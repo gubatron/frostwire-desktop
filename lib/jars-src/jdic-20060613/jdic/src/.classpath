@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry path="mac_os_x/classes" kind="src"/>
+	<classpathentry path="share/classes" kind="src"/>
+	<classpathentry path="unix/classes" kind="src"/>
+	<classpathentry path="win32/classes" kind="src"/>
+	<classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER" kind="con"/>
+	<classpathentry path="D:/ProgramFiles/jdk1.5.0_02/jre/lib/javaws.jar" kind="lib"/>
+	<classpathentry path="bin" kind="output"/>
+</classpath>

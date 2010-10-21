@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="Package Manager">
+  <title>Gettext Commons</title>
+  <body>
+    <links>
+      <item name="Project Page"
+      href="http://code.google.com/p/gettext-commons/"/>
+    </links>
+    <menu name="Overview">
+      <item href="/index.html" name="Home"/>
+      <item name="Download" href="http://code.google.com/p/gettext-commons/downloads/list"/>
+      <item href="/maven.html" name="Maven Repository"/>
+      <item href="http://code.google.com/p/gettext-commons/wiki/Tutorial" name="Tutorial"/>
+      <item name="API (JavaDoc)" href="/apidocs/index.html" target="_blank"/>
+    </menu>
+  </body>
+</project>

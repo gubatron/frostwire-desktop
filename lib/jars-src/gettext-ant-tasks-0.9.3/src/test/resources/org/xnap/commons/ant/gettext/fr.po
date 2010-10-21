@@ -1,0 +1,542 @@
+# French translation for xnap-commons
+# Copyright (c) (c) 2005 Canonical Ltd, and Rosetta Contributors 2005
+# This file is distributed under the same license as the xnap-commons package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2005.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: xnap-commons\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-12-08 01:38+0100\n"
+"PO-Revision-Date: 2006-11-22 13:00+0000\n"
+"Last-Translator: Pierre Slamich <pierre.slamich@gmail.com>\n"
+"Language-Team: French <fr@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Rosetta-Version: 0.1\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Rosetta-Export-Date: 2007-02-11 02:58+0000\n"
+
+#: src/java/org/xnap/commons/gui/completion/CompletionModeMenu.java:63
+msgid "Text Completion"
+msgstr "Complétion du texte"
+
+#: src/java/org/xnap/commons/gui/completion/CompletionModeMenu.java:74
+msgid "Application Default"
+msgstr "Défaut de l'Application"
+
+#: src/java/org/xnap/commons/gui/completion/EmacsCompletionMode.java:46
+#: src/java/org/xnap/commons/gui/completion/EmacsCompletionMode.java:51
+#: src/java/org/xnap/commons/gui/completion/ManualCompletionMode.java:48
+msgid "Completion"
+msgstr "Complétion"
+
+#: src/java/org/xnap/commons/gui/completion/EmacsCompletionMode.java:46
+msgid "Emacs Cycle Forward"
+msgstr ""
+
+#: src/java/org/xnap/commons/gui/completion/EmacsCompletionMode.java:51
+msgid "Emacs Cycle Backward"
+msgstr ""
+
+#: src/java/org/xnap/commons/gui/completion/ManualCompletionMode.java:48
+msgid "Trigger Manual Completion"
+msgstr "Déclencher un Complètement Manuel"
+
+#: src/java/org/xnap/commons/gui/completion/CompletionModeFactory.java:38
+msgid "No Completion"
+msgstr "Aucune Complétion"
+
+#: src/java/org/xnap/commons/gui/completion/CompletionModeFactory.java:40
+msgid "Automatic"
+msgstr "Automatique"
+
+#: src/java/org/xnap/commons/gui/completion/CompletionModeFactory.java:42
+msgid "Automatic Dropdown"
+msgstr ""
+
+#: src/java/org/xnap/commons/gui/completion/CompletionModeFactory.java:44
+msgid "Dropdown List"
+msgstr "Liste déroulante"
+
+#: src/java/org/xnap/commons/gui/completion/CompletionModeFactory.java:46
+msgid "Emacs Completion"
+msgstr "Complétion d'Emacs"
+
+#: src/java/org/xnap/commons/gui/completion/CompletionModeFactory.java:48
+msgid "Manual"
+msgstr "Manuel"
+
+#: src/java/org/xnap/commons/gui/completion/CompletionModeFactory.java:50
+msgid "Short Automatic"
+msgstr "Automatique court"
+
+#: src/java/org/xnap/commons/gui/completion/ClearCompletionModelAction.java:46
+msgid "Clear History"
+msgstr "Purger l'historique"
+
+#: src/java/org/xnap/commons/gui/DefaultDialog.java:516
+msgid "Apply"
+msgstr "Appliquer"
+
+#: src/java/org/xnap/commons/gui/DefaultDialog.java:536
+msgid "Cancel"
+msgstr "Annuler"
+
+#: src/java/org/xnap/commons/gui/DefaultDialog.java:558
+msgid "Close"
+msgstr "Fermer"
+
+#: src/java/org/xnap/commons/gui/DefaultDialog.java:586
+msgid "Help"
+msgstr "Aide"
+
+#: src/java/org/xnap/commons/gui/DefaultDialog.java:602
+msgid "Defaults"
+msgstr "Défauts"
+
+#: src/java/org/xnap/commons/gui/DefaultDialog.java:635
+#: src/java/org/xnap/commons/gui/FileChooserPanel.java:120
+msgid "OK"
+msgstr "OK"
+
+#: src/java/org/xnap/commons/gui/Dialogs.java:67
+#, java-format
+msgid "Could not copy {0} to {1}: {2}."
+msgstr "Impossible de copier {0} vers {1}: {2}"
+
+#: src/java/org/xnap/commons/gui/Dialogs.java:102
+#, java-format
+msgid "Could not move {0} to {1}: {2}."
+msgstr "Impossible de déplacer {0} vers {1}: {2}"
+
+#: src/java/org/xnap/commons/gui/Dialogs.java:169
+#, fuzzy
+msgid "Always quit without prompting me"
+msgstr "Toujours quitter sans confirmation"
+
+#: src/java/org/xnap/commons/gui/Dialogs.java:176
+msgid "Do you really want to quit?"
+msgstr "Voulez-vous réellement quitter?"
+
+#: src/java/org/xnap/commons/gui/Dialogs.java:181
+#: src/java/org/xnap/commons/gui/ErrorDialog.java:304
+msgid "Quit"
+msgstr "Quitter"
+
+#: src/java/org/xnap/commons/gui/Dialogs.java:217
+#: src/java/org/xnap/commons/gui/Dialogs.java:384
+msgid "Do not ask again"
+msgstr "Ne plus poser la question"
+
+#: src/java/org/xnap/commons/gui/Dialogs.java:263
+#, java-format
+msgid "Do you really want to copy the selected file to \"{0}\"?"
+msgid_plural "Do you really want to copy the selected files to \"{0}\"?"
+msgstr[0] ""
+"Êtes-vous sur de vouloir copier le fichier sélectionné vers \"{0}\"?"
+msgstr[1] ""
+"Êtes-vous sur de vouloir copier les fichiers sélectionnés vers \"{0}\"?"
+
+#: src/java/org/xnap/commons/gui/Dialogs.java:267
+msgid "Copy Files"
+msgstr "Copier les Fichers"
+
+#: src/java/org/xnap/commons/gui/Dialogs.java:292
+msgid "Do you really want to delete the selected files?"
+msgstr "Voulez-vous vraiment supprimer les fichiers choisis ?"
+
+#: src/java/org/xnap/commons/gui/Dialogs.java:293
+msgid "Delete Files"
+msgstr "Supprimer les fichiers"
+
+#: src/java/org/xnap/commons/gui/Dialogs.java:305
+#: src/java/org/xnap/commons/gui/Dialogs.java:318
+msgid "Error"
+msgstr "Erreur"
+
+#: src/java/org/xnap/commons/gui/Dialogs.java:451
+#, java-format
+msgid "Do you really want to move the selected files to \"{0}\"?"
+msgstr "Voulez-vous vraiment déplacer les fichiers choisis vers \"{0}\" ?"
+
+#: src/java/org/xnap/commons/gui/Dialogs.java:453
+msgid "Move Files"
+msgstr "Déplacer les Fichiers"
+
+#: src/java/org/xnap/commons/gui/shortcut/DefaultShortcut.java:45
+msgid "General"
+msgstr "Général"
+
+#: src/java/org/xnap/commons/gui/shortcut/KeyStrokePanel.java:252
+msgid "Default"
+msgstr "Défaut"
+
+#: src/java/org/xnap/commons/gui/shortcut/KeyStrokePanel.java:253
+#, fuzzy
+msgid "Reset to default"
+msgstr "Réinitialiser aux valeurs par défaut"
+
+#: src/java/org/xnap/commons/gui/shortcut/KeyStrokePanel.java:270
+msgid "None"
+msgstr "Aucun(e)"
+
+#: src/java/org/xnap/commons/gui/shortcut/KeyStrokePanel.java:272
+msgid "Assigns no keystroke"
+msgstr ""
+
+#: src/java/org/xnap/commons/gui/shortcut/ShortcutPanel.java:61
+msgid "Action"
+msgstr "Action"
+
+#: src/java/org/xnap/commons/gui/shortcut/ShortcutPanel.java:62
+msgid "Category"
+msgstr "Catégorie"
+
+#: src/java/org/xnap/commons/gui/shortcut/ShortcutPanel.java:63
+msgid "Shortcut"
+msgstr "Raccourci"
+
+#: src/java/org/xnap/commons/gui/shortcut/ShortcutPanel.java:92
+msgid "Shortcut for Selected Action"
+msgstr "Raccourci pour l' Action sélectionnée"
+
+#: src/java/org/xnap/commons/gui/shortcut/ShortcutPanel.java:141
+msgid "Shortcuts"
+msgstr "Raccourcis"
+
+#: src/java/org/xnap/commons/gui/table/ProgressCellRenderer.java:68
+#, fuzzy
+msgid "stalled"
+msgstr "calé"
+
+#: src/java/org/xnap/commons/gui/table/ProgressCellRenderer.java:71
+msgid "/s"
+msgstr "/s"
+
+#: src/java/org/xnap/commons/gui/table/TableHeaderMenu.java:168
+msgid "Maintain Sort Order"
+msgstr "Conserver l'Ordre de Tri"
+
+#: src/java/org/xnap/commons/gui/table/TableHeaderMenu.java:170
+msgid ""
+"If enabled, the sort order will be maintained as newitems are added to the "
+"table"
+msgstr ""
+"Si activé, l'ordre de tri sera conservé lorsque de nouveaux articles de "
+"nouvelle sont ajoutés à la table"
+
+#: src/java/org/xnap/commons/gui/table/TableLayoutManager.java:117
+msgid "Reset Columns"
+msgstr ""
+
+#: src/java/org/xnap/commons/gui/table/FilesizeCellRenderer.java:43
+msgid "%,d bytes"
+msgstr "%,d octets"
+
+#: src/java/org/xnap/commons/gui/util/GUIHelper.java:566
+msgid "Unknown"
+msgstr "Inconnu"
+
+#: src/java/org/xnap/commons/gui/util/WhatsThisAction.java:36
+msgid "What's This?"
+msgstr "Qu'est-ce que c'est ?"
+
+#: src/java/org/xnap/commons/gui/util/WhatsThisAction.java:38
+#, fuzzy
+msgid "Enters what's this mode"
+msgstr "Entre dans le mode qu'est-ce que c'est"
+
+#: src/java/org/xnap/commons/gui/ErrorDialog.java:137
+msgid "Do not show this exception again"
+msgstr "Ne plus montrer cette exception"
+
+#: src/java/org/xnap/commons/gui/ErrorDialog.java:144
+msgid "Do not show this dialog again"
+msgstr "Ne plus afficher cette boîte de dialogue"
+
+#: src/java/org/xnap/commons/gui/ErrorDialog.java:228
+#, java-format
+msgid "Details - {0} Problems"
+msgstr "étails - {0} Problèmes"
+
+#: src/java/org/xnap/commons/gui/ErrorDialog.java:271
+msgid "Show Details"
+msgstr "Afficher les détails"
+
+#: src/java/org/xnap/commons/gui/ErrorDialog.java:289
+msgid "Continue"
+msgstr "Continuer"
+
+#: src/java/org/xnap/commons/gui/ErrorDialog.java:307
+msgid "Quits the application"
+msgstr "Quitte l'application"
+
+#: src/java/org/xnap/commons/gui/ErrorDialog.java:322
+msgid "Send Report"
+msgstr "Envoyer le Rapport"
+
+#: src/java/org/xnap/commons/gui/ErrorDialog.java:325
+msgid "Sends the details to a remote site for analysis"
+msgstr "Envoie les détails à un site distant pour analyse"
+
+#: src/java/org/xnap/commons/gui/ErrorDialog.java:345
+msgid "Sending Error Report"
+msgstr "Envoi du Rapport d'Erreur"
+
+#: src/java/org/xnap/commons/gui/ErrorDialog.java:372
+msgid "Thank you."
+msgstr "Merci."
+
+#: src/java/org/xnap/commons/gui/ErrorDialog.java:373
+#: src/java/org/xnap/commons/gui/ErrorDialog.java:386
+#: src/java/org/xnap/commons/gui/ErrorDialog.java:389
+msgid "XNap Error"
+msgstr "Erreur XNap"
+
+#: src/java/org/xnap/commons/gui/ErrorDialog.java:385
+#, java-format
+msgid "Could not send error report: {0}."
+msgstr "N'a pas pu envoyer le rapport d'erreur : {0}."
+
+#: src/java/org/xnap/commons/gui/ErrorHandler.java:70
+msgid "An unknown problem has occured!"
+msgstr "Un problème inconnu s'est produit !"
+
+#: src/java/org/xnap/commons/gui/dnd/DefaultTreeFileTransferHandler.java:145
+msgid "Copying Files"
+msgstr "Copie des Fichiers"
+
+#: src/java/org/xnap/commons/gui/dnd/DefaultTreeFileTransferHandler.java:148
+msgid "Error copying files"
+msgstr "Erreur de copie des fichiers"
+
+#: src/java/org/xnap/commons/gui/dnd/DefaultTreeFileTransferHandler.java:169
+#, java-format
+msgid "Copying<br>{0}<br>to<br>{1}..."
+msgstr "Copie<br>{0}<br>vers<br>{1}..."
+
+#: src/java/org/xnap/commons/gui/TextFieldMenu.java:49
+msgid "Edit"
+msgstr "Éditer"
+
+#: src/java/org/xnap/commons/gui/TextFieldMenu.java:69
+msgid "Select All"
+msgstr "Tout Sélectionner"
+
+#: src/java/org/xnap/commons/gui/TextFieldMenu.java:71
+msgid "Selects all text"
+msgstr "Sélectionne tout le texte"
+
+#: src/java/org/xnap/commons/gui/TextFieldMenu.java:96
+msgid "Clear"
+msgstr "Effacer"
+
+#: src/java/org/xnap/commons/gui/TextFieldMenu.java:98
+msgid "Deletes all text"
+msgstr "Supprime tout le texte"
+
+#: src/java/org/xnap/commons/gui/TextFieldMenu.java:120
+msgid "Copy"
+msgstr "Copier"
+
+#: src/java/org/xnap/commons/gui/TextFieldMenu.java:122
+msgid "Copies selected text to clipboard"
+msgstr "Copie le texte sélectionné vers le presse-papiers"
+
+#: src/java/org/xnap/commons/gui/TextFieldMenu.java:136
+msgid "Cut"
+msgstr "Couper"
+
+#: src/java/org/xnap/commons/gui/TextFieldMenu.java:138
+msgid "Moves selected text to clipboard"
+msgstr "Déplace le texte sélectionné vers le presse-papiers"
+
+#: src/java/org/xnap/commons/gui/TextFieldMenu.java:152
+msgid "Paste"
+msgstr "Coller"
+
+#: src/java/org/xnap/commons/gui/TextFieldMenu.java:154
+msgid "Pastes clipboard contents"
+msgstr "Colle le contenu du presse-papiers"
+
+#: src/java/org/xnap/commons/gui/AboutDialog.java:224
+#, java-format
+msgid "File {0} not found"
+msgstr "Fichier  {0}  non trouvé"
+
+#: src/java/org/xnap/commons/gui/wizard/WizardDialog.java:329
+msgid "Previous"
+msgstr "Précédent"
+
+#: src/java/org/xnap/commons/gui/wizard/WizardDialog.java:344
+msgid "Next"
+msgstr "Suivant"
+
+#: src/java/org/xnap/commons/gui/wizard/WizardDialog.java:359
+msgid "Finish"
+msgstr "Terminer"
+
+#: src/java/org/xnap/commons/gui/FileChooserPanel.java:121
+msgid "Choose File"
+msgstr "Choisir un fichier"
+
+#: src/java/org/xnap/commons/gui/FileChooserPanel.java:255
+msgid "Choose a file"
+msgstr "Choisir un fichier"
+
+#: src/java/org/xnap/commons/gui/DirectoryChooser.java:101
+msgid "Folders"
+msgstr "Dossiers"
+
+#: src/java/org/xnap/commons/gui/DirectoryChooser.java:172
+msgid "Choose a Folder"
+msgstr "Choisir un dossier"
+
+#: src/java/org/xnap/commons/gui/DirectoryChooser.java:190
+msgid "Home"
+msgstr "Dossier personnel"
+
+#: src/java/org/xnap/commons/gui/DirectoryChooser.java:192
+msgid "Jump to home folder"
+msgstr "Aller au dossier personnel"
+
+#: src/java/org/xnap/commons/gui/ColorChooserPanel.java:82
+msgid "Black"
+msgstr "Noir"
+
+#: src/java/org/xnap/commons/gui/ColorChooserPanel.java:83
+msgid "DarkGray"
+msgstr "Gris-foncé"
+
+#: src/java/org/xnap/commons/gui/ColorChooserPanel.java:84
+msgid "Gray"
+msgstr "Gris"
+
+#: src/java/org/xnap/commons/gui/ColorChooserPanel.java:85
+msgid "LightGray"
+msgstr "Gris-clair"
+
+#: src/java/org/xnap/commons/gui/ColorChooserPanel.java:86
+msgid "Blue"
+msgstr "Bleu"
+
+#: src/java/org/xnap/commons/gui/ColorChooserPanel.java:87
+msgid "Cyan"
+msgstr "Cyan"
+
+#: src/java/org/xnap/commons/gui/ColorChooserPanel.java:88
+msgid "Magenta"
+msgstr "Magenta"
+
+#: src/java/org/xnap/commons/gui/ColorChooserPanel.java:89
+msgid "Pink"
+msgstr "Rose"
+
+#: src/java/org/xnap/commons/gui/ColorChooserPanel.java:90
+msgid "Red"
+msgstr "Rouge"
+
+#: src/java/org/xnap/commons/gui/ColorChooserPanel.java:91
+msgid "Orange"
+msgstr "Orange"
+
+#: src/java/org/xnap/commons/gui/ColorChooserPanel.java:92
+msgid "Green"
+msgstr "Vert"
+
+#: src/java/org/xnap/commons/gui/ColorChooserPanel.java:93
+msgid "Yellow"
+msgstr "Jaune"
+
+#: src/java/org/xnap/commons/gui/ColorChooserPanel.java:94
+msgid "White"
+msgstr "Blanc"
+
+#: src/java/org/xnap/commons/gui/ColorChooserPanel.java:162
+msgid "Opens color selection dialog"
+msgstr "Ouvre le dialogue de sélection de couleur"
+
+#: src/java/org/xnap/commons/gui/ColorChooserPanel.java:169
+msgid "Choose color"
+msgstr "Choisir la couleur"
+
+#: src/java/org/xnap/commons/gui/ColorChooserPanel.java:186
+msgid "Custom"
+msgstr "Personnalisé"
+
+#: src/java/org/xnap/commons/gui/EraseTextFieldAction.java:45
+msgid "Erases text"
+msgstr "Efface le texte"
+
+#: src/java/org/xnap/commons/settings/IntValidator.java:69
+#: src/java/org/xnap/commons/settings/StringValidator.java:82
+msgid "Value must not be null"
+msgstr "La valeur ne doit pas être nulle"
+
+#: src/java/org/xnap/commons/settings/IntValidator.java:74
+msgid "Value out of range."
+msgstr "Valeur hors limites."
+
+#: src/java/org/xnap/commons/settings/PortRangeValidator.java:83
+msgid "Malformed range."
+msgstr "Plage de valeurs mal formée."
+
+#: src/java/org/xnap/commons/settings/PortRangeValidator.java:92
+msgid "Malformed number."
+msgstr "Nombre mal formé."
+
+#: src/java/org/xnap/commons/settings/PortRangeValidator.java:98
+msgid "No port given."
+msgstr "Aucun port fourni."
+
+#: src/java/org/xnap/commons/settings/PortRangeValidator.java:110
+#, java-format
+msgid "Port out of range {0}."
+msgstr "Port hors limites {0}."
+
+#: src/java/org/xnap/commons/settings/StringValidator.java:85
+msgid "Value is too short"
+msgstr "La valeur est trop courte"
+
+#: src/java/org/xnap/commons/settings/StringValidator.java:90
+msgid "Invalid character"
+msgstr "Caractère invalide"
+
+#: src/java/org/xnap/commons/util/NetHelper.java:98
+msgid "Connection refused"
+msgstr "Connexion refusée"
+
+#: src/java/org/xnap/commons/util/NetHelper.java:101
+#, java-format
+msgid "Unknown host {0}"
+msgstr "Hôte inconnu {0}"
+
+#: src/java/org/xnap/commons/util/NetHelper.java:105
+#, java-format
+msgid "Error ({0})"
+msgstr "Erreur ({0})"
+
+msgid "Four: {0}"
+msgstr "Quatre : {0}"
+
+msgid "Confirmation"
+msgstr "Confirmation"
+
+msgid "Folder Chooser"
+msgstr ""
+
+msgid "Choose Folder"
+msgstr "Choisir le dossier"
+
+msgid "Selected: {0}"
+msgstr "Sélectionné: {0}"
+
+msgid "Socket timeout"
+msgstr "Arrêt pour temps dépassé du socket"
+
+#, java-format
+#~ msgid "Do you really want to copy the selected files to \"{0}\"?"
+#~ msgstr "Voulez-vous vraiment copier les fichiers choisis vers \"{0}\" ?"

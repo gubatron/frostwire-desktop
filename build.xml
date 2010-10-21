@@ -1,0 +1,180 @@
+<!-- top level ant file -->
+<project name="limewire" default="compile-src" basedir=".">
+
+    <property name="limewire.home" location="${basedir}"/>
+
+    <import file="components/build.xml"/>
+    <import file="core/build.xml"/>
+    <import file="gui/build.xml" />
+
+    <!-- Builds EVERYTHING from Scratch, including 3rd party jars from sources (lib/jars-src) -->
+    <target name="everything">
+      <touch file="lib/jars/COMPILE"/>
+      <ant dir="lib/jars-src"/>
+      <ant target="jar"/>
+    </target>
+	
+    <target name="clean-jars">
+	<ant dir="lib/jars-src" target="clean"/>
+    </target>
+    
+    <target name="initialize" depends="lw-core.initialize, lw-gui.initialize,  lw-components.initialize" unless="initialized.limewire">
+        <property name="limewire.components.limewire.home"
+                  location="${limewire.home}"/>
+        <do.setup-properties component="limewire"/>
+    </target>
+    
+    <target name="compile"
+            description="Compiles all code."
+            depends="initialize, lw-components.compile-core-src, lw-components.compile-ui-src, lw-core.compile-core, lw-gui.compile-gui"/>
+    
+    <target name="compile-src"
+            description="Compiles all source code (not tests)."
+            depends="initialize, lw-components.compile-core-src, lw-components.compile-ui-src, lw-core.compile-core, lw-gui.compile-gui"/>
+    
+    <target name="clean" 
+            description="Cleans everything."
+            depends="initialize, lw-components.clean, clean-core, clean-gui">
+        <do.clean component="limewire"/>
+    	<delete dir="${limewire.components.limewire.home}/unused"/>
+    </target>
+	
+	<target name="clean-src"
+	        description="Cleans artifacts from compiling src."
+            depends="initialize, lw-components.clean-src, clean-core, clean-gui"/>
+    
+       
+    
+	<target name="jar" depends="compile-src">
+
+      <ant dir="components" target="jar"/>
+
+      <echo message="GUBA: root main.xml (jar) - Remember to invoke components/build.xml jar first than this manually"/>
+	  <!-- get the list of jars in a space separated list without dirnames -->
+	  <fileset dir="${limewire.lib.jars}" includes="**/*.jar" id="alljars"/>
+	  <pathconvert property="classpath" refid="alljars" pathsep=" ">
+	    <mapper type = "flatten" />
+	  </pathconvert>
+	  
+	  <mkdir dir="${limewire.home}/dist"/>
+	  
+	  <!-- build limewire's main jar -->
+	  <delete file="${limewire.home}/dist/FrostWire.jar"/>
+	  <jar jarfile="${limewire.home}/dist/FrostWire.jar" compress="true" level="9">
+	    <fileset dir="${build.limewire.gui.classes}" includes="com/frostwire/**/*.class"/>
+            <fileset dir="${build.limewire.core.classes}" includes="com/frostwire/**/*.class"/>
+	    <fileset dir="${build.limewire.gui.classes}" includes="com/limegroup/**/*.class"/>
+	    <fileset dir="${build.limewire.core.classes}" includes="com/limegroup/**/*.class"/>
+	    <fileset dir="${limewire.home}/gui" includes="irc/**/*" excludes="irc/**/*.java"/>
+	    <manifest>
+	      <attribute name="Main-Class" value="com.limegroup.gnutella.gui.Main" />
+	      <attribute name="Class-Path" value=". ${classpath} lw-azureus.jar lw-collection.jar lw-common.jar lw-http.jar lw-io.jar lw-mojito.jar lw-net.jar lw-nio.jar lw-resources.jar lw-rudp.jar lw-security.jar lw-setting.jar lw-statistic.jar"/>
+	    </manifest>
+	  </jar>
+	</target> 
+
+    <target name="deb-src">
+      <!-- TODO: create a .deb out of all the sources -->
+    </target>
+
+    
+    <!-- TODO: implement -->
+    <target name="clean-dist"/>
+        
+    <target name="javadoc">
+    	<fail message="Use maven to generate javadocs."/>
+    </target>
+
+    <property name="translation.cutoff" value="60"/>
+
+    <target name="lw-gettext-extract"
+     		description="Extracts message keys from the source code"
+     		depends="init.gettext">
+	    <gettext-extract keysFile="frostwire.pot" poDirectory="lib/messagebundles" keywords="-kgetStringResource -kgetFormattedStringResource -ktrc -ktr -kmarktr -ktrn:1,2 -ktrl">
+			<fileset dir="components" includes="**/*.java"/>
+			<fileset dir="core" includes="**/*.java"/>
+			<fileset dir="gui" includes="**/*.java"/>
+	    </gettext-extract>
+    </target>
+
+    <target name="lw-gettext-merge"
+     		description="Merge message keys with translations"
+     		depends="init.gettext">
+		<gettext-merge keysFile="frostwire.pot" poDirectory="lib/messagebundles"/>
+    </target>
+
+    <!-- generate two jars, one with almost complete translations, and a remaining one -->
+    <target name="lw-bundle-messages"
+    		description="Rebuilds messages and bundles them"
+    		depends="init.gettext">
+
+	    <!-- clean up -->
+	    <delete dir="lib/messagebundles/org"/>
+	
+	    <!-- generate default bundle for complete messages -->
+	    <gettext-generate-default targetBundle="org.limewire.i18n.Messages"
+	    						  outputDirectory="lib/messagebundles" 
+	    						  potfile="lib/messagebundles/frostwire.pot"/>
+	
+	    <!-- generate complete bundles -->
+	    <gettext-dist targetBundle="org.limewire.i18n.Messages"
+	   				  poDirectory="lib/messagebundles"
+	    			          outputDirectory="lib/messagebundles"
+	   				  percentage="${translation.cutoff}"/>
+	
+	    <!-- generate the empty en.po file without percentage  -->
+	    <gettext-dist targetBundle="org.limewire.i18n.Messages"
+				      outputDirectory="lib/messagebundles">
+			<fileset dir="lib/messagebundles" includes="en.po"/>
+	    </gettext-dist>
+	    
+	    <!-- jar them -->
+	    <jar destfile="lib/jars/messages.jar" 
+	    	 basedir="lib/messagebundles"
+	    	 includes="org/**"/>
+	    	
+	    <!-- clean up -->
+	    <delete dir="lib/messagebundles/org"/>
+	    	
+	    <!-- generate incomplete ones -->
+	    <gettext-dist targetBundle="org.limewire.i18n.Messages"
+	     	          poDirectory="lib/messagebundles"
+	    		  outputDirectory="lib/messagebundles"
+	    	          percentage="${translation.cutoff}"
+	                  moreOrLess="less"/>
+	
+	    <delete>
+	    	<fileset dir="lib/messagebundles/org/limewire/i18n/" includes="**/Messages_en*"/>
+	    </delete>
+	
+	    <!-- jar them -->
+	    <jar destfile="lib/jars/compile/messages.jar"
+	         basedir="lib/messagebundles"
+	    	 includes="org/**"/>
+    	
+     	    <!-- clean up -->
+	    <delete dir="lib/messagebundles/org"/>
+    </target>
+
+    <!-- mask imported targets -->
+    <target name="test"/>
+    <target name="test-package"/>
+    <target name="compile-core"/>
+    <target name="compile-core-src"/>
+    <target name="compile-ui-src"/>
+    <target name="compile-gui"/>
+
+</project>
+
+
+
+
+
+
+
+
+
+
+
+
+

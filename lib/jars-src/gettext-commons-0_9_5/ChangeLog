@@ -1,0 +1,62 @@
+2008-04-12  Felix Berger  <felixberger@beldesign.de>
+
+	* src/java/org/xnap/commons/i18n/I18nCache.java: Fixed
+	synchronization and improved visitor traversal by moving it out of
+	the synchronized block.
+
+2008-04-10  Felix Berger  <felixberger@beldesign.de>
+
+	* src/java/org/xnap/commons/i18n/I18n.java: Made thread-safe.
+
+	* src/java/org/xnap/commons/i18n/I18nCache.java: Made thread-safe.
+
+2006-08-22  Steffen Pingel  <steffen.pingel@googlemail.com>
+
+	* Gettext Commons 0.9.1 released
+
+2007-08-22  Steffen Pingel  <steffen.pingel@googlemail.com>
+
+	* src/java/org/xnap/commons/i18n/I18nFactory.java: Modified lookup strategy to
+	only check for property files when no bundle name is provided.
+
+2007-08-21  Steffen Pingel  <steffen.pingel@googlemail.com>
+
+	* src/java/org/xnap/commons/i18n/I18nManager.java: Do not set default locale anymore.
+
+	* src/java/org/xnap/commons/i18n/EmptyResourceBundle.java: Added locale parameter. 
+
+	* src/java/org/xnap/commons/i18n/I18n.java: Store only a single bundle and also store locale. 
+
+	* src/java/org/xnap/commons/i18n/I18nFactory.java: Added NO_CACHE flag, extracted caching to 
+	I18nCache. 
+
+	* src/java/org/xnap/commons/i18n/I18nCache.java: Cache by package and locale.
+
+2007-08-06  Steffen Pingel  <steffen.pingel@googlemail.com>
+
+	* src/java/org/xnap/commons/i18n/I18nFactory.java: Added private
+	constructor.
+
+	* src/java/org/xnap/commons/i18n/I18nFactory.java: Added getI18n() 
+	method that accepts configuration flags. If I18nFactory.FALLBACK is
+	passed the lookup will fall-back to a default resource bundle
+	instead of throwing an exception (#3). Lookup of the basename in 
+	properties can now be omitted when I18nFactory.READ_PROPERTIES
+	is not passed as a configuration flag.
+
+2006-01-05  Steffen Pingel  <squig@users.sourceforge.net>
+
+	* Gettext Commons 0.9 released
+
+2006-01-03  Steffen Pingel  <squig@users.sourceforge.net>
+
+	* src/java/org/xnap/commons/i18n/I18nManager.java: Moved
+	non-factory related methods to this class.
+
+	* src/java/org/xnap/commons/i18n/I18nFactory.java: Implemented
+	weak listener.
+
+2005-12-24  Steffen Pingel  <squig@users.sourceforge.net>
+
+	* src/java/org/xnap/commons/i18n/: Created project: Moved i18n
+	package from XNap Commons to this project.

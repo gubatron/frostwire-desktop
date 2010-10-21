@@ -1,0 +1,22 @@
+<project name="gettext-commons-0.9.5" default="main" basedir=".">
+
+	<target name="main">
+
+		<exec executable="mvn" dir=".">
+			<arg value="install"/>
+			<arg value="-Dmaven.test.skip=true"/>
+		</exec>
+		
+		<copy file="target/gettext-commons-0.9.5.jar" tofile="../dist/gettext-commons.jar" overwrite="true"/>
+		
+	</target>
+
+	<target name="clean">
+
+		<exec executable="mvn" dir=".">
+			<arg value="clean"/>
+		</exec>
+
+	</target>
+
+</project>

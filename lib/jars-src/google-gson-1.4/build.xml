@@ -1,0 +1,22 @@
+<project name="google-gson-1.4" default="main" basedir=".">
+
+	<target name="main">
+
+		<exec executable="mvn" dir=".">
+			<arg value="install"/>
+			<arg value="-Dmaven.test.skip=true"/>
+		</exec>
+		
+		<copy file="target/gson-1.4.jar" tofile="../dist/gson-1.4.jar" overwrite="true"/>
+		
+	</target>
+
+	<target name="clean">
+
+		<exec executable="mvn" dir=".">
+			<arg value="clean"/>
+		</exec>
+
+	</target>
+
+</project>

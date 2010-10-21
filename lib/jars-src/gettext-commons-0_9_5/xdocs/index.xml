@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<document>
+  <properties>
+    <title>Gettext Commons</title>
+  </properties>
+  <body>
+    <section name="Introduction">
+      <p>The Gettext Commons project provides Java classes for
+      internationalization (i18n) through <a
+      href="http://www.gnu.org/software/gettext/">GNU gettext</a>.</p>
+
+	  <p>See
+	  the <a href="http://code.google.com/p/gettext-commons/">project
+		  page</a> for more information and downloads.</p>
+	</section>
+  </body>
+</document>
+
+<!--
+Local Variables:
+sgml-indent-data: t
+End:
+-->

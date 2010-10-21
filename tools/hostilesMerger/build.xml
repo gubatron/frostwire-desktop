@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="hostilesMerger" default="compile-src" basedir=".">
+    <target name="compile-src">
+      <!-- cleanup and setup -->
+      <!-- build -->
+      <javac srcdir="src" destdir="bin" fork="true" memoryinitialsize="256m" memorymaximumsize="256m">
+	<!-- all the classpath jars -->
+	<classpath>
+	  <pathelement location="../../components/io/dist/lw-io.jar"/>
+	  <pathelement location="../../dist/FrostWire.jar"/>
+	</classpath>
+      </javac>
+    </target>
+</project>

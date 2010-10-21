@@ -1,0 +1,2 @@
+#!/bin/bash
+find . -name log4.log | xargs rm -f

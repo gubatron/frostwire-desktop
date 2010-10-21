@@ -1,0 +1,337 @@
+frostwire (4.21.1) stable; urgency=low
+
+  * New auto-update support for Windows and Ubuntu.
+  * Upgrades Azureus Core (bittorrent engine) to version 4.5.0.4. Thanks to the Azureus Team for their hard work and support through the integration.
+  * New setting pane to allow user to turn off FrostClick promotions.
+  * Fixes issue with Application Icon. New high resolution icon now  in place.
+	
+ -- FrostWire Team <contact@frostwire.com>  Wed, 22 Sep 2010 20:48:18 -0500
+
+frostwire (4.20.9) stable; urgency=low
+
+  * Fixes bug where FrostWire would not try to open exclusively UDP tracked torrents.
+  * New option -Dultrapeer=1 forces FrostWire to run as Ultrapeer. Only for hackers that build FrostWire.
+	
+ -- FrostWire Team <contact@frostwire.com>  Tue, 17 Aug 2010 11:36:22 -0500
+	
+frostwire (4.20.8) stable; urgency=low
+
+  * Upgrades search, now powered with ClearBits.net results a service
+  that indexes thousands of legal torrent files. (formerly known as
+  LegalTorrents.com)
+  * New BitTorrent Connection Settings Available.
+  * New ability to configure the max. number of active torrent downloads.
+  * New ability to configure the max. number of peers per torrent.
+  * New ability to configure the max. number of torrent connections.
+  * New ability to configure the max. number of torrent uploads.
+  * Fixes torrent auto resume bug.
+
+ -- FrostWire Team <contact@frostwire.com>  Thu, 05 Aug 2010 21:16:17 -0500
+
+frostwire (4.20.7) stable; urgency=low
+
+  * Improves Torrent search dramatically.
+
+ -- FrostWire Team <contact@frostwire.com>  Thu, 01 Jul 2010 15:26:46 -0500
+
+frostwire (4.20.6) stable; urgency=low
+
+  * Upgrades Azureus Core to version 4.4.0.0 - Thanks to the
+  Vuze/Azureus team for their hard work.
+
+ -- FrostWire Team <contact@frostwire.com>  Sun, 25 Apr 2010 00:00:00 -0500
+
+frostwire (4.20.5) stable; urgency=low
+
+  * Fixes audio player issues. Now all MP3s should support skipping
+  and gain control.  * Fixes bug on status bar speed meter. Now
+  BitTorrent uploads speeds are added up and shown correctly in it.
+  * Fixes High CPU usage bug while loading hostiles ip list.  *
+  Fixes a bug on MacOSX on which FrostWire would only start
+  downloading a .torrent only if FrostWire was already running.  *
+  The FrostWire windows installer will now clean FrostWire Desktop
+  shortcuts if uninstalled.
+
+ -- FrostWire Team <contact@frostwire.com>  Fri, 06 Apr 2010 00:00:00 -0500
+
+frostwire (4.20.4) stable; urgency=low
+
+  * Fixes connectivity issues for Mac version.
+
+ -- FrostWire Team <contact@frostwire.com>  Mon, 28 Mar 2010 00:00:00 -0500
+
+frostwire (4.20.3) stable; urgency=low
+
+  * Fixes a bug where files couldn't be dragged out of the Library.
+  * Fixes a bug where opening a magnet link would freeze the UI
+  while it was being fetched in the DHT.  * Fixes a bug where magnet
+  links that were dropped on FrostWire wouldn't start downloading.
+
+ -- FrostWire Team <contact@frostwire.com>  Wed, 15 Mar 2010 00:00:00 -0500
+
+frostwire (4.20.2) stable; urgency=low
+
+  * Fixes a bug on torrent resume * Installer sizes reduced over 58%
+
+ -- FrostWire Team <contact@frostwire.com>  Wed, 02 Feb 2010 00:00:00 -0500
+
+frostwire (4.20.1) stable; urgency=low
+
+  * Major Upgrade: BitTorrent Engine replaced for a lightweight
+  version of the Azureus BitTorrent core.  FrostWire has become a
+  far superior BitTorrent client starting version 4.20.x now
+  supporting: - Trackerless Torrents (via Azureus DHT) - Improved
+  Magnet link support (BTIH Magnet Links) - SuperSeeding - +100%
+  Faster Torrent Connection Bootstraping (No more "sources needed"
+  for some .torrents) - +100% Faster Torrent Downloads in some
+  ocassions than 4.18.x - Transport Encryption capabilities -
+  Improved UPnP implementation * New Feature: The Download Manager
+  now has a new column showing the amount of bytes downloaded per
+  download.  * Update: The "Refresh Connections" Tool is now
+  available even if you are Turbo Charged.  * Fixes a bug where
+  Crash Reports would always show an old version number.
+
+ -- FrostWire Team <contact@frostwire.com>  Tue, 01 Feb 2010 00:00:00 -0500
+
+frostwire (4.18.6) stable; urgency=low
+
+  * New Feature: Right clicking on the tabs brings out a context
+  popup menu to Show/Hide any of the tabs.  * New Feature: Gnutella
+  Torrent Search. FrostWire now can search for .torrent metadata
+  files in the Gnutella network.  * Upgraded feature: Optionally
+  FrostWire will copy all .torrent meta files to a shared torrent
+  folder.  * Fixes a bug where FrostWire would not recognize or
+  switch Themes/Skins correctly.
+
+ -- FrostWire Team <contact@frostwire.com>  Tue, 01 Jan 2010 00:00:00 -0500
+
+frostwire (4.18.5) stable; urgency=low
+
+  * Fixes two NPEs that were causing FrostWire to kill
+  uploads. (related to httpcomponent/nio) * Fixes a crash under some
+  Windows JREs when the windows firewall is turned off.  * Fixes a
+  freeze in Windows after the user would switch to the "Windows
+  Theme".  * Updates: License is upgraded from GPLv2 to GPLv3 to
+  allow proper license compatibility with Apache Licensed
+  components.
+
+ -- FrostWire Team <contact@frostwire.com>  Tue, 01 Dec 2009 00:00:00 -0500
+
+frostwire (4.18.4) stable; urgency=low
+
+  * New: "Tools > Refresh Connections". A network of FrostWire
+  Sentinels mantains a list of reliable nodes that can be used to
+  bootstrap your connection.  * FrostWire IP BlackList technology
+  updated to get rid of over 70% of spam and fakes (thanks
+  Aaron.Walkhouse).  * Update: latest UPnP code merged from LimeWire
+  Codebase for better connectivity.  * Update: Network core more
+  efficient and stable thanks to the latest Apache HttpComponents
+  (httpcore-4.0.1 and httpclient-4.0) * Update: Random Splash
+  Screens. Now showing different community submitted Splash Screens
+  to spread the FrostWire culture.  * Update: The Chat Server is now
+  a parameter on frostwire.props.  * Fix: Connection Doctor
+  addresses more connection bootstrapping issues.
+
+ -- FrostWire Team <contact@frostwire.com>  Tue, 01 Nov 2009 00:00:00 -0500
+
+frostwire (4.18.3) stable; urgency=low
+
+  * Fixes connectivity issues on Snow Leopard where FrostWire would
+  not attempt to open any connections.  * Bug fix on Connection
+  Doctor. It would continue to run even though FrostWire was already
+  connected.  * FrostWire for Mac is now compiled with 64-bit JDK
+  and it's backwards compatible with Leopard (10.5)
+
+ -- FrostWire Team <contact@frostwire.com>  Tue, 30 Aug 2009 00:00:00 -0500
+
+frostwire (4.18.2) stable; urgency=low
+
+  * Ads .wma and .au extension to the default excluded shared
+  formats. Also they are filtered from search results by default to
+  protect windows users from malicious installers invoked from
+  Windows Media Player when fake .au and .wma are opened. This also
+  gives preference to .mp3 content which has no DRM.  * Updated
+  Adult Filter keywords.  * Fixes compatibility issues with Snow
+  Leopard for Mac users.
+
+ -- FrostWire Team <contact@frostwire.com>  Tue, 15 Aug 2009 00:00:00 -0500
+
+frostwire (4.18.1) stable; urgency=low
+
+  * Updates on the "Connection Doctor" component, to address
+  connection issues. Connects to new network of UHC servers.  *
+  Updates on secondary (after-search) loading logic. Loads secondary
+  overlay on the spot, more room for FrostClick artist promotions.
+  * Fixes a bug where some mp3 would not play. Volume, Pause and
+  skip are disabled intentionally during workaround.  * Fixes a bug
+  where the media player would loop non-stop without playing all the
+  songs on a playlist once it found an mp3 it could not play * Fixes
+  a bug on for Mac OSX where FrostWire would only download torrents
+  opened via Finder if it was already running. Torrents now launch
+  FrostWire and start downloading at once.  * Updates video help
+  link to point to YouTube video of how to install FrostWire on
+  Mac. http://www.youtube.com/watch?v=hakWq8q8CHQ * Fixes Windows
+  Uninstaller issue where it would leave behind a Start Menu entry *
+  Fixes a bug on the .deb (Ubuntu/Debian) installer and GDebi. The
+  FrostWire icon is now shown correctly in Ubuntu 9.04 "Applications
+  > Internet" menu. (Thanks Telkwa)
+
+ -- FrostWire Team <contact@frostwire.com>  Tue, 01 Aug 2009 00:00:00 -0500
+
+frostwire (4.18.0) stable; urgency=low
+
+  * Fixes Bittorrent Incompatibilities.  * Mac launcher fixes bug
+  where FrostWire would not allow itself to run on a external disk.
+  * Fixes bug on Welcome Screen, now you don't need to open
+  FrostWire twice to get the latest welcome screen.  * FrostWire
+  caches the last 2 images shown on the Welcome Screen to save
+  bandwidth from static servers.  * Tools > Check for Updates. Now
+  FrostWire can check for configuration updates, community messages,
+  new FrostWire releases and welcome screen promotion updates during
+  runtime.  * The welcome screen can be customized for every
+  language, giving the chance to more content creators to be
+  promoted every week to different audiences that speak their
+  language.  * The Buttons of the Download Manager have been
+  rearranged to avoid mistakes when trying to resume downloads. The
+  Clear and Cancel Buttons are all the way to the right. Thanks to
+  'ssome' for the suggestion.  * New Splash Screen.  * Anti spam
+  filters updated to filter out new keywords used by spammers.  *
+  New "Buy" icon.  * The community chat 'Connect' button now checks
+  if a nickname has been set and helps the user set a default
+  nickname using an input dialog.  * When users issue the "/nick"
+  command on the chat, FrostWire will remember the new nickname as
+  the default nickname.  * Updates to debian package fix issues with
+  unpack200 and performs a cleaner uninstall.
+
+ -- FrostWire Team <contact@frostwire.com>  Tue, 01 May 2009 00:00:00 -0500
+
+frostwire (4.17.2) stable; urgency=low
+
+  * Fixes a newly introduced bug in Windows which would make
+  FrostWire(tm) take over the .bittorrent file association without
+  asking the user.  * Reduces network load. The LimeWire team found
+  out that "store forwarding" would not provide extra data
+  availability, so it's been turned off from the DHT * FrostWire.ico
+  has been updated. Now when FrostWire(tm) is associated to
+  .bittorrent files, .bittorrent files will use the FrostWire(tm)
+  icon.
+
+ -- FrostWire Team <contact@frostwire.com>  Tue, 30 Nov 2008 00:00:00 -0500
+
+frostwire (4.17.1) stable; urgency=low
+
+  * Heavy work on all translations. Translation files now work with
+  launchpad.net for more open collaboration of worldwide translator
+  volunteers * Default Community Chat chatroom auto join will now be
+  more friendly to non-english speaking users. Users that speak the
+  following languages will be able to foster new communities to help
+  others in their native language. Dutch, Portuguese, French,
+  German, Spanish, Turkish, Norwegian, Danish, Italian, Swedish,
+  Polish, Czech, Filipino, Japanese, Finnish and Hungarian. No more
+  unexplained kicks to international users!  * Icons updated *
+  Volume toolbar graphic replaced * Fixed playback Issue when
+  continuous playback was selected * Valid Chatroom links will now
+  open on the user's default browser * Smaller Windows Installer
+  (2.1 times smaller helping us double our available bandwidth) * It
+  will attempt to add the default Library folder of 4.13.5 so users
+  won't feel like they lost their old library * FrostWire(tm) now
+  can be auto-started when Windows starts. This setting is available
+  from the 'Option' menu ('Windows boot') and from the initial
+  setup.  * File Association issues fixed. FrostWire(tm) will open
+  automatically on Windows and MacOSX upon clicking on .torrent
+  files and links, as well as for magnet links.  * Fixes
+  compatibility issues with iTunes 8.  * Updated "FrostWire" font
+  logo on the Logo Pane
+
+ -- FrostWire Team <contact@frostwire.com>  Tue, 01 Nov 2008 00:00:00 -0500
+
+frostwire (4.17.0) stable; urgency=low
+
+  * Completely new FrostWire(tm) based on the core of LimeWire
+  4.17.4 * Faster, Improved Networking * Capable of using Mojito DHT
+  technology
+
+ -- FrostWire Team <contact@frostwire.com>  Tue, 01 Jul 2008 00:00:00 -0500
+
+frostwire (4.13.5) stable; urgency=low
+
+  * More fixes on peer discovery on connection bootstraping.  *
+  FrostWire(tm) is now capable of remembering announcements sent via
+  the update system, that way users won't be annoyed by reading the
+  same announcements for as long as we have them up.  * Added Smiley
+  support to the Chatroom. Developer note: irc.jar is now part of
+  our build process, One step build scripts for all distros.  *
+  Fixed wording on spanish translation.  * Fixed bugs on the media
+  player and playlists on Preview.  * Fixed bug on search box
+  auto-focusing while a search was running.  * Fixed typo in
+  Polish. Thanks Radek.  * Fixed i18n bug, where non english
+  operating system could never keep english as the preferred
+  language, it would always default to the OS systema affer
+  restarting FW. Thanks to FTA our new dev team member.
+
+ -- FrostWire Team <contact@frostwire.com>  Tue, 01 Feb 2008 00:00:00 -0500
+
+frostwire (4.13.4) stable; urgency=low
+
+  * Connection Bootstrapping problems should be gone. TurboCharged
+  connection is achieved on average under 5 seconds after launch.  *
+  "Buy" button on the search result panel.  * Polish Translation
+  Included. Finally got around Encoding issues of the Java
+  ResourceBundle class. More translations with their correct
+  characters coming in the future. (thanks Paulinka for the
+  translation) * New FrostWire(tm) Icon on the Icon Tray for Windows
+  XP (thanks to sw1tch) * The Bugmanager window still said
+  "LimeWire" (it was very well hidden in the code). Thanks to
+  Marcelina Knitter for reporting.  * Fixes on Update Notification
+  Mechanism.  * Fixes on Chat Banner Loading Mechanism, banner
+  reloading interval from server is now configurable. Banners can
+  now be delivered per FrostWire(tm) version. Faster startup and
+  savings on bandwidth.  * Cleaning of IRC Stack traces.
+
+ -- FrostWire Team <contact@frostwire.com>  Tue, 22 Nov 2007 00:00:00 -0500
+
+frostwire (4.13.3) stable; urgency=low
+
+  * New Update Manager. Also allows delivery of special
+  announcements to the community. We won't use this feature for
+  spam, only for special announcements to the community, or special
+  downloads.  * The Update Manager supports the delivery of torrent
+  broadcasting to all the FrostWire(tm) community. This will allow
+  us to lower bandwidth costs if we decide to distribute an upload
+  using bittorrent trackers.  * FrostWire(tm) startup time back to
+  normal, no more waiting for Chat window to load, the chat is now
+  loaded on a background thread.
+
+ -- FrostWire Team <contact@frostwire.com>  Tue, 01 Aug 2007 00:00:00 -0500
+
+frostwire (4.13.2) stable; urgency=low
+
+  * No more BETA, this is the final release of the 4.13.1.8 branch *
+  Included translation to Portuguese (Since our Brazilian User Base
+  is the second biggest one out there).  * Cleaner debian installer
+  (Thanks to the "Ubunteros" that kept complaining).  *
+  Compatibility fix for Beryl (Thanks to the "Ubunteros" again) *
+  Frostwire will actually shutdown on Linux without you having to
+  set up the Tray System settings.  * Updates on Chat Banner
+  system. Memory Leak fixed, Banners can be targetted by language,
+  ip range and country. (Want to advertise on the FrostWire(tm)
+  Chat? - write to contact@frostwire.com) * Misc Updates to the Chat
+  and Lots to the Chat Server (Ianw's the man ruling those lands).
+  * When music files are launched they're automatically added to the
+  playlist (Finally).  * Fixed bug on "Explore" button where it'd
+  launch the file instead of the folder that contains the file.  *
+  Dev. tools to synchronize translation files, and quick build
+  script.  * Removed all Simpp messages
+
+ -- FrostWire Team <contact@frostwire.com>  Tue, 22 Jul 2007 00:00:00 -0500
+
+frostwire (4.13.1) stable; urgency=low
+
+  * Added IRC Chat (only for Windows and Mac until we resolve AWT
+  Font bug for Linux on PJIRC) * Merged Bittorrent support * Merged
+  Several Core and GUI Improvements * New Building Scripts will
+  automate further releases. build/ directory added to the frostwire
+  trunk * Magnetmix button gone, we need help from the community to
+  keep going
+
+ -- FrostWire Team <contact@frostwire.com>  Tue, 22 Jun 2007 00:00:00 -0500

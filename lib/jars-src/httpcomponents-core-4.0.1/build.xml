@@ -1,0 +1,23 @@
+<project name="httpcomponents-core-4.0.1" default="main" basedir=".">
+
+	<target name="main">
+
+		<exec executable="mvn" dir=".">
+			<arg value="install"/>
+			<arg value="-Dmaven.test.skip=true"/>
+		</exec>
+		
+		<copy file="httpcore/target/httpcore-4.0.1.jar" tofile="../dist/httpcore-4.0.1.jar" overwrite="true"/>
+		<copy file="httpcore-nio/target/httpcore-nio-4.0.1.jar" tofile="../dist/httpcore-nio-4.0.1.jar" overwrite="true"/>
+		
+	</target>
+
+	<target name="clean">
+
+		<exec executable="mvn" dir=".">
+			<arg value="clean"/>
+		</exec>
+
+	</target>
+
+</project>

@@ -1,0 +1,7 @@
+#/bin/sh
+rm *.class
+rm device/*.class
+rm service/*.class
+rm ssdp/*.class
+rm util/*.class
+rm http/*.class

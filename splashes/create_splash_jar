@@ -1,0 +1,12 @@
+#!/bin/bash
+# See com.limegroup.gnutella.gui.Main.getChosenSplashURL() for further adjustments before releasing.
+if test -z "$1"
+then
+  echo "Usage: ./create_splash_jar <version>"
+  exit
+fi
+
+cd $1
+rm splash.jar
+jar cvf splash.jar com
+cd ..

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="lw-resources" basedir=".">
+
+	<description>
+		LimeWire component 'resources'.
+		This component is a collection of resources required for the GUI.
+	</description>
+	
+    <import file="../common/build-macros.xml" />
+    <import file="../common/build.xml"/>
+    
+    <property name="component" value="lw-resources"/>
+
+    <target name="initialize" depends="lw-common.initialize" 
+            unless="initialized.resources">
+        <do.setup-properties component="lw-resources"/>
+    </target>
+
+	<target name="jar">
+    <delete dir="${basedir}/resources/dist"/>
+    <mkdir dir="${basedir}/resources/dist" />
+    <jar destfile="${basedir}/resources/dist/${component}.jar"
+          compress="@{compress}"
+          level="9"
+          basedir="${basedir}/resources/src/main/resources/">
+      </jar>
+    </target>
+</project>

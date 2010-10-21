@@ -1,0 +1,84 @@
+#!/bin/bash
+
+### Run script for FrostWire.
+### Builds a classpath for all jars & components.
+#JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.6.0/home/
+set JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.5/home/
+CLASSPATH=
+PS=":"
+
+OPTS="-Xms32m -Xmx128m -Djava.net.preferIPV6Addresses=false -ea -Djava.net.preferIPv4stack=true"
+
+#setup the java options & initial system-dependent classpath
+PLATFORM=`uname`
+case ${PLATFORM} in 
+    Linux)
+        OPTS="${OPTS} -Djava.library.path=../lib/native/linux";
+        export PATH="${PATH}:../lib/native/linux";
+        ADDITIONAL=linux
+    ;;
+    Darwin)
+        CLASSPATH="${CLASSPATH}:/System/Library/Java";
+        OPTS="${OPTS} -Djava.library.path=../lib/native/osx";
+        OPTS="${OPTS} -Djava.endorsed.dirs=\"\"";
+        OPTS="${OPTS} -Djava.nio.preferSelect=true";
+        OPTS="${OPTS} -Xdock:icon=FrostWire.icns";
+#        OPTS="${OPTS} -Dswing.defaultlaf=org.jvnet.substance.skin.SubstanceBusinessLookAndFeel";
+        ADDITIONAL=osx
+    ;;
+    CYGWIN*)
+        PS=";"
+        export PATH=$PATH:../lib/native/windows
+        ADDITIONAL=windows
+        
+    ;;
+    *)
+        echo "Sorry, platform '${platform}' is not recognized.";
+        exit 1;
+    ;;
+esac
+
+CLASSPATH="${CLASSPATH}${PS}.${PS}../core"
+
+#add all the jars.
+for JAR in $(find ../lib/jars -maxdepth 1 -name "*.jar"); do 
+   CLASSPATH="${CLASSPATH}${PS}${JAR}"
+done
+
+#add all the additional jars.
+for JAR in $(find ../lib/jars/${ADDITIONAL} -maxdepth 1 -name "*.jar" ); do 
+   CLASSPATH="${CLASSPATH}${PS}${JAR}"
+done
+
+#add all the other jars.
+for JAR in $(find ../lib/jars/other -maxdepth 1 -name "*.jar" ); do 
+   CLASSPATH="${CLASSPATH}${PS}${JAR}"
+done
+
+#add all the components.
+for COMPONENT in $(ls ../components); do
+	if [ -d "../components/${COMPONENT}/src" ]
+	then
+		CLASSPATH="${CLASSPATH}${PS}../components/${COMPONENT}/build/classes${PS}../components/${COMPONENT}/src/main/resources"
+	fi
+done
+
+export CLASSPATH
+echo $CLASSPATH
+
+export JAVA_HOME
+echo $JAVA_HOME
+java -version
+
+# uncomment if you want to do the serialver with the classpath all setup.
+#serialver $*
+#exit 0
+
+# Minor hack to get proper space quoting in OS X
+# "\"FrostWire CVS\"", "FrostWire\040CVS", and "'FrostWire CVS'" all fail
+case ${PLATFORM} in
+    Darwin)
+        java ${OPTS} -Xdock:name="FrostWire CVS" -Ddebug=1 com.limegroup.gnutella.gui.Main $* ;;
+    *)
+        java ${OPTS} -Ddebug=1 com.limegroup.gnutella.gui.Main $* ;;
+esac

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+Copyright (c) 2002, Simone Bordet
+All rights reserved.
+
+This software is distributable under the BSD license.
+See the terms of the BSD license in the documentation provided with this software.
+
+-->
+
+<project name="Foxtrot" default="jar" basedir="..">
+
+   <property name="name" value="foxtrot"/>
+   <!-- REMEMBER: change also the manifest information -->
+   <property name="version" value="2.0"/>
+
+   <property name="src.dir" value="${basedir}/src"/>
+   <property name="core.src.dir" value="${src.dir}/core"/>
+   <property name="examples.src.dir" value="${src.dir}/examples"/>
+
+   <property name="classes.dir" value="${basedir}/classes"/>
+   <property name="core.classes.dir" value="${classes.dir}/core"/>
+   <property name="examples.classes.dir" value="${classes.dir}/examples"/>
+
+   <property name="etc.dir" value="${src.dir}/etc"/>
+
+   <property name="lib.dir" value="${basedir}/lib"/>
+
+   <property name="dist.dir" value="${basedir}/dist"/>
+   <property name="dist.lib.dir" value="${dist.dir}/lib"/>
+   <property name="dist.docs.dir" value="${dist.dir}/docs"/>
+   <property name="dist.docs.api.dir" value="${dist.docs.dir}/api"/>
+   <property name="dist.release.dir" value="${dist.dir}/${name}-${version}"/>
+
+   <property name="core.jar.file" value="${dist.lib.dir}/${name}.jar"/>
+   <property name="examples.jar.file" value="${dist.lib.dir}/${name}-examples.jar"/>
+   <property name="src.jar.file" value="${dist.lib.dir}/${name}-src.jar"/>
+
+   <patternset id="core.classes">
+      <include name="foxtrot/*.class"/>
+      <include name="foxtrot/pumps/**/*.class"/>
+      <include name="foxtrot/workers/**/*.class"/>
+   </patternset>
+
+   <patternset id="examples.classes">
+      <include name="foxtrot/examples/**/*.class"/>
+   </patternset>
+
+   <patternset id="src.files">
+      <include name="**/*.java"/>
+   </patternset>
+
+   <target name="compile">
+      <mkdir dir="${core.classes.dir}"/>
+      <javac srcdir="${core.src.dir}"
+         destdir="${core.classes.dir}"
+         debug="on"
+         deprecation="on">
+      </javac>
+
+      <mkdir dir="${examples.classes.dir}"/>
+      <javac srcdir="${examples.src.dir}"
+         destdir="${examples.classes.dir}"
+         debug="on"
+         deprecation="on"
+         classpath="${core.classes.dir}">
+      </javac>
+
+   </target>
+
+   <target name="jar" depends="compile">
+      <mkdir dir="${dist.lib.dir}"/>
+
+      <jar jarfile="../../dist/foxtrot.jar"
+         manifest="${etc.dir}/MANIFEST.MF">
+         <fileset dir="${core.classes.dir}">
+            <patternset refid="core.classes"/>
+         </fileset>
+      </jar>
+
+      <jar jarfile="${examples.jar.file}"
+         manifest="${etc.dir}/MANIFEST.MF">
+         <fileset dir="${examples.classes.dir}">
+            <patternset refid="examples.classes"/>
+         </fileset>
+      </jar>
+
+      <jar jarfile="${src.jar.file}"
+         manifest="${etc.dir}/MANIFEST.MF">
+         <fileset dir="${core.src.dir}">
+            <patternset refid="src.files"/>
+         </fileset>
+         <fileset dir="${examples.src.dir}">
+            <patternset refid="src.files"/>
+         </fileset>
+      </jar>
+   </target>
+
+   <target name="javadocs">
+      <mkdir dir="${dist.docs.api.dir}"/>
+      <javadoc destdir="${dist.docs.api.dir}"
+         packagenames="foxtrot.*"
+         author="true"
+         version="true"
+         use="true"
+         windowtitle="Foxtrot API">
+         <sourcepath>
+            <pathelement path="${core.src.dir}"/>
+            <pathelement path="${examples.src.dir}"/>
+         </sourcepath>
+      </javadoc>
+   </target>
+
+   <target name="main" depends="jar">
+
+   </target>
+
+   <!--
+      Creates a release building jars and docs an creating zip and tar.gz
+      release file. The filenames are built using the version label
+   -->
+   <target name="release" depends="clean, jar, javadocs">
+      <mkdir dir="${dist.release.dir}"/>
+
+      <!-- Miscellaneous files -->
+      <copy todir="${dist.release.dir}">
+         <fileset dir="${etc.dir}"
+            includes="README,LICENSE"/>
+      </copy>
+
+      <!-- The core, examples and source foxtrot jars -->
+      <copy file="${core.jar.file}" todir="${dist.release.dir}/lib"/>
+      <copy file="${examples.jar.file}" todir="${dist.release.dir}/lib"/>
+      <copy file="${src.jar.file}" todir="${dist.release.dir}/lib"/>
+
+      <!-- The documentation -->
+      <copy todir="${dist.release.dir}/docs">
+         <fileset dir="${dist.docs.dir}"/>
+      </copy>
+
+      <tar tarfile="${dist.dir}/${name}-${version}.tar" basedir="${dist.dir}" includes="${name}-${version}/**"/>
+      <gzip zipfile="${dist.dir}/${name}-${version}.tar.gz" src="${dist.dir}/${name}-${version}.tar"/>
+      <delete file="${dist.dir}/${name}-${version}.tar"/>
+
+      <zip destfile="${dist.dir}/${name}-${version}.zip" basedir="${dist.dir}" includes="${name}-${version}/**"/>
+
+      <delete dir="${dist.release.dir}" quiet="true"/>
+   </target>
+
+   <target name="clean">
+      <delete dir="${classes.dir}" quiet="true"/>
+      <delete dir="${dist.dir}" quiet="true"/>
+   </target>
+
+</project>

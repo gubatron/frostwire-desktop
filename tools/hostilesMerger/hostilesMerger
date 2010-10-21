@@ -1,0 +1,2 @@
+#!/bin/bash
+java -Xmx512Mb -classpath bin:../../components/io/dist/lw-io.jar:../../components/collection/dist/lw-collection.jar:../../dist/FrostWire.jar com.frostwire.tools.HostilesMerger $1 $2 $3

@@ -1,0 +1,13 @@
+#/bin/sh
+rm *.class
+rm device/*.class
+rm service/*.class
+rm ssdp/*.class
+rm util/*.class
+rm http/*.class
+javac -O *.java
+javac -O device/*.java
+javac -O service/*.java
+javac -O ssdp/*.java
+javac -O util/*.java
+javac -O http/*.java

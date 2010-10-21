@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="mrjadapter" default="main" basedir=".">
+
+	<property name="jars" value="../dist"/>
+
+    <path id="default.classpath">
+		<fileset dir="${jars}" includes="*.jar" excludes="MRJAdapter.jar"/>
+	</path>
+
+	<target name="main">
+		<mkdir dir="bin" />
+
+		<!-- build -->
+		<javac srcdir="." destdir="bin" fork="true" memoryinitialsize="256m" memorymaximumsize="256m" target="1.5">
+			<classpath refid="default.classpath"/>
+		</javac>
+
+		<!-- jar -->
+		<jar jarfile="../dist/MRJAdapter.jar">
+			<fileset dir="bin" />
+		</jar>
+
+	</target>
+
+	<target name="clean">
+
+		<delete dir="bin" />
+
+	</target>
+
+</project>

@@ -1,0 +1,71 @@
+<project name="UPNP" default="jar" basedir=".">
+
+<!-- set global properties for this basedir -->
+<property name="basedir" value="."/>
+
+
+<!-- constants -->
+<property name="DEBUG" value="yes"/>  
+<property name="OPTIMIZE" value="no"/>  
+<property name="DEPRECATION" value="yes"/>
+<property name="NOWARN" value="yes"/>
+
+<!-- default classpath for javac.  it is set as the user's CLASSPATH
+     environment with the jar files necessary for compilation appended. -->
+<path id="default.classpath" >
+</path>
+
+
+<!-- Initialization stuff -->
+<target name="init">
+	<tstamp/>
+</target>
+
+<!-- Core -->
+<target name="build" depends="init">
+	<javac debug="${DEBUG}" 
+           optimize="${OPTIMIZE}" 
+           deprecation="${DEPRECATION}"
+		   srcdir="${basedir}" 
+           destdir="${basedir}"
+           nowarn="${NOWARN}"
+           source="1.5"
+           target="1.5"
+    >
+    <classpath refid="default.classpath" />
+    </javac>
+</target>
+
+	
+
+<!-- CLEAN -->
+<target name="clean">
+	<delete>
+		<fileset dir="${basedir}/org" includes="**/*.class"/>
+	</delete>
+</target>
+
+<!-- Creates a jar file from core code -->
+<target name="jar" depends="clean, build">
+	<delete file="clink.jar"/>
+	<jar destfile="../dist/clink.jar" 
+		 basedir="." 
+		 excludes="**/*.java **/*.xml **/*.txt **/*.sh **/*.bat 
+		 		   **/*.html **/*.jar">
+	</jar>
+</target>
+
+</project>
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,84 @@
+<project name="VorbisSPI" default="jar" basedir=".">
+
+  <!-- Initializations -->
+  <target name="init">    
+    <echo message="--------------------------------------------------------------"/>  
+    <echo message="------------        BUILDING VORBIS SPI PACKAGE     ----------"/>
+    <echo message=""/>
+    <property name="year" value="1999-2005"/>
+    <property name="jars" value="${basedir}"/>
+    <property name="sources" value="${basedir}/src"/>
+    <property name="sourcestest" value="${basedir}/srctest"/>
+    <property name="classes" value="${basedir}/classes"/>
+    <property name="api" value="${basedir}/docs"/>    
+    <property name="lib" value="${basedir}/lib"/>
+    <property name="oggjar" value="${lib}/jogg-0.0.7.jar"/>
+    <property name="jorbisjar" value="${lib}/jorbis-0.0.15.jar"/>
+    <property name="tritonusjar" value="${lib}/tritonus_share.jar"/>            
+  </target>
+
+  <property name="jars" value="../dist"/>
+
+  <path id="default.classpath">
+    <fileset dir="${jars}" includes="*.jar" excludes="vorbisspi.jar"/>
+  </path>
+
+  <!-- Build -->
+  <target name="build" depends="init">
+    <echo message="------ Compiling application"/>
+    <javac srcdir="${sources}" destdir="${classes}" includes="**">
+	<classpath refid="default.classpath"/>      
+    </javac>
+    <copy todir="${classes}/META-INF" overwrite="true">
+      <fileset dir="${sources}/META-INF"/>
+    </copy>
+  </target>
+  
+  <!-- Archive -->
+  <target name="jar" depends="build">
+    <echo message="------ Building JAR file"/>
+    <jar jarfile="../dist/vorbisspi.jar" basedir="${classes}">
+      <manifest>
+        <attribute name="Created-By" value="JavaZOOM" />
+      </manifest>    
+    </jar>
+  </target>
+
+  <!-- JavaDoc -->
+  <target name="all" depends="jar">
+     <echo message="------ Running JavaDoc"/>
+     <javadoc packagenames="javazoom.*"
+              sourcepath="${sources}"
+              destdir="${api}"
+              bottom="JavaZOOM ${year}">
+      <classpath>
+        <pathelement location="${classes}"/>
+        <pathelement location="${oggjar}"/>
+        <pathelement location="${jorbisjar}"/>
+        <pathelement location="${tritonusjar}"/>
+        <pathelement location="${sources}"/>
+      </classpath>
+     </javadoc>
+  </target>
+
+  <!-- Usage -->
+  <target name="usage">
+     <echo message="*** VorbisSPI ANT build script ***"/>
+     <echo message="Usage : "/>
+     <echo message="   ant [target]"/>
+     <echo message=""/>     
+     <echo message="   target : "/>     
+     <echo message="            build : Build Application"/>     
+     <echo message="            dist  : Build Application + Archive (JAR)"/>     
+     <echo message="            all   : Build Application + Archive + JavaDoc"/>       
+  </target>
+	
+	<target name="clean">
+
+		<delete dir="classes" />
+		
+		<mkdir dir="classes"/>
+
+	</target>
+       
+</project>

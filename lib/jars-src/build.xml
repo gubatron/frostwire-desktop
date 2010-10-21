@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="jars-src" default="main" basedir=".">
+
+    <target name="check-compile">
+        <available file="../jars/COMPILE" property="compile.present"/>
+    </target>
+
+	<target name="main" depends="check-compile" if="compile.present">
+
+		<delete includeemptydirs="true">
+				<fileset dir="dist" includes="*"/>
+		</delete>
+		
+		<ant dir="aopalliance"/>
+		<ant dir="clink"/>
+		<ant dir="commons-codec-1.3"/>
+		<ant dir="commons-logging-1.0.4-src"/>
+		<ant dir="httpcomponents-client-4.0"/>
+		<ant dir="httpcomponents-core-4.0.1"/>
+		<ant dir="jmdns"/>
+		<ant dir="daap"/>
+		<ant dir="forms-1.1.0"/>
+		<ant dir="Foxtrot_2_0/foxtrot" antfile="build/build.xml"/>
+		<ant dir="gettext-ant-tasks-0.9.3"/>
+		<ant dir="gettext-commons-0_9_5"/>
+		<ant dir="google-gson-1.4"/>
+		<ant dir="asm-3.1"/>
+		<ant dir="cglib-2.2"/>
+		<ant dir="guice-1.0"/>
+		<ant dir="icu4j"/>
+		<ant dir="jaudiotagger"/>
+		<ant dir="jcip-annotations"/>
+		<ant dir="jcraft"/>
+		<ant dir="netx-0.5" />
+		<ant dir="jdic-20060613"/>
+		<ant dir="jflac-1.2"/>
+		<ant dir="JLayer1.0"/>
+		<ant dir="junit3.8.1"/>
+		<ant dir="jython2.2.1"/>
+		<ant dir="log4j"/>
+		<ant dir="looks"/>
+		<ant dir="tritonus"/>
+		<ant dir="mp3spi"/>
+		<ant dir="VorbisSPI1.0.2"/>
+		<ant dir="onion-common"/>
+		<ant dir="onion-fec"/>
+		<ant dir="AppleJavaExtensions"/>
+		<ant dir="mrjadapter"/>
+		
+		<antcall target="copyjars"/>
+        
+        <delete file="../jars/COMPILE"/>
+
+	</target>
+
+	<target name="clean">
+
+		<delete includeemptydirs="true">
+    			<fileset dir="dist" includes="*"/>
+  		</delete>
+
+		<ant dir="aopalliance" target="clean"/>
+		<ant dir="clink" target="clean"/>
+		<ant dir="commons-codec-1.3" target="clean"/>
+		<ant dir="commons-logging-1.0.4-src" target="clean"/>
+		<ant dir="httpcomponents-client-4.0" target="clean"/>
+		<ant dir="httpcomponents-core-4.0.1" target="clean"/>
+		<ant dir="jmdns" target="clean"/>
+		<ant dir="daap" target="clean"/>
+		<ant dir="forms-1.1.0" target="clean"/>
+		<ant dir="Foxtrot_2_0/foxtrot" antfile="build/build.xml" target="clean" />
+		<ant dir="gettext-ant-tasks-0.9.3" target="clean"/>
+		<ant dir="gettext-commons-0_9_5" target="clean"/>
+		<ant dir="google-gson-1.4" target="clean"/>
+		<ant dir="cglib-2.2" target="clean"/>
+		<ant dir="guice-1.0" target="clean"/>
+		<ant dir="asm-3.1" target="clean"/>
+		<ant dir="icu4j" target="clean"/>
+		<ant dir="jaudiotagger" target="clean"/>
+		<ant dir="jcip-annotations" target="clean"/>
+		<ant dir="jcraft" target="clean"/>
+		<ant dir="netx-0.5" target="clean"/>
+		<ant dir="jdic-20060613" target="clean"/>
+		<ant dir="jflac-1.2" target="clean"/>
+		<ant dir="JLayer1.0" target="clean"/>
+		<ant dir="junit3.8.1" target="clean"/>
+		<ant dir="jython2.2.1" target="clean"/>
+		<ant dir="log4j" target="clean"/>
+		<ant dir="looks" target="clean"/>
+		<ant dir="tritonus" target="clean"/>
+		<ant dir="mp3spi" target="clean"/>
+		<ant dir="VorbisSPI1.0.2" target="clean"/>
+		<ant dir="onion-common" target="clean"/>
+		<ant dir="onion-fec" target="clean"/>
+		<ant dir="AppleJavaExtensions" target="clean"/>
+		<ant dir="mrjadapter" target="clean"/>
+		
+		<mkdir dir="dist"/>
+        
+       <!--  
+	     This should probably be done on purpose when we're making a source distribution.
+	     <touch file="../jars/COMPILE"/> 
+       -->
+
+	</target>
+	
+	<target name="copyjars">
+		
+		<copy file="dist/gettext-ant-tasks.jar" todir="../jars/ant"/>
+		<copy file="dist/aopalliance.jar" todir="../jars/"/>
+		<copy file="dist/clink.jar" todir="../jars/"/>
+		<copy file="dist/commons-codec-1.3.jar" todir="../jars/"/>
+		<copy file="dist/commons-logging.jar" todir="../jars/"/>
+		<copy file="dist/daap.jar" todir="../jars/"/>
+		<copy file="dist/forms.jar" todir="../jars/"/>
+		<copy file="dist/foxtrot.jar" todir="../jars/"/>
+		<copy file="dist/gettext-commons.jar" todir="../jars/"/>
+		<copy file="dist/gson-1.4.jar" todir="../jars/"/>
+		<copy file="dist/guice-1.0.jar" todir="../jars/"/>
+		<copy file="dist/httpclient-4.0.jar" todir="../jars/"/>
+		<copy file="dist/httpcore-4.0.1.jar" todir="../jars/"/>
+		<copy file="dist/httpcore-nio-4.0.1.jar" todir="../jars/"/>
+		<copy file="dist/icu4j.jar" todir="../jars/"/>
+		<copy file="dist/jaudiotagger.jar" todir="../jars/"/>
+		<copy file="dist/jcip-annotations.jar" todir="../jars/"/>
+		<copy file="dist/jcraft.jar" todir="../jars/"/>
+		<copy file="dist/netx.jar" todir="../jars/"/>
+		<copy file="dist/jdic.jar" todir="../jars/"/>
+		<copy file="dist/jflac.jar" todir="../jars/"/>
+		<copy file="dist/jl.jar" todir="../jars/"/>
+		<copy file="dist/jmdns.jar" todir="../jars/"/>
+		<copy file="dist/junit.jar" todir="../jars/"/>
+		<copy file="dist/jython.jar" todir="../jars/"/>
+		<copy file="dist/log4j.jar" todir="../jars/"/>
+		<copy file="dist/looks.jar" todir="../jars/"/>
+		<copy file="dist/mp3spi.jar" todir="../jars/"/>
+		<copy file="dist/onion-common.jar" todir="../jars/"/>
+		<copy file="dist/onion-fec.jar" todir="../jars/"/>
+		<copy file="dist/tritonus.jar" todir="../jars/"/>
+		<copy file="dist/vorbisspi.jar" todir="../jars/"/>
+		<copy file="dist/AppleJavaExtensions.jar" todir="../jars/stubs"/>
+		<copy file="dist/MRJAdapter.jar" todir="../jars/osx"/>
+		<copy file="dist/libjdic.so" todir="../native/linux"/>
+		<copy file="dist/libtray.so" todir="../native/linux"/>
+		<copy file="dist/cglib-nodep-2.2.jar" todir="../jars/"/>		
+		<copy file="dist/asm-3.1.jar" todir="../jars/"/>
+
+	</target>
+	
+</project>
