@@ -39,7 +39,9 @@ import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.GuiFrostWireUtils;
+import com.frostwire.gnutella.gui.chat.AndroidMediator;
 import com.frostwire.gnutella.gui.chat.ChatMediator;
+import com.frostwire.gnutella.gui.tabs.AndroidTab;
 import com.frostwire.gnutella.gui.tabs.ChatTab;
 import com.limegroup.gnutella.gui.connection.ConnectionMediator;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
@@ -120,6 +122,9 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      */
     private final LibraryMediator LIBRARY_MEDIATOR =
         LibraryMediator.instance();
+    
+    private final AndroidMediator ANDROID_MEDIATOR =
+    	AndroidMediator.instance();
 
     private final ChatMediator CHAT_MEDIATOR =
         ChatMediator.instance();
@@ -323,15 +328,17 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         //    if (!ApplicationSettings.CONSOLE_VIEW_ENABLED.getValue())
         //        this.setTabVisible(GUIMediator.Tabs.CONSOLE, false);
         //}
-        if(!ApplicationSettings.LOGGING_VIEW_ENABLED.getValue())
-            this.setTabVisible(GUIMediator.Tabs.LOGGING, false);
+        //if(!ApplicationSettings.LOGGING_VIEW_ENABLED.getValue())
+        //    this.setTabVisible(GUIMediator.Tabs.LOGGING, false);
         
 
         if( SWTBrowserSettings.USE_SWT_BROWSER.getValue()&& GUIMediator.isBrowserCapable()) {
             if(!ApplicationSettings.SWT_BROWSER_VIEW_ENABLED.getValue())
                 this.setTabVisible(GUIMediator.Tabs.FROSTCLICK, false);
         }
-	if (!ApplicationSettings.CHAT_VIEW_ENABLED.getValue())
+        if (!ApplicationSettings.ANDROID_VIEW_ENABLED.getValue())
+            this.setTabVisible(GUIMediator.Tabs.ANDROID, false);
+        if (!ApplicationSettings.CHAT_VIEW_ENABLED.getValue())
             this.setTabVisible(GUIMediator.Tabs.CHAT, false);
 
 
@@ -432,8 +439,9 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         TABS.put(GUIMediator.Tabs.MONITOR, new MonitorUploadTab(MONITOR_VIEW, UPLOAD_MEDIATOR));
         TABS.put(GUIMediator.Tabs.CONNECTION, new ConnectionsTab(CONNECTION_MEDIATOR));
         TABS.put(GUIMediator.Tabs.LIBRARY, new LibraryPlayListTab(LIBRARY_MEDIATOR));
+        TABS.put(GUIMediator.Tabs.ANDROID, new AndroidTab(ANDROID_MEDIATOR));
 	    TABS.put(GUIMediator.Tabs.CHAT, new ChatTab(CHAT_MEDIATOR));
-        TABS.put(GUIMediator.Tabs.LOGGING, new LoggingTab(LOGGING_MEDIATOR));
+        //TABS.put(GUIMediator.Tabs.LOGGING, new LoggingTab(LOGGING_MEDIATOR));
         //if (SWTBrowserSettings.USE_SWT_BROWSER.getValue() && GUIMediator.isBrowserCapable() ) {
         // Sorry, no limewire store in frostwire.
         // TABS.put(GUIMediator.Tabs.LWS, new SWTBrowserSearchTab());
