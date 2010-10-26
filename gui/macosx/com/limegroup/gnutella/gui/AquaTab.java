@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
+import java.lang.reflect.Method;
 
 import javax.swing.UIManager;
 
@@ -77,9 +78,21 @@ public class AquaTab extends AquaTabbedPaneUI {
                 boolean rightCap = (selTab == tabPane.getTabCount()-1);
                 boolean focused = false;
                 
+                try {
+					Method drawTabmethod = AquaImageFactory.class.getMethod("drawTab", SunGraphics2D.class, Integer.class, Integer.class, Integer.class, Integer.class,
+							Integer.class, Boolean.class, Boolean.class, Boolean.class, Boolean.class,
+							Boolean.class, Boolean.class, Boolean.class, Boolean.class);
+					
+					drawTabmethod.invoke(null, (SunGraphics2D)g2, 0, 0, w, h, 
+	                       HONIZONTAL, selected, hidden, false, active, leftCap, rightCap, focused, false);
+				} catch (Exception e) {
+					e.printStackTrace();
+					System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+				}
+                
                 // Draw the Tab
-                AquaImageFactory.drawTab((SunGraphics2D)g2, 0, 0, w, h, 
-                        HONIZONTAL, selected, hidden, false, active, leftCap, rightCap, focused, false);
+                //AquaImageFactory.drawTab((SunGraphics2D)g2, 0, 0, w, h, 
+                //        HONIZONTAL, selected, hidden, false, active, leftCap, rightCap, focused, false);
             }
             g2.dispose();
             img.flush();
