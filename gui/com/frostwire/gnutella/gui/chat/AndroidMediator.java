@@ -6,6 +6,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.frostwire.android.Finger;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
@@ -48,8 +49,12 @@ public class AndroidMediator implements ThemeObserver {
 		return MAIN_PANEL;
 	}
 
-	public static void handleNewDevice(String json) {
-		INSTANCE.showMessage(json);
+	public static void handleNewDevice(Finger finger) {
+		INSTANCE.showMessage("NEW DEVICE: " + finger.uuid + ":" + finger.androidDevice + ":" + finger.androidManufacturer);
+	}
+	
+	public static void handleDeviceAlive(Finger finger) {
+		INSTANCE.showMessage("DEVICE ALIVE: " + finger.uuid + ":" + finger.androidDevice + ":" + finger.androidManufacturer);
 	}
 
 	private void showMessage(String json) {

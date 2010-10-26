@@ -96,10 +96,10 @@ public class DefaultHttpExecutor implements HttpExecutor {
         try {
 			response = client.execute(method);
 		} catch (IOException failed) {
-			failed.printStackTrace();
+			//failed.printStackTrace();
 			return !listener.requestFailed(method, null, failed);
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
             IOException ioe = new IOException();
             ioe.initCause(e);
             return !listener.requestFailed(method, null, ioe);

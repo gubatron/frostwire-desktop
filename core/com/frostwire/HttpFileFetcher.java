@@ -41,7 +41,7 @@ public class HttpFileFetcher implements HttpClientListener {
 	}
 	
 	public byte[] fetch() {
-		final HttpGet get = new HttpGet(_uri);
+		HttpGet get = new HttpGet(_uri);
 		get.addHeader("User-Agent", "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506");
 		get.addHeader(HTTPHeaderName.CONNECTION.httpStringValue(),"close");
         
