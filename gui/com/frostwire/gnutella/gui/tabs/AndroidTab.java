@@ -6,7 +6,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import com.frostwire.android.PeerDiscoveryClerk;
-import com.frostwire.gnutella.gui.chat.AndroidMediator;
+import com.frostwire.gnutella.gui.android.AndroidMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.tabs.AbstractTab;
 import com.limegroup.gnutella.settings.ApplicationSettings;

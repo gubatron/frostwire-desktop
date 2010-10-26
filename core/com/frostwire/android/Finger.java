@@ -3,6 +3,7 @@ package com.frostwire.android;
 public class Finger {
 	
 	public String uuid;
+	public String nickname;
 	public String frostwireVersion;
 	public int totalShared;
 	public String androidVersion;

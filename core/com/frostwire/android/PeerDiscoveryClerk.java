@@ -15,7 +15,8 @@ import javax.swing.SwingUtilities;
 import org.limewire.io.NetworkUtils;
 
 import com.frostwire.HttpFileFetcher;
-import com.frostwire.gnutella.gui.chat.AndroidMediator;
+import com.frostwire.gnutella.gui.android.AndroidMediator;
+import com.frostwire.gnutella.gui.android.Device;
 import com.frostwire.json.JsonEngine;
 import com.limegroup.gnutella.settings.ConnectionSettings;
 
@@ -24,27 +25,27 @@ public class PeerDiscoveryClerk {
 	public static final int PORT_MULTICAST = 0xffa0; // 65440
 	public static final int PORT_BROADCAST = 0xffb0; // 65456
 	
-	private HashMap<String, Finger> DEVICE_CACHE;
+	private HashMap<String, Device> DEVICE_CACHE;
 	
 	private JsonEngine _jsonEngine;
 	
 	public PeerDiscoveryClerk() {
-		DEVICE_CACHE = new HashMap<String, Finger>();
+		DEVICE_CACHE = new HashMap<String, Device>();
 		_jsonEngine = new JsonEngine();
 	}
 	
-	public void handleNewDevice(final Finger finger) {
+	public void handleNewDevice(final Device device) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-			    AndroidMediator.handleNewDevice(finger);
+			    AndroidMediator.handleNewDevice(device);
 			}
 		});
 	}
 	
-	private void handleDeviceAlive(final Finger finger) {
+	private void handleDeviceAlive(final Device device) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-			    AndroidMediator.handleDeviceAlive(finger);
+			    AndroidMediator.handleDeviceAlive(device);
 			}
 		});
 	}
@@ -163,12 +164,12 @@ public class PeerDiscoveryClerk {
 		
 		InetAddress address = packet.getAddress();
 		
-		handlePossibleNewDevice(address, p, multicast);
+		handlePossibleNewDevice(address, p + 1, multicast);
 	}
 
 	private void handlePossibleNewDevice(InetAddress address, int p, boolean multicast) {
 		
-		String key = address.getHostAddress() + ":" + (p + 1);
+		String key = address.getHostAddress() + ":" + p;
 		
 		if (DEVICE_CACHE.containsKey(key)) {
 			handleDeviceAlive(DEVICE_CACHE.get(key));
@@ -195,8 +196,9 @@ public class PeerDiscoveryClerk {
 			if (DEVICE_CACHE.containsKey(key)) { // best effort without lock
 				handleDeviceAlive(DEVICE_CACHE.get(key));
 			} else {
-				DEVICE_CACHE.put(key, finger);
-				handleNewDevice(finger);
+				Device device = new Device(address, p, finger);
+				DEVICE_CACHE.put(key, device);
+				handleNewDevice(device);
 			}
 			
 		} catch (Exception e) {

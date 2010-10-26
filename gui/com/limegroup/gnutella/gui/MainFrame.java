@@ -39,7 +39,7 @@ import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.GuiFrostWireUtils;
-import com.frostwire.gnutella.gui.chat.AndroidMediator;
+import com.frostwire.gnutella.gui.android.AndroidMediator;
 import com.frostwire.gnutella.gui.chat.ChatMediator;
 import com.frostwire.gnutella.gui.tabs.AndroidTab;
 import com.frostwire.gnutella.gui.tabs.ChatTab;

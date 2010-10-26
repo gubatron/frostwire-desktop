@@ -1,12 +1,11 @@
-package com.frostwire.gnutella.gui.chat;
+package com.frostwire.gnutella.gui.android;
 
-import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import com.frostwire.android.Finger;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
@@ -22,7 +21,13 @@ public class AndroidMediator implements ThemeObserver {
 	/**
 	 * The primary panel that contains all of the library elements.
 	 */
-	private static final JPanel MAIN_PANEL = new JPanel(new FlowLayout());
+	private JPanel MAIN_PANEL;
+	
+	private DeviceBar DEVICE_BAR;
+	
+	private DesktopExplorer DESKTOP_EXPLORER;
+	
+	private DeviceExplorer DEVICE_EXPLORER;
     
 	/**
 	 * @return the <tt>AndroidMediator</tt> instance
@@ -32,7 +37,29 @@ public class AndroidMediator implements ThemeObserver {
 	private AndroidMediator() {
     	GUIMediator.setSplashScreenString(I18n.tr("Loading phone and tablets..."));
     	ThemeMediator.addThemeObserver(this);
+    	
+    	setupUIElements();
     }
+
+	private void setupUIElements() {
+		
+		MAIN_PANEL = new JPanel(new GridBagLayout());
+		DESKTOP_EXPLORER = new DesktopExplorer();
+		DEVICE_EXPLORER = new DeviceExplorer();
+		DEVICE_BAR = new DeviceBar(DEVICE_EXPLORER);
+		
+		GridBagConstraints c;
+		
+		c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		
+		MAIN_PANEL.add(DEVICE_BAR, c);
+		
+		c = new GridBagConstraints();
+		c.fill = GridBagConstraints.VERTICAL;
+		
+		MAIN_PANEL.add(DEVICE_EXPLORER, c);
+	}
 
 	@Override
 	public void updateTheme() {
@@ -49,15 +76,11 @@ public class AndroidMediator implements ThemeObserver {
 		return MAIN_PANEL;
 	}
 
-	public static void handleNewDevice(Finger finger) {
-		INSTANCE.showMessage("NEW DEVICE: " + finger.uuid + ":" + finger.androidDevice + ":" + finger.androidManufacturer);
+	public static void handleNewDevice(Device device) {
+		INSTANCE.DEVICE_BAR.handleNewDevice(device);
 	}
 	
-	public static void handleDeviceAlive(Finger finger) {
-		INSTANCE.showMessage("DEVICE ALIVE: " + finger.uuid + ":" + finger.androidDevice + ":" + finger.androidManufacturer);
-	}
-
-	private void showMessage(String json) {
-		MAIN_PANEL.add(new JLabel(json));
+	public static void handleDeviceAlive(Device device) {
+		INSTANCE.DEVICE_BAR.handleDeviceAlive(device);
 	}
 }
