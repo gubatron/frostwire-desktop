@@ -1,6 +1,8 @@
 package com.frostwire.gnutella.gui.tabs;
 
 import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -18,13 +20,20 @@ public final class AndroidTab extends AbstractTab {
 	 * elements of this tab.
 	 */
 	private static JComponent COMPONENT;
-	private static JPanel PANEL = new JPanel(new BorderLayout());
+	private static JPanel PANEL = new JPanel(new GridBagLayout());
 
 	public AndroidTab(AndroidMediator androidMediator) {
 		super(I18n.tr("Phone and Tablets"), I18n.tr("Show the phone and tablets"), "chat_tab");
 	
 		COMPONENT = androidMediator.getComponent();
-		PANEL.add(COMPONENT);
+		GridBagConstraints c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 0;
+        c.fill = GridBagConstraints.BOTH;
+        c.anchor = GridBagConstraints.LINE_START;
+        c.weightx = 1;
+        c.weighty = 1;
+		PANEL.add(COMPONENT,c);
 		
 		PeerDiscoveryClerk clerk = new PeerDiscoveryClerk();
 		clerk.start();

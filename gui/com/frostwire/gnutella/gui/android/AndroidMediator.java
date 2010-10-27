@@ -52,12 +52,23 @@ public class AndroidMediator implements ThemeObserver {
 		
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
+		c.anchor = GridBagConstraints.CENTER;
+		c.gridwidth = GridBagConstraints.REMAINDER;
 		
 		MAIN_PANEL.add(DEVICE_BAR, c);
 		
 		c = new GridBagConstraints();
-		c.fill = GridBagConstraints.VERTICAL;
+		c.fill = GridBagConstraints.BOTH;
+		c.anchor = GridBagConstraints.WEST;
+		c.gridwidth = GridBagConstraints.RELATIVE;
 		
+		MAIN_PANEL.add(DESKTOP_EXPLORER, c);
+		
+		c = new GridBagConstraints();
+		c.fill = GridBagConstraints.BOTH;
+		c.anchor = GridBagConstraints.WEST;
+		c.gridwidth = GridBagConstraints.REMAINDER;
+        
 		MAIN_PANEL.add(DEVICE_EXPLORER, c);
 	}
 

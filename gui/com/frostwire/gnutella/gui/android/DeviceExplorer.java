@@ -40,7 +40,6 @@ public class DeviceExplorer extends JPanel {
 		_list.setVisibleRowCount(-1);
 		
 		JScrollPane scrollPane = new JScrollPane(_list);
-		scrollPane.setPreferredSize(new Dimension(300, 600));
 		
 		add(scrollPane);
 	}
@@ -70,7 +69,7 @@ public class DeviceExplorer extends JPanel {
 			FileDescriptorList list = _jsonEngine.toObject(json, FileDescriptorList.class);
 			
 			for (FileDescriptor fileDescriptor : list.files) {
-				_model.addElement(fileDescriptor.title);
+				_model.addElement(fileDescriptor);
 			}
 			
 		} catch (Exception e) {
