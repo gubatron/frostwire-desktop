@@ -12,9 +12,6 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.limewire.io.IOUtils;
 
-import com.frostwire.guice.FrostWireCoreModule;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 import com.limegroup.gnutella.SaveLocationException;
 import com.limegroup.gnutella.http.HTTPHeaderName;
 import com.limegroup.gnutella.http.HttpClientListener;
@@ -36,8 +33,7 @@ public class HttpFileFetcher implements HttpClientListener {
 
 	public HttpFileFetcher(URI uri) {
 		this._uri = uri;
-		Injector injector = Guice.createInjector(new FrostWireCoreModule());
-		_httpExecutor = injector.getInstance(HttpExecutor.class);
+		_httpExecutor = CoreFrostWireUtils.getHTTPExecutor();
 	}
 	
 	public byte[] fetch() {

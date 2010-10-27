@@ -31,11 +31,17 @@ import com.aelitis.azureus.core.AzureusCoreComponent;
 import com.aelitis.azureus.core.AzureusCoreException;
 import com.aelitis.azureus.core.AzureusCoreLifecycleListener;
 import com.frostwire.bittorrent.AzureusStarter;
+import com.frostwire.guice.FrostWireCoreModule;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import com.limegroup.bittorrent.BTMetaInfo;
+import com.limegroup.gnutella.http.HttpExecutor;
 import com.limegroup.gnutella.library.SharingUtils;
 import com.limegroup.gnutella.util.LimeWireUtils;
 
 public class CoreFrostWireUtils {
+	
+	private static Injector INJECTOR;
 	
 	public final static File getPreferencesFolder() {
 	    return LimeWireUtils.getRequestedUserSettingsLocation();
@@ -467,6 +473,16 @@ public class CoreFrostWireUtils {
 				printDiskManagerPieces(dm);
 			}});
 	}
-
 	
+	public static Injector getInjector() {
+		if (INJECTOR == null) {
+			INJECTOR = Guice.createInjector(new FrostWireCoreModule());
+		}
+		
+		return INJECTOR;
+	}
+
+	public static HttpExecutor getHTTPExecutor() {
+		return getInjector().getInstance(HttpExecutor.class);
+	}
 }
