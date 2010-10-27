@@ -14,7 +14,7 @@ import javax.swing.SwingUtilities;
 
 import org.limewire.io.NetworkUtils;
 
-import com.frostwire.HttpFileFetcher;
+import com.frostwire.HttpFetcher;
 import com.frostwire.json.JsonEngine;
 import com.limegroup.gnutella.settings.ConnectionSettings;
 
@@ -178,7 +178,7 @@ public class PeerDiscoveryClerk {
 			
 			URI uri = new URI("http://" + key + "/finger");
 			
-			HttpFileFetcher fetcher = new HttpFileFetcher(uri);
+			HttpFetcher fetcher = new HttpFetcher(uri);
 			
 			byte[] jsonBytes = fetcher.fetch();
 			

@@ -160,7 +160,7 @@ public class CoreFrostWireUtils {
 	 * use the byte[] directly. */
 	public final static byte[] downloadHttpFile(String url) {
 	    try {
-			return new HttpFileFetcher(new URI(url)).fetch();
+			return new HttpFetcher(new URI(url)).fetch();
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 			return null;

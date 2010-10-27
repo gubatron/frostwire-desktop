@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-import com.frostwire.HttpFileFetcher;
+import com.frostwire.HttpFetcher;
 import com.frostwire.json.JsonEngine;
 
 public class DeviceExplorer extends JPanel {
@@ -49,14 +49,14 @@ public class DeviceExplorer extends JPanel {
 		_device = device;
 		_model.clear();
 		
-		fillModel(0);
+		fillModel(1);
 	}
 	
 	private void fillModel(int type) {
 		try {
 			URI uri = new URI("http://" + _device.getAddress().getHostAddress() + ":" + _device.getPort() + "/browse?type=" + type);
 			
-			HttpFileFetcher fetcher = new HttpFileFetcher(uri);
+			HttpFetcher fetcher = new HttpFetcher(uri);
 			
 			byte[] jsonBytes = fetcher.fetch();
 			

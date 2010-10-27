@@ -6,7 +6,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
 
-import com.frostwire.HttpFileFetcher;
+import com.frostwire.HttpFetcher;
 import com.frostwire.bittorrent.websearch.clearbits.ClearBitsResponse;
 import com.frostwire.bittorrent.websearch.isohunt.ISOHuntResponse;
 import com.frostwire.bittorrent.websearch.mininova.MininovaVuzeResponse;
@@ -33,9 +33,9 @@ public class WebTorrentSearch {
 					e.printStackTrace();
 				}
 				
-		HttpFileFetcher fetcher = null;
+		HttpFetcher fetcher = null;
 		try {
-			fetcher = new HttpFileFetcher(new URI("http://www.clearbits.net/home/search/index.json?query="+iha));
+			fetcher = new HttpFetcher(new URI("http://www.clearbits.net/home/search/index.json?query="+iha));
 		} catch (URISyntaxException e) {
 			
 		}
@@ -75,9 +75,9 @@ public class WebTorrentSearch {
 			e.printStackTrace();
 		}
 		
-		HttpFileFetcher fetcher = null;
+		HttpFetcher fetcher = null;
 		try {
-			fetcher = new HttpFileFetcher(new URI("http://isohunt.com/js/json.php?ihq="+iha+"&start=1&rows=100&sort=seeds"));
+			fetcher = new HttpFetcher(new URI("http://isohunt.com/js/json.php?ihq="+iha+"&start=1&rows=100&sort=seeds"));
 		} catch (URISyntaxException e) {
 		}
 		byte[] jsonBytes = fetcher.fetch();
@@ -104,9 +104,9 @@ public class WebTorrentSearch {
 			e.printStackTrace();
 		}
 		
-		HttpFileFetcher fetcher = null;
+		HttpFetcher fetcher = null;
 		try {
-			fetcher = new HttpFileFetcher(new URI("http://www.mininova.org/vuze.php?search="+iha));
+			fetcher = new HttpFetcher(new URI("http://www.mininova.org/vuze.php?search="+iha));
 		} catch (URISyntaxException e) {
 		}
 		byte[] jsonBytes = fetcher.fetch();
