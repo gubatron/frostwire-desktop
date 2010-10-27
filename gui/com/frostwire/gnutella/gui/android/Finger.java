@@ -1,4 +1,4 @@
-package com.frostwire.android;
+package com.frostwire.gnutella.gui.android;
 
 public class Finger {
 	

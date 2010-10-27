@@ -2,7 +2,6 @@ package com.frostwire.gnutella.gui.android;
 
 import java.net.InetAddress;
 
-import com.frostwire.android.Finger;
 
 public class Device {
 

@@ -1,4 +1,4 @@
-package com.frostwire.android;
+package com.frostwire.gnutella.gui.android;
 
 import java.io.InterruptedIOException;
 import java.net.DatagramPacket;
@@ -15,8 +15,6 @@ import javax.swing.SwingUtilities;
 import org.limewire.io.NetworkUtils;
 
 import com.frostwire.HttpFileFetcher;
-import com.frostwire.gnutella.gui.android.AndroidMediator;
-import com.frostwire.gnutella.gui.android.Device;
 import com.frostwire.json.JsonEngine;
 import com.limegroup.gnutella.settings.ConnectionSettings;
 
