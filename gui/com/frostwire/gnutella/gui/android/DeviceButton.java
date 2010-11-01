@@ -28,7 +28,11 @@ public class DeviceButton extends JButton {
 			}
 		});
 	}
-
+	
+	public Device getDevice() {
+		return _device;
+	}
+	
 	protected void mouseClicked(MouseEvent e) {
 		_deviceExplorer.setDevice(_device);
 	}
