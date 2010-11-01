@@ -1,10 +1,14 @@
 package com.frostwire.gnutella.gui.android;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -92,5 +96,34 @@ public class AndroidMediator implements ThemeObserver {
 	
 	public static void handleDeviceAlive(Device device) {
 		INSTANCE.DEVICE_BAR.handleDeviceAlive(device);
+	}
+
+	public static void handleDeviceStale(Device device) {
+		INSTANCE.DEVICE_BAR.handleDeviceStale(device);
+	}
+	
+	public static void startAndroidClerk() {
+		PeerDiscoveryClerk clerk = new PeerDiscoveryClerk();
+		clerk.start();
+	}
+	
+	public static void main(String[] args) {
+		AndroidMediator.startAndroidClerk();
+		AndroidMediator mediator = AndroidMediator.instance();
+
+		JFrame frame = new JFrame();
+		Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+		frame.setSize((int) (screenSize.width * 0.6), (int) (screenSize.height * 0.6));
+		frame.getContentPane().add(mediator.getComponent());
+		frame.pack();
+
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				System.exit(1);
+			}
+		});
+
+		frame.setVisible(true);
 	}
 }

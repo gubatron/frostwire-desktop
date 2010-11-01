@@ -4,8 +4,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -18,37 +18,34 @@ public class DeviceBar extends JPanel {
 	 */
 	private static final long serialVersionUID = -6886611714952957959L;
 	
-	private static final long STALE_DEVICE_TIMEOUT = 21000;
-	
 	private DeviceExplorer _deviceExplorer;
 	
-	private Map<Device, Long> _devices;
+	
 	private Map<Device, DeviceButton> _buttons;
 	private DeviceListener _deviceListener;
 	
 	public DeviceBar(DeviceExplorer deviceExplorer) {
 		
 		_deviceExplorer = deviceExplorer;
+		_deviceExplorer.setPanelDevice(false);
 		
-		_devices = new HashMap<Device, Long>();
 		_buttons = new HashMap<Device, DeviceButton>();
 		_deviceListener = new DeviceListener() {
-			public void onActionFailed(Device button, Exception e) {
-				cleanDevice(button);
+			public void onActionFailed(Device device, Exception e) {
+				//handleDeviceStale(device);
+				JOptionPane op = new JOptionPane("Device error: " + device.getFinger().nickname, JOptionPane.OK_OPTION);
+				op.setVisible(true);
 				if (e != null) {
 					e.printStackTrace();
 				}
 			}
 		};
-		new Thread(new CleanStaleDevices()).start();
 		
 		setLayout(new FlowLayout());
 		setPreferredSize(new Dimension(300, 100));
 	}
 
 	public void handleNewDevice(Device device) {
-		
-		handleDeviceAlive(device);
 		
 		DeviceButton button = new DeviceButton(device, _deviceExplorer);
 		_buttons.put(device, button);
@@ -59,43 +56,25 @@ public class DeviceBar extends JPanel {
 	}
 
 	public void handleDeviceAlive(Device device) {
-		_devices.put(device, System.currentTimeMillis());
 	}
 	
-	private void cleanDevice(final Device device) {
-		_devices.remove(device);
+	public void handleDeviceStale(final Device device) {
 		
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				DeviceButton button = _buttons.remove(device);
-				remove(button);
-				repaint();
+				
+				if (button != null) {
+					remove(button);
+					repaint();
+					
+					if (_buttons.size() == 0) {
+						_deviceExplorer.setPanelDevice(false);
+					}
+				}
 			}
 		});
 	}
 	
-	private final class CleanStaleDevices implements Runnable {
-
-		@Override
-		public void run() {
-			
-			while (true) {
-				
-				long now = System.currentTimeMillis();
-				
-				for (Entry<Device, Long> entry :_devices.entrySet()){
-					if (entry.getValue() + STALE_DEVICE_TIMEOUT < now) {
-						cleanDevice(entry.getKey());
-					}
-				}
-				
-				for (int i = 0; i < STALE_DEVICE_TIMEOUT; i+= 1000) {
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-					}
-				}
-			}
-		}
-	}
+	
 }
