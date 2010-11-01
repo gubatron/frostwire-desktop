@@ -1,5 +1,6 @@
 package com.frostwire.gnutella.gui.android;
 
+import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
@@ -43,33 +44,31 @@ public class AndroidMediator implements ThemeObserver {
 
 	private void setupUIElements() {
 		
-		MAIN_PANEL = new JPanel(new GridBagLayout());
+		MAIN_PANEL = new JPanel(new BorderLayout());
 		DESKTOP_EXPLORER = new DesktopExplorer();
 		DEVICE_EXPLORER = new DeviceExplorer();
 		DEVICE_BAR = new DeviceBar(DEVICE_EXPLORER);
 		
+		MAIN_PANEL.add(DEVICE_BAR, BorderLayout.PAGE_START);
+		
+		JPanel center = new JPanel(new GridBagLayout());
+		
 		GridBagConstraints c;
 		
 		c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.anchor = GridBagConstraints.CENTER;
-		c.gridwidth = GridBagConstraints.REMAINDER;
-		
-		MAIN_PANEL.add(DEVICE_BAR, c);
+		c.fill = GridBagConstraints.BOTH;
+		c.weightx = 0.7;
+		c.weighty = 10;
+		center.add(DESKTOP_EXPLORER, c);
 		
 		c = new GridBagConstraints();
 		c.fill = GridBagConstraints.BOTH;
-		c.anchor = GridBagConstraints.WEST;
-		c.gridwidth = GridBagConstraints.RELATIVE;
-		
-		MAIN_PANEL.add(DESKTOP_EXPLORER, c);
-		
-		c = new GridBagConstraints();
-		c.fill = GridBagConstraints.BOTH;
-		c.anchor = GridBagConstraints.WEST;
 		c.gridwidth = GridBagConstraints.REMAINDER;
-        
-		MAIN_PANEL.add(DEVICE_EXPLORER, c);
+		c.weightx = 0.3;
+		c.weighty = 10;
+		center.add(DEVICE_EXPLORER, c);
+		
+		MAIN_PANEL.add(center, BorderLayout.CENTER);
 	}
 
 	@Override

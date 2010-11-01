@@ -28,6 +28,10 @@ public class LocalFileListModel implements ListModel {
 		contentsChanched();
 	}
 	
+	public LocalFile getRoot() {
+		return _root;
+	}
+	
 	public void setRoot(String path) {
 		setRoot(new LocalFile(new File(path), this));
 	}

@@ -1,6 +1,6 @@
 package com.frostwire.gnutella.gui.android;
 
-import java.awt.Dimension;
+import java.awt.BorderLayout;
 import java.net.URI;
 
 import javax.swing.DefaultListModel;
@@ -41,7 +41,8 @@ public class DeviceExplorer extends JPanel {
 		
 		JScrollPane scrollPane = new JScrollPane(_list);
 		
-		add(scrollPane);
+		setLayout(new BorderLayout());
+		add(scrollPane, BorderLayout.CENTER);
 	}
 
 	public void setDevice(Device device) {

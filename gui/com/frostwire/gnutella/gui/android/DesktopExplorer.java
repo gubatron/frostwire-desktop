@@ -1,6 +1,6 @@
 package com.frostwire.gnutella.gui.android;
 
-import java.awt.Dimension;
+import java.awt.BorderLayout;
 
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -30,7 +30,8 @@ public class DesktopExplorer extends JPanel {
 		
 		JScrollPane scrollPane = new JScrollPane(_list);
 		
-		add(scrollPane);
+		setLayout(new BorderLayout());
+		add(scrollPane, BorderLayout.CENTER);
 		
 		_model.setRoot("/Users/atorres");
 	}
