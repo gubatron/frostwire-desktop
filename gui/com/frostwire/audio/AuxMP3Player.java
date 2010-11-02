@@ -1,12 +1,7 @@
-/**
- * 
- */
 package com.frostwire.audio;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
-
-import org.python.modules.synchronize;
 
 import javazoom.jl.player.FactoryRegistry;
 import javazoom.jl.player.Player;

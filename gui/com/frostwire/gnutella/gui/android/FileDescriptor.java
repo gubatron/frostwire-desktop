@@ -8,6 +8,7 @@ public class FileDescriptor {
 	public String title;
 	public String album;
 	public String year;
+	public String fileName;
 	public long fileSize;
 	
 	public Device device;

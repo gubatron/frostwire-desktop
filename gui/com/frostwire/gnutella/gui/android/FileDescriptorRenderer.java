@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 
 import javax.swing.JButton;
@@ -26,6 +30,7 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 	
 	private JLabel _label;
 	private JButton _buttonPlay;
+	private JButton _buttonCopy;
 	
 	private LimeWirePlayer _player;
 	
@@ -46,6 +51,17 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 			}
 		});
 		add(_buttonPlay);
+		
+		_buttonCopy = new JButton("Copy");
+		_buttonCopy.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (_fileDescriptor != null && _fileDescriptor.device != null) {
+					copy(_fileDescriptor);
+				}
+			}
+		});
+		add(_buttonCopy);
 	}
 
 	@Override
@@ -88,5 +104,38 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 		_player.loadSong(new AudioSource(url));
 		_player.playSong();
 		
+	}
+	
+	private void copy(FileDescriptor fileDescriptor) {
+		
+		if (AndroidMediator.SELECTED_DESKTOP_FOLDER == null) {
+			return;
+		}
+		
+		URL url = fileDescriptor.device.getDownloadURL(fileDescriptor.fileType, fileDescriptor.id);
+		
+		try {
+			InputStream is = url.openStream();
+			
+			File file = new File(AndroidMediator.SELECTED_DESKTOP_FOLDER.getFile(), fileDescriptor.fileName);
+			
+			FileOutputStream fos = new FileOutputStream(file);
+			
+			byte[] buffer = new byte[4 * 1024];
+			int n = 0;
+			
+			while ((n = is.read(buffer, 0, buffer.length)) != -1) {
+				fos.write(buffer, 0, n);
+			}
+			
+			fos.close();
+			is.close();
+			
+			AndroidMediator.SELECTED_DESKTOP_FOLDER.refresh();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

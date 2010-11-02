@@ -8,7 +8,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JPanel;
 
 public class RedispatchMouseListener implements MouseListener, MouseMotionListener {
     private JList list;
@@ -28,21 +30,23 @@ public class RedispatchMouseListener implements MouseListener, MouseMotionListen
     
     public Component getComponentAt(MouseEvent e) {
         int index = list.locationToIndex(e.getPoint());
+        int x = e.getX() - list.indexToLocation(index).x;
         int y = e.getY() - list.indexToLocation(index).y;
-        FileDescriptorRenderer renderer = (FileDescriptorRenderer) list.getCellRenderer().getListCellRendererComponent(list, list.getModel().getElementAt(index), index, false, false);
-        return renderer.getComponentAt(e.getX(), y);            
+        JPanel renderer = (JPanel) list.getCellRenderer().getListCellRendererComponent(list, list.getModel().getElementAt(index), index, false, false);
+        return renderer.getComponentAt(x, y);            
     }
     
     public Rectangle getRepaintBounds(MouseEvent e) {
         int index = list.locationToIndex(e.getPoint());
         Point p = list.indexToLocation(index);
-        FileDescriptorRenderer renderer = (FileDescriptorRenderer) list.getCellRenderer().getListCellRendererComponent(list, list.getModel().getElementAt(index), index, false, false);
+        JPanel renderer = (JPanel) list.getCellRenderer().getListCellRendererComponent(list, list.getModel().getElementAt(index), index, false, false);
         return new Rectangle(p.x, p.y, renderer.getPreferredSize().width, renderer.getPreferredSize().height);
     }
     
     public void mouseClicked(MouseEvent e) {           
         Component c = getComponentAt(e);
-        if (c instanceof JButton) {
+        if (c instanceof JButton ||
+        	c instanceof JLabel) {
             c.dispatchEvent(new MouseEvent(c, e.getID(), e.getWhen(), e.getModifiers(), 0, 0, e.getClickCount(), e.isPopupTrigger(), e.getButton()));
             list.repaint(getRepaintBounds(e));
         }
