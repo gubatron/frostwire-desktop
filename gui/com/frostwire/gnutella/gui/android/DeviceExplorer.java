@@ -81,6 +81,7 @@ public class DeviceExplorer extends JPanel {
 		
 		_list = new JList(_model);
 		_list.setCellRenderer(new FileDescriptorRenderer());
+		_list.addMouseListener(new RedispatchMouseListener(_list));
 		_list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		_list.setLayoutOrientation(JList.VERTICAL);
 		_list.setVisibleRowCount(-1);
@@ -133,6 +134,7 @@ public class DeviceExplorer extends JPanel {
 				public void run() {
 					
 					for (FileDescriptor fileDescriptor : result) {
+						fileDescriptor.device = _device;
 						_model.addElement(fileDescriptor);
 					}
 				}

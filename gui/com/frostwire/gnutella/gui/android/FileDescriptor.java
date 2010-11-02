@@ -9,4 +9,6 @@ public class FileDescriptor {
 	public String album;
 	public String year;
 	public long fileSize;
+	
+	public Device device;
 }

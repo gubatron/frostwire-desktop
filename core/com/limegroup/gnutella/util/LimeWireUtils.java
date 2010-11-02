@@ -123,10 +123,10 @@ public final class LimeWireUtils {
 	 */
 	static {
 		if(!LIMEWIRE_VERSION.endsWith("Pro")) {
-			HTTP_SERVER = "Frosty/" + LIMEWIRE_VERSION;
+			HTTP_SERVER = "LimeWire/" + LIMEWIRE_VERSION;
 		}
 		else {
-			HTTP_SERVER = ("Frosty/"+LIMEWIRE_VERSION.
+			HTTP_SERVER = ("LimeWire/"+LIMEWIRE_VERSION.
                            substring(0, LIMEWIRE_VERSION.length()-4)+" (Pro)");
             _isPro = true;
 		}

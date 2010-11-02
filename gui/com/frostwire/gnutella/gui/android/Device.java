@@ -2,6 +2,7 @@ package com.frostwire.gnutella.gui.android;
 
 import java.net.InetAddress;
 import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,6 +85,43 @@ public class Device {
 		}
 		
 		return new ArrayList<FileDescriptor>();
+	}
+	
+	public URL getDownloadURL(int type, int id) {
+		try {
+			
+			return new URL("http://" + _address.getHostAddress() + ":" + _port + "/download?type=" + type + "&id=" + id);
+			
+		} catch (Exception e) {
+			actionFailed(e);
+		}
+		
+		return null;
+	}
+	
+	public byte[] download(int type, int id) {
+		
+		try {
+			
+			URI uri = new URI("http://" + _address.getHostAddress() + ":" + _port + "/download?type=" + type + "&id=" + id);
+			
+			HttpFetcher fetcher = new HttpFetcher(uri);
+			
+			byte[] data = fetcher.fetch();
+			
+			if (data == null) {
+				System.out.println("Failed to connnect to " + uri);
+				actionFailed(null);
+				return null;
+			}
+			
+			return data; 
+			
+		} catch (Exception e) {
+			actionFailed(e);
+		}
+		
+		return null;
 	}
 	
 	private void actionFailed(Exception e) {
