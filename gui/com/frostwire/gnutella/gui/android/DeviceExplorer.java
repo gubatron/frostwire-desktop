@@ -84,6 +84,8 @@ public class DeviceExplorer extends JPanel {
 		_list.addMouseListener(new RedispatchMouseListener(_list));
 		_list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		_list.setLayoutOrientation(JList.VERTICAL);
+		_list.setDragEnabled(true);
+		_list.setTransferHandler(new DeviceListTransferHandler());
 		_list.setVisibleRowCount(-1);
 		
 		JScrollPane scrollPane = new JScrollPane(_list);

@@ -61,4 +61,9 @@ public class LocalFile {
 	public void refresh() {
 		_model.refresh();
 	}
+	
+	@Override
+	public String toString() {
+		return _name != null ? _name + (_file != null ? ":" + _file.toString() : "") : _file.toString();
+	}
 }

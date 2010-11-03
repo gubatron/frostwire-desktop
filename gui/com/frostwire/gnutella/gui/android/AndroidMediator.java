@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -117,14 +115,8 @@ public class AndroidMediator implements ThemeObserver {
 		Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setSize((int) (screenSize.width * 0.6), (int) (screenSize.height * 0.6));
 		frame.getContentPane().add(mediator.getComponent());
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
-
-		frame.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				System.exit(1);
-			}
-		});
 
 		frame.setVisible(true);
 	}

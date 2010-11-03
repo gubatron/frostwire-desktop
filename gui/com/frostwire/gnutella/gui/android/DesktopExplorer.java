@@ -27,6 +27,8 @@ public class DesktopExplorer extends JPanel {
 		_list.addMouseListener(new RedispatchMouseListener(_list));
 		_list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		_list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		_list.setDragEnabled(true);
+		_list.setTransferHandler(new DesktopListTransferHandler());
 		_list.setVisibleRowCount(-1);
 		
 		JScrollPane scrollPane = new JScrollPane(_list);
@@ -34,6 +36,6 @@ public class DesktopExplorer extends JPanel {
 		setLayout(new BorderLayout());
 		add(scrollPane, BorderLayout.CENTER);
 		
-		_model.setRoot("/Users/atorres");
+		_model.setRoot("C:\\Users\\Alden\\Downloads\\FW");
 	}
 }

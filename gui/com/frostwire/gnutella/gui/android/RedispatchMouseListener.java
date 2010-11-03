@@ -93,7 +93,7 @@ public class RedispatchMouseListener implements MouseListener, MouseMotionListen
                 return;
         }
         for (MouseMotionListener l : motionListeners)
-            l.mouseMoved(e);            
+            l.mouseDragged(e);            
     }
 
     public void mouseMoved(MouseEvent e) {

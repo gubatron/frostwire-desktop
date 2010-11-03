@@ -29,6 +29,7 @@ public class LocalFileListModel implements ListModel {
 	}
 	
 	public void setRoot(LocalFile root) {
+		
 		if (_root != null) {
 			UP.setFile(_root.getFile().getParentFile());
 		}
