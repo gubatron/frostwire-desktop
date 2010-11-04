@@ -1,9 +1,10 @@
 package com.frostwire.gnutella.gui.android;
 
-import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
+import java.util.ArrayList;
 
 import javax.swing.JComponent;
+import javax.swing.JList;
 import javax.swing.TransferHandler;
 
 public class DesktopListTransferHandler extends TransferHandler {
@@ -20,6 +21,17 @@ public class DesktopListTransferHandler extends TransferHandler {
 
 	@Override
 	protected Transferable createTransferable(JComponent c) {
-		return new StringSelection("a");
+		
+		JList list = (JList) c;
+		
+		Object[] selectedValues = list.getSelectedValues();
+		
+		ArrayList<LocalFile> localFiles = new ArrayList<LocalFile>();
+		
+		for (Object value : selectedValues) {
+			localFiles.add((LocalFile) value);
+		}
+		
+		return new DesktopListTransferable(localFiles);
 	}
 }

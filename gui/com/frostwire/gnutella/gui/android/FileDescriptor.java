@@ -1,7 +1,14 @@
 package com.frostwire.gnutella.gui.android;
 
-public class FileDescriptor {
+import java.io.Serializable;
 
+public class FileDescriptor implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -594450692434313002L;
+	
 	public int id;
 	public byte fileType;
 	public String artist;

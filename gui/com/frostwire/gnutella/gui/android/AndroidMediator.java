@@ -33,6 +33,7 @@ public class AndroidMediator implements ThemeObserver {
 	private DeviceExplorer DEVICE_EXPLORER;
 	
 	public static LocalFile SELECTED_DESKTOP_FOLDER;
+	public static Device SELECTED_DEVICE;
     
 	/**
 	 * @return the <tt>AndroidMediator</tt> instance

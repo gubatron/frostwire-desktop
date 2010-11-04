@@ -1,14 +1,24 @@
 package com.frostwire.gnutella.gui.android;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LocalFile {
+public class LocalFile implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2596345342420014651L;
 	
 	private String _name;
 	private File _file;
-	private LocalFileListModel _model;
+	private transient LocalFileListModel _model;
+	
+	public LocalFile() {
+		
+	}
 	
 	public LocalFile(String name, LocalFileListModel model) {
 		_name = name;

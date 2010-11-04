@@ -1,13 +1,20 @@
 package com.frostwire.gnutella.gui.android;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.net.InetAddress;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import org.apache.http.client.utils.URLEncodedUtils;
 
 import com.frostwire.HttpFetcher;
 import com.frostwire.json.JsonEngine;
+import com.limegroup.gnutella.util.EncodingUtils;
 
 
 public class Device {
@@ -17,12 +24,14 @@ public class Device {
 	private InetAddress _address;
 	private int _port;
 	private Finger _finger;
+	private String _token;
 	private DeviceListener _listener;
 	
 	public Device(InetAddress address, int port, Finger finger) {
 		_address = address;
 		_port = port;
 		_finger = finger;
+		_token = UUID.randomUUID().toString();
 	}
 
 	public void setAddress(InetAddress address) {
@@ -103,7 +112,7 @@ public class Device {
 		
 		try {
 			
-			URI uri = new URI("http://" + _address.getHostAddress() + ":" + _port + "/download?type=" + type + "&id=" + id);
+			URI uri = getDownloadURL(type, id).toURI();
 			
 			HttpFetcher fetcher = new HttpFetcher(uri);
 			
@@ -122,6 +131,25 @@ public class Device {
 		}
 		
 		return null;
+	}
+	
+	public void upload(int type, File file) {
+		try {
+			
+			URI uri = new URI("http://" + _address.getHostAddress() + ":" + _port + "/upload?type=" + type + "&fileName=" + EncodingUtils.encode(file.getName()) + "&token=" + _token);
+			
+			HttpFetcher fetcher = new HttpFetcher(uri);
+			
+			byte[] data = fetcher.post(file);
+			
+			if (data == null) {
+				System.out.println("Failed to connnect to " + uri);
+				actionFailed(null);
+			}
+			
+		} catch (Exception e) {
+			actionFailed(e);
+		}
 	}
 	
 	private void actionFailed(Exception e) {

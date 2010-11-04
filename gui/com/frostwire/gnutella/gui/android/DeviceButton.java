@@ -34,6 +34,7 @@ public class DeviceButton extends JButton {
 	}
 	
 	protected void mouseClicked(MouseEvent e) {
+		AndroidMediator.SELECTED_DEVICE = _device;
 		_deviceExplorer.setDevice(_device);
 	}
 }
