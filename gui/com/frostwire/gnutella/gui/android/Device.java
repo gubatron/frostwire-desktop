@@ -1,16 +1,12 @@
 package com.frostwire.gnutella.gui.android;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.net.InetAddress;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import org.apache.http.client.utils.URLEncodedUtils;
 
 import com.frostwire.HttpFetcher;
 import com.frostwire.json.JsonEngine;
@@ -136,18 +132,16 @@ public class Device {
 	public void upload(int type, File file) {
 		try {
 			
-			URI uri = new URI("http://" + _address.getHostAddress() + ":" + _port + "/upload?type=" + type + "&fileName=" + EncodingUtils.encode(file.getName()) + "&token=" + _token);
+			URI uri = new URI("http://" + _address.getHostAddress() + ":" + _port + "/upload?type=" + type + "&fileName=" + EncodingUtils.encode(file.getName()) + "&token=" + EncodingUtils.encode(_token));
 			
 			HttpFetcher fetcher = new HttpFetcher(uri);
 			
-			byte[] data = fetcher.post(file);
+			fetcher.post(file);
 			
-			if (data == null) {
-				System.out.println("Failed to connnect to " + uri);
-				actionFailed(null);
-			}
-			
+			System.out.println("Uploaded file " + uri);
+						
 		} catch (Exception e) {
+			System.out.println("Error uploading file " + file);
 			actionFailed(e);
 		}
 	}

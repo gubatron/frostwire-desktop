@@ -32,6 +32,8 @@ public class AndroidMediator implements ThemeObserver {
 	
 	private DeviceExplorer DEVICE_EXPLORER;
 	
+	private ProgressPanel PROGRESS_PANEL;
+	
 	public static LocalFile SELECTED_DESKTOP_FOLDER;
 	public static Device SELECTED_DEVICE;
     
@@ -53,6 +55,7 @@ public class AndroidMediator implements ThemeObserver {
 		DESKTOP_EXPLORER = new DesktopExplorer();
 		DEVICE_EXPLORER = new DeviceExplorer();
 		DEVICE_BAR = new DeviceBar(DEVICE_EXPLORER);
+		PROGRESS_PANEL = new ProgressPanel();
 		
 		MAIN_PANEL.add(DEVICE_BAR, BorderLayout.PAGE_START);
 		
@@ -74,6 +77,8 @@ public class AndroidMediator implements ThemeObserver {
 		center.add(DEVICE_EXPLORER, c);
 		
 		MAIN_PANEL.add(center, BorderLayout.CENTER);
+		
+		MAIN_PANEL.add(PROGRESS_PANEL, BorderLayout.PAGE_END);
 	}
 
 	@Override
