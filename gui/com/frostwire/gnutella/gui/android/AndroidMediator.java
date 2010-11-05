@@ -34,6 +34,8 @@ public class AndroidMediator implements ThemeObserver {
 	
 	private ProgressPanel PROGRESS_PANEL;
 	
+	private ActivityProcessor ACTIVITY_PROCESSOR;
+	
 	public static LocalFile SELECTED_DESKTOP_FOLDER;
 	public static Device SELECTED_DEVICE;
     
@@ -45,6 +47,9 @@ public class AndroidMediator implements ThemeObserver {
 	private AndroidMediator() {
     	GUIMediator.setSplashScreenString(I18n.tr("Loading phone and tablets..."));
     	ThemeMediator.addThemeObserver(this);
+    	
+    	ACTIVITY_PROCESSOR = new ActivityProcessor();
+    	ACTIVITY_PROCESSOR.start();
     	
     	setupUIElements();
     }
@@ -106,6 +111,10 @@ public class AndroidMediator implements ThemeObserver {
 
 	public static void handleDeviceStale(Device device) {
 		INSTANCE.DEVICE_BAR.handleDeviceStale(device);
+	}
+	
+	public static void addAcitivy(Activity activity) {
+		INSTANCE.ACTIVITY_PROCESSOR.add(activity);
 	}
 	
 	public static void startAndroidClerk() {

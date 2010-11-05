@@ -27,7 +27,7 @@ import com.limegroup.gnutella.http.HTTPHeaderName;
  */
 public class HttpFetcher {
 	
-	private static final int TIMEOUT = 5000;
+	private static final int TIMEOUT = 10000;
 	private final URI _uri;
 
 	private byte[] body = null;

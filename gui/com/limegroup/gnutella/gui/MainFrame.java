@@ -56,7 +56,6 @@ import com.limegroup.gnutella.gui.search.MagnetClipboardListener;
 import com.limegroup.gnutella.gui.search.SearchMediator;
 import com.limegroup.gnutella.gui.tabs.ConnectionsTab;
 import com.limegroup.gnutella.gui.tabs.LibraryPlayListTab;
-import com.limegroup.gnutella.gui.tabs.LoggingTab;
 import com.limegroup.gnutella.gui.tabs.MonitorUploadTab;
 import com.limegroup.gnutella.gui.tabs.SearchDownloadTab;
 import com.limegroup.gnutella.gui.tabs.Tab;

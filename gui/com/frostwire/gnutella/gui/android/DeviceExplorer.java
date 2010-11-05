@@ -51,6 +51,10 @@ public class DeviceExplorer extends JPanel {
 		
 		setPanelDevice(false);
 	}
+	
+	public Device getDevice() {
+		return _device;
+	}
 
 	public void setDevice(Device device) {
 		_device = device;
@@ -119,12 +123,15 @@ public class DeviceExplorer extends JPanel {
 	
 	private void fillModelAsync(final int type) {
 		_model.clear();
-		new Thread(new Runnable() {
+		
+		Activity activity = new Activity(Activity.ACTION_BROWSE, Activity.DEVICE, Activity.DEVICE) {	
 			@Override
 			public void run() {
 				fillModel(type);
 			}
-		}).start();
+		};
+		
+		AndroidMediator.addAcitivy(activity);
 	}
 	
 	private void fillModel(int type) {
@@ -143,7 +150,7 @@ public class DeviceExplorer extends JPanel {
 			});
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("Error filling model: " + e.getMessage());
 		}
 	}
 }
