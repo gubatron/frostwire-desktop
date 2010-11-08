@@ -13,7 +13,6 @@ import com.frostwire.gnutella.gui.android.ProgressFileEntity.OnWriteListener;
 import com.frostwire.json.JsonEngine;
 import com.limegroup.gnutella.util.EncodingUtils;
 
-
 public class Device {
 	
 	private JsonEngine JSON_ENGINE = new JsonEngine();

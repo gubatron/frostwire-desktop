@@ -75,7 +75,6 @@ public abstract class Activity implements Runnable {
 	}
 	
 	public interface OnChangedListener {
-
 		public void onChanged(Activity activity);
 	}
 }

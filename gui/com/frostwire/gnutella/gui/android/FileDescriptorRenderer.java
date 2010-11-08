@@ -108,7 +108,9 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 	
 	private void copy(FileDescriptor fileDescriptor) {
 		
-		if (AndroidMediator.SELECTED_DESKTOP_FOLDER == null) {
+		LocalFile localFile = AndroidMediator.instance().getDesktopExplorer().getSelectedFolder();
+		
+		if (localFile == null) {
 			return;
 		}
 		
@@ -117,7 +119,7 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 		try {
 			InputStream is = url.openStream();
 			
-			File file = new File(AndroidMediator.SELECTED_DESKTOP_FOLDER.getFile(), fileDescriptor.fileName);
+			File file = new File(localFile.getFile(), fileDescriptor.fileName);
 			
 			FileOutputStream fos = new FileOutputStream(file);
 			
@@ -131,10 +133,9 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 			fos.close();
 			is.close();
 			
-			AndroidMediator.SELECTED_DESKTOP_FOLDER.refresh();
+			localFile.refresh();
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -10,7 +10,7 @@ public class DeviceListTransferHandler extends TransferHandler {
 	 * 
 	 */
 	private static final long serialVersionUID = -2277397432089499656L;
-
+	
 	@Override
 	public boolean canImport(TransferSupport support) {
 		
@@ -23,6 +23,11 @@ public class DeviceListTransferHandler extends TransferHandler {
 	
 	@Override
 	public boolean importData(TransferSupport support) {
+		
+		Device device = AndroidMediator.instance().getDeviceBar().getSelectedDevice();
+		if (device == null) {
+			return false;
+		}
 		
 		if (!canImport(support)) {
 	        return false;
@@ -37,7 +42,7 @@ public class DeviceListTransferHandler extends TransferHandler {
 			return false;
 		}
 		
-		AndroidMediator.addAcitivy(new CopyToDeviceActivity(AndroidMediator.SELECTED_DEVICE, localFiles));
+		AndroidMediator.addAcitivy(new CopyToDeviceActivity(device, localFiles));
 		
 		return true;
 	}

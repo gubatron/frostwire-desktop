@@ -2,6 +2,8 @@ package com.frostwire.gnutella.gui.android;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,16 +20,12 @@ public class DeviceBar extends JPanel {
 	 */
 	private static final long serialVersionUID = -6886611714952957959L;
 	
-	private DeviceExplorer _deviceExplorer;
-	
-	
 	private Map<Device, DeviceButton> _buttons;
 	private OnActionFailedListener _deviceListener;
 	
-	public DeviceBar(DeviceExplorer deviceExplorer) {
-		
-		_deviceExplorer = deviceExplorer;
-		_deviceExplorer.setPanelDevice(false);
+	private Device _selectedDevice;
+	
+	public DeviceBar() {
 		
 		_buttons = new HashMap<Device, DeviceButton>();
 		_deviceListener = new OnActionFailedListener() {
@@ -47,7 +45,13 @@ public class DeviceBar extends JPanel {
 
 	public void handleNewDevice(Device device) {
 		
-		DeviceButton button = new DeviceButton(device, _deviceExplorer);
+		final DeviceButton button = new DeviceButton(device);
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				_selectedDevice = button.getDevice();
+			}
+		});
 		_buttons.put(device, button);
 		add(button);
 		revalidate();
@@ -69,12 +73,14 @@ public class DeviceBar extends JPanel {
 					repaint();
 					
 					if (_buttons.size() == 0) {
-						_deviceExplorer.setPanelDevice(false);
+						AndroidMediator.instance().getDeviceExplorer().setPanelDevice(false);
 					}
 				}
 			}
 		});
 	}
-	
-	
+
+	public Device getSelectedDevice() {
+		return _selectedDevice;
+	}
 }

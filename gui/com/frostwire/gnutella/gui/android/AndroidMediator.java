@@ -35,9 +35,6 @@ public class AndroidMediator implements ThemeObserver {
 	private ProgressPanel PROGRESS_PANEL;
 	
 	private ActivityProcessor ACTIVITY_PROCESSOR;
-	
-	public static LocalFile SELECTED_DESKTOP_FOLDER;
-	public static Device SELECTED_DEVICE;
     
 	/**
 	 * @return the <tt>AndroidMediator</tt> instance
@@ -59,7 +56,7 @@ public class AndroidMediator implements ThemeObserver {
 		MAIN_PANEL = new JPanel(new BorderLayout());
 		DESKTOP_EXPLORER = new DesktopExplorer();
 		DEVICE_EXPLORER = new DeviceExplorer();
-		DEVICE_BAR = new DeviceBar(DEVICE_EXPLORER);
+		DEVICE_BAR = new DeviceBar();
 		PROGRESS_PANEL = new ProgressPanel();
 		
 		MAIN_PANEL.add(DEVICE_BAR, BorderLayout.PAGE_START);
@@ -116,6 +113,22 @@ public class AndroidMediator implements ThemeObserver {
 	public static void addAcitivy(Activity activity) {
 		INSTANCE.PROGRESS_PANEL.addActivity(activity);
 		INSTANCE.ACTIVITY_PROCESSOR.addActivity(activity);
+	}
+	
+	public DeviceBar getDeviceBar() {
+		return DEVICE_BAR;
+	}
+	
+	public DesktopExplorer getDesktopExplorer() {
+		return DESKTOP_EXPLORER;
+	}
+	
+	public DeviceExplorer getDeviceExplorer() {
+		return DEVICE_EXPLORER;
+	}
+	
+	public ProgressPanel getProgressPanel() {
+		return PROGRESS_PANEL;
 	}
 	
 	public static void startAndroidClerk() {

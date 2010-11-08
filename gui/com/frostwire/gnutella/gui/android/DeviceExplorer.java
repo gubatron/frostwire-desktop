@@ -50,7 +50,7 @@ public class DeviceExplorer extends JPanel {
 
 	public void setDevice(Device device) {
 		_device = device;
-		_model.clear();
+		_model.clear();		
 		setPanelDevice(true);
 	}
 	

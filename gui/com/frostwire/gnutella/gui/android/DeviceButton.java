@@ -14,27 +14,28 @@ public class DeviceButton extends JButton {
 	
 	private Device _device;
 	
-	private DeviceExplorer _deviceExplorer;
-
-	public DeviceButton(Device device, DeviceExplorer deviceExplorer) {
+	public DeviceButton(Device device) {
 		_device = device;
-		_deviceExplorer = deviceExplorer;
-		setText(device.getFinger().nickname);
 		
-		addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				DeviceButton.this.mouseClicked(e);
-			}
-		});
+		setupUI();
 	}
-	
+
 	public Device getDevice() {
 		return _device;
 	}
 	
-	protected void mouseClicked(MouseEvent e) {
-		AndroidMediator.SELECTED_DEVICE = _device;
-		_deviceExplorer.setDevice(_device);
+	protected void deviceButton_mouseClicked(MouseEvent e) {
+		AndroidMediator.instance().getDeviceExplorer().setDevice(_device);
+	}
+	
+	private void setupUI() {
+		setText(_device.getFinger().nickname);
+		
+		addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				deviceButton_mouseClicked(e);
+			}
+		});
 	}
 }

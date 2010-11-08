@@ -37,7 +37,6 @@ public class LocalFileListModel implements ListModel {
 		_files.clear();
 		_files = root.getChildren();
 		contentsChanched();
-		AndroidMediator.SELECTED_DESKTOP_FOLDER = root;
 	}
 	
 	public LocalFile getRoot() {
@@ -72,6 +71,10 @@ public class LocalFileListModel implements ListModel {
 		_listeners.remove(l);
 	}
 	
+	public void refresh() {
+		setRoot(_root);
+	}
+	
 	private void contentsChanched() {
 		
 		ListDataEvent evt = new ListDataEvent(this, ListDataEvent.CONTENTS_CHANGED, 0, getSize());
@@ -83,9 +86,5 @@ public class LocalFileListModel implements ListModel {
 				e.printStackTrace();
 			}
 		}
-	}
-
-	public void refresh() {
-		setRoot(_root);
 	}
 }

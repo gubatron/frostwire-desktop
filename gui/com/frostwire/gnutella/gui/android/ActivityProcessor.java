@@ -32,7 +32,7 @@ public class ActivityProcessor {
 						}
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					System.out.println("Error processing device integration activities: " + e.getMessage());
 				}
 			}
 		}).start();
