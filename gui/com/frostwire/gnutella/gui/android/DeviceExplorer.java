@@ -5,7 +5,6 @@ import java.awt.CardLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.swing.BoxLayout;
@@ -16,7 +15,6 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
 
 public class DeviceExplorer extends JPanel {
 
@@ -28,26 +26,20 @@ public class DeviceExplorer extends JPanel {
 	private static final String DEVICE = "device";
 	private static final String NO_DEVICE = "no-device";
 	
-	private JList _list;
-	
 	private DefaultListModel _model;
-	
-	private Device _device;
 	
 	private JPanel _panelDevice;
 	private JPanel _panelNoDevice;
-	
+	private JList _list;
 	private Map<Integer, JButton> _buttonTypes;
+	
+	private Device _device;
 
 	public DeviceExplorer() {
 		
-		setLayout(new CardLayout());
+		_model = new DefaultListModel();
 		
-		_panelDevice = setupPanelDevice();
-		_panelNoDevice = setupPanelNoDevice();
-		
-		add(_panelDevice, DEVICE);
-		add(_panelNoDevice, NO_DEVICE);
+		setupUI();
 		
 		setPanelDevice(false);
 	}
@@ -67,6 +59,16 @@ public class DeviceExplorer extends JPanel {
 		cl.show(this, device ? DEVICE : NO_DEVICE);
 	}
 	
+	private void setupUI() {
+		setLayout(new CardLayout());
+		
+		_panelDevice = setupPanelDevice();
+		_panelNoDevice = setupPanelNoDevice();
+		
+		add(_panelDevice, DEVICE);
+		add(_panelNoDevice, NO_DEVICE);
+	}
+	
 	private JPanel setupPanelDevice() {
 		JPanel panel = new JPanel(new BorderLayout());
 		
@@ -80,8 +82,6 @@ public class DeviceExplorer extends JPanel {
 		setupButtonType(header, DeviceConstants.FILE_TYPE_RINGTONES);
 		setupButtonType(header, DeviceConstants.FILE_TYPE_AUDIO);
 		panel.add(header, BorderLayout.PAGE_START);
-		
-		_model = new DefaultListModel();
 		
 		_list = new JList(_model);
 		_list.setCellRenderer(new FileDescriptorRenderer());
@@ -114,43 +114,11 @@ public class DeviceExplorer extends JPanel {
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				fillModelAsync(type);
+				_model.clear();
+				AndroidMediator.addAcitivy(new BrowseActivity(_device, _model, type));
 			}
 		});
 		_buttonTypes.put(type, button);
 		container.add(button);
-	}
-	
-	private void fillModelAsync(final int type) {
-		_model.clear();
-		
-		Activity activity = new Activity(Activity.ACTION_BROWSE, Activity.DEVICE, Activity.DEVICE) {	
-			@Override
-			public void run() {
-				fillModel(type);
-			}
-		};
-		
-		AndroidMediator.addAcitivy(activity);
-	}
-	
-	private void fillModel(int type) {
-		try {
-			
-			final List<FileDescriptor> result = _device.browse(type);
-			
-			SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
-					
-					for (FileDescriptor fileDescriptor : result) {
-						fileDescriptor.device = _device;
-						_model.addElement(fileDescriptor);
-					}
-				}
-			});
-			
-		} catch (Exception e) {
-			System.out.println("Error filling model: " + e.getMessage());
-		}
 	}
 }

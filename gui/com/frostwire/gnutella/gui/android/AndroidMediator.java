@@ -114,7 +114,8 @@ public class AndroidMediator implements ThemeObserver {
 	}
 	
 	public static void addAcitivy(Activity activity) {
-		INSTANCE.ACTIVITY_PROCESSOR.add(activity);
+		INSTANCE.PROGRESS_PANEL.addActivity(activity);
+		INSTANCE.ACTIVITY_PROCESSOR.addActivity(activity);
 	}
 	
 	public static void startAndroidClerk() {

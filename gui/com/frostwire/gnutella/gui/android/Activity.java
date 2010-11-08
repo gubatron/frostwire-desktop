@@ -2,46 +2,39 @@ package com.frostwire.gnutella.gui.android;
 
 public abstract class Activity implements Runnable {
 
-	public static final int ACTION_BROWSE = 0;
-	
-	public static final String DEVICE = "device";
-	
-	public static final String DESKTOP = "desktop";
-	
-	private int _action;
+	private ActivityListener _listener;
 	
 	private int _progress;
 	
-	private String _source;
-	
-	private String _target;
-	
 	private boolean _canceled;
+	
+	private boolean _failed;
+	
+	private Exception _failException;
 
-	public Activity(int action, String source, String target) {
-		_action = action;
-		_source = source;
-		_target = target;
+	public Activity() {
 	}
 	
-	public int getAction() {
-		return _action;
+	public ActivityListener getListener() {
+		return _listener;
 	}
 	
+	public void setActivityListener(ActivityListener listener) {
+		_listener = listener;
+	}
+		
 	public int getProgress() {
 		return _progress;
 	}
 	
-	protected void setProgress(int progress) {
+	public void setProgress(int progress) {
+		
+		// cast progress to [0..100]
+		progress = (progress < 0) ? 0 : progress;
+		progress = (progress > 100) ? 100 : progress;
+		
 		_progress = progress;
-	}
-	
-	public String getSource() {
-		return _source;
-	}
-	
-	public String getTarget() {
-		return _target;
+		fireOnChanged();
 	}
 	
 	public boolean isCanceled() {
@@ -49,6 +42,35 @@ public abstract class Activity implements Runnable {
 	}
 	
 	public void cancel() {
+		if (getProgress() == 100) {
+			return;
+		}
+		
 		_canceled = true;
+		fireOnChanged();
+	}
+	
+	public boolean isFailed() {
+		return _failed;
+	}
+	
+	public Exception getFailException() {
+		return _failException;
+	}
+	
+	public void fail(Exception e) {
+		if (getProgress() == 100) {
+			return;
+		}
+		
+		_failed = true;
+		_failException = e;
+		fireOnChanged();
+	}
+	
+	protected void fireOnChanged() {
+		if (_listener != null) {
+			_listener.onChanged(this);
+		}
 	}
 }

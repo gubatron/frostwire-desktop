@@ -38,7 +38,7 @@ public class ActivityProcessor {
 		}).start();
 	}
 
-	public void add(Activity activity) {
+	public void addActivity(Activity activity) {
 		_queue.add(activity);
 	}
 }
