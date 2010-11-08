@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.frostwire.HttpFetcher;
+import com.frostwire.gnutella.gui.android.ProgressFileEntity.OnWriteListener;
 import com.frostwire.json.JsonEngine;
 import com.limegroup.gnutella.util.EncodingUtils;
 
@@ -21,7 +22,7 @@ public class Device {
 	private int _port;
 	private Finger _finger;
 	private String _token;
-	private DeviceListener _listener;
+	private OnActionFailedListener _listener;
 	
 	public Device(InetAddress address, int port, Finger finger) {
 		_address = address;
@@ -55,11 +56,11 @@ public class Device {
 	}
 	
 
-	public DeviceListener getListener() {
+	public OnActionFailedListener getListener() {
 		return _listener;
 	}
 	
-	public void setListener(DeviceListener listener) {
+	public void setListener(OnActionFailedListener listener) {
 		_listener = listener;
 	}
 	
@@ -75,7 +76,7 @@ public class Device {
 			
 			if (jsonBytes == null) {
 				System.out.println("Failed to connnect to " + uri);
-				actionFailed(null);
+				fireOnActionFailed(null);
 				return new ArrayList<FileDescriptor>();
 			}
 			
@@ -86,7 +87,7 @@ public class Device {
 			return list.files; 
 			
 		} catch (Exception e) {
-			actionFailed(e);
+			fireOnActionFailed(e);
 		}
 		
 		return new ArrayList<FileDescriptor>();
@@ -98,7 +99,7 @@ public class Device {
 			return new URL("http://" + _address.getHostAddress() + ":" + _port + "/download?type=" + type + "&id=" + id);
 			
 		} catch (Exception e) {
-			actionFailed(e);
+			fireOnActionFailed(e);
 		}
 		
 		return null;
@@ -116,14 +117,14 @@ public class Device {
 			
 			if (data == null) {
 				System.out.println("Failed to connnect to " + uri);
-				actionFailed(null);
+				fireOnActionFailed(null);
 				return null;
 			}
 			
 			return data; 
 			
 		} catch (Exception e) {
-			actionFailed(e);
+			fireOnActionFailed(e);
 		}
 		
 		return null;
@@ -142,17 +143,38 @@ public class Device {
 						
 		} catch (Exception e) {
 			System.out.println("Error uploading file " + file);
-			actionFailed(e);
+			fireOnActionFailed(e);
 		}
 	}
 	
-	private void actionFailed(Exception e) {
+	public void upload(int type, File file, OnWriteListener listener) {
+		
+		URI uri = null;
+		
+		try {
+			
+			uri = new URI("http://" + _address.getHostAddress() + ":" + _port + "/upload?type=" + type + "&fileName=" + EncodingUtils.encode(file.getName()) + "&token=" + EncodingUtils.encode(_token));
+			
+			HttpFetcher fetcher = new HttpFetcher(uri);
+			
+			ProgressFileEntity fileEntity = new ProgressFileEntity(file);
+			fileEntity.setOnWriteListener(listener);
+			
+			fetcher.post(fileEntity);
+						
+		} catch (Exception e) {
+			System.out.println("Error uploading file: " + uri);
+			fireOnActionFailed(e);
+		}
+	}
+	
+	private void fireOnActionFailed(Exception e) {
 		if (_listener != null) {
 			_listener.onActionFailed(this, e);
 		}
 	}
 	
-	public interface DeviceListener {
+	public interface OnActionFailedListener {
 		public void onActionFailed(Device device, Exception e);
 	}
 }

@@ -10,6 +10,9 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
+
+import com.frostwire.gnutella.gui.android.Activity.OnChangedListener;
 
 public class ProgressPanel extends JPanel {
 
@@ -35,7 +38,7 @@ public class ProgressPanel extends JPanel {
 	
 	public void addActivity(Activity activity) {
 		
-		activity.setActivityListener(_activityListener);
+		activity.setOnChangedListener(_activityListener);
 		
 		_model.addActivity(activity);
 		
@@ -77,9 +80,13 @@ public class ProgressPanel extends JPanel {
 		_model.refreshIndex(index);
 	}
 	
-	private final class MyActivityListener implements ActivityListener {
-		public void onChanged(Activity activity) {
-			_model.refreshActivity(activity);
+	private final class MyActivityListener implements OnChangedListener {
+		public void onChanged(final Activity activity) {
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					_model.refreshActivity(activity);
+				}
+			});
 		}
 	}
 }

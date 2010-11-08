@@ -2,7 +2,7 @@ package com.frostwire.gnutella.gui.android;
 
 public abstract class Activity implements Runnable {
 
-	private ActivityListener _listener;
+	private OnChangedListener _listener;
 	
 	private int _progress;
 	
@@ -15,11 +15,11 @@ public abstract class Activity implements Runnable {
 	public Activity() {
 	}
 	
-	public ActivityListener getListener() {
+	public OnChangedListener getOnChangedListener() {
 		return _listener;
 	}
 	
-	public void setActivityListener(ActivityListener listener) {
+	public void setOnChangedListener(OnChangedListener listener) {
 		_listener = listener;
 	}
 		
@@ -72,5 +72,10 @@ public abstract class Activity implements Runnable {
 		if (_listener != null) {
 			_listener.onChanged(this);
 		}
+	}
+	
+	public interface OnChangedListener {
+
+		public void onChanged(Activity activity);
 	}
 }

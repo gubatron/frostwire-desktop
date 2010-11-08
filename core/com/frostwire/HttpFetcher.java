@@ -122,4 +122,38 @@ public class HttpFetcher {
 			httpClient.getConnectionManager().shutdown();
 		}
 	}
+	
+	public void post(FileEntity fileEntity) throws IOException {
+        
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        httpClient.setHttpRequestRetryHandler(new DefaultHttpRequestRetryHandler(0, false));
+
+        HttpHost httpHost = new HttpHost(_uri.getHost(), _uri.getPort());
+		HttpPost httpPost = new HttpPost(_uri);
+		httpPost.setEntity(fileEntity);
+		
+		HttpParams params = httpPost.getParams();
+		HttpConnectionParams.setConnectionTimeout(params, TIMEOUT);
+        HttpConnectionParams.setSoTimeout(params, TIMEOUT);
+        HttpConnectionParams.setStaleCheckingEnabled(params, true);
+        HttpConnectionParams.setTcpNoDelay(params, true);
+        HttpClientParams.setRedirecting(params, true);
+        HttpProtocolParams.setUseExpectContinue(params, false);
+        HttpProtocolParams.setUserAgent(params, "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506");
+        
+		try {
+			
+			HttpResponse response = httpClient.execute(httpHost, httpPost);
+			
+			if (response.getStatusLine().getStatusCode() < 200 || response.getStatusLine().getStatusCode() >= 300)
+				throw new IOException("bad status code, upload file " + response.getStatusLine().getStatusCode());
+
+		} catch (IOException e) {
+			throw e;
+		} catch (Exception e) {
+			new IOException("Http error: " + e.getMessage(), e);
+		} finally {
+			httpClient.getConnectionManager().shutdown();
+		}
+	}
 }

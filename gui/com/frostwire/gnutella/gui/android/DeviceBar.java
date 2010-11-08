@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import com.frostwire.gnutella.gui.android.Device.DeviceListener;
+import com.frostwire.gnutella.gui.android.Device.OnActionFailedListener;
 
 public class DeviceBar extends JPanel {
 
@@ -22,7 +22,7 @@ public class DeviceBar extends JPanel {
 	
 	
 	private Map<Device, DeviceButton> _buttons;
-	private DeviceListener _deviceListener;
+	private OnActionFailedListener _deviceListener;
 	
 	public DeviceBar(DeviceExplorer deviceExplorer) {
 		
@@ -30,7 +30,7 @@ public class DeviceBar extends JPanel {
 		_deviceExplorer.setPanelDevice(false);
 		
 		_buttons = new HashMap<Device, DeviceButton>();
-		_deviceListener = new DeviceListener() {
+		_deviceListener = new OnActionFailedListener() {
 			public void onActionFailed(Device device, Exception e) {
 				//handleDeviceStale(device);
 				JOptionPane op = new JOptionPane("Device error: " + device.getFinger().nickname, JOptionPane.OK_OPTION);

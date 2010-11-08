@@ -1,7 +1,6 @@
 package com.frostwire.gnutella.gui.android;
 
 import java.awt.datatransfer.Transferable;
-import java.io.File;
 
 import javax.swing.TransferHandler;
 
@@ -38,21 +37,8 @@ public class DeviceListTransferHandler extends TransferHandler {
 			return false;
 		}
 		
-		for (LocalFile localFile : localFiles) {
-			File file = localFile.getFile();
-			AndroidMediator.SELECTED_DEVICE.upload(getFileType(file), file);
-		}
+		AndroidMediator.addAcitivy(new CopyToDeviceActivity(AndroidMediator.SELECTED_DEVICE, localFiles));
 		
 		return true;
-	}
-	
-	public int getFileType(File file) {
-		String name = file.getName();
-		
-		if (name.endsWith(".mp3")) {
-			return DeviceConstants.FILE_TYPE_AUDIO;
-		} else {
-			return DeviceConstants.FILE_TYPE_DOCUMENTS;
-		}
 	}
 }
