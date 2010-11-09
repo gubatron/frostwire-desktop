@@ -1,6 +1,5 @@
 package com.frostwire.gnutella.gui.android;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -41,10 +40,6 @@ public class LocalFileListModel implements ListModel {
 	
 	public LocalFile getRoot() {
 		return _root;
-	}
-	
-	public void setRoot(String path) {
-		setRoot(new LocalFile(new File(path), this));
 	}
 	
 	public List<LocalFile> getSpecialFiles() {
