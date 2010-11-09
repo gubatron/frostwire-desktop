@@ -1,5 +1,6 @@
 package com.frostwire.gnutella.gui.android;
 
+import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JLabel;
@@ -21,14 +22,22 @@ public class ActivityRenderer extends JPanel implements ListCellRenderer {
 	private JLabel _label;
 	
 	public ActivityRenderer() {
-		_label = new JLabel();
-		add(_label);
+		setupUI();
 	}
 
 	@Override
 	public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 
 		_activity = (Activity) value;
+		
+		if (isSelected) {
+		    setBackground(Color.LIGHT_GRAY);
+		    setForeground(Color.BLACK);
+		}
+		else {
+		    setBackground(Color.WHITE);
+		    setForeground(Color.BLACK);
+		}
 		
 		if (_activity instanceof BrowseActivity) {
 			renderBrowseActivity((BrowseActivity) _activity);
@@ -42,6 +51,11 @@ public class ActivityRenderer extends JPanel implements ListCellRenderer {
 
 		return this;
 	}
+	
+	protected void setupUI() {
+		_label = new JLabel();
+		add(_label);
+	}
 
 	private void renderBrowseActivity(BrowseActivity activity) {
 		String text = "Browsing device for file type " + getFileTypeAsString(activity.getType());
@@ -50,6 +64,8 @@ public class ActivityRenderer extends JPanel implements ListCellRenderer {
 			text += " Canceled";
 		} else if (activity.isFailed()) {
 			text += " Failed (" + activity.getFailException().getMessage() + ")";
+		} else if (activity.getProgress() == 0) {
+			text += " Pending";
 		} else if (activity.getProgress() == 100) {
 			text += "  Done";
 		}
@@ -64,6 +80,8 @@ public class ActivityRenderer extends JPanel implements ListCellRenderer {
 			text += " Canceled";
 		} else if (activity.isFailed()) {
 			text += " Failed (" + activity.getFailException().getMessage() + ")";
+		} else if (activity.getProgress() == 0) {
+			text += " Pending";
 		} else if (activity.getProgress() == 100) {
 			text += "  Done";
 		} else {
@@ -80,6 +98,8 @@ public class ActivityRenderer extends JPanel implements ListCellRenderer {
 			text += " Canceled";
 		} else if (activity.isFailed()) {
 			text += " Failed (" + activity.getFailException().getMessage() + ")";
+		} else if (activity.getProgress() == 0) {
+			text += " Pending";
 		} else if (activity.getProgress() == 100) {
 			text += "  Done";
 		} else {

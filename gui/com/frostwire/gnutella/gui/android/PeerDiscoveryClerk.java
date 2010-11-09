@@ -22,58 +22,35 @@ import com.limegroup.gnutella.settings.ConnectionSettings;
 
 public class PeerDiscoveryClerk {
 	
-	private static final long STALE_DEVICE_TIMEOUT = 21000;
+	private static final String TAG = "PeerDiscoveryClerk";
 	
-	private HashMap<String, Device> DEVICE_CACHE;
-	private Map<Device, Long> DEVICE_TIMEOUTS;
+	private static final long STALE_DEVICE_TIMEOUT = 7000;
+	
+	private HashMap<String, Device> _deviceCache;
+	private Map<Device, Long> _deviceTimeouts;
 	
 	private JsonEngine _jsonEngine;
 	
 	public PeerDiscoveryClerk() {
-		DEVICE_CACHE = new HashMap<String, Device>();
-		DEVICE_TIMEOUTS = new HashMap<Device, Long>();
+		_deviceCache = new HashMap<String, Device>();
+		_deviceTimeouts = new HashMap<Device, Long>();
 		_jsonEngine = new JsonEngine();
-	}
-	
-	public void handleNewDevice(String key, final Device device) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-			    AndroidMediator.handleNewDevice(device);
-			}
-		});
-	}
-	
-	private void handleDeviceAlive(String key, final Device device) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-			    AndroidMediator.handleDeviceAlive(device);
-			}
-		});
-	}
-	
-	private void handleDeviceStale(String key, final Device device) {
-		DEVICE_CACHE.remove(key);
-		DEVICE_TIMEOUTS.remove(key);
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-			    AndroidMediator.handleDeviceStale(device);
-			}
-		});
 	}
 	
 	public void start() {
 		try {
 			startBroadcast();
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.e(TAG, "Error starting broadcast");
 		}
+		
 		try {
 			startMulticast();
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.e(TAG, "Error starting multicast");
 		}
 		
-		new Thread(new CleanStaleDevices()).start();
+		new Thread(new CleanStaleDevices(), "CleanStaleDevices").start();
 	}
 
 	private void startBroadcast() throws Exception {
@@ -86,21 +63,15 @@ public class PeerDiscoveryClerk {
 		socket.bind(new InetSocketAddress(DeviceConstants.PORT_BROADCAST));
 		
 		new Thread(new Runnable() {
-			
-			@Override
 			public void run() {
 				try {
-
 					byte[] data = new byte[65535];
 
 					while (true) {
-
 						try {
 
 							DatagramPacket packet = new DatagramPacket(data, data.length);
-
 							socket.receive(packet);
-
 							handleDatagramPacket(packet, false);
 
 						} catch (InterruptedIOException e) {
@@ -108,7 +79,7 @@ public class PeerDiscoveryClerk {
 					}
 
 				} catch (Exception e) {
-					e.printStackTrace();
+					Log.e(TAG, "Error receiving broadcast");
 				} finally {
 					socket.close();
 					socket.disconnect();
@@ -138,21 +109,15 @@ public class PeerDiscoveryClerk {
 		socket.joinGroup(groupInetAddress);
 		
 		new Thread(new Runnable() {
-			
-			@Override
 			public void run() {
 				try {
-
 					byte[] data = new byte[65535];
 
 					while (true) {
-
 						try {
 
 							DatagramPacket packet = new DatagramPacket(data, data.length);
-
 							socket.receive(packet);
-
 							handleDatagramPacket(packet, true);
 
 						} catch (InterruptedIOException e) {
@@ -160,7 +125,7 @@ public class PeerDiscoveryClerk {
 					}
 
 				} catch (Exception e) {
-					e.printStackTrace();
+					Log.e(TAG, "Error receiving broadcast");
 				} finally {
 					socket.close();
 					socket.disconnect();
@@ -185,8 +150,8 @@ public class PeerDiscoveryClerk {
 		
 		String key = address.getHostAddress() + ":" + p;
 		
-		if (DEVICE_CACHE.containsKey(key)) {
-			Device device = DEVICE_CACHE.get(key);
+		if (_deviceCache.containsKey(key)) {
+			Device device = _deviceCache.get(key);
 			if (!b) {
 				handleDeviceAlive(key, device);
 			} else {
@@ -212,9 +177,9 @@ public class PeerDiscoveryClerk {
 			
 			Finger finger = _jsonEngine.toObject(json, Finger.class);
 			
-			synchronized (DEVICE_CACHE) {			
-				if (DEVICE_CACHE.containsKey(key)) { // best effort without lock
-					Device device = DEVICE_CACHE.get(key);
+			synchronized (_deviceCache) {			
+				if (_deviceCache.containsKey(key)) {
+					Device device = _deviceCache.get(key);
 					if (!b) {
 						handleDeviceAlive(key, device);
 					} else {
@@ -223,40 +188,75 @@ public class PeerDiscoveryClerk {
 				} else {
 					if (!b) {
 						Device device = new Device(address, p, finger);
-						DEVICE_CACHE.put(key, device);
 						handleNewDevice(key, device);
 					}
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("Failed to connnect http to " + key);
+			Log.e(TAG, "Failed to connnect to " + key);
 		}
 	}
 	
+	private void handleNewDevice(String key, final Device device) {
+		_deviceCache.put(key, device);
+		_deviceTimeouts.put(device, System.currentTimeMillis());
+		
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+			    AndroidMediator.handleNewDevice(device);
+			}
+		});
+	}
+	
+	private void handleDeviceAlive(String key, final Device device) {
+		_deviceCache.put(key, device);
+		_deviceTimeouts.put(device, System.currentTimeMillis());
+		
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+			    AndroidMediator.handleDeviceAlive(device);
+			}
+		});
+	}
+	
+	private void handleDeviceStale(String key, final Device device) {
+		_deviceCache.remove(key);
+		_deviceTimeouts.remove(key);
+		
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+			    AndroidMediator.handleDeviceStale(device);
+			}
+		});
+	}
+	
 	private final class CleanStaleDevices implements Runnable {
-
-		@Override
 		public void run() {
 			
-			while (true) {
-				
+			while (true) {				
 				long now = System.currentTimeMillis();
 				
-				for (Entry<Device, Long> entry : DEVICE_TIMEOUTS.entrySet()){
-					if (entry.getValue() + STALE_DEVICE_TIMEOUT < now) {
-						
-						Device device = entry.getKey();
-						String key = device.getAddress().getHostAddress() + ":" + device.getPort();
-						
-						handleDeviceStale(key, entry.getKey());
+				synchronized (_deviceTimeouts) {
+					for (Entry<Device, Long> entry : _deviceTimeouts.entrySet()){
+						if (entry.getValue() + STALE_DEVICE_TIMEOUT < now) {
+							
+							Device device = entry.getKey();
+							String key = device.getAddress().getHostAddress() + ":" + device.getPort();
+							
+							handleDeviceStale(key, entry.getKey());
+						}
 					}
 				}
 				
-				for (int i = 0; i < STALE_DEVICE_TIMEOUT; i+= 1000) {
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-					}
+				sleep();
+			}
+		}
+		
+		private void sleep() {
+			for (int i = 0; i < STALE_DEVICE_TIMEOUT; i+= 1000) {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
 				}
 			}
 		}

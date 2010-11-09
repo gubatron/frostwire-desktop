@@ -2,6 +2,8 @@ package com.frostwire.gnutella.gui.android;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -76,15 +78,31 @@ public class ProgressPanel extends JPanel {
 	private void buttonCancel_mouseClicked(MouseEvent e) {
 		int index = _listActivities.getSelectedIndex();
 		
-		_model.getElementAt(index).cancel();
-		_model.refreshIndex(index);
+		if (index != -1) {
+			_model.getElementAt(index).cancel();
+			_model.refreshIndex(index);
+		}
+	}
+	
+	private Rectangle getRepaintBounds(int index) {
+		Point p = _listActivities.indexToLocation(index);
+		JPanel renderer = (JPanel) _listActivities.getCellRenderer().getListCellRendererComponent(_listActivities, _listActivities.getModel().getElementAt(index), index, false, false);
+		return new Rectangle(p.x, p.y, renderer.getPreferredSize().width, renderer.getPreferredSize().height);
 	}
 	
 	private final class MyActivityListener implements OnChangedListener {
 		public void onChanged(final Activity activity) {
+			
+			final int index = _model.indexOf(activity);
+			
+			if (index == -1) {
+				return;
+			}
+			
 			SwingUtilities.invokeLater(new Runnable() {
 				public void run() {
-					_model.refreshActivity(activity);
+					_listActivities.repaint(getRepaintBounds(index));
+					_model.refreshIndex(index);
 				}
 			});
 		}

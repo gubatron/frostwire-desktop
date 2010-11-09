@@ -157,7 +157,7 @@ public class Device {
 			HttpFetcher fetcher = new HttpFetcher(uri);
 			
 			ProgressFileEntity fileEntity = new ProgressFileEntity(file);
-			fileEntity.setOnWriteListener(listener);
+			fileEntity.setProgressFileEntityListener(listener);
 			
 			fetcher.post(fileEntity);
 						

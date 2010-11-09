@@ -37,11 +37,8 @@ public class ActivityListModel extends AbstractListModel {
 	public void refreshIndex(int index) {
 		fireContentsChanged(this, index, index);
 	}
-
-	public void refreshActivity(Activity activity) {
-		int index = _activities.indexOf(activity);
-		if (index != 1) {
-			fireContentsChanged(this, index, index);
-		}
+	
+	public int indexOf(Activity activity) {
+		return _activities.indexOf(activity);
 	}
 }

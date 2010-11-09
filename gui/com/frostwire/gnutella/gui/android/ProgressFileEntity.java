@@ -17,11 +17,11 @@ public class ProgressFileEntity  extends FileEntity {
 		setChunked(true);
 	}
 
-	public ProgressFileEntityListener getOnWriteListener() {
+	public ProgressFileEntityListener getProgressFileEntityListener() {
 		return _listener;
 	}
 	
-	public void setOnWriteListener(ProgressFileEntityListener listener) {
+	public void setProgressFileEntityListener(ProgressFileEntityListener listener) {
 		_listener = listener;
 	}
 	
