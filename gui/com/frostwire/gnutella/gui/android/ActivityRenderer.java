@@ -92,7 +92,7 @@ public class ActivityRenderer extends JPanel implements ListCellRenderer {
 	}
 	
 	private void renderCopyToDesktopActivity(CopyToDesktopActivity activity) {
-		String text = "Copying " + activity.getFileDescriptor().fileName;
+		String text = "Copying " + activity.getProgressMessage();
 		
 		if (activity.isCanceled()) {
 			text += " Canceled";

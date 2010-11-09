@@ -11,12 +11,16 @@ public class CopyToDesktopActivity extends Activity {
 	
 	private Device _device;
 	private LocalFile _localFile;
-	private FileDescriptor _fileDescriptor;
+	private FileDescriptor[] _fileDescriptors;
+
+	private String _progressMessage;
 	
-	public CopyToDesktopActivity(Device device, LocalFile localFile, FileDescriptor fileDescriptor) {
+	public CopyToDesktopActivity(Device device, LocalFile localFile, FileDescriptor[] fileDescriptors) {
 		_device = device;
 		_localFile = localFile;
-		_fileDescriptor = fileDescriptor;
+		_fileDescriptors = fileDescriptors;
+		
+		_progressMessage = "";
 	}
 	
 	public Device getDevice() {
@@ -27,8 +31,8 @@ public class CopyToDesktopActivity extends Activity {
 		return _localFile;
 	}
 	
-	public FileDescriptor getFileDescriptor() {
-		return _fileDescriptor;
+	public String getProgressMessage() {
+		return _progressMessage;
 	}
 
 	@Override
@@ -40,45 +44,65 @@ public class CopyToDesktopActivity extends Activity {
 		
 		setProgress(0);
 		
-		int totalBytes = (int) _fileDescriptor.fileSize;
+		int totalBytes = getTotalBytes();
 		int totalWritten = 0;
-
-		URL url = _device.getDownloadURL(_fileDescriptor.fileType, _fileDescriptor.id);
 		
-		InputStream is = null;
-		FileOutputStream fos = null;
-		
-		try {
-			is = url.openStream();
+		for (int i = 0; i < _fileDescriptors.length; i++) {
 			
-			File file = new File(_localFile.getFile(), _fileDescriptor.fileName);
-			
-			fos = new FileOutputStream(file);
-			
-			byte[] buffer = new byte[4 * 1024];
-			int n = 0;
-			
-			while ((n = is.read(buffer, 0, buffer.length)) != -1) {
-				
-				if (isCanceled()) {
-					return;
-				}
-				
-				fos.write(buffer, 0, n);
-				totalWritten += n;
-				setProgress((int) ((totalWritten * 100) / totalBytes));
+			if (isCanceled()) {
+				return;
 			}
 			
-			_localFile.refresh();
+			FileDescriptor fileDescriptor = _fileDescriptors[i];
+
+			URL url = _device.getDownloadURL(fileDescriptor.fileType, fileDescriptor.id);
 			
-			setProgress(100);
+			InputStream is = null;
+			FileOutputStream fos = null;
 			
-		} catch (IOException e) {
-			fail(e);
-		} finally {
-			close(fos);
-			close(is);
+			try {
+				is = url.openStream();
+				
+				File file = new File(_localFile.getFile(), fileDescriptor.fileName);
+				
+				_progressMessage = file.getName() + ((_fileDescriptors.length > 1) ? (" " + (i + 1) + "/" + _fileDescriptors.length) : "");
+				
+				fos = new FileOutputStream(file);
+				
+				byte[] buffer = new byte[4 * 1024];
+				int n = 0;
+				
+				while ((n = is.read(buffer, 0, buffer.length)) != -1) {
+					
+					if (isCanceled()) {
+						return;
+					}
+					
+					fos.write(buffer, 0, n);
+					totalWritten += n;
+					setProgress((int) ((totalWritten * 100) / totalBytes));
+				}
+				
+				_localFile.refresh();
+				
+				setProgress(100);
+				
+			} catch (IOException e) {
+				fail(e);
+				break;
+			} finally {
+				close(fos);
+				close(is);
+			}
 		}
+	}
+	
+	private int getTotalBytes() {
+		int total = 0;
+		for (FileDescriptor fileDescriptor : _fileDescriptors) {
+			total += fileDescriptor.fileSize;
+		}
+		return total;
 	}
 	
 	private void close(Closeable closable) {

@@ -21,6 +21,10 @@ public class CopyToDeviceActivity extends Activity {
 		_totalWritten = 0;
 		_progressMessage = "";
 	}
+	
+	public String getProgressMessage() {
+		return _progressMessage;
+	}
 
 	@Override
 	public void run() {
@@ -28,7 +32,7 @@ public class CopyToDeviceActivity extends Activity {
 			return;
 		}
 		
-		setProgress(0);	
+		setProgress(0);
 		
 		try {
 			for (int i = 0; i < _localFiles.length; i++) {
@@ -39,7 +43,9 @@ public class CopyToDeviceActivity extends Activity {
 				
 				try {			
 					File file = _localFiles[i].getFile();
-					_progressMessage = file.getName() + " " + (i + 1) + "/" + _localFiles.length;
+					
+					_progressMessage = file.getName() + ((_localFiles.length > 1) ? (" " + (i + 1) + "/" + _localFiles.length) : "");
+					
 					_device.upload(getFileType(file), file, new ProgressFileEntityListener() {
 						public void onWrite(ProgressFileEntity progressFileEntity, int written) {
 							_totalWritten += written;
@@ -50,8 +56,10 @@ public class CopyToDeviceActivity extends Activity {
 							return CopyToDeviceActivity.this.isCanceled();
 						}
 					});
+					
 				} catch (Exception e) {
 					fail(e);
+					break;
 				}
 			}
 			
@@ -60,10 +68,6 @@ public class CopyToDeviceActivity extends Activity {
 		} catch (Exception e) {
 			fail(e);
 		}
-	}
-	
-	public String getProgressMessage() {
-		return _progressMessage;
 	}
 	
 	private int getTotalBytes() {
