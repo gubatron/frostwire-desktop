@@ -41,6 +41,7 @@ public class BrowseActivity extends Activity {
 			SwingUtilities.invokeLater(new Runnable() {
 				public void run() {
 					try {
+						_model.clear(); // avoid bad effects in instant browse button switch
 						for (FileDescriptor fileDescriptor : result) {
 							_model.addElement(fileDescriptor);
 						}

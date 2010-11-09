@@ -50,6 +50,10 @@ public class CopyToDeviceActivity extends Activity {
 						public void onWrite(ProgressFileEntity progressFileEntity, int written) {
 							_totalWritten += written;
 							setProgress((int) ((_totalWritten * 100) / _totalBytes));
+							
+							if (getProgress() >= 2) {
+								_device.setTokenAuthorized(true);
+							}
 						}
 
 						public boolean isCanceled() {

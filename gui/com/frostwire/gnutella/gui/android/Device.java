@@ -15,12 +15,19 @@ import com.limegroup.gnutella.util.EncodingUtils;
 
 public class Device {
 	
-	private JsonEngine JSON_ENGINE = new JsonEngine();
+	public static int ACTION_BROWSE = 0;
+	
+	public static int ACTION_DOWNLOAD = 1;
+	
+	public static int ACTION_UPLOAD = 2;
+	
+	private static JsonEngine JSON_ENGINE = new JsonEngine();
 
 	private InetAddress _address;
 	private int _port;
 	private Finger _finger;
 	private String _token;
+	private boolean _tokenAuthorized;
 	private OnActionFailedListener _listener;
 	
 	public Device(InetAddress address, int port, Finger finger) {
@@ -53,13 +60,24 @@ public class Device {
 	public Finger getFinger() {
 		return _finger;
 	}
-	
 
-	public OnActionFailedListener getListener() {
+	public String getName() {
+		return _finger != null ? _finger.nickname : null;
+	}
+	
+	public boolean isTokenAuthorized() {
+		return _tokenAuthorized;
+	}
+	
+	public void setTokenAuthorized(boolean authorized) {
+		_tokenAuthorized = authorized;
+	}
+
+	public OnActionFailedListener getOnActionFailedListener() {
 		return _listener;
 	}
 	
-	public void setListener(OnActionFailedListener listener) {
+	public void setOnActionFailedListener(OnActionFailedListener listener) {
 		_listener = listener;
 	}
 	
@@ -74,8 +92,7 @@ public class Device {
 			byte[] jsonBytes = fetcher.fetch();
 			
 			if (jsonBytes == null) {
-				System.out.println("Failed to connnect to " + uri);
-				fireOnActionFailed(null);
+				fireOnActionFailed(ACTION_BROWSE, null);
 				return new ArrayList<FileDescriptor>();
 			}
 			
@@ -86,7 +103,7 @@ public class Device {
 			return list.files; 
 			
 		} catch (Exception e) {
-			fireOnActionFailed(e);
+			fireOnActionFailed(ACTION_BROWSE, e);
 		}
 		
 		return new ArrayList<FileDescriptor>();
@@ -98,7 +115,7 @@ public class Device {
 			return new URL("http://" + _address.getHostAddress() + ":" + _port + "/download?type=" + type + "&id=" + id);
 			
 		} catch (Exception e) {
-			fireOnActionFailed(e);
+			fireOnActionFailed(ACTION_DOWNLOAD, e);
 		}
 		
 		return null;
@@ -115,15 +132,14 @@ public class Device {
 			byte[] data = fetcher.fetch();
 			
 			if (data == null) {
-				System.out.println("Failed to connnect to " + uri);
-				fireOnActionFailed(null);
+				fireOnActionFailed(ACTION_DOWNLOAD, null);
 				return null;
 			}
 			
 			return data; 
 			
 		} catch (Exception e) {
-			fireOnActionFailed(e);
+			fireOnActionFailed(ACTION_DOWNLOAD, e);
 		}
 		
 		return null;
@@ -137,12 +153,9 @@ public class Device {
 			HttpFetcher fetcher = new HttpFetcher(uri);
 			
 			fetcher.post(file);
-			
-			System.out.println("Uploaded file " + uri);
 						
 		} catch (Exception e) {
-			System.out.println("Error uploading file " + file);
-			fireOnActionFailed(e);
+			fireOnActionFailed(ACTION_UPLOAD, e);
 		}
 	}
 	
@@ -162,18 +175,17 @@ public class Device {
 			fetcher.post(fileEntity);
 						
 		} catch (Exception e) {
-			System.out.println("Error uploading file: " + uri);
-			fireOnActionFailed(e);
+			fireOnActionFailed(ACTION_UPLOAD, e);
 		}
 	}
 	
-	private void fireOnActionFailed(Exception e) {
+	private void fireOnActionFailed(int action, Exception e) {
 		if (_listener != null) {
-			_listener.onActionFailed(this, e);
+			_listener.onActionFailed(this, action, e);
 		}
 	}
 	
 	public interface OnActionFailedListener {
-		public void onActionFailed(Device device, Exception e);
+		public void onActionFailed(Device device, int action, Exception e);
 	}
 }

@@ -7,11 +7,12 @@ import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 import com.frostwire.gnutella.gui.android.Device.OnActionFailedListener;
+import com.limegroup.gnutella.gui.I18n;
 
 public class DeviceBar extends JPanel {
 
@@ -21,66 +22,72 @@ public class DeviceBar extends JPanel {
 	private static final long serialVersionUID = -6886611714952957959L;
 	
 	private Map<Device, DeviceButton> _buttons;
-	private OnActionFailedListener _deviceListener;
+	private MyOnActionFailedListener _deviceListener;
+	private MyMouseAdapter _mouseAdapter;
 	
 	private Device _selectedDevice;
 	
 	public DeviceBar() {
+		setupUI();
 		
 		_buttons = new HashMap<Device, DeviceButton>();
-		_deviceListener = new OnActionFailedListener() {
-			public void onActionFailed(Device device, Exception e) {
-				//handleDeviceStale(device);
-				JOptionPane op = new JOptionPane("Device error: " + device.getFinger().nickname, JOptionPane.OK_OPTION);
-				op.setVisible(true);
-				if (e != null) {
-					e.printStackTrace();
-				}
-			}
-		};
-		
-		setLayout(new FlowLayout());
-		setPreferredSize(new Dimension(300, 100));
+		_deviceListener = new MyOnActionFailedListener();
+		_mouseAdapter = new MyMouseAdapter();
 	}
 
 	public void handleNewDevice(Device device) {
 		
-		final DeviceButton button = new DeviceButton(device);
-		button.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				_selectedDevice = button.getDevice();
-			}
-		});
+		DeviceButton button = new DeviceButton(device);
+		button.addMouseListener(_mouseAdapter);
 		_buttons.put(device, button);
 		add(button);
 		revalidate();
 		
-		device.setListener(_deviceListener);
+		device.setOnActionFailedListener(_deviceListener);
 	}
 
 	public void handleDeviceAlive(Device device) {
+		// nothing for now
 	}
 	
 	public void handleDeviceStale(final Device device) {
-		
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				DeviceButton button = _buttons.remove(device);
-				
-				if (button != null) {
-					remove(button);
-					repaint();
-					
-					if (_buttons.size() == 0) {
-						AndroidMediator.instance().getDeviceExplorer().setPanelDevice(false);
-					}
-				}
+		DeviceButton button = _buttons.remove(device);
+
+		if (button != null) {
+			remove(button);
+			revalidate();
+
+			if (_buttons.size() == 0) {
+				AndroidMediator.instance().getDeviceExplorer().setPanelDevice(false);
 			}
-		});
+		}
 	}
 
 	public Device getSelectedDevice() {
 		return _selectedDevice;
+	}
+	
+	protected void setupUI() {
+		setLayout(new FlowLayout());
+		setPreferredSize(new Dimension(300, 100));
+	}
+	
+	private final class MyMouseAdapter extends MouseAdapter {
+		public void mouseClicked(MouseEvent e) {
+			DeviceButton button = (DeviceButton) e.getComponent();
+			_selectedDevice = button.getDevice();
+		}
+	}
+	
+	private final class MyOnActionFailedListener implements OnActionFailedListener {
+		public void onActionFailed(Device device, int action, Exception e) {
+			JComponent dialogParent = AndroidMediator.instance().getComponent();
+			if (action == Device.ACTION_UPLOAD) {
+				JOptionPane.showMessageDialog(dialogParent, I18n.tr("You are not authorized to upload files to this device"), I18n.tr("From ") + device.getName(), JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				handleDeviceStale(device);
+				JOptionPane.showMessageDialog(dialogParent, I18n.tr("Error connecting to device: ") + (e != null ? e.getMessage() : I18n.tr("undefined")), I18n.tr("From ") + device.getName(), JOptionPane.OK_OPTION);
+			}
+		}
 	}
 }
