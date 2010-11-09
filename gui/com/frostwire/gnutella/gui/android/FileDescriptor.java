@@ -17,6 +17,4 @@ public class FileDescriptor implements Serializable {
 	public String year;
 	public String fileName;
 	public long fileSize;
-	
-	public Device device;
 }

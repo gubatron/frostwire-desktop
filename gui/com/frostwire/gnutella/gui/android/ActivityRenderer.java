@@ -34,6 +34,8 @@ public class ActivityRenderer extends JPanel implements ListCellRenderer {
 			renderBrowseActivity((BrowseActivity) _activity);
 		} else if (_activity instanceof CopyToDeviceActivity) {
 			renderCopyToDeviceActivity((CopyToDeviceActivity) _activity);
+		} else if (_activity instanceof CopyToDesktopActivity) {
+			renderCopyToDesktopActivity((CopyToDesktopActivity) _activity);
 		} else {
 			_label.setText(_activity.toString());
 		}
@@ -57,6 +59,22 @@ public class ActivityRenderer extends JPanel implements ListCellRenderer {
 	
 	private void renderCopyToDeviceActivity(CopyToDeviceActivity activity) {
 		String text = "Copying " + activity.getProgressMessage();
+		
+		if (activity.isCanceled()) {
+			text += " Canceled";
+		} else if (activity.isFailed()) {
+			text += " Failed (" + activity.getFailException().getMessage() + ")";
+		} else if (activity.getProgress() == 100) {
+			text += "  Done";
+		} else {
+			text += " " + activity.getProgress() + "%";
+		}
+		
+		_label.setText(text);
+	}
+	
+	private void renderCopyToDesktopActivity(CopyToDesktopActivity activity) {
+		String text = "Copying " + activity.getFileDescriptor().fileName;
 		
 		if (activity.isCanceled()) {
 			text += " Canceled";

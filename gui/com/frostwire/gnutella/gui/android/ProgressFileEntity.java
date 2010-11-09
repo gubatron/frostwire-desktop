@@ -10,18 +10,18 @@ import org.apache.http.entity.FileEntity;
 
 public class ProgressFileEntity  extends FileEntity {
 	
-	private OnWriteListener _listener;
+	private ProgressFileEntityListener _listener;
 
 	public ProgressFileEntity(File file) {
 		super(file, "binary/octet-stream");
 		setChunked(true);
 	}
 
-	public OnWriteListener getOnWriteListener() {
+	public ProgressFileEntityListener getOnWriteListener() {
 		return _listener;
 	}
 	
-	public void setOnWriteListener(OnWriteListener listener) {
+	public void setOnWriteListener(ProgressFileEntityListener listener) {
 		_listener = listener;
 	}
 	
@@ -38,6 +38,10 @@ public class ProgressFileEntity  extends FileEntity {
             while ((l = instream.read(tmp)) != -1) {
                 outstream.write(tmp, 0, l);
                 fireOnWrite(l);
+                
+                if (_listener != null && _listener.isCanceled()) {
+                	break;
+                }
             }
             outstream.flush();
         } finally {
@@ -51,7 +55,10 @@ public class ProgressFileEntity  extends FileEntity {
 		}
 	}
 	
-	public interface OnWriteListener {
+	public interface ProgressFileEntityListener {
+		
 		public void onWrite(ProgressFileEntity progressFileEntity, int written);
+		
+		public boolean isCanceled();
 	}
 }

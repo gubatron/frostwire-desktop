@@ -2,7 +2,7 @@ package com.frostwire.gnutella.gui.android;
 
 import java.io.File;
 
-import com.frostwire.gnutella.gui.android.ProgressFileEntity.OnWriteListener;
+import com.frostwire.gnutella.gui.android.ProgressFileEntity.ProgressFileEntityListener;
 
 public class CopyToDeviceActivity extends Activity {
 	
@@ -10,7 +10,7 @@ public class CopyToDeviceActivity extends Activity {
 	private LocalFile[] _localFiles;
 	
 	private int _totalBytes;
-	private int _totalRead;
+	private int _totalWritten;
 	private String _progressMessage;
 
 	public CopyToDeviceActivity(Device device, LocalFile[] localFiles) {
@@ -18,7 +18,7 @@ public class CopyToDeviceActivity extends Activity {
 		_localFiles = localFiles;
 		
 		_totalBytes = getTotalBytes();
-		_totalRead = 0;
+		_totalWritten = 0;
 		_progressMessage = "";
 	}
 
@@ -40,10 +40,14 @@ public class CopyToDeviceActivity extends Activity {
 				try {			
 					File file = _localFiles[i].getFile();
 					_progressMessage = file.getName() + " " + (i + 1) + "/" + _localFiles.length;
-					_device.upload(getFileType(file), file, new OnWriteListener() {
-						public void onWrite(ProgressFileEntity progressFileEntity, int read) {
-							_totalRead += read;
-							setProgress((int) ((_totalRead * 100) / _totalBytes));
+					_device.upload(getFileType(file), file, new ProgressFileEntityListener() {
+						public void onWrite(ProgressFileEntity progressFileEntity, int written) {
+							_totalWritten += written;
+							setProgress((int) ((_totalWritten * 100) / _totalBytes));
+						}
+
+						public boolean isCanceled() {
+							return CopyToDeviceActivity.this.isCanceled();
 						}
 					});
 				} catch (Exception e) {

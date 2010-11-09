@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.frostwire.HttpFetcher;
-import com.frostwire.gnutella.gui.android.ProgressFileEntity.OnWriteListener;
+import com.frostwire.gnutella.gui.android.ProgressFileEntity.ProgressFileEntityListener;
 import com.frostwire.json.JsonEngine;
 import com.limegroup.gnutella.util.EncodingUtils;
 
@@ -146,7 +146,7 @@ public class Device {
 		}
 	}
 	
-	public void upload(int type, File file, OnWriteListener listener) {
+	public void upload(int type, File file, ProgressFileEntityListener listener) {
 		
 		URI uri = null;
 		

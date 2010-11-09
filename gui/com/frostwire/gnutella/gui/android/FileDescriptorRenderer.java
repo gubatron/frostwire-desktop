@@ -4,10 +4,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 
 import javax.swing.JButton;
@@ -45,9 +41,7 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 		_buttonPlay.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (_fileDescriptor != null && _fileDescriptor.device != null) {
-					play(_fileDescriptor);
-				}
+				buttonPlay_mouseClicked(e);
 			}
 		});
 		add(_buttonPlay);
@@ -56,9 +50,7 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 		_buttonCopy.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (_fileDescriptor != null && _fileDescriptor.device != null) {
-					copy(_fileDescriptor);
-				}
+				buttonCopy_mouseClicked(e);
 			}
 		});
 		add(_buttonCopy);
@@ -98,45 +90,26 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
         return null;
     }
 	
-	private void play(FileDescriptor fileDescriptor) {
+	protected void buttonPlay_mouseClicked(MouseEvent e) {
+		Device device = AndroidMediator.instance().getDeviceBar().getSelectedDevice();
 		
-		URL url = fileDescriptor.device.getDownloadURL(fileDescriptor.fileType, fileDescriptor.id);
-		_player.loadSong(new AudioSource(url));
-		_player.playSong();
-		
+		if (device != null && _fileDescriptor != null) {
+			play(device, _fileDescriptor);
+		}
 	}
 	
-	private void copy(FileDescriptor fileDescriptor) {
+	protected void buttonCopy_mouseClicked(MouseEvent e) {
 		
+		Device device = AndroidMediator.instance().getDeviceBar().getSelectedDevice();
 		LocalFile localFile = AndroidMediator.instance().getDesktopExplorer().getSelectedFolder();
-		
-		if (localFile == null) {
-			return;
+		if (device != null && localFile != null && _fileDescriptor != null) {
+			AndroidMediator.addAcitivy(new CopyToDesktopActivity(device, localFile, _fileDescriptor));
 		}
-		
-		URL url = fileDescriptor.device.getDownloadURL(fileDescriptor.fileType, fileDescriptor.id);
-		
-		try {
-			InputStream is = url.openStream();
-			
-			File file = new File(localFile.getFile(), fileDescriptor.fileName);
-			
-			FileOutputStream fos = new FileOutputStream(file);
-			
-			byte[] buffer = new byte[4 * 1024];
-			int n = 0;
-			
-			while ((n = is.read(buffer, 0, buffer.length)) != -1) {
-				fos.write(buffer, 0, n);
-			}
-			
-			fos.close();
-			is.close();
-			
-			localFile.refresh();
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	}
+	
+	private void play(Device device, FileDescriptor fileDescriptor) {
+		URL url = device.getDownloadURL(fileDescriptor.fileType, fileDescriptor.id);
+		_player.loadSong(new AudioSource(url));
+		_player.playSong();
 	}
 }

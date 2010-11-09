@@ -42,7 +42,6 @@ public class BrowseActivity extends Activity {
 				public void run() {
 					try {
 						for (FileDescriptor fileDescriptor : result) {
-							fileDescriptor.device = _device;
 							_model.addElement(fileDescriptor);
 						}
 					} catch (Exception e) {
