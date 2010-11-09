@@ -36,7 +36,6 @@ public class DeviceBar extends JPanel {
 	}
 
 	public void handleNewDevice(Device device) {
-		
 		DeviceButton button = new DeviceButton(device);
 		button.addMouseListener(_mouseAdapter);
 		_buttons.put(device, button);
@@ -47,15 +46,21 @@ public class DeviceBar extends JPanel {
 	}
 
 	public void handleDeviceAlive(Device device) {
-		// nothing for now
+		DeviceButton button = _buttons.get(device);
+			
+		if (button != null) {
+			button.refresh();
+		}
 	}
 	
 	public void handleDeviceStale(final Device device) {
-		DeviceButton button = _buttons.remove(device);
-
-		if (button != null) {
-			remove(button);
-			revalidate();
+		synchronized (_buttons) {
+			DeviceButton button = _buttons.remove(device);
+	
+			if (button != null) {
+				remove(button);
+				revalidate();
+			}
 
 			if (_buttons.size() == 0) {
 				AndroidMediator.instance().getDeviceExplorer().setPanelDevice(false);

@@ -62,7 +62,7 @@ public class Device {
 	}
 
 	public String getName() {
-		return _finger != null ? _finger.nickname : null;
+		return _finger.nickname;
 	}
 	
 	public boolean isTokenAuthorized() {

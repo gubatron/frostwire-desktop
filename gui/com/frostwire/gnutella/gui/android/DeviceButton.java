@@ -24,12 +24,17 @@ public class DeviceButton extends JButton {
 		return _device;
 	}
 	
+	public void refresh() {
+		setText(_device.getFinger().nickname + "(" + _device.isTokenAuthorized() + ")");
+		repaint();
+	}
+	
 	protected void deviceButton_mouseClicked(MouseEvent e) {
 		AndroidMediator.instance().getDeviceExplorer().setDevice(_device);
 	}
 	
 	private void setupUI() {
-		setText(_device.getFinger().nickname);
+		setText(_device.getFinger().nickname + "(" + _device.isTokenAuthorized() + ")");
 		
 		addMouseListener(new MouseAdapter() {
 			@Override

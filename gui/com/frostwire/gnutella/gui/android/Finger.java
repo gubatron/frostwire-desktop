@@ -6,8 +6,8 @@ public class Finger {
 	public String nickname;
 	public String frostwireVersion;
 	public int totalShared;
-	public String androidVersion;
-	public String androidProduct;
-	public String androidDevice;
-	public String androidManufacturer;
+	public String deviceVersion;
+	public String deviceProduct;
+	public String deviceDevice;
+	public String deviceManufacturer;
 }
