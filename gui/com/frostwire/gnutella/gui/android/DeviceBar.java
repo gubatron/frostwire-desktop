@@ -74,13 +74,16 @@ public class DeviceBar extends JPanel {
 	
 	protected void setupUI() {
 		setLayout(new FlowLayout());
-		setPreferredSize(new Dimension(300, 100));
+		setPreferredSize(new Dimension(300, 130));
 	}
 	
 	private final class MyMouseAdapter extends MouseAdapter {
 		public void mouseClicked(MouseEvent e) {
 			DeviceButton button = (DeviceButton) e.getComponent();
-			_selectedDevice = button.getDevice();
+			if (_selectedDevice == null || !_selectedDevice.equals(button.getDevice())) {
+				_selectedDevice = button.getDevice();
+				AndroidMediator.instance().getDeviceExplorer().setDevice(_selectedDevice);
+			}
 		}
 	}
 	

@@ -179,6 +179,20 @@ public class Device {
 		}
 	}
 	
+	@Override
+	public int hashCode() {
+		return _address.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Device)) {
+			return false;
+		}
+		
+		return _address.equals(((Device) obj)._address);
+	}
+	
 	private void fireOnActionFailed(int action, Exception e) {
 		if (_listener != null) {
 			_listener.onActionFailed(this, action, e);
