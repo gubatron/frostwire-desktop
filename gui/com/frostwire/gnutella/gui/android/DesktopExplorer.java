@@ -1,9 +1,13 @@
 package com.frostwire.gnutella.gui.android;
 
-import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -14,23 +18,36 @@ import org.pushingpixels.flamingo.api.bcb.BreadcrumbPathEvent;
 import org.pushingpixels.flamingo.api.bcb.BreadcrumbPathListener;
 import org.pushingpixels.flamingo.api.bcb.core.BreadcrumbFileSelector;
 
+import com.limegroup.gnutella.gui.I18n;
+
 public class DesktopExplorer extends JPanel {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7362861227107918643L;
-	
-	private LocalFileListModel _model;
 
+	private JButton _buttonUp;
+	private JButton _buttonFavoriteApplications;
+	private JButton _buttonFavoriteDocuments;
+	private JButton _buttonFavoritePictures;
+	private JButton _buttonFavoriteVideo;
+	private JButton _buttonFavoriteRingtones;
+	private JButton _buttonFavoriteAudio;
 	private BreadcrumbFileSelector _breadcrumb;
 	private JList _list;
+	private JScrollPane _scrollPane;
+	
+	private LocalFileListModel _model;
 	
 	public DesktopExplorer() {
 		
 		_model = new LocalFileListModel();
 		
 		setupUI();
+		
+		LocalFile initFolder = new LocalFile(new File("C:\\Users\\Alden\\Downloads\\FW"), _model);
+		setSelectedFolder(initFolder);
 	}
 	
 	public LocalFile getSelectedFolder() {
@@ -42,17 +59,64 @@ public class DesktopExplorer extends JPanel {
 		_model.setRoot(selectedFolder);
 	}
 	
-	protected void breadcrumb_pathEvent(BreadcrumbPathEvent event) {
-		List<BreadcrumbItem<File>> items = _breadcrumb.getModel().getItems();
+	protected void setupUI() {
+		setLayout(new GridBagLayout());
 		
-		if (items.size() > 0) {
-			File file = items.get(items.size() - 1).getData();
-			_model.setRoot(new LocalFile(file, _model));
-		}
+		setupTop();
+		setupList();
 	}
-
-	private void setupUI() {
-		setLayout(new BorderLayout());
+	
+	private void setupTop() {
+		
+		GridBagConstraints c;
+		
+		_buttonUp = new JButton("UP");
+		_buttonUp.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				buttonUp_mouseClicked(e);
+			}
+		});
+		c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 0;
+		add(_buttonUp, c);
+		
+		_buttonFavoriteApplications = setupButtonFavorite(I18n.tr("Applications"), new File("C:\\"));
+		c = new GridBagConstraints();
+		c.gridx = 1;
+		c.gridy = 0;
+		add(_buttonFavoriteApplications, c);
+		
+		_buttonFavoriteDocuments = setupButtonFavorite(I18n.tr("Documents"), new File("C:\\"));
+		c = new GridBagConstraints();
+		c.gridx = 2;
+		c.gridy = 0;
+		add(_buttonFavoriteDocuments, c);
+		
+		_buttonFavoritePictures = setupButtonFavorite(I18n.tr("Pictures"), new File("C:\\"));
+		c = new GridBagConstraints();
+		c.gridx = 3;
+		c.gridy = 0;
+		add(_buttonFavoritePictures, c);
+		
+		_buttonFavoriteVideo = setupButtonFavorite(I18n.tr("Video"), new File("C:\\"));
+		c = new GridBagConstraints();
+		c.gridx = 4;
+		c.gridy = 0;
+		add(_buttonFavoriteVideo, c);
+		
+		_buttonFavoriteRingtones = setupButtonFavorite(I18n.tr("Ringtones"), new File("C:\\"));
+		c = new GridBagConstraints();
+		c.gridx = 5;
+		c.gridy = 0;
+		add(_buttonFavoriteRingtones, c);
+		
+		_buttonFavoriteAudio = setupButtonFavorite(I18n.tr("Audio"), new File("C:\\"));
+		c = new GridBagConstraints();
+		c.gridx = 6;
+		c.gridy = 0;
+		add(_buttonFavoriteAudio, c);
 		
 		_breadcrumb = new BreadcrumbFileSelector();
 		_breadcrumb.getModel().addPathListener(new BreadcrumbPathListener() {
@@ -60,7 +124,18 @@ public class DesktopExplorer extends JPanel {
 				breadcrumb_pathEvent(event);
 			}
 		});
-		add(_breadcrumb, BorderLayout.PAGE_START);
+		c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 1;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 1.0;
+		c.gridwidth = 8; // this put a extra column and perform a nice fill at the end in the top row
+		add(_breadcrumb, c);
+	}
+	
+	private void setupList() {
+		
+		GridBagConstraints c;
 		
 		_list = new JList(_model);
 		_list.setCellRenderer(new LocalFileRenderer());
@@ -71,11 +146,44 @@ public class DesktopExplorer extends JPanel {
 		_list.setTransferHandler(new DesktopListTransferHandler());
 		_list.setVisibleRowCount(-1);
 		
-		JScrollPane scrollPane = new JScrollPane(_list);
+		_scrollPane = new JScrollPane(_list);
+		c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 2;
+		c.fill = GridBagConstraints.BOTH;
+		c.weightx = 1.0;
+		c.weighty = 1.0;
+		c.gridwidth = 8;
 
-		add(scrollPane, BorderLayout.CENTER);
+		add(_scrollPane, c);
+	}
+
+	private JButton setupButtonFavorite(String text, File path) {
+		JButton button = new JButton(text);
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				buttonFavorite_mouseClicked(e);
+			}
+		});
+		return button;
+	}
+
+	private void buttonUp_mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
 		
-		LocalFile initFolder = new LocalFile(new File("C:\\Users\\Alden\\Downloads\\FW"), _model);
-		setSelectedFolder(initFolder);
+	}
+	
+	private void buttonFavorite_mouseClicked(MouseEvent e) {
+		
+	}
+	
+	private void breadcrumb_pathEvent(BreadcrumbPathEvent event) {
+		List<BreadcrumbItem<File>> items = _breadcrumb.getModel().getItems();
+		
+		if (items.size() > 0) {
+			File file = items.get(items.size() - 1).getData();
+			_model.setRoot(new LocalFile(file, _model));
+		}
 	}
 }
