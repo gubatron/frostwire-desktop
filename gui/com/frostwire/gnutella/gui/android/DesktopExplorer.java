@@ -18,6 +18,7 @@ import org.pushingpixels.flamingo.api.bcb.BreadcrumbPathEvent;
 import org.pushingpixels.flamingo.api.bcb.BreadcrumbPathListener;
 import org.pushingpixels.flamingo.api.bcb.core.BreadcrumbFileSelector;
 
+import com.frostwire.gnutella.gui.android.LocalFileListModel.OnRootListener;
 import com.limegroup.gnutella.gui.I18n;
 
 public class DesktopExplorer extends JPanel {
@@ -43,20 +44,27 @@ public class DesktopExplorer extends JPanel {
 	public DesktopExplorer() {
 		
 		_model = new LocalFileListModel();
+		_model.setOnRootListener(new OnRootListener() {
+			public void onRoot(LocalFileListModel localFileListModel, File path) {
+				_breadcrumb.setPath(path);
+			}
+		});
 		
 		setupUI();
 		
-		LocalFile initFolder = new LocalFile(new File("C:\\Users\\Alden\\Downloads\\FW"), _model);
-		setSelectedFolder(initFolder);
+		setSelectedFolder(new File("C:\\Users\\Alden\\Downloads\\FW"));
 	}
 	
-	public LocalFile getSelectedFolder() {
+	public File getSelectedFolder() {
 		return _model.getRoot();
 	}
 	
-	public void setSelectedFolder(LocalFile selectedFolder) {
-		_breadcrumb.setPath(selectedFolder.getFile());
-		_model.setRoot(selectedFolder);
+	public void setSelectedFolder(File path) {
+		_model.setRoot(path);
+	}
+	
+	public void refresh() {
+		_model.refresh();
 	}
 	
 	protected void setupUI() {
@@ -158,32 +166,33 @@ public class DesktopExplorer extends JPanel {
 		add(_scrollPane, c);
 	}
 
-	private JButton setupButtonFavorite(String text, File path) {
+	private JButton setupButtonFavorite(String text, final File path) {
 		JButton button = new JButton(text);
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				buttonFavorite_mouseClicked(e);
+				setSelectedFolder(path);
 			}
 		});
 		return button;
 	}
 
 	private void buttonUp_mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	private void buttonFavorite_mouseClicked(MouseEvent e) {
-		
+		File path = _model.getRoot().getParentFile();
+		if (path != null) {
+			setSelectedFolder(path);
+		}
 	}
 	
 	private void breadcrumb_pathEvent(BreadcrumbPathEvent event) {
 		List<BreadcrumbItem<File>> items = _breadcrumb.getModel().getItems();
 		
 		if (items.size() > 0) {
-			File file = items.get(items.size() - 1).getData();
-			_model.setRoot(new LocalFile(file, _model));
+			File path = items.get(items.size() - 1).getData();
+			OnRootListener listener = _model.getOnRootListener();
+			_model.setOnRootListener(null); // avoid infinite recursion
+			_model.setRoot(path);
+			_model.setOnRootListener(listener);
 		}
 	}
 }

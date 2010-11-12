@@ -10,14 +10,14 @@ import java.net.URL;
 public class CopyToDesktopActivity extends Activity {
 	
 	private Device _device;
-	private LocalFile _localFile;
+	private File _path;
 	private FileDescriptor[] _fileDescriptors;
 
 	private String _progressMessage;
 	
-	public CopyToDesktopActivity(Device device, LocalFile localFile, FileDescriptor[] fileDescriptors) {
+	public CopyToDesktopActivity(Device device, File path, FileDescriptor[] fileDescriptors) {
 		_device = device;
-		_localFile = localFile;
+		_path = path;
 		_fileDescriptors = fileDescriptors;
 		
 		_progressMessage = "";
@@ -27,8 +27,8 @@ public class CopyToDesktopActivity extends Activity {
 		return _device;
 	}
 	
-	public LocalFile getLocalFile() {
-		return _localFile;
+	public File getPath() {
+		return _path;
 	}
 	
 	public String getProgressMessage() {
@@ -63,7 +63,7 @@ public class CopyToDesktopActivity extends Activity {
 			try {
 				is = url.openStream();
 				
-				File file = new File(_localFile.getFile(), fileDescriptor.fileName);
+				File file = new File(_path, fileDescriptor.fileName);
 				
 				_progressMessage = file.getName() + ((_fileDescriptors.length > 1) ? (" " + (i + 1) + "/" + _fileDescriptors.length) : "");
 				
@@ -82,8 +82,6 @@ public class CopyToDesktopActivity extends Activity {
 					totalWritten += n;
 					setProgress((int) ((totalWritten * 100) / totalBytes));
 				}
-				
-				_localFile.refresh();
 				
 				setProgress(100);
 				
