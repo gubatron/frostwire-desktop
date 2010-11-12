@@ -2,8 +2,6 @@ package com.frostwire.gnutella.gui.android;
 
 import java.io.File;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class LocalFile implements Serializable {
 	
@@ -12,26 +10,20 @@ public class LocalFile implements Serializable {
 	 */
 	private static final long serialVersionUID = -2596345342420014651L;
 	
-	private String _name;
 	private File _file;
-	private transient LocalFileListModel _model;
+	
+	private OnOpenListener _listener;
 	
 	public LocalFile() {
 		
 	}
 	
-	public LocalFile(String name, LocalFileListModel model) {
-		_name = name;
-		_model = model;
-	}
-	
-	public LocalFile(File file, LocalFileListModel model) {
+	public LocalFile(File file) {
 		_file = file;
-		_model = model;
 	}
 
 	public String getName() {
-		return _name != null ? _name : _file.getName();
+		return _file.getName();
 	}
 	
 	public File getFile() {
@@ -42,38 +34,32 @@ public class LocalFile implements Serializable {
 		_file = file;
 	}
 	
+	public OnOpenListener getOnOpenListener() {
+		return _listener;
+	}
+	
+	public void setOnOpenListener(OnOpenListener listener) {
+		_listener = listener;
+	}
+	
 	public void open() {
-		if (_file == null || !_file.isDirectory()) {
-			return;
+		if (_file.isDirectory()) {
+			fireOnOpen();
 		}
-		
-		_model.setRoot(this);
-	}
-
-	public List<LocalFile> getChildren() {
-		if (_file == null || !_file.isDirectory()) {
-			return new ArrayList<LocalFile>();
-		}
-		
-		ArrayList<LocalFile> result = new ArrayList<LocalFile>();
-		
-		result.addAll(_model.getSpecialFiles());
-		
-		for (File f : _file.listFiles()) {
-			if (!f.isHidden()) {
-				result.add(new LocalFile(f, _model));
-			}
-		}
-
-		return result;
-	}
-
-	public void refresh() {
-		_model.refresh();
 	}
 	
 	@Override
 	public String toString() {
-		return _name != null ? _name + (_file != null ? ":" + _file.toString() : "") : _file.toString();
+		return _file.toString();
+	}
+	
+	protected void fireOnOpen() {
+		if (_listener != null) {
+			_listener.onOpen(this);
+		}
+	}
+	
+	public interface OnOpenListener {	
+		public void onOpen(LocalFile localFile);
 	}
 }

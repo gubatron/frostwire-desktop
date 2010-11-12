@@ -1,49 +1,53 @@
 package com.frostwire.gnutella.gui.android;
 
+import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import javax.swing.ListModel;
-import javax.swing.event.ListDataEvent;
-import javax.swing.event.ListDataListener;
+import javax.swing.AbstractListModel;
 
-public class LocalFileListModel implements ListModel {
+import com.frostwire.gnutella.gui.android.LocalFile.OnOpenListener;
+
+public class LocalFileListModel extends AbstractListModel {
 	
-	private Set<ListDataListener> _listeners;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3669455405023885518L;
 	
-	private LocalFile _root;
+	private File _root;
 	private List<LocalFile> _files;
-	private LocalFile UP;
-	private List<LocalFile> _specialFolders;
+	
+	private OnRootListener _listener;
+	private MyOnOpenListener _myOnOpenListener;
 	
 	public LocalFileListModel() {
-		_listeners = new HashSet<ListDataListener>();
 		_files = new ArrayList<LocalFile>();
-		
-		UP = new LocalFile("UP", this);
-		_specialFolders = Arrays.asList(UP);
+		_myOnOpenListener = new MyOnOpenListener();
 	}
 	
-	public void setRoot(LocalFile root) {
-		
-		if (_root != null) {
-			UP.setFile(_root.getFile().getParentFile());
+	public void setRoot(File path) {
+		if (!path.isDirectory()) {
+			return;
 		}
-		_root = root;
+		
+		_root = path;
 		_files.clear();
-		_files = root.getChildren();
-		contentsChanched();
+		_files.addAll(getChildren(_root));
+		fireOnRoot(path);
+		fireContentsChanged(this, 0, _files.size() - 1);
 	}
 	
-	public LocalFile getRoot() {
+	public File getRoot() {
 		return _root;
 	}
 	
-	public List<LocalFile> getSpecialFiles() {
-		return _specialFolders;
+	public OnRootListener getOnRootListener() {
+		return _listener;
+	}
+	
+	public void setOnRootListener(OnRootListener listener) {
+		_listener = listener;
 	}
 
 	@Override
@@ -55,31 +59,42 @@ public class LocalFileListModel implements ListModel {
 	public Object getElementAt(int index) {
 		return _files.get(index);
 	}
-
-	@Override
-	public void addListDataListener(ListDataListener l) {
-		_listeners.add(l);
-	}
-
-	@Override
-	public void removeListDataListener(ListDataListener l) {
-		_listeners.remove(l);
-	}
 	
 	public void refresh() {
 		setRoot(_root);
 	}
 	
-	private void contentsChanched() {
+	protected void fireOnRoot(File path) {
+		if (_listener != null) {
+			_listener.onRoot(this, path);
+		}
+	}
+	
+	private List<LocalFile> getChildren(File path) {
+		if (path == null || !path.isDirectory()) {
+			return new ArrayList<LocalFile>();
+		}
 		
-		ListDataEvent evt = new ListDataEvent(this, ListDataEvent.CONTENTS_CHANGED, 0, getSize());
+		ArrayList<LocalFile> result = new ArrayList<LocalFile>();
 		
-		for (ListDataListener l : _listeners) {
-			try {
-				l.contentsChanged(evt);
-			} catch (Exception e) {
-				e.printStackTrace();
+		for (File f : path.listFiles()) {
+			if (!f.isHidden()) {
+				LocalFile localFile = new LocalFile(f);
+				localFile.setOnOpenListener(_myOnOpenListener);
+				result.add(localFile);
 			}
+		}
+
+		return result;
+	}
+	
+	public interface OnRootListener {
+		public void onRoot(LocalFileListModel localFileListModel, File path);
+	}
+	
+	private final class MyOnOpenListener implements OnOpenListener {
+		public void onOpen(LocalFile localFile) {
+			setRoot(localFile.getFile());
 		}
 	}
 }

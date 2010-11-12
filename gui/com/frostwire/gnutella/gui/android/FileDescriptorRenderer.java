@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.net.URL;
 
 import javax.swing.JButton;
@@ -101,9 +102,9 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 	protected void buttonCopy_mouseClicked(MouseEvent e) {
 		
 		Device device = AndroidMediator.instance().getDeviceBar().getSelectedDevice();
-		LocalFile localFile = AndroidMediator.instance().getDesktopExplorer().getSelectedFolder();
-		if (device != null && localFile != null && _fileDescriptor != null) {
-			AndroidMediator.addActivity(new CopyToDesktopActivity(device, localFile, new FileDescriptor[] { _fileDescriptor }));
+		File path = AndroidMediator.instance().getDesktopExplorer().getSelectedFolder();
+		if (device != null && path != null && _fileDescriptor != null) {
+			AndroidMediator.addActivity(new CopyToDesktopActivity(device, path, new FileDescriptor[] { _fileDescriptor }));
 		}
 	}
 	
