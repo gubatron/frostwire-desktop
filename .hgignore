@@ -6,3 +6,4 @@ bin/*
 components/http/build/classes/org/limewire/http/package.html
 gui/log4.log
 log4.log
+*.orig
