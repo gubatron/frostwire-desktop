@@ -12,7 +12,7 @@ public class LocalFile implements Serializable {
 	
 	private File _file;
 	
-	private OnOpenListener _listener;
+	private transient OnOpenListener _listener;
 	
 	public LocalFile() {
 		

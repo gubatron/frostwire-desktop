@@ -20,6 +20,7 @@ import org.pushingpixels.flamingo.api.bcb.core.BreadcrumbFileSelector;
 
 import com.frostwire.gnutella.gui.android.LocalFileListModel.OnRootListener;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.settings.SharingSettings;
 
 public class DesktopExplorer extends JPanel {
 
@@ -52,7 +53,7 @@ public class DesktopExplorer extends JPanel {
 		
 		setupUI();
 		
-		setSelectedFolder(new File("C:\\Users\\Alden\\Downloads\\FW"));
+		setSelectedFolder(SharingSettings.getDeviceFilesDirectory()); // guarantee the creation of files
 	}
 	
 	public File getSelectedFolder() {
@@ -90,37 +91,37 @@ public class DesktopExplorer extends JPanel {
 		c.gridy = 0;
 		add(_buttonUp, c);
 		
-		_buttonFavoriteApplications = setupButtonFavorite(I18n.tr("Applications"), new File("C:\\"));
+		_buttonFavoriteApplications = setupButtonFavorite(I18n.tr("Applications"), SharingSettings.DEVICE_APPLICATIONS_FILES_DIR);
 		c = new GridBagConstraints();
 		c.gridx = 1;
 		c.gridy = 0;
 		add(_buttonFavoriteApplications, c);
 		
-		_buttonFavoriteDocuments = setupButtonFavorite(I18n.tr("Documents"), new File("C:\\"));
+		_buttonFavoriteDocuments = setupButtonFavorite(I18n.tr("Documents"), SharingSettings.DEVICE_DOCUMENTS_FILES_DIR);
 		c = new GridBagConstraints();
 		c.gridx = 2;
 		c.gridy = 0;
 		add(_buttonFavoriteDocuments, c);
 		
-		_buttonFavoritePictures = setupButtonFavorite(I18n.tr("Pictures"), new File("C:\\"));
+		_buttonFavoritePictures = setupButtonFavorite(I18n.tr("Pictures"), SharingSettings.DEVICE_PICTURES_FILES_DIR);
 		c = new GridBagConstraints();
 		c.gridx = 3;
 		c.gridy = 0;
 		add(_buttonFavoritePictures, c);
 		
-		_buttonFavoriteVideo = setupButtonFavorite(I18n.tr("Video"), new File("C:\\"));
+		_buttonFavoriteVideo = setupButtonFavorite(I18n.tr("Video"), SharingSettings.DEVICE_VIDEO_FILES_DIR);
 		c = new GridBagConstraints();
 		c.gridx = 4;
 		c.gridy = 0;
 		add(_buttonFavoriteVideo, c);
 		
-		_buttonFavoriteRingtones = setupButtonFavorite(I18n.tr("Ringtones"), new File("C:\\"));
+		_buttonFavoriteRingtones = setupButtonFavorite(I18n.tr("Ringtones"), SharingSettings.DEVICE_RINGTONES_FILES_DIR);
 		c = new GridBagConstraints();
 		c.gridx = 5;
 		c.gridy = 0;
 		add(_buttonFavoriteRingtones, c);
 		
-		_buttonFavoriteAudio = setupButtonFavorite(I18n.tr("Audio"), new File("C:\\"));
+		_buttonFavoriteAudio = setupButtonFavorite(I18n.tr("Audio"), SharingSettings.DEVICE_AUDIO_FILES_DIR);
 		c = new GridBagConstraints();
 		c.gridx = 6;
 		c.gridy = 0;
@@ -170,7 +171,7 @@ public class DesktopExplorer extends JPanel {
 		JButton button = new JButton(text);
 		button.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mouseReleased(MouseEvent e) {
 				setSelectedFolder(path);
 			}
 		});

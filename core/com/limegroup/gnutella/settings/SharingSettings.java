@@ -42,13 +42,34 @@ public class SharingSettings extends LimeProps {
         new File(LimeWireUtils.getLimeWireRootFolder(), "Shared");
     
     public static final File DEFAULT_SHARED_TORRENTS_DIR = 
-    	new File(LimeWireUtils.getLimeWireRootFolder(),"Torrents");
+    	new File(LimeWireUtils.getLimeWireRootFolder(), "Torrents");
     
     /**
      * Default directory for songs purchased from LWS
      */
     public static final File DEFAULT_SAVE_LWS_DIR = 
         new File(LimeWireUtils.getLimeWireRootFolder(), "Store Purchased");
+    
+    public static final File DEVICE_FILES_DIR = 
+        new File(LimeWireUtils.getLimeWireRootFolder(), "Phones and Tablets");
+    
+    public static final File DEVICE_APPLICATIONS_FILES_DIR = 
+        new File(DEVICE_FILES_DIR, "Apps");
+    
+    public static final File DEVICE_DOCUMENTS_FILES_DIR = 
+        new File(DEVICE_FILES_DIR, "Documents");
+    
+    public static final File DEVICE_PICTURES_FILES_DIR = 
+        new File(DEVICE_FILES_DIR, "Pictures");
+    
+    public static final File DEVICE_VIDEO_FILES_DIR = 
+        new File(DEVICE_FILES_DIR, "Video");
+    
+    public static final File DEVICE_RINGTONES_FILES_DIR = 
+        new File(DEVICE_FILES_DIR, "Ringtones");
+    
+    public static final File DEVICE_AUDIO_FILES_DIR = 
+        new File(DEVICE_FILES_DIR, "Music");
     
     /**
      * Whether or not we're going to add an alternate for ourselves
@@ -222,8 +243,8 @@ public class SharingSettings extends LimeProps {
                 set.add(next.getValue());
         }  
         return set;  
-    }  
-
+    }
+    
     /**
      * Sets the directory to save the purchased songs from the LWS
      *  
@@ -311,6 +332,41 @@ public class SharingSettings extends LimeProps {
         final File f = DIRECTORY_FOR_SAVING_LWS_FILES.getValue();        
         if (!f.exists()) f.mkdirs();
         return f;
+    }
+
+    /**
+     * @return directory of where to save songs purchased from LimeWire Store
+     */
+    public static final File getDeviceFilesDirectory() {
+        if (!DEVICE_FILES_DIR.exists()) {
+        	DEVICE_FILES_DIR.mkdirs();
+        }
+        
+        if (!DEVICE_APPLICATIONS_FILES_DIR.exists()) {
+        	DEVICE_APPLICATIONS_FILES_DIR.mkdirs();
+        }
+        
+        if (!DEVICE_DOCUMENTS_FILES_DIR.exists()) {
+        	DEVICE_DOCUMENTS_FILES_DIR.mkdirs();
+        }
+        
+        if (!DEVICE_PICTURES_FILES_DIR.exists()) {
+        	DEVICE_PICTURES_FILES_DIR.mkdirs();
+        }
+        
+        if (!DEVICE_VIDEO_FILES_DIR.exists()) {
+        	DEVICE_VIDEO_FILES_DIR.mkdirs();
+        }
+        
+        if (!DEVICE_RINGTONES_FILES_DIR.exists()) {
+        	DEVICE_RINGTONES_FILES_DIR.mkdirs();
+        }        
+        
+        if (!DEVICE_AUDIO_FILES_DIR.exists()) {
+        	DEVICE_AUDIO_FILES_DIR.mkdirs();
+        }
+        
+        return DEVICE_FILES_DIR;
     }
     
     public static final void setSaveLWSTemplate(String template) throws IOException { 
