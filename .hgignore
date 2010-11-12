@@ -1,9 +1,9 @@
 syntax: glob
-
-*.class
-.classpath
 bin/*
-components/http/build/classes/org/limewire/http/package.html
-gui/log4.log
-log4.log
+*.class
 *.orig
+.classpath
+log4.log
+gui/log4.log
+lib/jars/other/themes.jar
+components/http/build/classes/org/limewire/http/package.html
