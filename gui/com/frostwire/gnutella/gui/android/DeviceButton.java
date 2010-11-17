@@ -1,11 +1,16 @@
 package com.frostwire.gnutella.gui.android;
 
 import java.awt.Dimension;
+import java.awt.Image;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 
+import com.frostwire.ImageCache;
+import com.frostwire.ImageCache.OnLoadedListener;
 import com.limegroup.gnutella.gui.I18n;
 
 public class DeviceButton extends JToggleButton {
@@ -78,7 +83,24 @@ public class DeviceButton extends JToggleButton {
 	}
 	
 	private ImageIcon createImageIcon(String name) {
-		return new ImageIcon(getClass().getResource("images/" + name));
+	    URL url = null;
+        try {
+            url = new URL("http://www.frostwire.com/android/images/" + name);
+        } catch (MalformedURLException e) {
+        }
+        
+	    Image image = ImageCache.getInstance().getImage(url, new OnLoadedListener() {
+            public void onLoaded(URL url, Image image) {
+                
+            }
+        });
+	    
+	    url = getClass().getResource("images/" + name);
+	    if (image == null) {
+	        image = ImageCache.getInstance().getImage(url, null);
+	    }
+	    
+		return new ImageIcon(image);
 	}
 	
 	private String getImagePrefix() {

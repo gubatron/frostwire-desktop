@@ -50,6 +50,9 @@ public class SharingSettings extends LimeProps {
     public static final File DEFAULT_SAVE_LWS_DIR = 
         new File(LimeWireUtils.getLimeWireRootFolder(), "Store Purchased");
     
+    public static final File IMAGE_CACHE_DIR = 
+        new File(LimeWireUtils.getLimeWireRootFolder(), "Images cache");
+    
     public static final File DEVICE_FILES_DIR = 
         new File(LimeWireUtils.getLimeWireRootFolder(), "Phones and Tablets");
     
@@ -334,9 +337,6 @@ public class SharingSettings extends LimeProps {
         return f;
     }
 
-    /**
-     * @return directory of where to save songs purchased from LimeWire Store
-     */
     public static final File getDeviceFilesDirectory() {
         if (!DEVICE_FILES_DIR.exists()) {
         	DEVICE_FILES_DIR.mkdirs();
@@ -367,6 +367,13 @@ public class SharingSettings extends LimeProps {
         }
         
         return DEVICE_FILES_DIR;
+    }
+    
+    public static final File getImageCacheDirectory() {
+        if (!IMAGE_CACHE_DIR.exists()) {
+            IMAGE_CACHE_DIR.mkdirs();
+        }
+        return IMAGE_CACHE_DIR;
     }
     
     public static final void setSaveLWSTemplate(String template) throws IOException { 

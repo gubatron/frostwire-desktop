@@ -28,12 +28,19 @@ import com.limegroup.gnutella.http.HTTPHeaderName;
 public class HttpFetcher {
 	
 	private static final int TIMEOUT = 10000;
-	private final URI _uri;
+	
+	private URI _uri;
+	private String _userAgent;
 
 	private byte[] body = null;
 
+	public HttpFetcher(URI uri, String userAgent) {
+		_uri = uri;
+		_userAgent = userAgent;
+	}
+	
 	public HttpFetcher(URI uri) {
-		this._uri = uri;
+	    this(uri, "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506");
 	}
 	
 	public byte[] fetch() {
@@ -51,7 +58,7 @@ public class HttpFetcher {
         HttpConnectionParams.setTcpNoDelay(params, true);
         HttpClientParams.setRedirecting(params, true);
         HttpProtocolParams.setUseExpectContinue(params, false);
-        HttpProtocolParams.setUserAgent(params, "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506");
+        HttpProtocolParams.setUserAgent(params, _userAgent);
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		
