@@ -10,25 +10,25 @@ import javax.swing.ListCellRenderer;
 
 import com.limegroup.gnutella.gui.I18n;
 
-public class ActivityRenderer extends JPanel implements ListCellRenderer {
+public class TaskRenderer extends JPanel implements ListCellRenderer {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 3202019053091139910L;
 	
-	private Activity _activity;
+	private Task _activity;
 	
 	private JLabel _label;
 	
-	public ActivityRenderer() {
+	public TaskRenderer() {
 		setupUI();
 	}
 
 	@Override
 	public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 
-		_activity = (Activity) value;
+		_activity = (Task) value;
 		
 		if (isSelected) {
 		    setBackground(Color.LIGHT_GRAY);
@@ -39,12 +39,12 @@ public class ActivityRenderer extends JPanel implements ListCellRenderer {
 		    setForeground(Color.BLACK);
 		}
 		
-		if (_activity instanceof BrowseActivity) {
-			renderBrowseActivity((BrowseActivity) _activity);
-		} else if (_activity instanceof CopyToDeviceActivity) {
-			renderCopyToDeviceActivity((CopyToDeviceActivity) _activity);
-		} else if (_activity instanceof CopyToDesktopActivity) {
-			renderCopyToDesktopActivity((CopyToDesktopActivity) _activity);
+		if (_activity instanceof BrowseTask) {
+			renderBrowseActivity((BrowseTask) _activity);
+		} else if (_activity instanceof CopyToDeviceTask) {
+			renderCopyToDeviceActivity((CopyToDeviceTask) _activity);
+		} else if (_activity instanceof CopyToDesktopTask) {
+			renderCopyToDesktopActivity((CopyToDesktopTask) _activity);
 		} else {
 			_label.setText(_activity.toString());
 		}
@@ -57,7 +57,7 @@ public class ActivityRenderer extends JPanel implements ListCellRenderer {
 		add(_label);
 	}
 
-	private void renderBrowseActivity(BrowseActivity activity) {
+	private void renderBrowseActivity(BrowseTask activity) {
 		String text = "Browsing device for file type " + getFileTypeAsString(activity.getType());
 		
 		if (activity.isCanceled()) {
@@ -73,7 +73,7 @@ public class ActivityRenderer extends JPanel implements ListCellRenderer {
 		_label.setText(text);
 	}
 	
-	private void renderCopyToDeviceActivity(CopyToDeviceActivity activity) {
+	private void renderCopyToDeviceActivity(CopyToDeviceTask activity) {
 		String text = "Copying " + activity.getProgressMessage();
 		
 		if (activity.isCanceled()) {
@@ -91,7 +91,7 @@ public class ActivityRenderer extends JPanel implements ListCellRenderer {
 		_label.setText(text);
 	}
 	
-	private void renderCopyToDesktopActivity(CopyToDesktopActivity activity) {
+	private void renderCopyToDesktopActivity(CopyToDesktopTask activity) {
 		String text = "Copying " + activity.getProgressMessage();
 		
 		if (activity.isCanceled()) {

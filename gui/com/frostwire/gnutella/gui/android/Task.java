@@ -1,6 +1,6 @@
 package com.frostwire.gnutella.gui.android;
 
-public abstract class Activity implements Runnable {
+public abstract class Task implements Runnable {
 
 	private OnChangedListener _listener;
 	
@@ -12,7 +12,7 @@ public abstract class Activity implements Runnable {
 	
 	private Exception _failException;
 
-	public Activity() {
+	public Task() {
 	}
 	
 	public OnChangedListener getOnChangedListener() {
@@ -68,6 +68,10 @@ public abstract class Activity implements Runnable {
 		fireOnChanged();
 	}
 	
+	public boolean enqueue() {
+	    return true;
+	}
+	
 	protected void fireOnChanged() {
 		if (_listener != null) {
 			_listener.onChanged(this);
@@ -75,6 +79,6 @@ public abstract class Activity implements Runnable {
 	}
 	
 	public interface OnChangedListener {
-		public void onChanged(Activity activity);
+		public void onChanged(Task activity);
 	}
 }

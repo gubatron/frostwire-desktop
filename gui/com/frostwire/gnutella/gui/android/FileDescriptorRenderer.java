@@ -104,7 +104,7 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 		Device device = AndroidMediator.instance().getDeviceBar().getSelectedDevice();
 		File path = AndroidMediator.instance().getDesktopExplorer().getSelectedFolder();
 		if (device != null && path != null && _fileDescriptor != null) {
-			AndroidMediator.addActivity(new CopyToDesktopActivity(device, path, new FileDescriptor[] { _fileDescriptor }));
+			AndroidMediator.addActivity(new CopyToDesktopTask(device, path, new FileDescriptor[] { _fileDescriptor }));
 		}
 	}
 	
