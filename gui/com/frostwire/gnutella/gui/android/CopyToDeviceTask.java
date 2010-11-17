@@ -4,7 +4,7 @@ import java.io.File;
 
 import com.frostwire.gnutella.gui.android.ProgressFileEntity.ProgressFileEntityListener;
 
-public class CopyToDeviceActivity extends Activity {
+public class CopyToDeviceTask extends Task {
 	
 	private Device _device;
 	private LocalFile[] _localFiles;
@@ -13,7 +13,7 @@ public class CopyToDeviceActivity extends Activity {
 	private int _totalWritten;
 	private String _progressMessage;
 
-	public CopyToDeviceActivity(Device device, LocalFile[] localFiles) {
+	public CopyToDeviceTask(Device device, LocalFile[] localFiles) {
 		_device = device;
 		_localFiles = localFiles;
 		
@@ -57,7 +57,7 @@ public class CopyToDeviceActivity extends Activity {
 						}
 
 						public boolean isCanceled() {
-							return CopyToDeviceActivity.this.isCanceled();
+							return CopyToDeviceTask.this.isCanceled();
 						}
 					});
 					

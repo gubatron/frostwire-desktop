@@ -34,7 +34,7 @@ public class AndroidMediator implements ThemeObserver {
 	
 	private ProgressPanel PROGRESS_PANEL;
 	
-	private ActivityProcessor ACTIVITY_PROCESSOR;
+	private TaskProcessor ACTIVITY_PROCESSOR;
     
 	/**
 	 * @return the <tt>AndroidMediator</tt> instance
@@ -45,7 +45,7 @@ public class AndroidMediator implements ThemeObserver {
     	GUIMediator.setSplashScreenString(I18n.tr("Loading phone and tablets..."));
     	ThemeMediator.addThemeObserver(this);
     	
-    	ACTIVITY_PROCESSOR = new ActivityProcessor();
+    	ACTIVITY_PROCESSOR = new TaskProcessor();
     	ACTIVITY_PROCESSOR.start();
     	
     	setupUIElements();
@@ -110,9 +110,9 @@ public class AndroidMediator implements ThemeObserver {
 		INSTANCE.DEVICE_BAR.handleDeviceStale(device);
 	}
 	
-	public static void addActivity(Activity activity) {
+	public static void addActivity(Task activity) {
 		INSTANCE.PROGRESS_PANEL.addActivity(activity);
-		INSTANCE.ACTIVITY_PROCESSOR.addActivity(activity);
+		INSTANCE.ACTIVITY_PROCESSOR.addTask(activity);
 	}
 	
 	public DeviceBar getDeviceBar() {

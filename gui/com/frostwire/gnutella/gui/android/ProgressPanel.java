@@ -14,7 +14,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 
-import com.frostwire.gnutella.gui.android.Activity.OnChangedListener;
+import com.frostwire.gnutella.gui.android.Task.OnChangedListener;
 
 public class ProgressPanel extends JPanel {
 
@@ -23,7 +23,7 @@ public class ProgressPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = -5916970294500660451L;
 	
-	private ActivityListModel _model;
+	private TaskListModel _model;
 	private MyActivityListener _activityListener;
 	
 	private JButton _buttonCancel;
@@ -32,13 +32,13 @@ public class ProgressPanel extends JPanel {
 
 	public ProgressPanel() {
 		
-		_model = new ActivityListModel();
+		_model = new TaskListModel();
 		_activityListener = new MyActivityListener();
 		
 		setupUI();
 	}
 	
-	public void addActivity(Activity activity) {
+	public void addActivity(Task activity) {
 		
 		activity.setOnChangedListener(_activityListener);
 		
@@ -63,7 +63,7 @@ public class ProgressPanel extends JPanel {
 		add(_buttonCancel, BorderLayout.PAGE_START);		
 		
 		_listActivities = new JList(_model);
-		_listActivities.setCellRenderer(new ActivityRenderer());
+		_listActivities.setCellRenderer(new TaskRenderer());
 		_listActivities.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		_listActivities.setLayoutOrientation(JList.VERTICAL);
 		_listActivities.setVisibleRowCount(-1);
@@ -91,7 +91,7 @@ public class ProgressPanel extends JPanel {
 	}
 	
 	private final class MyActivityListener implements OnChangedListener {
-		public void onChanged(final Activity activity) {
+		public void onChanged(final Task activity) {
 			
 			final int index = _model.indexOf(activity);
 			

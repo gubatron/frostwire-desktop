@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
-public class CopyToDesktopActivity extends Activity {
+public class CopyToDesktopTask extends Task {
 	
 	private Device _device;
 	private File _path;
@@ -15,7 +15,7 @@ public class CopyToDesktopActivity extends Activity {
 
 	private String _progressMessage;
 	
-	public CopyToDesktopActivity(Device device, File path, FileDescriptor[] fileDescriptors) {
+	public CopyToDesktopTask(Device device, File path, FileDescriptor[] fileDescriptors) {
 		_device = device;
 		_path = path;
 		_fileDescriptors = fileDescriptors;

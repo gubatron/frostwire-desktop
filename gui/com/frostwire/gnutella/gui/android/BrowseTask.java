@@ -5,13 +5,13 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.SwingUtilities;
 
-public class BrowseActivity extends Activity {
+public class BrowseTask extends Task {
 	
 	private Device _device;
 	private DefaultListModel _model;
 	private int _type;
 
-	public BrowseActivity(Device device, DefaultListModel model, int type) {
+	public BrowseTask(Device device, DefaultListModel model, int type) {
 		_device = device;
 		_model = model;
 		_type = type;
@@ -56,5 +56,10 @@ public class BrowseActivity extends Activity {
 		} catch (Exception e) {
 			fail(e);
 		}
+	}
+	
+	@Override
+	public boolean enqueue() {
+	    return false;
 	}
 }

@@ -115,7 +115,7 @@ public class DeviceExplorer extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				_model.clear();
-				AndroidMediator.addActivity(new BrowseActivity(_device, _model, type));
+				AndroidMediator.addActivity(new BrowseTask(_device, _model, type));
 			}
 		});
 		_buttonTypes.put(type, button);

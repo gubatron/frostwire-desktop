@@ -5,17 +5,17 @@ import java.util.List;
 
 import javax.swing.AbstractListModel;
 
-public class ActivityListModel extends AbstractListModel {
+public class TaskListModel extends AbstractListModel {
 	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -8310165387627881837L;
 	
-	private List<Activity> _activities;
+	private List<Task> _activities;
 	
-	public ActivityListModel() {
-		_activities = new ArrayList<Activity>();
+	public TaskListModel() {
+		_activities = new ArrayList<Task>();
 	}
 
 	@Override
@@ -24,11 +24,11 @@ public class ActivityListModel extends AbstractListModel {
 	}
 
 	@Override
-	public Activity getElementAt(int index) {
+	public Task getElementAt(int index) {
 		return _activities.get(index);
 	}
 	
-	public void addActivity(Activity activity) {
+	public void addActivity(Task activity) {
 		int index = _activities.size();
 		_activities.add(activity);
 		fireIntervalAdded(this, index, index);
@@ -38,7 +38,7 @@ public class ActivityListModel extends AbstractListModel {
 		fireContentsChanged(this, index, index);
 	}
 	
-	public int indexOf(Activity activity) {
+	public int indexOf(Task activity) {
 		return _activities.indexOf(activity);
 	}
 }

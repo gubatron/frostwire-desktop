@@ -4,12 +4,12 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-public class ActivityProcessor {
+public class TaskProcessor {
 	
-	private BlockingQueue<Activity> _queue;
+	private BlockingQueue<Task> _queue;
 	
-	public ActivityProcessor() {
-		_queue = new LinkedBlockingQueue<Activity>();
+	public TaskProcessor() {
+		_queue = new LinkedBlockingQueue<Task>();
 	}
 	
 	public void start() {
@@ -21,13 +21,13 @@ public class ActivityProcessor {
 				try {
 					while (true) {
 	
-						Activity activity = _queue.poll(1, TimeUnit.SECONDS); //this will wait if queue is empty
+						Task task = _queue.poll(1, TimeUnit.SECONDS); //this will wait if queue is empty
 	
-						if (activity != null) {
+						if (task != null) {
 							try {
-								activity.run();
+								task.run();
 							} catch (Exception e) {
-								System.out.println("Error ejecuting activity " + activity + ", error=" + e.getMessage());
+								System.out.println("Error ejecuting task " + task + ", error=" + e.getMessage());
 							}
 						}
 					}
@@ -38,7 +38,11 @@ public class ActivityProcessor {
 		}).start();
 	}
 
-	public void addActivity(Activity activity) {
-		_queue.add(activity);
+	public void addTask(Task task) {
+	    if (task.enqueue()) {
+	        _queue.add(task);
+	    } else {
+	        new Thread(task).start();
+	    }
 	}
 }
