@@ -2,6 +2,7 @@ package org.limewire.listener;
 
 import java.util.concurrent.Executor;
 
+import org.limewire.listener.EventListenerList.EventListenerListContext;
 import org.limewire.logging.Log;
 
 /**
@@ -55,5 +56,10 @@ public class AsynchronousMulticaster<E> implements EventMulticaster<E> {
             }
         });
     }
+
+	@Override
+	public EventListenerListContext getListenerContext() {
+		return listeners.getContext();
+	}
 
 }

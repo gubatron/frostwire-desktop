@@ -31,6 +31,7 @@ import org.limewire.mojito.messages.MessageID;
 import org.limewire.mojito.messages.StatsRequest;
 import org.limewire.mojito.routing.Contact;
 import org.limewire.mojito.routing.Version;
+import org.limewire.security.SecureMessage;
 
 
 /**
@@ -43,7 +44,7 @@ public class StatsRequestImpl extends AbstractRequestMessage
     
     private final byte[] signature;
     
-    private Status secureStatus = Status.INSECURE;
+    private int secureStatus = SecureMessage.INSECURE;
     
     public StatsRequestImpl(Context context, 
             Contact contact, MessageID messageId, StatisticType request) {
@@ -65,16 +66,16 @@ public class StatsRequestImpl extends AbstractRequestMessage
         return request;
     }
 
-    public void setSecureStatus(Status secureStatus) {
+    public void setSecureStatus(int secureStatus) {
         this.secureStatus = secureStatus;
     }
 
-    public Status getSecureStatus() {
+    public int getSecureStatus() {
         return secureStatus;
     }
     
     public boolean isSecure() {
-        return secureStatus == Status.SECURE;
+        return secureStatus == SecureMessage.SECURE;
     }
 
     public byte[] getSecureSignature() {
