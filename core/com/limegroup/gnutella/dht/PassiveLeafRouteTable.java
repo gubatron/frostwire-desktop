@@ -361,5 +361,9 @@ class PassiveLeafRouteTable implements RouteTable {
         public String toString() {
             return CollectionUtils.toString(map.values());
         }
+
+        public boolean isInSmallestSubtree() {
+            return false;
+        }
     }
 }

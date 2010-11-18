@@ -10,6 +10,7 @@ import java.util.concurrent.ExecutionException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.limewire.concurrent.FutureEvent;
 import org.limewire.io.Connectable;
 import org.limewire.io.ConnectableImpl;
 import org.limewire.io.IpPort;
@@ -80,7 +81,7 @@ public class AltLocFinder {
             KUID key = KUIDUtils.toKUID(urn);
             EntityKey lookupKey = EntityKey.createEntityKey(key, AbstractAltLocValue.ALT_LOC);
             final DHTFuture<FindValueResult> future = dht.get(lookupKey);
-            future.addDHTFutureListener(new AltLocsHandler(dht, urn, key, listener));
+            future.addFutureListener(new AltLocsHandler(dht, urn, key, listener));
             return new Shutdownable() {
                 public void shutdown() {
                     future.cancel(true);
@@ -115,7 +116,7 @@ public class AltLocFinder {
             KUID key = KUIDUtils.toKUID(guid);
             EntityKey lookupKey = EntityKey.createEntityKey(key, AbstractPushProxiesValue.PUSH_PROXIES);
             DHTFuture<FindValueResult> future = dht.get(lookupKey);
-            future.addDHTFutureListener(new PushAltLocsHandler(dht, guid, urn, key, altLocEntity, listener));
+            future.addFutureListener(new PushAltLocsHandler(dht, guid, urn, key, altLocEntity, listener));
             return true;
         }
     }
@@ -148,7 +149,21 @@ public class AltLocFinder {
         }
         
         @Override
-        public void handleFutureSuccess(FindValueResult result) {
+        protected void operationComplete(FutureEvent<FindValueResult> event) {
+            switch (event.getType()) {
+                case SUCCESS:
+                    handleFutureSuccess(event.getResult());
+                    break;
+                case EXCEPTION:
+                    handleExecutionException(event.getException());
+                    break;
+                case CANCELLED:
+                    handleCancellation();
+                    break;
+            }
+        }
+        
+        private void handleFutureSuccess(FindValueResult result) {
             boolean success = false;
             
             if (result.isSuccess()) {
@@ -193,27 +208,16 @@ public class AltLocFinder {
          */
         protected abstract boolean handleDHTValueEntity(DHTValueEntity entity);
         
-        @Override
-        public void handleCancellationException(CancellationException e) {
-            LOG.error("CancellationException", e);
-            
-            if (listener != null) {
-                listener.handleAltLocSearchDone(false);
-            }
-        }
-
-        @Override
-        public void handleExecutionException(ExecutionException e) {
+        private void handleExecutionException(ExecutionException e) {
             LOG.error("ExecutionException", e);
             
             if (listener != null) {
                 listener.handleAltLocSearchDone(false);
             }
         }
-
-        @Override
-        public void handleInterruptedException(InterruptedException e) {
-            LOG.error("InterruptedException", e);
+        
+        private void handleCancellation() {
+            LOG.error("Cancelled");
             
             if (listener != null) {
                 listener.handleAltLocSearchDone(false);

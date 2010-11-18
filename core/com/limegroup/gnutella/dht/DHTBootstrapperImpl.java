@@ -14,10 +14,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.limewire.collection.FixedSizeLIFOSet;
 import org.limewire.collection.FixedSizeLIFOSet.EjectionPolicy;
+import org.limewire.concurrent.FutureEvent;
 import org.limewire.mojito.KUID;
 import org.limewire.mojito.MojitoDHT;
 import org.limewire.mojito.concurrent.DHTFuture;
-import org.limewire.mojito.concurrent.DHTFutureListener;
+import org.limewire.mojito.concurrent.DHTFutureAdapter;
 import org.limewire.mojito.exceptions.DHTException;
 import org.limewire.mojito.result.BootstrapResult;
 import org.limewire.mojito.result.PingResult;
@@ -200,7 +201,7 @@ class DHTBootstrapperImpl implements DHTBootstrapper{
             }
             
             pingFuture = getMojitoDHT().findActiveContact();
-            pingFuture.addDHTFutureListener(new PongListener(pingFuture));
+            pingFuture.addFutureListener(new PongListener(pingFuture));
             
             triedRouteTable = true;
             fromRouteTable = true;
@@ -241,7 +242,7 @@ class DHTBootstrapperImpl implements DHTBootstrapper{
             it.remove();
             
             pingFuture = getMojitoDHT().ping(addr);
-            pingFuture.addDHTFutureListener(new PongListener(pingFuture));
+            pingFuture.addFutureListener(new PongListener(pingFuture));
         }
     }
     
@@ -347,12 +348,27 @@ class DHTBootstrapperImpl implements DHTBootstrapper{
      * 1) start the DHTNodeFetcher if it isn't already running
      * 2) check the hosts Set for other Nodes and ping 'em
      */
-    private class PongListener implements DHTFutureListener<PingResult> {
+    private class PongListener extends DHTFutureAdapter<PingResult> {
         
         private final DHTFuture<PingResult> myFuture;
         
         public PongListener(DHTFuture<PingResult> myFuture) {
             this.myFuture = myFuture;
+        }
+        
+        @Override
+        protected void operationComplete(FutureEvent<PingResult> event) {
+            switch (event.getType()) {
+                case SUCCESS:
+                    handleFutureSuccess(event.getResult());
+                    break;
+                case CANCELLED:
+                    handleCancellationException();
+                    break;
+                case EXCEPTION:
+                    handleExecutionException(event.getException());
+                    break;
+            }
         }
         
         public void handleFutureSuccess(PingResult result) {
@@ -369,7 +385,7 @@ class DHTBootstrapperImpl implements DHTBootstrapper{
                 stopNodeFetcher();
                 
                 bootstrapFuture = getMojitoDHT().bootstrap(result.getContact());
-                bootstrapFuture.addDHTFutureListener(new BootstrapListener());
+                bootstrapFuture.addFutureListener(new BootstrapListener());
             }
         }
         
@@ -435,6 +451,13 @@ class DHTBootstrapperImpl implements DHTBootstrapper{
                 stop();
             }
         }
+        
+        public void handleCancellationException() {
+            synchronized (lock) {
+                LOG.debug("Bootstrap Canceled");
+                stop();
+            }
+        }
     }
     
     /**
@@ -442,7 +465,23 @@ class DHTBootstrapperImpl implements DHTBootstrapper{
      * On a success we'll update our capabilities and if bootstrapping failed
      * we'll just try it again. 
      */
-    private class BootstrapListener implements DHTFutureListener<BootstrapResult> {
+    private class BootstrapListener extends DHTFutureAdapter<BootstrapResult> {
+        
+        @Override
+        protected void operationComplete(FutureEvent<BootstrapResult> event) {
+            switch (event.getType()) {
+                case SUCCESS:
+                    handleFutureSuccess(event.getResult());
+                    break;
+                case CANCELLED:
+                    handleCancellationException();
+                    break;
+                case EXCEPTION:
+                    handleExecutionException(event.getException());
+                    break;
+            }
+        }
+        
         public void handleFutureSuccess(BootstrapResult result) {
             boolean finish = false;
             synchronized (lock) {
@@ -493,6 +532,13 @@ class DHTBootstrapperImpl implements DHTBootstrapper{
         public void handleInterruptedException(InterruptedException e) {
             synchronized (lock) {
                 LOG.debug("Bootstrap Interrupted", e);
+                stop();
+            }
+        }
+        
+        public void handleCancellationException() {
+            synchronized (lock) {
+                LOG.debug("Bootstrap Canceled");
                 stop();
             }
         }
