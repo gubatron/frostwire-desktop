@@ -126,7 +126,7 @@ public class DHTSettings extends LimeProps {
      * WARNING: DO NOT MANUALLY CHANGE THIS
      */
     public static final BooleanSetting EXCLUDE_ULTRAPEERS 
-        = FACTORY.createBooleanSetting("EXCLUDE_ULTRAPEERS", true);
+        = FACTORY.createBooleanSetting("EXCLUDE_ULTRAPEERS", false);
     
     /**
      * Setting for the probability to switch from DHT node to Ultrapeer node
@@ -222,11 +222,11 @@ public class DHTSettings extends LimeProps {
     
     /**
      * The minimum number of upload attempts before a file is considered
-     * rate. This make sure we don't upload every file.
+     * rare. This make sure we don't upload every file.
      */
     public static final IntSetting RARE_FILE_ATTEMPTED_UPLOADS
         = FACTORY.createRemoteIntSetting("RARE_FILE_ATTEMPTED_UPLOADS", 
-                1, "DHT.RareFileAttemptedUploads", 0, Integer.MAX_VALUE);
+                0, "DHT.RareFileAttemptedUploads", 0, Integer.MAX_VALUE);
     
     /**
      * The number of times a file must have been uploaded before it's considered 
@@ -250,15 +250,12 @@ public class DHTSettings extends LimeProps {
      * WARNING: DO NOT MANUALLY CHANGE THIS
      */
     public static final BooleanSetting PUBLISH_ALT_LOCS
-        = FACTORY.createRemoteBooleanSetting("PUBLISH_ALT_LOCS", 
-                false, "DHT.PublishAltLocs");
-    
+        = FACTORY.createBooleanSetting("PUBLISH_ALT_LOCS", true);
     /**
      * Whether or not DHT querying is enabled 
      */
     public static final BooleanSetting ENABLE_DHT_ALT_LOC_QUERIES
-        = FACTORY.createRemoteBooleanSetting("ENABLE_DHT_ALT_LOC_QUERIES", 
-                false, "DHT.EnableAltLocQueriesV2");
+        = FACTORY.createBooleanSetting("ENABLE_DHT_ALT_LOC_QUERIES",true);
     
     /**
      * The maximum number of DHT requery attempts
@@ -297,15 +294,13 @@ public class DHTSettings extends LimeProps {
      * WARNING: DO NOT MANUALLY CHANGE THIS
      */
     public static final BooleanSetting PUBLISH_PUSH_PROXIES
-        = FACTORY.createRemoteBooleanSetting("PUBLISH_PUSH_PROXIES", 
-                false, "DHT.PublishPushProxies");
+        = FACTORY.createBooleanSetting("PUBLISH_PUSH_PROXIES", true);
     
     /**
      * Whether or not we query for PushProxies
      */
     public static final BooleanSetting ENABLE_PUSH_PROXY_QUERIES
-        = FACTORY.createRemoteBooleanSetting("ENABLE_PUSH_PROXY_QUERIES", 
-                false, "DHT.EnablePushProxyQueriesV2");
+        = FACTORY.createBooleanSetting("ENABLE_PUSH_PROXY_QUERIES", true);
     
     /**
      * This setting is storing the most recent DHT Node ID for debugging purposes.
