@@ -1,6 +1,5 @@
 package com.frostwire;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -29,7 +28,7 @@ public class ImageCache {
         return INSTANCE;
     }
     
-    public Image getImage(URL url, OnLoadedListener listener) {
+    public BufferedImage getImage(URL url, OnLoadedListener listener) {
         if (isCached(url)) {
             return loadFromCache(url);
         } else if (!url.getProtocol().equals("http")) {
@@ -57,7 +56,7 @@ public class ImageCache {
         return file.exists();
     }
     
-    private Image loadFromCache(URL url) {
+    private BufferedImage loadFromCache(URL url) {
         try {
             File file = getCacheFile(url);
             return ImageIO.read(file);
@@ -66,7 +65,7 @@ public class ImageCache {
         }
     }
     
-    private Image loadFromResource(URL url) {
+    private BufferedImage loadFromResource(URL url) {
         try {
             BufferedImage image = ImageIO.read(url);
             saveToCache(url, image);
@@ -119,6 +118,6 @@ public class ImageCache {
     }
 
     public interface OnLoadedListener {
-        public void onLoaded(URL url, Image image);
+        public void onLoaded(URL url, BufferedImage image);
     }
 }
