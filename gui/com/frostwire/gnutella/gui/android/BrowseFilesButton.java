@@ -26,6 +26,7 @@ public class BrowseFilesButton extends JRadioButton {
     private ImageIcon _innetImagePressed;
     
     public BrowseFilesButton() {
+        setupUI();
     }
     
     @Override
@@ -40,6 +41,16 @@ public class BrowseFilesButton extends JRadioButton {
         if (icon != null && icon instanceof ImageIcon && ((ImageIcon) icon).getImage() instanceof BufferedImage) {
             //BufferedImage image = (BufferedImageshow f) ((ImageIcon) icon).getImage();
         }
+    }
+    
+    private void setupUI() {
+        //////////visible effect trick
+        setBorder(null);
+        setBackground(null);
+        setFocusable(false);
+        setFocusPainted(false);
+        setContentAreaFilled(false);
+        ////////////////////////////////
     }
     
     private Image buildTextImage(String text) {
