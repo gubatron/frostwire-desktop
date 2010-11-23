@@ -2,6 +2,7 @@ package com.frostwire.gnutella.gui.android;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
@@ -41,12 +42,12 @@ public class DeviceExplorer extends JPanel {
 	
 	private Device _device;
 	
-	private BrowseFilesButton _buttonApplications;
-	private BrowseFilesButton _buttonDocuments;
-	private BrowseFilesButton _buttonPictures;
-	private BrowseFilesButton _buttonVideos;
-	private BrowseFilesButton _buttonRingtones;
-	private BrowseFilesButton _buttonAudio;
+	private ImageRadioButton _buttonApplications;
+	private ImageRadioButton _buttonDocuments;
+	private ImageRadioButton _buttonPictures;
+	private ImageRadioButton _buttonVideos;
+	private ImageRadioButton _buttonRingtones;
+	private ImageRadioButton _buttonAudio;
 
 	public DeviceExplorer() {
 		
@@ -129,8 +130,8 @@ public class DeviceExplorer extends JPanel {
 		return p;
 	}
 	
-	private BrowseFilesButton setupButtonType(JPanel container, final int type) {
-	    BrowseFilesButton button = new BrowseFilesButton();
+	private ImageRadioButton setupButtonType(JPanel container, final int type) {
+	    ImageRadioButton button = new ImageRadioButton();
 		button.setIcon(loadImageIcon(getImageName(type)));
 		button.setPressedIcon(loadImageIcon(getImageName(type) + "_checked"));
 		button.setSize(100, 100);
@@ -144,6 +145,7 @@ public class DeviceExplorer extends JPanel {
 				AndroidMediator.addActivity(new BrowseTask(_device, _model, type));
 			}
 		});
+		
 		container.add(button);
 		
 		return button;
