@@ -11,7 +11,6 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -32,7 +31,7 @@ public class DeviceExplorer extends JPanel {
 	private static final String DEVICE = "device";
 	private static final String NO_DEVICE = "no-device";
 	
-	private DefaultListModel _model;
+	private FileDescriptorListModel _model;
 	private Device _device;
 	
 	private JPanel _panelDevice;
@@ -47,7 +46,7 @@ public class DeviceExplorer extends JPanel {
 	private ImageRadioButton _buttonAudio;
 
 	public DeviceExplorer() {
-		_model = new DefaultListModel();
+		_model = new FileDescriptorListModel();
 		setupUI();		
 		setPanelDevice(false);
 	}
@@ -75,6 +74,10 @@ public class DeviceExplorer extends JPanel {
     		_buttonRingtones.setText(String.valueOf(finger.numSharedRingtoneFiles));
     		_buttonAudio.setText(String.valueOf(finger.numSharedAudioFiles));
 		}
+	}
+	
+	public FileDescriptorListModel getModel() {
+	    return _model;
 	}
 	
 	protected void setupUI() {

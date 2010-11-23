@@ -31,4 +31,15 @@ public class FileDescriptor implements Serializable {
 	public String year;
 	public String fileName;
 	public long fileSize;
+	
+	@Override
+	public boolean equals(Object obj) {
+	    if (obj == null || !(obj instanceof FileDescriptor)) {
+	        return false;
+	    }
+	    
+	    FileDescriptor fileDescriptor = (FileDescriptor) obj;
+	    
+	    return this.id == fileDescriptor.id && this.fileType == fileDescriptor.fileType;
+	}
 }
