@@ -146,6 +146,9 @@ public class DeviceExplorer extends JPanel {
 			}
 		});
 		
+		Font font = button.getFont();
+		button.setFont(new Font(font.getName(), font.getStyle() | Font.BOLD, font.getSize() + 4));
+		
 		container.add(button);
 		
 		return button;

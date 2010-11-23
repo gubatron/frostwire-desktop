@@ -90,7 +90,7 @@ public class ImageRadioButton extends JRadioButton {
 
             FontMetrics metrics = graphicsDummy.getFontMetrics(font);
             int w = metrics.stringWidth(text) + 20;
-            int h = metrics.getHeight() + 16;
+            int h = metrics.getHeight() + 20;
 
             BufferedImage image1 = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
             graphics1 = image1.createGraphics();
@@ -100,7 +100,7 @@ public class ImageRadioButton extends JRadioButton {
             //draw "shadow" text: to be blurred next
             TextLayout textLayout = new TextLayout(text, font, graphics1.getFontRenderContext());
             graphics1.setPaint(Color.BLACK);
-            textLayout.draw(graphics1, 11, 11);
+            textLayout.draw(graphics1, 11, 14);
             graphics1.dispose();
 
             //blur the shadow: result is sorted in image2
@@ -114,7 +114,7 @@ public class ImageRadioButton extends JRadioButton {
             graphics2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
             graphics2.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
             graphics2.setPaint(Color.WHITE);
-            textLayout.draw(graphics2, 10, 10);
+            textLayout.draw(graphics2, 10, 13);
             
             image = image2;
             
