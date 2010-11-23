@@ -6,8 +6,16 @@ public class Finger {
 	public String nickname;
 	public String frostwireVersion;
 	public int totalShared;
+	
 	public String deviceVersion;
 	public String deviceProduct;
 	public String deviceDevice;
 	public String deviceManufacturer;
+	
+	public int numSharedAudioFiles;
+    public int numSharedVideoFiles;
+    public int numSharedPictureFiles;
+    public int numSharedDocumentFiles;
+    public int numSharedApplicationFiles;
+    public int numSharedRingtoneFiles;
 }

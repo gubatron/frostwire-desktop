@@ -9,14 +9,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
-import javax.swing.JToggleButton;
+import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
 
 import com.frostwire.ImageCache;
 import com.frostwire.ImageCache.OnLoadedListener;
 import com.limegroup.gnutella.gui.I18n;
 
-public class DeviceButton extends JToggleButton {
+public class DeviceButton extends JRadioButton {
 
 	/**
 	 * 
