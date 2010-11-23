@@ -3,8 +3,6 @@ package com.frostwire.gnutella.gui.android;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -22,7 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 
-import com.frostwire.gnutella.gui.BackgroundImageJPanel;
+import com.frostwire.gnutella.gui.ImagePanel;
 
 public class DeviceExplorer extends JPanel {
 
@@ -35,12 +33,11 @@ public class DeviceExplorer extends JPanel {
 	private static final String NO_DEVICE = "no-device";
 	
 	private DefaultListModel _model;
+	private Device _device;
 	
 	private JPanel _panelDevice;
 	private JPanel _panelNoDevice;
 	private JList _list;
-	
-	private Device _device;
 	
 	private ImageRadioButton _buttonApplications;
 	private ImageRadioButton _buttonDocuments;
@@ -50,11 +47,8 @@ public class DeviceExplorer extends JPanel {
 	private ImageRadioButton _buttonAudio;
 
 	public DeviceExplorer() {
-		
 		_model = new DefaultListModel();
-		
-		setupUI();
-		
+		setupUI();		
 		setPanelDevice(false);
 	}
 	
@@ -83,20 +77,21 @@ public class DeviceExplorer extends JPanel {
 		}
 	}
 	
-	private void setupUI() {
-		setLayout(new CardLayout());
-		
-		_panelDevice = setupPanelDevice();
-		_panelNoDevice = setupPanelNoDevice();
-		
-		add(_panelDevice, DEVICE);
-		add(_panelNoDevice, NO_DEVICE);
-	}
+	protected void setupUI() {
+        setLayout(new CardLayout());
+        
+        _panelDevice = setupPanelDevice();
+        _panelNoDevice = setupPanelNoDevice();
+        
+        add(_panelDevice, DEVICE);
+        add(_panelNoDevice, NO_DEVICE);
+    }
 	
 	private JPanel setupPanelDevice() {
 		JPanel panel = new JPanel(new BorderLayout());
 		
-		BackgroundImageJPanel header = new BackgroundImageJPanel(loadImageIcon("device_explorer_background.jpg").getImage());
+		ImagePanel header = new ImagePanel(loadImageIcon("device_explorer_background.jpg").getImage());
+		header.setSize(400, 100);
 		header.setLayout(new BoxLayout(header, BoxLayout.LINE_AXIS));
 		
 		_buttonApplications = setupButtonType(header, DeviceConstants.FILE_TYPE_APPLICATIONS);
@@ -114,6 +109,7 @@ public class DeviceExplorer extends JPanel {
 		_list.setLayoutOrientation(JList.VERTICAL);
 		_list.setDragEnabled(true);
 		_list.setTransferHandler(new DeviceListTransferHandler());
+		_list.setPrototypeCellValue(new FileDescriptor(0, DeviceConstants.FILE_TYPE_AUDIO, "", "", "", "", "", 0));
 		_list.setVisibleRowCount(-1);
 		
 		JScrollPane scrollPane = new JScrollPane(_list);

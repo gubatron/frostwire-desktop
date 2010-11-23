@@ -78,7 +78,7 @@ public class DeviceBar extends JPanel {
 	}
 	
 	private final class MyMouseAdapter extends MouseAdapter {
-		public void mouseClicked(MouseEvent e) {
+		public void mouseReleased(MouseEvent e) {
 			DeviceButton button = (DeviceButton) e.getComponent();
 			if (_selectedDevice == null || !_selectedDevice.equals(button.getDevice())) {
 				_selectedDevice = button.getDevice();
