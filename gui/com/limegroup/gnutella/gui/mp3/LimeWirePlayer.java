@@ -201,6 +201,11 @@ public class LimeWirePlayer implements Runnable, AudioPlayer, RefreshListener {
     public void stop() {
         tryStoppingAuxMP3Player();
         
+        if (currentAudioFormat != null) {
+            currentAudioFormat.stopSourceDataLine();
+            currentAudioFormat.closeStreams();
+        }
+        
         if( !(playerState == UNKNOWN || playerState == STOPPED)) {
             playerState = STOPPED;
             notifyEvent(STOPPED, -1);
