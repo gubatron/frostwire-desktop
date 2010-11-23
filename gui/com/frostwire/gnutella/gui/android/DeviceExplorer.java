@@ -2,8 +2,11 @@ package com.frostwire.gnutella.gui.android;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
@@ -17,6 +20,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
+
+import com.frostwire.gnutella.gui.BackgroundImageJPanel;
 
 public class DeviceExplorer extends JPanel {
 
@@ -90,7 +95,7 @@ public class DeviceExplorer extends JPanel {
 	private JPanel setupPanelDevice() {
 		JPanel panel = new JPanel(new BorderLayout());
 		
-		JPanel header = new JPanel();
+		BackgroundImageJPanel header = new BackgroundImageJPanel(loadImageIcon("device_explorer_background.jpg").getImage());
 		header.setLayout(new BoxLayout(header, BoxLayout.LINE_AXIS));
 		
 		_buttonApplications = setupButtonType(header, DeviceConstants.FILE_TYPE_APPLICATIONS);
@@ -145,7 +150,13 @@ public class DeviceExplorer extends JPanel {
 	}
 	
 	private ImageIcon loadImageIcon(String name) {
-	    URL url = getClass().getResource("images/" + name + ".png");
+		String path = "images" + File.separator + name + ".png";
+		
+		if (name.endsWith(".jpg")) {
+			path = "images" + File.separator + name;
+		}
+		
+	    URL url = getClass().getResource(path);
 	    try {
             return new ImageIcon(ImageIO.read(url));
         } catch (IOException e) {

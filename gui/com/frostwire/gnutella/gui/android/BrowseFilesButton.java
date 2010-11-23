@@ -1,15 +1,10 @@
 package com.frostwire.gnutella.gui.android;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
-import java.awt.Shape;
-import java.awt.Stroke;
-import java.awt.font.GlyphVector;
 import java.awt.font.TextLayout;
 import java.awt.image.BufferedImage;
 import java.awt.image.ConvolveOp;
@@ -21,9 +16,6 @@ import javax.swing.JRadioButton;
 
 public class BrowseFilesButton extends JRadioButton {
     
-    /**
-     * 
-     */
     private static final long serialVersionUID = 3261658194515096352L;
     
     private Font _font1;
@@ -92,7 +84,7 @@ public class BrowseFilesButton extends JRadioButton {
         int h1 = image1.getHeight();
         int w2 = image2.getWidth();
         int h2 = image2.getHeight();
-        
-        
+        //FIXME
+        return null;
     }
 }
