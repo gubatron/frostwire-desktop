@@ -18,8 +18,30 @@ public class ImageRadioButton extends JRadioButton {
     
     private static final long serialVersionUID = 3261658194515096352L;
     
-   public ImageRadioButton() {
+    private Icon _icon;
+    private Icon _pressedIcon;
+    private Icon _selectedIcon;
+
+    public ImageRadioButton() {
         setupUI();
+    }
+    
+    @Override
+    public void setIcon(Icon defaultIcon) {
+        super.setIcon(defaultIcon);
+        _icon = defaultIcon;
+    }
+    
+    @Override
+    public void setPressedIcon(Icon pressedIcon) {
+        super.setPressedIcon(pressedIcon);
+        _pressedIcon = pressedIcon;
+    }
+    
+    @Override
+    public void setSelectedIcon(Icon selectedIcon) {
+        super.setSelectedIcon(selectedIcon);
+        _selectedIcon = selectedIcon;
     }
     
     @Override
@@ -36,6 +58,7 @@ public class ImageRadioButton extends JRadioButton {
         BufferedImage textImage = buildTextImage(text);
         setCompositeIcon(textImage);
         setCompositePressedIcon(textImage);
+        setCompositeSelectedIcon(textImage);
     }
     
     protected void setupUI() {
@@ -50,23 +73,34 @@ public class ImageRadioButton extends JRadioButton {
     
     private void setCompositeIcon(BufferedImage textImage) {
         BufferedImage image = null;
-        Icon icon = getIcon();
+        Icon icon = _icon;
         
         if (icon != null && icon instanceof ImageIcon && ((ImageIcon) icon).getImage() instanceof BufferedImage) {
             image = (BufferedImage) ((ImageIcon) icon).getImage();
             image = joinImages(image, textImage);
-            setIcon(new ImageIcon(image));
+            super.setIcon(new ImageIcon(image));
         }
     }
     
     private void setCompositePressedIcon(BufferedImage textImage) {
         BufferedImage image = null;
-        Icon icon = getPressedIcon();
+        Icon icon = _pressedIcon;
         
         if (icon != null && icon instanceof ImageIcon && ((ImageIcon) icon).getImage() instanceof BufferedImage) {
             image = (BufferedImage) ((ImageIcon) icon).getImage();
             image = joinImages(image, textImage);
-            setPressedIcon(new ImageIcon(image));
+            super.setPressedIcon(new ImageIcon(image));
+        }
+    }
+    
+    private void setCompositeSelectedIcon(BufferedImage textImage) {
+        BufferedImage image = null;
+        Icon icon = _selectedIcon;
+        
+        if (icon != null && icon instanceof ImageIcon && ((ImageIcon) icon).getImage() instanceof BufferedImage) {
+            image = (BufferedImage) ((ImageIcon) icon).getImage();
+            image = joinImages(image, textImage);
+            super.setSelectedIcon(new ImageIcon(image));
         }
     }
     

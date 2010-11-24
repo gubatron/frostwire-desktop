@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -51,6 +52,8 @@ public class DeviceExplorer extends JPanel {
 	private ImageRadioButton _buttonVideos;
 	private ImageRadioButton _buttonRingtones;
 	private ImageRadioButton _buttonAudio;
+	private ButtonGroup _buttonGroup;
+	
 	private JTextField _textFilter;
 
 	public DeviceExplorer() {
@@ -169,6 +172,14 @@ public class DeviceExplorer extends JPanel {
         c.insets = new Insets(5, 0, 0, 5);
         header.add(_buttonAudio, c);
         
+        _buttonGroup = new ButtonGroup();
+        _buttonGroup.add(_buttonApplications);
+        _buttonGroup.add(_buttonDocuments);
+        _buttonGroup.add(_buttonPictures);
+        _buttonGroup.add(_buttonVideos);
+        _buttonGroup.add(_buttonRingtones);
+        _buttonGroup.add(_buttonAudio);
+        
         _textFilter = new JTextField();
         Dimension textFilterSize = new Dimension(100, 25);
         _textFilter.setPreferredSize(textFilterSize);
@@ -218,6 +229,7 @@ public class DeviceExplorer extends JPanel {
 	    ImageRadioButton button = new ImageRadioButton();
 		button.setIcon(new ImageIcon(loadImage(getImageName(type))));
 		button.setPressedIcon(new ImageIcon(loadImage(getImageName(type) + "_checked")));
+		button.setSelectedIcon(new ImageIcon(loadImage(getImageName(type) + "_checked")));
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

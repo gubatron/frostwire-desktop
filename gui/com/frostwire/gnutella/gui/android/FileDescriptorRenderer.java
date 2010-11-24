@@ -23,6 +23,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.ListCellRenderer;
 
 import com.frostwire.gnutella.gui.ImagePanel;
@@ -51,8 +52,8 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 	private JLabel _labelTitle;
 	private JLabel _labelSize;
 	private JLabel _labelExtra;
-	private JButton _buttonPlay;
-	private JButton _buttonCopy;
+	private JRadioButton _buttonPlay;
+	private JRadioButton _buttonCopy;
 	
 	private FileDescriptor _fileDescriptor;
 	
@@ -145,7 +146,7 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
         c.insets = new Insets(0, 0, 3, 0);
         add(_labelExtra, c);
         
-        _buttonCopy = new JButton();
+        _buttonCopy = new JRadioButton();
         _buttonCopy.setBorder(null);
         _buttonCopy.setBackground(null);
         _buttonCopy.setFocusable(false);
@@ -165,7 +166,7 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
         c.insets = new Insets(0, 0, 0, 5);
         add(_buttonCopy, c);
         
-        _buttonPlay = new JButton();
+        _buttonPlay = new JRadioButton();
         _buttonPlay.setBorder(null);
         _buttonPlay.setBackground(null);
         _buttonPlay.setFocusable(false);
