@@ -23,4 +23,16 @@ public class ImageTool {
             return null;
         }
     }
+    
+    public String getImageNameByFileType(int type) {
+        switch(type) {
+        case DeviceConstants.FILE_TYPE_APPLICATIONS: return "application";
+        case DeviceConstants.FILE_TYPE_DOCUMENTS: return "document";
+        case DeviceConstants.FILE_TYPE_PICTURES: return "picture";
+        case DeviceConstants.FILE_TYPE_VIDEOS: return "video";
+        case DeviceConstants.FILE_TYPE_RINGTONES: return "ringtone";
+        case DeviceConstants.FILE_TYPE_AUDIO: return "audio";
+        default: return "";
+        }
+    }
 }

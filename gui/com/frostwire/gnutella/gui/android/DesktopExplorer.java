@@ -3,6 +3,7 @@ package com.frostwire.gnutella.gui.android;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -22,7 +23,6 @@ import org.pushingpixels.flamingo.api.bcb.BreadcrumbPathListener;
 import org.pushingpixels.flamingo.api.bcb.core.BreadcrumbFileSelector;
 
 import com.frostwire.gnutella.gui.android.LocalFileListModel.OnRootListener;
-import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 public class DesktopExplorer extends JPanel {
@@ -40,7 +40,7 @@ public class DesktopExplorer extends JPanel {
 	private JButton _buttonFavoriteApplications;
 	private JButton _buttonFavoriteDocuments;
 	private JButton _buttonFavoritePictures;
-	private JButton _buttonFavoriteVideo;
+	private JButton _buttonFavoriteVideos;
 	private JButton _buttonFavoriteRingtones;
 	private JButton _buttonFavoriteAudio;
 	private BreadcrumbFileSelector _breadcrumb;
@@ -172,46 +172,30 @@ public class DesktopExplorer extends JPanel {
         });
         _toolBar.add(_buttonViewList);
         
+        _toolBar.addSeparator();
+        
+        _buttonFavoriteApplications = setupButtonFavorite(DeviceConstants.FILE_TYPE_APPLICATIONS, SharingSettings.DEVICE_APPLICATIONS_FILES_DIR);
+        _toolBar.add(_buttonFavoriteApplications);
+        
+        _buttonFavoriteDocuments = setupButtonFavorite(DeviceConstants.FILE_TYPE_DOCUMENTS, SharingSettings.DEVICE_DOCUMENTS_FILES_DIR);
+        _toolBar.add(_buttonFavoriteDocuments);
+        
+        _buttonFavoritePictures = setupButtonFavorite(DeviceConstants.FILE_TYPE_PICTURES, SharingSettings.DEVICE_PICTURES_FILES_DIR);
+        _toolBar.add(_buttonFavoritePictures);
+        
+        _buttonFavoriteVideos = setupButtonFavorite(DeviceConstants.FILE_TYPE_VIDEOS, SharingSettings.DEVICE_VIDEO_FILES_DIR);
+        _toolBar.add(_buttonFavoriteVideos);
+        
+        _buttonFavoriteRingtones = setupButtonFavorite(DeviceConstants.FILE_TYPE_RINGTONES, SharingSettings.DEVICE_RINGTONES_FILES_DIR);
+        _toolBar.add(_buttonFavoriteRingtones);
+        
+        _buttonFavoriteAudio = setupButtonFavorite(DeviceConstants.FILE_TYPE_AUDIO, SharingSettings.DEVICE_AUDIO_FILES_DIR);
+        _toolBar.add(_buttonFavoriteAudio);
+        
 		c = new GridBagConstraints();
 		c.gridx = 0;
 		c.gridy = 0;
 		add(_toolBar, c);
-		
-		_buttonFavoriteApplications = setupButtonFavorite(I18n.tr("Applications"), SharingSettings.DEVICE_APPLICATIONS_FILES_DIR);
-		c = new GridBagConstraints();
-		c.gridx = 1;
-		c.gridy = 0;
-		add(_buttonFavoriteApplications, c);
-		
-		_buttonFavoriteDocuments = setupButtonFavorite(I18n.tr("Documents"), SharingSettings.DEVICE_DOCUMENTS_FILES_DIR);
-		c = new GridBagConstraints();
-		c.gridx = 2;
-		c.gridy = 0;
-		add(_buttonFavoriteDocuments, c);
-		
-		_buttonFavoritePictures = setupButtonFavorite(I18n.tr("Pictures"), SharingSettings.DEVICE_PICTURES_FILES_DIR);
-		c = new GridBagConstraints();
-		c.gridx = 3;
-		c.gridy = 0;
-		add(_buttonFavoritePictures, c);
-		
-		_buttonFavoriteVideo = setupButtonFavorite(I18n.tr("Video"), SharingSettings.DEVICE_VIDEO_FILES_DIR);
-		c = new GridBagConstraints();
-		c.gridx = 4;
-		c.gridy = 0;
-		add(_buttonFavoriteVideo, c);
-		
-		_buttonFavoriteRingtones = setupButtonFavorite(I18n.tr("Ringtones"), SharingSettings.DEVICE_RINGTONES_FILES_DIR);
-		c = new GridBagConstraints();
-		c.gridx = 5;
-		c.gridy = 0;
-		add(_buttonFavoriteRingtones, c);
-		
-		_buttonFavoriteAudio = setupButtonFavorite(I18n.tr("Audio"), SharingSettings.DEVICE_AUDIO_FILES_DIR);
-		c = new GridBagConstraints();
-		c.gridx = 6;
-		c.gridy = 0;
-		add(_buttonFavoriteAudio, c);
 		
 		_breadcrumb = new BreadcrumbFileSelector();
 		_breadcrumb.getModel().addPathListener(new BreadcrumbPathListener() {
@@ -224,7 +208,7 @@ public class DesktopExplorer extends JPanel {
 		c.gridy = 1;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 1.0;
-		c.gridwidth = 8; // this put a extra column and perform a nice fill at the end in the top row
+		c.gridwidth = 2; // this put a extra column and perform a nice fill at the end in the top row
 		add(_breadcrumb, c);
 	}
 
@@ -253,8 +237,16 @@ public class DesktopExplorer extends JPanel {
 		add(_scrollPane, c);
 	}
 
-	private JButton setupButtonFavorite(String text, final File path) {
-		JButton button = new JButton(text);
+	private JButton setupButtonFavorite(int type, final File path) {
+	    ImageTool imageTool = new ImageTool();
+	    Image image = imageTool.load(imageTool.getImageNameByFileType(type)).getScaledInstance(18, 18, Image.SCALE_SMOOTH);
+	    Dimension size = new Dimension(28, 28);
+		JButton button = new JButton();
+		button.setPreferredSize(size);
+		button.setMinimumSize(size);
+		button.setMaximumSize(size);
+		button.setSize(size);
+		button.setIcon(new ImageIcon(image));
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {

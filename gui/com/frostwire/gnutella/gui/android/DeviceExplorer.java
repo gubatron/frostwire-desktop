@@ -220,11 +220,12 @@ public class DeviceExplorer extends JPanel {
 		return p;
 	}
 	
-	private ImageRadioButton setupButtonType(final int type) {
+	private ImageRadioButton setupButtonType(final int type) {	    
+	    ImageTool imageTool = new ImageTool();
 	    ImageRadioButton button = new ImageRadioButton();
-		button.setIcon(new ImageIcon(new ImageTool().load(getImageName(type))));
-		button.setPressedIcon(new ImageIcon(new ImageTool().load(getImageName(type) + "_checked")));
-		button.setSelectedIcon(new ImageIcon(new ImageTool().load(getImageName(type) + "_checked")));
+		button.setIcon(new ImageIcon(imageTool.load(imageTool.getImageNameByFileType(type))));
+		button.setPressedIcon(new ImageIcon(imageTool.load(imageTool.getImageNameByFileType(type) + "_checked")));
+		button.setSelectedIcon(new ImageIcon(imageTool.load(imageTool.getImageNameByFileType(type) + "_checked")));
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -237,17 +238,5 @@ public class DeviceExplorer extends JPanel {
 		button.setFont(new Font(font.getName(), font.getStyle() | Font.BOLD, font.getSize() + 4));
 		
 		return button;
-	}
-	
-	private String getImageName(int type) {
-	    switch(type) {
-	    case DeviceConstants.FILE_TYPE_APPLICATIONS: return "application";
-	    case DeviceConstants.FILE_TYPE_DOCUMENTS: return "document";
-	    case DeviceConstants.FILE_TYPE_PICTURES: return "picture";
-	    case DeviceConstants.FILE_TYPE_VIDEOS: return "video";
-	    case DeviceConstants.FILE_TYPE_RINGTONES: return "ringtone";
-	    case DeviceConstants.FILE_TYPE_AUDIO: return "audio";
-	    default: return "";
-	    }
 	}
 }
