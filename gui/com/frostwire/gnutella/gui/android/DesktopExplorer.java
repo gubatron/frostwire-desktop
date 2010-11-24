@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -11,6 +13,8 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -23,6 +27,7 @@ import org.pushingpixels.flamingo.api.bcb.BreadcrumbPathListener;
 import org.pushingpixels.flamingo.api.bcb.core.BreadcrumbFileSelector;
 
 import com.frostwire.gnutella.gui.android.LocalFileListModel.OnRootListener;
+import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 public class DesktopExplorer extends JPanel {
@@ -43,6 +48,8 @@ public class DesktopExplorer extends JPanel {
 	private JButton _buttonFavoriteVideos;
 	private JButton _buttonFavoriteRingtones;
 	private JButton _buttonFavoriteAudio;
+	private JLabel _labelSort;
+	private JComboBox _comboBoxSort;
 	private BreadcrumbFileSelector _breadcrumb;
 	private JList _list;
 	private JScrollPane _scrollPane;
@@ -103,6 +110,12 @@ public class DesktopExplorer extends JPanel {
     protected void buttonViewList_mousePressed(MouseEvent e) {
         _list.setLayoutOrientation(JList.VERTICAL);
     }
+    
+    protected void comboBoxSort_actionPerformed(ActionEvent e) {
+        JComboBox comboBox = (JComboBox)e.getSource();
+        SortByItem item = (SortByItem)comboBox.getSelectedItem();
+        _model.sortBy(item.sortBy);
+    }
 	
 	private void setupTop() {
 		
@@ -111,6 +124,8 @@ public class DesktopExplorer extends JPanel {
 		_toolBar = new JToolBar();
 		_toolBar.setFloatable(false);
 		_toolBar.setRollover(true);
+		
+		_toolBar.addSeparator();
 		
 		Dimension toolBarButtonSize = new Dimension(28, 28);
 		
@@ -192,6 +207,27 @@ public class DesktopExplorer extends JPanel {
         _buttonFavoriteAudio = setupButtonFavorite(DeviceConstants.FILE_TYPE_AUDIO, SharingSettings.DEVICE_AUDIO_FILES_DIR);
         _toolBar.add(_buttonFavoriteAudio);
         
+        _toolBar.addSeparator();
+        
+        _labelSort = new JLabel();
+        _labelSort.setText(I18n.tr("Sort:"));
+        _toolBar.add(_labelSort);
+        
+        _comboBoxSort = new JComboBox();
+        _comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_NONE, I18n.tr("None")));
+        _comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_NAME_ASC, I18n.tr("Name Asc")));
+        _comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_NAME_DESC, I18n.tr("Name Desc")));
+        _comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_DATE_ASC, I18n.tr("Date Asc")));
+        _comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_DATE_DESC, I18n.tr("Date Desc")));
+        _comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_KIND_ASC, I18n.tr("Kind Asc")));
+        _comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_KIND_DESC, I18n.tr("Kind Desc")));
+        _comboBoxSort.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                comboBoxSort_actionPerformed(e);
+            }
+        });
+        _toolBar.add(_comboBoxSort);
+        
 		c = new GridBagConstraints();
 		c.gridx = 0;
 		c.gridy = 0;
@@ -266,5 +302,20 @@ public class DesktopExplorer extends JPanel {
 			_model.setRoot(path);
 			_model.setOnRootListener(listener);
 		}
+	}
+	
+	private final class SortByItem {
+	    public int sortBy;
+	    public String text;
+	    
+	    public SortByItem(int sortBy, String text) {
+	        this.sortBy = sortBy;
+	        this.text = text;
+	    }
+	    
+	    @Override
+	    public String toString() {
+	        return text;
+	    }
 	}
 }

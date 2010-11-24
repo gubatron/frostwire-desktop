@@ -2,6 +2,8 @@ package com.frostwire.gnutella.gui.android;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.AbstractListModel;
@@ -16,13 +18,23 @@ public class LocalFileListModel extends AbstractListModel {
 	 */
 	private static final long serialVersionUID = 3669455405023885518L;
 	
+	public static final int SORT_BY_NONE = 0;
+	public static final int SORT_BY_NAME_ASC = 1;
+	public static final int SORT_BY_NAME_DESC = 2;
+	public static final int SORT_BY_DATE_ASC = 3;
+	public static final int SORT_BY_DATE_DESC = 4;
+	public static final int SORT_BY_KIND_ASC = 5;
+	public static final int SORT_BY_KIND_DESC = 6;
+	
 	private File _root;
 	private List<LocalFile> _files;
 	
+	private int _sortCriteria;
 	private OnRootListener _listener;
 	private MyOnOpenListener _myOnOpenListener;
 	
 	public LocalFileListModel() {
+	    _sortCriteria = SORT_BY_NONE;
 		_files = new ArrayList<LocalFile>();
 		_myOnOpenListener = new MyOnOpenListener();
 	}
@@ -34,7 +46,32 @@ public class LocalFileListModel extends AbstractListModel {
 		
 		_root = path;
 		_files.clear();
-		_files.addAll(getChildren(_root));
+		
+		List<LocalFile> children = getChildren(_root);
+		
+		if (_sortCriteria != SORT_BY_NONE) {
+    		Collections.sort(children, new Comparator<LocalFile>() {
+    		    public int compare(LocalFile localFile1, LocalFile localFile2) {
+    		        File f1 = localFile1.getFile();
+    		        File f2 = localFile2.getFile();
+    		        
+    		        Long d1 = f1.lastModified();
+    		        Long d2 = f2.lastModified();
+    		        
+                    switch (_sortCriteria) {
+                    case SORT_BY_NAME_ASC: return f1.getName().compareTo(f2.getName());
+                    case SORT_BY_NAME_DESC: return -1 * f1.getName().compareTo(f2.getName());
+                    case SORT_BY_DATE_ASC: return d1.compareTo(d2);
+                    case SORT_BY_DATE_DESC: return -1 * d1.compareTo(d2);
+                    case SORT_BY_KIND_ASC: return compareByKind(f1, f2);
+                    case SORT_BY_KIND_DESC: return -1 * compareByKind(f1, f2);
+                    default: return 0;
+                    }
+                }
+            });
+		}
+		
+		_files.addAll(children);
 		fireOnRoot(path);
 		fireContentsChanged(this, 0, _files.size() - 1);
 	}
@@ -91,6 +128,11 @@ public class LocalFileListModel extends AbstractListModel {
         return localFile;
     }
 	
+	public void sortBy(int criteria) {
+	    _sortCriteria = criteria;
+        refresh();
+    }
+	
 	protected void fireOnRoot(File path) {
 		if (_listener != null) {
 			_listener.onRoot(this, path);
@@ -113,6 +155,44 @@ public class LocalFileListModel extends AbstractListModel {
 		}
 
 		return result;
+	}
+	
+	private int compareByKind(File f1, File f2) {
+	    if (f1.isDirectory() && f2.isDirectory()) {
+	        return f1.getName().compareTo(f2.getName());
+	    }
+	    
+	    if (f1.isDirectory()) {
+	        return -1;
+	    }
+	    
+	    if (f2.isDirectory()) {
+            return -1;
+        }
+	    
+	    int index1 = f1.getName().lastIndexOf('.');
+	    int index2 = f2.getName().lastIndexOf('.');
+	    
+	    if (index1 == -1 && index2 == -1) {
+	        return f1.getName().compareTo(f2.getName());
+	    }
+	    
+	    if (index1 == -1) {
+	        return 1;
+	    }
+	    
+	    if (index2 == -1) {
+            return 1;
+        }
+	    
+	    String ext1 = f1.getName().substring(index1);
+	    String ext2 = f2.getName().substring(index2);
+	    
+	    if (ext1.equals(ext2)) {
+	        return f1.getName().compareTo(f2.getName());
+	    }
+	    
+	    return ext1.compareTo(ext2);
 	}
 	
 	public interface OnRootListener {
