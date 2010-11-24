@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
 public class RedispatchMouseListener implements MouseListener, MouseMotionListener {
 	
@@ -49,7 +50,9 @@ public class RedispatchMouseListener implements MouseListener, MouseMotionListen
 
 	public void mouseClicked(MouseEvent e) {
 		Component c = getComponentAt(e);
-		if (c instanceof JButton || c instanceof JLabel) {
+		if (c instanceof JButton ||
+            c instanceof JRadioButton ||
+            c instanceof JLabel) {
 			c.dispatchEvent(new MouseEvent(c, e.getID(), e.getWhen(), e.getModifiers(), 0, 0, e.getClickCount(), e.isPopupTrigger(), e.getButton()));
 			_list.repaint(getRepaintBounds(e));
 		} else {
@@ -62,7 +65,8 @@ public class RedispatchMouseListener implements MouseListener, MouseMotionListen
 	public void mousePressed(MouseEvent e) {
 		Component c = getComponentAt(e);
 		_mousePressedEvent = e;
-		if (c instanceof JButton) {
+		if (c instanceof JButton ||
+            c instanceof JRadioButton) {
 			c.dispatchEvent(new MouseEvent(c, e.getID(), e.getWhen(), e.getModifiers(), 0, 0, e.getClickCount(), e.isPopupTrigger(), e.getButton()));
 			_list.repaint(getRepaintBounds(e));
 		} else {
@@ -75,7 +79,8 @@ public class RedispatchMouseListener implements MouseListener, MouseMotionListen
 	public void mouseReleased(MouseEvent e) {
 		if (_mousePressedEvent != null) {
 			Component c = getComponentAt(_mousePressedEvent);
-			if (c instanceof JButton) {
+			if (c instanceof JButton ||
+			    c instanceof JRadioButton) {
 				c.dispatchEvent(new MouseEvent(c, MouseEvent.MOUSE_RELEASED, e.getWhen(), e.getModifiers(), 0, 0, e.getClickCount(), e.isPopupTrigger(), e.getButton()));
 				_list.repaint(getRepaintBounds(_mousePressedEvent));
 			}
