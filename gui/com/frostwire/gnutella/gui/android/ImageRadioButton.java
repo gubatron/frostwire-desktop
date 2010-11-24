@@ -38,7 +38,7 @@ public class ImageRadioButton extends JRadioButton {
         setCompositePressedIcon(textImage);
     }
     
-    private void setupUI() {
+    protected void setupUI() {
         //////////visible effect trick
         setBorder(null);
         setBackground(null);
@@ -90,7 +90,7 @@ public class ImageRadioButton extends JRadioButton {
 
             FontMetrics metrics = graphicsDummy.getFontMetrics(font);
             int w = metrics.stringWidth(text) + 20;
-            int h = metrics.getHeight() + 20;
+            int h = metrics.getHeight();
 
             BufferedImage image1 = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
             graphics1 = image1.createGraphics();

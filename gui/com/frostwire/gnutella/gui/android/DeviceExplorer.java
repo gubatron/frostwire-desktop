@@ -2,7 +2,12 @@ package com.frostwire.gnutella.gui.android;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -10,14 +15,13 @@ import java.io.IOException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
 
 import com.frostwire.gnutella.gui.ImagePanel;
 
@@ -44,6 +48,7 @@ public class DeviceExplorer extends JPanel {
 	private ImageRadioButton _buttonVideos;
 	private ImageRadioButton _buttonRingtones;
 	private ImageRadioButton _buttonAudio;
+	private JTextField _textFilter;
 
 	public DeviceExplorer() {
 		_model = new FileDescriptorListModel();
@@ -93,16 +98,67 @@ public class DeviceExplorer extends JPanel {
 	private JPanel setupPanelDevice() {
 		JPanel panel = new JPanel(new BorderLayout());
 		
-		ImagePanel header = new ImagePanel(loadImageIcon("device_explorer_background.jpg").getImage());
-		header.setSize(400, 100);
-		header.setLayout(new BoxLayout(header, BoxLayout.LINE_AXIS));
+		ImagePanel header = new ImagePanel(loadImage("device_explorer_background.jpg"));
+		header.setLayout(new GridBagLayout());
 		
-		_buttonApplications = setupButtonType(header, DeviceConstants.FILE_TYPE_APPLICATIONS);
-		_buttonDocuments = setupButtonType(header, DeviceConstants.FILE_TYPE_DOCUMENTS);
-		_buttonPictures = setupButtonType(header, DeviceConstants.FILE_TYPE_PICTURES);
-		_buttonVideos = setupButtonType(header, DeviceConstants.FILE_TYPE_VIDEOS);
-		_buttonRingtones = setupButtonType(header, DeviceConstants.FILE_TYPE_RINGTONES);
-		_buttonAudio = setupButtonType(header, DeviceConstants.FILE_TYPE_AUDIO);
+		GridBagConstraints c;
+		
+		_buttonApplications = setupButtonType(DeviceConstants.FILE_TYPE_APPLICATIONS);
+		c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 0;
+        c.insets = new Insets(5, 5, 0, 5);
+        header.add(_buttonApplications, c);
+        
+		_buttonDocuments = setupButtonType(DeviceConstants.FILE_TYPE_DOCUMENTS);
+		c = new GridBagConstraints();
+        c.gridx = 1;
+        c.gridy = 0;
+        c.insets = new Insets(5, 0, 0, 5);
+        header.add(_buttonDocuments, c);
+        
+		_buttonPictures = setupButtonType(DeviceConstants.FILE_TYPE_PICTURES);
+		c = new GridBagConstraints();
+        c.gridx = 2;
+        c.gridy = 0;
+        c.insets = new Insets(5, 0, 0, 5);
+        header.add(_buttonPictures, c);
+        
+		_buttonVideos = setupButtonType(DeviceConstants.FILE_TYPE_VIDEOS);
+		c = new GridBagConstraints();
+        c.gridx = 3;
+        c.gridy = 0;
+        c.insets = new Insets(5, 0, 0, 5);
+        header.add(_buttonVideos, c);
+        
+		_buttonRingtones = setupButtonType(DeviceConstants.FILE_TYPE_RINGTONES);
+		c = new GridBagConstraints();
+        c.gridx = 4;
+        c.gridy = 0;
+        c.insets = new Insets(5, 0, 0, 5);
+        header.add(_buttonRingtones, c);
+        
+		_buttonAudio = setupButtonType(DeviceConstants.FILE_TYPE_AUDIO);
+		c = new GridBagConstraints();
+        c.gridx = 5;
+        c.gridy = 0;
+        c.insets = new Insets(5, 0, 0, 5);
+        header.add(_buttonAudio, c);
+        
+        _textFilter = new JTextField();
+        Dimension textFilterSize = new Dimension(100, 25);
+        _textFilter.setPreferredSize(textFilterSize);
+        _textFilter.setMinimumSize(textFilterSize);
+        _textFilter.setMaximumSize(textFilterSize);
+        _textFilter.setSize(textFilterSize);
+        c = new GridBagConstraints();
+        c.gridx = 6;
+        c.gridy = 0;
+        c.insets = new Insets(5, 0, 0, 5);
+        c.anchor = GridBagConstraints.EAST;
+        c.weightx = 1.0;
+        header.add(_textFilter, c);
+        
 		panel.add(header, BorderLayout.PAGE_START);
 		
 		_list = new JList(_model);
@@ -129,14 +185,14 @@ public class DeviceExplorer extends JPanel {
 		return p;
 	}
 	
-	private ImageRadioButton setupButtonType(JPanel container, final int type) {
+	private ImageRadioButton setupButtonType(final int type) {
 	    ImageRadioButton button = new ImageRadioButton();
-		button.setIcon(loadImageIcon(getImageName(type)));
-		button.setPressedIcon(loadImageIcon(getImageName(type) + "_checked"));
-		button.setSize(100, 100);
-		button.setPreferredSize(button.getSize());
-		button.setHorizontalTextPosition(SwingConstants.CENTER);
-		button.setVerticalTextPosition(SwingConstants.BOTTOM);
+		button.setIcon(new ImageIcon(loadImage(getImageName(type))));
+		button.setPressedIcon(new ImageIcon(loadImage(getImageName(type) + "_checked")));
+		//button.setSize(100, 80);
+		//button.setPreferredSize(button.getSize());
+		//button.setHorizontalTextPosition(SwingConstants.CENTER);
+		//button.setVerticalTextPosition(SwingConstants.L);
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -148,12 +204,10 @@ public class DeviceExplorer extends JPanel {
 		Font font = button.getFont();
 		button.setFont(new Font(font.getName(), font.getStyle() | Font.BOLD, font.getSize() + 4));
 		
-		container.add(button);
-		
 		return button;
 	}
 	
-	private ImageIcon loadImageIcon(String name) {
+	private Image loadImage(String name) {
 		String path = "images" + File.separator + name + ".png";
 		
 		if (name.endsWith(".jpg")) {
@@ -162,7 +216,7 @@ public class DeviceExplorer extends JPanel {
 		
 	    URL url = getClass().getResource(path);
 	    try {
-            return new ImageIcon(ImageIO.read(url));
+            return ImageIO.read(url);
         } catch (IOException e) {
             return null;
         }
