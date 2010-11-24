@@ -54,7 +54,7 @@ public class FileDescriptorListModel extends AbstractListModel {
 
     @Override
     public Object getElementAt(int index) {
-        if (index < _filterFileDescriptors.size()) {
+        if (index >= 0 && index < _filterFileDescriptors.size()) {
             return _filterFileDescriptors.get(index);
         } else {
             return null;

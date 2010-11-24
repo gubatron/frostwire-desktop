@@ -15,6 +15,8 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -23,7 +25,6 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 
 import com.frostwire.gnutella.gui.ImagePanel;
 
@@ -86,6 +87,21 @@ public class DeviceExplorer extends JPanel {
 	public FileDescriptorListModel getModel() {
 	    return _model;
 	}
+	
+	public List<FileDescriptor> getSelectedFileDescriptors() {
+        Object[] selectedValues = _list.getSelectedValues();
+        
+        if (selectedValues == null) {
+            return new ArrayList<FileDescriptor>();
+        }
+        
+        ArrayList<FileDescriptor> selectedFileDescriptors = new ArrayList<FileDescriptor>(selectedValues.length);
+        for (int i = 0; i < selectedValues.length; i++) {
+            selectedFileDescriptors.add((FileDescriptor) selectedValues[i]);
+        }
+        
+        return selectedFileDescriptors;
+    }
 	
 	protected void setupUI() {
         setLayout(new CardLayout());
@@ -178,7 +194,6 @@ public class DeviceExplorer extends JPanel {
 		_list = new JList(_model);
 		_list.setCellRenderer(new FileDescriptorRenderer());
 		_list.addMouseListener(new RedispatchMouseListener(_list));
-		_list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		_list.setLayoutOrientation(JList.VERTICAL);
 		_list.setDragEnabled(true);
 		_list.setTransferHandler(new DeviceListTransferHandler());

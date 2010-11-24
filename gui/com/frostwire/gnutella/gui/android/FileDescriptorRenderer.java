@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
@@ -196,8 +197,9 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 		
 		Device device = AndroidMediator.instance().getDeviceBar().getSelectedDevice();
 		File path = AndroidMediator.instance().getDesktopExplorer().getSelectedFolder();
+		List<FileDescriptor> fileDescriptors = AndroidMediator.instance().getDeviceExplorer().getSelectedFileDescriptors();
 		if (device != null && path != null && _fileDescriptor != null) {
-			AndroidMediator.addActivity(new CopyToDesktopTask(device, path, new FileDescriptor[] { _fileDescriptor }));
+			AndroidMediator.addActivity(new CopyToDesktopTask(device, path, fileDescriptors.toArray(new FileDescriptor[0])));
 		}
 	}
 	

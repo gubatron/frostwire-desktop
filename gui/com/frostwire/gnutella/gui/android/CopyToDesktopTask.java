@@ -85,6 +85,8 @@ public class CopyToDesktopTask extends Task {
 				
 				setProgress(100);
 				
+				AndroidMediator.instance().getDesktopExplorer().refresh();
+				
 			} catch (IOException e) {
 				fail(e);
 				break;
