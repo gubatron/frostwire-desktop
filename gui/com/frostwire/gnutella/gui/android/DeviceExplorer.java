@@ -8,6 +8,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -95,6 +97,12 @@ public class DeviceExplorer extends JPanel {
         add(_panelNoDevice, NO_DEVICE);
     }
 	
+	protected void textFilter_keyPressed(KeyEvent e) {
+	    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+           _model.filter(_textFilter.getText());
+        }
+    }
+	
 	private JPanel setupPanelDevice() {
 		JPanel panel = new JPanel(new BorderLayout());
 		
@@ -151,6 +159,12 @@ public class DeviceExplorer extends JPanel {
         _textFilter.setMinimumSize(textFilterSize);
         _textFilter.setMaximumSize(textFilterSize);
         _textFilter.setSize(textFilterSize);
+        _textFilter.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                textFilter_keyPressed(e);
+            }
+        });
         c = new GridBagConstraints();
         c.gridx = 6;
         c.gridy = 0;
@@ -178,7 +192,7 @@ public class DeviceExplorer extends JPanel {
 		return panel;
 	}
 	
-	private JPanel setupPanelNoDevice() {
+    private JPanel setupPanelNoDevice() {
 		JLabel l = new JLabel("hello");
 		JPanel p = new JPanel(new BorderLayout());
 		p.add(l);
@@ -189,10 +203,6 @@ public class DeviceExplorer extends JPanel {
 	    ImageRadioButton button = new ImageRadioButton();
 		button.setIcon(new ImageIcon(loadImage(getImageName(type))));
 		button.setPressedIcon(new ImageIcon(loadImage(getImageName(type) + "_checked")));
-		//button.setSize(100, 80);
-		//button.setPreferredSize(button.getSize());
-		//button.setHorizontalTextPosition(SwingConstants.CENTER);
-		//button.setVerticalTextPosition(SwingConstants.L);
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

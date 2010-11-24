@@ -57,7 +57,11 @@ public class LocalFileListModel extends AbstractListModel {
 
 	@Override
 	public Object getElementAt(int index) {
-		return _files.get(index);
+	    if (index < _files.size()) {
+	        return _files.get(index);
+	    } else {
+	        return null;
+	    }
 	}
 	
 	public void refresh() {

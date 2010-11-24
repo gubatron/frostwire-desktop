@@ -2,16 +2,15 @@ package com.frostwire.gnutella.gui.android;
 
 import java.util.List;
 
-import javax.swing.DefaultListModel;
 import javax.swing.SwingUtilities;
 
 public class BrowseTask extends Task {
 	
 	private Device _device;
-	private DefaultListModel _model;
+	private FileDescriptorListModel _model;
 	private int _type;
 
-	public BrowseTask(Device device, DefaultListModel model, int type) {
+	public BrowseTask(Device device, FileDescriptorListModel model, int type) {
 		_device = device;
 		_model = model;
 		_type = type;
@@ -21,7 +20,7 @@ public class BrowseTask extends Task {
 		return _device;
 	}
 	
-	public DefaultListModel getModel() {
+	public FileDescriptorListModel getModel() {
 		return _model;
 	}
 	
@@ -42,9 +41,7 @@ public class BrowseTask extends Task {
 				public void run() {
 					try {
 						_model.clear(); // avoid bad effects in instant browse button switch
-						for (FileDescriptor fileDescriptor : result) {
-							_model.addElement(fileDescriptor);
-						}
+						_model.addAll(result);
 					} catch (Exception e) {
 						fail(e);
 					}
