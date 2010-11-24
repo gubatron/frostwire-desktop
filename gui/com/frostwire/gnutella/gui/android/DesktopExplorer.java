@@ -1,5 +1,6 @@
 package com.frostwire.gnutella.gui.android;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
@@ -7,10 +8,12 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 
 import org.pushingpixels.flamingo.api.bcb.BreadcrumbItem;
@@ -29,7 +32,11 @@ public class DesktopExplorer extends JPanel {
 	 */
 	private static final long serialVersionUID = 7362861227107918643L;
 
+	private JToolBar _toolBar;
 	private JButton _buttonUp;
+	private JButton _buttonNew;
+	private JButton _buttonViewThumbnail;
+	private JButton _buttonViewList;
 	private JButton _buttonFavoriteApplications;
 	private JButton _buttonFavoriteDocuments;
 	private JButton _buttonFavoritePictures;
@@ -75,21 +82,100 @@ public class DesktopExplorer extends JPanel {
 		setupList();
 	}
 	
+	protected void buttonUp_mousePressed(MouseEvent e) {
+        File path = _model.getRoot().getParentFile();
+        if (path != null) {
+            setSelectedFolder(path);
+        }
+    }
+    
+    protected void buttonNew_mousePressed(MouseEvent e) {
+        LocalFile localFile = _model.createNewFolder();
+        if (localFile != null) {
+            _list.setSelectedValue(localFile, true);
+        }
+    }
+    
+    protected void buttonViewThumbnail_mousePressed(MouseEvent e) {
+        _list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+    }
+    
+    protected void buttonViewList_mousePressed(MouseEvent e) {
+        _list.setLayoutOrientation(JList.VERTICAL);
+    }
+	
 	private void setupTop() {
 		
 		GridBagConstraints c;
 		
-		_buttonUp = new JButton("UP");
+		_toolBar = new JToolBar();
+		_toolBar.setFloatable(false);
+		_toolBar.setRollover(true);
+		
+		Dimension toolBarButtonSize = new Dimension(28, 28);
+		
+		_buttonUp = new JButton();
+		_buttonUp.setIcon(new ImageIcon(new ImageTool().load("folder_up")));
+		_buttonUp.setPreferredSize(toolBarButtonSize);
+		_buttonUp.setMinimumSize(toolBarButtonSize);
+		_buttonUp.setMaximumSize(toolBarButtonSize);
+		_buttonUp.setSize(toolBarButtonSize);
 		_buttonUp.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				buttonUp_mouseClicked(e);
+			public void mousePressed(MouseEvent e) {
+				buttonUp_mousePressed(e);
 			}
 		});
+		_toolBar.add(_buttonUp);
+		
+		_buttonNew = new JButton();
+		_buttonNew.setIcon(new ImageIcon(new ImageTool().load("folder_new")));
+		_buttonNew.setPreferredSize(toolBarButtonSize);
+		_buttonNew.setMinimumSize(toolBarButtonSize);
+		_buttonNew.setMaximumSize(toolBarButtonSize);
+		_buttonNew.setSize(toolBarButtonSize);
+		_buttonNew.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                buttonNew_mousePressed(e);
+            }
+        });
+        _toolBar.add(_buttonNew);
+        
+        _toolBar.addSeparator();
+        
+        _buttonViewThumbnail = new JButton();
+        _buttonViewThumbnail.setIcon(new ImageIcon(new ImageTool().load("view_thumbnail")));
+        _buttonViewThumbnail.setPreferredSize(toolBarButtonSize);
+        _buttonViewThumbnail.setMinimumSize(toolBarButtonSize);
+        _buttonViewThumbnail.setMaximumSize(toolBarButtonSize);
+        _buttonViewThumbnail.setSize(toolBarButtonSize);
+        _buttonViewThumbnail.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                buttonViewThumbnail_mousePressed(e);
+            }
+        });
+        _toolBar.add(_buttonViewThumbnail);
+        
+        _buttonViewList = new JButton();
+        _buttonViewList.setIcon(new ImageIcon(new ImageTool().load("view_list")));
+        _buttonViewList.setPreferredSize(toolBarButtonSize);
+        _buttonViewList.setMinimumSize(toolBarButtonSize);
+        _buttonViewList.setMaximumSize(toolBarButtonSize);
+        _buttonViewList.setSize(toolBarButtonSize);
+        _buttonViewList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                buttonViewList_mousePressed(e);
+            }
+        });
+        _toolBar.add(_buttonViewList);
+        
 		c = new GridBagConstraints();
 		c.gridx = 0;
 		c.gridy = 0;
-		add(_buttonUp, c);
+		add(_toolBar, c);
 		
 		_buttonFavoriteApplications = setupButtonFavorite(I18n.tr("Applications"), SharingSettings.DEVICE_APPLICATIONS_FILES_DIR);
 		c = new GridBagConstraints();
@@ -141,8 +227,8 @@ public class DesktopExplorer extends JPanel {
 		c.gridwidth = 8; // this put a extra column and perform a nice fill at the end in the top row
 		add(_breadcrumb, c);
 	}
-	
-	private void setupList() {
+
+    private void setupList() {
 		
 		GridBagConstraints c;
 		
@@ -176,13 +262,6 @@ public class DesktopExplorer extends JPanel {
 			}
 		});
 		return button;
-	}
-
-	private void buttonUp_mouseClicked(MouseEvent e) {
-		File path = _model.getRoot().getParentFile();
-		if (path != null) {
-			setSelectedFolder(path);
-		}
 	}
 	
 	private void breadcrumb_pathEvent(BreadcrumbPathEvent event) {

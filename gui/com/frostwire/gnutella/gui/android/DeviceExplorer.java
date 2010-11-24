@@ -6,19 +6,14 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -125,7 +120,7 @@ public class DeviceExplorer extends JPanel {
 	private JPanel setupPanelDevice() {
 		JPanel panel = new JPanel(new BorderLayout());
 		
-		ImagePanel header = new ImagePanel(loadImage("device_explorer_background.jpg"));
+		ImagePanel header = new ImagePanel(new ImageTool().load("device_explorer_background.jpg"));
 		header.setLayout(new GridBagLayout());
 		
 		GridBagConstraints c;
@@ -227,9 +222,9 @@ public class DeviceExplorer extends JPanel {
 	
 	private ImageRadioButton setupButtonType(final int type) {
 	    ImageRadioButton button = new ImageRadioButton();
-		button.setIcon(new ImageIcon(loadImage(getImageName(type))));
-		button.setPressedIcon(new ImageIcon(loadImage(getImageName(type) + "_checked")));
-		button.setSelectedIcon(new ImageIcon(loadImage(getImageName(type) + "_checked")));
+		button.setIcon(new ImageIcon(new ImageTool().load(getImageName(type))));
+		button.setPressedIcon(new ImageIcon(new ImageTool().load(getImageName(type) + "_checked")));
+		button.setSelectedIcon(new ImageIcon(new ImageTool().load(getImageName(type) + "_checked")));
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -242,21 +237,6 @@ public class DeviceExplorer extends JPanel {
 		button.setFont(new Font(font.getName(), font.getStyle() | Font.BOLD, font.getSize() + 4));
 		
 		return button;
-	}
-	
-	private Image loadImage(String name) {
-		String path = "images" + File.separator + name + ".png";
-		
-		if (name.endsWith(".jpg")) {
-			path = "images" + File.separator + name;
-		}
-		
-	    URL url = getClass().getResource(path);
-	    try {
-            return ImageIO.read(url);
-        } catch (IOException e) {
-            return null;
-        }
 	}
 	
 	private String getImageName(int type) {

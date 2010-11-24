@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.AbstractListModel;
 
 import com.frostwire.gnutella.gui.android.LocalFile.OnOpenListener;
+import com.limegroup.gnutella.gui.I18n;
 
 public class LocalFileListModel extends AbstractListModel {
 	
@@ -67,6 +68,28 @@ public class LocalFileListModel extends AbstractListModel {
 	public void refresh() {
 		setRoot(_root);
 	}
+	
+	public LocalFile createNewFolder() {
+	    File file = null;
+	    LocalFile localFile = null;
+	    
+	    int n = 0;
+	    while ((file = new File(_root, I18n.tr("New Folder") + (n == 0 ? "" : " " + n))).exists()) {
+	        n++;
+	    }
+        
+	    try {
+            file.mkdir();
+            localFile = new LocalFile(file);
+            localFile.setOnOpenListener(_myOnOpenListener);
+            _files.add(localFile);
+            int index = _files.size() - 1;
+            fireIntervalAdded(this, index, index);
+        } catch (Exception e) {
+        }
+        
+        return localFile;
+    }
 	
 	protected void fireOnRoot(File path) {
 		if (_listener != null) {
