@@ -80,6 +80,8 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 		if (_fileDescriptor.fileType == DeviceConstants.FILE_TYPE_AUDIO ||
 		    _fileDescriptor.fileType == DeviceConstants.FILE_TYPE_APPLICATIONS) {
 		    _labelExtra.setText(_fileDescriptor.artist);
+		} else {
+		    _labelExtra.setText("");
 		}
 		
 		if (_fileDescriptor.fileType == DeviceConstants.FILE_TYPE_AUDIO) {

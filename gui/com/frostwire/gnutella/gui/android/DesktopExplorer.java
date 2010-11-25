@@ -259,6 +259,7 @@ public class DesktopExplorer extends JPanel {
 		_list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		_list.setDragEnabled(true);
 		_list.setTransferHandler(new DesktopListTransferHandler());
+		_list.setPrototypeCellValue(new LocalFile(SharingSettings.getDeviceFilesDirectory()));
 		_list.setVisibleRowCount(-1);
 		
 		_scrollPane = new JScrollPane(_list);
