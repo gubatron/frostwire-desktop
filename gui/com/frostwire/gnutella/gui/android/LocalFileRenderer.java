@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
+import javax.swing.filechooser.FileSystemView;
 
 import com.frostwire.gnutella.gui.ImagePanel;
 
@@ -29,12 +30,14 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
 	public static final int VIEW_LIST = 1;
 	
 	private static Map<Integer, Image> IMAGE_TYPES = new HashMap<Integer, Image>();
+	private static FileSystemView FILE_SYSTEM_VIEW = FileSystemView.getFileSystemView();
+	private static ImageTool IMAGE_TOOL = new ImageTool();
 	
 	private LocalFile _localFile;
 	private int _viewType;
 	
 	private ImagePanel _imagePanelThumbnail;
-	private JLabel _labelName;
+	private MultilineLabel _labelName;
 	
 	public LocalFileRenderer() {
 	    _viewType = VIEW_THUMBNAIL;
@@ -54,7 +57,7 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
         }
 		
 		setImagePanelThumbnail(_localFile.getFile());
-		_labelName.setText(_localFile.getName());
+		setLabelNameText(_localFile.getFile());
 		
 		return this;
 	}
@@ -71,7 +74,7 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
 	    
 	    _imagePanelThumbnail = new ImagePanel();
 	    
-	    _labelName = new JLabel();
+	    _labelName = new MultilineLabel();
         _labelName.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -112,7 +115,22 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
     }
 
     private void setImagePanelThumbnail(File file) {
-        Image image = new ImageTool().load("audio");
+        Image image = null;
+        if (file.isDirectory()) {
+            if (_viewType == VIEW_THUMBNAIL) {
+                image = IMAGE_TOOL.load("folder_64");
+            } else {
+                image = IMAGE_TOOL.load("folger");
+            }
+        } else {
+            image = IMAGE_TOOL.load("audio");
+        }
+        
         _imagePanelThumbnail.setImage(image);
+    }
+    
+    private void setLabelNameText(File file) {
+        //_labelName.setText("<html><p>" + FILE_SYSTEM_VIEW.getSystemDisplayName(file) + "</p></html>");
+        _labelName.setText(FILE_SYSTEM_VIEW.getSystemDisplayName(file));
     }
 }
