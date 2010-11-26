@@ -94,7 +94,7 @@ public class ProgressPanel extends JPanel {
 	 * @return
 	 */
 	private JLabel setupTitle() {
-		String fontFamily = GuiFrostWireUtils.getFontFamily("Dialog", "garuda","helvetica","arial","FreeSans");
+		String fontFamily = GuiFrostWireUtils.getFontFamily("Dialog", "myriad","garuda","helvetica","arial","FreeSans");
 		
 		Font titleFont = new Font(fontFamily,Font.BOLD,20);
 		JLabel titleLabel = new JLabel(" " + I18n.tr("File Transfers"));
