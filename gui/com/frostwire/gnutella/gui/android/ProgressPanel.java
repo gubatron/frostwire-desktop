@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
@@ -13,6 +12,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
@@ -87,52 +87,14 @@ public class ProgressPanel extends JPanel {
 
 	/**
 	 * Sets up a title label. It tries to use Helvetica, Arial and Sans-Serif.
-	 * If it cannot find any of these font families it'll just use Dialog.
+	 * See {@link GuiFrostWireUtils) getFontFamily().
 	 * 
-	 * The implementation of choosing fonts by a priority should probably be done in a generic manner,
-	 * maybe on {@link GuiFrostWireUtils}.getFamilyName(defaultValue, ...); Where ... is an open ended
-	 * list of String arguments representing the font families you may want. 
+	 * Case is of no importance for the family name, if it's there it'll find it.
+	 * 
 	 * @return
 	 */
 	private JLabel setupTitle() {
-		String[] availableFontFamilyNames = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-		
-		//fetch helvetica, arial or sans-serif.
-		String fontFamily = new String();
-		String helveticaCandidate = null;
-		String arialCandidate = null;
-		String sansCandidate = null;
-		for (String fontName : availableFontFamilyNames) {
-			
-			if (fontName.equalsIgnoreCase("helvetica")) {
-				helveticaCandidate = fontName;
-				continue;
-			}
-			
-			if (fontName.equalsIgnoreCase("arial")) {
-				arialCandidate = fontName;
-				continue;
-			}
-			
-			if (fontName.equalsIgnoreCase("sansserif")) {
-				sansCandidate = fontName;
-				continue;
-			}
-			
-			if (helveticaCandidate!=null && arialCandidate!=null & sansCandidate!=null) {
-				break;
-			}
-		}
-		
-		if (helveticaCandidate!=null) {
-			fontFamily=helveticaCandidate;
-		} else if (arialCandidate!=null) {
-			fontFamily=arialCandidate;
-		} else if (sansCandidate!=null) {
-			fontFamily=sansCandidate;
-		} else {
-			fontFamily="Dialog";
-		}
+		String fontFamily = GuiFrostWireUtils.getFontFamily("Dialog", "garuda","helvetica","arial","FreeSans");
 		
 		Font titleFont = new Font(fontFamily,Font.BOLD,20);
 		JLabel titleLabel = new JLabel(" " + I18n.tr("File Transfers"));
@@ -147,6 +109,12 @@ public class ProgressPanel extends JPanel {
 		int index = _listActivities.getSelectedIndex();
 		
 		if (index != -1) {
+			int showConfirmDialog = JOptionPane.showConfirmDialog(null, I18n.tr("Should I stop the File Transfer?"), I18n.tr("Are you sure?"), JOptionPane.YES_NO_OPTION);
+			
+			if (showConfirmDialog != JOptionPane.YES_OPTION) {
+				return;
+			}
+
 			_model.getElementAt(index).cancel();
 			_model.refreshIndex(index);
 		}
