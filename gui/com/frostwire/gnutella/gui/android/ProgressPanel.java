@@ -1,20 +1,26 @@
 package com.frostwire.gnutella.gui.android;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 
+import com.frostwire.GuiFrostWireUtils;
 import com.frostwire.gnutella.gui.android.Task.OnChangedListener;
+import com.limegroup.gnutella.gui.I18n;
 
 public class ProgressPanel extends JPanel {
 
@@ -53,6 +59,10 @@ public class ProgressPanel extends JPanel {
 	private void setupUI() {
 		setLayout(new BorderLayout());
 		
+		JLabel titleLabel = setupTitle();
+		
+		add(titleLabel, BorderLayout.PAGE_START);
+		
 		_buttonCancel = new JButton("Cancel");
 		_buttonCancel.addMouseListener(new MouseAdapter() {
 			@Override
@@ -60,7 +70,7 @@ public class ProgressPanel extends JPanel {
 				buttonCancel_mouseClicked(e);
 			}
 		});
-		add(_buttonCancel, BorderLayout.PAGE_START);		
+		add(_buttonCancel, BorderLayout.PAGE_END);		
 		
 		_listActivities = new JList(_model);
 		_listActivities.setCellRenderer(new TaskRenderer());
@@ -73,6 +83,64 @@ public class ProgressPanel extends JPanel {
 		add(_scrollPaneActivities, BorderLayout.CENTER);
 		
 		setPreferredSize(new Dimension(300, 100));
+	}
+
+	/**
+	 * Sets up a title label. It tries to use Helvetica, Arial and Sans-Serif.
+	 * If it cannot find any of these font families it'll just use Dialog.
+	 * 
+	 * The implementation of choosing fonts by a priority should probably be done in a generic manner,
+	 * maybe on {@link GuiFrostWireUtils}.getFamilyName(defaultValue, ...); Where ... is an open ended
+	 * list of String arguments representing the font families you may want. 
+	 * @return
+	 */
+	private JLabel setupTitle() {
+		String[] availableFontFamilyNames = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+		
+		//fetch helvetica, arial or sans-serif.
+		String fontFamily = new String();
+		String helveticaCandidate = null;
+		String arialCandidate = null;
+		String sansCandidate = null;
+		for (String fontName : availableFontFamilyNames) {
+			
+			if (fontName.equalsIgnoreCase("helvetica")) {
+				helveticaCandidate = fontName;
+				continue;
+			}
+			
+			if (fontName.equalsIgnoreCase("arial")) {
+				arialCandidate = fontName;
+				continue;
+			}
+			
+			if (fontName.equalsIgnoreCase("sansserif")) {
+				sansCandidate = fontName;
+				continue;
+			}
+			
+			if (helveticaCandidate!=null && arialCandidate!=null & sansCandidate!=null) {
+				break;
+			}
+		}
+		
+		if (helveticaCandidate!=null) {
+			fontFamily=helveticaCandidate;
+		} else if (arialCandidate!=null) {
+			fontFamily=arialCandidate;
+		} else if (sansCandidate!=null) {
+			fontFamily=sansCandidate;
+		} else {
+			fontFamily="Dialog";
+		}
+		
+		Font titleFont = new Font(fontFamily,Font.BOLD,20);
+		JLabel titleLabel = new JLabel(" " + I18n.tr("File Transfers"));
+		titleLabel.setForeground(Color.white);
+		titleLabel.setOpaque(true);
+		titleLabel.setBackground(new Color(0x2c7fb0));
+		titleLabel.setFont(titleFont);
+		return titleLabel;
 	}
 	
 	private void buttonCancel_mouseClicked(MouseEvent e) {
