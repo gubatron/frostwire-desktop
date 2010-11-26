@@ -2,30 +2,20 @@ package com.frostwire.gnutella.gui.android;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.ComponentOrientation;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.BoxLayout;
-import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
-import javax.swing.filechooser.FileSystemView;
-import javax.swing.plaf.IconUIResource;
 
-import com.apple.laf.AquaIcon;
 import com.frostwire.gnutella.gui.ImagePanel;
 
 public class LocalFileRenderer extends JPanel implements ListCellRenderer {
