@@ -33,31 +33,65 @@ public class MultilineLabel extends JLabel {
 
     private void calculateText(Graphics2D g) {
      
-        int width = getWidth();
-        
-        FontMetrics metrics = g.getFontMetrics(getFont());
-        
-        char[] arr = _originalText.toCharArray();
-        
-        int len = 0;
-        while (len < arr.length && metrics.charsWidth(arr, 0, len) < width) {
-            len++;
-        }
-        
-        if (len == _originalText.length()) { // one line
-            _calculatedText = "<html><p>" + _originalText + "</p><html>";
-        } else { // perform two lines layout
-            String line1 = _originalText.substring(0, len - 1);
-            String line2 = _originalText.substring(len);
-            if (line2.length() > len) { // perform ellipsis
-                int line1Width = metrics.stringWidth(line1);
-                while (metrics.stringWidth((line2 = line2.substring(0, line2.length() - 1)) + "...") > line1Width);
-                line2 = line2 + "...";
+        try {
+            
+            if (_originalText.indexOf("libbfd") != -1) {
+                int x = 0;
             }
             
-            _calculatedText = "<html><p>" + line1 + "</p><p>" + line2 + "</p><html>";
+            FontMetrics metrics = g.getFontMetrics(getFont());
+            
+            int width = getWidth() - metrics.stringWidth(" ") - 4;
+            
+            char[] arr = _originalText.toCharArray();
+            
+            int len = 0;
+            while (len < arr.length && metrics.charsWidth(arr, 0, len) < width) {
+                len++;
+            }
+            
+            if (len == _originalText.length()) { // one line
+                _calculatedText = "<html>" + makeParagraph(fillText(metrics, _originalText, width)) + "<html>";
+            } else { // perform two lines layout
+                int index = _originalText.lastIndexOf(" ");
+                if (index == -1) { // no suitable blank space to break at
+                    index = len;
+                }
+                String line1 = _originalText.substring(0, index);
+                String line2 = _originalText.substring(index);
+                if (line2.length() >= len - 1) { // perform ellipsis
+                    len = 0;
+                    while (metrics.stringWidth(line2.substring(0, len) + "... ") < width) {
+                        len++;
+                    }
+                    line2 = line2.substring(0, len) + "...";
+                }
+                
+                _calculatedText = "<html>" + makeParagraph(fillText(metrics, line1, width)) + makeParagraph(fillText(metrics, line2, width)) + "<html>";
+            }
+        } catch (Exception e) { // poor logic in some place
+            _calculatedText = _originalText;
         }
         
         setText(_calculatedText);
+    }
+    
+    private String fillText(FontMetrics metrics, String text, int width) {
+        boolean flag = true;
+        while (metrics.stringWidth(text + " ") < width) {
+            if (flag) {
+                text = text + " ";
+            } else {
+                text = " " + text;
+            }
+            
+            flag = !flag;
+        }
+        
+        return text.replace(" ", "&nbsp;");
+    }
+    
+    private String makeParagraph(String text) {
+        return "<p>" + text + "</p>";
     }
 }

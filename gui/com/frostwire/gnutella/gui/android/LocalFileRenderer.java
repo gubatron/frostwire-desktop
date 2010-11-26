@@ -3,8 +3,11 @@ package com.frostwire.gnutella.gui.android;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -99,14 +102,36 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
 	}
 
     private void layoutThumbnail() {
-        setLayout(new GridLayout(2, 1));
-        Dimension size = new Dimension(120, 120);
+        setLayout(new GridBagLayout());
+        Dimension size = new Dimension(140, 120);
         setPreferredSize(size);
         setMinimumSize(size);
         setMaximumSize(size);
         setSize(size);
-        add(_imagePanelThumbnail);
-        add(_labelName);
+        
+        GridBagConstraints c;
+        
+        Dimension thumbnailSize = new Dimension(64, 64);
+        _imagePanelThumbnail.setPreferredSize(thumbnailSize);
+        _imagePanelThumbnail.setMinimumSize(thumbnailSize);
+        _imagePanelThumbnail.setMaximumSize(thumbnailSize);
+        _imagePanelThumbnail.setSize(thumbnailSize);
+        c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 0;
+        c.insets = new Insets(0, 38, 0, 38);
+        add(_imagePanelThumbnail, c);
+        
+        Dimension labelNameSize = new Dimension(120, 64);
+        _labelName.setPreferredSize(labelNameSize);
+        _labelName.setMinimumSize(labelNameSize);
+        _labelName.setMaximumSize(labelNameSize);
+        _labelName.setSize(labelNameSize);
+        c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 1;
+        c.insets = new Insets(0, 10, 0, 10);
+        add(_labelName, c);
     }
     
     private void layoutList() {
