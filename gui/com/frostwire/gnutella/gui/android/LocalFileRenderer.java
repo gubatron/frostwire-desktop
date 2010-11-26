@@ -100,7 +100,7 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
 
     private void layoutThumbnail() {
         setLayout(new GridLayout(2, 1));
-        Dimension size = new Dimension(100, 100);
+        Dimension size = new Dimension(120, 120);
         setPreferredSize(size);
         setMinimumSize(size);
         setMaximumSize(size);
@@ -130,7 +130,6 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
     }
     
     private void setLabelNameText(File file) {
-        //_labelName.setText("<html><p>" + FILE_SYSTEM_VIEW.getSystemDisplayName(file) + "</p></html>");
         _labelName.setText(FILE_SYSTEM_VIEW.getSystemDisplayName(file));
     }
 }

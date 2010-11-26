@@ -1,12 +1,9 @@
 package com.frostwire.gnutella.gui.android;
 
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.font.LineBreakMeasurer;
-import java.awt.font.TextLayout;
-import java.text.AttributedString;
 
-import javax.smartcardio.ATR;
 import javax.swing.JLabel;
 
 public class MultilineLabel extends JLabel {
@@ -16,47 +13,51 @@ public class MultilineLabel extends JLabel {
      */
     private static final long serialVersionUID = -6265191318434960684L;
     
-    private static final String LN = System.getProperty("line.separator");
-    
-    private String _orignalText;
+    private String _originalText;
+    private String _calculatedText;
     
     @Override
     public void setText(String text) {
         super.setText(text);
-        _orignalText = text;
+        _originalText = text;
+        _calculatedText = null;
     }
 
     @Override
     public void paint(Graphics g) {
-        modifyText((Graphics2D) g);
+        if (_calculatedText == null) {
+            calculateText((Graphics2D) g);
+        }
         super.paint(g);
     }
 
-    private void modifyText(Graphics2D g) {
+    private void calculateText(Graphics2D g) {
      
         int width = getWidth();
-        String newText = "";
         
-        AttributedString attrStr = new AttributedString(_orignalText);
+        FontMetrics metrics = g.getFontMetrics(getFont());
         
-        LineBreakMeasurer linebreaker = new LineBreakMeasurer(attrStr.getIterator(), g.getFontRenderContext());
-
-        int begin = 0;
-        int end = 0;
-        float y = 0.0f;
-        while (linebreaker.getPosition() < _orignalText.length()) {
-            TextLayout tl = linebreaker.nextLayout(width);
-
-            y += tl.getAscent();
-            tl.draw(g, 0, y);
-            y += tl.getDescent() + tl.getLeading();
-            
-            begin = end;
-            end = linebreaker.getPosition();
-            
-            newText += _orignalText.substring(begin, end) + (end == _orignalText.length() - 1 ? "" : LN);
+        char[] arr = _originalText.toCharArray();
+        
+        int len = 0;
+        while (len < arr.length && metrics.charsWidth(arr, 0, len) < width) {
+            len++;
         }
         
-        setText(newText);
+        if (len == _originalText.length()) { // one line
+            _calculatedText = "<html><p>" + _originalText + "</p><html>";
+        } else { // perform two lines layout
+            String line1 = _originalText.substring(0, len - 1);
+            String line2 = _originalText.substring(len);
+            if (line2.length() > len) { // perform ellipsis
+                int line1Width = metrics.stringWidth(line1);
+                while (metrics.stringWidth((line2 = line2.substring(0, line2.length() - 1)) + "...") > line1Width);
+                line2 = line2 + "...";
+            }
+            
+            _calculatedText = "<html><p>" + line1 + "</p><p>" + line2 + "</p><html>";
+        }
+        
+        setText(_calculatedText);
     }
 }
