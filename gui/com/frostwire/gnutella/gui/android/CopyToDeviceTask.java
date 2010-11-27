@@ -46,7 +46,7 @@ public class CopyToDeviceTask extends Task {
 					
 					_progressMessage = file.getName() + ((_localFiles.length > 1) ? (" " + (i + 1) + "/" + _localFiles.length) : "");
 					
-					_device.upload(getFileType(file), file, new ProgressFileEntityListener() {
+					_device.upload(_localFiles[i].getFileType(), file, new ProgressFileEntityListener() {
 						public void onWrite(ProgressFileEntity progressFileEntity, int written) {
 							_totalWritten += written;
 							setProgress((int) ((_totalWritten * 100) / _totalBytes));
@@ -80,15 +80,5 @@ public class CopyToDeviceTask extends Task {
 			total += localFile.getFile().length();
 		}
 		return total;
-	}
-	
-	private int getFileType(File file) {
-		String name = file.getName();
-		
-		if (name.endsWith(".mp3")) {
-			return DeviceConstants.FILE_TYPE_AUDIO;
-		} else {
-			return DeviceConstants.FILE_TYPE_DOCUMENTS;
-		}
 	}
 }

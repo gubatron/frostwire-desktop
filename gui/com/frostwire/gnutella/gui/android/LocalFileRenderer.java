@@ -3,18 +3,23 @@ package com.frostwire.gnutella.gui.android;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.Insets;
+import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.font.TextLayout;
+import java.awt.image.BufferedImage;
+import java.awt.image.ConvolveOp;
+import java.awt.image.Kernel;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
@@ -32,7 +37,7 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
 	public static final int VIEW_THUMBNAIL = 0;
 	public static final int VIEW_LIST = 1;
 	
-	private static Map<Integer, Image> IMAGE_TYPES = new HashMap<Integer, Image>();
+	private static Map<String, BufferedImage> IMAGE_TYPES = new HashMap<String, BufferedImage>();
 	private static FileSystemView FILE_SYSTEM_VIEW = FileSystemView.getFileSystemView();
 	private static ImageTool IMAGE_TOOL = new ImageTool();
 	
@@ -59,7 +64,7 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
             setBackground(Color.WHITE);
         }
 		
-		setImagePanelThumbnail(_localFile.getFile());
+		setImagePanelThumbnail(_localFile);
 		setLabelNameText(_localFile.getFile());
 		
 		return this;
@@ -140,22 +145,124 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
         
     }
 
-    private void setImagePanelThumbnail(File file) {
-        Image image = null;
-        if (file.isDirectory()) {
+    private void setImagePanelThumbnail(LocalFile localFile) {
+        BufferedImage image = null;
+        if (localFile.getFile().isDirectory()) {
             if (_viewType == VIEW_THUMBNAIL) {
                 image = IMAGE_TOOL.load("folder_64");
             } else {
                 image = IMAGE_TOOL.load("folger");
             }
         } else {
-            image = IMAGE_TOOL.load("audio");
+            String ext = localFile.getExt();
+            if (IMAGE_TYPES.containsKey(ext)) {
+                image = IMAGE_TYPES.get(ext);
+            } else {
+                image = IMAGE_TOOL.load(IMAGE_TOOL.getImageNameByFileType(localFile.getFileType()));
+                if (ext != null) {
+                    image = composeImage(image, ext);
+                    IMAGE_TYPES.put(ext, image);
+                }
+            }
         }
         
         _imagePanelThumbnail.setImage(image);
     }
-    
+
     private void setLabelNameText(File file) {
         _labelName.setText(FILE_SYSTEM_VIEW.getSystemDisplayName(file));
+    }
+    
+    private BufferedImage composeImage(BufferedImage imageInput, String ext) {
+        
+        BufferedImage image1 = imageInput;
+        BufferedImage image2 = buildTextImage(ext.toUpperCase());
+        
+        int w1 = image1.getWidth();
+        int h1 = image1.getHeight();
+        int w2 = image2.getWidth();
+        int h2 = image2.getHeight();
+        
+        int w = w1;
+        int h = h1;
+        
+        BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        
+        Graphics2D graphics = image.createGraphics();
+        
+        try {
+            
+            graphics.drawImage(image1,  0,  0, w1, h1, null);
+            graphics.drawImage(image2, 14, 45, w2, h2, null);
+            
+        } finally {
+            if (graphics != null) {
+                graphics.dispose();
+            }
+        }
+        
+        return image;
+    }
+    
+    private BufferedImage buildTextImage(String text) {
+        
+        Font font = new Font("Curier", Font.ITALIC | Font.BOLD, 16);
+
+        Graphics2D graphicsDummy = null;
+        Graphics2D graphics1 = null;
+        Graphics2D graphics2 = null;
+        
+        BufferedImage image = null;
+
+        try {
+
+            BufferedImage imageDummy = new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB);
+            graphicsDummy = imageDummy.createGraphics();
+            graphicsDummy.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            graphicsDummy.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+
+            FontMetrics metrics = graphicsDummy.getFontMetrics(font);
+            int w = metrics.stringWidth(text) + 20;
+            int h = metrics.getHeight() + 10;
+
+            BufferedImage image1 = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+            graphics1 = image1.createGraphics();
+            graphics1.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            graphics1.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+
+            //draw "shadow" text: to be blurred next
+            TextLayout textLayout = new TextLayout(text, font, graphics1.getFontRenderContext());
+            graphics1.setPaint(Color.BLUE);
+            textLayout.draw(graphics1, 11, 14);
+            graphics1.dispose();
+
+            //blur the shadow: result is sorted in image2
+            float ninth = 3.0f / 9.0f;
+            float[] kernel = { ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth };
+            ConvolveOp op = new ConvolveOp(new Kernel(3, 3, kernel), ConvolveOp.EDGE_NO_OP, null);
+            BufferedImage image2 = op.filter(image1, null);
+
+            //write "original" text on top of shadow
+            graphics2 = image2.createGraphics();
+            graphics2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            graphics2.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+            graphics2.setPaint(Color.YELLOW);
+            textLayout.draw(graphics2, 10, 13);
+            
+            image = image2;
+            
+        } finally {
+            if (graphicsDummy != null) {
+                graphicsDummy.dispose();
+            }
+            if (graphicsDummy != null) {
+                graphics1.dispose();
+            }
+            if (graphicsDummy != null) {
+                graphics2.dispose();
+            }
+        }
+
+        return image;
     }
 }

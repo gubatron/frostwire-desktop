@@ -16,10 +16,13 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 
 import org.pushingpixels.flamingo.api.bcb.BreadcrumbItem;
 import org.pushingpixels.flamingo.api.bcb.BreadcrumbPathEvent;
@@ -53,6 +56,8 @@ public class DesktopExplorer extends JPanel {
 	private BreadcrumbFileSelector _breadcrumb;
 	private JList _list;
 	private JScrollPane _scrollPane;
+	private JPopupMenu _popupList;
+	private JMenuItem _menuRename;
 	
 	private LocalFileListModel _model;
 	
@@ -262,6 +267,19 @@ public class DesktopExplorer extends JPanel {
 		_list.setTransferHandler(new DesktopListTransferHandler());
 		_list.setPrototypeCellValue(new LocalFile(SharingSettings.getDeviceFilesDirectory()));
 		_list.setVisibleRowCount(-1);
+		
+		_popupList = new JPopupMenu();
+		_popupList.add(_menuRename = new JMenuItem(I18n.tr("Rename")));
+		
+        _list.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // if right mouse button clicked (or e.isPopupTrigger())
+                if (SwingUtilities.isRightMouseButton(e) && !_list.isSelectionEmpty() && _list.locationToIndex(e.getPoint()) == _list.getSelectedIndex()) {
+                    _popupList.show(_list, e.getX(), e.getY());
+                }
+            }
+        });
 		
 		_scrollPane = new JScrollPane(_list);
 		c = new GridBagConstraints();

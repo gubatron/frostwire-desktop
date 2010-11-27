@@ -42,7 +42,24 @@ public class LocalFile implements Serializable {
 		_listener = listener;
 	}
 	
-	public void open() {
+	public String getExt() {
+	    String name = _file.getName();
+        int index = name.lastIndexOf(".");
+        String ext = index != -1 ? name.substring(index + 1, name.length()) : null;
+        
+        return ext;
+	}
+	
+	public int getFileType() {
+	    String ext = getExt();
+	    if (ext != null) {
+	        return getFileTypeByExt(ext);
+	    } else {
+	        return DeviceConstants.FILE_TYPE_DOCUMENTS;
+	    }
+	}
+
+    public void open() {
 		if (_file.isDirectory()) {
 			fireOnOpen();
 		}
@@ -58,6 +75,14 @@ public class LocalFile implements Serializable {
 			_listener.onOpen(this);
 		}
 	}
+	
+	private int getFileTypeByExt(String ext) {
+        if (ext.equalsIgnoreCase("mp3")) {
+            return DeviceConstants.FILE_TYPE_AUDIO;
+        } else {
+            return DeviceConstants.FILE_TYPE_DOCUMENTS;
+        }
+    }
 	
 	public interface OnOpenListener {	
 		public void onOpen(LocalFile localFile);
