@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.Calendar;
 import java.util.StringTokenizer;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class constructs an <tt>Initializer</tt> instance that constructs
@@ -28,6 +29,7 @@ public class Main {
 	 */
 	@SuppressWarnings("unchecked")
     public static void main(String args[]) {
+		System.out.println("1: Main.main("+args+")");
 	    Frame splash = null;
 	    try {
             if (isMacOSX()) {
@@ -35,13 +37,11 @@ public class Main {
                 // Use reflection to not slow down non-OSX systems.
                 // "GURLHandler.getInstance().register();"
             	MAC_EVENT_REGISTER_LATCH = new CountDownLatch(1);
-            	
                 Class clazz = Class.forName("com.limegroup.gnutella.gui.GURLHandler");
                 Method getInstance = clazz.getMethod("getInstance", new Class[0]);
                 Object gurl = getInstance.invoke(null, new Object[0]);
                 Method register = gurl.getClass().getMethod("register", new Class[0]);
                 register.invoke(gurl, new Object[0]);
-                
                 MAC_EVENT_REGISTER_LATCH.await();
                 
                 System.out.print("preferIPV6Addresses: ");

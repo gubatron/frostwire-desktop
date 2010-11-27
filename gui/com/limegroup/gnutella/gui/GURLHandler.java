@@ -6,9 +6,16 @@ import javax.swing.SwingUtilities;
 import org.limewire.service.ErrorService;
 import org.limewire.util.OSUtils;
 
+import com.apple.eawt.AppEventListener;
+import com.apple.eawt.AppForegroundListener;
+import com.apple.eawt.AppReOpenedListener;
 import com.apple.eawt.Application;
-import com.apple.eawt.ApplicationAdapter;
-import com.apple.eawt.ApplicationEvent;
+import com.apple.eawt.OpenFilesHandler;
+import com.apple.eawt.AppEvent.AppForegroundEvent;
+import com.apple.eawt.AppEvent.AppReOpenedEvent;
+import com.apple.eawt.AppEvent.OpenFilesEvent;
+//import com.apple.eawt.ApplicationAdapter;
+//import com.apple.eawt.ApplicationEvent;
 import com.limegroup.gnutella.browser.ExternalControl;
 
 /**
@@ -27,10 +34,13 @@ public final class GURLHandler {
     
     static {
         try {
-            if (OSUtils.isMacOSX105() || OSUtils.isMacOSX106())
+            if (OSUtils.isMacOSX105() || OSUtils.isMacOSX106()) {
                 System.loadLibrary("GURLLeopard");
-            else
-                System.loadLibrary("GURLTiger");
+                System.out.println("GURLLeopard loadded.");
+            }
+            else {
+                System.loadLibrary("GURLTiger loaded.");
+            }
         }
         catch (UnsatisfiedLinkError err) {
             ErrorService.error(err);
@@ -92,44 +102,30 @@ public final class GURLHandler {
         }
     }
     
+    private void lowerLatchFromMain() {
+        try {
+            synchronized (Main.MAC_EVENT_REGISTER_LATCH) {
+            	Main.MAC_EVENT_REGISTER_LATCH.countDown();
+            }
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+    }
+    
     public final void initializeApplicationAdapter() {
         APP = Application.getApplication();
+        MacEventHandler.instance();
         
-        //System.out.println("FrostWireLauncher.initializingApplicationAdapter()");
-        
-        APP.addApplicationListener(new ApplicationAdapter() {
-            @Override
-            public void handleOpenFile(ApplicationEvent evt) {
-            	//System.out.println("ApplicationAdapter().handleOpenFile()");
-            	genericHandler(evt);
-            }
-            
-            public void handleOpenApplication(ApplicationEvent evt) {
-            	//System.out.println("ApplicationAdapter().handleOpenApplication()");
-            	genericHandler(evt);
-            }
-            
-            public void handleReOpenApplication(ApplicationEvent evt) {
-            	//System.out.println("ApplicationAdapter().handleReOpenApplication()");
-            	genericHandler(evt);
-            }
-            
-            private void genericHandler(ApplicationEvent evt) {
-                System.out.println("GURLHandler.initializeApplicationAdapter().genericHandler() invoked");
-                String path = evt.getFilename();
-                if (path != null) {
-                    Main.argFilePath = path;
-                }
-
-                try {
-                    synchronized (Main.MAC_EVENT_REGISTER_LATCH) {
-                    	Main.MAC_EVENT_REGISTER_LATCH.countDown();
-                    }
-                 } catch (Exception e) {
-                     e.printStackTrace();
-                 }
-            } //genericHandler
-        });
+        /**
+        APP.setOpenFileHandler(new OpenFilesHandler() {
+			
+			@Override
+			public void openFiles(OpenFilesEvent arg0) {
+				
+			}
+		});
+		*/
+        Main.MAC_EVENT_REGISTER_LATCH.countDown();
     }    
     
     private synchronized final native int InstallEventHandler();
