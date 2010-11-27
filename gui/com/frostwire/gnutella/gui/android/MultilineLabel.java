@@ -35,13 +35,9 @@ public class MultilineLabel extends JLabel {
      
         try {
             
-            if (_originalText.indexOf("libbfd") != -1) {
-                int x = 0;
-            }
-            
             FontMetrics metrics = g.getFontMetrics(getFont());
             
-            int width = getWidth() - metrics.stringWidth(" ") - 4;
+            int width = getWidth() - metrics.stringWidth(" ") - 6;
             
             char[] arr = _originalText.toCharArray();
             
@@ -50,15 +46,19 @@ public class MultilineLabel extends JLabel {
                 len++;
             }
             
+            String line1;
+            String line2;
+            
             if (len == _originalText.length()) { // one line
-                _calculatedText = "<html>" + makeParagraph(fillText(metrics, _originalText, width)) + "<html>";
+                line1 = _originalText;
+                line2 = " ";
             } else { // perform two lines layout
                 int index = _originalText.lastIndexOf(" ");
                 if (index == -1) { // no suitable blank space to break at
                     index = len;
                 }
-                String line1 = _originalText.substring(0, index);
-                String line2 = _originalText.substring(index);
+                line1 = _originalText.substring(0, index);
+                line2 = _originalText.substring(index);
                 if (line2.length() >= len - 1) { // perform ellipsis
                     len = 0;
                     while (metrics.stringWidth(line2.substring(0, len) + "... ") < width) {
@@ -66,9 +66,9 @@ public class MultilineLabel extends JLabel {
                     }
                     line2 = line2.substring(0, len) + "...";
                 }
-                
-                _calculatedText = "<html>" + makeParagraph(fillText(metrics, line1, width)) + makeParagraph(fillText(metrics, line2, width)) + "<html>";
             }
+            
+            _calculatedText = "<html>" + makeParagraph(fillText(metrics, line1, width)) + makeParagraph(fillText(metrics, line2, width)) + "<html>";
         } catch (Exception e) { // poor logic in some place
             _calculatedText = _originalText;
         }

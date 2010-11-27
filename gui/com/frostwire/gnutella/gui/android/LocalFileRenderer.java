@@ -103,7 +103,7 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
 
     private void layoutThumbnail() {
         setLayout(new GridBagLayout());
-        Dimension size = new Dimension(140, 120);
+        Dimension size = new Dimension(140, 100);
         setPreferredSize(size);
         setMinimumSize(size);
         setMaximumSize(size);
@@ -122,7 +122,7 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
         c.insets = new Insets(0, 38, 0, 38);
         add(_imagePanelThumbnail, c);
         
-        Dimension labelNameSize = new Dimension(120, 64);
+        Dimension labelNameSize = new Dimension(118, 30);
         _labelName.setPreferredSize(labelNameSize);
         _labelName.setMinimumSize(labelNameSize);
         _labelName.setMaximumSize(labelNameSize);
@@ -130,7 +130,8 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
         c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = 1;
-        c.insets = new Insets(0, 10, 0, 10);
+        c.anchor = GridBagConstraints.NORTH;
+        c.insets = new Insets(0, 12, 0, 10);
         add(_labelName, c);
     }
     
