@@ -49,10 +49,12 @@ public final class AzureusStarter {
 	 * Initializes synchronously the azureus core
 	 */
 	private static void azureusInit() {
-		if (AZUREUS_CORE != null && AZUREUS_CORE.isStarted()) {
-			LOG.debug("azureusInit(): core already started. skipping.");
-			return;
-		}
+		try {
+			if (AZUREUS_CORE != null && AZUREUS_CORE.isStarted()) {
+				LOG.debug("azureusInit(): core already started. skipping.");
+				return;
+			}
+		} catch (Exception ignore) {}
 		
 		if (!AzureusCoreFactory.isCoreAvailable()) {
 			//This does work
