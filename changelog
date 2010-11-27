@@ -1,3 +1,9 @@
+frostwire (4.21.2) stable; urgency=low
+
+  * Fixes text rendering issue on search results. 
+	
+ -- FrostWire Team <contact@frostwire.com>  Fri, 26 Nov 2010 21:02:17 -0500
+
 frostwire (4.21.1) stable; urgency=low
 
   * New auto-update support for Windows and Ubuntu. 
