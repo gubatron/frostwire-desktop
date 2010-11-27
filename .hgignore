@@ -1,6 +1,6 @@
 syntax: glob
 bin/*
-builder/*
+builder
 *.class
 *.orig
 .classpath
@@ -8,3 +8,4 @@ log4.log
 gui/log4.log
 lib/jars/other/themes.jar
 components/http/build/classes/org/limewire/http/package.html
+*dist/*.jar
