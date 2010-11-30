@@ -64,6 +64,12 @@ public class LocalFile implements Serializable {
 			fireOnOpen();
 		}
 	}
+    
+    public void rename(String name) {
+        File dest = new File(_file.getParentFile(), name);
+        _file.renameTo(dest);
+        _file = dest;
+    }
 	
 	@Override
 	public String toString() {

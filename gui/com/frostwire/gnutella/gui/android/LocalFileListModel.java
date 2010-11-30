@@ -195,6 +195,14 @@ public class LocalFileListModel extends AbstractListModel {
 	    return ext1.compareTo(ext2);
 	}
 	
+	public void rename(int index, String name) {
+	    LocalFile localFile = (LocalFile) getElementAt(index);
+	    if (localFile != null) {
+	        localFile.rename(name);
+	        fireContentsChanged(this, index, index);
+	    }
+	}
+	
 	public interface OnRootListener {
 		public void onRoot(LocalFileListModel localFileListModel, File path);
 	}

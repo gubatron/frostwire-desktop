@@ -21,11 +21,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JList;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JTextArea;
 import javax.swing.ListCellRenderer;
+import javax.swing.SwingUtilities;
 import javax.swing.filechooser.FileSystemView;
 
 import com.frostwire.gnutella.gui.ImagePanel;
+import com.limegroup.gnutella.gui.I18n;
 
 public class LocalFileRenderer extends JPanel implements ListCellRenderer {
 
@@ -65,15 +70,22 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
         }
 		
 		setImagePanelThumbnail(_localFile);
-		setLabelNameText(_localFile.getFile());
+		
+		_labelName.setText(FILE_SYSTEM_VIEW.getSystemDisplayName(_localFile.getFile()));
 		
 		return this;
 	}
 
     public Component getComponentAt(int x, int y) {
-		for (int i = 0; i < getComponentCount(); i++)
-            if (getComponent(i).getBounds().contains(x, y))
+		for (int i = 0; i < getComponentCount(); i++) {
+            if (getComponent(i).getBounds().contains(x, y)) {
                 return getComponent(i);
+            }
+		}
+        
+        if (getBounds().contains(x, y)) {
+            return this;
+        }
         
         return null;
     }
@@ -81,6 +93,14 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
 	protected void setupUI() {
 	    
 	    _imagePanelThumbnail = new ImagePanel();
+	    _imagePanelThumbnail.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() >= 2 && !e.isConsumed()) {
+                    _localFile.open();
+                }
+            }
+        });
 	    
 	    _labelName = new MultilineLabel();
         _labelName.addMouseListener(new MouseAdapter() {
@@ -151,7 +171,7 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
             if (_viewType == VIEW_THUMBNAIL) {
                 image = IMAGE_TOOL.load("folder_64");
             } else {
-                image = IMAGE_TOOL.load("folger");
+                image = IMAGE_TOOL.load("folder");
             }
         } else {
             String ext = localFile.getExt();
@@ -167,10 +187,6 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
         }
         
         _imagePanelThumbnail.setImage(image);
-    }
-
-    private void setLabelNameText(File file) {
-        _labelName.setText(FILE_SYSTEM_VIEW.getSystemDisplayName(file));
     }
     
     private BufferedImage composeImage(BufferedImage imageInput, String ext) {

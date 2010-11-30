@@ -95,9 +95,15 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 	}
 	
 	public Component getComponentAt(int x, int y) {
-		for (int i = 0; i < getComponentCount(); i++)
-            if (getComponent(i).getBounds().contains(x, y))
+		for (int i = 0; i < getComponentCount(); i++) {
+            if (getComponent(i).getBounds().contains(x, y)) {
                 return getComponent(i);
+            }
+		}
+		
+		if (getBounds().contains(x, y)) {
+            return this;
+        }
         
         return null;
     }

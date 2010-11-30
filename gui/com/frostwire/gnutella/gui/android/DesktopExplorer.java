@@ -56,8 +56,8 @@ public class DesktopExplorer extends JPanel {
 	private BreadcrumbFileSelector _breadcrumb;
 	private JList _list;
 	private JScrollPane _scrollPane;
-	private JPopupMenu _popupList;
-	private JMenuItem _menuRename;
+    private JPopupMenu _popupList;
+    private JMenuItem _menuRename;
 	
 	private LocalFileListModel _model;
 	
@@ -267,10 +267,18 @@ public class DesktopExplorer extends JPanel {
 		_list.setTransferHandler(new DesktopListTransferHandler());
 		_list.setPrototypeCellValue(new LocalFile(SharingSettings.getDeviceFilesDirectory()));
 		_list.setVisibleRowCount(-1);
-		
-		_popupList = new JPopupMenu();
-		_popupList.add(_menuRename = new JMenuItem(I18n.tr("Rename")));
-		
+        
+        _popupList = new JPopupMenu();
+        _popupList.add(_menuRename = new JMenuItem(I18n.tr("Rename")));
+        _menuRename.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int index = _list.getSelectedIndex();
+                if (index != -1) {
+                    // TODO: Show window
+                }
+            }
+        });
+        
         _list.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
