@@ -69,13 +69,13 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
     @Override
 	public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 		
+        _localFile = (LocalFile) value;     
+        _selected = isSelected;
+        
         if (_layoutOrientation != list.getLayoutOrientation()) {
             _layoutOrientation = list.getLayoutOrientation();
             relayout();
-        }
-        
-		_localFile = (LocalFile) value;		
-		_selected = isSelected;		
+        }		
 		
 		setImagePanelThumbnail(_localFile);		
 		if (_layoutOrientation == JList.HORIZONTAL_WRAP) {
@@ -189,6 +189,9 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
 	}
 	
 	private void relayout() {
+	    
+	    IMAGE_TYPES.remove(_localFile.getExt());
+	    
 	    remove(_imagePanel);
 	    remove(_multilineLabelName);
 	    remove(_labelName);
@@ -295,7 +298,7 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
                 }
             }
             
-            image = image.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+            //image = image.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
         }
         
         _imagePanel.setImage(image);
@@ -321,7 +324,8 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
         try {
             
             graphics.drawImage(image1,  0,  0, w1, h1, null);
-            graphics.drawImage(image2, 14, 45, w2, h2, null);
+            //graphics.drawImage(image2, 14, 45, w2, h2, null);
+            graphics.drawImage(image2, 0, 0, w2, h2, null);
             
         } finally {
             if (graphics != null) {

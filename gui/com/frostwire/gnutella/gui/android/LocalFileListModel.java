@@ -25,6 +25,8 @@ public class LocalFileListModel extends AbstractListModel {
 	public static final int SORT_BY_DATE_DESC = 4;
 	public static final int SORT_BY_KIND_ASC = 5;
 	public static final int SORT_BY_KIND_DESC = 6;
+	public static final int SORT_BY_SIZE_ASC = 7;
+    public static final int SORT_BY_SIZE_DESC = 8;
 	
 	private File _root;
 	private List<LocalFile> _files;
@@ -58,6 +60,9 @@ public class LocalFileListModel extends AbstractListModel {
     		        Long d1 = f1.lastModified();
     		        Long d2 = f2.lastModified();
     		        
+    		        Long l1 = f1.length();
+    		        Long l2 = f2.length();
+    		        
                     switch (_sortCriteria) {
                     case SORT_BY_NAME_ASC: return f1.getName().compareTo(f2.getName());
                     case SORT_BY_NAME_DESC: return -1 * f1.getName().compareTo(f2.getName());
@@ -65,6 +70,8 @@ public class LocalFileListModel extends AbstractListModel {
                     case SORT_BY_DATE_DESC: return -1 * d1.compareTo(d2);
                     case SORT_BY_KIND_ASC: return compareByKind(f1, f2);
                     case SORT_BY_KIND_DESC: return -1 * compareByKind(f1, f2);
+                    case SORT_BY_SIZE_ASC: return l1.compareTo(l2);
+                    case SORT_BY_SIZE_DESC: return -1 * l1.compareTo(l2);
                     default: return 0;
                     }
                 }
