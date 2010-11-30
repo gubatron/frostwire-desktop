@@ -2,6 +2,7 @@ package com.frostwire.gnutella.gui.android;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.HashMap;
 
 public class LocalFile implements Serializable {
 	
@@ -15,10 +16,9 @@ public class LocalFile implements Serializable {
 	private transient OnOpenListener _listener;
 	
 	public LocalFile() {
-		
 	}
-	
-	public LocalFile(File file) {
+
+    public LocalFile(File file) {
 		_file = file;
 	}
 
@@ -52,11 +52,7 @@ public class LocalFile implements Serializable {
 	
 	public int getFileType() {
 	    String ext = getExt();
-	    if (ext != null) {
-	        return getFileTypeByExt(ext);
-	    } else {
-	        return DeviceConstants.FILE_TYPE_DOCUMENTS;
-	    }
+	    return new UITool().getFileTypeByExt(ext);
 	}
 
     public void open() {
@@ -81,14 +77,6 @@ public class LocalFile implements Serializable {
 			_listener.onOpen(this);
 		}
 	}
-	
-	private int getFileTypeByExt(String ext) {
-        if (ext.equalsIgnoreCase("mp3")) {
-            return DeviceConstants.FILE_TYPE_AUDIO;
-        } else {
-            return DeviceConstants.FILE_TYPE_DOCUMENTS;
-        }
-    }
 	
 	public interface OnOpenListener {	
 		public void onOpen(LocalFile localFile);

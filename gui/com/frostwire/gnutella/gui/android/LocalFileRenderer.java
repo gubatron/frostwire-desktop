@@ -293,12 +293,15 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
             } else {
                 BufferedImage imageFileType = UI_TOOL.loadImage(UI_TOOL.getImageNameByFileType(localFile.getFileType()));
                 if (ext != null) {
-                    image = composeImage(imageFileType, ext);
+                    imageFileType = composeImage(imageFileType, ext);
                     IMAGE_TYPES.put(ext, imageFileType);
+                    image = imageFileType;
                 }
             }
             
-            //image = image.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+            if (_layoutOrientation != JList.HORIZONTAL_WRAP) {
+                image = image.getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+            }
         }
         
         _imagePanel.setImage(image);
@@ -324,8 +327,7 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
         try {
             
             graphics.drawImage(image1,  0,  0, w1, h1, null);
-            //graphics.drawImage(image2, 14, 45, w2, h2, null);
-            graphics.drawImage(image2, 0, 0, w2, h2, null);
+            graphics.drawImage(image2, 14, 45, w2, h2, null);
             
         } finally {
             if (graphics != null) {
