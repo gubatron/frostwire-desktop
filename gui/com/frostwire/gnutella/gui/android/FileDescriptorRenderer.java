@@ -38,8 +38,8 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 	private static final long serialVersionUID = 8978172363548823491L;
 	
 	private static final Color COLOR_LIGHTER_BLUE = new Color(0xc4, 0xee, 0xfe);
-	private static String[] BYTE_UNITS = new String[] { "b", "KB", "Mb", "Gb", "Tb" };
 	
+	private static UITool UI_TOOL = new UITool();
 	private static LimeWirePlayer PLAYER = new LimeWirePlayer();
 	private static FileDescriptor LAST_PLAY;
     private static Map<Integer, Image> IMAGE_TYPES = new HashMap<Integer, Image>();
@@ -75,7 +75,7 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 		
 		_imagePanel.setImage(loadImageType(_fileDescriptor.fileType));
 		_labelTitle.setText(_fileDescriptor.title);
-		_labelSize.setText(getBytesInHuman(_fileDescriptor.fileSize));
+		_labelSize.setText(UI_TOOL.getBytesInHuman(_fileDescriptor.fileSize));
 		
 		if (_fileDescriptor.fileType == DeviceConstants.FILE_TYPE_AUDIO ||
 		    _fileDescriptor.fileType == DeviceConstants.FILE_TYPE_APPLICATIONS) {
@@ -232,7 +232,7 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 	        return IMAGE_TYPES.get(type);
 	    }
 	        
-        Image image = loadImage(getImageName(_fileDescriptor.fileType)).getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+        Image image = UI_TOOL.loadImage(UI_TOOL.getImageNameByFileType(_fileDescriptor.fileType)).getScaledInstance(24, 24, Image.SCALE_SMOOTH);
          IMAGE_TYPES.put(type, image);
          
         return image;
@@ -243,7 +243,7 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
             return IMAGE_COPY;
         }
         
-        return IMAGE_COPY = loadImage("copy_device").getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+        return IMAGE_COPY = UI_TOOL.loadImage("copy_device").getScaledInstance(32, 32, Image.SCALE_SMOOTH);
     }
 	
 	private Image loadImagePlay() {
@@ -251,7 +251,7 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 	        return IMAGE_PLAY;
 	    }
 	    
-	    return IMAGE_PLAY = loadImage("play").getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+	    return IMAGE_PLAY = UI_TOOL.loadImage("play").getScaledInstance(32, 32, Image.SCALE_SMOOTH);
 	}
 	
 	private Image loadImageStop() {
@@ -259,46 +259,6 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
             return IMAGE_STOP;
         }
         
-        return IMAGE_STOP = loadImage("stop").getScaledInstance(32, 32, Image.SCALE_SMOOTH);
-    }
-	
-	private Image loadImage(String name) {
-        String path = "images" + File.separator + name + ".png";
-        
-        if (name.endsWith(".jpg")) {
-            path = "images" + File.separator + name;
-        }
-        
-        URL url = getClass().getResource(path);
-        try {
-            return ImageIO.read(url);
-        } catch (IOException e) {
-            return null;
-        }
-	}
-	
-	private String getImageName(int type) {
-        switch(type) {
-        case DeviceConstants.FILE_TYPE_APPLICATIONS: return "application";
-        case DeviceConstants.FILE_TYPE_DOCUMENTS: return "document";
-        case DeviceConstants.FILE_TYPE_PICTURES: return "picture";
-        case DeviceConstants.FILE_TYPE_VIDEOS: return "video";
-        case DeviceConstants.FILE_TYPE_RINGTONES: return "ringtone";
-        case DeviceConstants.FILE_TYPE_AUDIO: return "audio";
-        default: return "";
-        }
-    }
-	
-	private static String getBytesInHuman(long size) {
-
-        int i = 0;
-        float fSize = (float) size;
-
-        for (i = 0; size > 1024; i++) {
-            size /= 1024;
-            fSize = fSize / 1024f;
-        }
-
-        return String.format("%.2f ", fSize) + BYTE_UNITS[i];
+        return IMAGE_STOP = UI_TOOL.loadImage("stop").getScaledInstance(32, 32, Image.SCALE_SMOOTH);
     }
 }

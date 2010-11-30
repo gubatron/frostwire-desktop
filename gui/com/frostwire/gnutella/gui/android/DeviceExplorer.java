@@ -120,7 +120,7 @@ public class DeviceExplorer extends JPanel {
 	private JPanel setupPanelDevice() {
 		JPanel panel = new JPanel(new BorderLayout());
 		
-		ImagePanel header = new ImagePanel(new ImageTool().load("device_explorer_background.jpg"));
+		ImagePanel header = new ImagePanel(new UITool().loadImage("device_explorer_background.jpg"));
 		header.setLayout(new GridBagLayout());
 		
 		GridBagConstraints c;
@@ -221,11 +221,11 @@ public class DeviceExplorer extends JPanel {
 	}
 	
 	private ImageRadioButton setupButtonType(final int type) {	    
-	    ImageTool imageTool = new ImageTool();
+	    UITool imageTool = new UITool();
 	    ImageRadioButton button = new ImageRadioButton();
-		button.setIcon(new ImageIcon(imageTool.load(imageTool.getImageNameByFileType(type))));
-		button.setPressedIcon(new ImageIcon(imageTool.load(imageTool.getImageNameByFileType(type) + "_checked")));
-		button.setSelectedIcon(new ImageIcon(imageTool.load(imageTool.getImageNameByFileType(type) + "_checked")));
+		button.setIcon(new ImageIcon(imageTool.loadImage(imageTool.getImageNameByFileType(type))));
+		button.setPressedIcon(new ImageIcon(imageTool.loadImage(imageTool.getImageNameByFileType(type) + "_checked")));
+		button.setSelectedIcon(new ImageIcon(imageTool.loadImage(imageTool.getImageNameByFileType(type) + "_checked")));
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

@@ -7,9 +7,11 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-public class ImageTool {
+public class UITool {
+    
+    private static String[] BYTE_UNITS = new String[] { "b", "KB", "Mb", "Gb", "Tb" };
 
-    public BufferedImage load(String name) {
+    public BufferedImage loadImage(String name) {
         String path = "images" + File.separator + name + ".png";
         
         if (name.endsWith(".jpg")) {
@@ -34,5 +36,18 @@ public class ImageTool {
         case DeviceConstants.FILE_TYPE_AUDIO: return "audio";
         default: return "";
         }
+    }
+    
+    public String getBytesInHuman(long size) {
+
+        int i = 0;
+        float fSize = (float) size;
+
+        for (i = 0; size > 1024; i++) {
+            size /= 1024;
+            fSize = fSize / 1024f;
+        }
+
+        return String.format("%.2f ", fSize) + BYTE_UNITS[i];
     }
 }

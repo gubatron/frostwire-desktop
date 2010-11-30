@@ -140,11 +140,13 @@ public class DesktopExplorer extends JPanel {
     protected void buttonViewThumbnail_mousePressed(MouseEvent e) {
         cancelEdit();
         _list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+        _list.setPrototypeCellValue(new LocalFile(SharingSettings.getDeviceFilesDirectory()));
     }
     
     protected void buttonViewList_mousePressed(MouseEvent e) {
         cancelEdit();
         _list.setLayoutOrientation(JList.VERTICAL);
+        _list.setPrototypeCellValue(new LocalFile(SharingSettings.getDeviceFilesDirectory()));
     }
     
     protected void comboBoxSort_actionPerformed(ActionEvent e) {
@@ -158,23 +160,10 @@ public class DesktopExplorer extends JPanel {
         cancelEdit();
         int index = _list.getSelectedIndex();
         if (index != -1) {
-            _selectedIndexToRename = index;
-            LocalFile localFile = (LocalFile) _model.getElementAt(index);
-            String text = localFile.getName();
-            _textName.setText(text);
-            _textName.setSelectionStart(0);
-            _textName.setSelectionEnd(text.length());
-            Point p =_list.indexToLocation(index);
-            p.translate(5, 64);            
-            _scrollName.setLocation(p);
-            _scrollName.setVisible(true);
-            _scrollName.requestFocusInWindow();
-            _scrollName.requestFocus();
-            _textName.requestFocusInWindow();
-            _textName.requestFocus();
+            startEdit(index);
         }
     }
-    
+
     protected void textName_keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         if (_selectedIndexToRename != -1 && key == KeyEvent.VK_ENTER) {
@@ -203,7 +192,7 @@ public class DesktopExplorer extends JPanel {
 		Dimension toolBarButtonSize = new Dimension(28, 28);
 		
 		_buttonUp = new JButton();
-		_buttonUp.setIcon(new ImageIcon(new ImageTool().load("folder_up")));
+		_buttonUp.setIcon(new ImageIcon(new UITool().loadImage("folder_up")));
 		_buttonUp.setPreferredSize(toolBarButtonSize);
 		_buttonUp.setMinimumSize(toolBarButtonSize);
 		_buttonUp.setMaximumSize(toolBarButtonSize);
@@ -217,7 +206,7 @@ public class DesktopExplorer extends JPanel {
 		_toolBar.add(_buttonUp);
 		
 		_buttonNew = new JButton();
-		_buttonNew.setIcon(new ImageIcon(new ImageTool().load("folder_new")));
+		_buttonNew.setIcon(new ImageIcon(new UITool().loadImage("folder_new")));
 		_buttonNew.setPreferredSize(toolBarButtonSize);
 		_buttonNew.setMinimumSize(toolBarButtonSize);
 		_buttonNew.setMaximumSize(toolBarButtonSize);
@@ -233,7 +222,7 @@ public class DesktopExplorer extends JPanel {
         _toolBar.addSeparator();
         
         _buttonViewThumbnail = new JButton();
-        _buttonViewThumbnail.setIcon(new ImageIcon(new ImageTool().load("view_thumbnail")));
+        _buttonViewThumbnail.setIcon(new ImageIcon(new UITool().loadImage("view_thumbnail")));
         _buttonViewThumbnail.setPreferredSize(toolBarButtonSize);
         _buttonViewThumbnail.setMinimumSize(toolBarButtonSize);
         _buttonViewThumbnail.setMaximumSize(toolBarButtonSize);
@@ -247,7 +236,7 @@ public class DesktopExplorer extends JPanel {
         _toolBar.add(_buttonViewThumbnail);
         
         _buttonViewList = new JButton();
-        _buttonViewList.setIcon(new ImageIcon(new ImageTool().load("view_list")));
+        _buttonViewList.setIcon(new ImageIcon(new UITool().loadImage("view_list")));
         _buttonViewList.setPreferredSize(toolBarButtonSize);
         _buttonViewList.setMinimumSize(toolBarButtonSize);
         _buttonViewList.setMaximumSize(toolBarButtonSize);
@@ -389,7 +378,6 @@ public class DesktopExplorer extends JPanel {
 		add(_scrollPane, c);
 		
 		_textName = new JTextArea();
-		_textName.setSize(130, 33);
 		_textName.setLineWrap(true);
 		_textName.setWrapStyleWord(true);
 		_textName.addKeyListener(new KeyAdapter() {
@@ -400,7 +388,6 @@ public class DesktopExplorer extends JPanel {
         });
 		
 		_scrollName = new JScrollPane(_textName);
-		_scrollName.setSize(130, 33);
 		_scrollName.setVisible(false);
 		_scrollName.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		_scrollName.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
@@ -409,8 +396,8 @@ public class DesktopExplorer extends JPanel {
 	}
 
     private JButton setupButtonFavorite(int type, final File path) {
-	    ImageTool imageTool = new ImageTool();
-	    Image image = imageTool.load(imageTool.getImageNameByFileType(type)).getScaledInstance(18, 18, Image.SCALE_SMOOTH);
+	    UITool imageTool = new UITool();
+	    Image image = imageTool.loadImage(imageTool.getImageNameByFileType(type)).getScaledInstance(18, 18, Image.SCALE_SMOOTH);
 	    Dimension size = new Dimension(28, 28);
 		JButton button = new JButton();
 		button.setPreferredSize(size);
@@ -427,6 +414,42 @@ public class DesktopExplorer extends JPanel {
 		});
 		return button;
 	}
+    
+    private void startEdit(int index) {
+        
+        _selectedIndexToRename = index;
+        LocalFile localFile = (LocalFile) _model.getElementAt(index);
+        String text = localFile.getName();
+
+        if (_list.getLayoutOrientation() == JList.VERTICAL) { // list mode
+            LocalFileRenderer renderer = (LocalFileRenderer) _list.getCellRenderer().getListCellRendererComponent(_list, _list.getModel().getElementAt(index), index, false, false);
+            Dimension lsize = renderer.getLabelNameSize();
+            Point llocation = renderer.getLabelNameLocation();
+            lsize.setSize(lsize.getWidth() - 3, lsize.getHeight() - 3);
+            Point p =_list.indexToLocation(index);
+            p.translate(llocation.x, llocation.y - 1);
+            _textName.setSize(lsize);
+            _scrollName.setSize(lsize);
+            _scrollName.setLocation(p);
+        } else { // thumbnail mode
+            Point p =_list.indexToLocation(index);
+            p.translate(5, 64);
+            _textName.setSize(130, 33);
+            _scrollName.setSize(130, 33);
+            _scrollName.setLocation(p);
+        }
+        
+        _textName.setText(text);
+        _textName.setSelectionStart(0);
+        _textName.setSelectionEnd(text.length());
+        
+        _scrollName.setVisible(true);
+        
+        _scrollName.requestFocusInWindow();
+        _scrollName.requestFocus();
+        _textName.requestFocusInWindow();
+        _textName.requestFocus();
+    }
 	
 	private void renameSelectedItem(int index) {
 	    if (!_scrollName.isVisible()) {

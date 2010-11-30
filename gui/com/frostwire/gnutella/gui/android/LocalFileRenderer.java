@@ -9,7 +9,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -18,22 +20,19 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JTextArea;
 import javax.swing.ListCellRenderer;
-import javax.swing.SwingUtilities;
-import javax.swing.border.LineBorder;
+import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileSystemView;
 
 import com.frostwire.gnutella.gui.ImagePanel;
-import com.limegroup.gnutella.gui.I18n;
 
 public class LocalFileRenderer extends JPanel implements ListCellRenderer {
 
@@ -42,37 +41,51 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
 	 */
 	private static final long serialVersionUID = 8723371611297478100L;
 	
-	public static final int VIEW_THUMBNAIL = 0;
-	public static final int VIEW_LIST = 1;
-	
 	private static final Color FILL_COLOR = new Color(0x8DB2ED);
 	private static final Color INNER_BORDER_COLOR = new Color(0x98BFFF);
 	private static final Color OUTER_BORDER_COLOR = new Color(0x516688);
 	
+	private static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd/yy hh:mm:ss aa");
+	
 	private static Map<String, BufferedImage> IMAGE_TYPES = new HashMap<String, BufferedImage>();
 	private static FileSystemView FILE_SYSTEM_VIEW = FileSystemView.getFileSystemView();
-	private static ImageTool IMAGE_TOOL = new ImageTool();
+	private static UITool UI_TOOL = new UITool();
 	
 	private LocalFile _localFile;
-	private int _viewType;
+	private int _layoutOrientation;
 	private boolean _selected;
 	
-	private ImagePanel _imagePanelThumbnail;
-	private MultilineLabel _labelName;
+	private ImagePanel _imagePanel;
+	private MultilineLabel _multilineLabelName;
+	private JLabel _labelName;
+	private JLabel _labelDateModified;
+	private JLabel _labelSize;
 	
 	public LocalFileRenderer() {
-	    _viewType = VIEW_THUMBNAIL;
+	    _layoutOrientation = -1;
 	    setupUI();
 	}
 
     @Override
 	public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 		
-		_localFile = (LocalFile) value;
-		_selected = isSelected;
-		setImagePanelThumbnail(_localFile);
+        if (_layoutOrientation != list.getLayoutOrientation()) {
+            _layoutOrientation = list.getLayoutOrientation();
+            relayout();
+        }
+        
+		_localFile = (LocalFile) value;		
+		_selected = isSelected;		
 		
-		_labelName.setText(FILE_SYSTEM_VIEW.getSystemDisplayName(_localFile.getFile()));
+		setImagePanelThumbnail(_localFile);		
+		if (_layoutOrientation == JList.HORIZONTAL_WRAP) {
+		    _multilineLabelName.setText(FILE_SYSTEM_VIEW.getSystemDisplayName(_localFile.getFile()));
+		} else {
+		    File file = _localFile.getFile();
+		    _labelName.setText(FILE_SYSTEM_VIEW.getSystemDisplayName(file));
+		    _labelDateModified.setText(DATE_FORMAT.format(new Date(file.lastModified())));
+		    _labelSize.setText(UI_TOOL.getBytesInHuman(file.length()));
+		}
 		
 		return this;
 	}
@@ -89,6 +102,14 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
         }
         
         return null;
+    }
+    
+    public Dimension getLabelNameSize() {
+        return _labelName.getSize();
+    }
+    
+    public Point getLabelNameLocation() {
+        return _labelName.getLocation();
     }
     
     @Override
@@ -112,8 +133,8 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
 	
 	protected void setupUI() {
 	    
-	    _imagePanelThumbnail = new ImagePanel();
-	    _imagePanelThumbnail.addMouseListener(new MouseAdapter() {
+	    _imagePanel = new ImagePanel();
+	    _imagePanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() >= 2 && !e.isConsumed()) {
@@ -122,7 +143,17 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
             }
         });
 	    
-	    _labelName = new MultilineLabel();
+	    _multilineLabelName = new MultilineLabel();
+        _multilineLabelName.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() >= 2 && !e.isConsumed()) {
+                    _localFile.open();
+                }
+            }
+        });
+        
+        _labelName = new JLabel();
         _labelName.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -132,14 +163,39 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
             }
         });
         
-        relayout();
+        _labelDateModified = new JLabel();
+        _labelDateModified.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() >= 2 && !e.isConsumed()) {
+                    _localFile.open();
+                }
+            }
+        });
+        
+        _labelSize = new JLabel();
+        Dimension labelSizeSize = new Dimension(70, 26);
+        _labelSize.setPreferredSize(labelSizeSize);
+        _labelSize.setMinimumSize(labelSizeSize);
+        _labelSize.setHorizontalAlignment(SwingConstants.RIGHT);
+        _labelSize.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() >= 2 && !e.isConsumed()) {
+                    _localFile.open();
+                }
+            }
+        });
 	}
 	
 	private void relayout() {
-	    remove(_imagePanelThumbnail);
+	    remove(_imagePanel);
+	    remove(_multilineLabelName);
 	    remove(_labelName);
+	    remove(_labelDateModified);
+	    remove(_labelSize);
 	    
-	    if (_viewType == VIEW_THUMBNAIL) {
+	    if (_layoutOrientation == JList.HORIZONTAL_WRAP) {
 	        layoutThumbnail();
 	    } else {
 	        layoutList();
@@ -157,56 +213,92 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
         GridBagConstraints c;
         
         Dimension thumbnailSize = new Dimension(64, 64);
-        _imagePanelThumbnail.setPreferredSize(thumbnailSize);
-        _imagePanelThumbnail.setMinimumSize(thumbnailSize);
-        _imagePanelThumbnail.setMaximumSize(thumbnailSize);
-        _imagePanelThumbnail.setSize(thumbnailSize);
+        _imagePanel.setPreferredSize(thumbnailSize);
+        _imagePanel.setMinimumSize(thumbnailSize);
+        _imagePanel.setMaximumSize(thumbnailSize);
+        _imagePanel.setSize(thumbnailSize);
         c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = 0;
         c.insets = new Insets(0, 38, 0, 38);
-        add(_imagePanelThumbnail, c);
+        add(_imagePanel, c);
         
         Dimension labelNameSize = new Dimension(118, 30);
-        _labelName.setPreferredSize(labelNameSize);
-        _labelName.setMinimumSize(labelNameSize);
-        _labelName.setMaximumSize(labelNameSize);
-        _labelName.setSize(labelNameSize);
+        _multilineLabelName.setPreferredSize(labelNameSize);
+        _multilineLabelName.setMinimumSize(labelNameSize);
+        _multilineLabelName.setMaximumSize(labelNameSize);
+        _multilineLabelName.setSize(labelNameSize);
         c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = 1;
         c.anchor = GridBagConstraints.NORTH;
         c.insets = new Insets(0, 12, 0, 10);
-        add(_labelName, c);
+        add(_multilineLabelName, c);
     }
-    
-    private void layoutList() {
-        // TODO Auto-generated method stub
+
+   private void layoutList() {
+        setLayout(new GridBagLayout());
+        setPreferredSize(null);
         
+        GridBagConstraints c;
+        
+        Dimension size = new Dimension(32, 32);
+        _imagePanel.setPreferredSize(size);
+        _imagePanel.setMinimumSize(size);
+        _imagePanel.setMaximumSize(size);
+        _imagePanel.setSize(size);
+        c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 0;
+        c.insets = new Insets(5, 5, 0, 5);
+        add(_imagePanel, c);
+        
+        c = new GridBagConstraints();
+        c.gridx = 1;
+        c.gridy = 0;
+        c.insets = new Insets(5, 0, 0, 0);
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1.0;
+        c.weighty = 1.0;
+        c.gridwidth = 1;
+        add(_labelName, c);
+        
+        c = new GridBagConstraints();
+        c.gridx = 2;
+        c.gridy = 0;
+        add(_labelDateModified, c);
+        
+        c = new GridBagConstraints();
+        c.gridx = 3;
+        c.gridy = 0;
+        c.insets = new Insets(0, 0, 0, 6);
+        add(_labelSize, c);
     }
 
     private void setImagePanelThumbnail(LocalFile localFile) {
-        BufferedImage image = null;
+        Image image = null;
         if (localFile.getFile().isDirectory()) {
-            if (_viewType == VIEW_THUMBNAIL) {
-                image = IMAGE_TOOL.load("folder_64");
+            if (_layoutOrientation == JList.HORIZONTAL_WRAP) {
+                image = UI_TOOL.loadImage("folder_64");
             } else {
-                image = IMAGE_TOOL.load("folder");
+                image = UI_TOOL.loadImage("folder_32");
             }
         } else {
             String ext = localFile.getExt();
             if (IMAGE_TYPES.containsKey(ext)) {
                 image = IMAGE_TYPES.get(ext);
             } else {
-                image = IMAGE_TOOL.load(IMAGE_TOOL.getImageNameByFileType(localFile.getFileType()));
+                BufferedImage imageFileType = UI_TOOL.loadImage(UI_TOOL.getImageNameByFileType(localFile.getFileType()));
                 if (ext != null) {
-                    image = composeImage(image, ext);
-                    IMAGE_TYPES.put(ext, image);
+                    image = composeImage(imageFileType, ext);
+                    IMAGE_TYPES.put(ext, imageFileType);
                 }
             }
+            
+            image = image.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
         }
         
-        _imagePanelThumbnail.setImage(image);
+        _imagePanel.setImage(image);
     }
     
     private BufferedImage composeImage(BufferedImage imageInput, String ext) {
