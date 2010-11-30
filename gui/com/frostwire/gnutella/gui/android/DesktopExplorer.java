@@ -4,8 +4,11 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -20,8 +23,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 
 import org.pushingpixels.flamingo.api.bcb.BreadcrumbItem;
@@ -58,17 +63,23 @@ public class DesktopExplorer extends JPanel {
 	private JScrollPane _scrollPane;
     private JPopupMenu _popupList;
     private JMenuItem _menuRename;
+    private JTextArea _textName;
+    private JScrollPane _scrollName;
 	
 	private LocalFileListModel _model;
+	private int _selectedIndexToRename;
 	
 	public DesktopExplorer() {
 		
 		_model = new LocalFileListModel();
 		_model.setOnRootListener(new OnRootListener() {
 			public void onRoot(LocalFileListModel localFileListModel, File path) {
+			    cancelEdit();
 				_breadcrumb.setPath(path);
 			}
 		});
+		
+		_selectedIndexToRename = -1;
 		
 		setupUI();
 		
@@ -76,14 +87,17 @@ public class DesktopExplorer extends JPanel {
 	}
 	
 	public File getSelectedFolder() {
+	    cancelEdit();
 		return _model.getRoot();
 	}
 	
 	public void setSelectedFolder(File path) {
+	    cancelEdit();
 		_model.setRoot(path);
 	}
 	
 	public void refresh() {
+	    cancelEdit();
 		_model.refresh();
 	}
 	
@@ -94,7 +108,21 @@ public class DesktopExplorer extends JPanel {
 		setupList();
 	}
 	
+	protected void breadcrumb_pathEvent(BreadcrumbPathEvent event) {
+	    cancelEdit();
+        List<BreadcrumbItem<File>> items = _breadcrumb.getModel().getItems();
+        
+        if (items.size() > 0) {
+            File path = items.get(items.size() - 1).getData();
+            OnRootListener listener = _model.getOnRootListener();
+            _model.setOnRootListener(null); // avoid infinite recursion
+            _model.setRoot(path);
+            _model.setOnRootListener(listener);
+        }
+    }
+	
 	protected void buttonUp_mousePressed(MouseEvent e) {
+	    cancelEdit();
         File path = _model.getRoot().getParentFile();
         if (path != null) {
             setSelectedFolder(path);
@@ -102,6 +130,7 @@ public class DesktopExplorer extends JPanel {
     }
     
     protected void buttonNew_mousePressed(MouseEvent e) {
+        cancelEdit();
         LocalFile localFile = _model.createNewFolder();
         if (localFile != null) {
             _list.setSelectedValue(localFile, true);
@@ -109,26 +138,65 @@ public class DesktopExplorer extends JPanel {
     }
     
     protected void buttonViewThumbnail_mousePressed(MouseEvent e) {
+        cancelEdit();
         _list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
     }
     
     protected void buttonViewList_mousePressed(MouseEvent e) {
+        cancelEdit();
         _list.setLayoutOrientation(JList.VERTICAL);
     }
     
     protected void comboBoxSort_actionPerformed(ActionEvent e) {
+        cancelEdit();
         JComboBox comboBox = (JComboBox)e.getSource();
         SortByItem item = (SortByItem)comboBox.getSelectedItem();
         _model.sortBy(item.sortBy);
     }
-	
-	private void setupTop() {
+    
+    protected void menuRename_actionPerformed(ActionEvent e) {
+        cancelEdit();
+        int index = _list.getSelectedIndex();
+        if (index != -1) {
+            _selectedIndexToRename = index;
+            LocalFile localFile = (LocalFile) _model.getElementAt(index);
+            String text = localFile.getName();
+            _textName.setText(text);
+            _textName.setSelectionStart(0);
+            _textName.setSelectionEnd(text.length());
+            Point p =_list.indexToLocation(index);
+            p.translate(5, 64);            
+            _scrollName.setLocation(p);
+            _scrollName.setVisible(true);
+            _scrollName.requestFocusInWindow();
+            _scrollName.requestFocus();
+            _textName.requestFocusInWindow();
+            _textName.requestFocus();
+        }
+    }
+    
+    protected void textName_keyPressed(KeyEvent e) {
+        int key = e.getKeyCode();
+        if (_selectedIndexToRename != -1 && key == KeyEvent.VK_ENTER) {
+            renameSelectedItem(_selectedIndexToRename);
+        } else if (key == KeyEvent.VK_ESCAPE) {
+            _scrollName.setVisible(false);
+        }
+    }
+
+    private void setupTop() {
 		
 		GridBagConstraints c;
 		
 		_toolBar = new JToolBar();
 		_toolBar.setFloatable(false);
 		_toolBar.setRollover(true);
+		_toolBar.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mousePressed(MouseEvent e) {
+		        _scrollName.setVisible(false);
+		    }
+        });
 		
 		_toolBar.addSeparator();
 		
@@ -211,7 +279,6 @@ public class DesktopExplorer extends JPanel {
         
         _buttonFavoriteAudio = setupButtonFavorite(DeviceConstants.FILE_TYPE_AUDIO, SharingSettings.DEVICE_AUDIO_FILES_DIR);
         _toolBar.add(_buttonFavoriteAudio);
-        
         _toolBar.addSeparator();
         
         _labelSort = new JLabel();
@@ -272,19 +339,40 @@ public class DesktopExplorer extends JPanel {
         _popupList.add(_menuRename = new JMenuItem(I18n.tr("Rename")));
         _menuRename.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                int index = _list.getSelectedIndex();
-                if (index != -1) {
-                    // TODO: Show window
-                }
+                menuRename_actionPerformed(e);
             }
         });
         
-        _list.addMouseListener(new MouseAdapter() {
+        _list.addMouseListener(new MouseAdapter() {            
+            @Override
+            public void mousePressed(MouseEvent e) {
+                cancelEdit();
+                int index = _list.locationToIndex(e.getPoint());
+                if (index != -1) {
+                    _list.setSelectedIndex(index);
+                }
+            }
+            
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                cancelEdit();
+            }
+            
             @Override
             public void mouseClicked(MouseEvent e) {
+                cancelEdit();
                 // if right mouse button clicked (or e.isPopupTrigger())
                 if (SwingUtilities.isRightMouseButton(e) && !_list.isSelectionEmpty() && _list.locationToIndex(e.getPoint()) == _list.getSelectedIndex()) {
                     _popupList.show(_list, e.getX(), e.getY());
+                }
+            }
+        });
+        _list.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                int key = e.getKeyCode();
+                if (key == KeyEvent.VK_ESCAPE) {
+                    _scrollName.setVisible(false);
                 }
             }
         });
@@ -299,9 +387,28 @@ public class DesktopExplorer extends JPanel {
 		c.gridwidth = 8;
 
 		add(_scrollPane, c);
+		
+		_textName = new JTextArea();
+		_textName.setSize(130, 33);
+		_textName.setLineWrap(true);
+		_textName.setWrapStyleWord(true);
+		_textName.addKeyListener(new KeyAdapter() {
+		    @Override
+		    public void keyPressed(KeyEvent e) {
+		        textName_keyPressed(e);
+		    }
+        });
+		
+		_scrollName = new JScrollPane(_textName);
+		_scrollName.setSize(130, 33);
+		_scrollName.setVisible(false);
+		_scrollName.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		_scrollName.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+		
+		_list.add(_scrollName);
 	}
 
-	private JButton setupButtonFavorite(int type, final File path) {
+    private JButton setupButtonFavorite(int type, final File path) {
 	    ImageTool imageTool = new ImageTool();
 	    Image image = imageTool.load(imageTool.getImageNameByFileType(type)).getScaledInstance(18, 18, Image.SCALE_SMOOTH);
 	    Dimension size = new Dimension(28, 28);
@@ -314,22 +421,25 @@ public class DesktopExplorer extends JPanel {
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
+			    cancelEdit();
 				setSelectedFolder(path);
 			}
 		});
 		return button;
 	}
 	
-	private void breadcrumb_pathEvent(BreadcrumbPathEvent event) {
-		List<BreadcrumbItem<File>> items = _breadcrumb.getModel().getItems();
-		
-		if (items.size() > 0) {
-			File path = items.get(items.size() - 1).getData();
-			OnRootListener listener = _model.getOnRootListener();
-			_model.setOnRootListener(null); // avoid infinite recursion
-			_model.setRoot(path);
-			_model.setOnRootListener(listener);
-		}
+	private void renameSelectedItem(int index) {
+	    if (!_scrollName.isVisible()) {
+	        return;
+	    }
+	    
+        _model.rename(index, _textName.getText());
+        _scrollName.setVisible(false);
+    }
+	
+	private void cancelEdit() {
+	    _selectedIndexToRename = -1;
+	    _scrollName.setVisible(false);
 	}
 	
 	private final class SortByItem {

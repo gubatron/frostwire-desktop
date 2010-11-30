@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -20,6 +21,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.BorderFactory;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -27,6 +29,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTextArea;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
+import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileSystemView;
 
 import com.frostwire.gnutella.gui.ImagePanel;
@@ -42,12 +45,17 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
 	public static final int VIEW_THUMBNAIL = 0;
 	public static final int VIEW_LIST = 1;
 	
+	private static final Color FILL_COLOR = new Color(0x8DB2ED);
+	private static final Color INNER_BORDER_COLOR = new Color(0x98BFFF);
+	private static final Color OUTER_BORDER_COLOR = new Color(0x516688);
+	
 	private static Map<String, BufferedImage> IMAGE_TYPES = new HashMap<String, BufferedImage>();
 	private static FileSystemView FILE_SYSTEM_VIEW = FileSystemView.getFileSystemView();
 	private static ImageTool IMAGE_TOOL = new ImageTool();
 	
 	private LocalFile _localFile;
 	private int _viewType;
+	private boolean _selected;
 	
 	private ImagePanel _imagePanelThumbnail;
 	private MultilineLabel _labelName;
@@ -61,14 +69,7 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
 	public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 		
 		_localFile = (LocalFile) value;
-		
-		if (isSelected) {
-            setBackground(Color.LIGHT_GRAY);
-        }
-        else {
-            setBackground(Color.WHITE);
-        }
-		
+		_selected = isSelected;
 		setImagePanelThumbnail(_localFile);
 		
 		_labelName.setText(FILE_SYSTEM_VIEW.getSystemDisplayName(_localFile.getFile()));
@@ -88,6 +89,25 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
         }
         
         return null;
+    }
+    
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        int w = getWidth();
+        int h = getHeight();
+        
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, w, h);
+        
+        if (_selected) {
+            g.setColor(FILL_COLOR);
+            g.fillRoundRect(2, 2, w - 5, h - 5, 5, 5);
+            g.setColor(INNER_BORDER_COLOR);
+            g.drawRoundRect(3, 3, w - 7, h - 7, 5, 5);
+            g.setColor(OUTER_BORDER_COLOR);
+            g.drawRoundRect(2, 2, w - 5, h - 5, 5, 5);
+        }
     }
 	
 	protected void setupUI() {
