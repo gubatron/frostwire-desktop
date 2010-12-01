@@ -73,7 +73,9 @@ public class DeviceBar extends JPanel {
 	}
 	
 	protected void setupUI() {
-		setLayout(new FlowLayout());
+		FlowLayout layout = new FlowLayout();
+		layout.setHgap(10);
+		setLayout(layout);
 		setPreferredSize(new Dimension(300, 130));
 	}
 	
