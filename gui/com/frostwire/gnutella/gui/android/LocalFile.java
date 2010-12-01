@@ -2,7 +2,6 @@ package com.frostwire.gnutella.gui.android;
 
 import java.io.File;
 import java.io.Serializable;
-import java.util.HashMap;
 
 public class LocalFile implements Serializable {
 	
@@ -64,6 +63,7 @@ public class LocalFile implements Serializable {
     public void rename(String name) {
         File dest = new File(_file.getParentFile(), name);
         _file.renameTo(dest);
+        _file.delete();
         _file = dest;
     }
 	

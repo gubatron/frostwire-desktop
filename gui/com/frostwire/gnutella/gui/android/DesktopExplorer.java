@@ -29,12 +29,15 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 
+import org.jdesktop.jdic.desktop.Desktop;
+import org.limewire.util.OSUtils;
 import org.pushingpixels.flamingo.api.bcb.BreadcrumbItem;
 import org.pushingpixels.flamingo.api.bcb.BreadcrumbPathEvent;
 import org.pushingpixels.flamingo.api.bcb.BreadcrumbPathListener;
 import org.pushingpixels.flamingo.api.bcb.core.BreadcrumbFileSelector;
 
 import com.frostwire.gnutella.gui.android.LocalFileListModel.OnRootListener;
+import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
 
@@ -122,13 +125,9 @@ public class DesktopExplorer extends JPanel {
     }
 	
 	protected void buttonUp_mousePressed(MouseEvent e) {
-	    cancelEdit();
-        File path = _model.getRoot().getParentFile();
-        if (path != null) {
-            setSelectedFolder(path);
-        }
+	    gotoParentFolderAction();
     }
-    
+
     protected void buttonNew_mousePressed(MouseEvent e) {
         cancelEdit();
         LocalFile localFile = _model.createNewFolder();
@@ -157,11 +156,7 @@ public class DesktopExplorer extends JPanel {
     }
     
     protected void menuRename_actionPerformed(ActionEvent e) {
-        cancelEdit();
-        int index = _list.getSelectedIndex();
-        if (index != -1) {
-            startEdit(index);
-        }
+        startRenameAction();
     }
 
     protected void textName_keyPressed(KeyEvent e) {
@@ -364,6 +359,24 @@ public class DesktopExplorer extends JPanel {
                 int key = e.getKeyCode();
                 if (key == KeyEvent.VK_ESCAPE) {
                     _scrollName.setVisible(false);
+                } else if (key == KeyEvent.VK_F5) {
+                    refresh();
+                } else if (key == KeyEvent.VK_ENTER) {
+                    if (OSUtils.isMacOSX()) {
+                        startRenameAction();
+                    } else {
+                        openFileAction();
+                    }
+                } else if (key == KeyEvent.VK_F2) {
+                    if (!OSUtils.isMacOSX()) {
+                        startRenameAction();
+                    }
+                } else if (key == KeyEvent.VK_SPACE) {
+                    if (OSUtils.isMacOSX()) {
+                        openFileAction();
+                    }
+                } else if (key == KeyEvent.VK_BACK_SPACE) {
+                    gotoParentFolderAction();
                 }
             }
         });
@@ -452,13 +465,29 @@ public class DesktopExplorer extends JPanel {
         _textName.requestFocusInWindow();
         _textName.requestFocus();
     }
+    
+    private void startRenameAction() {
+        cancelEdit();
+        int index = _list.getSelectedIndex();
+        if (index != -1) {
+            startEdit(index);
+        }
+    }
 	
 	private void renameSelectedItem(int index) {
 	    if (!_scrollName.isVisible()) {
 	        return;
 	    }
-	    
-        _model.rename(index, _textName.getText());
+	    String text = _textName.getText();
+	    if (text != null && text.length() > 0) {
+	        if (text.indexOf('.') == -1) { // no extension? put the old extension
+	            LocalFile localFile = (LocalFile) _model.getElementAt(index);
+	            if (localFile != null && localFile.getFile().isFile() && localFile.getExt() != null) {
+	                text += "." + localFile.getExt();
+	            }
+	        }
+	        _model.rename(index, text);
+	    }
         _scrollName.setVisible(false);
     }
 	
@@ -466,6 +495,33 @@ public class DesktopExplorer extends JPanel {
 	    _selectedIndexToRename = -1;
 	    _scrollName.setVisible(false);
 	}
+	
+	private void openFileAction() {
+	    cancelEdit();
+        int index = _list.getSelectedIndex();
+        if (index != -1) {
+            LocalFile localFile = (LocalFile) _model.getElementAt(index);
+            if (localFile != null) {
+                if (localFile.getFile().isDirectory()) {
+                    setSelectedFolder(localFile.getFile());
+                } else {
+                    try {
+                        Desktop.open(localFile.getFile());
+                    } catch (Exception e) {
+                        GUIMediator.launchFile(localFile.getFile());
+                    }
+                }
+            }
+        }
+    }
+	
+	private void gotoParentFolderAction() {
+        cancelEdit();
+        File path = _model.getRoot().getParentFile();
+        if (path != null) {
+            setSelectedFolder(path);
+        }
+    }
 	
 	private final class SortByItem {
 	    public int sortBy;

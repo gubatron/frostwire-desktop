@@ -45,6 +45,13 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
 	private static final Color INNER_BORDER_COLOR = new Color(0x98BFFF);
 	private static final Color OUTER_BORDER_COLOR = new Color(0x516688);
 	
+	private static final Color EXT_SHADOW_COLOR = new Color(0x333333);
+	private static final Color EXT_COLOR = new Color(0xFFFFFF);
+	
+	private static final int EXT_POS_X = 14;
+	private static final int EXT_POS_Y = 14;
+	private static final int EXT_SHADOW_DELTA = 10;
+	
 	private static SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd/yy hh:mm:ss aa");
 	
 	private static Map<String, BufferedImage> IMAGE_TYPES = new HashMap<String, BufferedImage>();
@@ -327,7 +334,11 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
         try {
             
             graphics.drawImage(image1,  0,  0, w1, h1, null);
-            graphics.drawImage(image2, 14, 45, w2, h2, null);
+            if (ext.length() <= 3) {
+                graphics.drawImage(image2, EXT_POS_X, EXT_POS_Y, w2, h2, null);
+            } else {
+                graphics.drawImage(image2, EXT_POS_X - EXT_SHADOW_DELTA, EXT_POS_Y, w2, h2, null);
+            }
             
         } finally {
             if (graphics != null) {
@@ -340,7 +351,11 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
     
     private BufferedImage buildTextImage(String text) {
         
-        Font font = new Font("Curier", Font.ITALIC | Font.BOLD, 16);
+        if (text.length() > 3) {
+            text = text.substring(0, 4);
+        }
+        
+        Font font = new Font("Courier", Font.ITALIC | Font.BOLD, 16);
 
         Graphics2D graphicsDummy = null;
         Graphics2D graphics1 = null;
@@ -366,7 +381,7 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
 
             //draw "shadow" text: to be blurred next
             TextLayout textLayout = new TextLayout(text, font, graphics1.getFontRenderContext());
-            graphics1.setPaint(Color.BLUE);
+            graphics1.setPaint(EXT_SHADOW_COLOR);
             textLayout.draw(graphics1, 11, 14);
             graphics1.dispose();
 
@@ -380,7 +395,7 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
             graphics2 = image2.createGraphics();
             graphics2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
             graphics2.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
-            graphics2.setPaint(Color.YELLOW);
+            graphics2.setPaint(EXT_COLOR);
             textLayout.draw(graphics2, 10, 13);
             
             image = image2;

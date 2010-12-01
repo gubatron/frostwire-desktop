@@ -59,6 +59,11 @@ public class UITool {
     }
     
     public int getFileTypeByExt(String ext) {
+        
+        if (ext == null) {
+            return DeviceConstants.FILE_TYPE_DOCUMENTS;
+        }
+        
         ext = ext.replace("\\.", "").trim();
         
         Integer type = FILE_TYPES.get(ext);
