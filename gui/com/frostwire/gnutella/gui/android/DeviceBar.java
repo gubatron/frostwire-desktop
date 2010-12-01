@@ -28,11 +28,11 @@ public class DeviceBar extends JPanel {
 	private Device _selectedDevice;
 	
 	public DeviceBar() {
+	    _buttons = new HashMap<Device, DeviceButton>();
+        _deviceListener = new MyOnActionFailedListener();
+        _mouseAdapter = new MyMouseAdapter();
+        
 		setupUI();
-		
-		_buttons = new HashMap<Device, DeviceButton>();
-		_deviceListener = new MyOnActionFailedListener();
-		_mouseAdapter = new MyMouseAdapter();
 	}
 
 	public void handleNewDevice(Device device) {

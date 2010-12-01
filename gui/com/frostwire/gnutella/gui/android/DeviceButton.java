@@ -23,7 +23,7 @@ public class DeviceButton extends JRadioButton {
 	 */
 	private static final long serialVersionUID = 4608372510091566914L;
 	
-	private static final String IMAGES_URL = "http://192.168.1.107/~atorres/";
+	private static final String IMAGES_URL = "http://static1.frostwire.com/images/devices/";
 	
 	private ImageIcon _image;
 	private ImageIcon _imageAuthorized;
@@ -35,7 +35,7 @@ public class DeviceButton extends JRadioButton {
 	public DeviceButton(Device device) {
 		_device = device;
 		
-		loadImages();
+		loadImage(getImageName());
 		setupUI();
 	}
 
@@ -79,36 +79,30 @@ public class DeviceButton extends JRadioButton {
 		}
 	}
 	
-	private void loadImages() {
-		BufferedImage defaultImage = loadImage(getImagePrefix(true) + ".png", null);
-		BufferedImage image = loadImage(getImagePrefix(false) + ".png", defaultImage);
-		buildImages(image);
+	private BufferedImage loadDefaultImage() {
+	    return new UITool().loadImage("generic_device");
 	}
-
-    private BufferedImage loadImage(String name, BufferedImage defaultImage) {
-	    URL url = null;
+	
+    private void loadImage(String name) {
         try {
-            url = new URL(IMAGES_URL + name);
-        } catch (MalformedURLException e) {
-        }
-        
-	    BufferedImage image = ImageCache.getInstance().getImage(url, new OnLoadedListener() {
-            public void onLoaded(URL url, BufferedImage image) {
-                buildImages(image);
-                setImage();
+            URL url = new URL(IMAGES_URL + _device.getFinger().deviceManufacturer.toLowerCase() + "/" + name);
+            
+            BufferedImage image = ImageCache.getInstance().getImage(url, new OnLoadedListener() {
+                public void onLoaded(URL url, BufferedImage image) {
+                    buildImages(image);
+                    setImage();
+                }
+            });
+            
+            if (image == null) {
+                image = loadDefaultImage();
             }
-        });
-	    
-	    url = getClass().getResource("images/" + name);
-	    if (image == null && url != null) {
-	        image = ImageCache.getInstance().getImage(url, null);
-	    }
-	    
-	    if (image == null) {
-	        image = defaultImage;
-	    }
-	    
-		return image;
+            
+            buildImages(image);
+            setImage();
+            
+        } catch (MalformedURLException e) {
+        }        
 	}
     
     private void buildImages(BufferedImage image) {
@@ -143,16 +137,11 @@ public class DeviceButton extends JRadioButton {
         return newImage;
     }
 	
-	private String getImagePrefix(boolean defaultPrefix) {
-	    
-	    if (defaultPrefix) {
-	        return "generic_device";
-	    }
-	    
+	private String getImageName() {
 	    Finger finger = _device.getFinger();
-	    String prefix = finger.deviceManufacturer + "/" + finger.deviceManufacturer + "_" + finger.deviceProduct + "_" + finger.deviceModel;
+	    String prefix = finger.deviceManufacturer + "_" + finger.deviceName + "_" + finger.deviceProduct + "_" + finger.deviceModel;
 	    prefix = prefix.replace('.', '_').replace(' ', '_');
 	    
-	    return prefix.toLowerCase();
+	    return prefix.toLowerCase() + ".png";
 	}
 }

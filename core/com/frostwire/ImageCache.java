@@ -53,7 +53,8 @@ public class ImageCache {
 
     private boolean isCached(URL url) {
         File file = getCacheFile(url);
-        return file.exists();
+        long now = System.currentTimeMillis();
+        return file.exists() && (now - file.lastModified()) < 2592000000L;
     }
     
     private BufferedImage loadFromCache(URL url) {
@@ -68,7 +69,7 @@ public class ImageCache {
     private BufferedImage loadFromResource(URL url) {
         try {
             BufferedImage image = ImageIO.read(url);
-            saveToCache(url, image);
+            saveToCache(url, image, 0);
             return image;
         } catch (IOException e) {
             return null;
@@ -84,10 +85,12 @@ public class ImageCache {
                     
                     String userAgent = "FrostWire/" + OSUtils.getOS() + "/" + LimeWireUtils.getLimeWireVersion();
                     HttpFetcher fetcher = new HttpFetcher(url.toURI(), userAgent);
-                    byte[] data = fetcher.fetch();
+                    Object[] result = fetcher.fetchWithDate();
+                    byte[] data = (byte[]) result[0];
+                    long date = (Long) result[1];
                     if (data != null) {
                         image = ImageIO.read(new ByteArrayInputStream(data));
-                        saveToCache(url, image);
+                        saveToCache(url, image, date);
                     }
                     if (listener != null && image != null) {
                         listener.onLoaded(url, image);
@@ -100,10 +103,14 @@ public class ImageCache {
         }).start();
     }
     
-    private void saveToCache(URL url, BufferedImage image) {
+    private void saveToCache(URL url, BufferedImage image, long date) {
         try {
             File file = getCacheFile(url);
-
+            
+            if (file.exists() && file.lastModified() < date) {
+                file.delete();
+            }
+            
             String filename = file.getName();
             int dotIndex = filename.lastIndexOf('.');
             String ext = filename.substring(dotIndex + 1);
@@ -112,6 +119,7 @@ public class ImageCache {
 
             if (file.mkdirs()) {
                 ImageIO.write(image, formatName, file);
+                file.setLastModified(date);
             }
         } catch (IOException e) {
         }

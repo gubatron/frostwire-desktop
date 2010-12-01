@@ -15,10 +15,8 @@ import com.limegroup.gnutella.util.EncodingUtils;
 
 public class Device {
 	
-	public static int ACTION_BROWSE = 0;
-	
-	public static int ACTION_DOWNLOAD = 1;
-	
+	public static int ACTION_BROWSE = 0;	
+	public static int ACTION_DOWNLOAD = 1;	
 	public static int ACTION_UPLOAD = 2;
 	
 	private static JsonEngine JSON_ENGINE = new JsonEngine();
@@ -92,7 +90,7 @@ public class Device {
 			byte[] jsonBytes = fetcher.fetch();
 			
 			if (jsonBytes == null) {
-				fireOnActionFailed(ACTION_BROWSE, null);
+				notifyOnActionFailed(ACTION_BROWSE, null);
 				return new ArrayList<FileDescriptor>();
 			}
 			
@@ -103,7 +101,7 @@ public class Device {
 			return list.files; 
 			
 		} catch (Exception e) {
-			fireOnActionFailed(ACTION_BROWSE, e);
+			notifyOnActionFailed(ACTION_BROWSE, e);
 		}
 		
 		return new ArrayList<FileDescriptor>();
@@ -115,7 +113,7 @@ public class Device {
 			return new URL("http://" + _address.getHostAddress() + ":" + _port + "/download?type=" + type + "&id=" + id);
 			
 		} catch (Exception e) {
-			fireOnActionFailed(ACTION_DOWNLOAD, e);
+			notifyOnActionFailed(ACTION_DOWNLOAD, e);
 		}
 		
 		return null;
@@ -132,14 +130,14 @@ public class Device {
 			byte[] data = fetcher.fetch();
 			
 			if (data == null) {
-				fireOnActionFailed(ACTION_DOWNLOAD, null);
+				notifyOnActionFailed(ACTION_DOWNLOAD, null);
 				return null;
 			}
 			
 			return data; 
 			
 		} catch (Exception e) {
-			fireOnActionFailed(ACTION_DOWNLOAD, e);
+			notifyOnActionFailed(ACTION_DOWNLOAD, e);
 		}
 		
 		return null;
@@ -155,7 +153,7 @@ public class Device {
 			fetcher.post(file);
 						
 		} catch (Exception e) {
-			fireOnActionFailed(ACTION_UPLOAD, e);
+			notifyOnActionFailed(ACTION_UPLOAD, e);
 		}
 	}
 	
@@ -175,13 +173,13 @@ public class Device {
 			fetcher.post(fileEntity);
 						
 		} catch (Exception e) {
-			fireOnActionFailed(ACTION_UPLOAD, e);
+			notifyOnActionFailed(ACTION_UPLOAD, e);
 		}
 	}
 	
 	@Override
 	public int hashCode() {
-		return _address.hashCode();
+		return _finger.uuid.hashCode();
 	}
 	
 	@Override
@@ -190,10 +188,10 @@ public class Device {
 			return false;
 		}
 		
-		return _address.equals(((Device) obj)._address);
+		return _finger.uuid.equals(((Device) obj)._finger.uuid);
 	}
 	
-	private void fireOnActionFailed(int action, Exception e) {
+	protected void notifyOnActionFailed(int action, Exception e) {
 		if (_listener != null) {
 			_listener.onActionFailed(this, action, e);
 		}

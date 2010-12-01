@@ -169,6 +169,32 @@ public class DesktopExplorer extends JPanel {
 			_scrollName.setVisible(false);
 		}
 	}
+	
+	protected void list_keyPressed(KeyEvent e) {
+	    int key = e.getKeyCode();
+        if (key == KeyEvent.VK_ESCAPE) {
+            _scrollName.setVisible(false);
+        } else if (key == KeyEvent.VK_F5) {
+            refresh();
+        } else if (key == KeyEvent.VK_ENTER) {
+            if (OSUtils.isMacOSX()) {
+                actionStartRename();
+            } else {
+                actionOpenFile();
+            }
+        } else if (key == KeyEvent.VK_F2) {
+            if (!OSUtils.isMacOSX()) {
+                actionStartRename();
+            }
+        } else if (key == KeyEvent.VK_SPACE) {
+            if (OSUtils.isMacOSX() || OSUtils.isLinux()) {
+                actionOpenFile();
+            }
+        } else if ((!OSUtils.isMacOSX() && key == KeyEvent.VK_BACK_SPACE) || 
+                (OSUtils.isMacOSX() && (key == KeyEvent.VK_UP && e.isMetaDown()))) {
+            actionGotoParentFolder();
+        }
+    }
 
 	private void setupTop() {
 
@@ -419,33 +445,11 @@ public class DesktopExplorer extends JPanel {
 			}
 		});
 		_list.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				int key = e.getKeyCode();
-				if (key == KeyEvent.VK_ESCAPE) {
-					_scrollName.setVisible(false);
-				} else if (key == KeyEvent.VK_F5) {
-					refresh();
-				} else if (key == KeyEvent.VK_ENTER) {
-					if (OSUtils.isMacOSX()) {
-						actionStartRename();
-					} else {
-						actionOpenFile();
-					}
-				} else if (key == KeyEvent.VK_F2) {
-					if (!OSUtils.isMacOSX()) {
-						actionStartRename();
-					}
-				} else if (key == KeyEvent.VK_SPACE) {
-					if (OSUtils.isMacOSX()) {
-						actionOpenFile();
-					}
-				} else if ((!OSUtils.isMacOSX() && key == KeyEvent.VK_BACK_SPACE) || 
-						(OSUtils.isMacOSX() && (key == KeyEvent.VK_UP && e.isMetaDown()))) {
-					actionGotoParentFolder();
-				}
-			}
-		});
+		    @Override
+		    public void keyPressed(KeyEvent e) {
+		        list_keyPressed(e);
+		    }
+        });
 
 		_scrollPane = new JScrollPane(_list);
 		c = new GridBagConstraints();
@@ -478,7 +482,7 @@ public class DesktopExplorer extends JPanel {
 		_list.add(_scrollName);
 	}
 
-	private JButton setupButtonFavorite(int type, final File path) {
+    private JButton setupButtonFavorite(int type, final File path) {
 		UITool imageTool = new UITool();
 		Image image = imageTool.loadImage(
 				imageTool.getImageNameByFileType(type)).getScaledInstance(18,

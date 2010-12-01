@@ -231,8 +231,7 @@ public class PeerDiscoveryClerk {
 	}
 	
 	private final class CleanStaleDevices implements Runnable {
-		public void run() {
-			
+		public void run() {			
 			while (true) {				
 				long now = System.currentTimeMillis();
 				
@@ -248,16 +247,10 @@ public class PeerDiscoveryClerk {
 					}
 				}
 				
-				sleep();
-			}
-		}
-		
-		private void sleep() {
-			for (int i = 0; i < STALE_DEVICE_TIMEOUT; i+= 1000) {
 				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-				}
+                    Thread.sleep(STALE_DEVICE_TIMEOUT);
+                } catch (InterruptedException e) {
+                }
 			}
 		}
 	}

@@ -15,6 +15,7 @@ import org.limewire.setting.StringArraySetting;
 import org.limewire.setting.StringSetting;
 import org.limewire.util.FileUtils;
 
+import com.frostwire.CoreFrostWireUtils;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.util.LimeWireUtils;
 
@@ -51,7 +52,7 @@ public class SharingSettings extends LimeProps {
         new File(LimeWireUtils.getLimeWireRootFolder(), "Store Purchased");
     
     public static final File IMAGE_CACHE_DIR = 
-        new File(LimeWireUtils.getLimeWireRootFolder(), "Images cache");
+        new File(CoreFrostWireUtils.getPreferencesFolder(), "image_cache");
     
     public static final File DEVICE_FILES_DIR = 
         new File(LimeWireUtils.getLimeWireRootFolder(), "Phones and Tablets");

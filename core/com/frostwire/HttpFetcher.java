@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 
+import org.apache.http.Header;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -13,6 +14,7 @@ import org.apache.http.client.params.HttpClientParams;
 import org.apache.http.entity.FileEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
+import org.apache.http.impl.cookie.DateUtils;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
@@ -43,7 +45,7 @@ public class HttpFetcher {
 	    this(uri, "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506");
 	}
 	
-	public byte[] fetch() {
+	public Object[] fetchWithDate() {
         
         DefaultHttpClient httpClient = new DefaultHttpClient();
 
@@ -66,8 +68,22 @@ public class HttpFetcher {
 			
 			HttpResponse response = httpClient.execute(httpHost, httpGet);
 			
-			if (response.getStatusLine().getStatusCode() < 200 || response.getStatusLine().getStatusCode() >= 300)
+			if (response.getStatusLine().getStatusCode() < 200 || response.getStatusLine().getStatusCode() >= 300) {
 				throw new IOException("bad status code, downloading file " + response.getStatusLine().getStatusCode());
+			}
+			
+			Long date = Long.valueOf(0);
+            
+            Header[] headers = response.getAllHeaders();
+            for (int i = 0; i < headers.length; i++) {
+                if (headers[i].getName().startsWith("Last-Modified")) {
+                    try {
+                        date = DateUtils.parseDate(headers[i].getValue()).getTime();
+                    } catch (Exception e) {
+                    }
+                    break;
+                }
+            }
 			
 			if(response.getEntity() != null) {
 				response.getEntity().writeTo(baos);
@@ -79,7 +95,7 @@ public class HttpFetcher {
 				throw new IOException("invalid response");
 			}
 
-			return body;
+			return new Object[]{ body, date};
 			
 		} catch (Exception e) {
 			System.out.println("Http error: " + e.getMessage());
@@ -92,6 +108,10 @@ public class HttpFetcher {
 		}
 		
 		return null;
+	}
+	
+	public byte[] fetch() {
+	    return (byte[]) fetchWithDate()[0];
 	}
 	
 	public void post(File file) throws IOException {
