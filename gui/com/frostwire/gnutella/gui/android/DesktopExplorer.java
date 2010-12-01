@@ -71,6 +71,10 @@ public class DesktopExplorer extends JPanel {
 	private LocalFileListModel _model;
 	private int _selectedIndexToRename;
 
+	private JMenuItem _menuOpen;
+
+	private JMenuItem _menuRefresh;
+
 	public DesktopExplorer() {
 
 		_model = new LocalFileListModel();
@@ -128,7 +132,7 @@ public class DesktopExplorer extends JPanel {
 	}
 
 	protected void buttonUp_mousePressed(MouseEvent e) {
-		gotoParentFolderAction();
+		actionGotoParentFolder();
 	}
 
 	protected void buttonNew_mousePressed(MouseEvent e) {
@@ -158,10 +162,6 @@ public class DesktopExplorer extends JPanel {
 		JComboBox comboBox = (JComboBox) e.getSource();
 		SortByItem item = (SortByItem) comboBox.getSelectedItem();
 		_model.sortBy(item.sortBy);
-	}
-
-	protected void menuRename_actionPerformed(ActionEvent e) {
-		startRenameAction();
 	}
 
 	protected void textName_keyPressed(KeyEvent e) {
@@ -352,10 +352,27 @@ public class DesktopExplorer extends JPanel {
 		_list.setVisibleRowCount(-1);
 
 		_popupList = new JPopupMenu();
+		
+		_popupList.add(_menuOpen = new JMenuItem(I18n.tr("Open")));
+		_menuOpen.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DesktopExplorer.this.actionOpenFile();
+			}
+		});
+		
 		_popupList.add(_menuRename = new JMenuItem(I18n.tr("Rename")));
 		_menuRename.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				menuRename_actionPerformed(e);
+				DesktopExplorer.this.actionStartRename();
+			}
+		});
+
+		_popupList.add(_menuRefresh = new JMenuItem(I18n.tr("Refresh")));
+		_menuRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DesktopExplorer.this.refresh();
 			}
 		});
 
@@ -396,20 +413,20 @@ public class DesktopExplorer extends JPanel {
 					refresh();
 				} else if (key == KeyEvent.VK_ENTER) {
 					if (OSUtils.isMacOSX()) {
-						startRenameAction();
+						actionStartRename();
 					} else {
-						openFileAction();
+						actionOpenFile();
 					}
 				} else if (key == KeyEvent.VK_F2) {
 					if (!OSUtils.isMacOSX()) {
-						startRenameAction();
+						actionStartRename();
 					}
 				} else if (key == KeyEvent.VK_SPACE) {
 					if (OSUtils.isMacOSX()) {
-						openFileAction();
+						actionOpenFile();
 					}
 				} else if (key == KeyEvent.VK_BACK_SPACE) {
-					gotoParentFolderAction();
+					actionGotoParentFolder();
 				}
 			}
 		});
@@ -506,7 +523,7 @@ public class DesktopExplorer extends JPanel {
 		_textName.requestFocus();
 	}
 
-	private void startRenameAction() {
+	private void actionStartRename() {
 		cancelEdit();
 		int index = _list.getSelectedIndex();
 		if (index != -1) {
@@ -538,7 +555,7 @@ public class DesktopExplorer extends JPanel {
 		_scrollName.setVisible(false);
 	}
 
-	private void openFileAction() {
+	private void actionOpenFile() {
 		cancelEdit();
 		int index = _list.getSelectedIndex();
 		if (index != -1) {
@@ -555,7 +572,7 @@ public class DesktopExplorer extends JPanel {
 
 	
 
-	private void gotoParentFolderAction() {
+	private void actionGotoParentFolder() {
 		cancelEdit();
 		File path = _model.getRoot().getParentFile();
 		if (path != null) {
