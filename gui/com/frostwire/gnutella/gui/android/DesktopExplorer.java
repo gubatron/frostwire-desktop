@@ -29,16 +29,14 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 
-import org.jdesktop.jdic.desktop.Desktop;
 import org.limewire.util.OSUtils;
 import org.pushingpixels.flamingo.api.bcb.BreadcrumbItem;
 import org.pushingpixels.flamingo.api.bcb.BreadcrumbPathEvent;
 import org.pushingpixels.flamingo.api.bcb.BreadcrumbPathListener;
 import org.pushingpixels.flamingo.api.bcb.core.BreadcrumbFileSelector;
 
-import com.frostwire.CoreFrostWireUtils;
+import com.frostwire.GuiFrostWireUtils;
 import com.frostwire.gnutella.gui.android.LocalFileListModel.OnRootListener;
-import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
 
@@ -549,38 +547,13 @@ public class DesktopExplorer extends JPanel {
 				if (localFile.getFile().isDirectory()) {
 					setSelectedFolder(localFile.getFile());
 				} else {
-					try {
-						boolean isJava16or17 = CoreFrostWireUtils
-								.isJavaMajorVersion("1.6")
-								|| CoreFrostWireUtils.isJavaMajorVersion("1.7");
-
-						if (!OSUtils.isMacOSX()) {
-							// try awt first if you got newer java
-							if (isJava16or17) {
-								java.awt.Desktop.getDesktop().open(
-										localFile.getFile());
-							} else {
-								// try jdic if you're 1.5
-								Desktop.open(localFile.getFile());
-							}
-						}
-						// hopefully java.awt.Desktop will work already for 1.7
-						// if it ever comes out.
-						else if (isJava16or17) {
-							java.awt.Desktop.getDesktop().open(
-									localFile.getFile());
-						}
-						// the old way for older machines
-						else {
-							GUIMediator.launchFile(localFile.getFile());
-						}
-					} catch (Exception e) {
-						GUIMediator.launchFile(localFile.getFile());
-					}
+					GuiFrostWireUtils.launchFile(localFile.getFile());
 				}
 			}
 		}
 	}
+
+	
 
 	private void gotoParentFolderAction() {
 		cancelEdit();
