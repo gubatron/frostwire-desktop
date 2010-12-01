@@ -302,8 +302,9 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
                 if (ext != null) {
                     imageFileType = composeImage(imageFileType, ext);
                     IMAGE_TYPES.put(ext, imageFileType);
-                    image = imageFileType;
                 }
+                
+                image = imageFileType;
             }
             
             if (_layoutOrientation != JList.HORIZONTAL_WRAP) {
