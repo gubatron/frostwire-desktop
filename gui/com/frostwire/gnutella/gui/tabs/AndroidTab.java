@@ -22,7 +22,7 @@ public final class AndroidTab extends AbstractTab {
 	private static JPanel PANEL = new JPanel(new GridBagLayout());
 
 	public AndroidTab(AndroidMediator androidMediator) {
-		super(I18n.tr("Phone and Tablets"), I18n.tr("Show the phone and tablets"), "chat_tab");
+        super(I18n.tr("Phones and Tablets"), I18n.tr("Show the phones and tablets"), "device_tab");
 	
 		COMPONENT = androidMediator.getComponent();
 		GridBagConstraints c = new GridBagConstraints();

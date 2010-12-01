@@ -8,8 +8,9 @@ public class Finger {
 	public int totalShared;
 	
 	public String deviceVersion;
+	public String deviceModel;
 	public String deviceProduct;
-	public String deviceDevice;
+	public String deviceName;
 	public String deviceManufacturer;
 	
 	public int numSharedAudioFiles;

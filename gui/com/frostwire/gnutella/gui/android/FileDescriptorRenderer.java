@@ -3,6 +3,7 @@ package com.frostwire.gnutella.gui.android;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -125,6 +126,9 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
         add(_imagePanel, c);
         
         _labelTitle = new JLabel();
+        Font f = _labelTitle.getFont();
+        f = new Font(f.getName(), f.getStyle() | Font.BOLD, f.getSize() + 2);
+        _labelTitle.setFont(f);
         c = new GridBagConstraints();
         c.gridx = 1;
         c.gridy = 0;

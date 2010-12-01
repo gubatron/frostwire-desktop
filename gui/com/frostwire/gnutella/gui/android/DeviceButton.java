@@ -149,10 +149,10 @@ public class DeviceButton extends JRadioButton {
 	        return "generic_device";
 	    }
 	    
-		if (DeviceID.isNexusOne(_device)) {
-			return "nexus_one";
-		} else {
-			return "generic_device";
-		}
+	    Finger finger = _device.getFinger();
+	    String prefix = finger.deviceManufacturer + "/" + finger.deviceManufacturer + "_" + finger.deviceProduct + "_" + finger.deviceModel;
+	    prefix = prefix.replace('.', '_').replace(' ', '_');
+	    
+	    return prefix.toLowerCase();
 	}
 }

@@ -47,16 +47,16 @@ public class AndroidMediator implements ThemeObserver {
 	public static AndroidMediator instance() { return INSTANCE; }
 	
 	private AndroidMediator() {
-    	GUIMediator.setSplashScreenString(I18n.tr("Loading phone and tablets..."));
+    	GUIMediator.setSplashScreenString(I18n.tr("Loading phones and tablets..."));
     	ThemeMediator.addThemeObserver(this);
     	
     	ACTIVITY_PROCESSOR = new TaskProcessor();
     	ACTIVITY_PROCESSOR.start();
     	
-    	setupUIElements();
+    	setupUI();
     }
 
-	private void setupUIElements() {
+	protected void setupUI() {
 		
 		MAIN_PANEL = new JPanel(new BorderLayout());
 		DESKTOP_EXPLORER = new DesktopExplorer();
@@ -78,11 +78,11 @@ public class AndroidMediator implements ThemeObserver {
 		c.gridx=0;
 		c.gridy=0;
 		c.fill=GridBagConstraints.BOTH;
-		c.weightx = 0.9;
+		c.weightx = 10;
 		c.weighty=1.0;
 		c.anchor=GridBagConstraints.NORTHWEST;
 		
-		DESKTOP_EXPLORER.setMinimumSize(new Dimension(700,700));
+		//DESKTOP_EXPLORER.setMinimumSize(new Dimension(700,700));
 
 		EXPLORERS_CONTAINER.add(DESKTOP_EXPLORER, c);
 		
@@ -162,7 +162,7 @@ public class AndroidMediator implements ThemeObserver {
 
 		JFrame frame = new JFrame();
 		Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-		frame.setSize((int) (screenSize.width * 0.6), (int) (screenSize.height * 0.6));
+		frame.setSize((int) (screenSize.width * 0.6), 600);
 		frame.getContentPane().add(mediator.getComponent());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
