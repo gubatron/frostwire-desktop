@@ -3,6 +3,8 @@ package com.frostwire.gnutella.gui.android;
 import java.io.File;
 import java.io.Serializable;
 
+import com.frostwire.GuiFrostWireUtils;
+
 public class LocalFile implements Serializable {
 	
 	/**
@@ -57,6 +59,8 @@ public class LocalFile implements Serializable {
     public void open() {
 		if (_file.isDirectory()) {
 			fireOnOpen();
+		} else {
+			GuiFrostWireUtils.launchFile(_file);
 		}
 	}
     
