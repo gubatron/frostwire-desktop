@@ -8,8 +8,6 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 
-import com.limegroup.gnutella.gui.I18n;
-
 public class TaskRenderer extends JPanel implements ListCellRenderer {
 
 	/**
@@ -58,7 +56,7 @@ public class TaskRenderer extends JPanel implements ListCellRenderer {
 	}
 
 	private void renderBrowseActivity(BrowseTask activity) {
-		String text = "Browsing device for file type " + getFileTypeAsString(activity.getType());
+		String text = "Browsing device for file type " + UITool.getFileTypeAsString(activity.getType());
 		
 		if (activity.isCanceled()) {
 			text += " Canceled";
@@ -107,25 +105,5 @@ public class TaskRenderer extends JPanel implements ListCellRenderer {
 		}
 		
 		_label.setText(text);
-	}
-	
-	private String getFileTypeAsString(int type) {
-
-		switch (type) {
-		case DeviceConstants.FILE_TYPE_APPLICATIONS:
-			return I18n.tr("Applications");
-		case DeviceConstants.FILE_TYPE_AUDIO:
-			return I18n.tr("Audio");
-		case DeviceConstants.FILE_TYPE_DOCUMENTS:
-			return I18n.tr("Documents");
-		case DeviceConstants.FILE_TYPE_PICTURES:
-			return I18n.tr("Pictures");
-		case DeviceConstants.FILE_TYPE_RINGTONES:
-			return I18n.tr("Ringtones");
-		case DeviceConstants.FILE_TYPE_VIDEOS:
-			return I18n.tr("Video");
-		default:
-			return "Unkown file type";
-		}
 	}
 }

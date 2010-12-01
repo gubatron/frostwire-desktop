@@ -17,9 +17,11 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -65,8 +67,9 @@ public class DesktopExplorer extends JPanel {
 	private JList _list;
 	private JScrollPane _scrollPane;
 	private JPopupMenu _popupList;
-	private JMenuItem _menuRename;
 	private JMenuItem _menuOpen;
+	private JMenuItem _menuRename;
+	private JMenuItem _menuDelete;
     private JMenuItem _menuRefresh;
 	private JTextArea _textName;
 	private JScrollPane _scrollName;
@@ -87,12 +90,7 @@ public class DesktopExplorer extends JPanel {
 		_selectedIndexToRename = -1;
 
 		setupUI();
-
-		setSelectedFolder(SharingSettings.getDeviceFilesDirectory()); // guarantee
-																		// the
-																		// creation
-																		// of
-																		// files
+		setSelectedFolder(SharingSettings.getDeviceFilesDirectory()); // guarantee the creation of files
 	}
 
 	public File getSelectedFolder() {
@@ -302,24 +300,15 @@ public class DesktopExplorer extends JPanel {
 		_toolBar.add(_labelSort);
 
 		_comboBoxSort = new JComboBox();
-		_comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_NONE,
-				I18n.tr("None")));
-		_comboBoxSort.addItem(new SortByItem(
-				LocalFileListModel.SORT_BY_NAME_ASC, I18n.tr("Name Asc")));
-		_comboBoxSort.addItem(new SortByItem(
-				LocalFileListModel.SORT_BY_NAME_DESC, I18n.tr("Name Desc")));
-		_comboBoxSort.addItem(new SortByItem(
-				LocalFileListModel.SORT_BY_DATE_ASC, I18n.tr("Date Asc")));
-		_comboBoxSort.addItem(new SortByItem(
-				LocalFileListModel.SORT_BY_DATE_DESC, I18n.tr("Date Desc")));
-		_comboBoxSort.addItem(new SortByItem(
-				LocalFileListModel.SORT_BY_KIND_ASC, I18n.tr("Kind Asc")));
-		_comboBoxSort.addItem(new SortByItem(
-				LocalFileListModel.SORT_BY_KIND_DESC, I18n.tr("Kind Desc")));
-		_comboBoxSort.addItem(new SortByItem(
-				LocalFileListModel.SORT_BY_SIZE_DESC, I18n.tr("Size Asc")));
-		_comboBoxSort.addItem(new SortByItem(
-				LocalFileListModel.SORT_BY_SIZE_DESC, I18n.tr("Size Desc")));
+		_comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_NONE, I18n.tr("None")));
+		_comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_NAME_ASC, I18n.tr("Name Asc")));
+		_comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_NAME_DESC, I18n.tr("Name Desc")));
+		_comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_DATE_ASC, I18n.tr("Date Asc")));
+		_comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_DATE_DESC, I18n.tr("Date Desc")));
+		_comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_KIND_ASC, I18n.tr("Kind Asc")));
+		_comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_KIND_DESC, I18n.tr("Kind Desc")));
+		_comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_SIZE_DESC, I18n.tr("Size Asc")));
+		_comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_SIZE_DESC, I18n.tr("Size Desc")));
 		_comboBoxSort.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				comboBoxSort_actionPerformed(e);
@@ -366,28 +355,40 @@ public class DesktopExplorer extends JPanel {
 
 		_popupList = new JPopupMenu();
 		
-		_popupList.add(_menuOpen = new JMenuItem(I18n.tr("Open")));
-		_menuOpen.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				DesktopExplorer.this.actionOpenFile();
-			}
-		});
+		_menuOpen = new JMenuItem(I18n.tr("Open"));
+		_menuOpen.addActionListener(new ActionListener() {            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DesktopExplorer.this.actionOpenFile();
+            }
+        });
+		_popupList.add(_menuOpen);
 		
-		_popupList.add(_menuRename = new JMenuItem(I18n.tr("Rename")));
+		_menuRename = new JMenuItem(I18n.tr("Rename"));
 		_menuRename.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				DesktopExplorer.this.actionStartRename();
-			}
-		});
-
-		_popupList.add(_menuRefresh = new JMenuItem(I18n.tr("Refresh")));
+            public void actionPerformed(ActionEvent e) {
+                DesktopExplorer.this.actionStartRename();
+            }
+        });
+		_popupList.add(_menuRename);
+		
+		_menuDelete = new JMenuItem(I18n.tr("Delete"));
+		_menuDelete.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                DesktopExplorer.this.actionStartDelete();
+            }
+        });
+        _popupList.add(_menuDelete);
+        
+        _popupList.addSeparator();
+		
+		_menuRefresh = new JMenuItem(I18n.tr("Refresh"));
 		_menuRefresh.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				DesktopExplorer.this.refresh();
-			}
-		});
+            public void actionPerformed(ActionEvent e) {
+                DesktopExplorer.this.refresh();
+            }
+        });
+		_popupList.add(_menuRefresh);		
 
 		_list.addMouseListener(new MouseAdapter() {
 			@Override
@@ -544,6 +545,27 @@ public class DesktopExplorer extends JPanel {
 			startEdit(index);
 		}
 	}
+	
+	private void actionStartDelete() {
+	    int index = _list.getSelectedIndex();
+        if (index != -1) {
+            LocalFile localFile = (LocalFile) _model.getElementAt(index);
+            if (localFile != null) {
+                boolean success;
+                try {
+                    success = localFile.getFile().delete();
+                } catch (Exception e) {
+                    success = false;
+                }
+                
+                if (!success) {
+                    JComponent dialogParent = AndroidMediator.instance().getComponent();
+                    JOptionPane.showMessageDialog(dialogParent, I18n.tr("Error deleting file"), I18n.tr("System"), JOptionPane.INFORMATION_MESSAGE);
+                }
+                refresh();
+            }
+        }
+    }
 
 	private void renameSelectedItem(int index) {
 		if (!_scrollName.isVisible()) {

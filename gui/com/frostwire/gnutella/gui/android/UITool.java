@@ -8,6 +8,8 @@ import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 
+import com.limegroup.gnutella.gui.I18n;
+
 public class UITool {
     
     private static String[] BYTE_UNITS = new String[] { "b", "KB", "Mb", "Gb", "Tb" };
@@ -71,6 +73,26 @@ public class UITool {
             return type;
         } else {
             return DeviceConstants.FILE_TYPE_DOCUMENTS;
+        }
+    }
+    
+    public static String getFileTypeAsString(int type) {
+
+        switch (type) {
+        case DeviceConstants.FILE_TYPE_APPLICATIONS:
+            return I18n.tr("Applications");
+        case DeviceConstants.FILE_TYPE_AUDIO:
+            return I18n.tr("Audio");
+        case DeviceConstants.FILE_TYPE_DOCUMENTS:
+            return I18n.tr("Documents");
+        case DeviceConstants.FILE_TYPE_PICTURES:
+            return I18n.tr("Pictures");
+        case DeviceConstants.FILE_TYPE_RINGTONES:
+            return I18n.tr("Ringtones");
+        case DeviceConstants.FILE_TYPE_VIDEOS:
+            return I18n.tr("Video");
+        default:
+            return "Unkown file type";
         }
     }
     
