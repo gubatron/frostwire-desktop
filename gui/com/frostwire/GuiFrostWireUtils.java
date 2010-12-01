@@ -160,29 +160,19 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
 	 */
 	public static void launchFile(File file) {
 		try {
-			boolean isJava16or17 = CoreFrostWireUtils
-					.isJavaMajorVersion("1.6")
-					|| CoreFrostWireUtils.isJavaMajorVersion("1.7");
+			boolean isJava16orGreater = CoreFrostWireUtils
+					.isJavaMinorVersionEqualOrGreaterThan("1.6");
 
-			if (!OSUtils.isMacOSX()) {
-				// try awt first if you got newer java
-				if (isJava16or17) {
-					java.awt.Desktop.getDesktop().open(
-							file);
-				} else {
-					// try jdic if you're 1.5
+			if (isJava16orGreater) {
+				java.awt.Desktop.getDesktop().open(file);
+			} else {
+				//try jdic if you're not a mac and you're on below 1.6
+				if (!OSUtils.isMacOSX()) {
 					Desktop.open(file);
+				} else {
+					//if you're an old mac, try the old way
+					GUIMediator.launchFile(file);
 				}
-			}
-			// hopefully java.awt.Desktop will work already for 1.7
-			// if it ever comes out.
-			else if (isJava16or17) {
-				java.awt.Desktop.getDesktop().open(
-						file);
-			}
-			// the old way for older machines
-			else {
-				GUIMediator.launchFile(file);
 			}
 		} catch (Exception e) {
 			GUIMediator.launchFile(file);

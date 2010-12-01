@@ -102,14 +102,26 @@ public class Version implements Comparable<Version> {
         if(major == other.major)
             if(minor == other.minor)
                 if(service == other.service)
-                    // if revision == other.revision
-                        // return 0;
-                    // else
-                        retVal = revision - other.revision;
+                    retVal = revision - other.revision;
                 else
                     retVal = service - other.service;
             else
                 retVal = minor - other.minor;
+        else
+            retVal = major - other.major;
+            
+        return retVal;
+    }
+    
+    /**
+     * Compares major.minor only.
+     * @param other
+     * @return >= 0 if this version is greater or equal.
+     */
+    public int compareMajorMinorTo(Version other) {
+        int retVal;
+        if(major == other.major)
+            retVal = minor - other.minor;
         else
             retVal = major - other.major;
             

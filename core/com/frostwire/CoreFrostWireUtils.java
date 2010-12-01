@@ -25,6 +25,7 @@ import org.gudy.azureus2.core3.download.DownloadManagerListener;
 import org.gudy.azureus2.core3.download.DownloadManagerStats;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
 import org.limewire.util.CommonUtils;
+import org.limewire.util.Version;
 
 import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.AzureusCoreComponent;
@@ -492,10 +493,21 @@ public class CoreFrostWireUtils {
 	 * If you're in java 1.6.xxx and you just ass "1.6" and it should always return true.
 	 * 
 	 * */
-	public static boolean isJavaMajorVersion(String version) {
+	public static boolean isJavaMinorVersionEqualOrGreaterThan(String version) {
 		if (version == null)
 			return false;
-		return System.getProperty("java.version").startsWith(version);
+		
+		Version asking = null;
+		Version javaVersion = null;
+			
+		try {
+			asking = new Version(version);
+			javaVersion = new Version(System.getProperty("java.version"));
+		} catch (Exception e) {
+			return false;
+		}
+		
+		return javaVersion.compareMajorMinorTo(asking) >= 0;
 	}
 
 }
