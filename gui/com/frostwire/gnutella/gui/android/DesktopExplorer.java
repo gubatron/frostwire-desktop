@@ -307,8 +307,9 @@ public class DesktopExplorer extends JPanel {
 		_comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_DATE_DESC, I18n.tr("Date Desc")));
 		_comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_KIND_ASC, I18n.tr("Kind Asc")));
 		_comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_KIND_DESC, I18n.tr("Kind Desc")));
-		_comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_SIZE_DESC, I18n.tr("Size Asc")));
+		_comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_SIZE_ASC, I18n.tr("Size Asc")));
 		_comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_SIZE_DESC, I18n.tr("Size Desc")));
+		_comboBoxSort.setSelectedIndex(5);
 		_comboBoxSort.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				comboBoxSort_actionPerformed(e);

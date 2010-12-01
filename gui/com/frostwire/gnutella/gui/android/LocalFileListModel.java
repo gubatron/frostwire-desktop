@@ -36,7 +36,7 @@ public class LocalFileListModel extends AbstractListModel {
 	private MyOnOpenListener _myOnOpenListener;
 	
 	public LocalFileListModel() {
-	    _sortCriteria = SORT_BY_NONE;
+	    _sortCriteria = SORT_BY_KIND_ASC;
 		_files = new ArrayList<LocalFile>();
 		_myOnOpenListener = new MyOnOpenListener();
 	}
@@ -60,9 +60,6 @@ public class LocalFileListModel extends AbstractListModel {
     		        Long d1 = f1.lastModified();
     		        Long d2 = f2.lastModified();
     		        
-    		        Long l1 = f1.length();
-    		        Long l2 = f2.length();
-    		        
                     switch (_sortCriteria) {
                     case SORT_BY_NAME_ASC: return f1.getName().compareTo(f2.getName());
                     case SORT_BY_NAME_DESC: return -1 * f1.getName().compareTo(f2.getName());
@@ -70,8 +67,8 @@ public class LocalFileListModel extends AbstractListModel {
                     case SORT_BY_DATE_DESC: return -1 * d1.compareTo(d2);
                     case SORT_BY_KIND_ASC: return compareByKind(f1, f2);
                     case SORT_BY_KIND_DESC: return -1 * compareByKind(f1, f2);
-                    case SORT_BY_SIZE_ASC: return l1.compareTo(l2);
-                    case SORT_BY_SIZE_DESC: return -1 * l1.compareTo(l2);
+                    case SORT_BY_SIZE_ASC: return compareByLength(f1, f2, true);
+                    case SORT_BY_SIZE_DESC: return compareByLength(f1, f2, false);
                     default: return 0;
                     }
                 }
@@ -165,16 +162,13 @@ public class LocalFileListModel extends AbstractListModel {
 	}
 	
 	private int compareByKind(File f1, File f2) {
+	    
 	    if (f1.isDirectory() && f2.isDirectory()) {
 	        return f1.getName().compareTo(f2.getName());
-	    }
-	    
-	    if (f1.isDirectory()) {
-	        return -1;
-	    }
-	    
-	    if (f2.isDirectory()) {
+	    } else if (f1.isDirectory()) {
             return -1;
+        } else if (f2.isDirectory()) {
+            return 1;
         }
 	    
 	    int index1 = f1.getName().lastIndexOf('.');
@@ -182,25 +176,37 @@ public class LocalFileListModel extends AbstractListModel {
 	    
 	    if (index1 == -1 && index2 == -1) {
 	        return f1.getName().compareTo(f2.getName());
-	    }
-	    
-	    if (index1 == -1) {
+	    } else if (index1 == -1) {
 	        return 1;
+	    } else if (index2 == -1) {
+	        return -1;
 	    }
-	    
-	    if (index2 == -1) {
-            return 1;
-        }
 	    
 	    String ext1 = f1.getName().substring(index1);
 	    String ext2 = f2.getName().substring(index2);
 	    
-	    if (ext1.equals(ext2)) {
+	    if (!ext1.equals(ext2)) {
+	        return ext1.compareTo(ext2);
+	    } else {
 	        return f1.getName().compareTo(f2.getName());
 	    }
-	    
-	    return ext1.compareTo(ext2);
 	}
+	
+	private int compareByLength(File f1, File f2, boolean asc) {
+        
+        if (f1.isDirectory() && f2.isDirectory()) {
+            return f1.getName().compareTo(f2.getName());
+        } else if (f1.isDirectory()) {
+            return -1;
+        } else if (f2.isDirectory()) {
+            return 1;
+        }
+        
+        Long l1 = f1.length();
+        Long l2 = f2.length();
+        
+        return (asc ? 1 : -1) * l1.compareTo(l2);
+    }
 	
 	public void rename(int index, String name) {
 	    LocalFile localFile = (LocalFile) getElementAt(index);
