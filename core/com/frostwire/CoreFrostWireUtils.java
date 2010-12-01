@@ -485,4 +485,17 @@ public class CoreFrostWireUtils {
 	public static HttpExecutor getHTTPExecutor() {
 		return getInjector().getInstance(HttpExecutor.class);
 	}
+	
+	/** 
+	 * Quick and dirty java version comparator 
+	 * 
+	 * If you're in java 1.6.xxx and you just ass "1.6" and it should always return true.
+	 * 
+	 * */
+	public static boolean isJavaMajorVersion(String version) {
+		if (version == null)
+			return false;
+		return System.getProperty("java.version").startsWith(version);
+	}
+
 }

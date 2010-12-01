@@ -36,6 +36,7 @@ import org.pushingpixels.flamingo.api.bcb.BreadcrumbPathEvent;
 import org.pushingpixels.flamingo.api.bcb.BreadcrumbPathListener;
 import org.pushingpixels.flamingo.api.bcb.core.BreadcrumbFileSelector;
 
+import com.frostwire.CoreFrostWireUtils;
 import com.frostwire.gnutella.gui.android.LocalFileListModel.OnRootListener;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -64,128 +65,134 @@ public class DesktopExplorer extends JPanel {
 	private BreadcrumbFileSelector _breadcrumb;
 	private JList _list;
 	private JScrollPane _scrollPane;
-    private JPopupMenu _popupList;
-    private JMenuItem _menuRename;
-    private JTextArea _textName;
-    private JScrollPane _scrollName;
-	
+	private JPopupMenu _popupList;
+	private JMenuItem _menuRename;
+	private JTextArea _textName;
+	private JScrollPane _scrollName;
+
 	private LocalFileListModel _model;
 	private int _selectedIndexToRename;
-	
+
 	public DesktopExplorer() {
-		
+
 		_model = new LocalFileListModel();
 		_model.setOnRootListener(new OnRootListener() {
 			public void onRoot(LocalFileListModel localFileListModel, File path) {
-			    cancelEdit();
+				cancelEdit();
 				_breadcrumb.setPath(path);
 			}
 		});
-		
+
 		_selectedIndexToRename = -1;
-		
+
 		setupUI();
-		
-		setSelectedFolder(SharingSettings.getDeviceFilesDirectory()); // guarantee the creation of files
+
+		setSelectedFolder(SharingSettings.getDeviceFilesDirectory()); // guarantee
+																		// the
+																		// creation
+																		// of
+																		// files
 	}
-	
+
 	public File getSelectedFolder() {
-	    cancelEdit();
+		cancelEdit();
 		return _model.getRoot();
 	}
-	
+
 	public void setSelectedFolder(File path) {
-	    cancelEdit();
+		cancelEdit();
 		_model.setRoot(path);
 	}
-	
+
 	public void refresh() {
-	    cancelEdit();
+		cancelEdit();
 		_model.refresh();
 	}
-	
+
 	protected void setupUI() {
 		setLayout(new GridBagLayout());
-		
+
 		setupTop();
 		setupList();
 	}
-	
+
 	protected void breadcrumb_pathEvent(BreadcrumbPathEvent event) {
-	    cancelEdit();
-        List<BreadcrumbItem<File>> items = _breadcrumb.getModel().getItems();
-        
-        if (items.size() > 0) {
-            File path = items.get(items.size() - 1).getData();
-            OnRootListener listener = _model.getOnRootListener();
-            _model.setOnRootListener(null); // avoid infinite recursion
-            _model.setRoot(path);
-            _model.setOnRootListener(listener);
-        }
-    }
-	
+		cancelEdit();
+		List<BreadcrumbItem<File>> items = _breadcrumb.getModel().getItems();
+
+		if (items.size() > 0) {
+			File path = items.get(items.size() - 1).getData();
+			OnRootListener listener = _model.getOnRootListener();
+			_model.setOnRootListener(null); // avoid infinite recursion
+			_model.setRoot(path);
+			_model.setOnRootListener(listener);
+		}
+	}
+
 	protected void buttonUp_mousePressed(MouseEvent e) {
-	    gotoParentFolderAction();
-    }
+		gotoParentFolderAction();
+	}
 
-    protected void buttonNew_mousePressed(MouseEvent e) {
-        cancelEdit();
-        LocalFile localFile = _model.createNewFolder();
-        if (localFile != null) {
-            _list.setSelectedValue(localFile, true);
-        }
-    }
-    
-    protected void buttonViewThumbnail_mousePressed(MouseEvent e) {
-        cancelEdit();
-        _list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-        _list.setPrototypeCellValue(new LocalFile(SharingSettings.getDeviceFilesDirectory()));
-    }
-    
-    protected void buttonViewList_mousePressed(MouseEvent e) {
-        cancelEdit();
-        _list.setLayoutOrientation(JList.VERTICAL);
-        _list.setPrototypeCellValue(new LocalFile(SharingSettings.getDeviceFilesDirectory()));
-    }
-    
-    protected void comboBoxSort_actionPerformed(ActionEvent e) {
-        cancelEdit();
-        JComboBox comboBox = (JComboBox)e.getSource();
-        SortByItem item = (SortByItem)comboBox.getSelectedItem();
-        _model.sortBy(item.sortBy);
-    }
-    
-    protected void menuRename_actionPerformed(ActionEvent e) {
-        startRenameAction();
-    }
+	protected void buttonNew_mousePressed(MouseEvent e) {
+		cancelEdit();
+		LocalFile localFile = _model.createNewFolder();
+		if (localFile != null) {
+			_list.setSelectedValue(localFile, true);
+		}
+	}
 
-    protected void textName_keyPressed(KeyEvent e) {
-        int key = e.getKeyCode();
-        if (_selectedIndexToRename != -1 && key == KeyEvent.VK_ENTER) {
-            renameSelectedItem(_selectedIndexToRename);
-        } else if (key == KeyEvent.VK_ESCAPE) {
-            _scrollName.setVisible(false);
-        }
-    }
+	protected void buttonViewThumbnail_mousePressed(MouseEvent e) {
+		cancelEdit();
+		_list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		_list.setPrototypeCellValue(new LocalFile(SharingSettings
+				.getDeviceFilesDirectory()));
+	}
 
-    private void setupTop() {
-		
+	protected void buttonViewList_mousePressed(MouseEvent e) {
+		cancelEdit();
+		_list.setLayoutOrientation(JList.VERTICAL);
+		_list.setPrototypeCellValue(new LocalFile(SharingSettings
+				.getDeviceFilesDirectory()));
+	}
+
+	protected void comboBoxSort_actionPerformed(ActionEvent e) {
+		cancelEdit();
+		JComboBox comboBox = (JComboBox) e.getSource();
+		SortByItem item = (SortByItem) comboBox.getSelectedItem();
+		_model.sortBy(item.sortBy);
+	}
+
+	protected void menuRename_actionPerformed(ActionEvent e) {
+		startRenameAction();
+	}
+
+	protected void textName_keyPressed(KeyEvent e) {
+		int key = e.getKeyCode();
+		if (_selectedIndexToRename != -1 && key == KeyEvent.VK_ENTER) {
+			renameSelectedItem(_selectedIndexToRename);
+		} else if (key == KeyEvent.VK_ESCAPE) {
+			_scrollName.setVisible(false);
+		}
+	}
+
+	private void setupTop() {
+
 		GridBagConstraints c;
-		
+
 		_toolBar = new JToolBar();
 		_toolBar.setFloatable(false);
 		_toolBar.setRollover(true);
 		_toolBar.addMouseListener(new MouseAdapter() {
-		    @Override
-		    public void mousePressed(MouseEvent e) {
-		        _scrollName.setVisible(false);
-		    }
-        });
-		
+			@Override
+			public void mousePressed(MouseEvent e) {
+				_scrollName.setVisible(false);
+			}
+		});
+
 		_toolBar.addSeparator();
-		
+
 		Dimension toolBarButtonSize = new Dimension(28, 28);
-		
+
 		_buttonUp = new JButton();
 		_buttonUp.setIcon(new ImageIcon(new UITool().loadImage("folder_up")));
 		_buttonUp.setPreferredSize(toolBarButtonSize);
@@ -199,7 +206,7 @@ public class DesktopExplorer extends JPanel {
 			}
 		});
 		_toolBar.add(_buttonUp);
-		
+
 		_buttonNew = new JButton();
 		_buttonNew.setIcon(new ImageIcon(new UITool().loadImage("folder_new")));
 		_buttonNew.setPreferredSize(toolBarButtonSize);
@@ -207,90 +214,113 @@ public class DesktopExplorer extends JPanel {
 		_buttonNew.setMaximumSize(toolBarButtonSize);
 		_buttonNew.setSize(toolBarButtonSize);
 		_buttonNew.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                buttonNew_mousePressed(e);
-            }
-        });
-        _toolBar.add(_buttonNew);
-        
-        _toolBar.addSeparator();
-        
-        _buttonViewThumbnail = new JButton();
-        _buttonViewThumbnail.setIcon(new ImageIcon(new UITool().loadImage("view_thumbnail")));
-        _buttonViewThumbnail.setPreferredSize(toolBarButtonSize);
-        _buttonViewThumbnail.setMinimumSize(toolBarButtonSize);
-        _buttonViewThumbnail.setMaximumSize(toolBarButtonSize);
-        _buttonViewThumbnail.setSize(toolBarButtonSize);
-        _buttonViewThumbnail.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                buttonViewThumbnail_mousePressed(e);
-            }
-        });
-        _toolBar.add(_buttonViewThumbnail);
-        
-        _buttonViewList = new JButton();
-        _buttonViewList.setIcon(new ImageIcon(new UITool().loadImage("view_list")));
-        _buttonViewList.setPreferredSize(toolBarButtonSize);
-        _buttonViewList.setMinimumSize(toolBarButtonSize);
-        _buttonViewList.setMaximumSize(toolBarButtonSize);
-        _buttonViewList.setSize(toolBarButtonSize);
-        _buttonViewList.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                buttonViewList_mousePressed(e);
-            }
-        });
-        _toolBar.add(_buttonViewList);
-        
-        _toolBar.addSeparator();
-        
-        _buttonFavoriteApplications = setupButtonFavorite(DeviceConstants.FILE_TYPE_APPLICATIONS, SharingSettings.DEVICE_APPLICATIONS_FILES_DIR);
-        _toolBar.add(_buttonFavoriteApplications);
-        
-        _buttonFavoriteDocuments = setupButtonFavorite(DeviceConstants.FILE_TYPE_DOCUMENTS, SharingSettings.DEVICE_DOCUMENTS_FILES_DIR);
-        _toolBar.add(_buttonFavoriteDocuments);
-        
-        _buttonFavoritePictures = setupButtonFavorite(DeviceConstants.FILE_TYPE_PICTURES, SharingSettings.DEVICE_PICTURES_FILES_DIR);
-        _toolBar.add(_buttonFavoritePictures);
-        
-        _buttonFavoriteVideos = setupButtonFavorite(DeviceConstants.FILE_TYPE_VIDEOS, SharingSettings.DEVICE_VIDEO_FILES_DIR);
-        _toolBar.add(_buttonFavoriteVideos);
-        
-        _buttonFavoriteRingtones = setupButtonFavorite(DeviceConstants.FILE_TYPE_RINGTONES, SharingSettings.DEVICE_RINGTONES_FILES_DIR);
-        _toolBar.add(_buttonFavoriteRingtones);
-        
-        _buttonFavoriteAudio = setupButtonFavorite(DeviceConstants.FILE_TYPE_AUDIO, SharingSettings.DEVICE_AUDIO_FILES_DIR);
-        _toolBar.add(_buttonFavoriteAudio);
-        _toolBar.addSeparator();
-        
-        _labelSort = new JLabel();
-        _labelSort.setText(I18n.tr("Sort:"));
-        _toolBar.add(_labelSort);
-        
-        _comboBoxSort = new JComboBox();
-        _comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_NONE, I18n.tr("None")));
-        _comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_NAME_ASC, I18n.tr("Name Asc")));
-        _comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_NAME_DESC, I18n.tr("Name Desc")));
-        _comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_DATE_ASC, I18n.tr("Date Asc")));
-        _comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_DATE_DESC, I18n.tr("Date Desc")));
-        _comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_KIND_ASC, I18n.tr("Kind Asc")));
-        _comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_KIND_DESC, I18n.tr("Kind Desc")));
-        _comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_SIZE_DESC, I18n.tr("Size Asc")));
-        _comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_SIZE_DESC, I18n.tr("Size Desc")));
-        _comboBoxSort.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                comboBoxSort_actionPerformed(e);
-            }
-        });
-        _toolBar.add(_comboBoxSort);
-        
+			@Override
+			public void mousePressed(MouseEvent e) {
+				buttonNew_mousePressed(e);
+			}
+		});
+		_toolBar.add(_buttonNew);
+
+		_toolBar.addSeparator();
+
+		_buttonViewThumbnail = new JButton();
+		_buttonViewThumbnail.setIcon(new ImageIcon(new UITool()
+				.loadImage("view_thumbnail")));
+		_buttonViewThumbnail.setPreferredSize(toolBarButtonSize);
+		_buttonViewThumbnail.setMinimumSize(toolBarButtonSize);
+		_buttonViewThumbnail.setMaximumSize(toolBarButtonSize);
+		_buttonViewThumbnail.setSize(toolBarButtonSize);
+		_buttonViewThumbnail.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				buttonViewThumbnail_mousePressed(e);
+			}
+		});
+		_toolBar.add(_buttonViewThumbnail);
+
+		_buttonViewList = new JButton();
+		_buttonViewList.setIcon(new ImageIcon(new UITool()
+				.loadImage("view_list")));
+		_buttonViewList.setPreferredSize(toolBarButtonSize);
+		_buttonViewList.setMinimumSize(toolBarButtonSize);
+		_buttonViewList.setMaximumSize(toolBarButtonSize);
+		_buttonViewList.setSize(toolBarButtonSize);
+		_buttonViewList.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				buttonViewList_mousePressed(e);
+			}
+		});
+		_toolBar.add(_buttonViewList);
+
+		_toolBar.addSeparator();
+
+		_buttonFavoriteApplications = setupButtonFavorite(
+				DeviceConstants.FILE_TYPE_APPLICATIONS,
+				SharingSettings.DEVICE_APPLICATIONS_FILES_DIR);
+		_toolBar.add(_buttonFavoriteApplications);
+
+		_buttonFavoriteDocuments = setupButtonFavorite(
+				DeviceConstants.FILE_TYPE_DOCUMENTS,
+				SharingSettings.DEVICE_DOCUMENTS_FILES_DIR);
+		_toolBar.add(_buttonFavoriteDocuments);
+
+		_buttonFavoritePictures = setupButtonFavorite(
+				DeviceConstants.FILE_TYPE_PICTURES,
+				SharingSettings.DEVICE_PICTURES_FILES_DIR);
+		_toolBar.add(_buttonFavoritePictures);
+
+		_buttonFavoriteVideos = setupButtonFavorite(
+				DeviceConstants.FILE_TYPE_VIDEOS,
+				SharingSettings.DEVICE_VIDEO_FILES_DIR);
+		_toolBar.add(_buttonFavoriteVideos);
+
+		_buttonFavoriteRingtones = setupButtonFavorite(
+				DeviceConstants.FILE_TYPE_RINGTONES,
+				SharingSettings.DEVICE_RINGTONES_FILES_DIR);
+		_toolBar.add(_buttonFavoriteRingtones);
+
+		_buttonFavoriteAudio = setupButtonFavorite(
+				DeviceConstants.FILE_TYPE_AUDIO,
+				SharingSettings.DEVICE_AUDIO_FILES_DIR);
+		_toolBar.add(_buttonFavoriteAudio);
+		_toolBar.addSeparator();
+
+		_labelSort = new JLabel();
+		_labelSort.setText(I18n.tr("Sort:"));
+		_toolBar.add(_labelSort);
+
+		_comboBoxSort = new JComboBox();
+		_comboBoxSort.addItem(new SortByItem(LocalFileListModel.SORT_BY_NONE,
+				I18n.tr("None")));
+		_comboBoxSort.addItem(new SortByItem(
+				LocalFileListModel.SORT_BY_NAME_ASC, I18n.tr("Name Asc")));
+		_comboBoxSort.addItem(new SortByItem(
+				LocalFileListModel.SORT_BY_NAME_DESC, I18n.tr("Name Desc")));
+		_comboBoxSort.addItem(new SortByItem(
+				LocalFileListModel.SORT_BY_DATE_ASC, I18n.tr("Date Asc")));
+		_comboBoxSort.addItem(new SortByItem(
+				LocalFileListModel.SORT_BY_DATE_DESC, I18n.tr("Date Desc")));
+		_comboBoxSort.addItem(new SortByItem(
+				LocalFileListModel.SORT_BY_KIND_ASC, I18n.tr("Kind Asc")));
+		_comboBoxSort.addItem(new SortByItem(
+				LocalFileListModel.SORT_BY_KIND_DESC, I18n.tr("Kind Desc")));
+		_comboBoxSort.addItem(new SortByItem(
+				LocalFileListModel.SORT_BY_SIZE_DESC, I18n.tr("Size Asc")));
+		_comboBoxSort.addItem(new SortByItem(
+				LocalFileListModel.SORT_BY_SIZE_DESC, I18n.tr("Size Desc")));
+		_comboBoxSort.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				comboBoxSort_actionPerformed(e);
+			}
+		});
+		_toolBar.add(_comboBoxSort);
+
 		c = new GridBagConstraints();
 		c.gridx = 0;
 		c.gridy = 0;
 		add(_toolBar, c);
-		
+
 		_breadcrumb = new BreadcrumbFileSelector();
 		_breadcrumb.getModel().addPathListener(new BreadcrumbPathListener() {
 			public void breadcrumbPathEvent(BreadcrumbPathEvent event) {
@@ -302,14 +332,15 @@ public class DesktopExplorer extends JPanel {
 		c.gridy = 1;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 1.0;
-		c.gridwidth = 2; // this put a extra column and perform a nice fill at the end in the top row
+		c.gridwidth = 2; // this put a extra column and perform a nice fill at
+							// the end in the top row
 		add(_breadcrumb, c);
 	}
 
-    private void setupList() {
-		
+	private void setupList() {
+
 		GridBagConstraints c;
-		
+
 		_list = new JList(_model);
 		_list.setCellRenderer(new LocalFileRenderer());
 		RedispatchMouseListener listener = new RedispatchMouseListener(_list);
@@ -318,69 +349,73 @@ public class DesktopExplorer extends JPanel {
 		_list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		_list.setDragEnabled(true);
 		_list.setTransferHandler(new DesktopListTransferHandler());
-		_list.setPrototypeCellValue(new LocalFile(SharingSettings.getDeviceFilesDirectory()));
+		_list.setPrototypeCellValue(new LocalFile(SharingSettings
+				.getDeviceFilesDirectory()));
 		_list.setVisibleRowCount(-1);
-        
-        _popupList = new JPopupMenu();
-        _popupList.add(_menuRename = new JMenuItem(I18n.tr("Rename")));
-        _menuRename.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                menuRename_actionPerformed(e);
-            }
-        });
-        
-        _list.addMouseListener(new MouseAdapter() {            
-            @Override
-            public void mousePressed(MouseEvent e) {
-                cancelEdit();
-                int index = _list.locationToIndex(e.getPoint());
-                if (index != -1) {
-                    _list.setSelectedIndex(index);
-                }
-            }
-            
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                cancelEdit();
-            }
-            
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                cancelEdit();
-                // if right mouse button clicked (or e.isPopupTrigger())
-                if (SwingUtilities.isRightMouseButton(e) && !_list.isSelectionEmpty() && _list.locationToIndex(e.getPoint()) == _list.getSelectedIndex()) {
-                    _popupList.show(_list, e.getX(), e.getY());
-                }
-            }
-        });
-        _list.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                int key = e.getKeyCode();
-                if (key == KeyEvent.VK_ESCAPE) {
-                    _scrollName.setVisible(false);
-                } else if (key == KeyEvent.VK_F5) {
-                    refresh();
-                } else if (key == KeyEvent.VK_ENTER) {
-                    if (OSUtils.isMacOSX()) {
-                        startRenameAction();
-                    } else {
-                        openFileAction();
-                    }
-                } else if (key == KeyEvent.VK_F2) {
-                    if (!OSUtils.isMacOSX()) {
-                        startRenameAction();
-                    }
-                } else if (key == KeyEvent.VK_SPACE) {
-                    if (OSUtils.isMacOSX()) {
-                        openFileAction();
-                    }
-                } else if (key == KeyEvent.VK_BACK_SPACE) {
-                    gotoParentFolderAction();
-                }
-            }
-        });
-		
+
+		_popupList = new JPopupMenu();
+		_popupList.add(_menuRename = new JMenuItem(I18n.tr("Rename")));
+		_menuRename.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				menuRename_actionPerformed(e);
+			}
+		});
+
+		_list.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				cancelEdit();
+				int index = _list.locationToIndex(e.getPoint());
+				if (index != -1) {
+					_list.setSelectedIndex(index);
+				}
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				cancelEdit();
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				cancelEdit();
+				// if right mouse button clicked (or e.isPopupTrigger())
+				if (SwingUtilities.isRightMouseButton(e)
+						&& !_list.isSelectionEmpty()
+						&& _list.locationToIndex(e.getPoint()) == _list
+								.getSelectedIndex()) {
+					_popupList.show(_list, e.getX(), e.getY());
+				}
+			}
+		});
+		_list.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				int key = e.getKeyCode();
+				if (key == KeyEvent.VK_ESCAPE) {
+					_scrollName.setVisible(false);
+				} else if (key == KeyEvent.VK_F5) {
+					refresh();
+				} else if (key == KeyEvent.VK_ENTER) {
+					if (OSUtils.isMacOSX()) {
+						startRenameAction();
+					} else {
+						openFileAction();
+					}
+				} else if (key == KeyEvent.VK_F2) {
+					if (!OSUtils.isMacOSX()) {
+						startRenameAction();
+					}
+				} else if (key == KeyEvent.VK_SPACE) {
+					if (OSUtils.isMacOSX()) {
+						openFileAction();
+					}
+				} else if (key == KeyEvent.VK_BACK_SPACE) {
+					gotoParentFolderAction();
+				}
+			}
+		});
+
 		_scrollPane = new JScrollPane(_list);
 		c = new GridBagConstraints();
 		c.gridx = 0;
@@ -391,29 +426,33 @@ public class DesktopExplorer extends JPanel {
 		c.gridwidth = 8;
 
 		add(_scrollPane, c);
-		
+
 		_textName = new JTextArea();
 		_textName.setLineWrap(true);
 		_textName.setWrapStyleWord(true);
 		_textName.addKeyListener(new KeyAdapter() {
-		    @Override
-		    public void keyPressed(KeyEvent e) {
-		        textName_keyPressed(e);
-		    }
-        });
-		
+			@Override
+			public void keyPressed(KeyEvent e) {
+				textName_keyPressed(e);
+			}
+		});
+
 		_scrollName = new JScrollPane(_textName);
 		_scrollName.setVisible(false);
-		_scrollName.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		_scrollName.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-		
+		_scrollName
+				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		_scrollName
+				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
 		_list.add(_scrollName);
 	}
 
-    private JButton setupButtonFavorite(int type, final File path) {
-	    UITool imageTool = new UITool();
-	    Image image = imageTool.loadImage(imageTool.getImageNameByFileType(type)).getScaledInstance(18, 18, Image.SCALE_SMOOTH);
-	    Dimension size = new Dimension(28, 28);
+	private JButton setupButtonFavorite(int type, final File path) {
+		UITool imageTool = new UITool();
+		Image image = imageTool.loadImage(
+				imageTool.getImageNameByFileType(type)).getScaledInstance(18,
+				18, Image.SCALE_SMOOTH);
+		Dimension size = new Dimension(28, 28);
 		JButton button = new JButton();
 		button.setPreferredSize(size);
 		button.setMinimumSize(size);
@@ -423,118 +462,146 @@ public class DesktopExplorer extends JPanel {
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-			    cancelEdit();
+				cancelEdit();
 				setSelectedFolder(path);
 			}
 		});
 		return button;
 	}
-    
-    private void startEdit(int index) {
-        
-        _selectedIndexToRename = index;
-        LocalFile localFile = (LocalFile) _model.getElementAt(index);
-        String text = localFile.getName();
 
-        if (_list.getLayoutOrientation() == JList.VERTICAL) { // list mode
-            LocalFileRenderer renderer = (LocalFileRenderer) _list.getCellRenderer().getListCellRendererComponent(_list, _list.getModel().getElementAt(index), index, false, false);
-            Dimension lsize = renderer.getLabelNameSize();
-            Point llocation = renderer.getLabelNameLocation();
-            lsize.setSize(lsize.getWidth() - 3, lsize.getHeight() - 3);
-            Point p =_list.indexToLocation(index);
-            p.translate(llocation.x, llocation.y - 1);
-            _textName.setSize(lsize);
-            _scrollName.setSize(lsize);
-            _scrollName.setLocation(p);
-        } else { // thumbnail mode
-            Point p =_list.indexToLocation(index);
-            p.translate(5, 64);
-            _textName.setSize(130, 33);
-            _scrollName.setSize(130, 33);
-            _scrollName.setLocation(p);
-        }
-        
-        _textName.setText(text);
-        _textName.setSelectionStart(0);
-        _textName.setSelectionEnd(text.length());
-        
-        _scrollName.setVisible(true);
-        
-        _scrollName.requestFocusInWindow();
-        _scrollName.requestFocus();
-        _textName.requestFocusInWindow();
-        _textName.requestFocus();
-    }
-    
-    private void startRenameAction() {
-        cancelEdit();
-        int index = _list.getSelectedIndex();
-        if (index != -1) {
-            startEdit(index);
-        }
-    }
-	
-	private void renameSelectedItem(int index) {
-	    if (!_scrollName.isVisible()) {
-	        return;
-	    }
-	    String text = _textName.getText();
-	    if (text != null && text.length() > 0) {
-	        if (text.indexOf('.') == -1) { // no extension? put the old extension
-	            LocalFile localFile = (LocalFile) _model.getElementAt(index);
-	            if (localFile != null && localFile.getFile().isFile() && localFile.getExt() != null) {
-	                text += "." + localFile.getExt();
-	            }
-	        }
-	        _model.rename(index, text);
-	    }
-        _scrollName.setVisible(false);
-    }
-	
-	private void cancelEdit() {
-	    _selectedIndexToRename = -1;
-	    _scrollName.setVisible(false);
+	private void startEdit(int index) {
+
+		_selectedIndexToRename = index;
+		LocalFile localFile = (LocalFile) _model.getElementAt(index);
+		String text = localFile.getName();
+
+		if (_list.getLayoutOrientation() == JList.VERTICAL) { // list mode
+			LocalFileRenderer renderer = (LocalFileRenderer) _list
+					.getCellRenderer().getListCellRendererComponent(_list,
+							_list.getModel().getElementAt(index), index, false,
+							false);
+			Dimension lsize = renderer.getLabelNameSize();
+			Point llocation = renderer.getLabelNameLocation();
+			lsize.setSize(lsize.getWidth() - 3, lsize.getHeight() - 3);
+			Point p = _list.indexToLocation(index);
+			p.translate(llocation.x, llocation.y - 1);
+			_textName.setSize(lsize);
+			_scrollName.setSize(lsize);
+			_scrollName.setLocation(p);
+		} else { // thumbnail mode
+			Point p = _list.indexToLocation(index);
+			p.translate(5, 64);
+			_textName.setSize(130, 33);
+			_scrollName.setSize(130, 33);
+			_scrollName.setLocation(p);
+		}
+
+		_textName.setText(text);
+		_textName.setSelectionStart(0);
+		_textName.setSelectionEnd(text.length());
+
+		_scrollName.setVisible(true);
+
+		_scrollName.requestFocusInWindow();
+		_scrollName.requestFocus();
+		_textName.requestFocusInWindow();
+		_textName.requestFocus();
 	}
-	
+
+	private void startRenameAction() {
+		cancelEdit();
+		int index = _list.getSelectedIndex();
+		if (index != -1) {
+			startEdit(index);
+		}
+	}
+
+	private void renameSelectedItem(int index) {
+		if (!_scrollName.isVisible()) {
+			return;
+		}
+		String text = _textName.getText();
+		if (text != null && text.length() > 0) {
+			if (text.indexOf('.') == -1) { // no extension? put the old
+											// extension
+				LocalFile localFile = (LocalFile) _model.getElementAt(index);
+				if (localFile != null && localFile.getFile().isFile()
+						&& localFile.getExt() != null) {
+					text += "." + localFile.getExt();
+				}
+			}
+			_model.rename(index, text);
+		}
+		_scrollName.setVisible(false);
+	}
+
+	private void cancelEdit() {
+		_selectedIndexToRename = -1;
+		_scrollName.setVisible(false);
+	}
+
 	private void openFileAction() {
-	    cancelEdit();
-        int index = _list.getSelectedIndex();
-        if (index != -1) {
-            LocalFile localFile = (LocalFile) _model.getElementAt(index);
-            if (localFile != null) {
-                if (localFile.getFile().isDirectory()) {
-                    setSelectedFolder(localFile.getFile());
-                } else {
-                    try {
-                        Desktop.open(localFile.getFile());
-                    } catch (Exception e) {
-                        GUIMediator.launchFile(localFile.getFile());
-                    }
-                }
-            }
-        }
-    }
-	
+		cancelEdit();
+		int index = _list.getSelectedIndex();
+		if (index != -1) {
+			LocalFile localFile = (LocalFile) _model.getElementAt(index);
+			if (localFile != null) {
+				if (localFile.getFile().isDirectory()) {
+					setSelectedFolder(localFile.getFile());
+				} else {
+					try {
+						boolean isJava16or17 = CoreFrostWireUtils
+								.isJavaMajorVersion("1.6")
+								|| CoreFrostWireUtils.isJavaMajorVersion("1.7");
+
+						if (!OSUtils.isMacOSX()) {
+							// try awt first if you got newer java
+							if (isJava16or17) {
+								java.awt.Desktop.getDesktop().open(
+										localFile.getFile());
+							} else {
+								// try jdic if you're 1.5
+								Desktop.open(localFile.getFile());
+							}
+						}
+						// hopefully java.awt.Desktop will work already for 1.7
+						// if it ever comes out.
+						else if (isJava16or17) {
+							java.awt.Desktop.getDesktop().open(
+									localFile.getFile());
+						}
+						// the old way for older machines
+						else {
+							GUIMediator.launchFile(localFile.getFile());
+						}
+					} catch (Exception e) {
+						GUIMediator.launchFile(localFile.getFile());
+					}
+				}
+			}
+		}
+	}
+
 	private void gotoParentFolderAction() {
-        cancelEdit();
-        File path = _model.getRoot().getParentFile();
-        if (path != null) {
-            setSelectedFolder(path);
-        }
-    }
-	
+		cancelEdit();
+		File path = _model.getRoot().getParentFile();
+		if (path != null) {
+			setSelectedFolder(path);
+		}
+	}
+
 	private final class SortByItem {
-	    public int sortBy;
-	    public String text;
-	    
-	    public SortByItem(int sortBy, String text) {
-	        this.sortBy = sortBy;
-	        this.text = text;
-	    }
-	    
-	    @Override
-	    public String toString() {
-	        return text;
-	    }
+		public int sortBy;
+		public String text;
+
+		public SortByItem(int sortBy, String text) {
+			this.sortBy = sortBy;
+			this.text = text;
+		}
+
+		@Override
+		public String toString() {
+			return text;
+		}
 	}
 }
