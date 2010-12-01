@@ -9,11 +9,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jdesktop.jdic.desktop.Desktop;
 import org.limewire.collection.SortedList;
 import org.limewire.io.IOUtils;
 import org.limewire.util.FileUtils;
+import org.limewire.util.OSUtils;
 
 import com.limegroup.bittorrent.BTMetaInfo;
+import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.settings.SharingSettings;
 
@@ -148,5 +151,41 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
 		}
 
 		return defaultFamily;
+	}
+	
+	/**
+	 * Tries to open a file using java.awt.Desktop, jdic, or GUIMediator.launchFile.
+	 * 
+	 * @param file
+	 */
+	public static void launchFile(File file) {
+		try {
+			boolean isJava16or17 = CoreFrostWireUtils
+					.isJavaMajorVersion("1.6")
+					|| CoreFrostWireUtils.isJavaMajorVersion("1.7");
+
+			if (!OSUtils.isMacOSX()) {
+				// try awt first if you got newer java
+				if (isJava16or17) {
+					java.awt.Desktop.getDesktop().open(
+							file);
+				} else {
+					// try jdic if you're 1.5
+					Desktop.open(file);
+				}
+			}
+			// hopefully java.awt.Desktop will work already for 1.7
+			// if it ever comes out.
+			else if (isJava16or17) {
+				java.awt.Desktop.getDesktop().open(
+						file);
+			}
+			// the old way for older machines
+			else {
+				GUIMediator.launchFile(file);
+			}
+		} catch (Exception e) {
+			GUIMediator.launchFile(file);
+		}
 	}
 }
