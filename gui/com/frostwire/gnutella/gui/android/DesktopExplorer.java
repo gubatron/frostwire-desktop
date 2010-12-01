@@ -50,6 +50,7 @@ public class DesktopExplorer extends JPanel {
 	private JToolBar _toolBar;
 	private JButton _buttonUp;
 	private JButton _buttonNew;
+	private JButton _buttonRefresh;
 	private JButton _buttonViewThumbnail;
 	private JButton _buttonViewList;
 	private JButton _buttonFavoriteApplications;
@@ -65,15 +66,13 @@ public class DesktopExplorer extends JPanel {
 	private JScrollPane _scrollPane;
 	private JPopupMenu _popupList;
 	private JMenuItem _menuRename;
+	private JMenuItem _menuOpen;
+    private JMenuItem _menuRefresh;
 	private JTextArea _textName;
 	private JScrollPane _scrollName;
 
 	private LocalFileListModel _model;
-	private int _selectedIndexToRename;
-
-	private JMenuItem _menuOpen;
-
-	private JMenuItem _menuRefresh;
+	private int _selectedIndexToRename;	
 
 	public DesktopExplorer() {
 
@@ -218,6 +217,20 @@ public class DesktopExplorer extends JPanel {
 			}
 		});
 		_toolBar.add(_buttonNew);
+		
+		_buttonRefresh = new JButton();
+		_buttonRefresh.setIcon(new ImageIcon(new UITool().loadImage("refresh")));
+		_buttonRefresh.setPreferredSize(toolBarButtonSize);
+		_buttonRefresh.setMinimumSize(toolBarButtonSize);
+		_buttonRefresh.setMaximumSize(toolBarButtonSize);
+		_buttonRefresh.setSize(toolBarButtonSize);
+		_buttonRefresh.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                DesktopExplorer.this.refresh();
+            }
+        });
+        _toolBar.add(_buttonRefresh);
 
 		_toolBar.addSeparator();
 
