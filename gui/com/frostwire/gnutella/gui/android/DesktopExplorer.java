@@ -425,7 +425,8 @@ public class DesktopExplorer extends JPanel {
 					if (OSUtils.isMacOSX()) {
 						actionOpenFile();
 					}
-				} else if (key == KeyEvent.VK_BACK_SPACE) {
+				} else if ((!OSUtils.isMacOSX() && key == KeyEvent.VK_BACK_SPACE) || 
+						(OSUtils.isMacOSX() && (key == KeyEvent.VK_UP && e.isMetaDown()))) {
 					actionGotoParentFolder();
 				}
 			}
@@ -513,7 +514,7 @@ public class DesktopExplorer extends JPanel {
 
 		_textName.setText(text);
 		_textName.setSelectionStart(0);
-		_textName.setSelectionEnd(text.length());
+		_textName.setSelectionEnd(localFile.getFile().isFile() ? text.lastIndexOf(".") : text.length());
 
 		_scrollName.setVisible(true);
 
