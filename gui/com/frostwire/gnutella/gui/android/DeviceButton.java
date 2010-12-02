@@ -3,6 +3,7 @@ package com.frostwire.gnutella.gui.android;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.net.MalformedURLException;
@@ -24,6 +25,10 @@ public class DeviceButton extends JRadioButton {
 	private static final long serialVersionUID = 4608372510091566914L;
 	
 	private static final String IMAGES_URL = "http://static1.frostwire.com/images/devices/";
+	
+	private static final Color FILL_COLOR = new Color(0x8DB2ED);
+    private static final Color INNER_BORDER_COLOR = new Color(0x98BFFF);
+    private static final Color OUTER_BORDER_COLOR = new Color(0x516688);
 	
 	private ImageIcon _image;
 	private ImageIcon _imageAuthorized;
@@ -51,18 +56,36 @@ public class DeviceButton extends JRadioButton {
 	protected void setupUI() {
 		////////// visible effect trick
 		setBorder(null);
-		setBackground(null);
+		//setBackground(null);
 		setFocusable(false);
 		setFocusPainted(false);
 		setContentAreaFilled(false);
 		////////////////////////////////
-		setPreferredSize(new Dimension(100, 130));
+		setMinimumSize(new Dimension(100, 140));
 		setTooltip();
 		setImage();
-		setText(_device.getName());
+		setText(" " + _device.getName() + " ");
 		setHorizontalTextPosition(SwingConstants.CENTER);
 		setVerticalTextPosition(SwingConstants.BOTTOM);
 	}
+	
+	@Override
+    protected void paintComponent(Graphics g) {
+        
+        int w = getWidth();
+        int h = getHeight();
+        
+        if (isSelected()) {
+            g.setColor(FILL_COLOR);
+            g.fillRoundRect(0, 0, w, h, 5, 5);
+            g.setColor(INNER_BORDER_COLOR);
+            g.drawRoundRect(1, 1, w - 3, h - 3, 5, 5);
+            g.setColor(OUTER_BORDER_COLOR);
+            g.drawRoundRect(0, 0, w - 1, h - 1, 5, 5);
+        }
+        
+        super.paintComponent(g);
+    }
 	
 	private void setTooltip() {
 		setToolTipText(I18n.tr("Connected") + (_device.isTokenAuthorized() ? I18n.tr(" and authorized") : ""));
@@ -118,26 +141,26 @@ public class DeviceButton extends JRadioButton {
     }
     
     private BufferedImage buildImage(BufferedImage image, boolean pressed, boolean authorized) {
-        int width = image.getWidth(); 
-        int height = image.getHeight();
-        BufferedImage newImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        int w = image.getWidth(); 
+        int h = image.getHeight();
+        BufferedImage newImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         
-        Graphics2D g2 = newImage.createGraphics();
-        
-        g2.drawImage(image, 0, 0, null);
+        Graphics2D g = newImage.createGraphics();
+                
+        g.drawImage(image, 0, 0, null);
         
         if (pressed) {
-            g2.setColor(Color.BLUE);
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.DST_IN, 0.7f));
-            g2.fillRect(0, 0, width, height);
+            g.setColor(Color.BLUE);
+            g.setComposite(AlphaComposite.getInstance(AlphaComposite.DST_IN, 0.7f));
+            g.fillRect(0, 0, w, h);
         }
         
         if (authorized) {
-            g2.setColor(Color.GREEN);
-            g2.drawOval(0, 0, 40, 40);
+            g.setColor(Color.GREEN);
+            g.drawOval(0, 0, 40, 40);
         }
         
-        g2.dispose();
+        g.dispose();
         
         return newImage;
     }

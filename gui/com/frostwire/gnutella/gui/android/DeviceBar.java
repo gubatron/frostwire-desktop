@@ -89,10 +89,8 @@ public class DeviceBar extends JPanel {
 	}
 	
 	protected void setupUI() {
-		FlowLayout layout = new FlowLayout();
-		layout.setHgap(10);
-		setLayout(layout);
-		setPreferredSize(new Dimension(300, 130));
+		setLayout(new FlowLayout());
+		setPreferredSize(new Dimension(300, 140));
 	}
 	
 	private final class MyMouseAdapter extends MouseAdapter {
