@@ -1,45 +1,42 @@
 package com.frostwire.gnutella.gui.sponsors;
 
-import java.util.HashSet;
-
-import org.xml.sax.XMLReader;
-import org.xml.sax.ContentHandler;
-import org.xml.sax.InputSource;
-import org.xml.sax.Attributes;
-import org.xml.sax.Locator;
-
-import org.xml.sax.helpers.XMLReaderFactory;
-import org.xml.sax.SAXException;
-
-import java.net.URL;
-import java.net.HttpURLConnection;
-
-import java.util.HashMap;
-import java.util.Set;
-import java.util.LinkedHashSet;
-import java.util.Iterator;
-
-import java.io.IOException;
-
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.awt.Cursor;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import javax.swing.JLabel;
+
+import org.limewire.util.OSUtils;
+import org.xml.sax.Attributes;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.InputSource;
+import org.xml.sax.Locator;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLReaderFactory;
 
 import com.frostwire.ImageCache;
 import com.frostwire.ImageCache.OnLoadedListener;
-import com.frostwire.gnutella.gui.android.UITool;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.LimeWireCore;
+import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
-import com.limegroup.gnutella.LimeWireCore;
-import org.limewire.util.OSUtils;
+import com.limegroup.gnutella.util.LimeWireUtils;
 
-import com.limegroup.gnutella.NetworkManager;
 
+@SuppressWarnings("serial")
 public class SponsorBanner extends JLabel {
+
+	private static final long serialVersionUID = -2074000214262216103L;
 	private SponsorLoader _sponsorLoader = new SponsorLoader();
 	private static NetworkManager networkManager = null;
 	public static String ipAddress = "0.0.0.0"; // ipBytesToString(networkManager.getExternalAddress());
@@ -55,28 +52,14 @@ public class SponsorBanner extends JLabel {
 				LimeWireCore core = GuiCoreMediator.getCore();
 				networkManager = core.getNetworkManager();
 				byte[] ipBytes = networkManager.getExternalAddress();
-				// System.out.println("Fetching ip address on separate thread");
-				// System.out.println("My IP address looks like this ->" +
-				// ipBytesToString(ipBytes));
 
 				int maxTries = 20;
-				int seconds = 0;
-				while (!(GUIMediator.isConstructed()) // &&
-				// GuiCoreMediator.getCore() != null &&
-				// GuiCoreMediator.getLifecycleManager().isLoaded())
-				) {
-					// ||
-					// ipBytesToString(ipBytes).equals("0.0.0.0")) {
-					// System.out.println("Waiting one more second to get the ipAddress");
+
+				while (!(GUIMediator.isConstructed())) {
 					try {
-						Thread.currentThread().sleep(1000);
-					} catch (Exception e) {
-					}
-					;
+						Thread.sleep(1000);
+					} catch (InterruptedException ignore) {}
 					ipBytes = networkManager.getExternalAddress();
-					// System.out.println("This is what the networkManager grabbed ->");
-					// System.out.println(ipBytesToString(ipBytes));
-					// System.out.println();
 
 					maxTries--;
 					if (maxTries == 0)
@@ -85,7 +68,6 @@ public class SponsorBanner extends JLabel {
 
 				// instance
 				String ip = ipBytesToString(ipBytes);
-				// System.out.println("MY IP ADDRESS IS THIS ->>>> " + ip);
 				SponsorBanner.ipAddress = ip;
 			}
 		});
@@ -160,7 +142,6 @@ public class SponsorBanner extends JLabel {
 		 * width="120" height="600" type="torrent|web" countries="VE,US"
 		 * language="en" duration="60" />
 		 */
-		public String ipAddress = new String("0.0.0.0");
 
 		private boolean _status = false;
 		private Set<SponsorBanner> _result = new LinkedHashSet<SponsorBanner>();
