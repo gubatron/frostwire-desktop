@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
@@ -47,6 +48,7 @@ public class DeviceExplorer extends JPanel {
 	private ImageRadioButton _buttonVideos;
 	private ImageRadioButton _buttonRingtones;
 	private ImageRadioButton _buttonAudio;
+	private JRadioButton _invisibleRadioButton;
 	private ButtonGroup _buttonGroup;
 	
 	private JTextField _textFilter;
@@ -63,7 +65,8 @@ public class DeviceExplorer extends JPanel {
 
 	public void setDevice(Device device) {
 		_device = device;
-		_model.clear();		
+		_model.clear();
+		_invisibleRadioButton.setSelected(true);
 		setPanelDevice(true);
 	}
 	
@@ -174,6 +177,7 @@ public class DeviceExplorer extends JPanel {
         _buttonGroup.add(_buttonVideos);
         _buttonGroup.add(_buttonRingtones);
         _buttonGroup.add(_buttonAudio);
+        _buttonGroup.add(_invisibleRadioButton = new JRadioButton());
         
         _textFilter = new JTextField();
         Dimension textFilterSize = new Dimension(100, 25);
