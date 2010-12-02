@@ -66,7 +66,7 @@ public class UITool {
             return DeviceConstants.FILE_TYPE_DOCUMENTS;
         }
         
-        ext = ext.replace("\\.", "").trim();
+        ext = ext.replace("\\.", "").trim().toLowerCase();
         
         Integer type = FILE_TYPES.get(ext);
         if (type != null) {

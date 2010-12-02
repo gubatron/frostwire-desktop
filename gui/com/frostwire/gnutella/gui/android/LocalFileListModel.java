@@ -182,8 +182,8 @@ public class LocalFileListModel extends AbstractListModel {
 	        return -1;
 	    }
 	    
-	    String ext1 = f1.getName().substring(index1);
-	    String ext2 = f2.getName().substring(index2);
+	    String ext1 = f1.getName().substring(index1).toLowerCase();
+	    String ext2 = f2.getName().substring(index2).toLowerCase();
 	    
 	    if (!ext1.equals(ext2)) {
 	        return ext1.compareTo(ext2);

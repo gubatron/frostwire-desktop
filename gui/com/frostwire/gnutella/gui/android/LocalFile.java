@@ -46,7 +46,7 @@ public class LocalFile implements Serializable {
 	public String getExt() {
 	    String name = _file.getName();
         int index = name.lastIndexOf(".");
-        String ext = index != -1 ? name.substring(index + 1, name.length()) : null;
+        String ext = index != -1 ? name.substring(index + 1, name.length()).toLowerCase() : null;
         
         return ext;
 	}
