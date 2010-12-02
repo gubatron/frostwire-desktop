@@ -40,8 +40,10 @@ public class BrowseTask extends Task {
 			SwingUtilities.invokeLater(new Runnable() {
 				public void run() {
 					try {
-						_model.clear(); // avoid bad effects in instant browse button switch
-						_model.addAll(result);
+					    if (AndroidMediator.instance().getDeviceExplorer().getSelectedFileType() == _type) {
+					        _model.clear(); // avoid bad effects in instant browse button switch
+	                        _model.addAll(result);
+					    }						
 					} catch (Exception e) {
 						fail(e);
 					}

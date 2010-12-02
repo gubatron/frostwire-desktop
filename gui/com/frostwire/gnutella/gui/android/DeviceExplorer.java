@@ -36,11 +36,11 @@ public class DeviceExplorer extends JPanel {
 	
 	private FileDescriptorListModel _model;
 	private Device _device;
+	private int _selectedFileType;
 	
 	private JPanel _panelDevice;
 	private JPanel _panelNoDevice;
-	private JList _list;
-	
+	private JList _list;	
 	private ImageRadioButton _buttonApplications;
 	private ImageRadioButton _buttonDocuments;
 	private ImageRadioButton _buttonPictures;
@@ -48,8 +48,7 @@ public class DeviceExplorer extends JPanel {
 	private ImageRadioButton _buttonRingtones;
 	private ImageRadioButton _buttonAudio;
 	private JRadioButton _invisibleRadioButton;
-	private ButtonGroup _buttonGroup;
-	
+	private ButtonGroup _buttonGroup;	
 	private JTextField _textFilter;
 
 	public DeviceExplorer() {
@@ -111,6 +110,10 @@ public class DeviceExplorer extends JPanel {
         
         return selectedFileDescriptors;
     }
+	
+	public int getSelectedFileType() {
+	    return _selectedFileType;
+	}
 	
 	protected void setupUI() {
         setLayout(new CardLayout());
@@ -234,6 +237,7 @@ public class DeviceExplorer extends JPanel {
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+			    _selectedFileType = type;
 				_model.clear();
 				AndroidMediator.addActivity(new BrowseTask(_device, _model, type));
 			}
