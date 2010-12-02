@@ -13,8 +13,6 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.RenderingHints;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.font.TextLayout;
 import java.awt.image.BufferedImage;
 import java.awt.image.ConvolveOp;
@@ -141,58 +139,18 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
 	protected void setupUI() {
 	    
 	    _imagePanel = new ImagePanel();
-	    _imagePanel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() >= 2 && !e.isConsumed()) {
-                    _localFile.open();
-                }
-            }
-        });
 	    
 	    _multilineLabelName = new MultilineLabel();
-        _multilineLabelName.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() >= 2 && !e.isConsumed()) {
-                    _localFile.open();
-                }
-            }
-        });
         
         _labelName = new JLabel();
-        _labelName.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() >= 2 && !e.isConsumed()) {
-                    _localFile.open();
-                }
-            }
-        });
         
         _labelDateModified = new JLabel();
-        _labelDateModified.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() >= 2 && !e.isConsumed()) {
-                    _localFile.open();
-                }
-            }
-        });
         
         _labelSize = new JLabel();
         Dimension labelSizeSize = new Dimension(70, 26);
         _labelSize.setPreferredSize(labelSizeSize);
         _labelSize.setMinimumSize(labelSizeSize);
         _labelSize.setHorizontalAlignment(SwingConstants.RIGHT);
-        _labelSize.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() >= 2 && !e.isConsumed()) {
-                    _localFile.open();
-                }
-            }
-        });
 	}
 	
 	private void relayout() {
@@ -266,11 +224,9 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
         c = new GridBagConstraints();
         c.gridx = 1;
         c.gridy = 0;
-        c.insets = new Insets(5, 0, 0, 0);
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1.0;
         c.weighty = 1.0;
-        c.gridwidth = 1;
         add(_labelName, c);
         
         c = new GridBagConstraints();

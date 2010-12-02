@@ -170,7 +170,7 @@ public class DesktopExplorer extends JPanel {
 	protected void list_keyPressed(KeyEvent e) {
 	    int key = e.getKeyCode();
         if (key == KeyEvent.VK_ESCAPE) {
-            _scrollName.setVisible(false);
+            cancelEdit();
         } else if (key == KeyEvent.VK_F5) {
             refresh();
         } else if (key == KeyEvent.VK_ENTER) {
@@ -438,7 +438,9 @@ public class DesktopExplorer extends JPanel {
 						&& _list.locationToIndex(e.getPoint()) == _list
 								.getSelectedIndex()) {
 					_popupList.show(_list, e.getX(), e.getY());
-				}
+				} else if (e.getClickCount() >= 2 && !e.isConsumed()) {
+                    actionOpenFile();
+                }
 			}
 		});
 		_list.addKeyListener(new KeyAdapter() {
@@ -508,15 +510,12 @@ public class DesktopExplorer extends JPanel {
 		String text = localFile.getName();
 
 		if (_list.getLayoutOrientation() == JList.VERTICAL) { // list mode
-			LocalFileRenderer renderer = (LocalFileRenderer) _list
-					.getCellRenderer().getListCellRendererComponent(_list,
-							_list.getModel().getElementAt(index), index, false,
-							false);
+			LocalFileRenderer renderer = (LocalFileRenderer) _list.getCellRenderer().getListCellRendererComponent(_list, _list.getModel().getElementAt(index), index, false, false);
 			Dimension lsize = renderer.getLabelNameSize();
 			Point llocation = renderer.getLabelNameLocation();
-			lsize.setSize(lsize.getWidth() - 3, lsize.getHeight() - 3);
+			lsize.setSize(lsize.getWidth() - 3, lsize.getHeight() - 8);
 			Point p = _list.indexToLocation(index);
-			p.translate(llocation.x, llocation.y - 1);
+			p.translate(llocation.x, llocation.y + 4);
 			_textName.setSize(lsize);
 			_scrollName.setSize(lsize);
 			_scrollName.setLocation(p);
