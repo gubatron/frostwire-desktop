@@ -1,18 +1,16 @@
 package com.frostwire.gnutella.gui.sponsors;
 
-import com.frostwire.gnutella.gui.sponsors.SponsorBanner;
-
 import java.awt.CardLayout;
-import java.awt.event.MouseEvent;
 import java.awt.event.MouseAdapter;
-import javax.swing.JPanel;
-
+import java.awt.event.MouseEvent;
+import java.util.Calendar;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.Iterator;
-import java.util.Calendar;
+
+import javax.swing.JPanel;
 
 /**
  * This is the component that displays the banners that are specified on the frostwire servers.
@@ -25,7 +23,6 @@ public class BannerContainer extends JPanel {
 	
     private Timer bannerSwitcher; //timer to switch banner one by one
     private Timer bannerRefresher; //timer to reload all banners from server
-	private SponsorBanner currentBanner;
 	
 	private int DEFAULT_BANNER_REFRESH_RATE = 10; //secs
 	
