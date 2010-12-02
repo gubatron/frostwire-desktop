@@ -78,7 +78,7 @@ public class AndroidMediator implements ThemeObserver {
 		c.gridx=0;
 		c.gridy=0;
 		c.fill=GridBagConstraints.BOTH;
-		c.weightx = 10;
+		c.weightx = 99;
 		c.weighty=1.0;
 		c.anchor=GridBagConstraints.NORTHWEST;
 		
@@ -93,7 +93,7 @@ public class AndroidMediator implements ThemeObserver {
 		c.gridwidth=GridBagConstraints.REMAINDER;
 		c.fill=GridBagConstraints.VERTICAL;
 		c.anchor=GridBagConstraints.EAST;
-		c.weightx = 0.1;
+		c.weightx = 1;
 		c.weighty=1.0;
 		EXPLORERS_CONTAINER.add(DEVICE_EXPLORER,c);
 
@@ -122,8 +122,8 @@ public class AndroidMediator implements ThemeObserver {
 		INSTANCE.DEVICE_BAR.handleNewDevice(device);
 	}
 	
-	public static void handleDeviceAlive(Device device) {
-		INSTANCE.DEVICE_BAR.handleDeviceAlive(device);
+	public static void handleDeviceAlive(Device device, int n) {
+		INSTANCE.DEVICE_BAR.handleDeviceAlive(device, n);
 	}
 
 	public static void handleDeviceStale(Device device) {

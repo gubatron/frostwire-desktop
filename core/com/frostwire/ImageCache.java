@@ -31,7 +31,9 @@ public class ImageCache {
     
     public BufferedImage getImage(URL url, OnLoadedListener listener) {
         if (isCached(url)) {
-            return loadFromCache(url);
+        	BufferedImage result = loadFromCache(url);
+        	listener.wasAlreadyCached(getCachedFileURL(url), result);
+            return result;
         } else if (!url.getProtocol().equals("http")) {
             return loadFromResource(url);
         } else {
@@ -144,6 +146,10 @@ public class ImageCache {
     }
 
     public interface OnLoadedListener {
+    	/** This is called in the event that the image was downloaded and cached*/
         public void onLoaded(URL url, BufferedImage image);
+
+        /** This is called in the event that the image was already cached */
+		public void wasAlreadyCached(URL cachedFileURL, BufferedImage imageFromCache);
     }
 }

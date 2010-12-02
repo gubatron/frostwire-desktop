@@ -286,7 +286,10 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
     }
 
     private void setImagePanelThumbnail(LocalFile localFile) {
-        Image image = null;
+        if (localFile == null)
+        	return;
+
+    	Image image = null;
         if (localFile.getFile().isDirectory()) {
             if (_layoutOrientation == JList.HORIZONTAL_WRAP) {
                 image = UI_TOOL.loadImage("folder_64");

@@ -45,7 +45,7 @@ public class DeviceBar extends JPanel {
 		device.setOnActionFailedListener(_deviceListener);
 	}
 
-	public void handleDeviceAlive(Device device) {
+	public void handleDeviceAlive(Device device, int n) {
 		DeviceButton button = _buttons.get(device);
 			
 		if (button != null) {

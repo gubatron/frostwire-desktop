@@ -92,15 +92,21 @@ public class DeviceButton extends JRadioButton {
                     buildImages(image);
                     setImage();
                 }
+
+				@Override
+				public void wasAlreadyCached(URL cachedFileURL,
+						BufferedImage image) {
+					buildImages(image);
+		            setImage();
+				}
             });
             
+            //In the meantime show the default image
             if (image == null) {
                 image = loadDefaultImage();
+                buildImages(image);
+                setImage();
             }
-            
-            buildImages(image);
-            setImage();
-            
         } catch (MalformedURLException e) {
         }        
 	}

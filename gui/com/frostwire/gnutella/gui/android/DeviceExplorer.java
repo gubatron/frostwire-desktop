@@ -2,8 +2,10 @@ package com.frostwire.gnutella.gui.android;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -218,9 +220,45 @@ public class DeviceExplorer extends JPanel {
 	}
 	
     private JPanel setupPanelNoDevice() {
-		JLabel l = new JLabel("hello");
-		JPanel p = new JPanel(new BorderLayout());
-		p.add(l);
+		JPanel p = new JPanel(new BorderLayout()) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void repaint(long arg0) {
+				super.repaint(arg0);
+			}
+			
+			@Override
+			public void paint(Graphics graphics) {
+				System.out.print("paint");
+				super.paint(graphics);
+				graphics.setColor(new Color(0x2c7fb0));
+				graphics.fillRect(0, 0, getWidth(), getHeight());
+
+				//paint green concentric circles of the radar
+				int circles = 16;
+				int initialRadio = 1;
+				
+				int smallerLength = (getWidth() > getHeight()) ? getHeight() : getWidth(); 
+				
+				int radioStep = smallerLength/(circles>>2);
+				
+				int centerX = getWidth()/2;
+				int centerY = getHeight()/2;
+				
+				graphics.setColor(new Color(0x7adafa));				
+				for (int i=0; i < circles; i++) {
+					graphics.drawOval(centerX, centerY, initialRadio, initialRadio);
+					graphics.drawOval(centerX, centerY, initialRadio+1, initialRadio+1);
+					graphics.drawOval(centerX, centerY, initialRadio-1, initialRadio-1);
+					graphics.drawOval(centerX, centerY, initialRadio-1, initialRadio+1);
+					graphics.drawOval(centerX, centerY, initialRadio+1, initialRadio-1);
+					initialRadio += radioStep;
+					centerX -= radioStep/2;
+					centerY -= radioStep/2;
+				}
+			}
+		};
 		return p;
 	}
 	

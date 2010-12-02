@@ -44,9 +44,6 @@ import com.limegroup.gnutella.settings.SharingSettings;
 
 public class DesktopExplorer extends JPanel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7362861227107918643L;
 
 	private JToolBar _toolBar;

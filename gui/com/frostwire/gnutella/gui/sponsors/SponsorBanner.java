@@ -32,8 +32,6 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.util.LimeWireUtils;
 
-
-@SuppressWarnings("serial")
 public class SponsorBanner extends JLabel {
 
 	private static final long serialVersionUID = -2074000214262216103L;
@@ -489,24 +487,32 @@ public class SponsorBanner extends JLabel {
 		try {
 			remoteImageURL = new URL(getImageSrc());
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
 		
 		ImageCache.getInstance().getImage(remoteImageURL, new OnLoadedListener() {
 
 			@Override
 			public void onLoaded(URL url, BufferedImage image) {
-				URL cachedFileURL = ImageCache.getInstance().getCachedFileURL(url);
-				SponsorBanner.this.setLocalImageURL(cachedFileURL);
-				SponsorBanner.this.onImageLoaded();
+				setBannerLabelHtml(ImageCache.getInstance().getCachedFileURL(url));
+			}
+
+			@Override
+			public void wasAlreadyCached(URL cachedFileURL,
+					BufferedImage imageFromCache) {
+				setBannerLabelHtml(cachedFileURL);				
 			}
 			
 		});
-
 	}
-
-	public void onImageLoaded() {
-		setText("<html><img src=\"" + getLocalImageSrc() + "\" width=\""
+	
+	public void setBannerLabelHtml(URL cachedImageURL) {
+		String cachedURLString = null;
+		try {
+			cachedURLString = cachedImageURL.toURI().toURL().toString();
+		} catch(Exception ignore) {}
+		
+		setText("<html><img src=\"" + cachedURLString  + "\" width=\""
 				+ getWidth() + "\" height=\"" + getHeight()
 				+ "\" border=\"0\"/></html>");
 		setSize(new Dimension(getWidth(), getHeight()));
@@ -562,7 +568,6 @@ public class SponsorBanner extends JLabel {
 	
 	private String url;
 	private String imageSrc;
-	private String localImageSrc;
 	private int width;
 	private int height;
 	private int duration;
@@ -666,14 +671,6 @@ public class SponsorBanner extends JLabel {
 		imageSrc = src;
 	}
 	
-	public void setLocalImageURL(URL localURL) {
-		localImageSrc = localURL.toString();
-	}
-	
-	public String getLocalImageSrc() {
-		return localImageSrc;
-	}
-
 	public void setWidth(int w) {
 		width = w;
 	}
