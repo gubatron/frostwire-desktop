@@ -7,9 +7,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JList;
-import javax.swing.JPanel;
 
 public class RedispatchMouseListener implements MouseListener, MouseMotionListener {
 	
@@ -22,12 +22,14 @@ public class RedispatchMouseListener implements MouseListener, MouseMotionListen
 		_list = list;
 		_mouseListeners = list.getMouseListeners();
 		_motionListeners = list.getMouseMotionListeners();
+		
 		for (MouseListener l : _mouseListeners) {
 			list.removeMouseListener(l);
 		}
 		for (MouseMotionListener l : _motionListeners) {
 			list.removeMouseMotionListener(l);
 		}
+		
 		list.addMouseMotionListener(this);
 	}
 
@@ -35,14 +37,14 @@ public class RedispatchMouseListener implements MouseListener, MouseMotionListen
 		int index = _list.locationToIndex(e.getPoint());
 		int x = e.getX() - _list.indexToLocation(index).x;
 		int y = e.getY() - _list.indexToLocation(index).y;
-		JPanel renderer = (JPanel) _list.getCellRenderer().getListCellRendererComponent(_list, _list.getModel().getElementAt(index), index, false, false);
+		Component renderer = _list.getCellRenderer().getListCellRendererComponent(_list, _list.getModel().getElementAt(index), index, false, false);
 		return renderer.getComponentAt(x, y);
 	}
 
 	public Rectangle getRepaintBounds(MouseEvent e) {
 		int index = _list.locationToIndex(e.getPoint());
 		Point p = _list.indexToLocation(index);
-		JPanel renderer = (JPanel) _list.getCellRenderer().getListCellRendererComponent(_list, _list.getModel().getElementAt(index), index, false, false);
+		Component renderer = _list.getCellRenderer().getListCellRendererComponent(_list, _list.getModel().getElementAt(index), index, false, false);
 		return new Rectangle(p.x, p.y, renderer.getPreferredSize().width, renderer.getPreferredSize().height);
 	}
 
@@ -53,6 +55,10 @@ public class RedispatchMouseListener implements MouseListener, MouseMotionListen
 			_list.repaint(getRepaintBounds(e));
 		}
 		
+		if (c instanceof AbstractButton) {
+		    return;
+		}
+
 		for (MouseListener l : _mouseListeners) {
             l.mouseClicked(e);
         }
@@ -66,6 +72,10 @@ public class RedispatchMouseListener implements MouseListener, MouseMotionListen
 			_list.repaint(getRepaintBounds(e));
 		}
 		
+		if (c instanceof AbstractButton) {
+            return;
+        }
+		
 		for (MouseListener l : _mouseListeners) {
             l.mousePressed(e);
         }
@@ -78,6 +88,10 @@ public class RedispatchMouseListener implements MouseListener, MouseMotionListen
 				c.dispatchEvent(new MouseEvent(c, MouseEvent.MOUSE_RELEASED, e.getWhen(), e.getModifiers(), 0, 0, e.getClickCount(), e.isPopupTrigger(), e.getButton()));
 				_list.repaint(getRepaintBounds(_mousePressedEvent));
 			}
+			
+			if (c instanceof AbstractButton) {
+	            return;
+	        }
 		}
 		
 		for (MouseListener l : _mouseListeners) {
@@ -100,6 +114,7 @@ public class RedispatchMouseListener implements MouseListener, MouseMotionListen
 	public void mouseDragged(MouseEvent e) {
 		if (_mousePressedEvent != null) {
 			Component c = getComponentAt(_mousePressedEvent);
+			
 			if (c instanceof JButton) {
 				return;
 			}
