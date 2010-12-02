@@ -153,6 +153,9 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
         c.gridx = 2;
         c.gridy = 1;
         c.insets = new Insets(0, 0, 3, 0);
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1.0;
+        c.weighty = 1.0;
         add(_labelExtra, c);
         
         _buttonCopy = new JRadioButton();
