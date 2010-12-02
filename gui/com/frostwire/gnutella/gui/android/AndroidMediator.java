@@ -122,8 +122,8 @@ public class AndroidMediator implements ThemeObserver {
 		INSTANCE.DEVICE_BAR.handleNewDevice(device);
 	}
 	
-	public static void handleDeviceAlive(Device device, int n) {
-		INSTANCE.DEVICE_BAR.handleDeviceAlive(device, n);
+	public static void handleDeviceAlive(Device device) {
+		INSTANCE.DEVICE_BAR.handleDeviceAlive(device);
 	}
 
 	public static void handleDeviceStale(Device device) {

@@ -46,10 +46,9 @@ public class DeviceButton extends JRadioButton {
 	public void refresh() {
 		setTooltip();
 		setImage();
-		revalidate();
 	}
 	
-	private void setupUI() {
+	protected void setupUI() {
 		////////// visible effect trick
 		setBorder(null);
 		setBackground(null);

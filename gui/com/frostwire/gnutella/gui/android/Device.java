@@ -63,6 +63,19 @@ public class Device {
 		return _finger.nickname;
 	}
 	
+	public String getKey() {
+	    return _address.getHostAddress() + ":" + _port;
+	}
+	
+	public int getTotalShared() {
+	    return _finger.numSharedApplicationFiles +
+	           _finger.numSharedDocumentFiles +
+	           _finger.numSharedPictureFiles +
+	           _finger.numSharedVideoFiles +
+	           _finger.numSharedRingtoneFiles +
+	           _finger.numSharedAudioFiles;
+	}
+	
 	public boolean isTokenAuthorized() {
 		return _tokenAuthorized;
 	}
@@ -179,16 +192,16 @@ public class Device {
 	
 	@Override
 	public int hashCode() {
-		return _finger.uuid.hashCode();
+		return getKey().hashCode();
 	}
 	
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof Device)) {
+		if (obj == null || !(obj instanceof Device)) {
 			return false;
 		}
 		
-		return _finger.uuid.equals(((Device) obj)._finger.uuid);
+		return hashCode() == ((Device) obj).hashCode();
 	}
 	
 	protected void notifyOnActionFailed(int action, Exception e) {

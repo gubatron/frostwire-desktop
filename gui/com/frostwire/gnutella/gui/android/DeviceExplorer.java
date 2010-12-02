@@ -66,7 +66,7 @@ public class DeviceExplorer extends JPanel {
 		_device = device;
 		_model.clear();
 		_invisibleRadioButton.setSelected(true);
-		setPanelDevice(true);
+		setPanelDevice(device != null ? true : false);
 	}
 	
 	public void setPanelDevice(boolean device) {
@@ -74,14 +74,23 @@ public class DeviceExplorer extends JPanel {
 		cl.show(this, device ? DEVICE : NO_DEVICE);
 		
 		if (device) {
-    		Finger finger = _device.getFinger();
-    		_buttonApplications.setText(String.valueOf(finger.numSharedApplicationFiles));
-    		_buttonDocuments.setText(String.valueOf(finger.numSharedDocumentFiles));
-    		_buttonPictures.setText(String.valueOf(finger.numSharedPictureFiles));
-    		_buttonVideos.setText(String.valueOf(finger.numSharedVideoFiles));
-    		_buttonRingtones.setText(String.valueOf(finger.numSharedRingtoneFiles));
-    		_buttonAudio.setText(String.valueOf(finger.numSharedAudioFiles));
+    		refreshHeader();
 		}
+	}
+	
+	public void refreshHeader() {
+	    
+	    if (_device == null) {
+	        return;
+	    }
+	    
+	    Finger finger = _device.getFinger();
+	    refreshBrowseButton(_buttonApplications, finger.numSharedApplicationFiles);
+	    refreshBrowseButton(_buttonDocuments, finger.numSharedDocumentFiles);
+	    refreshBrowseButton(_buttonPictures, finger.numSharedPictureFiles);
+	    refreshBrowseButton(_buttonVideos, finger.numSharedVideoFiles);
+	    refreshBrowseButton(_buttonRingtones, finger.numSharedRingtoneFiles);
+	    refreshBrowseButton(_buttonAudio, finger.numSharedAudioFiles);
 	}
 	
 	public FileDescriptorListModel getModel() {
@@ -234,5 +243,12 @@ public class DeviceExplorer extends JPanel {
 		button.setFont(new Font(font.getName(), font.getStyle() | Font.BOLD, font.getSize() + 4));
 		
 		return button;
+	}
+	
+	private void refreshBrowseButton(ImageRadioButton button, int numShared) {
+	    button.setText(String.valueOf(numShared));
+	    if (numShared == 0 && button.isSelected()) {
+	        _model.clear();
+	    }
 	}
 }

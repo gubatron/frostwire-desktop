@@ -36,6 +36,9 @@ public class DeviceBar extends JPanel {
 	}
 
 	public void handleNewDevice(Device device) {
+	    
+	    handleDeviceStale(device);
+	    
 		DeviceButton button = new DeviceButton(device);
 		button.addMouseListener(_mouseAdapter);
 		_buttons.put(device, button);
@@ -45,24 +48,37 @@ public class DeviceBar extends JPanel {
 		device.setOnActionFailedListener(_deviceListener);
 	}
 
-	public void handleDeviceAlive(Device device, int n) {
+	public void handleDeviceAlive(Device device) {
 		DeviceButton button = _buttons.get(device);
-			
-		if (button != null) {
-			button.refresh();
+		
+		if (button == null) {
+		    return;
+		}
+				
+		button.getDevice().setFinger(device.getFinger());
+
+		button.refresh();
+		revalidate();
+		if (button.getDevice().equals(_selectedDevice)) {
+		    if (_selectedDevice != null) {
+		        AndroidMediator.instance().getDeviceExplorer().refreshHeader();
+		    }
 		}
 	}
 	
 	public void handleDeviceStale(final Device device) {
 		synchronized (_buttons) {
 			DeviceButton button = _buttons.remove(device);
-	
-			if (button != null) {
-			    button.setVisible(false);
-				remove(button);
+			
+			if (button == null) {
+			    return;
 			}
 
-			if (_buttons.size() == 0) {
+			button.setVisible(false);
+			remove(button);
+			revalidate();
+			
+			if (_buttons.size() == 0 || device.equals(_selectedDevice)) {
 				AndroidMediator.instance().getDeviceExplorer().setPanelDevice(false);
 			}
 		}
@@ -82,10 +98,8 @@ public class DeviceBar extends JPanel {
 	private final class MyMouseAdapter extends MouseAdapter {
 		public void mouseReleased(MouseEvent e) {
 			DeviceButton button = (DeviceButton) e.getComponent();
-			//if (_selectedDevice == null) {
-				_selectedDevice = button.getDevice();
-				AndroidMediator.instance().getDeviceExplorer().setDevice(_selectedDevice);
-			//}
+			_selectedDevice = button.getDevice();
+			AndroidMediator.instance().getDeviceExplorer().setDevice(_selectedDevice);
 		}
 	}
 	

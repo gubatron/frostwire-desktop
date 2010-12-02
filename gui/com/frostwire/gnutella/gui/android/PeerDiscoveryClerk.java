@@ -8,6 +8,7 @@ import java.net.InetSocketAddress;
 import java.net.MulticastSocket;
 import java.net.NetworkInterface;
 import java.net.URI;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -21,8 +22,6 @@ import com.frostwire.json.JsonEngine;
 import com.limegroup.gnutella.settings.ConnectionSettings;
 
 public class PeerDiscoveryClerk {
-
-	private static final String TAG = "PeerDiscoveryClerk";
 
 	private static final long STALE_DEVICE_TIMEOUT = 7000;
 
@@ -41,13 +40,13 @@ public class PeerDiscoveryClerk {
 		try {
 			startBroadcast();
 		} catch (Exception e) {
-			Log.e(TAG, "Error starting broadcast");
+			log("Error starting broadcast");
 		}
 
 		try {
 			startMulticast();
 		} catch (Exception e) {
-			Log.e(TAG, "Error starting multicast");
+			log("Error starting multicast");
 		}
 
 		new Thread(new CleanStaleDevices(), "CleanStaleDevices").start();
@@ -80,7 +79,7 @@ public class PeerDiscoveryClerk {
 					}
 
 				} catch (Exception e) {
-					Log.e(TAG, "Error receiving broadcast");
+					log("Error receiving broadcast");
 				} finally {
 					socket.close();
 					socket.disconnect();
@@ -91,11 +90,9 @@ public class PeerDiscoveryClerk {
 
 	private void startMulticast() throws Exception {
 
-		final InetAddress groupInetAddress = InetAddress
-				.getByAddress(new byte[] { (byte) 224, 0, 1, 16 });
+		final InetAddress groupInetAddress = InetAddress.getByAddress(new byte[] { (byte) 224, 0, 1, 16 });
 
-		final MulticastSocket socket = new MulticastSocket(
-				DeviceConstants.PORT_MULTICAST);
+		final MulticastSocket socket = new MulticastSocket(DeviceConstants.PORT_MULTICAST);
 		socket.setSoTimeout(60000);
 		socket.setTimeToLive(254);
 		socket.setReuseAddress(true);
@@ -130,7 +127,7 @@ public class PeerDiscoveryClerk {
 					}
 
 				} catch (Exception e) {
-					Log.e(TAG, "Error receiving broadcast");
+					log("Error receiving broadcast");
 				} finally {
 					socket.close();
 					socket.disconnect();
@@ -141,67 +138,75 @@ public class PeerDiscoveryClerk {
 
 	private void handleDatagramPacket(DatagramPacket packet, boolean multicast) {
 		
+	    InetAddress address = packet.getAddress();
+	    
 		byte[] data = packet.getData();
 		
+		int p = ((data[0x1e] & 0xFF) << 8) + (data[0x1f] & 0xFF);
 		int n = ((data[0x20]) & 0xFF << 16) + ((data[0x21] & 0xff) << 8) + (data[0x22]&0xff);
 		boolean b = (data[0x43] & 0xFF) != 0;
-		int p = ((data[0x1e] & 0xFF) << 8) + (data[0x1f] & 0xFF);
 		
-		InetAddress address = packet.getAddress();
-		
-		handlePossibleNewDevice(address, p + 1, multicast, n, b);
+		handleDeviceState(address, p + 1, n, b);
 	}
 
-	private void handlePossibleNewDevice(InetAddress address, int p,
-			boolean multicast,int n, boolean b) {
+	private void handleDeviceState(InetAddress address, int p, int n, boolean b) {
 
 		String key = address.getHostAddress() + ":" + p;
 
 		if (_deviceCache.containsKey(key)) {
 			Device device = _deviceCache.get(key);
 			if (!b) {
-				handleDeviceAlive(key, device, n);
+			    if (n == device.getTotalShared()) {
+			        handleDeviceAlive(key, device);
+			    } else {
+			        retrieveFinger(key, address, p, b);
+			    }
 			} else {
 				handleDeviceStale(key, device);
 			}
 			return;
-		}
+		} else {
+		    retrieveFinger(key, address, p, b);
+		}		
+	}
+	
+	private void retrieveFinger(String key, InetAddress address, int p, boolean b) {
+	    try {
 
-		try {
+            URI uri = new URI("http://" + key + "/finger");
 
-			URI uri = new URI("http://" + key + "/finger");
+            HttpFetcher fetcher = new HttpFetcher(uri);
 
-			HttpFetcher fetcher = new HttpFetcher(uri);
+            byte[] jsonBytes = fetcher.fetch();
 
-			byte[] jsonBytes = fetcher.fetch();
+            if (jsonBytes == null) {
+                System.out.println("Failed to connnect to " + uri);
+                return;
+            }
 
-			if (jsonBytes == null) {
-				System.out.println("Failed to connnect to " + uri);
-				return;
-			}
+            String json = new String(jsonBytes);
 
-			String json = new String(jsonBytes);
+            Finger finger = _jsonEngine.toObject(json, Finger.class);
 
-			Finger finger = _jsonEngine.toObject(json, Finger.class);
-
-			synchronized (_deviceCache) {
-				if (_deviceCache.containsKey(key)) {
-					Device device = _deviceCache.get(key);
-					if (!b) {
-						handleDeviceAlive(key, device, n);
-					} else {
-						handleDeviceStale(key, device);
-					}
-				} else {
-					if (!b) {
-						Device device = new Device(address, p, finger);
-						handleNewDevice(key, device);
-					}
-				}
-			}
-		} catch (Exception e) {
-			Log.e(TAG, "Failed to connnect to " + key);
-		}
+            synchronized (_deviceCache) {
+                if (_deviceCache.containsKey(key)) {
+                    Device device = _deviceCache.get(key);
+                    if (!b) {
+                        device.setFinger(finger);
+                        handleDeviceAlive(key, device);
+                    } else {
+                        handleDeviceStale(key, device);
+                    }
+                } else {
+                    if (!b) {
+                        Device device = new Device(address, p, finger);
+                        handleNewDevice(key, device);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            log("Failed to connnect to " + key);
+        }
 	}
 
 	private void handleNewDevice(String key, final Device device) {
@@ -215,13 +220,13 @@ public class PeerDiscoveryClerk {
 		});
 	}
 
-	private void handleDeviceAlive(String key, final Device device, final int n) {
+	private void handleDeviceAlive(String key, final Device device) {
 		_deviceCache.put(key, device);
 		_deviceTimeouts.put(device, System.currentTimeMillis());
 		
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				AndroidMediator.handleDeviceAlive(device, n);
+				AndroidMediator.handleDeviceAlive(device);
 			}
 		});
 	}
@@ -236,6 +241,10 @@ public class PeerDiscoveryClerk {
 			}
 		});
 	}
+	
+	public static void log(String msg) {
+        System.out.println("[ERRR] " + new Date() + " PeerDiscoveryClerk: " + msg);
+    }
 
 	private final class CleanStaleDevices implements Runnable {
 		public void run() {
@@ -247,10 +256,7 @@ public class PeerDiscoveryClerk {
 						if (entry.getValue() + STALE_DEVICE_TIMEOUT < now) {
 
 							Device device = entry.getKey();
-							String key = device.getAddress().getHostAddress()
-									+ ":" + device.getPort();
-
-							handleDeviceStale(key, entry.getKey());
+							handleDeviceStale(device.getKey(), entry.getKey());
 						}
 					}
 				}
