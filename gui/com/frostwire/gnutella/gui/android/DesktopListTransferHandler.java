@@ -47,7 +47,6 @@ public class DesktopListTransferHandler extends TransferHandler {
         try {
             fileDescriptors = (FileDescriptor[]) transferable.getTransferData(DeviceListTransferable.FILE_DESCRIPTOR_ARRAY);
         } catch (Exception e) {
-            System.out.print(e);
             return false;
         }
         
