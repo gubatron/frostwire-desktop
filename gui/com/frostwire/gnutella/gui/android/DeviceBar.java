@@ -58,8 +58,8 @@ public class DeviceBar extends JPanel {
 			DeviceButton button = _buttons.remove(device);
 	
 			if (button != null) {
+			    button.setVisible(false);
 				remove(button);
-				revalidate();
 			}
 
 			if (_buttons.size() == 0) {
@@ -82,10 +82,10 @@ public class DeviceBar extends JPanel {
 	private final class MyMouseAdapter extends MouseAdapter {
 		public void mouseReleased(MouseEvent e) {
 			DeviceButton button = (DeviceButton) e.getComponent();
-			if (_selectedDevice == null || !_selectedDevice.equals(button.getDevice())) {
+			//if (_selectedDevice == null) {
 				_selectedDevice = button.getDevice();
 				AndroidMediator.instance().getDeviceExplorer().setDevice(_selectedDevice);
-			}
+			//}
 		}
 	}
 	
