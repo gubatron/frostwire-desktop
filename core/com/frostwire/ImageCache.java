@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
@@ -49,6 +50,23 @@ public class ImageCache {
         }
         
         return new File(SharingSettings.getImageCacheDirectory(), File.separator + host + File.separator + path);
+    }
+    
+    /**
+     * Given the remote URL if the image has been cached this will return the local URL of the cached image on disk.
+     * 
+     * @param remoteURL
+     * @return The URL of the cached file. null if it's not been cached yet.
+     */
+    public URL getCachedFileURL(URL remoteURL) {
+    	if (isCached(remoteURL)) {
+    		try {
+				return getCacheFile(remoteURL).toURI().toURL();
+			} catch (MalformedURLException e) {
+				return null;
+			}
+    	}
+    	return null;
     }
 
     private boolean isCached(URL url) {

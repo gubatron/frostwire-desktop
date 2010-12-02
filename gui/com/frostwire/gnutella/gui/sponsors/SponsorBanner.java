@@ -24,9 +24,13 @@ import java.io.IOException;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.awt.Cursor;
 import javax.swing.JLabel;
 
+import com.frostwire.ImageCache;
+import com.frostwire.ImageCache.OnLoadedListener;
+import com.frostwire.gnutella.gui.android.UITool;
 import com.limegroup.gnutella.util.LimeWireUtils;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
@@ -132,7 +136,7 @@ public class SponsorBanner extends JLabel {
 	 * 
 	 * @return
 	 */
-	public HashSet<SponsorBanner> getBannersFromServer(BannerContainer container) {
+	public Set<SponsorBanner> getBannersFromServer(BannerContainer container) {
 		SponsorLoader sponsorLoader = getSponsorLoader();
 
 		if (container != null) {
@@ -148,7 +152,7 @@ public class SponsorBanner extends JLabel {
 
 	private class SponsorLoader implements ContentHandler {
 		/**
-		 * A banner tag is supposed to look like this.
+		 * A banner tag is supposed to look like 
 		 * 
 		 * <banner src=
 		 * "http://sponsors.frostwire.com/banners/120x600google_checkout.png"
@@ -159,7 +163,7 @@ public class SponsorBanner extends JLabel {
 		public String ipAddress = new String("0.0.0.0");
 
 		private boolean _status = false;
-		private HashSet<SponsorBanner> _result = new HashSet<SponsorBanner>();
+		private Set<SponsorBanner> _result = new LinkedHashSet<SponsorBanner>();
 
 		private BannerContainer _bannerContainer = null;
 
@@ -169,7 +173,7 @@ public class SponsorBanner extends JLabel {
 		 * create an XMLReader and use the XML parsing methods to instantiate
 		 * Banner Objects.
 		 * */
-		public HashSet<SponsorBanner> loadBanners() {
+		public Set<SponsorBanner> loadBanners() {
 			HttpURLConnection connection = null;
 			InputSource src = null;
 
@@ -232,17 +236,17 @@ public class SponsorBanner extends JLabel {
 			if (localName.equals("sponsors")) {
 				String status = atts.getValue("status").toLowerCase();
 
-				this._status = false;
+				_status = false;
 				if (status != null
 						&& (status.equals("on") || status.equals("true") || status
 								.equals("1"))) {
-					this._status = true;
+					_status = true;
 				}
 			}
 			// parse the banners tag. See if they want the BannerContainer to
 			// re-request this XML file
 			// at a rate different than the default, or not at all
-			else if (localName.equals("banners") && this._status) {
+			else if (localName.equals("banners") && _status) {
 				// if there is a refresh rate, it expresses how often we should
 				// re-reload this file, and we have to notify the
 				// BannerContainer
@@ -261,7 +265,7 @@ public class SponsorBanner extends JLabel {
 							|| refreshRate.equalsIgnoreCase("off")) {
 						// kill the refresh banners task
 						// System.out.println("SponsorLoader.startElement -> Killing Banner Refresh Tasks");
-						this.get_bannerContainer().setupBannerRefreshTask(-1);
+						get_bannerContainer().setupBannerRefreshTask(-1);
 					} else {
 						// attempt to update the refresh rate
 						int refreshRateInt = -1;
@@ -279,14 +283,14 @@ public class SponsorBanner extends JLabel {
 						if (refreshRateInt > 0) {
 							// System.out.println("SponsorLoader.startElement -> setting custom banner refresh task interval - "
 							// + refreshRateInt);
-							this.get_bannerContainer().setupBannerRefreshTask(
+							get_bannerContainer().setupBannerRefreshTask(
 									refreshRateInt);
 						}
 					}
 				}
 			}
 			// parse the banner tag, only if the status is set to on.
-			else if (localName.equals("banner") && this._status) {
+			else if (localName.equals("banner") && _status) {
 				// got a banner, read properties here
 				String src = new String(atts.getValue("src"));
 				String href = new String(atts.getValue("href"));
@@ -392,7 +396,7 @@ public class SponsorBanner extends JLabel {
 				// All filters passed, add to resulting banner list.
 				// System.out.println();
 				// System.out.println("Banner Added " + banner.getUrl());
-				this._result.add(banner);
+				_result.add(banner);
 				// System.out.println();
 			}
 		} // startElement
@@ -440,84 +444,6 @@ public class SponsorBanner extends JLabel {
 			return true;
 		}
 
-		/**
-		 * Compares an ip address to a bunch of ipRange expressions. If at least
-		 * one matches, then it returns true.
-		 * 
-		 * @param ip
-		 * @param ipRanges
-		 * @return
-		 */
-		public boolean ipMatchesRanges(String ip, Set<String> ipRanges) {
-			if (ip == null || ip.equals("0.0.0.0")) {
-				return false;
-				// should probably throw an exception here
-			}
-
-			if (ipRanges != null && ip != null) {
-				Iterator<String> iterator = ipRanges.iterator();
-				String ipRange = null;
-				while (iterator.hasNext()) {
-					ipRange = iterator.next();
-					// System.out.println("About to compare ("+ip+") vs ("+ipRange+")");
-					if (ipMatchesRange(ip, ipRange)) {
-						// System.out.println("Found a match -> " + ip + " vs "
-						// + ipRange);
-						return true;
-					}
-				} // for
-			} // if
-
-			return false;
-		} // ipMatchesRanges
-
-		/**
-		 * Compares ip octects to a single ipRange. Examples ip = 192.168.34.2
-		 * ipRange = 192.168.*.* output = true
-		 * 
-		 * Only wildcards allowed are * and x, represents any number from 0-255
-		 * 
-		 * @param ip
-		 * @param ipRange
-		 * @return
-		 */
-		public boolean ipMatchesRange(String ip, String ipRange) {
-			if (ip == null) {
-				System.out.println("ip null");
-				return false;
-			}
-			if (ipRange == null) {
-				System.out.println("ipRange null");
-				return false;
-			}
-
-			String[] ipOctets = ip.split("\\.");
-			String[] ipRangeOctets = ipRange.split("\\.");
-			int octetIndex = 0;
-
-			if (ipOctets.length != ipRangeOctets.length) {
-				// System.out.println("Octet lengths don't match");
-				return false;
-			}
-
-			for (String octet : ipOctets) {
-				// If I get a wild card, or if the current octect matches
-				// the ipRange octect, we have a match
-
-				// System.out.println("Comparing ("+octet+") vs ("+ipRangeOctets[octetIndex]+")");
-				if (!(ipRangeOctets[octetIndex].equals("*")
-						|| ipRangeOctets[octetIndex].equals("x") || ipRangeOctets[octetIndex]
-						.equals(octet))) {
-					// System.out.println("FAILED\n");
-					return false;
-				}
-				// System.out.println("PASSED");
-				octetIndex += 1;
-			}
-			// System.out.println();
-			return true;
-		} // ipMatchesRange
-
 		public void skippedEntity(String name) {
 
 		}
@@ -558,28 +484,51 @@ public class SponsorBanner extends JLabel {
 	public SponsorBanner(String url, String imageSrc, int width, int height,
 			int duration, Set<String> ipRanges, String type,
 			HashMap<String, String> countries, String language, String version) {
-		this.setUrl(url);
-		this.setImageSrc(imageSrc);
-		this.setWidth(width);
-		this.setHeight(height);
-		this.setDuration(duration);
-		this.setIpRanges(ipRanges);
-		this.setVersion(version);
+		setUrl(url);
+		setImageSrc(imageSrc);
+		setWidth(width);
+		setHeight(height);
+		setDuration(duration);
+		setIpRanges(ipRanges);
+		setVersion(version);
 
-		this.setType(type);
+		setType(type);
 
 		if (countries != null) {
-			this.setCountries(countries);
+			setCountries(countries);
 		}
 
 		if (language != null) {
-			this.setLanguage(language);
+			setLanguage(language);
 		}
+		
+		//Get the ImageSrc from the server if it's not available locally as a file://
+		//in the image cache.
+		URL remoteImageURL = null;
+		try {
+			remoteImageURL = new URL(getImageSrc());
+		} catch (Exception e) {
+			
+		}
+		
+		ImageCache.getInstance().getImage(remoteImageURL, new OnLoadedListener() {
 
-		this.setText("<html><img src=\"" + this.getImageSrc() + "\" width=\""
-				+ this.getWidth() + "\" height=\"" + this.getHeight()
+			@Override
+			public void onLoaded(URL url, BufferedImage image) {
+				URL cachedFileURL = ImageCache.getInstance().getCachedFileURL(url);
+				SponsorBanner.this.setLocalImageURL(cachedFileURL);
+				SponsorBanner.this.onImageLoaded();
+			}
+			
+		});
+
+	}
+
+	public void onImageLoaded() {
+		setText("<html><img src=\"" + getLocalImageSrc() + "\" width=\""
+				+ getWidth() + "\" height=\"" + getHeight()
 				+ "\" border=\"0\"/></html>");
-		this.setSize(new Dimension(this.getWidth(), this.getHeight()));
+		setSize(new Dimension(getWidth(), getHeight()));
 
 		addMouseListener(new MouseAdapter() {
 			// THIS IS WHAT HAPPENS WHEN THEY CLICK ON THE BANNER
@@ -627,11 +576,12 @@ public class SponsorBanner extends JLabel {
 			public void mouseExited(MouseEvent evt) {
 				setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			} // mouseExited
-		});
+		});		
 	}
-
+	
 	private String url;
 	private String imageSrc;
+	private String localImageSrc;
 	private int width;
 	private int height;
 	private int duration;
@@ -643,74 +593,74 @@ public class SponsorBanner extends JLabel {
 	private String version = null;
 
 	public String getUrl() {
-		return this.url;
+		return url;
 	}
 
 	public String getImageSrc() {
-		return this.imageSrc;
+		return imageSrc;
 	}
 
 	public int getWidth() {
-		if (this.width <= 0)
+		if (width <= 0)
 			return 120;
-		return this.width;
+		return width;
 	}
 
 	public int getHeight() {
-		if (this.height <= 0)
+		if (height <= 0)
 			return 600;
-		return this.height;
+		return height;
 	}
 
 	public int getDuration() {
-		if (this.duration <= 0)
+		if (duration <= 0)
 			return 300;
-		return this.duration;
+		return duration;
 	}
 
 	public Set<String> getIpRanges() {
-		return this.ipRanges;
+		return ipRanges;
 	}
 
 	public String getVersion() {
-		return this.version;
+		return version;
 	}
 
 	/** Could be used to have a different click handler on the banner */
 	public String getType() {
-		return this.type;
+		return type;
 	}
 
 	public String getBannerLocale() {
-		return this.locale;
+		return locale;
 	}
 
 	public void addCountry(String country) {
 		if (country == null)
 			return;
 
-		if (this.countries == null)
-			this.countries = new HashMap<String, String>();
+		if (countries == null)
+			countries = new HashMap<String, String>();
 
-		this.countries.put(country, country);
+		countries.put(country, country);
 	}
 
 	public boolean hasCountry(String country) {
-		if (this.countries == null || country == null)
+		if (countries == null || country == null)
 			return false;
-		return this.countries.containsKey(country);
+		return countries.containsKey(country);
 	}
 
-	public void setCountries(HashMap<String, String> countries) {
-		this.countries = countries;
+	public void setCountries(HashMap<String, String> countriesMap) {
+		countries = countriesMap;
 	}
 
 	public HashMap<String, String> getCountries() {
-		return this.countries;
+		return countries;
 	}
 
 	public String getLanguage() {
-		return this.language;
+		return language;
 	}
 
 	public String getSystemCountry() {
@@ -727,35 +677,43 @@ public class SponsorBanner extends JLabel {
 		return language;
 	}
 
-	public void setUrl(String url) {
-		this.url = url;
+	public void setUrl(String u) {
+		url = u;
 	}
 
 	public void setImageSrc(String src) {
-		this.imageSrc = src;
+		imageSrc = src;
+	}
+	
+	public void setLocalImageURL(URL localURL) {
+		localImageSrc = localURL.toString();
+	}
+	
+	public String getLocalImageSrc() {
+		return localImageSrc;
 	}
 
 	public void setWidth(int w) {
-		this.width = w;
+		width = w;
 	}
 
 	public void setHeight(int h) {
-		this.height = h;
+		height = h;
 	}
 
 	public void setDuration(int d) {
-		this.duration = d;
+		duration = d;
 	}
 
-	public void setIpRanges(Set<String> ipRanges) {
-		if (ipRanges != null && ipRanges.size() == 0) {
-			ipRanges = null;
+	public void setIpRanges(Set<String> ipRange) {
+		if (ipRange != null && ipRange.size() == 0) {
+			ipRange = null;
 		}
-		this.ipRanges = ipRanges;
+		ipRanges = ipRange;
 	}
 
 	public void setVersion(String v) {
-		this.version = v;
+		version = v;
 	}
 
 	/**
@@ -764,20 +722,20 @@ public class SponsorBanner extends JLabel {
 	 * - null | webpage -> To open a web browser with the URL - torrent -> To
 	 * open and download the file specified by the torrent URL
 	 */
-	public void setType(String type) {
+	public void setType(String t) {
 
-		if (type != null) {
-			type = type.toLowerCase();
+		if (t != null) {
+			t = t.toLowerCase();
 		}
 
-		this.type = type;
+		type = t;
 	}
 
-	public void setLanguage(String language) {
-		this.language = language;
+	public void setLanguage(String lang) {
+		language = lang;
 	}
 
-	public void setBannerLocale(String locale) {
-		this.locale = locale;
+	public void setBannerLocale(String l) {
+		locale = l;
 	}
 }

@@ -8,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import javax.swing.JPanel;
 
 import java.util.HashSet;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Iterator;
@@ -20,7 +21,7 @@ import java.util.Calendar;
 public class BannerContainer extends JPanel {
 
     private CardLayout layout = null; //new CardLayout();
-	private HashSet<SponsorBanner> banners;
+	private Set<SponsorBanner> _banners;
 	
     private Timer bannerSwitcher; //timer to switch banner one by one
     private Timer bannerRefresher; //timer to reload all banners from server
@@ -92,7 +93,7 @@ public class BannerContainer extends JPanel {
 	
 	public void removeAllBanners() {
 		//remove all SponsorBanner components if any and stop the timer.
-		if (this.banners != null && getComponentCount() > 0) {
+		if (_banners != null && getComponentCount() > 0) {
 			//System.out.println("BannerContainer.setBanners -> Removing all banners");
 			bannerSwitcher.cancel();
 			removeAll();
@@ -100,14 +101,10 @@ public class BannerContainer extends JPanel {
 	}
 	
 	/** Removes all the existing banners if any, and will place the given ones */
-	public void setBanners(HashSet<SponsorBanner> banners) {
-
-	    this.banners = null;
-		this.banners = banners;
+	public void setBanners(Set<SponsorBanner> bannerSet) {
+		_banners = bannerSet;
 		
-		Iterator<SponsorBanner> iterator = this.banners.iterator();
-
-		//System.out.println("BannerContainer.banners.size() -> " + this.banners.size());
+		Iterator<SponsorBanner> iterator = _banners.iterator();
 		
  		if (bannerSwitcher != null) {
 		    bannerSwitcher.cancel();
@@ -176,7 +173,7 @@ public class BannerContainer extends JPanel {
 	 * @return
 	 */
 	public SponsorBanner getCurrentShownBanner() {
-		Iterator<SponsorBanner> iterator = this.banners.iterator();
+		Iterator<SponsorBanner> iterator = this._banners.iterator();
 		
 		while (iterator.hasNext()) {
 			SponsorBanner banner = iterator.next();
