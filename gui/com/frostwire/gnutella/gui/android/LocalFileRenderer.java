@@ -82,15 +82,17 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
             relayout();
         }		
 		
+        File file = _localFile.getFile();
+        
 		setImagePanelThumbnail(_localFile);		
 		if (_layoutOrientation == JList.HORIZONTAL_WRAP) {
-		    _multilineLabelName.setText(FILE_SYSTEM_VIEW.getSystemDisplayName(_localFile.getFile()));
+		    _multilineLabelName.setText(FILE_SYSTEM_VIEW.getSystemDisplayName(file));
 		} else {
-		    File file = _localFile.getFile();
 		    _labelName.setText(FILE_SYSTEM_VIEW.getSystemDisplayName(file));
 		    _labelDateModified.setText(DATE_FORMAT.format(new Date(file.lastModified())));
 		    _labelSize.setText(UI_TOOL.getBytesInHuman(file.length()));
-		}
+		}		
+		setToolTip(file);
 		
 		return this;
 	}
@@ -373,5 +375,17 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
         }
 
         return image;
+    }
+    
+    private void setToolTip(File file) {
+        StringBuilder sb = new StringBuilder();
+        
+        sb.append("<html>");
+        sb.append(FILE_SYSTEM_VIEW.getSystemDisplayName(file) + "<br/>");
+        sb.append(DATE_FORMAT.format(new Date(file.lastModified())) + "<br/>");
+        sb.append(UI_TOOL.getBytesInHuman(file.length()));
+        sb.append("</html>");
+        
+        setToolTipText(sb.toString());
     }
 }

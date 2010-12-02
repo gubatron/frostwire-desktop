@@ -27,7 +27,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JToolBar;
-import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 
@@ -166,6 +165,16 @@ public class DesktopExplorer extends JPanel {
 			_scrollName.setVisible(false);
 		}
 	}
+	
+	protected void list_mouseClicked(MouseEvent e) {
+        cancelEdit();
+        if (SwingUtilities.isRightMouseButton(e) && !_list.isSelectionEmpty() &&
+                _list.locationToIndex(e.getPoint()) == _list.getSelectedIndex()) {
+            _popupList.show(_list, e.getX(), e.getY());
+        } else if (e.getClickCount() >= 2 && !e.isConsumed()) {
+            actionOpenFile();
+        }
+    }
 	
 	protected void list_keyPressed(KeyEvent e) {
 	    int key = e.getKeyCode();
@@ -369,12 +378,10 @@ public class DesktopExplorer extends JPanel {
 		_list.setCellRenderer(new LocalFileRenderer());
 		RedispatchMouseListener listener = new RedispatchMouseListener(_list);
 		_list.addMouseListener(listener);
-		_list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		_list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		_list.setDragEnabled(true);
 		_list.setTransferHandler(new DesktopListTransferHandler());
-		_list.setPrototypeCellValue(new LocalFile(SharingSettings
-				.getDeviceFilesDirectory()));
+		_list.setPrototypeCellValue(new LocalFile(SharingSettings.getDeviceFilesDirectory()));
 		_list.setVisibleRowCount(-1);
 
 		_popupList = new JPopupMenu();
@@ -383,7 +390,7 @@ public class DesktopExplorer extends JPanel {
 		_menuOpen.addActionListener(new ActionListener() {            
             @Override
             public void actionPerformed(ActionEvent e) {
-                DesktopExplorer.this.actionOpenFile();
+                actionOpenFile();
             }
         });
 		_popupList.add(_menuOpen);
@@ -391,7 +398,7 @@ public class DesktopExplorer extends JPanel {
 		_menuRename = new JMenuItem(I18n.tr("Rename"));
 		_menuRename.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                DesktopExplorer.this.actionStartRename();
+                actionStartRename();
             }
         });
 		_popupList.add(_menuRename);
@@ -399,7 +406,7 @@ public class DesktopExplorer extends JPanel {
 		_menuDelete = new JMenuItem(I18n.tr("Delete"));
 		_menuDelete.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                DesktopExplorer.this.actionStartDelete();
+                actionStartDelete();
             }
         });
         _popupList.add(_menuDelete);
@@ -409,7 +416,7 @@ public class DesktopExplorer extends JPanel {
 		_menuRefresh = new JMenuItem(I18n.tr("Refresh"));
 		_menuRefresh.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                DesktopExplorer.this.refresh();
+                refresh();
             }
         });
 		_popupList.add(_menuRefresh);		
@@ -418,10 +425,6 @@ public class DesktopExplorer extends JPanel {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				cancelEdit();
-				int index = _list.locationToIndex(e.getPoint());
-				if (index != -1) {
-					_list.setSelectedIndex(index);
-				}
 			}
 
 			@Override
@@ -431,16 +434,7 @@ public class DesktopExplorer extends JPanel {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				cancelEdit();
-				// if right mouse button clicked (or e.isPopupTrigger())
-				if (SwingUtilities.isRightMouseButton(e)
-						&& !_list.isSelectionEmpty()
-						&& _list.locationToIndex(e.getPoint()) == _list
-								.getSelectedIndex()) {
-					_popupList.show(_list, e.getX(), e.getY());
-				} else if (e.getClickCount() >= 2 && !e.isConsumed()) {
-                    actionOpenFile();
-                }
+			    list_mouseClicked(e);
 			}
 		});
 		_list.addKeyListener(new KeyAdapter() {
