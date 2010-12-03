@@ -35,6 +35,9 @@ public class RedispatchMouseListener implements MouseListener, MouseMotionListen
 
 	public Component getComponentAt(MouseEvent e) {
 		int index = _list.locationToIndex(e.getPoint());
+		if (index == -1) {
+		    return null;
+		}
 		int x = e.getX() - _list.indexToLocation(index).x;
 		int y = e.getY() - _list.indexToLocation(index).y;
 		Component renderer = _list.getCellRenderer().getListCellRendererComponent(_list, _list.getModel().getElementAt(index), index, false, false);
@@ -43,6 +46,9 @@ public class RedispatchMouseListener implements MouseListener, MouseMotionListen
 
 	public Rectangle getRepaintBounds(MouseEvent e) {
 		int index = _list.locationToIndex(e.getPoint());
+		if (index == -1) {
+            return null;
+        }
 		Point p = _list.indexToLocation(index);
 		Component renderer = _list.getCellRenderer().getListCellRendererComponent(_list, _list.getModel().getElementAt(index), index, false, false);
 		return new Rectangle(p.x, p.y, renderer.getPreferredSize().width, renderer.getPreferredSize().height);
