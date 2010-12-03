@@ -2,7 +2,6 @@ package com.frostwire.gnutella.gui.android;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -20,7 +19,6 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 
 import com.frostwire.gnutella.gui.ImagePanel;
 
@@ -49,7 +47,7 @@ public class DeviceExplorer extends JPanel {
 	private ImageRadioButton _buttonAudio;
 	private JRadioButton _invisibleRadioButton;
 	private ButtonGroup _buttonGroup;	
-	private JTextField _textFilter;
+	private HintTextField _textFilter;
 
 	public DeviceExplorer() {
 		_model = new FileDescriptorListModel();
@@ -190,12 +188,7 @@ public class DeviceExplorer extends JPanel {
         _buttonGroup.add(_buttonAudio);
         _buttonGroup.add(_invisibleRadioButton = new JRadioButton());
         
-        _textFilter = new JTextField();
-        Dimension textFilterSize = new Dimension(100, 25);
-        _textFilter.setPreferredSize(textFilterSize);
-        _textFilter.setMinimumSize(textFilterSize);
-        _textFilter.setMaximumSize(textFilterSize);
-        _textFilter.setSize(textFilterSize);
+        _textFilter = new HintTextField("Type here to search");
         _textFilter.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -203,11 +196,11 @@ public class DeviceExplorer extends JPanel {
             }
         });
         c = new GridBagConstraints();
-        c.gridx = 6;
-        c.gridy = 0;
-        c.insets = new Insets(5, 0, 0, 5);
-        c.anchor = GridBagConstraints.EAST;
+        c.gridx = 0;
+        c.gridy = 1;
+        c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1.0;
+        c.gridwidth = 6;
         header.add(_textFilter, c);
         
 		panel.add(header, BorderLayout.PAGE_START);
