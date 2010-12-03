@@ -231,6 +231,7 @@ public class DeviceExplorer extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 			    _selectedFileType = type;
+			    _textFilter.clear();
 				_model.clear();
 				AndroidMediator.addActivity(new BrowseTask(_device, _model, type));
 			}

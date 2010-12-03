@@ -12,7 +12,7 @@ public class HintTextField extends JTextField implements FocusListener {
      * 
      */
     private static final long serialVersionUID = -3191287673317585610L;
-    
+
     private final String _hint;
     private Color _color;
     private Color _hintColor;
@@ -28,16 +28,16 @@ public class HintTextField extends JTextField implements FocusListener {
 
     @Override
     public void focusGained(FocusEvent e) {
-        if(this.getText().length() == 0) {
+        if (this.getText().length() == 0) {
             setForeground(_color);
             super.setText("");
         }
     }
+
     @Override
     public void focusLost(FocusEvent e) {
-        if(this.getText().length() == 0) {
-            setForeground(_hintColor);
-            super.setText(_hint);
+        if (this.getText().length() == 0) {
+            clear();
         }
     }
 
@@ -45,5 +45,10 @@ public class HintTextField extends JTextField implements FocusListener {
     public String getText() {
         String typed = super.getText();
         return typed.equals(_hint) ? "" : typed;
+    }
+
+    public void clear() {
+        setForeground(_hintColor);
+        super.setText(_hint);
     }
 }

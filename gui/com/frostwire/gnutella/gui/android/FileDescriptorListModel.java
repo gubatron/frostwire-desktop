@@ -67,16 +67,73 @@ public class FileDescriptorListModel extends AbstractListModel {
         if (_filterText == null || _filterText.trim().length() == 0) {
             _filterFileDescriptors.addAll(_fileDescriptors);
         } else {
-            String subString = _filterText.trim().toLowerCase();
+            String searchText = _filterText.trim().toLowerCase();
+            
             for (int i = 0; i < _fileDescriptors.size(); i++) {
                 FileDescriptor fileDescriptor = _fileDescriptors.get(i);
-                if (fileDescriptor.title.toLowerCase().indexOf(subString) != -1 ||
-                    fileDescriptor.artist.toLowerCase().indexOf(subString) != -1) {
+                
+                String title = fileDescriptor.title != null ? fileDescriptor.title.toLowerCase() : "";
+                String artist = fileDescriptor.artist != null ? fileDescriptor.artist.toLowerCase() : "";
+                String album = fileDescriptor.album != null ? fileDescriptor.album.toLowerCase() : "";
+                
+                boolean isSubString = title.contains(searchText)|| artist.contains(searchText) || album.contains(searchText);
+                
+                if (isSubString) {
                     _filterFileDescriptors.add(fileDescriptor);
+                }
+            }
+            
+            if (_filterFileDescriptors.size() == 0) {
+                
+                for (int i = 0; i < _fileDescriptors.size(); i++) {
+                    FileDescriptor fileDescriptor = _fileDescriptors.get(i);
+                    
+                    String title = fileDescriptor.title != null ? fileDescriptor.title.toLowerCase() : "";
+                    String artist = fileDescriptor.artist != null ? fileDescriptor.artist.toLowerCase() : "";
+                    String album = fileDescriptor.album != null ? fileDescriptor.album.toLowerCase() : "";
+                    
+                    if (pseudoMatch(title, searchText) &&
+                        pseudoMatch(artist, searchText) &&
+                        pseudoMatch(album, searchText)) {
+                        _filterFileDescriptors.add(fileDescriptor);
+                    }
+                }
+            }
+            
+            if (_filterFileDescriptors.size() == 0) {
+                
+                for (int i = 0; i < _fileDescriptors.size(); i++) {
+                    FileDescriptor fileDescriptor = _fileDescriptors.get(i);
+                    
+                    String title = fileDescriptor.title != null ? fileDescriptor.title.toLowerCase() : "";
+                    String artist = fileDescriptor.artist != null ? fileDescriptor.artist.toLowerCase() : "";
+                    String album = fileDescriptor.album != null ? fileDescriptor.album.toLowerCase() : "";
+                    
+                    if (pseudoMatch(title, searchText) ||
+                        pseudoMatch(artist, searchText) ||
+                        pseudoMatch(album, searchText)) {
+                        _filterFileDescriptors.add(fileDescriptor);
+                    }
                 }
             }
         }
         
         fireContentsChanged (this, 0, getSize());
+    }
+
+    private boolean pseudoMatch(String text, String searchText) {
+        if (text == null || text.length() == 0) {
+            return false;
+        }
+        
+        String[] tokens = searchText.split(" ");
+        
+        for (int i = 0; i < tokens.length; i++) {
+            if (text.contains(tokens[i])) {
+                return true;
+            }
+        }
+        
+        return false;
     }
 }
