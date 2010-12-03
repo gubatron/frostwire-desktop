@@ -40,7 +40,6 @@ import org.pushingpixels.flamingo.api.bcb.core.BreadcrumbFileSelector;
 import com.frostwire.GuiFrostWireUtils;
 import com.frostwire.gnutella.gui.android.LocalFileListModel.OnRootListener;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.search.SharedSearchResult;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 public class DesktopExplorer extends JPanel {
@@ -53,11 +52,11 @@ public class DesktopExplorer extends JPanel {
     private JButton _buttonRefresh;
     private JButton _buttonViewThumbnail;
     private JButton _buttonViewList;
-    private JButton _buttonFavoriteSaved;
-    private JButton _buttonFavoriteDocuments;
-    private JButton _buttonFavoriteMusic;
-    private JButton _buttonFavoritePictures;
-    private JButton _buttonFavoriteVideos;
+//    private JButton _buttonFavoriteSaved;
+//    private JButton _buttonFavoriteDocuments;
+//    private JButton _buttonFavoriteMusic;
+//    private JButton _buttonFavoritePictures;
+//    private JButton _buttonFavoriteVideos;
     private JLabel _labelSort;
     private JComboBox _comboBoxSort;
     private BreadcrumbFileSelector _breadcrumb;
@@ -99,7 +98,7 @@ public class DesktopExplorer extends JPanel {
         _documentsFolder = new File(root, "Documents");
         _musicFolder = new File(root, "Music");
         _picturesFolder = new File(root, "Pictures");
-        _videosFolder = new File(root, "Videos");
+        _videosFolder = new File(root, OSUtils.isMacOSX() ? "Movies" : "Videos");
 
         setupUI();
         setSelectedFolder(SharingSettings.DIRECTORY_FOR_OPEN_DESKTOP_EXPLORER.getValue());
@@ -313,20 +312,11 @@ public class DesktopExplorer extends JPanel {
 
         _toolBar.addSeparator();
 
-        _buttonFavoriteSaved = setupButtonFavorite(_savedFolder, I18n.tr("Saved"), "folder_32");
-        _toolBar.add(_buttonFavoriteSaved);
-        
-        _buttonFavoriteDocuments = setupButtonFavorite(DeviceConstants.FILE_TYPE_DOCUMENTS, _documentsFolder, I18n.tr("Documents"));
-        _toolBar.add(_buttonFavoriteDocuments);
-        
-        _buttonFavoriteMusic = setupButtonFavorite(DeviceConstants.FILE_TYPE_AUDIO, _musicFolder, I18n.tr("Music"));
-        _toolBar.add(_buttonFavoriteMusic);
-
-        _buttonFavoritePictures = setupButtonFavorite(DeviceConstants.FILE_TYPE_PICTURES, _picturesFolder, I18n.tr("Pictures"));
-        _toolBar.add(_buttonFavoritePictures);
-
-        _buttonFavoriteVideos = setupButtonFavorite(DeviceConstants.FILE_TYPE_VIDEOS, _videosFolder, I18n.tr("Videos"));
-        _toolBar.add(_buttonFavoriteVideos);
+        setupButtonFavorite(_toolBar, _savedFolder, I18n.tr("Saved"), "folder_32");
+        setupButtonFavorite(_toolBar, DeviceConstants.FILE_TYPE_DOCUMENTS, _documentsFolder, I18n.tr("Documents"));
+        setupButtonFavorite(_toolBar, DeviceConstants.FILE_TYPE_AUDIO, _musicFolder, I18n.tr("Music"));
+        setupButtonFavorite(_toolBar, DeviceConstants.FILE_TYPE_PICTURES, _picturesFolder, I18n.tr("Pictures"));
+        setupButtonFavorite(_toolBar, DeviceConstants.FILE_TYPE_VIDEOS, _videosFolder, I18n.tr("Videos"));
         
         _toolBar.addSeparator();
 
@@ -486,12 +476,14 @@ public class DesktopExplorer extends JPanel {
         _list.add(_scrollName);
     }
 
-    private JButton setupButtonFavorite(int type, final File path, String tooltip) {
-        
-        return setupButtonFavorite(path, tooltip, new UITool().getImageNameByFileType(type));
+    private JButton setupButtonFavorite(JToolBar toolbar, int type, final File path, String tooltip) {
+        return setupButtonFavorite(toolbar, path, tooltip, new UITool().getImageNameByFileType(type));
     }
     
-    private JButton setupButtonFavorite(final File path, String tooltip, String imageName) {
+    private JButton setupButtonFavorite(JToolBar toolbar, final File path, String tooltip, String imageName) {
+        if (!path.exists()) {
+            return null;
+        }
         Image image = new UITool().loadImage(imageName).getScaledInstance(18, 18, Image.SCALE_SMOOTH);
         Dimension size = new Dimension(28, 28);
         JButton button = new JButton();
@@ -508,6 +500,7 @@ public class DesktopExplorer extends JPanel {
                 setSelectedFolder(path);
             }
         });
+        toolbar.add(button);
         return button;
     }
 
