@@ -57,20 +57,13 @@ public class AndroidMediator implements ThemeObserver {
     }
 
 	protected void setupUI() {
-		
-		MAIN_PANEL = new JPanel(new BorderLayout());
+		DEVICE_BAR = new DeviceBar();
 		DESKTOP_EXPLORER = new DesktopExplorer();
 		DEVICE_EXPLORER = new DeviceExplorer();
-		DEVICE_BAR = new DeviceBar();
 		PROGRESS_PANEL = new ProgressPanel();
-		
-		MAIN_PANEL.add(DEVICE_BAR, BorderLayout.PAGE_START);
-		
-		//up and down
-		SPLIT_PANE = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
-		SPLIT_PANE.setAutoscrolls(true);
-		SPLIT_PANE.setDividerSize(4);
 
+		MAIN_PANEL = new JPanel(new BorderLayout());
+		MAIN_PANEL.add(DEVICE_BAR, BorderLayout.PAGE_START);
 		
 		EXPLORERS_CONTAINER = new JPanel(new GridBagLayout());
 
@@ -81,26 +74,29 @@ public class AndroidMediator implements ThemeObserver {
 		c.weightx = 99;
 		c.weighty=1.0;
 		c.anchor=GridBagConstraints.NORTHWEST;
-		
-		//DESKTOP_EXPLORER.setMinimumSize(new Dimension(700,700));
-
 		EXPLORERS_CONTAINER.add(DESKTOP_EXPLORER, c);
 		
+		//up and down
+		SPLIT_PANE = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+		SPLIT_PANE.setAutoscrolls(true);
+		SPLIT_PANE.setDividerSize(4);
+		SPLIT_PANE.add(DEVICE_EXPLORER);
+		SPLIT_PANE.add(PROGRESS_PANEL);
+		
 		c = new GridBagConstraints();
-		c.gridx=GridBagConstraints.RELATIVE;
+		c.gridx=1;//GridBagConstraints.RELATIVE;
 		c.gridy=0;
 		c.weightx=0;
 		c.gridwidth=GridBagConstraints.REMAINDER;
 		c.fill=GridBagConstraints.VERTICAL;
 		c.anchor=GridBagConstraints.EAST;
-		c.weightx = 1;
+		c.weightx = 0.1;
 		c.weighty=1.0;
-		EXPLORERS_CONTAINER.add(DEVICE_EXPLORER,c);
 
-		SPLIT_PANE.add(EXPLORERS_CONTAINER);
-		SPLIT_PANE.add(PROGRESS_PANEL);
+		EXPLORERS_CONTAINER.add(SPLIT_PANE,c);
 
-		MAIN_PANEL.add(SPLIT_PANE,BorderLayout.CENTER);
+		MAIN_PANEL.add(EXPLORERS_CONTAINER,BorderLayout.CENTER);
+		SPLIT_PANE.setDividerLocation(500);
 	}
 
 	@Override
