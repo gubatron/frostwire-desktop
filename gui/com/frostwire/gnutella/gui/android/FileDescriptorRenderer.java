@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,8 +56,14 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 	
 	private FileDescriptor _fileDescriptor;
 	
+	private JList _list;
+	private int _index;
+	
+	
 	public FileDescriptorRenderer() {
 		setupUI();
+		_index=-1;
+		_list = null;
 	}
 
 	@Override
@@ -64,6 +71,9 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 		setComponentOrientation(list.getComponentOrientation());
 		
 		_fileDescriptor = (FileDescriptor) value;
+		
+		_list = list;
+		_index = index;
 		
 		if (isSelected) {
 		    setBackground(COLOR_LIGHTER_BLUE);
@@ -210,7 +220,31 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 		
 		Device device = AndroidMediator.instance().getDeviceBar().getSelectedDevice();
 		File path = AndroidMediator.instance().getDesktopExplorer().getSelectedFolder();
-		List<FileDescriptor> fileDescriptors = AndroidMediator.instance().getDeviceExplorer().getSelectedFileDescriptors();
+		
+		List<FileDescriptor> fileDescriptors=null;
+		
+		int[] selectedIndices = _list.getSelectedIndices();
+		boolean clickedInsideSelectedIndices=false;
+		
+		for (int i=0; i < selectedIndices.length; i++) {
+			if (selectedIndices[i] == _index) {
+				clickedInsideSelectedIndices = true;
+				break;
+			}
+		}
+		
+		//clicked one of the selected elements, or the selected element.
+		if (clickedInsideSelectedIndices) {
+			fileDescriptors = AndroidMediator.instance().getDeviceExplorer().getSelectedFileDescriptors();
+		} 
+		//there were elements selected but clicked on one outside.
+		else {
+			fileDescriptors = new ArrayList<FileDescriptor>(1);
+			fileDescriptors.add((FileDescriptor) _list.getModel().getElementAt(_index));
+			_list.clearSelection();
+			_list.setSelectedIndex(_index);
+		}
+		
 		if (device != null && path != null && _fileDescriptor != null) {
 			AndroidMediator.addActivity(new CopyToDesktopTask(device, path, fileDescriptors.toArray(new FileDescriptor[0])));
 		}

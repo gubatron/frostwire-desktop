@@ -84,7 +84,7 @@ public class AndroidMediator implements ThemeObserver {
 		SPLIT_PANE.add(PROGRESS_PANEL);
 		
 		c = new GridBagConstraints();
-		c.gridx=1;//GridBagConstraints.RELATIVE;
+		c.gridx=GridBagConstraints.RELATIVE;
 		c.gridy=0;
 		c.weightx=0;
 		c.gridwidth=GridBagConstraints.REMAINDER;
