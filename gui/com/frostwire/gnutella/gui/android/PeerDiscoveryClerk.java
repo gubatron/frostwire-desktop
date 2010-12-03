@@ -188,6 +188,7 @@ public class PeerDiscoveryClerk {
 
             Finger finger = _jsonEngine.toObject(json, Finger.class);
 
+            //gubs: HA!, I thought I'd never see the day of you using a synchronized block :)
             synchronized (_deviceCache) {
                 if (_deviceCache.containsKey(key)) {
                     Device device = _deviceCache.get(key);
