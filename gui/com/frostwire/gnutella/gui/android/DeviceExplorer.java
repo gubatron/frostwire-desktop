@@ -251,7 +251,7 @@ public class DeviceExplorer extends JPanel {
 	
 	private void refreshBrowseButton(ImageRadioButton button, int numShared) {
 	    button.setText(String.valueOf(numShared));
-	    if (numShared == 0 && button.isSelected()) {
+	    if (numShared == 0 && button.isSelected() && _model.getSize() > 0) {
 	        _model.clear();
 	    }
 	}

@@ -21,6 +21,8 @@ public class ImageRadioButton extends JRadioButton {
     private Icon _icon;
     private Icon _pressedIcon;
     private Icon _selectedIcon;
+    
+    private String _imageText;
 
     public ImageRadioButton() {
         setupUI();
@@ -55,6 +57,10 @@ public class ImageRadioButton extends JRadioButton {
      */
     @Override
     public void setText(String text) {
+        if (_imageText != null && _imageText.equals(text)) {
+            return;
+        }
+        _imageText = text;
         BufferedImage textImage = buildTextImage(text);
         setCompositeIcon(textImage);
         setCompositePressedIcon(textImage);

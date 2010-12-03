@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -22,6 +23,7 @@ public class DeviceBar extends JPanel {
 	private static final long serialVersionUID = -6886611714952957959L;
 	
 	private Map<Device, DeviceButton> _buttons;
+	private ButtonGroup _buttonGroup;
 	private MyOnActionFailedListener _deviceListener;
 	private MyMouseAdapter _mouseAdapter;
 	
@@ -29,6 +31,7 @@ public class DeviceBar extends JPanel {
 	
 	public DeviceBar() {
 	    _buttons = new HashMap<Device, DeviceButton>();
+	    _buttonGroup = new ButtonGroup();
         _deviceListener = new MyOnActionFailedListener();
         _mouseAdapter = new MyMouseAdapter();
         
@@ -42,6 +45,7 @@ public class DeviceBar extends JPanel {
 		DeviceButton button = new DeviceButton(device);
 		button.addMouseListener(_mouseAdapter);
 		_buttons.put(device, button);
+		_buttonGroup.add(button);
 		add(button);
 		revalidate();
 		
@@ -55,8 +59,6 @@ public class DeviceBar extends JPanel {
 		    return;
 		}
 				
-		button.getDevice().setFinger(device.getFinger());
-
 		button.refresh();
 		revalidate();
 		if (button.getDevice().equals(_selectedDevice)) {
@@ -75,6 +77,7 @@ public class DeviceBar extends JPanel {
 			}
 
 			button.setVisible(false);
+			_buttonGroup.remove(button);
 			remove(button);
 			revalidate();
 			
