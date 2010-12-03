@@ -30,6 +30,7 @@ import javax.swing.JToolBar;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 
+import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 import org.pushingpixels.flamingo.api.bcb.BreadcrumbItem;
 import org.pushingpixels.flamingo.api.bcb.BreadcrumbPathEvent;
@@ -51,12 +52,11 @@ public class DesktopExplorer extends JPanel {
     private JButton _buttonRefresh;
     private JButton _buttonViewThumbnail;
     private JButton _buttonViewList;
-    private JButton _buttonFavoriteApplications;
+    private JButton _buttonFavoriteSaved;
     private JButton _buttonFavoriteDocuments;
+    private JButton _buttonFavoriteMusic;
     private JButton _buttonFavoritePictures;
     private JButton _buttonFavoriteVideos;
-    private JButton _buttonFavoriteRingtones;
-    private JButton _buttonFavoriteAudio;
     private JLabel _labelSort;
     private JComboBox _comboBoxSort;
     private BreadcrumbFileSelector _breadcrumb;
@@ -74,7 +74,13 @@ public class DesktopExplorer extends JPanel {
 
     private LocalFileListModel _model;
     private int _selectedIndexToRename;
-
+    
+    private File _shareFolder;
+    private File _documentsFolder;
+    private File _musicFolder;
+    private File _picturesFolder;
+    private File _videosFolder;
+    
     public DesktopExplorer() {
 
         _model = new LocalFileListModel();
@@ -86,13 +92,16 @@ public class DesktopExplorer extends JPanel {
         });
 
         _selectedIndexToRename = -1;
+        
+        File root = CommonUtils.getUserHomeDir();
+        _shareFolder = SharingSettings.DEFAULT_SAVE_DIR;
+        _documentsFolder = new File(root, "Documents");
+        _musicFolder = new File(root, "Music");
+        _picturesFolder = new File(root, "Pictures");
+        _videosFolder = new File(root, "Videos");
 
         setupUI();
-        setSelectedFolder(SharingSettings.getDeviceFilesDirectory()); // guarantee
-                                                                      // the
-                                                                      // creation
-                                                                      // of
-                                                                      // files
+        setSelectedFolder(_shareFolder);
     }
 
     public File getSelectedFolder() {
@@ -145,13 +154,13 @@ public class DesktopExplorer extends JPanel {
     protected void buttonViewThumbnail_mousePressed(MouseEvent e) {
         cancelEdit();
         _list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-        _list.setPrototypeCellValue(new LocalFile(SharingSettings.getDeviceFilesDirectory()));
+        _list.setPrototypeCellValue(new LocalFile(_shareFolder));
     }
 
     protected void buttonViewList_mousePressed(MouseEvent e) {
         cancelEdit();
         _list.setLayoutOrientation(JList.VERTICAL);
-        _list.setPrototypeCellValue(new LocalFile(SharingSettings.getDeviceFilesDirectory()));
+        _list.setPrototypeCellValue(new LocalFile(_shareFolder));
     }
 
     protected void comboBoxSort_actionPerformed(ActionEvent e) {
@@ -301,23 +310,21 @@ public class DesktopExplorer extends JPanel {
 
         _toolBar.addSeparator();
 
-        _buttonFavoriteApplications = setupButtonFavorite(DeviceConstants.FILE_TYPE_APPLICATIONS, SharingSettings.DEVICE_APPLICATIONS_FILES_DIR);
-        _toolBar.add(_buttonFavoriteApplications);
-
-        _buttonFavoriteDocuments = setupButtonFavorite(DeviceConstants.FILE_TYPE_DOCUMENTS, SharingSettings.DEVICE_DOCUMENTS_FILES_DIR);
+        _buttonFavoriteSaved = setupButtonFavorite(_shareFolder, I18n.tr("Saved"), "folder_32");
+        _toolBar.add(_buttonFavoriteSaved);
+        
+        _buttonFavoriteDocuments = setupButtonFavorite(DeviceConstants.FILE_TYPE_DOCUMENTS, _documentsFolder, I18n.tr("Documents"));
         _toolBar.add(_buttonFavoriteDocuments);
+        
+        _buttonFavoriteMusic = setupButtonFavorite(DeviceConstants.FILE_TYPE_AUDIO, _musicFolder, I18n.tr("Music"));
+        _toolBar.add(_buttonFavoriteMusic);
 
-        _buttonFavoritePictures = setupButtonFavorite(DeviceConstants.FILE_TYPE_PICTURES, SharingSettings.DEVICE_PICTURES_FILES_DIR);
+        _buttonFavoritePictures = setupButtonFavorite(DeviceConstants.FILE_TYPE_PICTURES, _picturesFolder, I18n.tr("Pictures"));
         _toolBar.add(_buttonFavoritePictures);
 
-        _buttonFavoriteVideos = setupButtonFavorite(DeviceConstants.FILE_TYPE_VIDEOS, SharingSettings.DEVICE_VIDEO_FILES_DIR);
+        _buttonFavoriteVideos = setupButtonFavorite(DeviceConstants.FILE_TYPE_VIDEOS, _videosFolder, I18n.tr("Videos"));
         _toolBar.add(_buttonFavoriteVideos);
-
-        _buttonFavoriteRingtones = setupButtonFavorite(DeviceConstants.FILE_TYPE_RINGTONES, SharingSettings.DEVICE_RINGTONES_FILES_DIR);
-        _toolBar.add(_buttonFavoriteRingtones);
-
-        _buttonFavoriteAudio = setupButtonFavorite(DeviceConstants.FILE_TYPE_AUDIO, SharingSettings.DEVICE_AUDIO_FILES_DIR);
-        _toolBar.add(_buttonFavoriteAudio);
+        
         _toolBar.addSeparator();
 
         _labelSort = new JLabel();
@@ -374,7 +381,7 @@ public class DesktopExplorer extends JPanel {
         _list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
         _list.setDragEnabled(true);
         _list.setTransferHandler(new DesktopListTransferHandler());
-        _list.setPrototypeCellValue(new LocalFile(SharingSettings.getDeviceFilesDirectory()));
+        _list.setPrototypeCellValue(new LocalFile(_shareFolder));
         _list.setVisibleRowCount(-1);
 
         _popupList = new JPopupMenu();
@@ -476,15 +483,20 @@ public class DesktopExplorer extends JPanel {
         _list.add(_scrollName);
     }
 
-    private JButton setupButtonFavorite(int type, final File path) {
-        UITool imageTool = new UITool();
-        Image image = imageTool.loadImage(imageTool.getImageNameByFileType(type)).getScaledInstance(18, 18, Image.SCALE_SMOOTH);
+    private JButton setupButtonFavorite(int type, final File path, String tooltip) {
+        
+        return setupButtonFavorite(path, tooltip, new UITool().getImageNameByFileType(type));
+    }
+    
+    private JButton setupButtonFavorite(final File path, String tooltip, String imageName) {
+        Image image = new UITool().loadImage(imageName).getScaledInstance(18, 18, Image.SCALE_SMOOTH);
         Dimension size = new Dimension(28, 28);
         JButton button = new JButton();
         button.setPreferredSize(size);
         button.setMinimumSize(size);
         button.setMaximumSize(size);
         button.setSize(size);
+        button.setToolTipText(tooltip);
         button.setIcon(new ImageIcon(image));
         button.addMouseListener(new MouseAdapter() {
             @Override
@@ -548,6 +560,14 @@ public class DesktopExplorer extends JPanel {
             for (int index = 0; index < selectedIndices.length; index++) {
                 LocalFile localFile = (LocalFile) _model.getElementAt(selectedIndices[index]);
                 if (localFile != null) {
+                    
+                    JComponent dialogParent = AndroidMediator.instance().getComponent();
+                    
+                    if (localFile.getFile().isDirectory() && localFile.getFile().list().length > 0) {
+                        JOptionPane.showMessageDialog(dialogParent, I18n.tr("Can't delete not empty folder"), I18n.tr("System"), JOptionPane.INFORMATION_MESSAGE);
+                        break;
+                    }
+                    
                     boolean success;
                     try {
                         success = localFile.getFile().delete();
@@ -556,7 +576,6 @@ public class DesktopExplorer extends JPanel {
                     }
 
                     if (!success) {
-                        JComponent dialogParent = AndroidMediator.instance().getComponent();
                         JOptionPane.showMessageDialog(dialogParent, I18n.tr("Error deleting file"), I18n.tr("System"), JOptionPane.INFORMATION_MESSAGE);
                         break;
                     }
