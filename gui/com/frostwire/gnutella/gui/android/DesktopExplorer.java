@@ -40,6 +40,7 @@ import org.pushingpixels.flamingo.api.bcb.core.BreadcrumbFileSelector;
 import com.frostwire.GuiFrostWireUtils;
 import com.frostwire.gnutella.gui.android.LocalFileListModel.OnRootListener;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.search.SharedSearchResult;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 public class DesktopExplorer extends JPanel {
@@ -75,7 +76,7 @@ public class DesktopExplorer extends JPanel {
     private LocalFileListModel _model;
     private int _selectedIndexToRename;
     
-    private File _shareFolder;
+    private File _savedFolder;
     private File _documentsFolder;
     private File _musicFolder;
     private File _picturesFolder;
@@ -94,14 +95,14 @@ public class DesktopExplorer extends JPanel {
         _selectedIndexToRename = -1;
         
         File root = CommonUtils.getUserHomeDir();
-        _shareFolder = SharingSettings.DEFAULT_SAVE_DIR;
+        _savedFolder = SharingSettings.DEFAULT_SAVE_DIR;
         _documentsFolder = new File(root, "Documents");
         _musicFolder = new File(root, "Music");
         _picturesFolder = new File(root, "Pictures");
         _videosFolder = new File(root, "Videos");
 
         setupUI();
-        setSelectedFolder(_shareFolder);
+        setSelectedFolder(SharingSettings.DIRECTORY_FOR_OPEN_DESKTOP_EXPLORER.getValue());
     }
 
     public File getSelectedFolder() {
@@ -112,6 +113,7 @@ public class DesktopExplorer extends JPanel {
     public void setSelectedFolder(File path) {
         cancelEdit();
         _model.setRoot(path);
+        SharingSettings.DIRECTORY_FOR_OPEN_DESKTOP_EXPLORER.setValue(path);
     }
 
     public void refresh() {
@@ -136,6 +138,7 @@ public class DesktopExplorer extends JPanel {
             _model.setOnRootListener(null); // avoid infinite recursion
             _model.setRoot(path);
             _model.setOnRootListener(listener);
+            SharingSettings.DIRECTORY_FOR_OPEN_DESKTOP_EXPLORER.setValue(path);
         }
     }
 
@@ -154,13 +157,13 @@ public class DesktopExplorer extends JPanel {
     protected void buttonViewThumbnail_mousePressed(MouseEvent e) {
         cancelEdit();
         _list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-        _list.setPrototypeCellValue(new LocalFile(_shareFolder));
+        _list.setPrototypeCellValue(new LocalFile(_savedFolder));
     }
 
     protected void buttonViewList_mousePressed(MouseEvent e) {
         cancelEdit();
         _list.setLayoutOrientation(JList.VERTICAL);
-        _list.setPrototypeCellValue(new LocalFile(_shareFolder));
+        _list.setPrototypeCellValue(new LocalFile(_savedFolder));
     }
 
     protected void comboBoxSort_actionPerformed(ActionEvent e) {
@@ -310,7 +313,7 @@ public class DesktopExplorer extends JPanel {
 
         _toolBar.addSeparator();
 
-        _buttonFavoriteSaved = setupButtonFavorite(_shareFolder, I18n.tr("Saved"), "folder_32");
+        _buttonFavoriteSaved = setupButtonFavorite(_savedFolder, I18n.tr("Saved"), "folder_32");
         _toolBar.add(_buttonFavoriteSaved);
         
         _buttonFavoriteDocuments = setupButtonFavorite(DeviceConstants.FILE_TYPE_DOCUMENTS, _documentsFolder, I18n.tr("Documents"));
@@ -381,7 +384,7 @@ public class DesktopExplorer extends JPanel {
         _list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
         _list.setDragEnabled(true);
         _list.setTransferHandler(new DesktopListTransferHandler());
-        _list.setPrototypeCellValue(new LocalFile(_shareFolder));
+        _list.setPrototypeCellValue(new LocalFile(_savedFolder));
         _list.setVisibleRowCount(-1);
 
         _popupList = new JPopupMenu();

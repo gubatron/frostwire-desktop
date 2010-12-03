@@ -123,6 +123,12 @@ public class SharingSettings extends LimeProps {
      */    
     public static final BooleanSetting CLEAR_DOWNLOAD =
         FACTORY.createBooleanSetting("CLEAR_DOWNLOAD", false);
+    
+    /**
+     * Initial directory for open desktop explorer.
+     */
+    public static final FileSetting DIRECTORY_FOR_OPEN_DESKTOP_EXPLORER = 
+        FACTORY.createFileSetting("DIRECTORY_FOR_OPEN_DESKTOP_EXPLORER", DEFAULT_SAVE_DIR).setAlwaysSave(true);
         
     
     /**
