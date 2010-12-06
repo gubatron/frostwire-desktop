@@ -7,6 +7,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -112,8 +113,9 @@ public class SlideshowPanel extends JPanel {
         Slide slide = null;
         
         if (_currentSlideIndex == -1) {
+            _currentSlideIndex = new Random(System.currentTimeMillis()).nextInt(_slides.size());
             try {
-                ImageCache.getInstance().getImage(new URL(_slides.get(0).imageSrc), new OnLoadedListener() {
+                ImageCache.getInstance().getImage(new URL(_slides.get(_currentSlideIndex).imageSrc), new OnLoadedListener() {
                     public void onLoaded(URL url, BufferedImage image, boolean fromCache) {
                         _currentImage = image;
                         repaint();
@@ -121,7 +123,6 @@ public class SlideshowPanel extends JPanel {
                 });
             } catch (MalformedURLException e) {
             }
-            _currentSlideIndex = 0;
         } else {
             slide = _slides.get(_currentSlideIndex);
             if (slide.duration + _lastSlideLoaded + _transitionTime < System.currentTimeMillis()) {
