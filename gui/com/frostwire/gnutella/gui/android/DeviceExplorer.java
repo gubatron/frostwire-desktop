@@ -21,6 +21,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 
 import com.frostwire.gnutella.gui.ImagePanel;
+import com.frostwire.gnutella.gui.SlideshowPanel;
 
 public class DeviceExplorer extends JPanel {
 
@@ -28,6 +29,8 @@ public class DeviceExplorer extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = -6716798921645948528L;
+	
+	private static final String SLIDESHOW_JSON_URL = "http://localhost/~atorres/slides.php";
 	
 	private static final String DEVICE = "device";
 	private static final String NO_DEVICE = "no-device";
@@ -117,7 +120,7 @@ public class DeviceExplorer extends JPanel {
         setLayout(new CardLayout());
         
         _panelDevice = setupPanelDevice();
-        _panelNoDevice = new NoDevicePanel();
+        _panelNoDevice = new SlideshowPanel(SLIDESHOW_JSON_URL);
         
         add(_panelDevice, DEVICE);
         add(_panelNoDevice, NO_DEVICE);

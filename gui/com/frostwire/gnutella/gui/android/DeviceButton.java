@@ -110,17 +110,10 @@ public class DeviceButton extends JRadioButton {
             URL url = new URL(IMAGES_URL + _device.getFinger().deviceManufacturer.toLowerCase() + "/" + name);
             
             BufferedImage image = ImageCache.getInstance().getImage(url, new OnLoadedListener() {
-                public void onLoaded(URL url, BufferedImage image) {
+                public void onLoaded(URL url, BufferedImage image, boolean fromCache) {
                     buildImages(image);
                     setImage();
                 }
-
-				@Override
-				public void wasAlreadyCached(URL cachedFileURL,
-						BufferedImage image) {
-					buildImages(image);
-		            setImage();
-				}
             });
             
             //In the meantime show the default image

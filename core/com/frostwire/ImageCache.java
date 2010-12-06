@@ -32,7 +32,7 @@ public class ImageCache {
     public BufferedImage getImage(URL url, OnLoadedListener listener) {
         if (isCached(url)) {
         	BufferedImage result = loadFromCache(url);
-        	listener.wasAlreadyCached(getCachedFileURL(url), result);
+        	listener.onLoaded(url, result, true);
             return result;
         } else if (!url.getProtocol().equals("http")) {
             return loadFromResource(url);
@@ -113,7 +113,7 @@ public class ImageCache {
                         saveToCache(url, image, date);
                     }
                     if (listener != null && image != null) {
-                        listener.onLoaded(url, image);
+                        listener.onLoaded(url, image, false);
                     }
                 } catch (URISyntaxException e) {
                 } catch (IOException e) {
@@ -146,10 +146,10 @@ public class ImageCache {
     }
 
     public interface OnLoadedListener {
-    	/** This is called in the event that the image was downloaded and cached*/
-        public void onLoaded(URL url, BufferedImage image);
-
-        /** This is called in the event that the image was already cached */
-		public void wasAlreadyCached(URL cachedFileURL, BufferedImage imageFromCache);
+    	
+        /**
+    	 * This is called in the event that the image was downloaded and cached
+    	 */
+        public void onLoaded(URL url, BufferedImage image, boolean fromCache);
     }
 }
