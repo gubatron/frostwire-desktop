@@ -43,6 +43,7 @@ public class SlideshowPanel extends JPanel {
 					_currentSlide = (_currentSlide+1) % _slides.size();
 					Slide nextSlide = _slides.get(_currentSlide);
 					_transition.start(currentSlide, nextSlide, SlideshowPanel.this);
+					_lastSlideLoaded = System.currentTimeMillis();
 				}
 				
 			}
