@@ -106,6 +106,11 @@ public class ImageCache {
                     String userAgent = "FrostWire/" + OSUtils.getOS() + "/" + LimeWireUtils.getLimeWireVersion();
                     HttpFetcher fetcher = new HttpFetcher(url.toURI(), userAgent);
                     Object[] result = fetcher.fetch(false);
+                    
+                    if (result == null) {
+                    	throw new IOException("HttpFetcher.fetch() got nothing at " + url.toString());
+                    }
+                    
                     byte[] data = (byte[]) result[0];
                     long date = (Long) result[1];
                     if (data != null) {
