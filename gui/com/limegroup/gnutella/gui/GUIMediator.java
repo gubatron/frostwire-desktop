@@ -1616,11 +1616,7 @@ public final class GUIMediator {
 		try {
 			return Launcher.openURL(url);
 		} catch (IOException ioe) {
-			GUIMediator
-					.showError(I18n
-							.tr(
-									"FrostWire could not locate your web browser to display the following webpage: {0}.",
-									url));
+			GUIMediator.showError(I18n.tr("FrostWire could not locate your web browser to display the following webpage: {0}.", url));
 			return -1;
 		}
 	}
@@ -2044,8 +2040,7 @@ public final class GUIMediator {
 	public void openTorrentMagnet(final String request) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				GUIMediator
-						.setSplashScreenString("Fetching .torrent from the DHT...");
+				GUIMediator.setSplashScreenString("Fetching .torrent from the DHT...");
 			}
 		});
 
@@ -2056,36 +2051,26 @@ public final class GUIMediator {
 
 					final CountDownLatch signal = new CountDownLatch(1);
 
-					TorrentDownloader downloader = TorrentDownloaderFactory
-							.create(
+					TorrentDownloader downloader = TorrentDownloaderFactory.create(
 									new TorrentDownloaderCallBackInterface() {
-
-										@Override
-										public void TorrentDownloaderEvent(
-												int state, TorrentDownloader inf) {
-
+										public void TorrentDownloaderEvent(int state, TorrentDownloader inf) {
 											if (state == TorrentDownloader.STATE_FINISHED) {
 												signal.countDown();
-												GUIMediator.instance()
-														.getStatusLine()
-														.setStatusText("Done");
+												GUIMediator.instance().getStatusLine().setStatusText("Done");
 											}
 										}
 									}, request, null,
-									SharingSettings.DEFAULT_SHARED_TORRENTS_DIR
-											.getCanonicalPath());
+									SharingSettings.DEFAULT_SHARED_TORRENTS_DIR.getCanonicalPath());
 
 					downloader.start();
 
 					if (!signal.await(1, TimeUnit.MINUTES))
-						throw new TimeoutException(
-								"Error downloading torrent magnet");
+						throw new TimeoutException("Error downloading torrent magnet");
 
 					GUIMediator.instance().openTorrent(downloader.getFile());
 				} catch (Exception e) {
 					throw new RuntimeException(e);
 				}
-
 			}
 		};
 

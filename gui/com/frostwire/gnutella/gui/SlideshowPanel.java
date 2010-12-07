@@ -1,6 +1,9 @@
 package com.frostwire.gnutella.gui;
 
+import java.awt.Cursor;
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -17,6 +20,7 @@ import com.frostwire.HttpFetcher;
 import com.frostwire.ImageCache;
 import com.frostwire.ImageCache.OnLoadedListener;
 import com.frostwire.json.JsonEngine;
+import com.limegroup.gnutella.gui.GUIMediator;
 
 public class SlideshowPanel extends JPanel {
 
@@ -26,6 +30,7 @@ public class SlideshowPanel extends JPanel {
     private static final long serialVersionUID = -1964953870003850981L;
 
     private List<Slide> _slides;
+    private boolean _randomStart;
     private int _currentSlideIndex;
     private BufferedImage _currentImage;
     private BufferedImage _lastImage;
@@ -45,9 +50,8 @@ public class SlideshowPanel extends JPanel {
      */
     private Timer _timer;
     
-    public SlideshowPanel(List<Slide> slides) {
-        _slides = slides;
-        _currentSlideIndex = -1;
+    public SlideshowPanel(List<Slide> slides, boolean randomStart) {
+        setup(slides, false);
     }
     
     public SlideshowPanel(String url) {
@@ -62,8 +66,8 @@ public class SlideshowPanel extends JPanel {
         byte[] jsonBytes = fetcher.fetch();
         
         if (jsonBytes != null) {
-            _slides = new JsonEngine().toObject(new String(jsonBytes), SlideList.class).slides;
-            _currentSlideIndex = -1;
+            SlideList slideList = new JsonEngine().toObject(new String(jsonBytes), SlideList.class);
+            setup(slideList.slides, slideList.randomStart);
         }
     }
     
@@ -84,6 +88,32 @@ public class SlideshowPanel extends JPanel {
         if (_transition == null && _currentImage != null) {
             g.drawImage(_currentImage, 0, 0, null);
         }
+    }
+    
+    private void setup(List<Slide> slides, boolean randomStart) {
+        _slides = slides;
+        _randomStart = randomStart;
+        _currentSlideIndex = -1;
+        setCursor(new Cursor(Cursor.HAND_CURSOR));
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                try {
+                    Slide slide = _slides.get(_currentSlideIndex);
+                    if (slide.url != null) {
+                        GUIMediator.openURL(slide.url);
+                    }
+                    if (slide.torrent != null) {
+                        if (slide.torrent.toLowerCase().startsWith("http")) {
+                            GUIMediator.instance().openTorrentURI(new URI(slide.torrent));
+                        } else if (slide.torrent.toLowerCase().startsWith("magnet:?")) {
+                            GUIMediator.instance().openTorrentMagnet(slide.torrent);
+                        }
+                    }
+                } catch (Exception ex) {
+                }
+            }
+        });
     }
 
     private void startAnimation() {
@@ -113,7 +143,11 @@ public class SlideshowPanel extends JPanel {
         Slide slide = null;
         
         if (_currentSlideIndex == -1) {
-            _currentSlideIndex = new Random(System.currentTimeMillis()).nextInt(_slides.size());
+            if (_randomStart) {
+                _currentSlideIndex = new Random(System.currentTimeMillis()).nextInt(_slides.size());
+            } else {
+                _currentSlideIndex = 0;
+            }
             try {
                 ImageCache.getInstance().getImage(new URL(_slides.get(_currentSlideIndex).imageSrc), new OnLoadedListener() {
                     public void onLoaded(URL url, BufferedImage image, boolean fromCache) {
