@@ -48,7 +48,12 @@ public class HintTextField extends JTextField implements FocusListener {
     }
 
     public void clear() {
-        setForeground(_hintColor);
-        super.setText(_hint);
+        if (isFocusOwner()) {
+            setForeground(_color);
+            super.setText("");
+        } else {
+            setForeground(_hintColor);
+            super.setText(_hint);
+        }
     }
 }

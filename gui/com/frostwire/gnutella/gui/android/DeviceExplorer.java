@@ -133,7 +133,7 @@ public class DeviceExplorer extends JPanel {
 	        _searchThread.interrupt();
 	    }
 	    
-	    final String text = _textFilter.getText();
+	    final String text = _textFilter.getText() + e.getKeyChar();
 	    _searchThread = new Thread(new Runnable() {
             public void run() {
                 _model.filter(text);
