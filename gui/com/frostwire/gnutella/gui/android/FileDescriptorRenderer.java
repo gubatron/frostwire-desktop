@@ -219,7 +219,7 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 	protected void buttonCopy_mouseReleased(MouseEvent e) {
 		
 		Device device = AndroidMediator.instance().getDeviceBar().getSelectedDevice();
-		File path = AndroidMediator.instance().getDesktopExplorer().getSelectedFolder();
+		File path = AndroidMediator.instance().getDesktopExplorer().getRootFolder();
 		
 		List<FileDescriptor> fileDescriptors=null;
 		

@@ -101,18 +101,24 @@ public class DesktopExplorer extends JPanel {
         _videosFolder = new File(root, OSUtils.isMacOSX() ? "Movies" : "Videos");
 
         setupUI();
-        setSelectedFolder(SharingSettings.DIRECTORY_FOR_OPEN_DESKTOP_EXPLORER.getValue());
+        setRootFolder(SharingSettings.DIRECTORY_FOR_OPEN_DESKTOP_EXPLORER.getValue());
     }
 
-    public File getSelectedFolder() {
+    public File getRootFolder() {
         cancelEdit();
         return _model.getRoot();
     }
 
-    public void setSelectedFolder(File path) {
+    public void setRootFolder(File path) {
         cancelEdit();
         _model.setRoot(path);
         SharingSettings.DIRECTORY_FOR_OPEN_DESKTOP_EXPLORER.setValue(path);
+    }
+    
+    public File getSelectedFolder() {
+        cancelEdit();
+        LocalFile localFile = (LocalFile) _list.getSelectedValue();
+        return localFile != null && localFile.getFile().isDirectory() ? localFile.getFile() : null; 
     }
 
     public void refresh() {
@@ -497,7 +503,7 @@ public class DesktopExplorer extends JPanel {
             @Override
             public void mouseReleased(MouseEvent e) {
                 cancelEdit();
-                setSelectedFolder(path);
+                setRootFolder(path);
             }
         });
         toolbar.add(button);
@@ -612,7 +618,7 @@ public class DesktopExplorer extends JPanel {
             LocalFile localFile = (LocalFile) _model.getElementAt(index);
             if (localFile != null) {
                 if (localFile.getFile().isDirectory()) {
-                    setSelectedFolder(localFile.getFile());
+                    setRootFolder(localFile.getFile());
                 } else {
                     GuiFrostWireUtils.launchFile(localFile.getFile());
                 }
@@ -624,7 +630,7 @@ public class DesktopExplorer extends JPanel {
         cancelEdit();
         File path = _model.getRoot().getParentFile();
         if (path != null) {
-            setSelectedFolder(path);
+            setRootFolder(path);
         }
     }
 

@@ -38,6 +38,9 @@ public class DesktopListTransferHandler extends TransferHandler {
         }
         
         File path = AndroidMediator.instance().getDesktopExplorer().getSelectedFolder();
+        if (path == null) {
+            path = AndroidMediator.instance().getDesktopExplorer().getRootFolder();
+        }
         if (path == null || !path.exists() || !path.isDirectory()) {
             return false;
         }

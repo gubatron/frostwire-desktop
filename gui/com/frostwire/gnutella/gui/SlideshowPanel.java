@@ -125,13 +125,25 @@ public class SlideshowPanel extends JPanel {
         _started = true;
         _lastSlideLoaded = 0;
         
-        _timer = new Timer();
-        _timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                tryMoveNext();
+        if (_slides.size() == 1) {
+            try {
+                ImageCache.getInstance().getImage(new URL(_slides.get(0).imageSrc), new OnLoadedListener() {
+                    public void onLoaded(URL url, BufferedImage image, boolean fromCache) {
+                        _currentImage = image;
+                        repaint();
+                    }
+                });
+            } catch (MalformedURLException e) {
             }
-        }, 0, 200); // Check every 200 milliseconds if we should trigger a transition
+        } else {
+            _timer = new Timer();
+            _timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    tryMoveNext();
+                }
+            }, 0, 200); // Check every 200 milliseconds if we should trigger a transition
+        }
     }
 
     private void tryMoveNext() {
