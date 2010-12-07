@@ -149,8 +149,8 @@ public class DeviceButton extends JRadioButton {
         }
         
         if (authorized) {
-            g.setColor(Color.GREEN);
-            g.drawOval(0, 0, 40, 40);
+            BufferedImage phoneAuthorized = new UITool().loadImage("phone_authorized");
+            g.drawImage(phoneAuthorized, 60, 10, null);
         }
         
         g.dispose();
