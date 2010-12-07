@@ -51,6 +51,8 @@ public class DeviceExplorer extends JPanel {
 	private JRadioButton _invisibleRadioButton;
 	private ButtonGroup _buttonGroup;	
 	private HintTextField _textFilter;
+	
+	private Thread _searchThread;
 
 	public DeviceExplorer() {
 		_model = new FileDescriptorListModel();
@@ -126,10 +128,19 @@ public class DeviceExplorer extends JPanel {
         add(_panelNoDevice, NO_DEVICE);
     }
 	
-	protected void textFilter_keyPressed(KeyEvent e) {
-	    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-           _model.filter(_textFilter.getText());
-        }
+	protected void textFilter_keyTyped(KeyEvent e) {
+	    if (_searchThread != null && !_searchThread.isInterrupted()) {
+	        _searchThread.interrupt();
+	    }
+	    
+	    final String text = _textFilter.getText();
+	    _searchThread = new Thread(new Runnable() {
+            public void run() {
+                _model.filter(text);
+            }
+        });
+	    _searchThread.setDaemon(true);
+	    _searchThread.start();
     }
 	
 	private JPanel setupPanelDevice() {
@@ -194,8 +205,8 @@ public class DeviceExplorer extends JPanel {
         _textFilter = new HintTextField("Type here to search");
         _textFilter.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyPressed(KeyEvent e) {
-                textFilter_keyPressed(e);
+            public void keyTyped(KeyEvent e) {
+                textFilter_keyTyped(e);
             }
         });
         c = new GridBagConstraints();

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.AbstractListModel;
+import javax.swing.SwingUtilities;
 
 public class FileDescriptorListModel extends AbstractListModel {
 
@@ -42,6 +43,11 @@ public class FileDescriptorListModel extends AbstractListModel {
         fireContentsChanged(this, index, index);
     }
 
+    /**
+     * This method is designed to be called by a no GUI thread.
+     * 
+     * @param filterText Text patter to perform the query search.
+     */
     public void filter(String filterText) {
         _filterText = filterText;
         refilter();
@@ -62,14 +68,29 @@ public class FileDescriptorListModel extends AbstractListModel {
     }
     
     private void refilter() {
+        
+        if (Thread.interrupted()) {
+            return;
+        }
+        
         _filterFileDescriptors.clear();
         
         if (_filterText == null || _filterText.trim().length() == 0) {
+            
+            if (Thread.interrupted()) {
+                return;
+            }
+            
             _filterFileDescriptors.addAll(_fileDescriptors);
         } else {
             String searchText = _filterText.trim().toLowerCase();
             
             for (int i = 0; i < _fileDescriptors.size(); i++) {
+                
+                if (Thread.interrupted()) {
+                    return;
+                }
+                
                 FileDescriptor fileDescriptor = _fileDescriptors.get(i);
                 
                 String title = fileDescriptor.title != null ? fileDescriptor.title.toLowerCase() : "";
@@ -86,6 +107,11 @@ public class FileDescriptorListModel extends AbstractListModel {
             if (_filterFileDescriptors.size() == 0) {
                 
                 for (int i = 0; i < _fileDescriptors.size(); i++) {
+                    
+                    if (Thread.interrupted()) {
+                        return;
+                    }
+                    
                     FileDescriptor fileDescriptor = _fileDescriptors.get(i);
                     
                     String title = fileDescriptor.title != null ? fileDescriptor.title.toLowerCase() : "";
@@ -103,6 +129,11 @@ public class FileDescriptorListModel extends AbstractListModel {
             if (_filterFileDescriptors.size() == 0) {
                 
                 for (int i = 0; i < _fileDescriptors.size(); i++) {
+                    
+                    if (Thread.interrupted()) {
+                        return;
+                    }
+                    
                     FileDescriptor fileDescriptor = _fileDescriptors.get(i);
                     
                     String title = fileDescriptor.title != null ? fileDescriptor.title.toLowerCase() : "";
@@ -118,10 +149,23 @@ public class FileDescriptorListModel extends AbstractListModel {
             }
         }
         
-        fireContentsChanged (this, 0, getSize());
+        if (Thread.interrupted()) {
+            return;
+        }
+        
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                fireContentsChanged(this, 0, getSize());
+            }
+        });
     }
 
     private boolean pseudoMatch(String text, String searchText) {
+        
+        if (Thread.interrupted()) {
+            return false;
+        }
+        
         if (text == null || text.length() == 0) {
             return false;
         }
@@ -129,6 +173,11 @@ public class FileDescriptorListModel extends AbstractListModel {
         String[] tokens = searchText.split(" ");
         
         for (int i = 0; i < tokens.length; i++) {
+            
+            if (Thread.interrupted()) {
+                return false;
+            }
+            
             if (text.contains(tokens[i])) {
                 return true;
             }
