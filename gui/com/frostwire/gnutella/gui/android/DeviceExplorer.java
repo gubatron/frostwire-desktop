@@ -133,7 +133,14 @@ public class DeviceExplorer extends JPanel {
 	        _searchThread.interrupt();
 	    }
 	    
-	    final String text = _textFilter.getText() + e.getKeyChar();
+	    String tempStr = _textFilter.getText();
+	    
+	    char ch = e.getKeyChar();	    
+	    if (Character.isLetterOrDigit(ch)) {
+	        tempStr += ch;
+	    }
+	    
+	    final String text = tempStr;
 	    _searchThread = new Thread(new Runnable() {
             public void run() {
                 _model.filter(text);
