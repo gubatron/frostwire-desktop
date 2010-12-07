@@ -100,7 +100,7 @@ public class Device {
 			
 			HttpFetcher fetcher = new HttpFetcher(uri);
 			
-			byte[] jsonBytes = fetcher.fetch();
+			byte[] jsonBytes = (byte[]) fetcher.fetch(true)[0];
 			
 			if (jsonBytes == null) {
 				notifyOnActionFailed(ACTION_BROWSE, null);

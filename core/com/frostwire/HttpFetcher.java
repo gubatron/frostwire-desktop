@@ -3,21 +3,32 @@ package com.frostwire;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
+import java.util.zip.GZIPInputStream;
 
 import org.apache.http.Header;
+import org.apache.http.HeaderElement;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpException;
 import org.apache.http.HttpHost;
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpRequestInterceptor;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpResponseInterceptor;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.params.HttpClientParams;
 import org.apache.http.entity.FileEntity;
+import org.apache.http.entity.HttpEntityWrapper;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
 import org.apache.http.impl.cookie.DateUtils;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
+import org.apache.http.protocol.HttpContext;
+import org.apache.http.util.EntityUtils;
 
 import com.limegroup.gnutella.http.HTTPHeaderName;
 
@@ -45,9 +56,35 @@ public class HttpFetcher {
 	    this(uri, "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506");
 	}
 	
-	public Object[] fetchWithDate() {
+	public Object[] fetch(boolean gzip) {
         
         DefaultHttpClient httpClient = new DefaultHttpClient();
+        
+        if (gzip) {
+            httpClient.addRequestInterceptor(new HttpRequestInterceptor() {
+                public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
+                    if (!request.containsHeader("Accept-Encoding")) {
+                        request.addHeader("Accept-Encoding", "gzip");
+                    }
+                }
+            });
+    
+            httpClient.addResponseInterceptor(new HttpResponseInterceptor() {
+                public void process(HttpResponse response, HttpContext context) throws HttpException, IOException {
+                    HttpEntity entity = response.getEntity();
+                    Header ceheader = entity.getContentEncoding();
+                    if (ceheader != null) {
+                        HeaderElement[] codecs = ceheader.getElements();
+                        for (int i = 0; i < codecs.length; i++) {
+                            if (codecs[i].getName().equalsIgnoreCase("gzip")) {
+                                response.setEntity(new GzipDecompressingEntity(response.getEntity()));
+                                return;
+                            }
+                        }
+                    }
+                }
+            });
+        }
 
 		HttpHost httpHost = new HttpHost(_uri.getHost(), _uri.getPort());
 		HttpGet httpGet = new HttpGet(_uri);
@@ -86,7 +123,12 @@ public class HttpFetcher {
             }
 			
 			if(response.getEntity() != null) {
-				response.getEntity().writeTo(baos);
+			    if (gzip) {
+			        String str = EntityUtils.toString(response.getEntity());
+			        baos.write(str.getBytes());
+			    } else {
+			        response.getEntity().writeTo(baos);
+			    }
 			}
 			
 			body = baos.toByteArray();
@@ -111,7 +153,7 @@ public class HttpFetcher {
 	}
 	
 	public byte[] fetch() {
-	    return (byte[]) fetchWithDate()[0];
+	    return (byte[]) fetch(false)[0];
 	}
 	
 	public void post(File file) throws IOException {
@@ -183,4 +225,21 @@ public class HttpFetcher {
 			httpClient.getConnectionManager().shutdown();
 		}
 	}
+	
+    private static final class GzipDecompressingEntity extends HttpEntityWrapper {
+
+        public GzipDecompressingEntity(final HttpEntity entity) {
+            super(entity);
+        }
+
+        @Override
+        public InputStream getContent() throws IOException, IllegalStateException {
+            return new GZIPInputStream(wrappedEntity.getContent());
+        }
+
+        @Override
+        public long getContentLength() {
+            return -1;
+        }
+    }
 }
