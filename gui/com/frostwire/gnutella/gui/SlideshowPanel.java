@@ -55,19 +55,17 @@ public class SlideshowPanel extends JPanel {
     }
     
     public SlideshowPanel(String url) {
-        HttpFetcher fetcher = null;
-        
         try {
-            fetcher = new HttpFetcher(new URI(url));
-        } catch (URISyntaxException e) {
-            return; // nothing happens
-        }
-        
-        byte[] jsonBytes = fetcher.fetch();
-        
-        if (jsonBytes != null) {
-            SlideList slideList = new JsonEngine().toObject(new String(jsonBytes), SlideList.class);
-            setup(slideList.slides, slideList.randomStart);
+            HttpFetcher fetcher = new HttpFetcher(new URI(url));
+            
+            byte[] jsonBytes = fetcher.fetch();
+            
+            if (jsonBytes != null) {
+                SlideList slideList = new JsonEngine().toObject(new String(jsonBytes), SlideList.class);
+                setup(slideList.slides, slideList.randomStart);
+            }    
+        } catch (Exception e) {
+            // nothing happens
         }
     }
     
