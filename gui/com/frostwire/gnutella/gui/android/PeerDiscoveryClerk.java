@@ -10,8 +10,6 @@ import java.net.NetworkInterface;
 import java.net.URI;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.swing.SwingUtilities;
 
@@ -26,13 +24,11 @@ public class PeerDiscoveryClerk {
 	private static final long STALE_DEVICE_TIMEOUT = 7000;
 
 	private HashMap<String, Device> _deviceCache;
-	private Map<Device, Long> _deviceTimeouts;
 
 	private JsonEngine _jsonEngine;
 
 	public PeerDiscoveryClerk() {
 		_deviceCache = new HashMap<String, Device>();
-		_deviceTimeouts = new HashMap<Device, Long>();
 		_jsonEngine = new JsonEngine();
 	}
 
@@ -212,7 +208,7 @@ public class PeerDiscoveryClerk {
 
 	private void handleNewDevice(String key, final Device device) {
 		_deviceCache.put(key, device);
-		_deviceTimeouts.put(device, System.currentTimeMillis());
+		device.setTimeout(System.currentTimeMillis());
 
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -223,7 +219,7 @@ public class PeerDiscoveryClerk {
 
 	private void handleDeviceAlive(String key, final Device device) {
 		_deviceCache.put(key, device);
-		_deviceTimeouts.put(device, System.currentTimeMillis());
+		device.setTimeout(System.currentTimeMillis());
 		
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -234,7 +230,6 @@ public class PeerDiscoveryClerk {
 
 	private void handleDeviceStale(String key, final Device device) {
 		_deviceCache.remove(key);
-		_deviceTimeouts.remove(key);
 
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -252,15 +247,12 @@ public class PeerDiscoveryClerk {
 			while (true) {
 				long now = System.currentTimeMillis();
 
-				synchronized (_deviceTimeouts) {
-					for (Entry<Device, Long> entry : _deviceTimeouts.entrySet()) {
-						if (entry.getValue() + STALE_DEVICE_TIMEOUT < now) {
+                for (Device device : _deviceCache.values()) {
+                    if (device.getTimeout() + STALE_DEVICE_TIMEOUT < now) {
 
-							Device device = entry.getKey();
-							handleDeviceStale(device.getKey(), entry.getKey());
-						}
-					}
-				}
+                        handleDeviceStale(device.getKey(), device);
+                    }
+                }
 
 				try {
 					Thread.sleep(STALE_DEVICE_TIMEOUT);

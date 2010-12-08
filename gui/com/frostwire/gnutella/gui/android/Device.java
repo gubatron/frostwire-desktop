@@ -27,6 +27,7 @@ public class Device {
 	private String _token;
 	private boolean _tokenAuthorized;
 	private OnActionFailedListener _listener;
+	private long _timeout;
 	
 	public Device(InetAddress address, int port, Finger finger) {
 		_address = address;
@@ -34,29 +35,37 @@ public class Device {
 		_finger = finger;
 		_token = UUID.randomUUID().toString();
 	}
+	
+	public InetAddress getAddress() {
+        return _address;
+    }
 
 	public void setAddress(InetAddress address) {
 		_address = address;
-	}
-
-	public InetAddress getAddress() {
-		return _address;
-	}
-
-	public void setPort(int port) {
-		_port = port;
-	}
+	}	
 
 	public int getPort() {
 		return _port;
 	}
+	
+	public void setPort(int port) {
+        _port = port;
+    }
+	
+	public Finger getFinger() {
+        return _finger;
+    }
 
 	public void setFinger(Finger finger) {
 		_finger = finger;
 	}
-
-	public Finger getFinger() {
-		return _finger;
+	
+	public long getTimeout() {
+	    return _timeout;
+	}
+	
+	public void setTimeout(long timeout) {
+	    _timeout = timeout;
 	}
 
 	public String getName() {
@@ -107,6 +116,8 @@ public class Device {
 				return new ArrayList<FileDescriptor>();
 			}
 			
+			setTimeout(System.currentTimeMillis());
+			
 			String json = new String(jsonBytes);
 			
 			FileDescriptorList list = JSON_ENGINE.toObject(json, FileDescriptorList.class);
@@ -147,6 +158,8 @@ public class Device {
 				return null;
 			}
 			
+			setTimeout(System.currentTimeMillis());
+			
 			return data; 
 			
 		} catch (Exception e) {
@@ -164,6 +177,8 @@ public class Device {
 			HttpFetcher fetcher = new HttpFetcher(uri);
 			
 			fetcher.post(file);
+			
+			setTimeout(System.currentTimeMillis());
 						
 		} catch (Exception e) {
 			notifyOnActionFailed(ACTION_UPLOAD, e);
@@ -184,6 +199,8 @@ public class Device {
 			fileEntity.setProgressFileEntityListener(listener);
 			
 			fetcher.post(fileEntity);
+			
+			setTimeout(System.currentTimeMillis());
 						
 		} catch (Exception e) {
 			notifyOnActionFailed(ACTION_UPLOAD, e);
