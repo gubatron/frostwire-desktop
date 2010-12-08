@@ -176,7 +176,7 @@ public class PeerDiscoveryClerk {
             byte[] jsonBytes = fetcher.fetch();
 
             if (jsonBytes == null) {
-                System.out.println("Failed to connnect to " + uri);
+                log("Failed to connnect to " + uri);
                 return;
             }
 
