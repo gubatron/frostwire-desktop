@@ -44,7 +44,7 @@ public class DeviceListTransferHandler extends TransferHandler {
 			return false;
 		}
 		
-		AndroidMediator.addActivity(new CopyToDeviceTask(device, localFiles));
+		AndroidMediator.addTask(new CopyToDeviceTask(device, localFiles));
 		
 		return true;
 	}

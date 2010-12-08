@@ -1,8 +1,11 @@
 package com.frostwire.gnutella.gui.android;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Task implements Runnable {
 
-	private OnChangedListener _listener;
+	private List<OnChangedListener> _listeners;
 	
 	private int _progress;
 	
@@ -13,14 +16,15 @@ public abstract class Task implements Runnable {
 	private Exception _failException;
 
 	public Task() {
+	    _listeners = new ArrayList<Task.OnChangedListener>();
 	}
 	
-	public OnChangedListener getOnChangedListener() {
-		return _listener;
+	public List<OnChangedListener> getOnChangedListeners() {
+		return _listeners;
 	}
 	
-	public void setOnChangedListener(OnChangedListener listener) {
-		_listener = listener;
+	public void addOnChangedListener(OnChangedListener listener) {
+		_listeners.add(listener);
 	}
 		
 	public int getProgress() {
@@ -34,11 +38,15 @@ public abstract class Task implements Runnable {
 		progress = (progress > 100) ? 100 : progress;
 		
 		_progress = progress;
-		fireOnChanged();
+		notifyOnChanged();
 	}
 	
 	public boolean isCanceled() {
 		return _canceled;
+	}
+	
+	public boolean isRunning() {
+	    return !isCanceled() && !isFailed() && getProgress() != 100;
 	}
 	
 	public void cancel() {
@@ -47,7 +55,7 @@ public abstract class Task implements Runnable {
 		}
 		
 		_canceled = true;
-		fireOnChanged();
+		notifyOnChanged();
 	}
 	
 	public boolean isFailed() {
@@ -65,20 +73,23 @@ public abstract class Task implements Runnable {
 		
 		_failed = true;
 		_failException = e;
-		fireOnChanged();
+		notifyOnChanged();
 	}
 	
 	public boolean enqueue() {
 	    return true;
 	}
 	
-	protected void fireOnChanged() {
-		if (_listener != null) {
-			_listener.onChanged(this);
-		}
+	protected void notifyOnChanged() {
+	    for (int i = 0; i < _listeners.size(); i++) { // no thread safe
+	        OnChangedListener listener = _listeners.get(i);
+	        if (listener != null) {
+	            listener.onChanged(this);
+	        }
+	    }
 	}
 	
 	public interface OnChangedListener {
-		public void onChanged(Task activity);
+		public void onChanged(Task task);
 	}
 }

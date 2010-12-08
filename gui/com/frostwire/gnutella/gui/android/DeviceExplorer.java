@@ -6,22 +6,27 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 
 import com.frostwire.gnutella.gui.ImagePanel;
 import com.frostwire.gnutella.gui.SlideshowPanel;
+import com.frostwire.gnutella.gui.android.Task.OnChangedListener;
 
 public class DeviceExplorer extends JPanel {
 
@@ -41,7 +46,8 @@ public class DeviceExplorer extends JPanel {
 	
 	private JPanel _panelDevice;
 	private JPanel _panelNoDevice;
-	private JList _list;	
+	private JList _list;
+	private JScrollPane _scrollPane;
 	private ImageRadioButton _buttonApplications;
 	private ImageRadioButton _buttonDocuments;
 	private ImageRadioButton _buttonPictures;
@@ -51,6 +57,7 @@ public class DeviceExplorer extends JPanel {
 	private JRadioButton _invisibleRadioButton;
 	private ButtonGroup _buttonGroup;	
 	private HintTextField _textFilter;
+	private JLabel _labelLoading;
 	
 	private Thread _searchThread;
 
@@ -235,9 +242,15 @@ public class DeviceExplorer extends JPanel {
 		_list.setPrototypeCellValue(new FileDescriptor(0, DeviceConstants.FILE_TYPE_AUDIO, "", "", "", "", "", 0));
 		_list.setVisibleRowCount(-1);
 		
-		JScrollPane scrollPane = new JScrollPane(_list);
+		_scrollPane = new JScrollPane(_list);		
 		
-		panel.add(scrollPane, BorderLayout.CENTER);
+		panel.add(_scrollPane, BorderLayout.CENTER);
+		
+		_labelLoading = new JLabel();
+		_labelLoading.setSize(100, 100);
+        _labelLoading.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(getClass().getResource("images" + File.separator + "loading.gif"))));
+        _labelLoading.setVisible(false);
+        _list.add(_labelLoading, BorderLayout.CENTER);
 		
 		return panel;
 	}
@@ -251,10 +264,7 @@ public class DeviceExplorer extends JPanel {
 		button.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-			    _selectedFileType = type;
-			    _textFilter.clear();
-				_model.clear();
-				AndroidMediator.addActivity(new BrowseTask(_device, _model, type));
+			    buttonType_mouseClicked(e, type);
 			}
 		});
 		
@@ -264,7 +274,33 @@ public class DeviceExplorer extends JPanel {
 		return button;
 	}
 	
-	private void refreshBrowseButton(ImageRadioButton button, int numShared) {
+	private void buttonType_mouseClicked(MouseEvent e, int type) {
+	    _selectedFileType = type;
+        _textFilter.clear();
+        _model.clear();
+        
+        int x = (_scrollPane.getWidth() - _labelLoading.getWidth()) / 2;
+        int y = (_scrollPane.getHeight() - _labelLoading.getHeight()) / 2 - 10;
+        _labelLoading.setLocation(x, y);
+        _labelLoading.setVisible(true);
+        
+        BrowseTask browseTask = new BrowseTask(_device, _model, type);
+        browseTask.addOnChangedListener(new OnChangedListener() {
+            public void onChanged(Task task) {
+                if (!task.isRunning()) {
+                    SwingUtilities.invokeLater(new Runnable() {
+                        public void run() {
+                            _labelLoading.setVisible(false);
+                        }
+                    });
+                }
+            }
+        });
+        
+        AndroidMediator.addTask(browseTask);
+    }
+
+    private void refreshBrowseButton(ImageRadioButton button, int numShared) {
 	    button.setText(String.valueOf(numShared));
 	    if (numShared == 0 && button.isSelected() && _model.getSize() > 0) {
 	        _model.clear();

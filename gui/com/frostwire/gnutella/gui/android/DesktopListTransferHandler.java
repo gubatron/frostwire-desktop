@@ -53,7 +53,7 @@ public class DesktopListTransferHandler extends TransferHandler {
             return false;
         }
         
-        AndroidMediator.addActivity(new CopyToDesktopTask(device, path, fileDescriptors));
+        AndroidMediator.addTask(new CopyToDesktopTask(device, path, fileDescriptors));
         
         return true;
     }

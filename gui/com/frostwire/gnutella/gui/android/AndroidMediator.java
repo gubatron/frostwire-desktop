@@ -126,9 +126,9 @@ public class AndroidMediator implements ThemeObserver {
 		INSTANCE.DEVICE_BAR.handleDeviceStale(device);
 	}
 	
-	public static void addActivity(Task activity) {
-		INSTANCE.PROGRESS_PANEL.addActivity(activity);
-		INSTANCE.ACTIVITY_PROCESSOR.addTask(activity);
+	public static void addTask(Task task) {
+		INSTANCE.PROGRESS_PANEL.addTask(task);
+		INSTANCE.ACTIVITY_PROCESSOR.addTask(task);
 	}
 	
 	public DeviceBar getDeviceBar() {

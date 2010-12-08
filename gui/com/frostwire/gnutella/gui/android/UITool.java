@@ -22,7 +22,7 @@ public class UITool {
     public BufferedImage loadImage(String name) {
         String path = "images" + File.separator + name + ".png";
         
-        if (name.endsWith(".jpg")) {
+        if (name.endsWith(".jpg") || name.endsWith(".gif")) {
             path = "images" + File.separator + name;
         }
         

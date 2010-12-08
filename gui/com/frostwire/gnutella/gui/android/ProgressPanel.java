@@ -30,29 +30,29 @@ public class ProgressPanel extends JPanel {
 	private static final long serialVersionUID = -5916970294500660451L;
 	
 	private TaskListModel _model;
-	private MyActivityListener _activityListener;
+	private MyActivityListener _taskListener;
 	
 	private JButton _buttonCancel;
-	private JList _listActivities;
-	private JScrollPane _scrollPaneActivities;
+	private JList _listTasks;
+	private JScrollPane _scrollPaneTasks;
 
 	public ProgressPanel() {
 		
 		_model = new TaskListModel();
-		_activityListener = new MyActivityListener();
+		_taskListener = new MyActivityListener();
 		
 		setupUI();
 	}
 	
-	public void addActivity(Task activity) {
+	public void addTask(Task task) {
 		
-		activity.setOnChangedListener(_activityListener);
+		task.addOnChangedListener(_taskListener);
 		
-		_model.addActivity(activity);
+		_model.addActivity(task);
 		
 		int lastIndex = _model.getSize() - 1;
 		if (lastIndex >= 0) {
-			_listActivities.ensureIndexIsVisible(lastIndex);
+			_listTasks.ensureIndexIsVisible(lastIndex);
 		}
 	}
 	
@@ -72,15 +72,15 @@ public class ProgressPanel extends JPanel {
 		});
 		add(_buttonCancel, BorderLayout.PAGE_END);		
 		
-		_listActivities = new JList(_model);
-		_listActivities.setCellRenderer(new TaskRenderer());
-		_listActivities.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		_listActivities.setLayoutOrientation(JList.VERTICAL);
-		_listActivities.setVisibleRowCount(-1);
+		_listTasks = new JList(_model);
+		_listTasks.setCellRenderer(new TaskRenderer());
+		_listTasks.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		_listTasks.setLayoutOrientation(JList.VERTICAL);
+		_listTasks.setVisibleRowCount(-1);
 
-		_scrollPaneActivities = new JScrollPane(_listActivities);
+		_scrollPaneTasks = new JScrollPane(_listTasks);
 		
-		add(_scrollPaneActivities, BorderLayout.CENTER);
+		add(_scrollPaneTasks, BorderLayout.CENTER);
 		
 		setPreferredSize(new Dimension(300, 100));
 	}
@@ -106,7 +106,7 @@ public class ProgressPanel extends JPanel {
 	}
 	
 	private void buttonCancel_mouseClicked(MouseEvent e) {
-		int index = _listActivities.getSelectedIndex();
+		int index = _listTasks.getSelectedIndex();
 		
 		if (index != -1) {
 			int showConfirmDialog = JOptionPane.showConfirmDialog(null, I18n.tr("Should I stop the File Transfer?"), I18n.tr("Are you sure?"), JOptionPane.YES_NO_OPTION);
@@ -121,8 +121,8 @@ public class ProgressPanel extends JPanel {
 	}
 	
 	private Rectangle getRepaintBounds(int index) {
-		Point p = _listActivities.indexToLocation(index);
-		JPanel renderer = (JPanel) _listActivities.getCellRenderer().getListCellRendererComponent(_listActivities, _listActivities.getModel().getElementAt(index), index, false, false);
+		Point p = _listTasks.indexToLocation(index);
+		JPanel renderer = (JPanel) _listTasks.getCellRenderer().getListCellRendererComponent(_listTasks, _listTasks.getModel().getElementAt(index), index, false, false);
 		return new Rectangle(p.x, p.y, renderer.getPreferredSize().width, renderer.getPreferredSize().height);
 	}
 	
@@ -137,7 +137,7 @@ public class ProgressPanel extends JPanel {
 			
 			SwingUtilities.invokeLater(new Runnable() {
 				public void run() {
-					_listActivities.repaint(getRepaintBounds(index));
+					_listTasks.repaint(getRepaintBounds(index));
 					_model.refreshIndex(index);
 				}
 			});
