@@ -5,6 +5,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -26,9 +29,9 @@ public class DeviceButton extends JRadioButton {
 	
 	private static final String IMAGES_URL = "http://static1.frostwire.com/images/devices/";
 	
-	private static final Color FILL_COLOR = new Color(0x8DB2ED);
-    private static final Color INNER_BORDER_COLOR = new Color(0x98BFFF);
-    private static final Color OUTER_BORDER_COLOR = new Color(0x516688);
+	private static final Color FILL_COLOR = new Color(0x8D, 0xB2, 0xED, 180);
+    private static final Color INNER_BORDER_COLOR = new Color(0x98, 0xBF, 0xFF, 180);
+    private static final Color OUTER_BORDER_COLOR = new Color(0x51, 0x66, 0x88, 180);
 	
 	private ImageIcon _image;
 	private ImageIcon _imageAuthorized;
@@ -61,23 +64,40 @@ public class DeviceButton extends JRadioButton {
 		setFocusPainted(false);
 		setContentAreaFilled(false);
 		////////////////////////////////
-		setMinimumSize(new Dimension(100, 140));
+		Dimension size = new Dimension(100, 130);
+		setMinimumSize(size);
+		setPreferredSize(size);
+		setForeground(Color.WHITE);
 		setTooltip();
 		setImage();
 		setText(" " + _device.getName() + " ");
 		setHorizontalTextPosition(SwingConstants.CENTER);
 		setVerticalTextPosition(SwingConstants.BOTTOM);
+		
+		addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseReleased(MouseEvent e) {
+		        if (isSelected()) {
+		            setForeground(Color.BLACK);
+		        } else {
+		            setForeground(Color.WHITE);
+		        }
+		    }
+        });
 	}
 	
 	@Override
     protected void paintComponent(Graphics g) {
+	    
+	    Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
         int w = getWidth();
         int h = getHeight();
         
         if (isSelected()) {
             g.setColor(FILL_COLOR);
-            g.fillRoundRect(0, 0, w, h, 5, 5);
+            g.fillRoundRect(0, 0, w, h - 1, 5, 5);
             g.setColor(INNER_BORDER_COLOR);
             g.drawRoundRect(1, 1, w - 3, h - 3, 5, 5);
             g.setColor(OUTER_BORDER_COLOR);
