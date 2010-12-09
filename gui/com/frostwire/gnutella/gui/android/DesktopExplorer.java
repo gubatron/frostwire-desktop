@@ -375,8 +375,7 @@ public class DesktopExplorer extends JPanel {
 
         _list = new JList(_model);
         _list.setCellRenderer(new LocalFileRenderer());
-        RedispatchMouseListener listener = new RedispatchMouseListener(_list);
-        _list.addMouseListener(listener);
+        _list.addMouseListener(new RedispatchMouseListener(_list));
         _list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
         _list.setDragEnabled(true);
         _list.setTransferHandler(new DesktopListTransferHandler());

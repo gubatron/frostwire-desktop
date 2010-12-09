@@ -8,23 +8,34 @@ public class CopyToDeviceTask extends Task {
 	
 	private Device _device;
 	private LocalFile[] _localFiles;
-	
-	private int _totalBytes;
-	private int _totalWritten;
-	private String _progressMessage;
+	private int _fileType;
+    private int _currentIndex;
+    
+    private long _totalBytes;
+    private long _totalWritten;
 
-	public CopyToDeviceTask(Device device, LocalFile[] localFiles) {
+	public CopyToDeviceTask(Device device, LocalFile[] localFiles, int fileType) {
 		_device = device;
 		_localFiles = localFiles;
-		
-		_totalBytes = getTotalBytes();
-		_totalWritten = 0;
-		_progressMessage = "";
+		_fileType = fileType;
+		_currentIndex = -1;
 	}
 	
-	public String getProgressMessage() {
-		return _progressMessage;
+	public Device getDevice() {
+        return _device;
+    }
+	
+	public int getFileType() {
+	    return _fileType;
 	}
+	
+	public int getCurrentIndex() {
+        return _currentIndex;
+    }
+    
+    public int getTotalItems() {
+        return _localFiles.length;
+    }
 
 	@Override
 	public void run() {
@@ -36,16 +47,19 @@ public class CopyToDeviceTask extends Task {
 		    
 		    setProgress(0);
 		    
+		    _totalBytes = getTotalBytes();
+            _totalWritten = 0;
+		    
 			for (int i = 0; i < _localFiles.length; i++) {
 				
 				if (isCanceled()) {
 					return;
 				}
 				
+				_currentIndex = i;
+				
 				try {			
 					File file = _localFiles[i].getFile();
-					
-					_progressMessage = file.getName() + ((_localFiles.length > 1) ? (" " + (i + 1) + "/" + _localFiles.length) : "");
 					
 					_device.upload(_localFiles[i].getFileType(), file, new ProgressFileEntityListener() {
 						public void onWrite(ProgressFileEntity progressFileEntity, int written) {
@@ -75,8 +89,8 @@ public class CopyToDeviceTask extends Task {
 		}
 	}
 	
-	private int getTotalBytes() {
-		int total = 0;
+	private long getTotalBytes() {
+		long total = 0;
 		for (LocalFile localFile : _localFiles) {
 			total += localFile.getFile().length();
 		}

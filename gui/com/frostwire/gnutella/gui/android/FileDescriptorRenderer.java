@@ -221,10 +221,10 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 		Device device = AndroidMediator.instance().getDeviceBar().getSelectedDevice();
 		File path = AndroidMediator.instance().getDesktopExplorer().getRootFolder();
 		
-		List<FileDescriptor> fileDescriptors=null;
+		List<FileDescriptor> fileDescriptors = null;
 		
 		int[] selectedIndices = _list.getSelectedIndices();
-		boolean clickedInsideSelectedIndices=false;
+		boolean clickedInsideSelectedIndices = false;
 		
 		for (int i=0; i < selectedIndices.length; i++) {
 			if (selectedIndices[i] == _index) {
@@ -246,7 +246,9 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 		}
 		
 		if (device != null && path != null && _fileDescriptor != null) {
-			AndroidMediator.addTask(new CopyToDesktopTask(device, path, fileDescriptors.toArray(new FileDescriptor[0])));
+		    FileDescriptor[] arr = fileDescriptors.toArray(new FileDescriptor[0]);
+		    int fileType = AndroidMediator.instance().getDeviceExplorer().getSelectedFileType();
+			AndroidMediator.addTask(new CopyToDesktopTask(device, path, arr, fileType));
 		}
 	}
 	

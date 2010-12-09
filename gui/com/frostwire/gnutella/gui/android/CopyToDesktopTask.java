@@ -12,13 +12,15 @@ public class CopyToDesktopTask extends Task {
 	private Device _device;
 	private File _path;
 	private FileDescriptor[] _fileDescriptors;
-	private int _currentFileIndex;
+	private int _fileType;
+	private int _currentIndex;
 	
-	public CopyToDesktopTask(Device device, File path, FileDescriptor[] fileDescriptors) {
+	public CopyToDesktopTask(Device device, File path, FileDescriptor[] fileDescriptors, int fileType) {
 		_device = device;
 		_path = path;
 		_fileDescriptors = fileDescriptors;
-		_currentFileIndex = -1;
+		_fileType = fileType;
+		_currentIndex = -1;
 	}
 	
 	public Device getDevice() {
@@ -29,11 +31,15 @@ public class CopyToDesktopTask extends Task {
 		return _path;
 	}
 	
-	public int getCurrentFileIndex() {
-		return _currentFileIndex;
+	public int getFileType() {
+	    return _fileType;
 	}
 	
-	public int getTotalFiles() {
+	public int getCurrentIndex() {
+		return _currentIndex;
+	}
+	
+	public int getTotalItems() {
 	    return _fileDescriptors.length;
 	}
 
@@ -57,7 +63,7 @@ public class CopyToDesktopTask extends Task {
     				return;
     			}
     			
-    			_currentFileIndex = i;
+    			_currentIndex = i;
     			
     			FileDescriptor fileDescriptor = _fileDescriptors[i];
     

@@ -12,6 +12,7 @@ import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,6 +66,8 @@ public class TaskRenderer extends JPanel implements ListCellRenderer {
 		
 		if (_task instanceof CopyToDesktopTask) {
 		    renderDownload((CopyToDesktopTask) _task);
+		} else if (_task instanceof CopyToDeviceTask) {
+		    renderUpload((CopyToDeviceTask) _task);
 		}
 
 		return this;
@@ -97,9 +100,11 @@ public class TaskRenderer extends JPanel implements ListCellRenderer {
         add(_labelText, c);
         
         _labelPercent = new JLabel();
+        _labelPercent.setForeground(Color.LIGHT_GRAY);
         c = new GridBagConstraints();
         c.gridx = 2;
         c.gridy = 0;
+        c.insets = new Insets(0, 5, 0, 5);
         add(_labelPercent, c);
         
         _buttonStop = new JRadioButton();
@@ -174,31 +179,87 @@ public class TaskRenderer extends JPanel implements ListCellRenderer {
     }
 	
 	private void renderDownload(CopyToDesktopTask task) {
-	    
-	    if (task.getProgress() == 0) {
-	        _labelText.setText(I18n.tr("Download") + " " +
-	                (task.getTotalFiles() == 1 ? I18n.tr("one file") : task.getTotalFiles() + " " + I18n.tr("files")) +
-	                " " + I18n.tr("from") + " " + task.getDevice().getName());
-	        _labelPercent.setText(I18n.tr("pending"));
-	    } else if (task.getProgress() == 100) {
-	        _labelText.setText(I18n.tr("Downloaded") +  " " +
-	                (task.getTotalFiles() == 1 ? I18n.tr("one file") : task.getTotalFiles() + " " + I18n.tr("files")) +
-	                " " + I18n.tr("from") + " " + task.getDevice().getName());
-	        _labelPercent.setText(I18n.tr("done"));
-	    } else if (task.isCanceled()) {
-	        _labelText.setText(I18n.tr("Download") + " " +
-                    (task.getTotalFiles() == 1 ? I18n.tr("one file") : task.getTotalFiles() + " " + I18n.tr("files")) +
+        Image image = null;
+        if (TO_DESKTOP_IMAGE_TYPES.containsKey(task.getFileType())) {
+            image = TO_DESKTOP_IMAGE_TYPES.get(task.getFileType());
+        } else {
+            BufferedImage imageCopyDevice = UI_TOOL.loadImage("copy_device");
+            BufferedImage imageFileType = UI_TOOL.loadImage(UI_TOOL.getImageNameByFileType(task.getFileType()));
+
+            image = composeImage(imageCopyDevice, imageFileType, false);
+            TO_DESKTOP_IMAGE_TYPES.put(task.getFileType(), image);
+        }
+        
+        _imagePanel.setImage(image);
+        
+        if (task.getProgress() == 0) {
+            _labelText.setText(I18n.tr("Download") + " " +
+                    (task.getTotalItems() == 1 ? I18n.tr("one file") : task.getTotalItems() + " " + I18n.tr("files")) +
+                    " " + I18n.tr("from") + " " + task.getDevice().getName());
+            _labelPercent.setText(I18n.tr("pending"));
+        } else if (task.getProgress() == 100) {
+            _labelText.setText(I18n.tr("Downloaded") +  " " +
+                    (task.getTotalItems() == 1 ? I18n.tr("one file") : task.getTotalItems() + " " + I18n.tr("files")) +
+                    " " + I18n.tr("from") + " " + task.getDevice().getName());
+            _labelPercent.setText(I18n.tr("done"));
+        } else if (task.isCanceled()) {
+            _labelText.setText(I18n.tr("Download") + " " +
+                    (task.getTotalItems() == 1 ? I18n.tr("one file") : task.getTotalItems() + " " + I18n.tr("files")) +
                     " " + I18n.tr("from") + " " + task.getDevice().getName());
             _labelPercent.setText(I18n.tr("canceled"));
-	    } else if (task.isFailed()) {
-	        _labelText.setText(I18n.tr("Download") + " " +
-                    (task.getTotalFiles() == 1 ? I18n.tr("one file") : task.getTotalFiles() + " " + I18n.tr("files")) +
+        } else if (task.isFailed()) {
+            _labelText.setText(I18n.tr("Download") + " " +
+                    (task.getTotalItems() == 1 ? I18n.tr("one file") : task.getTotalItems() + " " + I18n.tr("files")) +
                     " " + I18n.tr("from") + " " + task.getDevice().getName());
             _labelPercent.setText(I18n.tr("error"));
-	    } else {
-	        _labelText.setText(I18n.tr("Downloading") + " " +
-                    (task.getTotalFiles() == 1 ? I18n.tr("one file") : (task.getCurrentFileIndex() + 1) + " " + I18n.tr("out of") + " " + task.getTotalFiles() + " " + I18n.tr("files")) +
+        } else {
+            _labelText.setText(I18n.tr("Downloading") + " " +
+                    (task.getTotalItems() == 1 ? I18n.tr("one file") : (task.getCurrentIndex() + 1) + " " + I18n.tr("out of") + " " + task.getTotalItems() + " " + I18n.tr("files")) +
                     " " + I18n.tr("from") + " " + task.getDevice().getName());
+            _labelPercent.setText(task.getProgress() + "%");
+        }
+    }
+	
+	private void renderUpload(CopyToDeviceTask task) {
+	    
+	    Image image = null;
+        if (TO_DEVICE_IMAGE_TYPES.containsKey(task.getFileType())) {
+            image = TO_DEVICE_IMAGE_TYPES.get(task.getFileType());
+        } else {
+            BufferedImage imageCopyDevice = UI_TOOL.loadImage("copy_desktop");
+            //BufferedImage imageFileType = UI_TOOL.loadImage(UI_TOOL.getImageNameByFileType(task.getFileType()));
+
+            //image = composeImage(imageCopyDevice, imageFileType, true);
+            image = imageCopyDevice.getScaledInstance(26, 26, Image.SCALE_SMOOTH);
+            TO_DEVICE_IMAGE_TYPES.put(task.getFileType(), image);
+        }
+        
+        _imagePanel.setImage(image);
+	    
+	    if (task.getProgress() == 0) {
+	        _labelText.setText(I18n.tr("Upload") + " " +
+	                (task.getTotalItems() == 1 ? I18n.tr("one file") : task.getTotalItems() + " " + I18n.tr("files")) +
+	                " " + I18n.tr("to") + " " + task.getDevice().getName());
+	        _labelPercent.setText(I18n.tr("pending"));
+	    } else if (task.getProgress() == 100) {
+	        _labelText.setText(I18n.tr("Uploaded") +  " " +
+	                (task.getTotalItems() == 1 ? I18n.tr("one file") : task.getTotalItems() + " " + I18n.tr("files")) +
+	                " " + I18n.tr("to") + " " + task.getDevice().getName());
+	        _labelPercent.setText(I18n.tr("done"));
+	    } else if (task.isCanceled()) {
+	        _labelText.setText(I18n.tr("Upload") + " " +
+                    (task.getTotalItems() == 1 ? I18n.tr("one file") : task.getTotalItems() + " " + I18n.tr("files")) +
+                    " " + I18n.tr("to") + " " + task.getDevice().getName());
+            _labelPercent.setText(I18n.tr("canceled"));
+	    } else if (task.isFailed()) {
+	        _labelText.setText(I18n.tr("Upload") + " " +
+                    (task.getTotalItems() == 1 ? I18n.tr("one file") : task.getTotalItems() + " " + I18n.tr("files")) +
+                    " " + I18n.tr("to") + " " + task.getDevice().getName());
+            _labelPercent.setText(I18n.tr("error"));
+	    } else {
+	        _labelText.setText(I18n.tr("Uploading") + " " +
+                    (task.getTotalItems() == 1 ? I18n.tr("one file") : (task.getCurrentIndex() + 1) + " " + I18n.tr("out of") + " " + task.getTotalItems() + " " + I18n.tr("files")) +
+                    " " + I18n.tr("to") + " " + task.getDevice().getName());
             _labelPercent.setText(task.getProgress() + "%");
 	    }
     }
@@ -209,5 +270,41 @@ public class TaskRenderer extends JPanel implements ListCellRenderer {
         }
         
         return IMAGE_STOP = UI_TOOL.loadImage("stop").getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+    }
+	
+	private Image composeImage(BufferedImage imageCopyDevice, BufferedImage imageFileType, boolean left) {
+        
+        BufferedImage image1 = imageCopyDevice;
+        Image image2 = imageFileType.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
+        
+        int w1 = image1.getWidth();
+        int h1 = image1.getHeight();
+        int w2 = image2.getWidth(null);
+        int h2 = image2.getHeight(null);
+        
+        int w = 64;
+        int h = 64;
+        
+        BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        
+        Graphics2D graphics = image.createGraphics();
+        
+        try {
+            
+            graphics.drawImage(image1,  0,  4, w1, h1, null);
+            
+            if (left) {
+                graphics.drawImage(image2, 0, 20, w2, h2, null);
+            } else {
+                graphics.drawImage(image2, 32, 20, w2, h2, null);
+            }
+            
+        } finally {
+            if (graphics != null) {
+                graphics.dispose();
+            }
+        }
+        
+        return image.getScaledInstance(32, 32, Image.SCALE_SMOOTH);
     }
 }
