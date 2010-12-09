@@ -26,7 +26,6 @@ import javax.swing.SwingUtilities;
 
 import com.frostwire.gnutella.gui.HintTextField;
 import com.frostwire.gnutella.gui.GraphicPanel;
-import com.frostwire.gnutella.gui.ImageRadioButton;
 import com.frostwire.gnutella.gui.SlideshowPanel;
 import com.frostwire.gnutella.gui.android.Task.OnChangedListener;
 
@@ -50,12 +49,12 @@ public class DeviceExplorer extends JPanel {
 	private JPanel _panelNoDevice;
 	private JList _list;
 	private JScrollPane _scrollPane;
-	private ImageRadioButton _buttonApplications;
-	private ImageRadioButton _buttonDocuments;
-	private ImageRadioButton _buttonPictures;
-	private ImageRadioButton _buttonVideos;
-	private ImageRadioButton _buttonRingtones;
-	private ImageRadioButton _buttonAudio;
+	private BrowseFileTypeButton _buttonApplications;
+	private BrowseFileTypeButton _buttonDocuments;
+	private BrowseFileTypeButton _buttonPictures;
+	private BrowseFileTypeButton _buttonVideos;
+	private BrowseFileTypeButton _buttonRingtones;
+	private BrowseFileTypeButton _buttonAudio;
 	private JRadioButton _invisibleRadioButton;
 	private ButtonGroup _buttonGroup;	
 	private HintTextField _textFilter;
@@ -231,6 +230,7 @@ public class DeviceExplorer extends JPanel {
         c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = 1;
+        c.insets = new Insets(0, 3, 3, 3);
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1.0;
         c.gridwidth = 6;
@@ -260,9 +260,9 @@ public class DeviceExplorer extends JPanel {
 		return panel;
 	}
 	
-	private ImageRadioButton setupButtonType(final int type) {	    
+	private BrowseFileTypeButton setupButtonType(final int type) {	    
 	    UITool imageTool = new UITool();
-	    ImageRadioButton button = new ImageRadioButton();
+	    BrowseFileTypeButton button = new BrowseFileTypeButton();
 		button.setIcon(new ImageIcon(imageTool.loadImage(imageTool.getImageNameByFileType(type))));
 		button.setPressedIcon(new ImageIcon(imageTool.loadImage(imageTool.getImageNameByFileType(type) + "_checked")));
 		button.setSelectedIcon(new ImageIcon(imageTool.loadImage(imageTool.getImageNameByFileType(type) + "_checked")));
@@ -326,7 +326,7 @@ public class DeviceExplorer extends JPanel {
         AndroidMediator.addTask(browseTask);
     }
 
-    private void refreshBrowseButton(ImageRadioButton button, int numShared) {
+    private void refreshBrowseButton(BrowseFileTypeButton button, int numShared) {
 	    button.setText(String.valueOf(numShared));
 	    if (numShared == 0 && button.isSelected() && _model.getSize() > 0) {
 	        _model.clear();

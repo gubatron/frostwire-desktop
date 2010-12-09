@@ -12,15 +12,13 @@ public class CopyToDesktopTask extends Task {
 	private Device _device;
 	private File _path;
 	private FileDescriptor[] _fileDescriptors;
-
-	private String _progressMessage;
+	private int _currentFileIndex;
 	
 	public CopyToDesktopTask(Device device, File path, FileDescriptor[] fileDescriptors) {
 		_device = device;
 		_path = path;
 		_fileDescriptors = fileDescriptors;
-		
-		_progressMessage = "";
+		_currentFileIndex = -1;
 	}
 	
 	public Device getDevice() {
@@ -31,8 +29,12 @@ public class CopyToDesktopTask extends Task {
 		return _path;
 	}
 	
-	public String getProgressMessage() {
-		return _progressMessage;
+	public int getCurrentFileIndex() {
+		return _currentFileIndex;
+	}
+	
+	public int getTotalFiles() {
+	    return _fileDescriptors.length;
 	}
 
 	@Override
@@ -42,63 +44,68 @@ public class CopyToDesktopTask extends Task {
 			return;
 		}
 		
-		setProgress(0);
+		try {
+		    
+    		setProgress(0);
+    		
+    		long totalBytes = getTotalBytes();
+    		long totalWritten = 0;
+    		
+    		for (int i = 0; i < _fileDescriptors.length; i++) {
+    			
+    			if (isCanceled()) {
+    				return;
+    			}
+    			
+    			_currentFileIndex = i;
+    			
+    			FileDescriptor fileDescriptor = _fileDescriptors[i];
+    
+    			URL url = _device.getDownloadURL(fileDescriptor.fileType, fileDescriptor.id);
+    			
+    			InputStream is = null;
+    			FileOutputStream fos = null;
+    			
+    			try {
+    				is = url.openStream();
+    				
+    				File file = new File(_path, fileDescriptor.fileName);
+    				
+    				fos = new FileOutputStream(file);
+    				
+    				byte[] buffer = new byte[4 * 1024];
+    				int n = 0;
+    				
+    				while ((n = is.read(buffer, 0, buffer.length)) != -1) {
+    					
+    					if (isCanceled()) {
+    						return;
+    					}
+    					
+    					fos.write(buffer, 0, n);
+    					totalWritten += n;
+    					setProgress((int) ((totalWritten * 100) / totalBytes));
+    				}
+    				
+    			} catch (IOException e) {
+    				fail(e);
+    				break;
+    			} finally {
+    				close(fos);
+    				close(is);
+    			}
+    		}
+    		
+    		setProgress(100);
+    		AndroidMediator.instance().getDesktopExplorer().refresh();
 		
-		int totalBytes = getTotalBytes();
-		int totalWritten = 0;
-		
-		for (int i = 0; i < _fileDescriptors.length; i++) {
-			
-			if (isCanceled()) {
-				return;
-			}
-			
-			FileDescriptor fileDescriptor = _fileDescriptors[i];
-
-			URL url = _device.getDownloadURL(fileDescriptor.fileType, fileDescriptor.id);
-			
-			InputStream is = null;
-			FileOutputStream fos = null;
-			
-			try {
-				is = url.openStream();
-				
-				File file = new File(_path, fileDescriptor.fileName);
-				
-				_progressMessage = file.getName() + ((_fileDescriptors.length > 1) ? (" " + (i + 1) + "/" + _fileDescriptors.length) : "");
-				
-				fos = new FileOutputStream(file);
-				
-				byte[] buffer = new byte[4 * 1024];
-				int n = 0;
-				
-				while ((n = is.read(buffer, 0, buffer.length)) != -1) {
-					
-					if (isCanceled()) {
-						return;
-					}
-					
-					fos.write(buffer, 0, n);
-					totalWritten += n;
-					setProgress((int) ((totalWritten * 100) / totalBytes));
-				}
-				
-				setProgress(100);
-				
-				AndroidMediator.instance().getDesktopExplorer().refresh();
-				
-			} catch (IOException e) {
-				fail(e);
-				break;
-			} finally {
-				close(fos);
-				close(is);
-			}
-		}
+		} catch (Exception e) {
+            fail(e);
+        }
 	}
 	
-	private int getTotalBytes() {
-		int total = 0;
+	private long getTotalBytes() {
+	    long total = 0;
 		for (FileDescriptor fileDescriptor : _fileDescriptors) {
 			total += fileDescriptor.fileSize;
 		}

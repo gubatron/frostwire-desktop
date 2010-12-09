@@ -49,6 +49,11 @@ public class ProgressPanel extends JPanel {
 	}
 	
 	public void addTask(Task task) {
+	    
+	    if (!(task instanceof CopyToDesktopTask ||
+	          task instanceof CopyToDeviceTask)) {
+	        return;
+	    }
 		
 		task.addOnChangedListener(_taskListener);
 		

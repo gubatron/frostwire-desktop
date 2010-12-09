@@ -32,9 +32,10 @@ public class CopyToDeviceTask extends Task {
 			return;
 		}
 		
-		setProgress(0);
-		
 		try {
+		    
+		    setProgress(0);
+		    
 			for (int i = 0; i < _localFiles.length; i++) {
 				
 				if (isCanceled()) {

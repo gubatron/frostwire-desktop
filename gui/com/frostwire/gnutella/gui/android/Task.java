@@ -34,6 +34,9 @@ public abstract class Task implements Runnable {
 	public void setProgress(int progress) {
 		
 		// cast progress to [0..100]
+	    if (progress < 0 || progress > 100) {
+	        System.out.println("que paso");
+	    }
 		progress = (progress < 0) ? 0 : progress;
 		progress = (progress > 100) ? 100 : progress;
 		

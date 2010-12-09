@@ -1,4 +1,4 @@
-package com.frostwire.gnutella.gui;
+package com.frostwire.gnutella.gui.android;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -14,7 +14,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JRadioButton;
 
-public class ImageRadioButton extends JRadioButton {
+public class BrowseFileTypeButton extends JRadioButton {
     
     private static final long serialVersionUID = 3261658194515096352L;
     
@@ -24,7 +24,7 @@ public class ImageRadioButton extends JRadioButton {
     
     private String _imageText;
 
-    public ImageRadioButton() {
+    public BrowseFileTypeButton() {
         setupUI();
     }
     

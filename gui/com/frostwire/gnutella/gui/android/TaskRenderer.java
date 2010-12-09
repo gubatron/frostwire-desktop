@@ -2,11 +2,28 @@ package com.frostwire.gnutella.gui.android;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Insets;
+import java.awt.RenderingHints;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.ListCellRenderer;
+
+import com.frostwire.gnutella.gui.GraphicPanel;
+import com.limegroup.gnutella.gui.I18n;
 
 public class TaskRenderer extends JPanel implements ListCellRenderer {
 
@@ -15,9 +32,25 @@ public class TaskRenderer extends JPanel implements ListCellRenderer {
 	 */
 	private static final long serialVersionUID = 3202019053091139910L;
 	
-	private Task _activity;
+	private static final Color COLOR_SELECTED = new Color(0x8DB2ED);
+	private static final Color COLOR_EVEN_ROW = new Color(0xFFFFFF);
+	private static final Color COLOR_ODD_ROW = new Color(0xCFE3EA);
+	private static final Color COLOR_PROGRESS_LIGHT = new Color(0xFFFFCF);
+	private static final Color COLOR_PROGRESS = new Color(0xFCE314);
 	
-	private JLabel _label;
+	private static UITool UI_TOOL = new UITool();
+	private static Map<Integer, Image> TO_DEVICE_IMAGE_TYPES = new HashMap<Integer, Image>();
+	private static Map<Integer, Image> TO_DESKTOP_IMAGE_TYPES = new HashMap<Integer, Image>();
+	private static Image IMAGE_STOP;
+	
+	private Task _task;
+	private boolean _selected;
+	private int _index;
+	
+	private GraphicPanel _imagePanel;
+	private JLabel _labelText;
+	private JLabel _labelPercent;
+	private JRadioButton _buttonStop;
 	
 	public TaskRenderer() {
 		setupUI();
@@ -26,84 +59,155 @@ public class TaskRenderer extends JPanel implements ListCellRenderer {
 	@Override
 	public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 
-		_activity = (Task) value;
+		_task = (Task) value;
+		_selected = isSelected;
+		_index = index;
 		
-		if (isSelected) {
-		    setBackground(Color.LIGHT_GRAY);
-		    setForeground(Color.BLACK);
-		}
-		else {
-		    setBackground(Color.WHITE);
-		    setForeground(Color.BLACK);
-		}
-		
-		if (_activity instanceof BrowseTask) {
-			renderBrowseActivity((BrowseTask) _activity);
-		} else if (_activity instanceof CopyToDeviceTask) {
-			renderCopyToDeviceActivity((CopyToDeviceTask) _activity);
-		} else if (_activity instanceof CopyToDesktopTask) {
-			renderCopyToDesktopActivity((CopyToDesktopTask) _activity);
-		} else {
-			_label.setText(_activity.toString());
+		if (_task instanceof CopyToDesktopTask) {
+		    renderDownload((CopyToDesktopTask) _task);
 		}
 
 		return this;
 	}
-	
-	protected void setupUI() {
-		_label = new JLabel();
-		add(_label);
-	}
 
-	private void renderBrowseActivity(BrowseTask activity) {
-		String text = "Browsing device for file type " + UITool.getFileTypeAsString(activity.getType());
-		
-		if (activity.isCanceled()) {
-			text += " Canceled";
-		} else if (activity.isFailed()) {
-			text += " Failed (" + activity.getFailException().getMessage() + ")";
-		} else if (activity.getProgress() == 0) {
-			text += " Pending";
-		} else if (activity.getProgress() == 100) {
-			text += "  Done";
-		}
-		
-		_label.setText(text);
+    protected void setupUI() {
+	    setLayout(new GridBagLayout());
+	    
+	    GridBagConstraints c;
+
+	    _imagePanel = new GraphicPanel();
+	    Dimension size = new Dimension(32, 32);
+        _imagePanel.setPreferredSize(size);
+        _imagePanel.setMinimumSize(size);
+        _imagePanel.setMaximumSize(size);
+        _imagePanel.setSize(size);
+        c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 0;
+        c.insets = new Insets(5, 5, 0, 5);
+        add(_imagePanel, c);
+        
+        _labelText = new JLabel();
+        c = new GridBagConstraints();
+        c.gridx = 1;
+        c.gridy = 0;
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1.0;
+        c.weighty = 1.0;
+        add(_labelText, c);
+        
+        _labelPercent = new JLabel();
+        c = new GridBagConstraints();
+        c.gridx = 2;
+        c.gridy = 0;
+        add(_labelPercent, c);
+        
+        _buttonStop = new JRadioButton();
+        _buttonStop.setBorder(null);
+        _buttonStop.setBackground(null);
+        _buttonStop.setFocusable(false);
+        _buttonStop.setFocusPainted(false);
+        _buttonStop.setContentAreaFilled(false);
+        _buttonStop.setIcon(new ImageIcon(loadImageStop()));
+        _buttonStop.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                buttonStop_mouseReleased(e);
+            }
+        });
+        c = new GridBagConstraints();
+        c.gridx = 3;
+        c.gridy = 0;
+        c.insets = new Insets(0, 0, 0, 6);
+        add(_buttonStop, c);
 	}
+    
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        
+        int w = getWidth();
+        int h = getHeight();
+        
+        if (_selected) {
+            g.setColor(COLOR_SELECTED);
+            g.fillRect(0, 0, w, h);
+        } else {
+            g.setColor(Color.WHITE);
+            g.fillRect(0, 0, w, h);
+        }
+        
+        if (_index % 2 == 0) {
+            g.setColor(COLOR_EVEN_ROW);
+            g.fillRoundRect(2, 2, w - 4, h - 4, 5, 5);
+        } else {
+            g.setColor(COLOR_ODD_ROW);
+            g.fillRoundRect(2, 2, w - 4, h - 4, 5, 5);
+        }
+        
+        if (_task.getProgress() == 0) {
+            
+        } else if (_task.getProgress() == 100) {
+            
+        } else if (_task.isCanceled()) {
+            
+        } else if (_task.isFailed()) {
+            
+        } else {
+            g.setColor(COLOR_PROGRESS_LIGHT);
+            g.fillRoundRect(2, 2, w - 4, h - 4, 5, 5);
+            int pw = (w * _task.getProgress()) / 100;
+            if (pw > w - 4) {
+                pw = w - 4;
+            }
+            g.setColor(COLOR_PROGRESS);
+            g.fillRoundRect(2, 2, pw, h - 4, 5, 5);
+        }
+    }
+
+	protected void buttonStop_mouseReleased(MouseEvent e) {
+        // TODO Auto-generated method stub
+        
+    }
 	
-	private void renderCopyToDeviceActivity(CopyToDeviceTask activity) {
-		String text = "Copying " + activity.getProgressMessage();
-		
-		if (activity.isCanceled()) {
-			text += " Canceled";
-		} else if (activity.isFailed()) {
-			text += " Failed (" + activity.getFailException().getMessage() + ")";
-		} else if (activity.getProgress() == 0) {
-			text += " Pending";
-		} else if (activity.getProgress() == 100) {
-			text += "  Done";
-		} else {
-			text += " " + activity.getProgress() + "%";
-		}
-		
-		_label.setText(text);
-	}
+	private void renderDownload(CopyToDesktopTask task) {
+	    
+	    if (task.getProgress() == 0) {
+	        _labelText.setText(I18n.tr("Download") + " " +
+	                (task.getTotalFiles() == 1 ? I18n.tr("one file") : task.getTotalFiles() + " " + I18n.tr("files")) +
+	                " " + I18n.tr("from") + " " + task.getDevice().getName());
+	        _labelPercent.setText(I18n.tr("pending"));
+	    } else if (task.getProgress() == 100) {
+	        _labelText.setText(I18n.tr("Downloaded") +  " " +
+	                (task.getTotalFiles() == 1 ? I18n.tr("one file") : task.getTotalFiles() + " " + I18n.tr("files")) +
+	                " " + I18n.tr("from") + " " + task.getDevice().getName());
+	        _labelPercent.setText(I18n.tr("done"));
+	    } else if (task.isCanceled()) {
+	        _labelText.setText(I18n.tr("Download") + " " +
+                    (task.getTotalFiles() == 1 ? I18n.tr("one file") : task.getTotalFiles() + " " + I18n.tr("files")) +
+                    " " + I18n.tr("from") + " " + task.getDevice().getName());
+            _labelPercent.setText(I18n.tr("canceled"));
+	    } else if (task.isFailed()) {
+	        _labelText.setText(I18n.tr("Download") + " " +
+                    (task.getTotalFiles() == 1 ? I18n.tr("one file") : task.getTotalFiles() + " " + I18n.tr("files")) +
+                    " " + I18n.tr("from") + " " + task.getDevice().getName());
+            _labelPercent.setText(I18n.tr("error"));
+	    } else {
+	        _labelText.setText(I18n.tr("Downloading") + " " +
+                    (task.getTotalFiles() == 1 ? I18n.tr("one file") : (task.getCurrentFileIndex() + 1) + " " + I18n.tr("out of") + " " + task.getTotalFiles() + " " + I18n.tr("files")) +
+                    " " + I18n.tr("from") + " " + task.getDevice().getName());
+            _labelPercent.setText(task.getProgress() + "%");
+	    }
+    }
 	
-	private void renderCopyToDesktopActivity(CopyToDesktopTask activity) {
-		String text = "Copying " + activity.getProgressMessage();
-		
-		if (activity.isCanceled()) {
-			text += " Canceled";
-		} else if (activity.isFailed()) {
-			text += " Failed (" + activity.getFailException().getMessage() + ")";
-		} else if (activity.getProgress() == 0) {
-			text += " Pending";
-		} else if (activity.getProgress() == 100) {
-			text += "  Done";
-		} else {
-			text += " " + activity.getProgress() + "%";
-		}
-		
-		_label.setText(text);
-	}
+	private Image loadImageStop() {
+        if (IMAGE_STOP != null) {
+            return IMAGE_STOP;
+        }
+        
+        return IMAGE_STOP = UI_TOOL.loadImage("stop").getScaledInstance(24, 24, Image.SCALE_SMOOTH);
+    }
 }
