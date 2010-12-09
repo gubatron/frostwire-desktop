@@ -84,6 +84,8 @@ public class DeviceButton extends JRadioButton {
 		        }
 		    }
         });
+		
+		setTransferHandler(new DeviceListTransferHandler());
 	}
 	
 	@Override
