@@ -1,4 +1,4 @@
-package com.frostwire.gnutella.gui.android;
+package com.frostwire.gnutella.gui;
 
 import java.awt.Color;
 import java.awt.Font;

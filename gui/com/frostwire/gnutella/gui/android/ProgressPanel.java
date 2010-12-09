@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GradientPaint;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
@@ -19,6 +20,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 
 import com.frostwire.GuiFrostWireUtils;
+import com.frostwire.gnutella.gui.GraphicPanel;
 import com.frostwire.gnutella.gui.android.Task.OnChangedListener;
 import com.limegroup.gnutella.gui.I18n;
 
@@ -35,6 +37,8 @@ public class ProgressPanel extends JPanel {
 	private JButton _buttonCancel;
 	private JList _listTasks;
 	private JScrollPane _scrollPaneTasks;
+	private JLabel _labelTitle;
+	private GraphicPanel _panelTitle;
 
 	public ProgressPanel() {
 		
@@ -56,12 +60,22 @@ public class ProgressPanel extends JPanel {
 		}
 	}
 	
-	private void setupUI() {
+	protected void setupUI() {
 		setLayout(new BorderLayout());
 		
-		JLabel titleLabel = setupTitle();
+		_panelTitle = new GraphicPanel();
+		_panelTitle.setLayout(new BorderLayout());
+		_panelTitle.setGradient(new GradientPaint(0, 0, Color.RED, 0, 25, Color.BLUE));
+		add(_panelTitle, BorderLayout.PAGE_START);
 		
-		add(titleLabel, BorderLayout.PAGE_START);
+		String fontFamily = GuiFrostWireUtils.getFontFamily("Dialog", "myriad", "garuda", "helvetica", "arial", "FreeSans");
+        Font titleFont = new Font(fontFamily, Font.PLAIN, 20);
+
+        _labelTitle = new JLabel(" " + I18n.tr("File Transfers"));
+        _labelTitle.setForeground(Color.white);
+        _labelTitle.setFont(titleFont);
+		
+		_panelTitle.add(_labelTitle, BorderLayout.CENTER);
 		
 		_buttonCancel = new JButton("Cancel");
 		_buttonCancel.addMouseListener(new MouseAdapter() {
@@ -83,26 +97,6 @@ public class ProgressPanel extends JPanel {
 		add(_scrollPaneTasks, BorderLayout.CENTER);
 		
 		setPreferredSize(new Dimension(300, 100));
-	}
-
-	/**
-	 * Sets up a title label. It tries to use Helvetica, Arial and Sans-Serif.
-	 * See {@link GuiFrostWireUtils) getFontFamily().
-	 * 
-	 * Case is of no importance for the family name, if it's there it'll find it.
-	 * 
-	 * @return
-	 */
-	private JLabel setupTitle() {
-		String fontFamily = GuiFrostWireUtils.getFontFamily("Dialog", "myriad","garuda","helvetica","arial","FreeSans");
-		
-		Font titleFont = new Font(fontFamily,Font.BOLD,20);
-		JLabel titleLabel = new JLabel(" " + I18n.tr("File Transfers"));
-		titleLabel.setForeground(Color.white);
-		titleLabel.setOpaque(true);
-		titleLabel.setBackground(new Color(0x2c7fb0));
-		titleLabel.setFont(titleFont);
-		return titleLabel;
 	}
 	
 	private void buttonCancel_mouseClicked(MouseEvent e) {

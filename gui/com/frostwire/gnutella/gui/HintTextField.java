@@ -1,4 +1,4 @@
-package com.frostwire.gnutella.gui.android;
+package com.frostwire.gnutella.gui;
 
 import java.awt.Color;
 import java.awt.event.FocusEvent;
@@ -17,7 +17,7 @@ public class HintTextField extends JTextField implements FocusListener {
     private Color _color;
     private Color _hintColor;
 
-    public HintTextField(final String hint) {
+    public HintTextField(String hint) {
         super(hint);
         _hint = hint;
         _color = Color.BLACK;

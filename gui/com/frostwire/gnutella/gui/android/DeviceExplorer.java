@@ -24,7 +24,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
-import com.frostwire.gnutella.gui.ImagePanel;
+import com.frostwire.gnutella.gui.HintTextField;
+import com.frostwire.gnutella.gui.GraphicPanel;
+import com.frostwire.gnutella.gui.ImageRadioButton;
 import com.frostwire.gnutella.gui.SlideshowPanel;
 import com.frostwire.gnutella.gui.android.Task.OnChangedListener;
 
@@ -160,7 +162,8 @@ public class DeviceExplorer extends JPanel {
 	private JPanel setupPanelDevice() {
 		JPanel panel = new JPanel(new BorderLayout());
 		
-		ImagePanel header = new ImagePanel(new UITool().loadImage("device_explorer_background.jpg"));
+		GraphicPanel header = new GraphicPanel();
+		header.setImage(new UITool().loadImage("device_explorer_background.jpg"));
 		header.setLayout(new GridBagLayout());
 		
 		GridBagConstraints c;
@@ -218,7 +221,7 @@ public class DeviceExplorer extends JPanel {
         
         
         
-        _textFilter = new HintTextField("Type here to filter results");
+        _textFilter = new HintTextField("Type here to search");
         _textFilter.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {

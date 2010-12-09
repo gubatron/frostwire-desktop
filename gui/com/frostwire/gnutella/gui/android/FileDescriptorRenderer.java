@@ -25,7 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.ListCellRenderer;
 
-import com.frostwire.gnutella.gui.ImagePanel;
+import com.frostwire.gnutella.gui.GraphicPanel;
 import com.limegroup.gnutella.gui.mp3.AudioSource;
 import com.limegroup.gnutella.gui.mp3.LimeWirePlayer;
 import com.limegroup.gnutella.gui.mp3.PlayerState;
@@ -47,7 +47,7 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
     private static Image IMAGE_PLAY;
     private static Image IMAGE_STOP;
 	
-	private ImagePanel _imagePanel;
+	private GraphicPanel _imagePanel;
 	private JLabel _labelTitle;
 	private JLabel _labelSize;
 	private JLabel _labelExtra;
@@ -123,7 +123,7 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 	    
 	    GridBagConstraints c;
 	    
-	    _imagePanel = new ImagePanel();
+	    _imagePanel = new GraphicPanel();
 	    Dimension size = new Dimension(24, 24);
 	    _imagePanel.setPreferredSize(size);
 	    _imagePanel.setMinimumSize(size);

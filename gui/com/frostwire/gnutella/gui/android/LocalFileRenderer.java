@@ -30,7 +30,7 @@ import javax.swing.ListCellRenderer;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileSystemView;
 
-import com.frostwire.gnutella.gui.ImagePanel;
+import com.frostwire.gnutella.gui.GraphicPanel;
 
 public class LocalFileRenderer extends JPanel implements ListCellRenderer {
 
@@ -60,7 +60,7 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
 	private int _layoutOrientation;
 	private boolean _selected;
 	
-	private ImagePanel _imagePanel;
+	private GraphicPanel _imagePanel;
 	private MultilineLabel _multilineLabelName;
 	private JLabel _labelName;
 	private JLabel _labelDateModified;
@@ -140,7 +140,7 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
 	
 	protected void setupUI() {
 	    
-	    _imagePanel = new ImagePanel();
+	    _imagePanel = new GraphicPanel();
 	    
 	    _multilineLabelName = new MultilineLabel();
         
