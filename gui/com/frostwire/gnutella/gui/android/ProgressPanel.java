@@ -2,7 +2,9 @@ package com.frostwire.gnutella.gui.android;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Point;
@@ -34,7 +36,8 @@ public class ProgressPanel extends JPanel {
 	private TaskListModel _model;
 	private MyActivityListener _taskListener;
 	
-	private JButton _buttonCancel;
+	private JButton _buttonCancelAll;
+	private JButton _buttonClearFinished;
 	private JList _listTasks;
 	private JScrollPane _scrollPaneTasks;
 	private JLabel _labelTitle;
@@ -57,7 +60,7 @@ public class ProgressPanel extends JPanel {
 		
 		task.addOnChangedListener(_taskListener);
 		
-		_model.addActivity(task);
+		_model.addTask(task);
 		
 		int lastIndex = _model.getSize() - 1;
 		if (lastIndex >= 0) {
@@ -82,14 +85,28 @@ public class ProgressPanel extends JPanel {
 		
 		_panelTitle.add(_labelTitle, BorderLayout.CENTER);
 		
-		_buttonCancel = new JButton("Cancel");
-		_buttonCancel.addMouseListener(new MouseAdapter() {
+		JPanel bottomPanel = new JPanel();
+		bottomPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		
+		_buttonCancelAll = new JButton(I18n.tr("Cancel All"));
+		_buttonCancelAll.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				buttonCancel_mouseClicked(e);
+				buttonCancelAll_mouseClicked(e);
 			}
 		});
-		add(_buttonCancel, BorderLayout.PAGE_END);		
+		bottomPanel.add(_buttonCancelAll);
+		
+		_buttonClearFinished = new JButton(I18n.tr("Clear Finished"));
+		_buttonClearFinished.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                buttonClearFinished_mouseClicked(e);
+            }
+        });
+        bottomPanel.add(_buttonClearFinished);
+		
+		add(bottomPanel, BorderLayout.PAGE_END);		
 		
 		_listTasks = new JList(_model);
 		_listTasks.setCellRenderer(new TaskRenderer());
@@ -104,19 +121,31 @@ public class ProgressPanel extends JPanel {
 		setPreferredSize(new Dimension(300, 100));
 	}
 	
-	private void buttonCancel_mouseClicked(MouseEvent e) {
-		int index = _listTasks.getSelectedIndex();
-		
-		if (index != -1) {
-			int showConfirmDialog = JOptionPane.showConfirmDialog(null, I18n.tr("Should I stop the File Transfer?"), I18n.tr("Are you sure?"), JOptionPane.YES_NO_OPTION);
-			
-			if (showConfirmDialog != JOptionPane.YES_OPTION) {
-				return;
-			}
+	protected void buttonClearFinished_mouseClicked(MouseEvent e) {
+        for (int i = _model.getSize() - 1; i >= 0; i--) {
+            Task task = (Task) _model.getElementAt(i);
+            if (!task.isRunning()) {
+                _model.delete(i);
+            }
+        }
+    }
 
-			_model.getElementAt(index).cancel();
-			_model.refreshIndex(index);
-		}
+    protected void buttonCancelAll_mouseClicked(MouseEvent e) {
+        Component parent = AndroidMediator.instance().getComponent();
+        int showConfirmDialog = JOptionPane.showConfirmDialog(parent, I18n.tr("Should I stop all transfers?"), I18n.tr("Are you sure?"),
+                JOptionPane.YES_NO_OPTION);
+
+        if (showConfirmDialog != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        for (int i = _model.getSize() - 1; i >= 0; i--) {
+            Task task = (Task) _model.getElementAt(i);
+            if (task.isRunning()) {
+                _model.getElementAt(i).cancel();
+                _model.refreshIndex(i);
+            }
+        }
 	}
 	
 	private Rectangle getRepaintBounds(int index) {
@@ -136,8 +165,12 @@ public class ProgressPanel extends JPanel {
 			
 			SwingUtilities.invokeLater(new Runnable() {
 				public void run() {
-					_listTasks.repaint(getRepaintBounds(index));
-					_model.refreshIndex(index);
+				    try {
+				        _listTasks.repaint(getRepaintBounds(index));
+				        _model.refreshIndex(index);
+				    } catch (Exception e) {
+				        // ignored due to concurrent modifications
+				    }
 				}
 			});
 		}

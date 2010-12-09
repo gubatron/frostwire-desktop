@@ -74,7 +74,7 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
     @Override
 	public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 		
-        _localFile = (LocalFile) value;     
+        _localFile = (LocalFile) value;
         _selected = isSelected;
         
         if (_layoutOrientation != list.getLayoutOrientation()) {
@@ -82,6 +82,9 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
             relayout();
         }		
 		
+        if (_localFile == null) {
+            return this;
+        }
         File file = _localFile.getFile();
         
 		setImagePanelThumbnail(_localFile);		

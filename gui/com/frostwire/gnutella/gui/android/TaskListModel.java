@@ -12,25 +12,25 @@ public class TaskListModel extends AbstractListModel {
 	 */
 	private static final long serialVersionUID = -8310165387627881837L;
 	
-	private List<Task> _activities;
+	private List<Task> _tasks;
 	
 	public TaskListModel() {
-		_activities = new ArrayList<Task>();
+		_tasks = new ArrayList<Task>();
 	}
 
 	@Override
 	public int getSize() {
-		return _activities.size();
+		return _tasks.size();
 	}
 
 	@Override
 	public Task getElementAt(int index) {
-		return _activities.get(index);
+		return _tasks.get(index);
 	}
 	
-	public void addActivity(Task activity) {
-		int index = _activities.size();
-		_activities.add(activity);
+	public void addTask(Task task) {
+		int index = _tasks.size();
+		_tasks.add(task);
 		fireIntervalAdded(this, index, index);
 	}
 	
@@ -39,6 +39,15 @@ public class TaskListModel extends AbstractListModel {
 	}
 	
 	public int indexOf(Task activity) {
-		return _activities.indexOf(activity);
+		return _tasks.indexOf(activity);
+	}
+	
+	public void delete(int index) {
+	    try {
+	        _tasks.remove(index);
+	        fireIntervalRemoved(this, index, index);
+	    } catch (Exception e) {
+	        // ignore
+	    }
 	}
 }

@@ -192,7 +192,7 @@ public class TaskRenderer extends JPanel implements ListCellRenderer {
         
         _imagePanel.setImage(image);
         
-        if (task.getProgress() == 0) {
+        if (task.getProgress() == 0 && !(task.isCanceled() || task.isFailed())) {
             _labelText.setText(I18n.tr("Download") + " " +
                     (task.getTotalItems() == 1 ? I18n.tr("one file") : task.getTotalItems() + " " + I18n.tr("files")) +
                     " " + I18n.tr("from") + " " + task.getDevice().getName());
@@ -236,7 +236,7 @@ public class TaskRenderer extends JPanel implements ListCellRenderer {
         
         _imagePanel.setImage(image);
 	    
-	    if (task.getProgress() == 0) {
+	    if (task.getProgress() == 0 && !(task.isCanceled() || task.isFailed())) {
 	        _labelText.setText(I18n.tr("Upload") + " " +
 	                (task.getTotalItems() == 1 ? I18n.tr("one file") : task.getTotalItems() + " " + I18n.tr("files")) +
 	                " " + I18n.tr("to") + " " + task.getDevice().getName());
