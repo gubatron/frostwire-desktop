@@ -1,19 +1,27 @@
 package com.frostwire.gnutella.gui.android;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.awt.image.ConvolveOp;
+import java.awt.image.Kernel;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -37,6 +45,7 @@ public class DeviceBar extends JPanel {
 	private BufferedImage _imageLeftBorder;
 	private BufferedImage _imageRightBorder;
 	private BufferedImage _imageBackground;
+	private BufferedImage _imageNoDevice;
 	
 	public DeviceBar() {
 	    _buttons = new HashMap<Device, DeviceButton>();
@@ -58,7 +67,7 @@ public class DeviceBar extends JPanel {
 		_buttons.put(device, button);
 		_buttonGroup.add(button);
 		add(button);
-		revalidate();
+		repaint();
 		
 		device.setOnActionFailedListener(_deviceListener);
 	}
@@ -93,6 +102,7 @@ public class DeviceBar extends JPanel {
 			revalidate();
 			
 			if (_buttons.size() == 0 || device.equals(_selectedDevice)) {
+			    repaint();
 				AndroidMediator.instance().getDeviceExplorer().setPanelDevice(false);
 			}
 		}
@@ -118,6 +128,15 @@ public class DeviceBar extends JPanel {
 	    
 	    g.drawImage(_imageLeftBorder, 0, 0, null);
 	    g.drawImage(_imageRightBorder, getWidth() - _imageRightBorder.getWidth(), 0, null);
+	    
+	    if (_buttons.size() == 0) {
+	        int x = (getWidth() - _imageNoDevice.getWidth()) / 2;
+	        int y = (getHeight() - _imageNoDevice.getHeight())  / 2 - 5;
+	        
+	        if (x >= 0 && y >= 0) {
+	            g.drawImage(_imageNoDevice, x, y, null);
+	        }
+	    }
 	}
 	
 	private void buildImages() {
@@ -146,7 +165,73 @@ public class DeviceBar extends JPanel {
         }
         
         _imageBackground = image.getSubimage(15, 0, image.getWidth() - 15, image.getHeight());
+        
+        _imageNoDevice = buildTextImage(I18n.tr("No devices nearby"));
 	}
+	
+	private BufferedImage buildTextImage(String text) {
+        // TODO: Use parameters for colors.
+        
+        Font font = getFont();
+        font = new Font(font.getFamily(), Font.BOLD, font.getSize() + 20);
+
+        Graphics2D graphicsDummy = null;
+        Graphics2D graphics1 = null;
+        Graphics2D graphics2 = null;
+        
+        BufferedImage image = null;
+
+        try {
+
+            BufferedImage imageDummy = new BufferedImage(300, 120, BufferedImage.TYPE_INT_ARGB);
+            graphicsDummy = imageDummy.createGraphics();
+            graphicsDummy.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            graphicsDummy.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+
+            FontMetrics metrics = graphicsDummy.getFontMetrics(font);
+            int w = metrics.stringWidth(text) + 20;
+            int h = metrics.getHeight();
+
+            BufferedImage image1 = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+            graphics1 = image1.createGraphics();
+            graphics1.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            graphics1.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+
+            //draw "shadow" text: to be blurred next
+            TextLayout textLayout = new TextLayout(text, font, graphics1.getFontRenderContext());
+            graphics1.setPaint(Color.BLACK);
+            textLayout.draw(graphics1, 11, 34);
+            graphics1.dispose();
+
+            //blur the shadow: result is sorted in image2
+            float ninth = 1.0f / 9.0f;
+            float[] kernel = { ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth };
+            ConvolveOp op = new ConvolveOp(new Kernel(3, 3, kernel), ConvolveOp.EDGE_NO_OP, null);
+            BufferedImage image2 = op.filter(image1, null);
+
+            //write "original" text on top of shadow
+            graphics2 = image2.createGraphics();
+            graphics2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            graphics2.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+            graphics2.setPaint(Color.WHITE);
+            textLayout.draw(graphics2, 10, 33);
+            
+            image = image2;
+            
+        } finally {
+            if (graphicsDummy != null) {
+                graphicsDummy.dispose();
+            }
+            if (graphicsDummy != null) {
+                graphics1.dispose();
+            }
+            if (graphicsDummy != null) {
+                graphics2.dispose();
+            }
+        }
+
+        return image;
+    }
 	
 	private final class MyMouseAdapter extends MouseAdapter {
 		public void mouseReleased(MouseEvent e) {
