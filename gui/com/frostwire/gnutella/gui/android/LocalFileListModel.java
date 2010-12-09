@@ -41,7 +41,7 @@ public class LocalFileListModel extends AbstractListModel {
 		_myOnOpenListener = new MyOnOpenListener();
 	}
 	
-	public void setRoot(File path) {
+	public void setRoot(final File path) {
 		if (!path.isDirectory()) {
 			return;
 		}
@@ -77,7 +77,7 @@ public class LocalFileListModel extends AbstractListModel {
 		
 		_files.addAll(children);
 		fireOnRoot(path);
-		fireContentsChanged(this, 0, _files.size() - 1);
+        fireContentsChanged(this, 0, _files.size() - 1);
 	}
 	
 	public File getRoot() {

@@ -1,5 +1,6 @@
 package com.frostwire.gnutella.gui;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
@@ -36,6 +37,7 @@ public class SlideshowPanel extends JPanel {
     private boolean _loadingNextImage;
     private FadeSlideTransition _transition;
     private long _transitionTime;
+    private Color _colorBackground;
     
     private boolean _started;
     
@@ -71,6 +73,9 @@ public class SlideshowPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         
+        g.setColor(_colorBackground);
+        g.fillRect(0, 0, getWidth(), getHeight());
+        
         if (!_started) {
             startAnimation();
         }
@@ -83,7 +88,9 @@ public class SlideshowPanel extends JPanel {
         }
         
         if (_transition == null && _currentImage != null) {
-            g.drawImage(_currentImage, 0, 0, null);
+            int x = (getWidth() - _currentImage.getWidth()) / 2;
+            int y = (getHeight() - _currentImage.getHeight()) / 2;
+            g.drawImage(_currentImage, x, y, null);
         }
     }
     
@@ -91,6 +98,7 @@ public class SlideshowPanel extends JPanel {
         _slides = slides;
         _randomStart = randomStart;
         _currentSlideIndex = -1;
+        _colorBackground = getBackground();
         setCursor(new Cursor(Cursor.HAND_CURSOR));
         addMouseListener(new MouseAdapter() {
             @Override

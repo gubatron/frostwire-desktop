@@ -109,10 +109,9 @@ public class DesktopExplorer extends JPanel {
         return _model.getRoot();
     }
 
-    public void setRootFolder(File path) {
+    public void setRootFolder(final File path) {
         cancelEdit();
         _model.setRoot(path);
-        SharingSettings.DIRECTORY_FOR_OPEN_DESKTOP_EXPLORER.setValue(path);
     }
     
     public File getSelectedFolder() {

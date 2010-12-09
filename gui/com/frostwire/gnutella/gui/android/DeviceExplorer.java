@@ -2,6 +2,7 @@ package com.frostwire.gnutella.gui.android;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -131,6 +132,7 @@ public class DeviceExplorer extends JPanel {
         
         _panelDevice = setupPanelDevice();
         _panelNoDevice = new SlideshowPanel(SLIDESHOW_JSON_URL);
+        _panelNoDevice.setBackground(Color.BLACK);
         
         add(_panelDevice, DEVICE);
         add(_panelNoDevice, NO_DEVICE);
