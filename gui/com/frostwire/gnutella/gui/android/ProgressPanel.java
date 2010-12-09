@@ -70,7 +70,7 @@ public class ProgressPanel extends JPanel {
 		
 		_panelTitle = new GraphicPanel();
 		_panelTitle.setLayout(new BorderLayout());
-		_panelTitle.setGradient(new GradientPaint(0, 0, Color.RED, 0, 25, Color.BLUE));
+		_panelTitle.setGradient(new GradientPaint(0, 0,new Color(0x2c7fb0), 0, 25,  Color.BLACK));
 		add(_panelTitle, BorderLayout.PAGE_START);
 		
 		String fontFamily = GuiFrostWireUtils.getFontFamily("Dialog", "myriad", "garuda", "helvetica", "arial", "FreeSans");
