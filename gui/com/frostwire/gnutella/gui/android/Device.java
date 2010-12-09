@@ -191,7 +191,11 @@ public class Device {
 		
 		try {
 			
-			uri = new URI("http://" + _address.getHostAddress() + ":" + _port + "/upload?type=" + type + "&fileName=" + EncodingUtils.encode(file.getName()) + "&token=" + EncodingUtils.encode(_token));
+			uri = new URI("http://" + _address.getHostAddress() + ":" + _port +
+			        "/upload?type=" + type +
+			        "&fileName=" + EncodingUtils.encode(file.getName()) +
+			        "&token=" + EncodingUtils.encode(_token) +
+			        "&from=" + EncodingUtils.encode(System.getProperty("user.name")));
 			
 			HttpFetcher fetcher = new HttpFetcher(uri);
 			

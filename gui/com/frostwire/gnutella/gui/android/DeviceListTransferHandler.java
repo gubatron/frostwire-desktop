@@ -16,11 +16,16 @@ public class DeviceListTransferHandler extends TransferHandler {
 	
 	@Override
 	public boolean canImport(TransferSupport support) {
-		
-		if (support.isDataFlavorSupported(DesktopListTransferable.LOCAL_FILE_ARRAY)) {
+	    
+	    Device device = AndroidMediator.instance().getDeviceBar().getSelectedDevice();
+        if (device == null) {
+            return false;
+        }
+        
+	    if (support.isDataFlavorSupported(DesktopListTransferable.LOCAL_FILE_ARRAY)) {
 			return true;
 		}
-		
+	    
 		return false;
 	}
 	
