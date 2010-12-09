@@ -2,8 +2,13 @@ package com.frostwire.gnutella.gui.android;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,11 +34,17 @@ public class DeviceBar extends JPanel {
 	
 	private Device _selectedDevice;
 	
+	private BufferedImage _imageLeftBorder;
+	private BufferedImage _imageRightBorder;
+	private BufferedImage _imageBackground;
+	
 	public DeviceBar() {
 	    _buttons = new HashMap<Device, DeviceButton>();
 	    _buttonGroup = new ButtonGroup();
         _deviceListener = new MyOnActionFailedListener();
         _mouseAdapter = new MyMouseAdapter();
+        
+        buildImages();
         
 		setupUI();
 	}
@@ -94,6 +105,47 @@ public class DeviceBar extends JPanel {
 	protected void setupUI() {
 		setLayout(new FlowLayout());
 		setPreferredSize(new Dimension(300, 140));
+	}
+	
+	@Override
+	protected void paintComponent(Graphics g) {
+	    super.paintComponent(g);
+	    
+	    int n = getWidth() / _imageBackground.getWidth() + 1;
+	    for (int i = 0; i < n; i++) {
+	        g.drawImage(_imageBackground, i * _imageBackground.getWidth(), 0, null);
+	    }
+	    
+	    g.drawImage(_imageLeftBorder, 0, 0, null);
+	    g.drawImage(_imageRightBorder, getWidth() - _imageRightBorder.getWidth(), 0, null);
+	}
+	
+	private void buildImages() {
+        BufferedImage image = new UITool().loadImage("device_bar_background");
+
+        _imageLeftBorder = image.getSubimage(0, 0, 15, image.getHeight());
+
+        _imageRightBorder = new BufferedImage(_imageLeftBorder.getWidth(), _imageLeftBorder.getHeight(), _imageLeftBorder.getType());
+
+        Graphics2D g = null;
+
+        try {
+
+            g = _imageRightBorder.createGraphics();
+            g.drawImage(_imageLeftBorder, 0, 0, null);
+
+            AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
+            tx.translate(-_imageLeftBorder.getWidth(), 0);
+            AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+            _imageRightBorder = op.filter(_imageRightBorder, null);
+
+        } finally {
+            if (g != null) {
+                g.dispose();
+            }
+        }
+        
+        _imageBackground = image.getSubimage(15, 0, image.getWidth() - 15, image.getHeight());
 	}
 	
 	private final class MyMouseAdapter extends MouseAdapter {
