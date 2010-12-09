@@ -78,7 +78,7 @@ public class CopyToDeviceTask extends Task {
 					
 				} catch (Exception e) {
 					fail(e);
-					break;
+					return;
 				}
 			}
 			

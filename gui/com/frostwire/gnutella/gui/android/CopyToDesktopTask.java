@@ -95,7 +95,7 @@ public class CopyToDesktopTask extends Task {
     				
     			} catch (IOException e) {
     				fail(e);
-    				break;
+    				return;
     			} finally {
     				close(fos);
     				close(is);

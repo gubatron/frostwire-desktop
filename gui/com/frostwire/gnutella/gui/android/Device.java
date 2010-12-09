@@ -204,6 +204,7 @@ public class Device {
 						
 		} catch (Exception e) {
 			notifyOnActionFailed(ACTION_UPLOAD, e);
+			throw new RuntimeException(e);
 		}
 	}
 	
