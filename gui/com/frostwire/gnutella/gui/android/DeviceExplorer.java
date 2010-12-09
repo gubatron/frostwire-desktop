@@ -35,7 +35,7 @@ public class DeviceExplorer extends JPanel {
 	 */
 	private static final long serialVersionUID = -6716798921645948528L;
 	
-	private static final String SLIDESHOW_JSON_URL = "http://localhost/~atorres/slides.php";
+	private static final String SLIDESHOW_JSON_URL = "http://localhost/~gubatron/slides.php";
 	
 	private static final String DEVICE = "device";
 	private static final String NO_DEVICE = "no-device";
@@ -216,7 +216,9 @@ public class DeviceExplorer extends JPanel {
         _buttonGroup.add(_buttonAudio);
         _buttonGroup.add(_invisibleRadioButton = new JRadioButton());
         
-        _textFilter = new HintTextField("Type here to search");
+        
+        
+        _textFilter = new HintTextField("Type here to filter results");
         _textFilter.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -265,6 +267,27 @@ public class DeviceExplorer extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 			    buttonType_mouseClicked(e, type);
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+			    String fileType = "Application";
+		    	switch(type) {
+		    		case DeviceConstants.FILE_TYPE_AUDIO:
+		    			fileType="Audio"; break;
+		    		case DeviceConstants.FILE_TYPE_DOCUMENTS:
+		    			fileType="Document"; break;
+		    		case DeviceConstants.FILE_TYPE_PICTURES:
+		    			fileType="Picture"; break;
+		    		case DeviceConstants.FILE_TYPE_RINGTONES:
+		    			fileType="Ringtone"; break;
+		    		case DeviceConstants.FILE_TYPE_VIDEOS:
+		    			fileType="Video"; break;
+		    	}
+			    	
+			    _textFilter.setHint("Type here to filter "+ fileType +" files");
+			    _textFilter.focusLost(null);
+			    _textFilter.clear();
 			}
 		});
 		
