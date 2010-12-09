@@ -110,6 +110,7 @@ public class ProgressPanel extends JPanel {
 		
 		_listTasks = new JList(_model);
 		_listTasks.setCellRenderer(new TaskRenderer());
+		_listTasks.addMouseListener(new RedispatchMouseListener(_listTasks));
 		_listTasks.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		_listTasks.setLayoutOrientation(JList.VERTICAL);
 		_listTasks.setVisibleRowCount(-1);

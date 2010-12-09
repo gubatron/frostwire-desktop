@@ -72,6 +72,20 @@ public class TaskRenderer extends JPanel implements ListCellRenderer {
 
 		return this;
 	}
+	
+	public Component getComponentAt(int x, int y) {
+        for (int i = 0; i < getComponentCount(); i++) {
+            if (getComponent(i).getBounds().contains(x, y)) {
+                return getComponent(i);
+            }
+        }
+        
+        if (getBounds().contains(x, y)) {
+            return this;
+        }
+        
+        return null;
+    }
 
     protected void setupUI() {
 	    setLayout(new GridBagLayout());
@@ -174,8 +188,8 @@ public class TaskRenderer extends JPanel implements ListCellRenderer {
     }
 
 	protected void buttonStop_mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
-        
+        _task.cancel();
+        _buttonStop.setVisible(false);
     }
 	
 	private void renderDownload(CopyToDesktopTask task) {
@@ -197,26 +211,31 @@ public class TaskRenderer extends JPanel implements ListCellRenderer {
                     (task.getTotalItems() == 1 ? I18n.tr("one file") : task.getTotalItems() + " " + I18n.tr("files")) +
                     " " + I18n.tr("from") + " " + task.getDevice().getName());
             _labelPercent.setText(I18n.tr("pending"));
+            _buttonStop.setVisible(true);
         } else if (task.getProgress() == 100) {
             _labelText.setText(I18n.tr("Downloaded") +  " " +
                     (task.getTotalItems() == 1 ? I18n.tr("one file") : task.getTotalItems() + " " + I18n.tr("files")) +
                     " " + I18n.tr("from") + " " + task.getDevice().getName());
             _labelPercent.setText(I18n.tr("done"));
+            _buttonStop.setVisible(false);
         } else if (task.isCanceled()) {
             _labelText.setText(I18n.tr("Download") + " " +
                     (task.getTotalItems() == 1 ? I18n.tr("one file") : task.getTotalItems() + " " + I18n.tr("files")) +
                     " " + I18n.tr("from") + " " + task.getDevice().getName());
             _labelPercent.setText(I18n.tr("canceled"));
+            _buttonStop.setVisible(false);
         } else if (task.isFailed()) {
             _labelText.setText(I18n.tr("Download") + " " +
                     (task.getTotalItems() == 1 ? I18n.tr("one file") : task.getTotalItems() + " " + I18n.tr("files")) +
                     " " + I18n.tr("from") + " " + task.getDevice().getName());
             _labelPercent.setText(I18n.tr("error"));
+            _buttonStop.setVisible(false);
         } else {
             _labelText.setText(I18n.tr("Downloading") + " " +
                     (task.getTotalItems() == 1 ? I18n.tr("one file") : (task.getCurrentIndex() + 1) + " " + I18n.tr("out of") + " " + task.getTotalItems() + " " + I18n.tr("files")) +
                     " " + I18n.tr("from") + " " + task.getDevice().getName());
             _labelPercent.setText(task.getProgress() + "%");
+            _buttonStop.setVisible(true);
         }
     }
 	
@@ -241,26 +260,31 @@ public class TaskRenderer extends JPanel implements ListCellRenderer {
 	                (task.getTotalItems() == 1 ? I18n.tr("one file") : task.getTotalItems() + " " + I18n.tr("files")) +
 	                " " + I18n.tr("to") + " " + task.getDevice().getName());
 	        _labelPercent.setText(I18n.tr("pending"));
+	        _buttonStop.setVisible(true);
 	    } else if (task.getProgress() == 100) {
 	        _labelText.setText(I18n.tr("Uploaded") +  " " +
 	                (task.getTotalItems() == 1 ? I18n.tr("one file") : task.getTotalItems() + " " + I18n.tr("files")) +
 	                " " + I18n.tr("to") + " " + task.getDevice().getName());
 	        _labelPercent.setText(I18n.tr("done"));
+	        _buttonStop.setVisible(false);
 	    } else if (task.isCanceled()) {
 	        _labelText.setText(I18n.tr("Upload") + " " +
                     (task.getTotalItems() == 1 ? I18n.tr("one file") : task.getTotalItems() + " " + I18n.tr("files")) +
                     " " + I18n.tr("to") + " " + task.getDevice().getName());
             _labelPercent.setText(I18n.tr("canceled"));
+            _buttonStop.setVisible(false);
 	    } else if (task.isFailed()) {
 	        _labelText.setText(I18n.tr("Upload") + " " +
                     (task.getTotalItems() == 1 ? I18n.tr("one file") : task.getTotalItems() + " " + I18n.tr("files")) +
                     " " + I18n.tr("to") + " " + task.getDevice().getName());
             _labelPercent.setText(I18n.tr("error"));
+            _buttonStop.setVisible(false);
 	    } else {
 	        _labelText.setText(I18n.tr("Uploading") + " " +
                     (task.getTotalItems() == 1 ? I18n.tr("one file") : (task.getCurrentIndex() + 1) + " " + I18n.tr("out of") + " " + task.getTotalItems() + " " + I18n.tr("files")) +
                     " " + I18n.tr("to") + " " + task.getDevice().getName());
             _labelPercent.setText(task.getProgress() + "%");
+            _buttonStop.setVisible(true);
 	    }
     }
 	
