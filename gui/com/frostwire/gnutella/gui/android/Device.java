@@ -169,27 +169,21 @@ public class Device {
 		return null;
 	}
 	
-	public void upload(int type, File file) {
-		try {
-			
-			URI uri = new URI("http://" + _address.getHostAddress() + ":" + _port + "/upload?type=" + type + "&fileName=" + EncodingUtils.encode(file.getName()) + "&token=" + EncodingUtils.encode(_token));
-			
-			HttpFetcher fetcher = new HttpFetcher(uri);
-			
-			fetcher.post(file);
-			
-			setTimeout(System.currentTimeMillis());
-						
-		} catch (Exception e) {
-			notifyOnActionFailed(ACTION_UPLOAD, e);
-		}
-	}
-	
 	public void upload(int type, File file, ProgressFileEntityListener listener) {
 		
 		URI uri = null;
 		
 		try {
+		    
+		    uri = new URI("http://" + _address.getHostAddress() + ":" + _port +
+                    "/authorize?token=" + EncodingUtils.encode(_token) +
+                    "&from=" + EncodingUtils.encode(System.getProperty("user.name")));
+
+		    HttpFetcher fetcher = new HttpFetcher(uri);
+		    
+		    fetcher.fetch();
+		    
+		    setTimeout(System.currentTimeMillis());
 			
 			uri = new URI("http://" + _address.getHostAddress() + ":" + _port +
 			        "/upload?type=" + type +
@@ -197,7 +191,7 @@ public class Device {
 			        "&token=" + EncodingUtils.encode(_token) +
 			        "&from=" + EncodingUtils.encode(System.getProperty("user.name")));
 			
-			HttpFetcher fetcher = new HttpFetcher(uri);
+			fetcher = new HttpFetcher(uri);
 			
 			ProgressFileEntity fileEntity = new ProgressFileEntity(file);
 			fileEntity.setProgressFileEntityListener(listener);
