@@ -653,7 +653,7 @@ msgstr "Iniciar automáticamente"
 
 #: gui/com/limegroup/bittorrent/gui/options/panes/BittorrentPaneItem.java:36
 msgid "BitTorrent Settings"
-msgstr "Configuracion de BitTorrent"
+msgstr "Configuración de BitTorrent"
 
 #: gui/com/limegroup/bittorrent/gui/options/panes/BittorrentPaneItem.java:38
 msgid ""
@@ -1089,7 +1089,7 @@ msgid ""
 msgstr ""
 "Tu estas compartiendo muchos ficheros a través de FrostWire, {0} ficheros y "
 "contando. ¿Piensas compartir estos ficheros? Por favor revise su "
-"configuracion de compartir y que ficheros estan compartidos para asegurar "
+"configuración de compartir y que ficheros estan compartidos para asegurar "
 "que tu no estas compartiendo ficheros comprometidos."
 
 #: gui/com/limegroup/gnutella/gui/FileManagerWarningManager.java:106
@@ -4026,7 +4026,7 @@ msgstr "Preguntarme que hacer cuando falte una asociacion."
 
 #: gui/com/limegroup/gnutella/gui/init/FirewallWindow.java:22
 msgid "Firewall Setup"
-msgstr "Configuracion del Corta-fuego (Firewall)"
+msgstr "Configuración del Corta-fuego (Firewall)"
 
 #: gui/com/limegroup/gnutella/gui/init/FirewallWindow.java:23
 msgid ""
@@ -4118,8 +4118,8 @@ msgid ""
 "Please choose the speed of your internet connection. Setting this speed "
 "correctly is important for optimum network performance."
 msgstr ""
-"Por favor eliga la velocidad de su conexion de internet. Poner esto "
-"correctamente es importante para tener un performance optimo en la red"
+"Por favor eliga la velocidad de su conexión de internet. Poner esto "
+"correctamente es importante para tener un performance óptimo en la red."
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:151
 #: gui/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:22
@@ -4167,9 +4167,9 @@ msgid ""
 "can also choose folders you would like to share with other users running "
 "FrostWire."
 msgstr ""
-"Porfavor elige una carpeta donde desea que sus archivos descargados sean "
-"guardados. Tambien puede elegir carpetas que le gustaria compartir con otros "
-"usuarios mientras corre FrostWire"
+"Por favor elige una carpeta donde desea que sus archivos descargados sean "
+"guardados. También puede elegir carpetas que le gustaría compartir con otros "
+"usuarios mientras corre FrostWire."
 
 #: gui/com/limegroup/gnutella/gui/init/SaveWindow.java:81
 msgid ""
@@ -4178,8 +4178,8 @@ msgid ""
 "choose folders you would like to share with other users running FrostWire."
 msgstr ""
 "FrowtWire ahora descarga archivos a una carpeta nueva, diferente. Por favor "
-"confirme que esta carpeta es donde le gustaria que sus archivos sean "
-"guardados. Tambien puede elegir carpetas para compartir con otros usuarios "
+"confirme que esta carpeta es donde le gustaría que sus archivos sean "
+"guardados. También puede elegir carpetas para compartir con otros usuarios "
 "que corren FrostWire."
 
 #: gui/com/limegroup/gnutella/gui/init/SaveWindow.java:103
@@ -4236,7 +4236,7 @@ msgstr "Escoja otra carpeta"
 
 #: gui/com/limegroup/gnutella/gui/init/SetupManager.java:223
 msgid "FrostWire Setup Wizard"
-msgstr "Asistente de configuracion FrostWire"
+msgstr "Asistente de configuración FrostWire"
 
 #: gui/com/limegroup/gnutella/gui/init/SetupManager.java:456
 #: gui/com/limegroup/gnutella/gui/wizard/Wizard.java:255
@@ -5037,7 +5037,7 @@ msgstr "Preferencias"
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:399
 #, fuzzy
 msgid "Firewall"
-msgstr "Configuracion del Corta-fuego (Firewall)"
+msgstr "Configuración del Corta-fuego (Firewall)"
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:400
 msgid "Proxy"
@@ -5125,7 +5125,7 @@ msgid ""
 "takes them."
 msgstr ""
 "Puede utilizar FrostWire para abrir ciertos tipos de archivos y protocolos. "
-"Tambien puede instruir a FrostWire para siempre recuperar estas asociaciones "
+"También puede instruir a FrostWire para siempre recuperar estas asociaciones "
 "si otro programa las reclama."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:59
@@ -5228,7 +5228,7 @@ msgstr ""
 "de error de ejemplo, haga clic en 'ver ejemplo'. Si elije 'enviar siempre "
 "inmediatamente', contactará de inmediato al servidor de errores cuando "
 "FrostWire encuentre un error interno. Si elije 'preguntar siempre si deseo "
-"revisar', FrostWire le pediránsu aprobación antes de enviar un error al "
+"revisar', FrostWire le pedirá su aprobación antes de enviar un error al "
 "servidor de errores. Si elige 'siempre descartar errores', FrostWire "
 "ignorará todos los errores (no se recomienda)."
 
@@ -5299,7 +5299,7 @@ msgid ""
 "You can limit who is able to connect to you based on the number of files "
 "they share."
 msgstr ""
-"Puede restringir quién puede conectarse a usted segn la cantidad de archivos "
+"Puede restringir quién puede conectarse a usted según la cantidad de archivos "
 "que compartan."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ConnectionPreferencingPaneItem.java:34
@@ -5348,8 +5348,8 @@ msgid ""
 "higher setting may use more memory."
 msgstr ""
 "Es possible configurar el tamaño del Buffer usado para el streaming de los "
-"medios.Si Itunesu otro reproductor de medios experimenta frecuentemente "
-"rebuffering, incremente este valor. Un ajuste alto puede usar mas memoria,"
+"medios.Si Itunes u otro reproductor de medios experimenta frecuentemente "
+"rebuffering, incremente este valor. Un ajuste alto puede usar mas memoria."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/DaapPasswordPaneItem.java:24
 msgid "Password Protection"
@@ -5422,9 +5422,9 @@ msgid ""
 "secure communications mode called TLS, which may use more CPU resources.  "
 "You can disable these if needed."
 msgstr ""
-"Si su computadora tiene una conexion rapida al internet, FrostWire puede "
-"actuar como un \"Ultrapeer\" y/o conectarse el DHT Mojito.  FrostWire "
-"tambien puede utilizar una comunicacion segura llamada TLS, la cual puede "
+"Si su computadora tiene una conexión rapida al internet, FrostWire puede "
+"actuar como un \"Ultrapeer\" y/o conectarse al DHT Mojito.  FrostWire "
+"también puede utilizar una comunicación segura llamada TLS, la cual puede "
 "utilizar mas recursos del CPU. Puede desabilitar estas si lo desea."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/DisableCapabilitiesPaneItem.java:39
@@ -5599,7 +5599,7 @@ msgid ""
 "FrostWire can also manage a blacklist for you.  This will keep FrostWire "
 "protected from harmful clients and other nuisances."
 msgstr ""
-"FrostWire tambien puede administrar una lista negra por Ud. Esto mantendra a "
+"FrostWire también puede administrar una lista negra por Ud. Esto mantendrá a "
 "FrostWire protegido de clientes malignos y otras molestias."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/IgnoreMessagesPaneItem.java:56
@@ -5774,14 +5774,14 @@ msgid ""
 msgstr ""
 "Puede decirle a FrostWire que asocie las conexiones salientes a una "
 "direccion IP de una Interfaz de Red especifica (Tjta de red). Los sockets "
-"activos aun seguiran escuchando en todas las interfaces disponibles. Esto es "
-"util para instalaciones que funcionan en varios lugares (casa,oficina,"
-"universidad). Si desea desabilitar la interfaz, FrostWire revertira la "
-"asociacion a una direccion arbitraria."
+"activos aún seguirán escuchando en todas las interfaces disponibles. Esto es "
+"útil para instalaciones que funcionan en varios lugares (casa,oficina,"
+"universidad). Si desea desabilitar la interfaz, FrostWire revertirá la "
+"asociación a una dirección arbitraria."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:48
 msgid "Use a specific network interface."
-msgstr "Utilizar una interfaz de red especifica."
+msgstr "Utilizar una interfaz de red específica."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:108
 msgid ""
@@ -5802,7 +5802,7 @@ msgid ""
 "as a download completing. "
 msgstr ""
 "FrostWire puede mostrar popups para notificarle cuando ciertas cosas "
-"sucedes, por ejemplo cuando se completa una descarga. "
+"suceden, por ejemplo cuando se completa una descarga. "
 
 #: gui/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:25
 msgid "Show Notifications:"
@@ -6867,7 +6867,7 @@ msgstr "Escriba patrón de la extensión:"
 #: gui/com/limegroup/gnutella/gui/sharing/FileTypeSharingPanelManager.java:492
 #: gui/com/limegroup/gnutella/gui/sharing/FileTypeSharingPanelManager.java:518
 msgid "Extension Sharing Settings"
-msgstr "Configuracion de Extensiones Compartidas"
+msgstr "Configuración de Extensiones Compartidas"
 
 #: gui/com/limegroup/gnutella/gui/sharing/FileTypeSharingPanelManager.java:517
 msgid ""
@@ -6876,7 +6876,7 @@ msgid ""
 "you wish to continue?"
 msgstr ""
 "Estas opciones borran cualquier cambio en las extensiones compartidas que "
-"haya hecho y pone la configuracion de extensiones compartidas en sus valores "
+"haya hecho y pone la configuración de extensiones compartidas en sus valores "
 "originales. Desea continuar?"
 
 #: gui/com/limegroup/gnutella/gui/sharing/FileTypeSharingPanelManager.java:530
@@ -9411,7 +9411,7 @@ msgstr ""
 #~ "es un esfuerzo colaborativo de <a href=\"http://www.frostwire.com/"
 #~ "\">Código Abierto</a> que cuenta con la colaboración de programadores e "
 #~ "investigadores de todas partes del mundo. La naturaleza colaborativa de "
-#~ "Gnutella se ve reflajada tambien en el foro de desarrolladores Gnutella "
+#~ "Gnutella se ve reflajada también en el foro de desarrolladores Gnutella "
 #~ "(GDF), en el cual FrostWire participa. Los miembros del GDF trabajan "
 #~ "arduamente todos los días para hacer que Gnutella sea una colección "
 #~ "innovadora de protocolos que se mejora constantemente -- un testimonio "
@@ -9421,7 +9421,7 @@ msgstr ""
 #~ "FrostWire is also, of course, the result of the countless hours of work "
 #~ "by FrostWire's developers:"
 #~ msgstr ""
-#~ "FrostWire es tambien, por supuesto, el resultado de incontables horas de "
+#~ "FrostWire es también, por supuesto, el resultado de incontables horas de "
 #~ "trabajo del equipo de desarrolladores de FrostWire:"
 
 #~ msgid ""
@@ -9464,7 +9464,7 @@ msgstr ""
 #~ "internationalization project, both for the application itself and for the "
 #~ "FrostWire web site."
 #~ msgstr ""
-#~ "FrostWire tambien agradece a los muchos contribuyentes del proyecto de "
+#~ "FrostWire también agradece a los muchos contribuyentes del proyecto de "
 #~ "internacionalización, tanto para la aplicación como por el sitio web."
 
 #~ msgid ""
@@ -9657,7 +9657,7 @@ msgstr ""
 #~ "este filtro, Usted le estara diciendo a FrostWire que confirme todos los "
 #~ "archivos que descargueo comparta con una lista de contenido removido. "
 #~ "Usted puede cambiar esto en cualquier momento escogiendo Filtro - "
-#~ ">Configuracion de los Filtros de Contenido desde el menu principal"
+#~ ">Configuración de los Filtros de Contenido desde el menu principal"
 
 #~ msgid "Updates"
 #~ msgstr "Actualizaciones"

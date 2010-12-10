@@ -1,6 +1,12 @@
+frostwire (4.21.2) stable; urgency=low
+
+  * Fixes text rendering issue on search results. 
+	
+ -- FrostWire Team <contact@frostwire.com>  Fri, 26 Nov 2010 21:02:17 -0500
+
 frostwire (4.21.1) stable; urgency=low
 
-  * New auto-update support for Windows and Ubuntu.
+  * New auto-update support for Windows and Ubuntu. 
   * Upgrades Azureus Core (bittorrent engine) to version 4.5.0.4. Thanks to the Azureus Team for their hard work and support through the integration.
   * New setting pane to allow user to turn off FrostClick promotions.
   * Fixes issue with Application Icon. New high resolution icon now  in place.
