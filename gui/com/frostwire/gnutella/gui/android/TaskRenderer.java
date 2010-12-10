@@ -256,11 +256,16 @@ public class TaskRenderer extends JPanel implements ListCellRenderer {
         _imagePanel.setImage(image);
 	    
 	    if (task.getProgress() == 0 && !(task.isCanceled() || task.isFailed())) {
-	        _labelText.setText(I18n.tr("Upload") + " " +
-	                (task.getTotalItems() == 1 ? I18n.tr("one file") : task.getTotalItems() + " " + I18n.tr("files")) +
-	                " " + I18n.tr("to") + " " + task.getDevice().getName());
-	        _labelPercent.setText(I18n.tr("pending"));
-	        _buttonStop.setVisible(true);
+	    	if (task.isWaitingForAuthorization()) {
+		        _labelText.setText(I18n.tr("Waiting for authorization from ") + " " + task.getDevice().getName());
+	            _labelPercent.setText("0%");
+	    	} else {
+		        _labelText.setText(I18n.tr("Upload") + " " +
+		                (task.getTotalItems() == 1 ? I18n.tr("one file") : task.getTotalItems() + " " + I18n.tr("files")) +
+		                " " + I18n.tr("to") + " " + task.getDevice().getName());
+		        _labelPercent.setText(I18n.tr("pending"));
+		        _buttonStop.setVisible(true);
+	    	}
 	    } else if (task.isCanceled()) {
 	        _labelText.setText(I18n.tr("Upload") + " " +
                     (task.getTotalItems() == 1 ? I18n.tr("one file") : task.getTotalItems() + " " + I18n.tr("files")) +
@@ -280,16 +285,10 @@ public class TaskRenderer extends JPanel implements ListCellRenderer {
 	        _labelPercent.setText(I18n.tr("done"));
 	        _buttonStop.setVisible(false);
 	    } else {
-	    	if (task.getDevice().isTokenAuthorized()) {
-		        _labelText.setText(I18n.tr("Uploading") + " " +
-	                    (task.getTotalItems() == 1 ? I18n.tr("one file") : (task.getCurrentIndex() + 1) + " " + I18n.tr("out of") + " " + task.getTotalItems() + " " + I18n.tr("files")) +
-	                    " " + I18n.tr("to") + " " + task.getDevice().getName());
-	            _labelPercent.setText(task.getProgress() + "%");
-	    	} else {
-	    		//this is mickey mouse
-		        _labelText.setText(I18n.tr("Waiting for authorization from ") + " " + task.getDevice().getName());
-	            _labelPercent.setText("0%");
-	    	}
+	        _labelText.setText(I18n.tr("Uploading") + " " +
+                    (task.getTotalItems() == 1 ? I18n.tr("one file") : (task.getCurrentIndex() + 1) + " " + I18n.tr("out of") + " " + task.getTotalItems() + " " + I18n.tr("files")) +
+                    " " + I18n.tr("to") + " " + task.getDevice().getName());
+            _labelPercent.setText(task.getProgress() + "%");
             _buttonStop.setVisible(true);
 	    }
     }

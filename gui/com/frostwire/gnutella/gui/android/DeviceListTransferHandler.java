@@ -20,13 +20,7 @@ public class DeviceListTransferHandler extends TransferHandler {
 	
 	@Override
 	public boolean canImport(TransferSupport support) {
-	    Device device = AndroidMediator.instance().getDeviceBar().getSelectedDevice();
-        if (device == null) {
-            return false;
-        }
-        
         DataFlavor[] flavors = support.getDataFlavors();
-        
         return support.isDataFlavorSupported(DesktopListTransferable.LOCAL_FILE_ARRAY) || DNDUtils.containsFileFlavors(flavors);
     }
 	
@@ -39,7 +33,12 @@ public class DeviceListTransferHandler extends TransferHandler {
 	    
 		Device device = AndroidMediator.instance().getDeviceBar().getSelectedDevice();
 		if (device == null) {
-			return false;
+			
+			if (support.getComponent() instanceof DeviceButton) {
+				device = ((DeviceButton) support.getComponent()).getDevice();
+			} else {
+				return false;
+			}
 		}
 
 		Transferable transferable = support.getTransferable();

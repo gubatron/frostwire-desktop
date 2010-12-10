@@ -181,6 +181,7 @@ public class Device {
                     "&from=" + EncodingUtils.encode(System.getProperty("user.name")));
 
 		    HttpFetcher fetcher = new HttpFetcher(uri);
+		    listener.onAuthorizationSent();
 		    
 		    byte[] fetch = fetcher.fetch();
 		    

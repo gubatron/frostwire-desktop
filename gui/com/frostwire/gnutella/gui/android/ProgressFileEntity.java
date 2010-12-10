@@ -57,6 +57,8 @@ public class ProgressFileEntity  extends FileEntity {
 	
 	public interface ProgressFileEntityListener {
 		
+		public void onAuthorizationSent();
+		
 		public void onWrite(ProgressFileEntity progressFileEntity, int written);
 		
 		public boolean isCanceled();
