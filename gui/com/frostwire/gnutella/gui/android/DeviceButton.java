@@ -27,7 +27,7 @@ public class DeviceButton extends JRadioButton {
 	 */
 	private static final long serialVersionUID = 4608372510091566914L;
 	
-	private static final String IMAGES_URL = "http://static1.frostwire.com/images/devices/";
+	private static final String IMAGES_URL = "http://static.frostwire.com/images/devices/";
 	
 	private static final Color FILL_COLOR = new Color(0x8D, 0xB2, 0xED, 180);
     private static final Color INNER_BORDER_COLOR = new Color(0x98, 0xBF, 0xFF, 180);
