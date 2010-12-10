@@ -63,7 +63,9 @@ public class DNDUtils {
 	 */
 	public static URI[] getURIs(Transferable transferable) throws UnsupportedFlavorException, IOException {
 			
-		String lines = (String) transferable.getTransferData(FileTransferable.URIFlavor);
+		String lines = (String) (contains(transferable.getTransferDataFlavors(), FileTransferable.URIFlavor) ?
+				transferable.getTransferData(FileTransferable.URIFlavor) : transferable.getTransferData(FileTransferable.URIFlavor16));
+		
 		StringTokenizer st = new StringTokenizer(lines, System.getProperty("line.separator"));
 		ArrayList<URI> uris = new ArrayList<URI>();
 		while (st.hasMoreTokens()) {
@@ -106,7 +108,8 @@ public class DNDUtils {
 	 */
 	public static boolean containsFileFlavors(DataFlavor[] flavors) {
 		return contains(flavors, DataFlavor.javaFileListFlavor) ||
-			contains(flavors, FileTransferable.URIFlavor);
+			contains(flavors, FileTransferable.URIFlavor) ||
+			contains(flavors, FileTransferable.URIFlavor16);
 	}
 	
 	public static boolean containsLibraryFlavors(DataFlavor[] flavors) {
@@ -128,7 +131,8 @@ public class DNDUtils {
 		if (contains(transferable.getTransferDataFlavors(), DataFlavor.javaFileListFlavor)) {
 			return ((List<File>)transferable.getTransferData(DataFlavor.javaFileListFlavor)).toArray(new File[0]);
 		}
-		else if (contains(transferable.getTransferDataFlavors(), FileTransferable.URIFlavor)) {
+		else if (contains(transferable.getTransferDataFlavors(), FileTransferable.URIFlavor) ||
+				 contains(transferable.getTransferDataFlavors(), FileTransferable.URIFlavor16)) {
 			return getFiles(getURIs(transferable));
 		}
 		return new File[0];
