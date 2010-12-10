@@ -14,6 +14,21 @@ public class CopyToDeviceTask extends Task {
     private long _totalBytes;
     private long _totalWritten;
 
+    public CopyToDeviceTask(Device device, File[] files, int fileType) {
+    	this(device, filesToLocalFiles(files), fileType);
+    }
+
+	private static LocalFile[] filesToLocalFiles(File[] files) {
+		LocalFile[] localFiles = new LocalFile[files.length];
+    	for (int i=0; i < files.length; i++) {
+    		if (!files[i].isDirectory()) {
+    			localFiles[i] = new LocalFile(files[i]);
+    		}
+    	}
+    	
+    	return localFiles;
+	}
+    
 	public CopyToDeviceTask(Device device, LocalFile[] localFiles, int fileType) {
 		_device = device;
 		_localFiles = localFiles;
