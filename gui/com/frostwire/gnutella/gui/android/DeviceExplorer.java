@@ -37,7 +37,7 @@ public class DeviceExplorer extends JPanel {
 	 */
 	private static final long serialVersionUID = -6716798921645948528L;
 	
-	private static final String SLIDESHOW_JSON_URL = "http://localhost/~gubatron/slides.php";
+	private static final String SLIDESHOW_JSON_URL = "http://update.frostwire.com/no.devices.slides.php";
 	
 	private static final String DEVICE = "device";
 	private static final String NO_DEVICE = "no-device";

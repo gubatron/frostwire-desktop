@@ -76,7 +76,7 @@ public class ProgressPanel extends JPanel {
 		_panelTitle.setGradient(new GradientPaint(0, 0,new Color(0x2c7fb0), 0, 25,  Color.BLACK));
 		add(_panelTitle, BorderLayout.PAGE_START);
 		
-		String fontFamily = GuiFrostWireUtils.getFontFamily("Dialog", "myriad", "garuda", "helvetica", "arial", "FreeSans");
+		String fontFamily = GuiFrostWireUtils.getFontFamily("myriad","helvetica","arial", "Dialog","FreeSans");
         Font titleFont = new Font(fontFamily, Font.PLAIN, 20);
 
         _labelTitle = new JLabel(" " + I18n.tr("File Transfers"));

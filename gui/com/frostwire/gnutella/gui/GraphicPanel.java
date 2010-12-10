@@ -1,5 +1,6 @@
 package com.frostwire.gnutella.gui;
 
+import java.awt.AlphaComposite;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -39,10 +40,10 @@ public class GraphicPanel extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-        
+
         if (_gradient != null) {
-            Graphics2D g2 = (Graphics2D) g;
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        	Graphics2D g2 = (Graphics2D) g;
+        	g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             g2.setPaint(_gradient);
             g2.fillRect(0, 0, getWidth(), getHeight());
         }

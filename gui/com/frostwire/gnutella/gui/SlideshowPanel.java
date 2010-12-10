@@ -67,6 +67,7 @@ public class SlideshowPanel extends JPanel {
             }    
         } catch (Exception e) {
             // nothing happens
+        	e.printStackTrace();
         }
     }
     
