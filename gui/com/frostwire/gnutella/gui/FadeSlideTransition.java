@@ -4,6 +4,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+/**
+ * TODO: Make this an Interface Implementation
+ * @author gubatron
+ *
+ */
 public class FadeSlideTransition {
 
     private SlideshowPanel _panel;
