@@ -280,10 +280,16 @@ public class TaskRenderer extends JPanel implements ListCellRenderer {
 	        _labelPercent.setText(I18n.tr("done"));
 	        _buttonStop.setVisible(false);
 	    } else {
-	        _labelText.setText(I18n.tr("Uploading") + " " +
-                    (task.getTotalItems() == 1 ? I18n.tr("one file") : (task.getCurrentIndex() + 1) + " " + I18n.tr("out of") + " " + task.getTotalItems() + " " + I18n.tr("files")) +
-                    " " + I18n.tr("to") + " " + task.getDevice().getName());
-            _labelPercent.setText(task.getProgress() + "%");
+	    	if (task.getDevice().isTokenAuthorized()) {
+		        _labelText.setText(I18n.tr("Uploading") + " " +
+	                    (task.getTotalItems() == 1 ? I18n.tr("one file") : (task.getCurrentIndex() + 1) + " " + I18n.tr("out of") + " " + task.getTotalItems() + " " + I18n.tr("files")) +
+	                    " " + I18n.tr("to") + " " + task.getDevice().getName());
+	            _labelPercent.setText(task.getProgress() + "%");
+	    	} else {
+	    		//this is mickey mouse
+		        _labelText.setText(I18n.tr("Waiting for authorization from ") + " " + task.getDevice().getName());
+	            _labelPercent.setText("0%");
+	    	}
             _buttonStop.setVisible(true);
 	    }
     }

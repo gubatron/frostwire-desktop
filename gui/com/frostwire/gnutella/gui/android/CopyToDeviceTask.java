@@ -76,12 +76,15 @@ public class CopyToDeviceTask extends Task {
 				try {			
 					File file = _localFiles[i].getFile();
 					
+					
+					
 					_device.upload(_localFiles[i].getFileType(), file, new ProgressFileEntityListener() {
 						public void onWrite(ProgressFileEntity progressFileEntity, int written) {
+							System.out.println(_totalWritten);
 							_totalWritten += written;
 							setProgress((int) ((_totalWritten * 100) / _totalBytes));
 							
-							if (getProgress() >= 2) {
+							if (_totalWritten > 1024*302) {
 								_device.setTokenAuthorized(true);
 							}
 						}
@@ -90,6 +93,8 @@ public class CopyToDeviceTask extends Task {
 							return CopyToDeviceTask.this.isCanceled();
 						}
 					});
+					
+					_device.setTokenAuthorized(true);
 					
 				} catch (Exception e) {
 					fail(e);
