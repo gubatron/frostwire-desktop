@@ -48,8 +48,8 @@ import org.limewire.mojito.util.ContactUtils;
 
 
 /**
- * The Tag class is a wrapper for outgoing DHTMessages. For 
- * sent Requests you may obtain a Receipt.
+ * A wrapper for outgoing DHTMessages.  
+ * You may obtain a <code>Receipt</code> for sent Requests.
  */
 public class Tag {
     
@@ -105,7 +105,7 @@ public class Tag {
     }
     
     /**
-     * Retruns true if this is a request
+     * Returns true if this is a request.
      */
     public boolean isRequest() {
         return responseHandler != null 
@@ -113,7 +113,7 @@ public class Tag {
     }
     
     /**
-     * Returns the size of the serialized Message in bytes
+     * Returns the size of the serialized Message in bytes.
      */
     public int getSize() {
         if (size < 0) {
@@ -123,7 +123,7 @@ public class Tag {
     }
     
     /**
-     * Returns the MessageID
+     * Returns the MessageID.
      */
     public MessageID getMessageID() {
         return message.getMessageID();
@@ -131,7 +131,7 @@ public class Tag {
     
     /**
      * Returns the remote Node's ID. Might be null
-     * if it's unknown
+     * if it's unknown.
      */
     public KUID getNodeID() {
         return nodeId;
@@ -145,14 +145,14 @@ public class Tag {
     }
     
     /**
-     * Returns the DHTMessage instance
+     * Returns the DHTMessage instance.
      */
     public DHTMessage getMessage() {
         return message;
     }
     
     /**
-     * Sets the serialized message data
+     * Sets the serialized message data.
      */
     public void setData(ByteBuffer data) {
         this.size = data.remaining();
@@ -160,7 +160,7 @@ public class Tag {
     }
     
     /**
-     * Returns serialized message data
+     * Returns serialized message data.
      */
     public ByteBuffer getData() {
         if (data == null) {
@@ -170,8 +170,8 @@ public class Tag {
     }
     
     /**
-     * Marks this Message as sent and returns a Receipt
-     * if this is a request
+     * Marks this Message as sent and returns a <code>Receipt</code>
+     * if this is a request.
      */
     public Receipt receipt() {
         sent = System.currentTimeMillis();
@@ -180,7 +180,7 @@ public class Tag {
     }
     
     /**
-     * Creates and returns a Receipt if this is a request
+     * Creates and returns a <code>Receipt</code> if this is a request.
      */
     private Receipt getReceipt() throws IllegalStateException {
         if (sent < 0L) {
@@ -196,7 +196,7 @@ public class Tag {
     
     /**
      * A delegate method to notify the ResponseHandler that
-     * an error occurred
+     * an error occurred.
      */
     public void handleError(IOException e) {
         if (responseHandler != null) {
@@ -205,7 +205,7 @@ public class Tag {
     }
     
     /**
-     * Returns true if this Message was cancelled
+     * Returns true if this Message was cancelled.
      */
     public boolean isCancelled() {
         if (responseHandler != null) {
@@ -214,6 +214,7 @@ public class Tag {
         return false;
     }
     
+    @Override
     public String toString() {
         return "Tag for " + message.toString()+ " going to id "+getNodeID()+" dest: "+dst;
     }
@@ -232,7 +233,7 @@ public class Tag {
         
         /**
          * Returns the remote Node's ID to which this Message was
-         * sent or null if it's unknown (certain PingRequests)
+         * sent or null if it's unknown (certain PingRequests).
          */
         public KUID getNodeID() {
             return Tag.this.getNodeID();
@@ -240,42 +241,42 @@ public class Tag {
         
         /**
          * Returns the remote Node's SocketAddress to which this
-         * Message was sent
+         * Message was sent.
          */
         public SocketAddress getSocketAddress() {
             return Tag.this.getSocketAddress();
         }
         
         /**
-         * Returns the MessageID
+         * Returns the MessageID.
          */
         public MessageID getMessageID() {
             return Tag.this.getMessageID();
         }
         
         /**
-         * Returns the RequestMessage that was sent to the remote Node
+         * Returns the RequestMessage that was sent to the remote Node.
          */
         public RequestMessage getRequestMessage() {
             return (RequestMessage)Tag.this.getMessage();
         }
         
         /**
-         * Returns the size of the sent Message
+         * Returns the size of the sent Message.
          */
         public int getSentMessageSize() {
             return getSize();
         }
         
         /**
-         * Sets the received time marker
+         * Sets the received time marker.
          */
         public void received() {
             received = System.currentTimeMillis();
         }
         
         /**
-         * Returns the Round Trip Time (RTT)
+         * Returns the Round Trip Time (RTT).
          */
         public long time() {
             if (received < 0L) {
@@ -287,14 +288,14 @@ public class Tag {
         
         /**
          * Returns the amount of time that has elapsed since
-         * the request was sent
+         * the request was sent.
          */
         private long elapsedTime() {
             return System.currentTimeMillis() - sent;
         }
         
         /**
-         * Returns whether or not this request has timedout
+         * Returns whether or not this request has timed-out.
          */
         public boolean timeout() {
             long elapsed = elapsedTime();
@@ -362,7 +363,7 @@ public class Tag {
         
         /**
          * Checks if the ResponseMessage fulfills all expected
-         * requirements
+         * requirements.
          */
         public boolean sanityCheck(ResponseMessage response) {
             return compareNodeID(response) 
@@ -371,7 +372,7 @@ public class Tag {
         }
         
         /**
-         * Returns the ResponseHandler instance
+         * Returns the ResponseHandler instance.
          */
         public ResponseHandler getResponseHandler() {
             return responseHandler;
@@ -379,7 +380,7 @@ public class Tag {
         
         /**
          * A delegate method to notify the ResponseHandler that 
-         * an error occurred
+         * an error occurred.
          */
         public void handleError(IOException e) {
             if (responseHandler != null) {
@@ -389,7 +390,7 @@ public class Tag {
         
         /**
          * A delegate method to notify the ResponseHandler that
-         * a tick has passed
+         * a tick has passed.
          */
         public void handleTick() {
             if (responseHandler != null) {
@@ -398,7 +399,7 @@ public class Tag {
         }
         
         /**
-         * Returns true if this Receipt was cancelled
+         * Returns true if this Receipt was cancelled.
          */
         public boolean isCancelled() {
             return Tag.this.isCancelled();

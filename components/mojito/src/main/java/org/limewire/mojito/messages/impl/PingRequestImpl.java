@@ -32,7 +32,7 @@ import org.limewire.mojito.routing.Version;
 
 
 /**
- * An implementation of PingRequest
+ * An implementation of PingRequest.
  */
 public class PingRequestImpl extends AbstractRequestMessage
         implements PingRequest {
@@ -47,10 +47,12 @@ public class PingRequestImpl extends AbstractRequestMessage
         super(context, OpCode.PING_REQUEST, src, messageId, msgVersion, in);
     }
 
+    @Override
     protected void writeBody(MessageOutputStream out) throws IOException {
         // WRITE NOTHING
     }
     
+    @Override
     public String toString() {
         return "PingRequest: " + getContact();
     }

@@ -21,8 +21,8 @@ package org.limewire.mojito.db;
 
 import java.io.Serializable;
 
-import org.limewire.mojito.Context;
 import org.limewire.mojito.KUID;
+import org.limewire.mojito.MojitoDHT;
 import org.limewire.mojito.routing.Contact;
 
 /**
@@ -33,51 +33,51 @@ public class DHTValueEntity implements Serializable {
     private static final long serialVersionUID = 2007158043378144871L;
 
     /**
-     * The creator of the value
+     * The creator of the value.
      */
     private final Contact creator;
     
     /**
-     * The sender of the value (store forward)
+     * The sender of the value (store forward).
      */
     private final Contact sender;
     
     /**
-     * The (primary) key of the value
+     * The (primary) key of the value.
      */
     private final KUID primaryKey;
     
     /**
-     * The secondary key of the value
+     * The secondary key of the value.
      */
     private final KUID secondaryKey;
     
     /**
-     * The actual value
+     * The actual value.
      */
     private final DHTValue value;
     
     /**
-     * The time when this value was created (local time)
+     * The time when this value was created (local time).
      */
     private final long creationTime = System.currentTimeMillis();
     
     /**
      * Flag for whether or not this is a local entity
-     * (i.e. Sender and Creator are both the local Node)
+     * (i.e. Sender and Creator are both the local Node).
      */
     private final boolean local;
     
     /**
-     * The hash code of this entity
+     * The hash code of this entity.
      */
     private final int hashCode;
     
     /**
      * Creates and returns a <code>DHTValueEntity</code> from a <code>Storable</code>.
      */
-    public static DHTValueEntity createFromStorable(Context context, Storable storable) {
-        return new DHTValueEntity(context.getLocalNode(), context.getLocalNode(), 
+    public static DHTValueEntity createFromStorable(MojitoDHT mojitoDHT, Storable storable) {
+        return new DHTValueEntity(mojitoDHT.getLocalNode(), mojitoDHT.getLocalNode(), 
                 storable.getPrimaryKey(), storable.getValue(), true);
     }
 
@@ -85,8 +85,8 @@ public class DHTValueEntity implements Serializable {
      * Creates and returns a <code>DHTValueEntity</code> for the given primary 
      * key and value.
      */
-    public static DHTValueEntity createFromValue(Context context, KUID primaryKey, DHTValue value) {
-        return new DHTValueEntity(context.getLocalNode(), context.getLocalNode(), 
+    public static DHTValueEntity createFromValue(MojitoDHT mojitoDHT, KUID primaryKey, DHTValue value) {
+        return new DHTValueEntity(mojitoDHT.getLocalNode(), mojitoDHT.getLocalNode(), 
                 primaryKey, value, true);
     }
     
@@ -177,6 +177,7 @@ public class DHTValueEntity implements Serializable {
      * (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
+    @Override
     public int hashCode() {
         return hashCode;
     }
@@ -185,6 +186,7 @@ public class DHTValueEntity implements Serializable {
      * (non-Javadoc)
      * @see java.lang.Object#equals(java.lang.Object)
      */
+    @Override
     public boolean equals(Object o) {
         if (o == this) {
             return true;
@@ -201,6 +203,7 @@ public class DHTValueEntity implements Serializable {
      * (non-Javadoc)
      * @see java.lang.Object#toString()
      */
+    @Override
     public String toString() {
         StringBuilder buffer = new StringBuilder();
         buffer.append("Creator: ").append(getCreator()).append("\n");

@@ -48,12 +48,13 @@ public class Vendor implements Serializable, Comparable<Vendor> {
     }
     
     /**
-     * Returns the vendor ID as an integer
+     * Returns the vendor ID as an integer.
      */
     public int intValue() {
         return vendorId;
     }
     
+    @Override
     public int hashCode() {
         return vendorId;
     }
@@ -62,6 +63,7 @@ public class Vendor implements Serializable, Comparable<Vendor> {
         return vendorId - o.vendorId;
     }
 
+    @Override
     public boolean equals(Object o) {
         if (o == this) {
             return true;
@@ -72,12 +74,13 @@ public class Vendor implements Serializable, Comparable<Vendor> {
         return vendorId == ((Vendor)o).vendorId;
     }
     
+    @Override
     public String toString() {
         return ArrayUtils.toString(vendorId);
     }
     
     /**
-     * Returns a Vendor object for the given vendor ID
+     * Returns a Vendor object for the given vendor ID.
      */
     public static synchronized Vendor valueOf(int vendorId) {
         int index = (vendorId & Integer.MAX_VALUE) % VENDORS.length;
@@ -90,7 +93,7 @@ public class Vendor implements Serializable, Comparable<Vendor> {
     }
     
     /**
-     * Returns a Vendor object for the given vendor ID
+     * Returns a Vendor object for the given vendor ID.
      */
     public static Vendor valueOf(String vendorId) {
         return valueOf(ArrayUtils.toInteger(vendorId));

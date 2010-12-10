@@ -19,10 +19,8 @@
 
 package org.limewire.mojito.db;
 
-import java.net.InetSocketAddress;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -30,7 +28,6 @@ import junit.framework.Test;
 
 import org.limewire.mojito.KUID;
 import org.limewire.mojito.MojitoDHT;
-import org.limewire.mojito.MojitoFactory;
 import org.limewire.mojito.MojitoTestCase;
 import org.limewire.mojito.db.impl.DHTValueImpl;
 import org.limewire.mojito.result.StoreResult;
@@ -38,7 +35,9 @@ import org.limewire.mojito.routing.Version;
 import org.limewire.mojito.settings.DatabaseSettings;
 import org.limewire.mojito.settings.KademliaSettings;
 import org.limewire.mojito.util.DatabaseUtils;
+import org.limewire.mojito.util.MojitoUtils;
 import org.limewire.util.PrivilegedAccessor;
+import org.limewire.util.StringUtils;
 
 public class StorableTest extends MojitoTestCase {
 
@@ -60,34 +59,20 @@ public class StorableTest extends MojitoTestCase {
         setLocalIsPrivate(false);
     }
 
-    @SuppressWarnings("null")
     public void testStorableModel() throws Exception {
         int k = KademliaSettings.REPLICATION_PARAMETER.getValue();
         
         PrivilegedAccessor.setValue(DatabaseSettings.STORABLE_PUBLISHER_PERIOD, "value", new Long(100));
         
-        Map<KUID, MojitoDHT> dhts = new HashMap<KUID, MojitoDHT>();
-        MojitoDHT first = null;
+        Map<KUID, MojitoDHT> dhts = Collections.emptyMap();
         try {
-            for (int i = 0; i < 2*k; i++) {
-                MojitoDHT dht = MojitoFactory.createDHT("DHT-" + i);
-                dht.bind(new InetSocketAddress(2000 + i));
-                dht.start();
-                
-                if (i > 0) {
-                    dht.bootstrap(new InetSocketAddress("localhost", 2000)).get();
-                } else {
-                    first = dht;
-                }
-                dhts.put(dht.getLocalNodeID(), dht);
-            }
-            first.bootstrap(new InetSocketAddress("localhost", 2000+1)).get();
+            dhts = MojitoUtils.createBootStrappedDHTsMap(2);
             Thread.sleep(250);
             
             KUID key = KUID.createRandomID();
             DHTValueType type = DHTValueType.TEST;
             Version version = Version.ZERO;
-            byte[] b = "Hello World".getBytes();
+            byte[] b = StringUtils.toAsciiBytes("Hello World");
             
             long time = System.currentTimeMillis();
             
@@ -97,7 +82,7 @@ public class StorableTest extends MojitoTestCase {
             final Storable storable = new Storable(key, new DHTValueImpl(type, version, b));
             final AtomicBoolean publisherDidRun = new AtomicBoolean(false);
             
-            first.getStorableModelManager().addStorableModel(type, new StorableModel() {
+            dhts.values().iterator().next().getStorableModelManager().addStorableModel(type, new StorableModel() {
                 public Collection<Storable> getStorables() {
                     synchronized (lock1) {
                         try {

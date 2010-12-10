@@ -30,11 +30,12 @@ import java.util.concurrent.ExecutionException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.limewire.concurrent.OnewayExchanger;
 import org.limewire.mojito.Context;
 import org.limewire.mojito.EntityKey;
 import org.limewire.mojito.KUID;
+import org.limewire.mojito.concurrent.DHTFuture;
 import org.limewire.mojito.concurrent.DHTTask;
+import org.limewire.mojito.concurrent.DHTValueFuture;
 import org.limewire.mojito.db.DHTValueEntity;
 import org.limewire.mojito.db.DHTValueType;
 import org.limewire.mojito.exceptions.DHTBackendException;
@@ -61,14 +62,14 @@ import org.limewire.mojito.util.EntryImpl;
 import org.limewire.security.SecurityToken;
 
 /**
- * The StoreProcess controls the whole process of storing
+ * Controls the whole process of storing
  * values along a path. There are 3 different options:
- * 
- * 1) No Contact(s) are specified.
+ * <pre>
+ * 1) No Contact is specified.
  *    The StoreProcess will do a full lookup for the k-closest 
  *    Nodes and will store the value(s) along the path.
  *    
- * 2) A single Contact is specified but SecurityToken is missing.
+ * 2) A single Contact is specified but a SecurityToken is missing.
  *    The StoreProcess will try to obtain the SecurityToken
  *    and will store the value(s) at the given Node.
  *    
@@ -77,13 +78,13 @@ import org.limewire.security.SecurityToken;
  *    It's meant for DHT implementations (say you want to create a
  *    DHT is a closed environment where SecurityTokens make little
  *    sense).
- *    
- * Regards values and the first case. It's possible to store multiple
- * values in a batch but all values must have the same primary key!
+ * </pre>   
+ * Regarding values and the first case, it's possible to store multiple
+ * values in a batch but all values must have the same primary key.
  */
 class StoreProcess implements DHTTask<StoreResult> {
     
-    private static final Log LOG = LogFactory.getLog(StoreProcess.class);
+    //private static final Log LOG = LogFactory.getLog(StoreProcess.class);
     
     private final Context context;
     
@@ -91,7 +92,7 @@ class StoreProcess implements DHTTask<StoreResult> {
     
     private boolean cancelled = false;
     
-    private OnewayExchanger<StoreResult, ExecutionException> exchanger;
+    private DHTFuture<StoreResult> future;
     
     private final KUID primaryKey;
     
@@ -139,16 +140,9 @@ class StoreProcess implements DHTTask<StoreResult> {
         return waitOnLock;
     }
 
-    public void start(OnewayExchanger<StoreResult, ExecutionException> exchanger) {
+    public void start(DHTFuture<StoreResult> future) {
         
-        if (exchanger == null) {
-            if (LOG.isWarnEnabled()) {
-                LOG.warn("Starting ResponseHandler without an OnewayExchanger");
-            }
-            exchanger = new OnewayExchanger<StoreResult, ExecutionException>(true);
-        }
-            
-        this.exchanger = exchanger;
+        this.future = future;
         
         // Regular store operation
         if (node == null) {
@@ -166,19 +160,23 @@ class StoreProcess implements DHTTask<StoreResult> {
     }
     
     private void findNearestNodes() {
-        OnewayExchanger<LookupResult, ExecutionException> c 
-                = new OnewayExchanger<LookupResult, ExecutionException>(true) {
+        DHTFuture<LookupResult> c = new DHTValueFuture<LookupResult>() {
             @Override
-            public synchronized void setValue(LookupResult value) {
-                super.setValue(value);
-                handleNearestNodes(value);
+            public synchronized boolean setValue(LookupResult value) {
+                if (super.setValue(value)) {
+                    handleNearestNodes(value);
+                    return true;
+                }
+                return false;
             }
-
+            
             @Override
-            public synchronized void setException(
-                    ExecutionException exception) {
-                super.setException(exception);
-                exchanger.setException(exception);
+            public synchronized boolean setException(Throwable exception) {
+                if (super.setException(exception)) {
+                    future.setException(exception);
+                    return true;
+                }
+                return false;
             }
         };
 
@@ -197,18 +195,23 @@ class StoreProcess implements DHTTask<StoreResult> {
     }
     
     private void doGetSecurityToken() {
-        OnewayExchanger<GetSecurityTokenResult, ExecutionException> c 
-                = new OnewayExchanger<GetSecurityTokenResult, ExecutionException>(true) {
+        DHTFuture<GetSecurityTokenResult> c = new DHTValueFuture<GetSecurityTokenResult>() {
             @Override
-            public synchronized void setValue(GetSecurityTokenResult value) {
-                super.setValue(value);
-                handleSecurityToken(value);
+            public synchronized boolean setValue(GetSecurityTokenResult value) {
+                if (super.setValue(value)) {
+                    handleSecurityToken(value);
+                    return true;
+                }
+                return false;
             }
-
+            
             @Override
-            public synchronized void setException(ExecutionException exception) {
-                super.setException(exception);
-                exchanger.setException(exception);
+            public synchronized boolean setException(Throwable exception) {
+                if (super.setException(exception)) {
+                    future.setException(exception);
+                    return true;
+                }
+                return false;
             }
         };
 
@@ -221,7 +224,7 @@ class StoreProcess implements DHTTask<StoreResult> {
     private void handleSecurityToken(GetSecurityTokenResult result) {
         SecurityToken securityToken = result.getSecurityToken();
         if (securityToken == null) {
-            exchanger.setException(new ExecutionException(
+            future.setException(new ExecutionException(
                             new DHTException("Could not get SecurityToken from " + node)));
         } else {
             Entry<Contact, SecurityToken> entry 
@@ -235,10 +238,10 @@ class StoreProcess implements DHTTask<StoreResult> {
         // And store the values along the path
         StoreResponseHandler handler 
             = new StoreResponseHandler(context, path, entities);
-        start(handler, exchanger);
+        start(handler, future);
     }
     
-    private <T> void start(DHTTask<T> task, OnewayExchanger<T, ExecutionException> c) {
+    private <T> void start(DHTTask<T> task, DHTFuture<T> c) {
         boolean doStart = false;
         synchronized (tasks) {
             if (!cancelled) {

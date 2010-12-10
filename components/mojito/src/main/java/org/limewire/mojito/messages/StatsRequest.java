@@ -20,27 +20,28 @@
 package org.limewire.mojito.messages;
 
 /**
- * An interface for StatsRequest implementations
+ * Defines an interface for requesting statistic messages. The messages contain
+ * security state information.
  */
 public interface StatsRequest extends RequestMessage, DHTSecureMessage {
 
     /**
-     * Various types of statistic requests
+     * Defines the types of statistic requests for a remote Node.
      */
     public static enum StatisticType {
         
         /**
-         * Request the remote Node's Statistics
+         * Request the remote Node's Statistics.
          */
         STATISTICS(0x01),
         
         /**
-         * Request the remote Node's Database
+         * Request the remote Node's Database.
          */
         DATABASE(0x02),
         
         /**
-         * Request the remote Node's RouteTable
+         * Request the remote Node's RouteTable.
          */
         ROUTETABLE(0x03);
         
@@ -54,6 +55,7 @@ public interface StatsRequest extends RequestMessage, DHTSecureMessage {
             return type;
         }
         
+        @Override
         public String toString() {
             return name() + " (" + toByte() + ")";
         }
@@ -85,7 +87,7 @@ public interface StatsRequest extends RequestMessage, DHTSecureMessage {
     }
     
     /**
-     * Returns the Type of the request
+     * Returns the Type of the request.
      */
     public StatisticType getType();
 }

@@ -33,7 +33,7 @@ import org.limewire.mojito.result.FindValueResult;
 
 
 /**
- * FindValueManager manages lookups for values
+ * Manages lookups for values.
  */
 public class FindValueManager extends AbstractManager<FindValueResult> {
     
@@ -49,7 +49,7 @@ public class FindValueManager extends AbstractManager<FindValueResult> {
     }
     
     /**
-     * Starts a lookup for the given KUID
+     * Starts a lookup for the given KUID.
      */
     public DHTFuture<FindValueResult> lookup(EntityKey entityKey) {
         return lookup(entityKey, -1);
@@ -57,7 +57,7 @@ public class FindValueManager extends AbstractManager<FindValueResult> {
     
     /**
      * Starts a lookup for the given KUID and expects 'count' 
-     * number of results
+     * number of results.
      */
     private DHTFuture<FindValueResult> lookup(EntityKey entityKey, int count) {
         
@@ -78,7 +78,7 @@ public class FindValueManager extends AbstractManager<FindValueResult> {
     }
     
     /**
-     * The DHTFuture for FIND_VALUE
+     * The DHTFuture for FIND_VALUE.
      */
     private class FindValueFuture extends DHTFutureTask<FindValueResult> {
 
@@ -93,10 +93,11 @@ public class FindValueManager extends AbstractManager<FindValueResult> {
         }
 
         @Override
-        protected void done() {
+        protected void done0() {
             futureMap.remove(entityKey);
         }
 
+        @Override
         public String toString() {
             return "FindValueFuture: " + entityKey + ", " + handler;
         }

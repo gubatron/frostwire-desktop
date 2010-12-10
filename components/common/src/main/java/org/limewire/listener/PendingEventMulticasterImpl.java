@@ -3,6 +3,7 @@ package org.limewire.listener;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.limewire.listener.EventListenerList.EventListenerListContext;
 import org.limewire.util.ExceptionUtils;
 
 public class PendingEventMulticasterImpl<E> implements EventMulticaster<E>, PendingEventBroadcaster<E> {
@@ -83,5 +84,10 @@ public class PendingEventMulticasterImpl<E> implements EventMulticaster<E>, Pend
             }
         }
     }
+
+	@Override
+	public EventListenerListContext getListenerContext() {
+		return multicaster.getListenerContext();
+	}
 
 }

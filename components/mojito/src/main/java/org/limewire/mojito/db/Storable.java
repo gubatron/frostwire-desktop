@@ -23,7 +23,7 @@ import org.limewire.mojito.KUID;
 import org.limewire.mojito.result.StoreResult;
 
 /**
- * A key-value pair that can be stored in the DHT.
+ * A key-value pair ({@link KUID}, {@link DHTValue}) that can be stored in the DHT.
  */
 public class Storable {
     
@@ -98,6 +98,7 @@ public class Storable {
         setLocationCount(result.getLocations().size());
     }
     
+    @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         synchronized (this) {

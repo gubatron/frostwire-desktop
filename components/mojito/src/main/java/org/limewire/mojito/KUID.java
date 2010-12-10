@@ -41,8 +41,8 @@ import org.limewire.security.SecurityUtils;
 
 /**
  * KUID stands for Kademlia Unique Identifier and represents 
- * an 160bit value.
- * 
+ * a 160-bit integer.
+ * <p>
  * This class is immutable!
  */
 public class KUID implements Comparable<KUID>, Serializable {
@@ -53,9 +53,9 @@ public class KUID implements Comparable<KUID>, Serializable {
     
     public static final int LENGTH = 20;
     
-    public static final int LENGTH_IN_BITS = LENGTH * 8; // 160 bit
+    public static final int LENGTH_IN_BITS = LENGTH * 8; // 160-bit
     
-    /** Bits from MSB to LSB */
+    /** Bits from Most Significant Bits (MSB) to Least Significant Bits (LSB) */
     private static final int[] BITS = {
         0x80,
         0x40,
@@ -67,10 +67,10 @@ public class KUID implements Comparable<KUID>, Serializable {
         0x1
     };
     
-    /** All 160 bits are 0 */
+    /** All 160 bits are 0. */
     public static final KUID MINIMUM;
     
-    /** All 160 bits are 1 */
+    /** All 160 bits are 1. */
     public static final KUID MAXIMUM;
                                            
     static {
@@ -83,10 +83,10 @@ public class KUID implements Comparable<KUID>, Serializable {
         MAXIMUM = new KUID(max);
     }
     
-    /** The id */
+    /** The id. */
     private final byte[] id;
     
-    /** The hashCode of this Object */
+    /** The hashCode of this Object. */
     private final int hashCode;
     
     protected KUID(byte[] id) {
@@ -103,14 +103,14 @@ public class KUID implements Comparable<KUID>, Serializable {
     }
     
     /**
-     * Writes the ID to the OutputStream
+     * Writes the ID to the OutputStream.
      */
     public void write(OutputStream out) throws IOException {
         out.write(id, 0, id.length);
     }
     
     /**
-     * Returns whether or not the 'bitIndex' th bit is set
+     * Returns whether or not the 'bitIndex' th bit is set.
      */
     public boolean isBitSet(int bitIndex) {
         // Take advantage of rounding errors!
@@ -121,7 +121,7 @@ public class KUID implements Comparable<KUID>, Serializable {
     
     /**
      * Sets the specified bit to 1 and returns a new
-     * KUID instance
+     * KUID instance.
      */
     public KUID set(int bit) {
         return set(bit, true);
@@ -129,7 +129,7 @@ public class KUID implements Comparable<KUID>, Serializable {
     
     /**
      * Sets the specified bit to 0 and returns a new
-     * KUID instance
+     * KUID instance.
      */
     public KUID unset(int bit) {
         return set(bit, false);
@@ -137,14 +137,14 @@ public class KUID implements Comparable<KUID>, Serializable {
     
     /**
      * Flips the specified bit from 0 to 1 or vice versa
-     * and returns a new KUID instance
+     * and returns a new KUID instance.
      */
     public KUID flip(int bit) {
         return set(bit, !isBitSet(bit));
     }
     
     /**
-     * Sets or unsets the 'bitIndex' th bit
+     * Sets or unsets the 'bitIndex' th bit.
      */
     private KUID set(int bitIndex, boolean set) {
         // Take advantage of rounding errors!
@@ -164,7 +164,7 @@ public class KUID implements Comparable<KUID>, Serializable {
     }
     
     /**
-     * Returns the number of bits that are 1
+     * Returns the number of bits that are 1.
      */
     public int bits() {
         int bits = 0;
@@ -180,7 +180,7 @@ public class KUID implements Comparable<KUID>, Serializable {
      * Returns the first bit that differs in this KUID
      * and the given KUID or KeyAnalyzer.NULL_BIT_KEY
      * if all 160 bits are zero or KeyAnalyzer.EQUAL_BIT_KEY
-     * if both KUIDs are equal
+     * if both KUIDs are equal.
      */
     public int bitIndex(KUID nodeId) {
         boolean allNull = true;
@@ -216,7 +216,7 @@ public class KUID implements Comparable<KUID>, Serializable {
     }
     
     /**
-     * Returns the xor distance between the current and given KUID.
+     * Returns the XOR distance between the current and given KUID.
      */
     public KUID xor(KUID nodeId) {
         byte[] result = new byte[id.length];
@@ -228,7 +228,7 @@ public class KUID implements Comparable<KUID>, Serializable {
     }
     
     /**
-     * Inverts all bits of the current KUID
+     * Inverts all bits of the current KUID.
      */
     public KUID invert() {
         byte[] result = new byte[id.length];
@@ -239,11 +239,29 @@ public class KUID implements Comparable<KUID>, Serializable {
     }
     
     /**
-     * Returns true if this KUID is nearer to <tt>targetId</tt> than
-     * <tt>otherId</tt>.
      * 
-     * @param targetId The target ID
-     * @param otherId The other KUID to compare to
+     * 
+     * Returns true if the distance from this KUID to <tt>targetId</tt>, is 
+     * smaller than the distance from <tt>otherId</tt> to <tt>targetId</tt>.
+     * 
+     * <pre>
+     *  KUID thisKUID = KUID.createWithHexString("0000000000000000000000000000000000000000");
+     *  KUID targetID = KUID.createWithHexString("0000000000000000000000000000000000000001");
+     *  KUID otherID  = KUID.createWithHexString("1000000000000000000000000000000000000000");
+     *        
+     *  System.out.println("Distance thisKUID to targetID: " + thisKUID.xor(targetID));
+     *  System.out.println("Distance otherID  to targetID: " + otherID.xor(targetID));
+     *  
+     *  System.out.println("thisKUID to targetID is closer than otherID to targetID: " 
+     *                     + thisKUID.isNearerTo(targetID, otherID));
+     * 
+     * Output:
+     * Distance thisKUID to targetID: 0000000000000000000000000000000000000001
+     * Distance otherID  to targetID: 1000000000000000000000000000000000000001
+     * thisKUID to targetID is closer than otherID to targetID: true
+     * </pre>
+     * @param targetId the target ID
+     * @param otherId the other KUID to compare to
      * 
      * @return true if this KUID is nearer to targetID, false otherwise
      */
@@ -254,7 +272,7 @@ public class KUID implements Comparable<KUID>, Serializable {
         for (int i = 0; i < id.length; i++){
             xorToSelf = (id[i] ^ targetId.id[i]) & 0xFF;
             xorToOther = (otherId.id[i] ^ targetId.id[i]) & 0xFF;
-            
+
             if (xorToSelf < xorToOther) {
                 return true;
             } else if (xorToSelf > xorToOther) {
@@ -268,20 +286,21 @@ public class KUID implements Comparable<KUID>, Serializable {
     /**
      * Returns the raw bytes of the current KUID. The
      * returned byte[] array is a copy and modifications
-     * are not reflected to this KUID
+     * are not reflected to this KUID.
      */
     public byte[] getBytes() {
         return getBytes(0, new byte[id.length], 0, id.length);
     }
     
     /**
-     * Returns the raw bytes of the current KUID from the specified interval
+     * Returns the raw bytes of the current KUID from the specified interval.
      */
     public byte[] getBytes(int srcPos, byte[] dest, int destPos, int length) {
         System.arraycopy(id, srcPos, dest, destPos, length);
         return dest;
     }
     
+    @Override
     public int hashCode() {
         return hashCode;
     }
@@ -301,8 +320,9 @@ public class KUID implements Comparable<KUID>, Serializable {
     }
     
     /**
-     * Returns whether or not both KUIDs are equal
+     * Returns whether or not both KUIDs are equal.
      */
+    @Override
     public boolean equals(Object o) {
         if (o == this) {
             return true;
@@ -314,21 +334,21 @@ public class KUID implements Comparable<KUID>, Serializable {
     }
 
     /**
-     * Returns the current KUID as hex String
+     * Returns the current KUID as hex String.
      */
     public String toHexString() {
         return ArrayUtils.toHexString(id);
     }
     
     /**
-     * Returns the current KUID as bin String
+     * Returns the current KUID as bin String.
      */
     public String toBinString() {
         return ArrayUtils.toBinString(id);
     }
     
     /**
-     * Returns the current KUID as BigInteger
+     * Returns the current KUID as BigInteger.
      */
     public BigInteger toBigInteger() {    
         return new BigInteger(1 /* unsigned! */, id);
@@ -342,8 +362,31 @@ public class KUID implements Comparable<KUID>, Serializable {
         return toBigInteger().bitLength();
     }
     
+    @Override
     public String toString() {
         return toHexString();
+    }
+    
+    /**
+     * Compute common prefix length of two KUIDs.
+     */   
+    public int getCommonPrefixLength(KUID other) {
+        int commonPrefixLength = 0;
+        for (int i = 0; i < id.length; i++) {
+            byte xorValue = (byte)(id[i] ^ other.id[i]);
+            if (xorValue == 0) {
+                commonPrefixLength += BITS.length;
+            } else {
+                for (int j = 0; j < BITS.length; j++) {
+                    if ((xorValue & BITS[j]) == 0) {
+                        commonPrefixLength++;
+                    } else {
+                        return commonPrefixLength;
+                    }
+                }
+            }
+        }   
+        return commonPrefixLength;
     }
     
     /**
@@ -356,6 +399,7 @@ public class KUID implements Comparable<KUID>, Serializable {
          * Random Numbers.
          */
         MessageDigestInput randomNumbers = new MessageDigestInput() {
+            @Override
             public void update(MessageDigest md) {
                 byte[] random = new byte[LENGTH * 2];
                 GENERATOR.nextBytes(random);
@@ -369,6 +413,7 @@ public class KUID implements Comparable<KUID>, Serializable {
          * add some randomness.
          */
         MessageDigestInput properties = new MessageDigestInput() {
+            @Override
             public void update(MessageDigest md) {
                 Properties props = System.getProperties();
                 try {
@@ -386,10 +431,11 @@ public class KUID implements Comparable<KUID>, Serializable {
         };
         
         /*
-         * System time in millis (GMT). Many computer clocks
+         * System time in milliseconds (GMT). Many computer clocks
          * are off. Should be a good source for randomness.
          */
         MessageDigestInput millis = new MessageDigestInput() {
+            @Override
             public void update(MessageDigest md) {
                 long millis = System.currentTimeMillis();
                 md.update((byte)((millis >> 56L) & 0xFFL));
@@ -407,6 +453,7 @@ public class KUID implements Comparable<KUID>, Serializable {
          * VM/machine dependent pseudo time.
          */
         MessageDigestInput nanos = new MessageDigestInput() {
+            @Override
             public void update(MessageDigest md) {
                 long nanos = System.nanoTime();
                 md.update((byte)((nanos >> 56L) & 0xFFL));
@@ -460,9 +507,6 @@ public class KUID implements Comparable<KUID>, Serializable {
         }
     }
     
-    /**
-     * See KUID.createRandomNodeID()
-     */
     private abstract static class MessageDigestInput 
             implements Comparable<MessageDigestInput> {
         
@@ -476,7 +520,7 @@ public class KUID implements Comparable<KUID>, Serializable {
     }
     
     /**
-     * Creates and returns a KUID from a byte array
+     * Creates and returns a KUID from a byte array.
      */
     public static KUID createWithBytes(byte[] id) {
         byte[] dst = new byte[id.length];
@@ -485,14 +529,14 @@ public class KUID implements Comparable<KUID>, Serializable {
     }
     
     /**
-     * Creates and returns a KUID from a hex encoded String
+     * Creates and returns a KUID from a hex encoded String.
      */
     public static KUID createWithHexString(String id) {
         return new KUID(ArrayUtils.parseHexString(id));
     }
     
     /**
-     * Creates a KUID from the given InputStream
+     * Creates a KUID from the given InputStream.
      */
     public static KUID createWithInputStream(InputStream in) throws IOException {
         byte[] id = new byte[LENGTH];
@@ -511,9 +555,10 @@ public class KUID implements Comparable<KUID>, Serializable {
     }
     
     /**
-     * Creates a random ID with the specified byte prefix
+     * Creates a random ID with the specified byte prefix.
      * 
      * @param prefix the fixed prefix bytes
+     * @param depth of the Bucket in the Trie
      * @return a random KUID starting with the given prefix
      */
     public static KUID createPrefxNodeID(KUID prefix, int depth) {
@@ -523,9 +568,11 @@ public class KUID implements Comparable<KUID>, Serializable {
     }
     
     /**
-     * Creates a random ID with the specified byte prefix
+     * Creates a random ID with the specified byte prefix.
      * 
      * @param prefix the fixed prefix bytes
+     * @param depth of the Bucket in the Trie
+     * @param random random bytes
      * @return a random KUID starting with the given prefix
      */
     private static KUID createPrefxNodeID(KUID prefix, int depth, byte[] random) {
@@ -546,12 +593,12 @@ public class KUID implements Comparable<KUID>, Serializable {
     }
     
     /**
-     * The default KeyAnalyzer for KUIDs
+     * The default KeyAnalyzer for KUIDs.
      */
     public static final KeyAnalyzer<KUID> KEY_ANALYZER = new KUIDKeyAnalyzer();
     
     /**
-     * A PATRICIA Trie KeyAnalyzer for KUIDs
+     * A <code>PatriciaTrie</code> <code>KeyAnalyzer</code> for <code>KUIDs</code>.
      */
     private static class KUIDKeyAnalyzer implements KeyAnalyzer<KUID> {
         

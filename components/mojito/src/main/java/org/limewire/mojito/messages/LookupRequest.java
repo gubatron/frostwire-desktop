@@ -22,12 +22,12 @@ package org.limewire.mojito.messages;
 import org.limewire.mojito.KUID;
 
 /**
- * An interface for LookupRequest implementations
+ * Defines an interface for a lookup request.
  */
 public interface LookupRequest extends RequestMessage {
     
     /**
-     * The ID we're looking for
+     * The ID we're looking for.
      */
     public KUID getLookupID();
 }

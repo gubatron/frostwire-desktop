@@ -26,19 +26,19 @@ import org.limewire.mojito.db.DHTValueType;
 
 
 /**
- * An interface for FindValueRequest implementations
+ * Defines an interface for a <code>OpCode.FIND_VALUE_REQUEST</code>. 
  */
 public interface FindValueRequest extends LookupRequest {
     
     /**
      * Returns a Collection of KUIDs the remote Node
-     * is looking for
+     * is looking for.
      */
     public Collection<KUID> getSecondaryKeys();
     
     /**
      * Returns the type of the value the remote Node
-     * is looking for
+     * is looking for.
      */
     public DHTValueType getDHTValueType();
 }

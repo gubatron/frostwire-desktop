@@ -27,7 +27,7 @@ import org.limewire.mojito.routing.Version;
 
 
 /**
- * This is an abstract base class for all DHT messages.
+ * Defines the interface for all DHT messages.
  */
 public interface DHTMessage {
     
@@ -35,7 +35,7 @@ public interface DHTMessage {
     public static final int F_DHT_MESSAGE = 0x44; // 'D'
     
     /**
-     * The opcodes of our Messages
+     * The opcodes of the LimeWire DHT messages.
      */
     public static enum OpCode {
         
@@ -64,6 +64,7 @@ public interface DHTMessage {
             return opcode;
         }
         
+        @Override
         public String toString() {
             return name() + " (" + toByte() + ")";
         }
@@ -97,21 +98,21 @@ public interface DHTMessage {
         }
     }
     
-    /** Returns the opcode (type) of the Message */
+    /** Returns the opcode (type) of the Message. */
     public OpCode getOpCode();
     
-    /** Returns the sender of this Message */
+    /** Returns the sender of this Message. */
     public Contact getContact();
     
-    /** Returns the Message ID of the Message */
+    /** Returns the Message ID of the Message. */
     public MessageID getMessageID();
     
-    /** Returns the Version of the Message */
+    /** Returns the Version of the Message. */
     public Version getMessageVersion();
     
-    /** Writes this Message to the OutputStream */
+    /** Writes this Message to the OutputStream. */
     public void write(OutputStream out) throws IOException;
 
-    /** The length of this message */
+    /** The length of this message. */
     public int getLength();
 }

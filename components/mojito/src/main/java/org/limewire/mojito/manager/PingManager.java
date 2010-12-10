@@ -24,7 +24,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
 
 import org.limewire.mojito.Context;
 import org.limewire.mojito.KUID;
@@ -40,7 +39,7 @@ import org.limewire.mojito.util.ContactUtils;
 
 
 /**
- * The PingManager takes care of concurrent Pings and makes sure
+ * Takes care of concurrent Pings and makes sure
  * a single Node cannot be pinged multiple times in parallel.
  */
 public class PingManager extends AbstractManager<PingResult> {
@@ -60,7 +59,7 @@ public class PingManager extends AbstractManager<PingResult> {
     }
     
     /**
-     * Sends a ping to the remote Host
+     * Sends a ping to the remote Host.
      */
     public DHTFuture<PingResult> ping(SocketAddress host) {
         PingIterator pinger = new PingIteratorFactory.SocketAddressPinger(host);
@@ -73,7 +72,7 @@ public class PingManager extends AbstractManager<PingResult> {
     }
     
     /**
-     * Sends a ping to the remote Node
+     * Sends a ping to the remote Node.
      */
     public DHTFuture<PingResult> ping(Contact node) {
         PingIterator pinger = new PingIteratorFactory.ContactPinger(node);
@@ -81,7 +80,7 @@ public class PingManager extends AbstractManager<PingResult> {
     }
     
     /**
-     * Sends a ping to the remote Node
+     * Sends a ping to the remote Node.
      */
     public DHTFuture<PingResult> ping(KUID nodeId, SocketAddress address) {
         PingIterator pinger = new PingIteratorFactory.EntryPinger(nodeId, address);
@@ -89,7 +88,7 @@ public class PingManager extends AbstractManager<PingResult> {
     }
     
     /**
-     * Sends a ping to the remote Node
+     * Sends a ping to the remote Node.
      */
     public DHTFuture<PingResult> ping(Set<? extends Contact> nodes) {
         PingIterator pinger = new PingIteratorFactory.ContactPinger(nodes);
@@ -98,22 +97,19 @@ public class PingManager extends AbstractManager<PingResult> {
     
     /**
      * Sends a special ping to the given Node to test if there
-     * is a Node ID collision
+     * is a Node ID collision.
      */
     public DHTFuture<PingResult> collisionPing(Contact node) {
         return collisionPing(node.getContactAddress(), Collections.singleton(node));
     }
     
-    /**
-     * 
-     */
     public DHTFuture<PingResult> collisionPing(Set<? extends Contact> nodes) {
         return collisionPing(null, nodes);
     }
     
     /**
      * Sends a special ping to the given Node to test if there
-     * is a Node ID collision
+     * is a Node ID collision.
      */
     private DHTFuture<PingResult> collisionPing(SocketAddress key, Set<? extends Contact> nodes) {
         Contact sender = ContactUtils.createCollisionPingSender(context.getLocalNode());
@@ -122,11 +118,11 @@ public class PingManager extends AbstractManager<PingResult> {
     }
     
     /**
-     * Sends a ping to the remote Node
+     * Sends a ping to the remote Node.
      * 
-     * @param sender The local Node
-     * @param nodeId The remote Node's KUID (can be null)
-     * @param key The remote Node's address
+     * @param sender the local Node
+     * @param key the remote Node's address
+     * @param pinger sends ping requests
      */
     private DHTFuture<PingResult> ping(Contact sender, SocketAddress key, PingIterator pinger) {
         PingFuture future = null;
@@ -150,7 +146,7 @@ public class PingManager extends AbstractManager<PingResult> {
     }
     
     /**
-     * A ping specific implementation of DHTFuture 
+     * A ping specific implementation of DHTFuture. 
      */
     private class PingFuture extends DHTFutureTask<PingResult> {
 
@@ -162,22 +158,16 @@ public class PingManager extends AbstractManager<PingResult> {
         }
         
         @Override
-        protected void done() {
+        protected void done0() {
             if (key != null) {
                 futureMap.remove(key);
             }
-        }
-
-        @Override
-        protected void fireFutureResult(PingResult value) {
-            networkStats.PINGS_OK.incrementStat();
-            super.fireFutureResult(value);
-        }
-        
-        @Override
-        protected void fireExecutionException(ExecutionException e) {
-            networkStats.PINGS_FAILED.incrementStat();
-            super.fireExecutionException(e);
+            
+            if (!isCompletedAbnormally()) {
+                networkStats.PINGS_OK.incrementStat();
+            } else {
+                networkStats.PINGS_FAILED.incrementStat();
+            }
         }
     }
 }

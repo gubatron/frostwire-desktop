@@ -54,10 +54,10 @@ import org.limewire.security.SecurityToken;
 
 
 /**
- * The MessageInputStream reads (parses) a DHTMessage
+ * The MessageInputStream reads (parses) a <code>DHTMessage</code>
  * from a given InputStream.
- * 
- * <b>NOTE</b>: This class is specific to Mojito's Gnutella backed
+ * <p>
+ * <strong>NOTE</strong>: This class is specific to Mojito's Gnutella backed
  * Message format. You may or may not be able to use parts of this
  * class for alternative message formats!
  */
@@ -70,7 +70,7 @@ public class MessageInputStream extends DataInputStream {
     }
     
     /**
-     * Reads the given number of bytes
+     * Reads the given number of bytes.
      */
     public byte[] readBytes(int bytes) throws IOException {
         byte[] buf = new byte[bytes];
@@ -79,21 +79,21 @@ public class MessageInputStream extends DataInputStream {
     }
     
     /**
-     * Reads a KUID from the InputStream 
+     * Reads a KUID from the InputStream.
      */
     public KUID readKUID() throws IOException {
         return KUID.createWithInputStream(this);
     }
     
     /**
-     * Reads a MessageID from the InputStream 
+     * Reads a MessageID from the InputStream.
      */
     public MessageID readMessageID() throws IOException {
         return DefaultMessageID.createWithInputStream(this, MACCalculatorRepositoryManager);
     }
     
     /**
-     * Reads a BigInteger from the InputStream 
+     * Reads a BigInteger from the InputStream.
      */
     public BigInteger readDHTSize() throws IOException {
         int length = readUnsignedByte();
@@ -106,9 +106,9 @@ public class MessageInputStream extends DataInputStream {
     }
     
     /**
-     * Reads a DHTValueEntity from the InputStream 
+     * Reads a DHTValueEntity from the InputStream.
      * 
-     * @param sender The Contact that send us the DHTValue
+     * @param sender the Contact that send us the DHTValue
      */
     public DHTValueEntity readDHTValueEntity(Contact sender, DHTValueFactoryManager factoryManager) throws IOException {
         Contact creator = readContact();
@@ -122,7 +122,7 @@ public class MessageInputStream extends DataInputStream {
     }
     
     /**
-     * Reads a DHTValue from the InputStream 
+     * Reads a DHTValue from the InputStream.
      */
     private DHTValue readDHTValue(DHTValueFactoryManager factoryManager) throws IOException {
         DHTValueType valueType = readValueType();
@@ -139,7 +139,7 @@ public class MessageInputStream extends DataInputStream {
     }
     
     /**
-     * Reads multiple DHTValues from the InputStream 
+     * Reads multiple DHTValues from the InputStream.
      */
     public List<DHTValueEntity> readDHTValueEntities(Contact sender, DHTValueFactoryManager factoryManager) throws IOException {
         int size = readUnsignedByte();
@@ -155,7 +155,7 @@ public class MessageInputStream extends DataInputStream {
     }
     
     /**
-     * Reads multiple KUIDs from the InputStream 
+     * Reads multiple KUIDs from the InputStream.
      */
     public Collection<KUID> readKUIDs() throws IOException {
         int size = readUnsignedByte();
@@ -172,7 +172,7 @@ public class MessageInputStream extends DataInputStream {
     }
     
     /**
-     * Reads a Signature from the InputStream  
+     * Reads a Signature from the InputStream.
      */
     public byte[] readSignature() throws IOException {
         int length = readUnsignedByte();
@@ -186,7 +186,7 @@ public class MessageInputStream extends DataInputStream {
     }
 	
     /**
-     * Reads a Contact from the InputStream 
+     * Reads a Contact from the InputStream.
      */
     public Contact readContact() throws IOException {
         Vendor vendor = readVendor();
@@ -202,7 +202,7 @@ public class MessageInputStream extends DataInputStream {
     }
     
     /**
-     * Reads multiple Contacts from the InputStream 
+     * Reads multiple Contacts from the InputStream.
      */
     public Collection<Contact> readContacts() throws IOException {
         int size = readUnsignedByte();
@@ -218,7 +218,7 @@ public class MessageInputStream extends DataInputStream {
     }
 
     /**
-     * Reads an InetAddress from the InputStream 
+     * Reads an InetAddress from the InputStream.
      */
     public InetAddress readInetAddress() throws IOException {
         int length = readUnsignedByte();
@@ -233,14 +233,14 @@ public class MessageInputStream extends DataInputStream {
     }
     
     /**
-     * Reads a Port number from the InputStream 
+     * Reads a Port number from the InputStream.
      */
     public int readPort() throws IOException {
         return readUnsignedShort();
     }
     
     /**
-     * Reads a SocketAddress from the InputStream 
+     * Reads a SocketAddress from the InputStream.
      */
     public InetSocketAddress readSocketAddress() throws IOException {
         InetAddress addr = readInetAddress();
@@ -253,7 +253,7 @@ public class MessageInputStream extends DataInputStream {
     }
     
     /**
-     * Reads a AddressSecurityToken from the InputStream 
+     * Reads a AddressSecurityToken from the InputStream.
      */
     public SecurityToken readSecurityToken() throws IOException {
         int length = readUnsignedByte();
@@ -267,7 +267,7 @@ public class MessageInputStream extends DataInputStream {
     }
     
     /**
-     * Reads an encoded Statistics 
+     * Reads an encoded Statistics.
      */
     public byte[] readStatistics() throws IOException {
         int length = readUnsignedShort();
@@ -281,21 +281,21 @@ public class MessageInputStream extends DataInputStream {
     }
     
     /**
-     * Reads an OpCode from the InputStream
+     * Reads an OpCode from the InputStream.
      */
     public OpCode readOpCode() throws IOException {
         return OpCode.valueOf(readUnsignedByte());
     }
     
     /**
-     * Reads an Type from the InputStream
+     * Reads an Type from the InputStream.
      */
     public StatisticType readStatisticType() throws IOException {
         return StatisticType.valueOf(readUnsignedByte());
     }
     
     /**
-     * Reads a StatusCode from the InputStream
+     * Reads a StatusCode from the InputStream.
      */
     public StatusCode readStatusCode() throws IOException {
         return StatusCode.valueOf(readUnsignedShort(), readDHTString());
@@ -303,21 +303,23 @@ public class MessageInputStream extends DataInputStream {
     
     /**
      * Reads a String from the InputStream. See 
-     * MessageOutputStrea.writeDHTString()
+     * MessageOutputStrea.writeDHTString().
+     * 
+     * @returns empty string if the length of the string is 0
      */
     private String readDHTString() throws IOException {
         int length = readUnsignedShort();
         if (length == 0) {
-            return null;
+            return "";
         }
         
         byte[] b = new byte[length];
         readFully(b);
-        return new String(b, "UTF-8"); // UTF Support in mojito (reading)
+        return new String(b, "UTF-8");
     }
     
     /**
-     * Reats and returns a Collection of StoreStatusCode(s)
+     * Reads and returns a Collection of StoreStatusCode(s).
      */
     public Collection<StoreStatusCode> readStoreStatusCodes() throws IOException {
         int size = readUnsignedByte();
@@ -337,21 +339,21 @@ public class MessageInputStream extends DataInputStream {
     }
     
     /**
-     * Reads a DHTValueType from the InputStream
+     * Reads a DHTValueType from the InputStream.
      */
     public DHTValueType readValueType() throws IOException {
         return DHTValueType.valueOf(readInt());
     }
     
     /**
-     * Reads a Vendor from the InputStream
+     * Reads a Vendor from the InputStream.
      */
     public Vendor readVendor() throws IOException {
         return Vendor.valueOf(readInt());
     }
     
     /**
-     * Reads a Version from the InputStream
+     * Reads a Version from the InputStream.
      */
     public Version readVersion() throws IOException {
         return Version.valueOf(readUnsignedShort());

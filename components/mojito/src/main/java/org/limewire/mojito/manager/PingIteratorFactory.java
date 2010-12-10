@@ -39,8 +39,8 @@ import org.limewire.mojito.util.EntryImpl;
 
 
 /**
- * A Factory class that provides various PingIterator
- * implementations for the PingManager
+ * Provides various <code>PingIterator</code> 
+ * implementations for the <code>PingManager</code>.
  */
 class PingIteratorFactory {
     
@@ -90,13 +90,14 @@ class PingIteratorFactory {
             return context.getMessageDispatcher().send(nodeId, dst, request, responseHandler);
         }
         
+        @Override
         public String toString() {
             return "ContactPinger: " + nodes;
         }
     }
     
     /**
-     * A CollisionPinger sends collision ping requests to a Set of Contacts
+     * Sends collision ping requests to a Set of <code>Contact</code>s.
      */
     static class CollisionPinger extends ContactPinger {
         
@@ -149,13 +150,14 @@ class PingIteratorFactory {
             return context.getMessageDispatcher().send(nodeId, dst, request, responseHandler);
         }
         
+        @Override
         public String toString() {
             return "CollisionPinger: " + sender;
         }
     }
 
     /**
-     * A SocketAddressPinger sends ping requests to a Set of SocketAddresses
+     * Sends ping requests to a Set of <code>SocketAddresses</code>.
      */
     static class SocketAddressPinger implements PingIterator {
         
@@ -194,6 +196,7 @@ class PingIteratorFactory {
             return context.getMessageDispatcher().send(null, dst, request, responseHandler);
         }
         
+        @Override
         public String toString() {
             return "SocketAddressPinger: " + hosts.toString();
         }
@@ -252,6 +255,7 @@ class PingIteratorFactory {
             return context.getMessageDispatcher().send(nodeId, dst, request, responseHandler);
         }
         
+        @Override
         public String toString() {
             return "EntryPinger: " + entries.toString();
         }

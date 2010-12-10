@@ -26,22 +26,22 @@ import org.limewire.mojito.db.DHTValueEntity;
 
 
 /**
- * An interface for FindValueResponse implementations
+ * Defines an interface for a <code>OpCode.FIND_VALUE_RESPONSE</code>. 
  */
 public interface FindValueResponse extends LookupResponse {
     
     /**
-     * Returns a Collection of KUIDs that a Node has to offer
+     * Returns a Collection of KUIDs that a Node has to offer.
      */
     public Collection<KUID> getSecondaryKeys();
     
     /**
-     * Returns a Collection of DHTValueEntity(s)
+     * Returns a Collection of DHTValueEntity(s).
      */
     public Collection<? extends DHTValueEntity> getDHTValueEntities();
     
     /**
-     * Returns the request load for this key
+     * Returns the request load for this key.
      */
     public float getRequestLoad();
 }

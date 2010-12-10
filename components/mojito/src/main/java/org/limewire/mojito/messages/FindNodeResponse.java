@@ -24,13 +24,13 @@ import java.util.Collection;
 import org.limewire.mojito.routing.Contact;
 
 /**
- * An interface for FindNodeResponse implementations
+ * Defines an interface for a <code>OpCode.FIND_NODE_RESPONSE</code>. 
  */
 public interface FindNodeResponse extends LookupResponse {
     
     /**
      * Returns the k-closest (or less) Node's to the
-     * KUID we were looking for
+     * KUID we were looking for.
      */
     public Collection<? extends Contact> getNodes();
 }

@@ -44,7 +44,7 @@ import org.limewire.security.SecureMessageCallback;
 import org.limewire.security.Verifier;
 
 /**
- * This is a stand alone/reference implementation of MessageDispatcher
+ * This is a stand alone/reference implementation of <code>MessageDispatcher</code>.
  */
 public class MessageDispatcherImpl extends MessageDispatcher implements Runnable {
 
@@ -56,13 +56,13 @@ public class MessageDispatcherImpl extends MessageDispatcher implements Runnable
     private static final long WAIT_ON_LOCK = 5000L;
     
     /**
-     * The receive buffer size for the Socket
+     * The receive buffer size for the Socket.
      */
     private static final int RECEIVE_BUFFER_SIZE 
         = NetworkSettings.RECEIVE_BUFFER_SIZE.getValue();
     
     /**
-     * The send buffer size for the Socket
+     * The send buffer size for the Socket.
      */
     private static final int SEND_BUFFER_SIZE 
         = NetworkSettings.SEND_BUFFER_SIZE.getValue();
@@ -73,18 +73,18 @@ public class MessageDispatcherImpl extends MessageDispatcher implements Runnable
     private static final long SELECTOR_SLEEP = 50L;
     
     /**
-     * A flag whether or not this MD is running
+     * A flag whether or not this MessageDispatcher is running.
      */
     private volatile boolean running = false;
     
     /**
-     * A flag whether or not this MD is accepting incoming 
-     * Requests and Responses
+     * A flag whether or not this MessageDispatcher is accepting incoming 
+     * Requests and Responses.
      */
     private volatile boolean accepting = false;
     
     /**
-     * The DatagramChannel's Selector
+     * The DatagramChannel's Selector.
      */
     private Selector selector;
     
@@ -94,33 +94,33 @@ public class MessageDispatcherImpl extends MessageDispatcher implements Runnable
     private DatagramChannel channel;
     
     /**
-     * The DatagramChannel lock Object
+     * The DatagramChannel lock Object.
      */
     private final Object lock = new Object();
 
     /**
-     * The Thread this MD is running on
+     * The Thread this MessageDispatcher is running on.
      */
     private Thread thread;
     
     /**
-     * Buffer for incoming Messages
+     * Buffer for incoming Messages.
      */
     private final ByteBuffer receiveBuffer;
     
     /**
-     * Lists of tasks we've to execute
+     * Lists of tasks we've to execute.
      */
     private List<Runnable> tasks = new ArrayList<Runnable>();
     
     /** 
-     * Queue of things we have to send 
+     * Queue of things we have to send. 
      */
     private List<Tag> outputQueue = new LinkedList<Tag>();
     
     /**
      * Whether or not a new ByteBuffer should be allocated for
-     * every message we receive
+     * every message we receive.
      */
     private volatile boolean allocateNewByteBuffer 
         = NetworkSettings.ALLOCATE_NEW_BUFFER.getValue();
@@ -132,7 +132,7 @@ public class MessageDispatcherImpl extends MessageDispatcher implements Runnable
     }
     
     /**
-     * Sets whether or not a new ByteBuffer should be allocated
+     * Sets whether or not a new ByteBuffer should be allocated.
      */
     public void setAllocateNewByteBuffer(boolean allocateNewByteBuffer) {
         this.allocateNewByteBuffer = allocateNewByteBuffer;
@@ -140,7 +140,7 @@ public class MessageDispatcherImpl extends MessageDispatcher implements Runnable
     
     /**
      * Returns whether or not a new ByteBuffer is allocated for
-     * every message
+     * every message.
      */
     public boolean getAllocateNewByteBuffer() {
         return allocateNewByteBuffer;
@@ -169,7 +169,7 @@ public class MessageDispatcherImpl extends MessageDispatcher implements Runnable
     }
     
     /**
-     * Returns true if the DatagramChannel is open
+     * Returns true if the DatagramChannel is open.
      */
     public boolean isOpen() {
         synchronized (lock) {
@@ -185,7 +185,7 @@ public class MessageDispatcherImpl extends MessageDispatcher implements Runnable
     }
     
     /**
-     * Returns the DatagramChannel
+     * Returns the DatagramChannel.
      */
     public DatagramChannel getDatagramChannel() {
         synchronized (lock) {
@@ -194,7 +194,7 @@ public class MessageDispatcherImpl extends MessageDispatcher implements Runnable
     }
     
     /**
-     * Returns the DatagramChannel Socket's local SocketAddress
+     * Returns the DatagramChannel Socket's local SocketAddress.
      */
     public SocketAddress getLocalSocketAddress() {
         synchronized (lock) {
@@ -436,7 +436,7 @@ public class MessageDispatcherImpl extends MessageDispatcher implements Runnable
         // be done on a different Thread than MessageDispatcher's
         // Executor Thread. On the other hand are the chances slim to none
         // that a Node will ever receive a SecureMessage. It's a trade off
-        // at the end if it's really an issue or waste of ressources...
+        // at the end if it's really an issue or waste of resources...
         // NOTE: LimeDHTMessageDispatcher is using a different implementation!
         //       This is the stand alone implementation!
         
@@ -517,14 +517,14 @@ public class MessageDispatcherImpl extends MessageDispatcher implements Runnable
      * sent or false if there was insufficient space in the
      * output buffer (that means you'll have to re-try it later
      * again).
-     * 
+     * <p>
      * IMPORTANT: The expected behavior is the same as 
      * DatagramChannel.send(BytBuffer,SocketAddress). That means
      * if you are not able to send the data return false and 
      * leave the ByteBuffer untouched!
      */
     // We could pass a slice to this method to enforce the expected
-    // behavior but there's maybe an use-case like Kadmlia over TCP
+    // behavior but there's maybe an use-case like Kademlia over TCP
     // where it makes sense to send the data piece-by-piece...
     private boolean send(SocketAddress dst, ByteBuffer data) throws IOException {
         return channel.send(data, dst) > 0;

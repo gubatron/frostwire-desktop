@@ -35,7 +35,7 @@ import org.limewire.security.SecurityToken;
 
 
 /**
- * An implementation of FindNodeResponse
+ * An implementation of FindNodeResponse.
  */
 public class FindNodeResponseImpl extends AbstractLookupResponse
         implements FindNodeResponse, SecurityTokenProvider {
@@ -69,11 +69,13 @@ public class FindNodeResponseImpl extends AbstractLookupResponse
         return nodes;
     }
 
+    @Override
     protected void writeBody(MessageOutputStream out) throws IOException {
         out.writeSecurityToken(securityToken);
         out.writeContacts(nodes);
     }
     
+    @Override
     public String toString() {
         return "FindNodeResponse: securityToken=" + securityToken + ", nodes=" + nodes+ " from "+getContact();
     }

@@ -19,16 +19,16 @@
 
 package org.limewire.mojito.db;
 
-import java.net.InetSocketAddress;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
 
 import junit.framework.Test;
 
+import org.limewire.concurrent.FutureEvent;
+import org.limewire.concurrent.FutureEvent.Type;
 import org.limewire.mojito.Context;
 import org.limewire.mojito.KUID;
 import org.limewire.mojito.MojitoDHT;
-import org.limewire.mojito.MojitoFactory;
 import org.limewire.mojito.MojitoTestCase;
 import org.limewire.mojito.concurrent.DHTFuture;
 import org.limewire.mojito.concurrent.DHTFutureAdapter;
@@ -37,6 +37,8 @@ import org.limewire.mojito.result.StoreResult;
 import org.limewire.mojito.routing.Version;
 import org.limewire.mojito.settings.KademliaSettings;
 import org.limewire.mojito.util.DatabaseUtils;
+import org.limewire.mojito.util.MojitoUtils;
+import org.limewire.util.StringUtils;
 
 public class DHTValueTest extends MojitoTestCase {
     
@@ -62,36 +64,22 @@ public class DHTValueTest extends MojitoTestCase {
         setLocalIsPrivate(false);
     }
 
-    @SuppressWarnings("null")
     public void testLocationCount() throws Exception {
         int k = KademliaSettings.REPLICATION_PARAMETER.getValue();
         
-        Map<KUID, MojitoDHT> dhts = new HashMap<KUID, MojitoDHT>();
-        MojitoDHT first = null;
+        Map<KUID, MojitoDHT> dhts = Collections.emptyMap();
         try {
-            for (int i = 0; i < 2*k; i++) {
-                MojitoDHT dht = MojitoFactory.createDHT("DHT-" + i);
-                dht.bind(new InetSocketAddress(2000 + i));
-                dht.start();
-                
-                if (i > 0) {
-                    dht.bootstrap(new InetSocketAddress("localhost", 2000)).get();
-                } else {
-                    first = dht;
-                }
-                dhts.put(dht.getLocalNodeID(), dht);
-            }
-            first.bootstrap(new InetSocketAddress("localhost", 2000+1)).get();
+            dhts = MojitoUtils.createBootStrappedDHTsMap(2);
             Thread.sleep(250);
             
             KUID key = KUID.createRandomID();
             DHTValueType type = DHTValueType.TEST;
             Version version = Version.ZERO;
-            byte[] b = "Hello World".getBytes();
+            byte[] b = StringUtils.toUTF8Bytes("Hello World");
             
             long time = System.currentTimeMillis();
             
-            Context context = (Context)first;
+            Context context = (Context)dhts.values().iterator().next();
             
             final Object lock = new Object();
             final Storable storable = new Storable(key, new DHTValueImpl(type, version, b));
@@ -103,10 +91,12 @@ public class DHTValueTest extends MojitoTestCase {
             
             // Store...
             DHTFuture<StoreResult> future = context.store(storable);
-            future.addDHTFutureListener(new DHTFutureAdapter<StoreResult>() {
+            future.addFutureListener(new DHTFutureAdapter<StoreResult>() {
                 @Override
-                public void handleFutureSuccess(StoreResult result) {
-                    storable.handleStoreResult(result);
+                public void operationComplete(FutureEvent<StoreResult> event) {
+                    assertEquals(Type.SUCCESS, event.getType());
+                    
+                    storable.handleStoreResult(event.getResult());
                     synchronized (lock) {
                         lock.notifyAll();
                     }
