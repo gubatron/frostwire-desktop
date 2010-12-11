@@ -28,7 +28,7 @@ public final class LimeWireUtils {
 	 * Constant for the current version of FrostWire.
 	 */
     @InspectablePrimitive("limewire version")
-	private static final String LIMEWIRE_VERSION = "4.21.1";
+	private static final String FROSTWIRE_VERSION = "4.21.2";
     
     /**
      * The current revision of the BitTorrent protocol implementation.
@@ -54,19 +54,19 @@ public final class LimeWireUtils {
      * The cached value of the major revision number.
      */
     private static final int _majorVersionNumber = 
-        getMajorVersionNumberInternal(LIMEWIRE_VERSION);
+        getMajorVersionNumberInternal(FROSTWIRE_VERSION);
 
     /**
      * The cached value of the minor revision number.
      */
     private static final int _minorVersionNumber = 
-        getMinorVersionNumberInternal(LIMEWIRE_VERSION);
+        getMinorVersionNumberInternal(FROSTWIRE_VERSION);
         
     /**
      * The cached value of the really minor version number.
      */
     private static final int _serviceVersionNumber =
-        getServiceVersionNumberInternal(LIMEWIRE_VERSION);
+        getServiceVersionNumberInternal(FROSTWIRE_VERSION);
 
     /**
      * The cached value of the GUESS major revision number.
@@ -122,12 +122,12 @@ public final class LimeWireUtils {
 	 * Initialize the settings statically. 
 	 */
 	static {
-		if(!LIMEWIRE_VERSION.endsWith("Pro")) {
-			HTTP_SERVER = "LimeWire/" + LIMEWIRE_VERSION;
+		if(!FROSTWIRE_VERSION.endsWith("Pro")) {
+			HTTP_SERVER = "LimeWire/" + FROSTWIRE_VERSION;
 		}
 		else {
-			HTTP_SERVER = ("LimeWire/"+LIMEWIRE_VERSION.
-                           substring(0, LIMEWIRE_VERSION.length()-4)+" (Pro)");
+			HTTP_SERVER = ("LimeWire/"+FROSTWIRE_VERSION.
+                           substring(0, FROSTWIRE_VERSION.length()-4)+" (Pro)");
             _isPro = true;
 		}
 	}
@@ -171,7 +171,7 @@ public final class LimeWireUtils {
 	 */
 	public static String getLimeWireVersion() {
         if(testVersion==null)//Always the case, except when update tests are run
-            return LIMEWIRE_VERSION;
+            return FROSTWIRE_VERSION;
         return testVersion;
 	}
 
@@ -225,7 +225,7 @@ public final class LimeWireUtils {
      *  otherwise <tt>false</tt>
      */
     public static boolean isTestingVersion() {
-        return LIMEWIRE_VERSION.equals("@" + "version" + "@");
+        return FROSTWIRE_VERSION.equals("@" + "version" + "@");
     }
     
     static int getMinorVersionNumberInternal(String version) {
@@ -275,7 +275,7 @@ public final class LimeWireUtils {
      * Same as '"LimeWire "+getLimeWireVersion'.
 	 */
 	public static String getVendor() {
-		return "LimeWire " + LIMEWIRE_VERSION;
+		return "LimeWire " + FROSTWIRE_VERSION;
 	}    
 
 	/**
