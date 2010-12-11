@@ -191,7 +191,7 @@ final class AboutWindow {
         sb.append(I18n.tr("<h1>FrostWire Logo Designer</h1>"));
         sb.append("<ul><li>Luis Ramirez (Venezuela - <a href='http://www.elblogo.com'>ElBlogo.com</a>)</li></ul>");
 
-        sb.append(I18n.tr("<h1>FrostWire Graphics Designer</h1>"));
+        sb.append(I18n.tr("<h1>FrostWire Graphics Designers/Photographers</h1>"));
         sb.append("<ul><li>Arianys Wilson - Splash 4.18 (New York - <a href='http://nanynany.com/blog/?from=frostwire'>NanyNany.com</a>)</li></ul>");
         sb.append("<ul><li>Scott Kellum - Splash 4.17 (New York - <a href='http://www.scottkellum.net'>ScottKellum.net</a>)</li></ul>");
         sb.append("<ul><li>Shelby Allen - Splash 4.13 (New Zealand - <a href='http://www.stitzu.com'>Stitzu.com</a>)</li></ul>");
