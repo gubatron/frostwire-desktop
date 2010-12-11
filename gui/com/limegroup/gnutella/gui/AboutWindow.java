@@ -184,9 +184,8 @@ final class AboutWindow {
         sb.append("<ul><li>Ian '<strong>the man</strong>' Walker</li></ul>");
         sb.append("<strong>VE:</strong>");
         sb.append("<ul>");
-        sb.append("<li>Fernando Toussaint '<strong>FTA</strong>' - <a href='http://www.cybercultura.net'>Web</a></li>");
-        sb.append("<li>Alden Torres '<strong>aldenml</strong>' - <a href='http://www.aldentorres.com'>Blog</a>, <a href='http://google.com/profiles/aldenml'>Buzz</a>, <a href='http://twitter.com/aldenml'>Twitter</a></li>");
-        sb.append("<li>Angel Leon '<strong>gubatron</strong>' - <a href='http://www.gubatron.com'>Blog</a>, <a href='http://google.com/profiles/gubatron'>Buzz</a>, <a href='http://twitter.com/gubatron'>Twitter</a></li>");
+        sb.append("<li>Alden Torres '<strong>aldenml</strong>' - <a href='http://google.com/profiles/aldenml'>Buzz</a>, <a href='http://twitter.com/aldenml'>Twitter</a></li>");
+        sb.append("<li>Angel Leon '<strong>gubatron</strong>' - <a href='http://www.gubatron.com/blog'>Blog</a>, <a href='http://google.com/profiles/gubatron'>Buzz</a>, <a href='http://twitter.com/gubatron'>Twitter</a></li>");
         sb.append("</ul><br><br>");
 
         sb.append(I18n.tr("<h1>FrostWire Logo Designer</h1>"));
@@ -200,6 +199,7 @@ final class AboutWindow {
 
         sb.append(I18n.tr("<h1>Thanks to Former FrostWire Developers</h1>"));
         sb.append("<li>Gregorio Roper (Germany)</li>");
+        sb.append("<li>Fernando Toussaint '<strong>FTA</strong>' - <a href='http://www.cybercultura.net'>Web</a></li>");
         sb.append("<br><br>");
 
         sb.append(I18n.tr("<h1>Thanks to the FrostWire Chat Community!</h1>"));
