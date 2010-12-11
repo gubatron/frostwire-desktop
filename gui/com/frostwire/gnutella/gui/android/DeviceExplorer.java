@@ -254,7 +254,7 @@ public class DeviceExplorer extends JPanel {
 		panel.add(_scrollPane, BorderLayout.CENTER);
 		
 		_labelLoading = new JLabel();
-		_labelLoading.setSize(100, 100);
+		_labelLoading.setSize(32,32);
         _labelLoading.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(getClass().getResource("images" + File.separator + "loading.gif"))));
         _labelLoading.setVisible(false);
         _list.add(_labelLoading, BorderLayout.CENTER);
