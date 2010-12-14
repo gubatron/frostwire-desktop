@@ -371,7 +371,7 @@ public final class UpdateMessageReader implements ContentHandler {
 		InputSource src = null;
 
 		try {
-			String userAgent = "FrostWire/" + OSUtils.getOS() + "/"
+			String userAgent = "FrostWire/" + OSUtils.getOS() + "-" + OSUtils.getArchitecture() + "/"
 					+ LimeWireUtils.getLimeWireVersion();
 			connection = (HttpURLConnection) (new URL(getUpdateURL()))
 					.openConnection();
