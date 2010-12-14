@@ -20,7 +20,7 @@ public class AndroidMediator implements ThemeObserver {
 	/**
 	 * Singleton instance of this class.
 	 */
-	private static final AndroidMediator INSTANCE = new AndroidMediator();
+	private static AndroidMediator INSTANCE;
 	
 	/**
 	 * The primary panel that contains all of the library elements.
@@ -44,7 +44,12 @@ public class AndroidMediator implements ThemeObserver {
 	/**
 	 * @return the <tt>AndroidMediator</tt> instance
 	 */
-	public static AndroidMediator instance() { return INSTANCE; }
+	public static AndroidMediator instance() { 
+		if (INSTANCE == null) {
+			 INSTANCE = new AndroidMediator();
+		}
+		return INSTANCE; 
+	}
 	
 	private AndroidMediator() {
     	GUIMediator.setSplashScreenString(I18n.tr("Loading phones and tablets..."));
