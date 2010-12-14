@@ -93,60 +93,39 @@ public class FileDescriptorListModel extends AbstractListModel {
                 
                 FileDescriptor fileDescriptor = _fileDescriptors.get(i);
                 
-                String title = fileDescriptor.title != null ? fileDescriptor.title.toLowerCase() : "";
-                String artist = fileDescriptor.artist != null ? fileDescriptor.artist.toLowerCase() : "";
-                String album = fileDescriptor.album != null ? fileDescriptor.album.toLowerCase() : "";
+                //build haystack string
+                StringBuilder haystack = new StringBuilder();
                 
-                boolean isSubString = title.contains(searchText)|| artist.contains(searchText) || album.contains(searchText);
+                if (fileDescriptor.title != null)
+                	haystack.append(fileDescriptor.title.toLowerCase() + " ");
                 
-                if (isSubString) {
+                if (fileDescriptor.artist != null)
+                	haystack.append(fileDescriptor.artist.toLowerCase() + " ");
+                
+                if (fileDescriptor.album != null)
+                	haystack.append(fileDescriptor.artist.toLowerCase() + " ");
+                
+                if (fileDescriptor.fileName != null)
+                	haystack.append(fileDescriptor.fileName.toLowerCase());
+                
+                boolean isMatch = true;
+                
+                //tokenize search terms and make sure all of them apply to the
+                //current filedescriptor.
+                String[] splitSearch = searchText.split(" ");
+                
+                for (String token : splitSearch) {
+                	if (haystack.indexOf(token) == -1) {
+                		isMatch = false;
+                		break;
+                	}
+                }
+                
+                if (isMatch) {
                     _filterFileDescriptors.add(fileDescriptor);
                 }
             }
             
-            if (_filterFileDescriptors.size() == 0) {
-                
-                for (int i = 0; i < _fileDescriptors.size(); i++) {
-                    
-                    if (Thread.interrupted()) {
-                        return;
-                    }
-                    
-                    FileDescriptor fileDescriptor = _fileDescriptors.get(i);
-                    
-                    String title = fileDescriptor.title != null ? fileDescriptor.title.toLowerCase() : "";
-                    String artist = fileDescriptor.artist != null ? fileDescriptor.artist.toLowerCase() : "";
-                    String album = fileDescriptor.album != null ? fileDescriptor.album.toLowerCase() : "";
-                    
-                    if (pseudoMatch(title, searchText) &&
-                        pseudoMatch(artist, searchText) &&
-                        pseudoMatch(album, searchText)) {
-                        _filterFileDescriptors.add(fileDescriptor);
-                    }
-                }
-            }
-            
-            if (_filterFileDescriptors.size() == 0) {
-                
-                for (int i = 0; i < _fileDescriptors.size(); i++) {
-                    
-                    if (Thread.interrupted()) {
-                        return;
-                    }
-                    
-                    FileDescriptor fileDescriptor = _fileDescriptors.get(i);
-                    
-                    String title = fileDescriptor.title != null ? fileDescriptor.title.toLowerCase() : "";
-                    String artist = fileDescriptor.artist != null ? fileDescriptor.artist.toLowerCase() : "";
-                    String album = fileDescriptor.album != null ? fileDescriptor.album.toLowerCase() : "";
-                    
-                    if (pseudoMatch(title, searchText) ||
-                        pseudoMatch(artist, searchText) ||
-                        pseudoMatch(album, searchText)) {
-                        _filterFileDescriptors.add(fileDescriptor);
-                    }
-                }
-            }
         }
         
         if (Thread.interrupted()) {
