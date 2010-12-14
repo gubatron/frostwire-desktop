@@ -66,7 +66,7 @@
 	    <fileset dir="${build.limewire.gui.classes}" includes="com/limegroup/**/*.class"/>
 	    <fileset dir="${build.limewire.core.classes}" includes="com/limegroup/**/*.class"/>
 	    <fileset dir="${limewire.home}/gui" includes="irc/**/*" excludes="irc/**/*.java"/>
-	    <fileset dir="${limewire.home/gui" includes="org/**/*" excludes="org/**/*.java"/>
+	    <fileset dir="${limewire.home}/gui" includes="org/**/*" excludes="org/**/*.java"/>
 	    <manifest>
 	      <attribute name="Main-Class" value="com.limegroup.gnutella.gui.Main" />
 	      <attribute name="Class-Path" value=". ${classpath} lw-azureus.jar lw-collection.jar lw-common.jar lw-http.jar lw-io.jar lw-mojito.jar lw-net.jar lw-nio.jar lw-resources.jar lw-rudp.jar lw-security.jar lw-setting.jar lw-statistic.jar"/>

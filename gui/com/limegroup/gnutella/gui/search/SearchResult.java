@@ -171,9 +171,14 @@ interface SearchResult {
      * @param line {@link TableLine} that will hold <code>this</code>
      */
     void initialize(TableLine line);
-            
-            
     
     JPopupMenu createMenu(JPopupMenu popupMenu, TableLine[] lines, boolean markAsSpam, boolean markAsNot, ResultPanel rp);
+    
+    /**
+     * Wether or not this result can be marked as Junk.
+     * @return
+     */
+    public boolean canBeMarkedAsJunk();
+    	
 
 }

@@ -47,6 +47,11 @@ final class GnutellaSearchResult extends AbstractSearchResult {
             _alts = Collections.emptySet();
     }
     
+    @Override
+    public boolean canBeMarkedAsJunk() {
+    	return true;
+    }
+    
     /** Gets the RemoteFileDesc */
     RemoteFileDesc getRemoteFileDesc() { return RFD; }
     
