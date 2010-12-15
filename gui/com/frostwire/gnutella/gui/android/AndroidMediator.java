@@ -101,7 +101,7 @@ public class AndroidMediator implements ThemeObserver {
 		EXPLORERS_CONTAINER.add(SPLIT_PANE,c);
 
 		MAIN_PANEL.add(EXPLORERS_CONTAINER,BorderLayout.CENTER);
-		SPLIT_PANE.setDividerLocation(500);
+		SPLIT_PANE.setDividerLocation(300);
 	}
 
 	@Override

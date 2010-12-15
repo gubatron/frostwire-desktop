@@ -12,7 +12,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +24,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
-import com.frostwire.gnutella.gui.HintTextField;
 import com.frostwire.gnutella.gui.GraphicPanel;
+import com.frostwire.gnutella.gui.HintTextField;
 import com.frostwire.gnutella.gui.SlideshowPanel;
 import com.frostwire.gnutella.gui.android.Task.OnChangedListener;
 
@@ -255,7 +254,7 @@ public class DeviceExplorer extends JPanel {
 		
 		_labelLoading = new JLabel();
 		_labelLoading.setSize(32,32);
-        _labelLoading.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(getClass().getResource("images" + File.separator + "loading.gif"))));
+        _labelLoading.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(getClass().getResource("images/loading.gif"))));
         _labelLoading.setVisible(false);
         _list.add(_labelLoading, BorderLayout.CENTER);
 		
