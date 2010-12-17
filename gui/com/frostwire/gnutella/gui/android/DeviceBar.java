@@ -143,7 +143,7 @@ public class DeviceBar extends JPanel {
 
         _imageLeftBorder = image.getSubimage(0, 0, 15, image.getHeight());
 
-        _imageRightBorder = new BufferedImage(_imageLeftBorder.getWidth(), _imageLeftBorder.getHeight(), _imageLeftBorder.getType());
+        _imageRightBorder = new BufferedImage(_imageLeftBorder.getWidth(), _imageLeftBorder.getHeight(), BufferedImage.TYPE_INT_RGB);
 
         Graphics2D g = null;
 
