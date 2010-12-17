@@ -259,27 +259,14 @@ public class GUILoader {
      * throws MissingResourceException.
      */         
     private static void sanityCheck() throws StartupFailedException {
-        File test = new File("iscvs.txt");
-        boolean isCVS = false;
-        
-        // If the gpl.txt exists, then we're running off of CVS.
-        if( test.exists() && test.isFile() ) {
-            isCVS = true;
-        }
-        // If it doesn't, we're a production version.
-        else {
-            isCVS = false;
-        }
-        
-        String root = isCVS ? "../lib/jars" : ".";        
-        //File themesJar = new File(root, "themes.jar");
-        
-        //if( !isCVS && (!themesJar.exists() || !themesJar.isFile()) )
-        //    throw new StartupFailedException("invalid themes.jar");
-            
-        // Then do more advanced hash checks.
+    	boolean skip = true;
+    	
+    	if (skip) {
+    		return;
+    	}
+    	
         try {
-            verifyHashes(root);
+            verifyHashes(".");
         } catch(IOException e) {
             throw new StartupFailedException(e.getMessage());
         }
