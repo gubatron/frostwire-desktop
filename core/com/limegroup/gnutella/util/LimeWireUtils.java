@@ -10,8 +10,8 @@ import org.limewire.util.CommonUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 import org.limewire.util.SystemUtils;
-import org.limewire.util.VersionUtils;
 import org.limewire.util.SystemUtils.SpecialLocations;
+import org.limewire.util.VersionUtils;
 
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.settings.ApplicationSettings;
@@ -38,12 +38,6 @@ public final class LimeWireUtils {
     @InspectablePrimitive("bittorrent revision")
 	public static final String BT_REVISION = "0002";
 
-    /**
-     * Variable used for testing only, it's value is set to whatever the test
-     * needs, and getVersion method retuns this value if it's not null
-     */
-    private static String testVersion = null;
-    
     /** True if this is a beta. */
     private static final boolean betaVersion = true;
     
@@ -169,10 +163,8 @@ public final class LimeWireUtils {
 	 * Returns the current version number of LimeWire as
      * a string, e.g., "1.4".
 	 */
-	public static String getLimeWireVersion() {
-        if(testVersion==null)//Always the case, except when update tests are run
-            return FROSTWIRE_VERSION;
-        return testVersion;
+	public static String getFrostWireVersion() {
+        return FROSTWIRE_VERSION;
 	}
 
     /** Gets the major version of LimeWire.
@@ -414,7 +406,7 @@ public final class LimeWireUtils {
         url += "guid=" + EncodingUtils.encode(new GUID(myClientGUID).toHexString())+ 
             "&pro="   + LimeWireUtils.isPro() + 
             "&lang=" + EncodingUtils.encode(ApplicationSettings.getLanguage()) +
-            "&lv="   + EncodingUtils.encode(LimeWireUtils.getLimeWireVersion()) +
+            "&lv="   + EncodingUtils.encode(LimeWireUtils.getFrostWireVersion()) +
             "&jv="   + EncodingUtils.encode(VersionUtils.getJavaVersion()) +
             "&os="   + EncodingUtils.encode(OSUtils.getOS()) +
             "&osv="  + EncodingUtils.encode(OSUtils.getOSVersion());

@@ -14,7 +14,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Enumeration;
 import java.util.Properties;
 
 import javax.swing.BorderFactory;
@@ -55,7 +54,7 @@ public class GUILoader {
                 hideSplash(frame);
                 JavaVersionNotice.showUpgradeRequiredDialog();
             }
-	        sanityCheck();
+	        //sanityCheck();
 	        Initializer initializer = new Initializer();
 	        initializer.initialize(args, frame);
         } catch(StartupFailedException sfe) {
@@ -101,7 +100,7 @@ public class GUILoader {
 		err.printStackTrace();
 		StringWriter sw = new StringWriter();
 		PrintWriter pw = new PrintWriter(sw);
-		pw.println("FrostWire version " + LimeWireUtils.getLimeWireVersion());
+		pw.println("FrostWire version " + LimeWireUtils.getFrostWireVersion());
 		pw.print("Java version ");
 		pw.print(System.getProperty("java.version", "?"));
 		pw.print(" from ");
@@ -152,14 +151,6 @@ public class GUILoader {
             return new File(dir, ".frostwire");
     }
         
-    /**
-     * @return if we're running on windows without using OSUtils.
-     */
-    private static final boolean isWindows() {
-        final String os = System.getProperty("os.name").toLowerCase();
-        return os.contains("windows");
-    }
-    
 	/**
 	 * Displays an internal error with specialized formatting.
 	 */
@@ -253,64 +244,6 @@ public class GUILoader {
 		DIALOG.setVisible(true);
     }	
 	
-    /**
-     * Determines whether or not specific files exist and are the correct size.
-     * If they do not exist or are the incorrect size, 
-     * throws MissingResourceException.
-     */         
-    private static void sanityCheck() throws StartupFailedException {
-    	boolean skip = true;
-    	
-    	if (skip) {
-    		return;
-    	}
-    	
-        try {
-            verifyHashes(".");
-        } catch(IOException e) {
-            throw new StartupFailedException(e.getMessage());
-        }
-    }
-    
-    /**
-     * Loads up a file 'hashes' and verifies that all the files/hashes
-     * in it match the hashes we have.
-     */
-    private static void verifyHashes(String root) throws IOException, StartupFailedException {
-        // Load up the file with the hashes.
-        if (System.getProperty("debug") != null) {
-            System.out.println("GUILoader.verifyHashes() skipped - (debug=1)");
-            return;
-        }
-        
-		Properties props = new Properties();
-		FileInputStream fis = null;
-		try {
-			fis = new FileInputStream(new File(root, "hashes"));
-			props.load(fis);
-        } finally {
-            if( fis != null ) {
-                try {
-                    fis.close();
-                    fis = null;
-                } catch(IOException ignored) {}
-            }
-        }
-        
-        //Iterate through each expected hash to verify that
-        //the files on disk are not corrupted.
-        Enumeration names = props.propertyNames();
-        while(names.hasMoreElements()) {
-            String name = (String)names.nextElement();
-            String storedHash = props.getProperty(name);
-            String realHash = hash(new File(root, name));
-            if(!realHash.equals(storedHash)) {
-                throw new StartupFailedException(
-                    "file [" + name + "] has hash of [" + realHash +
-                    "] instead of expected [" + storedHash + "]");
-            }
-        }
-    }
     
     /**
      * Determines the MD5 hash of the specified file.
@@ -360,10 +293,6 @@ public class GUILoader {
     
     @SuppressWarnings("serial")
 	private static class StartupFailedException extends Exception {
-        StartupFailedException(final String msg) {
-            super(msg);
-        } 
-        
         @SuppressWarnings("unused")
 		StartupFailedException() {
             super();

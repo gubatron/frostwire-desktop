@@ -277,7 +277,7 @@ public final class BugManager {
                         new FileInputStream(f)));
             String version = (String)in.readObject();
             long nextTime = in.readLong();
-            if( version.equals(LimeWireUtils.getLimeWireVersion()) ) {
+            if( version.equals(LimeWireUtils.getFrostWireVersion()) ) {
                 Map<String, Long> bugs = GenericsUtils.scanForMap(
                         in.readObject(), String.class, Long.class,
                         GenericsUtils.ScanMode.REMOVE);
@@ -321,7 +321,7 @@ public final class BugManager {
             try {
                 File f = BugSettings.BUG_INFO_FILE.getValue();
                 out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(f)));
-                String version = LimeWireUtils.getLimeWireVersion();
+                String version = LimeWireUtils.getFrostWireVersion();
                 out.writeObject(version);
                 out.writeLong(_nextAllowedTime);
                 out.writeObject(BUG_TIMES);
@@ -359,7 +359,7 @@ public final class BugManager {
         Version myVersion;
         Version lastVersion;
         try {
-            myVersion = new Version(LimeWireUtils.getLimeWireVersion());
+            myVersion = new Version(LimeWireUtils.getFrostWireVersion());
             lastVersion = new Version(BugSettings.LAST_ACCEPTABLE_VERSION.getValue());
         } catch(VersionFormatException vfe) {
             return false;

@@ -549,7 +549,7 @@ public final class UpdateManager implements Serializable {
 		if (messageVersion == null)
 			return false;
 
-		String currentVersion = LimeWireUtils.getLimeWireVersion();
+		String currentVersion = LimeWireUtils.getFrostWireVersion();
 
 		// first discard if we're the exact same version
 		if (currentVersion.equals(messageVersion)) {

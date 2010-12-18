@@ -102,7 +102,7 @@ public class ImageCache {
                 try {
                     BufferedImage image = null;
                     
-                    String userAgent = "FrostWire/" + OSUtils.getOS() + "/" + LimeWireUtils.getLimeWireVersion();
+                    String userAgent = "FrostWire/" + OSUtils.getOS() + "/" + LimeWireUtils.getFrostWireVersion();
                     HttpFetcher fetcher = new HttpFetcher(url.toURI(), userAgent);
                     Object[] result = fetcher.fetch(false);
                     
