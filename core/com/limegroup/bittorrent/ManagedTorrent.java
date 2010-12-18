@@ -307,8 +307,13 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 	}
 	
 	private void azureusInit() {
-		if (_azureusCore == null)
-			_azureusCore = AzureusStarter.getAzureusCore();
+		if (_azureusCore == null) {
+			try {
+				_azureusCore = AzureusStarter.getAzureusCore();
+			} catch (Exception shhLetItHappen) {
+				
+			}
+		}
 	}
 
 
