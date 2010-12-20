@@ -343,8 +343,8 @@ public final class ResourceManager {
         if (OSUtils.isWindows() || OSUtils.isLinux()) {
             boolean loaded = false;
             try {
-            	System.out.println("About to load tray, java.library.path = " + System.getProperty("java.library.path"));
-                System.loadLibrary("tray");
+            	//System.out.println("About to load tray, java.library.path = " + System.getProperty("java.library.path"));
+                //System.loadLibrary("tray");
                 loaded = true;
             } catch (UnsatisfiedLinkError ule) {
             	ule.printStackTrace();

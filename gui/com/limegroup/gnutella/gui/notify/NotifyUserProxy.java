@@ -36,7 +36,7 @@ public class NotifyUserProxy implements NotifyUser {
      */
     private NotifyUserProxy() {
         if (OSUtils.supportsTray() && ResourceManager.instance().isTrayLibraryLoaded()) {
-        	_notifier = new JDICNotifier();
+        	_notifier = new TrayNotifier();
         	// If add notifications failed, we're screwed.
             if(!showTrayIcon())
                 _notifier = new BasicNotifier();

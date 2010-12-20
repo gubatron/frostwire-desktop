@@ -1,18 +1,23 @@
 package com.limegroup.gnutella.gui.notify;
 
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.MenuItem;
+import java.awt.Point;
+import java.awt.PopupMenu;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.lang.reflect.Field;
 
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
-import org.limewire.util.OSUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jdesktop.jdic.tray.SystemTray;
-import org.jdesktop.jdic.tray.TrayIcon;
+import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -22,7 +27,7 @@ import com.limegroup.gnutella.settings.UISettings;
  * Puts an icon and menu in the system tray.
  * Works on Windows, Linux, and any other platforms JDIC supports.
  */
-public class JDICNotifier implements NotifyUser {
+public class TrayNotifier implements NotifyUser {
 	
     private static final Log LOG = LogFactory.getLog(DefaultNotificationRenderer.class);
     
@@ -30,8 +35,8 @@ public class JDICNotifier implements NotifyUser {
 	private TrayIcon _icon;
 	private NotificationWindow notificationWindow;
 	
-	public JDICNotifier() {
-		_tray = SystemTray.getDefaultSystemTray();
+	public TrayNotifier() {
+		_tray = SystemTray.getSystemTray();
 		buildPopupMenu();
 
 		String iconFileName = "frosticon";
@@ -46,25 +51,34 @@ public class JDICNotifier implements NotifyUser {
 	private void buildTrayIcon(String desc, String imageFileName) {
 	    //String tip = "FrostWire: Running the Gnutella Network";
 
-	    _icon = new TrayIcon(GUIMediator.getThemeImage(imageFileName), 
+	    _icon = new TrayIcon(GUIMediator.getThemeImage(imageFileName).getImage(), 
 				 desc, 
 				 GUIMediator.getTrayMenu());
+	    
+        _icon.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if ((e.getModifiersEx() & MouseEvent.BUTTON1_DOWN_MASK) == MouseEvent.BUTTON1_DOWN_MASK) {
+                    GUIMediator.restoreView();
+                }
+            }
+        });
         
-	    // left click restores.  This happens on the awt thread.
-	    _icon.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
-        		GUIMediator.restoreView();
-		    }
-		});
+//	    // left click restores.  This happens on the awt thread.
+//	    _icon.addActionListener(new ActionListener() {
+//		    public void actionPerformed(ActionEvent e) {
+//        		GUIMediator.restoreView();
+//		    }
+//		});
         
-	    _icon.setIconAutoSize(true);
+	    _icon.setImageAutoSize(true);
 	} //buildTrayIcon
 	
-	private JPopupMenu buildPopupMenu() {
-		JPopupMenu menu = GUIMediator.getTrayMenu();
+	private PopupMenu buildPopupMenu() {
+		PopupMenu menu = GUIMediator.getTrayMenu();
 		
 		// restore
-		JMenuItem item = new JMenuItem(I18n.tr("Restore"));
+		MenuItem item = new MenuItem(I18n.tr("Restore"));
 		item.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GUIMediator.restoreView();
@@ -75,7 +89,7 @@ public class JDICNotifier implements NotifyUser {
 		menu.addSeparator();
 		
 		// about box
-		item = new JMenuItem(I18n.tr("About"));
+		item = new MenuItem(I18n.tr("About"));
 		item.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GUIMediator.showAboutWindow();
@@ -86,7 +100,7 @@ public class JDICNotifier implements NotifyUser {
 		menu.addSeparator();
 		
 		//exit after transfers
-		item = new JMenuItem(I18n.tr("Exit after Transfers"));
+		item = new MenuItem(I18n.tr("Exit after Transfers"));
 		item.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GUIMediator.shutdownAfterTransfers();
@@ -95,7 +109,7 @@ public class JDICNotifier implements NotifyUser {
 		menu.add(item);
 		
 		// exit
-		item = new JMenuItem(I18n.tr("Exit"));
+		item = new MenuItem(I18n.tr("Exit"));
 		item.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				GUIMediator.shutdown();
@@ -115,8 +129,8 @@ public class JDICNotifier implements NotifyUser {
 	
 	public boolean showTrayIcon() {
 	    try {
-	        _tray.addTrayIcon(_icon);
-	    } catch(IllegalArgumentException iae) {
+	        _tray.add(_icon);
+	    } catch(Exception iae) {
 	        // Sometimes JDIC can't load the trayIcon :(
 	        return false;
 	    }
@@ -133,7 +147,7 @@ public class JDICNotifier implements NotifyUser {
 	}
 
 	public void hideTrayIcon() {
-		_tray.removeTrayIcon(_icon);
+		_tray.remove(_icon);
 		notificationWindow.setParentLocation(null);
 		notificationWindow.setParentSize(null);
 	}
@@ -142,8 +156,8 @@ public class JDICNotifier implements NotifyUser {
 	    try {
 	        notificationWindow.addNotification(notification);
 	        try {
-	            notificationWindow.setParentLocation(_icon.getLocationOnScreen());
-	        } catch (NullPointerException ignore) {
+	            notificationWindow.setParentLocation(getTryIconLocation(_icon));
+	        } catch (Exception ignore) {
 	            // thrown if the native peer is not found (GUI-273)?
 	        }
 	        notificationWindow.showWindow();
@@ -162,5 +176,24 @@ public class JDICNotifier implements NotifyUser {
     public void updateUI() {
         SwingUtilities.updateComponentTreeUI(notificationWindow);
     }
-	
+
+    private Point getTryIconLocation(TrayIcon icon) throws Exception {
+        Field peerField = icon.getClass().getDeclaredField("peer");
+        peerField.setAccessible(true);
+
+        Object peer = peerField.get(icon);
+
+        Field eframeField = peer.getClass().getDeclaredField("eframe");
+        eframeField.setAccessible(true);
+
+        Object eframe = eframeField.get(peer);
+
+        Component component = (Component) eframe;
+
+        Point p = component.getLocation();
+
+        SwingUtilities.convertPointToScreen(p, component);
+
+        return p;
+    }
 }

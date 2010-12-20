@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Frame;
 import java.awt.Point;
+import java.awt.PopupMenu;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
@@ -359,7 +360,7 @@ public final class GUIMediator {
 	/**
 	 * The popup menu on the icon in the sytem tray.
 	 */
-	private static final JPopupMenu TRAY_MENU = new TrayPopupMenu();
+	private static final PopupMenu TRAY_MENU = new PopupMenu();
 
 	/**
 	 * <tt>List</tt> of <tt>RefreshListener</tt> classes to notify of UI refresh
@@ -710,7 +711,7 @@ public final class GUIMediator {
 	 * 
 	 * @return The tray popup menu
 	 */
-	public static final JPopupMenu getTrayMenu() {
+	public static final PopupMenu getTrayMenu() {
 		return TRAY_MENU;
 	}
 
