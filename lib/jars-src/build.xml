@@ -140,8 +140,6 @@
 		<copy file="dist/vorbisspi.jar" todir="../jars/"/>
 		<copy file="dist/AppleJavaExtensions.jar" todir="../jars/stubs"/>
 		<copy file="dist/MRJAdapter.jar" todir="../jars/osx"/>
-		<copy file="dist/libjdic.so" todir="../native/linux/${os.arch}"/>
-		<copy file="dist/libtray.so" todir="../native/linux/${os.arch}"/>
 		<copy file="dist/cglib-nodep-2.2.jar" todir="../jars/"/>		
 		<copy file="dist/asm-3.1.jar" todir="../jars/"/>
 
