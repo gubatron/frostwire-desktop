@@ -34,7 +34,7 @@ public class ProgressPanel extends JPanel {
 	private static final long serialVersionUID = -5916970294500660451L;
 	
 	private TaskListModel _model;
-	private MyActivityListener _taskListener;
+	private MyTaskListener _taskListener;
 	
 	private JButton _buttonCancelAll;
 	private JButton _buttonClearFinished;
@@ -46,7 +46,7 @@ public class ProgressPanel extends JPanel {
 	public ProgressPanel() {
 		
 		_model = new TaskListModel();
-		_taskListener = new MyActivityListener();
+		_taskListener = new MyTaskListener();
 		
 		setupUI();
 	}
@@ -73,11 +73,11 @@ public class ProgressPanel extends JPanel {
 		
 		_panelTitle = new GraphicPanel();
 		_panelTitle.setLayout(new BorderLayout());
-		_panelTitle.setGradient(new GradientPaint(0, 0,new Color(0x2c7fb0), 0, 25,  Color.BLACK));
+		_panelTitle.setGradient(new GradientPaint(0, 0, new Color(0x4f9fd2), 0, 25,  new Color(0x095d98)));
 		add(_panelTitle, BorderLayout.PAGE_START);
 		
-		String fontFamily = GuiFrostWireUtils.getFontFamily("myriad","helvetica","arial", "Dialog","FreeSans");
-        Font titleFont = new Font(fontFamily, Font.PLAIN, 20);
+		String fontFamily = GuiFrostWireUtils.getFontFamily("helvetica","arial", "Dialog","FreeSans");
+        Font titleFont = new Font(fontFamily, Font.PLAIN, 18);
 
         _labelTitle = new JLabel(" " + I18n.tr("File Transfers"));
         _labelTitle.setForeground(Color.white);
@@ -155,7 +155,7 @@ public class ProgressPanel extends JPanel {
 		return new Rectangle(p.x, p.y, renderer.getPreferredSize().width, renderer.getPreferredSize().height);
 	}
 	
-	private final class MyActivityListener implements OnChangedListener {
+	private final class MyTaskListener implements OnChangedListener {
 		public void onChanged(final Task activity) {
 			
 			final int index = _model.indexOf(activity);

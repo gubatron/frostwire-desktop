@@ -628,7 +628,10 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
                 transformSpamButton(I18n.tr("Junk"), 
                         I18n.tr("Mark selected search results as Junk"));
             }
+            
+            SPAM_BUTTON.setEnabled(line.getSearchResult().canBeMarkedAsJunk());
         }
+       
         
         BUY_BUTTON.setEnabled(false);                                                                                                                                           
         if (getAllSelectedLines().length == 1) {                                                                                                                                

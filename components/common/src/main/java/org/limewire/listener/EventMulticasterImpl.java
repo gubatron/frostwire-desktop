@@ -1,5 +1,6 @@
 package org.limewire.listener;
 
+import org.limewire.listener.EventListenerList.EventListenerListContext;
 import org.limewire.logging.Log;
 
 /**
@@ -41,4 +42,9 @@ public class EventMulticasterImpl<E> implements EventMulticaster<E> {
     public boolean removeListener(EventListener<E> eventListener) {
         return listeners.removeListener(eventListener);        
     }
+    
+    public EventListenerListContext getListenerContext() {
+    	return listeners.getContext();
+    }
+
 }

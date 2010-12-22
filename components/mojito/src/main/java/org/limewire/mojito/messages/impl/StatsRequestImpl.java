@@ -31,10 +31,11 @@ import org.limewire.mojito.messages.MessageID;
 import org.limewire.mojito.messages.StatsRequest;
 import org.limewire.mojito.routing.Contact;
 import org.limewire.mojito.routing.Version;
+import org.limewire.security.SecureMessage;
 
 
 /**
- * An implementation of StatsRequest
+ * An implementation of StatsRequest.
  */
 public class StatsRequestImpl extends AbstractRequestMessage
         implements StatsRequest {
@@ -43,7 +44,7 @@ public class StatsRequestImpl extends AbstractRequestMessage
     
     private final byte[] signature;
     
-    private int secureStatus = INSECURE;
+    private int secureStatus = SecureMessage.INSECURE;
     
     public StatsRequestImpl(Context context, 
             Contact contact, MessageID messageId, StatisticType request) {
@@ -74,7 +75,7 @@ public class StatsRequestImpl extends AbstractRequestMessage
     }
     
     public boolean isSecure() {
-        return secureStatus == SECURE;
+        return secureStatus == SecureMessage.SECURE;
     }
 
     public byte[] getSecureSignature() {
@@ -86,11 +87,13 @@ public class StatsRequestImpl extends AbstractRequestMessage
         initSignature(signature);
     }
     
+    @Override
     protected void writeBody(MessageOutputStream out) throws IOException {
         out.writeStatisticType(request);
         out.writeSignature(signature);
     }
     
+    @Override
     public String toString() {
         return "StatsRequest: " + request;
     }

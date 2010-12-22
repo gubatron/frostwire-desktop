@@ -46,12 +46,17 @@ public final class ChatMediator implements ThemeObserver {
 	/**
 	 * Singleton instance of this class.
 	 */
-	private static final ChatMediator INSTANCE = new ChatMediator();
+	private static ChatMediator INSTANCE; 
     
 	/**
 	 * @return the <tt>ChatMediator</tt> instance
 	 */
-	public static ChatMediator instance() { return INSTANCE; }
+	public static ChatMediator instance() { 
+		if (INSTANCE == null) {
+			INSTANCE = new ChatMediator();
+		}
+		return INSTANCE; 
+	}
 
     /**
      * Override the default main panel setup

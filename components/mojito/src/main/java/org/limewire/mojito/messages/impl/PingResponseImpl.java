@@ -33,7 +33,7 @@ import org.limewire.mojito.routing.Version;
 
 
 /**
- * An implementation of PingResponse (Pong)
+ * An implementation of PingResponse (Pong).
  */
 public class PingResponseImpl extends AbstractResponseMessage
         implements PingResponse {
@@ -68,11 +68,13 @@ public class PingResponseImpl extends AbstractResponseMessage
         return estimatedSize;
     }
 
+    @Override
     protected void writeBody(MessageOutputStream out) throws IOException {
         out.writeSocketAddress(externalAddress);
         out.writeDHTSize(estimatedSize);
     }
 
+    @Override
     public String toString() {
         return "PingResponse: externalAddress=" + externalAddress + ", estimatedSize=" + estimatedSize;
     }

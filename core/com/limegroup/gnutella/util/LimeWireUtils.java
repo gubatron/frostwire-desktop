@@ -10,8 +10,8 @@ import org.limewire.util.CommonUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 import org.limewire.util.SystemUtils;
-import org.limewire.util.VersionUtils;
 import org.limewire.util.SystemUtils.SpecialLocations;
+import org.limewire.util.VersionUtils;
 
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.settings.ApplicationSettings;
@@ -28,7 +28,7 @@ public final class LimeWireUtils {
 	 * Constant for the current version of FrostWire.
 	 */
     @InspectablePrimitive("limewire version")
-	private static final String LIMEWIRE_VERSION = "4.21.1";
+	private static final String FROSTWIRE_VERSION = "4.21.3";
     
     /**
      * The current revision of the BitTorrent protocol implementation.
@@ -38,12 +38,6 @@ public final class LimeWireUtils {
     @InspectablePrimitive("bittorrent revision")
 	public static final String BT_REVISION = "0002";
 
-    /**
-     * Variable used for testing only, it's value is set to whatever the test
-     * needs, and getVersion method retuns this value if it's not null
-     */
-    private static String testVersion = null;
-    
     /** True if this is a beta. */
     private static final boolean betaVersion = true;
     
@@ -54,19 +48,19 @@ public final class LimeWireUtils {
      * The cached value of the major revision number.
      */
     private static final int _majorVersionNumber = 
-        getMajorVersionNumberInternal(LIMEWIRE_VERSION);
+        getMajorVersionNumberInternal(FROSTWIRE_VERSION);
 
     /**
      * The cached value of the minor revision number.
      */
     private static final int _minorVersionNumber = 
-        getMinorVersionNumberInternal(LIMEWIRE_VERSION);
+        getMinorVersionNumberInternal(FROSTWIRE_VERSION);
         
     /**
      * The cached value of the really minor version number.
      */
     private static final int _serviceVersionNumber =
-        getServiceVersionNumberInternal(LIMEWIRE_VERSION);
+        getServiceVersionNumberInternal(FROSTWIRE_VERSION);
 
     /**
      * The cached value of the GUESS major revision number.
@@ -122,12 +116,12 @@ public final class LimeWireUtils {
 	 * Initialize the settings statically. 
 	 */
 	static {
-		if(!LIMEWIRE_VERSION.endsWith("Pro")) {
-			HTTP_SERVER = "LimeWire/" + LIMEWIRE_VERSION;
+		if(!FROSTWIRE_VERSION.endsWith("Pro")) {
+			HTTP_SERVER = "LimeWire/" + FROSTWIRE_VERSION;
 		}
 		else {
-			HTTP_SERVER = ("LimeWire/"+LIMEWIRE_VERSION.
-                           substring(0, LIMEWIRE_VERSION.length()-4)+" (Pro)");
+			HTTP_SERVER = ("LimeWire/"+FROSTWIRE_VERSION.
+                           substring(0, FROSTWIRE_VERSION.length()-4)+" (Pro)");
             _isPro = true;
 		}
 	}
@@ -169,10 +163,8 @@ public final class LimeWireUtils {
 	 * Returns the current version number of LimeWire as
      * a string, e.g., "1.4".
 	 */
-	public static String getLimeWireVersion() {
-        if(testVersion==null)//Always the case, except when update tests are run
-            return LIMEWIRE_VERSION;
-        return testVersion;
+	public static String getFrostWireVersion() {
+        return FROSTWIRE_VERSION;
 	}
 
     /** Gets the major version of LimeWire.
@@ -225,7 +217,7 @@ public final class LimeWireUtils {
      *  otherwise <tt>false</tt>
      */
     public static boolean isTestingVersion() {
-        return LIMEWIRE_VERSION.equals("@" + "version" + "@");
+        return FROSTWIRE_VERSION.equals("@" + "version" + "@");
     }
     
     static int getMinorVersionNumberInternal(String version) {
@@ -275,7 +267,7 @@ public final class LimeWireUtils {
      * Same as '"LimeWire "+getLimeWireVersion'.
 	 */
 	public static String getVendor() {
-		return "LimeWire " + LIMEWIRE_VERSION;
+		return "LimeWire " + FROSTWIRE_VERSION;
 	}    
 
 	/**
@@ -414,7 +406,7 @@ public final class LimeWireUtils {
         url += "guid=" + EncodingUtils.encode(new GUID(myClientGUID).toHexString())+ 
             "&pro="   + LimeWireUtils.isPro() + 
             "&lang=" + EncodingUtils.encode(ApplicationSettings.getLanguage()) +
-            "&lv="   + EncodingUtils.encode(LimeWireUtils.getLimeWireVersion()) +
+            "&lv="   + EncodingUtils.encode(LimeWireUtils.getFrostWireVersion()) +
             "&jv="   + EncodingUtils.encode(VersionUtils.getJavaVersion()) +
             "&os="   + EncodingUtils.encode(OSUtils.getOS()) +
             "&osv="  + EncodingUtils.encode(OSUtils.getOSVersion());

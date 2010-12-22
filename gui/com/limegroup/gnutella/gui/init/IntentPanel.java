@@ -43,7 +43,7 @@ public class IntentPanel extends JPanel {
         gbc.gridwidth = GridBagConstraints.REMAINDER;
        
         JLabel almostDone = new JLabel(I18n.tr("You're almost done!"));
-        JLabel stateIntent = new JLabel(I18n.tr("State your intent below to start using FrostWire " + LimeWireUtils.getLimeWireVersion()));
+        JLabel stateIntent = new JLabel(I18n.tr("State your intent below to start using FrostWire " + LimeWireUtils.getFrostWireVersion()));
         Line line = new Line();
         MultiLineLabel description = new MultiLineLabel(I18n.tr("FrostWire is a peer-to-peer program for sharing authorized files only.  Installing and using the program does not consitute a license for obtaining or distributing unauthorized content."), 500);
         URLLabel findMore = new URLLabel("http://www.frostwire.com/?id=terms", I18n.tr("Find out more..."));
@@ -53,7 +53,7 @@ public class IntentPanel extends JPanel {
         willNot.setLayout(new GridBagLayout());
         gbc.fill = GridBagConstraints.NONE;
         gbc.insets = new Insets(10, 10, 10, 10);
-        willNotButton.setText(I18n.tr("<html><div display=\"block\" color=\"#515151\" size=\"13\">I <b>will not</b> use FrostWire {0} for copyright infringement.</div></html>", LimeWireUtils.getLimeWireVersion()));
+        willNotButton.setText(I18n.tr("<html><div display=\"block\" color=\"#515151\" size=\"13\">I <b>will not</b> use FrostWire {0} for copyright infringement.</div></html>", LimeWireUtils.getFrostWireVersion()));
         willNotButton.setOpaque(false);
         willNotButton.setIconTextGap(10);
         willNot.add(willNotButton, gbc);
@@ -61,7 +61,7 @@ public class IntentPanel extends JPanel {
 
         DitherPanel mightUse = new DitherPanel(ditherer);
         mightUse.setLayout(new GridBagLayout());
-        mightUseButton.setText(I18n.tr("<html><div display=\"block\" color=\"#515151\" size=\"13\">I <b>might use</b> FrostWire {0} for copyright infringement.</div></html>", LimeWireUtils.getLimeWireVersion()));
+        mightUseButton.setText(I18n.tr("<html><div display=\"block\" color=\"#515151\" size=\"13\">I <b>might use</b> FrostWire {0} for copyright infringement.</div></html>", LimeWireUtils.getFrostWireVersion()));
         mightUseButton.setOpaque(false);
         mightUseButton.setIconTextGap(10);
         mightUse.add(mightUseButton, gbc);

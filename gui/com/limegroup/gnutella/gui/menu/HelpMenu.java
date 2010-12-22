@@ -53,7 +53,7 @@ final class HelpMenu extends AbstractMenu {
 		        I18n.tr("Foru&m"),
 		        I18n.tr("Access the FrostWire Users\' Forum")));
 		
-		addMenuItem(new OpenLinkAction("http://www.frostclick.com/wp/?from=frostwire"+com.limegroup.gnutella.util.LimeWireUtils.getLimeWireVersion(),
+		addMenuItem(new OpenLinkAction("http://www.frostclick.com/wp/?from=frostwire"+com.limegroup.gnutella.util.LimeWireUtils.getFrostWireVersion(),
 				I18n.tr("FrostClick.com"),
 				I18n.tr("Free Legal Downloads")));
 		

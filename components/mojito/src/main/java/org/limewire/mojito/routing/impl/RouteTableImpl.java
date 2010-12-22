@@ -35,10 +35,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.limewire.collection.PatriciaTrie;
 import org.limewire.collection.Trie.Cursor;
+import org.limewire.concurrent.FutureEvent;
 import org.limewire.mojito.KUID;
 import org.limewire.mojito.concurrent.DHTExecutorService;
 import org.limewire.mojito.concurrent.DHTFutureAdapter;
-import org.limewire.mojito.concurrent.DHTFutureListener;
 import org.limewire.mojito.exceptions.DHTTimeoutException;
 import org.limewire.mojito.result.PingResult;
 import org.limewire.mojito.routing.Bucket;
@@ -56,7 +56,7 @@ import org.limewire.service.ErrorService;
 
 
 /**
- * A PatriciaTrie bases RouteTable implementation for the Mojito DHT.
+ * A PatriciaTrie based RouteTable implementation for the Mojito DHT.
  * This is the reference implementation.
  */
 public class RouteTableImpl implements RouteTable {
@@ -66,27 +66,22 @@ public class RouteTableImpl implements RouteTable {
     private static final Log LOG = LogFactory.getLog(RouteTableImpl.class);
     
     /**
-     * Trie of Buckets and the Buckets are a Trie of Contacts
+     * Trie of Buckets and the Buckets are a Trie of Contacts.
      */
     private final PatriciaTrie<KUID, Bucket> bucketTrie;
     
     /**
-     * A counter for consecutive failures
+     * A counter for consecutive failures.
      */
     private int consecutiveFailures = 0;
     
     /**
-     * The smallest subtree Bucket
-     */
-    private Bucket smallestSubtreeBucket = null;
-   
-    /**
-     * A reference to the ContactPinger
+     * A reference to the ContactPinger.
      */
     private transient ContactPinger pinger;
     
     /**
-     * The local Node
+     * The local Node.
      */
     private Contact localNode;
     
@@ -97,13 +92,13 @@ public class RouteTableImpl implements RouteTable {
         = new CopyOnWriteArrayList<RouteTableListener>();
     
     /** 
-     * Executor where to offload notifications to RouteTableListeners
+     * Executor where to offload notifications to RouteTableListeners.
      */
     private transient volatile DHTExecutorService notifier;
     
     /**
      * Create a new RouteTable and generates a new random Node ID
-     * for the local Node
+     * for the local Node.
      */
     public RouteTableImpl() {
         this(KUID.createRandomID());
@@ -111,7 +106,7 @@ public class RouteTableImpl implements RouteTable {
     
     /**
      * Create a new RouteTable and uses the given Node ID
-     * for the local Node
+     * for the local Node.
      */
     public RouteTableImpl(byte[] nodeId) {
         this(KUID.createWithBytes(nodeId));
@@ -119,7 +114,7 @@ public class RouteTableImpl implements RouteTable {
     
     /**
      * Create a new RouteTable and uses the given Node ID
-     * for the local Node
+     * for the local Node.
      */
     public RouteTableImpl(String nodeId) {
         this(KUID.createWithHexString(nodeId));
@@ -127,7 +122,7 @@ public class RouteTableImpl implements RouteTable {
     
     /**
      * Create a new RouteTable and uses the given Node ID
-     * for the local Node
+     * for the local Node.
      */
     public RouteTableImpl(KUID nodeId) {
         localNode = ContactFactory.createLocalContact(Vendor.UNKNOWN, Version.ZERO, nodeId, 0, false);
@@ -136,7 +131,7 @@ public class RouteTableImpl implements RouteTable {
     }
     
     /**
-     * Initializes the RouteTable
+     * Initializes the RouteTable.
      */
     private void init() {
         KUID bucketId = KUID.MINIMUM;
@@ -146,7 +141,6 @@ public class RouteTableImpl implements RouteTable {
         addContactToBucket(bucket, localNode);
         
         consecutiveFailures = 0;
-        smallestSubtreeBucket = null;
     }
     
     private void readObject(ObjectInputStream in) 
@@ -174,14 +168,14 @@ public class RouteTableImpl implements RouteTable {
 
     /**
      * Adds a RouteTableListener.
-     * 
+     * <p>
      * Implementation Note: The listener(s) is not called from a 
-     * seperate event Thread! That means processor intensive tasks
+     * separate event Thread! That means processor intensive tasks
      * that are performed straight in the listener(s) can slowdown 
      * the processing throughput significantly. Offload intensive
-     * tasks to seperate Threads in necessary!
+     * tasks to separate Threads in necessary!
      * 
-     * @param l The RouteTableListener instance to add
+     * @param l the RouteTableListener instance to add
      */
     public void addRouteTableListener(RouteTableListener l) {
         if (l == null) {
@@ -192,9 +186,9 @@ public class RouteTableImpl implements RouteTable {
     }
     
     /**
-     * Removes a RouteTableListener
+     * Removes a RouteTableListener.
      * 
-     * @param l The RouteTableListener instance to remove
+     * @param l the RouteTableListener instance to remove
      */
     public void removeRouteTableListener(RouteTableListener l) {
         if (l == null) {
@@ -256,7 +250,10 @@ public class RouteTableImpl implements RouteTable {
             if (isOkayToAdd(bucket, node)) {
                 addContactToBucket(bucket, node);
             } else {
+                // only cache node if the bucket can't be split
+                if (!canSplit(bucket)) {
                 addContactToBucketCache(bucket, node);
+            }
             }
         } else if (split(bucket)) {
             add(node); // re-try to add
@@ -269,7 +266,7 @@ public class RouteTableImpl implements RouteTable {
      * This method updates an existing Contact with data from a new Contact.
      * The initial state is that both Contacts have the same Node ID which
      * doesn't mean they're really the same Node. In order to figure out
-     * if they're really equal it's peforming some additional checks and
+     * if they're really equal it's performing some additional checks and
      * there are a few side conditions.
      */
     protected synchronized void updateContactInBucket(Bucket bucket, Contact existing, Contact node) {
@@ -357,9 +354,21 @@ public class RouteTableImpl implements RouteTable {
      * state is that both Contacts have the same Node ID.
      */
     protected synchronized void doSpoofCheck(Bucket bucket, final Contact existing, final Contact node) {
-        DHTFutureListener<PingResult> listener = new DHTFutureAdapter<PingResult>() {
+        DHTFutureAdapter<PingResult> listener = new DHTFutureAdapter<PingResult>() {
+            
             @Override
-            public void handleFutureSuccess(PingResult result) {
+            protected void operationComplete(FutureEvent<PingResult> event) {
+                switch (event.getType()) {
+                    case SUCCESS:
+                        handleFutureSuccess(event.getResult());
+                        break;
+                    case EXCEPTION:
+                        handleExecutionException(event.getException());
+                        break;
+                }
+            }
+
+            private void handleFutureSuccess(PingResult result) {
                 if (LOG.isWarnEnabled()) {
                     LOG.warn(node + " is trying to spoof " + result);
                 }
@@ -369,8 +378,7 @@ public class RouteTableImpl implements RouteTable {
                 // Reason: It was maybe just a Node ID collision!
             }
             
-            @Override
-            public void handleExecutionException(ExecutionException e) {
+            private void handleExecutionException(ExecutionException e) {
                 DHTTimeoutException timeout = ExceptionUtils.getCause(e, DHTTimeoutException.class);
                 
                 // We can only make decisions for timeouts! 
@@ -431,7 +439,7 @@ public class RouteTableImpl implements RouteTable {
     }
     
     /**
-     * Adds the given Contact to the Bucket's replacement Cache
+     * Adds the given Contact to the Bucket's replacement Cache.
      */
     protected synchronized void addContactToBucketCache(Bucket bucket, Contact node) {
         
@@ -446,12 +454,9 @@ public class RouteTableImpl implements RouteTable {
     }
     
     /**
-     * This method splits the given Bucket into two new Buckets.
-     * There are a few conditions in which cases we do split and
-     * in which cases we don't.
+     * Returns true if the bucket can be split.
      */
-    protected synchronized boolean split(Bucket bucket) {
-        
+    private boolean canSplit(Bucket bucket) {
         // Three conditions for splitting:
         // 1. Bucket contains the local Node
         // 2. New node part of the smallest subtree to the local node
@@ -460,8 +465,21 @@ public class RouteTableImpl implements RouteTable {
         boolean containsLocalNode = bucket.contains(getLocalNode().getNodeID());
         
         if (containsLocalNode
-                || bucket.equals(smallestSubtreeBucket)
+                || bucket.isInSmallestSubtree()
                 || !bucket.isTooDeep()) {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * This method splits the given Bucket into two new Buckets.
+     * There are a few conditions in which cases we do split and
+     * in which cases we don't.
+     */
+    protected synchronized boolean split(Bucket bucket) {
+        
+       if (canSplit(bucket)) {
             
             if (LOG.isTraceEnabled()) {
                 LOG.trace("Splitting bucket: " + bucket);
@@ -472,16 +490,6 @@ public class RouteTableImpl implements RouteTable {
             
             Bucket left = buckets.get(0);
             Bucket right = buckets.get(1);
-            
-            if (containsLocalNode) {
-                if (left.contains(getLocalNode().getNodeID())) {
-                    smallestSubtreeBucket = right;
-                } else if (right.contains(getLocalNode().getNodeID())) {
-                    smallestSubtreeBucket = left;
-                } else {
-                    throw new IllegalStateException("Neither left nor right Bucket contains the local Node");
-                }
-            }
             
             // The left one replaces the current bucket in the Trie!
             Bucket oldLeft = bucketTrie.put(left.getBucketID(), left);
@@ -612,8 +620,8 @@ public class RouteTableImpl implements RouteTable {
                         assert (removed == true);
                         
                         if (isOkayToAdd(bucket, mrs)) {
-                        	removed = bucket.removeActiveContact(nodeId);
-                        	assert (removed == true);
+                            removed = bucket.removeActiveContact(nodeId);
+                            assert (removed == true);
                             assert (bucket.isActiveFull() == false);
                             
                             bucket.addActiveContact(mrs);
@@ -650,7 +658,7 @@ public class RouteTableImpl implements RouteTable {
     
     /**
      * Returns true of it's Okay to add the given Contact to the
-     * givan Bucket as active Contact. See {@link ClassfulNetworkCounter}
+     * given Bucket as active Contact. See {@link ClassfulNetworkCounter}
      * for more information!
      */
     protected synchronized boolean isOkayToAdd(Bucket bucket, Contact node) {
@@ -669,7 +677,7 @@ public class RouteTableImpl implements RouteTable {
     }
     
     /**
-     * Removes the given Contact from the RouteTable
+     * Removes the given Contact from the RouteTable.
      */
     protected synchronized boolean remove(Contact node) {
         return remove(node.getNodeID());
@@ -677,7 +685,7 @@ public class RouteTableImpl implements RouteTable {
     
     /**
      * Removes the given KUID (Contact with that KUID) 
-     * from the RouteTable
+     * from the RouteTable.
      */
     protected synchronized boolean remove(KUID nodeId) {
         return bucketTrie.select(nodeId).remove(nodeId);
@@ -718,7 +726,7 @@ public class RouteTableImpl implements RouteTable {
     }
     
     /**
-     * Returns 'count' number of Contacts that are nearest (xor distance)
+     * Returns 'count' number of Contacts that are nearest (XOR distance)
      * to the given KUID.
      */
     public synchronized Collection<Contact> select(KUID nodeId, int count) {
@@ -892,7 +900,7 @@ public class RouteTableImpl implements RouteTable {
     }
     
     /**
-     * Touches the given Bucket (i.e. updates its timeStamp)
+     * Touches the given Bucket (i.e. updates its timeStamp).
      */
     private void touchBucket(Bucket bucket) {
         if(LOG.isTraceEnabled()) {
@@ -903,7 +911,7 @@ public class RouteTableImpl implements RouteTable {
     }
     
     /**
-     * Pings the least recently seen active Contact in the given Bucket
+     * Pings the least recently seen active Contact in the given Bucket.
      */
     private void pingLeastRecentlySeenNode(Bucket bucket) {
         Contact lrs = bucket.getLeastRecentlySeenActiveContact();
@@ -914,9 +922,9 @@ public class RouteTableImpl implements RouteTable {
     
     /**
      * Pings the given Contact and adds the given DHTEventListener to
-     * the DHTFuture if it's not null
+     * the DHTFuture if it's not null.
      */
-    private void ping(Contact node, DHTFutureListener<PingResult> listener) {
+    private void ping(Contact node, DHTFutureAdapter<PingResult> listener) {
         ContactPinger pinger = this.pinger;
         if (pinger != null) {
             pinger.ping(node, listener);
@@ -925,8 +933,12 @@ public class RouteTableImpl implements RouteTable {
             
             if (listener != null) {
                 ExecutionException exception = new ExecutionException(
-                        new DHTTimeoutException(node.getNodeID(), node.getContactAddress(), null, 0L));
-                listener.handleExecutionException(exception);
+                        new DHTTimeoutException(node.getNodeID(), 
+                                node.getContactAddress(), null, 0L));
+                
+                FutureEvent<PingResult> event 
+                    = FutureEvent.createException(exception);
+                listener.handleEvent(event);
             }
         }
     }
@@ -1142,6 +1154,7 @@ public class RouteTableImpl implements RouteTable {
             r.run();
     }
     
+    @Override
     public synchronized String toString() {
         StringBuilder buffer = new StringBuilder();
         buffer.append("Local: ").append(getLocalNode()).append("\n");

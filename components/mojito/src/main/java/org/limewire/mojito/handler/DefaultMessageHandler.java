@@ -20,6 +20,7 @@
 package org.limewire.mojito.handler;
 
 import java.net.SocketAddress;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -43,16 +44,14 @@ import org.limewire.mojito.settings.DatabaseSettings;
 import org.limewire.mojito.settings.KademliaSettings;
 import org.limewire.mojito.settings.StoreSettings;
 import org.limewire.mojito.statistics.DatabaseStatisticContainer;
-import org.limewire.mojito.util.CollectionUtils;
 import org.limewire.mojito.util.ContactUtils;
 import org.limewire.security.SecurityToken;
 
 
 /**
- * The DefaultMessageHandler performs basic Kademlia RouteTable 
- * update operations. That means adding new Nodes if RouteTable 
- * is not full, updating the last seen time stamp of Nodes and 
- * so forth.
+ * Performs basic Kademlia {@link RouteTable}
+ * update operations. That means adding new Nodes if the <code>RouteTable</code>
+ * is not full, updating the last seen time stamp of Nodes and so forth.
  */
 public class DefaultMessageHandler {
     
@@ -101,7 +100,8 @@ public class DefaultMessageHandler {
     }
     
     /**
-     * Adds the given Contact or updates it if it's already in our RouteTable
+     * Adds the given <code>Contact</code> or updates it if it's already in our 
+     * <code>RouteTable</code>
      */
     private synchronized void addLiveContactInfo(Contact node, DHTMessage message) {
         
@@ -212,6 +212,9 @@ public class DefaultMessageHandler {
                 
                 Operation op = getOperation(node, existing, primaryKey);
                 
+                if (LOG.isDebugEnabled())
+                    LOG.debug("node: " + node + "existing: " + existing + "operation: " + op);
+                
                 if (op.equals(Operation.FORWARD)) {
                     Map<KUID, DHTValueEntity> bag = database.get(primaryKey);
                     valuesToForward.addAll(bag.values());
@@ -260,7 +263,7 @@ public class DefaultMessageHandler {
     }
     
     /**
-     * Determinates whether to remove, forward or to do nothing with the
+     * Determines whether to remove, forward or to do nothing with the
      * value that is associated with the given valueId.
      */
     private Operation getOperation(Contact node, Contact existing, KUID valueId) {
@@ -272,10 +275,14 @@ public class DefaultMessageHandler {
         
         int k = KademliaSettings.REPLICATION_PARAMETER.getValue();
         RouteTable routeTable = context.getRouteTable();
-        List<Contact> nodes = CollectionUtils.toList(
+        List<Contact> nodes = org.limewire.collection.CollectionUtils.toList(
                 routeTable.select(valueId, k, SelectMode.ALL));
         Contact closest = nodes.get(0);
         Contact furthest = nodes.get(nodes.size()-1);
+        
+        if (LOG.isDebugEnabled()) {
+            LOG.debug(MessageFormat.format("node: {0}, existing: {1}, close nodes: {2}", node, existing, nodes));
+        }
         
 //        StringBuilder sb = new StringBuilder();
 //        sb.append("ME: "+context.getLocalNode()+"\n");

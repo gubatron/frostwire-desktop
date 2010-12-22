@@ -28,7 +28,7 @@ import org.limewire.mojito.messages.ResponseMessage;
 
 
 /**
- * Interface to handle incoming responses
+ * Interface to handle incoming responses.
  */
 public interface ResponseHandler {
     
@@ -38,37 +38,37 @@ public interface ResponseHandler {
     public long getTimeout();
     
     /**
-     * Returns whether or not this handler has been cancelled
+     * Returns whether or not this handler has been cancelled.
      */
     public boolean isCancelled();
     
     /**
-     * Called to handle a response
+     * Called to handle a response.
      * 
-     * @param message The Response Message
-     * @param time The Round Trip Time
+     * @param message the response message
+     * @param time the round trip time
      * @throws IOException 
      */
     public void handleResponse(ResponseMessage message, long time) throws IOException;
     
     /**
-     * Called after the timeout time has elapsed and no response has arrived
+     * Called after the timeout time has elapsed and no response has arrived.
      * 
-     * @param nodeId The Node ID of the Contact (can be null)
-     * @param dst The Address where we sent the request
-     * @param message The Request Message
-     * @param time The total time that has elapsed
+     * @param nodeId the Node ID of the Contact (can be null)
+     * @param dst the address where we sent the request
+     * @param message the request message
+     * @param time the total time that has elapsed
      * @throws IOException
      */
     public void handleTimeout(KUID nodeId, SocketAddress dst, RequestMessage message, long time) throws IOException;
     
     /**
-     * Called if an error occured in handleResponse() or handleTimeout()
+     * Called if an error occurred in handleResponse() or handleTimeout().
      * 
-     * @param nodeId The Node ID of the Contact (can be null)
-     * @param dst The Address of the Contact
-     * @param message The RequestMessage that failed to be send
-     * @param e The Exception that was thrown
+     * @param nodeId the Node ID of the Contact (can be null)
+     * @param dst the address of the Contact
+     * @param message the RequestMessage that failed to be send
+     * @param e the Exception that was thrown
      */
     public void handleError(KUID nodeId, SocketAddress dst, RequestMessage message, IOException e);
     

@@ -93,4 +93,12 @@ abstract class AbstractSearchResult implements SearchResult {
             return 3;
         return 0;
     }
+    
+    /**
+     * Wether or not this result can be marked as Junk.
+     * @return
+     */
+    public boolean canBeMarkedAsJunk() {
+    	return false;
+    }
 }

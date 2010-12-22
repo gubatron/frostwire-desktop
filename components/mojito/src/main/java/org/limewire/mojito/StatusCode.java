@@ -25,8 +25,8 @@ import java.util.Map;
 import org.limewire.mojito.util.FixedSizeHashMap;
 
 /**
- * A StatusCode is essentially a 16bit int value and a String which may or may
- * not describes the StatusCode.
+ * A 16 bit <code>int</code> value and a String which may or may
+ * not describe the <code>StatusCode</code>.
  */
 public class StatusCode implements Serializable, Comparable<StatusCode> {
     
@@ -45,14 +45,14 @@ public class StatusCode implements Serializable, Comparable<StatusCode> {
     }
     
     /**
-     * Returns the actual status code
+     * Returns the actual status code.
      */
     public int shortValue() {
         return code;
     }
     
     /**
-     * Returns the description of the StatusCode
+     * Returns the description of the StatusCode.
      */
     public String getDescription() {
         return description;
@@ -62,10 +62,12 @@ public class StatusCode implements Serializable, Comparable<StatusCode> {
         return code - other.code;
     }
     
+    @Override
     public int hashCode() {
         return code;
     }
     
+    @Override
     public boolean equals(Object o) {
         if (o == this) {
             return true;
@@ -76,11 +78,20 @@ public class StatusCode implements Serializable, Comparable<StatusCode> {
         return compareTo((StatusCode)o) == 0;
     }
     
+    @Override
     public String toString() {
         return code + ": " + description;
     }
     
+    /**
+     * Returns a canonical version of status code.
+     *
+     * @param description must not be null
+     */
     public static StatusCode valueOf(int code, String description) {
+        if (description == null) {
+            throw new NullPointerException("description must not be null, code: " + code);
+        }
         Integer key = Integer.valueOf(code & 0xFFFF);
         StatusCode statusCode = null;
         synchronized (CODES) {

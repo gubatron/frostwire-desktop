@@ -1,5 +1,6 @@
 package org.limewire.listener;
 
+import org.limewire.listener.EventListenerList.EventListenerListContext;
 import org.limewire.logging.Log;
 
 
@@ -20,6 +21,7 @@ import org.limewire.logging.Log;
  */
 public class CachingEventMulticasterImpl<E> implements CachingEventMulticaster<E> {
     
+	private final EventListenerListContext listenerContext;
     private final EventMulticaster<E> multicaster;
     private final BroadcastPolicy broadcastPolicy;
     private final Object LOCK = new Object();
@@ -45,6 +47,7 @@ public class CachingEventMulticasterImpl<E> implements CachingEventMulticaster<E
     public CachingEventMulticasterImpl(BroadcastPolicy broadcastPolicy, EventMulticaster<E> multicaster) {
         this.broadcastPolicy = broadcastPolicy;
         this.multicaster = multicaster;
+        this.listenerContext = multicaster.getListenerContext();
     }
 
     @Override
@@ -53,9 +56,21 @@ public class CachingEventMulticasterImpl<E> implements CachingEventMulticaster<E
      * most recent Event, if any.
      */
     public void addListener(EventListener<E> eEventListener) {
-        if(cachedEvent != null) {
-            EventListenerList.dispatch(eEventListener, cachedEvent);
+        E copy = cachedEvent;
+        if(copy != null) {
+            // An alternate way to do this would be to add some kind of notifyListener(EventListener, Event)                                                                                                                                
+            // method/interface, similar to EventListenerList#notifyListener, that would internally                                                                                                                                         
+            // use the context.  This would remove the need to pass a context to this class,                                                                                                                                                
+            // but would require a more difficult interface be implemented by multicasters.                                                                                                                                                 
+            // Overall it's probably the better option to do it via notifyListener, because that would                                                                                                                                      
+            // also allow the multicaster to control how the event is broadcast, but harder to fit                                                                                                                                          
+            // into the existing multicaster impls.                                                                                                                                                                                         
+            EventListenerList.dispatch(eEventListener, copy, listenerContext);
         }
+    	
+//    	if(cachedEvent != null) {
+//            EventListenerList.dispatch(eEventListener, cachedEvent);
+//        }
         multicaster.addListener(eEventListener);
     }
 
@@ -98,4 +113,9 @@ public class CachingEventMulticasterImpl<E> implements CachingEventMulticaster<E
     public E getLastEvent() {
         return cachedEvent;
     }
+
+	@Override
+	public EventListenerListContext getListenerContext() {
+		return listenerContext;
+	}
 }

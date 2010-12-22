@@ -263,7 +263,7 @@ Top-level target:
   <!--
     - LINUX DISTRIBUTION
     -->
-  <target name="buildlinux" depends="buildunixjar, javadoc, buildunixjni, buildunixembed"
+  <target name="buildlinux" depends="buildunixjar"
           description="build java and native source code for Linux platform" >
   </target>
 

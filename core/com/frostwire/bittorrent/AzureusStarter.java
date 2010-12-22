@@ -49,18 +49,27 @@ public final class AzureusStarter {
 	 * Initializes synchronously the azureus core
 	 */
 	private static void azureusInit() {
-		if (AZUREUS_CORE != null && AZUREUS_CORE.isStarted()) {
-			LOG.debug("azureusInit(): core already started. skipping.");
-			return;
-		}
+		try {
+			if (AZUREUS_CORE != null && AZUREUS_CORE.isStarted()) {
+				LOG.debug("azureusInit(): core already started. skipping.");
+				return;
+			}
+		} catch (Exception ignore) {}
 		
 		if (!AzureusCoreFactory.isCoreAvailable()) {
 			//This does work
 			org.gudy.azureus2.core3.util.SystemProperties.APPLICATION_NAME = "azureus";
 			org.gudy.azureus2.core3.util.SystemProperties.setUserPath(LimeWireUtils.getRequestedUserSettingsLocation() + File.separator + "azureus" + File.separator);
 			
-			AZUREUS_CORE = AzureusCoreFactory.create();
-			
+			try {
+				AZUREUS_CORE = AzureusCoreFactory.create();
+			} catch (AzureusCoreException coreException) {
+				//so we already had one eh...
+				if (AZUREUS_CORE == null) {
+					AZUREUS_CORE = AzureusCoreFactory.getSingleton();
+				}
+			}
+				
 			//to guarantee a synchronous start
 			final CountDownLatch signal = new CountDownLatch(1);
 			
@@ -110,7 +119,9 @@ public final class AzureusStarter {
 						}
 					});			
 
-			AZUREUS_CORE.start();
+			if (!AZUREUS_CORE.isStarted() && !AZUREUS_CORE.isRestarting()) {
+				AZUREUS_CORE.start();
+			}
 			
 			AZUREUS_CORE.getGlobalManager().resumeDownloads();
 			LOG.debug("azureusInit(): core.start() waiting...");

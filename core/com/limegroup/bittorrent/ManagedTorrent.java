@@ -1,18 +1,14 @@
 package com.limegroup.bittorrent;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.gudy.azureus2.core3.disk.DiskManager;
 import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.core3.download.DownloadManager;
-import org.gudy.azureus2.core3.download.DownloadManagerDiskListener;
 import org.gudy.azureus2.core3.download.DownloadManagerException;
 import org.gudy.azureus2.core3.download.DownloadManagerListener;
 import org.gudy.azureus2.core3.download.DownloadManagerPeerListener;
@@ -33,16 +29,13 @@ import com.aelitis.azureus.core.AzureusCoreComponent;
 import com.aelitis.azureus.core.AzureusCoreException;
 import com.aelitis.azureus.core.AzureusCoreLifecycleListener;
 import com.frostwire.bittorrent.AzureusStarter;
-import com.limegroup.bittorrent.Torrent.TorrentState;
 import com.limegroup.bittorrent.choking.ChokerFactory;
 import com.limegroup.bittorrent.disk.DiskManagerListener;
 import com.limegroup.bittorrent.handshaking.BTConnectionFetcher;
 import com.limegroup.bittorrent.handshaking.BTConnectionFetcherFactory;
-import com.limegroup.bittorrent.messages.BTHave;
 import com.limegroup.bittorrent.settings.BittorrentSettings;
 import com.limegroup.bittorrent.tracking.TrackerManagerFactory;
 import com.limegroup.gnutella.FileManager;
-import com.limegroup.gnutella.InsufficientDataException;
 import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.auth.ContentManager;
@@ -307,8 +300,13 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 	}
 	
 	private void azureusInit() {
-		if (_azureusCore == null)
-			_azureusCore = AzureusStarter.getAzureusCore();
+		if (_azureusCore == null) {
+			try {
+				_azureusCore = AzureusStarter.getAzureusCore();
+			} catch (Exception shhLetItHappen) {
+				
+			}
+		}
 	}
 
 
@@ -597,6 +595,8 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 
 	} //stateChanged
 	
+
+	@SuppressWarnings("unused")
 	private void printAzTorrentDownloadStats() {
 		StringBuffer buf = new StringBuffer();
 		buf.append(" Completed:");

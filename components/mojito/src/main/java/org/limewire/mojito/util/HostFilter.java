@@ -22,13 +22,14 @@ package org.limewire.mojito.util;
 import java.net.SocketAddress;
 
 /**
- * 
+ * Defines an interface to determine whether to contact a 
+ * <code>SocketAddress</code>.
  */
 public interface HostFilter {
     
     /**
      * Returns whether or not it's allowed to contact
-     * the given SocketAddress
+     * the given SocketAddress.
      */
     public boolean allow(SocketAddress addr);
 }

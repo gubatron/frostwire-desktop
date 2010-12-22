@@ -5,7 +5,6 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
@@ -103,7 +102,7 @@ public class ImageCache {
                 try {
                     BufferedImage image = null;
                     
-                    String userAgent = "FrostWire/" + OSUtils.getOS() + "/" + LimeWireUtils.getLimeWireVersion();
+                    String userAgent = "FrostWire/" + OSUtils.getOS() + "/" + LimeWireUtils.getFrostWireVersion();
                     HttpFetcher fetcher = new HttpFetcher(url.toURI(), userAgent);
                     Object[] result = fetcher.fetch(false);
                     
@@ -120,8 +119,8 @@ public class ImageCache {
                     if (listener != null && image != null) {
                         listener.onLoaded(url, image, false);
                     }
-                } catch (URISyntaxException e) {
-                } catch (IOException e) {
+                } catch (Exception e) {
+                	e.printStackTrace();
                 }
                 
             }

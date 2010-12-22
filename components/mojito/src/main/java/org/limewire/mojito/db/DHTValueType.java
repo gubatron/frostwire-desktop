@@ -26,7 +26,10 @@ import org.limewire.mojito.util.ArrayUtils;
 import org.limewire.mojito.util.FixedSizeHashMap;
 
 /**
- * Specifies the type of a <code>DHTValue</code>.
+ * Specifies the type of a DHT value. You can use the existing values (BINARY, 
+ * LIME, or TEXT) and, or you can define your own type. You can use existing, 
+ * your own and the "ANY" type when looking up nodes. However, ANY can not
+ * be used an actual type (only for looking up nodes).
  */
 public final class DHTValueType implements Comparable<DHTValueType>, Serializable {
     
@@ -38,36 +41,36 @@ public final class DHTValueType implements Comparable<DHTValueType>, Serializabl
         = new FixedSizeHashMap<Integer, DHTValueType>(16, 0.75f, true, 254);
     
     /**
-     * An arbitrary type of value
+     * An arbitrary type of value.
      */
     public static final DHTValueType BINARY = DHTValueType.valueOf("Binary", 0x00000000);
     
     /**
      * LIME and all deviations of LIME like LiMe or lime are reserved
-     * for Lime Wire LLC
+     * for Lime Wire LLC.
      */
     public static final DHTValueType LIME = DHTValueType.valueOf("LimeWire", "LIME");
     
     /**
-     * Type for UTF-8 encoded Strings
+     * Type for UTF-8 encoded Strings.
      */
     public static final DHTValueType TEXT = DHTValueType.valueOf("UTF-8 Encoded String", "TEXT");
     
     /**
-     * A value that is used for testing purposes
+     * A value that is used for testing purposes.
      */
     public static final DHTValueType TEST = DHTValueType.valueOf("Test Value", "TEST");
     
     /**
      * The ANY type is reserved for requesting purposes. You may not
-     * use it as an actual value type
+     * use it as an actual value type.
      */
     public static final DHTValueType ANY = DHTValueType.valueOf("Any Type", "****");
     
-    /** The Name of the value type */
+    /** The Name of the value type. */
     private final String name;
     
-    /** The type code of the value */
+    /** The type code of the value. */
     private final int type;
     
     private DHTValueType(String name, int type) {
@@ -87,10 +90,12 @@ public final class DHTValueType implements Comparable<DHTValueType>, Serializabl
         return type - o.type;
     }
 
+    @Override
     public int hashCode() {
         return type;
     }
     
+    @Override
     public boolean equals(Object o) {
         if (o == this) {
             return true;
@@ -101,6 +106,7 @@ public final class DHTValueType implements Comparable<DHTValueType>, Serializabl
         return compareTo((DHTValueType)o)==0;
     }
     
+    @Override
     public String toString() {
         StringBuilder buffer = new StringBuilder();
         if (name.equals(UNKNOWN_NAME)) {
@@ -146,7 +152,7 @@ public final class DHTValueType implements Comparable<DHTValueType>, Serializabl
     /**
      * Check the cache and replace this instance with the cached instance
      * if one exists. The main goal is to pre-initialize the DHTValueType
-     * Map
+     * Map.
      */
     private Object readResolve() {
         Integer key = Integer.valueOf(type);
@@ -163,7 +169,7 @@ public final class DHTValueType implements Comparable<DHTValueType>, Serializabl
     
     /**
      * Returns true if the given name is a better than DHTValueType's
-     * current name
+     * current name.
      */
     private static boolean isBetterName(DHTValueType valueType, String name) {
         return valueType.name.equals(UNKNOWN_NAME) && !name.equals(UNKNOWN_NAME);

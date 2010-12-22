@@ -162,7 +162,7 @@ public class ThemeMediator {
         SwingUtilities.updateComponentTreeUI(GUIMediator.getMainOptionsComponent());
         TipOfTheDayMediator.instance().updateComponentTreeUI();
         SwingUtilities.updateComponentTreeUI(GUIMediator.getAppFrame());
-        SwingUtilities.updateComponentTreeUI(GUIMediator.getTrayMenu());
+        //SwingUtilities.updateComponentTreeUI(GUIMediator.getTrayMenu());
         NotifyUserProxy.instance().updateUI();
         updateThemeObservers();
     }

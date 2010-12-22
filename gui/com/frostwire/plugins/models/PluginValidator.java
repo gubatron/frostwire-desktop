@@ -104,7 +104,7 @@ public class PluginValidator implements ContentHandler {
             connection = (HttpURLConnection) (new URL(AVAILABLE_PLUGINS_MANIFEST_URL)).openConnection();
 
             
-            String userAgent = "FrostWire-PluginValidator/" + OSUtils.getOS() + "/" + LimeWireUtils.getLimeWireVersion();
+            String userAgent = "FrostWire-PluginValidator/" + OSUtils.getOS() + "/" + LimeWireUtils.getFrostWireVersion();
             connection.setRequestProperty("User-Agent",userAgent);
             src = new InputSource(connection.getInputStream());
 

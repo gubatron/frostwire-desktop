@@ -35,7 +35,7 @@ public final class StringSetting extends AbstractSetting {
 	public String getValue() {
         return value;
 	}
-
+	
 	/**
 	 * Mutator for this setting.
 	 *

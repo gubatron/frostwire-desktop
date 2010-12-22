@@ -36,7 +36,7 @@ public class WindowsUtils {
 	**/
 
         File homeDir = CommonUtils.getUserHomeDir();
-        File src = new File(homeDir, "Start Menu\\Programs\\FrostWire\\FrostWire "+ LimeWireUtils.getLimeWireVersion() +".lnk");
+        File src = new File(homeDir, "Start Menu\\Programs\\FrostWire\\FrostWire "+ LimeWireUtils.getFrostWireVersion() +".lnk");
         File startup = new File(homeDir, "Start Menu\\Programs\\Startup");
         File dst = new File(startup, "FrostWire On Startup.lnk");
 

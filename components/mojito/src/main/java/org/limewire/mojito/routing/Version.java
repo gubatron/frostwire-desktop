@@ -46,26 +46,27 @@ public class Version implements Serializable, Comparable<Version> {
     }
     
     /**
-     * Returns the major version
+     * Returns the major version.
      */
     public int getMajor() {
         return (version >> 8) & 0xFF;
     }
     
     /**
-     * Returns the minor version
+     * Returns the minor version.
      */
     public int getMinor() {
         return version & 0xFF;
     }
     
     /**
-     * Returns the version as an unsigned short
+     * Returns the version as an unsigned short.
      */
     public int shortValue() {
         return version;
     }
     
+    @Override
     public int hashCode() {
         return version;
     }
@@ -74,6 +75,7 @@ public class Version implements Serializable, Comparable<Version> {
         return version - o.version;
     }
 
+    @Override
     public boolean equals(Object o) {
         if (o == this) {
             return true;
@@ -84,12 +86,13 @@ public class Version implements Serializable, Comparable<Version> {
         return version == ((Version)o).version;
     }
     
+    @Override
     public String toString() {
         return getMajor() + "." + getMinor();
     }
     
     /**
-     * Returns a Version object for the given version number
+     * Returns a Version object for the given version number.
      */
     public static synchronized Version valueOf(int version) {
         if ((version & 0xFFFF0000) != 0) {
@@ -106,7 +109,7 @@ public class Version implements Serializable, Comparable<Version> {
     }
     
     /**
-     * Returns a Version object for the given major and minor version number
+     * Returns a Version object for the given major and minor version number.
      */
     public static Version valueOf(int major, int minor) {
         return valueOf((major << 8) | minor);

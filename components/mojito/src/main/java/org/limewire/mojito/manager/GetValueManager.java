@@ -28,10 +28,10 @@ import org.limewire.mojito.result.FindValueResult;
 
 
 /**
- * GetValueManager is in widest sense equivalent to FindValueManager
+ * GetValueManager is, in the widest sense, equivalent to <code>FindValueManager</code>
  * but the main difference is that it's used to retrieve the value
  * rather than to find it. That means you must know which Node is storing
- * a value!
+ * a value.
  */
 public class GetValueManager extends AbstractManager<FindValueResult> {
 
@@ -40,7 +40,7 @@ public class GetValueManager extends AbstractManager<FindValueResult> {
     }
     
     /**
-     * Tries to get one or more values from the remote Node
+     * Tries to get one or more values from the remote Node.
      */
     public DHTFuture<FindValueResult> get(EntityKey entityKey) {
         
@@ -52,7 +52,7 @@ public class GetValueManager extends AbstractManager<FindValueResult> {
     }
     
     /**
-     * A "get value" specific implementation of DHTFuture
+     * A "get value" specific implementation of DHTFuture.
      */
     private class GetValueFuture extends DHTFutureTask<FindValueResult> {
 

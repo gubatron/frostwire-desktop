@@ -5,6 +5,7 @@ import java.net.InetAddress;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -169,35 +170,37 @@ public class Device {
 		return null;
 	}
 	
-	public void upload(int type, File file) {
-		try {
-			
-			URI uri = new URI("http://" + _address.getHostAddress() + ":" + _port + "/upload?type=" + type + "&fileName=" + EncodingUtils.encode(file.getName()) + "&token=" + EncodingUtils.encode(_token));
-			
-			HttpFetcher fetcher = new HttpFetcher(uri);
-			
-			fetcher.post(file);
-			
-			setTimeout(System.currentTimeMillis());
-						
-		} catch (Exception e) {
-			notifyOnActionFailed(ACTION_UPLOAD, e);
-		}
-	}
-	
 	public void upload(int type, File file, ProgressFileEntityListener listener) {
 		
 		URI uri = null;
 		
 		try {
+		    
+		    uri = new URI("http://" + _address.getHostAddress() + ":" + _port +
+                    "/authorize?token=" + EncodingUtils.encode(_token) +
+                    "&from=" + EncodingUtils.encode(System.getProperty("user.name")));
+
+		    HttpFetcher fetcher = new HttpFetcher(uri);
+		    listener.onAuthorizationSent();
+		    
+		    byte[] fetch = fetcher.fetch();
+		    
+		    if (!(fetch!=null &&
+		    	Arrays.equals(_token.getBytes(), fetch))) {
+		    	throw new Exception("Not authorized or invalid token for upload to " + _finger.nickname);
+		    }
+		    
+		    setTokenAuthorized(true);
+		    
+		    
+		    setTimeout(System.currentTimeMillis());
 			
 			uri = new URI("http://" + _address.getHostAddress() + ":" + _port +
 			        "/upload?type=" + type +
 			        "&fileName=" + EncodingUtils.encode(file.getName()) +
-			        "&token=" + EncodingUtils.encode(_token) +
-			        "&from=" + EncodingUtils.encode(System.getProperty("user.name")));
+			        "&token=" + EncodingUtils.encode(_token));
 			
-			HttpFetcher fetcher = new HttpFetcher(uri);
+			fetcher = new HttpFetcher(uri);
 			
 			ProgressFileEntity fileEntity = new ProgressFileEntity(file);
 			fileEntity.setProgressFileEntityListener(listener);

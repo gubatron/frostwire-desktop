@@ -1,8 +1,8 @@
 package com.frostwire.gnutella.gui;
 
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -31,20 +31,20 @@ public class SlideshowPanel extends JPanel {
 
     private List<Slide> _slides;
     private boolean _randomStart;
+    //private Slide _currentSlide;
     private int _currentSlideIndex;
     private BufferedImage _currentImage;
     private BufferedImage _lastImage;
     private boolean _loadingNextImage;
     private FadeSlideTransition _transition;
     private long _transitionTime;
-    private Color _colorBackground;
     
     private boolean _started;
     
     /**
      * Last time stamp a slide was loaded
      */
-    private long _lastSlideLoaded;
+    private long _lastTimeSlideLoaded;
     
     /**
      * Timer to check if we need to switch slides
@@ -73,10 +73,9 @@ public class SlideshowPanel extends JPanel {
     
     @Override
     protected void paintComponent(Graphics g) {
-        
-        g.setColor(_colorBackground);
+    	g.setColor(getBackground());
         g.fillRect(0, 0, getWidth(), getHeight());
-        
+
         if (!_started) {
             startAnimation();
         }
@@ -89,9 +88,7 @@ public class SlideshowPanel extends JPanel {
         }
         
         if (_transition == null && _currentImage != null) {
-            int x = (getWidth() - _currentImage.getWidth()) / 2;
-            int y = (getHeight() - _currentImage.getHeight()) / 2;
-            g.drawImage(_currentImage, x, y, null);
+        	g.drawImage(_currentImage, 0, 0, null);
         }
     }
     
@@ -99,7 +96,7 @@ public class SlideshowPanel extends JPanel {
         _slides = slides;
         _randomStart = randomStart;
         _currentSlideIndex = -1;
-        _colorBackground = getBackground();
+        
         setCursor(new Cursor(Cursor.HAND_CURSOR));
         addMouseListener(new MouseAdapter() {
             @Override
@@ -129,7 +126,7 @@ public class SlideshowPanel extends JPanel {
         }
         
         _started = true;
-        _lastSlideLoaded = 0;
+        _lastTimeSlideLoaded = 0;
         
         if (_slides.size() == 1) {
             try {
@@ -170,15 +167,19 @@ public class SlideshowPanel extends JPanel {
                 ImageCache.getInstance().getImage(new URL(_slides.get(_currentSlideIndex).imageSrc), new OnLoadedListener() {
                     public void onLoaded(URL url, BufferedImage image, boolean fromCache) {
                         _currentImage = image;
+                        _lastImage = _currentImage;
+                        _loadingNextImage = false;
                         repaint();
+                        _lastTimeSlideLoaded = System.currentTimeMillis();
                     }
                 });
             } catch (MalformedURLException e) {
             }
         } else {
             slide = _slides.get(_currentSlideIndex);
-            if (slide.duration + _lastSlideLoaded + _transitionTime < System.currentTimeMillis()) {
+            if (slide.duration + _lastTimeSlideLoaded + _transitionTime < System.currentTimeMillis()) {
                 _currentSlideIndex = (_currentSlideIndex + 1) % _slides.size();
+                slide = _slides.get(_currentSlideIndex);
             } else {
                 slide = null;
             }
@@ -189,7 +190,7 @@ public class SlideshowPanel extends JPanel {
             try {
                 ImageCache.getInstance().getImage(new URL(slide.imageSrc), new OnLoadedListener() {
                     public void onLoaded(URL url, BufferedImage image, boolean fromCache) {
-                        _currentImage = image;
+                        _currentImage = prepareImage(image);
                         if (_lastImage != null && _currentImage != null) {
                             _transition = new FadeSlideTransition(SlideshowPanel.this, _lastImage, _currentImage);
                             _transitionTime = _transition.getEstimatedDuration();
@@ -197,7 +198,7 @@ public class SlideshowPanel extends JPanel {
                         }
                         _lastImage = _currentImage;
                         _loadingNextImage = false;
-                        _lastSlideLoaded = System.currentTimeMillis();
+                        _lastTimeSlideLoaded = System.currentTimeMillis();
                         repaint();
                     }
                 });
@@ -205,4 +206,39 @@ public class SlideshowPanel extends JPanel {
             }
         }
     }
+
+    
+	protected BufferedImage prepareImage(BufferedImage image) {
+		BufferedImage bImage = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g = null;
+		
+		try {
+			g = bImage.createGraphics();
+			
+            int x = 0;
+            int y = 0;
+
+            //will try to center images that are smaller than the container.
+            if (image.getHeight() < getHeight()) {
+            	g.setColor(getBackground());
+                g.fillRect(0, 0, getWidth(), getHeight());
+            	y = (getHeight() - image.getHeight()) / 2;
+            }
+
+            if (image.getWidth() < getWidth()) {
+            	g.setColor(getBackground());
+                g.fillRect(0, 0, getWidth(), getHeight());
+            	x = (getWidth() - image.getWidth()) / 2;
+            }
+            
+            g.drawImage(image, x, y, null);
+            			
+		} finally {
+			if (g != null) {
+				g.dispose();
+			}
+		}
+		
+		return bImage;
+	}
 }

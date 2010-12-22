@@ -1,8 +1,6 @@
 package com.frostwire.gnutella.gui.android;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 
@@ -20,19 +18,23 @@ public class UITool {
     }
 
     public BufferedImage loadImage(String name) {
-        String path = "images" + File.separator + name + ".png";
+        String path = "images" + "/" + name + ".png";
         
         if (name.endsWith(".jpg") || name.endsWith(".gif")) {
-            path = "images" + File.separator + name;
+            path = "images" + "/" + name;
         }
         
         URL url = getClass().getResource(path);
+
         try {
             initFileTypes();
             return ImageIO.read(url);
-        } catch (IOException e) {
-            return null;
+        } catch (Exception e) {
+        	System.out.println("URL? " + url);
+        	System.out.println("PATH? " + path);
+        	e.printStackTrace();
         }
+        return null;
     }
     
     public String getImageNameByFileType(int type) {

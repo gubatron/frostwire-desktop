@@ -34,7 +34,7 @@ import org.limewire.mojito.util.CollectionUtils;
 
 
 /**
- * An implementation of StoreResponse
+ * An implementation of StoreResponse.
  */
 public class StoreResponseImpl extends AbstractResponseMessage
         implements StoreResponse {
@@ -60,10 +60,12 @@ public class StoreResponseImpl extends AbstractResponseMessage
         return statusCodes;
     }
     
+    @Override
     protected void writeBody(MessageOutputStream out) throws IOException {
         out.writeStoreStatusCodes(statusCodes);
     }
     
+    @Override
     public String toString() {
         return "StoreResponse:\n" + CollectionUtils.toString(statusCodes);
     }

@@ -30,7 +30,7 @@ public class DeadlockBugManager {
         Version myVersion;
         Version lastVersion;
         try {
-            myVersion = new Version(LimeWireUtils.getLimeWireVersion());
+            myVersion = new Version(LimeWireUtils.getFrostWireVersion());
             lastVersion = new Version(BugSettings.LAST_ACCEPTABLE_VERSION.getValue());
         } catch(VersionFormatException vfe) {
             return false;

@@ -35,7 +35,7 @@ import org.limewire.mojito.routing.Version;
 
 
 /**
- * An implementation of FindValueRequest
+ * An implementation of FindValueRequest.
  */
 public class FindValueRequestImpl extends AbstractLookupRequest
         implements FindValueRequest {
@@ -77,6 +77,7 @@ public class FindValueRequestImpl extends AbstractLookupRequest
         out.writeDHTValueType(getDHTValueType());
     }
 
+    @Override
     public String toString() {
         return "FindValueRequest: " + lookupId;
     }

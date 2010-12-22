@@ -44,7 +44,7 @@ public final class LocalClientInfo extends LocalAbstractInfo {
 	 */
 	public LocalClientInfo(Throwable bug, String threadName, String detail, boolean fatal, SessionInfo sessionInfo) {
 	    //Store the basic information ...	    
-	    _limewireVersion = LimeWireUtils.getLimeWireVersion();
+	    _limewireVersion = LimeWireUtils.getFrostWireVersion();
 	    _javaVersion = VersionUtils.getJavaVersion();
         _javaVendor = prop("java.vendor");
 	    _os = OSUtils.getOS();

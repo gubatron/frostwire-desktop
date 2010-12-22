@@ -433,7 +433,7 @@ public class UpdateHandlerImpl implements UpdateHandler {
 
         Version limeV;
         try {
-            limeV = new Version(LimeWireUtils.getLimeWireVersion());
+            limeV = new Version(LimeWireUtils.getFrostWireVersion());
         } catch(VersionFormatException vfe) {
             LOG.warn("Invalid LimeWire version", vfe);
             return;

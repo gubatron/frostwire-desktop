@@ -29,6 +29,8 @@ public class FileTransferable implements Transferable {
 	 */
 	public static final DataFlavor URIFlavor = createURIFlavor();
 	
+	public static final DataFlavor URIFlavor16 = createURIFlavor16();
+	
 	public static final List<? extends FileTransfer> EMPTY_FILE_TRANSFER_LiST =
 		Collections.emptyList();
 	
@@ -41,7 +43,16 @@ public class FileTransferable implements Transferable {
 			return null;
 		}
 	}
-    
+
+	static DataFlavor createURIFlavor16() {
+		try {
+			return new DataFlavor("text/uri-list;representationclass=java.lang.String");
+		} catch (ClassNotFoundException cnfe) {
+			return null;
+		}
+	}
+	
+	
 	public FileTransferable(List<File> files) {
         this(files, EMPTY_FILE_TRANSFER_LiST);
     }
@@ -79,7 +90,7 @@ public class FileTransferable implements Transferable {
       throws UnsupportedFlavorException, IOException {
     	if (flavor.equals(DataFlavor.javaFileListFlavor)) {
     		return getFiles();
-    	} else if (URIFlavor.equals(flavor)) {
+    	} else if (URIFlavor.equals(flavor) || URIFlavor16.equals(flavor)) {
     		StringBuilder sb = new StringBuilder();
     		String lineSep = System.getProperty("line.separator");
     		for (File file : getFiles()) {
@@ -100,12 +111,13 @@ public class FileTransferable implements Transferable {
         if(OSUtils.isWindows()) {
             return new DataFlavor[] { DataFlavor.javaFileListFlavor };
         } else {
-            return new DataFlavor[] { DataFlavor.javaFileListFlavor, URIFlavor };
+            return new DataFlavor[] { DataFlavor.javaFileListFlavor, URIFlavor, URIFlavor16 };
         }
     }
 
     public boolean isDataFlavorSupported(DataFlavor flavor) {
         return flavor.equals(DataFlavor.javaFileListFlavor)
-        	|| flavor.equals(URIFlavor);
+        	|| flavor.equals(URIFlavor)
+        	|| flavor.equals(URIFlavor16);
     }
 }

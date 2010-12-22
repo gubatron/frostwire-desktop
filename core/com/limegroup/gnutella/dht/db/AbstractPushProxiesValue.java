@@ -2,6 +2,7 @@ package com.limegroup.gnutella.dht.db;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Set;
 
 import org.limewire.collection.BitNumbers;
@@ -162,5 +163,38 @@ public abstract class AbstractPushProxiesValue implements PushProxiesValue {
     
     static BitNumbers getNumbersFromProxies(Set<? extends IpPort> proxies) {
         return BitNumbers.synchronizedBitNumbers(HTTPHeaderUtils.getTLSIndices(proxies));
+    }
+    
+    /**
+     * Value based comparison with other object.
+     */
+    @Override
+    public final boolean equals(Object obj) {
+        if (obj instanceof PushProxiesValue) {
+            PushProxiesValue other = (PushProxiesValue)obj;
+            return Arrays.equals(getGUID(), other.getGUID()) 
+            && getPort() == other.getPort()
+            && getFeatures() == other.getFeatures()
+            && getFwtVersion() == other.getFwtVersion()
+            && getPushProxies().equals(other.getPushProxies())
+            && getTLSInfo().equals(other.getTLSInfo());
+        }
+        return false;
+    }
+    
+    @Override
+    public final int hashCode() {
+        return getPort() + getFeatures() * 31 + getFwtVersion() * 31 * 31 
+        + computeHashCode(getPushProxies()) * 31 * 31 * 31
+        + getTLSInfo().hashCode() * 31 * 31 * 31 * 31;
+    }
+    
+    private static final int computeHashCode(Set<? extends IpPort> pushProxies) {
+        int hashCode = 1;
+        // in case of connectables: we ignore the tls info
+        for (IpPort ipPort : pushProxies) {
+            hashCode *= 31 * ipPort.getInetSocketAddress().hashCode();
+        }
+        return hashCode;
     }
 }

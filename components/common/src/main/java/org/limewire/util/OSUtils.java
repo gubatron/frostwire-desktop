@@ -382,4 +382,8 @@ public class OSUtils {
     public static boolean supportsTLS() {
         return true;
     }
+
+	public static String getArchitecture() {
+		return System.getProperty("os.arch");
+	}
 }

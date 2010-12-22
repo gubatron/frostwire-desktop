@@ -1,14 +1,18 @@
 package com.frostwire.gnutella.gui.android;
 
+import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.TransferHandler;
 
-public class DeviceListTransferHandler extends TransferHandler {
+import com.limegroup.gnutella.gui.dnd.DNDUtils;
 
+public class DeviceListTransferHandler extends TransferHandler {
+	
 	/**
 	 * 
 	 */
@@ -16,18 +20,9 @@ public class DeviceListTransferHandler extends TransferHandler {
 	
 	@Override
 	public boolean canImport(TransferSupport support) {
-	    
-	    Device device = AndroidMediator.instance().getDeviceBar().getSelectedDevice();
-        if (device == null) {
-            return false;
-        }
-        
-	    if (support.isDataFlavorSupported(DesktopListTransferable.LOCAL_FILE_ARRAY)) {
-			return true;
-		}
-	    
-		return false;
-	}
+        DataFlavor[] flavors = support.getDataFlavors();
+        return support.isDataFlavorSupported(DesktopListTransferable.LOCAL_FILE_ARRAY) || DNDUtils.containsFileFlavors(flavors);
+    }
 	
 	@Override
 	public boolean importData(TransferSupport support) {
@@ -38,19 +33,35 @@ public class DeviceListTransferHandler extends TransferHandler {
 	    
 		Device device = AndroidMediator.instance().getDeviceBar().getSelectedDevice();
 		if (device == null) {
-			return false;
+			
+			if (support.getComponent() instanceof DeviceButton) {
+				device = ((DeviceButton) support.getComponent()).getDevice();
+			} else {
+				return false;
+			}
 		}
 
 		Transferable transferable = support.getTransferable();
-		LocalFile[] localFiles = null;
-		try {
-			localFiles = (LocalFile[]) transferable.getTransferData(DesktopListTransferable.LOCAL_FILE_ARRAY);
-		} catch (Exception e) {
-			return false;
-		}
-		
 		int fileType = AndroidMediator.instance().getDeviceExplorer().getSelectedFileType();
-		AndroidMediator.addTask(new CopyToDeviceTask(device, localFiles, fileType));
+		
+		if (DNDUtils.contains(transferable.getTransferDataFlavors(), DesktopListTransferable.LOCAL_FILE_ARRAY)) {
+			LocalFile[] localFiles = null;
+			try {
+				localFiles = (LocalFile[]) transferable.getTransferData(DesktopListTransferable.LOCAL_FILE_ARRAY);
+			} catch (Exception e) {
+				return false;
+			}			
+			
+			AndroidMediator.addTask(new CopyToDeviceTask(device, localFiles, fileType));
+		} else {
+			File[] files = null;
+			try {
+				 files = DNDUtils.getFiles(transferable);
+			} catch (Exception e) {
+				return false;
+			}
+			AndroidMediator.addTask(new CopyToDeviceTask(device, files, fileType));
+		}
 		
 		return true;
 	}

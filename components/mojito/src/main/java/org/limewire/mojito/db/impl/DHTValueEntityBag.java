@@ -81,6 +81,7 @@ public class DHTValueEntityBag implements Serializable {
         
         //Use Exponentially weighted moving average (EMA) to compute load
         //on this particular value bag. 
+        //See http://en.wikipedia.org/wiki/Moving_average#Exponential_moving_average
         
         long now = System.currentTimeMillis();
         
@@ -144,10 +145,12 @@ public class DHTValueEntityBag implements Serializable {
         return values.isEmpty();
     }
     
+    @Override
     public int hashCode() {
         return primaryKey.hashCode();
     }
     
+    @Override
     public boolean equals(Object o) {
         if (o == this) {
             return true;

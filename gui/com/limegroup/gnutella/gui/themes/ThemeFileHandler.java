@@ -66,7 +66,7 @@ public final class ThemeFileHandler {
         // version that unzipped this theme was an old version.
         if(!force && themeDir.isDirectory()) {
             String contents = contentsOf(themeVersionFile);
-            if(contents == null || !contents.equals(LimeWireUtils.getLimeWireVersion())) {
+            if(contents == null || !contents.equals(LimeWireUtils.getFrostWireVersion())) {
                 force = true;
                 forceNewLWTP = true;
             }
@@ -129,7 +129,7 @@ public final class ThemeFileHandler {
 	    FileOutputStream fos = null;
 	    try {
 	        fos = new FileOutputStream(file);
-	        fos.write(LimeWireUtils.getLimeWireVersion().getBytes("UTF8"));
+	        fos.write(LimeWireUtils.getFrostWireVersion().getBytes("UTF8"));
 	        fos.flush();
 	    } catch(IOException ignored) {
 	    } finally {

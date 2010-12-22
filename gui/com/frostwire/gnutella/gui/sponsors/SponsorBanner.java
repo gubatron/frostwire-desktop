@@ -161,7 +161,7 @@ public class SponsorBanner extends JLabel {
 				connection = (HttpURLConnection) (new URL(
 						"http://sponsors.frostwire.com/")).openConnection();
 				String userAgent = "FrostWire/" + OSUtils.getOS() + "/"
-						+ LimeWireUtils.getLimeWireVersion();
+						+ LimeWireUtils.getFrostWireVersion();
 				// System.out.println("User-Agent: "+userAgent);
 				connection.setRequestProperty("User-Agent", userAgent);
 				src = new InputSource(connection.getInputStream());

@@ -256,17 +256,16 @@ public class TaskRenderer extends JPanel implements ListCellRenderer {
         _imagePanel.setImage(image);
 	    
 	    if (task.getProgress() == 0 && !(task.isCanceled() || task.isFailed())) {
-	        _labelText.setText(I18n.tr("Upload") + " " +
-	                (task.getTotalItems() == 1 ? I18n.tr("one file") : task.getTotalItems() + " " + I18n.tr("files")) +
-	                " " + I18n.tr("to") + " " + task.getDevice().getName());
-	        _labelPercent.setText(I18n.tr("pending"));
-	        _buttonStop.setVisible(true);
-	    } else if (task.getProgress() == 100) {
-	        _labelText.setText(I18n.tr("Uploaded") +  " " +
-	                (task.getTotalItems() == 1 ? I18n.tr("one file") : task.getTotalItems() + " " + I18n.tr("files")) +
-	                " " + I18n.tr("to") + " " + task.getDevice().getName());
-	        _labelPercent.setText(I18n.tr("done"));
-	        _buttonStop.setVisible(false);
+	    	if (task.isWaitingForAuthorization()) {
+		        _labelText.setText(I18n.tr("Waiting for authorization from ") + " " + task.getDevice().getName());
+	            _labelPercent.setText("0%");
+	    	} else {
+		        _labelText.setText(I18n.tr("Upload") + " " +
+		                (task.getTotalItems() == 1 ? I18n.tr("one file") : task.getTotalItems() + " " + I18n.tr("files")) +
+		                " " + I18n.tr("to") + " " + task.getDevice().getName());
+		        _labelPercent.setText(I18n.tr("pending"));
+		        _buttonStop.setVisible(true);
+	    	}
 	    } else if (task.isCanceled()) {
 	        _labelText.setText(I18n.tr("Upload") + " " +
                     (task.getTotalItems() == 1 ? I18n.tr("one file") : task.getTotalItems() + " " + I18n.tr("files")) +
@@ -279,6 +278,12 @@ public class TaskRenderer extends JPanel implements ListCellRenderer {
                     " " + I18n.tr("to") + " " + task.getDevice().getName());
             _labelPercent.setText(I18n.tr("error"));
             _buttonStop.setVisible(false);
+	    } else if (task.getProgress() == 100) {
+	        _labelText.setText(I18n.tr("Uploaded") +  " " +
+	                (task.getTotalItems() == 1 ? I18n.tr("one file") : task.getTotalItems() + " " + I18n.tr("files")) +
+	                " " + I18n.tr("to") + " " + task.getDevice().getName());
+	        _labelPercent.setText(I18n.tr("done"));
+	        _buttonStop.setVisible(false);
 	    } else {
 	        _labelText.setText(I18n.tr("Uploading") + " " +
                     (task.getTotalItems() == 1 ? I18n.tr("one file") : (task.getCurrentIndex() + 1) + " " + I18n.tr("out of") + " " + task.getTotalItems() + " " + I18n.tr("files")) +

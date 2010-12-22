@@ -22,12 +22,12 @@ package org.limewire.mojito.messages;
 import org.limewire.security.SecureMessage;
 
 /**
- * The DHTSecureMessage interface allows a DHTMessage to be secured
+ * Defines an interface to determine if a <code>DHTMessage</code> is secured.
  */
 public interface DHTSecureMessage extends SecureMessage {
     
     /**
-     * Returns true if this message is secure
+     * Returns true if this message is secure.
      */
     public boolean isSecure();
 }
