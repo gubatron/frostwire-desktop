@@ -1,11 +1,14 @@
 frostwire (4.21.3) stable; urgency=low
 
-  * New "Phones and Tablets" tab. Tools to share files with Android devices on a Wi-Fi network.
+  * New "Phones and Tablets" tab. Tools to share files with Android
+  devices on a Wi-Fi network.
   * New debian source packages available.
   * Upgrades to HttpFetcher performance. Cleanups and refactors.
   * Upgrades java compatibility to Java 6.
-  * Upgrades Mojito-DHT to the latest version found on the LimeWire repository. Tune ups.
-  * Removed dependencies on Linux native libraries. JDIC is no more for Linux releases.
+  * Upgrades Mojito-DHT to the latest version found on the LimeWire
+  repository. Tune ups.
+  * Removed dependencies on Linux native libraries. JDIC is no more
+  for Linux releases.
   * Fixes issues when rendering and scrolling torrent search results.
 	
  -- FrostWire Team <contact@frostwire.com>  Thu, 16 Dec 2010 20:00:00 -0500
@@ -13,16 +16,21 @@ frostwire (4.21.3) stable; urgency=low
 frostwire (4.21.1) stable; urgency=low
 
   * New auto-update support for Windows and Ubuntu. 
-  * Upgrades Azureus Core (bittorrent engine) to version 4.5.0.4. Thanks to the Azureus Team for their hard work and support through the integration.
+  * Upgrades Azureus Core (bittorrent engine) to version 4.5.0.4.
+  Thanks to the Azureus Team for their hard work and support through the
+  integration.
   * New setting pane to allow user to turn off FrostClick promotions.
-  * Fixes issue with Application Icon. New high resolution icon now  in place.
+  * Fixes issue with Application Icon. New high resolution icon now
+  in place.
 	
  -- FrostWire Team <contact@frostwire.com>  Wed, 22 Sep 2010 20:48:18 -0500
 
 frostwire (4.20.9) stable; urgency=low
 
-  * Fixes bug where FrostWire would not try to open exclusively UDP tracked torrents.
-  * New option -Dultrapeer=1 forces FrostWire to run as Ultrapeer. Only for hackers that build FrostWire.
+  * Fixes bug where FrostWire would not try to open exclusively UDP tracked
+  torrents.
+  * New option -Dultrapeer=1 forces FrostWire to run as Ultrapeer. Only for
+  hackers that build FrostWire.
 	
  -- FrostWire Team <contact@frostwire.com>  Tue, 17 Aug 2010 11:36:22 -0500
 	
