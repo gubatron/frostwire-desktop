@@ -1,3 +1,15 @@
+frostwire (4.21.3) stable; urgency=low
+
+  * New "Phones and Tablets" tab. Tools to share files with Android devices on a Wi-Fi network.
+  * New debian source packages available.
+  * Upgrades to HttpFetcher performance. Cleanups and refactors.
+  * Upgrades java compatibility to Java 6.
+  * Upgrades Mojito-DHT to the latest version found on the LimeWire repository. Tune ups.
+  * Removed dependencies on Linux native libraries. JDIC is no more for Linux releases.
+  * Fixes issues when rendering and scrolling torrent search results.
+	
+ -- FrostWire Team <contact@frostwire.com>  Thu, 16 Dec 2010 20:00:00 -0500
+
 frostwire (4.21.1) stable; urgency=low
 
   * New auto-update support for Windows and Ubuntu.
