@@ -29,6 +29,7 @@ import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.bittorrent.gui.options.panes.AutoStartTorrentsPaneItem;
+import com.limegroup.bittorrent.gui.options.panes.BitTorrentDownloadSpeedPaneItem;
 import com.limegroup.bittorrent.gui.options.panes.BittorrentConnectionPaneItem;
 import com.limegroup.bittorrent.gui.options.panes.BittorrentPaneItem;
 import com.limegroup.gnutella.gui.BoxPanel;
@@ -342,9 +343,10 @@ public final class OptionsConstructor {
 
         // bittorrent
         addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, BITTORRENT_KEY, I18n.tr("BitTorrent"));
-		addOption(BITTORRENT_KEY, BITTORRENT_BASIC_KEY, I18n.tr("Basic"), AutoStartTorrentsPaneItem.class);
+		addOption(BITTORRENT_KEY, BITTORRENT_BASIC_KEY, I18n.tr("Basic"), AutoStartTorrentsPaneItem.class, BitTorrentDownloadSpeedPaneItem.class);
 		addOption(BITTORRENT_KEY, BITTORRENT_ADVANCED_KEY, I18n.tr("Advanced"), BittorrentPaneItem.class, BittorrentConnectionPaneItem.class);
-
+		
+		
 		Class<? extends AbstractPaneItem>[] clazzes; 
 		if (OSUtils.supportsTray() && ResourceManager.instance().isTrayIconAvailable())
 		    clazzes = new Class[] { ShutdownPaneItem.class, TrayIconDisplayPaneItem.class };
