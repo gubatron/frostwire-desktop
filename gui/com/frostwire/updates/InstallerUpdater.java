@@ -25,6 +25,7 @@ import com.frostwire.bittorrent.AzureusStarter;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.library.SharingUtils;
+import com.limegroup.gnutella.settings.UpdateSettings;
 
 public class InstallerUpdater implements Runnable, DownloadManagerListener {
 	
@@ -41,6 +42,9 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 	}
 	
 	public void run() {
+		if (!UpdateSettings.AUTOMATIC_INSTALLER_DOWNLOAD.getValue()) {
+			return;
+		}
 		
 		if (checkIfDownloaded()) {
 			showUpdateMessage();

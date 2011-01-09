@@ -28,6 +28,7 @@ import org.limewire.setting.IntSetting;
 import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.OSUtils;
 
+import com.frostwire.updates.AutomaticInstallerDownloadPaneItem;
 import com.limegroup.bittorrent.gui.options.panes.AutoStartTorrentsPaneItem;
 import com.limegroup.bittorrent.gui.options.panes.BitTorrentDownloadSpeedPaneItem;
 import com.limegroup.bittorrent.gui.options.panes.BittorrentConnectionPaneItem;
@@ -396,7 +397,7 @@ public final class OptionsConstructor {
         
 		// advanced options
 		addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, ADVANCED_KEY, I18n.tr("Advanced"));        
-		addOption(ADVANCED_KEY, PREFERENCING_KEY, I18n.tr("Preferencing"), ConnectionPreferencingPaneItem.class);
+		addOption(ADVANCED_KEY, PREFERENCING_KEY, I18n.tr("Preferencing"), ConnectionPreferencingPaneItem.class, AutomaticInstallerDownloadPaneItem.class);
 		addOption(ADVANCED_KEY, FIREWALL_KEY, I18n.tr("Firewall"), PortPaneItem.class, ForceIPPaneItem.class);
 		addOption(ADVANCED_KEY, PROXY_KEY, I18n.tr("Proxy"), ProxyPaneItem.class, ProxyLoginPaneItem.class);
         addOption(ADVANCED_KEY, NETWORK_INTERFACE_KEY, I18n.tr("Network Interface"), NetworkInterfacePaneItem.class);
