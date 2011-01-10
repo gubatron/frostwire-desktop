@@ -155,6 +155,7 @@ public class DesktopExplorer extends JPanel {
         LocalFile localFile = _model.createNewFolder();
         if (localFile != null) {
             _list.setSelectedValue(localFile, true);
+            startEdit(_list.getSelectedIndex());
         }
     }
 
@@ -509,6 +510,10 @@ public class DesktopExplorer extends JPanel {
     }
 
     private void startEdit(int index) {
+        
+        if (index < 0) {
+            return;
+        }
 
         _selectedIndexToRename = index;
         LocalFile localFile = (LocalFile) _model.getElementAt(index);
