@@ -322,7 +322,7 @@ public class NBThrottle implements Throttle {
     }
     
     /**
-     * Notifies all requestors that bandwidth is available.
+     * Notifies all requesters that bandwidth is available.
      */
     private void spreadBandwidth() {
         synchronized(_requests) {

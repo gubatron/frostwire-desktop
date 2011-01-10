@@ -10,38 +10,45 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.gudy.azureus2.core3.config.COConfigurationManager;
+import org.gudy.azureus2.core3.config.impl.TransferSpeedValidator;
+
+import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.gui.options.panes.AbstractPaneItem;
-import com.limegroup.gnutella.settings.ConnectionSettings;
 
 public class BitTorrentDownloadSpeedPaneItem extends AbstractPaneItem {
 
-	public final static String TITLE = "BitTorrent download speed";
+	public final static String TITLE = I18n.tr("BitTorrent download speed");
 
-	public final static String LABEL = "You can set the BitTorrent download speed.";
+	public final static String LABEL = I18n.tr("Set the Maximum BitTorrent download speed in KB/s.");
 
-	private final String LABEL_SPEED = "Download Speed:";
+	private final String LABEL_SPEED = I18n.tr("Download Speed:");
 
-	private final JSlider DOWNLOAD_SLIDER = new JSlider(0, 100);
+	/** Speeds in Kilobytes/sec 
+	 * From 56kbit to 100mbit - 101 == Unlimited.
+	 * */
+	private JSlider DOWNLOAD_SLIDER = new JSlider(56, 101*1024);
 
 	private final JLabel SLIDER_LABEL = new JLabel();
 
 	private int storedDownloadSpeed;
-
+	
+	private String configKey = "Max Download Speed KBs";
+	
 	public BitTorrentDownloadSpeedPaneItem() {
 		super(TITLE, LABEL);
 
-		DOWNLOAD_SLIDER.setMajorTickSpacing(10);
-		DOWNLOAD_SLIDER.setPaintTicks(true);
+		DOWNLOAD_SLIDER.setMajorTickSpacing(1024);
 
 		Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
-		JLabel label1 = new JLabel("Min speed");
-		JLabel label2 = new JLabel("Max speed");
+		JLabel label1 = new JLabel(I18n.tr("Min speed"));
+		JLabel label2 = new JLabel(I18n.tr("Max speed"));
 		Font font = new Font("Helvetica", Font.BOLD, 10);
 		label1.setFont(font);
 		label2.setFont(font);
-		labelTable.put(0, label1);
-		labelTable.put(100, label2);
+		labelTable.put(56, label1);
+		labelTable.put(101*1024, label2);
 
 		DOWNLOAD_SLIDER.setLabelTable(labelTable);
 		DOWNLOAD_SLIDER.setPaintLabels(true);
@@ -62,36 +69,53 @@ public class BitTorrentDownloadSpeedPaneItem extends AbstractPaneItem {
 	private void updateSpeedLabel() {
 		float value = DOWNLOAD_SLIDER.getValue();
 
-		Float f = new Float((value / 100.0)
-				* ConnectionSettings.CONNECTION_SPEED.getValue() / 8.f);
-
+		System.out.println("updateSpeedLabel: " + value);
+		
 		NumberFormat formatter = NumberFormat.getInstance();
 		formatter.setMaximumFractionDigits(2);
 
-		String labelText = String.valueOf(formatter.format(f)) + " KB/s";
-
-		SLIDER_LABEL.setText(labelText);
+		String labelText = String.valueOf(formatter.format(value)) + " KB/s";
+	
+		if (value > 100*1024) {
+			SLIDER_LABEL.setText(I18n.tr("Unlimited"));
+		} else {
+			SLIDER_LABEL.setText(labelText);
+		}
 	}
 
 	@Override
 	public void initOptions() {
-		// TODO Read BitTorrent speed configuration
-		storedDownloadSpeed = 70;
-
-		DOWNLOAD_SLIDER.setValue(storedDownloadSpeed);
+		storedDownloadSpeed = COConfigurationManager.getIntParameter(configKey);
+		
+		if (storedDownloadSpeed == 0) {
+			DOWNLOAD_SLIDER.setValue(101*1024);
+			SLIDER_LABEL.setText(I18n.tr("Unlimited"));
+		} else {
+			DOWNLOAD_SLIDER.setValue(storedDownloadSpeed);
+		}
+		
 		updateSpeedLabel();
 	}
 
 	@Override
 	public boolean applyOptions() throws IOException {
-		// TODO Auto-generated method stub
+		int newSpeed = DOWNLOAD_SLIDER.getValue();
+		int cValue = 0; //unlimited
+		
+		if (newSpeed <= 100*1024) {
+			cValue = ((Integer) new TransferSpeedValidator(configKey,
+	                new Integer(newSpeed)).getValue()).intValue();
+		} 
+		
+		COConfigurationManager.setParameter(configKey, cValue);
+		COConfigurationManager.save();
+		
 		return false;
 	}
 
 	@Override
 	public boolean isDirty() {
-		// TODO Auto-generated method stub
-		return false;
+		return storedDownloadSpeed != DOWNLOAD_SLIDER.getValue();
 	}
 
 }
