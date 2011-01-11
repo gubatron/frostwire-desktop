@@ -31,15 +31,21 @@ public class DeviceListTransferHandler extends TransferHandler {
             return false;
         }
 	    
-		Device device = AndroidMediator.instance().getDeviceBar().getSelectedDevice();
-		if (device == null) {
-			
-			if (support.getComponent() instanceof DeviceButton) {
-				device = ((DeviceButton) support.getComponent()).getDevice();
-			} else {
-				return false;
+	    Device device = null;
+	    
+	    if (support.getComponent() != null && support.getComponent() instanceof DeviceButton) {
+	    	device = ((DeviceButton) support.getComponent()).getDevice();
+	    } else {
+			device = AndroidMediator.instance().getDeviceBar().getSelectedDevice();
+			if (device == null) {
+				if (support.getComponent() instanceof DeviceButton) {
+					device = ((DeviceButton) support.getComponent()).getDevice();
+				} else {
+					return false;
+				}
 			}
-		}
+	    }
+	    
 
 		Transferable transferable = support.getTransferable();
 		int fileType = AndroidMediator.instance().getDeviceExplorer().getSelectedFileType();
