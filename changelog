@@ -1,3 +1,14 @@
+frostwire (4.21.4) stable; urgency=low
+
+  * New setting to turn off automatic installer downloads.
+  * New setting to limit the speed of BitTorrent downloads.
+  * UX improvements when creating new folders on the Phones and Tablets UI.
+  * Fixes bug when dropping files on an Android device that hasn't been 
+    selected.
+  * Fixes bug when copying .apk files from Android device to desktop computer.
+	
+ -- FrostWire Team <contact@frostwire.com>  Fri, 21 Jan 2011 20:00:00 -0500
+
 frostwire (4.21.3) stable; urgency=low
 
   * New "Phones and Tablets" tab. Tools to share files with Android
