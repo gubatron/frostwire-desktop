@@ -49,7 +49,7 @@ public class LanguageFlagFactory {
         lc2cc.put("ga","IE"); //Irish, Ireland
         lc2cc.put("gez","ET");//Geez, Ethiopia
         lc2cc.put("gu","IN"); //Gujarati, India
-        lc2cc.put("gl","ES"); //Gallego, Spain
+        lc2cc.put("gl","GL"); //Gallego, Spain
         lc2cc.put("hi","IN"); //Hindi, India
         lc2cc.put("hr","HR"); //Hrvatski, Croatia
         lc2cc.put("hu","HU"); //Magyar, Hungary

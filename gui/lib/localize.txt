@@ -182,13 +182,13 @@ private final LocaleDef[] LANGUAGES = {
 		}),
 	new LocaleDef("en_JM", new String[] {"en_JM",	// Specialization
 		}, new String[] {"English (Jamaica)",
-		 "fr", "Anglais (Jamaïque)",
+		 "fr", "Anglais (Jamaï¿½que)",
 		 "de", "Englisch (Jamaica)",
 		}, new String[] {"JM",
 		}),
 	new LocaleDef("en_BS", new String[] {"en_BS",	// Specialization
 		}, new String[] {"English (Caribbean)",
-		 "fr", "Anglais (Caraïbes)",
+		 "fr", "Anglais (Caraï¿½bes)",
 		 "de", "Englisch (Caribbean)",
 		}, new String[] {"BS",
 		 "BS", "AG", "AI", "BB", "DM", "GD", "TC", "VG", "VI",
@@ -221,9 +221,9 @@ private final LocaleDef[] LANGUAGES = {
 		}),
 	new LocaleDef("fr", new String[] {"fr_FR",	// Generic
 		 "fr_CA", "fr_BE", "fr_CH", "fr_LU", "fr_MC",
-		}, new String[] {"Français",
+		}, new String[] {"Franï¿½ais",
 		 "en", "French",
-		 "de", "Französich",
+		 "de", "Franzï¿½sich",
 		}, new String[] {
 		 "FR", "CA", "BE", "CH", "LU", "MC", "AD", "GP", "MQ", "RE",
 		 "GF", "PM", "MQ", "NC", "PF", "TF", "YT", "MA", "DZ", "TN",
@@ -238,7 +238,7 @@ private final LocaleDef[] LANGUAGES = {
 		 "AT", "CH", "LU", "PL", "HU", "DA", "IT", "LI", "RU",
 		 "CZ", "SK", "KZ", "PY", "BO"}),
 	new LocaleDef("es", new String[] {"es_ES",	// Generic
-		}, new String[] {"Español",
+		}, new String[] {"Espaï¿½ol",
 		 "en", "Spanish",
 		 "fr", "Espagnol",
 		 "de", "Spanish",
@@ -249,7 +249,7 @@ private final LocaleDef[] LANGUAGES = {
 		}),
 	new LocaleDef("pt", new String[] {"pt_PT",	// Generic
 		 "pt_BR",
-		}, new String[] {"Português (standart)",
+		}, new String[] {"Portuguï¿½s (standart)",
 		 "en", "Portuguese (standard)",
 		 "fr", "Portugais (standard)",
 		 "de", "Portugiese (standart)",
@@ -257,9 +257,9 @@ private final LocaleDef[] LANGUAGES = {
 		 "AO", "CV", "FR", "MO", "MZ", "OM", "TP",
 		}),
 	new LocaleDef("pt_BR", new String[] {"pt",	// Alias
-		}, new String[] {"Português (Brasileiro)",
+		}, new String[] {"Portuguï¿½s (Brasileiro)",
 		 "en", "Portuguese (Brasilian)",
-		 "fr", "Portugais (Brésilien)",
+		 "fr", "Portugais (Brï¿½silien)",
 		 "de", "Portugiese (Brasil)",
 		}, new String[] {"BR"
 		 "GW", "GF", "SN",
@@ -267,7 +267,7 @@ private final LocaleDef[] LANGUAGES = {
 	new LocaleDef("sv", new String[] {"sv_SE",	// Generic
 		}, new String[] {"Svenska",
 		 "en", "Swedish", 
-		 "fr", "Suédois",
+		 "fr", "Suï¿½dois",
 		 "de", "Schwede",
 		}, new String[] {"SE",
 		}),
@@ -282,16 +282,16 @@ private final LocaleDef[] LANGUAGES = {
 	new LocaleDef("nl", new String[] {"nl_NL",	// Generic
 		}, new String[] {"Nederlands",
 		 "en", "Dutch",
-		 "fr", "Néerlandais",
-		 "de", "Niederländisch",
+		 "fr", "Nï¿½erlandais",
+		 "de", "Niederlï¿½ndisch",
 		}, new String[] {"NL",
 		 "SN", "NA", "ZA",
 		}),
 	new LocaleDef("nl_BE", new String[] {"nl",	// Alias
 		}, new String[] {"Nederlands (Flanders)",
 		 "en", "Dutch (Flemisch)",
-		 "fr", "Néerlandais (Flamand)",
-		 "de", "Niederländisch (Flemisch)",
+		 "fr", "Nï¿½erlandais (Flamand)",
+		 "de", "Niederlï¿½ndisch (Flemisch)",
 		}, new String[] {"BE",
 		 "FR", "GP",
 		}),
@@ -304,7 +304,7 @@ private final LocaleDef[] LANGUAGES = {
 		 "CN",
 		}),
 	new LocaleDef("tr", new String[] {"tr_TR",	// Generic
-		}, new String[] {"Türkçe",
+		}, new String[] {"Tï¿½rkï¿½e",
 		 "en", "Turkish",
 		 "fr", "Turc",
 		 "de", "Turkisch",
@@ -331,13 +331,13 @@ private final LocaleDef[] LANGUAGES = {
 	new LocaleDef("fi", "Finnish", "Suomi",
 		"FI", new String[]
 		{"FI", "RU"}),
-	new LocaleDef("no", "Norwegian (standard)", "Norsk (Bokmål)",
+	new LocaleDef("no", "Norwegian (standard)", "Norsk (Bokmï¿½l)",
 		"NO", new String[]
 		{"NO"}),
 	new LocaleDef("no__N", "Norwegian (new)", "Norsk (Nynorsk)",
 		"NO", new String[]
 		{"NO"}),
-	new LocaleDef("is", "Icelandic", "Íslenska",
+	new LocaleDef("is", "Icelandic", "ï¿½slenska",
 		"IS", new String[]
 		{"IS"}),
 	new LocaleDef("et", "Estonian", "Eesti",
@@ -388,11 +388,11 @@ private final LocaleDef[] LANGUAGES = {
 	new LocaleDef("af", "Afrikaans", "Afrikaans",
 		"ZA", new String[]
 		{"ZA", "ZB"}),
-	new LocaleDef("ca", "Catalan",  "Català",
+	new LocaleDef("ca", "Catalan",  "Catalï¿½",
 		"_ca", new String[]
 		{"ES", "FR"}),
 	new LocaleDef("gl", "Gallician",  "Gallego",
-		"ES", new String[]	// note: uses country flag instead of "gl_ES"
+		"GL", new String[]	// note: uses country flag instead of "gl_ES"
 		{"ES", "PT"}),
 	new LocaleDef("eu", "Basque", "Euskara",
 		"ES", new String[]	// note: uses main country flag
@@ -717,7 +717,7 @@ private final LocaleDef[] LANGUAGES = {
 //	  new LocaleDef("ui", "Uighur",
 //		"__", new String[]	//unknown main country, uses world flag
 //		{}),	//????????
-//	  new LocaleDef("vo", "Volapük",
+//	  new LocaleDef("vo", "Volapï¿½k",
 //		"__", new String[]	//unknown main country, uses world flag
 //		{}),	//????????
 //	  new LocaleDef("wo", "Wolof",
@@ -841,7 +841,7 @@ private final LocaleDef[] COUNTRIES = {
 		"CG", new String[]{"fr"}),
 	  new LocaleDef("CH", "Switzerland",
 		"CH", new String[]{"de", "fr", "it"}),
-	  new LocaleDef("CI", "Côte d'Ivoire",
+	  new LocaleDef("CI", "Cï¿½te d'Ivoire",
 		"CI", new String[]{"fr"}),
 	  new LocaleDef("CK", "Cook Islands",
 		"NZ", new String[]{"en"}),
