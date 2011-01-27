@@ -276,7 +276,12 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
      */
     private class PPP extends PaddedPanel
                       implements ProgTabUIFactory.Progressor {
-        public double calculatePercentage(long now) {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public double calculatePercentage(long now) {
             return ResultPanel.this.calculatePercentage(now);
         }
     }
@@ -305,7 +310,12 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
              * colors for The LimeWire Store&#8482; song results.
              */
             
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
             protected Color getEvenRowColor(int row) {
                 return getLine(row).getEvenRowColor();
             }
@@ -1054,7 +1064,12 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
 
     protected JPanel createWarningDitherPanel() {
         return new DitherPanel(new Ditherer(6, new Color(255, 209, 86), new Color(255, 183, 44))) {
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = 4924459624958989577L;
+
+			@Override
             public void updateUI() {
                 super.updateUI();
 
@@ -1191,7 +1206,11 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
     
     public class WarningBorder extends AbstractBorder {
      
-        private Color lineColor;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1031178095074065273L;
+		private Color lineColor;
         private int offset;
 
         public WarningBorder(Color lineColor, int offset) {
@@ -1237,7 +1256,12 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
 
     private final class RepeatSearchAction extends AbstractAction {
 
-        public RepeatSearchAction() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -209446182720400951L;
+
+		public RepeatSearchAction() {
             putValue(Action.NAME, SearchMediator.REPEAT_SEARCH_STRING);
             setEnabled(isRepeatSearchEnabled());
         }
@@ -1249,7 +1273,12 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
 
     private final class RepeatSearchNoClearAction extends AbstractAction {
 
-        public RepeatSearchNoClearAction() {
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = -4696794773922819241L;
+
+		public RepeatSearchNoClearAction() {
             putValue(Action.NAME, SearchMediator.REPEAT_SEARCH_NO_CLEAR_STRING);
             setEnabled(isRepeatSearchEnabled());
         }
@@ -1264,7 +1293,12 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
      */
     protected final class CancelListener extends AbstractAction {
         
-        public void actionPerformed(ActionEvent e) {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -3020746990796080277L;
+
+		public void actionPerformed(ActionEvent e) {
             SearchMediator.killSearch();
         }
     }  

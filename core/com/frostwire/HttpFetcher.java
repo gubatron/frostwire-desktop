@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.GZIPInputStream;
 
 import org.apache.http.Header;
@@ -16,6 +18,8 @@ import org.apache.http.HttpRequest;
 import org.apache.http.HttpRequestInterceptor;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpResponseInterceptor;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.params.HttpClientParams;
@@ -24,6 +28,7 @@ import org.apache.http.entity.HttpEntityWrapper;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
 import org.apache.http.impl.cookie.DateUtils;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
@@ -154,6 +159,43 @@ public class HttpFetcher {
 	
 	public byte[] fetch() {
 	    return (byte[]) fetch(false)[0];
+	}
+	
+	public void post(String param, String value) throws IOException {
+		DefaultHttpClient httpClient = new DefaultHttpClient();
+        httpClient.setHttpRequestRetryHandler(new DefaultHttpRequestRetryHandler(0, false));
+
+        HttpHost httpHost = new HttpHost(_uri.getHost(), _uri.getPort());
+		HttpPost httpPost = new HttpPost(_uri);
+    	
+    	List<NameValuePair> formparams = new ArrayList<NameValuePair>();
+    	formparams.add(new BasicNameValuePair(param, value));
+		UrlEncodedFormEntity entity = new UrlEncodedFormEntity(formparams, "UTF-8");
+		httpPost.setEntity(entity);
+		
+		HttpParams params = httpPost.getParams();
+		HttpConnectionParams.setConnectionTimeout(params, TIMEOUT);
+        HttpConnectionParams.setSoTimeout(params, TIMEOUT);
+        HttpConnectionParams.setStaleCheckingEnabled(params, true);
+        HttpConnectionParams.setTcpNoDelay(params, true);
+        HttpClientParams.setRedirecting(params, true);
+        HttpProtocolParams.setUseExpectContinue(params, false);
+        HttpProtocolParams.setUserAgent(params, "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506");
+        
+		try {
+			
+			HttpResponse response = httpClient.execute(httpHost, httpPost);
+			
+			if (response.getStatusLine().getStatusCode() < 200 || response.getStatusLine().getStatusCode() >= 300)
+				throw new IOException("bad status code, upload file " + response.getStatusLine().getStatusCode());
+
+		} catch (IOException e) {
+			throw e;
+		} catch (Exception e) {
+			new IOException("Http error: " + e.getMessage(), e);
+		} finally {
+			httpClient.getConnectionManager().shutdown();
+		}
 	}
 	
 	public void post(File file) throws IOException {

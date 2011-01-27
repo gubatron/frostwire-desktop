@@ -9,7 +9,11 @@ import javax.swing.JPanel;
  */
 public class DitherPanel extends JPanel {
 
-    private final Ditherer DITHERER;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6998596665800341964L;
+	private final Ditherer DITHERER;
     private boolean isDithering = true;
     
     /**
