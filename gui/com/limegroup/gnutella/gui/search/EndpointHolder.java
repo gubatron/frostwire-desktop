@@ -74,16 +74,16 @@ class EndpointHolder implements Comparable<EndpointHolder> {
         _isPrivate = false;
     }
     
-    void addHosts(Set alts) {
+    void addHosts(Set<IpPort> alts) {
         if(_hosts == null) {
             _hosts = new HashSet<String>();
             _hosts.add(_hostName + ":" + _port);
         }
         // only add a few altlocs per reply
         int added = 0;
-        for(Iterator i = alts.iterator(); i.hasNext() &&
+        for(Iterator<IpPort> i = alts.iterator(); i.hasNext() &&
         added++ < FilterSettings.MAX_ALTS_TO_DISPLAY.getValue(); ) {
-            IpPort next = (IpPort)i.next();
+            IpPort next = i.next();
             _hosts.add(next.getAddress() + ":" + next.getPort());
         }
         _tag = MULTIPLE + " (" + _hosts.size() + ")";

@@ -26,6 +26,11 @@ import com.limegroup.gnutella.xml.SchemaNotFoundException;
 class FilterPanel extends BoxPanel {
     
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 662877643217563505L;
+
+	/**
 	 * The current uniqueID.
 	 */
 	private static int uniqueIdCount = 0;

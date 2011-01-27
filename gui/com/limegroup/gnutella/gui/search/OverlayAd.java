@@ -11,9 +11,9 @@ import java.awt.Insets;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
 
@@ -31,7 +31,6 @@ import javax.swing.OverlayLayout;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
-import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
@@ -44,7 +43,12 @@ import com.limegroup.gnutella.util.LimeWireUtils;
  * search window.
  */
 public class OverlayAd extends JPanel implements ThemeObserver {
-    public final int NOT_READY_YET = -1000;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -617582500794644377L;
+
+	public final int NOT_READY_YET = -1000;
     
     /** The icon to close the overlay. */
     private final Icon CLOSER;
@@ -121,8 +125,7 @@ public class OverlayAd extends JPanel implements ThemeObserver {
         
         introRunner = new LoadImageThenRun(introInfo,
                                            lateRunner,
-                                           "intro",
-                                           null);
+                                           "intro");
         introFuture = introRunner.run();
     }
     
@@ -219,7 +222,7 @@ public class OverlayAd extends JPanel implements ThemeObserver {
                     }
                 }
             }
-        , "afterSearch",null);
+        , "afterSearch");
         runner.run();
     }
 
@@ -364,7 +367,7 @@ public class OverlayAd extends JPanel implements ThemeObserver {
         public void mouseClicked(MouseEvent e) {
             if(!e.isConsumed()) {
                 e.consume();
-                byte[] guid = GuiCoreMediator.getApplicationServices().getMyGUID();
+                //byte[] guid = GuiCoreMediator.getApplicationServices().getMyGUID();
                 //String finalUrl = LimeWireUtils.addLWInfoToUrl(url, guid);
 
                 //System.out.println("URL is " + url);
@@ -423,16 +426,13 @@ public class OverlayAd extends JPanel implements ThemeObserver {
         private LateImageRunner runner;
         private String backupImage;
         private ImageIcon imageIcon;
-        private String newMD5;
         
         public LoadImageThenRun(ImageInfo imageInfo, 
                                 LateImageRunner runner, 
-                                String backupImage,
-                                String newMD5) {
+                                String backupImage) {
             this.imageInfo = imageInfo;
             this.runner = runner;
             this.backupImage = backupImage;
-            this.newMD5 = newMD5;
         }
         
         /**

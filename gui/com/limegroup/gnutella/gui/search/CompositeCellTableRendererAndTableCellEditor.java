@@ -33,7 +33,9 @@ import com.limegroup.gnutella.gui.themes.ThemeObserver;
 public abstract class CompositeCellTableRendererAndTableCellEditor extends JPanel
         implements TableCellRenderer, TableCellEditor, ThemeObserver {
        
-    /** Main label that always display text */
+	private static final long serialVersionUID = -2427013072872239878L;
+
+	/** Main label that always display text */
     public final JLabel mainLabel;
     
     /** Keep around a list of the buttons for hiding and showing of them */
@@ -80,8 +82,9 @@ public abstract class CompositeCellTableRendererAndTableCellEditor extends JPane
 
     /** Default properties of all buttons that may be generated */
     private static class SmallButton extends JButton  {
+		private static final long serialVersionUID = -1647779828579830402L;
 
-        SmallButton(Action a) {
+		SmallButton(Action a) {
             super(a);
             setFocusable(false);
             
