@@ -6,6 +6,8 @@ frostwire (4.21.4) stable; urgency=low
   * UX improvements when creating new folders on the Phones and Tablets UI.
   * Fixes bug when dropping files on an Android device that hasn't been 
     selected.
+  * UX change. Default save location folder in Windows Vista and Windows7 is
+    now the user's default "~Downloads/FrostWire" folder.
   * Fixes bug when copying .apk files from Android device to desktop computer.
   * Fixes bug when saving torrents to it's default Save location if that
     folder has been deleted.
