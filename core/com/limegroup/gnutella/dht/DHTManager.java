@@ -120,6 +120,8 @@ public interface DHTManager extends ConnectionLifecycleListener,
     
     /**
      * Sets whether or not the DHT is enabled
+     * Gubatron: This looks more like a ON/OFF switch that gets invoked
+     * when we connect or disconnect to gnutella.
      */
     public void setEnabled(boolean enabled);
     

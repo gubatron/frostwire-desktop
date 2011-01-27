@@ -23,13 +23,13 @@ public class DHTSettings extends LimeProps {
     // Was DHTSettings.DisableDHT // 4.13.1 & 4.13.2
     public static final BooleanSetting DISABLE_DHT_NETWORK 
         = FACTORY.createRemoteBooleanSetting("DISABLE_DHT_NETWORK", 
-                true, "DHT.DisableNetwork");
+                false, "DHT.DisableNetwork");
     
     /**
      * Setting for whether or not the DHT should be active at all.
      */
     public static final BooleanSetting DISABLE_DHT_USER 
-        = FACTORY.createBooleanSetting("DISABLE_DHT_USER", true); 
+        = FACTORY.createBooleanSetting("DISABLE_DHT_USER", false); 
     
     /**
      * Setting to force DHT capability
