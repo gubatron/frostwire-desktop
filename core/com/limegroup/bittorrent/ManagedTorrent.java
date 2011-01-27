@@ -324,6 +324,10 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 		
 		int MAX_TRIES = 20;
 		do {
+			if (!SharingSettings.DEFAULT_SAVE_DIR.exists()) {
+				SharingSettings.DEFAULT_SAVE_DIR.mkdirs();
+			}
+			
 			_manager = _azureusCore.getGlobalManager().addDownloadManager(
 					_torrentFile.getCanonicalPath(),
 					SharingSettings.DEFAULT_SAVE_DIR.getCanonicalPath());
