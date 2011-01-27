@@ -115,6 +115,7 @@ public class SystemUtils {
     /** A list of places that getSpecialPath uses. */
     public static enum SpecialLocations {
         DOCUMENTS("Documents"),
+        DOWNLOADS("Downloads"),
         APPLICATION_DATA("ApplicationData"),
         DESKTOP("Desktop"),
         START_MENU("StartMenu"),
