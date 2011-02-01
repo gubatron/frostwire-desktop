@@ -48,6 +48,11 @@ public class OSUtils {
      * Variable for whether or not we're on Windows Vista.
      */
     private static boolean _isWindowsVista;
+    
+    /** 
+     * Variable for whether or not we're on Windows 7.
+     */
+    private static boolean _isWindows7;
 
     /** 
      * Variable for whether or not the operating system allows the 
@@ -97,6 +102,7 @@ public class OSUtils {
      */
     public static void setOperatingSystems() {
     	_isWindows = false;
+    	_isWindows7 = false;
     	_isWindowsVista = false;
     	_isWindowsNT = false;
     	_isWindowsXP = false;
@@ -121,7 +127,10 @@ public class OSUtils {
     	if (os.indexOf("windows xp") != -1) 
     		_isWindowsXP = true;
         if (os.indexOf("windows vista") != -1)
-            _isWindowsVista = true;        
+            _isWindowsVista = true;
+        if (os.indexOf("windows 7") != -1) {
+        	_isWindows7 = true;
+        }
     	if(os.indexOf("windows 95") != -1)
     	   _isWindows95 = true;
     	if(os.indexOf("windows 98") != -1)
@@ -229,6 +238,13 @@ public class OSUtils {
      */
     public static boolean isWindowsVista() {
         return _isWindowsVista;
+    }
+    
+    /**
+     * @return true if the application is running on Windows 7
+     */
+    public static boolean isWindows7() {
+        return _isWindows7;
     }
     
     /**

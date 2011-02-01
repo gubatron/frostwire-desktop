@@ -7,7 +7,12 @@ import java.util.List;
 
 public class NoGroupTableRowFilter extends TableRowFilter{
     
-    public NoGroupTableRowFilter(TableLineFilter f) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4821319622186015475L;
+
+	public NoGroupTableRowFilter(TableLineFilter f) {
         super(f);
     }
     

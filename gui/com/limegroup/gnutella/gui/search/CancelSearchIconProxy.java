@@ -219,7 +219,8 @@ final class CancelSearchIconProxy implements Icon {
     	        return true;
     	        
     	    try {
-    	        Class c = Class.forName("com.sun.java.swing.plaf.windows.WindowsIconFactory");
+    	        @SuppressWarnings("rawtypes")
+				Class c = Class.forName("com.sun.java.swing.plaf.windows.WindowsIconFactory");
     	        Method m = c.getDeclaredMethod("createFrameCloseIcon");
     	        _windowsCloseIcon = (Icon)m.invoke(c, new Object[0]);
     	        if(_windowsCloseIcon.getIconHeight() == 0 
@@ -263,7 +264,9 @@ final class CancelSearchIconProxy implements Icon {
 	        button.getModel().setRollover(style == ARMED);
 	        button.getModel().setEnabled(true);
 	        JInternalFrame frame = new JInternalFrame() {
-	            public boolean isSelected() { return style != PLAIN; }
+				private static final long serialVersionUID = 2384270243394909293L;
+
+				public boolean isSelected() { return style != PLAIN; }
 	        };
 	        frame.getContentPane().add(button);
 	        component = button;

@@ -26,6 +26,7 @@ public class Main {
 	@SuppressWarnings("unchecked")
     public static void main(String args[]) {
 		System.out.println("1: Main.main("+args+")");
+		
 	    Frame splash = null;
 	    try {
             if (isMacOSX()) {

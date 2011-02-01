@@ -215,7 +215,7 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
         if (sr instanceof GnutellaSearchResult) {
             GnutellaSearchResult gsr = (GnutellaSearchResult)sr;
             RemoteFileDesc rfd = gsr.getRemoteFileDesc();
-            Set<? extends IpPort> alts = gsr.getAlts();
+            Set<IpPort> alts = gsr.getAlts();
             if(alts != null && !alts.isEmpty()) {
                 if(_alts == null)
                     _alts = new IpPortSet();

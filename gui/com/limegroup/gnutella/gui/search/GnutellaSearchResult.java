@@ -33,12 +33,12 @@ import com.limegroup.gnutella.xml.LimeXMLDocument;
 final class GnutellaSearchResult extends AbstractSearchResult {
     private final RemoteFileDesc RFD;
     private final HostData DATA;
-    private Set<? extends IpPort> _alts;
+    private Set<IpPort> _alts;
     
     /**
      * Constructs a new SearchResult with the given data.
      */
-    GnutellaSearchResult(RemoteFileDesc rfd, HostData data, Set<? extends IpPort> alts) {
+    GnutellaSearchResult(RemoteFileDesc rfd, HostData data, Set<IpPort> alts) {
         RFD = rfd;
         DATA = data;
         if(UISettings.UI_ADD_REPLY_ALT_LOCS.getValue())
@@ -59,7 +59,7 @@ final class GnutellaSearchResult extends AbstractSearchResult {
     HostData getHostData() { return DATA; }
     
     /** Gets the Alternate Locations */
-    Set<? extends IpPort> getAlts() { return _alts; }
+    Set<IpPort> getAlts() { return _alts; }
     
     /**
      * Clears the alternate locations for this SearchResult.
@@ -71,7 +71,7 @@ final class GnutellaSearchResult extends AbstractSearchResult {
     /**
      * Sets the alternate locations for this SearchResult.
      */
-    void setAlts(Set<? extends IpPort> alts) {
+    void setAlts(Set<IpPort> alts) {
         _alts = alts;
     }
     
@@ -141,7 +141,7 @@ final class GnutellaSearchResult extends AbstractSearchResult {
 
     public void initialize(TableLine line) {
         RemoteFileDesc rfd = getRemoteFileDesc();
-        Set<? extends IpPort> alts = getAlts();
+        Set<IpPort> alts = getAlts();
 
         if (rfd.isChatEnabled()) {
             line.setChatHost(rfd);

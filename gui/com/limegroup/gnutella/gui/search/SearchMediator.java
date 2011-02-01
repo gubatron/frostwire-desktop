@@ -702,7 +702,7 @@ public final class SearchMediator {
      */
     public static void handleQueryResult(RemoteFileDesc rfd,
                                          HostData data,
-                                         Set<? extends IpPort> alts) {
+                                         Set<IpPort> alts) {
         byte[] replyGUID = data.getMessageGUID();
         ResultPanel rp = getResultPanelForGUID(new GUID(replyGUID));
         if(rp != null) {

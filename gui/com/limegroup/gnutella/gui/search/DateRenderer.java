@@ -9,7 +9,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 class DateRenderer extends DefaultTableCellRenderer {
     
-    private static final DateFormat FORMAT =
+	private static final long serialVersionUID = -5927935873435355689L;
+	private static final DateFormat FORMAT =
         DateFormat.getDateInstance(DateFormat.MEDIUM);
 
     public Component getTableCellRendererComponent(JTable table,
