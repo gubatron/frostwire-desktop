@@ -4,14 +4,15 @@ import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
+
+import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
 
 import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 
 /** Draws EndpointHolder's appropriately colorized */
-class EndpointRenderer extends DefaultTableCellRenderer 
+class EndpointRenderer extends SubstanceDefaultTableCellRenderer 
                                                      implements ThemeObserver {
 
 	/**

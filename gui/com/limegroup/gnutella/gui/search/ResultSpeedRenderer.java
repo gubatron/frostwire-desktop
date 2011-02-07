@@ -4,14 +4,15 @@ import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
+
+import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
 
 import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 
 /** Draws ResultSpeed's appropriately colorized */
-class ResultSpeedRenderer extends DefaultTableCellRenderer 
+class ResultSpeedRenderer extends SubstanceDefaultTableCellRenderer 
 	implements ThemeObserver {
     
     /**
