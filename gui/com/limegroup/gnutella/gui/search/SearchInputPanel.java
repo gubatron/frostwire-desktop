@@ -51,7 +51,7 @@ import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.KeyProcessingTextField;
 import com.limegroup.gnutella.gui.MySharedFilesButton;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
+import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.gui.xml.InputPanel;
 import com.limegroup.gnutella.settings.FilterSettings;
@@ -64,6 +64,11 @@ import com.limegroup.gnutella.xml.LimeXMLSchema;
  */
 class SearchInputPanel extends JPanel {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5638062215253666235L;
+
     /**
      * The current search label in what's new.
      */
@@ -129,8 +134,8 @@ class SearchInputPanel extends JPanel {
      */
     private final Ditherer DITHERER =
             new Ditherer(62,
-                        ThemeFileHandler.SEARCH_PANEL_BG_1.getValue(), 
-                        ThemeFileHandler.SEARCH_PANEL_BG_2.getValue()
+                        SkinHandler.getSearchPanelBG1(), 
+                        SkinHandler.getSearchPanelBG2()
                         );
                     
 	private JPanel searchEntry;
@@ -191,7 +196,9 @@ class SearchInputPanel extends JPanel {
 
         if(!ThemeSettings.isNativeTheme()) {
             PANE.setBorder(
-              new LineBorder(ThemeFileHandler.SEARCH_GRID_COLOR.getValue()) {
+              new LineBorder(SkinHandler.getSearchGridColor()) {
+                private static final long serialVersionUID = 8313923847157523499L;
+
                 public void paintBorder(Component c, Graphics g,
                                         int x, int y, int width, int height) {
                     try {
@@ -310,9 +317,10 @@ class SearchInputPanel extends JPanel {
      */
     private void panelize(JComponent c) {
         GUIUtils.setOpaque(false, c);
-        if(!ThemeSettings.isNativeTheme())
+        if(!ThemeSettings.isNativeTheme()) {
             c.setOpaque(true);
-        c.setBackground(ThemeFileHandler.SEARCH_PANEL_BG_2.getValue());
+        }
+        c.setBackground(SkinHandler.getSearchPanelBG2());
         c.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 0));
     }
     

@@ -32,7 +32,7 @@ import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.JMultilineToolTip;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
+import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.util.DataUtils;
 
@@ -50,6 +50,11 @@ import com.limegroup.gnutella.util.DataUtils;
  * @author Sam Berlin
  */
 public class LimeJTable extends JTable implements JSortTable {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 8592998839457123312L;
 
     private static final int DEFAULT_ROW_HEIGHT = 16;
     
@@ -104,7 +109,7 @@ public class LimeJTable extends JTable implements JSortTable {
     /**
      * Same as JTable(TableModel)
      */
-    public LimeJTable(DataLineModel dm) {
+    public LimeJTable(DataLineModel<?, ?> dm) {
         super(dm);
         setToolTipText("");
         GUIUtils.fixInputMap(this);
@@ -115,7 +120,6 @@ public class LimeJTable extends JTable implements JSortTable {
      * Overriden to not manage focus.
      * (Other it causes some problems in search results)
      */
-    @SuppressWarnings("deprecation")
     public boolean isManagingFocus() {
         return false;
     }
@@ -253,16 +257,14 @@ public class LimeJTable extends JTable implements JSortTable {
      * @return the VIEW index of the sorted column.
      */
     public int getSortedColumnIndex() {
-        return convertColumnIndexToView(
-                ((DataLineModel)dataModel).getSortColumn()
-               );
+        return convertColumnIndexToView(((DataLineModel<?, ?>)dataModel).getSortColumn());
     }
 
     /**
      * accessor function
      */
     public boolean isSortedColumnAscending() { 
-        return ((DataLineModel)dataModel).isSortAscending();
+        return ((DataLineModel<?, ?>)dataModel).isSortAscending();
     }
 
     /**
@@ -380,7 +382,7 @@ public class LimeJTable extends JTable implements JSortTable {
         int row = rowAtPoint(p);
         int col = columnAtPoint(p);
         int colModel = convertColumnIndexToModel(col);
-        DataLineModel dlm = (DataLineModel)dataModel;
+        DataLineModel<?, ?> dlm = (DataLineModel<?, ?>)dataModel;
         boolean isClippable = col > -1 && row > -1 ?
                           dlm.isClippable(colModel) : false;
         boolean forceTooltip = col > -1 && row > -1 ?
@@ -435,7 +437,7 @@ public class LimeJTable extends JTable implements JSortTable {
         int dataWidth = getDataWidth(row, colModel);
         if (columnWidth < dataWidth) {
             tips = CLIPPED_TIP;
-            return ((DataLineModel)dataModel).get(row).toString() + col;
+            return ((DataLineModel<?, ?>)dataModel).get(row).toString() + col;
         } else {
             tips = DataUtils.EMPTY_STRING_ARRAY;
             return null;
@@ -449,8 +451,8 @@ public class LimeJTable extends JTable implements JSortTable {
      * @param col the MODEL index of the column
      */
     private int getDataWidth(int row, int col) {
-        DataLineModel dlm = (DataLineModel)dataModel;
-        DataLine dl = dlm.get(row);
+        DataLineModel<?, ?> dlm = (DataLineModel<?, ?>)dataModel;
+        DataLine<?> dl = dlm.get(row);
         Object data = dl.getValueAt(col);
         String info;
         if( data != null && (info = data.toString()) != null ) {
@@ -487,7 +489,7 @@ public class LimeJTable extends JTable implements JSortTable {
      * LimeTableColumn columns.
      */
     public void createDefaultColumnsFromModel() {
-        DataLineModel dlm = (DataLineModel)dataModel;
+        DataLineModel<?, ?> dlm = (DataLineModel<?, ?>)dataModel;
         if (dlm != null) {
             // Remove any current columns
             TableColumnModel cm = getColumnModel();
@@ -507,10 +509,11 @@ public class LimeJTable extends JTable implements JSortTable {
      * Returns the color that a specific row will be.
      */
     public Color getBackgroundForRow(int row) {
-        if(row % 2 == 0 || !tableSettings.ROWSTRIPE.getValue())
+        if(row % 2 == 0 || !tableSettings.ROWSTRIPE.getValue()) {
             return getBackground();
-        else
-            return ThemeFileHandler.TABLE_ALTERNATE_COLOR.getValue();
+        } else {
+            return SkinHandler.getTableAlternateColor();
+        }
     }
         
     
@@ -572,7 +575,7 @@ public class LimeJTable extends JTable implements JSortTable {
      * or startIndex is out of bounds
      */
     public int getNextMatch(String prefix, int startIndex, Position.Bias bias) {
-        DataLineModel model = (DataLineModel)dataModel;
+        DataLineModel<?, ?> model = (DataLineModel<?, ?>)dataModel;
         int max = model.getRowCount();
         if (prefix == null)
             throw new IllegalArgumentException();
@@ -642,7 +645,7 @@ public class LimeJTable extends JTable implements JSortTable {
      * @return the default Color for an even row
      */
     protected Color getEvenRowColor(int row) {
-        return ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
+        return SkinHandler.getTableBackgroundColor();
     }
 
     /**
@@ -652,7 +655,7 @@ public class LimeJTable extends JTable implements JSortTable {
      * @return the default Color for an even row
      */
     protected Color getOddRowColor(int row) {
-        return ThemeFileHandler.TABLE_ALTERNATE_COLOR.getValue();
+        return SkinHandler.getTableAlternateColor();
     }     
     
     /**
