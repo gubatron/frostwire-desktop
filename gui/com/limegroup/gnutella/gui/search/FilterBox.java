@@ -1,6 +1,7 @@
 package com.limegroup.gnutella.gui.search;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -230,7 +231,7 @@ class FilterBox extends JPanel {
         add(TITLE_PANEL, BorderLayout.NORTH);
         add(LIST_PANEL, BorderLayout.CENTER);
 
-        LIST.setBackground(SkinHandler.getTableBackgroundColor());
+        //LIST.setBackground(SkinHandler.getTableBackgroundColor()); // Check color
         LIST.setCellRenderer(RENDERER);
         LIST.addListSelectionListener(MOVER);
         LIST.setModel(DELEGATOR);
@@ -878,7 +879,7 @@ class FilterBox extends JPanel {
                 }
                 if(idx % 2 == 0 && STRIPE_ROWS.getValue()) {
                     setOpaque(true);
-                    setBackground(SkinHandler.getTableAlternateColor());
+                    setBackground(Color.YELLOW); // Check color
                 } else {
                     setOpaque(false);
                 }

@@ -1,6 +1,5 @@
 package com.limegroup.gnutella.gui;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -23,7 +22,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
-import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.settings.QuestionsHandler;
@@ -159,9 +157,9 @@ public class MonitorView extends JPanel implements ThemeObserver {
 	 * Updates the appearance of this panel based on the current theme.
 	 */
 	public void updateTheme() {
-		Color tableColor = SkinHandler.getTableBackgroundColor();
-		scrollPane.getViewport().setBackground(tableColor);
-		listOfQueries.setBackground(tableColor);
+//		Color tableColor = SkinHandler.getTableBackgroundColor();
+//		scrollPane.getViewport().setBackground(tableColor);
+//		listOfQueries.setBackground(tableColor);
 	}
 
 	/**

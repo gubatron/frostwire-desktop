@@ -508,7 +508,7 @@ public class LimeJTable extends JTable implements JSortTable {
      * Returns the color that a specific row will be.
      */
     public Color getBackgroundForRow(int row) {
-        return Color.YELLOW;
+        return Color.YELLOW; // Check color
     }
         
     

@@ -390,6 +390,7 @@ public final class ThemeSettings extends LimeProps {
     
     public static final ColorSetting DEFAULT_TABLE_EVEN_ROW_COLOR = FACTORY.createColorSetting("DEFAULT_TABLE_EVEN_ROW_COLOR", new Color(255, 255, 255));
     public static final ColorSetting DEFAULT_TABLE_ODD_ROW_COLOR = FACTORY.createColorSetting("DEFAULT_TABLE_ODD_ROW_COLOR", new Color(248, 248, 255));
+    public static final ColorSetting DEFAULT_TIP_OF_THE_DAY_PANEL_COLOR = FACTORY.createColorSetting("DEFAULT_TIP_OF_THE_DAY_PANEL_COLOR", new Color(248, 248, 255));
 }
 
 	

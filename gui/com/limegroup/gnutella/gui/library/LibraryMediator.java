@@ -146,8 +146,8 @@ public final class LibraryMediator implements ThemeObserver {
 	// inherit doc comment
 	public void updateTheme() {
 		LIBRARY_TREE.updateTheme();
-		Color tableColor = SkinHandler.getTableBackgroundColor();
-		TREE_SCROLL_PANE.getViewport().setBackground(tableColor);
+//		Color tableColor = SkinHandler.getTableBackgroundColor();
+//		TREE_SCROLL_PANE.getViewport().setBackground(tableColor);
 	}
 
 	/**

@@ -1,6 +1,5 @@
 package com.limegroup.gnutella.gui.library;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -33,10 +32,10 @@ import org.limewire.util.StringUtils;
 import com.limegroup.gnutella.FileManagerEvent;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
+import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.actions.ShareFileSpeciallyAction;
 import com.limegroup.gnutella.gui.actions.ShareNewFolderAction;
@@ -49,7 +48,6 @@ import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
 import com.limegroup.gnutella.gui.search.NamedMediaType;
 import com.limegroup.gnutella.gui.tables.DefaultMouseListener;
 import com.limegroup.gnutella.gui.tables.MouseObserver;
-import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 import com.limegroup.gnutella.settings.SharingSettings;
@@ -263,9 +261,9 @@ final class LibraryTree extends JTree implements MouseObserver {
 	
 	// inherit doc comment
 	public void updateTheme() {
-		Color tableColor = SkinHandler.getTableBackgroundColor();
-		setBackground(tableColor);
-		setCellRenderer(new LibraryTreeCellRenderer());
+//		Color tableColor = SkinHandler.getTableBackgroundColor();
+//		setBackground(tableColor);
+//		setCellRenderer(new LibraryTreeCellRenderer());
 	}
 	
 	/**
