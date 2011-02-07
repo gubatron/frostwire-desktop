@@ -20,7 +20,7 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.tables.Linkable;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
+import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 import com.limegroup.gnutella.security.SHA1;
 import com.limegroup.gnutella.util.EncodingUtils;
@@ -161,11 +161,11 @@ public class ThirdPartySearchResult extends AbstractSearchResult implements Link
     }
     
     public Color getEvenRowColor() {
-        return ThemeFileHandler.TABLE_SPECIAL_BACKGROUND_COLOR.getValue();
+        return SkinHandler.getTableSpecialBackgroundColor();
     }
 
     public Color getOddRowColor() {
-        return ThemeFileHandler.TABLE_SPECIAL_ALTERNATE_COLOR.getValue();
+        return SkinHandler.getTableSpecialAlternateColor();
     }
 
     public void takeAction(TableLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {

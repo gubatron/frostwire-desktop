@@ -36,9 +36,8 @@ import org.limewire.setting.BooleanSetting;
 import com.frostwire.actions.ConnectionDoctorAction;
 import com.frostwire.bittorrent.AzureusStarter;
 import com.limegroup.gnutella.NetworkManager;
-import com.limegroup.gnutella.UploadServicesImpl;
 import com.limegroup.gnutella.gui.mp3.MediaPlayerComponent;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
+import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.settings.ApplicationSettings;
@@ -766,7 +765,12 @@ public final class StatusLine implements ThemeObserver {
 	 */
 	private class ShowConnectionQualityAction extends AbstractAction {
 		
-		public ShowConnectionQualityAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 7922422377962473634L;
+
+        public ShowConnectionQualityAction() {
 			putValue(Action.NAME, I18n.tr
 					("Show Connection Quality"));
 		}
@@ -782,7 +786,12 @@ public final class StatusLine implements ThemeObserver {
 	 */
 	private class ShowSharedFilesCountAction extends AbstractAction {
 		
-		public ShowSharedFilesCountAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 6615872299886789939L;
+
+        public ShowSharedFilesCountAction() {
 			putValue(Action.NAME, I18n.tr
 					("Show Shared Files Count"));
 		}
@@ -798,7 +807,12 @@ public final class StatusLine implements ThemeObserver {
 	 */
 	private class ShowLanguageStatusAction extends AbstractAction {
 		
-		public ShowLanguageStatusAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 726208491122581283L;
+
+        public ShowLanguageStatusAction() {
 			putValue(Action.NAME, I18n.tr
 					("Show Language Status"));
 		}
@@ -819,7 +833,12 @@ public final class StatusLine implements ThemeObserver {
 	 */
 	private class ShowFirewallStatusAction extends AbstractAction {
 		
-		public ShowFirewallStatusAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -8489901794229005217L;
+
+        public ShowFirewallStatusAction() {
 			putValue(Action.NAME, I18n.tr
 					("Show Firewall Status"));
 		}
@@ -829,29 +848,18 @@ public final class StatusLine implements ThemeObserver {
 			refresh();
 		}
 	}
-	
-    /**
-     * Action for the 'Store Indicator' menu item
-     */
-    private class ShowStoreIndicatorStatusAction extends AbstractAction {
-
-        public ShowStoreIndicatorStatusAction() {
-            putValue(Action.NAME, I18n.tr
-                    ("Show Store Indicator"));
-        }
-        
-        public void actionPerformed(ActionEvent e) {
-            StatusBarSettings.LWS_DISPLAY_ENABLED.invert();
-            refresh();
-        }
-    }
     
 	/**
 	 * Action for the 'Show Bandwidth Consumption' menu item. 
 	 */
 	private class ShowBandwidthConsumptionAction extends AbstractAction {
 		
-		public ShowBandwidthConsumptionAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 1455679943975682049L;
+
+        public ShowBandwidthConsumptionAction() {
 			putValue(Action.NAME, I18n.tr
 					("Show Bandwidth Consumption"));
 		}
@@ -867,7 +875,12 @@ public final class StatusLine implements ThemeObserver {
 	 */
 	private class ShowMediaPlayerAction extends AbstractAction {
 		
-		public ShowMediaPlayerAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 4989741761670317316L;
+
+        public ShowMediaPlayerAction() {
 			putValue(Action.NAME, I18n.tr
 					("Show Media Player"));
 		}
@@ -883,6 +896,11 @@ public final class StatusLine implements ThemeObserver {
 	private class SharedFilesLabel extends JLabel {
 
 		/**
+         * 
+         */
+        private static final long serialVersionUID = 8191429330285263217L;
+
+        /**
 		 * The height of this icon.
 		 */
 		private static final int _height = 20;
@@ -966,7 +984,7 @@ public final class StatusLine implements ThemeObserver {
                 if (!_string.endsWith("..."))
                     _string += "...";
             } else if (_string.startsWith("0")) {
-                g2.setPaint(ThemeFileHandler.NOT_SHARING_LABEL_COLOR.getValue());
+                g2.setPaint(SkinHandler.getNotSharingLabelColor());
                 if (_string.endsWith("..."))
                     _string = _string.substring(0, _string.length() - 3);
             }
@@ -1002,7 +1020,13 @@ public final class StatusLine implements ThemeObserver {
 	}
 	
 	private class LazyTooltip extends JLabel {
-		LazyTooltip(ImageIcon icon) {
+	    
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -5759748801999410032L;
+
+        LazyTooltip(ImageIcon icon) {
 			super(icon);
 			ToolTipManager.sharedInstance().registerComponent(this);
 		}

@@ -94,4 +94,25 @@ public class SkinHandler {
     public static final Color getNotSharingLabelColor() {
         return new Color(208, 0, 5);
     }
+
+    /**
+     * Setting for the window 4 Color.
+     */
+    public static final Color getWindow4Color() {
+        return new Color(0, 0, 0);
+    }
+
+    /**
+     * Setting for the table odd row Color Color for special search results.
+     */
+    public static final Color getTableSpecialBackgroundColor() {
+        return new Color(255, 243, 193);
+    }
+
+    /**
+     * Setting for the table even row Color for special search results.
+     */
+    public static final Color getTableSpecialAlternateColor() {
+        return new Color(255, 222, 102);
+    }
 }

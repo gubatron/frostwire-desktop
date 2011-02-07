@@ -115,46 +115,46 @@ public class ThemeMediator {
             oldClassName = "";
             
     	//System.out.println("ThemeMediator - debugging now the selection...");
-        if(!ThemeSettings.THEME_FILE.getValue().equals(newTheme) ||
-    	   !className.equals(oldClassName)) {
-    	    File oldTheme = ThemeSettings.THEME_FILE.getValue();
-    	    ThemeSettings.THEME_FILE.setValue(newTheme);
-    	    ThemeFileHandler.reload(forceReload);
-            ThemeSettings.setOtherLF(className);
-    	    if(!ThemeFileHandler.isCurrent()) {
-        		ThemeSettings.THEME_FILE.setValue(oldTheme);
-        		ThemeFileHandler.reload(forceReload);
-        		showThemeError(newTheme.getName());
-    	    } else {
-        		boolean isPinstripes = ThemeSettings.isPinstripesTheme();
-        		boolean wasMetal = ResourceManager.instance().isBrushedMetalSet();
-        		boolean isMetal = ThemeSettings.isBrushedMetalTheme();
-        		if((isPinstripes && wasMetal) || (isMetal && !wasMetal))
-        		    GUIMediator.showMessage(I18n.tr("To try your new skin, you must restart FrostWire."));
-        		else {
-        		    GUIMediator.setAppVisible(false);
-        		    SplashWindow.instance().setVisible(true);
-        		    SplashWindow.instance().refreshImage();
-        		    ResourceManager.instance().themeChanged();
-        		    
-        		    //System.out.println("ThemeMediator - Updating Hierarchy");
-        		    updateComponentHierarchy();
-        		    //System.out.println("ThemeMediator - Hierarchy updated!");
-        		    
-        		    
-        		    //System.out.println("ThemeMediator - Updating theme observers..");
-        		    
-        		    updateThemeObservers();
-        		    //System.out.println("ThemeMediator - Observers updated!");
-        		    
-        		    GUIMediator.setAppVisible(true);
-        		    //System.out.println("ThemeMediator - Hiding splash window");
-        		    SplashWindow.instance().setVisible(false);
-        		    //System.out.println("ThemeMediator - Splash window hidden!");
-        		    _themeavailable = true;
-        		}
-    	    }
-    	}
+//        if(!ThemeSettings.THEME_FILE.getValue().equals(newTheme) ||
+//    	   !className.equals(oldClassName)) {
+//    	    File oldTheme = ThemeSettings.THEME_FILE.getValue();
+//    	    ThemeSettings.THEME_FILE.setValue(newTheme);
+//    	    ThemeFileHandler.reload(forceReload);
+//            ThemeSettings.setOtherLF(className);
+//    	    if(!ThemeFileHandler.isCurrent()) {
+//        		ThemeSettings.THEME_FILE.setValue(oldTheme);
+//        		ThemeFileHandler.reload(forceReload);
+//        		showThemeError(newTheme.getName());
+//    	    } else {
+//        		boolean isPinstripes = ThemeSettings.isPinstripesTheme();
+//        		boolean wasMetal = ResourceManager.instance().isBrushedMetalSet();
+//        		boolean isMetal = ThemeSettings.isBrushedMetalTheme();
+//        		if((isPinstripes && wasMetal) || (isMetal && !wasMetal))
+//        		    GUIMediator.showMessage(I18n.tr("To try your new skin, you must restart FrostWire."));
+//        		else {
+//        		    GUIMediator.setAppVisible(false);
+//        		    SplashWindow.instance().setVisible(true);
+//        		    SplashWindow.instance().refreshImage();
+//        		    ResourceManager.instance().themeChanged();
+//        		    
+//        		    //System.out.println("ThemeMediator - Updating Hierarchy");
+//        		    updateComponentHierarchy();
+//        		    //System.out.println("ThemeMediator - Hierarchy updated!");
+//        		    
+//        		    
+//        		    //System.out.println("ThemeMediator - Updating theme observers..");
+//        		    
+//        		    updateThemeObservers();
+//        		    //System.out.println("ThemeMediator - Observers updated!");
+//        		    
+//        		    GUIMediator.setAppVisible(true);
+//        		    //System.out.println("ThemeMediator - Hiding splash window");
+//        		    SplashWindow.instance().setVisible(false);
+//        		    //System.out.println("ThemeMediator - Splash window hidden!");
+//        		    _themeavailable = true;
+//        		}
+//    	    }
+//    	}
         _themeavailable = true; // FTA: if themes is already loaded do nothing but don't disable the option.
     }
     

@@ -30,7 +30,7 @@ import javax.swing.border.EtchedBorder;
 
 import org.limewire.util.OSUtils;
 
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
+import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.settings.StartupSettings;
@@ -296,7 +296,7 @@ public final class TipOfTheDayMediator implements ThemeObserver {
      * Builds the TOTD dialog.
      */
     private void constructDialog() {
-        Color darkColor = ThemeFileHandler.TABLE_ALTERNATE_COLOR.getValue().darker();
+        Color darkColor = SkinHandler.getTableAlternateColor();
         
         JPanel centerPanel = new JPanel(new BorderLayout());
         centerPanel.setBackground(darkColor);
