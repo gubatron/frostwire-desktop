@@ -45,4 +45,46 @@ public class SkinHandler {
     public static final Color getSearchPanelBG2() {
         return getTableHeaderBackgroundColor();
     }
+
+    /**
+     * Setting for the search result speed Color.
+     */
+    public static final Color getSearchResultSpeedColor() {
+        return new Color(7, 170, 0);
+    }
+
+    /**
+     * Setting for the search ip private address Color.
+     */
+    public static final Color getSearchPrivateIPColor() {
+        return new Color(255, 0, 0);
+    }
+
+    /**
+     * Setting for the search ip selected private address Color.
+     */
+    public static final Color getSearchSelectedPrivateIPColor() {
+        return getSearchPrivateIPColor();
+    }
+
+    /**
+     * Setting for the top of the filter title color.
+     */
+    public static final Color getFilterTitleTopColor() {
+        return getTableHeaderBackgroundColor();
+    }
+
+    /**
+     * Setting for the filter title color.
+     */
+    public static final Color getFilterTitleColor() {
+        return getTableHeaderBackgroundColor();
+    }
+
+    /**
+     * Setting for the background grid color.
+     */
+    public static final Color getSearchGridColor() {
+        return new Color(0, 0, 0);
+    }
 }

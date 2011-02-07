@@ -12,7 +12,6 @@ import javax.swing.Icon;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
-import com.limegroup.bittorrent.BTDataImpl;
 import com.limegroup.bittorrent.BTDownloader;
 import com.limegroup.bittorrent.BTDownloaderImpl;
 import com.limegroup.bittorrent.settings.BittorrentSettings;
@@ -44,7 +43,7 @@ import com.limegroup.gnutella.gui.tables.ProgressBarHolder;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
 import com.limegroup.gnutella.gui.tables.SpeedRenderer;
 import com.limegroup.gnutella.gui.tables.TimeRemainingHolder;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
+import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 
 /**
@@ -1038,8 +1037,8 @@ public final class DownloadDataLine extends AbstractDataLine<Downloader>
 	}
 	
 	private void initColors() {
-	    _cellColor = ThemeFileHandler.WINDOW8_COLOR.getValue();
-        _othercellColor = ThemeFileHandler.SEARCH_RESULT_SPEED_COLOR.getValue();
+	    _cellColor = SkinHandler.getWindow8Color();
+        _othercellColor = SkinHandler.getSearchResultSpeedColor();
 	}
 	
 	private Color getColor(boolean playing) {
@@ -1048,7 +1047,9 @@ public final class DownloadDataLine extends AbstractDataLine<Downloader>
 	
 	private final class LaunchAction extends AbstractAction {
 
-	    private File file;
+	    private static final long serialVersionUID = 4020797972200661119L;
+        
+        private File file;
 
 	    public LaunchAction (File file) {
 	        this.file = file;
@@ -1068,7 +1069,9 @@ public final class DownloadDataLine extends AbstractDataLine<Downloader>
 
 	private final class ShowInLibraryAction extends AbstractAction {
 
-	    private File file;
+	    private static final long serialVersionUID = -6177511216279954853L;
+        
+        private File file;
 
 	    public ShowInLibraryAction(File file) {
 	        this.file = file;
@@ -1084,6 +1087,4 @@ public final class DownloadDataLine extends AbstractDataLine<Downloader>
 	        LibraryMediator.setSelectedFile(file);
 	    }
 	}
-
-
 }

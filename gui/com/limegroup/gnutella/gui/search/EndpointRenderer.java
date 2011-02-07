@@ -6,7 +6,7 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
+import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 
@@ -14,7 +14,12 @@ import com.limegroup.gnutella.gui.themes.ThemeObserver;
 class EndpointRenderer extends DefaultTableCellRenderer 
                                                      implements ThemeObserver {
 
-	private static Color _nonPrivateColor;
+	/**
+     * 
+     */
+    private static final long serialVersionUID = -1874962715412607083L;
+
+    private static Color _nonPrivateColor;
 
 	private static Color _privateColor;
     
@@ -52,8 +57,8 @@ class EndpointRenderer extends DefaultTableCellRenderer
     }
 
     public void updateTheme() {
-        _nonPrivateColor = ThemeFileHandler.WINDOW8_COLOR.getValue();
-        _privateColor = ThemeFileHandler.SEARCH_PRIVATE_IP_COLOR.getValue();
-        _selectedPrivateColor = ThemeFileHandler.SEARCH_SELECTED_PRIVATE_IP_COLOR.getValue();
+        _nonPrivateColor = SkinHandler.getWindow8Color();
+        _privateColor = SkinHandler.getSearchPrivateIPColor();
+        _selectedPrivateColor = SkinHandler.getSearchSelectedPrivateIPColor();
     }
 }

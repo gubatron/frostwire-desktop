@@ -62,7 +62,7 @@ import org.limewire.util.CommonUtils;
 import com.google.inject.Inject;
 import com.limegroup.gnutella.bugs.LocalClientInfo;
 import com.limegroup.gnutella.dht.DHTManager;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
+import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.settings.ConsoleSettings;
@@ -73,6 +73,11 @@ import com.limegroup.gnutella.settings.ConsoleSettings;
  */
 public class Console extends JPanel implements ThemeObserver {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 4222581676271230664L;
+
     @Inject private static volatile LocalClientInfoFactory localClientInfoFactory;
 
     private final int idealSize;
@@ -338,7 +343,6 @@ public class Console extends JPanel implements ThemeObserver {
             });
             
             addConsoleListener(new ConsoleListener() {
-                @SuppressWarnings("unchecked")
                 public boolean handleCommand(final String command, final PrintWriter out) throws IOException {
                     Runnable task = new Runnable() {
                         public void run() {
@@ -350,7 +354,7 @@ public class Console extends JPanel implements ThemeObserver {
                                     return;
                                 }
                                 
-                                Class cmdHandler = Class.forName("org.limewire.mojito.CommandHandler");
+                                Class<?> cmdHandler = Class.forName("org.limewire.mojito.CommandHandler");
                                 Method handle = cmdHandler.getMethod("handle", 
                                         new Class[]{MojitoDHT.class, String.class, PrintWriter.class});
                                 
@@ -418,7 +422,7 @@ public class Console extends JPanel implements ThemeObserver {
      */
     private void refreshLoggers() {
         LoggerRepository repository = LogManager.getLoggerRepository();
-        Enumeration currentLoggers = repository.getCurrentLoggers();
+        Enumeration<?> currentLoggers = repository.getCurrentLoggers();
         
         LoggerComboBoxModel loggerModel = (LoggerComboBoxModel) loggerComboBox.getModel();
         int loggerIndex = loggerComboBox.getSelectedIndex();
@@ -597,6 +601,8 @@ public class Console extends JPanel implements ThemeObserver {
                 buffer.append(new Date()).append("\n\n");
                 
                 Exception e = new Exception() {
+                    private static final long serialVersionUID = -3648872482667070725L;
+
                     public void printStackTrace(PrintWriter out) {
                         /* PRINT NOTHING */
                     }
@@ -720,7 +726,7 @@ public class Console extends JPanel implements ThemeObserver {
      * Updates the appearance of this panel based on the current theme.
      */
     public void updateTheme() {
-        Color tableColor = ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
+        Color tableColor = SkinHandler.getTableBackgroundColor();
         scrollPane.getViewport().setBackground(tableColor);
     }
 
@@ -757,6 +763,11 @@ public class Console extends JPanel implements ThemeObserver {
      */
     private static class LoggerComboBoxModel extends DefaultComboBoxModel {
         
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 3491557584683354666L;
+
         private static final String SPACER = "    ";
         
         private List<LoggerNode> nodes = Collections.emptyList();
@@ -803,6 +814,11 @@ public class Console extends JPanel implements ThemeObserver {
      */
     private class LevelComboBoxModel extends DefaultComboBoxModel {
 
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -5890301416305509224L;
+        
         private final Level[] levels = new Level[] { 
                 Level.OFF, 
                 Level.ALL,
@@ -847,7 +863,7 @@ public class Console extends JPanel implements ThemeObserver {
         }
         
         public void add(Logger logger) {
-            classNodes.add(new ClassNode(this, logger));
+            classNodes.add(new ClassNode(logger));
         }
         
         public Level getLevel() {
@@ -904,20 +920,10 @@ public class Console extends JPanel implements ThemeObserver {
     
     private static class ClassNode implements LoggerNode {
         
-        private PackageNode parent;
         private Logger logger;
         
-        private ClassNode(PackageNode parent, Logger logger) {
-            this.parent = parent;
+        private ClassNode(Logger logger) {
             this.logger = logger;
-        }
-        
-        public PackageNode getParent() {
-            return parent;
-        }
-        
-        public Logger getLogger() {
-            return logger;
         }
         
         public Level getLevel() {

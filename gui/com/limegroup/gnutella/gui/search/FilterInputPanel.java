@@ -21,18 +21,23 @@ import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconButton;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
+import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 
 class FilterInputPanel extends BoxPanel {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8526751137039657471L;
 
     /**
      * The ditherer drawing the back to search button.
      */
     private final Ditherer DITHERER = 
             new Ditherer(20,
-                        ThemeFileHandler.SEARCH_PANEL_BG_1.getValue(), 
-                        ThemeFileHandler.SEARCH_PANEL_BG_2.getValue()
+                        SkinHandler.getSearchPanelBG1(), 
+                        SkinHandler.getSearchPanelBG2()
                         );
         
     /**
@@ -85,7 +90,7 @@ class FilterInputPanel extends BoxPanel {
      * Removes all filters from the list of filters.
      */
     void clearFilters() {
-        for(Iterator i = ACTIVE_FILTERS.values().iterator(); i.hasNext();) {
+        for(Iterator<?> i = ACTIVE_FILTERS.values().iterator(); i.hasNext();) {
             FILTER_PANEL.remove((FilterPanel)i.next());
             i.remove();
         }
@@ -148,12 +153,12 @@ class FilterInputPanel extends BoxPanel {
         panel.add(Box.createVerticalStrut(5));
         panel.add(GUIUtils.center(search));
         panel.add(Box.createVerticalStrut(5));
-        panel.setBackground(ThemeFileHandler.SEARCH_PANEL_BG_2.getValue());
+        panel.setBackground(SkinHandler.getSearchPanelBG2());
         GUIUtils.setOpaque(false, panel);
-        if(!ThemeSettings.isNativeTheme())
+        if(!ThemeSettings.isNativeTheme()) {
             panel.setOpaque(true);
-        panel.setBorder(BorderFactory.createLineBorder(
-            ThemeFileHandler.SEARCH_GRID_COLOR.getValue()));
+        }
+        panel.setBorder(BorderFactory.createLineBorder(SkinHandler.getSearchGridColor()));
         
         backToSearch = search;
         return panel;
