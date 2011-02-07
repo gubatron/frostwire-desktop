@@ -30,8 +30,6 @@ import org.limewire.setting.FileSetting;
 import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 
-import com.frostwire.GuiFrostWireUtils;
-import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.FileManagerEvent;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
@@ -51,7 +49,7 @@ import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
 import com.limegroup.gnutella.gui.search.NamedMediaType;
 import com.limegroup.gnutella.gui.tables.DefaultMouseListener;
 import com.limegroup.gnutella.gui.tables.MouseObserver;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
+import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 import com.limegroup.gnutella.settings.SharingSettings;
@@ -64,14 +62,16 @@ import com.limegroup.gnutella.settings.SharingSettings;
 // 2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 final class LibraryTree extends JTree implements MouseObserver {
 
-   // private static final Log LOG = LogFactory.getLog(LibraryTree.class);
-	
-	
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -6122455765140267448L;
+    
 	///////////////////////////////////////////////////////////////////////////
 	//  Nodes
 	///////////////////////////////////////////////////////////////////////////
 	
-	/**
+    /**
 	 * Constant for the root node of the tree.
 	 */
 	private final LibraryTreeNode ROOT_NODE = 
@@ -248,7 +248,7 @@ final class LibraryTree extends JTree implements MouseObserver {
 	}
 
 	private void addPerMediaTypeDirectories() {
-		for (Iterator i = NamedMediaType.getAllNamedMediaTypes().iterator(); i.hasNext(); ) {
+		for (Iterator<?> i = NamedMediaType.getAllNamedMediaTypes().iterator(); i.hasNext(); ) {
 			NamedMediaType nm = (NamedMediaType)i.next();
 			if (nm.getMediaType().getMimeType().equals(MediaType.SCHEMA_ANY_TYPE))
 				continue;
@@ -263,7 +263,7 @@ final class LibraryTree extends JTree implements MouseObserver {
 	
 	// inherit doc comment
 	public void updateTheme() {
-		Color tableColor = ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
+		Color tableColor = SkinHandler.getTableBackgroundColor();
 		setBackground(tableColor);
 		setCellRenderer(new LibraryTreeCellRenderer());
 	}
@@ -690,7 +690,12 @@ final class LibraryTree extends JTree implements MouseObserver {
 	 */
 	public final class LibraryTreeNode extends DefaultMutableTreeNode
 	                                    implements FileTransfer {
-		private DirectoryHolder _holder;
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -6006388424375212116L;
+        
+        private DirectoryHolder _holder;
 
 		private LibraryTreeNode(DirectoryHolder holder) {
 			super(holder);
@@ -743,8 +748,6 @@ final class LibraryTree extends JTree implements MouseObserver {
 
 		public File[] getFiles() { return new File[0]; }
 
-		public FileDesc[] getFileDescs() { return new FileDesc[0]; }
-
 		public String getName() { return name; }
 
 		public boolean accept(File pathname) { return false; }
@@ -775,7 +778,12 @@ final class LibraryTree extends JTree implements MouseObserver {
 	
 	private class UnshareAction extends AbstractAction {
 
-		public UnshareAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -22198400547158328L;
+
+        public UnshareAction() {
 			putValue(Action.NAME,
 					I18n.tr("Stop Sharing Folder"));
 		}
@@ -785,20 +793,14 @@ final class LibraryTree extends JTree implements MouseObserver {
 		}
 	}
 	
-    private class LWSDirectoryHolder extends RootNodeDirectoryHolder {
-        
-        public LWSDirectoryHolder() {
-            super( I18n.tr("Store"));
-        }
-        
-        public Icon getIcon() {
-            return GUIMediator.getThemeImage("lws_small");
-        }
-    }
-	
 	private class AddDirectoryToPlaylistAction extends AbstractAction {
 
-		public AddDirectoryToPlaylistAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -4408516187152426542L;
+
+        public AddDirectoryToPlaylistAction() {
 			putValue(Action.NAME,
 					I18n.tr("Add Folder Contents to Playlist"));
 		}
@@ -811,7 +813,12 @@ final class LibraryTree extends JTree implements MouseObserver {
 	
 	private class LibraryTreeCellRenderer extends DefaultTreeCellRenderer {
 		
-		public LibraryTreeCellRenderer() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -5541614151018217164L;
+
+        public LibraryTreeCellRenderer() {
 			setOpaque(false);
 		}
 		
@@ -834,7 +841,12 @@ final class LibraryTree extends JTree implements MouseObserver {
 
 	private class ShareAction extends AbstractAction {
 
-		public ShareAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 4071173294983759719L;
+
+        public ShareAction() {
 			putValue(Action.NAME, I18n.tr
 					("Share Folder"));
 		}
@@ -846,6 +858,11 @@ final class LibraryTree extends JTree implements MouseObserver {
     
     private class ShowHideTorrentMetaAction extends AbstractAction {
         
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -7029848351325797438L;
+
         private String hideMetaFilesLabel =
             I18n.tr("Hide .torrent Files");
             
@@ -876,7 +893,12 @@ final class LibraryTree extends JTree implements MouseObserver {
 	
 	private class RefreshAction extends AbstractAction {
 		
-		public RefreshAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 412879927060208864L;
+
+        public RefreshAction() {
 			putValue(Action.NAME, I18n.tr
 					("Refresh"));
 			putValue(Action.SHORT_DESCRIPTION, I18n.tr
@@ -892,7 +914,12 @@ final class LibraryTree extends JTree implements MouseObserver {
 
 	private class ExploreAction extends AbstractAction {
 		
-		public ExploreAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 2767346265174793478L;
+
+        public ExploreAction() {
 			putValue(Action.NAME, I18n.tr
 					("Explore"));
 			putValue(Action.SHORT_DESCRIPTION, I18n.tr

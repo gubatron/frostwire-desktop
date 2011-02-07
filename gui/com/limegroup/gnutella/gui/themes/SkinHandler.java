@@ -87,4 +87,11 @@ public class SkinHandler {
     public static final Color getSearchGridColor() {
         return new Color(0, 0, 0);
     }
+
+    /**
+     * Setting for the not sharing label Color.
+     */
+    public static final Color getNotSharingLabelColor() {
+        return new Color(208, 0, 5);
+    }
 }

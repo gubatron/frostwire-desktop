@@ -32,7 +32,7 @@ import com.limegroup.gnutella.gui.library.RecursiveSharingDialog.State;
 import com.limegroup.gnutella.gui.options.ConfigureOptionsAction;
 import com.limegroup.gnutella.gui.options.OptionsConstructor;
 import com.limegroup.gnutella.gui.sharing.ShareManager;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
+import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
@@ -82,11 +82,7 @@ public final class LibraryMediator implements ThemeObserver {
 	/** Panel for the Shared Files node. */
 	private static JPanel jpShared = null;
 
-    /** Panel for the LimeWire Store Files node.  */
-    private static JPanel storeShared = null;
-
-	
-	///////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////
 	//  Singleton Pattern
 	///////////////////////////////////////////////////////////////////////////
 	
@@ -150,7 +146,7 @@ public final class LibraryMediator implements ThemeObserver {
 	// inherit doc comment
 	public void updateTheme() {
 		LIBRARY_TREE.updateTheme();
-		Color tableColor = ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
+		Color tableColor = SkinHandler.getTableBackgroundColor();
 		TREE_SCROLL_PANE.getViewport().setBackground(tableColor);
 	}
 

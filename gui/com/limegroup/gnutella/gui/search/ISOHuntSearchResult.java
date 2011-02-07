@@ -18,7 +18,7 @@ import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
+import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 import com.limegroup.gnutella.http.HTTPUtils;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
@@ -50,7 +50,7 @@ public class ISOHuntSearchResult extends AbstractSearchResult  {
 
 	@Override
 	public Color getEvenRowColor() {
-		return ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
+		return SkinHandler.getTableBackgroundColor();
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class ISOHuntSearchResult extends AbstractSearchResult  {
 
 	@Override
 	public Color getOddRowColor() {
-		return ThemeFileHandler.TABLE_ALTERNATE_COLOR.getValue();
+		return SkinHandler.getTableAlternateColor();
 	}
 
 	@Override
