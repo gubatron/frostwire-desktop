@@ -20,6 +20,11 @@ public class BasicDataLineModel<T extends DataLine<E>, E> extends AbstractTableM
     implements DataLineModel<T, E> {
 
     /**
+     * 
+     */
+    private static final long serialVersionUID = -974830504558996194L;
+
+    /**
      * Internally used list object storing the DataLines.
      */
     protected List<T> _list = new ArrayList<T>();

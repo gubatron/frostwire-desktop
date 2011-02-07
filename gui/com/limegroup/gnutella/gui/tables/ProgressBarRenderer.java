@@ -25,7 +25,12 @@ import com.limegroup.gnutella.gui.themes.ThemeObserver;
 public class ProgressBarRenderer extends LimeJProgressBar
 	implements TableCellRenderer, ThemeObserver {
 
-	private Border _selectedBorder;
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 4078901049982402262L;
+    
+    private Border _selectedBorder;
 	private Border _unselectedBorder;
     private Map<Color, Border> borders = new HashMap<Color, Border>();
     

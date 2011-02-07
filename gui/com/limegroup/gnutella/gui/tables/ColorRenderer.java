@@ -64,6 +64,10 @@ class ColorRenderer extends JComponent
   implements TableCellRenderer, ThemeObserver {
     
     /**
+     * 
+     */
+    private static final long serialVersionUID = 653501867944836138L;
+    /**
      * Map is from TableCellRenderer to TableCellRenderer.
      * Every instance of a renderer will have a mirrored instance as its value.
      */

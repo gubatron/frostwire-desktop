@@ -6,6 +6,11 @@ package com.limegroup.gnutella.gui.tables;
 public final class LastColumnException extends Exception {
 
     /**
+     * 
+     */
+    private static final long serialVersionUID = -7634376508930779806L;
+
+    /**
      * dull constructor
      */
     public LastColumnException() { super(); }

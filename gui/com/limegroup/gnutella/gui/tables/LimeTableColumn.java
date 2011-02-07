@@ -21,6 +21,11 @@ import javax.swing.table.TableColumn;
 public class LimeTableColumn extends TableColumn {
 
     /**
+     * 
+     */
+    private static final long serialVersionUID = 5966221936060186588L;
+
+    /**
      * Variable for the HeaderRenderer for all components.
      */
     public static final TableCellRenderer HEADER_RENDERER =

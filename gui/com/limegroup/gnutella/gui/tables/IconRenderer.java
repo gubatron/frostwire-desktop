@@ -5,18 +5,23 @@ import java.awt.Component;
 import javax.swing.Icon;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
+
+import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
 
 /**
  * Renders the column in the search window that displays an icon for
  * whether or not the host returning the result is chattable.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
-public final class IconRenderer extends DefaultTableCellRenderer
+public final class IconRenderer extends SubstanceDefaultTableCellRenderer
                                 implements TableCellRenderer {
 	
 	/**
+     * 
+     */
+    private static final long serialVersionUID = 8144602599802586291L;
+
+    /**
 	 * The constructor sets this <tt>JLabel</tt> to be opaque and sets the
 	 * border.
 	 */

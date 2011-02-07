@@ -12,6 +12,11 @@ import java.util.HashMap;
 //2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public class HashBasedDataLineModel<T extends DataLine<E>, E> extends BasicDataLineModel<T, E> {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -4697217283217173076L;
+    
     /** 
      * HashMap for quick access to indexes.
      */

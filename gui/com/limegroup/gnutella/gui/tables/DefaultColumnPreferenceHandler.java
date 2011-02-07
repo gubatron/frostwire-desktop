@@ -223,7 +223,7 @@ import com.limegroup.gnutella.settings.TablesHandler;
 
         // Traverse & change settings, and make everything visible
         // so we can traverse back through & set the order and width.
-        DataLineModel dlm = (DataLineModel)table.getModel();
+        DataLineModel<?, ?> dlm = (DataLineModel<?, ?>)table.getModel();
         for(int i = 0; i < dlm.getColumnCount(); i++) {
             LimeTableColumn ltc = dlm.getTableColumn(i);
             setVisibility(ltc, ltc.getDefaultVisibility());
@@ -272,7 +272,7 @@ import com.limegroup.gnutella.settings.TablesHandler;
      * Determines whether the columns are already the default values.
      */
     public boolean isDefault() {
-        DataLineModel dlm = (DataLineModel)table.getModel();
+        DataLineModel<?, ?> dlm = (DataLineModel<?, ?>)table.getModel();
         for(int i = 0; i < dlm.getColumnCount(); i++) {
             LimeTableColumn ltc = dlm.getTableColumn(i);
             if( !isDefaultWidth(ltc) ) return false;
@@ -294,7 +294,7 @@ import com.limegroup.gnutella.settings.TablesHandler;
         //traverse through each possible column and set its preferred
         //width.  this MUST use the DataLineModel to traverse, to ensure
         //that we set the future preferred width for any added columns.
-        DataLineModel dlm = (DataLineModel)table.getModel();
+        DataLineModel<?, ?> dlm = (DataLineModel<?, ?>)table.getModel();
         for(int i = 0; i < dlm.getColumnCount(); i++) {
             LimeTableColumn ltc = dlm.getTableColumn(i);
             int width = getWidth(ltc);
@@ -318,7 +318,7 @@ import com.limegroup.gnutella.settings.TablesHandler;
         //put it in the correct place.  this MUST use the DataLineModel
         //to traverse, so reordering doesn't confuse what we're looking at.
         TableColumnModel tcm = table.getColumnModel();
-        DataLineModel dlm = (DataLineModel)table.getModel();
+        DataLineModel<?, ?> dlm = (DataLineModel<?, ?>)table.getModel();
         int max = dlm.getColumnCount();
         for(int i = 0; i < max; i++) {
             LimeTableColumn ltc = dlm.getTableColumn(i);
@@ -351,7 +351,7 @@ import com.limegroup.gnutella.settings.TablesHandler;
 
         //traverse through each possible column, and set its
         //visibility appropriately
-        DataLineModel dlm = (DataLineModel)table.getModel();
+        DataLineModel<?, ?> dlm = (DataLineModel<?, ?>)table.getModel();
         for(int i = 0; i < dlm.getColumnCount(); i++) {
             LimeTableColumn ltc = dlm.getTableColumn(i);
             boolean wantVis = getVisibility(ltc);

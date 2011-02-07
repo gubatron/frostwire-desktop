@@ -32,11 +32,11 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.MouseInputListener;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 
 import org.limewire.util.StringUtils;
+import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
 
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIConstants;
@@ -163,7 +163,7 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
      * Variable for the default renderer for all components.
      */
     protected static final TableCellRenderer DEFAULT_RENDERER =
-        new DefaultTableCellRenderer();
+        new SubstanceDefaultTableCellRenderer();
         
     /**
      * Variable for the centered renderer.

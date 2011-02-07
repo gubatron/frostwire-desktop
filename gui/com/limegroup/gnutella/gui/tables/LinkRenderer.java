@@ -3,14 +3,20 @@ package com.limegroup.gnutella.gui.tables;
 import java.awt.Component;
 
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
+
+import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
 
 import com.limegroup.gnutella.gui.GUIUtils;
 
 
 /** Renderer that can display {@link Linkable} objects in HTML. */
-public class LinkRenderer extends DefaultTableCellRenderer {
+public class LinkRenderer extends SubstanceDefaultTableCellRenderer {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 648136389396954869L;
+
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
             boolean hasFocus, int row, int column) {
