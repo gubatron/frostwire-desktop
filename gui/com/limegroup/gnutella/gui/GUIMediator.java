@@ -33,7 +33,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 
@@ -44,7 +43,6 @@ import org.limewire.concurrent.AbstractLazySingletonProvider;
 import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.io.Connectable;
-import org.limewire.listener.EventListener;
 import org.limewire.service.ErrorService;
 import org.limewire.service.Switch;
 import org.limewire.setting.BooleanSetting;
@@ -55,11 +53,12 @@ import org.limewire.setting.evt.SettingListener;
 import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 import org.limewire.util.VersionUtils;
-import org.python.modules.newmodule;
 
+import com.frostwire.bittorrent.AzureusStarter;
+import com.frostwire.gnutella.connectiondoctor.ConnectionDoctor;
+import com.frostwire.gnutella.gui.chat.ChatMediator;
 import com.google.inject.Provider;
 import com.limegroup.bittorrent.gui.TorrentUploadCanceller;
-import com.limegroup.gnutella.LifecycleManagerImpl;
 import com.limegroup.gnutella.bugs.FatalBugManager;
 import com.limegroup.gnutella.chat.InstantMessenger;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
@@ -77,21 +76,11 @@ import com.limegroup.gnutella.gui.search.SearchMediator;
 import com.limegroup.gnutella.gui.shell.LimeAssociations;
 import com.limegroup.gnutella.gui.shell.ShellAssociationManager;
 import com.limegroup.gnutella.gui.tabs.LibraryPlayListTab;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.gui.upload.UploadMediator;
-import com.aelitis.azureus.core.AzureusCore;
-import com.aelitis.azureus.core.AzureusCoreComponent;
-import com.aelitis.azureus.core.AzureusCoreException;
-import com.aelitis.azureus.core.AzureusCoreFactory;
-import com.aelitis.azureus.core.AzureusCoreLifecycleListener;
-import com.frostwire.GuiFrostWireUtils;
-import com.frostwire.bittorrent.AzureusStarter;
-import com.frostwire.gnutella.gui.chat.ChatMediator;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.PlayerSettings;
 import com.limegroup.gnutella.settings.QuestionsHandler;
-import com.limegroup.gnutella.settings.SWTBrowserSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.StartupSettings;
 import com.limegroup.gnutella.util.LaunchException;
@@ -99,7 +88,6 @@ import com.limegroup.gnutella.util.Launcher;
 import com.limegroup.gnutella.util.LimeWireUtils;
 import com.limegroup.gnutella.util.LogUtils;
 import com.limegroup.gnutella.version.UpdateInformation;
-import com.frostwire.gnutella.connectiondoctor.ConnectionDoctor;
 
 /**
  * This class acts as a central point of access for all gui components, a sort
@@ -240,7 +228,11 @@ public final class GUIMediator {
 
 		private class ShowTabAction extends AbstractAction {
 
-			/** The tab this listener is using. */
+			/**
+             * 
+             */
+            private static final long serialVersionUID = -8174130601083499183L;
+            /** The tab this listener is using. */
 			private final GUIMediator.Tabs tab;
 
 			private ShowTabAction(GUIMediator.Tabs tab) {
@@ -269,7 +261,12 @@ public final class GUIMediator {
 		}
 
 		private class NavigationAction extends AbstractAction {
-			public NavigationAction(String name, String description) {
+			/**
+             * 
+             */
+            private static final long serialVersionUID = -575503118703093157L;
+
+            public NavigationAction(String name, String description) {
 				super(name);
 				putValue(Action.LONG_DESCRIPTION, description);
 			}
@@ -288,7 +285,11 @@ public final class GUIMediator {
 		 * which takes an url as the third parameter.
 		 */
 		private class BrowseAction extends AbstractAction {
-			private String url;
+			/**
+             * 
+             */
+            private static final long serialVersionUID = -6546640610645484649L;
+            private String url;
 
 			public BrowseAction(String name, String url) {
 				super(name);
@@ -541,8 +542,7 @@ public final class GUIMediator {
 						try {
 							if (ThemeSettings.isWindowsTheme()) {
 								// System.out.println("GUIMediator - setting frostwire theme for windows...");
-								ThemeMediator
-										.changeTheme(ThemeSettings.FROSTWIRE_THEME_FILE);
+								//ThemeMediator.changeTheme(ThemeSettings.FROSTWIRE_THEME_FILE);
 								try {
 									if (visible)
 										FRAME.toFront();
@@ -1876,7 +1876,7 @@ public final class GUIMediator {
 				// it needs to pause for a bit, otherwise it'll play the same
 				// song.
 				// must be a sync bug somewhere, but this fixes it
-				Thread.currentThread().sleep(1000);
+				Thread.sleep(1000);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

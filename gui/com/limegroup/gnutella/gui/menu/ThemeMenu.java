@@ -25,7 +25,6 @@ import org.limewire.util.OSUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
 import com.limegroup.gnutella.gui.actions.OpenLinkAction;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.util.LimeWireUtils;
 
@@ -117,7 +116,7 @@ final class ThemeMenu extends AbstractMenu {
         
         allThemes.addAll(ThemeSettings.JAR_THEME_NAMES);
         
-        for (Iterator i = allThemes.iterator(); i.hasNext();) {
+        for (Iterator<?> i = allThemes.iterator(); i.hasNext();) {
             if (!isAllowedThemeFilename((String) i.next())) 
                 i.remove();
         }
@@ -198,16 +197,21 @@ final class ThemeMenu extends AbstractMenu {
      */
     protected static class ThemeChangeAction extends AbstractAction {
         
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -1905875579976154693L;
+
         public ThemeChangeAction() {
             super(I18n.tr("Use &Default"));
             putValue(LONG_DESCRIPTION, I18n.tr("Use your default skin"));
         }
         
         public void actionPerformed(ActionEvent e) {
-            JMenuItem item = (JMenuItem)e.getSource();
-            String themePath = (String)item.getClientProperty(THEME_PROPERTY);
-            String className = (String)item.getClientProperty(THEME_CLASSNAME);
-    	    ThemeMediator.changeTheme(new File(themePath), className);
+//            JMenuItem item = (JMenuItem)e.getSource();
+//            String themePath = (String)item.getClientProperty(THEME_PROPERTY);
+//            String className = (String)item.getClientProperty(THEME_CLASSNAME);
+//    	    ThemeMediator.changeTheme(new File(themePath), className);
         }
     }
     

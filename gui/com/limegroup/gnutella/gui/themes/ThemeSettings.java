@@ -215,7 +215,7 @@ public final class ThemeSettings extends LimeProps {
      * Determines if the current theme is the GTK theme.
      */
     public static boolean isGTKTheme() {
-        return THEME_FILE.getValue().equals(GTK_LAF_THEME_FILE);
+        return false;//THEME_FILE.getValue().equals(GTK_LAF_THEME_FILE);
     }
     
     /** 
