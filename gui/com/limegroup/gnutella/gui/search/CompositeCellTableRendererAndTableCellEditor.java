@@ -23,7 +23,7 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
 import com.limegroup.gnutella.gui.tables.LimeJTable;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
+import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 
 /**
@@ -243,7 +243,7 @@ public abstract class CompositeCellTableRendererAndTableCellEditor extends JPane
      */
     public void updateTheme() {
         mainLabel.setFont(UIManager.getFont("Table.font"));
-        mainLabel.setForeground(ThemeFileHandler.WINDOW8_COLOR.getValue());
+        mainLabel.setForeground(SkinHandler.getWindow8Color());
     } 
 }
 
