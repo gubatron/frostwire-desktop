@@ -18,12 +18,12 @@ import com.limegroup.gnutella.gui.GUIMediator;
  * Controls the look and feel of the application.
  */
 //2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
-public final class LimeLookAndFeel extends MetalLookAndFeel {
+public final class LimeLookAndFeel2 extends MetalLookAndFeel {
 	/**
 	 * The constructor simply sets the color theme for the application.
 	 */
-	public LimeLookAndFeel() {
-		setCurrentTheme(new LimeTheme());
+	public LimeLookAndFeel2() {
+		setCurrentTheme(new LimeTheme2());
 	}
 
 	public String getDescription() {
@@ -61,7 +61,7 @@ public final class LimeLookAndFeel extends MetalLookAndFeel {
 	protected void initComponentDefaults(UIDefaults table) {
 		super.initComponentDefaults(table);
 		
-		Object[] defaults = LimeLookAndFeel.getComponentDefaults(table);
+		Object[] defaults = LimeLookAndFeel2.getComponentDefaults(table);
 		table.putDefaults(defaults);
     }
     
@@ -106,22 +106,22 @@ public final class LimeLookAndFeel extends MetalLookAndFeel {
 		    "OptionPane.errorIcon",           errorIcon,
 		    "OptionPane.informationIcon",     infoIcon,
 
-		    "ProgressBar.selectionForeground",new ColorUIResource(ThemeFileHandler.WINDOW4_COLOR.getValue()),
-            "ProgressBar.selectionBackground",new ColorUIResource(ThemeFileHandler.WINDOW4_COLOR.getValue()),
+		    "ProgressBar.selectionForeground",new ColorUIResource(ThemeFileHandler2.WINDOW4_COLOR.getValue()),
+            "ProgressBar.selectionBackground",new ColorUIResource(ThemeFileHandler2.WINDOW4_COLOR.getValue()),
 
 		    "Label.font",                     labelFont,
 
 		    "Table.foreground",               getUserTextColor(),
 		    "Table.selectionForeground",      getUserTextColor(),
-		    "Table.selectionBackground",      new ColorUIResource(ThemeFileHandler.SECONDARY3_COLOR.getValue()),
+		    "Table.selectionBackground",      new ColorUIResource(ThemeFileHandler2.SECONDARY3_COLOR.getValue()),
 		    "Table.focusCellForeground",      getUserTextColor(),
-		    "Table.focusCellBackground",      new ColorUIResource(ThemeFileHandler.SECONDARY3_COLOR.getValue()),
+		    "Table.focusCellBackground",      new ColorUIResource(ThemeFileHandler2.SECONDARY3_COLOR.getValue()),
 		    
-		    "TableHeader.background",         new ColorUIResource(ThemeFileHandler.TABLE_HEADER_BACKGROUND_COLOR.getValue()),
+		    "TableHeader.background",         new ColorUIResource(ThemeFileHandler2.TABLE_HEADER_BACKGROUND_COLOR.getValue()),
 		    "TableHeader.cellBorder",         new BorderUIResource(BorderFactory.createRaisedBevelBorder()),
 		    "TableHeader.cellPressedBorder",  new BorderUIResource(BorderFactory.createLoweredBevelBorder()),
 		    
-		    "TextField.background",           new ColorUIResource(ThemeFileHandler.WINDOW7_COLOR.getValue()),
+		    "TextField.background",           new ColorUIResource(ThemeFileHandler2.WINDOW7_COLOR.getValue()),
 		    
 		    "ToolTip.foreground",             getControlTextColor(),
 		    "ToolTip.background",             getControl(),
@@ -131,7 +131,7 @@ public final class LimeLookAndFeel extends MetalLookAndFeel {
 		    "Tree.collapsedIcon",             closedDirIcon,
 		    "Tree.rightChildIndent",          new Integer(6),
             "Tree.selectionForeground",       getUserTextColor(),
-		    "Tree.selectionBackground",       new ColorUIResource(ThemeFileHandler.SECONDARY3_COLOR.getValue()),
+		    "Tree.selectionBackground",       new ColorUIResource(ThemeFileHandler2.SECONDARY3_COLOR.getValue()),
         };
         
         return defaults;

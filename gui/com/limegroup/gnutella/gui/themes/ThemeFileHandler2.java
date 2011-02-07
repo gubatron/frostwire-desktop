@@ -24,9 +24,9 @@ import com.limegroup.gnutella.util.LimeWireUtils;
  * This class contains key/value pairs for the current "theme."  The
  * theme defines values for the colors, fonts, etc, of the application.
  */
-public final class ThemeFileHandler {
+public final class ThemeFileHandler2 {
     
-    private static Log LOG = LogFactory.getLog(ThemeFileHandler.class);
+    private static Log LOG = LogFactory.getLog(ThemeFileHandler2.class);
 
 	/**
 	 * The current theme version.
@@ -41,7 +41,7 @@ public final class ThemeFileHandler {
     /**
      * Private constructor to ensure that this class is not constructed.
      */
-    private ThemeFileHandler() {}
+    private ThemeFileHandler2() {}
 
 	static {
 		reload(false);

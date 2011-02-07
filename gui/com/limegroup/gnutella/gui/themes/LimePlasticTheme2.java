@@ -4,15 +4,21 @@ import java.awt.Font;
 
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.FontUIResource;
-import javax.swing.plaf.metal.DefaultMetalTheme;
+
+import com.jgoodies.plaf.plastic.PlasticLookAndFeel;
+import com.jgoodies.plaf.plastic.PlasticTheme;
 
 /**
  * This class defines the colors used in the application.
  */
 //2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
-public final class LimeTheme extends DefaultMetalTheme {
+public final class LimePlasticTheme2 extends PlasticTheme {
+    
+    public static void installThisTheme() {
+        PlasticLookAndFeel.setMyCurrentTheme(new LimePlasticTheme2());
+    }
 
-	public String getName() { return "LimeTheme"; }
+	public String getName() { return "LimePlasticTheme"; }
 
 	// 0, 51, 102, 153, 204, 255 -- the web safe rgb values
 
@@ -20,32 +26,32 @@ public final class LimeTheme extends DefaultMetalTheme {
 
 	// Primary1: titles & highlight
 	private final ColorUIResource prim1 = 
-		new ColorUIResource(ThemeFileHandler.PRIMARY1_COLOR.getValue());
+		new ColorUIResource(ThemeFileHandler2.PRIMARY1_COLOR.getValue());
 
 	// Primary2: depressed menu
 	private final ColorUIResource prim2 = 
-		new ColorUIResource(ThemeFileHandler.PRIMARY2_COLOR.getValue());
+		new ColorUIResource(ThemeFileHandler2.PRIMARY2_COLOR.getValue());
 
 	// Primary3: tooltip & scrollbar highlight
 	private final ColorUIResource prim3 = 
-		new ColorUIResource(ThemeFileHandler.PRIMARY3_COLOR.getValue());
+		new ColorUIResource(ThemeFileHandler2.PRIMARY3_COLOR.getValue());
 
 	// Secondary1: base outline
 	private final ColorUIResource sec1 = 
-		new ColorUIResource(ThemeFileHandler.SECONDARY1_COLOR.getValue());
+		new ColorUIResource(ThemeFileHandler2.SECONDARY1_COLOR.getValue());
 
 	// Secondary2: inactive tabs, table cols & section outline
 	// old "darker" color (135, 145, 170)
 	private final ColorUIResource sec2 = 
-		new ColorUIResource(ThemeFileHandler.SECONDARY2_COLOR.getValue());
+		new ColorUIResource(ThemeFileHandler2.SECONDARY2_COLOR.getValue());
 
 	// Secondary3: background color
 	private final ColorUIResource sec3 = 
-		new ColorUIResource(ThemeFileHandler.SECONDARY3_COLOR.getValue());
+		new ColorUIResource(ThemeFileHandler2.SECONDARY3_COLOR.getValue());
 
 	//SystemText: playoptions mp3list library sharing prompt everything in options
 	private final ColorUIResource win1 = 
-		new ColorUIResource(ThemeFileHandler.WINDOW1_COLOR.getValue());
+		new ColorUIResource(ThemeFileHandler2.WINDOW1_COLOR.getValue());
 
 
 	// CUSTOMIZED METAL COMPONENT COLORS (NEEDED FOR THOSE MAPPED TO WHITE/BLACK)
@@ -53,12 +59,12 @@ public final class LimeTheme extends DefaultMetalTheme {
 	//Control: background color
 	//(initially mapped to Secondary2)
 	private final ColorUIResource win2 = 
-		new ColorUIResource(ThemeFileHandler.WINDOW2_COLOR.getValue());
+		new ColorUIResource(ThemeFileHandler2.WINDOW2_COLOR.getValue());
 
 	//ControlHighlight: highlite around radiobuttons inputfields and whole windows
 	//(initially mapped to Secondary3)
 	private final ColorUIResource win3 = 
-		new ColorUIResource(ThemeFileHandler.WINDOW3_COLOR.getValue());
+		new ColorUIResource(ThemeFileHandler2.WINDOW3_COLOR.getValue());
 
 	//ControlShadow: Missing
 	//(mapped to Secondary1)
@@ -68,47 +74,47 @@ public final class LimeTheme extends DefaultMetalTheme {
 	//ControlTextColor: TABtext - liblist - buttons
 	//(initially mapped to Primary1)
 	private final ColorUIResource win4 = 
-		new ColorUIResource(ThemeFileHandler.WINDOW4_COLOR.getValue());
+		new ColorUIResource(ThemeFileHandler2.WINDOW4_COLOR.getValue());
 
 	//ControlInfo: checks and little arrows on drop downs
 	//(initially mapped to Secondary1)
 	private final ColorUIResource win5 = 
-		new ColorUIResource(ThemeFileHandler.WINDOW5_COLOR.getValue());
+		new ColorUIResource(ThemeFileHandler2.WINDOW5_COLOR.getValue());
 
 	//WindowBackground: unspecified
 	//(initially mapped to Primary3)
 	private final ColorUIResource win6 = 
-		new ColorUIResource(ThemeFileHandler.WINDOW6_COLOR.getValue());
+		new ColorUIResource(ThemeFileHandler2.WINDOW6_COLOR.getValue());
 
 	//WindowTitleInactiveForeground: unspecified
 	//(initially mapped to White)
 	private final ColorUIResource win7 =  
-		new ColorUIResource(ThemeFileHandler.WINDOW7_COLOR.getValue());
+		new ColorUIResource(ThemeFileHandler2.WINDOW7_COLOR.getValue());
 
 	//UserTextColor: results list and blinking cursor
 	//(initially mapped to Black)
 	private final ColorUIResource win8 = 
-		new ColorUIResource(ThemeFileHandler.WINDOW8_COLOR.getValue());
+		new ColorUIResource(ThemeFileHandler2.WINDOW8_COLOR.getValue());
 
 	//MenuForeground:
 	//(initially mapped to Primary1)
 	private final ColorUIResource win9 = 
-		new ColorUIResource(ThemeFileHandler.WINDOW9_COLOR.getValue());
+		new ColorUIResource(ThemeFileHandler2.WINDOW9_COLOR.getValue());
 
 	//MenuSelectedForeground:
 	//(initially mapped to Primary1)
 	private final ColorUIResource win10 = 
-		new ColorUIResource(ThemeFileHandler.WINDOW10_COLOR.getValue());
+		new ColorUIResource(ThemeFileHandler2.WINDOW10_COLOR.getValue());
 
 	//DesktopColor: MDI container or desktop background
 	//(initially mapped to Secondary3)
 	private final ColorUIResource win11 = 
-		new ColorUIResource(ThemeFileHandler.WINDOW11_COLOR.getValue());
+		new ColorUIResource(ThemeFileHandler2.WINDOW11_COLOR.getValue());
 
 	//MenuBackground:
 	//(initially mapped to Secondary3)
 	private final ColorUIResource win12 = 
-		new ColorUIResource(ThemeFileHandler.WINDOW12_COLOR.getValue());
+		new ColorUIResource(ThemeFileHandler2.WINDOW12_COLOR.getValue());
 
 	private FontUIResource controlFont;	//dialog, BOLD_STYLE, 11/12
 	private FontUIResource captionFont;	//dialog, BOLD, 11/12
@@ -140,9 +146,9 @@ public final class LimeTheme extends DefaultMetalTheme {
 	public FontUIResource getControlTextFont() {
 		if (controlFont == null) {
 			Font font = new Font(
-				ThemeFileHandler.CONTROL_TEXT_FONT_NAME.getValue(), 
-				ThemeFileHandler.CONTROL_TEXT_FONT_STYLE.getValue(),
-				ThemeFileHandler.CONTROL_TEXT_FONT_SIZE.getValue());
+				ThemeFileHandler2.CONTROL_TEXT_FONT_NAME.getValue(), 
+				ThemeFileHandler2.CONTROL_TEXT_FONT_STYLE.getValue(),
+				ThemeFileHandler2.CONTROL_TEXT_FONT_SIZE.getValue());
 			try {
 				controlFont =  new FontUIResource(Font.getFont(
 					"swing.plaf.metal.controlFont",
@@ -158,9 +164,9 @@ public final class LimeTheme extends DefaultMetalTheme {
 	public FontUIResource getSystemTextFont() {
 		if (systemFont == null) {
 			Font font = new Font(
-				ThemeFileHandler.SYSTEM_TEXT_FONT_NAME.getValue(), 
-				ThemeFileHandler.SYSTEM_TEXT_FONT_STYLE.getValue(),
-				ThemeFileHandler.SYSTEM_TEXT_FONT_SIZE.getValue());
+				ThemeFileHandler2.SYSTEM_TEXT_FONT_NAME.getValue(), 
+				ThemeFileHandler2.SYSTEM_TEXT_FONT_STYLE.getValue(),
+				ThemeFileHandler2.SYSTEM_TEXT_FONT_SIZE.getValue());
 			try {
 				systemFont = new FontUIResource(Font.getFont(
 					"swing.plaf.metal.systemFont",
@@ -176,9 +182,9 @@ public final class LimeTheme extends DefaultMetalTheme {
 	public FontUIResource getUserTextFont() {
 		if (userFont == null) {
 			Font font = new Font(
-				ThemeFileHandler.USER_TEXT_FONT_NAME.getValue(), 
-				ThemeFileHandler.USER_TEXT_FONT_STYLE.getValue(),
-				ThemeFileHandler.USER_TEXT_FONT_SIZE.getValue());
+				ThemeFileHandler2.USER_TEXT_FONT_NAME.getValue(), 
+				ThemeFileHandler2.USER_TEXT_FONT_STYLE.getValue(),
+				ThemeFileHandler2.USER_TEXT_FONT_SIZE.getValue());
 			try {
 				userFont = new FontUIResource(Font.getFont(
 					"swing.plaf.metal.userFont",
@@ -194,9 +200,9 @@ public final class LimeTheme extends DefaultMetalTheme {
 	public FontUIResource getMenuTextFont() {
 		if (controlFont == null) {
 			Font font = new Font(
-				ThemeFileHandler.MENU_TEXT_FONT_NAME.getValue(), 
-				ThemeFileHandler.MENU_TEXT_FONT_STYLE.getValue(),
-				ThemeFileHandler.MENU_TEXT_FONT_SIZE.getValue());
+				ThemeFileHandler2.MENU_TEXT_FONT_NAME.getValue(), 
+				ThemeFileHandler2.MENU_TEXT_FONT_STYLE.getValue(),
+				ThemeFileHandler2.MENU_TEXT_FONT_SIZE.getValue());
 			try {
 				controlFont = new FontUIResource(Font.getFont(
 					"swing.plaf.metal.controlFont",
@@ -212,9 +218,9 @@ public final class LimeTheme extends DefaultMetalTheme {
 	public FontUIResource getWindowTitleFont() {
 		if (captionFont == null) {
 			Font font = new Font(
-				ThemeFileHandler.WINDOW_TITLE_FONT_NAME.getValue(), 
-				ThemeFileHandler.WINDOW_TITLE_FONT_STYLE.getValue(),
-				ThemeFileHandler.WINDOW_TITLE_FONT_SIZE.getValue());
+				ThemeFileHandler2.WINDOW_TITLE_FONT_NAME.getValue(), 
+				ThemeFileHandler2.WINDOW_TITLE_FONT_STYLE.getValue(),
+				ThemeFileHandler2.WINDOW_TITLE_FONT_SIZE.getValue());
 			try {
 				captionFont = new FontUIResource(Font.getFont(
 					"swing.plaf.metal.controlFont",
@@ -230,9 +236,9 @@ public final class LimeTheme extends DefaultMetalTheme {
 	public FontUIResource getSubTextFont() {
 		if (smallFont == null) {
 			Font font = new Font(
-				ThemeFileHandler.SUB_TEXT_FONT_NAME.getValue(), 
-				ThemeFileHandler.SUB_TEXT_FONT_STYLE.getValue(),
-				ThemeFileHandler.SUB_TEXT_FONT_SIZE.getValue());
+				ThemeFileHandler2.SUB_TEXT_FONT_NAME.getValue(), 
+				ThemeFileHandler2.SUB_TEXT_FONT_STYLE.getValue(),
+				ThemeFileHandler2.SUB_TEXT_FONT_SIZE.getValue());
 			try {
 				smallFont = new FontUIResource(Font.getFont(
 					"swing.plaf.metal.smallFont",
