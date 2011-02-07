@@ -8,11 +8,18 @@ import java.net.URL;
 import java.util.Calendar;
 import java.util.StringTokenizer;
 
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+
+import org.pushingpixels.substance.api.SubstanceLookAndFeel;
+import org.pushingpixels.substance.api.skin.GraphiteGlassSkin;
+import org.pushingpixels.substance.api.skin.SubstanceMistAquaLookAndFeel;
+
 /**
  * This class constructs an <tt>Initializer</tt> instance that constructs
  * all of the necessary classes for the application.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public class Main {
 	
     private static URL CHOSEN_SPLASH_URL = null;
@@ -23,8 +30,7 @@ public class Main {
 	 *
 	 * @param args the array of command line arguments
 	 */
-	@SuppressWarnings("unchecked")
-    public static void main(String args[]) {
+	public static void main(String args[]) {
 		System.out.println("1: Main.main("+args+")");
 		
 	    Frame splash = null;
@@ -33,7 +39,7 @@ public class Main {
                 // Register GURL to receive AppleEvents, such as magnet links.
                 // Use reflection to not slow down non-OSX systems.
                 // "GURLHandler.getInstance().register();"
-				Class clazz = Class.forName("com.limegroup.gnutella.gui.GURLHandler");
+				Class<?> clazz = Class.forName("com.limegroup.gnutella.gui.GURLHandler");
                 Method getInstance = clazz.getMethod("getInstance", new Class[0]);
                 Object gurl = getInstance.invoke(null, new Object[0]);
                 Method register = gurl.getClass().getMethod("register", new Class[0]);
@@ -51,13 +57,32 @@ public class Main {
 			// show initial splash screen only if there are no arguments
             if (args == null || args.length == 0)
 				splash = showInitialSplash();
+            
+            final String[] finalArgs = args;
+            final Frame finalSplash = splash;
+            
+            //JFrame.setDefaultLookAndFeelDecorated(true);
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    try {
+                        //UIManager.setLookAndFeel(new SubstanceMistAquaLookAndFeel());
+                        SubstanceLookAndFeel.setSkin(new GraphiteGlassSkin());
 
-            // load the GUI through reflection so that we don't reference classes here,
-            // which would slow the speed of class-loading, causing the splash to be
-            // displayed later.
-            Class.forName("com.limegroup.gnutella.gui.GUILoader").
-                getMethod("load", new Class[] { String[].class, Frame.class }).
-                    invoke(null, new Object[] { args, splash });
+                    } catch (Exception e) {
+                        System.out.println("Substance engine failed to initialize");
+                    }
+
+                    // load the GUI through reflection so that we don't reference classes here,
+                    // which would slow the speed of class-loading, causing the splash to be
+                    // displayed later.
+                    try {
+                        Class.forName("com.limegroup.gnutella.gui.GUILoader").getMethod("load", new Class[] { String[].class, Frame.class })
+                                .invoke(null, new Object[] { finalArgs, finalSplash });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }            
+            });
         } catch(Throwable e) {
             e.printStackTrace();
             System.exit(1);
