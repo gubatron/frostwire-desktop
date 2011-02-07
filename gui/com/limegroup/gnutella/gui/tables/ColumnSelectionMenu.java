@@ -85,7 +85,7 @@ public class ColumnSelectionMenu {
      */
     public ColumnSelectionMenu(LimeJTable table) {
         _table = table;
-        DataLineModel model = (DataLineModel)_table.getModel();
+        DataLineModel<?, ?> model = (DataLineModel<?, ?>)_table.getModel();
 
         // add the 'revert to default' option.
         ActionListener reverter = new ReverterListener();
@@ -116,7 +116,7 @@ public class ColumnSelectionMenu {
      * Adds the table choices.
      */
     protected void addTableColumnChoices(ActionListener listener,
-                                         DataLineModel model,
+                                         DataLineModel<?, ?> model,
                                          LimeJTable table) {
         for( int i = 0; i < model.getColumnCount(); i++) {
             JMenuItem item = createColumnMenuItem(listener, model, table, i);
@@ -128,7 +128,7 @@ public class ColumnSelectionMenu {
      * Creates a single menu item for a column.
      */
     protected JMenuItem createColumnMenuItem(ActionListener listener,
-                                             DataLineModel model,
+                                             DataLineModel<?, ?> model,
                                              LimeJTable table,
                                              int i) {
         Object id = model.getColumnId(i);

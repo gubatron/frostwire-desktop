@@ -32,7 +32,6 @@ import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.JMultilineToolTip;
-import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.util.DataUtils;
 
@@ -509,11 +508,7 @@ public class LimeJTable extends JTable implements JSortTable {
      * Returns the color that a specific row will be.
      */
     public Color getBackgroundForRow(int row) {
-        if(row % 2 == 0 || !tableSettings.ROWSTRIPE.getValue()) {
-            return getBackground();
-        } else {
-            return SkinHandler.getTableAlternateColor();
-        }
+        return Color.YELLOW;
     }
         
     
