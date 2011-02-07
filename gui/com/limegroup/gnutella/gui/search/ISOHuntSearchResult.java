@@ -49,11 +49,6 @@ public class ISOHuntSearchResult extends AbstractSearchResult  {
 	}
 
 	@Override
-	public Color getEvenRowColor() {
-		return SkinHandler.getTableBackgroundColor();
-	}
-
-	@Override
 	public String getExtension() {
 		return "torrent";
 	}
@@ -72,11 +67,6 @@ public class ISOHuntSearchResult extends AbstractSearchResult  {
 	@Override
 	public String getHost() {
 		return _item.tracker;
-	}
-
-	@Override
-	public Color getOddRowColor() {
-		return SkinHandler.getTableAlternateColor();
 	}
 
 	@Override

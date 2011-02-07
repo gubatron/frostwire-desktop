@@ -1,6 +1,7 @@
 package com.limegroup.gnutella.gui.themes;
 
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -17,6 +18,7 @@ import java.util.zip.ZipException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.limewire.service.ErrorService;
+import org.limewire.setting.ColorSetting;
 import org.limewire.setting.FileSetting;
 import org.limewire.setting.IntSetting;
 import org.limewire.util.CommonUtils;
@@ -385,6 +387,9 @@ public final class ThemeSettings extends LimeProps {
      */
     public static final IntSetting FONT_SIZE_INCREMENT = 
         FACTORY.createIntSetting("FONT_SIZE_INCREMENT", 0);
+    
+    public static final ColorSetting DEFAULT_TABLE_EVEN_ROW_COLOR = FACTORY.createColorSetting("DEFAULT_TABLE_EVEN_ROW_COLOR", new Color(255, 255, 255));
+    public static final ColorSetting DEFAULT_TABLE_ODD_ROW_COLOR = FACTORY.createColorSetting("DEFAULT_TABLE_ODD_ROW_COLOR", new Color(248, 248, 255));
 }
 
 	

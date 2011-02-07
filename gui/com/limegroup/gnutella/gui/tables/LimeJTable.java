@@ -537,26 +537,28 @@ public class LimeJTable extends JTable implements JSortTable {
     	Component r = renderer.getTableCellRendererComponent(this, value,
     	                                              isSelected, hasFocus,
     	                                              row, column);
-	                      
-        Color  odd = getEvenRowColor(row);
-        Color even = getOddRowColor(row);
-        
-        if ( isSelected ) {
-            // do nothing if selected.
-        } else if (hasFocus && isCellEditable(row, column)) {
-            // do nothing if we're focused & editting.
-        } else if (even.equals(odd)) {
-            // do nothing if backgrounds are the same.
-        } else if (!tableSettings.ROWSTRIPE.getValue()) {
-            // if the renderer's background isn't already the normal one,
-            // change it.  (needed for real-time changing of the option)
-            if( r != null && !r.equals(even) )
+
+    	if (isOverrideRowColor(row)) {
+            Color  odd = getEvenRowColor(row);
+            Color even = getOddRowColor(row);
+            
+            if ( isSelected ) {
+                // do nothing if selected.
+            } else if (hasFocus && isCellEditable(row, column)) {
+                // do nothing if we're focused & editting.
+            } else if (even.equals(odd)) {
+                // do nothing if backgrounds are the same.
+            } else if (!tableSettings.ROWSTRIPE.getValue()) {
+                // if the renderer's background isn't already the normal one,
+                // change it.  (needed for real-time changing of the option)
+                if( r != null && !r.equals(even) )
+                    r.setBackground(even);
+            } else if ( row % 2 != 0 ) {
+                r.setBackground(odd);
+            } else {
                 r.setBackground(even);
-        } else if ( row % 2 != 0 ) {
-            r.setBackground(odd);
-        } else {
-            r.setBackground(even);
-        }
+            }
+    	}
         
         return r;
     }
@@ -638,6 +640,10 @@ public class LimeJTable extends JTable implements JSortTable {
         }
     }
     
+    protected boolean isOverrideRowColor(int row) {
+        return false;
+    }
+    
     /**
      * Returns the default Color for an even row.  This <b>can</b> be overridden.
      * 
@@ -645,7 +651,7 @@ public class LimeJTable extends JTable implements JSortTable {
      * @return the default Color for an even row
      */
     protected Color getEvenRowColor(int row) {
-        return SkinHandler.getTableBackgroundColor();
+        return ThemeSettings.DEFAULT_TABLE_EVEN_ROW_COLOR.getValue();
     }
 
     /**
@@ -655,7 +661,7 @@ public class LimeJTable extends JTable implements JSortTable {
      * @return the default Color for an even row
      */
     protected Color getOddRowColor(int row) {
-        return SkinHandler.getTableAlternateColor();
+        return ThemeSettings.DEFAULT_TABLE_ODD_ROW_COLOR.getValue();
     }     
     
     /**

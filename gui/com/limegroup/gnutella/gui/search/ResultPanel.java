@@ -314,6 +314,11 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
 			 * 
 			 */
 			private static final long serialVersionUID = 1L;
+			
+			@Override
+			protected boolean isOverrideRowColor(int row) {
+			    return getLine(row).isOverrideRowColor();
+			}
 
 			@Override
             protected Color getEvenRowColor(int row) {

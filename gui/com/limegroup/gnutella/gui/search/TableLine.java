@@ -779,7 +779,7 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
         RemoteFileDesc[] rfds = new RemoteFileDesc[size];
         rfds[0] = sr.getRemoteFileDesc();
         int j = 1;
-        for(Iterator i = getOtherResults().iterator(); i.hasNext(); j++)
+        for(Iterator<?> i = getOtherResults().iterator(); i.hasNext(); j++)
             rfds[j] = ((GnutellaSearchResult)i.next()).getRemoteFileDesc();
         return rfds;
     }
@@ -812,7 +812,7 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
             _lastRating = RESULT.getSpamRating();
             int num = 1;
             if (_otherResults != null) {
-                for (Iterator iter = _otherResults.iterator(); iter.hasNext();) {
+                for (Iterator<?> iter = _otherResults.iterator(); iter.hasNext();) {
                     SearchResult r = (SearchResult)iter.next();
                     if (!(r instanceof GnutellaSearchResult)) continue;
                     num++;
@@ -853,6 +853,10 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
      */
     public final SearchResult getSearchResult() {
         return RESULT;
+    }
+    
+    public final boolean isOverrideRowColor() {
+        return RESULT.isOverrideRowColor();
     }
     
     /**

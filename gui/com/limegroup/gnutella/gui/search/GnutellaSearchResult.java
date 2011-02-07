@@ -127,14 +127,6 @@ final class GnutellaSearchResult extends AbstractSearchResult {
         return RFD.getHost();
     }
 
-    public Color getEvenRowColor() {
-        return SkinHandler.getTableBackgroundColor();
-    }
-
-    public Color getOddRowColor() {
-        return SkinHandler.getTableAlternateColor();
-    }
-
     public void takeAction(TableLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
         SearchMediator.downloadGnutellaLine(line, guid, saveDir, fileName, saveAs, searchInfo);
     }
