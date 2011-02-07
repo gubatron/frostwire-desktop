@@ -129,12 +129,6 @@ public final class SearchMediator {
         new SearchInputManager();
 
     /**
-     * The LimeWire Store&#8482; song DB for the sponsored results.
-     */
-    private static final RemoteStringBasicSpecialResultsDatabaseImpl thirdPartyDatabase = 
-        new RemoteStringBasicSpecialResultsDatabaseImpl(GuiCoreMediator.getLimeXMLDocumentFactory());
-
-    /**
      * This instance handles the display of all search results.
      * TODO: Changed to package-protected for testing to add special results
      */
@@ -387,34 +381,7 @@ public final class SearchMediator {
             addResultTab(new GUID(guid), info);
         }
         
-        
-        
         doSearch(guid, info);
-        
-        // Here is where we can intercept the query and look for terms
-        GuiCoreMediator.getCoreBackgroundExecutor().execute(new Runnable() {
-            public void run() {
-                thirdPartyDatabase.find(info, new ThirdPartyResultsDatabase.SearchResultsCallback() {
-                public void process(final List<SearchResult> results, SearchInformation info) {
-                    if (results == null)
-                        return;
-                    final ResultPanel rp = SearchMediator.getResultPanelForGUID(new GUID(guid));
-                    if (rp == null)
-                        return;
-                    try {
-                        SwingUtilities.invokeAndWait(new Runnable() {
-                            public void run() {
-                                for (final SearchResult sr : results) {
-                                    SearchMediator.RESULT_DISPLAYER.addQueryResult(guid, sr, rp);
-                                }
-                            }});
-                    } catch (InterruptedException e) {
-                        ErrorService.error(e, "invokeAndWait for store song result");
-                    } catch (InvocationTargetException e) {
-                        ErrorService.error(e, "invokeAndWait for store song result");
-                    }
-                }});
-            }});
         
         return guid;
     }
