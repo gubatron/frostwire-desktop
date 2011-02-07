@@ -5,9 +5,9 @@ import java.awt.Component;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 
 import org.limewire.collection.NameValue;
+import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.ImageManipulator;
@@ -16,8 +16,13 @@ import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.licenses.License;
 import com.limegroup.gnutella.licenses.LicenseFactory;
 
-class LicenseRenderer extends DefaultTableCellRenderer implements ThemeObserver {
+class LicenseRenderer extends SubstanceDefaultTableCellRenderer implements ThemeObserver {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -2252423761469812206L;
+
     /**
      * The CC icon, disabled.
      *
@@ -90,7 +95,7 @@ class LicenseRenderer extends DefaultTableCellRenderer implements ThemeObserver 
                                                    boolean hasFocus,
                                                    int row,
                                                    int column) {
-        NameValue nv = (NameValue)value;
+        NameValue<?> nv = (NameValue<?>)value;
         super.getTableCellRendererComponent(table, value, isSel, hasFocus, row, column);
         setText(null);
         if(nv != null) {
