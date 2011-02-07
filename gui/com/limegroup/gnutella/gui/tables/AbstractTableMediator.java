@@ -41,9 +41,8 @@ import org.limewire.util.StringUtils;
 
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIConstants;
-import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.PaddedPanel;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
+import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.licenses.License;
 
@@ -342,10 +341,11 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
      * Currently sets the 'action' key to call 'handleActionKey'.
      */
     protected void addActions() {
-        InputMap map =
-            TABLE.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        InputMap map = TABLE.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
         Action enter = new AbstractAction() {
+            private static final long serialVersionUID = 5177362850526818763L;
+
             public void actionPerformed(ActionEvent e) {
                 handleActionKey();
             }
@@ -353,6 +353,8 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         installAction(map, enter, KeyEvent.VK_ENTER, "limewire.action");
         
         Action delete = new AbstractAction() {
+            private static final long serialVersionUID = 6973509148820061808L;
+
             public void actionPerformed(ActionEvent e) {
                 if(!TABLE.isEditing())
                     removeSelection();
@@ -488,10 +490,12 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         return tablePane;
     }
 
-    // inherit doc comment
     public void updateTheme() {
-        Color tableColor = ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
-        if (TABLE_PANE == null) return;
+        Color tableColor = SkinHandler.getTableBackgroundColor();
+        
+        if (TABLE_PANE == null) {
+            return;
+        }
 
         TABLE_PANE.setBackground(tableColor);
         TABLE.setBackground(tableColor);
@@ -831,7 +835,7 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
     protected void sortAndMaintainSelection(int columnToSort) {
         // store the currently selected rows
         int[] rows = TABLE.getSelectedRows();
-        DataLine[] dls = new DataLine[rows.length];
+        DataLine<?>[] dls = new DataLine[rows.length];
         Object inView = null;
         for (int i = 0; i < rows.length; i++) {
             dls[i] = DATA_MODEL.get(rows[i]);
@@ -938,7 +942,7 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         } else if ( o1.getClass() == String.class ) {
             retval = StringUtils.compareFullPrimary( (String)o1, (String)o2 );
         } else if( o1 instanceof java.lang.Comparable ) {
-            retval = ((java.lang.Comparable)o1).compareTo(o2);
+            retval = ((java.lang.Comparable<Object>)o1).compareTo(o2);
         } else {
             retval = 0;
         }
