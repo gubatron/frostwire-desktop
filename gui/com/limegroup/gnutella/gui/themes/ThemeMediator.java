@@ -132,4 +132,53 @@ public class ThemeMediator {
         d.setLocationRelativeTo(GUIMediator.getAppFrame());
         d.setVisible(true);
     }
+    
+    /*private void changeTheme() {
+        SwingUtils.invokeNowOrLater(new Runnable() {
+            public void run() {
+
+                final boolean wasDecoratedByOS = !_frame
+                        .isUndecorated();
+
+                try {
+
+                    UIManager.setLookAndFeel(item.getlookAndFeel());
+
+                    for (Window window : Window.getWindows()) {
+                        SwingUtilities.updateComponentTreeUI(window);
+                    }
+
+                    boolean canBeDecoratedByLAF = UIManager
+                            .getLookAndFeel()
+                            .getSupportsWindowDecorations();
+                    if (canBeDecoratedByLAF == wasDecoratedByOS) {
+                        boolean wasVisible = _frame.isVisible();
+
+                        _frame.setVisible(false);
+                        _frame.dispose();
+                        if (!canBeDecoratedByLAF
+                                || _wasOriginallyDecoratedByOS) {
+                            // see the java docs under the method
+                            // JFrame.setDefaultLookAndFeelDecorated(boolean
+                            // value) for description of these 2 lines:
+                            _frame.setUndecorated(false);
+                            _frame.getRootPane()
+                                    .setWindowDecorationStyle(
+                                            JRootPane.NONE);
+
+                        } else {
+                            _frame.setUndecorated(true);
+                            _frame.getRootPane()
+                                    .setWindowDecorationStyle(
+                                            JRootPane.FRAME);
+                        }
+                        _frame.setVisible(wasVisible);
+                        // wasDecoratedByOS = !frame.isUndecorated();
+                    }
+
+                } catch (Exception e) {
+                }
+            }
+        });
+    }*/
 }

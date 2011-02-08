@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.StringTokenizer;
+import java.util.concurrent.CountDownLatch;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -15,6 +16,8 @@ import javax.swing.UIManager;
 import org.pushingpixels.substance.api.SubstanceLookAndFeel;
 import org.pushingpixels.substance.api.skin.GraphiteGlassSkin;
 import org.pushingpixels.substance.api.skin.SubstanceMistAquaLookAndFeel;
+
+import com.frostwire.gnutella.gui.skin.SeaGlassSkin;
 
 /**
  * This class constructs an <tt>Initializer</tt> instance that constructs
@@ -58,31 +61,27 @@ public class Main {
             if (args == null || args.length == 0)
 				splash = showInitialSplash();
             
-            final String[] finalArgs = args;
-            final Frame finalSplash = splash;
+            // load the GUI through reflection so that we don't reference classes here,
+            // which would slow the speed of class-loading, causing the splash to be
+            // displayed later.
+            try {
+                Class.forName("com.limegroup.gnutella.gui.GUILoader").getMethod("load", new Class[] { String[].class, Frame.class })
+                        .invoke(null, new Object[] { args, splash });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             
-            //JFrame.setDefaultLookAndFeelDecorated(true);
+            JFrame.setDefaultLookAndFeelDecorated(true);
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     try {
-                        //UIManager.setLookAndFeel(new SubstanceMistAquaLookAndFeel());
-                        SubstanceLookAndFeel.setSkin(new GraphiteGlassSkin());
-
+                        SubstanceLookAndFeel.setSkin(new SeaGlassSkin());
                     } catch (Exception e) {
                         System.out.println("Substance engine failed to initialize");
                     }
-
-                    // load the GUI through reflection so that we don't reference classes here,
-                    // which would slow the speed of class-loading, causing the splash to be
-                    // displayed later.
-                    try {
-                        Class.forName("com.limegroup.gnutella.gui.GUILoader").getMethod("load", new Class[] { String[].class, Frame.class })
-                                .invoke(null, new Object[] { finalArgs, finalSplash });
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }            
+                }
             });
+           
         } catch(Throwable e) {
             e.printStackTrace();
             System.exit(1);
