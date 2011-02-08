@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.StringTokenizer;
 import java.util.concurrent.CountDownLatch;
 
@@ -34,6 +35,7 @@ public class Main {
 	 * @param args the array of command line arguments
 	 */
 	public static void main(String args[]) {
+		System.setProperty("apple.laf.useScreenMenuBar", "true");
 		System.out.println("1: Main.main("+args+")");
 		
 	    Frame splash = null;
@@ -61,23 +63,41 @@ public class Main {
             if (args == null || args.length == 0)
 				splash = showInitialSplash();
             
-            // load the GUI through reflection so that we don't reference classes here,
-            // which would slow the speed of class-loading, causing the splash to be
-            // displayed later.
-            try {
-                Class.forName("com.limegroup.gnutella.gui.GUILoader").getMethod("load", new Class[] { String[].class, Frame.class })
-                        .invoke(null, new Object[] { args, splash });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            final String[] finalargs = args;
+            final Frame finalsplash = splash;
             
-            JFrame.setDefaultLookAndFeelDecorated(true);
+            //JFrame.setDefaultLookAndFeelDecorated(true);
+            
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     try {
+                    	
+                    	UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                    	
+                    	String[] keys = new String[]{"MenuBarUI",  "MenuUI", "MenuItemUI", "CheckBoxMenuItemUI", "RadioButtonMenuItemUI", "PopupMenuUI"};
+                    	
+                    	HashMap<Object, Object> map = new HashMap<Object, Object>();
+                    	for (String k : keys) {
+                    		Object v = UIManager.get(k);
+                    		map.put(k, v);
+                    	}
                         SubstanceLookAndFeel.setSkin(new SeaGlassSkin());
+                        for (String k : keys) {
+                    		Object v = map.get(k);
+                    		UIManager.put(k, v);
+                    	}
                     } catch (Exception e) {
-                        System.out.println("Substance engine failed to initialize");
+                        System.out.println("Substance engine failed to irnitialize");
+                    }
+                    
+                 // load the GUI through reflection so that we don't reference classes here,
+                    // which would slow the speed of class-loading, causing the splash to be
+                    // displayed later.
+                    try {
+                        Class.forName("com.limegroup.gnutella.gui.GUILoader").getMethod("load", new Class[] { String[].class, Frame.class })
+                                .invoke(null, new Object[] { finalargs, finalsplash });
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             });

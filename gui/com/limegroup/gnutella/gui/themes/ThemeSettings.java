@@ -248,8 +248,8 @@ public final class ThemeSettings extends LimeProps {
      * Determines if the current theme is the native OSX theme.
      */
     public static boolean isNativeOSXTheme() {
-        return OSUtils.isMacOSX() &&
-              (isPinstripesTheme() || isBrushedMetalTheme());
+        return false;//OSUtils.isMacOSX() &&
+              //(isPinstripesTheme() || isBrushedMetalTheme());
     }
     
     /**
