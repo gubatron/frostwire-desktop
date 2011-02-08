@@ -31,7 +31,9 @@ public class Main {
 	 * @param args the array of command line arguments
 	 */
 	public static void main(String args[]) {
-		//System.setProperty("apple.laf.useScreenMenuBar", "true");
+		if (isMacOSX()) {
+			System.setProperty("apple.laf.useScreenMenuBar", "true");
+		}
 		System.out.println("1: Main.main("+args+")");
 		
 	    Frame splash = null;
@@ -59,11 +61,6 @@ public class Main {
             if (args == null || args.length == 0)
 				splash = showInitialSplash();
             
-            final String[] finalargs = args;
-            final Frame finalsplash = splash;
-            
-            //JFrame.setDefaultLookAndFeelDecorated(true);
-            
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     try {
@@ -77,11 +74,15 @@ public class Main {
                     		Object v = UIManager.get(k);
                     		map.put(k, v);
                     	}
-                        SubstanceLookAndFeel.setSkin(new SeaGlassSkin());
-                        //for (String k : keys) {
-                    		//Object v = map.get(k);
-                    		//UIManager.put(k, v);
-                    	//}
+                        
+                    	SubstanceLookAndFeel.setSkin(new SeaGlassSkin());
+                        
+                    	if (isMacOSX()) {
+                    		for (String k : keys) {
+                    			Object v = map.get(k);
+                    			UIManager.put(k, v);
+                    		}
+                    	}
                     } catch (Exception e) {
                         System.out.println("Substance engine failed to irnitialize");
                     }
@@ -93,7 +94,7 @@ public class Main {
             // displayed later.
             try {
                 Class.forName("com.limegroup.gnutella.gui.GUILoader").getMethod("load", new Class[] { String[].class, Frame.class })
-                        .invoke(null, new Object[] { finalargs, finalsplash });
+                        .invoke(null, new Object[] { args, splash });
             } catch (Exception e) {
                 e.printStackTrace();
             }
