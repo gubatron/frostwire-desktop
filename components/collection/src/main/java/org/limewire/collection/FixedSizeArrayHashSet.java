@@ -43,6 +43,11 @@ import java.util.Iterator;
  */
 public class FixedSizeArrayHashSet<E> extends HashSet<E> implements RandomAccessCollection<E> {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 6084155001043889128L;
+
     private transient FixedSizeArrayHashMap<E,Object> map;
 
     // Dummy value to associate with an Object in the backing Map

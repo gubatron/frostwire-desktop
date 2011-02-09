@@ -156,7 +156,7 @@ public class NIODispatcher implements Runnable {
     private Collection <Runnable> LATER = new LinkedList<Runnable>();
     
     /** A queue of DelayedRunnables to process tasks. */
-    private final BlockingQueue<ScheduledFutureTask> DELAYED = new DelayQueue<ScheduledFutureTask>();
+    private final BlockingQueue<ScheduledFutureTask<?>> DELAYED = new DelayQueue<ScheduledFutureTask<?>>();
     
     /** The throttle queue. */
     private final List <NBThrottle> THROTTLE = new ArrayList<NBThrottle>();
@@ -1021,11 +1021,19 @@ public class NIODispatcher implements Runnable {
     }
     
     private static class SpinningException extends Exception {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 3025221063635131353L;
+
         public SpinningException() { super(); }
     }
     
     private static class ProcessingException extends Exception {
-        public ProcessingException() { super(); }
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 125637099261671379L;
         public ProcessingException(Throwable t) { super(t); }
     }
     

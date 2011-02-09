@@ -332,7 +332,7 @@ public class PatriciaTrie<K, V> extends AbstractMap<K, V> implements Trie<K, V>,
     @SuppressWarnings("unchecked")
     public V select(K key) {
         int keyLength = length(key);
-        TrieEntry[] result = new TrieEntry[1];
+        TrieEntry<K, V>[] result = new TrieEntry[1];
         if (!selectR(root.left, -1, key, keyLength, result)) {
             TrieEntry<K, V> e = result[0];
             return e.getValue();
@@ -346,7 +346,7 @@ public class PatriciaTrie<K, V> extends AbstractMap<K, V> implements Trie<K, V>,
      * Entry from the Trie.
      */
     private boolean selectR(TrieEntry<K, V> h, int bitIndex, 
-            final K key, final int keyLength, final TrieEntry[] result) {
+            final K key, final int keyLength, final TrieEntry<?, ?>[] result) {
         
         if (h.bitIndex <= bitIndex) {
             // If we hit the root Node and it is empty
@@ -374,7 +374,7 @@ public class PatriciaTrie<K, V> extends AbstractMap<K, V> implements Trie<K, V>,
     @SuppressWarnings("unchecked")
     public Map.Entry<K,V> select(K key, Cursor<? super K, ? super V> cursor) {
         int keyLength = length(key);
-        TrieEntry[] result = new TrieEntry[]{ null };
+        TrieEntry<K, V>[] result = new TrieEntry[]{ null };
         selectR(root.left, -1, key, keyLength, cursor, result);
         return result[0];
     }
@@ -383,7 +383,7 @@ public class PatriciaTrie<K, V> extends AbstractMap<K, V> implements Trie<K, V>,
             final K key, 
             final int keyLength,
             final Cursor<? super K, ? super V> cursor,
-            final TrieEntry[] result) {
+            final TrieEntry<?, ?>[] result) {
 
         if (h.bitIndex <= bitIndex) {
             if(!h.isEmpty()) {
@@ -574,7 +574,7 @@ public class PatriciaTrie<K, V> extends AbstractMap<K, V> implements Trie<K, V>,
             return false;
         
         int keyLength = length(key);
-        TrieEntry entry = getNearestEntryForKey(key, keyLength);
+        TrieEntry<?, ?> entry = getNearestEntryForKey(key, keyLength);
         return !entry.isEmpty() && key.equals(entry.key);
     }
     
@@ -1062,7 +1062,7 @@ public class PatriciaTrie<K, V> extends AbstractMap<K, V> implements Trie<K, V>,
             if(o == this) {
                 return true;
             } else if(o instanceof Map.Entry) {
-                Map.Entry e = (Map.Entry)o;
+                Map.Entry<?, ?> e = (Map.Entry<?, ?>)o;
                 Object k1 = getKey();
                 Object k2 = e.getKey();
                 if (k1 == k2 || (k1 != null && k1.equals(k2))) {
@@ -1440,7 +1440,7 @@ public class PatriciaTrie<K, V> extends AbstractMap<K, V> implements Trie<K, V>,
             if (!(o instanceof Map.Entry))
                 return false;
             
-            TrieEntry<K,V> candidate = getEntry(((Map.Entry)o).getKey());
+            TrieEntry<K,V> candidate = getEntry(((Map.Entry<?, ?>)o).getKey());
             return candidate != null && candidate.equals(o);
         }
         
@@ -1878,6 +1878,10 @@ public class PatriciaTrie<K, V> extends AbstractMap<K, V> implements Trie<K, V>,
     
     /** A submap used for prefix views over the Trie. */
     private class PrefixSubMap extends SubMap {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -1736000794623484155L;
         protected final K prefix;
         protected final int offset;
         protected final int length;        
@@ -2006,8 +2010,11 @@ public class PatriciaTrie<K, V> extends AbstractMap<K, V> implements Trie<K, V>,
     
     private class SubMap extends AbstractMap<K,V> implements SortedMap<K,V>, java.io.Serializable {
 
-        // TODO: add serialVersionUID
-        
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 4268580791803450065L;
+
         /** The key to start from, null if the beginning. */
         protected K fromKey;
         
@@ -2122,7 +2129,7 @@ public class PatriciaTrie<K, V> extends AbstractMap<K, V> implements Trie<K, V>,
             public int size() {
                 if (size == -1 || sizeModCount != PatriciaTrie.this.modCount) {
                     size = 0;  sizeModCount = PatriciaTrie.this.modCount;
-                    Iterator i = iterator();
+                    Iterator<?> i = iterator();
                     while (i.hasNext()) {
                         size++;
                         i.next();

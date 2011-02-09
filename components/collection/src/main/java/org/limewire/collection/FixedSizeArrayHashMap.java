@@ -20,6 +20,11 @@ import java.util.Set;
  */
 public class FixedSizeArrayHashMap<K, V> extends HashMap<K, V> implements RandomAccessMap<K, V> {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 4799419311182279976L;
+    
     private Buffer<Map.Entry<K, V>> buf;
     
     /** Creates a FixedSizeArrayHashMap with the specified maxmium capacity. */
@@ -149,7 +154,7 @@ public class FixedSizeArrayHashMap<K, V> extends HashMap<K, V> implements Random
         
         @Override
         public boolean equals(Object obj) {
-            FixedEntry e = (FixedEntry)obj;
+            FixedEntry<?, ?> e = (FixedEntry<?, ?>)obj;
             return key.equals(e.key) && value.equals(e.value);
         }
         
@@ -159,7 +164,7 @@ public class FixedSizeArrayHashMap<K, V> extends HashMap<K, V> implements Random
         }
     }
     
-    protected Iterator<Map.Entry<K, V>> newEntryIterator() {
+    protected Iterator<Map.Entry<K, V>> newEntryIterator2() {
         return new ArrayHashMapEntryIterator();
     }
     
@@ -181,13 +186,13 @@ public class FixedSizeArrayHashMap<K, V> extends HashMap<K, V> implements Random
     
     private class EntrySet extends AbstractSet<Map.Entry<K,V>> {
         public Iterator<Map.Entry<K,V>> iterator() {
-            return newEntryIterator();
+            return newEntryIterator2();
         }
         
         public boolean contains(Object o) {
             if (!(o instanceof Map.Entry))
                 return false;
-            Map.Entry e = (Map.Entry)o;
+            Map.Entry<?, ?> e = (Map.Entry<?, ?>)o;
             Object key = e.getKey();
             Object value = e.getValue();
             return containsKey(key) && get(key).equals(value);

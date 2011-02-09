@@ -493,7 +493,7 @@ public abstract class AbstractNBSocket extends NBSocket implements ConnectObserv
         if(VersionUtils.isJavaVersionOrAbove("1.5.0_10") || NIODispatcher.instance().isDispatchThread()) {
             shutdownSocketAndChannels();
         } else {
-            Future future = NIODispatcher.instance().getScheduledExecutorService().submit(new Runnable() {
+            Future<?> future = NIODispatcher.instance().getScheduledExecutorService().submit(new Runnable() {
                 public void run() {
                     shutdownSocketAndChannels();
                 }

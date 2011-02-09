@@ -36,7 +36,7 @@ public class Objects {
      * making the comparison. It sorts null objects as coming before non-null
      * objects.
      */
-    public static <T extends Comparable> int compareToNull(T o1, T o2) {
+    public static <T extends Comparable<T>> int compareToNull(T o1, T o2) {
         return compareToNull(o1, o2, true);
     }
 
@@ -46,8 +46,7 @@ public class Objects {
      * comparison. It allows you to choose what order to sort nulls in by use of
      * the nullsFirst variable;
      */
-    @SuppressWarnings("unchecked")
-    public static <T extends Comparable> int compareToNull(T o1, T o2, boolean nullsFirst) {
+    public static <T extends Comparable<T>> int compareToNull(T o1, T o2, boolean nullsFirst) {
         if (o1 == o2) {
             return 0;
         } else if (o1 == null) {
@@ -75,7 +74,7 @@ public class Objects {
      * Builds an returns a generic comparator that will compare objects using
      * the Objects.compareToNull method.
      */
-    public static <T extends Comparable> Comparator<T> getComparator(final boolean nullsFirst) {
+    public static <T extends Comparable<T>> Comparator<T> getComparator(final boolean nullsFirst) {
         return new Comparator<T>() {
             @Override
             public int compare(T o1, T o2) {

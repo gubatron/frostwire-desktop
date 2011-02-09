@@ -22,6 +22,11 @@ import java.util.Iterator;
  */
 public class RandomOrderHashSet<T> extends FixedSizeArrayHashSet<T> {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8912198658108880129L;
+
     public RandomOrderHashSet(Collection<? extends T> c) {
         super(c);
     }

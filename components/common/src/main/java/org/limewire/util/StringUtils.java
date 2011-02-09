@@ -505,7 +505,7 @@ public class StringUtils {
                         if (value == null) {
                             fields.put(field.getName(), String.valueOf(value));
                         } else {
-                            Class clazz = value.getClass();
+                            Class<?> clazz = value.getClass();
                             if (clazz.isArray()) {
                                 if (!clazz.getComponentType().isPrimitive()) {
                                     fields.put(field.getName(), String.valueOf(Arrays

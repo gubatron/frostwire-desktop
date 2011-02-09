@@ -190,7 +190,7 @@ implements Set<E>, Cloneable, java.io.Serializable
 		s.writeInt(map.size());
 
 //		Write out all elements in the proper order.
-		for (Iterator i=map.keySet().iterator(); i.hasNext(); )
+		for (Iterator<?> i=map.keySet().iterator(); i.hasNext(); )
 			s.writeObject(i.next());
 	}
 

@@ -41,7 +41,7 @@ public class EventListenerList<E> implements ListenerSupport<E>, EventBroadcaste
     }
     
     /** Constructs an {@link EventListenerList} with a new context a log based on the given class. */
-    public EventListenerList(Class loggerKey) {
+    public EventListenerList(Class<?> loggerKey) {
         this(LogFactory.getLog(loggerKey), new EventListenerListContext());
     }
     

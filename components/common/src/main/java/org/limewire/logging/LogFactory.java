@@ -16,7 +16,7 @@ public class LogFactory {
      * @param clazz can not be null
      * @return a Log named by the fully qualifed class name of clazz
      */
-    public static Log getLog(Class clazz) {
+    public static Log getLog(Class<?> clazz) {
         return getLog(clazz, null);
     }
 
@@ -35,7 +35,7 @@ public class LogFactory {
      * where <code>classname</code> is the non-qualified name of the 
      * class.
      */
-    public static Log getLog(Class clazz, String keyOrCategory) {
+    public static Log getLog(Class<?> clazz, String keyOrCategory) {
         assert clazz != null || keyOrCategory != null;
         
         // not synchronized as LogFactory is also not synchronized, Logs are created

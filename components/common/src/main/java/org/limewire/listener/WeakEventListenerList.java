@@ -12,7 +12,7 @@ import java.util.WeakHashMap;
  */
 // TODO: This isn't synchronized right now, which is bad -- listener list should really be CoW,
 //       or a ConcurrentMap.  (See Google Collection's ReferenceMap.)
-public class WeakEventListenerList<E extends Event> implements WeakEventListenerSupport<E> {
+public class WeakEventListenerList<E extends Event<?, ?>> implements WeakEventListenerSupport<E> {
     
     private final Map<Object, List<EventListener<E>>> listenerMap;
 

@@ -55,12 +55,12 @@ public class MultiCollection<T> extends MultiIterable<T> implements Collection<T
 	}
 
 	public void clear() {
-		for (Collection c : collections)
+		for (Collection<?> c : collections)
 			c.clear();
 	}
 
 	public boolean contains(Object o) {
-		for (Collection c : collections) {
+		for (Collection<?> c : collections) {
 			if (c.contains(o))
 				return true;
 		}
@@ -76,7 +76,7 @@ public class MultiCollection<T> extends MultiIterable<T> implements Collection<T
     } 
 
 	public boolean isEmpty() {
-		for (Collection c : collections) {
+		for (Collection<?> c : collections) {
 			if (!c.isEmpty())
 				return false;
 		}
@@ -84,7 +84,7 @@ public class MultiCollection<T> extends MultiIterable<T> implements Collection<T
 	}
 
 	public boolean remove(Object o) {
-		for (Collection c : collections) {
+		for (Collection<?> c : collections) {
 			if (c.remove(o))
 				return true;
 		}
@@ -110,15 +110,14 @@ public class MultiCollection<T> extends MultiIterable<T> implements Collection<T
 
 	public int size() {
 		int ret = 0;
-		for (Collection c : collections) 
+		for (Collection<?> c : collections) 
 			ret += c.size();
 		return ret;
 	}
 
-	@SuppressWarnings("unchecked")
 	public Object[] toArray() {
-		List t = new ArrayList(size());
-		for (Collection c : collections) {
+		List<Object> t = new ArrayList<Object>(size());
+		for (Collection<?> c : collections) {
 			t.addAll(c);
 		}
 		return t.toArray();
@@ -127,8 +126,8 @@ public class MultiCollection<T> extends MultiIterable<T> implements Collection<T
 	@SuppressWarnings("unchecked")
 	public <B>B[] toArray(B[] a) {
 		List<B> t = new ArrayList<B>(size());
-		for (Collection c : collections) {
-			t.addAll(c);
+		for (Collection<?> c : collections) {
+			t.addAll((Collection<? extends B>) c);
 		}
 		return t.toArray(a);
 	}

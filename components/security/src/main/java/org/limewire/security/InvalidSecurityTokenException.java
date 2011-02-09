@@ -10,6 +10,11 @@ import java.io.IOException;
  */
 public class InvalidSecurityTokenException extends IOException {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 3591421533435644455L;
+
     public InvalidSecurityTokenException(String message) {
         super(message);
     }
