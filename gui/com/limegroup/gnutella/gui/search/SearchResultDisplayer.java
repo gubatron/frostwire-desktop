@@ -2,6 +2,7 @@ package com.limegroup.gnutella.gui.search;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.IllegalComponentStateException;
@@ -12,6 +13,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -27,6 +29,9 @@ import javax.swing.plaf.TabbedPaneUI;
 
 import org.limewire.util.DebugRunnable;
 
+import com.frostwire.gnutella.gui.Slide;
+import com.frostwire.gnutella.gui.SlideshowPanel;
+import com.frostwire.settings.UpdateManagerSettings;
 import com.limegroup.gnutella.FileManager;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.BoxPanel;
@@ -116,10 +121,23 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
         results.setLayout(switcher);
 
         //Add SlideShowPanel here.
-        //		if (!UpdateManagerSettings.SHOW_PROMOTION_OVERLAYS.getValue()) { ...
-        //Else we create 
+        SlideshowPanel promoSlides = null; 
+
+        if (!UpdateManagerSettings.SHOW_PROMOTION_OVERLAYS.getValue()) { 
+        	Slide s1 = new Slide( "http://static.frostwire.com/images/overlays/default_now_on_android.png","http://www.frostwire.com/?from=defaultSlide",30000);
+        	Slide s2 = new Slide( "http://static.frostwire.com/images/overlays/frostclick_default_overlay.jpg","http://www.frostclick.com/?from=defaultSlide",30000);
+        	promoSlides = new SlideshowPanel(Arrays.asList(s1,s2),false);
+        } else {
+        	promoSlides = new SlideshowPanel(UpdateManagerSettings.OVERLAY_SLIDESHOW_JSON_URL.getValue());
+        }
         
-        DUMMY = new ResultPanel(null);
+        promoSlides.setBackground(Color.WHITE);
+        promoSlides.setSize(720, 380);
+        promoSlides.setMaximumSize(new Dimension(720,380));
+        
+
+        
+        DUMMY = new ResultPanel(promoSlides);
 		
 		mainScreen = new JPanel(new BorderLayout());
         mainScreen.add(DUMMY.getComponent(), BorderLayout.CENTER);
