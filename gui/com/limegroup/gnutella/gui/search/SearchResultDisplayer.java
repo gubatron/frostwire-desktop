@@ -2,6 +2,7 @@ package com.limegroup.gnutella.gui.search;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.IllegalComponentStateException;
@@ -121,7 +122,8 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
         results.setPreferredSize(new Dimension(10000, 10000));
         results.setLayout(switcher);
         OVERLAY = new OverlayAd();
-		DUMMY = new ResultPanel(OVERLAY);
+        DUMMY = new ResultPanel(OVERLAY);
+		
 		mainScreen = new JPanel(new BorderLayout());
         mainScreen.add(DUMMY.getComponent(), BorderLayout.CENTER);
         results.add("dummy", mainScreen);
@@ -564,17 +566,6 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
                 CancelSearchIconProxy.createSelected() :
                 CancelSearchIconProxy.createPlain());
         }
-    }
-
-	/**
-	 * Accessor for the <tt>ResultPanel</tt> instance that shows no active
-	 * searches.
-	 *
-	 * @return the <tt>ResultPanel</tt> instance that shows no active
-	 * searches
-	 */
-    ResultPanel getDummyResultPanel(){
-		return DUMMY;
     }
 
 	/**

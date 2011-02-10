@@ -83,6 +83,11 @@ public class OverlayAd extends JPanel implements ThemeObserver {
         loadOverlay();
     }
     
+    @Override
+    public boolean isOptimizedDrawingEnabled() {
+    	return false;
+    }
+    
     public void loadOverlay() {
     	_searchDone = false; //reloads intro promo
         introInfo = UISettings.INTRO_IMAGE_INFO;
@@ -241,6 +246,7 @@ public class OverlayAd extends JPanel implements ThemeObserver {
      */
     private JPanel createImagePanel(String url,String torrentUrl) {
         JPanel panel = new JPanel(new BorderLayout());
+        
         try {
         	java.awt.MediaTracker mt = new java.awt.MediaTracker(panel);
         	mt.addImage(_image.getImage(), 0);
