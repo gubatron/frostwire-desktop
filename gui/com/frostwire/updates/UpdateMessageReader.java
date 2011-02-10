@@ -3,7 +3,6 @@ package com.frostwire.updates;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -538,17 +537,4 @@ public final class UpdateMessageReader implements ContentHandler {
 			throws SAXException {
 	}
 
-	public List<UpdateMessage> getDefaultOverlays() {
-		ArrayList<UpdateMessage> defaultOverlays = new ArrayList<UpdateMessage>(
-				2);
-		defaultOverlays.add(UpdateMessage.createOverlayMessage(
-				"http://static.frostwire.com/images/overlays/default.png",
-				"http://www.frostwire.com/", true,
-				"44b80b72419a49d3569aae5a4fed50b6", null));
-		defaultOverlays.add(UpdateMessage.createOverlayMessage(
-				"http://static.frostwire.com/images/overlays/frostclick_default_overlay.jpg",
-				"http://www.frostclick.com/", false,
-				"b792c80c208793ecb49ce7747450d767", null));
-		return defaultOverlays;
-	}
 } // UpdateMessageReader class
