@@ -134,9 +134,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
         promoSlides.setBackground(Color.WHITE);
         promoSlides.setSize(720, 380);
         promoSlides.setMaximumSize(new Dimension(720,380));
-        
 
-        
         DUMMY = new ResultPanel(promoSlides);
 		
 		mainScreen = new JPanel(new BorderLayout());
