@@ -89,18 +89,18 @@ public class Main {
                     } catch (Exception e) {
                         System.out.println("Substance engine failed to irnitialize");
                     }
-                    
-                 // load the GUI through reflection so that we don't reference classes here,
-                    // which would slow the speed of class-loading, causing the splash to be
-                    // displayed later.
-                    try {
-                        Class.forName("com.limegroup.gnutella.gui.GUILoader").getMethod("load", new Class[] { String[].class, Frame.class })
-                                .invoke(null, new Object[] { finalargs, finalsplash });
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
                 }
             });
+            
+         // load the GUI through reflection so that we don't reference classes here,
+            // which would slow the speed of class-loading, causing the splash to be
+            // displayed later.
+            try {
+                Class.forName("com.limegroup.gnutella.gui.GUILoader").getMethod("load", new Class[] { String[].class, Frame.class })
+                        .invoke(null, new Object[] { finalargs, finalsplash });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
            
         } catch(Throwable e) {
             e.printStackTrace();

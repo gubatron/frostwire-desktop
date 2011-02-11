@@ -137,14 +137,9 @@ public final class GUIMediator {
 		CONNECTION(I18n.tr("&Connections"), ApplicationSettings.CONNECTION_VIEW_ENABLED),
 		LIBRARY(I18n.tr("&Library"), ApplicationSettings.LIBRARY_VIEW_ENABLED),
 		ANDROID(I18n.tr("&Phones and Tablets"), ApplicationSettings.ANDROID_VIEW_ENABLED),
-		CHAT(I18n.tr("Community C&hat"), ApplicationSettings.CHAT_VIEW_ENABLED),
-				
-		// CONSOLE(I18n.tr("C&onsole"),
-		// ApplicationSettings.CONSOLE_VIEW_ENABLED),
-		LOGGING(I18n.tr("Lo&gging"), ApplicationSettings.LOGGING_VIEW_ENABLED), FROSTCLICK(
-				I18n.tr("FrostClick.com"),
-				ApplicationSettings.SWT_BROWSER_VIEW_ENABLED,
-				"http://www.frostclick.com/?from=frostwire&");
+		CHAT(I18n.tr("Community C&hat"), ApplicationSettings.CHAT_VIEW_ENABLED),				
+		LOGGING(I18n.tr("Lo&gging"), ApplicationSettings.LOGGING_VIEW_ENABLED),
+		FROSTCLICK(I18n.tr("FrostClick.com"),ApplicationSettings.SWT_BROWSER_VIEW_ENABLED, "http://www.frostclick.com/?from=frostwire&");
 
 		private Action navAction;
 

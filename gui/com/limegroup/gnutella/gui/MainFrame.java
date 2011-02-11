@@ -64,14 +64,11 @@ import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.gui.upload.UploadMediator;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.PlayerSettings;
-import com.limegroup.gnutella.settings.SWTBrowserSettings;
-
 
 /**
  * This class constructs the main <tt>JFrame</tt> for the program as well as 
  * all of the other GUI classes.  
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public final class MainFrame implements RefreshListener, ThemeObserver {
 
     /**
@@ -322,19 +319,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
             this.setTabVisible(GUIMediator.Tabs.CONNECTION, false);
         if (!ApplicationSettings.LIBRARY_VIEW_ENABLED.getValue())
             this.setTabVisible(GUIMediator.Tabs.LIBRARY, false);
-        
-        //if (LogUtils.isLog4JAvailable()) {
-        //    if (!ApplicationSettings.CONSOLE_VIEW_ENABLED.getValue())
-        //        this.setTabVisible(GUIMediator.Tabs.CONSOLE, false);
-        //}
-        //if(!ApplicationSettings.LOGGING_VIEW_ENABLED.getValue())
-        //    this.setTabVisible(GUIMediator.Tabs.LOGGING, false);
-        
-
-        if( SWTBrowserSettings.USE_SWT_BROWSER.getValue()&& GUIMediator.isBrowserCapable()) {
-            if(!ApplicationSettings.SWT_BROWSER_VIEW_ENABLED.getValue())
-                this.setTabVisible(GUIMediator.Tabs.FROSTCLICK, false);
-        }
         if (!ApplicationSettings.ANDROID_VIEW_ENABLED.getValue())
             this.setTabVisible(GUIMediator.Tabs.ANDROID, false);
         if (!ApplicationSettings.CHAT_VIEW_ENABLED.getValue())
