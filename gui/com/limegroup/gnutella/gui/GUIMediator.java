@@ -39,7 +39,6 @@ import javax.swing.SwingUtilities;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloader;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderCallBackInterface;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderFactory;
-import org.limewire.concurrent.AbstractLazySingletonProvider;
 import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.io.Connectable;
@@ -57,7 +56,6 @@ import org.limewire.util.VersionUtils;
 import com.frostwire.bittorrent.AzureusStarter;
 import com.frostwire.gnutella.connectiondoctor.ConnectionDoctor;
 import com.frostwire.gnutella.gui.chat.ChatMediator;
-import com.google.inject.Provider;
 import com.limegroup.bittorrent.gui.TorrentUploadCanceller;
 import com.limegroup.gnutella.bugs.FatalBugManager;
 import com.limegroup.gnutella.chat.InstantMessenger;
@@ -339,13 +337,7 @@ public final class GUIMediator {
 	public static boolean isBrowserCapable() {
 		return OSUtils.isWindows();
 	}
-
-	/**
-	 * Constant specifying whether or not the user has donated to the Frosty
-	 * project.
-	 */
-	private static boolean HAS_DONATED = true;
-
+	
 	/**
 	 * The main <tt>JFrame</tt> for the application.
 	 */
@@ -377,13 +369,7 @@ public final class GUIMediator {
 	/**
 	 * The shell association manager.
 	 */
-	private static final Provider<ShellAssociationManager> ASSOCIATION_MANAGER = new AbstractLazySingletonProvider<ShellAssociationManager>() {
-		@Override
-		protected ShellAssociationManager createObject() {
-			return new ShellAssociationManager(LimeAssociations
-					.getSupportedAssociations());
-		}
-	};
+	private static ShellAssociationManager ASSOCIATION_MANAGER;
 
 	/**
 	 * Constant handle to the <tt>MainFrame</tt> instance that handles
@@ -605,9 +591,6 @@ public final class GUIMediator {
 		_displayedMessage = true;
 
 		getAssociationManager().checkAndGrab(true);
-
-		if (!hasDonated())
-			UpgradeWindow.showProDialog();
 
 		if (TipOfTheDayMessages.hasLocalizedMessages()
 				&& StartupSettings.SHOW_TOTD.getValue()) {
@@ -870,7 +853,11 @@ public final class GUIMediator {
 	 * @return the <tt>ShellAssociationManager</tt> instance.
 	 */
 	public static ShellAssociationManager getAssociationManager() {
-		return ASSOCIATION_MANAGER.get();
+	    if (ASSOCIATION_MANAGER == null) {
+	        ASSOCIATION_MANAGER = new ShellAssociationManager(LimeAssociations.getSupportedAssociations()); 
+	    }
+	    
+	    return ASSOCIATION_MANAGER;
 	}
 
 	/**
@@ -1721,16 +1708,6 @@ public final class GUIMediator {
 						.tr("Your machine does not appear to have an active Internet connection or a firewall is blocking FrostWire from accessing the internet. FrostWire will automatically keep trying to connect you to the network unless you select \"Disconnect\" from the File menu."),
 				QuestionsHandler.NO_INTERNET_RETRYING,
 				JOptionPane.ERROR_MESSAGE);
-	}
-
-	/**
-	 * Returns a <tt>boolean</tt> specifying whether or not the user has donated
-	 * to the LimeWire project.
-	 * 
-	 * @return <tt>true</tt> if the user has donated, <tt>false</tt> otherwise
-	 */
-	public static boolean hasDonated() {
-		return HAS_DONATED;
 	}
 
 	/**

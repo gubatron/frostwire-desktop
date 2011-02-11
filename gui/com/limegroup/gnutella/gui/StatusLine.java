@@ -202,8 +202,6 @@ public final class StatusLine implements ThemeObserver {
 		if (indicatorWidth <= 0)
             if (_updatePanel.shouldBeShown()) {
                 indicatorWidth = 190;
-			    if (!GUIMediator.hasDonated()) 
-                    indicatorWidth = 280;
             }
 		remainingWidth -= indicatorWidth;
 
@@ -439,17 +437,11 @@ public final class StatusLine implements ThemeObserver {
 
 		_nextUpdateTime = now + 1000 * 5; // update every minute
 		_centerPanel.removeAll();
-		if (GUIMediator.hasDonated()) {
-			if (_updatePanel.shouldBeShown())
-				_centerComponent = _updatePanel;
-			else
-				_centerComponent = new JLabel();
-		} else {
-			if ((_centerComponent == _statusLinkHandler.getComponent()) && _updatePanel.shouldBeShown())
-				_centerComponent = _updatePanel;
-			else
-				_centerComponent = _statusLinkHandler.getComponent();
-		}
+        if (_updatePanel.shouldBeShown()) {
+            _centerComponent = _updatePanel;
+        } else {
+            _centerComponent = new JLabel();
+        }
 		
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -645,18 +637,13 @@ public final class StatusLine implements ThemeObserver {
                     tip = LimeWireUtils.isPro() ? I18n.tr("Your connection to the network is extremely strong") :
                         I18n.tr("You can experience Turbo-Charged connections all the time with LimeWire PRO!");
                     break;
-            //case STATUS_IDLE:
-                    //status = STATISTICS_CONNECTION_IDLE;
-                    //tip = null; // impossible to see this
-                    //break;
             case STATUS_WAKING_UP:
                     status = I18n.tr("Waking Up") + " " + connection;
                     tip = I18n.tr("FrostWire is waking up from sleep mode");
                     break;
         }
         _connectionQualityMeter.setToolTipText(tip);
-        if (GUIMediator.hasDonated())
-            _connectionQualityMeter.setText(status);
+        _connectionQualityMeter.setText(status);
     }
 
     /**
