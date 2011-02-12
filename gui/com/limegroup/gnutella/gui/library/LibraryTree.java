@@ -119,12 +119,17 @@ final class LibraryTree extends JTree implements MouseObserver {
 	/**
 	 * Singleton instance of this class.
 	 */
-	private static final LibraryTree INSTANCE = new LibraryTree();
+	private static LibraryTree INSTANCE;
     
 	/**
 	 * @return the <tt>LibraryTree</tt> instance
 	 */
-	public static LibraryTree instance() { return INSTANCE; }
+	public static LibraryTree instance() {
+	    if (INSTANCE == null) {
+	        INSTANCE = new LibraryTree();
+	    }
+	    return INSTANCE;
+	}
 
 	/**
 	 * Constructs the tree and its primary listeners,visualization options,

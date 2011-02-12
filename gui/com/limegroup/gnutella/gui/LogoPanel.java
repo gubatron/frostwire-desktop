@@ -14,6 +14,11 @@ import javax.swing.JLabel;
 final class LogoPanel extends BoxPanel /* implements ThemeObserver */ {
 
 	/**
+     * 
+     */
+    private static final long serialVersionUID = 222666494852328516L;
+
+    /**
 	 * Icon for the when we're searching.
 	 */
 	private ImageIcon _searchingIcon;

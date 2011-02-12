@@ -15,7 +15,12 @@ import org.limewire.util.SystemUtils;
 public class LimeJFrame extends JFrame {
 
     
-	public LimeJFrame() throws HeadlessException {
+	/**
+     * 
+     */
+    private static final long serialVersionUID = -8237193535978264490L;
+
+    public LimeJFrame() throws HeadlessException {
         super();
         initialize();
     }

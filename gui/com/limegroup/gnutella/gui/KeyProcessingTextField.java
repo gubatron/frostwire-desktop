@@ -6,6 +6,11 @@ import javax.swing.text.Document;
 
 public class KeyProcessingTextField extends LimeTextField {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -2092997448111879390L;
+
     public KeyProcessingTextField() {
         super();
     }

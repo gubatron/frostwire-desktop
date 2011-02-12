@@ -68,40 +68,40 @@ public final class StatusLine implements ThemeObserver {
     /**
      * The main container for the status line component.
      */
-    private final JPanel BAR = new JPanel(new GridBagLayout());
+    private JPanel BAR;
     
     /**
      * The left most panel containing the connection quality.
      * The switcher changes the actual ImageIcons on this panel.
      */
-    private final JLabel _connectionQualityMeter = new JLabel();
+    private JLabel _connectionQualityMeter;
     private final ImageIcon[] _connectionQualityMeterIcons = new ImageIcon[9];
 
     /**
      * The button for the current language flag to allow language switching
      */
-    private final LanguageButton _languageButton = new LanguageButton();
+    private LanguageButton _languageButton;
     
     /**
      * The label with the firewall status.
      */
-    private final JLabel _firewallStatus = new JLabel();
+    private JLabel _firewallStatus;
 	
     /**
      * The custom component for displaying the number of shared files.
      */
-    private final SharedFilesLabel _sharedFiles = new SharedFilesLabel();
+    private SharedFilesLabel _sharedFiles;
     
 	/**
      * The label with the store status.
      */
-    private final JLabel _lwsStatus = new JLabel();     
+    private JLabel _lwsStatus;
     
 	/**
 	 * The labels for displaying the bandwidth usage.
 	 */
-	private final JLabel _bandwidthUsageDown = new LazyTooltip(GUIMediator.getThemeImage("downloading_small")); 
-	private final JLabel _bandwidthUsageUp = new LazyTooltip(GUIMediator.getThemeImage("uploading_small")); 
+	private JLabel _bandwidthUsageDown;
+	private JLabel _bandwidthUsageUp;
     
     /**
      * Variables for the center portion of the status bar, which can display
@@ -109,11 +109,11 @@ public final class StatusLine implements ThemeObserver {
      * (notification that a new version of FrostWire is available), and the
      * StatusLinkHandler (ads for going PRO).
      */
-    private final StatusComponent STATUS_COMPONENT = new StatusComponent();
-    private final UpdatePanel _updatePanel = new UpdatePanel();
-	private final StatusLinkHandler _statusLinkHandler = new StatusLinkHandler();
-	private final JPanel _centerPanel = new JPanel(new GridBagLayout());
-	private Component _centerComponent = _updatePanel;
+    private StatusComponent STATUS_COMPONENT;
+    private UpdatePanel _updatePanel;
+	private StatusLinkHandler _statusLinkHandler;
+	private JPanel _centerPanel;
+	private Component _centerComponent;
 
     /**
      * The media player.
@@ -137,7 +137,7 @@ public final class StatusLine implements ThemeObserver {
             I18n.tr("Loading Status Window..."));
 
 		GUIMediator.addRefreshListener(REFRESH_LISTENER);
-		BAR.addMouseListener(STATUS_BAR_LISTENER);
+		getComponent().addMouseListener(STATUS_BAR_LISTENER);
 		GUIMediator.getAppFrame().addComponentListener(new ComponentListener() {
 			public void componentResized(ComponentEvent arg0) { refresh(); }
 			public void componentMoved(ComponentEvent arg0) { }
@@ -179,7 +179,7 @@ public final class StatusLine implements ThemeObserver {
 	 * and makes sure it has room to add an indicator before adding it.
 	 */
 	public void refresh() {
-		BAR.removeAll();
+	    getComponent().removeAll();
         
 		//  figure out remaining width, and do not add indicators if no room
 		int sepWidth = Math.max(2, createSeparator().getWidth());
@@ -338,6 +338,7 @@ public final class StatusLine implements ThemeObserver {
      */
     private void createConnectionQualityPanel() {
 		updateTheme();  // loads images
+		_connectionQualityMeter = new JLabel();
 		_connectionQualityMeter.setOpaque(false);
         _connectionQualityMeter.setMinimumSize(new Dimension(34, 20));
         _connectionQualityMeter.setMaximumSize(new Dimension(90, 30));
@@ -349,6 +350,7 @@ public final class StatusLine implements ThemeObserver {
 	 * Sets up the 'Sharing X Files' label.
 	 */
 	private void createSharingFilesLabel() {
+	    _sharedFiles = new SharedFilesLabel();
         _sharedFiles.setHorizontalAlignment(SwingConstants.LEFT);
 	    // don't allow easy clipping
 		_sharedFiles.setMinimumSize(new Dimension(24, 20));
@@ -362,6 +364,7 @@ public final class StatusLine implements ThemeObserver {
 	 * Sets up the 'Language' button
 	 */
 	private void createLanguageButton() {
+	    _languageButton = new LanguageButton();
 		_languageButton.addMouseListener(STATUS_BAR_LISTENER);
 		updateLanguage();
 	}
@@ -371,7 +374,8 @@ public final class StatusLine implements ThemeObserver {
 	 * Sets up the 'Firewall Status' label.
 	 */
 	private void createFirewallLabel() {
-		updateFirewall();
+	    _firewallStatus = new JLabel();
+	    updateFirewall();
 		// don't allow easy clipping
 		_firewallStatus.setMinimumSize(new Dimension(20, 20));
 		// add right-click listener
@@ -382,6 +386,7 @@ public final class StatusLine implements ThemeObserver {
      * Sets up the 'Store Status' label.
      */
     private void createLWSLabel() {
+        _lwsStatus = new JLabel();
         updateLWS();
         // don't allow easy clipping
         _lwsStatus.setMinimumSize(new Dimension(20, 20));
@@ -393,6 +398,8 @@ public final class StatusLine implements ThemeObserver {
 	 * Sets up the 'Bandwidth Usage' label.
 	 */
 	private void createBandwidthLabel() {
+	    _bandwidthUsageDown = new LazyTooltip(GUIMediator.getThemeImage("downloading_small"));
+	    _bandwidthUsageUp = new LazyTooltip(GUIMediator.getThemeImage("uploading_small"));
 		updateBandwidth();
 		// don't allow easy clipping
 		_bandwidthUsageDown.setMinimumSize(new Dimension(60, 20));
@@ -406,6 +413,12 @@ public final class StatusLine implements ThemeObserver {
 	 * Sets up the center panel.
 	 */
 	private void createCenterPanel() {
+	    STATUS_COMPONENT = new StatusComponent();
+	    _updatePanel = new UpdatePanel();
+	    _centerComponent = _updatePanel;
+	    _statusLinkHandler = new StatusLinkHandler();
+	    _centerPanel = new JPanel(new GridBagLayout());
+	    
 		_centerPanel.setOpaque(false);
         _updatePanel.setOpaque(false);
 		((JComponent)_statusLinkHandler.getComponent()).setOpaque(false);
@@ -663,6 +676,9 @@ public final class StatusLine implements ThemeObserver {
       *  of the panels for the status line
       */
     public JComponent getComponent() {
+        if (BAR == null) {
+            BAR = new JPanel(new GridBagLayout());
+        }
         return BAR;
     }
 	

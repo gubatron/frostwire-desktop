@@ -12,7 +12,12 @@ import com.limegroup.gnutella.gui.tables.ProgressBarRenderer;
  */
 public class UploadProgressBarRenderer extends ProgressBarRenderer {
 
-	@Override
+	/**
+     * 
+     */
+    private static final long serialVersionUID = -5558003231918448268L;
+
+    @Override
 	protected int getBarStatus(Object value) {
 		if (value == null)
 			return 0;

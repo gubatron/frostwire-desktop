@@ -8,15 +8,11 @@ import java.net.URL;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.StringTokenizer;
-import java.util.concurrent.CountDownLatch;
 
-import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import org.pushingpixels.substance.api.SubstanceLookAndFeel;
-import org.pushingpixels.substance.api.skin.GraphiteGlassSkin;
-import org.pushingpixels.substance.api.skin.SubstanceMistAquaLookAndFeel;
 
 import com.frostwire.gnutella.gui.skin.SeaGlassSkin;
 
@@ -35,7 +31,7 @@ public class Main {
 	 * @param args the array of command line arguments
 	 */
 	public static void main(String args[]) {
-		System.setProperty("apple.laf.useScreenMenuBar", "true");
+		//System.setProperty("apple.laf.useScreenMenuBar", "true");
 		System.out.println("1: Main.main("+args+")");
 		
 	    Frame splash = null;
@@ -82,17 +78,17 @@ public class Main {
                     		map.put(k, v);
                     	}
                         SubstanceLookAndFeel.setSkin(new SeaGlassSkin());
-                        for (String k : keys) {
-                    		Object v = map.get(k);
-                    		UIManager.put(k, v);
-                    	}
+                        //for (String k : keys) {
+                    		//Object v = map.get(k);
+                    		//UIManager.put(k, v);
+                    	//}
                     } catch (Exception e) {
                         System.out.println("Substance engine failed to irnitialize");
                     }
                 }
             });
             
-         // load the GUI through reflection so that we don't reference classes here,
+            // load the GUI through reflection so that we don't reference classes here,
             // which would slow the speed of class-loading, causing the splash to be
             // displayed later.
             try {

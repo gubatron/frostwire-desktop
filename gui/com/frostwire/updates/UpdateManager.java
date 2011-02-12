@@ -12,24 +12,17 @@ import java.net.URISyntaxException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
 import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
-import com.frostwire.updates.UpdateMessage;
-import com.frostwire.overlays.OverlayImageManager;
 import com.frostwire.settings.UpdateManagerSettings;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.search.OverlayAd;
-import com.limegroup.gnutella.gui.search.SearchMediator;
-import com.limegroup.gnutella.gui.search.SearchResultDisplayer;
 import com.limegroup.gnutella.util.LimeWireUtils;
 
 /**
@@ -131,82 +124,82 @@ public final class UpdateManager implements Serializable {
 	 */
 	public void updateOverlays(List<UpdateMessage> overlays,
 			final UpdateMessageReader umr) {
-		System.out.println("UpdateManager.updateOverlays() invoked.");
-
-		if (overlays == null) {
-			System.out
-					.println("UpdateManager.updateOverlays() Skipping, no overlays");
-			return;
-		}
-
-		Iterator<UpdateMessage> iter = overlays.iterator();
-		UpdateMessage message = null;
-
-		while (iter.hasNext()) {
-			message = iter.next();
-
-			final SearchResultDisplayer resultDisplayer = SearchMediator.RESULT_DISPLAYER;
-			final OverlayAd overlayAd = resultDisplayer.getOverlayAd();
-
-			// update the welcome image, for now both welcome and after search
-			// will be the same
-			// once we get it to work I'll change both
-			String linkUrl = message.getUrl();
-			boolean canLink = linkUrl != null && !linkUrl.equals("");
-			String torrentUrl = message.getTorrent();
-
-			// Now we ask the OverlayImageManager to fetch (and cache) this
-			// image, or give us the path of the already cached version.
-			OverlayImageManager overlayCache = OverlayImageManager
-					.getInstance();
-
-			String imgUrl = null;
-
-			try {
-				imgUrl = overlayCache.getCachedImagePath(message.getSrc(),
-						message.getRemoteMD5());
-
-				if (OSUtils.isWindows()) {
-					imgUrl = "file:///" + imgUrl.substring("file://".length());
-				}
-			} catch (Exception e) {
-				// use the default local image here or something
-				e.printStackTrace();
-				imgUrl = message.getSrc();
-			}
-
-			final com.limegroup.gnutella.settings.UISettings.ImageInfoImpl imageInfo = new com.limegroup.gnutella.settings.UISettings.ImageInfoImpl(
-					message.isIntro(), imgUrl, canLink, linkUrl, torrentUrl);
-
-			// welcome overlay
-			if (message.isIntro() && !umr.isIntroLoaded()) {
-				Runnable overlayUpdater = new Runnable() {
-					public void run() {
-						overlayAd.updateIntroInfo(imageInfo);
-						umr._introloaded = true;
-						try {
-							resultDisplayer.setOverlayAd(overlayAd);
-							resultDisplayer.refreshOverlayAd();
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-							umr._introloaded = false;
-							// continue;
-						}
-						umr._introloaded = true;
-					}
-				};
-				SwingUtilities.invokeLater(overlayUpdater);
-			} // Secondary Overlay (after search)
-			else if (!message.isIntro() && !umr.isOtherLoaded()) {
-				System.out
-						.println("UpdateManager.updateOverlays() - About to update secondary overlay - "
-								+ imageInfo.getImageUrl());
-				overlayAd.updateAfterSearchInfo(imageInfo);
-				umr._otherloaded = true;
-			}
-
-			overlayAd.updateTheme();
-		} // while
+//		System.out.println("UpdateManager.updateOverlays() invoked.");
+//
+//		if (overlays == null) {
+//			System.out
+//					.println("UpdateManager.updateOverlays() Skipping, no overlays");
+//			return;
+//		}
+//
+//		Iterator<UpdateMessage> iter = overlays.iterator();
+//		UpdateMessage message = null;
+//
+//		while (iter.hasNext()) {
+//			message = iter.next();
+//
+//			final SearchResultDisplayer resultDisplayer = SearchMediator.getSearchResultDisplayer();
+//			final OverlayAd overlayAd = resultDisplayer.getOverlayAd();
+//
+//			// update the welcome image, for now both welcome and after search
+//			// will be the same
+//			// once we get it to work I'll change both
+//			String linkUrl = message.getUrl();
+//			boolean canLink = linkUrl != null && !linkUrl.equals("");
+//			String torrentUrl = message.getTorrent();
+//
+//			// Now we ask the OverlayImageManager to fetch (and cache) this
+//			// image, or give us the path of the already cached version.
+//			OverlayImageManager overlayCache = OverlayImageManager
+//					.getInstance();
+//
+//			String imgUrl = null;
+//
+//			try {
+//				imgUrl = overlayCache.getCachedImagePath(message.getSrc(),
+//						message.getRemoteMD5());
+//
+//				if (OSUtils.isWindows()) {
+//					imgUrl = "file:///" + imgUrl.substring("file://".length());
+//				}
+//			} catch (Exception e) {
+//				// use the default local image here or something
+//				e.printStackTrace();
+//				imgUrl = message.getSrc();
+//			}
+//
+//			final com.limegroup.gnutella.settings.UISettings.ImageInfoImpl imageInfo = new com.limegroup.gnutella.settings.UISettings.ImageInfoImpl(
+//					message.isIntro(), imgUrl, canLink, linkUrl, torrentUrl);
+//
+//			// welcome overlay
+//			if (message.isIntro() && !umr.isIntroLoaded()) {
+//				Runnable overlayUpdater = new Runnable() {
+//					public void run() {
+//						overlayAd.updateIntroInfo(imageInfo);
+//						umr._introloaded = true;
+//						try {
+//							resultDisplayer.setOverlayAd(overlayAd);
+//							resultDisplayer.refreshOverlayAd();
+//						} catch (InterruptedException e) {
+//							e.printStackTrace();
+//							umr._introloaded = false;
+//							// continue;
+//						}
+//						umr._introloaded = true;
+//					}
+//				};
+//				SwingUtilities.invokeLater(overlayUpdater);
+//			} // Secondary Overlay (after search)
+//			else if (!message.isIntro() && !umr.isOtherLoaded()) {
+//				System.out
+//						.println("UpdateManager.updateOverlays() - About to update secondary overlay - "
+//								+ imageInfo.getImageUrl());
+//				overlayAd.updateAfterSearchInfo(imageInfo);
+//				umr._otherloaded = true;
+//			}
+//
+//			overlayAd.updateTheme();
+//		} // while
 
 	} // updateOverlays
 

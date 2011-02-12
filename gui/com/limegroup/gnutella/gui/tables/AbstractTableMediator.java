@@ -126,64 +126,53 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
     /**
      * Variable for the SpeedRenderer for all components.
      */
-    protected static final TableCellRenderer SPEED_RENDERER =
-        new SpeedRenderer();
+    private static TableCellRenderer SPEED_RENDERER;
 
     /**
      * Variable for the ProgressBarRenderer for all components.
      */
-    protected static final TableCellRenderer PROGRESS_BAR_RENDERER =
-        new ProgressBarRenderer();
+    private static TableCellRenderer PROGRESS_BAR_RENDERER;
 
     /**
      * Variable for the ChatRenderer for all components.
      */
-    protected static final TableCellRenderer CHAT_RENDERER =
-        new ChatRenderer();
+    private static TableCellRenderer CHAT_RENDERER;
 
     /**
      * Variable for the ColorRenderer for all components.
      */
-    protected static final TableCellRenderer COLOR_RENDERER =
-        new ColorRenderer();
+    private static TableCellRenderer COLOR_RENDERER;
         
     /**
      * Variable for the IconRenderer for all components.
      */
-    protected static final TableCellRenderer ICON_RENDERER =
-        new IconRenderer();
+    private static TableCellRenderer ICON_RENDERER;
         
     /**
      * Variable for the IconAndNameRenderer for all components.
      */
-    protected static final TableCellRenderer ICON_AND_NAME_RENDERER =
-        new IconAndNameRenderer();
+    private static TableCellRenderer ICON_AND_NAME_RENDERER;
         
     /**
      * Variable for the default renderer for all components.
      */
-    protected static final TableCellRenderer DEFAULT_RENDERER =
-        new SubstanceDefaultTableCellRenderer();
+    private static TableCellRenderer DEFAULT_RENDERER;
         
     /**
      * Variable for the centered renderer.
      */
-    protected static final TableCellRenderer CENTER_RENDERER =
-        new CenteredRenderer();
+    private static TableCellRenderer CENTER_RENDERER;
         
     /**
      * Variable for the License renderer.
      */
-    protected static final TableCellRenderer LICENSE_RENDERER = 
-        new LicenseRenderer();
+    private static TableCellRenderer LICENSE_RENDERER;
     
     /** Variable for the date renderer. */
-    protected static final TableCellRenderer DATE_RENDERER =
-        new DateRenderer();
+    private static TableCellRenderer DATE_RENDERER;
     
     /** Renderer for strings that could be HTML. */
-    protected static final TableCellRenderer LINK_RENDERER =
-        new LinkRenderer();
+    private static TableCellRenderer LINK_RENDERER;
 
     /**
      * A zero dimension to be used in all tables.
@@ -390,16 +379,16 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
      * and ICON_AND_NAME_RENDERER is assigned to IconAndNameHolder.class.
      */
     protected void setDefaultRenderers() {
-        TABLE.setDefaultRenderer(ProgressBarHolder.class, PROGRESS_BAR_RENDERER);
-        TABLE.setDefaultRenderer(ChatHolder.class, CHAT_RENDERER);
-        TABLE.setDefaultRenderer(ColoredCell.class, COLOR_RENDERER);
-        TABLE.setDefaultRenderer(Icon.class, ICON_RENDERER);
-        TABLE.setDefaultRenderer(IconAndNameHolder.class, ICON_AND_NAME_RENDERER);
-        TABLE.setDefaultRenderer(Object.class, DEFAULT_RENDERER);
-        TABLE.setDefaultRenderer(CenteredHolder.class, CENTER_RENDERER);
-        TABLE.setDefaultRenderer(License.class, LICENSE_RENDERER);
-        TABLE.setDefaultRenderer(SpeedRenderer.class, SPEED_RENDERER);
-        TABLE.setDefaultRenderer(Date.class, DATE_RENDERER);
+        TABLE.setDefaultRenderer(ProgressBarHolder.class, getProgressBarRenderer());
+        TABLE.setDefaultRenderer(ChatHolder.class, getChatRenderer());
+        TABLE.setDefaultRenderer(ColoredCell.class, getColorRenderer());
+        TABLE.setDefaultRenderer(Icon.class, getIconRenderer());
+        TABLE.setDefaultRenderer(IconAndNameHolder.class, getIconAndNameRenderer());
+        TABLE.setDefaultRenderer(Object.class, getDefaultRenderer());
+        TABLE.setDefaultRenderer(CenteredHolder.class, getCenterRenderer());
+        TABLE.setDefaultRenderer(License.class, getLicenseRenderer());
+        TABLE.setDefaultRenderer(SpeedRenderer.class, getSpeedRenderer());
+        TABLE.setDefaultRenderer(Date.class, getDateRenderer());
     }
 
     /**
@@ -953,4 +942,81 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
 	boolean isResorting() {
 		return isResorting;
 	}
+	
+	protected TableCellRenderer getProgressBarRenderer() {
+	    if (PROGRESS_BAR_RENDERER == null) {
+	        PROGRESS_BAR_RENDERER = new ProgressBarRenderer();
+	    }
+	    return PROGRESS_BAR_RENDERER;
+	}
+	
+	protected TableCellRenderer getChatRenderer() {
+        if (CHAT_RENDERER == null) {
+            CHAT_RENDERER = new ChatRenderer();
+        }
+        return CHAT_RENDERER;
+    }
+	
+	protected TableCellRenderer getSpeedRenderer() {
+        if (SPEED_RENDERER == null) {
+            SPEED_RENDERER = new SpeedRenderer();
+        }
+        return SPEED_RENDERER;
+    }
+	
+	protected TableCellRenderer getColorRenderer() {
+        if (COLOR_RENDERER == null) {
+            COLOR_RENDERER = new ColorRenderer();
+        }
+        return COLOR_RENDERER;
+    }
+	
+	protected TableCellRenderer getIconRenderer() {
+        if (ICON_RENDERER == null) {
+            ICON_RENDERER = new IconRenderer();
+        }
+        return ICON_RENDERER;
+    }
+	
+	protected TableCellRenderer getLinkRenderer() {
+	    if (LINK_RENDERER == null) {
+	        LINK_RENDERER = new LinkRenderer();
+	    }
+	    return LINK_RENDERER;
+	}
+	
+	protected TableCellRenderer getIconAndNameRenderer() {
+        if (ICON_AND_NAME_RENDERER == null) {
+            ICON_AND_NAME_RENDERER = new IconAndNameRenderer();
+        }
+        return ICON_AND_NAME_RENDERER;
+    }
+	
+	protected TableCellRenderer getDefaultRenderer() {
+        if (DEFAULT_RENDERER == null) {
+            DEFAULT_RENDERER = new SubstanceDefaultTableCellRenderer();
+        }
+        return DEFAULT_RENDERER;
+    }
+	
+	protected TableCellRenderer getCenterRenderer() {
+        if (CENTER_RENDERER == null) {
+            CENTER_RENDERER = new CenteredRenderer();
+        }
+        return CENTER_RENDERER;
+    }
+	
+	protected TableCellRenderer getDateRenderer() {
+        if (DATE_RENDERER == null) {
+            DATE_RENDERER = new DateRenderer();
+        }
+        return DATE_RENDERER;
+    }
+	
+	protected TableCellRenderer getLicenseRenderer() {
+        if (LICENSE_RENDERER == null) {
+            LICENSE_RENDERER = new LicenseRenderer();
+        }
+        return LICENSE_RENDERER;
+    }
 }

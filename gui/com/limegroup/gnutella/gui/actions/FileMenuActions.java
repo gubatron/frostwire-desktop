@@ -17,9 +17,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import org.limewire.concurrent.ThreadExecutor;
-
-
 import com.limegroup.gnutella.ConnectionManager;
 import com.limegroup.gnutella.browser.MagnetOptions;
 import com.limegroup.gnutella.connection.ConnectionLifecycleEvent;
@@ -44,6 +41,10 @@ public class FileMenuActions {
 
     public static class ConnectAction extends AbstractAction {
 
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 7595447037804923632L;
         private final ConnectionManager manager;
         
         public ConnectAction(ConnectionManager manager) {
@@ -73,6 +74,10 @@ public class FileMenuActions {
     
     public static class DisconnectAction extends AbstractAction {
 
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -1892452641614812403L;
         private final ConnectionManager manager;
         
         public DisconnectAction(ConnectionManager manager) {
@@ -104,11 +109,16 @@ public class FileMenuActions {
     /** Shows the File, Open Magnet or Torrent dialog box to let the user enter a magnet or torrent. */
     public static class OpenMagnetTorrentAction extends AbstractAction {
         
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 7148824020273223391L;
         private JDialog dialog = null;
-        private AutoCompleteTextField PATH_FIELD = new ClearableAutoCompleteTextField(34);
+        private AutoCompleteTextField PATH_FIELD;
 
         public OpenMagnetTorrentAction() {
             super(I18n.tr("&Download .Torrent or Magnet"));
+            PATH_FIELD = new ClearableAutoCompleteTextField(34);
             putValue(Action.LONG_DESCRIPTION, I18n.tr("Opens a magnet link or torrent file"));
         }
 
@@ -222,6 +232,11 @@ public class FileMenuActions {
         
         private class PasteAction extends AbstractAction {
 
+            /**
+             * 
+             */
+            private static final long serialVersionUID = -3351075105994389491L;
+
             public PasteAction() {
                 super(I18n.tr("Paste"));
             }
@@ -232,6 +247,11 @@ public class FileMenuActions {
         }
         
         private class BrowseAction extends AbstractAction {
+
+            /**
+             * 
+             */
+            private static final long serialVersionUID = 3000234847843826596L;
 
             public BrowseAction() {
                 super(I18n.tr("Browse..."));
@@ -245,6 +265,11 @@ public class FileMenuActions {
         }
 
         private class OkAction extends AbstractAction {
+
+            /**
+             * 
+             */
+            private static final long serialVersionUID = -2129198631435809271L;
 
             public OkAction() {
                 super(I18n.tr("OK"));
@@ -262,6 +287,11 @@ public class FileMenuActions {
         
         private class CancelAction extends AbstractAction {
             
+            /**
+             * 
+             */
+            private static final long serialVersionUID = 3350673081539434959L;
+
             public CancelAction() {
                 super(I18n.tr("Cancel"));
             }
@@ -346,6 +376,11 @@ public class FileMenuActions {
      * Exits the application.
      */
     public static class ExitAction extends AbstractAction {
+
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -456007457702576349L;
 
         public ExitAction() {
             super(I18n.tr("&Close"));

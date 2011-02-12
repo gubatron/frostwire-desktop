@@ -135,42 +135,7 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
      * The *_IDX variables above need to match the corresponding
      * column's position in this array.
      */
-    private static final LimeTableColumn[] ltColumns =
-    {
-        new LimeTableColumn(ICON_IDX, "LIBRARY_TABLE_ICON", I18n.tr("Icon"),
-                GUIMediator.getThemeImage("question_mark"), 18, true, Icon.class),
-        
-        new LimeTableColumn(NAME_IDX, "LIBRARY_TABLE_NAME", I18n.tr("Name"),
-                239, true, ColoredCell.class),
-        
-        new LimeTableColumn(SIZE_IDX, "LIBRARY_TABLE_SIZE", I18n.tr("Size"),
-                62, true, ColoredCell.class),
-
-        new LimeTableColumn(TYPE_IDX, "LIBRARY_TABLE_TYPE", I18n.tr("Type"),
-                48, true, ColoredCell.class),
-                                                
-        new LimeTableColumn(PATH_IDX, "LIBRARY_TABLE_PATH", I18n.tr("Path"),
-                108, true, ColoredCell.class),
-
-        new LimeTableColumn(UPLOADS_IDX, "LIBRARY_TABLE_UPLOAD_COUNT", I18n.tr("Uploads"),
-                62, true, UploadCountHolder.class),
-
-        new LimeTableColumn(HITS_IDX, "LIBRARY_TABLE_HITCOUNT", I18n.tr("Hits"),
-                39, true, Integer.class),
-                        
-        new LimeTableColumn(ALT_LOC_IDX, "LIBRARY_TABLE_NUMALTLOC", I18n.tr("Locations"),
-                72, true, Integer.class),
-
-        new LimeTableColumn(LICENSE_IDX, "LIBRARY_TABLE_LICENSE", I18n.tr("License"),
-                20, true, License.class),
-
-        new LimeTableColumn(MODIFICATION_TIME_IDX, 
-                "LIBRARY_TABLE_MODIFICATION_TIME", I18n.tr("Last Modified"),
-                20, false, Date.class),
-
-        new LimeTableColumn(SHARED_IDX, "LIBRARY_TABLE_SHARED", I18n.tr("Shared"),
-                20, true, Icon.class)
-    };
+    private static LimeTableColumn[] ltColumns;
     
 	/** If the file is a directory */
 	private boolean _isDirectory;
@@ -237,7 +202,7 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
 
 	public FileDesc getFileDesc() { return _fileDesc; }
 
-	public int getColumnCount() { return ltColumns.length; }
+	public int getColumnCount() { return getLimeTableColumns().length; }
 
 	/**
 	 * Initialize the object.
@@ -395,7 +360,7 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
 	}
 
 	public LimeTableColumn getColumn(int idx) {
-	    return ltColumns[idx];
+	    return getLimeTableColumns()[idx];
 	}
 	
 	public boolean isClippable(int idx) {
@@ -514,5 +479,48 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
         if (GuiCoreMediator.getFileManager().isStoreDirectory(initializer))
             return _sharedCellColor;
 		return _unsharedCellColor;
+	}
+	
+	private LimeTableColumn[] getLimeTableColumns() {
+	    if (ltColumns == null) {
+	        LimeTableColumn[] temp =
+	        {
+	            new LimeTableColumn(ICON_IDX, "LIBRARY_TABLE_ICON", I18n.tr("Icon"),
+	                    GUIMediator.getThemeImage("question_mark"), 18, true, Icon.class),
+	            
+	            new LimeTableColumn(NAME_IDX, "LIBRARY_TABLE_NAME", I18n.tr("Name"),
+	                    239, true, ColoredCell.class),
+	            
+	            new LimeTableColumn(SIZE_IDX, "LIBRARY_TABLE_SIZE", I18n.tr("Size"),
+	                    62, true, ColoredCell.class),
+
+	            new LimeTableColumn(TYPE_IDX, "LIBRARY_TABLE_TYPE", I18n.tr("Type"),
+	                    48, true, ColoredCell.class),
+	                                                    
+	            new LimeTableColumn(PATH_IDX, "LIBRARY_TABLE_PATH", I18n.tr("Path"),
+	                    108, true, ColoredCell.class),
+
+	            new LimeTableColumn(UPLOADS_IDX, "LIBRARY_TABLE_UPLOAD_COUNT", I18n.tr("Uploads"),
+	                    62, true, UploadCountHolder.class),
+
+	            new LimeTableColumn(HITS_IDX, "LIBRARY_TABLE_HITCOUNT", I18n.tr("Hits"),
+	                    39, true, Integer.class),
+	                            
+	            new LimeTableColumn(ALT_LOC_IDX, "LIBRARY_TABLE_NUMALTLOC", I18n.tr("Locations"),
+	                    72, true, Integer.class),
+
+	            new LimeTableColumn(LICENSE_IDX, "LIBRARY_TABLE_LICENSE", I18n.tr("License"),
+	                    20, true, License.class),
+
+	            new LimeTableColumn(MODIFICATION_TIME_IDX, 
+	                    "LIBRARY_TABLE_MODIFICATION_TIME", I18n.tr("Last Modified"),
+	                    20, false, Date.class),
+
+	            new LimeTableColumn(SHARED_IDX, "LIBRARY_TABLE_SHARED", I18n.tr("Shared"),
+	                    20, true, Icon.class)
+	        };
+	        ltColumns = temp;
+	    }
+	    return ltColumns;
 	}
 }

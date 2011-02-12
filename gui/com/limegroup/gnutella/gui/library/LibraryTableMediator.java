@@ -135,10 +135,15 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
     /**
      * instance, for singelton access
      */
-    private static LibraryTableMediator _instance = new LibraryTableMediator();
+    private static LibraryTableMediator INSTANCE;
 
-    public static LibraryTableMediator instance() { return _instance; }
-
+    public static LibraryTableMediator instance() {
+        if (INSTANCE == null) {
+            INSTANCE = new LibraryTableMediator();
+        }
+        return INSTANCE;
+    }
+    
     /**
      * Build some extra listeners
      */
@@ -1223,7 +1228,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 
     private final class LaunchAction extends AbstractAction {
 		
-		public LaunchAction () {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 949208465372392591L;
+
+        public LaunchAction () {
 			putValue(Action.NAME, I18n.tr
 					("Launch"));
 			putValue(Action.SHORT_DESCRIPTION,
@@ -1238,7 +1248,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	
     private final class EnqueueAction extends AbstractAction {
 		
-		public EnqueueAction () {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 9153310119076594713L;
+
+        public EnqueueAction () {
 			putValue(Action.NAME, I18n.tr
 					("Enqueue"));
 			putValue(Action.SHORT_DESCRIPTION,
@@ -1262,7 +1277,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 
     private final class RemoveAction extends AbstractAction {
 		
-		public RemoveAction () {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -8704093935791256631L;
+
+        public RemoveAction () {
 			putValue(Action.NAME, I18n.tr
 					("Delete"));
 			putValue(Action.SHORT_DESCRIPTION,
@@ -1277,7 +1297,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	
     private final class AnnotateAction extends AbstractAction {
 		
-		public AnnotateAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 66935682397420122L;
+
+        public AnnotateAction() {
 			putValue(Action.NAME, 
 					 I18n.tr("Describe..."));
 			putValue(Action.SHORT_DESCRIPTION,
@@ -1292,7 +1317,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
     
     private final class PublishAction extends AbstractAction {
     	
-    	public PublishAction() {
+    	/**
+         * 
+         */
+        private static final long serialVersionUID = -8431012683093696830L;
+
+        public PublishAction() {
 			putValue(Action.NAME, 
 					 I18n.tr("Publish..."));
 			putValue(Action.SHORT_DESCRIPTION,
@@ -1307,7 +1337,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 
     private final class EditLicenseAction extends AbstractAction {
     	
-    	public EditLicenseAction() {
+    	/**
+         * 
+         */
+        private static final long serialVersionUID = -5453614508418401477L;
+
+        public EditLicenseAction() {
 			putValue(Action.NAME, 
 					 I18n.tr("Edit License..."));
     	}
@@ -1318,7 +1353,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
     }
     private final class ResumeAction extends AbstractAction {
 		
-		public ResumeAction () {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 6014468419110764144L;
+
+        public ResumeAction () {
 			putValue(Action.NAME, I18n.tr
 					("Resume"));
 			putValue(Action.SHORT_DESCRIPTION,
@@ -1333,7 +1373,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	
     private final class RenameAction extends AbstractAction {
 		
-		public RenameAction () {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 2673219925804729384L;
+
+        public RenameAction () {
 			putValue(Action.NAME, I18n.tr
 					("Rename"));
 			//  "LIBRARY_RENAME"   ???
@@ -1347,7 +1392,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 
 	private class ShareFileAction extends AbstractAction {
 		
-		public ShareFileAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -253503274459243151L;
+
+        public ShareFileAction() {
 			putValue(Action.NAME, I18n.tr
 					 ("Share File"));
 		}
@@ -1374,7 +1424,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	
 	private class UnshareFileAction extends AbstractAction {
 		
-		public UnshareFileAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 3640380569278974061L;
+
+        public UnshareFileAction() {
 			putValue(Action.NAME, I18n.tr
 					 ("Stop Sharing File"));
 		}
@@ -1401,7 +1456,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	
 	private class ShareFolderAction extends AbstractAction {
 		
-		public ShareFolderAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -645036096577263247L;
+
+        public ShareFolderAction() {
 			putValue(Action.NAME, I18n.tr
 					 ("Share Folder"));
 		}
@@ -1431,7 +1491,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	
 	private class UnshareFolderAction extends AbstractAction {
 		
-		public UnshareFolderAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -6872709046755949990L;
+
+        public UnshareFolderAction() {
 			putValue(Action.NAME, I18n.tr
 					 ("Stop Sharing Folder"));
 		}
@@ -1458,7 +1523,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	
 	private final class MagnetLookupAction extends AbstractAction {
 		
-		public MagnetLookupAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 5081688548976571828L;
+
+        public MagnetLookupAction() {
 			putValue(Action.NAME, I18n.tr
 					("Show Magnet Details"));
 		}
@@ -1470,7 +1540,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 
 	private class ViewLicenseAction extends AbstractAction {
 
-		public ViewLicenseAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -962929069359813388L;
+
+        public ViewLicenseAction() {
 			putValue(Action.NAME, I18n.tr
 					("View License"));
 		}
@@ -1485,7 +1560,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	 */
 	private static class FileNameListCellRenderer extends DefaultListCellRenderer {
 		
-		@Override
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 5064313639046811749L;
+
+        @Override
 		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 			super.getListCellRendererComponent(list, value, index, isSelected,
 					cellHasFocus);

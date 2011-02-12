@@ -2,12 +2,10 @@ package com.frostwire.gnutella.gui.tabs;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Hashtable;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JPopupMenu;
 
-import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIMediator.Tabs;
 
 /**

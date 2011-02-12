@@ -505,9 +505,10 @@ public final class Initializer {
     /** Runs any late UI tasks, such as initializing Icons, I18n support. */
     private void loadLateTasksForUI() {        
         // Initialize IconManager.
-        GUIMediator.setSplashScreenString(I18n.tr("Loading Icons..."));
+        //GUIMediator.setSplashScreenString(I18n.tr("Loading Icons..."));
         GUIMediator.safeInvokeAndWait(new Runnable() {
             public void run() {
+                GUIMediator.setSplashScreenString(I18n.tr("Loading Icons..."));
                 IconManager.instance();
             }
         });

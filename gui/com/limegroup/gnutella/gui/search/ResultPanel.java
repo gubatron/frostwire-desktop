@@ -262,7 +262,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
         TABLE.setDefaultRenderer(ResultSpeed.class, RESULT_SPEED_RENDERER);
         TABLE.setDefaultRenderer(Date.class, DATE_RENDERER);
         TABLE.setDefaultRenderer(Float.class, PERCENTAGE_RENDERER);
-        TABLE.setDefaultRenderer(ResultNameHolder.class, LINK_RENDERER);
+        TABLE.setDefaultRenderer(ResultNameHolder.class, getLinkRenderer());
     }
 
     /**
