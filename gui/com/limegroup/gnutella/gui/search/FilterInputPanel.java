@@ -139,11 +139,8 @@ class FilterInputPanel extends BoxPanel {
         return added;
     }
     
-    private JPanel createBackToSearchButton(ActionListener forButton,
-                                            KeyListener autoSearch) {
-        JButton search = new IconButton(
-            I18n.tr("Back To Search"),
-            I18nMarker.marktr("Back To Search"));
+    private JPanel createBackToSearchButton(ActionListener forButton, KeyListener autoSearch) {
+        JButton search = new IconButton(I18n.tr("Back To Search"), I18nMarker.marktr("Back To Search"));
         search.addActionListener(forButton);
         search.addKeyListener(autoSearch);
         search.setRequestFocusEnabled(true);
@@ -153,7 +150,7 @@ class FilterInputPanel extends BoxPanel {
         panel.add(Box.createVerticalStrut(5));
         panel.add(GUIUtils.center(search));
         panel.add(Box.createVerticalStrut(5));
-        panel.setBackground(SkinHandler.getSearchPanelBG2());
+        //panel.setBackground(SkinHandler.getSearchPanelBG2());
         GUIUtils.setOpaque(false, panel);
         if(!ThemeSettings.isNativeTheme()) {
             panel.setOpaque(true);
@@ -162,6 +159,5 @@ class FilterInputPanel extends BoxPanel {
         
         backToSearch = search;
         return panel;
-    }    
-    
+    }
 }

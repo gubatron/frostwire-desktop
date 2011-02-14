@@ -6,7 +6,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -35,7 +34,6 @@ import javax.swing.JTextArea;
 import javax.swing.JViewport;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.border.LineBorder;
 import javax.swing.text.BadLocationException;
 
 import org.limewire.io.NetworkInstanceUtils;
@@ -176,12 +174,9 @@ class SearchInputPanel extends JPanel {
         panelize(searchEntry);
         panelize(whatsnew);
         panelize(browseHost);
-        PANE.add(I18n.tr("Keyword"),
-                 searchEntry);
-        PANE.add(I18n.tr("What\'s New"),
-                 whatsnew);
-        PANE.add(I18n.tr("Direct Connect"),
-                 browseHost);
+        PANE.add(I18n.tr("Keyword"), searchEntry);
+        PANE.add(I18n.tr("What\'s New"), whatsnew);
+        PANE.add(I18n.tr("Direct Connect"), browseHost);
                  
         PANE.setRequestFocusEnabled(false);
         PANE.addMouseListener(new MouseListener() {
@@ -194,22 +189,6 @@ class SearchInputPanel extends JPanel {
             public void mouseReleased(MouseEvent e) {}
         });         
 
-        if(!ThemeSettings.isNativeTheme()) {
-            PANE.setBorder(
-              new LineBorder(SkinHandler.getSearchGridColor()) {
-                private static final long serialVersionUID = 8313923847157523499L;
-
-                public void paintBorder(Component c, Graphics g,
-                                        int x, int y, int width, int height) {
-                    try {
-                        Component sel = PANE.getSelectedComponent();
-                        if(sel != null)
-                            height = sel.getBounds().height + 4;                    
-                    } catch(ArrayIndexOutOfBoundsException aioobe) {}
-                    super.paintBorder(c, g, x, y, width, height);
-                }
-            });
-        }
         add(PANE, BorderLayout.CENTER);
 
         JPanel viewSharedFilesPanel = new BoxPanel(BoxPanel.X_AXIS);
