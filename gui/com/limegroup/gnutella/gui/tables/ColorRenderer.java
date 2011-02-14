@@ -10,6 +10,8 @@ import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
+import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
+
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 
@@ -60,8 +62,7 @@ import com.limegroup.gnutella.gui.themes.ThemeObserver;
  *
  * NOTE: This does not color selected or focused cells.
  */
-class ColorRenderer extends JComponent
-  implements TableCellRenderer, ThemeObserver {
+class ColorRenderer extends SubstanceDefaultTableCellRenderer implements ThemeObserver {
     
     /**
      * 
@@ -71,7 +72,7 @@ class ColorRenderer extends JComponent
      * Map is from TableCellRenderer to TableCellRenderer.
      * Every instance of a renderer will have a mirrored instance as its value.
      */
-    private Map<TableCellRenderer, TableCellRenderer> otherRenderers =
+    private static final Map<TableCellRenderer, TableCellRenderer> otherRenderers =
         new HashMap<TableCellRenderer, TableCellRenderer>();
     
     public ColorRenderer() {

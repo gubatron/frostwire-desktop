@@ -960,23 +960,4 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
                 throw new UnsupportedFlavorException(flavor);
         }
     }
-  
-    /**
-     * Processes a button click on a 'buy' button from the playlist table when a user
-     * is previewing a song from the LimeWire Store (LWS)
-     */
-  /*
-    public void buyProduct(PlaylistDataLine line){
-        JOptionPane.showMessageDialog(null, "buy: " + line.getPlayListItem().getName());
-    }
-  */
-    /**
-     * Processes a button click on a 'info' button from the playlist table when a user
-     * is previewing a sing from the LimewireStore
-     */
-/*
-    public void infoProduct(PlaylistDataLine line){
-        JOptionPane.showMessageDialog(null, "try: " + line.getPlayListItem().getName());
-    }
-	*/
 }

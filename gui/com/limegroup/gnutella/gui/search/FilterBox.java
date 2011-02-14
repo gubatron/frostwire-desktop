@@ -17,7 +17,6 @@ import java.util.Iterator;
 
 import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -36,6 +35,7 @@ import javax.swing.event.ListSelectionListener;
 
 import org.limewire.setting.BooleanSetting;
 import org.limewire.util.StringUtils;
+import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
@@ -834,7 +834,7 @@ class FilterBox extends JPanel {
      *
      * Draws the line transparent unless it is selected.
      */
-    private static class Renderer extends DefaultListCellRenderer {
+    private static class Renderer extends SubstanceDefaultListCellRenderer {
         
         /**
          * 

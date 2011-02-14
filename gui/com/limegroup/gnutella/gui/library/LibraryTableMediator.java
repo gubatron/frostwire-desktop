@@ -11,7 +11,6 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Box;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JList;
@@ -33,6 +32,7 @@ import org.limewire.collection.Tuple;
 import org.limewire.io.NetworkUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
+import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.FileDesc;
@@ -92,7 +92,6 @@ import com.limegroup.gnutella.xml.LimeXMLUtils;
  * controlling access to the table and the various table properties.
  * It is the Mediator to the Table part of the Library display.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel, LibraryTableDataLine, File>
 	implements VerificationListener, FileDetailsProvider {
 
@@ -914,8 +913,8 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	    JList fileList = new JList(fileNames.toArray());
         fileList.setVisibleRowCount(5);
         fileList.setCellRenderer(new FileNameListCellRenderer());
-        fileList.setSelectionForeground(fileList.getForeground());
-        fileList.setSelectionBackground(fileList.getBackground());
+        //fileList.setSelectionForeground(fileList.getForeground());
+        //fileList.setSelectionBackground(fileList.getBackground());
         fileList.setFocusable(false);
         return fileList;
 	}
@@ -1558,7 +1557,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	/**
 	 * Sets an icon based on the filename extension. 
 	 */
-	private static class FileNameListCellRenderer extends DefaultListCellRenderer {
+	private static class FileNameListCellRenderer extends SubstanceDefaultListCellRenderer {
 		
 		/**
          * 

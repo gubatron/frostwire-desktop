@@ -3,12 +3,13 @@ package com.limegroup.gnutella.gui.playlist;
 import java.awt.Component;
 
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
+
+import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
 
 /**
  *  Numbers each row in the table
  */
-public class NumberTableCellRenderer extends DefaultTableCellRenderer {
+public class NumberTableCellRenderer extends SubstanceDefaultTableCellRenderer {
 
     /**
      * 

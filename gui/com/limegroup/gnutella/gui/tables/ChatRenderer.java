@@ -5,7 +5,6 @@ import java.awt.Component;
 import javax.swing.Icon;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.table.TableCellRenderer;
 
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
 
@@ -18,7 +17,7 @@ import com.limegroup.gnutella.gui.themes.ThemeObserver;
  * whether or not the host returning the result is chattable.
  */
 public final class ChatRenderer extends SubstanceDefaultTableCellRenderer 
-	implements TableCellRenderer, ThemeObserver {
+	implements ThemeObserver {
 
 	/**
      * 

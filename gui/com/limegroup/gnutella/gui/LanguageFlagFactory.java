@@ -6,10 +6,11 @@ import java.util.Map;
 import java.util.MissingResourceException;
 
 import javax.swing.BorderFactory;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
+
+import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
 /**
  * Simple factory for retrieving a flag for a given country and/or language.
@@ -173,7 +174,12 @@ public class LanguageFlagFactory {
         return new LocaleRenderer();
     }
     
-    private static class LocaleRenderer extends DefaultListCellRenderer {
+    private static class LocaleRenderer extends SubstanceDefaultListCellRenderer {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -2270349869432835425L;
+
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean hasFocus) {
             super.getListCellRendererComponent(list, value, index, isSelected, hasFocus);
             

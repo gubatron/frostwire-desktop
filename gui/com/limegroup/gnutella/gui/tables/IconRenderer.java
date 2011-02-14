@@ -5,7 +5,6 @@ import java.awt.Component;
 import javax.swing.Icon;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.table.TableCellRenderer;
 
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
 
@@ -13,8 +12,7 @@ import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRender
  * Renders the column in the search window that displays an icon for
  * whether or not the host returning the result is chattable.
  */
-public final class IconRenderer extends SubstanceDefaultTableCellRenderer
-                                implements TableCellRenderer {
+public final class IconRenderer extends SubstanceDefaultTableCellRenderer {
 	
 	/**
      * 
