@@ -441,8 +441,6 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
     /** Normalizes the location count, depending on the quality. */
     private int normalizeLocationCount(int count, int quality) {
         switch(quality) {
-        case QualityRenderer.THIRD_PARTY_RESULT_QUALITY:
-            return Integer.MAX_VALUE;
         case QualityRenderer.SECURE_QUALITY:
             return Integer.MAX_VALUE-1;
         case QualityRenderer.MULTICAST_QUALITY:
