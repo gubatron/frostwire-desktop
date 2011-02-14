@@ -320,7 +320,7 @@ class SearchInputPanel extends JPanel {
         if(!ThemeSettings.isNativeTheme()) {
             c.setOpaque(true);
         }
-        c.setBackground(SkinHandler.getSearchPanelBG2());
+        //c.setBackground(SkinHandler.getSearchPanelBG2());
         c.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 0));
     }
     
@@ -477,13 +477,10 @@ class SearchInputPanel extends JPanel {
             throw new NullPointerException("named mediatype has no schema");
         }
 		
-		InputPanel panel = new InputPanel(schema, SEARCH_LISTENER, 
-				SEARCH_FIELD.getDocument(),
-				SEARCH_FIELD.getUndoManager());
+		InputPanel panel = new InputPanel(schema, SEARCH_LISTENER, SEARCH_FIELD.getDocument(), SEARCH_FIELD.getUndoManager());
 		panel.addMoreOptionsListener(new MoreOptionsListener());
-		JScrollPane pane = new JScrollPane(panel,
-				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		
+		JScrollPane pane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         cleanupPaneActions(pane.getActionMap());
 		pane.setOpaque(false);
 		pane.setBorder(BorderFactory.createEmptyBorder());
@@ -491,17 +488,23 @@ class SearchInputPanel extends JPanel {
 		JPanel outerPanel = new JPanel(new BorderLayout());
 		outerPanel.add(pane,"Center");
 		outerPanel.add(createSearchButtonPanel(),"South");
+		
 		int paneWidth = (int)pane.getPreferredSize().getWidth();
 		int paneHeight= (int)pane.getPreferredSize().getHeight();
-        Dimension dim = new Dimension(paneWidth+70,paneHeight+30);
+        
+		Dimension dim = new Dimension(paneWidth+70,paneHeight+30);
         outerPanel.setMaximumSize(dim);
-	    inputPanelDimensions.put(nmt,dim);
+	    
+        inputPanelDimensions.put(nmt, dim);
         JPanel holdingPanel = new JPanel();
 	    holdingPanel.setLayout(new BoxLayout(holdingPanel,BoxLayout.Y_AXIS));
 	    holdingPanel.add(outerPanel);
-		getInputPanelKeys().add(name);
-		META_PANEL.add(holdingPanel, name);
-		panelize(searchEntry);
+		
+	    getInputPanelKeys().add(name);
+		
+	    META_PANEL.add(holdingPanel, name);
+		
+	    panelize(searchEntry);
 	}
     
     private void cleanupPaneActions(ActionMap map) {
