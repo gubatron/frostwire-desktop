@@ -65,8 +65,6 @@ public final class LibraryMediator implements ThemeObserver {
 
     private static final String TABLE_KEY = "LIBRARY_TABLE";
     private static final String SHARED_KEY = "SHARED";
-    //private static final String STORE_KEY = "STORE"; // No store under FrostWire
-
     /**
      * Constant handle to the file update handler.
      */
@@ -392,21 +390,6 @@ public final class LibraryMediator implements ThemeObserver {
         showView(SHARED_KEY);
     }
 
-    /**
-	 *	Constructs a panel that displays the FrostWire Store (LWS) logo in the 
-	 *	library table when the root in the tree of the LWS was chosen
-	 */
-/*
-    public static void showStoreFiles() {
-        if( storeShared == null) {
-            storeShared = new JPanel(new BorderLayout());
-            storeShared.add( new JLabel( I18n.tr("Songs purchased from the FrostWire Store"), GUIMediator.getThemeImage("lws"), JLabel.CENTER));
-            storeShared.setBorder(BorderFactory.createEtchedBorder());
-            addView(storeShared, STORE_KEY);
-        }
-        showView(STORE_KEY);
-    }
-*/
 	public static void showView(String key) {
 		VIEW_LAYOUT.show(getViewPanel(), key);
 	}

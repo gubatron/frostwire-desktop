@@ -144,6 +144,10 @@ public class RecursiveSharingDialog extends JDialog {
     
     private class OkayAction extends AbstractAction {
         
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 5816638700147325928L;
         public OkayAction() {
             super(I18n.tr("OK"));
         }
@@ -155,7 +159,12 @@ public class RecursiveSharingDialog extends JDialog {
     
     private class CancelAction extends AbstractAction  {
     	
-    	public CancelAction() {
+    	/**
+         * 
+         */
+        private static final long serialVersionUID = -7215008939050724999L;
+
+        public CancelAction() {
     		super(I18n.tr("Cancel"));
     	}
     	

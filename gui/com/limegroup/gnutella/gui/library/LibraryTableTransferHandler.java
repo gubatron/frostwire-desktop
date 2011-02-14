@@ -5,7 +5,6 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.swing.JComponent;
@@ -28,6 +27,11 @@ import com.limegroup.gnutella.gui.dnd.LimeTransferHandler;
  * TODO dnd: Offer real drop support (move, copy, etc..).
  */
 public class LibraryTableTransferHandler extends LimeTransferHandler {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 5039095245636389805L;
 
     /** Constructs a new TransferHandler that supports COPY & MOVE. */
     public LibraryTableTransferHandler() {
