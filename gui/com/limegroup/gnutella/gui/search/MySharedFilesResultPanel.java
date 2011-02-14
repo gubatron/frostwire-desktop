@@ -158,6 +158,11 @@ public class MySharedFilesResultPanel extends ResultPanel {
     
     private class UnshareFileAction extends AbstractAction {
 
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -7635649670855308992L;
+
         public UnshareFileAction() {
             putValue(Action.NAME, I18n.tr("Stop Sharing File"));
         }
@@ -281,6 +286,11 @@ public class MySharedFilesResultPanel extends ResultPanel {
         
         panel.add(Box.createHorizontalStrut(2));
         Action configureAction = new AbstractAction() {
+            /**
+             * 
+             */
+            private static final long serialVersionUID = 8565671954910041629L;
+
             public void actionPerformed(ActionEvent e) {
                 OptionsMediator optionsMediator = OptionsMediator.instance();
                 optionsMediator.setOptionsVisible(true, OptionsConstructor.SHARED_KEY);
@@ -292,6 +302,11 @@ public class MySharedFilesResultPanel extends ResultPanel {
         
         panel.add(Box.createHorizontalStrut(2));
         Action libraryAction = new AbstractAction() {
+            /**
+             * 
+             */
+            private static final long serialVersionUID = 4838684077296068822L;
+
             public void actionPerformed(ActionEvent e) {
                 GUIMediator.instance().getMainFrame().setSelectedTab(GUIMediator.Tabs.LIBRARY);
             }

@@ -20,7 +20,7 @@ final class SearchColumnSelectionMenu extends ColumnSelectionMenu {
      * Overriden to add columns from the same schema to a submenu.
      */
     protected void addTableColumnChoices(ActionListener listener,
-                                         DataLineModel model,
+                                         DataLineModel<?, ?> model,
                                          LimeJTable table) {
         String currentSchema = "";
         JMenu currentSchemaMenu = null;        

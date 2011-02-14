@@ -1,6 +1,5 @@
 package com.limegroup.gnutella.gui.search;
 
-import java.awt.Color;
 import java.io.File;
 import java.util.Set;
 
@@ -14,7 +13,6 @@ import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
 
 /**

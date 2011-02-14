@@ -29,7 +29,7 @@ import com.limegroup.gnutella.xml.SchemaFieldInfo;
  * ListModel views of specific fields may be retrieved in order to
  * 
  */
-@SuppressWarnings("unchecked") // this class is insane
+@SuppressWarnings({"unchecked", "rawtypes"}) // this class is insane
 final class MetadataModel {
     
     // Important note about the below two mappings MODEL & PROPERTIES:
@@ -438,6 +438,10 @@ final class MetadataModel {
      */
     private static class Model extends TreeMap implements ListModelMap {
         /**
+         * 
+         */
+        private static final long serialVersionUID = -8165482508878323037L;
+        /**
          * The delegate ListModel for propogating ListModel events.
          */
         private final SimpleListModel DELEGATE = new SimpleListModel();
@@ -460,10 +464,6 @@ final class MetadataModel {
             Object o = super.put(a, b);
             DELEGATE.fireContentsChanged(this, 0, size());
             return o;
-        }
-        
-        public void fireContentsChanged() {
-            DELEGATE.fireContentsChanged(this, 0, size());
         }
         
         /**
@@ -526,7 +526,7 @@ final class MetadataModel {
             else {
                 Iterator iter = keySet().iterator();
                 for(int i = 1; iter.hasNext(); i++)
-                    if(compare(o, iter.next()) == 0)
+                    if(compare2(o, iter.next()) == 0)
                         return i;
                 return -1;
             }
@@ -542,7 +542,7 @@ final class MetadataModel {
         /**
          * Compares two keys using the correct comparison method for this Map.
          */
-        private int compare(Object k1, Object k2) {
+        private int compare2(Object k1, Object k2) {
             return (comparator()==null ? ((Comparable)k1).compareTo(k2)
                                      : comparator().compare(k1, k2));
         }
@@ -553,6 +553,10 @@ final class MetadataModel {
      * A simple ListModel, useful for delegating to for action calls.
      */
     private static class SimpleListModel extends AbstractListModel {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 2883479699601639104L;
         public int getSize() { throw new IllegalStateException(); }
         public Object getElementAt(int idx) { throw new IllegalStateException(); }
         public void fireContentsChanged(Object src, int a, int b) {

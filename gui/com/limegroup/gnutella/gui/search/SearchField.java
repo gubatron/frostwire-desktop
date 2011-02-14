@@ -21,6 +21,11 @@ import com.limegroup.gnutella.settings.SearchSettings;
 public class SearchField extends ClearableAutoCompleteTextField {
 
     /**
+     * 
+     */
+    private static final long serialVersionUID = 8227151857934233442L;
+
+    /**
      * Constant for the array of characters that should not be 
      * allowed in search strings.
      */
@@ -72,6 +77,11 @@ public class SearchField extends ClearableAutoCompleteTextField {
      * the system should beep.
      */
     public static class SearchFieldDocument extends PlainDocument {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 3170826542928334750L;
+
         public void insertString(int offs,
                                  String str,
                                  AttributeSet a)

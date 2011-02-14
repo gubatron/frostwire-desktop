@@ -1,6 +1,5 @@
 package com.limegroup.gnutella.gui.search;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -19,7 +18,6 @@ import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.BitziLookupAction;
 import com.limegroup.gnutella.gui.actions.CopyMagnetLinkToClipboardAction;
-import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 import com.limegroup.gnutella.search.HostData;
 import com.limegroup.gnutella.settings.UISettings;

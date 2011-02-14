@@ -1,9 +1,6 @@
 package com.limegroup.gnutella.gui.download;
 
-import com.limegroup.bittorrent.BTDownloader;
 import com.limegroup.bittorrent.BTDownloaderImpl;
-import com.limegroup.bittorrent.TorrentEvent;
-import com.limegroup.bittorrent.TorrentEvent.Type;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.Downloader.DownloadStatus;
 import com.limegroup.gnutella.gui.tables.BasicDataLineModel;
@@ -13,6 +10,11 @@ import com.limegroup.gnutella.gui.tables.BasicDataLineModel;
  * downloads displayed in the download window.
  */
 final class DownloadModel extends BasicDataLineModel<DownloadDataLine, Downloader> {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 8163563369069283107L;
 
     /**
      * Initialize the model by setting the class of its DataLines.

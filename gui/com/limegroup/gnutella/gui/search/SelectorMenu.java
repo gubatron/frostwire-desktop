@@ -32,10 +32,10 @@ class SelectorMenu {
     SelectorMenu(FilterBox box) {
         ActionListener listener = new SelectionListener(box);
         
-        List options = box.getMetadataModel().getSelectorOptions();
+        List<?> options = box.getMetadataModel().getSelectorOptions();
         String currentSchema = "";
         JMenu currentSchemaMenu = null;
-        for(Iterator i = options.iterator(); i.hasNext();) {
+        for(Iterator<?> i = options.iterator(); i.hasNext();) {
             Selector selector = (Selector)i.next();
             JMenuItem item = createItem(box, selector);
             item.addActionListener(listener);
