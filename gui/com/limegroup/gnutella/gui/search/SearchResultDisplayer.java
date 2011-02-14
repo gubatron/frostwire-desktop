@@ -2,6 +2,7 @@ package com.limegroup.gnutella.gui.search;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.IllegalComponentStateException;
@@ -12,6 +13,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -27,6 +29,9 @@ import javax.swing.plaf.TabbedPaneUI;
 
 import org.limewire.util.DebugRunnable;
 
+import com.frostwire.gnutella.gui.Slide;
+import com.frostwire.gnutella.gui.SlideshowPanel;
+import com.frostwire.settings.UpdateManagerSettings;
 import com.limegroup.gnutella.FileManager;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.BoxPanel;
@@ -35,7 +40,6 @@ import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.ProgTabUIFactory;
 import com.limegroup.gnutella.gui.RefreshListener;
-import com.limegroup.gnutella.gui.search.OverlayAd;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
@@ -93,11 +97,6 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 
     
     /**
-     * The overlay panel to use when no searches are active.
-     */
-    private OverlayAd OVERLAY;
-    
-    /**
      * The listener to notify about the currently displaying search
      * changing.
      *
@@ -120,8 +119,26 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
         // for when the window is resized. 
         results.setPreferredSize(new Dimension(10000, 10000));
         results.setLayout(switcher);
-        OVERLAY = new OverlayAd();
-		DUMMY = new ResultPanel(OVERLAY);
+
+        //Add SlideShowPanel here.
+        SlideshowPanel promoSlides = null; 
+
+        if (!UpdateManagerSettings.SHOW_PROMOTION_OVERLAYS.getValue()) { 
+        	Slide s1 = new Slide( "http://static.frostwire.com/images/overlays/default_now_on_android.png","http://www.frostwire.com/?from=defaultSlide",10000);
+        	Slide s2 = new Slide( "http://static.frostwire.com/images/overlays/frostclick_default_overlay.jpg","http://www.frostclick.com/?from=defaultSlide",10000);
+        	promoSlides = new SlideshowPanel(Arrays.asList(s1,s2),false);
+        } else {
+        	promoSlides = new SlideshowPanel(UpdateManagerSettings.OVERLAY_SLIDESHOW_JSON_URL.getValue());
+        }
+        
+        promoSlides.setBackground(Color.WHITE);
+        Dimension promoDimensions = new Dimension(720, 380);
+        promoSlides.setPreferredSize(promoDimensions);
+        promoSlides.setSize(promoDimensions);
+        promoSlides.setMaximumSize(promoDimensions);
+
+        DUMMY = new ResultPanel(promoSlides);
+		
 		mainScreen = new JPanel(new BorderLayout());
         mainScreen.add(DUMMY.getComponent(), BorderLayout.CENTER);
         results.add("dummy", mainScreen);
@@ -133,26 +150,6 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
         
         ThemeMediator.addThemeObserver(this);
         CancelSearchIconProxy.updateTheme();
-	}
-	
-	public OverlayAd getOverlayAd() {
-		return OVERLAY;
-	}
-	
-	public void setOverlayAd(OverlayAd overlayad) {
-	    OVERLAY = null;
-		OVERLAY = overlayad;
-	}
-
-	/**
-	 * Refreshes the overlay objects, fixes freeze bug.
-	 * No need to remove and read the components, we just need to reload the
-	 * OVERLAY object.
-	 * @throws InterruptedException
-	 */
-	public void refreshOverlayAd() throws InterruptedException {
-		getOverlayAd().loadOverlay();
-		results.getComponent(0).invalidate();
 	}
 	
 	/**
@@ -295,8 +292,10 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 
         GUIMediator.instance().setSearching(true);
         
-        if (OVERLAY != null)
-        	OVERLAY.searchPerformed();
+        //We might need to do something with our SlideShowPanel when we add new elements
+        //i.e. hide it..., show it
+        //if (OVERLAY != null)
+        // 	OVERLAY.searchPerformed();
         
         switcher.last(results);  //show tabbed results
 
@@ -567,17 +566,6 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
     }
 
 	/**
-	 * Accessor for the <tt>ResultPanel</tt> instance that shows no active
-	 * searches.
-	 *
-	 * @return the <tt>ResultPanel</tt> instance that shows no active
-	 * searches
-	 */
-    ResultPanel getDummyResultPanel(){
-		return DUMMY;
-    }
-
-	/**
 	 * Returns the <tt>JComponent</tt> instance containing all of the search
 	 * result ui components.
 	 *
@@ -592,7 +580,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 	public void updateTheme() {
 	    ProgTabUIFactory.extendUI(tabbedPane);
 		DUMMY.updateTheme();
-		OVERLAY.updateTheme();
+		
 		CancelSearchIconProxy.updateTheme();
 		fixIcons();
 		for(Iterator<ResultPanel> i = entries.iterator(); i.hasNext(); ) {
