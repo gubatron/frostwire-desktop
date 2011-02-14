@@ -201,6 +201,8 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
     ResultPanel(JPanel overlay) {
         super(SEARCH_TABLE);
         setupFakeTable(overlay);
+
+        
         SEARCH_INFO = SearchInformation.createKeywordSearch("", null,
                                       MediaType.getAnyTypeMediaType());
         SPAM_FILTER=null;
@@ -1099,12 +1101,22 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
     private void setupFakeTable(JPanel overlay) {
         MAIN_PANEL.removeAll();
         
-        JPanel background = new JPanel();
+        //Fixes flickering!
+        JPanel background = new JPanel() {
+			private static final long serialVersionUID = 8931395134232576566L;
+
+			public boolean isOptimizedDrawingEnabled() {
+                return false;
+              }
+        };
+        
         background.setLayout(new OverlayLayout(background));
+        
         JPanel overlayPanel = new BoxPanel(BoxPanel.Y_AXIS);
         overlayPanel.setOpaque(false);
         overlayPanel.add(Box.createVerticalStrut(20));
         overlayPanel.add(overlay);
+        
         overlayPanel.setMinimumSize(new Dimension(0, 0));
         JComponent table = getScrolledTablePane();
         table.setOpaque(false);

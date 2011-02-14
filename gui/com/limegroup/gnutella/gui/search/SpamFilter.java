@@ -102,7 +102,12 @@ public class SpamFilter implements TableLineFilter {
     		String[] ipSplit = host.split("\\.");
     		host = "";
     		for (String octet : ipSplit) {
-    			host += Integer.toHexString(Integer.valueOf(octet));
+    			String hexString = Integer.toHexString(Integer.valueOf(octet));
+    			if (hexString.length()==1) {
+    				hexString = "0" + hexString;
+    			}
+    				
+    			host += hexString;
     		}
     		
     		ips +=  host;
