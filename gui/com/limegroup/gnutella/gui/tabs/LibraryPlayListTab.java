@@ -24,7 +24,7 @@ public final class LibraryPlayListTab extends AbstractTab {
 	 * elements of this tab.
 	 */
 	private static JComponent COMPONENT;
-	private static JPanel PANEL = new JPanel(new BorderLayout());
+	private static JPanel PANEL;
 	
 	private static LibraryMediator LIBRARY_MEDIATOR;
 	
@@ -34,9 +34,8 @@ public final class LibraryPlayListTab extends AbstractTab {
 	 * @param LIBRARY_MEDIATOR the <tt>LibraryMediator</tt> instance 
 	 * @param PLAYLIST_MEDIATOR the <tt>PlayListMediator</tt> instance 
 	 */
-	public LibraryPlayListTab(final LibraryMediator lm) {
-		super(I18n.tr("Library"),
-		        I18n.tr("View Repository of Saved Files"), "library_tab");
+	public LibraryPlayListTab(LibraryMediator lm) {
+		super(I18n.tr("Library"), I18n.tr("View Repository of Saved Files"), "library_tab");
 		LIBRARY_MEDIATOR = lm;
 		setPlayerEnabled(GUIMediator.isPlaylistVisible());
 	}
@@ -46,13 +45,15 @@ public final class LibraryPlayListTab extends AbstractTab {
 	}
 
 	public JComponent getComponent() {
-		return PANEL;
+		return getPanel();
 	}
 	
 	public static void setPlayerEnabled(boolean value) {
-		if (COMPONENT != null && value == COMPONENT instanceof JSplitPane)
+		if (COMPONENT != null && value == COMPONENT instanceof JSplitPane) {
 			return;
+		}
 		
+		getPanel(); // triggers the panel creation
 		PANEL.removeAll();
 		
 		if (value) {
@@ -61,15 +62,22 @@ public final class LibraryPlayListTab extends AbstractTab {
 												GUIMediator.getPlayList().getComponent());
             divider.setContinuousLayout(true);
 			divider.setOneTouchExpandable(true);
-			DividerLocationSettingUpdater.install(divider, 
-					UISettings.UI_LIBRARY_PLAY_LIST_TAB_DIVIDER_LOCATION);
+			DividerLocationSettingUpdater.install(divider, UISettings.UI_LIBRARY_PLAY_LIST_TAB_DIVIDER_LOCATION);
 			COMPONENT = divider;
-		} else
+		} else {
 			COMPONENT = LIBRARY_MEDIATOR.getComponent();
+		}
 		
 		PANEL.add(COMPONENT, BorderLayout.CENTER);
 		
 		PANEL.invalidate();
 		PANEL.validate();
+	}
+	
+	private static JPanel getPanel() {
+	    if (PANEL == null) {
+	        PANEL = new JPanel(new BorderLayout());
+	    }	    
+	    return PANEL;
 	}
 }

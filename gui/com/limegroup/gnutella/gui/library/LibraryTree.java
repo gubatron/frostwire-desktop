@@ -19,7 +19,6 @@ import javax.swing.ToolTipManager;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
@@ -28,6 +27,7 @@ import javax.swing.tree.TreeSelectionModel;
 import org.limewire.setting.FileSetting;
 import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
+import org.pushingpixels.substance.api.renderers.SubstanceDefaultTreeCellRenderer;
 
 import com.limegroup.gnutella.FileManagerEvent;
 import com.limegroup.gnutella.MediaType;
@@ -57,7 +57,6 @@ import com.limegroup.gnutella.settings.SharingSettings;
  * shared folders. It constructs the tree and supplies access to it. It also
  * controls tree directory selection, deletion, etc.
  */
-// 2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 final class LibraryTree extends JTree implements MouseObserver {
 
     /**
@@ -72,8 +71,7 @@ final class LibraryTree extends JTree implements MouseObserver {
     /**
 	 * Constant for the root node of the tree.
 	 */
-	private final LibraryTreeNode ROOT_NODE = 
-		new LibraryTreeNode(new RootNodeDirectoryHolder(""));
+	private final LibraryTreeNode ROOT_NODE = new LibraryTreeNode(new RootNodeDirectoryHolder(""));
 	private RootSharedFilesDirectoryHolder rsfdh = new RootSharedFilesDirectoryHolder();
 
 	/** Constant for the tree model. */
@@ -814,7 +812,7 @@ final class LibraryTree extends JTree implements MouseObserver {
 	}
 	
 	
-	private class LibraryTreeCellRenderer extends DefaultTreeCellRenderer {
+	private class LibraryTreeCellRenderer extends SubstanceDefaultTreeCellRenderer {
 		
 		/**
          * 
@@ -1085,9 +1083,6 @@ final class LibraryTree extends JTree implements MouseObserver {
 	LibrarySearchResultsHolder getSearchResultsHolder() {
 		return lsrdh;
 	}
-
-	   
-	
 }
 
 
