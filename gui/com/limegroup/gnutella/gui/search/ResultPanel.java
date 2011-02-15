@@ -44,6 +44,7 @@ import org.limewire.inspection.InspectablePrimitive;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gnutella.gui.actions.BuyAction;
+import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.BrowseHostHandler;
 import com.limegroup.gnutella.FileDetails;
 import com.limegroup.gnutella.GUID;
@@ -537,7 +538,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
             return null;
   
 
-        JPopupMenu menu = new JPopupMenu();
+        JPopupMenu menu = new SkinPopupMenu();
         menu.add(createSearchAgainMenu(lines.length > 0 ? lines[0] : null));
         
         menu.addSeparator();

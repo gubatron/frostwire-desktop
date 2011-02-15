@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import org.limewire.io.NetworkUtils;
 import org.limewire.net.SocketsManager.ConnectType;
 
+import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.connection.RoutedConnection;
 import com.limegroup.gnutella.gui.AutoCompleteTextField;
 import com.limegroup.gnutella.gui.ClearableAutoCompleteTextField;
@@ -211,7 +212,7 @@ public final class ConnectionMediator extends AbstractTableMediator<ConnectionMo
      * Returns the JPopupMenu for the connection table
      */
     protected JPopupMenu createPopupMenu() {
-        JPopupMenu jpm = new JPopupMenu();
+        JPopupMenu jpm = new SkinPopupMenu();
 
         //  add
         JMenuItem jmi = new JMenuItem(I18n

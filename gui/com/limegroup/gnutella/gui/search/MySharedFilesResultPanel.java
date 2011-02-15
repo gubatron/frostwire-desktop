@@ -19,6 +19,7 @@ import javax.swing.JPopupMenu;
 import org.limewire.io.IpPort;
 import org.limewire.io.NetworkUtils;
 
+import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.FileEventListener;
 import com.limegroup.gnutella.FileManager;
@@ -209,7 +210,7 @@ public class MySharedFilesResultPanel extends ResultPanel {
         TableLine[] lines = getAllSelectedLines();
         if(lines.length == 0)
             return null;
-        return (new SearchResultMenu(this)).addToMenu(new JPopupMenu(), lines, true, false);
+        return (new SearchResultMenu(this)).addToMenu(new SkinPopupMenu(), lines, true, false);
     }
     
     /**

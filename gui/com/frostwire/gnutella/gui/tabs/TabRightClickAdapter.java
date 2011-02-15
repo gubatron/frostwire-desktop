@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JPopupMenu;
 
+import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.gui.GUIMediator.Tabs;
 
 /**
@@ -28,7 +29,7 @@ public class TabRightClickAdapter extends MouseAdapter {
 	}
 
 	private final void initializeMenu() {
-		_menu = new JPopupMenu();
+		_menu = new SkinPopupMenu();
 		
 		for (Tabs tab : Tabs.getOptionalTabs() ) {
 			JCheckBoxMenuItem menuItem = 

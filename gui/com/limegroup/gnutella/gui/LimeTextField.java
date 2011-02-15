@@ -18,6 +18,8 @@ import javax.swing.undo.UndoManager;
 
 import org.limewire.i18n.I18nMarker;
 
+import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
+
 /**
  * A better JTextField.
  */
@@ -217,7 +219,7 @@ public class LimeTextField extends JTextField {
         JPopupMenu popup;
 
         // initialize the JPopupMenu with necessary stuff.
-        popup = new JPopupMenu() {
+        popup = new SkinPopupMenu() {
             /**
              * 
              */

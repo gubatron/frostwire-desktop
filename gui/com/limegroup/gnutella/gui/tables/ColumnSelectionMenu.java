@@ -11,6 +11,7 @@ import javax.swing.JPopupMenu;
 
 import org.limewire.setting.BooleanSetting;
 
+import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.QuestionsHandler;
@@ -72,7 +73,7 @@ public class ColumnSelectionMenu {
     /**
      * The actual popup menu.
      */
-    protected final JPopupMenu _menu = new JPopupMenu();
+    protected final JPopupMenu _menu = new SkinPopupMenu();
 
     /**
      * The LimeJTable this menu is associated with

@@ -29,6 +29,7 @@ import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultTreeCellRenderer;
 
+import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.FileManagerEvent;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
@@ -970,7 +971,7 @@ final class LibraryTree extends JTree implements MouseObserver {
 	///////////////////////////////////////////////////////////////////////////
 	
 	/** Constant for the popup menu. */
-	private final JPopupMenu DIRECTORY_POPUP = new JPopupMenu();
+	private final JPopupMenu DIRECTORY_POPUP = new SkinPopupMenu();
 	private Action shareAction = new ShareAction();
 	private Action unshareAction = new UnshareAction();
 	private Action addDirToPlaylistAction = new AddDirectoryToPlaylistAction();

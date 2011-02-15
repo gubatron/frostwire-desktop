@@ -65,9 +65,11 @@ public class Main {
                 public void run() {
                     try {
                     	
-                    	UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                    	if (isMacOSX()) {
+                    		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                    	}
                     	
-                    	String[] keys = new String[]{"MenuBarUI",  "MenuUI", "MenuItemUI", "CheckBoxMenuItemUI", "RadioButtonMenuItemUI", "PopupMenuUI"};
+                    	String[] keys = new String[]{"MenuBarUI",  "MenuUI", "MenuItemUI", "CheckBoxMenuItemUI", "RadioButtonMenuItemUI", "PopupMenuSeparatorUI"};
                     	
                     	HashMap<Object, Object> map = new HashMap<Object, Object>();
                     	for (String k : keys) {
@@ -76,6 +78,7 @@ public class Main {
                     	}
                         
                     	SubstanceLookAndFeel.setSkin(new SeaGlassSkin());
+                    	UIManager.put("PopupMenuUI", "com.frostwire.gnutella.gui.skin.SkinPopupMenuUI");
                         
                     	if (isMacOSX()) {
                     		for (String k : keys) {

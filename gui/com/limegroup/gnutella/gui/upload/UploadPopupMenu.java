@@ -3,6 +3,7 @@ package com.limegroup.gnutella.gui.upload;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
+import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.gui.I18n;
 
 /**
@@ -14,7 +15,7 @@ final class UploadPopupMenu {
 	/**
 	 * Constant for the <tt>JPopupMenu</tt> that contains all of the menu items.
 	 */
-	private final JPopupMenu MENU = new JPopupMenu();
+	private final JPopupMenu MENU = new SkinPopupMenu();
 
 	/**
 	 * The index of the kill download menu item.

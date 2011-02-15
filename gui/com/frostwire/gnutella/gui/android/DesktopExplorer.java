@@ -39,6 +39,7 @@ import org.pushingpixels.flamingo.api.bcb.core.BreadcrumbFileSelector;
 
 import com.frostwire.GuiFrostWireUtils;
 import com.frostwire.gnutella.gui.android.LocalFileListModel.OnRootListener;
+import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
 
@@ -382,8 +383,8 @@ public class DesktopExplorer extends JPanel {
         _list.setPrototypeCellValue(new LocalFile(_savedFolder));
         _list.setVisibleRowCount(-1);
 
-        _popupList = new JPopupMenu();
-        _deletePopupMenu = new JPopupMenu();
+        _popupList = new SkinPopupMenu();
+        _deletePopupMenu = new SkinPopupMenu();
 
         _menuOpen = new JMenuItem(I18n.tr("Open"));
         _menuOpen.addActionListener(new ActionListener() {

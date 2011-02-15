@@ -35,6 +35,7 @@ import org.limewire.setting.BooleanSetting;
 
 import com.frostwire.actions.ConnectionDoctorAction;
 import com.frostwire.bittorrent.AzureusStarter;
+import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.gui.mp3.MediaPlayerComponent;
 import com.limegroup.gnutella.gui.themes.SkinHandler;
@@ -710,7 +711,7 @@ public final class StatusLine implements ThemeObserver {
 		
 		public void processMouseEvent(MouseEvent me) {
 			if (me.isPopupTrigger()) {
-                JPopupMenu jpm = new JPopupMenu();
+                JPopupMenu jpm = new SkinPopupMenu();
                 
                 // If they click on the Connection Quality Meter...
                 // add 'Refresh Connections' menu item (if they click on STATUS_LINE)

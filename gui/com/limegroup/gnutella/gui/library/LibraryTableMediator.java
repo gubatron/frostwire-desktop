@@ -34,6 +34,7 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
+import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.FileDetails;
@@ -198,7 +199,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		if (TABLE.getSelectionModel().isSelectionEmpty())
 			return null;
         
-        JPopupMenu menu = new JPopupMenu();
+        JPopupMenu menu = new SkinPopupMenu();
         
 		menu.add(new JMenuItem(LAUNCH_ACTION));
 		menu.add(new JMenuItem(ENQUEUE_ACTION));

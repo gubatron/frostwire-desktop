@@ -28,6 +28,7 @@ import org.limewire.util.OSUtils;
 
 import com.frostwire.CoreFrostWireUtils;
 import com.frostwire.GuiFrostWireUtils;
+import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.bittorrent.BTDownloader;
 import com.limegroup.bittorrent.gui.TorrentDownloadFactory;
 import com.limegroup.bittorrent.gui.TorrentFileFetcher;
@@ -752,7 +753,7 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
     // inherit doc comment
     protected JPopupMenu createPopupMenu() {
 		
-		JPopupMenu menu = new JPopupMenu();
+		JPopupMenu menu = new SkinPopupMenu();
 		menu.add(new JMenuItem(removeAction));
 		menu.add(new JMenuItem(resumeAction));
 		menu.add(new JMenuItem(pauseAction));

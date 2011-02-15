@@ -10,6 +10,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
+import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
+
 
 /**
  * Manages creating and displaying a JPopupMenu of selectors.
@@ -24,7 +26,7 @@ class SelectorMenu {
     /**
      * The actual JPopupMenu.
      */
-    private final JPopupMenu MENU = new JPopupMenu();
+    private final JPopupMenu MENU = new SkinPopupMenu();
     
     /**
      * Constructs a new SelectorMenu.
