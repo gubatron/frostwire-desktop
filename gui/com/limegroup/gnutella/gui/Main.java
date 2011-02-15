@@ -6,12 +6,12 @@ import java.awt.Toolkit;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.StringTokenizer;
 
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.SubstanceLookAndFeel;
 
 import com.frostwire.gnutella.gui.skin.SeaGlassSkin;
@@ -31,14 +31,14 @@ public class Main {
 	 * @param args the array of command line arguments
 	 */
 	public static void main(String args[]) {
-		if (isMacOSX()) {
+		if (OSUtils.isMacOSX()) {
 			System.setProperty("apple.laf.useScreenMenuBar", "true");
 		}
 		System.out.println("1: Main.main("+args+")");
 		
 	    Frame splash = null;
 	    try {
-            if (isMacOSX()) {
+            if (OSUtils.isMacOSX()) {
                 // Register GURL to receive AppleEvents, such as magnet links.
                 // Use reflection to not slow down non-OSX systems.
                 // "GURLHandler.getInstance().register();"
@@ -65,30 +65,15 @@ public class Main {
                 public void run() {
                     try {
                     	
-                    	if (isMacOSX()) {
-                    		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                    	}
-                    	
-                    	String[] keys = new String[]{"MenuBarUI", "RadioButtonMenuItemUI", "PopupMenuSeparatorUI"};
-                    	
-                    	HashMap<Object, Object> map = new HashMap<Object, Object>();
-                    	for (String k : keys) {
-                    		Object v = UIManager.get(k);
-                    		map.put(k, v);
-                    	}
-                        
                     	SubstanceLookAndFeel.setSkin(new SeaGlassSkin());
                     	UIManager.put("PopupMenuUI", "com.frostwire.gnutella.gui.skin.SkinPopupMenuUI");
                     	UIManager.put("MenuItemUI", "com.frostwire.gnutella.gui.skin.SkinMenuItemUI");
                     	UIManager.put("MenuUI", "com.frostwire.gnutella.gui.skin.SkinMenuUI");
                     	UIManager.put("CheckBoxMenuItemUI", "com.frostwire.gnutella.gui.skin.SkinCheckBoxMenuItemUI");
+                    	UIManager.put("MenuBarUI", "com.frostwire.gnutella.gui.skin.SkinMenuBarUI");
+                    	UIManager.put("RadioButtonMenuItemUI", "com.frostwire.gnutella.gui.skin.SkinRadioButtonMenuItemUI");
+                    	UIManager.put("PopupMenuSeparatorUI", "com.frostwire.gnutella.gui.skin.SkinPopupMenuSeparatorUI");
                     	
-                    	if (isMacOSX()) {
-                    		for (String k : keys) {
-                    			Object v = map.get(k);
-                    			UIManager.put(k, v);
-                    		}
-                    	}
                     } catch (Exception e) {
                         System.out.println("Substance engine failed to irnitialize");
                     }
@@ -147,13 +132,7 @@ public class Main {
 	    
 	    CHOSEN_SPLASH_URL = ClassLoader.getSystemResource(splashPath + randomSplash + ".jpg");
 	    return CHOSEN_SPLASH_URL;
-	} //getNextSplashURL
-    
-    /** Determines if this is running on OS X. */
-    private static boolean isMacOSX() {
-        String os = System.getProperty("os.name").toLowerCase();
-        return os.startsWith("mac os") && os.endsWith("x"); // Why not indexOf("mac os x") ?
-    }
+	} 
     
     /** Determines if this is running a Mac OSX lower than Leopard */
     private static boolean isOlderThanLeopard() {
