@@ -11,6 +11,7 @@ import javax.swing.JPopupMenu;
 
 import org.limewire.io.IpPort;
 
+import com.frostwire.gnutella.gui.skin.SkinMenu;
 import com.frostwire.gnutella.gui.skin.SkinMenuItem;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.RemoteFileDesc;
@@ -173,7 +174,7 @@ final class GnutellaSearchResult extends AbstractSearchResult {
         PopupUtils.addMenuItem(SearchMediator.BLOCK_STRING, new BlockListener(resultPanel),
                 popupMenu, lines.length > 0, 6);
         
-        JMenu spamMenu = new JMenu(SearchMediator.MARK_AS_STRING);
+        JMenu spamMenu = new SkinMenu(SearchMediator.MARK_AS_STRING);
         spamMenu.setEnabled(markAsSpam || markAsNot);
         PopupUtils.addMenuItem(SearchMediator.SPAM_STRING, resultPanel.MARK_AS_SPAM_LISTENER,
                 spamMenu, markAsSpam);
@@ -195,7 +196,7 @@ final class GnutellaSearchResult extends AbstractSearchResult {
      * @return
      */
     private JMenu createAdvancedMenu(TableLine line, ResultPanel resultPanel) {
-        JMenu menu = new JMenu(I18n.tr("Advanced"));
+        JMenu menu = new SkinMenu(I18n.tr("Advanced"));
         
         if (line == null) {
             menu.setEnabled(false);

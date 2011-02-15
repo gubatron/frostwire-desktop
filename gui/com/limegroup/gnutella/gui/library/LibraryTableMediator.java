@@ -34,6 +34,7 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
+import com.frostwire.gnutella.gui.skin.SkinMenu;
 import com.frostwire.gnutella.gui.skin.SkinMenuItem;
 import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.Downloader;
@@ -233,7 +234,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	        DELETE_ACTION.setEnabled(torrentSelected);
 	        RENAME_ACTION.setEnabled(false);
 			if (fileSelected) {
-				JMenu sharingMenu = new JMenu(I18n.tr("Sharing"));
+				JMenu sharingMenu = new SkinMenu(I18n.tr("Sharing"));
 				sharingMenu.add(new JMenuItem(SHARE_ACTION));
 				sharingMenu.add(new JMenuItem(UNSHARE_ACTION));
 				sharingMenu.add(new JMenuItem(ANNOTATE_ACTION));
@@ -266,7 +267,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
     }
 
 	private JMenu createLicenseMenu(LibraryTableDataLine dl) {
-		JMenu menu = new JMenu(I18n.tr("License"));
+		JMenu menu = new SkinMenu(I18n.tr("License"));
 		if (dl != null) {
 			menu.add(new SkinMenuItem(PUBLISH_ACTION));
 			menu.add(new SkinMenuItem(EDIT_LICENSE_ACTION));
@@ -283,7 +284,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	}
 
 	private JMenu createAdvancedMenu(LibraryTableDataLine dl) {
-		JMenu menu = new JMenu(I18n.tr("Advanced"));
+		JMenu menu = new SkinMenu(I18n.tr("Advanced"));
 		if (dl != null) {
 			menu.add(new SkinMenuItem(BITZI_LOOKUP_ACTION));
 			menu.add(new SkinMenuItem(MAGNET_LOOKUP_ACTION));
@@ -300,7 +301,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	
 
 	private JMenu createSearchSubMenu(LibraryTableDataLine dl) {
-		JMenu menu = new JMenu(I18n.tr("Search"));
+		JMenu menu = new SkinMenu(I18n.tr("Search"));
         
         if(dl != null) {
             File f = dl.getInitializeObject();

@@ -16,7 +16,6 @@ import java.util.Set;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 import org.apache.commons.logging.Log;
@@ -28,6 +27,7 @@ import org.limewire.util.OSUtils;
 
 import com.frostwire.CoreFrostWireUtils;
 import com.frostwire.GuiFrostWireUtils;
+import com.frostwire.gnutella.gui.skin.SkinMenu;
 import com.frostwire.gnutella.gui.skin.SkinMenuItem;
 import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.bittorrent.BTDownloader;
@@ -35,6 +35,7 @@ import com.limegroup.bittorrent.gui.TorrentDownloadFactory;
 import com.limegroup.bittorrent.gui.TorrentFileFetcher;
 import com.limegroup.bittorrent.settings.BittorrentSettings;
 import com.limegroup.gnutella.Downloader;
+import com.limegroup.gnutella.Downloader.DownloadStatus;
 import com.limegroup.gnutella.Endpoint;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.FileDetails;
@@ -43,7 +44,6 @@ import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.SaveLocationException;
 import com.limegroup.gnutella.URN;
-import com.limegroup.gnutella.Downloader.DownloadStatus;
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.FileDetailsProvider;
@@ -775,7 +775,7 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
     }
 	
     private JMenu createSearchMenu() {
-        JMenu menu = new JMenu(I18n.tr("Search..."));
+        JMenu menu = new SkinMenu(I18n.tr("Search..."));
         int[] sel = TABLE.getSelectedRows();
         if ( sel.length == 0 )  { // is there any file selected ?
         	menu.setEnabled(false);

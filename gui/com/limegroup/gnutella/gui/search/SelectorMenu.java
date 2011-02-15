@@ -10,6 +10,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
+import com.frostwire.gnutella.gui.skin.SkinMenu;
 import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 
 
@@ -46,7 +47,7 @@ class SelectorMenu {
                 if(!selector.getSchema().equals(currentSchema)) {
                     currentSchema = selector.getSchema();
                     String title = NamedMediaType.getFromDescription(currentSchema).getName();
-                    currentSchemaMenu = new JMenu(title);
+                    currentSchemaMenu = new SkinMenu(title);
                     MENU.add(currentSchemaMenu);
                 }
                 assert currentSchemaMenu != null;

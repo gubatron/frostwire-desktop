@@ -11,6 +11,7 @@ import javax.swing.JPopupMenu;
 
 import org.limewire.setting.BooleanSetting;
 
+import com.frostwire.gnutella.gui.skin.SkinMenu;
 import com.frostwire.gnutella.gui.skin.SkinMenuItem;
 import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -146,7 +147,7 @@ public class ColumnSelectionMenu {
      * Returns a JMenu with the 'More Options' options tied to settings.
      */
     public static JMenu createMoreOptions(TableSettings settings) {
-        JMenu options = new JMenu(MORE_OPTIONS);
+        JMenu options = new SkinMenu(MORE_OPTIONS);
         addSetting(options, SORTING, settings.REAL_TIME_SORT);
         addSetting(options, TOOLTIPS, settings.DISPLAY_TOOLTIPS);
         return options;

@@ -43,6 +43,7 @@ import org.limewire.inspection.InspectablePrimitive;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gnutella.gui.actions.BuyAction;
+import com.frostwire.gnutella.gui.skin.SkinMenu;
 import com.frostwire.gnutella.gui.skin.SkinMenuItem;
 import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.BrowseHostHandler;
@@ -566,7 +567,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
      * Returns a menu with a 'repeat search' and 'repeat search no clear' action.
      */
     protected final JMenu createSearchAgainMenu(TableLine line) {
-        JMenu menu = new JMenu(I18n.tr("Search More"));
+        JMenu menu = new SkinMenu(I18n.tr("Search More"));
         menu.add(new SkinMenuItem(new RepeatSearchAction()));
         menu.add(new SkinMenuItem(new RepeatSearchNoClearAction()));
 
