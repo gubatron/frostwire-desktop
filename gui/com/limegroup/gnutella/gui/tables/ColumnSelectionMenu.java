@@ -11,6 +11,7 @@ import javax.swing.JPopupMenu;
 
 import org.limewire.setting.BooleanSetting;
 
+import com.frostwire.gnutella.gui.skin.SkinCheckBoxMenuItem;
 import com.frostwire.gnutella.gui.skin.SkinMenu;
 import com.frostwire.gnutella.gui.skin.SkinMenuItem;
 import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
@@ -137,7 +138,7 @@ public class ColumnSelectionMenu {
         Object id = model.getColumnId(i);
         String name = model.getColumnName(i);
         JCheckBoxMenuItem item =
-            new JCheckBoxMenuItem( name, table.isColumnVisible(id) );
+            new SkinCheckBoxMenuItem( name, table.isColumnVisible(id) );
         item.putClientProperty( COLUMN_ID, id );
         item.addActionListener( listener );
         return item;
@@ -159,7 +160,7 @@ public class ColumnSelectionMenu {
     public static JMenuItem addSetting(JMenu parent, 
                                        final String name,
                                        BooleanSetting setting) {
-        JMenuItem item = new JCheckBoxMenuItem(name, setting.getValue());
+        JMenuItem item = new SkinCheckBoxMenuItem(name, setting.getValue());
         item.putClientProperty(SETTING, setting);
         item.addActionListener(SETTING_LISTENER);
         parent.add(item);

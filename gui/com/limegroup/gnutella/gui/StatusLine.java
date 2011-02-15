@@ -34,6 +34,7 @@ import org.limewire.setting.BooleanSetting;
 
 import com.frostwire.actions.ConnectionDoctorAction;
 import com.frostwire.bittorrent.AzureusStarter;
+import com.frostwire.gnutella.gui.skin.SkinCheckBoxMenuItem;
 import com.frostwire.gnutella.gui.skin.SkinMenuItem;
 import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.NetworkManager;
@@ -721,40 +722,35 @@ public final class StatusLine implements ThemeObserver {
                 }
                 
                 //  add 'Show Connection Quality' menu item
-                JCheckBoxMenuItem jcbmi = new JCheckBoxMenuItem(new ShowConnectionQualityAction());
+                JCheckBoxMenuItem jcbmi = new SkinCheckBoxMenuItem(new ShowConnectionQualityAction());
                 jcbmi.setState(StatusBarSettings.CONNECTION_QUALITY_DISPLAY_ENABLED.getValue());
                 jpm.add(jcbmi);
 
                 //  add 'Show International Localization' menu item
-                jcbmi = new JCheckBoxMenuItem(new ShowLanguageStatusAction());
+                jcbmi = new SkinCheckBoxMenuItem(new ShowLanguageStatusAction());
                 jcbmi.setState(getLanguageSetting().getValue());
                 jpm.add(jcbmi);
 
                 
                 //  add 'Show Firewall Status' menu item
-                jcbmi = new JCheckBoxMenuItem(new ShowFirewallStatusAction());
+                jcbmi = new SkinCheckBoxMenuItem(new ShowFirewallStatusAction());
                 jcbmi.setState(StatusBarSettings.FIREWALL_DISPLAY_ENABLED.getValue());
                 jpm.add(jcbmi);
                 
-                // add 'Store Indicator' menu item (Not in FrostWire)
-                //jcbmi = new JCheckBoxMenuItem(new ShowStoreIndicatorStatusAction());
-                //jcbmi.setState(StatusBarSettings.LWS_DISPLAY_ENABLED.getValue());
-                //jpm.add(jcbmi);
-                
                 //  add 'Show Shared Files Count' menu item 
-                jcbmi = new JCheckBoxMenuItem(new ShowSharedFilesCountAction());
+                jcbmi = new SkinCheckBoxMenuItem(new ShowSharedFilesCountAction());
                 jcbmi.setState(StatusBarSettings.SHARED_FILES_DISPLAY_ENABLED.getValue());
                 jpm.add(jcbmi);
                 
                 //  add 'Show Bandwidth Consumption' menu item
-                jcbmi = new JCheckBoxMenuItem(new ShowBandwidthConsumptionAction());
+                jcbmi = new SkinCheckBoxMenuItem(new ShowBandwidthConsumptionAction());
                 jcbmi.setState(StatusBarSettings.BANDWIDTH_DISPLAY_ENABLED.getValue());
                 jpm.add(jcbmi);
                 
                 jpm.addSeparator();
                 
                 //  add 'Show Media Player' menu item
-                jcbmi = new JCheckBoxMenuItem(new ShowMediaPlayerAction());
+                jcbmi = new SkinCheckBoxMenuItem(new ShowMediaPlayerAction());
                 jcbmi.setState(PlayerSettings.PLAYER_ENABLED.getValue());
                 jpm.add(jcbmi);
                 

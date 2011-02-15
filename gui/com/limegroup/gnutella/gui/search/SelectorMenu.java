@@ -5,11 +5,11 @@ import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
+import com.frostwire.gnutella.gui.skin.SkinCheckBoxMenuItem;
 import com.frostwire.gnutella.gui.skin.SkinMenu;
 import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 
@@ -71,7 +71,7 @@ class SelectorMenu {
     private JMenuItem createItem(FilterBox box, Selector selector) {
         String title = selector.getTitle();
         boolean isSelected = box.getSelector().equals(selector);
-        JMenuItem item = new JCheckBoxMenuItem(title, isSelected);
+        JMenuItem item = new SkinCheckBoxMenuItem(title, isSelected);
         item.putClientProperty(SELECTOR, selector);
         return item;
     }
