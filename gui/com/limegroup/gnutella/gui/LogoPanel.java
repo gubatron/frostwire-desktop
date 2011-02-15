@@ -1,7 +1,6 @@
 package com.limegroup.gnutella.gui;
 
 import java.awt.Cursor;
-import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -63,6 +62,7 @@ final class LogoPanel extends BoxPanel /* implements ThemeObserver */ {
 	public void updateTheme() {
 		_searchingIcon = GUIMediator.getThemeImage("searching");
 		_notSearchingIcon = GUIMediator.getThemeImage("notsearching");
+		
 		if(_searching) {
 			ICON_LABEL.setIcon(_searchingIcon);
 		} else {
@@ -70,18 +70,16 @@ final class LogoPanel extends BoxPanel /* implements ThemeObserver */ {
 		}
 		ImageIcon logoIcon = GUIMediator.getThemeImage("logo");
 		LOGO_LABEL.setIcon(logoIcon);
+		
+		
 		LOGO_LABEL.setSize(logoIcon.getIconWidth(),
 						   logoIcon.getIconHeight());
 		ICON_LABEL.setSize(_searchingIcon.getIconWidth(),
 						   _searchingIcon.getIconHeight());
+		
+		GUIUtils.setOpaque(false, this);
 
-		Dimension dim = new Dimension(LOGO_LABEL.getSize().width+
-									  ICON_LABEL.getSize().width+12,
-									  ICON_LABEL.getSize().height);
-		this.setPreferredSize(dim);
-		this.setSize(dim.width, dim.height);
 		buildPanel();
-        GUIUtils.setOpaque(false, this);
 	}
 	
 	private void buildPanel() {

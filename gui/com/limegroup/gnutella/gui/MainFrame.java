@@ -10,7 +10,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.dnd.DropTarget;
 import java.awt.event.ComponentEvent;
@@ -25,10 +24,8 @@ import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
@@ -158,8 +155,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      */
     private Map<GUIMediator.Tabs, Tab> TABS = new HashMap<GUIMediator.Tabs, Tab>(7);
 
-	private int height;
-
 	private boolean isSearching = false;
     
     /**
@@ -202,10 +197,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         new DropTarget(FRAME, new TransferHandlerDropTargetListener(DNDUtils.DEFAULT_TRANSFER_HANDLER));
 
         TABBED_PANE = new JTabbedPane();
-        // Setup the Tabs structure based on advertising mode and Windows
-        //buildTabs();
-        
-        //TABBED_PANE.setPreferredSize(new Dimension(10000, 10000));        
         
         // Add a listener for saving the dimensions of the window &
         // position the search icon overlay correctly.
@@ -213,7 +204,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
             public void componentHidden(ComponentEvent e) {}
             
             public void componentShown(ComponentEvent e) {
-                setSearchIconLocation();
             }
             
             public void componentMoved(ComponentEvent e) {
@@ -223,7 +213,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
 
             public void componentResized(ComponentEvent e) {
                 saveWindowState();
-                setSearchIconLocation();
             }
         });
 
@@ -258,34 +247,45 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         FRAME.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         this.setFrameDimensions();
 
-
-        
-
         FRAME.setJMenuBar(getMenuMediator().getMenuBar());
         JPanel contentPane = new JPanel();
+        
         FRAME.setContentPane(contentPane);
         contentPane.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
+        
+        //ADD LOGO
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.gridwidth = 1;
+        gbc.weightx = 0;
+        gbc.insets = new Insets(2,0,0,5); //padding
+        gbc.anchor = GridBagConstraints.NORTHEAST;
+        LOGO_PANEL = new LogoPanel();
+        contentPane.add(LOGO_PANEL, gbc);
+        
+        //ADD TABBED PANE
+        gbc = new GridBagConstraints();
+        gbc.gridwidth = 2; //spans all the way
+        gbc.gridx = 0;
+        gbc.gridy = 0;	
         gbc.weightx = 1;
         gbc.weighty = 1;
         gbc.fill = GridBagConstraints.BOTH;
-        gbc.gridx = 0;
+        gbc.ipady = 100;
         contentPane.add(TABBED_PANE, gbc);
-        gbc.weighty = 0;
+        
+        //ADD STATUS LINE
+        gbc = new GridBagConstraints();
         gbc.gridy = 1;
+        gbc.gridwidth = 2;
+        gbc.weighty = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         contentPane.add(getStatusLine().getComponent(), gbc);
-
-        LOGO_PANEL = new LogoPanel();
-        JLayeredPane layeredPane =
-            JLayeredPane.getLayeredPaneAbove(TABBED_PANE);
-        layeredPane.add(LOGO_PANEL, JLayeredPane.PALETTE_LAYER, 0);
 
         ThemeMediator.addThemeObserver(this);
         GUIMediator.addRefreshListener(this);
 
-        //updateLogoHeight();
-        
         if (ApplicationSettings.MAGNET_CLIPBOARD_LISTENER.getValue()) {
             FRAME.addWindowListener(MagnetClipboardListener.getInstance());
         }
@@ -328,26 +328,13 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
     // inherit doc comment
     public void updateTheme() {
         FRAME.setJMenuBar(getMenuMediator().getMenuBar());
-        LOGO_PANEL.updateTheme();
-        setSearchIconLocation();
-        updateLogoHeight();
+        //LOGO_PANEL.updateTheme();
+        //setSearchIconLocation();
+        //updateLogoHeight();
         for(GUIMediator.Tabs tab : GUIMediator.Tabs.values())
             updateTabIcon(tab);
 	}
     
-    public void updateLogoHeight() {
-        // necessary so that the logo does not intrude on the content below
-        Rectangle rect = TABBED_PANE.getUI().getTabBounds(TABBED_PANE, 0);
-        Dimension ld = LOGO_PANEL.getPreferredSize();
-        int height = ld.height + 4;
-		this.height = Math.max(rect.height, height);
-        if (rect.height < height)
-            TABBED_PANE.setBorder(BorderFactory.createEmptyBorder(
-                height - rect.height, 0, 0, 0));
-        else
-            TABBED_PANE.setBorder(null);
-    }
-
     /**
      * Build the Tab Structure based on advertising mode and Windows
      */
@@ -367,7 +354,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
 	    
 	    TABBED_PANE.setPreferredSize(new Dimension(10000, 10000));
 	    
-	 // listener for updating the tab's titles & tooltips.
+	    // listener for updating the tab's titles & tooltips.
         PropertyChangeListener propertyChangeListener = new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent evt) {
                 Tab tab = (Tab)evt.getSource();
@@ -837,16 +824,4 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
 		isSearching = searching;
 		refresh();
     }
-
-    /**
-     * Sets the location of the search status icon.
-     */
-    private void setSearchIconLocation() {
-		int y = getMenuMediator().getMenuBarHeight() 
-			+ (height - LOGO_PANEL.getPreferredSize().height) / 2;
-        LOGO_PANEL.setLocation(
-            FRAME.getSize().width - LOGO_PANEL.getSize().width - 12,
-            y);
-    }
-
 }
