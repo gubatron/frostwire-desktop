@@ -11,6 +11,7 @@ import javax.swing.JPopupMenu;
 
 import org.limewire.setting.BooleanSetting;
 
+import com.frostwire.gnutella.gui.skin.SkinMenuItem;
 import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -90,7 +91,7 @@ public class ColumnSelectionMenu {
 
         // add the 'revert to default' option.
         ActionListener reverter = new ReverterListener();
-        JMenuItem revert = new JMenuItem(REVERT_DEFAULT);
+        JMenuItem revert = new SkinMenuItem(REVERT_DEFAULT);
         ColumnPreferenceHandler cph = _table.getColumnPreferenceHandler();
         TableSettings settings = _table.getTableSettings();        
         //if there is no preferences handler or the values are already default,

@@ -28,6 +28,7 @@ import org.limewire.util.OSUtils;
 
 import com.frostwire.CoreFrostWireUtils;
 import com.frostwire.GuiFrostWireUtils;
+import com.frostwire.gnutella.gui.skin.SkinMenuItem;
 import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.bittorrent.BTDownloader;
 import com.limegroup.bittorrent.gui.TorrentDownloadFactory;
@@ -754,19 +755,19 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
     protected JPopupMenu createPopupMenu() {
 		
 		JPopupMenu menu = new SkinPopupMenu();
-		menu.add(new JMenuItem(removeAction));
-		menu.add(new JMenuItem(resumeAction));
-		menu.add(new JMenuItem(pauseAction));
-		menu.add(new JMenuItem(launchAction));
+		menu.add(new SkinMenuItem(removeAction));
+		menu.add(new SkinMenuItem(resumeAction));
+		menu.add(new SkinMenuItem(pauseAction));
+		menu.add(new SkinMenuItem(launchAction));
 		if(OSUtils.isWindows()||OSUtils.isMacOSX())
-			menu.add(new JMenuItem(exploreAction)); 
+			menu.add(new SkinMenuItem(exploreAction)); 
 		menu.addSeparator();
-		menu.add(new JMenuItem(clearAction));
+		menu.add(new SkinMenuItem(clearAction));
 		menu.addSeparator();
         menu.add(createSearchMenu());
-		menu.add(new JMenuItem(chatAction));
-		menu.add(new JMenuItem(browseAction));
-		menu.add(new JMenuItem(editLocationAction));
+		menu.add(new SkinMenuItem(chatAction));
+		menu.add(new SkinMenuItem(browseAction));
+		menu.add(new SkinMenuItem(editLocationAction));
 //		menu.addSeparator();
 //		menu.add(createAdvancedSubMenu());
 				
@@ -788,7 +789,7 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
                                         SearchMediator.SEARCH_INFORMATION_KEY );
         if ( searchInfoMap != null ) {
             SearchInformation searchInfo = SearchInformation.createFromMap( searchInfoMap );
-            menu.add(new JMenuItem( new SearchAction( searchInfo ) ));
+            menu.add(new SkinMenuItem( new SearchAction( searchInfo ) ));
         }
         
         //-- make search for filename action --
@@ -805,7 +806,7 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
         SearchInformation info = 
             SearchInformation.createKeywordSearch (filename, null, MediaType.getAnyTypeMediaType());
         if (SearchMediator.validateInfo(info) == SearchMediator.QUERY_VALID)
-            menu.add(new JMenuItem( new SearchAction(info,I18nMarker.marktr("Search for Keywords: {0}")) ));
+            menu.add(new SkinMenuItem( new SearchAction(info,I18nMarker.marktr("Search for Keywords: {0}")) ));
         
         return menu;
     }

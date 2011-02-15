@@ -8,11 +8,11 @@ import java.util.Map;
 
 import javax.swing.Action;
 import javax.swing.JList;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 import org.limewire.collection.NameValue;
 
+import com.frostwire.gnutella.gui.skin.SkinMenuItem;
 import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.gui.actions.SearchWhatsNewMediaTypeAction;
 import com.limegroup.gnutella.gui.actions.SearchXMLFieldAction;
@@ -62,7 +62,7 @@ class FilterPopupMenuHandler {
 		if (actions.length > 0) {
 			JPopupMenu menu = new SkinPopupMenu();
 			for (int i = 0; i < actions.length; i++) {
-				menu.add(new JMenuItem(actions[i]));
+				menu.add(new SkinMenuItem(actions[i]));
 			}
 			menu.show(box.getList(), e.getX(), e.getY());
 		}	

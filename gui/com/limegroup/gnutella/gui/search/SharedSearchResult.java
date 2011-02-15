@@ -8,6 +8,7 @@ import javax.swing.JPopupMenu;
 
 import org.limewire.io.IpPort;
 
+import com.frostwire.gnutella.gui.skin.SkinMenuItem;
 import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.GUID;
@@ -112,13 +113,13 @@ public class SharedSearchResult extends AbstractSearchResult {
     public JPopupMenu createMenu(JPopupMenu popupMenu, TableLine[] lines, boolean markAsSpam, boolean markAsNot, ResultPanel resultPanel) {
         JPopupMenu menu = new SkinPopupMenu(); 
         
-        JMenuItem item = new JMenuItem(I18n.tr("Path") + ": " + getFileDesc().getPath());
+        JMenuItem item = new SkinMenuItem(I18n.tr("Path") + ": " + getFileDesc().getPath());
         menu.add(item);
         menu.addSeparator();
         
         // TODO: fix this hidden coupling, SharedSearchResult needs to be tied MyFilesResultPanel
         //        explicitly
-        menu.add(new JMenuItem(((MySharedFilesResultPanel)resultPanel).STOP_SHARING_FILE_LISTENER));
+        menu.add(new SkinMenuItem(((MySharedFilesResultPanel)resultPanel).STOP_SHARING_FILE_LISTENER));
  
 
         return menu;

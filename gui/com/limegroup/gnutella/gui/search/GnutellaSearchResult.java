@@ -7,11 +7,11 @@ import java.util.Collections;
 import java.util.Set;
 
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 import org.limewire.io.IpPort;
 
+import com.frostwire.gnutella.gui.skin.SkinMenuItem;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.URN;
@@ -205,12 +205,12 @@ final class GnutellaSearchResult extends AbstractSearchResult {
         BitziLookupAction bitziAction = new BitziLookupAction(resultPanel);
 
         bitziAction.setEnabled(line.getRemoteFileDesc().getSHA1Urn() != null);
-        menu.add(new JMenuItem(bitziAction));
+        menu.add(new SkinMenuItem(bitziAction));
         
         CopyMagnetLinkToClipboardAction magnet =
             new CopyMagnetLinkToClipboardAction(resultPanel);
         magnet.setEnabled(line.hasNonFirewalledRFD());
-        menu.add(new JMenuItem(magnet));
+        menu.add(new SkinMenuItem(magnet));
         
         // launch action
         if(line.isLaunchable()) {

@@ -15,6 +15,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import com.frostwire.gnutella.gui.skin.SkinMenuItem;
 import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.FileChooserHandler;
@@ -160,8 +161,8 @@ class MediaTypeDownloadDirMediator extends AbstractTableMediator<MediaTypeDownlo
 	 */
 	protected JPopupMenu createPopupMenu() {
 		JPopupMenu menu = new SkinPopupMenu();
-		menu.add(new JMenuItem(browseAction));
-		menu.add(new JMenuItem(resetAction));
+		menu.add(new SkinMenuItem(browseAction));
+		menu.add(new SkinMenuItem(resetAction));
 		return menu;
 	}
 

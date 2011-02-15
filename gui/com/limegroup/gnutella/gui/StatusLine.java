@@ -24,7 +24,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
@@ -35,6 +34,7 @@ import org.limewire.setting.BooleanSetting;
 
 import com.frostwire.actions.ConnectionDoctorAction;
 import com.frostwire.bittorrent.AzureusStarter;
+import com.frostwire.gnutella.gui.skin.SkinMenuItem;
 import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.gui.mp3.MediaPlayerComponent;
@@ -716,7 +716,7 @@ public final class StatusLine implements ThemeObserver {
                 // If they click on the Connection Quality Meter...
                 // add 'Refresh Connections' menu item (if they click on STATUS_LINE)
                 if (me.getComponent().equals(_connectionQualityMeter)) {
-                    jpm.add(new JMenuItem(ConnectionDoctorAction.getInstance()));
+                    jpm.add(new SkinMenuItem(ConnectionDoctorAction.getInstance()));
                     jpm.addSeparator();
                 }
                 

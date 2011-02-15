@@ -34,6 +34,7 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
+import com.frostwire.gnutella.gui.skin.SkinMenuItem;
 import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.FileDesc;
@@ -201,13 +202,13 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
         
         JPopupMenu menu = new SkinPopupMenu();
         
-		menu.add(new JMenuItem(LAUNCH_ACTION));
-		menu.add(new JMenuItem(ENQUEUE_ACTION));
+		menu.add(new SkinMenuItem(LAUNCH_ACTION));
+		menu.add(new SkinMenuItem(ENQUEUE_ACTION));
 		menu.addSeparator();
-		menu.add(new JMenuItem(RESUME_ACTION));
+		menu.add(new SkinMenuItem(RESUME_ACTION));
 		menu.addSeparator();
-		menu.add(new JMenuItem(DELETE_ACTION));
-		menu.add(new JMenuItem(RENAME_ACTION));
+		menu.add(new SkinMenuItem(DELETE_ACTION));
+		menu.add(new SkinMenuItem(RENAME_ACTION));
 		menu.addSeparator();
 		
         int[] rows = TABLE.getSelectedRows();
@@ -267,9 +268,9 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	private JMenu createLicenseMenu(LibraryTableDataLine dl) {
 		JMenu menu = new JMenu(I18n.tr("License"));
 		if (dl != null) {
-			menu.add(new JMenuItem(PUBLISH_ACTION));
-			menu.add(new JMenuItem(EDIT_LICENSE_ACTION));
-			menu.add(new JMenuItem(VIEW_LICENSE_ACTION));
+			menu.add(new SkinMenuItem(PUBLISH_ACTION));
+			menu.add(new SkinMenuItem(EDIT_LICENSE_ACTION));
+			menu.add(new SkinMenuItem(VIEW_LICENSE_ACTION));
 			
 			menu.setEnabled(PUBLISH_ACTION.isEnabled() 
 					|| EDIT_LICENSE_ACTION.isEnabled() 
@@ -284,9 +285,9 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	private JMenu createAdvancedMenu(LibraryTableDataLine dl) {
 		JMenu menu = new JMenu(I18n.tr("Advanced"));
 		if (dl != null) {
-			menu.add(new JMenuItem(BITZI_LOOKUP_ACTION));
-			menu.add(new JMenuItem(MAGNET_LOOKUP_ACTION));
-			menu.add(new JMenuItem(COPY_MAGNET_TO_CLIPBOARD_ACTION));
+			menu.add(new SkinMenuItem(BITZI_LOOKUP_ACTION));
+			menu.add(new SkinMenuItem(MAGNET_LOOKUP_ACTION));
+			menu.add(new SkinMenuItem(COPY_MAGNET_TO_CLIPBOARD_ACTION));
 			File file = getFile(TABLE.getSelectedRow());
 			menu.setEnabled(GuiCoreMediator.getFileManager().isFileShared(file)); 
 		}
@@ -305,13 +306,13 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
             File f = dl.getInitializeObject();
     		String keywords = QueryUtils.createQueryString(f.getName());
             if (keywords.length() > 2)
-    			menu.add(new JMenuItem(new SearchAction(keywords)));
+    			menu.add(new SkinMenuItem(new SearchAction(keywords)));
     		
     		LimeXMLDocument doc = dl.getXMLDocument();
     		if(doc != null) {
                 Action[] actions = ActionUtils.createSearchActions(doc);
         		for (int i = 0; i < actions.length; i++)
-        			menu.add(new JMenuItem(actions[i]));
+        			menu.add(new SkinMenuItem(actions[i]));
             }
         }
         

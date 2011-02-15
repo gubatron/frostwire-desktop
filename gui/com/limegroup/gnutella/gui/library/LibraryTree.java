@@ -29,6 +29,7 @@ import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultTreeCellRenderer;
 
+import com.frostwire.gnutella.gui.skin.SkinMenuItem;
 import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.FileManagerEvent;
 import com.limegroup.gnutella.MediaType;
@@ -986,22 +987,22 @@ final class LibraryTree extends JTree implements MouseObserver {
 	 * click.
 	 */
 	private void makePopupMenu() {
-		DIRECTORY_POPUP.add(new JMenuItem(shareAction));
-		DIRECTORY_POPUP.add(new JMenuItem(unshareAction));
-        DIRECTORY_POPUP.add(new JMenuItem(addDirToPlaylistAction));
+		DIRECTORY_POPUP.add(new SkinMenuItem(shareAction));
+		DIRECTORY_POPUP.add(new SkinMenuItem(unshareAction));
+        DIRECTORY_POPUP.add(new SkinMenuItem(addDirToPlaylistAction));
 		DIRECTORY_POPUP.addSeparator();
-		DIRECTORY_POPUP.add(new JMenuItem(new ShareFileSpeciallyAction()));
-		DIRECTORY_POPUP.add(new JMenuItem(new ShareNewFolderAction()));
+		DIRECTORY_POPUP.add(new SkinMenuItem(new ShareFileSpeciallyAction()));
+		DIRECTORY_POPUP.add(new SkinMenuItem(new ShareNewFolderAction()));
 		DIRECTORY_POPUP.addSeparator();
-        DIRECTORY_POPUP.add(new JMenuItem(showTorrentMetaAction));
+        DIRECTORY_POPUP.add(new SkinMenuItem(showTorrentMetaAction));
         DIRECTORY_POPUP.addSeparator();
-		DIRECTORY_POPUP.add(new JMenuItem(refreshAction));
+		DIRECTORY_POPUP.add(new SkinMenuItem(refreshAction));
 		if (hasExploreAction()) {
-			DIRECTORY_POPUP.add(new JMenuItem(exploreAction));
+			DIRECTORY_POPUP.add(new SkinMenuItem(exploreAction));
 		}
 		DIRECTORY_POPUP.addSeparator();
 		
-		DIRECTORY_POPUP.add(new JMenuItem(new ConfigureOptionsAction(
+		DIRECTORY_POPUP.add(new SkinMenuItem(new ConfigureOptionsAction(
                 OptionsConstructor.SHARED_KEY,
                 I18n.tr("Configure Sharing Options"),
                 I18n.tr("You can configure the folders you share in FrostWire\'s Options."))));

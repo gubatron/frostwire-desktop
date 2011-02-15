@@ -3,6 +3,7 @@ package com.limegroup.gnutella.gui.upload;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
+import com.frostwire.gnutella.gui.skin.SkinMenuItem;
 import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.gui.I18n;
 
@@ -36,23 +37,17 @@ final class UploadPopupMenu {
         /**
     	 * Constant for the kill download menu item.
     	 */
-    	final JMenuItem KILL_ITEM = new JMenuItem(
-            I18n.tr("Kill Upload")
-        );
+    	final JMenuItem KILL_ITEM = new SkinMenuItem(I18n.tr("Kill Upload"));
     
     	/**
     	 * Constant for the chat menu item.
     	 */
-    	final JMenuItem CHAT_ITEM = new JMenuItem(
-            I18n.tr("Chat with Host")
-        );
+    	final JMenuItem CHAT_ITEM = new SkinMenuItem(I18n.tr("Chat with Host"));
         
         /**
          * Constant for the browse menu item.
          */
-        final JMenuItem BROWSE_ITEM = new JMenuItem(
-            I18n.tr("Browse Host")
-        );
+        final JMenuItem BROWSE_ITEM = new SkinMenuItem(I18n.tr("Browse Host"));
     
    		KILL_ITEM.addActionListener( um.REMOVE_LISTENER );
         CHAT_ITEM.addActionListener( um.CHAT_LISTENER );

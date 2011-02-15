@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import org.limewire.io.NetworkUtils;
 import org.limewire.net.SocketsManager.ConnectType;
 
+import com.frostwire.gnutella.gui.skin.SkinMenuItem;
 import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.connection.RoutedConnection;
 import com.limegroup.gnutella.gui.AutoCompleteTextField;
@@ -215,21 +216,19 @@ public final class ConnectionMediator extends AbstractTableMediator<ConnectionMo
         JPopupMenu jpm = new SkinPopupMenu();
 
         //  add
-        JMenuItem jmi = new JMenuItem(I18n
-                .tr("Add..."));
+        JMenuItem jmi = new SkinMenuItem(I18n.tr("Add..."));
         jmi.addActionListener(ADD_LISTENER);
         jpm.add(jmi);
         jpm.addSeparator();
 
         //  remove
-        jmi = new JMenuItem(I18n.tr("Remove"));
+        jmi = new SkinMenuItem(I18n.tr("Remove"));
         jmi.addActionListener(REMOVE_LISTENER);
         jpm.add(jmi);
         jpm.addSeparator();
 
         //  browse host
-        jmi = new JMenuItem(I18n
-                .tr("Browse Host"));
+        jmi = new SkinMenuItem(I18n.tr("Browse Host"));
         jmi.addActionListener(BROWSE_HOST_LISTENER);
         jpm.add(jmi);
 

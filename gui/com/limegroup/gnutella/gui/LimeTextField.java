@@ -18,6 +18,7 @@ import javax.swing.undo.UndoManager;
 
 import org.limewire.i18n.I18nMarker;
 
+import com.frostwire.gnutella.gui.skin.SkinMenuItem;
 import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 
 /**
@@ -231,14 +232,14 @@ public class LimeTextField extends JTextField {
             }
         };
         
-        popup.add(new JMenuItem(UNDO_ACTION));
+        popup.add(new SkinMenuItem(UNDO_ACTION));
         popup.addSeparator();
-        popup.add(new JMenuItem(CUT_ACTION));
-        popup.add(new JMenuItem(COPY_ACTION));
-        popup.add(new JMenuItem(PASTE_ACTION));
-        popup.add(new JMenuItem(DELETE_ACTION));
+        popup.add(new SkinMenuItem(CUT_ACTION));
+        popup.add(new SkinMenuItem(COPY_ACTION));
+        popup.add(new SkinMenuItem(PASTE_ACTION));
+        popup.add(new SkinMenuItem(DELETE_ACTION));
         popup.addSeparator();
-        popup.add(new JMenuItem(SELECT_ALL_ACTION));
+        popup.add(new SkinMenuItem(SELECT_ALL_ACTION));
         return popup;
     }
     
