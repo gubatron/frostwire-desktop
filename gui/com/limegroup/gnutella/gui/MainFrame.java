@@ -254,12 +254,14 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         contentPane.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         
+        int logoTopPadding = (OSUtils.isMacOSX()) ? 2 : 0;
+        
         //ADD LOGO
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.gridwidth = 1;
         gbc.weightx = 0;
-        gbc.insets = new Insets(2,0,0,5); //padding
+        gbc.insets = new Insets(logoTopPadding,0,0,5); //padding
         gbc.anchor = GridBagConstraints.NORTHEAST;
         LOGO_PANEL = new LogoPanel();
         contentPane.add(LOGO_PANEL, gbc);
