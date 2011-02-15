@@ -145,7 +145,6 @@ public class ColumnSelectionMenu {
      */
     public static JMenu createMoreOptions(TableSettings settings) {
         JMenu options = new JMenu(MORE_OPTIONS);
-        addSetting(options, ROWSTRIPE, settings.ROWSTRIPE);
         addSetting(options, SORTING, settings.REAL_TIME_SORT);
         addSetting(options, TOOLTIPS, settings.DISPLAY_TOOLTIPS);
         return options;

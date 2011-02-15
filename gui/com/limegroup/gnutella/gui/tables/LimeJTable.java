@@ -543,11 +543,6 @@ public class LimeJTable extends JTable implements JSortTable {
                 // do nothing if we're focused & editting.
             } else if (even.equals(odd)) {
                 // do nothing if backgrounds are the same.
-            } else if (!tableSettings.ROWSTRIPE.getValue()) {
-                // if the renderer's background isn't already the normal one,
-                // change it.  (needed for real-time changing of the option)
-                if( r != null && !r.equals(even) )
-                    r.setBackground(even);
             } else if ( row % 2 != 0 ) {
                 r.setBackground(odd);
             } else {

@@ -1,7 +1,6 @@
 package com.limegroup.gnutella.gui.search;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -33,7 +32,6 @@ import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.limewire.setting.BooleanSetting;
 import org.limewire.util.StringUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
@@ -67,14 +65,6 @@ class FilterBox extends JPanel {
      * The listener that ensures the selected row is always visible.
      */
     private static final ListSelectionListener MOVER = new Mover();
-    
-    /**
-     * The setting that controls row striping.
-     *
-     * (Ideally we wouldn't reference ResultPanel, but it's easiest.)
-     */
-    private static final BooleanSetting STRIPE_ROWS = 
-        ResultPanel.SEARCH_SETTINGS.ROWSTRIPE;
     
     /**
      * The string to use for 'Options'.
@@ -852,37 +842,17 @@ class FilterBox extends JPanel {
     	public Component getListCellRendererComponent(JList list, Object value,
                                                    int idx, boolean isSelected,
                                                    boolean cellHasFocus) {
+    	    
+    	    super.getListCellRendererComponent(list, value, idx, isSelected, cellHasFocus);
+    	    
             Integer matchIdx = (Integer)list.getClientProperty(MATCH_IDX);
             boolean match = matchIdx != null && idx == matchIdx.intValue();
             setComponentOrientation(list.getComponentOrientation());
 
-            if (isSelected) {
-				if (match) {
-					setFont(UIManager.getFont("Table.font.bold"));
-				} else {
-					setFont(UIManager.getFont("Table.font"));
-				}
-                setOpaque(true);
-                setBackground(list.getSelectionBackground());
-                setForeground(list.getSelectionForeground());
+            if (match) {
+                setFont(UIManager.getFont("Table.font.bold"));
             } else {
-                if(match) {
-                    setFont(UIManager.getFont("Table.font.bold"));
-                    setForeground(list.getForeground());
-                    //TODO: ideally we would change the color also,
-                    //      but what color should we use?
-                    //setForeground(
-                    //  ThemeFileHandler.FILTER_TITLE_COLOR.getValue());
-                } else {
-                    setFont(UIManager.getFont("Table.font"));                
-                    setForeground(list.getForeground());
-                }
-                if(idx % 2 == 0 && STRIPE_ROWS.getValue()) {
-                    setOpaque(true);
-                    setBackground(Color.YELLOW); // Check color
-                } else {
-                    setOpaque(false);
-                }
+                setFont(UIManager.getFont("Table.font"));
             }
     	    
     	    if(value instanceof IconAndNameHolder) {
@@ -894,8 +864,6 @@ class FilterBox extends JPanel {
                 setText((value == null) ? "" : value.toString());
             }
             setEnabled(list.isEnabled());
-            setBorder((cellHasFocus) ? 
-                UIManager.getBorder("List.focusCellHighlightBorder") : noFocusBorder);
             return this;
         }
     }
