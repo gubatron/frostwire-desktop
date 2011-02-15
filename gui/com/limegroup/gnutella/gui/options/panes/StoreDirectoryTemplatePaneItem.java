@@ -271,14 +271,6 @@ public final class StoreDirectoryTemplatePaneItem extends AbstractPaneItem {
             this.displayTemplateText = displayTemplateText;
         }
         
-        public String getDisplayText(){
-            return displayText;
-        }
-        
-        public String getDisplayTemplateText() {
-            return displayTemplateText;
-        }
-        
         public String toString(){
             return displayText;
         }

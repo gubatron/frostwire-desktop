@@ -22,7 +22,7 @@ public final class ConnectionsTab extends AbstractTab {
 	 *
 	 * @param CONNECTION_MEDIATOR the <tt>ConectionMediator</tt> instance
 	 */
-	public ConnectionsTab(final ComponentMediator CONNECTION_MEDIATOR) {
+	public ConnectionsTab(final ComponentMediator<?> CONNECTION_MEDIATOR) {
 		super(I18n.tr("Connections"),
 		        I18n.tr("Show Connections to Other Clients"), "connection_tab");
 		COMPONENT = CONNECTION_MEDIATOR.getComponent();

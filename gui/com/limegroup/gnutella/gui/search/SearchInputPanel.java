@@ -11,8 +11,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -137,6 +137,8 @@ class SearchInputPanel extends JPanel {
                         );
                     
 	private JPanel searchEntry;
+	private JPanel whatsnew;
+    private JPanel browseHost;
     
     /**
      * The listener for new searches.
@@ -168,26 +170,24 @@ class SearchInputPanel extends JPanel {
         add(SCHEMA_BOX, BorderLayout.NORTH);
 
         searchEntry = createSearchEntryPanel();
-		
-        JPanel whatsnew = createWhatIsNewPanel();
-        JPanel browseHost = createBrowseHostPanel();
+		whatsnew = createWhatIsNewPanel();
+        browseHost = createBrowseHostPanel();
+        
         panelize(searchEntry);
         panelize(whatsnew);
         panelize(browseHost);
+        
         PANE.add(I18n.tr("Keyword"), searchEntry);
         PANE.add(I18n.tr("What\'s New"), whatsnew);
         PANE.add(I18n.tr("Direct Connect"), browseHost);
                  
         PANE.setRequestFocusEnabled(false);
-        PANE.addMouseListener(new MouseListener() {
+        PANE.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent e) {
                 requestSearchFocusImmediately();
             }
-            public void mouseEntered(MouseEvent e) {}
-            public void mouseExited(MouseEvent e) {}
-            public void mousePressed(MouseEvent e) {}
-            public void mouseReleased(MouseEvent e) {}
-        });         
+        });
 
         add(PANE, BorderLayout.CENTER);
 

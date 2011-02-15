@@ -57,6 +57,10 @@ public class StoreSaveTemplateProcessor {
      */
     public final static class IllegalTemplateException extends ParseException {
         
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -3544104037008917572L;
         private final String template;
                 
         public IllegalTemplateException(int pos, final String msg, final String template) {

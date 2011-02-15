@@ -125,7 +125,7 @@ class MediaTypeDownloadDirMediator extends AbstractTableMediator<MediaTypeDownlo
 	 */
 	public void initOptions() {
 		DATA_MODEL.clear();
-		for (Iterator i = NamedMediaType.getAllNamedMediaTypes().iterator(); i.hasNext();) {
+		for (Iterator<?> i = NamedMediaType.getAllNamedMediaTypes().iterator(); i.hasNext();) {
 			NamedMediaType nm = (NamedMediaType) i.next();
 			if (!nm.getMediaType().getMimeType().equals(MediaType.SCHEMA_ANY_TYPE))
 				DATA_MODEL.add(nm);
@@ -195,7 +195,12 @@ class MediaTypeDownloadDirMediator extends AbstractTableMediator<MediaTypeDownlo
 	 * selected mediatype row.
 	 */
 	private class BrowseDirectoryAction extends AbstractAction {
-		public BrowseDirectoryAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 3781168481533565154L;
+
+        public BrowseDirectoryAction() {
 			putValue(Action.NAME, I18n
 					.tr("Browse..."));
 			putValue(Action.SHORT_DESCRIPTION, I18n
@@ -228,7 +233,12 @@ class MediaTypeDownloadDirMediator extends AbstractTableMediator<MediaTypeDownlo
 	 */
 	private class ResetDirectoryAction extends AbstractAction {
 
-		public ResetDirectoryAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 508292832909926418L;
+
+        public ResetDirectoryAction() {
 			putValue(Action.NAME, I18n
 					.tr("Reset"));
 			putValue(Action.SHORT_DESCRIPTION, I18n

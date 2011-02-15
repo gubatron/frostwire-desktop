@@ -13,10 +13,14 @@ import com.limegroup.gnutella.gui.options.panes.AbstractPaneItem;
  * coupling that directly subclassing <tt>DefaultMutableTreeNode</tt>
  * would incur.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public class OptionsTreeNode extends DefaultMutableTreeNode {
 	
 	/**
+     * 
+     */
+    private static final long serialVersionUID = 5889522847540513086L;
+
+    /**
 	 * The key for uniquely identifying this node.
 	 */
 	private String _titleKey;

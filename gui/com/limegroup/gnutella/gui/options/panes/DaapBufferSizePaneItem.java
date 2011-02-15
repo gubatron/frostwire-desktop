@@ -24,7 +24,7 @@ public final class DaapBufferSizePaneItem extends AbstractPaneItem {
      * @param key the key for this <tt>AbstractPaneItem</tt> that the
      *            superclass uses to generate locale-specific keys
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public DaapBufferSizePaneItem() {
         super(TITLE, LABEL);
         

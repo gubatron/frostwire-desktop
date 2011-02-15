@@ -25,7 +25,6 @@ import com.limegroup.gnutella.gui.trees.LimeTreeCellRenderer;
  * the <tt>JTree</tt> instance and provides access to that 
  * <tt>Component</tt>.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 final class OptionsTreeManager {
 	
 	/**
@@ -115,13 +114,12 @@ final class OptionsTreeManager {
 	/**
 	 * Sets the selection of the tree to the node with the given key.
 	 */
-	@SuppressWarnings("unchecked")
 	void setSelection(final String key) {
 		if (key == null)
 			return;
 		OptionsTreeNode root = (OptionsTreeNode)TREE_MODEL.getRoot();
 		OptionsTreeNode node = null;
-		for (Enumeration en = root.breadthFirstEnumeration(); en.hasMoreElements(); ) {
+		for (Enumeration<?> en = root.breadthFirstEnumeration(); en.hasMoreElements(); ) {
 			node = (OptionsTreeNode)en.nextElement();
 			if (key.equals(node.getTitleKey())) {
 				//  set selection and return

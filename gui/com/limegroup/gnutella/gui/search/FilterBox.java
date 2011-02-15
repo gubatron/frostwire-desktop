@@ -15,7 +15,6 @@ import java.awt.event.MouseListener;
 import java.util.Iterator;
 
 import javax.swing.AbstractListModel;
-import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -69,14 +68,12 @@ class FilterBox extends JPanel {
     /**
      * The string to use for 'Options'.
      */
-    private static final String OPTIONS =
-        I18n.tr("Options");
+    private static final String OPTIONS = I18n.tr("Options");
         
     /**
      * The string to use for 'Option'.
      */
-    private static final String OPTION =
-        I18n.tr("Option");
+    private static final String OPTION = I18n.tr("Option");
     
     /**
      * The property name stored within the JList that keeps the currently
@@ -237,13 +234,12 @@ class FilterBox extends JPanel {
             public void mouseReleased(MouseEvent e) {}
         });
 
-        setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createRaisedBevelBorder(),
-            BorderFactory.createLoweredBevelBorder())
-        );
+//        setBorder(BorderFactory.createCompoundBorder(
+//            BorderFactory.createRaisedBevelBorder(),
+//            BorderFactory.createLoweredBevelBorder())
+//        );
 
-        pane.setHorizontalScrollBarPolicy(
-            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
             
         setSelector(selector);
     }

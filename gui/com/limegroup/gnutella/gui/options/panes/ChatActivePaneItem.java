@@ -3,7 +3,6 @@ package com.limegroup.gnutella.gui.options.panes;
 import java.io.IOException;
 
 import javax.swing.JCheckBox;
-import javax.swing.JTextField;
 
 import org.limewire.i18n.I18nMarker;
 
@@ -15,7 +14,6 @@ import com.limegroup.gnutella.settings.ChatSettings;
  * This class defines the panel in the options window that allows the user
  * to change the maximum number of dowloads to allow at any one time.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public final class ChatActivePaneItem extends AbstractPaneItem {
 
     public final static String TITLE = I18n.tr("Host Communication");
@@ -38,11 +36,6 @@ public final class ChatActivePaneItem extends AbstractPaneItem {
 	 * should be automatically cleared.
 	 */
 	private final JCheckBox CHECK_BOX = new JCheckBox();
-
-    	/**
-     	* The chat Community nickname field.
-     	*/
-    	private JTextField _ircNickField; 
 
 	/**
 	 * The constructor constructs all of the elements of this

@@ -23,7 +23,6 @@ import org.limewire.setting.FileSetting;
 import org.limewire.setting.IntSetting;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.FileUtils;
-import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
