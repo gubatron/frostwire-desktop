@@ -138,30 +138,4 @@ public class FileDescriptorListModel extends AbstractListModel {
             }
         });
     }
-
-    private boolean pseudoMatch(String text, String searchText) {
-        
-        if (Thread.interrupted()) {
-            return false;
-        }
-        
-        if (text == null || text.length() == 0) {
-            return false;
-        }
-        
-        String[] tokens = searchText.split(" ");
-        
-        for (int i = 0; i < tokens.length; i++) {
-            
-            if (Thread.interrupted()) {
-                return false;
-            }
-            
-            if (text.contains(tokens[i])) {
-                return true;
-            }
-        }
-        
-        return false;
-    }
 }

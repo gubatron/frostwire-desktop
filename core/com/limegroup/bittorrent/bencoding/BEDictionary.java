@@ -41,7 +41,7 @@ class BEDictionary extends BEAbstractCollection<Map<String, Object>> {
         /** The key itself */
         private String key;
         /** Token for the parsing of the value */
-        private Token valueToken;
+        private Token<?> valueToken;
         /** The value itself */
         private Object value;
         /** Whether this is the last entry in the map */
@@ -54,7 +54,7 @@ class BEDictionary extends BEAbstractCollection<Map<String, Object>> {
         
         public void handleRead() throws IOException {
             if (keyToken == null && key == null) {
-                Token t = getNextToken(chan);
+                Token<?> t = getNextToken(chan);
                 if (t != null) {
                     if (t instanceof BEString) { 
                         keyToken = (BEString)t;
@@ -82,7 +82,7 @@ class BEDictionary extends BEAbstractCollection<Map<String, Object>> {
             // if we got here we have fully read the key
             
             if (valueToken == null && value == null) {
-                Token t = getNextToken(chan);
+                Token<?> t = getNextToken(chan);
                 if (t != null) 
                     valueToken = t;
                 else

@@ -35,7 +35,7 @@ public abstract class Choker implements Runnable, Shutdownable {
 	protected final NECallable<List<? extends Chokable>> chokablesSource;
 	protected int round;
 	
-	private volatile Future periodic;
+	private volatile Future<?> periodic;
 	private final Runnable immediateChoker = new ImmediateChoker();
 	
 	private final UploadServices uploadServices;

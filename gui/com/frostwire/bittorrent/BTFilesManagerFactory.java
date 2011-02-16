@@ -4,13 +4,9 @@ package com.frostwire.bittorrent;
 // I/O Handling
 import java.io.File;
 import java.io.IOException;
-
-// Used by Frostwire to hold the Bit Torrent data
-import com.limegroup.bittorrent.BTMetaInfo;
-
-// To handle the file's list obtained from torrent
 import java.util.List;
-import java.util.ArrayList;
+
+import com.limegroup.bittorrent.BTMetaInfo;
 
 /**
  *
