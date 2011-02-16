@@ -2,6 +2,7 @@ package com.limegroup.gnutella.gui.themes;
 
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
@@ -12,7 +13,10 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.WindowConstants;
+
+import org.pushingpixels.substance.api.SubstanceLookAndFeel;
 
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -133,52 +137,33 @@ public class ThemeMediator {
         d.setVisible(true);
     }
     
-    /*private void changeTheme() {
-        SwingUtils.invokeNowOrLater(new Runnable() {
-            public void run() {
+    public static void changeTheme(final String skinClassName) {
+        try {
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
 
-                final boolean wasDecoratedByOS = !_frame
-                        .isUndecorated();
+                    try {
 
-                try {
+                        SubstanceLookAndFeel.setSkin(skinClassName);
+                        UIManager.put("PopupMenuUI", "com.frostwire.gnutella.gui.skin.SkinPopupMenuUI");
+                        UIManager.put("MenuItemUI", "com.frostwire.gnutella.gui.skin.SkinMenuItemUI");
+                        UIManager.put("MenuUI", "com.frostwire.gnutella.gui.skin.SkinMenuUI");
+                        UIManager.put("CheckBoxMenuItemUI", "com.frostwire.gnutella.gui.skin.SkinCheckBoxMenuItemUI");
+                        UIManager.put("MenuBarUI", "com.frostwire.gnutella.gui.skin.SkinMenuBarUI");
+                        UIManager.put("RadioButtonMenuItemUI", "com.frostwire.gnutella.gui.skin.SkinRadioButtonMenuItemUI");
+                        UIManager.put("PopupMenuSeparatorUI", "com.frostwire.gnutella.gui.skin.SkinPopupMenuSeparatorUI");
 
-                    UIManager.setLookAndFeel(item.getlookAndFeel());
-
-                    for (Window window : Window.getWindows()) {
-                        SwingUtilities.updateComponentTreeUI(window);
-                    }
-
-                    boolean canBeDecoratedByLAF = UIManager
-                            .getLookAndFeel()
-                            .getSupportsWindowDecorations();
-                    if (canBeDecoratedByLAF == wasDecoratedByOS) {
-                        boolean wasVisible = _frame.isVisible();
-
-                        _frame.setVisible(false);
-                        _frame.dispose();
-                        if (!canBeDecoratedByLAF
-                                || _wasOriginallyDecoratedByOS) {
-                            // see the java docs under the method
-                            // JFrame.setDefaultLookAndFeelDecorated(boolean
-                            // value) for description of these 2 lines:
-                            _frame.setUndecorated(false);
-                            _frame.getRootPane()
-                                    .setWindowDecorationStyle(
-                                            JRootPane.NONE);
-
-                        } else {
-                            _frame.setUndecorated(true);
-                            _frame.getRootPane()
-                                    .setWindowDecorationStyle(
-                                            JRootPane.FRAME);
+                        for (Window window : Window.getWindows()) {
+                            SwingUtilities.updateComponentTreeUI(window);
                         }
-                        _frame.setVisible(wasVisible);
-                        // wasDecoratedByOS = !frame.isUndecorated();
-                    }
 
-                } catch (Exception e) {
+                    } catch (Exception e) {
+                        System.out.println("Substance engine failed to initialize");
+                    }
                 }
-            }
-        });
-    }*/
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

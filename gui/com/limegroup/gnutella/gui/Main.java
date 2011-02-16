@@ -14,8 +14,6 @@ import javax.swing.UIManager;
 import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.SubstanceLookAndFeel;
 
-import com.frostwire.gnutella.gui.skin.SeaGlassSkin;
-
 /**
  * This class constructs an <tt>Initializer</tt> instance that constructs
  * all of the necessary classes for the application.
@@ -65,8 +63,8 @@ public class Main {
                 public void run() {
                     try {
                     	
-                    	SubstanceLookAndFeel.setSkin(new SeaGlassSkin());
-                    	UIManager.put("PopupMenuUI", "com.frostwire.gnutella.gui.skin.SkinPopupMenuUI");
+                        SubstanceLookAndFeel.setSkin("com.frostwire.gnutella.gui.skin.SeaGlassSkin");
+                        UIManager.put("PopupMenuUI", "com.frostwire.gnutella.gui.skin.SkinPopupMenuUI");
                     	UIManager.put("MenuItemUI", "com.frostwire.gnutella.gui.skin.SkinMenuItemUI");
                     	UIManager.put("MenuUI", "com.frostwire.gnutella.gui.skin.SkinMenuUI");
                     	UIManager.put("CheckBoxMenuItemUI", "com.frostwire.gnutella.gui.skin.SkinCheckBoxMenuItemUI");
@@ -75,7 +73,7 @@ public class Main {
                     	UIManager.put("PopupMenuSeparatorUI", "com.frostwire.gnutella.gui.skin.SkinPopupMenuSeparatorUI");
                     	
                     } catch (Exception e) {
-                        System.out.println("Substance engine failed to irnitialize");
+                        System.out.println("Substance engine failed to initialize");
                     }
                 }
             });

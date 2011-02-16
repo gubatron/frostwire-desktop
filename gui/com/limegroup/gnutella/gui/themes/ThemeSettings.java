@@ -9,8 +9,6 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
 import java.util.zip.ZipException;
@@ -139,14 +137,6 @@ public final class ThemeSettings extends LimeProps {
     static final File OTHER_THEME_FILE =
         new File(THEME_DIR_FILE, OTHER_THEME_NAME);
     
-    /**
-     * Find the themes jar and delete any zip files on disk if
-     * they're older than the ones in our jar.
-     */
-    static {   
-        JAR_THEME_NAMES = Collections.emptyList();
-    }
-
     /**
      * Expands the specified theme zip file to the specified directory.
      *
@@ -373,11 +363,6 @@ public final class ThemeSettings extends LimeProps {
 	 */
 	public static final FileSetting THEME_DIR =
 		FACTORY.createFileSetting("THEME_DIR", THEME_DEFAULT_DIR);
-
-    /**
-     * ArrayList containing the names of theme files in our jar as Strings.
-     */
-    public static final List<String> JAR_THEME_NAMES;
     
     /**
      * Setting for the value all fonts should be incremented by.
