@@ -1,13 +1,11 @@
 package com.limegroup.gnutella.gui.menu;
 
-import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.GUIMediator.Tabs;
-import com.limegroup.gnutella.util.LogUtils;
+import com.limegroup.gnutella.gui.I18n;
 
 /**
  * Contains all of the menu items for the navigation menu.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 final class NavMenu extends AbstractMenu {
     
     /**

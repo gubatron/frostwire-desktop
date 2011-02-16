@@ -1,14 +1,9 @@
 package com.limegroup.gnutella.gui.themes;
 
-import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,23 +11,13 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.WindowConstants;
 
-import org.limewire.util.CommonUtils;
 import org.limewire.util.FileUtils;
 import org.pushingpixels.substance.api.SubstanceLookAndFeel;
 
-import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.GUIUtils;
-import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.MultiLineLabel;
 import com.limegroup.gnutella.gui.TipOfTheDayMediator;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
 

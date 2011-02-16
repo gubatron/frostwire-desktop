@@ -4,8 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Comparator;
 import java.util.Enumeration;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -14,16 +12,11 @@ import javax.swing.Action;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
-import javax.swing.UIManager;
-
-import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
-import com.limegroup.gnutella.gui.actions.OpenLinkAction;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeMediator.SkinInfo;
-import com.limegroup.gnutella.gui.themes.ThemeSettings;
 
 /**
  * The menu to be used for themes.
@@ -105,43 +98,6 @@ final class ThemeMenu extends AbstractMenu {
             MENU.add(theme);
         }
     }
-    
-    /**
-     * Removes all items in the group from the menu.  Used for refreshing.
-     */
-    private void removeThemeItems() {
-        Enumeration<AbstractButton> items = GROUP.getElements();
-        List<JMenuItem> removed = new LinkedList<JMenuItem>();
-        while(items.hasMoreElements()) {
-            JMenuItem item = (JMenuItem)items.nextElement();
-            MENU.remove(item);
-            removed.add(item);
-        }
-        
-        for(JMenuItem item : removed)
-            GROUP.remove(item);
-    }
-    
-    /**
-     * Refreshes the theme menu options to those on the disk.
-     */
-    private class RefreshThemesAction extends AbstractAction {
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 3056020209833157854L;
-
-		public RefreshThemesAction() {
-            super(I18n.tr("&Refresh Skins"));
-            putValue(LONG_DESCRIPTION, I18n.tr("Reload available skins from disk"));
-        }
-    
-    	public void actionPerformed(ActionEvent e) {
-            removeThemeItems();
-            addThemeItems();
-    	}
-    }    
     
     /**
      * Action that is also used as action listener.

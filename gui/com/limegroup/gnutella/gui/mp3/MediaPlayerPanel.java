@@ -20,6 +20,11 @@ import com.limegroup.gnutella.gui.themes.ThemeObserver;
  */
 public class MediaPlayerPanel extends BoxPanel implements ThemeObserver, ComponentListener{
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 5155969108296759721L;
+
     public MediaPlayerPanel(int orientation){
         super(orientation);
         

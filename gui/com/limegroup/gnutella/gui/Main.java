@@ -8,11 +8,7 @@ import java.net.URL;
 import java.util.Calendar;
 import java.util.StringTokenizer;
 
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-
 import org.limewire.util.OSUtils;
-import org.pushingpixels.substance.api.SubstanceLookAndFeel;
 
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 

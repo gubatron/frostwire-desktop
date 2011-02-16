@@ -128,7 +128,7 @@ public class FileTreeModel extends AbstractTreeModel {
             if (parent.equals(root)) {
                 return subRoots.indexOf(child);
             }
-            return ((List) subChildren.get(parent)).indexOf(child);
+            return ((List<?>) subChildren.get(parent)).indexOf(child);
         }
 
         return -1;
