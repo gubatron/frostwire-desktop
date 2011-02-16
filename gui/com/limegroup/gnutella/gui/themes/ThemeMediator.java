@@ -239,10 +239,37 @@ public class ThemeMediator {
     private static void createDefaultSkinsFile() throws IOException {
         List<SkinInfo> skins = new ArrayList<SkinInfo>();
         
+        // from FrostWire
         skins.add(new SkinInfo("Sea Glass", "com.frostwire.gnutella.gui.skin.SeaGlassSkin", true, false));
+        
+        // from Substance
+        skins.add(new SkinInfo("Autumn", "org.pushingpixels.substance.api.skin.AutumnSkin", false, false));
+        skins.add(new SkinInfo("Business Black Steel", "org.pushingpixels.substance.api.skin.BusinessBlackSteelSkin", false, false));
+        skins.add(new SkinInfo("Business Blue Steel", "org.pushingpixels.substance.api.skin.BusinessBlueSteelSkin", false, false));
         skins.add(new SkinInfo("Business", "org.pushingpixels.substance.api.skin.BusinessSkin", false, false));
+        skins.add(new SkinInfo("Challenger Deep", "org.pushingpixels.substance.api.skin.ChallengerDeepSkin", false, false));
+        skins.add(new SkinInfo("CremeCoffee", "org.pushingpixels.substance.api.skin.CremeCoffeeSkin", false, false));
+        skins.add(new SkinInfo("Creme", "org.pushingpixels.substance.api.skin.CremeSkin", false, false));
+        skins.add(new SkinInfo("Dust Coffee", "org.pushingpixels.substance.api.skin.DustCoffeeSkin", false, false));
+        skins.add(new SkinInfo("Dust", "org.pushingpixels.substance.api.skin.DustSkin", false, false));
+        skins.add(new SkinInfo("Emerald Dusk", "org.pushingpixels.substance.api.skin.EmeraldDuskSkin", false, false));
+        skins.add(new SkinInfo("Gemini", "org.pushingpixels.substance.api.skin.GeminiSkin", false, false));
+        skins.add(new SkinInfo("Graphite Aqua", "org.pushingpixels.substance.api.skin.GraphiteAquaSkin", false, false));
+        skins.add(new SkinInfo("Graphite Glass", "org.pushingpixels.substance.api.skin.GraphiteGlassSkin", false, false));
         skins.add(new SkinInfo("Graphite", "org.pushingpixels.substance.api.skin.GraphiteSkin", false, false));
+        skins.add(new SkinInfo("Magellan", "org.pushingpixels.substance.api.skin.MagellanSkin", false, false));
         skins.add(new SkinInfo("Mariner", "org.pushingpixels.substance.api.skin.MarinerSkin", false, false));
+        skins.add(new SkinInfo("Mist Aqua", "org.pushingpixels.substance.api.skin.MistAquaSkin", false, false));
+        skins.add(new SkinInfo("Mist Silver", "org.pushingpixels.substance.api.skin.MistSilverSkin", false, false));
+        skins.add(new SkinInfo("Moderate", "org.pushingpixels.substance.api.skin.ModerateSkin", false, false));
+        skins.add(new SkinInfo("Nebula Brick Wall", "org.pushingpixels.substance.api.skin.NebulaBrickWallSkin", false, false));
+        skins.add(new SkinInfo("Nebula", "org.pushingpixels.substance.api.skin.NebulaSkin", false, false));
+        skins.add(new SkinInfo("Office Black 2007", "org.pushingpixels.substance.api.skin.OfficeBlack2007Skin", false, false));
+        skins.add(new SkinInfo("Office Blue 2007", "org.pushingpixels.substance.api.skin.OfficeBlue2007Skin", false, false));
+        skins.add(new SkinInfo("Office Silver 2007", "org.pushingpixels.substance.api.skin.OfficeSilver2007Skin", false, false));
+        skins.add(new SkinInfo("Raven", "org.pushingpixels.substance.api.skin.RavenSkin", false, false));
+        skins.add(new SkinInfo("Sahara", "org.pushingpixels.substance.api.skin.SaharaSkin", false, false));
+        skins.add(new SkinInfo("Twilight", "org.pushingpixels.substance.api.skin.TwilightSkin", false, false));
         
         saveSkins(skins);
     }
