@@ -14,6 +14,8 @@ import javax.swing.UIManager;
 import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.SubstanceLookAndFeel;
 
+import com.limegroup.gnutella.gui.themes.ThemeMediator;
+
 /**
  * This class constructs an <tt>Initializer</tt> instance that constructs
  * all of the necessary classes for the application.
@@ -59,24 +61,7 @@ public class Main {
             if (args == null || args.length == 0)
 				splash = showInitialSplash();
             
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    try {
-                    	
-                        SubstanceLookAndFeel.setSkin("com.frostwire.gnutella.gui.skin.SeaGlassSkin");
-                        UIManager.put("PopupMenuUI", "com.frostwire.gnutella.gui.skin.SkinPopupMenuUI");
-                    	UIManager.put("MenuItemUI", "com.frostwire.gnutella.gui.skin.SkinMenuItemUI");
-                    	UIManager.put("MenuUI", "com.frostwire.gnutella.gui.skin.SkinMenuUI");
-                    	UIManager.put("CheckBoxMenuItemUI", "com.frostwire.gnutella.gui.skin.SkinCheckBoxMenuItemUI");
-                    	UIManager.put("MenuBarUI", "com.frostwire.gnutella.gui.skin.SkinMenuBarUI");
-                    	UIManager.put("RadioButtonMenuItemUI", "com.frostwire.gnutella.gui.skin.SkinRadioButtonMenuItemUI");
-                    	UIManager.put("PopupMenuSeparatorUI", "com.frostwire.gnutella.gui.skin.SkinPopupMenuSeparatorUI");
-                    	
-                    } catch (Exception e) {
-                        System.out.println("Substance engine failed to initialize");
-                    }
-                }
-            });
+            ThemeMediator.setCurrentOrDefaultTheme(false);
             
             // load the GUI through reflection so that we don't reference classes here,
             // which would slow the speed of class-loading, causing the splash to be

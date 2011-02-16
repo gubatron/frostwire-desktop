@@ -22,17 +22,13 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
 import com.limegroup.gnutella.gui.actions.OpenLinkAction;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
+import com.limegroup.gnutella.gui.themes.ThemeMediator.SkinInfo;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 
 /**
  * The menu to be used for themes.
  */
 final class ThemeMenu extends AbstractMenu {
-    
-    /**
-     * The client property to use for theme changing items.
-     */
-    private static final String THEME_PROPERTY = "THEME_NAME";
     
     /**
      * The client property to use for theme changing when using 'other' L&Fs.
@@ -55,16 +51,10 @@ final class ThemeMenu extends AbstractMenu {
     ThemeMenu() {
         super(I18n.tr("&Apply Skins"));
         
-        addMenuItem(new OpenLinkAction("http://www.frostwire.com/beta/skins/", 
-                I18n.tr("&Get More Skins"),
-                I18n.tr("Find more skins from frostwire.com")));
-        
-        addMenuItem(new RefreshThemesAction());
-        
         
         JMenuItem def = addMenuItem(THEME_CHANGER);            
-        final Object defaultVal = ThemeSettings.THEME_DEFAULT.getAbsolutePath();
-        def.putClientProperty(THEME_PROPERTY, defaultVal);
+        final String defaultVal = ThemeMediator.getDefaultTheme().className;
+        def.putClientProperty(THEME_CLASSNAME, defaultVal);
         
         // Add a listener to set the new theme as selected.
         def.addActionListener(new ActionListener() {
@@ -85,7 +75,7 @@ final class ThemeMenu extends AbstractMenu {
         Enumeration<AbstractButton> items = GROUP.getElements();
         while(items.hasMoreElements()) {
             JMenuItem item = (JMenuItem)items.nextElement();
-            if(value.equals(item.getClientProperty(THEME_PROPERTY))) {
+            if(value.equals(item.getClientProperty(THEME_CLASSNAME))) {
                 item.setSelected(true);
                 break;
             }
@@ -98,31 +88,16 @@ final class ThemeMenu extends AbstractMenu {
      */ 
     private void addThemeItems() {
        
-        Set<Object> allThemes = new TreeSet<Object>(new ThemeComparator());
+        Set<SkinInfo> skins = new TreeSet<SkinInfo>(new ThemeComparator());
         
-        allThemes.add("com.frostwire.gnutella.gui.skin.SeaGlassSkin");
-        allThemes.add("org.pushingpixels.substance.api.skin.BusinessSkin");
-        allThemes.add("org.pushingpixels.substance.api.skin.GraphiteSkin");
-        allThemes.add("org.pushingpixels.substance.api.skin.MarinerSkin");
-        allThemes.add("org.pushingpixels.substance.api.skin.NebulaSkin");
+        skins.addAll(ThemeMediator.loadSkins());
         
-        addInstalledLFs(allThemes);
-        
-
-        if(allThemes.isEmpty())
-            return;
-        
-        for(Object next : allThemes) {
+        for(SkinInfo skin : skins) {
             JMenuItem theme;
             
-            if(next instanceof String) {
-                theme = new JRadioButtonMenuItem((String) next);
-                theme.putClientProperty(THEME_CLASSNAME, (String) next);
-            } else {
-                UIManager.LookAndFeelInfo lfi = (UIManager.LookAndFeelInfo)next;
-                theme = new JRadioButtonMenuItem(lfi.getName());
-                theme.putClientProperty(THEME_CLASSNAME, lfi.getClassName());
-            }
+            theme = new JRadioButtonMenuItem(skin.name);
+            theme.putClientProperty(THEME_CLASSNAME, skin.className);
+            theme.setSelected(skin.current);
                 
             theme.setFont(AbstractMenu.FONT);
             GROUP.add(theme);
@@ -196,61 +171,11 @@ final class ThemeMenu extends AbstractMenu {
     private static class ThemeComparator implements Comparator<Object> {
         public int compare(Object a, Object b) {
             String name1, name2;
-            if(a instanceof String)
-                name1 = ThemeSettings.formatName((String)a);
-            else
-                name1 = ((UIManager.LookAndFeelInfo)a).getName();
-                
-            if(b instanceof String)
-                name2 = ThemeSettings.formatName((String)b);
-            else
-                name2 = ((UIManager.LookAndFeelInfo)b).getName();
+            
+            name1 = ((SkinInfo) a).name;
+            name2 = ((SkinInfo) b).name;
 
             return name1.compareTo(name2);
-        }
-    }
-    
-    /**
-     * Adds installed LFs (Look and Feels) to the list.
-     * FTA: Place to add specific look & feel according to the OS,
-     * some outdated themes has been removed since are no longer used.
-     * 
-     * If users try to use those themes FrostWire will suggest the user
-     * to go and download from the website the latest version.
-     * 
-     */
-    private static void addInstalledLFs(Set<Object> themes) {
-        UIManager.LookAndFeelInfo[] lfs = UIManager.getInstalledLookAndFeels();
-        if(lfs == null)
-            return;
-            
-        for(int i = 0; i < lfs.length; i++) {
-            UIManager.LookAndFeelInfo l = lfs[i];
-            if(l.getClassName().equals("com.sun.java.swing.plaf.windows.WindowsLookAndFeel") || 
-               l.getClassName().contains("javax.swing.plaf.metal.MetalLookAndFeel"))
-                continue;
-            if(l.getClassName().startsWith("apple"))
-                continue;
-            if(l.getClassName().equals("com.sun.java.swing.plaf.gtk.GTKLookAndFeel") &&
-               OSUtils.isLinux())
-                continue;
-            if(l.getClassName().equals("com.sun.java.swing.plaf.motif.MotifLookAndFeel") ||
-               l.getClassName().equals("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel") ||
-               l.getClassName().equals("com.sun.java.swing.plaf.windows.WindowsClassicLookAndFeel"))
-                continue;
-            
-            /** 
-             *  FTA NOTE:
-             *  DEC/08/2009
-             *  Outdated and non-compatible themes for FrostWire 4.18.x were removed from a weird
-             *  "fixed list" frostwire used to have.
-             *  
-             *  It seems that someone tried was doing the same technique before (to remove unused themes)
-             *  but the conditionals were wrong or perhaps it was the way it used to work in a previous
-             *  release.
-             **/
-             //System.out.println("ThemeMenu - Look & Feel: "+ l.getClassName()); // FTA: shown only under Mac or Linux
-            themes.add(l);
         }
     }
 }

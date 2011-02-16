@@ -5,6 +5,14 @@ import java.awt.Font;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,6 +24,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 
+import org.limewire.util.CommonUtils;
+import org.limewire.util.FileUtils;
 import org.pushingpixels.substance.api.SubstanceLookAndFeel;
 
 import com.limegroup.gnutella.gui.BoxPanel;
@@ -81,64 +91,111 @@ public class ThemeMediator {
         GUIMediator.getMainOptionsComponent().validate();
         GUIMediator.getAppFrame().validate();
     }
+    
+    public static List<SkinInfo> loadSkins() {
+        
+        List<SkinInfo> skins = new ArrayList<SkinInfo>();
+        BufferedReader input = null;
+        
+        try {
+            
+            File skinsFile = ThemeSettings.SKINS_FILE;
+            
+            if (!skinsFile.exists()) {
+                createDefaultSkinsFile();
+            }
+            
+            input = new BufferedReader(new FileReader(skinsFile));
 
-    /**
-     * Shows a dialog with an error message about selecting a theme.
-     */
-    public static void showThemeError(String name) {
-        Dimension size = new Dimension(300, 100);
+            String line = null;
+
+            while ((line = input.readLine()) != null) {
+                if (line.trim().length() == 0) {
+                    continue;
+                }
+                SkinInfo skin = new SkinInfo();
+                String[] arr = line.split(",");
+                for (int i = 0; i < arr.length; i++) {
+                    String[] kv = arr[i].split(":");
+                    if (kv[0].equals("name")) {
+                        skin.name = kv[1];
+                    }
+                    if (kv[0].equals("className")) {
+                        skin.className = kv[1];
+                    }
+                    if (kv[0].equals("default")) {
+                        skin._default = Boolean.parseBoolean(kv[1]);
+                    }
+                    if (kv[0].equals("current")) {
+                        skin.current = Boolean.parseBoolean(kv[1]);
+                    }
+                }
+                skins.add(skin);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            FileUtils.close(input);
+        }
         
-        final JDialog d = new JDialog(GUIMediator.getAppFrame());
-        d.setModal(true);
-        d.setResizable(false);
-        d.setTitle(I18n.tr("Invalid Skin"));
-        d.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        return skins;
+    }
+    
+    public static SkinInfo getDefaultTheme() {
         
-        BoxPanel body = new BoxPanel(BoxPanel.Y_AXIS);
+        List<SkinInfo> skins = loadSkins();
         
-        JPanel text = new BoxPanel(BoxPanel.Y_AXIS);
-        MultiLineLabel label = new MultiLineLabel(
-						  I18n.tr("The skin you selected is out of date. Please download the latest version of the skin."), 250);
-    	label.setFont(new Font("Dialog", Font.BOLD, 12));
-    	text.add(Box.createVerticalGlue());
-    	text.add(GUIUtils.center(label));
-    	text.add(Box.createVerticalGlue());
-    		
-    	BoxPanel buttons = new BoxPanel(BoxPanel.X_AXIS);
-    	
-    	JButton getNew = new JButton(I18n.tr(
-								   "Get New Skins"));
-        JButton later = new JButton(I18n.tr(
-								  "Later"));
-        getNew.addActionListener(new ActionListener() {
-    		public void actionPerformed(ActionEvent e) {
-    			GUIMediator.openURL("http://dl.frostwire.com/skins/4.17.0/");
-    		    d.dispose();
-    		    d.setVisible(false);
-    		}
-	    });
-        later.addActionListener(new ActionListener() {
-    		public void actionPerformed(ActionEvent e) {
-    		    d.dispose();
-    		    d.setVisible(false);
-    		}
-	    });
-    		
-    	buttons.add(getNew);
-    	buttons.add(GUIMediator.getHorizontalSeparator());
-    	buttons.add(later);
-    		
-    	body.add(text);
-        body.add(buttons);
-        body.setPreferredSize(size);
-        d.getContentPane().add(body);
-        d.pack();
-        d.setLocationRelativeTo(GUIMediator.getAppFrame());
-        d.setVisible(true);
+        for (int i = 0; i < skins.size(); i++) {
+            SkinInfo skin = skins.get(i);
+            
+            if (skin._default) {
+                return skin;
+            }
+        }
+        
+        return null;
+    }
+    
+    public static void setCurrentOrDefaultTheme(boolean setDefault) throws IOException {
+        List<SkinInfo> skins = loadSkins();
+        
+        if (setDefault) {
+            for (int i = 0; i < skins.size(); i++) {
+                SkinInfo skin = skins.get(i);
+                
+                if (setDefault && skin._default) {
+                    changeTheme(skin.className);
+                    break;
+                }
+            }
+        } else {
+            
+            SkinInfo defaultSkin = null;
+            
+            for (int i = 0; i < skins.size(); i++) {
+                SkinInfo skin = skins.get(i);
+                
+                if (skin.current) {
+                    defaultSkin = null;
+                    changeTheme(skin.className);
+                    break;
+                }
+                
+                if (skin._default) {
+                    defaultSkin = skin;
+                }
+            }
+            
+            if (defaultSkin != null) {
+                changeTheme(defaultSkin.className);
+            }
+        }
     }
     
     public static void changeTheme(final String skinClassName) {
         try {
+            
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
 
@@ -156,6 +213,18 @@ public class ThemeMediator {
                         for (Window window : Window.getWindows()) {
                             SwingUtilities.updateComponentTreeUI(window);
                         }
+                        
+                        List<SkinInfo> skins = loadSkins();
+                        
+                        for (int i = 0; i < skins.size(); i++) {
+                            SkinInfo skin = skins.get(i);
+                            skin.current = false;
+                            if (skin.className.equals(skinClassName)) {
+                                skin.current = true;
+                            }
+                        }
+                        
+                        saveSkins(skins);
 
                     } catch (Exception e) {
                         System.out.println("Substance engine failed to initialize");
@@ -164,6 +233,52 @@ public class ThemeMediator {
             });
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void createDefaultSkinsFile() throws IOException {
+        List<SkinInfo> skins = new ArrayList<SkinInfo>();
+        
+        skins.add(new SkinInfo("Sea Glass", "com.frostwire.gnutella.gui.skin.SeaGlassSkin", true, false));
+        skins.add(new SkinInfo("Business", "org.pushingpixels.substance.api.skin.BusinessSkin", false, false));
+        skins.add(new SkinInfo("Graphite", "org.pushingpixels.substance.api.skin.GraphiteSkin", false, false));
+        skins.add(new SkinInfo("Mariner", "org.pushingpixels.substance.api.skin.MarinerSkin", false, false));
+        
+        saveSkins(skins);
+    }
+    
+    private static void saveSkins(List<SkinInfo> skins) throws IOException {
+        File skinsFile = ThemeSettings.SKINS_FILE;
+        
+        BufferedWriter output = new BufferedWriter(new FileWriter(skinsFile));
+        
+        try {
+            
+            for (SkinInfo skin : skins) {
+                String line = "name:" + skin.name + ",className:" + skin.className + ",default:" + skin._default + ",current:" + skin.current;
+                output.write(line);
+                output.newLine();
+            }
+            
+        } finally {
+            FileUtils.close(output);
+        }
+    }
+    
+    public static final class SkinInfo {
+        public String name;
+        public String className;
+        public boolean _default;
+        public boolean current;
+        
+        public SkinInfo() {   
+        }
+        
+        public SkinInfo(String name, String className, boolean _default, boolean current) {
+            this.name = name;
+            this.className = className;
+            this._default = _default;
+            this.current = current;
         }
     }
 }

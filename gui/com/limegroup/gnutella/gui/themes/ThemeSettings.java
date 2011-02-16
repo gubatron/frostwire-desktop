@@ -22,6 +22,7 @@ import org.limewire.setting.IntSetting;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.FileUtils;
 
+import com.frostwire.CoreFrostWireUtils;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.LimeProps;
@@ -49,6 +50,8 @@ public final class ThemeSettings extends LimeProps {
      * stands for "LimeWire Theme Pack".
      */
     public static final String EXTENSION = "fwtp";
+    
+    public static final File SKINS_FILE = new File(CoreFrostWireUtils.getPreferencesFolder(), "skins.dat");
     
     public static final File THEME_DIR_FILE =
 		new File(CommonUtils.getUserSettingsDir(), "themes");
