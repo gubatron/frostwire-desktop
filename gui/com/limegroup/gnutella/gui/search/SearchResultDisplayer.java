@@ -123,6 +123,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
         // for when the window is resized. 
         results.setPreferredSize(new Dimension(10000, 10000));
         results.setLayout(switcher);
+        results.setBackground(Color.WHITE);
 
         //Add SlideShowPanel here.
         SlideshowPanel promoSlides = null; 
