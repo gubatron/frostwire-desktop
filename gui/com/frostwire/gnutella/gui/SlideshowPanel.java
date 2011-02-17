@@ -102,6 +102,10 @@ public class SlideshowPanel extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 try {
+                	if (_currentSlideIndex == -1 && _slides != null && _slides.size() > 0) {
+                		_currentSlideIndex = 0;
+                	}
+
                     Slide slide = _slides.get(_currentSlideIndex);
                     if (slide.url != null) {
                         GUIMediator.openURL(slide.url);
