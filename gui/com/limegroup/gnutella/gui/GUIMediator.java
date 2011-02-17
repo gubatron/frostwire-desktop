@@ -33,7 +33,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 
@@ -44,7 +43,6 @@ import org.limewire.concurrent.AbstractLazySingletonProvider;
 import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.io.Connectable;
-import org.limewire.listener.EventListener;
 import org.limewire.service.ErrorService;
 import org.limewire.service.Switch;
 import org.limewire.setting.BooleanSetting;
@@ -55,11 +53,12 @@ import org.limewire.setting.evt.SettingListener;
 import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 import org.limewire.util.VersionUtils;
-import org.python.modules.newmodule;
 
+import com.frostwire.bittorrent.AzureusStarter;
+import com.frostwire.gnutella.connectiondoctor.ConnectionDoctor;
+import com.frostwire.gnutella.gui.chat.ChatMediator;
 import com.google.inject.Provider;
 import com.limegroup.bittorrent.gui.TorrentUploadCanceller;
-import com.limegroup.gnutella.LifecycleManagerImpl;
 import com.limegroup.gnutella.bugs.FatalBugManager;
 import com.limegroup.gnutella.chat.InstantMessenger;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
@@ -80,18 +79,9 @@ import com.limegroup.gnutella.gui.tabs.LibraryPlayListTab;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.gui.upload.UploadMediator;
-import com.aelitis.azureus.core.AzureusCore;
-import com.aelitis.azureus.core.AzureusCoreComponent;
-import com.aelitis.azureus.core.AzureusCoreException;
-import com.aelitis.azureus.core.AzureusCoreFactory;
-import com.aelitis.azureus.core.AzureusCoreLifecycleListener;
-import com.frostwire.GuiFrostWireUtils;
-import com.frostwire.bittorrent.AzureusStarter;
-import com.frostwire.gnutella.gui.chat.ChatMediator;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.PlayerSettings;
 import com.limegroup.gnutella.settings.QuestionsHandler;
-import com.limegroup.gnutella.settings.SWTBrowserSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.StartupSettings;
 import com.limegroup.gnutella.util.LaunchException;
@@ -99,7 +89,6 @@ import com.limegroup.gnutella.util.Launcher;
 import com.limegroup.gnutella.util.LimeWireUtils;
 import com.limegroup.gnutella.util.LogUtils;
 import com.limegroup.gnutella.version.UpdateInformation;
-import com.frostwire.gnutella.connectiondoctor.ConnectionDoctor;
 
 /**
  * This class acts as a central point of access for all gui components, a sort

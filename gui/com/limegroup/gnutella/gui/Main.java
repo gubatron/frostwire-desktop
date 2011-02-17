@@ -6,7 +6,10 @@ import java.awt.Toolkit;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Calendar;
+import java.util.Enumeration;
 import java.util.StringTokenizer;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 /**
  * This class constructs an <tt>Initializer</tt> instance that constructs
@@ -116,5 +119,31 @@ public class Main {
       int minor = Integer.parseInt(tk.nextToken());
       return major==10 && minor < 6;
     }
+    
+    /**                                                                                                                                                                                               
+     * Count the number of splash images exist inside the splash.jar                                                                                                                                  
+     * @return                                                                                                                                                                                        
+     * @throws                                                                                                                                                                                        
+     */
+    private static int countSplashes()  {
+            int n = 0;
+            try {
+            	JarFile splashes = new JarFile("splash.jar");
+            	Enumeration<JarEntry> entries = splashes.entries();
+            	while (entries.hasMoreElements()) {
+            		JarEntry nextElement = entries.nextElement();
+            		String file = nextElement.getName();
+            		if (file.endsWith("jpg") || file.endsWith("png") || file.endsWith("gif")) {
+            			n++;
+            		}
+                }
+            } catch (Exception e) {
+                    // TODO Auto-generated catch block                                                                                                                                                
+                    e.printStackTrace();
+            }
+            return n;
+    }
+
+
     
 }

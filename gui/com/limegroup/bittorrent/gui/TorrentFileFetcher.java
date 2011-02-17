@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
+
 import javax.swing.SwingUtilities;
 
 import org.apache.http.HttpResponse;
@@ -18,12 +19,9 @@ import org.apache.http.params.HttpParams;
 import org.limewire.io.IOUtils;
 import org.limewire.nio.observer.Shutdownable;
 import org.limewire.util.FileUtils;
-import org.python.modules.newmodule;
 
 import com.frostwire.GuiFrostWireUtils;
 import com.limegroup.bittorrent.BTMetaInfo;
-import com.limegroup.bittorrent.ManagedTorrent;
-import com.limegroup.bittorrent.TorrentManager;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.Endpoint;
 import com.limegroup.gnutella.GUID;
@@ -42,7 +40,6 @@ import com.limegroup.gnutella.gui.download.DownloaderUtils;
 import com.limegroup.gnutella.gui.download.GuiDownloaderFactory;
 import com.limegroup.gnutella.http.HTTPHeaderName;
 import com.limegroup.gnutella.http.HttpClientListener;
-import com.limegroup.gnutella.library.SharingUtils;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.util.LimeWireUtils;
 
