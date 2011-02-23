@@ -48,7 +48,7 @@ public final class AzureusStarter {
 	/*
 	 * Initializes synchronously the azureus core
 	 */
-	private static void azureusInit() {
+	private synchronized static void azureusInit() {
 		try {
 			if (AZUREUS_CORE != null && AZUREUS_CORE.isStarted()) {
 				LOG.debug("azureusInit(): core already started. skipping.");

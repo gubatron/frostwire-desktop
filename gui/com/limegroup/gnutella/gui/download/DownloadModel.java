@@ -4,8 +4,10 @@ import com.limegroup.bittorrent.BTDownloader;
 import com.limegroup.bittorrent.BTDownloaderImpl;
 import com.limegroup.bittorrent.TorrentEvent;
 import com.limegroup.bittorrent.TorrentEvent.Type;
+import com.limegroup.bittorrent.gui.TorrentFileFetcher;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.Downloader.DownloadStatus;
+import com.limegroup.gnutella.downloader.CoreDownloader;
 import com.limegroup.gnutella.gui.tables.BasicDataLineModel;
 
 /**
@@ -112,15 +114,21 @@ final class DownloadModel extends BasicDataLineModel<DownloadDataLine, Downloade
 
 	public void remove(int i) {
 		DownloadDataLine line = get(i);
-		//System.out.println(line.getState());
-        if (line.getState() == DownloadStatus.COMPLETE &&
-            	line.getDownloader() instanceof BTDownloaderImpl) {
-            	BTDownloaderImpl downloader = ((BTDownloaderImpl) line.getDownloader());
-            	downloader.removeFromDownloadManager();
-            	//downloader.setCancelled(true);
-            	//downloader.handleTorrentEvent(new TorrentEvent(null, TorrentEvent.Type.STOPPED, downloader.getTorrent()));
-        }	
-		super.remove(i);
+		
+		Downloader downloader = null;
+		
+		if (line.getDownloader() instanceof TorrentFileFetcher) {
+            downloader = ((TorrentFileFetcher) line.getDownloader()).getDownloader();
+        } else if (line.getDownloader() instanceof BTDownloaderImpl) {
+            downloader = line.getDownloader();
+        }
+        
+        
+        if (downloader != null && downloader instanceof BTDownloaderImpl) {
+            ((BTDownloaderImpl) downloader).removeFromDownloadManager();
+        }
+
+        super.remove(i);
 	}
 }
 

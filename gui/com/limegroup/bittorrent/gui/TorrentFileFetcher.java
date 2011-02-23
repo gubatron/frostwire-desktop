@@ -21,6 +21,7 @@ import org.limewire.nio.observer.Shutdownable;
 import org.limewire.util.FileUtils;
 
 import com.frostwire.GuiFrostWireUtils;
+import com.limegroup.bittorrent.BTDownloaderImpl;
 import com.limegroup.bittorrent.BTMetaInfo;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.Endpoint;
@@ -490,4 +491,8 @@ public class TorrentFileFetcher implements HttpClientListener, CoreDownloader {
 	@Override
 	public void setOverwrite(boolean override) {
 	}
+
+    public CoreDownloader getDownloader() {
+        return delegate;
+    }
 }
