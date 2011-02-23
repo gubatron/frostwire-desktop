@@ -51,8 +51,8 @@ public class WebTorrentSearch {
 		// Convert from [ {"torrent":{...}, {"torrent":{...}, ...]
 		// to { "results" : [{...},{...},{...}] }
 		
-		json = "{ \"results\": " + json.replace("{\"torrent\":", "").replace("}}","}") + "}";
-		System.out.println(json);
+		//json = "{ \"results\": " + json.replace("{\"torrent\":", "").replace("}}","}") + "}";
+		//System.out.println(json);
 		
 		// Feel the power of reflection
 		JsonEngine engine = new JsonEngine();

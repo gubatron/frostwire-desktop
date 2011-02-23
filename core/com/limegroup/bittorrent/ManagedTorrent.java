@@ -1188,7 +1188,9 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 
 		int count = 0;
 
-		if (_manager != null) {
+		if (_manager != null &&
+		        _manager.getPeerManager() != null &&
+		        _manager.getPeerManager().getPeers() != null) {
 			for (PEPeer peer : _manager.getPeerManager().getPeers()) {
 				if (!peer.isInteresting())
 					count++;
