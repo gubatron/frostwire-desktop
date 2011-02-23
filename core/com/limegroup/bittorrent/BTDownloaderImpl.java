@@ -126,7 +126,7 @@ public class BTDownloaderImpl extends AbstractCoreDownloader
 	}
 
 	public boolean isInactive() {
-		return isResumable() || torrent.getState() == TorrentState.QUEUED;
+		return isResumable() || torrent.getState() == TorrentState.QUEUED || torrent.getState() == TorrentState.SEEDING;
 	}
 	
 	public boolean isLaunchable() {
