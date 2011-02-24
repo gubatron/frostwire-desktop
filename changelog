@@ -6,6 +6,9 @@ frostwire (4.21.4) stable; urgency=low
   * UX improvements when creating new folders on the Phones and Tablets UI.
   * Fixes bug when dropping files on an Android device that hasn't been 
     selected.
+  * UX change. FrostWire will now seed torrents that have not been removed
+    from it's download manager. Completed torrents now will appear as
+    "Completed/Seeding"
   * UX change. Default save location folder in Windows Vista and Windows7 is
     now the user's default "~Downloads/FrostWire" folder.
   * UX improvements when showing FrostClick overlays. No more flickering.

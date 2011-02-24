@@ -171,12 +171,17 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 		    for (DownloadManager dlManager : downloadManagers) {
 		    	BTMetaInfo info = null;
 				try {
+					
+					if (dlManager.getState() != 70) {
+						continue;
+					}
+					
 			    	byte [] b = FileUtils.readFileFully(new File(dlManager.getTorrentFileName()));
 					info = BTMetaInfo.readFromBytes(b);
 					
 					BTDownloaderImpl btDownloader = (BTDownloaderImpl) _coreDownloaderFactory.createBTDownloader(info);
 			    	btDownloader.initBtMetaInfo(info);
-
+			    	
 			    	add(btDownloader.createUploader());
 			    	
 			    	dlManager.startDownload();

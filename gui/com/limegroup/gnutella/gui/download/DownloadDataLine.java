@@ -14,6 +14,7 @@ import org.limewire.util.OSUtils;
 
 import com.limegroup.bittorrent.BTDownloader;
 import com.limegroup.bittorrent.BTDownloaderImpl;
+import com.limegroup.bittorrent.gui.TorrentFileFetcher;
 import com.limegroup.bittorrent.settings.BittorrentSettings;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.Downloader.DownloadStatus;
@@ -855,9 +856,12 @@ public final class DownloadDataLine extends AbstractDataLine<Downloader>
 	        break;
 		case COMPLETE:
             _status = COMPLETE_STATE;
-            if (getDownloader().getClass().equals(BTDownloaderImpl.class)) {
+            
+            if (getDownloader() instanceof BTDownloaderImpl ||
+            	getDownloader() instanceof TorrentFileFetcher) {
             	_status = COMPLETE_SEEDING_STATE;
             }
+            
 			_progress = 100;
 			break;
 		case ABORTED:
@@ -1013,7 +1017,7 @@ public final class DownloadDataLine extends AbstractDataLine<Downloader>
 	 *  <tt>false</tt> otherwise
 	 */
 	boolean isInactive() {
-		return (//_state == DownloadStatus.COMPLETE ||
+		return (_state == DownloadStatus.COMPLETE ||
 				_state == DownloadStatus.ABORTED ||
 				_state == DownloadStatus.GAVE_UP ||
 				_state == DownloadStatus.DISK_PROBLEM ||

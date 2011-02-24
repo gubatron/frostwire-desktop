@@ -1109,7 +1109,7 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 			case SEEDING:
 			case VERIFYING:
 			case SAVING:
-			case QUEUED:
+			//case QUEUED:
 				return true;
 			}
 		}
