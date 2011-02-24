@@ -1109,6 +1109,7 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 			case SEEDING:
 			case VERIFYING:
 			case SAVING:
+			case QUEUED:
 				return true;
 			}
 		}
@@ -1123,7 +1124,6 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 			if (isDownloading())
 				return true;
 			switch (state.get()) {
-			case QUEUED:
 			case VERIFYING:
 				return true;
 			}

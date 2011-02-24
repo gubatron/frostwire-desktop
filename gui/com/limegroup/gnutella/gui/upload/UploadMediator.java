@@ -169,7 +169,6 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 	    if (downloadManagers.size() > 0) {
 	    	
 		    for (DownloadManager dlManager : downloadManagers) {
-		    	System.out.print("\tAzureusStarter.resumeDownloads()");		    	
 		    	BTMetaInfo info = null;
 				try {
 			    	byte [] b = FileUtils.readFileFully(new File(dlManager.getTorrentFileName()));
@@ -179,6 +178,8 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 			    	btDownloader.initBtMetaInfo(info);
 
 			    	add(btDownloader.createUploader());
+			    	
+			    	dlManager.startDownload();
 				} catch (IOException e) {
 					e.printStackTrace();					
 				}

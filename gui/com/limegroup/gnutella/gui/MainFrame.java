@@ -106,7 +106,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      * Constant handle to the <tt>UploadMediator</tt> class that is
      * responsible for displaying active uploads to the user.
      */
-    @Inject
     private UploadMediator UPLOAD_MEDIATOR = UploadMediator.instance();
 
     /**
