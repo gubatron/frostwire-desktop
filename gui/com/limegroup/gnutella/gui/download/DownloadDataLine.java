@@ -85,6 +85,12 @@ public final class DownloadDataLine extends AbstractDataLine<Downloader>
 	 */
 	private static final String COMPLETE_STATE =
 		I18n.tr("Complete");
+	
+	/**
+	 * 
+	 */
+	private static final String COMPLETE_SEEDING_STATE =
+		I18n.tr("Complete/Seeding");
 
 	/**
 	 * Constant for the "aborted" download state.
@@ -850,6 +856,11 @@ public final class DownloadDataLine extends AbstractDataLine<Downloader>
 	        break;
 		case COMPLETE:
             _status = COMPLETE_STATE;
+            
+            if (getDownloader().getClass().equals(BTDownloaderImpl.class)) {
+            	_status = COMPLETE_SEEDING_STATE;
+            }
+            
 			_progress = 100;
 			break;
 		case ABORTED:
@@ -1005,7 +1016,7 @@ public final class DownloadDataLine extends AbstractDataLine<Downloader>
 	 *  <tt>false</tt> otherwise
 	 */
 	boolean isInactive() {
-		return (_state == DownloadStatus.COMPLETE ||
+		return (//_state == DownloadStatus.COMPLETE ||
 				_state == DownloadStatus.ABORTED ||
 				_state == DownloadStatus.GAVE_UP ||
 				_state == DownloadStatus.DISK_PROBLEM ||

@@ -11,7 +11,6 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.limewire.net.ConnectionAcceptor;
 import org.limewire.net.ConnectionDispatcher;
 import org.limewire.nio.AbstractNBSocket;
@@ -19,6 +18,7 @@ import org.limewire.util.FileLocker;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
+import com.frostwire.bittorrent.AzureusStarter;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
@@ -51,9 +51,11 @@ import com.limegroup.gnutella.util.EventDispatcher;
  * the new torrent is queued.
  */
 @Singleton
-public class TorrentManager 
-implements FileLocker, ConnectionAcceptor, TorrentEventListener, 
-EventDispatcher<TorrentEvent, TorrentEventListener> {
+public class TorrentManager implements
+	FileLocker, 
+	ConnectionAcceptor, 
+	TorrentEventListener, 
+	EventDispatcher<TorrentEvent, TorrentEventListener> {
 	
 
 	private static final Log LOG = LogFactory.getLog(TorrentManager.class);

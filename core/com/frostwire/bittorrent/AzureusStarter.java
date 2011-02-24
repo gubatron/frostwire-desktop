@@ -124,6 +124,8 @@ public final class AzureusStarter {
 			}
 			
 			AZUREUS_CORE.getGlobalManager().resumeDownloads();
+			
+			
 			LOG.debug("azureusInit(): core.start() waiting...");
 			try {
 				signal.await(); LOG.debug("azureusInit(): core started...");

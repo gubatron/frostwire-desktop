@@ -126,7 +126,11 @@ public class BTDownloaderImpl extends AbstractCoreDownloader
 	}
 
 	public boolean isInactive() {
-		return isResumable() || torrent.getState() == TorrentState.QUEUED || torrent.getState() == TorrentState.SEEDING;
+		return isResumable() || 
+		       torrent.getState() == TorrentState.QUEUED ||
+		       torrent.getState() == TorrentState.DISK_PROBLEM ||
+		       torrent.getState() == TorrentState.INVALID;
+			//We don't add STOPPED, in the Azureus world this is the same as PAUSED!! FML
 	}
 	
 	public boolean isLaunchable() {
@@ -454,6 +458,10 @@ public class BTDownloaderImpl extends AbstractCoreDownloader
 	public void startDownload() {
 		btUploaderFactory.createBTUploader((ManagedTorrent)torrent, btMetaInfo);
 		torrent.start();
+	}
+	
+	public BTUploader createUploader() {
+		return btUploaderFactory.createBTUploader((ManagedTorrent)torrent, btMetaInfo);
 	}
 	
 	public void handleInactivity() {

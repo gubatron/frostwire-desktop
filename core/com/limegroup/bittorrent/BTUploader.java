@@ -15,6 +15,8 @@ import com.limegroup.gnutella.util.EventDispatcher;
 
 /**
  * A facade for the GUI to treat a single BitTorrent download as a single upload.
+ * 
+ * @see BTDownloader.createUploader() to create one of these quickly.
  */
 public class BTUploader implements Uploader, TorrentEventListener {
 	

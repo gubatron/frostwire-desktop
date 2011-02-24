@@ -17,4 +17,6 @@ public interface BTDownloader extends CoreDownloader {
     public int getNumPeers();
 
 	public int getNumSeeds();
+	
+	public BTUploader createUploader();
 }

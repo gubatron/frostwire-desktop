@@ -3,28 +3,23 @@ package com.limegroup.gnutella.gui;
 import java.io.File;
 import java.util.Set;
 import java.util.Vector;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.SwingUtilities;
 
-import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloader;
-import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderCallBackInterface;
-import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderFactory;
-import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.io.IpPort;
 
 import com.google.inject.Singleton;
+import com.limegroup.bittorrent.BTDownloader;
+import com.limegroup.bittorrent.BTDownloaderImpl;
 import com.limegroup.gnutella.ActivityCallback;
 import com.limegroup.gnutella.Downloader;
+import com.limegroup.gnutella.Downloader.DownloadStatus;
 import com.limegroup.gnutella.FileManagerEvent;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.Uploader;
-import com.limegroup.gnutella.Downloader.DownloadStatus;
 import com.limegroup.gnutella.browser.MagnetOptions;
 import com.limegroup.gnutella.chat.InstantMessenger;
 import com.limegroup.gnutella.connection.ConnectionLifecycleEvent;
@@ -39,7 +34,6 @@ import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.search.HostData;
 import com.limegroup.gnutella.settings.DaapSettings;
 import com.limegroup.gnutella.settings.QuestionsHandler;
-import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.iTunesSettings;
 import com.limegroup.gnutella.uploader.UploadType;
 import com.limegroup.gnutella.util.QueryUtils;
@@ -276,6 +270,14 @@ public final class VisualConnectionCallback implements ActivityCallback {
 	
     public void addDownload(Downloader mgr) {
         Runnable doWorkRunnable = new AddDownload(mgr);
+        
+        if (mgr instanceof BTDownloaderImpl) {
+        	if (((BTDownloader) mgr).isCompleted()) {
+        		//don't add it visually
+        		return;
+        	}
+        }
+        
         SwingUtilities.invokeLater(doWorkRunnable);
     }
 

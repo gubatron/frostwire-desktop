@@ -575,7 +575,7 @@ public class LifecycleManagerImpl implements LifecycleManager {
         statistics.get().shutdown();
         
 		// start closing all active torrents
-		// torrentManager.shutdown();
+		//torrentManager.shutdown();
 		
         //Update firewalled status
         ConnectionSettings.EVER_ACCEPTED_INCOMING.setValue(networkManager.get().acceptedIncomingConnection());

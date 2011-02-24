@@ -353,7 +353,7 @@ public class FileMenuActions {
         }
         
         public void actionPerformed(ActionEvent e) {
-            GUIMediator.close(false); //FTA: false?
+            GUIMediator.close(false);
         }
     }
 }

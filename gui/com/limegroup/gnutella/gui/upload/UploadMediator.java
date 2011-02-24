@@ -1,14 +1,24 @@
 package com.limegroup.gnutella.gui.upload;
 
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.swing.JPopupMenu;
 
+import org.gudy.azureus2.core3.download.DownloadManager;
 import org.limewire.io.ConnectableImpl;
+import org.limewire.util.FileUtils;
 
+import com.aelitis.azureus.core.AzureusCore;
+import com.frostwire.CoreFrostWireUtils;
+import com.frostwire.bittorrent.AzureusStarter;
+import com.limegroup.bittorrent.BTDownloader;
+import com.limegroup.bittorrent.BTMetaInfo;
 import com.limegroup.gnutella.PushEndpoint;
 import com.limegroup.gnutella.UploadServicesImpl;
 import com.limegroup.gnutella.Uploader;
@@ -26,7 +36,6 @@ import com.limegroup.gnutella.gui.tables.TableSettings;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.uploader.HTTPUploader;
-
 
 /**
  * This class acts as a mediator between all of the components of the
@@ -65,9 +74,14 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
     /**
      * instance, for singelton acces
      */
-    private static UploadMediator _instance = new UploadMediator();
+    private static UploadMediator _instance;
 
-    public static UploadMediator instance() { return _instance; }
+    public static UploadMediator instance() {
+    	if (_instance == null) {
+    		_instance = new UploadMediator();
+    	}
+    	return _instance; 
+    }
 
     /**
      * Variable for whether or not chat is enabled for the selected host.
@@ -140,6 +154,43 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 	    super("UPLOAD_MEDIATOR");
 	    GUIMediator.addRefreshListener(this);
 	    ThemeMediator.addThemeObserver(this);
+	    
+	    
+	    new Thread() {
+	    	public void run() {
+	    		try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	    		restoreSeedingTorrents();
+	    	};
+	    }.start();
+	}
+
+	private void restoreSeedingTorrents() {
+	    AzureusCore azureusCore = AzureusStarter.getAzureusCore();
+	    @SuppressWarnings("unchecked")
+		List<DownloadManager> downloadManagers = (List<DownloadManager>) azureusCore.getGlobalManager().getDownloadManagers();
+	    
+	    if (downloadManagers.size() > 0) {
+	    	
+	    	BTDownloader btDownloader = CoreFrostWireUtils.getInjector().getInstance(BTDownloader.class);
+	    	
+		    for (DownloadManager dlManager : downloadManagers) {
+		    	System.out.print("\tAzureusStarter.resumeDownloads()");		    	
+		    	BTMetaInfo info = null;
+				try {
+			    	byte [] b = FileUtils.readFileFully(new File(dlManager.getTorrentFileName()));
+					info = BTMetaInfo.readFromBytes(b);
+			    	btDownloader.initBtMetaInfo(info);
+			    	add(btDownloader.createUploader());
+				} catch (IOException e) {
+					e.printStackTrace();					
+				}
+		    }
+	    }
 	}
 
 	/**

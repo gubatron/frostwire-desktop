@@ -53,8 +53,4 @@ public class BTDownloadMementoImpl implements BTDownloadMemento, Serializable {
     public void setSaveFile(File saveFile) {
         serialObjects.put("saveFile", saveFile);
     }
-    
-
-
-
 }
