@@ -175,7 +175,8 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 		List<DownloadManager> downloadManagers = (List<DownloadManager>) azureusCore.getGlobalManager().getDownloadManagers();
 	    
 	    if (downloadManagers.size() > 0) {
-	    	
+
+	    	//NOTE: Exception in thread "Thread-4" com.google.inject.ConfigurationException: Missing binding to com.limegroup.bittorrent.BTDownloader.
 	    	BTDownloader btDownloader = CoreFrostWireUtils.getInjector().getInstance(BTDownloader.class);
 	    	
 		    for (DownloadManager dlManager : downloadManagers) {
