@@ -20,6 +20,7 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 import com.limegroup.bittorrent.BTContextFactory;
+import com.limegroup.bittorrent.BTDownloader;
 import com.limegroup.bittorrent.BTUploaderFactory;
 import com.limegroup.bittorrent.ManagedTorrentFactory;
 import com.limegroup.bittorrent.TorrentManager;
@@ -47,6 +48,7 @@ import com.limegroup.gnutella.dht.DHTNodeFetcherFactory;
 import com.limegroup.gnutella.dht.db.AltLocFinder;
 import com.limegroup.gnutella.dht.db.AltLocValueFactory;
 import com.limegroup.gnutella.dht.db.PushProxiesValueFactory;
+import com.limegroup.gnutella.downloader.CoreDownloaderFactory;
 import com.limegroup.gnutella.downloader.DiskController;
 import com.limegroup.gnutella.downloader.RemoteFileDescFactory;
 import com.limegroup.gnutella.filters.IPFilter;
@@ -633,6 +635,10 @@ public class LimeWireCore {
 
     public BTUploaderFactory getBTUploaderFactory() {
         return injector.getInstance(BTUploaderFactory.class);
+    }
+    
+    public CoreDownloaderFactory getCoreDownloaderFactory() {
+    	return injector.getInstance(CoreDownloaderFactory.class);
     }
 
     public PingRequestFactory getPingRequestFactory() {

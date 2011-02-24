@@ -43,6 +43,7 @@ import com.frostwire.gnutella.gui.android.AndroidMediator;
 import com.frostwire.gnutella.gui.chat.ChatMediator;
 import com.frostwire.gnutella.gui.tabs.AndroidTab;
 import com.frostwire.gnutella.gui.tabs.ChatTab;
+import com.google.inject.Inject;
 import com.limegroup.gnutella.gui.connection.ConnectionMediator;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.TransferHandlerDropTargetListener;
@@ -105,8 +106,8 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      * Constant handle to the <tt>UploadMediator</tt> class that is
      * responsible for displaying active uploads to the user.
      */
-    private final UploadMediator UPLOAD_MEDIATOR =
-        UploadMediator.instance();
+    @Inject
+    private UploadMediator UPLOAD_MEDIATOR = UploadMediator.instance();
 
     /**
      * Constant handle to the <tt>ConnectionView</tt> class that is

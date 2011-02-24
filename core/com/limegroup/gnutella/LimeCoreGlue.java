@@ -95,10 +95,10 @@ public class LimeCoreGlue {
     /** Wires all various components together. */
     public void install() {
     	//SIMPP 
-    	if (!ApplicationSettings.USE_SIMPP.getValue()) {
-    		LOG.debug("No more SIMPP, turned off");
-    		return;
-    	}
+    	//if (!ApplicationSettings.USE_SIMPP.getValue()) {
+    	//	LOG.debug("No more SIMPP, turned off");
+    	//	return;
+    	//}
     	
         // Only install once.
         if(!installed.compareAndSet(false, true))

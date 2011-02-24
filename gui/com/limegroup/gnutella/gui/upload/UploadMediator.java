@@ -15,13 +15,17 @@ import org.limewire.io.ConnectableImpl;
 import org.limewire.util.FileUtils;
 
 import com.aelitis.azureus.core.AzureusCore;
-import com.frostwire.CoreFrostWireUtils;
 import com.frostwire.bittorrent.AzureusStarter;
-import com.limegroup.bittorrent.BTDownloader;
+import com.google.inject.Guice;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.google.inject.Provider;
+import com.limegroup.bittorrent.BTDownloaderImpl;
 import com.limegroup.bittorrent.BTMetaInfo;
 import com.limegroup.gnutella.PushEndpoint;
 import com.limegroup.gnutella.UploadServicesImpl;
 import com.limegroup.gnutella.Uploader;
+import com.limegroup.gnutella.downloader.CoreDownloaderFactory;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -63,7 +67,9 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 	ActionListener CHAT_LISTENER;
 	ActionListener CLEAR_LISTENER;
 	ActionListener BROWSE_LISTENER;
-	
+
+	private CoreDownloaderFactory _coreDownloaderFactory;
+
 	private static final String UPLOAD_TITLE =
 	    I18n.tr("Uploads");
     private static final String ACTIVE = 
@@ -72,16 +78,10 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
         I18n.tr("Queued");
 
     /**
-     * instance, for singelton acces
+     * instance, for singleton acces
      */
     private static UploadMediator _instance;
 
-    public static UploadMediator instance() {
-    	if (_instance == null) {
-    		_instance = new UploadMediator();
-    	}
-    	return _instance; 
-    }
 
     /**
      * Variable for whether or not chat is enabled for the selected host.
@@ -150,23 +150,15 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 	 * Constructs all of the elements of the upload window, including
 	 * the table, the buttons, etc.
 	 */
+	@Inject
 	public UploadMediator() {
 	    super("UPLOAD_MEDIATOR");
+	    _coreDownloaderFactory = GuiCoreMediator.getCore().getCoreDownloaderFactory();
+	    
 	    GUIMediator.addRefreshListener(this);
 	    ThemeMediator.addThemeObserver(this);
-	    
-	    
-	    new Thread() {
-	    	public void run() {
-	    		try {
-					Thread.sleep(5000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	    		restoreSeedingTorrents();
-	    	};
-	    }.start();
+
+	    restoreSeedingTorrents();
 	}
 
 	private void restoreSeedingTorrents() {
@@ -175,9 +167,6 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 		List<DownloadManager> downloadManagers = (List<DownloadManager>) azureusCore.getGlobalManager().getDownloadManagers();
 	    
 	    if (downloadManagers.size() > 0) {
-
-	    	//NOTE: Exception in thread "Thread-4" com.google.inject.ConfigurationException: Missing binding to com.limegroup.bittorrent.BTDownloader.
-	    	BTDownloader btDownloader = CoreFrostWireUtils.getInjector().getInstance(BTDownloader.class);
 	    	
 		    for (DownloadManager dlManager : downloadManagers) {
 		    	System.out.print("\tAzureusStarter.resumeDownloads()");		    	
@@ -185,7 +174,10 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 				try {
 			    	byte [] b = FileUtils.readFileFully(new File(dlManager.getTorrentFileName()));
 					info = BTMetaInfo.readFromBytes(b);
+					
+					BTDownloaderImpl btDownloader = (BTDownloaderImpl) _coreDownloaderFactory.createBTDownloader(info);
 			    	btDownloader.initBtMetaInfo(info);
+
 			    	add(btDownloader.createUploader());
 				} catch (IOException e) {
 					e.printStackTrace();					
@@ -446,5 +438,12 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 		_browseEnabled = false;
 		setButtonEnabled(UploadButtons.KILL_BUTTON, false);
 		setButtonEnabled(UploadButtons.BROWSE_BUTTON, false);
+	}
+
+	public static UploadMediator instance() {
+		if (_instance == null) {
+			_instance = new UploadMediator();
+		}
+		return _instance;
 	}
 }

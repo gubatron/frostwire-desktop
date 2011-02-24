@@ -268,21 +268,14 @@ public final class Initializer {
     
     /** Wires together LimeWire. */
     private LimeWireGUI createLimeWire() {
-        //stopwatch.reset();
-        //System.out.println("Initializer.createLimeWire(): Guice.createInjector()");
         Injector injector = Guice.createInjector(new LimeWireModule());
-        //stopwatch.resetAndLog("Create injector"); //FTA debug commented for debug new theme tests
-        //System.out.println("Initializer.createLimeWire(): injector.getInstance(LimeWireGUI.class)");
         LimeWireGUI limeWireGUI = injector.getInstance(LimeWireGUI.class);
-        //stopwatch.resetAndLog("Get LimeWireGUI");
-        //System.out.println("Initializer.createLimeWire(): got limeWireGUI");
         return limeWireGUI;
     }
     
     /** Wires together remaining non-Guiced pieces. */
     private void glueCore(LimeWireCore limeWireCore) {
         limeWireCore.getLimeCoreGlue().install();
-        //stopwatch.resetAndLog("Install core glue");
     }
     
     /** Tasks that can be done after core is created, before it's started. */
@@ -291,7 +284,6 @@ public final class Initializer {
         if(!limeWireCore.getNIODispatcher().isRunning()) {
             failInternetBlocked();
         }
-        //stopwatch.resetAndLog("Check for NIO dispatcher");
     }
     
     /**

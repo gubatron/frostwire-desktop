@@ -83,8 +83,8 @@ public class BTDownloaderImpl extends AbstractCoreDownloader
         this.btContextFactory = btContextFactory;
         setCancelled(false);
     }
-    
-    /* (non-Javadoc)
+
+	/* (non-Javadoc)
      * @see com.limegroup.bittorrent.BTDownloader#initBtMetaInfo(com.limegroup.bittorrent.BTMetaInfo)
      */
     public void initBtMetaInfo(BTMetaInfo btMetaInfo) {

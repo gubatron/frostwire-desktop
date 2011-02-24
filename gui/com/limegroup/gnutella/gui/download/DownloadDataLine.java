@@ -12,13 +12,12 @@ import javax.swing.Icon;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
-import com.limegroup.bittorrent.BTDataImpl;
 import com.limegroup.bittorrent.BTDownloader;
 import com.limegroup.bittorrent.BTDownloaderImpl;
 import com.limegroup.bittorrent.settings.BittorrentSettings;
 import com.limegroup.gnutella.Downloader;
-import com.limegroup.gnutella.InsufficientDataException;
 import com.limegroup.gnutella.Downloader.DownloadStatus;
+import com.limegroup.gnutella.InsufficientDataException;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
@@ -856,11 +855,9 @@ public final class DownloadDataLine extends AbstractDataLine<Downloader>
 	        break;
 		case COMPLETE:
             _status = COMPLETE_STATE;
-            
             if (getDownloader().getClass().equals(BTDownloaderImpl.class)) {
             	_status = COMPLETE_SEEDING_STATE;
             }
-            
 			_progress = 100;
 			break;
 		case ABORTED:
