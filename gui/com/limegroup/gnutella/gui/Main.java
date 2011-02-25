@@ -3,9 +3,11 @@ package com.limegroup.gnutella.gui;
 import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.File;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.StringTokenizer;
 import java.util.jar.JarEntry;
@@ -96,7 +98,8 @@ public class Main {
 	        return CHOSEN_SPLASH_URL;
 	    
         final String splashPath = "com/frostwire/splash/";
-	    final int max_splashes = 20; //20 splashes
+        
+	    final int max_splashes = countSplashesInSplashJar();
 	    
 	    //different splash every minute... that way it round robins forward in a loop.
 	    final int randomSplash = 1+(Calendar.getInstance().get(Calendar.MINUTE) % max_splashes);
@@ -104,8 +107,39 @@ public class Main {
 	    CHOSEN_SPLASH_URL = ClassLoader.getSystemResource(splashPath + randomSplash + ".jpg");
 	    return CHOSEN_SPLASH_URL;
 	} //getNextSplashURL
-    
-    /** Determines if this is running on OS X. */
+
+	/**
+	 * Lookup splash.jar in the classpath and count all the splashes in it.
+	 * @return
+	 */
+    private static int countSplashesInSplashJar() {
+    	int result = 0;
+		String pathSeparator = System.getProperty("path.separator");
+        String classPath = System.getProperty("java.class.path");
+        
+        String[] classPathEntries = classPath.split(pathSeparator);
+
+        try {
+            for (String entry : classPathEntries) {
+            	if (entry.endsWith("splash.jar")) {
+            		JarFile jar = new JarFile(new File(entry));
+            		Enumeration<JarEntry> jarEntries = jar.entries();
+            		while (jarEntries.hasMoreElements()) {
+            			String fileName = jarEntries.nextElement().getName();
+            			
+            			if (fileName.endsWith("png") || fileName.endsWith("jpg") || fileName.endsWith("gif")) {
+            				result++;
+            			}
+            		}
+            		return result;
+            	}
+            }
+        } catch (Exception ignore) { }
+
+		return result;
+	}
+
+	/** Determines if this is running on OS X. */
     private static boolean isMacOSX() {
         String os = System.getProperty("os.name").toLowerCase();
         return os.startsWith("mac os") && os.endsWith("x"); // Why not indexOf("mac os x") ?
