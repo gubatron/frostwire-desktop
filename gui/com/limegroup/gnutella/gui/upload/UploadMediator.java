@@ -184,7 +184,7 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 			    	
 			    	add(btDownloader.createUploader());
 			    	
-			    	dlManager.startDownload();
+			    	dlManager.resume();
 				} catch (IOException e) {
 					e.printStackTrace();					
 				}

@@ -429,7 +429,7 @@ public class BTDownloaderImpl extends AbstractCoreDownloader
 
 	private void torrentStopped(String description) {
 		LOG.debug("TIME: "+ System.currentTimeMillis()+" torrentStopped (isResumable? before or after pause?)");
-		if (stopTime == 0) {
+		//if (stopTime == 0) {
             if (description != null)
                 setAttribute(CUSTOM_INACTIVITY_KEY, description, false);
 			averagedBandwidth.clear();
@@ -437,9 +437,9 @@ public class BTDownloaderImpl extends AbstractCoreDownloader
 			boolean resumable = !getCancelled() && !finished;//isResumable();
 			stopTime = System.currentTimeMillis();
 			downloadManager.remove(this, !resumable);
-		} else { // otherwise torrent was already completed.
+		//} else { // otherwise torrent was already completed.
 		    //assert(torrent instanceof FinishedTorrentDownload);
-		}
+		//}
 	}
 
 	public void initialize() {
@@ -456,12 +456,12 @@ public class BTDownloaderImpl extends AbstractCoreDownloader
 	}
 	
 	public void startDownload() {
-		btUploaderFactory.createBTUploader((ManagedTorrent)torrent, btMetaInfo);
+		btUploaderFactory.createBTUploader((ManagedTorrent)torrent, btMetaInfo,this);
 		torrent.start();
 	}
 	
 	public BTUploader createUploader() {
-		return btUploaderFactory.createBTUploader((ManagedTorrent)torrent, btMetaInfo);
+		return btUploaderFactory.createBTUploader((ManagedTorrent)torrent, btMetaInfo, this);
 	}
 	
 	public void handleInactivity() {

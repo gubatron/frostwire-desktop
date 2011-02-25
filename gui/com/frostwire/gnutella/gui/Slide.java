@@ -36,4 +36,22 @@ public class Slide {
 	 * length of time this slide will be shown
 	 */
 	public long duration;
+	
+	/**
+	 * language (optional filter) = Can be given in the forms of:
+	 * *
+	 * en
+	 * en_US
+	 * 
+	 */
+	public String language;
+	
+	/**
+	 * os (optional filter) = Can be given in the forms of:
+	 * windows
+	 * mac
+	 * linux
+	 */
+	public String os;
+	
 }

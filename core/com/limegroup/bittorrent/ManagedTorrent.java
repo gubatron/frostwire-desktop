@@ -560,7 +560,9 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 			_manager.startDownload();
 			dispatchEvent(TorrentEvent.Type.STARTED);
 		} else if (intState == DownloadManager.STATE_ALLOCATING
-				|| intState == DownloadManager.STATE_INITIALIZING) {
+				|| intState == DownloadManager.STATE_INITIALIZING
+				|| intState == DownloadManager.STATE_QUEUED) {
+			_ignoreStopped = false;//ugly hack
 			synchronized(state.getLock()) {
 				state.set(TorrentState.CONNECTING);
 			}
@@ -678,21 +680,25 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 		state.set(TorrentState.STOPPED);
 		stopImpl();
 	}
-
+	
 	/**
 	 * Performs the actual stop.
 	 */
 	private synchronized void stopImpl() {
-		if (!stopState())
-			throw new IllegalStateException("stopping in wrong state "
-					+ state.get());
+		//if (!stopState())
+		//	throw new IllegalStateException("stopping in wrong state "
+		//			+ state.get());
 	
+		stopImpl(false);
+	}
+	
+	private synchronized void stopImpl(boolean pause) {
 		if (_manager != null) {
 			//_manager.stopIt(DownloadManager.STATE_STOPPED, false, false);
 			_manager.getGlobalManager().pauseDownload(_manager);
 		}
 	
-		dispatchEvent(TorrentEvent.Type.STOPPED);
+		dispatchEvent(pause ? TorrentEvent.Type.PAUSED : TorrentEvent.Type.STOPPED);
 		LOG.debug("Torrent stopped on stopImpl()!");
 	}
 
@@ -759,7 +765,7 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 			
 			if (wasActive) {
 				LOG.debug("ManagedTorrent.pause() - wasActive=true, invoking stopImpl()");
-				stopImpl();
+				stopImpl(true);
 			}
 		} finally {
 			LOG.debug("TIME: "+ System.currentTimeMillis()+ "ManagedTorrent.pause() - The torrent state at the end was: " + state.get()); 
@@ -779,7 +785,7 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 				case STOPPED:
 					if (_manager != null) {
 						state.set(TorrentState.QUEUED);
-						_manager.getGlobalManager().resumeDownload(_manager);
+						_manager.resume();
 					}
 					return true;
 				default:

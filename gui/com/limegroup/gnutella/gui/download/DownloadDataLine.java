@@ -808,6 +808,12 @@ public final class DownloadDataLine extends AbstractDataLine<Downloader>
         //though it actually had progress.
 		double d = (double)_amountRead/(double)_size;
 		_progress = (int)(d*100);
+		if (_progress > 100) {
+			_progress = 100;
+		}
+		if (_progress < 0) {
+			_progress = 0;
+		}
 		this.updateStatus();
 		// downloads can go from inactive to active through resuming.
 		if ( !this.isInactive() ) _endTime = -1;

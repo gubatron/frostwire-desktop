@@ -22,6 +22,8 @@ public class BTUploader implements Uploader, TorrentEventListener {
 	
 	private final ManagedTorrent _torrent;
 	
+	private final BTDownloaderImpl _btDownloader;
+	
 	private final BTMetaInfo _info;
 	
 	private long startTime, stopTime;
@@ -30,13 +32,22 @@ public class BTUploader implements Uploader, TorrentEventListener {
 
     private final ActivityCallback activityCallback;
 
-	BTUploader(ManagedTorrent torrent, BTMetaInfo info,
-			EventDispatcher<TorrentEvent, TorrentEventListener> dispatcher, ActivityCallback activityCallback) {
+	BTUploader(ManagedTorrent torrent, 
+			BTMetaInfo info,
+			EventDispatcher<TorrentEvent, 
+			TorrentEventListener> dispatcher, 
+			ActivityCallback activityCallback,
+			BTDownloaderImpl btDownloader) {
 		_torrent = torrent;
 		_info = info;
+		_btDownloader = btDownloader;
 		this.dispatcher = dispatcher;
         this.activityCallback = activityCallback;
 		dispatcher.addEventListener(this);
+	}
+	
+	public ManagedTorrent getManagedTorrent() {
+		return _torrent;
 	}
 
 	public void stop() {
@@ -219,5 +230,9 @@ public class BTUploader implements Uploader, TorrentEventListener {
 
     public float getSeedRatio() {
 	return _torrent.getRatio();
+    }
+    
+    public BTDownloaderImpl getBTDownloader() {
+    	return _btDownloader;
     }
 }

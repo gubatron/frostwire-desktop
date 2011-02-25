@@ -18,8 +18,8 @@ public class BTUploaderFactoryImpl implements BTUploaderFactory {
     }
     
     public BTUploader createBTUploader(ManagedTorrent torrent,
-            BTMetaInfo info) {
-        return new BTUploader(torrent, info, torrentManager.get(), activityCallback.get());
+            BTMetaInfo info, BTDownloaderImpl downloader) {
+        return new BTUploader(torrent, info, torrentManager.get(), activityCallback.get(), downloader);
     }
 
 }

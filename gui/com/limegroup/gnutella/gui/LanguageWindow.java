@@ -71,6 +71,7 @@ public class LanguageWindow extends JDialog {
         
         if (getWidth() < MIN_DIALOG_WIDTH) {
             setSize(350, getHeight());
+            setResizable(false);
         }
     }
 

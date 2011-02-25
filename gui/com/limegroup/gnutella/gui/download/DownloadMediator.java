@@ -451,6 +451,10 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
             if (ddl != null) ddl.setEndTime(System.currentTimeMillis());
         }
     }
+    
+    public void forceRemoveDownloader(Downloader dloader) {
+    	super.remove(dloader);
+    }
 
     public void openTorrent(File file) {
     	try {

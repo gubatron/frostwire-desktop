@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Timer;
@@ -16,11 +17,14 @@ import java.util.TimerTask;
 
 import javax.swing.JPanel;
 
+import org.limewire.util.OSUtils;
+
 import com.frostwire.HttpFetcher;
 import com.frostwire.ImageCache;
 import com.frostwire.ImageCache.OnLoadedListener;
 import com.frostwire.json.JsonEngine;
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.settings.ApplicationSettings;
 
 public class SlideshowPanel extends JPanel {
 
@@ -93,7 +97,8 @@ public class SlideshowPanel extends JPanel {
     }
     
     private void setup(List<Slide> slides, boolean randomStart) {
-        _slides = slides;
+    	
+        _slides = filter(slides);
         _randomStart = randomStart;
         _currentSlideIndex = -1;
         
@@ -244,5 +249,51 @@ public class SlideshowPanel extends JPanel {
 		}
 		
 		return bImage;
+	}
+	
+	private List<Slide> filter(List<Slide> slides) {
+		List<Slide> result = new ArrayList<Slide>(slides.size());
+		
+		for (Slide slide : slides) { 
+			if (isMessageEligibleForMyLang(slide.language) &&
+				isMessageEligibleForMyOs(slide.os)) {
+				result.add(slide);
+			}
+		}
+		
+		return result;
+	}
+	
+	/*
+	 * Examples of when this returns true
+	 * given == lang in app
+	 * es_ve == es_ve
+	 * es == es_ve
+	 * * == es_ve
+	 */
+	private boolean isMessageEligibleForMyLang(String lang) {
+
+		if (lang == null || lang.equals("*"))
+			return true;
+
+		String langinapp = ApplicationSettings.getLanguage().toLowerCase();
+
+		if (lang.length() == 2)
+			return langinapp.toLowerCase().startsWith(lang.toLowerCase());
+
+		return lang.equalsIgnoreCase(langinapp);
+	}
+	
+	private boolean isMessageEligibleForMyOs(String os) {
+		if (os == null)
+			return true;
+
+		boolean im_mac_msg_for_me = os.equals("mac") && OSUtils.isMacOSX();
+
+		boolean im_windows_msg_for_me = os.equals("windows") && OSUtils.isWindows();
+
+		boolean im_linux_msg_for_me = os.equals("linux") && OSUtils.isLinux();
+
+		return im_mac_msg_for_me || im_windows_msg_for_me || im_linux_msg_for_me;
 	}
 }
