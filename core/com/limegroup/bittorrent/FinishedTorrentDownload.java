@@ -101,4 +101,8 @@ public class FinishedTorrentDownload implements Torrent {
 	public File getTorrentName() {
 		return _innerTorrent.getTorrentName();
 	}
+	
+	public float getRatio() {
+	    return 0;
+	}
 }

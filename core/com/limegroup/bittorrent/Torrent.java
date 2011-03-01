@@ -2,7 +2,7 @@ package com.limegroup.bittorrent;
 
 import java.io.File;
 
-interface Torrent {
+public interface Torrent {
 
 	/**
 	 * States of a torrent.  Some of them are functionally equivalent
@@ -33,17 +33,17 @@ interface Torrent {
 	/**
 	 * @return true if the torrent is complete.
 	 */
-	public abstract boolean isComplete();
+	public boolean isComplete();
 
 	/**
 	 * Starts the torrent 
 	 */
-	public abstract void start();
+	public void start();
 
 	/**
 	 * Stops the torrent
 	 */
-	public abstract void stop();
+	public void stop();
 
 	public void measureBandwidth();
 
@@ -74,7 +74,7 @@ interface Torrent {
 	/**
 	 * Resumes the torrent.
 	 */
-	public abstract boolean resume();
+	public boolean resume();
 
 	/**
 	 * @return true if paused
@@ -86,7 +86,9 @@ interface Torrent {
 	/**
 	 * Pauses the torrent.
 	 */
-	public abstract void pause();
+	public void pause();
 
 	public File getTorrentName();
+	
+	public float getRatio();
 }

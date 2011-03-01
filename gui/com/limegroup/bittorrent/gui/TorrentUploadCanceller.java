@@ -1,6 +1,7 @@
 package com.limegroup.bittorrent.gui;
 
 import com.limegroup.bittorrent.ManagedTorrent;
+import com.limegroup.bittorrent.Torrent;
 import com.limegroup.bittorrent.TorrentEvent;
 import com.limegroup.bittorrent.TorrentEventListener;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -27,7 +28,7 @@ public class TorrentUploadCanceller implements TorrentEventListener {
 		if (evt.getType() != TorrentEvent.Type.STOP_REQUESTED)
 			return;
 		
-		ManagedTorrent t = evt.getTorrent();
+		Torrent t = evt.getTorrent();
         if (!t.isActive())
             return;
 		boolean approve = true;

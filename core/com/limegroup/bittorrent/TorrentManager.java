@@ -166,7 +166,7 @@ public class TorrentManager implements
 	public void handleTorrentEvent(TorrentEvent evt) {
 		if (evt.getSource() == this)
 			return;
-		ManagedTorrent t = evt.getTorrent();
+		ManagedTorrent t = (ManagedTorrent)evt.getTorrent();
 		switch(evt.getType()) {
 		case STARTING: torrentStarting(t); break;
 		case STARTED: torrentStarted(t); break;
