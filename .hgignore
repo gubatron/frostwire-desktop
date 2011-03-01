@@ -4,15 +4,10 @@ builder/*
 *.class
 *.orig
 .classpath
-<<<<<<< variant A
+*dist/*.jar
 log4.log
 gui/log4.log
 lib/jars/other/themes.jar
 components/http/build/classes/org/limewire/http/package.html
-*dist/*.jar>>>>>>> variant B
-log4.log
-gui/log4.log
-lib/jars/other/themes.jar
-components/http/build/classes/org/limewire/http/package.html
-hs_err_*.log####### Ancestor
-======= end
+hs_err_*.log
+.DS_Store
