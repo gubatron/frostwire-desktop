@@ -4,6 +4,7 @@ import com.limegroup.bittorrent.BTDownloaderImpl;
 import com.limegroup.bittorrent.BTUploader;
 import com.limegroup.bittorrent.gui.TorrentFileFetcher;
 import com.limegroup.gnutella.Downloader;
+import com.limegroup.gnutella.Downloader.DownloadStatus;
 import com.limegroup.gnutella.Uploader;
 import com.limegroup.gnutella.gui.download.DownloadDataLine;
 import com.limegroup.gnutella.gui.download.DownloadMediator;
@@ -143,8 +144,11 @@ final class UploadModel extends BasicDataLineModel<UploadDataLine, Uploader> {
 		
 		if (line.getInitializeObject() instanceof BTUploader) {
 			BTUploader uploader = (BTUploader) line.getInitializeObject();
-			//uploader.getBTDownloader().setCancelled(true);
-			DownloadMediator.instance().forceRemoveDownloader(uploader.getBTDownloader());
+			
+			BTDownloaderImpl downloader = uploader.getBTDownloader();
+			if (downloader.getState() != DownloadStatus.PAUSED) {
+			    DownloadMediator.instance().forceRemoveDownloader(downloader);
+			}
 		}
         
 		super.remove(row);

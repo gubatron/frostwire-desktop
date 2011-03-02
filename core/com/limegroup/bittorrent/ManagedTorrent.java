@@ -560,9 +560,7 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 			_manager.startDownload();
 			dispatchEvent(TorrentEvent.Type.STARTED);
 		} else if (intState == DownloadManager.STATE_ALLOCATING
-				|| intState == DownloadManager.STATE_INITIALIZING
-				|| intState == DownloadManager.STATE_QUEUED) {
-			_ignoreStopped = false;//ugly hack
+				|| intState == DownloadManager.STATE_INITIALIZING) {
 			synchronized(state.getLock()) {
 				state.set(TorrentState.CONNECTING);
 			}
@@ -684,7 +682,7 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 	/**
 	 * Performs the actual stop.
 	 */
-	private synchronized void stopImpl() {
+	private void stopImpl() {
 		//if (!stopState())
 		//	throw new IllegalStateException("stopping in wrong state "
 		//			+ state.get());
@@ -698,7 +696,7 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 			_manager.getGlobalManager().pauseDownload(_manager);
 		}
 	
-		dispatchEvent(pause ? TorrentEvent.Type.PAUSED : TorrentEvent.Type.STOPPED);
+		dispatchEvent(TorrentEvent.Type.STOPPED);
 		LOG.debug("Torrent stopped on stopImpl()!");
 	}
 
@@ -785,7 +783,7 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 				case STOPPED:
 					if (_manager != null) {
 						state.set(TorrentState.QUEUED);
-						_manager.resume();
+						_manager.getGlobalManager().resumeDownload(_manager);
 					}
 					return true;
 				default:
