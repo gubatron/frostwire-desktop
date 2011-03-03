@@ -105,4 +105,11 @@ public class FinishedTorrentDownload implements Torrent {
 	public float getRatio() {
 	    return 0;
 	}
+
+    @Override
+    public void destroy() {
+        if (_innerTorrent != null) {
+            _innerTorrent.destroy();
+        }
+    }
 }

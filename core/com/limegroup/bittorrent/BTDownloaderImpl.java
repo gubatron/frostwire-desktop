@@ -437,6 +437,7 @@ public class BTDownloaderImpl extends AbstractCoreDownloader
 			boolean resumable = !getCancelled() && !finished;//isResumable();
 			stopTime = System.currentTimeMillis();
 			downloadManager.remove(this, !resumable);
+			torrent.destroy();
 		} else { // otherwise torrent was already completed.
 		    //assert(torrent instanceof FinishedTorrentDownload);
 		}
@@ -565,6 +566,7 @@ public class BTDownloaderImpl extends AbstractCoreDownloader
 
 	public void removeFromDownloadManager() {
 		setCancelled(true);
+		finished = true;
 		torrentStopped(null);
 		//downloadManager.remove(this, true);
 	}

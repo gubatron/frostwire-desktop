@@ -14,6 +14,7 @@ import org.gudy.azureus2.core3.download.DownloadManagerListener;
 import org.gudy.azureus2.core3.download.DownloadManagerPeerListener;
 import org.gudy.azureus2.core3.download.DownloadManagerPieceListener;
 import org.gudy.azureus2.core3.download.DownloadManagerStats;
+import org.gudy.azureus2.core3.global.GlobalManagerDownloadRemovalVetoException;
 import org.gudy.azureus2.core3.peer.PEPeer;
 import org.gudy.azureus2.core3.peer.PEPeerManager;
 import org.gudy.azureus2.core3.peer.PEPiece;
@@ -1460,5 +1461,14 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 
 	public File getTorrentName() {
 		return new File(_info.getName());
+	}
+	
+	public void destroy() {
+	    try {
+            _manager.getGlobalManager().removeDownloadManager(_manager);
+        } catch (GlobalManagerDownloadRemovalVetoException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 	}
 }

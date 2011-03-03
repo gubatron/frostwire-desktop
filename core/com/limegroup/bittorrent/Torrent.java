@@ -91,4 +91,6 @@ public interface Torrent {
 	public File getTorrentName();
 	
 	public float getRatio();
+
+    public void destroy();
 }

@@ -148,6 +148,7 @@ final class UploadModel extends BasicDataLineModel<UploadDataLine, Uploader> {
 			BTDownloaderImpl downloader = uploader.getBTDownloader();
 			if (downloader.getState() != DownloadStatus.PAUSED) {
 			    DownloadMediator.instance().forceRemoveDownloader(downloader);
+			    downloader.removeFromDownloadManager();
 			}
 		}
         
