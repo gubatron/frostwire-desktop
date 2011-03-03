@@ -17,7 +17,9 @@ import org.gudy.azureus2.core3.download.DownloadManagerStats;
 import org.gudy.azureus2.core3.peer.PEPeer;
 import org.gudy.azureus2.core3.peer.PEPeerManager;
 import org.gudy.azureus2.core3.peer.PEPiece;
+import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
+import org.gudy.azureus2.core3.util.TorrentUtils;
 import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.concurrent.SyncWrapper;
 import org.limewire.io.DiskException;
@@ -254,6 +256,10 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 	public void start() {
 		//if (LOG.isDebugEnabled())
 		//	LOG.debug("requesting torrent start", new Exception());
+	    
+	    if (_hasBeenPaused) {
+	        return;
+	    }
 
 		synchronized (state.getLock()) {
 			if (state.get() != TorrentState.QUEUED)
@@ -327,10 +333,14 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 			if (!SharingSettings.DEFAULT_SAVE_DIR.exists()) {
 				SharingSettings.DEFAULT_SAVE_DIR.mkdirs();
 			}
-
-			_manager = _azureusCore.getGlobalManager().addDownloadManager(
-					_torrentFile.getCanonicalPath(),
-					SharingSettings.DEFAULT_SAVE_DIR.getCanonicalPath());
+			
+			TOTorrent torrent = TorrentUtils.readFromFile(_torrentFile, false);
+			
+			if ((_manager = _azureusCore.getGlobalManager().getDownloadManager(torrent)) == null) {			
+			    _manager = _azureusCore.getGlobalManager().addDownloadManager(
+			            _torrentFile.getCanonicalPath(),
+			            SharingSettings.DEFAULT_SAVE_DIR.getCanonicalPath());
+			}
 			
 			LOG.debug("createdAzureusDownloadManger - Azureus Save Location is:\n>> " + _manager.getSaveLocation().getCanonicalPath());
 
@@ -367,9 +377,9 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 			boolean saveFolderIsEmpty = saveLocation.list() == null;
 			
 			if (saveFolderNotThere || saveFolderIsEmpty || _overwrite) {
-				_azureusCore.getGlobalManager().removeDownloadManager(_manager,
-						true, true);
-				createAzureusDownloadManager();
+				//_azureusCore.getGlobalManager().removeDownloadManager(_manager,
+				//		true, true);
+				//createAzureusDownloadManager();
 				_overwrite = false; // For proper isComplete logic.
 			}
 			
@@ -514,9 +524,9 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 						AzureusCoreComponent component) {
 				}
 			});
+						
+			_manager.setStateWaiting();
 			
-			
-			_manager.initialize();
 		} catch (Exception e) {
 			LOG.error("Error starting torrent download", e);
 		}
@@ -593,12 +603,13 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 				state.set(TorrentState.STOPPED);
 			}
 			dispatchEvent(TorrentEvent.Type.STOPPED);
+		} else if (intState == DownloadManager.STATE_WAITING) {
+		    _manager.initialize();
 		}
 
 		//printAzTorrentDownloadStats();
 
 	} //stateChanged
-	
 
 	@SuppressWarnings("unused")
 	private void printAzTorrentDownloadStats() {
@@ -692,8 +703,7 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 	
 	private synchronized void stopImpl(boolean pause) {
 		if (_manager != null) {
-			//_manager.stopIt(DownloadManager.STATE_STOPPED, false, false);
-			_manager.getGlobalManager().pauseDownload(_manager);
+			_manager.stopIt(DownloadManager.STATE_STOPPED, false, false);
 		}
 	
 		dispatchEvent(TorrentEvent.Type.STOPPED);
@@ -783,7 +793,7 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 				case STOPPED:
 					if (_manager != null) {
 						state.set(TorrentState.QUEUED);
-						_manager.getGlobalManager().resumeDownload(_manager);
+						_manager.setStateWaiting();
 					}
 					return true;
 				default:
