@@ -90,7 +90,7 @@ public class BTUploader implements Uploader, TorrentEventListener {
 		if (!_torrent.isActive()) {
 			if (_torrent.isComplete() && _torrent.getRatio() > 1)
 				return UploadStatus.COMPLETE;
-			return UploadStatus.INTERRUPTED;
+			//return UploadStatus.WAITING_REQUESTS;
 		}
 		
 		if (_torrent.isUploading())

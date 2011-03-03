@@ -172,7 +172,8 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 		    	BTMetaInfo info = null;
 				try {
 					
-					if (dlManager.getState() != 70) {
+					if (dlManager.getState() != 70 &&
+					    dlManager.getState() != 75 ) {
 						continue;
 					}
 					
@@ -184,7 +185,6 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 			    	
 			    	add(btDownloader.createUploader());
 			    	
-			    	dlManager.resume();
 				} catch (IOException e) {
 					e.printStackTrace();					
 				}

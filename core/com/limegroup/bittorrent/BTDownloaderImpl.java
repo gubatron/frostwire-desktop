@@ -461,7 +461,9 @@ public class BTDownloaderImpl extends AbstractCoreDownloader
 	}
 	
 	public BTUploader createUploader() {
-		return btUploaderFactory.createBTUploader((ManagedTorrent)torrent, btMetaInfo, this);
+		BTUploader uploader = btUploaderFactory.createBTUploader((ManagedTorrent)torrent, btMetaInfo, this);
+		torrent.start();
+		return uploader;
 	}
 	
 	public void handleInactivity() {
