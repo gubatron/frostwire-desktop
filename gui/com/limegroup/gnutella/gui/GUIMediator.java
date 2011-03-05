@@ -303,21 +303,8 @@ public final class GUIMediator {
 			if (OPTIONAL_TABS != null)
 				return OPTIONAL_TABS;
 
-			if (LogUtils.isLog4JAvailable()) {
-				if (isBrowserCapable())
-					OPTIONAL_TABS = new Tabs[] { MONITOR, CONNECTION, LIBRARY,
-							ANDROID, CHAT }; // , FROSTCLICK };
-				else
-					OPTIONAL_TABS = new Tabs[] { MONITOR, CONNECTION, LIBRARY,
+			OPTIONAL_TABS = new Tabs[] { MONITOR, CONNECTION, LIBRARY,
 							ANDROID, CHAT };
-			} else {
-				if (isBrowserCapable())
-					OPTIONAL_TABS = new Tabs[] { MONITOR, CONNECTION, LIBRARY,
-							ANDROID, CHAT };// , FROSTCLICK };
-				else
-					OPTIONAL_TABS = new Tabs[] { MONITOR, CONNECTION, LIBRARY,
-							ANDROID, CHAT };
-			}
 
 			return OPTIONAL_TABS;
 		}

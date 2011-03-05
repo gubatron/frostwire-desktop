@@ -39,7 +39,6 @@ import com.limegroup.gnutella.settings.ConnectionSettings;
 import com.limegroup.gnutella.settings.DaapSettings;
 import com.limegroup.gnutella.settings.StartupSettings;
 import com.limegroup.gnutella.util.LimeWireUtils;
-import com.limegroup.gnutella.util.LogUtils;
 
 /** Initializes (creates, starts, & displays) the LimeWire Core & UI. */
 public final class Initializer {
@@ -59,11 +58,6 @@ public final class Initializer {
     private final Stopwatch stopwatch;
     
     Initializer() {
-        // If Log4J is available then remove the NoOpLog
-        if (LogUtils.isLog4JAvailable()) {
-            System.getProperties().remove("org.apache.commons.logging.Log");
-        }
-        
         LOG = LogFactory.getLog(Initializer.class);
         
         if(LOG.isTraceEnabled()) {
