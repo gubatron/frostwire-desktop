@@ -323,14 +323,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         if (!ApplicationSettings.LIBRARY_VIEW_ENABLED.getValue())
             this.setTabVisible(GUIMediator.Tabs.LIBRARY, false);
         
-        //if (LogUtils.isLog4JAvailable()) {
-        //    if (!ApplicationSettings.CONSOLE_VIEW_ENABLED.getValue())
-        //        this.setTabVisible(GUIMediator.Tabs.CONSOLE, false);
-        //}
-        //if(!ApplicationSettings.LOGGING_VIEW_ENABLED.getValue())
-        //    this.setTabVisible(GUIMediator.Tabs.LOGGING, false);
-        
-
         if( SWTBrowserSettings.USE_SWT_BROWSER.getValue()&& GUIMediator.isBrowserCapable()) {
             if(!ApplicationSettings.SWT_BROWSER_VIEW_ENABLED.getValue())
                 this.setTabVisible(GUIMediator.Tabs.FROSTCLICK, false);
@@ -440,11 +432,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         TABS.put(GUIMediator.Tabs.LIBRARY, new LibraryPlayListTab(LIBRARY_MEDIATOR));
         TABS.put(GUIMediator.Tabs.ANDROID, new AndroidTab(ANDROID_MEDIATOR));
 	    TABS.put(GUIMediator.Tabs.CHAT, new ChatTab(CHAT_MEDIATOR));
-        
-        //if (LogUtils.isLog4JAvailable()) {
-        //    Console console = new Console();
-        //    TABS.put(GUIMediator.Tabs.CONSOLE, new ConsoleTab(console));
-        //}        
     }
 
     

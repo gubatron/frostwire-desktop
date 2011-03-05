@@ -1,6 +1,5 @@
 package com.onionnetworks.io;
 
-//import org.apache.log4j.Category;
 import java.io.*;
 
 // Implement Filtering.

@@ -42,7 +42,6 @@ import com.limegroup.gnutella.util.LimeWireUtils;
 
 /** Initializes (creates, starts, & displays) the LimeWire Core & UI. */
 public final class Initializer {
-    /** The log -- set only after Log4J can be determined. */
     private final Log LOG;
     
     /** Refuse to start after this date */

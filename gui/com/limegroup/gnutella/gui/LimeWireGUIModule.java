@@ -23,9 +23,5 @@ public class LimeWireGUIModule extends AbstractModule {
         
         bind(SessionInfo.class).to(LimeSessionInfo.class);
         bind(LocalClientInfoFactory.class).to(LocalClientInfoFactoryImpl.class);
-        
     }
-    
-    
-
 }
