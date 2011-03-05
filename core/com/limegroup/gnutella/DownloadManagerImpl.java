@@ -24,7 +24,6 @@ import org.limewire.io.IpPort;
 import org.limewire.service.MessageService;
 import org.limewire.util.FileUtils;
 
-import com.frostwire.bittorrent.AzureusStarter;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
@@ -46,7 +45,6 @@ import com.limegroup.gnutella.downloader.PushDownloadManager;
 import com.limegroup.gnutella.downloader.PushedSocketHandlerRegistry;
 import com.limegroup.gnutella.downloader.RemoteFileDescFactory;
 import com.limegroup.gnutella.downloader.ResumeDownloader;
-import com.limegroup.gnutella.downloader.StoreDownloader;
 import com.limegroup.gnutella.downloader.serial.BTMetaInfoMemento;
 import com.limegroup.gnutella.downloader.serial.DownloadMemento;
 import com.limegroup.gnutella.downloader.serial.DownloadSerializer;
@@ -609,39 +607,6 @@ public class DownloadManagerImpl implements DownloadManager {
             coreDownloaderFactory.createMagnetDownloader( magnet,
                 overwrite, saveDir, fileName);
         initializeDownload(downloader);
-        return downloader;
-    }
-
-    /* (non-Javadoc)
-     * @see com.limegroup.gnutella.DownloadMI#downloadFromStore(com.limegroup.gnutella.RemoteFileDesc, boolean, java.io.File, java.lang.String)
-     */
-    public synchronized Downloader downloadFromStore( RemoteFileDesc rfd,
-            boolean overwrite,
-            File saveDir,
-            String fileName)
-    throws IllegalArgumentException, SaveLocationException {
-        
-        //Purge entries from incompleteFileManager that have no corresponding
-        //file on disk.  This protects against stupid users who delete their
-        //temporary files while FrostWire is running, either through the command
-        //prompt or the library.  Note that you could optimize this by just
-        //purging files corresponding to the current download, but it's not
-        //worth it.
-        incompleteFileManager.purge();
-        
-        if (conflicts(rfd.getSHA1Urn(), 0, new File(saveDir,fileName))) {
-            throw new SaveLocationException
-            (SaveLocationException.FILE_ALREADY_DOWNLOADING, new File(fileName));
-        }
-      
-        //Start download asynchronously.  This automatically moves downloader to
-        //active if it can.
-        StoreDownloader downloader =
-            coreDownloaderFactory.createStoreDownloader(rfd,  
-                                  saveDir, fileName, overwrite);
-
-        initializeDownload(downloader);
-        
         return downloader;
     }
 

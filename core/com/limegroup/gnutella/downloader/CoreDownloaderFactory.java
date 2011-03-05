@@ -34,18 +34,6 @@ public interface CoreDownloaderFactory {
     public ResumeDownloader createResumeDownloader(File incompleteFile, String name, long size)
             throws SaveLocationException;
 
-    /**
-     * @param rfd - location to download from
-     * @param saveDirectory - location to save the file
-     * @param fileName - name of file once download is complete
-     * @param overwrite - true to overwrite a file with the same name in the
-     *        same directory
-     * @return - a StoreDownloader to begin downloading from
-     * @throws SaveLocationException
-     */
-    public StoreDownloader createStoreDownloader(RemoteFileDesc rfd, File saveDirectory,
-            String fileName, boolean overwrite) throws SaveLocationException;
-    
     public BTDownloader createBTDownloader(BTMetaInfo info);
 
     /**

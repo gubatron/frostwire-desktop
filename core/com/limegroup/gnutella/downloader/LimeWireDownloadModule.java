@@ -21,7 +21,6 @@ public class LimeWireDownloadModule extends AbstractModule {
         bind(InNetworkDownloader.class).to(InNetworkDownloaderImpl.class);
         bind(MagnetDownloader.class).to(MagnetDownloaderImpl.class);
         bind(ResumeDownloader.class).to(ResumeDownloaderImpl.class);
-        bind(StoreDownloader.class).to(StoreDownloaderImpl.class);
         bind(BTDownloader.class).to(BTDownloaderImpl.class);
         
         bind(RemoteFileDescFactory.class).to(RemoteFileDescFactoryImpl.class);

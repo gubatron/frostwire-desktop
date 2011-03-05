@@ -29,8 +29,6 @@ public class CoreDownloaderFactoryImpl implements CoreDownloaderFactory {
 
     private final Provider<ResumeDownloader> resumeDownloaderFactory;
 
-    private final Provider<StoreDownloader> storeDownloaderFactory;
-
     private final Provider<BTDownloader> btDownloaderFactory;
 
     @Inject
@@ -38,13 +36,11 @@ public class CoreDownloaderFactoryImpl implements CoreDownloaderFactory {
             Provider<MagnetDownloader> magnetDownloaderFactory,
             Provider<InNetworkDownloader> inNetworkDownloaderFactory,
             Provider<ResumeDownloader> resumeDownloaderFactory,
-            Provider<StoreDownloader> storeDownloaderFactory,
             Provider<BTDownloader> btDownloaderFactory) {
         this.managedDownloaderFactory = managedDownloaderFactory;
         this.magnetDownloaderFactory = magnetDownloaderFactory;
         this.inNetworkDownloaderFactory = inNetworkDownloaderFactory;
         this.resumeDownloaderFactory = resumeDownloaderFactory;
-        this.storeDownloaderFactory = storeDownloaderFactory;
         this.btDownloaderFactory = btDownloaderFactory;
     }
 
@@ -90,14 +86,6 @@ public class CoreDownloaderFactoryImpl implements CoreDownloaderFactory {
         return rd;
     }
 
-    public StoreDownloader createStoreDownloader(RemoteFileDesc rfd, File saveDirectory,
-            String fileName, boolean overwrite) throws SaveLocationException {
-        StoreDownloader sd = storeDownloaderFactory.get();
-        sd.addInitialSources(Collections.singletonList(rfd), fileName);
-        sd.setSaveFile(saveDirectory, fileName, overwrite);
-        return sd;
-    }
-
     public BTDownloader createBTDownloader(BTMetaInfo info) {
         BTDownloader bd = btDownloaderFactory.get();
         bd.initBtMetaInfo(info);
@@ -126,8 +114,6 @@ public class CoreDownloaderFactoryImpl implements CoreDownloaderFactory {
             return magnetDownloaderFactory;
         case MANAGED:
             return managedDownloaderFactory;
-        case STORE:
-            return storeDownloaderFactory;
         case TORRENTFETCHER:
         default:
             throw new InvalidDataException("invalid memento type: " + memento.getDownloadType());

@@ -404,14 +404,14 @@ public class BTDownloaderImpl extends AbstractCoreDownloader
 			return;
 		
 		switch(evt.getType()) {
-		case STARTED : torrentStarted(); break;
-		case COMPLETE : torrentComplete(); break;
-		case STOPPED : torrentStopped(evt.getDescription()); break;
-        
-        // the below aren't handled...
-        case STARTING:
-        case STOP_APPROVED:
-        case STOP_REQUESTED:
+			case STARTED : torrentStarted(); break;
+			case COMPLETE : torrentComplete(); break;
+			case STOPPED : torrentStopped(evt.getDescription()); break;
+	        
+	        // the events below aren't handled...
+	        case STARTING:
+	        case STOP_APPROVED:
+	        case STOP_REQUESTED:
 		}
 	}
 	
@@ -430,8 +430,10 @@ public class BTDownloaderImpl extends AbstractCoreDownloader
 	private void torrentStopped(String description) {
 		LOG.debug("TIME: "+ System.currentTimeMillis()+" torrentStopped (isResumable? before or after pause?)");
 		if (stopTime == 0) {
-            if (description != null)
+            if (description != null) {
                 setAttribute(CUSTOM_INACTIVITY_KEY, description, false);
+            }
+            
 			averagedBandwidth.clear();
 			
 			boolean resumable = !getCancelled() && !finished;//isResumable();

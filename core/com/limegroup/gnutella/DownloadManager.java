@@ -172,24 +172,6 @@ public interface DownloadManager extends BandwidthTracker, SaveLocationManager, 
             String fileName) throws IllegalArgumentException, SaveLocationException;
 
     /**
-     * Creates a new LimeWire Store (LWS) download. Store downloads are handled in a similar fashion as
-     * MAGNET links except there are no alternative locations.  <tt>filename</tt> should always
-     * be specified since we have complete control over META-DATA for these downloads, it will 
-     * be used as the name of the complete file. Unlike all other downloads performed here, 
-     * saveDir is a unique directory specified in the options menu under Store Downloads
-     * 
-     * @param store - Descriptor describing the download from the store including URN
-     * @param overwrite - true if same file names should be overwritten
-     * @param saveDir - directory to save the completed file into
-     * @param fileName - name of the completed file
-     * @return
-     * @throws IllegalArgumentException
-     * @throws SaveLocationException
-     */
-    public Downloader downloadFromStore(RemoteFileDesc rfd, boolean overwrite, File saveDir,
-            String fileName) throws IllegalArgumentException, SaveLocationException;
-
-    /**
      * Starts a resume download for the given incomplete file.
      * @exception CantResumeException incompleteFile is not a valid 
      *  incomplete file
