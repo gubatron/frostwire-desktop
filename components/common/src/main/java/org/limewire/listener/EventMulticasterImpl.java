@@ -1,7 +1,7 @@
 package org.limewire.listener;
 
+import org.apache.commons.logging.Log;
 import org.limewire.listener.EventListenerList.EventListenerListContext;
-import org.limewire.logging.Log;
 
 /**
  * An implementation of an event multicaster.

@@ -9,10 +9,10 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.concurrent.ThreadExecutor;
-import org.limewire.logging.Log;
-import org.limewire.logging.LogFactory;
 import org.limewire.util.ExceptionUtils;
 import org.limewire.util.Objects;
 
@@ -41,7 +41,8 @@ public class EventListenerList<E> implements ListenerSupport<E>, EventBroadcaste
     }
     
     /** Constructs an {@link EventListenerList} with a new context a log based on the given class. */
-    public EventListenerList(Class loggerKey) {
+    @SuppressWarnings("rawtypes")
+	public EventListenerList(Class loggerKey) {
         this(LogFactory.getLog(loggerKey), new EventListenerListContext());
     }
     
@@ -86,17 +87,11 @@ public class EventListenerList<E> implements ListenerSupport<E>, EventBroadcaste
     
     /** Adds the listener. */
     public void addListener(EventListener<E> listener) {
-        if(log != null) {
-            log.debugf("adding listener {0} to {1}", listener, this);
-        }
         listenerList.add(new ListenerProxy<E>(log, Objects.nonNull(listener, "listener"), context));
     }
     
     /** Returns true if the listener was removed. */
     public boolean removeListener(EventListener<E> listener) {
-        if(log != null) {
-            log.debugf("removing listener {0} from {1}", listener, this);
-        }
         Objects.nonNull(listener, "listener");
         
         // Find the proxy, then remove it.
@@ -120,9 +115,6 @@ public class EventListenerList<E> implements ListenerSupport<E>, EventBroadcaste
     /** Broadcasts an event to all listeners. */
     public void broadcast(E event) {
         Objects.nonNull(event, "event");
-        if(log != null) {
-            log.debugf("broadcasting event {0} from {1}", event, this);
-        }
         
         // When broadcasting, capture exceptions to make sure each listeners
         // gets a shot.  If an exception occurs and can be reported immediately,
@@ -177,9 +169,6 @@ public class EventListenerList<E> implements ListenerSupport<E>, EventBroadcaste
                 strategy = analyze(delegate, event);                
             }
             
-            if(log != null) {
-                log.tracef("Dispatching event {0} to {1} with strategy {2}", event, delegate, strategy);
-            }
             strategy.dispatch(delegate, event);
         }
         

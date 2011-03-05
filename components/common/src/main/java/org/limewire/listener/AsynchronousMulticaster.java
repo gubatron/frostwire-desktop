@@ -2,8 +2,8 @@ package org.limewire.listener;
 
 import java.util.concurrent.Executor;
 
+import org.apache.commons.logging.Log;
 import org.limewire.listener.EventListenerList.EventListenerListContext;
-import org.limewire.logging.Log;
 
 /**
  * An EventMulticaster that broadcasts all its events within an executor.
