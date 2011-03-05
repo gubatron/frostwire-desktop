@@ -1,8 +1,7 @@
 package com.limegroup.gnutella.gui.menu;
 
-import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.GUIMediator.Tabs;
-import com.limegroup.gnutella.util.LogUtils;
+import com.limegroup.gnutella.gui.I18n;
 
 /**
  * Contains all of the menu items for the navigation menu.
@@ -22,10 +21,6 @@ final class NavMenu extends AbstractMenu {
 	    super(I18n.tr("&Navigation"));
 	
 		for (Tabs tab : Tabs.values()) {
-		    //if (tab == Tabs.CONSOLE && !LogUtils.isLog4JAvailable()) {
-		    //    continue;
-		    //}
-		    
 		    addMenuItem(tab.getNavigationAction());
         }
     }

@@ -87,7 +87,6 @@ import com.limegroup.gnutella.settings.StartupSettings;
 import com.limegroup.gnutella.util.LaunchException;
 import com.limegroup.gnutella.util.Launcher;
 import com.limegroup.gnutella.util.LimeWireUtils;
-import com.limegroup.gnutella.util.LogUtils;
 import com.limegroup.gnutella.version.UpdateInformation;
 
 /**
