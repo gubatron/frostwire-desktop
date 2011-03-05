@@ -66,12 +66,6 @@ public interface FileManager {
     public abstract int getNumFiles();
 
     /**
-     * returns the number of store files
-     * This number does NOT include incomplete files
-     */
-    public abstract int getNumStoreFiles();
-
-    /**
      * Returns the number of shared incomplete files.
      */
     public abstract int getNumIncompleteFiles();
@@ -348,12 +342,6 @@ public interface FileManager {
     public abstract boolean hasIndividualFiles();
 
     /**
-     * Determines if there are any LWS files that are located in a shared
-     * directory
-     */
-    public abstract boolean hasIndividualStoreFiles();
-
-    /**
      * @return true if currently we have any files that are 
      * shared by the application.
      */
@@ -363,18 +351,6 @@ public interface FileManager {
      * Returns all files that are shared while not in shared directories.
      */
     public abstract File[] getIndividualFiles();
-
-    /**
-     * Returns all files that are LWS files that are located in a shared
-     *	directory
-     */
-    public abstract File[] getIndividualStoreFiles();
-
-    /**
-     * Returns true if the file is a store file and is located in a shared directory,
-     * false otherwise
-     */
-    public abstract boolean isIndividualStore(File f);
 
     /**
      * Returns true if the file is not a store file and is shared but the entire folder 
@@ -399,26 +375,6 @@ public interface FileManager {
      * Returns true if this dir is completely shared. 
      */
     public abstract boolean isFolderShared(File dir);
-
-    /**
-     * @return true if this file is a song purchased from the LWS, false otherwise
-     * 
-     * This does a simple lookup in the lists of store
-     * files and returns true if that file is found in a store list and false otherwise. This
-     * method assumes all files have already had there ID3 information examined and placed in
-     * one of these lists when appropriate
-     */
-    public abstract boolean isStoreFile(File file);
-
-    /**
-     * Returns true if this directory is the folder that is selected to download LWS songs into
-     * or is a subfolder of the LWS folder and false otherwise. NOTE: this folder can be
-     * shared and can be the same as the currently selected root shared folder.
-     * 
-     * @param file
-     * @return
-     */
-    public abstract boolean isStoreDirectory(File file);
 
     /**
      * Returns true if this folder is sharable.

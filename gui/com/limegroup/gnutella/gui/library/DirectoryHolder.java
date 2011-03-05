@@ -46,10 +46,4 @@ public interface DirectoryHolder extends FileFilter {
 	 * Determines if this is empty.
 	 */
 	boolean isEmpty();
-    
-    /**
-     * @return true if this is an instance that contains a file from the LWS,
-     * false otherwise
-     */
-    boolean isStoreNode();
 }

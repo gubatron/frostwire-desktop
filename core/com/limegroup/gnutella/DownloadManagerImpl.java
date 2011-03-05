@@ -92,12 +92,6 @@ public class DownloadManagerImpl implements DownloadManager {
     private int innetworkCount = 0;
 
     /**
-     * The number of active store downloads. These are counted when determining
-     * how many downloaders are active
-     */
-    private int storeDownloadCount = 0;
-    
-    /**
      * The number of times we've been bandwidth measures
      */
     private int numMeasures = 0;
@@ -368,14 +362,7 @@ public class DownloadManagerImpl implements DownloadManager {
                 i.remove();
                 cleanupCompletedDownload(md, false);
             }
-            // handle downloads from DownloaderType.BTDOWNLOADERLWS seperately, only allow 1 at a time
-            else if( storeDownloadCount == 0 && md.getDownloadType() == DownloaderType.STORE ) {
-                    i.remove();
-                    storeDownloadCount++;
-                    active.add(md);
-                    md.startDownload();
-            }             
-            else if(hasFreeSlot() && (md.shouldBeRestarted()) && (md.getDownloadType() != DownloaderType.STORE)) {
+            else if(hasFreeSlot() && (md.shouldBeRestarted())) {
                 i.remove();
                 if(md.getDownloadType() == DownloaderType.INNETWORK)
                     innetworkCount++;
@@ -465,7 +452,7 @@ public class DownloadManagerImpl implements DownloadManager {
      * @see com.limegroup.gnutella.DownloadMI#getNumActiveDownloads()
      */
     public synchronized int getNumActiveDownloads() {
-        return active.size() - innetworkCount - storeDownloadCount;
+        return active.size() - innetworkCount;
     }
    
     /* (non-Javadoc)
@@ -915,7 +902,7 @@ public class DownloadManagerImpl implements DownloadManager {
 
     /** @requires this monitor' held by caller */
     private boolean hasFreeSlot() {
-        return active.size() - innetworkCount - storeDownloadCount
+        return active.size() - innetworkCount
             < DownloadSettings.MAX_SIM_DOWNLOAD.getValue();
     }
     
@@ -927,9 +914,6 @@ public class DownloadManagerImpl implements DownloadManager {
         boolean isRemoved = active.remove(downloader);
         if(downloader.getDownloadType() == DownloaderType.INNETWORK)
             innetworkCount--;
-        // make sure an active download was removed prior to decrementing this index
-        if(downloader.getDownloadType() == DownloaderType.STORE && isRemoved)
-            storeDownloadCount--;
         
         waiting.remove(downloader);
         if(completed)
@@ -1072,10 +1056,7 @@ public class DownloadManagerImpl implements DownloadManager {
         return fileName;
     }
     
-    // ---------------------------------------------------------------
-    // Implementation of LWSIntegrationServicesDelegate
-
-    /* (non-Javadoc)
+    /*
      * @see com.limegroup.gnutella.DownloadMI#getAllDownloaders()
      */
     public final Iterable<CoreDownloader> getAllDownloaders() {

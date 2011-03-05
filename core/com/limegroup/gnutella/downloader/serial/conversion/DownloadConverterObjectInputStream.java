@@ -47,7 +47,6 @@ class DownloadConverterObjectInputStream extends ConverterObjectInputStream {
     private void addCommon() {
         addLookup("com.limegroup.gnutella.downloader.AbstractDownloader", SerialRoot.class.getName());
         addLookup("com.limegroup.gnutella.downloader.ManagedDownloader", SerialManagedDownloaderImpl.class.getName());
-        addLookup("com.limegroup.gnutella.downloader.StoreDownloader", SerialStoreDownloader.class.getName());
         addLookup("com.limegroup.gnutella.downloader.RequeryDownloader", SerialRequeryDownloader.class.getName());
         addLookup("com.limegroup.gnutella.downloader.MagnetDownloader", SerialMagnetDownloader.class.getName());
         addLookup("com.limegroup.gnutella.downloader.InNetworkDownloader", SerialInNetworkDownloader.class.getName());

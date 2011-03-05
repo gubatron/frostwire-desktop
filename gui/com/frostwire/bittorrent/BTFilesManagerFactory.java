@@ -75,7 +75,6 @@ public class BTFilesManagerFactory {
 															// torrent.
 			return; // Everything OK!
 		}
-		System.out.println("Saludo al salir fue: " + ftoask.greeting());
 		throw new IOException("No files selected by user");
 	}
 }

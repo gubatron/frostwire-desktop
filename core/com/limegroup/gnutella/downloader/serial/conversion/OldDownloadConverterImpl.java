@@ -93,8 +93,6 @@ public class OldDownloadConverterImpl implements OldDownloadConverter {
                 addResume(mementos, (SerialResumeDownloader)o, sifm);
             else if(o instanceof SerialRequeryDownloader)
                 ; // ignore!
-            else if(o instanceof SerialStoreDownloader)
-                addStore(mementos, (SerialStoreDownloader)o, sifm);
             else if(o instanceof SerialManagedDownloader)
                 addManaged(mementos, (SerialManagedDownloader)o, sifm);
             else
@@ -120,15 +118,6 @@ public class OldDownloadConverterImpl implements OldDownloadConverter {
         memento.setSaveFile((File)properties.get("saveFile"));
     }
 
-    private void addStore(List<DownloadMemento> mementos, SerialStoreDownloader o, SerialIncompleteFileManager sifm) {
-        File incompleteFile = getIncompleteFile(o, sifm);
-        List<Range> ranges = getRanges(incompleteFile, sifm);
-        GnutellaDownloadMemento memento = new GnutellaDownloadMementoImpl();
-        memento.setDownloadType(DownloaderType.STORE);
-        addGnutellaProperties(memento, o.getProperties(), ranges, incompleteFile, o.getRemoteFileDescs());
-        mementos.add(memento);
-    }
-    
     private void addManaged(List<DownloadMemento> mementos, SerialManagedDownloader o, SerialIncompleteFileManager sifm) {
         File incompleteFile = getIncompleteFile(o, sifm);
         List<Range> ranges = getRanges(incompleteFile, sifm);

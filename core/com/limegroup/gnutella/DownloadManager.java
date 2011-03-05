@@ -95,8 +95,7 @@ public interface DownloadManager extends BandwidthTracker, SaveLocationManager, 
     public int getNumIndividualDownloaders();
 
     /**
-     * Inner network traffic and downloads from the LWS don't count towards overall
-     * download activity.
+     * Inner network traffic don't count towards overall download activity.
      */
     public int getNumActiveDownloads();
 

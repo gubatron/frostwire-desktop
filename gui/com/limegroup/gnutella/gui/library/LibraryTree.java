@@ -30,15 +30,14 @@ import org.limewire.setting.FileSetting;
 import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 
-import com.frostwire.GuiFrostWireUtils;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.FileManagerEvent;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
+import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.actions.ShareFileSpeciallyAction;
 import com.limegroup.gnutella.gui.actions.ShareNewFolderAction;
@@ -98,15 +97,6 @@ final class LibraryTree extends JTree implements MouseObserver {
 	private LibraryTreeNode speciallySharedFilesNode;
 	private final SpeciallySharedFilesDirectoryHolder ssfdh = new SpeciallySharedFilesDirectoryHolder();
 
-    /** The LimeWire Store files node. */
-    //private LibraryTreeNode lwsFilesNode;
-    //private LWSDirectoryHolder lwsdh = new LWSDirectoryHolder();
-    
-    /**	LimeWire Store purchases found in shared folders */
-	/*
-    private LibraryTreeNode lwsSpeciallFilesNode;
-    private final LWSSpecialFilesHolder lwssfh = new LWSSpecialFilesHolder();
-	*/
 	private LibraryTreeNode searchResultsNode;
 	private final LibrarySearchResultsHolder lsrdh = new LibrarySearchResultsHolder();
     
@@ -227,9 +217,9 @@ final class LibraryTree extends JTree implements MouseObserver {
         
 		TREE_MODEL.insertNodeInto(child, parent, insert);
 		
-		if (expand || (parent == sharedFilesNode && !isExpanded(new TreePath(sharedFilesNode.getPath())))
-                ) // || (parent == lwsFilesNode && !isExpanded(new TreePath(lwsFilesNode.getPath()))) // removed
+		if (expand || (parent == sharedFilesNode && !isExpanded(new TreePath(sharedFilesNode.getPath())))) { 
 			expandPath(new TreePath(parent.getPath()));
+		}
 	}
 	
 	private void addNode(LibraryTreeNode parent, LibraryTreeNode child) {
@@ -430,10 +420,6 @@ final class LibraryTree extends JTree implements MouseObserver {
 			return false;
         if (node == torrentsMetaFilesNode)
             return false;
-        //if (node == lwsFilesNode)
-        //    return false;
-        //if (node == lwsSpeciallFilesNode)
-        //    return false;
 		if (node.getParent() == null)
 			return false;
 		
@@ -455,13 +441,15 @@ final class LibraryTree extends JTree implements MouseObserver {
 	 * @return
 	 */
 	private boolean canBeShared(LibraryTreeNode node) {
-		if (node == null || node == incompleteFilesNode || node == torrentsMetaFilesNode)
-// || node == lwsFilesNode || node == lwsSpeciallFilesNode removed
+		if (node == null || node == incompleteFilesNode || node == torrentsMetaFilesNode) {
 			return false;
+		}
+		
 		File dir = node.getDirectoryHolder().getDirectory();
-		if (dir == null || GuiCoreMediator.getFileManager().isFolderShared(dir) ||
-                GuiCoreMediator.getFileManager().isStoreDirectory(dir))
+		if (dir == null || GuiCoreMediator.getFileManager().isFolderShared(dir)) {
 			return false;
+		}
+		
 		return true;
 	}
 	
@@ -554,19 +542,7 @@ final class LibraryTree extends JTree implements MouseObserver {
         
         // remove all the store files
         selected = false;
-        //count = lwsFilesNode.getChildCount();
-        // count down, but do not remove node 0
-	/*
-        for (int i = count - 1; i >= 0; i--) {
-            TreeNode node = lwsFilesNode.getChildAt(i);
-            if(node == getSelectedNode())
-                selected = true;
-            lwsFilesNode.remove(i);
-        }
-        */
         TREE_MODEL.reload();
-        //if (selected)
-        //    setSelectionPath(new TreePath(lwsFilesNode));
 	}
 
 	/**
@@ -674,9 +650,6 @@ final class LibraryTree extends JTree implements MouseObserver {
 			
 			if (node == sharedFilesNode)
 				LibraryMediator.showSharedFiles();
-            /*else if( node == lwsFilesNode)
-                LibraryMediator.showStoreFiles();
-	    */
 			else
 				LibraryMediator.updateTableFiles(node.getDirectoryHolder());	    
 		}
@@ -784,17 +757,6 @@ final class LibraryTree extends JTree implements MouseObserver {
 			unshareLibraryFolder();
 		}
 	}
-	
-    private class LWSDirectoryHolder extends RootNodeDirectoryHolder {
-        
-        public LWSDirectoryHolder() {
-            super( I18n.tr("Store"));
-        }
-        
-        public Icon getIcon() {
-            return GUIMediator.getThemeImage("lws_small");
-        }
-    }
 	
 	private class AddDirectoryToPlaylistAction extends AbstractAction {
 
@@ -1032,12 +994,11 @@ final class LibraryTree extends JTree implements MouseObserver {
 			return false;
 		LibraryTreeNode ltn = getNodeForFolder(dir, sharedFilesNode);
 		if (ltn == null) {
-            	//ltn = getNodeForFolder(dir, lwsFilesNode);
-	    	//ltn = getNodeForFolder(dir, sharedFilesNode);
-	    	//System.out.println ("LTN was null" + ltn);
-            	//if( ltn == null)
-				return false;
+	    	ltn = getNodeForFolder(dir, sharedFilesNode);
+        	if( ltn == null) {
+        		return false;
         	}
+        }
 		
 		setSelectionPath(new TreePath(ltn.getPath()));
 		return true;
@@ -1046,8 +1007,7 @@ final class LibraryTree extends JTree implements MouseObserver {
        
 	void setSearchResultsNodeSelected() {
 		clearSelection();
-		TreePath path = new TreePath(new Object[] { ROOT_NODE,
-				 searchResultsNode });
+		TreePath path = new TreePath(new Object[] { ROOT_NODE, searchResultsNode });
 		scrollPathToVisible(path);
 		setSelectionPath(path);
 	}
@@ -1055,9 +1015,4 @@ final class LibraryTree extends JTree implements MouseObserver {
 	LibrarySearchResultsHolder getSearchResultsHolder() {
 		return lsrdh;
 	}
-
-	   
-	
 }
-
-

@@ -298,8 +298,7 @@ public class LimeXMLReplyCollection {
         List<String> retList = new ArrayList<String>();
         synchronized(mainMap){
             for(LimeXMLDocument d : mainMap.values()) {
-                if( !isLWSDoc(d))
-                    retList.addAll(d.getKeyWords());
+            	retList.addAll(d.getKeyWords());
             }
         }
         return retList;
@@ -315,8 +314,7 @@ public class LimeXMLReplyCollection {
         List<String> retList = new ArrayList<String>();
         synchronized(mainMap){
             for(LimeXMLDocument d : mainMap.values()) {
-                if( !isLWSDoc(d))
-                    retList.addAll(d.getKeyWordsIndivisible());
+            	retList.addAll(d.getKeyWordsIndivisible());
             }
         }
         return retList;
@@ -394,23 +392,12 @@ public class LimeXMLReplyCollection {
         synchronized(mainMap){
             dirty = true;
             mainMap.put(hash,replyDoc);
-            if(!isLWSDoc(replyDoc))
-            	addKeywords(replyDoc);
+            addKeywords(replyDoc);
         }
         
         fd.addLimeXMLDocument(replyDoc);
     }
     
-    /**
-     * Determines if the XMLDocument is from the LWS
-     * @return true if this document contains a LWS license, false otherwise
-     */
-    public boolean isLWSDoc(LimeXMLDocument doc) {
-    	if( doc != null && doc.getLicenseString() != null && doc.getLicenseString().equals(LicenseType.LIMEWIRE_STORE_PURCHASE.toString()))
-    		return true;
-    	return false;
-    }
-
     /**
      * Returns the amount of items in this collection.
      */
@@ -523,8 +510,7 @@ public class LimeXMLReplyCollection {
             oldDoc = mainMap.put(hash,newDoc);
             assert oldDoc != null : "attempted to replace doc that did not exist!!";
             removeKeywords(oldDoc);
-	        if(!isLWSDoc(newDoc))
-            	addKeywords(newDoc);
+            addKeywords(newDoc);
         }
        
         boolean replaced = fd.replaceLimeXMLDocument(oldDoc, newDoc);

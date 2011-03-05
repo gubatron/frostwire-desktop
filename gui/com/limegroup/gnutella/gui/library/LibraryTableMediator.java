@@ -426,20 +426,9 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		clearTable();
 		setIncompleteSelected(LibraryMediator.incompleteDirectoryIsSelected());
 		File[] files = dirHolder.getFiles();
-        FileManager manager =  GuiCoreMediator.getFileManager();
         
-        // if a store node, only display store files
-        if( dirHolder.isStoreNode() ) {
-          for (int i = 0; i < files.length; i++) {
-              if( manager.isStoreFile(files[i]) )
-                  addUnsorted(files[i]);
-          }
-        }
-        // else display everything but store files
-        else {
-          for (int i = 0; i < files.length; i++)
-              if( !manager.isStoreFile(files[i]))
-                  addUnsorted(files[i]);
+        for (int i = 0; i < files.length; i++) {
+        	addUnsorted(files[i]);
         }
 		forceResort();
     }
@@ -1076,7 +1065,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		LibraryTableDataLine selectedLine = DATA_MODEL.get(sel[0]);
 		File selectedFile = getFile(sel[0]);
 		boolean firstShared = GuiCoreMediator.getFileManager().isFileShared(selectedFile);
-        boolean isStore = GuiCoreMediator.getFileManager().isStoreFile(selectedFile);
 		
 		//  always turn on Launch, Delete, Magnet Lookup, Bitzi Lookup
 		LAUNCH_ACTION.setEnabled(true);
@@ -1097,7 +1085,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		//  turn on Describe for complete files
 		//  turn on Publish / Edit for single selected complete files
 		if (!_isIncomplete && _annotateEnabled) {
-			ANNOTATE_ACTION.setEnabled(firstShared || isStore);
+			ANNOTATE_ACTION.setEnabled(firstShared);
 			
 			boolean canPublish = (sel.length == 1 && firstShared && LimeXMLUtils.isFilePublishable(selectedFile.getName()));
 			PUBLISH_ACTION.setEnabled(canPublish && !selectedLine.isLicensed());
@@ -1160,16 +1148,16 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 					break;
 			}
 		}
-		SHARE_ACTION.setEnabled(shareAllowed && !isStore);
-		UNSHARE_ACTION.setEnabled(unshareAllowed && !isStore);
-		SHARE_FOLDER_ACTION.setEnabled(shareFolderAllowed && !isStore);
+		SHARE_ACTION.setEnabled(shareAllowed);
+		UNSHARE_ACTION.setEnabled(unshareAllowed);
+		SHARE_FOLDER_ACTION.setEnabled(shareFolderAllowed);
 		UNSHARE_FOLDER_ACTION.setEnabled(unshareFolderAllowed);
 		
 		//  enable / disable advanced items if file shared / not shared
-		MAGNET_LOOKUP_ACTION.setEnabled(firstShared && !isStore);
-		BITZI_LOOKUP_ACTION.setEnabled(firstShared && !isStore);
+		MAGNET_LOOKUP_ACTION.setEnabled(firstShared);
+		BITZI_LOOKUP_ACTION.setEnabled(firstShared);
 
-		COPY_MAGNET_TO_CLIPBOARD_ACTION.setEnabled(!_isIncomplete && getFileDesc(sel[0]) != null && !isStore);
+		COPY_MAGNET_TO_CLIPBOARD_ACTION.setEnabled(!_isIncomplete && getFileDesc(sel[0]) != null);
 	}
 
 	/**

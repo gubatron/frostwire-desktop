@@ -94,11 +94,6 @@ public final class StatusLine implements ThemeObserver {
     private final SharedFilesLabel _sharedFiles = new SharedFilesLabel();
     
 	/**
-     * The label with the store status.
-     */
-    private final JLabel _lwsStatus = new JLabel();     
-    
-	/**
 	 * The labels for displaying the bandwidth usage.
 	 */
 	private final JLabel _bandwidthUsageDown = new LazyTooltip(GUIMediator.getThemeImage("downloading_small")); 
@@ -154,9 +149,6 @@ public final class StatusLine implements ThemeObserver {
 
         //  make the 'Firewall Status' label
         createFirewallLabel();
-        
-        //  make the 'LWS Status' label
-        createLWSLabel();        
         
         //  make the 'Sharing X Files' component
 		createSharingFilesLabel();
@@ -256,19 +248,6 @@ public final class StatusLine implements ThemeObserver {
             BAR.add(createSeparator(), gbc);
             remainingWidth -= indicatorWidth;
         }
-        
-        //  then add store display if there's room
-        indicatorWidth = GUIConstants.SEPARATOR +
-            Math.max((int)_lwsStatus.getMinimumSize().getWidth(),
-                    _lwsStatus.getWidth()) + sepWidth;
-        if (StatusBarSettings.LWS_DISPLAY_ENABLED.getValue() &&
-                remainingWidth > indicatorWidth) {
-            BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
-            BAR.add(_lwsStatus, gbc);
-            BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
-            BAR.add(createSeparator(), gbc);
-            remainingWidth -= indicatorWidth;
-        }         
         
 		//  add shared files indicator if there's room
 		indicatorWidth = GUIConstants.SEPARATOR +
@@ -382,17 +361,6 @@ public final class StatusLine implements ThemeObserver {
 	}
 	
 	/**
-     * Sets up the 'Store Status' label.
-     */
-    private void createLWSLabel() {
-        updateLWS();
-        // don't allow easy clipping
-        _lwsStatus.setMinimumSize(new Dimension(20, 20));
-        // add right-click listener
-        _lwsStatus.addMouseListener(STATUS_BAR_LISTENER);
-    }        
-	
-	/**
 	 * Sets up the 'Bandwidth Usage' label.
 	 */
 	private void createBandwidthLabel() {
@@ -497,19 +465,6 @@ public final class StatusLine implements ThemeObserver {
 	}
 
 	/**
-     * Updates the LimeWire Store text. 
-     */
-    public void updateLWSLabel(boolean notConnected) {
-        if (notConnected) {
-            _lwsStatus.setIcon(GUIMediator.getThemeImage("lws_statusline_no"));
-            _lwsStatus.setToolTipText(I18n.tr("You are not connected to the FrostWire VIP Area"));
-        } else {
-            _lwsStatus.setIcon(GUIMediator.getThemeImage("lws_statusline"));
-            _lwsStatus.setToolTipText(I18n.tr("You are connected to the FrostWire"));
-        }
-    }      
-
-	/**
 	 * Updates the image on the flag
 	 */
 	public void updateLanguage() {
@@ -523,13 +478,6 @@ public final class StatusLine implements ThemeObserver {
 		updateFirewallLabel(networkManager.acceptedIncomingConnection());
 	}
 	
-	/**
-     * Updates the FrostWire Store text. 
-     */
-    public void updateLWS() {
-        updateLWSLabel(true);
-    }
-    
     /**
      * Returns the number of uploads without counting hostiles.txt if its being seeded.
      * @return
@@ -733,11 +681,6 @@ public final class StatusLine implements ThemeObserver {
                 jcbmi.setState(StatusBarSettings.FIREWALL_DISPLAY_ENABLED.getValue());
                 jpm.add(jcbmi);
                 
-                // add 'Store Indicator' menu item (Not in FrostWire)
-                //jcbmi = new JCheckBoxMenuItem(new ShowStoreIndicatorStatusAction());
-                //jcbmi.setState(StatusBarSettings.LWS_DISPLAY_ENABLED.getValue());
-                //jpm.add(jcbmi);
-                
                 //  add 'Show Shared Files Count' menu item 
                 jcbmi = new JCheckBoxMenuItem(new ShowSharedFilesCountAction());
                 jcbmi.setState(StatusBarSettings.SHARED_FILES_DISPLAY_ENABLED.getValue());
@@ -766,6 +709,8 @@ public final class StatusLine implements ThemeObserver {
 	 */
 	private class ShowConnectionQualityAction extends AbstractAction {
 		
+		private static final long serialVersionUID = 7922422377962473634L;
+
 		public ShowConnectionQualityAction() {
 			putValue(Action.NAME, I18n.tr
 					("Show Connection Quality"));
@@ -782,6 +727,11 @@ public final class StatusLine implements ThemeObserver {
 	 */
 	private class ShowSharedFilesCountAction extends AbstractAction {
 		
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 6615872299886789939L;
+
 		public ShowSharedFilesCountAction() {
 			putValue(Action.NAME, I18n.tr
 					("Show Shared Files Count"));
@@ -798,6 +748,11 @@ public final class StatusLine implements ThemeObserver {
 	 */
 	private class ShowLanguageStatusAction extends AbstractAction {
 		
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 726208491122581283L;
+
 		public ShowLanguageStatusAction() {
 			putValue(Action.NAME, I18n.tr
 					("Show Language Status"));
@@ -819,6 +774,11 @@ public final class StatusLine implements ThemeObserver {
 	 */
 	private class ShowFirewallStatusAction extends AbstractAction {
 		
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -8489901794229005217L;
+
 		public ShowFirewallStatusAction() {
 			putValue(Action.NAME, I18n.tr
 					("Show Firewall Status"));
@@ -831,26 +791,15 @@ public final class StatusLine implements ThemeObserver {
 	}
 	
     /**
-     * Action for the 'Store Indicator' menu item
-     */
-    private class ShowStoreIndicatorStatusAction extends AbstractAction {
-
-        public ShowStoreIndicatorStatusAction() {
-            putValue(Action.NAME, I18n.tr
-                    ("Show Store Indicator"));
-        }
-        
-        public void actionPerformed(ActionEvent e) {
-            StatusBarSettings.LWS_DISPLAY_ENABLED.invert();
-            refresh();
-        }
-    }
-    
-	/**
 	 * Action for the 'Show Bandwidth Consumption' menu item. 
 	 */
 	private class ShowBandwidthConsumptionAction extends AbstractAction {
 		
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1455679943975682049L;
+
 		public ShowBandwidthConsumptionAction() {
 			putValue(Action.NAME, I18n.tr
 					("Show Bandwidth Consumption"));
@@ -867,6 +816,11 @@ public final class StatusLine implements ThemeObserver {
 	 */
 	private class ShowMediaPlayerAction extends AbstractAction {
 		
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 4989741761670317316L;
+
 		public ShowMediaPlayerAction() {
 			putValue(Action.NAME, I18n.tr
 					("Show Media Player"));
@@ -881,6 +835,11 @@ public final class StatusLine implements ThemeObserver {
 	 * Custom component for displaying the number of shared files. 
 	 */
 	private class SharedFilesLabel extends JLabel {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 8191429330285263217L;
 
 		/**
 		 * The height of this icon.
@@ -1002,6 +961,11 @@ public final class StatusLine implements ThemeObserver {
 	}
 	
 	private class LazyTooltip extends JLabel {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -5759748801999410032L;
+
 		LazyTooltip(ImageIcon icon) {
 			super(icon);
 			ToolTipManager.sharedInstance().registerComponent(this);

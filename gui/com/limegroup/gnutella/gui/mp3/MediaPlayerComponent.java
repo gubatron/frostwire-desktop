@@ -656,12 +656,12 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
     }        
     
     /**
-     * Returns {@link LWSDispatcherSupport.Responses#OK} on success and a
+     * Returns "ok" on success and a
      * failure message on failure after taking an index into the playlist and
      * remove it.
      * 
      * @param index index of the item to remove
-     * @return {@link LWSDispatcherSupport.Responses#OK} on success and a
+     * @return "ok" on success and a
      *         failure message on failure after taking an index into the
      *         playlist and remove it;
      */
@@ -674,18 +674,17 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
     }
     
     /**
-     * Returns {@link LWSDispatcherSupport.Responses#OK} on success and a
+     * Returns "ok" on success and a
      * failure message on failure after taking an index into the playlist and
      * remove it.
      * 
      * @param index index of the item to remove
-     * @return {@link LWSDispatcherSupport.Responses#OK} on success and a
+     * @return "ok" on success and a
      *         failure message on failure after taking an index into the
      *         playlist and remove it;
      */
     String playIndexInPlaylist(int index) {
         PlaylistMediator pl = GUIMediator.getPlayList();
-//        pl.
         if (pl.removeFileFromPlaylist(index)) {
             return "ok";
         }
@@ -709,9 +708,7 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
         return res.toString();        
     }
     
-    /**
-     * @return {@link  LWSDispatcherSupport.Responses#OK}
-     */
+    
     String addToPlaylist(Map<String,String> args) {
 
         Tagged<String> urlString = LimeWireUtils.getArg(args, "url", "AddToPlaylist");
@@ -749,7 +746,7 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
                 props.put(PlayListItem.ALBUM, albumString.getValue());
             }
             PlayListItem song = new PlayListItem(u.toURI(), new AudioSource(u), 
-                                                 nameString.getValue(), false, true, props);           
+                                                 nameString.getValue(), false, props);           
             GUIMediator.instance().launchAudio(song);
         } catch (IOException e) {
             ErrorService.error(e, "invalid URL:" + url);
@@ -780,7 +777,7 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
             URL u = new URL(decodedURL);
             Map<String,String> props = new HashMap<String,String>();
             PlayListItem song = new PlayListItem(u.toURI(), new AudioSource(u), 
-                                                 name, false, true, props);
+                                                 name, false, props);
             GUIMediator.instance().launchAudio(song);
         } catch (IOException e) {
             ErrorService.error(e, "invalid URL:" + url);

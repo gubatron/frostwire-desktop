@@ -60,12 +60,10 @@ public class MP3MetaData extends AudioDataReader {
                     Iterator<TagField> iter = license.iterator();
                     while(iter.hasNext()) {
                         TagField t = iter.next();
-                        checkLWS(t.toString());
                     }
                     iter = priv.iterator();
                     while(iter.hasNext()) {
                         TagField t = iter.next(); 
-                        checkLWS(t.toString());
                         try {
                             isPRIVCheck(t.getRawContent());
                         } catch (UnsupportedEncodingException e) {
@@ -88,23 +86,10 @@ public class MP3MetaData extends AudioDataReader {
     private void isPRIVCheck(byte[] contentBytes) {
         try {
             String content = new String(contentBytes,"UTF-8");
-            checkLWS(content);
         } catch (UnsupportedEncodingException e) {
         }
     }
 
-    /**
-     * If the song is not a LWS already, do a substring search to see if
-     * it is a LWS song
-     * @param content - ID3 tag to scan for a substring
-     */
-    private void checkLWS(String content) { 
-        if( audioData.getLicenseType() == null || !audioData.getLicenseType().equals(MAGIC_KEY))
-            if( content.indexOf(MAGIC_KEY) != -1) { 
-                audioData.setLicenseType(MAGIC_KEY);
-            }
-    }
-    
     /**
      * Some genres in ID3v2 tags are displaying (XXX) numbers along side the genre.
      * If this exists it hides the number from the user

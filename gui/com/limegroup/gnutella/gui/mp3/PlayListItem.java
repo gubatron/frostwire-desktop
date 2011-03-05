@@ -59,14 +59,6 @@ public class PlayListItem implements Comparable<PlayListItem>{
     private final boolean isLocal;
     
     /**
-     * A flag for setting whether this audio source is a preview clip from the LimeWire store.
-     * When this flag is set, a buy/info button is presented in the playlist for purchasing
-     * this item
-     */
-    @SuppressWarnings("unused") 
-    private final boolean isStorePreview;
-    
-    /**
      * A map of audio properties that can be displayed about this item. Audio clips from the store
      * for example, may not contain audio properties embeded in the Tag but are transfered in XML 
      * to the client.
@@ -97,13 +89,13 @@ public class PlayListItem implements Comparable<PlayListItem>{
      * the ID3 tag. This should never be instantiated on the swing event
      * queue
      * 
-     * @param uri - location of the audio source
+     * @param url - location of the audio source
      * @param audioSource - source to pass to the music player
-     * @param name - default name to display
-     * @param isLocal - true if the source if a file on the local file system
+     * @param name - default name to display if no other information is available
+     * @param isLocal - true if the source is a file and stored locally
      */
-    public PlayListItem(URI uri, AudioSource audioSource, String name, boolean isLocal) {
-        this(uri, audioSource, name, isLocal, false);
+    public PlayListItem(URI uri, AudioSource audioSource, String name, boolean isLocal){
+        this(uri,audioSource, name, isLocal, null);
     }
     
     /**
@@ -116,38 +108,17 @@ public class PlayListItem implements Comparable<PlayListItem>{
      * @param audioSource - source to pass to the music player
      * @param name - default name to display if no other information is available
      * @param isLocal - true if the source is a file and stored locally
-     * @param isStorePreview - true if url is from LimeWire Store (LWS), sets a buy/info button
-     *                  in the display
-     */
-    public PlayListItem(URI uri, AudioSource audioSource, String name, boolean isLocal, boolean isStorePreview){
-        this(uri,audioSource, name, isLocal, isStorePreview, null);
-    }
-    
-    /**
-     * creates a playlistitem instance. Creation of a PlayListItem will
-     * often result in disk access or possibly network access to obtain
-     * the ID3 tag. This should never be instantiated on the swing event
-     * queue
-     * 
-     * @param url - location of the audio source
-     * @param audioSource - source to pass to the music player
-     * @param name - default name to display if no other information is available
-     * @param isLocal - true if the source is a file and stored locally
-     * @param isStorePreview - true if url is from LimeWire Store (LWS), sets a buy/info button
-     *                  in the display
      * @param properties - meta data about the song such as Artist, Album, Track, etc.
      *              The map is stored as a reference and not a copy so changes outside
      *              will be reflected in the playlist table
      */
-    public PlayListItem(URI uri, AudioSource audioSource, String name, boolean isLocal, boolean isStorePreview,  
-            Map<String,String> properties){
+    public PlayListItem(URI uri, AudioSource audioSource, String name, boolean isLocal, Map<String,String> properties){
         if( uri == null || name == null )
             throw new IllegalArgumentException();
         this.uri = uri;
         this.audioSource = audioSource;
         this.name = name;
         this.isLocal = isLocal;
-        this.isStorePreview = isStorePreview;
         if( properties == null )
             this.properties = new HashMap<String,String>();
         else

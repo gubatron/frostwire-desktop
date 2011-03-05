@@ -35,14 +35,12 @@ public class SlideshowPanel extends JPanel {
 
     private List<Slide> _slides;
     private boolean _randomStart;
-    //private Slide _currentSlide;
     private int _currentSlideIndex;
     private BufferedImage _currentImage;
     private BufferedImage _lastImage;
     private boolean _loadingNextImage;
     private FadeSlideTransition _transition;
     private long _transitionTime;
-    
     private boolean _started;
     
     /**
@@ -71,7 +69,7 @@ public class SlideshowPanel extends JPanel {
             }    
         } catch (Exception e) {
             // nothing happens
-        	e.printStackTrace();
+        	//e.printStackTrace();
         }
     }
     
@@ -295,5 +293,9 @@ public class SlideshowPanel extends JPanel {
 		boolean im_linux_msg_for_me = os.equals("linux") && OSUtils.isLinux();
 
 		return im_mac_msg_for_me || im_windows_msg_for_me || im_linux_msg_for_me;
+	}
+
+	public boolean hasSlides() {
+		return _slides != null && _slides.size() > 0;
 	}
 }

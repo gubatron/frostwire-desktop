@@ -45,12 +45,6 @@ public class SharingSettings extends LimeProps {
     public static final File DEFAULT_SHARED_TORRENTS_DIR = 
     	new File(LimeWireUtils.getLimeWireRootFolder(), "Torrents");
     
-    /**
-     * Default directory for songs purchased from LWS
-     */
-    public static final File DEFAULT_SAVE_LWS_DIR = 
-        new File(LimeWireUtils.getLimeWireRootFolder(), "Store Purchased");
-    
     public static final File IMAGE_CACHE_DIR = 
         new File(CoreFrostWireUtils.getPreferencesFolder(), "image_cache");
     
@@ -67,21 +61,6 @@ public class SharingSettings extends LimeProps {
     public static final FileSetting DIRECTORY_FOR_SAVING_FILES = 
         FACTORY.createFileSetting("DIRECTORY_FOR_SAVING_FILES", 
             DEFAULT_SAVE_DIR).setAlwaysSave(true);
-    
-    /**
-     * Directory for saving songs purchased from LimeWire Store (LWS)
-     */
-    public static final FileSetting DIRECTORY_FOR_SAVING_LWS_FILES = 
-        FACTORY.createFileSetting("DIRETORY_FOR_SAVING_LWS_FILES",
-                DEFAULT_SAVE_LWS_DIR).setAlwaysSave(true);
-    
-    /**
-     * Template for substructure when saving songs purchased from LimeWire Store (LWS)
-     * The template allows purchased songs to be saved in a unique fashion, 
-     * ie. LWS_dir/artist/album/songX.mp3
-     */
-    public static final StringSetting TEMPLATE_FOR_SAVING_LWS_FILES = 
-        (StringSetting)FACTORY.createStringSetting("TEMPLATE_FOR_SAVING_LWS_FILES","").setAlwaysSave(true);
     
     /**
      * The directory where incomplete files are stored (downloads in progress).
@@ -234,115 +213,12 @@ public class SharingSettings extends LimeProps {
         return set;  
     }
     
-    /**
-     * Sets the directory to save the purchased songs from the LWS
-     *  
-     * @param   storeDir  A <tt>File</tt> instance denoting the
-     *                   abstract pathname of the directory for
-     *                   store files.
-     *
-     * @throws  <tt>IOException</tt>
-     *          If the directory denoted by the directory pathname
-     *          String parameter did not exist prior to this method
-     *          call and could not be created, or if the canonical
-     *          path could not be retrieved from the file system.
-     *
-     * @throws  <tt>NullPointerException</tt>
-     *          If the "dir" parameter is null.
-     */
-    public static final void setSaveLWSDirectory(File storeDir) throws IOException { 
-        if (storeDir == null)
-            throw new NullPointerException();
-        if (!storeDir.isDirectory()) {
-            if (!storeDir.mkdirs())
-                throw new IOException("could not create save dir at: " + storeDir);
-        }
-        
-        FileUtils.setWriteable(storeDir);
-
-        if(!storeDir.canRead() || !storeDir.canWrite()) {
-            throw new IOException("could not write to selected directory");
-        }
-        
-        // Canonicalize the files ... 
-        try {
-            storeDir = FileUtils.getCanonicalFile(storeDir);
-        } catch(IOException ignored) {}
-        
-        DIRECTORY_FOR_SAVING_LWS_FILES.setValue(storeDir);
-    }
-    
-    
-    /**
-     * @return directory of where to save songs purchased from LimeWire Store
-     */
-    public static final File getSaveLWSDirectory(File incompleteFile) {
-//        final String template = getSaveLWSTemplate();
-        
-//        // if mp3, try to get meta-data to use template pattern when saving
-//        if( incompleteFile.getName().toLowerCase().endsWith("mp3")) {
-//            try {
-//                final MP3MetaData data = (MP3MetaData) MetaData.parse(incompleteFile);
-//                final Map<String, String> subs = new HashMap<String, String>();
-//                String artist = data.getArtist();
-//                if (artist == null) {
-//                    artist = GUIMediator.getStringResource("Unknown Artist");
-//                }
-//                String album = data.getAlbum();
-//                if (album == null) {
-//                    album = GUIMediator.getStringResource("Unknown Album");
-//                }
-//                subs.put(StoreSaveTemplateProcessor.ARTIST_LABEL, artist);
-//                subs.put(StoreSaveTemplateProcessor.ALBUM_LABEL, album);
-//                subs.put(StoreSaveTemplateProcessor.HOME_LABEL, System.getProperty("user.dir"));
-//                File outDir = null;
-//                try {
-//                    outDir = new StoreSaveTemplateProcessor().getOutputDirectory(template, subs, f);
-//                } catch (IllegalTemplateException e) {
-//                    GUIMediator.showError("Invalid Template", System.getProperty("line.separator") + e.getMessage());
-//                }
-//                if (outDir != null && new File(outDir.getCanonicalPath()).mkdirs()) {
-//                	FileUtils.setWriteable(outDir);
-//                	f = outDir; 
-//                }
-//            } catch (IOException e) { 
-////                LOG.error("getSaveLWSDirectory", e);
-//            }
-//            if( !f.isDirectory() || !f.canRead() || !f.canWrite())
-//                f = DIRECTORY_FOR_SAVING_LWS_FILES.getValue();
-//        }
-        return DIRECTORY_FOR_SAVING_LWS_FILES.getValue();
-    }
-    
-    /**
-     * @return directory of where to save songs purchased from LimeWire Store
-     */
-    public static final File getSaveLWSDirectory() {
-        final File f = DIRECTORY_FOR_SAVING_LWS_FILES.getValue();        
-        if (!f.exists()) f.mkdirs();
-        return f;
-    }
-    
     public static final File getImageCacheDirectory() {
         if (!IMAGE_CACHE_DIR.exists()) {
             IMAGE_CACHE_DIR.mkdirs();
         }
         return IMAGE_CACHE_DIR;
     }
-    
-    public static final void setSaveLWSTemplate(String template) throws IOException { 
-        if(template == null) template = "";
-        TEMPLATE_FOR_SAVING_LWS_FILES.setValue(template);
-    }
-
-    /**
-     * @return template of how to store LWS files
-     */
-    public static final String getSaveLWSTemplate() {
-        return TEMPLATE_FOR_SAVING_LWS_FILES.getValue();
-    }
-    
-    /*********************************************************************/
     
     /**
      * Default file extensions.

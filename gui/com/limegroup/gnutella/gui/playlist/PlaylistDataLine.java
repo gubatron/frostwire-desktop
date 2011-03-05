@@ -275,13 +275,6 @@ public final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
 	}
     
     /**
-     * @return true if this is a preview of a song from the LWS
-     */
-    public boolean isStoreSong() {
-        return initializer.isStorePreview();
-    }
-    
-    /**
      * @return the file name of the song
      */
     public String getSongName() {

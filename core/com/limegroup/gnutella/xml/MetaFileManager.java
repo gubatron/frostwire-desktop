@@ -21,11 +21,11 @@ import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.FileEventListener;
 import com.limegroup.gnutella.FileManagerController;
 import com.limegroup.gnutella.FileManagerEvent;
+import com.limegroup.gnutella.FileManagerEvent.Type;
 import com.limegroup.gnutella.FileManagerImpl;
 import com.limegroup.gnutella.IncompleteFileDesc;
 import com.limegroup.gnutella.Response;
 import com.limegroup.gnutella.URN;
-import com.limegroup.gnutella.FileManagerEvent.Type;
 import com.limegroup.gnutella.messages.QueryRequest;
 import com.limegroup.gnutella.metadata.audio.AudioMetaData;
 

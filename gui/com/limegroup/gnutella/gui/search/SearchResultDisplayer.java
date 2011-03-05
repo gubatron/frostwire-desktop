@@ -131,17 +131,20 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
         	promoSlides = new SlideshowPanel(UpdateManagerSettings.OVERLAY_SLIDESHOW_JSON_URL.getValue());
         }
         
-        promoSlides.setBackground(Color.WHITE);
-        Dimension promoDimensions = new Dimension(720, 380);
-        promoSlides.setPreferredSize(promoDimensions);
-        promoSlides.setSize(promoDimensions);
-        promoSlides.setMaximumSize(promoDimensions);
-
-        DUMMY = new ResultPanel(promoSlides);
-		
-		mainScreen = new JPanel(new BorderLayout());
-        mainScreen.add(DUMMY.getComponent(), BorderLayout.CENTER);
-        results.add("dummy", mainScreen);
+        if (promoSlides != null && promoSlides.hasSlides()) {
+	        promoSlides.setBackground(Color.WHITE);
+	        Dimension promoDimensions = new Dimension(720, 380);
+	        promoSlides.setPreferredSize(promoDimensions);
+	        promoSlides.setSize(promoDimensions);
+	        promoSlides.setMaximumSize(promoDimensions);
+	
+	        DUMMY = new ResultPanel(promoSlides);
+			
+			mainScreen = new JPanel(new BorderLayout());
+	        mainScreen.add(DUMMY.getComponent(), BorderLayout.CENTER);
+	        results.add("dummy", mainScreen);
+        }
+        
         switcher.first(results);
 
         setupTabbedPane();

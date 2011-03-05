@@ -440,11 +440,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         TABS.put(GUIMediator.Tabs.LIBRARY, new LibraryPlayListTab(LIBRARY_MEDIATOR));
         TABS.put(GUIMediator.Tabs.ANDROID, new AndroidTab(ANDROID_MEDIATOR));
 	    TABS.put(GUIMediator.Tabs.CHAT, new ChatTab(CHAT_MEDIATOR));
-        //TABS.put(GUIMediator.Tabs.LOGGING, new LoggingTab(LOGGING_MEDIATOR));
-        //if (SWTBrowserSettings.USE_SWT_BROWSER.getValue() && GUIMediator.isBrowserCapable() ) {
-        // Sorry, no limewire store in frostwire.
-        // TABS.put(GUIMediator.Tabs.LWS, new SWTBrowserSearchTab());
-        //}
         
         //if (LogUtils.isLog4JAvailable()) {
         //    Console console = new Console();

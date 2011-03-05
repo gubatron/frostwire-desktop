@@ -238,24 +238,6 @@ public abstract class FileManagerImpl implements FileManager {
     private Set<File> _transientSharedFiles = new HashSet<File>();
     
     /**
-     * An index that maps a LWS <tt>File</tt> on disk to the 
-     *  <tt>FileDesc</tt> holding it.
-     *
-     * INVARIANT: For all keys k in _fileToFileDescMap, 
-     *  _files[_fileToFileDescMap.get(k).getIndex()].getFile().equals(k)
-     *
-     * Keys must be canonical <tt>File</tt> instances.
-     */
-    private Map<File, FileDesc> _storeToFileDescMap;
-
-    /**
-     *  The directory for downloading LWS songs to and any subdirectories
-     *  that may recursively exist
-     */    
-    @InspectableForSize("number of directories for the store")
-    private Set<File> _storeDirectories;
-    
-    /**
      * Individual files that are not in a shared folder.
      */
     @InspectableForSize("number of individually shared files")
@@ -419,8 +401,6 @@ public abstract class FileManagerImpl implements FileManager {
         // the transient files and the special files.
         _individualSharedFiles = Collections.synchronizedCollection(
         		new MultiCollection<File>(_transientSharedFiles, _data.SPECIAL_FILES_TO_SHARE));
-        _storeToFileDescMap = new HashMap<File, FileDesc>();
-        _storeDirectories = new HashSet<File>();
     }
 
     /* (non-Javadoc)
@@ -487,13 +467,6 @@ public abstract class FileManagerImpl implements FileManager {
 	}
     
     /* (non-Javadoc)
-     * @see com.limegroup.gnutella.FileManager#getNumStoreFiles()
-     */
-    public int getNumStoreFiles() {
-        return _storeToFileDescMap.size();
-    }
-    
-    /* (non-Javadoc)
      * @see com.limegroup.gnutella.FileManager#getNumIncompleteFiles()
      */
     public int getNumIncompleteFiles() {
@@ -548,10 +521,11 @@ public abstract class FileManagerImpl implements FileManager {
         } catch(IOException ioe) {
             return null;
         }
+        
         if(_fileToFileDescMap.containsKey(f))
         	return _fileToFileDescMap.get(f);
-        else
-            return _storeToFileDescMap.get(f);
+        
+        return null;
     }
     
     /* (non-Javadoc)
@@ -697,8 +671,6 @@ public abstract class FileManagerImpl implements FileManager {
         synchronized(_data.DIRECTORIES_NOT_TO_SHARE) {
             _data.DIRECTORIES_NOT_TO_SHARE.clear();
             _data.DIRECTORIES_NOT_TO_SHARE.addAll(canonicalize(blackListSet));
-            _storeDirectories.clear();
-            _storeDirectories.add(SharingSettings.getSaveLWSDirectory());
         }
 	    loadSettings();
     }
@@ -848,27 +820,6 @@ public abstract class FileManagerImpl implements FileManager {
             addFileIfSharedOrStore(file, EMPTY_DOCUMENTS, true, _revision, null, AddType.ADD_SHARE);
         }
         
-        // Update the store directory and add only files from the LWS
-/*
-        File storeDir = SharingSettings.getSaveLWSDirectory();
-        updateStoreDirectories(storeDir.getAbsoluteFile(), null, revision);
-        
-        // Optain the list of lws files found in shared directories
-        Collection<File> specialStoreFiles = _data.SPECIAL_STORE_FILES;
-        ArrayList<File> storeList;
-        synchronized (specialStoreFiles) {
-            storeList = new ArrayList<File>(specialStoreFiles);
-        }
-        */
-        // list lws files found in shared directories in the special
-        //	store files node
-/*
-        for(File file: storeList) {
-            if(_revision != revision)
-                break;
-            addFileIfSharedOrStore(file, EMPTY_DOCUMENTS, true, _revision, null, AddType.ADD_STORE);
-        }
-        */
         _isUpdating = false;
 
         trim();
@@ -950,8 +901,6 @@ public abstract class FileManagerImpl implements FileManager {
             if (_completelySharedDirectories.contains(directory))
                 return;
 
-            if (!_storeDirectories.contains(directory))
-				_completelySharedDirectories.add(directory);
             if (!isForcedShare) {
                 dispatchFileEvent(
                         new FileManagerEvent(this, Type.ADD_FOLDER, rootShare, depth, directory, parent));
@@ -1062,8 +1011,6 @@ public abstract class FileManagerImpl implements FileManager {
                     else if(f.isFile() && !_individualSharedFiles.contains(f)) {
                         if(removeFileIfShared(f) == null)
                             fileManagerController.clearPendingShare(f);
-                        if(isStoreFile(f)) 
-                            _data.SPECIAL_STORE_FILES.remove(f);	
                     }
                 }
             }
@@ -1248,15 +1195,11 @@ public abstract class FileManagerImpl implements FileManager {
 	    
 			// if file is not shareable, also remove it from special files
 			// to share since in that case it's not physically shareable then
-        if (!isFileShareable(file) && !isFileLocatedStoreDirectory(file)) { 
+        if (!isFileShareable(file)) { 
 		    	_individualSharedFiles.remove(file);
             callback.handleFileEvent(new FileManagerEvent(FileManagerImpl.this, addFileType.getFailureType(), file));
             return;
         }
-        
-        if( isStoreFile(file)){
-                return;
-		}
         
         if(isFileShared(file)) {
             callback.handleFileEvent(new FileManagerEvent(FileManagerImpl.this, Type.ALREADY_SHARED_FILE, file));
@@ -1312,10 +1255,7 @@ public abstract class FileManagerImpl implements FileManager {
                 // try loading the fd so we can check the LimeXML info
                 loadFile(fd, file, metadata, urns);
 
-                // check LimeXML to determine if is a store file
-                if (isStoreXML(fd.getXMLDocument())) {
-                    addStoreFile(fd, file, urns, addFileType, notify, callback);
-                } else if (addFileType == AddType.ADD_SHARE) {
+                if (addFileType == AddType.ADD_SHARE) {
                     addSharedFile(file, fd, urns, addFileType, notify, callback);
                 }
                 
@@ -1345,33 +1285,6 @@ public abstract class FileManagerImpl implements FileManager {
     }   
   
     /**
-     * Creates a file descriptor for the given file and places the fd into the set
-     * of LWS file descriptors
-     */
-    private synchronized void addStoreFile(FileDesc fd, File file, Set<? extends URN> urns, AddType addFileType,
-            final boolean notify, final FileEventListener callback) {
-        if(LOG.isDebugEnabled())
-            LOG.debug("Sharing file: " + file);
-        
-        // if this file is in a shared folder, add to individual store files
-        if( addFileType == AddType.ADD_SHARE)
-            _data.SPECIAL_STORE_FILES.add(file);
-
-        //store files are not part of the _files list so recreate fd with invalid index in _files
-        FileDesc fileDesc = createFileDesc(file, urns, STORE_FILEDESC_INDEX);
-        //add the xml doc to the new FileDesc
-        if( fd.getXMLDocument() != null )
-            fileDesc.addLimeXMLDocument(fd.getXMLDocument());
-    
-        _storeToFileDescMap.put(file, fileDesc);
-        
-        FileManagerEvent evt = new FileManagerEvent(FileManagerImpl.this, Type.ADD_STORE_FILE, fileDesc);
-        if(notify) // sometimes notify the GUI
-            dispatchFileEvent(evt);
-        callback.handleFileEvent(evt); // always notify the individual callback.
-    }
-    
-    /**
      * Handles the actual sharing of a file by placing the file descriptor into the set of shared files
      */
     private synchronized void addSharedFile(File file, FileDesc fileDesc, Set<? extends URN> urns, AddType addFileType,
@@ -1379,15 +1292,12 @@ public abstract class FileManagerImpl implements FileManager {
         if(LOG.isDebugEnabled())
             LOG.debug("Sharing file: " + file);
                
-        // since we created the FD to test the XML for being an instance of LWS, check to make sure
-        //  the FD is still valid before continuing
         if( fileDesc.getIndex() != _files.size()) {
             LimeXMLDocument doc = fileDesc.getXMLDocument();
             fileDesc = createFileDesc(file, urns, _files.size());
             if( doc != null )
                 fileDesc.addLimeXMLDocument(doc);
         }
-        
 
         long fileLength = file.length();
         _filesSize += fileLength;        
@@ -1574,30 +1484,6 @@ public abstract class FileManagerImpl implements FileManager {
                     trie.remove(keyword);
             }
         }        
-    }
-    
-    protected synchronized FileDesc removeStoreFile(File f, boolean notify){
-        //Take care of case, etc.
-        try {
-            f = FileUtils.getCanonicalFile(f);
-        } catch (IOException e) {
-            return null;
-        }        
-
-        // Look for matching file ...         
-        FileDesc fd = _storeToFileDescMap.get(f);
-        if (fd == null)
-            return null;
-
-        _data.SPECIAL_STORE_FILES.remove(f);
-        _storeToFileDescMap.remove(f);
- 
-        // Notify the GUI...
-        if (notify) {
-            FileManagerEvent evt = new FileManagerEvent(this, Type.REMOVE_STORE_FILE, fd);                                           
-            dispatchFileEvent(evt);
-        } 
-        return fd;
     }
     
     /* (non-Javadoc)
@@ -1805,32 +1691,7 @@ public abstract class FileManagerImpl implements FileManager {
                     callback.handleFileEvent(newEvt);
             }
             }, AddType.ADD_SHARE);
-        }   
-        // its a store files
-        else  {
-            final FileDesc removed = removeStoreFile(oldName, false);
-            assert removed == toRemove : "invariant broken.";
-            if (_data.SPECIAL_STORE_FILES.remove(oldName)) 
-                _data.SPECIAL_STORE_FILES.add(newName);
-            // Prepopulate the cache with new URNs.
-            fileManagerController.addUrns(newName, removed.getUrns());
-    
-            addFileIfSharedOrStore(newName, xmlDocs, false, _revision, new FileEventListener() {
-                public void handleFileEvent(FileManagerEvent evt) {
-                  FileManagerEvent newEvt = null; 
-                  if(evt.isAddStoreEvent()) {
-                      FileDesc fd = evt.getFileDescs()[0];
-                      newEvt = new FileManagerEvent(FileManagerImpl.this, Type.RENAME_FILE, removed, fd);
-                  } else {
-                      newEvt = new FileManagerEvent(FileManagerImpl.this, Type.REMOVE_STORE_FILE, removed);
-                  }
-                  dispatchFileEvent(newEvt);
-                  if(callback != null)
-                      callback.handleFileEvent(newEvt);
-                }
-            }, AddType.ADD_STORE
-            );
-        }
+        }        
     }
 
 
@@ -1871,13 +1732,6 @@ public abstract class FileManagerImpl implements FileManager {
     }
     
     /* (non-Javadoc)
-     * @see com.limegroup.gnutella.FileManager#hasIndividualStoreFiles()
-     */
-    public boolean hasIndividualStoreFiles() {
-        return !_data.SPECIAL_STORE_FILES.isEmpty();
-    }
-    
-    /* (non-Javadoc)
      * @see com.limegroup.gnutella.FileManager#hasApplicationSharedFiles()
      */
     public boolean hasApplicationSharedFiles() {
@@ -1912,32 +1766,6 @@ public abstract class FileManagerImpl implements FileManager {
             else
     		    return files.toArray(new File[files.size()]);
         }
-    }
-    
-    /* (non-Javadoc)
-     * @see com.limegroup.gnutella.FileManager#getIndividualStoreFiles()
-     */
-    public File[] getIndividualStoreFiles() {
-        Set<File> candidates = _data.SPECIAL_STORE_FILES;
-        synchronized (candidates) {
-            ArrayList<File> files = new ArrayList<File>(candidates.size());
-            for(File f : candidates) {
-                if (f.exists())
-                    files.add(f);
-            }
-            
-            if (files.isEmpty())
-                return new File[0];
-            else
-                return files.toArray(new File[files.size()]);
-        }
-    }
-    
-    /* (non-Javadoc)
-     * @see com.limegroup.gnutella.FileManager#isIndividualStore(java.io.File)
-     */
-    public boolean isIndividualStore(File f) {
-        return _data.SPECIAL_STORE_FILES.contains(f);
     }
     
     /* (non-Javadoc)
@@ -2018,22 +1846,9 @@ public abstract class FileManagerImpl implements FileManager {
 		}
 	}
 
-	/* (non-Javadoc)
-     * @see com.limegroup.gnutella.FileManager#isStoreFile(java.io.File)
-     */
-    public boolean isStoreFile(File file) {
-        if( _storeToFileDescMap.containsKey(file) || 
-                _storeDirectories.contains(file)) {
-                return true;
-        }
-        return false;
-    }
-    
 	/**
 	 * Returns true if the given file is in a completely shared directory
 	 * or if it is specially shared.
-     * NOTE: this does not determine if a file is unshareable as a result of
-     * being a LWS file
 	 */
 	private boolean isFileShareable(File file) {
 		if (!SharingUtils.isFilePhysicallyShareable(file))
@@ -2043,7 +1858,7 @@ public abstract class FileManagerImpl implements FileManager {
 		if (_data.FILES_NOT_TO_SHARE.contains(file))
 			return false;
 		if (isFileInCompletelySharedDirectory(file)) {
-	        if (file.getName().toUpperCase().startsWith("LIMEWIRE"))
+	        if (file.getName().toUpperCase().startsWith("FROSTWIRE"))
 				return true;
 			if (!hasShareableExtension(file))
 	        	return false;
@@ -2053,26 +1868,6 @@ public abstract class FileManagerImpl implements FileManager {
 		return false;
 	}
     
-    private boolean isFileLocatedStoreDirectory(File file) {
-        return ( _storeDirectories.contains(file.getParentFile()));
-    }
-    
-    /**
-     * Returns true if the XML doc contains information regarding the LWS
-     */
-    private boolean isStoreXML(LimeXMLDocument doc) {
-       return doc != null && doc.getLicenseString() != null &&
-               doc.getLicenseString().equals(LicenseType.LIMEWIRE_STORE_PURCHASE.name());
-    }
-    
-    /* (non-Javadoc)
-     * @see com.limegroup.gnutella.FileManager#isStoreDirectory(java.io.File)
-     */
-    public boolean isStoreDirectory(File file) {
-        return _storeDirectories.contains(file);
-    }
-       
- 
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.FileManager#isFolderShareable(java.io.File, boolean)
      */

@@ -510,9 +510,6 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
 			return _sharedCellColor;
 		if (GuiCoreMediator.getFileManager().isFolderShared(initializer))
 			return _sharedCellColor;
-		// paint store directories as if they were shared files
-        if (GuiCoreMediator.getFileManager().isStoreDirectory(initializer))
-            return _sharedCellColor;
 		return _unsharedCellColor;
 	}
 }

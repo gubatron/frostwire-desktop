@@ -205,8 +205,7 @@ public final class LibraryMediator implements ThemeObserver {
      */
     public void quickRefresh() {
 	    DirectoryHolder dh = LIBRARY_TREE.getSelectedDirectoryHolder();
-		if(dh instanceof SavedFilesDirectoryHolder || dh instanceof IncompleteDirectoryHolder ||
-                dh instanceof LWSSpecialFilesHolder )
+		if(dh instanceof SavedFilesDirectoryHolder || dh instanceof IncompleteDirectoryHolder)
             updateTableFiles(dh);
     }
     
@@ -388,21 +387,6 @@ public final class LibraryMediator implements ThemeObserver {
         showView(SHARED_KEY);
     }
 
-    /**
-	 *	Constructs a panel that displays the FrostWire Store (LWS) logo in the 
-	 *	library table when the root in the tree of the LWS was chosen
-	 */
-/*
-    public static void showStoreFiles() {
-        if( storeShared == null) {
-            storeShared = new JPanel(new BorderLayout());
-            storeShared.add( new JLabel( I18n.tr("Songs purchased from the FrostWire Store"), GUIMediator.getThemeImage("lws"), JLabel.CENTER));
-            storeShared.setBorder(BorderFactory.createEtchedBorder());
-            addView(storeShared, STORE_KEY);
-        }
-        showView(STORE_KEY);
-    }
-*/
 	public static void showView(String key) {
 		viewLayout.show(viewPanel, key);
 	}

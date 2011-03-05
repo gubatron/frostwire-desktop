@@ -52,8 +52,6 @@ public enum LicenseType {
             return WEED_LICENSE;
         if (hasDRMLicense(type))
             return DRM_LICENSE;
-        if (hasLWSLicense(type))
-            return LIMEWIRE_STORE_PURCHASE;
         
         // the other licenses do not have any special requirements 
         // for the license or type field (yet)
@@ -85,9 +83,5 @@ public enum LicenseType {
         return type != null &&
                type.startsWith(WRMXML.PROTECTED);
     }
-    
-    private static boolean hasLWSLicense(String type) {
-        return type != null &&
-               type.startsWith(AudioDataReader.MAGIC_KEY);
-    }
+  
 }
