@@ -51,6 +51,8 @@ import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.KeyProcessingTextField;
 import com.limegroup.gnutella.gui.MySharedFilesButton;
+import com.limegroup.gnutella.gui.actions.FileMenuActions;
+import com.limegroup.gnutella.gui.actions.FileMenuActions.OpenMagnetTorrentAction;
 import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.gui.xml.InputPanel;
@@ -458,6 +460,18 @@ class SearchInputPanel extends JPanel {
         search.add(GUIUtils.left(SEARCH_TYPE_LABEL));
         search.add(Box.createVerticalStrut(5));
         search.add(META_PANEL);
+        
+        JButton openTorrentButton = new JButton("Open a Torrent");
+        openTorrentButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				OpenMagnetTorrentAction openMagnetTorrentAction = new FileMenuActions.OpenMagnetTorrentAction();
+				openMagnetTorrentAction.actionPerformed(null);
+			}
+		});
+        
+        search.add(GUIUtils.center(openTorrentButton));
         return search;
     }
     
