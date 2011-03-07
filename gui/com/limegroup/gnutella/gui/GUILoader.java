@@ -36,7 +36,6 @@ import com.limegroup.gnutella.util.LimeWireUtils;
  * This class constructs an <tt>Initializer</tt> instance that constructs
  * all of the necessary classes for the application.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public class GUILoader {
 	
 	/** 

@@ -346,7 +346,7 @@ public class FixedSizeSortedSet<E> implements Iterable<E> {
             return true;
         if(!( o instanceof FixedSizeSortedSet))
             return false;
-        FixedSizeSortedSet other = (FixedSizeSortedSet)o;
+        FixedSizeSortedSet<?> other = (FixedSizeSortedSet<?>)o;
         return (_sortedSet.equals(other._sortedSet) && _map.equals(other._map));
     }
 
@@ -402,8 +402,8 @@ public class FixedSizeSortedSet<E> implements Iterable<E> {
      */
      private void stabilize() {
         // First clean up the map for any entries that may not be in the set.
-        for(Iterator iter = _map.entrySet().iterator(); iter.hasNext(); ) {
-            Map.Entry entry = (Map.Entry)iter.next();
+        for(Iterator<?> iter = _map.entrySet().iterator(); iter.hasNext(); ) {
+            Map.Entry<?, ?> entry = (Map.Entry<?, ?>)iter.next();
             // If the set does not contain the value of this entry, remove it
             // from the map.
             if( !_sortedSet.contains(entry.getValue()) )
@@ -411,8 +411,8 @@ public class FixedSizeSortedSet<E> implements Iterable<E> {
         }
         
         // Then clean up the set for any entries that may not be in the map.
-        Collection values = _map.values();
-        for(Iterator iter = _sortedSet.iterator(); iter.hasNext(); ) {
+        Collection<?> values = _map.values();
+        for(Iterator<?> iter = _sortedSet.iterator(); iter.hasNext(); ) {
             Object o = iter.next();
             // If the values of the map do not contain this entry, remove it
             // from the set.

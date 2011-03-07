@@ -12,7 +12,11 @@ import javax.swing.JProgressBar;
  */
 public class LimeJProgressBar extends JProgressBar {
 
-	private final static Dimension PREFERRED_HORIZONTAL_SIZE = new Dimension(146, 17);  
+	/**
+     * 
+     */
+    private static final long serialVersionUID = -391739746034247225L;
+    private final static Dimension PREFERRED_HORIZONTAL_SIZE = new Dimension(146, 17);  
 	
     public LimeJProgressBar() {
         super();

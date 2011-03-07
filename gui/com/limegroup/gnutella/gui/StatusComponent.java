@@ -14,7 +14,7 @@ import javax.swing.JProgressBar;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.gui.GUIUtils.SizePolicy;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
+import com.limegroup.gnutella.gui.themes.SkinHandler;
 
 /**
  * Displays a status update in various ways, depending on the
@@ -29,6 +29,11 @@ import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
  */
 public class StatusComponent extends JPanel {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -1278146862770218271L;
+
     /** The JProgressBar whose text is updated, if not running on OSX. */
     private final JProgressBar BAR;
     
@@ -51,10 +56,12 @@ public class StatusComponent extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));        
         construct();
         GUIUtils.setOpaque(false, this);
-        if(BAR != null && !OSUtils.isMacOSX())
+        if(BAR != null && !OSUtils.isMacOSX()) {
             BAR.setOpaque(true);
-        if(LABEL != null)
-            LABEL.setForeground(ThemeFileHandler.WINDOW4_COLOR.getValue());
+        }
+        if(LABEL != null) {
+            LABEL.setForeground(SkinHandler.getWindow4Color());
+        }
         BAR.setIndeterminate(true);
     }
     
@@ -74,8 +81,9 @@ public class StatusComponent extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         construct();
         GUIUtils.setOpaque(false, this);
-        if(LABEL != null)
-            LABEL.setForeground(ThemeFileHandler.WINDOW4_COLOR.getValue());
+        if(LABEL != null) {
+            LABEL.setForeground(SkinHandler.getWindow4Color());
+        }
         
         BAR.setMaximum(steps+1);
         BAR.setMinimum(0);

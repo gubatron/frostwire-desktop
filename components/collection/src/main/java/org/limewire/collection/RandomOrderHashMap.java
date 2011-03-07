@@ -9,6 +9,11 @@ import java.util.Map;
  */
 public class RandomOrderHashMap<K, V> extends FixedSizeArrayHashMap<K, V> {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 7486635140443385580L;
+
     public RandomOrderHashMap(Map<? extends K, ? extends V> m) {
         super(m);
     }
@@ -26,7 +31,7 @@ public class RandomOrderHashMap<K, V> extends FixedSizeArrayHashMap<K, V> {
     }
 
     @Override
-    protected Iterator<Entry<K, V>> newEntryIterator() {
+    protected Iterator<Entry<K, V>> newEntryIterator2() {
         return new RandomIterator();
     }
     

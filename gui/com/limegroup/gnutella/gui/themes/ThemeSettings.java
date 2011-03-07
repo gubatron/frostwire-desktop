@@ -1,6 +1,7 @@
 package com.limegroup.gnutella.gui.themes;
 
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -8,31 +9,24 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.List;
 import java.util.Locale;
 import java.util.StringTokenizer;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
-import java.util.zip.ZipFile;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.limewire.service.ErrorService;
+import org.limewire.setting.ColorSetting;
 import org.limewire.setting.FileSetting;
 import org.limewire.setting.IntSetting;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.FileUtils;
-import org.limewire.util.OSUtils;
 
+import com.frostwire.CoreFrostWireUtils;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.LimeProps;
 import com.limegroup.gnutella.util.Expand;
-import com.limegroup.gnutella.util.LimeWireUtils;
 
 /**
  * Class for handling all LimeWire settings that are stored to disk.  To
@@ -56,6 +50,8 @@ public final class ThemeSettings extends LimeProps {
      * stands for "LimeWire Theme Pack".
      */
     public static final String EXTENSION = "fwtp";
+    
+    public static final File SKINS_FILE = new File(CoreFrostWireUtils.getPreferencesFolder(), "skins.dat");
     
     public static final File THEME_DIR_FILE =
 		new File(CommonUtils.getUserSettingsDir(), "themes");
@@ -145,112 +141,6 @@ public final class ThemeSettings extends LimeProps {
         new File(THEME_DIR_FILE, OTHER_THEME_NAME);
     
     /**
-     * Find the themes jar and delete any zip files on disk if
-     * they're older than the ones in our jar.
-     */
-    static {
-        File themesJar = getThemesJar();    
-        //System.out.println("ThemeSettings - Themes jar: " + themesJar);
-        if(themesJar == null || !themesJar.isFile())
-            JAR_THEME_NAMES = Collections.emptyList();
-        else
-            JAR_THEME_NAMES = scanJarFileForThemes(themesJar);        
-    }
-    
-    /**
-     * Scans through the themes.jar file for all themes.
-     * This will delete themes that are older than the timestamp
-     * in the themes.jar and return a list of all potential themes.
-     */ 
-    private static List<String> scanJarFileForThemes(File jarFile) {
-    	//System.out.println("ThemeSettings - *************scanning jar for themes..." + jarFile.lastModified());
-        List<String> themeFiles = new ArrayList<String>();
-        ZipFile zf = null;
-        try {        	
-            long jarMod = jarFile.lastModified();
-            zf = new ZipFile(jarFile);
-            Enumeration<? extends ZipEntry> entries = zf.entries();
-            while(entries.hasMoreElements()) {
-                ZipEntry ze = entries.nextElement();
-                String name = ze.getName();
-                if(!name.endsWith(".fwtp"))
-                    continue;
-                //System.out.println("ThemeSettings - Added from jar: " + name);
-                themeFiles.add(name);
-                File existingFile = new File(THEME_DIR_FILE, name);
-                File existingDir = extractThemeDir(existingFile);                
-                
-                if(existingFile.isFile() || existingDir.isDirectory()) {
-                    if(jarMod > existingFile.lastModified()
-                            || jarMod > existingDir.lastModified())
-                        deleteZipWithOldTimestamp(existingFile);
-                }
-            }
-        } catch(IOException ioe) {
-            ErrorService.error(ioe);
-        } finally {
-            if(zf != null) {
-                try {
-                    zf.close();
-                } catch(IOException ignored) {}
-            }
-        }
-        
-        return Collections.unmodifiableList(themeFiles);
-    }
-    
-    /** Returns the themes.jar file. */
-    private static File getThemesJarFromFrostWireThemePath() {
-    	//System.out.println("ThemeSettings - Frostwire theme resource name is: " + FROSTWIRE_THEME_NAME);
-        URL themeURL = ThemeSettings.class.getClassLoader().getResource(FROSTWIRE_THEME_NAME);
-        
-        if(themeURL != null) {
-            String url = themeURL.toExternalForm();
-            if (url != null && url.startsWith("jar:file:")) {
-                url = url.substring("jar:file:".length(), url.length());
-                url = url.substring(0, url.length() - FROSTWIRE_THEME_NAME.length() - "!/".length());
-                return new File(url);
-            }
-        }
-
-        return null;
-    }
-    
-    private static File getThemesJar() {
-    	//the jar should be on the same folder as the frostwire executable
-    	File themeJar = new File(System.getProperty("user.dir") + File.separatorChar + "themes.jar");
-    	
-    	if (themeJar != null &&
-    		themeJar.exists() &&
-    		themeJar.isFile())
-    		return themeJar;
-    	
-    	//if we're not running from a binary, then we have to look for the jar elsewhere
-    	return getThemesJarFromFrostWireThemePath();
-    }
-
-    /**
-     * Utility method that deletes specified theme file and expanded folder 
-     * from the themes folder.
-     *
-     * @param themeFile the theme zip file to delete
-     */
-    private static void deleteZipWithOldTimestamp(File themeFile) {
-        File themeDir = extractThemeDir(themeFile);
-
-        if(themeDir.exists()) {
-            String[] children = themeDir.list();
-            if (children != null) {
-            	for (int i=0; i<children.length; i++)
-            		new File(themeDir, children[i]).delete();
-            }
-            themeDir.delete();
-        }
-
-        themeFile.delete();
-    }
-
-    /**
      * Expands the specified theme zip file to the specified directory.
      *
      * @param themeFile the theme zip file to expand
@@ -319,7 +209,7 @@ public final class ThemeSettings extends LimeProps {
      * Determines if the current theme is the GTK theme.
      */
     public static boolean isGTKTheme() {
-        return THEME_FILE.getValue().equals(GTK_LAF_THEME_FILE);
+        return false;//THEME_FILE.getValue().equals(GTK_LAF_THEME_FILE);
     }
     
     /** 
@@ -350,8 +240,8 @@ public final class ThemeSettings extends LimeProps {
      * Determines if the current theme is the native OSX theme.
      */
     public static boolean isNativeOSXTheme() {
-        return OSUtils.isMacOSX() &&
-              (isPinstripesTheme() || isBrushedMetalTheme());
+        return false;//OSUtils.isMacOSX() &&
+              //(isPinstripesTheme() || isBrushedMetalTheme());
     }
     
     /**
@@ -461,25 +351,8 @@ public final class ThemeSettings extends LimeProps {
     public static final File THEME_DEFAULT;
     public static final File THEME_DEFAULT_DIR;
     static {
-        File theme, dir;
-        if(OSUtils.isMacOSX()) {
-            theme = PINSTRIPES_OSX_THEME_FILE;
-            dir = new File(THEME_DIR_FILE, "pinstripes_theme_osx");
-        } else if(LimeWireUtils.isPro()) {
-            theme = PRO_THEME_FILE;
-            dir = new File(THEME_DIR_FILE, "frostwirePro_theme");
-        } else if(OSUtils.isNativeThemeWindows()) {
-            theme = WINDOWS_LAF_THEME_FILE;
-            dir = new File(THEME_DIR_FILE, "windows_theme");
-        } else if(OSUtils.isLinux()) {
-            theme = GTK_LAF_THEME_FILE;
-            dir = new File(THEME_DIR_FILE, "GTK_theme");
-        } else {
-            theme = FROSTWIRE_THEME_FILE;
-            dir = new File(THEME_DIR_FILE, "frostwirePro_theme");
-        }
-        THEME_DEFAULT = theme;
-        THEME_DEFAULT_DIR = dir;
+        THEME_DEFAULT = GTK_LAF_THEME_FILE;
+        THEME_DEFAULT_DIR = new File(THEME_DIR_FILE, "GTK_theme");
     }
 	
 	/**
@@ -493,11 +366,6 @@ public final class ThemeSettings extends LimeProps {
 	 */
 	public static final FileSetting THEME_DIR =
 		FACTORY.createFileSetting("THEME_DIR", THEME_DEFAULT_DIR);
-
-    /**
-     * ArrayList containing the names of theme files in our jar as Strings.
-     */
-    public static final List<String> JAR_THEME_NAMES;
     
     /**
      * Setting for the value all fonts should be incremented by.
@@ -507,39 +375,9 @@ public final class ThemeSettings extends LimeProps {
     public static final IntSetting FONT_SIZE_INCREMENT = 
         FACTORY.createIntSetting("FONT_SIZE_INCREMENT", 0);
     
-    /**
-	 * Gets the themes for the themes.jar file in the current working directory
-	 */
-	public static boolean recoverFromJar() {
-		GUIMediator.showMessage("FTA: FrostWire will look for skin's jar file. Using system directory it would be: " + System.getProperty("user.dir")); // FTA: DEBUG MESSAGE TO TRY FROM BINARY
-		//System.getProperty("user.dir")); or CommonUtils.getCurrentDirectory() will take same result 
-		File themesJarFile = new File(CommonUtils.getCurrentDirectory() + System.getProperty("file.separator") + "themes.jar");
-		//GUIMediator.showMessage("FTA: FrostWire will look for skin's jar file in: " + CommonUtils.getCurrentDirectory() + System.getProperty("file.separator") + "themes.jar\nUsing system directory it would be: " + System.getProperty("user.dir")); // FTA: DEBUG MESSAGE TO TRY FROM BINARY
-		if (!themesJarFile.exists()) {
-    		GUIMediator.showError(I18n.tr("The file containing default themes for FrostWire cannot be found.\nYou will need to download the files manually."));
-    		return false;
-		}
-		
-    	List<String> JAR_THEME_NAMES = scanJarFileForThemes(themesJarFile);
-    	
-    	File themeDir = THEME_DIR_FILE;
-    	 try {
-             FileUtils.setWriteable(themeDir);
-             Expand.expandFile(themesJarFile, themeDir, false);
-         } catch(ZipException ze) {
-             // invalid theme, tell the user.
-             GUIMediator.showError(I18n.tr("The theme you are applying is invalid. FrostWire will revert to the default theme."));             
-             return false;
-         } catch(IOException e) {
-             return false;
-         }
-         
-         
-        return true;
-		//THEME_DIR_FILE
-      //System.out.println("ThemeSettings - Copying file from " + existingFile.getName() + " to " + existingFile);
-        //CommonUtils.copyResourceFile(existingFile.getName(), existingFile, true);
-	}
+    public static final ColorSetting DEFAULT_TABLE_EVEN_ROW_COLOR = FACTORY.createColorSetting("DEFAULT_TABLE_EVEN_ROW_COLOR", new Color(255, 255, 255));
+    public static final ColorSetting DEFAULT_TABLE_ODD_ROW_COLOR = FACTORY.createColorSetting("DEFAULT_TABLE_ODD_ROW_COLOR", new Color(248, 248, 255));
+    public static final ColorSetting DEFAULT_TIP_OF_THE_DAY_PANEL_COLOR = FACTORY.createColorSetting("DEFAULT_TIP_OF_THE_DAY_PANEL_COLOR", new Color(248, 248, 255));
 }
 
 	

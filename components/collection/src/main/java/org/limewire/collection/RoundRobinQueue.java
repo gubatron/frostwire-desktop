@@ -70,7 +70,7 @@ public class RoundRobinQueue<T>  {
 	 * @param o the object to remove.
 	 */
 	public synchronized void removeAllOccurences(Object o) {
-		Iterator iterator = _current.iterator();
+		Iterator<?> iterator = _current.iterator();
 		while(iterator.hasNext())
 			if (iterator.next().equals(o))
 				iterator.remove();

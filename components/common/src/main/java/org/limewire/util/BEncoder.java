@@ -198,7 +198,7 @@ public class BEncoder {
      */
     private void encode(Object object) throws IOException {
     	if (object instanceof Map)
-    		encodeDict((Map)object);
+    		encodeDict((Map<?, ?>)object);
     	else if (object instanceof Iterable<?>)
     		encodeList((Iterable<?>)object);
     	else if (object instanceof Number)

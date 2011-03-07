@@ -16,7 +16,7 @@ public class ComboBoxValue implements Comparable<ComboBoxValue> {
         this.value = value;
     }
     
-    public ComboBoxValue(NameValue nameValue) {
+    public ComboBoxValue(NameValue<?> nameValue) {
         this(nameValue.getName(), (String)nameValue.getValue());
     }
     

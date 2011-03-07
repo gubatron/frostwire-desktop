@@ -26,7 +26,7 @@ final class SearchInputManager implements ThemeObserver {
      * The panel that contains all input information for searching.
      * This includes both 'input boxes' and 'filter boxes'.
      */
-    private final JPanel COMPONENT_PANEL = new JPanel(new GridBagLayout());
+    private JPanel COMPONENT_PANEL;
     
     /**
      * The card layout switching between searching or filtering.
@@ -36,7 +36,7 @@ final class SearchInputManager implements ThemeObserver {
     /**
      * The panel containing either search input or filters.
      */
-    private final JPanel MAIN_PANEL = new JPanel(MAIN_CARDS);
+    private JPanel MAIN_PANEL;
 
     /**
      * The search input panel.
@@ -61,18 +61,18 @@ final class SearchInputManager implements ThemeObserver {
         SEARCH = new SearchInputPanel(GuiCoreMediator.getNetworkManager(), GuiCoreMediator.getNetworkInstanceUtils());
         FILTER = new FilterInputPanel(new ShowSearchListener(), new AutoSearchListener());
 
-        MAIN_PANEL.removeAll();       
-        MAIN_PANEL.add(SEARCH, "search");
-        MAIN_PANEL.add(FILTER, "filter");
+        getMainPanel().removeAll();       
+        getMainPanel().add(SEARCH, "search");
+        getMainPanel().add(FILTER, "filter");
         
-        COMPONENT_PANEL.removeAll();
+        getComponent().removeAll();
         GridBagConstraints c = new GridBagConstraints();
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1;
         c.weighty = 1;
         c.insets = new Insets(5, 0, 0, 0);
-        COMPONENT_PANEL.add(MAIN_PANEL, c);
+        getComponent().add(MAIN_PANEL, c);
     }
     
     void rebuild() {
@@ -103,6 +103,9 @@ final class SearchInputManager implements ThemeObserver {
      *  for the search input section of the search tab
      */
     JComponent getComponent() {
+        if (COMPONENT_PANEL == null) {
+            COMPONENT_PANEL = new JPanel(new GridBagLayout());
+        }
         return COMPONENT_PANEL;
     }
     
@@ -135,7 +138,7 @@ final class SearchInputManager implements ThemeObserver {
     void setFiltersFor(ResultPanel rp) {
         if(UISettings.SEARCH_RESULT_FILTERS.getValue()) {
             boolean added = FILTER.setFiltersFor(rp);
-            MAIN_CARDS.last(MAIN_PANEL);
+            MAIN_CARDS.last(getMainPanel());
             if(added)
                 requestFilterFocus();
         }
@@ -145,7 +148,7 @@ final class SearchInputManager implements ThemeObserver {
      * Displays the search card.
      */
     private void showSearchCard(boolean immediate) {
-        MAIN_CARDS.first(MAIN_PANEL);
+        MAIN_CARDS.first(getMainPanel());
         requestSearchFocus(immediate);
     }      
     
@@ -207,5 +210,11 @@ final class SearchInputManager implements ThemeObserver {
             }
         }
     }
-        
+    
+    private JPanel getMainPanel() {
+        if (MAIN_PANEL == null) {
+            MAIN_PANEL = new JPanel(MAIN_CARDS);
+        }
+        return MAIN_PANEL;
+    }
 }

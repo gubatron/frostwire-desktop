@@ -55,12 +55,12 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 	 * <tt>JPanel</tt> containing the primary components of the search result
 	 * display.
 	 */
-	private final JPanel MAIN_PANEL = new BoxPanel(BoxPanel.Y_AXIS);
+	private JPanel MAIN_PANEL;
 
 	/**
 	 * The main tabbed pane for displaying different search results.
 	 */
-	private JTabbedPane tabbedPane = new JTabbedPane();
+	private JTabbedPane tabbedPane;
 
     /** The contents of tabbedPane. 
      *  INVARIANT: entries.size()==# of tabs in tabbedPane 
@@ -76,7 +76,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
      *  results exist OR a blank ResultPanel when nothing is showing.
      *  Use switcher to switch between the two.  The first entry is the
      *  blank results panel; the second is the tabbed panel. */
-    private JPanel results = new JPanel();
+    private JPanel results;
     
     /**
      * The layout that switches between the dummy result panel
@@ -113,12 +113,17 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 	 * Constructs the search display elements.
 	 */
 	public SearchResultDisplayer() {
+	    MAIN_PANEL = new BoxPanel(BoxPanel.Y_AXIS);
         MAIN_PANEL.setMinimumSize(new Dimension(0,0));
+        
+        tabbedPane = new JTabbedPane();
+        results = new JPanel();
         
         // make the results panel take up as much space as possible
         // for when the window is resized. 
         results.setPreferredSize(new Dimension(10000, 10000));
         results.setLayout(switcher);
+        results.setBackground(Color.WHITE);
 
         //Add SlideShowPanel here.
         SlideshowPanel promoSlides = null; 

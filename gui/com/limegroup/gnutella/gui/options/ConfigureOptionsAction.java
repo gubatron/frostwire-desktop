@@ -8,6 +8,10 @@ import com.limegroup.gnutella.gui.actions.AbstractAction;
 public class ConfigureOptionsAction extends AbstractAction {
 
 	/**
+     * 
+     */
+    private static final long serialVersionUID = -4910940664898276702L;
+    /**
 	 * Resource key to go to in the options window
 	 */
 	private String paneTitle;

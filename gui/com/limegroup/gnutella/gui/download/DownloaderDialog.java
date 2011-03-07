@@ -48,6 +48,11 @@ import com.limegroup.gnutella.settings.QuestionsHandler;
  */
 public class DownloaderDialog extends JDialog {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8960958888371326838L;
+    
     public static final int DEFAULT_ASK = 0;
     public static final int DEFAULT_APPEND = 1;
     public static final int DEFAULT_SAVE_AS = 2;
@@ -291,7 +296,7 @@ public class DownloaderDialog extends JDialog {
 		    ext = originalName.substring(dot);
 		}
 
-		Set downloads = DownloadMediator.instance().getFileNames();
+		Set<?> downloads = DownloadMediator.instance().getFileNames();
 		File newFile = originalFile;
 		String newName = originalName;
 		for (int i = 1; newFile.exists() || downloads.contains(newName); i++) {
@@ -310,7 +315,12 @@ public class DownloaderDialog extends JDialog {
 
 	private class OverWriteAction extends AbstractAction {
 		
-		public OverWriteAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 2111775584793796676L;
+
+        public OverWriteAction() {
 			putValue(Action.NAME, I18n.tr
 					("Overwrite"));
 			putValue(Action.SHORT_DESCRIPTION, I18n.tr
@@ -330,7 +340,12 @@ public class DownloaderDialog extends JDialog {
 	
 	private class SaveAsAction extends AbstractAction {
 		
-		public SaveAsAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -1578546482215690189L;
+
+        public SaveAsAction() {
 			putValue(Action.NAME, I18n.tr
 					("Save As..."));
 			putValue(Action.SHORT_DESCRIPTION, I18n.tr
@@ -358,7 +373,12 @@ public class DownloaderDialog extends JDialog {
 	
 	private class AppendAction extends AbstractAction {
 		
-		public AppendAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -8656271814286200978L;
+
+        public AppendAction() {
 			putValue(Action.NAME, I18n.tr
 					("Append (#)"));
 			putValue(Action.SHORT_DESCRIPTION, I18n.tr
@@ -372,7 +392,12 @@ public class DownloaderDialog extends JDialog {
 	
 	private class CancelAction extends AbstractAction {
 		
-		public CancelAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 1097046749993675175L;
+
+        public CancelAction() {
 			putValue(Action.NAME, I18n.tr
 					("Cancel"));
 			putValue(Action.SHORT_DESCRIPTION, I18n.tr

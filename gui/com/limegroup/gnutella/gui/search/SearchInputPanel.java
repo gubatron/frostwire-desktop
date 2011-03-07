@@ -6,14 +6,13 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -35,7 +34,6 @@ import javax.swing.JTextArea;
 import javax.swing.JViewport;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.border.LineBorder;
 import javax.swing.text.BadLocationException;
 
 import org.limewire.io.NetworkInstanceUtils;
@@ -51,9 +49,9 @@ import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.KeyProcessingTextField;
 import com.limegroup.gnutella.gui.MySharedFilesButton;
+import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.actions.FileMenuActions;
 import com.limegroup.gnutella.gui.actions.FileMenuActions.OpenMagnetTorrentAction;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.gui.xml.InputPanel;
 import com.limegroup.gnutella.settings.FilterSettings;
@@ -66,6 +64,11 @@ import com.limegroup.gnutella.xml.LimeXMLSchema;
  */
 class SearchInputPanel extends JPanel {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5638062215253666235L;
+
     /**
      * The current search label in what's new.
      */
@@ -131,11 +134,13 @@ class SearchInputPanel extends JPanel {
      */
     private final Ditherer DITHERER =
             new Ditherer(62,
-                        ThemeFileHandler.SEARCH_PANEL_BG_1.getValue(), 
-                        ThemeFileHandler.SEARCH_PANEL_BG_2.getValue()
+                        SkinHandler.getSearchPanelBG1(), 
+                        SkinHandler.getSearchPanelBG2()
                         );
                     
 	private JPanel searchEntry;
+	private JPanel whatsnew;
+    private JPanel browseHost;
     
     /**
      * The listener for new searches.
@@ -167,44 +172,25 @@ class SearchInputPanel extends JPanel {
         add(SCHEMA_BOX, BorderLayout.NORTH);
 
         searchEntry = createSearchEntryPanel();
-		
-        JPanel whatsnew = createWhatIsNewPanel();
-        JPanel browseHost = createBrowseHostPanel();
+		whatsnew = createWhatIsNewPanel();
+        browseHost = createBrowseHostPanel();
+        
         panelize(searchEntry);
         panelize(whatsnew);
         panelize(browseHost);
-        PANE.add(I18n.tr("Keyword"),
-                 searchEntry);
-        PANE.add(I18n.tr("What\'s New"),
-                 whatsnew);
-        PANE.add(I18n.tr("Direct Connect"),
-                 browseHost);
+        
+        PANE.add(I18n.tr("Keyword"), searchEntry);
+        PANE.add(I18n.tr("What\'s New"), whatsnew);
+        PANE.add(I18n.tr("Direct Connect"), browseHost);
                  
         PANE.setRequestFocusEnabled(false);
-        PANE.addMouseListener(new MouseListener() {
+        PANE.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent e) {
                 requestSearchFocusImmediately();
             }
-            public void mouseEntered(MouseEvent e) {}
-            public void mouseExited(MouseEvent e) {}
-            public void mousePressed(MouseEvent e) {}
-            public void mouseReleased(MouseEvent e) {}
-        });         
+        });
 
-        if(!ThemeSettings.isNativeTheme()) {
-            PANE.setBorder(
-              new LineBorder(ThemeFileHandler.SEARCH_GRID_COLOR.getValue()) {
-                public void paintBorder(Component c, Graphics g,
-                                        int x, int y, int width, int height) {
-                    try {
-                        Component sel = PANE.getSelectedComponent();
-                        if(sel != null)
-                            height = sel.getBounds().height + 4;                    
-                    } catch(ArrayIndexOutOfBoundsException aioobe) {}
-                    super.paintBorder(c, g, x, y, width, height);
-                }
-            });
-        }
         add(PANE, BorderLayout.CENTER);
 
         JPanel viewSharedFilesPanel = new BoxPanel(BoxPanel.X_AXIS);
@@ -312,9 +298,10 @@ class SearchInputPanel extends JPanel {
      */
     private void panelize(JComponent c) {
         GUIUtils.setOpaque(false, c);
-        if(!ThemeSettings.isNativeTheme())
+        if(!ThemeSettings.isNativeTheme()) {
             c.setOpaque(true);
-        c.setBackground(ThemeFileHandler.SEARCH_PANEL_BG_2.getValue());
+        }
+        //c.setBackground(SkinHandler.getSearchPanelBG2());
         c.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 0));
     }
     
@@ -483,13 +470,10 @@ class SearchInputPanel extends JPanel {
             throw new NullPointerException("named mediatype has no schema");
         }
 		
-		InputPanel panel = new InputPanel(schema, SEARCH_LISTENER, 
-				SEARCH_FIELD.getDocument(),
-				SEARCH_FIELD.getUndoManager());
+		InputPanel panel = new InputPanel(schema, SEARCH_LISTENER, SEARCH_FIELD.getDocument(), SEARCH_FIELD.getUndoManager());
 		panel.addMoreOptionsListener(new MoreOptionsListener());
-		JScrollPane pane = new JScrollPane(panel,
-				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		
+		JScrollPane pane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         cleanupPaneActions(pane.getActionMap());
 		pane.setOpaque(false);
 		pane.setBorder(BorderFactory.createEmptyBorder());
@@ -497,17 +481,23 @@ class SearchInputPanel extends JPanel {
 		JPanel outerPanel = new JPanel(new BorderLayout());
 		outerPanel.add(pane,"Center");
 		outerPanel.add(createSearchButtonPanel(),"South");
+		
 		int paneWidth = (int)pane.getPreferredSize().getWidth();
 		int paneHeight= (int)pane.getPreferredSize().getHeight();
-        Dimension dim = new Dimension(paneWidth+70,paneHeight+30);
+        
+		Dimension dim = new Dimension(paneWidth+70,paneHeight+30);
         outerPanel.setMaximumSize(dim);
-	    inputPanelDimensions.put(nmt,dim);
+	    
+        inputPanelDimensions.put(nmt, dim);
         JPanel holdingPanel = new JPanel();
 	    holdingPanel.setLayout(new BoxLayout(holdingPanel,BoxLayout.Y_AXIS));
 	    holdingPanel.add(outerPanel);
-		getInputPanelKeys().add(name);
-		META_PANEL.add(holdingPanel, name);
-		panelize(searchEntry);
+		
+	    getInputPanelKeys().add(name);
+		
+	    META_PANEL.add(holdingPanel, name);
+		
+	    panelize(searchEntry);
 	}
     
     private void cleanupPaneActions(ActionMap map) {

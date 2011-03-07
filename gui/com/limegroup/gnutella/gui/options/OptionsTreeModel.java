@@ -9,10 +9,13 @@ import javax.swing.tree.MutableTreeNode;
  * This class creates the <tt>TreeModel</tt> used in the <tt>JTree</tt> of 
  * the options pane.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 final class OptionsTreeModel extends DefaultTreeModel {
 
 	/**
+     * 
+     */
+    private static final long serialVersionUID = -3443600214760041469L;
+    /**
 	 * Constant handle to the root node of the tree.
 	 */
 	private OptionsTreeNode ROOT = null;		

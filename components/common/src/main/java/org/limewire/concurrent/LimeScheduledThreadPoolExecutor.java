@@ -39,7 +39,7 @@ public class LimeScheduledThreadPoolExecutor extends ScheduledThreadPoolExecutor
         super.afterExecute(r, t);
         
         if (r instanceof FutureTask) {
-            FutureTask task = (FutureTask)r;
+            FutureTask<?> task = (FutureTask<?>)r;
             try {
                 if (task.isDone() && !task.isCancelled()) {
                     task.get();

@@ -11,7 +11,6 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Box;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JList;
@@ -33,7 +32,11 @@ import org.limewire.collection.Tuple;
 import org.limewire.io.NetworkUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
+import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
+import com.frostwire.gnutella.gui.skin.SkinMenu;
+import com.frostwire.gnutella.gui.skin.SkinMenuItem;
+import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.FileDetails;
@@ -92,7 +95,6 @@ import com.limegroup.gnutella.xml.LimeXMLUtils;
  * controlling access to the table and the various table properties.
  * It is the Mediator to the Table part of the Library display.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel, LibraryTableDataLine, File>
 	implements VerificationListener, FileDetailsProvider {
 
@@ -135,10 +137,15 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
     /**
      * instance, for singelton access
      */
-    private static LibraryTableMediator _instance = new LibraryTableMediator();
+    private static LibraryTableMediator INSTANCE;
 
-    public static LibraryTableMediator instance() { return _instance; }
-
+    public static LibraryTableMediator instance() {
+        if (INSTANCE == null) {
+            INSTANCE = new LibraryTableMediator();
+        }
+        return INSTANCE;
+    }
+    
     /**
      * Build some extra listeners
      */
@@ -194,15 +201,15 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		if (TABLE.getSelectionModel().isSelectionEmpty())
 			return null;
         
-        JPopupMenu menu = new JPopupMenu();
+        JPopupMenu menu = new SkinPopupMenu();
         
-		menu.add(new JMenuItem(LAUNCH_ACTION));
-		menu.add(new JMenuItem(ENQUEUE_ACTION));
+		menu.add(new SkinMenuItem(LAUNCH_ACTION));
+		menu.add(new SkinMenuItem(ENQUEUE_ACTION));
 		menu.addSeparator();
-		menu.add(new JMenuItem(RESUME_ACTION));
+		menu.add(new SkinMenuItem(RESUME_ACTION));
 		menu.addSeparator();
-		menu.add(new JMenuItem(DELETE_ACTION));
-		menu.add(new JMenuItem(RENAME_ACTION));
+		menu.add(new SkinMenuItem(DELETE_ACTION));
+		menu.add(new SkinMenuItem(RENAME_ACTION));
 		menu.addSeparator();
 		
         int[] rows = TABLE.getSelectedRows();
@@ -227,7 +234,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	        DELETE_ACTION.setEnabled(torrentSelected);
 	        RENAME_ACTION.setEnabled(false);
 			if (fileSelected) {
-				JMenu sharingMenu = new JMenu(I18n.tr("Sharing"));
+				JMenu sharingMenu = new SkinMenu(I18n.tr("Sharing"));
 				sharingMenu.add(new JMenuItem(SHARE_ACTION));
 				sharingMenu.add(new JMenuItem(UNSHARE_ACTION));
 				sharingMenu.add(new JMenuItem(ANNOTATE_ACTION));
@@ -260,11 +267,11 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
     }
 
 	private JMenu createLicenseMenu(LibraryTableDataLine dl) {
-		JMenu menu = new JMenu(I18n.tr("License"));
+		JMenu menu = new SkinMenu(I18n.tr("License"));
 		if (dl != null) {
-			menu.add(new JMenuItem(PUBLISH_ACTION));
-			menu.add(new JMenuItem(EDIT_LICENSE_ACTION));
-			menu.add(new JMenuItem(VIEW_LICENSE_ACTION));
+			menu.add(new SkinMenuItem(PUBLISH_ACTION));
+			menu.add(new SkinMenuItem(EDIT_LICENSE_ACTION));
+			menu.add(new SkinMenuItem(VIEW_LICENSE_ACTION));
 			
 			menu.setEnabled(PUBLISH_ACTION.isEnabled() 
 					|| EDIT_LICENSE_ACTION.isEnabled() 
@@ -277,11 +284,11 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	}
 
 	private JMenu createAdvancedMenu(LibraryTableDataLine dl) {
-		JMenu menu = new JMenu(I18n.tr("Advanced"));
+		JMenu menu = new SkinMenu(I18n.tr("Advanced"));
 		if (dl != null) {
-			menu.add(new JMenuItem(BITZI_LOOKUP_ACTION));
-			menu.add(new JMenuItem(MAGNET_LOOKUP_ACTION));
-			menu.add(new JMenuItem(COPY_MAGNET_TO_CLIPBOARD_ACTION));
+			menu.add(new SkinMenuItem(BITZI_LOOKUP_ACTION));
+			menu.add(new SkinMenuItem(MAGNET_LOOKUP_ACTION));
+			menu.add(new SkinMenuItem(COPY_MAGNET_TO_CLIPBOARD_ACTION));
 			File file = getFile(TABLE.getSelectedRow());
 			menu.setEnabled(GuiCoreMediator.getFileManager().isFileShared(file)); 
 		}
@@ -294,19 +301,19 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	
 
 	private JMenu createSearchSubMenu(LibraryTableDataLine dl) {
-		JMenu menu = new JMenu(I18n.tr("Search"));
+		JMenu menu = new SkinMenu(I18n.tr("Search"));
         
         if(dl != null) {
             File f = dl.getInitializeObject();
     		String keywords = QueryUtils.createQueryString(f.getName());
             if (keywords.length() > 2)
-    			menu.add(new JMenuItem(new SearchAction(keywords)));
+    			menu.add(new SkinMenuItem(new SearchAction(keywords)));
     		
     		LimeXMLDocument doc = dl.getXMLDocument();
     		if(doc != null) {
                 Action[] actions = ActionUtils.createSearchActions(doc);
         		for (int i = 0; i < actions.length; i++)
-        			menu.add(new JMenuItem(actions[i]));
+        			menu.add(new SkinMenuItem(actions[i]));
             }
         }
         
@@ -898,8 +905,8 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	    JList fileList = new JList(fileNames.toArray());
         fileList.setVisibleRowCount(5);
         fileList.setCellRenderer(new FileNameListCellRenderer());
-        fileList.setSelectionForeground(fileList.getForeground());
-        fileList.setSelectionBackground(fileList.getBackground());
+        //fileList.setSelectionForeground(fileList.getForeground());
+        //fileList.setSelectionBackground(fileList.getBackground());
         fileList.setFocusable(false);
         return fileList;
 	}
@@ -1211,7 +1218,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 
     private final class LaunchAction extends AbstractAction {
 		
-		public LaunchAction () {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 949208465372392591L;
+
+        public LaunchAction () {
 			putValue(Action.NAME, I18n.tr
 					("Launch"));
 			putValue(Action.SHORT_DESCRIPTION,
@@ -1226,7 +1238,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	
     private final class EnqueueAction extends AbstractAction {
 		
-		public EnqueueAction () {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 9153310119076594713L;
+
+        public EnqueueAction () {
 			putValue(Action.NAME, I18n.tr
 					("Enqueue"));
 			putValue(Action.SHORT_DESCRIPTION,
@@ -1250,7 +1267,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 
     private final class RemoveAction extends AbstractAction {
 		
-		public RemoveAction () {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -8704093935791256631L;
+
+        public RemoveAction () {
 			putValue(Action.NAME, I18n.tr
 					("Delete"));
 			putValue(Action.SHORT_DESCRIPTION,
@@ -1265,7 +1287,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	
     private final class AnnotateAction extends AbstractAction {
 		
-		public AnnotateAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 66935682397420122L;
+
+        public AnnotateAction() {
 			putValue(Action.NAME, 
 					 I18n.tr("Describe..."));
 			putValue(Action.SHORT_DESCRIPTION,
@@ -1280,7 +1307,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
     
     private final class PublishAction extends AbstractAction {
     	
-    	public PublishAction() {
+    	/**
+         * 
+         */
+        private static final long serialVersionUID = -8431012683093696830L;
+
+        public PublishAction() {
 			putValue(Action.NAME, 
 					 I18n.tr("Publish..."));
 			putValue(Action.SHORT_DESCRIPTION,
@@ -1295,7 +1327,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 
     private final class EditLicenseAction extends AbstractAction {
     	
-    	public EditLicenseAction() {
+    	/**
+         * 
+         */
+        private static final long serialVersionUID = -5453614508418401477L;
+
+        public EditLicenseAction() {
 			putValue(Action.NAME, 
 					 I18n.tr("Edit License..."));
     	}
@@ -1306,7 +1343,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
     }
     private final class ResumeAction extends AbstractAction {
 		
-		public ResumeAction () {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 6014468419110764144L;
+
+        public ResumeAction () {
 			putValue(Action.NAME, I18n.tr
 					("Resume"));
 			putValue(Action.SHORT_DESCRIPTION,
@@ -1321,7 +1363,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	
     private final class RenameAction extends AbstractAction {
 		
-		public RenameAction () {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 2673219925804729384L;
+
+        public RenameAction () {
 			putValue(Action.NAME, I18n.tr
 					("Rename"));
 			//  "LIBRARY_RENAME"   ???
@@ -1335,7 +1382,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 
 	private class ShareFileAction extends AbstractAction {
 		
-		public ShareFileAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -253503274459243151L;
+
+        public ShareFileAction() {
 			putValue(Action.NAME, I18n.tr
 					 ("Share File"));
 		}
@@ -1362,7 +1414,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	
 	private class UnshareFileAction extends AbstractAction {
 		
-		public UnshareFileAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 3640380569278974061L;
+
+        public UnshareFileAction() {
 			putValue(Action.NAME, I18n.tr
 					 ("Stop Sharing File"));
 		}
@@ -1389,7 +1446,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	
 	private class ShareFolderAction extends AbstractAction {
 		
-		public ShareFolderAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -645036096577263247L;
+
+        public ShareFolderAction() {
 			putValue(Action.NAME, I18n.tr
 					 ("Share Folder"));
 		}
@@ -1419,7 +1481,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	
 	private class UnshareFolderAction extends AbstractAction {
 		
-		public UnshareFolderAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -6872709046755949990L;
+
+        public UnshareFolderAction() {
 			putValue(Action.NAME, I18n.tr
 					 ("Stop Sharing Folder"));
 		}
@@ -1446,7 +1513,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	
 	private final class MagnetLookupAction extends AbstractAction {
 		
-		public MagnetLookupAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 5081688548976571828L;
+
+        public MagnetLookupAction() {
 			putValue(Action.NAME, I18n.tr
 					("Show Magnet Details"));
 		}
@@ -1458,7 +1530,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 
 	private class ViewLicenseAction extends AbstractAction {
 
-		public ViewLicenseAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -962929069359813388L;
+
+        public ViewLicenseAction() {
 			putValue(Action.NAME, I18n.tr
 					("View License"));
 		}
@@ -1471,9 +1548,14 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	/**
 	 * Sets an icon based on the filename extension. 
 	 */
-	private static class FileNameListCellRenderer extends DefaultListCellRenderer {
+	private static class FileNameListCellRenderer extends SubstanceDefaultListCellRenderer {
 		
-		@Override
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 5064313639046811749L;
+
+        @Override
 		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 			super.getListCellRendererComponent(list, value, index, isSelected,
 					cellHasFocus);

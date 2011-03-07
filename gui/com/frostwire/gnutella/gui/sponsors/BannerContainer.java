@@ -18,6 +18,10 @@ import javax.swing.JPanel;
 */		
 public class BannerContainer extends JPanel {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1441841852837627482L;
     private CardLayout layout = null; //new CardLayout();
 	private Set<SponsorBanner> _banners;
 	

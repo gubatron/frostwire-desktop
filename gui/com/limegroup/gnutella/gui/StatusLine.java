@@ -24,7 +24,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
@@ -35,10 +34,12 @@ import org.limewire.setting.BooleanSetting;
 
 import com.frostwire.actions.ConnectionDoctorAction;
 import com.frostwire.bittorrent.AzureusStarter;
+import com.frostwire.gnutella.gui.skin.SkinCheckBoxMenuItem;
+import com.frostwire.gnutella.gui.skin.SkinMenuItem;
+import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.NetworkManager;
-import com.limegroup.gnutella.UploadServicesImpl;
 import com.limegroup.gnutella.gui.mp3.MediaPlayerComponent;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
+import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.settings.ApplicationSettings;
@@ -69,35 +70,35 @@ public final class StatusLine implements ThemeObserver {
     /**
      * The main container for the status line component.
      */
-    private final JPanel BAR = new JPanel(new GridBagLayout());
+    private JPanel BAR;
     
     /**
      * The left most panel containing the connection quality.
      * The switcher changes the actual ImageIcons on this panel.
      */
-    private final JLabel _connectionQualityMeter = new JLabel();
+    private JLabel _connectionQualityMeter;
     private final ImageIcon[] _connectionQualityMeterIcons = new ImageIcon[9];
 
     /**
      * The button for the current language flag to allow language switching
      */
-    private final LanguageButton _languageButton = new LanguageButton();
+    private LanguageButton _languageButton;
     
     /**
      * The label with the firewall status.
      */
-    private final JLabel _firewallStatus = new JLabel();
+    private JLabel _firewallStatus;
 	
     /**
      * The custom component for displaying the number of shared files.
      */
-    private final SharedFilesLabel _sharedFiles = new SharedFilesLabel();
+    private SharedFilesLabel _sharedFiles;
     
 	/**
 	 * The labels for displaying the bandwidth usage.
 	 */
-	private final JLabel _bandwidthUsageDown = new LazyTooltip(GUIMediator.getThemeImage("downloading_small")); 
-	private final JLabel _bandwidthUsageUp = new LazyTooltip(GUIMediator.getThemeImage("uploading_small")); 
+	private JLabel _bandwidthUsageDown;
+	private JLabel _bandwidthUsageUp;
     
     /**
      * Variables for the center portion of the status bar, which can display
@@ -105,11 +106,11 @@ public final class StatusLine implements ThemeObserver {
      * (notification that a new version of FrostWire is available), and the
      * StatusLinkHandler (ads for going PRO).
      */
-    private final StatusComponent STATUS_COMPONENT = new StatusComponent();
-    private final UpdatePanel _updatePanel = new UpdatePanel();
-	private final StatusLinkHandler _statusLinkHandler = new StatusLinkHandler();
-	private final JPanel _centerPanel = new JPanel(new GridBagLayout());
-	private Component _centerComponent = _updatePanel;
+    private StatusComponent STATUS_COMPONENT;
+    private UpdatePanel _updatePanel;
+	private StatusLinkHandler _statusLinkHandler;
+	private JPanel _centerPanel;
+	private Component _centerComponent;
 
     /**
      * The media player.
@@ -133,7 +134,7 @@ public final class StatusLine implements ThemeObserver {
             I18n.tr("Loading Status Window..."));
 
 		GUIMediator.addRefreshListener(REFRESH_LISTENER);
-		BAR.addMouseListener(STATUS_BAR_LISTENER);
+		getComponent().addMouseListener(STATUS_BAR_LISTENER);
 		GUIMediator.getAppFrame().addComponentListener(new ComponentListener() {
 			public void componentResized(ComponentEvent arg0) { refresh(); }
 			public void componentMoved(ComponentEvent arg0) { }
@@ -172,7 +173,7 @@ public final class StatusLine implements ThemeObserver {
 	 * and makes sure it has room to add an indicator before adding it.
 	 */
 	public void refresh() {
-		BAR.removeAll();
+	    getComponent().removeAll();
         
 		//  figure out remaining width, and do not add indicators if no room
 		int sepWidth = Math.max(2, createSeparator().getWidth());
@@ -195,8 +196,6 @@ public final class StatusLine implements ThemeObserver {
 		if (indicatorWidth <= 0)
             if (_updatePanel.shouldBeShown()) {
                 indicatorWidth = 190;
-			    if (!GUIMediator.hasDonated()) 
-                    indicatorWidth = 280;
             }
 		remainingWidth -= indicatorWidth;
 
@@ -320,6 +319,7 @@ public final class StatusLine implements ThemeObserver {
      */
     private void createConnectionQualityPanel() {
 		updateTheme();  // loads images
+		_connectionQualityMeter = new JLabel();
 		_connectionQualityMeter.setOpaque(false);
         _connectionQualityMeter.setMinimumSize(new Dimension(34, 20));
         _connectionQualityMeter.setMaximumSize(new Dimension(90, 30));
@@ -331,6 +331,7 @@ public final class StatusLine implements ThemeObserver {
 	 * Sets up the 'Sharing X Files' label.
 	 */
 	private void createSharingFilesLabel() {
+	    _sharedFiles = new SharedFilesLabel();
         _sharedFiles.setHorizontalAlignment(SwingConstants.LEFT);
 	    // don't allow easy clipping
 		_sharedFiles.setMinimumSize(new Dimension(24, 20));
@@ -344,6 +345,7 @@ public final class StatusLine implements ThemeObserver {
 	 * Sets up the 'Language' button
 	 */
 	private void createLanguageButton() {
+	    _languageButton = new LanguageButton();
 		_languageButton.addMouseListener(STATUS_BAR_LISTENER);
 		updateLanguage();
 	}
@@ -353,7 +355,8 @@ public final class StatusLine implements ThemeObserver {
 	 * Sets up the 'Firewall Status' label.
 	 */
 	private void createFirewallLabel() {
-		updateFirewall();
+	    _firewallStatus = new JLabel();
+	    updateFirewall();
 		// don't allow easy clipping
 		_firewallStatus.setMinimumSize(new Dimension(20, 20));
 		// add right-click listener
@@ -361,9 +364,12 @@ public final class StatusLine implements ThemeObserver {
 	}
 	
 	/**
+        _lwsStatus = new JLabel();
 	 * Sets up the 'Bandwidth Usage' label.
 	 */
 	private void createBandwidthLabel() {
+	    _bandwidthUsageDown = new LazyTooltip(GUIMediator.getThemeImage("downloading_small"));
+	    _bandwidthUsageUp = new LazyTooltip(GUIMediator.getThemeImage("uploading_small"));
 		updateBandwidth();
 		// don't allow easy clipping
 		_bandwidthUsageDown.setMinimumSize(new Dimension(60, 20));
@@ -377,6 +383,12 @@ public final class StatusLine implements ThemeObserver {
 	 * Sets up the center panel.
 	 */
 	private void createCenterPanel() {
+	    STATUS_COMPONENT = new StatusComponent();
+	    _updatePanel = new UpdatePanel();
+	    _centerComponent = _updatePanel;
+	    _statusLinkHandler = new StatusLinkHandler();
+	    _centerPanel = new JPanel(new GridBagLayout());
+	    
 		_centerPanel.setOpaque(false);
         _updatePanel.setOpaque(false);
 		((JComponent)_statusLinkHandler.getComponent()).setOpaque(false);
@@ -408,17 +420,11 @@ public final class StatusLine implements ThemeObserver {
 
 		_nextUpdateTime = now + 1000 * 5; // update every minute
 		_centerPanel.removeAll();
-		if (GUIMediator.hasDonated()) {
-			if (_updatePanel.shouldBeShown())
-				_centerComponent = _updatePanel;
-			else
-				_centerComponent = new JLabel();
-		} else {
-			if ((_centerComponent == _statusLinkHandler.getComponent()) && _updatePanel.shouldBeShown())
-				_centerComponent = _updatePanel;
-			else
-				_centerComponent = _statusLinkHandler.getComponent();
-		}
+        if (_updatePanel.shouldBeShown()) {
+            _centerComponent = _updatePanel;
+        } else {
+            _centerComponent = new JLabel();
+        }
 		
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -594,18 +600,13 @@ public final class StatusLine implements ThemeObserver {
                     tip = LimeWireUtils.isPro() ? I18n.tr("Your connection to the network is extremely strong") :
                         I18n.tr("You can experience Turbo-Charged connections all the time with LimeWire PRO!");
                     break;
-            //case STATUS_IDLE:
-                    //status = STATISTICS_CONNECTION_IDLE;
-                    //tip = null; // impossible to see this
-                    //break;
             case STATUS_WAKING_UP:
                     status = I18n.tr("Waking Up") + " " + connection;
                     tip = I18n.tr("FrostWire is waking up from sleep mode");
                     break;
         }
         _connectionQualityMeter.setToolTipText(tip);
-        if (GUIMediator.hasDonated())
-            _connectionQualityMeter.setText(status);
+        _connectionQualityMeter.setText(status);
     }
 
     /**
@@ -625,6 +626,9 @@ public final class StatusLine implements ThemeObserver {
       *  of the panels for the status line
       */
     public JComponent getComponent() {
+        if (BAR == null) {
+            BAR = new JPanel(new GridBagLayout());
+        }
         return BAR;
     }
 	
@@ -656,45 +660,45 @@ public final class StatusLine implements ThemeObserver {
 		
 		public void processMouseEvent(MouseEvent me) {
 			if (me.isPopupTrigger()) {
-                JPopupMenu jpm = new JPopupMenu();
+                JPopupMenu jpm = new SkinPopupMenu();
                 
                 // If they click on the Connection Quality Meter...
                 // add 'Refresh Connections' menu item (if they click on STATUS_LINE)
                 if (me.getComponent().equals(_connectionQualityMeter)) {
-                    jpm.add(new JMenuItem(ConnectionDoctorAction.getInstance()));
+                    jpm.add(new SkinMenuItem(ConnectionDoctorAction.getInstance()));
                     jpm.addSeparator();
                 }
                 
                 //  add 'Show Connection Quality' menu item
-                JCheckBoxMenuItem jcbmi = new JCheckBoxMenuItem(new ShowConnectionQualityAction());
+                JCheckBoxMenuItem jcbmi = new SkinCheckBoxMenuItem(new ShowConnectionQualityAction());
                 jcbmi.setState(StatusBarSettings.CONNECTION_QUALITY_DISPLAY_ENABLED.getValue());
                 jpm.add(jcbmi);
 
                 //  add 'Show International Localization' menu item
-                jcbmi = new JCheckBoxMenuItem(new ShowLanguageStatusAction());
+                jcbmi = new SkinCheckBoxMenuItem(new ShowLanguageStatusAction());
                 jcbmi.setState(getLanguageSetting().getValue());
                 jpm.add(jcbmi);
 
                 
                 //  add 'Show Firewall Status' menu item
-                jcbmi = new JCheckBoxMenuItem(new ShowFirewallStatusAction());
+                jcbmi = new SkinCheckBoxMenuItem(new ShowFirewallStatusAction());
                 jcbmi.setState(StatusBarSettings.FIREWALL_DISPLAY_ENABLED.getValue());
                 jpm.add(jcbmi);
                 
                 //  add 'Show Shared Files Count' menu item 
-                jcbmi = new JCheckBoxMenuItem(new ShowSharedFilesCountAction());
+                jcbmi = new SkinCheckBoxMenuItem(new ShowSharedFilesCountAction());
                 jcbmi.setState(StatusBarSettings.SHARED_FILES_DISPLAY_ENABLED.getValue());
                 jpm.add(jcbmi);
                 
                 //  add 'Show Bandwidth Consumption' menu item
-                jcbmi = new JCheckBoxMenuItem(new ShowBandwidthConsumptionAction());
+                jcbmi = new SkinCheckBoxMenuItem(new ShowBandwidthConsumptionAction());
                 jcbmi.setState(StatusBarSettings.BANDWIDTH_DISPLAY_ENABLED.getValue());
                 jpm.add(jcbmi);
                 
                 jpm.addSeparator();
                 
                 //  add 'Show Media Player' menu item
-                jcbmi = new JCheckBoxMenuItem(new ShowMediaPlayerAction());
+                jcbmi = new SkinCheckBoxMenuItem(new ShowMediaPlayerAction());
                 jcbmi.setState(PlayerSettings.PLAYER_ENABLED.getValue());
                 jpm.add(jcbmi);
                 
@@ -709,9 +713,12 @@ public final class StatusLine implements ThemeObserver {
 	 */
 	private class ShowConnectionQualityAction extends AbstractAction {
 		
-		private static final long serialVersionUID = 7922422377962473634L;
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 7922422377962473634L;
 
-		public ShowConnectionQualityAction() {
+        public ShowConnectionQualityAction() {
 			putValue(Action.NAME, I18n.tr
 					("Show Connection Quality"));
 		}
@@ -728,11 +735,11 @@ public final class StatusLine implements ThemeObserver {
 	private class ShowSharedFilesCountAction extends AbstractAction {
 		
 		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 6615872299886789939L;
+         * 
+         */
+        private static final long serialVersionUID = 6615872299886789939L;
 
-		public ShowSharedFilesCountAction() {
+        public ShowSharedFilesCountAction() {
 			putValue(Action.NAME, I18n.tr
 					("Show Shared Files Count"));
 		}
@@ -749,11 +756,11 @@ public final class StatusLine implements ThemeObserver {
 	private class ShowLanguageStatusAction extends AbstractAction {
 		
 		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 726208491122581283L;
+         * 
+         */
+        private static final long serialVersionUID = 726208491122581283L;
 
-		public ShowLanguageStatusAction() {
+        public ShowLanguageStatusAction() {
 			putValue(Action.NAME, I18n.tr
 					("Show Language Status"));
 		}
@@ -775,11 +782,11 @@ public final class StatusLine implements ThemeObserver {
 	private class ShowFirewallStatusAction extends AbstractAction {
 		
 		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -8489901794229005217L;
+         * 
+         */
+        private static final long serialVersionUID = -8489901794229005217L;
 
-		public ShowFirewallStatusAction() {
+        public ShowFirewallStatusAction() {
 			putValue(Action.NAME, I18n.tr
 					("Show Firewall Status"));
 		}
@@ -789,18 +796,18 @@ public final class StatusLine implements ThemeObserver {
 			refresh();
 		}
 	}
-	
-    /**
+    
+	/**
 	 * Action for the 'Show Bandwidth Consumption' menu item. 
 	 */
 	private class ShowBandwidthConsumptionAction extends AbstractAction {
 		
 		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1455679943975682049L;
+         * 
+         */
+        private static final long serialVersionUID = 1455679943975682049L;
 
-		public ShowBandwidthConsumptionAction() {
+        public ShowBandwidthConsumptionAction() {
 			putValue(Action.NAME, I18n.tr
 					("Show Bandwidth Consumption"));
 		}
@@ -817,11 +824,11 @@ public final class StatusLine implements ThemeObserver {
 	private class ShowMediaPlayerAction extends AbstractAction {
 		
 		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 4989741761670317316L;
+         * 
+         */
+        private static final long serialVersionUID = 4989741761670317316L;
 
-		public ShowMediaPlayerAction() {
+        public ShowMediaPlayerAction() {
 			putValue(Action.NAME, I18n.tr
 					("Show Media Player"));
 		}
@@ -837,11 +844,11 @@ public final class StatusLine implements ThemeObserver {
 	private class SharedFilesLabel extends JLabel {
 
 		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 8191429330285263217L;
+         * 
+         */
+        private static final long serialVersionUID = 8191429330285263217L;
 
-		/**
+        /**
 		 * The height of this icon.
 		 */
 		private static final int _height = 20;
@@ -925,7 +932,7 @@ public final class StatusLine implements ThemeObserver {
                 if (!_string.endsWith("..."))
                     _string += "...";
             } else if (_string.startsWith("0")) {
-                g2.setPaint(ThemeFileHandler.NOT_SHARING_LABEL_COLOR.getValue());
+                g2.setPaint(SkinHandler.getNotSharingLabelColor());
                 if (_string.endsWith("..."))
                     _string = _string.substring(0, _string.length() - 3);
             }
@@ -961,12 +968,13 @@ public final class StatusLine implements ThemeObserver {
 	}
 	
 	private class LazyTooltip extends JLabel {
+	    
 		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -5759748801999410032L;
+         * 
+         */
+        private static final long serialVersionUID = -5759748801999410032L;
 
-		LazyTooltip(ImageIcon icon) {
+        LazyTooltip(ImageIcon icon) {
 			super(icon);
 			ToolTipManager.sharedInstance().registerComponent(this);
 		}

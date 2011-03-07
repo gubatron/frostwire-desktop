@@ -12,8 +12,7 @@ import com.limegroup.gnutella.gui.tables.ColoredCell;
 import com.limegroup.gnutella.gui.tables.ColoredCellImpl;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
-
+import com.limegroup.gnutella.gui.themes.SkinHandler;
 
 public final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
                                     implements FileTransfer {
@@ -218,8 +217,8 @@ public final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
     
 	// inherit doc comment
 	public void updateTheme() {
-		_cellColor = ThemeFileHandler.WINDOW8_COLOR.getValue();
-		_othercellColor = ThemeFileHandler.SEARCH_RESULT_SPEED_COLOR.getValue();
+		_cellColor = SkinHandler.getWindow8Color();
+		_othercellColor = SkinHandler.getSearchResultSpeedColor();
 	}    
 
 	/**

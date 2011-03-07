@@ -4,15 +4,22 @@ import java.awt.Color;
 import java.awt.Component;
 
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
 
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
+import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
+
+import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 
 /** Draws ResultSpeed's appropriately colorized */
-class ResultSpeedRenderer extends DefaultTableCellRenderer 
+class ResultSpeedRenderer extends SubstanceDefaultTableCellRenderer 
 	implements ThemeObserver {
+    
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1682169231365624296L;
+    
     /** The color to show measured speeds in.  This is dark green,
      *  similar to the color on the connected status icon. */
     public static Color _measuredColor;
@@ -29,8 +36,8 @@ class ResultSpeedRenderer extends DefaultTableCellRenderer
 
 	// inherit doc comment
 	public void updateTheme() {
-		_measuredColor = ThemeFileHandler.SEARCH_RESULT_SPEED_COLOR.getValue();
-		_unmeasuredColor = ThemeFileHandler.WINDOW8_COLOR.getValue();			
+		_measuredColor = SkinHandler.getSearchResultSpeedColor();
+		_unmeasuredColor = SkinHandler.getWindow8Color();			
 	}
 
     public Component getTableCellRendererComponent(JTable table,

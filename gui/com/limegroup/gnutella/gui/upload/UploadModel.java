@@ -17,6 +17,11 @@ import com.limegroup.gnutella.gui.tables.BasicDataLineModel;
 final class UploadModel extends BasicDataLineModel<UploadDataLine, Uploader> {
 
     /**
+     * 
+     */
+    private static final long serialVersionUID = -2550143209425054162L;
+
+    /**
      * Constructs the upload model & sets its DataLine class
      */
     UploadModel() {

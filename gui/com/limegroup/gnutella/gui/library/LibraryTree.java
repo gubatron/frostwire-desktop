@@ -1,6 +1,5 @@
 package com.limegroup.gnutella.gui.library;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -13,14 +12,12 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Icon;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
 import javax.swing.ToolTipManager;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
@@ -29,8 +26,10 @@ import javax.swing.tree.TreeSelectionModel;
 import org.limewire.setting.FileSetting;
 import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
+import org.pushingpixels.substance.api.renderers.SubstanceDefaultTreeCellRenderer;
 
-import com.limegroup.gnutella.FileDesc;
+import com.frostwire.gnutella.gui.skin.SkinMenuItem;
+import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.FileManagerEvent;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
@@ -50,7 +49,6 @@ import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
 import com.limegroup.gnutella.gui.search.NamedMediaType;
 import com.limegroup.gnutella.gui.tables.DefaultMouseListener;
 import com.limegroup.gnutella.gui.tables.MouseObserver;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 import com.limegroup.gnutella.settings.SharingSettings;
@@ -60,21 +58,21 @@ import com.limegroup.gnutella.settings.SharingSettings;
  * shared folders. It constructs the tree and supplies access to it. It also
  * controls tree directory selection, deletion, etc.
  */
-// 2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 final class LibraryTree extends JTree implements MouseObserver {
 
-   // private static final Log LOG = LogFactory.getLog(LibraryTree.class);
-	
-	
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -6122455765140267448L;
+    
 	///////////////////////////////////////////////////////////////////////////
 	//  Nodes
 	///////////////////////////////////////////////////////////////////////////
 	
-	/**
+    /**
 	 * Constant for the root node of the tree.
 	 */
-	private final LibraryTreeNode ROOT_NODE = 
-		new LibraryTreeNode(new RootNodeDirectoryHolder(""));
+	private final LibraryTreeNode ROOT_NODE = new LibraryTreeNode(new RootNodeDirectoryHolder(""));
 	private RootSharedFilesDirectoryHolder rsfdh = new RootSharedFilesDirectoryHolder();
 
 	/** Constant for the tree model. */
@@ -111,12 +109,17 @@ final class LibraryTree extends JTree implements MouseObserver {
 	/**
 	 * Singleton instance of this class.
 	 */
-	private static final LibraryTree INSTANCE = new LibraryTree();
+	private static LibraryTree INSTANCE;
     
 	/**
 	 * @return the <tt>LibraryTree</tt> instance
 	 */
-	public static LibraryTree instance() { return INSTANCE; }
+	public static LibraryTree instance() {
+	    if (INSTANCE == null) {
+	        INSTANCE = new LibraryTree();
+	    }
+	    return INSTANCE;
+	}
 
 	/**
 	 * Constructs the tree and its primary listeners,visualization options,
@@ -238,7 +241,7 @@ final class LibraryTree extends JTree implements MouseObserver {
 	}
 
 	private void addPerMediaTypeDirectories() {
-		for (Iterator i = NamedMediaType.getAllNamedMediaTypes().iterator(); i.hasNext(); ) {
+		for (Iterator<?> i = NamedMediaType.getAllNamedMediaTypes().iterator(); i.hasNext(); ) {
 			NamedMediaType nm = (NamedMediaType)i.next();
 			if (nm.getMediaType().getMimeType().equals(MediaType.SCHEMA_ANY_TYPE))
 				continue;
@@ -253,9 +256,9 @@ final class LibraryTree extends JTree implements MouseObserver {
 	
 	// inherit doc comment
 	public void updateTheme() {
-		Color tableColor = ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
-		setBackground(tableColor);
-		setCellRenderer(new LibraryTreeCellRenderer());
+//		Color tableColor = SkinHandler.getTableBackgroundColor();
+//		setBackground(tableColor);
+//		setCellRenderer(new LibraryTreeCellRenderer());
 	}
 	
 	/**
@@ -663,7 +666,12 @@ final class LibraryTree extends JTree implements MouseObserver {
 	 */
 	public final class LibraryTreeNode extends DefaultMutableTreeNode
 	                                    implements FileTransfer {
-		private DirectoryHolder _holder;
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -6006388424375212116L;
+        
+        private DirectoryHolder _holder;
 
 		private LibraryTreeNode(DirectoryHolder holder) {
 			super(holder);
@@ -716,8 +724,6 @@ final class LibraryTree extends JTree implements MouseObserver {
 
 		public File[] getFiles() { return new File[0]; }
 
-		public FileDesc[] getFileDescs() { return new FileDesc[0]; }
-
 		public String getName() { return name; }
 
 		public boolean accept(File pathname) { return false; }
@@ -748,7 +754,12 @@ final class LibraryTree extends JTree implements MouseObserver {
 	
 	private class UnshareAction extends AbstractAction {
 
-		public UnshareAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -22198400547158328L;
+
+        public UnshareAction() {
 			putValue(Action.NAME,
 					I18n.tr("Stop Sharing Folder"));
 		}
@@ -760,7 +771,12 @@ final class LibraryTree extends JTree implements MouseObserver {
 	
 	private class AddDirectoryToPlaylistAction extends AbstractAction {
 
-		public AddDirectoryToPlaylistAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -4408516187152426542L;
+
+        public AddDirectoryToPlaylistAction() {
 			putValue(Action.NAME,
 					I18n.tr("Add Folder Contents to Playlist"));
 		}
@@ -771,9 +787,14 @@ final class LibraryTree extends JTree implements MouseObserver {
 	}
 	
 	
-	private class LibraryTreeCellRenderer extends DefaultTreeCellRenderer {
+	private class LibraryTreeCellRenderer extends SubstanceDefaultTreeCellRenderer {
 		
-		public LibraryTreeCellRenderer() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -5541614151018217164L;
+
+        public LibraryTreeCellRenderer() {
 			setOpaque(false);
 		}
 		
@@ -796,7 +817,12 @@ final class LibraryTree extends JTree implements MouseObserver {
 
 	private class ShareAction extends AbstractAction {
 
-		public ShareAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 4071173294983759719L;
+
+        public ShareAction() {
 			putValue(Action.NAME, I18n.tr
 					("Share Folder"));
 		}
@@ -808,6 +834,11 @@ final class LibraryTree extends JTree implements MouseObserver {
     
     private class ShowHideTorrentMetaAction extends AbstractAction {
         
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -7029848351325797438L;
+
         private String hideMetaFilesLabel =
             I18n.tr("Hide .torrent Files");
             
@@ -838,7 +869,12 @@ final class LibraryTree extends JTree implements MouseObserver {
 	
 	private class RefreshAction extends AbstractAction {
 		
-		public RefreshAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 412879927060208864L;
+
+        public RefreshAction() {
 			putValue(Action.NAME, I18n.tr
 					("Refresh"));
 			putValue(Action.SHORT_DESCRIPTION, I18n.tr
@@ -854,7 +890,12 @@ final class LibraryTree extends JTree implements MouseObserver {
 
 	private class ExploreAction extends AbstractAction {
 		
-		public ExploreAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 2767346265174793478L;
+
+        public ExploreAction() {
 			putValue(Action.NAME, I18n.tr
 					("Explore"));
 			putValue(Action.SHORT_DESCRIPTION, I18n.tr
@@ -904,7 +945,7 @@ final class LibraryTree extends JTree implements MouseObserver {
 	///////////////////////////////////////////////////////////////////////////
 	
 	/** Constant for the popup menu. */
-	private final JPopupMenu DIRECTORY_POPUP = new JPopupMenu();
+	private final JPopupMenu DIRECTORY_POPUP = new SkinPopupMenu();
 	private Action shareAction = new ShareAction();
 	private Action unshareAction = new UnshareAction();
 	private Action addDirToPlaylistAction = new AddDirectoryToPlaylistAction();
@@ -919,22 +960,22 @@ final class LibraryTree extends JTree implements MouseObserver {
 	 * click.
 	 */
 	private void makePopupMenu() {
-		DIRECTORY_POPUP.add(new JMenuItem(shareAction));
-		DIRECTORY_POPUP.add(new JMenuItem(unshareAction));
-        DIRECTORY_POPUP.add(new JMenuItem(addDirToPlaylistAction));
+		DIRECTORY_POPUP.add(new SkinMenuItem(shareAction));
+		DIRECTORY_POPUP.add(new SkinMenuItem(unshareAction));
+        DIRECTORY_POPUP.add(new SkinMenuItem(addDirToPlaylistAction));
 		DIRECTORY_POPUP.addSeparator();
-		DIRECTORY_POPUP.add(new JMenuItem(new ShareFileSpeciallyAction()));
-		DIRECTORY_POPUP.add(new JMenuItem(new ShareNewFolderAction()));
+		DIRECTORY_POPUP.add(new SkinMenuItem(new ShareFileSpeciallyAction()));
+		DIRECTORY_POPUP.add(new SkinMenuItem(new ShareNewFolderAction()));
 		DIRECTORY_POPUP.addSeparator();
-        DIRECTORY_POPUP.add(new JMenuItem(showTorrentMetaAction));
+        DIRECTORY_POPUP.add(new SkinMenuItem(showTorrentMetaAction));
         DIRECTORY_POPUP.addSeparator();
-		DIRECTORY_POPUP.add(new JMenuItem(refreshAction));
+		DIRECTORY_POPUP.add(new SkinMenuItem(refreshAction));
 		if (hasExploreAction()) {
-			DIRECTORY_POPUP.add(new JMenuItem(exploreAction));
+			DIRECTORY_POPUP.add(new SkinMenuItem(exploreAction));
 		}
 		DIRECTORY_POPUP.addSeparator();
 		
-		DIRECTORY_POPUP.add(new JMenuItem(new ConfigureOptionsAction(
+		DIRECTORY_POPUP.add(new SkinMenuItem(new ConfigureOptionsAction(
                 OptionsConstructor.SHARED_KEY,
                 I18n.tr("Configure Sharing Options"),
                 I18n.tr("You can configure the folders you share in FrostWire\'s Options."))));

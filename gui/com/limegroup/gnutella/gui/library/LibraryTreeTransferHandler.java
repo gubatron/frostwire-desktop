@@ -23,6 +23,11 @@ import com.limegroup.gnutella.gui.dnd.LimeTransferHandler;
  */
 class LibraryTreeTransferHandler extends LimeTransferHandler {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -3356613003962197130L;
+
     LibraryTreeTransferHandler() {
         super(COPY);
     }

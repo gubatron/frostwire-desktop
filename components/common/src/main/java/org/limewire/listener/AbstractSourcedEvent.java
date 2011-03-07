@@ -26,7 +26,7 @@ public class AbstractSourcedEvent<S> {
         if(!obj.getClass().equals(getClass())) {
             return false;
         }
-        return source.equals(((AbstractSourcedEvent)obj).getSource());
+        return source.equals(((AbstractSourcedEvent<?>)obj).getSource());
     }
 
     @Override

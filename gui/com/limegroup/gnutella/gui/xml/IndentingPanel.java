@@ -36,6 +36,12 @@ import com.limegroup.gnutella.xml.SchemaFieldInfo;
  * A panel that displays fields of an XML schema.
  */
 public abstract class IndentingPanel extends JPanel implements Scrollable {
+    
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5161910728661778728L;
+
     /**
      * The property that contains the canonical key of the field
      * in each JComponent.

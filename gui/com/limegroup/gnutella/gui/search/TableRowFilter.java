@@ -17,6 +17,11 @@ import com.limegroup.gnutella.settings.SearchSettings;
 public class TableRowFilter extends ResultPanelModel {
     
     /**
+     * 
+     */
+    private static final long serialVersionUID = -7810977044778830969L;
+
+    /**
      * The filter to use in this row filter.
      */
     private final TableLineFilter FILTER;

@@ -6,8 +6,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpException;
 import org.limewire.util.CommonUtils;
 
@@ -43,8 +41,6 @@ public final class ConnectionDoctor { //made public for being available from eve
 	
 	//Current count of attempts to fetch the hosts file
     private int CURRTRY = 0;
-
-	private static final Log LOG = LogFactory.getLog(ConnectionDoctor.class);
 	
 	private Thread _initializer; //will make initializer thread a member just to 
 	                             //make sure it wont die right after initialize()
@@ -206,7 +202,7 @@ public final class ConnectionDoctor { //made public for being available from eve
 
 					}
 					
-					try { Thread.currentThread().sleep(1000); } catch (Exception e) {};
+					try { Thread.sleep(1000); } catch (Exception e) {};
 
 				}
 				

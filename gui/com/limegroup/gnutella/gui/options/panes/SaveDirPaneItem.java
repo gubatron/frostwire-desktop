@@ -12,7 +12,6 @@ import javax.swing.Action;
 import org.limewire.i18n.I18nMarker;
 
 import com.frostwire.CoreFrostWireUtils;
-import com.frostwire.GuiFrostWireUtils;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -26,7 +25,6 @@ import com.limegroup.gnutella.settings.SharingSettings;
  * This class defines the panel in the options window that allows the user to
  * change the directory for saving files.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public final class SaveDirPaneItem extends AbstractDirPaneItem {
 
     public final static String TITLE = I18n.tr("Save Folder");

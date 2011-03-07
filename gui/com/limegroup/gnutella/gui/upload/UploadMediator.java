@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.swing.JPopupMenu;
+import javax.swing.table.TableCellRenderer;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.limewire.io.ConnectableImpl;
@@ -58,8 +59,7 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 	/**
 	 * A progress bar renderer specific for the uploads table.
 	 */
-	private static final ProgressBarRenderer PROGRESS_BAR_RENDERER =
-		new UploadProgressBarRenderer();
+	private static ProgressBarRenderer PROGRESS_BAR_RENDERER;
 
 	/**
 	 * Variables so we only need one listener for both ButtonRow & PopupMenu
@@ -135,7 +135,7 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 	 */
 	protected void setDefaultRenderers() {
 		super.setDefaultRenderers();
-		TABLE.setDefaultRenderer(ProgressBarHolder.class, PROGRESS_BAR_RENDERER);
+		TABLE.setDefaultRenderer(ProgressBarHolder.class, getProgressBarRenderer());
 	}
 	
 	/**
@@ -445,7 +445,15 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 		setButtonEnabled(UploadButtons.KILL_BUTTON, false);
 		setButtonEnabled(UploadButtons.BROWSE_BUTTON, false);
 	}
-
+	
+	@Override
+	protected TableCellRenderer getProgressBarRenderer() {
+	    if (PROGRESS_BAR_RENDERER == null) {
+	        PROGRESS_BAR_RENDERER = new UploadProgressBarRenderer();
+	    }
+	    return PROGRESS_BAR_RENDERER;
+	}
+	
 	public static UploadMediator instance() {
 		if (_instance == null) {
 			_instance = new UploadMediator();

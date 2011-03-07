@@ -12,7 +12,12 @@ import com.limegroup.gnutella.gui.dnd.LimeTransferHandler;
 
 class ResultPanelTransferHandler extends LimeTransferHandler {
 
-	/** The ResultPanel this is handling. */
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 6250741497962589713L;
+    
+    /** The ResultPanel this is handling. */
     private final ResultPanel panel;
     
     ResultPanelTransferHandler(ResultPanel panel) {

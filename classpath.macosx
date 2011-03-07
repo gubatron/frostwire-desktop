@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" output="components/collection/build/classes" path="components/collection/src/main/java"/>
 	<classpathentry kind="src" path="components/common/src/main/resources"/>
 	<classpathentry kind="src" path="gui/macosx">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="frostwire.trunk/gui/native/osx"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="frostwire.desktop/gui/native/osx"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="components/resources/src/main/resources"/>
-	<classpathentry kind="src" path="components/swarm/src/java"/>
 	<classpathentry kind="src" output="components/common/build/classes" path="components/common/src/main/java"/>
 	<classpathentry kind="src" output="components/http/build/classes" path="components/http/src/main/java"/>
 	<classpathentry kind="src" output="components/io/build/classes" path="components/io/src/main/java"/>
@@ -23,15 +21,16 @@
 	<classpathentry kind="src" output="components/statistic/build/classes" path="components/statistic/src/main/java"/>
 	<classpathentry excluding="examples/*|examples/|examples/" kind="src" path="core">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="frostwire.trunk/lib/native/osx"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="frostwire.desktop/lib/native/osx"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry excluding="macosx/|plugins/|windows/|plugins/brooklyn/|plugins/brooklyn/|plugins/|windows/" kind="src" path="gui">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="frostwire.trunk/lib/native/osx"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="frostwire.desktop/lib/native/osx"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="components/azureus/src/main/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/jars/aopalliance.jar"/>
 	<classpathentry kind="lib" path="lib/jars/clink.jar"/>
 	<classpathentry kind="lib" path="lib/jars/commons-codec-1.3.jar"/>
@@ -54,7 +53,6 @@
 	<classpathentry kind="lib" path="lib/jars/junit.jar"/>
 	<classpathentry kind="lib" path="lib/jars/jython.jar"/>
 	<classpathentry kind="lib" path="lib/jars/log4j.jar"/>
-	<classpathentry kind="lib" path="lib/jars/looks.jar"/>
 	<classpathentry kind="lib" path="lib/jars/mp3spi.jar"/>
 	<classpathentry kind="lib" path="lib/jars/onion-common.jar"/>
 	<classpathentry kind="lib" path="lib/jars/onion-fec.jar"/>
@@ -65,9 +63,9 @@
 	<classpathentry kind="lib" path="lib/jars/httpcore-nio-4.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/jars/messages.jar"/>
 	<classpathentry kind="lib" path="lib/jars/compile/messages.jar"/>
-	<classpathentry kind="lib" path="lib/jars/other/themes.jar"/>
 	<classpathentry kind="lib" path="lib/jars/splash.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="lib/jars/substance.jar"/>
+	<classpathentry kind="lib" path="lib/jars/trident.jar"/>
 	<classpathentry kind="lib" path="lib/jars/gson-1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

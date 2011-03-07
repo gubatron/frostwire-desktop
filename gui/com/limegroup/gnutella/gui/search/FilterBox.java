@@ -15,8 +15,6 @@ import java.awt.event.MouseListener;
 import java.util.Iterator;
 
 import javax.swing.AbstractListModel;
-import javax.swing.BorderFactory;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -33,8 +31,8 @@ import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.limewire.setting.BooleanSetting;
 import org.limewire.util.StringUtils;
+import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
@@ -42,7 +40,7 @@ import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.tables.CircularIcon;
 import com.limegroup.gnutella.gui.tables.IconAndNameHolder;
 import com.limegroup.gnutella.gui.tables.SortArrowIcon;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
+import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.xml.XMLValue;
 
 /**
@@ -51,6 +49,12 @@ import com.limegroup.gnutella.gui.xml.XMLValue;
  * Except for the header, all backgrounds are opaque.
  */
 class FilterBox extends JPanel {    
+    
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8289807895757013290L;
+
     /**
      * The renderer to use on all lists.
      */
@@ -62,24 +66,14 @@ class FilterBox extends JPanel {
     private static final ListSelectionListener MOVER = new Mover();
     
     /**
-     * The setting that controls row striping.
-     *
-     * (Ideally we wouldn't reference ResultPanel, but it's easiest.)
-     */
-    private static final BooleanSetting STRIPE_ROWS = 
-        ResultPanel.SEARCH_SETTINGS.ROWSTRIPE;
-    
-    /**
      * The string to use for 'Options'.
      */
-    private static final String OPTIONS =
-        I18n.tr("Options");
+    private static final String OPTIONS = I18n.tr("Options");
         
     /**
      * The string to use for 'Option'.
      */
-    private static final String OPTION =
-        I18n.tr("Option");
+    private static final String OPTION = I18n.tr("Option");
     
     /**
      * The property name stored within the JList that keeps the currently
@@ -107,8 +101,8 @@ class FilterBox extends JPanel {
      */
     private final Ditherer DITHERER =
             new Ditherer(10,
-                        ThemeFileHandler.FILTER_TITLE_TOP_COLOR.getValue(), 
-                        ThemeFileHandler.FILTER_TITLE_COLOR.getValue()
+                        SkinHandler.getFilterTitleTopColor(), 
+                        SkinHandler.getFilterTitleColor()
                         );    
     
     
@@ -224,7 +218,7 @@ class FilterBox extends JPanel {
         add(TITLE_PANEL, BorderLayout.NORTH);
         add(LIST_PANEL, BorderLayout.CENTER);
 
-        LIST.setBackground(ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue());
+        //LIST.setBackground(SkinHandler.getTableBackgroundColor()); // Check color
         LIST.setCellRenderer(RENDERER);
         LIST.addListSelectionListener(MOVER);
         LIST.setModel(DELEGATOR);
@@ -240,13 +234,12 @@ class FilterBox extends JPanel {
             public void mouseReleased(MouseEvent e) {}
         });
 
-        setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createRaisedBevelBorder(),
-            BorderFactory.createLoweredBevelBorder())
-        );
+//        setBorder(BorderFactory.createCompoundBorder(
+//            BorderFactory.createRaisedBevelBorder(),
+//            BorderFactory.createLoweredBevelBorder())
+//        );
 
-        pane.setHorizontalScrollBarPolicy(
-            JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
             
         setSelector(selector);
     }
@@ -368,10 +361,10 @@ class FilterBox extends JPanel {
         LIST.putClientProperty(MATCH_IDX, null);
         LIST.putClientProperty(SELECTED, null);
 
-        ListModelMap oldModel = 
+        ListModelMap<?, ?> oldModel = 
                     _selector==null ? null : MODEL.getListModelMap(_selector);
         _selector = selector;
-        ListModelMap newModel = MODEL.getListModelMap(selector);
+        ListModelMap<?, ?> newModel = MODEL.getListModelMap(selector);
         setModel(newModel);
         DELEGATOR.changeListener(oldModel, newModel);
 
@@ -442,7 +435,7 @@ class FilterBox extends JPanel {
     /**
      * Sets the model of the underlying JList.
      */
-	void setModel(ListModelMap view) {
+	void setModel(ListModelMap<?, ?> view) {
         Object selected = LIST.getClientProperty(SELECTED);
 	    DELEGATOR.setDelegate(view);
 	    if(selected != null) {
@@ -465,7 +458,7 @@ class FilterBox extends JPanel {
     /**
      * Retrieves the model of the underlying list.
      */
-    ListModelMap getModel() {
+    ListModelMap<?, ?> getModel() {
         return DELEGATOR.getDelegate();
     }    
     
@@ -507,7 +500,7 @@ class FilterBox extends JPanel {
         });
         
         JPanel panel = new DitherPanel(DITHERER);
-        panel.setBackground(ThemeFileHandler.FILTER_TITLE_COLOR.getValue());        
+        panel.setBackground(SkinHandler.getFilterTitleColor());        
         panel.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.anchor = GridBagConstraints.WEST;
@@ -547,12 +540,12 @@ class FilterBox extends JPanel {
         if(_requestedValue == null)
             return;
             
-        ListModelMap map = DELEGATOR.getDelegate();
+        ListModelMap<?, ?> map = DELEGATOR.getDelegate();
         int highScore = 0;
         int index = -1;
         Object matchingValue = null;
         int i = 1; // start at one because of the 'All' option we're ignoring.
-        for(Iterator iter = map.iterator(); iter.hasNext(); i++) {
+        for(Iterator<?> iter = map.iterator(); iter.hasNext(); i++) {
             Object next = iter.next();
             String val;
             
@@ -604,7 +597,7 @@ class FilterBox extends JPanel {
      * Returns the index of the value in the list's model.
      */
     private int indexOf(Object value) {
-        ListModelMap view = DELEGATOR.getDelegate();
+        ListModelMap<?, ?> view = DELEGATOR.getDelegate();
         if(view != null) {
             return view.indexOf(value);
         } else {
@@ -684,14 +677,19 @@ class FilterBox extends JPanel {
     private class ListModelDelegator extends AbstractListModel 
                                             implements ListDataListener {
         /**
+         * 
+         */
+        private static final long serialVersionUID = 8992972573659689267L;
+        
+        /**
          * The delegate model.
          */
-        private ListModelMap _delegate = null;
+        private ListModelMap<?, ?> _delegate = null;
         
         /**
          * Sets a new delegate model, and calls for refresh
          */
-        void setDelegate(ListModelMap delegate) {
+        void setDelegate(ListModelMap<?, ?> delegate) {
             if(_delegate == delegate)
                 return;
             _delegate = delegate;
@@ -702,7 +700,7 @@ class FilterBox extends JPanel {
          * Unregisters this from listening for events on the old model, and
          * registers for events on the new model
          */
-        void changeListener(ListModelMap oldModel, ListModelMap newModel) {
+        void changeListener(ListModelMap<?, ?> oldModel, ListModelMap<?, ?> newModel) {
             // remove our old listener.
             if(oldModel != null)
                 oldModel.removeListDataListener(this);
@@ -713,7 +711,7 @@ class FilterBox extends JPanel {
         /**
          * Retrieves the delegate model.
          */
-        ListModelMap getDelegate() {
+        ListModelMap<?, ?> getDelegate() {
             return _delegate;
         }
         
@@ -822,7 +820,13 @@ class FilterBox extends JPanel {
      *
      * Draws the line transparent unless it is selected.
      */
-    private static class Renderer extends DefaultListCellRenderer {
+    private static class Renderer extends SubstanceDefaultListCellRenderer {
+        
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 4884791038291849632L;
+
         Renderer() {
             super();
         }
@@ -834,37 +838,17 @@ class FilterBox extends JPanel {
     	public Component getListCellRendererComponent(JList list, Object value,
                                                    int idx, boolean isSelected,
                                                    boolean cellHasFocus) {
+    	    
+    	    super.getListCellRendererComponent(list, value, idx, isSelected, cellHasFocus);
+    	    
             Integer matchIdx = (Integer)list.getClientProperty(MATCH_IDX);
             boolean match = matchIdx != null && idx == matchIdx.intValue();
             setComponentOrientation(list.getComponentOrientation());
 
-            if (isSelected) {
-				if (match) {
-					setFont(UIManager.getFont("Table.font.bold"));
-				} else {
-					setFont(UIManager.getFont("Table.font"));
-				}
-                setOpaque(true);
-                setBackground(list.getSelectionBackground());
-                setForeground(list.getSelectionForeground());
+            if (match) {
+                setFont(UIManager.getFont("Table.font.bold"));
             } else {
-                if(match) {
-                    setFont(UIManager.getFont("Table.font.bold"));
-                    setForeground(list.getForeground());
-                    //TODO: ideally we would change the color also,
-                    //      but what color should we use?
-                    //setForeground(
-                    //  ThemeFileHandler.FILTER_TITLE_COLOR.getValue());
-                } else {
-                    setFont(UIManager.getFont("Table.font"));                
-                    setForeground(list.getForeground());
-                }
-                if(idx % 2 == 0 && STRIPE_ROWS.getValue()) {
-                    setOpaque(true);
-                    setBackground(ThemeFileHandler.TABLE_ALTERNATE_COLOR.getValue());
-                } else {
-                    setOpaque(false);
-                }
+                setFont(UIManager.getFont("Table.font"));
             }
     	    
     	    if(value instanceof IconAndNameHolder) {
@@ -876,8 +860,6 @@ class FilterBox extends JPanel {
                 setText((value == null) ? "" : value.toString());
             }
             setEnabled(list.isEnabled());
-            setBorder((cellHasFocus) ? 
-                UIManager.getBorder("List.focusCellHighlightBorder") : noFocusBorder);
             return this;
         }
     }

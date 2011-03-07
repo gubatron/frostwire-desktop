@@ -20,6 +20,11 @@ import com.limegroup.gnutella.settings.UISettings;
 class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
     
     /**
+     * 
+     */
+    private static final long serialVersionUID = -2382156313320196261L;
+
+    /**
      * The model storing metadata information.
      */
     protected final MetadataModel METADATA;
@@ -119,18 +124,6 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
         int spamRet = compareSpam(ta, tb);
         if (spamRet != 0)
             return spamRet;
-        
-        
-        // Always put The LimeWire Store&#8482; song results at the top
-        SearchResult sra = ta.getSearchResult();
-        SearchResult srb = tb.getSearchResult();
-        
-        if (sra instanceof ThirdPartySearchResult && !(srb instanceof ThirdPartySearchResult)) {
-            return -1;
-        }
-        if (srb instanceof ThirdPartySearchResult && !(sra instanceof ThirdPartySearchResult)) {
-            return 1;
-        }
         
         if (!isSorted() || _activeColumn != SearchTableColumns.COUNT_IDX)
             return super.compare(ta, tb);
@@ -448,8 +441,6 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
     /** Normalizes the location count, depending on the quality. */
     private int normalizeLocationCount(int count, int quality) {
         switch(quality) {
-        case QualityRenderer.THIRD_PARTY_RESULT_QUALITY:
-            return Integer.MAX_VALUE;
         case QualityRenderer.SECURE_QUALITY:
             return Integer.MAX_VALUE-1;
         case QualityRenderer.MULTICAST_QUALITY:

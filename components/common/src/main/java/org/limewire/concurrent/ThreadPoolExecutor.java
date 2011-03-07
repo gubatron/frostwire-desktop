@@ -528,6 +528,10 @@ public class ThreadPoolExecutor extends java.util.concurrent.ThreadPoolExecutor 
      * task being run.
      */
     private final class Worker extends ReentrantLock implements Runnable {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -1784809862406975944L;
         /** Thread this worker is running in.  Null if factory fails. */
         final Thread thread;
         /** Initial task to run.  Possibly null. */

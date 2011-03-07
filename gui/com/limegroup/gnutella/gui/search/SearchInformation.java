@@ -104,7 +104,7 @@ public class SearchInformation {
      * @see toMap()
      * @see fromMap(Map)
      */
-    private SearchInformation(Map map) {
+    private SearchInformation(Map<?, ?> map) {
         Integer type = (Integer) map.get(MAP_TYPE);
         if ( type == null )
             throw new NullPointerException("null type");
@@ -263,7 +263,7 @@ public class SearchInformation {
      * @see toMap()
      * @see SearchInformation(Map)
      */
-    public static SearchInformation createFromMap(Map map) {
+    public static SearchInformation createFromMap(Map<?, ?> map) {
         return new SearchInformation(map);
     }
 }

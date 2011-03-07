@@ -62,6 +62,10 @@ public class ForgetfulHashMap<K, V> extends HashMap<K, V> {
      * hashtable should use probing, not chaining.
      */
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 2532083688989076085L;
     private Object[] queue;
     private int next;
     private int n;

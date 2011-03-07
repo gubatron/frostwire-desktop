@@ -140,18 +140,6 @@ public class MessageService {
         }
 
         // Inherit doc comment.
-        public void showError(String messageKey, String message) {
-            System.out.println("error key: " + messageKey + " extra message: " + message);
-        }
-
-        // Inherit doc comment.
-        public void showError(String messageKey,
-                              String message,
-                              Switch ignore) {
-            showError(messageKey, message);
-        }
-
-        // Inherit doc comment.
         public void showMessage(String messageKey) {
             System.out.println("message key: " + messageKey); 
         }

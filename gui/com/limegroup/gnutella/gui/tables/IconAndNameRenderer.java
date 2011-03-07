@@ -4,15 +4,20 @@ import java.awt.Component;
 
 import javax.swing.Icon;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
+
+import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
 
 /**
  * Renders an icon along with a label.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
-public final class IconAndNameRenderer extends DefaultTableCellRenderer {
+public final class IconAndNameRenderer extends SubstanceDefaultTableCellRenderer {
 	
 	/**
+     * 
+     */
+    private static final long serialVersionUID = 8244672573299436077L;
+
+    /**
 	 * Constructs a new IconAndNameRenderer with the Icon aligned to the left
 	 * of the text, with a text gap of 5 between the icon and text.
 	 */

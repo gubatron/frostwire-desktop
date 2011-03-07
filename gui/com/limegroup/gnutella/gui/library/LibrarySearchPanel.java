@@ -42,7 +42,12 @@ import com.limegroup.gnutella.messages.QueryRequestFactory;
  */
 public class LibrarySearchPanel extends JPanel {
 
-	private AutoCompleteSearchField queryField = new AutoCompleteSearchField(40);
+	/**
+     * 
+     */
+    private static final long serialVersionUID = -8099451849619924981L;
+
+    private AutoCompleteSearchField queryField = new AutoCompleteSearchField(40);
 	
 	private final QueryRequestFactory queryRequestFactory;
 	        
@@ -68,7 +73,12 @@ public class LibrarySearchPanel extends JPanel {
         
 	private class SearchLibraryAction extends AbstractAction {
 		
-		public SearchLibraryAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -2182314529781104010L;
+
+        public SearchLibraryAction() {
 			putValue(Action.NAME,
 					I18n.tr("Search"));
 		}
@@ -130,7 +140,12 @@ public class LibrarySearchPanel extends JPanel {
 	
 	private class AutoCompleteSearchField extends AutoCompleteTextField {
 		
-		public AutoCompleteSearchField(int columns) {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -1429993304589825874L;
+
+        public AutoCompleteSearchField(int columns) {
 			super(columns);
 		}
 		
@@ -140,5 +155,4 @@ public class LibrarySearchPanel extends JPanel {
 		}
 		
 	}
-	
 }

@@ -42,7 +42,7 @@ import org.limewire.util.SystemUtils;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.search.Ditherer;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
+import com.limegroup.gnutella.gui.themes.SkinHandler;
 
 /**
  * An animated notification window that can display multiple notifications. The
@@ -62,6 +62,8 @@ import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
  * Based on JDIC GnomeTrayIconService.BalloonMessageWindow.
  */
 public class NotificationWindow extends AnimatedWindow {
+
+    private static final long serialVersionUID = 7826381963144231497L;
 
     private final static int DEFAULT_TIMEOUT = 6 * 1000;
 
@@ -612,6 +614,8 @@ public class NotificationWindow extends AnimatedWindow {
      */
     private class IconButton extends JButton {
 
+        private static final long serialVersionUID = -8670595793783875510L;
+
         public IconButton(Action action) {
             super(action);
             setText("");
@@ -656,6 +660,8 @@ public class NotificationWindow extends AnimatedWindow {
 
     private class NextNotificationAction extends AbstractAction {
 
+        private static final long serialVersionUID = 9025502192496019505L;
+
         public NextNotificationAction() {
             putValue(Action.NAME, ">");
         }
@@ -663,10 +669,11 @@ public class NotificationWindow extends AnimatedWindow {
         public void actionPerformed(ActionEvent e) {
             showNextNotification();
         }
-
     }
 
     private class PreviousNotificationAction extends AbstractAction {
+
+        private static final long serialVersionUID = 8634646312072477295L;
 
         public PreviousNotificationAction() {
             putValue(Action.NAME, "<");
@@ -675,10 +682,11 @@ public class NotificationWindow extends AnimatedWindow {
         public void actionPerformed(ActionEvent e) {
             showPreviousNotification();
         }
-
     }
 
     private class CloseAction extends AbstractAction {
+
+        private static final long serialVersionUID = -7970545406830868291L;
 
         public CloseAction() {
             putValue(Action.NAME, "X");
@@ -687,15 +695,16 @@ public class NotificationWindow extends AnimatedWindow {
         public void actionPerformed(ActionEvent e) {
             hideWindowImmediately();
         }
-
     }
 
     public class MainPanel extends JPanel {
         
+        private static final long serialVersionUID = -5156001841794524934L;
+        
         // used to paint background
         private Ditherer DITHERER = new Ditherer(62,
-                ThemeFileHandler.SEARCH_PANEL_BG_1.getValue(),
-                ThemeFileHandler.SEARCH_PANEL_BG_2.getValue());
+                SkinHandler.getSearchPanelBG1(),
+                SkinHandler.getSearchPanelBG2());
 
         public MainPanel(LayoutManager layoutManager) {
             super(layoutManager);
@@ -715,11 +724,9 @@ public class NotificationWindow extends AnimatedWindow {
         public void updateUI() {
             super.updateUI();
             DITHERER = new Ditherer(62,
-                    ThemeFileHandler.SEARCH_PANEL_BG_1.getValue(),
-                    ThemeFileHandler.SEARCH_PANEL_BG_2.getValue());
-            setBackground(ThemeFileHandler.SEARCH_PANEL_BG_2.getValue());
+                    SkinHandler.getSearchPanelBG1(),
+                    SkinHandler.getSearchPanelBG2());
+            setBackground(SkinHandler.getSearchPanelBG2());
         }
-
     }
-
 }
