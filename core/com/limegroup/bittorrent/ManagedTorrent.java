@@ -1465,7 +1465,9 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 	
 	public void destroy() {
 	    try {
-            _manager.getGlobalManager().removeDownloadManager(_manager);
+	        if (!_hasBeenPaused) {
+	            _manager.getGlobalManager().removeDownloadManager(_manager);
+	        }
         } catch (GlobalManagerDownloadRemovalVetoException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

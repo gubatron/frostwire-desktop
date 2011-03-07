@@ -539,8 +539,8 @@ public class BTDownloaderImpl extends AbstractCoreDownloader
     }
     
     protected DownloadMemento createMemento() {
-        if(finished)
-            throw new IllegalStateException("creating memento for finished torrent!");
+        //if(finished)
+        //    throw new IllegalStateException("creating memento for finished torrent!");
         return new BTDownloadMementoImpl();
     }
     
