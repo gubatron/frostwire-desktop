@@ -16,7 +16,6 @@ import java.util.Set;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 import org.apache.commons.logging.Log;
@@ -28,11 +27,15 @@ import org.limewire.util.OSUtils;
 
 import com.frostwire.CoreFrostWireUtils;
 import com.frostwire.GuiFrostWireUtils;
+import com.frostwire.gnutella.gui.skin.SkinMenu;
+import com.frostwire.gnutella.gui.skin.SkinMenuItem;
+import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.bittorrent.BTDownloader;
 import com.limegroup.bittorrent.gui.TorrentDownloadFactory;
 import com.limegroup.bittorrent.gui.TorrentFileFetcher;
 import com.limegroup.bittorrent.settings.BittorrentSettings;
 import com.limegroup.gnutella.Downloader;
+import com.limegroup.gnutella.Downloader.DownloadStatus;
 import com.limegroup.gnutella.Endpoint;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.FileDetails;
@@ -41,7 +44,6 @@ import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.SaveLocationException;
 import com.limegroup.gnutella.URN;
-import com.limegroup.gnutella.Downloader.DownloadStatus;
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.FileDetailsProvider;
@@ -97,13 +99,6 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
      * session.
      */
     private static int _totalDownloads = 0;
-
-    /**
-     * Flag for whether or not an mp3 file has been launched from the download
-     * window.
-     * A field so it can be accessed and updated from a runnable.
-     */
-    private static boolean _audioLaunched = false;
 
     /**
      * instance, for singleton acces
@@ -432,7 +427,7 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
         				QuestionsHandler.THEME_DOWNLOADED, DialogOption.YES
         				);
         		if( response == DialogOption.YES ) {
-        			ThemeMediator.changeTheme(themeFile);
+        			//ThemeMediator.changeTheme(themeFile);
         		}
         	}
         }
@@ -763,20 +758,20 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
     // inherit doc comment
     protected JPopupMenu createPopupMenu() {
 		
-		JPopupMenu menu = new JPopupMenu();
-		menu.add(new JMenuItem(removeAction));
-		menu.add(new JMenuItem(resumeAction));
-		menu.add(new JMenuItem(pauseAction));
-		menu.add(new JMenuItem(launchAction));
+		JPopupMenu menu = new SkinPopupMenu();
+		menu.add(new SkinMenuItem(removeAction));
+		menu.add(new SkinMenuItem(resumeAction));
+		menu.add(new SkinMenuItem(pauseAction));
+		menu.add(new SkinMenuItem(launchAction));
 		if(OSUtils.isWindows()||OSUtils.isMacOSX())
-			menu.add(new JMenuItem(exploreAction)); 
+			menu.add(new SkinMenuItem(exploreAction)); 
 		menu.addSeparator();
-		menu.add(new JMenuItem(clearAction));
+		menu.add(new SkinMenuItem(clearAction));
 		menu.addSeparator();
         menu.add(createSearchMenu());
-		menu.add(new JMenuItem(chatAction));
-		menu.add(new JMenuItem(browseAction));
-		menu.add(new JMenuItem(editLocationAction));
+		menu.add(new SkinMenuItem(chatAction));
+		menu.add(new SkinMenuItem(browseAction));
+		menu.add(new SkinMenuItem(editLocationAction));
 //		menu.addSeparator();
 //		menu.add(createAdvancedSubMenu());
 				
@@ -784,7 +779,7 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
     }
 	
     private JMenu createSearchMenu() {
-        JMenu menu = new JMenu(I18n.tr("Search..."));
+        JMenu menu = new SkinMenu(I18n.tr("Search..."));
         int[] sel = TABLE.getSelectedRows();
         if ( sel.length == 0 )  { // is there any file selected ?
         	menu.setEnabled(false);
@@ -794,11 +789,11 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
         // get orginal query
         DownloadDataLine line = DATA_MODEL.get(sel[0]);
         Downloader downloader = line.getDownloader();
-        Map searchInfoMap = (Map) downloader.getAttribute(
+        Map<?, ?> searchInfoMap = (Map<?, ?>) downloader.getAttribute(
                                         SearchMediator.SEARCH_INFORMATION_KEY );
         if ( searchInfoMap != null ) {
             SearchInformation searchInfo = SearchInformation.createFromMap( searchInfoMap );
-            menu.add(new JMenuItem( new SearchAction( searchInfo ) ));
+            menu.add(new SkinMenuItem( new SearchAction( searchInfo ) ));
         }
         
         //-- make search for filename action --
@@ -815,7 +810,7 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
         SearchInformation info = 
             SearchInformation.createKeywordSearch (filename, null, MediaType.getAnyTypeMediaType());
         if (SearchMediator.validateInfo(info) == SearchMediator.QUERY_VALID)
-            menu.add(new JMenuItem( new SearchAction(info,I18nMarker.marktr("Search for Keywords: {0}")) ));
+            menu.add(new SkinMenuItem( new SearchAction(info,I18nMarker.marktr("Search for Keywords: {0}")) ));
         
         return menu;
     }
@@ -919,7 +914,12 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
     }
 
     private abstract class RefreshingAction extends AbstractAction {
-    	public final void actionPerformed(ActionEvent e) {
+    	/**
+         * 
+         */
+        private static final long serialVersionUID = -937688457597255711L;
+
+        public final void actionPerformed(ActionEvent e) {
     		performAction(e);
     		doRefresh();
     	}
@@ -929,7 +929,12 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
     
 	private class RemoveAction extends RefreshingAction {
 		
-		public RemoveAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -1742554445891016991L;
+
+        public RemoveAction() {
 			putValue(Action.NAME, I18n.tr
 					("Cancel Download"));
 			putValue(LimeAction.SHORT_NAME,
@@ -946,7 +951,12 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
 	
 	private class ChatAction extends RefreshingAction {
 		
-		public ChatAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 4297785616252564677L;
+
+        public ChatAction() {
     	    putValue(Action.NAME,
 					I18n.tr("Chat with Host"));
 		}
@@ -958,7 +968,12 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
 	
 	private class ClearAction extends RefreshingAction {
 		
-		public ClearAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -5015913950467760897L;
+
+        public ClearAction() {
 			putValue(Action.NAME,
 					 I18n.tr("Clear All Inactive Downloads"));
 			putValue(LimeAction.SHORT_NAME,
@@ -975,7 +990,12 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
 
 	private class BrowseAction extends RefreshingAction {
 
-		public BrowseAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 874818705792848110L;
+
+        public BrowseAction() {
     	    putValue(Action.NAME,
 					I18n.tr("Browse Host"));
 		}
@@ -987,7 +1007,12 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
 
 	private class LaunchAction extends RefreshingAction {
 		
-		public LaunchAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -567893064454697074L;
+
+        public LaunchAction() {
 			putValue(Action.NAME,
 					 I18n.tr("Preview Download"));
 			putValue(LimeAction.SHORT_NAME,
@@ -1005,7 +1030,12 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
 	
 	private class ResumeAction extends RefreshingAction {
 
-		public ResumeAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -4449981369424872994L;
+
+        public ResumeAction() {
     	    putValue(Action.NAME,
 					 I18n.tr("Resume Download"));
 			putValue(LimeAction.SHORT_NAME, 
@@ -1022,7 +1052,12 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
 
 	private class PauseAction extends RefreshingAction {
 
-		public PauseAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 4682149704934484393L;
+
+        public PauseAction() {
 			putValue(Action.NAME,
 					 I18n.tr("Pause Download"));
 			putValue(LimeAction.SHORT_NAME,
@@ -1038,7 +1073,12 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
 	}
 
 	private class ExploreAction extends RefreshingAction { 
-		public ExploreAction() { 
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -4648558721588938475L;
+
+        public ExploreAction() { 
 	        putValue(Action.NAME, 
 	                 I18n.tr("Explore")); 
 	        putValue(LimeAction.SHORT_NAME, 
@@ -1054,7 +1094,12 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
 	} 
 	private class PriorityUpAction extends RefreshingAction {
 
-		public PriorityUpAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -5406125075406694692L;
+
+        public PriorityUpAction() {
 			putValue(LimeAction.SHORT_NAME, "");
 			putValue(Action.SHORT_DESCRIPTION,
 					 I18n.tr("Move the Selected Download Closer to Becoming Active"));
@@ -1073,7 +1118,12 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
 
 	private class PriorityDownAction extends RefreshingAction {
 
-		public PriorityDownAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -7767158063813466877L;
+
+        public PriorityDownAction() {
 			putValue(LimeAction.SHORT_NAME, "");
 			putValue(Action.SHORT_DESCRIPTION,
 					 I18n.tr("Move the Selected Download Further from Becoming Active"));
@@ -1092,7 +1142,12 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
 	
 	private class EditLocationAction extends RefreshingAction {
 
-		public EditLocationAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -8130981269487031494L;
+
+        public EditLocationAction() {
 			putValue(Action.NAME, 
 					 I18n.tr
 					 ("Change File Location..."));

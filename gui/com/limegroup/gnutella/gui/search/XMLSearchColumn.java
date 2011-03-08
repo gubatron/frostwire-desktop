@@ -6,6 +6,11 @@ import com.limegroup.gnutella.xml.SchemaFieldInfo;
 
 public class XMLSearchColumn extends SearchColumn {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -773178469633714739L;
+    
     private SchemaFieldInfo sfi;
     
     public XMLSearchColumn(int idx, SchemaFieldInfo sfi) {

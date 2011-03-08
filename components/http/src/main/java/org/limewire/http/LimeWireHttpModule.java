@@ -78,6 +78,7 @@ public class LimeWireHttpModule extends AbstractModule {
     private static class LimeSchemeRegistryProvider extends AbstractLazySingletonProvider<SchemeRegistry> {
         private final Provider<SocketsManager> socketsManager;
         
+        @SuppressWarnings("unused")
         @Inject
         public LimeSchemeRegistryProvider(Provider<SocketsManager> socketsManager) {
             this.socketsManager = socketsManager;

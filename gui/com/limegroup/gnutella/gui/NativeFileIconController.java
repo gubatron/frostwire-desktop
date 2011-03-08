@@ -112,7 +112,12 @@ public class NativeFileIconController implements FileIconController {
         for(int i = 0; i < 10; i++) {
             try {
                 chooser = new JFileChooser() {
-                    {
+                    /**
+					 * 
+					 */
+					private static final long serialVersionUID = 8831689600678227460L;
+
+					{
                         FileChooserUI ui =
                             (FileChooserUI)ResourceManager.getNativeUI(this);
                         setUI(ui);
@@ -222,8 +227,8 @@ public class NativeFileIconController implements FileIconController {
         final MediaType[] types = MediaType.getDefaultMediaTypes();
         final AtomicBoolean continueLoading = new AtomicBoolean(true);
         for(int i = 0; i < types.length && continueLoading.get(); i++) {
-            final Set exts = types[i].getExtensions();
-            for(Iterator j = exts.iterator(); j.hasNext() && continueLoading.get(); ) {
+            final Set<?> exts = types[i].getExtensions();
+            for(Iterator<?> j = exts.iterator(); j.hasNext() && continueLoading.get(); ) {
                 final String next = (String)j.next();
                 queue.execute(new Runnable() {
                     public void run() {

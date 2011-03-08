@@ -8,13 +8,14 @@ import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import com.frostwire.gnutella.gui.skin.SkinMenuItem;
+import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.I18n;
@@ -125,7 +126,7 @@ class MediaTypeDownloadDirMediator extends AbstractTableMediator<MediaTypeDownlo
 	 */
 	public void initOptions() {
 		DATA_MODEL.clear();
-		for (Iterator i = NamedMediaType.getAllNamedMediaTypes().iterator(); i.hasNext();) {
+		for (Iterator<?> i = NamedMediaType.getAllNamedMediaTypes().iterator(); i.hasNext();) {
 			NamedMediaType nm = (NamedMediaType) i.next();
 			if (!nm.getMediaType().getMimeType().equals(MediaType.SCHEMA_ANY_TYPE))
 				DATA_MODEL.add(nm);
@@ -158,9 +159,9 @@ class MediaTypeDownloadDirMediator extends AbstractTableMediator<MediaTypeDownlo
 	 * @see com.limegroup.gnutella.gui.tables.AbstractTableMediator#createPopupMenu()
 	 */
 	protected JPopupMenu createPopupMenu() {
-		JPopupMenu menu = new JPopupMenu();
-		menu.add(new JMenuItem(browseAction));
-		menu.add(new JMenuItem(resetAction));
+		JPopupMenu menu = new SkinPopupMenu();
+		menu.add(new SkinMenuItem(browseAction));
+		menu.add(new SkinMenuItem(resetAction));
 		return menu;
 	}
 
@@ -195,7 +196,12 @@ class MediaTypeDownloadDirMediator extends AbstractTableMediator<MediaTypeDownlo
 	 * selected mediatype row.
 	 */
 	private class BrowseDirectoryAction extends AbstractAction {
-		public BrowseDirectoryAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 3781168481533565154L;
+
+        public BrowseDirectoryAction() {
 			putValue(Action.NAME, I18n
 					.tr("Browse..."));
 			putValue(Action.SHORT_DESCRIPTION, I18n
@@ -228,7 +234,12 @@ class MediaTypeDownloadDirMediator extends AbstractTableMediator<MediaTypeDownlo
 	 */
 	private class ResetDirectoryAction extends AbstractAction {
 
-		public ResetDirectoryAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 508292832909926418L;
+
+        public ResetDirectoryAction() {
 			putValue(Action.NAME, I18n
 					.tr("Reset"));
 			putValue(Action.SHORT_DESCRIPTION, I18n

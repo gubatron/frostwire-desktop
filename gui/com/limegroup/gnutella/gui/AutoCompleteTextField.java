@@ -30,6 +30,11 @@ import com.limegroup.gnutella.settings.UISettings;
  */
 public class AutoCompleteTextField extends KeyProcessingTextField {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -6044335597208068852L;
+
     public AutoCompleteTextField() { super(); }
     public AutoCompleteTextField(Document a, String b, int c) {super(a, b, c);}
     public AutoCompleteTextField(int a) { super(a); }

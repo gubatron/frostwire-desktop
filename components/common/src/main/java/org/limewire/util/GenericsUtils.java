@@ -51,12 +51,12 @@ public class GenericsUtils {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static <K, V> Map<K, V> scanForMap(Object o, Class<K> k, Class<V> v, ScanMode mode, Class<? extends Map> createFromThis) {
+    public static <K, V> Map<K, V> scanForMap(Object o, Class<K> k, Class<V> v, ScanMode mode, Class<? extends Map<K, V>> createFromThis) {
         if(o instanceof Map) {
-            Map map = (Map)o;
-            Map copy = null;
-            for(Iterator i = map.entrySet().iterator(); i.hasNext(); ) {
-                Map.Entry entry = (Map.Entry)i.next();
+            Map<?, ?> map = (Map<?, ?>)o;
+            Map<K, V> copy = null;
+            for(Iterator<?> i = map.entrySet().iterator(); i.hasNext(); ) {
+                Map.Entry<?, ?> entry = (Map.Entry<?, ?>)i.next();
                 Object key = entry.getKey();
                 Object value = entry.getValue();
                 if(key == null || value == null ||
@@ -80,7 +80,7 @@ public class GenericsUtils {
                     case NEW_COPY_REMOVED:
                         if(copy == null) {
                             copy = newInstance(createFromThis);
-                            copy.putAll(map);
+                            copy.putAll((Map<? extends K, ? extends V>) map);
                         }
                         copy.remove(key);
                         break;
@@ -90,7 +90,7 @@ public class GenericsUtils {
             if(copy != null)
                 return copy;
             else
-                return map;
+                return (Map<K, V>) map;
         } else {
             throw new ClassCastException();
         }
@@ -121,11 +121,11 @@ public class GenericsUtils {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public static <V> Collection<V> scanForCollection(Object o, Class<V> v, ScanMode mode, Class<? extends Collection> createFromThis) {
+    public static <V> Collection<V> scanForCollection(Object o, Class<V> v, ScanMode mode, Class<? extends Collection<V>> createFromThis) {
         if(o instanceof Collection) {
-            Collection c = (Collection)o;
-            Collection copy = null;
-            for(Iterator i = c.iterator(); i.hasNext(); ) {
+            Collection<?> c = (Collection<?>)o;
+            Collection<V> copy = null;
+            for(Iterator<?> i = c.iterator(); i.hasNext(); ) {
                 Object value = i.next();
                 if(value == null || !v.isAssignableFrom(value.getClass())) {
                     switch(mode) {
@@ -137,7 +137,7 @@ public class GenericsUtils {
                     case NEW_COPY_REMOVED:
                         if(copy == null) {
                             copy = newInstance(createFromThis);
-                            copy.addAll(c);
+                            copy.addAll((Collection<? extends V>) c);
                         }
                         copy.remove(value);
                         break;
@@ -148,7 +148,7 @@ public class GenericsUtils {
             if(copy != null)
                 return copy;
             else
-                return c;
+                return (Collection<V>) c;
         } else {
             throw new ClassCastException();
         }
@@ -179,7 +179,7 @@ public class GenericsUtils {
      * @param remove
      * @return
      */
-    public static <V> Set<V> scanForSet(Object o, Class<V> v, ScanMode mode, Class<? extends Set> createFromThis) {
+    public static <V> Set<V> scanForSet(Object o, Class<V> v, ScanMode mode, Class<? extends Set<V>> createFromThis) {
         if(o instanceof Set) {
             return (Set<V>)scanForCollection(o, v, mode, createFromThis);
         } else {
@@ -211,7 +211,7 @@ public class GenericsUtils {
      * @param remove
      * @return
      */
-    public static <V> List<V> scanForList(Object o, Class<V> v, ScanMode mode, Class<? extends List> createFromThis) {
+    public static <V> List<V> scanForList(Object o, Class<V> v, ScanMode mode, Class<? extends List<V>> createFromThis) {
         if(o instanceof List) {
             return (List<V>)scanForCollection(o, v, mode, createFromThis);
         } else {

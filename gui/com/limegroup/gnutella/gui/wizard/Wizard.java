@@ -28,7 +28,6 @@ import com.limegroup.gnutella.gui.I18n;
  * This class provides a generic wizard. It manages {@link WizardPage}
  * objects which are displayed in a dialog.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public class Wizard {	
 
 	/**
@@ -240,7 +239,12 @@ public class Wizard {
 
 	private class CancelAction extends AbstractAction {
 
-		public CancelAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -673247927829374297L;
+
+        public CancelAction() {
 			putValue(Action.NAME, I18n.tr("Cancel"));
 		}
 
@@ -251,7 +255,12 @@ public class Wizard {
 	
 	private class NextAction extends AbstractAction {
 		
-		public NextAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -7159267613717056769L;
+
+        public NextAction() {
 			putValue(Action.NAME, I18n.tr("Next >>"));
 		}
 
@@ -262,7 +271,12 @@ public class Wizard {
 	
 	private class PreviousAction extends AbstractAction {
 
-		public PreviousAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -8480312088788527993L;
+
+        public PreviousAction() {
 			putValue(Action.NAME, I18n.tr("<< Back"));
 		}
 		
@@ -273,7 +287,12 @@ public class Wizard {
 	
 	private class FinishAction extends AbstractAction {
 		
-		public FinishAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 4595477515446446886L;
+
+        public FinishAction() {
 			putValue(Action.NAME, I18n.tr("Finish"));
 		}
 
@@ -292,6 +311,10 @@ public class Wizard {
 	private class WizardPagePanel extends JPanel {
 
 		/**
+         * 
+         */
+        private static final long serialVersionUID = 5769275967652462158L;
+        /**
 		 * The <tt>CardLayout</tt> instance for the setup windows.
 		 */
 		private final CardLayout CARD_LAYOUT = new CardLayout();
@@ -315,14 +338,6 @@ public class Wizard {
 		public WizardPage getFirst() {
 			if (getComponentCount() > 0) {
 				return (WizardPage) getComponent(0);
-			} else {
-				return null;
-			}
-		}
-
-		public WizardPage getLast() {
-			if (getComponentCount() > 0) {
-				return (WizardPage) getComponent(getComponentCount() - 1);
 			} else {
 				return null;
 			}

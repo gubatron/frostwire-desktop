@@ -63,6 +63,11 @@ import org.limewire.util.OSUtils;
  */
 public class ClearableAutoCompleteTextField extends AutoCompleteTextField {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8501269106544016677L;
+
     public ClearableAutoCompleteTextField() { super(); init(); }
     public ClearableAutoCompleteTextField(Document a, String b, int c) {super(a, b, c); init();}
     public ClearableAutoCompleteTextField(int a) { super(a); init();}
@@ -312,6 +317,11 @@ public class ClearableAutoCompleteTextField extends AutoCompleteTextField {
      */
     private class ClearHistory extends JButton {
         
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 601999394867955024L;
+
         ClearHistory() {
             super(I18n.tr("Clear History"));
             enableEvents(AWTEvent.MOUSE_EVENT_MASK);
@@ -332,6 +342,10 @@ public class ClearableAutoCompleteTextField extends AutoCompleteTextField {
      * A list that's used to show auto-complete items.
      */
     private class AutoCompleteList extends JList {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -7324769835640667828L;
         private String currentText;
         
         AutoCompleteList() {

@@ -254,7 +254,7 @@ public class BTMetaInfo extends BTMetaInfoBTFM {
 	        Object metaInfo = Token.parse(torrent);
 	        if(!(metaInfo instanceof Map))
 	            throw new ValueException("metaInfo not a Map!");
-		    BTMetaInfo result = new BTMetaInfo(new BTDataImpl((Map)metaInfo)); // Original handling without the bit torrent file's manager. *if everything goes ok we should keep this line commented*
+		    BTMetaInfo result = new BTMetaInfo(new BTDataImpl((Map<?, ?>)metaInfo)); // Original handling without the bit torrent file's manager. *if everything goes ok we should keep this line commented*
 		    result._rawBytes = Arrays.copyOf(torrent, torrent.length);
 		    return result;
 	    } catch (IOException bad) {

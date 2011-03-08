@@ -242,9 +242,9 @@ public class LongHashMap<V> {
             throw new NullPointerException();
         }
 
-        Entry tab[] = table;
+        Entry<?> tab[] = table;
         for (int i = tab.length; i-- > 0;) {
-            for (Entry e = tab[i]; e != null; e = e.next) {
+            for (Entry<?> e = tab[i]; e != null; e = e.next) {
                 if (e.value.equals(value)) {
                     return true;
                 }
@@ -279,10 +279,10 @@ public class LongHashMap<V> {
      * @see #contains(Object)
      */
     public boolean containsKey(long key) {
-        Entry tab[] = table;
+        Entry<?> tab[] = table;
         int hash = (int)key;
         int index = (hash & 0x7FFFFFFF) % tab.length;
-        for (Entry e = tab[index]; e != null; e = e.next) {
+        for (Entry<?> e = tab[index]; e != null; e = e.next) {
             if (e.hash == hash && e.key == key) {
                 return true;
             }
@@ -421,7 +421,7 @@ public class LongHashMap<V> {
      * <p>Clears this hashtable so that it contains no keys.</p>
      */
     public synchronized void clear() {
-        Entry tab[] = table;
+        Entry<?> tab[] = table;
         for (int index = tab.length; --index >= 0;) {
             tab[index] = null;
         }

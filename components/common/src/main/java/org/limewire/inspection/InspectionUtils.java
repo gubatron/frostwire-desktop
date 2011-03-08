@@ -116,10 +116,10 @@ public class InspectionUtils {
             
             // if inner, create one
             Object enclosingObj = injector.getInstance(lookup);
-            Constructor[] constructors = container.getDeclaredConstructors();
+            Constructor<?>[] constructors = container.getDeclaredConstructors();
             if (constructors.length != 1)
                 throw new InspectionException("wrong constructors length: " + constructors.length);
-            Class[] parameters = constructors[0].getParameterTypes();
+            Class<?>[] parameters = constructors[0].getParameterTypes();
             if (parameters.length != 1 || !lookup.isAssignableFrom(parameters[0]))
                 throw new InspectionException("wrong parameter count or type for constructor");
             constructors[0].setAccessible(true);
@@ -183,7 +183,7 @@ public class InspectionUtils {
     throws IllegalAccessException, NoSuchFieldException {
         Field field;
         if ( instance instanceof Class )
-            field = getFieldImpl((Class)instance, fieldName);
+            field = getFieldImpl((Class<?>)instance, fieldName);
         else
             field = getFieldImpl(instance.getClass(), fieldName);
         field.setAccessible(true);
@@ -198,7 +198,7 @@ public class InspectionUtils {
         return field.get(instance);
     }
 
-    private static Field getFieldImpl(Class thisClass, 
+    private static Field getFieldImpl(Class<?> thisClass, 
             String fieldName) 
     throws NoSuchFieldException {
         if (thisClass == null)

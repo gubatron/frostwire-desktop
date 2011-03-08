@@ -16,6 +16,11 @@ import com.limegroup.gnutella.gui.tables.BasicDataLineModel;
 public final class PlaylistModel extends BasicDataLineModel<PlaylistDataLine, PlayListItem> {
 
     /**
+     * 
+     */
+    private static final long serialVersionUID = 6620071077040103714L;
+
+    /**
      * Whether or not songs are shuffling.
      */
     private boolean _shuffle = false;

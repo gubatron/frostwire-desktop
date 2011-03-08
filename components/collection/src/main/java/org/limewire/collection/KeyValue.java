@@ -62,7 +62,7 @@ public void set(K key, V value)
 */
 public boolean equals(Object o)
 {
-	KeyValue keyValue = (KeyValue)o;
+	KeyValue<?, ?> keyValue = (KeyValue<?, ?>)o;
 
 	return key.equals(keyValue.getKey());
 }

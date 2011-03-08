@@ -8,7 +8,11 @@ import javax.swing.Icon;
  */
 public class TreeCheckBox extends DefaultMutableTreeNode {
 
-  public final static int SINGLE_SELECTION = 0;
+  /**
+     * 
+     */
+    private static final long serialVersionUID = -4701591604911399020L;
+public final static int SINGLE_SELECTION = 0;
   public final static int DIG_IN_SELECTION = 4;
   protected int selectionMode;
   protected boolean isSelected;
@@ -49,7 +53,7 @@ public class TreeCheckBox extends DefaultMutableTreeNode {
     
     if ((selectionMode == DIG_IN_SELECTION)
         && (children != null)) {
-      Enumeration myitem = children.elements();      
+      Enumeration<?> myitem = children.elements();      
       while (myitem.hasMoreElements()) {
         TreeCheckBox node = (TreeCheckBox)myitem.nextElement();
         node.setSelected(isSelected);

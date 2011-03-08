@@ -25,6 +25,11 @@ import com.limegroup.gnutella.gui.themes.ThemeMediator;
 public class SongProgressBar extends MediaSlider {
 	
     /**
+     * 
+     */
+    private static final long serialVersionUID = 2193699831662448665L;
+
+    /**
      * An optional string that can be displayed on the progress bar.The default
      * is <code>null</code>. Setting this to a non-<code>null</code> value
      * does not imply that the string will be displayed. To display the string,

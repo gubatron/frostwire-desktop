@@ -55,6 +55,11 @@ import com.limegroup.gnutella.gui.trees.FileTreeModel;
 // repaint code
 public class RecursiveSharingPanel extends JPanel {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 26922801291926139L;
+
     private final FileTreeModel directoryTreeModel;
     
     private final JTree directoryTree;
@@ -587,6 +592,11 @@ public class RecursiveSharingPanel extends JPanel {
     private class FileTreeCellEditor extends DefaultCellEditor {
 
                 
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -4740838176378935127L;
+
         public FileTreeCellEditor() {
             super(configureCheckBox(new JCheckBox()));
             setColors((JCheckBox)editorComponent, true);
@@ -633,6 +643,11 @@ public class RecursiveSharingPanel extends JPanel {
      * Overriden to set the root path to not be editable.
      */
     private static class RootNotEditableTree extends JTree {
+
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -8216291497637257568L;
 
         public RootNotEditableTree(TreeModel newModel) {
             super(newModel);

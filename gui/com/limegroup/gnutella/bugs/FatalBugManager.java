@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 
 import org.limewire.inject.Providers;
 
@@ -47,9 +48,14 @@ public final class FatalBugManager {
         LocalClientInfoFactory factoryToUse = localClientInfoFactory;
         if(factoryToUse == null)
             factoryToUse = new LocalClientInfoFactoryImpl(Providers.of((SessionInfo)new FatalSessionInfo()));
-        LocalClientInfo info = factoryToUse.createLocalClientInfo(bug, Thread.currentThread().getName(), null, true);
+        final LocalClientInfo info = factoryToUse.createLocalClientInfo(bug, Thread.currentThread().getName(), null, true);
         
-        reviewBug(info);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                reviewBug(info);
+            }
+        });
     }
     
     private static String warning() {

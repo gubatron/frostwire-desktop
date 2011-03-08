@@ -7,21 +7,16 @@ import javax.swing.Action;
 import org.limewire.i18n.I18nMarker;
 
 import com.frostwire.actions.ConnectionDoctorAction;
-import com.limegroup.gnutella.connection.ConnectionLifecycleEvent;
-import com.limegroup.gnutella.connection.ConnectionLifecycleListener;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
 
 /**
  * Contains all of the menu items for the tools menu.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 final class ToolsMenu extends AbstractMenu {
     
-    //final CheckForUpdatesAction checkUpdatesAction;
-	/**
+    /**
 	 * Creates a new <tt>ToolsMenu</tt>, using the <tt>key</tt> 
 	 * argument for setting the locale-specific title and 
 	 * accessibility text.
@@ -44,7 +39,11 @@ final class ToolsMenu extends AbstractMenu {
 	
 	
 	private static class CheckForUpdatesAction extends AbstractAction {
-	    private final long TIME_BETWEEN_CHECKS = 1000 * 300; //5 minutes
+	    /**
+         * 
+         */
+        private static final long serialVersionUID = -4544415000859745587L;
+        private final long TIME_BETWEEN_CHECKS = 1000 * 300; //5 minutes
 	    private long lastTimeWeChecked = 0;
 	    private Thread enabler;
 	    
@@ -89,7 +88,12 @@ final class ToolsMenu extends AbstractMenu {
 
     private static class ShowOptionsAction extends AbstractAction {
 	    
-	    public ShowOptionsAction() {
+	    /**
+         * 
+         */
+        private static final long serialVersionUID = 6187597973189408647L;
+
+        public ShowOptionsAction() {
 	        super(I18n.tr("&Options"));
 	        putValue(LONG_DESCRIPTION, I18nMarker.marktr("Display the Options Screen"));
         }

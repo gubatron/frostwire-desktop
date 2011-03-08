@@ -15,7 +15,7 @@ public class EventMulticasterImpl<E> implements EventMulticaster<E> {
         this.listeners = new EventListenerList<E>();
     }
     
-    public EventMulticasterImpl(Class loggerKey) {
+    public EventMulticasterImpl(Class<?> loggerKey) {
         this.listeners = new EventListenerList<E>(loggerKey);
     }
     

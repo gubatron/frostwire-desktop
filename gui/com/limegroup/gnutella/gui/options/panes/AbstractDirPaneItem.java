@@ -83,6 +83,10 @@ public abstract class AbstractDirPaneItem extends AbstractPaneItem {
      */
     private class DefaultListener extends AbstractAction {
         
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -4380290152874379103L;
         public DefaultListener(){
             putValue(Action.NAME, I18n.tr("Use Default"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Use the Default Folder"));
@@ -113,6 +117,11 @@ public abstract class AbstractDirPaneItem extends AbstractPaneItem {
      */
     private class SelectSaveDirectoryListener extends AbstractAction {
             
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 7571939605303997396L;
+
         public SelectSaveDirectoryListener(){
             putValue(Action.NAME, I18n.tr("Browse..."));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Choose Another Folder"));

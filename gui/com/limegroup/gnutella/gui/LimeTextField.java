@@ -18,15 +18,28 @@ import javax.swing.undo.UndoManager;
 
 import org.limewire.i18n.I18nMarker;
 
+import com.frostwire.gnutella.gui.skin.SkinMenuItem;
+import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
+
 /**
  * A better JTextField.
  */
 public class LimeTextField extends JTextField {
     
     /**
+     * 
+     */
+    private static final long serialVersionUID = -1994520183255049424L;
+
+    /**
      * The undo action.
      */
     private static Action UNDO_ACTION = new FieldAction(I18nMarker.marktr("Undo")) {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 675409703997007078L;
+
         public void actionPerformed(ActionEvent e) {
             getField(e).undo();
         }
@@ -36,6 +49,11 @@ public class LimeTextField extends JTextField {
      * The cut action
      */
     private static Action CUT_ACTION = new FieldAction(I18nMarker.marktr("Cut")) {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 5342970192703043838L;
+
         public void actionPerformed(ActionEvent e) {
             getField(e).cut();
         }
@@ -45,6 +63,11 @@ public class LimeTextField extends JTextField {
      * The copy action.
      */
     private static Action COPY_ACTION = new FieldAction(I18nMarker.marktr("Copy")) {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -3484207766103231841L;
+
         public void actionPerformed(ActionEvent e) {
             getField(e).copy();
         }
@@ -54,6 +77,11 @@ public class LimeTextField extends JTextField {
      * The paste action.
      */
     private static Action PASTE_ACTION = new FieldAction(I18nMarker.marktr("Paste")) {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -967931044746884556L;
+
         public void actionPerformed(ActionEvent e) {
             getField(e).paste();
         }
@@ -63,6 +91,11 @@ public class LimeTextField extends JTextField {
      * The delete action.
      */
     private static Action DELETE_ACTION = new FieldAction(I18nMarker.marktr("Delete")) {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -1239306786560704952L;
+
         public void actionPerformed(ActionEvent e) {
             getField(e).replaceSelection("");
         }
@@ -72,6 +105,11 @@ public class LimeTextField extends JTextField {
      * The select all action.
      */      
     private static Action SELECT_ALL_ACTION = new FieldAction(I18nMarker.marktr("Select All")) {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 4783056991868525860L;
+
         public void actionPerformed(ActionEvent e) {
             getField(e).selectAll();
         }
@@ -182,21 +220,26 @@ public class LimeTextField extends JTextField {
         JPopupMenu popup;
 
         // initialize the JPopupMenu with necessary stuff.
-        popup = new JPopupMenu() {
+        popup = new SkinPopupMenu() {
+            /**
+             * 
+             */
+            private static final long serialVersionUID = -6004124495511263059L;
+
             public void show(Component invoker, int x, int y) {
                 ((LimeTextField)invoker).updateActions();
                 super.show(invoker, x, y);
             }
         };
         
-        popup.add(new JMenuItem(UNDO_ACTION));
+        popup.add(new SkinMenuItem(UNDO_ACTION));
         popup.addSeparator();
-        popup.add(new JMenuItem(CUT_ACTION));
-        popup.add(new JMenuItem(COPY_ACTION));
-        popup.add(new JMenuItem(PASTE_ACTION));
-        popup.add(new JMenuItem(DELETE_ACTION));
+        popup.add(new SkinMenuItem(CUT_ACTION));
+        popup.add(new SkinMenuItem(COPY_ACTION));
+        popup.add(new SkinMenuItem(PASTE_ACTION));
+        popup.add(new SkinMenuItem(DELETE_ACTION));
         popup.addSeparator();
-        popup.add(new JMenuItem(SELECT_ALL_ACTION));
+        popup.add(new SkinMenuItem(SELECT_ALL_ACTION));
         return popup;
     }
     
@@ -245,6 +288,11 @@ public class LimeTextField extends JTextField {
      */
     private static abstract class FieldAction extends AbstractAction {
         
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -2088365927213389348L;
+
         /**
          * Constructs a new FieldAction looking up the name from the MessagesBundles.
          */

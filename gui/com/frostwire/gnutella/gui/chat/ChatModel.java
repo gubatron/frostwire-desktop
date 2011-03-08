@@ -12,11 +12,6 @@ package com.frostwire.gnutella.gui.chat;
 public final class ChatModel implements Comparable<ChatDataLine> {
 
     /**
-     * The currently item *debug purposes*.
-     */
-    private ChatItem _currentItem;
-
-    /**
      * Initialize the model by setting the class of its DataLines.
      */
     ChatModel() {

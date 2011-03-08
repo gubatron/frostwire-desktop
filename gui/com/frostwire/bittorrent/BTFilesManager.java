@@ -51,7 +51,11 @@ import com.limegroup.gnutella.gui.I18n;
  */
 public class BTFilesManager extends JDialog {
 
-	public List<com.limegroup.bittorrent.BTData.BTFileData> _files = null;
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 3858296202021922229L;
+    public List<com.limegroup.bittorrent.BTData.BTFileData> _files = null;
 	public File _tfile;
 	public List<com.limegroup.bittorrent.BTData.BTFileData> _selectedfiles = null;
 	public Set<String> _selectedfolders = null;
@@ -92,7 +96,7 @@ public class BTFilesManager extends JDialog {
     	String subfolder="";
     	String subfolderpath="";
         //List<String> pathscreated = new ArrayList(); // Folders added
-	Set<String> pathscreated = new HashSet(); // Folders added in format used by BTData
+	Set<String> pathscreated = new HashSet<String>(); // Folders added in format used by BTData
 
 	Integer pos=0;
 	Integer numsubfolders=0; // Max number of subfolders (deepest level)
@@ -178,10 +182,9 @@ public class BTFilesManager extends JDialog {
 
     Integer nodepos=0; // Node position
     Integer parentpos=0; // Parent
-    Integer pathpos=0; // Path separator position
 
-    List<String> psorted = new ArrayList(); // In format used for being a Sorted list
-    List<Integer> folderspos = new ArrayList(); // quick way to know if the node is a folder
+    List<String> psorted = new ArrayList<String>(); // In format used for being a Sorted list
+    List<Integer> folderspos = new ArrayList<Integer>(); // quick way to know if the node is a folder
 
     for (int k=0;k<items.length;k++) { //itemstotal //items.length // works ok for single file
 	//System.out.println("Ruta es: " + items[k]);	
@@ -275,7 +278,6 @@ nodepos=1;
 //System.out.println("Nodo dos: " + _nodes[2] + " Ruta Full: " + _nodes[2].getFilePath());
 //System.out.println("Nodo tres: " + _nodes[3] + " Ruta Full: " + _nodes[3].getFilePath());
 
-TreeCheckBox folderNode=null;
 
 for (int it=1;it<itemstotal;it++) { 
 	if (!folderspos.contains(it)) { // If the current node is not a folder, then proceed
@@ -384,8 +386,6 @@ for (int it=1;it<itemstotal;it++) {
     JScrollPane sp = new JScrollPane(tree);
 
     JTextArea textArea = new JTextArea(7,10); //3,10
-    JScrollPane textPanel = new JScrollPane(textArea);
-    JButton cmdtest = new JButton("*Test*");
     JButton cmdcancel = new JButton(I18n.tr("Cancel"));
     JButton button = new JButton(I18n.tr("OK"));
     button.addActionListener(
@@ -443,8 +443,8 @@ for (int it=1;it<itemstotal;it++) {
     return "FTA: *Exit status*\nHi what's up!";
   }
 
- private Hashtable createIcons() {
-    Hashtable icons = new Hashtable();
+ private Hashtable<?, ?> createIcons() {
+    Hashtable<Object, Object> icons = new Hashtable<Object, Object>();
     icons.put("zip",MetalIconFactory.getTreeFloppyDriveIcon());
     //icons.put("c"    ,TextIcons.getIcon("c"));
     return icons;
@@ -489,6 +489,11 @@ for (int it=1;it<itemstotal;it++) {
 
   class CancelAction extends AbstractAction {
             
+            /**
+     * 
+     */
+    private static final long serialVersionUID = -6175209379399098736L;
+
             public CancelAction() {
                 super(I18n.tr("Cancel"));
             }
@@ -509,7 +514,7 @@ for (int it=1;it<itemstotal;it++) {
     }
     
     public void actionPerformed(ActionEvent e) {
-      Enumeration items = root.breadthFirstEnumeration();
+      Enumeration<?> items = root.breadthFirstEnumeration();
       // Since selectedfiles is null i can't add any item, so I've copied the same structure contained in files and then i cleaned this up. 
       // This way i'm not creating any new object and i'll have an empty list with the same structure.
       _selectedfiles = _files;

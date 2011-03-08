@@ -72,6 +72,11 @@ public class AdvancedMenu extends AbstractMenu {
     
     private static class ArcsAction extends AbstractAction implements DHTEventListener {
 
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -1949181218045856946L;
+
         public ArcsAction() {
             super(I18n.tr("Mojito &DHT Arcs View"));
             putValue(LONG_DESCRIPTION, I18n

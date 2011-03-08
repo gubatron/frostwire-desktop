@@ -1,6 +1,5 @@
 package com.limegroup.gnutella.gui;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -23,7 +22,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.settings.QuestionsHandler;
@@ -35,6 +33,11 @@ import com.limegroup.gnutella.settings.UISettings;
  */
 public class MonitorView extends JPanel implements ThemeObserver {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 2399842924016344939L;
+    
     //  Components on this panel
     private JCheckBox showQueriesCheckBox;
     private JTextField listSizeTextField;
@@ -154,9 +157,9 @@ public class MonitorView extends JPanel implements ThemeObserver {
 	 * Updates the appearance of this panel based on the current theme.
 	 */
 	public void updateTheme() {
-		Color tableColor = ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
-		scrollPane.getViewport().setBackground(tableColor);
-		listOfQueries.setBackground(tableColor);
+//		Color tableColor = SkinHandler.getTableBackgroundColor();
+//		scrollPane.getViewport().setBackground(tableColor);
+//		listOfQueries.setBackground(tableColor);
 	}
 
 	/**

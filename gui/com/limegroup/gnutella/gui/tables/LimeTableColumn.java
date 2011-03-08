@@ -21,21 +21,19 @@ import javax.swing.table.TableColumn;
 public class LimeTableColumn extends TableColumn {
 
     /**
+     * 
+     */
+    private static final long serialVersionUID = 5966221936060186588L;
+
+    /**
      * Variable for the HeaderRenderer for all components.
      */
-    public static final TableCellRenderer HEADER_RENDERER =
-        new SortHeaderRenderer();
+    public static TableCellRenderer HEADER_RENDERER;
         
     /**
      * Variable for an invisible HeaderRenderer.
      */
-    public static final TableCellRenderer INVIS_RENDERER;
-    
-    static {
-        SortHeaderRenderer rnd = new SortHeaderRenderer();
-        rnd.setAllowIcon(false);
-        INVIS_RENDERER = rnd;
-    }
+    public static TableCellRenderer INVIS_RENDERER;
 
     private final boolean defaultVisibility;
     private final int defaultWidth;
@@ -91,7 +89,7 @@ public class LimeTableColumn extends TableColumn {
      */
     public LimeTableColumn setHeaderVisible(boolean vis) {
         if(vis) {
-            super.setHeaderRenderer(HEADER_RENDERER);
+            super.setHeaderRenderer(getHeaderSortRenderer());
             if(icon != null) {
                 super.setHeaderValue(icon);
             } else if(name != null) {
@@ -100,7 +98,7 @@ public class LimeTableColumn extends TableColumn {
                 super.setHeaderValue("");
             }
         } else {
-            super.setHeaderRenderer(INVIS_RENDERER);
+            super.setHeaderRenderer(getInvisSortRenderer());
             super.setHeaderValue("");
         }
         return this;
@@ -184,6 +182,22 @@ public class LimeTableColumn extends TableColumn {
     public void setIdentifier(Object id) {
         if(!initialized) return;
         throw new IllegalStateException("cannot change id");
+    }
+    
+    private TableCellRenderer getHeaderSortRenderer() {
+        if (HEADER_RENDERER == null) {
+            HEADER_RENDERER = new SortHeaderRenderer();
+        }
+        return HEADER_RENDERER;
+    }
+    
+    private TableCellRenderer getInvisSortRenderer() {
+        if (INVIS_RENDERER == null) {
+            SortHeaderRenderer rnd = new SortHeaderRenderer();
+            rnd.setAllowIcon(false);
+            INVIS_RENDERER = rnd;
+        }
+        return INVIS_RENDERER;
     }
 }
 

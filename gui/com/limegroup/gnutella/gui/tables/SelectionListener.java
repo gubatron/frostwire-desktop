@@ -12,9 +12,9 @@ final class SelectionListener implements ListSelectionListener {
     // this really should be stored as an AbstractTableMediator
     // instead of a ComponentMediator, but for some reason
     // it causes an NPE when run on Java 1.3 if that is done.
-    private final AbstractTableMediator atm;
+    private final AbstractTableMediator<?, ?, ?> atm;
     
-    SelectionListener(AbstractTableMediator atm) {
+    SelectionListener(AbstractTableMediator<?, ?, ?> atm) {
         if(atm == null)
             throw new NullPointerException("null atm");
         this.atm = atm;

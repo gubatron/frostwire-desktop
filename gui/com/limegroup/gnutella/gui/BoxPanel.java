@@ -13,10 +13,14 @@ import javax.swing.JPanel;
  * specified in the constructor.  The default contructor creates a panel 
  * oriented along the y axis.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public class BoxPanel extends JPanel {
 	
 	/**
+     * 
+     */
+    private static final long serialVersionUID = -9143705446804323859L;
+
+    /**
 	 * Constant for specifying that the underlying <tt>BoxLayout</tt> should
 	 * be oriented along the x axis.
 	 */

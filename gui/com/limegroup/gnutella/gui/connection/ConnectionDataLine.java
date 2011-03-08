@@ -434,7 +434,7 @@ public final class ConnectionDataLine extends AbstractDataLine<RoutedConnection>
             tips.add("");
             
             String k;
-            Enumeration ps = p.propertyNames();
+            Enumeration<?> ps = p.propertyNames();
             while(ps.hasMoreElements()) {
                 k = (String)ps.nextElement();
                 tips.add(k + ": " + p.getProperty(k));

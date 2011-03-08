@@ -5,6 +5,11 @@ import com.limegroup.gnutella.gui.tables.BasicDataLineModel;
 
 public final class ConnectionModel extends BasicDataLineModel<ConnectionDataLine, RoutedConnection> {
         
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 2229565732321064117L;
+
     ConnectionModel() {
         super( ConnectionDataLine.class );
     }

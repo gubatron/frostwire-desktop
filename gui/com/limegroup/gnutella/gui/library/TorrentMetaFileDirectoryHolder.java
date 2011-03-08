@@ -4,7 +4,6 @@ import java.io.File;
 
 import javax.swing.Icon;
 
-import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.search.NamedMediaType;
 import com.limegroup.gnutella.settings.SharingSettings;
@@ -15,14 +14,11 @@ public class TorrentMetaFileDirectoryHolder extends AbstractDirectoryHolder{
     private String desc;
     
     public TorrentMetaFileDirectoryHolder() {
-        this.name = I18n.tr
-                ("List of .torrent files");
-        this.desc = I18n.tr
-                (".torrent files");
+        this.name = I18n.tr("List of .torrent files");
+        this.desc = I18n.tr(".torrent files");
     }
 
     public File getDirectory() {
-        //return SharingUtils.APPLICATION_SPECIAL_SHARE;
     	return SharingSettings.DEFAULT_SHARED_TORRENTS_DIR;
     }
     
@@ -44,5 +40,4 @@ public class TorrentMetaFileDirectoryHolder extends AbstractDirectoryHolder{
     public Icon getIcon() {
     	return NamedMediaType.getFromExtension("torrent").getIcon();
     }
-
 }

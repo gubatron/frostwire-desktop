@@ -249,9 +249,9 @@ public class IntHashMap<V> implements Serializable {
             throw new NullPointerException();
         }
 
-        Entry tab[] = table;
+        Entry<?> tab[] = table;
         for (int i = tab.length; i-- > 0;) {
-            for (Entry e = tab[i]; e != null; e = e.next) {
+            for (Entry<?> e = tab[i]; e != null; e = e.next) {
                 if (e.value.equals(value)) {
                     return true;
                 }
@@ -286,10 +286,10 @@ public class IntHashMap<V> implements Serializable {
      * @see #contains(Object)
      */
     public boolean containsKey(int key) {
-        Entry tab[] = table;
+        Entry<?> tab[] = table;
         int hash = key;
         int index = (hash & 0x7FFFFFFF) % tab.length;
-        for (Entry e = tab[index]; e != null; e = e.next) {
+        for (Entry<?> e = tab[index]; e != null; e = e.next) {
             if (e.hash == hash) {
                 return true;
             }
@@ -428,7 +428,7 @@ public class IntHashMap<V> implements Serializable {
      * <p>Clears this hashtable so that it contains no keys.</p>
      */
     public synchronized void clear() {
-        Entry tab[] = table;
+        Entry<?> tab[] = table;
         for (int index = tab.length; --index >= 0;) {
             tab[index] = null;
         }

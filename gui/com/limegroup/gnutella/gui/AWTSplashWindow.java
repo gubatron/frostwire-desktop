@@ -50,6 +50,12 @@ import java.awt.Window;
  * @version 1.3 2003-06-01 Revised.
  */
 public class AWTSplashWindow extends Window {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 720067738309164784L;
+
+
     private Image splashImage;
 
 

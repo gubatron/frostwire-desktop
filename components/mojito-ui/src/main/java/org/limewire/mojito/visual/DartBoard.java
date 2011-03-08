@@ -160,9 +160,9 @@ class DartBoard extends Painter {
             
             int power = 0;
             
-            int hexOffset = RESOLUTION / 4;
-            if (RESOLUTION % 4 !=0)
-                hexOffset++;
+            int hexOffset = 4;//RESOLUTION / 4;
+            //if (RESOLUTION % 4 !=0)
+            //    hexOffset++;
             String hex = nodeId.toHexString().substring(0,hexOffset);
             int intId = Integer.valueOf(hex,16);
             assert intId >= 0;

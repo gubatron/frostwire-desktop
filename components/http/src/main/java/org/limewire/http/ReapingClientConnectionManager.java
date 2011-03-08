@@ -8,8 +8,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.apache.http.conn.ClientConnectionManager;
 import org.apache.http.conn.ClientConnectionRequest;
-import org.apache.http.conn.ConnectionPoolTimeoutException;
-import org.apache.http.conn.ManagedClientConnection;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.routing.HttpRoute;
@@ -23,7 +21,7 @@ import com.google.inject.Provider;
  * A <code>ClientConnectionManager</code> that will close idle connections
  */
 class ReapingClientConnectionManager extends ThreadSafeClientConnManager {
-    protected final ScheduledFuture connectionCloserTask;
+    protected final ScheduledFuture<?> connectionCloserTask;
     protected final IdleConnectionCloser connectionCloser;
 
     public ReapingClientConnectionManager(Provider<SchemeRegistry> schemeRegistry, Provider<ScheduledExecutorService> scheduler, Provider<HttpParams> defaultParams) {

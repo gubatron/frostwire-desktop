@@ -21,9 +21,6 @@ public final class ChatTab extends AbstractTab {
 	private static JComponent COMPONENT;
 	private static JPanel PANEL = new JPanel(new BorderLayout());
 	
-	//old style 
-	private static ChatMediator CHAT_MEDIATOR;
-
 	/**
 	 * Construcs the connections tab.
 	 *

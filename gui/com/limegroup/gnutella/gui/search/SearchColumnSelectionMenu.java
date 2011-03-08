@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import com.frostwire.gnutella.gui.skin.SkinMenu;
 import com.limegroup.gnutella.gui.tables.ColumnSelectionMenu;
 import com.limegroup.gnutella.gui.tables.DataLineModel;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
@@ -20,7 +21,7 @@ final class SearchColumnSelectionMenu extends ColumnSelectionMenu {
      * Overriden to add columns from the same schema to a submenu.
      */
     protected void addTableColumnChoices(ActionListener listener,
-                                         DataLineModel model,
+                                         DataLineModel<?, ?> model,
                                          LimeJTable table) {
         String currentSchema = "";
         JMenu currentSchemaMenu = null;        
@@ -30,7 +31,7 @@ final class SearchColumnSelectionMenu extends ColumnSelectionMenu {
             if(schema != null) {
                 if(!schema.equals(currentSchema)) {
                     currentSchema = schema;
-                    currentSchemaMenu = new JMenu(currentSchema);
+                    currentSchemaMenu = new SkinMenu(currentSchema);
                     _menu.add(currentSchemaMenu);
                 }
                 assert currentSchemaMenu != null;

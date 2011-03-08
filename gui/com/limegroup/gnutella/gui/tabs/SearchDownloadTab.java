@@ -33,18 +33,13 @@ public final class SearchDownloadTab extends AbstractTab {
 	 *
 	 * @param SEARCH_MEDIATOR the <tt>SearchMediator</tt> instance for 
 	 *  obtaining the necessary ui components to add
-	 * @param DOWNLOAD_MEDIATOR the <tt>DownloadMediator</tt> instance for 
+	 * @param downloadMediator the <tt>DownloadMediator</tt> instance for 
 	 *  obtaining the necessary ui components to add
 	 */
-	public SearchDownloadTab(final SearchMediator searchMediator,
-							 final ComponentMediator DOWNLOAD_MEDIATOR) {
-		super(I18n.tr("Search"), 
-		        I18n.tr("Search and Download Files"), "search_tab");
+	public SearchDownloadTab(SearchMediator searchMediator, ComponentMediator<?> downloadMediator) {
+		super(I18n.tr("Search"), I18n.tr("Search and Download Files"), "search_tab");
 
-        SEARCH_DOWNLOAD_SPLIT_PANE =
-            new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-                           SearchMediator.getResultComponent(),
-                           DOWNLOAD_MEDIATOR.getComponent());
+        SEARCH_DOWNLOAD_SPLIT_PANE = new JSplitPane(JSplitPane.VERTICAL_SPLIT, SearchMediator.getResultComponent(), downloadMediator.getComponent());
         SEARCH_DOWNLOAD_SPLIT_PANE.setContinuousLayout(true);
         SEARCH_DOWNLOAD_SPLIT_PANE.setOneTouchExpandable(true);
 		SEARCH_DOWNLOAD_SPLIT_PANE.setPreferredSize(new Dimension(200,200));
@@ -55,9 +50,7 @@ public final class SearchDownloadTab extends AbstractTab {
 		searchBoxPanel.setPreferredSize(new Dimension(width,100));
         
 		
-        SPLIT_PANE = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-									searchBoxPanel,
-									SEARCH_DOWNLOAD_SPLIT_PANE);
+        SPLIT_PANE = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, searchBoxPanel, SEARCH_DOWNLOAD_SPLIT_PANE);
 		SPLIT_PANE.setDividerSize(0);
 	}
 

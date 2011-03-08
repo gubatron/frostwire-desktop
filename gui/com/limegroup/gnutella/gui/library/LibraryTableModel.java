@@ -15,11 +15,14 @@ import com.limegroup.gnutella.gui.tables.SizeHolder;
  * Uses HashBasedDataLineModel instead of BasicDataLineModel
  * for quicker access to row's based on the file.
  */
-
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 final class LibraryTableModel extends HashBasedDataLineModel<LibraryTableDataLine, File> {
 
 	/**
+     * 
+     */
+    private static final long serialVersionUID = 2859783399965055446L;
+    
+    /**
 	 * The table this model is used for.
 	 * (Needed to make sure isCellEditable
 	 *  is only true when a single thing is selected.)

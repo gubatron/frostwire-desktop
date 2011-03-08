@@ -482,6 +482,11 @@ public final class FileTypeSharingPanelManager {
     
     private class AddExtAction extends AbstractAction {
         
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -8174972449744071395L;
+
         public AddExtAction() {
             putValue(Action.NAME, I18n.tr("Add New Extension"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Add a New Extension to My Extensions"));
@@ -506,6 +511,11 @@ public final class FileTypeSharingPanelManager {
     
     private class RestoreAction extends AbstractAction {
         
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -3864449170688710885L;
+
         public RestoreAction() {
             putValue(Action.NAME, I18n.tr("Restore Defaults"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Share the Default File Extensions"));
@@ -601,16 +611,7 @@ public final class FileTypeSharingPanelManager {
     public boolean isDirty() {
         return    !this.originalExtensions.equals(this.getExtensions())
                || !this.disableSensitive.isSelected() == SharingSettings.DISABLE_SENSITIVE.getValue();
-    }
-
-  
-    
-    
-    
-    
-    
-    
-    
+    }    
     
     // Listener Classes
     
@@ -656,9 +657,6 @@ public final class FileTypeSharingPanelManager {
             this.parent.refreshSidePanel();
         }
     }  
-
-    
-    
     
     // Providers   
     
@@ -712,8 +710,7 @@ public final class FileTypeSharingPanelManager {
             return icon != null ? icon : new GUIUtils.EmptyIcon(obj, 16, 16);
         }
         
-    }
-    
+    }    
     
     private static class MediaProvider 
         implements CheckBoxList.TextProvider<NamedMediaType> {
@@ -799,5 +796,4 @@ public final class FileTypeSharingPanelManager {
             return "(" + panel.getCheckedElements().size() + ")";
         }
     }    
-
 }

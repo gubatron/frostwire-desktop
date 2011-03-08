@@ -24,7 +24,7 @@ public final class MenuMediator {
 	 * Constant handle to the instance of this class for following 
 	 * the singleton pattern.
 	 */
-	private static final MenuMediator INSTANCE = new MenuMediator();
+	private static MenuMediator INSTANCE;
 
 	/**
 	 * Constant handle to the <tt>JMenuBar</tt> instance that holds all
@@ -43,12 +43,6 @@ public final class MenuMediator {
 	 * the application.
 	 */
 	private final NavMenu NAV_MENU = new NavMenu();
-
-	/**
-	 * Constant handle to the single <tt>ResourcesMenu</tt> instance for
-	 * the application.
-	 */
-	private final Menu RESOURCES_MENU = new ResourcesMenu();
 
 	/**
 	 * Constant handle to the single <tt>ToolsMenu</tt> instance for
@@ -78,6 +72,9 @@ public final class MenuMediator {
 	 * @return the <tt>MenuMediator</tt> instance
 	 */
 	public static final MenuMediator instance() {
+	    if (INSTANCE == null) {
+	        INSTANCE = new MenuMediator();
+	    }
 		return INSTANCE;
 	}
 

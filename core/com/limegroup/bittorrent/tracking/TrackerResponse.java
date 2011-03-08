@@ -61,7 +61,7 @@ class TrackerResponse {
 	public TrackerResponse(Object t_response) throws ValueException {
 		if (!(t_response instanceof Map))
 			throw new ValueException("bad tracker response");
-		Map response = (Map) t_response;
+		Map<?, ?> response = (Map<?, ?>) t_response;
 
 		if (response.containsKey("failure reason")) {
 			byte [] failureBytes = (byte [])response.get("failure reason");
@@ -75,7 +75,7 @@ class TrackerResponse {
 		if (response.containsKey("peers")) {
 			Object t_peers = response.get("peers");
 			if (t_peers instanceof List)
-				PEERS = parsePeers((List) t_peers);
+				PEERS = parsePeers((List<?>) t_peers);
 			else if (t_peers instanceof byte [])
 				PEERS = parsePeers( (byte[]) t_peers);
 			else
@@ -148,14 +148,14 @@ class TrackerResponse {
 	 * 
 	 * @throws ValueException
 	 */
-	private static List<TorrentLocation> parsePeers(List peers) throws ValueException {
+	private static List<TorrentLocation> parsePeers(List<?> peers) throws ValueException {
 		List<TorrentLocation> ret = new ArrayList<TorrentLocation>();
-		for (Iterator iter = peers.iterator(); iter.hasNext();) {
+		for (Iterator<?> iter = peers.iterator(); iter.hasNext();) {
 			Object t_peer = iter.next();
 			if (!(t_peer instanceof Map))
 				throw new ValueException("bad tracker response - bad peer "
 						+ t_peer);
-			ret.add(parsePeer((Map) t_peer));
+			ret.add(parsePeer((Map<?, ?>) t_peer));
 		}
 		return Collections.unmodifiableList(ret);
 	}
@@ -203,7 +203,7 @@ class TrackerResponse {
 	 * @return @throws
 	 *         ValueException
 	 */
-	private static TorrentLocation parsePeer(Map peer) throws ValueException {
+	private static TorrentLocation parsePeer(Map<?, ?> peer) throws ValueException {
 		Object t_ip = peer.get("ip");
 		if (!(t_ip instanceof byte []))
 			throw new ValueException("bad tracker response - bad peer ip "
