@@ -256,6 +256,13 @@ public class ThemeMediator {
         skins.add(new SkinInfo("Sahara", "org.pushingpixels.substance.api.skin.SaharaSkin", false, false));
         skins.add(new SkinInfo("Twilight", "org.pushingpixels.substance.api.skin.TwilightSkin", false, false));
         
+        skins.add(new SkinInfo("Field Of Wheat", "org.pushingpixels.substance.skinpack.FieldOfWheatSkin", false, false));
+        skins.add(new SkinInfo("Finding Nemo", "org.pushingpixels.substance.skinpack.FindingNemoSkin", false, false));
+        skins.add(new SkinInfo("Green Magic", "org.pushingpixels.substance.skinpack.GreenMagicSkin", false, false));
+        skins.add(new SkinInfo("Magma", "org.pushingpixels.substance.skinpack.MagmaSkin", false, false));
+        skins.add(new SkinInfo("Mango", "org.pushingpixels.substance.skinpack.MangoSkin", false, false));
+        skins.add(new SkinInfo("Streetlights", "org.pushingpixels.substance.skinpack.StreetlightsSkin", false, false));
+        
         saveSkins(skins);
     }
     

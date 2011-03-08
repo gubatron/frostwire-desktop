@@ -154,3 +154,8 @@ trident-64a55aa/ -> trident.jar
 https://github.com/kirillcool/trident.git -r 64a55aa
 Java animation library (for Substance)
 https://github.com/kirillcool/trident
+
+substance-extras-c56d24d/ -> substance-extras.jar
+https://github.com/kirillcool/substance-extras.git -r c56d24d
+Substance look-and-feel extras pack
+https://github.com/kirillcool/substance-extras
