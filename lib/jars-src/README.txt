@@ -144,3 +144,13 @@ mrjadapter/ -> MRJAdapter.jar
 Integration of Mac features without compromising portability. https://mrjadapter.dev.java.net/
 svn checkout https://mrjadapter.dev.java.net/svn/mrjadapter/trunk mrjadapter --username guest
 It's not important for Linux.
+
+substance-58d3873/ -> substance.jar
+https://github.com/kirillcool/substance.git -r 58d3873
+Swing look-and-feel library
+https://github.com/kirillcool/substance
+
+trident-64a55aa/ -> trident.jar
+https://github.com/kirillcool/trident.git -r 64a55aa
+Java animation library (for Substance)
+https://github.com/kirillcool/trident
