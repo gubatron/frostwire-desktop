@@ -40,6 +40,7 @@ import com.limegroup.gnutella.gui.tables.ProgressBarHolder;
 import com.limegroup.gnutella.gui.tables.ProgressBarRenderer;
 import com.limegroup.gnutella.gui.tables.TableSettings;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
+import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.uploader.HTTPUploader;
 
@@ -159,9 +160,21 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 	    
 	    GUIMediator.addRefreshListener(this);
 	    ThemeMediator.addThemeObserver(this);
+	    
+	    BackgroundExecutorService.schedule(new Runnable() {
 
-	    //Freezes here
-	    //restoreSeedingTorrents();
+			@Override
+			public void run() {
+				try {
+					//avoids freeze and makes sure we'll start reseeding when azureus core is completely ready
+					Thread.sleep(6000);
+				} catch (InterruptedException e) {
+				}
+				restoreSeedingTorrents();
+			}
+	    	
+	    });
+	    
 	}
 
 	private void restoreSeedingTorrents() {
@@ -175,6 +188,7 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 		    	BTMetaInfo info = null;
 				try {
 					
+					//not STOPPED && not QUEUED
 					if (dlManager.getState() != 70 &&
 					    dlManager.getState() != 75 ) {
 						continue;
