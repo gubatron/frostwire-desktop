@@ -110,7 +110,7 @@ public class MininovaVuzeSearchResult extends AbstractSearchResult  {
 
 	@Override
 	public String getVendor() {
-		return "ISOHunt";
+		return "Mininova";
 	}
 
 	@Override

@@ -45,8 +45,6 @@ import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 public final class ConnectionMediator extends AbstractTableMediator<ConnectionModel, ConnectionDataLine, RoutedConnection> {
 
     public static ConnectionMediator instance() { 
-    	int a = 0;
-    	
     	return INSTANCE; 
     }
 

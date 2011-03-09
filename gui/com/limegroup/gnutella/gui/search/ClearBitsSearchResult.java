@@ -111,7 +111,7 @@ public class ClearBitsSearchResult extends AbstractSearchResult {
 
 	@Override
 	public String getVendor() {
-		return "ISOHunt";
+		return "ClearBits";
 	}
 
 	@Override

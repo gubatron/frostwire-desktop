@@ -46,17 +46,12 @@ public class WebTorrentSearch {
 		
 		String json = new String(jsonBytes);
 		
-		//Massage JSON to make it easy to parse.
-		
-		// Convert from [ {"torrent":{...}, {"torrent":{...}, ...]
-		// to { "results" : [{...},{...},{...}] }
-		
-		//json = "{ \"results\": " + json.replace("{\"torrent\":", "").replace("}}","}") + "}";
-		//System.out.println(json);
-		
 		// Feel the power of reflection
 		JsonEngine engine = new JsonEngine();
 		ClearBitsResponse response = engine.toObject(json, ClearBitsResponse.class);
+		
+		response.fixItems();
+		
 		return response;
 			
 	}

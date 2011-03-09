@@ -33,4 +33,16 @@ import java.util.List;
  */
 public class ClearBitsResponse {
 	public List<ClearBitsItem> results;
+
+	/**
+	 * 
+	 */
+	public void fixItems() {
+		if (results != null && results.size() > 0) {
+			for (ClearBitsItem item : results) {
+				item.fixItem();
+			}
+		}
+		
+	}
 }

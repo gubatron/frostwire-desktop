@@ -9,8 +9,10 @@ import java.util.List;
 import java.util.Set;
 
 import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
+import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.io.ConnectableImpl;
 import org.limewire.util.FileUtils;
 
@@ -158,7 +160,8 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 	    GUIMediator.addRefreshListener(this);
 	    ThemeMediator.addThemeObserver(this);
 
-	    restoreSeedingTorrents();
+	    //Freezes here
+	    //restoreSeedingTorrents();
 	}
 
 	private void restoreSeedingTorrents() {
