@@ -9,19 +9,14 @@ import java.util.List;
 import java.util.Set;
 
 import javax.swing.JPopupMenu;
-import javax.swing.SwingUtilities;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
-import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.io.ConnectableImpl;
 import org.limewire.util.FileUtils;
 
 import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.bittorrent.AzureusStarter;
-import com.google.inject.Guice;
 import com.google.inject.Inject;
-import com.google.inject.Injector;
-import com.google.inject.Provider;
 import com.limegroup.bittorrent.BTDownloaderImpl;
 import com.limegroup.bittorrent.BTMetaInfo;
 import com.limegroup.gnutella.PushEndpoint;

@@ -63,7 +63,7 @@ public final class SplashWindow {
         glassPane.add(Box.createVerticalStrut(8));
         glassPane.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 2));
         
-        String name = LimeWireUtils.isPro() ? "splashpro" : "splash";
+        //String name = LimeWireUtils.isPro() ? "splashpro" : "splash";
         //URL imageURL = ClassLoader.getSystemResource("org/limewire/gui/images/" + name + ".png");
         URL imageURL = null;
         try {
