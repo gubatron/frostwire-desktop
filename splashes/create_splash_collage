@@ -1,8 +1,2 @@
 #!/bin/bash
-if test -z "$1"
-then
-  echo "Usage: ./create_splash_collage <version>"
-  exit
-fi
-
 java -classpath ./bin com.frostwire.splash.SplashCollage $1
