@@ -112,4 +112,8 @@ public class FinishedTorrentDownload implements Torrent {
             _innerTorrent.destroy();
         }
     }
+    
+    public Torrent getInnerTorrent() {
+        return _innerTorrent;
+    }
 }

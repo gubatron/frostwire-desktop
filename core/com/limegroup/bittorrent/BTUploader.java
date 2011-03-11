@@ -152,7 +152,10 @@ public class BTUploader implements Uploader, TorrentEventListener {
 		
 		switch(evt.getType()) {
 		case STARTED : torrentStarted(); break;
-		case STOP_APPROVED: _torrent.stop(); break;
+		case STOP_APPROVED:
+		    activityCallback.removeUpload(this);
+		    //_torrent.stop();
+		    break;
 		case STOPPED : 
 			torrentStopped();
 			dispatcher.removeEventListener(this);
@@ -178,7 +181,7 @@ public class BTUploader implements Uploader, TorrentEventListener {
 	}
 	
 	private void torrentStopped() {
-		activityCallback.removeUpload(this);
+		//activityCallback.removeUpload(this);
 		stopTime = System.currentTimeMillis();
 	}
 	

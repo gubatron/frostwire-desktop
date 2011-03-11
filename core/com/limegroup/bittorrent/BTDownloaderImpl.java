@@ -114,7 +114,9 @@ public class BTDownloaderImpl extends AbstractCoreDownloader
 	}
 
 	public void pause() {
-		torrent.pause();
+	    if (torrent.isPausable()) {
+	        torrent.pause();
+	    }
 	}
 
 	public boolean isPaused() {
@@ -571,6 +573,14 @@ public class BTDownloaderImpl extends AbstractCoreDownloader
 		finished = true;
 		torrentStopped(null);
 		//downloadManager.remove(this, true);
+		if (torrent instanceof ManagedTorrent) {
+		    ((ManagedTorrent) torrent).removeFromAzureus();
+		} else if (torrent instanceof FinishedTorrentDownload) {
+		    Torrent temp = ((FinishedTorrentDownload) torrent).getInnerTorrent();
+		    if (temp != null && temp instanceof ManagedTorrent) {
+		        ((ManagedTorrent) temp).removeFromAzureus();
+		    }
+		}
 	}
 	
 	public void setOverwrite(boolean overwrite) {

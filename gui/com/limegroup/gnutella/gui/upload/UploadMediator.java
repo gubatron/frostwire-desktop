@@ -19,6 +19,7 @@ import com.frostwire.bittorrent.AzureusStarter;
 import com.google.inject.Inject;
 import com.limegroup.bittorrent.BTDownloaderImpl;
 import com.limegroup.bittorrent.BTMetaInfo;
+import com.limegroup.bittorrent.BTUploader;
 import com.limegroup.gnutella.PushEndpoint;
 import com.limegroup.gnutella.UploadServicesImpl;
 import com.limegroup.gnutella.Uploader;
@@ -305,7 +306,7 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 	 */
     public void remove(Uploader uploader) {
 		if (SharingSettings.CLEAR_UPLOAD.getValue() &&
-            uploader.isInactive()) {
+            (uploader.isInactive() || uploader instanceof BTUploader)) {
             // This is called when the upload is finished, either because
             // the user clicked 'Kill', something was interupted, etc..
             // It doesn't matter that we always setPersistConnect(true),
