@@ -4,6 +4,7 @@ import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Calendar;
@@ -117,26 +118,64 @@ public class Main {
 		String pathSeparator = System.getProperty("path.separator");
         String classPath = System.getProperty("java.class.path");
         
+        System.out.println("pathSeparator = " + pathSeparator);
+        System.out.println("classPath = " + classPath);
+        
         String[] classPathEntries = classPath.split(pathSeparator);
 
         try {
             for (String entry : classPathEntries) {
-            	if (entry.endsWith("splash.jar")) {
-            		JarFile jar = new JarFile(new File(entry));
-            		Enumeration<JarEntry> jarEntries = jar.entries();
-            		while (jarEntries.hasMoreElements()) {
-            			String fileName = jarEntries.nextElement().getName();
-            			
-            			if (fileName.endsWith("png") || fileName.endsWith("jpg") || fileName.endsWith("gif")) {
-            				result++;
-            			}
-            		}
-            		return result;
-            	}
+            	System.out.println("class path entry = " + entry);
+        		if (entry.endsWith("splash.jar")) {
+        			System.out.println("Found splash.jar");
+        			result = countImagesInJar(entry);
+        		}
             }
         } catch (Exception ignore) { }
 
+        //running from FrostWire.app on Mac and splash.jar was not in the classpath
+        //for some reason...
+        if (result == 0 && classPath.toLowerCase().contains("frostwire.app") &&
+        	System.getProperty("os.name").toLowerCase().startsWith("mac")) {
+        	
+        	String[] splitClasspath = classPath.split(":");
+        	
+        	for (String entry : splitClasspath) {
+        		if (entry.contains("FrostWire.app") && entry.endsWith("jar")) {
+        			classPath = entry.substring(0, entry.lastIndexOf("/"));
+        			System.out.println("About to save the day with " + classPath);
+        			return countImagesInJar(classPath + "/splash.jar");
+        		}
+        	}
+        }
+
+        
 		return result;
+	}
+
+	private static int countImagesInJar(String entry) {
+		int result = 0;
+		
+			JarFile jar = null;
+			
+			try {
+				jar = new JarFile(new File(entry));
+			} catch (Exception e) {
+				return 0;
+			}
+			
+			Enumeration<JarEntry> jarEntries = jar.entries();
+			while (jarEntries.hasMoreElements()) {
+				String fileName = jarEntries.nextElement().getName();
+				
+				if (fileName.endsWith("png") || fileName.endsWith("jpg") || fileName.endsWith("gif")) {
+					result++;
+					System.out.println("one more image inside jar - " + fileName + " (" + result + ")");
+				}
+			}
+			
+			return result;
+
 	}
 
 	/** Determines if this is running on OS X. */
