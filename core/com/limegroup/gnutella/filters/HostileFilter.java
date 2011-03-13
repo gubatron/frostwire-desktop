@@ -41,7 +41,9 @@ public class HostileFilter extends  AbstractIPFilter {
         try {
             for (String ip : allHosts)
                 newHostile.add(new IP(ip));
-            if (newHostile.isValidFilter(false, networkInstanceUtils))
+            
+            //if (newHostile.isValidFilter(true, networkInstanceUtils)) //allow private ips
+            if (newHostile.isValidFilter(false, networkInstanceUtils)) //dont allow private ips
                 hostileHosts = newHostile;
         } catch (IllegalArgumentException badSimpp){}
     }

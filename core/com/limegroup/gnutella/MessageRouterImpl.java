@@ -1864,7 +1864,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
         // only send to at most 4 Ultrapeers, as we could have more
         // as a result of race conditions - also, don't send what is new
         // requests down too many connections
-        final int max = qr.isWhatIsNewRequest() ? 2 : 3;
+        final int max = qr.isWhatIsNewRequest() ? 2 : 4;
 	int start = !qr.isWhatIsNewRequest() ? 0 :
 		(int) (Math.floor(Math.random()*(list.size()-1)));
         int limit = Math.min(max, list.size());

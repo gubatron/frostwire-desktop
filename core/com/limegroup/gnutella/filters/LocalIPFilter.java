@@ -86,7 +86,7 @@ public final class LocalIPFilter extends AbstractIPFilter {
             ipLoader.execute(load);
     }
     
-    /** Does the work of setting new good  & bad hosts. */
+    /** Does the work of setting new good & bad hosts. */
     private void refreshHostsImpl() {
         LOG.debug("refreshing hosts");
         
@@ -105,7 +105,7 @@ public final class LocalIPFilter extends AbstractIPFilter {
         }
 
         // Load data from hostiles.txt (if it wasn't already loaded!)...
-        if(shouldLoadHostiles) {
+        if (shouldLoadHostiles) {
             shouldLoadHostiles = false;
             
             LOG.debug("loading hostiles");
@@ -146,12 +146,12 @@ public final class LocalIPFilter extends AbstractIPFilter {
     }
     
     protected boolean allowImpl(IP ip) {
-        if (goodHosts.contains(ip)) {
+        if (goodHosts != null && goodHosts.contains(ip)) {
             whitelistings++;
             return true;
         }
 
-        if (badHosts.contains(ip)) {
+        if (badHosts != null && badHosts.contains(ip)) {
             blacklistings++;
             return false;
         }

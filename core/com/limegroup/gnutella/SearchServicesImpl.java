@@ -1,5 +1,6 @@
 package com.limegroup.gnutella;
 
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.limewire.concurrent.ThreadExecutor;
@@ -13,6 +14,7 @@ import com.google.inject.Singleton;
 import com.limegroup.gnutella.filters.MutableGUIDFilter;
 import com.limegroup.gnutella.messages.QueryRequest;
 import com.limegroup.gnutella.messages.QueryRequestFactory;
+import com.limegroup.gnutella.search.HostData;
 import com.limegroup.gnutella.search.QueryDispatcher;
 import com.limegroup.gnutella.search.SearchResultHandler;
 import com.limegroup.gnutella.settings.FilterSettings;
@@ -215,4 +217,49 @@ public class SearchServicesImpl implements SearchServices {
             GUID.timeStampGuid(ret);
         return ret;
     }
+
+	@Override
+	public boolean isFloodQueryReply(HostData data, Response response) {
+		
+		if (response == null || response.getDocument() == null) {
+			return false;
+		}
+
+		//several 'pleasers' forgot to set creation time. filters a lot
+		if (response.getCreateTime() == -1) {
+			return true;
+		}
+		
+		Set<Entry<String, String>> nameValueSet = response.getDocument().getNameValueSet();
+
+		if (nameValueSet == null) {
+			return false;
+		}
+		
+		for (Entry<String,String> nameValue : nameValueSet) {
+			String key = nameValue.getKey();
+			String value = nameValue.getValue();
+			//System.out.println(key + "=" + value);
+			
+			if (key.equals("audios__audio__album__") &&
+				(value.equals("LIMEWIRE COURT SETTLEMENT, LIMEWIRE USERS GET A FREE APPLE IPHONE 4/IPAD AT WWW.LIMEWIRELAW.COM") ||
+				value.contains("LIMEWIRE COURT") ||
+				value.contains("APPLE") || value.contains("IPHONE") || value.contains("IPAD") || 
+				value.contains("LIMEWIRELAW.COM"))) {
+				return true;
+			}
+		}
+		
+		long size = response.getSize();
+		
+		if (size == 2915581 || 
+			size == 2470272 || 
+			size == 2928329 ||
+			size == 3416192 ||
+			size == 241272) {
+			return true;	
+		}
+		
+		return false;
+	}
 }

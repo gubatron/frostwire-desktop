@@ -288,6 +288,11 @@ public final class SearchResultHandler {
                 continue;
             }
             
+            // Throw away flood results
+            if (searchServices.isFloodQueryReply(data, response)) {
+            	continue;
+            }
+            
             // If there was an action, only allow it if it's a secure message.
             LimeXMLDocument doc = response.getDocument();
             //System.out.println("Secure Results?: " + ApplicationSettings.USE_SECURE_RESULTS.getValue());

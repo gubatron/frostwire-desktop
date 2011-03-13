@@ -47,8 +47,10 @@ import com.frostwire.gnutella.gui.actions.BuyAction;
 import com.limegroup.gnutella.BrowseHostHandler;
 import com.limegroup.gnutella.FileDetails;
 import com.limegroup.gnutella.GUID;
+import com.limegroup.gnutella.LimeCoreGlue;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.RemoteFileDesc;
+import com.limegroup.gnutella.SpamServicesImpl;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.FileDetailsProvider;
@@ -730,6 +732,9 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
         	}
         }
         
+        
+        
+        
         int answer = GUIMediator.showConfirmListMessage(I18n.tr("Do you want to block search results from the following list of hosts?"), 
         		uniqueHosts.toArray(), JOptionPane.YES_NO_OPTION, null);
         if (answer == JOptionPane.YES_OPTION) {
@@ -738,6 +743,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
             uniqueHosts.addAll(Arrays.asList(bannedIps));
             FilterSettings.BLACK_LISTED_IP_ADDRESSES.setValue(uniqueHosts.toArray(new String[uniqueHosts.size()]));
             GuiCoreMediator.getSpamServices().reloadIPFilter();
+
         }
     }
     

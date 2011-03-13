@@ -78,6 +78,11 @@ public class SpamServicesImpl implements SpamServices {
         }
     }
 
+    public boolean isHostile(String host) {
+    	int length = FilterSettings.BLACK_LISTED_IP_ADDRESSES.getValue().length;
+    	return false;
+    }
+    
     public void unblockHost(String host) {
         // FIXME move into IPFilter
         // FIXME synchronize access to setting properly?

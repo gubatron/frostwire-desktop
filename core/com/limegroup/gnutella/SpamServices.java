@@ -20,4 +20,6 @@ public interface SpamServices {
     public boolean isAllowed(InetAddress host);
 
     public void unblockHost(String host);
+    
+    public boolean isHostile(String host);
 }

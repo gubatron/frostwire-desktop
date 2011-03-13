@@ -5,6 +5,8 @@ import java.util.Set;
 import org.limewire.io.Connectable;
 import org.limewire.io.IpPort;
 
+import com.limegroup.gnutella.search.HostData;
+
 public interface SearchServices {
 
     /**
@@ -111,5 +113,7 @@ public interface SearchServices {
      * queries.
      */
     public byte[] newQueryGUID();
+
+	public boolean isFloodQueryReply(HostData data, Response response);
 
 }
