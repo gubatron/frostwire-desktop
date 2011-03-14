@@ -21,7 +21,7 @@ import com.limegroup.gnutella.settings.ConnectionSettings;
 
 public class PeerDiscoveryClerk {
 
-	private static final long STALE_DEVICE_TIMEOUT = 7000;
+	private static final long STALE_DEVICE_TIMEOUT = 14000;
 
 	private HashMap<String, Device> _deviceCache;
 
