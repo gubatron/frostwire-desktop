@@ -50,7 +50,6 @@
 	<classpathentry kind="lib" path="lib/jars/jl.jar"/>
 	<classpathentry kind="lib" path="lib/jars/jmdns.jar"/>
 	<classpathentry kind="lib" path="lib/jars/junit.jar"/>
-	<classpathentry kind="lib" path="lib/jars/jython.jar"/>
 	<classpathentry kind="lib" path="lib/jars/log4j.jar"/>
 	<classpathentry kind="lib" path="lib/jars/looks.jar"/>
 	<classpathentry kind="lib" path="lib/jars/messages.jar"/>
