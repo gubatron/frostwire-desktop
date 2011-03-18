@@ -27,7 +27,7 @@ public class Main {
 	 *
 	 * @param args the array of command line arguments
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
     public static void main(String args[]) {
 		System.out.println("1: Main.main("+args+")");
 		
@@ -96,12 +96,11 @@ public class Main {
 	    if (CHOSEN_SPLASH_URL != null)
 	        return CHOSEN_SPLASH_URL;
 	    
-        final String splashPath = "com/frostwire/splash/";
-        
-	    final int max_splashes = countSplashesInSplashJar();
+	    int max_splashes = countSplashesInSplashJar();
 	    
 	    //different splash every minute... that way it round robins forward in a loop.
 	    final int randomSplash = 1+(Calendar.getInstance().get(Calendar.MINUTE) % max_splashes);
+	    final String splashPath = "com/frostwire/splash/";
 	    
 	    CHOSEN_SPLASH_URL = ClassLoader.getSystemResource(splashPath + randomSplash + ".jpg");
 	    return CHOSEN_SPLASH_URL;
@@ -113,11 +112,16 @@ public class Main {
 	 */
     private static int countSplashesInSplashJar() {
     	int result = 0;
+    	
+    	//if running in windows, from .exe, splash.jar should be at the same level
+    	File splashJar = new File("splash.jar");
+    	if (splashJar.exists() && splashJar.isFile()) {
+    		return countImagesInJar("splash.jar");
+    	}
+
+    	//otherwise try to find splash.jar in the classpath.
 		String pathSeparator = System.getProperty("path.separator");
         String classPath = System.getProperty("java.class.path");
-        
-//        System.out.println("pathSeparator = " + pathSeparator);
-//        System.out.println("classPath = " + classPath);
         
         String[] classPathEntries = classPath.split(pathSeparator);
 
@@ -126,6 +130,7 @@ public class Main {
             	System.out.println("class path entry = " + entry);
         		if (entry.endsWith("splash.jar")) {
         			result = countImagesInJar(entry);
+        			break;
         		}
             }
         } catch (Exception ignore) { }
@@ -144,7 +149,6 @@ public class Main {
         		}
         	}
         }
-
         
 		return result;
 	}
@@ -194,7 +198,8 @@ public class Main {
      * @return                                                                                                                                                                                        
      * @throws                                                                                                                                                                                        
      */
-    private static int countSplashes()  {
+    @SuppressWarnings("unused")
+	private static int countSplashes()  {
             int n = 0;
             try {
             	JarFile splashes = new JarFile("splash.jar");
