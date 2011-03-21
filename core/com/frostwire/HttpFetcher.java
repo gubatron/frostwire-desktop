@@ -158,7 +158,13 @@ public class HttpFetcher {
 	}
 	
 	public byte[] fetch() {
-	    return (byte[]) fetch(false)[0];
+		Object[] objArray = fetch(false);
+		
+		if (objArray != null) {
+			return (byte[]) objArray[0];
+		}
+		
+	    return null;
 	}
 	
 	public void post(String param, String value) throws IOException {

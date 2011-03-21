@@ -181,6 +181,7 @@ public class BTUploader implements Uploader, TorrentEventListener {
 	}
 	
 	private void torrentStopped() {
+		//this was commented maybe for a good reason
 		//activityCallback.removeUpload(this);
 		stopTime = System.currentTimeMillis();
 	}

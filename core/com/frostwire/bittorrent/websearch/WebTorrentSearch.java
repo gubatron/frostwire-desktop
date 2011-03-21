@@ -104,8 +104,8 @@ public class WebTorrentSearch {
 			fetcher = new HttpFetcher(new URI("http://www.mininova.org/vuze.php?search="+iha));
 		} catch (URISyntaxException e) {
 		}
+		
 		byte[] jsonBytes = fetcher.fetch();
-
 		
 		if (jsonBytes == null)
 			return null;

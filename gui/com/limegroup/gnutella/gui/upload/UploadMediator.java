@@ -351,6 +351,10 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 		for( int counter = sel.length - 1; counter >= 0; counter--) {
 			int i = sel[counter];
 			DATA_MODEL.get(i).cleanup();
+			
+			if (DATA_MODEL.get(i).getInitializeObject() instanceof BTUploader) {
+				DATA_MODEL.remove(i);
+			}
 		}
     }
 

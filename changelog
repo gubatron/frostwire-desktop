@@ -1,3 +1,16 @@
+frostwire (4.21.5) stable; urgency=high
+
+  * Fixes newly introduced bug where it would not recursively share the 
+    files in a folder. Thanks File_Girl71.
+  * Fixes newly introduced bug where it wouldn't correctly display the 
+    title of a file on the Playlist.
+  * Fixes issue where it would not kill torrent uploads until 
+    the next restart.
+  * Fixes NPE on HttpFetcher.fetch()
+	
+ -- FrostWire Team <contact@frostwire.com>  Mon, 21 Mar 2011 19:33:12 -0500
+
+
 frostwire (4.21.4) stable; urgency=low
 
   * New setting to turn off automatic installer downloads.

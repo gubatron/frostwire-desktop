@@ -28,7 +28,7 @@ public final class LimeWireUtils {
 	 * Constant for the current version of FrostWire.
 	 */
     @InspectablePrimitive("limewire version")
-	private static final String FROSTWIRE_VERSION = "4.21.4";
+	private static final String FROSTWIRE_VERSION = "4.21.5";
     
     /**
      * The current revision of the BitTorrent protocol implementation.

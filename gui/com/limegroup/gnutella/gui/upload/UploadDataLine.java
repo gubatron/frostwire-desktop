@@ -326,7 +326,11 @@ public final class UploadDataLine extends AbstractDataLine<Uploader> {
 	}
 
 	// implements DataLine interface
-	public void cleanup() { if ( !_persistConnection) initializer.stop(); }
+	public void cleanup() { 
+		if ( !_persistConnection) {
+			initializer.stop(); 
+		}
+	}
 
 	/*
 	 * Returns the <tt>Object</tt> stored at the specified column in this
