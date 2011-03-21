@@ -73,7 +73,7 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
     /**
      * Performs the rendering of the Name column in the playlist
      */
-    private StoreNameRendererEditor STORE_RENDERER;
+    private PlaylistItemNameRendererEditor STORE_RENDERER;
     
     /**
      * Adds a row number to each row in the table
@@ -149,7 +149,7 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
 		TABLE = new LimeJTable(DATA_MODEL);
 //        TABLE.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         BUTTON_ROW = (new PlaylistButtons(this)).getComponent();
-        STORE_RENDERER = new StoreNameRendererEditor();
+        STORE_RENDERER = new PlaylistItemNameRendererEditor();
         TABLE_NUMBER_RENDERER = new NumberTableCellRenderer();
     }
 
@@ -213,7 +213,7 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
      */
     protected void setDefaultEditors() {
         super.setDefaultEditors();        
-        TABLE.setDefaultRenderer(StoreName.class, STORE_RENDERER);
+        TABLE.setDefaultRenderer(PlaylistItemName.class, STORE_RENDERER);
     }
     
     /**

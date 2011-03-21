@@ -32,7 +32,7 @@ public final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
     static final int NAME_IDX = 1;
     private static final LimeTableColumn NAME_COLUMN =
         new LimeTableColumn(NAME_IDX, "PLAYLIST_TABLE_NAME", I18n.tr("Name"),
-                700, true, StoreName.class);
+                700, true, PlaylistItemName.class);
     
     /**
      * Artist column
@@ -142,7 +142,7 @@ public final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
     /**
      * Holder for painting the filename/buttons in a single cell
      */
-    private StoreName name;
+    private PlaylistItemName name;
     
     /**
      *  Coverts the size of the PlayListItem into readable form postfixed with
@@ -164,7 +164,7 @@ public final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
     public void initialize(PlayListItem item) {
         super.initialize(item);
 
-        name = new StoreName(this);
+        name = new PlaylistItemName(this);
         if(item.getProperty(PlayListItem.SIZE) != null )
             holder = new SizeHolder(Integer.parseInt(item.getProperty(PlayListItem.SIZE)));
         else

@@ -13,14 +13,14 @@ import com.limegroup.gnutella.gui.search.CompositeCellTableRendererAndTableCellE
  *  of the file being played. When displaying a preview item from the LWS, buttons are
  *  displayed which enable the user to purchase the song directly from the playlist
  */
-public class StoreNameRendererEditor extends CompositeCellTableRendererAndTableCellEditor {
+public class PlaylistItemNameRendererEditor extends CompositeCellTableRendererAndTableCellEditor {
     
     /**
      * line containing information about the row being painted
      */
     private PlaylistDataLine line;
     
-    public StoreNameRendererEditor(){
+    public PlaylistItemNameRendererEditor(){
         super();
     }
     
@@ -48,7 +48,7 @@ public class StoreNameRendererEditor extends CompositeCellTableRendererAndTableC
      */
     @Override
     protected String getNameForValue(Object value) { 
-        final StoreName rnh = (StoreName)value;
+        final PlaylistItemName rnh = (PlaylistItemName)value;
         this.line = rnh.getLine();
         return line.getSongName();
     }
@@ -83,4 +83,3 @@ public class StoreNameRendererEditor extends CompositeCellTableRendererAndTableC
         return line.getSongName();
     }
 }
-
