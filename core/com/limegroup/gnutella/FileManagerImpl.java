@@ -901,6 +901,7 @@ public abstract class FileManagerImpl implements FileManager {
             if (_completelySharedDirectories.contains(directory))
                 return;
 
+            _completelySharedDirectories.add(directory);
             if (!isForcedShare) {
                 dispatchFileEvent(
                         new FileManagerEvent(this, Type.ADD_FOLDER, rootShare, depth, directory, parent));
