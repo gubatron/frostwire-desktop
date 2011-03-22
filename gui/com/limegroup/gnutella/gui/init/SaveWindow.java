@@ -18,9 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import org.limewire.i18n.I18nMarker;
-import org.limewire.util.StringUtils;
 import org.limewire.util.CommonUtils;
-//import org.limewire.util.OSUtils;
+import org.limewire.util.StringUtils;
 
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.FileChooserHandler;
@@ -31,7 +30,6 @@ import com.limegroup.gnutella.gui.actions.RemoveSharedDirectoryAction;
 import com.limegroup.gnutella.gui.actions.SelectSharedDirectoryAction;
 import com.limegroup.gnutella.gui.library.RecursiveSharingPanel;
 import com.limegroup.gnutella.settings.SharingSettings;
-import com.limegroup.gnutella.util.LimeWireUtils;
 /**
  * This class displays a setup window for allowing the user to choose
  * the directory for saving their files.
@@ -39,6 +37,11 @@ import com.limegroup.gnutella.util.LimeWireUtils;
 //2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 
 class SaveWindow extends SetupWindow {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -1727438256825669742L;
 
     private static final String LEARN_MORE_URL = "http://www.frostwire.com";
     
@@ -215,7 +218,12 @@ class SaveWindow extends SetupWindow {
 
 	private class DefaultAction extends AbstractAction {
 		
-		public DefaultAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 4107077835180336159L;
+
+        public DefaultAction() {
 			putValue(Action.NAME, I18n.tr("Use Default"));
 			putValue(Action.SHORT_DESCRIPTION, I18n.tr("Use the Default Folder"));
 		}
@@ -227,7 +235,12 @@ class SaveWindow extends SetupWindow {
 	
 	private class BrowseAction extends AbstractAction {
 		
-		public BrowseAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -5098673476971367183L;
+
+        public BrowseAction() {
 			putValue(Action.NAME, I18n.tr("Browse..."));
 			putValue(Action.SHORT_DESCRIPTION, I18n.tr("Choose Another Folder"));
 		}

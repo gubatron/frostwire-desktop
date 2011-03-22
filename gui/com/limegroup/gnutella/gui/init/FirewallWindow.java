@@ -16,6 +16,11 @@ import com.limegroup.gnutella.gui.GuiCoreMediator;
 final class FirewallWindow extends SetupWindow {
 
 	/**
+     * 
+     */
+    private static final long serialVersionUID = 3859613568907434264L;
+
+    /**
 	 * Creates the window and its components.
 	 */
 	FirewallWindow(SetupManager manager) {

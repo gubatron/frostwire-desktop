@@ -2,11 +2,8 @@ package com.limegroup.gnutella.gui.upload;
 
 import com.limegroup.bittorrent.BTDownloaderImpl;
 import com.limegroup.bittorrent.BTUploader;
-import com.limegroup.bittorrent.gui.TorrentFileFetcher;
-import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.Downloader.DownloadStatus;
 import com.limegroup.gnutella.Uploader;
-import com.limegroup.gnutella.gui.download.DownloadDataLine;
 import com.limegroup.gnutella.gui.download.DownloadMediator;
 import com.limegroup.gnutella.gui.tables.BasicDataLineModel;
 

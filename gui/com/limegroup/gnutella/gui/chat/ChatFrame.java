@@ -47,6 +47,11 @@ import com.limegroup.gnutella.gui.themes.ThemeObserver;
 public class ChatFrame extends JFrame implements ThemeObserver {
 
 	/**
+     * 
+     */
+    private static final long serialVersionUID = 3639289555617736364L;
+
+    /**
 	 * Constant for the locale-specific resource key for the label of the 
 	 * chat block sender button.
 	 */
@@ -278,7 +283,11 @@ public class ChatFrame extends JFrame implements ThemeObserver {
 	 * including pastes
 	 */
 	private class JTextFieldLimit extends PlainDocument {
-		private int limit;
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -2546573474331014643L;
+        private int limit;
 		
 		public JTextFieldLimit(int limit) {
 			super();
@@ -294,7 +303,12 @@ public class ChatFrame extends JFrame implements ThemeObserver {
 	}
 
 	private class TextPanel extends JPanel {
-		public TextPanel() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 8695755536879470542L;
+
+        public TextPanel() {
 			setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 			BoxPanel fieldPanel = new BoxPanel(BoxLayout.X_AXIS);
 			_area = new JTextArea();

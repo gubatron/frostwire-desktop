@@ -427,7 +427,11 @@ public class SetupManager {
 
 	private abstract class LanguageAwareAction extends AbstractAction {
 		
-		private final String nameKey;
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -9116039417985018834L;
+        private final String nameKey;
 		
 		public LanguageAwareAction(String nameKey) {
 			super(I18n.tr(nameKey));
@@ -441,7 +445,12 @@ public class SetupManager {
 	
 	private class CancelAction extends LanguageAwareAction {
 
-		public CancelAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -337264221787811634L;
+
+        public CancelAction() {
 			super(I18nMarker.marktr("Cancel"));
 		}
 
@@ -452,7 +461,12 @@ public class SetupManager {
 	
 	private class NextAction extends LanguageAwareAction {
 		
-		public NextAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 8396346766881170337L;
+
+        public NextAction() {
 			super(I18nMarker.marktr("Next >>"));
 		}
 
@@ -463,7 +477,12 @@ public class SetupManager {
 	
 	private class PreviousAction extends LanguageAwareAction {
 
-		public PreviousAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -6355909946850317926L;
+
+        public PreviousAction() {
 			super(I18nMarker.marktr("<< Back"));
 		}
 		
@@ -474,7 +493,12 @@ public class SetupManager {
 	
 	private class FinishAction extends LanguageAwareAction {
 		
-		public FinishAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 7243495030424309213L;
+
+        public FinishAction() {
 			super(I18nMarker.marktr("Finish"));
 		}
 

@@ -733,8 +733,6 @@ final class LibraryTree extends JTree implements MouseObserver {
 		public Icon getIcon() { return null; }
 		
 		public boolean isEmpty() { return true; }
-        
-        public boolean isStoreNode() { return false; }
 	}
 	
 	private class RootSharedFilesDirectoryHolder extends RootNodeDirectoryHolder {

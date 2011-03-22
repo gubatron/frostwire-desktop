@@ -4,7 +4,6 @@ import com.limegroup.bittorrent.BTDownloaderImpl;
 import com.limegroup.bittorrent.gui.TorrentFileFetcher;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.Downloader.DownloadStatus;
-import com.limegroup.gnutella.downloader.CoreDownloader;
 import com.limegroup.gnutella.gui.tables.BasicDataLineModel;
 
 /**

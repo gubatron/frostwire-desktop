@@ -31,6 +31,10 @@ import com.limegroup.gnutella.settings.ApplicationSettings;
 
 public class LanguagePanel extends JPanel {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -4464891813825761134L;
     private final JLabel languageLabel;
     private final ActionListener actionListener;
     private final JComboBox languageOptions;

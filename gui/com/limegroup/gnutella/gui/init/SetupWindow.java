@@ -26,6 +26,11 @@ import com.limegroup.gnutella.gui.URLLabel;
 abstract class SetupWindow extends JPanel {
 
 	/**
+     * 
+     */
+    private static final long serialVersionUID = 6493935905177540283L;
+
+    /**
 	 * The width of the setup window.
 	 */
 	public static final int SETUP_WIDTH = 700;
@@ -256,6 +261,11 @@ abstract class SetupWindow extends JPanel {
 	protected static class MultiLineLabel extends JTextArea {
 
 	    /**
+         * 
+         */
+        private static final long serialVersionUID = -2269845470113202415L;
+
+        /**
 	     * Creates a label that can have multiple lines and that has the 
 	     * default width.
 	     *

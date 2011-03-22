@@ -22,6 +22,10 @@ import com.limegroup.gnutella.util.LimeWireUtils;
 
 public class IntentPanel extends JPanel {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 2787016363153722074L;
     private final JRadioButton mightUseButton;
     private final JRadioButton willNotButton;
 

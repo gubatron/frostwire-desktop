@@ -14,6 +14,11 @@ import com.limegroup.gnutella.gui.GUIMediator;
 final class WelcomeWindow extends SetupWindow {
     
 	/**
+     * 
+     */
+    private static final long serialVersionUID = -5102133230630399469L;
+
+    /**
 	 * Creates the window and its components
 	 */
 	WelcomeWindow(SetupManager manager, boolean partial) {

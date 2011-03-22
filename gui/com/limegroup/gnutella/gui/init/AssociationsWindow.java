@@ -23,7 +23,12 @@ import com.limegroup.gnutella.gui.shell.LimeAssociations;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 
 public class AssociationsWindow extends SetupWindow {
-	/** a mapping of checkboxes to associations */
+	/**
+     * 
+     */
+    private static final long serialVersionUID = -8599946599240459538L;
+
+    /** a mapping of checkboxes to associations */
 	private Map<JCheckBox, LimeAssociationOption> associations =
 		new HashMap<JCheckBox, LimeAssociationOption>();
 	

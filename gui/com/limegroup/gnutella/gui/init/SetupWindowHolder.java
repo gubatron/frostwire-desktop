@@ -14,6 +14,10 @@ import javax.swing.JPanel;
 final class SetupWindowHolder extends JPanel {
 
 	/**
+     * 
+     */
+    private static final long serialVersionUID = -5012114565385150258L;
+    /**
 	 * The <tt>CardLayout</tt> instance for the setup windows.
 	 */
 	private final CardLayout CARD_LAYOUT = new CardLayout();

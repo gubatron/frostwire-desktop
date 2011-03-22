@@ -10,6 +10,10 @@ import com.limegroup.gnutella.gui.sharing.FileTypeSharingPanelManager;
  */
 public final class FileTypeWindow extends SetupWindow {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -4010696344898451260L;
     private FileTypeSharingPanelManager manager;
     
     FileTypeWindow(SetupManager manager) {

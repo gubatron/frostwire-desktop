@@ -151,9 +151,7 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
         STORE_RENDERER = new PlaylistItemNameRendererEditor();
         TABLE_NUMBER_RENDERER = new NumberTableCellRenderer();
     }
-
-        
-        STORE_RENDERER.updateTheme();
+	
     /**
      * Update the splash screen
      */
@@ -200,9 +198,9 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
     protected void setDefaultRenderers() {
         super.setDefaultRenderers();
         TABLE.setDefaultRenderer(NumberCell.class, TABLE_NUMBER_RENDERER );
+        TABLE.setDefaultRenderer(PlaylistItemName.class, STORE_RENDERER);
     }
     
-        TABLE.setDefaultRenderer(PlaylistItemName.class, STORE_RENDERER);
     /**
      * Sets up dnd
      */
