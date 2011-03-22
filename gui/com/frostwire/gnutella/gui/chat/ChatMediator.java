@@ -12,6 +12,7 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
 
 import com.frostwire.gnutella.gui.sponsors.BannerContainer;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -37,7 +38,7 @@ public final class ChatMediator implements ThemeObserver {
 	/**
 	 * The primary panel that contains all of the library elements.
 	 */
-	private static final JPanel MAIN_PANEL = new JPanel(new GridBagLayout());
+	private static JPanel MAIN_PANEL;
     private static IRCApplication PJIRC;
     private static IRCConfiguration _config; // added to use config procedures
     private BannerContainer bannerContainer;
@@ -84,6 +85,9 @@ public final class ChatMediator implements ThemeObserver {
 	 * the Chat.
 	 */
 	public JComponent getComponent() {
+	    if (MAIN_PANEL == null) {
+	        MAIN_PANEL = new JPanel(new GridBagLayout());
+	    }
 		return MAIN_PANEL;
 	}
 
@@ -101,15 +105,23 @@ public final class ChatMediator implements ThemeObserver {
         	//Tries to create an IRC chat, if the Nickname is still a default nick, it will fail
         	//and this function can be invoked again and again until a chat has been started and
         	//added to the Chat Tab. Once it succeeds invoking it will be a void action.
-        	Runnable r = new Runnable() {
-				public void run() {
-				updateSplashScreen();				
-				//System.out.println("Trying to start chat panel...");    
-					tryToStartAndAddChat();
-				//System.out.println("end of try...");    
-				}
-        	};
-        	new Thread(r).start();
+//        	Runnable r = new Runnable() {
+//				public void run() {
+//				updateSplashScreen();				
+//				//System.out.println("Trying to start chat panel...");    
+//					tryToStartAndAddChat();
+//				//System.out.println("end of try...");    
+//				}
+//        	};
+//        	new Thread(r).start();
+        	SwingUtilities.invokeLater(new Runnable() {
+              public void run() {
+              updateSplashScreen();               
+              //System.out.println("Trying to start chat panel...");    
+                  tryToStartAndAddChat();
+              //System.out.println("end of try...");    
+              }
+        	});
     }
 	
 	/**
@@ -187,7 +199,7 @@ public final class ChatMediator implements ThemeObserver {
     	
 		String currlang=ApplicationSettings.LANGUAGE.getValue();
 		
-		Hashtable defaultRooms = new Hashtable();
+		Hashtable<String, String> defaultRooms = new Hashtable<String, String>();
 		//by popularity
 		//(For further language code reference if this needs to be
 		// mantained in the future, use:
@@ -231,7 +243,7 @@ public final class ChatMediator implements ThemeObserver {
 	    			ChatSettings.SMILEYS_ENABLED.getValue()); // Loads smileys
 		
 		//System.out.println("Creating new IRC App...");
-		PJIRC = new IRCApplication(ircConfiguration,startupConfiguration,MAIN_PANEL);
+		PJIRC = new IRCApplication(ircConfiguration,startupConfiguration, getComponent());
 		_config = ircConfiguration;
 		//System.out.println("Initializing new IRC App...");
 		PJIRC.init();
@@ -270,15 +282,15 @@ public final class ChatMediator implements ThemeObserver {
         GridBagLayout gridbag = new GridBagLayout();
         GridBagConstraints c = new GridBagConstraints();
         
-        MAIN_PANEL.setLayout(gridbag);
+        getComponent().setLayout(gridbag);
         c.gridx = 0;
         c.gridy = 0;
-        c.fill = c.BOTH;
-        c.anchor = c.LINE_START;
+        c.fill = GridBagConstraints.BOTH;
+        c.anchor = GridBagConstraints.LINE_START;
         c.weightx = 1;
         c.weighty = 1;
     	
-    	MAIN_PANEL.add(PJIRC.getIRCInterface().getComponent(),c);
+        getComponent().add(PJIRC.getIRCInterface().getComponent(),c);
     	//Fix for heavyweight component to not go on top of lightweight menu (Test in Windows)
     	//MAIN_PANEL.setComponentZOrder(PJIRC.getIRCInterface().getComponent(), 1);
     	//MAIN_PANEL.setComponentZOrder(MenuMediator.instance().getMenuBar(),0);
@@ -286,12 +298,12 @@ public final class ChatMediator implements ThemeObserver {
     	c.weightx = 0;
     	c.weighty = 0;
     	c.gridx = 1;
-    	c.fill = c.NONE;
-    	c.anchor = c.LINE_END;
+    	c.fill = GridBagConstraints.NONE;
+    	c.anchor = GridBagConstraints.LINE_END;
 	
 	//FTA    	
     	bannerContainer = new BannerContainer();	
-    	MAIN_PANEL.add(bannerContainer,c);
+    	getComponent().add(bannerContainer,c);
     	
 
     	_chatAlreadyStarted = true;
@@ -337,7 +349,7 @@ public final class ChatMediator implements ThemeObserver {
     
     public void changesmileys(boolean newstatus) {
     	//System.out.println("Changing smileys status..."); 	
-    	String color,txtnewstatus=null;
+    	//String color,txtnewstatus=null;
     	
     		if (newstatus == true) {
     			//color = "3";

@@ -12,11 +12,14 @@ import java.util.StringTokenizer;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
+import org.limewire.util.OSUtils;
+
+import com.limegroup.gnutella.gui.themes.ThemeMediator;
+
 /**
  * This class constructs an <tt>Initializer</tt> instance that constructs
  * all of the necessary classes for the application.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public class Main {
 	
     private static URL CHOSEN_SPLASH_URL = null;
@@ -27,17 +30,19 @@ public class Main {
 	 *
 	 * @param args the array of command line arguments
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-    public static void main(String args[]) {
+	public static void main(String args[]) {
+		if (OSUtils.isMacOSX()) {
+			System.setProperty("apple.laf.useScreenMenuBar", "true");
+		}
 		System.out.println("1: Main.main("+args+")");
 		
 	    Frame splash = null;
 	    try {
-            if (isMacOSX()) {
+            if (OSUtils.isMacOSX()) {
                 // Register GURL to receive AppleEvents, such as magnet links.
                 // Use reflection to not slow down non-OSX systems.
                 // "GURLHandler.getInstance().register();"
-				Class clazz = Class.forName("com.limegroup.gnutella.gui.GURLHandler");
+				Class<?> clazz = Class.forName("com.limegroup.gnutella.gui.GURLHandler");
                 Method getInstance = clazz.getMethod("getInstance", new Class[0]);
                 Object gurl = getInstance.invoke(null, new Object[0]);
                 Method register = gurl.getClass().getMethod("register", new Class[0]);
@@ -55,13 +60,19 @@ public class Main {
 			// show initial splash screen only if there are no arguments
             if (args == null || args.length == 0)
 				splash = showInitialSplash();
-
+            
+            ThemeMediator.setCurrentOrDefaultTheme(false);
+            
             // load the GUI through reflection so that we don't reference classes here,
             // which would slow the speed of class-loading, causing the splash to be
             // displayed later.
-            Class.forName("com.limegroup.gnutella.gui.GUILoader").
-                getMethod("load", new Class[] { String[].class, Frame.class }).
-                    invoke(null, new Object[] { args, splash });
+            try {
+                Class.forName("com.limegroup.gnutella.gui.GUILoader").getMethod("load", new Class[] { String[].class, Frame.class })
+                        .invoke(null, new Object[] { args, splash });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+           
         } catch(Throwable e) {
             e.printStackTrace();
             System.exit(1);
@@ -104,7 +115,7 @@ public class Main {
 	    
 	    CHOSEN_SPLASH_URL = ClassLoader.getSystemResource(splashPath + randomSplash + ".jpg");
 	    return CHOSEN_SPLASH_URL;
-	} //getNextSplashURL
+	}
 
 	/**
 	 * Lookup splash.jar in the classpath and count all the splashes in it.
@@ -177,12 +188,6 @@ public class Main {
 			return result;
 
 	}
-
-	/** Determines if this is running on OS X. */
-    private static boolean isMacOSX() {
-        String os = System.getProperty("os.name").toLowerCase();
-        return os.startsWith("mac os") && os.endsWith("x"); // Why not indexOf("mac os x") ?
-    }
     
     /** Determines if this is running a Mac OSX lower than Leopard */
     private static boolean isOlderThanLeopard() {

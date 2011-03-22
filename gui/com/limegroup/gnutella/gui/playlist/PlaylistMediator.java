@@ -147,18 +147,13 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
 		MAIN_PANEL = new PaddedPanel(I18n.tr("Playlist"));
 		DATA_MODEL = MODEL = new PlaylistModel();
 		TABLE = new LimeJTable(DATA_MODEL);
-//        TABLE.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         BUTTON_ROW = (new PlaylistButtons(this)).getComponent();
         STORE_RENDERER = new PlaylistItemNameRendererEditor();
         TABLE_NUMBER_RENDERER = new NumberTableCellRenderer();
     }
 
-    public void updateTheme() {
-        super.updateTheme();
         
         STORE_RENDERER.updateTheme();
-    }
-
     /**
      * Update the splash screen
      */
@@ -207,15 +202,7 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
         TABLE.setDefaultRenderer(NumberCell.class, TABLE_NUMBER_RENDERER );
     }
     
-
-    /**
-     * Sets the default editors.
-     */
-    protected void setDefaultEditors() {
-        super.setDefaultEditors();        
         TABLE.setDefaultRenderer(PlaylistItemName.class, STORE_RENDERER);
-    }
-    
     /**
      * Sets up dnd
      */
@@ -835,7 +822,10 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
      *      methods need to get to added to the dataline
      */
     private class PlaylistFileTransferHandler extends LimeTransferHandler {
-		private static final long serialVersionUID = 8001846286940013099L;
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 8001846286940013099L;
 
 		DataFlavor playlistFlavor = 
             new DataFlavor(PlaylistTransferable.class, "FrostWire PlaylistTransfer");

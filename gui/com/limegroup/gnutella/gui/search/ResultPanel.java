@@ -27,7 +27,6 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -44,6 +43,9 @@ import org.limewire.inspection.InspectablePrimitive;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gnutella.gui.actions.BuyAction;
+import com.frostwire.gnutella.gui.skin.SkinMenu;
+import com.frostwire.gnutella.gui.skin.SkinMenuItem;
+import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.BrowseHostHandler;
 import com.limegroup.gnutella.FileDetails;
 import com.limegroup.gnutella.GUID;
@@ -266,7 +268,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
         TABLE.setDefaultRenderer(ResultSpeed.class, RESULT_SPEED_RENDERER);
         TABLE.setDefaultRenderer(Date.class, DATE_RENDERER);
         TABLE.setDefaultRenderer(Float.class, PERCENTAGE_RENDERER);
-        TABLE.setDefaultRenderer(ResultNameHolder.class, LINK_RENDERER);
+        TABLE.setDefaultRenderer(ResultNameHolder.class, getLinkRenderer());
     }
 
     /**
@@ -318,6 +320,11 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
 			 * 
 			 */
 			private static final long serialVersionUID = 1L;
+			
+			@Override
+			protected boolean isOverrideRowColor(int row) {
+			    return getLine(row).isOverrideRowColor();
+			}
 
 			@Override
             protected Color getEvenRowColor(int row) {
@@ -534,7 +541,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
             return null;
   
 
-        JPopupMenu menu = new JPopupMenu();
+        JPopupMenu menu = new SkinPopupMenu();
         menu.add(createSearchAgainMenu(lines.length > 0 ? lines[0] : null));
         
         menu.addSeparator();
@@ -562,9 +569,9 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
      * Returns a menu with a 'repeat search' and 'repeat search no clear' action.
      */
     protected final JMenu createSearchAgainMenu(TableLine line) {
-        JMenu menu = new JMenu(I18n.tr("Search More"));
-        menu.add(new JMenuItem(new RepeatSearchAction()));
-        menu.add(new JMenuItem(new RepeatSearchNoClearAction()));
+        JMenu menu = new SkinMenu(I18n.tr("Search More"));
+        menu.add(new SkinMenuItem(new RepeatSearchAction()));
+        menu.add(new SkinMenuItem(new RepeatSearchNoClearAction()));
 
         if (line == null) {
             menu.setEnabled(isRepeatSearchEnabled());
@@ -577,7 +584,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
                 keywords, null, MediaType
                 .getAnyTypeMediaType());
         if (SearchMediator.validateInfo(info) == SearchMediator.QUERY_VALID) {
-            menu.add(new JMenuItem(new SearchAction(info, I18nMarker
+            menu.add(new SkinMenuItem(new SearchAction(info, I18nMarker
                     .marktr("Search for Keywords: {0}"))));
         }
 
@@ -585,7 +592,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
         if (doc != null) {
             Action[] actions = ActionUtils.createSearchActions(doc);
             for (int i = 0; i < actions.length; i++) {
-                menu.add(new JMenuItem(actions[i]));
+                menu.add(new SkinMenuItem(actions[i]));
             }
         }
 

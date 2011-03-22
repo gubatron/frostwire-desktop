@@ -13,6 +13,11 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 public class LimeTreeCellRenderer extends DefaultTreeCellRenderer {
 
     /**
+     * 
+     */
+    private static final long serialVersionUID = -7659877202352618572L;
+
+    /**
      * Creates a new renderer instance, with the proper LNF.
      */
     public LimeTreeCellRenderer() {

@@ -58,7 +58,7 @@ final class SearchColumnPreferenceHandler
     }
     
     protected void save() {
-        DataLineModel dlm = (DataLineModel)table.getModel();
+        DataLineModel<?, ?> dlm = (DataLineModel<?, ?>)table.getModel();
         for(int i = 0; i < dlm.getColumnCount(); i++) {
             LimeTableColumn ltc = dlm.getTableColumn(i);
             super.setVisibility(ltc, getVisibility(ltc));

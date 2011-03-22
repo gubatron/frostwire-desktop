@@ -10,7 +10,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.dnd.DropTarget;
 import java.awt.event.ComponentEvent;
@@ -25,10 +24,8 @@ import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
@@ -65,92 +62,78 @@ import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.gui.upload.UploadMediator;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.PlayerSettings;
-import com.limegroup.gnutella.settings.SWTBrowserSettings;
-
 
 /**
  * This class constructs the main <tt>JFrame</tt> for the program as well as 
  * all of the other GUI classes.  
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public final class MainFrame implements RefreshListener, ThemeObserver {
 
     /**
      * Handle to the <tt>JTabbedPane</tt> instance.
      */
-    private final JTabbedPane TABBED_PANE =
-        new JTabbedPane();
+    private JTabbedPane TABBED_PANE;
 
     /**
      * Constant handle to the <tt>SearchMediator</tt> class that is
      * responsible for displaying search results to the user.
      */
-    private final SearchMediator SEARCH_MEDIATOR =
-        new SearchMediator();
+    private SearchMediator SEARCH_MEDIATOR;
 
      /**
      * Constant handle to the <tt>DownloadMediator</tt> class that is
      * responsible for displaying active downloads to the user.
      */
-    private final DownloadMediator DOWNLOAD_MEDIATOR =
-        DownloadMediator.instance();
+    private DownloadMediator DOWNLOAD_MEDIATOR;
 
     /**
      * Constant handle to the <tt>MonitorView</tt> class that is
      * responsible for displaying incoming search queries to the user.
      */
-    private final MonitorView MONITOR_VIEW =
-        new MonitorView();
+    private MonitorView MONITOR_VIEW;
     
     /**
      * Constant handle to the <tt>UploadMediator</tt> class that is
      * responsible for displaying active uploads to the user.
      */
-    private UploadMediator UPLOAD_MEDIATOR = UploadMediator.instance();
+    private UploadMediator UPLOAD_MEDIATOR;
 
     /**
      * Constant handle to the <tt>ConnectionView</tt> class that is
      * responsible for displaying current connections to the user.
      */
-    private final ConnectionMediator CONNECTION_MEDIATOR =
-        ConnectionMediator.instance();
+    private ConnectionMediator CONNECTION_MEDIATOR;
 
     /**
      * Constant handle to the <tt>LibraryView</tt> class that is
      * responsible for displaying files in the user's repository.
      */
-    private final LibraryMediator LIBRARY_MEDIATOR =
-        LibraryMediator.instance();
+    private LibraryMediator LIBRARY_MEDIATOR;
     
-    private final AndroidMediator ANDROID_MEDIATOR =
-    	AndroidMediator.instance();
+    private AndroidMediator ANDROID_MEDIATOR;
 
-    private final ChatMediator CHAT_MEDIATOR =
-        ChatMediator.instance();
+    private ChatMediator CHAT_MEDIATOR;
     
-    private final LoggingMediator LOGGING_MEDIATOR =
-        LoggingMediator.instance();
+    private LoggingMediator LOGGING_MEDIATOR;
 
     /**
      * Constant handle to the <tt>OptionsMediator</tt> class that is
      * responsible for displaying customizable options to the user.
      */
-    private final OptionsMediator OPTIONS_MEDIATOR =
-        OptionsMediator.instance();
+    private OptionsMediator OPTIONS_MEDIATOR;
 
     /**
      * Constant handle to the <tt>StatusLine</tt> class that is
      * responsible for displaying the status of the network and
      * connectivity to the user.
      */
-    private final StatusLine STATUS_LINE = new StatusLine(GuiCoreMediator.getNetworkManager());
+    private StatusLine STATUS_LINE;
 
     /**
      * Handle the <tt>MenuMediator</tt> for use in changing the menu
      * depending on the selected tab.
      */
-    private final MenuMediator MENU_MEDIATOR =
-        MenuMediator.instance();
+    private MenuMediator MENU_MEDIATOR;
 
     /**
      * The main <tt>JFrame</tt> for the application.
@@ -166,14 +149,12 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      * Constant for the <tt>LogoPanel</tt> used for displaying the
      * lime/spinning lime search status indicator and the logo.
      */
-    private final LogoPanel LOGO_PANEL = new LogoPanel();
+    private LogoPanel LOGO_PANEL;
 
     /**
      * The array of tabs in the main application window.
      */
     private Map<GUIMediator.Tabs, Tab> TABS = new HashMap<GUIMediator.Tabs, Tab>(7);
-
-	private int height;
 
 	private boolean isSearching = false;
     
@@ -216,10 +197,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         FRAME = frame;
         new DropTarget(FRAME, new TransferHandlerDropTargetListener(DNDUtils.DEFAULT_TRANSFER_HANDLER));
 
-        // Setup the Tabs structure based on advertising mode and Windows
-        buildTabs();
-
-        TABBED_PANE.setPreferredSize(new Dimension(10000, 10000));        
+        TABBED_PANE = new JTabbedPane();
         
         // Add a listener for saving the dimensions of the window &
         // position the search icon overlay correctly.
@@ -227,7 +205,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
             public void componentHidden(ComponentEvent e) {}
             
             public void componentShown(ComponentEvent e) {
-                setSearchIconLocation();
             }
             
             public void componentMoved(ComponentEvent e) {
@@ -237,7 +214,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
 
             public void componentResized(ComponentEvent e) {
                 saveWindowState();
-                setSearchIconLocation();
             }
         });
 
@@ -272,8 +248,116 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         FRAME.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         this.setFrameDimensions();
 
+        FRAME.setJMenuBar(getMenuMediator().getMenuBar());
+        JPanel contentPane = new JPanel();
+        
+        FRAME.setContentPane(contentPane);
+        contentPane.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        
+        int logoTopPadding = (OSUtils.isMacOSX()) ? 2 : 0;
+        
+        //ADD LOGO
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.gridwidth = 1;
+        gbc.weightx = 0;
+        gbc.insets = new Insets(logoTopPadding,0,0,5); //padding
+        gbc.anchor = GridBagConstraints.NORTHEAST;
+        LOGO_PANEL = new LogoPanel();
+        contentPane.add(LOGO_PANEL, gbc);
+        
+        //ADD TABBED PANE
+        gbc = new GridBagConstraints();
+        gbc.gridwidth = 2; //spans all the way
+        gbc.gridx = 0;
+        gbc.gridy = 0;	
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.ipady = 100;
+        contentPane.add(TABBED_PANE, gbc);
+        
+        //ADD STATUS LINE
+        gbc = new GridBagConstraints();
+        gbc.gridy = 1;
+        gbc.gridwidth = 2;
+        gbc.weighty = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        contentPane.add(getStatusLine().getComponent(), gbc);
 
-        // listener for updating the tab's titles & tooltips.
+        ThemeMediator.addThemeObserver(this);
+        GUIMediator.addRefreshListener(this);
+
+        if (ApplicationSettings.MAGNET_CLIPBOARD_LISTENER.getValue()) {
+            FRAME.addWindowListener(MagnetClipboardListener.getInstance());
+        }
+        
+        PowerManager pm = new PowerManager();
+        FRAME.addWindowListener(pm);
+        GUIMediator.addRefreshListener(pm);
+        
+        GuiCoreMediator.getCoreBackgroundExecutor().execute(new Runnable() {
+        	public void run() {
+        		GuiFrostWireUtils.verifySharedTorrentFolderCorrecteness();
+        	}
+        });
+    }
+    
+    /** Saves the state of the Window to settings. */
+    void saveWindowState() {
+        int state = FRAME.getExtendedState();
+        if(state == Frame.NORMAL) {
+            // save the screen size and location 
+            Dimension dim = GUIMediator.getAppSize();
+            if((dim.height > 100) && (dim.width > 100)) {
+                Point loc = GUIMediator.getAppLocation();
+                ApplicationSettings.APP_WIDTH.setValue(dim.width);
+                ApplicationSettings.APP_HEIGHT.setValue(dim.height);
+                ApplicationSettings.WINDOW_X.setValue(loc.x);
+                ApplicationSettings.WINDOW_Y.setValue(loc.y);
+                ApplicationSettings.MAXIMIZE_WINDOW.setValue(false);
+            }
+        } else if( (state & Frame.MAXIMIZED_BOTH) == Frame.MAXIMIZED_BOTH) {
+            ApplicationSettings.MAXIMIZE_WINDOW.setValue(true);
+            if(lastState != null && lastState.time == System.currentTimeMillis()) {
+                ApplicationSettings.WINDOW_X.setValue(lastState.x);
+                ApplicationSettings.WINDOW_Y.setValue(lastState.y);
+                lastState = null;
+            }
+        }
+    }
+
+    // inherit doc comment
+    public void updateTheme() {
+        FRAME.setJMenuBar(getMenuMediator().getMenuBar());
+        //LOGO_PANEL.updateTheme();
+        //setSearchIconLocation();
+        //updateLogoHeight();
+        for(GUIMediator.Tabs tab : GUIMediator.Tabs.values())
+            updateTabIcon(tab);
+	}
+    
+    /**
+     * Build the Tab Structure based on advertising mode and Windows
+     */
+    public void buildTabs() {
+    	//Enable right click on Tabs to hide/show tabs
+    	TABBED_PANE.addMouseListener(com.frostwire.gnutella.gui.tabs.TabRightClickAdapter.getInstance());
+    	
+    	SEARCH_MEDIATOR = new SearchMediator();
+    	MONITOR_VIEW = new MonitorView();
+        
+    	TABS.put(GUIMediator.Tabs.SEARCH, new SearchDownloadTab(SEARCH_MEDIATOR, getDownloadMediator()));
+        TABS.put(GUIMediator.Tabs.MONITOR, new MonitorUploadTab(MONITOR_VIEW, getUploadMediator()));
+        TABS.put(GUIMediator.Tabs.CONNECTION, new ConnectionsTab(getConnectionMediator()));
+        TABS.put(GUIMediator.Tabs.LIBRARY, new LibraryPlayListTab(getLibraryMediator()));
+        TABS.put(GUIMediator.Tabs.ANDROID, new AndroidTab(getAndroidMediator()));
+	    TABS.put(GUIMediator.Tabs.CHAT, new ChatTab(getChatMediator()));
+	    
+	    TABBED_PANE.setPreferredSize(new Dimension(10000, 10000));
+	    
+	    // listener for updating the tab's titles & tooltips.
         PropertyChangeListener propertyChangeListener = new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent evt) {
                 Tab tab = (Tab)evt.getSource();
@@ -322,116 +406,11 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
             this.setTabVisible(GUIMediator.Tabs.CONNECTION, false);
         if (!ApplicationSettings.LIBRARY_VIEW_ENABLED.getValue())
             this.setTabVisible(GUIMediator.Tabs.LIBRARY, false);
-        
-        if( SWTBrowserSettings.USE_SWT_BROWSER.getValue()&& GUIMediator.isBrowserCapable()) {
-            if(!ApplicationSettings.SWT_BROWSER_VIEW_ENABLED.getValue())
-                this.setTabVisible(GUIMediator.Tabs.FROSTCLICK, false);
-        }
         if (!ApplicationSettings.ANDROID_VIEW_ENABLED.getValue())
             this.setTabVisible(GUIMediator.Tabs.ANDROID, false);
         if (!ApplicationSettings.CHAT_VIEW_ENABLED.getValue())
             this.setTabVisible(GUIMediator.Tabs.CHAT, false);
 
-
-        FRAME.setJMenuBar(MENU_MEDIATOR.getMenuBar());
-        JPanel contentPane = new JPanel();
-        FRAME.setContentPane(contentPane);
-        contentPane.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.weightx = 1;
-        gbc.weighty = 1;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.gridx = 0;
-        contentPane.add(TABBED_PANE, gbc);
-        gbc.weighty = 0;
-        gbc.gridy = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        contentPane.add(STATUS_LINE.getComponent(), gbc);
-
-        JLayeredPane layeredPane =
-            JLayeredPane.getLayeredPaneAbove(TABBED_PANE);
-        layeredPane.add(LOGO_PANEL, JLayeredPane.PALETTE_LAYER, 0);
-
-        ThemeMediator.addThemeObserver(this);
-        GUIMediator.addRefreshListener(this);
-
-        updateLogoHeight();
-        
-        if (ApplicationSettings.MAGNET_CLIPBOARD_LISTENER.getValue()) {
-            FRAME.addWindowListener(MagnetClipboardListener.getInstance());
-        }
-        
-        PowerManager pm = new PowerManager();
-        FRAME.addWindowListener(pm);
-        GUIMediator.addRefreshListener(pm);
-        
-        GuiCoreMediator.getCoreBackgroundExecutor().execute(new Runnable() {
-        	public void run() {
-        		GuiFrostWireUtils.verifySharedTorrentFolderCorrecteness();
-        	}
-        });
-    }
-    
-    /** Saves the state of the Window to settings. */
-    void saveWindowState() {
-        int state = FRAME.getExtendedState();
-        if(state == Frame.NORMAL) {
-            // save the screen size and location 
-            Dimension dim = GUIMediator.getAppSize();
-            if((dim.height > 100) && (dim.width > 100)) {
-                Point loc = GUIMediator.getAppLocation();
-                ApplicationSettings.APP_WIDTH.setValue(dim.width);
-                ApplicationSettings.APP_HEIGHT.setValue(dim.height);
-                ApplicationSettings.WINDOW_X.setValue(loc.x);
-                ApplicationSettings.WINDOW_Y.setValue(loc.y);
-                ApplicationSettings.MAXIMIZE_WINDOW.setValue(false);
-            }
-        } else if( (state & Frame.MAXIMIZED_BOTH) == Frame.MAXIMIZED_BOTH) {
-            ApplicationSettings.MAXIMIZE_WINDOW.setValue(true);
-            if(lastState != null && lastState.time == System.currentTimeMillis()) {
-                ApplicationSettings.WINDOW_X.setValue(lastState.x);
-                ApplicationSettings.WINDOW_Y.setValue(lastState.y);
-                lastState = null;
-            }
-        }
-    }
-
-    // inherit doc comment
-    public void updateTheme() {
-        FRAME.setJMenuBar(MENU_MEDIATOR.getMenuBar());
-        LOGO_PANEL.updateTheme();
-        setSearchIconLocation();
-        updateLogoHeight();
-        for(GUIMediator.Tabs tab : GUIMediator.Tabs.values())
-            updateTabIcon(tab);
-	}
-    
-    private void updateLogoHeight() {
-        // necessary so that the logo does not intrude on the content below
-        Rectangle rect = TABBED_PANE.getUI().getTabBounds(TABBED_PANE, 0);
-        Dimension ld = LOGO_PANEL.getPreferredSize();
-        int height = ld.height + 4;
-		this.height = Math.max(rect.height, height);
-        if (rect.height < height)
-            TABBED_PANE.setBorder(BorderFactory.createEmptyBorder(
-                height - rect.height, 0, 0, 0));
-        else
-            TABBED_PANE.setBorder(null);
-    }
-
-    /**
-     * Build the Tab Structure based on advertising mode and Windows
-     */
-    private void buildTabs() {
-    	//Enable right click on Tabs to hide/show tabs
-    	TABBED_PANE.addMouseListener(com.frostwire.gnutella.gui.tabs.TabRightClickAdapter.getInstance());
-        
-    	TABS.put(GUIMediator.Tabs.SEARCH, new SearchDownloadTab(SEARCH_MEDIATOR, DOWNLOAD_MEDIATOR));
-        TABS.put(GUIMediator.Tabs.MONITOR, new MonitorUploadTab(MONITOR_VIEW, UPLOAD_MEDIATOR));
-        TABS.put(GUIMediator.Tabs.CONNECTION, new ConnectionsTab(CONNECTION_MEDIATOR));
-        TABS.put(GUIMediator.Tabs.LIBRARY, new LibraryPlayListTab(LIBRARY_MEDIATOR));
-        TABS.put(GUIMediator.Tabs.ANDROID, new AndroidTab(ANDROID_MEDIATOR));
-	    TABS.put(GUIMediator.Tabs.CHAT, new ChatTab(CHAT_MEDIATOR));
     }
 
     
@@ -680,15 +659,15 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
 		}
 		
         // first handle the download view
-        if (DOWNLOAD_MEDIATOR.getActiveDownloads() == 0 &&
+        if (getDownloadMediator().getActiveDownloads() == 0 &&
                 isDownloadViewVisible) {
             ((SearchDownloadTab)TABS.get(GUIMediator.Tabs.SEARCH)).
                 setDividerLocation(1000);
             isDownloadViewVisible = false;
-        } else if (DOWNLOAD_MEDIATOR.getActiveDownloads() > 0 &&
+        } else if (getDownloadMediator().getActiveDownloads() > 0 &&
                  !isDownloadViewVisible) {
             // need to turn it on....
-            final int count = DOWNLOAD_MEDIATOR.getActiveDownloads();
+            final int count = getDownloadMediator().getActiveDownloads();
             // make sure stuff didn't change on me....
             if (count > 0) {
                 final double prop = (count > 6) ? 0.60 : 0.70;
@@ -701,22 +680,16 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
             }
         }
     }
-
-    /**
-     * Returns a reference to the <tt>SearchMediator</tt> instance.
-     *
-     * @return a reference to the <tt>SearchMediator</tt> instance
-     */
-    final SearchMediator getSearchMediator() {
-        return SEARCH_MEDIATOR;
-    }
-
+    
     /**
      * Returns a reference to the <tt>DownloadMediator</tt> instance.
      *
      * @return a reference to the <tt>DownloadMediator</tt> instance
      */
     final DownloadMediator getDownloadMediator() {
+        if (DOWNLOAD_MEDIATOR == null) {
+            DOWNLOAD_MEDIATOR = DownloadMediator.instance();
+        }
         return DOWNLOAD_MEDIATOR;
     }
 
@@ -735,6 +708,9 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      * @return a reference to the <tt>UploadMediator</tt> instance
      */
     final UploadMediator getUploadMediator() {
+        if (UPLOAD_MEDIATOR == null) {
+            UPLOAD_MEDIATOR = UploadMediator.instance();
+        }
         return UPLOAD_MEDIATOR;
     }
 
@@ -744,6 +720,9 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      * @return a reference to the <tt>ConnectionMediator</tt> instance
      */
     final ConnectionMediator getConnectionMediator() {
+        if (CONNECTION_MEDIATOR == null) {
+            CONNECTION_MEDIATOR = ConnectionMediator.instance();
+        }
         return CONNECTION_MEDIATOR;
     }
 
@@ -754,15 +733,31 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      * @return a reference to the <tt>LibraryMediator</tt> instance
      */
     final LibraryMediator getLibraryMediator() {
+        if (LIBRARY_MEDIATOR == null) {
+            LIBRARY_MEDIATOR = LibraryMediator.instance();
+        }
         return LIBRARY_MEDIATOR;
+    }
+    
+    final AndroidMediator getAndroidMediator() {
+        if (ANDROID_MEDIATOR == null) {
+            ANDROID_MEDIATOR = AndroidMediator.instance();
+        }
+        return ANDROID_MEDIATOR;
     }
 
     final ChatMediator getChatMediator() {
+        if (CHAT_MEDIATOR == null) {
+            CHAT_MEDIATOR = ChatMediator.instance();
+        }
         return CHAT_MEDIATOR;
     }
         
     /** Returns the logging mediator. */
     final LoggingMediator getLoggingMediator() {
+        if (LOGGING_MEDIATOR == null) {
+            LOGGING_MEDIATOR = LoggingMediator.instance();
+        }
         return LOGGING_MEDIATOR;
     }
     
@@ -783,6 +778,9 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      * @return a reference to the <tt>StatusLine</tt> instance
      */
     final StatusLine getStatusLine() {
+        if (STATUS_LINE == null) {
+            STATUS_LINE = new StatusLine(GuiCoreMediator.getNetworkManager());
+        }
         return STATUS_LINE;
     }
 
@@ -792,6 +790,9 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      * @return a reference to the <tt>MenuMediator</tt> instance
      */
     public final MenuMediator getMenuMediator() {
+        if (MENU_MEDIATOR == null) {
+            MENU_MEDIATOR = MenuMediator.instance();
+        }
         return MENU_MEDIATOR;
     }
 
@@ -801,6 +802,9 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      * @return a reference to the <tt>OptionsMediator</tt> instance
      */
     final OptionsMediator getOptionsMediator() {
+        if (OPTIONS_MEDIATOR == null) {
+            OPTIONS_MEDIATOR = OptionsMediator.instance();
+        }
         return OPTIONS_MEDIATOR;
     }
 
@@ -823,16 +827,4 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
 		isSearching = searching;
 		refresh();
     }
-
-    /**
-     * Sets the location of the search status icon.
-     */
-    private void setSearchIconLocation() {
-		int y = MENU_MEDIATOR.getMenuBarHeight() 
-			+ (height - LOGO_PANEL.getPreferredSize().height) / 2;
-        LOGO_PANEL.setLocation(
-            FRAME.getSize().width - LOGO_PANEL.getSize().width - 12,
-            y);
-    }
-
 }

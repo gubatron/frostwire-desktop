@@ -33,7 +33,7 @@ public class DefaultEvent<S, E> extends AbstractSourcedEvent<S> implements Event
         if(!obj.getClass().equals(getClass())) {
             return false;
         }
-        return event.equals(((DefaultEvent)obj).getType());
+        return event.equals(((DefaultEvent<?, ?>)obj).getType());
     }
 
     @Override

@@ -32,9 +32,6 @@ public class HttpIOReactor implements DispatchedIOReactor {
     
     protected volatile IOEventDispatch eventDispatch = null;
 
-    // copied from DefaultServerIOEventDispatch
-    private static final String NHTTP_CONN = "NHTTP_CONN";
-    
     public HttpIOReactor(final HttpParams params) {
         if (params == null) {
             throw new IllegalArgumentException();

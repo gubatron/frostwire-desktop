@@ -33,9 +33,6 @@ import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
-import com.limegroup.gnutella.gui.themes.LimeLookAndFeel;
-import com.limegroup.gnutella.gui.themes.LimePlasticTheme;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 
@@ -323,12 +320,6 @@ public final class ResourceManager {
      * constructed from outside this class.
      */
     private ResourceManager() {
-        if (!ThemeFileHandler.isCurrent() || !ThemeSettings.isValid()) {
-            ThemeSettings.THEME_FILE.revertToDefault();
-            ThemeSettings.THEME_DIR.revertToDefault();
-            ThemeFileHandler.reload(false);
-        }
-
         String bMetal = System.getProperty("apple.awt.brushMetalLook");
         BRUSHED_METAL = bMetal != null && bMetal.equalsIgnoreCase("true");
 
@@ -544,17 +535,17 @@ public final class ResourceManager {
                             "newFolderIconVistaFix");
                 }
             } else {
-                if (isPlasticAvailable()) {
-                    if (_defaultTheme == null)
-                        _defaultTheme = getDefaultTheme();
-
-                    LimePlasticTheme.installThisTheme();
-                    UIManager
-                            .setLookAndFeel("com.jgoodies.plaf.plastic.PlasticXPLookAndFeel");
-                    LimeLookAndFeel.installUIManagerDefaults();
-                } else {
-                    UIManager.setLookAndFeel(new LimeLookAndFeel());
-                }
+//                if (isPlasticAvailable()) {
+//                    if (_defaultTheme == null)
+//                        _defaultTheme = getDefaultTheme();
+//
+//                    LimePlasticTheme.installThisTheme();
+//                    UIManager
+//                            .setLookAndFeel("com.jgoodies.plaf.plastic.PlasticXPLookAndFeel");
+//                    LimeLookAndFeel.installUIManagerDefaults();
+//                } else {
+//                    UIManager.setLookAndFeel(new LimeLookAndFeel());
+//                }
             }
 
             UIManager

@@ -18,7 +18,7 @@ final class I18NConvertICU extends AbstractI18NConverter {
     private java.util.BitSet _excluded;
     /** certain chars to be replaced by space (like commas, etc) */
     private java.util.BitSet _replaceWithSpace;
-    private Map _cMap;
+    private Map<?, ?> _cMap;
 
     /**
      * initializer:
@@ -33,7 +33,7 @@ final class I18NConvertICU extends AbstractI18NConverter {
         throws IOException, ClassNotFoundException {
     	java.util.BitSet bs = null;
         java.util.BitSet bs2 = null;
-    	Map hm = null;
+    	Map<?, ?> hm = null;
 
         InputStream fi = CommonUtils.getResourceStream("org/limewire/util/excluded.dat");
         //read in the explusion bitset
@@ -44,7 +44,7 @@ final class I18NConvertICU extends AbstractI18NConverter {
         fi = CommonUtils.getResourceStream("org/limewire/util/caseMap.dat");
         //read in the case map
         ois = new ConverterObjectInputStream(new BufferedInputStream(fi));
-        hm = (HashMap)ois.readObject();
+        hm = (HashMap<?, ?>)ois.readObject();
         ois.close();
         
         fi = CommonUtils.getResourceStream("org/limewire/util/replaceSpace.dat");

@@ -21,13 +21,13 @@ import java.util.NoSuchElementException;
         Expected to get NoSuchElementException exception: java.util.NoSuchElementException
  </pre>
  */
-public class EmptyIterator extends UnmodifiableIterator {
+public class EmptyIterator extends UnmodifiableIterator<Object> {
     /** A constant EmptyIterator. */
-    public final static Iterator EMPTY_ITERATOR = new EmptyIterator();
+    public final static Iterator<?> EMPTY_ITERATOR = new EmptyIterator();
 
     @SuppressWarnings("unchecked")
     public static <T> Iterator<T> emptyIterator() {
-        return EMPTY_ITERATOR;
+        return (Iterator<T>) EMPTY_ITERATOR;
     }
 
     // inherits javadoc comment

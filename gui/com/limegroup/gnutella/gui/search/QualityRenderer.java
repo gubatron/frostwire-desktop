@@ -1,14 +1,12 @@
 package com.limegroup.gnutella.gui.search;
 
-import java.awt.Color;
 import java.awt.Component;
 
-import javax.swing.JLabel;
+import javax.swing.Icon;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.TableCellRenderer;
+
+import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
@@ -18,76 +16,60 @@ import com.limegroup.gnutella.gui.themes.ThemeObserver;
  * This class handles rendering the "Quality" column in the search results.
  * It uses different labels depending on how many stars should be displayed.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
-final class QualityRenderer implements TableCellRenderer, ThemeObserver {
+final class QualityRenderer extends SubstanceDefaultTableCellRenderer implements ThemeObserver {
 
 	/**
-	 * The default border to use -- used when the label does not have focus.
-	 */
-    private static Border _noFocusBorder = new EmptyBorder(1, 1, 1, 1); 
-
-	/**
-	 * Holder for the foreground color to use when a label is not selected.
-	 */
-    private Color _unselectedForeground; 
-
-	/**
-	 * Holder for the background color to use when a label is not selected.
-	 */
-    private Color _unselectedBackground; 
-
-	/**
-	 * <tt>JLabel</tt> instance for rendering one star.
-	 */
-	private final JLabel STAR_ONE = new JLabel();
-
-	/**
-	 * <tt>JLabel</tt> instance for rendering two stars.
-	 */
-	private final JLabel STAR_TWO = new JLabel();
-
-	/**
-	 * <tt>JLabel</tt> instance for rendering three stars.
-	 */
-	private final JLabel STAR_THREE = new JLabel();
-
-	/**
-	 * <tt>JLabel</tt> instance for rendering four stars.
-	 */
-	private final JLabel STAR_FOUR = new JLabel();
-	
-	/**
-	 * <tt>JLabel</tt> instance for rendering five stars.
-	 */
-	private final JLabel STAR_FIVE = new JLabel();
-	
-	/**
-     * <tt>JLabel</tt> instance for rendering special
+     * 
      */
-    private final JLabel STORE_SONG = new JLabel();
-	
-	/**
-	 * <tt>JLabel</tt> instance for rendering a saved file.
+    private static final long serialVersionUID = -3140525602102010666L;
+
+    /**
+	 * Icon for one star.
 	 */
-	private final JLabel SAVED_FILE = new JLabel();
-	
-	/**
-	 * <tt>JLabel</tt> instance for rendering a downloading file.
-	 */
-	private final JLabel DOWNLOADING_FILE = new JLabel();
+	private Icon STAR_ONE;
 
 	/**
-	 * <tt>JLabel</tt> instance for rendering an incomplete file.
+	 * Icon for two stars.
 	 */
-	private final JLabel INCOMPLETE_FILE = new JLabel();
+	private Icon STAR_TWO;
+
+	/**
+	 * Icon for three stars.
+	 */
+	private Icon STAR_THREE;
+
+	/**
+	 * Icon for four stars.
+	 */
+	private Icon STAR_FOUR;
+	
+	/**
+	 * Icon for five stars.
+	 */
+	private Icon STAR_FIVE;
+	
+	/**
+	 * Icon for a saved file.
+	 */
+	private Icon SAVED_FILE;
+	
+	/**
+	 * Icon for a downloading file.
+	 */
+	private Icon DOWNLOADING_FILE;
+
+	/**
+	 * Icon for an incomplete file.
+	 */
+	private Icon INCOMPLETE_FILE;
 	
     /**
-     * <tt>JLabel</tt> instance for rendering a spam file.
+     * Icon for a spam file.
      */
-    private final JLabel SPAM_FILE = new JLabel();
+    private Icon SPAM_FILE;
     
-    /** JLabel for rendering a secure result. */
-    private final JLabel SECURE_FILE = new JLabel();
+    /** Icon for rendering a secure result. */
+    private Icon SECURE_FILE;
     
     /**
      * 'Quality' for spam file results.
@@ -111,11 +93,6 @@ final class QualityRenderer implements TableCellRenderer, ThemeObserver {
     
     /** 'Quality' for files that are considered secure results. */
     static final int SECURE_QUALITY = 999;
-    
-    /**
-     * Quality for special results.
-     */
-    static final int THIRD_PARTY_RESULT_QUALITY = 5;
     
     /**
      * Number of stars ("quality") for multicast results.
@@ -149,42 +126,25 @@ final class QualityRenderer implements TableCellRenderer, ThemeObserver {
 	/**
 	 * Makes all of the star labels opaque and sets their borders.
 	 */
-	QualityRenderer() {
-	    fix(STAR_ONE);
-	    fix(STAR_TWO);
-	    fix(STAR_THREE);
-	    fix(STAR_FOUR);
-	    fix(STAR_FIVE);
-        fix(STORE_SONG);
-	    fix(SAVED_FILE);
-	    fix(DOWNLOADING_FILE);
-	    fix(INCOMPLETE_FILE);
-        fix(SPAM_FILE);
-        fix(SECURE_FILE);
+	public QualityRenderer() {
+	    setHorizontalAlignment(SwingConstants.CENTER);
         
 		updateTheme();
 		ThemeMediator.addThemeObserver(this);
 	}
-	
-	private void fix(JLabel label) {
-	    label.setBorder(_noFocusBorder);
-	    label.setOpaque(true);
-	    label.setHorizontalAlignment(SwingConstants.CENTER);
-    }
 
 	public void updateTheme() {
-		STAR_ONE.setIcon(GUIMediator.getThemeImage("01_star"));
-		STAR_TWO.setIcon(GUIMediator.getThemeImage("02_star"));
-		STAR_THREE.setIcon(GUIMediator.getThemeImage("03_star"));
-		STAR_FOUR.setIcon(GUIMediator.getThemeImage("04_star"));
-		STAR_FIVE.setIcon(GUIMediator.getThemeImage("05_star"));
-		SAVED_FILE.setIcon(GUIMediator.getThemeImage("complete"));
-		DOWNLOADING_FILE.setIcon(GUIMediator.getThemeImage("downloading"));
-		INCOMPLETE_FILE.setIcon(GUIMediator.getThemeImage("incomplete"));
-        SPAM_FILE.setIcon(GUIMediator.getThemeImage("spam_mini"));
+		STAR_ONE = GUIMediator.getThemeImage("01_star");
+		STAR_TWO = GUIMediator.getThemeImage("02_star");
+		STAR_THREE = GUIMediator.getThemeImage("03_star");
+		STAR_FOUR = GUIMediator.getThemeImage("04_star");
+		STAR_FIVE = GUIMediator.getThemeImage("05_star");
+		SAVED_FILE = GUIMediator.getThemeImage("complete");
+		DOWNLOADING_FILE = GUIMediator.getThemeImage("downloading");
+		INCOMPLETE_FILE = GUIMediator.getThemeImage("incomplete");
+        SPAM_FILE = GUIMediator.getThemeImage("spam_mini");
         // that's: lime hi res, not lime hires. :)
-        SECURE_FILE.setIcon(GUIMediator.getThemeImage("frosthires"));
-        STORE_SONG.setIcon(GUIMediator.getThemeImage("frosthires"));
+        SECURE_FILE = GUIMediator.getThemeImage("frosthires");
 	}
 
 	/**
@@ -200,47 +160,33 @@ final class QualityRenderer implements TableCellRenderer, ThemeObserver {
 		int numStars = value == null ? POOR_QUALITY : 
 		    ((Integer)value).intValue();
 		
-		JLabel curLabel;
+		Icon curIcon;
 		
 		switch(numStars) {
         case SECURE_QUALITY:
-            curLabel = SECURE_FILE; break;
+            curIcon = SECURE_FILE; break;
         case SPAM_FILE_QUALITY:
-            curLabel = SPAM_FILE; break;
+            curIcon = SPAM_FILE; break;
         case SAVED_FILE_QUALITY:
-            curLabel = SAVED_FILE; break;
+            curIcon = SAVED_FILE; break;
         case DOWNLOADING_FILE_QUALITY:
-            curLabel = DOWNLOADING_FILE; break;
+            curIcon = DOWNLOADING_FILE; break;
         case INCOMPLETE_FILE_QUALITY:
-            curLabel = INCOMPLETE_FILE; break;
+            curIcon = INCOMPLETE_FILE; break;
         case MULTICAST_QUALITY:
-            curLabel = STAR_FIVE; break;
-        case THIRD_PARTY_RESULT_QUALITY:
-            curLabel = STORE_SONG; break;            
+            curIcon = STAR_FIVE; break;
         case EXCELLENT_QUALITY:
-            curLabel = STAR_FOUR; break;
+            curIcon = STAR_FOUR; break;
         case GOOD_QUALITY:
-            curLabel = STAR_THREE; break;
+            curIcon = STAR_THREE; break;
         case FAIR_QUALITY:
-            curLabel = STAR_TWO; break;
+            curIcon = STAR_TWO; break;
         default:
-            curLabel = STAR_ONE;
+            curIcon = STAR_ONE;
         }
-        
-		if (isSelected) {
-			curLabel.setForeground(table.getSelectionForeground());
-			curLabel.setBackground(table.getSelectionBackground());
-		}
-		else {
-			curLabel.setForeground((_unselectedForeground != null) ? 
-									_unselectedForeground 
-									: table.getForeground());
-			curLabel.setBackground((_unselectedBackground != null) ? 
-									_unselectedBackground 
-									: table.getBackground());
-		}
-
-		return curLabel;		
+		
+		setIcon(curIcon);
+		return super.getTableCellRendererComponent(
+	            table, null, isSelected, hasFocus, row, column);
 	}
-
 }

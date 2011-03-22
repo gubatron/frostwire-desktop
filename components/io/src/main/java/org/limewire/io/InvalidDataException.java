@@ -3,6 +3,11 @@ package org.limewire.io;
 /** Thrown when invalid data is parsed. */
 public class InvalidDataException extends Exception {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5289507507603167161L;
+
     public InvalidDataException() {
         super();
     }

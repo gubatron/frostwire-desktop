@@ -11,6 +11,11 @@ import com.limegroup.gnutella.gui.tables.BasicDataLineModel;
 class MediaTypeDownloadDirModel extends BasicDataLineModel<MediaTypeDownloadDirDataLine, NamedMediaType> {
 
 	/**
+     * 
+     */
+    private static final long serialVersionUID = -8028199494508532012L;
+
+    /**
 	 * @param dataLineClass
 	 */
 	public MediaTypeDownloadDirModel() {

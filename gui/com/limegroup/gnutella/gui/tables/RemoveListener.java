@@ -9,9 +9,9 @@ import java.awt.event.ActionListener;
  */
 public final class RemoveListener implements ActionListener {
     
-    private ComponentMediator cm;
+    private ComponentMediator<?> cm;
     
-    RemoveListener(ComponentMediator cm) {
+    RemoveListener(ComponentMediator<?> cm) {
         this.cm = cm;
    }
 

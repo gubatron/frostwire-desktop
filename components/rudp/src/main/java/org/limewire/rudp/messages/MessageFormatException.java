@@ -9,6 +9,11 @@ import org.limewire.io.InvalidDataException;
  */
 public class MessageFormatException extends InvalidDataException {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 7309318990497553144L;
+
     public MessageFormatException() {
         super();
     }

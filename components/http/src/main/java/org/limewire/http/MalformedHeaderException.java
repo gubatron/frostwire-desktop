@@ -7,6 +7,11 @@ import org.apache.http.ProtocolException;
  */
 public class MalformedHeaderException extends ProtocolException {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 3922391811793665254L;
+
     public MalformedHeaderException() {
         super();
     }

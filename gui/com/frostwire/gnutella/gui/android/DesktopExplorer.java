@@ -39,6 +39,8 @@ import org.pushingpixels.flamingo.api.bcb.core.BreadcrumbFileSelector;
 
 import com.frostwire.GuiFrostWireUtils;
 import com.frostwire.gnutella.gui.android.LocalFileListModel.OnRootListener;
+import com.frostwire.gnutella.gui.skin.SkinMenuItem;
+import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
 
@@ -382,10 +384,10 @@ public class DesktopExplorer extends JPanel {
         _list.setPrototypeCellValue(new LocalFile(_savedFolder));
         _list.setVisibleRowCount(-1);
 
-        _popupList = new JPopupMenu();
-        _deletePopupMenu = new JPopupMenu();
+        _popupList = new SkinPopupMenu();
+        _deletePopupMenu = new SkinPopupMenu();
 
-        _menuOpen = new JMenuItem(I18n.tr("Open"));
+        _menuOpen = new SkinMenuItem(I18n.tr("Open"));
         _menuOpen.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -394,7 +396,7 @@ public class DesktopExplorer extends JPanel {
         });
         _popupList.add(_menuOpen);
 
-        _menuRename = new JMenuItem(I18n.tr("Rename"));
+        _menuRename = new SkinMenuItem(I18n.tr("Rename"));
         _menuRename.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 actionStartRename();
@@ -402,7 +404,7 @@ public class DesktopExplorer extends JPanel {
         });
         _popupList.add(_menuRename);
 
-        _menuDelete = new JMenuItem(I18n.tr("Delete"));
+        _menuDelete = new SkinMenuItem(I18n.tr("Delete"));
         _menuDelete.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 actionStartDelete();
@@ -410,7 +412,7 @@ public class DesktopExplorer extends JPanel {
         });
         _popupList.add(_menuDelete);
 
-        _menuDeleteMultiple = new JMenuItem(I18n.tr("Delete Files"));
+        _menuDeleteMultiple = new SkinMenuItem(I18n.tr("Delete Files"));
         _menuDeleteMultiple.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 actionStartDelete();
@@ -421,7 +423,7 @@ public class DesktopExplorer extends JPanel {
 
         _popupList.addSeparator();
 
-        _menuRefresh = new JMenuItem(I18n.tr("Refresh"));
+        _menuRefresh = new SkinMenuItem(I18n.tr("Refresh"));
         _menuRefresh.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 refresh();

@@ -31,6 +31,11 @@ final class SearchMenu extends AbstractMenu {
     
     private static class ShowSearchComponentAction extends ToggleSettingAction {
         
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -3950682597001800833L;
+
         ShowSearchComponentAction(BooleanSetting set, String name, String description) {
             super(set, name, description);
         }

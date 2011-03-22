@@ -20,7 +20,6 @@ import com.limegroup.gnutella.settings.FilterSettings;
  * This class defines the panel in the options window that allows the user
  * to add and remove ip addresses from a list of ip addresses to block.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public final class AllowMessagesPaneItem extends AbstractPaneItem {
 
     public final static String TITLE = I18n.tr("Allow Hosts");
@@ -67,7 +66,7 @@ public final class AllowMessagesPaneItem extends AbstractPaneItem {
 	 * @throws IOException if the options could not be applied for some reason
 	 */
 	public boolean applyOptions() throws IOException {
-		Vector model = MESSAGES_LIST.getModel();
+		Vector<?> model = MESSAGES_LIST.getModel();
 		String[] allowedIps = new String[model.size()];
 		model.copyInto(allowedIps);
 		
@@ -77,13 +76,13 @@ public final class AllowMessagesPaneItem extends AbstractPaneItem {
 	}
 	
     public boolean isDirty() {
-        List model = Arrays.asList(FilterSettings.WHITE_LISTED_IP_ADDRESSES.getValue());
+        List<?> model = Arrays.asList(FilterSettings.WHITE_LISTED_IP_ADDRESSES.getValue());
         return !model.equals(MESSAGES_LIST.getModel());
     }	
 	
 	private class IPEnforcer implements ListDataListener {
 	    public void intervalAdded(ListDataEvent lde) {
-	        Vector model = (Vector)lde.getSource();
+	        Vector<?> model = (Vector<?>)lde.getSource();
 	        String ipString = (String)model.get(lde.getIndex0());
 	        // Ensure that this ip can be constructed.
 	        try {
@@ -98,7 +97,7 @@ public final class AllowMessagesPaneItem extends AbstractPaneItem {
 	    public void intervalRemoved(ListDataEvent lde) { }
         
         public void contentsChanged(ListDataEvent lde) {
-            Vector model = (Vector)lde.getSource();
+            Vector<?> model = (Vector<?>)lde.getSource();
             String ipString = (String)model.get(lde.getIndex0());
             try {
                 new IP(ipString);

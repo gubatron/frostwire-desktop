@@ -7,6 +7,10 @@ import com.limegroup.gnutella.gui.tables.BasicDataLineModel;
 
 public final class LoggingModel extends BasicDataLineModel<LoggingDataLine, LogEvent> {
         
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -6185690335663329478L;
     /** Used when the sorting changes off of time. */
     private List<LoggingDataLine> timeSortedList = null;
     

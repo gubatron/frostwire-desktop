@@ -35,7 +35,7 @@ public class Periodic {
 	private final Delegate d;
 	
 	private long nextExecuteTime;
-	private Future future;
+	private Future<?> future;
 	
     private static long now() {
         return System.nanoTime() - NANO_ORIGIN;

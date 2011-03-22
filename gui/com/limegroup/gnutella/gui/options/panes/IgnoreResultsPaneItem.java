@@ -15,7 +15,6 @@ import com.limegroup.gnutella.settings.FilterSettings;
  * set add and remove words from a list of words to ignore when they 
  * appear in search results.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public final class IgnoreResultsPaneItem extends AbstractPaneItem {
 
     public final static String TITLE = I18n.tr("Filter Results");
@@ -61,7 +60,7 @@ public final class IgnoreResultsPaneItem extends AbstractPaneItem {
 	 * @throws IOException if the options could not be applied for some reason
 	 */
 	public boolean applyOptions() throws IOException {
-		Vector model = RESULTS_LIST.getModel();
+		Vector<?> model = RESULTS_LIST.getModel();
 		String[] bannedResults = new String[model.size()];
 		model.copyInto(bannedResults);		
 		
@@ -71,7 +70,7 @@ public final class IgnoreResultsPaneItem extends AbstractPaneItem {
 	}
 
     public boolean isDirty() {
-      List model = Arrays.asList(FilterSettings.BANNED_WORDS.getValue());
+      List<?> model = Arrays.asList(FilterSettings.BANNED_WORDS.getValue());
       return !model.equals(RESULTS_LIST.getModel());
     }
 }

@@ -3,16 +3,22 @@ package com.limegroup.gnutella.gui.tables;
 import java.awt.Component;
 
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
+
+import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
 
 import com.limegroup.gnutella.gui.GUIUtils;
 
 /**
  * Simple renderer for speeds.
  */
-public final class SpeedRenderer extends DefaultTableCellRenderer {
+public final class SpeedRenderer extends SubstanceDefaultTableCellRenderer {
 	
 	/**
+     * 
+     */
+    private static final long serialVersionUID = -3181771818657704593L;
+
+    /**
 	 * Constructs the speed drawer.
 	 */
 	public SpeedRenderer() {

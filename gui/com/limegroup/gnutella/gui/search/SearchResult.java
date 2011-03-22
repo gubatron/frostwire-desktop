@@ -104,6 +104,8 @@ interface SearchResult {
      * @return host or <code>null</code> for no host.
      */
     String getHost();
+    
+    boolean isOverrideRowColor();
 
     /**
      * Returns the color for painting an even row.

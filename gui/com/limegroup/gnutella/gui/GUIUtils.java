@@ -408,6 +408,12 @@ public final class GUIUtils {
     public static Action getDisposeAction() {
         if(ACTION_DISPOSE == null) {
             ACTION_DISPOSE = new AbstractAction() {
+                
+                /**
+                 * 
+                 */
+                private static final long serialVersionUID = 3219036624812939826L;
+
                 public void actionPerformed(ActionEvent ae) {
                     Window parent;
                     if(ae.getSource() instanceof Window)

@@ -501,7 +501,7 @@ public class StringTrie<V> {
      * <code>buf</code>.
      * The printing starts with the given indent level. (internal)
      */
-    private void toStringHelper(TrieNode start, StringBuilder buf, int indent) {
+    private void toStringHelper(TrieNode<?> start, StringBuilder buf, int indent) {
         // Print value of node.
         if (start.getValue() != null) {
             buf.append(" -> ");
@@ -509,7 +509,7 @@ public class StringTrie<V> {
         }
         buf.append("\n");
         //For each child...
-        for (Iterator iter = start.labelsForward(); iter.hasNext(); ) {
+        for (Iterator<?> iter = start.labelsForward(); iter.hasNext(); ) {
             // Indent child appropriately.
             for (int i = 0; i < indent; i++)
                 buf.append(" ");
@@ -517,7 +517,7 @@ public class StringTrie<V> {
             String label = (String)iter.next();
             buf.append(label);
             // Recurse to print value.
-            TrieNode child = start.get(label.charAt(0)).getChild();
+            TrieNode<?> child = start.get(label.charAt(0)).getChild();
             toStringHelper(child, buf, indent + 1);
         }
     }

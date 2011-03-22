@@ -421,21 +421,13 @@ public final class Initializer {
         GUIMediator.setSplashScreenString(I18n.tr("Loading User Interface..."));
         stopwatch.resetAndLog("update splash for UI");
 
-        // To prevent deadlocks, the GUI must be constructed in the Swing thread.
-        // (Except on OS X, which is strange.)
-        if (OSUtils.isMacOSX()) {
-            GUIMediator.instance();
-            stopwatch.resetAndLog("OSX GUIMediator instance");
-        } else {
-            GUIMediator.safeInvokeAndWait(new Runnable() {
-                public void run() {
-                    //stopwatch.resetAndLog("enter evt queue");
-                    GUIMediator.instance();
-                    //stopwatch.resetAndLog("GUImediator instance");
-                }
-            });
-            //stopwatch.resetAndLog("return from evt queue");
-        }
+		GUIMediator.safeInvokeAndWait(new Runnable() {
+			public void run() {
+				// stopwatch.resetAndLog("enter evt queue");
+				GUIMediator.instance();
+				// stopwatch.resetAndLog("GUImediator instance");
+			}
+		});
         
         GUIMediator.setSplashScreenString(I18n.tr("Loading Core Components..."));
         //stopwatch.resetAndLog("update splash for core");
@@ -490,9 +482,10 @@ public final class Initializer {
     /** Runs any late UI tasks, such as initializing Icons, I18n support. */
     private void loadLateTasksForUI() {        
         // Initialize IconManager.
-        GUIMediator.setSplashScreenString(I18n.tr("Loading Icons..."));
+        //GUIMediator.setSplashScreenString(I18n.tr("Loading Icons..."));
         GUIMediator.safeInvokeAndWait(new Runnable() {
             public void run() {
+                GUIMediator.setSplashScreenString(I18n.tr("Loading Icons..."));
                 IconManager.instance();
             }
         });

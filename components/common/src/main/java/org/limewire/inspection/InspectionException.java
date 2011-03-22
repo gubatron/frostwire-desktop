@@ -19,6 +19,11 @@ package org.limewire.inspection;
  */
 public class InspectionException extends Exception {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -463496914950232812L;
+
     public InspectionException() {
     }
 

@@ -1,8 +1,6 @@
 package com.limegroup.gnutella.gui.search;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics;
 import java.io.File;
 import java.util.Collections;
 import java.util.Date;
@@ -266,10 +264,6 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
         updateXMLDocument(sr.getXMLDocument(), mm);        
     }
     
-    final boolean isThirdPartyResult() {
-        return RESULT instanceof ThirdPartySearchResult;
-    }
-    
     /**
      * Updates the XMLDocument and the MetadataModel.
      */
@@ -442,7 +436,7 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
             return QualityRenderer.INCOMPLETE_FILE_QUALITY;
         else if (_secure)
             return QualityRenderer.SECURE_QUALITY;
-        else if (!isThirdPartyResult() && SearchSettings.ENABLE_SPAM_FILTER.getValue() && SpamFilter.isAboveSpamThreshold(this))
+        else if (SearchSettings.ENABLE_SPAM_FILTER.getValue() && SpamFilter.isAboveSpamThreshold(this))
             return QualityRenderer.SPAM_FILE_QUALITY;
         else
             return _quality;
@@ -561,28 +555,8 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
      * Returns the icon.
      */
     Icon getIcon() {
-        // Return the yellow icon for the special results
-        if (isThirdPartyResult()) {
-            return new Icon() {
-                private final Icon icon = GUIMediator.getThemeImage("external_link");
-                
-                public int getIconHeight() {
-                    return icon.getIconHeight();
-                }
-                public int getIconWidth() {
-                    return icon.getIconWidth();
-                }
-                public void paintIcon(Component c, Graphics g, int x, int y) {
-                    icon.paintIcon(c, g, x, y);
-                }
-                public String toString() {
-                    return null;
-                }
-            };
-        } else {
-            String ext = getExtension();
-            return IconManager.instance().getIconForExtension(ext);
-        }
+        String ext = getExtension();
+        return IconManager.instance().getIconForExtension(ext);
     }
 
     /**
@@ -771,15 +745,12 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
      * Gets all RemoteFileDescs for this line.
      */
     RemoteFileDesc[] getAllRemoteFileDescs() {
-        if (isThirdPartyResult()) {
-            return new RemoteFileDesc[0];
-        }
         GnutellaSearchResult sr = (GnutellaSearchResult)RESULT;
         int size = getOtherResults().size() + 1;
         RemoteFileDesc[] rfds = new RemoteFileDesc[size];
         rfds[0] = sr.getRemoteFileDesc();
         int j = 1;
-        for(Iterator i = getOtherResults().iterator(); i.hasNext(); j++)
+        for(Iterator<?> i = getOtherResults().iterator(); i.hasNext(); j++)
             rfds[j] = ((GnutellaSearchResult)i.next()).getRemoteFileDesc();
         return rfds;
     }
@@ -812,7 +783,7 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
             _lastRating = RESULT.getSpamRating();
             int num = 1;
             if (_otherResults != null) {
-                for (Iterator iter = _otherResults.iterator(); iter.hasNext();) {
+                for (Iterator<?> iter = _otherResults.iterator(); iter.hasNext();) {
                     SearchResult r = (SearchResult)iter.next();
                     if (!(r instanceof GnutellaSearchResult)) continue;
                     num++;
@@ -853,6 +824,10 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
      */
     public final SearchResult getSearchResult() {
         return RESULT;
+    }
+    
+    public final boolean isOverrideRowColor() {
+        return RESULT.isOverrideRowColor();
     }
     
     /**

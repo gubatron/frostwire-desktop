@@ -10,5 +10,5 @@ public interface ThemeObserver {
 	/**
 	 * Update any required theme settings, such as colors or images.
 	 */
-	void updateTheme();
+	public void updateTheme();
 }

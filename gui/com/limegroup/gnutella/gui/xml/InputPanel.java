@@ -30,6 +30,11 @@ import com.limegroup.gnutella.xml.SchemaFieldInfo;
  */
 public class InputPanel extends IndentingPanel {
    
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1633476577800714637L;
+    
     private final LimeXMLSchema SCHEMA;
 
     public InputPanel(LimeXMLSchema schema, ActionListener listener,

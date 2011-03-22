@@ -18,7 +18,7 @@ public class LimeWireGUIModule extends AbstractModule {
         requestStaticInjection(BugManager.class);
         requestStaticInjection(DeadlockBugManager.class);
         requestStaticInjection(FatalBugManager.class);
-
+        
         bind(ActivityCallback.class).to(VisualConnectionCallback.class);
         
         bind(SessionInfo.class).to(LimeSessionInfo.class);

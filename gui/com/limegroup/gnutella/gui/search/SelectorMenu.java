@@ -5,10 +5,13 @@ import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+
+import com.frostwire.gnutella.gui.skin.SkinCheckBoxMenuItem;
+import com.frostwire.gnutella.gui.skin.SkinMenu;
+import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 
 
 /**
@@ -24,7 +27,7 @@ class SelectorMenu {
     /**
      * The actual JPopupMenu.
      */
-    private final JPopupMenu MENU = new JPopupMenu();
+    private final JPopupMenu MENU = new SkinPopupMenu();
     
     /**
      * Constructs a new SelectorMenu.
@@ -32,10 +35,10 @@ class SelectorMenu {
     SelectorMenu(FilterBox box) {
         ActionListener listener = new SelectionListener(box);
         
-        List options = box.getMetadataModel().getSelectorOptions();
+        List<?> options = box.getMetadataModel().getSelectorOptions();
         String currentSchema = "";
         JMenu currentSchemaMenu = null;
-        for(Iterator i = options.iterator(); i.hasNext();) {
+        for(Iterator<?> i = options.iterator(); i.hasNext();) {
             Selector selector = (Selector)i.next();
             JMenuItem item = createItem(box, selector);
             item.addActionListener(listener);
@@ -44,7 +47,7 @@ class SelectorMenu {
                 if(!selector.getSchema().equals(currentSchema)) {
                     currentSchema = selector.getSchema();
                     String title = NamedMediaType.getFromDescription(currentSchema).getName();
-                    currentSchemaMenu = new JMenu(title);
+                    currentSchemaMenu = new SkinMenu(title);
                     MENU.add(currentSchemaMenu);
                 }
                 assert currentSchemaMenu != null;
@@ -68,7 +71,7 @@ class SelectorMenu {
     private JMenuItem createItem(FilterBox box, Selector selector) {
         String title = selector.getTitle();
         boolean isSelected = box.getSelector().equals(selector);
-        JMenuItem item = new JCheckBoxMenuItem(title, isSelected);
+        JMenuItem item = new SkinCheckBoxMenuItem(title, isSelected);
         item.putClientProperty(SELECTOR, selector);
         return item;
     }

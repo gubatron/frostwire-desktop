@@ -1,6 +1,5 @@
 package com.limegroup.gnutella.gui.search;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -8,18 +7,18 @@ import java.util.Collections;
 import java.util.Set;
 
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 import org.limewire.io.IpPort;
 
+import com.frostwire.gnutella.gui.skin.SkinMenu;
+import com.frostwire.gnutella.gui.skin.SkinMenuItem;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.BitziLookupAction;
 import com.limegroup.gnutella.gui.actions.CopyMagnetLinkToClipboardAction;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 import com.limegroup.gnutella.search.HostData;
 import com.limegroup.gnutella.settings.UISettings;
@@ -127,14 +126,6 @@ final class GnutellaSearchResult extends AbstractSearchResult {
         return RFD.getHost();
     }
 
-    public Color getEvenRowColor() {
-        return ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
-    }
-
-    public Color getOddRowColor() {
-        return ThemeFileHandler.TABLE_ALTERNATE_COLOR.getValue();
-    }
-
     public void takeAction(TableLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
         SearchMediator.downloadGnutellaLine(line, guid, saveDir, fileName, saveAs, searchInfo);
     }
@@ -183,7 +174,7 @@ final class GnutellaSearchResult extends AbstractSearchResult {
         PopupUtils.addMenuItem(SearchMediator.BLOCK_STRING, new BlockListener(resultPanel),
                 popupMenu, lines.length > 0, 6);
         
-        JMenu spamMenu = new JMenu(SearchMediator.MARK_AS_STRING);
+        JMenu spamMenu = new SkinMenu(SearchMediator.MARK_AS_STRING);
         spamMenu.setEnabled(markAsSpam || markAsNot);
         PopupUtils.addMenuItem(SearchMediator.SPAM_STRING, resultPanel.MARK_AS_SPAM_LISTENER,
                 spamMenu, markAsSpam);
@@ -205,7 +196,7 @@ final class GnutellaSearchResult extends AbstractSearchResult {
      * @return
      */
     private JMenu createAdvancedMenu(TableLine line, ResultPanel resultPanel) {
-        JMenu menu = new JMenu(I18n.tr("Advanced"));
+        JMenu menu = new SkinMenu(I18n.tr("Advanced"));
         
         if (line == null) {
             menu.setEnabled(false);
@@ -215,12 +206,12 @@ final class GnutellaSearchResult extends AbstractSearchResult {
         BitziLookupAction bitziAction = new BitziLookupAction(resultPanel);
 
         bitziAction.setEnabled(line.getRemoteFileDesc().getSHA1Urn() != null);
-        menu.add(new JMenuItem(bitziAction));
+        menu.add(new SkinMenuItem(bitziAction));
         
         CopyMagnetLinkToClipboardAction magnet =
             new CopyMagnetLinkToClipboardAction(resultPanel);
         magnet.setEnabled(line.hasNonFirewalledRFD());
-        menu.add(new JMenuItem(magnet));
+        menu.add(new SkinMenuItem(magnet));
         
         // launch action
         if(line.isLaunchable()) {

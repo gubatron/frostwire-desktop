@@ -34,6 +34,11 @@ import org.limewire.mojito.messages.DHTMessage.OpCode;
  */
 public class ArcsVisualizer extends JPanel implements MessageDispatcherListener {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 6942402131373032004L;
+
     private static final long SLEEP = 100L;
     
     private static final float FONT_SIZE = 24f;

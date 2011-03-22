@@ -13,27 +13,13 @@ import com.limegroup.gnutella.settings.TablesHandler;
  */
 class SearchColumn extends LimeTableColumn {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5131410067087443020L;
     private int _width;
     private int _order;
     private boolean _visible;
-    
-//    /**
-//     * Creates a new column.
-//     */
-//    public SearchColumn(int model, final String id,
-//                    int width, boolean vis, Class<?> clazz) {
-//        this(model, id, GUIMediator.getStringResource(id),
-//             width, vis, clazz);
-//    }
-//    
-//    /**
-//     * Creates a new column.
-//     */
-//    public SearchColumn(int model, final String id, final Icon icon,
-//                    int width, boolean vis, Class<?> clazz) {
-//        this(model, id, GUIMediator.getStringResource(id), icon,
-//             width, vis, clazz);
-//    }
     
     /**
      * Creates a new column.

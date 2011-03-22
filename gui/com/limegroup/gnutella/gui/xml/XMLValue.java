@@ -33,7 +33,7 @@ public class XMLValue implements Comparable<XMLValue> {
             return false;
     }
     
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public int compareTo(XMLValue other) {
         if(other == null)
             return 1;

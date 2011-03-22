@@ -67,6 +67,11 @@ final class ViewMenu extends AbstractMenu {
     
     private static class ShowLanguageWindowAction extends AbstractAction {
         
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -6305934985012530356L;
+
         public ShowLanguageWindowAction() {
             super(I18n.tr("C&hange Language"));
             putValue(LONG_DESCRIPTION, I18n.tr("Select your Language Prefereces"));
@@ -81,6 +86,11 @@ final class ViewMenu extends AbstractMenu {
     
     private static class ToggleIconSettingAction extends ToggleSettingAction {
         
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -4953235635397552198L;
+
         public ToggleIconSettingAction(BooleanSetting setting, String name, String description) {
             super(setting, name, description);
         }
@@ -92,7 +102,11 @@ final class ViewMenu extends AbstractMenu {
    }
 
     private static class ToggleSmileySettingAction extends ToggleSettingAction {        
-	public static BooleanSetting newsetting;	
+	/**
+         * 
+         */
+        private static final long serialVersionUID = -1098362918446138044L;
+    public static BooleanSetting newsetting;	
         public ToggleSmileySettingAction(BooleanSetting setting, String name, String description) {
             super(setting, name, description);
 	    newsetting=setting;
@@ -107,7 +121,11 @@ final class ViewMenu extends AbstractMenu {
    
    private static class ChangeFontSizeAction extends AbstractAction {
 
-       private final int increment;
+       /**
+     * 
+     */
+    private static final long serialVersionUID = -6517433597971721717L;
+    private final int increment;
        
        public ChangeFontSizeAction(int inc, String name, String description) {
            super(name);

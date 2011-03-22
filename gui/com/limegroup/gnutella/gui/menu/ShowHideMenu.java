@@ -25,8 +25,6 @@ final class ShowHideMenu extends AbstractMenu {
 
     private void initializeMenu() {
         for (Tabs tab : Tabs.getOptionalTabs()) {
-        	if (tab == Tabs.FROSTCLICK)
-        		continue;
         	addToggleMenuItem(tab.getShowTabAction(), tab.isViewEnabled());
         }
         

@@ -1,29 +1,20 @@
 package com.frostwire.bittorrent;
 
 // Basic GUI
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Color;
 import java.awt.Graphics;
-
-
-// Tree GUI related
-import javax.swing.JPanel;
-import javax.swing.JCheckBox;
-import javax.swing.JTree;
-import javax.swing.JLabel;
-import javax.swing.UIManager;
-
-// Tree Handling
-import javax.swing.tree.TreeCellRenderer;
-
-// Icons for the trees
-import javax.swing.plaf.ColorUIResource;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-
-// Data Handling
 import java.util.Hashtable;
+
+import javax.swing.Icon;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTree;
+import javax.swing.UIManager;
+import javax.swing.plaf.ColorUIResource;
+import javax.swing.tree.TreeCellRenderer;
 
 
 
@@ -31,7 +22,11 @@ import java.util.Hashtable;
  * renderer
  */
 public class TreeRenderer extends JPanel implements TreeCellRenderer {
-  protected JCheckBox check;
+  /**
+     * 
+     */
+    private static final long serialVersionUID = 6546355901460059103L;
+protected JCheckBox check;
   protected TreeLabel label;
   
   public TreeRenderer() {
@@ -48,7 +43,7 @@ public class TreeRenderer extends JPanel implements TreeCellRenderer {
     Icon icon = ((TreeCheckBox)value).getIcon();
 
     if (icon == null) {
-      Hashtable icons = (Hashtable)tree.getClientProperty("JTree.icons");
+      Hashtable<?, ?> icons = (Hashtable<?, ?>)tree.getClientProperty("JTree.icons");
       String name = ((TreeCheckBox)value).getIconName();
 
       if ((icons != null) && (name != null)) {
@@ -112,6 +107,10 @@ public class TreeRenderer extends JPanel implements TreeCellRenderer {
   
     
   class TreeLabel extends JLabel {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 4868380641797559962L;
     boolean isSelected;
     boolean hasFocus;
     

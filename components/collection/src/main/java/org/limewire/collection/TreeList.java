@@ -615,7 +615,7 @@ public class TreeList<E> extends AbstractList<E> {
         /**
          * Gets the relative position.
          */
-        private int getOffset(AVLNode node) {
+        private int getOffset(AVLNode<?> node) {
             if (node == null) {
                 return 0;
             }

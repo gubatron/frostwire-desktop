@@ -66,7 +66,6 @@ public class BTDataImpl implements BTData {
     public BTDataImpl(List<com.limegroup.bittorrent.BTData.BTFileData> files,
 			Set<String> folders,
 			BTData torrentData) throws com.limegroup.bittorrent.ValueException {    
-      Object tmp;
 	
         announce = torrentData.getAnnounce();
         infoHash = torrentData.getInfoHash();
@@ -95,7 +94,7 @@ public class BTDataImpl implements BTData {
         if(tmp == null || !(tmp instanceof Map))
             throw new ValueException("info missing or invalid!");
         
-        Map infoMap = (Map)tmp;
+        Map<?, ?> infoMap = (Map<?, ?>)tmp;
         infoHash = calculateInfoHash(infoMap);
         
         tmp = infoMap.get("private");
@@ -137,7 +136,7 @@ public class BTDataImpl implements BTData {
         
         tmp = infoMap.get("files");        
         if(tmp instanceof List) {
-            List<?> fileData = (List)tmp;
+            List<?> fileData = (List<?>)tmp;
             if (fileData.isEmpty())
             	throw new ValueException("empty file list");
             
@@ -147,7 +146,7 @@ public class BTDataImpl implements BTData {
             for(Object o : fileData) {
                 if(!(o instanceof Map))
                     throw new ValueException("info->files[x] not a Map!");
-                Map<?, ?> fileMap = (Map)o;
+                Map<?, ?> fileMap = (Map<?, ?>)o;
                 
                 tmp = fileMap.get("length");
                 if(!(tmp instanceof Long))
@@ -192,7 +191,7 @@ public class BTDataImpl implements BTData {
             throw new ValueException("info->files[x].path[.utf-8] not a List!");
         
         Set<String> newFolders = new HashSet<String>();
-        String path = parseFileList((List)tmp, newFolders, true);
+        String path = parseFileList((List<?>)tmp, newFolders, true);
         if(path == null)
             throw new ValueException("info->files[x].path[-utf-8] not valid!");
         

@@ -1,6 +1,5 @@
 package com.limegroup.gnutella.gui.search;
 
-import java.awt.Color;
 import java.io.File;
 import java.util.Set;
 
@@ -9,12 +8,13 @@ import javax.swing.JPopupMenu;
 
 import org.limewire.io.IpPort;
 
+import com.frostwire.gnutella.gui.skin.SkinMenuItem;
+import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
 
 /**
@@ -107,27 +107,19 @@ public class SharedSearchResult extends AbstractSearchResult {
         return rfd.getHost();
     }
 
-    public Color getEvenRowColor() {
-        return ThemeFileHandler.TABLE_BACKGROUND_COLOR.getValue();
-    }
-
-    public Color getOddRowColor() {
-        return ThemeFileHandler.TABLE_ALTERNATE_COLOR.getValue();
-    }
-
     public void takeAction(TableLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
     }
 
     public JPopupMenu createMenu(JPopupMenu popupMenu, TableLine[] lines, boolean markAsSpam, boolean markAsNot, ResultPanel resultPanel) {
-        JPopupMenu menu = new JPopupMenu(); 
+        JPopupMenu menu = new SkinPopupMenu(); 
         
-        JMenuItem item = new JMenuItem(I18n.tr("Path") + ": " + getFileDesc().getPath());
+        JMenuItem item = new SkinMenuItem(I18n.tr("Path") + ": " + getFileDesc().getPath());
         menu.add(item);
         menu.addSeparator();
         
         // TODO: fix this hidden coupling, SharedSearchResult needs to be tied MyFilesResultPanel
         //        explicitly
-        menu.add(new JMenuItem(((MySharedFilesResultPanel)resultPanel).STOP_SHARING_FILE_LISTENER));
+        menu.add(new SkinMenuItem(((MySharedFilesResultPanel)resultPanel).STOP_SHARING_FILE_LISTENER));
  
 
         return menu;

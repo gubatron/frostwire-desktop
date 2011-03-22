@@ -39,7 +39,6 @@ import javax.swing.SwingUtilities;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloader;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderCallBackInterface;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderFactory;
-import org.limewire.concurrent.AbstractLazySingletonProvider;
 import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.io.Connectable;
@@ -57,7 +56,6 @@ import org.limewire.util.VersionUtils;
 import com.frostwire.bittorrent.AzureusStarter;
 import com.frostwire.gnutella.connectiondoctor.ConnectionDoctor;
 import com.frostwire.gnutella.gui.chat.ChatMediator;
-import com.google.inject.Provider;
 import com.limegroup.bittorrent.gui.TorrentUploadCanceller;
 import com.limegroup.gnutella.bugs.FatalBugManager;
 import com.limegroup.gnutella.chat.InstantMessenger;
@@ -76,7 +74,6 @@ import com.limegroup.gnutella.gui.search.SearchMediator;
 import com.limegroup.gnutella.gui.shell.LimeAssociations;
 import com.limegroup.gnutella.gui.shell.ShellAssociationManager;
 import com.limegroup.gnutella.gui.tabs.LibraryPlayListTab;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.gui.upload.UploadMediator;
 import com.limegroup.gnutella.settings.ApplicationSettings;
@@ -129,7 +126,7 @@ public final class GUIMediator {
 	/**
 	 * Singleton for easy access to the mediator.
 	 */
-	private static GUIMediator _instance = null;
+	private static GUIMediator _instance;
 
 	public static enum Tabs {
 		SEARCH(I18n.tr("&Search")),
@@ -137,14 +134,7 @@ public final class GUIMediator {
 		CONNECTION(I18n.tr("&Connections"), ApplicationSettings.CONNECTION_VIEW_ENABLED),
 		LIBRARY(I18n.tr("&Library"), ApplicationSettings.LIBRARY_VIEW_ENABLED),
 		ANDROID(I18n.tr("&Phones and Tablets"), ApplicationSettings.ANDROID_VIEW_ENABLED),
-		CHAT(I18n.tr("Community C&hat"), ApplicationSettings.CHAT_VIEW_ENABLED),
-				
-		// CONSOLE(I18n.tr("C&onsole"),
-		// ApplicationSettings.CONSOLE_VIEW_ENABLED),
-		LOGGING(I18n.tr("Lo&gging"), ApplicationSettings.LOGGING_VIEW_ENABLED), FROSTCLICK(
-				I18n.tr("FrostClick.com"),
-				ApplicationSettings.SWT_BROWSER_VIEW_ENABLED,
-				"http://www.frostclick.com/?from=frostwire&");
+		CHAT(I18n.tr("Community C&hat"), ApplicationSettings.CHAT_VIEW_ENABLED);
 
 		private Action navAction;
 
@@ -228,7 +218,11 @@ public final class GUIMediator {
 
 		private class ShowTabAction extends AbstractAction {
 
-			/** The tab this listener is using. */
+			/**
+             * 
+             */
+            private static final long serialVersionUID = -8174130601083499183L;
+            /** The tab this listener is using. */
 			private final GUIMediator.Tabs tab;
 
 			private ShowTabAction(GUIMediator.Tabs tab) {
@@ -257,7 +251,12 @@ public final class GUIMediator {
 		}
 
 		private class NavigationAction extends AbstractAction {
-			public NavigationAction(String name, String description) {
+			/**
+             * 
+             */
+            private static final long serialVersionUID = -575503118703093157L;
+
+            public NavigationAction(String name, String description) {
 				super(name);
 				putValue(Action.LONG_DESCRIPTION, description);
 			}
@@ -276,7 +275,11 @@ public final class GUIMediator {
 		 * which takes an url as the third parameter.
 		 */
 		private class BrowseAction extends AbstractAction {
-			private String url;
+			/**
+             * 
+             */
+            private static final long serialVersionUID = -6546640610645484649L;
+            private String url;
 
 			public BrowseAction(String name, String url) {
 				super(name);
@@ -295,16 +298,16 @@ public final class GUIMediator {
 		// so that the actions update all the components listening to them.
 		private static Tabs[] OPTIONAL_TABS = null;
 
-		/**
-		 * Returns the
-		 */
 		public static Tabs[] getOptionalTabs() {
-			if (OPTIONAL_TABS != null)
-				return OPTIONAL_TABS;
-
-			OPTIONAL_TABS = new Tabs[] { MONITOR, CONNECTION, LIBRARY,
-							ANDROID, CHAT };
-
+			if (OPTIONAL_TABS == null) {
+			    OPTIONAL_TABS = new Tabs[] {
+			            MONITOR,
+			            CONNECTION,
+			            LIBRARY,
+			            ANDROID,
+			            CHAT };
+			}
+			
 			return OPTIONAL_TABS;
 		}
 
@@ -313,29 +316,16 @@ public final class GUIMediator {
 		}
 
 	}
-
-	/**
-	 * Return true if the web browser can safely launch on the OS
-	 */
-	public static boolean isBrowserCapable() {
-		return OSUtils.isWindows();
-	}
-
-	/**
-	 * Constant specifying whether or not the user has donated to the Frosty
-	 * project.
-	 */
-	private static boolean HAS_DONATED = true;
-
+	
 	/**
 	 * The main <tt>JFrame</tt> for the application.
 	 */
-	private static final JFrame FRAME = new LimeJFrame();
+	private static JFrame FRAME;
 
 	/**
 	 * The popup menu on the icon in the sytem tray.
 	 */
-	private static final PopupMenu TRAY_MENU = new PopupMenu();
+	private static PopupMenu TRAY_MENU;
 
 	/**
 	 * <tt>List</tt> of <tt>RefreshListener</tt> classes to notify of UI refresh
@@ -346,71 +336,60 @@ public final class GUIMediator {
 	/**
 	 * String to be displayed in title bar of LW client.
 	 */
-	private final String APP_TITLE = I18n
-			.tr("FrostWire: Share it with your friends");
+	private static final String APP_TITLE = I18n.tr("FrostWire: Share it with your friends");
 
 	/**
 	 * Handle to the <tt>OptionsMediator</tt> class that is responsible for
 	 * displaying customizable options to the user.
 	 */
-	private static OptionsMediator _optionsMediator;
+	private static OptionsMediator OPTIONS_MEDIATOR;
 
 	/**
 	 * The shell association manager.
 	 */
-	private static final Provider<ShellAssociationManager> ASSOCIATION_MANAGER = new AbstractLazySingletonProvider<ShellAssociationManager>() {
-		@Override
-		protected ShellAssociationManager createObject() {
-			return new ShellAssociationManager(LimeAssociations
-					.getSupportedAssociations());
-		}
-	};
+	private static ShellAssociationManager ASSOCIATION_MANAGER;
 
 	/**
 	 * Constant handle to the <tt>MainFrame</tt> instance that handles
 	 * constructing all of the primary gui components.
 	 */
-	private final MainFrame MAIN_FRAME = new MainFrame(FRAME);
+	private MainFrame MAIN_FRAME;
 
 	/**
 	 * Constant handle to the <tt>DownloadMediator</tt> class that is
 	 * responsible for displaying active downloads to the user.
 	 */
-	private final DownloadMediator DOWNLOAD_MEDIATOR = MAIN_FRAME
-			.getDownloadMediator();
+	private DownloadMediator DOWNLOAD_MEDIATOR;
 
 	/**
 	 * Constant handle to the <tt>UploadMediator</tt> class that is responsible
 	 * for displaying active uploads to the user.
 	 */
-	private final UploadMediator UPLOAD_MEDIATOR = MAIN_FRAME
-			.getUploadMediator();
+	private UploadMediator UPLOAD_MEDIATOR;
 
 	/**
 	 * Constant handle to the <tt>ConnectionMediator</tt> class that is
 	 * responsible for displaying current connections to the user.
 	 */
-	private final ConnectionMediator CONNECTION_MEDIATOR = MAIN_FRAME
-			.getConnectionMediator();
+	private ConnectionMediator CONNECTION_MEDIATOR;
 
 	/**
 	 * Constant handle to the <tt>LibraryMediator</tt> class that is responsible
 	 * for displaying files in the user's repository.
 	 */
-	private final LibraryMediator LIBRARY_MEDIATOR = MAIN_FRAME
-			.getLibraryMediator();
+	private LibraryMediator LIBRARY_MEDIATOR;
 
 	/**
 	 * Constant handle to the <tt>ChatMediator</tt> class that is responsible
 	 * for displaying the user chat.
 	 */
-	private final ChatMediator CHAT_MEDIATOR = MAIN_FRAME.getChatMediator();
+	private ChatMediator CHAT_MEDIATOR;
 
 	/**
 	 * Constant handle to the <tt>DownloadView</tt> class that is responsible
 	 * for displaying the status of the network and connectivity to the user.
 	 */
-	private final StatusLine STATUS_LINE = MAIN_FRAME.getStatusLine();
+	private StatusLine STATUS_LINE;
 
 	/**
 	 * Flag for whether or not the app has ever been made visible during this
@@ -433,8 +412,10 @@ public final class GUIMediator {
 	 * another class.
 	 */
 	private GUIMediator() {
-		FRAME.setTitle(APP_TITLE);
-		_optionsMediator = MAIN_FRAME.getOptionsMediator();
+	    MAIN_FRAME = new MainFrame(getAppFrame());
+        MAIN_FRAME.buildTabs();
+        //MAIN_FRAME.updateLogoHeight();
+        OPTIONS_MEDIATOR = MAIN_FRAME.getOptionsMediator();
 	}
 
 	/**
@@ -483,7 +464,7 @@ public final class GUIMediator {
 	 *         otherwise
 	 */
 	public static final boolean isAppVisible() {
-		return FRAME.isShowing();
+		return getAppFrame().isShowing();
 	}
 
 	/**
@@ -499,8 +480,8 @@ public final class GUIMediator {
 			public void run() {
 				try {
 					if (visible)
-						FRAME.toFront();
-					FRAME.setVisible(visible);
+					    getAppFrame().toFront();
+					getAppFrame().setVisible(visible);
 				} catch (NullPointerException npe) {
 					System.out
 							.println("GUIMediator - NULL POINTER EXCEPTION HAPPENED");
@@ -516,12 +497,11 @@ public final class GUIMediator {
 						try {
 							if (ThemeSettings.isWindowsTheme()) {
 								// System.out.println("GUIMediator - setting frostwire theme for windows...");
-								ThemeMediator
-										.changeTheme(ThemeSettings.FROSTWIRE_THEME_FILE);
+								//ThemeMediator.changeTheme(ThemeSettings.FROSTWIRE_THEME_FILE);
 								try {
 									if (visible)
-										FRAME.toFront();
-									FRAME.setVisible(visible);
+									    getAppFrame().toFront();
+									getAppFrame().setVisible(visible);
 								} catch (NullPointerException npe2) {
 									GUIMediator
 											.showError(I18n
@@ -559,8 +539,8 @@ public final class GUIMediator {
 					// on Java 1.5, it does not validate correctly.
 					SwingUtilities.invokeLater(new Runnable() {
 						public void run() {
-							FRAME.getContentPane().invalidate();
-							FRAME.getContentPane().validate();
+						    getAppFrame().getContentPane().invalidate();
+						    getAppFrame().getContentPane().validate();
 						}
 					});
 				}
@@ -587,9 +567,6 @@ public final class GUIMediator {
 		_displayedMessage = true;
 
 		getAssociationManager().checkAndGrab(true);
-
-		if (!hasDonated())
-			UpgradeWindow.showProDialog();
 
 		if (TipOfTheDayMessages.hasLocalizedMessages()
 				&& StartupSettings.SHOW_TOTD.getValue()) {
@@ -648,7 +625,7 @@ public final class GUIMediator {
 	 *         the wrapped JFrame
 	 */
 	public static final Dimension getAppSize() {
-		return FRAME.getSize();
+		return getAppFrame().getSize();
 	}
 
 	/**
@@ -659,7 +636,7 @@ public final class GUIMediator {
 	 *         wrapped JFrame
 	 */
 	public static final Point getAppLocation() {
-		return FRAME.getLocation();
+		return getAppFrame().getLocation();
 	}
 
 	/**
@@ -669,7 +646,7 @@ public final class GUIMediator {
 	 * @return the <tt>MainFrame</tt> instance
 	 */
 	public final MainFrame getMainFrame() {
-		return MAIN_FRAME;
+	    return MAIN_FRAME;
 	}
 
 	/**
@@ -678,6 +655,10 @@ public final class GUIMediator {
 	 * @return the main application <tt>JFrame</tt> instance
 	 */
 	public static final JFrame getAppFrame() {
+	    if (FRAME == null) {
+	        FRAME = new LimeJFrame();
+	        FRAME.setTitle(APP_TITLE);
+	    }
 		return FRAME;
 	}
 
@@ -687,6 +668,9 @@ public final class GUIMediator {
 	 * @return The tray popup menu
 	 */
 	public static final PopupMenu getTrayMenu() {
+	    if (TRAY_MENU == null) {
+	        TRAY_MENU = new PopupMenu();
+	    }
 		return TRAY_MENU;
 	}
 
@@ -694,6 +678,9 @@ public final class GUIMediator {
 	 * Returns the status line instance for other classes to access
 	 */
 	public StatusLine getStatusLine() {
+	    if (STATUS_LINE == null) {
+	        STATUS_LINE = getMainFrame().getStatusLine();
+	    }
 		return STATUS_LINE;
 	}
 
@@ -716,7 +703,7 @@ public final class GUIMediator {
 		int pendingShare = GuiCoreMediator.getFileManager()
 				.getNumPendingFiles();
 		int quality = getConnectionQuality();
-		STATUS_LINE.setStatistics(sharedFiles, pendingShare);
+		getStatusLine().setStatistics(sharedFiles, pendingShare);
 		if (quality != StatusLine.STATUS_DISCONNECTED
 				&& quality != StatusLine.STATUS_CONNECTING) {
 			hideDisposableMessage(DISCONNECTED_MESSAGE);
@@ -735,7 +722,7 @@ public final class GUIMediator {
 		int status;
 
 		if (stable == 0) {
-			int initializing = CONNECTION_MEDIATOR.getConnectingCount();
+			int initializing = getConnectionMediator().getConnectingCount();
 			int connections = GuiCoreMediator.getConnectionServices()
 					.getNumInitializedConnections();
 			// No initializing or stable connections
@@ -803,9 +790,9 @@ public final class GUIMediator {
 	 *            the visibility state to set the window to
 	 */
 	public void setOptionsVisible(boolean visible) {
-		if (_optionsMediator == null)
+		if (OPTIONS_MEDIATOR == null)
 			return;
-		_optionsMediator.setOptionsVisible(visible);
+		OPTIONS_MEDIATOR.setOptionsVisible(visible);
 	}
 
 	/**
@@ -818,9 +805,9 @@ public final class GUIMediator {
 	 *            the unique identifying key of the panel to show
 	 */
 	public void setOptionsVisible(boolean visible, final String key) {
-		if (_optionsMediator == null)
+		if (OPTIONS_MEDIATOR == null)
 			return;
-		_optionsMediator.setOptionsVisible(visible, key);
+		OPTIONS_MEDIATOR.setOptionsVisible(visible, key);
 	}
 
 	/**
@@ -830,9 +817,9 @@ public final class GUIMediator {
 	 *         otherwise
 	 */
 	public static boolean isOptionsVisible() {
-		if (_optionsMediator == null)
+		if (OPTIONS_MEDIATOR == null)
 			return false;
-		return _optionsMediator.isOptionsVisible();
+		return OPTIONS_MEDIATOR.isOptionsVisible();
 	}
 
 	/**
@@ -843,16 +830,20 @@ public final class GUIMediator {
 	 *         guaranteed to be constructed if it is visible)
 	 */
 	public static Component getMainOptionsComponent() {
-		if (_optionsMediator == null)
+		if (OPTIONS_MEDIATOR == null)
 			return null;
-		return _optionsMediator.getMainOptionsComponent();
+		return OPTIONS_MEDIATOR.getMainOptionsComponent();
 	}
 
 	/**
 	 * @return the <tt>ShellAssociationManager</tt> instance.
 	 */
 	public static ShellAssociationManager getAssociationManager() {
-		return ASSOCIATION_MANAGER.get();
+	    if (ASSOCIATION_MANAGER == null) {
+	        ASSOCIATION_MANAGER = new ShellAssociationManager(LimeAssociations.getSupportedAssociations()); 
+	    }
+	    
+	    return ASSOCIATION_MANAGER;
 	}
 
 	/**
@@ -862,7 +853,7 @@ public final class GUIMediator {
 	 *            the index of the tab to display
 	 */
 	public void setWindow(GUIMediator.Tabs tab) {
-		MAIN_FRAME.setSelectedTab(tab);
+	    getMainFrame().setSelectedTab(tab);
 	}
 
 	/**
@@ -872,14 +863,14 @@ public final class GUIMediator {
 	 *            the fixed index of the tab to update
 	 */
 	public void updateTabIcon(GUIMediator.Tabs tab) {
-		MAIN_FRAME.updateTabIcon(tab);
+	    getMainFrame().updateTabIcon(tab);
 	}
 
 	/**
 	 * Clear the connections in the connection view.
 	 */
 	public void clearConnections() {
-		CONNECTION_MEDIATOR.clearConnections();
+		getConnectionMediator().clearConnections();
 	}
 
 	/**
@@ -889,7 +880,7 @@ public final class GUIMediator {
 	 *            the connected/disconnected status of the client
 	 */
 	private void updateConnectionUI(int quality) {
-		STATUS_LINE.setConnectionQuality(quality);
+	    getStatusLine().setConnectionQuality(quality);
 
 		boolean connected = quality != StatusLine.STATUS_DISCONNECTED;
 		if (!connected)
@@ -902,7 +893,7 @@ public final class GUIMediator {
 	 * @return the total number of uploads for this session
 	 */
 	public int getTotalUploads() {
-		return UPLOAD_MEDIATOR.getTotalUploads();
+		return getUploadMediator().getTotalUploads();
 	}
 
 	/**
@@ -911,7 +902,7 @@ public final class GUIMediator {
 	 * @return the total number of currently active uploads
 	 */
 	public int getCurrentUploads() {
-		return UPLOAD_MEDIATOR.getCurrentUploads();
+		return getUploadMediator().getCurrentUploads();
 	}
 
 	/**
@@ -920,7 +911,7 @@ public final class GUIMediator {
 	 * @return the total number of downloads for this session
 	 */
 	public final int getTotalDownloads() {
-		return DOWNLOAD_MEDIATOR.getTotalDownloads();
+		return getDownloadMediator().getTotalDownloads();
 	}
 
 	/**
@@ -929,16 +920,16 @@ public final class GUIMediator {
 	 * @return the total number of currently active downloads
 	 */
 	public final int getCurrentDownloads() {
-		return DOWNLOAD_MEDIATOR.getCurrentDownloads();
+		return getDownloadMediator().getCurrentDownloads();
 	}
 
 	public final void openTorrent(File torrentFile) {
-		DOWNLOAD_MEDIATOR.openTorrent(torrentFile);
+	    getDownloadMediator().openTorrent(torrentFile);
 		setWindow(GUIMediator.Tabs.SEARCH);
 	}
 
 	public final void openTorrentURI(URI torrentURI) {
-		DOWNLOAD_MEDIATOR.openTorrentURI(torrentURI);
+	    getDownloadMediator().openTorrentURI(torrentURI);
 		setWindow(GUIMediator.Tabs.SEARCH);
 	}
 
@@ -946,7 +937,7 @@ public final class GUIMediator {
 	 * Tells the library to add a new top-level (shared) folder.
 	 */
 	public final void addSharedLibraryFolder() {
-		LIBRARY_MEDIATOR.addSharedLibraryFolder();
+		getLibraryMediator().addSharedLibraryFolder();
 	}
 
 	/**
@@ -1002,7 +993,7 @@ public final class GUIMediator {
 			public void run() {
 				Thread awt = Thread.currentThread();
 				awt.setPriority(awt.getPriority() + 1);
-				STATUS_LINE.loadFinished();
+				getStatusLine().loadFinished();
 			}
 		});
 	}
@@ -1034,11 +1025,11 @@ public final class GUIMediator {
 	 * @see restoreView
 	 */
 	public static void hideView() {
-		FRAME.setState(Frame.ICONIFIED);
+		getAppFrame().setState(Frame.ICONIFIED);
 
-		if (OSUtils.supportsTray()
-				&& ResourceManager.instance().isTrayIconAvailable())
+		if (OSUtils.supportsTray() && ResourceManager.instance().isTrayIconAvailable()) {
 			GUIMediator.setAppVisible(false);
+		}
 	}
 
 	/**
@@ -1077,7 +1068,7 @@ public final class GUIMediator {
 		// disabled when the GUI is visible.
 		Finalizer.cancelShutdown();
 
-		FRAME.setState(Frame.NORMAL);
+		getAppFrame().setState(Frame.NORMAL);
 	}
 
 	/**
@@ -1706,16 +1697,6 @@ public final class GUIMediator {
 	}
 
 	/**
-	 * Returns a <tt>boolean</tt> specifying whether or not the user has donated
-	 * to the LimeWire project.
-	 * 
-	 * @return <tt>true</tt> if the user has donated, <tt>false</tt> otherwise
-	 */
-	public static boolean hasDonated() {
-		return HAS_DONATED;
-	}
-
-	/**
 	 * Sets the visible/invisible state of the tab.
 	 * 
 	 * @param tab
@@ -1724,7 +1705,7 @@ public final class GUIMediator {
 	 *            the visible/invisible state to set the tab to
 	 */
 	public void setTabVisible(GUIMediator.Tabs tab, boolean visible) {
-		MAIN_FRAME.setTabVisible(tab, visible);
+	    getMainFrame().setTabVisible(tab, visible);
 	}
 
 	/**
@@ -1738,7 +1719,7 @@ public final class GUIMediator {
 		if (!_allowVisible)
 			SplashWindow.instance().setStatusText(text);
 		else if (isConstructed())
-			instance().STATUS_LINE.setStatusText(text);
+			instance().getStatusLine().setStatusText(text);
 	}
 
 	/**
@@ -1781,7 +1762,7 @@ public final class GUIMediator {
 	 *            the searching status of the application
 	 */
 	public void setSearching(boolean searching) {
-		MAIN_FRAME.setSearching(searching);
+	    getMainFrame().setSearching(searching);
 	}
 
 	/**
@@ -1851,7 +1832,7 @@ public final class GUIMediator {
 				// it needs to pause for a bit, otherwise it'll play the same
 				// song.
 				// must be a sync bug somewhere, but this fixes it
-				Thread.currentThread().sleep(1000);
+				Thread.sleep(1000);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -1882,7 +1863,7 @@ public final class GUIMediator {
 	public void showUpdateNotification(final UpdateInformation info) {
 		safeInvokeAndWait(new Runnable() {
 			public void run() {
-				STATUS_LINE.showUpdatePanel(true, info);
+			    getStatusLine().showUpdatePanel(true, info);
 			}
 		});
 	}
@@ -1896,7 +1877,7 @@ public final class GUIMediator {
 	 *         testing
 	 */
 	public byte[] triggerSearch(String query) {
-		MAIN_FRAME.setSelectedTab(GUIMediator.Tabs.SEARCH);
+	    getMainFrame().setSelectedTab(GUIMediator.Tabs.SEARCH);
 		return SearchMediator.triggerSearch(query);
 	}
 
@@ -1905,7 +1886,7 @@ public final class GUIMediator {
 	 */
 	public void buttonViewChanged() {
 		IconManager.instance().wipeButtonIconCache();
-		updateButtonView(FRAME);
+		updateButtonView(getAppFrame());
 	}
 
 	/**
@@ -1913,7 +1894,7 @@ public final class GUIMediator {
 	 */
 	public void smileysChanged(boolean newstatus) {
 		ChatMediator.instance().changesmileys(newstatus);
-		updateButtonView(FRAME);
+		updateButtonView(getAppFrame());
 	}
 
 	private void updateButtonView(Component c) {
@@ -1935,7 +1916,7 @@ public final class GUIMediator {
 	 * trigger a browse host based on address and port
 	 */
 	public void doBrowseHost(Connectable host) {
-		MAIN_FRAME.setSelectedTab(GUIMediator.Tabs.SEARCH);
+		getMainFrame().setSelectedTab(GUIMediator.Tabs.SEARCH);
 		SearchMediator.doBrowseHost(host, null);
 	}
 
@@ -1980,18 +1961,18 @@ public final class GUIMediator {
 			return;
 		PlayerSettings.PLAYER_ENABLED.setValue(value);
 		getStatusLine().refresh();
-		LIBRARY_MEDIATOR.setPlayerEnabled(value);
+		getLibraryMediator().setPlayerEnabled(value);
 		LibraryPlayListTab.setPlayerEnabled(value);
 	}
 
 	/** Tells CHAT_MEDIATOR to try to start the IRC Chat */
 	public void tryToStartAndAddChat() {
-		CHAT_MEDIATOR.tryToStartAndAddChat();
+		getChatMediator().tryToStartAndAddChat();
 	}
 
 	/** Changes the nick on the Chat */
 	public void setIRCNick(String newNick) {
-		CHAT_MEDIATOR.nick(newNick);
+		getChatMediator().nick(newNick);
 	}
 
 	/**
@@ -2002,7 +1983,7 @@ public final class GUIMediator {
 	 *            components that don't have their own cursor set
 	 */
 	public void setFrameCursor(Cursor cursor) {
-		FRAME.setCursor(cursor);
+	    getAppFrame().setCursor(cursor);
 	}
 
 	public static ChatFrame createChat(String host, int port) {
@@ -2072,4 +2053,38 @@ public final class GUIMediator {
 		}).start();
 	}
 
+	private DownloadMediator getDownloadMediator() {
+	    if (DOWNLOAD_MEDIATOR == null) {
+	        DOWNLOAD_MEDIATOR = getMainFrame().getDownloadMediator();
+	    }
+	    return DOWNLOAD_MEDIATOR;
+	}
+	
+	private UploadMediator getUploadMediator() {
+	    if (UPLOAD_MEDIATOR == null) {
+	        UPLOAD_MEDIATOR = getMainFrame().getUploadMediator();
+	    }
+	    return UPLOAD_MEDIATOR;
+	}
+	
+	private ConnectionMediator getConnectionMediator() {
+	    if (CONNECTION_MEDIATOR == null) {
+	        CONNECTION_MEDIATOR = getMainFrame().getConnectionMediator();
+	    }
+	    return CONNECTION_MEDIATOR;
+	}
+	
+	private LibraryMediator getLibraryMediator() {
+	    if (LIBRARY_MEDIATOR == null) {
+	        LIBRARY_MEDIATOR = getMainFrame().getLibraryMediator();
+	    }
+	    return LIBRARY_MEDIATOR;
+	}
+	
+	private ChatMediator getChatMediator() {
+	    if (CHAT_MEDIATOR == null) {
+	        CHAT_MEDIATOR = getMainFrame().getChatMediator();
+	    }
+	    return CHAT_MEDIATOR;
+	}
 }

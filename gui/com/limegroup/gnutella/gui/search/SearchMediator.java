@@ -1,7 +1,6 @@
 package com.limegroup.gnutella.gui.search;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -19,7 +18,6 @@ import org.limewire.io.ConnectableImpl;
 import org.limewire.io.IpPort;
 import org.limewire.io.IpPortSet;
 import org.limewire.rudp.RUDPUtils;
-import org.limewire.service.ErrorService;
 import org.limewire.setting.FileSetting;
 import org.limewire.setting.evt.SettingEvent;
 import org.limewire.setting.evt.SettingListener;
@@ -124,21 +122,13 @@ public final class SearchMediator {
     /**
      * Variable for the component that handles all search input from the user.
      */
-    private static final SearchInputManager INPUT_MANAGER =
-        new SearchInputManager();
-
-    /**
-     * The LimeWire Store&#8482; song DB for the sponsored results.
-     */
-    private static final RemoteStringBasicSpecialResultsDatabaseImpl thirdPartyDatabase = 
-        new RemoteStringBasicSpecialResultsDatabaseImpl(GuiCoreMediator.getLimeXMLDocumentFactory());
+    private static SearchInputManager INPUT_MANAGER;
 
     /**
      * This instance handles the display of all search results.
      * TODO: Changed to package-protected for testing to add special results
      */
-    public static final SearchResultDisplayer RESULT_DISPLAYER =
-        new SearchResultDisplayer();
+    private static SearchResultDisplayer RESULT_DISPLAYER;
     
     /** Banner that shows a message in the search result panel. */
     private static volatile Banner banner;
@@ -152,16 +142,16 @@ public final class SearchMediator {
         final String splashScreenString =
             I18n.tr("Loading Search Window...");
         GUIMediator.setSplashScreenString(splashScreenString);
-        GUIMediator.addRefreshListener(RESULT_DISPLAYER);
+        GUIMediator.addRefreshListener(getSearchResultDisplayer());
         
         // Link up the tabs of results with the filters of the input screen.
-        RESULT_DISPLAYER.setSearchListener(new ChangeListener() {
+        getSearchResultDisplayer().setSearchListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-                ResultPanel panel = RESULT_DISPLAYER.getSelectedResultPanel();
+                ResultPanel panel = getSearchResultDisplayer().getSelectedResultPanel();
                 if(panel == null)
-                    INPUT_MANAGER.clearFilters();
+                    getSearchInputManager().clearFilters();
                 else
-                    INPUT_MANAGER.setFiltersFor(panel);
+                    getSearchInputManager().setFiltersFor(panel);
             }
         });
         initBanner();
@@ -197,14 +187,14 @@ public final class SearchMediator {
      * Rebuilds the INPUT_MANAGER's panel.
      */
     public static void rebuildInputPanel() {
-        INPUT_MANAGER.rebuild();
+        getSearchInputManager().rebuild();
     }
     
     /**
      * Notification that the address has changed -- pass it along.
      */
     public static void addressChanged() {
-        INPUT_MANAGER.addressChanged();
+        getSearchInputManager().addressChanged();
     }
     
     /**
@@ -212,21 +202,21 @@ public final class SearchMediator {
      * window.
      */
     public static void showSearchInput() {
-        INPUT_MANAGER.goToSearch();
+        getSearchInputManager().goToSearch();
     }
     
     /**
      * Requests the search focus in the INPUT_MANAGER.
      */
     public static void requestSearchFocus() {
-        INPUT_MANAGER.requestSearchFocus();
+        getSearchInputManager().requestSearchFocus();
     }
     
     /**
      * Updates all current results.
      */
     public static void updateResults() {
-        RESULT_DISPLAYER.updateResults();
+        getSearchResultDisplayer().updateResults();
     }
 
     /**
@@ -250,7 +240,7 @@ public final class SearchMediator {
         GuiCoreMediator.getSearchServices().stopQuery(new GUID(rp.getGUID()));
         rp.setGUID(newGuid);
         if ( clearingResults ) {
-          INPUT_MANAGER.panelReset(rp);
+            getSearchInputManager().panelReset(rp);
         }
         
         if(info.isBrowseHostSearch()) {
@@ -327,7 +317,7 @@ public final class SearchMediator {
                                                    null, false);
                                          
         in.setBrowseHostHandler(bhh);
-        INPUT_MANAGER.panelReset(in);
+        getSearchInputManager().panelReset(in);
     }
     
 
@@ -366,7 +356,7 @@ public final class SearchMediator {
      * @param guid The guid associated with this Browse. 
      */
     public static void browseHostFailed(GUID guid) {
-        RESULT_DISPLAYER.browseHostFailed(guid);
+        getSearchResultDisplayer().browseHostFailed(guid);
     }
     
     /**
@@ -386,34 +376,7 @@ public final class SearchMediator {
             addResultTab(new GUID(guid), info);
         }
         
-        
-        
         doSearch(guid, info);
-        
-        // Here is where we can intercept the query and look for terms
-        GuiCoreMediator.getCoreBackgroundExecutor().execute(new Runnable() {
-            public void run() {
-                thirdPartyDatabase.find(info, new ThirdPartyResultsDatabase.SearchResultsCallback() {
-                public void process(final List<SearchResult> results, SearchInformation info) {
-                    if (results == null)
-                        return;
-                    final ResultPanel rp = SearchMediator.getResultPanelForGUID(new GUID(guid));
-                    if (rp == null)
-                        return;
-                    try {
-                        SwingUtilities.invokeAndWait(new Runnable() {
-                            public void run() {
-                                for (final SearchResult sr : results) {
-                                    SearchMediator.RESULT_DISPLAYER.addQueryResult(guid, sr, rp);
-                                }
-                            }});
-                    } catch (InterruptedException e) {
-                        ErrorService.error(e, "invokeAndWait for store song result");
-                    } catch (InvocationTargetException e) {
-                        ErrorService.error(e, "invokeAndWait for store song result");
-                    }
-                }});
-            }});
         
         return guid;
     }
@@ -548,7 +511,7 @@ public final class SearchMediator {
 								@Override
 								public void run() {
 						        	for (final SearchResult sr : results) {
-						        		RESULT_DISPLAYER.addQueryResult(guid, sr, rp);
+						        	    getSearchResultDisplayer().addQueryResult(guid, sr, rp);
 						        	}
 								}});
 			        	}
@@ -673,19 +636,19 @@ public final class SearchMediator {
      */
     private static ResultPanel addResultTab(GUID guid,
                                             SearchInformation info) {
-        return RESULT_DISPLAYER.addResultTab(guid, info);
+        return getSearchResultDisplayer().addResultTab(guid, info);
     }
     
     /** Adds a tab to search results that displays your files. */
     private static ResultPanel addMyFilesResultTab(String title) {
-        return RESULT_DISPLAYER.addMyFilesResultTab(title);
+        return getSearchResultDisplayer().addMyFilesResultTab(title);
     }
 
     /**
      * Adds a browse host tab with the given description.
      */
     private static ResultPanel addBrowseHostTab(GUID guid, String desc) {
-        return RESULT_DISPLAYER.addResultTab(guid, 
+        return getSearchResultDisplayer().addResultTab(guid, 
             SearchInformation.createBrowseHostSearch(desc)
         );
     }
@@ -706,7 +669,7 @@ public final class SearchMediator {
         ResultPanel rp = getResultPanelForGUID(new GUID(replyGUID));
         if(rp != null) {
             SearchResult sr = new GnutellaSearchResult(rfd, data, alts);
-            RESULT_DISPLAYER.addQueryResult(replyGUID, sr, rp);
+            getSearchResultDisplayer().addQueryResult(replyGUID, sr, rp);
         }
     }
     
@@ -925,7 +888,7 @@ public final class SearchMediator {
      * view.
      */
     static void setTabDisplayCount(ResultPanel rp) {
-        RESULT_DISPLAYER.setTabDisplayCount(rp);
+        getSearchResultDisplayer().setTabDisplayCount(rp);
     }
 
     /**
@@ -934,24 +897,24 @@ public final class SearchMediator {
      *  from this
      */
     static void killSearch() {
-        RESULT_DISPLAYER.killSearch();
+        getSearchResultDisplayer().killSearch();
     }
     
     /**
      * Notification that a given ResultPanel has been selected
      */
     static void panelSelected(ResultPanel panel) {
-        INPUT_MANAGER.setFiltersFor(panel);
+        getSearchInputManager().setFiltersFor(panel);
     }
     
     /**
      * Notification that a search has been killed.
      */
     static void searchKilled(ResultPanel panel) {
-        INPUT_MANAGER.panelRemoved(panel);
-        ResultPanel rp = RESULT_DISPLAYER.getSelectedResultPanel();
+        getSearchInputManager().panelRemoved(panel);
+        ResultPanel rp = getSearchResultDisplayer().getSelectedResultPanel();
         if (rp != null) {
-            INPUT_MANAGER.setFiltersFor(rp);
+            getSearchInputManager().setFiltersFor(rp);
         }
 
         panel.cleanup();
@@ -961,7 +924,7 @@ public final class SearchMediator {
      * Checks to see if the spinning lime should be stopped.
      */
     static void checkToStopLime() {
-        RESULT_DISPLAYER.checkToStopLime();
+        getSearchResultDisplayer().checkToStopLime();
     }
     
     /**
@@ -972,7 +935,7 @@ public final class SearchMediator {
      *  if none match.
      */
     static ResultPanel getResultPanelForGUID(GUID rguid) {
-        return RESULT_DISPLAYER.getResultPanelForGUID(rguid);
+        return getSearchResultDisplayer().getResultPanelForGUID(rguid);
     }
 
     /** @returns true if the user is still using the query results for the input
@@ -988,7 +951,7 @@ public final class SearchMediator {
      * @return the search input panel component
      */
     public static JComponent getSearchComponent() {
-        return INPUT_MANAGER.getComponent();
+        return getSearchInputManager().getComponent();
     }
 
     /**
@@ -999,7 +962,7 @@ public final class SearchMediator {
      *  search result UI components
      */
     public static JComponent getResultComponent() {
-        return RESULT_DISPLAYER.getComponent();
+        return getSearchResultDisplayer().getComponent();
     }
 
     /**
@@ -1012,5 +975,18 @@ public final class SearchMediator {
 	    return banner.getAd();   
     }
 
+	private static SearchInputManager getSearchInputManager() {
+	    if (INPUT_MANAGER == null) {
+	        INPUT_MANAGER = new SearchInputManager();
+	    }
+	    return INPUT_MANAGER;
+	}
+	
+	public static SearchResultDisplayer getSearchResultDisplayer() {
+	    if (RESULT_DISPLAYER == null) {
+	        RESULT_DISPLAYER = new SearchResultDisplayer();
+	    }
+	    return RESULT_DISPLAYER;
+	}
 }
 

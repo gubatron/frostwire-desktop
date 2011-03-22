@@ -16,11 +16,11 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.SwingUtilities;
 
 
 public class SmileyButtons extends WindowAdapter implements ActionListener,Runnable 
 {
-	private Thread _thread=null;
 	private Frame _frame;
 	private Panel _panel;
 	private IRCApplication _appl;
@@ -45,11 +45,12 @@ public class SmileyButtons extends WindowAdapter implements ActionListener,Runna
 		//_frame.setResizable(true);
 		_frame.addWindowListener(this);
 
-		if (_thread == null) 
-		{
-			_thread = new Thread(this, "Smiley_Picker");
-			_thread.start();
-		}
+//		if (_thread == null) 
+//		{
+//			_thread = new Thread(this, "Smiley_Picker");
+//			_thread.start();
+//		}
+		SwingUtilities.invokeLater(this);
 	}
 
 	/**
@@ -83,7 +84,6 @@ public class SmileyButtons extends WindowAdapter implements ActionListener,Runna
 	
 	public void run() 
 	{
-		Thread myThread=Thread.currentThread();
 		_panel=new Panel();
 		//_panel.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
 		int columns = 5;
@@ -118,7 +118,6 @@ public class SmileyButtons extends WindowAdapter implements ActionListener,Runna
 
 	public void addPaneltoFrame(Panel panel)
 	{
-		int s=_smileyTable.getSize();
 		_panel=panel;
 		_frame.add(_panel);
 		_frame.pack();

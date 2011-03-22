@@ -1,7 +1,5 @@
 package com.frostwire.gnutella.gui.chat;
 
-import java.io.File;
-import java.net.URI;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -29,13 +27,7 @@ public class ChatItem implements Comparable<ChatItem>{
     public static final String TRACK = "Track";
     public static final String TYPE = "Type";
     public static final String YEAR = "Year";
-    public static final String VBR = "VBR";
-    
-    /**
-     * Location of the audio source
-     */
-    private final URI uri = null;
-    
+    public static final String VBR = "VBR";    
    
     /**
      * Default name of the audio source to display if no META information is available
@@ -67,11 +59,7 @@ public class ChatItem implements Comparable<ChatItem>{
      * as a tooltip.
      */
     private String[] toolTips = null;
-    
-  public void ChatItem(File file) {
-     System.out.println("Chat item was called without params");
-     return;
-    }
+   
     
     /**
      * Adds a local file to the playlist. Creation on a PlayListItem will

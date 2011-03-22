@@ -27,6 +27,11 @@ import com.limegroup.gnutella.xml.LimeXMLSchema;
 public abstract class AbstractMetaInfoPanel extends MetaEditorPanel {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3755007771304976986L;
+
+	/**
      * Contains the basic information displayed at the top of the information panel
      * If XML docs contain info will display image, title, artist/author, album
      */

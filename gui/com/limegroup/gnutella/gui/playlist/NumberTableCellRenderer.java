@@ -2,24 +2,23 @@ package com.limegroup.gnutella.gui.playlist;
 
 import java.awt.Component;
 
-
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
+
+import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
 
 /**
  *  Numbers each row in the table
  */
-public class NumberTableCellRenderer extends DefaultTableCellRenderer{
+public class NumberTableCellRenderer extends SubstanceDefaultTableCellRenderer {
 
-    public Component getTableCellRendererComponent(JTable table,
-            Object value, 
-            boolean isSel, 
-            boolean hasFocus,
-            int row,
-            int column) {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -195070901980682985L;
 
-            String formatted = Integer.toString(row + 1);
-            return super.getTableCellRendererComponent(table, formatted, isSel, hasFocus, row, column);
-}
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSel, boolean hasFocus, int row, int column) {
 
+        String formatted = Integer.toString(row + 1);
+        return super.getTableCellRendererComponent(table, formatted, isSel, hasFocus, row, column);
+    }
 }

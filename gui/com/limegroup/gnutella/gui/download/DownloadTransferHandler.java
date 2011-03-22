@@ -23,6 +23,11 @@ import com.limegroup.gnutella.gui.search.TableLine;
 
 class DownloadTransferHandler extends LimeTransferHandler {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 7090230440259575371L;
+
     DownloadTransferHandler() {
         super(COPY);
     }

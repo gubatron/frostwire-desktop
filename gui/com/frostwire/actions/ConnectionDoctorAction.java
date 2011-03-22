@@ -21,7 +21,11 @@ import org.limewire.concurrent.ThreadExecutor;
  */
 public class ConnectionDoctorAction extends AbstractAction implements ConnectionLifecycleListener {
 
-	private final short MAX_USES = 3;
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 5631616258511822844L;
+    private final short MAX_USES = 3;
 	private short timesUsed = 0;
 	private ConnectionDoctor doctor;
 	private boolean loadingHosts = false;

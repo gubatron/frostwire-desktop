@@ -22,10 +22,14 @@ import com.limegroup.gnutella.gui.wizard.Status.Severity;
  * for setup windows. It defines many of the basic accessor and mutator methods
  * required by subclasses.
  */
-// 2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public abstract class WizardPage extends JPanel {
 
 	/**
+     * 
+     */
+    private static final long serialVersionUID = 8069558402268318817L;
+
+    /**
 	 * Variable for the name of this window for use with <tt>CardLayout</tt>.
 	 */
 	private String key;
@@ -308,6 +312,11 @@ public abstract class WizardPage extends JPanel {
 	private static class MultiLineLabel extends JTextArea {
 
 		/**
+         * 
+         */
+        private static final long serialVersionUID = -680447270400290156L;
+
+        /**
 		 * Creates a label that can have multiple lines and that has the default
 		 * width.
 		 * 
@@ -325,11 +334,5 @@ public abstract class WizardPage extends JPanel {
 			setSelectedTextColor(UIManager.getColor("Label.foreground"));
 			setText(s);
 		}
-
-		public MultiLineLabel() {
-			this(" ");
-		}
-
 	}
-	
 }

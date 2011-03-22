@@ -12,6 +12,11 @@ import java.beans.PropertyChangeSupport;
  */
 public class SwingSafePropertyChangeSupport extends PropertyChangeSupport {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8838902085543023958L;
+
     public SwingSafePropertyChangeSupport(Object sourceBean) {
         super(sourceBean);
     }

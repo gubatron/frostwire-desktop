@@ -10,7 +10,6 @@ import javax.swing.Icon;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.TipOfTheDayMediator;
@@ -26,7 +25,6 @@ import com.limegroup.gnutella.util.LimeWireUtils;
  * includes such items as the link to the "Using LimeWire" page of the
  * web site as well as links to the forum, faq, "tell a friend", etc.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 final class HelpMenu extends AbstractMenu {
 
 	/**
@@ -78,7 +76,12 @@ final class HelpMenu extends AbstractMenu {
 	 */
 	private static class ShowTipOfTheDayAction extends AbstractAction {
 	    
-	    public ShowTipOfTheDayAction() {
+	    /**
+         * 
+         */
+        private static final long serialVersionUID = -4964160055694967725L;
+
+        public ShowTipOfTheDayAction() {
 	        super(I18n.tr("Tip of the &Day"));
 	        putValue(LONG_DESCRIPTION, I18n.tr("Show the Tip of the Day Window"));
         }
@@ -93,7 +96,12 @@ final class HelpMenu extends AbstractMenu {
 	 */
 	private static class GenerateUncaughtErrorAction extends AbstractAction {
 	    
-	    public GenerateUncaughtErrorAction() {
+	    /**
+         * 
+         */
+        private static final long serialVersionUID = 7936740290025125821L;
+
+        public GenerateUncaughtErrorAction() {
 	        super(I18n.tr("Generate &Error"));
 	        putValue(LONG_DESCRIPTION, I18n.tr("Generate a Popup Error for Testing"));
 	    }
@@ -108,7 +116,13 @@ final class HelpMenu extends AbstractMenu {
 	 */
 	private static class ShowAboutDialogAction extends AbstractAction {
 	    
-	    public ShowAboutDialogAction() {
+	    /**
+         * 
+         */
+        private static final long serialVersionUID = 2425666944873627828L;
+
+
+        public ShowAboutDialogAction() {
 	        super(I18n.tr("&About FrostWire"));
             putValue(LONG_DESCRIPTION, I18n.tr("Information about FrostWire"));
         }
@@ -123,6 +137,11 @@ final class HelpMenu extends AbstractMenu {
      * Shows a notification.
      */
     private static class ShowNotificationAction extends AbstractAction {
+
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 7955477944674441576L;
 
         public ShowNotificationAction() {
             putValue(Action.NAME, "Show Notification");

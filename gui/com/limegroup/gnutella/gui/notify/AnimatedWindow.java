@@ -36,6 +36,11 @@ import org.apache.commons.logging.LogFactory;
 
 public class AnimatedWindow extends JWindow {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1764619610298463956L;
+
     private final static int ANIMATION_INTERVAL = 10;
 
     private final static int MOVE_PER_INTERVAL = 1;
@@ -435,6 +440,11 @@ public class AnimatedWindow extends JWindow {
     public void setContentPane(Container contentPane) {
         this.contentPane = contentPane;
         JPanel panel = new JPanel(new BorderLayout()) {
+            /**
+             * 
+             */
+            private static final long serialVersionUID = 1025231305407376307L;
+
             @Override
             public void paint(Graphics g) {
                 if (animationImage != null && isAnimationInProgress()) {

@@ -69,7 +69,7 @@ public class NameValue <V> implements Map.Entry<String, V> {
      * <pre>
      * </pre> 
      */
-    public static class ComparableByName<V> extends NameValue<V> implements Comparable<ComparableByName> {
+    public static class ComparableByName<V> extends NameValue<V> implements Comparable<ComparableByName<V>> {
         public ComparableByName(String name) {
             super(name);
         }
@@ -78,7 +78,7 @@ public class NameValue <V> implements Map.Entry<String, V> {
             super(name, value);
         }
         
-        public int compareTo(ComparableByName b) {            
+        public int compareTo(ComparableByName<V> b) {            
             if(b == null)
                 return 1;
             String nameB = b.getName();

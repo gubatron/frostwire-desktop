@@ -13,6 +13,11 @@ import java.util.TreeSet;
  */
 public class IpPortSet extends TreeSet<IpPort> {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1280517068052676811L;
+
     /** Constructs an empty set. */
     public IpPortSet() {
         super(IpPort.COMPARATOR);

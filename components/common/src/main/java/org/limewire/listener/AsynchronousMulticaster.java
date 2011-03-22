@@ -22,7 +22,7 @@ public class AsynchronousMulticaster<E> implements EventMulticaster<E> {
         this.executor = executor;
     }
     
-    public AsynchronousMulticaster(Executor executor, Class loggerKey) {
+    public AsynchronousMulticaster(Executor executor, Class<?> loggerKey) {
         this.listeners = new EventListenerList<E>(loggerKey);
         this.executor = executor;
     }

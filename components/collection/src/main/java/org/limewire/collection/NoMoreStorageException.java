@@ -13,6 +13,10 @@ package org.limewire.collection;
 
 public class NoMoreStorageException extends RuntimeException
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -3057674425286691593L;
     public NoMoreStorageException()
     {
     }
