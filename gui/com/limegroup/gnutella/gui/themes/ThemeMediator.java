@@ -173,7 +173,7 @@ public class ThemeMediator {
         if (OSUtils.isMacOSX()) {
             DEFAULT_THEME = AquaThemeSetter.INSTANCE;
         } else {
-            DEFAULT_THEME = PlasticThemeSetter.INSTANCE;//SubstanceThemeSetter.SEA_GLASS;
+            DEFAULT_THEME = SubstanceThemeSetter.SEA_GLASS;
         }
         THEMES = themes;
         CURRENT_THEME = loadCurrentTheme();

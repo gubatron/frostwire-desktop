@@ -324,7 +324,7 @@ public final class ResourceManager {
         BRUSHED_METAL = bMetal != null && bMetal.equalsIgnoreCase("true");
 
         themeChanged();
-        ResourceManager.setFontSizes(ThemeSettings.FONT_SIZE_INCREMENT.getValue());
+        //ResourceManager.setFontSizes(ThemeSettings.FONT_SIZE_INCREMENT.getValue());
         try {
             validateLocaleAndFonts(Locale.getDefault());
         } catch (NullPointerException npe) {
@@ -548,26 +548,7 @@ public final class ResourceManager {
 //                }
             }
 
-            UIManager
-                    .put("Tree.leafIcon", UIManager.getIcon("Tree.closedIcon"));
-
-            // remove split pane borders
-            UIManager
-                    .put("SplitPane.border", BorderFactory.createEmptyBorder());
-
-            if (!OSUtils.isMacOSX())
-                UIManager.put("Table.focusRowHighlightBorder", UIManager
-                        .get("Table.focusCellHighlightBorder"));
-
-            UIManager.put("Table.focusCellHighlightBorder", BorderFactory
-                    .createEmptyBorder(1, 1, 1, 1));
-
-            // Add a bolded text version of simple text.
-            Font normal = UIManager.getFont("Table.font");
-            FontUIResource bold = new FontUIResource(normal.getName(),
-                    Font.BOLD, normal.getSize());
-            UIManager.put("Table.font.bold", bold);
-            UIManager.put("Tree.rowHeight", 0);
+            
 
         } catch (UnsupportedLookAndFeelException e) {
             throw new ExceptionInInitializerError(e);
@@ -579,7 +560,7 @@ public final class ResourceManager {
             throw new ExceptionInInitializerError(e);
         }
         
-        wrapDesktopProperties();
+        //wrapDesktopProperties();
     }
     
     private void wrapDesktopProperties() {
