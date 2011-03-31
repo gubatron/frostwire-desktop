@@ -110,7 +110,10 @@ public final class Launcher {
 	 *  for any reason
 	 */
 	private static int openURLWindows(String url) throws IOException {
-		String[] command = new String[] {"cmd.exe","/c","start " + url};
+		//Windows like escaping of '&' character when passed as part of a parameter
+		//& -> ^&
+		url = url.replace("&","^&");
+		String[] command = new String[] {"cmd.exe","/c","start", url};
 		ProcessBuilder pb = new ProcessBuilder(command);
 		pb.start();
 		return 0;
