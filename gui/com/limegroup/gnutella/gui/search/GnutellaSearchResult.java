@@ -11,14 +11,14 @@ import javax.swing.JPopupMenu;
 
 import org.limewire.io.IpPort;
 
-import com.frostwire.gnutella.gui.skin.SkinMenu;
-import com.frostwire.gnutella.gui.skin.SkinMenuItem;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.BitziLookupAction;
 import com.limegroup.gnutella.gui.actions.CopyMagnetLinkToClipboardAction;
+import com.limegroup.gnutella.gui.themes.SkinMenu;
+import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 import com.limegroup.gnutella.search.HostData;
 import com.limegroup.gnutella.settings.UISettings;

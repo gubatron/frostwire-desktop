@@ -19,7 +19,6 @@ import javax.swing.JPopupMenu;
 import org.limewire.io.IpPort;
 import org.limewire.io.NetworkUtils;
 
-import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.FileEventListener;
 import com.limegroup.gnutella.FileManager;
@@ -36,6 +35,7 @@ import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.options.OptionsConstructor;
 import com.limegroup.gnutella.gui.options.OptionsMediator;
 import com.limegroup.gnutella.gui.tables.DataLine;
+import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.library.SharingUtils;
 import com.limegroup.gnutella.search.HostData;

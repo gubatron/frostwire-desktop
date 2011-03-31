@@ -1,4 +1,4 @@
-package com.frostwire.gnutella.gui.skin;
+package com.limegroup.gnutella.gui.themes;
 
 import javax.swing.JRadioButtonMenuItem;
 

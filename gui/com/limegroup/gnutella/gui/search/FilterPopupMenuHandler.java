@@ -12,12 +12,12 @@ import javax.swing.JPopupMenu;
 
 import org.limewire.collection.NameValue;
 
-import com.frostwire.gnutella.gui.skin.SkinMenuItem;
-import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.gui.actions.SearchWhatsNewMediaTypeAction;
 import com.limegroup.gnutella.gui.actions.SearchXMLFieldAction;
 import com.limegroup.gnutella.gui.tables.DefaultMouseListener;
 import com.limegroup.gnutella.gui.tables.MouseObserver;
+import com.limegroup.gnutella.gui.themes.SkinMenuItem;
+import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 
 /**
  * If installed for a {@link FilterPanel} watches for popup events in all three

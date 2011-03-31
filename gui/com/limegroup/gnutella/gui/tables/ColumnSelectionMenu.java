@@ -11,12 +11,12 @@ import javax.swing.JPopupMenu;
 
 import org.limewire.setting.BooleanSetting;
 
-import com.frostwire.gnutella.gui.skin.SkinCheckBoxMenuItem;
-import com.frostwire.gnutella.gui.skin.SkinMenu;
-import com.frostwire.gnutella.gui.skin.SkinMenuItem;
-import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.themes.SkinCheckBoxMenuItem;
+import com.limegroup.gnutella.gui.themes.SkinMenu;
+import com.limegroup.gnutella.gui.themes.SkinMenuItem;
+import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 
 /**

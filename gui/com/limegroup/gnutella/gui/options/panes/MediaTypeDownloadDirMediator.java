@@ -14,8 +14,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import com.frostwire.gnutella.gui.skin.SkinMenuItem;
-import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.I18n;
@@ -25,6 +23,8 @@ import com.limegroup.gnutella.gui.search.NamedMediaType;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.tables.TableSettings;
+import com.limegroup.gnutella.gui.themes.SkinMenuItem;
+import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 
 /**
  * Class which handles the construction of the download directories per

@@ -6,9 +6,9 @@ import java.awt.event.MouseEvent;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JPopupMenu;
 
-import com.frostwire.gnutella.gui.skin.SkinCheckBoxMenuItem;
-import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.gui.GUIMediator.Tabs;
+import com.limegroup.gnutella.gui.themes.SkinCheckBoxMenuItem;
+import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 
 /**
  * This class is put as a mouse adapter on the tabs so that the users

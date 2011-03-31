@@ -22,8 +22,6 @@ import javax.swing.JTextField;
 import org.limewire.io.NetworkUtils;
 import org.limewire.net.SocketsManager.ConnectType;
 
-import com.frostwire.gnutella.gui.skin.SkinMenuItem;
-import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.connection.RoutedConnection;
 import com.limegroup.gnutella.gui.AutoCompleteTextField;
 import com.limegroup.gnutella.gui.ClearableAutoCompleteTextField;
@@ -37,6 +35,8 @@ import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.tables.TableSettings;
+import com.limegroup.gnutella.gui.themes.SkinMenuItem;
+import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 

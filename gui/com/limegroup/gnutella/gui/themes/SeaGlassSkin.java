@@ -27,7 +27,7 @@
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, 
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
  */
-package com.frostwire.gnutella.gui.skin;
+package com.limegroup.gnutella.gui.themes;
 
 import java.awt.Color;
 
@@ -57,7 +57,7 @@ public class SeaGlassSkin extends SubstanceSkin {
 	 */
 	public SeaGlassSkin() {
 		SubstanceSkin.ColorSchemes schemes = SubstanceSkin
-				.getColorSchemes("com/frostwire/gnutella/gui/skin/seaglass.colorschemes");
+				.getColorSchemes("com/frostwire/gnutella/gui/themes/seaglass.colorschemes");
 
 		SubstanceColorScheme activeScheme = schemes.get("Sea Glass Active");
 		SubstanceColorScheme enabledScheme = schemes.get("Sea Glass Enabled");

@@ -3,9 +3,9 @@ package com.limegroup.gnutella.gui.upload;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
-import com.frostwire.gnutella.gui.skin.SkinMenuItem;
-import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.themes.SkinMenuItem;
+import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 
 /**
  * This class contains the popup menu that is visible on right-click events in

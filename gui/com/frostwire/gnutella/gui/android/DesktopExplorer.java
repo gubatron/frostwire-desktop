@@ -39,9 +39,9 @@ import org.pushingpixels.flamingo.api.bcb.core.BreadcrumbFileSelector;
 
 import com.frostwire.GuiFrostWireUtils;
 import com.frostwire.gnutella.gui.android.LocalFileListModel.OnRootListener;
-import com.frostwire.gnutella.gui.skin.SkinMenuItem;
-import com.frostwire.gnutella.gui.skin.SkinPopupMenu;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.themes.SkinMenuItem;
+import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 public class DesktopExplorer extends JPanel {
