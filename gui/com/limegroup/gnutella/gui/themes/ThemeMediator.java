@@ -20,6 +20,7 @@ import org.pushingpixels.substance.api.SubstanceLookAndFeel;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.TipOfTheDayMediator;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
+import com.limegroup.gnutella.gui.themes.setters.PlasticThemeSetter;
 
 
 /**
@@ -143,39 +144,40 @@ public class ThemeMediator {
     }
     
     public static void setCurrentOrDefaultTheme(boolean setDefault) throws IOException {
-        List<SkinInfo> skins = loadSkins();
-        
-        if (setDefault) {
-            for (int i = 0; i < skins.size(); i++) {
-                SkinInfo skin = skins.get(i);
-                
-                if (setDefault && skin._default) {
-                    changeTheme(skin.className);
-                    break;
-                }
-            }
-        } else {
-            
-            SkinInfo defaultSkin = null;
-            
-            for (int i = 0; i < skins.size(); i++) {
-                SkinInfo skin = skins.get(i);
-                
-                if (skin.current) {
-                    defaultSkin = null;
-                    changeTheme(skin.className);
-                    break;
-                }
-                
-                if (skin._default) {
-                    defaultSkin = skin;
-                }
-            }
-            
-            if (defaultSkin != null) {
-                changeTheme(defaultSkin.className);
-            }
-        }
+        new PlasticThemeSetter().apply();
+//        List<SkinInfo> skins = loadSkins();
+//        
+//        if (setDefault) {
+//            for (int i = 0; i < skins.size(); i++) {
+//                SkinInfo skin = skins.get(i);
+//                
+//                if (setDefault && skin._default) {
+//                    changeTheme(skin.className);
+//                    break;
+//                }
+//            }
+//        } else {
+//            
+//            SkinInfo defaultSkin = null;
+//            
+//            for (int i = 0; i < skins.size(); i++) {
+//                SkinInfo skin = skins.get(i);
+//                
+//                if (skin.current) {
+//                    defaultSkin = null;
+//                    changeTheme(skin.className);
+//                    break;
+//                }
+//                
+//                if (skin._default) {
+//                    defaultSkin = skin;
+//                }
+//            }
+//            
+//            if (defaultSkin != null) {
+//                changeTheme(defaultSkin.className);
+//            }
+//        }
     }
     
     public static void changeTheme(final String skinClassName) {
