@@ -26,7 +26,12 @@ import com.limegroup.gnutella.settings.QuestionsHandler;
  */
 public class CopyMagnetLinkToClipboardAction extends AbstractAction {
 
-	private FileDetailsProvider provider;
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 4111219255963235388L;
+    
+    private FileDetailsProvider provider;
 	
 	public CopyMagnetLinkToClipboardAction(FileDetailsProvider provider) {
 		this.provider = provider;

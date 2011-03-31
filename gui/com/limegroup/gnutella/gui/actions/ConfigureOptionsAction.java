@@ -11,6 +11,11 @@ import com.limegroup.gnutella.gui.I18n;
 public class ConfigureOptionsAction extends AbstractAction {
 
 	/**
+     * 
+     */
+    private static final long serialVersionUID = -3107793911756516952L;
+    
+    /**
 	 * The title of the 
 	 */
 	private String paneTitle;

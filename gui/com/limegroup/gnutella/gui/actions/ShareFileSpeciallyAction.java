@@ -24,7 +24,12 @@ import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
  */
 public class ShareFileSpeciallyAction extends AbstractAction {
 
-	public ShareFileSpeciallyAction() {
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 1412854499177041798L;
+
+    public ShareFileSpeciallyAction() {
 		putValue(Action.NAME, I18n.tr
 				("Share New File..."));
 		putValue(Action.SHORT_DESCRIPTION, "Opens a Dialog and Lets You Choose a File to Share");

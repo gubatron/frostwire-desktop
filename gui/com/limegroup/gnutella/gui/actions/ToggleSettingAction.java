@@ -16,6 +16,11 @@ import org.limewire.setting.BooleanSetting;
  */
 public class ToggleSettingAction extends AbstractAction {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -7756628550520833921L;
+    
     private final BooleanSetting setting;
     
     public ToggleSettingAction(BooleanSetting setting, String name) { 

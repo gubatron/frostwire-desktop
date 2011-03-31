@@ -16,6 +16,11 @@ import com.limegroup.gnutella.gui.GUIUtils;
  */
 public abstract class AbstractAction extends javax.swing.AbstractAction {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 5133426772218480351L;
+
     public AbstractAction(String name, Icon icon) {
         super(name, icon);
     }

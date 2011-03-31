@@ -18,6 +18,11 @@ import com.limegroup.gnutella.gui.search.SearchMediator;
 public class MySharedFilesAction extends AbstractAction {
     
     /**
+     * 
+     */
+    private static final long serialVersionUID = 4094201491319672500L;
+
+    /**
      * Creates an action that links to My Shared Files with given text.
      */
     public MySharedFilesAction(String title) {

@@ -35,13 +35,13 @@ public class ActionUtils {
 		List<Action> actions = new ArrayList<Action>();
 		NamedMediaType nm = NamedMediaType.getFromDescription(doc.getSchemaDescription());
 		
-		for (Iterator i = schema.getCanonicalizedFields().iterator(); i.hasNext();) {
+		for (Iterator<SchemaFieldInfo> i = schema.getCanonicalizedFields().iterator(); i.hasNext();) {
 			SchemaFieldInfo field = (SchemaFieldInfo) i.next();
 			String name = field.getCanonicalizedFieldName();
 			String value = doc.getValue(name);
 			if (value == null || value.length() < 3 || field.isHidden())
 				continue;
-			NameValue displayPair = XMLUtils.getDisplayPair(field, value, schema);
+			NameValue<String> displayPair = XMLUtils.getDisplayPair(field, value, schema);
 			actions.add(new SearchXMLFieldAction(displayPair, name, value, nm));
 		}
 		

@@ -9,7 +9,12 @@ import com.limegroup.gnutella.gui.I18n;
 
 public class ShareNewFolderAction extends AbstractAction {
 
-	public ShareNewFolderAction() {
+	/**
+     * 
+     */
+    private static final long serialVersionUID = -4798827595247405133L;
+
+    public ShareNewFolderAction() {
 		putValue(Action.NAME, I18n.tr
 				("Share New Folder..."));
 		putValue(Action.SHORT_DESCRIPTION, I18n.tr("Opens a Window and Lets You Choose a New Folder to Share"));

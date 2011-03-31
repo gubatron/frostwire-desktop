@@ -26,7 +26,12 @@ import com.limegroup.gnutella.util.QueryUtils;
  */
 public class SearchXMLFieldAction extends AbstractAction {
 
-	private NameValue<?> displayPair;
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 4515402233583499549L;
+    
+    private NameValue<?> displayPair;
 	private String name;
 	private String value;
 	private NamedMediaType nm;

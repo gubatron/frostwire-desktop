@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.limegroup.gnutella.gui.actions;
 
 import java.awt.event.ActionEvent;
@@ -21,7 +18,12 @@ import com.limegroup.gnutella.util.QueryUtils;
  */
 public class SearchForKeywordsAction extends AbstractAction {
 
-	private String keywords;
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 9022311376862953447L;
+    
+    private String keywords;
 	
 	/**
 	 * Constructs an action that searches a space separated list of keywords.

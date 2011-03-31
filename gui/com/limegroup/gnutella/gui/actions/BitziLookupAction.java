@@ -20,6 +20,11 @@ import com.limegroup.gnutella.gui.I18n;
 public class BitziLookupAction extends AbstractAction {
 
 	/**
+     * 
+     */
+    private static final long serialVersionUID = -5516206566930644245L;
+
+    /**
 	 * Setting for the bitzi lookup string, has to be processed through 
 	 * {@link MessageFormat#format(java.lang.String, java.lang.Object[])} for
 	 * adding the urn.

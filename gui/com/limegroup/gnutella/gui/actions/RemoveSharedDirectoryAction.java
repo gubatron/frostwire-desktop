@@ -14,6 +14,11 @@ import com.limegroup.gnutella.gui.library.RecursiveSharingPanel;
  */
 public class RemoveSharedDirectoryAction extends AbstractAction {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -2621103904894918281L;
+    
     private final RecursiveSharingPanel recursiveSharingPanel;
 
     public RemoveSharedDirectoryAction(RecursiveSharingPanel recursiveSharingPanel) {

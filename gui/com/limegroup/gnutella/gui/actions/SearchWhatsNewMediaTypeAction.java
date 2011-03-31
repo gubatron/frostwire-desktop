@@ -19,7 +19,12 @@ import com.limegroup.gnutella.gui.search.SearchMediator;
  */
 public class SearchWhatsNewMediaTypeAction extends AbstractAction {
 
-	private NamedMediaType nm;
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 7057225395045742690L;
+    
+    private NamedMediaType nm;
 	
 	/**
 	 * Constructs an action which starts a "What's New" search for a named

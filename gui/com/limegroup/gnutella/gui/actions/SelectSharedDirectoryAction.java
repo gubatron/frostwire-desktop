@@ -16,6 +16,11 @@ import com.limegroup.gnutella.gui.sharing.ShareManager;
  */
 public class SelectSharedDirectoryAction extends AbstractAction {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -3532986330838475085L;
+    
     private final RecursiveSharingPanel recursiveSharingPanel;
     private final Component parent;
 
