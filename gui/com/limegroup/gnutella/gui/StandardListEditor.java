@@ -30,7 +30,6 @@ import org.limewire.i18n.I18nMarker;
  * the element to add from the user.  The remove button is only enabled
  * when there is an item selected in the list.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public final class StandardListEditor {
 
 	/**
@@ -198,7 +197,7 @@ public final class StandardListEditor {
 	 *
 	 * @param data the <tt>Vector</tt> containing data for the model
 	 */
-	public void setListData(Vector data) {
+	public void setListData(Vector<?> data) {
 		DefaultListModel model = new DefaultListModel();
 		for (int i=0; i<data.size(); i++)
 			model.addElement(data.get(i));
@@ -324,7 +323,11 @@ public final class StandardListEditor {
 	 */
 	private class AddAction extends AbstractAction {
 		
-		private final String INPUT_FIELD_KEY;
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 3356705813724288940L;
+        private final String INPUT_FIELD_KEY;
 		
 		public AddAction(final String name, final String key) {
 			putValue(Action.NAME, I18n.tr(name));
@@ -358,7 +361,12 @@ public final class StandardListEditor {
 	 */
 	private class RemoveAction extends AbstractAction {
 		
-		public RemoveAction(final String name)
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 1136233979260936902L;
+
+        public RemoveAction(final String name)
 		{
 			 putValue(Action.NAME, I18n.tr(name));
 			 putValue(Action.SHORT_DESCRIPTION, I18n.tr("Remove Selected Item"));

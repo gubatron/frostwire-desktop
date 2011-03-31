@@ -43,7 +43,6 @@ public final class GURLHandler {
     }
         
     /** Called by the native code */
-    @SuppressWarnings("unused")
     private void callback(final String url) {
 		if ( enabled && externalControl.isInitialized() ) {
 			Runnable runner = new Runnable() {

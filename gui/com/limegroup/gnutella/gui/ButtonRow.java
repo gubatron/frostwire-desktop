@@ -18,10 +18,14 @@ import com.limegroup.gnutella.gui.actions.LimeAction;
  * between them. The row of buttons can be oriented either 
  * horizontally or vertically, depending on the parameter.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public final class ButtonRow extends JPanel {
 
 	/**
+     * 
+     */
+    private static final long serialVersionUID = 2171794172705055068L;
+
+    /**
 	 * The array of <tt>JButton</tt>s.
 	 */
     private JButton[] _buttons;

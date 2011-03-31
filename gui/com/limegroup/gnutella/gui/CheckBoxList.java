@@ -52,6 +52,11 @@ import com.limegroup.gnutella.gui.themes.ThemeSettings;
  */
 public class CheckBoxList<E> extends BoxPanel {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 680881365220840255L;
+
     private String disabledTooltip = null;
     
     private boolean removeable = false;
@@ -60,7 +65,7 @@ public class CheckBoxList<E> extends BoxPanel {
     private JScrollPane scrollPane;
     private JTable checkBoxList;
     private CheckBoxListSelectionListener selectionListener;
-    private CheckBoxListCheckChangeListener checkListener;
+    private CheckBoxListCheckChangeListener<?> checkListener;
     private Object parent;
 
     private int highLightedRow = -1;
@@ -428,7 +433,7 @@ public class CheckBoxList<E> extends BoxPanel {
         this.selectionListener = listener;  
     }
     
-    public void setCheckChangeListener(CheckBoxListCheckChangeListener listener) {
+    public void setCheckChangeListener(CheckBoxListCheckChangeListener<?> listener) {
         this.checkListener = listener;  
     }
 
@@ -441,7 +446,7 @@ public class CheckBoxList<E> extends BoxPanel {
         if (provider == null) {
             throw new NullPointerException("provider must not be null");
         }
-        TextProvider oldProvider = this.provider;
+        TextProvider<?> oldProvider = this.provider;
         this.provider = provider;
         firePropertyChange(TEXT_PROVIDER_PROPERTY, oldProvider, this.provider);
     }
@@ -601,6 +606,11 @@ public class CheckBoxList<E> extends BoxPanel {
     
     private class SelectAllAction extends AbstractAction {
 
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -8173830762677196193L;
+
         public SelectAllAction() {
             putValue(Action.NAME, I18n.tr
                     ("Select All"));
@@ -620,6 +630,11 @@ public class CheckBoxList<E> extends BoxPanel {
     }
     
     private class DeselectAllAction extends AbstractAction {
+
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -7666969710559350155L;
 
         public DeselectAllAction() {
             putValue(Action.NAME, I18n.tr
@@ -642,6 +657,11 @@ public class CheckBoxList<E> extends BoxPanel {
     
     private class CustomJTable extends JTable {
     
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 2839028569443961323L;
+
         private void shift(int row) {
             if (row != highLightedRow) {
                 highLightedRow = row;
@@ -740,6 +760,10 @@ public class CheckBoxList<E> extends BoxPanel {
      */
     private class CheckBoxCellEditor extends DefaultCellEditor {
                        
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 8487646158995389360L;
         private CustomEditorDelegate customDelegate;
 
         public CheckBoxCellEditor() {
@@ -797,7 +821,7 @@ public class CheckBoxList<E> extends BoxPanel {
                 this.lastValue = null;
             }
             
-            @SuppressWarnings("unchecked")
+            @SuppressWarnings({ "unchecked", "rawtypes" })
             @Override
             public void setValue(Object value) { 
 
@@ -905,6 +929,10 @@ public class CheckBoxList<E> extends BoxPanel {
      * Stores selection change events
      */
     public static class CheckBoxListSelectionEvent extends EventObject{
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 6985964072155472329L;
         private Object selected;
        
         public CheckBoxListSelectionEvent(Object source, Object selected) {
@@ -926,6 +954,10 @@ public class CheckBoxList<E> extends BoxPanel {
      * Stores check/uncheck events 
      */
     public static class CheckBoxListCheckChangeEvent<E> extends EventObject{
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -2715339837857605924L;
         private E selected;
         private boolean checked;
        
@@ -1008,6 +1040,10 @@ public class CheckBoxList<E> extends BoxPanel {
      */
     private class IconDataCheckBox extends BoxPanel {
         
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 7370736947464891601L;
         private E obj;
         private JCheckBox checkBox;
         private JLabel label;
@@ -1040,10 +1076,6 @@ public class CheckBoxList<E> extends BoxPanel {
    
             originalFont = label.getFont();
             boldFont = originalFont.deriveFont(originalFont.getStyle() | Font.BOLD | Font.ITALIC);
-        }
-        
-        public E getData() {
-            return obj;
         }
         
         public void setRemovable(boolean state) {
@@ -1086,23 +1118,14 @@ public class CheckBoxList<E> extends BoxPanel {
                 
         }
         
-        /**
-         * Returns whether or not the check box is checked or not.
-         */
-        public boolean isSelected() {
-            return checkBox.isSelected();
-        }
-        
         public void setSelected(boolean selected) {
             checkBox.setSelected(selected);
-        }
-        
+        }        
 
         public void setEnabled(boolean enabled) {
             checkBox.setEnabled(enabled);
             label.setEnabled(enabled);
-        }
-        
+        }        
         
         public void setForeground(Color c) {
             if (label != null) {
@@ -1154,6 +1177,10 @@ public class CheckBoxList<E> extends BoxPanel {
         
         
         private class DeleteButton extends JButton {
+            /**
+             * 
+             */
+            private static final long serialVersionUID = 2099563643830495610L;
             private Icon iconReg;
             private Icon iconHi;
             

@@ -24,9 +24,12 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
 import com.limegroup.gnutella.settings.StatusBarSettings;
 
-import com.frostwire.gnutella.gui.chat.ChatMediator;
-
 public class LanguageWindow extends JDialog {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1794098818746665242L;
 
     private static final int MIN_DIALOG_WIDTH = 350;
 
@@ -199,6 +202,11 @@ public class LanguageWindow extends JDialog {
 
     private class OkayAction extends AbstractAction {
 
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -1477512286179401572L;
+
         public OkayAction() {
         }
 
@@ -211,6 +219,11 @@ public class LanguageWindow extends JDialog {
 
     private class CancelAction extends AbstractAction {
 
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -4642362028590179425L;
+
         public CancelAction() {
         }
 
@@ -221,6 +234,11 @@ public class LanguageWindow extends JDialog {
     }
 
     private class UseEnglishAction extends AbstractAction {
+
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 569992346803285269L;
 
         public UseEnglishAction() {
             // note: this string is intentionally not translated

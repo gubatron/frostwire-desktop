@@ -5,6 +5,10 @@ import javax.swing.JToolTip;
 
 public class JMultilineToolTip extends JToolTip {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 8174861735137956191L;
     private String[] tipArray;
     private static JMultilineToolTip instance = new JMultilineToolTip();
     

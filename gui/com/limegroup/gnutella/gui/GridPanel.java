@@ -12,10 +12,14 @@ import javax.swing.JPanel;
 /**
  * This class is simply a JPanel that uses a GridBagLayout.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public class GridPanel extends JPanel {
 	
 	/**
+     * 
+     */
+    private static final long serialVersionUID = 1859752343575210755L;
+
+    /**
 	 * Creates a default <tt>JPanel</tt> with a <tt>GridBagLayout</tt>.
 	 */
 	public GridPanel() {

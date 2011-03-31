@@ -7,6 +7,10 @@ import javax.swing.JDialog;
 
 public class FramedDialog extends LimeJFrame {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 171366776903869143L;
     private final JDialog dialog = new JDialog(this);
     
     public FramedDialog() throws HeadlessException {

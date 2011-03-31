@@ -99,6 +99,10 @@ public final class FileManagerWarningManager implements FileEventListener {
     }
 
     private static class IgnoreAction extends AbstractAction {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -3892490387425217951L;
         BooleanSetting ignoreSwitch;
         public IgnoreAction(BooleanSetting ignoreSwitch) {
             this.ignoreSwitch = ignoreSwitch;

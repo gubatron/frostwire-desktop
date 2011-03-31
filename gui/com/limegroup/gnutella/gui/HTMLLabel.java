@@ -8,6 +8,11 @@ import javax.swing.JLabel;
 
 public class HTMLLabel extends JEditorPane {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -3000702789974804495L;
+
     public HTMLLabel(String html) {
         super("text/html", html);
         setMargin(new Insets(5, 5, 5, 5));

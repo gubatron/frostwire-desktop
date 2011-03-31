@@ -12,6 +12,10 @@ import javax.swing.UIManager;
  */
 public class Line extends JComponent {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 3079143371460914806L;
     private Color color;
 	private Color uiColor;
     

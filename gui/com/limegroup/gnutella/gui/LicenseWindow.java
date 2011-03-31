@@ -31,6 +31,10 @@ import com.limegroup.gnutella.xml.LimeXMLDocument;
  */
 public abstract class LicenseWindow extends JDialog implements VerificationListener {    
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -9036732467623023201L;
     /** The URN that the license is expected to match. */
     protected final URN URN;
     /** The LimeXMLDocument with information about the file this license matches. */
@@ -412,6 +416,11 @@ public abstract class LicenseWindow extends JDialog implements VerificationListe
      * Special stuff for a CC license.
      */
     private static class CCWindow extends LicenseWindow {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 2175094618153319681L;
+
         CCWindow(License l, URN u, LimeXMLDocument d, VerificationListener v) {
             super(l, u, d, v, "CC");
         }
@@ -470,6 +479,11 @@ public abstract class LicenseWindow extends JDialog implements VerificationListe
      * Special stuff for a Weed license.
      */
     private static class WeedWindow extends LicenseWindow {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -3857637953742169998L;
+
         WeedWindow(License l, URN u, LimeXMLDocument d, VerificationListener v) {
             super(l, u, d, v, "WEED");
         }
@@ -538,6 +552,10 @@ public abstract class LicenseWindow extends JDialog implements VerificationListe
      * Special stuff for an unknown license.
      */
     private static class UnknownWindow extends LicenseWindow {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 8846175124819588520L;
         UnknownWindow(License l, URN u, LimeXMLDocument d, VerificationListener v) {
             super(l, u, d, v, "UNKNOWN");
         }

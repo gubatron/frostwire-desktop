@@ -13,10 +13,14 @@ import com.limegroup.gnutella.gui.GUIUtils.SizePolicy;
  * <tt>Dimension</tt> or sets the preferred and maximum sizes to the
  * <tt>Dimension</tt> argument.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public final class SizedPasswordField extends JPasswordField {
 	
 	/**
+     * 
+     */
+    private static final long serialVersionUID = -7918387739536835583L;
+
+    /**
 	 * Creates a <tt>JPasswordField</tt> with a standard size.
 	 */
 	public SizedPasswordField() {

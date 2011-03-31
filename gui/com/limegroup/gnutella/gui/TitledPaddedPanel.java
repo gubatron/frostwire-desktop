@@ -19,10 +19,14 @@ import javax.swing.border.TitledBorder;
  * The inner panel also defaults to <tt>BoxLayout</tt>, but the user can change 
  * the layout with the overridden setLayout method.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public class TitledPaddedPanel extends JPanel {	
 
 	/**
+     * 
+     */
+    private static final long serialVersionUID = -4497553505538520672L;
+
+    /**
 	 * Constant for specifying an x axis orientation for the layout.
 	 */
 	public static final int X_AXIS = 20;

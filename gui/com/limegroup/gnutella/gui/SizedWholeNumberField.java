@@ -7,10 +7,14 @@ import com.limegroup.gnutella.gui.GUIUtils.SizePolicy;
 /**
  * A <code>WholeNumberField</code> with a standard size.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public class SizedWholeNumberField extends WholeNumberField {
 	
 	/**
+     * 
+     */
+    private static final long serialVersionUID = -2271763210570417842L;
+
+    /**
 	 * constant dimension for sizing number fields.
 	 */
 	private final Dimension STANDARD_DIMENSION = new Dimension(5, 20);

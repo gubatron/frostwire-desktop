@@ -12,9 +12,13 @@ import org.limewire.collection.Buffer;
  *
  * @author Greg Bildson
  */
-public class BufferListModel<T> extends AbstractListModel
-{
+public class BufferListModel<T> extends AbstractListModel {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -6903124654956109876L;
+    
     private Buffer<T>              buffer;
 
 	/**

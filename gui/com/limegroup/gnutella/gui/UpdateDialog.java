@@ -27,6 +27,11 @@ import com.limegroup.gnutella.version.UpdateInformation;
 final class UpdateDialog extends JDialog {
 	
 	/**
+     * 
+     */
+    private static final long serialVersionUID = 1752089441759916757L;
+
+    /**
 	 * Constructs the dialog.
 	 */
 	public UpdateDialog(UpdateInformation info) {

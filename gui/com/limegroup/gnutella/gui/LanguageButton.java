@@ -17,6 +17,10 @@ import com.limegroup.gnutella.settings.ApplicationSettings;
 
 public class LanguageButton extends JPanel {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1795381168007012403L;
     private JButton   bheader;
     
 	public LanguageButton() {

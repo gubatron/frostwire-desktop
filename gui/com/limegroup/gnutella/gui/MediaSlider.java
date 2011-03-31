@@ -29,6 +29,11 @@ import com.limegroup.gnutella.gui.themes.ThemeObserver;
 public class MediaSlider extends JSlider implements ThemeObserver, ChangeListener {
 
     /**
+     * 
+     */
+    private static final long serialVersionUID = 6544159559093274923L;
+
+    /**
      * This represents the left end of the jslider track
      */
     private final String LEFT_TRACK;

@@ -21,10 +21,10 @@ public final class ProgTabUIFactory {
      * The classes for each specific UI we know how to handle.
      */
 
-    private static final Class aquaUI;
-    private static final Class windowsUI;
-    private static final Class metalUI;
-    private static final Class basicUI;
+    private static final Class<?> aquaUI;
+    private static final Class<?> windowsUI;
+    private static final Class<?> metalUI;
+    private static final Class<?> basicUI;
 
     static {
         aquaUI = loadClass("apple.laf.AquaTabbedPaneUI");
@@ -37,7 +37,7 @@ public final class ProgTabUIFactory {
     /**
      * Load the specified class -- if it couldn't load, return null.
      */
-    private static final Class loadClass(String toLoad) {
+    private static final Class<?> loadClass(String toLoad) {
         try {
             return Class.forName(toLoad);
         } catch(ClassNotFoundException cfnfe) {
@@ -51,7 +51,7 @@ public final class ProgTabUIFactory {
      */
     private static TabbedPaneUI createNewUI(String toLoad,
                                             TabbedPaneUI def) {
-        Class clazz = loadClass(toLoad);
+        Class<?> clazz = loadClass(toLoad);
         if( clazz == null )
             return def;
         

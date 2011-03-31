@@ -17,6 +17,11 @@ import javax.swing.event.HyperlinkListener;
 public final class ScrollingTextPane extends JScrollPane {
 
     /**
+     * 
+     */
+    private static final long serialVersionUID = 1706678462639869854L;
+
+    /**
      * <tt>JEditorPane</tt> to show the text
      */
     private final JEditorPane EDITOR_PANE;
@@ -48,7 +53,12 @@ public final class ScrollingTextPane extends JScrollPane {
 
          // create timer
          Action scrollText = new AbstractAction() {
-             public void actionPerformed(ActionEvent e) {
+             /**
+             * 
+             */
+            private static final long serialVersionUID = 1486050927440198480L;
+
+            public void actionPerformed(ActionEvent e) {
                  scroll();
              }
          };

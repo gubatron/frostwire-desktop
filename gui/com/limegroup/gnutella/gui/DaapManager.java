@@ -72,7 +72,7 @@ public final class DaapManager implements FinalizeListener {
     private Playlist creativecommons;
     private Playlist videos;
         
-    private DaapServer server;
+    private DaapServer<?> server;
     
     private BonjourService bonjour;
     private AutoCommitTransaction autoCommitTxn;
@@ -926,19 +926,6 @@ public final class DaapManager implements FinalizeListener {
      * Implements the DaapAuthenticator
      */
     private final class LimeAuthenticator implements DaapAuthenticator {
-        
-        /**
-         * Returns true if username and password are correct.<p>
-         * Note: iTunes does not support usernames (i.e. it's
-         * don't care)!
-         */
-        public byte[] getPassword(String username, Object scheme) {
-            String password = DaapSettings.DAAP_PASSWORD.getValue();
-            if (password.startsWith("MD5/")) {
-                password = password.substring(4);
-            }
-            return DaapUtil.parseHexString(password);
-        }
         
         public boolean authenticate(String username, String password, String uri, String nonce) {
             

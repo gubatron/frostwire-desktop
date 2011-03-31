@@ -12,7 +12,12 @@ import javax.swing.UIManager;
  */
 public class IconTextField extends BoxPanel {
 
-	private final JTextField textField;
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 4895286536141644757L;
+
+    private final JTextField textField;
 	
 	private final JLabel iconLabel;
 

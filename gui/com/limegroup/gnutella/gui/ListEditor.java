@@ -38,6 +38,10 @@ import javax.swing.event.ListSelectionListener;
  * element is modified at a time.
  */ 
 public class ListEditor extends JPanel {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 5689653237762528073L;
     /** INVARIANT: model contains exactly the same elements as realModel. */
     protected Vector<String> model;
     protected DefaultListModel /* of String */ realModel;
@@ -224,7 +228,12 @@ public class ListEditor extends JPanel {
     /** Someone tried to add something to the list. */
     private class AddAction extends AbstractAction {
     	
-    	public AddAction()
+    	/**
+         * 
+         */
+        private static final long serialVersionUID = 8474390737220207662L;
+
+        public AddAction()
     	{
     		putValue(Action.NAME, I18n.tr("Add"));
     	}
@@ -277,7 +286,12 @@ public class ListEditor extends JPanel {
     private class RemoveAction extends AbstractAction
 	{
     	
-    	public RemoveAction()
+    	/**
+         * 
+         */
+        private static final long serialVersionUID = 6931596656024307229L;
+
+        public RemoveAction()
     	{
     		putValue(Action.NAME, I18n.tr("Remove"));
     	}

@@ -76,6 +76,11 @@ class JavaVersionNotice {
 
     private static class UpgradeRequiredDialog extends JDialog {
 
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 6248367339958751670L;
+
         private UpgradeRequiredDialog() {
             setTitle("Upgrade Java");
             setSize(new Dimension(100, 300));
@@ -146,6 +151,11 @@ class JavaVersionNotice {
     }
     
     private static class UpgradeRecommendedDialog extends JDialog {
+
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -6983561620290780547L;
 
         private UpgradeRecommendedDialog(String text) {
             setTitle(I18n.tr("Upgrade Java"));

@@ -20,6 +20,11 @@ import com.limegroup.gnutella.gui.actions.LimeAction;
  */
 public class URLLabel extends JLabel  {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 6031824310075568242L;
+
     private MouseListener urlListener;
     
     private PropertyChangeListener listener = null;

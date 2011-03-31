@@ -16,10 +16,14 @@ import com.limegroup.gnutella.gui.GUIUtils.SizePolicy;
  * allows multiple-line labels.  It does this by using JLabel's values for 
  * border, font, etc.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public class MultiLineLabel extends JTextArea {
 
 	/**
+     * 
+     */
+    private static final long serialVersionUID = -7407493522099115196L;
+
+    /**
 	 * The default pixel width for labels when the width is not
 	 * specified in the constructor.
 	 */

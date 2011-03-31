@@ -12,11 +12,13 @@ import javax.swing.JTextField;
 /**
  * This class creates a text field with a label next to it.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
-
 public class LabeledTextField extends JPanel {
 
 	/**
+     * 
+     */
+    private static final long serialVersionUID = 6304953182729318404L;
+    /**
 	 * The <tt>JTextField</tt> part of this component.
 	 */
 	private JTextField _field;

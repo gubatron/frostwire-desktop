@@ -16,6 +16,11 @@ import com.limegroup.gnutella.version.UpdateInformation;
 
 final class UpdatePanel extends JLabel implements RefreshListener {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -3560119738968252710L;
+
     private final String labelString = 
         I18n.tr("A newer version is available, update?");
 

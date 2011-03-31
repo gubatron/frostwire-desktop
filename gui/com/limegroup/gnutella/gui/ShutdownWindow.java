@@ -12,6 +12,11 @@ import javax.swing.JProgressBar;
 
 class ShutdownWindow extends JDialog {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 446845150731872693L;
+
     public ShutdownWindow() {
         super(GUIMediator.getAppFrame());
         setResizable(false);

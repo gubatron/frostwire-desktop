@@ -15,6 +15,10 @@ import com.limegroup.gnutella.gui.themes.ThemeSettings;
  */
 public final class MediaButton extends JButton implements ThemeObserver {
         
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5372863777384403103L;
     private final String TIP_TEXT;
     private final String UP_NAME;
     private final String DOWN_NAME;

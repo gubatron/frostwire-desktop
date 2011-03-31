@@ -16,7 +16,11 @@ import javax.swing.UIManager;
  */
 public class CheckBoxListPanel<E> extends BoxPanel {
 	
-	private CheckBoxList<E> list;
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 1989311176988471587L;
+    private CheckBoxList<E> list;
 
 	/**
 	 * Constructs a checkbox list panel for an array of objects.
@@ -79,7 +83,12 @@ public class CheckBoxListPanel<E> extends BoxPanel {
 	 */
 	private class InternalJScrollPane extends JScrollPane {
 		
-		public InternalJScrollPane(Component comp) {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 5346177338334373472L;
+
+        public InternalJScrollPane(Component comp) {
 			super(comp);
 			getViewport().setBackground(UIManager.getColor("List.background"));
 		}

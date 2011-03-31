@@ -11,10 +11,14 @@ import com.limegroup.gnutella.gui.GUIUtils.SizePolicy;
  * <tt>Dimension</tt> or sets the preferred and maximum sizes to the
  * <tt>Dimension</tt> argument.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public final class SizedTextField extends LimeTextField {
 	
 	/**
+     * 
+     */
+    private static final long serialVersionUID = 8153967547511971533L;
+
+    /**
 	 * Constant for the standard height for <tt>JTextField</tt>.
 	 */
 	public static final int STANDARD_HEIGHT = 20;	

@@ -12,11 +12,13 @@ import javax.swing.border.Border;
  * panel a padded border and gives it a <tt>BoxLayout</tt> instead of the 
  * default <tt>FlowLayout</tt>.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
-
 public class PaddedPanel extends JPanel {
 
 	/**
+     * 
+     */
+    private static final long serialVersionUID = 4986909888220284988L;
+    /**
 	 * Stores an internal reference to the optional title label,
 	 * whose text may be altered later by setTitle()
 	 */

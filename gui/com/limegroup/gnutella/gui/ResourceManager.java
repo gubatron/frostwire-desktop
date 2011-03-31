@@ -1,33 +1,24 @@
 package com.limegroup.gnutella.gui;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.LookAndFeel;
-import javax.swing.SwingUtilities;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.FontUIResource;
-import javax.swing.plaf.metal.DefaultMetalTheme;
-import javax.swing.plaf.metal.MetalLookAndFeel;
-import javax.swing.plaf.metal.MetalTheme;
 
 import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
@@ -41,7 +32,6 @@ import com.limegroup.gnutella.settings.ApplicationSettings;
  * the locale-specific <tt>String</tt> instances, and any <tt>Icon</tt>
  * instances needed by the application.
  */
-// 2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public final class ResourceManager {
 
     /**
@@ -78,12 +68,12 @@ public final class ResourceManager {
     /**
      * Boolean for whether or not the font-size has been reduced.
      */
-    private static boolean _fontReduced = false;
+    //private static boolean _fontReduced = false;
 
     /**
      * The default MetalTheme.
      */
-    private static MetalTheme _defaultTheme = null;
+    //private static MetalTheme _defaultTheme = null;
 
     /**
      * Whether or not LimeWire was started in the 'brushed metal' look.
@@ -488,52 +478,52 @@ public final class ResourceManager {
      */
     public void themeChanged() {
         THEME_IMAGES.clear();
-        try {
+        //try {
             if (ThemeSettings.isOtherTheme()) {
-                // in case this is using metal ...
-                UIManager.put("swing.boldMetal", Boolean.FALSE);
-                if (_defaultTheme != null)
-                    MetalLookAndFeel.setCurrentTheme(_defaultTheme);
-
-                String other = ThemeSettings.getOtherLF();
-                UIManager.setLookAndFeel(other);
+//                // in case this is using metal ...
+//                UIManager.put("swing.boldMetal", Boolean.FALSE);
+//                if (_defaultTheme != null)
+//                    MetalLookAndFeel.setCurrentTheme(_defaultTheme);
+//
+//                String other = ThemeSettings.getOtherLF();
+//                UIManager.setLookAndFeel(other);
             } else if (ThemeSettings.isNativeTheme()) {
-                if (OSUtils.isWindows() && isPlasticWindowsAvailable()) {
-                    try {
-                        UIManager.setLookAndFeel("com.jgoodies.plaf.windows.ExtWindowsLookAndFeel");
-                    } catch (NullPointerException npe) {
-                        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-                    }
-                } else
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-
-                if (OSUtils.isMacOSX()) {
-                    if (!_fontReduced) {
-                        _fontReduced = true;
-                        reduceFont("Label.font");
-                        reduceFont("Table.font");
-                    }
-
-                    UIManager.put("List.focusCellHighlightBorder",
-                            BorderFactory.createEmptyBorder(1, 1, 1, 1));
-                    UIManager.put("ScrollPane.border",
-                            BorderFactory.createMatteBorder(1, 1, 1, 1, Color.lightGray));
-                }
-
-                // HACK: On Windows sometimes, JFileChooser can't
-                // show because some icons throw an AIOOBE
-                // when they're retrieved. To workaround this,
-                // we install our own version of those icons.
-                if (OSUtils.isWindows()) {
-                    replaceIconIfFailing("FileChooser.upFolderIcon",
-                            "upFolderIconVistaFix");
-                    replaceIconIfFailing("FileChooser.detailsViewIcon",
-                            "detailsViewIconVistaFix");
-                    replaceIconIfFailing("FileChooser.listViewIcon",
-                            "listViewIconVistaFix");
-                    replaceIconIfFailing("FileChooser.newFolderIcon",
-                            "newFolderIconVistaFix");
-                }
+//                if (OSUtils.isWindows() && isPlasticWindowsAvailable()) {
+//                    try {
+//                        UIManager.setLookAndFeel("com.jgoodies.plaf.windows.ExtWindowsLookAndFeel");
+//                    } catch (NullPointerException npe) {
+//                        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+//                    }
+//                } else
+//                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//
+//                if (OSUtils.isMacOSX()) {
+//                    if (!_fontReduced) {
+//                        _fontReduced = true;
+//                        reduceFont("Label.font");
+//                        reduceFont("Table.font");
+//                    }
+//
+//                    UIManager.put("List.focusCellHighlightBorder",
+//                            BorderFactory.createEmptyBorder(1, 1, 1, 1));
+//                    UIManager.put("ScrollPane.border",
+//                            BorderFactory.createMatteBorder(1, 1, 1, 1, Color.lightGray));
+//                }
+//
+//                // HACK: On Windows sometimes, JFileChooser can't
+//                // show because some icons throw an AIOOBE
+//                // when they're retrieved. To workaround this,
+//                // we install our own version of those icons.
+//                if (OSUtils.isWindows()) {
+//                    replaceIconIfFailing("FileChooser.upFolderIcon",
+//                            "upFolderIconVistaFix");
+//                    replaceIconIfFailing("FileChooser.detailsViewIcon",
+//                            "detailsViewIconVistaFix");
+//                    replaceIconIfFailing("FileChooser.listViewIcon",
+//                            "listViewIconVistaFix");
+//                    replaceIconIfFailing("FileChooser.newFolderIcon",
+//                            "newFolderIconVistaFix");
+//                }
             } else {
 //                if (isPlasticAvailable()) {
 //                    if (_defaultTheme == null)
@@ -550,106 +540,46 @@ public final class ResourceManager {
 
             
 
-        } catch (UnsupportedLookAndFeelException e) {
-            throw new ExceptionInInitializerError(e);
-        } catch (ClassNotFoundException e) {
-            throw new ExceptionInInitializerError(e);
-        } catch (InstantiationException e) {
-            throw new ExceptionInInitializerError(e);
-        } catch (IllegalAccessException e) {
-            throw new ExceptionInInitializerError(e);
-        }
+//        } catch (UnsupportedLookAndFeelException e) {
+//            throw new ExceptionInInitializerError(e);
+//        } catch (ClassNotFoundException e) {
+//            throw new ExceptionInInitializerError(e);
+//        } catch (InstantiationException e) {
+//            throw new ExceptionInInitializerError(e);
+//        } catch (IllegalAccessException e) {
+//            throw new ExceptionInInitializerError(e);
+//        }
         
         //wrapDesktopProperties();
     }
     
-    private void wrapDesktopProperties() {
-        if(!OSUtils.isWindows())
-            return;
-        
-        Class<?> desktopProperty;
-        // See if we can get a handle to the 'DesktopProperty' class.
-        try {
-            desktopProperty = Class.forName("com.sun.java.swing.plaf.windows.DesktopProperty");
-        } catch(ClassNotFoundException cnfe) {
-            return;
-        }
-        
-        UIDefaults defaults = UIManager.getLookAndFeelDefaults();
-        synchronized(defaults) {
-            for(Iterator<Map.Entry<Object, Object>> i = defaults.entrySet().iterator(); i.hasNext(); ) {
-                Map.Entry<Object, Object> next = i.next();
-                Object value = next.getValue();
-                if(next.getValue() instanceof UIDefaults.ActiveValue) {
-                    UIDefaults.ActiveValue activeValue = (UIDefaults.ActiveValue)value;
-                    if(value != null && desktopProperty.isAssignableFrom(value.getClass())) {
-                        next.setValue(new ActiveDesktopProperty(activeValue));
-                    }
-                }
-            }
-        }
-    }
-    
-    /**
-     * Replaces an icon resource in UIManager with a different resource if the
-     * original resource can't be retrieved correctly.
-     * 
-     * @param resource
-     * @param replacementName
-     */
-    private void replaceIconIfFailing(String resource, String replacementName) {
-        try {
-            UIManager.getIcon(resource);
-        } catch (ArrayIndexOutOfBoundsException aioobe) {
-            UIManager.put(resource, getThemeImage(replacementName));
-        }
-    }
-
-    /**
-     * Gets the current theme (or defaults to MetalTheme) if possible.
-     */
-    private MetalTheme getDefaultTheme() {
-        MetalTheme theme = null;
-        try {
-            theme = (MetalTheme) MetalLookAndFeel.class.getMethod(
-                    "getCurrentTheme", (Class[]) null).invoke(null,
-                    (Object[]) null);
-        } catch (IllegalAccessException iae) {
-        } catch (InvocationTargetException ite) {
-        } catch (NoSuchMethodException nsme) {
-        }
-
-        if (theme == null)
-            theme = new DefaultMetalTheme();
-
-        return theme;
-    }
-
-    /**
-     * Determines if the PlasticXP Theme is available.
-     */
-    private boolean isPlasticAvailable() {
-        try {
-            Class plastic = Class
-                    .forName("com.jgoodies.plaf.plastic.PlasticXPLookAndFeel");
-            return plastic != null;
-        } catch (ClassNotFoundException cnfe) {
-            return false;
-        }
-    }
-
-    /**
-     * Determines if the Plastic Windows Theme is available.
-     */
-    private boolean isPlasticWindowsAvailable() {
-        try {
-            Class plastic = Class
-                    .forName("com.jgoodies.plaf.windows.ExtWindowsLookAndFeel");
-            return plastic != null;
-        } catch (ClassNotFoundException cnfe) {
-            return false;
-        }
-    }
+//    /**
+//     * Replaces an icon resource in UIManager with a different resource if the
+//     * original resource can't be retrieved correctly.
+//     * 
+//     * @param resource
+//     * @param replacementName
+//     */
+//    private void replaceIconIfFailing(String resource, String replacementName) {
+//        try {
+//            UIManager.getIcon(resource);
+//        } catch (ArrayIndexOutOfBoundsException aioobe) {
+//            UIManager.put(resource, getThemeImage(replacementName));
+//        }
+//    }
+//    
+//    /**
+//     * Determines if the Plastic Windows Theme is available.
+//     */
+//    private boolean isPlasticWindowsAvailable() {
+//        try {
+//            Class plastic = Class
+//                    .forName("com.jgoodies.plaf.windows.ExtWindowsLookAndFeel");
+//            return plastic != null;
+//        } catch (ClassNotFoundException cnfe) {
+//            return false;
+//        }
+//    }
 
     /**
      * Updates the component to use the native UI resource.
@@ -659,7 +589,7 @@ public final class ResourceManager {
         String name = UIManager.getSystemLookAndFeelClassName();
         if (name != null) {
             try {
-                Class clazz = Class.forName(name);
+                Class<?> clazz = Class.forName(name);
                 LookAndFeel lf = (LookAndFeel) clazz.newInstance();
                 lf.initialize();
                 UIDefaults def = lf.getDefaults();
@@ -681,15 +611,15 @@ public final class ResourceManager {
         return ret;
     }
 
-    /**
-     * Reduces the size of a font in UIManager.
-     */
-    private static void reduceFont(String name) {
-        Font oldFont = UIManager.getFont(name);
-        FontUIResource newFont = new FontUIResource(oldFont.getName(), oldFont
-                .getStyle(), oldFont.getSize() - 2);
-        UIManager.put(name, newFont);
-    }
+//    /**
+//     * Reduces the size of a font in UIManager.
+//     */
+//    private static void reduceFont(String name) {
+//        Font oldFont = UIManager.getFont(name);
+//        FontUIResource newFont = new FontUIResource(oldFont.getName(), oldFont
+//                .getStyle(), oldFont.getSize() - 2);
+//        UIManager.put(name, newFont);
+//    }
 
     public static void setFontSizes(float fontSizeIncrement) {
         if (fontSizeIncrement == 0f) {
@@ -746,39 +676,4 @@ public final class ResourceManager {
         }
         UIManager.getDefaults().putDefaults(props.toArray());
     }
-
-    /** Wraps an ActiveValue to ensure creating the value is done in the Swing thread. */
-    private static class ActiveDesktopProperty implements UIDefaults.ActiveValue, Runnable {
-        private final UIDefaults.ActiveValue delegate;
-        private volatile UIDefaults table;
-        private volatile Object result;
-        
-        ActiveDesktopProperty(UIDefaults.ActiveValue value) {
-            this.delegate = value;
-        }
-            
-        public Object createValue(UIDefaults table) {
-            if(SwingUtilities.isEventDispatchThread()) {
-                return delegate.createValue(table);
-            } else {
-                this.table = table;
-                // Try to run it in the Swing thread,
-                // but if we can't, load the value directly
-                // (and pray).
-                try {
-                    SwingUtilities.invokeAndWait(this);
-                } catch (InterruptedException e) {
-                    return delegate.createValue(table);
-                } catch (InvocationTargetException e) {
-                    return delegate.createValue(table);
-                }
-                return result;
-            }
-        }
-        
-        public void run() {
-            this.result = delegate.createValue(table);
-        }
-    }
-    
 }
