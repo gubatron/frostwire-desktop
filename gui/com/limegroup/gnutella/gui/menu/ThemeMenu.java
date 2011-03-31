@@ -16,7 +16,7 @@ import javax.swing.JRadioButtonMenuItem;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
-import com.limegroup.gnutella.gui.themes.ThemeMediator.SkinInfo;
+import com.limegroup.gnutella.gui.themes.ThemeSetter;
 
 /**
  * The menu to be used for themes.
@@ -26,7 +26,7 @@ final class ThemeMenu extends AbstractMenu {
     /**
      * The client property to use for theme changing when using 'other' L&Fs.
      */
-    private static final String THEME_CLASSNAME = "THEME_CLASSNAME";
+    private static final String THEME_OBJECT = "THEME_OBJECT";
     
     /**
      * The listener for changing the theme.
@@ -46,13 +46,12 @@ final class ThemeMenu extends AbstractMenu {
         
         
         JMenuItem def = addMenuItem(THEME_CHANGER);            
-        final String defaultVal = ThemeMediator.getDefaultTheme().className;
-        def.putClientProperty(THEME_CLASSNAME, defaultVal);
+        def.putClientProperty(THEME_OBJECT, ThemeMediator.DEFAULT_THEME);
         
         // Add a listener to set the new theme as selected.
         def.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
-                setSelection(defaultVal);
+                setSelection(ThemeMediator.DEFAULT_THEME);
             }
         });
         
@@ -68,7 +67,7 @@ final class ThemeMenu extends AbstractMenu {
         Enumeration<AbstractButton> items = GROUP.getElements();
         while(items.hasMoreElements()) {
             JMenuItem item = (JMenuItem)items.nextElement();
-            if(value.equals(item.getClientProperty(THEME_CLASSNAME))) {
+            if(value.equals(item.getClientProperty(THEME_OBJECT))) {
                 item.setSelected(true);
                 break;
             }
@@ -81,16 +80,16 @@ final class ThemeMenu extends AbstractMenu {
      */ 
     private void addThemeItems() {
        
-        Set<SkinInfo> skins = new TreeSet<SkinInfo>(new ThemeComparator());
+        Set<ThemeSetter> skins = new TreeSet<ThemeSetter>(new ThemeComparator());
         
-        skins.addAll(ThemeMediator.loadSkins());
+        skins.addAll(ThemeMediator.loadThemes());
         
-        for(SkinInfo skin : skins) {
+        for(ThemeSetter skin : skins) {
             JMenuItem theme;
             
-            theme = new JRadioButtonMenuItem(skin.name);
-            theme.putClientProperty(THEME_CLASSNAME, skin.className);
-            theme.setSelected(skin.current);
+            theme = new JRadioButtonMenuItem(skin.getName());
+            theme.putClientProperty(THEME_OBJECT, skin);
+            theme.setSelected(skin.equals(ThemeMediator.CURRENT_THEME));
                 
             theme.setFont(AbstractMenu.FONT);
             GROUP.add(theme);
@@ -116,8 +115,8 @@ final class ThemeMenu extends AbstractMenu {
         
         public void actionPerformed(ActionEvent e) {
             JMenuItem item = (JMenuItem)e.getSource();
-            String className = (String)item.getClientProperty(THEME_CLASSNAME);
-    	    ThemeMediator.changeTheme(className);
+            ThemeSetter theme = (ThemeSetter)item.getClientProperty(THEME_OBJECT);
+    	    ThemeMediator.changeTheme(theme);
         }
     }
     
@@ -128,8 +127,8 @@ final class ThemeMenu extends AbstractMenu {
         public int compare(Object a, Object b) {
             String name1, name2;
             
-            name1 = ((SkinInfo) a).name;
-            name2 = ((SkinInfo) b).name;
+            name1 = ((ThemeSetter) a).getName();
+            name2 = ((ThemeSetter) b).getName();
 
             return name1.compareTo(name2);
         }

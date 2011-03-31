@@ -14,6 +14,11 @@ import com.limegroup.gnutella.gui.themes.LimePlasticTheme;
 import com.limegroup.gnutella.gui.themes.ThemeSetter;
 
 public class PlasticThemeSetter implements ThemeSetter {
+    
+    public static final PlasticThemeSetter INSTANCE = new PlasticThemeSetter();
+    
+    private PlasticThemeSetter() {
+    }
 
     public String getName() {
         return "Plastic Blue Skin (classic FrostWire)";
@@ -21,9 +26,15 @@ public class PlasticThemeSetter implements ThemeSetter {
 
     public void apply() {
         try {
-            
             LimePlasticTheme.installThisTheme();
             UIManager.setLookAndFeel("com.jgoodies.plaf.plastic.PlasticXPLookAndFeel");
+            UIManager.put("PopupMenuUI", "com.jgoodies.plaf.plastic.PlasticPopupMenuUI");
+            UIManager.put("MenuItemUI", "com.jgoodies.plaf.common.ExtBasicMenuItemUI");
+            UIManager.put("MenuUI", "com.jgoodies.plaf.plastic.PlasticMenuUI");
+            UIManager.put("CheckBoxMenuItemUI", "com.jgoodies.plaf.common.ExtBasicCheckBoxMenuItemUI");
+            UIManager.put("MenuBarUI", "com.jgoodies.plaf.plastic.PlasticMenuBarUI");
+            UIManager.put("RadioButtonMenuItemUI", "com.jgoodies.plaf.common.ExtBasicRadioButtonMenuItemUI");
+            UIManager.put("PopupMenuSeparatorUI", "com.jgoodies.plaf.common.ExtBasicPopupMenuSeparatorUI");
             LimeLookAndFeel.installUIManagerDefaults();
 
             UIManager.put("Tree.leafIcon", UIManager.getIcon("Tree.closedIcon"));

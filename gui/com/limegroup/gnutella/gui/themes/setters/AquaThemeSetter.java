@@ -13,8 +13,10 @@ import org.limewire.util.OSUtils;
 import com.limegroup.gnutella.gui.themes.ThemeSetter;
 
 public class AquaThemeSetter implements ThemeSetter {
+    
+    public static final AquaThemeSetter INSTANCE = new AquaThemeSetter();
 
-    public AquaThemeSetter() {
+    private AquaThemeSetter() {
         if (!OSUtils.isMacOSX()) {
             throw new ExceptionInInitializerError("Not OS supported");
         }

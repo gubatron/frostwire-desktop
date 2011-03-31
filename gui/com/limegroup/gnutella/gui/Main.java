@@ -61,7 +61,7 @@ public class Main {
             if (args == null || args.length == 0)
 				splash = showInitialSplash();
             
-            ThemeMediator.setCurrentOrDefaultTheme(false);
+            ThemeMediator.changeTheme(ThemeMediator.CURRENT_THEME);
             
             // load the GUI through reflection so that we don't reference classes here,
             // which would slow the speed of class-loading, causing the splash to be
