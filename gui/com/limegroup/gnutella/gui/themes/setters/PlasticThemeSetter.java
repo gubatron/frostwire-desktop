@@ -35,6 +35,7 @@ public class PlasticThemeSetter implements ThemeSetter {
             UIManager.put("MenuBarUI", "com.jgoodies.plaf.plastic.PlasticMenuBarUI");
             UIManager.put("RadioButtonMenuItemUI", "com.jgoodies.plaf.common.ExtBasicRadioButtonMenuItemUI");
             UIManager.put("PopupMenuSeparatorUI", "com.jgoodies.plaf.common.ExtBasicPopupMenuSeparatorUI");
+            UIManager.put("TextAreaUI", "javax.swing.plaf.basic.BasicTextAreaUI");
             LimeLookAndFeel.installUIManagerDefaults();
 
             UIManager.put("Tree.leafIcon", UIManager.getIcon("Tree.closedIcon"));
@@ -53,6 +54,9 @@ public class PlasticThemeSetter implements ThemeSetter {
             FontUIResource bold = new FontUIResource(normal.getName(), Font.BOLD, normal.getSize());
             UIManager.put("Table.font.bold", bold);
             UIManager.put("Tree.rowHeight", 0);
+            
+            //Object x = UIManager.get("TextAreaUI");
+            //System.out.println(x);
 
         } catch (ClassNotFoundException e) {
             throw new ExceptionInInitializerError(e);

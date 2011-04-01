@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 /**
  * This class is simply a JPanel that uses a BoxLayout with the orientation 
- * specified in the constructor.  The default contructor creates a panel 
+ * specified in the constructor.  The default constructor creates a panel 
  * oriented along the y axis.
  */
 public class BoxPanel extends JPanel {

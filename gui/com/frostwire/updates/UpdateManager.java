@@ -16,11 +16,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
-import com.frostwire.settings.UpdateManagerSettings;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.util.LimeWireUtils;
 
@@ -249,8 +249,8 @@ public final class UpdateManager implements Serializable {
 	 * 
 	 * @param msg
 	 */
-	public void showUpdateMessage(UpdateMessage msg) {
-		String title = (msg.getMessageType().equals("update")) ? "New FrostWire Update Available"
+	public void showUpdateMessage(final UpdateMessage msg) {
+		final String title = (msg.getMessageType().equals("update")) ? "New FrostWire Update Available"
 				: "FrostWire Team Announcement";
 
 		int optionType = JOptionPane.CANCEL_OPTION;
@@ -271,19 +271,25 @@ public final class UpdateManager implements Serializable {
 
 		options[OPTION_LATER] = new String("Thanks, but not now");
 		options[OPTION_OPEN_URL] = new String("Go to webpage");
+		
+		final int finalOptionType = optionType;
+		final String[] finalOptions = options;
+		
+		SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                int result = JOptionPane.showOptionDialog(null, msg.getMessage(),
+                        title, finalOptionType, JOptionPane.INFORMATION_MESSAGE, null, // Icon
+                        finalOptions, // Options[]
+                        null); // Initial value (Object)
 
-		int result = JOptionPane.showOptionDialog(null, msg.getMessage(),
-				title, optionType, JOptionPane.INFORMATION_MESSAGE, null, // Icon
-				options, // Options[]
-				null); // Initial value (Object)
-
-		if (result == OPTION_OPEN_URL) {
-			GUIMediator.openURL(msg.getUrl());
-		} else if (result == OPTION_DOWNLOAD_TORRENT) {
-			openTorrent(msg.getTorrent());
-		}
-
-	} // attemptShowUpdateMessage
+                if (result == OPTION_OPEN_URL) {
+                    GUIMediator.openURL(msg.getUrl());
+                } else if (result == OPTION_DOWNLOAD_TORRENT) {
+                    openTorrent(msg.getTorrent());
+                }
+            }
+        });
+	}
 
 	/**
 	 * Given announcements it will show them.
@@ -501,23 +507,4 @@ public final class UpdateManager implements Serializable {
 
 	private void writeObject(ObjectOutputStream oos) throws IOException {
 	}
-
-	/**
-	 * You can compile and run this file by itself from standing on gui/ javac
-	 * -cp .:../core:../lib/jars/commons-httpclient.jar
-	 * com/frostwire/UpdateManager.java java -cp
-	 * .:../core:../lib/jars/commons-httpclient.jar com/frostwire/UpdateManager
-	 * 
-	 * @param args
-	 */
-
-	public static void main(String[] args) {
-		System.out.println("Testing UpdateManager");
-
-		// Schedule an update task 0 seconds from now.
-		UpdateManager.DEBUGGING_NON_UI_MESSAGES = true;
-		UpdateManager.scheduleUpdateCheckTask(0,
-				"http://update1.frostwire.com/mock.php");
-	}
-
-} // UpdateManager class
+}

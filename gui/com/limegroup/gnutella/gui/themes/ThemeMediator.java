@@ -96,6 +96,7 @@ public class ThemeMediator {
 
                     try {
                         
+                        //PlasticThemeSetter.INSTANCE.apply();
                         theme.apply();
                         
                         for (Window window : Window.getWindows()) {

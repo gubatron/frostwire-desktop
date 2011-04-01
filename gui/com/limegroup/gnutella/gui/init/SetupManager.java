@@ -156,8 +156,9 @@ public class SetupManager {
         	windows.add(new AssociationsWindow(this));
         }
 
-        if( !InstallSettings.EXTENSION_OPTION.getValue())
-            windows.add(new FileTypeWindow(this));        
+        if(!InstallSettings.EXTENSION_OPTION.getValue()) {
+            windows.add(new FileTypeWindow(this));
+        }
 
         //THIS HAS TO GO LAST
         IntentWindow intentWindow = new IntentWindow(this);

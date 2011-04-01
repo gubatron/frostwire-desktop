@@ -409,7 +409,11 @@ public class CheckBoxList<E> extends BoxPanel {
      * Returns the enabled state of the List and its members.
      */
     public boolean isEnabled() {
-        return this.checkBoxList.isEnabled();
+        if (checkBoxList != null) {
+            return this.checkBoxList.isEnabled();
+        } else {
+            return false;
+        }
     }
     
     /**
