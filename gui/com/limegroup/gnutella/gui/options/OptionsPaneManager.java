@@ -118,7 +118,7 @@ public final class OptionsPaneManager {
 		SharedDirPaneItem sharedPane = FACTORY.getSharedPane();
 		if(sharedPane.isDirty()) {
 		    GuiCoreMediator.getFileManager().loadWithNewDirectories
-		    (sharedPane.getDirectoriesToShare(), sharedPane.getDirectorieToExclude());
+		    (sharedPane.getDirectoriesToShare(), sharedPane.getDirectorieToExclude(), true);
 		    sharedPane.resetDirtyState();
         }
 	

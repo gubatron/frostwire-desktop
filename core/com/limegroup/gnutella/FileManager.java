@@ -171,7 +171,7 @@ public interface FileManager {
     /**
      * Loads the FileManager with a new list of directories.
      */
-    public abstract void loadWithNewDirectories(Set<? extends File> shared, Set<File> blackListSet);
+    public abstract void loadWithNewDirectories(Set<? extends File> shared, Set<File> blackListSet, boolean loadSettings);
 
     /**
      * Returns whether or not the loading is finished.

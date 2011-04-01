@@ -666,13 +666,16 @@ public abstract class FileManagerImpl implements FileManager {
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.FileManager#loadWithNewDirectories(java.util.Set, java.util.Set)
      */
-    public void loadWithNewDirectories(Set<? extends File> shared, Set<File> blackListSet) {
+    public void loadWithNewDirectories(Set<? extends File> shared, Set<File> blackListSet, boolean loadSettings) {
         SharingSettings.DIRECTORIES_TO_SHARE.setValue(shared);
         synchronized(_data.DIRECTORIES_NOT_TO_SHARE) {
             _data.DIRECTORIES_NOT_TO_SHARE.clear();
             _data.DIRECTORIES_NOT_TO_SHARE.addAll(canonicalize(blackListSet));
         }
-	    loadSettings();
+        // TODO: Study this change since it appears to block the fluid GUI components creation.
+        if (loadSettings) {
+            loadSettings();
+        }
     }
     
     /**

@@ -21,6 +21,7 @@ import org.limewire.i18n.I18nMarker;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.StringUtils;
 
+import com.frostwire.updates.UpdateManager;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
@@ -208,8 +209,10 @@ class SaveWindow extends SetupWindow {
             }
         }
         
-        if(loadCoreComponents)
-            GuiCoreMediator.getFileManager().loadWithNewDirectories(roots, recursiveSharingPanel.getFoldersToExclude());
+        if(loadCoreComponents) {
+            GuiCoreMediator.getFileManager().loadWithNewDirectories(roots, recursiveSharingPanel.getFoldersToExclude(), false);
+            UpdateManager.scheduleUpdateCheckTask(0);
+        }
         
         if (!errors.isEmpty()) {
             throw new ApplySettingsException(StringUtils.explode(errors, "\n\n"));
