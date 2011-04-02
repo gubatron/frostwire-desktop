@@ -48,8 +48,6 @@ import com.limegroup.gnutella.settings.SharingSettings;
  * classes and acts as the mediator between the various objects in the
  * setup windows.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
-
 public class SetupManager {	
 
 	/**

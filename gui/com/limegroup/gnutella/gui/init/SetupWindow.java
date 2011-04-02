@@ -22,7 +22,6 @@ import com.limegroup.gnutella.gui.URLLabel;
  * <tt>BoxLayout</tt> for setup windows.  It defines many of the 
  * basic accessor and mutator methods required by subclasses.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 abstract class SetupWindow extends JPanel {
 
 	/**
@@ -255,7 +254,8 @@ abstract class SetupWindow extends JPanel {
 	protected void setSetupComponent(JComponent setupComponent) {
         setupComponent.setBorder(new EmptyBorder(20, 10, 10, 10));
         add(setupComponent, BorderLayout.CENTER);
-        revalidate();
+        //revalidate();
+        validate();
 	}
 	
 	protected static class MultiLineLabel extends JTextArea {
