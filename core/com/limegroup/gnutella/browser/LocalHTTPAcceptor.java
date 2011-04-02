@@ -4,18 +4,16 @@ import java.io.IOException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.HttpException;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.protocol.HttpContext;
-import org.limewire.http.AsyncHttpRequestHandler;
-import org.limewire.http.BasicHttpAcceptor;
-
-import org.apache.http.nio.protocol.SimpleNHttpRequestHandler;
-import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.nio.entity.ConsumingNHttpEntity;
+import org.apache.http.nio.protocol.SimpleNHttpRequestHandler;
+import org.apache.http.protocol.HttpContext;
+import org.limewire.http.BasicHttpAcceptor;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;

@@ -737,20 +737,20 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 		dispatchEvent(type, null);
 	}
 
-	/**
-	 * @return if the current state is a stopped state.
-	 */
-	private boolean stopState() {
-		switch (state.get()) {
-		case PAUSED:
-		case STOPPED:
-		case DISK_PROBLEM:
-		case TRACKER_FAILURE:
-		case INVALID:
-			return true;
-		}
-		return false;
-	}
+//	/**
+//	 * @return if the current state is a stopped state.
+//	 */
+//	private boolean stopState() {
+//		switch (state.get()) {
+//		case PAUSED:
+//		case STOPPED:
+//		case DISK_PROBLEM:
+//		case TRACKER_FAILURE:
+//		case INVALID:
+//			return true;
+//		}
+//		return false;
+//	}
 
 	/*
 	 * (non-Javadoc)

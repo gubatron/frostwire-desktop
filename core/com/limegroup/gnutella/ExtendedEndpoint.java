@@ -43,6 +43,10 @@ import com.limegroup.gnutella.settings.ConnectionSettings;
  * priorityComparator()
  */
 public class ExtendedEndpoint extends Endpoint {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 7113321185511914422L;
     /** The value to use for timeRecorded if unknown.  Doesn't really matter. */
     static final long DEFAULT_TIME_RECORDED=0;
     /** The system time that dailyUptime was encountered, typically when this

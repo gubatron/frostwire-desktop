@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 
 import org.apache.commons.logging.Log;
@@ -21,8 +20,8 @@ import org.limewire.mojito.concurrent.DHTFuture;
 import org.limewire.mojito.concurrent.DHTFutureAdapter;
 import org.limewire.mojito.exceptions.DHTException;
 import org.limewire.mojito.result.BootstrapResult;
-import org.limewire.mojito.result.PingResult;
 import org.limewire.mojito.result.BootstrapResult.ResultType;
+import org.limewire.mojito.result.PingResult;
 import org.limewire.mojito.util.ExceptionUtils;
 import org.limewire.service.ErrorService;
 
@@ -428,29 +427,29 @@ class DHTBootstrapperImpl implements DHTBootstrapper{
             }
         }
         
-        public void handleCancellationException(CancellationException e) {
-            synchronized (lock) {
-                LOG.debug("Bootstrap Ping Cancelled", e);
-                
-                if (pingFuture != myFuture) {
-                    return;
-                }
-                
-                stop();
-            }
-        }
-
-        public void handleInterruptedException(InterruptedException e) {
-            synchronized (lock) {
-                LOG.debug("Bootstrap Ping Interrupted", e);
-                
-                if (pingFuture != myFuture) {
-                    return;
-                }
-                
-                stop();
-            }
-        }
+//        public void handleCancellationException(CancellationException e) {
+//            synchronized (lock) {
+//                LOG.debug("Bootstrap Ping Cancelled", e);
+//                
+//                if (pingFuture != myFuture) {
+//                    return;
+//                }
+//                
+//                stop();
+//            }
+//        }
+//
+//        public void handleInterruptedException(InterruptedException e) {
+//            synchronized (lock) {
+//                LOG.debug("Bootstrap Ping Interrupted", e);
+//                
+//                if (pingFuture != myFuture) {
+//                    return;
+//                }
+//                
+//                stop();
+//            }
+//        }
         
         public void handleCancellationException() {
             synchronized (lock) {
@@ -522,19 +521,19 @@ class DHTBootstrapperImpl implements DHTBootstrapper{
             }
         }
         
-        public void handleCancellationException(CancellationException e) {
-            synchronized (lock) {
-                LOG.debug("Bootstrap Canceled", e);
-                stop();
-            }
-        }
-
-        public void handleInterruptedException(InterruptedException e) {
-            synchronized (lock) {
-                LOG.debug("Bootstrap Interrupted", e);
-                stop();
-            }
-        }
+//        public void handleCancellationException(CancellationException e) {
+//            synchronized (lock) {
+//                LOG.debug("Bootstrap Canceled", e);
+//                stop();
+//            }
+//        }
+//
+//        public void handleInterruptedException(InterruptedException e) {
+//            synchronized (lock) {
+//                LOG.debug("Bootstrap Interrupted", e);
+//                stop();
+//            }
+//        }
         
         public void handleCancellationException() {
             synchronized (lock) {

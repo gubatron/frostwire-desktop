@@ -146,14 +146,14 @@ public class HTTPAcceptor extends BasicHttpAcceptor {
         public void connectionClosed(NHttpConnection conn) {
         }
 
-        public void connectionTimeout(NHttpConnection conn) {
-        }
-
-        public void fatalIOException(IOException e, NHttpConnection conn) {
-        }
-
-        public void fatalProtocolException(HttpException e, NHttpConnection conn) {
-        }
+//        public void connectionTimeout(NHttpConnection conn) {
+//        }
+//
+//        public void fatalIOException(IOException e, NHttpConnection conn) {
+//        }
+//
+//        public void fatalProtocolException(HttpException e, NHttpConnection conn) {
+//        }
 
         public void requestReceived(NHttpConnection conn, HttpRequest request) {
         }
@@ -185,7 +185,7 @@ public class HTTPAcceptor extends BasicHttpAcceptor {
          */
         public void process(HttpResponse response, HttpContext context) throws HttpException,
                 IOException {
-            for (Iterator it = response.headerIterator(); it.hasNext();) {
+            for (Iterator<?> it = response.headerIterator(); it.hasNext();) {
                 Header header = (Header) it.next();
                 headerUpstream.addData(header.getName().length() + 2 + header.getValue().length());
             }

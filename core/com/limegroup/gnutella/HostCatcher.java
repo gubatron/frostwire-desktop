@@ -1372,28 +1372,28 @@ public class HostCatcher {
         synchronized(this) {
             //Check ENDPOINT_SET == ENDPOINT_QUEUE
             outer:
-            for (Iterator iter=ENDPOINT_SET.keySet().iterator(); iter.hasNext(); ) {
+            for (Iterator<?> iter=ENDPOINT_SET.keySet().iterator(); iter.hasNext(); ) {
                 Object e=iter.next();
-                for (Iterator iter2=ENDPOINT_QUEUE.iterator(); 
+                for (Iterator<?> iter2=ENDPOINT_QUEUE.iterator(); 
                      iter2.hasNext();) {
                     if (e.equals(iter2.next()))
                         continue outer;
                 }
                 throw new IllegalStateException("Couldn't find "+e+" in queue");
             }
-            for (Iterator iter=ENDPOINT_QUEUE.iterator(); iter.hasNext(); ) {
+            for (Iterator<?> iter=ENDPOINT_QUEUE.iterator(); iter.hasNext(); ) {
                 Object e=iter.next();
                 assert e instanceof ExtendedEndpoint;
                 assert ENDPOINT_SET.containsKey(e);
             }
         
             //Check permanentHosts === permanentHostsSet
-            for (Iterator iter=permanentHosts.iterator(); iter.hasNext(); ) {
+            for (Iterator<?> iter=permanentHosts.iterator(); iter.hasNext(); ) {
                 Object o=iter.next();
                 assert o instanceof ExtendedEndpoint;
                 assert permanentHostsSet.contains(o);
             }
-            for (Iterator iter=permanentHostsSet.iterator(); iter.hasNext(); ) {
+            for (Iterator<?> iter=permanentHostsSet.iterator(); iter.hasNext(); ) {
                 Object e=iter.next();
                 assert e instanceof ExtendedEndpoint;
                 assert permanentHosts.contains(e) :

@@ -79,7 +79,7 @@ public class SpamServicesImpl implements SpamServices {
     }
 
     public boolean isHostile(String host) {
-    	int length = FilterSettings.BLACK_LISTED_IP_ADDRESSES.getValue().length;
+    	//int length = FilterSettings.BLACK_LISTED_IP_ADDRESSES.getValue().length;
     	return false;
     }
     

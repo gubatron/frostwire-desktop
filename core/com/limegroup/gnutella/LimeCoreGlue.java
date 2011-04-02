@@ -4,15 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.limewire.mojito.settings.MojitoProps;
 import org.limewire.util.CommonUtils;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.limegroup.gnutella.settings.ApplicationSettings;
-import com.limegroup.gnutella.settings.LimeProps;
 import com.limegroup.gnutella.util.LimeWireUtils;
 
 /**
@@ -21,7 +16,6 @@ import com.limegroup.gnutella.util.LimeWireUtils;
  */
 @Singleton
 public class LimeCoreGlue {
-	private static final Log LOG = LogFactory.getLog(LimeCoreGlue.class);
 	
     private static AtomicBoolean preinstalled = new AtomicBoolean(false);
     private AtomicBoolean installed = new AtomicBoolean(false);
@@ -109,6 +103,11 @@ public class LimeCoreGlue {
     
     /** Simple exception for failure to install. */
     public static class InstallFailedException extends RuntimeException {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 3989727284459714644L;
+
         public InstallFailedException() {
             super();
         }

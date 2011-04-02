@@ -93,7 +93,7 @@ public class DHTControllerFacadeImpl implements DHTControllerFacade {
         return altLocModel.get();
     }
     
-    public DHTValueFactory getAltLocValueFactory() {
+    public DHTValueFactory<?> getAltLocValueFactory() {
         return altLocValueFactory.get();
     }
     
@@ -113,7 +113,7 @@ public class DHTControllerFacadeImpl implements DHTControllerFacade {
         return pushProxyModel.get();
     }
     
-    public DHTValueFactory getPushProxyValueFactory() {
+    public DHTValueFactory<?> getPushProxyValueFactory() {
         return pushProxyValueFactory.get();
     }
     

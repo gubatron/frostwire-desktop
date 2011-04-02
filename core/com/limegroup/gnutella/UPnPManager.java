@@ -231,7 +231,7 @@ public class UPnPManager implements org.limewire.lifecycle.Service {
      */
     private void discoverService() {
         
-        for (Iterator iter = _router.getDeviceList().iterator();iter.hasNext();) {
+        for (Iterator<?> iter = _router.getDeviceList().iterator();iter.hasNext();) {
             Device current = (Device)iter.next();
             if (!current.getDeviceType().equals(WAN_DEVICE))
                 continue;
@@ -537,9 +537,9 @@ public class UPnPManager implements org.limewire.lifecycle.Service {
     private class StaleCleaner implements Runnable {
         
         // TODO: remove
-        private String list(List l) {
+        private String list(List<?> l) {
             String s = "";
-            for(Iterator i = l.iterator(); i.hasNext(); ) {
+            for(Iterator<?> i = l.iterator(); i.hasNext(); ) {
                 Argument next = (Argument)i.next();
                 s += next.getName() + "->" + next.getValue() + ", ";
             }

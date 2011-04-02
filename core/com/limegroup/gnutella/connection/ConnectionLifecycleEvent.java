@@ -4,6 +4,11 @@ import java.util.EventObject;
 
 public class ConnectionLifecycleEvent extends EventObject {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5178689070528716001L;
+
     public static enum EventType {
         CONNECTING, 
         CONNECTED, 

@@ -282,7 +282,7 @@ public class ConnectionManagerImpl implements ConnectionManager {
     private final Provider<HostCatcher> hostCatcher;
     private final Provider<ConnectionDispatcher> connectionDispatcher;
     private final ScheduledExecutorService backgroundExecutor;
-    private final CapabilitiesVMFactory capabilitiesVMFactory;
+    //private final CapabilitiesVMFactory capabilitiesVMFactory;
     private final RoutedConnectionFactory managedConnectionFactory;
     private final Provider<QueryUnicaster> queryUnicaster;
     private final SocketsManager socketsManager;
@@ -314,7 +314,7 @@ public class ConnectionManagerImpl implements ConnectionManager {
         this.hostCatcher = hostCatcher;
         this.connectionDispatcher = connectionDispatcher;
         this.backgroundExecutor = backgroundExecutor;
-        this.capabilitiesVMFactory = capabilitiesVMFactory;
+        //this.capabilitiesVMFactory = capabilitiesVMFactory;
         this.managedConnectionFactory = managedConnectionFactory;
         this.queryUnicaster = queryUnicaster;
         this.socketsManager = socketsManager;

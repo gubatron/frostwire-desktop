@@ -105,7 +105,7 @@ public class AltLocManager {
             }
         }
 
-        AlternateLocationCollection col = null;
+        AlternateLocationCollection<?> col = null;
         boolean ret = false;
         if(dCol != null) {
             ret = dCol.remove((DirectAltLoc)al);

@@ -16,7 +16,6 @@ import com.google.inject.Singleton;
 import com.limegroup.gnutella.browser.MagnetOptions;
 import com.limegroup.gnutella.chat.InstantMessenger;
 import com.limegroup.gnutella.connection.ConnectionLifecycleEvent;
-import com.limegroup.gnutella.connection.RoutedConnection;
 import com.limegroup.gnutella.search.HostData;
 import com.limegroup.gnutella.version.UpdateInformation;
 
@@ -148,24 +147,24 @@ public class Main {
 
         /////////////////////////// ActivityCallback methods //////////////////////
     
-        public void connectionInitializing(RoutedConnection c) {
-        }
-    
-        public void connectionInitialized(RoutedConnection c) {
-    //      String host = c.getOrigHost();
-    //      int    port = c.getOrigPort();
-            ;//System.out.println("Connected to "+host+":"+port+".");
-        }
-    
-        public void connectionClosed(RoutedConnection c) {
-    //      String host = c.getOrigHost();
-    //      int    port = c.getOrigPort();
-            //System.out.println("Connection to "+host+":"+port+" closed.");
-        }
-    
-        public void knownHost(Endpoint e) {
-            //Do nothing.
-        }
+//        public void connectionInitializing(RoutedConnection c) {
+//        }
+//    
+//        public void connectionInitialized(RoutedConnection c) {
+//    //      String host = c.getOrigHost();
+//    //      int    port = c.getOrigPort();
+//            ;//System.out.println("Connected to "+host+":"+port+".");
+//        }
+//    
+//        public void connectionClosed(RoutedConnection c) {
+//    //      String host = c.getOrigHost();
+//    //      int    port = c.getOrigPort();
+//            //System.out.println("Connection to "+host+":"+port+" closed.");
+//        }
+//    
+//        public void knownHost(Endpoint e) {
+//            //Do nothing.
+//        }
     
     //     public void handleQueryReply( QueryReply qr ) {
     //      synchronized(System.out) {
@@ -191,26 +190,26 @@ public class Main {
         }
     
     
-        public void error(int errorCode) {
-            error(errorCode, null);
-        }
-        
-        public void error(Throwable problem, String msg) {
-            problem.printStackTrace();
-            System.out.println(msg);
-        }
+//        public void error(int errorCode) {
+//            error(errorCode, null);
+//        }
+//        
+//        public void error(Throwable problem, String msg) {
+//            problem.printStackTrace();
+//            System.out.println(msg);
+//        }
+//    
+//        /**
+//         * Implements ActivityCallback.
+//         */
+//        public void error(Throwable problem) {
+//            problem.printStackTrace();
+//        }
     
-        /**
-         * Implements ActivityCallback.
-         */
-        public void error(Throwable problem) {
-            problem.printStackTrace();
-        }
-    
-        public void error(int message, Throwable t) {
-            System.out.println("Error: "+message);
-            t.printStackTrace();
-        }
+//        public void error(int message, Throwable t) {
+//            System.out.println("Error: "+message);
+//            t.printStackTrace();
+//        }
     
         ///////////////////////////////////////////////////////////////////////////
 

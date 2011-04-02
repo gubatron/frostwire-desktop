@@ -911,7 +911,7 @@ public class DownloadManagerImpl implements DownloadManager {
      */
     public synchronized void remove(CoreDownloader downloader, 
                                     boolean completed) {
-        boolean isRemoved = active.remove(downloader);
+        active.remove(downloader);
         if(downloader.getDownloadType() == DownloaderType.INNETWORK)
             innetworkCount--;
         

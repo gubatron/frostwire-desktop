@@ -20,7 +20,6 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 import com.limegroup.bittorrent.BTContextFactory;
-import com.limegroup.bittorrent.BTDownloader;
 import com.limegroup.bittorrent.BTUploaderFactory;
 import com.limegroup.bittorrent.ManagedTorrentFactory;
 import com.limegroup.bittorrent.TorrentManager;

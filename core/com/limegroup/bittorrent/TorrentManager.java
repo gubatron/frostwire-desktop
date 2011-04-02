@@ -18,7 +18,6 @@ import org.limewire.util.FileLocker;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
-import com.frostwire.bittorrent.AzureusStarter;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;

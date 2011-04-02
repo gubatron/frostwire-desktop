@@ -18,9 +18,9 @@ public interface DHTControllerFacade {
 
     MessageDispatcherFactory getMessageDispatcherFactory();
 
-    DHTValueFactory getAltLocValueFactory();
+    DHTValueFactory<?> getAltLocValueFactory();
 
-    DHTValueFactory getPushProxyValueFactory();
+    DHTValueFactory<?> getPushProxyValueFactory();
 
     StorableModel getAltLocModel();
 

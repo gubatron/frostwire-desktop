@@ -74,7 +74,7 @@ public class UrnSet implements Set<URN>, Iterable<URN>, Cloneable, Serializable 
         if (!(o instanceof Set))
             return false;
 
-        Collection c = (Collection) o;
+        Collection<?> c = (Collection<?>) o;
         if (c.size() != size())
             return false;
         

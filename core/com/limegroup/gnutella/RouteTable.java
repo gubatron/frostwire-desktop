@@ -552,6 +552,11 @@ public final class RouteTable implements Inspectable {
      * A map that can optionally zero out the OOB-mutated bytes of a guid.
      */
     private static class ExperimentalGUIDMap extends TreeMap<byte [], RouteTableEntry> {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -9221643803368715816L;
+
         ExperimentalGUIDMap() {
             super(new GUID.GUIDByteComparator());
         }

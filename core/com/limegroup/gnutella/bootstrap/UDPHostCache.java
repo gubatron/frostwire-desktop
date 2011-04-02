@@ -332,7 +332,6 @@ public class UDPHostCache {
     /**
      * Creates and adds a host/port as a UDP host cache.
      */
-    @SuppressWarnings("unused")
     private void createAndAdd(String host, int port) {
         try {
             ExtendedEndpoint ep = 

@@ -8,6 +8,10 @@ import java.io.IOException;
  */
 public class SaveLocationException extends IOException {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 7438326183144839102L;
     /** Attempt to change save location that violates security rules, such as attempting directory traversal .*/
     public static final int SECURITY_VIOLATION = 1;
 	/** Attempt to change save location too late to save file in new place */

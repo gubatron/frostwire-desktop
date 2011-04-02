@@ -14,9 +14,6 @@ import org.limewire.net.LimeWireNetModule;
 
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
-import com.limegroup.bittorrent.BTDownloader;
-import com.limegroup.bittorrent.BTDownloaderImpl;
-import com.limegroup.gnutella.downloader.LimeWireDownloadModule;
 import com.limegroup.gnutella.http.DefaultHttpExecutor;
 import com.limegroup.gnutella.http.HttpExecutor;
 import com.limegroup.gnutella.settings.ConnectionSettings;

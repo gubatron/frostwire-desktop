@@ -16,6 +16,11 @@ import com.limegroup.gnutella.messages.GGEP;
 public abstract class AbstractAltLocValue implements AltLocValue {
     
     /**
+     * 
+     */
+    private static final long serialVersionUID = -2275833745190872765L;
+
+    /**
      * DHTValueType for AltLocs
      */
     public static final DHTValueType ALT_LOC = DHTValueType.valueOf("Gnutella Alternate Location", "ALOC");

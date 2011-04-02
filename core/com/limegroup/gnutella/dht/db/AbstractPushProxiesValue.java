@@ -22,6 +22,11 @@ import com.limegroup.gnutella.uploader.HTTPHeaderUtils;
 public abstract class AbstractPushProxiesValue implements PushProxiesValue {
 
     /**
+     * 
+     */
+    private static final long serialVersionUID = -1585026917723672794L;
+
+    /**
      * DHTValueType for Push Proxies
      */
     public static final DHTValueType PUSH_PROXIES = DHTValueType.valueOf("Gnutella Push Proxy", "PROX");

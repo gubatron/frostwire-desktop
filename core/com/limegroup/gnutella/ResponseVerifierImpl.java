@@ -26,7 +26,7 @@ public class ResponseVerifierImpl implements ResponseVerifier {
         /** The original query. */
         final String query;
         /** The rich query. */
-        final LimeXMLDocument richQuery;
+        //final LimeXMLDocument richQuery;
         /** The keywords of the original query, lowercased. */
         final List<String> queryWords;
         /** The type of the original query. */
@@ -40,15 +40,15 @@ public class ResponseVerifierImpl implements ResponseVerifier {
 
         RequestData(String query, LimeXMLDocument richQuery, MediaType type, boolean whatIsNew) {
             this.query=query;
-            this.richQuery=richQuery;
+            //this.richQuery=richQuery;
             this.queryWords=getSearchTerms(query, richQuery);
             this.type=type;
             this.whatIsNew = whatIsNew;
         }
 
-        public boolean xmlQuery() {
-            return richQuery != null;
-        }
+//        public boolean xmlQuery() {
+//            return richQuery != null;
+//        }
 
     }
 

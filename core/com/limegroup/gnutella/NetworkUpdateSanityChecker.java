@@ -44,12 +44,12 @@ public class NetworkUpdateSanityChecker {
     private boolean finished = false;
     private final Set<RequestType> successes = EnumSet.noneOf(RequestType.class);
     
-    private final Provider<ActivityCallback> activityCallback;
+    //private final Provider<ActivityCallback> activityCallback;
     
     @Inject
     public NetworkUpdateSanityChecker(
             Provider<ActivityCallback> activityCallback) {
-        this.activityCallback = activityCallback;
+        //this.activityCallback = activityCallback;
     }
 
     /**
