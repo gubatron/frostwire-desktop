@@ -248,16 +248,16 @@ public class UpdateHandlerImpl implements UpdateHandler {
      * Initializes data as read from disk.
      */
     public void initialize() {
-        LOG.trace("Initializing UpdateHandler");
-        backgroundExecutor.execute(new Runnable() {
-            public void run() {
-                handleDataInternal(FileUtils.readFileFully(getStoredFile()), UpdateType.FROM_DISK, null);
-            }
-        });
-        
-        // Try to update ourselves (re-use hosts for downloading, etc..)
-        // at a specified interval.
-        backgroundExecutor.schedule(new Poller(), UpdateSettings.UPDATE_RETRY_DELAY.getValue(), TimeUnit.MILLISECONDS);
+//        LOG.trace("Initializing UpdateHandler");
+//        backgroundExecutor.execute(new Runnable() {
+//            public void run() {
+//                handleDataInternal(FileUtils.readFileFully(getStoredFile()), UpdateType.FROM_DISK, null);
+//            }
+//        });
+//        
+//        // Try to update ourselves (re-use hosts for downloading, etc..)
+//        // at a specified interval.
+//        backgroundExecutor.schedule(new Poller(), UpdateSettings.UPDATE_RETRY_DELAY.getValue(), TimeUnit.MILLISECONDS);
     }
     
     /**
