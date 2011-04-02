@@ -36,6 +36,10 @@ import com.limegroup.gnutella.gui.xml.editor.video.VideoTabbedPane;
  */
 public class MetaEditor extends JDialog {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -2125283583933159614L;
     protected final FileDesc[] fds;
     private final String fileName;
     

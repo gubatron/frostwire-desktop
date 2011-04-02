@@ -223,7 +223,7 @@ public final class MetaEditorUtil {
      * We cannot use retainAll because we're building the intersection
      * between more than two LimeXMLDocuments
      */
-    private static Map intersection(LimeXMLDocument doc, Map<String, String> intersectionMap) {
+    private static Map<String, String> intersection(LimeXMLDocument doc, Map<String, String> intersectionMap) {
         for(Map.Entry<String, String> entry : doc.getNameValueSet()) {
             String key = entry.getKey();
             String value = entry.getValue();

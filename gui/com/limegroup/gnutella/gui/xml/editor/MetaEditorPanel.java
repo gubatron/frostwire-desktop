@@ -29,6 +29,10 @@ import com.limegroup.gnutella.xml.SchemaFieldInfo;
 
 public abstract class MetaEditorPanel extends AbstractMetaEditorPanel {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 5849819999034303310L;
     private Map<String, JComponent> nameToComponent;
     private Map<String, NameValue<String>> nameToUneditedField;
     

@@ -16,6 +16,10 @@ import com.limegroup.gnutella.xml.LimeXMLSchemaRepository;
 
 public abstract class MetaEditorTabbedPane extends JTabbedPane {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -3901180802632689228L;
     protected final FileDesc[] fds;
     protected final LimeXMLDocument document;
     protected final LimeXMLSchema schema;

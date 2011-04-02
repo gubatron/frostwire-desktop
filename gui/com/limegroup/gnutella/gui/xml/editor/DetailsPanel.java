@@ -29,6 +29,11 @@ import com.limegroup.gnutella.xml.SchemaReplyCollectionMapper;
 
 
 public class DetailsPanel extends JPanel {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -4191238326321737148L;
+
     private Font boldFont = null;
     
     private List<NameValue<String>> list = new ArrayList<NameValue<String>>();

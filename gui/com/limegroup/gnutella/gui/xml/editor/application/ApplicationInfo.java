@@ -16,6 +16,11 @@ import com.limegroup.gnutella.xml.LimeXMLSchema;
  *  exist in the LimeXMLDocument
  */
 public class ApplicationInfo extends AbstractMetaInfoPanel {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5619779502674331531L;
+
     public ApplicationInfo(FileDesc[] fds, LimeXMLSchema schema, LimeXMLDocument document) {
         super(fds, schema, document);
     }

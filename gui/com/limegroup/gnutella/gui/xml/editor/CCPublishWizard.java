@@ -253,7 +253,12 @@ public class CCPublishWizard extends Wizard {
 
 	private class WarningPage extends WizardPage {
 
-		private final String WARNING_MESSAGE_CREATE = I18n
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 5391818520775139111L;
+
+        private final String WARNING_MESSAGE_CREATE = I18n
 				.tr("I understand that to publish a file, I must either own its copyrights or be authorized to publish them under a Creative Commons license.");
 
 		private final String WARNING_MESSAGE_MODIFY = I18n
@@ -352,7 +357,12 @@ public class CCPublishWizard extends Wizard {
 	
 	private class UsagePage extends WizardPage {
 
-		final JRadioButton ALLOW_COMMERCIAL_YES = new JRadioButton(I18n
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -6106436339128941329L;
+
+        final JRadioButton ALLOW_COMMERCIAL_YES = new JRadioButton(I18n
 				.tr("Yes"));
 
 		final JRadioButton ALLOW_COMMERCIAL_NO = new JRadioButton(I18n
@@ -427,7 +437,12 @@ public class CCPublishWizard extends Wizard {
 
 	private class DetailsPage extends WizardPage {
 
-		private final JTextField COPYRIGHT_HOLDER = new SizedTextField(24, SizePolicy.RESTRICT_HEIGHT);
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -1893155421684918074L;
+
+        private final JTextField COPYRIGHT_HOLDER = new SizedTextField(24, SizePolicy.RESTRICT_HEIGHT);
 
 		private final JTextField WORK_TITLE = new SizedTextField(24, SizePolicy.RESTRICT_HEIGHT);
 
@@ -515,12 +530,14 @@ public class CCPublishWizard extends Wizard {
 	private class VerificationPage extends WizardPage {
 
 		/**
+         * 
+         */
+        private static final long serialVersionUID = 6011327097076318739L;
+
+        /**
 		 * The Verification URL field
 		 */
 		final JTextField VERIFICATION_URL_FIELD = new SizedTextField(20, SizePolicy.RESTRICT_HEIGHT);
-
-		final String VERIFICATION_ARCHIVE = I18n
-				.tr("I want to use the Internet Archive to host the file.");
 
 		final String VERIFICATION_SELF = I18n
 				.tr("I want to host the verification file myself at the following URL:");

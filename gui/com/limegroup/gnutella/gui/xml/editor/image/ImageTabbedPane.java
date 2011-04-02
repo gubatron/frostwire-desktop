@@ -8,6 +8,11 @@ import com.limegroup.gnutella.xml.LimeXMLNames;
  * Creates a tabbed pane for viewing info/editor of images
  */
 public class ImageTabbedPane extends MetaEditorTabbedPane {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 5143611825094837055L;
+
     public ImageTabbedPane(FileDesc[] fds) {
         super(fds, LimeXMLNames.IMAGE_SCHEMA);
         

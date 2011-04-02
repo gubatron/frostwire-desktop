@@ -21,6 +21,11 @@ import com.limegroup.gnutella.xml.LimeXMLSchema;
  */
 public class ImageEditor extends MetaEditorPanel {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -2517223868985807576L;
+
     private JComboBox licenseTypeComboBox;
     
     private JLabel licenseLabel;

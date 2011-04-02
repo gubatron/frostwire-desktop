@@ -8,6 +8,11 @@ import com.limegroup.gnutella.xml.LimeXMLNames;
  * Creates a tabbed pane for viewing info/editor of applications
  */
 public class ApplicationTabbedPane extends MetaEditorTabbedPane{
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -3889238756863819673L;
+
     public ApplicationTabbedPane(FileDesc[] fds) {
         super(fds, LimeXMLNames.APPLICATION_SCHEMA);
         

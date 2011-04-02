@@ -14,6 +14,11 @@ import com.limegroup.gnutella.xml.LimeXMLSchema;
  *  creation date, displays any Image XML data that may exist in the LimeXMLDocument
  */
 public class ImageInfo extends AbstractMetaInfoPanel {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -4143765151551836069L;
+
     public ImageInfo(FileDesc[] fds, LimeXMLSchema schema, LimeXMLDocument document) {
         super(fds, schema, document);
     }

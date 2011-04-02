@@ -23,6 +23,10 @@ import com.limegroup.gnutella.xml.LimeXMLSchema;
  */
 public class VideoEditor extends MetaEditorPanel {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -7913254627635355842L;
     private JScrollPane commentsScrollPane;
     private JTextArea commentsTextArea;
        

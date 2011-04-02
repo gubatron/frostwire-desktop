@@ -17,6 +17,11 @@ import com.limegroup.gnutella.xml.LimeXMLSchema;
  *  displays any Audio meta data that may exist in the LimeXMLDocument
  */
 public class AudioInfo extends AbstractMetaInfoPanel {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8843291489851119557L;
+
     public AudioInfo(FileDesc[] fds, LimeXMLSchema schema, LimeXMLDocument doc) {
         super(fds, schema, doc);
     }

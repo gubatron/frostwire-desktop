@@ -14,6 +14,11 @@ import com.limegroup.gnutella.xml.LimeXMLSchema;
  *  creation date, displays any Document XML data that may exist in the LimeXMLDocument
  */
 public class DocumentInfo extends AbstractMetaInfoPanel {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 2057707577084805607L;
+
     public DocumentInfo(FileDesc[] fds, LimeXMLSchema schema, LimeXMLDocument document) {
         super(fds, schema, document);
     }

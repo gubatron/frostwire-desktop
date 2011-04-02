@@ -17,6 +17,11 @@ import com.limegroup.gnutella.xml.LimeXMLSchema;
  *  creation date, displays any Video meta data that may exist in the LimeXMLDocument
  */
 public class VideoInfo extends AbstractMetaInfoPanel {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -8935981829044226388L;
+
     public VideoInfo(FileDesc[] fds, LimeXMLSchema schema, LimeXMLDocument document) {
         super(fds, schema, document);
     }

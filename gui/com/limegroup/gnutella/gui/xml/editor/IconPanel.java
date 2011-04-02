@@ -17,6 +17,11 @@ import com.limegroup.gnutella.gui.IconManager;
 
 public class IconPanel extends JPanel {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 5598707231034894140L;
+
     private BufferedImage cachedImage;
 
     private Icon icon;

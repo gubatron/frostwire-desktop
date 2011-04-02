@@ -49,6 +49,11 @@ import com.limegroup.gnutella.xml.SchemaReplyCollectionMapper;
 public class XmlTypeEditor extends MetaEditor {
  
     /**
+     * 
+     */
+    private static final long serialVersionUID = 1418607800524239557L;
+
+    /**
      * String keyword for the Selection Panel in card layout
      */
     private final static String SELECTION_PANEL = "SELECTION_PANEL";

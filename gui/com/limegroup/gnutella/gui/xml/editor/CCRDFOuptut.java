@@ -145,7 +145,12 @@ public class CCRDFOuptut implements MetaDataEventListener {
 	
 	private class CopyAction extends AbstractAction {
 		
-		public CopyAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -4269366305216351072L;
+
+        public CopyAction() {
 			putValue(Action.NAME, I18n.tr("Copy to Clipboard"));
 		}
 
@@ -160,7 +165,12 @@ public class CCRDFOuptut implements MetaDataEventListener {
 
 	private class FinishAction extends AbstractAction {
 		
-		public FinishAction() {
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 3567398249281656329L;
+
+        public FinishAction() {
 			putValue(Action.NAME, I18n.tr("Finish"));
 		}
 

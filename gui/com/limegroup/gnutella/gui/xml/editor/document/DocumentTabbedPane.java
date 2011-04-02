@@ -8,6 +8,11 @@ import com.limegroup.gnutella.xml.LimeXMLNames;
  * Creates a tabbed pane for viewing info/editor of documents
  */
 public class DocumentTabbedPane extends MetaEditorTabbedPane {   
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 3295522600366370752L;
+
     public DocumentTabbedPane(FileDesc[] fds) {
         super(fds, LimeXMLNames.DOCUMENT_SCHEMA);
         

@@ -24,6 +24,10 @@ import com.limegroup.gnutella.xml.LimeXMLSchema;
  */
 class AudioEditor extends MetaEditorPanel {
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 8380447285897703391L;
     private JScrollPane commentsScrollPane;
     private JTextArea commentsTextArea;
     

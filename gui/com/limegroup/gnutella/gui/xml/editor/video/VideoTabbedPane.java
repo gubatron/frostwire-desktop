@@ -8,6 +8,11 @@ import com.limegroup.gnutella.xml.LimeXMLNames;
  * Creates a tabbed pane for viewing info/editor of videos
  */
 public class VideoTabbedPane extends MetaEditorTabbedPane {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -9078481101879912622L;
+
     public VideoTabbedPane(FileDesc[] fds) {
         super(fds, LimeXMLNames.VIDEO_SCHEMA);
         
