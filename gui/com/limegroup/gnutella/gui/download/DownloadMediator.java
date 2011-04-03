@@ -101,12 +101,18 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
     private static int _totalDownloads = 0;
 
     /**
-     * instance, for singleton acces
+     * instance, for singleton access
      */
-    private static DownloadMediator _instance = new DownloadMediator();
+    private static DownloadMediator INSTANCE;
 
 
-    public static DownloadMediator instance() { return _instance; }
+    public static DownloadMediator instance() {
+        if (INSTANCE == null) {
+            INSTANCE = new DownloadMediator();
+        }
+        
+        return INSTANCE;
+    }
 
     /**
      * Variables so only one ActionListener needs to be created for both
