@@ -32,14 +32,13 @@ import org.pushingpixels.substance.internal.utils.UpdateOptimizationInfo;
 import org.pushingpixels.substance.internal.utils.border.SubstanceTableCellBorder;
 
 import com.limegroup.gnutella.gui.LimeJProgressBar;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
-import com.limegroup.gnutella.gui.themes.ThemeObserver;
+import com.limegroup.gnutella.gui.themes.PlasticThemeSettings;
 
 /**
  * This class handles rendering a <tt>JProgressBar</tt> for improved
  * performance in tables.
  */
-public class ProgressBarRenderer extends LimeJProgressBar implements TableCellRenderer, ThemeObserver {
+public class ProgressBarRenderer extends LimeJProgressBar implements TableCellRenderer {
 
     /**
      * 
@@ -57,7 +56,6 @@ public class ProgressBarRenderer extends LimeJProgressBar implements TableCellRe
      * to use for rendering
      */
     public ProgressBarRenderer() {
-        ThemeMediator.addThemeObserver(this);
         setStringPainted(true);
 
         Font font = getFont();
@@ -85,12 +83,6 @@ public class ProgressBarRenderer extends LimeJProgressBar implements TableCellRe
             setBorder(_unselectedBorder);
     }
 
-    public void updateTheme() {
-        _selectedBorder = null;
-        _unselectedBorder = null;
-        borders.clear();
-    }
-
     /**
      * Gets a new or old border for this color.
      */
@@ -116,12 +108,14 @@ public class ProgressBarRenderer extends LimeJProgressBar implements TableCellRe
             setValue(Math.min(100, getBarStatus(value)));
             setString(getDescription(value));
 
+            Color uc = getBackgroundForRow(table, row);
             if (_selectedBorder == null && _unselectedBorder == null) {
                 Color sc = table.getSelectionBackground();
-                Color uc = table.getSelectionBackground();//((LimeJTable) table).getBackgroundForRow(row);
                 _selectedBorder = BorderFactory.createMatteBorder(2, 5, 2, 5, sc);
                 _unselectedBorder = getCachedOrNewBorder(uc);
             }
+            
+            _unselectedBorder = getCachedOrNewBorder(uc);
 
             if (isSel) {
                 setBorder(_selectedBorder);
@@ -360,6 +354,18 @@ public class ProgressBarRenderer extends LimeJProgressBar implements TableCellRe
             } else {
                 return updateOptimizationInfo.getHighlightColorScheme(state);
             }
+        }
+    }
+    
+    /**
+     * Returns the color that a specific row will be.
+     * @param table 
+     */
+    public Color getBackgroundForRow(JTable table, int row) {
+        if(row % 2 == 0) {
+            return table.getBackground();
+        } else {
+            return PlasticThemeSettings.TABLE_ALTERNATE_COLOR.getValue();
         }
     }
 }
