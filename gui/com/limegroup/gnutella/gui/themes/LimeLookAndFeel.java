@@ -11,7 +11,7 @@ import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 
-import com.jgoodies.plaf.plastic.PlasticButtonUI;
+import com.jgoodies.looks.plastic.PlasticButtonUI;
 import com.limegroup.gnutella.gui.GUIMediator;
 
 /**

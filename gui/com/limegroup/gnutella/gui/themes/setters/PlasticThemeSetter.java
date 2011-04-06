@@ -27,14 +27,14 @@ public class PlasticThemeSetter implements ThemeSetter {
     public void apply() {
         try {
             LimePlasticTheme.installThisTheme();
-            UIManager.setLookAndFeel("com.jgoodies.plaf.plastic.PlasticXPLookAndFeel");
-            UIManager.put("PopupMenuUI", "com.jgoodies.plaf.plastic.PlasticPopupMenuUI");
-            UIManager.put("MenuItemUI", "com.jgoodies.plaf.common.ExtBasicMenuItemUI");
-            UIManager.put("MenuUI", "com.jgoodies.plaf.plastic.PlasticMenuUI");
-            UIManager.put("CheckBoxMenuItemUI", "com.jgoodies.plaf.common.ExtBasicCheckBoxMenuItemUI");
-            UIManager.put("MenuBarUI", "com.jgoodies.plaf.plastic.PlasticMenuBarUI");
-            UIManager.put("RadioButtonMenuItemUI", "com.jgoodies.plaf.common.ExtBasicRadioButtonMenuItemUI");
-            UIManager.put("PopupMenuSeparatorUI", "com.jgoodies.plaf.common.ExtBasicPopupMenuSeparatorUI");
+            UIManager.setLookAndFeel("com.jgoodies.looks.plastic.PlasticXPLookAndFeel");
+            UIManager.put("PopupMenuUI", "com.jgoodies.looks.plastic.PlasticPopupMenuUI");
+            UIManager.put("MenuItemUI", "com.jgoodies.looks.common.ExtBasicMenuItemUI");
+            UIManager.put("MenuUI", "com.jgoodies.looks.plastic.PlasticMenuUI");
+            UIManager.put("CheckBoxMenuItemUI", "com.jgoodies.looks.common.ExtBasicCheckBoxMenuItemUI");
+            UIManager.put("MenuBarUI", "com.jgoodies.looks.plastic.PlasticMenuBarUI");
+            UIManager.put("RadioButtonMenuItemUI", "com.jgoodies.looks.common.ExtBasicRadioButtonMenuItemUI");
+            UIManager.put("PopupMenuSeparatorUI", "com.jgoodies.looks.common.ExtBasicPopupMenuSeparatorUI");
             UIManager.put("TextAreaUI", "javax.swing.plaf.basic.BasicTextAreaUI");
             LimeLookAndFeel.installUIManagerDefaults();
 

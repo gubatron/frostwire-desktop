@@ -52,7 +52,7 @@ public class SubstanceThemeSetter implements ThemeSetter {
 
         UIManager.put("Table.focusCellHighlightBorder", BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-        // Add a bolded text version of simple text.
+        // Add a bold text version of simple text.
         Font normal = UIManager.getFont("Table.font");
         FontUIResource bold = new FontUIResource(normal.getName(), Font.BOLD, normal.getSize());
         UIManager.put("Table.font.bold", bold);

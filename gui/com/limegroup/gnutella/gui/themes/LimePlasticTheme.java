@@ -5,8 +5,8 @@ import java.awt.Font;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.FontUIResource;
 
-import com.jgoodies.plaf.plastic.PlasticLookAndFeel;
-import com.jgoodies.plaf.plastic.PlasticTheme;
+import com.jgoodies.looks.plastic.PlasticLookAndFeel;
+import com.jgoodies.looks.plastic.PlasticTheme;
 
 /**
  * This class defines the colors used in the application.
@@ -14,7 +14,7 @@ import com.jgoodies.plaf.plastic.PlasticTheme;
 public final class LimePlasticTheme extends PlasticTheme {
 
     public static void installThisTheme() {
-        PlasticLookAndFeel.setMyCurrentTheme(new LimePlasticTheme());
+        PlasticLookAndFeel.setCurrentTheme(new LimePlasticTheme());
     }
 
     // 0, 51, 102, 153, 204, 255 -- the web safe rgb values
