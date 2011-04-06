@@ -54,9 +54,6 @@ public class PlasticThemeSetter implements ThemeSetter {
             FontUIResource bold = new FontUIResource(normal.getName(), Font.BOLD, normal.getSize());
             UIManager.put("Table.font.bold", bold);
             UIManager.put("Tree.rowHeight", 0);
-            
-            //Object x = UIManager.get("TextAreaUI");
-            //System.out.println(x);
 
         } catch (ClassNotFoundException e) {
             throw new ExceptionInInitializerError(e);
