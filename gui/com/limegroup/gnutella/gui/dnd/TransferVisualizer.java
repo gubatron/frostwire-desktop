@@ -45,9 +45,9 @@ class TransferVisualizer {
         if(!t.isDataFlavorSupported(DataFlavor.javaFileListFlavor))
             return null;
             
-        List l = null;
+        List<?> l = null;
         try {
-            l = (List)t.getTransferData(DataFlavor.javaFileListFlavor);
+            l = (List<?>)t.getTransferData(DataFlavor.javaFileListFlavor);
         } catch(UnsupportedFlavorException ufe) {
             return null;
         } catch(IOException ioe) {
@@ -66,7 +66,7 @@ class TransferVisualizer {
         label.setVerticalAlignment(SwingConstants.TOP);
         label.setOpaque(false);
         int y = 0;
-        for(Iterator i = l.iterator(); i.hasNext(); ) {
+        for(Iterator<?> i = l.iterator(); i.hasNext(); ) {
             File f = (File)i.next();
             Icon icon = IconManager.instance().getIconForFile(f);
             label.setIcon(icon);

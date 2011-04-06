@@ -19,7 +19,12 @@ import com.limegroup.gnutella.gui.search.MagnetClipboardListener;
  */
 public class MagnetTransferHandler extends LimeTransferHandler {
 
-	@Override
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 5866840096804306495L;
+
+    @Override
 	public boolean canImport(JComponent c, DataFlavor[] flavors, DropInfo ddi) {
 		return canImport(c, flavors);
 	}

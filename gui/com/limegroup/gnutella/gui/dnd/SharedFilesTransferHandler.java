@@ -38,7 +38,12 @@ import com.limegroup.gnutella.settings.QuestionsHandler;
  */
 public class SharedFilesTransferHandler extends LimeTransferHandler {
 
-	@Override
+	/**
+     * 
+     */
+    private static final long serialVersionUID = -3210491592528122313L;
+
+    @Override
 	public boolean canImport(JComponent c, DataFlavor[] flavors, DropInfo ddi) {
 		return canImport(c, flavors);
 	}

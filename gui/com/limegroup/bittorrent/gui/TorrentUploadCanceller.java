@@ -1,12 +1,11 @@
 package com.limegroup.bittorrent.gui;
 
-import com.limegroup.bittorrent.ManagedTorrent;
 import com.limegroup.bittorrent.Torrent;
 import com.limegroup.bittorrent.TorrentEvent;
 import com.limegroup.bittorrent.TorrentEventListener;
+import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 import com.limegroup.gnutella.util.EventDispatcher;
 

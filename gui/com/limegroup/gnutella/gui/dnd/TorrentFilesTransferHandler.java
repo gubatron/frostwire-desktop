@@ -16,7 +16,12 @@ import com.limegroup.gnutella.gui.GUIMediator;
  */
 public class TorrentFilesTransferHandler extends LimeTransferHandler {
 
-	@Override
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 5478003116391589602L;
+
+    @Override
 	public boolean canImport(JComponent c, DataFlavor[] flavors, DropInfo ddi) {
 		return canImport(c, flavors);
 	}

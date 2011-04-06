@@ -23,7 +23,11 @@ import javax.swing.plaf.UIResource;
 // drop targets
 public class LimeDropTarget extends DropTarget implements UIResource {
 
-	/** The only listener we'll ever need. */
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 7798538644917817157L;
+    /** The only listener we'll ever need. */
     private static DropTargetListener listener;
 
     /** Lazily constructs the listener and returns it. */

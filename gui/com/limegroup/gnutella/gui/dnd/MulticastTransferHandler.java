@@ -13,7 +13,12 @@ import javax.swing.JComponent;
  */
 public class MulticastTransferHandler extends LimeTransferHandler {
 
-	private ArrayList<LimeTransferHandler> handlers = new ArrayList<LimeTransferHandler>();
+	/**
+     * 
+     */
+    private static final long serialVersionUID = -400036212482333760L;
+
+    private ArrayList<LimeTransferHandler> handlers = new ArrayList<LimeTransferHandler>();
 	
 	private LimeTransferHandler lastTransferer;
 	

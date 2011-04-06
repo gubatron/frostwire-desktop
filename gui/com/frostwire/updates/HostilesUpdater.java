@@ -556,7 +556,8 @@ public final class HostilesUpdater implements DownloadManagerListener {
 				if (t.isDirectory())
 					CoreFrostWireUtils.deleteFolderRecursively(t);
 				else {
-					List<DownloadManager> managers = AzureusStarter.getAzureusCore().getGlobalManager().getDownloadManagers();
+					@SuppressWarnings("unchecked")
+                    List<DownloadManager> managers = AzureusStarter.getAzureusCore().getGlobalManager().getDownloadManagers();
 					for (DownloadManager manager : managers) {
 						if (manager.getSaveLocation().equals(t)) {
 							manager.stopIt(DownloadManager.STATE_CLOSED, true, true);
@@ -659,7 +660,7 @@ public final class HostilesUpdater implements DownloadManagerListener {
 		System.out.println(f.length());
 
 		DiskManager dm = _manager.getDiskManager();
-		boolean filesExist = dm.filesExist();		
+		//boolean filesExist = dm.filesExist();		
 		int percentDone = dm.getPercentDone();		
 		long totalLength = dm.getTotalLength();
 		int rechecking = dm.getCompleteRecheckStatus();
