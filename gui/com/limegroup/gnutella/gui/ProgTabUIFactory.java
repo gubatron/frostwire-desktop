@@ -27,9 +27,8 @@ public final class ProgTabUIFactory {
     private static final Class<?> basicUI;
 
     static {
-        aquaUI = loadClass("apple.laf.AquaTabbedPaneUI");
-        windowsUI = 
-            loadClass("com.sun.java.swing.plaf.windows.WindowsTabbedPaneUI");
+        aquaUI = loadClass("com.apple.laf.AquaTabbedPaneUI");
+        windowsUI = loadClass("com.sun.java.swing.plaf.windows.WindowsTabbedPaneUI");
         metalUI = javax.swing.plaf.metal.MetalTabbedPaneUI.class;
         basicUI = javax.swing.plaf.basic.BasicTabbedPaneUI.class;
     }
