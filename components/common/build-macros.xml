@@ -169,6 +169,7 @@
 	  	           target       ="${compile.target}"
 	 	           sourcepath   =""
 			       excludes     ="@{excludes}"
+			       includeAntRuntime = "false"
 	 	    >
 			    <compilerarg value="-Xlint:unchecked"/>
 				<src>
@@ -285,12 +286,16 @@
         <attribute name="excludes"    default="**/*.java"/>
         <sequential>
             <do.dist-init component="@{component}"/>
+            <!--
 	    <echo message="GUBA: components/build-macros.xml(do.jar) This is the argument to the macro -> @{component}"/>
 	    <echo message="GUBA: components/build-macros.xml(do.jar) about to delete and create a jar"/>
+	    -->
             <delete file="${dist.limewire.components.@{component}.jar}"/>
+            <!--
 	    <echo message="GUBA: components/build-macros.xml(do.jar) deleted the file - gonna jar ${dist.limewire.components.@{component}.jar} from ${basedir}" />
         <echo message="GUBA: excludes -> @{excludes}"/>
         <echo message="GUBA.jar! basedir -> ${basedir}"/>
+        -->
 	    <!--
 	    <jar jarfile="${dist.limewire.components.@{component}.jar}">
 	      <fileset dir="${basedir}" excludes="${excludes}"/>	      
@@ -305,12 +310,13 @@
                  excludes="@{excludes}"
             >
 
-                <fileset dir="@{resourcedir}" excludes="@{resexclude}"/>
+                <fileset dir="@{resourcedir}" excludes="@{resexclude}" erroronmissingdir="false" />
                 <!--<fileset dir="@{resourcedir}"/> -->
                 <!-- <more-jar-elements/> -->
             </jar>
-
+        <!--
 	    <echo message="GUBA: components/build-macros.xml(do.jar) build-macros.xml:do.jar (macrodef) - created jar"/>
+	    -->
         </sequential>
     </macrodef>
     
