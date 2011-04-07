@@ -5,7 +5,6 @@ import javax.swing.SwingUtilities;
 import org.limewire.service.ErrorService;
 import org.limewire.util.OSUtils;
 
-import com.apple.eawt.Application;
 import com.limegroup.gnutella.browser.ExternalControl;
 
 /**
@@ -18,8 +17,6 @@ public final class GURLHandler {
     private volatile boolean enabled = false;
     private volatile String url;
     private volatile ExternalControl externalControl;
-    
-    public static Application APP;
     
     static {
         try {
