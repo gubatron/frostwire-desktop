@@ -1,3 +1,9 @@
+frostwire (4.21.6) stable; urgency=high
+
+  * Fixes a bug where running FrostWire for the very first time (and later) display Uploads number -1 in the bottom status bar.
+	
+ -- FrostWire Team <contact@frostwire.com>  Mon, 21 Mar 2011 19:33:12 -0500
+
 frostwire (4.21.5) stable; urgency=high
 
   * Fixes newly introduced bug where it would not recursively share the 
