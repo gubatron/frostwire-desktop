@@ -250,10 +250,9 @@ public final class StatusLine implements ThemeObserver {
         
 		//  add shared files indicator if there's room
 		indicatorWidth = GUIConstants.SEPARATOR +
-            Math.max((int)_sharedFiles.getMinimumSize().getWidth(),
-                    _sharedFiles.getWidth()) + sepWidth;
-        if (StatusBarSettings.SHARED_FILES_DISPLAY_ENABLED.getValue() &&
-				remainingWidth > indicatorWidth) {
+		    Math.max((int)_sharedFiles.getMinimumSize().getWidth(), _sharedFiles.getWidth()) + sepWidth;
+		
+        if (StatusBarSettings.SHARED_FILES_DISPLAY_ENABLED.getValue() && remainingWidth > indicatorWidth) {
 			BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
 			BAR.add(_sharedFiles, gbc);
 			BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
@@ -494,6 +493,11 @@ public final class StatusLine implements ThemeObserver {
         if (GuiCoreMediator.getUploadServices().isSeedingHostilesTxt())
             number--;
         
+        // TODO: in some case, the logic here is wrong, real fix is pending
+        if (number < 0) {
+            number = 0;
+        }
+        
         return number;
     }
 	
@@ -637,17 +641,19 @@ public final class StatusLine implements ThemeObserver {
      */
     private final RefreshListener REFRESH_LISTENER = new RefreshListener() {
         public void refresh() {
-            if (StatusBarSettings.BANDWIDTH_DISPLAY_ENABLED.getValue())
+            if (StatusBarSettings.BANDWIDTH_DISPLAY_ENABLED.getValue()) {
                 updateBandwidth();
+            }
             updateCenterPanel();
         }
     };
     
     private BooleanSetting getLanguageSetting() {
-        if (GUIMediator.isEnglishLocale())
+        if (GUIMediator.isEnglishLocale()) {
             return StatusBarSettings.LANGUAGE_DISPLAY_ENGLISH_ENABLED;
-        else
+        } else {
             return StatusBarSettings.LANGUAGE_DISPLAY_ENABLED;
+        }
     }
     
     /**
@@ -740,8 +746,7 @@ public final class StatusLine implements ThemeObserver {
         private static final long serialVersionUID = 6615872299886789939L;
 
         public ShowSharedFilesCountAction() {
-			putValue(Action.NAME, I18n.tr
-					("Show Shared Files Count"));
+			putValue(Action.NAME, I18n.tr("Show Shared Files Count"));
 		}
 		
 		public void actionPerformed(ActionEvent e) {
@@ -808,8 +813,7 @@ public final class StatusLine implements ThemeObserver {
         private static final long serialVersionUID = 1455679943975682049L;
 
         public ShowBandwidthConsumptionAction() {
-			putValue(Action.NAME, I18n.tr
-					("Show Bandwidth Consumption"));
+			putValue(Action.NAME, I18n.tr("Show Bandwidth Consumption"));
 		}
 		
 		public void actionPerformed(ActionEvent e) {
@@ -884,16 +888,19 @@ public final class StatusLine implements ThemeObserver {
 			_pending = pending;
 
 			//  if no changes, return
-			if (!(shareChanged || pendingChanged))
+			if (!(shareChanged || pendingChanged)) {
 				return;
+			}
 			
 			_string = GUIUtils.toLocalizedInteger(_share);
 			if (!GuiCoreMediator.getFileManager().isLoadFinished() ||
-                    GuiCoreMediator.getFileManager().isUpdating())
+                    GuiCoreMediator.getFileManager().isUpdating()) {
 				_string += "...";
+			}
 			
-			if (fm != null)
+			if (fm != null) {
 				_width = fm.stringWidth(_string) + _height;
+			}
 			
 			revalidate();
 			repaint();
@@ -919,11 +926,11 @@ public final class StatusLine implements ThemeObserver {
 			Graphics2D g2 = (Graphics2D) g;
 			
 			RenderingHints rh = g2.getRenderingHints();
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-					RenderingHints.VALUE_ANTIALIAS_ON);
+			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			
-			if (fm == null)
+			if (fm == null) {
 				fm = g2.getFontMetrics();
+			}
 			
             //  create string, set background color
 			if (!GuiCoreMediator.getFileManager().isLoadFinished() ||

@@ -15,7 +15,6 @@ import com.limegroup.gnutella.settings.StatusBarSettings;
  * This class defines the panel in the options window that allows the user
  * to change whether the number of shared files is visible in the status bar.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public final class StatusBarSharedFilesPaneItem extends AbstractPaneItem {
 
     public final static String TITLE = I18n.tr("Shared Files Indicator");
@@ -26,8 +25,7 @@ public final class StatusBarSharedFilesPaneItem extends AbstractPaneItem {
      * Constant for the key of the locale-specific <tt>String</tt> for whether 
      * the number of shared files should be displayed in the status bar.
      */
-    private final String CHECK_BOX_LABEL = 
-        I18nMarker.marktr("Show Shared Files Indicator:");
+    private final String CHECK_BOX_LABEL = I18nMarker.marktr("Show Shared Files Indicator:");
 
     private final JCheckBox CHECK_BOX = new JCheckBox();
 
@@ -66,8 +64,9 @@ public final class StatusBarSharedFilesPaneItem extends AbstractPaneItem {
      * @throws IOException if the options could not be applied for some reason
      */
     public boolean applyOptions() throws IOException {
-        if (!isDirty())
+        if (!isDirty()) {
             return false;
+        }
         
         StatusBarSettings.SHARED_FILES_DISPLAY_ENABLED.setValue(CHECK_BOX.isSelected());
         GUIMediator.instance().getStatusLine().refresh();
