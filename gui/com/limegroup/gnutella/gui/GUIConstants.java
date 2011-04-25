@@ -20,7 +20,7 @@ public final class GUIConstants {
 	/**
 	 * Constant for the the path to the LimeWire Windows launcher.
 	 */
-	public static final File LIMEWIRE_EXE_FILE = new File("FrostWire.exe").getAbsoluteFile();
+	public static final File FROSTWIRE_EXE_FILE = new File("FrostWire.exe").getAbsoluteFile();
 
 	/**
 	 * The number of pixels in the margin of a padded panel.

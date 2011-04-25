@@ -29,7 +29,7 @@ public class FirewallUtils {
             return false;
 
     	// Only add us if the LimeWire Windows launcher ran, not Java in a development environment
-    	if (!path.equalsIgnoreCase(GUIConstants.LIMEWIRE_EXE_FILE.getAbsolutePath()))
+    	if (!path.equalsIgnoreCase(GUIConstants.FROSTWIRE_EXE_FILE.getAbsolutePath()))
     		return false;
 
     	// Only add a listing for us if the Windows Firewall Exceptions list doesn't have one yet
@@ -60,7 +60,7 @@ public class FirewallUtils {
     	String path = SystemUtils.getRunningPath();
 
     	// Only do something if the LimeWire Windows launcher ran, not Java in a development environment
-    	if (!path.equalsIgnoreCase(GUIConstants.LIMEWIRE_EXE_FILE.getPath()))
+    	if (!path.equalsIgnoreCase(GUIConstants.FROSTWIRE_EXE_FILE.getPath()))
     		return;
 
     	// Only remove our listing if it's there
@@ -74,7 +74,7 @@ public class FirewallUtils {
             return false;
         
         String path = SystemUtils.getRunningPath();
-        return path.equalsIgnoreCase(GUIConstants.LIMEWIRE_EXE_FILE.getPath());
+        return path.equalsIgnoreCase(GUIConstants.FROSTWIRE_EXE_FILE.getPath());
     }
 
 	/**
