@@ -22,7 +22,7 @@ import com.limegroup.gnutella.connection.Connection;
 import com.limegroup.gnutella.connection.RoutedConnection;
 import com.limegroup.gnutella.dht.DHTManager;
 import com.limegroup.gnutella.settings.ApplicationSettings;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 @Singleton
 public class UDPCrawlerPongFactoryImpl implements UDPCrawlerPongFactory {
@@ -221,7 +221,7 @@ public class UDPCrawlerPongFactoryImpl implements UDPCrawlerPongFactory {
             }
             
             // append myself at the end
-            agents.append(LimeWireUtils.getHttpServer());
+            agents.append(FrostWireUtils.getHttpServer());
             
             //zip the string
             ByteArrayOutputStream baos = new ByteArrayOutputStream();

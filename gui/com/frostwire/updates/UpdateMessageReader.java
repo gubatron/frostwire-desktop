@@ -23,7 +23,7 @@ import com.limegroup.gnutella.gui.search.MininovaVuzeSearchResult;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.ChatSettings;
 import com.limegroup.gnutella.settings.FilterSettings;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * SAX Parser and more. Its responsible for creating UpdateMessages The
@@ -371,7 +371,7 @@ public final class UpdateMessageReader implements ContentHandler {
 
 		try {
 			String userAgent = "FrostWire/" + OSUtils.getOS() + "-" + OSUtils.getArchitecture() + "/"
-					+ LimeWireUtils.getFrostWireVersion();
+					+ FrostWireUtils.getFrostWireVersion();
 			connection = (HttpURLConnection) (new URL(getUpdateURL()))
 					.openConnection();
 			String url = getUpdateURL();

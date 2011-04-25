@@ -3,7 +3,7 @@ package com.limegroup.gnutella;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.limegroup.gnutella.settings.ApplicationSettings;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 @Singleton
 public class ApplicationServicesImpl implements ApplicationServices {
@@ -26,7 +26,7 @@ public class ApplicationServicesImpl implements ApplicationServices {
         mybtguid[0] = 0x2D; // - 
         mybtguid[1] = 0x4C; // L
         mybtguid[2] = 0x57; // W
-        System.arraycopy(LimeWireUtils.BT_REVISION.getBytes(),0, mybtguid,3, 4);
+        System.arraycopy(FrostWireUtils.BT_REVISION.getBytes(),0, mybtguid,3, 4);
         mybtguid[7] = 0x2D; // -
         System.arraycopy(limewireGUID,0,mybtguid,8,12);
         bittorrentGUID = mybtguid;

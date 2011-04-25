@@ -30,7 +30,7 @@ import com.limegroup.gnutella.LimeWireCore;
 import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 public class SponsorBanner extends JLabel {
 
@@ -161,7 +161,7 @@ public class SponsorBanner extends JLabel {
 				connection = (HttpURLConnection) (new URL(
 						"http://sponsors.frostwire.com/")).openConnection();
 				String userAgent = "FrostWire/" + OSUtils.getOS() + "/"
-						+ LimeWireUtils.getFrostWireVersion();
+						+ FrostWireUtils.getFrostWireVersion();
 				// System.out.println("User-Agent: "+userAgent);
 				connection.setRequestProperty("User-Agent", userAgent);
 				src = new InputSource(connection.getInputStream());

@@ -14,7 +14,7 @@ import org.limewire.util.VersionFormatException;
 
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.ConnectionSettings;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * This class contains the necessary information to form a response to a 
@@ -413,7 +413,7 @@ public class HandshakeResponse {
 		Properties headers = new Properties();
 		
         // add our user agent
-        headers.put(HeaderNames.USER_AGENT, LimeWireUtils.getHttpServer());
+        headers.put(HeaderNames.USER_AGENT, FrostWireUtils.getHttpServer());
         headers.put(HeaderNames.X_ULTRAPEER, Boolean.toString(handshakeServices.isUltrapeer()));
         
 		// add any leaves

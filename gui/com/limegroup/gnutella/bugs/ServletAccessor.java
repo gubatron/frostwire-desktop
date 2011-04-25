@@ -17,7 +17,7 @@ import org.limewire.http.LimeHttpClient;
 import org.limewire.http.SimpleLimeHttpClient;
 
 import com.limegroup.gnutella.gui.GuiCoreMediator;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * This class handles accessing the servlet, sending it data about the client
@@ -84,7 +84,7 @@ final class ServletAccessor {
             List<NameValuePair> params = localInfo.getPostRequestParams();
             HttpPost post = new HttpPost(SERVLET_URL);
             post.addHeader("Cache-Control", "no-cache");
-            post.addHeader("User-Agent", LimeWireUtils.getHttpServer());
+            post.addHeader("User-Agent", FrostWireUtils.getHttpServer());
             post.addHeader("Content-Type",
                     "application/x-www-form-urlencoded; charset=UTF-8");
             post.setEntity(new UrlEncodedFormEntity(params));

@@ -110,7 +110,7 @@ import com.limegroup.gnutella.settings.DownloadSettings;
 import com.limegroup.gnutella.settings.FilterSettings;
 import com.limegroup.gnutella.settings.MessageSettings;
 import com.limegroup.gnutella.settings.SearchSettings;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 import com.limegroup.gnutella.version.UpdateHandler;
 
 
@@ -3287,14 +3287,14 @@ public abstract class MessageRouterImpl implements MessageRouter {
         }
         
         public synchronized void tooManyResults(short numResults) {
-            if (!LimeWireUtils.isBetaRelease())
+            if (!FrostWireUtils.isBetaRelease())
                 return;
             totalDropped++;
             tooManyResults.add(numResults);
         }
         
         public synchronized void ttlByteDrop(byte ttl, int bytes) {
-            if (!LimeWireUtils.isBetaRelease())
+            if (!FrostWireUtils.isBetaRelease())
                 return;
             totalDropped++;
             ttls.add(ttl);
@@ -3321,7 +3321,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
         
         public synchronized void duplicateQuery(QueryRequest r) {
             totalDropped++;
-            if (!LimeWireUtils.isBetaRelease())
+            if (!FrostWireUtils.isBetaRelease())
                 return;
             
             duplicateTimes.add(System.currentTimeMillis());

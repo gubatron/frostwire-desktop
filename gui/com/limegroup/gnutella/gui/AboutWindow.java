@@ -24,7 +24,7 @@ import javax.swing.WindowConstants;
 import org.limewire.util.OSUtils;
 import org.limewire.util.VersionUtils;
 
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * Contains the <tt>JDialog</tt> instance that shows "about" information for the
@@ -77,7 +77,7 @@ final class AboutWindow {
 
 		// set up limewire version label
 		JLabel client = new JLabel(I18n.tr("FrostWire") + " "
-				+ LimeWireUtils.getFrostWireVersion());
+				+ FrostWireUtils.getFrostWireVersion());
 		client.setHorizontalAlignment(SwingConstants.CENTER);
 
 		// set up java version label

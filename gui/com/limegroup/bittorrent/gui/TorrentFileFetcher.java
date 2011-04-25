@@ -41,7 +41,7 @@ import com.limegroup.gnutella.gui.download.GuiDownloaderFactory;
 import com.limegroup.gnutella.http.HTTPHeaderName;
 import com.limegroup.gnutella.http.HttpClientListener;
 import com.limegroup.gnutella.settings.SharingSettings;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 public class TorrentFileFetcher implements HttpClientListener, CoreDownloader {
 	
@@ -72,7 +72,7 @@ public class TorrentFileFetcher implements HttpClientListener, CoreDownloader {
 	
 	public void fetch() {
 		final HttpGet get = new HttpGet(torrentURI);
-		get.addHeader("User-Agent", LimeWireUtils.getHttpServer());
+		get.addHeader("User-Agent", FrostWireUtils.getHttpServer());
 		get.addHeader(HTTPHeaderName.CONNECTION.httpStringValue(),"close");
         
         HttpParams params = new BasicHttpParams();

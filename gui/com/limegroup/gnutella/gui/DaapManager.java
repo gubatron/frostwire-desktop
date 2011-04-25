@@ -26,7 +26,7 @@ import com.limegroup.gnutella.FileManagerEvent;
 import com.limegroup.gnutella.IncompleteFileDesc;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.settings.DaapSettings;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
 import com.limegroup.gnutella.xml.LimeXMLNames;
 import com.limegroup.gnutella.xml.LimeXMLReplyCollection;
@@ -996,7 +996,7 @@ public final class DaapManager implements FinalizeListener {
         }
 
         public String getServerName() {
-            return LimeWireUtils.getHttpServer();
+            return FrostWireUtils.getHttpServer();
         }
 
         public void nextPort() {

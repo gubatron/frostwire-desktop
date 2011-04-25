@@ -29,7 +29,7 @@ import com.limegroup.gnutella.http.HTTPHeaderName;
 import com.limegroup.gnutella.http.SimpleReadHeaderState;
 import com.limegroup.gnutella.http.SimpleWriteHeaderState;
 import com.limegroup.gnutella.settings.ConnectionSettings;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * This class implements a simple chat protocol that allows to exchange text
@@ -215,7 +215,7 @@ public class InstantMessengerImpl implements InstantMessenger {
 
     private List<IOState> createOutgoingShakeStates() {
         List<Header> headers = new ArrayList<Header>();
-        headers.add(HTTPHeaderName.USER_AGENT.create(LimeWireUtils.getVendor()));
+        headers.add(HTTPHeaderName.USER_AGENT.create(FrostWireUtils.getVendor()));
         List<Header> emptyHeaders = Collections.emptyList();
 
         List<IOState> states = new ArrayList<IOState>(3);

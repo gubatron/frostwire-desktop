@@ -25,7 +25,7 @@ import com.limegroup.gnutella.ApplicationServices;
 import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.http.HTTPHeaderName;
 import com.limegroup.gnutella.http.URIUtils;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 class Tracker {
 	private static final Log LOG = LogFactory.getLog(Tracker.class);
@@ -195,7 +195,7 @@ class Tracker {
         try {
             URI requestURI = URIUtils.toURI(uri.toASCIIString() + query);
             get = new HttpGet(requestURI);
-            get.addHeader("User-Agent", LimeWireUtils.getHttpServer());
+            get.addHeader("User-Agent", FrostWireUtils.getHttpServer());
             get.addHeader("Cache-Control", "no-cache");
             get.addHeader(HTTPHeaderName.CONNECTION.httpStringValue(),
                     "close");

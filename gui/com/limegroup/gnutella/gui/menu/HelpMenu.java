@@ -17,7 +17,7 @@ import com.limegroup.gnutella.gui.actions.AbstractAction;
 import com.limegroup.gnutella.gui.actions.OpenLinkAction;
 import com.limegroup.gnutella.gui.notify.Notification;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 
 /**
@@ -51,7 +51,7 @@ final class HelpMenu extends AbstractMenu {
 		        I18n.tr("Foru&m"),
 		        I18n.tr("Access the FrostWire Users\' Forum")));
 		
-		addMenuItem(new OpenLinkAction("http://www.frostclick.com/wp/?from=frostwire"+com.limegroup.gnutella.util.LimeWireUtils.getFrostWireVersion(),
+		addMenuItem(new OpenLinkAction("http://www.frostclick.com/wp/?from=frostwire"+com.limegroup.gnutella.util.FrostWireUtils.getFrostWireVersion(),
 				I18n.tr("FrostClick.com"),
 				I18n.tr("Free Legal Downloads")));
 		
@@ -63,7 +63,7 @@ final class HelpMenu extends AbstractMenu {
             addSeparator();
             addMenuItem(new ShowAboutDialogAction());
         }
-		if(LimeWireUtils.isTestingVersion()) {
+		if(FrostWireUtils.isTestingVersion()) {
 		    addSeparator();
             addMenuItem(new ShowNotificationAction());
 		    addMenuItem(new GenerateUncaughtErrorAction());

@@ -21,7 +21,7 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.settings.ApplicationSettings;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * This class provides utility methods retrieving supported languages and
@@ -67,7 +67,7 @@ public class LanguageUtils {
             LOG.warn("Could not find bundle jar to determine locales");
         }
 
-        if (LimeWireUtils.isTestingVersion()) { 
+        if (FrostWireUtils.isTestingVersion()) { 
             addLocalesFromJar(locales, new File(CVS_BUNDLE_FILE));
         }
         

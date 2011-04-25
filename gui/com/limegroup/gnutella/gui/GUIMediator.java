@@ -83,7 +83,7 @@ import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.StartupSettings;
 import com.limegroup.gnutella.util.LaunchException;
 import com.limegroup.gnutella.util.Launcher;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 import com.limegroup.gnutella.version.UpdateInformation;
 
 /**
@@ -289,7 +289,7 @@ public final class GUIMediator {
 			public void actionPerformed(ActionEvent e) {
 				byte[] guid = GuiCoreMediator.getApplicationServices()
 						.getMyGUID();
-				GUIMediator.openURL(LimeWireUtils
+				GUIMediator.openURL(FrostWireUtils
 						.addLWInfoToUrl(this.url, guid));
 			}
 		}
@@ -747,7 +747,7 @@ public final class GUIMediator {
 			int preferred = GuiCoreMediator.getConnectionManager()
 					.getPreferredConnectionCount();
 			// pro will have more.
-			if (LimeWireUtils.isPro())
+			if (FrostWireUtils.isPro())
 				preferred -= 2;
 			// ultrapeers don't need as many...
 			if (GuiCoreMediator.getConnectionServices().isSupernode())

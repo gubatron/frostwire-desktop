@@ -14,7 +14,7 @@ import com.limegroup.gnutella.dht.db.AltLocFinder;
 import com.limegroup.gnutella.dht.db.AltLocSearchListener;
 import com.limegroup.gnutella.messages.QueryRequest;
 import com.limegroup.gnutella.settings.DHTSettings;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  *  A manager for controlling how requeries are sent in downloads.
@@ -129,7 +129,7 @@ class RequeryManager implements DHTEventListener, AltLocSearchListener {
     /** Returns true if a query can be sent right now. */
     boolean canSendQueryNow() {
         // PRO users can always send the DHT query, but only Gnutella after activate.
-        if(LimeWireUtils.isPro())
+        if(FrostWireUtils.isPro())
             return canSendDHTQueryNow() || (activated && canSendQueryAfterActivate());
         else
             return activated && canSendQueryAfterActivate();

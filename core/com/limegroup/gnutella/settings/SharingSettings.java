@@ -17,7 +17,7 @@ import org.limewire.util.FileUtils;
 
 import com.frostwire.CoreFrostWireUtils;
 import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 
 /**
@@ -37,13 +37,13 @@ public class SharingSettings extends LimeProps {
 	
     
     public static final File DEFAULT_SAVE_DIR =
-        new File(LimeWireUtils.getLimeWireRootFolder(), "Saved");
+        new File(FrostWireUtils.getLimeWireRootFolder(), "Saved");
     
     public static final File DEFAULT_SHARE_DIR = 
-        new File(LimeWireUtils.getLimeWireRootFolder(), "Shared");
+        new File(FrostWireUtils.getLimeWireRootFolder(), "Shared");
     
     public static final File DEFAULT_SHARED_TORRENTS_DIR = 
-    	new File(LimeWireUtils.getLimeWireRootFolder(), "Torrents");
+    	new File(FrostWireUtils.getLimeWireRootFolder(), "Torrents");
     
     public static final File IMAGE_CACHE_DIR = 
         new File(CoreFrostWireUtils.getPreferencesFolder(), "image_cache");

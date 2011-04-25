@@ -1,6 +1,6 @@
 package com.limegroup.gnutella.http;
 
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * This class adds type safety for constant HTTP header values.  If there's
@@ -50,7 +50,7 @@ public class ConstantHTTPHeaderValue {
     public static final HTTPHeaderValue USER_AGENT =
         new HTTPHeaderValue() {
             public String httpStringValue() {
-                return LimeWireUtils.getHttpServer();
+                return FrostWireUtils.getHttpServer();
             }
             
             public String toString() {
@@ -62,7 +62,7 @@ public class ConstantHTTPHeaderValue {
     public static final HTTPHeaderValue SERVER_VALUE = 
         new HTTPHeaderValue() {
             public String httpStringValue() {
-                return LimeWireUtils.getHttpServer();
+                return FrostWireUtils.getHttpServer();
             }
             
             public String toString() {

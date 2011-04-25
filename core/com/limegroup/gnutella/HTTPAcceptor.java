@@ -32,7 +32,7 @@ import com.limegroup.gnutella.http.HttpContextParams;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.statistics.TcpBandwidthStatistics;
 import com.limegroup.gnutella.statistics.TcpBandwidthStatistics.StatisticType;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * Processes HTTP requests for Gnutella uploads.
@@ -48,7 +48,7 @@ public class HTTPAcceptor extends BasicHttpAcceptor {
 
     @Inject
     public HTTPAcceptor(TcpBandwidthStatistics tcpBandwidthStatistics) {
-        super(createDefaultParams(LimeWireUtils.getHttpServer(), Constants.TIMEOUT), SUPPORTED_METHODS);
+        super(createDefaultParams(FrostWireUtils.getHttpServer(), Constants.TIMEOUT), SUPPORTED_METHODS);
 
         /**
         this.notFoundHandler = new NHttpRequestHandler() {

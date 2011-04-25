@@ -34,7 +34,7 @@ import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.settings.StartupSettings;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 public final class TipOfTheDayMediator implements ThemeObserver {
 
@@ -232,7 +232,7 @@ public final class TipOfTheDayMediator implements ThemeObserver {
             messages.addAll(Arrays.asList(TipOfTheDayMessages.getNonMacOSXMessages()));
         }
 
-        if (LimeWireUtils.isPro()) {
+        if (FrostWireUtils.isPro()) {
             messages.addAll(Arrays.asList(TipOfTheDayMessages.getProMessages()));
         } else {
             messages.addAll(Arrays.asList(TipOfTheDayMessages.getBasicMessages()));

@@ -41,7 +41,7 @@ import com.limegroup.gnutella.messages.MessageFactory;
 import com.limegroup.gnutella.messages.QueryReply;
 import com.limegroup.gnutella.messages.Message.Network;
 import com.limegroup.gnutella.settings.ConnectionSettings;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * Handles all stuff necessary for browsing of networks hosts. 
@@ -306,7 +306,7 @@ public class BrowseHostHandler {
         HttpProtocolParams.setVersion(client.getParams(), HttpVersion.HTTP_1_1);
         
         get.addHeader("Host", NetworkUtils.ip2string(socket.getInetAddress().getAddress()) + ":" + socket.getPort());
-        get.addHeader("User-Agent", LimeWireUtils.getVendor());
+        get.addHeader("User-Agent", FrostWireUtils.getVendor());
         get.addHeader("Accept", Constants.QUERYREPLY_MIME_TYPE);
         get.addHeader("Connection", "close");
         

@@ -65,7 +65,7 @@ import com.limegroup.gnutella.library.SharingUtils;
 import com.limegroup.gnutella.messages.vendor.CapabilitiesVMFactory;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.UpdateSettings;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * Manager for version updates.
@@ -433,7 +433,7 @@ public class UpdateHandlerImpl implements UpdateHandler {
 
         Version limeV;
         try {
-            limeV = new Version(LimeWireUtils.getFrostWireVersion());
+            limeV = new Version(FrostWireUtils.getFrostWireVersion());
         } catch(VersionFormatException vfe) {
             LOG.warn("Invalid LimeWire version", vfe);
             return;
@@ -452,7 +452,7 @@ public class UpdateHandlerImpl implements UpdateHandler {
         
         UpdateData updateInfo = uc.getUpdateDataFor(limeV, 
                     ApplicationSettings.getLanguage(),
-                    LimeWireUtils.isPro(),
+                    FrostWireUtils.isPro(),
                     style,
                     javaV);
 
@@ -549,8 +549,8 @@ public class UpdateHandlerImpl implements UpdateHandler {
         if (!httpRequestControl.isRequestPending())
             return;
         LOG.debug("about to issue http request method");
-        HttpGet get = new HttpGet(LimeWireUtils.addLWInfoToUrl(url, applicationServices.getMyGUID()));
-        get.addHeader("User-Agent", LimeWireUtils.getHttpServer());
+        HttpGet get = new HttpGet(FrostWireUtils.addLWInfoToUrl(url, applicationServices.getMyGUID()));
+        get.addHeader("User-Agent", FrostWireUtils.getHttpServer());
         get.addHeader(HTTPHeaderName.CONNECTION.httpStringValue(),"close");
         httpRequestControl.requestActive();
         HttpParams params = new BasicHttpParams();

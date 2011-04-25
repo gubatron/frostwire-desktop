@@ -21,7 +21,7 @@ import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * A base license class, implementing common functionality.
@@ -100,7 +100,7 @@ public abstract class AbstractLicense implements MutableLicense, Serializable, C
         HttpResponse response = null;
         try {
             HttpGet get = new HttpGet(url);
-            get.addHeader("User-Agent", LimeWireUtils.getHttpServer());
+            get.addHeader("User-Agent", FrostWireUtils.getHttpServer());
             response = httpClient.execute(get);
             String result;
             if (response.getEntity() != null) {
