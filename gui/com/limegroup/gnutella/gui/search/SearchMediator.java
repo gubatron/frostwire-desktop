@@ -51,7 +51,7 @@ import com.limegroup.gnutella.search.HostData;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 import com.limegroup.gnutella.settings.SearchSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
 import com.limegroup.gnutella.xml.LimeXMLProperties;
 
@@ -833,7 +833,7 @@ public final class SearchMediator {
                 String action = doc.getAction();
                 if (action != null && !action.equals("")) { // valid action
                     if (doc.actionDetailRequested())
-                        action = LimeWireUtils.addLWInfoToUrl(action, GuiCoreMediator.getApplicationServices().getMyGUID());
+                        action = FrostWireUtils.addLWInfoToUrl(action, GuiCoreMediator.getApplicationServices().getMyGUID());
                     if (action.length() > 255) // trim to make sure its not too long
                         action = action.substring(0, 255);
                     GUIMediator.openURL(action);

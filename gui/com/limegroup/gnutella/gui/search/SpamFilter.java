@@ -42,9 +42,11 @@ public class SpamFilter implements TableLineFilter {
 		if (isSpam) {
 			GuiCoreMediator.getSpamManager().handleUserMarkedSpam(descs);
 			r(line);
+			
 		}
-		else
+		else {
 			GuiCoreMediator.getSpamManager().handleUserMarkedGood(descs);
+		}
 		line.update();
         
         // save the rating data after each user action
