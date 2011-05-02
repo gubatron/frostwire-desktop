@@ -27,7 +27,7 @@ import com.limegroup.gnutella.gui.actions.AbstractAction;
 import com.limegroup.gnutella.gui.actions.OpenLinkAction;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * The menu to be used for themes.
@@ -310,7 +310,7 @@ final class ThemeMenu extends AbstractMenu {
     		return false;
     	
     	// only show pro theme if we're on pro.
-    	if(!LimeWireUtils.isPro() &&
+    	if(!FrostWireUtils.isPro() &&
     			name.equals(ThemeSettings.PRO_THEME_NAME))
     		return false;
     	

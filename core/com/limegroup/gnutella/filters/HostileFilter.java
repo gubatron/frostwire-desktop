@@ -64,4 +64,9 @@ public class HostileFilter extends  AbstractIPFilter {
         // TODO Auto-generated method stub
         refreshHosts(); //it makes sense on LocalIPFilter.x
     }
+    
+    @Override
+    public boolean isBlocked(String addr) {
+        return hostileHosts.contains(new IP(addr));
+    }
 }

@@ -20,7 +20,7 @@ import org.apache.http.nio.entity.ConsumingNHttpEntity;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.limegroup.gnutella.Constants;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 @Singleton
 public class LocalHTTPAcceptor extends BasicHttpAcceptor {
@@ -52,7 +52,7 @@ public class LocalHTTPAcceptor extends BasicHttpAcceptor {
 
     @Inject
     public LocalHTTPAcceptor(ExternalControl externalControl) {
-        super(createDefaultParams(LimeWireUtils.getHttpServer(), Constants.TIMEOUT), SUPPORTED_METHODS);
+        super(createDefaultParams(FrostWireUtils.getHttpServer(), Constants.TIMEOUT), SUPPORTED_METHODS);
         this.externalControl = externalControl;
         
         registerHandler("magnet:", new MagnetCommandRequestHandler());

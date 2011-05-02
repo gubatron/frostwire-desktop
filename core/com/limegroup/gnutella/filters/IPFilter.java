@@ -36,5 +36,7 @@ public interface IPFilter extends SpamFilter {
     }
 
     public void forceRefreshHosts();
+    
+    public boolean isBlocked(String addr);
 
 }

@@ -29,7 +29,7 @@ import javax.swing.JTextArea;
 import org.limewire.util.VersionUtils;
 
 import com.limegroup.gnutella.bugs.FatalBugManager;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 
 /**
@@ -100,7 +100,7 @@ public class GUILoader {
 		err.printStackTrace();
 		StringWriter sw = new StringWriter();
 		PrintWriter pw = new PrintWriter(sw);
-		pw.println("FrostWire version " + LimeWireUtils.getFrostWireVersion());
+		pw.println("FrostWire version " + FrostWireUtils.getFrostWireVersion());
 		pw.print("Java version ");
 		pw.print(System.getProperty("java.version", "?"));
 		pw.print(" from ");

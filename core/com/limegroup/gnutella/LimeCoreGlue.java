@@ -13,7 +13,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.LimeProps;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * This class is the glue that holds LimeWire together.
@@ -37,7 +37,7 @@ public class LimeCoreGlue {
      * @param userSettingsDir the preferred directory for user settings
      */
     public static void preinstall() throws InstallFailedException {
-        preinstall(LimeWireUtils.getRequestedUserSettingsLocation());
+        preinstall(FrostWireUtils.getRequestedUserSettingsLocation());
     }
     
     /**
@@ -66,11 +66,11 @@ public class LimeCoreGlue {
         } catch(IOException requestedFailed) {
             try {
                 // First clear any older temporary settings directories.
-                LimeWireUtils.clearTemporarySettingsDirectories();
+                FrostWireUtils.clearTemporarySettingsDirectories();
                 // Then try to set a temporary directory...
                 File temporaryDir;
                 try {
-                    temporaryDir = LimeWireUtils.getTemporarySettingsDirectory();
+                    temporaryDir = FrostWireUtils.getTemporarySettingsDirectory();
                 } catch(IOException tempFailed) {
                     tempFailed.initCause(requestedFailed);
                     throw tempFailed;
@@ -85,7 +85,7 @@ public class LimeCoreGlue {
                     throw cannotSet;
                 }
                 
-                LimeWireUtils.setTemporaryDirectoryInUse(true);
+                FrostWireUtils.setTemporaryDirectoryInUse(true);
             } catch(IOException totalFailure) {
                 throw new InstallFailedException("Settings Directory Failure", totalFailure);
             }

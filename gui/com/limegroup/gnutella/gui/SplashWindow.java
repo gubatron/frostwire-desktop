@@ -14,7 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JWindow;
 
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * Window that displays the splash screen.  This loads the splash screen

@@ -22,7 +22,7 @@ import com.limegroup.gnutella.settings.ApplicationSettings;
  * may want to access.
  */
 //2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
-public final class LimeWireUtils {
+public final class FrostWireUtils {
 
 	/** 
 	 * Constant for the current version of FrostWire.
@@ -110,7 +110,7 @@ public final class LimeWireUtils {
 	/**
 	 * Make sure the constructor can never be called.
 	 */
-	private LimeWireUtils() {}
+	private FrostWireUtils() {}
     
 	/**
 	 * Initialize the settings statically. 
@@ -404,9 +404,9 @@ public final class LimeWireUtils {
         else
             url += "&";
         url += "guid=" + EncodingUtils.encode(new GUID(myClientGUID).toHexString())+ 
-            "&pro="   + LimeWireUtils.isPro() + 
+            "&pro="   + FrostWireUtils.isPro() + 
             "&lang=" + EncodingUtils.encode(ApplicationSettings.getLanguage()) +
-            "&lv="   + EncodingUtils.encode(LimeWireUtils.getFrostWireVersion()) +
+            "&lv="   + EncodingUtils.encode(FrostWireUtils.getFrostWireVersion()) +
             "&jv="   + EncodingUtils.encode(VersionUtils.getJavaVersion()) +
             "&os="   + EncodingUtils.encode(OSUtils.getOS()) +
             "&osv="  + EncodingUtils.encode(OSUtils.getOSVersion());

@@ -44,7 +44,7 @@ import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.PlayerSettings;
 import com.limegroup.gnutella.settings.StatusBarSettings;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 import com.limegroup.gnutella.version.UpdateInformation;
 
 /**
@@ -488,6 +488,11 @@ public final class StatusLine implements ThemeObserver {
         if (GuiCoreMediator.getUploadServices().isSeedingHostilesTxt())
             number--;
         
+        // TODO: in some case, the logic here is wrong, real fix is pending
+        if (number < 0) {
+            number = 0;
+        }
+        
         return number;
     }
 	
@@ -591,7 +596,7 @@ public final class StatusLine implements ThemeObserver {
                     break;
             case STATUS_TURBOCHARGED:
                     status = I18n.tr("Turbo-Charged") + " " + connection;
-                    tip = LimeWireUtils.isPro() ? I18n.tr("Your connection to the network is extremely strong") :
+                    tip = FrostWireUtils.isPro() ? I18n.tr("Your connection to the network is extremely strong") :
                         I18n.tr("You can experience Turbo-Charged connections all the time with LimeWire PRO!");
                     break;
             //case STATUS_IDLE:

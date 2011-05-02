@@ -31,7 +31,7 @@ import com.limegroup.gnutella.gui.actions.RemoveSharedDirectoryAction;
 import com.limegroup.gnutella.gui.actions.SelectSharedDirectoryAction;
 import com.limegroup.gnutella.gui.library.RecursiveSharingPanel;
 import com.limegroup.gnutella.settings.SharingSettings;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 /**
  * This class displays a setup window for allowing the user to choose
  * the directory for saving their files.

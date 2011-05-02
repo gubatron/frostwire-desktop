@@ -35,7 +35,7 @@ import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.util.Tagged;
 import com.limegroup.gnutella.util.URLDecoder;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * This class sets up JPanel with MediaPlayer on it, and takes care of GUI
@@ -619,7 +619,7 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
      */
     String playSong(Map<String,String> args) {
         
-        Tagged<String> urlString = LimeWireUtils.getArg(args, "url", "AddToPlaylist");
+        Tagged<String> urlString = FrostWireUtils.getArg(args, "url", "AddToPlaylist");
         if (!urlString.isValid()) return urlString.getValue();
         String url = urlString.getValue();
         
@@ -711,19 +711,19 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
     
     String addToPlaylist(Map<String,String> args) {
 
-        Tagged<String> urlString = LimeWireUtils.getArg(args, "url", "AddToPlaylist");
+        Tagged<String> urlString = FrostWireUtils.getArg(args, "url", "AddToPlaylist");
         if (!urlString.isValid()) return urlString.getValue();
         
-        Tagged<String> nameString = LimeWireUtils.getArg(args, "name", "AddtoPlaylist");
+        Tagged<String> nameString = FrostWireUtils.getArg(args, "name", "AddtoPlaylist");
         if (!nameString.isValid()) return nameString.getValue();
         
-        Tagged<String> lengthString = LimeWireUtils.getArg(args, "length", "AddtoPlaylist");
+        Tagged<String> lengthString = FrostWireUtils.getArg(args, "length", "AddtoPlaylist");
         if (!lengthString.isValid()) return lengthString.getValue();
         
-        Tagged<String> artistString = LimeWireUtils.getArg(args, "artist", "AddtoPlaylist");
+        Tagged<String> artistString = FrostWireUtils.getArg(args, "artist", "AddtoPlaylist");
         if (!artistString.isValid()) return artistString.getValue();  
         
-        Tagged<String> albumString = LimeWireUtils.getArg(args, "album", "AddtoPlaylist");
+        Tagged<String> albumString = FrostWireUtils.getArg(args, "album", "AddtoPlaylist");
         if (!albumString.isValid()) return albumString.getValue();  
         
         // We won't accept full URLs
@@ -760,7 +760,7 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
     
     String playURL(Map<String,String> args) {
         
-        Tagged<String> urlString = LimeWireUtils.getArg(args, "url", "PlayURL");
+        Tagged<String> urlString = FrostWireUtils.getArg(args, "url", "PlayURL");
         if (!urlString.isValid()) return urlString.getValue();
         
         // We won't accept full URLs

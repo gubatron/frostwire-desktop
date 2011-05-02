@@ -87,7 +87,7 @@ public class SharedFilesTransferHandler extends LimeTransferHandler {
 		listPanel.getList().setVisibleRowCount(5);
 		
 		Object[] content = new Object[] {
-				new MultiLineLabel(I18n.tr("You dropped the following files/folders on LimeWire, please select the ones you would like to share."), 400),
+				new MultiLineLabel(I18n.tr("You dropped the following files/folders on FrostWire, please select the ones you would like to share."), 400),
 				Box.createVerticalStrut(ButtonRow.BUTTON_SEP),
 				listPanel,
 				Box.createVerticalStrut(ButtonRow.BUTTON_SEP),

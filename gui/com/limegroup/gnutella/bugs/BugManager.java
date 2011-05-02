@@ -57,7 +57,7 @@ import com.limegroup.gnutella.gui.MessageService;
 import com.limegroup.gnutella.gui.MultiLineLabel;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.BugSettings;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * Interface for reporting bugs.
@@ -151,7 +151,7 @@ public final class BugManager {
     private static final Inspectable INSPECTABLE = new Inspectable() {
         public Object inspect() {
             
-            if (!ApplicationSettings.USAGE_STATS.getValue() && !LimeWireUtils.isAlphaRelease())
+            if (!ApplicationSettings.USAGE_STATS.getValue() && !FrostWireUtils.isAlphaRelease())
                 return "Denied";
             
             Exception e = new Exception();
@@ -215,7 +215,7 @@ public final class BugManager {
                     
         boolean sent = false;
         // never ignore bugs or auto-send when developing.
-        if(!LimeWireUtils.isTestingVersion()) {
+        if(!FrostWireUtils.isTestingVersion()) {
     	    if( BugSettings.IGNORE_ALL_BUGS.getValue() )
     	        return; // ignore.
     	        
@@ -226,7 +226,7 @@ public final class BugManager {
             // If the user wants to automatically send to the servlet, do so.
             // Otherwise, display it for review.
             if( isSendableVersion()) {
-            	if (LimeWireUtils.isAlphaRelease() || BugSettings.USE_BUG_SERVLET.getValue())
+            	if (FrostWireUtils.isAlphaRelease() || BugSettings.USE_BUG_SERVLET.getValue())
             		sent = true;
             }
             
@@ -277,7 +277,7 @@ public final class BugManager {
                         new FileInputStream(f)));
             String version = (String)in.readObject();
             long nextTime = in.readLong();
-            if( version.equals(LimeWireUtils.getFrostWireVersion()) ) {
+            if( version.equals(FrostWireUtils.getFrostWireVersion()) ) {
                 Map<String, Long> bugs = GenericsUtils.scanForMap(
                         in.readObject(), String.class, Long.class,
                         GenericsUtils.ScanMode.REMOVE);
@@ -321,7 +321,7 @@ public final class BugManager {
             try {
                 File f = BugSettings.BUG_INFO_FILE.getValue();
                 out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(f)));
-                String version = LimeWireUtils.getFrostWireVersion();
+                String version = FrostWireUtils.getFrostWireVersion();
                 out.writeObject(version);
                 out.writeLong(_nextAllowedTime);
                 out.writeObject(BUG_TIMES);
@@ -359,7 +359,7 @@ public final class BugManager {
         Version myVersion;
         Version lastVersion;
         try {
-            myVersion = new Version(LimeWireUtils.getFrostWireVersion());
+            myVersion = new Version(FrostWireUtils.getFrostWireVersion());
             lastVersion = new Version(BugSettings.LAST_ACCEPTABLE_VERSION.getValue());
         } catch(VersionFormatException vfe) {
             return false;
@@ -488,7 +488,7 @@ public final class BugManager {
         final JRadioButton alwaysReview = new JRadioButton(I18n.tr("Always Ask For Review"));
         final JRadioButton alwaysDiscard = new JRadioButton(I18n.tr("Always Discard All Errors"));
 		innerPanel.add(Box.createVerticalStrut(6));        
-        if(!LimeWireUtils.isTestingVersion()) {
+        if(!FrostWireUtils.isTestingVersion()) {
     		if(sendable)
                 innerPanel.add(alwaysSend);
             innerPanel.add(alwaysReview);

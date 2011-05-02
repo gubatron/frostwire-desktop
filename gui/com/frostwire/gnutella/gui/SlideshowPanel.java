@@ -216,37 +216,43 @@ public class SlideshowPanel extends JPanel {
 
     
 	protected BufferedImage prepareImage(BufferedImage image) {
-		BufferedImage bImage = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
-		Graphics2D g = null;
-		
-		try {
-			g = bImage.createGraphics();
-			
-            int x = 0;
-            int y = 0;
+        try {
+            BufferedImage bImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g = null;
 
-            //will try to center images that are smaller than the container.
-            if (image.getHeight() < getHeight()) {
-            	g.setColor(getBackground());
-                g.fillRect(0, 0, getWidth(), getHeight());
-            	y = (getHeight() - image.getHeight()) / 2;
+            try {
+                g = bImage.createGraphics();
+
+                int x = 0;
+                int y = 0;
+
+                //will try to center images that are smaller than the container.
+                if (image.getHeight() < getHeight()) {
+                    g.setColor(getBackground());
+                    g.fillRect(0, 0, getWidth(), getHeight());
+                    y = (getHeight() - image.getHeight()) / 2;
+                }
+
+                if (image.getWidth() < getWidth()) {
+                    g.setColor(getBackground());
+                    g.fillRect(0, 0, getWidth(), getHeight());
+                    x = (getWidth() - image.getWidth()) / 2;
+                }
+
+                g.drawImage(image, x, y, null);
+
+            } finally {
+                if (g != null) {
+                    g.dispose();
+                }
             }
 
-            if (image.getWidth() < getWidth()) {
-            	g.setColor(getBackground());
-                g.fillRect(0, 0, getWidth(), getHeight());
-            	x = (getWidth() - image.getWidth()) / 2;
-            }
-            
-            g.drawImage(image, x, y, null);
-            			
-		} finally {
-			if (g != null) {
-				g.dispose();
-			}
-		}
-		
-		return bImage;
+            return bImage;
+        } catch (Exception e) {
+            System.out.println("Error creating image for SlideShow " + "(" + getWidth() + ", " + getHeight() + ")");
+            e.printStackTrace();
+            return null;
+        }
 	}
 	
 	private List<Slide> filter(List<Slide> slides) {

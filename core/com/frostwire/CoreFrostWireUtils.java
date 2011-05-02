@@ -38,14 +38,14 @@ import com.google.inject.Injector;
 import com.limegroup.bittorrent.BTMetaInfo;
 import com.limegroup.gnutella.http.HttpExecutor;
 import com.limegroup.gnutella.library.SharingUtils;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 public class CoreFrostWireUtils {
 	
 	private static Injector INJECTOR;
 	
 	public final static File getPreferencesFolder() {
-	    return LimeWireUtils.getRequestedUserSettingsLocation();
+	    return FrostWireUtils.getRequestedUserSettingsLocation();
 	}
 	
     public final static String getMD5(File f) throws Exception{

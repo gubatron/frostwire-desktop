@@ -31,12 +31,22 @@ public class TrayNotifier implements NotifyUser {
 	
     private static final Log LOG = LogFactory.getLog(DefaultNotificationRenderer.class);
     
-	private final SystemTray _tray;
+	private SystemTray _tray;
 	private TrayIcon _icon;
 	private NotificationWindow notificationWindow;
 	
+	private boolean _supportsTray;
+	
 	public TrayNotifier() {
-		_tray = SystemTray.getSystemTray();
+        try {
+            _tray = SystemTray.getSystemTray();
+        } catch (Exception e) {
+            _tray = null;
+            _supportsTray = false;
+            return;
+        }
+        
+        _supportsTray = true;
 		buildPopupMenu();
 
 		String iconFileName = "frosticon";
@@ -128,6 +138,10 @@ public class TrayNotifier implements NotifyUser {
 	}
 	
 	public boolean showTrayIcon() {
+	    if (_tray == null || !supportsSystemTray()) {
+	        return false;
+	    }
+	    
 	    try {
 	        _tray.add(_icon);
 	    } catch(Exception iae) {
@@ -142,9 +156,10 @@ public class TrayNotifier implements NotifyUser {
         return true;
 	}
 	
-	public boolean supportsSystemTray() {
-	    return true;
-	}
+    public boolean supportsSystemTray() {
+        //gub: could be SystemTray.isSupported(), not sure how fast that is though.
+        return _supportsTray;
+    }
 
 	public void hideTrayIcon() {
 		_tray.remove(_icon);

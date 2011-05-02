@@ -12,7 +12,7 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.search.TableLine;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 import com.limegroup.gnutella.util.QueryUtils;
 
 /**
@@ -111,7 +111,7 @@ public class BuyAction extends AbstractAction implements LimeAction {
 		}
 		
 		String encoded_keywords = null;
-		String fwUserAgent = "FrostWire/" + OSUtils.getOS() + "/" + LimeWireUtils.getFrostWireVersion();
+		String fwUserAgent = "FrostWire/" + OSUtils.getOS() + "/" + FrostWireUtils.getFrostWireVersion();
 		
 		try {
 			encoded_keywords = URLEncoder.encode(this.getCurrentFileKeywords(),"UTF-8"); //temporarily "madonna" for testing purposes

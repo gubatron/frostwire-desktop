@@ -22,7 +22,7 @@ import org.limewire.util.OSUtils;
 
 import com.frostwire.settings.UpdateManagerSettings;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * Reads an update.xml file from frostwire.com The update xml file can also come
@@ -315,7 +315,7 @@ public final class UpdateManager implements Serializable {
 	@SuppressWarnings("unchecked")
 	private void loadSeenMessages() {
 		// de-serializes seen messages if available
-		File f = new File(LimeWireUtils.getRequestedUserSettingsLocation(),
+		File f = new File(FrostWireUtils.getRequestedUserSettingsLocation(),
 				"seenMessages.dat");
 		_seenMessages = new HashSet<UpdateMessage>();
 
@@ -417,7 +417,7 @@ public final class UpdateManager implements Serializable {
 		if (messageVersion == null)
 			return false;
 
-		String currentVersion = LimeWireUtils.getFrostWireVersion();
+		String currentVersion = FrostWireUtils.getFrostWireVersion();
 
 		// first discard if we're the exact same version
 		if (currentVersion.equals(messageVersion)) {

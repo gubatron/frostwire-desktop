@@ -170,7 +170,7 @@ public class Main {
 				
 				if (fileName.endsWith("png") || fileName.endsWith("jpg") || fileName.endsWith("gif")) {
 					result++;
-					System.out.println("one more image inside jar - " + fileName + " (" + result + ")");
+					//System.out.println("one more image inside jar - " + fileName + " (" + result + ")");
 				}
 			}
 			

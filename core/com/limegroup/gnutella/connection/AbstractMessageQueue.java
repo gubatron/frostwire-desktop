@@ -1,7 +1,7 @@
 package com.limegroup.gnutella.connection;
 
 import com.limegroup.gnutella.messages.Message;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * A priority queue for messages. Subclasses override the add,
@@ -26,7 +26,7 @@ public abstract class AbstractMessageQueue implements MessageQueue {
     /** Count the number and type of dropped messages */
     private final Message.MessageCounter messageCounter = 
         new Message.MessageCounter( 
-                (LimeWireUtils.isBetaRelease() || LimeWireUtils.isAlphaRelease()) ? 5 : 1 );
+                (FrostWireUtils.isBetaRelease() || FrostWireUtils.isAlphaRelease()) ? 5 : 1 );
 
     /**
      * @param cycle the number of messages to return per cycle, i.e., between 

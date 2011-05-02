@@ -15,7 +15,7 @@ import com.aelitis.azureus.core.AzureusCoreException;
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.AzureusCoreLifecycleListener;
 import com.limegroup.bittorrent.settings.BittorrentSettings;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * Class to initialize the azureus core. Keeps a static reference to the initialized core
@@ -59,7 +59,7 @@ public final class AzureusStarter {
 		if (!AzureusCoreFactory.isCoreAvailable()) {
 			//This does work
 			org.gudy.azureus2.core3.util.SystemProperties.APPLICATION_NAME = "azureus";
-			org.gudy.azureus2.core3.util.SystemProperties.setUserPath(LimeWireUtils.getRequestedUserSettingsLocation() + File.separator + "azureus" + File.separator);
+			org.gudy.azureus2.core3.util.SystemProperties.setUserPath(FrostWireUtils.getRequestedUserSettingsLocation() + File.separator + "azureus" + File.separator);
 			
 			try {
 				AZUREUS_CORE = AzureusCoreFactory.create();

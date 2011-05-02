@@ -27,7 +27,7 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.settings.LimeProps;
 import com.limegroup.gnutella.settings.SharingSettings;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * This class encapsulates all of the data for an individual client machine
@@ -44,7 +44,7 @@ public final class LocalClientInfo extends LocalAbstractInfo {
 	 */
 	public LocalClientInfo(Throwable bug, String threadName, String detail, boolean fatal, SessionInfo sessionInfo) {
 	    //Store the basic information ...	    
-	    _limewireVersion = LimeWireUtils.getFrostWireVersion();
+	    _limewireVersion = FrostWireUtils.getFrostWireVersion();
 	    _javaVersion = VersionUtils.getJavaVersion();
         _javaVendor = prop("java.vendor");
 	    _os = OSUtils.getOS();

@@ -33,7 +33,7 @@ import com.limegroup.gnutella.altlocs.AlternateLocation;
 import com.limegroup.gnutella.browser.MagnetOptions;
 import com.limegroup.gnutella.downloader.serial.RemoteHostMemento;
 import com.limegroup.gnutella.util.DataUtils;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
 import com.limegroup.gnutella.xml.LimeXMLDocumentFactory;
 import com.limegroup.gnutella.xml.SchemaNotFoundException;
@@ -197,7 +197,7 @@ class RemoteFileDescFactoryImpl implements RemoteFileDescFactory {
 
     private long contentLength(URI uri) throws HttpException, IOException, InterruptedException {
         HttpHead head = new HttpHead(uri);
-        head.addHeader("User-Agent", LimeWireUtils.getHttpServer());
+        head.addHeader("User-Agent", FrostWireUtils.getHttpServer());
         HttpResponse response = null;
         LimeHttpClient client = httpClientProvider.get();
         try {

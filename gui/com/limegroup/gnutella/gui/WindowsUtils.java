@@ -6,7 +6,7 @@ import org.limewire.util.CommonUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * A collection of Windows-related GUI utility methods.
@@ -36,7 +36,7 @@ public class WindowsUtils {
 	**/
 
         File homeDir = CommonUtils.getUserHomeDir();
-        File src = new File(homeDir, "Start Menu\\Programs\\FrostWire\\FrostWire "+ LimeWireUtils.getFrostWireVersion() +".lnk");
+        File src = new File(homeDir, "Start Menu\\Programs\\FrostWire\\FrostWire "+ FrostWireUtils.getFrostWireVersion() +".lnk");
         File startup = new File(homeDir, "Start Menu\\Programs\\Startup");
         File dst = new File(startup, "FrostWire On Startup.lnk");
 

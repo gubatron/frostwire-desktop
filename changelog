@@ -1,3 +1,10 @@
+frostwire (4.21.6) stable; urgency=high
+
+  * Fixes a bug where some Debian systems that didn't support the Icon Tray would crash on startup.
+  * Fixes a bug where running FrostWire for the very first time (and later) display Uploads number -1 in the bottom status bar.
+	
+ -- FrostWire Team <contact@frostwire.com>  Fri, 29 Apr 2011 10:23:14 -0500
+
 frostwire (4.21.5) stable; urgency=high
 
   * Fixes newly introduced bug where it would not recursively share the 
@@ -9,7 +16,6 @@ frostwire (4.21.5) stable; urgency=high
   * Fixes NPE on HttpFetcher.fetch()
 	
  -- FrostWire Team <contact@frostwire.com>  Mon, 21 Mar 2011 19:33:12 -0500
-
 
 frostwire (4.21.4) stable; urgency=low
 

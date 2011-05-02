@@ -24,7 +24,7 @@ import com.limegroup.gnutella.gui.themes.ThemeFileHandler;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 import com.limegroup.gnutella.security.SHA1;
 import com.limegroup.gnutella.util.EncodingUtils;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
 
 /**
@@ -169,7 +169,7 @@ public class ThirdPartySearchResult extends AbstractSearchResult implements Link
     }
 
     public void takeAction(TableLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
-        GUIMediator.openURL(LimeWireUtils.addLWInfoToUrl(getURL(), GuiCoreMediator.getApplicationServices().getMyGUID()) + "&keyword=" + EncodingUtils.encode(keyword) + "&client=true");
+        GUIMediator.openURL(FrostWireUtils.addLWInfoToUrl(getURL(), GuiCoreMediator.getApplicationServices().getMyGUID()) + "&keyword=" + EncodingUtils.encode(keyword) + "&client=true");
     }
 
     public void initialize(TableLine line) {

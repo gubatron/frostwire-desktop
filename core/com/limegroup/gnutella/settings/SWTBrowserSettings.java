@@ -3,7 +3,7 @@ package com.limegroup.gnutella.settings;
 import org.limewire.setting.BooleanSetting;
 import org.limewire.setting.StringSetting;
 
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * Settings for the SWT browser. This will allow us to enable or disable the
@@ -34,7 +34,7 @@ public final class SWTBrowserSettings extends LimeProps {
     }
     
     public static StringSetting getTooltipSetting() {
-        return LimeWireUtils.isPro() ? SWT_BROWSER_TOOLTIP_PRO :
+        return FrostWireUtils.isPro() ? SWT_BROWSER_TOOLTIP_PRO :
             SWT_BROWSER_TOOLTIP;
     }
     

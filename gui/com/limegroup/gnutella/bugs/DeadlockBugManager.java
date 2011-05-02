@@ -6,7 +6,7 @@ import org.limewire.util.VersionFormatException;
 import com.google.inject.Inject;
 import com.limegroup.gnutella.gui.LocalClientInfoFactory;
 import com.limegroup.gnutella.settings.BugSettings;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 public class DeadlockBugManager {
 
@@ -21,7 +21,7 @@ public class DeadlockBugManager {
         
         LocalClientInfo info = localClientInfoFactory.createLocalClientInfo(bug, threadName, message, false);
         // If it's a sendable version & we're either a beta or the user said to send it, send it
-        if(isSendableVersion() && (LimeWireUtils.isBetaRelease() || BugSettings.SEND_DEADLOCK_BUGS.getValue()))
+        if(isSendableVersion() && (FrostWireUtils.isBetaRelease() || BugSettings.SEND_DEADLOCK_BUGS.getValue()))
             sendToServlet(info);
     }
     
@@ -30,7 +30,7 @@ public class DeadlockBugManager {
         Version myVersion;
         Version lastVersion;
         try {
-            myVersion = new Version(LimeWireUtils.getFrostWireVersion());
+            myVersion = new Version(FrostWireUtils.getFrostWireVersion());
             lastVersion = new Version(BugSettings.LAST_ACCEPTABLE_VERSION.getValue());
         } catch(VersionFormatException vfe) {
             return false;

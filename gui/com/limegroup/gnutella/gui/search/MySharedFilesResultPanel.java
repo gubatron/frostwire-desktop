@@ -41,7 +41,7 @@ import com.limegroup.gnutella.search.HostData;
 import com.limegroup.gnutella.settings.ChatSettings;
 import com.limegroup.gnutella.settings.ConnectionSettings;
 import com.limegroup.gnutella.settings.SSLSettings;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
 
 /**
@@ -84,7 +84,7 @@ public class MySharedFilesResultPanel extends ResultPanel {
                 .getNetworkManager().acceptedIncomingConnection(), false, false,
                 ChatSettings.CHAT_ENABLED.getValue(), false, false, NetworkUtils
                         .ip2string(GuiCoreMediator.getNetworkManager().getAddress()),
-                GuiCoreMediator.getNetworkManager().getPort(), 0, LimeWireUtils.QHD_VENDOR_NAME,
+                GuiCoreMediator.getNetworkManager().getPort(), 0, FrostWireUtils.QHD_VENDOR_NAME,
                 GuiCoreMediator.getConnectionManager().getPushProxies(), GuiCoreMediator
                         .getNetworkManager().canDoFWT(), GuiCoreMediator.getNetworkManager()
                         .supportsFWTVersion(), SSLSettings.isIncomingTLSEnabled());

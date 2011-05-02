@@ -41,6 +41,7 @@ import javax.swing.plaf.metal.MetalBorders;
 
 import org.limewire.i18n.I18nMarker;
 import org.limewire.inspection.InspectablePrimitive;
+import org.limewire.io.IpPort;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gnutella.gui.actions.BuyAction;
@@ -50,6 +51,7 @@ import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.LimeCoreGlue;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.RemoteFileDesc;
+import com.limegroup.gnutella.SpamServices;
 import com.limegroup.gnutella.SpamServicesImpl;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.BoxPanel;
@@ -160,7 +162,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
     ActionListener STOP_LISTENER;
     
     /**
-     * The Mark As Spam listener
+     * The Mark As Spam listener and Blocks the hosts marked as spam
      */
     ActionListener MARK_AS_SPAM_LISTENER;
     
@@ -720,19 +722,40 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
     }
 
     /**
-     * Blocks the host that sent the selected result.
+     * Blocks the hosts that sent the selected result.
      */
-    void blockHost() {
+    void blockHosts() {
         TableLine[] lines = getAllSelectedLines();
         Set<String> uniqueHosts = new HashSet<String>();
+        
+        SpamServices spamServices = GuiCoreMediator.getSpamServices();
+        
         for (TableLine line : lines) {
-        	uniqueHosts.add(line.getHostname());
+            Set<? extends IpPort> alts = line.getAlts();
+            
+            if (!spamServices.isHostile(line.getHostname())) {
+                uniqueHosts.add(line.getHostname());
+            }
+
+            for (IpPort alt : alts) {
+                String host = alt.getAddress();
+                if (!spamServices.isHostile(host)) {
+                    uniqueHosts.add(host);
+                }
+            }
+            
         	for (SearchResult result : line.getOtherResults()) {
-        		uniqueHosts.add(result.getHost());
+        	    String host = result.getHost();
+        	    if (!spamServices.isHostile(host)) {
+        	        uniqueHosts.add(host);
+        	    }
         	}
         }
         
-        
+        //nothing to block
+        if (uniqueHosts.size()==0) {
+            return;
+        }
         
         
         int answer = GUIMediator.showConfirmListMessage(I18n.tr("Do you want to block search results from the following list of hosts?"), 

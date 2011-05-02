@@ -78,9 +78,8 @@ public class SpamServicesImpl implements SpamServices {
         }
     }
 
-    public boolean isHostile(String host) {
-    	int length = FilterSettings.BLACK_LISTED_IP_ADDRESSES.getValue().length;
-    	return false;
+    public boolean isBlocked(String host) {
+        return ipFilter.get().isBlocked(host);
     }
     
     public void unblockHost(String host) {
@@ -93,6 +92,11 @@ public class SpamServicesImpl implements SpamServices {
             FilterSettings.BLACK_LISTED_IP_ADDRESSES.setValue(bannedList.toArray(new String[0]));
             reloadIPFilter();
         }
+    }
+    
+    @Override
+    public boolean isHostile(String host) {
+        return ipFilter.get().isBlocked(host);
     }
 
 }

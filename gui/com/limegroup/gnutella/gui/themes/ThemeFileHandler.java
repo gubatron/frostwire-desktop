@@ -18,7 +18,7 @@ import org.limewire.util.CommonUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * This class contains key/value pairs for the current "theme."  The
@@ -66,7 +66,7 @@ public final class ThemeFileHandler {
         // version that unzipped this theme was an old version.
         if(!force && themeDir.isDirectory()) {
             String contents = contentsOf(themeVersionFile);
-            if(contents == null || !contents.equals(LimeWireUtils.getFrostWireVersion())) {
+            if(contents == null || !contents.equals(FrostWireUtils.getFrostWireVersion())) {
                 force = true;
                 forceNewLWTP = true;
             }
@@ -129,7 +129,7 @@ public final class ThemeFileHandler {
 	    FileOutputStream fos = null;
 	    try {
 	        fos = new FileOutputStream(file);
-	        fos.write(LimeWireUtils.getFrostWireVersion().getBytes("UTF8"));
+	        fos.write(FrostWireUtils.getFrostWireVersion().getBytes("UTF8"));
 	        fos.flush();
 	    } catch(IOException ignored) {
 	    } finally {

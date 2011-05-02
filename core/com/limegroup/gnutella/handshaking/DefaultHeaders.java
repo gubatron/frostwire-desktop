@@ -7,7 +7,7 @@ import org.limewire.io.NetworkUtils;
 
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.ConnectionSettings;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * This class contains the headers that all LimeWires pass in connection
@@ -38,7 +38,7 @@ public abstract class DefaultHeaders extends Properties {
      */
     private static void addCommonHeaders(Properties props) {
         props.put(HeaderNames.X_QUERY_ROUTING, QUERY_ROUTING_VERSION);
-        props.put(HeaderNames.USER_AGENT, LimeWireUtils.getHttpServer());
+        props.put(HeaderNames.USER_AGENT, FrostWireUtils.getHttpServer());
         props.put(HeaderNames.GGEP, "0.5");
         props.put(HeaderNames.X_GUESS, "0.1");
         props.put(HeaderNames.X_VENDOR_MESSAGE, "0.2");

@@ -96,7 +96,7 @@ import com.limegroup.gnutella.settings.MessageSettings;
 import com.limegroup.gnutella.settings.SearchSettings;
 import com.limegroup.gnutella.statistics.OutOfBandStatistics;
 import com.limegroup.gnutella.util.DataUtils;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 import com.limegroup.gnutella.version.UpdateHandler;
 
 /**
@@ -683,7 +683,7 @@ public class GnutellaConnection extends AbstractConnection implements ReplyHandl
     private void startOutput() {
         
         // add some heavier stats code in betas
-        if (LimeWireUtils.isBetaRelease() || LimeWireUtils.isTestingVersion()) {
+        if (FrostWireUtils.isBetaRelease() || FrostWireUtils.isTestingVersion()) {
             statsWriters.put(StatsWriters.TOP,new StatisticGatheringWriter());
             statsWriters.put(StatsWriters.DEFLATER, new StatisticGatheringWriter());
             statsWriters.put(StatsWriters.DELAYER, new StatisticGatheringWriter());
@@ -817,7 +817,7 @@ public class GnutellaConnection extends AbstractConnection implements ReplyHandl
      *         loop to continue.
      */
     public void startMessaging() {
-        this.incoming = new Message.MessageCounter(LimeWireUtils.isBetaRelease() ? 10 : 1);
+        this.incoming = new Message.MessageCounter(FrostWireUtils.isBetaRelease() ? 10 : 1);
         
         supernodeClientAtLooping = isSupernodeClientConnection();
 

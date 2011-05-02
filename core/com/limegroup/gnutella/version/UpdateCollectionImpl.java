@@ -17,7 +17,7 @@ import org.w3c.dom.NodeList;
 
 import com.limegroup.gnutella.ApplicationServices;
 import com.limegroup.gnutella.URN;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 import com.limegroup.gnutella.xml.LimeXMLUtils;
 
 public class UpdateCollectionImpl implements UpdateCollection {
@@ -287,7 +287,7 @@ public class UpdateCollectionImpl implements UpdateCollection {
         }
         
         // Update the URL to contain the correct pro & language.
-        url = LimeWireUtils.addLWInfoToUrl(url, applicationServices.getMyGUID());
+        url = FrostWireUtils.addLWInfoToUrl(url, applicationServices.getMyGUID());
         data.setUpdateURL(url);
         
         try {

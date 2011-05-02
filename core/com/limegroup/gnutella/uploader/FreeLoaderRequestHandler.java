@@ -13,7 +13,7 @@ import org.apache.http.HttpEntityEnclosingRequest;
 import org.apache.http.nio.entity.ConsumingNHttpEntity;
 
 import com.limegroup.gnutella.Constants;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * Responds with an HTML page showing information. 
@@ -24,7 +24,7 @@ public class FreeLoaderRequestHandler extends SimpleNHttpRequestHandler {
         
     public static final String FREELOADER_RESPONSE_PAGE = "<html>\r\n"
             + "<head>\r\n"
-            + "  <title>" + LimeWireUtils.getHttpServer() + "</title>\r\n"
+            + "  <title>" + FrostWireUtils.getHttpServer() + "</title>\r\n"
             + "  <meta http-equiv=\"refresh\" content=\"0; URL=" + REDIRECT_URL + "\">\r\n"
             + "</head>\r\n"
             + "<body>\r\n"

@@ -24,7 +24,7 @@ import com.limegroup.gnutella.gui.LocalClientInfoFactory;
 import com.limegroup.gnutella.gui.MessageService;
 import com.limegroup.gnutella.gui.GUIUtils.SizePolicy;
 import com.limegroup.gnutella.settings.BugSettings;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * This class defines the panel in the options window that allows
@@ -106,7 +106,7 @@ public final class BugsPaneItem extends AbstractPaneItem {
         add(REVIEW_BOX);
         add(DISCARD_BOX);
         
-        if(!LimeWireUtils.isBetaRelease())
+        if(!FrostWireUtils.isBetaRelease())
             add(DEADLOCK_OPTION);
 
         add(getVerticalSeparator());

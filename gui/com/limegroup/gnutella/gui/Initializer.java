@@ -38,7 +38,7 @@ import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.ConnectionSettings;
 import com.limegroup.gnutella.settings.DaapSettings;
 import com.limegroup.gnutella.settings.StartupSettings;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /** Initializes (creates, starts, & displays) the LimeWire Core & UI. */
 public final class Initializer {
@@ -156,7 +156,7 @@ public final class Initializer {
      */
      private void tryMigratingOldPreferences() {
     	 File userDir = CommonUtils.getUserHomeDir();
-    	 File settingsDir = new File(userDir, LimeWireUtils.LIMEWIRE_PREFS_DIR_NAME);
+    	 File settingsDir = new File(userDir, FrostWireUtils.LIMEWIRE_PREFS_DIR_NAME);
     	 
     	 if (!OSUtils.isWindows() ||
     		 (settingsDir.exists() && settingsDir.list()!=null)) {
@@ -164,7 +164,7 @@ public final class Initializer {
     		 return;
     	 }
     	 
-    	 File possibleOldDir = new File(userDir, LimeWireUtils.FROSTWIRE_418_DIR_NAME);
+    	 File possibleOldDir = new File(userDir, FrostWireUtils.FROSTWIRE_418_DIR_NAME);
 
     	 if ((!settingsDir.exists() || settingsDir.list()==null) && 
     		possibleOldDir.exists() && 
@@ -315,7 +315,7 @@ public final class Initializer {
     
     /** Installs any system properties. */
     private void installProperties() {        
-        System.setProperty("http.agent", LimeWireUtils.getHttpServer());
+        System.setProperty("http.agent", FrostWireUtils.getHttpServer());
         stopwatch.resetAndLog("set system properties");
         
         if (OSUtils.isMacOSX()) {

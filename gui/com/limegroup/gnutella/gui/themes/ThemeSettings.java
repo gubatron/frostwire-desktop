@@ -32,7 +32,7 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.LimeProps;
 import com.limegroup.gnutella.util.Expand;
-import com.limegroup.gnutella.util.LimeWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * Class for handling all LimeWire settings that are stored to disk.  To
@@ -465,7 +465,7 @@ public final class ThemeSettings extends LimeProps {
         if(OSUtils.isMacOSX()) {
             theme = PINSTRIPES_OSX_THEME_FILE;
             dir = new File(THEME_DIR_FILE, "pinstripes_theme_osx");
-        } else if(LimeWireUtils.isPro()) {
+        } else if(FrostWireUtils.isPro()) {
             theme = PRO_THEME_FILE;
             dir = new File(THEME_DIR_FILE, "frostwirePro_theme");
         } else if(OSUtils.isNativeThemeWindows()) {

@@ -46,6 +46,6 @@ public class LimeJFrame extends JFrame {
 		super.addNotify();
 
 		// Replace the Swing icon with a prettier platform-specific one
-		SystemUtils.setWindowIcon(this, GUIConstants.LIMEWIRE_EXE_FILE);
+		SystemUtils.setWindowIcon(this, GUIConstants.FROSTWIRE_EXE_FILE);
 	}
 }

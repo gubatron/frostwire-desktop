@@ -253,7 +253,7 @@ final class GnutellaSearchResult extends AbstractSearchResult {
         }
 
         public void actionPerformed(ActionEvent e) {
-            p.blockHost();
+            p.blockHosts();
         }
     }
    
