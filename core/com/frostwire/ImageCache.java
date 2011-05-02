@@ -30,11 +30,9 @@ public class ImageCache {
     
     public BufferedImage getImage(URL url, OnLoadedListener listener) {
         if (isCached(url)) {
-        	BufferedImage result = loadFromCache(url);
-        	listener.onLoaded(url, result, true);
-            return result;
+        	return loadFromCache(url, listener);
         } else if (!url.getProtocol().equals("http")) {
-            return loadFromResource(url);
+            return loadFromResource(url, listener);
         } else {
             loadFromUrl(url, listener);
             return null;
@@ -76,21 +74,26 @@ public class ImageCache {
         return file.exists() && (now - file.lastModified()) < 2592000000L;
     }
     
-    private BufferedImage loadFromCache(URL url) {
+    private BufferedImage loadFromCache(URL url, OnLoadedListener listener) {
         try {
             File file = getCacheFile(url);
-            return ImageIO.read(file);
-        } catch (IOException e) {
+            BufferedImage image = ImageIO.read(file);
+            listener.onLoaded(url, image, true, false);
+            return image;
+        } catch (Exception e) {
+            listener.onLoaded(url, null, false, true);
             return null;
         }
     }
     
-    private BufferedImage loadFromResource(URL url) {
+    private BufferedImage loadFromResource(URL url, OnLoadedListener listener) {
         try {
             BufferedImage image = ImageIO.read(url);
             saveToCache(url, image, 0);
+            listener.onLoaded(url, image, false, false);
             return image;
-        } catch (IOException e) {
+        } catch (Exception e) {
+            listener.onLoaded(url, null, false, true);
             return null;
         }
     }
@@ -117,9 +120,10 @@ public class ImageCache {
                         saveToCache(url, image, date);
                     }
                     if (listener != null && image != null) {
-                        listener.onLoaded(url, image, false);
+                        listener.onLoaded(url, image, false, false);
                     }
                 } catch (Exception e) {
+                    listener.onLoaded(url, null, false, true);
                 	e.printStackTrace();
                 }
                 
@@ -146,6 +150,7 @@ public class ImageCache {
                 file.setLastModified(date);
             }
         } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -154,6 +159,6 @@ public class ImageCache {
         /**
     	 * This is called in the event that the image was downloaded and cached
     	 */
-        public void onLoaded(URL url, BufferedImage image, boolean fromCache);
+        public void onLoaded(URL url, BufferedImage image, boolean fromCache, boolean fail);
     }
 }

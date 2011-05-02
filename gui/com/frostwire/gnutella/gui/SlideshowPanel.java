@@ -69,7 +69,7 @@ public class SlideshowPanel extends JPanel {
             }    
         } catch (Exception e) {
             // nothing happens
-        	//e.printStackTrace();
+        	e.printStackTrace();
         }
     }
     
@@ -105,11 +105,19 @@ public class SlideshowPanel extends JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 try {
+                    
+                    if (_currentImage == null) {
+                        return;
+                    }
+                    
+                    int actualSlideIndex;
                 	if (_currentSlideIndex == -1 && _slides != null && _slides.size() > 0) {
-                		_currentSlideIndex = 0;
+                	    actualSlideIndex = 0;
+                	} else {
+                	    actualSlideIndex = _currentSlideIndex;
                 	}
 
-                    Slide slide = _slides.get(_currentSlideIndex);
+                    Slide slide = _slides.get(actualSlideIndex);
                     if (slide.url != null) {
                         GUIMediator.openURL(slide.url);
                     }
@@ -121,6 +129,7 @@ public class SlideshowPanel extends JPanel {
                         }
                     }
                 } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
             }
         });
@@ -138,12 +147,13 @@ public class SlideshowPanel extends JPanel {
         if (_slides.size() == 1) {
             try {
                 ImageCache.getInstance().getImage(new URL(_slides.get(0).imageSrc), new OnLoadedListener() {
-                    public void onLoaded(URL url, BufferedImage image, boolean fromCache) {
+                    public void onLoaded(URL url, BufferedImage image, boolean fromCache, boolean fail) {
                         _currentImage = image;
                         repaint();
                     }
                 });
             } catch (MalformedURLException e) {
+                e.printStackTrace();
             }
         } else {
             _timer = new Timer();
@@ -170,17 +180,21 @@ public class SlideshowPanel extends JPanel {
             } else {
                 _currentSlideIndex = 0;
             }
+            _loadingNextImage = true;
             try {
                 ImageCache.getInstance().getImage(new URL(_slides.get(_currentSlideIndex).imageSrc), new OnLoadedListener() {
-                    public void onLoaded(URL url, BufferedImage image, boolean fromCache) {
+                    public void onLoaded(URL url, BufferedImage image, boolean fromCache, boolean fail) {
                         _currentImage = image;
-                        _lastImage = _currentImage;
                         _loadingNextImage = false;
-                        repaint();
-                        _lastTimeSlideLoaded = System.currentTimeMillis();
+                        if (_currentImage != null) {
+                            _lastImage = _currentImage;
+                            _lastTimeSlideLoaded = System.currentTimeMillis();
+                            repaint();
+                        }
                     }
                 });
             } catch (MalformedURLException e) {
+                e.printStackTrace();
             }
         } else {
             slide = _slides.get(_currentSlideIndex);
@@ -196,26 +210,33 @@ public class SlideshowPanel extends JPanel {
             _loadingNextImage = true;
             try {
                 ImageCache.getInstance().getImage(new URL(slide.imageSrc), new OnLoadedListener() {
-                    public void onLoaded(URL url, BufferedImage image, boolean fromCache) {
+                    public void onLoaded(URL url, BufferedImage image, boolean fromCache, boolean fail) {
                         _currentImage = prepareImage(image);
                         if (_lastImage != null && _currentImage != null) {
                             _transition = new FadeSlideTransition(SlideshowPanel.this, _lastImage, _currentImage);
                             _transitionTime = _transition.getEstimatedDuration();
                             _transition.start();
                         }
-                        _lastImage = _currentImage;
                         _loadingNextImage = false;
-                        _lastTimeSlideLoaded = System.currentTimeMillis();
-                        repaint();
+                        if (_currentImage != null) {
+                            _lastImage = _currentImage;
+                            _lastTimeSlideLoaded = System.currentTimeMillis();
+                            repaint();
+                        }
                     }
                 });
             } catch (MalformedURLException e) {
+                e.printStackTrace();
             }
         }
     }
 
     
 	protected BufferedImage prepareImage(BufferedImage image) {
+	    if (image == null) {
+	        return null;
+	    }
+	    
         try {
             BufferedImage bImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
             Graphics2D g = null;
