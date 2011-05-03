@@ -574,11 +574,11 @@ public class BTDownloaderImpl extends AbstractCoreDownloader
 		torrentStopped(null);
 		//downloadManager.remove(this, true);
 		if (torrent instanceof ManagedTorrent) {
-		    ((ManagedTorrent) torrent).removeFromAzureus();
+		    ((ManagedTorrent) torrent).removeFromAzureusAndDisk();
 		} else if (torrent instanceof FinishedTorrentDownload) {
 		    Torrent temp = ((FinishedTorrentDownload) torrent).getInnerTorrent();
 		    if (temp != null && temp instanceof ManagedTorrent) {
-		        ((ManagedTorrent) temp).removeFromAzureus();
+		        ((ManagedTorrent) temp).removeFromAzureusAndDisk();
 		    }
 		}
 	}

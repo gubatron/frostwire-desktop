@@ -23,12 +23,14 @@ import com.limegroup.bittorrent.BTUploader;
 import com.limegroup.gnutella.PushEndpoint;
 import com.limegroup.gnutella.UploadServicesImpl;
 import com.limegroup.gnutella.Uploader;
+import com.limegroup.gnutella.Downloader.DownloadStatus;
 import com.limegroup.gnutella.downloader.CoreDownloaderFactory;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
+import com.limegroup.gnutella.gui.download.DownloadMediator;
 import com.limegroup.gnutella.gui.search.SearchMediator;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
@@ -337,6 +339,27 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 		    UploadDataLine udl = DATA_MODEL.get(uploader);
 		    if (udl != null) udl.setEndTime( System.currentTimeMillis() );
 	    }
+    }
+    
+    // another hack for torrents, needs a refactor in the future
+    public void remove(BTDownloaderImpl downloader) {
+        try {
+            int count = DATA_MODEL.getRowCount();
+            for (int i = 0; i < count; i++) {
+                UploadDataLine line = DATA_MODEL.get(i);
+
+                if (line.getInitializeObject() instanceof BTUploader) {
+                    BTUploader uploader = (BTUploader) line.getInitializeObject();
+
+                    if (downloader.equals(uploader.getBTDownloader())) {
+                        DATA_MODEL.forceRemoveUploader(i);
+                        break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

@@ -7,8 +7,10 @@ import com.limegroup.bittorrent.TorrentEvent.Type;
 import com.limegroup.bittorrent.gui.TorrentFileFetcher;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.Downloader.DownloadStatus;
+import com.limegroup.gnutella.Uploader;
 import com.limegroup.gnutella.downloader.CoreDownloader;
 import com.limegroup.gnutella.gui.tables.BasicDataLineModel;
+import com.limegroup.gnutella.gui.upload.UploadMediator;
 
 /**
  * This class provides access to the <tt>ArrayList</tt> that stores all of the
@@ -126,6 +128,7 @@ final class DownloadModel extends BasicDataLineModel<DownloadDataLine, Downloade
         
         if (downloader != null && downloader instanceof BTDownloaderImpl) {
             ((BTDownloaderImpl) downloader).removeFromDownloadManager();
+            UploadMediator.instance().remove((BTDownloaderImpl) downloader);
         }
 
         super.remove(i);

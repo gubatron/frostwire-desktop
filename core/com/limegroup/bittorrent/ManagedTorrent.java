@@ -1475,11 +1475,19 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
         }
 	}
 
-    public void removeFromAzureus() {
+    public void removeFromAzureusAndDisk() {
         if (_manager != null && _manager.getGlobalManager() != null) {
             try {
                 _manager.getGlobalManager().removeDownloadManager(_manager);
             } catch (GlobalManagerDownloadRemovalVetoException e) {
+                e.printStackTrace();
+            }
+            
+            // in the future, we must use a better state machine to avoid this hacks
+            try {
+                File file = _manager.getAbsoluteSaveLocation();
+                file.delete();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
