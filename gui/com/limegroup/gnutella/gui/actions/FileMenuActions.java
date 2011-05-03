@@ -108,7 +108,7 @@ public class FileMenuActions {
         private AutoCompleteTextField PATH_FIELD = new ClearableAutoCompleteTextField(34);
 
         public OpenMagnetTorrentAction() {
-            super(I18n.tr("&Download .Torrent or Magnet"));
+            super(I18n.tr("O&pen .Torrent or Magnet"));
             putValue(Action.LONG_DESCRIPTION, I18n.tr("Opens a magnet link or torrent file"));
         }
 
