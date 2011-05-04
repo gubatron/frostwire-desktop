@@ -16,6 +16,7 @@ import javax.swing.event.ChangeListener;
 
 import org.limewire.i18n.I18nMarker;
 
+import com.frostwire.GuiFrostWireUtils;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
@@ -88,14 +89,7 @@ public class ShareSpeciallyPaneItem extends AbstractPaneItem {
 		SharingSettings.SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES.
 			setValue(CHECK_BOX.isSelected());
 		
-		if (!SharingSettings.SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES.getValue()) {
-		    File[] files = SharingSettings.getSaveDirectory().listFiles();
-		    if (files != null) {
-		        for (File f : files) {
-		            GuiCoreMediator.getFileManager().removeFileIfShared(f);
-		        }
-		    }
-		}
+		GuiFrostWireUtils.correctIndividuallySharedFiles();
 		
         return false;
 	}

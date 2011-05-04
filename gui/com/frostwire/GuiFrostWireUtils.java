@@ -16,6 +16,7 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.bittorrent.BTMetaInfo;
+import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.settings.SharingSettings;
@@ -178,5 +179,26 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
 		} catch (Exception e) {
 			GUIMediator.launchFile(file);
 		}
+	}
+	
+	public static void correctIndividuallySharedFiles() {
+	    correctIndividuallySharedFiles(SharingSettings.getSaveDirectory());
+	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getDocumentMediaType()).getValue());
+	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getProgramMediaType()).getValue());
+	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getAudioMediaType()).getValue());
+	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getVideoMediaType()).getValue());
+	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getImageMediaType()).getValue());
+	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getTorrentMediaType()).getValue());
+	}
+	
+	private static void correctIndividuallySharedFiles(File directory) {
+	    if (!SharingSettings.SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES.getValue()) {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File f : files) {
+                    GuiCoreMediator.getFileManager().removeFileIfShared(f);
+                }
+            }
+        }
 	}
 }
