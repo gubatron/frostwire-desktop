@@ -3,6 +3,9 @@ package com.limegroup.gnutella.settings;
 import org.limewire.setting.BooleanSetting;
 import org.limewire.setting.IntSetting;
 import org.limewire.setting.SettingsFactory;
+import org.limewire.setting.StringSetting;
+
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * Handles installation preferences.
@@ -70,4 +73,7 @@ public final class InstallSettings extends LimeWireSettings {
     /** Whether the association option has been asked */
     public static final BooleanSetting EXTENSION_OPTION =
         FACTORY.createBooleanSetting("EXTENSION_OPTION", false);
+    
+    public static final StringSetting FIRST_INSTALL_FROSTWIRE_VERSION =
+        FACTORY.createStringSetting("FIRST_INSTALL_FROSTWIRE_VERSION", "");
 }

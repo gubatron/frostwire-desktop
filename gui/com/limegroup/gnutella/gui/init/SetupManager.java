@@ -26,6 +26,7 @@ import javax.swing.JPanel;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.setting.FileSetting;
 import org.limewire.setting.SettingsGroupManager;
+import org.limewire.setting.StringSetting;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
@@ -42,6 +43,7 @@ import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.InstallSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * This class manages the setup wizard.  It constructs all of the primary
@@ -127,6 +129,10 @@ public class SetupManager {
             File oldDefaultDir = new File(CommonUtils.getUserHomeDir(), "Shared");
             if(!saveSetting.getValue().exists() && oldDefaultDir.exists())
                 return SaveStatus.MIGRATE;
+        }
+        
+        if (InstallSettings.FIRST_INSTALL_FROSTWIRE_VERSION.isDefault()) {
+            return SaveStatus.NEEDS;
         }
         
         return SaveStatus.NO;
@@ -374,6 +380,8 @@ public class SetupManager {
         if (OSUtils.isWindows())
             InstallSettings.FIREWALL_WARNING.setValue(true);
         InstallSettings.ASSOCIATION_OPTION.setValue(LimeAssociations.CURRENT_ASSOCIATIONS);
+        
+        InstallSettings.FIRST_INSTALL_FROSTWIRE_VERSION.setValue(FrostWireUtils.getFrostWireVersion());
 		
         Future<Void> future = BackgroundExecutorService.submit(new Callable<Void>() {
      		public Void call() {
