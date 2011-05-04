@@ -39,6 +39,7 @@ import com.limegroup.bittorrent.handshaking.BTConnectionFetcherFactory;
 import com.limegroup.bittorrent.settings.BittorrentSettings;
 import com.limegroup.bittorrent.tracking.TrackerManagerFactory;
 import com.limegroup.gnutella.FileManager;
+import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.auth.ContentManager;
@@ -331,8 +332,10 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 		
 		int MAX_TRIES = 20;
 		do {
-			if (!SharingSettings.DEFAULT_SAVE_DIR.exists()) {
-				SharingSettings.DEFAULT_SAVE_DIR.mkdirs();
+		    
+		    File saveDir = SharingSettings.getFileSettingForMediaType(MediaType.getTorrentMediaType()).getValue();
+			if (!saveDir.exists()) {
+			    saveDir.mkdirs();
 			}
 			
 			TOTorrent torrent = TorrentUtils.readFromFile(_torrentFile, false);
@@ -340,7 +343,7 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 			if ((_manager = _azureusCore.getGlobalManager().getDownloadManager(torrent)) == null) {			
 			    _manager = _azureusCore.getGlobalManager().addDownloadManager(
 			            _torrentFile.getCanonicalPath(),
-			            SharingSettings.DEFAULT_SAVE_DIR.getCanonicalPath());
+			            saveDir.getCanonicalPath());
 			}
 			
 			LOG.debug("createdAzureusDownloadManger - Azureus Save Location is:\n>> " + _manager.getSaveLocation().getCanonicalPath());
@@ -1441,7 +1444,7 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 	}
 	
 	public void createTorrentFile() {
-		_torrentFile = _info.createFileFromRawBytes(SharingSettings.DEFAULT_SAVE_DIR + File.separator + _info.getName() + ".torrent");
+		_torrentFile = _info.createFileFromRawBytes(SharingSettings.getFileSettingForMediaType(MediaType.getTorrentMediaType()).getValueAsString() + File.separator + _info.getName() + ".torrent");
 	}
 	
 	public void setSaveFile(File saveDirectory, String filename) {
