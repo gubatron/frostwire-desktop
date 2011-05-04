@@ -464,7 +464,7 @@ public class UpdateHandlerImpl implements UpdateHandler {
         if (updateInfo != null && updateInfo.getUpdateURN() != null) {
             prepareUpdateCommand(updateInfo);
             updatesToDownload = new LinkedList<DownloadInformation>(updatesToDownload);
-            updatesToDownload.add(0,updateInfo);
+            //updatesToDownload.add(0,updateInfo);
         }
 
         _updateInfo = updateInfo;
