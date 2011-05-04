@@ -279,7 +279,7 @@ public class SharingSettings extends LimeProps {
      * Whether or not to auto-share files when using 'Download As'.
      */
 	public static final BooleanSetting SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES =
-		FACTORY.createBooleanSetting("SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES", true);
+		FACTORY.createBooleanSetting("SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES", false);
     
     /**
      * Whether or not to auto-share .torrent files.
@@ -422,7 +422,7 @@ public class SharingSettings extends LimeProps {
      * Setting for whether or not to allow partial files to be shared.
      */
     public static final BooleanSetting ALLOW_PARTIAL_SHARING =
-        FACTORY.createBooleanSetting("ALLOW_PARTIAL_SHARING", true);
+        FACTORY.createBooleanSetting("ALLOW_PARTIAL_SHARING", false);
     
     /**
      * Remote switch to turn off partial results.

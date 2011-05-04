@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 
 import org.limewire.util.FileUtils;
 
+import com.frostwire.GuiFrostWireUtils;
 import com.limegroup.gnutella.FileManager;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -141,6 +142,9 @@ public final class SharedDirPaneItem extends AbstractPaneItem {
 
 //	    // the actual applying of shared folders is done in OptionsPaneManager,
 	    // since it needs to be _after_ everything else is done.
+	    
+	    GuiFrostWireUtils.verifySharedTorrentFolderCorrecteness();
+	    
         return false;
 	}
 	

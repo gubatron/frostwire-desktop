@@ -46,6 +46,7 @@ import org.limewire.util.I18NConvert;
 import org.limewire.util.RPNParser;
 import org.limewire.util.StringUtils;
 
+import com.frostwire.GuiFrostWireUtils;
 import com.google.inject.Inject;
 import com.limegroup.gnutella.FileManagerEvent.Type;
 import com.limegroup.gnutella.auth.ContentResponseData;
@@ -838,6 +839,10 @@ public abstract class FileManagerImpl implements FileManager {
     
     private void updateSharedDirectories(File directory, File parent, int revision) {
         updateSharedDirectories(directory, directory, parent, revision, 1);
+        
+        if (directory.equals(SharingSettings.DEFAULT_SHARED_TORRENTS_DIR)) {
+            GuiFrostWireUtils.verifySharedTorrentFolderCorrecteness();
+        }
     }
     
     /**

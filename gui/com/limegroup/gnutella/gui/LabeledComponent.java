@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 
 import javax.swing.Box;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 
 /**
@@ -262,7 +263,7 @@ public final class LabeledComponent {
 	 * @return the <tt>Component</tt> that contains the <tt>JLabel</tt> 
 	 *         and the <tt>Component</tt> next to it
 	 */
-	public Component getComponent() {
+	public JComponent getComponent() {
 		return PANEL;
 	}
 	

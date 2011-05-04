@@ -365,11 +365,11 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         FRAME.addWindowListener(pm);
         GUIMediator.addRefreshListener(pm);
         
-        GuiCoreMediator.getCoreBackgroundExecutor().execute(new Runnable() {
-        	public void run() {
-        		GuiFrostWireUtils.verifySharedTorrentFolderCorrecteness();
-        	}
-        });
+        //GuiCoreMediator.getCoreBackgroundExecutor().execute(new Runnable() {
+        //	public void run() {
+        //		GuiFrostWireUtils.verifySharedTorrentFolderCorrecteness();
+        //	}
+        //});
     }
     
     /** Saves the state of the Window to settings. */

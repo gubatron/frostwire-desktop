@@ -1,9 +1,13 @@
 package com.limegroup.gnutella.gui.init;
 
+import java.awt.Component;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,26 +16,30 @@ import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.limewire.i18n.I18nMarker;
-import org.limewire.util.StringUtils;
 import org.limewire.util.CommonUtils;
-//import org.limewire.util.OSUtils;
+import org.limewire.util.StringUtils;
 
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.gui.SaveDirectoryHandler;
 import com.limegroup.gnutella.gui.actions.RemoveSharedDirectoryAction;
 import com.limegroup.gnutella.gui.actions.SelectSharedDirectoryAction;
 import com.limegroup.gnutella.gui.library.RecursiveSharingPanel;
 import com.limegroup.gnutella.settings.SharingSettings;
-import com.limegroup.gnutella.util.FrostWireUtils;
 /**
  * This class displays a setup window for allowing the user to choose
  * the directory for saving their files.
@@ -54,6 +62,11 @@ class SaveWindow extends SetupWindow {
 	private String _defaultSaveDir;
 
     private final RecursiveSharingPanel recursiveSharingPanel;
+    
+    // change for sharing files in saved folder
+    private final JCheckBox CHECK_BOX = new JCheckBox();
+    private final String CHECK_BOX_LABEL = I18nMarker.marktr("Share Finished Downloads:");
+    private final JLabel explanationLabel = new JLabel();
 
 	/**
 	 * Creates the window and its components
@@ -70,6 +83,7 @@ class SaveWindow extends SetupWindow {
         recursiveSharingPanel.getTree().setShowsRootHandles(true);
         recursiveSharingPanel.setRoots(SharingSettings.DIRECTORIES_TO_SHARE.getValueAsArray());
         recursiveSharingPanel.addRoot(SharingSettings.DEFAULT_SHARE_DIR);
+        recursiveSharingPanel.addRoot(SharingSettings.DEFAULT_SHARED_TORRENTS_DIR);
         recursiveSharingPanel.setFoldersToExclude(GuiCoreMediator.getFileManager().getFolderNotToShare());
         recursiveSharingPanel.setRootsExpanded();
     }
@@ -108,6 +122,12 @@ class SaveWindow extends SetupWindow {
 		gbc.insets = new Insets(0, 0, ButtonRow.BUTTON_SEP, 0);
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		mainPanel.add(SAVE_FIELD, gbc);
+		
+		gbc = new GridBagConstraints();
+		gbc.anchor = GridBagConstraints.NORTHWEST;
+		gbc.gridwidth = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        mainPanel.add(createOptionForShareInSavedFolderComponent(), gbc);
 		
 		// "Save Folder" buttons "User Default", "Browse..."
 		gbc = new GridBagConstraints();
@@ -211,7 +231,46 @@ class SaveWindow extends SetupWindow {
         if (!errors.isEmpty()) {
             throw new ApplySettingsException(StringUtils.explode(errors, "\n\n"));
         }
+        
+        SharingSettings.SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES.
+            setValue(CHECK_BOX.isSelected());
 	}
+	
+    private Component createOptionForShareInSavedFolderComponent() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+
+        LabeledComponent comp = new LabeledComponent(CHECK_BOX_LABEL, CHECK_BOX, LabeledComponent.NO_GLUE, LabeledComponent.LEFT);
+
+        explanationLabel.setFont(explanationLabel.getFont().deriveFont(Math.max(explanationLabel.getFont().getSize() - 2.0f, 9.0f)).deriveFont(Font.PLAIN));
+        CHECK_BOX.addItemListener(new ItemListener() {
+           public void itemStateChanged(ItemEvent e) {
+                setExplanationText(true);
+            }
+        });
+        setExplanationText(false);
+
+        CHECK_BOX.setSelected(SharingSettings.SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES.getValue());
+
+        comp.getComponent().setAlignmentX(Component.LEFT_ALIGNMENT);
+        explanationLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        panel.add(comp.getComponent());
+        panel.add(explanationLabel);
+
+        return panel;
+    }
+    
+    private void setExplanationText(boolean showMessage) {
+        if (CHECK_BOX.isSelected()) {
+            explanationLabel.setText(I18n.tr("All downloads will be shared. INDIVIDUAL FILE NOTICE (FORGOT PREVIOUS FILES)"));
+            if (showMessage) {
+                JOptionPane.showMessageDialog(this, "Clear and Prominent message about how individual files are shared");
+            }
+        } else {
+            explanationLabel.setText(I18n.tr("Only downloads in shared folders will be shared. INDIVIDUAL FILE NOTICE"));
+        }
+    }
 
 	private class DefaultAction extends AbstractAction {
 		

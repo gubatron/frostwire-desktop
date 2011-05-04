@@ -76,8 +76,8 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
 		canShareTorrentMetaFiles();
 
 		if (SharingSettings.SHARE_TORRENT_META_FILES.getValue()) {
-			GuiCoreMediator.getFileManager().addSharedFolder(
-					SharingSettings.DEFAULT_SHARED_TORRENTS_DIR);
+			//GuiCoreMediator.getFileManager().addSharedFolder(
+			//		SharingSettings.DEFAULT_SHARED_TORRENTS_DIR);
 		}
 
 		// share/unshare all torrents inside
@@ -85,7 +85,8 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
 				.listFiles();
 		if (torrents != null && torrents.length > 0) {
 			for (File t : torrents) {
-				if (SharingSettings.SHARE_TORRENT_META_FILES.getValue())
+				if (SharingSettings.SHARE_TORRENT_META_FILES.getValue() &&
+				    GuiCoreMediator.getFileManager().isFolderShared(SharingSettings.DEFAULT_SHARED_TORRENTS_DIR))
 					GuiCoreMediator.getFileManager().addFileAlways(t);
 				else
 					GuiCoreMediator.getFileManager().stopSharingFile(t);
