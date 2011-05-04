@@ -38,6 +38,7 @@ import org.limewire.inspection.InspectableContainer;
 import org.limewire.inspection.InspectableForSize;
 import org.limewire.inspection.InspectablePrimitive;
 import org.limewire.inspection.InspectionPoint;
+import org.limewire.setting.FileSetSetting;
 import org.limewire.setting.StringArraySetting;
 import org.limewire.statistic.StatsUtils;
 import org.limewire.util.ByteOrder;
@@ -843,6 +844,27 @@ public abstract class FileManagerImpl implements FileManager {
         if (directory.equals(SharingSettings.DEFAULT_SHARED_TORRENTS_DIR)) {
             GuiFrostWireUtils.verifySharedTorrentFolderCorrecteness();
         }
+        if (directory.equals(SharingSettings.getSaveDirectory())) {
+            GuiFrostWireUtils.correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getDocumentMediaType()).getValue());
+        }
+        if (directory.equals(SharingSettings.getFileSettingForMediaType(MediaType.getDocumentMediaType()).getValue())) {
+            GuiFrostWireUtils.correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getDocumentMediaType()).getValue());
+        }
+        if (directory.equals(SharingSettings.getFileSettingForMediaType(MediaType.getProgramMediaType()).getValue())) {
+            GuiFrostWireUtils.correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getProgramMediaType()).getValue());
+        }
+        if (directory.equals(SharingSettings.getFileSettingForMediaType(MediaType.getAudioMediaType()).getValue())) {
+            GuiFrostWireUtils.correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getAudioMediaType()).getValue());
+        }
+        if (directory.equals(SharingSettings.getFileSettingForMediaType(MediaType.getVideoMediaType()).getValue())) {
+            GuiFrostWireUtils.correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getVideoMediaType()).getValue());
+        }
+        if (directory.equals(SharingSettings.getFileSettingForMediaType(MediaType.getImageMediaType()).getValue())) {
+            GuiFrostWireUtils.correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getImageMediaType()).getValue());
+        }
+        if (directory.equals(SharingSettings.getFileSettingForMediaType(MediaType.getTorrentMediaType()).getValue())) {
+            GuiFrostWireUtils.correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getTorrentMediaType()).getValue());
+        }
     }
     
     /**
@@ -1500,6 +1522,11 @@ public abstract class FileManagerImpl implements FileManager {
                                                String name,
                                                long size,
                                                VerifyingFile vf) {
+        
+        if (!SharingSettings.ALLOW_PARTIAL_SHARING.getValue()) {
+            return;
+        }
+        
         try {
             incompleteFile = FileUtils.getCanonicalFile(incompleteFile);
         } catch(IOException ioe) {

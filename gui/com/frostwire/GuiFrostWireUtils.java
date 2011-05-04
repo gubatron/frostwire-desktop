@@ -191,7 +191,7 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
 	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getTorrentMediaType()).getValue());
 	}
 	
-	private static void correctIndividuallySharedFiles(File directory) {
+	public static void correctIndividuallySharedFiles(File directory) {
 	    if (!SharingSettings.SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES.getValue()) {
             File[] files = directory.listFiles();
             if (files != null) {
