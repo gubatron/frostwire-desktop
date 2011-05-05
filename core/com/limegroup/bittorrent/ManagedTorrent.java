@@ -1445,7 +1445,7 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 	}
 	
 	public void createTorrentFile() {
-		_torrentFile = _info.createFileFromRawBytes(SharingSettings.getFileSettingForMediaType(MediaType.getTorrentMediaType()).getValueAsString() + File.separator + _info.getName() + ".torrent");
+		_torrentFile = _info.createFileFromRawBytes(SharingSettings.DEFAULT_SHARED_TORRENTS_DIR.getAbsolutePath() + File.separator + _info.getName() + ".torrent");
 	}
 	
 	public void setSaveFile(File saveDirectory, String filename) {

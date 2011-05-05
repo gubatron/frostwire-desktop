@@ -11,6 +11,7 @@ frostwire (4.21.6) stable; urgency=high
   * Policy update, Finished downloads are not shared by default to
     avoid confusion between files on Shared folder versus files
     on Save folder.
+  * Policy update, .torrent files are not shared by default.
   * UX improvement, better explanation and option to turn on/off
     individual sharing of finished downloads (that end up in Saved
     Folder) during FrostWire setup wizard.
@@ -21,7 +22,11 @@ frostwire (4.21.6) stable; urgency=high
   * UX improvement, File menu now says "Open Torrent/Magnet" instead
     of "Download Torrent/Magnet" for clarity.
   * Bug Fix: The Torrent Save folder is now considered correctly,
-    now users can set a Torrent Save folder on external drives.    
+    now users can set a Torrent Save folder on external drives.
+  * Bug Fix: Slideshow component had an issue where it would not update
+    correctly the URL of the currently displayed slice if it had issues
+    fetching the image file, this could in turn sometimes cause 100% CPU
+    utilization.    
 	
  -- FrostWire Team <contact@frostwire.com>  Thu, 5 May 2011 11:03:14 -0500
 

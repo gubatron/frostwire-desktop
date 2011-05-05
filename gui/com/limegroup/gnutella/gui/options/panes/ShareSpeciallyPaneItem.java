@@ -4,24 +4,19 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import org.limewire.i18n.I18nMarker;
 
 import com.frostwire.GuiFrostWireUtils;
-import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.settings.SharingSettings;
-import com.limegroup.gnutella.util.FrostWireUtils;
 
 public class ShareSpeciallyPaneItem extends AbstractPaneItem {
 
@@ -46,7 +41,7 @@ public class ShareSpeciallyPaneItem extends AbstractPaneItem {
 	 * to send OOB searches.
 	 */
 	private final JCheckBox CHECK_BOX = new JCheckBox();
-
+	
 	public ShareSpeciallyPaneItem() {
 	    super(TITLE, LABEL);
 	    
@@ -90,6 +85,10 @@ public class ShareSpeciallyPaneItem extends AbstractPaneItem {
 	}
 
 	public boolean applyOptions() throws IOException {
+		if (!isDirty()) {
+			return false;
+		}
+		
 		SharingSettings.SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES.
 			setValue(CHECK_BOX.isSelected());
 		

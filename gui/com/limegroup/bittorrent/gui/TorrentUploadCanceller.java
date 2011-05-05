@@ -1,13 +1,9 @@
 package com.limegroup.bittorrent.gui;
 
-import com.limegroup.bittorrent.ManagedTorrent;
 import com.limegroup.bittorrent.Torrent;
 import com.limegroup.bittorrent.TorrentEvent;
 import com.limegroup.bittorrent.TorrentEventListener;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.DialogOption;
-import com.limegroup.gnutella.settings.QuestionsHandler;
 import com.limegroup.gnutella.util.EventDispatcher;
 
 public class TorrentUploadCanceller implements TorrentEventListener {
@@ -31,7 +27,9 @@ public class TorrentUploadCanceller implements TorrentEventListener {
 		Torrent t = evt.getTorrent();
         if (!t.isActive())
             return;
-		boolean approve = true;
+		//boolean approve = true;
+		
+		/*
 		if (!t.isComplete()) {
 			approve = GUIMediator.showYesNoMessage(I18n.tr("If you stop this upload, the torrent download will stop. Are you sure you want to do this?"), 
 					QuestionsHandler.TORRENT_STOP_UPLOAD, DialogOption.NO) == DialogOption.YES;
@@ -39,9 +37,12 @@ public class TorrentUploadCanceller implements TorrentEventListener {
 			approve = GUIMediator.showYesNoMessage(I18n.tr("This upload is a torrent and it hasn\'t seeded enough. You should let it upload some more. Are you sure you want to stop it?"), 
 					QuestionsHandler.TORRENT_SEED_MORE, DialogOption.NO) == DialogOption.YES;
 		}
+		*/
 		
-		if (approve && t.isActive())
-			dispatcher.dispatchEvent(new TorrentEvent(this,TorrentEvent.Type.STOP_APPROVED, t));
+		//if (approve && t.isActive())
+		dispatcher.dispatchEvent(new TorrentEvent(this,TorrentEvent.Type.STOP_APPROVED, t));
+		
+		GUIMediator.instance().refreshGUI();
 	}
 
 }
