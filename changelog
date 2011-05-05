@@ -17,6 +17,9 @@ frostwire (4.21.6) stable; urgency=high
   * UX improvement, when user turns off Finished Download sharing
     those files that were shared as individual files inside
     the 'Saved Folder' will not be shared anymore.
+  * UX improvement, File menu now has option to Exit FrostWire completely.
+  * UX improvement, File menu now says "Open Torrent/Magnet" instead
+    of "Download Torrent/Magnet" for clarity.
   * Bug Fix: The Torrent Save folder is now considered correctly,
     now users can set a Torrent Save folder on external drives.    
 	
