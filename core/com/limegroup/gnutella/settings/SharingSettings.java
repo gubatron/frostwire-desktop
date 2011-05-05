@@ -56,7 +56,7 @@ public class SharingSettings extends LimeProps {
      * The folder value where Torrent Data will be saved. This folder CANNOT BE SHARED
      * to avoid sharing inconsistencies. 
      */
-    public static final FileSetting DEFAULT_TORRENT_DATA_DIR_SETTING = 
+    public static final FileSetting TORRENT_DATA_DIR_SETTING = 
     	FACTORY.createFileSetting("DEFAULT_TORRENT_DATA_DIR_SETTING", 
     			DEFAULT_TORRENT_DATA_DIR).setAlwaysSave(true);
     
@@ -225,8 +225,9 @@ public class SharingSettings extends LimeProps {
         Set<File> set = new HashSet<File>(7);  
         set.add(getSaveDirectory());  
         synchronized(downloadDirsByDescription) {  
-            for(FileSetting next : downloadDirsByDescription.values()) 
+            for(FileSetting next : downloadDirsByDescription.values())  {
                 set.add(next.getValue());
+            }
         }  
         return set;  
     }

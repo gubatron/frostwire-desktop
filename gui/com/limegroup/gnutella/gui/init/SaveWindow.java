@@ -70,6 +70,8 @@ class SaveWindow extends SetupWindow {
     private final String CHECK_BOX_LABEL = I18nMarker.marktr("Share Finished Downloads");
     private final JLabel explanationLabel = new JLabel();
 
+	private TorrentSaveFolderComponent torrentSaveFolderComponent;
+
 	/**
 	 * Creates the window and its components
 	 */
@@ -146,13 +148,14 @@ class SaveWindow extends SetupWindow {
 		mainPanel.add(saveFolderPanel, gbc);
 		
         // "Saved Torrent Data" container
+		torrentSaveFolderComponent = new TorrentSaveFolderComponent(true);
         gbc = new GridBagConstraints();
         gbc.anchor = GridBagConstraints.NORTHWEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.weightx = 1;
         gbc.weighty = 1;
-        mainPanel.add(new TorrentSaveFolderComponent(),gbc);        
+        mainPanel.add(torrentSaveFolderComponent,gbc);        
 
         
         // "Shared Folders" panel
@@ -236,9 +239,15 @@ class SaveWindow extends SetupWindow {
                 }
             }
         }
+
+        
         
         if(loadCoreComponents)
             GuiCoreMediator.getFileManager().loadWithNewDirectories(roots, recursiveSharingPanel.getFoldersToExclude());
+        
+        if (!torrentSaveFolderComponent.isTorrentSaveFolderPathValid()) {
+        	errors.add(torrentSaveFolderComponent.getError());
+        }
         
         if (!errors.isEmpty()) {
             throw new ApplySettingsException(StringUtils.explode(errors, "\n\n"));
@@ -246,6 +255,10 @@ class SaveWindow extends SetupWindow {
         
         SharingSettings.SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES.
             setValue(CHECK_BOX.isSelected());
+        
+        SharingSettings.TORRENT_DATA_DIR_SETTING.setValue(new File(torrentSaveFolderComponent.getTorrentSaveFolderPath()));
+        SharingSettings.SEED_FINISHED_TORRENTS.setValue(torrentSaveFolderComponent.isSeedingSelected());
+        
 	}
 	
     private Component createOptionForShareInSavedFolderComponent() {

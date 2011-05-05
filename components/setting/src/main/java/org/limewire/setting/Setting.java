@@ -69,5 +69,4 @@ public interface Setting {
 
     /**  Returns the value as stored in the properties file.    */
     public String getValueAsString();
-
 }

@@ -97,6 +97,7 @@ import com.limegroup.gnutella.gui.options.panes.StatusBarBandwidthPaneItem;
 import com.limegroup.gnutella.gui.options.panes.StatusBarConnectionQualityPaneItem;
 import com.limegroup.gnutella.gui.options.panes.StatusBarFirewallPaneItem;
 import com.limegroup.gnutella.gui.options.panes.StatusBarSharedFilesPaneItem;
+import com.limegroup.gnutella.gui.options.panes.TorrentSaveFolderPaneItem;
 import com.limegroup.gnutella.gui.options.panes.TrayIconDisplayPaneItem;
 import com.limegroup.gnutella.gui.options.panes.UploadBandwidthPaneItem;
 import com.limegroup.gnutella.gui.options.panes.VideoPlayerPaneItem;
@@ -212,6 +213,14 @@ public final class OptionsConstructor {
 		DIALOG.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		GUIUtils.addHideAction((JComponent)DIALOG.getContentPane());
 
+		if (UISettings.UI_OPTIONS_DIALOG_HEIGHT.getValue() < UISettings.UI_OPTIONS_DIALOG_HEIGHT.getDefaultValue()) {
+			UISettings.UI_OPTIONS_DIALOG_HEIGHT.revertToDefault();
+		}
+		
+		if (UISettings.UI_OPTIONS_DIALOG_WIDTH.getValue() < UISettings.UI_OPTIONS_DIALOG_WIDTH.getDefaultValue()) {
+			UISettings.UI_OPTIONS_DIALOG_WIDTH.revertToDefault();
+		}
+		
 		DialogSizeSettingUpdater.install(DIALOG, UISettings.UI_OPTIONS_DIALOG_WIDTH,
 		        UISettings.UI_OPTIONS_DIALOG_HEIGHT);
 
@@ -314,7 +323,7 @@ public final class OptionsConstructor {
     private OptionsTreeNode initializePanels() {
         // for saving gnutella
         addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, SAVE_KEY, I18n.tr("Saving"));
-		OptionsTreeNode node = addOption(SAVE_KEY, SAVE_BASIC_KEY, I18n.tr("Basic"), SaveDirPaneItem.class, PurgeIncompletePaneItem.class);
+		OptionsTreeNode node = addOption(SAVE_KEY, SAVE_BASIC_KEY, I18n.tr("Basic"), SaveDirPaneItem.class, TorrentSaveFolderPaneItem.class, PurgeIncompletePaneItem.class);
 		addOption(SAVE_KEY, SAVE_ADVANCED_KEY, I18n.tr("Advanced"), DefaultActionPaneItem.class);
 
         // for sharing gnutella

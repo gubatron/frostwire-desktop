@@ -29,17 +29,20 @@ import com.limegroup.gnutella.settings.SharingSettings;
 
 public class TorrentSaveFolderComponent extends JPanel {
 
+	private static final long serialVersionUID = -6564593945827058369L;
 	private JTextField folderTextField;
     private final JCheckBox CHECK_BOX = new JCheckBox();
     private final String CHECK_BOX_LABEL = I18nMarker.marktr("Seed Finished Torrent Downloads");
     private final JLabel explanationLabel = new JLabel();
 
 	
-	public TorrentSaveFolderComponent() {
-		folderTextField = new JTextField(SharingSettings.DEFAULT_TORRENT_DATA_DIR_SETTING.getValueAsString());
+	public TorrentSaveFolderComponent(boolean border) {
+		folderTextField = new JTextField(SharingSettings.TORRENT_DATA_DIR_SETTING.getValueAsString());
 		
 		setLayout(new GridBagLayout());
-		setBorder(BorderFactory.createTitledBorder(I18n.tr("Torrent Data Save Folder")));
+		if (border) {
+			setBorder(BorderFactory.createTitledBorder(I18n.tr("Torrent Data Save Folder")));
+		}
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		
@@ -49,7 +52,7 @@ public class TorrentSaveFolderComponent extends JPanel {
 		gbc.insets = new Insets(0, 0, ButtonRow.BUTTON_SEP, 0);
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		add(folderTextField, gbc);
-		
+
 		gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.gridwidth = 1;
@@ -64,6 +67,21 @@ public class TorrentSaveFolderComponent extends JPanel {
 		add(new ButtonRow(new Action[] { new DefaultAction(), new BrowseAction() },
 				ButtonRow.X_AXIS, ButtonRow.LEFT_GLUE), gbc);
 
+	}
+	
+	public String getTorrentSaveFolderPath() {
+		return folderTextField.getText();
+	}
+	
+	public boolean isSeedingSelected() {
+		return CHECK_BOX.isSelected();
+	}
+	
+	public boolean isTorrentSaveFolderPathValid() {
+		//TODO: Validate Torrent Data Save Path
+		//has to be non empty, writeable, must be a folder, and must not be Saved, Shared, or inside any of them.
+		String path = folderTextField.getText();
+		return true;
 	}
 	
 	private Component createSeedingOptionsComponents() {
@@ -95,7 +113,7 @@ public class TorrentSaveFolderComponent extends JPanel {
         if (CHECK_BOX.isSelected()) {
             explanationLabel.setText(I18n.tr("Finished torrents will be seeded with other peers on the BitTorrent Network"));
         } else {
-            explanationLabel.setText(I18n.tr("Finished torrents will not be seeded (Leeching). However you will have to share during a torrent download."));
+            explanationLabel.setText(I18n.tr("Finished torrents will not be seeded (Leeching).\nHowever you will have to share during a torrent download."));
         }
     }
 	
@@ -125,4 +143,9 @@ public class TorrentSaveFolderComponent extends JPanel {
 			folderTextField.setText(saveDir.getAbsolutePath());
         }
     }
+
+	public String getError() {
+		//TODO:
+		return null;
+	}
 }

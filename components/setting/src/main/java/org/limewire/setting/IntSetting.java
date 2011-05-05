@@ -67,4 +67,15 @@ public final class IntSetting extends AbstractNumberSetting<Integer> {
     protected Comparable<Integer> convertToComparable(String value) {
         return new Integer(value);
     }
+    
+    @Override
+    public Integer getDefaultValue() {
+    	Object valueObj = super.getDefaultValue();
+    	
+        try {
+            return Integer.parseInt(valueObj.toString().trim());
+        } catch (Exception e) {
+        	return null;
+        }
+    }
 }

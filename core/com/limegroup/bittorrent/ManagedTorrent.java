@@ -333,7 +333,7 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 		int MAX_TRIES = 20;
 		do {
 		    
-		    File saveDir = SharingSettings.getFileSettingForMediaType(MediaType.getTorrentMediaType()).getValue();
+		    File saveDir = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
 			if (!saveDir.exists()) {
 			    saveDir.mkdirs();
 			}
@@ -1034,6 +1034,12 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 			//}
 		}
 		
+		//THE LOGIC AHEAD USED TO SHARE TORRENT CONTENTS IN GNUTELLA.
+		//DOING THIS COULD LEAD TO CONTRADICTORY TO FILE SHARING POLICIES SET BY THE USER.
+		//TORRENTS SHALL BE SEEDED IN BITTORRENT, NOT SHARED UNLESS THE USER
+		//MOVES THE FILES TO A SHARED FOLDER.
+		
+		/**
 		boolean force = SharingSettings.SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES
 				.getValue();
 
@@ -1051,6 +1057,7 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 		        fileManager.addIndividuallySharedFolder(_completeFile);
 		    }
 		}
+		*/
 	}
 
 	/**
@@ -1445,6 +1452,7 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 	}
 	
 	public void createTorrentFile() {
+		//This uses the folder where the .TORRENTS are saved, not the torrent data.
 		_torrentFile = _info.createFileFromRawBytes(SharingSettings.DEFAULT_SHARED_TORRENTS_DIR.getAbsolutePath() + File.separator + _info.getName() + ".torrent");
 	}
 	
