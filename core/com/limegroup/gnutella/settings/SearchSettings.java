@@ -312,7 +312,7 @@ public final class SearchSettings extends LimeProps {
      * The display mode for junk search results
      */    
     public static final IntSetting DISPLAY_JUNK_MODE =
-        FACTORY.createIntSetting("DISPLAY_JUNK_MODE", MOVE_JUNK_TO_BOTTOM);
+        FACTORY.createIntSetting("DISPLAY_JUNK_MODE", HIDE_JUNK);
     
     public static boolean moveJunkToBottom() {
         return ENABLE_SPAM_FILTER.getValue() && DISPLAY_JUNK_MODE.getValue() == MOVE_JUNK_TO_BOTTOM;
