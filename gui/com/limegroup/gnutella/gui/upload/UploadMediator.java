@@ -20,6 +20,7 @@ import com.google.inject.Inject;
 import com.limegroup.bittorrent.BTDownloaderImpl;
 import com.limegroup.bittorrent.BTMetaInfo;
 import com.limegroup.bittorrent.BTUploader;
+import com.limegroup.bittorrent.ManagedTorrent;
 import com.limegroup.gnutella.PushEndpoint;
 import com.limegroup.gnutella.UploadServicesImpl;
 import com.limegroup.gnutella.Uploader;
@@ -174,6 +175,10 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 	}
 
 	private void restoreSeedingTorrents() {
+		if (!SharingSettings.SEED_FINISHED_TORRENTS.getValue()) {
+			return;
+		}
+		
 	    AzureusCore azureusCore = AzureusStarter.getAzureusCore();
 	    @SuppressWarnings("unchecked")
 		List<DownloadManager> downloadManagers = (List<DownloadManager>) azureusCore.getGlobalManager().getDownloadManagers();
@@ -490,5 +495,29 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 			_instance = new UploadMediator();
 		}
 		return _instance;
+	}
+
+	/**
+	 * Removes the uploader for this torrent
+	 * @param managedTorrent
+	 */
+	public void stopSeeding(ManagedTorrent managedTorrent) {
+        try {
+            int count = DATA_MODEL.getRowCount();
+            for (int i = 0; i < count; i++) {
+                UploadDataLine line = DATA_MODEL.get(i);
+
+                if (line.getInitializeObject() instanceof BTUploader) {
+                    BTUploader uploader = (BTUploader) line.getInitializeObject();
+
+                    if (managedTorrent.equals(uploader.getBTDownloader().getTorrent())) {
+                        DATA_MODEL.removeNotSeeded(i);
+                        break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }		
 	}
 }

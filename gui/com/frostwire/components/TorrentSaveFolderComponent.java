@@ -113,7 +113,7 @@ public class TorrentSaveFolderComponent extends JPanel {
         if (CHECK_BOX.isSelected()) {
             explanationLabel.setText(I18n.tr("Finished torrents will be seeded with other peers on the BitTorrent Network"));
         } else {
-            explanationLabel.setText(I18n.tr("Finished torrents will not be seeded (Leeching).\nHowever you will have to share during a torrent download."));
+            explanationLabel.setText(I18n.tr("<html>Finished torrents will not be seeded. <b>You will become a Leecher</b>.<p>You still have to seed pieces of the torrent data files during their download."));
         }
     }
 	

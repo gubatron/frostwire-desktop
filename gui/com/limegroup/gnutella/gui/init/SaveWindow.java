@@ -24,8 +24,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import org.limewire.i18n.I18nMarker;
 import org.limewire.util.CommonUtils;
@@ -50,7 +48,7 @@ import com.limegroup.gnutella.settings.SharingSettings;
 
 class SaveWindow extends SetupWindow {
 
-    private static final String LEARN_MORE_URL = "http://www.frostwire.com";
+    private static final String LEARN_MORE_URL = "http://www.frostwire.com/faq#fil1";
     
 	/**
 	 * Constant handle to the <tt>LabeledTextField</tt> instance for the 
@@ -76,7 +74,7 @@ class SaveWindow extends SetupWindow {
 	 * Creates the window and its components
 	 */
 	SaveWindow(SetupManager manager, boolean migrate) {
-		super(manager, I18nMarker.marktr("Save Folder and Shared Folders"), describeText(migrate), LEARN_MORE_URL);
+		super(manager, I18nMarker.marktr("Save Folders and Shared Folders"), describeText(migrate), LEARN_MORE_URL);
 		File oldSaveDir = new File(CommonUtils.getUserHomeDir(), "Shared");
 		if (oldSaveDir.exists()) {
 			SharingSettings.DIRECTORIES_TO_SHARE.add(oldSaveDir);
@@ -94,9 +92,9 @@ class SaveWindow extends SetupWindow {
 	
 	private static String describeText(boolean migrate) {
 	    if(!migrate)
-	        return I18nMarker.marktr("Please choose a folder where you would like your files to be downloaded. You can also choose folders you would like to share with other users running FrostWire.");
+	        return I18nMarker.marktr("Please choose a folder where you would like your files to be downloaded.\nYou can also choose folders you would like to share with other users on the Gnutella and BitTorrent Networks.");
 	    else
-	        return I18nMarker.marktr("FrostWire now downloads files to a new, different folder.  Please confirm the folder where you would like your files to be downloaded. You can also choose folders you would like to share with other users running FrostWire.");
+	        return I18nMarker.marktr("FrostWire now downloads files to a new, different folder.\nPlease confirm the folder where you would like your files to be downloaded. You can also choose folders you would like to share with other users on the Gnutella and BitTorrent Networks.");
 	}
     
     protected void createWindow() {

@@ -153,6 +153,13 @@ public class BTDownloaderImpl extends AbstractCoreDownloader
 		return torrent.resume();
 	}
 
+	public Torrent getTorrent() {
+		if (torrent instanceof FinishedTorrentDownload) {
+			return ((FinishedTorrentDownload) torrent).getInnerTorrent();
+		}
+		return torrent;
+	}
+	
 	public File getFile() {
 		if (torrent.isComplete())
 			return torrentFileSystem.getCompleteFile();

@@ -45,6 +45,6 @@ public class TorrentSaveFolderPaneItem extends AbstractPaneItem {
 
 	@Override
 	public boolean isDirty() {
-		return !SharingSettings.TORRENT_DATA_DIR_SETTING.getValueAsString().equals(COMPONENT.getTorrentSaveFolderPath());
+		return !SharingSettings.TORRENT_DATA_DIR_SETTING.getValueAsString().equals(COMPONENT.getTorrentSaveFolderPath()) || SharingSettings.SEED_FINISHED_TORRENTS.getValue() != COMPONENT.isSeedingSelected();
 	}
 }

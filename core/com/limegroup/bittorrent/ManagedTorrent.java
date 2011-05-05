@@ -44,6 +44,8 @@ import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.auth.ContentManager;
 import com.limegroup.gnutella.filters.IPFilter;
+import com.limegroup.gnutella.gui.GuiCoreMediator;
+import com.limegroup.gnutella.gui.upload.UploadMediator;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.util.EventDispatcher;
 
@@ -417,6 +419,12 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 						dispatchEvent(TorrentEvent.Type.COMPLETE);
 					}
 					addToLibrary();
+
+					//stop seeding if we don't have to.
+					if (!SharingSettings.SEED_FINISHED_TORRENTS.getValue()) {
+						stopSeeding();
+					}
+
 				}
 
 				@Override
@@ -536,6 +544,11 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 		}
 	}
 	
+	protected void stopSeeding() {
+		removeFromAzureus();
+		UploadMediator.instance().stopSeeding(ManagedTorrent.this);
+	}
+
 	private Boolean _shuttingdown = false;
 		
 	private void onStateChanged(DownloadManager manager, int intState) {
@@ -1012,6 +1025,9 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 	}
 
 
+	/**
+	 * This happens when the torrent 
+	 */
 	private void addToLibrary() {
 		if (_manager == null)
 			return;
@@ -1058,6 +1074,16 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 		    }
 		}
 		*/
+	}
+
+	private void removeFromAzureus() {
+		if (_manager != null && _manager.getGlobalManager() != null) {
+	        try {
+	            _manager.getGlobalManager().removeDownloadManager(_manager);
+	        } catch (GlobalManagerDownloadRemovalVetoException e) {
+	            e.printStackTrace();
+	        }
+		}
 	}
 
 	/**
@@ -1488,13 +1514,9 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 	}
 
     public void removeFromAzureusAndDisk() {
-        if (_manager != null && _manager.getGlobalManager() != null) {
-            try {
-                _manager.getGlobalManager().removeDownloadManager(_manager);
-            } catch (GlobalManagerDownloadRemovalVetoException e) {
-                e.printStackTrace();
-            }
-            
+    	removeFromAzureus();
+        	
+       	if (_manager != null && _manager.getGlobalManager() != null) {	
             // in the future, we must use a better state machine to avoid this hacks
             try {
                 File file = _manager.getAbsoluteSaveLocation();
