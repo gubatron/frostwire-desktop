@@ -45,6 +45,24 @@ public class SharingSettings extends LimeProps {
     public static final File DEFAULT_SHARED_TORRENTS_DIR = 
     	new File(FrostWireUtils.getLimeWireRootFolder(), "Torrents");
     
+    /**
+     * The default folder where Torrent Data will be saved. This folder CANNOT BE SHARED
+     * to avoid sharing inconsistencies. 
+     */
+    public static final File DEFAULT_TORRENT_DATA_DIR =
+    	new File(FrostWireUtils.getLimeWireRootFolder(), "Torrent Data");
+
+    /**
+     * The folder value where Torrent Data will be saved. This folder CANNOT BE SHARED
+     * to avoid sharing inconsistencies. 
+     */
+    public static final FileSetting DEFAULT_TORRENT_DATA_DIR_SETTING = 
+    	FACTORY.createFileSetting("DEFAULT_TORRENT_DATA_DIR_SETTING", 
+    			DEFAULT_TORRENT_DATA_DIR).setAlwaysSave(true);
+    
+    public static final BooleanSetting SEED_FINISHED_TORRENTS =
+    	FACTORY.createBooleanSetting("SEED_FINISHED_TORRENTS", true);
+    
     public static final File IMAGE_CACHE_DIR = 
         new File(CoreFrostWireUtils.getPreferencesFolder(), "image_cache");
     

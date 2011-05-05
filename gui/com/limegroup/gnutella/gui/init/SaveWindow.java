@@ -16,6 +16,7 @@ import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -30,6 +31,7 @@ import org.limewire.i18n.I18nMarker;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.StringUtils;
 
+import com.frostwire.components.TorrentSaveFolderComponent;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
@@ -109,40 +111,49 @@ class SaveWindow extends SetupWindow {
 
 		JPanel mainPanel = new JPanel(new GridBagLayout());
 		
-		// "Save Folder" text label
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.anchor = GridBagConstraints.NORTHWEST;
-		gbc.insets = new Insets(0, 0, ButtonRow.BUTTON_SEP, 0);
-		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		mainPanel.add(new JLabel(I18n.tr("Save Folder")), gbc);
+		JPanel saveFolderPanel = new JPanel(new GridBagLayout());
+		saveFolderPanel.setBorder(BorderFactory.createTitledBorder(I18n.tr("Gnutella Save Folder")));
+		
 		
 		// "Save Folder" text field
+		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.weightx = 1;
 		gbc.insets = new Insets(0, 0, ButtonRow.BUTTON_SEP, 0);
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		mainPanel.add(SAVE_FIELD, gbc);
+		saveFolderPanel.add(SAVE_FIELD, gbc);
 		
 		gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.gridwidth = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        mainPanel.add(createOptionForShareInSavedFolderComponent(), gbc);
+        saveFolderPanel.add(createOptionForShareInSavedFolderComponent(), gbc);
 		
 		// "Save Folder" buttons "User Default", "Browse..."
 		gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		mainPanel.add(new ButtonRow(new Action[] { new DefaultAction(), new BrowseAction() },
+		saveFolderPanel.add(new ButtonRow(new Action[] { new DefaultAction(), new BrowseAction() },
 				ButtonRow.X_AXIS, ButtonRow.LEFT_GLUE), gbc);
-
-		// "Shared Folders" text label
+		
 		gbc = new GridBagConstraints();
-		gbc.anchor = GridBagConstraints.NORTHWEST;
-		gbc.insets = new Insets(12, 0, ButtonRow.BUTTON_SEP, 0);
-		gbc.gridwidth = GridBagConstraints.REMAINDER;
-        mainPanel.add(new JLabel(I18n.tr("Shared Folders")), gbc);
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+		mainPanel.add(saveFolderPanel, gbc);
+		
+        // "Saved Torrent Data" container
+        gbc = new GridBagConstraints();
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        mainPanel.add(new TorrentSaveFolderComponent(),gbc);        
+
         
         // "Shared Folders" panel
         JPanel sharingPanelContainer = new JPanel(new GridBagLayout());
@@ -153,6 +164,7 @@ class SaveWindow extends SetupWindow {
         gbc.anchor = GridBagConstraints.NORTHWEST;
         gbc.gridheight = GridBagConstraints.REMAINDER;
         gbc.gridwidth = GridBagConstraints.RELATIVE;
+        recursiveSharingPanel.setBorder(BorderFactory.createTitledBorder(I18n.tr("Shared Folders")));
         sharingPanelContainer.add(recursiveSharingPanel, gbc);
         
         // "Shared Folders" actions

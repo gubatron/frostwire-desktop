@@ -23,14 +23,12 @@ import com.limegroup.bittorrent.BTUploader;
 import com.limegroup.gnutella.PushEndpoint;
 import com.limegroup.gnutella.UploadServicesImpl;
 import com.limegroup.gnutella.Uploader;
-import com.limegroup.gnutella.Downloader.DownloadStatus;
 import com.limegroup.gnutella.downloader.CoreDownloaderFactory;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
-import com.limegroup.gnutella.gui.download.DownloadMediator;
 import com.limegroup.gnutella.gui.search.SearchMediator;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
@@ -185,6 +183,7 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 		    for (DownloadManager dlManager : downloadManagers) {
 		    	BTMetaInfo info = null;
 				try {
+					File torrentFile = new File(dlManager.getTorrentFileName());
 					
 					//not STOPPED && not QUEUED
 					if (dlManager.getState() != 70 &&
@@ -192,7 +191,7 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 						continue;
 					}
 					
-			    	byte [] b = FileUtils.readFileFully(new File(dlManager.getTorrentFileName()));
+			    	byte [] b = FileUtils.readFileFully(torrentFile);
 					info = BTMetaInfo.readFromBytes(b);
 					
 					BTDownloaderImpl btDownloader = (BTDownloaderImpl) _coreDownloaderFactory.createBTDownloader(info);
