@@ -2286,6 +2286,28 @@ public abstract class FileManagerImpl implements FileManager {
         }
     }
     
+    /**
+     * This is intented to be used with bittorrent only
+     */
+    public void addIndividuallySharedFolder(File directory) {
+        if (!directory.isDirectory()) {
+            return;
+        }
+        
+        File[] files = directory.listFiles();
+        if (files == null) {
+            return;
+        }
+        
+        for (int i = 0; i < files.length; i++) {
+            if (files[i].isDirectory()) {
+                addIndividuallySharedFolder(files[i]);
+            } else if (files[i].isFile()) {
+                addFileAlways(files[i]);
+            }
+        }
+    }
+    
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.FileManager#getIndexingIterator(boolean)
      */

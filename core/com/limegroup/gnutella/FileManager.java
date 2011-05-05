@@ -439,5 +439,7 @@ public interface FileManager {
      * Notification that an IncompleteFileDesc has been updated.
      */
     public void fileURNSUpdated(FileDesc ifd);
+    
+    public void addIndividuallySharedFolder(File directory);
 
 }

@@ -65,7 +65,7 @@ class SaveWindow extends SetupWindow {
     
     // change for sharing files in saved folder
     private final JCheckBox CHECK_BOX = new JCheckBox();
-    private final String CHECK_BOX_LABEL = I18nMarker.marktr("Share Finished Downloads:");
+    private final String CHECK_BOX_LABEL = I18nMarker.marktr("Share Finished Downloads");
     private final JLabel explanationLabel = new JLabel();
 
 	/**
@@ -240,7 +240,7 @@ class SaveWindow extends SetupWindow {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
-        LabeledComponent comp = new LabeledComponent(CHECK_BOX_LABEL, CHECK_BOX, LabeledComponent.NO_GLUE, LabeledComponent.LEFT);
+        LabeledComponent comp = new LabeledComponent(CHECK_BOX_LABEL, CHECK_BOX, LabeledComponent.NO_GLUE, LabeledComponent.RIGHT);
 
         explanationLabel.setFont(explanationLabel.getFont().deriveFont(Math.max(explanationLabel.getFont().getSize() - 2.0f, 9.0f)).deriveFont(Font.PLAIN));
         CHECK_BOX.addItemListener(new ItemListener() {
@@ -263,12 +263,16 @@ class SaveWindow extends SetupWindow {
     
     private void setExplanationText(boolean showMessage) {
         if (CHECK_BOX.isSelected()) {
-            explanationLabel.setText(I18n.tr("All downloads will be shared. INDIVIDUAL FILE NOTICE (FORGOT PREVIOUS FILES)"));
+            //explanationLabel.setText(I18n.tr("All downloads will be shared. INDIVIDUAL FILE NOTICE (FORGOT PREVIOUS FILES)"));
+            explanationLabel.setText(I18n.tr("Currently sharing downloaded files to the 'Save Folder' with everybody"));
             if (showMessage) {
-                JOptionPane.showMessageDialog(this, "Clear and Prominent message about how individual files are shared");
+                JOptionPane.showMessageDialog(this,
+                        I18n.tr("All files downloaded to the 'Save Folder' will be shared as 'individually shared files' with everybody on the network.\nYour 'Save Folder' won't be shared as a whole unless you decide to make it a shared folder.\n\nYou can check the files you are sharing individually in the Library Tab."),
+                        I18n.tr("How finished downloads are being shared"),
+                        JOptionPane.WARNING_MESSAGE); 
             }
         } else {
-            explanationLabel.setText(I18n.tr("Only downloads in shared folders will be shared. INDIVIDUAL FILE NOTICE"));
+            explanationLabel.setText(I18n.tr("Currently not sharing downloaded files to the 'Save Folder' with anybody"));
         }
     }
 

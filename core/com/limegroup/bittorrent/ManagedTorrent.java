@@ -1046,10 +1046,11 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 				fileManager.addFileAlways(_completeFile);
 			else
 				fileManager.addFileIfShared(_completeFile);
-		} else if (_completeFile.isDirectory()
-				&& (force || fileManager
-						.isFileInCompletelySharedDirectory(_completeFile)))
-			fileManager.addSharedFolder(_completeFile);
+		} else if (_completeFile.isDirectory()) {
+		    if (force || fileManager.isFileInCompletelySharedDirectory(_completeFile)) {
+		        fileManager.addIndividuallySharedFolder(_completeFile);
+		    }
+		}
 	}
 
 	/**
