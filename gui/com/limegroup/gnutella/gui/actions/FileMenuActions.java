@@ -356,4 +356,15 @@ public class FileMenuActions {
             GUIMediator.close(false);
         }
     }
+    
+    public static class ShutdownAction extends AbstractAction {
+        public ShutdownAction() {
+            super(I18n.tr("E&xit Completely"));
+            putValue(Action.LONG_DESCRIPTION, I18n.tr("Disconnect and Exit"));
+        }
+        
+        public void actionPerformed(ActionEvent e) {
+            GUIMediator.shutdown();
+        }
+    }
 }

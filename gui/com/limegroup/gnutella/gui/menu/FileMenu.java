@@ -31,6 +31,7 @@ final class FileMenu extends AbstractMenu {
 			MENU.addSeparator(); 
 			MENU.add(createMenuItem(new FileMenuActions.ExitAction()));
 		}
+		MENU.add(createMenuItem(new FileMenuActions.ShutdownAction()));
 	}
 
 	/**
