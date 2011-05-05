@@ -196,7 +196,7 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
             File[] files = directory.listFiles();
             if (files != null) {
                 for (File f : files) {
-                    GuiCoreMediator.getFileManager().removeFileIfShared(f);
+                    GuiCoreMediator.getFileManager().removeIndividuallySharedFile(f);
                 }
             }
         }

@@ -2308,6 +2308,25 @@ public abstract class FileManagerImpl implements FileManager {
         }
     }
     
+    /**
+     * This is intented to be used with bittorrent only
+     */
+    public void removeIndividuallySharedFile(File f) {
+        if (f.isFile()) {
+            removeFileIfShared(f);
+            return;
+        }
+        
+        File[] files = f.listFiles();
+        if (files == null) {
+            return;
+        }
+        
+        for (int i = 0; i < files.length; i++) {
+            removeIndividuallySharedFile(files[i]);
+        }
+    }
+    
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.FileManager#getIndexingIterator(boolean)
      */

@@ -441,5 +441,7 @@ public interface FileManager {
     public void fileURNSUpdated(FileDesc ifd);
     
     public void addIndividuallySharedFolder(File directory);
+    
+    public void removeIndividuallySharedFile(File f);
 
 }
