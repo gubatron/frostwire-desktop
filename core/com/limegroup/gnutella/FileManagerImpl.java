@@ -2313,7 +2313,7 @@ public abstract class FileManagerImpl implements FileManager {
      */
     public void removeIndividuallySharedFile(File f) {
         if (f.isFile()) {
-            removeFileIfShared(f);
+        	stopSharingFile(f);
             return;
         }
         

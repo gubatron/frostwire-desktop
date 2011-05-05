@@ -60,7 +60,7 @@ public class ShareSpeciallyPaneItem extends AbstractPaneItem {
                 setExplanationText(true);
             }
         });
-		setExplanationText(false);
+		
 		JPanel container = new JPanel(new BorderLayout());
 		container.add(explanationLabel, BorderLayout.EAST);
 		add(container);
@@ -68,12 +68,15 @@ public class ShareSpeciallyPaneItem extends AbstractPaneItem {
 	
 	private void setExplanationText(boolean showMessage) {
         if (CHECK_BOX.isSelected()) {
-            explanationLabel.setText(I18n.tr("All downloads will be shared. INDIVIDUAL FILE NOTICE (FORGOT PREVIOUS FILES)"));
+            explanationLabel.setText(I18n.tr("Currently sharing downloaded files to the 'Save Folder' with everybody"));
             if (showMessage) {
-                JOptionPane.showMessageDialog(null, "Clear and Prominent message about how individual files are shared");
+            	JOptionPane.showMessageDialog(null,
+                        I18n.tr("All files downloaded to the 'Save Folder' will be shared as 'individually shared files' with everybody on the network.\nYour 'Save Folder' won't be shared as a whole unless you decide to make it a shared folder.\n\nYou can check the files you are sharing individually in the Library Tab."),
+                        I18n.tr("How finished downloads are being shared"),
+                        JOptionPane.WARNING_MESSAGE); 
             }
         } else {
-            explanationLabel.setText(I18n.tr("Only downloads in shared folders will be shared. INDIVIDUAL FILE NOTICE"));
+            explanationLabel.setText(I18n.tr("Currently not sharing downloaded files to the 'Save Folder' with anybody"));
         }
 	}
 
@@ -83,6 +86,7 @@ public class ShareSpeciallyPaneItem extends AbstractPaneItem {
         CHECK_BOX.setSelected
         	(SharingSettings.SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES.getValue());
         CHECK_BOX.addItemListener(l[0]);
+        setExplanationText(false);
 	}
 
 	public boolean applyOptions() throws IOException {

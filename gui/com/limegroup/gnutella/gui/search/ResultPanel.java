@@ -480,7 +480,8 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
             public void actionPerformed(ActionEvent e) {
                 TableLine[] lines = getAllSelectedLines();
                 for (int i = 0; i < lines.length; i++) {
-                    SPAM_FILTER.markAsSpamUser(lines[i], true);             
+                    SPAM_FILTER.markAsSpamUser(lines[i], true);
+                    blockHosts();
                 }
                 
                 // This is a bit fine tuning...

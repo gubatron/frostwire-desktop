@@ -16,7 +16,9 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.bittorrent.BTMetaInfo;
+import com.limegroup.gnutella.FileManagerEvent;
 import com.limegroup.gnutella.MediaType;
+import com.limegroup.gnutella.FileManagerEvent.Type;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.settings.SharingSettings;
@@ -200,5 +202,7 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
                 }
             }
         }
+	    
+	    GuiCoreMediator.getFileManager().loadSettings();
 	}
 }
