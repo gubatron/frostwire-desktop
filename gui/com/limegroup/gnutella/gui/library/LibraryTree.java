@@ -845,6 +845,7 @@ final class LibraryTree extends JTree implements MouseObserver {
             }
         }
     }
+    
 	
 	private class RefreshAction extends AbstractAction {
 		
@@ -920,6 +921,11 @@ final class LibraryTree extends JTree implements MouseObserver {
 	private Action addDirToPlaylistAction = new AddDirectoryToPlaylistAction();
 	private Action refreshAction = new RefreshAction(); 
 	private Action exploreAction = new ExploreAction();
+	private Action configureSharingAction = new ConfigureOptionsAction(
+            OptionsConstructor.SHARED_KEY,
+            I18n.tr("Options"),
+            I18n.tr("You can configure the folders you share in FrostWire\'s Options."));
+            
     private Action showTorrentMetaAction = new ShowHideTorrentMetaAction();
 	
 	private ButtonRow BUTTON_ROW;
@@ -957,9 +963,9 @@ final class LibraryTree extends JTree implements MouseObserver {
 	private void makeButtonRow() {
 		if (hasExploreAction()) {
 			BUTTON_ROW = new ButtonRow(new Action[] { refreshAction,
-					exploreAction }, ButtonRow.X_AXIS, ButtonRow.NO_GLUE);
+					exploreAction, configureSharingAction }, ButtonRow.X_AXIS, ButtonRow.NO_GLUE);
 		} else {
-			BUTTON_ROW = new ButtonRow(new Action[] { refreshAction },
+			BUTTON_ROW = new ButtonRow(new Action[] { refreshAction, configureSharingAction },
 					ButtonRow.X_AXIS, ButtonRow.NO_GLUE);
 		}
 	}
