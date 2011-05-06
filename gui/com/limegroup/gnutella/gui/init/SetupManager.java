@@ -364,6 +364,16 @@ public class SetupManager {
 	 * Completes the setup.
 	 */
 	public void finishSetup() {
+	    
+	    if (_currentWindow != null) {
+	        try {
+                _currentWindow.applySettings(true);
+            } catch (ApplySettingsException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+	    }
+	    
 		dialogFrame.getDialog().dispose();
 		
 		ApplicationSettings.INSTALLED.setValue(true);
