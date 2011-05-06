@@ -251,20 +251,28 @@ class SaveWindow extends SetupWindow {
 		Set<File> saveDirs = new HashSet<File>();
 		saveDirs.add(saveDir);
 		
-        if (!torrentSaveFolderComponent.isTorrentSaveFolderPathValid(saveDirs, roots)) {
+        if (!torrentSaveFolderComponent.isTorrentSaveFolderPathValid(false, saveDirs, roots)) {
         	errors.add(torrentSaveFolderComponent.getError());
-        }
-        
-        if (!errors.isEmpty()) {
-            throw new ApplySettingsException(StringUtils.explode(errors, "\n\n"));
         }
         
         SharingSettings.SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES.
             setValue(CHECK_BOX.isSelected());
         
-        SharingSettings.TORRENT_DATA_DIR_SETTING.setValue(new File(torrentSaveFolderComponent.getTorrentSaveFolderPath()));
         SharingSettings.SEED_FINISHED_TORRENTS.setValue(torrentSaveFolderComponent.isSeedingSelected());
+        File folder = new File(torrentSaveFolderComponent.getTorrentSaveFolderPath());
+        if (folder.exists() && folder.isDirectory() && folder.canWrite()) {
+            SharingSettings.TORRENT_DATA_DIR_SETTING.setValue(folder);
+        } else {
+            if (!folder.mkdirs()) {
+                errors.add(I18n.tr("FrostWire could not create the Torrent Data Folder {0}", folder));
+            } else {
+                SharingSettings.TORRENT_DATA_DIR_SETTING.setValue(folder);
+            }
+        }
         
+        if (!errors.isEmpty()) {
+            throw new ApplySettingsException(StringUtils.explode(errors, "\n\n"));
+        }
 	}
 	
     private Component createOptionForShareInSavedFolderComponent() {

@@ -147,7 +147,7 @@ public final class SharedDirPaneItem extends AbstractPaneItem {
 	    
 	    GuiFrostWireUtils.verifySharedTorrentFolderCorrecteness();
 	    
-	    if (!TorrentSaveFolderComponent.isTorrentSaveFolderPathValid(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue(), 
+	    if (!TorrentSaveFolderComponent.isTorrentSaveFolderPathValid(true, SharingSettings.TORRENT_DATA_DIR_SETTING.getValue(), 
 	    														SharingSettings.getAllSaveDirectories(), 
 	    														sharingPanel.getRootsToShare())) {
 	    	GUIMediator.showError(TorrentSaveFolderComponent.getError());

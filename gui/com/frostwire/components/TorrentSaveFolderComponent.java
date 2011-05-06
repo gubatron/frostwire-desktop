@@ -80,7 +80,7 @@ public class TorrentSaveFolderComponent extends JPanel {
 	}
 	
 	
-	public boolean isTorrentSaveFolderPathValid(Set<File> gnutellaSaveFolders, Set<File> sharedFolders) {
+	public boolean isTorrentSaveFolderPathValid(boolean checkExist, Set<File> gnutellaSaveFolders, Set<File> sharedFolders) {
 		//has to be non empty, writeable, must be a folder, and must not be Saved, Shared, or inside any of them.
 		if (folderTextField.getText().trim().length() == 0) {
 			errorMessage = I18n.tr("You forgot to enter a path for the Torrent Data Folder.");
@@ -90,7 +90,7 @@ public class TorrentSaveFolderComponent extends JPanel {
 		String path = folderTextField.getText().trim();
 		File folder = new File(path);
 
-		return isTorrentSaveFolderPathValid(folder, gnutellaSaveFolders, sharedFolders);
+		return isTorrentSaveFolderPathValid(checkExist, folder, gnutellaSaveFolders, sharedFolders);
 	}
 	
 	/**
@@ -102,13 +102,15 @@ public class TorrentSaveFolderComponent extends JPanel {
 	 * @param gnutellaSaveFolders
 	 * @return
 	 */
-	public static boolean isTorrentSaveFolderPathValid(File folder, Set<File> gnutellaSaveFolders, Set<File> sharedFolders) {
+	public static boolean isTorrentSaveFolderPathValid(boolean checkExist, File folder, Set<File> gnutellaSaveFolders, Set<File> sharedFolders) {
 
-		//is folder useable
-		if (!(folder.exists() && folder.isDirectory() && folder.canWrite())) {
-			errorMessage = I18n.tr("Please enter a valid path for the Torrent Data Folder");
-			return false;
-		}
+	    if (checkExist) {
+    		//is folder useable
+    		if (!(folder.exists() && folder.isDirectory() && folder.canWrite())) {
+    			errorMessage = I18n.tr("Please enter a valid path for the Torrent Data Folder");
+    			return false;
+    		}
+	    }
 		
 		//is parent or child of a default save folder
 		for (File saveFolder : gnutellaSaveFolders) {

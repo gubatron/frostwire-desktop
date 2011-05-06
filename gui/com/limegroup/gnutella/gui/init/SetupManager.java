@@ -369,8 +369,13 @@ public class SetupManager {
 	        try {
                 _currentWindow.applySettings(true);
             } catch (ApplySettingsException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                // there was a problem applying the settings from
+                // the current window, so display the error message 
+                // to the user.
+                if (e.getMessage() != null && e.getMessage().length() > 0) {
+                    GUIMediator.showError(e.getMessage());
+                }
+                return;
             }
 	    }
 	    
