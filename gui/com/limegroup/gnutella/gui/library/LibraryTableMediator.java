@@ -34,6 +34,7 @@ import org.limewire.io.NetworkUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
+import com.frostwire.components.TorrentSaveFolderComponent;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.FileDetails;
@@ -79,6 +80,7 @@ import com.limegroup.gnutella.library.SharingUtils;
 import com.limegroup.gnutella.licenses.License;
 import com.limegroup.gnutella.licenses.VerificationListener;
 import com.limegroup.gnutella.settings.QuestionsHandler;
+import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.util.EncodingUtils;
 import com.limegroup.gnutella.util.QueryUtils;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
@@ -1146,6 +1148,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 					shareFolderAllowed = true;
 				else
 					unshareFolderAllowed = true;
+				
 			} else {
 				if (!GuiCoreMediator.getFileManager().isFileShared(file)) {
 					if (!SharingUtils.isFilePhysicallyShareable(file) || _isIncomplete)
@@ -1158,6 +1161,15 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 				if (shareAllowed && unshareAllowed && shareFolderAllowed && unshareFolderAllowed)
 					break;
 			}
+			
+			if (TorrentSaveFolderComponent.isParentOrChild(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue(), file, "")) {
+				shareAllowed = false;
+				unshareAllowed = false;
+				shareFolderAllowed = false;
+				unshareFolderAllowed = false;
+			}
+			
+			
 		}
 		SHARE_ACTION.setEnabled(shareAllowed);
 		UNSHARE_ACTION.setEnabled(unshareAllowed);

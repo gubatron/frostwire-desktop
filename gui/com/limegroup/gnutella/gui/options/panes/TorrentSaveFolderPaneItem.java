@@ -3,10 +3,9 @@ package com.limegroup.gnutella.gui.options.panes;
 import java.io.File;
 import java.io.IOException;
 
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter.DEFAULT;
-
 import com.frostwire.components.TorrentSaveFolderComponent;
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
 
@@ -30,7 +29,7 @@ public class TorrentSaveFolderPaneItem extends AbstractPaneItem {
 
 	@Override
 	public boolean applyOptions() throws IOException {
-		if (!COMPONENT.isTorrentSaveFolderPathValid()) {
+		if (!COMPONENT.isTorrentSaveFolderPathValid(SharingSettings.getAllSaveDirectories(),GuiCoreMediator.getFileManager().getAllSharedDirectories())) {
 			GUIMediator.showError(COMPONENT.getError());
 			throw new IOException();
 		}

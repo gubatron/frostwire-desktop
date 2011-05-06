@@ -16,7 +16,9 @@ import javax.swing.border.EmptyBorder;
 import org.limewire.util.FileUtils;
 
 import com.frostwire.GuiFrostWireUtils;
+import com.frostwire.components.TorrentSaveFolderComponent;
 import com.limegroup.gnutella.FileManager;
+import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.RemoveSharedDirectoryAction;
@@ -144,6 +146,13 @@ public final class SharedDirPaneItem extends AbstractPaneItem {
 	    // since it needs to be _after_ everything else is done.
 	    
 	    GuiFrostWireUtils.verifySharedTorrentFolderCorrecteness();
+	    
+	    if (!TorrentSaveFolderComponent.isTorrentSaveFolderPathValid(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue(), 
+	    														SharingSettings.getAllSaveDirectories(), 
+	    														sharingPanel.getRootsToShare())) {
+	    	GUIMediator.showError(TorrentSaveFolderComponent.getError());
+	    	throw new IOException();
+	    }
 	    
         return false;
 	}

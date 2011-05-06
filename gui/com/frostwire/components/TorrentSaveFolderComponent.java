@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
+import java.io.IOException;
+import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -34,7 +36,7 @@ public class TorrentSaveFolderComponent extends JPanel {
     private final JCheckBox CHECK_BOX = new JCheckBox();
     private final String CHECK_BOX_LABEL = I18nMarker.marktr("Seed Finished Torrent Downloads");
     private final JLabel explanationLabel = new JLabel();
-
+    private static String errorMessage;
 	
 	public TorrentSaveFolderComponent(boolean border) {
 		folderTextField = new JTextField(SharingSettings.TORRENT_DATA_DIR_SETTING.getValueAsString());
@@ -77,11 +79,79 @@ public class TorrentSaveFolderComponent extends JPanel {
 		return CHECK_BOX.isSelected();
 	}
 	
-	public boolean isTorrentSaveFolderPathValid() {
-		//TODO: Validate Torrent Data Save Path
+	
+	public boolean isTorrentSaveFolderPathValid(Set<File> gnutellaSaveFolders, Set<File> sharedFolders) {
 		//has to be non empty, writeable, must be a folder, and must not be Saved, Shared, or inside any of them.
-		String path = folderTextField.getText();
+		if (folderTextField.getText().trim().length() == 0) {
+			errorMessage = I18n.tr("You forgot to enter a path for the Torrent Data Folder.");
+			return false;
+		}
+		
+		String path = folderTextField.getText().trim();
+		File folder = new File(path);
+
+		return isTorrentSaveFolderPathValid(folder, gnutellaSaveFolders, sharedFolders);
+	}
+	
+	/**
+	 * The torrent save path is only valid as long as it's not inside (anywhere)
+	 * the Gnutella Save Folder.
+	 * 
+	 * This folder cannot also be a parent of the Gnutella Save folder.
+	 * 
+	 * @param gnutellaSaveFolders
+	 * @return
+	 */
+	public static boolean isTorrentSaveFolderPathValid(File folder, Set<File> gnutellaSaveFolders, Set<File> sharedFolders) {
+
+		//is folder useable
+		if (!(folder.exists() && folder.isDirectory() && folder.canWrite())) {
+			errorMessage = I18n.tr("Please enter a valid path for the Torrent Data Folder");
+			return false;
+		}
+		
+		//is parent or child of a default save folder
+		for (File saveFolder : gnutellaSaveFolders) {
+			if (isParentOrChild(folder, saveFolder, "Gnutella Save Folder " + saveFolder.getName())) {
+				return false;
+			}
+		}
+
+		//is parent or child of a default share folder
+		for (File sharedFolder : sharedFolders) {
+			if (isParentOrChild(folder, sharedFolder, "Shared Folder " + sharedFolder.getName())) {
+				return false;
+			}
+		}
+		
 		return true;
+	}
+	
+	public static boolean isParentOrChild(File torrentFolder, File otherFolder, String errorMessageSuffix) {
+		//is folder inside gnutella save folder?
+		try {
+			if (torrentFolder.getCanonicalPath().startsWith(otherFolder.getCanonicalPath())) {
+				errorMessage = I18n.tr("The Torrent Data Folder cannot be inside the " + errorMessageSuffix);
+				return true;
+			}
+		} catch (IOException e) {
+			errorMessage = I18n.tr("Could not resolve folder path.");
+			return true;
+		}
+
+		//is folder a parent of the gnutella save folder?
+		try {
+			if (otherFolder.getCanonicalPath().startsWith(torrentFolder.getCanonicalPath())) {
+				errorMessage = I18n.tr("The Torrent Data Folder cannot be a parent folder of the " + errorMessageSuffix);
+				return true;
+			}
+		} catch (IOException e) {
+			errorMessage = I18n.tr("Could not resolve folder path.");
+			return true;
+		}
+		
+		return false;
+
 	}
 	
 	private Component createSeedingOptionsComponents() {
@@ -144,8 +214,7 @@ public class TorrentSaveFolderComponent extends JPanel {
         }
     }
 
-	public String getError() {
-		//TODO:
-		return null;
+	public static String getError() {
+		return errorMessage;
 	}
 }

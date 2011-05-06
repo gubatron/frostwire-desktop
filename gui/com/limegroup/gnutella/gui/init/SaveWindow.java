@@ -11,6 +11,7 @@ import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -48,7 +49,9 @@ import com.limegroup.gnutella.settings.SharingSettings;
 
 class SaveWindow extends SetupWindow {
 
-    private static final String LEARN_MORE_URL = "http://www.frostwire.com/faq#fil1";
+	private static final long serialVersionUID = 4918724013794478084L;
+
+	private static final String LEARN_MORE_URL = "http://www.frostwire.com/faq#fil1";
     
 	/**
 	 * Constant handle to the <tt>LabeledTextField</tt> instance for the 
@@ -237,13 +240,17 @@ class SaveWindow extends SetupWindow {
                 }
             }
         }
-
-        
         
         if(loadCoreComponents)
             GuiCoreMediator.getFileManager().loadWithNewDirectories(roots, recursiveSharingPanel.getFoldersToExclude());
         
-        if (!torrentSaveFolderComponent.isTorrentSaveFolderPathValid()) {
+        String saveDirString = SAVE_FIELD.getText();
+		File saveDir = new File(saveDirString);
+		
+		Set<File> saveDirs = new HashSet<File>();
+		saveDirs.add(saveDir);
+		
+        if (!torrentSaveFolderComponent.isTorrentSaveFolderPathValid(saveDirs, roots)) {
         	errors.add(torrentSaveFolderComponent.getError());
         }
         

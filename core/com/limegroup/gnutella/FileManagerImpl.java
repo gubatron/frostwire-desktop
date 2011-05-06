@@ -38,7 +38,6 @@ import org.limewire.inspection.InspectableContainer;
 import org.limewire.inspection.InspectableForSize;
 import org.limewire.inspection.InspectablePrimitive;
 import org.limewire.inspection.InspectionPoint;
-import org.limewire.setting.FileSetSetting;
 import org.limewire.setting.StringArraySetting;
 import org.limewire.statistic.StatsUtils;
 import org.limewire.util.ByteOrder;
@@ -55,7 +54,6 @@ import com.limegroup.gnutella.auth.ContentResponseObserver;
 import com.limegroup.gnutella.downloader.VerifyingFile;
 import com.limegroup.gnutella.library.LibraryData;
 import com.limegroup.gnutella.library.SharingUtils;
-import com.limegroup.gnutella.licenses.LicenseType;
 import com.limegroup.gnutella.messages.QueryRequest;
 import com.limegroup.gnutella.routing.HashFunction;
 import com.limegroup.gnutella.routing.QueryRouteTable;
@@ -589,6 +587,10 @@ public abstract class FileManagerImpl implements FileManager {
         FileDesc[] fds = new FileDesc[_fileToFileDescMap.size()];        
         fds = _fileToFileDescMap.values().toArray(fds);
         return fds;
+    }
+    
+    public synchronized Set<File> getAllSharedDirectories() {
+    	return SharingSettings.DIRECTORIES_TO_SHARE.getValue();
     }
 
     /**
