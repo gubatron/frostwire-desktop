@@ -1,9 +1,11 @@
 package com.limegroup.bittorrent.gui;
 
+import com.limegroup.bittorrent.ManagedTorrent;
 import com.limegroup.bittorrent.Torrent;
 import com.limegroup.bittorrent.TorrentEvent;
 import com.limegroup.bittorrent.TorrentEventListener;
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.upload.UploadMediator;
 import com.limegroup.gnutella.util.EventDispatcher;
 
 public class TorrentUploadCanceller implements TorrentEventListener {
@@ -21,6 +23,11 @@ public class TorrentUploadCanceller implements TorrentEventListener {
 	}
 	
 	public void handleTorrentEvent(TorrentEvent evt) {
+		if (evt.getType() == TorrentEvent.Type.STOP_SEEDING) {
+			UploadMediator.instance().stopSeeding((ManagedTorrent) evt.getSource());
+			return;
+		}
+
 		if (evt.getType() != TorrentEvent.Type.STOP_REQUESTED)
 			return;
 		

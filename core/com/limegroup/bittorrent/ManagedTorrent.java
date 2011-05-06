@@ -39,13 +39,10 @@ import com.limegroup.bittorrent.handshaking.BTConnectionFetcherFactory;
 import com.limegroup.bittorrent.settings.BittorrentSettings;
 import com.limegroup.bittorrent.tracking.TrackerManagerFactory;
 import com.limegroup.gnutella.FileManager;
-import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.auth.ContentManager;
 import com.limegroup.gnutella.filters.IPFilter;
-import com.limegroup.gnutella.gui.GuiCoreMediator;
-import com.limegroup.gnutella.gui.upload.UploadMediator;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.util.EventDispatcher;
 
@@ -546,7 +543,8 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 	
 	protected void stopSeeding() {
 		removeFromAzureus();
-		UploadMediator.instance().stopSeeding(ManagedTorrent.this);
+		dispatchEvent(TorrentEvent.Type.STOP_SEEDING);
+		//UploadMediator.instance().stopSeeding(ManagedTorrent.this);
 	}
 
 	private Boolean _shuttingdown = false;

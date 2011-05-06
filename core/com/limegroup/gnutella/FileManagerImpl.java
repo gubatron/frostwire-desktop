@@ -46,7 +46,7 @@ import org.limewire.util.I18NConvert;
 import org.limewire.util.RPNParser;
 import org.limewire.util.StringUtils;
 
-import com.frostwire.GuiFrostWireUtils;
+import com.frostwire.CoreFrostWireUtils;
 import com.google.inject.Inject;
 import com.limegroup.gnutella.FileManagerEvent.Type;
 import com.limegroup.gnutella.auth.ContentResponseData;
@@ -839,33 +839,74 @@ public abstract class FileManagerImpl implements FileManager {
         tryToFinish();
     }
     
+    /**
+	 * Makes sure the Torrents/ folder exists. If it's shareable it will make
+	 * sure the folder is shared. If not it'll make sure all the torrents inside
+	 * are not shared.
+	 */
+	public final void verifySharedTorrentFolderCorrecteness() {
+		CoreFrostWireUtils.canShareTorrentMetaFiles();
+
+		if (SharingSettings.SHARE_TORRENT_META_FILES.getValue()) {
+			//GuiCoreMediator.getFileManager().addSharedFolder(
+			//		SharingSettings.DEFAULT_SHARED_TORRENTS_DIR);
+		}
+
+		// share/unshare all torrents inside
+		File[] torrents = SharingSettings.DEFAULT_SHARED_TORRENTS_DIR
+				.listFiles();
+		if (torrents != null && torrents.length > 0) {
+			for (File t : torrents) {
+				if (SharingSettings.SHARE_TORRENT_META_FILES.getValue() &&
+				    isFolderShared(SharingSettings.DEFAULT_SHARED_TORRENTS_DIR))
+					addFileAlways(t);
+				else
+					stopSharingFile(t);
+			}
+		}
+
+	} // verifySharedTorrentFolderCorrecteness
+	
+	public void correctIndividuallySharedFiles(File directory) {
+	    if (!SharingSettings.SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES.getValue()) {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File f : files) {
+                    removeIndividuallySharedFile(f);
+                }
+            }
+        }
+	    
+	    loadSettings();
+	}
+
     
     private void updateSharedDirectories(File directory, File parent, int revision) {
         updateSharedDirectories(directory, directory, parent, revision, 1);
         
         if (directory.equals(SharingSettings.DEFAULT_SHARED_TORRENTS_DIR)) {
-            GuiFrostWireUtils.verifySharedTorrentFolderCorrecteness();
+            verifySharedTorrentFolderCorrecteness();
         }
         if (directory.equals(SharingSettings.getSaveDirectory())) {
-            GuiFrostWireUtils.correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getDocumentMediaType()).getValue());
+            correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getDocumentMediaType()).getValue());
         }
         if (directory.equals(SharingSettings.getFileSettingForMediaType(MediaType.getDocumentMediaType()).getValue())) {
-            GuiFrostWireUtils.correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getDocumentMediaType()).getValue());
+            correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getDocumentMediaType()).getValue());
         }
         if (directory.equals(SharingSettings.getFileSettingForMediaType(MediaType.getProgramMediaType()).getValue())) {
-            GuiFrostWireUtils.correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getProgramMediaType()).getValue());
+            correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getProgramMediaType()).getValue());
         }
         if (directory.equals(SharingSettings.getFileSettingForMediaType(MediaType.getAudioMediaType()).getValue())) {
-            GuiFrostWireUtils.correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getAudioMediaType()).getValue());
+            correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getAudioMediaType()).getValue());
         }
         if (directory.equals(SharingSettings.getFileSettingForMediaType(MediaType.getVideoMediaType()).getValue())) {
-            GuiFrostWireUtils.correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getVideoMediaType()).getValue());
+            correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getVideoMediaType()).getValue());
         }
         if (directory.equals(SharingSettings.getFileSettingForMediaType(MediaType.getImageMediaType()).getValue())) {
-            GuiFrostWireUtils.correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getImageMediaType()).getValue());
+            correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getImageMediaType()).getValue());
         }
         if (directory.equals(SharingSettings.getFileSettingForMediaType(MediaType.getTorrentMediaType()).getValue())) {
-            GuiFrostWireUtils.correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getTorrentMediaType()).getValue());
+            correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getTorrentMediaType()).getValue());
         }
     }
     

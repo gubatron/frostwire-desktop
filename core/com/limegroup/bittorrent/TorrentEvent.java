@@ -7,7 +7,7 @@ public class TorrentEvent extends EventObject {
     private static final long serialVersionUID = 5166816249517367147L;
 
     public enum Type {
-        STARTING, STARTED, DOWNLOADING, STOPPED, COMPLETE, STOP_REQUESTED, STOP_APPROVED, PAUSED
+        STARTING, STARTED, DOWNLOADING, STOPPED, COMPLETE, STOP_REQUESTED, STOP_APPROVED, PAUSED, STOP_SEEDING
     }
 
     private final Type type;

@@ -16,24 +16,13 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.bittorrent.BTMetaInfo;
-import com.limegroup.gnutella.FileManagerEvent;
 import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.FileManagerEvent.Type;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 public final class GuiFrostWireUtils extends CoreFrostWireUtils {
-	private final static boolean canShareTorrentMetaFiles() {
-		if (!SharingSettings.DEFAULT_SHARED_TORRENTS_DIR.exists()) {
-			SharingSettings.DEFAULT_SHARED_TORRENTS_DIR.mkdir();
-		}
-
-		return SharingSettings.SHARE_TORRENT_META_FILES.getValue()
-				&& SharingSettings.DEFAULT_SHARED_TORRENTS_DIR.exists()
-				&& SharingSettings.DEFAULT_SHARED_TORRENTS_DIR.isDirectory()
-				&& SharingSettings.DEFAULT_SHARED_TORRENTS_DIR.canWrite();
-	}
+	
 
 	public final static void shareTorrent(BTMetaInfo bt, byte[] body) {
 		if (!canShareTorrentMetaFiles())
