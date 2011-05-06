@@ -10,6 +10,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import org.limewire.i18n.I18nMarker;
 
@@ -65,10 +66,16 @@ public class ShareSpeciallyPaneItem extends AbstractPaneItem {
         if (CHECK_BOX.isSelected()) {
             explanationLabel.setText(I18n.tr("Currently sharing downloaded files to the 'Save Folder' with everybody"));
             if (showMessage) {
-            	JOptionPane.showMessageDialog(null,
+            	SwingUtilities.invokeLater(new Runnable() {
+
+					@Override
+					public void run() {
+						JOptionPane.showMessageDialog(null,
                         I18n.tr("All files downloaded to the 'Save Folder' will be shared as 'individually shared files' with everybody on the network.\nYour 'Save Folder' won't be shared as a whole unless you decide to make it a shared folder.\n\nYou can check the files you are sharing individually in the Library Tab."),
                         I18n.tr("How finished downloads are being shared"),
-                        JOptionPane.WARNING_MESSAGE); 
+                        JOptionPane.WARNING_MESSAGE);
+					}});
+            	 
             }
         } else {
             explanationLabel.setText(I18n.tr("Currently not sharing downloaded files to the 'Save Folder' with anybody"));
