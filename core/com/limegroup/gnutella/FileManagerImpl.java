@@ -877,7 +877,7 @@ public abstract class FileManagerImpl implements FileManager {
             }
         }
 	    
-	    loadSettings();
+	    //loadSettings();
 	}
 
     
