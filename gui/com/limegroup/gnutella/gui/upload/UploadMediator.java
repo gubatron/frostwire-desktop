@@ -21,6 +21,7 @@ import com.google.inject.Inject;
 import com.limegroup.bittorrent.BTDownloaderImpl;
 import com.limegroup.bittorrent.BTMetaInfo;
 import com.limegroup.bittorrent.BTUploader;
+import com.limegroup.bittorrent.ManagedTorrent;
 import com.limegroup.gnutella.PushEndpoint;
 import com.limegroup.gnutella.UploadServicesImpl;
 import com.limegroup.gnutella.Uploader;
@@ -174,6 +175,10 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 	}
 
 	private void restoreSeedingTorrents() {
+		if (!SharingSettings.SEED_FINISHED_TORRENTS.getValue()) {
+			return;
+		}
+		
 	    AzureusCore azureusCore = AzureusStarter.getAzureusCore();
 	    @SuppressWarnings("unchecked")
 		List<DownloadManager> downloadManagers = (List<DownloadManager>) azureusCore.getGlobalManager().getDownloadManagers();
@@ -183,6 +188,7 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 		    for (DownloadManager dlManager : downloadManagers) {
 		    	BTMetaInfo info = null;
 				try {
+					File torrentFile = new File(dlManager.getTorrentFileName());
 					
 					//not STOPPED && not QUEUED
 					if (dlManager.getState() != 70 &&
@@ -190,7 +196,7 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 						continue;
 					}
 					
-			    	byte [] b = FileUtils.readFileFully(new File(dlManager.getTorrentFileName()));
+			    	byte [] b = FileUtils.readFileFully(torrentFile);
 					info = BTMetaInfo.readFromBytes(b);
 					
 					BTDownloaderImpl btDownloader = (BTDownloaderImpl) _coreDownloaderFactory.createBTDownloader(info);
@@ -338,6 +344,27 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 		    if (udl != null) udl.setEndTime( System.currentTimeMillis() );
 	    }
     }
+    
+    // another hack for torrents, needs a refactor in the future
+    public void remove(BTDownloaderImpl downloader) {
+        try {
+            int count = DATA_MODEL.getRowCount();
+            for (int i = 0; i < count; i++) {
+                UploadDataLine line = DATA_MODEL.get(i);
+
+                if (line.getInitializeObject() instanceof BTUploader) {
+                    BTUploader uploader = (BTUploader) line.getInitializeObject();
+
+                    if (downloader.equals(uploader.getBTDownloader())) {
+                        DATA_MODEL.forceRemoveUploader(i);
+                        break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Override the default remove to not actually remove,
@@ -476,5 +503,29 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 			_instance = new UploadMediator();
 		}
 		return _instance;
+	}
+
+	/**
+	 * Removes the uploader for this torrent
+	 * @param managedTorrent
+	 */
+	public void stopSeeding(ManagedTorrent managedTorrent) {
+        try {
+            int count = DATA_MODEL.getRowCount();
+            for (int i = 0; i < count; i++) {
+                UploadDataLine line = DATA_MODEL.get(i);
+
+                if (line.getInitializeObject() instanceof BTUploader) {
+                    BTUploader uploader = (BTUploader) line.getInitializeObject();
+
+                    if (managedTorrent.equals(uploader.getBTDownloader().getTorrent())) {
+                        DATA_MODEL.removeNotSeeded(i);
+                        break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }		
 	}
 }

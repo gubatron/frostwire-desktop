@@ -1,9 +1,34 @@
 frostwire (4.21.6) stable; urgency=high
 
-  * Fixes a bug where some Debian systems that didn't support the Icon Tray would crash on startup.
-  * Fixes a bug where running FrostWire for the very first time (and later) display Uploads number -1 in the bottom status bar.
+  * Fixes a bug where some Debian systems that didn't support the 
+    Icon Tray would crash on startup.
+  * Fixes a bug where running FrostWire for the very first time 
+    (and later) display Uploads number -1 in the bottom status bar.
+  * UX improvement Junk & Block. When marking Junk Results 
+    UI offers to block malicious hosts that haven't blocked already.
+  * Policy update, Incomplete files are not shared by default to avoid
+    sharing files you started downloading and didn't want.
+  * Policy update, Finished downloads are not shared by default to
+    avoid confusion between files on Shared folder versus files
+    on Save folder.
+  * Policy update, .torrent files are not shared by default.
+  * UX improvement, better explanation and option to turn on/off
+    individual sharing of finished downloads (that end up in Saved
+    Folder) during FrostWire setup wizard.
+  * UX improvement, when user turns off Finished Download sharing
+    those files that were shared as individual files inside
+    the 'Saved Folder' will not be shared anymore.
+  * UX improvement, File menu now has option to Exit FrostWire completely.
+  * UX improvement, File menu now says "Open Torrent/Magnet" instead
+    of "Download Torrent/Magnet" for clarity.
+  * Bug Fix: The Torrent Save folder is now considered correctly,
+    now users can set a Torrent Save folder on external drives.
+  * Bug Fix: Slideshow component had an issue where it would not update
+    correctly the URL of the currently displayed slice if it had issues
+    fetching the image file, this could in turn sometimes cause 100% CPU
+    utilization.    
 	
- -- FrostWire Team <contact@frostwire.com>  Fri, 29 Apr 2011 10:23:14 -0500
+ -- FrostWire Team <contact@frostwire.com>  Thu, 5 May 2011 11:03:14 -0500
 
 frostwire (4.21.5) stable; urgency=high
 
@@ -16,7 +41,6 @@ frostwire (4.21.5) stable; urgency=high
   * Fixes NPE on HttpFetcher.fetch()
 	
  -- FrostWire Team <contact@frostwire.com>  Mon, 21 Mar 2011 19:33:12 -0500
-
 
 frostwire (4.21.4) stable; urgency=low
 

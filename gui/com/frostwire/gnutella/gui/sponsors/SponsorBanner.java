@@ -491,8 +491,10 @@ public class SponsorBanner extends JLabel {
 		}
 		
 		ImageCache.getInstance().getImage(remoteImageURL, new OnLoadedListener() {
-			public void onLoaded(URL url, BufferedImage image, boolean fromCache) {
-				setBannerLabelHtml(ImageCache.getInstance().getCachedFileURL(url));
+			public void onLoaded(URL url, BufferedImage image, boolean fromCache, boolean fail) {
+			    if (!fail && image != null) {
+			        setBannerLabelHtml(ImageCache.getInstance().getCachedFileURL(url));
+			    }
 			}
 		});
 	}

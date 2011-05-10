@@ -38,6 +38,7 @@ import com.google.inject.Injector;
 import com.limegroup.bittorrent.BTMetaInfo;
 import com.limegroup.gnutella.http.HttpExecutor;
 import com.limegroup.gnutella.library.SharingUtils;
+import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
 public class CoreFrostWireUtils {
@@ -508,6 +509,17 @@ public class CoreFrostWireUtils {
 		}
 		
 		return javaVersion.compareMajorMinorTo(asking) >= 0;
+	}
+	
+	public final static boolean canShareTorrentMetaFiles() {
+		if (!SharingSettings.DEFAULT_SHARED_TORRENTS_DIR.exists()) {
+			SharingSettings.DEFAULT_SHARED_TORRENTS_DIR.mkdir();
+		}
+
+		return SharingSettings.SHARE_TORRENT_META_FILES.getValue()
+				&& SharingSettings.DEFAULT_SHARED_TORRENTS_DIR.exists()
+				&& SharingSettings.DEFAULT_SHARED_TORRENTS_DIR.isDirectory()
+				&& SharingSettings.DEFAULT_SHARED_TORRENTS_DIR.canWrite();
 	}
 
 }

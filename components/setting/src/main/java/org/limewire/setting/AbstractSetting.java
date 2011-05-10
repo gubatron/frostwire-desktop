@@ -309,4 +309,10 @@ public abstract class AbstractSetting implements Setting {
             SettingsGroupManager.instance().execute(command);
         }
     }
+    
+    /** Returns the default value */
+    public Object getDefaultValue() {
+    	return DEFAULT_PROPS.getProperty(KEY);
+    }
+
 }

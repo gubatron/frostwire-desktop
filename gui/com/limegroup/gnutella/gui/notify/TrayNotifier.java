@@ -156,10 +156,10 @@ public class TrayNotifier implements NotifyUser {
         return true;
 	}
 	
-	public boolean supportsSystemTray() {
+    public boolean supportsSystemTray() {
 		//gub: could be SystemTray.isSupported(), not sure how fast that is though.
 	    return _supportsTray;
-	}
+    }
 
 	public void hideTrayIcon() {
 		_tray.remove(_icon);

@@ -156,6 +156,15 @@ final class UploadModel extends BasicDataLineModel<UploadDataLine, Uploader> {
         
 		super.remove(row);
 	}
+	
+	public void forceRemoveUploader(int row) {
+	    super.remove(row);
+	}
+
+	public void removeNotSeeded(int i) {
+		 _list.remove(i);
+        fireTableRowsDeleted(i, i);
+	}
 }
 
 

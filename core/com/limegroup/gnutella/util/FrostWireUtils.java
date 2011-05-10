@@ -28,7 +28,7 @@ public final class FrostWireUtils {
 	 * Constant for the current version of FrostWire.
 	 */
     @InspectablePrimitive("frostwire version")
-	private static final String FROSTWIRE_VERSION = "4.21.5";
+	private static final String FROSTWIRE_VERSION = "4.21.6";
     
     /**
      * The current revision of the BitTorrent protocol implementation.

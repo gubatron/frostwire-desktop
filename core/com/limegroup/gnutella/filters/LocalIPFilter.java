@@ -181,6 +181,11 @@ public final class LocalIPFilter extends AbstractIPFilter {
             }
         };
     }
+    
+    @Override
+    public boolean isBlocked(String addr) {
+        return badHosts.contains(new IP(addr));
+    }
 
 	@Override
 	public boolean isBlocked(String addr) {

@@ -45,6 +45,24 @@ public class SharingSettings extends LimeProps {
     public static final File DEFAULT_SHARED_TORRENTS_DIR = 
     	new File(FrostWireUtils.getLimeWireRootFolder(), "Torrents");
     
+    /**
+     * The default folder where Torrent Data will be saved. This folder CANNOT BE SHARED
+     * to avoid sharing inconsistencies. 
+     */
+    public static final File DEFAULT_TORRENT_DATA_DIR =
+    	new File(FrostWireUtils.getLimeWireRootFolder(), "Torrent Data");
+
+    /**
+     * The folder value where Torrent Data will be saved. This folder CANNOT BE SHARED
+     * to avoid sharing inconsistencies. 
+     */
+    public static final FileSetting TORRENT_DATA_DIR_SETTING = 
+    	FACTORY.createFileSetting("DEFAULT_TORRENT_DATA_DIR_SETTING", 
+    			DEFAULT_TORRENT_DATA_DIR).setAlwaysSave(true);
+    
+    public static final BooleanSetting SEED_FINISHED_TORRENTS =
+    	FACTORY.createBooleanSetting("SEED_FINISHED_TORRENTS", true);
+    
     public static final File IMAGE_CACHE_DIR = 
         new File(CoreFrostWireUtils.getPreferencesFolder(), "image_cache");
     
@@ -207,8 +225,9 @@ public class SharingSettings extends LimeProps {
         Set<File> set = new HashSet<File>(7);  
         set.add(getSaveDirectory());  
         synchronized(downloadDirsByDescription) {  
-            for(FileSetting next : downloadDirsByDescription.values()) 
+            for(FileSetting next : downloadDirsByDescription.values())  {
                 set.add(next.getValue());
+            }
         }  
         return set;  
     }
@@ -279,7 +298,7 @@ public class SharingSettings extends LimeProps {
      * Whether or not to auto-share files when using 'Download As'.
      */
 	public static final BooleanSetting SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES =
-		FACTORY.createBooleanSetting("SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES", true);
+		FACTORY.createBooleanSetting("SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES", false);
     
     /**
      * Whether or not to auto-share .torrent files.
@@ -422,7 +441,7 @@ public class SharingSettings extends LimeProps {
      * Setting for whether or not to allow partial files to be shared.
      */
     public static final BooleanSetting ALLOW_PARTIAL_SHARING =
-        FACTORY.createBooleanSetting("ALLOW_PARTIAL_SHARING", true);
+        FACTORY.createBooleanSetting("ALLOW_PARTIAL_SHARING", false);
     
     /**
      * Remote switch to turn off partial results.

@@ -174,11 +174,17 @@ public class TorrentManager implements
 		case COMPLETE: torrentComplete(t); break;
         
         // the below aren't handled specially...
-        case STOP_APPROVED:
+        case STOP_APPROVED: torrentStoppedApproved(t); break;
         case STOP_REQUESTED:
 		}
 	}
 	
+	private void torrentStoppedApproved(ManagedTorrent t) {
+		if (_active != null && t != null) {
+			_active.remove(t);
+		}
+	}
+
 	/**
 	 * @return active torrent for the given infoHash, null if no such.
 	 */

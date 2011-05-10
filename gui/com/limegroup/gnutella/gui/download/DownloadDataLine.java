@@ -46,6 +46,7 @@ import com.limegroup.gnutella.gui.tables.SpeedRenderer;
 import com.limegroup.gnutella.gui.tables.TimeRemainingHolder;
 import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
+import com.limegroup.gnutella.settings.SharingSettings;
 
 /**
  * This class handles all of the data for a single download, representing
@@ -91,7 +92,10 @@ public final class DownloadDataLine extends AbstractDataLine<Downloader>
 	 */
 	private static final String COMPLETE_SEEDING_STATE =
 		I18n.tr("Complete/Seeding");
-
+	
+	private static final String COMPLETE_NOT_SEEDING_STATE =
+		I18n.tr("Complete/Not Seeding");
+		
 	/**
 	 * Constant for the "aborted" download state.
 	 */
@@ -865,7 +869,12 @@ public final class DownloadDataLine extends AbstractDataLine<Downloader>
             
             if (getDownloader() instanceof BTDownloaderImpl ||
             	getDownloader() instanceof TorrentFileFetcher) {
-            	_status = COMPLETE_SEEDING_STATE;
+            	
+            	if (SharingSettings.SEED_FINISHED_TORRENTS.getValue()) {
+            		_status = COMPLETE_SEEDING_STATE;
+            	} else {
+            		_status = COMPLETE_NOT_SEEDING_STATE;
+            	}
             }
             
 			_progress = 100;

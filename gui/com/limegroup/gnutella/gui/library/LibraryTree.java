@@ -83,6 +83,12 @@ final class LibraryTree extends JTree implements MouseObserver {
 	private final SavedFilesDirectoryHolder sfdh = new SavedFilesDirectoryHolder(
 			SharingSettings.DIRECTORY_FOR_SAVING_FILES, 
 		    I18n.tr("Saved Files"));
+	
+	/** The Torrent Data Saved Folder */
+    private LibraryTreeNode torrentDataFilesNode;
+	private final SavedFilesDirectoryHolder torrent_sfdh = new SavedFilesDirectoryHolder(
+			SharingSettings.TORRENT_DATA_DIR_SETTING, 
+		    I18n.tr("Torrent Saved Files"));
 
 	/** The shared files node. It's an empty meta node. */
 	private LibraryTreeNode sharedFilesNode;
@@ -150,6 +156,10 @@ final class LibraryTree extends JTree implements MouseObserver {
 		//  2. add saved node
 		savedFilesNode = new LibraryTreeNode(sfdh);
 		addNode(ROOT_NODE, savedFilesNode);
+		
+		//2.1 add torrent saved node
+		torrentDataFilesNode = new LibraryTreeNode(torrent_sfdh);
+		addNode(ROOT_NODE, torrentDataFilesNode);
 		
 		//  -> add media types under saved node
 		addPerMediaTypeDirectories();
@@ -864,6 +874,7 @@ final class LibraryTree extends JTree implements MouseObserver {
             }
         }
     }
+    
 	
 	private class RefreshAction extends AbstractAction {
 		
@@ -949,6 +960,11 @@ final class LibraryTree extends JTree implements MouseObserver {
 	private Action addDirToPlaylistAction = new AddDirectoryToPlaylistAction();
 	private Action refreshAction = new RefreshAction(); 
 	private Action exploreAction = new ExploreAction();
+	private Action configureSharingAction = new ConfigureOptionsAction(
+            OptionsConstructor.SHARED_KEY,
+            I18n.tr("Options"),
+            I18n.tr("You can configure the folders you share in FrostWire\'s Options."));
+            
     private Action showTorrentMetaAction = new ShowHideTorrentMetaAction();
 	
 	private ButtonRow BUTTON_ROW;
@@ -986,9 +1002,9 @@ final class LibraryTree extends JTree implements MouseObserver {
 	private void makeButtonRow() {
 		if (hasExploreAction()) {
 			BUTTON_ROW = new ButtonRow(new Action[] { refreshAction,
-					exploreAction }, ButtonRow.X_AXIS, ButtonRow.NO_GLUE);
+					exploreAction, configureSharingAction }, ButtonRow.X_AXIS, ButtonRow.NO_GLUE);
 		} else {
-			BUTTON_ROW = new ButtonRow(new Action[] { refreshAction },
+			BUTTON_ROW = new ButtonRow(new Action[] { refreshAction, configureSharingAction },
 					ButtonRow.X_AXIS, ButtonRow.NO_GLUE);
 		}
 	}

@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
+import com.limegroup.gnutella.gui.actions.LimeAction;
 
 public class ConfigureOptionsAction extends AbstractAction {
 
@@ -24,6 +25,7 @@ public class ConfigureOptionsAction extends AbstractAction {
         this(pane);
         putValue(NAME, name);
         putValue(SHORT_DESCRIPTION, tooltip);
+        putValue(LimeAction.ICON_NAME,"LIBRARY_SHARING_OPTIONS");
     }
 
 	/**

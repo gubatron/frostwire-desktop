@@ -145,6 +145,11 @@ public interface FileManager {
      * Returns an array of all shared file descriptors.
      */
     public abstract FileDesc[] getAllSharedFileDescriptors();
+    
+    /**
+     * Returns an array of all shared file directories.
+     */
+    public abstract Set<File> getAllSharedDirectories();
 
     /**
      * Returns a list of all shared file descriptors in the given directory,
@@ -439,5 +444,9 @@ public interface FileManager {
      * Notification that an IncompleteFileDesc has been updated.
      */
     public void fileURNSUpdated(FileDesc ifd);
+    
+    public void addIndividuallySharedFolder(File directory);
+    
+    public void removeIndividuallySharedFile(File f);
 
 }

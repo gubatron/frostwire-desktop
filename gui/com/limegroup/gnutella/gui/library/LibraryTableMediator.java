@@ -34,6 +34,7 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
+import com.frostwire.components.TorrentSaveFolderComponent;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.FileDetails;
@@ -82,6 +83,7 @@ import com.limegroup.gnutella.library.SharingUtils;
 import com.limegroup.gnutella.licenses.License;
 import com.limegroup.gnutella.licenses.VerificationListener;
 import com.limegroup.gnutella.settings.QuestionsHandler;
+import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.util.EncodingUtils;
 import com.limegroup.gnutella.util.QueryUtils;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
@@ -104,6 +106,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
      * Variables so the PopupMenu & ButtonRow can have the same listeners
      */
     public static Action LAUNCH_ACTION;
+    public static Action OPEN_IN_FOLDER_ACTION;
     public static Action ENQUEUE_ACTION;
 	public static Action DELETE_ACTION;
     public static Action ANNOTATE_ACTION;
@@ -153,6 +156,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
         super.buildListeners();
 
         LAUNCH_ACTION = new LaunchAction();
+        OPEN_IN_FOLDER_ACTION = new OpenInFolderAction();
         ENQUEUE_ACTION = new EnqueueAction();
 		DELETE_ACTION = new RemoveAction();
         ANNOTATE_ACTION = new AnnotateAction();
@@ -204,7 +208,9 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
         JPopupMenu menu = new SkinPopupMenu();
         
 		menu.add(new SkinMenuItem(LAUNCH_ACTION));
-		menu.add(new SkinMenuItem(ENQUEUE_ACTION));
+		if (hasExploreAction()) {
+		    menu.add(new JMenuItem(OPEN_IN_FOLDER_ACTION));
+		}
 		menu.addSeparator();
 		menu.add(new SkinMenuItem(RESUME_ACTION));
 		menu.addSeparator();
@@ -1077,6 +1083,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		LAUNCH_ACTION.setEnabled(true);
 		DELETE_ACTION.setEnabled(true);
 		
+		if (sel.length == 1 && selectedFile.isFile() && selectedFile.getParentFile() != null) {
+            OPEN_IN_FOLDER_ACTION.setEnabled(true);
+        } else {
+            OPEN_IN_FOLDER_ACTION.setEnabled(false);
+        }
+		
 		//  turn on Enqueue if play list is visible and a selected item is playable
 		if (GUIMediator.isPlaylistVisible()) {
 			boolean found = false;
@@ -1142,6 +1154,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 					shareFolderAllowed = true;
 				else
 					unshareFolderAllowed = true;
+				
 			} else {
 				if (!GuiCoreMediator.getFileManager().isFileShared(file)) {
 					if (!SharingUtils.isFilePhysicallyShareable(file) || _isIncomplete)
@@ -1154,6 +1167,15 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 				if (shareAllowed && unshareAllowed && shareFolderAllowed && unshareFolderAllowed)
 					break;
 			}
+			
+			if (TorrentSaveFolderComponent.isParentOrChild(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue(), file, "")) {
+				shareAllowed = false;
+				unshareAllowed = false;
+				shareFolderAllowed = false;
+				unshareFolderAllowed = false;
+			}
+			
+			
 		}
 		SHARE_ACTION.setEnabled(shareAllowed);
 		UNSHARE_ACTION.setEnabled(unshareAllowed);
@@ -1173,6 +1195,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	 */
 	public void handleNoSelection() {
 		LAUNCH_ACTION.setEnabled(false);
+		OPEN_IN_FOLDER_ACTION.setEnabled(false);
 		ENQUEUE_ACTION.setEnabled(false);
 		DELETE_ACTION.setEnabled(false);
 		ANNOTATE_ACTION.setEnabled(false);
@@ -1211,6 +1234,10 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	    }
 	    return false;
 	}
+	
+	private boolean hasExploreAction() {
+        return OSUtils.isWindows() || OSUtils.isMacOSX();
+    }
 
     ///////////////////////////////////////////////////////
     //  ACTIONS
@@ -1233,6 +1260,32 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		
         public void actionPerformed(ActionEvent ae) {
 			launch();
+        }
+    }
+    
+    private final class OpenInFolderAction extends AbstractAction {
+        
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 1693310684299300459L;
+
+        public OpenInFolderAction () {
+            putValue(Action.NAME, I18n.tr("Open in Folder"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Open Folder Containing a Selected File"));
+            putValue(LimeAction.ICON_NAME, "LIBRARY_LAUNCH");
+        }
+        
+        public void actionPerformed(ActionEvent ae) {
+            int[] sel = TABLE.getSelectedRows();
+            if (sel.length == 0) {
+                return;
+            } 
+            
+            File selectedFile = getFile(sel[0]);
+            if (selectedFile.isFile() && selectedFile.getParentFile() != null) {
+                GUIMediator.launchExplorer(selectedFile.getParentFile());
+            }
         }
     }
 	

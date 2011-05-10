@@ -153,6 +153,13 @@ public class BTDownloaderImpl extends AbstractCoreDownloader
 		return torrent.resume();
 	}
 
+	public Torrent getTorrent() {
+		if (torrent instanceof FinishedTorrentDownload) {
+			return ((FinishedTorrentDownload) torrent).getInnerTorrent();
+		}
+		return torrent;
+	}
+	
 	public File getFile() {
 		if (torrent.isComplete())
 			return torrentFileSystem.getCompleteFile();
@@ -574,11 +581,11 @@ public class BTDownloaderImpl extends AbstractCoreDownloader
 		torrentStopped(null);
 		//downloadManager.remove(this, true);
 		if (torrent instanceof ManagedTorrent) {
-		    ((ManagedTorrent) torrent).removeFromAzureus();
+		    ((ManagedTorrent) torrent).removeFromAzureusAndDisk();
 		} else if (torrent instanceof FinishedTorrentDownload) {
 		    Torrent temp = ((FinishedTorrentDownload) torrent).getInnerTorrent();
 		    if (temp != null && temp instanceof ManagedTorrent) {
-		        ((ManagedTorrent) temp).removeFromAzureus();
+		        ((ManagedTorrent) temp).removeFromAzureusAndDisk();
 		    }
 		}
 	}

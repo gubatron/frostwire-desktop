@@ -331,8 +331,10 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 		
 		int MAX_TRIES = 20;
 		do {
-			if (!SharingSettings.DEFAULT_SAVE_DIR.exists()) {
-				SharingSettings.DEFAULT_SAVE_DIR.mkdirs();
+		    
+		    File saveDir = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
+			if (!saveDir.exists()) {
+			    saveDir.mkdirs();
 			}
 			
 			TOTorrent torrent = TorrentUtils.readFromFile(_torrentFile, false);
@@ -340,7 +342,7 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 			if ((_manager = _azureusCore.getGlobalManager().getDownloadManager(torrent)) == null) {			
 			    _manager = _azureusCore.getGlobalManager().addDownloadManager(
 			            _torrentFile.getCanonicalPath(),
-			            SharingSettings.DEFAULT_SAVE_DIR.getCanonicalPath());
+			            saveDir.getCanonicalPath());
 			}
 			
 			LOG.debug("createdAzureusDownloadManger - Azureus Save Location is:\n>> " + _manager.getSaveLocation().getCanonicalPath());
@@ -414,6 +416,12 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 						dispatchEvent(TorrentEvent.Type.COMPLETE);
 					}
 					addToLibrary();
+
+					//stop seeding if we don't have to.
+					if (!SharingSettings.SEED_FINISHED_TORRENTS.getValue()) {
+						stopSeeding();
+					}
+
 				}
 
 				@Override
@@ -533,6 +541,12 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 		}
 	}
 	
+	protected void stopSeeding() {
+		removeFromAzureus();
+		dispatchEvent(TorrentEvent.Type.STOP_SEEDING);
+		//UploadMediator.instance().stopSeeding(ManagedTorrent.this);
+	}
+
 	private Boolean _shuttingdown = false;
 		
 	private void onStateChanged(DownloadManager manager, int intState) {
@@ -1009,6 +1023,9 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 	}
 
 
+	/**
+	 * This happens when the torrent 
+	 */
 	private void addToLibrary() {
 		if (_manager == null)
 			return;
@@ -1031,6 +1048,12 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 			//}
 		}
 		
+		//THE LOGIC AHEAD USED TO SHARE TORRENT CONTENTS IN GNUTELLA.
+		//DOING THIS COULD LEAD TO CONTRADICTORY TO FILE SHARING POLICIES SET BY THE USER.
+		//TORRENTS SHALL BE SEEDED IN BITTORRENT, NOT SHARED UNLESS THE USER
+		//MOVES THE FILES TO A SHARED FOLDER.
+		
+		/**
 		boolean force = SharingSettings.SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES
 				.getValue();
 
@@ -1043,10 +1066,22 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 				fileManager.addFileAlways(_completeFile);
 			else
 				fileManager.addFileIfShared(_completeFile);
-		} else if (_completeFile.isDirectory()
-				&& (force || fileManager
-						.isFileInCompletelySharedDirectory(_completeFile)))
-			fileManager.addSharedFolder(_completeFile);
+		} else if (_completeFile.isDirectory()) {
+		    if (force || fileManager.isFileInCompletelySharedDirectory(_completeFile)) {
+		        fileManager.addIndividuallySharedFolder(_completeFile);
+		    }
+		}
+		*/
+	}
+
+	private void removeFromAzureus() {
+		if (_manager != null && _manager.getGlobalManager() != null) {
+	        try {
+	            _manager.getGlobalManager().removeDownloadManager(_manager);
+	        } catch (GlobalManagerDownloadRemovalVetoException e) {
+	            e.printStackTrace();
+	        }
+		}
 	}
 
 	/**
@@ -1441,7 +1476,8 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 	}
 	
 	public void createTorrentFile() {
-		_torrentFile = _info.createFileFromRawBytes(SharingSettings.DEFAULT_SAVE_DIR + File.separator + _info.getName() + ".torrent");
+		//This uses the folder where the .TORRENTS are saved, not the torrent data.
+		_torrentFile = _info.createFileFromRawBytes(SharingSettings.DEFAULT_SHARED_TORRENTS_DIR.getAbsolutePath() + File.separator + _info.getName() + ".torrent");
 	}
 	
 	public void setSaveFile(File saveDirectory, String filename) {
@@ -1475,11 +1511,15 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
         }
 	}
 
-    public void removeFromAzureus() {
-        if (_manager != null && _manager.getGlobalManager() != null) {
+    public void removeFromAzureusAndDisk() {
+    	removeFromAzureus();
+        	
+       	if (_manager != null && _manager.getGlobalManager() != null) {	
+            // in the future, we must use a better state machine to avoid this hacks
             try {
-                _manager.getGlobalManager().removeDownloadManager(_manager);
-            } catch (GlobalManagerDownloadRemovalVetoException e) {
+                File file = _manager.getAbsoluteSaveLocation();
+                file.delete();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

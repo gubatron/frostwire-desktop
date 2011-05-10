@@ -16,21 +16,13 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.bittorrent.BTMetaInfo;
+import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 public final class GuiFrostWireUtils extends CoreFrostWireUtils {
-	private final static boolean canShareTorrentMetaFiles() {
-		if (!SharingSettings.DEFAULT_SHARED_TORRENTS_DIR.exists()) {
-			SharingSettings.DEFAULT_SHARED_TORRENTS_DIR.mkdir();
-		}
-
-		return SharingSettings.SHARE_TORRENT_META_FILES.getValue()
-				&& SharingSettings.DEFAULT_SHARED_TORRENTS_DIR.exists()
-				&& SharingSettings.DEFAULT_SHARED_TORRENTS_DIR.isDirectory()
-				&& SharingSettings.DEFAULT_SHARED_TORRENTS_DIR.canWrite();
-	}
+	
 
 	public final static void shareTorrent(BTMetaInfo bt, byte[] body) {
 		if (!canShareTorrentMetaFiles())
@@ -76,8 +68,8 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
 		canShareTorrentMetaFiles();
 
 		if (SharingSettings.SHARE_TORRENT_META_FILES.getValue()) {
-			GuiCoreMediator.getFileManager().addSharedFolder(
-					SharingSettings.DEFAULT_SHARED_TORRENTS_DIR);
+			//GuiCoreMediator.getFileManager().addSharedFolder(
+			//		SharingSettings.DEFAULT_SHARED_TORRENTS_DIR);
 		}
 
 		// share/unshare all torrents inside
@@ -85,7 +77,8 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
 				.listFiles();
 		if (torrents != null && torrents.length > 0) {
 			for (File t : torrents) {
-				if (SharingSettings.SHARE_TORRENT_META_FILES.getValue())
+				if (SharingSettings.SHARE_TORRENT_META_FILES.getValue() &&
+				    GuiCoreMediator.getFileManager().isFolderShared(SharingSettings.DEFAULT_SHARED_TORRENTS_DIR))
 					GuiCoreMediator.getFileManager().addFileAlways(t);
 				else
 					GuiCoreMediator.getFileManager().stopSharingFile(t);
@@ -177,5 +170,28 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
 		} catch (Exception e) {
 			GUIMediator.launchFile(file);
 		}
+	}
+	
+	public static void correctIndividuallySharedFiles() {
+	    correctIndividuallySharedFiles(SharingSettings.getSaveDirectory());
+	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getDocumentMediaType()).getValue());
+	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getProgramMediaType()).getValue());
+	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getAudioMediaType()).getValue());
+	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getVideoMediaType()).getValue());
+	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getImageMediaType()).getValue());
+	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getTorrentMediaType()).getValue());
+	}
+	
+	public static void correctIndividuallySharedFiles(File directory) {
+	    if (!SharingSettings.SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES.getValue()) {
+            File[] files = directory.listFiles();
+            if (files != null) {
+                for (File f : files) {
+                    GuiCoreMediator.getFileManager().removeIndividuallySharedFile(f);
+                }
+            }
+        }
+	    
+	    GuiCoreMediator.getFileManager().loadSettings();
 	}
 }

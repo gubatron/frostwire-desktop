@@ -27,7 +27,7 @@ import com.limegroup.gnutella.settings.SharingSettings;
  */
 public final class SaveDirPaneItem extends AbstractDirPaneItem {
 
-    public final static String TITLE = I18n.tr("Save Folder");
+    public final static String TITLE = I18n.tr("Gnutella Save Folder");
     
     /**
      * The mediatype table mediator that handles the per mediatype download

@@ -128,6 +128,11 @@ class MediaTypeDownloadDirMediator extends AbstractTableMediator<MediaTypeDownlo
 		DATA_MODEL.clear();
 		for (Iterator<?> i = NamedMediaType.getAllNamedMediaTypes().iterator(); i.hasNext();) {
 			NamedMediaType nm = (NamedMediaType) i.next();
+			
+			if (nm.getMediaType().equals(MediaType.TYPE_TORRENTS)) {
+				continue;
+			}
+			
 			if (!nm.getMediaType().getMimeType().equals(MediaType.SCHEMA_ANY_TYPE))
 				DATA_MODEL.add(nm);
 		}

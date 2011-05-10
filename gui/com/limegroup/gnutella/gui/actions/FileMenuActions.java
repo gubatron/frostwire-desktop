@@ -117,7 +117,7 @@ public class FileMenuActions {
         private AutoCompleteTextField PATH_FIELD;
 
         public OpenMagnetTorrentAction() {
-            super(I18n.tr("&Download .Torrent or Magnet"));
+            super(I18n.tr("O&pen .Torrent or Magnet"));
             PATH_FIELD = new ClearableAutoCompleteTextField(34);
             putValue(Action.LONG_DESCRIPTION, I18n.tr("Opens a magnet link or torrent file"));
         }
@@ -389,6 +389,17 @@ public class FileMenuActions {
         
         public void actionPerformed(ActionEvent e) {
             GUIMediator.close(false);
+        }
+    }
+    
+    public static class ShutdownAction extends AbstractAction {
+        public ShutdownAction() {
+            super(I18n.tr("E&xit Completely"));
+            putValue(Action.LONG_DESCRIPTION, I18n.tr("Disconnect and Exit"));
+        }
+        
+        public void actionPerformed(ActionEvent e) {
+            GUIMediator.shutdown();
         }
     }
 }
