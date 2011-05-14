@@ -743,6 +743,8 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
 //		// downloads can go from inactive to active through resuming.
 //		if ( !this.isInactive() ) _endTime = -1;
 //	}
+	    
+	    _progress = getInitializeObject().getProgress();
 	}
 
 

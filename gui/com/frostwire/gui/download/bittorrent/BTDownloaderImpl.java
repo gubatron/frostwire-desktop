@@ -55,4 +55,8 @@ public class BTDownloaderImpl implements BTDownloader {
     public File getSaveLocation() {
         return _downloadManager.getSaveLocation();
     }
+
+    public int getProgress() {
+        return _downloadManager.getStats().getDownloadCompleted(true) / 10;
+    }
 }
