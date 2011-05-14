@@ -313,7 +313,7 @@ public final class VisualConnectionCallback implements ActivityCallback {
             this.mgr = mgr;
         }
         public void run() {
-            mf().getDownloadMediator().add(mgr);
+            //mf().getBTDownloadMediator().add(mgr);
 		}
     }
 
@@ -323,7 +323,7 @@ public final class VisualConnectionCallback implements ActivityCallback {
             this.mgr = mgr;
         }
         public void run() {
-            mf().getDownloadMediator().remove(mgr);
+            //mf().getBTDownloadMediator().remove(mgr);
             mf().getLibraryMediator().quickRefresh();
             SearchMediator.updateResults();
             mf().getLoggingMediator().add(new LogEvent(mgr));

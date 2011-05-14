@@ -56,6 +56,7 @@ import org.limewire.util.VersionUtils;
 import com.frostwire.bittorrent.AzureusStarter;
 import com.frostwire.gnutella.connectiondoctor.ConnectionDoctor;
 import com.frostwire.gnutella.gui.chat.ChatMediator;
+import com.frostwire.gui.download.bittorrent.BTDownloadMediator;
 import com.limegroup.bittorrent.gui.TorrentUploadCanceller;
 import com.limegroup.gnutella.bugs.FatalBugManager;
 import com.limegroup.gnutella.chat.InstantMessenger;
@@ -360,6 +361,7 @@ public final class GUIMediator {
 	 * responsible for displaying active downloads to the user.
 	 */
 	private DownloadMediator DOWNLOAD_MEDIATOR;
+	private BTDownloadMediator BT_DOWNLOAD_MEDIATOR;
 
 	/**
 	 * Constant handle to the <tt>UploadMediator</tt> class that is responsible
@@ -911,25 +913,20 @@ public final class GUIMediator {
 	 * @return the total number of downloads for this session
 	 */
 	public final int getTotalDownloads() {
-		return getDownloadMediator().getTotalDownloads();
+		return getBTDownloadMediator().getTotalDownloads();
 	}
 
-	/**
-	 * Returns the total number of currently active downloads.
-	 * 
-	 * @return the total number of currently active downloads
-	 */
 	public final int getCurrentDownloads() {
-		return getDownloadMediator().getCurrentDownloads();
+		return getBTDownloadMediator().getActiveDownloads();
 	}
 
 	public final void openTorrent(File torrentFile) {
-	    getDownloadMediator().openTorrent(torrentFile);
+	    getBTDownloadMediator().openTorrent(torrentFile);
 		setWindow(GUIMediator.Tabs.SEARCH);
 	}
 
 	public final void openTorrentURI(URI torrentURI) {
-	    getDownloadMediator().openTorrentURI(torrentURI);
+	    getBTDownloadMediator().openTorrentURI(torrentURI);
 		setWindow(GUIMediator.Tabs.SEARCH);
 	}
 
@@ -2059,6 +2056,13 @@ public final class GUIMediator {
 	    }
 	    return DOWNLOAD_MEDIATOR;
 	}
+	
+	private BTDownloadMediator getBTDownloadMediator() {
+        if (BT_DOWNLOAD_MEDIATOR == null) {
+            BT_DOWNLOAD_MEDIATOR = getMainFrame().getBTDownloadMediator();
+        }
+        return BT_DOWNLOAD_MEDIATOR;
+    }
 	
 	private UploadMediator getUploadMediator() {
 	    if (UPLOAD_MEDIATOR == null) {

@@ -40,6 +40,7 @@ import com.frostwire.gnutella.gui.android.AndroidMediator;
 import com.frostwire.gnutella.gui.chat.ChatMediator;
 import com.frostwire.gnutella.gui.tabs.AndroidTab;
 import com.frostwire.gnutella.gui.tabs.ChatTab;
+import com.frostwire.gui.download.bittorrent.BTDownloadMediator;
 import com.limegroup.gnutella.gui.connection.ConnectionMediator;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.TransferHandlerDropTargetListener;
@@ -84,6 +85,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      * responsible for displaying active downloads to the user.
      */
     private DownloadMediator DOWNLOAD_MEDIATOR;
+    private BTDownloadMediator BT_DOWNLOAD_MEDIATOR;
 
     /**
      * Constant handle to the <tt>MonitorView</tt> class that is
@@ -347,7 +349,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
     	SEARCH_MEDIATOR = new SearchMediator();
     	MONITOR_VIEW = new MonitorView();
         
-    	TABS.put(GUIMediator.Tabs.SEARCH, new SearchDownloadTab(SEARCH_MEDIATOR, getDownloadMediator()));
+    	TABS.put(GUIMediator.Tabs.SEARCH, new SearchDownloadTab(SEARCH_MEDIATOR, getBTDownloadMediator()));
         TABS.put(GUIMediator.Tabs.MONITOR, new MonitorUploadTab(MONITOR_VIEW, getUploadMediator()));
         TABS.put(GUIMediator.Tabs.CONNECTION, new ConnectionsTab(getConnectionMediator()));
         TABS.put(GUIMediator.Tabs.LIBRARY, new LibraryPlayListTab(getLibraryMediator()));
@@ -658,15 +660,15 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
 		}
 		
         // first handle the download view
-        if (getDownloadMediator().getActiveDownloads() == 0 &&
+        if (getBTDownloadMediator().getTotalDownloads() == 0 &&
                 isDownloadViewVisible) {
             ((SearchDownloadTab)TABS.get(GUIMediator.Tabs.SEARCH)).
                 setDividerLocation(1000);
             isDownloadViewVisible = false;
-        } else if (getDownloadMediator().getActiveDownloads() > 0 &&
+        } else if (getBTDownloadMediator().getTotalDownloads() > 0 &&
                  !isDownloadViewVisible) {
             // need to turn it on....
-            final int count = getDownloadMediator().getActiveDownloads();
+            final int count = getBTDownloadMediator().getTotalDownloads();
             // make sure stuff didn't change on me....
             if (count > 0) {
                 final double prop = (count > 6) ? 0.60 : 0.70;
@@ -690,6 +692,13 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
             DOWNLOAD_MEDIATOR = DownloadMediator.instance();
         }
         return DOWNLOAD_MEDIATOR;
+    }
+    
+    final BTDownloadMediator getBTDownloadMediator() {
+        if (BT_DOWNLOAD_MEDIATOR == null) {
+            BT_DOWNLOAD_MEDIATOR = BTDownloadMediator.instance();
+        }
+        return BT_DOWNLOAD_MEDIATOR;
     }
 
     /**

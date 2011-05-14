@@ -360,7 +360,7 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
 	/**
 	 * Column index for the file name.
 	 */
-	static final int FILE_INDEX = 1;
+	static final int FILE_INDEX = 0;
 	private static final LimeTableColumn FILE_COLUMN =
 	    new LimeTableColumn(FILE_INDEX, "DOWNLOAD_NAME_COLUMN", I18n.tr("Name"),
 	                201, true, ColoredCell.class);
@@ -368,7 +368,7 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
 	/**
 	 * Column index for the file size.
 	 */
-	static final int SIZE_INDEX = 2;
+	static final int SIZE_INDEX = 1;
 	private static final LimeTableColumn SIZE_COLUMN =
 	    new LimeTableColumn(SIZE_INDEX, "DOWNLOAD_SIZE_COLUMN", I18n.tr("Size"),
 	                65, true, SizeHolder.class);
@@ -376,7 +376,7 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
 	/**
 	 * Column index for the file download status.
 	 */
-	static final int STATUS_INDEX = 3;
+	static final int STATUS_INDEX = 2;
 	private static final LimeTableColumn STATUS_COLUMN =
 	    new LimeTableColumn(STATUS_INDEX, "DOWNLOAD_STATUS_COLUMN", I18n.tr("Status"),
 	                152, true, String.class);
@@ -384,7 +384,7 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
 	/**
 	 * Column index for whether or not the uploader is chat-enabled.
 	 */
-	static final int CHAT_INDEX = 4;
+	static final int CHAT_INDEX = 3;
 	private static final LimeTableColumn CHAT_COLUMN =
 	    new LimeTableColumn(CHAT_INDEX, "DOWNLOAD_CHAT_COLUMN", I18n.tr("Chat"),
 	                10, false, ChatHolder.class);
@@ -392,7 +392,7 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
 	/**
 	 * Column index for the progress of the download.
 	 */
-	static final int PROGRESS_INDEX = 5;
+	static final int PROGRESS_INDEX = 4;
 	private static final LimeTableColumn PROGRESS_COLUMN =
 	    new LimeTableColumn(PROGRESS_INDEX, "DOWNLOAD_PROGRESS_COLUMN", I18n.tr("Progress"),
 	                71, true, ProgressBarHolder.class);
@@ -400,7 +400,7 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
 	/**
      * Column index for actual amount of bytes downloaded.
      */
-    static final int BYTES_DOWNLOADED_INDEX = 6;
+    static final int BYTES_DOWNLOADED_INDEX = 5;
     private static final LimeTableColumn BYTES_DOWNLOADED_COLUMN =
         new LimeTableColumn(BYTES_DOWNLOADED_INDEX, "DOWNLOAD_BYTES_DOWNLOADED_COLUMN", I18n.tr("Downloaded"),
                     20, true, SizeHolder.class);
@@ -408,7 +408,7 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
 	/**
 	 * Column index for the download speed.
 	 */
-	static final int SPEED_INDEX = 7;
+	static final int SPEED_INDEX = 6;
 	private static final LimeTableColumn SPEED_COLUMN =
 	    new LimeTableColumn(SPEED_INDEX, "DOWNLOAD_SPEED_COLUMN", I18n.tr("Speed"),
 	                58, true, SpeedRenderer.class);
@@ -416,7 +416,7 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
 	/**
 	 * Column index for the download time remaining.
 	 */
-	static final int TIME_INDEX = 8;
+	static final int TIME_INDEX = 7;
 	private static final LimeTableColumn TIME_COLUMN =
 	    new LimeTableColumn(TIME_INDEX, "DOWNLOAD_TIME_REMAINING_COLUMN", I18n.tr("Time"),
 	                49, true, TimeRemainingHolder.class);
@@ -424,7 +424,7 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
     /**
      * Column index for the vendor of the downloader.
      */
-    static final int VENDOR_INDEX = 9;
+    static final int VENDOR_INDEX = 8;
     private static final LimeTableColumn VENDOR_COLUMN =
         new LimeTableColumn(VENDOR_INDEX, "DOWNLOAD_SERVER_COLUMN", I18n.tr("Vendor/Version"),
                     20, false, String.class);
@@ -432,7 +432,7 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
 	/**
 	 * Number of columns to display
 	 */
-	static final int NUMBER_OF_COLUMNS = 10;
+	static final int NUMBER_OF_COLUMNS = 9;
 	
 	// Implements DataLine interface
 	public int getColumnCount() { return NUMBER_OF_COLUMNS; }
