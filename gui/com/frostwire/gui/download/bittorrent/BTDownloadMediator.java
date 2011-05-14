@@ -229,12 +229,16 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
 		}
 	}
 
-    public int getNumDownloads() {
-        return DATA_MODEL.getNumDownloads();
+    public int getActiveDownloads() {
+        return DATA_MODEL.getActiveDownloads();
     }
 
-    public int getNumUploads() {
-        return DATA_MODEL.getNumUploads();
+    public int getActiveUploads() {
+        return DATA_MODEL.getActiveUploads();
+    }
+    
+    public int getTotalDownloads() {
+        return DATA_MODEL.getTotalDownloads();
     }
     
     /**
@@ -645,4 +649,14 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
 	        launchExplorer(); 
 	    } 
 	}
+
+    public void openTorrentURI(URI torrentURI) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    public void openTorrent(File torrentFile) {
+        // TODO Auto-generated method stub
+        
+    }
 }

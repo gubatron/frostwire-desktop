@@ -32,7 +32,7 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
         return new BTDownloadDataLine();
     }    
 	
-	int getNumDownloads() {
+	int getActiveDownloads() {
 		int size  = getRowCount();
 		int count = 0;
 
@@ -45,7 +45,7 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
 		return count;
 	}
 	
-	int getNumUploads() {
+	int getActiveUploads() {
         int size  = getRowCount();
         int count = 0;
 
@@ -79,6 +79,10 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
     
     double getUploadsBandwidth() {
         return -1;
+    }
+    
+    public int getTotalDownloads() {
+        return getRowCount();
     }
 
 	/**
