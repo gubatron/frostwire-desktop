@@ -172,12 +172,7 @@ class SearchInputPanel extends JPanel {
         add(SCHEMA_BOX, BorderLayout.NORTH);
 
         searchEntry = createSearchEntryPanel();
-		whatsnew = createWhatIsNewPanel();
-        browseHost = createBrowseHostPanel();
-        
         panelize(searchEntry);
-        panelize(whatsnew);
-        panelize(browseHost);
         
         PANE.add(I18n.tr("Keyword"), searchEntry);
         PANE.add(I18n.tr("What\'s New"), whatsnew);
@@ -200,12 +195,11 @@ class SearchInputPanel extends JPanel {
         viewSharedFilesPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 10, 0));
         add(viewSharedFilesPanel, BorderLayout.SOUTH);
         
-        WHATSNEW_SEARCH_LABEL.setFont(UIManager.getFont("Table.font.bold"));
         Font bold = UIManager.getFont("Table.font.bold");
         Font bolder =
             new Font(bold.getName(), bold.getStyle(), bold.getSize() + 5);
         SEARCH_TYPE_LABEL.setFont(bolder);
-        SEARCH_TYPE_LABEL.setPreferredSize(new Dimension(130, 20)); //FTA: Finally. Spanish translation for "Cualquier tipo" now shows properly.
+        SEARCH_TYPE_LABEL.setPreferredSize(new Dimension(130, 20));
         schemaListener.actionPerformed(null);
     }
     
