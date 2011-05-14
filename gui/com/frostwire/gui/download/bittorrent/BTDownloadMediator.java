@@ -20,16 +20,19 @@ import javax.swing.JPopupMenu;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.gudy.azureus2.core3.download.DownloadManager;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.inspection.InspectablePrimitive;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
+import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.CoreFrostWireUtils;
 import com.frostwire.GuiFrostWireUtils;
 import com.limegroup.bittorrent.gui.TorrentDownloadFactory;
 import com.limegroup.bittorrent.gui.TorrentFileFetcher;
 import com.limegroup.bittorrent.settings.BittorrentSettings;
+import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.Endpoint;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.FileDetails;
@@ -84,18 +87,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
 	implements FileDetailsProvider {
 
 	private static final Log LOG = LogFactory.getLog(BTDownloadMediator.class);
-	
-	/**
-	 * Count the number of resume clicks
-	 */
-	@InspectablePrimitive("resume button clicks")
-    private static volatile int resumeClicks;
-	
-    /**
-     * Variable for the total number of downloads that have been added in this
-     * session.
-     */
-    private static int _totalDownloads = 0;
 
     /**
      * instance, for singleton access
@@ -107,7 +98,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         if (INSTANCE == null) {
             INSTANCE = new BTDownloadMediator();
         }
-        
         return INSTANCE;
     }
 
@@ -116,20 +106,16 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
      * the buttons & popup menu.
      */
 	private Action removeAction;
-    private Action clearAction;
-    private Action browseAction;
     private Action launchAction;
     private Action resumeAction;
     private Action pauseAction;
-	private Action magnetAction;
-	private Action bitziAction;
 	private Action exploreAction; 
 
     /** The actual download buttons instance.
      */
     private BTDownloadButtons _downloadButtons;
     
-    private final DockIcon dockIcon;
+    private AzureusCore _azureusCore;
     
     /**
      * Overriden to have different default values for tooltips.
@@ -157,14 +143,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         super.buildListeners();
 
 		removeAction = new RemoveAction();
-		clearAction = new ClearAction();
-		browseAction = new BrowseAction();
 		launchAction = new LaunchAction();
 		resumeAction = new ResumeAction();
 		pauseAction = new PauseAction();
-		magnetAction = new CopyMagnetLinkToClipboardAction(this);
-		exploreAction = new ExploreAction(); 
-		bitziAction = new BitziLookupAction(this);       
+		exploreAction = new ExploreAction();    
     }
 
 	/**
@@ -176,10 +158,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
 		if(OSUtils.isWindows()||OSUtils.isMacOSX())
             actions = new Action[] { 
                 resumeAction, pauseAction, launchAction,
-                exploreAction,clearAction,removeAction};
+                exploreAction,removeAction};
 		else 
 			actions = new Action[] { 
-		        resumeAction, pauseAction, launchAction,clearAction, removeAction};
+		        resumeAction, pauseAction, launchAction, removeAction};
 		
 		return actions;
 	}
@@ -220,8 +202,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         super("DOWNLOAD_TABLE");
         GUIMediator.addRefreshListener(this);
         ThemeMediator.addThemeObserver(this);
-        
-        this.dockIcon = new DockIconFactoryImpl().createDockIcon();
     }
 
     /**
@@ -231,89 +211,30 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     public void doRefresh() {
         boolean inactivePresent =
             ((Boolean)DATA_MODEL.refresh()).booleanValue();
-        
-		clearAction.setEnabled(inactivePresent);
       
 		int[] selRows = TABLE.getSelectedRows();
         
 		if (selRows.length > 0) {
-//            DownloadDataLine dataLine = DATA_MODEL.get(selRows[0]);
-//            
-//			if (dataLine.getState() == DownloadStatus.WAITING_FOR_USER) {
-//				resumeAction.putValue(Action.NAME,
-//						I18n.tr("Find More Sources for Download"));
-//				resumeAction.putValue(LimeAction.SHORT_NAME,
-//						I18n.tr("Find Sources"));
-//				resumeAction.putValue(Action.SHORT_DESCRIPTION,
-//						I18n.tr("Try to Find Additional Sources for Downloads"));
-//			}
-//            else {
-//				resumeAction.putValue(Action.NAME,
-//						I18n.tr("Resume Download"));
-//				resumeAction.putValue(LimeAction.SHORT_NAME, 
-//						 I18n.tr("Resume"));
-//				resumeAction.putValue(Action.SHORT_DESCRIPTION,
-//						 I18n.tr("Reattempt Selected Downloads"));
-//            }
-//			
-//            Downloader dl = dataLine.getDownloader();
-//            boolean inactive = dataLine.isDownloaderInactive();
-//            boolean resumable = dl.isResumable();
-//            boolean pausable = dl.isPausable(); 
-//            boolean completed = dl.isCompleted();
-//            
-//			resumeAction.setEnabled(resumable);
-//			pauseAction.setEnabled(pausable);
-//			priorityUpAction.setEnabled(inactive && pausable);
-//			priorityDownAction.setEnabled(inactive && pausable);
-//			exploreAction.setEnabled(completed || inactive);
+            BTDownloadDataLine dataLine = DATA_MODEL.get(selRows[0]);
+            
+            BTDownloader dl = dataLine.getInitializeObject();
+            
+            boolean resumable = dl.isResumable();
+            boolean pausable = dl.isPausable(); 
+            boolean completed = dl.isCompleted();
+            
+			resumeAction.setEnabled(resumable);
+			pauseAction.setEnabled(pausable);
+			exploreAction.setEnabled(completed);
 		}
-		
-        dockIcon.draw(getCompleteDownloads());
 	}
 
-    /**
-     * Returns the number of completed Downloads.
-     * 
-     * @return The number of completed Downloads
-     */
-    public int getCompleteDownloads() {
-        int complete = 0;
-//        for (int row = 0; row < DATA_MODEL.getRowCount(); row++) {
-//            BTDownloadDataLine dataLine = DATA_MODEL.get(row);
-//            if (dataLine.getState() == DownloadStatus.COMPLETE) {
-//                complete++;
-//            }
-//        }
-        return complete;
-    }
-    
-    /**
-     * Returns the total number of Downloads that have occurred in this session.
-     *
-     * @return the total number of Downloads that have occurred in this session
-     */
-    public int getTotalDownloads() {
-        return _totalDownloads;
+    public int getNumDownloads() {
+        return DATA_MODEL.getNumDownloads();
     }
 
-    /**
-     * Returns the total number of current Downloads.
-     *
-     * @return the total number of current Downloads
-     */
-    public int getCurrentDownloads() {
-        return DATA_MODEL.getCurrentDownloads();
-    }
-
-    /**
-     * Returns the total number of active Downloads.
-     * This includes anything that is still viewable in the Downloads view.
-     *
-     * @return the total number of active Downloads
-     */
-    public int getActiveDownloads() {
-        return DATA_MODEL.getRowCount();
+    public int getNumUploads() {
+        return DATA_MODEL.getNumUploads();
     }
     
     /**
@@ -331,13 +252,12 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
 //    	return names;
 //    }
     
-    /**
-     * Returns the aggregate amount of bandwidth being consumed by active downloads.
-     *  
-     * @return the total amount of bandwidth being consumed by active downloads.
-     */
-    public double getActiveDownloadsBandwidth() {
-        return DATA_MODEL.getActiveDownloadsBandwidth();
+    public double getDownloadsBandwidth() {
+        return DATA_MODEL.getDownloadsBandwidth();
+    }
+    
+    public double getUploadsBandwidth() {
+        return DATA_MODEL.getUploadsBandwidth();
     }
 
     /**
@@ -349,18 +269,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
      * If the download is not already in the list, then it is added.
      *  <p>
      */
-    public void add(BTDownloader downloader) {
-    	
-//    	//don't show system update on upload tab
-//        if (downloader != null && downloader.getFile() != null && downloader.getFile().getName().startsWith("hostiles.txt.")) {
-//            //System.out.println("UploadMediator.add() - Skipping "+uploader.getFileName()+" - no need to show");
-//            return;
-//        }
-//        
-//        if ( !DATA_MODEL.contains(downloader) ) {
-//            _totalDownloads++;
-//            super.add(downloader);
-//        }
+    public void add(BTDownloader downloader) {        
+        if ( !DATA_MODEL.contains(downloader) ) {
+            super.add(downloader);
+        }
     }
 
     /**
@@ -417,100 +329,11 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
 //            DownloadDataLine ddl = DATA_MODEL.get(dloader);
 //            if (ddl != null) ddl.setEndTime(System.currentTimeMillis());
 //        }
-    }
-
-    public void openTorrent(File file) {
-//    	try {
-//            TorrentDownloadFactory factory = new TorrentDownloadFactory(file);
-//            DownloaderUtils.createDownloader(factory);
-//  		
-//            if(SharingSettings.SHARE_TORRENT_META_FILES.getValue()) {
-//            	GuiFrostWireUtils.shareTorrent(file);
-//            	
-//            	// begin of FTA validations (FTA: Added support to handle files one by one)
-//            	com.limegroup.bittorrent.BTMetaInfo torrinfo = factory.getBTMetaInfo();
-//
-//            	if (torrinfo == null) {
-//            		//GUIMediator.showMessage("Canceled by user"); //FTA: debug
-//            		return;
-//            	}
-//            	final File tFile = GuiCoreMediator.getTorrentManager()
-//            	.getSharedTorrentMetaDataFile(torrinfo);
-//            	//System.out.println("DownloadMediator() - getBTMetaInfo SUCCESS!");
-//            	// end of FTA validations
-//
-//            	// Old code was:
-//            	//final File tFile = GuiCoreMediator.getTorrentManager()
-//            	//                .getSharedTorrentMetaDataFile(factory.getBTMetaInfo());
-//
-//            	File backup = null;
-//            	if(tFile.exists()) {
-//            		//could be same file if we are re-launching 
-//            		//an existing torrent from library
-//            		if(tFile.equals(file)) {
-//            			return;
-//            		}
-//
-//            		//don't get this one... aren't we supposed to share the file?
-//            		GuiCoreMediator.getFileManager().stopSharingFile(tFile);
-//
-//            		backup = new File(tFile.getParent(), tFile.getName().concat(".bak"));
-//            		FileUtils.forceRename(tFile, backup);
-//            	}
-//            	if(!FileUtils.copy(file, tFile) && (backup != null)) {
-//            		//try restoring backup
-//            		if(FileUtils.forceRename(backup, tFile)) {
-//            			GuiCoreMediator.getFileManager().addFileIfShared(tFile);
-//            		}
-//            	} 
-//            	//com.limegroup.gnutella.gui.GUIMediator.showMessage("The torrent has been read!"); //FTA: debug
-//            }
-//    	} catch (IOException ioe) {
-//    		ioe.printStackTrace();
-//    		if (!ioe.toString().contains("No files selected by user")) {
-//    			// could not read torrent file or bad torrent file.
-//    			GUIMediator.showError(I18n.tr("FrostWire was unable to load the torrent file \"{0}\", - it may be malformed or FrostWire does not have permission to access this file.", 
-//    					file.getName()),
-//    					QuestionsHandler.TORRENT_OPEN_FAILURE);
-//    			//System.out.println("***Error happened from Download Mediator: " +  ioe);
-//    			//GUIMediator.showMessage("Error was: " + ioe); //FTA: debug
-//    		}
-//    	}
-    }
-
-    /**
-     * Gubatron to FTA: You'll need to apply your updates on this method as well.
-     * @param uri
-     */
-    public void openTorrentURI(URI uri) {
-//    	TorrentFileFetcher fetcher = new TorrentFileFetcher(uri, GuiCoreMediator.getDownloadManager());
-//    	add(fetcher);
-//    	fetcher.fetch();
-    }
-    
-    private File copyToThemeDir(File themeFile) {
-        File themeDir = ThemeSettings.THEME_DIR_FILE;
-        File realLoc = new File(themeDir, themeFile.getName());
-        // if they're the same, just use it.
-        if( realLoc.equals(themeFile) )
-            return themeFile;
-
-        // otherwise, if the file already exists in the theme dir, remove it.
-        realLoc.delete();
         
-        // copy from shared to theme dir.
-        FileUtils.copy(themeFile, realLoc);
-        return realLoc;
+        super.remove(dloader);
+        
+        dloader.remove();
     }
-    
-    private boolean isThemeFile(String name) {
-        return name.toLowerCase().endsWith(ThemeSettings.EXTENSION);
-    }
-    
-    private boolean isTorrentFile(String name) {
-    	return name.toLowerCase().endsWith(".torrent");
-    }
-    
 
     /**
      * Launches the selected files in the <tt>Launcher</tt> or in the built-in
@@ -532,24 +355,25 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
      * Pauses all selected downloads.
      */
     void pauseSelectedDownloads() {
-//        int[] sel = TABLE.getSelectedRows();
-//        for(int i = 0; i < sel.length; i++)
-//            DATA_MODEL.get(sel[i]).getInitializeObject().pause();
+        int[] sel = TABLE.getSelectedRows();
+        for(int i = 0; i < sel.length; i++) {
+            DATA_MODEL.get(sel[i]).getInitializeObject().pause();
+        }
     }
     
     /**  
      * Launches explorer
      */ 
     void launchExplorer() { 
-//        int[] sel = TABLE.getSelectedRows();
-//        Downloader dl = DATA_MODEL.get(sel[sel.length-1]).getInitializeObject(); 
-//        File toExplore = dl.getFile(); 
-//        
-//        if (toExplore == null) {
-//            return;
-//        }
-//        
-//        GUIMediator.launchExplorer(toExplore);
+        int[] sel = TABLE.getSelectedRows();
+        BTDownloader dl = DATA_MODEL.get(sel[sel.length-1]).getInitializeObject(); 
+        File toExplore = dl.getSaveLocation(); 
+        
+        if (toExplore == null) {
+            return;
+        }
+        
+        GUIMediator.launchExplorer(toExplore);
     } 
     
     FileTransfer[] getSelectedFileTransfers() {
@@ -574,32 +398,12 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
      * Forces the selected downloads in the download window to resume.
      */
     void resumeSelectedDownloads() {
-//        int[] sel = TABLE.getSelectedRows();
-//        for(int i = 0; i < sel.length; i++) {
-//            DownloadDataLine dd = DATA_MODEL.get(sel[i]);
-//            Downloader downloader = dd.getDownloader();
-//                if(!dd.isCleaned())
-//                    downloader.resume();
-//        }
-//        
-//        resumeClicks++;
-    }
-
-	
-
-    /**
-     * Opens up a browse session with the selected hosts in the download
-     * window.
-     */
-    void browseSelectedDownloads() {
-//        int[] sel = TABLE.getSelectedRows();
-//        for(int i = 0; i < sel.length; i++) {
-//            DownloadDataLine dd = DATA_MODEL.get(sel[i]);
-//            Downloader downloader = dd.getInitializeObject();
-//            RemoteFileDesc end = downloader.getBrowseEnabledHost();
-//            if (end != null)
-//                SearchMediator.doBrowseHost(end);
-//        }
+        int[] sel = TABLE.getSelectedRows();
+        for(int i = 0; i < sel.length; i++) {
+            BTDownloadDataLine dd = DATA_MODEL.get(sel[i]);
+            BTDownloader downloader = dd.getInitializeObject();
+            downloader.resume();
+        }
     }
 
     /**
@@ -608,17 +412,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     public void handleActionKey() {
     	if (launchAction.isEnabled())
     		launchSelectedDownloads();
-    } 
-
-    /**
-     * Clears the downloads in the download window that have completed.
-     */
-    void clearCompletedDownloads() {
-        DATA_MODEL.clearCompleted();
-        clearSelection();
-        clearAction.setEnabled(false);
-        
-        dockIcon.draw(0);
     }
 
 	/**
@@ -658,10 +451,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
 		if(OSUtils.isWindows()||OSUtils.isMacOSX())
 			menu.add(new SkinMenuItem(exploreAction)); 
 		menu.addSeparator();
-		menu.add(new SkinMenuItem(clearAction));
-		menu.addSeparator();
         //menu.add(createSearchMenu());
-		menu.add(new SkinMenuItem(browseAction));
 //		menu.addSeparator();
 //		menu.add(createAdvancedSubMenu());
 				
@@ -680,72 +470,44 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
 
         BTDownloadDataLine dataLine = DATA_MODEL.get(row);
 
-//        chatAction.setEnabled(dataLine.getChatEnabled());
-//        browseAction.setEnabled(dataLine.getBrowseEnabled());
-//        
-//		boolean inactive = dataLine.isDownloaderInactive();
-//        boolean pausable = dataLine.getDownloader().isPausable();
-//
-//		
-//		if (dataLine.getState() == DownloadStatus.WAITING_FOR_USER) {
-//			resumeAction.putValue(Action.NAME,
-//								  I18n.tr("Find More Sources for Download"));
-//			resumeAction.putValue(LimeAction.SHORT_NAME,
-//								  I18n.tr("Find Sources"));
-//			resumeAction.putValue(Action.SHORT_DESCRIPTION,
-//								  I18n.tr("Try to Find Additional Sources for Downloads"));
-//		} else {
-//			resumeAction.putValue(Action.NAME,
-//								  I18n.tr("Resume Download"));
-//			resumeAction.putValue(LimeAction.SHORT_NAME, 
-//								  I18n.tr("Resume"));
-//			resumeAction.putValue(Action.SHORT_DESCRIPTION,
-//								  I18n.tr("Reattempt Selected Downloads"));
-//		}
-//		
-//		if (dataLine.isCompleted()) {
-//			removeAction.putValue(Action.NAME,
-//					  I18n.tr("Clear Download"));
-//			removeAction.putValue(LimeAction.SHORT_NAME,
-//					  I18n.tr("Clear"));
-//			removeAction.putValue(Action.SHORT_DESCRIPTION,
-//					  I18n.tr("Clear Selected Downloads"));
-//			launchAction.putValue(Action.NAME,
-//					  I18n.tr("Launch Download"));
-//			launchAction.putValue(LimeAction.SHORT_NAME,
-//					  I18n.tr("Launch"));
-//			launchAction.putValue(Action.SHORT_DESCRIPTION,
-//					  I18n.tr("Launch Selected Downloads"));
-//			exploreAction.setEnabled(TABLE.getSelectedRowCount() == 1); 
-//		} else {
-//			removeAction.putValue(Action.NAME, I18n.tr
-//					("Cancel Download"));
-//			removeAction.putValue(LimeAction.SHORT_NAME,
-//					 I18n.tr("Cancel"));
-//			removeAction.putValue(Action.SHORT_DESCRIPTION,
-//					 I18n.tr("Cancel Selected Downloads"));
-//			launchAction.putValue(Action.NAME,
-//					  I18n.tr("Preview Download"));
-//			launchAction.putValue(LimeAction.SHORT_NAME,
-//					  I18n.tr("Preview"));
-//			launchAction.putValue(Action.SHORT_DESCRIPTION,
-//					  I18n.tr("Preview Selected Downloads"));
-//			exploreAction.setEnabled(false); 
-//		}
-//		
-//		removeAction.setEnabled(true);
-//        resumeAction.setEnabled(inactive);
-//		pauseAction.setEnabled(pausable);
-//        priorityDownAction.setEnabled(inactive && pausable);
-//        priorityUpAction.setEnabled(inactive && pausable);
-//		
-//		Downloader dl = dataLine.getInitializeObject();
-//		editLocationAction.setEnabled(TABLE.getSelectedRowCount() == 1 
-//									  && dl.isRelocatable());
-//		
-//		magnetAction.setEnabled(dl.getSha1Urn() != null);
-//		bitziAction.setEnabled(dl.getSha1Urn() != null);
-//		launchAction.setEnabled(dl.isLaunchable());
+        
+		boolean pausable = dataLine.getInitializeObject().isPausable();
+		boolean resumable = dataLine.getInitializeObject().isResumable();
+
+		if (dataLine.isCompleted()) {
+			removeAction.putValue(Action.NAME,
+					  I18n.tr("Clear Download"));
+			removeAction.putValue(LimeAction.SHORT_NAME,
+					  I18n.tr("Clear"));
+			removeAction.putValue(Action.SHORT_DESCRIPTION,
+					  I18n.tr("Clear Selected Downloads"));
+			launchAction.putValue(Action.NAME,
+					  I18n.tr("Launch Download"));
+			launchAction.putValue(LimeAction.SHORT_NAME,
+					  I18n.tr("Launch"));
+			launchAction.putValue(Action.SHORT_DESCRIPTION,
+					  I18n.tr("Launch Selected Downloads"));
+			exploreAction.setEnabled(TABLE.getSelectedRowCount() == 1); 
+		} else {
+			removeAction.putValue(Action.NAME, I18n.tr
+					("Cancel Download"));
+			removeAction.putValue(LimeAction.SHORT_NAME,
+					 I18n.tr("Cancel"));
+			removeAction.putValue(Action.SHORT_DESCRIPTION,
+					 I18n.tr("Cancel Selected Downloads"));
+			launchAction.putValue(Action.NAME,
+					  I18n.tr("Preview Download"));
+			launchAction.putValue(LimeAction.SHORT_NAME,
+					  I18n.tr("Preview"));
+			launchAction.putValue(Action.SHORT_DESCRIPTION,
+					  I18n.tr("Preview Selected Downloads"));
+			exploreAction.setEnabled(false); 
+		}
+		
+		removeAction.setEnabled(true);
+        resumeAction.setEnabled(resumable);
+		pauseAction.setEnabled(pausable);
+		//launchAction.setEnabled(dl.isLaunchable());
     }
 
     /**
@@ -757,9 +519,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
 		resumeAction.setEnabled(false);
 		launchAction.setEnabled(false);
 		pauseAction.setEnabled(false);
-		browseAction.setEnabled(false);
-		magnetAction.setEnabled(false);
-		bitziAction.setEnabled(false);
 		exploreAction.setEnabled(false); 
     }
 
@@ -799,45 +558,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
 		}
 	}
 	
-	private class ClearAction extends RefreshingAction {
-		
-		/**
-         * 
-         */
-        private static final long serialVersionUID = -5015913950467760897L;
-
-        public ClearAction() {
-			putValue(Action.NAME,
-					 I18n.tr("Clear All Inactive Downloads"));
-			putValue(LimeAction.SHORT_NAME,
-					 I18n.tr("Clear Inactive"));
-			putValue(Action.SHORT_DESCRIPTION,
-					 I18n.tr("Remove Inactive Downloads"));
-			putValue(LimeAction.ICON_NAME, "DOWNLOAD_CLEAR");
-		}
-		
-	    public void performAction(ActionEvent e) {
-            clearCompletedDownloads();
-        }
-	}
-
-	private class BrowseAction extends RefreshingAction {
-
-		/**
-         * 
-         */
-        private static final long serialVersionUID = 874818705792848110L;
-
-        public BrowseAction() {
-    	    putValue(Action.NAME,
-					I18n.tr("Browse Host"));
-		}
-		
-		public void performAction(ActionEvent e) {
-			browseSelectedDownloads();
-		}
-	}
-
 	private class LaunchAction extends RefreshingAction {
 		
 		/**

@@ -655,15 +655,6 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
 	}
 
 	/**
-	 * Returns the <tt>Downloader</tt> associated with this download.
-	 *
-	 * @return the <tt>Downloader</tt> associated with this download
-	 */
-	BTDownloader getDownloader() {
-		return initializer;
-	}
-
-	/**
 	 * Return the state of the Downloader
 	 *
 	 * @return the state of the downloader
@@ -970,13 +961,6 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
 	    return false;
 	}
 	
-	/**
-	 * Determines if the downloader is in what it considers an inactive state.
-	 */
-	boolean isDownloaderInactive() {
-	    return false;//initializer.isInactive();
-	}
-
 	/**
 	 * Returns whether or not the
 	 * download for this line is currently downloading
