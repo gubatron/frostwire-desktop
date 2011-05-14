@@ -97,7 +97,7 @@ class SearchInputPanel extends JPanel {
         new ClearableAutoCompleteTextField();
     
     /**
-     * The What's New search button.
+     * The What's New search button
      */
     private final JButton WHATSNEW = new JButton(
             I18n.tr("What\'s New"));
