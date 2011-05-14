@@ -99,9 +99,4 @@ public class SpamServicesImpl implements SpamServices {
         return ipFilter.get().isBlocked(host);
     }
 
-	@Override
-	public boolean isHostile(String host) {
-		return ipFilter.get().isBlocked(host);
-	}
-
 }
