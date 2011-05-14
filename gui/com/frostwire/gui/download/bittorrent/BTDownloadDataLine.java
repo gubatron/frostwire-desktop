@@ -1,4 +1,4 @@
-package com.limegroup.gnutella.gui.download.bittorrent;
+package com.frostwire.gui.download.bittorrent;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -50,8 +50,7 @@ import com.limegroup.gnutella.settings.SharingSettings;
  * displayed data for the download from the contained <tt>Downloader</tt>
  * instance.
  */
-public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader>
-                                    implements LazyFileTransfer {
+public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
 
 	/**
 	 * Constant for the "queued" download state.
@@ -281,11 +280,6 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader>
         I18n.tr("FrostWire cannot download this torrent.  The tracker responded");
 
 	/**
-	 * Variable for the name of the file being downloaded.
-	 */
-	private String _fileName;
-
-	/**
 	 * Variable for the status of the download.
 	 */
 	private String _status;
@@ -363,14 +357,6 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader>
 
     private Notification lastNotification;    
 	
-	/**
-	 * Column index for priority.
-	 */
-	static final int PRIORITY_INDEX = 0;
-	private static final LimeTableColumn PRIORITY_COLUMN =
-	    new LimeTableColumn(PRIORITY_INDEX, "DOWNLOAD_PRIORITY_COLUMN", I18n.tr("Priority"),
-	                40, false, CenteredHolder.class);
-
 	/**
 	 * Column index for the file name.
 	 */
@@ -462,11 +448,7 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader>
 	    super.initialize(downloader);
 		_startTime = System.currentTimeMillis();
 		_endTime = -1;
-		//_size = initializer.getContentLength();
-		// don't cache filename anymore, since we allow renames henceforth
-		//_fileName  = initializer.getSaveFile().getName();
-		if (_fileName==null) //TODO: does this ever happen with an downloader?
-			_fileName="";
+		_size = initializer.getSize();
 		_status = "";
 		_chatEnabled = false;
 		_browseEnabled = false;
@@ -487,7 +469,7 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader>
 //	            initializer.stop();
 //            }
 //        });
-//	    _cleaned = true;
+	    _cleaned = true;
     }
     
     /**
@@ -495,31 +477,6 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader>
      */
     public boolean isCleaned() {
         return _cleaned;
-    }
-    
-    /**
-     * Gets the file if the download was completed.
-     */
-    public File getFile() {
-//        if(!OSUtils.isWindows())
-//            return initializer.getFile();
-//        else {
-//            if(initializer.isCompleted())
-//                return initializer.getFile();
-//            else
-                return null;
-//        }
-    }
-    
-    /**
-     * Lazily gets the file -- constructs it only if necessary.
-     */
-    public FileTransfer getFileTransfer() {
-        return new FileTransfer() {
-            public File getFile() {
-                return null;//initializer.getDownloadFragment();
-            }
-        };
     }
     
 	/**
@@ -532,23 +489,9 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader>
 	 */
 	public Object getValueAt(int index) {
 		switch(index) {
-//		case PRIORITY_INDEX:
-//		    if(initializer.isPaused())
-//		        return PriorityHolder.PAUSED_P;
-//		    if(initializer.isInactive())
-//		        return new PriorityHolder(initializer.getInactivePriority());
-//            else if(initializer.isCompleted())
-//                return PriorityHolder.COMPLETE_P;
-//            else
-//                return PriorityHolder.ACTIVE_P;
 		case FILE_INDEX:
-            PlayListItem currentPlaying = MediaPlayerComponent.getInstance().getCurrentSong();
-            Color color;
-            if( currentPlaying == null )
-                color = getColor(false);
-            else
-                color = getColor(currentPlaying.getName().contains(_fileName));
-		    return new ColoredCellImpl(new IconAndNameHolderImpl(getIcon(), _fileName), color, IconAndNameHolder.class);
+            Color color = getColor(false);
+            return new ColoredCellImpl(new IconAndNameHolderImpl(getIcon(), initializer.getDisplayName()), color, IconAndNameHolder.class);
 		case SIZE_INDEX:
 			return new SizeHolder(_size);
 		case STATUS_INDEX:
@@ -574,8 +517,7 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader>
 	 */
 	public LimeTableColumn getColumn(int idx) {
 	    switch(idx) {
-	        case PRIORITY_INDEX: return PRIORITY_COLUMN;
-    	    case FILE_INDEX:     return FILE_COLUMN;
+	        case FILE_INDEX:     return FILE_COLUMN;
     	    case SIZE_INDEX:     return SIZE_COLUMN;
     	    case STATUS_INDEX:   return STATUS_COLUMN;
     	    case CHAT_INDEX:     return CHAT_COLUMN;
@@ -606,8 +548,8 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader>
 //        return _state == DownloadStatus.INVALID;
 //    }
 	
-	public String[] getToolTipArray(int col) {
-	    // give a new message if we gave up
+//	public String[] getToolTipArray(int col) {
+//	    // give a new message if we gave up
 //	    if( _state == DownloadStatus.GAVE_UP )
 //	        return GAVE_UP_MESSAGE;
 //        
@@ -619,8 +561,8 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader>
 //            if (custom != null)
 //                return new String[]{TRACKER_FAILURE_REASON,custom};
 //        }
-	    	    
-	    String[] info = new String[11];
+//	    	    
+//	    String[] info = new String[11];
 //	    String bandwidth = AVERAGE_BANDWIDTH + ": " + GUIUtils.rate2speed(
 //	        initializer.getAverageBandwidth()
 //	    );
@@ -632,11 +574,11 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader>
 //	                     initializer.getNumberOfAlternateLocations();
 //        String numInvalidLocs = INVALID_ALTERNATE_LOCATIONS + ": " +
 //                         initializer.getNumberOfInvalidAlternateLocations();
-		int chunkSize = 0;
-		String numChunks = null;
-		String lost;
-		// DPINJ: pass in the shared disk controller!!!
-        int totalPending = GuiCoreMediator.getDiskController().getNumPendingItems();
+//		int chunkSize = 0;
+//		String numChunks = null;
+//		String lost;
+//		// DPINJ: pass in the shared disk controller!!!
+//        int totalPending = GuiCoreMediator.getDiskController().getNumPendingItems();
 //		synchronized(initializer) {
 //			if (_endTime == -1) {
 //				chunkSize = initializer.getChunkSize();
@@ -650,8 +592,8 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader>
 //			}
 //		 	lost = LOST+": "+initializer.getAmountLost()/1024+KB;
 //		}
-
-        info[0] = STARTED_ON + " " + GUIUtils.msec2DateTime( _startTime );
+//
+//        info[0] = STARTED_ON + " " + GUIUtils.msec2DateTime( _startTime );
 //	    if( _endTime != -1 ) {
 //	        info[1] = FINISHED_ON + " " + GUIUtils.msec2DateTime( _endTime );
 //	        info[2] = TIME_SPENT + ": " + CommonUtils.seconds2time(
@@ -676,13 +618,12 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader>
 //            info[8] = numInvalidLocs;
 //			info[9] = numChunks;
 //			info[10] = lost;}
-
-	    return info;
-	}
+//
+//	    return info;
+//	}
 
 	public boolean isDynamic(int idx) {
 	    switch(idx) {
-	        case PRIORITY_INDEX:
 	        case STATUS_INDEX:
 	        case PROGRESS_INDEX:
 	        case SPEED_INDEX:
@@ -701,14 +642,6 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader>
 	long getLength() {
 		return _size;
 	}
-
-    /**
-     * Returns name of the file being downloaded.
-     * @return name of the downloaded file.
-     */
-    public String getFileName() {
-        return _fileName;
-    }
     
 	/**
 	 * Returns whether or not the <tt>Downloader</tt> for this download
@@ -965,13 +898,13 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader>
 	        Notification notification = null;
 	        if (isCompleted()) {
 	            Action[] actions = null;
-	            File file = getFile();
-	            if (file != null) {
-	                actions = new Action[] { new LaunchAction(file), new ShowInLibraryAction(file) };
-	            }
-                if (file == null || !(file.getName().endsWith(".torrent") &&
-                        BittorrentSettings.TORRENT_AUTO_START.getValue()))
-                    notification = new Notification(getFileName() + ": " + _status, getIcon(), actions);
+//	            File file = getFile();
+//	            if (file != null) {
+//	                actions = new Action[] { new LaunchAction(file), new ShowInLibraryAction(file) };
+//	            }
+//                if (file == null || !(file.getName().endsWith(".torrent") &&
+//                        BittorrentSettings.TORRENT_AUTO_START.getValue()))
+//                    notification = new Notification(getFileName() + ": " + _status, getIcon(), actions);
 //	        } else if (isDownloading() || isInactive() || lastState == -1) {
 //	            notification =  new Notification(getFileName() + ": " + _status, getIcon());
 	        } else {
