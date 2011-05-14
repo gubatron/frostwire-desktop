@@ -10,6 +10,7 @@ import java.util.Vector;
 import org.limewire.io.IpPort;
 import org.limewire.net.SocketsManager.ConnectType;
 
+import com.frostwire.gui.download.bittorrent.BTDownloader;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
@@ -215,6 +216,8 @@ public class Main {
 
     
         public void addDownload(Downloader mgr) {}
+        
+        public void addDownload(BTDownloader mgr) {}
     
         public void removeDownload(Downloader mgr) {}
     

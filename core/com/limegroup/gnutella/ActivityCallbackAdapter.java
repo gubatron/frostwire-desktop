@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.limewire.io.IpPort;
 
+import com.frostwire.gui.download.bittorrent.BTDownloader;
 import com.google.inject.Singleton;
 import com.limegroup.gnutella.browser.MagnetOptions;
 import com.limegroup.gnutella.chat.InstantMessenger;
@@ -121,6 +122,10 @@ public class ActivityCallbackAdapter implements ActivityCallback {
     }
 
     public void addDownload(Downloader d) {
+        
+    }
+    
+    public void addDownload(BTDownloader d) {
         
     }
 

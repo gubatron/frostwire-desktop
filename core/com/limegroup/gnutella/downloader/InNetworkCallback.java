@@ -1,5 +1,6 @@
 package com.limegroup.gnutella.downloader;
 
+import com.frostwire.gui.download.bittorrent.BTDownloader;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.limegroup.gnutella.DownloadCallback;
@@ -21,6 +22,9 @@ public class InNetworkCallback implements DownloadCallback {
     }
     
     public void addDownload(Downloader d) {
+    }
+    
+    public void addDownload(BTDownloader d) {
     }
 
     public void removeDownload(Downloader d) {

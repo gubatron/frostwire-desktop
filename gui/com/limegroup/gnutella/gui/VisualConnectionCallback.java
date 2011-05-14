@@ -9,9 +9,8 @@ import javax.swing.SwingUtilities;
 
 import org.limewire.io.IpPort;
 
+import com.frostwire.gui.download.bittorrent.BTDownloader;
 import com.google.inject.Singleton;
-import com.limegroup.bittorrent.BTDownloader;
-import com.limegroup.bittorrent.BTDownloaderImpl;
 import com.limegroup.gnutella.ActivityCallback;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.Downloader.DownloadStatus;
@@ -269,14 +268,20 @@ public final class VisualConnectionCallback implements ActivityCallback {
 	///////////////////////////////////////////////////////////////////////////
 	
     public void addDownload(Downloader mgr) {
+//        Runnable doWorkRunnable = new AddDownload(mgr);
+//        
+//        if (mgr instanceof BTDownloaderImpl) {
+//        	if (((BTDownloader) mgr).isCompleted()) {
+//        		//don't add it visually
+//        		return;
+//        	}
+//        }
+//        
+//        SwingUtilities.invokeLater(doWorkRunnable);
+    }
+    
+    public void addDownload(BTDownloader mgr) {
         Runnable doWorkRunnable = new AddDownload(mgr);
-        
-        if (mgr instanceof BTDownloaderImpl) {
-        	if (((BTDownloader) mgr).isCompleted()) {
-        		//don't add it visually
-        		return;
-        	}
-        }
         
         SwingUtilities.invokeLater(doWorkRunnable);
     }
@@ -308,12 +313,12 @@ public final class VisualConnectionCallback implements ActivityCallback {
 	}	
     
     private class AddDownload implements Runnable {
-        private Downloader mgr;
-        public AddDownload(Downloader mgr) {
+        private BTDownloader mgr;
+        public AddDownload(BTDownloader mgr) {
             this.mgr = mgr;
         }
         public void run() {
-            //mf().getBTDownloadMediator().add(mgr);
+            mf().getBTDownloadMediator().add(mgr);
 		}
     }
 

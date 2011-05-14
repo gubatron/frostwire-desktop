@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.gudy.azureus2.core3.global.GlobalManager;
 import org.limewire.collection.DualIterator;
 import org.limewire.collection.MultiIterable;
 import org.limewire.i18n.I18nMarker;
@@ -24,6 +25,9 @@ import org.limewire.io.IpPort;
 import org.limewire.service.MessageService;
 import org.limewire.util.FileUtils;
 
+import com.frostwire.bittorrent.AzureusStarter;
+import com.frostwire.gui.download.bittorrent.BTDownloader;
+import com.frostwire.gui.download.bittorrent.BTDownloaderImpl;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
@@ -176,13 +180,32 @@ public class DownloadManagerImpl implements DownloadManager {
             callback(downloader).addDownload(downloader);
         }
     }
+    
+    public void addNewDownloader(BTDownloader downloader) {
+        synchronized(this) {
+            //waiting.add(downloader);
+            //downloader.initialize();
+            callback(downloader).addDownload(downloader);
+        }
+    }
 
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.DownloadMI#postGuiInit()
      */
     public void loadSavedDownloadsAndScheduleWriting() {
-        loadSavedDownloads();
-        scheduleSnapshots();
+        loadTorrenDownloads();
+        //loadSavedDownloads();
+        //scheduleSnapshots();
+    }
+    
+    private void loadTorrenDownloads() {
+        GlobalManager globalManager = AzureusStarter.getAzureusCore().getGlobalManager();
+        List<?> downloadManagers = globalManager.getDownloadManagers();
+        for (Object obj : downloadManagers) {
+            if (obj instanceof org.gudy.azureus2.core3.download.DownloadManager) {
+                addNewDownloader(new BTDownloaderImpl((org.gudy.azureus2.core3.download.DownloadManager) obj));
+            }
+        }
     }
     
     public void loadSavedDownloads() {
@@ -773,6 +796,10 @@ public class DownloadManagerImpl implements DownloadManager {
      */
     private DownloadCallback callback(Downloader md) {
         return (md instanceof InNetworkDownloader) ? innetworkCallback : downloadCallback.get();
+    }
+    
+    private DownloadCallback callback(BTDownloader md) {
+        return downloadCallback.get();
     }
         
     /**
