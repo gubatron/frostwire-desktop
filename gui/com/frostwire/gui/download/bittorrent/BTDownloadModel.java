@@ -1,5 +1,7 @@
 package com.frostwire.gui.download.bittorrent;
 
+import org.gudy.azureus2.core3.download.DownloadManager;
+
 import com.limegroup.bittorrent.gui.TorrentFileFetcher;
 import com.limegroup.gnutella.Uploader;
 import com.limegroup.gnutella.gui.tables.BasicDataLineModel;
@@ -30,44 +32,38 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
         return new BTDownloadDataLine();
     }    
 	
-	/**
-	 * Returns a count of the active downloads.
-	 *
-	 * @return the number of active downloads
-	 */
-	int countActiveDownloads() {
+	int getNumDownloads() {
 		int size  = getRowCount();
 		int count = 0;
 
 		for (int i=0; i<size; i++) {
-			BTDownloadDataLine ud = get(i);
-			if(!ud.isInactive()) count++;
+			BTDownloader downloader = get(i).getInitializeObject();
+			if (!downloader.isCompleted() && downloader.getState() == DownloadManager.STATE_DOWNLOADING) {
+			    count++;
+            }
 		}
 		return count;
 	}
+	
+	int getNumUploads() {
+        int size  = getRowCount();
+        int count = 0;
 
-	/**
-	 * Returns the currently connected downloads.
-	 *
-	 * @return the number of current downloads
-	 */
-	int getCurrentDownloads() {
-		int size  = getRowCount();
-		int count = 0;
-
-		for (int i=0; i<size; i++) {
-			BTDownloadDataLine dd = get(i);
-			if(dd.isDownloading()) count++;
-		}
-		return count;
-	}
+        for (int i=0; i<size; i++) {
+            BTDownloader downloader = get(i).getInitializeObject();
+            if (downloader.isCompleted() && downloader.getState() == DownloadManager.STATE_SEEDING) {
+                count++;
+            }
+        }
+        return count;
+    }
 
     /**
      * Returns the aggregate amount of bandwidth being consumed by active downloads.
      *  
      * @return the total amount of bandwidth being consumed by active downloads.
      */
-    double getActiveDownloadsBandwidth() {
+    double getDownloadsBandwidth() {
         int size = getRowCount();
         double count = 0.0;
 
@@ -79,6 +75,10 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
             }
         }
         return count;
+    }
+    
+    double getUploadsBandwidth() {
+        return -1;
     }
 
 	/**
