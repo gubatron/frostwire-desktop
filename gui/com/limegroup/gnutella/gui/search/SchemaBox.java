@@ -10,6 +10,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -96,7 +97,9 @@ final class SchemaBox extends JPanel {
      * Constructs the SchemaBox.
      */
     SchemaBox() {
-        List<NamedMediaType> allSchemas = NamedMediaType.getAllNamedMediaTypes();
+//        List<NamedMediaType> allSchemas = NamedMediaType.getAllNamedMediaTypes();
+        List<NamedMediaType> allSchemas = Arrays.asList(NamedMediaType.getFromMediaType(MediaType.TYPE_TORRENTS));
+        
         int cols, rows;
         cols = 2;
         rows = (int)Math.ceil(allSchemas.size() / 2.0);
@@ -178,51 +181,12 @@ final class SchemaBox extends JPanel {
         //After that, leave it to random chance.
         NamedMediaType current;
 
-        
-        // First add 'Any Type'
-        current = NamedMediaType.getFromDescription(MediaType.SCHEMA_ANY_TYPE);
-        schemas.remove(current);
-        addMediaType(current);
-        
-        // Then add 'Audio'
-        current = NamedMediaType.getFromDescription(MediaType.SCHEMA_AUDIO);
-        schemas.remove(current);
-        addMediaType(current, I18n.tr("Search For Audio Files, Including mp3, wav, ogg, and More"));
-        
-        // Then add 'Images'
-        current = NamedMediaType.getFromDescription(MediaType.SCHEMA_IMAGES);
-        schemas.remove(current);
-        addMediaType(current, I18n.tr("Search For Image Files, Including jpg, gif, png and More"));
-        
-        // Then add 'Video'
-        current = NamedMediaType.getFromDescription(MediaType.SCHEMA_VIDEO);
-        schemas.remove(current);
-        addMediaType(current, I18n.tr("Search For Video Files, Including avi, mpg, wmv, and More"));
-        
-        // Then add 'Documents'
-        current = NamedMediaType.getFromDescription(MediaType.SCHEMA_DOCUMENTS);
-        schemas.remove(current);
-        addMediaType(current, I18n.tr("Search for Document Files, Including html, txt, pdf, and More"));
-        
-        // Then add 'Programs'
-        current = NamedMediaType.getFromDescription(MediaType.SCHEMA_PROGRAMS);
-        schemas.remove(current);
-        addMediaType(current, I18n.tr("Search for Program Files, Including exe, zip, gz, and More"));
-
-        // Then add 'Torrents'
+        // Add 'Torrents'
         current = NamedMediaType.getFromDescription(MediaType.SCHEMA_TORRENTS);
-        schemas.remove(current);
+        //schemas.remove(current);
         addMediaType(current, I18n.tr("Search for Torrents!")); 
-        
-        // Then add anything that was left.
-        for(NamedMediaType nmt : schemas)
-            addMediaType(nmt);
     }    
     
-	private void addMediaType(NamedMediaType type) {
-		addMediaType(type, null);
-	}
-	
     /**
      * Adds the given NamedMediaType.
      *
