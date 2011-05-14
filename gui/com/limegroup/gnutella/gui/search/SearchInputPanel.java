@@ -91,7 +91,7 @@ class SearchInputPanel extends JPanel {
     private final JTextArea IP_TEXT = new JTextArea();
     
     /**
-     * The input field for browse-host searches.
+     * The input field for browse-host searches
      */
     private final AutoCompleteTextField BROWSE_HOST_FIELD =
         new ClearableAutoCompleteTextField();
