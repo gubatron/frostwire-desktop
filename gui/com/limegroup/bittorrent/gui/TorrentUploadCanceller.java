@@ -1,5 +1,6 @@
 package com.limegroup.bittorrent.gui;
 
+import com.limegroup.bittorrent.ManagedTorrent;
 import com.limegroup.bittorrent.Torrent;
 import com.limegroup.bittorrent.TorrentEvent;
 import com.limegroup.bittorrent.TorrentEventListener;

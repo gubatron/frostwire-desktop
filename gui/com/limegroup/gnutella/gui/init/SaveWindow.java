@@ -32,6 +32,7 @@ import org.limewire.util.CommonUtils;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.components.TorrentSaveFolderComponent;
+import com.frostwire.updates.UpdateManager;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
@@ -53,8 +54,7 @@ class SaveWindow extends SetupWindow {
 	private static final long serialVersionUID = 4918724013794478084L;
 
 	private static final String LEARN_MORE_URL = "http://www.frostwire.com/faq#fil1";
-    private static final long serialVersionUID = -1727438256825669742L;
-
+    
     
 	/**
 	 * Constant handle to the <tt>LabeledTextField</tt> instance for the 
