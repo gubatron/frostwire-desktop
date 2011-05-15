@@ -4,7 +4,6 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -17,9 +16,7 @@ import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -33,14 +30,11 @@ import org.limewire.util.StringUtils;
 
 import com.frostwire.components.TorrentSaveFolderComponent;
 import com.frostwire.updates.UpdateManager;
-import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.gui.SaveDirectoryHandler;
-import com.limegroup.gnutella.gui.actions.RemoveSharedDirectoryAction;
-import com.limegroup.gnutella.gui.actions.SelectSharedDirectoryAction;
 import com.limegroup.gnutella.gui.library.RecursiveSharingPanel;
 import com.limegroup.gnutella.settings.SharingSettings;
 /**
@@ -98,9 +92,9 @@ class SaveWindow extends SetupWindow {
 	
 	private static String describeText(boolean migrate) {
 	    if(!migrate)
-	        return I18nMarker.marktr("Please choose a folder where you would like your files to be downloaded.\nYou can also choose folders you would like to share with other users on the Gnutella and BitTorrent Networks.");
+	        return I18nMarker.marktr("Please choose a folder where you would like your files to be downloaded.\n");
 	    else
-	        return I18nMarker.marktr("FrostWire now downloads files to a new, different folder.\nPlease confirm the folder where you would like your files to be downloaded. You can also choose folders you would like to share with other users on the Gnutella and BitTorrent Networks.");
+	        return I18nMarker.marktr("FrostWire now downloads files to a new, different folder.\nPlease confirm the folder where you would like your files to be downloaded.");
 	}
     
     protected void createWindow() {
@@ -117,43 +111,42 @@ class SaveWindow extends SetupWindow {
 
 		JPanel mainPanel = new JPanel(new GridBagLayout());
 		
-		JPanel saveFolderPanel = new JPanel(new GridBagLayout());
-		saveFolderPanel.setBorder(BorderFactory.createTitledBorder(I18n.tr("Gnutella Save Folder")));
-		
-		
-		// "Save Folder" text field
-		GridBagConstraints gbc = new GridBagConstraints();
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weightx = 1;
-		gbc.insets = new Insets(0, 0, ButtonRow.BUTTON_SEP, 0);
-		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		saveFolderPanel.add(SAVE_FIELD, gbc);
-		
-		gbc = new GridBagConstraints();
-		gbc.anchor = GridBagConstraints.NORTHWEST;
-		gbc.gridwidth = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        saveFolderPanel.add(createOptionForShareInSavedFolderComponent(), gbc);
-		
-		// "Save Folder" buttons "User Default", "Browse..."
-		gbc = new GridBagConstraints();
-		gbc.anchor = GridBagConstraints.NORTHWEST;
-		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
-		saveFolderPanel.add(new ButtonRow(new Action[] { new DefaultAction(), new BrowseAction() },
-				ButtonRow.X_AXIS, ButtonRow.LEFT_GLUE), gbc);
-		
-		gbc = new GridBagConstraints();
-        gbc.anchor = GridBagConstraints.NORTHWEST;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.weightx = 1;
-        gbc.weighty = 1;
-		mainPanel.add(saveFolderPanel, gbc);
+//		JPanel saveFolderPanel = new JPanel(new GridBagLayout());
+//		saveFolderPanel.setBorder(BorderFactory.createTitledBorder(I18n.tr("Gnutella Save Folder")));
+//		
+//		// "Save Folder" text field
+//		GridBagConstraints gbc = new GridBagConstraints();
+//		gbc.fill = GridBagConstraints.HORIZONTAL;
+//		gbc.weightx = 1;
+//		gbc.insets = new Insets(0, 0, ButtonRow.BUTTON_SEP, 0);
+//		gbc.gridwidth = GridBagConstraints.REMAINDER;
+//		saveFolderPanel.add(SAVE_FIELD, gbc);
+//		
+//		gbc = new GridBagConstraints();
+//		gbc.anchor = GridBagConstraints.NORTHWEST;
+//		gbc.gridwidth = 1;
+//        gbc.fill = GridBagConstraints.HORIZONTAL;
+//        saveFolderPanel.add(createOptionForShareInSavedFolderComponent(), gbc);
+//		
+//		// "Save Folder" buttons "User Default", "Browse..."
+//		gbc = new GridBagConstraints();
+//		gbc.anchor = GridBagConstraints.NORTHWEST;
+//		gbc.gridwidth = GridBagConstraints.REMAINDER;
+//		gbc.fill = GridBagConstraints.HORIZONTAL;
+//		saveFolderPanel.add(new ButtonRow(new Action[] { new DefaultAction(), new BrowseAction() },
+//				ButtonRow.X_AXIS, ButtonRow.LEFT_GLUE), gbc);
+//		
+//		gbc = new GridBagConstraints();
+//        gbc.anchor = GridBagConstraints.NORTHWEST;
+//        gbc.fill = GridBagConstraints.HORIZONTAL;
+//        gbc.gridwidth = GridBagConstraints.REMAINDER;
+//        gbc.weightx = 1;
+//        gbc.weighty = 1;
+//		mainPanel.add(saveFolderPanel, gbc);
 		
         // "Saved Torrent Data" container
 		torrentSaveFolderComponent = new TorrentSaveFolderComponent(true);
-        gbc = new GridBagConstraints();
+		GridBagConstraints gbc = new GridBagConstraints();
         gbc.anchor = GridBagConstraints.NORTHWEST;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -162,37 +155,37 @@ class SaveWindow extends SetupWindow {
         mainPanel.add(torrentSaveFolderComponent,gbc);        
 
         
-        // "Shared Folders" panel
-        JPanel sharingPanelContainer = new JPanel(new GridBagLayout());
-        gbc = new GridBagConstraints();
-        gbc.weightx = 1;
-        gbc.weighty = 1;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.anchor = GridBagConstraints.NORTHWEST;
-        gbc.gridheight = GridBagConstraints.REMAINDER;
-        gbc.gridwidth = GridBagConstraints.RELATIVE;
-        recursiveSharingPanel.setBorder(BorderFactory.createTitledBorder(I18n.tr("Shared Folders")));
-        sharingPanelContainer.add(recursiveSharingPanel, gbc);
-        
-        // "Shared Folders" actions
-        gbc = new GridBagConstraints();
-        gbc.weightx = 0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.anchor = GridBagConstraints.NORTHWEST;
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.insets = new Insets(0, ButtonRow.BUTTON_SEP, 0, 0);
-        sharingPanelContainer.add(new JButton(new SelectSharedDirectoryAction(recursiveSharingPanel, _manager.getOwnerComponent())), gbc);
-        gbc.insets = new Insets(ButtonRow.BUTTON_SEP, ButtonRow.BUTTON_SEP, 0, 0);
-        sharingPanelContainer.add(new JButton(new RemoveSharedDirectoryAction(recursiveSharingPanel)), gbc); 
+//        // "Shared Folders" panel
+//        JPanel sharingPanelContainer = new JPanel(new GridBagLayout());
+//        gbc = new GridBagConstraints();
+//        gbc.weightx = 1;
+//        gbc.weighty = 1;
+//        gbc.fill = GridBagConstraints.BOTH;
+//        gbc.anchor = GridBagConstraints.NORTHWEST;
+//        gbc.gridheight = GridBagConstraints.REMAINDER;
+//        gbc.gridwidth = GridBagConstraints.RELATIVE;
+//        recursiveSharingPanel.setBorder(BorderFactory.createTitledBorder(I18n.tr("Shared Folders")));
+//        sharingPanelContainer.add(recursiveSharingPanel, gbc);
+//        
+//        // "Shared Folders" actions
+//        gbc = new GridBagConstraints();
+//        gbc.weightx = 0;
+//        gbc.fill = GridBagConstraints.HORIZONTAL;
+//        gbc.anchor = GridBagConstraints.NORTHWEST;
+//        gbc.gridwidth = GridBagConstraints.REMAINDER;
+//        gbc.insets = new Insets(0, ButtonRow.BUTTON_SEP, 0, 0);
+//        sharingPanelContainer.add(new JButton(new SelectSharedDirectoryAction(recursiveSharingPanel, _manager.getOwnerComponent())), gbc);
+//        gbc.insets = new Insets(ButtonRow.BUTTON_SEP, ButtonRow.BUTTON_SEP, 0, 0);
+//        sharingPanelContainer.add(new JButton(new RemoveSharedDirectoryAction(recursiveSharingPanel)), gbc); 
         
         // "Shared Folders" container
-        gbc = new GridBagConstraints();
-        gbc.anchor = GridBagConstraints.NORTHWEST;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.weightx = 1;
-        gbc.weighty = 1;
-        mainPanel.add(sharingPanelContainer, gbc);
+//        gbc = new GridBagConstraints();
+//        gbc.anchor = GridBagConstraints.NORTHWEST;
+//        gbc.fill = GridBagConstraints.BOTH;
+//        gbc.gridwidth = GridBagConstraints.REMAINDER;
+//        gbc.weightx = 1;
+//        gbc.weighty = 1;
+//        mainPanel.add(sharingPanelContainer, gbc);
         
         try {
 		    SAVE_FIELD.setText(_defaultSaveDir);

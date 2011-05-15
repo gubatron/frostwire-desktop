@@ -11,10 +11,8 @@ import java.util.Map;
 import javax.swing.JPanel;
 
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.SettingsWarningManager;
-import com.limegroup.gnutella.gui.options.panes.SharedDirPaneItem;
 
 /**
  * Manages the main options window that displays the various options 
@@ -93,7 +91,6 @@ public final class OptionsPaneManager {
 	 * <tt>ArrayList</tt> of <tt>OptionPane</tt>s when the window is shown.
 	 */
 	public void initOptions() {
-	    FACTORY.getSharedPane().initOptions();
 		for (int i = 0, size = OPTIONS_PANE_LIST.size(); i < size; i++) {
 			OptionsPane op = OPTIONS_PANE_LIST.get(i);
 			op.initOptions();
@@ -114,14 +111,6 @@ public final class OptionsPaneManager {
             restartRequired |= op.applyOptions();
 		}
 		
-		// Apply the share directories after everything else has been applied.
-		SharedDirPaneItem sharedPane = FACTORY.getSharedPane();
-		if(sharedPane.isDirty()) {
-		    GuiCoreMediator.getFileManager().loadWithNewDirectories
-		    (sharedPane.getDirectoriesToShare(), sharedPane.getDirectorieToExclude(), true);
-		    sharedPane.resetDirtyState();
-        }
-	
         if(restartRequired)
             GUIMediator.showMessage(I18n.tr("One or more options will take effect the next time FrostWire is restarted."));
         

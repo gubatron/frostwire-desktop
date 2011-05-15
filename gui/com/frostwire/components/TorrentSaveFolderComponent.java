@@ -53,6 +53,7 @@ public class TorrentSaveFolderComponent extends JPanel {
 		gbc.weightx = 1;
 		gbc.insets = new Insets(0, 0, ButtonRow.BUTTON_SEP, 0);
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		gbc.anchor = GridBagConstraints.NORTHEAST;
 		add(folderTextField, gbc);
 
 		gbc = new GridBagConstraints();
@@ -64,11 +65,11 @@ public class TorrentSaveFolderComponent extends JPanel {
 		// "Save Folder" buttons "User Default", "Browse..."
 		gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.NORTHWEST;
-		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		gbc.gridwidth = GridBagConstraints.RELATIVE;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		add(new ButtonRow(new Action[] { new DefaultAction(), new BrowseAction() },
 				ButtonRow.X_AXIS, ButtonRow.LEFT_GLUE), gbc);
-
+		
 	}
 	
 	public String getTorrentSaveFolderPath() {
@@ -191,6 +192,8 @@ public class TorrentSaveFolderComponent extends JPanel {
 	
 	private class DefaultAction extends AbstractAction {
 		
+		private static final long serialVersionUID = 7266666461649699221L;
+
 		public DefaultAction() {
 			putValue(Action.NAME, I18n.tr("Use Default"));
 			putValue(Action.SHORT_DESCRIPTION, I18n.tr("Use the Default Folder"));
@@ -203,6 +206,8 @@ public class TorrentSaveFolderComponent extends JPanel {
 	
 	private class BrowseAction extends AbstractAction {
 		
+		private static final long serialVersionUID = 2976380710515726420L;
+
 		public BrowseAction() {
 			putValue(Action.NAME, I18n.tr("Browse..."));
 			putValue(Action.SHORT_DESCRIPTION, I18n.tr("Choose Another Folder"));

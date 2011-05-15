@@ -29,7 +29,6 @@ import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.updates.AutomaticInstallerDownloadPaneItem;
-import com.limegroup.bittorrent.gui.options.panes.AutoStartTorrentsPaneItem;
 import com.limegroup.bittorrent.gui.options.panes.BitTorrentDownloadSpeedPaneItem;
 import com.limegroup.bittorrent.gui.options.panes.BittorrentConnectionPaneItem;
 import com.limegroup.bittorrent.gui.options.panes.BittorrentPaneItem;
@@ -43,62 +42,38 @@ import com.limegroup.gnutella.gui.IconTextField;
 import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.ResourceManager;
 import com.limegroup.gnutella.gui.options.panes.AbstractPaneItem;
-import com.limegroup.gnutella.gui.options.panes.AllowMessagesPaneItem;
 import com.limegroup.gnutella.gui.options.panes.AssociationPreferencePaneItem;
 import com.limegroup.gnutella.gui.options.panes.AudioPlayerPaneItem;
-import com.limegroup.gnutella.gui.options.panes.AutoClearDownloadsPaneItem;
-import com.limegroup.gnutella.gui.options.panes.AutoClearUploadsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.AutoCompletePaneItem;
 import com.limegroup.gnutella.gui.options.panes.BrowserPaneItem;
 import com.limegroup.gnutella.gui.options.panes.BugsPaneItem;
-import com.limegroup.gnutella.gui.options.panes.ChatActivePaneItem;
 import com.limegroup.gnutella.gui.options.panes.ChatCommunityPaneItem;
-import com.limegroup.gnutella.gui.options.panes.ConnectOnStartupPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ConnectionPreferencingPaneItem;
 import com.limegroup.gnutella.gui.options.panes.DaapBufferSizePaneItem;
 import com.limegroup.gnutella.gui.options.panes.DaapPasswordPaneItem;
 import com.limegroup.gnutella.gui.options.panes.DaapSupportPaneItem;
 import com.limegroup.gnutella.gui.options.panes.DefaultActionPaneItem;
 import com.limegroup.gnutella.gui.options.panes.DisableCapabilitiesPaneItem;
-import com.limegroup.gnutella.gui.options.panes.DisableOOBSearchingPaneItem;
-import com.limegroup.gnutella.gui.options.panes.DownloadBandwidthPaneItem;
-import com.limegroup.gnutella.gui.options.panes.EnableSpamFilterPaneItem;
-import com.limegroup.gnutella.gui.options.panes.FileTypePaneItem;
 import com.limegroup.gnutella.gui.options.panes.ForceIPPaneItem;
-import com.limegroup.gnutella.gui.options.panes.IgnoreMessagesPaneItem;
 import com.limegroup.gnutella.gui.options.panes.IgnoreResultTypesPaneItem;
 import com.limegroup.gnutella.gui.options.panes.IgnoreResultsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ImageViewerPaneItem;
-import com.limegroup.gnutella.gui.options.panes.MaximumDownloadsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.MaximumSearchesPaneItem;
-import com.limegroup.gnutella.gui.options.panes.MaximumUploadsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.NetworkInterfacePaneItem;
 import com.limegroup.gnutella.gui.options.panes.NotificationsPaneItem;
-import com.limegroup.gnutella.gui.options.panes.PartialFileSharingPaneItem;
-import com.limegroup.gnutella.gui.options.panes.PerPersonUploadsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.PlayerPreferencePaneItem;
 import com.limegroup.gnutella.gui.options.panes.PopupsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.PortPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ProxyLoginPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ProxyPaneItem;
-import com.limegroup.gnutella.gui.options.panes.PurgeIncompletePaneItem;
-import com.limegroup.gnutella.gui.options.panes.SaveDirPaneItem;
-import com.limegroup.gnutella.gui.options.panes.SearchQualityPaneItem;
-import com.limegroup.gnutella.gui.options.panes.SearchSpeedPaneItem;
-import com.limegroup.gnutella.gui.options.panes.ShareSpeciallyPaneItem;
-import com.limegroup.gnutella.gui.options.panes.ShareTorrentMetaPaneItem;
-import com.limegroup.gnutella.gui.options.panes.SharedDirPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ShowPromoOverlaysPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ShutdownPaneItem;
-import com.limegroup.gnutella.gui.options.panes.SpamFilterSensivityPaneItem;
-import com.limegroup.gnutella.gui.options.panes.SpeedPaneItem;
 import com.limegroup.gnutella.gui.options.panes.StartupPaneItem;
 import com.limegroup.gnutella.gui.options.panes.StatusBarBandwidthPaneItem;
 import com.limegroup.gnutella.gui.options.panes.StatusBarConnectionQualityPaneItem;
 import com.limegroup.gnutella.gui.options.panes.StatusBarFirewallPaneItem;
 import com.limegroup.gnutella.gui.options.panes.TorrentSaveFolderPaneItem;
 import com.limegroup.gnutella.gui.options.panes.TrayIconDisplayPaneItem;
-import com.limegroup.gnutella.gui.options.panes.UploadBandwidthPaneItem;
 import com.limegroup.gnutella.gui.options.panes.VideoPlayerPaneItem;
 import com.limegroup.gnutella.gui.options.panes.iTunesPreferencePaneItem;
 import com.limegroup.gnutella.gui.shell.LimeAssociations;
@@ -320,40 +295,11 @@ public final class OptionsConstructor {
 
     @SuppressWarnings({ "unchecked" })
     private OptionsTreeNode initializePanels() {
-        // for saving gnutella
-        addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, SAVE_KEY, I18n.tr("Saving"));
-		OptionsTreeNode node = addOption(SAVE_KEY, SAVE_BASIC_KEY, I18n.tr("Basic"), SaveDirPaneItem.class, TorrentSaveFolderPaneItem.class, PurgeIncompletePaneItem.class);
-		addOption(SAVE_KEY, SAVE_ADVANCED_KEY, I18n.tr("Advanced"), DefaultActionPaneItem.class);
-
-        // for sharing gnutella
-		addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, SHARED_KEY, I18n.tr("Sharing"));
-		addOption(SHARED_KEY, SHARED_BASIC_KEY, I18n.tr("Basic"), SharedDirPaneItem.class, ShareSpeciallyPaneItem.class);
-		addOption(SHARED_KEY, SHARED_ADVANCED_KEY, I18n.tr("Advanced"), ShareTorrentMetaPaneItem.class, PartialFileSharingPaneItem.class);
-        addOption(SHARED_KEY, SHARED_TYPES_KEY, I18n.tr("Types"), FileTypePaneItem.class);
-		
-        // store options
-        //addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, STORE_KEY, I18n.tr("LimeWire Store"));
-        //addOption(STORE_KEY, STORE_BASIC_KEY, I18n.tr("Save Folder"), StoreSaveDirPaneItem.class);
-        //NO LONGER AVAILABLE        addOption(STORE_KEY, STORE_ADVANCED_KEY, GUIMediator.getStringResource("Template"), StoreDirectoryTemplatePaneItem.class);
-        
-		addOption(OptionsMediator.ROOT_NODE_KEY, SPEED_KEY, I18n.tr("Speed"), SpeedPaneItem.class, DisableOOBSearchingPaneItem.class);
-		
-		addOption(OptionsMediator.ROOT_NODE_KEY, DOWNLOAD_KEY, I18n.tr("Downloads"), MaximumDownloadsPaneItem.class, AutoClearDownloadsPaneItem.class, DownloadBandwidthPaneItem.class);
-
-		// upload options
-		addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, UPLOAD_KEY, I18n.tr("Uploads"));
-		addOption(UPLOAD_KEY, UPLOAD_BASIC_KEY, I18n.tr("Basic"), AutoClearUploadsPaneItem.class, UploadBandwidthPaneItem.class);
-		addOption(UPLOAD_KEY, UPLOAD_SLOTS_KEY, I18n.tr("Slots"), PerPersonUploadsPaneItem.class, MaximumUploadsPaneItem.class);
-        //uploadSlotsPane.add(new SoftMaximumUploadsPaneItem("UPLOAD_SOFT_MAX"));
-		
-		addOption(OptionsMediator.ROOT_NODE_KEY, CONNECTIONS_KEY, I18n.tr("Connections"), ConnectOnStartupPaneItem.class);
-        //connectionsPane.add(new AutoConnectPaneItem("AUTO_CONNECT"));
-        //connectionsPane.add(new AutoConnectActivePaneItem("AUTO_CONNECT_ACTIVE"));
+    	//saving
+    	OptionsTreeNode node = addOption(OptionsMediator.ROOT_NODE_KEY, SAVE_KEY, I18n.tr("Saving"), TorrentSaveFolderPaneItem.class, DefaultActionPaneItem.class);
 
         // bittorrent
-        addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, BITTORRENT_KEY, I18n.tr("BitTorrent"));
-		addOption(BITTORRENT_KEY, BITTORRENT_BASIC_KEY, I18n.tr("Basic"), AutoStartTorrentsPaneItem.class, BitTorrentDownloadSpeedPaneItem.class);
-		addOption(BITTORRENT_KEY, BITTORRENT_ADVANCED_KEY, I18n.tr("Advanced"), BittorrentPaneItem.class, BittorrentConnectionPaneItem.class);
+        addOption(OptionsMediator.ROOT_NODE_KEY,BITTORRENT_KEY, I18n.tr("BitTorrent"), BitTorrentDownloadSpeedPaneItem.class, BittorrentPaneItem.class, BittorrentConnectionPaneItem.class);
 		
 		
 		Class<? extends AbstractPaneItem>[] clazzes; 
@@ -365,7 +311,7 @@ public final class OptionsConstructor {
 
         //FTA: Unused setting in 4.17.0 addOption(OptionsMediator.ROOT_NODE_KEY, UPDATE_KEY, I18n.tr("Updates"), UpdatePaneItem.class);
 
-		addOption(OptionsMediator.ROOT_NODE_KEY, CHAT_KEY, I18n.tr("Community Chat"), ChatActivePaneItem.class, ChatCommunityPaneItem.class);
+		addOption(OptionsMediator.ROOT_NODE_KEY, CHAT_KEY, I18n.tr("Community Chat"), ChatCommunityPaneItem.class);
 
         addOption(OptionsMediator.ROOT_NODE_KEY, PLAYER_KEY, I18n.tr("Player"), PlayerPreferencePaneItem.class);    
         
@@ -391,17 +337,12 @@ public final class OptionsConstructor {
         addOption(GUI_KEY, SHOW_PROMOTION_OVERLAYS_KEY, I18n.tr("FrostClick"), ShowPromoOverlaysPaneItem.class);
 
 		// search options
-		addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, SEARCH_KEY, I18n.tr("Searching"));
-		addOption(SEARCH_KEY, SEARCH_LIMIT_KEY, I18n.tr("Basic"), MaximumSearchesPaneItem.class); // , DownloadLicenseWarningPaneItem.class
-		addOption(SEARCH_KEY, SEARCH_QUALITY_KEY, I18n.tr("Quality"), SearchQualityPaneItem.class);
-		addOption(SEARCH_KEY, SEARCH_SPEED_KEY, I18n.tr("Speed"),  SearchSpeedPaneItem.class);
+		addOption(OptionsMediator.ROOT_NODE_KEY, SEARCH_KEY, I18n.tr("Searching"), MaximumSearchesPaneItem.class);
         
 		// filter options
 		addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, FILTERS_KEY, I18n.tr("Filters"));
-        //addOption(FILTERS_KEY, CONTENT_FILTER_KEY, I18n.tr("Content"), ContentFilterPaneItem.class); 
-        addOption(FILTERS_KEY, SEARCH_JUNK_KEY, I18n.tr("Junk"), EnableSpamFilterPaneItem.class, SpamFilterSensivityPaneItem.class);
 		addOption(FILTERS_KEY, RESULTS_KEY, I18n.tr("Keywords"), IgnoreResultsPaneItem.class, IgnoreResultTypesPaneItem.class); 
-		addOption(FILTERS_KEY, MESSAGES_KEY, I18n.tr("Hosts"), IgnoreMessagesPaneItem.class, AllowMessagesPaneItem.class);
+		
         
 		// advanced options
 		addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, ADVANCED_KEY, I18n.tr("Advanced"));        
