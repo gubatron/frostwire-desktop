@@ -376,12 +376,8 @@ public final class LibraryMediator implements ThemeObserver {
 			JPanel jpInternal = new JPanel(new GridBagLayout());
 			GridBagConstraints gbc = new GridBagConstraints();
 			gbc.insets = new Insets(0, 0, ButtonRow.BUTTON_SEP, 0);
-			jpInternal.add(new JLabel(I18n.tr("You can configure the folders you share in FrostWire\'s Options.")), gbc);
+
 			gbc.gridy = 1;
-			jpInternal.add(new JButton(new ConfigureOptionsAction(
-					OptionsConstructor.SHARED_KEY,
-					I18n.tr("Configure..."),
-					I18n.tr("You can configure the folders you share in FrostWire\'s Options."))), gbc);
 			jpShared.add(jpInternal, BorderLayout.CENTER);
 			jpShared.setBorder(BorderFactory.createEtchedBorder());
             addView(jpShared, SHARED_KEY);
