@@ -36,8 +36,6 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.LimeAction;
-import com.limegroup.gnutella.gui.actions.ShareFileSpeciallyAction;
-import com.limegroup.gnutella.gui.actions.ShareNewFolderAction;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.FileTransfer;
 import com.limegroup.gnutella.gui.dnd.MulticastTransferHandler;
@@ -89,25 +87,17 @@ final class LibraryTree extends JTree implements MouseObserver {
 	private final SavedFilesDirectoryHolder torrent_sfdh = new SavedFilesDirectoryHolder(
 			SharingSettings.TORRENT_DATA_DIR_SETTING, 
 		    I18n.tr("Torrent Saved Files"));
+	
+	/** The dot torrents folder */
+	private LibraryTreeNode dotTorrentFilesNode;
+	private final DotTorrentDirectoryHolder dotTorrentDh = new DotTorrentDirectoryHolder();
 
 	/** The shared files node. It's an empty meta node. */
 	private LibraryTreeNode sharedFilesNode;
 	
-    /** The incomplete node. */
-    private LibraryTreeNode incompleteFilesNode;
-	private final IncompleteDirectoryHolder idh = new IncompleteDirectoryHolder();
-	
-	/** The individually shared files node. */
-	private LibraryTreeNode speciallySharedFilesNode;
-	private final SpeciallySharedFilesDirectoryHolder ssfdh = new SpeciallySharedFilesDirectoryHolder();
-
 	private LibraryTreeNode searchResultsNode;
 	private final LibrarySearchResultsHolder lsrdh = new LibrarySearchResultsHolder();
     
-    private LibraryTreeNode torrentsMetaFilesNode;
-    private final TorrentMetaFileDirectoryHolder tmfh = new TorrentMetaFileDirectoryHolder();
-
-	
 	///////////////////////////////////////////////////////////////////////////
 	//  Singleton Pattern
 	///////////////////////////////////////////////////////////////////////////
@@ -146,38 +136,27 @@ final class LibraryTree extends JTree implements MouseObserver {
 		makeButtonRow();
 		addMouseListener(new DefaultMouseListener(this));
 
-		//  1. add shared node
-		sharedFilesNode = new LibraryTreeNode(rsfdh);
-		addNode(ROOT_NODE, sharedFilesNode);
-        
-        //  -> add specially shared sub-node
-        speciallySharedFilesNode = new LibraryTreeNode(ssfdh);
-		
-		//  2. add saved node
-		savedFilesNode = new LibraryTreeNode(sfdh);
-		addNode(ROOT_NODE, savedFilesNode);
-		
-		//2.1 add torrent saved node
-		torrentDataFilesNode = new LibraryTreeNode(torrent_sfdh);
-		addNode(ROOT_NODE, torrentDataFilesNode);
-		
-		//  -> add media types under saved node
-		addPerMediaTypeDirectories();
-		
-		//  4. add incomplete node
-		incompleteFilesNode = new LibraryTreeNode(idh);
-		addNode(ROOT_NODE, incompleteFilesNode);
-		
 		// add libray search results node
 		searchResultsNode = new LibraryTreeNode(lsrdh);
 		addNode(ROOT_NODE, searchResultsNode);
-        
-		// add torrent meta files dir.
-        torrentsMetaFilesNode = new LibraryTreeNode(tmfh);
-        
-        if (SharingSettings.SHOW_TORRENT_META_FILES.getValue()) {
-            addNode(sharedFilesNode, torrentsMetaFilesNode);
-        } 
+
+		//add saved node
+		savedFilesNode = new LibraryTreeNode(sfdh);
+		addNode(ROOT_NODE, savedFilesNode);
+		// add media types under saved node
+		addPerMediaTypeDirectories();
+
+		//add .torrents node
+		dotTorrentFilesNode = new LibraryTreeNode(dotTorrentDh);
+		addNode(ROOT_NODE, dotTorrentFilesNode);
+
+		//add torrent saved node
+		torrentDataFilesNode = new LibraryTreeNode(torrent_sfdh);
+		addNode(ROOT_NODE, torrentDataFilesNode);
+		
+		//add shared node
+		sharedFilesNode = new LibraryTreeNode(rsfdh);
+		//addNode(ROOT_NODE, sharedFilesNode);
 		
 		updateTheme();
 		
@@ -215,14 +194,13 @@ final class LibraryTree extends JTree implements MouseObserver {
 		if(!(child.getDirectoryHolder() instanceof SharedFilesDirectoryHolder)) {
             insert = children;
             // decrease insert by one if it's the specially shared & torrent is visible
-            if(insert != 0 && child == speciallySharedFilesNode && parent.getChildAt(children-1) == torrentsMetaFilesNode)
+            if(insert != 0)
                 insert--;
 		} else {
     		for(; insert < children; insert++) {
                 LibraryTreeNode current = (LibraryTreeNode)parent.getChildAt(insert);
                 File f = current.getFile();
-                if(current == torrentsMetaFilesNode  // don't insert after torrent 
-                  || f == null                       // nor specially shared files
+                if(f == null                       // nor specially shared files
                   || StringUtils.compareFullPrimary(f.getName(), child.getFile().getName()) >= 0) // alphabetically
     		        break;
     		}
@@ -239,17 +217,6 @@ final class LibraryTree extends JTree implements MouseObserver {
 		addNode(parent, child, false);
 	}
 	
-	/**
-	 * Removes the child node from the parent node.  Does nothing if child not a child of parent.
-	 */
-	private void removeNode(LibraryTreeNode parent, LibraryTreeNode child) {
-		if (parent == null || child == null)
-			return;
-		if (parent.getIndex(child) == -1)
-			return;
-		TREE_MODEL.removeNodeFromParent(child);
-	}
-
 	private void addPerMediaTypeDirectories() {
 		for (Iterator<?> i = NamedMediaType.getAllNamedMediaTypes().iterator(); i.hasNext(); ) {
 			NamedMediaType nm = (NamedMediaType)i.next();
@@ -266,16 +233,13 @@ final class LibraryTree extends JTree implements MouseObserver {
 	
 	// inherit doc comment
 	public void updateTheme() {
-//		Color tableColor = SkinHandler.getTableBackgroundColor();
-//		setBackground(tableColor);
-//		setCellRenderer(new LibraryTreeCellRenderer());
 	}
 	
 	/**
 	 * Sets the initial selection to the Saved Files folder.
 	 */
 	public void setInitialSelection() {
-		TreePath tp = new TreePath( sharedFilesNode.getPath());
+		TreePath tp = new TreePath(torrentDataFilesNode.getPath());
 		setSelectionPath(tp);
 	}
 
@@ -321,23 +285,6 @@ final class LibraryTree extends JTree implements MouseObserver {
 	 */
 	public void handleFileManagerEvent(final FileManagerEvent evt) {
 	    switch(evt.getType()) {
-	    case ADD_FILE:
-		    // If this was an individually shared file, add that node.
-		    if(ssfdh.accept(evt.getFileDescs()[0].getFile())) {
-		        addNode(sharedFilesNode, speciallySharedFilesNode, true);
-            }
-            break;
-        case REMOVE_FILE:
-			//  hide individually shared files node if no individually shared files exist
-			if (ssfdh.isEmpty()) {
-				//  change selection to saved files
-				if (ssfdh == getSelectedDirectoryHolder())
-					setSelectionPath(new TreePath(savedFilesNode.getPath()));
-				removeNode(sharedFilesNode, speciallySharedFilesNode);				
-			}
-            // hide individual purchased files node if no purchased files in a shared folder exist
-
-			break;
 	    case ADD_FOLDER:
 	        File[] files = evt.getFiles();
 	        addDirectoryToNode(files[0], sharedFilesNode, false);
@@ -425,14 +372,8 @@ final class LibraryTree extends JTree implements MouseObserver {
 	private boolean canBeUnshared(LibraryTreeNode node) {
 		if (node == null)
 			return false;
-		if (node == speciallySharedFilesNode)
-			return false;
-		if (node == incompleteFilesNode)
-			return false;
 		if (node == sharedFilesNode)
 			return false;
-        if (node == torrentsMetaFilesNode)
-            return false;
 		if (node.getParent() == null)
 			return false;
 		
@@ -454,7 +395,7 @@ final class LibraryTree extends JTree implements MouseObserver {
 	 * @return
 	 */
 	private boolean canBeShared(LibraryTreeNode node) {
-		if (node == null || node == incompleteFilesNode || node == torrentsMetaFilesNode) {
+		if (node == null) {
 			return false;
 		}
 		
@@ -494,9 +435,7 @@ final class LibraryTree extends JTree implements MouseObserver {
 	 *         folder, <tt>false</tt> otherwise
 	 */
 	boolean droppingToIncompleteFolder(Point mousePoint) {
-		TreePath path = getPathForLocation(mousePoint.x, mousePoint.y);
-		LibraryTreeNode node = (LibraryTreeNode)path.getLastPathComponent();
-		return node == incompleteFilesNode;
+		return false;
 	}
 
 	/**
@@ -528,8 +467,7 @@ final class LibraryTree extends JTree implements MouseObserver {
 		// collect all but the child that holds the specially shared files
 		for (int i = 0; i < length - 1; i++) {
 			LibraryTreeNode node = (LibraryTreeNode)sharedFilesNode.getChildAt(i);
-			if (node != speciallySharedFilesNode && node != torrentsMetaFilesNode)
-				newFiles.add(node.getDirectoryHolder().getDirectory());
+			newFiles.add(node.getDirectoryHolder().getDirectory());
 		}
 		return newFiles.toArray(new File[0]);
 	}
@@ -546,8 +484,7 @@ final class LibraryTree extends JTree implements MouseObserver {
 		    TreeNode node = sharedFilesNode.getChildAt(i);
 		    if(node == getSelectedNode())
 		        selected = true;
-            if(node != torrentsMetaFilesNode)
-                sharedFilesNode.remove(i);
+            sharedFilesNode.remove(i);
 		}
 		
 		if (selected)
@@ -596,8 +533,7 @@ final class LibraryTree extends JTree implements MouseObserver {
 	 *         <tt>false</tt> otherwise
 	 */
 	boolean incompleteDirectoryIsSelected() {
-		LibraryTreeNode selected = getSelectedNode();
-		return incompleteFilesNode == selected;
+		return false;
 	}
 	
 	/**
@@ -840,41 +776,6 @@ final class LibraryTree extends JTree implements MouseObserver {
 		}
 	}
     
-    private class ShowHideTorrentMetaAction extends AbstractAction {
-        
-        /**
-         * 
-         */
-        private static final long serialVersionUID = -7029848351325797438L;
-
-        private String hideMetaFilesLabel =
-            I18n.tr("Hide .torrent Files");
-            
-        private String showMetaFilesLabel = 
-            I18n.tr("Show .torrent Files");
-        
-        public ShowHideTorrentMetaAction() {
-            if (SharingSettings.SHOW_TORRENT_META_FILES.getValue()) {
-                putValue(Action.NAME, hideMetaFilesLabel);
-            } else {
-                putValue(Action.NAME, showMetaFilesLabel);
-            }
-        }
-        
-        public void actionPerformed(ActionEvent e) {
-            if(!sharedFilesNode.isNodeChild(torrentsMetaFilesNode)) {
-                addNode(sharedFilesNode, torrentsMetaFilesNode);
-                //switch name
-                putValue(Action.NAME, hideMetaFilesLabel);
-                SharingSettings.SHOW_TORRENT_META_FILES.setValue(true);
-            } else {
-                removeNode(sharedFilesNode, torrentsMetaFilesNode);
-                putValue(Action.NAME, showMetaFilesLabel);
-                SharingSettings.SHOW_TORRENT_META_FILES.setValue(false);
-            }
-        }
-    }
-    
 	
 	private class RefreshAction extends AbstractAction {
 		
@@ -928,8 +829,7 @@ final class LibraryTree extends JTree implements MouseObserver {
 	private boolean isEnqueueable() {
 		LibraryTreeNode node = getSelectedNode();
 		boolean enqueueable = false;
-		if (node != null && node != incompleteFilesNode && 
-				node != sharedFilesNode) {
+		if (node != null && node != sharedFilesNode) {
 			File[] files = node.getDirectoryHolder().getFiles();
 			if (files != null && files.length > 0) {
 				for (int i = 0; i < files.length; i++) {
@@ -965,8 +865,6 @@ final class LibraryTree extends JTree implements MouseObserver {
             I18n.tr("Options"),
             I18n.tr("You can configure the folders you share in FrostWire\'s Options."));
             
-    private Action showTorrentMetaAction = new ShowHideTorrentMetaAction();
-	
 	private ButtonRow BUTTON_ROW;
 	
 	/**
@@ -974,15 +872,8 @@ final class LibraryTree extends JTree implements MouseObserver {
 	 * click.
 	 */
 	private void makePopupMenu() {
-		DIRECTORY_POPUP.add(new SkinMenuItem(shareAction));
-		DIRECTORY_POPUP.add(new SkinMenuItem(unshareAction));
         DIRECTORY_POPUP.add(new SkinMenuItem(addDirToPlaylistAction));
 		DIRECTORY_POPUP.addSeparator();
-		DIRECTORY_POPUP.add(new SkinMenuItem(new ShareFileSpeciallyAction()));
-		DIRECTORY_POPUP.add(new SkinMenuItem(new ShareNewFolderAction()));
-		DIRECTORY_POPUP.addSeparator();
-        DIRECTORY_POPUP.add(new SkinMenuItem(showTorrentMetaAction));
-        DIRECTORY_POPUP.addSeparator();
 		DIRECTORY_POPUP.add(new SkinMenuItem(refreshAction));
 		if (hasExploreAction()) {
 			DIRECTORY_POPUP.add(new SkinMenuItem(exploreAction));
