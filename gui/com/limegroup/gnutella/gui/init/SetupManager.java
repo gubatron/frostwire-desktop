@@ -37,7 +37,7 @@ import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.Line;
 import com.limegroup.gnutella.gui.SplashWindow;
-import com.limegroup.gnutella.gui.shell.LimeAssociations;
+import com.limegroup.gnutella.gui.shell.FrostAssociations;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.InstallSettings;
@@ -101,7 +101,7 @@ public class SetupManager {
     }
     
     private boolean shouldShowAssociationsWindow() {
-    	if (InstallSettings.ASSOCIATION_OPTION.getValue() == LimeAssociations.CURRENT_ASSOCIATIONS)
+    	if (InstallSettings.ASSOCIATION_OPTION.getValue() == FrostAssociations.CURRENT_ASSOCIATIONS)
             return false;
     	
     	// display a window if silent grab failed. 
@@ -388,7 +388,7 @@ public class SetupManager {
             InstallSettings.START_STARTUP.setValue(true);
         if (OSUtils.isWindows())
             InstallSettings.FIREWALL_WARNING.setValue(true);
-        InstallSettings.ASSOCIATION_OPTION.setValue(LimeAssociations.CURRENT_ASSOCIATIONS);
+        InstallSettings.ASSOCIATION_OPTION.setValue(FrostAssociations.CURRENT_ASSOCIATIONS);
         
         InstallSettings.FIRST_INSTALL_FROSTWIRE_VERSION.setValue(FrostWireUtils.getFrostWireVersion());
 		

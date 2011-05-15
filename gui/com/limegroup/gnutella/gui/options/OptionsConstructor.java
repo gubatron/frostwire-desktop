@@ -76,7 +76,7 @@ import com.limegroup.gnutella.gui.options.panes.TorrentSaveFolderPaneItem;
 import com.limegroup.gnutella.gui.options.panes.TrayIconDisplayPaneItem;
 import com.limegroup.gnutella.gui.options.panes.VideoPlayerPaneItem;
 import com.limegroup.gnutella.gui.options.panes.iTunesPreferencePaneItem;
-import com.limegroup.gnutella.gui.shell.LimeAssociations;
+import com.limegroup.gnutella.gui.shell.FrostAssociations;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.settings.UISettings;
 
@@ -350,7 +350,7 @@ public final class OptionsConstructor {
 		addOption(ADVANCED_KEY, FIREWALL_KEY, I18n.tr("Firewall"), PortPaneItem.class, ForceIPPaneItem.class);
 		addOption(ADVANCED_KEY, PROXY_KEY, I18n.tr("Proxy"), ProxyPaneItem.class, ProxyLoginPaneItem.class);
         addOption(ADVANCED_KEY, NETWORK_INTERFACE_KEY, I18n.tr("Network Interface"), NetworkInterfacePaneItem.class);
-        if (LimeAssociations.anyAssociationsSupported()) {
+        if (FrostAssociations.anyAssociationsSupported()) {
         	addOption(ADVANCED_KEY, ASSOCIATIONS_KEY, I18n.tr("File Associations"), AssociationPreferencePaneItem.class);
         }
         addOption(ADVANCED_KEY, PERFORMANCE_KEY, I18n.tr("Performance"), DisableCapabilitiesPaneItem.class);              

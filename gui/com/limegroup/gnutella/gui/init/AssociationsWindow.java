@@ -19,7 +19,7 @@ import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.Line;
 import com.limegroup.gnutella.gui.shell.LimeAssociationOption;
-import com.limegroup.gnutella.gui.shell.LimeAssociations;
+import com.limegroup.gnutella.gui.shell.FrostAssociations;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 
 public class AssociationsWindow extends SetupWindow {
@@ -53,7 +53,7 @@ public class AssociationsWindow extends SetupWindow {
         gbc.gridwidth = GridBagConstraints.REMAINDER;
 
         gbc.insets = new Insets(1, 4, 1, 0);
-        for (LimeAssociationOption option : LimeAssociations.getSupportedAssociations()) {
+        for (LimeAssociationOption option : FrostAssociations.getSupportedAssociations()) {
             JCheckBox box = new JCheckBox(option.getDescription());
             box.setSelected(true);
             associations.put(box, option);

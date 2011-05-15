@@ -17,7 +17,7 @@ import javax.swing.JRadioButton;
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.shell.LimeAssociationOption;
-import com.limegroup.gnutella.gui.shell.LimeAssociations;
+import com.limegroup.gnutella.gui.shell.FrostAssociations;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 
 /**
@@ -47,7 +47,7 @@ public final class AssociationPreferencePaneItem extends AbstractPaneItem {
 	public AssociationPreferencePaneItem() {
 		super(TITLE, LABEL);
         
-		Iterable<LimeAssociationOption> options = LimeAssociations.getSupportedAssociations();
+		Iterable<LimeAssociationOption> options = FrostAssociations.getSupportedAssociations();
         
         JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();

@@ -11,7 +11,7 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.ResourceManager;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 
-public class LimeAssociations {
+public class FrostAssociations {
 	
     /** 
      * A constant for the current associations "level"

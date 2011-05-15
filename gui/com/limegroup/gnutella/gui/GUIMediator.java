@@ -70,7 +70,7 @@ import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
 import com.limegroup.gnutella.gui.options.OptionsMediator;
 import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
 import com.limegroup.gnutella.gui.search.SearchMediator;
-import com.limegroup.gnutella.gui.shell.LimeAssociations;
+import com.limegroup.gnutella.gui.shell.FrostAssociations;
 import com.limegroup.gnutella.gui.shell.ShellAssociationManager;
 import com.limegroup.gnutella.gui.tabs.LibraryPlayListTab;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
@@ -772,7 +772,7 @@ public final class GUIMediator {
 	 */
 	public static ShellAssociationManager getAssociationManager() {
 	    if (ASSOCIATION_MANAGER == null) {
-	        ASSOCIATION_MANAGER = new ShellAssociationManager(LimeAssociations.getSupportedAssociations()); 
+	        ASSOCIATION_MANAGER = new ShellAssociationManager(FrostAssociations.getSupportedAssociations()); 
 	    }
 	    
 	    return ASSOCIATION_MANAGER;
