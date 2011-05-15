@@ -53,6 +53,9 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     private static BTDownloadMediator INSTANCE;
 
     public static BTDownloadMediator instance() {
+        
+        AzureusStarter.start();
+        
         if (INSTANCE == null) {
             INSTANCE = new BTDownloadMediator();
         }

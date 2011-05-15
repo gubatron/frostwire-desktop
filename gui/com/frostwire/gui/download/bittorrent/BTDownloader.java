@@ -27,4 +27,12 @@ public interface BTDownloader {
     public int getProgress();
 
     public String getStateString();
+
+    public long getBytesReceived();
+
+    public double getDownloadSpeed();
+
+    public double getUploadSpeed();
+
+    public long getETA();
 }

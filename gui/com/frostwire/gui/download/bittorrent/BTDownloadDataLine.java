@@ -313,12 +313,14 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
 	/**
 	 * Variable for the speed of the download.
 	 */
-	private double _speed;
+	private double _downloadSpeed;
+	
+	private double _uploadSpeed;
 
 	/**
 	 * Variable for how much time is left.
 	 */
-	private int _timeLeft;
+	private long _timeLeft;
 
 	/**
 	 * Variable for the time this download started
@@ -383,17 +385,9 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
 	                152, true, String.class);
 
 	/**
-	 * Column index for whether or not the uploader is chat-enabled.
-	 */
-	static final int CHAT_INDEX = 3;
-	private static final LimeTableColumn CHAT_COLUMN =
-	    new LimeTableColumn(CHAT_INDEX, "DOWNLOAD_CHAT_COLUMN", I18n.tr("Chat"),
-	                10, false, ChatHolder.class);
-
-	/**
 	 * Column index for the progress of the download.
 	 */
-	static final int PROGRESS_INDEX = 4;
+	static final int PROGRESS_INDEX = 3;
 	private static final LimeTableColumn PROGRESS_COLUMN =
 	    new LimeTableColumn(PROGRESS_INDEX, "DOWNLOAD_PROGRESS_COLUMN", I18n.tr("Progress"),
 	                71, true, ProgressBarHolder.class);
@@ -401,7 +395,7 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
 	/**
      * Column index for actual amount of bytes downloaded.
      */
-    static final int BYTES_DOWNLOADED_INDEX = 5;
+    static final int BYTES_DOWNLOADED_INDEX = 4;
     private static final LimeTableColumn BYTES_DOWNLOADED_COLUMN =
         new LimeTableColumn(BYTES_DOWNLOADED_INDEX, "DOWNLOAD_BYTES_DOWNLOADED_COLUMN", I18n.tr("Downloaded"),
                     20, true, SizeHolder.class);
@@ -409,10 +403,15 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
 	/**
 	 * Column index for the download speed.
 	 */
-	static final int SPEED_INDEX = 6;
-	private static final LimeTableColumn SPEED_COLUMN =
-	    new LimeTableColumn(SPEED_INDEX, "DOWNLOAD_SPEED_COLUMN", I18n.tr("Speed"),
+	static final int DOWNLOAD_SPEED_INDEX = 5;
+	private static final LimeTableColumn DOWNLOAD_SPEED_COLUMN =
+	    new LimeTableColumn(DOWNLOAD_SPEED_INDEX, "DOWNLOAD_SPEED_COLUMN", I18n.tr("Down Speed"),
 	                58, true, SpeedRenderer.class);
+	
+	static final int UPLOAD_SPEED_INDEX = 6;
+    private static final LimeTableColumn UPLOAD_SPEED_COLUMN =
+        new LimeTableColumn(UPLOAD_SPEED_INDEX, "UPLOAD_SPEED_COLUMN", I18n.tr("Up Speed"),
+                    58, true, SpeedRenderer.class);
 
 	/**
 	 * Column index for the download time remaining.
@@ -423,17 +422,9 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
 	                49, true, TimeRemainingHolder.class);
     
     /**
-     * Column index for the vendor of the downloader.
-     */
-    static final int VENDOR_INDEX = 8;
-    private static final LimeTableColumn VENDOR_COLUMN =
-        new LimeTableColumn(VENDOR_INDEX, "DOWNLOAD_SERVER_COLUMN", I18n.tr("Vendor/Version"),
-                    20, false, String.class);
-	
-	/**
 	 * Number of columns to display
 	 */
-	static final int NUMBER_OF_COLUMNS = 9;
+	static final int NUMBER_OF_COLUMNS = 8;
 	
 	// Implements DataLine interface
 	public int getColumnCount() { return NUMBER_OF_COLUMNS; }
@@ -497,18 +488,16 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
 			return new SizeHolder(_size);
 		case STATUS_INDEX:
 			return _status;
-		case CHAT_INDEX:
-			return _chatEnabled ? Boolean.TRUE : Boolean.FALSE;
 		case PROGRESS_INDEX:
 			return Integer.valueOf(_progress);
 		case BYTES_DOWNLOADED_INDEX:
 			return new SizeHolder(_amountRead);
-		case SPEED_INDEX:
-			return new Double(_speed);
+		case DOWNLOAD_SPEED_INDEX:
+			return new Double(_downloadSpeed);
+		case UPLOAD_SPEED_INDEX:
+		    return new Double(_uploadSpeed);
         case TIME_INDEX:
             return new TimeRemainingHolder(_timeLeft);
-        case VENDOR_INDEX:
-            return _vendor;
         }
 		return null;
 	}
@@ -521,24 +510,13 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
 	        case FILE_INDEX:     return FILE_COLUMN;
     	    case SIZE_INDEX:     return SIZE_COLUMN;
     	    case STATUS_INDEX:   return STATUS_COLUMN;
-    	    case CHAT_INDEX:     return CHAT_COLUMN;
     	    case PROGRESS_INDEX: return PROGRESS_COLUMN;
     	    case BYTES_DOWNLOADED_INDEX: return BYTES_DOWNLOADED_COLUMN;
-    	    case SPEED_INDEX:    return SPEED_COLUMN;
+    	    case DOWNLOAD_SPEED_INDEX:    return DOWNLOAD_SPEED_COLUMN;
+    	    case UPLOAD_SPEED_INDEX: return UPLOAD_SPEED_COLUMN;
     	    case TIME_INDEX:     return TIME_COLUMN;
-    	    case VENDOR_INDEX:   return VENDOR_COLUMN;
 	    }
 	    return null;
-	}
-	
-	public boolean isClippable(int idx) {
-	    switch(idx) {
-	    case CHAT_INDEX:
-	    case PROGRESS_INDEX:
-	        return false;
-	    default:
-	        return true;
-        }
 	}
 	
 	public int getTypeAheadColumn() {
@@ -623,18 +601,6 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
 //	    return info;
 //	}
 
-	public boolean isDynamic(int idx) {
-	    switch(idx) {
-	        case STATUS_INDEX:
-	        case PROGRESS_INDEX:
-	        case SPEED_INDEX:
-	        case TIME_INDEX:
-	        case VENDOR_INDEX:
-	            return true;
-	    }
-	    return false;
-	}
-
 	/**
 	 * Returns the total size in bytes of the file being downloaded.
 	 *
@@ -663,15 +629,6 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
     int getState() {
 	    return _state;
 	}
-    
-    /**
-     * Return the speed of the Download
-     *
-     * @return the speed of the download
-     */
-    double getSpeed() {
-        return _speed;
-    }
 
 	/**
 	 * Returns whether or not the download has completed.
@@ -681,27 +638,7 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
 	boolean isCompleted() {
 		return false;//_state == DownloadStatus.COMPLETE;
 	}
-
-	/**
-	 * Returns whether or not chat is enabled for this download.
-	 *
-	 * @return <tt>true</tt> if the host we're downloading from is chattable,
-	 *  <tt>false</tt> otherwise
-	 */
-	boolean getChatEnabled() {
-		return _chatEnabled;
-	}
-
-	/**
-	 * Returns whether or not browse is enabled for this download.
-	 *
-	 * @return <tt>true</tt> if the host we're downloading from is browsable,
-	 *  <tt>false</tt> otherwise
-	 */
-	boolean getBrowseEnabled() {
-		return _browseEnabled;
-	}
-
+	
 	private Icon getIcon() {
 //	    if (initializer.getCustomIconDescriptor() == Downloader.BITTORRENT_DOWNLOAD)
 //	        return GUIMediator.getThemeImage("bittorrent_download");
@@ -747,6 +684,10 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
 	 
 	    _status = getInitializeObject().getStateString();
 	    _progress = getInitializeObject().getProgress();
+	    _amountRead = getInitializeObject().getBytesReceived();
+	    _downloadSpeed = getInitializeObject().getDownloadSpeed();
+	    _uploadSpeed = getInitializeObject().getUploadSpeed();
+	    _timeLeft = getInitializeObject().getETA();
 	}
 
 
@@ -1034,4 +975,16 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
 	        LibraryMediator.setSelectedFile(file);
 	    }
 	}
+
+    @Override
+    public boolean isDynamic(int col) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean isClippable(int col) {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }
