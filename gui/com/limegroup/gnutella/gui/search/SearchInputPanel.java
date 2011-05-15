@@ -168,13 +168,6 @@ class SearchInputPanel extends JPanel {
 
         add(PANE, BorderLayout.CENTER);
 
-        JPanel viewSharedFilesPanel = new BoxPanel(BoxPanel.X_AXIS);
-        viewSharedFilesPanel.add(new JLabel(GUIMediator.getThemeImage("shared_folder")));
-        viewSharedFilesPanel.add(Box.createHorizontalStrut(5));
-        viewSharedFilesPanel.add(new MySharedFilesButton());
-        viewSharedFilesPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 10, 0));
-        add(viewSharedFilesPanel, BorderLayout.SOUTH);
-        
         Font bold = UIManager.getFont("Table.font.bold");
         Font bolder =
             new Font(bold.getName(), bold.getStyle(), bold.getSize() + 5);
