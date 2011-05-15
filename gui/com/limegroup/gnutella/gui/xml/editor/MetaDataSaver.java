@@ -46,14 +46,14 @@ public class MetaDataSaver {
                 try {
                     GUIMediator.safeInvokeAndWait(new Runnable() {
                         public void run(){
-                            LibraryMediator.instance().setAnnotateEnabled(false);
+                           LibraryMediator.instance().setAnnotateEnabled(false);
                         }
                     });
                     saveMetaDataInternal(listener);
                 } finally{
                     GUIMediator.safeInvokeAndWait(new Runnable() {
                         public void run() {
-                            LibraryMediator.instance().setAnnotateEnabled(true);
+                           LibraryMediator.instance().setAnnotateEnabled(true);
                         }
                     });
             		if (listener != null) {

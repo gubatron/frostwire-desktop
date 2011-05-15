@@ -439,7 +439,7 @@ public final class VisualConnectionCallback implements ActivityCallback {
     public void setAnnotateEnabled(final boolean enabled) {
     	    SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                mf().getLibraryMediator().setAnnotateEnabled(enabled);
+//                mf().getLibraryMediator().setAnnotateEnabled(enabled);
             }
         });
     }

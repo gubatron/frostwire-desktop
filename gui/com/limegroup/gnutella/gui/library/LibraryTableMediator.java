@@ -63,7 +63,6 @@ import com.limegroup.gnutella.gui.actions.ActionUtils;
 import com.limegroup.gnutella.gui.actions.CopyMagnetLinkToClipboardAction;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.actions.SearchAction;
-import com.limegroup.gnutella.gui.library.RecursiveSharingDialog.State;
 import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
@@ -71,7 +70,6 @@ import com.limegroup.gnutella.gui.themes.SkinMenu;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
-import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.gui.util.CoreExceptionHandler;
 import com.limegroup.gnutella.gui.util.GUILauncher;
 import com.limegroup.gnutella.gui.util.GUILauncher.LaunchableProvider;
@@ -89,7 +87,6 @@ import com.limegroup.gnutella.xml.LimeXMLDocument;
 import com.limegroup.gnutella.xml.LimeXMLNames;
 import com.limegroup.gnutella.xml.LimeXMLSchema;
 import com.limegroup.gnutella.xml.LimeXMLSchemaRepository;
-import com.limegroup.gnutella.xml.LimeXMLUtils;
 
 /**
  * This class wraps the JTable that displays files in the library,
@@ -108,20 +105,8 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
     public static Action OPEN_IN_FOLDER_ACTION;
     public static Action ENQUEUE_ACTION;
 	public static Action DELETE_ACTION;
-    public static Action ANNOTATE_ACTION;
-    public static Action RESUME_ACTION;
-    
     public static Action RENAME_ACTION;
 	
-	public static Action SHARE_ACTION;
-	public static Action UNSHARE_ACTION;
-	public static Action SHARE_FOLDER_ACTION;
-	public static Action UNSHARE_FOLDER_ACTION;
-
-	private Action PUBLISH_ACTION;
-    private Action EDIT_LICENSE_ACTION;
-    private Action VIEW_LICENSE_ACTION;
-
     private Action MAGNET_LOOKUP_ACTION;
 	private Action COPY_MAGNET_TO_CLIPBOARD_ACTION;
 
@@ -130,11 +115,8 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
      */
     private boolean _isIncomplete;
 
-	/**
-	 * Annotation can be turned on once XML is set up.
-	 */
 	private boolean _annotateEnabled = false;
-	
+
     /**
      * instance, for singelton access
      */
@@ -157,24 +139,9 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
         OPEN_IN_FOLDER_ACTION = new OpenInFolderAction();
         ENQUEUE_ACTION = new EnqueueAction();
 		DELETE_ACTION = new RemoveAction();
-        ANNOTATE_ACTION = new AnnotateAction();
-        RESUME_ACTION = new ResumeAction();
-        
         RENAME_ACTION = new RenameAction();
-		
-		SHARE_ACTION = new ShareFileAction();
-		UNSHARE_ACTION = new UnshareFileAction();
-
-        PUBLISH_ACTION = new PublishAction();
-        EDIT_LICENSE_ACTION = new EditLicenseAction();
-        VIEW_LICENSE_ACTION = new ViewLicenseAction();
-        
         MAGNET_LOOKUP_ACTION = new MagnetLookupAction();
-        
 		COPY_MAGNET_TO_CLIPBOARD_ACTION = new CopyMagnetLinkToClipboardAction(this);
-
-		SHARE_FOLDER_ACTION = new ShareFolderAction();
-		UNSHARE_FOLDER_ACTION = new UnshareFolderAction();
     }
 
     /**
@@ -188,10 +155,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		Action[] aa = new Action[] { 
 				LAUNCH_ACTION,
 				ENQUEUE_ACTION,
-				DELETE_ACTION,
-				ANNOTATE_ACTION,
-				PUBLISH_ACTION,
-				RESUME_ACTION
+				DELETE_ACTION
 		};
 		
 		BUTTON_ROW = new ButtonRow(aa, ButtonRow.X_AXIS, ButtonRow.NO_GLUE);
@@ -208,8 +172,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		if (hasExploreAction()) {
 		    menu.add(new JMenuItem(OPEN_IN_FOLDER_ACTION));
 		}
-		menu.addSeparator();
-		menu.add(new SkinMenuItem(RESUME_ACTION));
 		menu.addSeparator();
 		menu.add(new SkinMenuItem(DELETE_ACTION));
 		menu.add(new SkinMenuItem(RENAME_ACTION));
@@ -236,55 +198,21 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	            ENQUEUE_ACTION.setEnabled(false);
 	        DELETE_ACTION.setEnabled(torrentSelected);
 	        RENAME_ACTION.setEnabled(false);
-			if (fileSelected) {
-				JMenu sharingMenu = new SkinMenu(I18n.tr("Sharing"));
-				sharingMenu.add(new JMenuItem(SHARE_ACTION));
-				sharingMenu.add(new JMenuItem(UNSHARE_ACTION));
-				sharingMenu.add(new JMenuItem(ANNOTATE_ACTION));
-				sharingMenu.addSeparator();
-				sharingMenu.add(new JMenuItem(SHARE_FOLDER_ACTION));
-				sharingMenu.add(new JMenuItem(UNSHARE_FOLDER_ACTION));
-				menu.add(sharingMenu);
-			} else { 
-				menu.add(new JMenuItem(SHARE_FOLDER_ACTION));
-				menu.add(new JMenuItem(UNSHARE_FOLDER_ACTION));
-			}
 		} else {
 	        if (GUIMediator.isPlaylistVisible() && PlaylistMediator.isPlayableFile(DATA_MODEL.getFile(rows[0])) )
 	            ENQUEUE_ACTION.setEnabled(true);
 	        DELETE_ACTION.setEnabled(true);
 	        // only allow single selection for renames
 	        RENAME_ACTION.setEnabled(LibraryMediator.isRenameEnabled() && rows.length == 1);
-			menu.add(new JMenuItem(SHARE_ACTION));
-			menu.add(new JMenuItem(UNSHARE_ACTION));
-			menu.add(new JMenuItem(ANNOTATE_ACTION));
 		}
 		menu.addSeparator();
 		
         LibraryTableDataLine line = DATA_MODEL.get(rows[0]);
-        menu.add(createLicenseMenu(line));
 		menu.add(createSearchSubMenu(line));
 		menu.add(createAdvancedMenu(line));
 
 		return menu;
     }
-
-	private JMenu createLicenseMenu(LibraryTableDataLine dl) {
-		JMenu menu = new SkinMenu(I18n.tr("License"));
-		if (dl != null) {
-			menu.add(new SkinMenuItem(PUBLISH_ACTION));
-			menu.add(new SkinMenuItem(EDIT_LICENSE_ACTION));
-			menu.add(new SkinMenuItem(VIEW_LICENSE_ACTION));
-			
-			menu.setEnabled(PUBLISH_ACTION.isEnabled() 
-					|| EDIT_LICENSE_ACTION.isEnabled() 
-					|| VIEW_LICENSE_ACTION.isEnabled()); 
-		} else {
-            menu.setEnabled(false);
-		}
-
-		return menu;
-	}
 
 	private JMenu createAdvancedMenu(LibraryTableDataLine dl) {
 		JMenu menu = new SkinMenu(I18n.tr("Advanced"));
@@ -362,6 +290,20 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		return null;
 	}
 	
+	/**
+	 * Allows annotation once XML is set up
+	 *
+	 * @param enabled whether or not annotation is allowed
+	 */
+	public void setAnnotateEnabled(boolean enabled) {
+		_annotateEnabled = enabled;
+		
+	    LibraryTableDataLine.setXMLEnabled(enabled);
+	    DATA_MODEL.refresh();
+		
+	    handleSelection(-1);
+	}
+	
     /**
      * Sets the default editors.
      */
@@ -394,20 +336,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	}
 
 	/**
-	 * Allows annotation once XML is set up
-	 *
-	 * @param enabled whether or not annotation is allowed
-	 */
-	public void setAnnotateEnabled(boolean enabled) {
-		_annotateEnabled = enabled;
-		
-	    LibraryTableDataLine.setXMLEnabled(enabled);
-	    DATA_MODEL.refresh();
-		
-	    handleSelection(-1);
-	}
-
-	/**
 	 * Notification that the incomplete directory is selected (or not)
 	 *
 	 * @param enabled whether or not incomplete is showing
@@ -417,11 +345,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 			return;
 	    _isIncomplete = enabled;
 	    //  enable/disable the resume buttons if we're not incomplete
-	    if (!enabled) {
-			RESUME_ACTION.setEnabled(false);
-	    } else if (!TABLE.getSelectionModel().isSelectionEmpty()) {
-			RESUME_ACTION.setEnabled(true);
-	    }
 	}
 	
 	/**
@@ -1071,7 +994,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 			return;
 		} 
 		
-		LibraryTableDataLine selectedLine = DATA_MODEL.get(sel[0]);
 		File selectedFile = getFile(sel[0]);
 		boolean firstShared = GuiCoreMediator.getFileManager().isFileShared(selectedFile);
 		
@@ -1097,27 +1019,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
         } else
 			ENQUEUE_ACTION.setEnabled(false);
 
-		//  turn on Describe for complete files
-		//  turn on Publish / Edit for single selected complete files
-		if (!_isIncomplete && _annotateEnabled) {
-			ANNOTATE_ACTION.setEnabled(firstShared);
-			
-			boolean canPublish = (sel.length == 1 && firstShared && LimeXMLUtils.isFilePublishable(selectedFile.getName()));
-			PUBLISH_ACTION.setEnabled(canPublish && !selectedLine.isLicensed());
-			EDIT_LICENSE_ACTION.setEnabled(canPublish && selectedLine.isLicensed());
-		} else {
-			ANNOTATE_ACTION.setEnabled(false);
-			PUBLISH_ACTION.setEnabled(false);
-			EDIT_LICENSE_ACTION.setEnabled(false);
-		}
-		// only allow annotations if 1 line is selected
-		ANNOTATE_ACTION.setEnabled(sel.length == 1);
-		
-		VIEW_LICENSE_ACTION.setEnabled(sel.length == 1 && selectedLine.isLicensed());
-		
-		//  turn on Resume button if Incomplete folder is currently selected
-		RESUME_ACTION.setEnabled(_isIncomplete);
-		
 		RENAME_ACTION.setEnabled(LibraryMediator.isRenameEnabled() && sel.length == 1);
 		 
 		//  enable Share File action when any selected file is not shared
@@ -1129,9 +1030,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		for (int i = 0; i < sel.length; i++) {
 			File file = getFile(sel[i]);
 			if (file.isDirectory()) {
-				
-				// disable annotate action when a directory is part of the selection
-				ANNOTATE_ACTION.setEnabled(false);
 				
 				// turn off launching for incomplete torrents
 				boolean isTorrent = false;
@@ -1173,10 +1071,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 			
 			
 		}
-		SHARE_ACTION.setEnabled(shareAllowed);
-		UNSHARE_ACTION.setEnabled(unshareAllowed);
-		SHARE_FOLDER_ACTION.setEnabled(shareFolderAllowed);
-		UNSHARE_FOLDER_ACTION.setEnabled(unshareFolderAllowed);
 		
 		//  enable / disable advanced items if file shared / not shared
 		MAGNET_LOOKUP_ACTION.setEnabled(firstShared);
@@ -1193,19 +1087,8 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		OPEN_IN_FOLDER_ACTION.setEnabled(false);
 		ENQUEUE_ACTION.setEnabled(false);
 		DELETE_ACTION.setEnabled(false);
-		ANNOTATE_ACTION.setEnabled(false);
-		RESUME_ACTION.setEnabled(false);
 		
 		RENAME_ACTION.setEnabled(false);
-		
-		SHARE_ACTION.setEnabled(false);
-		UNSHARE_ACTION.setEnabled(false);
-		SHARE_FOLDER_ACTION.setEnabled(false);
-		UNSHARE_FOLDER_ACTION.setEnabled(false);
-
-		PUBLISH_ACTION.setEnabled(false);
-		EDIT_LICENSE_ACTION.setEnabled(false);
-		VIEW_LICENSE_ACTION.setEnabled(false);
 
 		COPY_MAGNET_TO_CLIPBOARD_ACTION.setEnabled(false);
 		MAGNET_LOOKUP_ACTION.setEnabled(false);
@@ -1332,82 +1215,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		}
     }
 	
-    private final class AnnotateAction extends AbstractAction {
-		
-		/**
-         * 
-         */
-        private static final long serialVersionUID = 66935682397420122L;
-
-        public AnnotateAction() {
-			putValue(Action.NAME, 
-					 I18n.tr("Describe..."));
-			putValue(Action.SHORT_DESCRIPTION,
-					 I18n.tr("Add Description to Selected File"));
-			putValue(LimeAction.ICON_NAME, "LIBRARY_ANNOTATE");
-		}
-		
-    	public void actionPerformed(ActionEvent ae) {
-    		editMeta(false);
-    	}
-    }
     
-    private final class PublishAction extends AbstractAction {
-    	
-    	/**
-         * 
-         */
-        private static final long serialVersionUID = -8431012683093696830L;
-
-        public PublishAction() {
-			putValue(Action.NAME, 
-					 I18n.tr("Publish..."));
-			putValue(Action.SHORT_DESCRIPTION,
-					 I18n.tr("Publish under Creative Commons License"));
-			putValue(LimeAction.ICON_NAME, "LIBRARY_PUBLISH");
-    	}
-
-		public void actionPerformed(ActionEvent e) {
-			editMeta(true);
-		}
-    }
-
-    private final class EditLicenseAction extends AbstractAction {
-    	
-    	/**
-         * 
-         */
-        private static final long serialVersionUID = -5453614508418401477L;
-
-        public EditLicenseAction() {
-			putValue(Action.NAME, 
-					 I18n.tr("Edit License..."));
-    	}
-
-		public void actionPerformed(ActionEvent e) {
-			editMeta(true);
-		}
-    }
-    private final class ResumeAction extends AbstractAction {
-		
-		/**
-         * 
-         */
-        private static final long serialVersionUID = 6014468419110764144L;
-
-        public ResumeAction () {
-			putValue(Action.NAME, I18n.tr
-					("Resume"));
-			putValue(Action.SHORT_DESCRIPTION,
-					 I18n.tr("Continue Downloading Selected Incomplete File"));			
-			putValue(LimeAction.ICON_NAME, "LIBRARY_RESUME");
-		}
-		
-        public void actionPerformed(ActionEvent ae) {
-            resumeIncomplete();
-		}
-    }
-	
     private final class RenameAction extends AbstractAction {
 		
 		/**
@@ -1427,137 +1235,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		}
     }
 
-	private class ShareFileAction extends AbstractAction {
-		
-		/**
-         * 
-         */
-        private static final long serialVersionUID = -253503274459243151L;
-
-        public ShareFileAction() {
-			putValue(Action.NAME, I18n.tr
-					 ("Share File"));
-		}
-		
-		public void actionPerformed(ActionEvent e) {
-			int[] sel = TABLE.getSelectedRows();
-			final File[] files = new File[sel.length];
-			for (int i = 0; i < sel.length; i++) {
-				files[i] = getFile(sel[i]);
-			}
-			
-			BackgroundExecutorService.schedule(new Runnable() {
-			    public void run() {
-        			for (int i = 0; i < files.length; i++) {
-						File file = files[i];
-						if (file == null || file.isDirectory())
-							continue;
-        				GuiCoreMediator.getFileManager().addFileAlways(file);
-        			}
-                }
-            });
-		}
-	}
-	
-	private class UnshareFileAction extends AbstractAction {
-		
-		/**
-         * 
-         */
-        private static final long serialVersionUID = 3640380569278974061L;
-
-        public UnshareFileAction() {
-			putValue(Action.NAME, I18n.tr
-					 ("Stop Sharing File"));
-		}
-		
-		public void actionPerformed(ActionEvent e) {
-			int[] sel = TABLE.getSelectedRows();
-			final File[] files = new File[sel.length];
-			for (int i = sel.length - 1; i >= 0; i--) {
-				files[i] = getFile(sel[i]);
-			}
-			
-			BackgroundExecutorService.schedule(new Runnable() {
-			    public void run() {
-        			for (int i = 0; i < files.length; i++) {
-						File file = files[i];
-						if (file == null || file.isDirectory())
-							continue;
-        				GuiCoreMediator.getFileManager().stopSharingFile(file);
-        			}
-                }
-            });
-		}
-	}
-	
-	private class ShareFolderAction extends AbstractAction {
-		
-		/**
-         * 
-         */
-        private static final long serialVersionUID = -645036096577263247L;
-
-        public ShareFolderAction() {
-			putValue(Action.NAME, I18n.tr
-					 ("Share Folder"));
-		}
-		
-		public void actionPerformed(ActionEvent e) {
-			int[] sel = TABLE.getSelectedRows();
-			List<File> files = new ArrayList<File>(sel.length);
-			for (int i = 0; i < sel.length; i++) {
-				File file = getFile(sel[i]);
-				if (file != null && file.isDirectory()) {
-					files.add(file);
-				}
-			}
-
-			final RecursiveSharingDialog dialog = 
-				new RecursiveSharingDialog(GUIMediator.getAppFrame(), files.toArray(new File[0]));
-			if (dialog.showChooseDialog(MessageService.getParentComponent()) == State.OK) {
-				BackgroundExecutorService.schedule(new Runnable() {
-				    public void run() {
-				        GuiCoreMediator.getFileManager().addSharedFolders(dialog.getRootsToShare(),
-				        		dialog.getFoldersToExclude());
-		            }
-		        });
-			}
-		}
-	}
-	
-	private class UnshareFolderAction extends AbstractAction {
-		
-		/**
-         * 
-         */
-        private static final long serialVersionUID = -6872709046755949990L;
-
-        public UnshareFolderAction() {
-			putValue(Action.NAME, I18n.tr
-					 ("Stop Sharing Folder"));
-		}
-		
-		public void actionPerformed(ActionEvent e) {
-			int[] sel = TABLE.getSelectedRows();
-			final File[] files = new File[sel.length];
-			for (int i = sel.length - 1; i >= 0; i--) {
-				files[i] = getFile(sel[i]);
-			}
-			
-			BackgroundExecutorService.schedule(new Runnable() {
-			    public void run() {
-        			for (int i = 0; i < files.length; i++) {
-						File file = files[i];
-						if (file == null || !file.isDirectory())
-							continue;
-        				GuiCoreMediator.getFileManager().removeFolderIfShared(file);
-        			}
-                }
-            });
-		}
-	}
-	
 	private final class MagnetLookupAction extends AbstractAction {
 		
 		/**
@@ -1575,23 +1252,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
         }
     }
 
-	private class ViewLicenseAction extends AbstractAction {
-
-		/**
-         * 
-         */
-        private static final long serialVersionUID = -962929069359813388L;
-
-        public ViewLicenseAction() {
-			putValue(Action.NAME, I18n.tr
-					("View License"));
-		}
-		
-		public void actionPerformed(ActionEvent e) {
-			showLicenseWindow();
-		}
-	}
-	
 	/**
 	 * Sets an icon based on the filename extension. 
 	 */

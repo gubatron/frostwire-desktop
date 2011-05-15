@@ -11,9 +11,7 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -28,8 +26,6 @@ import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.MessageService;
 import com.limegroup.gnutella.gui.library.RecursiveSharingDialog.State;
-import com.limegroup.gnutella.gui.options.ConfigureOptionsAction;
-import com.limegroup.gnutella.gui.options.OptionsConstructor;
 import com.limegroup.gnutella.gui.sharing.ShareManager;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
@@ -273,17 +269,6 @@ public final class LibraryMediator implements ThemeObserver {
 	    }
 	}
 	
-	public void setAnnotateEnabled(boolean enabled) {
-	    getLibraryTable().setAnnotateEnabled(enabled);
-	}
-
-    /** 
-	 * Removes the selected folder from the shared folder group.. 
-	 */
-    public void unshareLibraryFolder() {
-        getLibraryTree().unshareLibraryFolder();
-    }
-
     /**
      * Adds a file to the playlist.
      */
@@ -415,6 +400,11 @@ public final class LibraryMediator implements ThemeObserver {
 	    return false;
 	}
 
+	public void setAnnotateEnabled(boolean enabled) {
+	    getLibraryTable().setAnnotateEnabled(enabled);
+	}
+
+	
 	/**
 	 * Updates the Library GUI based on whether the player is enabled. 
 	 */

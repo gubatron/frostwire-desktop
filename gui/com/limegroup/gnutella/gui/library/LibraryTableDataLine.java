@@ -471,11 +471,11 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
 	}
 	
 	private Color getColor() {
-		if (_fileDesc != null)
+		//if (_fileDesc != null)
 			return _sharedCellColor;
-		if (GuiCoreMediator.getFileManager().isFolderShared(initializer))
-			return _sharedCellColor;
-		return _unsharedCellColor;
+		//if (GuiCoreMediator.getFileManager().isFolderShared(initializer))
+		//	return _sharedCellColor;
+		//return _unsharedCellColor;
 	}
 	
 	private LimeTableColumn[] getLimeTableColumns() {
@@ -497,24 +497,24 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
 	            new LimeTableColumn(PATH_IDX, "LIBRARY_TABLE_PATH", I18n.tr("Path"),
 	                    108, true, ColoredCell.class),
 
-	            new LimeTableColumn(UPLOADS_IDX, "LIBRARY_TABLE_UPLOAD_COUNT", I18n.tr("Uploads"),
-	                    62, true, UploadCountHolder.class),
-
-	            new LimeTableColumn(HITS_IDX, "LIBRARY_TABLE_HITCOUNT", I18n.tr("Hits"),
-	                    39, true, Integer.class),
+//	            new LimeTableColumn(UPLOADS_IDX, "LIBRARY_TABLE_UPLOAD_COUNT", I18n.tr("Uploads"),
+//	                    62, true, UploadCountHolder.class),
+//
+//	            new LimeTableColumn(HITS_IDX, "LIBRARY_TABLE_HITCOUNT", I18n.tr("Hits"),
+//	                    39, true, Integer.class),
 	                            
-	            new LimeTableColumn(ALT_LOC_IDX, "LIBRARY_TABLE_NUMALTLOC", I18n.tr("Locations"),
-	                    72, true, Integer.class),
+//	            new LimeTableColumn(ALT_LOC_IDX, "LIBRARY_TABLE_NUMALTLOC", I18n.tr("Locations"),
+//	                    72, true, Integer.class),
 
-	            new LimeTableColumn(LICENSE_IDX, "LIBRARY_TABLE_LICENSE", I18n.tr("License"),
-	                    20, true, License.class),
+//	            new LimeTableColumn(LICENSE_IDX, "LIBRARY_TABLE_LICENSE", I18n.tr("License"),
+//	                    20, true, License.class),
 
 	            new LimeTableColumn(MODIFICATION_TIME_IDX, 
 	                    "LIBRARY_TABLE_MODIFICATION_TIME", I18n.tr("Last Modified"),
 	                    20, false, Date.class),
 
-	            new LimeTableColumn(SHARED_IDX, "LIBRARY_TABLE_SHARED", I18n.tr("Shared"),
-	                    20, true, Icon.class)
+//	            new LimeTableColumn(SHARED_IDX, "LIBRARY_TABLE_SHARED", I18n.tr("Shared"),
+//	                    20, true, Icon.class)
 	        };
 	        ltColumns = temp;
 	    }
