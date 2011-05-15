@@ -20,10 +20,8 @@ import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.Uploader;
 import com.limegroup.gnutella.browser.MagnetOptions;
-import com.limegroup.gnutella.chat.InstantMessenger;
 import com.limegroup.gnutella.connection.ConnectionLifecycleEvent;
 import com.limegroup.gnutella.connection.RoutedConnection;
-import com.limegroup.gnutella.gui.chat.ChatUIManager;
 import com.limegroup.gnutella.gui.download.DownloaderUtils;
 import com.limegroup.gnutella.gui.logging.LogEvent;
 import com.limegroup.gnutella.gui.search.SearchInformation;
@@ -390,70 +388,6 @@ public final class VisualConnectionCallback implements ActivityCallback {
             mf().getUploadMediator().remove(mgr);
 	    }
     }
-	
-
-	///////////////////////////////////////////////////////////////////////////
-	//  Chat-related callbacks
-	///////////////////////////////////////////////////////////////////////////
-	
-	/** 
-	 * Adds a new chat session, encapsulated in the specified 
-	 * <tt>Chatter</tt> instance.
-	 *
-	 * @param chatter the <tt>Chatter</tt> instance that provides all
-	 *  data access regarding the chat session
-	 */
-	public void acceptChat(final InstantMessenger chatter) {
-	    SwingUtilities.invokeLater(new Runnable() {
-	        public void run() {
-	            ChatUIManager.instance().acceptChat(chatter);
-			}
-	    });
-	}
-	
-	/**
-	 * Receives a new chat message for a specific <tt>Chatter</tt>
-	 * instance.
-	 * 
-	 * @param chatter the <tt>Chatter</tt> instance that is receiving
-	 *  a new message
-	 */
-	public void receiveMessage(final InstantMessenger chatter, final String message) {
-	    SwingUtilities.invokeLater(new Runnable() {
-	        public void run() {
-	            ChatUIManager.instance().receiveMessage(chatter, message);
-			}
-	    });
-	}
-
-	/** 
-	 * Specifies that the given chat host is no longer available, thereby
-	 * ending the chat session.
-	 *
-	 * @param chatter the <tt>Chatter</tt> instance for the chat session
-	 *  that is terminating 
-	 */
-	public void chatUnavailable(final InstantMessenger chatter) {
-	    SwingUtilities.invokeLater(new Runnable() {
-	        public void run() {
-	            ChatUIManager.instance().chatUnavailable(chatter);
-			}
-	    });
-	}
-
-	/** 
-	 * Display an error message for the specified chat session.
-	 *
-	 * @param chatter the <tt>Chatter</tt> instance to show an error for
-	 * @param str the error to display
-	 */
-	public void chatErrorMessage(final InstantMessenger chatter, final String str) {
-	    SwingUtilities.invokeLater(new Runnable() {
-	        public void run() {
-		        ChatUIManager.instance().chatErrorMessage(chatter, str);
-			}
-	    });
-	}
 
 	
 	///////////////////////////////////////////////////////////////////////////

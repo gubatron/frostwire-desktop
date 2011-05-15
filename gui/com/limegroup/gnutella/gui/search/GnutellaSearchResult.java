@@ -166,8 +166,6 @@ final class GnutellaSearchResult extends AbstractSearchResult {
                 popupMenu, lines.length == 1, 2);
         PopupUtils.addMenuItem(I18n.tr("View License"), new LicenseListener(resultPanel),
                 popupMenu, lines.length > 0 && lines[0].isLicenseAvailable(), 3);
-        PopupUtils.addMenuItem(SearchMediator.CHAT_STRING, resultPanel.CHAT_LISTENER, popupMenu,
-                lines.length > 0 && lines[0].isChatEnabled(), 4);
         PopupUtils.addMenuItem(SearchMediator.BROWSE_HOST_STRING, resultPanel.BROWSE_HOST_LISTENER,
                 popupMenu, lines.length > 0 && lines[0].isBrowseHostEnabled(), 5);
         PopupUtils.addMenuItem(SearchMediator.BLOCK_STRING, new BlockListener(resultPanel),

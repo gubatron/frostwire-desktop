@@ -147,11 +147,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
     ActionListener DOWNLOAD_AS_LISTENER;
     
     /**
-     * The chat listener.
-     */
-    ActionListener CHAT_LISTENER;
-    
-    /**
      * The browse host listener.
      */
     ActionListener BROWSE_HOST_LISTENER;
@@ -463,12 +458,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
             }
         };
         
-        CHAT_LISTENER = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                doChat();
-            }
-        };
-        
         BROWSE_HOST_LISTENER = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 SearchMediator.doBrowseHost(ResultPanel.this);
@@ -713,19 +702,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
         setButtonEnabled(SearchButtons.STOP_BUTTON_INDEX, false);
     }
     
-
-    /**
-     * Chats with the host chat-enabled host in the selected
-     * TableLine.
-     */
-    void doChat() {
-        TableLine line = getSelectedLine();
-        if(line == null)
-            return;
-        if(!line.isChatEnabled())
-            return;
-        line.doChat();
-    }
 
     /**
      * Blocks the hosts that sent the selected result.

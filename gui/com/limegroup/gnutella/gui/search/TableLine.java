@@ -755,15 +755,6 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
         return rfds;
     }
     
-    /**
-     * Does a chat.
-     */
-    void doChat() {
-		if (_chatHost != null && _chatHost.getHost() != null 
-				&& _chatHost.getPort() != -1) {
-			GUIMediator.createChat(_chatHost.getHost(), _chatHost.getPort());
-		}
-    }
     
 	/**
 	 * Returns the rfd of the search result for which this download was enabled

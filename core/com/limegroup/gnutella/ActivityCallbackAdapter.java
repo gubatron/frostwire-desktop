@@ -8,17 +8,12 @@ import org.limewire.io.IpPort;
 import com.frostwire.gui.download.bittorrent.BTDownloader;
 import com.google.inject.Singleton;
 import com.limegroup.gnutella.browser.MagnetOptions;
-import com.limegroup.gnutella.chat.InstantMessenger;
 import com.limegroup.gnutella.connection.ConnectionLifecycleEvent;
 import com.limegroup.gnutella.search.HostData;
 import com.limegroup.gnutella.version.UpdateInformation;
 
 @Singleton
 public class ActivityCallbackAdapter implements ActivityCallback {
-
-    public void acceptChat(InstantMessenger ctr) {
-        
-    }
 
     public void acceptedIncomingChanged(boolean status) {
         
@@ -29,14 +24,6 @@ public class ActivityCallbackAdapter implements ActivityCallback {
     }
 
     public void browseHostFailed(GUID guid) {
-        
-    }
-
-    public void chatErrorMessage(InstantMessenger chatter, String str) {
-        
-    }
-
-    public void chatUnavailable(InstantMessenger chatter) {
         
     }
 
@@ -91,10 +78,6 @@ public class ActivityCallbackAdapter implements ActivityCallback {
 
     public boolean isQueryAlive(GUID guid) {
         return false;
-    }
-
-    public void receiveMessage(InstantMessenger chr, String messsage) {
-        
     }
 
     public void removeUpload(Uploader u) {

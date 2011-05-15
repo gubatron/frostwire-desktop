@@ -33,7 +33,6 @@ import com.limegroup.bittorrent.gui.TorrentFileFetcher;
 import com.limegroup.bittorrent.settings.BittorrentSettings;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.Downloader.DownloadStatus;
-import com.limegroup.gnutella.Endpoint;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.FileDetails;
 import com.limegroup.gnutella.FileManager;
@@ -162,7 +161,6 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
         super.buildListeners();
 
 		removeAction = new RemoveAction();
-		chatAction = new ChatAction();
 		clearAction = new ClearAction();
 		browseAction = new BrowseAction();
 		launchAction = new LaunchAction();
@@ -645,22 +643,6 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
         resumeClicks++;
     }
 
-    /**
-     * Opens up a chat session with the selected hosts in the download
-     * window.
-     */
-    void chatWithSelectedDownloads() {
-        int[] sel = TABLE.getSelectedRows();
-        for(int i = 0; i < sel.length; i++) {
-            DownloadDataLine dd = DATA_MODEL.get(sel[i]);
-            Downloader downloader= dd.getInitializeObject();
-            Endpoint end = downloader.getChatEnabledHost();
-            if (end != null) {
-                GUIMediator.createChat(end.getAddress(), end.getPort());
-            }
-        }
-    }
-
 	/**
 	 * Shows file chooser dialog for first selected download.
 	 *
@@ -948,23 +930,6 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
 		public void performAction(ActionEvent e) {
 			removeSelection();
 		}
-	}
-	
-	private class ChatAction extends RefreshingAction {
-		
-		/**
-         * 
-         */
-        private static final long serialVersionUID = 4297785616252564677L;
-
-        public ChatAction() {
-    	    putValue(Action.NAME,
-					I18n.tr("Chat with Host"));
-		}
-		
-		public void performAction(ActionEvent e) {
-            chatWithSelectedDownloads();
-        }
 	}
 	
 	private class ClearAction extends RefreshingAction {

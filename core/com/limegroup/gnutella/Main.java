@@ -15,7 +15,6 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import com.limegroup.gnutella.browser.MagnetOptions;
-import com.limegroup.gnutella.chat.InstantMessenger;
 import com.limegroup.gnutella.connection.ConnectionLifecycleEvent;
 import com.limegroup.gnutella.search.HostData;
 import com.limegroup.gnutella.version.UpdateInformation;
@@ -233,14 +232,6 @@ public class Main {
     
         public void fileManagerLoading() {}
     
-        public void acceptChat(InstantMessenger chat) {}
-    
-        public void receiveMessage(InstantMessenger chat, String message) {}
-        
-        public void chatUnavailable(InstantMessenger chatter) {}
-    
-        public void chatErrorMessage(InstantMessenger chatter, String st) {}
-            
         public void downloadsComplete() {}    
         
         public void fileManagerLoaded() {}    

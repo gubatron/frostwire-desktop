@@ -41,7 +41,6 @@ import com.limegroup.gnutella.auth.ContentManager;
 import com.limegroup.gnutella.browser.ControlRequestAcceptor;
 import com.limegroup.gnutella.browser.LocalAcceptor;
 import com.limegroup.gnutella.browser.LocalHTTPAcceptor;
-import com.limegroup.gnutella.chat.ChatManager;
 import com.limegroup.gnutella.dht.DHTManager;
 import com.limegroup.gnutella.downloader.IncompleteFileManager;
 import com.limegroup.gnutella.downloader.PushDownloadManager;
@@ -102,7 +101,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
     private final Provider<ConnectionWatchdog> connectionWatchdog;
     private final Provider<SavedFileManager> savedFileManager;
     private final Provider<RatingTable> ratingTable;
-    private final Provider<ChatManager> chatManager;
     private final Provider<UDPMultiplexor> udpMultiplexor;
     private final Provider<HashTreeCache> tigerTreeCache;
     private final Provider<DHTManager> dhtManager;
@@ -176,7 +174,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
             Provider<ConnectionWatchdog> connectionWatchdog,
             Provider<SavedFileManager> savedFileManager,
             Provider<RatingTable> ratingTable,
-            Provider<ChatManager> chatManager,
             Provider<UDPMultiplexor> udpMultiplexor,
             Provider<HashTreeCache> tigerTreeCache,
             Provider<DHTManager> dhtManager,
@@ -225,7 +222,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
         this.connectionWatchdog = connectionWatchdog;
         this.savedFileManager = savedFileManager;
         this.ratingTable = ratingTable;
-        this.chatManager = chatManager;
         this.udpMultiplexor = udpMultiplexor;
         this.tigerTreeCache = tigerTreeCache;
         this.dhtManager = dhtManager;
@@ -522,7 +518,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
     private void initializeConnectionDispatcher() {
         connectionDispatcher.get().addConnectionAcceptor(controlRequestAcceptor.get(),
                 true, "MAGNET","TORRENT");
-        connectionDispatcher.get().addConnectionAcceptor(chatManager.get(), false, "CHAT");
     }
 
     private void initializeLocalConnectionDispatcher() {

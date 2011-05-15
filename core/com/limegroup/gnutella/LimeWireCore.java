@@ -35,8 +35,6 @@ import com.limegroup.gnutella.bootstrap.UDPHostCacheFactory;
 import com.limegroup.gnutella.browser.ExternalControl;
 import com.limegroup.gnutella.browser.LocalAcceptor;
 import com.limegroup.gnutella.browser.LocalHTTPAcceptor;
-import com.limegroup.gnutella.chat.ChatManager;
-import com.limegroup.gnutella.chat.InstantMessengerFactory;
 import com.limegroup.gnutella.connection.ConnectionCheckerManager;
 import com.limegroup.gnutella.connection.MessageReaderFactory;
 import com.limegroup.gnutella.connection.RoutedConnectionFactory;
@@ -384,10 +382,6 @@ public class LimeWireCore {
         return injector.getInstance(MulticastService.class);
     }
     
-    public ChatManager getChatManager() {
-        return injector.getInstance(ChatManager.class);
-    }
-
     public DiskManagerFactory getDiskManagerFactory() {
         return injector.getInstance(DiskManagerFactory.class);
     }
@@ -626,10 +620,6 @@ public class LimeWireCore {
 
     public MetaDataReader getMetaDataReader() {
         return injector.getInstance(MetaDataReader.class);
-    }
-
-    public InstantMessengerFactory getInstantMessengerFactory() {
-        return injector.getInstance(InstantMessengerFactory.class);
     }
 
     public BTUploaderFactory getBTUploaderFactory() {

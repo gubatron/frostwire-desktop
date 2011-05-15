@@ -50,7 +50,6 @@ final class UploadPopupMenu {
         final JMenuItem BROWSE_ITEM = new SkinMenuItem(I18n.tr("Browse Host"));
     
    		KILL_ITEM.addActionListener( um.REMOVE_LISTENER );
-        CHAT_ITEM.addActionListener( um.CHAT_LISTENER );
         BROWSE_ITEM.addActionListener( um.BROWSE_LISTENER );
         MENU.add(KILL_ITEM);
         MENU.add(CHAT_ITEM);

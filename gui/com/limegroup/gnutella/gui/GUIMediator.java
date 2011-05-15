@@ -59,10 +59,7 @@ import com.frostwire.gnutella.gui.chat.ChatMediator;
 import com.frostwire.gui.download.bittorrent.BTDownloadMediator;
 import com.limegroup.bittorrent.gui.TorrentUploadCanceller;
 import com.limegroup.gnutella.bugs.FatalBugManager;
-import com.limegroup.gnutella.chat.InstantMessenger;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
-import com.limegroup.gnutella.gui.chat.ChatFrame;
-import com.limegroup.gnutella.gui.chat.ChatUIManager;
 import com.limegroup.gnutella.gui.connection.ConnectionMediator;
 import com.limegroup.gnutella.gui.download.DownloadMediator;
 import com.limegroup.gnutella.gui.library.LibraryMediator;
@@ -82,9 +79,9 @@ import com.limegroup.gnutella.settings.PlayerSettings;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.StartupSettings;
+import com.limegroup.gnutella.util.FrostWireUtils;
 import com.limegroup.gnutella.util.LaunchException;
 import com.limegroup.gnutella.util.Launcher;
-import com.limegroup.gnutella.util.FrostWireUtils;
 import com.limegroup.gnutella.version.UpdateInformation;
 
 /**
@@ -1977,14 +1974,6 @@ public final class GUIMediator {
 	 */
 	public void setFrameCursor(Cursor cursor) {
 	    getAppFrame().setCursor(cursor);
-	}
-
-	public static ChatFrame createChat(String host, int port) {
-		InstantMessenger chatter = GuiCoreMediator.getChatManager()
-				.createConnection(host, port);
-		ChatFrame frame = ChatUIManager.instance().acceptChat(chatter);
-		chatter.start();
-		return frame;
 	}
 
 	public void openTorrentMagnet(final String request) {

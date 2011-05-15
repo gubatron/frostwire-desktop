@@ -64,7 +64,6 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 	/**
 	 * Variables so we only need one listener for both ButtonRow & PopupMenu
 	 */
-	ActionListener CHAT_LISTENER;
 	ActionListener CLEAR_LISTENER;
 	ActionListener BROWSE_LISTENER;
 
@@ -110,7 +109,6 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 	 */
 	protected void buildListeners() {
 	    super.buildListeners();
-	    CHAT_LISTENER = new ChatListener(this);
 	    CLEAR_LISTENER = new ClearListener(this);
 	    BROWSE_LISTENER = new BrowseListener(this);
 	}
@@ -384,22 +382,6 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 			}
 		}
     }
-
-	/**
-	 * Opens up a chat session with the selected hosts in the upload
-	 * window.
-	 */
-	void chatWithSelectedUploads() {
-		int[] sel = TABLE.getSelectedRows();
-		for (int i =0; i<sel.length; i++) {
-            Uploader uploader = DATA_MODEL.get(sel[i]).getInitializeObject();
-			if (uploader.isChatEnabled() ) {
-			    String host = uploader.getHost();
-				int port = uploader.getGnutellaPort();
-				GUIMediator.createChat(host, port);
-			}
-		}
-	}
 
 	/**
 	 * Browses all selected hosts (only once per host)

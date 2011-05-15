@@ -58,8 +58,6 @@ import com.limegroup.gnutella.auth.IpPortContentAuthorityFactory;
 import com.limegroup.gnutella.auth.IpPortContentAuthorityFactoryImpl;
 import com.limegroup.gnutella.bootstrap.UDPHostCacheFactory;
 import com.limegroup.gnutella.bootstrap.UDPHostCacheFactoryImpl;
-import com.limegroup.gnutella.chat.InstantMessengerFactory;
-import com.limegroup.gnutella.chat.InstantMessengerFactoryImpl;
 import com.limegroup.gnutella.connection.ConnectionBandwidthStatistics;
 import com.limegroup.gnutella.connection.ConnectionBandwidthStatisticsImpl;
 import com.limegroup.gnutella.connection.ConnectionCapabilities;
@@ -272,7 +270,6 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(LicenseFactory.class).to(LicenseFactoryImpl.class);
         bind(LimeXMLDocumentFactory.class).to(LimeXMLDocumentFactoryImpl.class);
         bind(MetaDataFactory.class).to(MetaDataFactoryImpl.class);
-        bind(InstantMessengerFactory.class).to(InstantMessengerFactoryImpl.class);
         bind(SaveLocationManager.class).to(DownloadManager.class);
         bind(BTUploaderFactory.class).to(BTUploaderFactoryImpl.class);
         bind(PingRequestFactory.class).to(PingRequestFactoryImpl.class);
