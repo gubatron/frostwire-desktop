@@ -65,15 +65,15 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
      */
     double getDownloadsBandwidth() {
         int size = getRowCount();
-        double count = 0.0;
+        double count = 1.0;
 
-        for (int i=0; i<size; i++) {
-            BTDownloadDataLine dd = get(i);
-            if(!dd.isInactive()) {
-                //  Speed can be -1 for some states, so max with 0 
-                count += Math.max(dd.getSpeed(), 0.0);
-            }
-        }
+//        for (int i=0; i<size; i++) {
+//            BTDownloadDataLine dd = get(i);
+//            if(!dd.isInactive()) {
+//                //  Speed can be -1 for some states, so max with 0 
+//                count += Math.max(dd.getSpeed(), 0.0);
+//            }
+//        }
         return count;
     }
     

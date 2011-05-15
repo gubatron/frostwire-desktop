@@ -10,15 +10,15 @@ import org.limewire.util.CommonUtils;
  */
 public final class TimeRemainingHolder implements Comparable<TimeRemainingHolder> {
 	
-	private int _timeRemaining;
+	private long _timeRemaining;
 	
-	public TimeRemainingHolder(int intValue) 
+	public TimeRemainingHolder(long intValue) 
 	{
 		_timeRemaining = intValue;
 	}
 	
 	public int compareTo(TimeRemainingHolder o) {
-	    return o._timeRemaining - _timeRemaining;
+	    return (int)(o._timeRemaining - _timeRemaining);
 	}
 	
     public String toString() {

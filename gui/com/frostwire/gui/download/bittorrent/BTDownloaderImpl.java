@@ -64,4 +64,20 @@ public class BTDownloaderImpl implements BTDownloader {
     public String getStateString() {
         return DisplayFormatters.formatDownloadStatus(_downloadManager);
     }
+
+    public long getBytesReceived() {
+        return _downloadManager.getStats().getTotalGoodDataBytesReceived();
+    }
+
+    public double getDownloadSpeed() {
+        return _downloadManager.getStats().getDataReceiveRate();
+    }
+
+    public double getUploadSpeed() {
+        return _downloadManager.getStats().getDataSendRate();
+    }
+
+    public long getETA() {
+        return _downloadManager.getStats().getETA();
+    }
 }
