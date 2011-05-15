@@ -2,10 +2,7 @@ package com.frostwire.gui.download.bittorrent;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
 
-import com.limegroup.bittorrent.gui.TorrentFileFetcher;
-import com.limegroup.gnutella.Uploader;
 import com.limegroup.gnutella.gui.tables.BasicDataLineModel;
-import com.limegroup.gnutella.gui.upload.UploadMediator;
 
 /**
  * This class provides access to the <tt>ArrayList</tt> that stores all of the

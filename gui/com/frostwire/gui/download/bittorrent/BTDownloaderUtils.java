@@ -9,19 +9,17 @@ import javax.swing.JOptionPane;
 
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.limewire.i18n.I18nMarker;
-import org.limewire.util.OSUtils;
 
-import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.IncompleteFileDesc;
 import com.limegroup.gnutella.SaveLocationException;
 import com.limegroup.gnutella.URN;
-import com.limegroup.gnutella.browser.MagnetOptions;
 import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.MessageService;
+import com.limegroup.gnutella.gui.download.GuiDownloaderFactory;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 
 /**

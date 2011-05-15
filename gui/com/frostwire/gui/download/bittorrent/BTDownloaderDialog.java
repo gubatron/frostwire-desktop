@@ -8,7 +8,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
 import java.text.MessageFormat;
-import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -27,8 +26,6 @@ import javax.swing.border.EmptyBorder;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.limewire.util.OSUtils;
 
-import com.limegroup.gnutella.Downloader;
-import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.SaveLocationException;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIMediator;
