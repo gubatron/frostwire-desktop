@@ -316,7 +316,6 @@ public final class SearchMediator {
                                                    new GUID(GUID.makeGuid()), 
                                                    null, false);
                                          
-        in.setBrowseHostHandler(bhh);
         getSearchInputManager().panelReset(in);
     }
     
@@ -348,7 +347,7 @@ public final class SearchMediator {
                                     host, guid, serventID, proxies,
                                     canDoFWTransfer);
         
-        rp.setBrowseHostHandler(bhh);
+
     }
 
     /**

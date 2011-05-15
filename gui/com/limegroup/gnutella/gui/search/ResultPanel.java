@@ -39,12 +39,10 @@ import javax.swing.event.MouseInputListener;
 import javax.swing.plaf.metal.MetalBorders;
 
 import org.limewire.i18n.I18nMarker;
-import org.limewire.inspection.InspectablePrimitive;
 import org.limewire.io.IpPort;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gnutella.gui.actions.BuyAction;
-import com.limegroup.gnutella.BrowseHostHandler;
 import com.limegroup.gnutella.FileDetails;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MediaType;
@@ -111,20 +109,10 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
     private final SearchInformation SEARCH_INFO;
     
     /**
-     * This' spam filter
-     */
-    private final SpamFilter SPAM_FILTER;
-
-    /**
      * The GUID of the last search. (Use this to match up results.)
      *  May be a DummyGUID for the empty result list hack.
      */
     protected volatile GUID guid;
-    
-    /**
-     * The BrowseHostHandler if this is a Browse Host tab.
-     */
-    private BrowseHostHandler browseHandler = null;
     
     /**
      * Start time of the query that this specific ResultPane handles
@@ -149,7 +137,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
     /**
      * The browse host listener.
      */
-    ActionListener BROWSE_HOST_LISTENER;
     
     /**
      * The stop listener.
@@ -188,11 +175,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
     protected Box SOUTH_PANEL;
 
     private MouseInputListener ACTION_HIGHLIGHT_LISTENER;
-    
-    /** Quick'n'dirty counter for spam button clicks */
-    @InspectablePrimitive("spam button clicks")
-    private static volatile int spamClicks;
-    
+        
     /**
      * Specialized constructor for creating a "dummy" result panel.
      * This should only be called once at search window creation-time.
@@ -204,7 +187,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
         
         SEARCH_INFO = SearchInformation.createKeywordSearch("", null,
                                       MediaType.getAnyTypeMediaType());
-        SPAM_FILTER=null;
         FILTER = null;
         this.guid = STOPPED_GUID;
         setButtonEnabled(SearchButtons.STOP_BUTTON_INDEX, false);
@@ -224,7 +206,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
     ResultPanel(String title, String id) {
         super(id);
         
-        this.SPAM_FILTER = null;
         this.SEARCH_INFO = SearchInformation.createKeywordSearch(title, null, MediaType
                 .getAnyTypeMediaType());
         
@@ -242,10 +223,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
     ResultPanel(GUID guid, SearchInformation info) {
         super(SEARCH_TABLE);
         SEARCH_INFO = info;
-        if (SEARCH_INFO.isBrowseHostSearch() || SEARCH_INFO.isWhatsNewSearch())
-            SPAM_FILTER = null;
-        else
-            SPAM_FILTER = new SpamFilter();
         this.guid = guid;
         setupRealTable();
         resetFilters();
@@ -458,12 +435,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
             }
         };
         
-        BROWSE_HOST_LISTENER = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                SearchMediator.doBrowseHost(ResultPanel.this);
-            }
-        };
-        
         STOP_LISTENER = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 stopSearch();
@@ -543,15 +514,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
         boolean allSpam = true;
         boolean allNot = true;
         
-        if (SPAM_FILTER != null) {
-            for (int i = 0; i < lines.length; i++) {
-                if (!SpamFilter.isAboveSpamThreshold(lines[i]))
-                    allSpam = false;
-                else
-                    allNot = false;
-            }
-        }
-        
         return (new SearchResultMenu(this)).addToMenu(menu, lines, !allSpam, !allNot);
     }
     
@@ -608,13 +570,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
      */
     public void handleNoSelection() {
         setButtonEnabled(SearchButtons.DOWNLOAD_BUTTON_INDEX, false);
-        setButtonEnabled(SearchButtons.BROWSE_BUTTON_INDEX, false);
-        
-//        SPAM_BUTTON.setEnabled(false);
-//        if (SearchSettings.ENABLE_SPAM_FILTER.getValue() && SPAM_FILTER != null) {
-//            transformSpamButton(I18n.tr("Junk"), 
-//                    I18n.tr("Mark selected search results as Junk"));
-//        }
         
         BUY_BUTTON.setEnabled(false);
     }
@@ -624,25 +579,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
      */
     public void handleSelection(int i)  { 
         setButtonEnabled(SearchButtons.DOWNLOAD_BUTTON_INDEX, true);
-        
-        TableLine line = DATA_MODEL.get(i);
-        setButtonEnabled(SearchButtons.BROWSE_BUTTON_INDEX,
-                         line.isBrowseHostEnabled());
-        
-//        if (SearchSettings.ENABLE_SPAM_FILTER.getValue() && SPAM_FILTER != null) {
-//            SPAM_BUTTON.setEnabled(true);
-//            
-//            if (SpamFilter.isAboveSpamThreshold(line)) {
-//                transformSpamButton(I18n.tr("Not Junk"), 
-//                        I18n.tr("Mark selected search results as Not Junk"));
-//            } else {
-//                transformSpamButton(I18n.tr("Junk"), 
-//                        I18n.tr("Mark selected search results as Junk"));
-//            }
-//            
-//            SPAM_BUTTON.setEnabled(line.getSearchResult().canBeMarkedAsJunk());
-//        }
-       
         
         BUY_BUTTON.setEnabled(false);                                                                                                                                           
         if (getAllSelectedLines().length == 1) {                                                                                                                                
@@ -886,17 +822,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
     
     void resetFilters() {
         FILTER.reset();
-        
-        if (!SEARCH_INFO.isBrowseHostSearch() && !SEARCH_INFO.isWhatsNewSearch()) {
-            DATA_MODEL.setJunkFilter(SPAM_FILTER);
-        } else {
-            DATA_MODEL.setJunkFilter(null);
-        }
-    }
-    
-    private void filtersChanged() {
-        DATA_MODEL.filtersChanged();
-        SearchMediator.setTabDisplayCount(this);
+        DATA_MODEL.setJunkFilter(null);
     }
     
     /**
@@ -927,13 +853,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
     /** Returns the media type this is responsible for. */
     MediaType getMediaType() {
         return SEARCH_INFO.getMediaType();
-    }
-    
-    /**
-     * Sets the BrowseHostHandler.
-     */
-    void setBrowseHostHandler(BrowseHostHandler bhh) {
-        browseHandler = bhh;
     }
     
     /**
@@ -983,13 +902,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
         if(guid.equals(STOPPED_GUID))
             return 1d;
 
-        if(SEARCH_INFO.isBrowseHostSearch()) {
-            if( browseHandler != null )
-                return browseHandler.getPercentComplete(currentTime);
-            else
-                return 0d;
-        } 
-        
         // first calculate the percentage solely based on 
         // the number of results we've received.
         int ideal = QueryHandler.ULTRAPEER_RESULTS;
@@ -1200,20 +1112,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
     public void cleanup() {
     }
 
-    /**
-     * Change the text and tooltip text of the SPAM_BUTTON
-     */
-    private void transformSpamButton(String text, String tip) {
-//        Dimension oldDim = SPAM_BUTTON.getPreferredSize();
-//        
-//        SPAM_BUTTON.setText(text);
-//        SPAM_BUTTON.setToolTipText(tip);
-//        
-//        // Preserve/use the max width...
-//        Dimension newDim = SPAM_BUTTON.getPreferredSize();
-//        newDim.width = Math.max(oldDim.width, newDim.width);
-//        SPAM_BUTTON.setPreferredSize(newDim);
-    }
     
     public class WarningBorder extends AbstractBorder {
      
