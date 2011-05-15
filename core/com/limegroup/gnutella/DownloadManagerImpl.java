@@ -27,6 +27,7 @@ import org.limewire.util.FileUtils;
 
 import com.frostwire.bittorrent.AzureusStarter;
 import com.frostwire.gui.download.bittorrent.BTDownloader;
+import com.frostwire.gui.download.bittorrent.BTDownloaderFactory;
 import com.frostwire.gui.download.bittorrent.BTDownloaderImpl;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -203,7 +204,10 @@ public class DownloadManagerImpl implements DownloadManager {
         List<?> downloadManagers = globalManager.getDownloadManagers();
         for (Object obj : downloadManagers) {
             if (obj instanceof org.gudy.azureus2.core3.download.DownloadManager) {
-                addNewDownloader(new BTDownloaderImpl((org.gudy.azureus2.core3.download.DownloadManager) obj));
+                
+                BTDownloader downloader = BTDownloaderFactory.createDownloader((org.gudy.azureus2.core3.download.DownloadManager) obj);
+                
+                addNewDownloader(downloader);
             }
         }
     }

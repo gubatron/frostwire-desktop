@@ -49,7 +49,7 @@ public class BTDownloaderImpl implements BTDownloader {
 
     public void resume() {
         if (isResumable()) {
-            TorrentUtil.queue(_downloadManager);
+            TorrentUtil.start(_downloadManager);
         }
     }
 
