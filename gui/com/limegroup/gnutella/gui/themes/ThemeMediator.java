@@ -172,7 +172,8 @@ public class ThemeMediator {
         themes.add(SubstanceThemeSetter.STREETLIGHTS);
         
         if (OSUtils.isMacOSX()) {
-            DEFAULT_THEME = AquaThemeSetter.INSTANCE;
+            //DEFAULT_THEME = AquaThemeSetter.INSTANCE;
+        	DEFAULT_THEME = SubstanceThemeSetter.SEA_GLASS; //to make FrostWire 5 statement, plus looks a lot better.
         } else {
             DEFAULT_THEME = SubstanceThemeSetter.SEA_GLASS;
         }
