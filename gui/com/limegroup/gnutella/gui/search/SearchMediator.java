@@ -571,16 +571,16 @@ public final class SearchMediator {
     		}).start();        	
         }
         
-        if(info.isXMLSearch()) {
-            GuiCoreMediator.getSearchServices().query(guid, query, xml, media);
-        } else if(info.isKeywordSearch()) {
-            GuiCoreMediator.getSearchServices().query(guid, query, media);
-        } else if(info.isWhatsNewSearch()) {
-            GuiCoreMediator.getSearchServices().queryWhatIsNew(guid, media);
-        } else if(info.isBrowseHostSearch()) {
-            IpPort ipport = info.getIpPort();
-            doBrowseHost(new ConnectableImpl(ipport, false), null);
-        }
+//        if(info.isXMLSearch()) {
+//            GuiCoreMediator.getSearchServices().query(guid, query, xml, media);
+//        } else if(info.isKeywordSearch()) {
+//            GuiCoreMediator.getSearchServices().query(guid, query, media);
+//        } else if(info.isWhatsNewSearch()) {
+//            GuiCoreMediator.getSearchServices().queryWhatIsNew(guid, media);
+//        } else if(info.isBrowseHostSearch()) {
+//            IpPort ipport = info.getIpPort();
+//            doBrowseHost(new ConnectableImpl(ipport, false), null);
+//        }
     }
     
     private static List<SearchResult> normalizeClearBitsResponse(ClearBitsResponse response, SearchInformation info) {

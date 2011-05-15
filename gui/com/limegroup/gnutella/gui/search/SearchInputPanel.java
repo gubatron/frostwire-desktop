@@ -66,11 +66,6 @@ class SearchInputPanel extends JPanel {
     private static final long serialVersionUID = -5638062215253666235L;
 
     /**
-     * The current search label in what's new.
-     */
-    private final JLabel WHATSNEW_SEARCH_LABEL = new JLabel();
-
-    /**
      * The current search label in normal search.
      */
     private final JLabel SEARCH_TYPE_LABEL = new JLabel();
@@ -92,11 +87,6 @@ class SearchInputPanel extends JPanel {
     private final AutoCompleteTextField BROWSE_HOST_FIELD =
         new ClearableAutoCompleteTextField();
     
-    /**
-     * The What's New search button
-     */
-    private final JButton WHATSNEW = new JButton(
-            I18n.tr("What\'s New"));
     
     /**
      * The JTabbedPane that switches between types of searches.
@@ -123,7 +113,6 @@ class SearchInputPanel extends JPanel {
     /**
      * The box that holds the schemas for searching.
      */
-    private final SchemaBox SCHEMA_BOX = new SchemaBox();
     
     /**
      * The ditherer to use for the tab backgrounds.
@@ -135,8 +124,6 @@ class SearchInputPanel extends JPanel {
                         );
                     
 	private JPanel searchEntry;
-//	private JPanel whatsnew;
-//    private JPanel browseHost;
     
     /**
      * The listener for new searches.
@@ -164,8 +151,8 @@ class SearchInputPanel extends JPanel {
         this.networkInstanceUtils = networkInstanceUtils;
 
         final ActionListener schemaListener = new SchemaListener();
-        SCHEMA_BOX.addSelectionListener(schemaListener);
-        add(SCHEMA_BOX, BorderLayout.NORTH);
+        //SCHEMA_BOX.addSelectionListener(schemaListener);
+
 
         searchEntry = createSearchEntryPanel();
         panelize(searchEntry);
@@ -201,9 +188,9 @@ class SearchInputPanel extends JPanel {
      */
     KeyProcessingTextField getForwardingSearchField() {
         if(isNormalSearchType()) {
-            if(SCHEMA_BOX.getSelectedSchema() != null) {
-                return getInputPanel().getFirstTextField();
-            }
+//            if(SCHEMA_BOX.getSelectedSchema() != null) {
+//                return getInputPanel().getFirstTextField();
+//            }
             return SEARCH_FIELD;
         }
 		if(isBrowseHostSearchType())
@@ -243,24 +230,18 @@ class SearchInputPanel extends JPanel {
     /**
      * Notification that the addr has changed.
      */
-    void addressChanged() {
+	void addressChanged() {
         updateIpText();
         invalidate();
         revalidate();
     }
     
     void requestSearchFocusImmediately() {
-        if(isNormalSearchType()) {
-            if(SCHEMA_BOX.getSelectedSchema() != null) {
-                getInputPanel().requestFirstFocus();
-            } else {
-                SEARCH_FIELD.requestFocus();
-            }
-        } else if(isWhatIsNewSearchType()) {
-            WHATSNEW.requestFocus();
-        } else if(isBrowseHostSearchType()) {
-            BROWSE_HOST_FIELD.requestFocus();
-        }
+    	if (getInputPanel() != null) {
+    		getInputPanel().requestFirstFocus();
+    	} else if (SEARCH_FIELD != null) {
+    		SEARCH_FIELD.requestFocus();
+    	}
     }
     
     void requestSearchFocus() {
@@ -288,7 +269,7 @@ class SearchInputPanel extends JPanel {
         if(!ThemeSettings.isNativeTheme()) {
             c.setOpaque(true);
         }
-        //c.setBackground(SkinHandler.getSearchPanelBG2());
+
         c.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 0));
     }
     
@@ -334,44 +315,6 @@ class SearchInputPanel extends JPanel {
         search.add(GUIUtils.center(openTorrentButton));
         return search;
     }
-    
-	private void createInputPanelForNamedMediaType(NamedMediaType nmt) {
-        String name = nmt.getName();
-        LimeXMLSchema schema = nmt.getSchema();
-        // If a schema exists, add it as a possible type.
-        if (schema == null) {
-            throw new NullPointerException("named mediatype has no schema");
-        }
-		
-		InputPanel panel = new InputPanel(schema, SEARCH_LISTENER, SEARCH_FIELD.getDocument(), SEARCH_FIELD.getUndoManager());
-		panel.addMoreOptionsListener(new MoreOptionsListener());
-		
-		JScrollPane pane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        cleanupPaneActions(pane.getActionMap());
-		pane.setOpaque(false);
-		pane.setBorder(BorderFactory.createEmptyBorder());
-        pane.getViewport().setBorder(null);
-		JPanel outerPanel = new JPanel(new BorderLayout());
-		outerPanel.add(pane,"Center");
-		outerPanel.add(createSearchButtonPanel(),"South");
-		
-		int paneWidth = (int)pane.getPreferredSize().getWidth();
-		int paneHeight= (int)pane.getPreferredSize().getHeight();
-        
-		Dimension dim = new Dimension(paneWidth+70,paneHeight+30);
-        outerPanel.setMaximumSize(dim);
-	    
-        inputPanelDimensions.put(nmt, dim);
-        JPanel holdingPanel = new JPanel();
-	    holdingPanel.setLayout(new BoxLayout(holdingPanel,BoxLayout.Y_AXIS));
-	    holdingPanel.add(outerPanel);
-		
-	    getInputPanelKeys().add(name);
-		
-	    META_PANEL.add(holdingPanel, name);
-		
-	    panelize(searchEntry);
-	}
     
     private void cleanupPaneActions(ActionMap map) {
         if(map == null)
@@ -478,17 +421,6 @@ class SearchInputPanel extends JPanel {
 	private class SchemaListener implements ActionListener {
 	    public void actionPerformed(ActionEvent event) {
 	    	SearchSettings.MAX_QUERY_LENGTH.revertToDefault();
-	        if(SCHEMA_BOX.getSelectedSchema() != null) {
-				String key = SCHEMA_BOX.getSelectedItem();
-				if (!getInputPanelKeys().contains(key))
-					createInputPanelForNamedMediaType(SCHEMA_BOX.getSelectedMedia());
-	            META_CARDS.show(META_PANEL, key);
-            } else {
-            	if (SCHEMA_BOX.getSelectedMediaType().equals(MediaType.TYPE_TORRENTS)) {
-            		SearchSettings.MAX_QUERY_LENGTH.setValue(100);
-            	}
-                META_CARDS.show(META_PANEL, DEFAULT_PANEL_KEY);
-            }
 
 	        //Truncate if you have too much text for a gnutella search
 	        if (SEARCH_FIELD.getText().length() > SearchSettings.MAX_QUERY_LENGTH.getValue()) {
@@ -498,10 +430,7 @@ class SearchInputPanel extends JPanel {
 				}
 	        }
 	        
-            WHATSNEW_SEARCH_LABEL.setText(SCHEMA_BOX.getSelectedItem());
-            WHATSNEW_SEARCH_LABEL.setPreferredSize(
-                new Dimension(GUIUtils.width(WHATSNEW_SEARCH_LABEL), 20));
-            SEARCH_TYPE_LABEL.setText(SCHEMA_BOX.getSelectedItem());
+            SEARCH_TYPE_LABEL.setText(I18n.tr("Search Files"));
             requestSearchFocus();
         }
     }
@@ -511,38 +440,11 @@ class SearchInputPanel extends JPanel {
      */
     private class SearchListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            MediaType mt = SCHEMA_BOX.getSelectedMediaType();
-            InputPanel panel = null;
-            final SearchInformation info;
-            
-            if(isWhatIsNewSearchType()) {
-                info = SearchInformation.createWhatsNewSearch(
-                    SCHEMA_BOX.getSelectedItem(), mt);
-            } else if(isNormalSearchType()) {
-                String query = null;
-                String xml = null;
-                String title = null;
-                if(SCHEMA_BOX.getSelectedSchema() != null) {
-                    panel = getInputPanel();
-                    query = panel.getStandardQuery();
-                    xml = panel.getInput(true);
-                    title = panel.getTitleForQuery();
-                } else {
-                    query = SEARCH_FIELD.getText();
-                    title = query;
-                }
-                info = SearchInformation.createTitledKeywordSearch(query, xml, mt, title);
-            } else if(isBrowseHostSearchType()) {
-                String user = BROWSE_HOST_FIELD.getText();
-                if (!NetworkUtils.isAddress(user)) {
-                    GUIMediator.showError(I18n.tr("The address format is incorrect, please use host:port."));
-                    return;
-                }
-                info = SearchInformation.createBrowseHostSearch(user);
-                mt = MediaType.getAnyTypeMediaType(); // always any
-            } else {
-                throw new IllegalStateException("Invalid search: " + e);
-            }
+            InputPanel panel = getInputPanel();
+            String query = SEARCH_FIELD.getText();
+            final SearchInformation info =
+            SearchInformation.createTitledKeywordSearch(query, null, MediaType.TYPE_TORRENTS,query);
+
             
             // If the search worked, store & clear it.
             if(SearchMediator.triggerSearch(info) != null) {
@@ -557,9 +459,6 @@ class SearchInputPanel extends JPanel {
     
                     // Clear the existing search.
                     SEARCH_FIELD.setText("");
-                } else if(info.isBrowseHostSearch()) {
-                    BROWSE_HOST_FIELD.addToDictionary();
-                    BROWSE_HOST_FIELD.setText("");
                 }
             }
         }
@@ -578,7 +477,7 @@ class SearchInputPanel extends JPanel {
             		c.setMaximumSize(null);
 	            }
             	else {
-                    Dimension dim = inputPanelDimensions.get(SCHEMA_BOX.getSelectedMedia());
+                    Dimension dim = inputPanelDimensions.get(MediaType.TYPE_TORRENTS);
             		if(dim != null)
             		c.setMaximumSize(dim);
             	}
