@@ -9,6 +9,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Icon;
 
+import org.gudy.azureus2.core3.util.DisplayFormatters;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
@@ -743,6 +744,9 @@ public final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
 //		// downloads can go from inactive to active through resuming.
 //		if ( !this.isInactive() ) _endTime = -1;
 //	}
+	 
+	    _status = getInitializeObject().getStateString();
+	    _progress = getInitializeObject().getProgress();
 	}
 
 

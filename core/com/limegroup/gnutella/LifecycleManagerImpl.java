@@ -617,6 +617,8 @@ public class LifecycleManagerImpl implements LifecycleManager {
         //TODO IMPORTANT: Bring this back
         //runShutdownItems();
         
+        AzureusStarter.getAzureusCore().stop();
+        
         shutdownDone.set(true);
     }
 

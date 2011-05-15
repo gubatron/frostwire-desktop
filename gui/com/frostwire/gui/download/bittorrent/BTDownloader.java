@@ -23,4 +23,8 @@ public interface BTDownloader {
     public File getSaveLocation();
 
     public void resume();
+
+    public int getProgress();
+
+    public String getStateString();
 }
