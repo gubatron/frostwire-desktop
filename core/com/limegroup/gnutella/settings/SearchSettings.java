@@ -300,7 +300,7 @@ public final class SearchSettings extends LimeProps {
 	 * The maximum number of simultaneous searches to allow.
 	 */    
     public static final IntSetting PARALLEL_SEARCH =
-        FACTORY.createIntSetting("PARALLEL_SEARCH", 5);
+        FACTORY.createIntSetting("PARALLEL_SEARCH", 15);
 	
 	/**
 	 * Whether or not to enable the spam filter.
