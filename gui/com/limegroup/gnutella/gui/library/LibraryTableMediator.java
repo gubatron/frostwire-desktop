@@ -15,7 +15,6 @@ import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -170,7 +169,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
         
 		menu.add(new SkinMenuItem(LAUNCH_ACTION));
 		if (hasExploreAction()) {
-		    menu.add(new JMenuItem(OPEN_IN_FOLDER_ACTION));
+		    menu.add(new SkinMenuItem(OPEN_IN_FOLDER_ACTION));
 		}
 		menu.addSeparator();
 		menu.add(new SkinMenuItem(DELETE_ACTION));
@@ -180,13 +179,13 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
         int[] rows = TABLE.getSelectedRows();
 		boolean dirSelected = false;
 		boolean fileSelected = false;
-		boolean torrentSelected = false;
+
 		for (int i = 0; i < rows.length; i++) {
 			File f = DATA_MODEL.get(rows[i]).getFile();
 			if (f.isDirectory()) {
 				dirSelected = true;
-				if (IncompleteFileManager.isTorrentFolder(f))
-					torrentSelected = true;
+//				if (IncompleteFileManager.isTorrentFolder(f))
+//					torrentSelected = true;
 			} else
 				fileSelected = true;
 			
@@ -196,7 +195,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		if (dirSelected) {
 	        if (GUIMediator.isPlaylistVisible())
 	            ENQUEUE_ACTION.setEnabled(false);
-	        DELETE_ACTION.setEnabled(torrentSelected);
+	        DELETE_ACTION.setEnabled(true);
 	        RENAME_ACTION.setEnabled(false);
 		} else {
 	        if (GUIMediator.isPlaylistVisible() && PlaylistMediator.isPlayableFile(DATA_MODEL.getFile(rows[0])) )
