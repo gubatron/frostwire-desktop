@@ -44,6 +44,7 @@ public class PaddedPanel extends JPanel {
 			panel.add(Box.createHorizontalGlue());
 			add(panel);
 		}
+
 	}
 
 	/** 

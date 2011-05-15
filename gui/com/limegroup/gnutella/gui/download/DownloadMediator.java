@@ -200,7 +200,7 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
      */
     protected void setupConstants() {
         MAIN_PANEL =
-            new PaddedPanel(I18n.tr("Downloads"));
+            new PaddedPanel(I18n.tr("Transfers"));
         DATA_MODEL = new DownloadModel();
         TABLE = new LimeJTable(DATA_MODEL);
         _downloadButtons = new DownloadButtons(this);

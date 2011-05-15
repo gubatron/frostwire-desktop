@@ -6,9 +6,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -49,12 +46,11 @@ import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.KeyProcessingTextField;
 import com.limegroup.gnutella.gui.MySharedFilesButton;
-import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.actions.FileMenuActions;
 import com.limegroup.gnutella.gui.actions.FileMenuActions.OpenMagnetTorrentAction;
+import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.gui.xml.InputPanel;
-import com.limegroup.gnutella.settings.FilterSettings;
 import com.limegroup.gnutella.settings.SearchSettings;
 import com.limegroup.gnutella.xml.LimeXMLSchema;
 
@@ -174,10 +170,7 @@ class SearchInputPanel extends JPanel {
         searchEntry = createSearchEntryPanel();
         panelize(searchEntry);
         
-        PANE.add(I18n.tr("Keyword"), searchEntry);
-//        PANE.add(I18n.tr("What\'s New"), whatsnew);
-//        PANE.add(I18n.tr("Direct Connect"), browseHost);
-                 
+        PANE.add(I18n.tr("Search"), searchEntry);
         PANE.setRequestFocusEnabled(false);
         PANE.addMouseListener(new MouseAdapter() {
             @Override
@@ -299,54 +292,6 @@ class SearchInputPanel extends JPanel {
         c.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 0));
     }
     
-    /**
-     * Creates the 'Direct Connect' browse host input panel.
-     */
-    private JPanel createBrowseHostPanel() {
-        BROWSE_HOST_FIELD.addActionListener(SEARCH_LISTENER);
-        
-        JPanel panel = new DitherPanel(DITHERER);
-        panel.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-        
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        
-        JLabel label = new JLabel(I18n.tr("Got Friends?"));
-        label.setFont(UIManager.getFont("Table.font.bold"));
-        panel.add(label, c);
-        
-        JTextArea text1 = new JTextArea(I18n.tr("Enter the IP address and port number (i.e. ip:port) of a friend you\'d like to connect to, click \'Direct Connect\', and FrostWire will try to browse that user's shared files."));
-        text1.setLineWrap(true);
-        text1.setWrapStyleWord(true);
-        text1.setColumns(15);
-        text1.setEditable(false);
-        text1.setFont(UIManager.getFont("Table.font"));
-        text1.setForeground(label.getForeground());
-        c.insets = new Insets(15, 0, 0, 0);
-        panel.add(text1, c);
-                
-        updateIpText();
-        IP_TEXT.setLineWrap(true);
-        IP_TEXT.setWrapStyleWord(true);
-        IP_TEXT.setColumns(15);
-        IP_TEXT.setEditable(false);
-        IP_TEXT.setFont(UIManager.getFont("Table.font"));
-        IP_TEXT.setForeground(label.getForeground());
-        panel.add(IP_TEXT, c);
-        
-        c.fill = GridBagConstraints.HORIZONTAL;
-        panel.add(BROWSE_HOST_FIELD, c);
-        
-        JButton search = new JButton(I18n.tr("Direct Connect"));
-        search.addActionListener(SEARCH_LISTENER);
-        c.fill = GridBagConstraints.NONE;
-        panel.add(search, c);
-        
-        c.weighty = 1;
-        panel.add(Box.createVerticalGlue(), c);
-        
-        return panel;
-    }        
         
     private void updateIpText() {
         if(networkManager.acceptedIncomingConnection() &&
@@ -361,73 +306,7 @@ class SearchInputPanel extends JPanel {
         }
     }
     
-    /**
-     * Creates the What's New input panel.
-     */
-    private JPanel createWhatIsNewPanel() {
-        JPanel panel = new DitherPanel(DITHERER);
-        panel.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-        
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        
-        JLabel label = new JLabel(I18n.tr("Don\'t Know"));
-        label.setFont(UIManager.getFont("Table.font.bold"));
-        panel.add(label, c);
-        
-        JLabel label2 = new JLabel(I18n.tr("What To Look For?"));        
-        label2.setFont(UIManager.getFont("Table.font.bold"));
-        panel.add(label2, c);
-        
-        JTextArea text = new JTextArea(I18n.tr("A \"What\'s New\" search will search for files that have been recently added to the network."));
-        text.setLineWrap(true);
-        text.setWrapStyleWord(true);
-        text.setColumns(15);
-        text.setEditable(false);
-        text.setFont(UIManager.getFont("Table.font"));
-        text.setForeground(label.getForeground());
-        c.insets = new Insets(15, 0, 30, 0);
-        panel.add(text, c);
-        
-        JTextArea type = new JTextArea(
-            I18n.tr("Current Search:") + 
-            "  ");
-        type.setFont(UIManager.getFont("Table.font"));
-        type.setEditable(false);
-        type.setForeground(label.getForeground());
-        c.anchor = GridBagConstraints.EAST;
-        c.gridwidth = GridBagConstraints.RELATIVE;
-        c.insets = new Insets(0, 0, 0, 0);
-        panel.add(type, c);
-        
-        c.anchor = GridBagConstraints.WEST;
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        panel.add(WHATSNEW_SEARCH_LABEL, c);
-        
-        WHATSNEW.addActionListener(SEARCH_LISTENER);
-        c.insets = new Insets(5, 0, 30, 0);
-        c.anchor = GridBagConstraints.CENTER;
-        panel.add(WHATSNEW, c);
-
-        final JCheckBox hideAdult = new JCheckBox(
-            I18n.tr("Hide Adult Content"),
-            FilterSettings.FILTER_WHATS_NEW_ADULT.getValue());
-        hideAdult.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
-                FilterSettings.FILTER_WHATS_NEW_ADULT.setValue(hideAdult.isSelected());
-            }
-        });
-        c.insets = new Insets(0, 0, 0, 0);
-        panel.add(hideAdult, c);
-        hideAdult.setVisible(!FilterSettings.FILTER_ADULT.getValue());
-        
-        // Add a blank item with a weighty that'll push the rest to the top.
-        c.weighty = 1;
-        panel.add(Box.createVerticalGlue(), c);
-
-        return panel;
-    }
-
+   
     private JPanel createSearchEntryPanel() {
         SEARCH_FIELD.addActionListener(SEARCH_LISTENER);
 
@@ -532,27 +411,14 @@ class SearchInputPanel extends JPanel {
      *    [   input box  ]
      */
     private JPanel createDefaultSearchPanel() {
-        
-        JPanel label = createLabel(
-			I18n.tr("Filename"));
         JPanel fullPanel = new BoxPanel(BoxPanel.Y_AXIS);
-        fullPanel.add(label);
         fullPanel.add(Box.createVerticalStrut(3));
         fullPanel.add(GUIUtils.left(SEARCH_FIELD));
         fullPanel.add(Box.createVerticalStrut(5));
         fullPanel.add(createSearchButtonPanel());
-
         return GUIUtils.left(fullPanel);
     }
     
-    private JPanel createLabel(String text) {
-        JPanel labelPanel = new BoxPanel(BoxPanel.X_AXIS);
-        labelPanel.setOpaque(false);
-        labelPanel.add(new JLabel(text));
-        labelPanel.add(Box.createHorizontalGlue());		
-        return labelPanel;
-    }    
-
     /**
      * Creates the search button & inserts it in a panel.
      */
