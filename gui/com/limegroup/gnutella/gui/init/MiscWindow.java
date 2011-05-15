@@ -9,10 +9,8 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 
 import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
@@ -20,15 +18,12 @@ import org.limewire.i18n.I18nMarker;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gnutella.gui.chat.ChatMediator;
-import com.limegroup.gnutella.SpeedConstants;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.gui.SizedTextField;
 import com.limegroup.gnutella.gui.WindowsUtils;
 import com.limegroup.gnutella.settings.ChatSettings;
-import com.limegroup.gnutella.settings.ConnectionSettings;
-import com.limegroup.gnutella.settings.DownloadSettings;
 import com.limegroup.gnutella.settings.StartupSettings;
 import com.limegroup.gnutella.util.MacOSXUtils;
 
@@ -44,19 +39,6 @@ final class MiscWindow extends SetupWindow {
      */
     private static final long serialVersionUID = 7123281955288276885L;
 
-    /**
-     * The four buttons that represent the speeds, and their button group.
-     */
-    private ButtonGroup _speedGroup;
-
-    private JRadioButton _modem;
-
-    private JRadioButton _cable;
-
-    private JRadioButton _t1;
-    
-    private JRadioButton _t3;
-    
     /**
      * The chat Community nickname field.
      */
@@ -75,7 +57,7 @@ final class MiscWindow extends SetupWindow {
                 manager,
                 I18nMarker.marktr("Miscellaneous Settings"),
                 I18nMarker
-                        .marktr("Below, are several options that affect the performance and functionality of FrostWire."));
+                        .marktr("Below, are several options that affect the functionality of FrostWire."));
     }
 
     protected void createWindow() {
@@ -83,59 +65,7 @@ final class MiscWindow extends SetupWindow {
 
         JPanel mainPanel = new JPanel(new GridBagLayout());
 
-        // Connection Speed
-        {
-            GridBagConstraints gbc = new GridBagConstraints();
-            JPanel buttonPanel = new JPanel(new GridBagLayout());
-            
-            buttonPanel.setBorder(new TitledBorder(I18n.tr("Network Speed")));
-            
-            _speedGroup = new ButtonGroup();
-            _t1 = new JRadioButton(I18n.tr("T1"));
-            _t3 = new JRadioButton(I18n.tr("T3"));
-            _modem = new JRadioButton(I18n.tr("Dial Up"));
-            _cable = new JRadioButton(I18n.tr("Broadband (or unsure)"));
-            
-            _speedGroup.add(_t3);
-            _speedGroup.add(_t1);
-            _speedGroup.add(_cable);
-            _speedGroup.add(_modem);
-            
-            MultiLineLabel speedDesc = new MultiLineLabel(
-                    I18n.tr("Please choose the speed of your internet connection. Setting this speed correctly is important for optimum network performance."));
-            speedDesc.setOpaque(false);
-            speedDesc.setBorder(BorderFactory.createEmptyBorder(0, 10, 5, 5));
-            speedDesc.setForeground(Color.black);
-            speedDesc.setFont(speedDesc.getFont().deriveFont(Font.PLAIN));
-            
-            gbc.anchor = GridBagConstraints.NORTHEAST;
-            gbc.fill = GridBagConstraints.HORIZONTAL;
-            gbc.gridwidth = GridBagConstraints.REMAINDER;
-            gbc.weightx = GridBagConstraints.REMAINDER;
-            buttonPanel.add(speedDesc, gbc);
-            
-            gbc.weightx = 1;
-            gbc.anchor = GridBagConstraints.SOUTHWEST;
-            gbc.gridwidth = 1;
-            buttonPanel.add(_t3, gbc);
 
-            gbc.weightx = 1;
-            gbc.gridwidth = 1;
-            buttonPanel.add(_t1, gbc);
-            
-            gbc.weightx = 1;
-            gbc.gridwidth = GridBagConstraints.RELATIVE;
-            buttonPanel.add(_cable, gbc);
-            
-            gbc.insets = new Insets(0, 20, 0, 0);
-            gbc.weightx = 1;
-            gbc.gridwidth = GridBagConstraints.REMAINDER;
-            buttonPanel.add(_modem, gbc);
-            
-            gbc.insets = new Insets(0, 0, 10, 0);
-            gbc.weightx = 1;
-            mainPanel.add(buttonPanel, gbc);
-        }
 
 	//System.out.println("*******STARTUP DEBUG: initializing verification System Startup...");
         // System Startup
@@ -256,24 +186,7 @@ final class MiscWindow extends SetupWindow {
 
         setSetupComponent(mainPanel);
 
-        // set the radio button selection state to the
-        // current setting, such that it doesn't just
-        // get reset every time the window is drawn.
-        //
-        {
-            int speed = ConnectionSettings.CONNECTION_SPEED.getValue();
 
-            if (SpeedConstants.MODEM_SPEED_INT == speed)
-                _modem.setSelected(true);
-            else if (SpeedConstants.CABLE_SPEED_INT == speed)
-                _cable.setSelected(true);
-            else if (SpeedConstants.T1_SPEED_INT == speed)
-            	_t1.setSelected(true);
-            else if (SpeedConstants.T3_SPEED_INT == speed)
-            	_t3.setSelected(true);
-            else
-                _cable.setSelected(true);
-        }
     }
 
     /**
@@ -281,17 +194,6 @@ final class MiscWindow extends SetupWindow {
      * Applies the settings handled in this window.
      */
     public void applySettings(boolean loadCoreComponents) {
-        // Connection Speed
-        {
-            int speed = getSpeed();
-            setDownloadSlots(speed);
-
-            if (speed < SpeedConstants.MIN_SPEED_INT || SpeedConstants.MAX_SPEED_INT < speed) {
-                throw new IllegalArgumentException();
-            }
-
-            ConnectionSettings.CONNECTION_SPEED.setValue(speed);
-        }
 
         // System Startup
         if (GUIUtils.shouldShowStartOnStartupWindow()) {
@@ -305,57 +207,12 @@ final class MiscWindow extends SetupWindow {
             StartupSettings.RUN_ON_STARTUP.setValue(allow);
         }
 
-        // Content Filtering
-        {
-            //ContentSettings.USER_WANTS_MANAGEMENTS.setValue(_filter.isSelected());
-        }
-        
         // Community Settings
         {
         	ChatSettings.CHAT_IRC_NICK.setValue(_ircNickField.getText());
         	//the chat could be loaded by now with the default nickname, the user won't be allowed to login
         	//if this happens, so we try to reinitialize the IRCApplication.
         	ChatMediator.instance().reloadConfiguration();
-        }
-    }
-
-    /**
-     * Returns the selected speed value.  If no speed was selected, 
-     * it returns the MODEM_SPEED.
-     *
-     * @return the selected speed value.  If no speed was selected, 
-     * it returns the MODEM_SPEED
-     */
-    private int getSpeed() {
-        if (_cable.isSelected())
-            return SpeedConstants.CABLE_SPEED_INT;
-        else if (_t1.isSelected())
-        	return SpeedConstants.T1_SPEED_INT;
-        else if (_t3.isSelected())
-        	return SpeedConstants.T3_SPEED_INT;
-        else
-            return SpeedConstants.MODEM_SPEED_INT;
-    }
-
-    /**
-     * Sets the number of download slots based on the connection
-     * speed the user entered.
-     * 
-     * @param speed the speed of the connection to use for setting
-     *  the download slots
-     */
-    private void setDownloadSlots(int speed) {
-
-        if (speed == SpeedConstants.MODEM_SPEED_INT) {
-            DownloadSettings.MAX_SIM_DOWNLOAD.setValue(3);
-        } else if (speed == SpeedConstants.CABLE_SPEED_INT) {
-            DownloadSettings.MAX_SIM_DOWNLOAD.setValue(8);
-        } else if (speed == SpeedConstants.T1_SPEED_INT) {
-        	DownloadSettings.MAX_SIM_DOWNLOAD.setValue(12);
-        } else if (speed == SpeedConstants.T3_SPEED_INT) {
-        	DownloadSettings.MAX_SIM_DOWNLOAD.setValue(16);
-        } else {
-            DownloadSettings.MAX_SIM_DOWNLOAD.setValue(3);
         }
     }
 }

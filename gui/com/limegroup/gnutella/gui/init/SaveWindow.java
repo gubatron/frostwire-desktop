@@ -74,7 +74,7 @@ class SaveWindow extends SetupWindow {
 	 * Creates the window and its components
 	 */
 	SaveWindow(SetupManager manager, boolean migrate) {
-		super(manager, I18nMarker.marktr("Save Folders and Shared Folders"), describeText(migrate), LEARN_MORE_URL);
+		super(manager, I18nMarker.marktr("Torrent Data Save Folder"), describeText(migrate), LEARN_MORE_URL);
 		File oldSaveDir = new File(CommonUtils.getUserHomeDir(), "Shared");
 		if (oldSaveDir.exists()) {
 			SharingSettings.DIRECTORIES_TO_SHARE.add(oldSaveDir);
