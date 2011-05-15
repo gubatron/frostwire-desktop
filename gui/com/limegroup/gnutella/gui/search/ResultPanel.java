@@ -156,25 +156,25 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
      */
     ActionListener STOP_LISTENER;
     
-    /**
-     * The Mark As Spam listener and Blocks the hosts marked as spam
-     */
-    ActionListener MARK_AS_SPAM_LISTENER;
-    
-    /**
-     * The Mark As Not Spam listener
-     */
-    ActionListener MARK_AS_NOT_SPAM_LISTENER;
+//    /**
+//     * The Mark As Spam listener and Blocks the hosts marked as spam
+//     */
+//    ActionListener MARK_AS_SPAM_LISTENER;
+//    
+//    /**
+//     * The Mark As Not Spam listener
+//     */
+//    ActionListener MARK_AS_NOT_SPAM_LISTENER;
 
     /**
      * The BUY this item listener
      */
     ActionListener BUY_LISTENER;
     
-    /**
-     * The button that marks search results as spam or undoes it
-     */
-    private JButton SPAM_BUTTON;
+//    /**
+//     * The button that marks search results as spam or undoes it
+//     */
+//    private JButton SPAM_BUTTON;
     
     
     /**                                                                                                                                       
@@ -339,26 +339,26 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
         // and needs thus more space. As next init the button
         // with the true label but keep the button width. See 
         // transformButton() for more info...
-        SPAM_BUTTON = new IconButton(
-                I18n.tr("Not Junk"), 
-                "SEARCH_SPAM");
-        transformSpamButton(I18n.tr("Junk"), 
-                I18n.tr("Mark selected search results as Junk"));
-        
-        SPAM_BUTTON.setEnabled(false);
-        SPAM_BUTTON.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                TableLine[] lines = getAllSelectedLines();
-                if (lines.length > 0) {
-                    spamClicks++;
-                    if (SpamFilter.isAboveSpamThreshold(lines[0])) {
-                        MARK_AS_NOT_SPAM_LISTENER.actionPerformed(e);
-                    } else {
-                        MARK_AS_SPAM_LISTENER.actionPerformed(e);
-                    }
-                }
-            }
-        });    
+//        SPAM_BUTTON = new IconButton(
+//                I18n.tr("Not Junk"), 
+//                "SEARCH_SPAM");
+//        transformSpamButton(I18n.tr("Junk"), 
+//                I18n.tr("Mark selected search results as Junk"));
+//        
+//        SPAM_BUTTON.setEnabled(false);
+//        SPAM_BUTTON.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                TableLine[] lines = getAllSelectedLines();
+//                if (lines.length > 0) {
+//                    spamClicks++;
+//                    if (SpamFilter.isAboveSpamThreshold(lines[0])) {
+//                        MARK_AS_NOT_SPAM_LISTENER.actionPerformed(e);
+//                    } else {
+//                        MARK_AS_SPAM_LISTENER.actionPerformed(e);
+//                    }
+//                }
+//            }
+//        });    
 
         if (BUY_ACTION == null)
         	BUY_ACTION = new BuyAction();
@@ -470,38 +470,38 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
             }
         };
             
-        MARK_AS_SPAM_LISTENER = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                TableLine[] lines = getAllSelectedLines();
-                for (int i = 0; i < lines.length; i++) {
-                    SPAM_FILTER.markAsSpamUser(lines[i], true);
-                    blockHosts();
-                }
-                
-                // This is a bit fine tuning...
-                if (SearchSettings.hideJunk()) {
-                    filtersChanged();   // i.e. hide the search result(s) we've just
-                                        // marked as spam
-                } else {
-                    DATA_MODEL.refresh(); // mark 'em red
-                    transformSpamButton(I18n.tr("Not Junk"), 
-                            I18n.tr("Mark selected search results as Not Junk"));
-                }
-            }
-        };
-
-        MARK_AS_NOT_SPAM_LISTENER = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                TableLine[] lines = getAllSelectedLines();
-                for (int i = 0; i < lines.length; i++) {
-                    SPAM_FILTER.markAsSpamUser(lines[i], false);
-                }
-                DATA_MODEL.refresh();
-                
-                transformSpamButton(I18n.tr("Junk"), 
-                        I18n.tr("Mark selected search results as Junk"));
-            }
-        };
+//        MARK_AS_SPAM_LISTENER = new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                TableLine[] lines = getAllSelectedLines();
+//                for (int i = 0; i < lines.length; i++) {
+//                    SPAM_FILTER.markAsSpamUser(lines[i], true);
+//                    blockHosts();
+//                }
+//                
+//                // This is a bit fine tuning...
+//                if (SearchSettings.hideJunk()) {
+//                    filtersChanged();   // i.e. hide the search result(s) we've just
+//                                        // marked as spam
+//                } else {
+//                    DATA_MODEL.refresh(); // mark 'em red
+//                    transformSpamButton(I18n.tr("Not Junk"), 
+//                            I18n.tr("Mark selected search results as Not Junk"));
+//                }
+//            }
+//        };
+//
+//        MARK_AS_NOT_SPAM_LISTENER = new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                TableLine[] lines = getAllSelectedLines();
+//                for (int i = 0; i < lines.length; i++) {
+//                    SPAM_FILTER.markAsSpamUser(lines[i], false);
+//                }
+//                DATA_MODEL.refresh();
+//                
+//                transformSpamButton(I18n.tr("Junk"), 
+//                        I18n.tr("Mark selected search results as Junk"));
+//            }
+//        };
         
         BUY_LISTENER = new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -610,11 +610,11 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
         setButtonEnabled(SearchButtons.DOWNLOAD_BUTTON_INDEX, false);
         setButtonEnabled(SearchButtons.BROWSE_BUTTON_INDEX, false);
         
-        SPAM_BUTTON.setEnabled(false);
-        if (SearchSettings.ENABLE_SPAM_FILTER.getValue() && SPAM_FILTER != null) {
-            transformSpamButton(I18n.tr("Junk"), 
-                    I18n.tr("Mark selected search results as Junk"));
-        }
+//        SPAM_BUTTON.setEnabled(false);
+//        if (SearchSettings.ENABLE_SPAM_FILTER.getValue() && SPAM_FILTER != null) {
+//            transformSpamButton(I18n.tr("Junk"), 
+//                    I18n.tr("Mark selected search results as Junk"));
+//        }
         
         BUY_BUTTON.setEnabled(false);
     }
@@ -629,19 +629,19 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
         setButtonEnabled(SearchButtons.BROWSE_BUTTON_INDEX,
                          line.isBrowseHostEnabled());
         
-        if (SearchSettings.ENABLE_SPAM_FILTER.getValue() && SPAM_FILTER != null) {
-            SPAM_BUTTON.setEnabled(true);
-            
-            if (SpamFilter.isAboveSpamThreshold(line)) {
-                transformSpamButton(I18n.tr("Not Junk"), 
-                        I18n.tr("Mark selected search results as Not Junk"));
-            } else {
-                transformSpamButton(I18n.tr("Junk"), 
-                        I18n.tr("Mark selected search results as Junk"));
-            }
-            
-            SPAM_BUTTON.setEnabled(line.getSearchResult().canBeMarkedAsJunk());
-        }
+//        if (SearchSettings.ENABLE_SPAM_FILTER.getValue() && SPAM_FILTER != null) {
+//            SPAM_BUTTON.setEnabled(true);
+//            
+//            if (SpamFilter.isAboveSpamThreshold(line)) {
+//                transformSpamButton(I18n.tr("Not Junk"), 
+//                        I18n.tr("Mark selected search results as Not Junk"));
+//            } else {
+//                transformSpamButton(I18n.tr("Junk"), 
+//                        I18n.tr("Mark selected search results as Junk"));
+//            }
+//            
+//            SPAM_BUTTON.setEnabled(line.getSearchResult().canBeMarkedAsJunk());
+//        }
        
         
         BUY_BUTTON.setEnabled(false);                                                                                                                                           
@@ -1143,41 +1143,30 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
             SOUTH_PANEL.setOpaque(false);
             
             SOUTH_PANEL.add(Box.createVerticalStrut(GUIConstants.SEPARATOR));
-            
-            if (SearchSettings.ENABLE_SPAM_FILTER.getValue() && SPAM_BUTTON != null) {
-                JPanel buttonPanel = new JPanel();
-                buttonPanel.setLayout(new GridBagLayout());
-                GridBagConstraints gbc = null;
 
-                gbc = new GridBagConstraints();                
-                gbc.gridx = 0;
-                gbc.gridy = 0;
-                gbc.anchor = GridBagConstraints.WEST;
-                gbc.fill = GridBagConstraints.NONE;
-                gbc.gridwidth = GridBagConstraints.RELATIVE;
-                buttonPanel.add(BUY_BUTTON, gbc);
-                
-                gbc.gridx = 1;
-                gbc.gridy = 0;
-                gbc.anchor = GridBagConstraints.CENTER;
-                gbc.fill = GridBagConstraints.NONE;
-                gbc.gridwidth = GridBagConstraints.RELATIVE;
-                gbc.weightx = 1;
-                buttonPanel.add(BUTTON_ROW, gbc);
-                
-                gbc = new GridBagConstraints();
-                gbc.gridx = 2;
-                gbc.gridy = 0;
-                gbc.anchor = GridBagConstraints.EAST;
-                gbc.fill = GridBagConstraints.NONE;
-                gbc.gridwidth = GridBagConstraints.REMAINDER;
-                buttonPanel.add(SPAM_BUTTON, gbc);
-                
-                buttonPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 64));
-                SOUTH_PANEL.add(buttonPanel);
-            } else {
-                SOUTH_PANEL.add(BUTTON_ROW);
-            }
+            JPanel buttonPanel = new JPanel();
+            buttonPanel.setLayout(new GridBagLayout());
+            GridBagConstraints gbc = null;
+
+            gbc = new GridBagConstraints();                
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.anchor = GridBagConstraints.WEST;
+            gbc.fill = GridBagConstraints.NONE;
+            gbc.gridwidth = GridBagConstraints.RELATIVE;
+            buttonPanel.add(BUY_BUTTON, gbc);
+
+            gbc.gridx = 1;
+            gbc.gridy = 0;
+            gbc.anchor = GridBagConstraints.CENTER;
+            gbc.fill = GridBagConstraints.NONE;
+            gbc.gridwidth = GridBagConstraints.RELATIVE;
+            gbc.weightx = 1;
+            buttonPanel.add(BUTTON_ROW, gbc);
+            
+            
+            buttonPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 64));
+            SOUTH_PANEL.add(buttonPanel);
             
             MAIN_PANEL.add(SOUTH_PANEL);
         }
@@ -1215,15 +1204,15 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
      * Change the text and tooltip text of the SPAM_BUTTON
      */
     private void transformSpamButton(String text, String tip) {
-        Dimension oldDim = SPAM_BUTTON.getPreferredSize();
-        
-        SPAM_BUTTON.setText(text);
-        SPAM_BUTTON.setToolTipText(tip);
-        
-        // Preserve/use the max width...
-        Dimension newDim = SPAM_BUTTON.getPreferredSize();
-        newDim.width = Math.max(oldDim.width, newDim.width);
-        SPAM_BUTTON.setPreferredSize(newDim);
+//        Dimension oldDim = SPAM_BUTTON.getPreferredSize();
+//        
+//        SPAM_BUTTON.setText(text);
+//        SPAM_BUTTON.setToolTipText(tip);
+//        
+//        // Preserve/use the max width...
+//        Dimension newDim = SPAM_BUTTON.getPreferredSize();
+//        newDim.width = Math.max(oldDim.width, newDim.width);
+//        SPAM_BUTTON.setPreferredSize(newDim);
     }
     
     public class WarningBorder extends AbstractBorder {
