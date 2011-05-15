@@ -47,12 +47,10 @@ import com.limegroup.gnutella.gui.options.panes.AutoCompletePaneItem;
 import com.limegroup.gnutella.gui.options.panes.BrowserPaneItem;
 import com.limegroup.gnutella.gui.options.panes.BugsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ChatCommunityPaneItem;
-import com.limegroup.gnutella.gui.options.panes.ConnectionPreferencingPaneItem;
 import com.limegroup.gnutella.gui.options.panes.DaapBufferSizePaneItem;
 import com.limegroup.gnutella.gui.options.panes.DaapPasswordPaneItem;
 import com.limegroup.gnutella.gui.options.panes.DaapSupportPaneItem;
 import com.limegroup.gnutella.gui.options.panes.DefaultActionPaneItem;
-import com.limegroup.gnutella.gui.options.panes.DisableCapabilitiesPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ForceIPPaneItem;
 import com.limegroup.gnutella.gui.options.panes.IgnoreResultTypesPaneItem;
 import com.limegroup.gnutella.gui.options.panes.IgnoreResultsPaneItem;
@@ -62,7 +60,6 @@ import com.limegroup.gnutella.gui.options.panes.NetworkInterfacePaneItem;
 import com.limegroup.gnutella.gui.options.panes.NotificationsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.PlayerPreferencePaneItem;
 import com.limegroup.gnutella.gui.options.panes.PopupsPaneItem;
-import com.limegroup.gnutella.gui.options.panes.PortPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ProxyLoginPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ProxyPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ShowPromoOverlaysPaneItem;
@@ -232,6 +229,7 @@ public final class OptionsConstructor {
 		
 		IconTextField iconTextField = new IconTextField(GUIMediator.getThemeImage("browse_host_generic"), 10);
 		filterTextField = iconTextField.getTextField();
+		
         // set text before adding the document listener
         filterTextField.setText(I18n.tr("Search here"));
         filterTextField.getDocument().addDocumentListener(new DocumentListener() {
@@ -332,18 +330,17 @@ public final class OptionsConstructor {
 		// filter options
 		addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, FILTERS_KEY, I18n.tr("Filters"));
 		addOption(FILTERS_KEY, RESULTS_KEY, I18n.tr("Keywords"), IgnoreResultsPaneItem.class, IgnoreResultTypesPaneItem.class); 
-		
         
 		// advanced options
 		addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, ADVANCED_KEY, I18n.tr("Advanced"));        
-		addOption(ADVANCED_KEY, PREFERENCING_KEY, I18n.tr("Preferencing"), ConnectionPreferencingPaneItem.class, AutomaticInstallerDownloadPaneItem.class);
-		addOption(ADVANCED_KEY, FIREWALL_KEY, I18n.tr("Firewall"), PortPaneItem.class, ForceIPPaneItem.class);
+		addOption(ADVANCED_KEY, PREFERENCING_KEY, I18n.tr("Updates"), AutomaticInstallerDownloadPaneItem.class);
+		addOption(ADVANCED_KEY, FIREWALL_KEY, I18n.tr("Firewall"), ForceIPPaneItem.class);
 		addOption(ADVANCED_KEY, PROXY_KEY, I18n.tr("Proxy"), ProxyPaneItem.class, ProxyLoginPaneItem.class);
         addOption(ADVANCED_KEY, NETWORK_INTERFACE_KEY, I18n.tr("Network Interface"), NetworkInterfacePaneItem.class);
         if (FrostAssociations.anyAssociationsSupported()) {
         	addOption(ADVANCED_KEY, ASSOCIATIONS_KEY, I18n.tr("File Associations"), AssociationPreferencePaneItem.class);
         }
-        addOption(ADVANCED_KEY, PERFORMANCE_KEY, I18n.tr("Performance"), DisableCapabilitiesPaneItem.class);              
+              
         if (GUIUtils.shouldShowStartOnStartupWindow()) {
             addOption(ADVANCED_KEY, STARTUP_KEY, I18n.tr("System Boot"), StartupPaneItem.class); 
         }
