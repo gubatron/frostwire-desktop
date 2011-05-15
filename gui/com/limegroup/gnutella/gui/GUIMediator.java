@@ -53,6 +53,7 @@ import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 import org.limewire.util.VersionUtils;
 
+import com.frostwire.CoreFrostWireUtils;
 import com.frostwire.bittorrent.AzureusStarter;
 import com.frostwire.gnutella.connectiondoctor.ConnectionDoctor;
 import com.frostwire.gnutella.gui.chat.ChatMediator;
@@ -696,8 +697,7 @@ public final class GUIMediator {
 		// update the status panel
 		int quality = getConnectionQuality();
 
-		if (quality != StatusLine.STATUS_DISCONNECTED
-				&& quality != StatusLine.STATUS_CONNECTING) {
+		if (quality != StatusLine.STATUS_DISCONNECTED) {
 			hideDisposableMessage(DISCONNECTED_MESSAGE);
 		}
 
@@ -708,71 +708,11 @@ public final class GUIMediator {
 	 * Returns the connectiong quality.
 	 */
 	public int getConnectionQuality() {
-		int stable = GuiCoreMediator.getConnectionServices()
-				.countConnectionsWithNMessages(STABLE_THRESHOLD);
-
-		int status;
-
-		if (stable == 0) {
-			int initializing = getConnectionMediator().getConnectingCount();
-			int connections = GuiCoreMediator.getConnectionServices()
-					.getNumInitializedConnections();
-			// No initializing or stable connections
-			if (initializing == 0 && connections == 0) {
-				// Not attempting to connect at all...
-				if (!GuiCoreMediator.getConnectionServices().isConnecting())
-					status = StatusLine.STATUS_DISCONNECTED;
-				// Attempting to connect...
-				else
-					status = StatusLine.STATUS_CONNECTING;
-			}
-			// No initialized, all initializing - connecting
-			else if (connections == 0)
-				status = StatusLine.STATUS_CONNECTING;
-			// Some initialized - poor connection.
-			else
-				status = StatusLine.STATUS_POOR;
-		} else if (GuiCoreMediator.getConnectionManager().isConnectionIdle()) {
-			lastIdleTime = System.currentTimeMillis();
-			status = StatusLine.STATUS_IDLE;
+		if (CoreFrostWireUtils.isInternetReachable()) {
+			return StatusLine.STATUS_TURBOCHARGED;
 		} else {
-			int preferred = GuiCoreMediator.getConnectionManager()
-					.getPreferredConnectionCount();
-			// pro will have more.
-			if (FrostWireUtils.isPro())
-				preferred -= 2;
-			// ultrapeers don't need as many...
-			if (GuiCoreMediator.getConnectionServices().isSupernode())
-				preferred -= 5;
-			preferred = Math.max(1, preferred); // prevent div by 0
-
-			double percent = (double) stable / (double) preferred;
-			if (percent <= 0.25)
-				status = StatusLine.STATUS_POOR;
-			else if (percent <= 0.5)
-				status = StatusLine.STATUS_FAIR;
-			else if (percent <= 0.75)
-				status = StatusLine.STATUS_GOOD;
-			else if (percent <= 1)
-				status = StatusLine.STATUS_EXCELLENT;
-			else
-				/* if(percent > 1) */
-				status = StatusLine.STATUS_TURBOCHARGED;
+			return StatusLine.STATUS_DISCONNECTED;
 		}
-
-		switch (status) {
-		case StatusLine.STATUS_CONNECTING:
-		case StatusLine.STATUS_POOR:
-		case StatusLine.STATUS_FAIR:
-		case StatusLine.STATUS_GOOD:
-			// if one of these four, see if we recently woke up from
-			// idle, and if so, report as 'waking up' instead.
-			long now = System.currentTimeMillis();
-			if (now < lastIdleTime + 15 * 1000)
-				status = StatusLine.STATUS_WAKING_UP;
-		}
-
-		return status;
 	}
 
 	/**

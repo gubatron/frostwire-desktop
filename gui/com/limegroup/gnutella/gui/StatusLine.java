@@ -51,14 +51,7 @@ public final class StatusLine implements ThemeObserver {
      * The different connection status possibilities.
      */
     public static final int STATUS_DISCONNECTED = 0;
-    public static final int STATUS_CONNECTING = 1;
-    public static final int STATUS_POOR = 2;
-    public static final int STATUS_FAIR = 3;
-    public static final int STATUS_GOOD = 4;
-    public static final int STATUS_EXCELLENT = 5;
-    public static final int STATUS_TURBOCHARGED = 6;
-    public static final int STATUS_IDLE = 7;
-    public static final int STATUS_WAKING_UP = 8;
+    public static final int STATUS_TURBOCHARGED = 1;
 
     /**
      * The main container for the status line component.
@@ -70,7 +63,7 @@ public final class StatusLine implements ThemeObserver {
      * The switcher changes the actual ImageIcons on this panel.
      */
     private JLabel _connectionQualityMeter;
-    private final ImageIcon[] _connectionQualityMeterIcons = new ImageIcon[9];
+    private final ImageIcon[] _connectionQualityMeterIcons = new ImageIcon[7];
 
     /**
      * The button for the current language flag to allow language switching
@@ -512,8 +505,8 @@ public final class StatusLine implements ThemeObserver {
      * Load connection quality theme icons
 	 */
 	public void updateTheme() {
-        for (int i = 0; i < _connectionQualityMeterIcons.length; i++)
-            _connectionQualityMeterIcons[i] = GUIMediator.getThemeImage("connect_small_" + i);
+        _connectionQualityMeterIcons[StatusLine.STATUS_DISCONNECTED] = GUIMediator.getThemeImage("connect_small_0");
+        _connectionQualityMeterIcons[StatusLine.STATUS_TURBOCHARGED] = GUIMediator.getThemeImage("connect_small_6");
         
 		if (_mediaPlayer != null)
 			_mediaPlayer.updateTheme();
@@ -537,37 +530,11 @@ public final class StatusLine implements ThemeObserver {
         switch(quality) {
             case STATUS_DISCONNECTED:
                 	status = I18n.tr("Disconnected");
-                    tip = I18n.tr("You are disconnected from the network. To connect, choose Connect from the File menu.");
-                    break;
-            case STATUS_CONNECTING:
-                    status = I18n.tr("Starting") + " " + connection;
-                    tip = I18n.tr("You are currently connecting to the network");
-                    break;
-            case STATUS_POOR:
-                    status = I18n.tr("Poor") + " " + connection;
-                    tip = I18n.tr("You are connected to few hosts and have an unstable connection the network");
-                    break;
-            case STATUS_FAIR:
-                    status = I18n.tr("Fair") + " " + connection;
-                    tip = I18n.tr("Your connection to the network is getting stronger");
-                    break;
-            case STATUS_GOOD:
-                    status = I18n.tr("Good") + " " + connection;
-                    tip = I18n.tr("You are not yet fully connected to the network, but have a very good connection");
-                    break;
-            case STATUS_IDLE:
-            case STATUS_EXCELLENT:
-                    status = I18n.tr("Excellent") + " " + connection;
-                    tip = I18n.tr("Your connection to the network is very strong");
+                    tip = I18n.tr("You are disconnected from the network.");
                     break;
             case STATUS_TURBOCHARGED:
                     status = I18n.tr("Turbo-Charged") + " " + connection;
-                    tip = FrostWireUtils.isPro() ? I18n.tr("Your connection to the network is extremely strong") :
-                        I18n.tr("You can experience Turbo-Charged connections all the time with LimeWire PRO!");
-                    break;
-            case STATUS_WAKING_UP:
-                    status = I18n.tr("Waking Up") + " " + connection;
-                    tip = I18n.tr("FrostWire is waking up from sleep mode");
+                    tip = I18n.tr("Your connection to the network is extremely strong");
                     break;
         }
         _connectionQualityMeter.setToolTipText(tip);
