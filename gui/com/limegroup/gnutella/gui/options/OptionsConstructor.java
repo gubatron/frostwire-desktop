@@ -40,7 +40,6 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconButton;
 import com.limegroup.gnutella.gui.IconTextField;
 import com.limegroup.gnutella.gui.PaddedPanel;
-import com.limegroup.gnutella.gui.ResourceManager;
 import com.limegroup.gnutella.gui.options.panes.AbstractPaneItem;
 import com.limegroup.gnutella.gui.options.panes.AssociationPreferencePaneItem;
 import com.limegroup.gnutella.gui.options.panes.AudioPlayerPaneItem;
@@ -67,13 +66,11 @@ import com.limegroup.gnutella.gui.options.panes.PortPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ProxyLoginPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ProxyPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ShowPromoOverlaysPaneItem;
-import com.limegroup.gnutella.gui.options.panes.ShutdownPaneItem;
 import com.limegroup.gnutella.gui.options.panes.StartupPaneItem;
 import com.limegroup.gnutella.gui.options.panes.StatusBarBandwidthPaneItem;
 import com.limegroup.gnutella.gui.options.panes.StatusBarConnectionQualityPaneItem;
 import com.limegroup.gnutella.gui.options.panes.StatusBarFirewallPaneItem;
 import com.limegroup.gnutella.gui.options.panes.TorrentSaveFolderPaneItem;
-import com.limegroup.gnutella.gui.options.panes.TrayIconDisplayPaneItem;
 import com.limegroup.gnutella.gui.options.panes.VideoPlayerPaneItem;
 import com.limegroup.gnutella.gui.options.panes.iTunesPreferencePaneItem;
 import com.limegroup.gnutella.gui.shell.FrostAssociations;
@@ -298,33 +295,26 @@ public final class OptionsConstructor {
     	//saving
     	OptionsTreeNode node = addOption(OptionsMediator.ROOT_NODE_KEY, SAVE_KEY, I18n.tr("Saving"), TorrentSaveFolderPaneItem.class, DefaultActionPaneItem.class);
 
-        // bittorrent
+        //bittorrent
         addOption(OptionsMediator.ROOT_NODE_KEY,BITTORRENT_KEY, I18n.tr("BitTorrent"), BitTorrentDownloadSpeedPaneItem.class, BittorrentPaneItem.class, BittorrentConnectionPaneItem.class);
-		
-		
-		Class<? extends AbstractPaneItem>[] clazzes; 
-		if (OSUtils.supportsTray() && ResourceManager.instance().isTrayIconAvailable())
-		    clazzes = new Class[] { ShutdownPaneItem.class, TrayIconDisplayPaneItem.class };
-		else
-		    clazzes = new Class[] { ShutdownPaneItem.class };
-        addOption(OptionsMediator.ROOT_NODE_KEY, SHUTDOWN_KEY, I18n.tr("System Tray"), clazzes); 
 
-        //FTA: Unused setting in 4.17.0 addOption(OptionsMediator.ROOT_NODE_KEY, UPDATE_KEY, I18n.tr("Updates"), UpdatePaneItem.class);
-
+        //community chat
 		addOption(OptionsMediator.ROOT_NODE_KEY, CHAT_KEY, I18n.tr("Community Chat"), ChatCommunityPaneItem.class);
 
+		//audio player
         addOption(OptionsMediator.ROOT_NODE_KEY, PLAYER_KEY, I18n.tr("Player"), PlayerPreferencePaneItem.class);    
         
+        //status bar
         addOption(OptionsMediator.ROOT_NODE_KEY, STATUS_BAR_KEY, I18n.tr("Status Bar"), StatusBarConnectionQualityPaneItem.class, StatusBarFirewallPaneItem.class, StatusBarBandwidthPaneItem.class); // Removed Lime Store
         
-
-        
-		addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, ITUNES_KEY, I18n.tr("iTunes"));
+        //itunes
+        addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, ITUNES_KEY, I18n.tr("iTunes"));
 		if (OSUtils.isMacOSX()) {
 			addOption(ITUNES_KEY, ITUNES_IMPORT_KEY, I18n.tr("Importing"), iTunesPreferencePaneItem.class); 
 		}
 		addOption(ITUNES_KEY, ITUNES_DAAP_KEY, I18n.tr("Sharing"), DaapSupportPaneItem.class, DaapPasswordPaneItem.class, DaapBufferSizePaneItem.class);
-        
+
+		
 		if (!OSUtils.isWindows() && !OSUtils.isAnyMac()) {
 			addOption(OptionsMediator.ROOT_NODE_KEY, APPS_KEY, I18n.tr("Helper Apps"), BrowserPaneItem.class, ImageViewerPaneItem.class, VideoPlayerPaneItem.class, AudioPlayerPaneItem.class);
 		}
