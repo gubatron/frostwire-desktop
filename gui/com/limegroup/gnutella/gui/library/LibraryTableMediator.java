@@ -60,7 +60,6 @@ import com.limegroup.gnutella.gui.LicenseWindow;
 import com.limegroup.gnutella.gui.MessageService;
 import com.limegroup.gnutella.gui.MultiLineLabel;
 import com.limegroup.gnutella.gui.actions.ActionUtils;
-import com.limegroup.gnutella.gui.actions.BitziLookupAction;
 import com.limegroup.gnutella.gui.actions.CopyMagnetLinkToClipboardAction;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.actions.SearchAction;
@@ -123,7 +122,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
     private Action EDIT_LICENSE_ACTION;
     private Action VIEW_LICENSE_ACTION;
 
-    private Action BITZI_LOOKUP_ACTION;
     private Action MAGNET_LOOKUP_ACTION;
 	private Action COPY_MAGNET_TO_CLIPBOARD_ACTION;
 
@@ -171,7 +169,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
         EDIT_LICENSE_ACTION = new EditLicenseAction();
         VIEW_LICENSE_ACTION = new ViewLicenseAction();
         
-        BITZI_LOOKUP_ACTION = new BitziLookupAction(this);
         MAGNET_LOOKUP_ACTION = new MagnetLookupAction();
         
 		COPY_MAGNET_TO_CLIPBOARD_ACTION = new CopyMagnetLinkToClipboardAction(this);
@@ -292,7 +289,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	private JMenu createAdvancedMenu(LibraryTableDataLine dl) {
 		JMenu menu = new SkinMenu(I18n.tr("Advanced"));
 		if (dl != null) {
-			menu.add(new SkinMenuItem(BITZI_LOOKUP_ACTION));
 			menu.add(new SkinMenuItem(MAGNET_LOOKUP_ACTION));
 			menu.add(new SkinMenuItem(COPY_MAGNET_TO_CLIPBOARD_ACTION));
 			File file = getFile(TABLE.getSelectedRow());
@@ -1184,7 +1180,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		
 		//  enable / disable advanced items if file shared / not shared
 		MAGNET_LOOKUP_ACTION.setEnabled(firstShared);
-		BITZI_LOOKUP_ACTION.setEnabled(firstShared);
 
 		COPY_MAGNET_TO_CLIPBOARD_ACTION.setEnabled(!_isIncomplete && getFileDesc(sel[0]) != null);
 	}
@@ -1214,7 +1209,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 
 		COPY_MAGNET_TO_CLIPBOARD_ACTION.setEnabled(false);
 		MAGNET_LOOKUP_ACTION.setEnabled(false);
-		BITZI_LOOKUP_ACTION.setEnabled(false);
 	}
 
 	/**

@@ -15,7 +15,6 @@ import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.actions.BitziLookupAction;
 import com.limegroup.gnutella.gui.actions.CopyMagnetLinkToClipboardAction;
 import com.limegroup.gnutella.gui.themes.SkinMenu;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
@@ -202,11 +201,6 @@ final class GnutellaSearchResult extends AbstractSearchResult {
             menu.setEnabled(false);
             return menu;
         }
-        
-        BitziLookupAction bitziAction = new BitziLookupAction(resultPanel);
-
-        bitziAction.setEnabled(line.getRemoteFileDesc().getSHA1Urn() != null);
-        menu.add(new SkinMenuItem(bitziAction));
         
         CopyMagnetLinkToClipboardAction magnet =
             new CopyMagnetLinkToClipboardAction(resultPanel);

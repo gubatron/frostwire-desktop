@@ -49,7 +49,6 @@ import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.MessageService;
 import com.limegroup.gnutella.gui.PaddedPanel;
-import com.limegroup.gnutella.gui.actions.BitziLookupAction;
 import com.limegroup.gnutella.gui.actions.CopyMagnetLinkToClipboardAction;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.actions.SearchAction;
@@ -129,7 +128,6 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
     private Action priorityDownAction;
 	private Action editLocationAction;
 	private Action magnetAction;
-	private Action bitziAction;
 	private Action exploreAction; 
 
     /** The actual download buttons instance.
@@ -175,7 +173,6 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
 		editLocationAction = new EditLocationAction();
 		magnetAction = new CopyMagnetLinkToClipboardAction(this);
 		exploreAction = new ExploreAction(); 
-		bitziAction = new BitziLookupAction(this);       
     }
 
 	/**
@@ -896,7 +893,6 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
 									  && dl.isRelocatable());
 		
 		magnetAction.setEnabled(dl.getSha1Urn() != null);
-		bitziAction.setEnabled(dl.getSha1Urn() != null);
 		launchAction.setEnabled(dl.isLaunchable());
     }
 
@@ -915,7 +911,6 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
 		priorityUpAction.setEnabled(false);
 		editLocationAction.setEnabled(false);
 		magnetAction.setEnabled(false);
-		bitziAction.setEnabled(false);
 		exploreAction.setEnabled(false); 
     }
 
