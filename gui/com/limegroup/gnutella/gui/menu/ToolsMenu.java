@@ -6,7 +6,6 @@ import javax.swing.Action;
 
 import org.limewire.i18n.I18nMarker;
 
-import com.frostwire.actions.ConnectionDoctorAction;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
@@ -28,7 +27,6 @@ final class ToolsMenu extends AbstractMenu {
 	    super(I18n.tr("&Tools"));
 	    
 	    addMenuItem(new CheckForUpdatesAction());
-        addMenuItem(ConnectionDoctorAction.getInstance());
 	    
         //if (!OSUtils.isMacOSX()) {
         addMenuItem(new ShowOptionsAction());
