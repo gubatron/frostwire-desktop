@@ -3,6 +3,7 @@ package com.frostwire.gui.download.bittorrent;
 import java.io.File;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
+import org.gudy.azureus2.core3.util.DisplayFormatters;
 
 public class BTDownloaderImpl implements BTDownloader {
 
@@ -58,5 +59,9 @@ public class BTDownloaderImpl implements BTDownloader {
 
     public int getProgress() {
         return _downloadManager.getStats().getDownloadCompleted(true) / 10;
+    }
+
+    public String getStateString() {
+        return DisplayFormatters.formatDownloadStatus(_downloadManager);
     }
 }

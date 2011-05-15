@@ -25,4 +25,6 @@ public interface BTDownloader {
     public void resume();
 
     public int getProgress();
+
+    public String getStateString();
 }
