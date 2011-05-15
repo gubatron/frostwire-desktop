@@ -24,7 +24,6 @@ import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.IncompleteFileDesc;
 import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.URN;
-import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
@@ -210,19 +209,19 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
         // mark that we need to recalculate the rating
         _lastRating = -1f;
         
-        if (sr instanceof GnutellaSearchResult) {
-            GnutellaSearchResult gsr = (GnutellaSearchResult)sr;
-            RemoteFileDesc rfd = gsr.getRemoteFileDesc();
-            Set<IpPort> alts = gsr.getAlts();
-            if(alts != null && !alts.isEmpty()) {
-                if(_alts == null)
-                    _alts = new IpPortSet();
-                _alts.addAll(alts);
-                gsr.clearAlts();
-                _location.addHosts(alts);
-            }
-            _location.addHost(rfd.getHost(), rfd.getPort());
-        }
+//        if (sr instanceof GnutellaSearchResult) {
+//            GnutellaSearchResult gsr = (GnutellaSearchResult)sr;
+//            RemoteFileDesc rfd = gsr.getRemoteFileDesc();
+//            Set<IpPort> alts = gsr.getAlts();
+//            if(alts != null && !alts.isEmpty()) {
+//                if(_alts == null)
+//                    _alts = new IpPortSet();
+//                _alts.addAll(alts);
+//                gsr.clearAlts();
+//                _location.addHosts(alts);
+//            }
+//            _location.addHost(rfd.getHost(), rfd.getPort());
+//        }
         
         
         // Set the speed correctly.
@@ -238,24 +237,24 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
         _quality = Math.max(sr.getQuality(), _quality);
         _secure |= sr.getSecureStatus() == SecureMessage.SECURE;        
         
-        if (sr instanceof GnutellaSearchResult) {
-            GnutellaSearchResult gsr = (GnutellaSearchResult)sr;
-            RemoteFileDesc rfd = gsr.getRemoteFileDesc();
-            if(rfd.getCreationTime() > 0)
-                _addedOn = Math.min(_addedOn, rfd.getCreationTime());
-                                      
-            // Set chat host correctly.
-            if (_chatHost == null && rfd.isChatEnabled()) {
-    			_chatHost = rfd;
-            }
-            // Set browse host correctly.
-    		if (_browseHost == null && rfd.isBrowseHostEnabled()) {
-    			_browseHost = rfd;
-    		}
-    		if (_nonFirewalledHost == null && !rfd.isFirewalled()) {
-    			_nonFirewalledHost = rfd;
-    		}
-        }
+//        if (sr instanceof GnutellaSearchResult) {
+//            GnutellaSearchResult gsr = (GnutellaSearchResult)sr;
+//            RemoteFileDesc rfd = gsr.getRemoteFileDesc();
+//            if(rfd.getCreationTime() > 0)
+//                _addedOn = Math.min(_addedOn, rfd.getCreationTime());
+//                                      
+//            // Set chat host correctly.
+//            if (_chatHost == null && rfd.isChatEnabled()) {
+//    			_chatHost = rfd;
+//            }
+//            // Set browse host correctly.
+//    		if (_browseHost == null && rfd.isBrowseHostEnabled()) {
+//    			_browseHost = rfd;
+//    		}
+//    		if (_nonFirewalledHost == null && !rfd.isFirewalled()) {
+//    			_nonFirewalledHost = rfd;
+//    		}
+//        }
         
         
         if(sr.getCreationTime() > 0)
@@ -745,14 +744,15 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
      * Gets all RemoteFileDescs for this line.
      */
     RemoteFileDesc[] getAllRemoteFileDescs() {
-        GnutellaSearchResult sr = (GnutellaSearchResult)RESULT;
-        int size = getOtherResults().size() + 1;
-        RemoteFileDesc[] rfds = new RemoteFileDesc[size];
-        rfds[0] = sr.getRemoteFileDesc();
-        int j = 1;
-        for(Iterator<?> i = getOtherResults().iterator(); i.hasNext(); j++)
-            rfds[j] = ((GnutellaSearchResult)i.next()).getRemoteFileDesc();
-        return rfds;
+//        GnutellaSearchResult sr = (GnutellaSearchResult)RESULT;
+//        int size = getOtherResults().size() + 1;
+//        RemoteFileDesc[] rfds = new RemoteFileDesc[size];
+//        rfds[0] = sr.getRemoteFileDesc();
+//        int j = 1;
+//        for(Iterator<?> i = getOtherResults().iterator(); i.hasNext(); j++)
+//            rfds[j] = ((GnutellaSearchResult)i.next()).getRemoteFileDesc();
+//        return rfds;
+    	return null;
     }
     
     
@@ -761,9 +761,10 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
 	 * @return
 	 */
 	RemoteFileDesc getRemoteFileDesc() {
-        return RESULT instanceof GnutellaSearchResult 
-                ? ((GnutellaSearchResult)RESULT).getRemoteFileDesc() 
-                : null;
+//        return RESULT instanceof GnutellaSearchResult 
+//                ? ((GnutellaSearchResult)RESULT).getRemoteFileDesc() 
+//                : null;
+		return null;
 	}
     
 	/**
@@ -776,10 +777,10 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
             if (_otherResults != null) {
                 for (Iterator<?> iter = _otherResults.iterator(); iter.hasNext();) {
                     SearchResult r = (SearchResult)iter.next();
-                    if (!(r instanceof GnutellaSearchResult)) continue;
-                    num++;
-                    _lastRating += ((GnutellaSearchResult)r).getRemoteFileDesc()
-                    .getSpamRating();
+//                    if (!(r instanceof GnutellaSearchResult)) continue;
+//                    num++;
+//                    _lastRating += ((GnutellaSearchResult)r).getRemoteFileDesc()
+//                    .getSpamRating();
             }
             }
             _lastRating = _lastRating / num;

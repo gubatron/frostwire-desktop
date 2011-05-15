@@ -662,16 +662,16 @@ public final class SearchMediator {
      * @requires this is called from Swing thread
      * @modifies this
      */
-    public static void handleQueryResult(RemoteFileDesc rfd,
-                                         HostData data,
-                                         Set<IpPort> alts) {
-        byte[] replyGUID = data.getMessageGUID();
-        ResultPanel rp = getResultPanelForGUID(new GUID(replyGUID));
-        if(rp != null) {
-            SearchResult sr = new GnutellaSearchResult(rfd, data, alts);
-            getSearchResultDisplayer().addQueryResult(replyGUID, sr, rp);
-        }
-    }
+//    public static void handleQueryResult(RemoteFileDesc rfd,
+//                                         HostData data,
+//                                         Set<IpPort> alts) {
+//        byte[] replyGUID = data.getMessageGUID();
+//        ResultPanel rp = getResultPanelForGUID(new GUID(replyGUID));
+//        if(rp != null) {
+//            SearchResult sr = new GnutellaSearchResult(rfd, data, alts);
+//            getSearchResultDisplayer().addQueryResult(replyGUID, sr, rp);
+//        }
+//    }
     
     /**
      * Downloads all the selected table lines from the given result panel.

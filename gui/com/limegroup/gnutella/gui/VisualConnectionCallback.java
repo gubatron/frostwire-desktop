@@ -139,7 +139,7 @@ public final class VisualConnectionCallback implements ActivityCallback {
 		SwingUtilities.invokeLater(new Runnable() {
 			@SuppressWarnings("unchecked")
 			public void run() {
-			    SearchMediator.handleQueryResult(rfd, data, (Set<IpPort>) locs);
+			    //SearchMediator.handleQueryResult(rfd, data, (Set<IpPort>) locs);
 			}
 		});
     }
