@@ -1,21 +1,15 @@
 package com.limegroup.gnutella.gui;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FontMetrics;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -37,7 +31,6 @@ import com.frostwire.bittorrent.AzureusStarter;
 import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.gui.mp3.MediaPlayerComponent;
 import com.limegroup.gnutella.gui.themes.SkinCheckBoxMenuItem;
-import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
@@ -89,11 +82,6 @@ public final class StatusLine implements ThemeObserver {
      */
     private JLabel _firewallStatus;
 	
-    /**
-     * The custom component for displaying the number of shared files.
-     */
-    private SharedFilesLabel _sharedFiles;
-    
 	/**
 	 * The labels for displaying the bandwidth usage.
 	 */
@@ -151,9 +139,6 @@ public final class StatusLine implements ThemeObserver {
         //  make the 'Firewall Status' label
         createFirewallLabel();
         
-        //  make the 'Sharing X Files' component
-		createSharingFilesLabel();
-
 		//  make the 'Bandwidth Usage' label
 		createBandwidthLabel();
 		
@@ -248,18 +233,7 @@ public final class StatusLine implements ThemeObserver {
             remainingWidth -= indicatorWidth;
         }
         
-		//  add shared files indicator if there's room
-		indicatorWidth = GUIConstants.SEPARATOR +
-		    Math.max((int)_sharedFiles.getMinimumSize().getWidth(), _sharedFiles.getWidth()) + sepWidth;
 		
-        if (StatusBarSettings.SHARED_FILES_DISPLAY_ENABLED.getValue() && remainingWidth > indicatorWidth) {
-			BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
-			BAR.add(_sharedFiles, gbc);
-			BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
-			BAR.add(createSeparator(), gbc);
-			remainingWidth -= indicatorWidth;
-        }
-
 		//  add bandwidth display if there's room
 		indicatorWidth = GUIConstants.SEPARATOR + GUIConstants.SEPARATOR / 2 + sepWidth +
 			Math.max((int)_bandwidthUsageDown.getMinimumSize().getWidth(), _bandwidthUsageDown.getWidth()) +
@@ -326,19 +300,6 @@ public final class StatusLine implements ThemeObserver {
 		_connectionQualityMeter.addMouseListener(STATUS_BAR_LISTENER);
 	}
 
-	/**
-	 * Sets up the 'Sharing X Files' label.
-	 */
-	private void createSharingFilesLabel() {
-	    _sharedFiles = new SharedFilesLabel();
-        _sharedFiles.setHorizontalAlignment(SwingConstants.LEFT);
-	    // don't allow easy clipping
-		_sharedFiles.setMinimumSize(new Dimension(24, 20));
-		// add right-click listener
-		_sharedFiles.addMouseListener(STATUS_BAR_LISTENER);
-        //  initialize tool tip
-        _sharedFiles.updateToolTip(0);
-	}
 
     /**
 	 * Sets up the 'Language' button
@@ -614,15 +575,6 @@ public final class StatusLine implements ThemeObserver {
     }
 
     /**
-     * Sets the horizon statistics for this.
-     * @modifies this
-     * @return A displayable Horizon string.
-     */
-    public void setStatistics(int share, int pending) {
-		_sharedFiles.update(share, pending);
-    }
-
-    /**
       * Accessor for the <tt>JComponent</tt> instance that contains all
       * of the panels for the status line.
       *
@@ -691,11 +643,6 @@ public final class StatusLine implements ThemeObserver {
                 jcbmi.setState(StatusBarSettings.FIREWALL_DISPLAY_ENABLED.getValue());
                 jpm.add(jcbmi);
                 
-                //  add 'Show Shared Files Count' menu item 
-                jcbmi = new SkinCheckBoxMenuItem(new ShowSharedFilesCountAction());
-                jcbmi.setState(StatusBarSettings.SHARED_FILES_DISPLAY_ENABLED.getValue());
-                jpm.add(jcbmi);
-                
                 //  add 'Show Bandwidth Consumption' menu item
                 jcbmi = new SkinCheckBoxMenuItem(new ShowBandwidthConsumptionAction());
                 jcbmi.setState(StatusBarSettings.BANDWIDTH_DISPLAY_ENABLED.getValue());
@@ -735,26 +682,6 @@ public final class StatusLine implements ThemeObserver {
 		}
 	}
 	
-	/**
-	 * Action for the 'Show Shared Files Count' menu item. 
-	 */
-	private class ShowSharedFilesCountAction extends AbstractAction {
-		
-		/**
-         * 
-         */
-        private static final long serialVersionUID = 6615872299886789939L;
-
-        public ShowSharedFilesCountAction() {
-			putValue(Action.NAME, I18n.tr("Show Shared Files Count"));
-		}
-		
-		public void actionPerformed(ActionEvent e) {
-			StatusBarSettings.SHARED_FILES_DISPLAY_ENABLED.invert();
-			refresh();
-		}
-	}
-
 	/**
 	 * Action for the 'Show Firewall Status' menu item. 
 	 */
@@ -839,138 +766,6 @@ public final class StatusLine implements ThemeObserver {
 		
 		public void actionPerformed(ActionEvent e) {
 			GUIMediator.instance().setPlayerEnabled(!PlayerSettings.PLAYER_ENABLED.getValue());
-		}
-	}
-	
-	/**
-	 * Custom component for displaying the number of shared files. 
-	 */
-	private class SharedFilesLabel extends JLabel {
-
-		/**
-         * 
-         */
-        private static final long serialVersionUID = 8191429330285263217L;
-
-        /**
-		 * The height of this icon.
-		 */
-		private static final int _height = 20;
-		
-		/**
-		 * The width of this icon.
-		 */
-		private int _width = 26;
-		
-		private FontMetrics fm = null;
-
-		private String _string = "0...";
-		
-		private int _share;
-		private int _pending;
-
-		public Dimension getMinimumSize() {
-			return getPreferredSize();
-		}
-		
-		public Dimension getPreferredSize() {
-			return new Dimension(_width, _height);
-		}
-		
-		/**
-		 * Updates the component with information about the sharing state. 
-		 */
-		public void update(int share, int pending) {
-			boolean shareChanged = share != _share;
-			boolean pendingChanged = pending != _pending;
-			
-			_share = share;
-			_pending = pending;
-
-			//  if no changes, return
-			if (!(shareChanged || pendingChanged)) {
-				return;
-			}
-			
-			_string = GUIUtils.toLocalizedInteger(_share);
-			if (!GuiCoreMediator.getFileManager().isLoadFinished() ||
-                    GuiCoreMediator.getFileManager().isUpdating()) {
-				_string += "...";
-			}
-			
-			if (fm != null) {
-				_width = fm.stringWidth(_string) + _height;
-			}
-			
-			revalidate();
-			repaint();
-
-			//  update tooltip
-			updateToolTip(share);
-		}
-
-        private void updateToolTip(int share) {
-            if (GuiCoreMediator.getFileManager().isLoadFinished()) {
-                // {0}: number of shared files
-				setToolTipText(I18n.trn("You are sharing {0} file", "You are sharing {0} files", share, share));
-            } else {
-                // {0}: number of shared files
-                setToolTipText(I18n.trn("You are sharing {0} file (Loading...)", "You are sharing {0} files (Loading...)", share, share));
-            }
-        }
-		
-		/**
-		 * Paints the icon, and then paints the number of shared files on top of it.
-		 */
-		protected void paintComponent(Graphics g) {
-			Graphics2D g2 = (Graphics2D) g;
-			
-			RenderingHints rh = g2.getRenderingHints();
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			
-			if (fm == null) {
-				fm = g2.getFontMetrics();
-			}
-			
-            //  create string, set background color
-			if (!GuiCoreMediator.getFileManager().isLoadFinished() ||
-                    GuiCoreMediator.getFileManager().isUpdating()) {
-                g2.setPaint(new Color(165, 165, 2));
-                if (!_string.endsWith("..."))
-                    _string += "...";
-            } else if (_string.startsWith("0")) {
-                g2.setPaint(SkinHandler.getNotSharingLabelColor());
-                if (_string.endsWith("..."))
-                    _string = _string.substring(0, _string.length() - 3);
-            }
-            else {
-                g2.setPaint(new Color(2, 137, 2));
-                if (_string.endsWith("..."))
-                    _string = _string.substring(0, _string.length() - 3);
-            }
-
-            //  figure out size
-            int width = fm.stringWidth(_string) + _height; 
-            if (width != _width) {
-                _width = width;
-                revalidate();
-            }
-
-			//  draw the round rectangle
-			RoundRectangle2D.Float rect
-				= new RoundRectangle2D.Float(0, 0, _width-2, _height-2, _height, _height);
-			g2.fill(rect);
-			
-			//  stroke the rectangle
-			g2.setColor(Color.black);
-			g2.draw(rect);
-			
-			//  then draw string
-			g2.setColor(Color.white);
-			g2.drawString(_string, (rect.width - fm.stringWidth(_string)) / 2f,
-					(rect.height + fm.getAscent() - fm.getDescent()) / 2f);
-			
-			g2.setRenderingHints(rh);
 		}
 	}
 	

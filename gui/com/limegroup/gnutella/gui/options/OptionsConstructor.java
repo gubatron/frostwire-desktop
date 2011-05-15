@@ -96,7 +96,6 @@ import com.limegroup.gnutella.gui.options.panes.StartupPaneItem;
 import com.limegroup.gnutella.gui.options.panes.StatusBarBandwidthPaneItem;
 import com.limegroup.gnutella.gui.options.panes.StatusBarConnectionQualityPaneItem;
 import com.limegroup.gnutella.gui.options.panes.StatusBarFirewallPaneItem;
-import com.limegroup.gnutella.gui.options.panes.StatusBarSharedFilesPaneItem;
 import com.limegroup.gnutella.gui.options.panes.TorrentSaveFolderPaneItem;
 import com.limegroup.gnutella.gui.options.panes.TrayIconDisplayPaneItem;
 import com.limegroup.gnutella.gui.options.panes.UploadBandwidthPaneItem;
@@ -370,7 +369,7 @@ public final class OptionsConstructor {
 
         addOption(OptionsMediator.ROOT_NODE_KEY, PLAYER_KEY, I18n.tr("Player"), PlayerPreferencePaneItem.class);    
         
-        addOption(OptionsMediator.ROOT_NODE_KEY, STATUS_BAR_KEY, I18n.tr("Status Bar"), StatusBarConnectionQualityPaneItem.class, StatusBarFirewallPaneItem.class, StatusBarSharedFilesPaneItem.class, StatusBarBandwidthPaneItem.class); // Removed Lime Store
+        addOption(OptionsMediator.ROOT_NODE_KEY, STATUS_BAR_KEY, I18n.tr("Status Bar"), StatusBarConnectionQualityPaneItem.class, StatusBarFirewallPaneItem.class, StatusBarBandwidthPaneItem.class); // Removed Lime Store
         
 
         

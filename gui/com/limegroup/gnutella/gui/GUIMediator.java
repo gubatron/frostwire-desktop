@@ -694,11 +694,8 @@ public final class GUIMediator {
 		}
 
 		// update the status panel
-		int sharedFiles = GuiCoreMediator.getFileManager().getNumFiles();
-		int pendingShare = GuiCoreMediator.getFileManager()
-				.getNumPendingFiles();
 		int quality = getConnectionQuality();
-		getStatusLine().setStatistics(sharedFiles, pendingShare);
+
 		if (quality != StatusLine.STATUS_DISCONNECTED
 				&& quality != StatusLine.STATUS_CONNECTING) {
 			hideDisposableMessage(DISCONNECTED_MESSAGE);

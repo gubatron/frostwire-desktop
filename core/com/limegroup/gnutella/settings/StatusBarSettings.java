@@ -16,12 +16,6 @@ public class StatusBarSettings extends LimeProps {
         FACTORY.createBooleanSetting("CONNECTION_QUALITY_DISPLAY_ENABLED", true);
 
     /**
-     * Whether or not number of shared files should be displayed.
-     */
-    public static BooleanSetting SHARED_FILES_DISPLAY_ENABLED =
-        FACTORY.createBooleanSetting("SHARED_FILES_DISPLAY_ENABLED", true);
-
-    /**
      * Whether or not language status should be displayed when not using English.
      */
     public static BooleanSetting LANGUAGE_DISPLAY_ENABLED =
