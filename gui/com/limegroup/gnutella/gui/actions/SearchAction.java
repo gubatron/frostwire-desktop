@@ -36,8 +36,9 @@ public class SearchAction extends AbstractAction {
 	 */
 	public SearchAction(String keywords) {
 		this(SearchInformation.createKeywordSearch
-				(keywords, null, MediaType.getAnyTypeMediaType()),
+				(keywords, null, MediaType.TYPE_TORRENTS),
 				I18nMarker.marktr("Search for Keywords: {0}"));
+		
 	}
 	
 	/**
