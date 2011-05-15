@@ -26,7 +26,6 @@ import javax.swing.JPanel;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.setting.FileSetting;
 import org.limewire.setting.SettingsGroupManager;
-import org.limewire.setting.StringSetting;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
@@ -158,10 +157,6 @@ public class SetupManager {
         
         if (shouldShowAssociationsWindow()) {
         	windows.add(new AssociationsWindow(this));
-        }
-
-        if(!InstallSettings.EXTENSION_OPTION.getValue()) {
-            windows.add(new FileTypeWindow(this));
         }
 
         //THIS HAS TO GO LAST
