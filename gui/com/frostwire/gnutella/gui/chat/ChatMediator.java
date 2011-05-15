@@ -14,7 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
-import com.frostwire.gnutella.gui.sponsors.BannerContainer;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
@@ -41,7 +40,6 @@ public final class ChatMediator implements ThemeObserver {
 	private static JPanel MAIN_PANEL;
     private static IRCApplication PJIRC;
     private static IRCConfiguration _config; // added to use config procedures
-    private BannerContainer bannerContainer;
     private boolean _chatAlreadyStarted = false;
 
 	/**
@@ -298,14 +296,9 @@ public final class ChatMediator implements ThemeObserver {
     	c.weightx = 0;
     	c.weighty = 0;
     	c.gridx = 1;
-    	c.fill = GridBagConstraints.NONE;
+    	c.fill = GridBagConstraints.REMAINDER;
     	c.anchor = GridBagConstraints.LINE_END;
 	
-	//FTA    	
-    	bannerContainer = new BannerContainer();	
-    	getComponent().add(bannerContainer,c);
-    	
-
     	_chatAlreadyStarted = true;
 	/**
 	 * new added for 4.17
