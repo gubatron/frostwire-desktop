@@ -35,7 +35,6 @@ import javax.swing.plaf.TabbedPaneUI;
 import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.OSUtils;
 
-import com.frostwire.GuiFrostWireUtils;
 import com.frostwire.gnutella.gui.android.AndroidMediator;
 import com.frostwire.gnutella.gui.chat.ChatMediator;
 import com.frostwire.gnutella.gui.tabs.AndroidTab;
@@ -52,9 +51,7 @@ import com.limegroup.gnutella.gui.options.OptionsMediator;
 import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
 import com.limegroup.gnutella.gui.search.MagnetClipboardListener;
 import com.limegroup.gnutella.gui.search.SearchMediator;
-import com.limegroup.gnutella.gui.tabs.ConnectionsTab;
 import com.limegroup.gnutella.gui.tabs.LibraryPlayListTab;
-import com.limegroup.gnutella.gui.tabs.MonitorUploadTab;
 import com.limegroup.gnutella.gui.tabs.SearchDownloadTab;
 import com.limegroup.gnutella.gui.tabs.Tab;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
@@ -350,8 +347,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
     	MONITOR_VIEW = new MonitorView();
         
     	TABS.put(GUIMediator.Tabs.SEARCH, new SearchDownloadTab(SEARCH_MEDIATOR, getBTDownloadMediator()));
-        TABS.put(GUIMediator.Tabs.MONITOR, new MonitorUploadTab(MONITOR_VIEW, getUploadMediator()));
-        TABS.put(GUIMediator.Tabs.CONNECTION, new ConnectionsTab(getConnectionMediator()));
         TABS.put(GUIMediator.Tabs.LIBRARY, new LibraryPlayListTab(getLibraryMediator()));
         TABS.put(GUIMediator.Tabs.ANDROID, new AndroidTab(getAndroidMediator()));
 	    TABS.put(GUIMediator.Tabs.CHAT, new ChatTab(getChatMediator()));
@@ -401,10 +396,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         });          
 
         // remove tabs according to Settings Manager...
-        if (!ApplicationSettings.MONITOR_VIEW_ENABLED.getValue())
-            this.setTabVisible(GUIMediator.Tabs.MONITOR, false);
-        if (!ApplicationSettings.CONNECTION_VIEW_ENABLED.getValue())
-            this.setTabVisible(GUIMediator.Tabs.CONNECTION, false);
         if (!ApplicationSettings.LIBRARY_VIEW_ENABLED.getValue())
             this.setTabVisible(GUIMediator.Tabs.LIBRARY, false);
         if (!ApplicationSettings.ANDROID_VIEW_ENABLED.getValue())

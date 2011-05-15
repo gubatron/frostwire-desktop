@@ -139,8 +139,8 @@ class SearchInputPanel extends JPanel {
                         );
                     
 	private JPanel searchEntry;
-	private JPanel whatsnew;
-    private JPanel browseHost;
+//	private JPanel whatsnew;
+//    private JPanel browseHost;
     
     /**
      * The listener for new searches.
@@ -175,8 +175,8 @@ class SearchInputPanel extends JPanel {
         panelize(searchEntry);
         
         PANE.add(I18n.tr("Keyword"), searchEntry);
-        PANE.add(I18n.tr("What\'s New"), whatsnew);
-        PANE.add(I18n.tr("Direct Connect"), browseHost);
+//        PANE.add(I18n.tr("What\'s New"), whatsnew);
+//        PANE.add(I18n.tr("Direct Connect"), browseHost);
                  
         PANE.setRequestFocusEnabled(false);
         PANE.addMouseListener(new MouseAdapter() {

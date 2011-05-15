@@ -131,8 +131,6 @@ public final class GUIMediator {
 
 	public static enum Tabs {
 		SEARCH(I18n.tr("&Search")),
-		MONITOR(I18n.tr("&Monitor"), ApplicationSettings.MONITOR_VIEW_ENABLED),
-		CONNECTION(I18n.tr("&Connections"), ApplicationSettings.CONNECTION_VIEW_ENABLED),
 		LIBRARY(I18n.tr("&Library"), ApplicationSettings.LIBRARY_VIEW_ENABLED),
 		ANDROID(I18n.tr("&Phones and Tablets"), ApplicationSettings.ANDROID_VIEW_ENABLED),
 		CHAT(I18n.tr("Community C&hat"), ApplicationSettings.CHAT_VIEW_ENABLED);
@@ -302,8 +300,6 @@ public final class GUIMediator {
 		public static Tabs[] getOptionalTabs() {
 			if (OPTIONAL_TABS == null) {
 			    OPTIONAL_TABS = new Tabs[] {
-			            MONITOR,
-			            CONNECTION,
 			            LIBRARY,
 			            ANDROID,
 			            CHAT };

@@ -109,9 +109,9 @@ final class SchemaBox extends JPanel {
         addSchemas(allSchemas);
         
         
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        panel.add(new JLabel(SELECT_TYPE));
-        add(panel);
+//        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+//        panel.add(new JLabel(SELECT_TYPE));
+//        add(panel);
         
         setLayout( new BoxLayout(this, BoxLayout.Y_AXIS));
         JPanel p = new BoxPanel(BoxPanel.X_AXIS);
