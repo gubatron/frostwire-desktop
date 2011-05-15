@@ -46,7 +46,7 @@ final class SearchInputManager implements ThemeObserver {
     /**
      * The filter input panel.
      */
-    private FilterInputPanel FILTER;
+    //private FilterInputPanel FILTER;
 
     /**
      * Constructs a new search input manager class, including all displayed
@@ -59,11 +59,11 @@ final class SearchInputManager implements ThemeObserver {
     
     public void updateTheme() {
         SEARCH = new SearchInputPanel(GuiCoreMediator.getNetworkManager(), GuiCoreMediator.getNetworkInstanceUtils());
-        FILTER = new FilterInputPanel(new ShowSearchListener(), new AutoSearchListener());
+        //FILTER = new FilterInputPanel(new ShowSearchListener(), new AutoSearchListener());
 
         getMainPanel().removeAll();       
         getMainPanel().add(SEARCH, "search");
-        getMainPanel().add(FILTER, "filter");
+        //getMainPanel().add(FILTER, "filter");
         
         getComponent().removeAll();
         GridBagConstraints c = new GridBagConstraints();
@@ -113,7 +113,7 @@ final class SearchInputManager implements ThemeObserver {
      * Removes all filters from the list of filters.
      */
     void clearFilters() {
-        FILTER.clearFilters();
+        //FILTER.clearFilters();
         showSearchCard(false);
     }
     
@@ -121,28 +121,28 @@ final class SearchInputManager implements ThemeObserver {
      * Resets the FilterPanel for the specified ResultPanel.
      */
     void panelReset(ResultPanel rp) {
-        FILTER.panelReset(rp);
+        //FILTER.panelReset(rp);
     }
     
     /**
      * Removes the filter associated with the specified result panel.
      */
     void panelRemoved(ResultPanel rp) {
-        if(FILTER.panelRemoved(rp))
-            showSearchCard(false);
+//        if(FILTER.panelRemoved(rp))
+//            showSearchCard(false);
     }
     
-    /**
-     * Creates and/or displays filters for the specified result panel.
-     */
-    void setFiltersFor(ResultPanel rp) {
-        if(UISettings.SEARCH_RESULT_FILTERS.getValue()) {
-            boolean added = FILTER.setFiltersFor(rp);
-            MAIN_CARDS.last(getMainPanel());
-            if(added)
-                requestFilterFocus();
-        }
-    }
+//    /**
+//     * Creates and/or displays filters for the specified result panel.
+//     */
+//    void setFiltersFor(ResultPanel rp) {
+//        if(UISettings.SEARCH_RESULT_FILTERS.getValue()) {
+//            boolean added = FILTER.setFiltersFor(rp);
+//            MAIN_CARDS.last(getMainPanel());
+//            if(added)
+//                requestFilterFocus();
+//        }
+//    }
 
     /**
      * Displays the search card.
@@ -166,7 +166,7 @@ final class SearchInputManager implements ThemeObserver {
      * Requests focus on the correct area of the filter.
      */
     private void requestFilterFocus() {
-        FILTER.requestFilterFocus();
+        //FILTER.requestFilterFocus();
     }    
     
     /**

@@ -749,7 +749,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
          * Forwards events to the activeSearchListener.
          */
         public void stateChanged(ChangeEvent e) {
-           _activeSearchListener.stateChanged(e);
+           //_activeSearchListener.stateChanged(e);
            fixIcons();
         }
     }

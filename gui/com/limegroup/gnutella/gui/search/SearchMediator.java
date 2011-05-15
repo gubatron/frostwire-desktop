@@ -145,15 +145,15 @@ public final class SearchMediator {
         GUIMediator.addRefreshListener(getSearchResultDisplayer());
         
         // Link up the tabs of results with the filters of the input screen.
-        getSearchResultDisplayer().setSearchListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                ResultPanel panel = getSearchResultDisplayer().getSelectedResultPanel();
-                if(panel == null)
-                    getSearchInputManager().clearFilters();
-                else
-                    getSearchInputManager().setFiltersFor(panel);
-            }
-        });
+//        getSearchResultDisplayer().setSearchListener(new ChangeListener() {
+//            public void stateChanged(ChangeEvent e) {
+//                ResultPanel panel = getSearchResultDisplayer().getSelectedResultPanel();
+//                if(panel == null)
+//                    getSearchInputManager().clearFilters();
+//                else
+//                    getSearchInputManager().setFiltersFor(panel);
+//            }
+//        });
         initBanner();
     }
     
@@ -904,7 +904,7 @@ public final class SearchMediator {
      * Notification that a given ResultPanel has been selected
      */
     static void panelSelected(ResultPanel panel) {
-        getSearchInputManager().setFiltersFor(panel);
+        //getSearchInputManager().setFiltersFor(panel);
     }
     
     /**
@@ -914,7 +914,7 @@ public final class SearchMediator {
         getSearchInputManager().panelRemoved(panel);
         ResultPanel rp = getSearchResultDisplayer().getSelectedResultPanel();
         if (rp != null) {
-            getSearchInputManager().setFiltersFor(rp);
+           // getSearchInputManager().setFiltersFor(rp);
         }
 
         panel.cleanup();
