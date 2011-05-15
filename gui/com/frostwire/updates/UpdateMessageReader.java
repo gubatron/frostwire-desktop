@@ -22,7 +22,6 @@ import com.limegroup.gnutella.gui.search.ISOHuntSearchResult;
 import com.limegroup.gnutella.gui.search.MininovaVuzeSearchResult;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.ChatSettings;
-import com.limegroup.gnutella.settings.FilterSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
@@ -35,8 +34,6 @@ public final class UpdateMessageReader implements ContentHandler {
 	public HashSet<UpdateMessage> _announcements = null;
 
 	public UpdateMessage _bufferMessage = null;
-
-	private Thread _hostileUpdaterWorkerThread;
 
 	public boolean _introloaded = false;
 
@@ -52,8 +49,6 @@ public final class UpdateMessageReader implements ContentHandler {
 										// (non-blocking). I've found that
 										// update.frostwire.com was down causing
 										// part of the abnormal behaviour.
-
-	private HostilesUpdater HOSTILES_UPDATER = null;
 
 	/**
 	 * Only ads Announcements that have not expired
@@ -167,36 +162,8 @@ public final class UpdateMessageReader implements ContentHandler {
 					"overlay")) {
 				// System.out.println("UpdateMessageReader.endElement() - addOverlay");
 				addOverlay(_bufferMessage);
-			} else if (_bufferMessage.getMessageType().equalsIgnoreCase(
-					"hostiles")
-					&& FilterSettings.USE_NETWORK_FILTER.getValue()) {
-
-				class HostileUpdaterWorker implements Runnable {
-					private UpdateMessage _hostilesMessage;
-
-					public HostileUpdaterWorker(UpdateMessage hostilesMessage) {
-						_hostilesMessage = hostilesMessage;
-					}
-
-					public void run() {
-						HOSTILES_UPDATER.processMessage(_hostilesMessage);
-						System.out.println("HostileUpdaterWorker ending now.");
-					}
-				}
-				;
-
-				// we keep a reference so it lives after the thread dies and it
-				// can process the torrent events if any
-				HOSTILES_UPDATER = HostilesUpdater.getInstance();
-
-				HostileUpdaterWorker worker = new HostileUpdaterWorker(
-						_bufferMessage);
-				_hostileUpdaterWorkerThread = new Thread(worker,
-						"HostileUpdater Worker");
-				_hostileUpdaterWorkerThread.start();
-				System.out.println("HostileUpdaterWorker starting now.");
 			}
-
+			
 			_bufferMessage = null;
 		}
 	} // endElement
