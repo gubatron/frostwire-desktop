@@ -59,10 +59,11 @@
 	<classpathentry kind="lib" path="lib/jars/compile/messages.jar"/>
 	<classpathentry kind="lib" path="lib/jars/splash.jar"/>
 	<classpathentry kind="lib" path="lib/jars/gson-1.4.jar"/>
+	<classpathentry kind="lib" path="lib/jars/looks.jar"/>
 	<classpathentry kind="lib" path="lib/jars/substance-extras.jar"/>
 	<classpathentry kind="lib" path="lib/jars/substance.jar"/>
-	<classpathentry kind="lib" path="lib/jars/trident.jar"/>
 	<classpathentry kind="lib" path="lib/jars/jgoodies-common-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/jars/jgoodies-looks-2.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/jars/trident.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
