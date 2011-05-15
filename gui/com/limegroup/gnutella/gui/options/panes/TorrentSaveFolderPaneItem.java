@@ -7,6 +7,7 @@ import com.frostwire.components.TorrentSaveFolderComponent;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 public class TorrentSaveFolderPaneItem extends AbstractPaneItem {
