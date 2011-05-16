@@ -173,16 +173,20 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
 	}
 	
 	public static void correctIndividuallySharedFiles() {
-	    correctIndividuallySharedFiles(SharingSettings.getSaveDirectory());
-	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getDocumentMediaType()).getValue());
-	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getProgramMediaType()).getValue());
-	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getAudioMediaType()).getValue());
-	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getVideoMediaType()).getValue());
-	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getImageMediaType()).getValue());
-	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getTorrentMediaType()).getValue());
+	    correctIndividuallySharedFiles(true);
 	}
 	
-	public static void correctIndividuallySharedFiles(File directory) {
+	public static void correctIndividuallySharedFiles(boolean loadSettings) {
+	    correctIndividuallySharedFiles(SharingSettings.getSaveDirectory(), loadSettings);
+	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getDocumentMediaType()).getValue(), loadSettings);
+	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getProgramMediaType()).getValue(), loadSettings);
+	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getAudioMediaType()).getValue(), loadSettings);
+	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getVideoMediaType()).getValue(), loadSettings);
+	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getImageMediaType()).getValue(), loadSettings);
+	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getTorrentMediaType()).getValue(), loadSettings);
+	}
+	
+	public static void correctIndividuallySharedFiles(File directory, boolean loadSettings) {
 	    if (!SharingSettings.SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES.getValue()) {
             File[] files = directory.listFiles();
             if (files != null) {
@@ -192,6 +196,8 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
             }
         }
 	    
-	    GuiCoreMediator.getFileManager().loadSettings();
+	    if (loadSettings) {
+	        GuiCoreMediator.getFileManager().loadSettings();
+	    }
 	}
 }

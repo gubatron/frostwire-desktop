@@ -31,6 +31,7 @@ import org.limewire.i18n.I18nMarker;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.StringUtils;
 
+import com.frostwire.GuiFrostWireUtils;
 import com.frostwire.components.TorrentSaveFolderComponent;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.FileChooserHandler;
@@ -273,6 +274,16 @@ class SaveWindow extends SetupWindow {
         if (!errors.isEmpty()) {
             throw new ApplySettingsException(StringUtils.explode(errors, "\n\n"));
         }
+        
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    GuiFrostWireUtils.correctIndividuallySharedFiles(false);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
 	}
 	
     private Component createOptionForShareInSavedFolderComponent() {
