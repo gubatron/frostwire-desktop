@@ -16,11 +16,11 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
-import com.frostwire.settings.UpdateManagerSettings;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
@@ -249,39 +249,48 @@ public final class UpdateManager implements Serializable {
 	 * 
 	 * @param msg
 	 */
-	public void showUpdateMessage(UpdateMessage msg) {
-		String title = (msg.getMessageType().equals("update")) ? "New FrostWire Update Available"
-				: "FrostWire Team Announcement";
+	public void showUpdateMessage(final UpdateMessage msg) {
+		
+		SwingUtilities.invokeLater(new Runnable() {
 
-		int optionType = JOptionPane.CANCEL_OPTION;
+			@Override
+			public void run() {
+				String title = (msg.getMessageType().equals("update")) ? "New FrostWire Update Available"
+						: "FrostWire Team Announcement";
 
-		// check if there's an URL to link to
-		if (msg.getUrl() != null && !msg.getUrl().trim().equals("")) {
-			System.out.println("\t" + msg.getUrl());
-			optionType = optionType | JOptionPane.OK_OPTION;
-		}
+				int optionType = JOptionPane.CANCEL_OPTION;
 
-		String[] options = new String[3];
+				// check if there's an URL to link to
+				if (msg.getUrl() != null && !msg.getUrl().trim().equals("")) {
+					System.out.println("\t" + msg.getUrl());
+					optionType = optionType | JOptionPane.OK_OPTION;
+				}
 
-		if (msg.getTorrent() != null) {
-			options[OPTION_DOWNLOAD_TORRENT] = new String("Download Torrent");
-		} else {
-			options = new String[2];
-		}
+				String[] options = new String[3];
 
-		options[OPTION_LATER] = new String("Thanks, but not now");
-		options[OPTION_OPEN_URL] = new String("Go to webpage");
+				if (msg.getTorrent() != null) {
+					options[OPTION_DOWNLOAD_TORRENT] = new String("Download Torrent");
+				} else {
+					options = new String[2];
+				}
 
-		int result = JOptionPane.showOptionDialog(null, msg.getMessage(),
-				title, optionType, JOptionPane.INFORMATION_MESSAGE, null, // Icon
-				options, // Options[]
-				null); // Initial value (Object)
+				options[OPTION_LATER] = new String("Thanks, but not now");
+				options[OPTION_OPEN_URL] = new String("Go to webpage");
 
-		if (result == OPTION_OPEN_URL) {
-			GUIMediator.openURL(msg.getUrl());
-		} else if (result == OPTION_DOWNLOAD_TORRENT) {
-			openTorrent(msg.getTorrent());
-		}
+				int result = JOptionPane.showOptionDialog(null, msg.getMessage(),
+						title, optionType, JOptionPane.INFORMATION_MESSAGE, null, // Icon
+						options, // Options[]
+						null); // Initial value (Object)
+
+				if (result == OPTION_OPEN_URL) {
+					GUIMediator.openURL(msg.getUrl());
+				} else if (result == OPTION_DOWNLOAD_TORRENT) {
+					openTorrent(msg.getTorrent());
+				}				
+			}
+			
+		});		
+
 
 	} // attemptShowUpdateMessage
 

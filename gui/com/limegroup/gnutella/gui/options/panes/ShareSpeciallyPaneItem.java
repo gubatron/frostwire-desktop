@@ -78,7 +78,7 @@ public class ShareSpeciallyPaneItem extends AbstractPaneItem {
             	 
             }
         } else {
-            explanationLabel.setText(I18n.tr("Currently not sharing downloaded files to the 'Save Folder' with anybody"));
+            explanationLabel.setText(I18n.tr("<html>Currently not sharing downloaded files to the 'Save Folder' with anybody.<p>If you were sharing many individual files it might take a while for FrostWire to stop sharing them.</html>"));
         }
 	}
 

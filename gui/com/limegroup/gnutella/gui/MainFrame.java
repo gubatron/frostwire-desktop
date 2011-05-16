@@ -38,12 +38,10 @@ import javax.swing.plaf.TabbedPaneUI;
 import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.OSUtils;
 
-import com.frostwire.GuiFrostWireUtils;
 import com.frostwire.gnutella.gui.android.AndroidMediator;
 import com.frostwire.gnutella.gui.chat.ChatMediator;
 import com.frostwire.gnutella.gui.tabs.AndroidTab;
 import com.frostwire.gnutella.gui.tabs.ChatTab;
-import com.google.inject.Inject;
 import com.limegroup.gnutella.gui.connection.ConnectionMediator;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.TransferHandlerDropTargetListener;

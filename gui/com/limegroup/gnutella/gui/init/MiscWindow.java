@@ -1,6 +1,7 @@
 package com.limegroup.gnutella.gui.init;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -10,7 +11,6 @@ import java.awt.Insets;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
@@ -19,23 +19,18 @@ import javax.swing.border.TitledBorder;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.util.OSUtils;
 
+import com.frostwire.gnutella.gui.chat.ChatMediator;
 import com.limegroup.gnutella.SpeedConstants;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.URLLabel;
+import com.limegroup.gnutella.gui.LabeledComponent;
+import com.limegroup.gnutella.gui.SizedTextField;
 import com.limegroup.gnutella.gui.WindowsUtils;
-import com.limegroup.gnutella.settings.ConnectionSettings;
-//import com.limegroup.gnutella.settings.ContentSettings;
 import com.limegroup.gnutella.settings.ChatSettings;
+import com.limegroup.gnutella.settings.ConnectionSettings;
 import com.limegroup.gnutella.settings.DownloadSettings;
 import com.limegroup.gnutella.settings.StartupSettings;
 import com.limegroup.gnutella.util.MacOSXUtils;
-import com.frostwire.gnutella.gui.chat.ChatMediator;
-
-import com.limegroup.gnutella.gui.LabeledComponent;
-import com.limegroup.gnutella.gui.SizedTextField;
-import java.awt.Dimension;
-import java.awt.Component;
 
 /**
  * This class displays a window to the user allowing them to specify

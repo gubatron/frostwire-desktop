@@ -14,8 +14,6 @@ import javax.swing.JPanel;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.util.CommonUtils;
 
-import com.limegroup.gnutella.util.FrostWireUtils;
-
 /** State Your Intent. */
 final class IntentWindow extends SetupWindow {
     

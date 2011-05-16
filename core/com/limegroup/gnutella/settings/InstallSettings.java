@@ -74,6 +74,6 @@ public final class InstallSettings extends LimeWireSettings {
     public static final BooleanSetting EXTENSION_OPTION =
         FACTORY.createBooleanSetting("EXTENSION_OPTION", false);
     
-    public static final StringSetting FIRST_INSTALL_FROSTWIRE_VERSION =
-        FACTORY.createStringSetting("FIRST_INSTALL_FROSTWIRE_VERSION", "");
+    public static final StringSetting LAST_FROSTWIRE_VERSION_WIZARD_INVOKED =
+        FACTORY.createStringSetting("LAST_FROSTWIRE_VERSION_WIZARD_INVOKED", "");
 }

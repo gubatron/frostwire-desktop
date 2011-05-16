@@ -26,7 +26,6 @@ import javax.swing.JPanel;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.setting.FileSetting;
 import org.limewire.setting.SettingsGroupManager;
-import org.limewire.setting.StringSetting;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
@@ -131,7 +130,8 @@ public class SetupManager {
                 return SaveStatus.MIGRATE;
         }
         
-        if (InstallSettings.FIRST_INSTALL_FROSTWIRE_VERSION.isDefault()) {
+        
+        if (!InstallSettings.LAST_FROSTWIRE_VERSION_WIZARD_INVOKED.getValue().equals(FrostWireUtils.getFrostWireVersion())) {
             return SaveStatus.NEEDS;
         }
         
@@ -396,7 +396,7 @@ public class SetupManager {
             InstallSettings.FIREWALL_WARNING.setValue(true);
         InstallSettings.ASSOCIATION_OPTION.setValue(LimeAssociations.CURRENT_ASSOCIATIONS);
         
-        InstallSettings.FIRST_INSTALL_FROSTWIRE_VERSION.setValue(FrostWireUtils.getFrostWireVersion());
+        InstallSettings.LAST_FROSTWIRE_VERSION_WIZARD_INVOKED.setValue(FrostWireUtils.getFrostWireVersion());
 		
         Future<Void> future = BackgroundExecutorService.submit(new Callable<Void>() {
      		public Void call() {

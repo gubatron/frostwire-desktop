@@ -676,7 +676,8 @@ public abstract class FileManagerImpl implements FileManager {
             _data.DIRECTORIES_NOT_TO_SHARE.clear();
             _data.DIRECTORIES_NOT_TO_SHARE.addAll(canonicalize(blackListSet));
         }
-	    loadSettings();
+
+       	loadSettings();
     }
     
     /**

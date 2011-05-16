@@ -23,12 +23,12 @@
 	<classpathentry kind="src" output="components/statistic/build/classes" path="components/statistic/src/main/java"/>
 	<classpathentry excluding="examples/*|examples/|examples/" kind="src" path="core">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="frostwire.trunk/lib/native/osx"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="frostwire.desktop/lib/native/osx"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry excluding="macosx/|plugins/|windows/|plugins/brooklyn/|plugins/brooklyn/|plugins/|windows/" kind="src" path="gui">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="frostwire.trunk/lib/native/osx"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="frostwire.desktop/lib/native/osx"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="components/azureus/src/main/java"/>
@@ -52,7 +52,6 @@
 	<classpathentry kind="lib" path="lib/jars/jl.jar"/>
 	<classpathentry kind="lib" path="lib/jars/jmdns.jar"/>
 	<classpathentry kind="lib" path="lib/jars/junit.jar"/>
-	<classpathentry kind="lib" path="lib/jars/jython.jar"/>
 	<classpathentry kind="lib" path="lib/jars/log4j.jar"/>
 	<classpathentry kind="lib" path="lib/jars/looks.jar"/>
 	<classpathentry kind="lib" path="lib/jars/mp3spi.jar"/>

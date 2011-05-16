@@ -209,7 +209,7 @@ class SaveWindow extends SetupWindow {
 	 *
 	 * This method applies any settings associated with this setup window.
 	 */
-	public void applySettings(boolean loadCoreComponents) throws ApplySettingsException {
+	public void applySettings(final boolean loadCoreComponents) throws ApplySettingsException {
 	    List<String> errors = new ArrayList<String>(2);
 		try {
 			String saveDirString = SAVE_FIELD.getText();
@@ -230,7 +230,7 @@ class SaveWindow extends SetupWindow {
 		    errors.add(I18n.tr("FrostWire was unable to use the specified folder for saving files. Please try a different folder."));
 		}
 		File defaultShareDir = SharingSettings.DEFAULT_SHARE_DIR; 
-        Set<File> roots = recursiveSharingPanel.getRootsToShare();
+        final Set<File> roots = recursiveSharingPanel.getRootsToShare();
         if (roots.contains(defaultShareDir)) {
             // try to create it
             if (defaultShareDir.isFile()) {
@@ -243,9 +243,6 @@ class SaveWindow extends SetupWindow {
             }
         }
         
-        if(loadCoreComponents)
-            GuiCoreMediator.getFileManager().loadWithNewDirectories(roots, recursiveSharingPanel.getFoldersToExclude());
-        
         String saveDirString = SAVE_FIELD.getText();
 		File saveDir = new File(saveDirString);
 		
@@ -253,7 +250,7 @@ class SaveWindow extends SetupWindow {
 		saveDirs.add(saveDir);
 		
         if (!torrentSaveFolderComponent.isTorrentSaveFolderPathValid(false, saveDirs, roots)) {
-        	errors.add(torrentSaveFolderComponent.getError());
+        	errors.add(TorrentSaveFolderComponent.getError());
         }
         
         SharingSettings.SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES.
@@ -279,6 +276,10 @@ class SaveWindow extends SetupWindow {
             public void run() {
                 try {
                     GuiFrostWireUtils.correctIndividuallySharedFiles(false);
+
+                    if(loadCoreComponents)
+                        GuiCoreMediator.getFileManager().loadWithNewDirectories(roots, recursiveSharingPanel.getFoldersToExclude());
+                    
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -300,7 +301,8 @@ class SaveWindow extends SetupWindow {
         });
         setExplanationText(false);
 
-        CHECK_BOX.setSelected(SharingSettings.SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES.getValue());
+        //CHECK_BOX.setSelected(SharingSettings.SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES.getValue());
+        CHECK_BOX.setSelected(false);
 
         comp.getComponent().setAlignmentX(Component.LEFT_ALIGNMENT);
         explanationLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -314,7 +316,7 @@ class SaveWindow extends SetupWindow {
     private void setExplanationText(boolean showMessage) {
         if (CHECK_BOX.isSelected()) {
             //explanationLabel.setText(I18n.tr("All downloads will be shared. INDIVIDUAL FILE NOTICE (FORGOT PREVIOUS FILES)"));
-            explanationLabel.setText(I18n.tr("Currently sharing downloaded files to the 'Save Folder' with everybody"));
+            explanationLabel.setText(I18n.tr("Currently sharing downloaded files to the 'Save Folder' with everybody."));
             if (showMessage) {
             	SwingUtilities.invokeLater(new Runnable() {
 
@@ -327,7 +329,7 @@ class SaveWindow extends SetupWindow {
 					}});
             }
         } else {
-            explanationLabel.setText(I18n.tr("Currently not sharing downloaded files to the 'Save Folder' with anybody"));
+            explanationLabel.setText(I18n.tr("<html>Currently not sharing downloaded files to the 'Save Folder' with anybody.<p>If you were sharing many individual files it might take a while for FrostWire to stop sharing them.</html>"));
         }
     }
 
