@@ -66,6 +66,10 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
      * Variable for how much time is left.
      */
     private long _timeLeft;
+    
+    private String _seeds;
+    
+    private String _peers;
 
     /**
      * Stores the current state of this download, as of the last update.
@@ -139,11 +143,18 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
     static final int TIME_INDEX = 7;
     private static final LimeTableColumn TIME_COLUMN = new LimeTableColumn(TIME_INDEX, "DOWNLOAD_TIME_REMAINING_COLUMN", I18n.tr("Time"), 49, true,
             TimeRemainingHolder.class);
+    
+    static final int SEEDS_INDEX = 8;
+    private static final LimeTableColumn SEEDS_COLUMN = new LimeTableColumn(SEEDS_INDEX, "SEEDS_STATUS_COLUMN", I18n.tr("Seeds"), 80, true, String.class);
+    
+    static final int PEERS_INDEX = 9;
+    private static final LimeTableColumn PEERS_COLUMN = new LimeTableColumn(PEERS_INDEX, "PEERS_STATUS_COLUMN", I18n.tr("Peers"), 80, false, String.class);
+
 
     /**
      * Number of columns to display
      */
-    static final int NUMBER_OF_COLUMNS = 8;
+    static final int NUMBER_OF_COLUMNS = 10;
 
     // Implements DataLine interface
     public int getColumnCount() {
@@ -215,6 +226,10 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
             return new Double(_uploadSpeed);
         case TIME_INDEX:
             return new TimeRemainingHolder(_timeLeft);
+        case SEEDS_INDEX:
+            return _seeds;
+        case PEERS_INDEX:
+            return _peers;
         }
         return null;
     }
@@ -240,6 +255,10 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
             return UPLOAD_SPEED_COLUMN;
         case TIME_INDEX:
             return TIME_COLUMN;
+        case SEEDS_INDEX:
+            return SEEDS_COLUMN;
+        case PEERS_INDEX:
+            return PEERS_COLUMN;
         }
         return null;
     }
@@ -413,6 +432,8 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
         _downloadSpeed = getInitializeObject().getDownloadSpeed();
         _uploadSpeed = getInitializeObject().getUploadSpeed();
         _timeLeft = getInitializeObject().getETA();
+        _seeds = getInitializeObject().getSeedsString();
+        _peers = getInitializeObject().getPeersString();
     }
 
     /**
@@ -583,36 +604,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
         }
     }
 
-    /**
-     * Returns a human-readable description of the address(es) from
-     * which d is downloading.
-     */
-    private void updateHostCount(BTDownloader d) {
-        //        int count = d.getNumHosts();
-        //
-        //        // we are in between chunks with this host,
-        //        // use the previous count so-as not to confuse
-        //        // the user.
-        //        if (count == 0) {
-        //            // don't change anything.
-        //            return;
-        //        }
-        //        
-        //        if (count==1) {
-        //            _status = DOWNLOADING_STATE + " " + count + " "+ HOST_LABEL; 
-        //            _vendor = d.getVendor();
-        //        } else {
-        //            _status = DOWNLOADING_STATE + " " +  count + " " + HOSTS_LABEL;
-        //            _vendor = d.getVendor();
-        //        }
-        //        updateVendor();
-    }
-
-    private void updateVendor() {
-        //    	if (_vendor == Downloader.BITTORRENT_DOWNLOAD)
-        //        	_vendor = I18n.tr("BitTorrent");
-    }
-
+    
     /**
      * Returns whether or not this download is in what
      * is considered an "inactive"

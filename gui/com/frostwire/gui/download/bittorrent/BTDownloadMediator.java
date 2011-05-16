@@ -370,7 +370,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
      */
     public FileDetails[] getFileDetails() {
         int[] sel = TABLE.getSelectedRows();
-        FileManager fmanager = GuiCoreMediator.getFileManager();
+        //FileManager fmanager = GuiCoreMediator.getFileManager();
         List<FileDetails> list = new ArrayList<FileDetails>(sel.length);
         //        for(int i = 0; i < sel.length; i++) {
         //            URN urn = DATA_MODEL.get(sel[i]).getDownloader().getSha1Urn();

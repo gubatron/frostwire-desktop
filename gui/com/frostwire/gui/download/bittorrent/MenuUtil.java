@@ -125,17 +125,17 @@ public class MenuUtil {
         }
 
         // ---
-        menuDownSpeed.addSeparator();
-
-        final SkinMenuItem itemDownSpeedManualSingle = new SkinMenuItem();
-        itemDownSpeedManualSingle.setText(I18n.tr("Manual..."));
-        itemDownSpeedManualSingle.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //int speed_value = getManualSpeedValue(shell, true);
-                //if (speed_value > 0) {adapter.setDownSpeed(speed_value);}
-            }
-        });
-        menuDownSpeed.add(itemDownSpeedManualSingle);
+//        menuDownSpeed.addSeparator();
+//
+//        final SkinMenuItem itemDownSpeedManualSingle = new SkinMenuItem();
+//        itemDownSpeedManualSingle.setText(I18n.tr("Manual..."));
+//        itemDownSpeedManualSingle.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                //int speed_value = getManualSpeedValue(shell, true);
+//                //if (speed_value > 0) {adapter.setDownSpeed(speed_value);}
+//            }
+//        });
+//        menuDownSpeed.add(itemDownSpeedManualSingle);
 
         //        if (num_entries > 1) {
         //            final MenuItem itemDownSpeedManualShared = new MenuItem(menuDownSpeed, SWT.PUSH);
@@ -232,17 +232,17 @@ public class MenuUtil {
             }
         }
 
-        menuUpSpeed.addSeparator();
-
-        final SkinMenuItem itemUpSpeedManualSingle = new SkinMenuItem();
-        itemUpSpeedManualSingle.setText(I18n.tr("Manual..."));
-        itemUpSpeedManualSingle.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //int speed_value = getManualSpeedValue(shell, false);
-                //if (speed_value > 0) {adapter.setUpSpeed(speed_value);}
-            }
-        });
-        menuUpSpeed.add(itemUpSpeedManualSingle);
+//        menuUpSpeed.addSeparator();
+//
+//        final SkinMenuItem itemUpSpeedManualSingle = new SkinMenuItem();
+//        itemUpSpeedManualSingle.setText(I18n.tr("Manual..."));
+//        itemUpSpeedManualSingle.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                //int speed_value = getManualSpeedValue(shell, false);
+//                //if (speed_value > 0) {adapter.setUpSpeed(speed_value);}
+//            }
+//        });
+//        menuUpSpeed.add(itemUpSpeedManualSingle);
 
         //        if (num_entries > 1) {
         //            final MenuItem itemUpSpeedManualShared = new MenuItem(menuUpSpeed, SWT.PUSH);

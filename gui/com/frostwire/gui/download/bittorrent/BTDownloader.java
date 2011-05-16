@@ -39,4 +39,8 @@ public interface BTDownloader {
     public long getETA();
     
     public DownloadManager getDownloadManager();
+
+    public String getPeersString();
+
+    public String getSeedsString();
 }
