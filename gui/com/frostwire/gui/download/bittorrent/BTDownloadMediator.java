@@ -27,6 +27,7 @@ import com.limegroup.gnutella.gui.dnd.FileTransfer;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.tables.TableSettings;
+import com.limegroup.gnutella.gui.themes.SkinMenu;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
@@ -390,7 +391,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         return list.toArray(new FileDetails[0]);
     }
 
-    // inherit doc comment
     protected JPopupMenu createPopupMenu() {
 
         JPopupMenu menu = new SkinPopupMenu();
@@ -398,12 +398,15 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         menu.add(new SkinMenuItem(resumeAction));
         menu.add(new SkinMenuItem(pauseAction));
         menu.add(new SkinMenuItem(launchAction));
-        if (OSUtils.isWindows() || OSUtils.isMacOSX())
+        if (OSUtils.isWindows() || OSUtils.isMacOSX()) {
             menu.add(new SkinMenuItem(exploreAction));
-        menu.addSeparator();
-        //menu.add(createSearchMenu());
-        //		menu.addSeparator();
-        //		menu.add(createAdvancedSubMenu());
+        }
+        
+        SkinMenu advancedMenu = MenuUtil.createAdvancedSubMenu();
+        if (advancedMenu != null) {
+            menu.addSeparator();
+            menu.add(advancedMenu);
+        }
 
         return menu;
     }

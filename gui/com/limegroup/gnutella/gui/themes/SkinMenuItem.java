@@ -10,6 +10,10 @@ public class SkinMenuItem extends JMenuItem {
 	 */
 	private static final long serialVersionUID = 4442214505668973505L;
 
+	public SkinMenuItem() {
+        super();
+    }
+	
 	public SkinMenuItem(String text) {
 		super(text);
     }

@@ -2,6 +2,8 @@ package com.frostwire.gui.download.bittorrent;
 
 import java.io.File;
 
+import org.gudy.azureus2.core3.download.DownloadManager;
+
 public interface BTDownloader {
 
     public long getSize();
@@ -35,4 +37,6 @@ public interface BTDownloader {
     public double getUploadSpeed();
 
     public long getETA();
+    
+    public DownloadManager getDownloadManager();
 }

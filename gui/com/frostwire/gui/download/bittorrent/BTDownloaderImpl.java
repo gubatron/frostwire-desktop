@@ -80,4 +80,8 @@ public class BTDownloaderImpl implements BTDownloader {
     public long getETA() {
         return _downloadManager.getStats().getETA();
     }
+
+    public DownloadManager getDownloadManager() {
+        return _downloadManager;
+    }
 }
