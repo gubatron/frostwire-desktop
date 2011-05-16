@@ -116,7 +116,7 @@ public class TorrentUtil {
     public static void removeDownload(DownloadManager downloadManager) {
         boolean deleteData = !downloadManager.getDownloadState().getFlag(Download.FLAG_DO_NOT_DELETE_DATA_ON_REMOVE);
 
-        asyncStopDelete(downloadManager, DownloadManager.STATE_STOPPED, false, deleteData, null);
+        asyncStopDelete(downloadManager, DownloadManager.STATE_STOPPED, true, deleteData, null);
     }
 
     public static boolean isStartable(DownloadManager dm) {

@@ -103,11 +103,11 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     protected void buildListeners() {
         super.buildListeners();
 
-        removeAction = new RemoveAction();
-        launchAction = new LaunchAction();
-        resumeAction = new ResumeAction();
-        pauseAction = new PauseAction();
-        exploreAction = new ExploreAction();
+        removeAction = BTDownloadActions.REMOVE_ACTION;
+        launchAction = BTDownloadActions.LAUNCH_ACTION;
+        resumeAction = BTDownloadActions.RESUME_ACTION;
+        pauseAction = BTDownloadActions.PAUSE_ACTION;
+        exploreAction = BTDownloadActions.EXPLORE_ACTION;
     }
 
     /**
@@ -467,114 +467,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         exploreAction.setEnabled(false);
     }
 
-    private abstract class RefreshingAction extends AbstractAction {
-        /**
-         * 
-         */
-        private static final long serialVersionUID = -937688457597255711L;
-
-        public final void actionPerformed(ActionEvent e) {
-            performAction(e);
-            doRefresh();
-        }
-
-        protected abstract void performAction(ActionEvent e);
-    }
-
-    private class RemoveAction extends RefreshingAction {
-
-        /**
-         * 
-         */
-        private static final long serialVersionUID = -1742554445891016991L;
-
-        public RemoveAction() {
-            putValue(Action.NAME, I18n.tr("Cancel Download"));
-            putValue(LimeAction.SHORT_NAME, I18n.tr("Cancel"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Cancel Selected Downloads"));
-            putValue(LimeAction.ICON_NAME, "DOWNLOAD_KILL");
-        }
-
-        public void performAction(ActionEvent e) {
-            removeSelection();
-        }
-    }
-
-    private class LaunchAction extends RefreshingAction {
-
-        /**
-         * 
-         */
-        private static final long serialVersionUID = -567893064454697074L;
-
-        public LaunchAction() {
-            putValue(Action.NAME, I18n.tr("Preview Download"));
-            putValue(LimeAction.SHORT_NAME, I18n.tr("Preview"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Preview Selected Downloads"));
-            putValue(LimeAction.ICON_NAME, "DOWNLOAD_LAUNCH");
-        }
-
-        public void performAction(ActionEvent e) {
-            launchSelectedDownloads();
-        }
-    }
-
-    private class ResumeAction extends RefreshingAction {
-
-        /**
-         * 
-         */
-        private static final long serialVersionUID = -4449981369424872994L;
-
-        public ResumeAction() {
-            putValue(Action.NAME, I18n.tr("Resume Download"));
-            putValue(LimeAction.SHORT_NAME, I18n.tr("Resume"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Reattempt Selected Downloads"));
-            putValue(LimeAction.ICON_NAME, "DOWNLOAD_FILE_MORE_SOURCES");
-        }
-
-        public void performAction(ActionEvent e) {
-            resumeSelectedDownloads();
-        }
-    }
-
-    private class PauseAction extends RefreshingAction {
-
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 4682149704934484393L;
-
-        public PauseAction() {
-            putValue(Action.NAME, I18n.tr("Pause Download"));
-            putValue(LimeAction.SHORT_NAME, I18n.tr("Pause"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Pause Selected Downloads"));
-            putValue(LimeAction.ICON_NAME, "DOWNLOAD_PAUSE");
-        }
-
-        public void performAction(ActionEvent e) {
-            pauseSelectedDownloads();
-        }
-    }
-
-    private class ExploreAction extends RefreshingAction {
-        /**
-         * 
-         */
-        private static final long serialVersionUID = -4648558721588938475L;
-
-        public ExploreAction() {
-            putValue(Action.NAME, I18n.tr("Explore"));
-            putValue(LimeAction.SHORT_NAME, I18n.tr("Explore"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Open Folder Containing the File"));
-            putValue(LimeAction.ICON_NAME, "LIBRARY_EXPLORE");
-        }
-
-        public void performAction(ActionEvent e) {
-            launchExplorer();
-        }
-    }
-
     public void openTorrentURI(URI uri) {
         TorrentDownloader downloader = TorrentDownloaderFactory.create(new TorrentDownloaderCallBackInterface() {
             public void TorrentDownloaderEvent(int state, TorrentDownloader inf) {
@@ -608,5 +500,16 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
                 //GUIMediator.showMessage("Error was: " + ioe); //FTA: debug
             }
         }
+    }
+
+    public BTDownloader[] getSelectedDownloaders() {
+        int[] sel = TABLE.getSelectedRows();
+        ArrayList<BTDownloader> downloaders = new ArrayList<BTDownloader>(sel.length);
+        for (int i = 0; i < sel.length; i++) {
+            BTDownloadDataLine line = DATA_MODEL.get(sel[i]);
+            BTDownloader downloader = line.getInitializeObject();
+            downloaders.add(downloader);
+        }
+        return downloaders.toArray(new BTDownloader[0]);
     }
 }

@@ -114,10 +114,12 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
 	}
 
 	public void remove(int i) {
-//		BTDownloadDataLine line = get(i);
-//		
-//		BTDownloader downloader = null;
-//		
+		BTDownloadDataLine line = get(i);
+		
+		BTDownloader downloader = line.getInitializeObject();
+		
+		downloader.remove();
+		
 //		if (line.getDownloader() instanceof TorrentFileFetcher) {
 //            downloader = ((TorrentFileFetcher) line.getDownloader()).getDownloader();
 //        } else if (line.getDownloader() instanceof BTDownloaderImpl) {
