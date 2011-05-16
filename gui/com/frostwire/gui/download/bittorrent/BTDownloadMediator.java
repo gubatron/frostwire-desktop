@@ -1,23 +1,18 @@
 package com.frostwire.gui.download.bittorrent;
 
-import java.awt.event.ActionEvent;
 import java.io.File;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JPopupMenu;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloader;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderCallBackInterface;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderFactory;
 import org.limewire.util.OSUtils;
 
-import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.bittorrent.AzureusStarter;
 import com.limegroup.gnutella.FileDetails;
 import com.limegroup.gnutella.FileManager;
@@ -44,8 +39,6 @@ import com.limegroup.gnutella.settings.SharingSettings;
  * components.
  */
 public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadModel, BTDownloadDataLine, BTDownloader> implements FileDetailsProvider {
-
-    private static final Log LOG = LogFactory.getLog(BTDownloadMediator.class);
 
     /**
      * instance, for singleton access
@@ -75,8 +68,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     /** The actual download buttons instance.
      */
     private BTDownloadButtons _downloadButtons;
-
-    private AzureusCore _azureusCore;
 
     /**
      * Overriden to have different default values for tooltips.
@@ -165,7 +156,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
      * set the clear button appropriately.
      */
     public void doRefresh() {
-        boolean inactivePresent = ((Boolean) DATA_MODEL.refresh()).booleanValue();
+        DATA_MODEL.refresh();
 
         int[] selRows = TABLE.getSelectedRows();
 
