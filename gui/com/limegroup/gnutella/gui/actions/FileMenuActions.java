@@ -317,7 +317,7 @@ public class FileMenuActions {
 
         public ExitAction() {
             super(I18n.tr("&Close"));
-            putValue(Action.LONG_DESCRIPTION, I18n.tr("Close the Program"));
+            putValue(Action.LONG_DESCRIPTION, I18n.tr("Close the program's main window"));
         }
         
         public void actionPerformed(ActionEvent e) {
@@ -326,9 +326,15 @@ public class FileMenuActions {
     }
     
     public static class ShutdownAction extends AbstractAction {
+        
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 8000042651676530796L;
+
         public ShutdownAction() {
-            super(I18n.tr("E&xit Completely"));
-            putValue(Action.LONG_DESCRIPTION, I18n.tr("Disconnect and Exit"));
+            super(I18n.tr("E&xit"));
+            putValue(Action.LONG_DESCRIPTION, I18n.tr("Close and exit the program"));
         }
         
         public void actionPerformed(ActionEvent e) {
