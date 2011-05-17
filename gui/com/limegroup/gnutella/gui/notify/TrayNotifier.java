@@ -74,6 +74,13 @@ public class TrayNotifier implements NotifyUser {
             }
         });
         
+      // left click restores.  This happens on the awt thread.
+      _icon.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent e) {
+              GUIMediator.restoreView();
+          }
+      });
+        
 	    _icon.setImageAutoSize(true);
 	} //buildTrayIcon
 	

@@ -27,9 +27,9 @@ final class FileMenu extends AbstractMenu {
 		MENU.add(createMenuItem(new FileMenuActions.OpenMagnetTorrentAction()));
 		if(!OSUtils.isMacOSX()) {
 			MENU.addSeparator(); 
-			MENU.add(createMenuItem(new FileMenuActions.ExitAction()));
+			MENU.add(createMenuItem(new FileMenuActions.CloseAction()));
 		}
-		MENU.add(createMenuItem(new FileMenuActions.ShutdownAction()));
+		MENU.add(createMenuItem(new FileMenuActions.ExitAction()));
 	}
 
 	/**

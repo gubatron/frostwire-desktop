@@ -137,7 +137,6 @@ public final class VisualConnectionCallback implements ActivityCallback {
                                   final HostData data,
                                   final Set<? extends IpPort> locs) {
 		SwingUtilities.invokeLater(new Runnable() {
-			@SuppressWarnings("unchecked")
 			public void run() {
 			    //SearchMediator.handleQueryResult(rfd, data, (Set<IpPort>) locs);
 			}

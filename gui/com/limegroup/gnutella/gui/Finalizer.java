@@ -11,12 +11,7 @@ import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
  * is about to be exited.
  */
 final class Finalizer {
-    
-    /** Stores the connection status before a shutdown
-     * operation is initiated.
-     */    
-    private static boolean _wasConnected;
-    
+
     /** Stores whether a shutdown operation has been
      * initiated.
      */    
@@ -90,39 +85,6 @@ final class Finalizer {
         _updateCommand = toExecute;
     }
     
-    /** Exits the virtual machine, making calls to save
-     * any necessary settings and to perform any
-     * necessary cleanups, after all incoming and
-     * outgoing transfers are complete.
-     */    
-    static void shutdownAfterTransfers() {
-        if (isShutdownImminent())
-            return;
-        
-        _shutdownImminent = true;
-        
-        _wasConnected = GuiCoreMediator.getConnectionServices().isConnected();
-		
-        if (_wasConnected)
-            GuiCoreMediator.getConnectionServices().disconnect();
-        
-        if (transfersComplete())
-            GUIMediator.shutdown();
-    }
-    
-    /** Cancels a pending shutdown operation.
-     */    
-    public static void cancelShutdown() {
-        _shutdownImminent = false;
-        _uploadsComplete = false;
-        _downloadsComplete = false;
-        
-        if (_wasConnected) {
-            GuiCoreMediator.getConnectionServices().connect();
-		}
-		
-    }
-    
     /** Notifies the <tt>Finalizer</tt> that all
      * downloads have been completed.
      */    
@@ -137,21 +99,6 @@ final class Finalizer {
     static void setUploadsComplete() {
         _uploadsComplete = true;
         checkForShutdown();
-    }
-    
-    /** Indicates whether all incoming and outgoing
-     * transfers have completed at the time this method
-     * is called.
-     * @return true if all transfers have been
-     * completed, false otherwise.
-     */    
-    private static boolean transfersComplete() {        
-        if (GuiCoreMediator.getDownloadServices().getNumDownloads() == 0)
-            _downloadsComplete = true;
-        if (GuiCoreMediator.getUploadServices().getNumUploads() == 0)
-            _uploadsComplete = true;
-        
-        return _uploadsComplete & _downloadsComplete;
     }
     
     /** Attempts to shutdown the application.  This

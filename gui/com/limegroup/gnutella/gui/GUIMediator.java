@@ -62,7 +62,6 @@ import com.limegroup.bittorrent.gui.TorrentUploadCanceller;
 import com.limegroup.gnutella.bugs.FatalBugManager;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
 import com.limegroup.gnutella.gui.connection.ConnectionMediator;
-import com.limegroup.gnutella.gui.download.DownloadMediator;
 import com.limegroup.gnutella.gui.library.LibraryMediator;
 import com.limegroup.gnutella.gui.mp3.MediaPlayerComponent;
 import com.limegroup.gnutella.gui.mp3.PlayListItem;
@@ -101,14 +100,7 @@ import com.limegroup.gnutella.version.UpdateInformation;
  * All of the methods in this class should be called from the event- dispatch
  * (Swing) thread.
  */
-// 2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public final class GUIMediator {
-
-	/**
-	 * The number of messages a connection must have sent before we consider it
-	 * stable for the UI.
-	 */
-	private static final int STABLE_THRESHOLD = 5;
 
 	/**
 	 * Flag for whether or not a message has been displayed to the user --
@@ -354,7 +346,6 @@ public final class GUIMediator {
 	 * Constant handle to the <tt>DownloadMediator</tt> class that is
 	 * responsible for displaying active downloads to the user.
 	 */
-	private DownloadMediator DOWNLOAD_MEDIATOR;
 	private BTDownloadMediator BT_DOWNLOAD_MEDIATOR;
 
 	/**
@@ -397,11 +388,6 @@ public final class GUIMediator {
 	 * Flag for whether or not the app is allowed to become visible.
 	 */
 	private static boolean _allowVisible = false;
-
-	/**
-	 * The last recorded idle time.
-	 */
-	private long lastIdleTime = 0;
 
 	/**
 	 * Private constructor to ensure that this class cannot be constructed from
@@ -991,10 +977,6 @@ public final class GUIMediator {
 				restoreView();
 		}
 
-		// If shutdown sequence was initiated, cancel it. Auto shutdown is
-		// disabled when the GUI is visible.
-		Finalizer.cancelShutdown();
-
 		getAppFrame().setState(Frame.NORMAL);
 	}
 
@@ -1004,26 +986,19 @@ public final class GUIMediator {
 	 * exiting after all file transfers in progress are complete.
 	 */
 	public static void close(boolean fromFrame) {
-		if (ApplicationSettings.MINIMIZE_TO_TRAY.getValue()) {
-			// if we want to minimize to the tray, but LimeWire wasn't
-			// able to load the tray library, then shutdown after transfers.
-			if (OSUtils.supportsTray()
-					&& !ResourceManager.instance().isTrayIconAvailable())
-				shutdownAfterTransfers();
-			else {
+		if (OSUtils.supportsTray()) {
+			if (ResourceManager.instance().isTrayIconAvailable()) {
 				applyWindowSettings();
 				GUIMediator.showTrayIcon();
 				hideView();
 			}
 		} else if (OSUtils.isMacOSX() && fromFrame) {
 			// If on OSX, don't close in response to clicking on the 'X'
-			// as that's not normal behaviour. This can only be done on Java14
+			// as that's not normal behavior. This can only be done on Java14
 			// though, because we need access to the
 			// com.apple.eawt.ApplicationListener.handleReOpenApplication event
 			// in order to restore the GUI.
 			GUIMediator.setAppVisible(false);
-		} else if (ApplicationSettings.SHUTDOWN_AFTER_TRANSFERS.getValue()) {
-			GUIMediator.shutdownAfterTransfers();
 		} else {
 			shutdown();
 		}
@@ -1034,18 +1009,6 @@ public final class GUIMediator {
 	 */
 	public static void shutdown() {
 		Finalizer.shutdown();
-	}
-
-	/**
-	 * Shutdown the program cleanly after all transfers in progress are
-	 * complete. Calling this method causes the GUI to be hidden while the
-	 * application waits to shutdown.
-	 * 
-	 * @see hideView
-	 */
-	public static void shutdownAfterTransfers() {
-		Finalizer.shutdownAfterTransfers();
-		GUIMediator.hideView();
 	}
 
 	public static void flagUpdate(String toExecute) {
@@ -1970,13 +1933,6 @@ public final class GUIMediator {
 				}
 			}
 		}).start();
-	}
-
-	private DownloadMediator getDownloadMediator() {
-	    if (DOWNLOAD_MEDIATOR == null) {
-	        DOWNLOAD_MEDIATOR = getMainFrame().getDownloadMediator();
-	    }
-	    return DOWNLOAD_MEDIATOR;
 	}
 	
 	private BTDownloadMediator getBTDownloadMediator() {

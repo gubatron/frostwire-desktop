@@ -17,17 +17,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.limegroup.gnutella.ConnectionManager;
 import com.limegroup.gnutella.browser.MagnetOptions;
-import com.limegroup.gnutella.connection.ConnectionLifecycleEvent;
-import com.limegroup.gnutella.connection.ConnectionLifecycleListener;
 import com.limegroup.gnutella.gui.AutoCompleteTextField;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.ClearableAutoCompleteTextField;
 import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
-import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.MultiLineLabel;
@@ -308,14 +304,14 @@ public class FileMenuActions {
     /**
      * Exits the application.
      */
-    public static class ExitAction extends AbstractAction {
+    public static class CloseAction extends AbstractAction {
 
         /**
          * 
          */
         private static final long serialVersionUID = -456007457702576349L;
 
-        public ExitAction() {
+        public CloseAction() {
             super(I18n.tr("&Close"));
             putValue(Action.LONG_DESCRIPTION, I18n.tr("Close the program's main window"));
         }
@@ -325,14 +321,14 @@ public class FileMenuActions {
         }
     }
     
-    public static class ShutdownAction extends AbstractAction {
+    public static class ExitAction extends AbstractAction {
         
         /**
          * 
          */
         private static final long serialVersionUID = 8000042651676530796L;
 
-        public ShutdownAction() {
+        public ExitAction() {
             super(I18n.tr("E&xit"));
             putValue(Action.LONG_DESCRIPTION, I18n.tr("Close and exit the program"));
         }
