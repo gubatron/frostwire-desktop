@@ -12,6 +12,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.limewire.io.NetworkUtils;
 
 import com.limegroup.gnutella.NetworkManager;
@@ -28,7 +29,6 @@ import com.limegroup.gnutella.settings.ConnectionSettings;
  * This class defines the panel in the options window that allows the user
  * to force their ip address to the specified value.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public final class ForceIPPaneItem extends AbstractPaneItem {
 
     public final static String TITLE = I18n.tr("Router Configuration");
@@ -39,18 +39,16 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
 	 * Constant <tt>WholeNumberField</tt> instance that holds the port 
 	 * to force to.
 	 */
-	private final WholeNumberField PORT_FIELD = new SizedWholeNumberField();
+	private final WholeNumberField TCP_PORT_FIELD = new SizedWholeNumberField();
+	
+	private final WholeNumberField UDP_PORT_FIELD = new SizedWholeNumberField();
 	
     /**
      * Constant handle to the check box that enables or disables this feature.
      */
     private final ButtonGroup BUTTONS = new ButtonGroup();
-    private final JRadioButton UPNP =
-        new JRadioButton(I18n.tr("Use UPnP (Recommended)"));
-    private final JRadioButton PORT =
-        new JRadioButton(I18n.tr("Manual Port Forward:"));
-    private final JRadioButton NONE =
-        new JRadioButton(I18n.tr("Do Nothing (Not Recommended)"));
+    private final JRadioButton UPNP = new JRadioButton(I18n.tr("Use UPnP (Recommended)"));
+    private final JRadioButton PORT = new JRadioButton(I18n.tr("Manual Port Forward:"));
     
     private final NetworkManager networkManager;
 
@@ -64,7 +62,6 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
 		
 		BUTTONS.add(UPNP);
 		BUTTONS.add(PORT);
-		BUTTONS.add(NONE);
 		PORT.addItemListener(new LocalPortListener());
 		
 		JPanel panel = new JPanel(new GridBagLayout());
@@ -76,8 +73,8 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
 		c.gridwidth = GridBagConstraints.RELATIVE;
 		panel.add(PORT, c);
 		c.gridwidth = GridBagConstraints.REMAINDER;
-		panel.add(PORT_FIELD, c);
-		panel.add(NONE, c);
+		panel.add(TCP_PORT_FIELD, c);
+		panel.add(UDP_PORT_FIELD, c);
 		
         c.weightx = 1;
         c.weighty = 1;
@@ -89,8 +86,8 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
 	}
 	
 	private void updateState() {
-	    PORT_FIELD.setEnabled(PORT.isSelected());
-        PORT_FIELD.setEditable(PORT.isSelected());
+	    TCP_PORT_FIELD.setEnabled(PORT.isSelected());
+        UDP_PORT_FIELD.setEditable(PORT.isSelected());
     }
 
     /** 
@@ -113,15 +110,14 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
 	 * window is shown.
 	 */
 	public void initOptions() {
-	    if(ConnectionSettings.FORCE_IP_ADDRESS.getValue() && 
-	      !ConnectionSettings.UPNP_IN_USE.getValue())
-	        PORT.setSelected(true);
-	    else if(ConnectionSettings.DISABLE_UPNP.getValue())
-	        NONE.setSelected(true);
-	    else
-	        UPNP.setSelected(true);
+        if (ConnectionSettings.FORCE_IP_ADDRESS.getValue() && !ConnectionSettings.UPNP_IN_USE.getValue()) {
+            PORT.setSelected(true);
+        } else {
+            UPNP.setSelected(true);
+        }
 	        
-        PORT_FIELD.setValue(ConnectionSettings.FORCED_PORT.getValue());
+        TCP_PORT_FIELD.setValue(ConnectionSettings.TCP_PORT.getValue());
+        UDP_PORT_FIELD.setValue(ConnectionSettings.UDP_PORT.getValue());
         
 		updateState();
 	}
@@ -135,10 +131,12 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
 	 * @throws IOException if the options could not be applied for some reason
 	 */
 	public boolean applyOptions() throws IOException {
+	    
 	    boolean restart = false;
 	    boolean oldUPNP = ConnectionSettings.UPNP_IN_USE.getValue();
-        int oldPort = ConnectionSettings.FORCED_PORT.getValue();
-        boolean oldForce = ConnectionSettings.FORCE_IP_ADDRESS.getValue();
+        //int oldTcpPort = ConnectionSettings.TCP_PORT.getValue();
+        //int oldUdpPort = ConnectionSettings.UDP_PORT.getValue();
+        //boolean oldForce = ConnectionSettings.FORCE_IP_ADDRESS.getValue();
 
 	    
 	    if(UPNP.isSelected()) {
@@ -147,29 +145,41 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
 	        ConnectionSettings.DISABLE_UPNP.setValue(false);
 	        if(!oldUPNP)
 	            restart = true;
-        } else if(NONE.isSelected()) {
-            ConnectionSettings.FORCE_IP_ADDRESS.setValue(false);
-            ConnectionSettings.DISABLE_UPNP.setValue(true);
+	        
+	        COConfigurationManager.setParameter("upnp.enable", true);
         } else { // PORT.isSelected()
-            int forcedPort = PORT_FIELD.getValue();
-            if(!NetworkUtils.isValidPort(forcedPort)) {
-                GUIMediator.showError(I18n.tr("You must enter a port between 1 and 65535 when manually forcing your port."));
-                throw new IOException("bad port: "+forcedPort);
+            int forcedTcpPort = TCP_PORT_FIELD.getValue();
+            int forcedUdpPort = UDP_PORT_FIELD.getValue();
+            if(!NetworkUtils.isValidPort(forcedTcpPort)) {
+                GUIMediator.showError(I18n.tr("You must enter a port between 1 and 65535 when manually forcing your TCP port."));
+                throw new IOException("bad port: "+forcedTcpPort);
+            }
+            if(!NetworkUtils.isValidPort(forcedUdpPort)) {
+                GUIMediator.showError(I18n.tr("You must enter a port between 1 and 65535 when manually forcing your UDP port."));
+                throw new IOException("bad port: "+forcedUdpPort);
             }
             
             ConnectionSettings.DISABLE_UPNP.setValue(false);
             ConnectionSettings.FORCE_IP_ADDRESS.setValue(true);
             ConnectionSettings.UPNP_IN_USE.setValue(false);
-            ConnectionSettings.FORCED_PORT.setValue(forcedPort);
+            ConnectionSettings.TCP_PORT.setValue(forcedTcpPort);
+            ConnectionSettings.UDP_PORT.setValue(forcedUdpPort);
+            
+            // put upnp port configuration
+            COConfigurationManager.setParameter("TCP.Listen.Port", forcedTcpPort);
+            COConfigurationManager.setParameter("UDP.Listen.Port", forcedUdpPort);
+            COConfigurationManager.setParameter("upnp.enable", false);
+            
+            restart = true;
         }
         
         // Notify that the address changed if:
         //    1) The 'forced address' status changed.
         // or 2) We're forcing and the ports are different.
-        boolean newForce = ConnectionSettings.FORCE_IP_ADDRESS.getValue();
-        int newPort = ConnectionSettings.FORCED_PORT.getValue();        
-        if(oldForce != newForce || (newForce && (oldPort != newPort)))
-            networkManager.addressChanged();
+//        boolean newForce = ConnectionSettings.FORCE_IP_ADDRESS.getValue();
+//        int newPort = ConnectionSettings.FORCED_PORT.getValue();        
+//        if(oldForce != newForce || (newForce && (oldPort != newPort)))
+//            networkManager.addressChanged();
         
         return restart;
     }
@@ -181,18 +191,13 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
 			if (!PORT.isSelected()) {
 				return true;
 			}
-		}
-		else if(ConnectionSettings.DISABLE_UPNP.getValue()) {
-			if (!NONE.isSelected()) {
-				return true;
-			}
-		}
-		else {
+		} else {
 			if (!UPNP.isSelected()) {
 				return true;
 			}
 		}
 		return PORT.isSelected() 
-			&& PORT_FIELD.getValue() != ConnectionSettings.FORCED_PORT.getValue();
+			&& (TCP_PORT_FIELD.getValue() != ConnectionSettings.TCP_PORT.getValue() ||
+			    UDP_PORT_FIELD.getValue() != ConnectionSettings.UDP_PORT.getValue());
     }
 }

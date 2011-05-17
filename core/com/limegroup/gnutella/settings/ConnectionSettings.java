@@ -202,6 +202,12 @@ public final class ConnectionSettings extends LimeProps {
     public static final IntSetting FORCED_PORT =
         FACTORY.createIntSetting("FORCED_PORT", 6346);
     
+    public static final IntSetting TCP_PORT =
+        FACTORY.createIntSetting("TCP_PORT", 55256);
+    
+    public static final IntSetting UDP_PORT =
+        FACTORY.createIntSetting("UDP_PORT", 55256);
+    
     /**
      * Whether we should not try to use UPnP to open ports.
      */
