@@ -24,8 +24,10 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.ToolTipManager;
 
+import org.gudy.azureus2.plugins.network.ConnectionManager;
 import org.limewire.setting.BooleanSetting;
 
+import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.bittorrent.AzureusStarter;
 import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.gui.mp3.MediaPlayerComponent;
@@ -431,7 +433,15 @@ public final class StatusLine implements ThemeObserver {
 	 * Updates the firewall text. 
 	 */
 	public void updateFirewall() {
-		updateFirewallLabel(networkManager.acceptedIncomingConnection());
+		AzureusCore azureusCore = AzureusStarter.getAzureusCore();
+		
+		if (azureusCore == null) {
+			updateFirewallLabel(false);
+			return;
+		}
+		
+		int natStatus = azureusCore.getGlobalManager().getNATStatus();
+		updateFirewallLabel(natStatus == ConnectionManager.NAT_OK || natStatus == ConnectionManager.NAT_PROBABLY_OK);	
 	}
 	
     /**
