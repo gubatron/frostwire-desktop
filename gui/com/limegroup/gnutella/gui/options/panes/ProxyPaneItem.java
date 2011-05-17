@@ -8,6 +8,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.limewire.i18n.I18nMarker;
 
 import com.limegroup.gnutella.gui.BoxPanel;
@@ -153,19 +154,26 @@ public final class ProxyPaneItem extends AbstractPaneItem {
     public boolean applyOptions() throws IOException {
         int connectionMethod = ConnectionSettings.C_NO_PROXY;
 
-        if (SOCKS4_PROXY_BUTTON.isSelected())
+        if (SOCKS4_PROXY_BUTTON.isSelected()) {
             connectionMethod = ConnectionSettings.C_SOCKS4_PROXY;
-        else if (SOCKS5_PROXY_BUTTON.isSelected())
+        } else if (SOCKS5_PROXY_BUTTON.isSelected()) {
             connectionMethod = ConnectionSettings.C_SOCKS5_PROXY;
-        else if (HTTP_PROXY_BUTTON.isSelected())
+        } else if (HTTP_PROXY_BUTTON.isSelected()) {
             connectionMethod = ConnectionSettings.C_HTTP_PROXY;
+        }
 
         final int proxyPort = PROXY_PORT_FIELD.getValue();
-        final String proxy = PROXY_HOST_FIELD.getText();
+        final String proxyHost = PROXY_HOST_FIELD.getText();
 
         ConnectionSettings.PROXY_PORT.setValue(proxyPort);
         ConnectionSettings.CONNECTION_METHOD.setValue(connectionMethod);
-        ConnectionSettings.PROXY_HOST.setValue(proxy);
+        ConnectionSettings.PROXY_HOST.setValue(proxyHost);
+        
+        // put proxy configuration in vuze options
+        COConfigurationManager.setParameter("Enable.Proxy", connectionMethod != ConnectionSettings.C_NO_PROXY);
+        COConfigurationManager.setParameter("Enable.SOCKS", connectionMethod == ConnectionSettings.C_SOCKS4_PROXY || connectionMethod == ConnectionSettings.C_SOCKS5_PROXY);
+        COConfigurationManager.setParameter("Proxy.Host", proxyHost);
+        COConfigurationManager.setParameter("Proxy.Port", String.valueOf(proxyPort));
 
         return false;
     }
