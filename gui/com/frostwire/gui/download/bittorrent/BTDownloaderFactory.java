@@ -59,7 +59,9 @@ public class BTDownloaderFactory {
             }
         });
 
-        downloadManager.setStateWaiting();
+        if (downloadManager.getState() != DownloadManager.STATE_STOPPED) {
+            downloadManager.setStateWaiting();
+        }
         
         return new BTDownloaderImpl(downloadManager);
     }

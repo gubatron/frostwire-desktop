@@ -194,12 +194,12 @@ public class DownloadManagerImpl implements DownloadManager {
      * @see com.limegroup.gnutella.DownloadMI#postGuiInit()
      */
     public void loadSavedDownloadsAndScheduleWriting() {
-        loadTorrenDownloads();
+        loadTorrentDownloads();
         //loadSavedDownloads();
         //scheduleSnapshots();
     }
     
-    private void loadTorrenDownloads() {
+    private void loadTorrentDownloads() {
         GlobalManager globalManager = AzureusStarter.getAzureusCore().getGlobalManager();
         List<?> downloadManagers = globalManager.getDownloadManagers();
         for (Object obj : downloadManagers) {
