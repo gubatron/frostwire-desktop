@@ -360,87 +360,87 @@ public class LifecycleManagerImpl implements LifecycleManager {
 	    
 	    statisticAccumulator.get().start();
 
-        if(SSLSettings.isIncomingTLSEnabled() || SSLSettings.isOutgoingTLSEnabled()) {
-            LOG.trace("START SSL Test");
-            activityCallback.get().componentLoading(I18nMarker.marktr("Loading TLS Encryption..."));
-            SSLEngineTest sslTester = new SSLEngineTest(SSLUtils.getTLSContext(), SSLUtils.getTLSCipherSuites(), byteBufferCache.get());
-            if(!sslTester.go()) {
-                Throwable t = sslTester.getLastFailureCause();
-                SSLSettings.disableTLS(t);
-                if(!SSLSettings.IGNORE_SSL_EXCEPTIONS.getValue() && !sslTester.isIgnorable(t))
-                    ErrorService.error(t);
-            }
-            LOG.trace("END SSL Test");
-        }
+//        if(SSLSettings.isIncomingTLSEnabled() || SSLSettings.isOutgoingTLSEnabled()) {
+//            LOG.trace("START SSL Test");
+//            activityCallback.get().componentLoading(I18nMarker.marktr("Loading TLS Encryption..."));
+//            SSLEngineTest sslTester = new SSLEngineTest(SSLUtils.getTLSContext(), SSLUtils.getTLSCipherSuites(), byteBufferCache.get());
+//            if(!sslTester.go()) {
+//                Throwable t = sslTester.getLastFailureCause();
+//                SSLSettings.disableTLS(t);
+//                if(!SSLSettings.IGNORE_SSL_EXCEPTIONS.getValue() && !sslTester.isIgnorable(t))
+//                    ErrorService.error(t);
+//            }
+//            LOG.trace("END SSL Test");
+//        }
 		// Now, link all the pieces together, starting the various threads.            
-        LOG.trace("START ContentManager");
-        activityCallback.get().componentLoading(I18nMarker.marktr("Loading Safe Content Management..."));
-        contentManager.get().start();
-        LOG.trace("STOP ContentManager");
+//        LOG.trace("START ContentManager");
+//        activityCallback.get().componentLoading(I18nMarker.marktr("Loading Safe Content Management..."));
+//        contentManager.get().start();
+//        LOG.trace("STOP ContentManager");
 
-        LOG.trace("START MessageRouter");
-        activityCallback.get().componentLoading(I18nMarker.marktr("Loading Message Router..."));
-		messageRouter.get().start();
-		LOG.trace("STOPMessageRouter");
+//        LOG.trace("START MessageRouter");
+//        activityCallback.get().componentLoading(I18nMarker.marktr("Loading Message Router..."));
+//		messageRouter.get().start();
+//		LOG.trace("STOPMessageRouter");
 		
-        LOG.trace("START UpdateManager.instance");
-        activityCallback.get().componentLoading(I18nMarker.marktr("Checking for Updates..."));
-        updateHandler.get().initialize();
-        LOG.trace("STOP UpdateManager.instance");
+//        LOG.trace("START UpdateManager.instance");
+//        activityCallback.get().componentLoading(I18nMarker.marktr("Checking for Updates..."));
+//        updateHandler.get().initialize();
+//        LOG.trace("STOP UpdateManager.instance");
 
-        LOG.trace("START HTTPUploadManager");
-        activityCallback.get().componentLoading(I18nMarker.marktr("Loading Upload Management..."));
-        uploadManager.get().start(); 
-        LOG.trace("STOP HTTPUploadManager");
+//        LOG.trace("START HTTPUploadManager");
+//        activityCallback.get().componentLoading(I18nMarker.marktr("Loading Upload Management..."));
+//        uploadManager.get().start(); 
+//        LOG.trace("STOP HTTPUploadManager");
 
-        LOG.trace("START HTTPUploadAcceptor");
-        httpUploadAcceptor.get().start(); 
-        connectionDispatcher.get().addConnectionAcceptor(httpUploadAcceptor.get(), false, httpUploadAcceptor.get().getHttpMethods());
-        LOG.trace("STOP HTTPUploadAcceptor");
+//        LOG.trace("START HTTPUploadAcceptor");
+//        httpUploadAcceptor.get().start(); 
+//        connectionDispatcher.get().addConnectionAcceptor(httpUploadAcceptor.get(), false, httpUploadAcceptor.get().getHttpMethods());
+//        LOG.trace("STOP HTTPUploadAcceptor");
 
-        LOG.trace("START Acceptor");
-        activityCallback.get().componentLoading(I18nMarker.marktr("Loading Connection Listener..."));
-		acceptor.get().start();
-		LOG.trace("STOP Acceptor");
+//        LOG.trace("START Acceptor");
+//        activityCallback.get().componentLoading(I18nMarker.marktr("Loading Connection Listener..."));
+//		acceptor.get().start();
+//		LOG.trace("STOP Acceptor");
 		
-        LOG.trace("START loading StaticMessages");
-        staticMessages.get().initialize();
-        LOG.trace("END loading StaticMessages");
+//        LOG.trace("START loading StaticMessages");
+//        staticMessages.get().initialize();
+//        LOG.trace("END loading StaticMessages");
         
-		LOG.trace("START ConnectionManager");
-		activityCallback.get().componentLoading(I18nMarker.marktr("Loading Connection Management..."));
-        connectionManager.get().initialize();
-		LOG.trace("STOP ConnectionManager");
+//		LOG.trace("START ConnectionManager");
+//		activityCallback.get().componentLoading(I18nMarker.marktr("Loading Connection Management..."));
+//        connectionManager.get().initialize();
+//		LOG.trace("STOP ConnectionManager");
 		
-		LOG.trace("Running download upgrade task");
-		downloadUpgradeTask.get().upgrade();
-		LOG.trace("Download upgrade task run!");
+//		LOG.trace("Running download upgrade task");
+//		downloadUpgradeTask.get().upgrade();
+//		LOG.trace("Download upgrade task run!");
 		
-		LOG.trace("START DownloadManager");
-		activityCallback.get().componentLoading(I18nMarker.marktr("Loading Download Management..."));
-		downloadManager.get().initialize();
-        connectionDispatcher.get().addConnectionAcceptor(pushDownloadManager.get(), false, "GIV");
-		LOG.trace("STOP DownloadManager");
+//		LOG.trace("START DownloadManager");
+//		activityCallback.get().componentLoading(I18nMarker.marktr("Loading Download Management..."));
+//		downloadManager.get().initialize();
+//        connectionDispatcher.get().addConnectionAcceptor(pushDownloadManager.get(), false, "GIV");
+//		LOG.trace("STOP DownloadManager");
 		
-		LOG.trace("START NodeAssigner");
-		activityCallback.get().componentLoading(I18nMarker.marktr("Loading Ultrapeer/DHT Management..."));
-		nodeAssigner.get().start();
-		LOG.trace("STOP NodeAssigner");
+//		LOG.trace("START NodeAssigner");
+//		activityCallback.get().componentLoading(I18nMarker.marktr("Loading Ultrapeer/DHT Management..."));
+//		nodeAssigner.get().start();
+//		LOG.trace("STOP NodeAssigner");
 		
-        LOG.trace("START HostCatcher.initialize");
-        activityCallback.get().componentLoading(I18nMarker.marktr("Locating Peers..."));
-		hostCatcher.get().initialize();
-		LOG.trace("STOP HostCatcher.initialize");
+//        LOG.trace("START HostCatcher.initialize");
+//        activityCallback.get().componentLoading(I18nMarker.marktr("Locating Peers..."));
+//		hostCatcher.get().initialize();
+//		LOG.trace("STOP HostCatcher.initialize");
 
-		if(ConnectionSettings.CONNECT_ON_STARTUP.getValue()) {
-			// Make sure connections come up ultra-fast (beyond default keepAlive)		
-			int outgoing = ConnectionSettings.NUM_CONNECTIONS.getValue();
-			if ( outgoing > 0 ) {
-			    LOG.trace("START connect");
-				connectionServices.get().connect();
-                LOG.trace("STOP connect");
-            }
-		}
+//		if(ConnectionSettings.CONNECT_ON_STARTUP.getValue()) {
+//			// Make sure connections come up ultra-fast (beyond default keepAlive)		
+//			int outgoing = ConnectionSettings.NUM_CONNECTIONS.getValue();
+//			if ( outgoing > 0 ) {
+//			    LOG.trace("START connect");
+//				connectionServices.get().connect();
+//                LOG.trace("STOP connect");
+//            }
+//		}
         // Asynchronously load files now that the GUI is up, notifying
         // callback.
         LOG.trace("START FileManager");
@@ -448,10 +448,10 @@ public class LifecycleManagerImpl implements LifecycleManager {
         fileManager.get().start();
         LOG.trace("STOP FileManager");
 
-        LOG.trace("START TorrentManager");
-        activityCallback.get().componentLoading(I18nMarker.marktr("Loading BitTorrent Management..."));
-		torrentManager.get().initialize(connectionDispatcher.get());
-		LOG.trace("STOP TorrentManager");
+//        LOG.trace("START TorrentManager");
+//        activityCallback.get().componentLoading(I18nMarker.marktr("Loading BitTorrent Management..."));
+//		torrentManager.get().initialize(connectionDispatcher.get());
+//		LOG.trace("STOP TorrentManager");
         
         // Restore any downloads in progress.
         LOG.trace("START DownloadManager.postGuiInit");
@@ -459,53 +459,53 @@ public class LifecycleManagerImpl implements LifecycleManager {
         downloadManager.get().loadSavedDownloadsAndScheduleWriting();
         LOG.trace("STOP DownloadManager.postGuiInit");
         
-        LOG.trace("START QueryUnicaster");
-        activityCallback.get().componentLoading(I18nMarker.marktr("Loading Directed Querier..."));
-		queryUnicaster.get().start();
-		LOG.trace("STOP QueryUnicaster");
+//        LOG.trace("START QueryUnicaster");
+//        activityCallback.get().componentLoading(I18nMarker.marktr("Loading Directed Querier..."));
+//		queryUnicaster.get().start();
+//		LOG.trace("STOP QueryUnicaster");
 		
-		LOG.trace("START LocalHTTPAcceptor");
-		activityCallback.get().componentLoading(I18nMarker.marktr("Loading Magnet Listener..."));
-        localHttpAcceptor.get().start();
-        localConnectionDispatcher.get().addConnectionAcceptor(localHttpAcceptor.get(), true, localHttpAcceptor.get().getHttpMethods());
-        LOG.trace("STOP LocalHTTPAcceptor");
+//		LOG.trace("START LocalHTTPAcceptor");
+//		activityCallback.get().componentLoading(I18nMarker.marktr("Loading Magnet Listener..."));
+//        localHttpAcceptor.get().start();
+//        localConnectionDispatcher.get().addConnectionAcceptor(localHttpAcceptor.get(), true, localHttpAcceptor.get().getHttpMethods());
+//        LOG.trace("STOP LocalHTTPAcceptor");
 
-        LOG.trace("START LocalAcceptor");
-        initializeLocalConnectionDispatcher();
-        localAcceptor.get().start();
-        LOG.trace("STOP LocalAcceptor");
+//        LOG.trace("START LocalAcceptor");
+//        initializeLocalConnectionDispatcher();
+//        localAcceptor.get().start();
+//        LOG.trace("STOP LocalAcceptor");
         
-        LOG.trace("START Pinger");
-        activityCallback.get().componentLoading(I18nMarker.marktr("Loading Peer Listener..."));
-        pinger.get().start();
-        LOG.trace("STOP Pinger");
+//        LOG.trace("START Pinger");
+//        activityCallback.get().componentLoading(I18nMarker.marktr("Loading Peer Listener..."));
+//        pinger.get().start();
+//        LOG.trace("STOP Pinger");
         
-        LOG.trace("START ConnectionWatchdog");
-        activityCallback.get().componentLoading(I18nMarker.marktr("Loading Stale Connection Management..."));
-        connectionWatchdog.get().start();
-        LOG.trace("STOP ConnectionWatchdog");
+//        LOG.trace("START ConnectionWatchdog");
+//        activityCallback.get().componentLoading(I18nMarker.marktr("Loading Stale Connection Management..."));
+//        connectionWatchdog.get().start();
+//        LOG.trace("STOP ConnectionWatchdog");
         
-        LOG.trace("START SavedFileManager");
-        activityCallback.get().componentLoading(I18nMarker.marktr("Loading Saved Files..."));
-        savedFileManager.get();
-        LOG.trace("STOP SavedFileManager");
+//        LOG.trace("START SavedFileManager");
+//        activityCallback.get().componentLoading(I18nMarker.marktr("Loading Saved Files..."));
+//        savedFileManager.get();
+//        LOG.trace("STOP SavedFileManager");
 		
-		LOG.trace("START loading spam data");
-		activityCallback.get().componentLoading(I18nMarker.marktr("Loading Spam Management..."));
-		ratingTable.get();
-		LOG.trace("START loading spam data");
+//		LOG.trace("START loading spam data");
+//		activityCallback.get().componentLoading(I18nMarker.marktr("Loading Spam Management..."));
+//		ratingTable.get();
+//		LOG.trace("START loading spam data");
         
-        LOG.trace("START register connection dispatchers");
-        activityCallback.get().componentLoading(I18nMarker.marktr("Loading Network Listeners..."));
-        initializeConnectionDispatcher();
-        LOG.trace("STOP register connection dispatchers");
+//        LOG.trace("START register connection dispatchers");
+//        activityCallback.get().componentLoading(I18nMarker.marktr("Loading Network Listeners..."));
+//        initializeConnectionDispatcher();
+//        LOG.trace("STOP register connection dispatchers");
         
-        LOG.trace("START Random Initializings");
-        outOfBandThroughputMeasurer.get().initialize();
-        browseHostHandlerManager.get().initialize();
-        LOG.trace("STOP Random Initializings");
+//        LOG.trace("START Random Initializings");
+//        outOfBandThroughputMeasurer.get().initialize();
+//        browseHostHandlerManager.get().initialize();
+//        LOG.trace("STOP Random Initializings");
 
-        serviceRegistry.start();
+        //serviceRegistry.start();
 
         if(ApplicationSettings.AUTOMATIC_MANUAL_GC.getValue())
             startManualGCThread();
