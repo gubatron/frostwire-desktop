@@ -1,12 +1,7 @@
 package com.limegroup.gnutella.gui.init;
 
-import java.awt.Component;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,15 +9,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
 
 import org.limewire.i18n.I18nMarker;
 import org.limewire.util.CommonUtils;
@@ -30,10 +19,8 @@ import org.limewire.util.StringUtils;
 
 import com.frostwire.components.TorrentSaveFolderComponent;
 import com.frostwire.updates.UpdateManager;
-import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.gui.SaveDirectoryHandler;
 import com.limegroup.gnutella.gui.library.RecursiveSharingPanel;
 import com.limegroup.gnutella.settings.SharingSettings;
@@ -41,8 +28,6 @@ import com.limegroup.gnutella.settings.SharingSettings;
  * This class displays a setup window for allowing the user to choose
  * the directory for saving their files.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
-
 class SaveWindow extends SetupWindow {
 
 	private static final long serialVersionUID = 4918724013794478084L;
@@ -65,8 +50,6 @@ class SaveWindow extends SetupWindow {
     
     // change for sharing files in saved folder
     private final JCheckBox CHECK_BOX = new JCheckBox();
-    private final String CHECK_BOX_LABEL = I18nMarker.marktr("Share Finished Downloads");
-    private final JLabel explanationLabel = new JLabel();
 
 	private TorrentSaveFolderComponent torrentSaveFolderComponent;
 
@@ -85,7 +68,7 @@ class SaveWindow extends SetupWindow {
         recursiveSharingPanel.getTree().setShowsRootHandles(true);
         recursiveSharingPanel.setRoots(SharingSettings.DIRECTORIES_TO_SHARE.getValueAsArray());
         recursiveSharingPanel.addRoot(SharingSettings.DEFAULT_SHARE_DIR);
-        recursiveSharingPanel.addRoot(SharingSettings.DEFAULT_SHARED_TORRENTS_DIR);
+        recursiveSharingPanel.addRoot(SharingSettings.DEFAULT_DOT_TORRENTS_DIR);
         recursiveSharingPanel.setFoldersToExclude(GuiCoreMediator.getFileManager().getFolderNotToShare());
         recursiveSharingPanel.setRootsExpanded();
     }
@@ -238,7 +221,7 @@ class SaveWindow extends SetupWindow {
         }
         
         if(loadCoreComponents) {
-            GuiCoreMediator.getFileManager().loadWithNewDirectories(roots, recursiveSharingPanel.getFoldersToExclude(), false);
+        //    GuiCoreMediator.getFileManager().loadWithNewDirectories(roots, recursiveSharingPanel.getFoldersToExclude(), false);
             UpdateManager.scheduleUpdateCheckTask(0);
         }
         
@@ -249,7 +232,7 @@ class SaveWindow extends SetupWindow {
 		saveDirs.add(saveDir);
 		
         if (!torrentSaveFolderComponent.isTorrentSaveFolderPathValid(false, saveDirs, roots)) {
-        	errors.add(torrentSaveFolderComponent.getError());
+        	errors.add(TorrentSaveFolderComponent.getError());
         }
         
         SharingSettings.SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES.
@@ -271,88 +254,6 @@ class SaveWindow extends SetupWindow {
             throw new ApplySettingsException(StringUtils.explode(errors, "\n\n"));
         }
 	}
-	
-    private Component createOptionForShareInSavedFolderComponent() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-
-        LabeledComponent comp = new LabeledComponent(CHECK_BOX_LABEL, CHECK_BOX, LabeledComponent.NO_GLUE, LabeledComponent.RIGHT);
-
-        explanationLabel.setFont(explanationLabel.getFont().deriveFont(Math.max(explanationLabel.getFont().getSize() - 2.0f, 9.0f)).deriveFont(Font.PLAIN));
-        CHECK_BOX.addItemListener(new ItemListener() {
-           public void itemStateChanged(ItemEvent e) {
-                setExplanationText(true);
-            }
-        });
-        setExplanationText(false);
-
-        CHECK_BOX.setSelected(SharingSettings.SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES.getValue());
-
-        comp.getComponent().setAlignmentX(Component.LEFT_ALIGNMENT);
-        explanationLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        panel.add(comp.getComponent());
-        panel.add(explanationLabel);
-
-        return panel;
-    }
-    
-    private void setExplanationText(boolean showMessage) {
-        if (CHECK_BOX.isSelected()) {
-            //explanationLabel.setText(I18n.tr("All downloads will be shared. INDIVIDUAL FILE NOTICE (FORGOT PREVIOUS FILES)"));
-            explanationLabel.setText(I18n.tr("Currently sharing downloaded files to the 'Save Folder' with everybody"));
-            if (showMessage) {
-            	SwingUtilities.invokeLater(new Runnable() {
-
-					@Override
-					public void run() {
-		                JOptionPane.showMessageDialog(SaveWindow.this,
-		                        I18n.tr("All files downloaded to the 'Save Folder' will be shared as 'individually shared files' with everybody on the network.\nYour 'Save Folder' won't be shared as a whole unless you decide to make it a shared folder.\n\nYou can check the files you are sharing individually in the Library Tab."),
-		                        I18n.tr("How finished downloads are being shared"),
-		                        JOptionPane.WARNING_MESSAGE); 
-					}});
-            }
-        } else {
-            explanationLabel.setText(I18n.tr("Currently not sharing downloaded files to the 'Save Folder' with anybody"));
-        }
-    }
-
-	private class DefaultAction extends AbstractAction {
-		
-		/**
-         * 
-         */
-        private static final long serialVersionUID = 4107077835180336159L;
-
-        public DefaultAction() {
-			putValue(Action.NAME, I18n.tr("Use Default"));
-			putValue(Action.SHORT_DESCRIPTION, I18n.tr("Use the Default Folder"));
-		}
-		
-        public void actionPerformed(ActionEvent e) {
-            SAVE_FIELD.setText(_defaultSaveDir);
-        }
-    }
-	
-	private class BrowseAction extends AbstractAction {
-		
-		/**
-         * 
-         */
-        private static final long serialVersionUID = -5098673476971367183L;
-
-        public BrowseAction() {
-			putValue(Action.NAME, I18n.tr("Browse..."));
-			putValue(Action.SHORT_DESCRIPTION, I18n.tr("Choose Another Folder"));
-		}
-		
-        public void actionPerformed(ActionEvent e) {
-            File saveDir = 
-                    FileChooserHandler.getInputDirectory(SaveWindow.this);
-			if(saveDir == null || !saveDir.isDirectory()) return;
-			SAVE_FIELD.setText(saveDir.getAbsolutePath());
-        }
-    }
 }
 
 

@@ -515,14 +515,14 @@ public class CoreFrostWireUtils {
 	}
 	
 	public final static boolean canShareTorrentMetaFiles() {
-		if (!SharingSettings.DEFAULT_SHARED_TORRENTS_DIR.exists()) {
-			SharingSettings.DEFAULT_SHARED_TORRENTS_DIR.mkdir();
+		if (!SharingSettings.DEFAULT_DOT_TORRENTS_DIR.exists()) {
+			SharingSettings.DEFAULT_DOT_TORRENTS_DIR.mkdir();
 		}
 
 		return SharingSettings.SHARE_TORRENT_META_FILES.getValue()
-				&& SharingSettings.DEFAULT_SHARED_TORRENTS_DIR.exists()
-				&& SharingSettings.DEFAULT_SHARED_TORRENTS_DIR.isDirectory()
-				&& SharingSettings.DEFAULT_SHARED_TORRENTS_DIR.canWrite();
+				&& SharingSettings.DEFAULT_DOT_TORRENTS_DIR.exists()
+				&& SharingSettings.DEFAULT_DOT_TORRENTS_DIR.isDirectory()
+				&& SharingSettings.DEFAULT_DOT_TORRENTS_DIR.canWrite();
 	}
 
 	public static boolean isInternetReachable() {

@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListCellRenderer;
+import javax.swing.SwingUtilities;
 
 import org.limewire.service.Switch;
 import org.limewire.setting.IntSetting;
@@ -85,12 +86,16 @@ public final class MessageService {
 	 * @param ignore the Boolean setting to store/retrieve whether or not to
 	 *  ignore this message in the future.	 
 	 */
-	final void showError(String message, Switch ignore) {
+	final void showError(final String message, final Switch ignore) {
 	    if ( !ignore.getValue() ) {
-		    JOptionPane.showMessageDialog(getParentComponent(), 
-                      doNotDisplayAgainLabel(message, ignore),
-					  I18n.tr("Error"),
-					  JOptionPane.ERROR_MESSAGE);
+	        SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    JOptionPane.showMessageDialog(getParentComponent(), 
+                            doNotDisplayAgainLabel(message, ignore),
+                            I18n.tr("Error"),
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            });
         }
 	}
 	

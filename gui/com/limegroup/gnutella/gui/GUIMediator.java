@@ -1899,7 +1899,7 @@ public final class GUIMediator {
 											}
 										}
 									}, request, null,
-									SharingSettings.DEFAULT_SHARED_TORRENTS_DIR.getCanonicalPath());
+									SharingSettings.DEFAULT_DOT_TORRENTS_DIR.getCanonicalPath());
 
 					downloader.start();
 

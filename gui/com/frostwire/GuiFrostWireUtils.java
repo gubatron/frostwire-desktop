@@ -31,7 +31,7 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
 		BufferedOutputStream bos = null;
 		try {
 			File newTorrent = new File(
-					SharingSettings.DEFAULT_SHARED_TORRENTS_DIR, bt.getName()
+					SharingSettings.DEFAULT_DOT_TORRENTS_DIR, bt.getName()
 							.concat(".torrent"));
 
 			bos = new BufferedOutputStream(new FileOutputStream(newTorrent));
@@ -52,7 +52,7 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
 
 		// make a copy of the torrent (wherever it is they are opening it from)
 		// to our torrents/ folder and share it.
-		File newTorrent = new File(SharingSettings.DEFAULT_SHARED_TORRENTS_DIR,
+		File newTorrent = new File(SharingSettings.DEFAULT_DOT_TORRENTS_DIR,
 				f.getName());
 		FileUtils.copy(f, newTorrent);
 
@@ -73,12 +73,12 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
 		}
 
 		// share/unshare all torrents inside
-		File[] torrents = SharingSettings.DEFAULT_SHARED_TORRENTS_DIR
+		File[] torrents = SharingSettings.DEFAULT_DOT_TORRENTS_DIR
 				.listFiles();
 		if (torrents != null && torrents.length > 0) {
 			for (File t : torrents) {
 				if (SharingSettings.SHARE_TORRENT_META_FILES.getValue() &&
-				    GuiCoreMediator.getFileManager().isFolderShared(SharingSettings.DEFAULT_SHARED_TORRENTS_DIR))
+				    GuiCoreMediator.getFileManager().isFolderShared(SharingSettings.DEFAULT_DOT_TORRENTS_DIR))
 					GuiCoreMediator.getFileManager().addFileAlways(t);
 				else
 					GuiCoreMediator.getFileManager().stopSharingFile(t);

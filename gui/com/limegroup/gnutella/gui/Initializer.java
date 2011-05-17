@@ -1,7 +1,6 @@
 package com.limegroup.gnutella.gui;
 
 import java.awt.Frame;
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
@@ -15,8 +14,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.service.ErrorService;
-import org.limewire.util.CommonUtils;
-import org.limewire.util.FileUtils;
 import org.limewire.util.I18NConvert;
 import org.limewire.util.OSUtils;
 import org.limewire.util.Stopwatch;
@@ -148,37 +145,6 @@ public final class Initializer {
         postinit();
     }
     
-     
-    /**
-     * If this is the first time we run and there was an old FrostWire
-     * Bring the .frostwire4.18 preferences so the user won't loose his library
-     * or preferences. Only for Windows.
-     */
-     private void tryMigratingOldPreferences() {
-    	 File userDir = CommonUtils.getUserHomeDir();
-    	 File settingsDir = new File(userDir, FrostWireUtils.LIMEWIRE_PREFS_DIR_NAME);
-    	 
-    	 if (!OSUtils.isWindows() ||
-    		 (settingsDir.exists() && settingsDir.list()!=null)) {
-    		 //System.out.println("Initializer.tryMigratingOldPreferences(): Not needed.");
-    		 return;
-    	 }
-    	 
-    	 File possibleOldDir = new File(userDir, FrostWireUtils.FROSTWIRE_418_DIR_NAME);
-
-    	 if ((!settingsDir.exists() || settingsDir.list()==null) && 
-    		possibleOldDir.exists() && 
-    		possibleOldDir.isDirectory() &&
-    		possibleOldDir.list() != null) {
-    		 //System.out.println("Initializer.tryMigratingOldPreferences(): Copying old settings...");
-    		 FileUtils.copyDirectoryRecursively(possibleOldDir, settingsDir);
-    		 
-    		 //get rid of overlays, make sure you get new ones.
-    		 FileUtils.deleteRecursive(new File(settingsDir,"overlays"));
-    		 FileUtils.delete(new File(settingsDir,"overlays.dat"), false);
-    	 }
-     }
-    
     /** Initializes the very early things. */
     /*
      * DO NOT CHANGE THIS WITHOUT KNOWING WHAT YOU'RE DOING.
@@ -188,9 +154,7 @@ public final class Initializer {
     private void preinit() {        
         // Make sure the settings directory is set.
         try {
-        	tryMigratingOldPreferences();
         	LimeCoreGlue.preinstall();
-            //stopwatch.resetAndLog("Preinstall");
         } catch(InstallFailedException ife) {
             failPreferencesPermissions();
         }

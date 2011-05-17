@@ -97,6 +97,8 @@ public final class FrostWireUtils {
     public static final String LIMEWIRE_PREFS_DIR_NAME = ".frostwire4.20";
     
     public static final String FROSTWIRE_418_DIR_NAME = ".frostwire4.18";
+    
+    public static final String FROSTWIRE_5_PREFS_DIR_NAME = ".frostwire5";
 
     /**
      * Variable for whether or not this is a PRO version of LimeWire. 
@@ -357,7 +359,7 @@ public final class FrostWireUtils {
         if(!OSUtils.isPOSIX() && userDir != null && userDir.exists())
             FileUtils.setWriteable(userDir);
         
-        File settingsDir = new File(userDir, LIMEWIRE_PREFS_DIR_NAME);
+        File settingsDir = new File(userDir, FROSTWIRE_5_PREFS_DIR_NAME);
 
         if (OSUtils.isWindows()) {
         	
@@ -365,7 +367,7 @@ public final class FrostWireUtils {
 
             if (appdata != null && appdata.length() > 0) {
                 appdata = stripQuotes(appdata);
-                File tempSettingsDir = new File(appdata, "FrostWire");
+                File tempSettingsDir = new File(appdata, "FrostWire"); // CHECK THE CASE OF WINDOWS
                 if (tempSettingsDir.isDirectory() || !settingsDir.exists()) {
                     FileUtils.setWriteable(new File(appdata));
                     try {

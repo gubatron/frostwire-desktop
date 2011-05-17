@@ -113,19 +113,19 @@ public class TorrentSaveFolderComponent extends JPanel {
     		}
 	    }
 		
-		//is parent or child of a default save folder
-		for (File saveFolder : gnutellaSaveFolders) {
-			if (isParentOrChild(folder, saveFolder, "Gnutella Save Folder " + saveFolder.getName())) {
-				return false;
-			}
-		}
-
-		//is parent or child of a default share folder
-		for (File sharedFolder : sharedFolders) {
-			if (isParentOrChild(folder, sharedFolder, "Shared Folder " + sharedFolder.getName())) {
-				return false;
-			}
-		}
+//		//is parent or child of a default save folder
+//		for (File saveFolder : gnutellaSaveFolders) {
+//			if (isParentOrChild(folder, saveFolder, "Gnutella Save Folder " + saveFolder.getName())) {
+//				return false;
+//			}
+//		}
+//
+//		//is parent or child of a default share folder
+//		for (File sharedFolder : sharedFolders) {
+//			if (isParentOrChild(folder, sharedFolder, "Shared Folder " + sharedFolder.getName())) {
+//				return false;
+//			}
+//		}
 		
 		return true;
 	}
