@@ -806,21 +806,12 @@ public final class GUIMediator {
 	}
 
 	/**
-	 * Returns the total number of uploads for this session.
-	 * 
-	 * @return the total number of uploads for this session
-	 */
-	public int getTotalUploads() {
-		return getUploadMediator().getTotalUploads();
-	}
-
-	/**
 	 * Returns the total number of currently active uploads.
 	 * 
 	 * @return the total number of currently active uploads
 	 */
 	public int getCurrentUploads() {
-		return getUploadMediator().getCurrentUploads();
+		return getBTDownloadMediator().getActiveUploads();
 	}
 
 	/**
@@ -1935,19 +1926,12 @@ public final class GUIMediator {
 		}).start();
 	}
 	
-	private BTDownloadMediator getBTDownloadMediator() {
+	public BTDownloadMediator getBTDownloadMediator() {
         if (BT_DOWNLOAD_MEDIATOR == null) {
             BT_DOWNLOAD_MEDIATOR = getMainFrame().getBTDownloadMediator();
         }
         return BT_DOWNLOAD_MEDIATOR;
     }
-	
-	private UploadMediator getUploadMediator() {
-	    if (UPLOAD_MEDIATOR == null) {
-	        UPLOAD_MEDIATOR = getMainFrame().getUploadMediator();
-	    }
-	    return UPLOAD_MEDIATOR;
-	}
 	
 	private ConnectionMediator getConnectionMediator() {
 	    if (CONNECTION_MEDIATOR == null) {

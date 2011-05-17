@@ -29,6 +29,7 @@ import org.limewire.setting.BooleanSetting;
 
 import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.bittorrent.AzureusStarter;
+import com.frostwire.gui.download.bittorrent.BTDownloadMediator;
 import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.gui.mp3.MediaPlayerComponent;
 import com.limegroup.gnutella.gui.themes.SkinCheckBoxMenuItem;
@@ -97,8 +98,6 @@ public final class StatusLine implements ThemeObserver {
      */
     private MediaPlayerComponent _mediaPlayer;
     
-    private final NetworkManager networkManager;
-
     
     ///////////////////////////////////////////////////////////////////////////
     //  Construction
@@ -108,8 +107,6 @@ public final class StatusLine implements ThemeObserver {
      * Creates a new status line in the disconnected state.
      */
     public StatusLine(NetworkManager networkManager) {
-        this.networkManager = networkManager;
-        
         GUIMediator.setSplashScreenString(
             I18n.tr("Loading Status Window..."));
 
@@ -322,7 +319,7 @@ public final class StatusLine implements ThemeObserver {
 	private void createBandwidthLabel() {
 	    _bandwidthUsageDown = new LazyTooltip(GUIMediator.getThemeImage("downloading_small"));
 	    _bandwidthUsageUp = new LazyTooltip(GUIMediator.getThemeImage("uploading_small"));
-		updateBandwidth();
+		//updateBandwidth();
 		// don't allow easy clipping
 		_bandwidthUsageDown.setMinimumSize(new Dimension(60, 20));
 		_bandwidthUsageUp.setMinimumSize(new Dimension(60, 20));
@@ -445,48 +442,17 @@ public final class StatusLine implements ThemeObserver {
 	}
 	
     /**
-     * Returns the number of uploads without counting hostiles.txt if its being seeded.
-     * @return
-     */
-    private int getNumberOfUploadsWithoutHostilesTxt() {
-        int number = GuiCoreMediator.getUploadServices().getNumUploads();
-        
-        if (GuiCoreMediator.getUploadServices().isSeedingHostilesTxt())
-            number--;
-        
-        // TODO: in some case, the logic here is wrong, real fix is pending
-        if (number < 0) {
-            number = 0;
-        }
-        
-        return number;
-    }
-	
-	/**
 	 * Updates the bandwidth statistics.
 	 */
 	public void updateBandwidth() {
-
-		//  calculate time-averaged stats
-        /*_pastDownloads[_pastBandwidthIndex] = BandwidthStat.HTTP_DOWNSTREAM_BANDWIDTH.getLastStored();
-        _pastUploads[_pastBandwidthIndex] = BandwidthStat.HTTP_UPSTREAM_BANDWIDTH.getLastStored();
-        _pastBandwidthIndex = (_pastBandwidthIndex + 1) % _numTimeSlices;
-        /*int upBW = 0; 
-        int downBW = 0;
-        for (int i = 0; i < _numTimeSlices; i++)
-            downBW += _pastDownloads[i];
-        downBW /= _numTimeSlices; 
-        for (int i = 0; i < _numTimeSlices; i++)
-            upBW += _pastUploads[i];
-        upBW /= _numTimeSlices;*/
-
+		
         //  format strings
-        String sDown = GUIUtils.rate2speed(GuiCoreMediator.getDownloadManager().getLastMeasuredBandwidth());
-        String sUp = GUIUtils.rate2speed(GuiCoreMediator.getUploadManager().getLastMeasuredBandwidth() + AzureusStarter.getLastMeasuredUploadBandwidth());
-                
-        int downloads = GuiCoreMediator.getDownloadServices().getNumActiveDownloads();
-        
-        int uploads = getNumberOfUploadsWithoutHostilesTxt();
+        String sDown = GUIUtils.rate2speed(GUIMediator.instance().getBTDownloadMediator().getDownloadsBandwidth());
+        String sUp = GUIUtils.rate2speed(GUIMediator.instance().getBTDownloadMediator().getUploadsBandwidth());
+
+        // number of uploads (seeding) and downloads
+        int downloads = GUIMediator.instance().getCurrentDownloads();
+        int uploads = GUIMediator.instance().getCurrentUploads();
 		
         
         _bandwidthUsageDown.setText(downloads + " @ " + sDown);
@@ -750,13 +716,16 @@ public final class StatusLine implements ThemeObserver {
 
 	    @Override
 		public String getToolTipText() {
-			String sDown = GUIUtils.rate2speed(GuiCoreMediator.getDownloadManager().getLastMeasuredBandwidth());
-	        String sUp = GUIUtils.rate2speed(GuiCoreMediator.getUploadManager().getLastMeasuredBandwidth());
-	        String totalDown = GUIUtils.toUnitbytes(GuiCoreMediator.getTcpBandwidthStatistics().getTotalDownstream() * 1024);
-	        String totalUp = GUIUtils.toUnitbytes(GuiCoreMediator.getTcpBandwidthStatistics().getTotalUpstream() * 1024);
-	        int downloads = GuiCoreMediator.getDownloadServices().getNumActiveDownloads();
+	    	BTDownloadMediator btDownloadMediator = GUIMediator.instance().getBTDownloadMediator();
+	    	
+	        String sDown = GUIUtils.rate2speed(btDownloadMediator.getDownloadsBandwidth());
+	        String sUp = GUIUtils.rate2speed(btDownloadMediator.getUploadsBandwidth());
 	        
-	        int uploads = getNumberOfUploadsWithoutHostilesTxt();
+	        String totalDown = GUIUtils.toUnitbytes(btDownloadMediator.getTotalBytesDownloaded());
+	        String totalUp = GUIUtils.toUnitbytes(btDownloadMediator.getTotalBytesUploaded());
+	        int downloads = GUIMediator.instance().getCurrentDownloads();
+	        
+	        int uploads = GUIMediator.instance().getCurrentUploads();
 	        
 			//  create good-looking table tooltip
 			StringBuilder tooltip = new StringBuilder(100);

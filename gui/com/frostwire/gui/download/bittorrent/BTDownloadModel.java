@@ -2,6 +2,8 @@ package com.frostwire.gui.download.bittorrent;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
 
+import com.aelitis.azureus.core.AzureusCore;
+import com.frostwire.bittorrent.AzureusStarter;
 import com.limegroup.gnutella.gui.tables.BasicDataLineModel;
 
 /**
@@ -60,22 +62,23 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
      *  
      * @return the total amount of bandwidth being consumed by active downloads.
      */
-    double getDownloadsBandwidth() {
-        int size = getRowCount();
-        double count = 1.0;
-
-//        for (int i=0; i<size; i++) {
-//            BTDownloadDataLine dd = get(i);
-//            if(!dd.isInactive()) {
-//                //  Speed can be -1 for some states, so max with 0 
-//                count += Math.max(dd.getSpeed(), 0.0);
-//            }
-//        }
-        return count;
+    double getBandwidth(boolean download) {
+        AzureusCore azureusCore = AzureusStarter.getAzureusCore();
+        
+        if (azureusCore == null) {
+        	return 0;
+        }
+        
+        return (download) ? azureusCore.getGlobalManager().getStats().getDataReceiveRate() : 
+        	azureusCore.getGlobalManager().getStats().getDataSendRate(); 
     }
     
-    double getUploadsBandwidth() {
-        return -1;
+    public double getDownloadsBandwidth() {
+    	return getBandwidth(true);
+    }
+    
+    public double getUploadsBandwidth() {
+        return getBandwidth(false);
     }
     
     public int getTotalDownloads() {

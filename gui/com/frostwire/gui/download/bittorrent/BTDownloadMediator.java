@@ -13,6 +13,7 @@ import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderCallBackInterf
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderFactory;
 import org.limewire.util.OSUtils;
 
+import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.bittorrent.AzureusStarter;
 import com.limegroup.gnutella.FileDetails;
 import com.limegroup.gnutella.FileManager;
@@ -505,5 +506,17 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
             downloaders.add(downloader);
         }
         return downloaders.toArray(new BTDownloader[0]);
+    }
+    
+    public long getTotalBytesDownloaded() {
+    	AzureusCore azureusCore = AzureusStarter.getAzureusCore();
+    	if (azureusCore == null) return 0;
+    	return azureusCore.getGlobalManager().getStats().getTotalDataBytesReceived();
+    }
+    
+    public long getTotalBytesUploaded() {
+    	AzureusCore azureusCore = AzureusStarter.getAzureusCore();
+    	if (azureusCore == null) return 0;
+    	return azureusCore.getGlobalManager().getStats().getTotalDataBytesSent();
     }
 }
