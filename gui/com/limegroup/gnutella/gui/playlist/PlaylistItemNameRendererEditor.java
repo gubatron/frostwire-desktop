@@ -1,6 +1,21 @@
 package com.limegroup.gnutella.gui.playlist;
 
+import java.awt.Color;
+import java.awt.Component;
+
+import javax.swing.JTable;
+import javax.swing.UIManager;
+import javax.swing.plaf.TableUI;
+
+import org.pushingpixels.substance.api.ColorSchemeAssociationKind;
+import org.pushingpixels.substance.api.ComponentState;
+import org.pushingpixels.substance.api.SubstanceColorScheme;
+import org.pushingpixels.substance.api.SubstanceLookAndFeel;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
+import org.pushingpixels.substance.internal.ui.SubstanceTableUI;
+import org.pushingpixels.substance.internal.ui.SubstanceTableUI.TableCellId;
+import org.pushingpixels.substance.internal.utils.SubstanceColorSchemeUtilities;
+import org.pushingpixels.substance.internal.utils.UpdateOptimizationInfo;
 
 import com.limegroup.gnutella.gui.mp3.MediaPlayerComponent;
 
@@ -10,50 +25,73 @@ import com.limegroup.gnutella.gui.mp3.MediaPlayerComponent;
  *  displayed which enable the user to purchase the song directly from the playlist
  */
 public class PlaylistItemNameRendererEditor extends SubstanceDefaultTableCellRenderer {
-    
+
     /**
      * 
      */
     private static final long serialVersionUID = -6309702261794142462L;
-    /**
-     * line containing information about the row being painted
-     */
-    private PlaylistDataLine line;
-    
-    public PlaylistItemNameRendererEditor(){
-        super();
+
+    public PlaylistItemNameRendererEditor() {
+    }
+
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+
+        PlaylistDataLine line = ((PlaylistItemName) value).getLine();
+        setFontColor(line, table, row, column);
+        return super.getTableCellRendererComponent(table, line.getSongName(), isSelected, hasFocus, row, column);
     }
 
     /**
-     * Returns the default filename for this table line
-     */
-//    @Override
-//    protected String getNameForValue(Object value) { 
-//        final PlaylistItemName rnh = (PlaylistItemName)value;
-//        this.line = rnh.getLine();
-//        return line.getSongName();
-//    }
-     
-    
-    /**
      * @return true if this PlayListItem is currently playing, false otherwise
      */
-    protected boolean isPlaying(){
+    protected boolean isPlaying(PlaylistDataLine line) {
         return MediaPlayerComponent.getInstance().getCurrentSong() == line.getPlayListItem();
     }
-    
+
     /**
      * Check what font color to use if this song is playing. 
      */
-//    @Override
-//    protected Color getFontColor(Color defaultColor) {
-//        if( line != null && isPlaying() )
-//            return line.getColor(true);
-//        else
-//            return defaultColor;
-//    }
-    
-    public String toString() {
-        return line.getSongName();
+    private void setFontColor(PlaylistDataLine line, JTable table, int row, int column) {
+
+        if (line != null && isPlaying(line)) {
+            setForeground(line.getColor(true));
+        } else {
+            Color color = Color.BLACK;
+            if (SubstanceLookAndFeel.isCurrentLookAndFeel()) {
+                color = getSubstanceForegroundColor(table, row, column);
+            } else {
+                color = UIManager.getColor("Table.foreground");
+            }
+
+            setForeground(color);
+        }
+    }
+
+    private Color getSubstanceForegroundColor(JTable table, int row, int column) {
+        TableUI tableUI = table.getUI();
+        SubstanceTableUI ui = (SubstanceTableUI) tableUI;
+        TableCellId cellId = new TableCellId(row, column);
+        ComponentState currState = ui.getCellState(cellId);
+
+        SubstanceColorScheme scheme = getColorSchemeForState(table, ui, currState);
+
+        return scheme.getForegroundColor();
+    }
+
+    private SubstanceColorScheme getColorSchemeForState(JTable table, SubstanceTableUI ui, ComponentState state) {
+        UpdateOptimizationInfo updateOptimizationInfo = ui.getUpdateOptimizationInfo();
+        if (state == ComponentState.ENABLED) {
+            if (updateOptimizationInfo == null) {
+                return SubstanceColorSchemeUtilities.getColorScheme(table, state);
+            } else {
+                return updateOptimizationInfo.getDefaultScheme();
+            }
+        } else {
+            if (updateOptimizationInfo == null) {
+                return SubstanceColorSchemeUtilities.getColorScheme(table, ColorSchemeAssociationKind.HIGHLIGHT, state);
+            } else {
+                return updateOptimizationInfo.getHighlightColorScheme(state);
+            }
+        }
     }
 }

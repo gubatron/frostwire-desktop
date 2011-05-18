@@ -38,6 +38,10 @@ public class SkinHandler {
     public static final Color getSearchResultSpeedColor() {
         return new Color(7, 170, 0);
     }
+    
+    public static final Color getPlayingDataLineColor() {
+        return new Color(7, 170, 0);
+    }
 
     /**
      * Setting for the search ip private address Color.
