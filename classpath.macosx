@@ -32,7 +32,6 @@
 	<classpathentry kind="lib" path="lib/jars/commons-logging.jar"/>
 	<classpathentry kind="lib" path="lib/jars/daap.jar"/>
 	<classpathentry kind="lib" path="lib/jars/forms.jar"/>
-	<classpathentry kind="lib" path="lib/jars/foxtrot.jar"/>
 	<classpathentry kind="lib" path="lib/jars/gettext-commons.jar"/>
 	<classpathentry kind="lib" path="lib/jars/guice-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/jars/httpclient-4.0.jar"/>
