@@ -397,16 +397,16 @@ public final class VisualConnectionCallback implements ActivityCallback {
      * Notification that the address has changed.
      */
     public void handleAddressStateChanged() {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                // don't touch GUI code if it isn't constructed.
-                // this is necessary here only because addressStateChanged
-                // is triggered by Acceptor, which is init'd prior to the
-                // GUI actually existing.
-                if (GUIMediator.isConstructed())
-                    SearchMediator.addressChanged();
-            }
-        });
+//        SwingUtilities.invokeLater(new Runnable() {
+//            public void run() {
+//                // don't touch GUI code if it isn't constructed.
+//                // this is necessary here only because addressStateChanged
+//                // is triggered by Acceptor, which is init'd prior to the
+//                // GUI actually existing.
+//                if (GUIMediator.isConstructed())
+//                    SearchMediator.addressChanged();
+//            }
+//        });
     }
     
     public void handleNoInternetConnection() {

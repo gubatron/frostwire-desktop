@@ -10,8 +10,6 @@ import java.util.Set;
 
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 import org.limewire.io.Connectable;
 import org.limewire.io.ConnectableImpl;
@@ -32,7 +30,6 @@ import com.frostwire.bittorrent.websearch.isohunt.ISOHuntItem;
 import com.frostwire.bittorrent.websearch.isohunt.ISOHuntResponse;
 import com.frostwire.bittorrent.websearch.mininova.MininovaVuzeItem;
 import com.frostwire.bittorrent.websearch.mininova.MininovaVuzeResponse;
-import com.limegroup.gnutella.BrowseHostHandler;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MediaType;
@@ -47,7 +44,6 @@ import com.limegroup.gnutella.gui.banner.Banner;
 import com.limegroup.gnutella.gui.download.DownloaderUtils;
 import com.limegroup.gnutella.gui.download.GuiDownloaderFactory;
 import com.limegroup.gnutella.gui.download.SearchResultDownloaderFactory;
-import com.limegroup.gnutella.search.HostData;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 import com.limegroup.gnutella.settings.SearchSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
@@ -191,13 +187,6 @@ public final class SearchMediator {
     }
     
     /**
-     * Notification that the address has changed -- pass it along.
-     */
-    public static void addressChanged() {
-        getSearchInputManager().addressChanged();
-    }
-    
-    /**
      * Informs the INPUT_MANAGER that we want to display the searching
      * window.
      */
@@ -311,8 +300,7 @@ public final class SearchMediator {
         // Update the GUID
         final GUID guid = new GUID(GUID.makeGuid());
         in.setGUID(guid);
-        BrowseHostHandler bhh =
-            GuiCoreMediator.getSearchServices().doAsynchronousBrowseHost(host, guid, 
+        GuiCoreMediator.getSearchServices().doAsynchronousBrowseHost(host, guid, 
                                                    new GUID(GUID.makeGuid()), 
                                                    null, false);
                                          
@@ -341,9 +329,9 @@ public final class SearchMediator {
         // Update the GUI
         GUID guid = new GUID(GUID.makeGuid());
         String title = host != null ? host.getAddress() + ":" + host.getPort() : I18n.tr("Firewalled Host"); 
-        ResultPanel rp =  addBrowseHostTab(guid, title);
+        addBrowseHostTab(guid, title);
         // Do the actual browse host
-        BrowseHostHandler bhh = GuiCoreMediator.getSearchServices().doAsynchronousBrowseHost(
+       GuiCoreMediator.getSearchServices().doAsynchronousBrowseHost(
                                     host, guid, serventID, proxies,
                                     canDoFWTransfer);
         
@@ -488,7 +476,7 @@ public final class SearchMediator {
      */
     private static void doSearch(final byte[] guid, final SearchInformation info) {
         final String query = info.getQuery();
-        String xml = info.getXML();
+        info.getXML();
         MediaType media = info.getMediaType();
 
         //If type is torrent, we'll try to fetch torrent search results from engine

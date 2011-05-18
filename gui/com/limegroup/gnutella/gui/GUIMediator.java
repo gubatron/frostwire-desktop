@@ -73,7 +73,6 @@ import com.limegroup.gnutella.gui.shell.FrostAssociations;
 import com.limegroup.gnutella.gui.shell.ShellAssociationManager;
 import com.limegroup.gnutella.gui.tabs.LibraryPlayListTab;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
-import com.limegroup.gnutella.gui.upload.UploadMediator;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.PlayerSettings;
 import com.limegroup.gnutella.settings.QuestionsHandler;
@@ -347,12 +346,6 @@ public final class GUIMediator {
 	 * responsible for displaying active downloads to the user.
 	 */
 	private BTDownloadMediator BT_DOWNLOAD_MEDIATOR;
-
-	/**
-	 * Constant handle to the <tt>UploadMediator</tt> class that is responsible
-	 * for displaying active uploads to the user.
-	 */
-	private UploadMediator UPLOAD_MEDIATOR;
 
 	/**
 	 * Constant handle to the <tt>ConnectionMediator</tt> class that is

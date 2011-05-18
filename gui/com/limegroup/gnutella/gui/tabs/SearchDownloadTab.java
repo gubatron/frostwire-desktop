@@ -5,8 +5,6 @@ import java.awt.Dimension;
 import javax.swing.JComponent;
 import javax.swing.JSplitPane;
 
-import org.limewire.util.OSUtils;
-
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.search.SearchMediator;
 import com.limegroup.gnutella.gui.tables.ComponentMediator;
@@ -46,10 +44,9 @@ public final class SearchDownloadTab extends AbstractTab {
 		SEARCH_DOWNLOAD_SPLIT_PANE.setDividerLocation(1000);
 
 		JComponent searchBoxPanel = SearchMediator.getSearchComponent();
-		int width = OSUtils.isMacOSX() ? 220 : 100;
-		searchBoxPanel.setPreferredSize(new Dimension(width,100));
+//		int width = OSUtils.isMacOSX() ? 220 : 100;
+//		searchBoxPanel.setPreferredSize(new Dimension(width,100));
         
-		
         SPLIT_PANE = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, searchBoxPanel, SEARCH_DOWNLOAD_SPLIT_PANE);
 		SPLIT_PANE.setDividerSize(0);
 	}
