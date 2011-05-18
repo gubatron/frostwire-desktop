@@ -26,6 +26,7 @@ import org.limewire.concurrent.SyncWrapper;
 import org.limewire.io.DiskException;
 import org.limewire.io.NetworkInstanceUtils;
 import org.limewire.service.ErrorService;
+import org.limewire.util.FileUtils;
 
 import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.AzureusCoreComponent;
@@ -1513,12 +1514,22 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 
     public void removeFromAzureusAndDisk() {
     	removeFromAzureus();
-        	
+    	
+    	//if the download already completed, do not delete the data files.
+    	if (_manager.getState() == 30 || _manager.getStats().getCompleted() == 1000) {
+    		System.out.println("ManagedTorrent: Stop here if you're finished.");
+    		return;
+    	}
+    	
        	if (_manager != null && _manager.getGlobalManager() != null) {	
             // in the future, we must use a better state machine to avoid this hacks
             try {
                 File file = _manager.getAbsoluteSaveLocation();
-                file.delete();
+                if (file.isDirectory()) {
+                	FileUtils.deleteRecursive(file);
+                } else {
+                	file.delete();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

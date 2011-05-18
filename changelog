@@ -1,5 +1,8 @@
 frostwire (4.21.7) stable; urgency=high
 
+  * Makes sure cancelling torrents that have finished are not deleted.
+  * Folders created by torrents that are cancelled during download are deleted
+    to avoid any unwanted file sharing.
   * Fixes a bug when migrating from an older version of FrostWire on which
     previously Saved and individually shared files would still be shared
     after not sharing finished downloads on the migration wizard.
