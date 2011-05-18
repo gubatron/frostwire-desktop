@@ -617,7 +617,6 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
         case SearchTableColumns.QUALITY_IDX: 
         case SearchTableColumns.COUNT_IDX:
         case SearchTableColumns.ICON_IDX: 
-        case SearchTableColumns.CHAT_IDX:
         case SearchTableColumns.LICENSE_IDX:
             return false;
         default:
@@ -643,15 +642,10 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
                 return new Integer(count);
         case SearchTableColumns.ICON_IDX: return getIcon();
         case SearchTableColumns.NAME_IDX: return new ResultNameHolder(this);
-        case SearchTableColumns.TYPE_IDX: return getExtension();
         case SearchTableColumns.SIZE_IDX: return new SizeHolder(getSize());
-        case SearchTableColumns.SPEED_IDX: return getSpeed();
-        case SearchTableColumns.CHAT_IDX: return isChatEnabled() ? Boolean.TRUE : Boolean.FALSE;
-        case SearchTableColumns.LOCATION_IDX: return getLocation();
-        case SearchTableColumns.VENDOR_IDX: return RESULT.getVendor();
+        case SearchTableColumns.SOURCE_IDX: return RESULT.getVendor();
         case SearchTableColumns.ADDED_IDX: return getAddedOn();
         case SearchTableColumns.LICENSE_IDX: return new NameValue.ComparableByName<Integer>(_licenseName, new Integer(_licenseState));
-		case SearchTableColumns.SPAM_IDX: return new Float(getSpamRating());
         default:
             if(_doc == null || index == -1) // no column, no value.
                 return null;
@@ -674,26 +668,6 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
                     return new String[] { icon.toString() };
             }
             return null;
-        }
-        // if we're on the location column and we've got multiple results,
-        // list them all out.
-        if(col == SearchTableColumns.LOCATION_IDX && getLocationCount() > 1) {
-            StringBuilder sb = new StringBuilder(3 * 23);
-            List<String> retList = new LinkedList<String>();
-            Iterator<String> iter = _location.getHosts().iterator();
-            for(int i = 0; iter.hasNext(); i++) {
-                if(i == 3) {
-                    i = 0;
-                    retList.add(sb.toString());
-                    sb = new StringBuilder(3 * 23);
-                } 
-                sb.append(iter.next());
-                if(iter.hasNext())
-                    sb.append(", ");
-                else
-                    retList.add(sb.toString());
-            }
-            return retList.toArray(new String[retList.size()]);
         }
         
         List<String> tips = new LinkedList<String>();

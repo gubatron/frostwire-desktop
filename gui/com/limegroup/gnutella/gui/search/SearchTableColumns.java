@@ -11,7 +11,6 @@ import javax.swing.Icon;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.tables.ChatHolder;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.licenses.License;
 import com.limegroup.gnutella.settings.SearchSettings;
@@ -53,50 +52,26 @@ final class SearchTableColumns {
         new SearchColumn(NAME_IDX, "RESULT_PANEL_NAME", I18n.tr("Name"),
                             272, true,  ResultNameHolder.class);
                             
-    static final int TYPE_IDX = 5;
-    private final LimeTableColumn TYPE_COLUMN =
-        new SearchColumn(TYPE_IDX, "RESULT_PANEL_TYPE", I18n.tr("Type"),
-                            42, true, String.class);
-
-    static final int SIZE_IDX = 6;
+    static final int SIZE_IDX = 5;
     private final LimeTableColumn SIZE_COLUMN =
         new SearchColumn(SIZE_IDX, "RESULT_PANEL_SIZE", I18n.tr("Size"),
                             53, true, String.class);
                             
-    static final int SPEED_IDX = 7;
-    private final LimeTableColumn SPEED_COLUMN =
-        new SearchColumn(SPEED_IDX, "RESULT_PANEL_SPEED", I18n.tr("Speed"),
-                            61, true, String.class);
-    
-    static final int CHAT_IDX = 8;
-    private final LimeTableColumn CHAT_COLUMN =
-        new SearchColumn(CHAT_IDX, "RESULT_PANEL_CHAT", I18n.tr("Chat"),
-                            40, false, ChatHolder.class);
-    
-    static final int LOCATION_IDX = 9;
-    private final LimeTableColumn LOCATION_COLUMN =
-        new SearchColumn(LOCATION_IDX, "RESULT_PANEL_LOCATION", I18n.tr("Location"),
-                           86, false, EndpointHolder.class);
-    
-    static final int VENDOR_IDX = 10;
-    private final LimeTableColumn VENDOR_COLUMN = 
-        new SearchColumn(VENDOR_IDX, "RESULT_PANEL_VENDOR", I18n.tr("Vendor"),
+   
+    static final int SOURCE_IDX = 6;
+    private final LimeTableColumn SOURCE_COLUMN = 
+        new SearchColumn(SOURCE_IDX, "RESULT_PANEL_SOURCE", I18n.tr("Source"),
                             55, false, String.class);
                             
-    static final int ADDED_IDX = 11;
+    static final int ADDED_IDX = 7;
     private final LimeTableColumn ADDED_COLUMN =
         new SearchColumn(ADDED_IDX, "RESULT_PANEL_ADDED", I18n.tr("Created"),
                             55, false, Date.class);
                             
-    static final int SPAM_IDX = 12;
-    private final LimeTableColumn SPAM_COLUMN =
-        new SearchColumn(SPAM_IDX, "RESULT_PANEL_SPAM", I18n.tr("Junk Rating"),
-                            40, false, Float.class);
-
     /**
      * The number of default columns.
      */
-    static final int DEFAULT_COLUMN_COUNT = 13;
+    static final int DEFAULT_COLUMN_COUNT = 8;
     
     /**
      * The number of extra XML columns.
@@ -155,15 +130,10 @@ final class SearchTableColumns {
         case COUNT_IDX: return COUNT_COLUMN;
         case ICON_IDX: return ICON_COLUMN;
         case NAME_IDX: return NAME_COLUMN;
-        case TYPE_IDX: return TYPE_COLUMN;
         case SIZE_IDX: return SIZE_COLUMN;
-        case SPEED_IDX: return SPEED_COLUMN;
-        case CHAT_IDX: return CHAT_COLUMN;
-        case LOCATION_IDX: return LOCATION_COLUMN;
-        case VENDOR_IDX: return VENDOR_COLUMN;
+        case SOURCE_IDX: return SOURCE_COLUMN;
         case ADDED_IDX: return ADDED_COLUMN;
         case LICENSE_IDX: return LICENSE_COLUMN;
-        case SPAM_IDX: return SPAM_COLUMN;
         default:
             if (idx == -1 && SearchSettings.moveJunkToBottom()) {
                 // idx is -1 if BasicDataLineModel is set to unsorted 
