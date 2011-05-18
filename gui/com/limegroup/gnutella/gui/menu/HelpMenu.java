@@ -10,7 +10,6 @@ import javax.swing.Icon;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.TipOfTheDayMediator;
