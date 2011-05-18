@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -16,9 +17,11 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.bittorrent.BTMetaInfo;
+import com.limegroup.bittorrent.settings.BittorrentSettings;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
+import com.limegroup.gnutella.http.HTTPUtils;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 public final class GuiFrostWireUtils extends CoreFrostWireUtils {
@@ -194,4 +197,27 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
 	    
 	    GuiCoreMediator.getFileManager().loadSettings();
 	}
+	
+	public static void showTorrentDetails(long delay, 
+			String redirectUrl, 
+			String query, 
+			String torrentDetailsURL, 
+			String torrentFileName) {
+		
+		if (!BittorrentSettings.TORRENT_DETAIL_PAGE_SHOWN_AFTER_DOWNLOAD.getValue())
+			return;
+		
+		try {
+			if (redirectUrl != null) {
+				String queryParam="q="+ HTTPUtils.encode(query, "utf-8");
+				String torrentDetailsURLparam = "u="+ HTTPUtils.encode(torrentDetailsURL,"utf-8");
+				String torrentFileNameparam = "t=" + HTTPUtils.encode(torrentDetailsURL,"utf-8");
+				GUIMediator.waitAndOpenURL(redirectUrl + "?"+queryParam+"&"+torrentDetailsURLparam+"&"+torrentFileNameparam,delay);
+			} else
+				GUIMediator.waitAndOpenURL(torrentDetailsURL, delay);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

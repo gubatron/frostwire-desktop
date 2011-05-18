@@ -10,6 +10,10 @@ import com.limegroup.gnutella.settings.LimeProps;
  * Bittorrent settings
  */
 public class BittorrentSettings extends LimeProps {
+	
+	/** Amount of time to wait in milliseconds before showing torrent details page */
+	public static final long SHOW_TORRENT_DETAILS_DELAY = 3500;
+
 	private BittorrentSettings() {
 		// empty constructor
 	}

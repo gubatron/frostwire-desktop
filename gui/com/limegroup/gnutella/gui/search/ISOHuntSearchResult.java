@@ -3,7 +3,6 @@ package com.limegroup.gnutella.gui.search;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.ParseException;
@@ -11,6 +10,7 @@ import java.text.SimpleDateFormat;
 
 import javax.swing.JPopupMenu;
 
+import com.frostwire.GuiFrostWireUtils;
 import com.frostwire.bittorrent.websearch.isohunt.ISOHuntItem;
 import com.limegroup.bittorrent.settings.BittorrentSettings;
 import com.limegroup.gnutella.GUID;
@@ -18,7 +18,6 @@ import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.util.PopupUtils;
-import com.limegroup.gnutella.http.HTTPUtils;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
 
 public class ISOHuntSearchResult extends AbstractSearchResult  {
@@ -143,28 +142,11 @@ public class ISOHuntSearchResult extends AbstractSearchResult  {
 			e.printStackTrace();
 		}
 		
-		showTorrentDetails();
-	}
-	
-	private void showTorrentDetails() {
-		showTorrentDetails(1250);
+		showTorrentDetails(BittorrentSettings.SHOW_TORRENT_DETAILS_DELAY);
 	}
 	
 	private void showTorrentDetails(long delay) {
-		if (!BittorrentSettings.TORRENT_DETAIL_PAGE_SHOWN_AFTER_DOWNLOAD.getValue())
-			return;
-		
-		try {
-			if (redirectUrl != null) {
-				String queryParam="q="+ HTTPUtils.encode(_info.getQuery(), "utf-8");
-				String torrentDetailsURL = "u="+ HTTPUtils.encode(_item.link,"utf-8");
-				String torrentFileName = "t=" + HTTPUtils.encode(getFileName(),"utf-8");
-				GUIMediator.waitAndOpenURL(redirectUrl + "?"+queryParam+"&"+torrentDetailsURL+"&"+torrentFileName,delay);
-			} else
-				GUIMediator.waitAndOpenURL(_item.link, delay);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		GuiFrostWireUtils.showTorrentDetails(delay,redirectUrl,_info.getQuery(),_item.link,getFileName());
 	}
 
 	@Override
