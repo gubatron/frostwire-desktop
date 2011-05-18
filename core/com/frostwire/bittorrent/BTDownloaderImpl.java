@@ -10,6 +10,8 @@ import org.gudy.azureus2.core3.util.DisplayFormatters;
 public class BTDownloaderImpl implements BTDownloader {
 
     private final DownloadManager _downloadManager;
+    
+    private boolean _deleteDataWhenRemove;
 
     public BTDownloaderImpl(DownloadManager downloadManager) {
         _downloadManager = downloadManager;
@@ -40,7 +42,7 @@ public class BTDownloaderImpl implements BTDownloader {
     }
 
     public void remove() {
-        TorrentUtil.removeDownload(_downloadManager);
+        TorrentUtil.removeDownload(_downloadManager, _deleteDataWhenRemove);
     }
 
     public void pause() {
@@ -130,7 +132,6 @@ public class BTDownloaderImpl implements BTDownloader {
         return tmp;
     }
 
-    @Override
     public String getSeedsString() {
         long lTotalSeeds = -1;
         long lTotalPeers = 0;
@@ -175,5 +176,13 @@ public class BTDownloaderImpl implements BTDownloader {
         tmp = tmp.replaceAll("%2", param2);
 
         return tmp;
+    }
+    
+    public boolean isDeleteDataWhenRemove() {
+        return _deleteDataWhenRemove;
+    }
+    
+    public void deleteDataWhenRemove(boolean deleteDataWhenRemove) {
+        _deleteDataWhenRemove = deleteDataWhenRemove;
     }
 }

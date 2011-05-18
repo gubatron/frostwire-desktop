@@ -5,6 +5,7 @@ import java.io.File;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.JOptionPane;
 
 import com.frostwire.bittorrent.BTDownloader;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -163,9 +164,9 @@ final class BTDownloadActions {
         private static final long serialVersionUID = -1742554445891016991L;
 
         public RemoveAction() {
-            putValue(Action.NAME, I18n.tr("Cancel Download"));
-            putValue(LimeAction.SHORT_NAME, I18n.tr("Cancel"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Cancel Selected Downloads"));
+            putValue(Action.NAME, I18n.tr("Remove Download"));
+            putValue(LimeAction.SHORT_NAME, I18n.tr("Remove"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Remove Selected Downloads"));
             putValue(LimeAction.ICON_NAME, "DOWNLOAD_KILL");
         }
 
