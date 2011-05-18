@@ -26,9 +26,9 @@ import org.limewire.service.MessageService;
 import org.limewire.util.FileUtils;
 
 import com.frostwire.bittorrent.AzureusStarter;
-import com.frostwire.gui.download.bittorrent.BTDownloader;
-import com.frostwire.gui.download.bittorrent.BTDownloaderFactory;
-import com.frostwire.gui.download.bittorrent.BTDownloaderImpl;
+import com.frostwire.bittorrent.BTDownloader;
+import com.frostwire.bittorrent.BTDownloaderFactory;
+import com.frostwire.bittorrent.BTDownloaderImpl;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;

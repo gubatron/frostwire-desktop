@@ -1,4 +1,4 @@
-package com.frostwire.gui.download.bittorrent;
+package com.frostwire.bittorrent;
 
 import java.io.File;
 

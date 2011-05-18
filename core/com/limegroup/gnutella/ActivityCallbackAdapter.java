@@ -5,7 +5,7 @@ import java.util.Set;
 
 import org.limewire.io.IpPort;
 
-import com.frostwire.gui.download.bittorrent.BTDownloader;
+import com.frostwire.bittorrent.BTDownloader;
 import com.google.inject.Singleton;
 import com.limegroup.gnutella.browser.MagnetOptions;
 import com.limegroup.gnutella.connection.ConnectionLifecycleEvent;

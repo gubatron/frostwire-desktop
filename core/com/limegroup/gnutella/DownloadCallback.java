@@ -1,6 +1,6 @@
 package com.limegroup.gnutella;
 
-import com.frostwire.gui.download.bittorrent.BTDownloader;
+import com.frostwire.bittorrent.BTDownloader;
 
 /**
  * A callback for download information.

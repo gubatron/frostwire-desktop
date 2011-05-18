@@ -1,6 +1,6 @@
 package com.limegroup.gnutella.downloader;
 
-import com.frostwire.gui.download.bittorrent.BTDownloader;
+import com.frostwire.bittorrent.BTDownloader;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.limegroup.gnutella.DownloadCallback;

@@ -15,6 +15,8 @@ import org.limewire.util.OSUtils;
 
 import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.bittorrent.AzureusStarter;
+import com.frostwire.bittorrent.BTDownloader;
+import com.frostwire.bittorrent.BTDownloaderFactory;
 import com.limegroup.gnutella.FileDetails;
 import com.limegroup.gnutella.FileManager;
 import com.limegroup.gnutella.MediaType;

@@ -26,6 +26,8 @@ import javax.swing.border.EmptyBorder;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.limewire.util.OSUtils;
 
+import com.frostwire.bittorrent.BTDownloader;
+import com.frostwire.bittorrent.BTDownloaderFactory;
 import com.limegroup.gnutella.SaveLocationException;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIMediator;

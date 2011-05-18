@@ -10,7 +10,7 @@ import java.util.Vector;
 import org.limewire.io.IpPort;
 import org.limewire.net.SocketsManager.ConnectType;
 
-import com.frostwire.gui.download.bittorrent.BTDownloader;
+import com.frostwire.bittorrent.BTDownloader;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;

@@ -41,7 +41,7 @@
  * AELITIS, SAS au capital de 46,603.30 euros,
  * 8 Allee Lenotre, La Grille Royale, 78600 Le Mesnil le Roi, France.
  */
-package com.frostwire.gui.download.bittorrent;
+package com.frostwire.bittorrent;
 
 import java.util.Arrays;
 

@@ -1,4 +1,4 @@
-package com.frostwire.gui.download.bittorrent;
+package com.frostwire.bittorrent;
 
 import java.io.File;
 
@@ -6,7 +6,6 @@ import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.tracker.client.TRTrackerScraperResponse;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
 
-import com.limegroup.gnutella.gui.I18n;
 
 public class BTDownloaderImpl implements BTDownloader {
 
@@ -120,7 +119,7 @@ public class BTDownloaderImpl implements BTDownloader {
 
         String tmp;
         if (started) {
-            tmp = hasScrape ? (lConnectedPeers > lTotalPeers ? "%1" : "%1 " + I18n.tr("of") + " %2") : "%1";
+            tmp = hasScrape ? (lConnectedPeers > lTotalPeers ? "%1" : "%1 " + "/" + " %2") : "%1";
         } else {
             tmp = hasScrape ? "%2" : "";
         }
@@ -164,7 +163,7 @@ public class BTDownloaderImpl implements BTDownloader {
         String tmp;
 
         if (started) {
-            tmp = hasScrape ? (lConnectedSeeds > lTotalSeeds ? "%1" : "%1 " + I18n.tr("of") + " %2") : "%1";
+            tmp = hasScrape ? (lConnectedSeeds > lTotalSeeds ? "%1" : "%1 " + "/" + " %2") : "%1";
         } else {
             tmp = hasScrape ? "%2" : "";
         }
