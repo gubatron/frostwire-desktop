@@ -172,6 +172,8 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
             
             restart = true;
         }
+	    
+	    COConfigurationManager.save();
         
         // Notify that the address changed if:
         //    1) The 'forced address' status changed.

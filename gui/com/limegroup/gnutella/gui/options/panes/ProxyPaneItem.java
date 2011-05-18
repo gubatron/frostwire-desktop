@@ -174,6 +174,8 @@ public final class ProxyPaneItem extends AbstractPaneItem {
         COConfigurationManager.setParameter("Enable.SOCKS", connectionMethod == ConnectionSettings.C_SOCKS4_PROXY || connectionMethod == ConnectionSettings.C_SOCKS5_PROXY);
         COConfigurationManager.setParameter("Proxy.Host", proxyHost);
         COConfigurationManager.setParameter("Proxy.Port", String.valueOf(proxyPort));
+        
+        COConfigurationManager.save();
 
         return false;
     }

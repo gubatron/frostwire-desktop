@@ -16,6 +16,7 @@ import com.aelitis.azureus.core.AzureusCoreException;
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.AzureusCoreLifecycleListener;
 import com.limegroup.bittorrent.settings.BittorrentSettings;
+import com.limegroup.gnutella.settings.ConnectionSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
@@ -62,7 +63,8 @@ public final class AzureusStarter {
 			//This does work
 			org.gudy.azureus2.core3.util.SystemProperties.APPLICATION_NAME = "azureus";
 			org.gudy.azureus2.core3.util.SystemProperties.setUserPath(FrostWireUtils.getRequestedUserSettingsLocation() + File.separator + "azureus" + File.separator);
-			COConfigurationManager.setParameter("General_sDefaultTorrent_Directory", SharingSettings.DEFAULT_DOT_TORRENTS_DIR_SETTING.getValue().getAbsolutePath()); 
+			
+			COConfigurationManager.setParameter("General_sDefaultTorrent_Directory", SharingSettings.DEFAULT_DOT_TORRENTS_DIR_SETTING.getValue().getAbsolutePath());
 			
 			try {
 				AZUREUS_CORE = AzureusCoreFactory.create();

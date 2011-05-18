@@ -139,6 +139,8 @@ public final class ProxyLoginPaneItem extends AbstractPaneItem {
         // put proxy configuration in vuze options
         COConfigurationManager.setParameter("Proxy.Username", username);
         COConfigurationManager.setParameter("Proxy.Password", password);
+        
+        COConfigurationManager.save();
 
         return false;
     }
