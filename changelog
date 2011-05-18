@@ -10,7 +10,7 @@ frostwire (4.21.7) stable; urgency=high
     freeze for a few seconds before moving towards the next screen.
   * Migration wizard will always be shown to make sure users are aware of
     what they're sharing. 
-  * Sharing completed files is always set to off by default.
+  * Sharing completed files is always set to off by default on the configuration wizard.
 	
  -- FrostWire Team <contact@frostwire.com>  Thu, 16 May 2011 17:10:25 -0500
 
