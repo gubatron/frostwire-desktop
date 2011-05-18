@@ -52,7 +52,6 @@ import com.limegroup.gnutella.gui.options.panes.DaapPasswordPaneItem;
 import com.limegroup.gnutella.gui.options.panes.DaapSupportPaneItem;
 import com.limegroup.gnutella.gui.options.panes.DefaultActionPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ForceIPPaneItem;
-import com.limegroup.gnutella.gui.options.panes.IgnoreResultTypesPaneItem;
 import com.limegroup.gnutella.gui.options.panes.IgnoreResultsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ImageViewerPaneItem;
 import com.limegroup.gnutella.gui.options.panes.MaximumSearchesPaneItem;
@@ -329,7 +328,7 @@ public final class OptionsConstructor {
         
 		// filter options
 		addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, FILTERS_KEY, I18n.tr("Filters"));
-		addOption(FILTERS_KEY, RESULTS_KEY, I18n.tr("Keywords"), IgnoreResultsPaneItem.class, IgnoreResultTypesPaneItem.class); 
+		addOption(FILTERS_KEY, RESULTS_KEY, I18n.tr("Keywords"), IgnoreResultsPaneItem.class); 
         
 		// advanced options
 		addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, ADVANCED_KEY, I18n.tr("Advanced"));        

@@ -15,14 +15,12 @@ import javax.swing.JRadioButton;
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.limewire.io.NetworkUtils;
 
-import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
-import com.limegroup.gnutella.gui.GuiCoreMediator;
+import com.limegroup.gnutella.gui.GUIUtils.SizePolicy;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.SizedWholeNumberField;
 import com.limegroup.gnutella.gui.WholeNumberField;
-import com.limegroup.gnutella.gui.GUIUtils.SizePolicy;
 import com.limegroup.gnutella.settings.ConnectionSettings;
 
 /**
@@ -50,15 +48,12 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
     private final JRadioButton UPNP = new JRadioButton(I18n.tr("Use UPnP (Recommended)"));
     private final JRadioButton PORT = new JRadioButton(I18n.tr("Manual Port Forward:"));
     
-    private final NetworkManager networkManager;
-
 	/**
 	 * The constructor constructs all of the elements of this 
 	 * <tt>AbstractPaneItem</tt>.
 	 */
 	public ForceIPPaneItem() {
 	    super(TITLE, LABEL);
-		this.networkManager = GuiCoreMediator.getNetworkManager();
 		
 		BUTTONS.add(UPNP);
 		BUTTONS.add(PORT);

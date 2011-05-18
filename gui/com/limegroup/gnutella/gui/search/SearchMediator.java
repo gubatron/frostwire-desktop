@@ -30,6 +30,9 @@ import com.frostwire.bittorrent.websearch.isohunt.ISOHuntItem;
 import com.frostwire.bittorrent.websearch.isohunt.ISOHuntResponse;
 import com.frostwire.bittorrent.websearch.mininova.MininovaVuzeItem;
 import com.frostwire.bittorrent.websearch.mininova.MininovaVuzeResponse;
+import com.frostwire.gnutella.gui.filters.SearchFilter;
+import com.frostwire.gnutella.gui.filters.SearchFilterFactory;
+import com.frostwire.gnutella.gui.filters.SearchFilterFactoryImpl;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MediaType;
@@ -128,6 +131,8 @@ public final class SearchMediator {
     
     /** Banner that shows a message in the search result panel. */
     private static volatile Banner banner;
+    
+    private static SearchFilterFactory SEARCH_FILTER_FACTORY;
 
     /**
      * Constructs the UI components of the search result display area of the 
@@ -135,8 +140,7 @@ public final class SearchMediator {
      */
     public SearchMediator() {
         // Set the splash screen text...
-        final String splashScreenString =
-            I18n.tr("Loading Search Window...");
+        final String splashScreenString = I18n.tr("Loading Search Window...");
         GUIMediator.setSplashScreenString(splashScreenString);
         GUIMediator.addRefreshListener(getSearchResultDisplayer());
         
@@ -476,98 +480,93 @@ public final class SearchMediator {
      */
     private static void doSearch(final byte[] guid, final SearchInformation info) {
         final String query = info.getQuery();
-        info.getXML();
-        MediaType media = info.getMediaType();
 
-        //If type is torrent, we'll try to fetch torrent search results from engine
-        if (media.equals(MediaType.TYPE_TORRENTS)) {
-        	//ClearBits (formerly known as LegalTorrents.com) Search Thread.
-        	new Thread(new Runnable() {
-    			public void run() {
-    			    
-    				final ResultPanel rp = getResultPanelForGUID(new GUID(guid));
-			        if(rp != null) {
-			        	
-			        	ClearBitsResponse response = WebTorrentSearch.searchClearBits(query);
-			        	
-			        	if (response != null) {
-				        	final List<SearchResult> results = normalizeClearBitsResponse(response, info);
+        //ClearBits (formerly known as LegalTorrents.com) Search Thread.
+        new Thread(new Runnable() {
+            public void run() {
 
-				        	SwingUtilities.invokeLater(new Runnable() {
+                final ResultPanel rp = getResultPanelForGUID(new GUID(guid));
+                if (rp != null) {
 
-								@Override
-								public void run() {
-						        	for (final SearchResult sr : results) {
-						        	    getSearchResultDisplayer().addQueryResult(guid, sr, rp);
-						        	}
-								}});
-			        	}
-			        }
-    			}
-    		}).start();        	
+                    ClearBitsResponse response = WebTorrentSearch.searchClearBits(query);
 
-        	
-        	//ISOHunt Search Thread.
-        	new Thread(new Runnable() {
-    			public void run() {
-    			    
-    				final ResultPanel rp = getResultPanelForGUID(new GUID(guid));
-			        if(rp != null) {
-			        	
-			        	ISOHuntResponse response = WebTorrentSearch.searchISOHunt(query);
-			        	
-			        	if (response != null) {
-				        	final List<SearchResult> results = normalizeISOHuntResponse(response,info);
+                    if (response != null) {
+                        final List<SearchResult> results = normalizeClearBitsResponse(response, info);
 
-				        	SwingUtilities.invokeLater(new Runnable() {
+                        SwingUtilities.invokeLater(new Runnable() {
 
-								@Override
-								public void run() {
-						        	for (final SearchResult sr : results) {
-						        		RESULT_DISPLAYER.addQueryResult(guid, sr, rp);
-						        	}
-								}});
-			        	}
-			        }
-    			}
-    		}).start();
-        	
-        	//MininovaVuze Search Thread.
-        	new Thread(new Runnable() {
-    			public void run() {
-    			    
-    				final ResultPanel rp = getResultPanelForGUID(new GUID(guid));
-			        if(rp != null) {
-			        	
-			        	MininovaVuzeResponse response = WebTorrentSearch.searchMininovaVuze(query);
-			        	
-			        	if (response != null) {
-				        	final List<SearchResult> results = normalizeMininovaVuzeResponse(response, info);
+                            @Override
+                            public void run() {
+                                SearchFilter filter = getSearchFilterFactory().createFilter();
+                                for (SearchResult sr : results) {
+                                    if (filter.allow(sr)) {
+                                        getSearchResultDisplayer().addQueryResult(guid, sr, rp);
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        }).start();
 
-				        	SwingUtilities.invokeLater(new Runnable() {
+        //ISOHunt Search Thread.
+        new Thread(new Runnable() {
+            public void run() {
 
-								@Override
-								public void run() {
-						        	for (final SearchResult sr : results) {
-						        		RESULT_DISPLAYER.addQueryResult(guid, sr, rp);
-						        	}
-								}});
-			        	}
-			        }
-    			}
-    		}).start();        	
-        }
-        
-//        if(info.isXMLSearch()) {
-//            GuiCoreMediator.getSearchServices().query(guid, query, xml, media);
-//        } else if(info.isKeywordSearch()) {
-//            GuiCoreMediator.getSearchServices().query(guid, query, media);
-//        } else if(info.isWhatsNewSearch()) {
-//            GuiCoreMediator.getSearchServices().queryWhatIsNew(guid, media);
-//        } else if(info.isBrowseHostSearch()) {
-//            IpPort ipport = info.getIpPort();
-//            doBrowseHost(new ConnectableImpl(ipport, false), null);
-//        }
+                final ResultPanel rp = getResultPanelForGUID(new GUID(guid));
+                if (rp != null) {
+
+                    ISOHuntResponse response = WebTorrentSearch.searchISOHunt(query);
+
+                    if (response != null) {
+                        final List<SearchResult> results = normalizeISOHuntResponse(response, info);
+
+                        SwingUtilities.invokeLater(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                SearchFilter filter = getSearchFilterFactory().createFilter();
+                                for (SearchResult sr : results) {
+                                    if (filter.allow(sr)) {
+                                        getSearchResultDisplayer().addQueryResult(guid, sr, rp);
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        }).start();
+
+        //MininovaVuze Search Thread.
+        new Thread(new Runnable() {
+            public void run() {
+
+                final ResultPanel rp = getResultPanelForGUID(new GUID(guid));
+                if (rp != null) {
+
+                    MininovaVuzeResponse response = WebTorrentSearch.searchMininovaVuze(query);
+
+                    if (response != null) {
+                        final List<SearchResult> results = normalizeMininovaVuzeResponse(response, info);
+
+                        SwingUtilities.invokeLater(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                SearchFilter filter = getSearchFilterFactory().createFilter();
+                                for (SearchResult sr : results) {
+                                    if (filter.allow(sr)) {
+                                        getSearchResultDisplayer().addQueryResult(guid, sr, rp);
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        }).start();
     }
     
     private static List<SearchResult> normalizeClearBitsResponse(ClearBitsResponse response, SearchInformation info) {
@@ -974,6 +973,13 @@ public final class SearchMediator {
 	        RESULT_DISPLAYER = new SearchResultDisplayer();
 	    }
 	    return RESULT_DISPLAYER;
+	}
+	
+	public static SearchFilterFactory getSearchFilterFactory() {
+	    if (SEARCH_FILTER_FACTORY == null) {
+	        SEARCH_FILTER_FACTORY = new SearchFilterFactoryImpl();
+	    }
+	    return SEARCH_FILTER_FACTORY;
 	}
 }
 

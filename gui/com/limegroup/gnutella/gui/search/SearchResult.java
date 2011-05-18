@@ -15,7 +15,7 @@ import com.limegroup.gnutella.xml.LimeXMLDocument;
  * A single SearchResult. These are returned in the {@link SearchInputPanel} and
  * are used to create {@link TableLine}s to show search results. *
  */
-interface SearchResult {
+public interface SearchResult {
 
     /**
      * @return the file name

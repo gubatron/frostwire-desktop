@@ -5,6 +5,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
+import javax.swing.JCheckBox;
+
+import org.limewire.i18n.I18nMarker;
+
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.ListEditor;
@@ -26,6 +30,17 @@ public final class IgnoreResultsPaneItem extends AbstractPaneItem {
 	 * word to ignore.
 	 */
 	private final ListEditor RESULTS_LIST = new ListEditor();
+	
+	/**
+     * Handle to the check box for ignoring adult content.
+     */
+    private JCheckBox IGNORE_ADULT_CHECK_BOX = new JCheckBox();
+    
+    /**
+     * Key for the locale-specifis string for the adult content check box 
+     * label.
+     */
+    private String ADULT_BOX_LABEL = I18nMarker.marktr("Ignore Adult Content");
 
 	/**
 	 * The constructor constructs all of the elements of this 
@@ -37,7 +52,10 @@ public final class IgnoreResultsPaneItem extends AbstractPaneItem {
 	public IgnoreResultsPaneItem() {
 	    super(TITLE, LABEL);
 	    
+	    IGNORE_ADULT_CHECK_BOX.setText(I18n.tr(ADULT_BOX_LABEL));
+	    
 		add(RESULTS_LIST);
+		add(IGNORE_ADULT_CHECK_BOX);
 	}
 
 	/**
@@ -49,6 +67,7 @@ public final class IgnoreResultsPaneItem extends AbstractPaneItem {
 	public void initOptions() {
 		String[] bannedWords = FilterSettings.BANNED_WORDS.getValue();
 		RESULTS_LIST.setModel(new Vector<String>(Arrays.asList(bannedWords)));
+		IGNORE_ADULT_CHECK_BOX.setSelected(FilterSettings.FILTER_ADULT.getValue());
 	}
 
 	/**
@@ -65,12 +84,13 @@ public final class IgnoreResultsPaneItem extends AbstractPaneItem {
 		model.copyInto(bannedResults);		
 		
         FilterSettings.BANNED_WORDS.setValue(bannedResults);
+        FilterSettings.FILTER_ADULT.setValue(IGNORE_ADULT_CHECK_BOX.isSelected());
 		GuiCoreMediator.getSpamServices().adjustSpamFilters();
         return false;
 	}
 
     public boolean isDirty() {
       List<?> model = Arrays.asList(FilterSettings.BANNED_WORDS.getValue());
-      return !model.equals(RESULTS_LIST.getModel());
+      return !model.equals(RESULTS_LIST.getModel()) || FilterSettings.FILTER_ADULT.getValue() != IGNORE_ADULT_CHECK_BOX.isSelected();
     }
 }
