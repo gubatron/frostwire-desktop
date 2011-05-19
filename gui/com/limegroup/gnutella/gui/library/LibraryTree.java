@@ -70,33 +70,27 @@ final class LibraryTree extends JTree implements MouseObserver {
     /**
 	 * Constant for the root node of the tree.
 	 */
-	private final LibraryTreeNode ROOT_NODE = new LibraryTreeNode(new RootNodeDirectoryHolder(""));
+	private final LibraryTreeNode ROOT_NODE;
 	private RootSharedFilesDirectoryHolder rsfdh = new RootSharedFilesDirectoryHolder();
-
-	/** Constant for the tree model. */
-	private final DefaultTreeModel TREE_MODEL = new DefaultTreeModel(ROOT_NODE);
-		
-	/** The saved files node. */
-    private LibraryTreeNode savedFilesNode;
-	private final SavedFilesDirectoryHolder sfdh = new SavedFilesDirectoryHolder(
-			SharingSettings.DIRECTORY_FOR_SAVING_FILES, 
-		    I18n.tr("Saved Files"));
 	
 	/** The Torrent Data Saved Folder */
     private LibraryTreeNode torrentDataFilesNode;
-	private final SavedFilesDirectoryHolder torrent_sfdh = new SavedFilesDirectoryHolder(
+	private final SavedFilesDirectoryHolder torrentsfdh = new SavedFilesDirectoryHolder(
 			SharingSettings.TORRENT_DATA_DIR_SETTING, 
 		    I18n.tr("Torrent Saved Files"));
 	
 	/** The dot torrents folder */
 	private LibraryTreeNode dotTorrentFilesNode;
-	private final DotTorrentDirectoryHolder dotTorrentDh = new DotTorrentDirectoryHolder();
+	private final TorrentDirectoryHolder torrentdh = new TorrentDirectoryHolder();
 
 	/** The shared files node. It's an empty meta node. */
 	private LibraryTreeNode sharedFilesNode;
 	
 	private LibraryTreeNode searchResultsNode;
 	private final LibrarySearchResultsHolder lsrdh = new LibrarySearchResultsHolder();
+	
+	/** Constant for the tree model. */
+    private final DefaultTreeModel TREE_MODEL;
     
 	///////////////////////////////////////////////////////////////////////////
 	//  Singleton Pattern
@@ -122,6 +116,10 @@ final class LibraryTree extends JTree implements MouseObserver {
 	 * editors, etc.
 	 */
 	private LibraryTree() {	
+	    
+	    ROOT_NODE = new LibraryTreeNode(new RootNodeDirectoryHolder(""));
+	    TREE_MODEL = new DefaultTreeModel(ROOT_NODE);
+	    
 		setModel(TREE_MODEL);
 		setRootVisible(false);
 		getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -139,20 +137,15 @@ final class LibraryTree extends JTree implements MouseObserver {
 		// add libray search results node
 		searchResultsNode = new LibraryTreeNode(lsrdh);
 		addNode(ROOT_NODE, searchResultsNode);
-
-		//add saved node
-		savedFilesNode = new LibraryTreeNode(sfdh);
-		addNode(ROOT_NODE, savedFilesNode);
-		// add media types under saved node
-		addPerMediaTypeDirectories();
-
+		
 		//add .torrents node
-		dotTorrentFilesNode = new LibraryTreeNode(dotTorrentDh);
+		dotTorrentFilesNode = new LibraryTreeNode(torrentdh);
 		addNode(ROOT_NODE, dotTorrentFilesNode);
 
 		//add torrent saved node
-		torrentDataFilesNode = new LibraryTreeNode(torrent_sfdh);
+		torrentDataFilesNode = new LibraryTreeNode(torrentsfdh);
 		addNode(ROOT_NODE, torrentDataFilesNode);
+		addPerMediaTypeDirectories();
 		
 		//add shared node
 		sharedFilesNode = new LibraryTreeNode(rsfdh);
@@ -218,17 +211,19 @@ final class LibraryTree extends JTree implements MouseObserver {
 	}
 	
 	private void addPerMediaTypeDirectories() {
-		for (Iterator<?> i = NamedMediaType.getAllNamedMediaTypes().iterator(); i.hasNext(); ) {
-			NamedMediaType nm = (NamedMediaType)i.next();
-			if (nm.getMediaType().getMimeType().equals(MediaType.SCHEMA_ANY_TYPE))
-				continue;
-			
-			FileSetting fs = SharingSettings.getFileSettingForMediaType(nm.getMediaType());
-			DirectoryHolder dh =
-			    new MediaTypeSavedFilesDirectoryHolder(fs, nm.getName(), nm.getMediaType());
-			LibraryTreeNode node = new LibraryTreeNode(dh);
-			addNode(savedFilesNode, node, true);
-		}
+	    addPerMediaTypeDirectory(NamedMediaType.getFromMediaType(MediaType.getProgramMediaType()));
+	    addPerMediaTypeDirectory(NamedMediaType.getFromMediaType(MediaType.getVideoMediaType()));
+	    addPerMediaTypeDirectory(NamedMediaType.getFromMediaType(MediaType.getDocumentMediaType()));
+	    addPerMediaTypeDirectory(NamedMediaType.getFromMediaType(MediaType.getImageMediaType()));
+	    addPerMediaTypeDirectory(NamedMediaType.getFromMediaType(MediaType.getAudioMediaType()));
+	}
+	
+	private void addPerMediaTypeDirectory(NamedMediaType nm) {
+	    FileSetting fs = SharingSettings.getFileSettingForMediaType(nm.getMediaType());
+        DirectoryHolder dh =
+            new MediaTypeSavedFilesDirectoryHolder(fs, nm.getName(), nm.getMediaType());
+        LibraryTreeNode node = new LibraryTreeNode(dh);
+        addNode(torrentDataFilesNode, node, true);
 	}
 	
 	// inherit doc comment
@@ -544,31 +539,9 @@ final class LibraryTree extends JTree implements MouseObserver {
 		LibraryTreeNode selected = getSelectedNode();
 		return selected == searchResultsNode;
 	}
-    
-	
-	/**
-	 * Returns whether or not the saved directory is selected in the tree.
-	 */
-	boolean savedDirectoryIsSelected() {
-		return isSavedDirectory(getSelectedNode());
-	}
 	
 	boolean sharedFoldersNodeIsSelected() {
 		return getSelectedNode() == sharedFilesNode;
-	}
-
-	/**
-	 * Determines whether the LibraryTreeNode parameter is the holder for the
-	 * saved folder.
-	 * 
-	 * @param holder
-	 *            the <tt>LibraryTreeNode</tt> class to check for whether or
-	 *            not it is the saved directory
-	 * @return <tt>true</tt> if it does contain the saved directory,
-	 *         <tt>false</tt> otherwise
-	 */
-	private boolean isSavedDirectory(LibraryTreeNode node) {
-	    return node == savedFilesNode || (node != null && node.getParent() == savedFilesNode);
 	}
 
 	/**
