@@ -19,14 +19,19 @@ final class SearchButtons {
 	private final ButtonRow BUTTONS;
 
 	/**
+	 * The index of the buy button.
+	 */
+	static final int BUY_BUTTON_INDEX = 0;
+	
+	/**
 	 * The index of the WishList / Download Button.
 	 */
-	static final int DOWNLOAD_BUTTON_INDEX = 0;
+	static final int DOWNLOAD_BUTTON_INDEX = 1;
 
 	/**
 	 * The index of the stop button in the button row.
 	 */
-	static final int STOP_BUTTON_INDEX = 1;
+	static final int STOP_BUTTON_INDEX = 2;
 
 	/**
 	 * The constructor creates the row of buttons with their associated
@@ -34,20 +39,24 @@ final class SearchButtons {
 	 */
     SearchButtons(ResultPanel rp) {
         String[] buttonLabelKeys = {
+        	I18nMarker.marktr("Buy"),
 			I18nMarker.marktr("Download"),
             I18nMarker.marktr("Stop Search")
 		};
         String[] buttonTipKeys = {
-			I18nMarker.marktr("Download All Selected Files"),
+        	I18nMarker.marktr("Search for related products on Amazon"),
+        	I18nMarker.marktr("Download All Selected Files"),
             I18nMarker.marktr("Stop Collecting Search Results for Selected Tab")
 		};
 
 		ActionListener[] buttonListeners = {
+			rp.BUY_LISTENER,
 		    rp.DOWNLOAD_LISTENER,
 		    rp.STOP_LISTENER
 		};
 		
 		String[] iconNames =  {
+			"BUY",
 		    "SEARCH_DOWNLOAD",
 		    "SEARCH_STOP"
 		};
