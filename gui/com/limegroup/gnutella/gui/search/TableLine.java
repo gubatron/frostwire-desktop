@@ -167,7 +167,6 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
 
     private void initializeEnd() {
         updateLicense();        
-        updateFileStatus();        
     }
     
     public boolean isLink() {
@@ -296,34 +295,6 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
     }
 
     /**
-     * Updates the file status of this line.
-     */
-    private void updateFileStatus() {
-        // hack for LWC-1099 -- can't check incomplete or else deadlock
-        if(RESULT instanceof SharedSearchResult) {
-            SharedSearchResult ssr = (SharedSearchResult)RESULT;
-            if(ssr.getFileDesc() instanceof IncompleteFileDesc)
-                _incompleteFile = true;
-            else
-                _savedFile = true;
-        } else {            
-            if(_sha1 != null) {
-                _savedFile =
-                    GuiCoreMediator.getFileManager().isUrnShared(_sha1);
-                _incompleteFile =
-                    GuiCoreMediator.getDownloadManager().isIncomplete(_sha1);
-            } else {
-                _savedFile = false;
-                _incompleteFile = false;
-            }
-            if(!_savedFile) {
-                _savedFile =
-                    GuiCoreMediator.getSavedFileManager().isSaved(_sha1, getFilename());
-            }
-        }
-    }
-    
-    /**
      * Updates cached data about this line.
      */
     public void update() {
@@ -398,8 +369,8 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
      */
     int getQuality() {
         boolean downloading = RESULT.isDownloading();
-        if(downloading != _downloading)
-            updateFileStatus();
+//        if(downloading != _downloading)
+//            updateFileStatus();
         _downloading = downloading;
         
         if(_savedFile)

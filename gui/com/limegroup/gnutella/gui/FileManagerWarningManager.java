@@ -9,7 +9,6 @@ import org.limewire.setting.BooleanSetting;
 
 import com.limegroup.gnutella.FileEventListener;
 import com.limegroup.gnutella.FileManagerEvent;
-import com.limegroup.gnutella.gui.actions.MySharedFilesAction;
 import com.limegroup.gnutella.gui.notify.Notification;
 import com.limegroup.gnutella.gui.notify.NotifyUser;
 import com.limegroup.gnutella.settings.QuestionsHandler;
@@ -45,7 +44,7 @@ public final class FileManagerWarningManager implements FileEventListener {
             GUIMediator.safeInvokeLater(new Runnable() {
                 public void run() {
                     Notification notification = new Notification(warning, null, true,
-                            new MySharedFilesAction(I18n.tr("View My Shared Files.")),
+//                            new MySharedFilesAction(I18n.tr("View My Shared Files.")),
                             new IgnoreAction(ignoreSwitch));
                     
                     notifier.showMessage(notification);

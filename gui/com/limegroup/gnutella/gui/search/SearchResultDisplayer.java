@@ -186,14 +186,6 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 		return addResultPanelInternal(panel, info.getTitle());
     }
 
-    /** Adds a tab of your files to the UI. */
-    ResultPanel addMyFilesResultTab(String title) {
-        FileManager fileManager = GuiCoreMediator.getFileManager();
-        
-        ResultPanel panel = new MySharedFilesResultPanel(title, fileManager);
-        return addResultPanelInternal(panel, title);
-    }    
-    
     private void removeTabbedPaneListeners() {
         if (tabbedPane != null) {
             tabbedPane.removeMouseListener(PANE_LISTENER);

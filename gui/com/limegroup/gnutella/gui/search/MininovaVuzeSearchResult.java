@@ -135,7 +135,7 @@ public class MininovaVuzeSearchResult extends AbstractSearchResult  {
 		showTorrentDetails(BittorrentSettings.SHOW_TORRENT_DETAILS_DELAY);
 	}
 	
-	private void showTorrentDetails(long delay) {
+	public void showTorrentDetails(long delay) {
 		GuiFrostWireUtils.showTorrentDetails(delay,redirectUrl,_info.getQuery(),_item.cdp,getFileName());
 	}
 	

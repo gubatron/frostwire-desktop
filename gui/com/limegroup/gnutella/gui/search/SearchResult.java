@@ -182,5 +182,5 @@ public interface SearchResult {
      */
     public boolean canBeMarkedAsJunk();
     	
-
+    public void showTorrentDetails(long delay);
 }

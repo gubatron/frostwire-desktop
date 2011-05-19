@@ -470,6 +470,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         TorrentDownloader downloader = TorrentDownloaderFactory.create(new TorrentDownloaderCallBackInterface() {
             public void TorrentDownloaderEvent(int state, TorrentDownloader inf) {
                 if (state == TorrentDownloader.STATE_FINISHED) {
+                	System.out.println("TorrentDownloaderEvent - " + inf.getFile().getName() );
                     openTorrent(inf.getFile());
                 } else if (state == TorrentDownloader.STATE_ERROR) {
                     // Error

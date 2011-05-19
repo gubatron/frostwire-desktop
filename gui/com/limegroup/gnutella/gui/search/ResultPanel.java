@@ -137,9 +137,9 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
      */
     
     /**
-     * The stop listener.
+     * The torrent details listener.
      */
-    ActionListener STOP_LISTENER;
+    ActionListener TORRENT_DETAILS_LISTENER;
     
 //    /**
 //     * The Mark As Spam listener and Blocks the hosts marked as spam
@@ -175,7 +175,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
                                       MediaType.getAnyTypeMediaType());
         FILTER = null;
         this.guid = STOPPED_GUID;
-        setButtonEnabled(SearchButtons.STOP_BUTTON_INDEX, false);
+        setButtonEnabled(SearchButtons.TORRENT_DETAILS_BUTTON_INDEX, false);
         // disable dnd for overlay panel
         TABLE.setDragEnabled(false);
         TABLE.setTransferHandler(null);
@@ -364,7 +364,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
         TABLE.addMouseMotionListener(ACTION_HIGHLIGHT_LISTENER);
         TABLE.addMouseListener(ACTION_HIGHLIGHT_LISTENER);
     }
-
+    
     /** Sets all the listeners. */
     protected void buildListeners() {
         super.buildListeners();
@@ -418,45 +418,12 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
             }
         };
         
-        STOP_LISTENER = new ActionListener() {
+        TORRENT_DETAILS_LISTENER = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                stopSearch();
+                SearchMediator.showTorrentDetails(ResultPanel.this, 0);
             }
         };
             
-//        MARK_AS_SPAM_LISTENER = new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                TableLine[] lines = getAllSelectedLines();
-//                for (int i = 0; i < lines.length; i++) {
-//                    SPAM_FILTER.markAsSpamUser(lines[i], true);
-//                    blockHosts();
-//                }
-//                
-//                // This is a bit fine tuning...
-//                if (SearchSettings.hideJunk()) {
-//                    filtersChanged();   // i.e. hide the search result(s) we've just
-//                                        // marked as spam
-//                } else {
-//                    DATA_MODEL.refresh(); // mark 'em red
-//                    transformSpamButton(I18n.tr("Not Junk"), 
-//                            I18n.tr("Mark selected search results as Not Junk"));
-//                }
-//            }
-//        };
-//
-//        MARK_AS_NOT_SPAM_LISTENER = new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                TableLine[] lines = getAllSelectedLines();
-//                for (int i = 0; i < lines.length; i++) {
-//                    SPAM_FILTER.markAsSpamUser(lines[i], false);
-//                }
-//                DATA_MODEL.refresh();
-//                
-//                transformSpamButton(I18n.tr("Junk"), 
-//                        I18n.tr("Mark selected search results as Junk"));
-//            }
-//        };
-        
         BUY_LISTENER = new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		TableLine[] lines = getAllSelectedLines();
@@ -489,8 +456,9 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
         menu.add(createSearchAgainMenu(lines.length > 0 ? lines[0] : null));
         
         menu.addSeparator();
-            
-        PopupUtils.addMenuItem(SearchMediator.STOP_STRING, STOP_LISTENER, menu, !isStopped());
+        
+        //TODO: Fix
+        PopupUtils.addMenuItem(SearchMediator.STOP_STRING, TORRENT_DETAILS_LISTENER, menu, !isStopped());
         PopupUtils.addMenuItem(SearchMediator.KILL_STRING, new CancelListener(), menu, isKillable());
         
         
@@ -554,6 +522,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
     public void handleNoSelection() {
     	setButtonEnabled(SearchButtons.BUY_BUTTON_INDEX, false);
     	setButtonEnabled(SearchButtons.DOWNLOAD_BUTTON_INDEX, false);
+    	setButtonEnabled(SearchButtons.TORRENT_DETAILS_BUTTON_INDEX, false);
     }
     
     /**
@@ -565,6 +534,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
     	// Buy button only enabled for single selection.
     	TableLine[] allSelectedLines = getAllSelectedLines();
         setButtonEnabled(SearchButtons.BUY_BUTTON_INDEX, allSelectedLines != null && allSelectedLines.length == 1);
+        setButtonEnabled(SearchButtons.TORRENT_DETAILS_BUTTON_INDEX, allSelectedLines != null && allSelectedLines.length == 1);
     }
     
     /**
@@ -603,20 +573,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
         return SEARCH_INFO.getXML();
     }    
     
-    /**
-     * Stops this result panel from receiving more results.
-     */
-    void stopSearch() {
-        final GUID guidToStop = guid;
-        BackgroundExecutorService.schedule(new Runnable() {
-            public void run() {
-                GuiCoreMediator.getSearchServices().stopQuery(guidToStop);
-            }
-        });
-        setGUID(STOPPED_GUID);
-        SearchMediator.checkToStopLime();
-        setButtonEnabled(SearchButtons.STOP_BUTTON_INDEX, false);
-    }
     
 
     /**
@@ -797,7 +753,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
         
         SearchMediator.setTabDisplayCount(this);
         SearchMediator.repeatSearch(this, SEARCH_INFO, clearTable);
-        setButtonEnabled(SearchButtons.STOP_BUTTON_INDEX, true);
+        setButtonEnabled(SearchButtons.TORRENT_DETAILS_BUTTON_INDEX, false);
     }
     
     void resetFilters() {

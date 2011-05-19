@@ -114,4 +114,5 @@ public abstract class AbstractSearchResult implements SearchResult {
     public Color getOddRowColor() {
         return ThemeSettings.DEFAULT_TABLE_ODD_ROW_COLOR.getValue();
     }
+        
 }

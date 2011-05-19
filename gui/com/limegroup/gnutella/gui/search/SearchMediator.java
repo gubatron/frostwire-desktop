@@ -34,6 +34,7 @@ import com.frostwire.bittorrent.websearch.mininova.MininovaVuzeResponse;
 import com.frostwire.gnutella.gui.filters.SearchFilter;
 import com.frostwire.gnutella.gui.filters.SearchFilterFactory;
 import com.frostwire.gnutella.gui.filters.SearchFilterFactoryImpl;
+import com.limegroup.bittorrent.settings.BittorrentSettings;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MediaType;
@@ -386,11 +387,6 @@ public final class SearchMediator {
         );
     }
     
-    /** Shows a search result tab with your files, with the given title. */
-    public static void showMyFiles(String title) {
-        addMyFilesResultTab(title);
-    }
-    
     /**
      * Validates the given search information.
      */
@@ -632,11 +628,6 @@ public final class SearchMediator {
         return getSearchResultDisplayer().addResultTab(guid, info);
     }
     
-    /** Adds a tab to search results that displays your files. */
-    private static ResultPanel addMyFilesResultTab(String title) {
-        return getSearchResultDisplayer().addMyFilesResultTab(title);
-    }
-
     /**
      * Adds a browse host tab with the given description.
      */
@@ -704,6 +695,17 @@ public final class SearchMediator {
 		downloadLine(lines[0], new GUID(panel.getGUID()), null, null, true,
                      panel.getSearchInformation());
 	}
+	
+	public static void showTorrentDetails(ResultPanel panel, long delay) {
+		final TableLine[] lines = panel.getAllSelectedLines();
+		if (lines.length != 1) {
+			throw new IllegalStateException("There should only be one search result selected: " + lines.length);
+		}
+		
+		SearchResult searchResult = lines[0].getSearchResult();
+		searchResult.showTorrentDetails(delay);
+	}
+
 
     /**
      * Downloads all the selected lines.
@@ -988,5 +990,6 @@ public final class SearchMediator {
 	    }
 	    return SEARCH_FILTER_FACTORY;
 	}
+
 }
 
