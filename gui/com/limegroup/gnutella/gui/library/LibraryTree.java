@@ -948,8 +948,11 @@ final class LibraryTree extends JTree implements MouseObserver {
         }
 
         public void run() {
-            
-            LibraryMediator.instance().clearLibraryTable();
+            GUIMediator.safeInvokeLater(new Runnable() {
+                public void run() {
+                    LibraryMediator.instance().clearLibraryTable();
+                }
+            });
             
             File file = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
             search(file);
@@ -965,6 +968,9 @@ final class LibraryTree extends JTree implements MouseObserver {
             final List<File> files = new ArrayList<File>();
             
             for (File child : file.listFiles()) {
+                if (child.isHidden()) {
+                    continue;
+                }
                 if (child.isDirectory()) {
                     directories.add(child);
                 } else if (_mtsfdh.accept(child)) {

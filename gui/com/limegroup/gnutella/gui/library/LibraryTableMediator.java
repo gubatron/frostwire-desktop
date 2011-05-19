@@ -114,8 +114,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
      */
     private boolean _isIncomplete;
 
-	private boolean _annotateEnabled = false;
-
     /**
      * instance, for singelton access
      */
@@ -295,7 +293,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	 * @param enabled whether or not annotation is allowed
 	 */
 	public void setAnnotateEnabled(boolean enabled) {
-		_annotateEnabled = enabled;
 		
 	    LibraryTableDataLine.setXMLEnabled(enabled);
 	    DATA_MODEL.refresh();

@@ -39,9 +39,6 @@ import com.limegroup.gnutella.xml.MetaFileManager;
  * the necessary Library info.
  * @author Sam Berlin
  */
-
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
-
 public final class LibraryTableDataLine extends AbstractDataLine<File>
 	implements ThemeObserver, FileTransfer {
 
@@ -162,7 +159,6 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
 	 * The colors for cells.
 	 */
 	private Color _sharedCellColor;
-	private Color _unsharedCellColor;
 	
 	/**
 	 * The model this is being displayed on
@@ -197,7 +193,6 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
 	// inherit doc comment
 	public void updateTheme() {
 		_sharedCellColor = SkinHandler.getWindow8Color();
-		_unsharedCellColor = SkinHandler.getNotSharingLabelColor();
 	}
 
 	public FileDesc getFileDesc() { return _fileDesc; }

@@ -1,13 +1,8 @@
 package com.limegroup.gnutella.gui.library;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.swing.Icon;
-
-import org.limewire.setting.FileSetting;
 
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.I18n;

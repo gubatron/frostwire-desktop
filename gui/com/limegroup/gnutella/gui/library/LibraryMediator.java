@@ -117,7 +117,7 @@ public final class LibraryMediator implements ThemeObserver {
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		gbc.insets = new Insets(GUIConstants.SEPARATOR, GUIConstants.SEPARATOR,
 								GUIConstants.SEPARATOR, GUIConstants.SEPARATOR);
-		MAIN_PANEL.add(new LibrarySearchPanel(GuiCoreMediator.getQueryRequestFactory()), gbc);
+		MAIN_PANEL.add(new LibrarySearchPanel(), gbc);
 		gbc = new GridBagConstraints();
 		gbc.weightx = 1;
 		gbc.weighty = 1;

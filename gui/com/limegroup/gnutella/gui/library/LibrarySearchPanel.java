@@ -6,7 +6,10 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileFilter;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -16,21 +19,16 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.text.Document;
 
-import com.limegroup.gnutella.FileDesc;
-import com.limegroup.gnutella.FileManager;
 import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.Response;
 import com.limegroup.gnutella.gui.AutoCompleteTextField;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
-import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.search.SearchField;
 import com.limegroup.gnutella.gui.search.SearchInformation;
 import com.limegroup.gnutella.gui.search.SearchMediator;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
-import com.limegroup.gnutella.messages.QueryRequest;
-import com.limegroup.gnutella.messages.QueryRequestFactory;
+import com.limegroup.gnutella.settings.SharingSettings;
 
 /**
  * Panel that embeds the search bar for the library panel. 
@@ -48,12 +46,9 @@ public class LibrarySearchPanel extends JPanel {
     private static final long serialVersionUID = -8099451849619924981L;
 
     private AutoCompleteSearchField queryField = new AutoCompleteSearchField(40);
-	
-	private final QueryRequestFactory queryRequestFactory;
-	        
-	LibrarySearchPanel(QueryRequestFactory queryRequestFactory) {
+		        
+	LibrarySearchPanel() {
 		super(new GridBagLayout());
-		this.queryRequestFactory = queryRequestFactory;
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(0, 2, 0, 2);
 		gbc.anchor = GridBagConstraints.WEST;
@@ -79,20 +74,13 @@ public class LibrarySearchPanel extends JPanel {
         private static final long serialVersionUID = -2182314529781104010L;
 
         public SearchLibraryAction() {
-			putValue(Action.NAME,
-					I18n.tr("Search"));
+			putValue(Action.NAME, I18n.tr("Search"));
 		}
 		
 		public boolean validate(SearchInformation info) {
 		    switch (SearchMediator.validateInfo(info)) {
 		    case SearchMediator.QUERY_EMPTY:
 		        return false;
-//		    case SearchMediator.QUERY_TOO_SHORT:  // not a problem for library
-//	            GUIMediator.showError(I18n.tr("Your search must be at least three characters long to avoid too many meaningless results."));
-//	            return false;
-//	        case SearchMediator.QUERY_TOO_LONG:   // not possible here, since field doesn't accept it
-//	            GUIMediator.showError(I18n.tr("Your search is too long. Please make your search smaller and try again."));
-//	            return false;
 	        case SearchMediator.QUERY_XML_TOO_LONG:
 	            // cannot happen
 	        case SearchMediator.QUERY_VALID:
@@ -112,28 +100,7 @@ public class LibrarySearchPanel extends JPanel {
 			    return;
 			}
 			queryField.addToDictionary();
-			BackgroundExecutorService.schedule(new Runnable() {
-				public void run() {
-					QueryRequest request = queryRequestFactory.createQuery(info.getQuery());
-					FileManager fm = GuiCoreMediator.getFileManager();
-					Response[] resps = fm.query(request);
-					ArrayList<File> files = new ArrayList<File>(resps.length);
-					for (Response response : resps) {
-						FileDesc f = fm.get((int)response.getIndex());
-						if (f != null) {
-							files.add(f.getFile());
-						}
-					}
-					final File[] filesArray = files.toArray(new File[files.size()]);
-					Runnable r = new Runnable() {
-						public void run() {
-							LibraryTree.instance().getSearchResultsHolder().setResults(filesArray);
-							LibraryTree.instance().setSearchResultsNodeSelected();
-						}
-					};
-					GUIMediator.safeInvokeLater(r);
-				}
-			});
+			BackgroundExecutorService.schedule(new SearchRunnable(query));
 		}
 		
 	}
@@ -153,6 +120,88 @@ public class LibrarySearchPanel extends JPanel {
 		protected Document createDefaultModel() {
 			return new SearchField.SearchFieldDocument();
 		}
-		
+	}
+	
+	private static final class SearchRunnable implements Runnable {
+        
+        private final String _query;
+        
+        public SearchRunnable(String query) {
+            _query = query;
+        }
+
+        public void run() {
+            
+            GUIMediator.safeInvokeLater(new Runnable() {
+                public void run() {
+                    LibraryTree.instance().getSearchResultsHolder().setResults(new File[0]);
+                    LibraryTree.instance().setSearchResultsNodeSelected();
+                }
+            });
+            
+            File file = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
+            search(file);
+        }
+        
+        private void search(File file) {
+            
+            if (!file.isDirectory()) {
+                return;
+            }
+            
+            List<File> directories = new ArrayList<File>();
+            final List<File> files = new ArrayList<File>();
+            
+            for (File child : file.listFiles(new SearchFileFilter(_query))) {
+                if (child.isHidden()) {
+                    continue;
+                }
+                if (child.isDirectory()) {
+                    directories.add(child);
+                } else if (child.isFile()) {
+                    files.add(child);
+                }
+            }
+            
+            Runnable r = new Runnable() {
+                public void run() {
+                    LibraryMediator.instance().addFilesToLibraryTable(files);
+                }
+            };
+            GUIMediator.safeInvokeLater(r);
+            
+            for (File directory : directories) {
+                search(directory);
+            }
+        }
+    }
+	
+	private static final class SearchFileFilter implements FileFilter {
+	    
+	    private final String[] _tokens;
+	    
+	    public SearchFileFilter(String query) {
+	        _tokens = query.split(" ");
+	        for (int i = 0; i < _tokens.length; i++) {
+	            _tokens[i] = _tokens[i].toLowerCase(Locale.US);
+	        }
+	    }
+	    
+        public boolean accept(File pathname) {
+            
+            if (pathname.isDirectory()) {
+                return true;
+            }
+            
+            String name = pathname.getName();
+            
+            for (String token : _tokens)  {
+                if (name.toLowerCase(Locale.US).contains(token)) {
+                    return true;
+                }
+            }
+            
+            return false;
+        }	    
 	}
 }
