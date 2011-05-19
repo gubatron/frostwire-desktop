@@ -20,9 +20,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.border.TitledBorder;
 import javax.swing.text.BadLocationException;
+
+import org.jdesktop.swingx.JXCollapsiblePane;
 
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.BoxPanel;
@@ -112,13 +116,27 @@ class SearchInputPanel extends JPanel {
             }
         });
 
-        add(PANE, BorderLayout.CENTER);
+        add(PANE, BorderLayout.NORTH);
 
         Font bold = UIManager.getFont("Table.font.bold");
         Font bolder = new Font(bold.getName(), bold.getStyle(), bold.getSize() + 5);
         SEARCH_TYPE_LABEL.setFont(bolder);
         SEARCH_TYPE_LABEL.setPreferredSize(new Dimension(130, 20));
         schemaListener.actionPerformed(null);
+        
+//        JXCollapsiblePane cp = new JXCollapsiblePane();
+//        cp.setLayout(new BorderLayout());
+//        cp.setAnimated(true);
+//        JPanel controls = new JPanel(new FlowLayout(FlowLayout.LEFT, 4, 0));
+//        controls.add(new JLabel("Search:"));
+//        controls.add(new JTextField(10));
+//        controls.add(new JButton("Refresh"));
+//        controls.setBorder(new TitledBorder("Filters"));
+//        cp.add("Center", controls);
+//        JButton toggle = new JButton(cp.getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION));
+//        toggle.setText("Show/Hide Search Panel");
+//        add(toggle, BorderLayout.NORTH);
+//        add(cp, BorderLayout.CENTER);
     }
 
     /**
