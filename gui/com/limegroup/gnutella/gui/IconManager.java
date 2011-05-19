@@ -115,4 +115,8 @@ public class IconManager {
         if(!fileController.isValid())
             fileController = new BasicFileIconController();
     }
+
+	public Icon getSmallIconForButton(String buttonName) {
+		return buttonController.getSmallIconForButton(buttonName);
+	}
 }

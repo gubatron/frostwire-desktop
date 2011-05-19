@@ -77,6 +77,33 @@ public class ButtonIconController {
         return icon;
     }
     
+	public Icon getSmallIconForButton(String buttonName) {
+		String fileName = BUTTON_NAMES.getProperty(buttonName);
+        if(fileName == null)
+            return null;
+        
+        Icon icon = BUTTON_CACHE.get(fileName);
+        if(icon == NULL)
+            return null;
+        if(icon != null)
+            return icon;
+        
+        try {
+            icon = ResourceManager.getThemeImage(fileName + "_small");
+            BUTTON_CACHE.put(fileName, icon);
+        } catch(MissingResourceException mre) {
+            // if neither small nor large existed, try once as exact
+            try {
+                icon = ResourceManager.getThemeImage(fileName);
+                BUTTON_CACHE.put(fileName, icon);
+            } catch(MissingResourceException mre2) {
+                BUTTON_CACHE.put(fileName, NULL);
+            }
+        }
+        return icon;
+   }
+
+    
     /**
      * Retrieves the rollover image for the specified button name.
      */
@@ -126,5 +153,6 @@ public class ButtonIconController {
         }
         return p;
     }
+
     
 }

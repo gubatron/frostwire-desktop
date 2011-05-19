@@ -11,16 +11,18 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
@@ -32,7 +34,9 @@ import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.KeyProcessingTextField;
+import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.actions.FileMenuActions;
 import com.limegroup.gnutella.gui.actions.FileMenuActions.OpenMagnetTorrentAction;
 import com.limegroup.gnutella.gui.themes.SkinHandler;
@@ -99,6 +103,8 @@ class SearchInputPanel extends JPanel {
      */
     private final ActionListener SEARCH_LISTENER = new SearchListener();
 
+	private JXCollapsiblePane SEARCH_OPTIONS_COLLAPSIBLE_PANEL;
+
     SearchInputPanel() {
         super(new BorderLayout(0, 5));
 
@@ -116,27 +122,13 @@ class SearchInputPanel extends JPanel {
             }
         });
 
-        add(PANE, BorderLayout.NORTH);
+        add(PANE, BorderLayout.CENTER);
 
         Font bold = UIManager.getFont("Table.font.bold");
         Font bolder = new Font(bold.getName(), bold.getStyle(), bold.getSize() + 5);
         SEARCH_TYPE_LABEL.setFont(bolder);
         SEARCH_TYPE_LABEL.setPreferredSize(new Dimension(130, 20));
         schemaListener.actionPerformed(null);
-        
-//        JXCollapsiblePane cp = new JXCollapsiblePane();
-//        cp.setLayout(new BorderLayout());
-//        cp.setAnimated(true);
-//        JPanel controls = new JPanel(new FlowLayout(FlowLayout.LEFT, 4, 0));
-//        controls.add(new JLabel("Search:"));
-//        controls.add(new JTextField(10));
-//        controls.add(new JButton("Refresh"));
-//        controls.setBorder(new TitledBorder("Filters"));
-//        cp.add("Center", controls);
-//        JButton toggle = new JButton(cp.getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION));
-//        toggle.setText("Show/Hide Search Panel");
-//        add(toggle, BorderLayout.NORTH);
-//        add(cp, BorderLayout.CENTER);
     }
 
     /**
@@ -239,10 +231,34 @@ class SearchInputPanel extends JPanel {
         fullPanel.add(GUIUtils.left(SEARCH_FIELD));
         fullPanel.add(Box.createVerticalStrut(5));
         fullPanel.add(createSearchButtonPanel());
+        fullPanel.add(createSearchOptionsPanel());
         return GUIUtils.left(fullPanel);
     }
 
-    /**
+    private Component createSearchOptionsPanel() {
+		SEARCH_OPTIONS_COLLAPSIBLE_PANEL = new JXCollapsiblePane();
+		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setCollapsed(true);
+		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setAnimated(true);
+		
+		
+		JPanel controls = new JPanel(new FlowLayout());
+		JCheckBox dummy = new JCheckBox("Clearbits");
+		JCheckBox dummy2 = new JCheckBox("Mininova");
+		JCheckBox dummy3 = new JCheckBox("IsoHunt");
+		
+		controls.add(dummy,BorderLayout.PAGE_START);
+		controls.add(dummy2,BorderLayout.CENTER);
+		controls.add(dummy3,BorderLayout.PAGE_END);
+		
+		controls.setBorder(new TitledBorder("Choose Search Engines"));
+		
+		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.add("Center", controls);
+
+		return SEARCH_OPTIONS_COLLAPSIBLE_PANEL;
+	}
+
+	/**
      * Creates the search button & inserts it in a panel.
      */
     private JPanel createSearchButtonPanel() {
@@ -254,8 +270,30 @@ class SearchInputPanel extends JPanel {
 
         b.add(Box.createHorizontalGlue());
         b.add(searchButton);
+        
+
+        // add collapse button
+        PaddedPanel paddedButtonPanel = new PaddedPanel();
+        
+        JButton iconButton = new JButton();
+        iconButton.setAction(new ToggleSearchOptionsPanelAction());
+        iconButton.setIcon(IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_MORE"));
+        fixIconButton(iconButton);        
+        
+        paddedButtonPanel.add(iconButton);
+        
+        b.add(paddedButtonPanel);
+
         return b;
     }
+
+	private void fixIconButton(JButton iconButton) {
+		iconButton.setBorderPainted(false);
+        iconButton.setFocusable(false);
+        iconButton.setBorder(null);
+        iconButton.setFocusPainted(false);
+        iconButton.setContentAreaFilled(false);
+	}
 
     /**
      * Gets the visible component in META_PANEL.
@@ -338,5 +376,27 @@ class SearchInputPanel extends JPanel {
                 }
             }
         }
+    }
+    
+    private class ToggleSearchOptionsPanelAction extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			SEARCH_OPTIONS_COLLAPSIBLE_PANEL.getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION).actionPerformed(event);
+			
+			JButton iconButton = (JButton) event.getSource();
+			
+			Icon iconForButton = null;
+			
+			if (!SEARCH_OPTIONS_COLLAPSIBLE_PANEL.isCollapsed()) {
+				iconForButton = IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_LESS");
+			} else {
+				iconForButton = IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_MORE");	
+			}
+
+			iconButton.setIcon(iconForButton);
+			fixIconButton(iconButton);
+		}
+    	
     }
 }
