@@ -156,18 +156,4 @@ public class AndroidMediator implements ThemeObserver {
 		PeerDiscoveryClerk clerk = new PeerDiscoveryClerk();
 		clerk.start();
 	}
-	
-	public static void main(String[] args) {
-		AndroidMediator.startAndroidClerk();
-		AndroidMediator mediator = AndroidMediator.instance();
-
-		JFrame frame = new JFrame();
-		Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-		frame.setSize((int) (screenSize.width * 0.6), 600);
-		frame.getContentPane().add(mediator.getComponent());
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.pack();
-
-		frame.setVisible(true);
-	}
 }

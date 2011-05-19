@@ -113,8 +113,8 @@ public class TorrentUtil {
         }
     }
 
-    public static void removeDownload(DownloadManager downloadManager, boolean deleteData) {
-        asyncStopDelete(downloadManager, DownloadManager.STATE_STOPPED, true, deleteData, null);
+    public static void removeDownload(DownloadManager downloadManager, boolean deleteTorrent, boolean deleteData) {
+        asyncStopDelete(downloadManager, DownloadManager.STATE_STOPPED, deleteTorrent, deleteData, null);
     }
 
     public static boolean isStartable(DownloadManager dm) {
