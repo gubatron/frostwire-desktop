@@ -33,7 +33,7 @@ class ResultNameHolder implements Comparable<ResultNameHolder>, Linkable {
 
     /** Returns the spam rating */
     public float getSpamRating() {
-        return line.getSpamRating();
+        return 0;
     }
     
     /**

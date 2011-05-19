@@ -13,7 +13,6 @@ import com.frostwire.HttpFetcher;
 import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
-import com.limegroup.gnutella.settings.SearchSettings;
 
 public class SpamFilter implements TableLineFilter {
     
@@ -64,7 +63,7 @@ public class SpamFilter implements TableLineFilter {
      * SearchSettings.FILTER_SPAM_RESULTS threshold
      */
     static final boolean isAboveSpamThreshold(TableLine line) {
-        return line.getSpamRating() >= SearchSettings.FILTER_SPAM_RESULTS.getValue();
+        return false;
     }
     
     private void r(TableLine line) {

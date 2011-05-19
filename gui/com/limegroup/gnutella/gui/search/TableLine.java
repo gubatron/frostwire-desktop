@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -135,11 +134,6 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
      */
     private long _addedOn;
     
-    /**
-     * The last spam rating this TableLine had
-     */
-    private float _lastRating = -1f;
-    
     /** License info. */
     private int _licenseState = License.NO_LICENSE;
     private String _licenseName = null;
@@ -205,24 +199,6 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
         if(_otherResults == null)
             _otherResults = new LinkedList<SearchResult>();
         _otherResults.add(sr);
-        
-        // mark that we need to recalculate the rating
-        _lastRating = -1f;
-        
-//        if (sr instanceof GnutellaSearchResult) {
-//            GnutellaSearchResult gsr = (GnutellaSearchResult)sr;
-//            RemoteFileDesc rfd = gsr.getRemoteFileDesc();
-//            Set<IpPort> alts = gsr.getAlts();
-//            if(alts != null && !alts.isEmpty()) {
-//                if(_alts == null)
-//                    _alts = new IpPortSet();
-//                _alts.addAll(alts);
-//                gsr.clearAlts();
-//                _location.addHosts(alts);
-//            }
-//            _location.addHost(rfd.getHost(), rfd.getPort());
-//        }
-        
         
         // Set the speed correctly.
         ResultSpeed newSpeed = new ResultSpeed(sr.getSpeed(), sr.isMeasuredSpeed());
@@ -352,7 +328,6 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
      */
     public void update() {
         updateLicense();
-        _lastRating = -1f;
     }
     
     /**
@@ -739,27 +714,6 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
 //                ? ((GnutellaSearchResult)RESULT).getRemoteFileDesc() 
 //                : null;
 		return null;
-	}
-    
-	/**
-	 * Gets the spam rating
-	 */
-	float getSpamRating() {
-        if (_lastRating == -1f) {
-            _lastRating = RESULT.getSpamRating();
-            int num = 1;
-            if (_otherResults != null) {
-                for (Iterator<?> iter = _otherResults.iterator(); iter.hasNext();) {
-                    SearchResult r = (SearchResult)iter.next();
-//                    if (!(r instanceof GnutellaSearchResult)) continue;
-//                    num++;
-//                    _lastRating += ((GnutellaSearchResult)r).getRemoteFileDesc()
-//                    .getSpamRating();
-            }
-            }
-            _lastRating = _lastRating / num;
-        } 
-		return _lastRating;
 	}
     
     /**
