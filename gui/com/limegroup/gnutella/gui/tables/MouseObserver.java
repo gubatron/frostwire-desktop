@@ -6,6 +6,9 @@ import java.awt.event.MouseEvent;
  * An observer for mouse-based events.
  */
 public interface MouseObserver {
+    
+    public void handleMouseClick(MouseEvent e);
+    
     /**
      * Handles when the mouse is double-clicked.
      */

@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -23,7 +22,6 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
-import org.limewire.setting.FileSetting;
 import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultTreeCellRenderer;
@@ -219,9 +217,7 @@ final class LibraryTree extends JTree implements MouseObserver {
 	}
 	
 	private void addPerMediaTypeDirectory(NamedMediaType nm) {
-	    FileSetting fs = SharingSettings.getFileSettingForMediaType(nm.getMediaType());
-        DirectoryHolder dh =
-            new MediaTypeSavedFilesDirectoryHolder(fs, nm.getName(), nm.getMediaType());
+	    DirectoryHolder dh = new MediaTypeSavedFilesDirectoryHolder(nm.getMediaType());
         LibraryTreeNode node = new LibraryTreeNode(dh);
         addNode(torrentDataFilesNode, node, true);
 	}
@@ -880,6 +876,14 @@ final class LibraryTree extends JTree implements MouseObserver {
 	///////////////////////////////////////////////////////////////////////////
 	//  MouseObserver implementation
 	///////////////////////////////////////////////////////////////////////////
+	
+	public void handleMouseClick(MouseEvent e) {
+	    DirectoryHolder directoryHolder = getSelectedDirectoryHolder();
+	    if (directoryHolder != null && directoryHolder instanceof MediaTypeSavedFilesDirectoryHolder) {
+	        MediaTypeSavedFilesDirectoryHolder mtsfdh = (MediaTypeSavedFilesDirectoryHolder) directoryHolder;
+	        BackgroundExecutorService.schedule(new SearchByMediaTypeRunnable(mtsfdh));
+	    }
+	}
 
     /**
      * Handles when the mouse is double-clicked.
@@ -934,4 +938,50 @@ final class LibraryTree extends JTree implements MouseObserver {
 	LibrarySearchResultsHolder getSearchResultsHolder() {
 		return lsrdh;
 	}
+	
+	private static final class SearchByMediaTypeRunnable implements Runnable {
+	    
+	    private final MediaTypeSavedFilesDirectoryHolder _mtsfdh;
+	    
+        public SearchByMediaTypeRunnable(MediaTypeSavedFilesDirectoryHolder mtsfdh) {
+            _mtsfdh = mtsfdh;
+        }
+
+        public void run() {
+            
+            LibraryMediator.instance().clearLibraryTable();
+            
+            File file = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
+            search(file);
+        }
+        
+        private void search(File file) {
+            
+            if (!file.isDirectory()) {
+                return;
+            }
+            
+            List<File> directories = new ArrayList<File>();
+            final List<File> files = new ArrayList<File>();
+            
+            for (File child : file.listFiles()) {
+                if (child.isDirectory()) {
+                    directories.add(child);
+                } else if (_mtsfdh.accept(child)) {
+                    files.add(child);
+                }
+            }
+            
+            Runnable r = new Runnable() {
+                public void run() {
+                    LibraryMediator.instance().addFilesToLibraryTable(files);
+                }
+            };
+            GUIMediator.safeInvokeLater(r);
+            
+            for (File directory : directories) {
+                search(directory);
+            }
+        }
+    }
 }

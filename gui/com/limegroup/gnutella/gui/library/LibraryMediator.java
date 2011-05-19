@@ -186,6 +186,16 @@ public final class LibraryMediator implements ThemeObserver {
         getLibraryTree().clear();
         quickRefresh();
 	}
+	
+	public void clearLibraryTable() {
+	    getLibraryTable().clearTable();
+	}
+	
+	public void addFilesToLibraryTable(List<File> files) {
+	    for (File file : files) {
+	        getLibraryTable().add(file);
+	    }
+	}
     
     /**
      * Returns the directory that's currently visible from the table.

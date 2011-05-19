@@ -114,6 +114,9 @@ class FilterPopupMenuHandler {
 		public void handlePopupMenu(MouseEvent e) {
 			createAndShowPopup(box, e);	
 		}
+		
+		public void handleMouseClick(MouseEvent e) {
+		}
 
 		public void handleMouseDoubleClick(MouseEvent e) {
 		}

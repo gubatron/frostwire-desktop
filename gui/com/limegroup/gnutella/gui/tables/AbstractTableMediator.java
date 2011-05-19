@@ -690,6 +690,8 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         return (new ColumnSelectionMenu(TABLE)).getComponent();
     }
     
+    public void handleMouseClick(MouseEvent e) { }
+    
     /**
      * Forwards a double click to the 'action key'.
      */

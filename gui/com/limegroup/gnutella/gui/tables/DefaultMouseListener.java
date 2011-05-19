@@ -30,6 +30,8 @@ public final class DefaultMouseListener implements MouseListener {
 			cm.handleRightMouseClick(event);
 		} else if(event.getClickCount() >= 2) {
 			cm.handleMouseDoubleClick(event);
+		} else {
+		    cm.handleMouseClick(event);
 		}
 	}
 
