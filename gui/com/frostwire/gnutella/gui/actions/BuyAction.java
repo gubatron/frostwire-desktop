@@ -67,7 +67,7 @@ public class BuyAction extends AbstractAction implements LimeAction {
 	 */
 	public BuyAction() {
 		super();
-		this.putValue(LimeAction.SHORT_NAME, I18n.tr("Buy Item Now"));
+		this.putValue(LimeAction.SHORT_NAME, I18n.tr("Buy"));
 		this.putValue(LimeAction.ICON_NAME,"BUY");
 	}
 	

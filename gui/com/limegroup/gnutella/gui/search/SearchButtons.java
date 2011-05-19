@@ -34,20 +34,24 @@ final class SearchButtons {
 	 */
     SearchButtons(ResultPanel rp) {
         String[] buttonLabelKeys = {
+        	I18nMarker.marktr("Buy"),
 			I18nMarker.marktr("Download"),
             I18nMarker.marktr("Stop Search")
 		};
         String[] buttonTipKeys = {
-			I18nMarker.marktr("Download All Selected Files"),
+        	I18nMarker.marktr("Search for related products on Amazon"),
+        	I18nMarker.marktr("Download All Selected Files"),
             I18nMarker.marktr("Stop Collecting Search Results for Selected Tab")
 		};
 
 		ActionListener[] buttonListeners = {
+			rp.BUY_LISTENER,
 		    rp.DOWNLOAD_LISTENER,
 		    rp.STOP_LISTENER
 		};
 		
 		String[] iconNames =  {
+			"BUY",
 		    "SEARCH_DOWNLOAD",
 		    "SEARCH_STOP"
 		};

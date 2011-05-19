@@ -24,7 +24,6 @@ import java.util.Set;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Box;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JOptionPane;
@@ -56,7 +55,6 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.IconButton;
 import com.limegroup.gnutella.gui.LicenseWindow;
 import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.ProgTabUIFactory;
@@ -157,18 +155,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
      * The BUY this item listener
      */
     ActionListener BUY_LISTENER;
-    
-//    /**
-//     * The button that marks search results as spam or undoes it
-//     */
-//    private JButton SPAM_BUTTON;
-    
-    
-    /**                                                                                                                                       
-     * The button that searches the search result on a third party website                                                                    
-     * to purchase the file's rights.                                                                                                         
-     */
-    private JButton BUY_BUTTON;
     
     public BuyAction BUY_ACTION;    
     
@@ -340,9 +326,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
         if (BUY_ACTION == null)
         	BUY_ACTION = new BuyAction();
 
-        BUY_BUTTON = new IconButton(BUY_ACTION);
-        BUY_BUTTON.setEnabled(false);
-        BUY_BUTTON.addActionListener(BUY_LISTENER);    
     }
     
     
@@ -570,8 +553,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
      */
     public void handleNoSelection() {
         setButtonEnabled(SearchButtons.DOWNLOAD_BUTTON_INDEX, false);
-        
-        BUY_BUTTON.setEnabled(false);
     }
     
     /**
@@ -579,12 +560,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
      */
     public void handleSelection(int i)  { 
         setButtonEnabled(SearchButtons.DOWNLOAD_BUTTON_INDEX, true);
-        
-        BUY_BUTTON.setEnabled(false);                                                                                                                                           
-        if (getAllSelectedLines().length == 1) {                                                                                                                                
-                BUY_ACTION.setTableLine(getAllSelectedLines()[0]);                                                                                                              
-                BUY_BUTTON.setEnabled(true);                                                                                                                                    
-        } 
     }
     
     /**
@@ -1058,24 +1033,17 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
 
             JPanel buttonPanel = new JPanel();
             buttonPanel.setLayout(new GridBagLayout());
-            GridBagConstraints gbc = null;
 
-            gbc = new GridBagConstraints();                
-            gbc.gridx = 0;
-            gbc.gridy = 0;
-            gbc.anchor = GridBagConstraints.WEST;
-            gbc.fill = GridBagConstraints.NONE;
-            gbc.gridwidth = GridBagConstraints.RELATIVE;
-            buttonPanel.add(BUY_BUTTON, gbc);
-
+            GridBagConstraints gbc = new GridBagConstraints();
+            
             gbc.gridx = 1;
             gbc.gridy = 0;
             gbc.anchor = GridBagConstraints.CENTER;
             gbc.fill = GridBagConstraints.NONE;
             gbc.gridwidth = GridBagConstraints.RELATIVE;
             gbc.weightx = 1;
-            buttonPanel.add(BUTTON_ROW, gbc);
             
+            buttonPanel.add(BUTTON_ROW, gbc);
             
             buttonPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 64));
             SOUTH_PANEL.add(buttonPanel);
