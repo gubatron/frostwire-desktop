@@ -11,10 +11,15 @@ public class BTDownloaderImpl implements BTDownloader {
 
     private final DownloadManager _downloadManager;
     
+    private boolean _deleteTorrentWhenRemove;
+    
     private boolean _deleteDataWhenRemove;
 
     public BTDownloaderImpl(DownloadManager downloadManager) {
         _downloadManager = downloadManager;
+        
+        _deleteTorrentWhenRemove = false;
+        _deleteDataWhenRemove = false;
     }
 
     public long getSize() {
@@ -42,7 +47,7 @@ public class BTDownloaderImpl implements BTDownloader {
     }
 
     public void remove() {
-        TorrentUtil.removeDownload(_downloadManager, _deleteDataWhenRemove);
+        TorrentUtil.removeDownload(_downloadManager, _deleteTorrentWhenRemove, _deleteDataWhenRemove);
     }
 
     public void pause() {
@@ -178,11 +183,19 @@ public class BTDownloaderImpl implements BTDownloader {
         return tmp;
     }
     
+    public boolean isDeleteTorrentWhenRemove() {
+        return _deleteTorrentWhenRemove;
+    }
+    
+    public void setDeleteTorrentWhenRemove(boolean deleteTorrentWhenRemove) {
+        _deleteTorrentWhenRemove = deleteTorrentWhenRemove;
+    }
+    
     public boolean isDeleteDataWhenRemove() {
         return _deleteDataWhenRemove;
     }
     
-    public void deleteDataWhenRemove(boolean deleteDataWhenRemove) {
+    public void setDeleteDataWhenRemove(boolean deleteDataWhenRemove) {
         _deleteDataWhenRemove = deleteDataWhenRemove;
     }
 }

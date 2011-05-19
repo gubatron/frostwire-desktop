@@ -43,4 +43,12 @@ public interface BTDownloader {
     public String getPeersString();
 
     public String getSeedsString();
+    
+    public boolean isDeleteTorrentWhenRemove();
+    
+    public void setDeleteTorrentWhenRemove(boolean deleteTorrentWhenRemove);
+    
+    public boolean isDeleteDataWhenRemove();
+    
+    public void setDeleteDataWhenRemove(boolean deleteDataWhenRemove);
 }

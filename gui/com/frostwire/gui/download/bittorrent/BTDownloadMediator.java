@@ -395,13 +395,17 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     protected JPopupMenu createPopupMenu() {
 
         JPopupMenu menu = new SkinPopupMenu();
-        menu.add(new SkinMenuItem(removeAction));
+        
         menu.add(new SkinMenuItem(resumeAction));
         menu.add(new SkinMenuItem(pauseAction));
         menu.add(new SkinMenuItem(launchAction));
         if (OSUtils.isWindows() || OSUtils.isMacOSX()) {
             menu.add(new SkinMenuItem(exploreAction));
         }
+        menu.addSeparator();
+        menu.add(new SkinMenuItem(removeAction));
+        menu.add(new SkinMenuItem(BTDownloadActions.REMOVE_TORRENT_ACTION));
+        menu.add(new SkinMenuItem(BTDownloadActions.REMOVE_TORRENT_AND_DATA_ACTION));
         
         SkinMenu advancedMenu = MenuUtil.createAdvancedSubMenu();
         if (advancedMenu != null) {

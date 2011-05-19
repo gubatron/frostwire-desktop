@@ -5,7 +5,6 @@ import java.io.File;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.JOptionPane;
 
 import com.frostwire.bittorrent.BTDownloader;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -21,7 +20,9 @@ final class BTDownloadActions {
     static final LaunchAction LAUNCH_ACTION = new LaunchAction();
     static final ResumeAction RESUME_ACTION = new ResumeAction();
     static final PauseAction PAUSE_ACTION = new PauseAction();
-    static final RemoveAction REMOVE_ACTION = new RemoveAction();
+    static final RemoveAction REMOVE_ACTION = new RemoveAction(false, false);
+    static final RemoveAction REMOVE_TORRENT_ACTION = new RemoveAction(true, false);
+    static final RemoveAction REMOVE_TORRENT_AND_DATA_ACTION = new RemoveAction(true, true);
 
     private static abstract class RefreshingAction extends AbstractAction {
 
@@ -163,14 +164,35 @@ final class BTDownloadActions {
          */
         private static final long serialVersionUID = -1742554445891016991L;
 
-        public RemoveAction() {
-            putValue(Action.NAME, I18n.tr("Remove Download"));
-            putValue(LimeAction.SHORT_NAME, I18n.tr("Remove"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Remove Selected Downloads"));
+        private final boolean _deleteTorrent;
+        private final boolean _deleteData;
+
+        public RemoveAction(boolean deleteTorrent, boolean deleteData) {
+            if (deleteTorrent && deleteData) {
+                putValue(Action.NAME, I18n.tr("Remove Torrent and Data"));
+                putValue(LimeAction.SHORT_NAME, I18n.tr("Remove Torrent and Data"));
+                putValue(Action.SHORT_DESCRIPTION, I18n.tr("Remove Torrent and Data from selected downloads"));
+            } else if (deleteTorrent) {
+                putValue(Action.NAME, I18n.tr("Remove Torrent"));
+                putValue(LimeAction.SHORT_NAME, I18n.tr("Remove Torrent"));
+                putValue(Action.SHORT_DESCRIPTION, I18n.tr("Remove Torrent from selected downloads"));
+            } else {
+                putValue(Action.NAME, I18n.tr("Remove Download"));
+                putValue(LimeAction.SHORT_NAME, I18n.tr("Remove"));
+                putValue(Action.SHORT_DESCRIPTION, I18n.tr("Remove Selected Downloads"));
+            }
             putValue(LimeAction.ICON_NAME, "DOWNLOAD_KILL");
+
+            _deleteTorrent = deleteTorrent;
+            _deleteData = deleteData;
         }
 
         public void performAction(ActionEvent e) {
+            BTDownloader[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
+            for (int i = 0; i < downloaders.length; i++) {
+                downloaders[i].setDeleteTorrentWhenRemove(_deleteTorrent);
+                downloaders[i].setDeleteDataWhenRemove(_deleteData);
+            }
             BTDownloadMediator.instance().removeSelection();
         }
     }
