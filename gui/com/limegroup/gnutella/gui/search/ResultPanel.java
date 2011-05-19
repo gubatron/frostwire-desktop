@@ -552,14 +552,19 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
      * Sets the appropriate buttons to be disabled.
      */
     public void handleNoSelection() {
-        setButtonEnabled(SearchButtons.DOWNLOAD_BUTTON_INDEX, false);
+    	setButtonEnabled(SearchButtons.BUY_BUTTON_INDEX, false);
+    	setButtonEnabled(SearchButtons.DOWNLOAD_BUTTON_INDEX, false);
     }
     
     /**
      * Sets the appropriate buttons to be enabled.
      */
     public void handleSelection(int i)  { 
-        setButtonEnabled(SearchButtons.DOWNLOAD_BUTTON_INDEX, true);
+    	setButtonEnabled(SearchButtons.DOWNLOAD_BUTTON_INDEX, true);
+
+    	// Buy button only enabled for single selection.
+    	TableLine[] allSelectedLines = getAllSelectedLines();
+        setButtonEnabled(SearchButtons.BUY_BUTTON_INDEX, allSelectedLines != null && allSelectedLines.length == 1);
     }
     
     /**

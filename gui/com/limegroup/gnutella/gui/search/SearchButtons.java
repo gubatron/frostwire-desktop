@@ -19,14 +19,19 @@ final class SearchButtons {
 	private final ButtonRow BUTTONS;
 
 	/**
+	 * The index of the buy button.
+	 */
+	static final int BUY_BUTTON_INDEX = 0;
+	
+	/**
 	 * The index of the WishList / Download Button.
 	 */
-	static final int DOWNLOAD_BUTTON_INDEX = 0;
+	static final int DOWNLOAD_BUTTON_INDEX = 1;
 
 	/**
 	 * The index of the stop button in the button row.
 	 */
-	static final int STOP_BUTTON_INDEX = 1;
+	static final int STOP_BUTTON_INDEX = 2;
 
 	/**
 	 * The constructor creates the row of buttons with their associated
