@@ -23,6 +23,7 @@ import org.limewire.util.I18NConvert;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.bittorrent.AzureusStarter;
+import com.frostwire.bittorrent.websearch.SearchEnginesSettings;
 import com.frostwire.bittorrent.websearch.WebTorrentSearch;
 import com.frostwire.bittorrent.websearch.clearbits.ClearBitsItem;
 import com.frostwire.bittorrent.websearch.clearbits.ClearBitsResponse;
@@ -482,91 +483,97 @@ public final class SearchMediator {
         final String query = info.getQuery();
 
         //ClearBits (formerly known as LegalTorrents.com) Search Thread.
-        new Thread(new Runnable() {
-            public void run() {
-
-                final ResultPanel rp = getResultPanelForGUID(new GUID(guid));
-                if (rp != null) {
-
-                    ClearBitsResponse response = WebTorrentSearch.searchClearBits(query);
-
-                    if (response != null) {
-                        final List<SearchResult> results = normalizeClearBitsResponse(response, info);
-
-                        SwingUtilities.invokeLater(new Runnable() {
-
-                            @Override
-                            public void run() {
-                                SearchFilter filter = getSearchFilterFactory().createFilter();
-                                for (SearchResult sr : results) {
-                                    if (filter.allow(sr)) {
-                                        getSearchResultDisplayer().addQueryResult(guid, sr, rp);
-                                    }
-                                }
-                            }
-                        });
-                    }
-                }
-            }
-        }).start();
+        if (SearchEnginesSettings.CLEARBITS_SEARCH_ENABLED.getValue()) {
+	        new Thread(new Runnable() {
+	            public void run() {
+	
+	                final ResultPanel rp = getResultPanelForGUID(new GUID(guid));
+	                if (rp != null) {
+	
+	                    ClearBitsResponse response = WebTorrentSearch.searchClearBits(query);
+	
+	                    if (response != null) {
+	                        final List<SearchResult> results = normalizeClearBitsResponse(response, info);
+	
+	                        SwingUtilities.invokeLater(new Runnable() {
+	
+	                            @Override
+	                            public void run() {
+	                                SearchFilter filter = getSearchFilterFactory().createFilter();
+	                                for (SearchResult sr : results) {
+	                                    if (filter.allow(sr)) {
+	                                        getSearchResultDisplayer().addQueryResult(guid, sr, rp);
+	                                    }
+	                                }
+	                            }
+	                        });
+	                    }
+	                }
+	            }
+	        }).start();
+        }
 
         //ISOHunt Search Thread.
-        new Thread(new Runnable() {
-            public void run() {
-
-                final ResultPanel rp = getResultPanelForGUID(new GUID(guid));
-                if (rp != null) {
-
-                    ISOHuntResponse response = WebTorrentSearch.searchISOHunt(query);
-
-                    if (response != null) {
-                        final List<SearchResult> results = normalizeISOHuntResponse(response, info);
-
-                        SwingUtilities.invokeLater(new Runnable() {
-
-                            @Override
-                            public void run() {
-                                SearchFilter filter = getSearchFilterFactory().createFilter();
-                                for (SearchResult sr : results) {
-                                    if (filter.allow(sr)) {
-                                        getSearchResultDisplayer().addQueryResult(guid, sr, rp);
-                                    }
-                                }
-                            }
-                        });
-                    }
-                }
-            }
-        }).start();
+        if (SearchEnginesSettings.ISOHUNT_SEARCH_ENABLED.getValue()) {
+	        new Thread(new Runnable() {
+	            public void run() {
+	
+	                final ResultPanel rp = getResultPanelForGUID(new GUID(guid));
+	                if (rp != null) {
+	
+	                    ISOHuntResponse response = WebTorrentSearch.searchISOHunt(query);
+	
+	                    if (response != null) {
+	                        final List<SearchResult> results = normalizeISOHuntResponse(response, info);
+	
+	                        SwingUtilities.invokeLater(new Runnable() {
+	
+	                            @Override
+	                            public void run() {
+	                                SearchFilter filter = getSearchFilterFactory().createFilter();
+	                                for (SearchResult sr : results) {
+	                                    if (filter.allow(sr)) {
+	                                        getSearchResultDisplayer().addQueryResult(guid, sr, rp);
+	                                    }
+	                                }
+	                            }
+	                        });
+	                    }
+	                }
+	            }
+	        }).start();
+        }
 
         //MininovaVuze Search Thread.
-        new Thread(new Runnable() {
-            public void run() {
-
-                final ResultPanel rp = getResultPanelForGUID(new GUID(guid));
-                if (rp != null) {
-
-                    MininovaVuzeResponse response = WebTorrentSearch.searchMininovaVuze(query);
-
-                    if (response != null) {
-                        final List<SearchResult> results = normalizeMininovaVuzeResponse(response, info);
-
-                        SwingUtilities.invokeLater(new Runnable() {
-
-                            @Override
-                            public void run() {
-                                SearchFilter filter = getSearchFilterFactory().createFilter();
-                                for (SearchResult sr : results) {
-                                    if (filter.allow(sr)) {
-                                        getSearchResultDisplayer().addQueryResult(guid, sr, rp);
-                                    }
-                                }
-                            }
-                        });
-                    }
-                }
-            }
-        }).start();
+        if (SearchEnginesSettings.MININOVA_SEARCH_ENABLED.getValue()) {
+	        new Thread(new Runnable() {
+	            public void run() {
+	
+	                final ResultPanel rp = getResultPanelForGUID(new GUID(guid));
+	                if (rp != null) {
+	
+	                    MininovaVuzeResponse response = WebTorrentSearch.searchMininovaVuze(query);
+	
+	                    if (response != null) {
+	                        final List<SearchResult> results = normalizeMininovaVuzeResponse(response, info);
+	
+	                        SwingUtilities.invokeLater(new Runnable() {
+	
+	                            @Override
+	                            public void run() {
+	                                SearchFilter filter = getSearchFilterFactory().createFilter();
+	                                for (SearchResult sr : results) {
+	                                    if (filter.allow(sr)) {
+	                                        getSearchResultDisplayer().addQueryResult(guid, sr, rp);
+	                                    }
+	                                }
+	                            }
+	                        });
+	                    }
+	                }
+	            }
+	        }).start();
+        }
     }
     
     private static List<SearchResult> normalizeClearBitsResponse(ClearBitsResponse response, SearchInformation info) {
