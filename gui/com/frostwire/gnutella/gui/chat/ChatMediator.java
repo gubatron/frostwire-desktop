@@ -161,7 +161,11 @@ public final class ChatMediator implements ThemeObserver {
             //System.out.println("Using: " + nickname);
             ChatSettings.CHAT_IRC_NICK.setValue(_nickname);
             //System.out.println("After the while nick -> " + nickname);
-            reloadConfiguration();
+            GUIMediator.safeInvokeAndWait(new Runnable() {
+                public void run() {
+                    reloadConfiguration();
+                }
+            });
 
         } //if
 	} //ensureValidNickname
