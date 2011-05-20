@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -238,22 +239,23 @@ class SearchInputPanel extends JPanel {
     private Component createSearchOptionsPanel() {
 		SEARCH_OPTIONS_COLLAPSIBLE_PANEL = new JXCollapsiblePane();
 		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setCollapsed(true);
-		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setLayout(new GridLayout(0, 1));
 		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setAnimated(true);
 		
 		
-		JPanel controls = new JPanel(new FlowLayout());
-		JCheckBox dummy = new JCheckBox("Clearbits");
-		JCheckBox dummy2 = new JCheckBox("Mininova");
-		JCheckBox dummy3 = new JCheckBox("IsoHunt");
+		JPanel controls = new JPanel();
+		controls.setLayout(new BoxLayout(controls, BoxLayout.PAGE_AXIS));
+		JCheckBox checkboxClearbits = new JCheckBox("Clearbits");
+		JCheckBox checkBoxMininova = new JCheckBox("Mininova");
+		JCheckBox checkBoxISOHunt = new JCheckBox("IsoHunt");
 		
-		controls.add(dummy,BorderLayout.PAGE_START);
-		controls.add(dummy2,BorderLayout.CENTER);
-		controls.add(dummy3,BorderLayout.PAGE_END);
+		controls.add(checkboxClearbits);
+		controls.add(checkBoxMininova);
+		controls.add(checkBoxISOHunt);
 		
 		controls.setBorder(new TitledBorder("Choose Search Engines"));
 		
-		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.add("Center", controls);
+		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.add(controls, BorderLayout.PAGE_START);
 
 		return SEARCH_OPTIONS_COLLAPSIBLE_PANEL;
 	}
@@ -380,7 +382,12 @@ class SearchInputPanel extends JPanel {
     
     private class ToggleSearchOptionsPanelAction extends AbstractAction {
 
-		@Override
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -2415729526575357348L;
+
+        @Override
 		public void actionPerformed(ActionEvent event) {
 			SEARCH_OPTIONS_COLLAPSIBLE_PANEL.getActionMap().get(JXCollapsiblePane.TOGGLE_ACTION).actionPerformed(event);
 			
