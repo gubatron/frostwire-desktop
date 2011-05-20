@@ -62,7 +62,17 @@ public final class AzureusStarter {
 		if (!AzureusCoreFactory.isCoreAvailable()) {
 			//This does work
 			org.gudy.azureus2.core3.util.SystemProperties.APPLICATION_NAME = "azureus";
-			org.gudy.azureus2.core3.util.SystemProperties.setUserPath(FrostWireUtils.getRequestedUserSettingsLocation() + File.separator + "azureus" + File.separator);
+			
+			File azureusUserPath = new File(FrostWireUtils.getRequestedUserSettingsLocation() + File.separator + "azureus" + File.separator);
+			if (!azureusUserPath.exists()) {
+			    azureusUserPath.mkdirs();
+			}
+			
+			org.gudy.azureus2.core3.util.SystemProperties.setUserPath(azureusUserPath.getAbsolutePath());
+			
+			if (!SharingSettings.DEFAULT_DOT_TORRENTS_DIR_SETTING.getValue().exists()) {
+			    SharingSettings.DEFAULT_DOT_TORRENTS_DIR_SETTING.getValue().mkdirs();
+			}
 			
 			COConfigurationManager.setParameter("General_sDefaultTorrent_Directory", SharingSettings.DEFAULT_DOT_TORRENTS_DIR_SETTING.getValue().getAbsolutePath());
 			

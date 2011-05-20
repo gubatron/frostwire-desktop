@@ -42,6 +42,8 @@ public final class ChatMediator implements ThemeObserver {
     private static IRCConfiguration _config; // added to use config procedures
     private boolean _chatAlreadyStarted = false;
 
+    private String _nickname;
+    
 	/**
 	 * Singleton instance of this class.
 	 */
@@ -130,26 +132,34 @@ public final class ChatMediator implements ThemeObserver {
         if (ChatSettings.CHAT_IRC_NICK.getValue().equals("") ||
             ChatSettings.CHAT_IRC_NICK.getValue().toLowerCase().startsWith("fw_guest")) {
             //we try and try until we get this dude to pick up a good nick name.
-            String nickname = "";
+            _nickname = "";
             
-            while (nickname.equals("")) {
-                nickname = JOptionPane.showInputDialog(null, "Enter your desired chat Nickname", "Nickname required to connect", JOptionPane.INFORMATION_MESSAGE);
+            while (_nickname.equals("")) {
+                GUIMediator.safeInvokeAndWait(new Runnable() {
+                    public void run() {
+                        _nickname = JOptionPane.showInputDialog(null, "Enter your desired chat Nickname", "Nickname required to connect", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                });
 
                 //hit cancel button
-                if (nickname == null)
+                if (_nickname == null)
                     throw new Exception("ChatMediator.ensureValidNickname() cancelled");
                 
                 //now make sure the nickname given will not break any rules
-                if (isNickNameCensored(nickname)) {
-                    JOptionPane.showMessageDialog(null, "The nickname '"+nickname+"' can't be accepted");
-                    nickname = "";
+                if (isNickNameCensored(_nickname)) {
+                    GUIMediator.safeInvokeAndWait(new Runnable() {
+                        public void run() {
+                            JOptionPane.showMessageDialog(null, "The nickname '"+_nickname+"' can't be accepted");
+                        }
+                    });
+                    _nickname = "";
                 } else {
-                    nickname = nickname.replaceAll(" ", "_");
+                    _nickname = _nickname.replaceAll(" ", "_");
                 }
             } //while
 
             //System.out.println("Using: " + nickname);
-            ChatSettings.CHAT_IRC_NICK.setValue(nickname);
+            ChatSettings.CHAT_IRC_NICK.setValue(_nickname);
             //System.out.println("After the while nick -> " + nickname);
             reloadConfiguration();
 
