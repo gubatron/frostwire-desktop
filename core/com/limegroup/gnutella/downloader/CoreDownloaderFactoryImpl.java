@@ -2,14 +2,12 @@ package com.limegroup.gnutella.downloader;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.Collections;
 
 import org.limewire.io.InvalidDataException;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import com.limegroup.bittorrent.BTDownloader;
 import com.limegroup.bittorrent.BTMetaInfo;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.RemoteFileDesc;
@@ -29,19 +27,15 @@ public class CoreDownloaderFactoryImpl implements CoreDownloaderFactory {
 
     private final Provider<ResumeDownloader> resumeDownloaderFactory;
 
-    private final Provider<BTDownloader> btDownloaderFactory;
-
     @Inject
     public CoreDownloaderFactoryImpl(Provider<ManagedDownloader> managedDownloaderFactory,
             Provider<MagnetDownloader> magnetDownloaderFactory,
             Provider<InNetworkDownloader> inNetworkDownloaderFactory,
-            Provider<ResumeDownloader> resumeDownloaderFactory,
-            Provider<BTDownloader> btDownloaderFactory) {
+            Provider<ResumeDownloader> resumeDownloaderFactory) {
         this.managedDownloaderFactory = managedDownloaderFactory;
         this.magnetDownloaderFactory = magnetDownloaderFactory;
         this.inNetworkDownloaderFactory = inNetworkDownloaderFactory;
         this.resumeDownloaderFactory = resumeDownloaderFactory;
-        this.btDownloaderFactory = btDownloaderFactory;
     }
 
     public ManagedDownloader createManagedDownloader(RemoteFileDesc[] files,
@@ -86,12 +80,6 @@ public class CoreDownloaderFactoryImpl implements CoreDownloaderFactory {
         return rd;
     }
 
-    public BTDownloader createBTDownloader(BTMetaInfo info) {
-        BTDownloader bd = btDownloaderFactory.get();
-        bd.initBtMetaInfo(info);
-        return bd;
-    }
-
     public CoreDownloader createFromMemento(DownloadMemento memento) throws InvalidDataException {
         try {
             Provider<? extends CoreDownloader> coreFactory = providerForMemento(memento);
@@ -106,8 +94,6 @@ public class CoreDownloaderFactoryImpl implements CoreDownloaderFactory {
     private Provider<? extends CoreDownloader> providerForMemento(DownloadMemento memento)
             throws InvalidDataException {
         switch (memento.getDownloadType()) {
-        case BTDOWNLOADER:
-            return btDownloaderFactory;
         case INNETWORK:
             return inNetworkDownloaderFactory;
         case MAGNET:

@@ -13,7 +13,6 @@ import org.limewire.collection.NameValue;
 
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.FileManager;
-import com.limegroup.gnutella.downloader.IncompleteFileManager;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -287,17 +286,6 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
             }
 	    case NAME_IDX:
 	        String nm = _name;
-	        // note: this fits better in the data line because
-	        // sorting and whatnot will work correctly.
-	        if (LibraryMediator.incompleteDirectoryIsSelected()) {
-	            try {
-                //Ideally we'd eliminate the dependency on IFM, but this seems
-                //better than adding yet another method to RouterService.
-                    nm = IncompleteFileManager.getCompletedName(initializer);
-                } catch (IllegalArgumentException e) {
-                    //Not an incomplete file?  Just return untranslated value.
-                }
-            }
 	        return new ColoredCellImpl(nm, getColor());	                    
 	    case SIZE_IDX:
 	        return new ColoredCellImpl(_sizeHolder, getColor());

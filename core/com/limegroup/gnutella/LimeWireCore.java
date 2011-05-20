@@ -20,7 +20,6 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 import com.limegroup.bittorrent.BTContextFactory;
-import com.limegroup.bittorrent.BTUploaderFactory;
 import com.limegroup.bittorrent.ManagedTorrentFactory;
 import com.limegroup.bittorrent.TorrentManager;
 import com.limegroup.bittorrent.disk.DiskManagerFactory;
@@ -620,10 +619,6 @@ public class LimeWireCore {
 
     public MetaDataReader getMetaDataReader() {
         return injector.getInstance(MetaDataReader.class);
-    }
-
-    public BTUploaderFactory getBTUploaderFactory() {
-        return injector.getInstance(BTUploaderFactory.class);
     }
     
     public CoreDownloaderFactory getCoreDownloaderFactory() {

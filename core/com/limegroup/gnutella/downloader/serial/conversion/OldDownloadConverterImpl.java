@@ -83,9 +83,7 @@ public class OldDownloadConverterImpl implements OldDownloadConverter {
         List<DownloadMemento> mementos = new ArrayList<DownloadMemento>(roots.size());
         
         for(Object o : roots) {
-            if(o instanceof SerialBTDownloader)
-                addBTDownloader(mementos, (SerialBTDownloader)o, sifm);
-            else if(o instanceof SerialInNetworkDownloader)
+            if(o instanceof SerialInNetworkDownloader)
                 ; // ignore for conversions -- they'll restart on their own
             else if(o instanceof SerialMagnetDownloader)
                 addMagnet(mementos, (SerialMagnetDownloader)o, sifm);
@@ -119,7 +117,7 @@ public class OldDownloadConverterImpl implements OldDownloadConverter {
     }
 
     private void addManaged(List<DownloadMemento> mementos, SerialManagedDownloader o, SerialIncompleteFileManager sifm) {
-        File incompleteFile = getIncompleteFile(o, sifm);
+        File incompleteFile = null;//getIncompleteFile(o, sifm);
         List<Range> ranges = getRanges(incompleteFile, sifm);
         GnutellaDownloadMemento memento = new GnutellaDownloadMementoImpl();
         memento.setDownloadType(DownloaderType.MANAGED);
@@ -128,7 +126,7 @@ public class OldDownloadConverterImpl implements OldDownloadConverter {
     }
 
     private void addResume(List<DownloadMemento> mementos, SerialResumeDownloader o, SerialIncompleteFileManager sifm) {
-        File incompleteFile = getIncompleteFile(o, sifm);
+        File incompleteFile = null;//getIncompleteFile(o, sifm);
         List<Range> ranges = getRanges(incompleteFile, sifm);
         o.getProperties().put("fileSize", o.getSize());
         o.getProperties().put("sha1Urn", o.getUrn());
@@ -140,7 +138,7 @@ public class OldDownloadConverterImpl implements OldDownloadConverter {
     }
 
     private void addMagnet(List<DownloadMemento> mementos, SerialMagnetDownloader o, SerialIncompleteFileManager sifm) {
-        File incompleteFile = getIncompleteFile(o, sifm);
+        File incompleteFile = null;//getIncompleteFile(o, sifm);
         List<Range> ranges = getRanges(incompleteFile, sifm);
         if(o.getUrn() != null)
             o.getProperties().put("sha1Urn", o.getUrn());      
@@ -149,14 +147,6 @@ public class OldDownloadConverterImpl implements OldDownloadConverter {
         memento.setMagnet((MagnetOptions)o.getProperties().get("MAGNET"));
         addGnutellaProperties(memento, o.getProperties(), ranges, incompleteFile, o.getRemoteFileDescs());
         mementos.add(memento); 
-    }
-
-    private void addBTDownloader(List<DownloadMemento> mementos, SerialBTDownloader o, SerialIncompleteFileManager sifm) throws IOException {
-        BTDownloadMemento memento = new BTDownloadMementoImpl();
-        memento.setDownloadType(DownloaderType.BTDOWNLOADER);
-        memento.setBtMetaInfoMemento(toBTMetaInfoMemento((SerialBTMetaInfo)o.getProperties().get("metainfo")));
-        addCommonProperties(memento, o.getProperties());
-        mementos.add(memento);
     }
     
     private BTMetaInfoMemento toBTMetaInfoMemento(SerialBTMetaInfo info) throws IOException {
@@ -208,39 +198,6 @@ public class OldDownloadConverterImpl implements OldDownloadConverter {
         }
         
         return Collections.emptyList();
-    }
-    
-    private File getIncompleteFile(SerialManagedDownloader download, SerialIncompleteFileManager sifm) {
-        URN sha1 = getSha1(download);        
-        File incompleteFile = null;
-        
-        if(download instanceof SerialResumeDownloader)
-            incompleteFile = ((SerialResumeDownloader)download).getIncompleteFile();
-        
-        if(sha1 != null)
-            incompleteFile = sifm.getHashes().get(sha1);
-                
-        if(incompleteFile == null) {
-            File saveFile = (File)download.getProperties().get("saveFile");
-            if(saveFile != null) {
-                String defaultName = (String)download.getProperties().get("defaultFileName");
-                if(defaultName != null) {
-                    saveFile = new File(SharingSettings.getSaveDirectory(defaultName), defaultName);
-                }
-            }
-
-            Number size = (Number)download.getProperties().get("fileSize");
-            if(download instanceof SerialResumeDownloader)
-                size = ((SerialResumeDownloader)download).getSize();
-            
-            if (saveFile != null && size != null) {
-                String name = CommonUtils.convertFileName(saveFile.getName());
-                incompleteFile = new File(SharingSettings.INCOMPLETE_DIRECTORY.getValue(), "T-"
-                        + size.longValue() + "-" + name);
-            }
-        }
-        
-        return incompleteFile;
     }
     
     private URN getSha1(SerialManagedDownloader download) {

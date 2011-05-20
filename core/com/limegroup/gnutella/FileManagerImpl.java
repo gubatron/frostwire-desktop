@@ -1954,9 +1954,6 @@ public abstract class FileManagerImpl implements FileManager {
         if(!folder.isDirectory() || !folder.canRead())
             return false;
         
-        if (folder.equals(SharingSettings.INCOMPLETE_DIRECTORY.getValue()))
-            return false;
-        
         if (SharingUtils.isApplicationSpecialShareDirectory(folder)) {
             return false;
         }

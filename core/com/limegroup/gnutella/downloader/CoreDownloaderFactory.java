@@ -4,7 +4,7 @@ import java.io.File;
 
 import org.limewire.io.InvalidDataException;
 
-import com.limegroup.bittorrent.BTDownloader;
+import com.frostwire.bittorrent.BTDownloader;
 import com.limegroup.bittorrent.BTMetaInfo;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.RemoteFileDesc;
@@ -33,8 +33,6 @@ public interface CoreDownloaderFactory {
 
     public ResumeDownloader createResumeDownloader(File incompleteFile, String name, long size)
             throws SaveLocationException;
-
-    public BTDownloader createBTDownloader(BTMetaInfo info);
 
     /**
      * Creates the appropriate kind of downloader from a given DownloadMemento.

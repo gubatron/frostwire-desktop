@@ -98,7 +98,7 @@ public final class FrostWireUtils {
     
     public static final String FROSTWIRE_418_DIR_NAME = ".frostwire4.18";
     
-    public static final String FROSTWIRE_5_PREFS_DIR_NAME = ".frostwire5";
+    public static final String FROSTWIRE_5_PREFS_DIR_NAME = ".frostwire5.0";
 
     /**
      * Variable for whether or not this is a PRO version of LimeWire. 

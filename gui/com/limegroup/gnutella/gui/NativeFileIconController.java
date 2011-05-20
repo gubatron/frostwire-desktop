@@ -196,24 +196,7 @@ public class NativeFileIconController implements FileIconController {
         // If we don't know the icon for this extension yet,
         // then create a temporary file, get icon, cache it,
         // and return it.
-        File dir = SharingSettings.INCOMPLETE_DIRECTORY.getValue();
-        File tmp = new File(dir, ".LimeWireIconFinder." + ext);
-        if(tmp.exists()) {
-            icon = VIEW.getIcon(tmp);
-        } else {
-            try {
-                FileUtils.touch(tmp);
-                icon = VIEW.getIcon(tmp);
-                if(icon == null)
-                    icon = NULL;
-            } catch(IOException fnfe) {
-                icon = NULL;
-            }
-        }
-        
-        tmp.delete();
         EXTENSIONS.put(ext, icon);
-        VIEW.removeFromCache(tmp); // do not need to keep it around.
         
         return icon;
     }

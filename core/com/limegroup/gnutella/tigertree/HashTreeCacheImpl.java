@@ -252,8 +252,6 @@ public final class HashTreeCacheImpl implements HashTreeCache {
             if (roots.get(sha1) != BUSH) {
                 if (fileManager.getFileDescForUrn(sha1) != null)
                     continue;
-                else if (downloadManager.getIncompleteFileManager().getFileForUrn(sha1) != null)
-                    continue;
                 else if (Math.random() > map.size() / 200)
                     // lazily removing entries if we don't have
                     // that many anyway. Maybe some of the files are

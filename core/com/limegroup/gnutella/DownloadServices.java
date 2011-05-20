@@ -105,17 +105,7 @@ public interface DownloadServices {
             boolean overwrite, File saveDir, String fileName)
             throws SaveLocationException;
 
-    /**
-     * Starts a torrent download for a given Inputstream to the .torrent file
-     * 
-     * @param is
-     *            the InputStream belonging to the .torrent file
-     * @throws IOException
-     *             in case there was a problem reading the file 
-     */
-    public Downloader downloadTorrent(BTMetaInfo info, boolean overwrite)
-            throws SaveLocationException;
-
+    
     /**
      * Returns whether there are any active internet (non-multicast) transfers
      * going at speed greater than 0.

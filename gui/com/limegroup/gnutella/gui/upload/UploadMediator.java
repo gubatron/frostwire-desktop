@@ -1,26 +1,16 @@
 package com.limegroup.gnutella.gui.upload;
 
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.swing.JPopupMenu;
 import javax.swing.table.TableCellRenderer;
 
-import org.gudy.azureus2.core3.download.DownloadManager;
 import org.limewire.io.ConnectableImpl;
-import org.limewire.util.FileUtils;
 
-import com.aelitis.azureus.core.AzureusCore;
-import com.frostwire.bittorrent.AzureusStarter;
 import com.google.inject.Inject;
-import com.limegroup.bittorrent.BTDownloaderImpl;
-import com.limegroup.bittorrent.BTMetaInfo;
-import com.limegroup.bittorrent.BTUploader;
 import com.limegroup.bittorrent.ManagedTorrent;
 import com.limegroup.gnutella.PushEndpoint;
 import com.limegroup.gnutella.UploadServicesImpl;
@@ -156,57 +146,7 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 	    GUIMediator.addRefreshListener(this);
 	    ThemeMediator.addThemeObserver(this);
 	    
-	    BackgroundExecutorService.schedule(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					//avoids freeze and makes sure we'll start reseeding when azureus core is completely ready
-					Thread.sleep(6000);
-				} catch (InterruptedException e) {
-				}
-				restoreSeedingTorrents();
-			}
-	    	
-	    });
 	    
-	}
-
-	private void restoreSeedingTorrents() {
-		if (!SharingSettings.SEED_FINISHED_TORRENTS.getValue()) {
-			return;
-		}
-		
-	    AzureusCore azureusCore = AzureusStarter.getAzureusCore();
-	    @SuppressWarnings("unchecked")
-		List<DownloadManager> downloadManagers = (List<DownloadManager>) azureusCore.getGlobalManager().getDownloadManagers();
-	    
-	    if (downloadManagers.size() > 0) {
-	    	
-		    for (DownloadManager dlManager : downloadManagers) {
-		    	BTMetaInfo info = null;
-				try {
-					File torrentFile = new File(dlManager.getTorrentFileName());
-					
-					//not STOPPED && not QUEUED
-					if (dlManager.getState() != 70 &&
-					    dlManager.getState() != 75 ) {
-						continue;
-					}
-					
-			    	byte [] b = FileUtils.readFileFully(torrentFile);
-					info = BTMetaInfo.readFromBytes(b);
-					
-					BTDownloaderImpl btDownloader = (BTDownloaderImpl) _coreDownloaderFactory.createBTDownloader(info);
-			    	btDownloader.initBtMetaInfo(info);
-			    	
-			    	add(btDownloader.createUploader());
-			    	
-				} catch (IOException e) {
-					e.printStackTrace();					
-				}
-		    }
-	    }
 	}
 
 	/**
@@ -310,7 +250,7 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 	 */
     public void remove(Uploader uploader) {
 		if (SharingSettings.CLEAR_UPLOAD.getValue() &&
-            (uploader.isInactive() || uploader instanceof BTUploader)) {
+            uploader.isInactive()) {
             // This is called when the upload is finished, either because
             // the user clicked 'Kill', something was interupted, etc..
             // It doesn't matter that we always setPersistConnect(true),
@@ -342,27 +282,6 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 		    if (udl != null) udl.setEndTime( System.currentTimeMillis() );
 	    }
     }
-    
-    // another hack for torrents, needs a refactor in the future
-    public void remove(BTDownloaderImpl downloader) {
-        try {
-            int count = DATA_MODEL.getRowCount();
-            for (int i = 0; i < count; i++) {
-                UploadDataLine line = DATA_MODEL.get(i);
-
-                if (line.getInitializeObject() instanceof BTUploader) {
-                    BTUploader uploader = (BTUploader) line.getInitializeObject();
-
-                    if (downloader.equals(uploader.getBTDownloader())) {
-                        DATA_MODEL.forceRemoveUploader(i);
-                        break;
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * Override the default remove to not actually remove,
@@ -377,9 +296,6 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 			int i = sel[counter];
 			DATA_MODEL.get(i).cleanup();
 			
-			if (DATA_MODEL.get(i).getInitializeObject() instanceof BTUploader) {
-				DATA_MODEL.remove(i);
-			}
 		}
     }
 
@@ -497,14 +413,6 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
             for (int i = 0; i < count; i++) {
                 UploadDataLine line = DATA_MODEL.get(i);
 
-                if (line.getInitializeObject() instanceof BTUploader) {
-                    BTUploader uploader = (BTUploader) line.getInitializeObject();
-
-                    if (managedTorrent.equals(uploader.getBTDownloader().getTorrent())) {
-                        DATA_MODEL.removeNotSeeded(i);
-                        break;
-                    }
-                }
             }
         } catch (Exception e) {
             e.printStackTrace();

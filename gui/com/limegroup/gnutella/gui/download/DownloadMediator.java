@@ -27,8 +27,6 @@ import org.limewire.util.OSUtils;
 
 import com.frostwire.CoreFrostWireUtils;
 import com.frostwire.GuiFrostWireUtils;
-import com.limegroup.bittorrent.BTDownloader;
-import com.limegroup.bittorrent.gui.TorrentDownloadFactory;
 import com.limegroup.bittorrent.gui.TorrentFileFetcher;
 import com.limegroup.bittorrent.settings.BittorrentSettings;
 import com.limegroup.gnutella.Downloader;
@@ -453,62 +451,7 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
     }
 
     public void openTorrent(File file) {
-    	try {
-            TorrentDownloadFactory factory = new TorrentDownloadFactory(file);
-            DownloaderUtils.createDownloader(factory);
-  		
-            if(SharingSettings.SHARE_TORRENT_META_FILES.getValue()) {
-            	GuiFrostWireUtils.shareTorrent(file);
-            	
-            	// begin of FTA validations (FTA: Added support to handle files one by one)
-            	com.limegroup.bittorrent.BTMetaInfo torrinfo = factory.getBTMetaInfo();
-
-            	if (torrinfo == null) {
-            		//GUIMediator.showMessage("Canceled by user"); //FTA: debug
-            		return;
-            	}
-            	final File tFile = GuiCoreMediator.getTorrentManager()
-            	.getSharedTorrentMetaDataFile(torrinfo);
-            	//System.out.println("DownloadMediator() - getBTMetaInfo SUCCESS!");
-            	// end of FTA validations
-
-            	// Old code was:
-            	//final File tFile = GuiCoreMediator.getTorrentManager()
-            	//                .getSharedTorrentMetaDataFile(factory.getBTMetaInfo());
-
-            	File backup = null;
-            	if(tFile.exists()) {
-            		//could be same file if we are re-launching 
-            		//an existing torrent from library
-            		if(tFile.equals(file)) {
-            			return;
-            		}
-
-            		//don't get this one... aren't we supposed to share the file?
-            		GuiCoreMediator.getFileManager().stopSharingFile(tFile);
-
-            		backup = new File(tFile.getParent(), tFile.getName().concat(".bak"));
-            		FileUtils.forceRename(tFile, backup);
-            	}
-            	if(!FileUtils.copy(file, tFile) && (backup != null)) {
-            		//try restoring backup
-            		if(FileUtils.forceRename(backup, tFile)) {
-            			GuiCoreMediator.getFileManager().addFileIfShared(tFile);
-            		}
-            	} 
-            	//com.limegroup.gnutella.gui.GUIMediator.showMessage("The torrent has been read!"); //FTA: debug
-            }
-    	} catch (IOException ioe) {
-    		ioe.printStackTrace();
-    		if (!ioe.toString().contains("No files selected by user")) {
-    			// could not read torrent file or bad torrent file.
-    			GUIMediator.showError(I18n.tr("FrostWire was unable to load the torrent file \"{0}\", - it may be malformed or FrostWire does not have permission to access this file.", 
-    					file.getName()),
-    					QuestionsHandler.TORRENT_OPEN_FAILURE);
-    			//System.out.println("***Error happened from Download Mediator: " +  ioe);
-    			//GUIMediator.showMessage("Error was: " + ioe); //FTA: debug
-    		}
-    	}
+    	
     }
 
     /**
@@ -651,10 +594,7 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
 		int[] sel = TABLE.getSelectedRows();
 		Downloader dl = DATA_MODEL.get(sel[0]).getInitializeObject();
 		File saveLocation = dl.getSaveFile();
-		File saveFile = dl instanceof BTDownloader ? FileChooserHandler.getSaveAsDir(MessageService.getParentComponent(),
-				I18nMarker.marktr("Choose Save Location"), saveLocation) :
-					FileChooserHandler.getSaveAsFile(MessageService.getParentComponent(),
-							I18nMarker.marktr("Choose Save Location"), saveLocation);
+		File saveFile = null;
 		if (saveFile == null)
 			return;
 		

@@ -10,7 +10,6 @@ import com.limegroup.gnutella.browser.MagnetOptions;
 import com.limegroup.gnutella.downloader.CantResumeException;
 import com.limegroup.gnutella.downloader.CoreDownloader;
 import com.limegroup.gnutella.downloader.CoreDownloaderFactory;
-import com.limegroup.gnutella.downloader.IncompleteFileManager;
 import com.limegroup.gnutella.downloader.PushedSocketHandler;
 import com.limegroup.gnutella.messages.QueryReply;
 import com.limegroup.gnutella.messages.QueryRequest;
@@ -83,12 +82,6 @@ public interface DownloadManager extends BandwidthTracker, SaveLocationManager, 
      * Returns whether or not we are actively downloading this file.
      */
     public boolean isActivelyDownloading(URN urn);
-
-    /**
-     * Returns the IncompleteFileManager used by this DownloadManager
-     * and all ManagedDownloaders.
-     */
-    public IncompleteFileManager getIncompleteFileManager();
 
     public int downloadsInProgress();
 
@@ -184,8 +177,6 @@ public interface DownloadManager extends BandwidthTracker, SaveLocationManager, 
      */
     public Downloader download(DownloadInformation info, long now) throws SaveLocationException;
 
-    public Downloader downloadTorrent(BTMetaInfo info, boolean overwrite)
-            throws SaveLocationException;
 
     /**
      * Returns <code>true</code> if there already is a download with the same urn. 

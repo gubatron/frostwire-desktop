@@ -58,7 +58,7 @@ public final class LocalClientInfo extends LocalAbstractInfo {
         _heapUsage = "" + ManagementFactory.getMemoryMXBean().getHeapMemoryUsage();
         _nonHeapUsage = "" + ManagementFactory.getMemoryMXBean().getNonHeapMemoryUsage();
         _settingsFreeSpace = getFreeSpace(CommonUtils.getUserSettingsDir());
-        _incompleteFreeSpace = getFreeSpace(SharingSettings.INCOMPLETE_DIRECTORY.getValue());
+        _incompleteFreeSpace = "";//getFreeSpace(SharingSettings.INCOMPLETE_DIRECTORY.getValue());
         _downloadFreeSpace = getFreeSpace(SharingSettings.getSaveDirectory());
         
 	    

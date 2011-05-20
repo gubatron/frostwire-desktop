@@ -151,15 +151,15 @@ public class TorrentFileFetcher implements HttpClientListener, CoreDownloader {
 		final BTMetaInfo toDownload = m;
         Runnable starter = new Runnable() {
             public void run() {
-            	//System.out.println("TorrentFileFetcher#requestComplete#starter#run()");
-                GuiDownloaderFactory factory = new TorrentDownloadFactory(toDownload);
-                CoreDownloader d = (CoreDownloader) DownloaderUtils.createDownloader(factory);
-                if (d != null) {
-                    delegate = d;
-                } else {
-                    stopped = true;
-                    removeDataLine();
-                }
+//            	//System.out.println("TorrentFileFetcher#requestComplete#starter#run()");
+//                GuiDownloaderFactory factory = new TorrentDownloadFactory(toDownload);
+//                CoreDownloader d = (CoreDownloader) DownloaderUtils.createDownloader(factory);
+//                if (d != null) {
+//                    delegate = d;
+//                } else {
+//                    stopped = true;
+//                    removeDataLine();
+//                }
             }
         };
         

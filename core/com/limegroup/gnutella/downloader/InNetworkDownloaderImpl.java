@@ -49,7 +49,7 @@ class InNetworkDownloaderImpl extends ManagedDownloaderImpl implements InNetwork
      */
     @Inject
     InNetworkDownloaderImpl(SaveLocationManager saveLocationManager, DownloadManager downloadManager,
-            FileManager fileManager, IncompleteFileManager incompleteFileManager,
+            FileManager fileManager, 
             DownloadCallback downloadCallback, NetworkManager networkManager,
             AlternateLocationFactory alternateLocationFactory, RequeryManagerFactory requeryManagerFactory,
             QueryRequestFactory queryRequestFactory, OnDemandUnicaster onDemandUnicaster,
@@ -60,7 +60,7 @@ class InNetworkDownloaderImpl extends ManagedDownloaderImpl implements InNetwork
              IPFilter ipFilter, @Named("backgroundExecutor") ScheduledExecutorService backgroundExecutor,
             Provider<MessageRouter> messageRouter, Provider<HashTreeCache> tigerTreeCache,
             ApplicationServices applicationServices, RemoteFileDescFactory remoteFileDescFactory, Provider<PushList> pushListProvider) throws SaveLocationException {
-        super(saveLocationManager, downloadManager, fileManager, incompleteFileManager,
+        super(saveLocationManager, downloadManager, fileManager,
                 downloadCallback, networkManager, alternateLocationFactory, requeryManagerFactory,
                 queryRequestFactory, onDemandUnicaster, downloadWorkerFactory, altLocManager,
                 contentManager, sourceRankerFactory, urnCache, savedFileManager,
@@ -93,15 +93,6 @@ class InNetworkDownloaderImpl extends ManagedDownloaderImpl implements InNetwork
 
     protected synchronized void setTigerTreeRoot(String tigerTreeRoot) {
         this.tigerTreeRoot = tigerTreeRoot;
-    }
-
-    /**
-     * Overriden to use a different incomplete directory.
-     */
-    @Override
-    protected File getIncompleteFile(String name, URN urn,
-                                     long length) throws IOException {
-        return incompleteFileManager.getFile(name, urn, length, new File(SharingUtils.PREFERENCE_SHARE, "Incomplete"));
     }
     
     /**

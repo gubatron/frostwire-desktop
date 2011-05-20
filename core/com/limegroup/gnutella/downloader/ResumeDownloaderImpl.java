@@ -50,7 +50,7 @@ class ResumeDownloaderImpl extends ManagedDownloaderImpl implements ResumeDownlo
      *  IncompleteFileManager.getCompletedSize(incompleteFile) */
     @Inject
     ResumeDownloaderImpl(SaveLocationManager saveLocationManager, DownloadManager downloadManager,
-            FileManager fileManager, IncompleteFileManager incompleteFileManager,
+            FileManager fileManager, 
             DownloadCallback downloadCallback, NetworkManager networkManager,
             AlternateLocationFactory alternateLocationFactory, RequeryManagerFactory requeryManagerFactory,
             QueryRequestFactory queryRequestFactory, OnDemandUnicaster onDemandUnicaster,
@@ -61,7 +61,7 @@ class ResumeDownloaderImpl extends ManagedDownloaderImpl implements ResumeDownlo
              IPFilter ipFilter, @Named("backgroundExecutor") ScheduledExecutorService backgroundExecutor,
             Provider<MessageRouter> messageRouter, Provider<HashTreeCache> tigerTreeCache,
             ApplicationServices applicationServices, RemoteFileDescFactory remoteFileDescFactory, Provider<PushList> pushListProvider) {
-        super(saveLocationManager, downloadManager, fileManager, incompleteFileManager,
+        super(saveLocationManager, downloadManager, fileManager,
                 downloadCallback, networkManager, alternateLocationFactory, requeryManagerFactory,
                 queryRequestFactory, onDemandUnicaster, downloadWorkerFactory, altLocManager,
                 contentManager, sourceRankerFactory, urnCache, savedFileManager,
@@ -75,9 +75,6 @@ class ResumeDownloaderImpl extends ManagedDownloaderImpl implements ResumeDownlo
     public void initIncompleteFile(File incompleteFile, long size) {
         setIncompleteFile(Objects.nonNull(incompleteFile, "incompleteFile"));
         setContentLength(size);
-        URN sha1 = incompleteFileManager.getCompletedHash(incompleteFile);
-        if(sha1 != null)
-            setSha1Urn(sha1);
     }
 
     /**

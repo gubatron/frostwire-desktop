@@ -84,28 +84,6 @@ public class SharingSettings extends LimeProps {
         FACTORY.createFileSetting("DIRECTORY_FOR_SAVING_FILES", 
             DEFAULT_SAVE_DIR).setAlwaysSave(true);
     
-    /**
-     * The directory where incomplete files are stored (downloads in progress).
-     */
-    public static final FileSetting INCOMPLETE_DIRECTORY =
-        FACTORY.createFileSetting("INCOMPLETE_DIRECTORY", 
-            (new File(DIRECTORY_FOR_SAVING_FILES.getValue().getParent(),
-                "Incomplete")));
-    
-    /**
-	 * A file with a snapshot of current downloading files.
-	 */                
-    public static final FileSetting OLD_DOWNLOAD_SNAPSHOT_FILE =
-        FACTORY.createFileSetting("DOWNLOAD_SNAPSHOT_FILE", 
-            (new File(INCOMPLETE_DIRECTORY.getValue(), "downloads.dat")));
-            
-    /**
-	 * A file with a snapshot of current downloading files.
-	 */                
-    public static final FileSetting OLD_DOWNLOAD_SNAPSHOT_BACKUP_FILE =
-        FACTORY.createFileSetting("DOWNLOAD_SNAPSHOT_BACKUP_FILE", 
-            (new File(INCOMPLETE_DIRECTORY.getValue(), "downloads.bak")));            
-    
     /** The minimum age in days for which incomplete files will be deleted.
      *  This values may be zero or negative; doing so will cause LimeWire to
      *  delete ALL incomplete files on startup. */   
@@ -190,9 +168,6 @@ public class SharingSettings extends LimeProps {
 		} catch(IOException ignored) {}
 		
         DIRECTORY_FOR_SAVING_FILES.setValue(saveDir);
-        INCOMPLETE_DIRECTORY.setValue(incDir);
-        OLD_DOWNLOAD_SNAPSHOT_FILE.setValue(snapFile);
-        OLD_DOWNLOAD_SNAPSHOT_BACKUP_FILE.setValue(snapBackup);
     }
     
     /**

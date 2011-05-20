@@ -213,7 +213,7 @@ public final class LibraryMediator implements ThemeObserver {
      */
     public void quickRefresh() {
 	    DirectoryHolder dh = getLibraryTree().getSelectedDirectoryHolder();
-		if(dh instanceof SavedFilesDirectoryHolder || dh instanceof IncompleteDirectoryHolder)
+		if(dh instanceof SavedFilesDirectoryHolder)
             updateTableFiles(dh);
     }
     

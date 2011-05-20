@@ -420,7 +420,6 @@ class ManagedDownloaderImpl extends AbstractCoreDownloader implements AltLocList
     
     protected final DownloadManager downloadManager;
     protected final FileManager fileManager;
-    protected final IncompleteFileManager incompleteFileManager;
     protected final DownloadCallback downloadCallback;    
     protected final NetworkManager networkManager;
     protected final AlternateLocationFactory alternateLocationFactory;
@@ -454,7 +453,7 @@ class ManagedDownloaderImpl extends AbstractCoreDownloader implements AltLocList
     @Inject
     protected ManagedDownloaderImpl(SaveLocationManager saveLocationManager,
             DownloadManager downloadManager, FileManager fileManager,
-            IncompleteFileManager incompleteFileManager, DownloadCallback downloadCallback,
+            DownloadCallback downloadCallback,
             NetworkManager networkManager, AlternateLocationFactory alternateLocationFactory,
             RequeryManagerFactory requeryManagerFactory, QueryRequestFactory queryRequestFactory,
             OnDemandUnicaster onDemandUnicaster, DownloadWorkerFactory downloadWorkerFactory,
@@ -469,7 +468,6 @@ class ManagedDownloaderImpl extends AbstractCoreDownloader implements AltLocList
         super(saveLocationManager);
         this.downloadManager = downloadManager;
         this.fileManager = fileManager;
-        this.incompleteFileManager = incompleteFileManager;
         this.downloadCallback = downloadCallback;
         this.networkManager = networkManager;
         this.alternateLocationFactory = alternateLocationFactory;
@@ -948,36 +946,11 @@ class ManagedDownloaderImpl extends AbstractCoreDownloader implements AltLocList
      * initializes the verifying file if the incompleteFile is initialized.
      */
 	protected void initializeVerifyingFile() throws IOException {
-		if (incompleteFile == null)
-			return;
-
-		// get VerifyingFile
-		commonOutFile = incompleteFileManager.getEntry(incompleteFile);
-		if (commonOutFile == null) {// no entry in incompleteFM
-			long completedSize = IncompleteFileManager.getCompletedSize(incompleteFile);
-            if (completedSize > MAX_FILE_SIZE)
-                throw new IOException("invalid incomplete file "+completedSize);
-			commonOutFile = verifyingFileFactory.createVerifyingFile(completedSize);
-			commonOutFile.setScanForExistingBlocks(true, incompleteFile.length());
-			incompleteFileManager.addEntry(incompleteFile, commonOutFile, shouldPublishIFD());
-		}
+		
 	}
 
 	protected void initializeIncompleteFile() throws IOException {
-        if (incompleteFile != null)
-            return;
         
-        URN sha1 = getSha1Urn();
-        if (sha1 != null)
-            incompleteFile = incompleteFileManager.getFileForUrn(sha1);
-        
-        if (incompleteFile == null) { 
-            incompleteFile = getIncompleteFile(getSaveFile().getName(), sha1,
-                                               getContentLength());
-        }
-        
-        if(LOG.isWarnEnabled())
-            LOG.warn("Incomplete File: " + incompleteFile);
     }
     
     /**
@@ -986,7 +959,7 @@ class ManagedDownloaderImpl extends AbstractCoreDownloader implements AltLocList
      */
     protected File getIncompleteFile(String name, URN urn,
                                      long length) throws IOException {
-        return incompleteFileManager.getFile(name, urn, length);
+        return null;
     }
     
     /**
@@ -994,37 +967,6 @@ class ManagedDownloaderImpl extends AbstractCoreDownloader implements AltLocList
      * IncompleteFileDesc for this download.
      */
     private synchronized void initializeAlternateLocations() {
-        if( incompleteFile == null ) // no incomplete, no big deal.
-            return;
-        
-        FileDesc fd = fileManager.getFileDescForFile(incompleteFile);
-        if( fd != null && fd instanceof IncompleteFileDesc) {
-            IncompleteFileDesc ifd = (IncompleteFileDesc)fd;
-            // Assert that the SHA1 of the IFD and our sha1 match.
-            if(getSha1Urn() != null && !getSha1Urn().equals(ifd.getSHA1Urn())) {
-                ErrorService.error(new IllegalStateException(
-                           "wrong IFD." +
-                           "\nclass: " + getClass().getName() +
-                           "\nours  :   " + incompleteFile +
-                           "\ntheirs: " + ifd.getFile() +
-                           "\nour hash    : " + getSha1Urn() +
-                           "\ntheir hashes: " + ifd.getUrns()+
-                           "\nifm.hashes : "+incompleteFileManager.dumpHashes()));
-                fileManager.removeFileIfShared(incompleteFile);
-            }
-        }
-        
-        // Locate the hash for this incomplete file, to retrieve the 
-        // IncompleteFileDesc.
-        URN hash = incompleteFileManager.getCompletedHash(incompleteFile);
-        if( hash != null ) {
-            long size = IncompleteFileManager.getCompletedSize(incompleteFile);
-            //create validAlts
-            addLocationsToDownload(altLocManager.getDirect(hash),
-                    altLocManager.getPushNoFWT(hash),
-                    altLocManager.getPushFWT(hash),
-                    size);
-        }
     }
     
     /**
@@ -1064,13 +1006,6 @@ class ManagedDownloaderImpl extends AbstractCoreDownloader implements AltLocList
 		if (iFile != null) {
 			return iFile.equals(incFile);
 		}
-		URN urn = getSha1Urn();
-		if (urn != null) {
-			iFile = incompleteFileManager.getFileForUrn(urn);
-		}
-		if (iFile != null) {
-			return iFile.equals(incFile);
-		}
 	
 		RemoteFileDesc rfd = null;
 		synchronized (this) {
@@ -1080,12 +1015,7 @@ class ManagedDownloaderImpl extends AbstractCoreDownloader implements AltLocList
 			rfd = cachedRFDs.iterator().next();
 		}
 		if (rfd != null) {
-			try {
-				File thisFile = incompleteFileManager.getFile(rfd);
-				return thisFile.equals(incFile);
-			} catch(IOException ioe) {
-				return false;
-			}
+			
 		}
 		return false;
     }
@@ -1094,16 +1024,7 @@ class ManagedDownloaderImpl extends AbstractCoreDownloader implements AltLocList
      * @see com.limegroup.gnutella.downloader.ManagedDownloader#conflicts(com.limegroup.gnutella.URN, long, java.io.File)
      */
 	public boolean conflicts(URN urn, long fileSize, File... fileName) {
-		if (urn != null && getSha1Urn() != null) {
-			return urn.equals(getSha1Urn());
-		}
-		if (fileSize > 0) {
-			try {
-				File file = incompleteFileManager.getFile(fileName[0].getName(), null, fileSize);
-				return conflictsWithIncompleteFile(file);
-			} catch (IOException e) {
-			}
-		}
+		
 		return false;
 	}
 	
@@ -1744,18 +1665,7 @@ class ManagedDownloaderImpl extends AbstractCoreDownloader implements AltLocList
         //exclusive file locks.  If the download hasn't started, the
         //incomplete file may not even exist--not a problem.
         else if (state!=DownloadStatus.COMPLETE) {
-            File file=new File(incompleteFile.getParent(),
-                               IncompleteFileManager.PREVIEW_PREFIX
-                                   +incompleteFile.getName());
-            //Get the size of the first block of the file.  (Remember
-            //that swarmed downloads don't always write in order.)
-            long size=amountForPreview();
-            if (size<=0)
-                return null;
-            //Copy first block, returning if nothing was copied.
-            if (FileUtils.copy(incompleteFile, size, file)<=0) 
-                return null;
-            return file;
+            return null;
         }
         //c) Otherwise, choose completed file.
         else {
@@ -2044,7 +1954,6 @@ class ManagedDownloaderImpl extends AbstractCoreDownloader implements AltLocList
         // First attempt to rename it.
         boolean success = FileUtils.forceRename(incompleteFile,saveFile);
 
-        incompleteFileManager.removeEntry(incompleteFile);
         
         // If that didn't work, we're out of luck.
         if (!success) {
@@ -2135,9 +2044,7 @@ class ManagedDownloaderImpl extends AbstractCoreDownloader implements AltLocList
      *  and attempts to rename incompleteFile to "CORRUPT-i-...".  Deletes
      *  incompleteFile if rename fails. */
     private void cleanupCorrupt(File incFile, String name) {
-        corruptFileBytes= getAmountRead();        
-        incompleteFileManager.removeEntry(incFile);
-
+        corruptFileBytes= getAmountRead();
         //Try to rename the incomplete file to a new corrupt file in the same
         //directory (INCOMPLETE_DIRECTORY).
         boolean renamed = false;
@@ -3092,9 +2999,7 @@ class ManagedDownloaderImpl extends AbstractCoreDownloader implements AltLocList
             throw new InvalidDataException("must have a name!");
         addInitialSources(toRfds(gmem.getRemoteHosts()), gmem.getDefaultFileName());
         
-        if(getIncompleteFile() != null) {
-            incompleteFileManager.initEntry(getIncompleteFile(), gmem.getSavedBlocks(), getSha1Urn(), shouldPublishIFD());
-        }
+        
     }
     
     /** Returns true if this download's IFD should be published as sharable. */

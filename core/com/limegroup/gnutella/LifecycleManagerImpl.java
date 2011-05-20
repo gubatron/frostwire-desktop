@@ -20,8 +20,6 @@ import org.limewire.listener.EventListener;
 import org.limewire.listener.EventListenerList;
 import org.limewire.net.ConnectionDispatcher;
 import org.limewire.nio.ByteBufferCache;
-import org.limewire.nio.ssl.SSLEngineTest;
-import org.limewire.nio.ssl.SSLUtils;
 import org.limewire.rudp.UDPMultiplexor;
 import org.limewire.service.ErrorService;
 import org.limewire.setting.SettingsGroupManager;
@@ -42,9 +40,7 @@ import com.limegroup.gnutella.browser.ControlRequestAcceptor;
 import com.limegroup.gnutella.browser.LocalAcceptor;
 import com.limegroup.gnutella.browser.LocalHTTPAcceptor;
 import com.limegroup.gnutella.dht.DHTManager;
-import com.limegroup.gnutella.downloader.IncompleteFileManager;
 import com.limegroup.gnutella.downloader.PushDownloadManager;
-import com.limegroup.gnutella.downloader.serial.conversion.DownloadUpgradeTask;
 import com.limegroup.gnutella.filters.IPFilter;
 import com.limegroup.gnutella.library.SharingUtils;
 import com.limegroup.gnutella.licenses.LicenseFactory;
@@ -52,7 +48,6 @@ import com.limegroup.gnutella.messages.StaticMessages;
 import com.limegroup.gnutella.rudp.messages.LimeRUDPMessageHandler;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.ConnectionSettings;
-import com.limegroup.gnutella.settings.SSLSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.spam.RatingTable;
 import com.limegroup.gnutella.tigertree.HashTreeCache;
@@ -113,7 +108,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
     private final Provider<LimeCoreGlue> limeCoreGlue;
     private final Provider<OutOfBandThroughputMeasurer> outOfBandThroughputMeasurer;
     private final Provider<BrowseHostHandlerManager> browseHostHandlerManager;
-    private final Provider<DownloadUpgradeTask> downloadUpgradeTask;
     private final Provider<StatisticAccumulator> statisticAccumulator;
     
     /** A list of items that require running prior to shutting down LW. */
@@ -189,7 +183,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
             Provider<LimeCoreGlue> limeCoreGlue,
             Provider<OutOfBandThroughputMeasurer> outOfBandThroughputMeasurer,
             Provider<BrowseHostHandlerManager> browseHostHandlerManager,
-            Provider<DownloadUpgradeTask> downloadUpgradeTask,
             Provider<StatisticAccumulator> statisticAccumulator,
             ServiceRegistry serviceRegistry) {
         
@@ -235,7 +228,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
         this.limeCoreGlue = limeCoreGlue;
         this.outOfBandThroughputMeasurer = outOfBandThroughputMeasurer;
         this.browseHostHandlerManager = browseHostHandlerManager;
-        this.downloadUpgradeTask = downloadUpgradeTask;
         this.statisticAccumulator = statisticAccumulator;
     }
     /**/
@@ -772,22 +764,7 @@ public class LifecycleManagerImpl implements LifecycleManager {
 
     /** Deletes all preview files. */
     private void cleanupPreviewFiles() {
-        //Cleanup any preview files.  Note that these will not be deleted if
-        //your previewer is still open.
-        File incompleteDir = SharingSettings.INCOMPLETE_DIRECTORY.getValue();
-        if (incompleteDir == null)
-            return; // if we could not get the incomplete directory, simply return.
         
-        
-        File[] files = incompleteDir.listFiles();
-        if(files == null)
-            return;
-        
-        for (int i=0; i<files.length; i++) {
-            String name = files[i].getName();
-            if (name.startsWith(IncompleteFileManager.PREVIEW_PREFIX))
-                files[i].delete();  //May or may not work; ignore return code.
-        }
     }
 
     public void addListener(EventListener<LifeCycleEvent> listener) {

@@ -12,8 +12,6 @@ import javax.swing.Icon;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
-import com.limegroup.bittorrent.BTDownloader;
-import com.limegroup.bittorrent.BTDownloaderImpl;
 import com.limegroup.bittorrent.gui.TorrentFileFetcher;
 import com.limegroup.bittorrent.settings.BittorrentSettings;
 import com.limegroup.gnutella.Downloader;
@@ -484,11 +482,7 @@ public final class DownloadDataLine extends AbstractDataLine<Downloader>
 	public void cleanup() {
 	    BackgroundExecutorService.schedule(new Runnable() {
 	        public void run() {
-	        	if (initializer.getClass().equals(BTDownloaderImpl.class)) {
-	        		((BTDownloaderImpl) initializer).setCancelled(true);
-	        	}
-	        	
-	            initializer.stop();
+	        	initializer.stop();
             }
         });
 	    _cleaned = true;
@@ -867,15 +861,7 @@ public final class DownloadDataLine extends AbstractDataLine<Downloader>
 		case COMPLETE:
             _status = COMPLETE_STATE;
             
-            if (getDownloader() instanceof BTDownloaderImpl ||
-            	getDownloader() instanceof TorrentFileFetcher) {
-            	
-            	if (SharingSettings.SEED_FINISHED_TORRENTS.getValue()) {
-            		_status = COMPLETE_SEEDING_STATE;
-            	} else {
-            		_status = COMPLETE_NOT_SEEDING_STATE;
-            	}
-            }
+            
             
 			_progress = 100;
 			break;
@@ -897,16 +883,7 @@ public final class DownloadDataLine extends AbstractDataLine<Downloader>
             try {
                 _speed = initializer.getMeasuredBandwidth();
                 
-                if (initializer instanceof BTDownloader && _speed < 0.1) {
-					
-					int numConnections = ((BTDownloader)initializer).getNumSeeds();
-					
-					if (numConnections <=1 )
-						_status = CONNECTING_STATE;
-					else
-						_status = MessageFormat.format(BT_CONNECTED_STATE, 
-								new Object[] { numConnections });
-				}
+               
             } catch(InsufficientDataException ide) {
                 _speed = 0;
             }

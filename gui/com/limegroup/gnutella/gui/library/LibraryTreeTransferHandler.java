@@ -227,7 +227,7 @@ class LibraryTreeTransferHandler extends LimeTransferHandler {
         
         // For incomplete or saved, just copy the visisible files --
         // for everything else, copy the 
-        if(holder instanceof SavedFilesDirectoryHolder || holder instanceof IncompleteDirectoryHolder) {
+        if(holder instanceof SavedFilesDirectoryHolder) {
             files = Arrays.asList(holder.getFiles());
         } else {
             File directory = holder.getDirectory();

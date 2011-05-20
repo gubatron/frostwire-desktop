@@ -109,7 +109,6 @@ public class FileManagerControllerImpl implements FileManagerController {
      */
     public void loadFinished() {
         creationTimeCache.get().pruneTimes();
-        downloadManager.get().getIncompleteFileManager().registerAllIncompleteFiles();
     }
     
     /* (non-Javadoc)

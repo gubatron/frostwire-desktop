@@ -84,7 +84,7 @@ class MagnetDownloaderImpl extends ManagedDownloaderImpl implements MagnetDownlo
      */
 	@Inject
     MagnetDownloaderImpl(SaveLocationManager saveLocationManager, DownloadManager downloadManager,
-            FileManager fileManager, IncompleteFileManager incompleteFileManager,
+            FileManager fileManager, 
             DownloadCallback downloadCallback, NetworkManager networkManager,
             AlternateLocationFactory alternateLocationFactory,
             RequeryManagerFactory requeryManagerFactory, QueryRequestFactory queryRequestFactory,
@@ -97,7 +97,7 @@ class MagnetDownloaderImpl extends ManagedDownloaderImpl implements MagnetDownlo
             ScheduledExecutorService backgroundExecutor, Provider<MessageRouter> messageRouter,
             Provider<HashTreeCache> tigerTreeCache, ApplicationServices applicationServices,
             RemoteFileDescFactory remoteFileDescFactory, Provider<PushList> pushListProvider) {
-        super(saveLocationManager, downloadManager, fileManager, incompleteFileManager,
+        super(saveLocationManager, downloadManager, fileManager, 
                 downloadCallback, networkManager, alternateLocationFactory, requeryManagerFactory,
                 queryRequestFactory, onDemandUnicaster, downloadWorkerFactory, altLocManager,
                 contentManager, sourceRankerFactory, urnCache, savedFileManager,

@@ -2,8 +2,6 @@ package com.limegroup.gnutella.downloader;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
-import com.limegroup.bittorrent.BTDownloader;
-import com.limegroup.bittorrent.BTDownloaderImpl;
 import com.limegroup.gnutella.DownloadCallback;
 import com.limegroup.gnutella.downloader.serial.DownloadSerializeSettings;
 import com.limegroup.gnutella.downloader.serial.DownloadSerializeSettingsImpl;
@@ -11,7 +9,6 @@ import com.limegroup.gnutella.downloader.serial.DownloadSerializer;
 import com.limegroup.gnutella.downloader.serial.DownloadSerializerImpl;
 import com.limegroup.gnutella.downloader.serial.OldDownloadConverter;
 import com.limegroup.gnutella.downloader.serial.conversion.OldDownloadConverterImpl;
-import com.limegroup.gnutella.downloader.serial.conversion.OldDownloadSettings;
 
 public class LimeWireDownloadModule extends AbstractModule {
     
@@ -21,7 +18,6 @@ public class LimeWireDownloadModule extends AbstractModule {
         bind(InNetworkDownloader.class).to(InNetworkDownloaderImpl.class);
         bind(MagnetDownloader.class).to(MagnetDownloaderImpl.class);
         bind(ResumeDownloader.class).to(ResumeDownloaderImpl.class);
-        bind(BTDownloader.class).to(BTDownloaderImpl.class);
         
         bind(RemoteFileDescFactory.class).to(RemoteFileDescFactoryImpl.class);
         bind(DownloadCallback.class).annotatedWith(Names.named("inNetwork")).to(InNetworkCallback.class);        
@@ -33,7 +29,6 @@ public class LimeWireDownloadModule extends AbstractModule {
         bind(DownloadSerializer.class).to(DownloadSerializerImpl.class);
         bind(DownloadSerializeSettings.class).to(DownloadSerializeSettingsImpl.class);
         bind(OldDownloadConverter.class).to(OldDownloadConverterImpl.class);
-        bind(DownloadSerializeSettings.class).annotatedWith(Names.named("oldDownloadSettings")).to(OldDownloadSettings.class);
     }
 
 }

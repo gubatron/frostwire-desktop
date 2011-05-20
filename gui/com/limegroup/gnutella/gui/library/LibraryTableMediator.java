@@ -39,12 +39,10 @@ import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.FileDetails;
 import com.limegroup.gnutella.FileManager;
 import com.limegroup.gnutella.FileManagerEvent;
-import com.limegroup.gnutella.IncompleteFileDesc;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.SaveLocationException;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.downloader.CantResumeException;
-import com.limegroup.gnutella.downloader.IncompleteFileManager;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.CheckBoxList;
 import com.limegroup.gnutella.gui.CheckBoxListPanel;
@@ -769,7 +767,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
         List<Tuple<File, FileDesc>> selected = listPanel.getSelectedElements();
         List<String> undeletedFileNames = new ArrayList<String>();
         FileManager fileManager = GuiCoreMediator.getFileManager();
-        IncompleteFileManager incompleteManager = GuiCoreMediator.getDownloadManager().getIncompleteFileManager();
 
         for (Tuple<File, FileDesc> tuple : selected) {
             File file = tuple.getFirst();
@@ -779,9 +776,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
                 continue;
             }
             
-            if (fd instanceof IncompleteFileDesc || fd == null) 
-                incompleteManager.removeEntry(file);
-            else 
+            if (fd != null) 
                 fileManager.removeFileIfShared(file);
             
             if (fd != null) { 
@@ -837,13 +832,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	 * just the regular file name otherwise. 
 	 */
 	private String getCompleteFileName(File file) {
-		if (_isIncomplete) {
-			try { 
-				return IncompleteFileManager.getCompletedName(file);
-			}
-			catch (IllegalArgumentException iae) {
-			}
-		}
 		return file.getName();
 	}
 	
@@ -1027,16 +1015,8 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 			File file = getFile(sel[i]);
 			if (file.isDirectory()) {
 				
-				// turn off launching for incomplete torrents
-				boolean isTorrent = false;
-				if (_isIncomplete) {
-					isTorrent = IncompleteFileManager.isTorrentFolder(file);
-					if (isTorrent)
-						LAUNCH_ACTION.setEnabled(false); 
-				}
-				
 				//  turn off delete (only once) if non-torrent directory found
-				if (!foundDir && !isTorrent){
+				if (!foundDir){
 					DELETE_ACTION.setEnabled(false);
 					foundDir = true;
 				}
