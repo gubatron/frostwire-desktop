@@ -196,12 +196,12 @@ public class LibrarySearchPanel extends JPanel {
             String name = pathname.getName();
             
             for (String token : _tokens)  {
-                if (name.toLowerCase(Locale.US).contains(token)) {
-                    return true;
+                if (!name.toLowerCase(Locale.US).contains(token)) {
+                    return false;
                 }
             }
             
-            return false;
+            return true;
         }	    
 	}
 }
