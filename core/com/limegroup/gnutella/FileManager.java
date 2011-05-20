@@ -147,11 +147,6 @@ public interface FileManager {
     public abstract FileDesc[] getAllSharedFileDescriptors();
     
     /**
-     * Returns an array of all shared file directories.
-     */
-    public abstract Set<File> getAllSharedDirectories();
-
-    /**
      * Returns a list of all shared file descriptors in the given directory,
      * in any order.
      * Returns null if directory is not shared, or a zero-length array if it is

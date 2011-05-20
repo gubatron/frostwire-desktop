@@ -39,9 +39,6 @@ public class SharingSettings extends LimeProps {
     public static final File DEFAULT_SAVE_DIR =
         new File(FrostWireUtils.getLimeWireRootFolder(), "Saved");
     
-    public static final File DEFAULT_SHARE_DIR = 
-        new File(FrostWireUtils.getLimeWireRootFolder(), "Shared");
-    
     public static final File DEFAULT_DOT_TORRENTS_DIR = 
     	new File(FrostWireUtils.getLimeWireRootFolder(), "Torrents");
     
@@ -266,12 +263,6 @@ public class SharingSettings extends LimeProps {
         return DEFAULT_EXTENSIONS_TO_DISABLE; 
     }
     
-    
-    /**
-	 * The shared directories. 
-	 */
-    public static final FileSetSetting DIRECTORIES_TO_SHARE =
-        FACTORY.createFileSetSetting("DIRECTORIES_TO_SEARCH_FOR_FILES", new File[0]);
 
     /**
      * Whether or not to auto-share files when using 'Download As'.

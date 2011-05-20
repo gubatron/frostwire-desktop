@@ -88,12 +88,6 @@ public class LibraryData extends AbstractSettingsGroup {
 	 * no longer exist.
 	 */
 	public final void clean() {
-		SharingSettings.DIRECTORIES_TO_SHARE.clean();
-		Set<File> parents = SharingSettings.DIRECTORIES_TO_SHARE.getValue();
-		clean(DIRECTORIES_NOT_TO_SHARE, parents);
-		clean(FILES_NOT_TO_SHARE, parents);
-		clean(SENSITIVE_DIRECTORIES_VALIDATED, parents);
-		clean(SENSITIVE_DIRECTORIES_NOT_TO_SHARE, parents);
 	}
 	
 	/**

@@ -45,8 +45,6 @@ class SaveWindow extends SetupWindow {
 	 * Variable for the default save directory to use.
 	 */    
 	private String _defaultSaveDir;
-
-    private final RecursiveSharingPanel recursiveSharingPanel;
     
     // change for sharing files in saved folder
     private final JCheckBox CHECK_BOX = new JCheckBox();
@@ -58,19 +56,6 @@ class SaveWindow extends SetupWindow {
 	 */
 	SaveWindow(SetupManager manager, boolean migrate) {
 		super(manager, I18nMarker.marktr("Torrent Data Save Folder"), describeText(migrate), LEARN_MORE_URL);
-		File oldSaveDir = new File(CommonUtils.getUserHomeDir(), "Shared");
-		if (oldSaveDir.exists()) {
-			SharingSettings.DIRECTORIES_TO_SHARE.add(oldSaveDir);
-		}
-
-		recursiveSharingPanel = new RecursiveSharingPanel();
-		recursiveSharingPanel.getTree().setRootVisible(false);
-        recursiveSharingPanel.getTree().setShowsRootHandles(true);
-        recursiveSharingPanel.setRoots(SharingSettings.DIRECTORIES_TO_SHARE.getValueAsArray());
-        recursiveSharingPanel.addRoot(SharingSettings.DEFAULT_SHARE_DIR);
-        recursiveSharingPanel.addRoot(SharingSettings.DEFAULT_DOT_TORRENTS_DIR);
-        recursiveSharingPanel.setFoldersToExclude(GuiCoreMediator.getFileManager().getFolderNotToShare());
-        recursiveSharingPanel.setRootsExpanded();
     }
 	
 	private static String describeText(boolean migrate) {
@@ -83,8 +68,6 @@ class SaveWindow extends SetupWindow {
     protected void createWindow() {
         super.createWindow();
         
-        recursiveSharingPanel.updateLanguage();
-
 		File saveDir = SharingSettings.getSaveDirectory();
 		try {
 		    _defaultSaveDir = saveDir.getCanonicalPath();
@@ -206,19 +189,6 @@ class SaveWindow extends SetupWindow {
 		} catch(IOException ioe) {
 		    errors.add(I18n.tr("FrostWire was unable to use the specified folder for saving files. Please try a different folder."));
 		}
-		File defaultShareDir = SharingSettings.DEFAULT_SHARE_DIR; 
-        Set<File> roots = recursiveSharingPanel.getRootsToShare();
-        if (roots.contains(defaultShareDir)) {
-            // try to create it
-            if (defaultShareDir.isFile()) {
-                errors.add(I18n.tr("FrostWire could not create default share folder {0}, a file with that name already exists.", defaultShareDir));
-            }
-            else if (!defaultShareDir.isDirectory()) {
-                if (!defaultShareDir.mkdirs()) {
-                    errors.add(I18n.tr("FrostWire could not create default share folder {0}, it will not be shared.", defaultShareDir));
-                }
-            }
-        }
         
         if(loadCoreComponents) {
         //    GuiCoreMediator.getFileManager().loadWithNewDirectories(roots, recursiveSharingPanel.getFoldersToExclude(), false);
@@ -231,9 +201,6 @@ class SaveWindow extends SetupWindow {
 		Set<File> saveDirs = new HashSet<File>();
 		saveDirs.add(saveDir);
 		
-        if (!torrentSaveFolderComponent.isTorrentSaveFolderPathValid(false, saveDirs, roots)) {
-        	errors.add(TorrentSaveFolderComponent.getError());
-        }
         
         SharingSettings.SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES.
             setValue(CHECK_BOX.isSelected());

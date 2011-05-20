@@ -30,7 +30,7 @@ public class TorrentSaveFolderPaneItem extends AbstractPaneItem {
 
 	@Override
 	public boolean applyOptions() throws IOException {
-		if (!COMPONENT.isTorrentSaveFolderPathValid(true, SharingSettings.getAllSaveDirectories(),GuiCoreMediator.getFileManager().getAllSharedDirectories())) {
+		if (!COMPONENT.isTorrentSaveFolderPathValid(true)) {
 			GUIMediator.showError(COMPONENT.getError());
 			throw new IOException();
 		}

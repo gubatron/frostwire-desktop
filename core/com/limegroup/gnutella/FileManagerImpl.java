@@ -588,10 +588,6 @@ public abstract class FileManagerImpl implements FileManager {
         fds = _fileToFileDescMap.values().toArray(fds);
         return fds;
     }
-    
-    public synchronized Set<File> getAllSharedDirectories() {
-    	return SharingSettings.DIRECTORIES_TO_SHARE.getValue();
-    }
 
     /**
      * Returns a list of all shared file descriptors in the given directory,
@@ -671,11 +667,11 @@ public abstract class FileManagerImpl implements FileManager {
      * @see com.limegroup.gnutella.FileManager#loadWithNewDirectories(java.util.Set, java.util.Set)
      */
     public void loadWithNewDirectories(Set<? extends File> shared, Set<File> blackListSet, boolean loadSettings) {
-        SharingSettings.DIRECTORIES_TO_SHARE.setValue(shared);
-        synchronized(_data.DIRECTORIES_NOT_TO_SHARE) {
-            _data.DIRECTORIES_NOT_TO_SHARE.clear();
-            _data.DIRECTORIES_NOT_TO_SHARE.addAll(canonicalize(blackListSet));
-        }
+//        SharingSettings.DIRECTORIES_TO_SHARE.setValue(shared);
+//        synchronized(_data.DIRECTORIES_NOT_TO_SHARE) {
+//            _data.DIRECTORIES_NOT_TO_SHARE.clear();
+//            _data.DIRECTORIES_NOT_TO_SHARE.addAll(canonicalize(blackListSet));
+//        }
         // TODO: Study this change since it appears to block the fluid GUI components creation.
         if (loadSettings) {
             loadSettings();
@@ -789,12 +785,6 @@ public abstract class FileManagerImpl implements FileManager {
             //from smallest to largest.  Unless directories are specified as
             //"C:\dir\..\dir\..\dir", this will do the right thing.
             
-            directories = SharingSettings.DIRECTORIES_TO_SHARE.getValueAsArray();
-            Arrays.sort(directories, new Comparator<File>() {
-                public int compare(File a, File b) {
-                    return a.toString().length()-b.toString().length();
-                }
-            });
         }
 
         //clear this, list of directories retrieved
@@ -807,8 +797,8 @@ public abstract class FileManagerImpl implements FileManager {
         
         //Load the shared directories and add their files.
         _isUpdating = true;
-        for(int i = 0; i < directories.length && _revision == revision; i++)
-            updateSharedDirectories(directories[i], null, revision);
+//        for(int i = 0; i < directories.length && _revision == revision; i++)
+//            updateSharedDirectories(directories[i], null, revision);
             
 
         // Add specially shared files
@@ -1052,18 +1042,18 @@ public abstract class FileManagerImpl implements FileManager {
         }
         
         if(contained) {
-            if(parent != null && SharingSettings.DIRECTORIES_TO_SHARE.contains(folder)) {
-                // we don't wanna remove it, since it's a root-share, nor do we want
-                // to remove any of its children, so we return immediately.
-                return;
-            } else if(parent == null) {
-                // Add the directory in the exclude list if it wasn't in the DIRECTORIES_NOT_TO_SHARE,
-                // or if it was *and* a parent folder of it is fully shared.
-                boolean explicitlyShared = SharingSettings.DIRECTORIES_TO_SHARE.remove(folder);
-                if(!explicitlyShared || isFolderShared(folder.getParentFile()))
-                    _data.DIRECTORIES_NOT_TO_SHARE.add(folder);
-                
-            }
+//            if(parent != null && SharingSettings.DIRECTORIES_TO_SHARE.contains(folder)) {
+//                // we don't wanna remove it, since it's a root-share, nor do we want
+//                // to remove any of its children, so we return immediately.
+//                return;
+//            } else if(parent == null) {
+//                // Add the directory in the exclude list if it wasn't in the DIRECTORIES_NOT_TO_SHARE,
+//                // or if it was *and* a parent folder of it is fully shared.
+//                boolean explicitlyShared = SharingSettings.DIRECTORIES_TO_SHARE.remove(folder);
+//                if(!explicitlyShared || isFolderShared(folder.getParentFile()))
+//                    _data.DIRECTORIES_NOT_TO_SHARE.add(folder);
+//                
+//            }
             
             // note that if(parent != null && not a root share)
             // we DO NOT ADD to DIRECTORIES_NOT_TO_SHARE.
@@ -1152,9 +1142,7 @@ public abstract class FileManagerImpl implements FileManager {
             return false;
         
         _data.DIRECTORIES_NOT_TO_SHARE.remove(folder);
-		if (!isFolderShared(folder.getParentFile()))
-			SharingSettings.DIRECTORIES_TO_SHARE.add(folder);
-        _isUpdating = true;
+		_isUpdating = true;
         updateSharedDirectories(folder, null, _revision);
         _isUpdating = false;
         
@@ -1799,8 +1787,7 @@ public abstract class FileManagerImpl implements FileManager {
      */
 	public void invalidateSensitiveFile(File dir) {
         _data.SENSITIVE_DIRECTORIES_VALIDATED.remove(dir);
-        _data.SENSITIVE_DIRECTORIES_NOT_TO_SHARE.add(dir);
-        SharingSettings.DIRECTORIES_TO_SHARE.remove(dir);   
+        _data.SENSITIVE_DIRECTORIES_NOT_TO_SHARE.add(dir);  
     }
     
     /* (non-Javadoc)
