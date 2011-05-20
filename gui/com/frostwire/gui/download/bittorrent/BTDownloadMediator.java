@@ -484,9 +484,13 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     public void openTorrent(File file) {
         try {
             BTDownloaderFactory factory = new BTDownloaderFactory(AzureusStarter.getAzureusCore().getGlobalManager(), file);
-            BTDownloader downloader = BTDownloaderUtils.createDownloader(factory);
+            final BTDownloader downloader = BTDownloaderUtils.createDownloader(factory);
             
-            add(downloader);
+            GUIMediator.safeInvokeLater(new Runnable() {
+                public void run() {
+                    add(downloader);
+                }
+            });
 
         } catch (Exception ioe) {
             ioe.printStackTrace();

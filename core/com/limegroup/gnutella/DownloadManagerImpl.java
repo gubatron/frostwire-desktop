@@ -200,7 +200,7 @@ public class DownloadManagerImpl implements DownloadManager {
         for (Object obj : downloadManagers) {
             if (obj instanceof org.gudy.azureus2.core3.download.DownloadManager) {
                 
-                BTDownloader downloader = BTDownloaderFactory.createDownloader((org.gudy.azureus2.core3.download.DownloadManager) obj);
+                BTDownloader downloader = new BTDownloaderFactory(globalManager, null).createDownloader((org.gudy.azureus2.core3.download.DownloadManager) obj);
                 
                 addNewDownloader(downloader);
             }

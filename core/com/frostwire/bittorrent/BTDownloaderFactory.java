@@ -47,20 +47,21 @@ public class BTDownloaderFactory {
         return createDownloader(manager);
     }
 
-    public static BTDownloader createDownloader(DownloadManager downloadManager) {
+    public BTDownloader createDownloader(DownloadManager downloadManager) {
         downloadManager.addListener(new DownloadManagerAdapter() {
             @Override
             public void stateChanged(DownloadManager manager, int state) {
                 if (state == DownloadManager.STATE_READY) {
                     manager.startDownload();
                 } else if (state == DownloadManager.STATE_WAITING) {
-                    manager.initialize();
+                   // manager.initialize();
                 }
             }
         });
 
         if (downloadManager.getState() != DownloadManager.STATE_STOPPED) {
-            downloadManager.setStateWaiting();
+            //downloadManager.setStateWaiting();
+            downloadManager.initialize();
         }
         
         return new BTDownloaderImpl(downloadManager);

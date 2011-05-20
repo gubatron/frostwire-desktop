@@ -334,7 +334,8 @@ public class TorrentUtil {
     {
       if (dm != null && dm.getState() == DownloadManager.STATE_STOPPED) {
           
-        dm.setStateWaiting();
+        //dm.setStateWaiting();
+          dm.initialize();
       }
     }
 }
