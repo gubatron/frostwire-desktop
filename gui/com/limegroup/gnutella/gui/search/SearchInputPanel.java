@@ -33,6 +33,7 @@ import javax.swing.text.BadLocationException;
 
 import org.jdesktop.swingx.JXCollapsiblePane;
 
+import com.frostwire.bittorrent.websearch.SearchEnginesSettings;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIUtils;
@@ -251,9 +252,9 @@ class SearchInputPanel extends JPanel {
 		final JCheckBox checkBoxMininova = new JCheckBox("Mininova");
 		final JCheckBox checkBoxISOHunt = new JCheckBox("IsoHunt");
 		
-		checkboxClearbits.setSelected(true);
-        checkBoxMininova.setSelected(true);
-        checkBoxISOHunt.setSelected(true);
+		checkboxClearbits.setSelected(SearchEnginesSettings.CLEARBITS_SEARCH_ENABLED.getValue());
+        checkBoxMininova.setSelected(SearchEnginesSettings.MININOVA_SEARCH_ENABLED.getValue());
+        checkBoxISOHunt.setSelected(SearchEnginesSettings.ISOHUNT_SEARCH_ENABLED.getValue());
 		
 		ItemListener listener = new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
@@ -262,6 +263,10 @@ class SearchInputPanel extends JPanel {
                     !checkBoxISOHunt.isSelected()) {
                     ((JCheckBox)e.getItemSelectable()).setSelected(true);
                 }
+                
+                SearchEnginesSettings.CLEARBITS_SEARCH_ENABLED.setValue(checkboxClearbits.isSelected());
+                SearchEnginesSettings.MININOVA_SEARCH_ENABLED.setValue(checkBoxMininova.isSelected());
+                SearchEnginesSettings.ISOHUNT_SEARCH_ENABLED.setValue(checkBoxISOHunt.isSelected());
             }
         };
 		

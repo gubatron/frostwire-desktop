@@ -34,7 +34,6 @@ import com.frostwire.bittorrent.websearch.mininova.MininovaVuzeResponse;
 import com.frostwire.gnutella.gui.filters.SearchFilter;
 import com.frostwire.gnutella.gui.filters.SearchFilterFactory;
 import com.frostwire.gnutella.gui.filters.SearchFilterFactoryImpl;
-import com.limegroup.bittorrent.settings.BittorrentSettings;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MediaType;
