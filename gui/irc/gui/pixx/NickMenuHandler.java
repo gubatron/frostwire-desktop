@@ -29,10 +29,18 @@
 
 package irc.gui.pixx;
 
-import irc.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import irc.EventDispatcher;
+import irc.Source;
+
+import java.awt.MenuItem;
+import java.awt.PopupMenu;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Enumeration;
+
+import javax.swing.JComponent;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 
 /**
  * Popupmenu handling for nicknames.
@@ -43,7 +51,7 @@ public class NickMenuHandler implements ActionListener
   private String _whoisNick;
   private PopupMenu _menu;
   private Source _source;
-  private Component _parent;
+  private JComponent _parent;
   private PixxConfiguration _pixxConfiguration;
 
   /**
@@ -52,7 +60,7 @@ public class NickMenuHandler implements ActionListener
    * @param parent a parent component for the popup menu.
    * @param source the source associated with this popup menu.
    */
-  public NickMenuHandler(PixxConfiguration config,Component parent,Source source)
+  public NickMenuHandler(PixxConfiguration config,JComponent parent,Source source)
   {
     _pixxConfiguration=config;
     _parent=parent;
@@ -136,7 +144,7 @@ public class NickMenuHandler implements ActionListener
    * @param x x-position relative to c.
    * @param y y-position relative to c.
    */
-  public void popup(String nick,String whois,Component c,int x,int y)
+  public void popup(String nick,String whois,JComponent c,int x,int y)
   {
     if(_pixxConfiguration.getNickMenuVector().size()==0) return;
     _selectedNick=nick;

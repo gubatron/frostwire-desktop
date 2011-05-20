@@ -29,9 +29,17 @@
 
 package irc.security;
 
-import java.io.*;
-import java.net.*;
-import java.awt.*;
+import java.awt.FileDialog;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+import javax.swing.JFrame;
 
 /**
  * Default secured provider.
@@ -66,7 +74,7 @@ public class DefaultSecuredProvider implements SecuredProvider
 
   public File getLoadFile(String title)
   {
-    Frame f=new Frame();
+    JFrame f=new JFrame();
     FileDialog dlg=new FileDialog(f,title,FileDialog.LOAD);
     //dlg.show();
     dlg.setVisible(true);
@@ -80,7 +88,7 @@ public class DefaultSecuredProvider implements SecuredProvider
 
   public File getSaveFile(String title)
   {
-    Frame f=new Frame();
+    JFrame f=new JFrame();
     FileDialog dlg=new FileDialog(f,title,FileDialog.SAVE);
     dlg.setVisible(true);
     File ans=null;
@@ -93,7 +101,7 @@ public class DefaultSecuredProvider implements SecuredProvider
 
   public File getSaveFile(String file,String title)
   {
-    Frame f=new Frame();
+    JFrame f=new JFrame();
     FileDialog dlg=new FileDialog(f,title,FileDialog.SAVE);
     dlg.setFile(file);
     dlg.setVisible(true);

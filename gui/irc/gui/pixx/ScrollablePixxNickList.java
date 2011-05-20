@@ -29,7 +29,9 @@
 
 package irc.gui.pixx;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+
+import javax.swing.JPanel;
 
 /**
  * A scrollable nick list.
@@ -48,7 +50,7 @@ public class ScrollablePixxNickList extends PixxPanel implements PixxScrollBarLi
   {
     super(config);
     setLayout(new BorderLayout());
-    Panel p=new Panel();
+    JPanel p=new JPanel();
     p.setLayout(new BorderLayout());
 
     _list=new PixxNickList(config,prefixes);

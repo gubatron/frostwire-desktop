@@ -1,13 +1,28 @@
 package irc;
 
-import irc.gui.*;
-import irc.ident.*;
-import java.util.*;
-import java.io.*;
-import irc.plugin.*;
+import irc.gui.GUISource;
+import irc.gui.IRCInterface;
+import irc.gui.IRCInterfaceListener;
+import irc.ident.IdentListener;
+import irc.ident.IdentWrapper;
+import irc.plugin.Plugin;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.io.File;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Vector;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JTextField;
 
 /**
  * The IRC Application. This is the main class of PJIRC.
@@ -26,7 +41,7 @@ public class IRCApplication extends IRCObject implements ServerListener,ServerMa
   private Vector _plugins;
   private Hashtable _pluginsTable;
 
-  private Frame _frame;
+  private JFrame _frame;
   private Container _container;
 
   private Hashtable<Server,Server> _servers;
@@ -85,7 +100,7 @@ public class IRCApplication extends IRCObject implements ServerListener,ServerMa
     _interface.addIRCInterfaceListener(this);
     if(_container==null)
     {
-      _frame=new Frame();
+      _frame=new JFrame();
       _frame.addWindowListener(this);
       if(_interface.getComponent()!=null) _frame.add(_interface.getComponent());
       _frame.setFont(new Font("",Font.PLAIN,12));
@@ -349,13 +364,13 @@ public class IRCApplication extends IRCObject implements ServerListener,ServerMa
     s.removeServerListener(this);
   }
 
-  private Frame getParentFrame()
+  private JFrame getParentFrame()
   {
     if(_frame!=null) return _frame;
     Container ans=_container;
     while(ans!=null)
     {
-      if(ans instanceof Frame) return (Frame)ans;
+      if(ans instanceof JFrame) return (JFrame)ans;
       ans=ans.getParent();
     }
     return null;
@@ -472,8 +487,8 @@ public class IRCApplication extends IRCObject implements ServerListener,ServerMa
   public void windowClosing(WindowEvent e)
   {
     //((Frame)e.getSource()).hide();
-    ((Frame)e.getSource()).setVisible(false);
-    ((Frame)e.getSource()).dispose();
+    ((JFrame)e.getSource()).setVisible(false);
+    ((JFrame)e.getSource()).dispose();
   }
 
   public void windowDeactivated(WindowEvent e)
@@ -669,13 +684,13 @@ public class IRCApplication extends IRCObject implements ServerListener,ServerMa
     {
       if(_interface.getComponent()!=null) _interface.getComponent().setEnabled(false);
       if(_frame!=null) _frame.setEnabled(false);
-      Frame f=new Frame();
+      JFrame f=new JFrame();
       f.setLayout(new FlowLayout());
       f.setSize(200,65);
       f.setTitle("Change nickname to");
       //f.setTitle(getText(IRCTextProvider.GUI_CHANGE_NICK));
-      TextField field=new TextField(_start.getNick());
-      Button b=new Button("Ok");
+      JTextField field=new JTextField(_start.getNick());
+      JButton b=new JButton("Ok");
       b.addActionListener(this);
       f.add(field);
       f.add(b);

@@ -1,18 +1,26 @@
 package irc.gui.pixx;
 
-import irc.*;
-import java.awt.*;
-import java.awt.event.*;
+import irc.EventDispatcher;
+import irc.ListenerGroup;
+import irc.StyleContext;
+
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 /**
  * Extension for the style selector.
  */
-public class AWTStyleSelectorEx extends Panel implements ActionListener,FontSelectorListener
+public class AWTStyleSelectorEx extends JPanel implements ActionListener,FontSelectorListener
 {
   private ListenerGroup _lis;
   private AWTStyleSelector _selector;
   private FontSelector _fs;
-  private Button _b;
+  private JButton _b;
 
   /**
    * Create a new AWTStyleSelectorEx.

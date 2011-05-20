@@ -1,11 +1,19 @@
 package irc.gui.pixx;
 
-import java.util.*;
-import irc.*;
-import java.awt.*;
-import java.awt.event.*;
-import irc.tree.*;
-import irc.style.*;
+import irc.Channel;
+import irc.ChannelListener2;
+import irc.ModeHandler;
+import irc.Source;
+import irc.style.StyledList;
+import irc.tree.SortedList;
+
+import java.awt.BorderLayout;
+import java.awt.event.MouseEvent;
+import java.util.Enumeration;
+import java.util.Hashtable;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  * NickNameComparator.
@@ -51,7 +59,7 @@ class NickNameComparator implements irc.tree.Comparator
 public class AWTChannel extends BaseAWTSource implements ChannelListener2,PixxNickListListener
 {
   private ScrollablePixxNickList _nicks;
-	private Label _label;
+	private JLabel _label;
   private SortedList _sortedList;
   private Hashtable _modeMapping;
   private NickMenuHandler _menu;
@@ -71,15 +79,15 @@ public class AWTChannel extends BaseAWTSource implements ChannelListener2,PixxNi
     _nicks.addPixxNickListListener(this);
     _sortedList=new SortedList(new NickNameComparator(c.getIRCServer().getNickPrefixes()));
     _modeMapping=new Hashtable();
-		_label=new Label("");
+		_label=new JLabel("");
     _label.setBackground(_pixxConfiguration.getColor(PixxColorModel.COLOR_BACK));
     _label.setForeground(_pixxConfiguration.getColor(PixxColorModel.COLOR_WHITE));
     if(_pixxConfiguration.getIRCConfiguration().getB("asl"))
 		{
-		  Panel right=new Panel();
+		  JPanel right=new JPanel();
 			right.setLayout(new BorderLayout());
 			right.add(_nicks,BorderLayout.CENTER);
-			Panel outlabel=new Panel();
+			JPanel outlabel=new JPanel();
       outlabel.setLayout(new BorderLayout());
       outlabel.add(new PixxSeparator(PixxSeparator.BORDER_LEFT),BorderLayout.WEST);
       outlabel.add(new PixxSeparator(PixxSeparator.BORDER_RIGHT),BorderLayout.EAST);

@@ -29,12 +29,16 @@
 
 package irc.gui.pixx;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+
+import javax.swing.JPanel;
 
 /**
  * Separator panel.
  */
-public class PixxSeparator extends Panel
+public class PixxSeparator extends JPanel
 {
   private int _type;
   /**

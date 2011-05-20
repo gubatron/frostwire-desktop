@@ -1,9 +1,21 @@
 package irc.gui.common;
 
-import irc.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
+import irc.EventDispatcher;
+import irc.ListenerGroup;
+
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.Vector;
+
+import javax.swing.JTextField;
 
 /**
  * The special input text field used in AWTSource.
@@ -16,7 +28,7 @@ public class AWTIrcTextField extends Container implements ActionListener,KeyList
   private String[] _completeList;
   private Vector _historic;
   private ListenerGroup _listeners;
-  private TextField _field;
+  private JTextField _field;
   private boolean _useEnterTextHere;
   private String _enterTextHere;
   
@@ -28,7 +40,7 @@ public class AWTIrcTextField extends Container implements ActionListener,KeyList
     super();
     _useEnterTextHere=false;
     setLayout(new GridLayout(1,1));
-    _field=new TextField();
+    _field=new JTextField();
     add(_field);
     _completeList=new String[0];
     _field.setFont(new Font("SanSerif",Font.PLAIN,13));

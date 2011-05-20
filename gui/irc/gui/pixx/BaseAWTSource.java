@@ -1,17 +1,43 @@
 package irc.gui.pixx;
 
-import java.util.*;
-import irc.*;
-import irc.style.*;
-import java.awt.*;
-import java.awt.event.*;
-import irc.gui.*;
-import irc.gui.common.*;
+import irc.AudioConfiguration;
+import irc.EventDispatcher;
+import irc.IRCConfiguration;
+import irc.ListenerGroup;
+import irc.Source;
+import irc.SourceListener;
+import irc.StringParser;
+import irc.StyleContext;
+import irc.gui.GUISource;
+import irc.gui.common.AWTIrcTextField;
+import irc.gui.common.MouseWheelPanelListener;
+import irc.gui.common.MouseWheelPanelWrapper;
+import irc.style.FormattedStringDrawer;
+import irc.style.StyledList;
+import irc.style.StyledListListener;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.util.Calendar;
+import java.util.Enumeration;
+import java.util.Locale;
+
+import javax.swing.JPanel;
+
 import com.limegroup.gnutella.gui.GUIMediator;
 /**
  * The AWT source.
  */
-public class BaseAWTSource extends Panel implements GUISource,SourceListener,ActionListener,PixxScrollBarListener,FocusListener,StyledListListener,WindowListener,MouseWheelPanelListener,AWTStyleSelectorExListener
+public class BaseAWTSource extends JPanel implements GUISource,SourceListener,ActionListener,PixxScrollBarListener,FocusListener,StyledListListener,WindowListener,MouseWheelPanelListener,AWTStyleSelectorExListener
 {
   /**
    * Enclosed source.
@@ -24,7 +50,7 @@ public class BaseAWTSource extends Panel implements GUISource,SourceListener,Act
   /**
    * Main panel.
    */
-  protected Panel _panel;
+  protected JPanel _panel;
   /**
    * Styled list.
    */
@@ -87,7 +113,7 @@ public class BaseAWTSource extends Panel implements GUISource,SourceListener,Act
     _source=source;
     addFocusListener(this);
     _source.addSourceListener(this);
-    _panel=new Panel();
+    _panel=new JPanel();
     _panel.addFocusListener(this);
     _panel.setBackground(Color.white);
     _scroll=new PixxVerticalScrollBar(_pixxConfiguration,0,0,0.1);
@@ -113,7 +139,7 @@ public class BaseAWTSource extends Panel implements GUISource,SourceListener,Act
     _textField.setBackground(c[0]);
     _textField.setForeground(c[1]);
     _textField.addFocusListener(this);
-    Panel p=new Panel();
+    JPanel p=new JPanel();
     p.setLayout(new BorderLayout());
 
     _wrapper=new MouseWheelPanelWrapper(_panel);
@@ -133,7 +159,7 @@ public class BaseAWTSource extends Panel implements GUISource,SourceListener,Act
     _selector.addAWTStyleSelectorExListener(this);
     if(_pixxConfiguration.getB("styleselector"))
     {
-      p=new Panel(new BorderLayout());
+      p=new JPanel(new BorderLayout());
       p.add(_textField,BorderLayout.CENTER);
       p.add(_selector,BorderLayout.EAST);
       add(p,BorderLayout.SOUTH);

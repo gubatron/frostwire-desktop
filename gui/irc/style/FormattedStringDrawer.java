@@ -1,9 +1,18 @@
 package irc.style;
 
-import irc.*;
-import java.util.*;
-import java.awt.*;
-import java.awt.image.*;
+import irc.EventDispatcher;
+import irc.IRCConfiguration;
+import irc.StyleContext;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.image.ImageObserver;
+import java.util.Vector;
 
 /**
  * CharacterInfo.

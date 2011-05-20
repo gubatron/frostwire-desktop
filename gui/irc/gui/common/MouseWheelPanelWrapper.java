@@ -29,13 +29,16 @@
 
 package irc.gui.common;
 
-import java.awt.*;
-import java.lang.reflect.*;
+import java.awt.Component;
+import java.awt.GridLayout;
+import java.lang.reflect.Method;
+
+import javax.swing.JPanel;
 
 /**
  * Wrapper for MouseWheelPanel.
  */
-public class MouseWheelPanelWrapper extends Panel
+public class MouseWheelPanelWrapper extends JPanel
 {
   private Object _panel;
   private Method _add;

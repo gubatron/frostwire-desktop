@@ -1,12 +1,42 @@
 package irc.gui.pixx;
 
-import java.util.*;
-import java.awt.*;
-import java.awt.event.*;
-import irc.gui.*;
-import irc.*;
-import irc.dcc.*;
-import irc.gui.common.*;
+import irc.ChanList;
+import irc.Channel;
+import irc.DefaultSource;
+import irc.EventDispatcher;
+import irc.IRCConfiguration;
+import irc.Interpretor;
+import irc.Query;
+import irc.Server;
+import irc.Source;
+import irc.Status;
+import irc.StyleContext;
+import irc.dcc.DCCChat;
+import irc.dcc.DCCFile;
+import irc.gui.GUISource;
+import irc.gui.IRCInterface;
+import irc.gui.common.DockablePanel;
+import irc.gui.common.DockablePanelListener;
+import irc.gui.common.MouseWheelPanelListener;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.LayoutManager;
+import java.awt.MenuItem;
+import java.awt.PopupMenu;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.util.Enumeration;
+import java.util.Hashtable;
+
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  * MDILayout.
@@ -70,9 +100,9 @@ public class PixxMDIInterface extends IRCInterface implements PixxTaskBarListene
   private PixxPanel _panel;
   private PixxMenuBar _menu;
   private PixxTaskBar _task;
-  private Panel _mdi;
+  private JPanel _mdi;
   private PopupMenu _popMenu;
-	private TextField _nickField;
+	private JTextField _nickField;
 	private Hashtable _awt2Dock;
 	private AWTInterpretor _interpretor;
 	private PixxConfiguration _pixxConfiguration;
@@ -111,7 +141,7 @@ public class PixxMDIInterface extends IRCInterface implements PixxTaskBarListene
       _awt2Dock=new Hashtable();
       _popMenu=new PopupMenu();
       _panel.setLayout(new BorderLayout());
-      _mdi=new Panel();
+      _mdi=new JPanel();
       _mdi.setLayout(new MDILayout());
       _mdi.setBackground(Color.white);
       _task.add(_popMenu);
@@ -131,16 +161,16 @@ public class PixxMDIInterface extends IRCInterface implements PixxTaskBarListene
   		}
   		else
   		{
-  		  Panel bottom=new Panel();
+  		  JPanel bottom=new JPanel();
   			bottom.setLayout(new BorderLayout());
   			bottom.add(_task,BorderLayout.CENTER);
-  			Panel nickConfig=new Panel();
+  			JPanel nickConfig=new JPanel();
   			nickConfig.setLayout(new BorderLayout());
-  			Label label=new Label("Change nickname to:");
+  			JLabel label=new JLabel("Change nickname to:");
   			//Label label=new Label(_panel.getText(PixxTextProvider.GUI_CHANGE_NICK));
   		  label.setBackground(_pixxConfiguration.getColor(PixxColorModel.COLOR_BACK));
   		  label.setForeground(_pixxConfiguration.getColor(PixxColorModel.COLOR_WHITE));
-  			Panel outerNickLabel=new Panel();
+  			JPanel outerNickLabel=new JPanel();
   			outerNickLabel.setLayout(new BorderLayout());
   			outerNickLabel.add(label,BorderLayout.CENTER);
         outerNickLabel.add(new PixxSeparator(PixxSeparator.BORDER_LEFT),BorderLayout.WEST);

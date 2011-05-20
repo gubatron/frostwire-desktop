@@ -29,12 +29,12 @@
 
 package irc.gui.pixx;
 
-import java.awt.*;
+import javax.swing.JTextField;
 
 /**
  * A NonFocusableTextField is a TextField that cannot receive focus via focus cycle.
  */
-public class NonFocusableTextField extends TextField
+public class NonFocusableTextField extends JTextField
 {
   /**
    * Create a new NonFocusableTextField.

@@ -29,11 +29,26 @@
 
 package irc.security;
 
-import java.io.*;
-import java.net.*;
-import java.awt.*;
-import java.awt.event.*;
-import irc.*;
+import irc.EventDispatcher;
+
+import java.awt.BorderLayout;
+import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  * The security provider. Provides an interface for accessing protected data or operation.
@@ -134,27 +149,27 @@ public class SecurityProvider implements ActionListener
    * @param msg the message.
    * @return true if the user replied yes, false otherwise.
    */
-  public boolean confirm(Frame parent,String title,String msg)
+  public boolean confirm(JFrame parent,String title,String msg)
   {
-    Dialog f;
+    JDialog f;
     
-    Frame tmp=null;
+    JFrame tmp=null;
     
     if(parent==null)
     {
-      tmp=new Frame();
-      f=new Dialog(tmp,title,true);
+      tmp=new JFrame();
+      f=new JDialog(tmp,title,true);
     }
     else
     {
-      f=new Dialog(parent,title,true);
+      f=new JDialog(parent,title,true);
     }
 
     f.setLayout(new BorderLayout());
-    f.add(new Label(msg),BorderLayout.CENTER);
-    Button b1=new Button("Yes");
-    Button b2=new Button("No");
-    Panel p=new Panel();
+    f.add(new JLabel(msg),BorderLayout.CENTER);
+    JButton b1=new JButton("Yes");
+    JButton b2=new JButton("No");
+    JPanel p=new JPanel();
     f.setResizable(false);
     f.add(p,BorderLayout.SOUTH);
     p.add(b1);
@@ -195,7 +210,7 @@ public class SecurityProvider implements ActionListener
 
   public void actionPerformed(ActionEvent e)
   {
-    Button b=(Button)e.getSource();
+    JButton b=(JButton)e.getSource();
     _answer=false;
     if(b.getLabel().equals("Yes")) _answer=true;
     /*synchronized(_lock)

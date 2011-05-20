@@ -1,9 +1,16 @@
 package irc.gui.pixx;
 
-import java.awt.*;
-import java.awt.event.*;
-import irc.*;
-import irc.dcc.*;
+import irc.EventDispatcher;
+import irc.dcc.DCCFile;
+import irc.dcc.DCCFileListener;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 /**
  * The AWT dcc file interface.
@@ -17,7 +24,7 @@ public class AWTDCCFile implements DCCFileListener,WindowListener
   /**
    * The displayed frame.
    */
-  protected Frame _frame;
+  protected JFrame _frame;
   /**
    * The progress bar.
    */
@@ -42,9 +49,9 @@ public class AWTDCCFile implements DCCFileListener,WindowListener
       str=_pixxConfiguration.getText(PixxTextProvider.GUI_SENDING_FILE,_file.getSize()+"");
 
 
-    Label label=new Label(str);
+    JLabel label=new JLabel(str);
 
-    _frame=new Frame();
+    _frame=new JFrame();
     _frame.setBackground(Color.white);
 
     _frame.setLayout(new BorderLayout());

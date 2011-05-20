@@ -29,10 +29,15 @@
 
 package irc.style;
 
-import irc.*;
-import java.awt.*;
-import java.awt.image.*;
-import java.util.*;
+import irc.IRCConfiguration;
+import irc.SmileyTable;
+
+import java.awt.Dimension;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.image.ImageObserver;
+import java.util.Vector;
 
 /**
  * Atomic characters drawer. The CharactersDrawer handles graphical smileys.

@@ -29,12 +29,13 @@
 
 package irc.gui.pixx;
 
-import java.awt.*;
+import javax.swing.JButton;
+
 
 /**
  * A NonFocusableButton is a Button that cannot receive focus via focus cycle.
  */
-public class NonFocusableButton extends Button
+public class NonFocusableButton extends JButton
 {
 
   /**

@@ -29,14 +29,22 @@
 
 package irc.gui.pixx;
 
-import irc.*;
-import java.awt.*;
-import java.awt.event.*;
+import irc.StyleContext;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.event.InputEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.JPanel;
 
 /**
  * The style selector.
  */
-public class AWTStyleSelector extends Panel implements MouseListener
+public class AWTStyleSelector extends JPanel implements MouseListener
 {
   private PixxConfiguration _pixxConfiguration;
   private StyleContext _ct;

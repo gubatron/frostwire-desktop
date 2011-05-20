@@ -1,10 +1,24 @@
 package irc.style;
 
-import java.util.*;
-import java.awt.*;
-import java.awt.event.*;
+import irc.IRCConfiguration;
+import irc.ListenerGroup;
+import irc.StyleContext;
 
-import irc.*;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.event.InputEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Vector;
+
+import javax.swing.JPanel;
 
 /**
  * LimitedArray, used to remove too old lines from the text history.
@@ -92,7 +106,7 @@ class ResultPair
  * A styled list is a panel designed for displaying lines of styled text, using
  * special color and style codes, and smileys.
  */
-public class StyledList extends Panel implements MouseListener,MouseMotionListener,FormattedStringDrawerListener
+public class StyledList extends JPanel implements MouseListener,MouseMotionListener,FormattedStringDrawerListener
 {
   private LimitedArray _list;
   private Hashtable _nickInfos;
@@ -342,12 +356,13 @@ public class StyledList extends Panel implements MouseListener,MouseMotionListen
    * Set the font to be used for display.
    * @param fnt font to be used.
    */
-  public void setFont(Font fnt)
-  {
-    _drawer.setFont(fnt);
-    reinit();
-    repaint();
-  }
+    public void setFont(Font fnt) {
+        if (_drawer != null) {
+            _drawer.setFont(fnt);
+            reinit();
+            repaint();
+        }
+    }
 
   /**
    * Set the wrap mode.

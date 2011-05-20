@@ -1,9 +1,11 @@
 package irc.gui.pixx;
 
-import irc.*;
-import irc.style.*;
+import irc.ChanList;
+import irc.ChanListListener;
+import irc.ChannelInfo;
+import irc.style.StyledList;
 
-import java.awt.*;
+import java.awt.BorderLayout;
 
 /**
  * The AWT channel list.

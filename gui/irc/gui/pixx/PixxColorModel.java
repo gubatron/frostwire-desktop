@@ -1,6 +1,6 @@
 package irc.gui.pixx;
 
-import java.awt.*;
+import java.awt.Color;
 
 /**
  * PixxInterface color model.

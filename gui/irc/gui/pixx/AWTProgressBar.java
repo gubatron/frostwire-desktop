@@ -1,11 +1,14 @@
 package irc.gui.pixx;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+
+import javax.swing.JPanel;
 
 /**
  * A progress bar panel.
  */
-public class AWTProgressBar extends Panel
+public class AWTProgressBar extends JPanel
 {
 
   private double _v;

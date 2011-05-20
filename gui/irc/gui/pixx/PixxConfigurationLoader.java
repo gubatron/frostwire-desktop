@@ -1,9 +1,13 @@
 package irc.gui.pixx;
 
-import irc.*;
+import irc.FileTextProvider;
+import irc.IRCConfiguration;
+import irc.ParameterProvider;
+import irc.StringParser;
+import irc.TextProvider;
 
-import java.util.*;
-import java.awt.*;
+import java.awt.Color;
+import java.util.Vector;
 
 /**
  * Toolkit for Configuration creation.

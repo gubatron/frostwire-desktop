@@ -1,9 +1,17 @@
 package irc.gui.pixx;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import irc.*;
+import irc.ListenerGroup;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.util.Vector;
 
 /**
  * The pixx nick list display.

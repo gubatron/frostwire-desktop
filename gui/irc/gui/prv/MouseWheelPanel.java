@@ -29,15 +29,19 @@
 
 package irc.gui.prv;
 
-import java.awt.*;
-import java.awt.event.*;
-import irc.*;
-import irc.gui.common.*;
+import irc.ListenerGroup;
+import irc.gui.common.MouseWheelPanelListener;
+
+import java.awt.GridLayout;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
+
+import javax.swing.JPanel;
 
 /**
  * MouseWheelPanel. Should be compiled using java jdk1.4.
  */
-public class MouseWheelPanel extends Panel implements MouseWheelListener
+public class MouseWheelPanel extends JPanel implements MouseWheelListener
 {
   private ListenerGroup _listeners;
 

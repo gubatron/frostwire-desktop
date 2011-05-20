@@ -29,15 +29,22 @@
 
 package irc;
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  * The about dialog.
  */
 public class AboutDialog extends WindowAdapter
 {
-  private Frame _aboutFrame;
+  private JFrame _aboutFrame;
 
   /**
    * Open and display the about dialog, using the given IRCConfiguration.
@@ -48,9 +55,9 @@ public class AboutDialog extends WindowAdapter
     displayAboutPage(config);
   }
 
-  private Label createLabel(String text)
+  private JLabel createLabel(String text)
   {
-    Label b=new Label(text,Label.CENTER);
+    JLabel b=new JLabel(text,JLabel.CENTER);
     b.setFont(new Font("",Font.PLAIN,12));
     return b;
   }
@@ -58,32 +65,32 @@ public class AboutDialog extends WindowAdapter
   private void displayAboutPage(IRCConfiguration config)
     {
     if(_aboutFrame!=null) return;
-    _aboutFrame=new Frame();
+    _aboutFrame=new JFrame();
     _aboutFrame.setTitle(config.getText(IRCTextProvider.ABOUT_ABOUT));
     _aboutFrame.setLayout(new BorderLayout());
     _aboutFrame.setFont(new Font("",Font.PLAIN,12));
 
-    Panel text=new Panel();
+    JPanel text=new JPanel();
 
     text.setLayout(new GridLayout(20,1));
     text.add(createLabel("PJIRC v"+config.getVersion()));
-    text.add(new Panel());
+    text.add(new JPanel());
     text.add(createLabel(config.getText(IRCTextProvider.ABOUT_GPL)));
-    text.add(new Panel());
+    text.add(new JPanel());
     text.add(createLabel(config.getText(IRCTextProvider.ABOUT_PROGRAMMING)+" : Philippe Detournay alias Plouf (theplouf@yahoo.com)"));
     text.add(createLabel(config.getText(IRCTextProvider.ABOUT_DESIGN)+" : Raphael Seegmuller chez pixxservices.com (pixxservices@pixxservices.com)"));
-    text.add(new Panel());
+    text.add(new JPanel());
     text.add(createLabel(config.getText(IRCTextProvider.ABOUT_THANKS)));
-    text.add(new Panel());
+    text.add(new JPanel());
     text.add(createLabel("Mandragor : www.mandragor.org"));
     text.add(createLabel("Diboo : www.diboo.net"));
     text.add(createLabel("Kombat Falcon.be Jerarckill Red Spider"));
     text.add(createLabel("Ezequiel Jiquera"));
-    text.add(new Panel());
+    text.add(new JPanel());
     text.add(createLabel(config.getText(IRCTextProvider.ABOUT_SUPPORT)));
-    text.add(new Panel());
+    text.add(new JPanel());
     text.add(createLabel(config.getGUIInfoString()));
-    text.add(new Panel());
+    text.add(new JPanel());
     text.add(createLabel("http://www.pjirc.com"));
     text.add(createLabel("http://www.pjirc.it"));
     _aboutFrame.addWindowListener(this);

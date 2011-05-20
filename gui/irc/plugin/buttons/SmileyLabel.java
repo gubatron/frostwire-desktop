@@ -1,7 +1,17 @@
 package irc.plugin.buttons;
 
-import java.awt.*;
-import java.net.*; 
+import java.awt.Canvas;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.MediaTracker;
+import java.awt.Toolkit;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import javax.swing.Icon;
 
 // This appears in Core Web Programming from
 // Prentice Hall Publishers, and may be freely used

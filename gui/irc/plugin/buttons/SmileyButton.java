@@ -1,11 +1,22 @@
 package irc.plugin.buttons;
 
-import irc.*;
-import irc.plugin.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.net.*;
-import java.awt.image.*;     // For SmileyFilter stuff
+import irc.IRCApplication;
+
+import java.awt.AWTEventMulticaster;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.image.FilteredImageSource;
+import java.awt.image.ImageFilter;
+import java.awt.image.ImageProducer;
+import java.awt.image.RGBImageFilter;
+import java.net.URL;
+
+import javax.swing.Icon;
 
 //======================================================
 /**

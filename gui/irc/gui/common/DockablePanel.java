@@ -1,17 +1,25 @@
 package irc.gui.common;
 
-import java.awt.*;
-import java.awt.event.*;
-import irc.*;
+import irc.EventDispatcher;
+import irc.ListenerGroup;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  * A panel that can be docked.
  */
-public class DockablePanel extends Panel implements WindowListener,Runnable
+public class DockablePanel extends JPanel implements WindowListener,Runnable
 {
   private Component _comp;
   private boolean _docked;
-  private Frame _frame;
+  private JFrame _frame;
   private int _behaviour;
   private ListenerGroup _listeners;
 
@@ -39,7 +47,7 @@ public class DockablePanel extends Panel implements WindowListener,Runnable
     add(_comp,BorderLayout.CENTER);
     validate();
 
-    _frame=new Frame();
+    _frame=new JFrame();
     _frame.setLayout(new BorderLayout());
     _frame.addWindowListener(this);
     

@@ -29,12 +29,15 @@
 
 package irc.gui.pixx;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+
+import javax.swing.JPanel;
 
 /**
  * Root panel for all PixxComponents.
  */
-public class PixxPanel extends Panel
+public class PixxPanel extends JPanel
 {
   /**
    * Black.

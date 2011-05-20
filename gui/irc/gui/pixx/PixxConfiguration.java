@@ -1,10 +1,14 @@
 package irc.gui.pixx;
 
-import java.awt.*;
-import java.awt.event.InputEvent;
+import irc.IRCConfiguration;
+import irc.RuleList;
+import irc.TextProvider;
 
-import irc.*;
-import java.util.*;
+import java.awt.Color;
+import java.awt.event.InputEvent;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Vector;
 
 /**
  * NullItem.

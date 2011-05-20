@@ -1,8 +1,19 @@
 package irc.gui.pixx;
 
-import java.awt.*;
-import java.awt.event.*;
-import irc.*;
+import irc.EventDispatcher;
+
+import java.awt.Choice;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  * The font selector window.
@@ -10,9 +21,9 @@ import irc.*;
 public class FontSelector implements WindowListener,ActionListener,Runnable
 {
   private Choice _name;
-  private TextField _size;
-  private Button _ok;
-  private Frame _f;
+  private JTextField _size;
+  private JButton _ok;
+  private JFrame _f;
   private FontSelectorListener _lis;
 
   /**
@@ -21,7 +32,7 @@ public class FontSelector implements WindowListener,ActionListener,Runnable
    */
   public FontSelector(PixxConfiguration config)
   {
-    _f=new Frame();
+    _f=new JFrame();
     _f.setTitle("Select font");
     _name=new Choice();
     _name.add("Monospaced");
@@ -29,10 +40,10 @@ public class FontSelector implements WindowListener,ActionListener,Runnable
     _name.add("SansSerif");
     _name.add("Dialog");
     _name.add("DialogInput");
-    _size=new TextField("12");
-    _ok=new Button("OK");
+    _size=new JTextField("12");
+    _ok=new JButton("OK");
     _ok.addActionListener(this);
-    Panel p=new Panel();
+    JPanel p=new JPanel();
     _f.add(p);
     p.setLayout(new FlowLayout(FlowLayout.CENTER));
     p.add(_name);
