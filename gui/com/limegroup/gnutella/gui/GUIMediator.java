@@ -1540,7 +1540,6 @@ public final class GUIMediator {
 	 */
 	public void connect() {
 		GuiCoreMediator.getConnectionServices().connect();
-		GuiCoreMediator.getDHTManager().setEnabled(true);
 	}
 
 	/**
@@ -1548,7 +1547,6 @@ public final class GUIMediator {
 	 */
 	public void disconnect() {
 		GuiCoreMediator.getConnectionServices().disconnect();
-		GuiCoreMediator.getDHTManager().setEnabled(false);
 	}
 
 	/**

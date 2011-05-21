@@ -2,18 +2,11 @@ package com.limegroup.gnutella.downloader;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.limewire.mojito.settings.LookupSettings;
 import org.limewire.nio.observer.Shutdownable;
 
 import com.limegroup.gnutella.ConnectionServices;
 import com.limegroup.gnutella.DownloadManager;
-import com.limegroup.gnutella.dht.DHTEvent;
-import com.limegroup.gnutella.dht.DHTEventListener;
-import com.limegroup.gnutella.dht.DHTManager;
-import com.limegroup.gnutella.dht.db.AltLocFinder;
-import com.limegroup.gnutella.dht.db.AltLocSearchListener;
 import com.limegroup.gnutella.messages.QueryRequest;
-import com.limegroup.gnutella.settings.DHTSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
@@ -24,7 +17,7 @@ import com.limegroup.gnutella.util.FrostWireUtils;
  *  The manager keeps track of what queries have been sent out,
  *  when queries can begin, and how long queries should wait for results.
  */
-class RequeryManager implements DHTEventListener, AltLocSearchListener {
+class RequeryManager  {
 
     private static final Log LOG = LogFactory.getLog(RequeryManager.class);
     
@@ -43,10 +36,6 @@ class RequeryManager implements DHTEventListener, AltLocSearchListener {
     private final RequeryListener requeryListener;
     
     private final DownloadManager downloadManager;
-    
-    private final AltLocFinder altLocFinder;
-    
-    private final DHTManager dhtManager;
     
     /** The type of the last query this sent out. */
     private volatile QueryType lastQueryType;
@@ -73,15 +62,10 @@ class RequeryManager implements DHTEventListener, AltLocSearchListener {
     
     RequeryManager(RequeryListener requeryListener, 
             DownloadManager manager,
-            AltLocFinder finder,
-            DHTManager dhtManager,
             ConnectionServices connectionServices) {
         this.requeryListener = requeryListener;
         this.downloadManager = manager;
-        this.altLocFinder = finder;
-        this.dhtManager = dhtManager;
         this.connectionServices = connectionServices;
-        dhtManager.addEventListener(this);
     }
     
     /** Returns true if we're currently waiting for any kinds of results. */
@@ -110,9 +94,7 @@ class RequeryManager implements DHTEventListener, AltLocSearchListener {
     /** Sends a requery, if allowed. */
     void sendQuery() {
         if(canSendQueryNow()) {
-            if(canSendDHTQueryNow())
-                sendDHTQuery();
-            else if(!sentGnutellaQuery)
+            if(!sentGnutellaQuery)
                 sendGnutellaQuery();
             else
                 LOG.debug("Can send a query now, but not sending it?!");
@@ -123,14 +105,14 @@ class RequeryManager implements DHTEventListener, AltLocSearchListener {
         
     /** True if a requery can immediately be performed or can be triggered from a user action. */
     boolean canSendQueryAfterActivate() {
-        return !sentGnutellaQuery || canSendDHTQueryNow();
+        return !sentGnutellaQuery;
     }
     
     /** Returns true if a query can be sent right now. */
     boolean canSendQueryNow() {
         // PRO users can always send the DHT query, but only Gnutella after activate.
         if(FrostWireUtils.isPro())
-            return canSendDHTQueryNow() || (activated && canSendQueryAfterActivate());
+            return (activated && canSendQueryAfterActivate());
         else
             return activated && canSendQueryAfterActivate();
     }
@@ -146,15 +128,6 @@ class RequeryManager implements DHTEventListener, AltLocSearchListener {
         dhtQuery = null;
         if (f != null)
             f.shutdown();
-        dhtManager.removeEventListener(this);
-    }
-    
-    /** Specifically, this cancels the DHT query if the DHT is stopped. */
-    public void handleDHTEvent(DHTEvent evt) {
-        if (evt.getType() == DHTEvent.Type.STOPPED) {
-            handleAltLocSearchDone(false);
-            numDHTQueries = 0;
-        }
     }
     
     public void handleAltLocSearchDone(boolean success){
@@ -165,37 +138,9 @@ class RequeryManager implements DHTEventListener, AltLocSearchListener {
         // those results.
         requeryListener.lookupFinished(QueryType.DHT);
     }
+
     
-    /**
-     * @return true if the dht is up and can be used for altloc queries.
-     */
-    private boolean isDHTUp() {
-        return DHTSettings.ENABLE_DHT_ALT_LOC_QUERIES.getValue()
-                && dhtManager.isMemberOfDHT();
-    }
-    
-    /** True if another DHT query can be sent right now. */
-    private boolean canSendDHTQueryNow() {
-        if (!isDHTUp())
-            return false;
-        return numDHTQueries == 0 || 
-        (numDHTQueries < DHTSettings.MAX_DHT_ALT_LOC_QUERY_ATTEMPTS.getValue()
-                && System.currentTimeMillis() - lastQuerySent >= 
-                    DHTSettings.TIME_BETWEEN_DHT_ALT_LOC_QUERIES.getValue()
-        );
-    }
-    
-    private void sendDHTQuery() {
-        LOG.debug("Sending a DHT requery!");
-        lastQuerySent = System.currentTimeMillis();
-        lastQueryType = QueryType.DHT;
-        numDHTQueries++;
-        requeryListener.lookupStarted(QueryType.DHT, Math.max(TIME_BETWEEN_REQUERIES, 
-                LookupSettings.FIND_VALUE_LOOKUP_TIMEOUT.getValue()));
-      
-        dhtQuery = altLocFinder.findAltLocs(requeryListener.getSHA1Urn(), this);
-    }
-    
+
     /** Sends a Gnutella Query */
     private void sendGnutellaQuery() {
         // If we don't have stable connections, wait until we do.

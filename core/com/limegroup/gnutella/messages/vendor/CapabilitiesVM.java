@@ -12,7 +12,6 @@ import java.util.Set;
 import org.limewire.service.ErrorService;
 import org.limewire.util.ByteOrder;
 
-import com.limegroup.gnutella.dht.DHTManager.DHTMode;
 import com.limegroup.gnutella.messages.BadPacketException;
 import com.limegroup.gnutella.messages.FeatureSearchData;
 
@@ -163,21 +162,21 @@ public final class CapabilitiesVM extends AbstractVendorMessage implements Vendo
      * Returns the current DHT version if this node is an ACTIVE DHT node
      */
     public int isActiveDHTNode() {
-        return supportsCapability(DHTMode.ACTIVE.getCapabilityName());
+        return 0;//supportsCapability(DHTMode.ACTIVE.getCapabilityName());
     }
     
     /**
      * Returns the current DHT version if this node is an PASSIVE DHT node
      */
     public int isPassiveDHTNode() {
-        return supportsCapability(DHTMode.PASSIVE.getCapabilityName());
+        return 0;//supportsCapability(DHTMode.PASSIVE.getCapabilityName());
     }
 
     /**
      * Returns the current DHT version if this node is an PASSIVE_LEAF DHT node
      */
     public int isPassiveLeafNode() {
-        return supportsCapability(DHTMode.PASSIVE_LEAF.getCapabilityName());
+        return 0;//supportsCapability(DHTMode.PASSIVE_LEAF.getCapabilityName());
     }
     
     // override super

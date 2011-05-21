@@ -7,8 +7,6 @@ import java.util.List;
 import org.limewire.io.IpPort;
 import org.limewire.security.AddressSecurityToken;
 
-import com.limegroup.gnutella.dht.DHTManager.DHTMode;
-
 public interface PingReply extends Message {
 
     /**
@@ -134,8 +132,6 @@ public interface PingReply extends Message {
      * Gets a list of packed IP/Ports of UDP Host Caches.
      */
     List<IpPort> getPackedUDPHostCaches();
-
-    DHTMode getDHTMode();
 
     int getDHTVersion();
 

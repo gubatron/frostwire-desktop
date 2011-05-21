@@ -6,8 +6,6 @@ import java.util.Set;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import com.limegroup.gnutella.dht.DHTManager;
-import com.limegroup.gnutella.dht.DHTManager.DHTMode;
 import com.limegroup.gnutella.messages.FeatureSearchData;
 import com.limegroup.gnutella.settings.SSLSettings;
 import com.limegroup.gnutella.version.UpdateHandler;
@@ -15,16 +13,12 @@ import com.limegroup.gnutella.version.UpdateHandler;
 @Singleton
 public class CapabilitiesVMFactoryImpl implements CapabilitiesVMFactory {
 
-    private final Provider<DHTManager> dhtManager;
-
     private final Provider<UpdateHandler> updateHandler;
     private volatile CapabilitiesVM currentCapabilities;
 
     @Inject
-    public CapabilitiesVMFactoryImpl(Provider<DHTManager> dhtManager,
-
+    public CapabilitiesVMFactoryImpl(
             Provider<UpdateHandler> updateHandler) {
-        this.dhtManager = dhtManager;
         this.updateHandler = updateHandler;
     }
 
@@ -62,15 +56,6 @@ public class CapabilitiesVMFactoryImpl implements CapabilitiesVMFactory {
                 CapabilitiesVM.LIME_UPDATE_BYTES, updateHandler.get()
                         .getLatestId());
         supported.add(smb);
-
-        if (dhtManager.get().isMemberOfDHT()) {
-            DHTMode mode = dhtManager.get().getDHTMode();
-            assert (mode != null);
-            smb = new CapabilitiesVM.SupportedMessageBlock(mode
-                    .getCapabilityName(), dhtManager.get().getVersion()
-                    .shortValue());
-            supported.add(smb);
-        }
 
         if (SSLSettings.isIncomingTLSEnabled()) {
             smb = new CapabilitiesVM.SupportedMessageBlock(

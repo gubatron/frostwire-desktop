@@ -11,7 +11,6 @@ import org.limewire.collection.Buffer;
 import org.limewire.io.NetworkUtils;
 import org.limewire.util.StringUtils;
 
-import com.limegroup.gnutella.dht.DHTManager.DHTMode;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.ConnectionSettings;
 
@@ -91,7 +90,6 @@ public class ExtendedEndpoint extends Endpoint {
     
     private volatile int _dhtVersion = -1;
     
-    private volatile DHTMode _dhtMode;
     
     /** If this host supports TLS. */
     private volatile boolean tlsCapable;
@@ -239,25 +237,6 @@ public class ExtendedEndpoint extends Endpoint {
         _clientLocale = l;
     }
     
-    public void setDHTVersion(int dhtVersion) {
-        _dhtVersion = dhtVersion;
-    }
-    
-    public boolean supportsDHT() {
-        return _dhtVersion > -1;
-    }
-    
-    public void setDHTMode(DHTMode mode) {
-        _dhtMode = mode;
-    }
-    
-    public DHTMode getDHTMode() {
-        return _dhtMode;
-    }
-    
-    public int getDHTVersion() {
-        return _dhtVersion;
-    }
     
     /**
      * Determines if this is an ExtendedEndpoint for a UDP Host Cache.
@@ -375,16 +354,16 @@ public class ExtendedEndpoint extends Endpoint {
             out.write(udpHostCacheFailures + "");
         }
         out.write(FIELD_SEPARATOR);
-        if(supportsDHT()) {
-            out.write(_dhtVersion + "");
-            out.write(FIELD_SEPARATOR);
-            if(_dhtVersion > -1 && _dhtMode!= null) {
-                out.write(_dhtMode.toString());
-            }
-        } else {
+//        if(supportsDHT()) {
+//            out.write(_dhtVersion + "");
+//            out.write(FIELD_SEPARATOR);
+//            if(_dhtVersion > -1 && _dhtMode!= null) {
+//                out.write(_dhtMode.toString());
+//            }
+//        } else {
             // ensure the # of separators is always equal
             out.write(FIELD_SEPARATOR);
-        }
+        //}
         
         out.write(FIELD_SEPARATOR);
         if(tlsCapable)
@@ -506,9 +485,9 @@ public class ExtendedEndpoint extends Endpoint {
             try {
                 int i = Integer.parseInt(linea[7]);
                 if(i >= -1) {
-                    ret.setDHTVersion(i);
-                    DHTMode mode = DHTMode.valueOf(linea[8]);
-                    ret.setDHTMode(mode);
+//                    ret.setDHTVersion(i);
+//                    DHTMode mode = DHTMode.valueOf(linea[8]);
+//                    ret.setDHTMode(mode);
                 }
             } 
             catch(NumberFormatException nfe) {}

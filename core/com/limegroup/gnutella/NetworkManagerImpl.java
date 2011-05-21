@@ -10,7 +10,6 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.limegroup.gnutella.connection.RoutedConnection;
-import com.limegroup.gnutella.dht.DHTManager;
 import com.limegroup.gnutella.handshaking.HeaderNames;
 import com.limegroup.gnutella.messages.vendor.HeaderUpdateVendorMessage;
 import com.limegroup.gnutella.settings.SearchSettings;
@@ -21,7 +20,6 @@ public class NetworkManagerImpl implements NetworkManager {
     
     private final Provider<UDPService> udpService;
     private final Provider<Acceptor> acceptor;
-    private final Provider<DHTManager> dhtManager;
     private final Provider<ConnectionManager> connectionManager;
     private final Provider<ActivityCallback> activityCallback;
     private final OutOfBandStatistics outOfBandStatistics;
@@ -30,14 +28,12 @@ public class NetworkManagerImpl implements NetworkManager {
     @Inject
     public NetworkManagerImpl(Provider<UDPService> udpService,
             Provider<Acceptor> acceptor,
-            Provider<DHTManager> dhtManager,
             Provider<ConnectionManager> connectionManager,
             Provider<ActivityCallback> activityCallback,
             OutOfBandStatistics outOfBandStatistics,
             NetworkInstanceUtils networkInstanceUtils) {
         this.udpService = udpService;
         this.acceptor = acceptor;
-        this.dhtManager = dhtManager;
         this.connectionManager = connectionManager;
         this.activityCallback = activityCallback;
         this.outOfBandStatistics = outOfBandStatistics;
@@ -151,9 +147,6 @@ public class NetworkManagerImpl implements NetworkManager {
         // reset the last connect back time so the next time the TCP/UDP
         // validators run they try to connect back.
         acceptor.get().resetLastConnectBackTime();
-        
-        // Notify the DHT
-        dhtManager.get().addressChanged();
         
     	Properties props = new Properties();
     	props.put(HeaderNames.LISTEN_IP,NetworkUtils.ip2string(addr)+":"+port);

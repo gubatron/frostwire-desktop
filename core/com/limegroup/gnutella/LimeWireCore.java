@@ -27,13 +27,6 @@ import com.limegroup.gnutella.browser.LocalHTTPAcceptor;
 import com.limegroup.gnutella.connection.ConnectionCheckerManager;
 import com.limegroup.gnutella.connection.MessageReaderFactory;
 import com.limegroup.gnutella.connection.RoutedConnectionFactory;
-import com.limegroup.gnutella.dht.DHTBootstrapperFactory;
-import com.limegroup.gnutella.dht.DHTControllerFactory;
-import com.limegroup.gnutella.dht.DHTManager;
-import com.limegroup.gnutella.dht.DHTNodeFetcherFactory;
-import com.limegroup.gnutella.dht.db.AltLocFinder;
-import com.limegroup.gnutella.dht.db.AltLocValueFactory;
-import com.limegroup.gnutella.dht.db.PushProxiesValueFactory;
 import com.limegroup.gnutella.downloader.CoreDownloaderFactory;
 import com.limegroup.gnutella.downloader.DiskController;
 import com.limegroup.gnutella.downloader.RemoteFileDescFactory;
@@ -115,10 +108,6 @@ public class LimeWireCore {
         return injector.getInstance(AlternateLocationFactory.class);
     }
 
-    public AltLocValueFactory getAltLocValueFactory() {
-        return injector.getInstance(AltLocValueFactory.class);
-    }
-
     public SocketsManager getSocketsManager() {
         return injector.getInstance(SocketsManager.class);
     }
@@ -175,20 +164,8 @@ public class LimeWireCore {
         return injector.getInstance(HandshakeResponderFactory.class);
     }
 
-    public PushProxiesValueFactory getPushProxiesValueFactory() {
-        return injector.getInstance(PushProxiesValueFactory.class);
-    }
-
     public PingReplyFactory getPingReplyFactory() {
         return injector.getInstance(PingReplyFactory.class);
-    }
-
-    public DHTControllerFactory getDhtControllerFactory() {
-        return injector.getInstance(DHTControllerFactory.class);
-    }
-
-    public DHTManager getDhtManager() {
-        return injector.getInstance(DHTManager.class);
     }
 
     public ConnectionManager getConnectionManager() {
@@ -225,10 +202,6 @@ public class LimeWireCore {
 
     public DownloadManager getDownloadManager() {
         return injector.getInstance(DownloadManager.class);
-    }
-
-    public AltLocFinder getAltLocFinder() {
-        return injector.getInstance(AltLocFinder.class);
     }
 
     public ConnectionDispatcher getLocalConnectionDispatcher() {
@@ -462,14 +435,6 @@ public class LimeWireCore {
     public NIODispatcher getNIODispatcher() {
         return injector.getInstance(NIODispatcher.class);
     }
-
-    public DHTBootstrapperFactory getDHTBootstrapperFactory() {
-        return injector.getInstance(DHTBootstrapperFactory.class);
-    }
-
-    public DHTNodeFetcherFactory getDHTNodeFetcherFactory() {
-        return injector.getInstance(DHTNodeFetcherFactory.class);
-    }    
     
     public DownloadCallback getDownloadCallback() {
         return injector.getInstance(DownloadCallback.class);

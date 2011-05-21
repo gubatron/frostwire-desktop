@@ -13,7 +13,6 @@ import org.limewire.util.RPNParser.StringLookup;
 
 import com.limegroup.gnutella.licenses.License;
 import com.limegroup.gnutella.routing.HashFunction;
-import com.limegroup.gnutella.settings.DHTSettings;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
 
 
@@ -445,12 +444,6 @@ public class FileDesc implements StringLookup {
             return String.valueOf(System.currentTimeMillis() - getLastAttemptedUploadTime());
         else if ("licensed".equals(key))
             return String.valueOf(isLicensed());
-        else if ("atUpSet".equals(key))
-            return DHTSettings.RARE_FILE_ATTEMPTED_UPLOADS.getValueAsString();
-        else if ("cUpSet".equals(key))
-            return DHTSettings.RARE_FILE_COMPLETED_UPLOADS.getValueAsString();
-        else if ("rftSet".equals(key))
-            return DHTSettings.RARE_FILE_TIME.getValueAsString();
         else if ("hasXML".equals(key))
             return String.valueOf(getXMLDocument() != null);
         else if ("size".equals(key))

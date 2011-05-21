@@ -25,7 +25,6 @@ import org.limewire.security.MACCalculatorRepositoryManager;
 import org.limewire.util.ByteOrder;
 
 import com.limegroup.gnutella.ExtendedEndpoint;
-import com.limegroup.gnutella.dht.DHTManager.DHTMode;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 
 /**
@@ -133,10 +132,6 @@ public class PingReplyImpl extends AbstractMessage implements IpPort, Connectabl
      */
     private final int DHT_VERSION;
     
-    /**
-     * Contant for the DHT mode (active/passive/none)
-     */
-    private final DHTMode DHT_MODE;
     
     /** True if the remote host supports TLS. */
     private final boolean TLS_CAPABLE;
@@ -204,7 +199,6 @@ public class PingReplyImpl extends AbstractMessage implements IpPort, Connectabl
         String cacheAddress = null;
         
         int dhtVersion = -1;
-        DHTMode dhtMode = null;
         
         // TODO: the exceptions thrown here are messy
         if(ggep != null) {
@@ -238,21 +232,21 @@ public class PingReplyImpl extends AbstractMessage implements IpPort, Connectabl
                 } catch (BadGGEPPropertyException e) {}
             }
             
-            if(ggep.hasKey((GGEP.GGEP_HEADER_DHT_SUPPORT))) {
-                try {
-                    byte[] bytes = ggep.getBytes(GGEP.GGEP_HEADER_DHT_SUPPORT);
-                    if(bytes.length >= 3) {
-                        dhtVersion = ByteOrder.ushort2int(ByteOrder.beb2short(bytes, 0));
-                        byte mode = (byte)(bytes[2] & DHTMode.DHT_MODE_MASK);
-                        dhtMode = DHTMode.valueOf(mode);
-                        if (dhtMode == null) {
-                            // Reset the Version number if the mode
-                            // is unknown
-                            dhtVersion = -1;
-                        }
-                    }
-                } catch (BadGGEPPropertyException e) {}
-            }
+//            if(ggep.hasKey((GGEP.GGEP_HEADER_DHT_SUPPORT))) {
+//                try {
+//                    byte[] bytes = ggep.getBytes(GGEP.GGEP_HEADER_DHT_SUPPORT);
+//                    if(bytes.length >= 3) {
+//                        dhtVersion = ByteOrder.ushort2int(ByteOrder.beb2short(bytes, 0));
+//                        byte mode = (byte)(bytes[2] & DHTMode.DHT_MODE_MASK);
+//                        dhtMode = DHTMode.valueOf(mode);
+//                        if (dhtMode == null) {
+//                            // Reset the Version number if the mode
+//                            // is unknown
+//                            dhtVersion = -1;
+//                        }
+//                    }
+//                } catch (BadGGEPPropertyException e) {}
+//            }
             
             if(ggep.hasKey(GGEP.GGEP_HEADER_CLIENT_LOCALE)) {
                 try {
@@ -359,7 +353,6 @@ public class PingReplyImpl extends AbstractMessage implements IpPort, Connectabl
         PACKED_DHT_IP_PORTS = packedDHTIPs;
         PACKED_UDP_HOST_CACHES = packedCaches;
         DHT_VERSION = dhtVersion;
-        DHT_MODE = dhtMode;
         TLS_CAPABLE = tlsCapable;
     }
     
@@ -566,10 +559,7 @@ public class PingReplyImpl extends AbstractMessage implements IpPort, Connectabl
     public List<IpPort> getPackedUDPHostCaches() {
         return PACKED_UDP_HOST_CACHES;
     }
-    
-    public DHTMode getDHTMode() {
-        return DHT_MODE;
-    }
+
     
     public int getDHTVersion() {
         return DHT_VERSION;

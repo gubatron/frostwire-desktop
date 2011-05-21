@@ -7,8 +7,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
 import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -52,8 +50,6 @@ import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 import com.limegroup.gnutella.bootstrap.UDPHostCache;
 import com.limegroup.gnutella.bootstrap.UDPHostCacheFactory;
-import com.limegroup.gnutella.dht.DHTManager;
-import com.limegroup.gnutella.dht.DHTManager.DHTMode;
 import com.limegroup.gnutella.filters.IPFilter;
 import com.limegroup.gnutella.messages.Message;
 import com.limegroup.gnutella.messages.PingReply;
@@ -140,17 +136,17 @@ public class HostCatcher {
     private static final Comparator<ExtendedEndpoint> DHT_COMPARATOR = 
         new Comparator<ExtendedEndpoint>() {
             public int compare(ExtendedEndpoint e1, ExtendedEndpoint e2) {
-                DHTMode mode1 = e1.getDHTMode();
-                DHTMode mode2 = e2.getDHTMode();
-                if ((mode1.equals(DHTMode.ACTIVE) && !mode2.equals(DHTMode.ACTIVE))
-                        || (mode1.equals(DHTMode.PASSIVE) && mode2.equals(DHTMode.INACTIVE))) {
-                    return -1;
-                } else if ((mode2.equals(DHTMode.ACTIVE) && !mode1.equals(DHTMode.ACTIVE))
-                        || (mode2.equals(DHTMode.PASSIVE) && mode1.equals(DHTMode.INACTIVE))) {
-                    return 1;
-                } else {
+//                DHTMode mode1 = e1.getDHTMode();
+//                DHTMode mode2 = e2.getDHTMode();
+//                if ((mode1.equals(DHTMode.ACTIVE) && !mode2.equals(DHTMode.ACTIVE))
+//                        || (mode1.equals(DHTMode.PASSIVE) && mode2.equals(DHTMode.INACTIVE))) {
+//                    return -1;
+//                } else if ((mode2.equals(DHTMode.ACTIVE) && !mode1.equals(DHTMode.ACTIVE))
+//                        || (mode2.equals(DHTMode.PASSIVE) && mode1.equals(DHTMode.INACTIVE))) {
+//                    return 1;
+//                } else {
                     return 0;
-                }
+                //}
             }
         };
 
@@ -317,7 +313,6 @@ public class HostCatcher {
     private final ConnectionServices connectionServices;
     private final Provider<ConnectionManager> connectionManager;
     private final Provider<UDPService> udpService;
-    private final Provider<DHTManager> dhtManager;
     private final Provider<QueryUnicaster> queryUnicaster;
     private final Provider<IPFilter> ipFilter;
     private final Provider<MulticastService> multicastService;
@@ -331,7 +326,7 @@ public class HostCatcher {
 	        @Named("backgroundExecutor") ScheduledExecutorService backgroundExecutor,
             ConnectionServices connectionServices,
             Provider<ConnectionManager> connectionManager,
-            Provider<UDPService> udpService, Provider<DHTManager> dhtManager,
+            Provider<UDPService> udpService,
             Provider<QueryUnicaster> queryUnicaster,
             @Named("hostileFilter") Provider<IPFilter> ipFilter, // TODO: check if ipFilter isn't more appropriate
             Provider<MulticastService> multicastService,
@@ -343,7 +338,6 @@ public class HostCatcher {
         this.connectionServices = connectionServices;
         this.connectionManager = connectionManager;
         this.udpService = udpService;
-        this.dhtManager = dhtManager;
         this.queryUnicaster = queryUnicaster;
         this.ipFilter = ipFilter;
         this.multicastService = multicastService;
@@ -454,14 +448,14 @@ public class HostCatcher {
     public synchronized List<ExtendedEndpoint> getDHTSupportEndpoint(int minVersion) {
         List<ExtendedEndpoint> hostsList = new ArrayList<ExtendedEndpoint>();
         IntSet classC = new IntSet();
-        for(ExtendedEndpoint host : getAllHosts()) {
-            if(host.supportsDHT() 
-                    && host.getDHTVersion() >= minVersion &&
-                    (!ConnectionSettings.FILTER_CLASS_C.getValue() ||
-                    classC.add(NetworkUtils.getMaskedIP(host.getInetAddress(), PONG_MASK)))) {
-                hostsList.add(host);
-            }
-        }
+//        for(ExtendedEndpoint host : getAllHosts()) {
+//            if(host.supportsDHT() 
+//                    && host.getDHTVersion() >= minVersion &&
+//                    (!ConnectionSettings.FILTER_CLASS_C.getValue() ||
+//                    classC.add(NetworkUtils.getMaskedIP(host.getInetAddress(), PONG_MASK)))) {
+//                hostsList.add(host);
+//            }
+//        }
         Collections.sort(hostsList, DHT_COMPARATOR);
         return hostsList;
     }
@@ -620,25 +614,25 @@ public class HostCatcher {
             return false;
         }
         
-        int dhtVersion = pr.getDHTVersion();
-        if(dhtVersion > -1) {
-            DHTMode mode = pr.getDHTMode();
-            endpoint.setDHTVersion(dhtVersion);
-            endpoint.setDHTMode(mode);
-            
-            if (dhtManager.get().isRunning()) {
-                // If active DHT endpoint, immediately send to dht manager
-                if(mode.equals(DHTMode.ACTIVE)) {
-                    SocketAddress address = new InetSocketAddress(
-                            endpoint.getAddress(), endpoint.getPort());
-                    dhtManager.get().addActiveDHTNode(address);
-                } else if(mode.equals(DHTMode.PASSIVE)) {
-                    SocketAddress address = new InetSocketAddress(
-                            endpoint.getAddress(), endpoint.getPort());
-                    dhtManager.get().addPassiveDHTNode(address);
-                }
-            }
-        }
+//        int dhtVersion = pr.getDHTVersion();
+//        if(dhtVersion > -1) {
+//            DHTMode mode = pr.getDHTMode();
+//            endpoint.setDHTVersion(dhtVersion);
+//            endpoint.setDHTMode(mode);
+//            
+//            if (dhtManager.get().isRunning()) {
+//                // If active DHT endpoint, immediately send to dht manager
+//                if(mode.equals(DHTMode.ACTIVE)) {
+//                    SocketAddress address = new InetSocketAddress(
+//                            endpoint.getAddress(), endpoint.getPort());
+//                    dhtManager.get().addActiveDHTNode(address);
+//                } else if(mode.equals(DHTMode.PASSIVE)) {
+//                    SocketAddress address = new InetSocketAddress(
+//                            endpoint.getAddress(), endpoint.getPort());
+//                    dhtManager.get().addPassiveDHTNode(address);
+//                }
+//            }
+//        }
         
         if(pr.supportsUnicast()) {
             queryUnicaster.get().addUnicastEndpoint(pr.getInetAddress(), pr.getPort());
@@ -670,13 +664,13 @@ public class HostCatcher {
                 add(ep, GOOD_PRIORITY);
         }
         
-        // if the pong carried packed UDP host caches, add those as their
-        // own endpoints.
-        for(IpPort ipp : pr.getPackedUDPHostCaches()) {
-            ExtendedEndpoint ep = new ExtendedEndpoint(ipp.getAddress(), ipp.getPort());
-            ep.setUDPHostCache(true);
-            addUDPHostCache(ep);
-        }
+//        // if the pong carried packed UDP host caches, add those as their
+//        // own endpoints.
+//        for(IpPort ipp : pr.getPackedUDPHostCaches()) {
+//            ExtendedEndpoint ep = new ExtendedEndpoint(ipp.getAddress(), ipp.getPort());
+//            ep.setUDPHostCache(true);
+//            addUDPHostCache(ep);
+//        }
         
         // if it was a UDPHostCache pong, just add it as that.
         if(endpoint.isUDPHostCache())
@@ -1706,27 +1700,27 @@ public class HostCatcher {
                     fu = FREE_ULTRAPEER_SLOTS_SET.size();
                     permdht = 0;
                     
-                    for (ExtendedEndpoint e : permanentHostsSet) {
-                        permdht += e.supportsDHT() ? 1 : 0;
-                    }
+//                    for (ExtendedEndpoint e : permanentHostsSet) {
+//                        permdht += e.supportsDHT() ? 1 : 0;
+//                    }
                     restdht = 0;
-                    for (ExtendedEndpoint e : restoredHosts)
-                        restdht += e.supportsDHT() ? 1 : 0;
-                    fldht = 0;
-                    for (ExtendedEndpoint e : FREE_LEAF_SLOTS_SET.keySet())
-                        fldht += e.supportsDHT() ? 1 : 0;
-                    fudht = 0;
-                    for (ExtendedEndpoint e : FREE_ULTRAPEER_SLOTS_SET.keySet())
-                        fudht += e.supportsDHT() ? 1 : 0;
+//                    for (ExtendedEndpoint e : restoredHosts)
+//                        restdht += e.supportsDHT() ? 1 : 0;
+//                    fldht = 0;
+//                    for (ExtendedEndpoint e : FREE_LEAF_SLOTS_SET.keySet())
+//                        fldht += e.supportsDHT() ? 1 : 0;
+//                    fudht = 0;
+//                    for (ExtendedEndpoint e : FREE_ULTRAPEER_SLOTS_SET.keySet())
+//                        fudht += e.supportsDHT() ? 1 : 0;
                 }
                 ret.put("perm",perm);
                 ret.put("permdht",permdht);
                 ret.put("rest",rest);
                 ret.put("restdht",restdht);
                 ret.put("fl",fl);
-                ret.put("fldht",fldht);
+               // ret.put("fldht",fldht);
                 ret.put("fu",fu);
-                ret.put("fudht",fudht);
+                //ret.put("fudht",fudht);
                 return ret;
             }
         };

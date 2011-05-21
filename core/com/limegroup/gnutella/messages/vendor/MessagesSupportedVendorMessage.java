@@ -141,7 +141,7 @@ public final class MessagesSupportedVendorMessage extends AbstractVendorMessage 
         // DHT Contacts
         smp = new SupportedMessageBlock(F_LIME_VENDOR_ID,
                                         F_DHT_CONTACTS,
-                                        DHTContactsMessage.VERSION);
+                                        0);
         
         hashSet.add(smp);
         

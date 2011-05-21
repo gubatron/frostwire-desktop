@@ -32,7 +32,6 @@ import com.limegroup.gnutella.browser.ExternalControl;
 import com.limegroup.gnutella.browser.LocalAcceptor;
 import com.limegroup.gnutella.browser.LocalHTTPAcceptor;
 import com.limegroup.gnutella.connection.ConnectionCheckerManager;
-import com.limegroup.gnutella.dht.DHTManager;
 import com.limegroup.gnutella.downloader.DiskController;
 import com.limegroup.gnutella.downloader.RemoteFileDescFactory;
 import com.limegroup.gnutella.filters.IPFilter;
@@ -60,7 +59,6 @@ public class GuiCoreMediator {
     public static UDPService getUdpService() {  return core.getUdpService(); }    
     public static NetworkManager getNetworkManager() {  return core.getNetworkManager(); }    
     public static ConnectionManager getConnectionManager() {  return core.getConnectionManager(); }    
-    public static DHTManager getDHTManager() {  return core.getDhtManager(); }    
     public static UploadManager getUploadManager() {  return core.getUploadManager(); }
     public static FileManager getFileManager() {  return core.getFileManager(); }
     public static UploadSlotManager getUploadSlotManager() {  return core.getUploadSlotManager(); }

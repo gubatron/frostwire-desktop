@@ -24,8 +24,6 @@ import com.limegroup.gnutella.HostCatcher;
 import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.Statistics;
 import com.limegroup.gnutella.UDPService;
-import com.limegroup.gnutella.dht.DHTManager;
-import com.limegroup.gnutella.dht.DHTManager.DHTMode;
 import com.limegroup.gnutella.messages.Message.Network;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.SSLSettings;
@@ -38,7 +36,6 @@ public class PingReplyFactoryImpl implements PingReplyFactory {
     private final Provider<UDPService> udpService;
     private final Provider<ConnectionManager> connectionManager;
     private final Provider<HostCatcher> hostCatcher;
-    private final Provider<DHTManager> dhtManager;
     private final LocalPongInfo localPongInfo;
     private final MACCalculatorRepositoryManager macCalculatorRepositoryManager;
     private final NetworkInstanceUtils networkInstanceUtils;
@@ -49,7 +46,6 @@ public class PingReplyFactoryImpl implements PingReplyFactory {
             Provider<Statistics> statistics, Provider<UDPService> udpService,
             Provider<ConnectionManager> connectionManager,
             Provider<HostCatcher> hostCatcher,
-            Provider<DHTManager> dhtManager,
             LocalPongInfo localPongInfo,
             MACCalculatorRepositoryManager MACCalculatorRepositoryManager,
             NetworkInstanceUtils networkInstanceUtils) {
@@ -58,7 +54,6 @@ public class PingReplyFactoryImpl implements PingReplyFactory {
         this.udpService = udpService;
         this.connectionManager = connectionManager;
         this.hostCatcher = hostCatcher;
-        this.dhtManager = dhtManager;
         this.localPongInfo = localPongInfo;
         this.macCalculatorRepositoryManager = MACCalculatorRepositoryManager;
         this.networkInstanceUtils = networkInstanceUtils;
@@ -358,9 +353,6 @@ public class PingReplyFactoryImpl implements PingReplyFactory {
         if (isUltrapeer)
             addUltrapeerExtension(ggep);
 
-        // add DHT support
-        addDHTExtension(ggep);
-
         // add our support of TLS
         if (SSLSettings.isIncomingTLSEnabled())
             ggep.put(GGEP.GGEP_HEADER_TLS_CAPABLE);
@@ -480,34 +472,6 @@ public class PingReplyFactoryImpl implements PingReplyFactory {
         payload[1] = localPongInfo.getNumFreeLimeWireLeafSlots();
         payload[2] = localPongInfo.getNumFreeLimeWireNonLeafSlots();
         ggep.put(GGEP.GGEP_HEADER_UP_SUPPORT, payload);
-    }
-
-    /**
-     * Adds the DHT GGEP extension to the pong.  This has the version of
-     * the DHT that we support as well as the mode of this node (active/passive).
-     * A node only advertises itself as an active node if it is already bootstrapped
-     * to the network!
-     * 
-     * @param ggep the <tt>GGEP</tt> instance to add the extension to
-     */
-    private void addDHTExtension(GGEP ggep) {
-        byte[] payload = new byte[3];
-
-        // put version
-        int version = dhtManager.get().getVersion().shortValue();
-
-        ByteOrder.short2beb((short) version, payload, 0);
-
-        if (dhtManager.get().isMemberOfDHT()) {
-            DHTMode mode = dhtManager.get().getDHTMode();
-            assert (mode != null);
-            payload[2] = mode.byteValue();
-        } else {
-            payload[2] = DHTMode.INACTIVE.byteValue();
-        }
-
-        // add it
-        ggep.put(GGEP.GGEP_HEADER_DHT_SUPPORT, payload);
     }
 
     // TODO : change this to look for multiple GGEP block in the payload....

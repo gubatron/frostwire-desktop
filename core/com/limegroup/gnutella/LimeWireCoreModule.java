@@ -14,8 +14,6 @@ import org.limewire.inspection.Inspector;
 import org.limewire.inspection.InspectorImpl;
 import org.limewire.io.LimeWireIOModule;
 import org.limewire.io.LocalSocketAddressProvider;
-import org.limewire.mojito.LimeWireMojitoModule;
-import org.limewire.mojito.io.MessageDispatcherFactory;
 import org.limewire.net.ConnectionDispatcher;
 import org.limewire.net.ConnectionDispatcherImpl;
 import org.limewire.net.LimeWireNetModule;
@@ -50,21 +48,6 @@ import com.limegroup.gnutella.connection.RoutedConnectionFactory;
 import com.limegroup.gnutella.connection.RoutedConnectionFactoryImpl;
 import com.limegroup.gnutella.connection.UDPConnectionChecker;
 import com.limegroup.gnutella.connection.UDPConnectionCheckerImpl;
-import com.limegroup.gnutella.dht.DHTBootstrapperFactory;
-import com.limegroup.gnutella.dht.DHTBootstrapperFactoryImpl;
-import com.limegroup.gnutella.dht.DHTControllerFacade;
-import com.limegroup.gnutella.dht.DHTControllerFacadeImpl;
-import com.limegroup.gnutella.dht.DHTControllerFactory;
-import com.limegroup.gnutella.dht.DHTControllerFactoryImpl;
-import com.limegroup.gnutella.dht.DHTManager;
-import com.limegroup.gnutella.dht.DHTManagerImpl;
-import com.limegroup.gnutella.dht.DHTNodeFetcherFactory;
-import com.limegroup.gnutella.dht.DHTNodeFetcherFactoryImpl;
-import com.limegroup.gnutella.dht.db.AltLocValueFactory;
-import com.limegroup.gnutella.dht.db.AltLocValueFactoryImpl;
-import com.limegroup.gnutella.dht.db.PushProxiesValueFactory;
-import com.limegroup.gnutella.dht.db.PushProxiesValueFactoryImpl;
-import com.limegroup.gnutella.dht.io.LimeMessageDispatcherFactoryImpl;
 import com.limegroup.gnutella.downloader.LimeWireDownloadModule;
 import com.limegroup.gnutella.filters.HostileFilter;
 import com.limegroup.gnutella.filters.IPFilter;
@@ -172,7 +155,6 @@ public class LimeWireCoreModule extends AbstractModule {
         binder().install(new LimeWireStatisticsModule());
         binder().install(new LimeWireGnutellaStatisticsModule());
         binder().install(new LimeWireIOModule());
-        binder().install(new LimeWireMojitoModule());
         
         bind(LimeWireCore.class);
         
@@ -182,10 +164,7 @@ public class LimeWireCoreModule extends AbstractModule {
 
         bind(DownloadCallback.class).to(ActivityCallback.class);
         bind(NetworkManager.class).to(NetworkManagerImpl.class);
-        bind(DHTManager.class).to(DHTManagerImpl.class);
-        bind(DHTControllerFactory.class).to(DHTControllerFactoryImpl.class);
         bind(PingReplyFactory.class).to(PingReplyFactoryImpl.class);
-        bind(PushProxiesValueFactory.class).to(PushProxiesValueFactoryImpl.class);
         bind(HandshakeResponderFactory.class).to(HandshakeResponderFactoryImpl.class);
         bind(HeadersFactory.class).to(HeadersFactoryImpl.class);
         bind(PushEndpointFactory.class).to(PushEndpointFactoryImpl.class);
@@ -196,7 +175,6 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(QueryRequestFactory.class).to(QueryRequestFactoryImpl.class);
         bind(RoutedConnectionFactory.class).to(RoutedConnectionFactoryImpl.class);
         bind(HostDataFactory.class).to(HostDataFactoryImpl.class);
-        bind(AltLocValueFactory.class).to(AltLocValueFactoryImpl.class);
         bind(AlternateLocationFactory.class).to(AlternateLocationFactoryImpl.class);
         bind(LocalFileDetailsFactory.class).to(LocalFileDetailsFactoryImpl.class);
         bind(HttpExecutor.class).to(DefaultHttpExecutor.class);
@@ -204,7 +182,6 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(FileManagerController.class).to(FileManagerControllerImpl.class);
         bind(ResponseFactory.class).to(ResponseFactoryImpl.class);
         bind(QueryReplyFactory.class).to(QueryReplyFactoryImpl.class);
-        bind(MessageDispatcherFactory.class).to(LimeMessageDispatcherFactoryImpl.class);
         bind(CapabilitiesVMFactory.class).to(CapabilitiesVMFactoryImpl.class);
         bind(LifecycleManager.class).to(LifecycleManagerImpl.class);
         bind(LocalPongInfo.class).to(LocalPongInfoImpl.class);
@@ -215,10 +192,7 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(ApplicationServices.class).to(ApplicationServicesImpl.class);
         bind(SpamServices.class).to(SpamServicesImpl.class);
         bind(SpamFilterFactory.class).to(SpamFilterFactoryImpl.class);
-        bind(DHTControllerFacade.class).to(DHTControllerFacadeImpl.class);
         bind(ConnectionCheckerManager.class).to(ConnectionCheckerManagerImpl.class);
-        bind(DHTBootstrapperFactory.class).to(DHTBootstrapperFactoryImpl.class);
-        bind(DHTNodeFetcherFactory.class).to(DHTNodeFetcherFactoryImpl.class);
         bind(UDPReplyHandlerFactory.class).to(UDPReplyHandlerFactoryImpl.class);
         bind(UDPReplyHandlerCache.class).to(UDPReplyHandlerCacheImpl.class);
         bind(SocketProcessor.class).to(AcceptorImpl.class);

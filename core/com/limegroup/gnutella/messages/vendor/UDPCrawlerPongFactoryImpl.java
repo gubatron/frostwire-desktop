@@ -20,19 +20,16 @@ import com.limegroup.gnutella.ConnectionManager;
 import com.limegroup.gnutella.Constants;
 import com.limegroup.gnutella.connection.Connection;
 import com.limegroup.gnutella.connection.RoutedConnection;
-import com.limegroup.gnutella.dht.DHTManager;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
 @Singleton
 public class UDPCrawlerPongFactoryImpl implements UDPCrawlerPongFactory {
 
-    private final Provider<DHTManager> dhtManager;
     private final Provider<ConnectionManager> connectionManager;
 
     @Inject
-    public UDPCrawlerPongFactoryImpl(Provider<DHTManager> dhtManager, Provider<ConnectionManager> connectionManager) {
-        this.dhtManager = dhtManager;
+    public UDPCrawlerPongFactoryImpl(Provider<ConnectionManager> connectionManager) {
         this.connectionManager = connectionManager;
     }
     
@@ -149,28 +146,7 @@ public class UDPCrawlerPongFactoryImpl implements UDPCrawlerPongFactory {
             ByteOrder.int2leb((int)currentAverage, result, 3);
         }
         
-        if(request.hasDHTStatus()) {
-            byte dhtStatus = 0x00;
-            DHTManager manager = dhtManager.get();
-            if(manager.isRunning()) {
-                switch (manager.getDHTMode()) {
-                    case ACTIVE:
-                        dhtStatus |= UDPCrawlerPong.DHT_ACTIVE_MASK;
-                        break;
-                    case PASSIVE:
-                        dhtStatus |= UDPCrawlerPong.DHT_PASSIVE_MASK;
-                        break;
-                    case PASSIVE_LEAF:
-                        dhtStatus |= UDPCrawlerPong.DHT_PASSIVE_LEAF_MASK;
-                        break;        
-                }
-                
-                if(!manager.isMemberOfDHT()) {
-                    dhtStatus |= UDPCrawlerPong.DHT_WAITING_MASK;
-                }
-            }
-            result[index-1] = dhtStatus;
-        }
+        
         
         //cat the two lists
         endpointsUP.addAll(endpointsLeaf);

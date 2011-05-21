@@ -36,7 +36,6 @@ import com.limegroup.gnutella.auth.ContentManager;
 import com.limegroup.gnutella.browser.ControlRequestAcceptor;
 import com.limegroup.gnutella.browser.LocalAcceptor;
 import com.limegroup.gnutella.browser.LocalHTTPAcceptor;
-import com.limegroup.gnutella.dht.DHTManager;
 import com.limegroup.gnutella.downloader.PushDownloadManager;
 import com.limegroup.gnutella.filters.IPFilter;
 import com.limegroup.gnutella.library.SharingUtils;
@@ -92,7 +91,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
     private final Provider<SavedFileManager> savedFileManager;
     private final Provider<RatingTable> ratingTable;
     private final Provider<HashTreeCache> tigerTreeCache;
-    private final Provider<DHTManager> dhtManager;
     private final Provider<ByteBufferCache> byteBufferCache;
     private final Provider<NetworkManager> networkManager;
     private final Provider<Statistics> statistics;
@@ -162,7 +160,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
             Provider<SavedFileManager> savedFileManager,
             Provider<RatingTable> ratingTable,
             Provider<HashTreeCache> tigerTreeCache,
-            Provider<DHTManager> dhtManager,
             Provider<ByteBufferCache> byteBufferCache,
             @Named("backgroundExecutor") Provider<ScheduledExecutorService> backgroundExecutor,
             Provider<NetworkManager> networkManager,
@@ -206,7 +203,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
         this.savedFileManager = savedFileManager;
         this.ratingTable = ratingTable;
         this.tigerTreeCache = tigerTreeCache;
-        this.dhtManager = dhtManager;
         this.byteBufferCache = byteBufferCache;
         this.networkManager = networkManager;
         this.statistics = statistics;
@@ -258,7 +254,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
         fileManager.get().addFileEventListener(activityCallback.get());
         
         connectionManager.get().addEventListener(activityCallback.get());
-        connectionManager.get().addEventListener(dhtManager.get());
         
         preinitializeDone.set(true);
 
@@ -532,8 +527,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
         
         nodeAssigner.get().stop();
 
-        dhtManager.get().stop();
-        
         try {
             acceptor.get().setListeningPort(0);
         } catch (IOException e) {

@@ -56,7 +56,6 @@ import com.limegroup.gnutella.connection.Connection;
 import com.limegroup.gnutella.connection.ConnectionLifecycleEvent;
 import com.limegroup.gnutella.connection.ConnectionLifecycleListener;
 import com.limegroup.gnutella.connection.RoutedConnection;
-import com.limegroup.gnutella.dht.DHTManager;
 import com.limegroup.gnutella.guess.GUESSEndpoint;
 import com.limegroup.gnutella.guess.OnDemandUnicaster;
 import com.limegroup.gnutella.messagehandlers.DualMessageHandler;
@@ -77,7 +76,6 @@ import com.limegroup.gnutella.messages.QueryRequest;
 import com.limegroup.gnutella.messages.QueryRequestFactory;
 import com.limegroup.gnutella.messages.StaticMessages;
 import com.limegroup.gnutella.messages.vendor.ContentResponse;
-import com.limegroup.gnutella.messages.vendor.DHTContactsMessage;
 import com.limegroup.gnutella.messages.vendor.HeadPing;
 import com.limegroup.gnutella.messages.vendor.HeadPong;
 import com.limegroup.gnutella.messages.vendor.HeadPongFactory;
@@ -316,7 +314,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
     protected final QueryUnicaster queryUnicaster;
     protected final FileManager fileManager;
     protected final ContentManager contentManager;
-    protected final DHTManager dhtManager;
     protected final UploadManager uploadManager;
     protected final DownloadManager downloadManager;
     protected final UDPService udpService;
@@ -365,7 +362,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
             QueryUnicaster queryUnicaster,
             FileManager fileManager,
             ContentManager contentManager,
-            DHTManager dhtManager,
             UploadManager uploadManager,
             DownloadManager downloadManager,
             UDPService udpService,
@@ -402,7 +398,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
         this.queryUnicaster = queryUnicaster;
         this.fileManager = fileManager;
         this.contentManager = contentManager;
-        this.dhtManager = dhtManager;
         this.uploadManager = uploadManager;
         this.downloadManager = downloadManager;
         this.udpService = udpService;
@@ -585,7 +580,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
         setMessageHandler(UpdateRequest.class, new UpdateRequestHandler());
         setMessageHandler(UpdateResponse.class, new UpdateResponseHandler());
         setMessageHandler(HeadPong.class, new HeadPongHandler());
-        setMessageHandler(DHTContactsMessage.class, new DHTContactsMessageHandler());
         setMessageHandler(VendorMessage.class, new VendorMessageHandler());
         setMessageHandler(InspectionRequest.class, inspectionHandler);
         
@@ -2775,10 +2769,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
         } 
     } 
     
-    private void handleDHTContactsMessage(DHTContactsMessage msg, ReplyHandler handler) {
-        dhtManager.handleDHTContactsMessage(msg);
-    }
-    
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.MessageRouter#forwardInspectionRequestToLeaves(com.limegroup.gnutella.messages.vendor.InspectionRequest)
      */
@@ -3050,7 +3040,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
     
     private class DHTContactsMessageHandler implements MessageHandler {
         public void handleMessage(Message msg, InetSocketAddress addr, ReplyHandler handler) {
-            handleDHTContactsMessage((DHTContactsMessage)msg, handler); 
+            //handleDHTContactsMessage((DHTContactsMessage)msg, handler); 
         }
     }
     

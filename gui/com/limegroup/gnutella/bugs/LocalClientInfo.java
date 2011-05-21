@@ -15,7 +15,6 @@ import java.util.Properties;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.limewire.mojito.settings.MojitoProps;
 import org.limewire.nio.NIODispatcher;
 import org.limewire.setting.Setting;
 import org.limewire.setting.SettingsFactory;
@@ -87,14 +86,14 @@ public final class LocalClientInfo extends LocalAbstractInfo {
 		            props.put(set.getKey(), set.getValueAsString());
             }
         }
-		sf = MojitoProps.instance().getFactory();
-		synchronized(sf) {
-		    for(Setting set : sf) {
-		        if(!set.isPrivate() && !set.isDefault())
-		            props.put(set.getKey(), set.getValueAsString());
-
-		    }
-		}
+//		sf = MojitoProps.instance().getFactory();
+//		synchronized(sf) {
+//		    for(Setting set : sf) {
+//		        if(!set.isPrivate() && !set.isDefault())
+//		            props.put(set.getKey(), set.getValueAsString());
+//
+//		    }
+//		}
 		// list the properties in the PrintWriter.
 		props.list(pw);
 		pw.flush();

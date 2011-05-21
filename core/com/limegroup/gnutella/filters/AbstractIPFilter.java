@@ -9,7 +9,6 @@ import java.net.UnknownHostException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.limewire.io.IP;
-import org.limewire.mojito.messages.DHTMessage;
 
 import com.limegroup.gnutella.messages.Message;
 import com.limegroup.gnutella.messages.PingReply;
@@ -42,15 +41,6 @@ abstract class AbstractIPFilter implements IPFilter {
                 return getIP(query.getGUID());
             else
                 return ALLOWED;
-        }
-        else if (m instanceof DHTMessage){
-            DHTMessage message = (DHTMessage)m;
-            InetSocketAddress addr = 
-                (InetSocketAddress) message.getContact().getContactAddress();
-            if (addr != null && addr.getAddress() instanceof Inet4Address)
-                return getIP(addr.getAddress().getAddress());
-            // dht messages do not require contact address.
-            return ALLOWED;
         } else {
             // we dont want to block other kinds of messages
             return ALLOWED;

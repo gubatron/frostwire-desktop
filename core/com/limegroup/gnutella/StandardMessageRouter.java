@@ -30,7 +30,6 @@ import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 import com.limegroup.gnutella.auth.ContentManager;
 import com.limegroup.gnutella.connection.RoutedConnection;
-import com.limegroup.gnutella.dht.DHTManager;
 import com.limegroup.gnutella.guess.OnDemandUnicaster;
 import com.limegroup.gnutella.messagehandlers.InspectionRequestHandler;
 import com.limegroup.gnutella.messagehandlers.OOBHandler;
@@ -80,7 +79,7 @@ public class StandardMessageRouter extends MessageRouterImpl {
             ConnectionManager connectionManager, @Named("forMeReplyHandler")
             ReplyHandler forMeReplyHandler, QueryUnicaster queryUnicaster,
             FileManager fileManager, ContentManager contentManager,
-            DHTManager dhtManager, UploadManager uploadManager,
+            UploadManager uploadManager,
             DownloadManager downloadManager, UDPService udpService,
             SearchResultHandler searchResultHandler,
             SocketsManager socketsManager, HostCatcher hostCatcher,
@@ -106,7 +105,7 @@ public class StandardMessageRouter extends MessageRouterImpl {
         super(networkManager, queryRequestFactory, queryHandlerFactory,
                 onDemandUnicaster, headPongFactory, pingReplyFactory,
                 connectionManager, forMeReplyHandler, queryUnicaster,
-                fileManager, contentManager, dhtManager, uploadManager,
+                fileManager, contentManager, uploadManager,
                 downloadManager, udpService, searchResultHandler,
                 socketsManager, hostCatcher, queryReplyFactory, staticMessages,
                 messageDispatcher, multicastService, queryDispatcher,
@@ -218,10 +217,7 @@ public class StandardMessageRouter extends MessageRouterImpl {
         
         List<IpPort> dhthosts = Collections.emptyList();
         int maxHosts = ConnectionSettings.NUM_RETURN_PONGS.getValue();
-        
-        if (request.requestsDHTIPP() && dhtManager.isRunning()) {
-            dhthosts = dhtManager.getActiveDHTNodes(maxHosts);
-        }
+ 
         
         int numDHTHosts = dhthosts.size();
         

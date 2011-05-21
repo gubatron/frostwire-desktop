@@ -240,7 +240,7 @@ public class VendorMessageParserBinderImpl implements VendorMessageParserBinder 
         }
         public VendorMessage parse(byte[] guid, byte ttl, byte hops, int version, 
                 byte[] restOf, Network network) throws BadPacketException {
-            return new DHTContactsMessage(guid, ttl, hops, version, restOf, network, macManager);
+            return null;//new DHTContactsMessage(guid, ttl, hops, version, restOf, network, macManager);
         }
     }
       
