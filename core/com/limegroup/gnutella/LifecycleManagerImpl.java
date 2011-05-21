@@ -33,8 +33,6 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
-import com.limegroup.bittorrent.TorrentManager;
-import com.limegroup.bittorrent.handshaking.IncomingConnectionHandler;
 import com.limegroup.gnutella.auth.ContentManager;
 import com.limegroup.gnutella.browser.ControlRequestAcceptor;
 import com.limegroup.gnutella.browser.LocalAcceptor;
@@ -86,7 +84,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
     private final Provider<NodeAssigner> nodeAssigner;
     private final Provider<HostCatcher> hostCatcher;
     private final Provider<FileManager> fileManager;
-    private final Provider<TorrentManager> torrentManager;
     private final Provider<ConnectionDispatcher> connectionDispatcher;
     private final Provider<UpdateHandler> updateHandler;
     private final Provider<QueryUnicaster> queryUnicaster;
@@ -157,7 +154,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
             Provider<NodeAssigner> nodeAssigner,
             Provider<HostCatcher> hostCatcher,
             Provider<FileManager> fileManager,
-            Provider<TorrentManager> torrentManager,
             @Named("global") Provider<ConnectionDispatcher> connectionDispatcher,
             @Named("local") Provider<ConnectionDispatcher> localConnectionDispatcher,
             Provider<UpdateHandler> updateHandler,
@@ -178,7 +174,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
             Provider<ConnectionServices> connectionServices,
             Provider<SpamServices> spamServices,
             Provider<ControlRequestAcceptor> controlRequestAcceptor,
-            Provider<IncomingConnectionHandler> incomingConnectionHandler,
             Provider<LicenseFactory> licenseFactory,
             Provider<LimeCoreGlue> limeCoreGlue,
             Provider<OutOfBandThroughputMeasurer> outOfBandThroughputMeasurer,
@@ -204,7 +199,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
         this.nodeAssigner = nodeAssigner;
         this.hostCatcher = hostCatcher;
         this.fileManager = fileManager;
-        this.torrentManager = torrentManager;
         this.connectionDispatcher = connectionDispatcher;
         this.localConnectionDispatcher = localConnectionDispatcher;
         this.updateHandler = updateHandler;

@@ -19,13 +19,6 @@ import com.google.inject.Key;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
-import com.limegroup.bittorrent.BTContextFactory;
-import com.limegroup.bittorrent.ManagedTorrentFactory;
-import com.limegroup.bittorrent.TorrentManager;
-import com.limegroup.bittorrent.disk.DiskManagerFactory;
-import com.limegroup.bittorrent.handshaking.IncomingConnectionHandler;
-import com.limegroup.bittorrent.tracking.TrackerFactory;
-import com.limegroup.bittorrent.tracking.TrackerManagerFactory;
 import com.limegroup.gnutella.altlocs.AltLocManager;
 import com.limegroup.gnutella.altlocs.AlternateLocationFactory;
 import com.limegroup.gnutella.auth.ContentManager;
@@ -171,22 +164,6 @@ public class LimeWireCore {
 
     public HTTPHeaderUtils getHttpHeaderUtils() {
         return injector.getInstance(HTTPHeaderUtils.class);
-    }
-
-    public TrackerFactory getTrackerFactory() {
-        return injector.getInstance(TrackerFactory.class);
-    }
-
-    public TrackerManagerFactory getTrackerManagerFactory() {
-        return injector.getInstance(TrackerManagerFactory.class);
-    }
-
-    public TorrentManager getTorrentManager() {
-        return injector.getInstance(TorrentManager.class);
-    }
-
-    public ManagedTorrentFactory getManagedTorrentFactory() {
-        return injector.getInstance(ManagedTorrentFactory.class);
     }
 
     public PushEndpointFactory getPushEndpointFactory() {
@@ -380,14 +357,6 @@ public class LimeWireCore {
     public MulticastService getMulticastService() {
         return injector.getInstance(MulticastService.class);
     }
-    
-    public DiskManagerFactory getDiskManagerFactory() {
-        return injector.getInstance(DiskManagerFactory.class);
-    }
-
-    public IncomingConnectionHandler getIncomingConnectionHandler() {
-        return injector.getInstance(IncomingConnectionHandler.class);
-    }
 
     public ConnectionWatchdog getConnectionWatchdog() {
         return injector.getInstance(ConnectionWatchdog.class);
@@ -459,10 +428,6 @@ public class LimeWireCore {
 
     public RUDPContext getRUDPContext() {
         return injector.getInstance(RUDPContext.class);
-    }
-
-    public BTContextFactory getBTContextFactory() {
-        return injector.getInstance(BTContextFactory.class);
     }
     
     public ActivityCallback getActivityCallback() {

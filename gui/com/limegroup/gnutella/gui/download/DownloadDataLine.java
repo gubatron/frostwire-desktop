@@ -12,8 +12,7 @@ import javax.swing.Icon;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
-import com.limegroup.bittorrent.gui.TorrentFileFetcher;
-import com.limegroup.bittorrent.settings.BittorrentSettings;
+import com.frostwire.bittorrent.settings.BittorrentSettings;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.Downloader.DownloadStatus;
 import com.limegroup.gnutella.InsufficientDataException;
@@ -44,7 +43,6 @@ import com.limegroup.gnutella.gui.tables.SpeedRenderer;
 import com.limegroup.gnutella.gui.tables.TimeRemainingHolder;
 import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
-import com.limegroup.gnutella.settings.SharingSettings;
 
 /**
  * This class handles all of the data for a single download, representing

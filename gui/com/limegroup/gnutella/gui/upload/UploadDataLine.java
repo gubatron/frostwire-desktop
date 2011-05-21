@@ -8,10 +8,9 @@ import javax.swing.Icon;
 
 import org.limewire.util.CommonUtils;
 
-import com.limegroup.bittorrent.ManagedTorrent;
-import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.InsufficientDataException;
+import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.Uploader;
 import com.limegroup.gnutella.Uploader.UploadStatus;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -647,13 +646,6 @@ public final class UploadDataLine extends AbstractDataLine<Uploader> {
 	 * Sets the speed & time left.
 	 */
     private void setSpeedAndTimeLeft() {
-            try {
-                _speed = (initializer instanceof ManagedTorrent) ? 
-                		((ManagedTorrent) initializer).getMeasuredBandwidth(false) : 
-                		initializer.getMeasuredBandwidth();
-            } catch(InsufficientDataException ide) {
-                _speed = 0;
-            }
             // If we have a valid rate (can't compute if rate is 0),
             // then determine how much time (in seconds) is remaining.
             if ( _speed > 0) {

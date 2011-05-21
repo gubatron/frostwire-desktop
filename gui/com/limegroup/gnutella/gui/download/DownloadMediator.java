@@ -3,8 +3,6 @@ package com.limegroup.gnutella.gui.download;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.io.IOException;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -26,9 +24,7 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.CoreFrostWireUtils;
-import com.frostwire.GuiFrostWireUtils;
-import com.limegroup.bittorrent.gui.TorrentFileFetcher;
-import com.limegroup.bittorrent.settings.BittorrentSettings;
+import com.frostwire.bittorrent.settings.BittorrentSettings;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.Downloader.DownloadStatus;
 import com.limegroup.gnutella.FileDesc;
@@ -39,12 +35,10 @@ import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.SaveLocationException;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.DialogOption;
-import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.FileDetailsProvider;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.MessageService;
 import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.actions.CopyMagnetLinkToClipboardAction;
 import com.limegroup.gnutella.gui.actions.LimeAction;
@@ -452,16 +446,6 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
 
     public void openTorrent(File file) {
     	
-    }
-
-    /**
-     * Gubatron to FTA: You'll need to apply your updates on this method as well.
-     * @param uri
-     */
-    public void openTorrentURI(URI uri) {
-    	TorrentFileFetcher fetcher = new TorrentFileFetcher(uri, GuiCoreMediator.getDownloadManager());
-    	add(fetcher);
-    	fetcher.fetch();
     }
     
     private File copyToThemeDir(File themeFile) {

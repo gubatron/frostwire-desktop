@@ -3,7 +3,6 @@ package com.limegroup.gnutella;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import com.limegroup.bittorrent.TorrentManager;
 import com.limegroup.gnutella.settings.ConnectionSettings;
 import com.limegroup.gnutella.settings.UploadSettings;
 import com.limegroup.gnutella.uploader.UploadSlotManager;
@@ -16,17 +15,14 @@ public class UploadServicesImpl implements UploadServices {
     private final Provider<UploadManager> uploadManager;
     private final Provider<UploadSlotManager> uploadSlotManager;
     private final Provider<ConnectionManager> connectionManager;
-    private final Provider<TorrentManager> torrentManager;
     
     @Inject
     public UploadServicesImpl(Provider<UploadManager> uploadManager,
             Provider<UploadSlotManager> uploadSlotManager,
-            Provider<ConnectionManager> connectionManager,
-            Provider<TorrentManager> torrentManager) {
+            Provider<ConnectionManager> connectionManager) {
         this.uploadManager = uploadManager;
         this.uploadSlotManager = uploadSlotManager;
         this.connectionManager = connectionManager;
-        this.torrentManager = torrentManager;
     }
     
 
@@ -75,7 +71,7 @@ public class UploadServicesImpl implements UploadServices {
      * @see com.limegroup.gnutella.UploadServices#getNumUploads()
      */
     public int getNumUploads() {
-        return uploadManager.get().uploadsInProgress() + torrentManager.get().getNumActiveTorrents();
+        return uploadManager.get().uploadsInProgress();
     }
 
     /* (non-Javadoc)

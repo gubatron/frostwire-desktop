@@ -6,7 +6,7 @@ import javax.swing.JCheckBox;
 
 import org.limewire.i18n.I18nMarker;
 
-import com.limegroup.bittorrent.settings.BittorrentSettings;
+import com.frostwire.bittorrent.settings.BittorrentSettings;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;

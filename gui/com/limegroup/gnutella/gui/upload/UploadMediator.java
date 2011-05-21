@@ -11,7 +11,6 @@ import javax.swing.table.TableCellRenderer;
 import org.limewire.io.ConnectableImpl;
 
 import com.google.inject.Inject;
-import com.limegroup.bittorrent.ManagedTorrent;
 import com.limegroup.gnutella.PushEndpoint;
 import com.limegroup.gnutella.UploadServicesImpl;
 import com.limegroup.gnutella.Uploader;
@@ -28,7 +27,6 @@ import com.limegroup.gnutella.gui.tables.ProgressBarHolder;
 import com.limegroup.gnutella.gui.tables.ProgressBarRenderer;
 import com.limegroup.gnutella.gui.tables.TableSettings;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
-import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.uploader.HTTPUploader;
 
@@ -403,19 +401,4 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 		return _instance;
 	}
 
-	/**
-	 * Removes the uploader for this torrent
-	 * @param managedTorrent
-	 */
-	public void stopSeeding(ManagedTorrent managedTorrent) {
-        try {
-            int count = DATA_MODEL.getRowCount();
-            for (int i = 0; i < count; i++) {
-                UploadDataLine line = DATA_MODEL.get(i);
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }		
-	}
 }

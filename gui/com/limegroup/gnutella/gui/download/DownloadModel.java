@@ -1,7 +1,5 @@
 package com.limegroup.gnutella.gui.download;
 
-import com.frostwire.bittorrent.BTDownloaderImpl;
-import com.limegroup.bittorrent.gui.TorrentFileFetcher;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.Downloader.DownloadStatus;
 import com.limegroup.gnutella.gui.tables.BasicDataLineModel;
@@ -114,16 +112,6 @@ final class DownloadModel extends BasicDataLineModel<DownloadDataLine, Downloade
 	}
 
 	public void remove(int i) {
-		DownloadDataLine line = get(i);
-		
-		Downloader downloader = null;
-		
-		if (line.getDownloader() instanceof TorrentFileFetcher) {
-            downloader = ((TorrentFileFetcher) line.getDownloader()).getDownloader();
-        } else if (line.getDownloader() instanceof BTDownloaderImpl) {
-            downloader = line.getDownloader();
-        }
-        
 
         super.remove(i);
 	}

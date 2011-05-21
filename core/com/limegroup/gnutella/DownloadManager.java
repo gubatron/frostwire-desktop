@@ -5,7 +5,6 @@ import java.net.Socket;
 import java.util.Collection;
 import java.util.List;
 
-import com.limegroup.bittorrent.BTMetaInfo;
 import com.limegroup.gnutella.browser.MagnetOptions;
 import com.limegroup.gnutella.downloader.CantResumeException;
 import com.limegroup.gnutella.downloader.CoreDownloader;

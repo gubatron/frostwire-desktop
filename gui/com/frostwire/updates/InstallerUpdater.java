@@ -123,13 +123,13 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 		}
 		
 		//We always re-download the torrent just in case.
-		try {
-			CoreFrostWireUtils.downloadTorrentFile(_updateMessage.getTorrent(), 
-						torrentFileLocation);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			//CoreFrostWireUtils.downloadTorrentFile(_updateMessage.getTorrent(), 
+//			//			torrentFileLocation);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 		assert (torrentFileLocation.exists());
 		

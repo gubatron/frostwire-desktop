@@ -11,8 +11,8 @@ import java.text.SimpleDateFormat;
 import javax.swing.JPopupMenu;
 
 import com.frostwire.GuiFrostWireUtils;
+import com.frostwire.bittorrent.settings.BittorrentSettings;
 import com.frostwire.bittorrent.websearch.isohunt.ISOHuntItem;
-import com.limegroup.bittorrent.settings.BittorrentSettings;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.GUIMediator;

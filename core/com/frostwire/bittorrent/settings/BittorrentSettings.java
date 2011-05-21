@@ -1,4 +1,4 @@
-package com.limegroup.bittorrent.settings;
+package com.frostwire.bittorrent.settings;
 
 import org.limewire.setting.BooleanSetting;
 import org.limewire.setting.IntSetting;

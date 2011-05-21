@@ -16,8 +16,7 @@ import org.limewire.io.IOUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
-import com.limegroup.bittorrent.BTMetaInfo;
-import com.limegroup.bittorrent.settings.BittorrentSettings;
+import com.frostwire.bittorrent.settings.BittorrentSettings;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
@@ -26,28 +25,6 @@ import com.limegroup.gnutella.settings.SharingSettings;
 
 public final class GuiFrostWireUtils extends CoreFrostWireUtils {
 	
-
-	public final static void shareTorrent(BTMetaInfo bt, byte[] body) {
-		if (!canShareTorrentMetaFiles())
-			return;
-
-		BufferedOutputStream bos = null;
-		try {
-			File newTorrent = new File(
-					SharingSettings.DEFAULT_DOT_TORRENTS_DIR, bt.getName()
-							.concat(".torrent"));
-
-			bos = new BufferedOutputStream(new FileOutputStream(newTorrent));
-			bos.write(body);
-			bos.flush();
-
-			verifySharedTorrentFolderCorrecteness();
-		} catch (Exception e) {
-			// we tried...
-		} finally {
-			IOUtils.close(bos);
-		}
-	} // shareTorrent
 
 	public final static void shareTorrent(File f) {
 		if (!canShareTorrentMetaFiles())

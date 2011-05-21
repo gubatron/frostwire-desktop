@@ -23,7 +23,6 @@ import org.limewire.i18n.I18nMarker;
 import org.limewire.io.InvalidDataException;
 import org.limewire.io.IpPort;
 import org.limewire.service.MessageService;
-import org.limewire.util.FileUtils;
 
 import com.frostwire.bittorrent.AzureusStarter;
 import com.frostwire.bittorrent.BTDownloader;
@@ -32,10 +31,6 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
-import com.limegroup.bittorrent.BTMetaInfo;
-import com.limegroup.bittorrent.TorrentFileSystem;
-import com.limegroup.bittorrent.TorrentManager;
-import com.limegroup.bittorrent.settings.BittorrentSettings;
 import com.limegroup.gnutella.browser.MagnetOptions;
 import com.limegroup.gnutella.downloader.CantResumeException;
 import com.limegroup.gnutella.downloader.CoreDownloader;
@@ -48,7 +43,6 @@ import com.limegroup.gnutella.downloader.PushDownloadManager;
 import com.limegroup.gnutella.downloader.PushedSocketHandlerRegistry;
 import com.limegroup.gnutella.downloader.RemoteFileDescFactory;
 import com.limegroup.gnutella.downloader.ResumeDownloader;
-import com.limegroup.gnutella.downloader.serial.BTMetaInfoMemento;
 import com.limegroup.gnutella.downloader.serial.DownloadMemento;
 import com.limegroup.gnutella.downloader.serial.DownloadSerializer;
 import com.limegroup.gnutella.library.SharingUtils;
@@ -118,7 +112,6 @@ public class DownloadManagerImpl implements DownloadManager {
     private final Provider<DownloadCallback> downloadCallback;
     private final Provider<MessageRouter> messageRouter;
     private final ScheduledExecutorService backgroundExecutor;
-    private final Provider<TorrentManager> torrentManager;
     private final Provider<PushDownloadManager> pushDownloadManager;
     private final CoreDownloaderFactory coreDownloaderFactory;
     private final DownloadSerializer downloadSerializer;
@@ -130,7 +123,6 @@ public class DownloadManagerImpl implements DownloadManager {
             Provider<DownloadCallback> downloadCallback,
             Provider<MessageRouter> messageRouter,
             @Named("backgroundExecutor") ScheduledExecutorService backgroundExecutor,
-            Provider<TorrentManager> torrentManager,
             Provider<PushDownloadManager> pushDownloadManager,
             CoreDownloaderFactory coreDownloaderFactory,
             DownloadSerializer downloaderSerializer,
@@ -140,7 +132,6 @@ public class DownloadManagerImpl implements DownloadManager {
         this.downloadCallback = downloadCallback;
         this.messageRouter = messageRouter;
         this.backgroundExecutor = backgroundExecutor;
-        this.torrentManager = torrentManager;
         this.pushDownloadManager = pushDownloadManager;
         this.coreDownloaderFactory = coreDownloaderFactory;
         this.downloadSerializer = downloaderSerializer;
@@ -644,32 +635,6 @@ public class DownloadManagerImpl implements DownloadManager {
                 info, dir, now);
         initializeDownload(d);
         return d;
-    }
-    
-    private void checkTargetLocation(TorrentFileSystem info, boolean overwrite) 
-    throws SaveLocationException{
-        for (File f : info.getFilesAndFolders()) {
-            if (f.exists())
-                throw new SaveLocationException
-                (SaveLocationException.FILE_ALREADY_EXISTS, f);
-        }
-    }
-    
-    private void checkActiveAndWaiting(URN urn, TorrentFileSystem system) 
-    throws SaveLocationException {
-        for (CoreDownloader current : activeAndWaiting) {
-            if (urn.equals(current.getSha1Urn())) {
-                // this is the place to add new trackers eventually.
-                throw new SaveLocationException
-                (SaveLocationException.FILE_ALREADY_DOWNLOADING, system.getCompleteFile());
-            }
-            for (File f : system.getFilesAndFolders()) {
-                if (current.conflictsSaveFile(f)) {
-                    throw new SaveLocationException
-                    (SaveLocationException.FILE_IS_ALREADY_DOWNLOADED_TO, f);
-                }
-            }
-        }
     }
     
     /**

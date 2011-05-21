@@ -782,7 +782,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
             if (fd != null) { 
                 GuiCoreMediator.getUploadManager().killUploadsForFileDesc(fd);
             }
-            GuiCoreMediator.getTorrentManager().killTorrentForFile(file);
 
             // removeOptions > 2 => OS offers trash options
             boolean removed = FileUtils.delete(file, removeOptions.length > 2 && option == 0 /* "move to trash" option index */);

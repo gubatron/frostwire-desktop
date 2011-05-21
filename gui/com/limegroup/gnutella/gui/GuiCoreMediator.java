@@ -6,7 +6,6 @@ import org.limewire.http.LimeHttpClient;
 import org.limewire.io.NetworkInstanceUtils;
 
 import com.google.inject.Inject;
-import com.limegroup.bittorrent.TorrentManager;
 import com.limegroup.gnutella.Acceptor;
 import com.limegroup.gnutella.ActivityCallback;
 import com.limegroup.gnutella.ApplicationServices;
@@ -62,7 +61,6 @@ public class GuiCoreMediator {
     public static NetworkManager getNetworkManager() {  return core.getNetworkManager(); }    
     public static ConnectionManager getConnectionManager() {  return core.getConnectionManager(); }    
     public static DHTManager getDHTManager() {  return core.getDhtManager(); }    
-    public static TorrentManager getTorrentManager() {  return core.getTorrentManager(); }    
     public static UploadManager getUploadManager() {  return core.getUploadManager(); }
     public static FileManager getFileManager() {  return core.getFileManager(); }
     public static UploadSlotManager getUploadSlotManager() {  return core.getUploadSlotManager(); }

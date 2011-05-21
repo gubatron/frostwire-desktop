@@ -50,7 +50,6 @@ class DownloadConverterObjectInputStream extends ConverterObjectInputStream {
         addLookup("com.limegroup.gnutella.downloader.RequeryDownloader", SerialRequeryDownloader.class.getName());
         addLookup("com.limegroup.gnutella.downloader.MagnetDownloader", SerialMagnetDownloader.class.getName());
         addLookup("com.limegroup.gnutella.downloader.InNetworkDownloader", SerialInNetworkDownloader.class.getName());
-        addLookup("com.limegroup.bittorrent.BTDownloader", SerialBTDownloader.class.getName());
         addLookup("com.limegroup.gnutella.downloader.IncompleteFileManager", SerialIncompleteFileManager.class.getName());
         addLookup("com.limegroup.gnutella.downloader.URLRemoteFileDesc", SerialUrlRemoteFileDesc.class.getName());
         addLookup("com.limegroup.gnutella.xml.LimeXMLDocument", SerialXml.class.getName());
@@ -58,10 +57,6 @@ class DownloadConverterObjectInputStream extends ConverterObjectInputStream {
         addLookup("com.limegroup.gnutella.util.IntervalSet", IntervalSet.class.getName());
         addLookup("com.limegroup.gnutella.BandwidthTrackerImpl", SerialBandwidthTrackerImpl.class.getName());
         addLookup("org.apache.commons.httpclient.URI", SerialOldURI.class.getName());
-        addLookup("com.limegroup.bittorrent.BTMetaInfo", SerialBTMetaInfo.class.getName());
-        addLookup("com.limegroup.bittorrent.BTMetaInfo$SerialKeys", SerialBTMetaInfo.SerialKeys.class.getName());
-        addLookup("com.limegroup.bittorrent.TorrentFileSystem", SerialTorrentFileSystem.class.getName());
-        addLookup("com.limegroup.bittorrent.disk.VerifyingFolder$SerialData", SerialDiskManagerData.class.getName());
     }
     
 

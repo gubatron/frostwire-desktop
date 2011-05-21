@@ -35,7 +35,6 @@ import com.frostwire.bittorrent.AzureusStarter;
 import com.frostwire.guice.FrostWireCoreModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.limegroup.bittorrent.BTMetaInfo;
 import com.limegroup.gnutella.http.HttpExecutor;
 import com.limegroup.gnutella.library.SharingUtils;
 import com.limegroup.gnutella.settings.SharingSettings;
@@ -342,63 +341,7 @@ public class CoreFrostWireUtils {
 		
 	}
 	
-	/**
-	 * Returns a BitTorrent Meta Info object from the URL of a torrent file.
-	 * If @saveLocation is a valid File, the torrent will be saved there.
-	 * 
-	 * @param torrentURL
-	 * @param saveLocation - Path to a file where you want to save the .torrent locally.
-	 * If the file already exists, it's overwritten.
-	 * @return
-	 * @throws IOException 
-	 */
-	public final static BTMetaInfo downloadTorrentFile(
-	        String torrentURL,
-	        File saveLocation) throws IOException {
-
-	    BTMetaInfo result = null;
-	    byte[] contents = CoreFrostWireUtils.downloadHttpFile(torrentURL);
-
-	    try {
-	        result = BTMetaInfo.readFromBytes(contents);
-	    } catch (IOException e) {
-	    	e.printStackTrace();
-	    }
-
-	    // save the torrent locally if you have to
-	    if (saveLocation != null && 
-	        contents != null &&
-	        contents.length > 0) {
-	        
-	    	if (saveLocation.exists()) {
-	    		saveLocation.delete();
-	    	}
-	    	
-	        //Create all the route necessary to save the .torrent file if it does not exit.
-            saveLocation.getParentFile().mkdirs();
-            saveLocation.createNewFile();
-            saveLocation.setWritable(true);
-	        
-	        FileOutputStream fos = new FileOutputStream(saveLocation,false);
-	        fos.write(contents);
-	        fos.flush();
-	        fos.close();
-	    }
-	    
-	    return result;
-	} //downloadTorrentFile
 	
-	/**
-	 * Returns a BitTorrent Meta info object from the URL of a torrent file.
-	 * @param torrentURL
-	 * @return
-	 */
-	public final static BTMetaInfo 
-	    downloadTorrentFile(String torrentURL) throws IOException {
-	    return CoreFrostWireUtils.downloadTorrentFile(torrentURL, null);
-	} //downloadTorrentFile
-	
-
 	public static Injector getInjector() {
 		if (INJECTOR == null) {
 			INJECTOR = Guice.createInjector(new FrostWireCoreModule());

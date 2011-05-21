@@ -58,7 +58,6 @@ import com.frostwire.bittorrent.AzureusStarter;
 import com.frostwire.gnutella.connectiondoctor.ConnectionDoctor;
 import com.frostwire.gnutella.gui.chat.ChatMediator;
 import com.frostwire.gui.download.bittorrent.BTDownloadMediator;
-import com.limegroup.bittorrent.gui.TorrentUploadCanceller;
 import com.limegroup.gnutella.bugs.FatalBugManager;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
 import com.limegroup.gnutella.gui.connection.ConnectionMediator;
@@ -416,7 +415,6 @@ public final class GUIMediator {
 	 */
 	public void coreInitialized() {
 		startTimer();
-		createEventListeners();
 		new ConnectionDoctor().initialize(); // Initialize the Connection Doctor
 												// timer
 	}
@@ -424,11 +422,6 @@ public final class GUIMediator {
 	private final void startTimer() {
 		RefreshTimer timer = new RefreshTimer();
 		timer.startTimer();
-	}
-
-	private void createEventListeners() {
-		TorrentUploadCanceller.createAndRegister(GuiCoreMediator
-				.getTorrentManager());
 	}
 
 	/**

@@ -6,7 +6,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -18,18 +17,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.limewire.collection.Range;
 import org.limewire.io.IOUtils;
-import org.limewire.util.CommonUtils;
 
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.browser.MagnetOptions;
 import com.limegroup.gnutella.downloader.DownloaderType;
 import com.limegroup.gnutella.downloader.FileNotFoundException;
-import com.limegroup.gnutella.downloader.serial.BTDiskManagerMemento;
-import com.limegroup.gnutella.downloader.serial.BTDiskManagerMementoImpl;
-import com.limegroup.gnutella.downloader.serial.BTDownloadMemento;
-import com.limegroup.gnutella.downloader.serial.BTDownloadMementoImpl;
-import com.limegroup.gnutella.downloader.serial.BTMetaInfoMemento;
-import com.limegroup.gnutella.downloader.serial.BTMetaInfoMementoImpl;
 import com.limegroup.gnutella.downloader.serial.DownloadMemento;
 import com.limegroup.gnutella.downloader.serial.GnutellaDownloadMemento;
 import com.limegroup.gnutella.downloader.serial.GnutellaDownloadMementoImpl;
@@ -37,10 +29,7 @@ import com.limegroup.gnutella.downloader.serial.MagnetDownloadMemento;
 import com.limegroup.gnutella.downloader.serial.MagnetDownloadMementoImpl;
 import com.limegroup.gnutella.downloader.serial.OldDownloadConverter;
 import com.limegroup.gnutella.downloader.serial.RemoteHostMemento;
-import com.limegroup.gnutella.downloader.serial.TorrentFileSystemMemento;
-import com.limegroup.gnutella.downloader.serial.TorrentFileSystemMementoImpl;
 import com.limegroup.gnutella.downloader.serial.conversion.DownloadConverterObjectInputStream.Version;
-import com.limegroup.gnutella.settings.SharingSettings;
 
 public class OldDownloadConverterImpl implements OldDownloadConverter {
     
@@ -147,44 +136,6 @@ public class OldDownloadConverterImpl implements OldDownloadConverter {
         memento.setMagnet((MagnetOptions)o.getProperties().get("MAGNET"));
         addGnutellaProperties(memento, o.getProperties(), ranges, incompleteFile, o.getRemoteFileDescs());
         mementos.add(memento); 
-    }
-    
-    private BTMetaInfoMemento toBTMetaInfoMemento(SerialBTMetaInfo info) throws IOException {
-        BTMetaInfoMemento memento = new BTMetaInfoMementoImpl();
-        memento.setFileSystem(toFileSystemMemento(info.getFileSystem()));
-        memento.setFolderData(toBTDiskManagerMemento(info.getDiskManagerData()));
-        memento.setHashes(info.getHashes());
-        memento.setInfoHash(info.getInfoHash());
-        memento.setPieceLength(info.getPieceLength());
-        memento.setPrivate(info.isPrivate());
-        memento.setRatio(info.getHistoricRatio());
-        try {
-            memento.setTrackers(info.getTrackers());
-        } catch (URISyntaxException e) {
-            IOException ioe = new IOException();
-            ioe.initCause(e);
-            throw ioe;
-        }
-        return memento;
-    }
-    
-    private BTDiskManagerMemento toBTDiskManagerMemento(SerialDiskManagerData data) {
-        BTDiskManagerMemento memento = new BTDiskManagerMementoImpl();
-        memento.setPartialBlocks(data.getPartialBlocks());
-        memento.setVerifiedBlocks(data.getVerifiedBlocks());
-        memento.setVerifying(data.isVerifying());
-        return memento;
-    }
-    
-    private TorrentFileSystemMemento toFileSystemMemento(SerialTorrentFileSystem system) {
-        TorrentFileSystemMemento memento = new TorrentFileSystemMementoImpl();
-        memento.setCompleteFile(system.getCompleteFile());
-        memento.setFiles(system.getFiles());
-        memento.setFolders(system.getFolders());
-        memento.setIncompleteFile(system.getIncompleteFile());
-        memento.setName(system.getName());
-        memento.setTotalSize(system.getTotalSize());
-        return memento;
     }
     
     private List<Range> getRanges(File incompleteFile, SerialIncompleteFileManager ifm) {
