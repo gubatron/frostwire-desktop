@@ -10,12 +10,10 @@ import org.apache.commons.logging.LogFactory;
 import org.limewire.io.NetworkUtils;
 import org.limewire.net.SocketsManager;
 import org.limewire.net.SocketsManager.ConnectType;
-import org.limewire.nio.NBSocket;
 import org.limewire.nio.channel.ChannelWriter;
 import org.limewire.nio.channel.InterestWritableByteChannel;
 import org.limewire.nio.channel.NIOMultiplexor;
 import org.limewire.nio.observer.ConnectObserver;
-import org.limewire.rudp.UDPSelectorProvider;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -40,7 +38,6 @@ public final class PushManager {
     private final Provider<FileManager> fileManager;
     private final Provider<SocketsManager> socketsManager;
     private final Provider<HTTPAcceptor> httpAcceptor;
-    private final Provider<UDPSelectorProvider> udpSelectorProvider;
 
     /**
      * @param fileManager
@@ -50,12 +47,10 @@ public final class PushManager {
     @Inject
     public PushManager(Provider<FileManager> fileManager,
             Provider<SocketsManager> socketsManager,
-            Provider<HTTPAcceptor> httpAcceptor,
-            Provider<UDPSelectorProvider> udpSelectorProvider) {
+            Provider<HTTPAcceptor> httpAcceptor) {
         this.fileManager = fileManager;
         this.socketsManager = socketsManager;
         this.httpAcceptor = httpAcceptor;
-        this.udpSelectorProvider = udpSelectorProvider;
     }    
 
 	/**
@@ -109,13 +104,13 @@ public final class PushManager {
         // If the transfer is to be done using FW-FW, then immediately start a new thread
         // which will connect using FWT.  Otherwise, do a non-blocking connect and have
         // the observer spawn the thread only if it succesfully connected.
-        if(isFWTransfer) {
-            if(LOG.isDebugEnabled())
-                LOG.debug("Adding push observer FW-FW to host: " + host + ":" + port);
-            // TODO: should FW-FW connections also use TLS?
-            NBSocket socket = udpSelectorProvider.get().openSocketChannel().socket();
-            socket.connect(new InetSocketAddress(host, port), CONNECT_TIMEOUT*2, new PushObserver(data, true, httpAcceptor.get()));
-        } else {
+//        if(isFWTransfer) {
+//            if(LOG.isDebugEnabled())
+//                LOG.debug("Adding push observer FW-FW to host: " + host + ":" + port);
+//            // TODO: should FW-FW connections also use TLS?
+//            NBSocket socket = udpSelectorProvider.get().openSocketChannel().socket();
+//            socket.connect(new InetSocketAddress(host, port), CONNECT_TIMEOUT*2, new PushObserver(data, true, httpAcceptor.get()));
+//        } else {
             if (LOG.isDebugEnabled())
                 LOG.debug("Adding push observer to host: " + host + ":" + port);
             try {
@@ -123,7 +118,7 @@ public final class PushManager {
                 socketsManager.get().connect(new InetSocketAddress(host, port), CONNECT_TIMEOUT, new PushObserver(data, false, httpAcceptor.get()), type);
             } catch(IOException iox) {
             }
-        }
+        //}
     }
     
     /** A simple collection of Push information */

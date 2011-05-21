@@ -20,7 +20,6 @@ import org.limewire.listener.EventListener;
 import org.limewire.listener.EventListenerList;
 import org.limewire.net.ConnectionDispatcher;
 import org.limewire.nio.ByteBufferCache;
-import org.limewire.rudp.UDPMultiplexor;
 import org.limewire.service.ErrorService;
 import org.limewire.setting.SettingsGroupManager;
 import org.limewire.statistic.StatisticAccumulator;
@@ -43,7 +42,6 @@ import com.limegroup.gnutella.filters.IPFilter;
 import com.limegroup.gnutella.library.SharingUtils;
 import com.limegroup.gnutella.licenses.LicenseFactory;
 import com.limegroup.gnutella.messages.StaticMessages;
-import com.limegroup.gnutella.rudp.messages.LimeRUDPMessageHandler;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.ConnectionSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
@@ -93,7 +91,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
     private final Provider<ConnectionWatchdog> connectionWatchdog;
     private final Provider<SavedFileManager> savedFileManager;
     private final Provider<RatingTable> ratingTable;
-    private final Provider<UDPMultiplexor> udpMultiplexor;
     private final Provider<HashTreeCache> tigerTreeCache;
     private final Provider<DHTManager> dhtManager;
     private final Provider<ByteBufferCache> byteBufferCache;
@@ -164,7 +161,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
             Provider<ConnectionWatchdog> connectionWatchdog,
             Provider<SavedFileManager> savedFileManager,
             Provider<RatingTable> ratingTable,
-            Provider<UDPMultiplexor> udpMultiplexor,
             Provider<HashTreeCache> tigerTreeCache,
             Provider<DHTManager> dhtManager,
             Provider<ByteBufferCache> byteBufferCache,
@@ -209,7 +205,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
         this.connectionWatchdog = connectionWatchdog;
         this.savedFileManager = savedFileManager;
         this.ratingTable = ratingTable;
-        this.udpMultiplexor = udpMultiplexor;
         this.tigerTreeCache = tigerTreeCache;
         this.dhtManager = dhtManager;
         this.byteBufferCache = byteBufferCache;
@@ -261,9 +256,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
         serviceRegistry.initialize();
         
         fileManager.get().addFileEventListener(activityCallback.get());
-        //allow incoming RUDP messages to be forwarded correctly.
-        LimeRUDPMessageHandler handler = new LimeRUDPMessageHandler(udpMultiplexor.get());
-        handler.install(messageRouter.get());      
         
         connectionManager.get().addEventListener(activityCallback.get());
         connectionManager.get().addEventListener(dhtManager.get());

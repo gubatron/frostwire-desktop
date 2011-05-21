@@ -4,7 +4,6 @@ import java.net.Socket;
 
 import org.limewire.nio.NBThrottle;
 import org.limewire.nio.Throttle;
-import org.limewire.rudp.RUDPSocket;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -60,7 +59,7 @@ public class BandwidthManagerImpl implements BandwidthManager {
     
     public Throttle getWriteThrottle(Socket socket) {
         applyUploadRate();
-        return (socket instanceof RUDPSocket) ? UP_UDP : UP_TCP;
+        return UP_TCP;
     }
 
 }

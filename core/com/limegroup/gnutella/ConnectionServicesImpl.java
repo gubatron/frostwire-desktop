@@ -9,7 +9,6 @@ import java.util.Set;
 import org.limewire.io.IpPort;
 import org.limewire.io.IpPortSet;
 import org.limewire.net.SocketsManager.ConnectType;
-import org.limewire.rudp.UDPMultiplexor;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -22,7 +21,6 @@ public class ConnectionServicesImpl implements ConnectionServices {
     
     private final Provider<ConnectionManager> connectionManager;
     private final Provider<HostCatcher> hostCatcher;
-    private final Provider<UDPMultiplexor> udpMultiplexor;
     private final Provider<UploadManager> uploadManager;
     private final Provider<Acceptor> acceptor;
     private final Provider<SpamServices> spamServices;
@@ -31,12 +29,10 @@ public class ConnectionServicesImpl implements ConnectionServices {
     public ConnectionServicesImpl(
             Provider<ConnectionManager> connectionManager,
             Provider<HostCatcher> hostCatcher,
-            Provider<UDPMultiplexor> udpMultiplexor,
             Provider<UploadManager> uploadManager, Provider<Acceptor> acceptor,
             Provider<SpamServices> spamServices) {
         this.connectionManager = connectionManager;
         this.hostCatcher = hostCatcher;
-        this.udpMultiplexor = udpMultiplexor;
         this.uploadManager = uploadManager;
         this.acceptor = acceptor;
         this.spamServices = spamServices;
@@ -171,7 +167,6 @@ public class ConnectionServicesImpl implements ConnectionServices {
         
         String host = addr.getHostAddress();
         return connectionManager.get().isConnectedTo(host) ||
-               udpMultiplexor.get().isConnectedTo(addr) ||
                uploadManager.get().isConnectedTo(addr); // ||
                // dloadManager.isConnectedTo(addr);
     }

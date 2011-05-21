@@ -15,7 +15,6 @@ import org.limewire.io.Connectable;
 import org.limewire.io.ConnectableImpl;
 import org.limewire.io.IpPort;
 import org.limewire.io.IpPortSet;
-import org.limewire.rudp.RUDPUtils;
 import org.limewire.setting.FileSetting;
 import org.limewire.setting.evt.SettingEvent;
 import org.limewire.setting.evt.SettingListener;
@@ -319,7 +318,7 @@ public final class SearchMediator {
     public static void doBrowseHost(PushEndpoint pushEndpoint) {
         InetSocketAddress inetSocketAddress = pushEndpoint.getInetSocketAddress();
         Connectable host = inetSocketAddress != null ? new ConnectableImpl(inetSocketAddress, false) : null;
-        doBrowseHost2(host, new GUID(pushEndpoint.getClientGUID()), pushEndpoint.getProxies(), pushEndpoint.supportsFWTVersion() >= RUDPUtils.VERSION);
+        //doBrowseHost2(host, new GUID(pushEndpoint.getClientGUID()), pushEndpoint.getProxies(), pushEndpoint.supportsFWTVersion() >= RUDPUtils.VERSION);
     }
 
     /**

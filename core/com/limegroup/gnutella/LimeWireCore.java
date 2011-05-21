@@ -8,9 +8,6 @@ import org.limewire.lifecycle.ServiceRegistry;
 import org.limewire.net.ConnectionDispatcher;
 import org.limewire.net.SocketsManager;
 import org.limewire.nio.NIODispatcher;
-import org.limewire.rudp.RUDPContext;
-import org.limewire.rudp.UDPMultiplexor;
-import org.limewire.rudp.UDPSelectorProvider;
 import org.limewire.security.SecureMessageVerifier;
 
 import com.google.inject.Inject;
@@ -416,18 +413,6 @@ public class LimeWireCore {
 
     public CapabilitiesVMFactory getCapabilitiesVMFactory() {
         return injector.getInstance(CapabilitiesVMFactory.class);
-    }
-
-    public UDPMultiplexor getUdpMultiplexor() {
-        return injector.getInstance(UDPMultiplexor.class);
-    }
-
-    public UDPSelectorProvider getUDPSelectorProvider() {
-        return injector.getInstance(UDPSelectorProvider.class);
-    }
-
-    public RUDPContext getRUDPContext() {
-        return injector.getInstance(RUDPContext.class);
     }
     
     public ActivityCallback getActivityCallback() {

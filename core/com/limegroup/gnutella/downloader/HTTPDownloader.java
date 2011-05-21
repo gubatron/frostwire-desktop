@@ -41,7 +41,6 @@ import org.limewire.nio.statemachine.IOStateMachine;
 import org.limewire.nio.statemachine.IOStateObserver;
 import org.limewire.nio.statemachine.ReadSkipState;
 import org.limewire.nio.statemachine.ReadState;
-import org.limewire.rudp.RUDPSocket;
 import org.limewire.util.OSUtils;
 
 import com.google.inject.Provider;
@@ -1351,9 +1350,8 @@ public class HTTPDownloader implements BandwidthTracker {
 
                 // try to update the FWT version and external address we know for this host
             	try {
-            	    updatePEAddress();
                     pushEndpointCache.get().setFWTVersionSupported(_rfd.getClientGUID(),FWTVersion);
-                } catch (IOException ignored) {}
+                } catch (Exception ignored) {}
             }
         }
     }
@@ -1400,8 +1398,7 @@ public class HTTPDownloader implements BandwidthTracker {
         
         try {
             pushEndpointCache.get().overwriteProxies(_rfd.getClientGUID(),str);
-            updatePEAddress();
-        }catch(IOException tooBad) {
+        }catch(Exception tooBad) {
             // invalid header - ignore it.
         }
         
@@ -1421,14 +1418,6 @@ public class HTTPDownloader implements BandwidthTracker {
         }
         catch (NumberFormatException nfe) {
             // do nothing, invalid network input
-        }
-    }
-    
-    private void updatePEAddress() throws IOException {
-        if (_socket instanceof RUDPSocket) {
-            IpPort newAddr = new IpPortImpl(_socket.getInetAddress(), _socket.getPort()); 
-            if (networkInstanceUtils.isValidExternalIpPort(newAddr))
-                pushEndpointCache.get().setAddr(_rfd.getClientGUID(),newAddr);
         }
     }
     

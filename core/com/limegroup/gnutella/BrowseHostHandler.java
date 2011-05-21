@@ -27,7 +27,6 @@ import org.limewire.io.NetworkInstanceUtils;
 import org.limewire.io.NetworkUtils;
 import org.limewire.net.SocketsManager;
 import org.limewire.net.SocketsManager.ConnectType;
-import org.limewire.rudp.RUDPUtils;
 import org.limewire.service.ErrorService;
 import org.limewire.util.StringUtils;
 
@@ -37,9 +36,9 @@ import com.limegroup.gnutella.downloader.PushDownloadManager;
 import com.limegroup.gnutella.downloader.RemoteFileDescFactory;
 import com.limegroup.gnutella.messages.BadPacketException;
 import com.limegroup.gnutella.messages.Message;
+import com.limegroup.gnutella.messages.Message.Network;
 import com.limegroup.gnutella.messages.MessageFactory;
 import com.limegroup.gnutella.messages.QueryReply;
-import com.limegroup.gnutella.messages.Message.Network;
 import com.limegroup.gnutella.settings.ConnectionSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
@@ -215,7 +214,7 @@ public class BrowseHostHandler {
         	RemoteFileDesc fakeRFD = 
         		remoteFileDescFactory.createRemoteFileDesc(host.getAddress(), host.getPort(), SPECIAL_INDEX, "fake",
                     0, _serventID.bytes(), 0, false, 0, false, null, null, false, true, "", proxies,
-                    -1, canDoFWTransfer ? RUDPUtils.VERSION : 0, host.isTLSCapable()); 
+                    -1, 0, host.isTLSCapable()); 
         	// register with the map so i get notified about a response to my
         	// Push.
             browseHostCallback.putInfo(_serventID, new PushRequestDetails(this));

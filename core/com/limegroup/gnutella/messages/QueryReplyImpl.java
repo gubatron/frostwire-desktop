@@ -25,7 +25,6 @@ import org.limewire.io.InvalidDataException;
 import org.limewire.io.IpPort;
 import org.limewire.io.IpPortSet;
 import org.limewire.io.NetworkUtils;
-import org.limewire.rudp.RUDPUtils;
 import org.limewire.security.SecureMessage;
 import org.limewire.security.SecurityToken;
 import org.limewire.service.ErrorService;
@@ -1101,9 +1100,9 @@ public class QueryReplyImpl extends AbstractMessage implements QueryReply {
                     retGGEP.put(GGEP.GGEP_HEADER_MULTICAST_RESPONSE);
                 if (supportsTLS)
                     retGGEP.put(GGEP.GGEP_HEADER_TLS_CAPABLE);
-                if (supportsFWTransfer)
-                    retGGEP.put(GGEP.GGEP_HEADER_FW_TRANS,
-                                new byte[] {RUDPUtils.VERSION});
+//                if (supportsFWTransfer)
+//                    retGGEP.put(GGEP.GGEP_HEADER_FW_TRANS,
+//                                new byte[] {RUDPUtils.VERSION});
                 if (securityToken != null) {
                     retGGEP.put(GGEP.GGEP_HEADER_SECURE_OOB, securityToken.getBytes());
                 }

@@ -5,7 +5,6 @@ import java.util.Properties;
 
 import org.limewire.io.NetworkInstanceUtils;
 import org.limewire.io.NetworkUtils;
-import org.limewire.rudp.RUDPUtils;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -217,7 +216,7 @@ public class NetworkManagerImpl implements NetworkManager {
     }
 
     public int supportsFWTVersion() {
-        return udpService.get().canDoFWT() ? RUDPUtils.VERSION : 0;
+        return  0;
     }
     
     public boolean isPrivateAddress(byte[] addr) {

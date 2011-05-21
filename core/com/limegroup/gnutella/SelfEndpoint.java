@@ -8,7 +8,6 @@ import org.limewire.io.IpPort;
 import org.limewire.io.IpPortImpl;
 import org.limewire.io.NetworkInstanceUtils;
 import org.limewire.io.NetworkUtils;
-import org.limewire.rudp.RUDPUtils;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -28,7 +27,7 @@ public class SelfEndpoint extends PushEndpoint {
             Provider<UDPService> udpService,
             NetworkInstanceUtils networkInstanceUtils) {
         super(applicationServices.getMyGUID(), IpPort.EMPTY_SET,
-                PushEndpoint.PLAIN, RUDPUtils.VERSION, null, null, networkInstanceUtils);
+                PushEndpoint.PLAIN, 0, null, null, networkInstanceUtils);
         this.networkManager = networkManager;
         this.connectionManager = connectionManager;
         this.udpService = udpService;

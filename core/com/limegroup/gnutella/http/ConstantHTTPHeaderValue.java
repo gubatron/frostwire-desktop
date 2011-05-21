@@ -44,7 +44,7 @@ public class ConstantHTTPHeaderValue {
      * most likely firewalled.
      */
     public static final HTTPHeaderValue FWT_PUSH_LOCS_FEATURE =
-    	new SimpleHTTPHeaderValue(HTTPConstants.FW_TRANSFER + "/" + HTTPConstants.FWT_TRANSFER_VERSION);
+    	new SimpleHTTPHeaderValue(HTTPConstants.FW_TRANSFER + "/" + 0);
     
     /** The current User Agent */
     public static final HTTPHeaderValue USER_AGENT =
