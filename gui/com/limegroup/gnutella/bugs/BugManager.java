@@ -208,7 +208,7 @@ public final class BugManager {
         bug.printStackTrace();
         
         // Build the LocalClientInfo out of the info ...
-        LocalClientInfo info = localClientInfoFactory.createLocalClientInfo(bug, threadName, detail, false);
+        final LocalClientInfo info = localClientInfoFactory.createLocalClientInfo(bug, threadName, detail, false);
 
         if( BugSettings.LOG_BUGS_LOCALLY.getValue() )
             logBugLocally(info);
@@ -234,8 +234,13 @@ public final class BugManager {
             	sendToServlet(info);
         }
         
-        if (!sent &&  _dialogsShowing < MAX_DIALOGS )
-            reviewBug(info);
+        if (!sent &&  _dialogsShowing < MAX_DIALOGS ) {
+            GUIMediator.safeInvokeLater(new Runnable() {
+                public void run() {
+                    reviewBug(info);
+                }
+            });
+        }
     }
     
     /**
