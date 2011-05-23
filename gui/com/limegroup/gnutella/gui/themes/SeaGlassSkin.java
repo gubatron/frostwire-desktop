@@ -57,7 +57,7 @@ public class SeaGlassSkin extends SubstanceSkin {
 	 */
 	public SeaGlassSkin() {
 		SubstanceSkin.ColorSchemes schemes = SubstanceSkin
-				.getColorSchemes("com/limegroup/gnutella/gui/themes/seaglass.colorschemes");
+				.getColorSchemes("components/resources/src/main/resources/org/limewire/gui/resources/seaglass.colorschemes");
 
 		SubstanceColorScheme activeScheme = schemes.get("Sea Glass Active");
 		SubstanceColorScheme enabledScheme = schemes.get("Sea Glass Enabled");
