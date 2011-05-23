@@ -32,6 +32,8 @@ import java.net.URLDecoder;
 import java.net.UnknownHostException;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.InflaterInputStream;
 
@@ -289,6 +291,12 @@ public class TorrentDownloaderImpl extends AEThread implements TorrentDownloader
       if ((filename!=null) && filename.toLowerCase().matches(".*attachment.*")) // Some code to handle b0rked servers.
         while (filename.toLowerCase().charAt(0)!='a')
           filename = filename.substring(1);
+      
+      Pattern p = Pattern.compile(".*filename=\\\"(.*)\\\"");
+      Matcher m = null;      
+      if (filename != null && ((m = p.matcher(filename)) != null) && m.matches()) {
+          filename = m.group(1);
+      } else
       if ((filename == null) || !filename.toLowerCase().startsWith("attachment") || (filename.indexOf('=') == -1)) {
         String tmp = this.url.getFile();
         if (tmp.length() == 0 || tmp.equals("/")) {
