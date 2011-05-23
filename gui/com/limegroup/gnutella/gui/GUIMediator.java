@@ -818,8 +818,8 @@ public final class GUIMediator {
 		setWindow(GUIMediator.Tabs.SEARCH);
 	}
 
-	public final void openTorrentURI(URI torrentURI) {
-	    getBTDownloadMediator().openTorrentURI(torrentURI);
+	public final void openTorrentURI(URI torrentURI, String infoHash) {
+	    getBTDownloadMediator().openTorrentURI(torrentURI, infoHash);
 		setWindow(GUIMediator.Tabs.SEARCH);
 	}
 

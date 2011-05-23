@@ -17,6 +17,7 @@ import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.bittorrent.AzureusStarter;
 import com.frostwire.bittorrent.BTDownloader;
 import com.frostwire.bittorrent.BTDownloaderFactory;
+import com.frostwire.bittorrent.TorrentUtil;
 import com.limegroup.gnutella.FileDetails;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.FileDetailsProvider;
@@ -466,17 +467,17 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         exploreAction.setEnabled(false);
     }
 
-    public void openTorrentURI(URI uri) {
+    public void openTorrentURI(final URI uri, String infoHash) {
         TorrentDownloader downloader = TorrentDownloaderFactory.create(new TorrentDownloaderCallBackInterface() {
             public void TorrentDownloaderEvent(int state, TorrentDownloader inf) {
                 if (state == TorrentDownloader.STATE_FINISHED) {
-                	System.out.println("TorrentDownloaderEvent - " + inf.getFile().getName() );
-                    openTorrent(inf.getFile());
+                	openTorrent(inf.getFile());
                 } else if (state == TorrentDownloader.STATE_ERROR) {
                     // Error
+                    System.out.println("Error downloading the torrent: " + uri);
                 }
             }
-        }, uri.toString(), null, SharingSettings.getFileSettingForMediaType(MediaType.TYPE_TORRENTS).getValue().getAbsolutePath());
+        }, uri.toString(), null, TorrentUtil.buildTorrentFile(uri, infoHash).getAbsolutePath());
 
         downloader.start();
     }
@@ -486,12 +487,13 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
             BTDownloaderFactory factory = new BTDownloaderFactory(AzureusStarter.getAzureusCore().getGlobalManager(), file);
             final BTDownloader downloader = BTDownloaderUtils.createDownloader(factory);
             
-            GUIMediator.safeInvokeLater(new Runnable() {
-                public void run() {
-                    add(downloader);
-                }
-            });
-
+            if (downloader != null) {
+                GUIMediator.safeInvokeLater(new Runnable() {
+                    public void run() {
+                        add(downloader);
+                    }
+                });
+            }
         } catch (Exception ioe) {
             ioe.printStackTrace();
             if (!ioe.toString().contains("No files selected by user")) {

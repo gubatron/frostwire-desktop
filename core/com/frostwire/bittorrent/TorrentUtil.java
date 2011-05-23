@@ -43,6 +43,8 @@
  */
 package com.frostwire.bittorrent;
 
+import java.io.File;
+import java.net.URI;
 import java.util.Arrays;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
@@ -66,6 +68,8 @@ import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.ui.UIFunctions;
 import com.aelitis.azureus.ui.UIFunctionsManager;
 import com.aelitis.azureus.ui.selectedcontent.SelectedContent;
+import com.limegroup.gnutella.MediaType;
+import com.limegroup.gnutella.settings.SharingSettings;
 
 public class TorrentUtil {
 
@@ -337,5 +341,29 @@ public class TorrentUtil {
         //dm.setStateWaiting();
           dm.initialize();
       }
+    }
+
+    public static File buildTorrentFile(URI uri, String infoHash) {
+
+        File dir = SharingSettings.getFileSettingForMediaType(MediaType.TYPE_TORRENTS).getValue();
+        
+        if (infoHash == null) {
+            return dir;
+        }
+
+        try {
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            String path = uri.getPath();
+
+            String filename = path.substring(path.lastIndexOf("/") + 1, path.lastIndexOf(".")) + "_" + infoHash + ".torrent";
+
+            return new File(dir, filename);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return dir;
+        }
     }
 }

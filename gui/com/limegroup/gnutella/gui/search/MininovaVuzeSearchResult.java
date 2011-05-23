@@ -127,7 +127,7 @@ public class MininovaVuzeSearchResult extends AbstractSearchResult  {
 			String fileName, boolean saveAs, SearchInformation searchInfo) {
 		_isDownloading = true;
 		try {
-			GUIMediator.instance().openTorrentURI(new URI(_item.download));
+			GUIMediator.instance().openTorrentURI(new URI(_item.download), _item.hash);
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}

@@ -15,4 +15,5 @@ public class ISOHuntItem {
 	public String Seeds;
 	public String leechers;
 	public String pubDate; //In this format Thu, 29 Apr 2010 16:32:44 GMT
+	public String hash;
 }

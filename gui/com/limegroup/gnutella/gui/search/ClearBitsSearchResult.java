@@ -63,7 +63,7 @@ public class ClearBitsSearchResult extends AbstractSearchResult {
 
 	@Override
 	public String getHost() {
-		return "http://www.mininova.org";
+		return "http://www.clearbits.net/";
 	}
 
 	@Override
@@ -128,7 +128,7 @@ public class ClearBitsSearchResult extends AbstractSearchResult {
 			String fileName, boolean saveAs, SearchInformation searchInfo) {
 		_isDownloading = true;
 		try {
-			GUIMediator.instance().openTorrentURI(new URI(_item.torrent_url));
+			GUIMediator.instance().openTorrentURI(new URI(_item.torrent_url), _item.hashstr);
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
