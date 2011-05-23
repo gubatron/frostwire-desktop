@@ -467,7 +467,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         exploreAction.setEnabled(false);
     }
 
-    public void openTorrentURI(final URI uri, String infoHash) {
+    public void openTorrentURI(final URI uri) {
         TorrentDownloader downloader = TorrentDownloaderFactory.create(new TorrentDownloaderCallBackInterface() {
             public void TorrentDownloaderEvent(int state, TorrentDownloader inf) {
                 if (state == TorrentDownloader.STATE_FINISHED) {
@@ -477,7 +477,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
                     System.out.println("Error downloading the torrent: " + uri);
                 }
             }
-        }, uri.toString(), null, TorrentUtil.buildTorrentFile(uri, infoHash).getAbsolutePath());
+        }, uri.toString(), null, SharingSettings.getFileSettingForMediaType(MediaType.TYPE_TORRENTS).getValue().getAbsolutePath());
 
         downloader.start();
     }

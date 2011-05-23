@@ -281,7 +281,7 @@ public class FileMenuActions {
                             uri = URIUtils.toURI(uri.toString()); // Extra checks, what happens in HTTPClient
 
                             // The text is a valid Web address
-                            GUIMediator.instance().openTorrentURI(uri, null); // Open the torrent address
+                            GUIMediator.instance().openTorrentURI(uri); // Open the torrent address
                             return true;
                         }
                     }

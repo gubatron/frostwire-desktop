@@ -137,7 +137,7 @@ public class ISOHuntSearchResult extends AbstractSearchResult  {
 			String fileName, boolean saveAs, SearchInformation searchInfo) {
 		_isDownloading = true;
 		try {
-			GUIMediator.instance().openTorrentURI(new URI(_item.enclosure_url), _item.hash);
+			GUIMediator.instance().openTorrentURI(new URI(_item.enclosure_url));
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}

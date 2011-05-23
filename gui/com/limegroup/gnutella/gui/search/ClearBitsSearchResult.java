@@ -128,7 +128,7 @@ public class ClearBitsSearchResult extends AbstractSearchResult {
 			String fileName, boolean saveAs, SearchInformation searchInfo) {
 		_isDownloading = true;
 		try {
-			GUIMediator.instance().openTorrentURI(new URI(_item.torrent_url), _item.hashstr);
+			GUIMediator.instance().openTorrentURI(new URI(_item.torrent_url));
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}

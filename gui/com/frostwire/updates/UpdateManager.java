@@ -495,7 +495,7 @@ public final class UpdateManager implements Serializable {
 				return;
 			}
 
-			GUIMediator.instance().openTorrentURI(uri, null);
+			GUIMediator.instance().openTorrentURI(uri);
 		} catch (URISyntaxException e) {
 			System.out.println(e);
 		}
