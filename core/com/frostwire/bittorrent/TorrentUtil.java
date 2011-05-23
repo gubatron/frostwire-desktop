@@ -51,7 +51,6 @@ import org.gudy.azureus2.core3.internat.MessageText;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.util.AERunnable;
 import org.gudy.azureus2.core3.util.AsyncDispatcher;
-import org.gudy.azureus2.core3.util.Base32;
 import org.gudy.azureus2.core3.util.Debug;
 import org.gudy.azureus2.plugins.PluginInterface;
 import org.gudy.azureus2.plugins.download.Download;
@@ -341,10 +340,23 @@ public class TorrentUtil {
     }
 
     public static String getMagnet(byte[] hash) {
-        return "magnet:?xt=urn:btih:" + Base32.encode(hash);
+        return "magnet:?xt=urn:btih:" + hashToString(hash);
     }
     
     public static String getMagnet(String hash) {
         return "magnet:?xt=urn:btih:" + hash;
+    }
+    
+    public static String hashToString(byte[] hash) {
+        String hex = "";
+        for (int i = 0; i < hash.length; i++) {
+            String t = Integer.toHexString(hash[i] & 0xFF);
+            if (t.length() < 2) {
+                t = "0" + t;
+            }
+            hex += t;
+        }
+        
+        return hex;
     }
 }

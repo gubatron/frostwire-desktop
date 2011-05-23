@@ -51,4 +51,6 @@ public interface BTDownloader {
     public boolean isDeleteDataWhenRemove();
     
     public void setDeleteDataWhenRemove(boolean deleteDataWhenRemove);
+    
+    public byte[] getHash();
 }

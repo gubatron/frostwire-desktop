@@ -7,6 +7,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 
 import com.frostwire.bittorrent.BTDownloader;
+import com.frostwire.bittorrent.TorrentUtil;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.LimeAction;
@@ -23,6 +24,8 @@ final class BTDownloadActions {
     static final RemoveAction REMOVE_ACTION = new RemoveAction(false, false);
     static final RemoveAction REMOVE_TORRENT_ACTION = new RemoveAction(true, false);
     static final RemoveAction REMOVE_TORRENT_AND_DATA_ACTION = new RemoveAction(true, true);
+    static final CopyMagnetAction COPY_MAGNET_ACTION = new CopyMagnetAction();
+    static final CopyHashAction COPY_HASH_ACTION = new CopyHashAction();
 
     private static abstract class RefreshingAction extends AbstractAction {
 
@@ -194,6 +197,56 @@ final class BTDownloadActions {
                 downloaders[i].setDeleteDataWhenRemove(_deleteData);
             }
             BTDownloadMediator.instance().removeSelection();
+        }
+    }
+    
+    private static class CopyMagnetAction extends RefreshingAction {
+
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 1602974659454016547L;
+
+        public CopyMagnetAction() {
+            putValue(Action.NAME, I18n.tr("Copy Magnet"));
+            putValue(LimeAction.SHORT_NAME, I18n.tr("Copy Magnet"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Copy Magnet"));
+            putValue(LimeAction.ICON_NAME, "COPY_MAGNET");
+        }
+
+        public void performAction(ActionEvent e) {
+            BTDownloader[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
+            String str = "";
+            for (int i = 0; i < downloaders.length; i++) {
+                str += TorrentUtil.getMagnet(downloaders[i].getHash());
+                str += "\n";
+            }
+            GUIMediator.setClipboardContent(str);
+        }
+    }
+    
+    private static class CopyHashAction extends RefreshingAction {
+
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 1138409323772464985L;
+
+        public CopyHashAction() {
+            putValue(Action.NAME, I18n.tr("Copy Hash"));
+            putValue(LimeAction.SHORT_NAME, I18n.tr("Copy Hash"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Copy Hash"));
+            putValue(LimeAction.ICON_NAME, "COPY_HASH");
+        }
+
+        public void performAction(ActionEvent e) {
+            BTDownloader[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
+            String str = "";
+            for (int i = 0; i < downloaders.length; i++) {
+                str += TorrentUtil.hashToString(downloaders[i].getHash());
+                str += "\n";
+            }
+            GUIMediator.setClipboardContent(str);
         }
     }
 

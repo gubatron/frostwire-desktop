@@ -3,6 +3,7 @@ package com.frostwire.bittorrent;
 import java.io.File;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
+import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.tracker.client.TRTrackerScraperResponse;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
 
@@ -197,5 +198,14 @@ public class BTDownloaderImpl implements BTDownloader {
     
     public void setDeleteDataWhenRemove(boolean deleteDataWhenRemove) {
         _deleteDataWhenRemove = deleteDataWhenRemove;
+    }
+    
+    public byte[] getHash() {
+        try {
+            return _downloadManager.getTorrent().getHash();
+        } catch (TOTorrentException e) {
+            e.printStackTrace();
+            return new byte[0];
+        }
     }
 }
