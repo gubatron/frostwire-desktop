@@ -5,10 +5,8 @@ import java.util.Map;
 
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.tables.BasicDataLineModel;
-import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.settings.SearchSettings;
-import com.limegroup.gnutella.settings.UISettings;
 
 /** 
  * Model for search results.
@@ -28,13 +26,6 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
      * The model storing metadata information.
      */
     protected final MetadataModel METADATA;
-    
-    /**
-     * The table this is the model of.
-     * This is necessary to fix selection problems caused
-     * by insertion / removal of rows.
-     */
-    private LimeJTable TABLE;
     
     /**
      * The columns.
@@ -83,15 +74,6 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
      */
     void setUseMetadata(boolean use) {
         _useMetadata = use;
-    }
-    
-    /**
-     * Sets the LimeJTable that this ResultPanelModel is for.
-     *
-     * Necessary to fix the selection after moving rows.
-     */
-    void setTable(LimeJTable table) {
-        TABLE = table;
     }
     
     /**
@@ -185,35 +167,6 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
     }
     
     /**
-     * Overriden to not get a new dataline if something already exists.
-     */
-    public TableLine getNewDataLine(SearchResult sr) {
-	    URN sha1 = sr.getSHA1Urn();
-	    int idx = -1;
-	    
-	    if(UISettings.UI_GROUP_RESULTS.getValue()) {
-    	    if(sha1 == null)
-    	        idx = slowMatch(sr);
-            else
-                idx = fastMatch(sha1);
-        }
-        
-        if(idx != -1) {
-            TableLine line = get(idx);            
-            int added = addNewResult(line, sr);
-            if(added != 0 && isSorted() && 
-               TABLE.getTableSettings().REAL_TIME_SORT.getValue() &&
-               getSortColumn() == SearchTableColumns.COUNT_IDX)
-                move(line, idx);
-            else if(added != 0)
-                fireTableRowsUpdated(idx, idx);
-            return null;
-        }
-        
-        return super.getNewDataLine(sr);
-    }
-    
-    /**
      * Adds sr to line as a new source.
      */
     protected int addNewResult(TableLine line, SearchResult sr) {
@@ -249,17 +202,6 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
             return fastMatch(sha1);
         else
             return super.getRow(tl);
-    }
-    
-    /**
-     * Gets the row this initialize object is at.
-     */
-    public int getRow(SearchResult sr) {
-        URN sha1 = sr.getSHA1Urn();
-        if(sha1 != null)
-            return fastMatch(sha1);
-        else
-            return super.getRow(sr);
     }
     
     /**
@@ -305,78 +247,6 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
         _indexes.clear();
         super.clear();
     }
-     
-    /**
-     * Moves line from oldIdx to somewhere new because its sources updated.
-     */
-    private void move(TableLine dl, int oldIdx) {
-        int newIdx = oldIdx;
-        if(!isSortAscending()) {
-            // if was at the beginning, update and leave.
-            if(oldIdx == 0) {
-                fireTableRowsUpdated(0, 0);
-                return;
-            }
-
-            // traverse upwards till we find a line with more.
-            for(int i = 0; newIdx > 0; newIdx--, i++) {
-                TableLine current = get(newIdx-1);
-                if(compareCount(dl, current, true) >= 0)
-                    break;
-            }
-        } else {
-            int end = getRowCount() - 1;
-            // if it was at the end, update & leave.
-            if(oldIdx == end) {
-                fireTableRowsUpdated(end, end);
-                return;
-            }
-            
-            // traverse downloads till we find a line with more
-            for(; newIdx < end; newIdx++) {
-                TableLine current = get(newIdx+1);
-                if(compareCount(dl, current, true) >= 0)
-                    break;
-            }
-        }                
-        
-        // didn't move anywhere? update and leave.
-        if(oldIdx == newIdx) {
-            fireTableRowsUpdated(newIdx, newIdx);
-            return;
-        }
-
-        // store value for later fix.        
-        boolean selected = TABLE.isRowSelected(oldIdx);
-        boolean inView = TABLE.isSelectionVisible();
-
-        // we moved from oldIdx to newIdx.
-        super.remove(oldIdx);
-        super.add(dl, newIdx);
-
-        // *** fix for JTable selection bugs.
-        if(selected) {
-            TABLE.clearSelection();
-            TABLE.addRowSelectionInterval(newIdx, newIdx);
-            if(inView)
-                TABLE.ensureSelectionVisible();
-        } else {
-            TABLE.removeRowSelectionInterval(newIdx, newIdx);
-            int selRow = TABLE.getSelectedRow();
-            if(selRow != -1) {
-                TABLE.addRowSelectionInterval(selRow, selRow);
-                if(inView)
-                    TABLE.ensureSelectionVisible();
-            }
-        }           
-        // *** end fix. 
-
-        // remap the indexes that changed.
-        if(oldIdx < newIdx)
-            remapIndexes(oldIdx, newIdx + 1);
-        else
-            remapIndexes(newIdx, oldIdx + 1);
-    }    
     
     /**
      * Remaps the indexes, starting at 'start' and going to the end of

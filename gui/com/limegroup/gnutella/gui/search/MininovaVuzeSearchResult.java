@@ -14,7 +14,6 @@ import com.frostwire.GuiFrostWireUtils;
 import com.frostwire.bittorrent.settings.BittorrentSettings;
 import com.frostwire.bittorrent.websearch.mininova.MininovaVuzeItem;
 import com.limegroup.gnutella.GUID;
-import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.util.PopupUtils;
@@ -70,10 +69,9 @@ public class MininovaVuzeSearchResult extends AbstractSearchResult  {
 		return QualityRenderer.EXCELLENT_QUALITY;
 	}
 
-	@Override
-	public URN getSHA1Urn() {
-		return null;
-	}
+	public String getHash() {
+        return _item.hash;
+    }
 
 	@Override
 	public int getSecureStatus() {

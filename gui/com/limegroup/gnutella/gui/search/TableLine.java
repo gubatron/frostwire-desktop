@@ -20,7 +20,6 @@ import org.limewire.security.SecureMessage;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.GUID;
-import com.limegroup.gnutella.IncompleteFileDesc;
 import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
@@ -86,11 +85,6 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
      */
     private boolean _incompleteFile;
     
-    /**
-     * Whether or not this file was downloading the last time we checked.
-     */
-    private boolean _downloading;
-    
     /** Whether or not this result is a secure result. */
     private boolean _secure;
 
@@ -155,7 +149,6 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
     private void initilizeStart(SearchResult sr) {
         RESULT = sr;
         _doc = sr.getXMLDocument();
-        _sha1 = sr.getSHA1Urn();
         if(_doc != null)
             _mediaType = NamedMediaType.getFromDescription(_doc.getSchemaDescription());
         else
@@ -187,13 +180,6 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
      * Adds a new SearchResult to this TableLine.
      */
     void addNewResult(SearchResult sr, MetadataModel mm) {
-
-        URN resultSHA1 = RESULT.getSHA1Urn();
-        URN thisSHA1 = sr.getSHA1Urn();
-        if(resultSHA1 == null)
-            assert thisSHA1 == null;
-        else
-            assert resultSHA1.equals(thisSHA1);
 
         if(_otherResults == null)
             _otherResults = new LinkedList<SearchResult>();
@@ -371,7 +357,7 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
         boolean downloading = RESULT.isDownloading();
 //        if(downloading != _downloading)
 //            updateFileStatus();
-        _downloading = downloading;
+        //_downloading = downloading;
         
         if(_savedFile)
             return QualityRenderer.SAVED_FILE_QUALITY;

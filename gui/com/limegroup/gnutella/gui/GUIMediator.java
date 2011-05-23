@@ -9,6 +9,8 @@ import java.awt.Frame;
 import java.awt.Point;
 import java.awt.PopupMenu;
 import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -1937,4 +1939,14 @@ public final class GUIMediator {
 	    }
 	    return CHAT_MEDIATOR;
 	}
+
+    public static void setClipboardContent(String str) {
+        try {
+            StringSelection data = new StringSelection(str);
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            clipboard.setContents(data, data);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

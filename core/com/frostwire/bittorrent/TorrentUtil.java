@@ -43,8 +43,6 @@
  */
 package com.frostwire.bittorrent;
 
-import java.io.File;
-import java.net.URI;
 import java.util.Arrays;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
@@ -53,6 +51,7 @@ import org.gudy.azureus2.core3.internat.MessageText;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.util.AERunnable;
 import org.gudy.azureus2.core3.util.AsyncDispatcher;
+import org.gudy.azureus2.core3.util.Base32;
 import org.gudy.azureus2.core3.util.Debug;
 import org.gudy.azureus2.plugins.PluginInterface;
 import org.gudy.azureus2.plugins.download.Download;
@@ -68,8 +67,6 @@ import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.ui.UIFunctions;
 import com.aelitis.azureus.ui.UIFunctionsManager;
 import com.aelitis.azureus.ui.selectedcontent.SelectedContent;
-import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.settings.SharingSettings;
 
 public class TorrentUtil {
 
@@ -341,5 +338,13 @@ public class TorrentUtil {
         //dm.setStateWaiting();
           dm.initialize();
       }
+    }
+
+    public static String getMagnet(byte[] hash) {
+        return "magnet:?xt=urn:btih:" + Base32.encode(hash);
+    }
+    
+    public static String getMagnet(String hash) {
+        return "magnet:?xt=urn:btih:" + hash;
     }
 }

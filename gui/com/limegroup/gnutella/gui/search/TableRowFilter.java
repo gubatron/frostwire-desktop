@@ -1,11 +1,8 @@
 package com.limegroup.gnutella.gui.search;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.search.QueryHandler;
 import com.limegroup.gnutella.settings.SearchSettings;
 
@@ -153,7 +150,6 @@ public class TableRowFilter extends ResultPanelModel {
      * Notification that the filters have changed.
      */
     void filtersChanged() {
-        rebuild();
         fireTableDataChanged();
     }
 	
@@ -173,53 +169,5 @@ public class TableRowFilter extends ResultPanelModel {
      */
     private boolean allow(TableLine line) {
         return FILTER.allow(line);
-    }
-    
-    /**
-     * Rebuilds the internal map to denote a new filter.
-     */
-	private void rebuild(){
-	    List<TableLine> existing = new ArrayList<TableLine>(_list);
-	    List<TableLine> hidden = new ArrayList<TableLine>(HIDDEN);
-	    simpleClear();
-	    
-	    setUseMetadata(false);
-	    
-	    // For stuff in _list, we can just re-add the DataLines as-is.
-        if(isSorted()) {
-            for(int i = 0; i < existing.size(); i++) {
-	            addSorted(existing.get(i));
-            }
-        } else {
-            for(int i = 0; i < existing.size(); i++) {
-                add(existing.get(i));
-            }
-        }
-	    
-        // Merge the hidden TableLines
-        Map<URN, TableLine> mergeMap = new HashMap<URN, TableLine>();
-        for(int i = 0; i < hidden.size(); i++) {
-            TableLine tl = hidden.get(i);
-            SearchResult sr = tl.getInitializeObject();
-            URN urn = sr.getSHA1Urn();
-            
-            TableLine tableLine = mergeMap.get(urn);
-            if (tableLine == null) {
-                mergeMap.put(urn, tl); // re-use TableLines
-            } else {
-                tableLine.addNewResult(sr, METADATA);
-            }
-        }
-        
-        // And add them
-        if(isSorted()) {
-            for(TableLine line : mergeMap.values())
-                addSorted(line);
-        } else {
-            for(TableLine line : mergeMap.values())
-                add(line);
-        }
-        
-        setUseMetadata(true);
     }
 }

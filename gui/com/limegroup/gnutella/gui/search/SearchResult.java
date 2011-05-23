@@ -8,7 +8,7 @@ import javax.swing.JPopupMenu;
 import org.limewire.collection.ApproximateMatcher;
 
 import com.limegroup.gnutella.GUID;
-import com.limegroup.gnutella.URN;
+import com.limegroup.gnutella.SpeedConstants;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
 
 /**
@@ -26,11 +26,6 @@ public interface SearchResult {
      * Gets the size of this SearchResult.
      */
     long getSize();
-    
-    /**
-     * @return the SHA1 URN for this artifact
-     */
-    URN getSHA1Urn();
     
     /**
      * @return the XML document representing the search result
@@ -183,4 +178,6 @@ public interface SearchResult {
     public boolean canBeMarkedAsJunk();
     	
     public void showTorrentDetails(long delay);
+
+    public String getHash();
 }

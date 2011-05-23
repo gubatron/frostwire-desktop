@@ -41,6 +41,7 @@ import org.limewire.i18n.I18nMarker;
 import org.limewire.io.IpPort;
 import org.limewire.util.OSUtils;
 
+import com.frostwire.bittorrent.TorrentUtil;
 import com.frostwire.gnutella.gui.actions.BuyAction;
 import com.limegroup.gnutella.FileDetails;
 import com.limegroup.gnutella.GUID;
@@ -70,7 +71,6 @@ import com.limegroup.gnutella.gui.tables.TableSettings;
 import com.limegroup.gnutella.gui.themes.SkinMenu;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
-import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 import com.limegroup.gnutella.licenses.License;
 import com.limegroup.gnutella.licenses.VerificationListener;
@@ -141,15 +141,9 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
      */
     ActionListener TORRENT_DETAILS_LISTENER;
     
-//    /**
-//     * The Mark As Spam listener and Blocks the hosts marked as spam
-//     */
-//    ActionListener MARK_AS_SPAM_LISTENER;
-//    
-//    /**
-//     * The Mark As Not Spam listener
-//     */
-//    ActionListener MARK_AS_NOT_SPAM_LISTENER;
+    private ActionListener COPY_MAGNET_ACTION_LISTENER;
+    
+    private ActionListener COPY_HASH_ACTION_LISTENER;
 
     /**
      * The BUY this item listener
@@ -294,7 +288,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
                 return getLine(row).getOddRowColor();
             }
         };
-        ((ResultPanelModel)DATA_MODEL).setTable(TABLE);
         BUTTON_ROW = new SearchButtons(this).getComponent();
         
         // The initialization of the SPAM_BUTTON is a bit
@@ -423,6 +416,30 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
                 SearchMediator.showTorrentDetails(ResultPanel.this, 0);
             }
         };
+        
+        COPY_MAGNET_ACTION_LISTENER = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                TableLine[] lines = getAllSelectedLines();
+                String str = "";
+                for (TableLine line : lines) {
+                    str += TorrentUtil.getMagnet(line.getInitializeObject().getHash());
+                    str += "\n";
+                }
+                GUIMediator.setClipboardContent(str);
+            }
+        };
+        
+        COPY_HASH_ACTION_LISTENER = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                TableLine[] lines = getAllSelectedLines();
+                String str = "";
+                for (TableLine line : lines) {
+                    str += line.getInitializeObject().getHash();
+                    str += "\n";
+                }
+                GUIMediator.setClipboardContent(str);
+            }
+        };
             
         BUY_LISTENER = new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -453,14 +470,15 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
   
 
         JPopupMenu menu = new SkinPopupMenu();
+        
+        PopupUtils.addMenuItem(I18n.tr("Copy Magnet"), COPY_MAGNET_ACTION_LISTENER, menu, !isStopped());
+        PopupUtils.addMenuItem(I18n.tr("Copy Hash"), COPY_HASH_ACTION_LISTENER, menu, !isStopped());
+        
         menu.add(createSearchAgainMenu(lines.length > 0 ? lines[0] : null));
         
         menu.addSeparator();
         
-        //TODO: Fix
         PopupUtils.addMenuItem(SearchMediator.STOP_STRING, TORRENT_DETAILS_LISTENER, menu, !isStopped());
-        PopupUtils.addMenuItem(SearchMediator.KILL_STRING, new CancelListener(), menu, isKillable());
-        
         
         boolean allSpam = true;
         boolean allNot = true;
@@ -1123,21 +1141,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
 
         public void actionPerformed(ActionEvent e) {
             repeatSearch(false);
-        }
-    }
-
-    /**
-     * Cancels the search.
-     */
-    protected final class CancelListener extends AbstractAction {
-        
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = -3020746990796080277L;
-
-		public void actionPerformed(ActionEvent e) {
-            SearchMediator.killSearch();
         }
     }  
     
