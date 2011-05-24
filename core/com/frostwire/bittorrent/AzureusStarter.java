@@ -63,7 +63,7 @@ public final class AzureusStarter {
 			//This does work
 			org.gudy.azureus2.core3.util.SystemProperties.APPLICATION_NAME = "azureus";
 			
-			File azureusUserPath = new File(FrostWireUtils.getRequestedUserSettingsLocation() + File.separator + "azureus" + File.separator);
+			File azureusUserPath = new File(FrostWireUtils.getUserSettingsDir() + File.separator + "azureus" + File.separator);
 			if (!azureusUserPath.exists()) {
 			    azureusUserPath.mkdirs();
 			}

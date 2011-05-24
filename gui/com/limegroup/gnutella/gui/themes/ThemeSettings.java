@@ -52,10 +52,10 @@ public final class ThemeSettings extends LimeProps {
      */
     public static final String EXTENSION = "fwtp";
     
-    public static final File SKINS_FILE = new File(FrostWireUtils.getRequestedUserSettingsLocation(), "skins.dat");
+    public static final File SKINS_FILE = new File(FrostWireUtils.getUserSettingsDir(), "skins.dat");
     
     public static final File THEME_DIR_FILE =
-		new File(CommonUtils.getUserSettingsDir(), "themes");
+		new File(FrostWireUtils.getUserSettingsDir(), "themes");
     
     /**
      * The normal 'LimeWire' theme.
