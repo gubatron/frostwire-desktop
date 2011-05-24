@@ -54,7 +54,7 @@ public final class LocalIPFilter extends AbstractIPFilter {
         this.hostileNetworkFilter = hostileNetworkFilter;
         this.ipLoader = ipLoader;
         
-        File hostiles = new File(FrostWireUtils.getRequestedUserSettingsLocation(), "hostiles.txt");
+        File hostiles = new File(FrostWireUtils.getUserSettingsDir(), "hostiles.txt");
         shouldLoadHostiles = hostiles.exists();
         
         hostileNetworkFilter.refreshHosts();
@@ -66,7 +66,7 @@ public final class LocalIPFilter extends AbstractIPFilter {
     }
     
     public void forceRefreshHosts() {
-        File hostiles = new File(FrostWireUtils.getRequestedUserSettingsLocation(), "hostiles.txt");
+        File hostiles = new File(FrostWireUtils.getUserSettingsDir(), "hostiles.txt");
         shouldLoadHostiles = hostiles.exists();
         refreshHosts(null);
     }
@@ -110,7 +110,7 @@ public final class LocalIPFilter extends AbstractIPFilter {
             
             LOG.debug("loading hostiles");
             System.out.println("Loading hostiles");
-            File hostiles = new File(FrostWireUtils.getRequestedUserSettingsLocation(), "hostiles.txt");
+            File hostiles = new File(FrostWireUtils.getUserSettingsDir(), "hostiles.txt");
             BufferedReader reader = null;
             try {
                 reader = new BufferedReader(new FileReader(hostiles));

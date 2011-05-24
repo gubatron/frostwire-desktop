@@ -269,7 +269,7 @@ public final class FrostWireUtils {
     /**
      * Returns the location where the user settings directory should be placed.
      */
-    public static File getRequestedUserSettingsLocation() {
+    public static File getUserSettingsDir() {
         // LOGIC:
         
         // On all platforms other than Windows or OSX,

@@ -539,6 +539,6 @@ public class CommonUtils {
         if(settingsDirectory != null)
             return settingsDirectory;
         else
-            return FrostWireUtils.getRequestedUserSettingsLocation();//getUserHomeDir();
+            return FrostWireUtils.getUserSettingsDir();
     }
 }

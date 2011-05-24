@@ -44,7 +44,7 @@ public class SharingSettings extends LimeProps {
     	FACTORY.createBooleanSetting("SEED_FINISHED_TORRENTS", true);
     
     public static final File IMAGE_CACHE_DIR = 
-        new File(FrostWireUtils.getRequestedUserSettingsLocation(), "image_cache");
+        new File(FrostWireUtils.getUserSettingsDir(), "image_cache");
     
     /**
      * The directory for saving files.

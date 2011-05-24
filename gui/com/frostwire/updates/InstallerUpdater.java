@@ -295,7 +295,7 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 	}
 
 	private final String getInstallerDatPath()  {
-		return FrostWireUtils.getRequestedUserSettingsLocation().getAbsolutePath()
+		return FrostWireUtils.getUserSettingsDir().getAbsolutePath()
 				+ File.separator + "installer.dat";
 	}
 	

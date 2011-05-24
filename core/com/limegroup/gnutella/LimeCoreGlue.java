@@ -31,7 +31,7 @@ public class LimeCoreGlue {
      * @param userSettingsDir the preferred directory for user settings
      */
     public static void preinstall() throws InstallFailedException {
-        preinstall(FrostWireUtils.getRequestedUserSettingsLocation());
+        preinstall(FrostWireUtils.getUserSettingsDir());
     }
     
     /**
