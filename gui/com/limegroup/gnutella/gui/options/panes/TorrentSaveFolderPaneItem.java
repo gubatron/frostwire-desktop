@@ -4,10 +4,9 @@ import java.io.File;
 import java.io.IOException;
 
 import com.frostwire.components.TorrentSaveFolderComponent;
+import com.frostwire.gui.download.bittorrent.BTDownloadMediator;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 public class TorrentSaveFolderPaneItem extends AbstractPaneItem {
@@ -39,6 +38,10 @@ public class TorrentSaveFolderPaneItem extends AbstractPaneItem {
 		
         SharingSettings.TORRENT_DATA_DIR_SETTING.setValue(new File(COMPONENT.getTorrentSaveFolderPath()));
         SharingSettings.SEED_FINISHED_TORRENTS.setValue(COMPONENT.isSeedingSelected());
+
+        if (!COMPONENT.isSeedingSelected()) {
+    		BTDownloadMediator.instance().stopCompleted();
+        }
 		
 		return restart;
 	}

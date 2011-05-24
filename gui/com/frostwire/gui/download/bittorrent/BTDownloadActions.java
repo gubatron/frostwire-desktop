@@ -8,11 +8,13 @@ import javax.swing.Action;
 
 import com.frostwire.bittorrent.BTDownloader;
 import com.frostwire.bittorrent.TorrentUtil;
+import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.util.GUILauncher;
 import com.limegroup.gnutella.gui.util.GUILauncher.LaunchableProvider;
+import com.limegroup.gnutella.settings.SharingSettings;
 
 final class BTDownloadActions {
 
@@ -131,9 +133,34 @@ final class BTDownloadActions {
         }
 
         public void performAction(ActionEvent e) {
+        	boolean oneIsCompleted = false;
+        	
             BTDownloader[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
+
             for (int i = 0; i < downloaders.length; i++) {
-                downloaders[i].resume();
+                if (downloaders[i].isCompleted()) {
+                	oneIsCompleted = true;
+                	break;
+                }
+            }
+
+            boolean allowedToResume = true;
+            DialogOption answer = null;
+            if (oneIsCompleted && !SharingSettings.SEED_FINISHED_TORRENTS.getValue()) {
+            	String message1 = (downloaders.length > 1) ? "One of the transfers is complete and resuming will cause it to start seeding" : "This transfer is already complete, resuming it will cause it to start seeding";
+            	String message2 = "Do you want to enable torrent seeding?";
+            	answer = GUIMediator.showYesNoMessage(I18n.tr(message1 + "\n\n" + message2),DialogOption.YES);
+            	allowedToResume = answer.equals(DialogOption.YES);
+            	
+            	if (allowedToResume) {
+            		SharingSettings.SEED_FINISHED_TORRENTS.setValue(true);
+            	}
+            }
+            
+            if (allowedToResume) {
+	            for (int i = 0; i < downloaders.length; i++) {
+	                downloaders[i].resume();
+	            }
             }
         }
     }

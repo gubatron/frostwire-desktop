@@ -9,6 +9,7 @@ import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.util.TorrentUtils;
 
+import com.frostwire.gui.download.bittorrent.BTDownloadMediator;
 import com.limegroup.gnutella.SaveLocationException;
 import com.limegroup.gnutella.settings.SharingSettings;
 
@@ -48,6 +49,8 @@ public class BTDownloaderFactory {
     }
 
     public BTDownloader createDownloader(DownloadManager downloadManager) {
+    	final BTDownloader btDownloader = new BTDownloaderImpl(downloadManager);
+    	
         downloadManager.addListener(new DownloadManagerAdapter() {
             @Override
             public void stateChanged(DownloadManager manager, int state) {
@@ -55,6 +58,12 @@ public class BTDownloaderFactory {
                     manager.startDownload();
                 } else if (state == DownloadManager.STATE_WAITING) {
                    // manager.initialize();
+                }
+                
+                if (!SharingSettings.SEED_FINISHED_TORRENTS.getValue()) {
+                	if (manager.getAssumedComplete()) {
+                		btDownloader.pause();
+                	}
                 }
             }
         });
@@ -64,6 +73,6 @@ public class BTDownloaderFactory {
             downloadManager.initialize();
         }
         
-        return new BTDownloaderImpl(downloadManager);
+        return btDownloader;
     }
 }

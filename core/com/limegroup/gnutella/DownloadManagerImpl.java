@@ -51,6 +51,7 @@ import com.limegroup.gnutella.messages.QueryReply;
 import com.limegroup.gnutella.messages.QueryRequest;
 import com.limegroup.gnutella.search.HostData;
 import com.limegroup.gnutella.settings.DownloadSettings;
+import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.UpdateSettings;
 import com.limegroup.gnutella.version.DownloadInformation;
 
@@ -185,14 +186,26 @@ public class DownloadManagerImpl implements DownloadManager {
         //scheduleSnapshots();
     }
     
+    /**
+     * This is where torrents are loaded from the last session.
+     * If seeding is not enaebled, completed torrents won't be started, they'll be stopped.
+     */
     private void loadTorrentDownloads() {
         GlobalManager globalManager = AzureusStarter.getAzureusCore().getGlobalManager();
         List<?> downloadManagers = globalManager.getDownloadManagers();
         for (Object obj : downloadManagers) {
             if (obj instanceof org.gudy.azureus2.core3.download.DownloadManager) {
+
+            	org.gudy.azureus2.core3.download.DownloadManager dlMgr = (org.gudy.azureus2.core3.download.DownloadManager) obj;
+                BTDownloader downloader = new BTDownloaderFactory(globalManager, null).createDownloader(dlMgr);
                 
-                BTDownloader downloader = new BTDownloaderFactory(globalManager, null).createDownloader((org.gudy.azureus2.core3.download.DownloadManager) obj);
-                
+            	if (!SharingSettings.SEED_FINISHED_TORRENTS.getValue()) {
+            		
+            		if (downloader.isCompleted()) {
+            			downloader.pause();
+            		}
+            	}
+
                 addNewDownloader(downloader);
             }
         }

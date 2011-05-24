@@ -365,8 +365,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
      * Handles a double-click event in the table.
      */
     public void handleActionKey() {
-        if (launchAction.isEnabled())
-            launchSelectedDownloads();
+        if (exploreAction.isEnabled())
+            exploreAction.actionPerformed(null);
     }
 
     /**
@@ -538,4 +538,27 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     	if (azureusCore == null) return 0;
     	return azureusCore.getGlobalManager().getStats().getTotalDataBytesSent();
     }
+//
+//	public void removeCompleted() {
+//		int n = DATA_MODEL.getRowCount();
+//		for (int i=n-1; i >= 0; i--) {
+//			BTDownloadDataLine btDownloadDataLine = DATA_MODEL.get(i);
+//			BTDownloader initializeObject = btDownloadDataLine.getInitializeObject();
+//			if (initializeObject.isCompleted()) {
+//				DATA_MODEL.remove(i);
+//			}			
+//		}		
+//	}
+//	
+	public void stopCompleted() {
+		int n = DATA_MODEL.getRowCount();
+		for (int i=n-1; i >= 0; i--) {
+			BTDownloadDataLine btDownloadDataLine = DATA_MODEL.get(i);
+			BTDownloader initializeObject = btDownloadDataLine.getInitializeObject();
+			if (initializeObject.isCompleted()) {
+				initializeObject.pause();
+			}			
+		}		
+	}
+
 }
