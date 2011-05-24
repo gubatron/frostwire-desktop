@@ -32,11 +32,8 @@ import com.google.inject.Provider;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.FileManager;
 import com.limegroup.gnutella.URN;
-import com.limegroup.gnutella.licenses.LicenseType;
 import com.limegroup.gnutella.metadata.MetaDataFactory;
 import com.limegroup.gnutella.metadata.MetaDataReader;
-import com.limegroup.gnutella.metadata.MetaDataWriter;
-import com.limegroup.gnutella.metadata.MetaReader;
 import com.limegroup.gnutella.metadata.audio.AudioMetaData;
 
 /**
@@ -239,7 +236,7 @@ public class LimeXMLReplyCollection {
         // check to see if it's corrupted and if so, fix it.
         if( AudioMetaData.isCorrupted(doc) ) {
             doc = AudioMetaData.fixCorruption(doc, limeXMLDocumentFactory);
-            mediaFileToDisk(fd, file.getPath(), doc);
+            //mediaFileToDisk(fd, file.getPath(), doc);
         }
         
         return doc;
@@ -541,91 +538,6 @@ public class LimeXMLReplyCollection {
             LOG.debug("removed: " + val);
         
         return val != null;
-    }
-    
-    /**
-     * Writes this media file to disk, using the XML in the doc.
-     */
-    public MetaDataState mediaFileToDisk(FileDesc fd, String fileName, LimeXMLDocument doc) {
-        MetaDataState writeState = MetaDataState.UNCHANGED;
-        
-        if(LOG.isDebugEnabled())
-            LOG.debug("writing: " + fileName + " to disk.");
-        
-        // see if you need to change a hash for a file due to a write...
-        // if so, we need to commit the metadata to disk....
-        MetaDataWriter writer = getEditorIfNeeded(fileName, doc);
-        if (writer != null)  {
-            writeState = commitMetaData(fileName, writer);
-        }
-        assert writeState != MetaDataState.INCORRECT_FILETYPE : "trying to write data to unwritable file";
-
-        return writeState;
-    }
-
-    /**
-     * Determines whether or not this LimeXMLDocument can or should be
-     * commited to disk to replace the ID3 tags in the audioFile.
-     * If the ID3 tags in the file are the same as those in document,
-     * this returns null (indicating no changes required).
-     * @return An Editor to use when committing or null if nothing 
-     *  should be editted.
-     */
-    private MetaDataWriter getEditorIfNeeded(String fileName, LimeXMLDocument doc) {
-        // check if an editor exists for this file, if no editor exists
-        //  just store data in xml repository only
-        if( !LimeXMLUtils.isSupportedEditableFormat(fileName)) 
-        	return null;
-        
-        //get the editor for this file and populate it with the XML doc info
-        MetaDataWriter newValues = new MetaDataWriter(fileName, metaDataFactory);
-        newValues.populate(doc);
-        
-        
-        // try reading the file off of disk
-        MetaReader existing = null;
-        try {
-            existing = metaDataFactory.parse(new File(fileName));
-        } catch (IOException e) {
-            return null;
-        }
-        
-        //We are supposed to pick and chose the better set of tags
-        if(!newValues.needsToUpdate(existing.getMetaData())) {
-            LOG.debug("tag read from disk is same as XML doc.");
-            return null;
-        }
-            
-        // Commit using this Meta data editor ... 
-        return newValues;
-    }
-
-
-    /**
-     * Commits the changes to disk.
-     * If anything was changed on disk, notifies the FileManager of a change.
-     */
-    private MetaDataState commitMetaData(String fileName, MetaDataWriter editor) {
-        //write to mp3 file...
-        MetaDataState retVal = editor.commitMetaData();
-        if(LOG.isDebugEnabled())
-            LOG.debug("wrote data: " + retVal);
-        // any error where the file wasn't changed ... 
-        if( retVal == MetaDataState.FILE_DEFECTIVE ||
-            retVal == MetaDataState.RW_ERROR ||
-            retVal == MetaDataState.BAD_ID3 ||
-            retVal == MetaDataState.INCORRECT_FILETYPE)
-            return retVal;
-            
-        // We do not remove the hash from the hashMap because
-        // MetaFileManager needs to look it up to get the doc.
-        
-        //Since the hash of the file has changed, the metadata pertaining 
-        //to other schemas will be lost unless we update those tables
-        //with the new hashValue. 
-        //NOTE:This is the only time the hash will change-(mp3 and audio)
-        fileManager.get().fileChanged(new File(fileName));
-        return retVal;
     }
     
     /** Serializes the current map to disk. */

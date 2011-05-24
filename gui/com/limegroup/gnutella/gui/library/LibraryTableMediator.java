@@ -1,7 +1,6 @@
 package com.limegroup.gnutella.gui.library;
 
 import java.awt.Component;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.ArrayList;
@@ -70,9 +69,6 @@ import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.util.CoreExceptionHandler;
 import com.limegroup.gnutella.gui.util.GUILauncher;
 import com.limegroup.gnutella.gui.util.GUILauncher.LaunchableProvider;
-import com.limegroup.gnutella.gui.xml.editor.CCPublishWizard;
-import com.limegroup.gnutella.gui.xml.editor.MetaEditor;
-import com.limegroup.gnutella.gui.xml.editor.XmlTypeEditor;
 import com.limegroup.gnutella.library.SharingUtils;
 import com.limegroup.gnutella.licenses.License;
 import com.limegroup.gnutella.licenses.VerificationListener;
@@ -81,9 +77,6 @@ import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.util.EncodingUtils;
 import com.limegroup.gnutella.util.QueryUtils;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
-import com.limegroup.gnutella.xml.LimeXMLNames;
-import com.limegroup.gnutella.xml.LimeXMLSchema;
-import com.limegroup.gnutella.xml.LimeXMLSchemaRepository;
 
 /**
  * This class wraps the JTable that displays files in the library,
@@ -541,62 +534,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
         return true;
     }
 
-    /**
-     * shows the user a meta-data for the file(if any) and allow the user
-     * to edit it.
-     * 
-     * @param publish true to edit the license MetaData, false otherwise
-     */
-    void editMeta(boolean publish){        
-        int[] rows = TABLE.getSelectedRows();
-        List<FileDesc> fileDescs = new ArrayList<FileDesc>(rows.length);
-        for(int i = 0; i < rows.length; i++) {
-            FileDesc fd = DATA_MODEL.getFileDesc(rows[i]);
-            if (fd != null) {
-                fileDescs.add(fd);
-            }
-        }
-        
-        if (fileDescs.isEmpty()) {
-            return;
-        }
-
-        FileDesc[] fds = fileDescs.toArray(new FileDesc[0]);
-        String name = fds[0].getFile().getName();
-        
-        Frame mainFrame = GUIMediator.getAppFrame();
-        if (isSupportedFormat(fds)) {
-            try {
-            	if (publish) {
-                    FileDesc fd = fds[0];               
-                    LimeXMLDocument doc = fd.getXMLDocument(LimeXMLNames.AUDIO_SCHEMA);
-                    LimeXMLSchemaRepository rep = GuiCoreMediator.getLimeXMLSchemaRepository();
-                    LimeXMLSchema schema = rep.getSchema(LimeXMLNames.AUDIO_SCHEMA);
-                    if(schema == null)
-                        throw new IllegalStateException("no audio schema!");
-                    
-            		CCPublishWizard wizard = new CCPublishWizard(fd, doc, schema);
-            		wizard.showDialog(mainFrame);
-            	} else {
-            		MetaEditor metaEditor = new MetaEditor(mainFrame, fds, name);
-            		metaEditor.setLocationRelativeTo(mainFrame);
-            		metaEditor.setVisible(true);
-            	}
-            	
-            	return;
-            } catch(IllegalStateException failed) {
-                if(publish) {
-                    GUIMediator.showError(I18n.tr("FrostWire cannot publish this file because it was unable to find a schema for audio files."));
-                    return;
-                }   
-            }
-        } else { // have the user choose a xml type for the file
-        	XmlTypeEditor metaEditor = new XmlTypeEditor(mainFrame, fds, name);
-        	metaEditor.setLocationRelativeTo(mainFrame);
-            metaEditor.setVisible(true);
-        }
-    }
-    
     /**
      * Programatically starts a rename of the selected item.
      */
