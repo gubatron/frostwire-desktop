@@ -38,6 +38,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import com.limegroup.gnutella.gui.GUIMediator;
+
 /**
  * MDILayout.
  */
@@ -241,21 +243,27 @@ public class PixxMDIInterface extends IRCInterface implements PixxTaskBarListene
     _awtDefaultSource=null;
   }
 
-  private void channelCreated(Channel chan,Boolean bring)
-  {
-    AWTChannel awt=new AWTChannel(_pixxConfiguration,chan);
-    awt.addBaseAWTSourceListener(this);
-    _task.addChannel(awt,bring.booleanValue());
-    _channels.put(chan,awt);
-  }
+    private void channelCreated(final Channel chan, final Boolean bring) {
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                AWTChannel awt = new AWTChannel(_pixxConfiguration, chan);
+                awt.addBaseAWTSourceListener(PixxMDIInterface.this);
+                _task.addChannel(awt, bring.booleanValue());
+                _channels.put(chan, awt);
+            }
+        });
+    }
 
-  private void channelRemoved(Channel chan)
-  {
-    AWTChannel s=(AWTChannel)_channels.get(chan);
-    s.removeBaseAWTSourceListener(this);
-    _task.removeChannel(s);
-    _channels.remove(chan);
-  }
+    private void channelRemoved(final Channel chan) {
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                AWTChannel s = (AWTChannel) _channels.get(chan);
+                s.removeBaseAWTSourceListener(PixxMDIInterface.this);
+                _task.removeChannel(s);
+                _channels.remove(chan);
+            }
+        });
+    }
 
   private void queryCreated(Query query,Boolean bring)
   {
