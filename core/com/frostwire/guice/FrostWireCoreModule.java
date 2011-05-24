@@ -13,8 +13,6 @@ import org.limewire.net.LimeWireNetModule;
 
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
-import com.limegroup.gnutella.http.DefaultHttpExecutor;
-import com.limegroup.gnutella.http.HttpExecutor;
 import com.limegroup.gnutella.settings.ConnectionSettings;
 import com.limegroup.gnutella.settings.SSLSettings;
 import com.limegroup.gnutella.settings.SettingsBackedProxySettings;
@@ -31,7 +29,6 @@ public class FrostWireCoreModule extends AbstractModule {
     	binder().install(new LimeWireNetModule(SettingsBackedProxySettings.class, SettingsBackedSocketBindingSettings.class));
         binder().install(new LimeWireIOModule());
         
-        bind(HttpExecutor.class).to(DefaultHttpExecutor.class);
         bind(LocalSocketAddressProvider.class).to(MyLocalSocketAddressProviderImpl.class);
         
         bindAll(Names.named("backgroundExecutor"), ScheduledExecutorService.class, BackgroundTimerProvider.class, ExecutorService.class, Executor.class);

@@ -28,15 +28,9 @@ import com.aelitis.azureus.core.AzureusCoreComponent;
 import com.aelitis.azureus.core.AzureusCoreException;
 import com.aelitis.azureus.core.AzureusCoreLifecycleListener;
 import com.frostwire.bittorrent.AzureusStarter;
-import com.frostwire.guice.FrostWireCoreModule;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.limegroup.gnutella.http.HttpExecutor;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 public class CoreFrostWireUtils {
-	
-	private static Injector INJECTOR;
 	
     public final static String getMD5(File f) throws Exception{
         MessageDigest m=MessageDigest.getInstance("MD5");
@@ -329,19 +323,6 @@ public class CoreFrostWireUtils {
 			System.out.println("FrostWireUtils.waitForAzureusCoreToStart() - Azureus core has started, let's do this.");
 		}
 		
-	}
-	
-	
-	public static Injector getInjector() {
-		if (INJECTOR == null) {
-			INJECTOR = Guice.createInjector(new FrostWireCoreModule());
-		}
-		
-		return INJECTOR;
-	}
-
-	public static HttpExecutor getHTTPExecutor() {
-		return getInjector().getInstance(HttpExecutor.class);
 	}
 	
 	/** 

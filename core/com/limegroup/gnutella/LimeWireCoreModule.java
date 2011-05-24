@@ -58,8 +58,6 @@ import com.limegroup.gnutella.handshaking.HandshakeServices;
 import com.limegroup.gnutella.handshaking.HandshakeServicesImpl;
 import com.limegroup.gnutella.handshaking.HeadersFactory;
 import com.limegroup.gnutella.handshaking.HeadersFactoryImpl;
-import com.limegroup.gnutella.http.DefaultHttpExecutor;
-import com.limegroup.gnutella.http.HttpExecutor;
 import com.limegroup.gnutella.licenses.LicenseFactory;
 import com.limegroup.gnutella.licenses.LicenseFactoryImpl;
 import com.limegroup.gnutella.messagehandlers.MessageHandlerBinderImpl;
@@ -165,7 +163,6 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(HostDataFactory.class).to(HostDataFactoryImpl.class);
         bind(AlternateLocationFactory.class).to(AlternateLocationFactoryImpl.class);
         bind(LocalFileDetailsFactory.class).to(LocalFileDetailsFactoryImpl.class);
-        bind(HttpExecutor.class).to(DefaultHttpExecutor.class);
         bind(FileManagerController.class).to(FileManagerControllerImpl.class);
         bind(ResponseFactory.class).to(ResponseFactoryImpl.class);
         bind(QueryReplyFactory.class).to(QueryReplyFactoryImpl.class);

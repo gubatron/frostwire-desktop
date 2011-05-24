@@ -5,10 +5,8 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -20,25 +18,17 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpHead;
 import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.DefaultedHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
 import org.limewire.collection.IntWrapper;
 import org.limewire.concurrent.ExecutorsHelper;
-import org.limewire.io.Connectable;
 import org.limewire.io.IOUtils;
 import org.limewire.io.IpPort;
 import org.limewire.io.NetworkUtils;
 import org.limewire.net.ConnectionAcceptor;
-import org.limewire.nio.AbstractNBSocket;
 import org.limewire.nio.channel.AbstractChannelInterestReader;
 import org.limewire.nio.channel.NIOMultiplexor;
 import org.limewire.nio.observer.ConnectObserver;
 import org.limewire.nio.observer.Shutdownable;
-import org.limewire.util.Base32;
 import org.limewire.util.BufferUtils;
 
 import com.google.inject.Inject;
@@ -53,7 +43,6 @@ import com.limegroup.gnutella.SocketProcessor;
 import com.limegroup.gnutella.UDPService;
 import com.limegroup.gnutella.filters.IPFilter;
 import com.limegroup.gnutella.http.HttpClientListener;
-import com.limegroup.gnutella.http.HttpExecutor;
 import com.limegroup.gnutella.messages.Message.Network;
 import com.limegroup.gnutella.messages.PushRequest;
 import com.limegroup.gnutella.messages.PushRequestImpl;
@@ -95,7 +84,6 @@ public class PushDownloadManager implements ConnectionAcceptor, PushedSocketHand
      * the request), whereas this is used to read and ensure it was a GIV.
      */
     private final Provider<SocketProcessor> socketProcessor;
-    private final Provider<HttpExecutor> httpExecutor;
     private final ScheduledExecutorService backgroundExecutor;    
     private final NetworkManager networkManager;
     private final Provider<MessageRouter> messageRouter;    
@@ -106,15 +94,13 @@ public class PushDownloadManager implements ConnectionAcceptor, PushedSocketHand
     @Inject
     public PushDownloadManager(
             Provider<MessageRouter> router,
-            Provider<HttpExecutor> executor,
             @Named("backgroundExecutor") ScheduledExecutorService scheduler,
             Provider<SocketProcessor> processor,
     		NetworkManager networkManager,
     		Provider<IPFilter> ipFilter,
     		Provider<UDPService> udpService) {
     	this.messageRouter = router;
-    	this.httpExecutor = executor;
-        this.backgroundExecutor = scheduler;
+    	this.backgroundExecutor = scheduler;
     	this.socketProcessor = processor;
     	this.networkManager = networkManager;
         this.ipFilter = ipFilter;
@@ -432,7 +418,7 @@ public class PushDownloadManager implements ConnectionAcceptor, PushedSocketHand
     	
     	public boolean requestFailed(HttpUriRequest request, HttpResponse response, IOException exc) {
     		LOG.warn("PushProxy request exception", exc);
-    		httpExecutor.get().releaseResources(response);
+    		//httpExecutor.get().releaseResources(response);
     		methods.remove(request);
     		if (methods.isEmpty()) // all failed
                 sendPushThroughNetwork(data);
@@ -442,7 +428,7 @@ public class PushDownloadManager implements ConnectionAcceptor, PushedSocketHand
     	public boolean requestComplete(HttpUriRequest request, HttpResponse response) {
     		methods.remove(request);
     		int statusCode = response.getStatusLine().getStatusCode();
-    		httpExecutor.get().releaseResources(response);
+    		//httpExecutor.get().releaseResources(response);
     		if (statusCode == 202) {
     			if(LOG.isInfoEnabled())
     				LOG.info("Succesful push proxy: " + request);

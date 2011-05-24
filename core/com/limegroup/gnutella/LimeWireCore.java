@@ -35,7 +35,6 @@ import com.limegroup.gnutella.guess.OnDemandUnicaster;
 import com.limegroup.gnutella.handshaking.HandshakeResponderFactory;
 import com.limegroup.gnutella.handshaking.HeadersFactory;
 import com.limegroup.gnutella.http.FeaturesWriter;
-import com.limegroup.gnutella.http.HttpExecutor;
 import com.limegroup.gnutella.licenses.LicenseCache;
 import com.limegroup.gnutella.licenses.LicenseFactory;
 import com.limegroup.gnutella.licenses.LicenseVerifier;
@@ -240,10 +239,6 @@ public class LimeWireCore {
 
     public BandwidthManager getBandwidthManager() {
         return injector.getInstance(BandwidthManager.class);
-    }
-
-    public HttpExecutor getHttpExecutor() {
-        return injector.getInstance(HttpExecutor.class);
     }
 
     public QueryStats getQueryStats() {

@@ -33,7 +33,6 @@ import com.limegroup.gnutella.connection.ConnectionCheckerManager;
 import com.limegroup.gnutella.downloader.DiskController;
 import com.limegroup.gnutella.downloader.RemoteFileDescFactory;
 import com.limegroup.gnutella.filters.IPFilter;
-import com.limegroup.gnutella.http.HttpExecutor;
 import com.limegroup.gnutella.licenses.LicenseVerifier;
 import com.limegroup.gnutella.messages.QueryRequestFactory;
 import com.limegroup.gnutella.metadata.MetaDataFactory;
@@ -68,7 +67,6 @@ public class GuiCoreMediator {
     public static AltLocManager getAltLocManager() {  return core.getAltLocManager(); }
     public static IPFilter getIpFilter() {  return core.getIpFilter(); }
     public static BandwidthManager getBandwidthManager() {  return core.getBandwidthManager(); }
-    public static HttpExecutor getHttpExecutor() {  return core.getHttpExecutor(); }
     public static SavedFileManager getSavedFileManager() { return core.getSavedFileManager(); }
     public static UPnPManager getUPnPManager() { return core.getUPnPManager(); }
     public static LimeXMLSchemaRepository getLimeXMLSchemaRepository() { return core.getLimeXMLSchemaRepository(); }
