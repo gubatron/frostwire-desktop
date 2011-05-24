@@ -186,23 +186,12 @@ public class TipOfTheDayMessages {
     }
 
     /**
-     * Returns general tips that are shown for Pro.
+     * Returns general tips that are shown for FrostWire.
      */
-    public static String[] getProMessages() {
+    public static String[] getFrostWireMessages() {
         return new String[] {
                 I18n.tr("Thank you for using FrostWire"),
                 I18n.tr("Visit us at www.frostwire.com"),
         };
     }
-    
-    /**
-     * Returns general tips that are shown for Basic.
-     */
-    public static String[] getBasicMessages() {
-        return new String[] {
-                I18n.tr("Thank you for using FrostWire"),
-                I18n.tr("Visit us at www.frostwire.com"),                                                
-        };
-    }
-
 }

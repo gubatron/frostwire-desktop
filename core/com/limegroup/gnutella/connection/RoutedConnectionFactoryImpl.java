@@ -28,7 +28,6 @@ import com.limegroup.gnutella.messages.vendor.CapabilitiesVMFactory;
 import com.limegroup.gnutella.messages.vendor.MessagesSupportedVendorMessage;
 import com.limegroup.gnutella.search.SearchResultHandler;
 import com.limegroup.gnutella.statistics.OutOfBandStatistics;
-import com.limegroup.gnutella.version.UpdateHandler;
 
 /**
  * An implementation of {@link RoutedConnectionFactory} that constructs {@link GnutellaConnection GnutellaConnections}.
@@ -62,8 +61,6 @@ public class RoutedConnectionFactoryImpl implements RoutedConnectionFactory {
 
     private final MessagesSupportedVendorMessage supportedVendorMessage;
 
-    private final Provider<UpdateHandler> updateHandler;
-
     private final Provider<ConnectionServices> connectionServices;
 
     private final GuidMapManager guidMapManager;
@@ -91,7 +88,6 @@ public class RoutedConnectionFactoryImpl implements RoutedConnectionFactory {
             Provider<SearchResultHandler> searchResultHandler,
             CapabilitiesVMFactory capabilitiesVMFactory, Provider<SocketsManager> socketsManager,
             Provider<Acceptor> acceptor, MessagesSupportedVendorMessage supportedVendorMessage, 
-            Provider<UpdateHandler> updateHandler,
             Provider<ConnectionServices> connectionServices, GuidMapManager guidMapManager,
             SpamFilterFactory spamFilterFactory, MessageFactory messageFactory,
             MessageReaderFactory messageReaderFactory, ApplicationServices applicationServices,
@@ -111,7 +107,6 @@ public class RoutedConnectionFactoryImpl implements RoutedConnectionFactory {
         this.socketsManager = socketsManager;
         this.acceptor = acceptor;
         this.supportedVendorMessage = supportedVendorMessage;
-        this.updateHandler = updateHandler;
         this.connectionServices = connectionServices;
         this.guidMapManager = guidMapManager;
         this.spamFilterFactory = spamFilterFactory;
@@ -131,7 +126,7 @@ public class RoutedConnectionFactoryImpl implements RoutedConnectionFactory {
                 queryRequestFactory, headersFactory, handshakeResponderFactory, queryReplyFactory,
                 messageDispatcher.get(), networkUpdateSanityChecker.get(), searchResultHandler
                         .get(), capabilitiesVMFactory, socketsManager.get(), acceptor.get(),
-                supportedVendorMessage, updateHandler, connectionServices,
+                supportedVendorMessage, connectionServices,
                 guidMapManager, spamFilterFactory, messageReaderFactory, messageFactory,
                 applicationServices, secureMessageVerifier.get(), outOfBandStatistics, networkInstanceUtils);
     }
@@ -141,7 +136,7 @@ public class RoutedConnectionFactoryImpl implements RoutedConnectionFactory {
                 queryRequestFactory, headersFactory, handshakeResponderFactory, queryReplyFactory,
                 messageDispatcher.get(), networkUpdateSanityChecker.get(), searchResultHandler
                         .get(), capabilitiesVMFactory, acceptor.get(), supportedVendorMessage,
-                updateHandler, connectionServices, guidMapManager, spamFilterFactory,
+                connectionServices, guidMapManager, spamFilterFactory,
                 messageReaderFactory, messageFactory, applicationServices, secureMessageVerifier
                         .get(), outOfBandStatistics, networkInstanceUtils);
     }

@@ -116,8 +116,6 @@ import com.limegroup.gnutella.util.FECUtils;
 import com.limegroup.gnutella.util.FECUtilsImpl;
 import com.limegroup.gnutella.version.UpdateCollectionFactory;
 import com.limegroup.gnutella.version.UpdateCollectionFactoryImpl;
-import com.limegroup.gnutella.version.UpdateHandler;
-import com.limegroup.gnutella.version.UpdateHandlerImpl;
 import com.limegroup.gnutella.version.UpdateMessageVerifier;
 import com.limegroup.gnutella.version.UpdateMessageVerifierImpl;
 import com.limegroup.gnutella.xml.LimeXMLDocumentFactory;
@@ -246,7 +244,6 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(MessageHandlerBinder.class).to(MessageHandlerBinderImpl.class);
         bind(QueryDispatcher.class).to(QueryDispatcherImpl.class);
         bind(Acceptor.class).to(AcceptorImpl.class);        
-        bind(UpdateHandler.class).to(UpdateHandlerImpl.class);
         bind(SecurityToken.TokenProvider.class).to(SecurityToken.AddressSecurityTokenProvider.class);
         bind(UpdateMessageVerifier.class).to(UpdateMessageVerifierImpl.class);
         bind(InspectionResponseFactory.class).to(InspectionResponseFactoryImpl.class);

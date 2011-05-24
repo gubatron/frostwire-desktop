@@ -232,11 +232,7 @@ public final class TipOfTheDayMediator implements ThemeObserver {
             messages.addAll(Arrays.asList(TipOfTheDayMessages.getNonMacOSXMessages()));
         }
 
-        if (FrostWireUtils.isPro()) {
-            messages.addAll(Arrays.asList(TipOfTheDayMessages.getProMessages()));
-        } else {
-            messages.addAll(Arrays.asList(TipOfTheDayMessages.getBasicMessages()));
-        }
+        messages.addAll(Arrays.asList(TipOfTheDayMessages.getFrostWireMessages()));
 
         // randomize the list.
         Collections.shuffle(messages);

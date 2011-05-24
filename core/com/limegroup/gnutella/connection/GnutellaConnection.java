@@ -49,7 +49,6 @@ import com.limegroup.gnutella.MessageDispatcher;
 import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.NetworkUpdateSanityChecker;
 import com.limegroup.gnutella.ReplyHandler;
-import com.limegroup.gnutella.NetworkUpdateSanityChecker.RequestType;
 import com.limegroup.gnutella.connection.ConnectionLifecycleEvent.EventType;
 import com.limegroup.gnutella.filters.SpamFilter;
 import com.limegroup.gnutella.filters.SpamFilterFactory;
@@ -65,6 +64,8 @@ import com.limegroup.gnutella.handshaking.HeadersFactory;
 import com.limegroup.gnutella.handshaking.NoGnutellaOkException;
 import com.limegroup.gnutella.messages.BadPacketException;
 import com.limegroup.gnutella.messages.Message;
+import com.limegroup.gnutella.messages.Message.MessageCounter;
+import com.limegroup.gnutella.messages.Message.Network;
 import com.limegroup.gnutella.messages.MessageFactory;
 import com.limegroup.gnutella.messages.PingReply;
 import com.limegroup.gnutella.messages.PushRequest;
@@ -72,8 +73,6 @@ import com.limegroup.gnutella.messages.QueryReply;
 import com.limegroup.gnutella.messages.QueryReplyFactory;
 import com.limegroup.gnutella.messages.QueryRequest;
 import com.limegroup.gnutella.messages.QueryRequestFactory;
-import com.limegroup.gnutella.messages.Message.MessageCounter;
-import com.limegroup.gnutella.messages.Message.Network;
 import com.limegroup.gnutella.messages.vendor.CapabilitiesVM;
 import com.limegroup.gnutella.messages.vendor.CapabilitiesVMFactory;
 import com.limegroup.gnutella.messages.vendor.HopsFlowVendorMessage;
@@ -85,7 +84,6 @@ import com.limegroup.gnutella.messages.vendor.QueryStatusResponse;
 import com.limegroup.gnutella.messages.vendor.ReplyNumberVendorMessage;
 import com.limegroup.gnutella.messages.vendor.TCPConnectBackVendorMessage;
 import com.limegroup.gnutella.messages.vendor.UDPConnectBackVendorMessage;
-import com.limegroup.gnutella.messages.vendor.UpdateRequest;
 import com.limegroup.gnutella.messages.vendor.VendorMessage;
 import com.limegroup.gnutella.routing.PatchTableMessage;
 import com.limegroup.gnutella.routing.QueryRouteTable;
@@ -97,7 +95,6 @@ import com.limegroup.gnutella.settings.SearchSettings;
 import com.limegroup.gnutella.statistics.OutOfBandStatistics;
 import com.limegroup.gnutella.util.DataUtils;
 import com.limegroup.gnutella.util.FrostWireUtils;
-import com.limegroup.gnutella.version.UpdateHandler;
 
 /**
  * A Connection managed by a ConnectionManager.
@@ -296,10 +293,6 @@ public class GnutellaConnection extends AbstractConnection implements ReplyHandl
 
     private final SearchResultHandler searchResultHandler;
 
-    //private final Provider<SimppManager> simppManager;
-
-    private final Provider<UpdateHandler> updateHandler;
-
     private final Provider<ConnectionServices> connectionServices;
 
     private final GuidMapManager guidMapManager;
@@ -343,8 +336,6 @@ public class GnutellaConnection extends AbstractConnection implements ReplyHandl
             SearchResultHandler searchResultHandler, CapabilitiesVMFactory capabilitiesVMFactory,
             SocketsManager socketsManager, Acceptor acceptor,
             MessagesSupportedVendorMessage supportedVendorMessage,
-            //Provider<SimppManager> simppManager, 
-            Provider<UpdateHandler> updateHandler,
             Provider<ConnectionServices> connectionServices, GuidMapManager guidMapManager,
             SpamFilterFactory spamFilterFactory, MessageReaderFactory messageReaderFactory,
             MessageFactory messageFactory, ApplicationServices applicationServices,
@@ -361,8 +352,6 @@ public class GnutellaConnection extends AbstractConnection implements ReplyHandl
         this.messageDispatcher = messageDispatcher;
         this.networkUpdateSanityChecker = networkUpdateSanityChecker;
         this.searchResultHandler = searchResultHandler;
-        //this.simppManager = simppManager;
-        this.updateHandler = updateHandler;
         this.connectionServices = connectionServices;
         this.guidMapManager = guidMapManager;
         this.messageReaderFactory = messageReaderFactory;
@@ -392,8 +381,6 @@ public class GnutellaConnection extends AbstractConnection implements ReplyHandl
             NetworkUpdateSanityChecker networkUpdateSanityChecker,
             SearchResultHandler searchResultHandler, CapabilitiesVMFactory capabilitiesVMFactory,
             Acceptor acceptor, MessagesSupportedVendorMessage supportedVendorMessage,
-            //Provider<SimppManager> simppManager, 
-            Provider<UpdateHandler> updateHandler,
             Provider<ConnectionServices> connectionServices, GuidMapManager guidMapManager,
             SpamFilterFactory spamFilterFactory, MessageReaderFactory messageReaderFactory,
             MessageFactory messageFactory, ApplicationServices applicationServices,
@@ -410,8 +397,6 @@ public class GnutellaConnection extends AbstractConnection implements ReplyHandl
         this.messageDispatcher = messageDispatcher;
         this.networkUpdateSanityChecker = networkUpdateSanityChecker;
         this.searchResultHandler = searchResultHandler;
-        //this.simppManager = simppManager;
-        this.updateHandler = updateHandler;
         this.connectionServices = connectionServices;
         this.guidMapManager = guidMapManager;
         this.messageReaderFactory = messageReaderFactory;
@@ -1111,15 +1096,15 @@ public class GnutellaConnection extends AbstractConnection implements ReplyHandl
             // we need to see if there is a new simpp version out there.
             CapabilitiesVM capVM = (CapabilitiesVM) vm;
 
-            // see if there's a new update message.
-            int latestId = updateHandler.get().getLatestId();
-            int currentId = capVM.supportsUpdate();
-            if (currentId != -1 && (!receivedCapVM || currentId > latestId)) {
-                networkUpdateSanityChecker.handleNewRequest(this, RequestType.VERSION);
-                send(new UpdateRequest());
-            } else if (currentId == latestId) {
-                updateHandler.get().handleUpdateAvailable(this, currentId);
-            }
+//            // see if there's a new update message.
+//            int latestId = updateHandler.get().getLatestId();
+//            int currentId = capVM.supportsUpdate();
+//            if (currentId != -1 && (!receivedCapVM || currentId > latestId)) {
+//                networkUpdateSanityChecker.handleNewRequest(this, RequestType.VERSION);
+//                send(new UpdateRequest());
+//            } else if (currentId == latestId) {
+//                updateHandler.get().handleUpdateAvailable(this, currentId);
+//            }
 
             receivedCapVM = true;
             // fire a vendor event

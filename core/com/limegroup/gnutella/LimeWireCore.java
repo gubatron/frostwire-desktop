@@ -70,7 +70,6 @@ import com.limegroup.gnutella.uploader.HTTPHeaderUtils;
 import com.limegroup.gnutella.uploader.HttpRequestHandlerFactory;
 import com.limegroup.gnutella.uploader.UploadSlotManager;
 import com.limegroup.gnutella.version.UpdateCollectionFactory;
-import com.limegroup.gnutella.version.UpdateHandler;
 import com.limegroup.gnutella.xml.LimeXMLDocumentFactory;
 import com.limegroup.gnutella.xml.LimeXMLDocumentHelper;
 import com.limegroup.gnutella.xml.LimeXMLProperties;
@@ -366,10 +365,6 @@ public class LimeWireCore {
 
     public SpamManager getSpamManager() {
         return injector.getInstance(SpamManager.class);
-    }
-
-    public UpdateHandler getUpdateHandler() {
-        return injector.getInstance(UpdateHandler.class);
     }
 
     public LimeXMLProperties getLimeXMLProperties() {

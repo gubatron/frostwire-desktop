@@ -109,7 +109,6 @@ import com.limegroup.gnutella.settings.FilterSettings;
 import com.limegroup.gnutella.settings.MessageSettings;
 import com.limegroup.gnutella.settings.SearchSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
-import com.limegroup.gnutella.version.UpdateHandler;
 
 
 /**
@@ -329,8 +328,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
     protected final ConnectionServices connectionServices;
     protected final ScheduledExecutorService backgroundExecutor;
     protected final Provider<PongCacher> pongCacher;
-    //protected final Provider<SimppManager> simppManager;
-    protected final Provider<UpdateHandler> updateHandler;
     protected final UDPReplyHandlerCache udpReplyHandlerCache;
     protected final GuidMap multicastGuidMap;
     private final Provider<InspectionRequestHandler> inspectionRequestHandlerFactory;
@@ -378,8 +375,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
             ApplicationServices applicationServices,
             @Named("backgroundExecutor") ScheduledExecutorService backgroundExecutor,
             Provider<PongCacher> pongCacher,
-            //Provider<SimppManager> simppManager,
-            Provider<UpdateHandler> updateHandler,
             GuidMapManager guidMapManager,	
             UDPReplyHandlerCache udpReplyHandlerCache,
             Provider<InspectionRequestHandler> inspectionRequestHandlerFactory,
@@ -413,8 +408,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
         this.connectionServices = connectionServices;
         this.backgroundExecutor = backgroundExecutor;
         this.pongCacher = pongCacher;
-        //this.simppManager = simppManager;
-        this.updateHandler = updateHandler;
         this.udpCrawlerPingHandlerFactory = udpCrawlerPingHandlerFactory;
         this.pingRequestFactory = pingRequestFactory;
         this.messageHandlerBinder = messageHandlerBinder;
@@ -2120,11 +2113,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
      */
     private void handleUpdateRequest(UpdateRequest req, ReplyHandler handler ) {
 
-        byte[] data = updateHandler.get().getLatestBytes();
-        if(data != null) {
-            UpdateResponse msg = UpdateResponse.createUpdateResponse(data,req);
-            handler.reply(msg);
-        }
+        
     }
     
     /** Handles a ContentResponse msg -- passing it to the ContentManager. */
@@ -2136,7 +2125,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
      * Passes the request onto the update manager.
      */
     private void handleUpdateResponse(UpdateResponse resp, ReplyHandler handler) {
-        updateHandler.get().handleNewData(resp.getUpdate(), handler);
+        
     }
 
     /**

@@ -54,7 +54,6 @@ import com.limegroup.gnutella.settings.ChatSettings;
 import com.limegroup.gnutella.settings.ConnectionSettings;
 import com.limegroup.gnutella.settings.MessageSettings;
 import com.limegroup.gnutella.util.DataUtils;
-import com.limegroup.gnutella.version.UpdateHandler;
 import com.limegroup.gnutella.xml.LimeXMLDocumentHelper;
 import com.limegroup.gnutella.xml.LimeXMLUtils;
 
@@ -92,7 +91,6 @@ public class StandardMessageRouter extends MessageRouterImpl {
             @Named("backgroundExecutor")
             ScheduledExecutorService backgroundExecutor,
             Provider<PongCacher> pongCacher,
-            Provider<UpdateHandler> updateHandler,
             GuidMapManager guidMapManager, 
             UDPReplyHandlerCache udpReplyHandlerCache,
             Provider<InspectionRequestHandler> inspectionRequestHandlerFactory,
@@ -111,8 +109,6 @@ public class StandardMessageRouter extends MessageRouterImpl {
                 messageDispatcher, multicastService, queryDispatcher,
                 activityCallback, connectionServices, applicationServices,
                 backgroundExecutor, pongCacher,
-                //simppManager, 
-                updateHandler,
                 guidMapManager, udpReplyHandlerCache, inspectionRequestHandlerFactory, 
                 udpCrawlerPingHandlerFactory, 
                 pingRequestFactory, messageHandlerBinder, oobHandlerFactory, 

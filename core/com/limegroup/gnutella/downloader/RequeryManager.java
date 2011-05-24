@@ -110,11 +110,12 @@ class RequeryManager  {
     
     /** Returns true if a query can be sent right now. */
     boolean canSendQueryNow() {
-        // PRO users can always send the DHT query, but only Gnutella after activate.
-        if(FrostWireUtils.isPro())
-            return (activated && canSendQueryAfterActivate());
-        else
-            return activated && canSendQueryAfterActivate();
+//        // PRO users can always send the DHT query, but only Gnutella after activate.
+//        if(FrostWireUtils.isPro())
+//            return (activated && canSendQueryAfterActivate());
+//        else
+//            return activated && canSendQueryAfterActivate();
+        return false;
     }
     
     /** Allows activated queries to begin. */

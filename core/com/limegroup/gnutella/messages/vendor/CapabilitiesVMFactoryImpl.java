@@ -4,22 +4,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import com.limegroup.gnutella.messages.FeatureSearchData;
-import com.limegroup.gnutella.settings.SSLSettings;
-import com.limegroup.gnutella.version.UpdateHandler;
 
 @Singleton
 public class CapabilitiesVMFactoryImpl implements CapabilitiesVMFactory {
 
-    private final Provider<UpdateHandler> updateHandler;
     private volatile CapabilitiesVM currentCapabilities;
 
     @Inject
-    public CapabilitiesVMFactoryImpl(
-            Provider<UpdateHandler> updateHandler) {
-        this.updateHandler = updateHandler;
+    public CapabilitiesVMFactoryImpl() {
     }
 
     /* (non-Javadoc)
@@ -46,22 +39,22 @@ public class CapabilitiesVMFactoryImpl implements CapabilitiesVMFactory {
     protected Set<CapabilitiesVM.SupportedMessageBlock> getSupportedMessages() {
         Set<CapabilitiesVM.SupportedMessageBlock> supported = new HashSet<CapabilitiesVM.SupportedMessageBlock>();
 
-        CapabilitiesVM.SupportedMessageBlock smb = null;
-        smb = new CapabilitiesVM.SupportedMessageBlock(
-                CapabilitiesVM.FEATURE_SEARCH_BYTES,
-                FeatureSearchData.FEATURE_SEARCH_MAX_SELECTOR);
-        supported.add(smb);
-
-        smb = new CapabilitiesVM.SupportedMessageBlock(
-                CapabilitiesVM.LIME_UPDATE_BYTES, updateHandler.get()
-                        .getLatestId());
-        supported.add(smb);
-
-        if (SSLSettings.isIncomingTLSEnabled()) {
-            smb = new CapabilitiesVM.SupportedMessageBlock(
-                    CapabilitiesVM.TLS_SUPPORT_BYTES, 1);
-            supported.add(smb);
-        }
+//        CapabilitiesVM.SupportedMessageBlock smb = null;
+//        smb = new CapabilitiesVM.SupportedMessageBlock(
+//                CapabilitiesVM.FEATURE_SEARCH_BYTES,
+//                FeatureSearchData.FEATURE_SEARCH_MAX_SELECTOR);
+//        supported.add(smb);
+//
+//        smb = new CapabilitiesVM.SupportedMessageBlock(
+//                CapabilitiesVM.LIME_UPDATE_BYTES, updateHandler.get()
+//                        .getLatestId());
+//        supported.add(smb);
+//
+//        if (SSLSettings.isIncomingTLSEnabled()) {
+//            smb = new CapabilitiesVM.SupportedMessageBlock(
+//                    CapabilitiesVM.TLS_SUPPORT_BYTES, 1);
+//            supported.add(smb);
+//        }
 
         return supported;
     }

@@ -57,32 +57,8 @@ public class LimeCoreGlue {
         //  - Otherwise, success.
         try {
             CommonUtils.setUserSettingsDir(userSettingsDir);
-        } catch(IOException requestedFailed) {
-            try {
-                // First clear any older temporary settings directories.
-                FrostWireUtils.clearTemporarySettingsDirectories();
-                // Then try to set a temporary directory...
-                File temporaryDir;
-                try {
-                    temporaryDir = FrostWireUtils.getTemporarySettingsDirectory();
-                } catch(IOException tempFailed) {
-                    tempFailed.initCause(requestedFailed);
-                    throw tempFailed;
-                }
-                
-                temporaryDir.deleteOnExit();
-                
-                try {
-                    CommonUtils.setUserSettingsDir(temporaryDir);
-                } catch(IOException cannotSet) {
-                    cannotSet.initCause(requestedFailed);
-                    throw cannotSet;
-                }
-                
-                FrostWireUtils.setTemporaryDirectoryInUse(true);
-            } catch(IOException totalFailure) {
-                throw new InstallFailedException("Settings Directory Failure", totalFailure);
-            }
+        } catch(Exception e) {
+            throw new InstallFailedException("Settings Directory Failure", e);
         }
     }
 

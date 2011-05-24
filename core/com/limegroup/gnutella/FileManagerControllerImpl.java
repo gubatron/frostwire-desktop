@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
@@ -19,7 +19,6 @@ import com.limegroup.gnutella.auth.ContentResponseData;
 import com.limegroup.gnutella.auth.ContentResponseObserver;
 import com.limegroup.gnutella.messages.QueryRequest;
 import com.limegroup.gnutella.metadata.MetaDataReader;
-import com.limegroup.gnutella.version.UpdateHandler;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
 import com.limegroup.gnutella.xml.LimeXMLDocumentFactory;
 import com.limegroup.gnutella.xml.LimeXMLProperties;
@@ -39,7 +38,6 @@ public class FileManagerControllerImpl implements FileManagerController {
     private final Provider<AltLocManager> altLocManager;
     private final Provider<ResponseFactory> responseFactory;
     private final Provider<SavedFileManager> savedFileManager;
-    private final Provider<UpdateHandler> updateHandler;
     private final Provider<ActivityCallback> activityCallback;
     private final ScheduledExecutorService backgroundExecutor;
     private final LimeXMLReplyCollectionFactory limeXMLReplyCollectionFactory;
@@ -64,7 +62,6 @@ public class FileManagerControllerImpl implements FileManagerController {
             Provider<ResponseFactory> responseFactory,
             Provider<SavedFileManager> savedFileManager,
 
-            Provider<UpdateHandler> updateHandler,
             Provider<ActivityCallback> activityCallback,
             @Named("backgroundExecutor") ScheduledExecutorService backgroundExecutor,
             LimeXMLReplyCollectionFactory limeXMLReplyCollectionFactory,
@@ -79,7 +76,6 @@ public class FileManagerControllerImpl implements FileManagerController {
         this.altLocManager = altLocManager;
         this.responseFactory = responseFactory;
         this.savedFileManager = savedFileManager;
-        this.updateHandler = updateHandler;
         this.activityCallback = activityCallback;
         this.backgroundExecutor = backgroundExecutor;
         this.limeXMLReplyCollectionFactory = limeXMLReplyCollectionFactory;
@@ -214,7 +210,6 @@ public class FileManagerControllerImpl implements FileManagerController {
 
     public void loadFinishedPostSave() {
         savedFileManager.get().run();
-        updateHandler.get().tryToDownloadUpdates();
         activityCallback.get().fileManagerLoaded();
     }
 

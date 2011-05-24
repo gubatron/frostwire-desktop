@@ -98,13 +98,7 @@ public final class FrostWireUtils {
     
     public static final String FROSTWIRE_418_DIR_NAME = ".frostwire4.18";
     
-    public static final String FROSTWIRE_5_PREFS_DIR_NAME = ".frostwire5.0";
-
-    /**
-     * Variable for whether or not this is a PRO version of LimeWire. 
-     */
-    @InspectablePrimitive("pro")
-    private static boolean _isPro = true;
+    public static final String FROSTWIRE_5_PREFS_DIR_NAME = ".frostwire5";
 
     /** Whether or not a temporary directory is in use. */
     private static boolean temporaryDirectoryInUse;
@@ -124,7 +118,6 @@ public final class FrostWireUtils {
 		else {
 			HTTP_SERVER = ("LimeWire/"+FROSTWIRE_VERSION.
                            substring(0, FROSTWIRE_VERSION.length()-4)+" (Pro)");
-            _isPro = true;
 		}
 	}
     
@@ -201,15 +194,6 @@ public final class FrostWireUtils {
         // in case this is a mainline version or NFE was caught (strange)
         return 2;
     }
-
-    /**
-     * Accessor for whether or not this is LimeWire pro.
-     *
-     * @return <tt>true</tt> if it is pro, otherwise <tt>false</tt>
-     */
-    public static boolean isPro() {
-        return _isPro;
-    }
     
     /**
      * Accessor for whether or not this is a testing version
@@ -282,55 +266,6 @@ public final class FrostWireUtils {
 		return HTTP_SERVER;
 	}
 
-    /** Returns a temporary directory that can be used for settings. */
-    public static File getTemporarySettingsDirectory() throws IOException {
-        File tempDir = FileUtils.createTempFile("frostwire4.18", "-temp").getAbsoluteFile();
-        File tempDirParent = tempDir.getParentFile();
-        tempDir.delete();
-        if(!tempDir.exists()) {
-            if(tempDir.mkdir()) {
-                if(tempDir.exists() && tempDir.isDirectory()) {
-                    return tempDir;
-                }
-            }
-        }
-        
-        // If we couldn't convert a temporary file into a temporary directory...
-        for(int i = 0; i < 1000; i++) {
-            tempDir = new File(tempDirParent, "frostwire4.18-tempdir-" + i);
-            if(!tempDir.exists()) {
-                if(tempDir.mkdir()) {
-                    if(tempDir.exists() && tempDir.isDirectory()) {
-                        return tempDir;
-                    }
-                }
-            }
-        }
-        
-        throw new IOException("temporary directory failed.  parent [" + tempDirParent + "]");
-    }
-    
-    /** Clears all potential temporary LW directories. */
-    public static void clearTemporarySettingsDirectories() {
-        File tempDir;
-        try {
-            tempDir = FileUtils.createTempFile("frostwire4.18", "-temp").getAbsoluteFile();
-        } catch(IOException failure) {
-            return; // can't do much from here.
-        }
-        
-        File tempDirParent = tempDir.getParentFile();
-        tempDir.delete();
-        
-        for(int i = 0; i < 1000; i++) {
-            File dir = new File(tempDirParent, "frostwire4.18-tempdir-" + i);
-            // If we can't delete it immediately, try deleting all contents first.
-            if(!dir.delete())
-                FileUtils.deleteRecursive(dir);
-        }
-        
-    }
-      
     /**
      * Returns the location where the user settings directory should be placed.
      */
@@ -363,38 +298,25 @@ public final class FrostWireUtils {
 
         if (OSUtils.isWindows()) {
         	
-            String appdata = System.getProperty("LIMEWIRE_PREFS_DIR", SystemUtils.getSpecialPath(SpecialLocations.APPLICATION_DATA));
-
-            if (appdata != null && appdata.length() > 0) {
-                appdata = stripQuotes(appdata);
-                File tempSettingsDir = new File(appdata, "FrostWire"); // CHECK THE CASE OF WINDOWS
-                if (tempSettingsDir.isDirectory() || !settingsDir.exists()) {
-                    FileUtils.setWriteable(new File(appdata));
-                    try {
-                        CommonUtils.validateSettingsDirectory(tempSettingsDir);
-                        return tempSettingsDir;
-                    } catch (IOException e) { // Ignore errors and fall back on default
-                    } catch (SecurityException e) {} // Ignore errors and fall back on default
-                }
-            }
+//            String appdata = System.getProperty("LIMEWIRE_PREFS_DIR", SystemUtils.getSpecialPath(SpecialLocations.APPLICATION_DATA));
+//
+//            if (appdata != null && appdata.length() > 0) {
+//                appdata = stripQuotes(appdata);
+//                File tempSettingsDir = new File(appdata, "FrostWire"); // CHECK THE CASE OF WINDOWS
+//                if (tempSettingsDir.isDirectory() || !settingsDir.exists()) {
+//                    FileUtils.setWriteable(new File(appdata));
+//                    try {
+//                        CommonUtils.validateSettingsDirectory(tempSettingsDir);
+//                        return tempSettingsDir;
+//                    } catch (IOException e) { // Ignore errors and fall back on default
+//                    } catch (SecurityException e) {} // Ignore errors and fall back on default
+//                }
+//            }
         } else if(OSUtils.isMacOSX()) {
-            settingsDir = new File(CommonUtils.getUserHomeDir(), "Library/Preferences/FrostWire");
+            settingsDir = new File(CommonUtils.getUserHomeDir(), "Library/Preferences/FrostWire5");
         } 
       
         return settingsDir;
-    }
-    
-    /** Strips out any quotes that we left on the data. */
-    private static String stripQuotes(String incoming) {
-        if (incoming == null || incoming.length() <= 2)
-            return incoming;
-
-        incoming = incoming.trim();
-        if (incoming.startsWith("\""))
-            incoming = incoming.substring(1);
-        if (incoming.endsWith("\""))
-            incoming = incoming.substring(0, incoming.length() - 1);
-        return incoming;
     }
     
     /**
@@ -406,7 +328,6 @@ public final class FrostWireUtils {
         else
             url += "&";
         url += "guid=" + EncodingUtils.encode(new GUID(myClientGUID).toHexString())+ 
-            "&pro="   + FrostWireUtils.isPro() + 
             "&lang=" + EncodingUtils.encode(ApplicationSettings.getLanguage()) +
             "&lv="   + EncodingUtils.encode(FrostWireUtils.getFrostWireVersion()) +
             "&jv="   + EncodingUtils.encode(VersionUtils.getJavaVersion()) +
