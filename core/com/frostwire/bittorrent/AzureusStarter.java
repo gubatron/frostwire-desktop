@@ -70,11 +70,11 @@ public final class AzureusStarter {
 			
 			org.gudy.azureus2.core3.util.SystemProperties.setUserPath(azureusUserPath.getAbsolutePath());
 			
-			if (!SharingSettings.DEFAULT_DOT_TORRENTS_DIR_SETTING.getValue().exists()) {
-			    SharingSettings.DEFAULT_DOT_TORRENTS_DIR_SETTING.getValue().mkdirs();
+			if (!SharingSettings.TORRENTS_DIR_SETTING.getValue().exists()) {
+			    SharingSettings.TORRENTS_DIR_SETTING.getValue().mkdirs();
 			}
 			
-			COConfigurationManager.setParameter("General_sDefaultTorrent_Directory", SharingSettings.DEFAULT_DOT_TORRENTS_DIR_SETTING.getValue().getAbsolutePath());
+			COConfigurationManager.setParameter("General_sDefaultTorrent_Directory", SharingSettings.TORRENTS_DIR_SETTING.getValue().getAbsolutePath());
 			
 			try {
 				AZUREUS_CORE = AzureusCoreFactory.create();

@@ -846,12 +846,12 @@ public abstract class FileManagerImpl implements FileManager {
 		}
 
 		// share/unshare all torrents inside
-		File[] torrents = SharingSettings.DEFAULT_DOT_TORRENTS_DIR
+		File[] torrents = SharingSettings.DEFAULT_TORRENTS_DIR
 				.listFiles();
 		if (torrents != null && torrents.length > 0) {
 			for (File t : torrents) {
 				if (SharingSettings.SHARE_TORRENT_META_FILES.getValue() &&
-				    isFolderShared(SharingSettings.DEFAULT_DOT_TORRENTS_DIR))
+				    isFolderShared(SharingSettings.DEFAULT_TORRENTS_DIR))
 					addFileAlways(t);
 				else
 					stopSharingFile(t);
@@ -877,7 +877,7 @@ public abstract class FileManagerImpl implements FileManager {
     private void updateSharedDirectories(File directory, File parent, int revision) {
         updateSharedDirectories(directory, directory, parent, revision, 1);
         
-        if (directory.equals(SharingSettings.DEFAULT_DOT_TORRENTS_DIR)) {
+        if (directory.equals(SharingSettings.DEFAULT_TORRENTS_DIR)) {
             verifySharedTorrentFolderCorrecteness();
         }
         if (directory.equals(SharingSettings.getSaveDirectory())) {

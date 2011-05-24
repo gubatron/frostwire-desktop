@@ -9,7 +9,7 @@ import com.limegroup.gnutella.settings.SharingSettings;
 public class TorrentDirectoryHolder extends FileSettingDirectoryHolder {
 	
 	public TorrentDirectoryHolder() {
-		super(SharingSettings.DEFAULT_DOT_TORRENTS_DIR_SETTING,"Torrent files");
+		super(SharingSettings.TORRENTS_DIR_SETTING,"Torrent files");
 	}
 	
 	public Icon getIcon() {
