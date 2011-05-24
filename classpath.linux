@@ -4,13 +4,9 @@
 	<classpathentry kind="src" path="components/common/src/main/resources"/>
 	<classpathentry kind="src" path="components/resources/src/main/resources"/>
 	<classpathentry kind="src" output="components/common/build/classes" path="components/common/src/main/java"/>
-	<classpathentry kind="src" output="components/http/build/classes" path="components/http/src/main/java"/>
 	<classpathentry kind="src" output="components/io/build/classes" path="components/io/src/main/java"/>
-	<classpathentry kind="src" output="components/mojito-src/build/classes" path="components/mojito/src/main/java"/>
-	<classpathentry kind="src" output="components/mojito-ui/build/classes" path="components/mojito-ui/src/main/java"/>
 	<classpathentry kind="src" output="components/net/build/classes" path="components/net/src/main/java"/>
 	<classpathentry kind="src" output="components/nio/build/classes" path="components/nio/src/main/java"/>
-	<classpathentry kind="src" output="components/rudp/build/classes" path="components/rudp/src/main/java"/>
 	<classpathentry kind="src" output="components/security/build/classes" path="components/security/src/main/java"/>
 	<classpathentry kind="src" output="components/setting/build/classes" path="components/setting/src/main/java"/>
 	<classpathentry kind="src" output="components/statistic/build/classes" path="components/statistic/src/main/java"/>
@@ -33,7 +29,6 @@
 	<classpathentry kind="lib" path="lib/jars/commons-logging.jar"/>
 	<classpathentry kind="lib" path="lib/jars/daap.jar"/>
 	<classpathentry kind="lib" path="lib/jars/forms.jar"/>
-	<classpathentry kind="lib" path="lib/jars/foxtrot.jar"/>
 	<classpathentry kind="lib" path="lib/jars/gettext-commons.jar"/>
 	<classpathentry kind="lib" path="lib/jars/guice-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/jars/httpclient-4.0.jar"/>
