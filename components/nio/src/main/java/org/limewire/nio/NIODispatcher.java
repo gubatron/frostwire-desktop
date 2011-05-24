@@ -436,19 +436,19 @@ public class NIODispatcher implements Runnable {
      */
     private void processConnect(long now, SelectionKey sk, ConnectObserver handler, Attachment proxy)
       throws IOException {
-        if (LOG.isDebugEnabled())
-            LOG.debug("Handling connect: " + handler);
-
-        SocketChannel channel = (SocketChannel) sk.channel();
-        proxy.clearTimeout();
-
-        boolean finished = channel.finishConnect();
-        if (finished) {
-        	sk.interestOps(0); // interested in nothing just yet.
-            handler.handleConnect(channel.socket());
-        } else {
-            cancel(sk, handler);
-        }
+//        if (LOG.isDebugEnabled())
+//            LOG.debug("Handling connect: " + handler);
+//
+//        SocketChannel channel = (SocketChannel) sk.channel();
+//        proxy.clearTimeout();
+//
+//        boolean finished = channel.finishConnect();
+//        if (finished) {
+//        	sk.interestOps(0); // interested in nothing just yet.
+//            handler.handleConnect(channel.socket());
+//        } else {
+//            cancel(sk, handler);
+//        }
     }
     
     /** Process a channel read operation. */
