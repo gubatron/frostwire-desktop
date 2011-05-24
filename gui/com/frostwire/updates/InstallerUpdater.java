@@ -234,8 +234,6 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 		}
 
 		if (state == DownloadManager.STATE_ERROR) {
-			//saveHostilesMetaData(_hostilesMetaData,
-			//		HostilesMetaData.STATUS_ERRORED);
 			System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 			System.out.println(_manager.getErrorDetails());
 			System.out.println("InstallerUpdater: ERROR - stopIt, startDownload!");
@@ -250,21 +248,16 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 				e.printStackTrace();
 			}
 			
-			//saveHostilesMetaData(_hostilesMetaData,
-				//	HostilesMetaData.STATUS_INITIATED);
 		} else if (state == DownloadManager.STATE_DOWNLOADING) {
 			System.out.println("stateChanged(STATE_DOWNLOADING)");
 		} else if (state == DownloadManager.STATE_READY) {
 			System.out.println("stateChanged(STATE_READY)");
 			manager.startDownload();
-			//saveHostilesMetaData(_hostilesMetaData,
-				//	HostilesMetaData.STATUS_DOWNLOADING);
 		}
 	}
 	
 	@Override
 	public void downloadComplete(DownloadManager manager) {
-		// notifyHostileUpdaterWorkerThread();
 		System.out.println("InstallerUpdater.downloadComplete()!!!!");
 		CoreFrostWireUtils.printDownloadManagerStatus(_manager);
 		

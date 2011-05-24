@@ -491,11 +491,7 @@ public final class UpdateMessageReader implements ContentHandler {
 				}
 			} // overlays
 
-			if (_bufferMessage.getMessageType().equalsIgnoreCase("hostiles")) {
-				if (atts.getValue("md5") != null) {
-					_bufferMessage.setRemoteMD5(atts.getValue("md5"));
-				}
-			} // hostiles
+			
 		}
 
 	}
