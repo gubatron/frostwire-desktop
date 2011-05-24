@@ -208,11 +208,11 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     //    }
 
     public double getDownloadsBandwidth() {
-        return DATA_MODEL.getDownloadsBandwidth();
+        return DATA_MODEL.getDownloadsBandwidth()/1000;
     }
 
     public double getUploadsBandwidth() {
-        return DATA_MODEL.getUploadsBandwidth();
+        return DATA_MODEL.getUploadsBandwidth()/1000;
     }
 
     /**
