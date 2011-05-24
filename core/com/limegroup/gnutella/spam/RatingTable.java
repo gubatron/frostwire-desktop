@@ -32,7 +32,7 @@ import com.limegroup.gnutella.spam.Token.Rating;
 
 @Singleton
 public class RatingTable {
-	private static final Log LOG = LogFactory.getLog(Tokenizer.class);
+	private static final Log LOG = LogFactory.getLog(RatingTable.class);
 
 	/**
 	 * don't hold more than this many entries * 2 and don't save more than this
@@ -53,21 +53,19 @@ public class RatingTable {
 	 */
 	private final Map<Token, Token> _tokenMap;
 	
-	private final Tokenizer tokenizer;
 	
 	/**
 	 * constructor, tries to deserialize filter data from disc, which will fail
 	 * silently, if it fails
 	 */
 	@Inject
-	RatingTable(Tokenizer tokenizer) {
-	    this.tokenizer = tokenizer;
+	RatingTable() {
 	    
 		// deserialize
 		_tokenMap = readData();
 		
-		for(Token token : _tokenMap.values())
-            tokenizer.initialize(token);
+//		for(Token token : _tokenMap.values())
+//            tokenizer.initialize(token);
 
 		if (LOG.isDebugEnabled())
 			LOG.debug("size of tokenSet " + _tokenMap.size());
@@ -88,10 +86,11 @@ public class RatingTable {
 	 * @return the rating for the RemoteFileDesc
 	 */
 	float getRating(RemoteFileDesc desc) {
-		float ret = getRating(lookup(tokenizer.getTokens(desc)));
-		if (LOG.isDebugEnabled())
-			LOG.debug(desc.toString() + " rated " + ret);
-		return ret;
+//		float ret = getRating(lookup(tokenizer.getTokens(desc)));
+//		if (LOG.isDebugEnabled())
+//			LOG.debug(desc.toString() + " rated " + ret);
+//		return ret;
+	    return 0;
 	}
 
 	/**
@@ -127,7 +126,7 @@ public class RatingTable {
 	 *            must be a rating as defined by the Token interface
 	 */
 	void mark(RemoteFileDesc[] descs, Rating rating) {
-		markInternal(lookup(tokenizer.getTokens(descs)), rating);
+		//markInternal(lookup(tokenizer.getTokens(descs)), rating);
 	}
 
 	/**
@@ -139,7 +138,7 @@ public class RatingTable {
 	 *            must be a rating as defined by the Token interface
 	 */
 	void mark(RemoteFileDesc desc, Rating rating) {
-		markInternal(lookup(tokenizer.getTokens(desc)), rating);
+		//markInternal(lookup(tokenizer.getTokens(desc)), rating);
 	}
 
 	/**
@@ -151,7 +150,7 @@ public class RatingTable {
 	 *            must be a rating as defined by the Token interface
 	 */
 	void mark(QueryRequest qr, Rating rating) {
-		markInternal(lookup(tokenizer.getTokens(qr)), rating);
+		//markInternal(lookup(tokenizer.getTokens(qr)), rating);
 	}
 
 	/**

@@ -49,7 +49,6 @@ import com.limegroup.gnutella.connection.UDPConnectionChecker;
 import com.limegroup.gnutella.connection.UDPConnectionCheckerImpl;
 import com.limegroup.gnutella.downloader.LimeWireDownloadModule;
 import com.limegroup.gnutella.filters.IPFilter;
-import com.limegroup.gnutella.filters.LocalIPFilter;
 import com.limegroup.gnutella.filters.SpamFilterFactory;
 import com.limegroup.gnutella.filters.SpamFilterFactoryImpl;
 import com.limegroup.gnutella.handshaking.HandshakeResponderFactory;
@@ -210,7 +209,6 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(SettingsProvider.class).to(MacCalculatorSettingsProviderImpl.class);
         bind(ReplyHandler.class).annotatedWith(Names.named("forMeReplyHandler")).to(ForMeReplyHandler.class);
         bind(MessageRouter.class).to(StandardMessageRouter.class);
-        bind(IPFilter.class).to(LocalIPFilter.class);
         bind(UploadSlotManager.class).to(UploadSlotManagerImpl.class);
         bind(BandwidthManager.class).to(BandwidthManagerImpl.class);
         bind(SecureMessageVerifier.class).toProvider(SecureMessageVerifierProvider.class);

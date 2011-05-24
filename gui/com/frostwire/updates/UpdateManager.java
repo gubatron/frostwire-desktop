@@ -321,7 +321,7 @@ public final class UpdateManager implements Serializable {
 	@SuppressWarnings("unchecked")
 	private void loadSeenMessages() {
 		// de-serializes seen messages if available
-		File f = new File(FrostWireUtils.getUserSettingsDir(),
+		File f = new File(CommonUtils.getUserSettingsDir(),
 				"seenMessages.dat");
 		_seenMessages = new HashSet<UpdateMessage>();
 

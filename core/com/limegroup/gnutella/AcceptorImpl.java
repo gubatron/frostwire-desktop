@@ -133,7 +133,6 @@ public class AcceptorImpl implements ConnectionAcceptor, SocketProcessor, Accept
     private final ScheduledExecutorService backgroundExecutor;
     private final Provider<ActivityCallback> activityCallback;
     private final Provider<ConnectionManager> connectionManager;
-    private final Provider<IPFilter> ipFilter;
     private final ConnectionServices connectionServices;
     private final Provider<UPnPManager> upnpManager;
     
@@ -148,7 +147,6 @@ public class AcceptorImpl implements ConnectionAcceptor, SocketProcessor, Accept
             @Named("backgroundExecutor") ScheduledExecutorService backgroundExecutor,
             Provider<ActivityCallback> activityCallback,
             Provider<ConnectionManager> connectionManager,
-            Provider<IPFilter> ipFilter, 
             ConnectionServices connectionServices,
             Provider<UPnPManager> upnpManager) {
         this.networkManager = networkManager;
@@ -158,7 +156,6 @@ public class AcceptorImpl implements ConnectionAcceptor, SocketProcessor, Accept
         this.backgroundExecutor = backgroundExecutor;
         this.activityCallback = activityCallback;
         this.connectionManager = connectionManager;
-        this.ipFilter = ipFilter;
         this.connectionServices = connectionServices;
         this.upnpManager = upnpManager;
         
@@ -625,10 +622,6 @@ public class AcceptorImpl implements ConnectionAcceptor, SocketProcessor, Accept
         		!NetworkUtils.isValidPort(client.getPort())) {
             IOUtils.close(client);
             LOG.warn("connection closed while accepting");
-        } else if (!ipFilter.get().allow(address.getAddress())) {
-            if (LOG.isWarnEnabled())
-                LOG.warn("Ignoring banned host: " + address);
-            IOUtils.close(client);
         } else {
             if (LOG.isDebugEnabled())
                 LOG.debug("Dispatching new client connecton: " + address);

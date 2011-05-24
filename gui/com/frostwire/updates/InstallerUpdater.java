@@ -18,6 +18,7 @@ import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.download.DownloadManagerListener;
 import org.gudy.azureus2.core3.global.GlobalManagerDownloadRemovalVetoException;
+import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.CoreFrostWireUtils;
@@ -295,7 +296,7 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 	}
 
 	private final String getInstallerDatPath()  {
-		return FrostWireUtils.getUserSettingsDir().getAbsolutePath()
+		return CommonUtils.getUserSettingsDir().getAbsolutePath()
 				+ File.separator + "installer.dat";
 	}
 	

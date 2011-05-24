@@ -68,7 +68,6 @@ public final class ForMeReplyHandler implements ReplyHandler, SecureMessageCallb
     private final ApplicationServices applicationServices;
     private final ConnectionServices connectionServices;
     private final LimeXMLDocumentHelper limeXMLDocumentHelper;
-    private final Provider<IPFilter> ipFilterProvider;
 
     @Inject
     ForMeReplyHandler(NetworkManager networkManager,
@@ -80,8 +79,7 @@ public final class ForMeReplyHandler implements ReplyHandler, SecureMessageCallb
             @Named("backgroundExecutor") ScheduledExecutorService backgroundExecutor,
             ApplicationServices applicationServices,
             ConnectionServices connectionServices,
-            LimeXMLDocumentHelper limeXMLDocumentHelper,
-            Provider<IPFilter> ipFilterProvider) {
+            LimeXMLDocumentHelper limeXMLDocumentHelper) {
         this.networkManager = networkManager;
         this.secureMessageVerifier = secureMessageVerifier;
         this.connectionManager = connectionManager;
@@ -92,7 +90,6 @@ public final class ForMeReplyHandler implements ReplyHandler, SecureMessageCallb
         this.applicationServices = applicationServices;
         this.connectionServices = connectionServices;
         this.limeXMLDocumentHelper = limeXMLDocumentHelper;
-        this.ipFilterProvider = ipFilterProvider;
     	    
 	    //Clear push requests every 30 seconds.
         //TODO: move to initializer
@@ -258,10 +255,10 @@ public final class ForMeReplyHandler implements ReplyHandler, SecureMessageCallb
             if(i.getInt() > UploadSettings.MAX_PUSHES_PER_HOST.getValue())
                 return;
         }
-        
-        // if the IP is banned, don't accept it
-        if (!ipFilterProvider.get().allow(ip))
-            return;
+//        
+//        // if the IP is banned, don't accept it
+//        if (!ipFilterProvider.get().allow(ip))
+//            return;
 
         int port = pushRequest.getPort();
         // if invalid port, exit

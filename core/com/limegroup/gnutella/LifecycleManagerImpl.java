@@ -54,8 +54,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
     
     private static enum State { NONE, STARTING, STARTED, STOPPED };
 
-    private final Provider<IPFilter> ipFilter;
-    
     private final Provider<Acceptor> acceptor;
     private final Provider<ActivityCallback> activityCallback;
     private final Provider<ContentManager> contentManager;
@@ -104,8 +102,7 @@ public class LifecycleManagerImpl implements LifecycleManager {
     
     /**/
     @Inject
-    public LifecycleManagerImpl(
-            Provider<IPFilter> ipFilter,             
+    public LifecycleManagerImpl(             
             Provider<Acceptor> acceptor,
             Provider<ActivityCallback> activityCallback,
             Provider<ContentManager> contentManager,
@@ -131,7 +128,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
         this.listenerList = new EventListenerList<LifeCycleEvent>();
 
         
-        this.ipFilter = ipFilter;
         this.acceptor = acceptor;
         this.activityCallback = activityCallback;
         this.contentManager = contentManager;
@@ -595,12 +591,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
         
         limeCoreGlue.get().install(); // ensure glue is set before running tasks.
         
-        //add more while-gui init tasks here
-        ipFilter.get().refreshHosts(new IPFilter.IPFilterCallback() {
-            public void ipFiltersLoaded() {
-                spamServices.get().adjustSpamFilters();
-            }
-        });
         acceptor.get().init();
         backgroundDone.set(true);
     }

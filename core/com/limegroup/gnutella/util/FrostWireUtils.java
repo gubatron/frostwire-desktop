@@ -7,7 +7,6 @@ import java.util.Map;
 import org.limewire.inspection.InspectablePrimitive;
 import org.limewire.setting.SettingsFactory;
 import org.limewire.util.CommonUtils;
-import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 import org.limewire.util.SystemUtils;
 import org.limewire.util.SystemUtils.SpecialLocations;
@@ -93,12 +92,6 @@ public final class FrostWireUtils {
 	 * Cached constant for the HTTP Server: header value.
 	 */
 	private static final String HTTP_SERVER;
-
-    public static final String LIMEWIRE_PREFS_DIR_NAME = ".frostwire4.20";
-    
-    public static final String FROSTWIRE_418_DIR_NAME = ".frostwire4.18";
-    
-    public static final String FROSTWIRE_5_PREFS_DIR_NAME = ".frostwire5";
 
     /** Whether or not a temporary directory is in use. */
     private static boolean temporaryDirectoryInUse;
@@ -265,59 +258,6 @@ public final class FrostWireUtils {
 	public static String getHttpServer() {
 		return HTTP_SERVER;
 	}
-
-    /**
-     * Returns the location where the user settings directory should be placed.
-     */
-    public static File getUserSettingsDir() {
-        // LOGIC:
-        
-        // On all platforms other than Windows or OSX,
-        // this will return <user-home>/.frostwire<versionMajor.versionMinor>
-        
-        // On OSX, this will return <user-home>/Library/Preferences/FrostWire
-        
-        // On Windows, this first tries to find:
-        // a) <user-home>/$LIMEWIRE_PREFS_DIR/.frostwire
-        // b) <user-home>/$APPDATA/FrostWire
-        // c) <user-home/.frostwire
-        // If the $LIMEWIRE_PREFS_DIR variable doesn't exist, it falls back
-        // to trying b).  If The $APPDATA variable can't be read or doesn't
-        // exist, it falls back to a).
-        // If using a) or b), and neither of those directories exist, but c)
-        // does, then c) is used.  Once a) or b) exist, they are used indefinitely.
-        // If neither a), b) nor c) exist, then the former is created in preference of
-        // of a), then b).        
-        File userDir = CommonUtils.getUserHomeDir();
-
-        // Changing permissions without permission in Unix is rude
-        if(!OSUtils.isPOSIX() && userDir != null && userDir.exists())
-            FileUtils.setWriteable(userDir);
-        
-        File settingsDir = new File(userDir, FROSTWIRE_5_PREFS_DIR_NAME);
-
-        if (OSUtils.isWindows()) {
-        	
-//            String appdata = System.getProperty("LIMEWIRE_PREFS_DIR", SystemUtils.getSpecialPath(SpecialLocations.APPLICATION_DATA));
-//
-//            if (appdata != null && appdata.length() > 0) {
-//                appdata = stripQuotes(appdata);
-//                File tempSettingsDir = new File(appdata, "FrostWire"); // CHECK THE CASE OF WINDOWS
-//                if (tempSettingsDir.isDirectory() || !settingsDir.exists()) {
-//                    FileUtils.setWriteable(new File(appdata));
-//                    try {
-//                        CommonUtils.validateSettingsDirectory(tempSettingsDir);
-//                        return tempSettingsDir;
-//                    } catch (IOException e) { // Ignore errors and fall back on default
-//                    } catch (SecurityException e) {} // Ignore errors and fall back on default
-//                }
-//            }
-        } else if(OSUtils.isMacOSX()) {
-            settingsDir = new File(CommonUtils.getUserHomeDir(), "Library/Preferences/FrostWire5");
-        } 
-      
-        return settingsDir;
-    }
     
     /**
      * Updates a URL to contain common information about the LW installation.

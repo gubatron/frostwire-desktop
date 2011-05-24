@@ -11,13 +11,10 @@ import com.limegroup.gnutella.settings.FilterSettings;
 public class SpamFilterFactoryImpl implements SpamFilterFactory {
     
     private final Provider<MutableGUIDFilter> mutableGUIDFilter;
-    private final Provider<LocalIPFilter> ipFilter;
 
     @Inject
-    public SpamFilterFactoryImpl(Provider<MutableGUIDFilter> mutableGUIDFilter, 
-            Provider<LocalIPFilter> ipFilter) {
+    public SpamFilterFactoryImpl(Provider<MutableGUIDFilter> mutableGUIDFilter) {
         this.mutableGUIDFilter = mutableGUIDFilter;
-        this.ipFilter = ipFilter;
     }
     
     /* (non-Javadoc)
@@ -27,10 +24,10 @@ public class SpamFilterFactoryImpl implements SpamFilterFactory {
         
         Vector<SpamFilter> buf=new Vector<SpamFilter>();
 
-        //1. IP-based techniques.
-        LocalIPFilter ipFilter = this.ipFilter.get();
-        if(ipFilter.hasBlacklistedHosts())
-            buf.add(ipFilter);
+//        //1. IP-based techniques.
+//        LocalIPFilter ipFilter = this.ipFilter.get();
+//        if(ipFilter.hasBlacklistedHosts())
+//            buf.add(ipFilter);
 
         //2. Keyword-based techniques.
         String[] badWords = FilterSettings.BANNED_WORDS.getValue();

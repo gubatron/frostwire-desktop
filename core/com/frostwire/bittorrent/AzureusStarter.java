@@ -9,6 +9,7 @@ import org.apache.commons.logging.LogFactory;
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.config.impl.ConfigurationManager;
 import org.gudy.azureus2.core3.download.DownloadManager;
+import org.limewire.util.CommonUtils;
 
 import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.AzureusCoreComponent;
@@ -63,7 +64,7 @@ public final class AzureusStarter {
 			//This does work
 			org.gudy.azureus2.core3.util.SystemProperties.APPLICATION_NAME = "azureus";
 			
-			File azureusUserPath = new File(FrostWireUtils.getUserSettingsDir() + File.separator + "azureus" + File.separator);
+			File azureusUserPath = new File(CommonUtils.getUserSettingsDir() + File.separator + "azureus" + File.separator);
 			if (!azureusUserPath.exists()) {
 			    azureusUserPath.mkdirs();
 			}

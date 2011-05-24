@@ -86,7 +86,6 @@ public class PushDownloadManager implements ConnectionAcceptor, PushedSocketHand
     private final ScheduledExecutorService backgroundExecutor;    
     private final NetworkManager networkManager;
     private final Provider<MessageRouter> messageRouter;    
-    private final Provider<IPFilter> ipFilter;
     private final Provider<UDPService> udpService;
     private final CopyOnWriteArrayList<PushedSocketHandler> pushHandlers = new CopyOnWriteArrayList<PushedSocketHandler>();
     
@@ -96,13 +95,11 @@ public class PushDownloadManager implements ConnectionAcceptor, PushedSocketHand
             @Named("backgroundExecutor") ScheduledExecutorService scheduler,
             Provider<SocketProcessor> processor,
     		NetworkManager networkManager,
-    		Provider<IPFilter> ipFilter,
     		Provider<UDPService> udpService) {
     	this.messageRouter = router;
     	this.backgroundExecutor = scheduler;
     	this.socketProcessor = processor;
     	this.networkManager = networkManager;
-        this.ipFilter = ipFilter;
         this.udpService = udpService;
     }
 
@@ -255,9 +252,9 @@ public class PushDownloadManager implements ConnectionAcceptor, PushedSocketHand
     
         //make sure we send it to the proxies, if any
         for(IpPort ppi : file.getPushProxies()) {
-            if (ipFilter.get().allow(ppi.getAddress())) {
-                udpService.send(pr, ppi.getInetSocketAddress());
-            }
+//            if (ipFilter.get().allow(ppi.getAddress())) {
+//                udpService.send(pr, ppi.getInetSocketAddress());
+//            }
         }
         
         return true;

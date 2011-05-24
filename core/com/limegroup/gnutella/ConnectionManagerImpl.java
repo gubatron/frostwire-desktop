@@ -288,7 +288,6 @@ public class ConnectionManagerImpl implements ConnectionManager {
     private final SocketsManager socketsManager;
     private final ConnectionServices connectionServices;
     private final Provider<NodeAssigner> nodeAssigner;
-    private final Provider<IPFilter> ipFilter;
     private final ConnectionCheckerManager connectionCheckerManager;
     private final PingRequestFactory pingRequestFactory;
     private final NetworkInstanceUtils networkInstanceUtils;
@@ -306,7 +305,6 @@ public class ConnectionManagerImpl implements ConnectionManager {
             SocketsManager socketsManager,
             ConnectionServices connectionServices,
             Provider<NodeAssigner> nodeAssigner, 
-             Provider<IPFilter> ipFilter,
             ConnectionCheckerManager connectionCheckerManager,
             PingRequestFactory pingRequestFactory, 
             NetworkInstanceUtils networkInstanceUtils) {
@@ -320,7 +318,6 @@ public class ConnectionManagerImpl implements ConnectionManager {
         this.socketsManager = socketsManager;
         this.connectionServices = connectionServices;
         this.nodeAssigner = nodeAssigner;
-        this.ipFilter = ipFilter;
         this.connectionCheckerManager = connectionCheckerManager;
         this.pingRequestFactory = pingRequestFactory;
         this.networkInstanceUtils = networkInstanceUtils;
@@ -2322,9 +2319,7 @@ public class ConnectionManagerImpl implements ConnectionManager {
         
         /** Returns true if we are able to make a connection attempt to this host. */
         private boolean isConnectableHost(IpPort host) {
-            return ipFilter.get().allow(host.getAddress())
-                && !isConnectedTo(host.getAddress()) 
-                && !isConnectingTo(host);
+            return false;
         }
 
         /** Callback that an endpoint is available for connecting. */

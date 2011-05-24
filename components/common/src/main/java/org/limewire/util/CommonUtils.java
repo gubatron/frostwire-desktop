@@ -22,8 +22,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-
-import com.limegroup.gnutella.util.FrostWireUtils;
 /**
  * Provides convenience functionality ranging from getting user information,
  * copying files to getting the stack traces of all current threads.
@@ -51,6 +49,12 @@ import com.limegroup.gnutella.util.FrostWireUtils;
  * </DL>
  */
 public class CommonUtils {
+    
+    public static final String LIMEWIRE_PREFS_DIR_NAME = ".frostwire4.20";
+    
+    public static final String FROSTWIRE_418_DIR_NAME = ".frostwire4.18";
+    
+    public static final String FROSTWIRE_5_PREFS_DIR_NAME = ".frostwire5";
     
     /**
      * Several arrays of illegal characters on various operating systems.
@@ -539,6 +543,59 @@ public class CommonUtils {
         if(settingsDirectory != null)
             return settingsDirectory;
         else
-            return FrostWireUtils.getUserSettingsDir();
+            return getUserSettingsDir2();
+    }
+    
+    /**
+     * Returns the location where the user settings directory should be placed.
+     */
+    private static File getUserSettingsDir2() {
+        // LOGIC:
+        
+        // On all platforms other than Windows or OSX,
+        // this will return <user-home>/.frostwire<versionMajor.versionMinor>
+        
+        // On OSX, this will return <user-home>/Library/Preferences/FrostWire
+        
+        // On Windows, this first tries to find:
+        // a) <user-home>/$LIMEWIRE_PREFS_DIR/.frostwire
+        // b) <user-home>/$APPDATA/FrostWire
+        // c) <user-home/.frostwire
+        // If the $LIMEWIRE_PREFS_DIR variable doesn't exist, it falls back
+        // to trying b).  If The $APPDATA variable can't be read or doesn't
+        // exist, it falls back to a).
+        // If using a) or b), and neither of those directories exist, but c)
+        // does, then c) is used.  Once a) or b) exist, they are used indefinitely.
+        // If neither a), b) nor c) exist, then the former is created in preference of
+        // of a), then b).        
+        File userDir = CommonUtils.getUserHomeDir();
+
+        // Changing permissions without permission in Unix is rude
+        if(!OSUtils.isPOSIX() && userDir != null && userDir.exists())
+            FileUtils.setWriteable(userDir);
+        
+        File settingsDir = new File(userDir, FROSTWIRE_5_PREFS_DIR_NAME);
+
+        if (OSUtils.isWindows()) {
+            
+//            String appdata = System.getProperty("LIMEWIRE_PREFS_DIR", SystemUtils.getSpecialPath(SpecialLocations.APPLICATION_DATA));
+//
+//            if (appdata != null && appdata.length() > 0) {
+//                appdata = stripQuotes(appdata);
+//                File tempSettingsDir = new File(appdata, "FrostWire"); // CHECK THE CASE OF WINDOWS
+//                if (tempSettingsDir.isDirectory() || !settingsDir.exists()) {
+//                    FileUtils.setWriteable(new File(appdata));
+//                    try {
+//                        CommonUtils.validateSettingsDirectory(tempSettingsDir);
+//                        return tempSettingsDir;
+//                    } catch (IOException e) { // Ignore errors and fall back on default
+//                    } catch (SecurityException e) {} // Ignore errors and fall back on default
+//                }
+//            }
+        } else if(OSUtils.isMacOSX()) {
+            settingsDir = new File(CommonUtils.getUserHomeDir(), "Library/Preferences/FrostWire5");
+        } 
+      
+        return settingsDir;
     }
 }

@@ -18,16 +18,14 @@ import com.limegroup.gnutella.settings.FilterSettings;
 public class SpamServicesImpl implements SpamServices {
     
     private final Provider<ConnectionManager> connectionManager;
-    private final Provider<IPFilter> ipFilter;
     private final SpamFilterFactory spamFilterFactory;
     private final UDPReplyHandlerCache udpReplyHandlerCache;
 
     @Inject
     public SpamServicesImpl(Provider<ConnectionManager> connectionManager,
-            Provider<IPFilter> ipFilter, SpamFilterFactory spamFilterFactory,
+            SpamFilterFactory spamFilterFactory,
             UDPReplyHandlerCache udpReplyHandlerCache) {
         this.connectionManager = connectionManager;
-        this.ipFilter = ipFilter;
         this.spamFilterFactory = spamFilterFactory;
         this.udpReplyHandlerCache = udpReplyHandlerCache;
     }
@@ -38,29 +36,29 @@ public class SpamServicesImpl implements SpamServices {
         //Just replace the spam filters.  No need to do anything
         //fancy like incrementally updating them.
         for(RoutedConnection c : connectionManager.get().getConnections()) {
-            if(ipFilter.get().allow(c.getAddress())) {
-                c.setPersonalFilter(spamFilterFactory.createPersonalFilter());
-                c.setRouteFilter(spamFilterFactory.createRouteFilter());
-            } else {
-                // If the connection isn't allowed now, close it.
-                c.close();
-            }
+//            if(ipFilter.get().allow(c.getAddress())) {
+//                c.setPersonalFilter(spamFilterFactory.createPersonalFilter());
+//                c.setRouteFilter(spamFilterFactory.createRouteFilter());
+//            } else {
+//                // If the connection isn't allowed now, close it.
+//                c.close();
+//            }
         }
         
         // TODO: notify DownloadManager & UploadManager about new banned IP ranges
     }
 
     public void reloadIPFilter() {
-        ipFilter.get().refreshHosts(new IPFilter.IPFilterCallback() {
-            public void ipFiltersLoaded() {
-                adjustSpamFilters();
-            }
-        });
+//        ipFilter.get().refreshHosts(new IPFilter.IPFilterCallback() {
+//            public void ipFiltersLoaded() {
+//                adjustSpamFilters();
+//            }
+//        });
     }
 
 
     public boolean isAllowed(InetAddress host) {
-        return ipFilter.get().allow(host.getAddress());
+        return false;//ipFilter.get().allow(host.getAddress());
     }
 
     public void blockHost(String host) {
@@ -79,7 +77,7 @@ public class SpamServicesImpl implements SpamServices {
     }
 
     public boolean isBlocked(String host) {
-        return ipFilter.get().isBlocked(host);
+        return false;//ipFilter.get().isBlocked(host);
     }
     
     public void unblockHost(String host) {
@@ -96,7 +94,7 @@ public class SpamServicesImpl implements SpamServices {
     
     @Override
     public boolean isHostile(String host) {
-        return ipFilter.get().isBlocked(host);
+        return false;//ipFilter.get().isBlocked(host);
     }
 
 }
