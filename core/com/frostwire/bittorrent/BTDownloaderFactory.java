@@ -9,7 +9,6 @@ import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.util.TorrentUtils;
 
-import com.frostwire.gui.download.bittorrent.BTDownloadMediator;
 import com.limegroup.gnutella.SaveLocationException;
 import com.limegroup.gnutella.settings.SharingSettings;
 
