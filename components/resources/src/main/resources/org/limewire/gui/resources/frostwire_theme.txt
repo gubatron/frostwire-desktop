@@ -9,7 +9,7 @@
 # will make the color and font names below much easier to 
 # understand.
 ##################################################################
-# Frostwire_theme (VER 1.4)
+# FrostWire_theme (VER 1.4)
 THEME_VERSION=2
 
 PRIMARY1_COLOR=#7CACDF

@@ -21,7 +21,7 @@ public final class PlasticThemeSettings {
     private static MemorySettingsFactory FACTORY;
 
     static {
-        InputStream inputStream = PlasticThemeSettings.class.getResourceAsStream("frostwire_pro_theme.txt");
+        InputStream inputStream = PlasticThemeSettings.class.getResourceAsStream("/org/limewire/gui/resources/frostwire_theme.txt");
         FACTORY = new MemorySettingsFactory(inputStream);
     }
 
