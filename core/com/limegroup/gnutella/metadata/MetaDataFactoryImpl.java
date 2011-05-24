@@ -11,10 +11,6 @@ import com.limegroup.gnutella.metadata.audio.reader.AudioDataReader;
 import com.limegroup.gnutella.metadata.audio.reader.MP3MetaData;
 import com.limegroup.gnutella.metadata.audio.reader.OGGMetaData;
 import com.limegroup.gnutella.metadata.audio.reader.WMAMetaData;
-import com.limegroup.gnutella.metadata.audio.writer.FlacDataEditor;
-import com.limegroup.gnutella.metadata.audio.writer.M4ADataEditor;
-import com.limegroup.gnutella.metadata.audio.writer.MP3DataEditor;
-import com.limegroup.gnutella.metadata.audio.writer.OGGDataEditor;
 import com.limegroup.gnutella.metadata.video.reader.MOVMetaData;
 import com.limegroup.gnutella.metadata.video.reader.MPEGMetaData;
 import com.limegroup.gnutella.metadata.video.reader.OGMMetaData;
@@ -29,21 +25,6 @@ import com.limegroup.gnutella.xml.LimeXMLUtils;
 public class MetaDataFactoryImpl implements MetaDataFactory {
 
     private static final Log LOG = LogFactory.getLog(MetaDataFactory.class); 
-    
-    /**
-     * factory method which returns an instance of MetaDataEditor which
-     * should be used with the specific file
-     * @param name the name of the file to be annotated
-     * @return the MetaDataEditor that will do the annotation.  null if the
-     * lime xml repository should be used.
-     */
-    public MetaWriter getEditorForFile(String name) {
-        if (LimeXMLUtils.isSupportedAudioFormat(name))
-            return getAudioEditorForFile(name);
-        //add video types here
-        return null;
-        
-    }
     
     /** Creates MetaData for the file, if possible. */  
     public MetaReader parse(File f) throws IOException {
@@ -71,22 +52,6 @@ public class MetaDataFactoryImpl implements MetaDataFactory {
             else if(p.hasAudio())
                 return new WMAMetaData(p);
         }
-        return null;
-    }
-    
-    /**
-     * Returns the audio editor for the file if an editor exists
-     * for that file type. Returns null if no editor exists
-     */
-    private MetaWriter getAudioEditorForFile(String name) {
-        if (LimeXMLUtils.isMP3File(name))
-            return new MP3DataEditor();
-        if (LimeXMLUtils.isOGGFile(name))
-            return new OGGDataEditor();
-        if (LimeXMLUtils.isM4AFile(name))
-            return new M4ADataEditor();
-        if (LimeXMLUtils.isFLACFile(name))
-            return new FlacDataEditor();
         return null;
     }
     
