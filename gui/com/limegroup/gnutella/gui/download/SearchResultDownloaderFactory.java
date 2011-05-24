@@ -10,7 +10,6 @@ import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.SaveLocationException;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
-import com.limegroup.gnutella.settings.SharingSettings;
 
 /**
  * Implements the DownloaderFactory interface to start downloads from
@@ -51,18 +50,18 @@ public class SearchResultDownloaderFactory implements GuiDownloaderFactory {
 	 * is used.
 	 */
 	public File getSaveFile() {
-		return new File(saveDir != null ? saveDir : SharingSettings.getSaveDirectory(fileName),
-				fileName);
+		return null;// new File(saveDir != null ? saveDir : SharingSettings.getSaveDirectory(fileName),
+				//fileName);
 	}
 
 	public void setSaveFile(File saveFile) {
-		File parentDir = saveFile.getParentFile();
-		fileName = saveFile.getName();
-		if (SharingSettings.getSaveDirectory(fileName).equals(parentDir)) {
-			saveDir = null;
-		} else {
-			saveDir = parentDir;
-		}
+//		File parentDir = saveFile.getParentFile();
+//		fileName = saveFile.getName();
+//		if (SharingSettings.getSaveDirectory(fileName).equals(parentDir)) {
+//			saveDir = null;
+//		} else {
+//			saveDir = parentDir;
+//		}
 	}
 
 

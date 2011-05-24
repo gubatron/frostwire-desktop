@@ -1,9 +1,7 @@
 package com.frostwire;
 
 import java.awt.GraphicsEnvironment;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -12,12 +10,10 @@ import java.util.Map;
 
 import org.jdesktop.jdic.desktop.Desktop;
 import org.limewire.collection.SortedList;
-import org.limewire.io.IOUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.bittorrent.settings.BittorrentSettings;
-import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.http.HTTPUtils;
@@ -150,29 +146,6 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
 		} catch (Exception e) {
 			GUIMediator.launchFile(file);
 		}
-	}
-	
-	public static void correctIndividuallySharedFiles() {
-	    correctIndividuallySharedFiles(SharingSettings.getSaveDirectory());
-	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getDocumentMediaType()).getValue());
-	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getProgramMediaType()).getValue());
-	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getAudioMediaType()).getValue());
-	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getVideoMediaType()).getValue());
-	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getImageMediaType()).getValue());
-	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getTorrentMediaType()).getValue());
-	}
-	
-	public static void correctIndividuallySharedFiles(File directory) {
-	    if (!SharingSettings.SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES.getValue()) {
-            File[] files = directory.listFiles();
-            if (files != null) {
-                for (File f : files) {
-                    GuiCoreMediator.getFileManager().removeIndividuallySharedFile(f);
-                }
-            }
-        }
-	    
-	    GuiCoreMediator.getFileManager().loadSettings();
 	}
 	
 	public static void showTorrentDetails(long delay, 

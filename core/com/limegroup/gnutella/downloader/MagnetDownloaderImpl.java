@@ -19,7 +19,6 @@ import com.limegroup.gnutella.MessageRouter;
 import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.SaveLocationException;
-import com.limegroup.gnutella.SaveLocationManager;
 import com.limegroup.gnutella.SavedFileManager;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.UrnCache;
@@ -83,7 +82,7 @@ class MagnetDownloaderImpl extends ManagedDownloaderImpl implements MagnetDownlo
      * final file location 
      */
 	@Inject
-    MagnetDownloaderImpl(SaveLocationManager saveLocationManager, DownloadManager downloadManager,
+    MagnetDownloaderImpl(DownloadManager downloadManager,
             FileManager fileManager, 
             DownloadCallback downloadCallback, NetworkManager networkManager,
             AlternateLocationFactory alternateLocationFactory,
@@ -97,7 +96,7 @@ class MagnetDownloaderImpl extends ManagedDownloaderImpl implements MagnetDownlo
             ScheduledExecutorService backgroundExecutor, Provider<MessageRouter> messageRouter,
             Provider<HashTreeCache> tigerTreeCache, ApplicationServices applicationServices,
             RemoteFileDescFactory remoteFileDescFactory, Provider<PushList> pushListProvider) {
-        super(saveLocationManager, downloadManager, fileManager, 
+        super(downloadManager, fileManager, 
                 downloadCallback, networkManager, alternateLocationFactory, requeryManagerFactory,
                 queryRequestFactory, onDemandUnicaster, downloadWorkerFactory, altLocManager,
                 contentManager, sourceRankerFactory, urnCache, savedFileManager,
@@ -166,7 +165,6 @@ class MagnetDownloaderImpl extends ManagedDownloaderImpl implements MagnetDownlo
      * NOTE: this calls HTTPUtils.contentLength which opens a URL and calls Head on the
      * link to determine the file length. This is a blocking call!
      */
-    @SuppressWarnings("deprecation")
     private RemoteFileDesc createRemoteFileDesc(String defaultURL,
         String filename, URN urn)
             throws IOException, HttpException, InterruptedException, URISyntaxException {

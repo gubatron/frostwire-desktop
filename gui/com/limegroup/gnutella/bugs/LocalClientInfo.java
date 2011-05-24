@@ -25,7 +25,6 @@ import org.limewire.util.VersionUtils;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.settings.LimeProps;
-import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
@@ -58,7 +57,7 @@ public final class LocalClientInfo extends LocalAbstractInfo {
         _nonHeapUsage = "" + ManagementFactory.getMemoryMXBean().getNonHeapMemoryUsage();
         _settingsFreeSpace = getFreeSpace(CommonUtils.getUserSettingsDir());
         _incompleteFreeSpace = "";//getFreeSpace(SharingSettings.INCOMPLETE_DIRECTORY.getValue());
-        _downloadFreeSpace = getFreeSpace(SharingSettings.getSaveDirectory());
+        //_downloadFreeSpace = getFreeSpace(SharingSettings.getSaveDirectory());
         
 	    
 	    //Store information about the bug and the current thread.

@@ -2,25 +2,18 @@ package com.limegroup.gnutella.gui.upload;
 
 import java.awt.event.ActionListener;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.swing.JPopupMenu;
 import javax.swing.table.TableCellRenderer;
 
-import org.limewire.io.ConnectableImpl;
-
 import com.google.inject.Inject;
-import com.limegroup.gnutella.PushEndpoint;
 import com.limegroup.gnutella.UploadServicesImpl;
 import com.limegroup.gnutella.Uploader;
-import com.limegroup.gnutella.downloader.CoreDownloaderFactory;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
-import com.limegroup.gnutella.gui.search.SearchMediator;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.tables.ProgressBarHolder;
@@ -28,7 +21,6 @@ import com.limegroup.gnutella.gui.tables.ProgressBarRenderer;
 import com.limegroup.gnutella.gui.tables.TableSettings;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.settings.SharingSettings;
-import com.limegroup.gnutella.uploader.HTTPUploader;
 
 /**
  * This class acts as a mediator between all of the components of the
@@ -54,8 +46,6 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 	 */
 	ActionListener CLEAR_LISTENER;
 	ActionListener BROWSE_LISTENER;
-
-	private CoreDownloaderFactory _coreDownloaderFactory;
 
 	private static final String UPLOAD_TITLE =
 	    I18n.tr("Uploads");
@@ -98,7 +88,7 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 	protected void buildListeners() {
 	    super.buildListeners();
 	    CLEAR_LISTENER = new ClearListener(this);
-	    BROWSE_LISTENER = new BrowseListener(this);
+	    BROWSE_LISTENER = null;//new BrowseListener(this);
 	}
 
 	/**
@@ -139,7 +129,6 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 	@Inject
 	public UploadMediator() {
 	    super("UPLOAD_MEDIATOR");
-	    _coreDownloaderFactory = GuiCoreMediator.getCore().getCoreDownloaderFactory();
 	    
 	    GUIMediator.addRefreshListener(this);
 	    ThemeMediator.addThemeObserver(this);
@@ -296,40 +285,6 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
 			
 		}
     }
-
-	/**
-	 * Browses all selected hosts (only once per host)
-	 * Moves display to the search window if a browse host was triggered
-	 */
-	void browseWithSelectedUploads() {
-	    boolean found = false;
-	    int[] sel = TABLE.getSelectedRows();
-	    Set<String> searched = new HashSet<String>( sel.length );
-	    for( int i = 0; i < sel.length; i++ ) {
-            Uploader uploader = DATA_MODEL.get(sel[i]).getInitializeObject();
-	        if ( uploader.isBrowseHostEnabled() ) {
-                String host = uploader.getHost();
-                if (host == null) {
-                    // host is null for firewalled downloader
-                    // TODO come up with a clean desing in the new UI where we don't have to know about the uploader
-                    // see LWC-834 for possible solutions
-                    if (uploader instanceof HTTPUploader) {
-                        PushEndpoint pushEndpoint = ((HTTPUploader)uploader).getPushEndpoint();
-                        if (!searched.contains(pushEndpoint.httpStringValue())) {
-                            SearchMediator.doBrowseHost(pushEndpoint);
-                            searched.add(pushEndpoint.httpStringValue());
-                            found = true;
-                        }
-                    }
-                } else if ( !searched.contains(host)) {
-	                SearchMediator.doBrowseHost(new ConnectableImpl(uploader), null );
-	                searched.add( host );
-	                found = true;
-	            }
-	        }
-	    }
-	    if ( found ) GUIMediator.instance().setWindow(GUIMediator.Tabs.SEARCH);
-	}
 
 	/**
 	 * Don't do anything on a double click.

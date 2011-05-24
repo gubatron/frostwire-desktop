@@ -5,14 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicReference;
 
 import org.limewire.util.CommonUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.settings.QuestionsHandler;
-import com.limegroup.gnutella.settings.SharingSettings;
 
 /**
  * This class handles prompting the user to enter a valid save directory.
@@ -25,56 +23,6 @@ public final class SaveDirectoryHandler {
      */
     private SaveDirectoryHandler() {}
 
-    /**
-     * Constructs a new window that prompts the user to enter a valid save
-     * directory.
-     *
-     * This doesn't return until the user has chosen a valid directory.
-     */
-    private static void showSaveDirectoryWindow() {
-        File dir = null;
-        while(!isSaveDirectoryValid(dir) || !showVistaWarningIfNeeded(dir)) {
-            final AtomicReference<File> dirRef = new AtomicReference<File>();
-            GUIMediator.safeInvokeAndWait(new Runnable() {
-                public void run() {
-                    GUIMediator.showError(I18n.tr("Your save folder is not valid. It may have been deleted, you may not have permissions to write to it, or there may be another problem. Please choose a different folder."));
-                    dirRef.set(showChooser());
-                }
-            });
-            dir = dirRef.get();
-            if(dir == null)
-                continue;
-            FileUtils.setWriteable(dir);
-        }
-    }
-
-    /**
-     * Shows the chooser & sets the save directory setting, adding the save
-     * directory as shared, also.
-     *
-     * @return the selected <tt>File</tt>, or <tt>null</tt> if there were
-     *  any problems
-     */
-    private static File showChooser() {
-        final AtomicReference<File> dirRef = new AtomicReference<File>();
-        GUIMediator.safeInvokeAndWait(new Runnable() {
-            public void run() {
-                dirRef.set(FileChooserHandler.getInputDirectory(null));                
-            }
-        });
-        
-        File dir = dirRef.get();
-        if(dir != null) {
-            try {
-                // updates Incomplete directory etc... 
-                SharingSettings.setSaveDirectory(dir);
-                //SharingSettings.DIRECTORIES_TO_SHARE.add(dir);
-                return dir;
-            } catch(IOException ignored) {}
-        }
-        return null;
-    }
-    
     /**
      * Utility method for checking whether or not the save directory is valid.
      * 
@@ -137,9 +85,9 @@ public final class SaveDirectoryHandler {
      * Makes sure that the user has a valid save directory.
      */
     public static void handleSaveDirectory() {    
-        File saveDir = SharingSettings.getSaveDirectory();
-        if(!isSaveDirectoryValid(saveDir) || !showVistaWarningIfNeeded(saveDir))
-            showSaveDirectoryWindow();
+//        File saveDir = SharingSettings.getSaveDirectory();
+//        if(!isSaveDirectoryValid(saveDir) || !showVistaWarningIfNeeded(saveDir))
+//            showSaveDirectoryWindow();
     }
     
     public static boolean isGoodVistaDirectory(File f) {

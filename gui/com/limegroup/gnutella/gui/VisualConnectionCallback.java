@@ -22,7 +22,6 @@ import com.limegroup.gnutella.Uploader;
 import com.limegroup.gnutella.browser.MagnetOptions;
 import com.limegroup.gnutella.connection.ConnectionLifecycleEvent;
 import com.limegroup.gnutella.connection.RoutedConnection;
-import com.limegroup.gnutella.gui.download.DownloaderUtils;
 import com.limegroup.gnutella.gui.logging.LogEvent;
 import com.limegroup.gnutella.gui.search.SearchInformation;
 import com.limegroup.gnutella.gui.search.SearchMediator;
@@ -563,7 +562,7 @@ public final class VisualConnectionCallback implements ActivityCallback {
 						}
 					}
 					else {
-						DownloaderUtils.createDownloader(magnets[i]);
+						//DownloaderUtils.createDownloader(magnets[i]);
 					}
 				}
 				if (magnets.length > 0) {

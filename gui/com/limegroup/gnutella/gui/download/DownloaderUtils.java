@@ -15,7 +15,6 @@ import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.IncompleteFileDesc;
 import com.limegroup.gnutella.SaveLocationException;
 import com.limegroup.gnutella.URN;
-import com.limegroup.gnutella.browser.MagnetOptions;
 import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
@@ -106,42 +105,6 @@ public class DownloaderUtils {
 		return createDownloader(factory, OSUtils.isAnyMac());
 	}
 	
-	/**
-	 * Tries to create a downloader for a magnet.
-	 * <p>
-	 * The magnet may also be {@link MagnetOptions#isDownloadable() not valid 
-	 * for downloading}, then a warning is displayed.
-	 * @param magnet
-	 * @return <code>null</code> if the magnet is is invalid or the user 
-	 * cancelled the process
-	 */
-	public static Downloader createDownloader(MagnetOptions magnet) {
-		String msg = magnet.getErrorMessage();
-		if (!magnet.isDownloadable()) {
-			if (msg == null) {
-				msg = magnet.toString();
-			}
-			// show warning and return
-			GUIMediator.showError(I18n.tr("Could not process bad MAGNET link {0}", msg));
-			return null;
-		}
-		if (msg != null) {
-			// show warning but proceed
-			GUIMediator.showWarning(I18n.tr("One or more URLs in the MAGNET link were invalid. Your file may not download correctly."));
-		}
-		MagnetDownloaderFactory factory = new MagnetDownloaderFactory(magnet);
-		if (magnet.getDisplayName() == null) {
-			Downloader dl = createDownloaderAs(factory);
-			if (dl != null && magnet.isHashOnly()) {
-				GUIMediator.showError(I18n.tr("FrostWire may not be able to start the download you have selected unless you start a search for it."));
-			}
-			return dl;
-		}
-		else {
-			return createDownloader(factory);
-		}
-	}
-
 	/**
 	 * Tries to create a downloader from a factory.
 	 * <p>

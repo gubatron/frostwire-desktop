@@ -1,19 +1,14 @@
 package com.limegroup.gnutella.downloader;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.limewire.io.InvalidDataException;
 import org.limewire.util.CommonUtils;
-import org.limewire.util.FileUtils;
-import org.limewire.util.Objects;
 
 import com.limegroup.gnutella.SaveLocationException;
-import com.limegroup.gnutella.SaveLocationManager;
 import com.limegroup.gnutella.downloader.serial.DownloadMemento;
-import com.limegroup.gnutella.settings.SharingSettings;
 
 /**
  * A basic implementation of CoreDownloader.
@@ -45,11 +40,8 @@ public abstract class AbstractCoreDownloader implements CoreDownloader {
 	
 	/** The default fileName this should use. */
 	private String defaultFileName;
-
-	private final SaveLocationManager saveLocationManager;
 	
-	protected AbstractCoreDownloader(SaveLocationManager saveLocationManager) {
-	    this.saveLocationManager = Objects.nonNull(saveLocationManager, "saveLocationManager");
+	protected AbstractCoreDownloader() {
 	}
 	
 	/* (non-Javadoc)
@@ -106,60 +98,60 @@ public abstract class AbstractCoreDownloader implements CoreDownloader {
      * @see com.limegroup.gnutella.downloader.CoreDownloader#setSaveFile(java.io.File, java.lang.String, boolean)
      */
 	public void setSaveFile(File saveDirectory, String fileName, boolean overwrite, boolean isTorrent) throws SaveLocationException {
-	    if (fileName == null) {
-	        fileName = getDefaultFileName();
-	    }
-	    
-	    if (saveDirectory == null) {
-	        saveDirectory = SharingSettings.getSaveDirectory(fileName);
-	    }
-	    
-	    try {
-	        fileName = CommonUtils.convertFileName(saveDirectory, fileName);
-	    }
-	    catch (IOException ie) {
-	        if (saveDirectory.isDirectory()) {
-	            throw new SaveLocationException(SaveLocationException.PATH_NAME_TOO_LONG, saveDirectory);
-	        }
-	        // if not a directory, give precedence to error messages below
-	    }
-	    
-	    if (!saveDirectory.isDirectory()) {
-	        if (saveDirectory.exists())
-	            throw new SaveLocationException(SaveLocationException.NOT_A_DIRECTORY, saveDirectory);
-	        throw new SaveLocationException(SaveLocationException.DIRECTORY_DOES_NOT_EXIST, saveDirectory);
-	    }
-	    
-	    File candidateFile = new File(saveDirectory, fileName);
-	    try {
-	        if (!FileUtils.isReallyParent(saveDirectory, candidateFile))
-	            throw new SaveLocationException(SaveLocationException.SECURITY_VIOLATION, candidateFile);
-	    } catch (IOException e) {
-	        throw new SaveLocationException(SaveLocationException.FILESYSTEM_ERROR, candidateFile);
-	    }
-		
-	    if (! FileUtils.setWriteable(saveDirectory))    
-	        throw new SaveLocationException(SaveLocationException.DIRECTORY_NOT_WRITEABLE,saveDirectory);
-		
-	    if (candidateFile.exists() && !isTorrent) {
-	        if (!candidateFile.isFile()) // TODO: how does this mix with torrents?
-	            throw new SaveLocationException(SaveLocationException.FILE_NOT_REGULAR, candidateFile);
-	        if (!overwrite)
-	            throw new SaveLocationException(SaveLocationException.FILE_ALREADY_EXISTS, candidateFile);
-	    }
-		
-		// check if another existing download is being saved to this download
-		// we ignore the overwrite flag on purpose in this case
-		if (saveLocationManager.isSaveLocationTaken(candidateFile) && !isTorrent) {
-			throw new SaveLocationException(SaveLocationException.FILE_IS_ALREADY_DOWNLOADED_TO, candidateFile);
-		}
-	     
-	    // Passed sanity checks, so save file
-	    synchronized (this) {
-	        if (!isRelocatable())
-	            throw new SaveLocationException(SaveLocationException.FILE_ALREADY_SAVED, candidateFile);
-	        this.saveFile = candidateFile;
-	    }
+//	    if (fileName == null) {
+//	        fileName = getDefaultFileName();
+//	    }
+//	    
+//	    if (saveDirectory == null) {
+//	        saveDirectory = SharingSettings.getSaveDirectory(fileName);
+//	    }
+//	    
+//	    try {
+//	        fileName = CommonUtils.convertFileName(saveDirectory, fileName);
+//	    }
+//	    catch (IOException ie) {
+//	        if (saveDirectory.isDirectory()) {
+//	            throw new SaveLocationException(SaveLocationException.PATH_NAME_TOO_LONG, saveDirectory);
+//	        }
+//	        // if not a directory, give precedence to error messages below
+//	    }
+//	    
+//	    if (!saveDirectory.isDirectory()) {
+//	        if (saveDirectory.exists())
+//	            throw new SaveLocationException(SaveLocationException.NOT_A_DIRECTORY, saveDirectory);
+//	        throw new SaveLocationException(SaveLocationException.DIRECTORY_DOES_NOT_EXIST, saveDirectory);
+//	    }
+//	    
+//	    File candidateFile = new File(saveDirectory, fileName);
+//	    try {
+//	        if (!FileUtils.isReallyParent(saveDirectory, candidateFile))
+//	            throw new SaveLocationException(SaveLocationException.SECURITY_VIOLATION, candidateFile);
+//	    } catch (IOException e) {
+//	        throw new SaveLocationException(SaveLocationException.FILESYSTEM_ERROR, candidateFile);
+//	    }
+//		
+//	    if (! FileUtils.setWriteable(saveDirectory))    
+//	        throw new SaveLocationException(SaveLocationException.DIRECTORY_NOT_WRITEABLE,saveDirectory);
+//		
+//	    if (candidateFile.exists() && !isTorrent) {
+//	        if (!candidateFile.isFile()) // TODO: how does this mix with torrents?
+//	            throw new SaveLocationException(SaveLocationException.FILE_NOT_REGULAR, candidateFile);
+//	        if (!overwrite)
+//	            throw new SaveLocationException(SaveLocationException.FILE_ALREADY_EXISTS, candidateFile);
+//	    }
+//		
+//		// check if another existing download is being saved to this download
+//		// we ignore the overwrite flag on purpose in this case
+//		if (saveLocationManager.isSaveLocationTaken(candidateFile) && !isTorrent) {
+//			throw new SaveLocationException(SaveLocationException.FILE_IS_ALREADY_DOWNLOADED_TO, candidateFile);
+//		}
+//	     
+//	    // Passed sanity checks, so save file
+//	    synchronized (this) {
+//	        if (!isRelocatable())
+//	            throw new SaveLocationException(SaveLocationException.FILE_ALREADY_SAVED, candidateFile);
+//	        this.saveFile = candidateFile;
+//	    }
 	}
 	
 	public synchronized File getSaveFile() {

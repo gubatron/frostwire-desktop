@@ -14,7 +14,6 @@ import com.limegroup.gnutella.gui.search.NamedMediaType;
 import com.limegroup.gnutella.gui.tables.AbstractDataLine;
 import com.limegroup.gnutella.gui.tables.IconAndNameHolder;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
-import com.limegroup.gnutella.settings.SharingSettings;
 
 /**
  * Displays the named mediatype in the first column and its download directory
@@ -94,7 +93,7 @@ public class MediaTypeDownloadDirDataLine extends AbstractDataLine<NamedMediaTyp
 
 	public void initialize(NamedMediaType obj) {
 		super.initialize(obj);
-		setting = SharingSettings.getFileSettingForMediaType(initializer.getMediaType());
+		setting = null;//SharingSettings.getFileSettingForMediaType(initializer.getMediaType());
 		isReset = false;
 	}
 

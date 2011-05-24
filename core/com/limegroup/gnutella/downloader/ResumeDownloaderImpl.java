@@ -14,9 +14,7 @@ import com.limegroup.gnutella.DownloadManager;
 import com.limegroup.gnutella.FileManager;
 import com.limegroup.gnutella.MessageRouter;
 import com.limegroup.gnutella.NetworkManager;
-import com.limegroup.gnutella.SaveLocationManager;
 import com.limegroup.gnutella.SavedFileManager;
-import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.UrnCache;
 import com.limegroup.gnutella.altlocs.AltLocManager;
 import com.limegroup.gnutella.altlocs.AlternateLocationFactory;
@@ -49,7 +47,7 @@ class ResumeDownloaderImpl extends ManagedDownloaderImpl implements ResumeDownlo
      * @param size the size of the completed file, which MUST be the result of
      *  IncompleteFileManager.getCompletedSize(incompleteFile) */
     @Inject
-    ResumeDownloaderImpl(SaveLocationManager saveLocationManager, DownloadManager downloadManager,
+    ResumeDownloaderImpl(DownloadManager downloadManager,
             FileManager fileManager, 
             DownloadCallback downloadCallback, NetworkManager networkManager,
             AlternateLocationFactory alternateLocationFactory, RequeryManagerFactory requeryManagerFactory,
@@ -61,7 +59,7 @@ class ResumeDownloaderImpl extends ManagedDownloaderImpl implements ResumeDownlo
              IPFilter ipFilter, @Named("backgroundExecutor") ScheduledExecutorService backgroundExecutor,
             Provider<MessageRouter> messageRouter, Provider<HashTreeCache> tigerTreeCache,
             ApplicationServices applicationServices, RemoteFileDescFactory remoteFileDescFactory, Provider<PushList> pushListProvider) {
-        super(saveLocationManager, downloadManager, fileManager,
+        super(downloadManager, fileManager,
                 downloadCallback, networkManager, alternateLocationFactory, requeryManagerFactory,
                 queryRequestFactory, onDemandUnicaster, downloadWorkerFactory, altLocManager,
                 contentManager, sourceRankerFactory, urnCache, savedFileManager,

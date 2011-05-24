@@ -1,6 +1,5 @@
 package com.limegroup.gnutella.downloader;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -16,9 +15,7 @@ import com.limegroup.gnutella.FileManager;
 import com.limegroup.gnutella.MessageRouter;
 import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.SaveLocationException;
-import com.limegroup.gnutella.SaveLocationManager;
 import com.limegroup.gnutella.SavedFileManager;
-import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.UrnCache;
 import com.limegroup.gnutella.altlocs.AltLocManager;
 import com.limegroup.gnutella.altlocs.AlternateLocationFactory;
@@ -28,7 +25,6 @@ import com.limegroup.gnutella.downloader.serial.InNetworkDownloadMemento;
 import com.limegroup.gnutella.downloader.serial.InNetworkDownloadMementoImpl;
 import com.limegroup.gnutella.filters.IPFilter;
 import com.limegroup.gnutella.guess.OnDemandUnicaster;
-import com.limegroup.gnutella.library.SharingUtils;
 import com.limegroup.gnutella.messages.QueryRequest;
 import com.limegroup.gnutella.messages.QueryRequestFactory;
 import com.limegroup.gnutella.tigertree.HashTreeCache;
@@ -48,7 +44,7 @@ class InNetworkDownloaderImpl extends ManagedDownloaderImpl implements InNetwork
      * @param pushListProvider TODO
      */
     @Inject
-    InNetworkDownloaderImpl(SaveLocationManager saveLocationManager, DownloadManager downloadManager,
+    InNetworkDownloaderImpl(DownloadManager downloadManager,
             FileManager fileManager, 
             DownloadCallback downloadCallback, NetworkManager networkManager,
             AlternateLocationFactory alternateLocationFactory, RequeryManagerFactory requeryManagerFactory,
@@ -60,7 +56,7 @@ class InNetworkDownloaderImpl extends ManagedDownloaderImpl implements InNetwork
              IPFilter ipFilter, @Named("backgroundExecutor") ScheduledExecutorService backgroundExecutor,
             Provider<MessageRouter> messageRouter, Provider<HashTreeCache> tigerTreeCache,
             ApplicationServices applicationServices, RemoteFileDescFactory remoteFileDescFactory, Provider<PushList> pushListProvider) throws SaveLocationException {
-        super(saveLocationManager, downloadManager, fileManager,
+        super(downloadManager, fileManager,
                 downloadCallback, networkManager, alternateLocationFactory, requeryManagerFactory,
                 queryRequestFactory, onDemandUnicaster, downloadWorkerFactory, altLocManager,
                 contentManager, sourceRankerFactory, urnCache, savedFileManager,

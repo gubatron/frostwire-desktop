@@ -1,11 +1,8 @@
 package com.limegroup.gnutella.gui.search;
 
 import java.io.File;
-import java.net.InetSocketAddress;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 import javax.swing.JComponent;
@@ -14,8 +11,6 @@ import javax.swing.SwingUtilities;
 import org.limewire.io.Connectable;
 import org.limewire.io.ConnectableImpl;
 import org.limewire.io.IpPort;
-import org.limewire.io.IpPortSet;
-import org.limewire.setting.FileSetting;
 import org.limewire.setting.evt.SettingEvent;
 import org.limewire.setting.evt.SettingListener;
 import org.limewire.util.I18NConvert;
@@ -33,10 +28,8 @@ import com.frostwire.bittorrent.websearch.mininova.MininovaVuzeResponse;
 import com.frostwire.gnutella.gui.filters.SearchFilter;
 import com.frostwire.gnutella.gui.filters.SearchFilterFactory;
 import com.frostwire.gnutella.gui.filters.SearchFilterFactoryImpl;
-import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.PushEndpoint;
 import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -44,15 +37,8 @@ import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.banner.Ad;
 import com.limegroup.gnutella.gui.banner.Banner;
-import com.limegroup.gnutella.gui.download.DownloaderUtils;
-import com.limegroup.gnutella.gui.download.GuiDownloaderFactory;
-import com.limegroup.gnutella.gui.download.SearchResultDownloaderFactory;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 import com.limegroup.gnutella.settings.SearchSettings;
-import com.limegroup.gnutella.settings.SharingSettings;
-import com.limegroup.gnutella.util.FrostWireUtils;
-import com.limegroup.gnutella.xml.LimeXMLDocument;
-import com.limegroup.gnutella.xml.LimeXMLProperties;
 
 /**
  * This class acts as a mediator between the various search components --
@@ -311,15 +297,6 @@ public final class SearchMediator {
         getSearchInputManager().panelReset(in);
     }
     
-
-    /**
-     * Performs a browse host on a push end point.  
-     */
-    public static void doBrowseHost(PushEndpoint pushEndpoint) {
-        InetSocketAddress inetSocketAddress = pushEndpoint.getInetSocketAddress();
-        Connectable host = inetSocketAddress != null ? new ConnectableImpl(inetSocketAddress, false) : null;
-        //doBrowseHost2(host, new GUID(pushEndpoint.getClientGUID()), pushEndpoint.getProxies(), pushEndpoint.supportsFWTVersion() >= RUDPUtils.VERSION);
-    }
 
     /**
      * Browses the passed host at the passed port.
@@ -733,135 +710,7 @@ public final class SearchMediator {
         
         line.takeAction(line, guid, saveDir, fileName, saveAs, searchInfo);
     }    
-    
-    public static void downloadGnutellaLine(TableLine line, GUID guid, File saveDir,
-            String fileName, boolean saveAs, SearchInformation searchInfo) 
-    {
-        if (line == null)
-            throw new NullPointerException("Tried to download null line");
-        
-		//  do not download if no license and user does not acknowledge
-		//if ((!line.isLicenseAvailable() && !line.isSecure()) && !GUIMediator.showFirstDownloadDialog())
-		//	return;
-		
-        RemoteFileDesc[] rfds;
-        Set<IpPort> alts = new IpPortSet();
-        List<RemoteFileDesc> otherRFDs = new LinkedList<RemoteFileDesc>();
-        
-        rfds = line.getAllRemoteFileDescs();
-        alts.addAll(line.getAlts());
-        
-        
-        // Iterate through RFDs and remove matching alts.
-        // Also store the first SHA1 capable RFD for collecting alts.
-        RemoteFileDesc sha1RFD = null;
-        for(int i = 0; i < rfds.length; i++) {
-            RemoteFileDesc next = rfds[i];
-			// this has been moved down until the download is actually started
-            // next.setDownloading(true);
-            next.setRetryAfter(0);
-            if(next.getSHA1Urn() != null)
-                sha1RFD = next;
-            alts.remove(next);
-        }
 
-        // If no SHA1 rfd, just use the first.
-        if(sha1RFD == null)
-            sha1RFD = rfds[0];
-        
-        // Now iterate through alts & add more rfds.
-        for(IpPort next : alts) {
-            otherRFDs.add(GuiCoreMediator.getRemoteFileDescFactory().createRemoteFileDesc(sha1RFD, next));
-        }
-		
-		// determine per mediatype directory if saveLocation == null
-		// and only pass it through if directory is different from default
-		// save directory == !isDefault()
-		if (saveDir == null && line.getNamedMediaType() != null) {
-			FileSetting fs = SharingSettings.getFileSettingForMediaType
-			(line.getNamedMediaType().getMediaType());
-			if (!fs.isDefault()) {
-				saveDir = fs.getValue();
-			}
-		}
-
-        downloadWithOverwritePrompt(rfds, otherRFDs, guid, saveDir, fileName, 
-                                    saveAs, searchInfo);
-    }
-
-    /**
-     * Downloads the given files, prompting the user if the file already exists.
-     * @param queryGUID the guid of the query you ar downloading rfds for.
-     * @param searchInfo The query used to find the file being downloaded.
-     */
-    private static void downloadWithOverwritePrompt(RemoteFileDesc[] rfds,
-                                                    List<? extends RemoteFileDesc> alts, GUID queryGUID,
-                                                    File saveDir, String fileName,
-                                                    boolean saveAs, 
-                                                    SearchInformation searchInfo) 
-    {
-        if (rfds.length < 1)
-            return;
-        if (containsExe(rfds)) {
-            if (!userWantsExeDownload())
-                return;
-        }
-
-        // Before proceeding...check if there is an rfd withpure metadata
-        // ie no file
-        int actLine = 0;
-        boolean pureFound = false;
-        for (; actLine < rfds.length; actLine++) {
-            if (rfds[actLine].getIndex() ==
-               LimeXMLProperties.DEFAULT_NONFILE_INDEX) {
-                // we have our line
-                pureFound = true;
-                break;
-            }
-        }
-        
-        if (pureFound) {
-            LimeXMLDocument doc = rfds[actLine].getXMLDocument();
-            if(doc != null) {
-                String action = doc.getAction();
-                if (action != null && !action.equals("")) { // valid action
-                    if (doc.actionDetailRequested())
-                        action = FrostWireUtils.addLWInfoToUrl(action, GuiCoreMediator.getApplicationServices().getMyGUID());
-                    if (action.length() > 255) // trim to make sure its not too long
-                        action = action.substring(0, 255);
-                    GUIMediator.openURL(action);
-                    return; // goodbye
-                }
-            }
-        }
-        // No pure metadata lines found...continue as usual...
-        GuiDownloaderFactory factory = new SearchResultDownloaderFactory
-        	(rfds, alts, queryGUID, saveDir, fileName); 
-		Downloader dl = saveAs ? DownloaderUtils.createDownloaderAs(factory) 
-				: DownloaderUtils.createDownloader(factory);
-		if (dl != null) {
-			setAsDownloading(rfds);
-            if (validateInfo(searchInfo) == QUERY_VALID)
-                dl.setAttribute(SEARCH_INFORMATION_KEY, searchInfo.toMap(), false);
-		}
-    }
-
-	private static void setAsDownloading(RemoteFileDesc[] rfds) {
-		for (int i = 0; i < rfds.length; i++) {
-			rfds[i].setDownloading(true);
-		}
-	}
-	
-    /**
-     * Returns true if any of the entries of rfd contains a .exe file.
-     */
-    private static boolean containsExe(RemoteFileDesc[] rfd) {
-        for (int i = 0; i < rfd.length; i++) {
-            if (rfd[i].getFileName().toLowerCase(Locale.US).endsWith("exe"))
-                return true;
-        }
-        return false;
-    }
 
     /**
      * Prompts the user if they want to download an .exe file.

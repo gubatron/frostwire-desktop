@@ -1,7 +1,5 @@
 package com.limegroup.gnutella;
 
-import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -18,12 +16,9 @@ import org.limewire.inspection.InspectablePrimitive;
 import org.limewire.lifecycle.ServiceRegistry;
 import org.limewire.listener.EventListener;
 import org.limewire.listener.EventListenerList;
-import org.limewire.net.ConnectionDispatcher;
-import org.limewire.nio.ByteBufferCache;
 import org.limewire.service.ErrorService;
 import org.limewire.setting.SettingsGroupManager;
 import org.limewire.statistic.StatisticAccumulator;
-import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 import org.limewire.util.SystemUtils;
 
@@ -33,20 +28,13 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 import com.limegroup.gnutella.auth.ContentManager;
-import com.limegroup.gnutella.browser.ControlRequestAcceptor;
 import com.limegroup.gnutella.browser.LocalAcceptor;
-import com.limegroup.gnutella.browser.LocalHTTPAcceptor;
-import com.limegroup.gnutella.downloader.PushDownloadManager;
 import com.limegroup.gnutella.filters.IPFilter;
-import com.limegroup.gnutella.library.SharingUtils;
 import com.limegroup.gnutella.licenses.LicenseFactory;
-import com.limegroup.gnutella.messages.StaticMessages;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.ConnectionSettings;
-import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.spam.RatingTable;
 import com.limegroup.gnutella.tigertree.HashTreeCache;
-import com.limegroup.gnutella.version.UpdateHandler;
 
 @Singleton
 public class LifecycleManagerImpl implements LifecycleManager {
@@ -72,34 +60,18 @@ public class LifecycleManagerImpl implements LifecycleManager {
     private final Provider<ActivityCallback> activityCallback;
     private final Provider<ContentManager> contentManager;
     private final Provider<MessageRouter> messageRouter;
-    private final Provider<UploadManager> uploadManager;
-    private final Provider<HTTPAcceptor> httpUploadAcceptor;
-    private final Provider<StaticMessages> staticMessages;
     private final Provider<ConnectionManager> connectionManager;
     private final Provider<DownloadManager> downloadManager;
-    private final Provider<PushDownloadManager> pushDownloadManager;
     private final Provider<NodeAssigner> nodeAssigner;
     private final Provider<HostCatcher> hostCatcher;
     private final Provider<FileManager> fileManager;
-    private final Provider<ConnectionDispatcher> connectionDispatcher;
-    private final Provider<UpdateHandler> updateHandler;
-    private final Provider<QueryUnicaster> queryUnicaster;
-    private final Provider<LocalHTTPAcceptor> localHttpAcceptor;
     private final Provider<LocalAcceptor> localAcceptor;
-    private final Provider<Pinger> pinger;
-    private final Provider<ConnectionWatchdog> connectionWatchdog;
-    private final Provider<SavedFileManager> savedFileManager;
     private final Provider<RatingTable> ratingTable;
     private final Provider<HashTreeCache> tigerTreeCache;
-    private final Provider<ByteBufferCache> byteBufferCache;
     private final Provider<NetworkManager> networkManager;
     private final Provider<Statistics> statistics;
-    private final Provider<ConnectionServices> connectionServices;
     private final Provider<SpamServices> spamServices;
-    private final Provider<ControlRequestAcceptor> controlRequestAcceptor;
     private final Provider<LimeCoreGlue> limeCoreGlue;
-    private final Provider<OutOfBandThroughputMeasurer> outOfBandThroughputMeasurer;
-    private final Provider<BrowseHostHandlerManager> browseHostHandlerManager;
     private final Provider<StatisticAccumulator> statisticAccumulator;
     
     /** A list of items that require running prior to shutting down LW. */
@@ -110,8 +82,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
 
 
     private final Provider<LicenseFactory> licenseFactory;
-
-    private final Provider<ConnectionDispatcher> localConnectionDispatcher;
     
     private final EventListenerList<LifeCycleEvent> listenerList;
     
@@ -140,37 +110,20 @@ public class LifecycleManagerImpl implements LifecycleManager {
             Provider<ActivityCallback> activityCallback,
             Provider<ContentManager> contentManager,
             Provider<MessageRouter> messageRouter,
-            Provider<UploadManager> uploadManager,
-            Provider<HTTPAcceptor> httpUploadAcceptor,
-            Provider<StaticMessages> staticMessages,
             Provider<ConnectionManager> connectionManager,
             Provider<DownloadManager> downloadManager,
-            Provider<PushDownloadManager> pushDownloadManager,
             Provider<NodeAssigner> nodeAssigner,
             Provider<HostCatcher> hostCatcher,
             Provider<FileManager> fileManager,
-            @Named("global") Provider<ConnectionDispatcher> connectionDispatcher,
-            @Named("local") Provider<ConnectionDispatcher> localConnectionDispatcher,
-            Provider<UpdateHandler> updateHandler,
-            Provider<QueryUnicaster> queryUnicaster,
-            Provider<LocalHTTPAcceptor> localHttpAcceptor,
             Provider<LocalAcceptor> localAcceptor,
-            Provider<Pinger> pinger,
-            Provider<ConnectionWatchdog> connectionWatchdog,
-            Provider<SavedFileManager> savedFileManager,
             Provider<RatingTable> ratingTable,
             Provider<HashTreeCache> tigerTreeCache,
-            Provider<ByteBufferCache> byteBufferCache,
             @Named("backgroundExecutor") Provider<ScheduledExecutorService> backgroundExecutor,
             Provider<NetworkManager> networkManager,
             Provider<Statistics> statistics,
-            Provider<ConnectionServices> connectionServices,
             Provider<SpamServices> spamServices,
-            Provider<ControlRequestAcceptor> controlRequestAcceptor,
             Provider<LicenseFactory> licenseFactory,
             Provider<LimeCoreGlue> limeCoreGlue,
-            Provider<OutOfBandThroughputMeasurer> outOfBandThroughputMeasurer,
-            Provider<BrowseHostHandlerManager> browseHostHandlerManager,
             Provider<StatisticAccumulator> statisticAccumulator,
             ServiceRegistry serviceRegistry) {
         
@@ -183,36 +136,19 @@ public class LifecycleManagerImpl implements LifecycleManager {
         this.activityCallback = activityCallback;
         this.contentManager = contentManager;
         this.messageRouter = messageRouter;
-        this.uploadManager = uploadManager;
-        this.httpUploadAcceptor = httpUploadAcceptor;
-        this.staticMessages = staticMessages;
         this.connectionManager = connectionManager;
         this.downloadManager = downloadManager;
-        this.pushDownloadManager = pushDownloadManager;
         this.nodeAssigner = nodeAssigner;
         this.hostCatcher = hostCatcher;
         this.fileManager = fileManager;
-        this.connectionDispatcher = connectionDispatcher;
-        this.localConnectionDispatcher = localConnectionDispatcher;
-        this.updateHandler = updateHandler;
-        this.queryUnicaster = queryUnicaster;
-        this.localHttpAcceptor = localHttpAcceptor;
         this.localAcceptor = localAcceptor;
-        this.pinger = pinger;
-        this.connectionWatchdog = connectionWatchdog;
-        this.savedFileManager = savedFileManager;
         this.ratingTable = ratingTable;
         this.tigerTreeCache = tigerTreeCache;
-        this.byteBufferCache = byteBufferCache;
         this.networkManager = networkManager;
         this.statistics = statistics;
-        this.connectionServices = connectionServices;
         this.spamServices = spamServices;
-        this.controlRequestAcceptor = controlRequestAcceptor;
         this.licenseFactory = licenseFactory;
         this.limeCoreGlue = limeCoreGlue;
-        this.outOfBandThroughputMeasurer = outOfBandThroughputMeasurer;
-        this.browseHostHandlerManager = browseHostHandlerManager;
         this.statisticAccumulator = statisticAccumulator;
     }
     /**/
@@ -487,16 +423,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
         startDone.set(true);
         startFinishedTime = System.currentTimeMillis();
     }
-    
-    private void initializeConnectionDispatcher() {
-        connectionDispatcher.get().addConnectionAcceptor(controlRequestAcceptor.get(),
-                true, "MAGNET","TORRENT");
-    }
-
-    private void initializeLocalConnectionDispatcher() {
-        localConnectionDispatcher.get().addConnectionAcceptor(controlRequestAcceptor.get(),
-                true, "MAGNET", "TORRENT");
-    }
 
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.LifecycleManager#shutdown()
@@ -560,7 +486,7 @@ public class LifecycleManagerImpl implements LifecycleManager {
         
         cleanupPreviewFiles();
         
-        cleanupTorrentMetadataFiles();
+        //cleanupTorrentMetadataFiles();
         
         downloadManager.get().writeSnapshot();
         
@@ -710,35 +636,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
         t.setDaemon(true);
         t.start();
         LOG.trace("Started manual GC thread.");
-    }
-
-    private void cleanupTorrentMetadataFiles() {
-        if(!fileManager.get().isLoadFinished()) {
-            return;
-        }
-        
-        FileFilter filter = new FileFilter() {
-            public boolean accept(File f) {
-                return "torrent".equals(FileUtils.getFileExtension(f));
-            }
-        };
-        
-        File[] file_list = SharingUtils.APPLICATION_SPECIAL_SHARE.listFiles(filter);
-        if(file_list == null) {
-            return;
-        }
-        long purgeLimit = System.currentTimeMillis() 
-            - SharingSettings.TORRENT_METADATA_PURGE_TIME.getValue()*24L*60L*60L*1000L;
-        File tFile;
-        
-        for(int i = 0; i < file_list.length; i++) {
-            tFile = file_list[i];
-            //Gubatron: watch out here, torrents might be deleted automagically here.
-            if(!fileManager.get().isFileShared(tFile) &&
-                    tFile.lastModified() < purgeLimit) {
-                tFile.delete();
-            }
-        }
     }
 
     /** Deletes all preview files. */

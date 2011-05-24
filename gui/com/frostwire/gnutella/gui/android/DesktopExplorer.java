@@ -43,6 +43,7 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.settings.SharingSettings;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 public class DesktopExplorer extends JPanel {
 
@@ -96,7 +97,7 @@ public class DesktopExplorer extends JPanel {
         _selectedIndexToRename = -1;
         
         File root = CommonUtils.getUserHomeDir();
-        _savedFolder = SharingSettings.DEFAULT_SAVE_DIR;
+        _savedFolder = FrostWireUtils.getLimeWireRootFolder();
         _documentsFolder = new File(root, "Documents");
         _musicFolder = new File(root, "Music");
         _picturesFolder = new File(root, "Pictures");

@@ -191,13 +191,13 @@ public class MagnetClipboardListener extends WindowAdapter {
     		public void run() {
     			if (!showDialog) {
     				for (MagnetOptions magnet : downloadCandidates) {
-						DownloaderUtils.createDownloader(magnet);
+						//TODO: DownloaderUtils.createDownloader(magnet);
 					}
     			}
     			else if (downloadCandidates.length > 0 ) {
 					List<MagnetOptions> userChosen = showStartDownloadsDialog(downloadCandidates);
 					for (MagnetOptions magnet : userChosen) {
-						DownloaderUtils.createDownloader(magnet);
+					  //TODO: DownloaderUtils.createDownloader(magnet);
 					}
 				}
 				boolean oneSearchStarted = false;

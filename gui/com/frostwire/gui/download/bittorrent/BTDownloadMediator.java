@@ -17,9 +17,7 @@ import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.bittorrent.AzureusStarter;
 import com.frostwire.bittorrent.BTDownloader;
 import com.frostwire.bittorrent.BTDownloaderFactory;
-import com.frostwire.bittorrent.TorrentUtil;
 import com.limegroup.gnutella.FileDetails;
-import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.FileDetailsProvider;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -487,7 +485,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
                     System.out.println("Error downloading the torrent: " + uri);
                 }
             }
-        }, uri.toString(), null, SharingSettings.getFileSettingForMediaType(MediaType.TYPE_TORRENTS).getValue().getAbsolutePath());
+        }, uri.toString(), null, SharingSettings.TORRENT_DATA_DIR_SETTING.getValue().getAbsolutePath());
 
         downloader.start();
     }

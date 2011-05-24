@@ -39,13 +39,11 @@ import com.limegroup.gnutella.Endpoint;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.FileManager;
 import com.limegroup.gnutella.GUID;
-import com.limegroup.gnutella.IncompleteFileDesc;
 import com.limegroup.gnutella.InsufficientDataException;
 import com.limegroup.gnutella.MessageRouter;
 import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.RemoteHostData;
-import com.limegroup.gnutella.SaveLocationManager;
 import com.limegroup.gnutella.SavedFileManager;
 import com.limegroup.gnutella.SpeedConstants;
 import com.limegroup.gnutella.URN;
@@ -54,7 +52,6 @@ import com.limegroup.gnutella.UrnSet;
 import com.limegroup.gnutella.altlocs.AltLocListener;
 import com.limegroup.gnutella.altlocs.AltLocManager;
 import com.limegroup.gnutella.altlocs.AlternateLocation;
-import com.limegroup.gnutella.altlocs.AlternateLocationCollection;
 import com.limegroup.gnutella.altlocs.AlternateLocationFactory;
 import com.limegroup.gnutella.altlocs.DirectAltLoc;
 import com.limegroup.gnutella.altlocs.DirectDHTAltLoc;
@@ -74,11 +71,9 @@ import com.limegroup.gnutella.messages.QueryRequest;
 import com.limegroup.gnutella.messages.QueryRequestFactory;
 import com.limegroup.gnutella.settings.ConnectionSettings;
 import com.limegroup.gnutella.settings.DownloadSettings;
-import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.tigertree.HashTree;
 import com.limegroup.gnutella.tigertree.HashTreeCache;
 import com.limegroup.gnutella.util.QueryUtils;
-import com.limegroup.gnutella.xml.LimeXMLDocument;
 
 /**
  * A smart download.  Tries to get a group of similar files by delegating
@@ -451,7 +446,7 @@ class ManagedDownloaderImpl extends AbstractCoreDownloader implements AltLocList
      * @param pushListProvider TODO
      */
     @Inject
-    protected ManagedDownloaderImpl(SaveLocationManager saveLocationManager,
+    protected ManagedDownloaderImpl(
             DownloadManager downloadManager, FileManager fileManager,
             DownloadCallback downloadCallback,
             NetworkManager networkManager, AlternateLocationFactory alternateLocationFactory,
@@ -465,7 +460,6 @@ class ManagedDownloaderImpl extends AbstractCoreDownloader implements AltLocList
             ScheduledExecutorService backgroundExecutor, Provider<MessageRouter> messageRouter,
             Provider<HashTreeCache> tigerTreeCache, ApplicationServices applicationServices,
             RemoteFileDescFactory remoteFileDescFactory, Provider<PushList> pushListProvider) {
-        super(saveLocationManager);
         this.downloadManager = downloadManager;
         this.fileManager = fileManager;
         this.downloadCallback = downloadCallback;
@@ -969,35 +963,6 @@ class ManagedDownloaderImpl extends AbstractCoreDownloader implements AltLocList
     private synchronized void initializeAlternateLocations() {
     }
     
-    /**
-     * Adds the alternate locations from the collections as possible
-     * download sources.
-     */
-    private void addLocationsToDownload(AlternateLocationCollection<? extends AlternateLocation> direct,
-                                        AlternateLocationCollection<? extends AlternateLocation>  push,
-                                        AlternateLocationCollection<? extends AlternateLocation>  fwt,
-                                        long size) {
-        List<RemoteFileDesc> locs =
-            new ArrayList<RemoteFileDesc>(direct.getAltLocsSize()+push.getAltLocsSize()+fwt.getAltLocsSize());
-
-        synchronized(direct) {
-            for(AlternateLocation loc : direct)
-                locs.add(loc.createRemoteFileDesc(size, remoteFileDescFactory));
-        }
-        
-        synchronized(push) {
-            for(AlternateLocation loc : push)
-                locs.add(loc.createRemoteFileDesc(size, remoteFileDescFactory));
-        }
-        
-        synchronized(fwt) {
-            for(AlternateLocation loc : fwt)
-                locs.add(loc.createRemoteFileDesc(size, remoteFileDescFactory));
-        }
-                
-        addPossibleSources(locs);
-    }
-
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.downloader.ManagedDownloader#conflictsWithIncompleteFile(java.io.File)
      */
@@ -1691,8 +1656,8 @@ class ManagedDownloaderImpl extends AbstractCoreDownloader implements AltLocList
      */
     @Override
     protected File getDefaultSaveFile() {
-        String fileName = getDefaultFileName(); 
-        return new File(SharingSettings.getSaveDirectory(fileName), fileName);
+        //String fileName = getDefaultFileName(); 
+        return null;//new File(SharingSettings.getSaveDirectory(fileName), fileName);
     }  
     
     //////////////////////////// Core Downloading Logic /////////////////////
@@ -2034,10 +1999,10 @@ class ManagedDownloaderImpl extends AbstractCoreDownloader implements AltLocList
      * Shares the newly downloaded file
      */
     protected void shareSavedFile(){
-		if (SharingSettings.SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES.getValue())
-			fileManager.addFileAlways(getSaveFile(), getXMLDocuments());
-		else
-		    fileManager.addFileIfShared(getSaveFile(), getXMLDocuments());
+//		if (SharingSettings.SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES.getValue())
+//			fileManager.addFileAlways(getSaveFile(), getXMLDocuments());
+//		else
+//		    fileManager.addFileIfShared(getSaveFile(), getXMLDocuments());
     }
 
     /** Removes all entries for incompleteFile from incompleteFileManager 
@@ -2458,26 +2423,6 @@ class ManagedDownloaderImpl extends AbstractCoreDownloader implements AltLocList
 
     }
             
-
-    /**
-     * Returns the union of all XML metadata documents from all hosts.
-     */
-    private synchronized List<LimeXMLDocument> getXMLDocuments() {
-        //TODO: we don't actually union here.  Also, should we only consider
-        //those locations that we download from?
-        List<LimeXMLDocument> allDocs = new ArrayList<LimeXMLDocument>();
-
-        // get all docs possible
-        for(RemoteFileDesc rfd : cachedRFDs) {
-			LimeXMLDocument doc = rfd.getXMLDocument();
-			if(doc != null)
-				allDocs.add(doc);
-        }
-
-        return allDocs;
-    }
-
-    /////////////////////////////Display Variables////////////////////////////
 
     public synchronized void setState(DownloadStatus newState) {
         setState(newState, Long.MAX_VALUE);
