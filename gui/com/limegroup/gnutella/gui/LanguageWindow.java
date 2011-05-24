@@ -19,8 +19,6 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 import com.frostwire.gnutella.gui.chat.ChatMediator;
-import com.jgoodies.forms.builder.DefaultFormBuilder;
-import com.jgoodies.forms.layout.FormLayout;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
 import com.limegroup.gnutella.settings.StatusBarSettings;
 
@@ -86,69 +84,69 @@ public class LanguageWindow extends JDialog {
     }
 
     private void initializeContent(Locale[] locales) {
-        FormLayout layout = new FormLayout("pref:grow");
-        DefaultFormBuilder builder = new DefaultFormBuilder(layout);
-
-        // add locales to model and select the best match 
-        DefaultComboBoxModel localeModel = new DefaultComboBoxModel();
-        int selectedScore = -1;
-        int selectedIndex = -1;
-        Locale systemLocale = Locale.getDefault();
-        for (int i = 0; i < locales.length; i++) {
-            localeModel.addElement(locales[i]);
-            int score = LanguageUtils.getMatchScore(currentLocale, locales[i]);
-            if (score > selectedScore) {
-                selectedScore = score;
-                selectedIndex = i;
-            }
-            if (locales[i].equals(systemLocale)) {
-                defaultLocaleSelectable = true;
-            }
-        }
-
-        localeComboBox = new JComboBox(localeModel);
-        localeComboBox.setRenderer(LanguageFlagFactory.getListRenderer());
-        localeComboBox.setMaximumRowCount(15);
-        if (selectedIndex != -1) {
-            localeComboBox.setSelectedIndex(selectedIndex);
-        }
-        builder.append(localeComboBox);
-        builder.nextLine();
-
-        // reflect the changed language right away so someone who doesn't speak
-        // English or whatever language it the default can understand what the
-        // buttons say
-        localeComboBox.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {
-                if (e.getStateChange() == ItemEvent.SELECTED) {
-                    Locale selected = (Locale) e.getItem();
-                    if (selected != null && !currentLocale.equals(selected)) {
-                        updateLabels(selected);
-                        // hide the flag by default for english locales to save
-                        // space in the status bar
-                        showLanguageCheckbox.setSelected(!LanguageUtils.isEnglishLocale(selected));
-                        currentLocale = selected;
-                    }
-                }
-            }
-        });
-
-        helpTranslateLabel = new URLLabel(TRANSLATE_URL, "");
-        builder.append(helpTranslateLabel);
-        builder.nextLine();
-
-        builder.append(Box.createVerticalStrut(15));
-        builder.nextLine();
-
-        showLanguageCheckbox = new JCheckBox();
-        showLanguageCheckbox.setSelected(StatusBarSettings.LANGUAGE_DISPLAY_ENABLED.getValue());
-        builder.append(showLanguageCheckbox);
-        builder.nextLine();
-
-        builder.append(Box.createVerticalStrut(5));
-        builder.nextLine();
-
-        mainPanel.add(builder.getPanel(), BorderLayout.CENTER);
+//        FormLayout layout = new FormLayout("pref:grow");
+//        DefaultFormBuilder builder = new DefaultFormBuilder(layout);
+//
+//        // add locales to model and select the best match 
+//        DefaultComboBoxModel localeModel = new DefaultComboBoxModel();
+//        int selectedScore = -1;
+//        int selectedIndex = -1;
+//        Locale systemLocale = Locale.getDefault();
+//        for (int i = 0; i < locales.length; i++) {
+//            localeModel.addElement(locales[i]);
+//            int score = LanguageUtils.getMatchScore(currentLocale, locales[i]);
+//            if (score > selectedScore) {
+//                selectedScore = score;
+//                selectedIndex = i;
+//            }
+//            if (locales[i].equals(systemLocale)) {
+//                defaultLocaleSelectable = true;
+//            }
+//        }
+//
+//        localeComboBox = new JComboBox(localeModel);
+//        localeComboBox.setRenderer(LanguageFlagFactory.getListRenderer());
+//        localeComboBox.setMaximumRowCount(15);
+//        if (selectedIndex != -1) {
+//            localeComboBox.setSelectedIndex(selectedIndex);
+//        }
+//        builder.append(localeComboBox);
+//        builder.nextLine();
+//
+//        // reflect the changed language right away so someone who doesn't speak
+//        // English or whatever language it the default can understand what the
+//        // buttons say
+//        localeComboBox.addItemListener(new ItemListener() {
+//            public void itemStateChanged(ItemEvent e) {
+//                if (e.getStateChange() == ItemEvent.SELECTED) {
+//                    Locale selected = (Locale) e.getItem();
+//                    if (selected != null && !currentLocale.equals(selected)) {
+//                        updateLabels(selected);
+//                        // hide the flag by default for english locales to save
+//                        // space in the status bar
+//                        showLanguageCheckbox.setSelected(!LanguageUtils.isEnglishLocale(selected));
+//                        currentLocale = selected;
+//                    }
+//                }
+//            }
+//        });
+//
+//        helpTranslateLabel = new URLLabel(TRANSLATE_URL, "");
+//        builder.append(helpTranslateLabel);
+//        builder.nextLine();
+//
+//        builder.append(Box.createVerticalStrut(15));
+//        builder.nextLine();
+//
+//        showLanguageCheckbox = new JCheckBox();
+//        showLanguageCheckbox.setSelected(StatusBarSettings.LANGUAGE_DISPLAY_ENABLED.getValue());
+//        builder.append(showLanguageCheckbox);
+//        builder.nextLine();
+//
+//        builder.append(Box.createVerticalStrut(5));
+//        builder.nextLine();
+//
+//        mainPanel.add(builder.getPanel(), BorderLayout.CENTER);
     }
 
     private void initializeButtons() {
