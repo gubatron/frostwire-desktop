@@ -2,8 +2,6 @@ package com.limegroup.gnutella;
 
 import java.net.InetAddress;
 
-import org.apache.http.protocol.HttpRequestHandler;
-
 /**
  * Defines the requirements for classes that manage Gnutella uploads. 
  */

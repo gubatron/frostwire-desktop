@@ -181,10 +181,8 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(UDPReplyHandlerCache.class).to(UDPReplyHandlerCacheImpl.class);
         bind(SocketProcessor.class).to(AcceptorImpl.class);
         bind(DownloadManager.class).to(DownloadManagerImpl.class).asEagerSingleton();
-        bind(BrowseHostHandlerManagerImpl.class).asEagerSingleton();
         bind(ReplyNumberVendorMessageFactory.class).to(ReplyNumberVendorMessageFactoryImpl.class);
         bind(GuidMapManager.class).to(GuidMapManagerImpl.class);
-        bind(BrowseHostHandlerManager.class).to(BrowseHostHandlerManagerImpl.class);
         bind(PushEndpointCache.class).to(PushEndpointCacheImpl.class);
         bind(MessageFactory.class).to(MessageFactoryImpl.class);
         bind(MessageReaderFactory.class).to(MessageReaderFactoryImpl.class);

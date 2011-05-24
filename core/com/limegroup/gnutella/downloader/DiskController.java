@@ -41,7 +41,7 @@ public class DiskController {
      */
     private final List<DelayedWrite> DELAYED = new LinkedList<DelayedWrite>();   
     /**  A cache for byte[]s. */
-    private final ByteArrayCache CACHE = new ByteArrayCache(512, HTTPDownloader.BUF_LENGTH);    
+    private final ByteArrayCache CACHE = new ByteArrayCache(512, 512);//HTTPDownloader.BUF_LENGTH);    
     /** a bunch of cached byte[]s for verifiable chunks */
     private final PowerOf2ByteArrayCache CHUNK_CACHE = new PowerOf2ByteArrayCache();
     /** The number of chunks scheduled to be written. */

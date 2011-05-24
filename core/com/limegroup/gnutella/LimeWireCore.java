@@ -425,10 +425,6 @@ public class LimeWireCore {
         return injector.getInstance(GuidMapManager.class);
     }
 
-    public BrowseHostHandlerManager getBrowseHostHandlerManager() {
-        return injector.getInstance(BrowseHostHandlerManager.class);
-    }
-
     public PushEndpointCache getPushEndpointCache() {
         return injector.getInstance(PushEndpointCache.class);
     }

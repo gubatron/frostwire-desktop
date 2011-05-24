@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import org.apache.http.HttpException;
 import org.limewire.util.CommonUtils;
 
 import com.limegroup.gnutella.gui.GUIMediator;

@@ -42,7 +42,6 @@ import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.SocketProcessor;
 import com.limegroup.gnutella.UDPService;
 import com.limegroup.gnutella.filters.IPFilter;
-import com.limegroup.gnutella.http.HttpClientListener;
 import com.limegroup.gnutella.messages.Message.Network;
 import com.limegroup.gnutella.messages.PushRequest;
 import com.limegroup.gnutella.messages.PushRequestImpl;
@@ -400,54 +399,6 @@ public class PushDownloadManager implements ConnectionAcceptor, PushedSocketHand
 //        }
     }
     
-    /**
-     * Listener for callbacks from http requests succeeding or failing.
-     * This will ensure that only enough proxies are contacted as necessary,
-     * and send through the network if necessary.
-     */
-    private class PushHttpClientListener implements HttpClientListener {
-        /** The HttpMethods that are being executed. */
-    	private final Collection<HttpUriRequest> methods;
-        /** Information about the push. */
-        private final PushData data;
-        
-    	PushHttpClientListener(Collection <? extends HttpUriRequest> methods, PushData data) {
-    		this.methods = new LinkedList<HttpUriRequest>(methods);
-    		this.data = data;
-    	}
-    	
-    	public boolean requestFailed(HttpUriRequest request, HttpResponse response, IOException exc) {
-    		LOG.warn("PushProxy request exception", exc);
-    		//httpExecutor.get().releaseResources(response);
-    		methods.remove(request);
-    		if (methods.isEmpty()) // all failed
-                sendPushThroughNetwork(data);
-            return true;
-    	}
-    	
-    	public boolean requestComplete(HttpUriRequest request, HttpResponse response) {
-    		methods.remove(request);
-    		int statusCode = response.getStatusLine().getStatusCode();
-    		//httpExecutor.get().releaseResources(response);
-    		if (statusCode == 202) {
-    			if(LOG.isInfoEnabled())
-    				LOG.info("Succesful push proxy: " + request);
-    			
-                
-                return false; // don't need to process any more methods.
-    		}
-            
-            
-    		if(LOG.isWarnEnabled())
-    		    LOG.warn("Invalid push proxy: " + request + ", response: " + response.getStatusLine().getStatusCode());
-
-    		if (methods.isEmpty()) // all failed 
-    		    sendPushThroughNetwork(data);
-            
-            return true; // try more.
-    	}
-    }
-     
     /** Accepts a socket that has had a GIV read off it already. */
     void handleGIV(Socket socket, GIVLine line) {
         String file = line.file;

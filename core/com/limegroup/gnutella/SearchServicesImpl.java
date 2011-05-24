@@ -35,7 +35,6 @@ public class SearchServicesImpl implements SearchServices {
     private final Provider<QueryStats> queryStats; 
     private final Provider<NetworkManager> networkManager;
     private final Provider<QueryRequestFactory> queryRequestFactory;
-    private final BrowseHostHandlerManager browseHostHandlerManager;
     private final OutOfBandStatistics outOfBandStatistics;
     
     @Inject
@@ -49,7 +48,6 @@ public class SearchServicesImpl implements SearchServices {
             Provider<QueryStats> queryStats,
             Provider<NetworkManager> networkManager,
             Provider<QueryRequestFactory> queryRequestFactory,
-            BrowseHostHandlerManager browseHostHandlerManager,
             OutOfBandStatistics outOfBandStatistics) {
         this.responseVerifier = responseVerifier;
         this.queryUnicaster = queryUnicaster;
@@ -61,24 +59,7 @@ public class SearchServicesImpl implements SearchServices {
         this.queryStats = queryStats;
         this.networkManager = networkManager;
         this.queryRequestFactory = queryRequestFactory;
-        this.browseHostHandlerManager = browseHostHandlerManager;
         this.outOfBandStatistics = outOfBandStatistics;
-    }
-
-    /* (non-Javadoc)
-     * @see com.limegroup.gnutella.SearchServices#doAsynchronousBrowseHost(org.limewire.io.Connectable, com.limegroup.gnutella.GUID, com.limegroup.gnutella.GUID, java.util.Set, boolean)
-     */
-    public BrowseHostHandler doAsynchronousBrowseHost(
-      final Connectable host, GUID guid, GUID serventID, 
-      final Set<? extends IpPort> proxies, final boolean canDoFWTransfer) {
-        final BrowseHostHandler handler = browseHostHandlerManager.createBrowseHostHandler(guid, serventID);
-        ThreadExecutor.startThread(new Runnable() {
-            public void run() {
-                handler.browseHost(host, proxies, canDoFWTransfer);
-            }
-        }, "BrowseHoster" );
-
-        return handler;
     }
 
     /* (non-Javadoc)

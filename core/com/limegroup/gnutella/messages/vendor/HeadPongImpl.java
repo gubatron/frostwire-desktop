@@ -24,7 +24,6 @@ import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.PushEndpoint;
 import com.limegroup.gnutella.PushEndpointFactory;
 import com.limegroup.gnutella.RemoteFileDesc;
-import com.limegroup.gnutella.downloader.DownloadWorker;
 import com.limegroup.gnutella.downloader.RemoteFileDescFactory;
 import com.limegroup.gnutella.messages.BadGGEPBlockException;
 import com.limegroup.gnutella.messages.BadGGEPPropertyException;
@@ -376,8 +375,8 @@ public class HeadPongImpl extends AbstractVendorMessage implements HeadPong {
         // if the rfd claims its busy, ping it again in a minute
         // (we're obviously using HeadPings, so its cheap to ping it sooner 
         // rather than later)
-        if (isBusy())
-            rfd.setRetryAfter(DownloadWorker.RETRY_AFTER_NONE_ACTIVE);
+//        if (isBusy())
+//            rfd.setRetryAfter(DownloadWorker.RETRY_AFTER_NONE_ACTIVE);
         rfd.setQueueStatus(getQueueStatus());
         rfd.setAvailableRanges(getRanges());
         rfd.setSerializeProxies();

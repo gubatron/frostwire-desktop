@@ -105,7 +105,7 @@ public final class ConnectionMediator extends AbstractTableMediator<ConnectionMo
         ADD_LISTENER = new AddListener();
         BROWSE_HOST_LISTENER = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                doBrowseHost();
+               // doBrowseHost();
             }
 	    };
     }
@@ -258,20 +258,9 @@ public final class ConnectionMediator extends AbstractTableMediator<ConnectionMo
 	}
 
     public void handleActionKey() {
-        doBrowseHost(); 
+        //doBrowseHost(); 
     }
-
-    /**
-     * get the first selected row and trigger a browse host
-     */
-    private void doBrowseHost() {
-        int[] rows = TABLE.getSelectedRows();
-        if(rows.length > 0) {
-            RoutedConnection c = DATA_MODEL.get(rows[0]).getInitializeObject();
-            GUIMediator.instance().doBrowseHost(c);
-        }
-    }
-
+    
 	/**
 	 * Override the default doRefresh so we can update the servent status label
 	 * (Uses doRefresh instead of refresh so this will only get called

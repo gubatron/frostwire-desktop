@@ -1,7 +1,6 @@
 package com.limegroup.gnutella.handshaking;
 
 import com.limegroup.gnutella.http.ConstantHTTPHeaderValue;
-import com.limegroup.gnutella.http.HTTPHeaderName;
 
 /**
  * Provides names for the headers used in the gnutella connection handshake
@@ -88,16 +87,16 @@ public final class HeaderNames {
      * HTTPHeaderName.CONTENT_ENCODING.httpStringValue()
      * in all handshaking classes is cumbersome.
      */
-    public static final String CONTENT_ENCODING =
-        HTTPHeaderName.CONTENT_ENCODING.httpStringValue();
+    public static final String CONTENT_ENCODING = "";
+        //HTTPHeaderName.CONTENT_ENCODING.httpStringValue();
         
     /**
      * Header for Accept-Encoding. Useful because typing
      * HTTPHeaderName.ACCEPT_ENCODING.httpStringValue()
      * in all handshaking classes is cumbersome.
      */
-    public static final String ACCEPT_ENCODING =
-        HTTPHeaderName.ACCEPT_ENCODING.httpStringValue();
+     public static final String ACCEPT_ENCODING = "";
+        //HTTPHeaderName.ACCEPT_ENCODING.httpStringValue();
         
     /**
      * The value for deflate -- the type of encoding we can read & write.

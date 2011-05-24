@@ -1780,14 +1780,6 @@ public final class GUIMediator {
 	}
 
 	/**
-	 * trigger a browse host based on address and port
-	 */
-	public void doBrowseHost(Connectable host) {
-		getMainFrame().setSelectedTab(GUIMediator.Tabs.SEARCH);
-		SearchMediator.doBrowseHost(host, null);
-	}
-
-	/**
 	 * safely run code synchronously in the event dispatching thread.
 	 */
 	public static void safeInvokeAndWait(Runnable runnable) {

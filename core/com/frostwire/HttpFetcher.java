@@ -21,6 +21,7 @@ import org.apache.http.HttpResponseInterceptor;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpHead;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.params.HttpClientParams;
 import org.apache.http.entity.FileEntity;
@@ -34,8 +35,6 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
-
-import com.limegroup.gnutella.http.HTTPHeaderName;
 
 /**
  * A Blocking HttpClient.
@@ -93,7 +92,7 @@ public class HttpFetcher {
 
 		HttpHost httpHost = new HttpHost(_uri.getHost(), _uri.getPort());
 		HttpGet httpGet = new HttpGet(_uri);
-		httpGet.addHeader(HTTPHeaderName.CONNECTION.httpStringValue(), "close");
+		httpGet.addHeader("Connection", "close");
 		
 		HttpParams params = httpGet.getParams();
 		HttpConnectionParams.setConnectionTimeout(params, TIMEOUT);

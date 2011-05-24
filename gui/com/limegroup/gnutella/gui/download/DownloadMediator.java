@@ -604,20 +604,6 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
 		}
 	}
 
-    /**
-     * Opens up a browse session with the selected hosts in the download
-     * window.
-     */
-    void browseSelectedDownloads() {
-        int[] sel = TABLE.getSelectedRows();
-        for(int i = 0; i < sel.length; i++) {
-            DownloadDataLine dd = DATA_MODEL.get(sel[i]);
-            Downloader downloader = dd.getInitializeObject();
-            RemoteFileDesc end = downloader.getBrowseEnabledHost();
-            if (end != null)
-                SearchMediator.doBrowseHost(end);
-        }
-    }
 
     /**
      * Handles a double-click event in the table.
@@ -891,7 +877,7 @@ public final class DownloadMediator extends AbstractTableMediator<DownloadModel,
 		}
 		
 		public void performAction(ActionEvent e) {
-			browseSelectedDownloads();
+			//browseSelectedDownloads();
 		}
 	}
 

@@ -14,15 +14,8 @@ public class LimeWireDownloadModule extends AbstractModule {
     
     @Override
     protected void configure() {
-        bind(ManagedDownloader.class).to(ManagedDownloaderImpl.class);
-        bind(InNetworkDownloader.class).to(InNetworkDownloaderImpl.class);
-        bind(MagnetDownloader.class).to(MagnetDownloaderImpl.class);
-        bind(ResumeDownloader.class).to(ResumeDownloaderImpl.class);
-        
         bind(RemoteFileDescFactory.class).to(RemoteFileDescFactoryImpl.class);
         bind(DownloadCallback.class).annotatedWith(Names.named("inNetwork")).to(InNetworkCallback.class);        
-        bind(DownloadWorkerFactory.class).to(DownloadWorkerFactoryImpl.class);
-        bind(HTTPDownloaderFactory.class).to(HTTPDownloaderFactoryImpl.class);
         bind(RequeryManagerFactory.class).to(RequeryManagerFactoryImpl.class);
         bind(PushedSocketHandlerRegistry.class).to(PushDownloadManager.class);
         bind(CoreDownloaderFactory.class).to(CoreDownloaderFactoryImpl.class);

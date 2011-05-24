@@ -228,7 +228,7 @@ public final class SearchMediator {
             int port = ipport.getPort();
             if(host != null && port != 0) {
                 GUIMediator.instance().setSearching(true);
-                reBrowseHost(new ConnectableImpl(ipport, false), rp);
+                //reBrowseHost(new ConnectableImpl(ipport, false), rp);
             }
         } else {
             GUIMediator.instance().setSearching(true);
@@ -238,86 +238,7 @@ public final class SearchMediator {
         return guidBytes;
     }
 
-    /**
-     * Browses the first selected host. Fails silently if couldn't browse.
-     */
-    static void doBrowseHost(ResultPanel rp) {
-        TableLine line = rp.getSelectedLine();
-        if(line == null)
-            return;
-            
-        // Get the browse-host RFD from the line.
-        RemoteFileDesc rfd = line.getBrowseHostEnabledRFD();
-        if(rfd == null)
-            return;
-        
-        // See if it is firewalled
-        byte[] serventIDBytes = rfd.getClientGUID();
-        // if the reply is to a multicast query, don't use any
-        // push proxies so we definitely will send a UDP push request
-        Set<? extends IpPort> proxies = rfd.isReplyToMulticast() ? 
-            IpPort.EMPTY_SET : rfd.getPushProxies();
-        GUID serventID = new GUID(serventIDBytes);        
-        doBrowseHost2(rfd, serventID, proxies, rfd.supportsFWTransfer());
-     }
-
-    /**
-     * Allows for browsing of a host from outside of the search package.
-     */
-    public static void doBrowseHost(final RemoteFileDesc rfd) {
-        doBrowseHost2(rfd,
-                      new GUID(rfd.getClientGUID()), rfd.getPushProxies(),
-                      rfd.supportsFWTransfer());
-    }
-
-
-    /**
-     * Allows for browsing of a host from outside of the search package
-     * without an rfd.
-     */
-    public static void doBrowseHost(Connectable connectable, GUID guid) {
-        if (guid == null)
-            doBrowseHost2(connectable, null, null, false);
-        else
-            doBrowseHost2(connectable, new GUID(guid.bytes()), null, false);
-    }
-
-    /**
-     * Re-browses the host.  Fails silently if browse failed...
-     * TODO: WILL NOT WORK FOR RE-BROWSES THAT REQUIRES A PUSH!!!
-     */
-    private static void reBrowseHost(Connectable host, ResultPanel in) {
-        // Update the GUID
-        final GUID guid = new GUID(GUID.makeGuid());
-        in.setGUID(guid);
-        GuiCoreMediator.getSearchServices().doAsynchronousBrowseHost(host, guid, 
-                                                   new GUID(GUID.makeGuid()), 
-                                                   null, false);
-                                         
-        getSearchInputManager().panelReset(in);
-    }
-    
-
-    /**
-     * Browses the passed host at the passed port.
-     * Fails silently if couldn't browse.
-     * @param host The host to browse, can be null for firewalled endpoints
-     * @param port The port at which to browse
-     */
-    static private void doBrowseHost2(Connectable host,
-                                      GUID serventID, 
-                                      Set<? extends IpPort> proxies, boolean canDoFWTransfer) {
-        // Update the GUI
-        GUID guid = new GUID(GUID.makeGuid());
-        String title = host != null ? host.getAddress() + ":" + host.getPort() : I18n.tr("Firewalled Host"); 
-        addBrowseHostTab(guid, title);
-        // Do the actual browse host
-       GuiCoreMediator.getSearchServices().doAsynchronousBrowseHost(
-                                    host, guid, serventID, proxies,
-                                    canDoFWTransfer);
-        
-
-    }
+  
 
     /**
      * Call this when a Browse Host fails.
