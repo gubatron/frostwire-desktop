@@ -429,7 +429,6 @@ class ManagedDownloaderImpl extends AbstractCoreDownloader implements AltLocList
     protected final SavedFileManager savedFileManager;
     protected final VerifyingFileFactory verifyingFileFactory;
     protected final DiskController diskController;
-    protected final IPFilter ipFilter;
     protected final ScheduledExecutorService backgroundExecutor;
     protected final Provider<MessageRouter> messageRouter;
     protected final Provider<HashTreeCache> tigerTreeCache;
@@ -456,7 +455,7 @@ class ManagedDownloaderImpl extends AbstractCoreDownloader implements AltLocList
             SourceRankerFactory sourceRankerFactory, UrnCache urnCache,
             SavedFileManager savedFileManager, VerifyingFileFactory verifyingFileFactory,
             DiskController diskController, 
-            IPFilter ipFilter, @Named("backgroundExecutor")
+            @Named("backgroundExecutor")
             ScheduledExecutorService backgroundExecutor, Provider<MessageRouter> messageRouter,
             Provider<HashTreeCache> tigerTreeCache, ApplicationServices applicationServices,
             RemoteFileDescFactory remoteFileDescFactory, Provider<PushList> pushListProvider) {
@@ -476,7 +475,6 @@ class ManagedDownloaderImpl extends AbstractCoreDownloader implements AltLocList
         this.savedFileManager = savedFileManager;
         this.verifyingFileFactory = verifyingFileFactory;
         this.diskController = diskController;
-        this.ipFilter = ipFilter;
         this.backgroundExecutor = backgroundExecutor;
         this.messageRouter = messageRouter;
         this.tigerTreeCache = tigerTreeCache;
@@ -1029,8 +1027,8 @@ class ManagedDownloaderImpl extends AbstractCoreDownloader implements AltLocList
      */
     protected boolean hostIsAllowed(RemoteFileDesc other) {
          // If this host is banned, don't add.
-        if ( !ipFilter.allow(other.getHost()) )
-            return false;            
+//        if ( !ipFilter.allow(other.getHost()) )
+//            return false;            
 
         if (networkManager.acceptedIncomingConnection() ||
                 !other.isFirewalled() ||

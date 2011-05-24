@@ -314,7 +314,6 @@ public class HostCatcher {
     private final Provider<ConnectionManager> connectionManager;
     private final Provider<UDPService> udpService;
     private final Provider<QueryUnicaster> queryUnicaster;
-    private final Provider<IPFilter> ipFilter;
     private final Provider<MulticastService> multicastService;
     private final UniqueHostPinger uniqueHostPinger;
     private final NetworkInstanceUtils networkInstanceUtils;
@@ -328,7 +327,6 @@ public class HostCatcher {
             Provider<ConnectionManager> connectionManager,
             Provider<UDPService> udpService,
             Provider<QueryUnicaster> queryUnicaster,
-            @Named("hostileFilter") Provider<IPFilter> ipFilter, // TODO: check if ipFilter isn't more appropriate
             Provider<MulticastService> multicastService,
             UniqueHostPinger uniqueHostPinger,
             UDPHostCacheFactory udpHostCacheFactory,
@@ -339,7 +337,6 @@ public class HostCatcher {
         this.connectionManager = connectionManager;
         this.udpService = udpService;
         this.queryUnicaster = queryUnicaster;
-        this.ipFilter = ipFilter;
         this.multicastService = multicastService;
         this.uniqueHostPinger = uniqueHostPinger;
         this.pingRequestFactory = pingRequestFactory;
@@ -950,10 +947,10 @@ public class HostCatcher {
         if (networkInstanceUtils.isMe(addr, host.getPort()))
             return false;
 
-        //Skip if this host is banned.
-        if (!ipFilter.get().allow(addr))
-            return false;  
-        
+//        //Skip if this host is banned.
+//        if (!ipFilter.get().allow(addr))
+//            return false;  
+//        
         synchronized(this) {
             // Don't add this host if it has previously failed.
             if(EXPIRED_HOSTS.contains(host)) {

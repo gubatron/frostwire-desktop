@@ -56,14 +56,14 @@ class ResumeDownloaderImpl extends ManagedDownloaderImpl implements ResumeDownlo
             ContentManager contentManager, SourceRankerFactory sourceRankerFactory,
             UrnCache urnCache, SavedFileManager savedFileManager,
             VerifyingFileFactory verifyingFileFactory, DiskController diskController,
-             IPFilter ipFilter, @Named("backgroundExecutor") ScheduledExecutorService backgroundExecutor,
+             @Named("backgroundExecutor") ScheduledExecutorService backgroundExecutor,
             Provider<MessageRouter> messageRouter, Provider<HashTreeCache> tigerTreeCache,
             ApplicationServices applicationServices, RemoteFileDescFactory remoteFileDescFactory, Provider<PushList> pushListProvider) {
         super(downloadManager, fileManager,
                 downloadCallback, networkManager, alternateLocationFactory, requeryManagerFactory,
                 queryRequestFactory, onDemandUnicaster, downloadWorkerFactory, altLocManager,
                 contentManager, sourceRankerFactory, urnCache, savedFileManager,
-                verifyingFileFactory, diskController, ipFilter, backgroundExecutor, messageRouter,
+                verifyingFileFactory, diskController, backgroundExecutor, messageRouter,
                 tigerTreeCache, applicationServices, remoteFileDescFactory, pushListProvider);
     }
     

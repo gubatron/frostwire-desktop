@@ -158,7 +158,6 @@ public class UDPService implements ReadWriteObserver {
     
     private final NetworkManager networkManager;
     private final Provider<MessageDispatcher> messageDispatcher;
-    private final Provider<IPFilter> hostileFilter;
     private final Provider<ConnectionManager> connectionManager;
     private final Provider<MessageRouter> messageRouter;
     private final Provider<Acceptor> acceptor;
@@ -183,7 +182,6 @@ public class UDPService implements ReadWriteObserver {
 	@Inject
     public UDPService(NetworkManager networkManager,
             Provider<MessageDispatcher> messageDispatcher,
-            @Named("hostileFilter") Provider<IPFilter> hostileFilter,
             Provider<ConnectionManager> connectionManager,
             Provider<MessageRouter> messageRouter, Provider<Acceptor> acceptor,
             Provider<QueryUnicaster> queryUnicaster,
@@ -194,7 +192,6 @@ public class UDPService implements ReadWriteObserver {
             NetworkInstanceUtils networkInstanceUtils) {
         this.networkManager = networkManager;
         this.messageDispatcher = messageDispatcher;
-        this.hostileFilter = hostileFilter;
         this.connectionManager = connectionManager;
         this.messageRouter = messageRouter;
         this.acceptor = acceptor;
@@ -355,9 +352,9 @@ public class UDPService implements ReadWriteObserver {
                 if (!NetworkUtils.isValidPort(addr.getPort()))
                     continue;
 
-                // don't go further if filtered.
-                if (!hostileFilter.get().allow(addr.getAddress().getAddress()))
-                    return;
+//                // don't go further if filtered.
+//                if (!hostileFilter.get().allow(addr.getAddress().getAddress()))
+//                    return;
                 
                 byte[] data = BUFFER.array();
                 int length = BUFFER.position();
@@ -394,8 +391,8 @@ public class UDPService implements ReadWriteObserver {
 	 * Processes a single message.
 	 */
     protected void processMessage(Message message, InetSocketAddress addr) {
-        if (!hostileFilter.get().allow(message))
-            return;
+//        if (!hostileFilter.get().allow(message))
+//            return;
         if (message instanceof PingReply) 
             mutateGUID(message.getGUID(), addr.getAddress(), addr.getPort());
         updateState(message, addr);

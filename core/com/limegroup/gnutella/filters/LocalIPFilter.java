@@ -37,7 +37,6 @@ public final class LocalIPFilter extends AbstractIPFilter {
     /** List contained in hostiles.txt if any.  Loaded on startup only */ 
     private final IPList hostilesTXTHosts = new IPList();
     
-    private final IPFilter hostileNetworkFilter;
     private final ScheduledExecutorService ipLoader;
     /** Marker for whether or not hostiles need to be loaded. */
     private volatile boolean shouldLoadHostiles;
@@ -49,15 +48,13 @@ public final class LocalIPFilter extends AbstractIPFilter {
     
     /** Constructs an IPFilter that automatically loads the content. */
     @Inject
-    public LocalIPFilter(@Named("hostileFilter") IPFilter hostileNetworkFilter, 
+    public LocalIPFilter(
             @Named("backgroundExecutor") ScheduledExecutorService ipLoader) {
-        this.hostileNetworkFilter = hostileNetworkFilter;
         this.ipLoader = ipLoader;
         
         File hostiles = new File(FrostWireUtils.getUserSettingsDir(), "hostiles.txt");
         shouldLoadHostiles = hostiles.exists();
         
-        hostileNetworkFilter.refreshHosts();
         refreshHosts();
     }
     
@@ -74,7 +71,7 @@ public final class LocalIPFilter extends AbstractIPFilter {
     public void refreshHosts(final IPFilterCallback callback) {
         Runnable load = new Runnable() {
             public void run() {
-                hostileNetworkFilter.refreshHosts();
+                //hostileNetworkFilter.refreshHosts();
                 refreshHostsImpl();
                 if (callback != null)
                     callback.ipFiltersLoaded();
@@ -132,17 +129,15 @@ public final class LocalIPFilter extends AbstractIPFilter {
     
     /** Determines if any blacklisted hosts exist. */
     public boolean hasBlacklistedHosts() {
-        return 
-          (FilterSettings.USE_NETWORK_FILTER.getValue() && hostileNetworkFilter.hasBlacklistedHosts())
-          || !badHosts.isEmpty();
+        return false;
     }
     
     /** The logmin distance to bad or hostile ips. */
     public int logMinDistanceTo(IP ip) {
-        int minDistance = badHosts.logMinDistanceTo(ip);
-        if(FilterSettings.USE_NETWORK_FILTER.getValue())
-            minDistance = Math.min(minDistance, hostileNetworkFilter.logMinDistanceTo(ip));
-        return minDistance;
+//        int minDistance = badHosts.logMinDistanceTo(ip);
+//        if(FilterSettings.USE_NETWORK_FILTER.getValue())
+//            minDistance = Math.min(minDistance, hostileNetworkFilter.logMinDistanceTo(ip));
+        return 0;
     }
     
     protected boolean allowImpl(IP ip) {
@@ -155,11 +150,11 @@ public final class LocalIPFilter extends AbstractIPFilter {
             blacklistings++;
             return false;
         }
-
-        if (FilterSettings.USE_NETWORK_FILTER.getValue() && !hostileNetworkFilter.allow(ip)) {
-            netblockings++;
-            return false;
-        }
+//
+//        if (FilterSettings.USE_NETWORK_FILTER.getValue() && !hostileNetworkFilter.allow(ip)) {
+//            netblockings++;
+//            return false;
+//        }
 
         implicitings++;
         return true;

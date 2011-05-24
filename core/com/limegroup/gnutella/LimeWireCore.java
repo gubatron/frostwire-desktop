@@ -234,10 +234,6 @@ public class LimeWireCore {
         return injector.getInstance(IPFilter.class);
     }
 
-    public IPFilter getHostileFilter() {
-        return injector.getInstance(Key.get(IPFilter.class,Names.named("hostileFilter")));
-    }
-
     public NetworkUpdateSanityChecker getNetworkUpdateSanityChecker() {
         return injector.getInstance(NetworkUpdateSanityChecker.class);
     }

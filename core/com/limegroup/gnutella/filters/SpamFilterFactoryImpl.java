@@ -11,15 +11,12 @@ import com.limegroup.gnutella.settings.FilterSettings;
 public class SpamFilterFactoryImpl implements SpamFilterFactory {
     
     private final Provider<MutableGUIDFilter> mutableGUIDFilter;
-    private final Provider<HostileFilter> hostileFilter;
     private final Provider<LocalIPFilter> ipFilter;
 
     @Inject
     public SpamFilterFactoryImpl(Provider<MutableGUIDFilter> mutableGUIDFilter, 
-            Provider<HostileFilter> hostileFilter,
             Provider<LocalIPFilter> ipFilter) {
         this.mutableGUIDFilter = mutableGUIDFilter;
-        this.hostileFilter = hostileFilter;
         this.ipFilter = ipFilter;
     }
     
@@ -103,7 +100,7 @@ public class SpamFilterFactoryImpl implements SpamFilterFactory {
         //     buf.add(new BearShareFilter());
         
         // always filter hostiles
-        buf.add(hostileFilter.get());
+        //buf.add(hostileFilter.get());
 
         return compose(buf);
     }

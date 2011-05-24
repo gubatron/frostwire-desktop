@@ -92,7 +92,7 @@ class MagnetDownloaderImpl extends ManagedDownloaderImpl implements MagnetDownlo
             SourceRankerFactory sourceRankerFactory, UrnCache urnCache,
             SavedFileManager savedFileManager, VerifyingFileFactory verifyingFileFactory,
             DiskController diskController, 
-            IPFilter ipFilter, @Named("backgroundExecutor")
+            @Named("backgroundExecutor")
             ScheduledExecutorService backgroundExecutor, Provider<MessageRouter> messageRouter,
             Provider<HashTreeCache> tigerTreeCache, ApplicationServices applicationServices,
             RemoteFileDescFactory remoteFileDescFactory, Provider<PushList> pushListProvider) {
@@ -100,7 +100,7 @@ class MagnetDownloaderImpl extends ManagedDownloaderImpl implements MagnetDownlo
                 downloadCallback, networkManager, alternateLocationFactory, requeryManagerFactory,
                 queryRequestFactory, onDemandUnicaster, downloadWorkerFactory, altLocManager,
                 contentManager, sourceRankerFactory, urnCache, savedFileManager,
-                verifyingFileFactory, diskController, ipFilter, backgroundExecutor, messageRouter,
+                verifyingFileFactory, diskController, backgroundExecutor, messageRouter,
                 tigerTreeCache, applicationServices, remoteFileDescFactory, pushListProvider);
     }
     
