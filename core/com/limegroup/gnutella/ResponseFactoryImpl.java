@@ -39,7 +39,6 @@ import com.limegroup.gnutella.messages.GGEP;
 import com.limegroup.gnutella.messages.HUGEExtension;
 import com.limegroup.gnutella.messages.IntervalEncoder;
 import com.limegroup.gnutella.settings.MessageSettings;
-import com.limegroup.gnutella.uploader.HTTPHeaderUtils;
 import com.limegroup.gnutella.util.DataUtils;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
 import com.limegroup.gnutella.xml.LimeXMLDocumentFactory;
@@ -429,13 +428,13 @@ public class ResponseFactoryImpl implements ResponseFactory {
                     "null or empty locations and small size");
 
         GGEP info = new GGEP(true);
-        if (ggep.locations.size() > 0) {
-            byte[] output = NetworkUtils.packIpPorts(ggep.locations);
-            info.put(GGEP.GGEP_HEADER_ALTS, output);
-            BitNumbers bn = HTTPHeaderUtils.getTLSIndices(ggep.locations);
-            if (!bn.isEmpty())
-                info.put(GGEP.GGEP_HEADER_ALTS_TLS, bn.toByteArray());
-        }
+//        if (ggep.locations.size() > 0) {
+//            byte[] output = NetworkUtils.packIpPorts(ggep.locations);
+//            info.put(GGEP.GGEP_HEADER_ALTS, output);
+//            BitNumbers bn = HTTPHeaderUtils.getTLSIndices(ggep.locations);
+//            if (!bn.isEmpty())
+//                info.put(GGEP.GGEP_HEADER_ALTS_TLS, bn.toByteArray());
+//        }
 
         if (ggep.createTime > 0)
             info.put(GGEP.GGEP_HEADER_CREATE_TIME, ggep.createTime / 1000);

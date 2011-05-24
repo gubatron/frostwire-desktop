@@ -13,8 +13,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.params.HttpClientParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.util.EntityUtils;
-import org.limewire.http.LimeHttpClient;
-import org.limewire.http.SimpleLimeHttpClient;
 
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.util.FrostWireUtils;
@@ -75,49 +73,50 @@ final class ServletAccessor {
 	 *                  local machine to send to the remote server
 	 */
 	synchronized RemoteClientInfo getRemoteBugInfo(LocalClientInfo localInfo) {
-        RemoteClientInfo remoteInfo = new RemoteClientInfo();
-        HttpResponse response = null;
-        LimeHttpClient client = ALLOW_NIO ? 
-                GuiCoreMediator.getLimeHttpClient() :
-                new SimpleLimeHttpClient();
-        try {
-            List<NameValuePair> params = localInfo.getPostRequestParams();
-            HttpPost post = new HttpPost(SERVLET_URL);
-            post.addHeader("Cache-Control", "no-cache");
-            post.addHeader("User-Agent", FrostWireUtils.getHttpServer());
-            post.addHeader("Content-Type",
-                    "application/x-www-form-urlencoded; charset=UTF-8");
-            post.setEntity(new UrlEncodedFormEntity(params));
-
-            HttpConnectionParams.setConnectionTimeout(client.getParams(), CONNECT_TIMEOUT);
-            HttpClientParams.setRedirecting(client.getParams(), false);
-
-            response = client.execute(post);
-            String result;
-            if (response.getEntity() != null) {
-                result = EntityUtils.toString(response.getEntity());
-            } else {
-                result = null;
-            }
-            String body = result;
-            if (LOG.isDebugEnabled())
-                LOG.debug("Got response: " + response);
-            // process results if valid status code
-            if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK)
-                remoteInfo.addRemoteInfo(body);
-                // otherwise mark as server down.
-            else {
-                if (LOG.isWarnEnabled())
-                    LOG.warn("Servlet connect failed, code: " +
-                            response.getStatusLine().getStatusCode());
-                remoteInfo.connectFailed();
-            }
-		} catch(IOException e) {
-            fail(remoteInfo, e);
-        } finally {
-            client.releaseConnection(response);
-        }
-        return remoteInfo;
+//        RemoteClientInfo remoteInfo = new RemoteClientInfo();
+//        HttpResponse response = null;
+//        LimeHttpClient client = ALLOW_NIO ? 
+//                GuiCoreMediator.getLimeHttpClient() :
+//                new SimpleLimeHttpClient();
+//        try {
+//            List<NameValuePair> params = localInfo.getPostRequestParams();
+//            HttpPost post = new HttpPost(SERVLET_URL);
+//            post.addHeader("Cache-Control", "no-cache");
+//            post.addHeader("User-Agent", FrostWireUtils.getHttpServer());
+//            post.addHeader("Content-Type",
+//                    "application/x-www-form-urlencoded; charset=UTF-8");
+//            post.setEntity(new UrlEncodedFormEntity(params));
+//
+//            HttpConnectionParams.setConnectionTimeout(client.getParams(), CONNECT_TIMEOUT);
+//            HttpClientParams.setRedirecting(client.getParams(), false);
+//
+//            response = client.execute(post);
+//            String result;
+//            if (response.getEntity() != null) {
+//                result = EntityUtils.toString(response.getEntity());
+//            } else {
+//                result = null;
+//            }
+//            String body = result;
+//            if (LOG.isDebugEnabled())
+//                LOG.debug("Got response: " + response);
+//            // process results if valid status code
+//            if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK)
+//                remoteInfo.addRemoteInfo(body);
+//                // otherwise mark as server down.
+//            else {
+//                if (LOG.isWarnEnabled())
+//                    LOG.warn("Servlet connect failed, code: " +
+//                            response.getStatusLine().getStatusCode());
+//                remoteInfo.connectFailed();
+//            }
+//		} catch(IOException e) {
+//            fail(remoteInfo, e);
+//        } finally {
+//            client.releaseConnection(response);
+//        }
+//        return remoteInfo;
+	    return null;
     }
 
     private void fail(RemoteClientInfo remoteInfo, Throwable e) {

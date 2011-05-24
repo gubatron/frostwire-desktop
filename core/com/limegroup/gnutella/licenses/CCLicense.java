@@ -14,7 +14,6 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.limewire.http.LimeHttpClient;
 import org.limewire.service.ErrorService;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -157,12 +156,12 @@ class CCLicense extends AbstractLicense {
             allWorks.clear();
     }
 
-    /**
-     * Locates the RDF from the body of the URL.
-     */
-    protected String getBody(String url, LimeHttpClient httpClient) {
-        return locateRDF(super.getBody(url, httpClient));
-    }
+//    /**
+//     * Locates the RDF from the body of the URL.
+//     */
+//    protected String getBody(String url, LimeHttpClient httpClient) {
+//        return locateRDF(super.getBody(url, httpClient));
+//    }
     
     ///// WORK & DETAILS CODE ///
     
@@ -299,37 +298,37 @@ class CCLicense extends AbstractLicense {
         return body.substring(startRDF, endRDF + 1);
     }   
 
-    /**
-     * Parses through the XML.  If this is live data, we look for works.
-     * Otherwise (it isn't from the verifier), we only look for licenses.
-     */
-    protected void parseDocumentNode(Node doc, LicenseCache licenseCache, LimeHttpClient httpClient) {
-        NodeList children = doc.getChildNodes();
-        
-        // Do a first pass for Work elements.
-        if(licenseCache != null) {
-            for(int i = 0; i < children.getLength(); i++) {
-                Node child = children.item(i);
-                if(child.getNodeName().equals("Work"))
-                    parseWorkItem(child);
-            }
-        }
-        
-        // And a second pass for License elements.
-        for(int i = 0; i < children.getLength(); i++) {
-            Node child = children.item(i);
-            if(child.getNodeName().equals("License"))
-                parseLicenseItem(child);
-        }
-        
-        // If this was from the verifier, see if we need to get any more
-        // license details.
-        if (licenseCache != null) {
-            updateLicenseDetails(licenseCache, httpClient);
-        }
-            
-        return;
-    }
+//    /**
+//     * Parses through the XML.  If this is live data, we look for works.
+//     * Otherwise (it isn't from the verifier), we only look for licenses.
+//     */
+//    protected void parseDocumentNode(Node doc, LicenseCache licenseCache, LimeHttpClient httpClient) {
+//        NodeList children = doc.getChildNodes();
+//        
+//        // Do a first pass for Work elements.
+//        if(licenseCache != null) {
+//            for(int i = 0; i < children.getLength(); i++) {
+//                Node child = children.item(i);
+//                if(child.getNodeName().equals("Work"))
+//                    parseWorkItem(child);
+//            }
+//        }
+//        
+//        // And a second pass for License elements.
+//        for(int i = 0; i < children.getLength(); i++) {
+//            Node child = children.item(i);
+//            if(child.getNodeName().equals("License"))
+//                parseLicenseItem(child);
+//        }
+//        
+//        // If this was from the verifier, see if we need to get any more
+//        // license details.
+//        if (licenseCache != null) {
+//            updateLicenseDetails(licenseCache, httpClient);
+//        }
+//            
+//        return;
+//    }
     
     /**
      * Parses the 'Work' item.
@@ -453,41 +452,41 @@ class CCLicense extends AbstractLicense {
         } 
     }
     
-    /**
-     * Updates the license details, potentially retrieving information
-     * from the licenseURL in each Details.
-     * @param httpClient TODO
-     */
-    private void updateLicenseDetails(LicenseCache licenseCache, LimeHttpClient httpClient) {
-        if(allWorks == null)
-            return;
-        
-        for(Details details : allWorks.values()) {
-            if(!details.isDescriptionAvailable() && details.licenseURL != null) {
-                if(LOG.isDebugEnabled())
-                    LOG.debug("Updating licenseURL for :" + details);
-                
-                String url = details.licenseURL.toExternalForm();
-                // First see if we have cached details.
-                Object data = licenseCache.getData(url);
-                String body = null;
-                if(data != null && data instanceof String) {
-                    if(LOG.isDebugEnabled())
-                        LOG.debug("Using cached data for url: " + url);
-                    body = locateRDF((String)data);
-                } else {
-                    body = getBody(url, httpClient);
-                    if(body != null)
-                        licenseCache.addData(url, body);
-                    else
-                        LOG.debug("Couldn't retrieve license details from url: " + url);
-                }
-                
-                // parsing MUST NOT alter allWorks,
-                // otherwise a ConcurrentMod will happen
-                if(body != null)
-                    parseXML(body, null, httpClient);
-             }
-        }
-    }
+//    /**
+//     * Updates the license details, potentially retrieving information
+//     * from the licenseURL in each Details.
+//     * @param httpClient TODO
+//     */
+//    private void updateLicenseDetails(LicenseCache licenseCache, LimeHttpClient httpClient) {
+//        if(allWorks == null)
+//            return;
+//        
+//        for(Details details : allWorks.values()) {
+//            if(!details.isDescriptionAvailable() && details.licenseURL != null) {
+//                if(LOG.isDebugEnabled())
+//                    LOG.debug("Updating licenseURL for :" + details);
+//                
+//                String url = details.licenseURL.toExternalForm();
+//                // First see if we have cached details.
+//                Object data = licenseCache.getData(url);
+//                String body = null;
+//                if(data != null && data instanceof String) {
+//                    if(LOG.isDebugEnabled())
+//                        LOG.debug("Using cached data for url: " + url);
+//                    body = locateRDF((String)data);
+//                } else {
+//                    body = getBody(url, httpClient);
+//                    if(body != null)
+//                        licenseCache.addData(url, body);
+//                    else
+//                        LOG.debug("Couldn't retrieve license details from url: " + url);
+//                }
+//                
+//                // parsing MUST NOT alter allWorks,
+//                // otherwise a ConcurrentMod will happen
+//                if(body != null)
+//                    parseXML(body, null, httpClient);
+//             }
+//        }
+//    }
 }

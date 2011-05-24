@@ -39,7 +39,6 @@ import com.limegroup.gnutella.search.HostData;
 import com.limegroup.gnutella.search.HostDataFactory;
 import com.limegroup.gnutella.settings.FilterSettings;
 import com.limegroup.gnutella.settings.SSLSettings;
-import com.limegroup.gnutella.uploader.HTTPHeaderUtils;
 import com.limegroup.gnutella.util.DataUtils;
 
 /**
@@ -1110,32 +1109,32 @@ public class QueryReplyImpl extends AbstractMessage implements QueryReply {
                 // if a PushProxyInterface is valid, write up to MAX_PROXIES
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 int numWritten = 0;
-                BitNumbers bn = HTTPHeaderUtils.getTLSIndices(proxies, Math.min(MAX_PROXIES, proxies.size()));
-                if (!proxies.isEmpty()) {
-                    Iterator<? extends IpPort> iter = proxies.iterator();
-                    while(iter.hasNext() && (numWritten < MAX_PROXIES)) {
-                        IpPort ppi = iter.next();
-                        IPPortCombo combo = new IPPortCombo(ppi.getInetSocketAddress());
-                        try {
-                            baos.write(combo.toBytes());
-                            numWritten++;
-                        } catch (IOException ignored) { } // cannot happen on ByteArrayOutputStream
-                    }
-                }
-
-                try {
-                    // add the PushProxies
-                    if (numWritten > 0) {
-                        retGGEP.put(GGEP.GGEP_HEADER_PUSH_PROXY, baos.toByteArray());
-                        // add the TLS push proxies info, if any.
-                        if(!bn.isEmpty())
-                            retGGEP.put(GGEP.GGEP_HEADER_PUSH_PROXY_TLS, bn.toByteArray());
-                    }
-                    // set up return value
-                    baos.reset();
-                    retGGEP.write(baos);
-                    retGGEPBlock = baos.toByteArray();
-                } catch (IOException ignored) { } // cannot happen on ByteArrayOutputStream
+//                BitNumbers bn = HTTPHeaderUtils.getTLSIndices(proxies, Math.min(MAX_PROXIES, proxies.size()));
+//                if (!proxies.isEmpty()) {
+//                    Iterator<? extends IpPort> iter = proxies.iterator();
+//                    while(iter.hasNext() && (numWritten < MAX_PROXIES)) {
+//                        IpPort ppi = iter.next();
+//                        IPPortCombo combo = new IPPortCombo(ppi.getInetSocketAddress());
+//                        try {
+//                            baos.write(combo.toBytes());
+//                            numWritten++;
+//                        } catch (IOException ignored) { } // cannot happen on ByteArrayOutputStream
+//                    }
+//                }
+//
+//                try {
+//                    // add the PushProxies
+//                    if (numWritten > 0) {
+//                        retGGEP.put(GGEP.GGEP_HEADER_PUSH_PROXY, baos.toByteArray());
+//                        // add the TLS push proxies info, if any.
+//                        if(!bn.isEmpty())
+//                            retGGEP.put(GGEP.GGEP_HEADER_PUSH_PROXY_TLS, bn.toByteArray());
+//                    }
+//                    // set up return value
+//                    baos.reset();
+//                    retGGEP.write(baos);
+//                    retGGEPBlock = baos.toByteArray();
+//                } catch (IOException ignored) { } // cannot happen on ByteArrayOutputStream
             }
             // else if (supportsBH && supportsFWTransfer &&
             // isMulticastResponse), since supportsFWTransfer is only helpful

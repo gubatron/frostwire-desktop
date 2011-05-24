@@ -15,7 +15,6 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.util.EntityUtils;
-import org.limewire.http.LimeHttpClient;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
@@ -79,94 +78,82 @@ public abstract class AbstractLicense implements MutableLicense, Serializable, C
      */
     protected abstract void clear();
     
-    /**
-     * Retrieves the body of a URL from a webserver.
-     *
-     * Returns null if the page could not be found.
-     * @param httpClient TODO
-     */
-    protected String getBody(String url, LimeHttpClient httpClient) {
-        return getBodyFromURL(url, httpClient);
-    }
+//    /**
+//     * Retrieves the body of a URL from a webserver.
+//     *
+//     * Returns null if the page could not be found.
+//     * @param httpClient TODO
+//     */
+//    protected String getBody(String url, LimeHttpClient httpClient) {
+//        return getBodyFromURL(url, httpClient);
+//    }
     
-    /**
-     * Contacts the given URL and downloads returns the body of the
-     * HTTP request.
-     * @param httpClient TODO
-     */
-    protected String getBodyFromURL(String url, LimeHttpClient httpClient) {
-        if (LOG.isTraceEnabled())
-            LOG.trace("Contacting: " + url);
-        HttpResponse response = null;
-        try {
-            HttpGet get = new HttpGet(url);
-            get.addHeader("User-Agent", FrostWireUtils.getHttpServer());
-            response = httpClient.execute(get);
-            String result;
-            if (response.getEntity() != null) {
-                result = EntityUtils.toString(response.getEntity());
-            } else {
-                result = null;
-            }
-            return result;
-        } catch (IOException e) {
-            LOG.warn("Can't contact license server: " + url, e);
-        } finally {
-            httpClient.releaseConnection(response);
-        }
-        return null;
-    }
+//    /**
+//     * Contacts the given URL and downloads returns the body of the
+//     * HTTP request.
+//     * @param httpClient TODO
+//     */
+//    protected String getBodyFromURL(String url, LimeHttpClient httpClient) {
+//        if (LOG.isTraceEnabled())
+//            LOG.trace("Contacting: " + url);
+//        HttpResponse response = null;
+//        try {
+//            HttpGet get = new HttpGet(url);
+//            get.addHeader("User-Agent", FrostWireUtils.getHttpServer());
+//            response = httpClient.execute(get);
+//            String result;
+//            if (response.getEntity() != null) {
+//                result = EntityUtils.toString(response.getEntity());
+//            } else {
+//                result = null;
+//            }
+//            return result;
+//        } catch (IOException e) {
+//            LOG.warn("Can't contact license server: " + url, e);
+//        } finally {
+//            httpClient.releaseConnection(response);
+//        }
+//        return null;
+//    }
     
-    /** Parses the document node of the XML. 
-     * @param httpClient TODO*/
-    protected abstract void parseDocumentNode(Node node, LicenseCache licenseCache, LimeHttpClient httpClient);
-    
-    /**
-     * Attempts to parse the given XML.
-     * The actual handling of the XML is sent to parseDocumentNode,
-     * which subclasses can implement as they see fit.
-     *
-     * If this is a request directly from our Verifier, 'liveData' is true.
-     * Subclasses may use this to know where the XML data is coming from.
-     * @param httpClient TODO
-     */
-    protected void parseXML(String xml, LicenseCache licenseCache, LimeHttpClient httpClient) {
-        if(xml == null)
-            return;
-        
-        if(LOG.isTraceEnabled())
-            LOG.trace("Attempting to parse: " + xml);
-
-        // TODO propagate exceptions and handle in LicenseVerifier
-        Document d;
-        try {
-        	DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-        	InputSource is = new InputSource(new StringReader(xml));
-            d = parser.parse(is);
-        } catch (IOException ioe) {
-            LOG.debug("IOX parsing XML\n" + xml, ioe);
-            return;
-        } catch (SAXException saxe) {
-            LOG.debug("SAX parsing XML\n" + xml, saxe);
-            return;
-        } catch (ParserConfigurationException bad) {
-        	LOG.debug("couldn't instantiate parser", bad);
-        	return;
-        }
-        
-        parseDocumentNode(d.getDocumentElement(), licenseCache, httpClient);
-    }
-
-    public void verify(LicenseCache licenseCache, LimeHttpClient httpClient) {
-        setVerified(AbstractLicense.VERIFYING);
-        clear();
-
-        String body = getBody(getLicenseURI().toString(), httpClient);
-        parseXML(body, licenseCache, httpClient);
-        setLastVerifiedTime(System.currentTimeMillis());
-        setVerified(AbstractLicense.VERIFIED);
-        
-        licenseCache.addVerifiedLicense(this);
-    }
+//    /** Parses the document node of the XML. 
+//     * @param httpClient TODO*/
+//    protected abstract void parseDocumentNode(Node node, LicenseCache licenseCache, LimeHttpClient httpClient);
+//    
+//    /**
+//     * Attempts to parse the given XML.
+//     * The actual handling of the XML is sent to parseDocumentNode,
+//     * which subclasses can implement as they see fit.
+//     *
+//     * If this is a request directly from our Verifier, 'liveData' is true.
+//     * Subclasses may use this to know where the XML data is coming from.
+//     * @param httpClient TODO
+//     */
+//    protected void parseXML(String xml, LicenseCache licenseCache, LimeHttpClient httpClient) {
+//        if(xml == null)
+//            return;
+//        
+//        if(LOG.isTraceEnabled())
+//            LOG.trace("Attempting to parse: " + xml);
+//
+//        // TODO propagate exceptions and handle in LicenseVerifier
+//        Document d;
+//        try {
+//        	DocumentBuilder parser = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+//        	InputSource is = new InputSource(new StringReader(xml));
+//            d = parser.parse(is);
+//        } catch (IOException ioe) {
+//            LOG.debug("IOX parsing XML\n" + xml, ioe);
+//            return;
+//        } catch (SAXException saxe) {
+//            LOG.debug("SAX parsing XML\n" + xml, saxe);
+//            return;
+//        } catch (ParserConfigurationException bad) {
+//        	LOG.debug("couldn't instantiate parser", bad);
+//        	return;
+//        }
+//        
+//        parseDocumentNode(d.getDocumentElement(), licenseCache, httpClient);
+//    }
     
 }

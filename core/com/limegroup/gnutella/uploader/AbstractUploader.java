@@ -22,8 +22,6 @@ public abstract class AbstractUploader implements Uploader {
 
     private static final Log LOG = LogFactory.getLog(AbstractUploader.class);
 
-    private final HTTPUploadSession session;
-
     /** 
      * The number of bytes that were transferred in previous sessions. 
      * <p>
@@ -93,8 +91,7 @@ public abstract class AbstractUploader implements Uploader {
     
     private final TcpBandwidthStatistics tcpBandwidthStatistics;
 
-    public AbstractUploader(String fileName, HTTPUploadSession session, TcpBandwidthStatistics tcpBandwidthStatistics) {
-        this.session = session;
+    public AbstractUploader(String fileName, TcpBandwidthStatistics tcpBandwidthStatistics) {
         this.filename = fileName;
         this.firstReply = true;
         this.tcpBandwidthStatistics = tcpBandwidthStatistics;
@@ -148,7 +145,7 @@ public abstract class AbstractUploader implements Uploader {
         if (lastTransferState != UploadStatus.QUEUED || state == UploadStatus.INTERRUPTED)
             return -1;
         else
-            return session.positionInQueue();
+            return -1;//session.positionInQueue();
     }
 
     /**
@@ -220,7 +217,7 @@ public abstract class AbstractUploader implements Uploader {
     }
 
     public String getHost() {
-        return (host != null) ? host : session.getHost();
+        return null;//(host != null) ? host : session.getHost();
     }
 
     public boolean isChatEnabled() {
@@ -281,15 +278,15 @@ public abstract class AbstractUploader implements Uploader {
         synchronized (bwLock) {
             written = (int) (totalAmountUploaded + amountUploaded);
         }
-        session.measureBandwidth(written);
+        //session.measureBandwidth(written);
     }
 
     public float getMeasuredBandwidth() throws InsufficientDataException {
-        return session.getMeasuredBandwidth();
+        return 0;//session.getMeasuredBandwidth();
     }
 
     public float getAverageBandwidth() {
-        return session.getAverageBandwidth();
+        return 0;//session.getAverageBandwidth();
     }
 
     public String getCustomIconDescriptor() {
@@ -355,13 +352,7 @@ public abstract class AbstractUploader implements Uploader {
                 + ",lastTransferState=" + lastTransferState + "]";
     }
 
-    /**
-     * Returns the upload session that is associated with the connection.
-     */
-    public HTTPUploadSession getSession() {
-        return session;
-    }
-
+    
     /**
      * Returns the file size returned by {@link #getFileSize()}.
      */
@@ -401,22 +392,22 @@ public abstract class AbstractUploader implements Uploader {
  
     /** Returns true if the socket this is on is currently using TLS. */
     public boolean isTLSCapable() {
-        return SSLUtils.isTLSEnabled(getSession().getIOSession().getSocket());
+        return false;//SSLUtils.isTLSEnabled(getSession().getIOSession().getSocket());
     }
 
     /** Returns the address of the host that initiated this upload. */
     public String getAddress() {
-        return getSession().getHost();
+        return null;//getSession().getHost();
     }
 
    /** Returns the address of the host that initiated this session. */
     public InetAddress getInetAddress() {
-        return getSession().getIOSession().getSocket().getInetAddress();
+        return null;//getSession().getIOSession().getSocket().getInetAddress();
     }
 
     /** Returns a combination of getInetAddress and getPort. */
     public InetSocketAddress getInetSocketAddress() {
-        return new InetSocketAddress(getInetAddress(), getPort());
+        return null;// new InetSocketAddress(getInetAddress(), getPort());
     }
 
     public String getAddressDescription() {
@@ -429,7 +420,7 @@ public abstract class AbstractUploader implements Uploader {
         if(gnutellaPort != -1)
             return gnutellaPort;
         else
-            return ((InetSocketAddress)getSession().getIOSession().getRemoteAddress()).getPort();
+            return -1;//((InetSocketAddress)getSession().getIOSession().getRemoteAddress()).getPort();
     }
     
 

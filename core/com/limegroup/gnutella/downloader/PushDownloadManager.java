@@ -96,7 +96,6 @@ public class PushDownloadManager implements ConnectionAcceptor, PushedSocketHand
      */
     private final Provider<SocketProcessor> socketProcessor;
     private final Provider<HttpExecutor> httpExecutor;
-    private final Provider<HttpParams> defaultParams;
     private final ScheduledExecutorService backgroundExecutor;    
     private final NetworkManager networkManager;
     private final Provider<MessageRouter> messageRouter;    
@@ -108,7 +107,6 @@ public class PushDownloadManager implements ConnectionAcceptor, PushedSocketHand
     public PushDownloadManager(
             Provider<MessageRouter> router,
             Provider<HttpExecutor> executor,
-            @Named("defaults") Provider<HttpParams> defaultParams,
             @Named("backgroundExecutor") ScheduledExecutorService scheduler,
             Provider<SocketProcessor> processor,
     		NetworkManager networkManager,
@@ -116,7 +114,6 @@ public class PushDownloadManager implements ConnectionAcceptor, PushedSocketHand
     		Provider<UDPService> udpService) {
     	this.messageRouter = router;
     	this.httpExecutor = executor;
-        this.defaultParams = defaultParams;
         this.backgroundExecutor = scheduler;
     	this.socketProcessor = processor;
     	this.networkManager = networkManager;
@@ -355,66 +352,66 @@ public class PushDownloadManager implements ConnectionAcceptor, PushedSocketHand
      * is told to send the push through the network.
      */
     private void sendPushThroughProxies(PushData data, Set<? extends IpPort> proxies) {
-        byte[] externalAddr = networkManager.getExternalAddress();
-        // if a fw transfer is necessary, but our external address is invalid,
-        // then exit immediately 'cause nothing will work.
-        if (data.isFWTransfer() && !NetworkUtils.isValidAddress(externalAddr)) {
-        	data.getMultiShutdownable().shutdown();
-            return;
-        }
-
-        byte[] addr = networkManager.getAddress();
-        int port = networkManager.getPort();
-
-        //TODO: send push msg directly to a proxy if you're connected to it.
-
-        // set up the request string --
-        // if a fw-fw transfer is required, add the extra "file" parameter.
-        final String request = "/gnutella/push-proxy?ServerID=" + 
-                               Base32.encode(data.getFile().getClientGUID()) +
-          (data.isFWTransfer() ? ("&file=" + PushRequest.FW_TRANS_INDEX) : "") +
-          (SSLSettings.isIncomingTLSEnabled() ? "&tls=true" : "");
-            
-        final String nodeString = "X-Node";
-        final String nodeValue =
-            NetworkUtils.ip2string(data.isFWTransfer() ? externalAddr : addr) +
-            ":" + port;
-
-        // the methods to execute
-        final List<HttpHead> methods = new ArrayList<HttpHead>();
-
-        // try to contact each proxy
-        for(IpPort ppi : proxies) {
-            if (!ipFilter.get().allow(ppi.getAddress()))
-                continue;
-            String protocol = "http://";
-            if(ppi instanceof Connectable) {
-                if(((Connectable)ppi).isTLSCapable())
-                    protocol = "tls://";
-            }
-            String connectTo =  protocol + ppi.getAddress() + ":" + ppi.getPort() + request;
-            HttpHead head = null;
-            try {
-                head = new HttpHead(connectTo);
-                head.addHeader(nodeString, nodeValue);
-                head.addHeader("Cache-Control", "no-cache");
-                methods.add(head);
-            } catch (Exception e) {
-                LOG.error(e);
-            }            
-        }        
-        
-        if(!methods.isEmpty()) {
-            HttpClientListener l = new PushHttpClientListener(methods, data);
-            HttpParams params = new BasicHttpParams();
-            HttpConnectionParams.setConnectionTimeout(params, 5000);
-            HttpConnectionParams.setSoTimeout(params, 5000);
-            params = new DefaultedHttpParams(params, defaultParams.get());
-            Shutdownable s = httpExecutor.get().executeAny(l, PUSH_THREAD_POOL, methods, params, data.getMultiShutdownable());
-            data.getMultiShutdownable().addShutdownable(s);
-        } else {
-            sendPushThroughNetwork(data);    
-        }
+//        byte[] externalAddr = networkManager.getExternalAddress();
+//        // if a fw transfer is necessary, but our external address is invalid,
+//        // then exit immediately 'cause nothing will work.
+//        if (data.isFWTransfer() && !NetworkUtils.isValidAddress(externalAddr)) {
+//        	data.getMultiShutdownable().shutdown();
+//            return;
+//        }
+//
+//        byte[] addr = networkManager.getAddress();
+//        int port = networkManager.getPort();
+//
+//        //TODO: send push msg directly to a proxy if you're connected to it.
+//
+//        // set up the request string --
+//        // if a fw-fw transfer is required, add the extra "file" parameter.
+//        final String request = "/gnutella/push-proxy?ServerID=" + 
+//                               Base32.encode(data.getFile().getClientGUID()) +
+//          (data.isFWTransfer() ? ("&file=" + PushRequest.FW_TRANS_INDEX) : "") +
+//          (SSLSettings.isIncomingTLSEnabled() ? "&tls=true" : "");
+//            
+//        final String nodeString = "X-Node";
+//        final String nodeValue =
+//            NetworkUtils.ip2string(data.isFWTransfer() ? externalAddr : addr) +
+//            ":" + port;
+//
+//        // the methods to execute
+//        final List<HttpHead> methods = new ArrayList<HttpHead>();
+//
+//        // try to contact each proxy
+//        for(IpPort ppi : proxies) {
+//            if (!ipFilter.get().allow(ppi.getAddress()))
+//                continue;
+//            String protocol = "http://";
+//            if(ppi instanceof Connectable) {
+//                if(((Connectable)ppi).isTLSCapable())
+//                    protocol = "tls://";
+//            }
+//            String connectTo =  protocol + ppi.getAddress() + ":" + ppi.getPort() + request;
+//            HttpHead head = null;
+//            try {
+//                head = new HttpHead(connectTo);
+//                head.addHeader(nodeString, nodeValue);
+//                head.addHeader("Cache-Control", "no-cache");
+//                methods.add(head);
+//            } catch (Exception e) {
+//                LOG.error(e);
+//            }            
+//        }        
+//        
+//        if(!methods.isEmpty()) {
+//            HttpClientListener l = new PushHttpClientListener(methods, data);
+//            HttpParams params = new BasicHttpParams();
+//            HttpConnectionParams.setConnectionTimeout(params, 5000);
+//            HttpConnectionParams.setSoTimeout(params, 5000);
+//            params = new DefaultedHttpParams(params, defaultParams.get());
+//            Shutdownable s = httpExecutor.get().executeAny(l, PUSH_THREAD_POOL, methods, params, data.getMultiShutdownable());
+//            data.getMultiShutdownable().addShutdownable(s);
+//        } else {
+//            sendPushThroughNetwork(data);    
+//        }
     }
     
     /**

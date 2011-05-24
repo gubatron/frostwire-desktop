@@ -37,7 +37,6 @@ public final class PushManager {
     
     private final Provider<FileManager> fileManager;
     private final Provider<SocketsManager> socketsManager;
-    private final Provider<HTTPAcceptor> httpAcceptor;
 
     /**
      * @param fileManager
@@ -46,11 +45,9 @@ public final class PushManager {
      */
     @Inject
     public PushManager(Provider<FileManager> fileManager,
-            Provider<SocketsManager> socketsManager,
-            Provider<HTTPAcceptor> httpAcceptor) {
+            Provider<SocketsManager> socketsManager) {
         this.fileManager = fileManager;
         this.socketsManager = socketsManager;
-        this.httpAcceptor = httpAcceptor;
     }    
 
 	/**
@@ -111,13 +108,13 @@ public final class PushManager {
 //            NBSocket socket = udpSelectorProvider.get().openSocketChannel().socket();
 //            socket.connect(new InetSocketAddress(host, port), CONNECT_TIMEOUT*2, new PushObserver(data, true, httpAcceptor.get()));
 //        } else {
-            if (LOG.isDebugEnabled())
-                LOG.debug("Adding push observer to host: " + host + ":" + port);
-            try {
-                ConnectType type = tlsCapable && SSLSettings.isOutgoingTLSEnabled() ? ConnectType.TLS : ConnectType.PLAIN;
-                socketsManager.get().connect(new InetSocketAddress(host, port), CONNECT_TIMEOUT, new PushObserver(data, false, httpAcceptor.get()), type);
-            } catch(IOException iox) {
-            }
+//            if (LOG.isDebugEnabled())
+//                LOG.debug("Adding push observer to host: " + host + ":" + port);
+//            try {
+//                ConnectType type = tlsCapable && SSLSettings.isOutgoingTLSEnabled() ? ConnectType.TLS : ConnectType.PLAIN;
+//                socketsManager.get().connect(new InetSocketAddress(host, port), CONNECT_TIMEOUT, new PushObserver(data, false, httpAcceptor.get()), type);
+//            } catch(IOException iox) {
+//            }
         //}
     }
     
@@ -153,12 +150,10 @@ public final class PushManager {
     private static class PushObserver implements ConnectObserver {
         private final PushData data;
         private final boolean fwt;
-        private final HTTPAcceptor httpAcceptor;
         
-        PushObserver(PushData data, boolean fwt, HTTPAcceptor httpAcceptor) {
+        PushObserver(PushData data, boolean fwt) {
             this.data = data;
             this.fwt = fwt;
-            this.httpAcceptor = httpAcceptor;
         }        
         
         public void handleIOException(IOException iox) {}
@@ -171,9 +166,9 @@ public final class PushManager {
 
         /** Starts a new thread that'll do the pushing. */
         public void handleConnect(Socket socket) throws IOException {
-            if(LOG.isDebugEnabled())
-                LOG.debug("Push (fwt: " + fwt + ") connect to: " + data.getHost() + ":" + data.getPort() + " succeeded");
-            ((NIOMultiplexor) socket).setWriteObserver(new PushConnector(socket, data, fwt, httpAcceptor));
+//            if(LOG.isDebugEnabled())
+//                LOG.debug("Push (fwt: " + fwt + ") connect to: " + data.getHost() + ":" + data.getPort() + " succeeded");
+//            ((NIOMultiplexor) socket).setWriteObserver(new PushConnector(socket, data, fwt, httpAcceptor));
         }
     }    
 
@@ -184,16 +179,13 @@ public final class PushManager {
         private final ByteBuffer buffer;
         private final Socket socket;
         private HTTPConnectionData data;
-        private HTTPAcceptor httpAcceptor;
 
-        public PushConnector(Socket socket, PushData data, boolean fwTransfer,
-                HTTPAcceptor httpAcceptor) throws IOException {
+        public PushConnector(Socket socket, PushData data, boolean fwTransfer) throws IOException {
             this.socket = socket;
             this.data = new HTTPConnectionData();
             this.data.setPush(true);
             this.data.setLocal(data.isLan());
             this.data.setFirewalled(fwTransfer);
-            this.httpAcceptor = httpAcceptor;
             
             socket.setSoTimeout(30 * 1000);
             
@@ -202,18 +194,18 @@ public final class PushManager {
         }
 
         public boolean handleWrite() throws IOException {
-            if (!buffer.hasRemaining()) {
-                return false;
-            }
-
-            while (buffer.hasRemaining()) {
-                int written = channel.write(buffer);
-                if (written == 0) {
-                    return true;
-                }
-            }
-
-            httpAcceptor.acceptConnection(socket, data);
+//            if (!buffer.hasRemaining()) {
+//                return false;
+//            }
+//
+//            while (buffer.hasRemaining()) {
+//                int written = channel.write(buffer);
+//                if (written == 0) {
+//                    return true;
+//                }
+//            }
+//
+//            httpAcceptor.acceptConnection(socket, data);
             return false;
         }
 

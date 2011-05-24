@@ -3,7 +3,6 @@ package com.limegroup.gnutella;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.limegroup.gnutella.uploader.LimitReachedRequestHandler;
 
 /**
  * Keeps track of requests sent by a client.
@@ -16,7 +15,7 @@ public class RequestCache {
     // another request after our initial LIMIT_REACHED reply
     // must be greater than or equal to what we send in our RetryAfter
     // header, otherwise we'll incorrectly mark guys as greedy.
-    static long WAIT_TIME = LimitReachedRequestHandler.RETRY_AFTER_TIME * 1000;
+    static long WAIT_TIME = 0;//LimitReachedRequestHandler.RETRY_AFTER_TIME * 1000;
 
     // time to wait before checking for hammering: 30 seconds.
     // if the averge number of requests per time frame exceeds MAX_REQUESTS

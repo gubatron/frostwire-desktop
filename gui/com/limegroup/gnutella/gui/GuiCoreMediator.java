@@ -2,7 +2,6 @@ package com.limegroup.gnutella.gui;
 
 import java.util.concurrent.ScheduledExecutorService;
 
-import org.limewire.http.LimeHttpClient;
 import org.limewire.io.NetworkInstanceUtils;
 
 import com.google.inject.Inject;
@@ -30,7 +29,6 @@ import com.limegroup.gnutella.UploadServices;
 import com.limegroup.gnutella.altlocs.AltLocManager;
 import com.limegroup.gnutella.browser.ExternalControl;
 import com.limegroup.gnutella.browser.LocalAcceptor;
-import com.limegroup.gnutella.browser.LocalHTTPAcceptor;
 import com.limegroup.gnutella.connection.ConnectionCheckerManager;
 import com.limegroup.gnutella.downloader.DiskController;
 import com.limegroup.gnutella.downloader.RemoteFileDescFactory;
@@ -67,7 +65,6 @@ public class GuiCoreMediator {
     public static LocalFileDetailsFactory getLocalFileDetailsFactory() {  return core.getLocalFileDetailsFactory(); }
     public static DownloadManager getDownloadManager() {  return core.getDownloadManager(); }
     public static LocalAcceptor getLocalAcceptor() {  return core.getLocalAcceptor(); }
-    public static LocalHTTPAcceptor getLocalHTTPAcceptor() {  return core.getLocalHTTPAcceptor(); }
     public static AltLocManager getAltLocManager() {  return core.getAltLocManager(); }
     public static IPFilter getIpFilter() {  return core.getIpFilter(); }
     public static BandwidthManager getBandwidthManager() {  return core.getBandwidthManager(); }
@@ -95,7 +92,6 @@ public class GuiCoreMediator {
     public static LicenseVerifier getLicenseVerifier() { return core.getLicenseVerifier(); }
     public static ResponseFactory getResponseFactory() { return core.getResponseFactory(); }
     public static RemoteFileDescFactory getRemoteFileDescFactory() { return core.getRemoteFileDescFactory(); }
-    public static LimeHttpClient getLimeHttpClient() { return core.getLimeHttpClient(); }
     public static TcpBandwidthStatistics getTcpBandwidthStatistics() { return core.getTcpBandwidthStatistics(); }
     public static NetworkInstanceUtils getNetworkInstanceUtils() { return core.getNetworkInstanceUtils(); }
 }

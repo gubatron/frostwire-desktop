@@ -313,7 +313,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
     protected final QueryUnicaster queryUnicaster;
     protected final FileManager fileManager;
     protected final ContentManager contentManager;
-    protected final UploadManager uploadManager;
     protected final DownloadManager downloadManager;
     protected final UDPService udpService;
     protected final SearchResultHandler searchResultHandler;
@@ -359,7 +358,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
             QueryUnicaster queryUnicaster,
             FileManager fileManager,
             ContentManager contentManager,
-            UploadManager uploadManager,
             DownloadManager downloadManager,
             UDPService udpService,
             SearchResultHandler searchResultHandler,
@@ -393,7 +391,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
         this.queryUnicaster = queryUnicaster;
         this.fileManager = fileManager;
         this.contentManager = contentManager;
-        this.uploadManager = uploadManager;
         this.downloadManager = downloadManager;
         this.udpService = udpService;
         this.searchResultHandler = searchResultHandler;
@@ -541,9 +538,9 @@ public abstract class MessageRouterImpl implements MessageRouter {
         // schedule a runner to clear guys we've connected back to
         backgroundExecutor.scheduleWithFixedDelay(new ConnectBackExpirer(), 10 * CLEAR_TIME, 
                                10 * CLEAR_TIME, TimeUnit.MILLISECONDS);
-        // schedule a runner to send hops-flow messages
-        backgroundExecutor.scheduleWithFixedDelay(new HopsFlowManager(uploadManager, connectionManager), HOPS_FLOW_INTERVAL*10, 
-                               HOPS_FLOW_INTERVAL, TimeUnit.MILLISECONDS);
+//        // schedule a runner to send hops-flow messages
+//        backgroundExecutor.scheduleWithFixedDelay(new HopsFlowManager(uploadManager, connectionManager), HOPS_FLOW_INTERVAL*10, 
+//                               HOPS_FLOW_INTERVAL, TimeUnit.MILLISECONDS);
         backgroundExecutor.scheduleWithFixedDelay(new UDPReplyCleaner(), UDP_REPLY_CACHE_TIME, UDP_REPLY_CACHE_TIME, TimeUnit.MILLISECONDS);
         
         // runner to clean up OOB sessions
@@ -2259,13 +2256,13 @@ public abstract class MessageRouterImpl implements MessageRouter {
         byte[] guid = queryRequest.getGUID();
         byte ttl = (byte)(queryRequest.getHops() + 1);
 
-        //Return measured speed if possible, or user's speed otherwise.
-        long speed = uploadManager.measuredUploadSpeed();
-        boolean measuredSpeed=true;
-        if (speed==-1) {
-            speed=ConnectionSettings.CONNECTION_SPEED.getValue();
-            measuredSpeed=false;
-        }
+//        //Return measured speed if possible, or user's speed otherwise.
+//        long speed = uploadManager.measuredUploadSpeed();
+//        boolean measuredSpeed=true;
+//        if (speed==-1) {
+//            speed=ConnectionSettings.CONNECTION_SPEED.getValue();
+//            measuredSpeed=false;
+//        }
 
         int numResponses = responses.length;
         int index = 0;
@@ -2323,8 +2320,8 @@ public abstract class MessageRouterImpl implements MessageRouter {
 			// see if there are any open slots
             // Note: if we are busy, non-metafile results would be filtered.
             // by this point.
-			boolean busy = !uploadManager.mayBeServiceable();
-            boolean uploaded = uploadManager.hadSuccesfulUpload();
+			boolean busy = false;//!uploadManager.mayBeServiceable();
+            boolean uploaded = false;//uploadManager.hadSuccesfulUpload();
 			
             // We only want to return a "reply to multicast query" QueryReply
             // if the request travelled a single hop.
@@ -2343,14 +2340,14 @@ public abstract class MessageRouterImpl implements MessageRouter {
                 ttl = 1; // not strictly necessary, but nice.
             }
             
-            List<QueryReply> replies =
-                createQueryReply(guid, ttl, speed, res, 
-                                 _clientGUID, busy, uploaded, 
-                                 measuredSpeed, mcast,
-                                 fwTransfer, securityToken);
-
-            //add to the list
-            queryReplies.addAll(replies);
+//            List<QueryReply> replies =
+//                createQueryReply(guid, ttl, speed, res, 
+//                                 _clientGUID, busy, uploaded, 
+//                                 measuredSpeed, mcast,
+//                                 fwTransfer, securityToken);
+//
+//            //add to the list
+//            queryReplies.addAll(replies);
 
         }//end of while
         

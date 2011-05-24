@@ -9,8 +9,6 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.params.HttpParams;
 import org.limewire.collection.Cancellable;
 import org.limewire.concurrent.ExecutorsHelper;
-import org.limewire.http.HttpClientUtils;
-import org.limewire.http.LimeHttpClient;
 import org.limewire.nio.observer.Shutdownable;
 
 import com.google.inject.Inject;
@@ -26,11 +24,9 @@ public class DefaultHttpExecutor implements HttpExecutor {
 
 	private static final ExecutorService POOL = 
         ExecutorsHelper.newThreadPool("HttpClient pool");
-    private final Provider<LimeHttpClient> clientProvider;
 
     @Inject
-    public DefaultHttpExecutor(Provider<LimeHttpClient> clientProvider) {
-        this.clientProvider = clientProvider;
+    public DefaultHttpExecutor() {
     }
 	
     public Shutdownable execute(HttpUriRequest method, HttpParams params, HttpClientListener listener) {
@@ -68,7 +64,7 @@ public class DefaultHttpExecutor implements HttpExecutor {
     }
 	
 	public void releaseResources(HttpResponse response) {
-        HttpClientUtils.releaseConnection(response);
+        //HttpClientUtils.releaseConnection(response);
 	}
 
 	public Shutdownable executeAny(HttpClientListener listener, 
@@ -87,25 +83,26 @@ public class DefaultHttpExecutor implements HttpExecutor {
      * false if another request should be processed.
      */
 	private boolean performRequest(HttpUriRequest method, HttpParams params, HttpClientListener listener) {
-		LimeHttpClient client = clientProvider.get();
-        if(params != null) {
-            client.setParams(params);
-        }
-
-        HttpResponse response;
-        try {
-			response = client.execute(method);
-		} catch (IOException failed) {
-			//failed.printStackTrace();
-			return !listener.requestFailed(method, null, failed);
-		} catch (Exception e) {
-			//e.printStackTrace();
-            IOException ioe = new IOException();
-            ioe.initCause(e);
-            return !listener.requestFailed(method, null, ioe);
-        } 
-
-        return !listener.requestComplete(method, response);
+//		LimeHttpClient client = clientProvider.get();
+//        if(params != null) {
+//            client.setParams(params);
+//        }
+//
+//        HttpResponse response;
+//        try {
+//			response = client.execute(method);
+//		} catch (IOException failed) {
+//			//failed.printStackTrace();
+//			return !listener.requestFailed(method, null, failed);
+//		} catch (Exception e) {
+//			//e.printStackTrace();
+//            IOException ioe = new IOException();
+//            ioe.initCause(e);
+//            return !listener.requestFailed(method, null, ioe);
+//        } 
+//
+//        return !listener.requestComplete(method, response);
+	    return false;
 	}
 
 	

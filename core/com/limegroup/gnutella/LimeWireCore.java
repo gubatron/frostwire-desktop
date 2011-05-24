@@ -2,7 +2,6 @@ package com.limegroup.gnutella;
 
 import java.util.concurrent.ScheduledExecutorService;
 
-import org.limewire.http.LimeHttpClient;
 import org.limewire.io.NetworkInstanceUtils;
 import org.limewire.lifecycle.ServiceRegistry;
 import org.limewire.net.ConnectionDispatcher;
@@ -23,7 +22,6 @@ import com.limegroup.gnutella.auth.IpPortContentAuthorityFactory;
 import com.limegroup.gnutella.bootstrap.UDPHostCacheFactory;
 import com.limegroup.gnutella.browser.ExternalControl;
 import com.limegroup.gnutella.browser.LocalAcceptor;
-import com.limegroup.gnutella.browser.LocalHTTPAcceptor;
 import com.limegroup.gnutella.connection.ConnectionCheckerManager;
 import com.limegroup.gnutella.connection.MessageReaderFactory;
 import com.limegroup.gnutella.connection.RoutedConnectionFactory;
@@ -65,9 +63,6 @@ import com.limegroup.gnutella.spam.RatingTable;
 import com.limegroup.gnutella.spam.SpamManager;
 import com.limegroup.gnutella.statistics.QueryStats;
 import com.limegroup.gnutella.statistics.TcpBandwidthStatistics;
-import com.limegroup.gnutella.uploader.FileResponseEntityFactory;
-import com.limegroup.gnutella.uploader.HTTPHeaderUtils;
-import com.limegroup.gnutella.uploader.HttpRequestHandlerFactory;
 import com.limegroup.gnutella.uploader.UploadSlotManager;
 import com.limegroup.gnutella.version.UpdateCollectionFactory;
 import com.limegroup.gnutella.xml.LimeXMLDocumentFactory;
@@ -147,10 +142,6 @@ public class LimeWireCore {
         return injector.getInstance(FeaturesWriter.class);
     }
 
-    public HTTPHeaderUtils getHttpHeaderUtils() {
-        return injector.getInstance(HTTPHeaderUtils.class);
-    }
-
     public PushEndpointFactory getPushEndpointFactory() {
         return injector.getInstance(PushEndpointFactory.class);
     }
@@ -215,16 +206,8 @@ public class LimeWireCore {
         return injector.getInstance(LocalAcceptor.class);
     }
     
-    public LocalHTTPAcceptor getLocalHTTPAcceptor() {
-        return injector.getInstance(LocalHTTPAcceptor.class);
-    }
-
     public HostCatcher getHostCatcher() {
         return injector.getInstance(HostCatcher.class);
-    }
-
-    public HTTPAcceptor getHttpUploadAcceptor() {
-        return injector.getInstance(HTTPAcceptor.class);
     }
 
     public PushManager getPushManager() {
@@ -286,11 +269,7 @@ public class LimeWireCore {
     public CreationTimeCache getCreationTimeCache() {
         return injector.getInstance(CreationTimeCache.class);
     }
-
-    public HttpRequestHandlerFactory getHttpRequestHandlerFactory() {
-        return injector.getInstance(HttpRequestHandlerFactory.class); 
-    }
-
+    
     public UrnCache getUrnCache() {
         return injector.getInstance(UrnCache.class);
     }
@@ -483,10 +462,6 @@ public class LimeWireCore {
         return injector.getProvider(UDPCrawlerPingHandler.class);
     }
 
-    public FileResponseEntityFactory getFileRepsoneEntityFactory() {
-        return injector.getInstance(FileResponseEntityFactory.class);
-    }
-
     public MessageFactory getMessageFactory() {
         return injector.getInstance(MessageFactory.class);
     }
@@ -562,11 +537,7 @@ public class LimeWireCore {
     public RemoteFileDescFactory getRemoteFileDescFactory() {
         return injector.getInstance(RemoteFileDescFactory.class);
     }
-
-    public LimeHttpClient getLimeHttpClient() {
-        return injector.getInstance(LimeHttpClient.class);
-    }
-
+    
     public TcpBandwidthStatistics getTcpBandwidthStatistics() {
         return injector.getInstance(TcpBandwidthStatistics.class);
     }

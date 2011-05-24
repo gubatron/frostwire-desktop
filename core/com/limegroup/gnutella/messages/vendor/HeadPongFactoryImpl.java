@@ -47,7 +47,6 @@ public class HeadPongFactoryImpl implements HeadPongFactory {
     private static final Log LOG = LogFactory.getLog(HeadPongFactoryImpl.class);
     
     private final NetworkManager networkManager;
-    private final Provider<UploadManager> uploadManager;
     private final Provider<FileManager> fileManager;
     private final Provider<AltLocManager> altLocManager;
     private final PushEndpointFactory pushEndpointFactory; 
@@ -63,13 +62,11 @@ public class HeadPongFactoryImpl implements HeadPongFactory {
     
     @Inject
     public HeadPongFactoryImpl(NetworkManager networkManager,
-            Provider<UploadManager> uploadManager,
             Provider<FileManager> fileManager,
             Provider<AltLocManager> altLocManager,
             PushEndpointFactory pushEndpointFactory,
             Provider<DownloadManager> downloadManager) {
         this.networkManager = networkManager;
-        this.uploadManager = uploadManager;
         this.fileManager = fileManager;
         this.altLocManager = altLocManager;
         this.pushEndpointFactory = pushEndpointFactory;
@@ -160,16 +157,17 @@ public class HeadPongFactoryImpl implements HeadPongFactory {
 
     /** Calculates the queue status. */
     private byte calculateQueueStatus() {
-        int queueSize = uploadManager.get().getNumQueuedUploads();
-        
-        if (queueSize >= UploadSettings.UPLOAD_QUEUE_SIZE.getValue())
-            return HeadPong.BUSY;
-        else if (queueSize > 0) 
-            return (byte) queueSize;
-        else   
-            return (byte)(uploadManager.get().uploadsInProgress() - 
-                          UploadSettings.HARD_MAX_UPLOADS.getValue()
-                         );
+//        int queueSize = uploadManager.get().getNumQueuedUploads();
+//        
+//        if (queueSize >= UploadSettings.UPLOAD_QUEUE_SIZE.getValue())
+//            return HeadPong.BUSY;
+//        else if (queueSize > 0) 
+//            return (byte) queueSize;
+//        else   
+//            return (byte)(uploadManager.get().uploadsInProgress() - 
+//                          UploadSettings.HARD_MAX_UPLOADS.getValue()
+//                         );
+        return 0;
     }
 
     /** Calculates the code that should be returned, based on the FileDesc. */

@@ -78,7 +78,6 @@ public class StandardMessageRouter extends MessageRouterImpl {
             ConnectionManager connectionManager, @Named("forMeReplyHandler")
             ReplyHandler forMeReplyHandler, QueryUnicaster queryUnicaster,
             FileManager fileManager, ContentManager contentManager,
-            UploadManager uploadManager,
             DownloadManager downloadManager, UDPService udpService,
             SearchResultHandler searchResultHandler,
             SocketsManager socketsManager, HostCatcher hostCatcher,
@@ -103,7 +102,7 @@ public class StandardMessageRouter extends MessageRouterImpl {
         super(networkManager, queryRequestFactory, queryHandlerFactory,
                 onDemandUnicaster, headPongFactory, pingReplyFactory,
                 connectionManager, forMeReplyHandler, queryUnicaster,
-                fileManager, contentManager, uploadManager,
+                fileManager, contentManager,
                 downloadManager, udpService, searchResultHandler,
                 socketsManager, hostCatcher, queryReplyFactory, staticMessages,
                 messageDispatcher, multicastService, queryDispatcher,
@@ -289,122 +288,124 @@ public class StandardMessageRouter extends MessageRouterImpl {
     protected boolean respondToQueryRequest(QueryRequest queryRequest,
                                             byte[] clientGUID,
                                             ReplyHandler handler) {
-        //Only respond if we understand the actual feature, if it had a feature.
-        if(!FeatureSearchData.supportsFeature(queryRequest.getFeatureSelector()))
-            return false;
-                                                
-        // Only send results if we're not busy.  Note that this ignores
-        // queue slots -- we're considered busy if all of our "normal"
-        // slots are full.  This allows some spillover into our queue that
-        // is necessary because we're always returning more total hits than
-        // we have slots available.
-        if(!uploadManager.mayBeServiceable() )  {
-            return false;
-        }
-                                                
-                                                
-        // Ensure that we have a valid IP & Port before we send the response.
-        // Otherwise the QueryReply will fail on creation.
-        if( !NetworkUtils.isValidPort(networkManager.getPort()) ||
-            !NetworkUtils.isValidAddress(networkManager.getAddress()))
-            return false;
-                                                     
-        // Run the local query
-        Response[] responses = fileManager.query(queryRequest);
-        return sendResponses(responses, queryRequest, handler);
+//        //Only respond if we understand the actual feature, if it had a feature.
+//        if(!FeatureSearchData.supportsFeature(queryRequest.getFeatureSelector()))
+//            return false;
+//                                                
+//        // Only send results if we're not busy.  Note that this ignores
+//        // queue slots -- we're considered busy if all of our "normal"
+//        // slots are full.  This allows some spillover into our queue that
+//        // is necessary because we're always returning more total hits than
+//        // we have slots available.
+//        if(!uploadManager.mayBeServiceable() )  {
+//            return false;
+//        }
+//                                                
+//                                                
+//        // Ensure that we have a valid IP & Port before we send the response.
+//        // Otherwise the QueryReply will fail on creation.
+//        if( !NetworkUtils.isValidPort(networkManager.getPort()) ||
+//            !NetworkUtils.isValidAddress(networkManager.getAddress()))
+//            return false;
+//                                                     
+//        // Run the local query
+//        Response[] responses = fileManager.query(queryRequest);
+//        return sendResponses(responses, queryRequest, handler);
+        return false;
         
     }
 
     private boolean sendResponses(Response[] responses, QueryRequest query,
                                  ReplyHandler handler) {
-        // if either there are no responses or, the
-        // response array came back null for some reason,
-        // exit this method
-        if ( (responses == null) || ((responses.length < 1)) )
-            return false;
-
-        // if we cannot service a regular query, only send back results for
-        // application-shared metafiles, if any.
-        if (!uploadManager.isServiceable()) {
-        	
-        	List<Response> filtered = new ArrayList<Response>(responses.length);
-        	for(Response r : responses) {
-        		if (r.isMetaFile() && 
-        				fileManager.isFileApplicationShared(r.getName()))
-        			filtered.add(r);
-        	}
-        	
-        	if (filtered.isEmpty()) // nothing to send..
-        		return false;
-        	
-        	if (filtered.size() != responses.length)
-        		responses = filtered.toArray(new Response[filtered.size()]);
-        }
-        
-        // Here we can do a couple of things - if the query wants
-        // out-of-band replies we should do things differently.  else just
-        // send it off as usual.  only send out-of-band if you can
-        // receive solicited udp AND not servicing too many
-        // uploads AND not connected to the originator of the query
-        if (query.desiresOutOfBandReplies() &&
-            !isConnectedTo(query, handler) && 
-			networkManager.canReceiveSolicited() &&
-            NetworkUtils.isValidAddressAndPort(query.getReplyAddress(), query.getReplyPort())) {
-            
-            // send the replies out-of-band - we need to
-            // 1) buffer the responses
-            // 2) send a ReplyNumberVM with the number of responses
-            if (bufferResponsesForLaterDelivery(query, responses)) {
-                // special out of band handling....
-                InetAddress addr = null;
-                try {
-                    addr = InetAddress.getByName(query.getReplyAddress());
-                } catch (UnknownHostException uhe) {}
-                final int port = query.getReplyPort();
-                
-                if(addr != null) { 
-                    // send a ReplyNumberVM to the host - he'll ACK you if he
-                    // wants the whole shebang
-                    int resultCount = 
-                        (responses.length > 255) ? 255 : responses.length;
-                    final ReplyNumberVendorMessage vm = query.desiresOutOfBandRepliesV3() ?
-                            replyNumberVendorMessageFactory.createV3ReplyNumberVendorMessage(new GUID(query.getGUID()), resultCount) :
-                                replyNumberVendorMessageFactory.createV2ReplyNumberVendorMessage(new GUID(query.getGUID()), resultCount);
-                    udpService.send(vm, addr, port);
-                    if (MessageSettings.OOB_REDUNDANCY.getValue() && 
-                            query.desiresOutOfBandRepliesV3()) {
-                        final InetAddress addrf = addr;
-                        backgroundExecutor.schedule(new Runnable() {
-                            public void run () {
-                                udpService.send(vm, addrf, port);
-                            }
-                        }, 100, TimeUnit.MILLISECONDS);
-                    }
-                    return true;
-                }
-            } else {
-                // else i couldn't buffer the responses due to busy-ness, oh, scrap
-                // them.....
-                return false;                
-            }
-        }
-
-        // send the replies in-band
-        // -----------------------------
-
-        //convert responses to QueryReplies
-        Iterable<QueryReply> iterable = responsesToQueryReplies(responses,
-                                                                  query);
-        //send the query replies
-        try {
-            for(QueryReply queryReply : iterable)
-                sendQueryReply(queryReply);
-        }  catch (IOException e) {
-            // if there is an error, do nothing..
-        }
-        // -----------------------------
-        
-        return true;
+//        // if either there are no responses or, the
+//        // response array came back null for some reason,
+//        // exit this method
+//        if ( (responses == null) || ((responses.length < 1)) )
+//            return false;
+//
+//        // if we cannot service a regular query, only send back results for
+//        // application-shared metafiles, if any.
+//        if (!uploadManager.isServiceable()) {
+//        	
+//        	List<Response> filtered = new ArrayList<Response>(responses.length);
+//        	for(Response r : responses) {
+//        		if (r.isMetaFile() && 
+//        				fileManager.isFileApplicationShared(r.getName()))
+//        			filtered.add(r);
+//        	}
+//        	
+//        	if (filtered.isEmpty()) // nothing to send..
+//        		return false;
+//        	
+//        	if (filtered.size() != responses.length)
+//        		responses = filtered.toArray(new Response[filtered.size()]);
+//        }
+//        
+//        // Here we can do a couple of things - if the query wants
+//        // out-of-band replies we should do things differently.  else just
+//        // send it off as usual.  only send out-of-band if you can
+//        // receive solicited udp AND not servicing too many
+//        // uploads AND not connected to the originator of the query
+//        if (query.desiresOutOfBandReplies() &&
+//            !isConnectedTo(query, handler) && 
+//			networkManager.canReceiveSolicited() &&
+//            NetworkUtils.isValidAddressAndPort(query.getReplyAddress(), query.getReplyPort())) {
+//            
+//            // send the replies out-of-band - we need to
+//            // 1) buffer the responses
+//            // 2) send a ReplyNumberVM with the number of responses
+//            if (bufferResponsesForLaterDelivery(query, responses)) {
+//                // special out of band handling....
+//                InetAddress addr = null;
+//                try {
+//                    addr = InetAddress.getByName(query.getReplyAddress());
+//                } catch (UnknownHostException uhe) {}
+//                final int port = query.getReplyPort();
+//                
+//                if(addr != null) { 
+//                    // send a ReplyNumberVM to the host - he'll ACK you if he
+//                    // wants the whole shebang
+//                    int resultCount = 
+//                        (responses.length > 255) ? 255 : responses.length;
+//                    final ReplyNumberVendorMessage vm = query.desiresOutOfBandRepliesV3() ?
+//                            replyNumberVendorMessageFactory.createV3ReplyNumberVendorMessage(new GUID(query.getGUID()), resultCount) :
+//                                replyNumberVendorMessageFactory.createV2ReplyNumberVendorMessage(new GUID(query.getGUID()), resultCount);
+//                    udpService.send(vm, addr, port);
+//                    if (MessageSettings.OOB_REDUNDANCY.getValue() && 
+//                            query.desiresOutOfBandRepliesV3()) {
+//                        final InetAddress addrf = addr;
+//                        backgroundExecutor.schedule(new Runnable() {
+//                            public void run () {
+//                                udpService.send(vm, addrf, port);
+//                            }
+//                        }, 100, TimeUnit.MILLISECONDS);
+//                    }
+//                    return true;
+//                }
+//            } else {
+//                // else i couldn't buffer the responses due to busy-ness, oh, scrap
+//                // them.....
+//                return false;                
+//            }
+//        }
+//
+//        // send the replies in-band
+//        // -----------------------------
+//
+//        //convert responses to QueryReplies
+//        Iterable<QueryReply> iterable = responsesToQueryReplies(responses,
+//                                                                  query);
+//        //send the query replies
+//        try {
+//            for(QueryReply queryReply : iterable)
+//                sendQueryReply(queryReply);
+//        }  catch (IOException e) {
+//            // if there is an error, do nothing..
+//        }
+//        // -----------------------------
+//        
+//        return true;
+        return false;
 
     }
 

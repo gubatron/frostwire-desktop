@@ -21,19 +21,16 @@ public class ConnectionServicesImpl implements ConnectionServices {
     
     private final Provider<ConnectionManager> connectionManager;
     private final Provider<HostCatcher> hostCatcher;
-    private final Provider<UploadManager> uploadManager;
     private final Provider<Acceptor> acceptor;
     private final Provider<SpamServices> spamServices;
 
     @Inject
     public ConnectionServicesImpl(
             Provider<ConnectionManager> connectionManager,
-            Provider<HostCatcher> hostCatcher,
-            Provider<UploadManager> uploadManager, Provider<Acceptor> acceptor,
+            Provider<HostCatcher> hostCatcher, Provider<Acceptor> acceptor,
             Provider<SpamServices> spamServices) {
         this.connectionManager = connectionManager;
         this.hostCatcher = hostCatcher;
-        this.uploadManager = uploadManager;
         this.acceptor = acceptor;
         this.spamServices = spamServices;
     }
@@ -160,15 +157,16 @@ public class ConnectionServicesImpl implements ConnectionServices {
      * @see com.limegroup.gnutella.ConnectionServices#isConnectedTo(java.net.InetAddress)
      */
     public boolean isConnectedTo(InetAddress addr) {
-        // ideally we would check download sockets too, but
-        // because of the way ManagedDownloader is built, it isn't
-        // too practical.
-        // TODO: rewrite ManagedDownloader
-        
-        String host = addr.getHostAddress();
-        return connectionManager.get().isConnectedTo(host) ||
-               uploadManager.get().isConnectedTo(addr); // ||
-               // dloadManager.isConnectedTo(addr);
+//        // ideally we would check download sockets too, but
+//        // because of the way ManagedDownloader is built, it isn't
+//        // too practical.
+//        // TODO: rewrite ManagedDownloader
+//        
+//        String host = addr.getHostAddress();
+//        return connectionManager.get().isConnectedTo(host) ||
+//               uploadManager.get().isConnectedTo(addr); // ||
+//               // dloadManager.isConnectedTo(addr);
+        return false;
     }
 
     /* (non-Javadoc)

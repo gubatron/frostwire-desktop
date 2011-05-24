@@ -6,7 +6,6 @@ import java.net.URLEncoder;
 import java.util.StringTokenizer;
 import java.io.UnsupportedEncodingException;
 
-import org.limewire.http.Constants;
 import org.limewire.service.ErrorService;
 
 import com.limegroup.gnutella.settings.BugSettings;
@@ -15,6 +14,11 @@ import com.limegroup.gnutella.settings.BugSettings;
  * Utilities for URIs
  */
 public class URIUtils {
+    
+    /**
+     * Identifier for ISO-Latin-1 encoding
+     */
+    private static String ASCII_ENCODING = "ISO-8859-1";
     
     private static final String RESERVED = ";/?:@&=+$,";
 
@@ -83,7 +87,7 @@ public class URIUtils {
                 encodedURL.append(s);
             } else {
                 try {
-                    encodedURL.append(URLEncoder.encode(s, Constants.ASCII_ENCODING));
+                    encodedURL.append(URLEncoder.encode(s, ASCII_ENCODING));
                 } catch (UnsupportedEncodingException e1) {
                     // should never happen
                     ErrorService.error(e1);

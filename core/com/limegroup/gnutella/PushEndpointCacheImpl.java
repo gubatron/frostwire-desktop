@@ -15,7 +15,6 @@ import org.limewire.io.IpPortSet;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
-import com.limegroup.gnutella.uploader.HTTPHeaderUtils;
 
 @Singleton
 public class PushEndpointCacheImpl implements PushEndpointCache {
@@ -44,13 +43,9 @@ public class PushEndpointCacheImpl implements PushEndpointCache {
     private final Map<GUID, PushEndpointCache.CachedPushEndpoint> GUID_PROXY_MAP = 
         Collections.synchronizedMap(new WeakHashMap<GUID, CachedPushEndpoint>());
     
-    private final HTTPHeaderUtils httpHeaderUtils;
-    
     @Inject
-    PushEndpointCacheImpl(@Named("backgroundExecutor") ScheduledExecutorService backgroundExecutor,
-                          HTTPHeaderUtils httpHeaderUtils) {
+    PushEndpointCacheImpl(@Named("backgroundExecutor") ScheduledExecutorService backgroundExecutor) {
         backgroundExecutor.scheduleWithFixedDelay(new WeakCleaner(),30*1000,30*1000, TimeUnit.MILLISECONDS);
-        this.httpHeaderUtils = httpHeaderUtils;
     }
 
     /**
@@ -61,8 +56,8 @@ public class PushEndpointCacheImpl implements PushEndpointCache {
      * @param httpString comma-separated list of proxies and possible proxy features
      */
     public void overwriteProxies(byte [] guid, String httpString) {
-        Set<? extends Connectable> newSet = httpHeaderUtils.decodePushProxies(httpString, ",");
-        overwriteProxies(guid, newSet);
+//        Set<? extends Connectable> newSet = httpHeaderUtils.decodePushProxies(httpString, ",");
+//        overwriteProxies(guid, newSet);
     }
 
     /**

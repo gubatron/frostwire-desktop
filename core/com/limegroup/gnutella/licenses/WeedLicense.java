@@ -5,7 +5,6 @@ import java.net.URISyntaxException;
 import java.net.URI;
 import java.net.URL;
 
-import org.limewire.http.LimeHttpClient;
 import org.limewire.service.ErrorService;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -121,47 +120,47 @@ class WeedLicense extends AbstractLicense {
         price = null;
     }
 
-    /**
-     * Overriden to retrieve the body of data from a special URI.
-     */
-    protected String getBody(String url, LimeHttpClient httpClient) {
-        return super.getBody(url + "&data=1", httpClient);
-    }
+//    /**
+//     * Overriden to retrieve the body of data from a special URI.
+//     */
+//    protected String getBody(String url, LimeHttpClient httpClient) {
+//        return super.getBody(url + "&data=1", httpClient);
+//    }
         
-    /**
-     * Parses the XML sent back from the Weed server.
-     * The XML should look like:
-     *  <WeedVerifyData>
-	 *       <Status>Verified</Status>
-	 *       <Artist>Roger Joseph Manning, Jr.</Artist>
-	 *       <Title>What You Don't Know About the Girl</Title>
-	 *       <Price>1.2500</Price>
-     *  </WeedVerifyData>
-     */
-    protected void parseDocumentNode(Node doc, LicenseCache licenseCache, LimeHttpClient httpClient) {
-        if(!doc.getNodeName().equals("WeedVerifyData"))
-            return;
-        
-        NodeList children = doc.getChildNodes();
-        for(int i = 0; i < children.getLength(); i++) {
-            Node child = children.item(i);
-            String name = child.getNodeName();
-            String value = LimeXMLUtils.getTextContent(child);
-            if(name == null || value == null)
-                continue;
-
-            value = value.trim();
-            if(value.equals(""))
-                continue;
-                
-            if(name.equals("Status"))
-                valid = value.equals("Verified");
-            else if(name.equals("Artist"))
-                artist = value;
-            else if(name.equals("Title"))
-                title = value;
-            else if(name.equals("Price"))
-                price = value;
-        }
-    }
+//    /**
+//     * Parses the XML sent back from the Weed server.
+//     * The XML should look like:
+//     *  <WeedVerifyData>
+//	 *       <Status>Verified</Status>
+//	 *       <Artist>Roger Joseph Manning, Jr.</Artist>
+//	 *       <Title>What You Don't Know About the Girl</Title>
+//	 *       <Price>1.2500</Price>
+//     *  </WeedVerifyData>
+//     */
+//    protected void parseDocumentNode(Node doc, LicenseCache licenseCache, LimeHttpClient httpClient) {
+//        if(!doc.getNodeName().equals("WeedVerifyData"))
+//            return;
+//        
+//        NodeList children = doc.getChildNodes();
+//        for(int i = 0; i < children.getLength(); i++) {
+//            Node child = children.item(i);
+//            String name = child.getNodeName();
+//            String value = LimeXMLUtils.getTextContent(child);
+//            if(name == null || value == null)
+//                continue;
+//
+//            value = value.trim();
+//            if(value.equals(""))
+//                continue;
+//                
+//            if(name.equals("Status"))
+//                valid = value.equals("Verified");
+//            else if(name.equals("Artist"))
+//                artist = value;
+//            else if(name.equals("Title"))
+//                title = value;
+//            else if(name.equals("Price"))
+//                price = value;
+//        }
+//    }
 }

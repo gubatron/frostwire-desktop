@@ -6,7 +6,6 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import org.limewire.concurrent.AbstractLazySingletonProvider;
 import org.limewire.concurrent.SimpleTimer;
-import org.limewire.http.LimeWireHttpModule;
 import org.limewire.inject.AbstractModule;
 import org.limewire.io.LimeWireIOModule;
 import org.limewire.io.LocalSocketAddressProvider;
@@ -30,7 +29,6 @@ public class FrostWireCoreModule extends AbstractModule {
     protected void configure() {
     	
     	binder().install(new LimeWireNetModule(SettingsBackedProxySettings.class, SettingsBackedSocketBindingSettings.class));
-        binder().install(new LimeWireHttpModule());
         binder().install(new LimeWireIOModule());
         
         bind(HttpExecutor.class).to(DefaultHttpExecutor.class);

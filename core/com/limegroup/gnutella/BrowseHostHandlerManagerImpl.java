@@ -14,10 +14,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpException;
 import org.limewire.concurrent.ThreadExecutor;
+import org.limewire.io.NetworkInstanceUtils;
 import org.limewire.net.SocketsManager;
 import org.limewire.service.ErrorService;
-import org.limewire.http.SocketWrappingHttpClient;
-import org.limewire.io.NetworkInstanceUtils;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -45,7 +44,6 @@ public class BrowseHostHandlerManagerImpl implements BrowseHostHandlerManager {
     private final RemoteFileDescFactory remoteFileDescFactory;
 
     private final MessageFactory messageFactory;
-    private Provider<SocketWrappingHttpClient> clientProvider;
     private final NetworkInstanceUtils networkInstanceUtils;
 
     @Inject
@@ -57,7 +55,6 @@ public class BrowseHostHandlerManagerImpl implements BrowseHostHandlerManager {
                                         @Named("forMeReplyHandler")Provider<ReplyHandler> forMeReplyHandler,
                                         MessageFactory messageFactory,
                                         RemoteFileDescFactory remoteFileDescFactory,
-                                        Provider<SocketWrappingHttpClient> clientProvider,
                                         NetworkInstanceUtils networkInstanceUtils) {
         this.activityCallback = activityCallback;
         this.socketsManager = socketsManager;
@@ -66,7 +63,6 @@ public class BrowseHostHandlerManagerImpl implements BrowseHostHandlerManager {
         this.messageFactory = messageFactory;
         this.backgroundExecutor = backgroundExecutor;
         this.remoteFileDescFactory = remoteFileDescFactory;
-        this.clientProvider = clientProvider;
         this.networkInstanceUtils = networkInstanceUtils;
     }
     
@@ -97,7 +93,7 @@ public class BrowseHostHandlerManagerImpl implements BrowseHostHandlerManager {
                         }
                     },
                 activityCallback.get(), socketsManager, pushDownloadManager,
-                forMeReplyHandler, messageFactory, remoteFileDescFactory, clientProvider, networkInstanceUtils);
+                forMeReplyHandler, messageFactory, remoteFileDescFactory, networkInstanceUtils);
     }
 
     /** @return true if the Push was handled by me. */

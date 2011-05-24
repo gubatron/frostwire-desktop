@@ -12,7 +12,6 @@ import org.apache.http.HttpException;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpHead;
-import org.limewire.http.LimeHttpClient;
 import org.limewire.io.Connectable;
 import org.limewire.io.InvalidDataException;
 import org.limewire.io.IpPort;
@@ -46,18 +45,15 @@ class RemoteFileDescFactoryImpl implements RemoteFileDescFactory {
     private final LimeXMLDocumentFactory limeXMLDocumentFactory;
 
     private final PushEndpointFactory pushEndpointFactory;
-
-    private final Provider<LimeHttpClient> httpClientProvider;
     
     private final NetworkInstanceUtils networkInstanceUtils;
 
     @Inject
     public RemoteFileDescFactoryImpl(LimeXMLDocumentFactory limeXMLDocumentFactory,
-            PushEndpointFactory pushEndpointFactory, Provider<LimeHttpClient> httpClientProvider,
+            PushEndpointFactory pushEndpointFactory,
             NetworkInstanceUtils networkInstanceUtils) {
         this.limeXMLDocumentFactory = limeXMLDocumentFactory;
         this.pushEndpointFactory = pushEndpointFactory;
-        this.httpClientProvider = httpClientProvider;
         this.networkInstanceUtils = networkInstanceUtils;
     }
 
@@ -196,29 +192,30 @@ class RemoteFileDescFactoryImpl implements RemoteFileDescFactory {
     }
 
     private long contentLength(URI uri) throws HttpException, IOException, InterruptedException {
-        HttpHead head = new HttpHead(uri);
-        head.addHeader("User-Agent", FrostWireUtils.getHttpServer());
-        HttpResponse response = null;
-        LimeHttpClient client = httpClientProvider.get();
-        try {
-            response = client.execute(head);
-            // Extract Content-length, but only if the response was 200 OK.
-            // Generally speaking any 2xx response is ok, but in this situation
-            // we expect only 200.
-            if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK)
-                throw new IOException("Got " + response.getStatusLine().getStatusCode()
-                        + " instead of 200 for URL: " + uri);
-
-            long length = -1;
-            if (response.getEntity() != null) {
-                length = response.getEntity().getContentLength();
-            }
-            if (length < 0)
-                throw new IOException("No content length");
-            return length;
-        } finally {
-            client.releaseConnection(response);
-        }
+//        HttpHead head = new HttpHead(uri);
+//        head.addHeader("User-Agent", FrostWireUtils.getHttpServer());
+//        HttpResponse response = null;
+//        LimeHttpClient client = httpClientProvider.get();
+//        try {
+//            response = client.execute(head);
+//            // Extract Content-length, but only if the response was 200 OK.
+//            // Generally speaking any 2xx response is ok, but in this situation
+//            // we expect only 200.
+//            if (response.getStatusLine().getStatusCode() != HttpStatus.SC_OK)
+//                throw new IOException("Got " + response.getStatusLine().getStatusCode()
+//                        + " instead of 200 for URL: " + uri);
+//
+//            long length = -1;
+//            if (response.getEntity() != null) {
+//                length = response.getEntity().getContentLength();
+//            }
+//            if (length < 0)
+//                throw new IOException("No content length");
+//            return length;
+//        } finally {
+//            client.releaseConnection(response);
+//        }
+        return 0;
     }
 
     public RemoteFileDesc createFromMemento(RemoteHostMemento remoteHostMemento)

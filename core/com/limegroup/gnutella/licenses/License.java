@@ -3,8 +3,6 @@ package com.limegroup.gnutella.licenses;
 import java.net.URI;
 import java.net.URL;
 
-import org.limewire.http.LimeHttpClient;
-
 import com.limegroup.gnutella.URN;
 
 /**
@@ -72,13 +70,6 @@ public interface License {
      * Returns the license, in human readable form.
      */
     public String getLicense();
-    
-    /**
-     * Verifies the license. The results of the verification can be retrieved by
-     * invoking {@link #isValid(URN)}.
-     * @param httpClient TODO
-     */
-    public void verify(LicenseCache licenseCache, LimeHttpClient httpClient);
     
     /**
      * Returns the last time this license was verified.

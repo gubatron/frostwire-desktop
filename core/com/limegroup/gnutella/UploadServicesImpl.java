@@ -12,15 +12,13 @@ public class UploadServicesImpl implements UploadServices {
     
     public static boolean IS_SEEDING_HOSTILES_TXT = false;
     
-    private final Provider<UploadManager> uploadManager;
     private final Provider<UploadSlotManager> uploadSlotManager;
     private final Provider<ConnectionManager> connectionManager;
     
     @Inject
-    public UploadServicesImpl(Provider<UploadManager> uploadManager,
+    public UploadServicesImpl(
             Provider<UploadSlotManager> uploadSlotManager,
             Provider<ConnectionManager> connectionManager) {
-        this.uploadManager = uploadManager;
         this.uploadSlotManager = uploadSlotManager;
         this.connectionManager = connectionManager;
     }
@@ -71,14 +69,14 @@ public class UploadServicesImpl implements UploadServices {
      * @see com.limegroup.gnutella.UploadServices#getNumUploads()
      */
     public int getNumUploads() {
-        return uploadManager.get().uploadsInProgress();
+        return 0;//uploadManager.get().uploadsInProgress();
     }
 
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.UploadServices#getNumQueuedUploads()
      */
     public int getNumQueuedUploads() {
-        return uploadManager.get().getNumQueuedUploads();
+        return 0;//uploadManager.get().getNumQueuedUploads();
     }
     
     public boolean isSeedingHostilesTxt() {

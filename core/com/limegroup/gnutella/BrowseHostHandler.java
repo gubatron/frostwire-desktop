@@ -18,7 +18,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.params.HttpProtocolParams;
-import org.limewire.http.SocketWrappingHttpClient;
 import org.limewire.io.Connectable;
 import org.limewire.io.ConnectableImpl;
 import org.limewire.io.IOUtils;
@@ -89,7 +88,6 @@ public class BrowseHostHandler {
 
     private final MessageFactory messageFactory;
     private final RemoteFileDescFactory remoteFileDescFactory;
-    private final Provider<SocketWrappingHttpClient> clientProvider;
     private final NetworkInstanceUtils networkInstanceUtils;
 
 
@@ -105,8 +103,7 @@ public class BrowseHostHandler {
                       Provider<PushDownloadManager> pushDownloadManager,
                       @Named("forMeReplyHandler")Provider<ReplyHandler> forMeReplyHandler,
                       MessageFactory messageFactory,
-                      RemoteFileDescFactory remoteFileDescFactory,
-                      Provider<SocketWrappingHttpClient> clientProvider, 
+                      RemoteFileDescFactory remoteFileDescFactory, 
                       NetworkInstanceUtils networkInstanceUtils) {
         _guid = guid;
         _serventID = serventID;
@@ -117,7 +114,6 @@ public class BrowseHostHandler {
         this.forMeReplyHandler = forMeReplyHandler;
         this.messageFactory = messageFactory;
         this.remoteFileDescFactory = remoteFileDescFactory;
-        this.clientProvider = clientProvider;
         this.networkInstanceUtils = networkInstanceUtils;
     }
 
@@ -296,20 +292,21 @@ public class BrowseHostHandler {
     }
 
     private HttpResponse makeHTTPRequest(Socket socket) throws IOException, URISyntaxException, HttpException, InterruptedException {
-        SocketWrappingHttpClient client = clientProvider.get();
-        client.setSocket(socket);
-        // TODO
-        // hardcoding to "http" should work;
-        // socket has already been established
-        HttpGet get = new HttpGet("http://" + NetworkUtils.ip2string(socket.getInetAddress().getAddress()) + ":" + socket.getPort() + "/");
-        HttpProtocolParams.setVersion(client.getParams(), HttpVersion.HTTP_1_1);
-        
-        get.addHeader("Host", NetworkUtils.ip2string(socket.getInetAddress().getAddress()) + ":" + socket.getPort());
-        get.addHeader("User-Agent", FrostWireUtils.getVendor());
-        get.addHeader("Accept", Constants.QUERYREPLY_MIME_TYPE);
-        get.addHeader("Connection", "close");
-        
-        return client.execute(get);
+//        SocketWrappingHttpClient client = clientProvider.get();
+//        client.setSocket(socket);
+//        // TODO
+//        // hardcoding to "http" should work;
+//        // socket has already been established
+//        HttpGet get = new HttpGet("http://" + NetworkUtils.ip2string(socket.getInetAddress().getAddress()) + ":" + socket.getPort() + "/");
+//        HttpProtocolParams.setVersion(client.getParams(), HttpVersion.HTTP_1_1);
+//        
+//        get.addHeader("Host", NetworkUtils.ip2string(socket.getInetAddress().getAddress()) + ":" + socket.getPort());
+//        get.addHeader("User-Agent", FrostWireUtils.getVendor());
+//        get.addHeader("Accept", Constants.QUERYREPLY_MIME_TYPE);
+//        get.addHeader("Connection", "close");
+//        
+//        return client.execute(get);
+        return null;
     }
 
     private void validateResponse(HttpResponse response) throws IOException {

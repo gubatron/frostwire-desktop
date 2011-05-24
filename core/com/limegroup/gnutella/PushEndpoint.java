@@ -19,7 +19,6 @@ import org.limewire.util.ByteOrder;
 import com.limegroup.gnutella.PushEndpointCache.CachedPushEndpoint;
 import com.limegroup.gnutella.http.HTTPConstants;
 import com.limegroup.gnutella.http.HTTPHeaderValue;
-import com.limegroup.gnutella.uploader.HTTPHeaderUtils;
 
 
 /**
@@ -254,17 +253,17 @@ public class PushEndpoint implements HTTPHeaderValue, IpPort {
 			offset+=2;
 			i++;
 		}
-        
-        // insert the tls indices & turn the feature on if TLS should be included
-        BitNumbers bn = includeTLS ? HTTPHeaderUtils.getTLSIndices(proxies, (Math.min(proxies.size(), MAX_PROXIES))) : BitNumbers.EMPTY_BN;
-        if(!bn.isEmpty()) {
-            byte[] tlsIndexes = bn.toByteArray();
-            assert tlsIndexes.length == 1;
-            where[pptlsIdx] = tlsIndexes[0];
-            where[featureIdx] |= PPTLS_BINARY;
-        } else {
-            where[featureIdx] &= ~PPTLS_BINARY; // make sure its not in the features!
-        }
+//        
+//        // insert the tls indices & turn the feature on if TLS should be included
+//        BitNumbers bn = includeTLS ? HTTPHeaderUtils.getTLSIndices(proxies, (Math.min(proxies.size(), MAX_PROXIES))) : BitNumbers.EMPTY_BN;
+//        if(!bn.isEmpty()) {
+//            byte[] tlsIndexes = bn.toByteArray();
+//            assert tlsIndexes.length == 1;
+//            where[pptlsIdx] = tlsIndexes[0];
+//            where[featureIdx] |= PPTLS_BINARY;
+//        } else {
+//            where[featureIdx] &= ~PPTLS_BINARY; // make sure its not in the features!
+//        }
 	}
 	
 	/**
@@ -399,14 +398,14 @@ public class PushEndpoint implements HTTPHeaderValue, IpPort {
 			}
 		
 		}
-		
-        Set<? extends IpPort> proxies = getProxies();
-        if (!proxies.isEmpty()) {
-            httpString.append(HTTPHeaderUtils.encodePushProxies(proxies, ";", PushEndpoint.MAX_PROXIES));
-        } else {
-            //trim the ; at the end
-            httpString.deleteCharAt(httpString.length()-1);
-        }
+//		
+//        Set<? extends IpPort> proxies = getProxies();
+//        if (!proxies.isEmpty()) {
+//            httpString.append(HTTPHeaderUtils.encodePushProxies(proxies, ";", PushEndpoint.MAX_PROXIES));
+//        } else {
+//            //trim the ; at the end
+//            httpString.deleteCharAt(httpString.length()-1);
+//        }
 
 		return httpString.toString();
 	}
