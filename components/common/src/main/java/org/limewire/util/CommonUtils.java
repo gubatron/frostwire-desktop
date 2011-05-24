@@ -22,6 +22,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+
+import com.limegroup.gnutella.util.FrostWireUtils;
 /**
  * Provides convenience functionality ranging from getting user information,
  * copying files to getting the stack traces of all current threads.
@@ -537,6 +539,6 @@ public class CommonUtils {
         if(settingsDirectory != null)
             return settingsDirectory;
         else
-            return getUserHomeDir();
+            return FrostWireUtils.getRequestedUserSettingsLocation();//getUserHomeDir();
     }
 }

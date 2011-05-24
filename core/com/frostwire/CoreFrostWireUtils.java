@@ -5,7 +5,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
 import java.net.URI;
@@ -17,14 +16,11 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import org.gudy.azureus2.core3.disk.DiskManager;
-import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.core3.disk.DiskManagerPiece;
 import org.gudy.azureus2.core3.download.DownloadManager;
-import org.gudy.azureus2.core3.download.DownloadManagerDiskListener;
 import org.gudy.azureus2.core3.download.DownloadManagerListener;
 import org.gudy.azureus2.core3.download.DownloadManagerStats;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
-import org.limewire.util.CommonUtils;
 import org.limewire.util.Version;
 
 import com.aelitis.azureus.core.AzureusCore;
@@ -36,17 +32,11 @@ import com.frostwire.guice.FrostWireCoreModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.limegroup.gnutella.http.HttpExecutor;
-import com.limegroup.gnutella.library.SharingUtils;
 import com.limegroup.gnutella.settings.SharingSettings;
-import com.limegroup.gnutella.util.FrostWireUtils;
 
 public class CoreFrostWireUtils {
 	
 	private static Injector INJECTOR;
-	
-	public final static File getPreferencesFolder() {
-	    return FrostWireUtils.getRequestedUserSettingsLocation();
-	}
 	
     public final static String getMD5(File f) throws Exception{
         MessageDigest m=MessageDigest.getInstance("MD5");

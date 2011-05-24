@@ -27,6 +27,7 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.LimeProps;
 import com.limegroup.gnutella.util.Expand;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * Class for handling all LimeWire settings that are stored to disk.  To
@@ -51,7 +52,7 @@ public final class ThemeSettings extends LimeProps {
      */
     public static final String EXTENSION = "fwtp";
     
-    public static final File SKINS_FILE = new File(CoreFrostWireUtils.getPreferencesFolder(), "skins.dat");
+    public static final File SKINS_FILE = new File(FrostWireUtils.getRequestedUserSettingsLocation(), "skins.dat");
     
     public static final File THEME_DIR_FILE =
 		new File(CommonUtils.getUserSettingsDir(), "themes");

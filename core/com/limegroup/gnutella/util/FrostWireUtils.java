@@ -340,7 +340,7 @@ public final class FrostWireUtils {
         // On all platforms other than Windows or OSX,
         // this will return <user-home>/.frostwire<versionMajor.versionMinor>
         
-        // On OSX, this will return <user-home>/Library/Preferences/LimeWire
+        // On OSX, this will return <user-home>/Library/Preferences/FrostWire
         
         // On Windows, this first tries to find:
         // a) <user-home>/$LIMEWIRE_PREFS_DIR/.frostwire

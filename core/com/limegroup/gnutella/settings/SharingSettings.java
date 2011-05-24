@@ -8,7 +8,6 @@ import org.limewire.setting.IntSetting;
 import org.limewire.setting.StringArraySetting;
 import org.limewire.setting.StringSetting;
 
-import com.frostwire.CoreFrostWireUtils;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
 
@@ -45,7 +44,7 @@ public class SharingSettings extends LimeProps {
     	FACTORY.createBooleanSetting("SEED_FINISHED_TORRENTS", true);
     
     public static final File IMAGE_CACHE_DIR = 
-        new File(CoreFrostWireUtils.getPreferencesFolder(), "image_cache");
+        new File(FrostWireUtils.getRequestedUserSettingsLocation(), "image_cache");
     
     /**
      * The directory for saving files.
