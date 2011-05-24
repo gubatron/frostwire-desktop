@@ -96,7 +96,7 @@ public final class UpdateMessage extends Object implements Serializable {
         String type = mt.toLowerCase().trim();
         boolean typeIsValid = (type.equals("update") ||
                 type.equals("announcement") || type.equals("overlay") ||
-                type.equals("hostiles") || type.equals("chat_server"));
+                type.equals("chat_server"));
         
         if (mt == null || !typeIsValid) {
             _messageType = new String("update");
