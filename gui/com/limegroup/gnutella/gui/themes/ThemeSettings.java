@@ -1,6 +1,5 @@
 package com.limegroup.gnutella.gui.themes;
 
-
 import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -22,12 +21,10 @@ import org.limewire.setting.IntSetting;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.FileUtils;
 
-import com.frostwire.CoreFrostWireUtils;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.LimeProps;
 import com.limegroup.gnutella.util.Expand;
-import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * Class for handling all LimeWire settings that are stored to disk.  To

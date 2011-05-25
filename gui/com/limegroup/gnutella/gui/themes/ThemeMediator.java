@@ -13,11 +13,11 @@ import java.util.List;
 
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.plaf.InsetsUIResource;
 
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
-import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.TipOfTheDayMediator;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
 import com.limegroup.gnutella.gui.themes.setters.AquaThemeSetter;
@@ -238,5 +238,7 @@ public class ThemeMediator {
         UIManager.put("TextAreaUI", "com.limegroup.gnutella.gui.themes.SkinTextAreaUI");
         UIManager.put("ListUI", "com.limegroup.gnutella.gui.themes.SkinListUI");
         UIManager.put("ComboBoxUI", "com.limegroup.gnutella.gui.themes.SkinComboBoxUI");
+        
+        UIManager.put("ComboBox.editorInsets", new InsetsUIResource(2, 2, 3, 2));
     }
 }

@@ -5,7 +5,6 @@ import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicPopupMenuUI;
 
 import org.limewire.util.OSUtils;
-import org.pushingpixels.substance.internal.ui.SubstancePopupMenuUI;
 
 import com.apple.laf.AquaPopupMenuUI;
 

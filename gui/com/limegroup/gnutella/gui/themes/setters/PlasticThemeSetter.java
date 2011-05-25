@@ -9,7 +9,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.plaf.basic.BasicListUI;
-import javax.swing.plaf.basic.BasicSeparatorUI;
 import javax.swing.plaf.basic.BasicTextAreaUI;
 
 import org.limewire.util.OSUtils;

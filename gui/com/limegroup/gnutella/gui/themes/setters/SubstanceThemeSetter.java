@@ -12,19 +12,17 @@ import javax.swing.plaf.FontUIResource;
 import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.SubstanceLookAndFeel;
 import org.pushingpixels.substance.internal.ui.SubstanceCheckBoxMenuItemUI;
-import org.pushingpixels.substance.internal.ui.SubstanceComboBoxUI;
-import org.pushingpixels.substance.internal.ui.SubstanceListUI;
 import org.pushingpixels.substance.internal.ui.SubstanceMenuBarUI;
 import org.pushingpixels.substance.internal.ui.SubstanceMenuItemUI;
 import org.pushingpixels.substance.internal.ui.SubstanceMenuUI;
 import org.pushingpixels.substance.internal.ui.SubstancePopupMenuSeparatorUI;
 import org.pushingpixels.substance.internal.ui.SubstancePopupMenuUI;
 import org.pushingpixels.substance.internal.ui.SubstanceRadioButtonMenuItemUI;
-import org.pushingpixels.substance.internal.ui.SubstanceSeparatorUI;
 import org.pushingpixels.substance.internal.utils.SubstanceCoreUtilities;
 
 import com.limegroup.gnutella.gui.ResourceManager;
 import com.limegroup.gnutella.gui.themes.SkinComboBoxUI;
+import com.limegroup.gnutella.gui.themes.SkinListUI;
 import com.limegroup.gnutella.gui.themes.SkinTextAreaUI;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSetter;
@@ -153,7 +151,8 @@ public class SubstanceThemeSetter implements ThemeSetter {
     }
 
     public ComponentUI createListUI(JComponent comp) {
-        return SubstanceListUI.createUI(comp);
+        SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
+        return new SkinListUI();
     }
 
     public ComponentUI createComboBoxUI(JComponent comp) {

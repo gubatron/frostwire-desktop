@@ -5,7 +5,6 @@ import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicMenuUI;
 
 import org.limewire.util.OSUtils;
-import org.pushingpixels.substance.internal.ui.SubstanceMenuUI;
 
 import com.apple.laf.AquaMenuUI;
 

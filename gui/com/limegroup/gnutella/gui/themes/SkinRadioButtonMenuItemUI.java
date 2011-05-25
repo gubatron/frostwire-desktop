@@ -5,7 +5,6 @@ import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicRadioButtonMenuItemUI;
 
 import org.limewire.util.OSUtils;
-import org.pushingpixels.substance.internal.ui.SubstanceRadioButtonMenuItemUI;
 
 import com.apple.laf.AquaMenuItemUI;
 
