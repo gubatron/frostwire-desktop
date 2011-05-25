@@ -39,7 +39,8 @@ public class SubstanceThemeSetter implements ThemeSetter {
         
         //reduceFont("Label.font");
         //reduceFont("Table.font");
-        ResourceManager.setFontSizes(-1);
+        //ResourceManager.setFontSizes(-1);
+        ResourceManager.setFontSizes(0);
 
         UIManager.put("Tree.leafIcon", UIManager.getIcon("Tree.closedIcon"));
 
