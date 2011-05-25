@@ -36,6 +36,8 @@ public class SubstanceThemeSetter implements ThemeSetter {
         UIManager.put("RadioButtonMenuItemUI", "com.limegroup.gnutella.gui.themes.SkinRadioButtonMenuItemUI");
         UIManager.put("PopupMenuSeparatorUI", "com.limegroup.gnutella.gui.themes.SkinPopupMenuSeparatorUI");
         UIManager.put("TextAreaUI", "com.limegroup.gnutella.gui.themes.SkinTextAreaUI");
+        UIManager.put("ListUI", "com.limegroup.gnutella.gui.themes.SkinListUI");
+        UIManager.put("ComboBoxUI", "com.limegroup.gnutella.gui.themes.SkinComboBoxUI");
         
         //reduceFont("Label.font");
         //reduceFont("Table.font");

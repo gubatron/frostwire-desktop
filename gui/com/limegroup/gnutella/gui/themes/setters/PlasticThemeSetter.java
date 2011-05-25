@@ -36,6 +36,8 @@ public class PlasticThemeSetter implements ThemeSetter {
             UIManager.put("RadioButtonMenuItemUI", "com.jgoodies.looks.common.ExtBasicRadioButtonMenuItemUI");
             UIManager.put("PopupMenuSeparatorUI", "com.jgoodies.looks.common.ExtBasicPopupMenuSeparatorUI");
             UIManager.put("TextAreaUI", "javax.swing.plaf.basic.BasicTextAreaUI");
+            UIManager.put("ListUI", "javax.swing.plaf.basic.BasicListUI");
+            UIManager.put("ComboBoxUI", "com.jgoodies.looks.plastic.PlasticComboBoxUI");
             LimeLookAndFeel.installUIManagerDefaults();
 
             UIManager.put("Tree.leafIcon", UIManager.getIcon("Tree.closedIcon"));
