@@ -11,6 +11,7 @@ import javax.swing.plaf.FontUIResource;
 
 import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.SubstanceLookAndFeel;
+import org.pushingpixels.substance.api.fonts.SubstanceFontUtilities;
 import org.pushingpixels.substance.internal.ui.SubstanceCheckBoxMenuItemUI;
 import org.pushingpixels.substance.internal.ui.SubstanceMenuBarUI;
 import org.pushingpixels.substance.internal.ui.SubstanceMenuItemUI;
@@ -45,10 +46,12 @@ public class SubstanceThemeSetter implements ThemeSetter {
         SubstanceLookAndFeel.setSkin(_skinClassName);
         ThemeMediator.applyCommonSkinUI();
         
+        SubstanceLookAndFeel.setFontPolicy(SubstanceFontUtilities.getScaledFontPolicy(0.87f));
+        
         //reduceFont("Label.font");
         //reduceFont("Table.font");
         //ResourceManager.setFontSizes(-1);
-        ResourceManager.setFontSizes(0);
+        //ResourceManager.setFontSizes(0);
 
         UIManager.put("Tree.leafIcon", UIManager.getIcon("Tree.closedIcon"));
 

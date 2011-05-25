@@ -352,6 +352,9 @@ public final class ResourceManager {
      * This prevents the UI from appearing as all boxes.
      */
     public static void validateLocaleAndFonts(Locale locale) {
+        if (true) {
+            return;
+        }
         // OSX can always display everything, and if it can't,
         // we have no way of correcting things 'cause canDisplayUpTo
         // is broken on it.
