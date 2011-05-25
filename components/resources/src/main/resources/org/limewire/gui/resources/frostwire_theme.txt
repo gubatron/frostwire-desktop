@@ -51,9 +51,9 @@ SEARCH_RESULT_SPEED_COLOR=#00CC00
 # only plain and bold are supported.  Plain is specified as
 # "0", wherease bold is specified as "1".
 ##################################################################
-CONTROL_TEXT_FONT_NAME=Verdana
-CONTROL_TEXT_FONT_STYLE=1
-CONTROL_TEXT_FONT_SIZE=10
+CONTROL_TEXT_FONT_NAME=Dialog
+CONTROL_TEXT_FONT_STYLE=0
+CONTROL_TEXT_FONT_SIZE=11
 
 SYSTEM_TEXT_FONT_NAME=Verdana
 SYSTEM_TEXT_FONT_STYLE=0
