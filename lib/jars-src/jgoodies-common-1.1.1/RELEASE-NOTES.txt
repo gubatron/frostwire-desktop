@@ -1,0 +1,35 @@
+
+                           JGoodies Common
+                            Version 1.1.1
+                            Release Notes
+                        
+
+CHANGES in 1.1.1
+
+    o Added Objects#deepCopy(Object).
+    o Source code improvements.
+
+
+CHANGES in 1.1
+
+    o Added interfaces ObservableBean and ObservableBean2.
+    o Removed generics from EmptyFormat.
+
+
+CHANGES in 1.0.1
+
+    o Empty*Format#format returns the 'toAppendTo' parameter
+      for the empty value instead of a new StringBuffer.
+
+
+CHANGES in 1.0
+
+    o Added Format wrappers:
+      - AbstractWrappedDateFormat
+      - EmptyDateFormat
+      - EmptyNumberFormat
+      - EmptyFormat
+    o Added tests for the empty formats.
+    o Added Preconditions#checkNotNull(String, String, Object...).
+    
+    
