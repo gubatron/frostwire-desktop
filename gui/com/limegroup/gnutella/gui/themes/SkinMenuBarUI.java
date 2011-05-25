@@ -15,7 +15,7 @@ public class SkinMenuBarUI extends BasicMenuBarUI {
 		if (OSUtils.isMacOSX()) {
 			return AquaMenuBarUI.createUI(comp);
 		} else {
-			return SubstanceMenuBarUI.createUI(comp);
+			return ThemeMediator.CURRENT_THEME.createMenuBarUI(comp);
 		}
 	}
 }

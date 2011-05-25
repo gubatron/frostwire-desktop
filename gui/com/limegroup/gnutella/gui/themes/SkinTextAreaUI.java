@@ -47,7 +47,7 @@ import org.pushingpixels.substance.internal.utils.*;
 /**
  * UI for text areas in <b>Substance</b> look and feel.
  * 
- * aldenml: Working around due to some new bug (by a previous fix) related
+ * aldenml: Workaround to some new bug (by a previous fix) related
  * to setCaretPos 
  * 
  * @author Kirill Grouchnikov
@@ -82,8 +82,7 @@ public class SkinTextAreaUI extends BasicTextAreaUI implements
      * @see javax.swing.plaf.ComponentUI#createUI(javax.swing.JComponent)
      */
     public static ComponentUI createUI(JComponent comp) {
-        SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
-        return new SkinTextAreaUI(comp);
+        return ThemeMediator.CURRENT_THEME.createTextAreadUI(comp);
     }
 
     /**

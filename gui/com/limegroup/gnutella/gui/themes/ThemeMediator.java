@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
@@ -45,11 +46,14 @@ public class ThemeMediator {
     private static final List<ThemeObserver> THEME_OBSERVERS = new LinkedList<ThemeObserver>();
     
     public static void updateComponentHierarchy() {
-        SwingUtilities.updateComponentTreeUI(GUIMediator.getMainOptionsComponent());
+        //SwingUtilities.updateComponentTreeUI(GUIMediator.getMainOptionsComponent());
         TipOfTheDayMediator.instance().updateComponentTreeUI();
-        SwingUtilities.updateComponentTreeUI(GUIMediator.getAppFrame());
         NotifyUserProxy.instance().updateUI();
         updateThemeObservers();
+        
+        for (Window window : Window.getWindows()) {
+            SwingUtilities.updateComponentTreeUI(window);
+        }
     }
 
     /**
@@ -84,8 +88,8 @@ public class ThemeMediator {
     	    curObserver.updateTheme();
         }
 
-        GUIMediator.getMainOptionsComponent().validate();
-        GUIMediator.getAppFrame().validate();
+        //GUIMediator.getMainOptionsComponent().validate();
+        //GUIMediator.getAppFrame().validate();
     }
     
     public static void changeTheme(final ThemeSetter theme) {
@@ -96,19 +100,16 @@ public class ThemeMediator {
 
                     try {
                         
-                        //PlasticThemeSetter.INSTANCE.apply();
                         theme.apply();
-                        
-                        for (Window window : Window.getWindows()) {
-                            SwingUtilities.updateComponentTreeUI(window);
-                        }
                         
                         CURRENT_THEME = theme;
                         
                         saveCurrentTheme(theme);
+                        
+                        updateComponentHierarchy();
 
                     } catch (Exception e) {
-                        System.out.println("Substance engine failed to initialize");
+                        System.out.println("Theme '" + theme.getName() + "' failed to apply: " + e.getMessage());
                     }
                 }
             });
@@ -224,5 +225,18 @@ public class ThemeMediator {
         } finally {
             FileUtils.close(output);
         }
+    }
+    
+    public static void applyCommonSkinUI() {
+        UIManager.put("PopupMenuUI", "com.limegroup.gnutella.gui.themes.SkinPopupMenuUI");
+        UIManager.put("MenuItemUI", "com.limegroup.gnutella.gui.themes.SkinMenuItemUI");
+        UIManager.put("MenuUI", "com.limegroup.gnutella.gui.themes.SkinMenuUI");
+        UIManager.put("CheckBoxMenuItemUI", "com.limegroup.gnutella.gui.themes.SkinCheckBoxMenuItemUI");
+        UIManager.put("MenuBarUI", "com.limegroup.gnutella.gui.themes.SkinMenuBarUI");
+        UIManager.put("RadioButtonMenuItemUI", "com.limegroup.gnutella.gui.themes.SkinRadioButtonMenuItemUI");
+        UIManager.put("PopupMenuSeparatorUI", "com.limegroup.gnutella.gui.themes.SkinPopupMenuSeparatorUI");
+        UIManager.put("TextAreaUI", "com.limegroup.gnutella.gui.themes.SkinTextAreaUI");
+        UIManager.put("ListUI", "com.limegroup.gnutella.gui.themes.SkinListUI");
+        UIManager.put("ComboBoxUI", "com.limegroup.gnutella.gui.themes.SkinComboBoxUI");
     }
 }

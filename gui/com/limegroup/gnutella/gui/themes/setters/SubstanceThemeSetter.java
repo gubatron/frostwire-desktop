@@ -3,13 +3,30 @@ package com.limegroup.gnutella.gui.themes.setters;
 import java.awt.Font;
 
 import javax.swing.BorderFactory;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.UIManager;
+import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.FontUIResource;
 
 import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.SubstanceLookAndFeel;
+import org.pushingpixels.substance.internal.ui.SubstanceCheckBoxMenuItemUI;
+import org.pushingpixels.substance.internal.ui.SubstanceComboBoxUI;
+import org.pushingpixels.substance.internal.ui.SubstanceListUI;
+import org.pushingpixels.substance.internal.ui.SubstanceMenuBarUI;
+import org.pushingpixels.substance.internal.ui.SubstanceMenuItemUI;
+import org.pushingpixels.substance.internal.ui.SubstanceMenuUI;
+import org.pushingpixels.substance.internal.ui.SubstancePopupMenuSeparatorUI;
+import org.pushingpixels.substance.internal.ui.SubstancePopupMenuUI;
+import org.pushingpixels.substance.internal.ui.SubstanceRadioButtonMenuItemUI;
+import org.pushingpixels.substance.internal.ui.SubstanceSeparatorUI;
+import org.pushingpixels.substance.internal.utils.SubstanceCoreUtilities;
 
 import com.limegroup.gnutella.gui.ResourceManager;
+import com.limegroup.gnutella.gui.themes.SkinComboBoxUI;
+import com.limegroup.gnutella.gui.themes.SkinTextAreaUI;
+import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSetter;
 
 public class SubstanceThemeSetter implements ThemeSetter {
@@ -28,16 +45,7 @@ public class SubstanceThemeSetter implements ThemeSetter {
 
     public void apply() {
         SubstanceLookAndFeel.setSkin(_skinClassName);
-        UIManager.put("PopupMenuUI", "com.limegroup.gnutella.gui.themes.SkinPopupMenuUI");
-        UIManager.put("MenuItemUI", "com.limegroup.gnutella.gui.themes.SkinMenuItemUI");
-        UIManager.put("MenuUI", "com.limegroup.gnutella.gui.themes.SkinMenuUI");
-        UIManager.put("CheckBoxMenuItemUI", "com.limegroup.gnutella.gui.themes.SkinCheckBoxMenuItemUI");
-        UIManager.put("MenuBarUI", "com.limegroup.gnutella.gui.themes.SkinMenuBarUI");
-        UIManager.put("RadioButtonMenuItemUI", "com.limegroup.gnutella.gui.themes.SkinRadioButtonMenuItemUI");
-        UIManager.put("PopupMenuSeparatorUI", "com.limegroup.gnutella.gui.themes.SkinPopupMenuSeparatorUI");
-        UIManager.put("TextAreaUI", "com.limegroup.gnutella.gui.themes.SkinTextAreaUI");
-        UIManager.put("ListUI", "com.limegroup.gnutella.gui.themes.SkinListUI");
-        UIManager.put("ComboBoxUI", "com.limegroup.gnutella.gui.themes.SkinComboBoxUI");
+        ThemeMediator.applyCommonSkinUI();
         
         //reduceFont("Label.font");
         //reduceFont("Table.font");
@@ -110,4 +118,47 @@ public class SubstanceThemeSetter implements ThemeSetter {
     public static final SubstanceThemeSetter MAGMA = new SubstanceThemeSetter("Magma", "org.pushingpixels.substance.skinpack.MagmaSkin");
     public static final SubstanceThemeSetter MANGO = new SubstanceThemeSetter("Mango", "org.pushingpixels.substance.skinpack.MangoSkin");
     public static final SubstanceThemeSetter STREETLIGHTS = new SubstanceThemeSetter("Streetlights", "org.pushingpixels.substance.skinpack.StreetlightsSkin");
+
+    public ComponentUI createCheckBoxMenuItemUI(JComponent comp) {
+        return SubstanceCheckBoxMenuItemUI.createUI(comp);
+    }
+
+    public ComponentUI createMenuBarUI(JComponent comp) {
+        return SubstanceMenuBarUI.createUI(comp);
+    }
+
+    public ComponentUI createMenuItemUI(JComponent comp) {
+        return SubstanceMenuItemUI.createUI(comp);
+    }
+
+    public ComponentUI createMenuUI(JComponent comp) {
+        return SubstanceMenuUI.createUI(comp);
+    }
+
+    public ComponentUI createPopupMenuSeparatorUI(JComponent comp) {
+        return SubstancePopupMenuSeparatorUI.createUI(comp);
+    }
+
+    public ComponentUI createPopupMenuUI(JComponent comp) {
+        return SubstancePopupMenuUI.createUI(comp);
+    }
+
+    public ComponentUI createRadioButtonMenuItemUI(JComponent comp) {
+        return SubstanceRadioButtonMenuItemUI.createUI(comp);
+    }
+
+    public ComponentUI createTextAreadUI(JComponent comp) {
+        SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
+        return new SkinTextAreaUI(comp);
+    }
+
+    public ComponentUI createListUI(JComponent comp) {
+        return SubstanceListUI.createUI(comp);
+    }
+
+    public ComponentUI createComboBoxUI(JComponent comp) {
+        SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
+        SkinComboBoxUI ui = new SkinComboBoxUI((JComboBox) comp);
+        return ui;
+    }
 }

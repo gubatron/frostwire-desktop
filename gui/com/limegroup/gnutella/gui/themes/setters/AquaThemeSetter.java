@@ -4,12 +4,21 @@ import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.FontUIResource;
+import javax.swing.plaf.basic.BasicTextAreaUI;
 
 import org.limewire.util.OSUtils;
 
+import com.apple.laf.AquaMenuBarUI;
+import com.apple.laf.AquaMenuItemUI;
+import com.apple.laf.AquaMenuUI;
+import com.apple.laf.AquaPopupMenuSeparatorUI;
+import com.apple.laf.AquaPopupMenuUI;
+import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSetter;
 
 public class AquaThemeSetter implements ThemeSetter {
@@ -30,6 +39,7 @@ public class AquaThemeSetter implements ThemeSetter {
         try {
 
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            ThemeMediator.applyCommonSkinUI();
 
             reduceFont("Label.font");
             reduceFont("Table.font");
@@ -68,5 +78,48 @@ public class AquaThemeSetter implements ThemeSetter {
         Font oldFont = UIManager.getFont(name);
         FontUIResource newFont = new FontUIResource(oldFont.getName(), oldFont.getStyle(), oldFont.getSize() - 2);
         UIManager.put(name, newFont);
+    }
+
+    public ComponentUI createCheckBoxMenuItemUI(JComponent comp) {
+        return AquaMenuItemUI.createUI(comp);
+    }
+
+    public ComponentUI createMenuBarUI(JComponent comp) {
+        return AquaMenuBarUI.createUI(comp);
+    }
+
+    public ComponentUI createMenuItemUI(JComponent comp) {
+        return AquaMenuItemUI.createUI(comp);
+    }
+
+    public ComponentUI createMenuUI(JComponent comp) {
+        return AquaMenuUI.createUI(comp);
+    }
+
+    public ComponentUI createPopupMenuSeparatorUI(JComponent comp) {
+        return AquaPopupMenuSeparatorUI.createUI(comp);
+    }
+
+    public ComponentUI createPopupMenuUI(JComponent comp) {
+        return AquaPopupMenuUI.createUI(comp);
+    }
+
+    public ComponentUI createRadioButtonMenuItemUI(JComponent comp) {
+        return AquaMenuItemUI.createUI(comp);
+    }
+
+    public ComponentUI createTextAreadUI(JComponent comp) {
+        new RuntimeException("Not implemented");
+        return null;
+    }
+
+    public ComponentUI createListUI(JComponent comp) {
+        new RuntimeException("Not implemented");
+        return null;
+    }
+
+    public ComponentUI createComboBoxUI(JComponent comp) {
+        new RuntimeException("Not implemented");
+        return null;
     }
 }

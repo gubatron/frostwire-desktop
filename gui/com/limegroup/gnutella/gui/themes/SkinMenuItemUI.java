@@ -15,7 +15,7 @@ public class SkinMenuItemUI extends BasicMenuItemUI {
 		if (OSUtils.isMacOSX() && !(comp instanceof SkinMenuItem)) {
 			return AquaMenuItemUI.createUI(comp);
 		} else {
-			return SubstanceMenuItemUI.createUI(comp);
+			return ThemeMediator.CURRENT_THEME.createMenuItemUI(comp);
 		}
 	}
 }

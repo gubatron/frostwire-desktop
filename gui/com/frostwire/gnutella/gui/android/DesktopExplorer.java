@@ -42,10 +42,12 @@ import com.frostwire.gnutella.gui.android.LocalFileListModel.OnRootListener;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
+import com.limegroup.gnutella.gui.themes.ThemeMediator;
+import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
-public class DesktopExplorer extends JPanel {
+public class DesktopExplorer extends JPanel implements ThemeObserver {
 
     private static final long serialVersionUID = 7362861227107918643L;
 
@@ -55,23 +57,18 @@ public class DesktopExplorer extends JPanel {
     private JButton _buttonRefresh;
     private JButton _buttonViewThumbnail;
     private JButton _buttonViewList;
-//    private JButton _buttonFavoriteSaved;
-//    private JButton _buttonFavoriteDocuments;
-//    private JButton _buttonFavoriteMusic;
-//    private JButton _buttonFavoritePictures;
-//    private JButton _buttonFavoriteVideos;
     private JLabel _labelSort;
     private JComboBox _comboBoxSort;
     private BreadcrumbFileSelector _breadcrumb;
     private JList _list;
     private JScrollPane _scrollPane;
-    private JPopupMenu _popupList;
-    private JPopupMenu _deletePopupMenu;
-    private JMenuItem _menuOpen;
-    private JMenuItem _menuRename;
-    private JMenuItem _menuDelete;
-    private JMenuItem _menuDeleteMultiple;
-    private JMenuItem _menuRefresh;
+    private SkinPopupMenu _popupList;
+    private SkinPopupMenu _deletePopupMenu;
+    private SkinMenuItem _menuOpen;
+    private SkinMenuItem _menuRename;
+    private SkinMenuItem _menuDelete;
+    private SkinMenuItem _menuDeleteMultiple;
+    private SkinMenuItem _menuRefresh;
     private JTextArea _textName;
     private JScrollPane _scrollName;
 
@@ -105,6 +102,8 @@ public class DesktopExplorer extends JPanel {
 
         setupUI();
         setRootFolder(SharingSettings.DIRECTORY_FOR_OPEN_DESKTOP_EXPLORER.getValue());
+        
+        ThemeMediator.addThemeObserver(this);
     }
 
     public File getRootFolder() {
@@ -653,5 +652,10 @@ public class DesktopExplorer extends JPanel {
         public String toString() {
             return text;
         }
+    }
+
+    public void updateTheme() {
+        removeAll();
+        setupUI();
     }
 }

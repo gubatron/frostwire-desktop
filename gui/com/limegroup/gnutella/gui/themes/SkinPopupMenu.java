@@ -14,7 +14,7 @@ public class SkinPopupMenu extends JPopupMenu {
 	
 	@Override
 	public void addSeparator() {
-		add( new SkinPopupMenu.Separator() );
+		add(new SkinPopupMenu.Separator());
 	}
 
 	/**
@@ -39,7 +39,6 @@ public class SkinPopupMenu extends JPopupMenu {
 		 */
 		public String getUIClassID() {
 			return "PopupMenuSeparatorUI";
-
 		}
 	}
 }

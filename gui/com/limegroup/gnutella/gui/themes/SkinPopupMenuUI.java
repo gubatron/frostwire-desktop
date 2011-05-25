@@ -15,7 +15,7 @@ public class SkinPopupMenuUI extends BasicPopupMenuUI {
 		if (OSUtils.isMacOSX() && !(comp instanceof SkinPopupMenu)) {
 			return AquaPopupMenuUI.createUI(comp);
 		} else {
-			return SubstancePopupMenuUI.createUI(comp);
+			return ThemeMediator.CURRENT_THEME.createPopupMenuUI(comp);
 		}
 	}
 }

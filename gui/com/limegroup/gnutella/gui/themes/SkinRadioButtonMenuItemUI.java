@@ -15,7 +15,7 @@ public class SkinRadioButtonMenuItemUI extends BasicRadioButtonMenuItemUI {
 		if (OSUtils.isMacOSX() && !(comp instanceof SkinRadioButtonMenuItem)) {
 			return AquaMenuItemUI.createUI(comp);
 		} else {
-			return SubstanceRadioButtonMenuItemUI.createUI(comp);
+			return ThemeMediator.CURRENT_THEME.createRadioButtonMenuItemUI(comp);
 		}
 	}
 }
