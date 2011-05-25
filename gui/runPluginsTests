@@ -1,4 +1,0 @@
-rm com/HelloFromJar.class
-rm -fr brooklyn
-#rm plugins/brooklyn.jar
-ant pluginTests
