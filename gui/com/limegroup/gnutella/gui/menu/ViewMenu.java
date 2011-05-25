@@ -129,7 +129,7 @@ final class ViewMenu extends AbstractMenu {
             int inc = ThemeSettings.FONT_SIZE_INCREMENT.getValue();
             inc += increment;
             ThemeSettings.FONT_SIZE_INCREMENT.setValue(inc);
-            ResourceManager.setFontSizes(increment);
+            ThemeMediator.setFontSizeDelta(increment);
             ThemeMediator.updateComponentHierarchy();
         }
     }

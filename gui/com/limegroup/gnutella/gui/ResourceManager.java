@@ -24,6 +24,7 @@ import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
+import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 
@@ -313,7 +314,8 @@ public final class ResourceManager {
         String bMetal = System.getProperty("apple.awt.brushMetalLook");
         BRUSHED_METAL = bMetal != null && bMetal.equalsIgnoreCase("true");
 
-        themeChanged();
+        ThemeMediator.setFontSizeDelta(ThemeSettings.FONT_SIZE_INCREMENT.getValue());
+        //themeChanged();
         //ResourceManager.setFontSizes(ThemeSettings.FONT_SIZE_INCREMENT.getValue());
         try {
             validateLocaleAndFonts(Locale.getDefault());
@@ -624,59 +626,5 @@ public final class ResourceManager {
 //        UIManager.put(name, newFont);
 //    }
 
-    public static void setFontSizes(float fontSizeIncrement) {
-        if (fontSizeIncrement == 0f) {
-            return;
-        }
-        
-        Map<Font, Font> newFontByOldFont = new HashMap<Font, Font>();
-        String[] fontKeys = new String[] {
-                "Button.font",
-                "CheckBox.font",
-                "ComboBox.font",
-                "DesktopIcon.font",
-                "Label.font",
-                "List.font",
-                "ProgressBar.font",
-                "RadioButton.font",
-                "Slider.font",
-                "Spinner.font",
-                "TabbedPane.font",
-                "TitledBorder.font",
-                "ToggleButton.font",
-                "CheckBoxMenuItem.font",
-                "Menu.font",
-                "MenuBar.font",
-                "MenuItem.font",
-                "PopupMenu.font",
-                "RadioButtonMenuItem.font",
-                "ToolBar.font",
-                "ToolTip.font",
-                "EditorPane.font",
-                "FormattedTextField.font",
-                "PasswordField.font",
-                "Table.font",
-                "TableHeader.font",
-                "TextArea.font",
-                "TextField.font",
-                "TextPane.font",
-                "Tree.font",
-                "InternalFrame.titleFont",
-        };
-        List<Object> props = new ArrayList<Object>(fontKeys.length * 2);
-        for (String fontKey : fontKeys) {
-            Font font = UIManager.getFont(fontKey);
-            Font newFont = newFontByOldFont.get(font);
-            if (newFont == null) {
-                if (font == null) {
-                    continue;
-                }
-                newFont = new FontUIResource(font.deriveFont(font.getSize() + fontSizeIncrement));
-                newFontByOldFont.put(font, newFont);
-            }
-            props.add(fontKey);
-            props.add(newFont);
-        }
-        UIManager.getDefaults().putDefaults(props.toArray());
-    }
+    
 }

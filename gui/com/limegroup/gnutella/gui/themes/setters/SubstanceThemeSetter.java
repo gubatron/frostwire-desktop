@@ -27,6 +27,7 @@ import com.limegroup.gnutella.gui.themes.SkinListUI;
 import com.limegroup.gnutella.gui.themes.SkinTextAreaUI;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSetter;
+import com.limegroup.gnutella.gui.themes.ThemeSettings;
 
 public class SubstanceThemeSetter implements ThemeSetter {
 

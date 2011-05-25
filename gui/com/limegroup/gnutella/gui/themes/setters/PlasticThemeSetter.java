@@ -25,6 +25,7 @@ import com.limegroup.gnutella.gui.themes.LimeLookAndFeel;
 import com.limegroup.gnutella.gui.themes.LimePlasticTheme;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSetter;
+import com.limegroup.gnutella.gui.themes.ThemeSettings;
 
 public class PlasticThemeSetter implements ThemeSetter {
     

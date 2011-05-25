@@ -19,6 +19,7 @@ import com.apple.laf.AquaPopupMenuSeparatorUI;
 import com.apple.laf.AquaPopupMenuUI;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSetter;
+import com.limegroup.gnutella.gui.themes.ThemeSettings;
 
 public class AquaThemeSetter implements ThemeSetter {
     
