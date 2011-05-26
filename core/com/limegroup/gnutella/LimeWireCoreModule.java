@@ -101,8 +101,6 @@ import com.limegroup.gnutella.statistics.LimeWireGnutellaStatisticsModule;
 import com.limegroup.gnutella.tigertree.LimeWireHashTreeModule;
 import com.limegroup.gnutella.uploader.UploadSlotManager;
 import com.limegroup.gnutella.uploader.UploadSlotManagerImpl;
-import com.limegroup.gnutella.util.FECUtils;
-import com.limegroup.gnutella.util.FECUtilsImpl;
 import com.limegroup.gnutella.version.UpdateCollectionFactory;
 import com.limegroup.gnutella.version.UpdateCollectionFactoryImpl;
 import com.limegroup.gnutella.version.UpdateMessageVerifier;
@@ -223,7 +221,6 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(SecurityToken.TokenProvider.class).to(SecurityToken.AddressSecurityTokenProvider.class);
         bind(UpdateMessageVerifier.class).to(UpdateMessageVerifierImpl.class);
         bind(InspectionResponseFactory.class).to(InspectionResponseFactoryImpl.class);
-        bind(FECUtils.class).to(FECUtilsImpl.class);
         bind(NodeAssigner.class).to(NodeAssignerImpl.class);
         bind(UPnPManagerConfiguration.class).to(UPnPManagerConfigurationImpl.class);
         
