@@ -48,7 +48,6 @@ import com.limegroup.gnutella.connection.RoutedConnectionFactoryImpl;
 import com.limegroup.gnutella.connection.UDPConnectionChecker;
 import com.limegroup.gnutella.connection.UDPConnectionCheckerImpl;
 import com.limegroup.gnutella.downloader.LimeWireDownloadModule;
-import com.limegroup.gnutella.filters.IPFilter;
 import com.limegroup.gnutella.filters.SpamFilterFactory;
 import com.limegroup.gnutella.filters.SpamFilterFactoryImpl;
 import com.limegroup.gnutella.handshaking.HandshakeResponderFactory;
@@ -110,8 +109,6 @@ import com.limegroup.gnutella.version.UpdateMessageVerifier;
 import com.limegroup.gnutella.version.UpdateMessageVerifierImpl;
 import com.limegroup.gnutella.xml.LimeXMLDocumentFactory;
 import com.limegroup.gnutella.xml.LimeXMLDocumentFactoryImpl;
-import com.limegroup.gnutella.xml.LimeXMLReplyCollectionFactory;
-import com.limegroup.gnutella.xml.LimeXMLReplyCollectionFactoryImpl;
 import com.limegroup.gnutella.xml.MetaFileManager;
 
 /**
@@ -190,7 +187,6 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(VendorMessageParserBinder.class).to(VendorMessageParserBinderImpl.class);
         bind(UDPCrawlerPongFactory.class).to(UDPCrawlerPongFactoryImpl.class);
         bind(UDPHostCacheFactory.class).to(UDPHostCacheFactoryImpl.class);
-        bind(LimeXMLReplyCollectionFactory.class).to(LimeXMLReplyCollectionFactoryImpl.class);
         bind(LicenseFactory.class).to(LicenseFactoryImpl.class);
         bind(LimeXMLDocumentFactory.class).to(LimeXMLDocumentFactoryImpl.class);
         bind(MetaDataFactory.class).to(MetaDataFactoryImpl.class);

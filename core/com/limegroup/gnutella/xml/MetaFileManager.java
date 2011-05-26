@@ -218,62 +218,63 @@ public class MetaFileManager extends FileManagerImpl {
      * the various LimeXMLReplyCollections.
      */
     protected synchronized FileDesc removeFileIfShared(File f, boolean notify) {
-        FileDesc fd = super.removeFileIfShared(f, notify);
-        // nothing removed, ignore.
-        if (fd == null)
-            return null;
-
-        // Get the schema URI of each document and remove from the collection
-        // We must remember the schemas and then remove the doc, or we will
-        // get a concurrent mod exception because removing the doc also
-        // removes it from the FileDesc.
-        List<LimeXMLDocument> xmlDocs = fd.getLimeXMLDocuments();
-        List<String> schemas = new LinkedList<String>();
-        for (LimeXMLDocument doc : xmlDocs)
-            schemas.add(doc.getSchemaURI());
-        for (String uri : schemas) {
-            LimeXMLReplyCollection col = fileManagerController.getReplyCollection(uri);
-            if (col != null)
-                col.removeDoc(fd);
-        }
-        _needRebuild = true;
-        return fd;
+//        FileDesc fd = super.removeFileIfShared(f, notify);
+//        // nothing removed, ignore.
+//        if (fd == null)
+//            return null;
+//
+//        // Get the schema URI of each document and remove from the collection
+//        // We must remember the schemas and then remove the doc, or we will
+//        // get a concurrent mod exception because removing the doc also
+//        // removes it from the FileDesc.
+//        List<LimeXMLDocument> xmlDocs = fd.getLimeXMLDocuments();
+//        List<String> schemas = new LinkedList<String>();
+//        for (LimeXMLDocument doc : xmlDocs)
+//            schemas.add(doc.getSchemaURI());
+//        for (String uri : schemas) {
+//            LimeXMLReplyCollection col = fileManagerController.getReplyCollection(uri);
+//            if (col != null)
+//                col.removeDoc(fd);
+//        }
+//        _needRebuild = true;
+//        return fd;
+        return null;
     }
 
     /**
      * Notification that FileManager loading is starting.
      */
     protected void loadStarted(int revision) {
-        fileManagerController.setAnnotateEnabled(false);
-
-        // Load up new ReplyCollections.
-        String[] schemas = fileManagerController.getAvailableSchemaURIs();
-        for (int i = 0; i < schemas.length; i++) {
-            fileManagerController.add(schemas[i], fileManagerController
-                    .createLimeXMLReplyCollection(schemas[i]));
-        }
-
-        super.loadStarted(revision);
+//        fileManagerController.setAnnotateEnabled(false);
+//
+//        // Load up new ReplyCollections.
+//        String[] schemas = fileManagerController.getAvailableSchemaURIs();
+//        for (int i = 0; i < schemas.length; i++) {
+//            fileManagerController.add(schemas[i], fileManagerController
+//                    .createLimeXMLReplyCollection(schemas[i]));
+//        }
+//
+//        super.loadStarted(revision);
     }
 
     /**
      * Notification that FileManager loading is finished.
      */
     protected void loadFinished(int revision) {
-        // save ourselves to disk every minute
-        if (saver == null) {
-            saver = new Saver();
-            fileManagerController.scheduleWithFixedDelay(saver, 60 * 1000, 60 * 1000,
-                    TimeUnit.MILLISECONDS);
-        }
-
-        Collection<LimeXMLReplyCollection> replies = fileManagerController.getCollections();
-        for (LimeXMLReplyCollection col : replies)
-            col.loadFinished();
-
-        fileManagerController.setAnnotateEnabled(true);
-
-        super.loadFinished(revision);
+//        // save ourselves to disk every minute
+//        if (saver == null) {
+//            saver = new Saver();
+//            fileManagerController.scheduleWithFixedDelay(saver, 60 * 1000, 60 * 1000,
+//                    TimeUnit.MILLISECONDS);
+//        }
+//
+//        Collection<LimeXMLReplyCollection> replies = fileManagerController.getCollections();
+//        for (LimeXMLReplyCollection col : replies)
+//            col.loadFinished();
+//
+//        fileManagerController.setAnnotateEnabled(true);
+//
+//        super.loadFinished(revision);
     }
 
     /**
@@ -281,31 +282,31 @@ public class MetaFileManager extends FileManagerImpl {
      */
     protected void loadFile(FileDesc fd, File file, List<? extends LimeXMLDocument> metadata,
             Set<? extends URN> urns) {
-        super.loadFile(fd, file, metadata, urns);
-        boolean added = false;
-
-        Collection<LimeXMLReplyCollection> replies = fileManagerController.getCollections();
-        for (LimeXMLReplyCollection col : replies)
-            added |= col.initialize(fd, metadata) != null;
-        for (LimeXMLReplyCollection col : replies)
-            added |= col.createIfNecessary(fd) != null;
-
-        if (added) {
-            synchronized (this) {
-                _needRebuild = true;
-            }
-        }
+//        super.loadFile(fd, file, metadata, urns);
+//        boolean added = false;
+//
+//        Collection<LimeXMLReplyCollection> replies = fileManagerController.getCollections();
+//        for (LimeXMLReplyCollection col : replies)
+//            added |= col.initialize(fd, metadata) != null;
+//        for (LimeXMLReplyCollection col : replies)
+//            added |= col.createIfNecessary(fd) != null;
+//
+//        if (added) {
+//            synchronized (this) {
+//                _needRebuild = true;
+//            }
+//        }
 
     }
 
     protected void save() {
-        if (isLoadFinished()) {
-            Collection<LimeXMLReplyCollection> replies = fileManagerController.getCollections();
-            for (LimeXMLReplyCollection col : replies)
-                col.writeMapToDisk();
-        }
-
-        super.save();
+//        if (isLoadFinished()) {
+//            Collection<LimeXMLReplyCollection> replies = fileManagerController.getCollections();
+//            for (LimeXMLReplyCollection col : replies)
+//                col.writeMapToDisk();
+//        }
+//
+//        super.save();
     }
 
     /**
@@ -355,18 +356,19 @@ public class MetaFileManager extends FileManagerImpl {
      * the files.
      */
     private List<String> getXMLKeyWords() {
-        List<String> words = new ArrayList<String>();
-        // Now get a list of keywords from each of the ReplyCollections
-        String[] schemas = fileManagerController.getAvailableSchemaURIs();
-        LimeXMLReplyCollection collection;
-        int len = schemas.length;
-        for (int i = 0; i < len; i++) {
-            collection = fileManagerController.getReplyCollection(schemas[i]);
-            if (collection == null)// not loaded? skip it and keep goin'
-                continue;
-            words.addAll(collection.getKeyWords());
-        }
-        return words;
+//        List<String> words = new ArrayList<String>();
+//        // Now get a list of keywords from each of the ReplyCollections
+//        String[] schemas = fileManagerController.getAvailableSchemaURIs();
+//        LimeXMLReplyCollection collection;
+//        int len = schemas.length;
+//        for (int i = 0; i < len; i++) {
+//            collection = fileManagerController.getReplyCollection(schemas[i]);
+//            if (collection == null)// not loaded? skip it and keep goin'
+//                continue;
+//            words.addAll(collection.getKeyWords());
+//        }
+//        return words;
+        return null;
     }
 
     /**
@@ -374,18 +376,19 @@ public class MetaFileManager extends FileManagerImpl {
      *         hashing into a QRT. Initially being used for schema uri hashing.
      */
     private List<String> getXMLIndivisibleKeyWords() {
-        List<String> words = new ArrayList<String>();
-        String[] schemas = fileManagerController.getAvailableSchemaURIs();
-        LimeXMLReplyCollection collection;
-        for (int i = 0; i < schemas.length; i++) {
-            if (schemas[i] != null)
-                words.add(schemas[i]);
-            collection = fileManagerController.getReplyCollection(schemas[i]);
-            if (collection == null)// not loaded? skip it and keep goin'
-                continue;
-            words.addAll(collection.getKeyWordsIndivisible());
-        }
-        return words;
+//        List<String> words = new ArrayList<String>();
+//        String[] schemas = fileManagerController.getAvailableSchemaURIs();
+//        LimeXMLReplyCollection collection;
+//        for (int i = 0; i < schemas.length; i++) {
+//            if (schemas[i] != null)
+//                words.add(schemas[i]);
+//            collection = fileManagerController.getReplyCollection(schemas[i]);
+//            if (collection == null)// not loaded? skip it and keep goin'
+//                continue;
+//            words.addAll(collection.getKeyWordsIndivisible());
+//        }
+//        return words;
+        return null;
     }
 
     /**
@@ -393,58 +396,59 @@ public class MetaFileManager extends FileManagerImpl {
      * match given query document.
      */
     private Response[] query(LimeXMLDocument queryDoc) {
-        String schema = queryDoc.getSchemaURI();
-        LimeXMLReplyCollection replyCol = fileManagerController.getReplyCollection(schema);
-        if (replyCol == null)// no matching reply collection for schema
-            return null;
-
-        List<LimeXMLDocument> matchingReplies = replyCol.getMatchingReplies(queryDoc);
-        // matchingReplies = a List of LimeXMLDocuments that match the query
-        int s = matchingReplies.size();
-        if (s == 0) // no matching replies.
-            return null;
-
-        Response[] retResponses = new Response[s];
-        int z = 0;
-        for (LimeXMLDocument currDoc : matchingReplies) {
-            File file = currDoc.getIdentifier();// returns null if none
-            Response res = null;
-            if (file == null) { // pure metadata (no file)
-                res = fileManagerController.createPureMetadataResponse();
-            } else { // meta-data about a specific file
-                FileDesc fd = getFileDescForFile(file);
-                if (fd == null || fd instanceof IncompleteFileDesc) {
-                    // fd == null is bad -- would mean MetaFileManager is out of sync.
-                    // fd incomplete should never happen, but apparently is somehow...
-                    continue;
-                } else { // we found a file with the right name
-                    res = fileManagerController.createResponse(fd);
-                    fd.incrementHitCount();
-                    fileManagerController.handleSharedFileUpdate(fd.getFile());
-                }
-            }
-
-            // Note that if any response was invalid,
-            // the array will be too small, and we'll
-            // have to resize it.
-            res.setDocument(currDoc);
-            retResponses[z] = res;
-            z++;
-        }
-
-        if (z == 0)
-            return null; // no responses
-
-        // need to ensure that no nulls are returned in my response[]
-        // z is a count of responses constructed, see just above...
-        // s == retResponses.length
-        if (z < s) {
-            Response[] temp = new Response[z];
-            System.arraycopy(retResponses, 0, temp, 0, z);
-            retResponses = temp;
-        }
-
-        return retResponses;
+//        String schema = queryDoc.getSchemaURI();
+//        LimeXMLReplyCollection replyCol = fileManagerController.getReplyCollection(schema);
+//        if (replyCol == null)// no matching reply collection for schema
+//            return null;
+//
+//        List<LimeXMLDocument> matchingReplies = replyCol.getMatchingReplies(queryDoc);
+//        // matchingReplies = a List of LimeXMLDocuments that match the query
+//        int s = matchingReplies.size();
+//        if (s == 0) // no matching replies.
+//            return null;
+//
+//        Response[] retResponses = new Response[s];
+//        int z = 0;
+//        for (LimeXMLDocument currDoc : matchingReplies) {
+//            File file = currDoc.getIdentifier();// returns null if none
+//            Response res = null;
+//            if (file == null) { // pure metadata (no file)
+//                res = fileManagerController.createPureMetadataResponse();
+//            } else { // meta-data about a specific file
+//                FileDesc fd = getFileDescForFile(file);
+//                if (fd == null || fd instanceof IncompleteFileDesc) {
+//                    // fd == null is bad -- would mean MetaFileManager is out of sync.
+//                    // fd incomplete should never happen, but apparently is somehow...
+//                    continue;
+//                } else { // we found a file with the right name
+//                    res = fileManagerController.createResponse(fd);
+//                    fd.incrementHitCount();
+//                    fileManagerController.handleSharedFileUpdate(fd.getFile());
+//                }
+//            }
+//
+//            // Note that if any response was invalid,
+//            // the array will be too small, and we'll
+//            // have to resize it.
+//            res.setDocument(currDoc);
+//            retResponses[z] = res;
+//            z++;
+//        }
+//
+//        if (z == 0)
+//            return null; // no responses
+//
+//        // need to ensure that no nulls are returned in my response[]
+//        // z is a count of responses constructed, see just above...
+//        // s == retResponses.length
+//        if (z < s) {
+//            Response[] temp = new Response[z];
+//            System.arraycopy(retResponses, 0, temp, 0, z);
+//            retResponses = temp;
+//        }
+//
+//        return retResponses;
+        return null;
     }
 
     private class Saver implements Runnable {

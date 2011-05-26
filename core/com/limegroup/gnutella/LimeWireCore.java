@@ -67,9 +67,7 @@ import com.limegroup.gnutella.version.UpdateCollectionFactory;
 import com.limegroup.gnutella.xml.LimeXMLDocumentFactory;
 import com.limegroup.gnutella.xml.LimeXMLDocumentHelper;
 import com.limegroup.gnutella.xml.LimeXMLProperties;
-import com.limegroup.gnutella.xml.LimeXMLReplyCollectionFactory;
 import com.limegroup.gnutella.xml.LimeXMLSchemaRepository;
-import com.limegroup.gnutella.xml.SchemaReplyCollectionMapper;
 
 /**
  * Contains mostly all references to singletons within LimeWire.
@@ -345,10 +343,6 @@ public class LimeWireCore {
         return injector.getInstance(LimeXMLSchemaRepository.class);
     }
 
-    public SchemaReplyCollectionMapper getSchemaReplyCollectionMapper() {
-        return injector.getInstance(SchemaReplyCollectionMapper.class);
-    }
-
     public CapabilitiesVMFactory getCapabilitiesVMFactory() {
         return injector.getInstance(CapabilitiesVMFactory.class);
     }
@@ -468,11 +462,7 @@ public class LimeWireCore {
     public UDPHostCacheFactory getUDPHostCacheFactory() {
         return injector.getInstance(UDPHostCacheFactory.class);
     }
-
-	public LimeXMLReplyCollectionFactory getLimeXMLReplyCollectionFactory() {
-        return injector.getInstance(LimeXMLReplyCollectionFactory.class);
-    }
-
+    
     public LicenseFactory getLicenseFactory() {
         return injector.getInstance(LicenseFactory.class);
     }

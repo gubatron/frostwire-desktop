@@ -27,10 +27,6 @@ import com.limegroup.gnutella.IncompleteFileDesc;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.settings.DaapSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
-import com.limegroup.gnutella.xml.LimeXMLDocument;
-import com.limegroup.gnutella.xml.LimeXMLNames;
-import com.limegroup.gnutella.xml.LimeXMLReplyCollection;
-import com.limegroup.gnutella.xml.SchemaReplyCollectionMapper;
 
 import de.kapsi.net.daap.AutoCommitTransaction;
 import de.kapsi.net.daap.DaapAuthenticator;
@@ -379,9 +375,9 @@ public final class DaapManager implements FinalizeListener {
             String name = newDesc.getFileName().toLowerCase(Locale.US);
             
             if (isSupportedAudioFormat(name)) {
-                updateSongAudioMeta(autoCommitTxn, song, newDesc);
+                //updateSongAudioMeta(autoCommitTxn, song, newDesc);
             } else if (isSupportedVideoFormat(name)) {
-                updateSongVideoMeta(autoCommitTxn, song, newDesc);
+                //updateSongVideoMeta(autoCommitTxn, song, newDesc);
             } else {
                 database.removeSong(autoCommitTxn, song);
             }
@@ -546,11 +542,11 @@ public final class DaapManager implements FinalizeListener {
             if (song != null) {
                 tmpUrnToSong.put(urn, song);
                 
-                if (audio) {
-                    updateSongAudioMeta(txn, song, file);
-                } else {
-                    updateSongVideoMeta(txn, song, file);
-                }
+//                if (audio) {
+//                    updateSongAudioMeta(txn, song, file);
+//                } else {
+//                    updateSongVideoMeta(txn, song, file);
+//                }
                 
             } else if (size < maxPlaylistSize) {
 
@@ -613,298 +609,17 @@ public final class DaapManager implements FinalizeListener {
             if (!ext.endsWith("mp3"))
                 song.setFormat(null, ext);
 
-            if (audio) {
-                updateSongAudioMeta(null, song, desc);
-            } else {
-                updateSongVideoMeta(null, song, desc);
-            }
+//            if (audio) {
+//                updateSongAudioMeta(null, song, desc);
+//            } else {
+//                updateSongVideoMeta(null, song, desc);
+//            }
             
         } else {
             song.setAttachment(desc);
         }
 
         return song;
-    }
-    
-    private boolean updateSongVideoMeta(Transaction txn, Song song, FileDesc desc) {
-        
-        song.setAttachment(desc);
-        
-        SchemaReplyCollectionMapper map = GuiCoreMediator.getSchemaReplyCollectionMapper();
-        LimeXMLReplyCollection collection = map.getReplyCollection(LimeXMLNames.VIDEO_SCHEMA);
-        
-        if (collection == null) {
-            LOG.error("LimeXMLReplyCollection is null");
-            return false;
-        }
-        
-        LimeXMLDocument doc = collection.getDocForHash(desc.getSHA1Urn());
-        
-        if (doc == null) {
-            return false;
-        }
-        
-        boolean update = false;
-        
-        String title = doc.getValue(LimeXMLNames.VIDEO_TITLE);
-        //String type = doc.getValue(LimeXMLNames.VIDEO_TYPE);
-        String year = doc.getValue(LimeXMLNames.VIDEO_YEAR);
-        String rating = doc.getValue(LimeXMLNames.VIDEO_RATING);
-        String length = doc.getValue(LimeXMLNames.VIDEO_LENGTH);
-        //String comments = doc.getValue(LimeXMLNames.VIDEO_COMMENTS);
-        //String licensetype = doc.getValue(LimeXMLNames.VIDEO_LICENSETYPE);
-        String license = doc.getValue(LimeXMLNames.VIDEO_LICENSE);
-        //String height = doc.getValue(LimeXMLNames.VIDEO_HEIGHT);
-        //String width = doc.getValue(LimeXMLNames.VIDEO_WIDTH);
-        String bitrate = doc.getValue(LimeXMLNames.VIDEO_BITRATE);
-        //String action = doc.getValue(LimeXMLNames.VIDEO_ACTION);
-        String director = doc.getValue(LimeXMLNames.VIDEO_DIRECTOR);
-        //String studio = doc.getValue(LimeXMLNames.VIDEO_STUDIO);
-        //String language = doc.getValue(LimeXMLNames.VIDEO_LANGUAGE);
-        //String stars = doc.getValue(LimeXMLNames.VIDEO_STARS);
-        //String producer = doc.getValue(LimeXMLNames.VIDEO_PRODUCE);
-        //String subtitles = doc.getValue(LimeXMLNames.VIDEO_SUBTITLES);
-        
-        if (title != null) {
-            String currentTitle = song.getName();
-            if (currentTitle == null || !title.equals(currentTitle)) {
-                update = true;
-                song.setName(txn, title);
-            }
-        }
-        
-        int currentBitrate = song.getBitrate();
-        if (bitrate != null) {
-            try {
-                int num = Integer.parseInt(bitrate);
-                if (num > 0 && num != currentBitrate) {
-                    update = true;
-                    song.setBitrate(txn, num);
-                }
-            } catch (NumberFormatException err) {}
-        } else if (currentBitrate != 0) {
-            update = true;
-            song.setBitrate(txn, 0);
-        }
-        
-        long currentLength = song.getTime();
-        if (length != null) {
-            try {
-                // iTunes expects the song length in milliseconds
-                int num = (int)(Integer.parseInt(length)*1000L);
-                if (num > 0 && num != currentLength) {
-                    update = true;
-                    song.setTime(txn, num);
-                }
-            } catch (NumberFormatException err) {}
-        } else if (currentLength != 0) {
-            update = true;
-            song.setTime(txn, 0);
-        }
-        
-        int currentYear = song.getYear();
-        if (year != null) {
-            try {
-                int num = Integer.parseInt(year);
-                if (num > 0 && num != currentYear) {
-                    update = true;
-                    song.setYear(txn, num);
-                }
-            } catch (NumberFormatException err) {}
-        } else if (currentYear != 0) {
-            update = true;
-            song.setYear(txn, 0);
-        }
-        
-        // Genre = License
-        String currentGenre = song.getGenre();
-        if (license != null) {
-            if (currentGenre == null || !license.equals(currentGenre)) {
-                update = true;
-                song.setGenre(txn, license);
-            }
-        } else if (currentGenre != null) {
-            update = true;
-            song.setGenre(txn, null);
-        }
-        
-        // Artist = Director
-        String currentArtist = song.getArtist();
-        if (director != null) {
-            if (currentArtist == null || !director.equals(currentArtist)) {
-                update = true;
-                song.setArtist(txn, director);
-            }
-        } else if (currentArtist != null) {
-            update = true;
-            song.setArtist(txn, null);
-        }
-        
-        // Rating = Album
-        String currentAlbum = song.getAlbum();
-        if (rating != null) {
-            if (currentAlbum == null || !rating.equals(currentAlbum)) {
-                update = true;
-                song.setAlbum(txn, rating);
-            }
-        } else if (currentAlbum != null) {
-            update = true;
-            song.setAlbum(txn, null);
-        }
-        
-        return update;
-    }
-    
-    /**
-     * Sets the audio meta data
-     */
-    private boolean updateSongAudioMeta(Transaction txn, Song song, FileDesc desc) {
-        
-        song.setAttachment(desc);
-        
-        SchemaReplyCollectionMapper map = GuiCoreMediator.getSchemaReplyCollectionMapper();
-        LimeXMLReplyCollection collection = map.getReplyCollection(LimeXMLNames.AUDIO_SCHEMA);
-
-        
-        if (collection == null) {
-            LOG.error("LimeXMLReplyCollection is null");
-            return false;
-        }
-        
-        LimeXMLDocument doc = collection.getDocForHash(desc.getSHA1Urn());
-        
-        if (doc == null)
-            return false;
-        
-        boolean update = false;
-        
-        String title = doc.getValue(LimeXMLNames.AUDIO_TITLE);
-        String track = doc.getValue(LimeXMLNames.AUDIO_TRACK);
-        String artist = doc.getValue(LimeXMLNames.AUDIO_ARTIST);
-        String album = doc.getValue(LimeXMLNames.AUDIO_ALBUM);
-        String genre = doc.getValue(LimeXMLNames.AUDIO_GENRE);
-        String bitrate = doc.getValue(LimeXMLNames.AUDIO_BITRATE);
-        //String comments = doc.getValue(LimeXMLNames.AUDIO_COMMENTS);
-        String time = doc.getValue(LimeXMLNames.AUDIO_SECONDS);
-        String year = doc.getValue(LimeXMLNames.AUDIO_YEAR);
-        
-        if (title != null) {
-            String currentTitle = song.getName();
-            if (currentTitle == null || !title.equals(currentTitle)) {
-                update = true;
-                song.setName(txn, title);
-            }
-        }
-        
-        int currentTrack = song.getTrackNumber();
-        if (track != null) {
-            try {
-                int num = Integer.parseInt(track);
-                if (num > 0 && num != currentTrack) {
-                    update = true;
-                    song.setTrackNumber(txn, num);
-                }
-            } catch (NumberFormatException err) {}
-        } else if (currentTrack != 0) {
-            update = true;
-            song.setTrackNumber(txn, 0);
-        }
-        
-        String currentArtist = song.getArtist();
-        if (artist != null) {
-            if (currentArtist == null || !artist.equals(currentArtist)) {
-                update = true;
-                song.setArtist(txn, artist);
-            }
-        } else if (currentArtist != null) {
-            update = true;
-            song.setArtist(txn, null);
-        }
-        
-        String currentAlbum = song.getAlbum();
-        if (album != null) {
-            if (currentAlbum == null || !album.equals(currentAlbum)) {
-                update = true;
-                song.setAlbum(txn, album);
-            }
-        } else if (currentAlbum != null) {
-            update = true;
-            song.setAlbum(txn, null);
-        }
-        
-        String currentGenre = song.getGenre();
-        if (genre != null) {
-            if (currentGenre == null || !genre.equals(currentGenre)) {
-                update = true;
-                song.setGenre(txn, genre);
-            }
-        } else if (currentGenre != null) {
-            update = true;
-            song.setGenre(txn, null);
-        }
-        
-        /*String currentComments = song.getComment();
-        if (comments != null) {
-            if (currentComments == null || !comments.equals(currentComments)) {
-                update = true;
-                song.setComment(txn, comments);
-            }
-        } else if (currentComments != null) {
-            update = true;
-            song.setComment(txn, null);
-        }*/
-        
-        int currentBitrate = song.getBitrate();
-        if (bitrate != null) {
-            try {
-                int num = Integer.parseInt(bitrate);
-                if (num > 0 && num != currentBitrate) {
-                    update = true;
-                    song.setBitrate(txn, num);
-                }
-            } catch (NumberFormatException err) {}
-        } else if (currentBitrate != 0) {
-            update = true;
-            song.setBitrate(txn, 0);
-        }
-        
-        long currentTime = song.getTime();
-        if (time != null) {
-            try {
-                // iTunes expects the song length in milliseconds
-                long num = Integer.parseInt(time)*1000l;
-                if (num > 0 && num != currentTime) {
-                    update = true;
-                    song.setTime(txn, num);
-                }
-            } catch (NumberFormatException err) {}
-        } else if (currentTime != 0) {
-            update = true;
-            song.setTime(txn, 0);
-        }
-        
-        int currentYear = song.getYear();
-        if (year != null) {
-            try {
-                int num = Integer.parseInt(year);
-                if (num > 0 && num != currentYear) {
-                    update = true;
-                    song.setYear(txn, num);
-                }
-            } catch (NumberFormatException err) {}
-        } else if (currentYear != 0) {
-            update = true;
-            song.setYear(txn, 0);
-        }
-        
-        // iTunes expects the date/time in seconds
-        int mod = (int)(desc.lastModified()/1000);
-        if (song.getDateModified() != mod) {
-            update = true;
-            song.setDateModified(txn, mod);
-        }
-
-        return update;
     }
     
     /**

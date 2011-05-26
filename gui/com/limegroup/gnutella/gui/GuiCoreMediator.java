@@ -43,7 +43,6 @@ import com.limegroup.gnutella.uploader.UploadSlotManager;
 import com.limegroup.gnutella.xml.LimeXMLDocumentFactory;
 import com.limegroup.gnutella.xml.LimeXMLProperties;
 import com.limegroup.gnutella.xml.LimeXMLSchemaRepository;
-import com.limegroup.gnutella.xml.SchemaReplyCollectionMapper;
 
 // DPINJ:  This is a temporary measure to delay refactoring the GUI.
 public class GuiCoreMediator {
@@ -70,7 +69,6 @@ public class GuiCoreMediator {
     public static SavedFileManager getSavedFileManager() { return core.getSavedFileManager(); }
     public static UPnPManager getUPnPManager() { return core.getUPnPManager(); }
     public static LimeXMLSchemaRepository getLimeXMLSchemaRepository() { return core.getLimeXMLSchemaRepository(); }
-    public static SchemaReplyCollectionMapper getSchemaReplyCollectionMapper() { return core.getSchemaReplyCollectionMapper(); }
     public static LimeXMLProperties getLimeXMLProperties() { return core.getLimeXMLProperties(); }
     public static RatingTable getRatingTable() { return core.getRatingTable(); }
     public static SpamManager getSpamManager() { return core.getSpamManager(); }
