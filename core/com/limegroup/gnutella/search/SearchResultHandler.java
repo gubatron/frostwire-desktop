@@ -32,7 +32,6 @@ import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.Response;
 import com.limegroup.gnutella.SearchServices;
 import com.limegroup.gnutella.URN;
-import com.limegroup.gnutella.downloader.RemoteFileDescFactory;
 import com.limegroup.gnutella.messages.BadPacketException;
 import com.limegroup.gnutella.messages.QueryReply;
 import com.limegroup.gnutella.messages.QueryRequest;
@@ -90,7 +89,6 @@ public final class SearchResultHandler {
     private final Provider<ConnectionManager> connectionManager;
     private final ConnectionServices connectionServices;
     private final Provider<SpamManager> spamManager;
-    private final RemoteFileDescFactory remoteFileDescFactory;
     private final NetworkInstanceUtils networkInstanceUtils;
 
     @Inject
@@ -100,7 +98,6 @@ public final class SearchResultHandler {
             Provider<ConnectionManager> connectionManager,
             ConnectionServices connectionServices,
             Provider<SpamManager> spamManager,
-            RemoteFileDescFactory remoteFileDescFactory,
             NetworkInstanceUtils networkInstanceUtils) {
         this.networkManager = networkManager;
         this.searchServices = searchServices;
@@ -108,7 +105,6 @@ public final class SearchResultHandler {
         this.connectionManager = connectionManager;
         this.connectionServices = connectionServices;
         this.spamManager = spamManager;
-        this.remoteFileDescFactory = remoteFileDescFactory;
         this.networkInstanceUtils = networkInstanceUtils;
     }
 
@@ -216,108 +212,108 @@ public final class SearchResultHandler {
 	 *  otherwise <tt>false</tt> 
      */
     public void handleQueryReply(final QueryReply qr) {
-        HostData data;
-        try {
-            data = qr.getHostData();
-        } catch(BadPacketException bpe) {
-            LOG.debug("bad packet reading qr", bpe);
-            return;
-        }
-
-        // always handle reply to multicast queries.
-        if( !data.isReplyToMulticastQuery() && !qr.isBrowseHostReply() ) {
-            // note that the minimum search quality will always be greater
-            // than -1, so -1 qualities (the impossible case) are never
-            // displayed
-            if(data.getQuality() < SearchSettings.MINIMUM_SEARCH_QUALITY.getValue()) {
-                LOG.debug("Ignoring because low quality");
-                return;
-            }
-            if(data.getSpeed() < SearchSettings.MINIMUM_SEARCH_SPEED.getValue()) {
-                LOG.debug("Ignoring because low speed");
-                return;
-            }
-            // if the other side is firewalled AND
-            // we're not on close IPs AND
-            // (we are firewalled OR we are a private IP) AND 
-            // no chance for FW transfer then drop the reply.
-            if(data.isFirewalled() && 
-               !networkInstanceUtils.isVeryCloseIP(qr.getIPBytes()) &&               
-               (!networkManager.acceptedIncomingConnection() ||
-                       networkInstanceUtils.isPrivateAddress(networkManager.getAddress())) &&
-               !(networkManager.canDoFWT() && 
-                 qr.getSupportsFWTransfer())
-               )  {
-               LOG.debug("Ignoring from firewall funkiness");
-               return;
-            }
-        }
-
-        List<Response> results = null;
-        try {
-            results = qr.getResultsAsList();
-            //System.out.println("***FTA DEBUG - SearchResuls: " + results);
-        } catch (BadPacketException e) {
-            LOG.debug("Error gettig results", e);
-            return;
-        }
-
-        // throw away results that aren't secure.
-        int secureStatus = qr.getSecureStatus();
-        if(secureStatus == SecureMessage.FAILED) {
-            return;
-        }
-        
-        boolean skipSpam = isWhatIsNew(qr) || qr.isBrowseHostReply();
-        int numGoodSentToFrontEnd = 0;
-        double numBadSentToFrontEnd = 0;
-            
-        for(Response response : results) {
-            if (!qr.isBrowseHostReply() && secureStatus != SecureMessage.SECURE) {
-                if (!searchServices.matchesType(data.getMessageGUID(), response)) {
-                    continue;
-                }
-
-                if (!searchServices.matchesQuery(data.getMessageGUID(), response)) {
-                    continue;
-                }
-            }
-
-            // Throw away results from Mandragore Worm
-            if (searchServices.isMandragoreWorm(data.getMessageGUID(), response)) {
-                continue;
-            }
-            
-            // Throw away flood results
-            if (searchServices.isFloodQueryReply(data, response)) {
-            	continue;
-            }
-            
-            // If there was an action, only allow it if it's a secure message.
-            LimeXMLDocument doc = response.getDocument();
-            //System.out.println("Secure Results?: " + ApplicationSettings.USE_SECURE_RESULTS.getValue());
-            //System.out.println("Secure Status: " + secureStatus + " ¿DISTINTO A?.. " + SecureMessage.SECURE);
-	    
-            if(ApplicationSettings.USE_SECURE_RESULTS.getValue() &&
-               doc != null && !"".equals(doc.getAction()) && secureStatus != SecureMessage.SECURE) {
-                continue;
-            }
-            
-            // we'll be showing the result to the user, count it
-            countClassC(qr,response);
-            RemoteFileDesc rfd = response.toRemoteFileDesc(data, remoteFileDescFactory);
-            rfd.setSecureStatus(secureStatus);
-            Set<? extends IpPort> alts = response.getLocations();
-            activityCallback.get().handleQueryResult(rfd, data, alts);
-            
-            if (skipSpam || !spamManager.get().isSpam(rfd))
-                numGoodSentToFrontEnd++;
-            else 
-                numBadSentToFrontEnd++;
-        } //end of response loop
-        
-        numBadSentToFrontEnd = Math.ceil(numBadSentToFrontEnd * SearchSettings.SPAM_RESULT_RATIO.getValue());
-        accountAndUpdateDynamicQueriers(qr, numGoodSentToFrontEnd + (int)numBadSentToFrontEnd);
+//        HostData data;
+//        try {
+//            data = qr.getHostData();
+//        } catch(BadPacketException bpe) {
+//            LOG.debug("bad packet reading qr", bpe);
+//            return;
+//        }
+//
+//        // always handle reply to multicast queries.
+//        if( !data.isReplyToMulticastQuery() && !qr.isBrowseHostReply() ) {
+//            // note that the minimum search quality will always be greater
+//            // than -1, so -1 qualities (the impossible case) are never
+//            // displayed
+//            if(data.getQuality() < SearchSettings.MINIMUM_SEARCH_QUALITY.getValue()) {
+//                LOG.debug("Ignoring because low quality");
+//                return;
+//            }
+//            if(data.getSpeed() < SearchSettings.MINIMUM_SEARCH_SPEED.getValue()) {
+//                LOG.debug("Ignoring because low speed");
+//                return;
+//            }
+//            // if the other side is firewalled AND
+//            // we're not on close IPs AND
+//            // (we are firewalled OR we are a private IP) AND 
+//            // no chance for FW transfer then drop the reply.
+//            if(data.isFirewalled() && 
+//               !networkInstanceUtils.isVeryCloseIP(qr.getIPBytes()) &&               
+//               (!networkManager.acceptedIncomingConnection() ||
+//                       networkInstanceUtils.isPrivateAddress(networkManager.getAddress())) &&
+//               !(networkManager.canDoFWT() && 
+//                 qr.getSupportsFWTransfer())
+//               )  {
+//               LOG.debug("Ignoring from firewall funkiness");
+//               return;
+//            }
+//        }
+//
+//        List<Response> results = null;
+//        try {
+//            results = qr.getResultsAsList();
+//            //System.out.println("***FTA DEBUG - SearchResuls: " + results);
+//        } catch (BadPacketException e) {
+//            LOG.debug("Error gettig results", e);
+//            return;
+//        }
+//
+//        // throw away results that aren't secure.
+//        int secureStatus = qr.getSecureStatus();
+//        if(secureStatus == SecureMessage.FAILED) {
+//            return;
+//        }
+//        
+//        boolean skipSpam = isWhatIsNew(qr) || qr.isBrowseHostReply();
+//        int numGoodSentToFrontEnd = 0;
+//        double numBadSentToFrontEnd = 0;
+//            
+//        for(Response response : results) {
+//            if (!qr.isBrowseHostReply() && secureStatus != SecureMessage.SECURE) {
+//                if (!searchServices.matchesType(data.getMessageGUID(), response)) {
+//                    continue;
+//                }
+//
+//                if (!searchServices.matchesQuery(data.getMessageGUID(), response)) {
+//                    continue;
+//                }
+//            }
+//
+//            // Throw away results from Mandragore Worm
+//            if (searchServices.isMandragoreWorm(data.getMessageGUID(), response)) {
+//                continue;
+//            }
+//            
+//            // Throw away flood results
+//            if (searchServices.isFloodQueryReply(data, response)) {
+//            	continue;
+//            }
+//            
+//            // If there was an action, only allow it if it's a secure message.
+//            LimeXMLDocument doc = response.getDocument();
+//            //System.out.println("Secure Results?: " + ApplicationSettings.USE_SECURE_RESULTS.getValue());
+//            //System.out.println("Secure Status: " + secureStatus + " ¿DISTINTO A?.. " + SecureMessage.SECURE);
+//	    
+//            if(ApplicationSettings.USE_SECURE_RESULTS.getValue() &&
+//               doc != null && !"".equals(doc.getAction()) && secureStatus != SecureMessage.SECURE) {
+//                continue;
+//            }
+//            
+//            // we'll be showing the result to the user, count it
+//            countClassC(qr,response);
+//            RemoteFileDesc rfd = response.toRemoteFileDesc(data, remoteFileDescFactory);
+//            rfd.setSecureStatus(secureStatus);
+//            Set<? extends IpPort> alts = response.getLocations();
+//            activityCallback.get().handleQueryResult(rfd, data, alts);
+//            
+//            if (skipSpam || !spamManager.get().isSpam(rfd))
+//                numGoodSentToFrontEnd++;
+//            else 
+//                numBadSentToFrontEnd++;
+//        } //end of response loop
+//        
+//        numBadSentToFrontEnd = Math.ceil(numBadSentToFrontEnd * SearchSettings.SPAM_RESULT_RATIO.getValue());
+//        accountAndUpdateDynamicQueriers(qr, numGoodSentToFrontEnd + (int)numBadSentToFrontEnd);
     }
 
     private void countClassC(QueryReply qr, Response r) {

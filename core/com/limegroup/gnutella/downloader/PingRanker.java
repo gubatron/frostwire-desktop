@@ -88,13 +88,11 @@ public class PingRanker extends AbstractSourceRanker implements MessageListener,
     private final UDPPinger udpPinger;
 
     private final MessageRouter messageRouter;
-    private final RemoteFileDescFactory remoteFileDescFactory;
     
-    protected PingRanker(NetworkManager networkManager, UDPPinger udpPinger, MessageRouter messageRouter, RemoteFileDescFactory remoteFileDescFactory) {
+    protected PingRanker(NetworkManager networkManager, UDPPinger udpPinger, MessageRouter messageRouter) {
         this.networkManager = networkManager; 
         this.udpPinger = udpPinger;
         this.messageRouter = messageRouter;
-        this.remoteFileDescFactory = remoteFileDescFactory;
         pingedHosts = new TreeMap<IpPort, RemoteFileDesc>(IpPort.COMPARATOR);
         testedLocations = new HashSet<RemoteFileDesc>();
         newHosts = new HashSet<RemoteFileDesc>();
@@ -360,7 +358,7 @@ public class PingRanker extends AbstractSourceRanker implements MessageListener,
                 else     
                     verifiedHosts.add(rfd);
 
-                alts = pong.getAllLocsRFD(rfd, remoteFileDescFactory);
+                //alts = pong.getAllLocsRFD(rfd, remoteFileDescFactory);
             }
         }
         

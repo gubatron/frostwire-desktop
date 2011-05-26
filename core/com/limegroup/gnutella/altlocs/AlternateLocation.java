@@ -3,10 +3,8 @@ package com.limegroup.gnutella.altlocs;
 
 import java.io.IOException;
 
-
 import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.URN;
-import com.limegroup.gnutella.downloader.RemoteFileDescFactory;
 import com.limegroup.gnutella.http.HTTPHeaderValue;
 import com.limegroup.gnutella.settings.UploadSettings;
 
@@ -123,7 +121,7 @@ public abstract class AlternateLocation implements HTTPHeaderValue, Comparable<A
 	 *  <tt>null</tt> if the <tt>RemoteFileDesc</tt> could not be created
 	 */
 
-	public abstract RemoteFileDesc createRemoteFileDesc(long size, RemoteFileDescFactory remoteFileDescFactory);
+	public abstract RemoteFileDesc createRemoteFileDesc(long size);
 	
 	/**
 	 * 

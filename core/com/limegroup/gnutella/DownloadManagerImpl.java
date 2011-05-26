@@ -21,7 +21,6 @@ import org.limewire.collection.DualIterator;
 import org.limewire.collection.MultiIterable;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.io.InvalidDataException;
-import org.limewire.io.IpPort;
 import org.limewire.service.MessageService;
 
 import com.frostwire.bittorrent.AzureusStarter;
@@ -39,9 +38,6 @@ import com.limegroup.gnutella.downloader.DownloaderType;
 import com.limegroup.gnutella.downloader.InNetworkDownloader;
 import com.limegroup.gnutella.downloader.MagnetDownloader;
 import com.limegroup.gnutella.downloader.ManagedDownloader;
-import com.limegroup.gnutella.downloader.PushDownloadManager;
-import com.limegroup.gnutella.downloader.PushedSocketHandlerRegistry;
-import com.limegroup.gnutella.downloader.RemoteFileDescFactory;
 import com.limegroup.gnutella.downloader.ResumeDownloader;
 import com.limegroup.gnutella.downloader.serial.DownloadMemento;
 import com.limegroup.gnutella.downloader.serial.DownloadSerializer;
@@ -113,10 +109,8 @@ public class DownloadManagerImpl implements DownloadManager {
     private final Provider<DownloadCallback> downloadCallback;
     private final Provider<MessageRouter> messageRouter;
     private final ScheduledExecutorService backgroundExecutor;
-    private final Provider<PushDownloadManager> pushDownloadManager;
     private final CoreDownloaderFactory coreDownloaderFactory;
     private final DownloadSerializer downloadSerializer;
-    private final RemoteFileDescFactory remoteFileDescFactory;
     
     @Inject
     public DownloadManagerImpl(NetworkManager networkManager,
@@ -124,29 +118,17 @@ public class DownloadManagerImpl implements DownloadManager {
             Provider<DownloadCallback> downloadCallback,
             Provider<MessageRouter> messageRouter,
             @Named("backgroundExecutor") ScheduledExecutorService backgroundExecutor,
-            Provider<PushDownloadManager> pushDownloadManager,
             CoreDownloaderFactory coreDownloaderFactory,
-            DownloadSerializer downloaderSerializer,
-            RemoteFileDescFactory remoteFileDescFactory) {
+            DownloadSerializer downloaderSerializer) {
         this.networkManager = networkManager;
         this.innetworkCallback = innetworkCallback;
         this.downloadCallback = downloadCallback;
         this.messageRouter = messageRouter;
         this.backgroundExecutor = backgroundExecutor;
-        this.pushDownloadManager = pushDownloadManager;
         this.coreDownloaderFactory = coreDownloaderFactory;
         this.downloadSerializer = downloaderSerializer;
-        this.remoteFileDescFactory = remoteFileDescFactory;
     }
 
-    /* (non-Javadoc)
-     * @see com.limegroup.gnutella.DownloadMI#register(com.limegroup.gnutella.downloader.PushedSocketHandlerRegistry)
-     */
-    // DO NOT REMOVE!  Guice calls this because of the @Inject
-    @Inject
-    public void register(PushedSocketHandlerRegistry registry) {
-        registry.register(this);
-    }
 
     //////////////////////// Creation and Saving /////////////////////////
 
@@ -317,10 +299,6 @@ public class DownloadManagerImpl implements DownloadManager {
         Set<String> hopeless = UpdateSettings.FAILED_UPDATES.getValue();
         hopeless.retainAll(urns);
         UpdateSettings.FAILED_UPDATES.setValue(hopeless);
-    }
-    
-    PushDownloadManager getPushManager() {
-        return pushDownloadManager.get();
     }
 
     /**
@@ -760,46 +738,46 @@ public class DownloadManagerImpl implements DownloadManager {
      * sources if they do.
      */
     private void addDownloadWithResponses(List<? extends Response> responses, HostData data) {
-        if(responses == null)
-            throw new NullPointerException("null responses");
-        if(data == null)
-            throw new NullPointerException("null hostdata");
-
-        // need to synch because active and waiting are not thread safe
-        List<CoreDownloader> downloaders = new ArrayList<CoreDownloader>(active.size() + waiting.size());
-        synchronized (this) { 
-            // add to all downloaders, even if they are waiting....
-            downloaders.addAll(active);
-            downloaders.addAll(waiting);
-        }
-        
-        // short-circuit.
-        if(downloaders.isEmpty())
-            return;
-
-        //For each response i, offer it to each downloader j.  Give a response
-        // to at most one downloader.
-        // TODO: it's possible that downloader x could accept response[i] but
-        //that would cause a conflict with downloader y.  Check for this.
-        for(Response r : responses) {
-            // Don't bother with making XML from the EQHD.
-            RemoteFileDesc rfd = r.toRemoteFileDesc(data, remoteFileDescFactory);
-            for(Downloader current : downloaders) {
-                if ( !(current instanceof ManagedDownloader))
-                    continue; // can't add sources to torrents yet
-                ManagedDownloader currD = (ManagedDownloader) current;
-                // If we were able to add this specific rfd,
-                // add any alternates that this response might have
-                // also.
-                if (currD.addDownload(rfd, true)) {
-                    for(IpPort ipp : r.getLocations()) {
-                        // don't cache alts.
-                        currD.addDownload(remoteFileDescFactory.createRemoteFileDesc(rfd, ipp), false);
-                    }
-                    break;
-                }
-            }
-        }
+//        if(responses == null)
+//            throw new NullPointerException("null responses");
+//        if(data == null)
+//            throw new NullPointerException("null hostdata");
+//
+//        // need to synch because active and waiting are not thread safe
+//        List<CoreDownloader> downloaders = new ArrayList<CoreDownloader>(active.size() + waiting.size());
+//        synchronized (this) { 
+//            // add to all downloaders, even if they are waiting....
+//            downloaders.addAll(active);
+//            downloaders.addAll(waiting);
+//        }
+//        
+//        // short-circuit.
+//        if(downloaders.isEmpty())
+//            return;
+//
+//        //For each response i, offer it to each downloader j.  Give a response
+//        // to at most one downloader.
+//        // TODO: it's possible that downloader x could accept response[i] but
+//        //that would cause a conflict with downloader y.  Check for this.
+//        for(Response r : responses) {
+//            // Don't bother with making XML from the EQHD.
+//            RemoteFileDesc rfd = r.toRemoteFileDesc(data, remoteFileDescFactory);
+//            for(Downloader current : downloaders) {
+//                if ( !(current instanceof ManagedDownloader))
+//                    continue; // can't add sources to torrents yet
+//                ManagedDownloader currD = (ManagedDownloader) current;
+//                // If we were able to add this specific rfd,
+//                // add any alternates that this response might have
+//                // also.
+//                if (currD.addDownload(rfd, true)) {
+//                    for(IpPort ipp : r.getLocations()) {
+//                        // don't cache alts.
+//                        currD.addDownload(remoteFileDescFactory.createRemoteFileDesc(rfd, ipp), false);
+//                    }
+//                    break;
+//                }
+//            }
+//        }
     }
 
     // //////////// Callback Methods for ManagedDownloaders ///////////////////

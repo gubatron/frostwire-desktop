@@ -14,28 +14,26 @@ public class SourceRankerFactory {
     private final NetworkManager networkManager;
     private final Provider<UDPPinger> udpPingerFactory;
     private final Provider<MessageRouter> messageRouter;
-    private final RemoteFileDescFactory remoteFileDescFactory;
     
     @Inject
     public SourceRankerFactory(NetworkManager networkManager,
                                Provider<UDPPinger> udpPingerFactory, 
-                               Provider<MessageRouter> messageRouter,
-                               RemoteFileDescFactory remoteFileDescFactory) {
+                               Provider<MessageRouter> messageRouter) {
         this.networkManager = networkManager;
         this.udpPingerFactory = udpPingerFactory;
         this.messageRouter = messageRouter;
-        this.remoteFileDescFactory = remoteFileDescFactory;
     }
 
     /**
      * @return a ranker appropriate for our system's capabilities.
      */
     public SourceRanker getAppropriateRanker() {
-        if (networkManager.canReceiveSolicited() && 
-                DownloadSettings.USE_HEADPINGS.getValue())
-            return new PingRanker(networkManager, udpPingerFactory.get(), messageRouter.get(), remoteFileDescFactory);
-        else 
-            return new LegacyRanker();
+//        if (networkManager.canReceiveSolicited() && 
+//                DownloadSettings.USE_HEADPINGS.getValue())
+//            return new PingRanker(networkManager, udpPingerFactory.get(), messageRouter.get(), remoteFileDescFactory);
+//        else 
+//            return new LegacyRanker();
+        return null;
     }
 
     /**
@@ -44,24 +42,25 @@ public class SourceRankerFactory {
      * the current one is stopped.
      */
     public SourceRanker getAppropriateRanker(SourceRanker original) {
-        if(original == null)
-            return getAppropriateRanker();
-        
-        SourceRanker better;
-        if (networkManager.canReceiveSolicited() && 
-                DownloadSettings.USE_HEADPINGS.getValue()) {
-            if (original instanceof PingRanker)
-                return original;
-            better = new PingRanker(networkManager, udpPingerFactory.get(), messageRouter.get(), remoteFileDescFactory);
-        }else {
-            if (original instanceof LegacyRanker)
-                return original;
-            better = new LegacyRanker();
-        }
-        
-        better.setMeshHandler(original.getMeshHandler());
-        better.addToPool(original.getShareableHosts());
-        original.stop();
-        return better;
+//        if(original == null)
+//            return getAppropriateRanker();
+//        
+//        SourceRanker better;
+//        if (networkManager.canReceiveSolicited() && 
+//                DownloadSettings.USE_HEADPINGS.getValue()) {
+//            if (original instanceof PingRanker)
+//                return original;
+//            better = new PingRanker(networkManager, udpPingerFactory.get(), messageRouter.get(), remoteFileDescFactory);
+//        }else {
+//            if (original instanceof LegacyRanker)
+//                return original;
+//            better = new LegacyRanker();
+//        }
+//        
+//        better.setMeshHandler(original.getMeshHandler());
+//        better.addToPool(original.getShareableHosts());
+//        original.stop();
+//        return better;
+        return null;
     }
 }

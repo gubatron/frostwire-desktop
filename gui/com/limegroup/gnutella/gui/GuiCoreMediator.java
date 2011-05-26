@@ -31,7 +31,6 @@ import com.limegroup.gnutella.browser.ExternalControl;
 import com.limegroup.gnutella.browser.LocalAcceptor;
 import com.limegroup.gnutella.connection.ConnectionCheckerManager;
 import com.limegroup.gnutella.downloader.DiskController;
-import com.limegroup.gnutella.downloader.RemoteFileDescFactory;
 import com.limegroup.gnutella.filters.IPFilter;
 import com.limegroup.gnutella.licenses.LicenseVerifier;
 import com.limegroup.gnutella.messages.QueryRequestFactory;
@@ -87,7 +86,6 @@ public class GuiCoreMediator {
     public static MetaDataFactory getMetaDataFactory() { return core.getMetaDataFactory(); }
     public static LicenseVerifier getLicenseVerifier() { return core.getLicenseVerifier(); }
     public static ResponseFactory getResponseFactory() { return core.getResponseFactory(); }
-    public static RemoteFileDescFactory getRemoteFileDescFactory() { return core.getRemoteFileDescFactory(); }
     public static TcpBandwidthStatistics getTcpBandwidthStatistics() { return core.getTcpBandwidthStatistics(); }
     public static NetworkInstanceUtils getNetworkInstanceUtils() { return core.getNetworkInstanceUtils(); }
 }

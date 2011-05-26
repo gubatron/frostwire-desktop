@@ -14,7 +14,6 @@ import org.limewire.io.IpPort;
 import org.limewire.service.ErrorService;
 import org.limewire.util.ByteOrder;
 
-import com.limegroup.gnutella.downloader.RemoteFileDescFactory;
 import com.limegroup.gnutella.search.HostData;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
 
@@ -296,19 +295,20 @@ public class Response {
     /**
      * Returns this Response as a RemoteFileDesc.
      */
-    public RemoteFileDesc toRemoteFileDesc(HostData data, RemoteFileDescFactory remoteFileDescFactory){
-        if(cachedRFD != null &&
-           cachedRFD.getPort() == data.getPort() &&
-           cachedRFD.getHost().equals(data.getIP()))
-            return cachedRFD;
-        else {
-            RemoteFileDesc rfd = remoteFileDescFactory.createRemoteFileDesc(data.getIP(), data.getPort(), getIndex(),
-                    getName(), getSize(), data.getClientGUID(), data.getSpeed(), data.isChatEnabled(), data.getQuality(), data.isBrowseHostEnabled(),
-                    getDocument(), getUrns(), data.isReplyToMulticastQuery(), data.isFirewalled(), data.getVendorCode(), data.getPushProxies(), getCreateTime(),
-                    data.getFWTVersionSupported(), data.isTLSCapable());
-            cachedRFD = rfd;
-            return rfd;
-        }
+    public RemoteFileDesc toRemoteFileDesc(HostData data){
+//        if(cachedRFD != null &&
+//           cachedRFD.getPort() == data.getPort() &&
+//           cachedRFD.getHost().equals(data.getIP()))
+//            return cachedRFD;
+//        else {
+//            RemoteFileDesc rfd = remoteFileDescFactory.createRemoteFileDesc(data.getIP(), data.getPort(), getIndex(),
+//                    getName(), getSize(), data.getClientGUID(), data.getSpeed(), data.isChatEnabled(), data.getQuality(), data.isBrowseHostEnabled(),
+//                    getDocument(), getUrns(), data.isReplyToMulticastQuery(), data.isFirewalled(), data.getVendorCode(), data.getPushProxies(), getCreateTime(),
+//                    data.getFWTVersionSupported(), data.isTLSCapable());
+//            cachedRFD = rfd;
+//            return rfd;
+//        }
+        return null;
     }
 
 	/**

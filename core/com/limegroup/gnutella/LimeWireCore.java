@@ -27,7 +27,6 @@ import com.limegroup.gnutella.connection.MessageReaderFactory;
 import com.limegroup.gnutella.connection.RoutedConnectionFactory;
 import com.limegroup.gnutella.downloader.CoreDownloaderFactory;
 import com.limegroup.gnutella.downloader.DiskController;
-import com.limegroup.gnutella.downloader.RemoteFileDescFactory;
 import com.limegroup.gnutella.filters.IPFilter;
 import com.limegroup.gnutella.filters.MutableGUIDFilter;
 import com.limegroup.gnutella.filters.SpamFilterFactory;
@@ -509,10 +508,6 @@ public class LimeWireCore {
     
     public DiskController getDiskController() {
         return injector.getInstance(DiskController.class);
-    }
-
-    public RemoteFileDescFactory getRemoteFileDescFactory() {
-        return injector.getInstance(RemoteFileDescFactory.class);
     }
     
     public TcpBandwidthStatistics getTcpBandwidthStatistics() {

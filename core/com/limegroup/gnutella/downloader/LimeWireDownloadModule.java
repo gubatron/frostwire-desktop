@@ -14,10 +14,8 @@ public class LimeWireDownloadModule extends AbstractModule {
     
     @Override
     protected void configure() {
-        bind(RemoteFileDescFactory.class).to(RemoteFileDescFactoryImpl.class);
         bind(DownloadCallback.class).annotatedWith(Names.named("inNetwork")).to(InNetworkCallback.class);        
         bind(RequeryManagerFactory.class).to(RequeryManagerFactoryImpl.class);
-        bind(PushedSocketHandlerRegistry.class).to(PushDownloadManager.class);
         bind(CoreDownloaderFactory.class).to(CoreDownloaderFactoryImpl.class);
         bind(DownloadSerializer.class).to(DownloadSerializerImpl.class);
         bind(DownloadSerializeSettings.class).to(DownloadSerializeSettingsImpl.class);
