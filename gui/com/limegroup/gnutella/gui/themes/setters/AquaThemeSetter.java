@@ -12,14 +12,16 @@ import javax.swing.plaf.FontUIResource;
 
 import org.limewire.util.OSUtils;
 
+import com.apple.laf.AquaComboBoxUI;
+import com.apple.laf.AquaListUI;
 import com.apple.laf.AquaMenuBarUI;
 import com.apple.laf.AquaMenuItemUI;
 import com.apple.laf.AquaMenuUI;
 import com.apple.laf.AquaPopupMenuSeparatorUI;
 import com.apple.laf.AquaPopupMenuUI;
+import com.apple.laf.AquaTextAreaUI;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSetter;
-import com.limegroup.gnutella.gui.themes.ThemeSettings;
 
 public class AquaThemeSetter implements ThemeSetter {
     
@@ -108,18 +110,15 @@ public class AquaThemeSetter implements ThemeSetter {
         return AquaMenuItemUI.createUI(comp);
     }
 
-    public ComponentUI createTextAreadUI(JComponent comp) {
-        new RuntimeException("Not implemented");
-        return null;
+    public ComponentUI createTextAreaUI(JComponent comp) {
+        return AquaTextAreaUI.createUI(comp);
     }
 
     public ComponentUI createListUI(JComponent comp) {
-        new RuntimeException("Not implemented");
-        return null;
+        return AquaListUI.createUI(comp);
     }
 
     public ComponentUI createComboBoxUI(JComponent comp) {
-        new RuntimeException("Not implemented");
-        return null;
+        return AquaComboBoxUI.createUI(comp);
     }
 }

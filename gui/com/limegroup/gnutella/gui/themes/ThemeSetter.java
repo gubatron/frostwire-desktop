@@ -23,7 +23,7 @@ public interface ThemeSetter {
 
     public ComponentUI createRadioButtonMenuItemUI(JComponent comp);
 
-    public ComponentUI createTextAreadUI(JComponent comp);
+    public ComponentUI createTextAreaUI(JComponent comp);
 
     public ComponentUI createListUI(JComponent comp);
 

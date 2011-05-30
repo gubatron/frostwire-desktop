@@ -82,7 +82,7 @@ public class SkinTextAreaUI extends BasicTextAreaUI implements
      * @see javax.swing.plaf.ComponentUI#createUI(javax.swing.JComponent)
      */
     public static ComponentUI createUI(JComponent comp) {
-        return ThemeMediator.CURRENT_THEME.createTextAreadUI(comp);
+        return ThemeMediator.CURRENT_THEME.createTextAreaUI(comp);
     }
 
     /**
