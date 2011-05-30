@@ -19,6 +19,7 @@ import com.apple.laf.AquaMenuItemUI;
 import com.apple.laf.AquaMenuUI;
 import com.apple.laf.AquaPopupMenuSeparatorUI;
 import com.apple.laf.AquaPopupMenuUI;
+import com.apple.laf.AquaTableUI;
 import com.apple.laf.AquaTextAreaUI;
 import com.apple.laf.AquaTreeUI;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
@@ -125,5 +126,9 @@ public class AquaThemeSetter implements ThemeSetter {
 
     public ComponentUI createTreeUI(JComponent comp) {
         return AquaTreeUI.createUI(comp);
+    }
+
+    public ComponentUI createTableUI(JComponent comp) {
+        return AquaTableUI.createUI(comp);
     }
 }

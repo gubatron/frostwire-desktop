@@ -9,6 +9,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.plaf.basic.BasicListUI;
+import javax.swing.plaf.basic.BasicTableUI;
 import javax.swing.plaf.basic.BasicTextAreaUI;
 
 import org.limewire.util.OSUtils;
@@ -124,5 +125,9 @@ public class PlasticThemeSetter implements ThemeSetter {
 
     public ComponentUI createTreeUI(JComponent comp) {
         return PlasticTreeUI.createUI(comp);
+    }
+
+    public ComponentUI createTableUI(JComponent comp) {
+        return BasicTableUI.createUI(comp);
     }
 }

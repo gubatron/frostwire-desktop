@@ -19,6 +19,7 @@ import org.pushingpixels.substance.internal.ui.SubstanceMenuUI;
 import org.pushingpixels.substance.internal.ui.SubstancePopupMenuSeparatorUI;
 import org.pushingpixels.substance.internal.ui.SubstancePopupMenuUI;
 import org.pushingpixels.substance.internal.ui.SubstanceRadioButtonMenuItemUI;
+import org.pushingpixels.substance.internal.ui.SubstanceTableUI;
 import org.pushingpixels.substance.internal.ui.SubstanceTreeUI;
 import org.pushingpixels.substance.internal.utils.SubstanceCoreUtilities;
 
@@ -157,5 +158,9 @@ public class SubstanceThemeSetter implements ThemeSetter {
 
     public ComponentUI createTreeUI(JComponent comp) {
         return SubstanceTreeUI.createUI(comp);
+    }
+
+    public ComponentUI createTableUI(JComponent comp) {
+        return SubstanceTableUI.createUI(comp);
     }
 }

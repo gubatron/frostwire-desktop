@@ -30,4 +30,6 @@ public interface ThemeSetter {
     public ComponentUI createComboBoxUI(JComponent comp);
     
     public ComponentUI createTreeUI(JComponent comp);
+
+    public ComponentUI createTableUI(JComponent comp);
 }
