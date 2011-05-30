@@ -132,14 +132,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     }
 
     /**
-     * Sets up the table headers.
-     */
-    protected void setupTableHeaders() {
-        super.setupTableHeaders();
-
-    }
-
-    /**
      * Update the splash screen.
      */
     protected void updateSplashScreen() {
