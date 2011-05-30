@@ -33,6 +33,10 @@ public class SubstanceThemeSetter implements ThemeSetter {
 
     private final String _name;
     private final String _skinClassName;
+    
+    private final float LINUX_SCALED_FONT_POLICY_FACTOR = 0.87f;
+    private final float WINDOWS_SCALED_FONT_POLICY_FACTOR = 0.87f;
+    private final float MAC_SCALED_FONT_POLICY_FACTOR = 0.87f;
 
     private SubstanceThemeSetter(String name, String skinClassName) {
         _name = name;
@@ -47,7 +51,14 @@ public class SubstanceThemeSetter implements ThemeSetter {
         SubstanceLookAndFeel.setSkin(_skinClassName);
         ThemeMediator.applyCommonSkinUI();
         
-        SubstanceLookAndFeel.setFontPolicy(SubstanceFontUtilities.getScaledFontPolicy(0.87f));
+        float scaledFontPolicyFactor = WINDOWS_SCALED_FONT_POLICY_FACTOR;
+        if (OSUtils.isMacOSX()) {
+        	scaledFontPolicyFactor = MAC_SCALED_FONT_POLICY_FACTOR;
+        } else if (OSUtils.isLinux()) {
+        	scaledFontPolicyFactor = LINUX_SCALED_FONT_POLICY_FACTOR;
+        }
+        
+        SubstanceLookAndFeel.setFontPolicy(SubstanceFontUtilities.getScaledFontPolicy(scaledFontPolicyFactor));
         
         //reduceFont("Label.font");
         //reduceFont("Table.font");
