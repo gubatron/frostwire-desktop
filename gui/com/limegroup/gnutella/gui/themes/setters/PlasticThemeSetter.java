@@ -21,6 +21,7 @@ import com.jgoodies.looks.plastic.PlasticComboBoxUI;
 import com.jgoodies.looks.plastic.PlasticMenuBarUI;
 import com.jgoodies.looks.plastic.PlasticMenuUI;
 import com.jgoodies.looks.plastic.PlasticPopupMenuUI;
+import com.jgoodies.looks.plastic.PlasticTreeUI;
 import com.limegroup.gnutella.gui.themes.LimeLookAndFeel;
 import com.limegroup.gnutella.gui.themes.LimePlasticTheme;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
@@ -119,5 +120,9 @@ public class PlasticThemeSetter implements ThemeSetter {
 
     public ComponentUI createComboBoxUI(JComponent comp) {
         return PlasticComboBoxUI.createUI(comp);
+    }
+
+    public ComponentUI createTreeUI(JComponent comp) {
+        return PlasticTreeUI.createUI(comp);
     }
 }

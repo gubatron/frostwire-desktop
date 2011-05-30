@@ -19,6 +19,7 @@ import org.pushingpixels.substance.internal.ui.SubstanceMenuUI;
 import org.pushingpixels.substance.internal.ui.SubstancePopupMenuSeparatorUI;
 import org.pushingpixels.substance.internal.ui.SubstancePopupMenuUI;
 import org.pushingpixels.substance.internal.ui.SubstanceRadioButtonMenuItemUI;
+import org.pushingpixels.substance.internal.ui.SubstanceTreeUI;
 import org.pushingpixels.substance.internal.utils.SubstanceCoreUtilities;
 
 import com.limegroup.gnutella.gui.themes.SkinComboBoxUI;
@@ -152,5 +153,9 @@ public class SubstanceThemeSetter implements ThemeSetter {
         SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
         SkinComboBoxUI ui = new SkinComboBoxUI((JComboBox) comp);
         return ui;
+    }
+
+    public ComponentUI createTreeUI(JComponent comp) {
+        return SubstanceTreeUI.createUI(comp);
     }
 }
