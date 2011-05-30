@@ -21,13 +21,11 @@ import org.pushingpixels.substance.internal.ui.SubstancePopupMenuUI;
 import org.pushingpixels.substance.internal.ui.SubstanceRadioButtonMenuItemUI;
 import org.pushingpixels.substance.internal.utils.SubstanceCoreUtilities;
 
-import com.limegroup.gnutella.gui.ResourceManager;
 import com.limegroup.gnutella.gui.themes.SkinComboBoxUI;
 import com.limegroup.gnutella.gui.themes.SkinListUI;
 import com.limegroup.gnutella.gui.themes.SkinTextAreaUI;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSetter;
-import com.limegroup.gnutella.gui.themes.ThemeSettings;
 
 public class SubstanceThemeSetter implements ThemeSetter {
 
@@ -70,15 +68,6 @@ public class SubstanceThemeSetter implements ThemeSetter {
         FontUIResource bold = new FontUIResource(normal.getName(), Font.BOLD, normal.getSize());
         UIManager.put("Table.font.bold", bold);
         UIManager.put("Tree.rowHeight", 0);
-    }
-    
-    /**
-     * Reduces the size of a font in UIManager.
-     */
-    private static void reduceFont(String name) {
-        Font oldFont = UIManager.getFont(name);
-        FontUIResource newFont = new FontUIResource(oldFont.getName(), oldFont.getStyle(), oldFont.getSize() - 2);
-        UIManager.put(name, newFont);
     }
 
     // from FrostWire
@@ -149,7 +138,7 @@ public class SubstanceThemeSetter implements ThemeSetter {
         return SubstanceRadioButtonMenuItemUI.createUI(comp);
     }
 
-    public ComponentUI createTextAreadUI(JComponent comp) {
+    public ComponentUI createTextAreaUI(JComponent comp) {
         SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
         return new SkinTextAreaUI(comp);
     }
