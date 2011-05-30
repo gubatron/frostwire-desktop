@@ -38,6 +38,7 @@ public class SlideshowPanel extends JPanel {
     private int _currentSlideIndex;
     private BufferedImage _currentImage;
     private BufferedImage _lastImage;
+    private BufferedImage _masterImage;
     private boolean _loadingNextImage;
     private FadeSlideTransition _transition;
     private long _transitionTime;
@@ -238,7 +239,7 @@ public class SlideshowPanel extends JPanel {
 	    }
 	    
         try {
-            BufferedImage bImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+            BufferedImage bImage = getMasterImage();
             Graphics2D g = null;
 
             try {
@@ -324,5 +325,12 @@ public class SlideshowPanel extends JPanel {
 
 	public boolean hasSlides() {
 		return _slides != null && _slides.size() > 0;
+	}
+	
+	private BufferedImage getMasterImage() {
+	    if (_masterImage == null) {
+	        _masterImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+	    }
+	    return _masterImage;
 	}
 }
