@@ -218,27 +218,6 @@ public final class VisualConnectionCallback implements ActivityCallback {
          */
          mf().getLibraryMediator().updateSharedFile(file);
     }
-        
-	/**
-	 * Handles events created by the FileManager. Passes these events on to DAAP
-	 * or the Library.
-	 */
-    public void handleFileEvent(final FileManagerEvent evt) {
-        BackgroundExecutorService.schedule(new Runnable() {
-            public void run() {
-                if (DaapSettings.DAAP_ENABLED.getValue()
-                        && DaapManager.instance().isEnabled()) {
-                    DaapManager.instance().handleFileManagerEvent(evt);
-                }
-            }
-        });
-
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                mf().getLibraryMediator().handleFileManagerEvent(evt);
-            }
-        });
-    }
     
     public void fileManagerLoading() {
         SwingUtilities.invokeLater(new Runnable() {

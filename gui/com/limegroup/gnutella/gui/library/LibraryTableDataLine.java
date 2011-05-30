@@ -261,9 +261,6 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
 	public Object getValueAt(int idx) {
 	    switch (idx) {
 	    case ICON_IDX:
-	    	// the incomplete torrent icon doesn't require loading
-	    	if (isIncompleteTorrent())
-	    		return GUIMediator.getThemeImage("bittorrent_incomplete");
 	    	boolean iconAvailable = IconManager.instance().isIconForFileAvailable(initializer);
 	        if(!iconAvailable && !_iconScheduledForLoad) {
 	            _iconScheduledForLoad = true;
@@ -290,8 +287,7 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
 	    case SIZE_IDX:
 	        return new ColoredCellImpl(_sizeHolder, getColor());
 	    case TYPE_IDX:
-	        return new ColoredCellImpl(isIncompleteTorrent() ? "torrent" : _type, 
-	        		getColor());
+	        return new ColoredCellImpl(_type, getColor());
 	    case HITS_IDX:
 	        if ( _fileDesc == null ) return null;
 	        int hits = _fileDesc.getHitCount();
@@ -336,10 +332,6 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
             return GUIMediator.getThemeImage("sharing_off");
 	    }
 	    return null;
-	}
-	
-	private boolean isIncompleteTorrent() {
-		return _isDirectory && LibraryMediator.incompleteDirectoryIsSelected();
 	}
 
 	public LimeTableColumn getColumn(int idx) {

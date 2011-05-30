@@ -101,11 +101,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	private Action COPY_MAGNET_TO_CLIPBOARD_ACTION;
 
     /**
-     * Whether or not the incomplete directory is selected.
-     */
-    private boolean _isIncomplete;
-
-    /**
      * instance, for singelton access
      */
     private static LibraryTableMediator INSTANCE;
@@ -323,18 +318,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	}
 
 	/**
-	 * Notification that the incomplete directory is selected (or not)
-	 *
-	 * @param enabled whether or not incomplete is showing
-	 */
-	void setIncompleteSelected(boolean enabled) {
-		if (enabled == _isIncomplete)
-			return;
-	    _isIncomplete = enabled;
-	    //  enable/disable the resume buttons if we're not incomplete
-	}
-	
-	/**
 	 * Updates the Table based on the selection of the given table.
 	 * Perform lookups to remove any store files from the shared folder
      * view and to only display store files in the store view
@@ -343,7 +326,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		if (dirHolder == null)
 			return;
 		clearTable();
-		setIncompleteSelected(LibraryMediator.incompleteDirectoryIsSelected());
 		File[] files = dirHolder.getFiles();
         
         for (int i = 0; i < files.length; i++) {
@@ -352,80 +334,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		forceResort();
     }
 	
-	/**
-	 * Handles events created by the FileManager.  Adds or removes rows from
-	 * the table as necessary. 
-	 */
-    void handleFileManagerEvent(final FileManagerEvent evt, DirectoryHolder holder) {
-		//  Need to update table only if one of the files in evt
-		//  is contained in the current directory.
-		if (evt == null || holder == null)
-			return;
-			
-		File[] files = evt.getFiles();
-		FileDesc[] fds = evt.getFileDescs();
-		
-        if(LOG.isDebugEnabled())
-            LOG.debug("Handling event: " + evt);
-        switch(evt.getType()) {
-        case REMOVE_STORE_FILE:
-        case REMOVE_FILE:
-            File f = fds[0].getFile();
-            if(holder.accept(f)) {
-                DATA_MODEL.reinitialize(f);
-                handleSelection(-1);
-            } else if(DATA_MODEL.contains(f)) {
-                DATA_MODEL.remove(f);
-                handleSelection(-1);
-            }
-            break;
-        case ADD_STORE_FILE:
-        case ADD_FILE:
-            if(holder.accept(fds[0].getFile())) {
-                add(fds[0].getFile());
-                handleSelection(-1);
-            }
-            break;
-        case CHANGE_FILE:
-            File changed = fds[0].getFile();
-            DATA_MODEL.reinitialize(changed);
-            handleSelection(-1);
-            break;
-        case RENAME_FILE:
-            File old = fds[0].getFile();
-            File now = fds[1].getFile();
-            if (holder.accept(now)) {
-                if(DATA_MODEL.contains(old)) {
-                    DATA_MODEL.reinitialize(old, now);
-                    handleSelection(-1);
-                } else {
-                    DATA_MODEL.add(now);
-                }
-            } else {
-                DATA_MODEL.remove(old);
-            }
-            break;
-        case ADD_STORE_FOLDER:
-        case ADD_FOLDER:
-			if (holder.accept(files[0])) {
-			    add(files[0]);
-	            handleSelection(-1);
-			}
-			break;
-        case REMOVE_STORE_FOLDER:
-        case REMOVE_FOLDER:
-            f = files[0];
-            if(holder.accept(f)) {
-                DATA_MODEL.reinitialize(f);
-                handleSelection(-1);
-            } else if(DATA_MODEL.contains(f)) {
-                DATA_MODEL.remove(f);
-                handleSelection(-1);
-            }
-            break;
-        }
-    }
-
 	/**
 	 * Returns the <tt>File</tt> stored at the specified row in the list.
 	 *
@@ -708,10 +616,10 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
         for (Tuple<File, FileDesc> tuple : selected) {
             File file = tuple.getFirst();
             FileDesc fd = tuple.getSecond();
-            if (_isIncomplete && hasActiveDownloader(file)) {
-                undeletedFileNames.add(getCompleteFileName(file));
-                continue;
-            }
+//            if (_isIncomplete && hasActiveDownloader(file)) {
+//                undeletedFileNames.add(getCompleteFileName(file));
+//                continue;
+//            }
             
             if (fd != null) 
                 fileManager.removeFileIfShared(file);
@@ -887,16 +795,16 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
        	 return;
         }
     	LaunchableProvider[] providers = new LaunchableProvider[rows.length];
-    	if (_isIncomplete) {
-    		for (int i = 0; i < rows.length; i++) {
-				providers[i] = new IncompleteProvider(DATA_MODEL.getFile(rows[i]));
-			}
-    	}
-    	else {
+//    	if (_isIncomplete) {
+//    		for (int i = 0; i < rows.length; i++) {
+//				providers[i] = new IncompleteProvider(DATA_MODEL.getFile(rows[i]));
+//			}
+//    	}
+//    	else {
     		for (int i = 0; i < rows.length; i++) {
 				providers[i] = new CompleteProvider(DATA_MODEL.getFile(rows[i]));
 			}
-    	}
+    	//}
     	GUILauncher.launch(providers);
     }
 
@@ -963,7 +871,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 				
 			} else {
 				if (!GuiCoreMediator.getFileManager().isFileShared(file)) {
-					if (!SharingUtils.isFilePhysicallyShareable(file) || _isIncomplete)
+					if (!SharingUtils.isFilePhysicallyShareable(file))
 						continue;
 					shareAllowed = true;
 				} else {
@@ -987,7 +895,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		//  enable / disable advanced items if file shared / not shared
 		MAGNET_LOOKUP_ACTION.setEnabled(firstShared);
 
-		COPY_MAGNET_TO_CLIPBOARD_ACTION.setEnabled(!_isIncomplete && getFileDesc(sel[0]) != null);
+		COPY_MAGNET_TO_CLIPBOARD_ACTION.setEnabled(getFileDesc(sel[0]) != null);
 	}
 
 	/**

@@ -68,7 +68,7 @@ final class LibraryTree extends JTree implements MouseObserver {
     /**
 	 * Constant for the root node of the tree.
 	 */
-	private final LibraryTreeNode ROOT_NODE;
+	private LibraryTreeNode ROOT_NODE;
 	private RootSharedFilesDirectoryHolder rsfdh = new RootSharedFilesDirectoryHolder();
 	
 	/** The Torrent Data Saved Folder */
@@ -79,16 +79,13 @@ final class LibraryTree extends JTree implements MouseObserver {
 	
 	/** The dot torrents folder */
 	private LibraryTreeNode dotTorrentFilesNode;
-	private final TorrentDirectoryHolder torrentdh = new TorrentDirectoryHolder();
+	private TorrentDirectoryHolder torrentdh = new TorrentDirectoryHolder();
 
-	/** The shared files node. It's an empty meta node. */
-	private LibraryTreeNode sharedFilesNode;
-	
 	private LibraryTreeNode searchResultsNode;
-	private final LibrarySearchResultsHolder lsrdh = new LibrarySearchResultsHolder();
+	private LibrarySearchResultsHolder lsrdh = new LibrarySearchResultsHolder();
 	
 	/** Constant for the tree model. */
-    private final DefaultTreeModel TREE_MODEL;
+    private DefaultTreeModel TREE_MODEL;
     
 	///////////////////////////////////////////////////////////////////////////
 	//  Singleton Pattern
@@ -145,12 +142,6 @@ final class LibraryTree extends JTree implements MouseObserver {
 		addNode(ROOT_NODE, torrentDataFilesNode);
 		addPerMediaTypeDirectories();
 		
-		//add shared node
-		sharedFilesNode = new LibraryTreeNode(rsfdh);
-		//addNode(ROOT_NODE, sharedFilesNode);
-		
-		updateTheme();
-		
 		// TODO dnd install LimeDropTarget
 		setDragEnabled(true);
         setTransferHandler(new MulticastTransferHandler(new LibraryTreeTransferHandler(), 
@@ -199,7 +190,7 @@ final class LibraryTree extends JTree implements MouseObserver {
         
 		TREE_MODEL.insertNodeInto(child, parent, insert);
 		
-		if (expand || (parent == sharedFilesNode && !isExpanded(new TreePath(sharedFilesNode.getPath())))) { 
+		if (expand) { 
 			expandPath(new TreePath(parent.getPath()));
 		}
 	}
@@ -269,24 +260,6 @@ final class LibraryTree extends JTree implements MouseObserver {
 
 		addNode(parentNode, current);
 	}
-
-	/**
-	 * Handles events created by the FileManager. Adds or removes nodes from the
-	 * tree as necessary.
-	 */
-	public void handleFileManagerEvent(final FileManagerEvent evt) {
-	    switch(evt.getType()) {
-	    case ADD_FOLDER:
-	        File[] files = evt.getFiles();
-	        addDirectoryToNode(files[0], sharedFilesNode, false);
-	        break;
-	    case REMOVE_FOLDER:
-	        File removed = evt.getFiles()[0];
-	        removeFolder(removed, sharedFilesNode);
-	        break;
-
-		}
-	}
 	
 	/**
 	 * Removes the given folder from the list of shared folders.
@@ -339,7 +312,7 @@ final class LibraryTree extends JTree implements MouseObserver {
 	 * Adds files to the playlist recursively.
 	 */
     void addPlayListEntries() {
-		if (incompleteDirectoryIsSelected() || !GUIMediator.isPlaylistVisible())
+		if (!GUIMediator.isPlaylistVisible())
 			return;
 
 		final DirectoryHolder dh = getSelectedDirectoryHolder();
@@ -357,23 +330,6 @@ final class LibraryTree extends JTree implements MouseObserver {
         pm.addFilesToPlaylist(dh.getFiles());
     }
 	
-	/**
-	 * Returns true if the given node is in the Shared Files subtree. 
-	 */
-	private boolean canBeUnshared(LibraryTreeNode node) {
-		if (node == null)
-			return false;
-		if (node == sharedFilesNode)
-			return false;
-		if (node.getParent() == null)
-			return false;
-		
-		if (node.getParent() == sharedFilesNode)
-			return true;
-		
-		return canBeUnshared((LibraryTreeNode)node.getParent());
-	}
-
 	/**
 	 * Returns false in the following cases:
 	 * <ul>
@@ -447,84 +403,26 @@ final class LibraryTree extends JTree implements MouseObserver {
 	}
 
 	/**
-	 * Returns the top-level directories as an array of <tt>File</tt> objects
-	 * for updating the shared directories in the <tt>SettingsManager</tt>.
-	 * 
-	 * @return the array of top-level directories as <tt>File</tt> objects
-	 */
-	File[] getSharedDirectories() {
-		int length = sharedFilesNode.getChildCount();
-		List<File> newFiles = new ArrayList<File>(length);
-		// collect all but the child that holds the specially shared files
-		for (int i = 0; i < length - 1; i++) {
-			LibraryTreeNode node = (LibraryTreeNode)sharedFilesNode.getChildAt(i);
-			newFiles.add(node.getDirectoryHolder().getDirectory());
-		}
-		return newFiles.toArray(new File[0]);
-	}
-
-	/**
 	 * Removes all shared directories from the visual display 
 	 * and changes the selection if any of them were selected.
 	 */ 
 	void clear() {
-	    boolean selected = false;
-		int count = sharedFilesNode.getChildCount();
-		// count down, but do not remove node 0
-		for (int i = count - 1; i >= 0; i--) {
-		    TreeNode node = sharedFilesNode.getChildAt(i);
-		    if(node == getSelectedNode())
-		        selected = true;
-            sharedFilesNode.remove(i);
-		}
-		
-		if (selected)
-			setSelectionPath(new TreePath(sharedFilesNode));
-        
-        // remove all the store files
-        selected = false;
-        TREE_MODEL.reload();
-	}
-
-	/**
-	 * Stops sharing the selected folder in the library if there is a folder
-	 * selected, if the folder is not the save folder, or if the folder is not a
-	 * subdirectory of a "root" shared folder.
-	 */
-	void unshareLibraryFolder() {
-		LibraryTreeNode node = getSelectedNode(); 
-
-		if (node == null)
-			return;
-
-		if (incompleteDirectoryIsSelected()) {
-			showIncompleteFolderMessage();
-		} else if (!canBeUnshared(node)) {
-			GUIMediator.showMessage(I18n.tr("FrostWire cannot stop sharing this folder."));
-		} else {
-			String msg = I18n.tr("Are you sure you want to stop sharing this folder?");				
-			DialogOption response = GUIMediator.showYesNoMessage(msg, QuestionsHandler.UNSHARE_DIRECTORY, DialogOption.YES);
-			if (response != DialogOption.YES)
-				return;
-
-            final File file = node.getFile();				
-		    BackgroundExecutorService.schedule(new Runnable() {
-		        public void run() {
-		            GuiCoreMediator.getFileManager().removeFolderIfShared(file);
-                }
-            });
-		}
-	}
-
-
-	/**
-	 * Returns whether or not the incomplete directory is selected in the tree.
-	 * 
-	 * @return <tt>true</tt> if the incomplete directory is selected,
-	 *         <tt>false</tt> otherwise
-	 */
-	boolean incompleteDirectoryIsSelected() {
-		return false;
+//	    boolean selected = false;
+//		int count = sharedFilesNode.getChildCount();
+//		// count down, but do not remove node 0
+//		for (int i = count - 1; i >= 0; i--) {
+//		    TreeNode node = sharedFilesNode.getChildAt(i);
+//		    if(node == getSelectedNode())
+//		        selected = true;
+//            sharedFilesNode.remove(i);
+//		}
+//		
+//		if (selected)
+//			setSelectionPath(new TreePath(sharedFilesNode));
+//        
+//        // remove all the store files
+//        selected = false;
+//        TREE_MODEL.reload();
 	}
 	
 	/**
@@ -534,10 +432,6 @@ final class LibraryTree extends JTree implements MouseObserver {
 	boolean searchResultDirectoryIsSelected() {
 		LibraryTreeNode selected = getSelectedNode();
 		return selected == searchResultsNode;
-	}
-	
-	boolean sharedFoldersNodeIsSelected() {
-		return getSelectedNode() == sharedFilesNode;
 	}
 
 	/**
@@ -559,17 +453,12 @@ final class LibraryTree extends JTree implements MouseObserver {
 		public void valueChanged(TreeSelectionEvent e) {	
 			LibraryTreeNode node = getSelectedNode();
 
-			unshareAction.setEnabled(canBeUnshared(node));
-			shareAction.setEnabled(canBeShared(node));
 			addDirToPlaylistAction.setEnabled(isEnqueueable());
 			
 			if (node == null)
 				return;
 			
-			if (node == sharedFilesNode)
-				LibraryMediator.showSharedFiles();
-			else
-				LibraryMediator.updateTableFiles(node.getDirectoryHolder());	    
+			LibraryMediator.updateTableFiles(node.getDirectoryHolder());	    
 		}
 
 	}
@@ -665,23 +554,6 @@ final class LibraryTree extends JTree implements MouseObserver {
 		}
 	}
 	
-	private class UnshareAction extends AbstractAction {
-
-		/**
-         * 
-         */
-        private static final long serialVersionUID = -22198400547158328L;
-
-        public UnshareAction() {
-			putValue(Action.NAME,
-					I18n.tr("Stop Sharing Folder"));
-		}
-		
-		public void actionPerformed(ActionEvent e) {
-			unshareLibraryFolder();
-		}
-	}
-	
 	private class AddDirectoryToPlaylistAction extends AbstractAction {
 
 		/**
@@ -728,24 +600,6 @@ final class LibraryTree extends JTree implements MouseObserver {
 		}
 	}
 
-	private class ShareAction extends AbstractAction {
-
-		/**
-         * 
-         */
-        private static final long serialVersionUID = 4071173294983759719L;
-
-        public ShareAction() {
-			putValue(Action.NAME, I18n.tr
-					("Share Folder"));
-		}
-		
-		public void actionPerformed(ActionEvent e) {
-			LibraryMediator.instance().addSharedLibraryFolder(getSelectedDirectory());
-		}
-	}
-    
-	
 	private class RefreshAction extends AbstractAction {
 		
 		/**
@@ -798,7 +652,7 @@ final class LibraryTree extends JTree implements MouseObserver {
 	private boolean isEnqueueable() {
 		LibraryTreeNode node = getSelectedNode();
 		boolean enqueueable = false;
-		if (node != null && node != sharedFilesNode) {
+		if (node != null) {
 			File[] files = node.getDirectoryHolder().getFiles();
 			if (files != null && files.length > 0) {
 				for (int i = 0; i < files.length; i++) {
@@ -823,9 +677,7 @@ final class LibraryTree extends JTree implements MouseObserver {
 	///////////////////////////////////////////////////////////////////////////
 	
 	/** Constant for the popup menu. */
-	private final JPopupMenu DIRECTORY_POPUP = new SkinPopupMenu();
-	private Action shareAction = new ShareAction();
-	private Action unshareAction = new UnshareAction();
+	private JPopupMenu DIRECTORY_POPUP;
 	private Action addDirToPlaylistAction = new AddDirectoryToPlaylistAction();
 	private Action refreshAction = new RefreshAction(); 
 	private Action exploreAction = new ExploreAction();
@@ -841,6 +693,7 @@ final class LibraryTree extends JTree implements MouseObserver {
 	 * click.
 	 */
 	private void makePopupMenu() {
+	    DIRECTORY_POPUP = new SkinPopupMenu();
         DIRECTORY_POPUP.add(new SkinMenuItem(addDirToPlaylistAction));
 		DIRECTORY_POPUP.addSeparator();
 		DIRECTORY_POPUP.add(new SkinMenuItem(refreshAction));
@@ -913,17 +766,17 @@ final class LibraryTree extends JTree implements MouseObserver {
 	 * @return true if the directory exists in the tree and could be selected
 	 */
 	public boolean setSelectedDirectory(File dir) {
-		if (dir == null || !dir.isDirectory())
-			return false;
-		LibraryTreeNode ltn = getNodeForFolder(dir, sharedFilesNode);
-		if (ltn == null) {
-	    	ltn = getNodeForFolder(dir, sharedFilesNode);
-        	if( ltn == null) {
-        		return false;
-        	}
-        }
-		
-		setSelectionPath(new TreePath(ltn.getPath()));
+//		if (dir == null || !dir.isDirectory())
+//			return false;
+//		LibraryTreeNode ltn = getNodeForFolder(dir, sharedFilesNode);
+//		if (ltn == null) {
+//	    	ltn = getNodeForFolder(dir, sharedFilesNode);
+//        	if( ltn == null) {
+//        		return false;
+//        	}
+//        }
+//		
+//		setSelectionPath(new TreePath(ltn.getPath()));
 		return true;
 	}
 

@@ -223,15 +223,6 @@ public final class LibraryMediator implements ThemeObserver {
     public void forceRefresh() {
         updateTableFiles(getLibraryTree().getSelectedDirectoryHolder());
     }
-
-	/**
-	 * Handles events created by the FileManager.  Passes these events on to
-	 * the LibraryTableMediator or LibraryTree as necessary.
-	 */
-    public void handleFileManagerEvent(final FileManagerEvent evt) {
-        getLibraryTree().handleFileManagerEvent(evt);
-        getLibraryTable().handleFileManagerEvent(evt, getLibraryTree().getSelectedDirectoryHolder());		
-    }
 		
     /** 
 	 * Displays a file chooser for selecting a new folder to share and 
@@ -305,12 +296,6 @@ public final class LibraryMediator implements ThemeObserver {
 		showView(TABLE_KEY);
     }
     
-	/** Returns true if this is showing the special incomplete directory,
-     *  false if showing normal files. */
-    public static boolean incompleteDirectoryIsSelected() {
-        return getLibraryTree().incompleteDirectoryIsSelected();        
-    }
-    
     /**
 	 * Whether or not the files in the table can currently be renamed.
 	 * 
@@ -318,8 +303,8 @@ public final class LibraryMediator implements ThemeObserver {
 	 * clean this up
 	 */
     static boolean isRenameEnabled() { 
-    	return !getLibraryTree().searchResultDirectoryIsSelected()
-    		&& !getLibraryTree().incompleteDirectoryIsSelected();
+    	return false;//!getLibraryTree().searchResultDirectoryIsSelected()
+    		//&& !getLibraryTree().incompleteDirectoryIsSelected();
     }
     
     /**
@@ -359,25 +344,6 @@ public final class LibraryMediator implements ThemeObserver {
 			    active = false;
             }
         }
-    }    
-	
-	/**
-	 * Shows the Shared Files view in response to selection of the Shared Files
-	 * in the LibraryTree.
-	 */
-	public static void showSharedFiles() {
-		if (jpShared == null) {
-			jpShared = new JPanel(new BorderLayout());
-			JPanel jpInternal = new JPanel(new GridBagLayout());
-			GridBagConstraints gbc = new GridBagConstraints();
-			gbc.insets = new Insets(0, 0, ButtonRow.BUTTON_SEP, 0);
-
-			gbc.gridy = 1;
-			jpShared.add(jpInternal, BorderLayout.CENTER);
-			jpShared.setBorder(BorderFactory.createEtchedBorder());
-            addView(jpShared, SHARED_KEY);
-        }
-        showView(SHARED_KEY);
     }
 
 	public static void showView(String key) {

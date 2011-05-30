@@ -25,7 +25,7 @@ import com.limegroup.gnutella.version.UpdateInformation;
  *  <li>Error messages
  *  </ul>
  */
-public interface ActivityCallback extends DownloadCallback, FileEventListener, ConnectionLifecycleListener
+public interface ActivityCallback extends DownloadCallback, ConnectionLifecycleListener
 {
     
     /**
@@ -74,13 +74,6 @@ public interface ActivityCallback extends DownloadCallback, FileEventListener, C
      * directory.  Returns true if the sensitive directory should be shared. 
      */
     public boolean warnAboutSharingSensitiveDirectory(File dir);
-    
-    /**
-     * Notifies the GUI when a FileDesc was either added, removed, 
-     * changed or renamed. This event is triggered by FileManager
-     * or MetaFileManager.
-     */
-    public void handleFileEvent(FileManagerEvent evt);
     
     /** 
      * Notifies the GUI of connection lifecycle related events.
