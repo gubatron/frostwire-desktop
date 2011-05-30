@@ -185,7 +185,7 @@ public class LifecycleManagerImpl implements LifecycleManager {
         
         //fileManager.get().addFileEventListener(activityCallback.get());
         
-        connectionManager.get().addEventListener(activityCallback.get());
+        //connectionManager.get().addEventListener(activityCallback.get());
         
         preinitializeDone.set(true);
 

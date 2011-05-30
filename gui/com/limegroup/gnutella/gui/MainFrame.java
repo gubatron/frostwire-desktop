@@ -40,7 +40,6 @@ import com.frostwire.gnutella.gui.chat.ChatMediator;
 import com.frostwire.gnutella.gui.tabs.AndroidTab;
 import com.frostwire.gnutella.gui.tabs.ChatTab;
 import com.frostwire.gui.download.bittorrent.BTDownloadMediator;
-import com.limegroup.gnutella.gui.connection.ConnectionMediator;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.TransferHandlerDropTargetListener;
 import com.limegroup.gnutella.gui.download.DownloadMediator;
@@ -95,12 +94,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      * responsible for displaying active uploads to the user.
      */
     private UploadMediator UPLOAD_MEDIATOR;
-
-    /**
-     * Constant handle to the <tt>ConnectionView</tt> class that is
-     * responsible for displaying current connections to the user.
-     */
-    private ConnectionMediator CONNECTION_MEDIATOR;
 
     /**
      * Constant handle to the <tt>LibraryView</tt> class that is
@@ -712,19 +705,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         }
         return UPLOAD_MEDIATOR;
     }
-
-    /**
-     * Returns a reference to the <tt>ConnectionMediator</tt> instance.
-     *
-     * @return a reference to the <tt>ConnectionMediator</tt> instance
-     */
-    final ConnectionMediator getConnectionMediator() {
-        if (CONNECTION_MEDIATOR == null) {
-            CONNECTION_MEDIATOR = ConnectionMediator.instance();
-        }
-        return CONNECTION_MEDIATOR;
-    }
-
 
     /**
      * Returns a reference to the <tt>LibraryMediator</tt> instance.

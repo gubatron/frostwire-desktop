@@ -25,7 +25,7 @@ import com.limegroup.gnutella.version.UpdateInformation;
  *  <li>Error messages
  *  </ul>
  */
-public interface ActivityCallback extends DownloadCallback, ConnectionLifecycleListener
+public interface ActivityCallback extends DownloadCallback
 {
     
     /**
@@ -74,13 +74,6 @@ public interface ActivityCallback extends DownloadCallback, ConnectionLifecycleL
      * directory.  Returns true if the sensitive directory should be shared. 
      */
     public boolean warnAboutSharingSensitiveDirectory(File dir);
-    
-    /** 
-     * Notifies the GUI of connection lifecycle related events.
-     * This event is triggered by the ConnectionManager
-     * 
-     */
-    public void handleConnectionLifecycleEvent(ConnectionLifecycleEvent evt);
     
     /**
      * Notifies the GUI that the given shared file has new information.

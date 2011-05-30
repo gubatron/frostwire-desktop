@@ -43,7 +43,6 @@ import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderCallBackInterf
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderFactory;
 import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.i18n.I18nMarker;
-import org.limewire.io.Connectable;
 import org.limewire.service.ErrorService;
 import org.limewire.service.Switch;
 import org.limewire.setting.BooleanSetting;
@@ -62,7 +61,6 @@ import com.frostwire.gnutella.gui.chat.ChatMediator;
 import com.frostwire.gui.download.bittorrent.BTDownloadMediator;
 import com.limegroup.gnutella.bugs.FatalBugManager;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
-import com.limegroup.gnutella.gui.connection.ConnectionMediator;
 import com.limegroup.gnutella.gui.library.LibraryMediator;
 import com.limegroup.gnutella.gui.mp3.MediaPlayerComponent;
 import com.limegroup.gnutella.gui.mp3.PlayListItem;
@@ -347,12 +345,6 @@ public final class GUIMediator {
 	 * responsible for displaying active downloads to the user.
 	 */
 	private BTDownloadMediator BT_DOWNLOAD_MEDIATOR;
-
-	/**
-	 * Constant handle to the <tt>ConnectionMediator</tt> class that is
-	 * responsible for displaying current connections to the user.
-	 */
-	private ConnectionMediator CONNECTION_MEDIATOR;
 
 	/**
 	 * Constant handle to the <tt>LibraryMediator</tt> class that is responsible
@@ -770,13 +762,6 @@ public final class GUIMediator {
 	 */
 	public void updateTabIcon(GUIMediator.Tabs tab) {
 	    getMainFrame().updateTabIcon(tab);
-	}
-
-	/**
-	 * Clear the connections in the connection view.
-	 */
-	public void clearConnections() {
-		getConnectionMediator().clearConnections();
 	}
 
 	/**
@@ -1910,13 +1895,6 @@ public final class GUIMediator {
         }
         return BT_DOWNLOAD_MEDIATOR;
     }
-	
-	private ConnectionMediator getConnectionMediator() {
-	    if (CONNECTION_MEDIATOR == null) {
-	        CONNECTION_MEDIATOR = getMainFrame().getConnectionMediator();
-	    }
-	    return CONNECTION_MEDIATOR;
-	}
 	
 	private LibraryMediator getLibraryMediator() {
 	    if (LIBRARY_MEDIATOR == null) {
