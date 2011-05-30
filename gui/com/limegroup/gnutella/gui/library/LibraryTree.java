@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,6 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
@@ -26,10 +26,8 @@ import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultTreeCellRenderer;
 
-import com.limegroup.gnutella.FileManagerEvent;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
-import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -46,7 +44,6 @@ import com.limegroup.gnutella.gui.tables.MouseObserver;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
-import com.limegroup.gnutella.settings.QuestionsHandler;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 /**
@@ -69,7 +66,6 @@ final class LibraryTree extends JTree implements MouseObserver {
 	 * Constant for the root node of the tree.
 	 */
 	private LibraryTreeNode ROOT_NODE;
-	private RootSharedFilesDirectoryHolder rsfdh = new RootSharedFilesDirectoryHolder();
 	
 	/** The Torrent Data Saved Folder */
     private LibraryTreeNode torrentDataFilesNode;
@@ -78,7 +74,7 @@ final class LibraryTree extends JTree implements MouseObserver {
 		    I18n.tr("Torrent Saved Files"));
 	
 	/** The dot torrents folder */
-	private LibraryTreeNode dotTorrentFilesNode;
+	private LibraryTreeNode torrentFilesNode;
 	private TorrentDirectoryHolder torrentdh = new TorrentDirectoryHolder();
 
 	private LibraryTreeNode searchResultsNode;
@@ -86,6 +82,9 @@ final class LibraryTree extends JTree implements MouseObserver {
 	
 	/** Constant for the tree model. */
     private DefaultTreeModel TREE_MODEL;
+    
+    private MouseListener _mouseListener;
+    private TreeSelectionListener _treeSelectionListener;
     
 	///////////////////////////////////////////////////////////////////////////
 	//  Singleton Pattern
@@ -110,44 +109,56 @@ final class LibraryTree extends JTree implements MouseObserver {
 	 * Constructs the tree and its primary listeners,visualization options,
 	 * editors, etc.
 	 */
-	private LibraryTree() {	
+	private LibraryTree() {
 	    
+	    _mouseListener = new DefaultMouseListener(this);
+	    _treeSelectionListener = new LibraryTreeSelectionListener();
+	    
+	    setupUI();
+	}
+	
+	protected void setupUI() {
 	    ROOT_NODE = new LibraryTreeNode(new RootNodeDirectoryHolder(""));
-	    TREE_MODEL = new DefaultTreeModel(ROOT_NODE);
-	    
-		setModel(TREE_MODEL);
-		setRootVisible(false);
-		getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-		setEditable(false);
-		setInvokesStopCellEditing(true);
-		setShowsRootHandles(true);	
-		putClientProperty("JTree.lineStyle", "None");
-		setCellRenderer(new LibraryTreeCellRenderer());
-		ToolTipManager.sharedInstance().registerComponent(this);
+        TREE_MODEL = new DefaultTreeModel(ROOT_NODE);
+        
+        setModel(TREE_MODEL);
+        setRootVisible(false);
+        getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+        setEditable(false);
+        setInvokesStopCellEditing(true);
+        setShowsRootHandles(true);  
+        putClientProperty("JTree.lineStyle", "None");
+        setCellRenderer(new LibraryTreeCellRenderer());
+        ToolTipManager.sharedInstance().registerComponent(this);
 
-		makePopupMenu();
-		makeButtonRow();
-		addMouseListener(new DefaultMouseListener(this));
+        makePopupMenu();
+        makeButtonRow();
+        addMouseListener(_mouseListener);
 
-		// add libray search results node
-		searchResultsNode = new LibraryTreeNode(lsrdh);
-		addNode(ROOT_NODE, searchResultsNode);
-		
-		//add .torrents node
-		dotTorrentFilesNode = new LibraryTreeNode(torrentdh);
-		addNode(ROOT_NODE, dotTorrentFilesNode);
+        // add libray search results node
+        searchResultsNode = new LibraryTreeNode(lsrdh);
+        addNode(ROOT_NODE, searchResultsNode);
+        
+        //add .torrents node
+        torrentFilesNode = new LibraryTreeNode(torrentdh);
+        addNode(ROOT_NODE, torrentFilesNode);
 
-		//add torrent saved node
-		torrentDataFilesNode = new LibraryTreeNode(torrentsfdh);
-		addNode(ROOT_NODE, torrentDataFilesNode);
-		addPerMediaTypeDirectories();
-		
-		// TODO dnd install LimeDropTarget
-		setDragEnabled(true);
+        //add torrent saved node
+        torrentDataFilesNode = new LibraryTreeNode(torrentsfdh);
+        addNode(ROOT_NODE, torrentDataFilesNode);
+        addPerMediaTypeDirectories();
+        
+        // TODO dnd install LimeDropTarget
+        setDragEnabled(true);
         setTransferHandler(new MulticastTransferHandler(new LibraryTreeTransferHandler(), 
-														DNDUtils.DEFAULT_TRANSFER_HANDLERS));
+                                                        DNDUtils.DEFAULT_TRANSFER_HANDLERS));
 
-        addTreeSelectionListener(new LibraryTreeSelectionListener());
+        addTreeSelectionListener(_treeSelectionListener);
+	}
+	
+	protected void clearUI() {
+	    removeMouseListener(_mouseListener);
+	    removeTreeSelectionListener(_treeSelectionListener);
 	}
 
 	/**
@@ -213,8 +224,9 @@ final class LibraryTree extends JTree implements MouseObserver {
         addNode(torrentDataFilesNode, node, true);
 	}
 	
-	// inherit doc comment
 	public void updateTheme() {
+	    clearUI();
+	    setupUI();
 	}
 	
 	/**
@@ -223,42 +235,6 @@ final class LibraryTree extends JTree implements MouseObserver {
 	public void setInitialSelection() {
 		TreePath tp = new TreePath(torrentDataFilesNode.getPath());
 		setSelectionPath(tp);
-	}
-
-	/**
-	 * Adds the visual representation of this folder to the library.
-	 * 
-	 * @param dir
-	 *            the <tt>File</tt> instance denoting the abstract pathname of
-	 *            the new shared directory to add to the library.
-	 */
-	private void addDirectoryToNode(File dir, LibraryTreeNode node, boolean isStoreNode) { 
-		SharedFilesDirectoryHolder dh = new SharedFilesDirectoryHolder(dir, isStoreNode);
-		
-		LibraryTreeNode current = new LibraryTreeNode(dh);
-
-		// See if this is the parent of any existing nodes.  If so, 
-		// redirect that node to be here.
-		int children = node.getChildCount();
-		for(int i = children - 1; i >= 0; i--) {
-			LibraryTreeNode child = (LibraryTreeNode)node.getChildAt(i);
-			File f = child.getFile();
-			if(f != null && dir.equals(f.getParentFile())) {
-				TREE_MODEL.removeNodeFromParent(child);
-				addNode(current, child);
-			}
-		}
-
-        // Add this into the correct position.
-		File parent = dir.getParentFile();
-		LibraryTreeNode parentNode = null;
-		if (parent != null) {
-			 parentNode = getNodeForFolder(parent, node);
-		}			
-		if (parentNode == null)
-		    parentNode = node;
-
-		addNode(parentNode, current);
 	}
 	
 	/**
@@ -329,30 +305,6 @@ final class LibraryTree extends JTree implements MouseObserver {
 
         pm.addFilesToPlaylist(dh.getFiles());
     }
-	
-	/**
-	 * Returns false in the following cases:
-	 * <ul>
-	 * <li>The node represents the incomplete directory.
-	 * <li>The directory behind the node is null.
-	 * <li>The directory is already shared either explicitly or recursively 
-	 * because its parent is shared.
-	 * </ul>
-	 * @param node
-	 * @return
-	 */
-	private boolean canBeShared(LibraryTreeNode node) {
-		if (node == null) {
-			return false;
-		}
-		
-		File dir = node.getDirectoryHolder().getDirectory();
-		if (dir == null || GuiCoreMediator.getFileManager().isFolderShared(dir)) {
-			return false;
-		}
-		
-		return true;
-	}
 	
 	public DirectoryHolder getSelectedDirectoryHolder() {
 		TreePath path = getSelectionPath();
@@ -432,17 +384,6 @@ final class LibraryTree extends JTree implements MouseObserver {
 	boolean searchResultDirectoryIsSelected() {
 		LibraryTreeNode selected = getSelectedNode();
 		return selected == searchResultsNode;
-	}
-
-	/**
-	 * Shows a message indicating that a specific action cannot be performed on
-	 * the incomplete directory (such as changing its name).
-	 * 
-	 * @param action
-	 *            the error that occurred
-	 */
-	private void showIncompleteFolderMessage() {
-		GUIMediator.showError(I18n.tr("FrostWire will not allow you delete to the folder reserved for incomplete files."));
 	}
 
 	/**
@@ -537,21 +478,6 @@ final class LibraryTree extends JTree implements MouseObserver {
 		public Icon getIcon() { return null; }
 		
 		public boolean isEmpty() { return true; }
-	}
-	
-	private class RootSharedFilesDirectoryHolder extends RootNodeDirectoryHolder {
-
-		public RootSharedFilesDirectoryHolder() {
-			super(I18n.tr("Shared Files"));
-		}
-		
-		public boolean accept(File file) {
-			return GuiCoreMediator.getFileManager().isFileInCompletelySharedDirectory(file);
-		}
-		
-		public Icon getIcon() {
-			return GUIMediator.getThemeImage("shared_folder");
-		}
 	}
 	
 	private class AddDirectoryToPlaylistAction extends AbstractAction {
