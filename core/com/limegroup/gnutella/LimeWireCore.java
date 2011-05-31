@@ -4,7 +4,6 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import org.limewire.io.NetworkInstanceUtils;
 import org.limewire.lifecycle.ServiceRegistry;
-import org.limewire.security.SecureMessageVerifier;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -24,7 +23,6 @@ import com.limegroup.gnutella.downloader.DiskController;
 import com.limegroup.gnutella.filters.IPFilter;
 import com.limegroup.gnutella.filters.MutableGUIDFilter;
 import com.limegroup.gnutella.filters.SpamFilterFactory;
-import com.limegroup.gnutella.guess.OnDemandUnicaster;
 import com.limegroup.gnutella.http.FeaturesWriter;
 import com.limegroup.gnutella.licenses.LicenseCache;
 import com.limegroup.gnutella.licenses.LicenseFactory;
@@ -141,10 +139,6 @@ public class LimeWireCore {
     public QueryUnicaster getQueryUnicaster() {
         return injector.getInstance(QueryUnicaster.class);
     }
-    
-    public OnDemandUnicaster getOnDemandUnicaster() {
-        return injector.getInstance(OnDemandUnicaster.class);
-    }
 
     public MessageRouter getMessageRouter() {
         return injector.getInstance(MessageRouter.class);
@@ -196,10 +190,6 @@ public class LimeWireCore {
 
     public Statistics getStatistics() {
         return injector.getInstance(Statistics.class);
-    }
-
-    public SecureMessageVerifier getSecureMessageVerifier() {
-        return injector.getInstance(SecureMessageVerifier.class);
     }
 
     public CreationTimeCache getCreationTimeCache() {

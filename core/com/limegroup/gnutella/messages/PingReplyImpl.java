@@ -19,9 +19,6 @@ import org.limewire.io.IpPort;
 import org.limewire.io.IpPortImpl;
 import org.limewire.io.NetworkInstanceUtils;
 import org.limewire.io.NetworkUtils;
-import org.limewire.security.AddressSecurityToken;
-import org.limewire.security.InvalidSecurityTokenException;
-import org.limewire.security.MACCalculatorRepositoryManager;
 import org.limewire.util.ByteOrder;
 
 import com.limegroup.gnutella.ExtendedEndpoint;
@@ -122,10 +119,6 @@ public class PingReplyImpl extends AbstractMessage implements IpPort, Connectabl
      */
     private final int VENDOR_MINOR_VERSION;
 
-    /**
-     * Constant for the query key reported for the pong.
-     */
-    private final AddressSecurityToken QUERY_KEY;
     
     /**
      * Constant for the DHT Version. 
@@ -165,7 +158,7 @@ public class PingReplyImpl extends AbstractMessage implements IpPort, Connectabl
      * @throws BadPacketException
      */
     protected PingReplyImpl(byte[] guid, byte ttl, byte hops, byte[] payload, GGEP ggep,
-            InetAddress ip, Network network, MACCalculatorRepositoryManager manager,
+            InetAddress ip, Network network,
             NetworkInstanceUtils networkInstanceUtils) throws BadPacketException {
         super(guid, Message.F_PING_REPLY, ttl, hops, payload.length, network);
         PAYLOAD = payload;
@@ -185,7 +178,6 @@ public class PingReplyImpl extends AbstractMessage implements IpPort, Connectabl
         
         int freeLeafSlots = -1;
         int freeUltrapeerSlots = -1;
-        AddressSecurityToken key = null;
         boolean tlsCapable = false;
         
         String locale /** def. val from settings? */
@@ -211,16 +203,16 @@ public class PingReplyImpl extends AbstractMessage implements IpPort, Connectabl
 
             supportsUnicast = ggep.hasKey(GGEP.GGEP_HEADER_UNICAST_SUPPORT);
 
-            if (ggep.hasKey(GGEP.GGEP_HEADER_QUERY_KEY_SUPPORT)) {
-                try {
-                    byte[] bytes = ggep.getBytes(GGEP.GGEP_HEADER_QUERY_KEY_SUPPORT);
-                    key = new AddressSecurityToken(bytes, manager);
-                } catch (InvalidSecurityTokenException e) {
-                    throw new BadPacketException("invalid query key");
-                } catch (BadGGEPPropertyException e) {
-                    throw new BadPacketException("invalid query key");
-                }
-            }
+//            if (ggep.hasKey(GGEP.GGEP_HEADER_QUERY_KEY_SUPPORT)) {
+//                try {
+//                    byte[] bytes = ggep.getBytes(GGEP.GGEP_HEADER_QUERY_KEY_SUPPORT);
+//                    key = new AddressSecurityToken(bytes, manager);
+//                } catch (InvalidSecurityTokenException e) {
+//                    throw new BadPacketException("invalid query key");
+//                } catch (BadGGEPPropertyException e) {
+//                    throw new BadPacketException("invalid query key");
+//                }
+//            }
             
             if(ggep.hasKey((GGEP.GGEP_HEADER_UP_SUPPORT))) {
                 try {
@@ -340,7 +332,7 @@ public class PingReplyImpl extends AbstractMessage implements IpPort, Connectabl
         VENDOR = vendor;
         VENDOR_MAJOR_VERSION = vendorMajor;
         VENDOR_MINOR_VERSION = vendorMinor;
-        QUERY_KEY = key;
+        //QUERY_KEY = key;
         FREE_LEAF_SLOTS = freeLeafSlots;
         FREE_ULTRAPEER_SLOTS = freeUltrapeerSlots;
         CLIENT_LOCALE = locale;
@@ -530,14 +522,6 @@ public class PingReplyImpl extends AbstractMessage implements IpPort, Connectabl
         return SUPPORTS_UNICAST;
     }
 
-    /** Returns the AddressSecurityToken (if any) associated with this pong.  May be null!
-     *
-     * @return the <tt>AddressSecurityToken</tt> for this pong, or <tt>null</tt> if no
-     *  key was specified
-     */
-    public AddressSecurityToken getQueryKey() {
-        return QUERY_KEY;
-    }
     
     /**
      * Gets the list of packed IP/Ports.

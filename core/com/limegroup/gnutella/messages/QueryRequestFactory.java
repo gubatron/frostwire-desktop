@@ -2,8 +2,6 @@ package com.limegroup.gnutella.messages;
 
 import java.util.Set;
 
-import org.limewire.security.AddressSecurityToken;
-
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.messages.Message.Network;
@@ -299,8 +297,7 @@ public interface QueryRequestFactory {
      * @throws <tt>IllegalArgumentException</tt> if the <tt>query</tt>
      *         argument is zero-length (empty)
      */
-    public QueryRequest createQueryKeyQuery(String query,
-            AddressSecurityToken key);
+    public QueryRequest createQueryKeyQuery(String query);
 
     /**
      * Creates a new query with the specified query key for use in GUESS-style
@@ -316,7 +313,7 @@ public interface QueryRequestFactory {
      * @throws <tt>IllegalArgumentException</tt> if the <tt>query</tt>
      *         argument is zero-length (empty)
      */
-    public QueryRequest createQueryKeyQuery(URN sha1, AddressSecurityToken key);
+    public QueryRequest createQueryKeyQuery(URN sha1);
 
     /**
      * Creates a new <tt>QueryRequest</tt> instance for multicast queries.
@@ -341,8 +338,7 @@ public interface QueryRequestFactory {
      * @param key the <tt>AddressSecurityToken</tt> to add
      * @return a new <tt>QueryRequest</tt> from the specified query and key
      */
-    public QueryRequest createQueryKeyQuery(QueryRequest qr,
-            AddressSecurityToken key);
+    public QueryRequest createQueryKeyQuery(QueryRequest qr);
 
     /**
      * Creates a new specialized <tt>QueryRequest</tt> instance for browse
@@ -390,7 +386,7 @@ public interface QueryRequestFactory {
      */
     public QueryRequest createQueryRequest(byte[] guid, byte ttl, String query,
             String richQuery, Set<? extends URN> queryUrns,
-            AddressSecurityToken addressSecurityToken, boolean isFirewalled,
+            boolean isFirewalled,
             Network network, boolean canReceiveOutOfBandReplies,
             int featureSelector);
 
@@ -409,7 +405,7 @@ public interface QueryRequestFactory {
      */
     public QueryRequest createQueryRequest(byte[] guid, byte ttl, String query,
             String richQuery, Set<? extends URN> queryUrns,
-            AddressSecurityToken addressSecurityToken, boolean isFirewalled,
+            boolean isFirewalled,
             Network network, boolean canReceiveOutOfBandReplies,
             int featureSelector, boolean doNotProxy, int metaFlagMask);
 
@@ -428,7 +424,7 @@ public interface QueryRequestFactory {
      */
     public QueryRequest createQueryRequest(byte[] guid, byte ttl, int minSpeed,
             String query, String richQuery, Set<? extends URN> queryUrns,
-            AddressSecurityToken addressSecurityToken, boolean isFirewalled,
+            boolean isFirewalled,
             Network network, boolean canReceiveOutOfBandReplies,
             int featureSelector, boolean doNotProxy, int metaFlagMask);
 
@@ -447,7 +443,7 @@ public interface QueryRequestFactory {
      */
     public QueryRequest createQueryRequest(byte[] guid, byte ttl, int minSpeed,
             String query, String richQuery, Set<? extends URN> queryUrns,
-            AddressSecurityToken addressSecurityToken, boolean isFirewalled,
+            boolean isFirewalled,
             Network network, boolean canReceiveOutOfBandReplies,
             int featureSelector, boolean doNotProxy, int metaFlagMask,
             boolean normalize);

@@ -16,7 +16,6 @@ import javax.swing.Icon;
 import org.limewire.collection.NameValue;
 import org.limewire.io.IpPort;
 import org.limewire.io.IpPortSet;
-import org.limewire.security.SecureMessage;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.GUID;
@@ -155,7 +154,7 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
             _mediaType = NamedMediaType.getFromExtension(getExtension());
         _speed = new ResultSpeed(sr.getSpeed(), sr.isMeasuredSpeed());
         _quality = sr.getQuality();
-        _secure = sr.getSecureStatus() == SecureMessage.SECURE;
+        _secure = false;//sr.getSecureStatus() == SecureMessage.SECURE;
     }
 
     private void initializeEnd() {
@@ -196,7 +195,7 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
         
         // Set the quality correctly.
         _quality = Math.max(sr.getQuality(), _quality);
-        _secure |= sr.getSecureStatus() == SecureMessage.SECURE;        
+        _secure = false;//|= sr.getSecureStatus() == SecureMessage.SECURE;        
         
 //        if (sr instanceof GnutellaSearchResult) {
 //            GnutellaSearchResult gsr = (GnutellaSearchResult)sr;

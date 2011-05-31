@@ -2,8 +2,6 @@ package com.limegroup.gnutella.messages;
 
 import java.util.Set;
 
-import org.limewire.security.AddressSecurityToken;
-
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
 
@@ -222,12 +220,6 @@ public interface QueryRequest extends Message {
      * @return true if this is likely a query for LimeWire.
      */
     public boolean isQueryForLW();
-
-    /**
-     * Returns the AddressSecurityToken associated with this Request.  May very well be
-     * null.  Usually only UDP QueryRequests will have non-null QueryKeys.
-     */
-    public AddressSecurityToken getQueryKey();
 
     /** @return true if the query has no constraints on the type of results
      *  it wants back.

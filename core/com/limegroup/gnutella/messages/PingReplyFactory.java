@@ -4,7 +4,6 @@ import java.net.UnknownHostException;
 import java.util.Collection;
 
 import org.limewire.io.IpPort;
-import org.limewire.security.AddressSecurityToken;
 
 import com.limegroup.gnutella.Endpoint;
 import com.limegroup.gnutella.messages.Message.Network;
@@ -51,8 +50,7 @@ public interface PingReplyFactory {
      * @param ttl the time to live for this message
      * @param key the <tt>AddressSecurityToken</tt> for this reply
      */
-    public PingReply createQueryKeyReply(byte[] guid, byte ttl,
-            AddressSecurityToken key);
+    public PingReply createQueryKeyReply(byte[] guid, byte ttl);
 
     /**
      * Creates a new <tt>PingReply</tt> for this host with the specified
@@ -63,8 +61,7 @@ public interface PingReplyFactory {
      * @param key the <tt>AddressSecurityToken</tt> for this reply
      */
     public PingReply createQueryKeyReply(byte[] guid, byte ttl, int port,
-            byte[] ip, long sharedFiles, long sharedSize, boolean ultrapeer,
-            AddressSecurityToken key);
+            byte[] ip, long sharedFiles, long sharedSize, boolean ultrapeer);
 
     /**
      * Creates a new <tt>PingReply</tt> for an external node -- the data

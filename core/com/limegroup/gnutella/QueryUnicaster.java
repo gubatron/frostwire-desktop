@@ -19,7 +19,6 @@ import org.apache.commons.logging.LogFactory;
 import org.limewire.collection.Buffer;
 import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.io.NetworkUtils;
-import org.limewire.security.AddressSecurityToken;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -88,10 +87,6 @@ public final class QueryUnicaster {
      */
     private final LinkedList<GUESSEndpoint> _queryHosts;
 
-    /**
-     * The Set of QueryKeys to be used for Queries.
-     */
-    private final Map<GUESSEndpoint, QueryKeyBundle> _queryKeys;
 
     /** The fixed size list of endpoints i've pinged.
      */
@@ -140,7 +135,6 @@ public final class QueryUnicaster {
         
         _queries = new Hashtable<GUID, QueryBundle>();
         _queryHosts = new LinkedList<GUESSEndpoint>();
-        _queryKeys = new Hashtable<GUESSEndpoint, QueryKeyBundle>();
         _pingList = new Buffer<GUESSEndpoint>(25);
         _querySets = new Hashtable<ReplyHandler, Set<GUID>>();
         _qGuidsToRemove = new Vector<GUID>();
@@ -203,14 +197,14 @@ public final class QueryUnicaster {
      * Starts the query unicaster thread.
      */
     public synchronized void start() {
-        if (!_initialized) {
-            _querier.start();
-            
-            QueryKeyExpirer expirer = new QueryKeyExpirer();
-            backgroundExecutor.scheduleWithFixedDelay(expirer, 0, 3 * ONE_HOUR, TimeUnit.MILLISECONDS);// every 3 hours
-
-            _initialized = true;
-        }
+//        if (!_initialized) {
+//            _querier.start();
+//            
+//            QueryKeyExpirer expirer = new QueryKeyExpirer();
+//            backgroundExecutor.scheduleWithFixedDelay(expirer, 0, 3 * ONE_HOUR, TimeUnit.MILLISECONDS);// every 3 hours
+//
+//            _initialized = true;
+//        }
     }
 
     /** 
@@ -219,59 +213,59 @@ public final class QueryUnicaster {
      * it.  Then sleep and try some more later...
      */
     private void queryLoop() {
-        while (true) {
-            try {
-                waitForQueries();
-                GUESSEndpoint toQuery = getUnicastHost();
-                // no query key to use in my query!
-                if (!_queryKeys.containsKey(toQuery)) {
-                    // send a AddressSecurityToken Request
-                    PingRequest pr = pingRequestFactory.createQueryKeyRequest();
-                    udpService.get().send(pr,toQuery.getInetAddress(), toQuery.getPort());
-                    // DO NOT RE-ADD ENDPOINT - we'll do that if we get a
-                    // AddressSecurityToken Reply!!
-                    continue; // try another up above....
-                }
-                AddressSecurityToken addressSecurityToken = _queryKeys.get(toQuery)._queryKey;
-
-                purgeGuidsInternal(); // in case any were added while asleep
-				boolean currentHostUsed = false;
-                synchronized (_queries) {
-                    for(QueryBundle currQB : _queries.values()) {
-                        if (currQB._hostsQueried.size() > QueryBundle.MAX_QUERIES)
-                            // query is now stale....
-                            _qGuidsToRemove.add(new GUID(currQB._qr.getGUID()));
-                        else if (currQB._hostsQueried.contains(toQuery))
-                            ; // don't send another....
-                        else {
-							InetAddress ip = toQuery.getInetAddress();
-							QueryRequest qrToSend = 
-							    queryRequestFactory.createQueryKeyQuery(currQB._qr, 
-																 addressSecurityToken);
-                            udpService.get().send(qrToSend, 
-                                            ip, toQuery.getPort());
-							currentHostUsed = true;
-							currQB._hostsQueried.add(toQuery);
-                        }
-                    }
-                }
-
-				// add the current host back to the list if it was not used for 
-				// any query
-				if(!currentHostUsed) {
-					addUnicastEndpoint(toQuery);
-				}
-                
-                // purge stale queries, hold lock so you don't miss any...
-                synchronized (_qGuidsToRemove) {
-                    purgeGuidsInternal();
-                    _qGuidsToRemove.clear();
-                }
-
-                Thread.sleep(ITERATION_TIME);
-            }
-            catch (InterruptedException ignored) {}
-        }
+//        while (true) {
+//            try {
+//                waitForQueries();
+//                GUESSEndpoint toQuery = getUnicastHost();
+//                // no query key to use in my query!
+//                if (!_queryKeys.containsKey(toQuery)) {
+//                    // send a AddressSecurityToken Request
+//                    PingRequest pr = pingRequestFactory.createQueryKeyRequest();
+//                    udpService.get().send(pr,toQuery.getInetAddress(), toQuery.getPort());
+//                    // DO NOT RE-ADD ENDPOINT - we'll do that if we get a
+//                    // AddressSecurityToken Reply!!
+//                    continue; // try another up above....
+//                }
+//                AddressSecurityToken addressSecurityToken = _queryKeys.get(toQuery)._queryKey;
+//
+//                purgeGuidsInternal(); // in case any were added while asleep
+//				boolean currentHostUsed = false;
+//                synchronized (_queries) {
+//                    for(QueryBundle currQB : _queries.values()) {
+//                        if (currQB._hostsQueried.size() > QueryBundle.MAX_QUERIES)
+//                            // query is now stale....
+//                            _qGuidsToRemove.add(new GUID(currQB._qr.getGUID()));
+//                        else if (currQB._hostsQueried.contains(toQuery))
+//                            ; // don't send another....
+//                        else {
+//							InetAddress ip = toQuery.getInetAddress();
+//							QueryRequest qrToSend = 
+//							    queryRequestFactory.createQueryKeyQuery(currQB._qr, 
+//																 addressSecurityToken);
+//                            udpService.get().send(qrToSend, 
+//                                            ip, toQuery.getPort());
+//							currentHostUsed = true;
+//							currQB._hostsQueried.add(toQuery);
+//                        }
+//                    }
+//                }
+//
+//				// add the current host back to the list if it was not used for 
+//				// any query
+//				if(!currentHostUsed) {
+//					addUnicastEndpoint(toQuery);
+//				}
+//                
+//                // purge stale queries, hold lock so you don't miss any...
+//                synchronized (_qGuidsToRemove) {
+//                    purgeGuidsInternal();
+//                    _qGuidsToRemove.clear();
+//                }
+//
+//                Thread.sleep(ITERATION_TIME);
+//            }
+//            catch (InterruptedException ignored) {}
+//        }
     }
 
  
@@ -436,19 +430,19 @@ public final class QueryUnicaster {
      *  pre: pr.getQueryKey() != null
      */
     public void handleQueryKeyPong(PingReply pr) {
-        if(pr == null) {
-            throw new NullPointerException("null pong");
-        }
-        AddressSecurityToken qk = pr.getQueryKey();
-        if(qk == null)
-            throw new IllegalArgumentException("no key in pong");
-        
-        InetAddress address = pr.getInetAddress();
-
-        int port = pr.getPort();
-        GUESSEndpoint endpoint = new GUESSEndpoint(address, port);
-        _queryKeys.put(endpoint, new QueryKeyBundle(qk));
-        addUnicastEndpoint(endpoint);
+//        if(pr == null) {
+//            throw new NullPointerException("null pong");
+//        }
+//        AddressSecurityToken qk = pr.getQueryKey();
+//        if(qk == null)
+//            throw new IllegalArgumentException("no key in pong");
+//        
+//        InetAddress address = pr.getInetAddress();
+//
+//        int port = pr.getPort();
+//        GUESSEndpoint endpoint = new GUESSEndpoint(address, port);
+//        _queryKeys.put(endpoint, new QueryKeyBundle(qk));
+//        addUnicastEndpoint(endpoint);
     }
 
 
@@ -529,12 +523,6 @@ public final class QueryUnicaster {
             _queryHosts.clear();
             _queryHosts.notifyAll();
         }
-        
-        synchronized (_queryKeys) {
-            _queryKeys.clear();
-            _queryKeys.notifyAll();
-        }
-        
         synchronized (_pingList) {
             _pingList.clear();
             _pingList.notifyAll();
@@ -567,47 +555,4 @@ public final class QueryUnicaster {
     }
 
     
-    private static class QueryKeyBundle {
-        public static final long QUERY_KEY_LIFETIME = 2 * ONE_HOUR; // 2 hours
-        
-        final long _birthTime;
-        final AddressSecurityToken _queryKey;
-        
-        public QueryKeyBundle(AddressSecurityToken qk) {
-            _queryKey = qk;
-            _birthTime = System.currentTimeMillis();
-        }
-
-        /** Returns true if this AddressSecurityToken hasn't been updated in a while and
-         *  should be expired.
-         */
-        public boolean shouldExpire() {
-            if ((System.currentTimeMillis() - _birthTime) >= 
-                QUERY_KEY_LIFETIME)
-                return true;
-            return false;
-        }
-
-        public String toString() {
-            return "{QueryKeyBundle: " + _queryKey + " BirthTime = " +
-            _birthTime;
-        }
-    }
-
-
-    /**
-     * Schedule this class to run every so often and rid the Map of Bundles that
-     * are stale.
-     */ 
-    private class QueryKeyExpirer implements Runnable {
-        public void run() {
-            synchronized (_queryKeys) {
-                for(Iterator<QueryKeyBundle> iter = _queryKeys.values().iterator();
-                    iter.hasNext(); ) {
-                    if(iter.next().shouldExpire())
-                        iter.remove();
-                }
-            }
-        }
-    }
 }

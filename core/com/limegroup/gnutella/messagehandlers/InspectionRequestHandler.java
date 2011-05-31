@@ -8,7 +8,6 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import org.limewire.collection.Periodic;
 import org.limewire.io.NetworkInstanceUtils;
-import org.limewire.security.SecureMessageVerifier;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -57,11 +56,10 @@ public class InspectionRequestHandler extends RestrictedResponder {
     public InspectionRequestHandler(Provider<MessageRouter> router, NetworkManager networkManager,
             UDPReplyHandlerFactory udpReplyHandlerFactory,
             UDPReplyHandlerCache udpReplyHandlerCache, InspectionResponseFactory factory,
-            @Named("inspection")
-            SecureMessageVerifier inspectionVerifier, @Named("messageExecutor")
+            @Named("messageExecutor")
             ExecutorService dispatch, @Named("backgroundExecutor")
             ScheduledExecutorService background, NetworkInstanceUtils networkInstanceUtils) {
-        super(FilterSettings.INSPECTOR_IP_ADDRESSES, inspectionVerifier,
+        super(FilterSettings.INSPECTOR_IP_ADDRESSES, 
                 MessageSettings.INSPECTION_VERSION, networkManager,
                 udpReplyHandlerFactory, udpReplyHandlerCache, dispatch, networkInstanceUtils);
         this.router = router;

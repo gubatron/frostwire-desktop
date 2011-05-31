@@ -20,8 +20,6 @@ import org.apache.commons.logging.LogFactory;
 import org.limewire.io.IPPortCombo;
 import org.limewire.io.IpPort;
 import org.limewire.io.NetworkUtils;
-import org.limewire.security.MACCalculatorRepositoryManager;
-import org.limewire.security.SecurityToken;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -29,9 +27,7 @@ import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 import com.limegroup.gnutella.auth.ContentManager;
 import com.limegroup.gnutella.connection.RoutedConnection;
-import com.limegroup.gnutella.guess.OnDemandUnicaster;
 import com.limegroup.gnutella.messagehandlers.InspectionRequestHandler;
-import com.limegroup.gnutella.messagehandlers.OOBHandler;
 import com.limegroup.gnutella.messagehandlers.UDPCrawlerPingHandler;
 import com.limegroup.gnutella.messages.FeatureSearchData;
 import com.limegroup.gnutella.messages.PingReply;
@@ -72,7 +68,6 @@ public class StandardMessageRouter extends MessageRouterImpl {
     public StandardMessageRouter(NetworkManager networkManager,
             QueryRequestFactory queryRequestFactory,
             QueryHandlerFactory queryHandlerFactory,
-            OnDemandUnicaster onDemandUnicaster,
             HeadPongFactory headPongFactory, PingReplyFactory pingReplyFactory,
             QueryUnicaster queryUnicaster,
             FileManager fileManager, ContentManager contentManager,
@@ -93,11 +88,9 @@ public class StandardMessageRouter extends MessageRouterImpl {
             Provider<UDPCrawlerPingHandler> udpCrawlerPingHandlerFactory,
             Statistics statistics,
             ReplyNumberVendorMessageFactory replyNumberVendorMessageFactory,
-            PingRequestFactory pingRequestFactory, MessageHandlerBinder messageHandlerBinder,
-            Provider<OOBHandler> oobHandlerFactory,
-            Provider<MACCalculatorRepositoryManager> MACCalculatorRepositoryManager) {
+            PingRequestFactory pingRequestFactory, MessageHandlerBinder messageHandlerBinder) {
         super(networkManager, queryRequestFactory, queryHandlerFactory,
-                onDemandUnicaster, headPongFactory, pingReplyFactory,
+                headPongFactory, pingReplyFactory,
                 queryUnicaster,
                 fileManager, contentManager,
                 downloadManager, udpService, searchResultHandler,
@@ -107,8 +100,7 @@ public class StandardMessageRouter extends MessageRouterImpl {
                 backgroundExecutor, pongCacher,
                 guidMapManager, udpReplyHandlerCache, inspectionRequestHandlerFactory, 
                 udpCrawlerPingHandlerFactory, 
-                pingRequestFactory, messageHandlerBinder, oobHandlerFactory, 
-                MACCalculatorRepositoryManager);
+                pingRequestFactory, messageHandlerBinder);
         this.statistics = statistics;
         this.replyNumberVendorMessageFactory = replyNumberVendorMessageFactory;
     }
@@ -290,135 +282,6 @@ public class StandardMessageRouter extends MessageRouterImpl {
         return query.matchesReplyAddress(handler.getInetAddress().getAddress());
     }
 
-    /** 
-     * Creates a <tt>List</tt> of <tt>QueryReply</tt> instances with
-     * compressed XML data, if requested.
-     *
-     * @return a new <tt>List</tt> of <tt>QueryReply</tt> instances
-     */
-    @Override
-    protected List<QueryReply> createQueryReply(byte[] guid, byte ttl,
-                                    long speed, Response[] res,
-                                    byte[] clientGUID, 
-                                    boolean busy, boolean uploaded, 
-                                    boolean measuredSpeed, 
-                                    boolean isFromMcast,
-                                    boolean isFWTransfer,
-                                    SecurityToken securityToken) {
-        
-//        List<QueryReply> queryReplies = new ArrayList<QueryReply>();
-//        QueryReply queryReply = null;
-//
-//        // pick the right address & port depending on multicast & fwtrans
-//        // if we cannot find a valid address & port, exit early.
-//        int port = -1;
-//        byte[] ip = null;
-//        // first try using multicast addresses & ports, but if they're
-//        // invalid, fallback to non multicast.
-//        if(isFromMcast) {
-//            ip = networkManager.getNonForcedAddress();
-//            port = networkManager.getNonForcedPort();
-//            if(!NetworkUtils.isValidPort(port) ||
-//               !NetworkUtils.isValidAddress(ip))
-//                isFromMcast = false;
-//        }
-//        
-//        if(!isFromMcast) {
-//            
-//            // see if we have a valid FWTrans address.  if not, fall back.
-//            if(isFWTransfer) {
-//                port = udpService.getStableUDPPort();
-//                ip = networkManager.getExternalAddress();
-//                if(!NetworkUtils.isValidAddress(ip) 
-//                        || !NetworkUtils.isValidPort(port))
-//                    isFWTransfer = false;
-//            }
-//            
-//            // if we still don't have a valid address here, exit early.
-//            if(!isFWTransfer) {
-//                ip = networkManager.getAddress();
-//                port = networkManager.getPort();
-//                if(!NetworkUtils.isValidAddress(ip) ||
-//                        !NetworkUtils.isValidPort(port))
-//                    return Collections.emptyList();
-//            }
-//        }
-//        
-//        // get the xml collection string...
-//        String xmlCollectionString = 
-//        LimeXMLDocumentHelper.getAggregateString(res);
-//        if (xmlCollectionString == null)
-//            xmlCollectionString = "";
-//
-//        byte[] xmlBytes = null;
-//        try {
-//            xmlBytes = xmlCollectionString.getBytes("UTF-8");
-//        } catch(UnsupportedEncodingException ueex) {
-//            throw new IllegalStateException(ueex);
-//        }
-//        
-//        // get the *latest* push proxies if we have not accepted an incoming
-//        // connection in this session
-//        boolean notIncoming = !networkManager.acceptedIncomingConnection();
-//        Set<? extends IpPort> proxies = notIncoming ? connectionManager.getPushProxies() : null;
-//        
-//        // it may be too big....
-//        if (xmlBytes.length > QueryReply.XML_MAX_SIZE) {
-//            // ok, need to partition responses up once again and send out
-//            // multiple query replies.....
-//            List<Response[]> splitResps = new LinkedList<Response[]>();
-//            splitAndAddResponses(splitResps, res);
-//
-//            while (!splitResps.isEmpty()) {
-//                Response[] currResps = splitResps.remove(0);
-//                String currXML = LimeXMLDocumentHelper.getAggregateString(currResps);
-//                byte[] currXMLBytes = null;
-//                try {
-//                    currXMLBytes = currXML.getBytes("UTF-8");
-//                } catch(UnsupportedEncodingException ueex) {
-//                    throw new IllegalStateException(ueex);
-//                }
-//                if ((currXMLBytes.length > QueryReply.XML_MAX_SIZE) &&
-//                                                        (currResps.length > 1)) 
-//                    splitAndAddResponses(splitResps, currResps);
-//                else {
-//                    // create xml bytes if possible...
-//                    byte[] xmlCompressed = null;
-//                    if (!currXML.equals(""))
-//                        xmlCompressed = LimeXMLUtils.compress(currXMLBytes);
-//                    else //there is no XML
-//                        xmlCompressed = DataUtils.EMPTY_BYTE_ARRAY;
-//                    
-//                    // create the new queryReply
-//                    queryReply = queryReplyFactory.createQueryReply(guid, ttl,
-//                            port, ip, speed, currResps, _clientGUID,
-//                            xmlCompressed, notIncoming, busy, uploaded, measuredSpeed,
-//                            ChatSettings.CHAT_ENABLED.getValue(), isFromMcast, isFWTransfer, proxies, securityToken);
-//                    queryReplies.add(queryReply);
-//                }
-//            }
-//
-//        }
-//        else {  // xml is small enough, no problem.....
-//            // get xml bytes if possible....
-//            byte[] xmlCompressed = null;
-//            if (!xmlCollectionString.equals(""))
-//                xmlCompressed = 
-//                    LimeXMLUtils.compress(xmlBytes);
-//            else //there is no XML
-//                xmlCompressed = DataUtils.EMPTY_BYTE_ARRAY;
-//            
-//            // create the new queryReply
-//            queryReply = queryReplyFactory.createQueryReply(guid, ttl, port,
-//                    ip, speed, res, _clientGUID, xmlCompressed, notIncoming,
-//                    busy, uploaded, measuredSpeed, ChatSettings.CHAT_ENABLED.getValue(), isFromMcast, isFWTransfer,
-//                    proxies, securityToken);
-//            queryReplies.add(queryReply);
-//        }
-//
-//        return queryReplies;
-        return null;
-    }
     
 
     

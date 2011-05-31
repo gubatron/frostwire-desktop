@@ -1,7 +1,5 @@
 package com.limegroup.gnutella.messages;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Collection;
@@ -10,9 +8,6 @@ import org.limewire.collection.BitNumbers;
 import org.limewire.io.IpPort;
 import org.limewire.io.NetworkInstanceUtils;
 import org.limewire.io.NetworkUtils;
-import org.limewire.security.AddressSecurityToken;
-import org.limewire.security.MACCalculatorRepositoryManager;
-import org.limewire.service.ErrorService;
 import org.limewire.util.ByteOrder;
 
 import com.google.inject.Inject;
@@ -35,7 +30,6 @@ public class PingReplyFactoryImpl implements PingReplyFactory {
     private final Provider<UDPService> udpService;
     private final Provider<HostCatcher> hostCatcher;
     private final LocalPongInfo localPongInfo;
-    private final MACCalculatorRepositoryManager macCalculatorRepositoryManager;
     private final NetworkInstanceUtils networkInstanceUtils;
     
     // TODO: All these objects should be folded into LocalPongInfo
@@ -44,14 +38,12 @@ public class PingReplyFactoryImpl implements PingReplyFactory {
             Provider<Statistics> statistics, Provider<UDPService> udpService,
             Provider<HostCatcher> hostCatcher,
             LocalPongInfo localPongInfo,
-            MACCalculatorRepositoryManager MACCalculatorRepositoryManager,
             NetworkInstanceUtils networkInstanceUtils) {
         this.networkManager = networkManager;
         this.statistics = statistics;
         this.udpService = udpService;
         this.hostCatcher = hostCatcher;
         this.localPongInfo = localPongInfo;
-        this.macCalculatorRepositoryManager = MACCalculatorRepositoryManager;
         this.networkInstanceUtils = networkInstanceUtils;
     }
 
@@ -89,19 +81,13 @@ public class PingReplyFactoryImpl implements PingReplyFactory {
         return null;
     }
 
-    public PingReply createQueryKeyReply(byte[] guid, byte ttl,
-            AddressSecurityToken key) {
-        return create(guid, ttl, networkManager.getPort(), networkManager
-                .getAddress(), localPongInfo.getNumSharedFiles(), localPongInfo
-                .getSharedFileSize() / 1024, localPongInfo.isSupernode(),
-                qkGGEP(key));
+    public PingReply createQueryKeyReply(byte[] guid, byte ttl) {
+        return null;
     }
 
     public PingReply createQueryKeyReply(byte[] guid, byte ttl, int port,
-            byte[] ip, long sharedFiles, long sharedSize, boolean ultrapeer,
-            AddressSecurityToken key) {
-        return create(guid, ttl, port, ip, sharedFiles, sharedSize, ultrapeer,
-                qkGGEP(key));
+            byte[] ip, long sharedFiles, long sharedSize, boolean ultrapeer) {
+        return null;
     }
 
     public PingReply create(byte[] guid, byte ttl, int port, byte[] address) {
@@ -163,56 +149,57 @@ public class PingReplyFactoryImpl implements PingReplyFactory {
     public PingReply create(byte[] guid, byte ttl, int port, byte[] ipBytes,
             long files, long kbytes, boolean isUltrapeer, GGEP ggep) {
 
-        if (!NetworkUtils.isValidPort(port))
-            throw new IllegalArgumentException("invalid port: " + port);
-        if (!NetworkUtils.isValidAddress(ipBytes))
-            throw new IllegalArgumentException("invalid address: "
-                    + NetworkUtils.ip2string(ipBytes));
-
-        InetAddress ip = null;
-        try {
-            ip = InetAddress.getByName(NetworkUtils.ip2string(ipBytes));
-        } catch (UnknownHostException e) {
-            throw new IllegalArgumentException(e);
-        }
-        byte[] extensions = null;
-        if (ggep != null) {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            try {
-                ggep.write(baos);
-            } catch (IOException e) {
-                // this should not happen
-                ErrorService.error(e);
-            }
-            extensions = baos.toByteArray();
-        }
-        int length = PingReply.STANDARD_PAYLOAD_SIZE
-                + (extensions == null ? 0 : extensions.length);
-
-        byte[] payload = new byte[length];
-        //It's ok if casting port, files, or kbytes turns negative.
-        ByteOrder.short2leb((short) port, payload, 0);
-        //payload stores IP in BIG-ENDIAN
-        payload[2] = ipBytes[0];
-        payload[3] = ipBytes[1];
-        payload[4] = ipBytes[2];
-        payload[5] = ipBytes[3];
-        ByteOrder.int2leb((int) files, payload, 6);
-        ByteOrder.int2leb((int) (isUltrapeer ? mark(kbytes) : kbytes), payload,
-                10);
-
-        //Encode GGEP block if included.
-        if (extensions != null) {
-            System.arraycopy(extensions, 0, payload,
-                    PingReply.STANDARD_PAYLOAD_SIZE, extensions.length);
-        }
-
-        try {
-            return new PingReplyImpl(guid, ttl, (byte) 0, payload, ggep, ip,
-                    Network.UNKNOWN, macCalculatorRepositoryManager, networkInstanceUtils);
-        } catch (BadPacketException e) {
-            throw new IllegalStateException(e);
-        }
+//        if (!NetworkUtils.isValidPort(port))
+//            throw new IllegalArgumentException("invalid port: " + port);
+//        if (!NetworkUtils.isValidAddress(ipBytes))
+//            throw new IllegalArgumentException("invalid address: "
+//                    + NetworkUtils.ip2string(ipBytes));
+//
+//        InetAddress ip = null;
+//        try {
+//            ip = InetAddress.getByName(NetworkUtils.ip2string(ipBytes));
+//        } catch (UnknownHostException e) {
+//            throw new IllegalArgumentException(e);
+//        }
+//        byte[] extensions = null;
+//        if (ggep != null) {
+//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//            try {
+//                ggep.write(baos);
+//            } catch (IOException e) {
+//                // this should not happen
+//                ErrorService.error(e);
+//            }
+//            extensions = baos.toByteArray();
+//        }
+//        int length = PingReply.STANDARD_PAYLOAD_SIZE
+//                + (extensions == null ? 0 : extensions.length);
+//
+//        byte[] payload = new byte[length];
+//        //It's ok if casting port, files, or kbytes turns negative.
+//        ByteOrder.short2leb((short) port, payload, 0);
+//        //payload stores IP in BIG-ENDIAN
+//        payload[2] = ipBytes[0];
+//        payload[3] = ipBytes[1];
+//        payload[4] = ipBytes[2];
+//        payload[5] = ipBytes[3];
+//        ByteOrder.int2leb((int) files, payload, 6);
+//        ByteOrder.int2leb((int) (isUltrapeer ? mark(kbytes) : kbytes), payload,
+//                10);
+//
+//        //Encode GGEP block if included.
+//        if (extensions != null) {
+//            System.arraycopy(extensions, 0, payload,
+//                    PingReply.STANDARD_PAYLOAD_SIZE, extensions.length);
+//        }
+//
+//        try {
+//            return new PingReplyImpl(guid, ttl, (byte) 0, payload, ggep, ip,
+//                    Network.UNKNOWN, macCalculatorRepositoryManager, networkInstanceUtils);
+//        } catch (BadPacketException e) {
+//            throw new IllegalStateException(e);
+//        }
+        return null;
     }
 
     public PingReply createFromNetwork(byte[] guid, byte ttl, byte hops,
@@ -299,8 +286,7 @@ public class PingReplyFactoryImpl implements PingReplyFactory {
                         + e.getMessage());
             }
         }
-        return new PingReplyImpl(guid, ttl, hops, payload, ggep, ip, network,
-                macCalculatorRepositoryManager, networkInstanceUtils);
+        return null;
     }
 
     public PingReply mutateGUID(PingReply pingReply, byte[] guid) {
@@ -340,24 +326,7 @@ public class PingReplyFactoryImpl implements PingReplyFactory {
         return ggep;
     }
 
-    /** Returns the GGEP payload bytes to encode the given AddressSecurityToken */
-    private GGEP qkGGEP(AddressSecurityToken addressSecurityToken) {
-        try {
-            GGEP ggep = new GGEP();
-
-            // get qk bytes....
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            addressSecurityToken.write(baos);
-            // populate GGEP....
-            ggep.put(GGEP.GGEP_HEADER_QUERY_KEY_SUPPORT, baos.toByteArray());
-
-            return ggep;
-        } catch (IOException e) {
-            throw new IllegalStateException(
-                    "Couldn't encode AddressSecurityToken"
-                            + addressSecurityToken, e);
-        }
-    }
+    
 
     /**
      * Adds the locale GGEP.

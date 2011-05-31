@@ -25,7 +25,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.gudy.azureus2.plugins.network.ConnectionManager;
 import org.limewire.collection.Buffer;
 import org.limewire.collection.FixedsizeHashMap;
 import org.limewire.collection.NoMoreStorageException;
@@ -35,9 +34,6 @@ import org.limewire.inspection.Inspectable;
 import org.limewire.inspection.InspectionPoint;
 import org.limewire.io.IpPort;
 import org.limewire.io.NetworkUtils;
-import org.limewire.security.AddressSecurityToken;
-import org.limewire.security.MACCalculatorRepositoryManager;
-import org.limewire.security.SecurityToken;
 import org.limewire.service.ErrorService;
 import org.limewire.setting.evt.SettingEvent;
 import org.limewire.setting.evt.SettingListener;
@@ -53,11 +49,9 @@ import com.limegroup.gnutella.connection.ConnectionLifecycleEvent;
 import com.limegroup.gnutella.connection.ConnectionLifecycleListener;
 import com.limegroup.gnutella.connection.RoutedConnection;
 import com.limegroup.gnutella.guess.GUESSEndpoint;
-import com.limegroup.gnutella.guess.OnDemandUnicaster;
 import com.limegroup.gnutella.messagehandlers.DualMessageHandler;
 import com.limegroup.gnutella.messagehandlers.InspectionRequestHandler;
 import com.limegroup.gnutella.messagehandlers.MessageHandler;
-import com.limegroup.gnutella.messagehandlers.OOBHandler;
 import com.limegroup.gnutella.messagehandlers.UDPCrawlerPingHandler;
 import com.limegroup.gnutella.messages.BadPacketException;
 import com.limegroup.gnutella.messages.Message;
@@ -298,7 +292,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
     protected final NetworkManager networkManager;
     protected final QueryRequestFactory queryRequestFactory;
     protected final QueryHandlerFactory queryHandlerFactory;
-    protected final OnDemandUnicaster onDemandUnicaster;
     protected final HeadPongFactory headPongFactory;
     protected final PingReplyFactory pingReplyFactory;
     protected final QueryUnicaster queryUnicaster;
@@ -320,9 +313,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
     protected final GuidMap multicastGuidMap;
     private final Provider<InspectionRequestHandler> inspectionRequestHandlerFactory;
     private final Provider<UDPCrawlerPingHandler> udpCrawlerPingHandlerFactory;
-    private final Provider<OOBHandler> oobHandlerFactory;
-    private final Provider<MACCalculatorRepositoryManager> MACCalculatorRepositoryManager;
-
+    
     private final PingRequestFactory pingRequestFactory;
 
     private final MessageHandlerBinder messageHandlerBinder;
@@ -339,7 +330,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
     protected MessageRouterImpl(NetworkManager networkManager,
             QueryRequestFactory queryRequestFactory,
             QueryHandlerFactory queryHandlerFactory,
-            OnDemandUnicaster onDemandUnicaster, 
             HeadPongFactory headPongFactory,
             PingReplyFactory pingReplyFactory,
             QueryUnicaster queryUnicaster,
@@ -362,13 +352,10 @@ public abstract class MessageRouterImpl implements MessageRouter {
             UDPReplyHandlerCache udpReplyHandlerCache,
             Provider<InspectionRequestHandler> inspectionRequestHandlerFactory,
             Provider<UDPCrawlerPingHandler> udpCrawlerPingHandlerFactory,
-            PingRequestFactory pingRequestFactory, MessageHandlerBinder messageHandlerBinder,
-            Provider<OOBHandler> oobHandlerFactory,
-            Provider<MACCalculatorRepositoryManager> MACCalculatorRepositoryManager) {
+            PingRequestFactory pingRequestFactory, MessageHandlerBinder messageHandlerBinder) {
         this.networkManager = networkManager;
         this.queryRequestFactory = queryRequestFactory;
         this.queryHandlerFactory = queryHandlerFactory;
-        this.onDemandUnicaster = onDemandUnicaster;
         this.headPongFactory = headPongFactory;
         this.pingReplyFactory = pingReplyFactory;
         this.queryUnicaster = queryUnicaster;
@@ -392,8 +379,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
         this.multicastGuidMap = guidMapManager.getMap();
         this.udpReplyHandlerCache = udpReplyHandlerCache;
         this.inspectionRequestHandlerFactory = inspectionRequestHandlerFactory;
-        this.oobHandlerFactory = oobHandlerFactory;
-        this.MACCalculatorRepositoryManager = MACCalculatorRepositoryManager;
 
         _clientGUID = applicationServices.getMyGUID();
         _bypassedResultsCache = new BypassedResultsCache(activityCallback, downloadManager);
@@ -525,9 +510,9 @@ public abstract class MessageRouterImpl implements MessageRouter {
         backgroundExecutor.scheduleWithFixedDelay(new UDPReplyCleaner(), UDP_REPLY_CACHE_TIME, UDP_REPLY_CACHE_TIME, TimeUnit.MILLISECONDS);
         
         // runner to clean up OOB sessions
-        OOBHandler oobHandler = oobHandlerFactory.get();
-        backgroundExecutor.scheduleWithFixedDelay(oobHandler, CLEAR_TIME, CLEAR_TIME, TimeUnit.MILLISECONDS);
-        
+//        OOBHandler oobHandler = oobHandlerFactory.get();
+//        backgroundExecutor.scheduleWithFixedDelay(oobHandler, CLEAR_TIME, CLEAR_TIME, TimeUnit.MILLISECONDS);
+//        
         // handler for inspection requests
         InspectionRequestHandler inspectionHandler = inspectionRequestHandlerFactory.get();
         
@@ -555,11 +540,11 @@ public abstract class MessageRouterImpl implements MessageRouter {
         setMessageHandler(InspectionRequest.class, inspectionHandler);
         
         setUDPMessageHandler(QueryRequest.class, new UDPQueryRequestHandler());
-        setUDPMessageHandler(QueryReply.class, new UDPQueryReplyHandler(oobHandler));
+        //setUDPMessageHandler(QueryReply.class, new UDPQueryReplyHandler(oobHandler));
         setUDPMessageHandler(PingRequest.class, new UDPPingRequestHandler());
         setUDPMessageHandler(PingReply.class, new UDPPingReplyHandler());
         setUDPMessageHandler(LimeACKVendorMessage.class, new UDPLimeACKVendorMessageHandler());
-        setUDPMessageHandler(ReplyNumberVendorMessage.class, oobHandler);
+        //setUDPMessageHandler(ReplyNumberVendorMessage.class, oobHandler);
         setUDPMessageHandler(UDPCrawlerPing.class, udpCrawlerPingHandlerFactory.get());
         setUDPMessageHandler(HeadPing.class, new UDPHeadPingHandler());
         setUDPMessageHandler(UpdateRequest.class, new UDPUpdateRequestHandler());
@@ -756,11 +741,12 @@ public abstract class MessageRouterImpl implements MessageRouter {
      */
     protected boolean hasValidQueryKey(InetAddress ip, int port, 
                                        QueryRequest qr) {
-        AddressSecurityToken qk = qr.getQueryKey();
-        if (qk == null)
-            return false;
-        
-        return qk.isFor(ip, port);
+//        AddressSecurityToken qk = qr.getQueryKey();
+//        if (qk == null)
+//            return false;
+//        
+//        return qk.isFor(ip, port);
+        return false;
     }
 
 	/**
@@ -969,33 +955,33 @@ public abstract class MessageRouterImpl implements MessageRouter {
         // fast!
         InetAddress address = addr.getAddress();
         int port = addr.getPort();
-        AddressSecurityToken key = new AddressSecurityToken(address, port, MACCalculatorRepositoryManager.get());
-        
-        // respond with Pong with QK, as GUESS requires....
-        PingReply reply = 
-            pingReplyFactory.createQueryKeyReply(pr.getGUID(), (byte)1, key);
-        udpService.send(reply, addr.getAddress(), addr.getPort());
+//        AddressSecurityToken key = new AddressSecurityToken(address, port, MACCalculatorRepositoryManager.get());
+//        
+//        // respond with Pong with QK, as GUESS requires....
+//        PingReply reply = 
+//            pingReplyFactory.createQueryKeyReply(pr.getGUID(), (byte)1, key);
+//        udpService.send(reply, addr.getAddress(), addr.getPort());
     }
 
 
     protected void handleUDPPingReply(PingReply reply, ReplyHandler handler,
                                       InetAddress address, int port) {
-        if (reply.getQueryKey() != null) {
-            // this is a PingReply in reply to my AddressSecurityToken Request - 
-            //consume the Pong and return, don't process as usual....
-            onDemandUnicaster.handleQueryKeyPong(reply);
-            return;
-        }
-
-        // do not process the pong if different from the host
-        // described in the reply 
-        if((reply.getPort() != port) || 
-           (!reply.getInetAddress().equals(address))) {
-            return;
-		}
-        
-        // normal pong processing...
-        handlePingReply(reply, handler);
+//        if (reply.getQueryKey() != null) {
+//            // this is a PingReply in reply to my AddressSecurityToken Request - 
+//            //consume the Pong and return, don't process as usual....
+//            onDemandUnicaster.handleQueryKeyPong(reply);
+//            return;
+//        }
+//
+//        // do not process the pong if different from the host
+//        // described in the reply 
+//        if((reply.getPort() != port) || 
+//           (!reply.getInetAddress().equals(address))) {
+//            return;
+//		}
+//        
+//        // normal pong processing...
+//        handlePingReply(reply, handler);
     }
 
     
@@ -1100,36 +1086,36 @@ public abstract class MessageRouterImpl implements MessageRouter {
     protected void handleLimeACKMessage(LimeACKVendorMessage ack,
                                         InetSocketAddress addr) {
 
-        GUID.TimedGUID refGUID = new GUID.TimedGUID(new GUID(ack.getGUID()),
-                                                    TIMED_GUID_LIFETIME);
-        QueryResponseBundle bundle = _outOfBandReplies.remove(refGUID);
-        
-        // token is null for old oob messages, it will just be ignored then
-        SecurityToken securityToken = ack.getSecurityToken();
-       
-        if ((bundle != null) && (ack.getNumResults() > 0)) {
-            InetAddress iaddr = addr.getAddress();
-            int port = addr.getPort();
-
-            //convert responses to QueryReplies, but only send as many as the
-            //node wants
-            Iterable<QueryReply> iterable;
-            if (ack.getNumResults() < bundle._responses.length) {
-                // TODO move selection to responseToQueryReplies methods for randomization
-                Response[] desired = new Response[ack.getNumResults()];
-                System.arraycopy(bundle._responses, 0, desired, 0, desired.length);
-                iterable = responsesToQueryReplies(desired, bundle._query, 1, securityToken);
-            } else { 
-                iterable = responsesToQueryReplies(bundle._responses, 
-                                                   bundle._query, 1, securityToken);
-            }
-            
-            //send the query replies
-            for(QueryReply queryReply : iterable)
-                udpService.send(queryReply, iaddr, port);
-        }
-        // else some sort of routing error or attack?
-        // TODO: tally some stat stuff here
+//        GUID.TimedGUID refGUID = new GUID.TimedGUID(new GUID(ack.getGUID()),
+//                                                    TIMED_GUID_LIFETIME);
+//        QueryResponseBundle bundle = _outOfBandReplies.remove(refGUID);
+//        
+//        // token is null for old oob messages, it will just be ignored then
+//        SecurityToken securityToken = ack.getSecurityToken();
+//       
+//        if ((bundle != null) && (ack.getNumResults() > 0)) {
+//            InetAddress iaddr = addr.getAddress();
+//            int port = addr.getPort();
+//
+//            //convert responses to QueryReplies, but only send as many as the
+//            //node wants
+//            Iterable<QueryReply> iterable;
+//            if (ack.getNumResults() < bundle._responses.length) {
+//                // TODO move selection to responseToQueryReplies methods for randomization
+//                Response[] desired = new Response[ack.getNumResults()];
+//                System.arraycopy(bundle._responses, 0, desired, 0, desired.length);
+//                iterable = responsesToQueryReplies(desired, bundle._query, 1, securityToken);
+//            } else { 
+//                iterable = responsesToQueryReplies(bundle._responses, 
+//                                                   bundle._query, 1, securityToken);
+//            }
+//            
+//            //send the query replies
+//            for(QueryReply queryReply : iterable)
+//                udpService.send(queryReply, iaddr, port);
+//        }
+//        // else some sort of routing error or attack?
+//        // TODO: tally some stat stuff here
     }
     
     /**
@@ -1215,7 +1201,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
      * @see com.limegroup.gnutella.MessageRouter#isHostUnicastQueried(com.limegroup.gnutella.GUID, org.limewire.io.IpPort)
      */
     public boolean isHostUnicastQueried(GUID guid, IpPort host) {
-        return onDemandUnicaster.isHostQueriedForGUID(guid, host);
+        return false;//onDemandUnicaster.isHostQueriedForGUID(guid, host);
     }
     
     /**
@@ -1845,7 +1831,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
      */
     public Iterable<QueryReply> responsesToQueryReplies(Response[] responses,
                                             QueryRequest queryRequest) {
-        return responsesToQueryReplies(responses, queryRequest, 10, null);
+        return null;// responsesToQueryReplies(responses, queryRequest, 10, null);
     }
 
 
@@ -1866,7 +1852,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
     // default access for testing
     Iterable<QueryReply> responsesToQueryReplies(Response[] responses,
                                              QueryRequest queryRequest,
-                                             final int REPLY_LIMIT, SecurityToken securityToken) {
+                                             final int REPLY_LIMIT) {
 
         //List to store Query Replies
         List<QueryReply> queryReplies = new LinkedList<QueryReply>();
@@ -1973,24 +1959,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
         return queryReplies;
     }
 
-    /**
-     * Abstract method for creating query hits.  Subclasses must specify
-     * how this list is created.
-     * 
-     * @param securityToken might be null, otherwise must be sent in GGEP
-     * of QHD with header "SO"
-     *
-     * @return a <tt>List</tt> of <tt>QueryReply</tt> instances
-     */
-    protected abstract List<QueryReply> createQueryReply(byte[] guid, byte ttl,
-                                            long speed, 
-                                             Response[] res, byte[] clientGUID, 
-                                             boolean busy, 
-                                             boolean uploaded, 
-                                             boolean measuredSpeed, 
-                                             boolean isFromMcast,
-                                             boolean shouldMarkForFWTransfer,
-                                             SecurityToken securityToken);
 
     /**
      * Handles a message to reset the query route table for the given
@@ -2521,26 +2489,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
      * {@link OOBHandler} if they are not replies to multicast or unicast
      * queries.
      */
-    public class UDPQueryReplyHandler implements MessageHandler {
-
-        private final OOBHandler oobHandler;
-        
-        public UDPQueryReplyHandler(OOBHandler oobHandler) {
-            this.oobHandler = oobHandler;
-        }
-        
-        public void handleMessage(Message msg, InetSocketAddress addr, ReplyHandler handler) {
-            QueryReply reply = (QueryReply)msg;
-            if (reply.isReplyToMulticastQuery()
-                    || isHostUnicastQueried(new GUID(reply.getGUID()), handler)) {
-                handleQueryReply(reply, handler);
-            }
-            else {
-                oobHandler.handleMessage(msg, addr, handler);
-            }
-        }
-        
-    }
+    
     
     /**
      * tracks information about messages with a specified guid.

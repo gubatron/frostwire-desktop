@@ -3,7 +3,6 @@ package com.limegroup.gnutella.connection;
 import java.net.Socket;
 
 import org.limewire.io.NetworkInstanceUtils;
-import org.limewire.security.SecureMessageVerifier;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -56,8 +55,6 @@ public class RoutedConnectionFactoryImpl implements RoutedConnectionFactory {
 
     private final ApplicationServices applicationServices;
     
-    private final Provider<SecureMessageVerifier> secureMessageVerifier;
-    
     private final OutOfBandStatistics outOfBandStatistics;
     
     private final NetworkInstanceUtils networkInstanceUtils;
@@ -73,7 +70,7 @@ public class RoutedConnectionFactoryImpl implements RoutedConnectionFactory {
             GuidMapManager guidMapManager,
             SpamFilterFactory spamFilterFactory, MessageFactory messageFactory,
             MessageReaderFactory messageReaderFactory, ApplicationServices applicationServices,
-            Provider<SecureMessageVerifier> secureMessageVerifier, OutOfBandStatistics outOfBandStatistics,
+            OutOfBandStatistics outOfBandStatistics,
             NetworkInstanceUtils networkInstanceUtils) {
         this.networkManager = networkManager;
         this.queryRequestFactory = queryRequestFactory;
@@ -88,7 +85,6 @@ public class RoutedConnectionFactoryImpl implements RoutedConnectionFactory {
         this.spamFilterFactory = spamFilterFactory;
         this.messageFactory = messageFactory;
         this.messageReaderFactory = messageReaderFactory;
-        this.secureMessageVerifier = secureMessageVerifier;
         this.outOfBandStatistics = outOfBandStatistics;
         this.networkInstanceUtils = networkInstanceUtils;
     }

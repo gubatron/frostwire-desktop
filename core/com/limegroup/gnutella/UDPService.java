@@ -22,9 +22,6 @@ import org.limewire.io.ByteBufferOutputStream;
 import org.limewire.io.IpPort;
 import org.limewire.io.NetworkInstanceUtils;
 import org.limewire.io.NetworkUtils;
-import org.limewire.security.AddressSecurityToken;
-import org.limewire.security.MACCalculator;
-import org.limewire.security.MACCalculatorRepositoryManager;
 import org.limewire.service.ErrorService;
 
 import com.google.inject.Inject;
@@ -61,9 +58,6 @@ public class UDPService {
     private static final Log LOG = LogFactory.getLog(UDPService.class);
     
     
-    private static final MACCalculator PING_GENERATOR = 
-        MACCalculatorRepositoryManager.createDefaultCalculatorFactory().createMACCalculator();
-	
 	/**
 	 * The DatagramChannel we're reading from & writing to.
 	 */
@@ -434,9 +428,9 @@ public class UDPService {
 	}
 	
     public static void mutateGUID(byte[] guid, InetAddress ip, int port) {
-        byte[] qk = PING_GENERATOR.getMACBytes(new AddressSecurityToken.AddressTokenData(ip,port));
-        for (int i = 0; i < qk.length; i++)
-            guid[i] =(byte)(guid[i] ^ qk[i]);
+//        byte[] qk = PING_GENERATOR.getMACBytes(new AddressSecurityToken.AddressTokenData(ip,port));
+//        for (int i = 0; i < qk.length; i++)
+//            guid[i] =(byte)(guid[i] ^ qk[i]);
     }
     
 	/**

@@ -3,7 +3,6 @@ package com.limegroup.gnutella.messages;
 import java.util.Set;
 
 import org.limewire.io.IpPort;
-import org.limewire.security.SecurityToken;
 
 import com.limegroup.gnutella.Response;
 import com.limegroup.gnutella.messages.Message.Network;
@@ -75,37 +74,7 @@ public interface QueryReplyFactory {
             boolean finishedUpload, boolean measuredSpeed,
             boolean supportsChat, boolean isMulticastReply);
 
-    /**
-     * Creates a new QueryReply with a BearShare 2.2.0-style QHD. The QHD with
-     * the LIME vendor code and the given busy and push flags. Note that this
-     * constructor has no support for undefined push or busy bits. The Browse
-     * Host GGEP extension is ON by default.
-     * 
-     * @param needsPush true iff this is firewalled and the downloader should
-     *        attempt a push without trying a normal download.
-     * @param isBusy true iff this server is busy, i.e., has no more upload
-     *        slots
-     * @param finishedUpload true iff this server has successfully finished an
-     *        upload
-     * @param measuredSpeed true iff speed is measured, not as reported by the
-     *        user
-     * @param xmlBytes The (non-null) byte[] containing aggregated and indexed
-     *        information regarding file metadata. In terms of byte-size, this
-     *        should not be bigger than 65535 bytes. Anything larger will result
-     *        in an Exception being throw. This String is assumed to consist of
-     *        compressed data.
-     * @param supportsChat true iff the host currently allows chatting.
-     * @param proxies an array of PushProxy interfaces. will be included in the
-     *        replies GGEP extension.
-     * @exception IllegalArgumentException Thrown if xmlBytes.length >
-     *            XML_MAX_SIZE
-     */
-    public QueryReply createQueryReply(byte[] guid, byte ttl, int port,
-            byte[] ip, long speed, Response[] responses, byte[] clientGUID,
-            byte[] xmlBytes, boolean needsPush, boolean isBusy,
-            boolean finishedUpload, boolean measuredSpeed,
-            boolean supportsChat, boolean isMulticastReply,
-            Set<? extends IpPort> proxies);
+ 
 
     /**
      * Creates a new QueryReply with a BearShare 2.2.0-style QHD. The QHD with
@@ -138,7 +107,7 @@ public interface QueryReplyFactory {
             byte[] xmlBytes, boolean needsPush, boolean isBusy,
             boolean finishedUpload, boolean measuredSpeed,
             boolean supportsChat, boolean isMulticastReply,
-            Set<? extends IpPort> proxies, SecurityToken securityToken);
+            Set<? extends IpPort> proxies);
 
     /**
      * Creates a new QueryReply with a BearShare 2.2.0-style QHD. The QHD with
@@ -172,39 +141,7 @@ public interface QueryReplyFactory {
             boolean supportsChat, boolean isMulticastReply,
             boolean supportsFWTransfer, Set<? extends IpPort> proxies);
 
-    /**
-     * Creates a new QueryReply with a BearShare 2.2.0-style QHD. The QHD with
-     * the LIME vendor code and the given busy and push flags. Note that this
-     * constructor has no support for undefined push or busy bits. The Browse
-     * Host GGEP extension is ON by default.
-     * 
-     * @param needsPush true iff this is firewalled and the downloader should
-     *        attempt a push without trying a normal download.
-     * @param isBusy true iff this server is busy, i.e., has no more upload
-     *        slots
-     * @param finishedUpload true iff this server has successfully finished an
-     *        upload
-     * @param measuredSpeed true iff speed is measured, not as reported by the
-     *        user
-     * @param xmlBytes The (non-null) byte[] containing aggregated and indexed
-     *        information regarding file metadata. In terms of byte-size, this
-     *        should not be bigger than 65535 bytes. Anything larger will result
-     *        in an Exception being throw. This String is assumed to consist of
-     *        compressed data.
-     * @param supportsChat true iff the host currently allows chatting.
-     * @param proxies an array of PushProxy interfaces. will be included in the
-     *        replies GGEP extension.
-     * @param securityToken might be null
-     * @exception IllegalArgumentException Thrown if xmlBytes.length >
-     *            XML_MAX_SIZE
-     */
-    public QueryReply createQueryReply(byte[] guid, byte ttl, int port,
-            byte[] ip, long speed, Response[] responses, byte[] clientGUID,
-            byte[] xmlBytes, boolean needsPush, boolean isBusy,
-            boolean finishedUpload, boolean measuredSpeed,
-            boolean supportsChat, boolean isMulticastReply,
-            boolean supportsFWTransfer, Set<? extends IpPort> proxies,
-            SecurityToken securityToken);
+    
 
     /** Creates a new query reply with data read from the network. */
     public QueryReply createFromNetwork(byte[] guid, byte ttl, byte hops,
