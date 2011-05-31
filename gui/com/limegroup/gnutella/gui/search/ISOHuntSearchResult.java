@@ -22,14 +22,12 @@ import com.limegroup.gnutella.xml.LimeXMLDocument;
 public class ISOHuntSearchResult extends AbstractSearchResult  {
 
 	public static String redirectUrl=null;
-	private boolean _isDownloading;
 	private ISOHuntItem _item;
 	private SearchInformation _info;
 	
 	public ISOHuntSearchResult(ISOHuntItem item, SearchInformation searchInfo) {
 		_item = item;
 		_info = searchInfo;
-		_isDownloading = false;
 	}
 
 	@Override
@@ -119,12 +117,6 @@ public class ISOHuntSearchResult extends AbstractSearchResult  {
 		
 		//hack this to show the icon for mininova or for isohunt.
 	}
-
-	@Override
-	public boolean isDownloading() {
-		return _isDownloading;
-	}
-
 	@Override
 	public boolean isMeasuredSpeed() {
 		return false;
@@ -133,13 +125,7 @@ public class ISOHuntSearchResult extends AbstractSearchResult  {
 	@Override
 	public void takeAction(TableLine line, GUID guid, File saveDir,
 			String fileName, boolean saveAs, SearchInformation searchInfo) {
-		_isDownloading = true;
-		try {
-			GUIMediator.instance().openTorrentURI(new URI(_item.enclosure_url));
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
-		
+	    GUIMediator.instance().openTorrentURI(_item.enclosure_url);
 		showTorrentDetails(BittorrentSettings.SHOW_TORRENT_DETAILS_DELAY);
 	}
 	

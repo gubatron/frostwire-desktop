@@ -38,11 +38,6 @@ public interface SearchResult {
     long getCreationTime();
     
     /**
-     * @return <code>true</code> if this result is currently being downloaded
-     */
-    boolean isDownloading();
-    
-    /**
      * @return the name of vendor who created this artifact
      */
     String getVendor();

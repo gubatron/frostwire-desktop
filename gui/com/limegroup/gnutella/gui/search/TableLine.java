@@ -353,23 +353,7 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
      * Gets the quality of this line.
      */
     int getQuality() {
-        boolean downloading = RESULT.isDownloading();
-//        if(downloading != _downloading)
-//            updateFileStatus();
-        //_downloading = downloading;
-        
-        if(_savedFile)
-            return QualityRenderer.SAVED_FILE_QUALITY;
-        else if(downloading)
-            return QualityRenderer.DOWNLOADING_FILE_QUALITY;
-        else if(_incompleteFile)
-            return QualityRenderer.INCOMPLETE_FILE_QUALITY;
-        else if (_secure)
-            return QualityRenderer.SECURE_QUALITY;
-        else if (SearchSettings.ENABLE_SPAM_FILTER.getValue() && SpamFilter.isAboveSpamThreshold(this))
-            return QualityRenderer.SPAM_FILE_QUALITY;
-        else
-            return _quality;
+        return _quality;
     }
     
     /**

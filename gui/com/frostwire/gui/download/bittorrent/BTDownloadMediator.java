@@ -467,17 +467,31 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         _copyHashAction.setEnabled(false);
     }
 
-    public void openTorrentURI(final URI uri) {
+    public void openTorrentURI(final String uri) {
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                GUIMediator.instance().getStatusLine().setStatusText(I18n.tr("Fetching .torrent from Internet"));
+            }
+        });
+        
         TorrentDownloader downloader = TorrentDownloaderFactory.create(new TorrentDownloaderCallBackInterface() {
             public void TorrentDownloaderEvent(int state, TorrentDownloader inf) {
                 if (state == TorrentDownloader.STATE_FINISHED) {
+                    GUIMediator.safeInvokeLater(new Runnable() {
+                        public void run() {
+                            GUIMediator.instance().getStatusLine().setStatusText(I18n.tr("Torrent file downloaded from Internet"));
+                        }
+                    });
                 	openTorrent(inf.getFile());
                 } else if (state == TorrentDownloader.STATE_ERROR) {
-                    // Error
-                    System.out.println("Error downloading the torrent: " + uri);
+                    GUIMediator.safeInvokeLater(new Runnable() {
+                        public void run() {
+                            GUIMediator.instance().getStatusLine().setStatusText(I18n.tr("Error downloading the .torrent file"));
+                        }
+                    });
                 }
             }
-        }, uri.toString(), null, SharingSettings.TORRENT_DATA_DIR_SETTING.getValue().getAbsolutePath());
+        }, uri, null, SharingSettings.TORRENT_DATA_DIR_SETTING.getValue().getAbsolutePath());
 
         downloader.start();
     }

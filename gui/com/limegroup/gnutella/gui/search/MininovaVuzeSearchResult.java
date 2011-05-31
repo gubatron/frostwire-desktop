@@ -22,14 +22,12 @@ import com.limegroup.gnutella.xml.LimeXMLDocument;
 public class MininovaVuzeSearchResult extends AbstractSearchResult  {
 
 	public static String redirectUrl=null;
-	private boolean _isDownloading;
 	private MininovaVuzeItem _item;
 	private SearchInformation _info;
 	
 	public MininovaVuzeSearchResult(MininovaVuzeItem item, SearchInformation searchInfo) {
 		_item = item;
 		_info = searchInfo;
-		_isDownloading = false;
 	}
 
 	@Override
@@ -109,12 +107,7 @@ public class MininovaVuzeSearchResult extends AbstractSearchResult  {
 		int seeds = Integer.valueOf(_item.seeds)+Integer.valueOf(_item.superseeds);
 		line.initLocations(seeds);
 	}
-
-	@Override
-	public boolean isDownloading() {
-		return _isDownloading;
-	}
-
+	
 	@Override
 	public boolean isMeasuredSpeed() {
 		return false;
@@ -123,13 +116,7 @@ public class MininovaVuzeSearchResult extends AbstractSearchResult  {
 	@Override
 	public void takeAction(TableLine line, GUID guid, File saveDir,
 			String fileName, boolean saveAs, SearchInformation searchInfo) {
-		_isDownloading = true;
-		try {
-			GUIMediator.instance().openTorrentURI(new URI(_item.download));
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
-		
+		GUIMediator.instance().openTorrentURI(_item.download);
 		showTorrentDetails(BittorrentSettings.SHOW_TORRENT_DETAILS_DELAY);
 	}
 	

@@ -124,7 +124,7 @@ public class MacEventHandler {
                 externalControl.enqueueControlRequest(file.getAbsolutePath());
             else if (file.getAbsolutePath().startsWith("magnet:?xt=urn:btih")) {
             	//System.out.println("MacEventHandler");
-            	GUIMediator.instance().openTorrentMagnet(file.getAbsolutePath());
+            	GUIMediator.instance().openTorrentURI(file.getAbsolutePath());
             }
         }
         else if (filename.endsWith("torrent")) {

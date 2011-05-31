@@ -230,52 +230,6 @@ public class ExternalControl {
 		}
 	}
 	
-	/**
-	 *  Handle a Magnet request via a socket (for TCP handling).
-	 *  Deiconify the application, fire MAGNET request
-	 *  and return true as a sign that FrostWire is running.
-	 */
-	public void fireControlThread(Socket socket, boolean magnet) {
-	    LOG.trace("enter fireControl");
-	    
-        Thread.currentThread().setName("IncomingControlThread");
-		try {
-			// Only allow control from localhost
-			if (!NetworkUtils.isLocalHost(socket)) {
-                if(LOG.isWarnEnabled())
-				    LOG.warn("Invalid control request from: " + socket.getInetAddress().getHostAddress());
-				return;
-            }
-
-			// First read extra parameter
-			socket.setSoTimeout(Constants.TIMEOUT);
-			ByteReader br = new ByteReader(socket.getInputStream());
-            // read the first line. if null, throw an exception
-            String line = br.readLine();
-			socket.setSoTimeout(0);
-
-			BufferedOutputStream out =
-			  new BufferedOutputStream(socket.getOutputStream());
-			String s = CommonUtils.getUserName() + "\r\n";
-			byte[] bytes=s.getBytes();
-			out.write(bytes);
-			out.flush();
-			
-			if (isTorrentMagnetRequest(line))
-				handleTorrentMagnetRequest(line);
-			else if (magnet)
-				handleMagnetRequest(line);
-			else
-				handleTorrentRequest(line);
-		} catch (IOException e) {
-		    LOG.warn("Exception while responding to control request", e);
-		} finally {
-		    IOUtils.close(socket);
-        }
-	}
-
-	
-
 	/**  Check if the client is already running, and if so, pop it up.
 	 *   Sends the MAGNET message along the given socket. 
 	 *   @returns  true if a local FrostWire responded with a true.
