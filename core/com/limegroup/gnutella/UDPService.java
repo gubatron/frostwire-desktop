@@ -22,8 +22,6 @@ import org.limewire.io.ByteBufferOutputStream;
 import org.limewire.io.IpPort;
 import org.limewire.io.NetworkInstanceUtils;
 import org.limewire.io.NetworkUtils;
-import org.limewire.nio.NIODispatcher;
-import org.limewire.nio.observer.ReadWriteObserver;
 import org.limewire.security.AddressSecurityToken;
 import org.limewire.security.MACCalculator;
 import org.limewire.security.MACCalculatorRepositoryManager;
@@ -58,7 +56,7 @@ import com.limegroup.gnutella.settings.ConnectionSettings;
  *
  */
 @Singleton
-public class UDPService implements ReadWriteObserver {
+public class UDPService {
 
     private static final Log LOG = LogFactory.getLog(UDPService.class);
     
@@ -109,8 +107,8 @@ public class UDPService implements ReadWriteObserver {
      */
     private long _lastConnectBackTime = System.currentTimeMillis();
     void resetLastConnectBackTime() {
-        _lastConnectBackTime = 
-             System.currentTimeMillis() - acceptor.get().getIncomingExpireTime();
+//        _lastConnectBackTime = 
+//             System.currentTimeMillis() - acceptor.get().getIncomingExpireTime();
     }
     
     /** Whether our NAT assigns stable ports for successive connections 
@@ -158,12 +156,9 @@ public class UDPService implements ReadWriteObserver {
     
     private final NetworkManager networkManager;
     private final Provider<MessageDispatcher> messageDispatcher;
-    private final Provider<ConnectionManager> connectionManager;
     private final Provider<MessageRouter> messageRouter;
-    private final Provider<Acceptor> acceptor;
     private final Provider<QueryUnicaster> queryUnicaster;
     private final ScheduledExecutorService backgroundExecutor;
-    private final ConnectionServices connectionServices;
     private final MessageFactory messageFactory;
     private final PingRequestFactory pingRequestFactory;
     private final NetworkInstanceUtils networkInstanceUtils;
@@ -182,22 +177,17 @@ public class UDPService implements ReadWriteObserver {
 	@Inject
     public UDPService(NetworkManager networkManager,
             Provider<MessageDispatcher> messageDispatcher,
-            Provider<ConnectionManager> connectionManager,
-            Provider<MessageRouter> messageRouter, Provider<Acceptor> acceptor,
+            Provider<MessageRouter> messageRouter, 
             Provider<QueryUnicaster> queryUnicaster,
             @Named("backgroundExecutor") ScheduledExecutorService backgroundExecutor,
-            ConnectionServices connectionServices,
             MessageFactory messageFactory,
             PingRequestFactory pingRequestFactory,
             NetworkInstanceUtils networkInstanceUtils) {
         this.networkManager = networkManager;
         this.messageDispatcher = messageDispatcher;
-        this.connectionManager = connectionManager;
         this.messageRouter = messageRouter;
-        this.acceptor = acceptor;
         this.queryUnicaster = queryUnicaster;
         this.backgroundExecutor = backgroundExecutor;
-        this.connectionServices = connectionServices;
         this.messageFactory = messageFactory;
         this.pingRequestFactory = pingRequestFactory;
         this.networkInstanceUtils = networkInstanceUtils;
@@ -212,10 +202,10 @@ public class UDPService implements ReadWriteObserver {
      * Schedules IncomingValidator & PeriodicPinger for periodic use.
      */
     protected void scheduleServices() {
-        backgroundExecutor.scheduleWithFixedDelay(new IncomingValidator(), 
-                               acceptor.get().getTimeBetweenValidates(),
-                               acceptor.get().getTimeBetweenValidates(), TimeUnit.MILLISECONDS);
-        backgroundExecutor.scheduleWithFixedDelay(new PeriodicPinger(), 0, PING_PERIOD, TimeUnit.MILLISECONDS);
+//        backgroundExecutor.scheduleWithFixedDelay(new IncomingValidator(), 
+//                               acceptor.get().getTimeBetweenValidates(),
+//                               acceptor.get().getTimeBetweenValidates(), TimeUnit.MILLISECONDS);
+//        backgroundExecutor.scheduleWithFixedDelay(new PeriodicPinger(), 0, PING_PERIOD, TimeUnit.MILLISECONDS);
     }
     
     /** @return The GUID to send for UDPConnectBack attempts....
@@ -234,14 +224,14 @@ public class UDPService implements ReadWriteObserver {
      * Starts listening for UDP messages & allowing UDP messages to be written.
      */
     public void start() {
-        DatagramChannel channel;
-        synchronized(this) {
-            _started = true;
-            channel = _channel;
-        }
+//        DatagramChannel channel;
+//        synchronized(this) {
+//            _started = true;
+//            channel = _channel;
+//        }
         
-        if(channel != null)
-            NIODispatcher.instance().registerReadWrite(channel, this);
+//        if(channel != null)
+//            NIODispatcher.instance().registerReadWrite(channel, this);
     }
 
     /** 
@@ -455,17 +445,18 @@ public class UDPService implements ReadWriteObserver {
 	 */
 	private boolean isValidForIncoming(InetSocketAddress addr) {
             
-	    String host = addr.getAddress().getHostAddress();
-        
-        //  If addr is connected to us, then return false.  Otherwise (not connected), only return true if either:
-        //      1) the non-connected party is NOT private
-        //  OR
-        //      2) the non-connected party _is_ private, and the LOCAL_IS_PRIVATE is set to false
-        return
-                !connectionManager.get().isConnectedTo(host)
-            &&  !networkInstanceUtils.isPrivateAddress(addr.getAddress())
-             ;
+//	    String host = addr.getAddress().getHostAddress();
+//        
+//        //  If addr is connected to us, then return false.  Otherwise (not connected), only return true if either:
+//        //      1) the non-connected party is NOT private
+//        //  OR
+//        //      2) the non-connected party _is_ private, and the LOCAL_IS_PRIVATE is set to false
+//        return
+//                !connectionManager.get().isConnectedTo(host)
+//            &&  !networkInstanceUtils.isPrivateAddress(addr.getAddress())
+//             ;
 
+	    return false;
     }
     
     /**
@@ -499,92 +490,93 @@ public class UDPService implements ReadWriteObserver {
      * @param host the host to send the message to
      */
     public void send(Message msg, InetSocketAddress addr) {
-        if (msg == null)
-            throw new IllegalArgumentException("Null Message");
-        if (!NetworkUtils.isValidSocketAddress(addr))
-            throw new IllegalArgumentException("Invalid addr: " + addr);
-        if(_channel == null || _channel.socket().isClosed())
-            return; // ignore if not open.
-
-        if (LOG.isTraceEnabled()) {
-            LOG.trace("Sending message: " + msg + "to " + addr);
-        }
-        
-        int length = msg.getTotalLength();
-        ByteBuffer buffer = NIODispatcher.instance().getBufferCache().getHeap(length);
-        if(buffer.remaining() != length)
-            throw new IllegalStateException("retrieved a buffer with wrong remaining! " +
-                                            "wanted: " + length +
-                                            ", had: " + buffer.remaining() +
-                                            ", position: " + buffer.position() +
-                                            ", limit: " + buffer.limit());
-
-        ByteBufferOutputStream baos = new ByteBufferOutputStream(buffer);
-        try {
-            msg.writeQuickly(baos);
-        } catch(IOException e) {
-            // this should not happen -- we should always be able to write
-            // to this output stream in memory
-            ErrorService.error(e);
-            // can't send the hit, so return
-            return;
-        }
-       
-        buffer.flip();
-        if (msg instanceof PingRequest)
-            mutateGUID(buffer.array(), addr.getAddress(), addr.getPort());
-        
-        sentMessageCounter.countMessage(msg);
-        send(buffer, addr, false);
+//        if (msg == null)
+//            throw new IllegalArgumentException("Null Message");
+//        if (!NetworkUtils.isValidSocketAddress(addr))
+//            throw new IllegalArgumentException("Invalid addr: " + addr);
+//        if(_channel == null || _channel.socket().isClosed())
+//            return; // ignore if not open.
+//
+//        if (LOG.isTraceEnabled()) {
+//            LOG.trace("Sending message: " + msg + "to " + addr);
+//        }
+//        
+//        int length = msg.getTotalLength();
+//        ByteBuffer buffer = NIODispatcher.instance().getBufferCache().getHeap(length);
+//        if(buffer.remaining() != length)
+//            throw new IllegalStateException("retrieved a buffer with wrong remaining! " +
+//                                            "wanted: " + length +
+//                                            ", had: " + buffer.remaining() +
+//                                            ", position: " + buffer.position() +
+//                                            ", limit: " + buffer.limit());
+//
+//        ByteBufferOutputStream baos = new ByteBufferOutputStream(buffer);
+//        try {
+//            msg.writeQuickly(baos);
+//        } catch(IOException e) {
+//            // this should not happen -- we should always be able to write
+//            // to this output stream in memory
+//            ErrorService.error(e);
+//            // can't send the hit, so return
+//            return;
+//        }
+//       
+//        buffer.flip();
+//        if (msg instanceof PingRequest)
+//            mutateGUID(buffer.array(), addr.getAddress(), addr.getPort());
+//        
+//        sentMessageCounter.countMessage(msg);
+//        send(buffer, addr, false);
     }
     
     public void send(ByteBuffer buffer, InetSocketAddress addr, boolean custom) { 
-        synchronized(OUTGOING_MSGS) {
-            OUTGOING_MSGS.add(new SendBundle(buffer, addr, custom));
-            if(_channel != null)
-                NIODispatcher.instance().interestWrite(_channel, true);
-        }
+//        synchronized(OUTGOING_MSGS) {
+//            OUTGOING_MSGS.add(new SendBundle(buffer, addr, custom));
+//            if(_channel != null)
+//                NIODispatcher.instance().interestWrite(_channel, true);
+//        }
 	}
 	
 	/**
 	 * Notification that a write can happen.
 	 */
 	public boolean handleWrite() throws IOException {
-        try {
-    	    synchronized(OUTGOING_MSGS) {
-    	        while(!OUTGOING_MSGS.isEmpty()) {
-                    boolean releaseBuffer = true;
-                    SendBundle bundle = OUTGOING_MSGS.remove(0);
-    	            try {
-        	            if(_channel.send(bundle.buffer, bundle.addr) == 0) {
-        	                // we removed the bundle from the list but couldn't send it,
-        	                // so we have to put it back in.
-        	                OUTGOING_MSGS.add(0, bundle);
-                            releaseBuffer = false;
-        	                return true; // no room left to send.
-                        }
-                    } catch(IOException ignored) {
-                        LOG.warn("Ignoring exception on socket", ignored);
-                    } finally {
-                        if(bundle.custom) {
-                            bundle.buffer.rewind();
-                            releaseBuffer = false;
-                        }
-                        
-                        if (releaseBuffer)
-                            NIODispatcher.instance().getBufferCache().release(bundle.buffer);
-                    }
-    	        }
-    	        
-    	        // if there's no data left to send, we don't wanna be notified of write events.
-    	        NIODispatcher.instance().interestWrite(_channel, false);
-    	        return false;
-    	    }
-        } catch(Throwable t) {
-            // Don't let it propogate, since that could close UDPService!
-            ErrorService.error(t);
-            return true;
-        }
+//        try {
+//    	    synchronized(OUTGOING_MSGS) {
+//    	        while(!OUTGOING_MSGS.isEmpty()) {
+//                    boolean releaseBuffer = true;
+//                    SendBundle bundle = OUTGOING_MSGS.remove(0);
+//    	            try {
+//        	            if(_channel.send(bundle.buffer, bundle.addr) == 0) {
+//        	                // we removed the bundle from the list but couldn't send it,
+//        	                // so we have to put it back in.
+//        	                OUTGOING_MSGS.add(0, bundle);
+//                            releaseBuffer = false;
+//        	                return true; // no room left to send.
+//                        }
+//                    } catch(IOException ignored) {
+//                        LOG.warn("Ignoring exception on socket", ignored);
+//                    } finally {
+//                        if(bundle.custom) {
+//                            bundle.buffer.rewind();
+//                            releaseBuffer = false;
+//                        }
+//                        
+//                        if (releaseBuffer)
+//                            NIODispatcher.instance().getBufferCache().release(bundle.buffer);
+//                    }
+//    	        }
+//    	        
+//    	        // if there's no data left to send, we don't wanna be notified of write events.
+//    	        NIODispatcher.instance().interestWrite(_channel, false);
+//    	        return false;
+//    	    }
+//        } catch(Throwable t) {
+//            // Don't let it propogate, since that could close UDPService!
+//            ErrorService.error(t);
+//            return true;
+//        }
+	    return false;
     }       
 	
 	/** Wrapper for outgoing data */
@@ -646,49 +638,50 @@ public class UDPService implements ReadWriteObserver {
 	 * port.
 	 */
 	public boolean canDoFWT(){
-	    // this does not affect EVER_DISABLED_FWT.
-	    if (!canReceiveSolicited()) 
-	        return false;
-
-	    if (!connectionServices.isConnected())
-	        return !ConnectionSettings.LAST_FWT_STATE.getValue();
-	    
-	    boolean ret = true;
-	    synchronized(this) {     	
-	        if (_numReceivedIPPongs < 1) 
-	            return !ConnectionSettings.LAST_FWT_STATE.getValue();
-	        
-	        if (LOG.isTraceEnabled()) {
-	            LOG.trace("stable "+_portStable+
-	                    " last reported port "+_lastReportedPort+
-	                    " our external port "+networkManager.getPort()+
-	                    " our non-forced port "+acceptor.get().getPort(false)+
-	                    " number of received IP pongs "+_numReceivedIPPongs+
-	                    " valid external addr "+NetworkUtils.isValidAddress(
-	                            networkManager.getExternalAddress()));
-	        }
-	        // System.out.println("DEBUG PING PORT stable "+_portStable+
-	        //            " last reported port "+_lastReportedPort+
-	        //            " our external port "+networkManager.getPort()+
-	        //            " our non-forced port "+acceptor.get().getPort(false)+
-	        //            " number of received IP pongs "+_numReceivedIPPongs+
-	        //            " valid external addr "+NetworkUtils.isValidAddress(
-	        //                    networkManager.getExternalAddress()));
-	        
-	        ret= 
-	            NetworkUtils.isValidAddress(networkManager.getExternalAddress()) && 
-	    		_portStable;
-	        
-	        if (_numReceivedIPPongs == 1){
-	            ret = ret &&
-	            	(_lastReportedPort == acceptor.get().getPort(false) ||
-	                    _lastReportedPort == networkManager.getPort());
-	        }
-	    }
-	    
-	    ConnectionSettings.LAST_FWT_STATE.setValue(!ret);
-	    
-	    return ret;
+//	    // this does not affect EVER_DISABLED_FWT.
+//	    if (!canReceiveSolicited()) 
+//	        return false;
+//
+//	    if (!connectionServices.isConnected())
+//	        return !ConnectionSettings.LAST_FWT_STATE.getValue();
+//	    
+//	    boolean ret = true;
+//	    synchronized(this) {     	
+//	        if (_numReceivedIPPongs < 1) 
+//	            return !ConnectionSettings.LAST_FWT_STATE.getValue();
+//	        
+//	        if (LOG.isTraceEnabled()) {
+//	            LOG.trace("stable "+_portStable+
+//	                    " last reported port "+_lastReportedPort+
+//	                    " our external port "+networkManager.getPort()+
+//	                    " our non-forced port "+acceptor.get().getPort(false)+
+//	                    " number of received IP pongs "+_numReceivedIPPongs+
+//	                    " valid external addr "+NetworkUtils.isValidAddress(
+//	                            networkManager.getExternalAddress()));
+//	        }
+//	        // System.out.println("DEBUG PING PORT stable "+_portStable+
+//	        //            " last reported port "+_lastReportedPort+
+//	        //            " our external port "+networkManager.getPort()+
+//	        //            " our non-forced port "+acceptor.get().getPort(false)+
+//	        //            " number of received IP pongs "+_numReceivedIPPongs+
+//	        //            " valid external addr "+NetworkUtils.isValidAddress(
+//	        //                    networkManager.getExternalAddress()));
+//	        
+//	        ret= 
+//	            NetworkUtils.isValidAddress(networkManager.getExternalAddress()) && 
+//	    		_portStable;
+//	        
+//	        if (_numReceivedIPPongs == 1){
+//	            ret = ret &&
+//	            	(_lastReportedPort == acceptor.get().getPort(false) ||
+//	                    _lastReportedPort == networkManager.getPort());
+//	        }
+//	    }
+//	    
+//	    ConnectionSettings.LAST_FWT_STATE.setValue(!ret);
+//	    
+//	    return ret;
+	    return false;
 	}
 	
 	// Some getters for bug reporting 
@@ -714,21 +707,22 @@ public class UDPService implements ReadWriteObserver {
 	 * RouterService thinks our port is.
 	 */
 	public int getStableUDPPort() {
-
-	    int localPort = acceptor.get().getPort(false);
-	    int forcedPort = networkManager.getPort();
-
-	    synchronized(this) {
-	        if (_portStable && _numReceivedIPPongs > 1)
-	            return _lastReportedPort;
-
-		if (_numReceivedIPPongs == 1 &&
-			(localPort == _lastReportedPort || 
-				forcedPort == _lastReportedPort))
-		    return _lastReportedPort;
-	    }
-
-	    return forcedPort; // we haven't received an ippong.
+//
+//	    int localPort = acceptor.get().getPort(false);
+//	    int forcedPort = networkManager.getPort();
+//
+//	    synchronized(this) {
+//	        if (_portStable && _numReceivedIPPongs > 1)
+//	            return _lastReportedPort;
+//
+//		if (_numReceivedIPPongs == 1 &&
+//			(localPort == _lastReportedPort || 
+//				forcedPort == _lastReportedPort))
+//		    return _lastReportedPort;
+//	    }
+//
+//	    return forcedPort; // we haven't received an ippong.
+	    return 0;
 	}
 
 	/**
@@ -778,50 +772,6 @@ public class UDPService implements ReadWriteObserver {
         
         public void registered(byte[] guid) {}
         public void unregistered(byte[] guid) {}
-    }
-
-    private class IncomingValidator implements Runnable {
-        public IncomingValidator() {}
-        public void run() {
-            // clear and revalidate if 1) we haven't had in incoming in an hour
-            // or 2) we've never had incoming and we haven't checked in an hour
-            final long currTime = System.currentTimeMillis();
-            if (
-                (_acceptedUnsolicitedIncoming && //1)
-                 ((currTime - _lastUnsolicitedIncomingTime) > 
-                  acceptor.get().getIncomingExpireTime())) 
-                || 
-                (!_acceptedUnsolicitedIncoming && //2)
-                 ((currTime - _lastConnectBackTime) > 
-                 acceptor.get().getIncomingExpireTime()))
-                ) {
-                
-                final GUID cbGuid = new GUID(GUID.makeGuid());
-                final MLImpl ml = new MLImpl();
-                messageRouter.get().registerMessageListener(cbGuid.bytes(), ml);
-                // send a connectback request to a few peers and clear
-                if(connectionManager.get().sendUDPConnectBackRequests(cbGuid))  {
-                    _lastConnectBackTime = System.currentTimeMillis();
-                    Runnable checkThread = new Runnable() {
-                            public void run() {
-                                if ((_acceptedUnsolicitedIncoming && 
-                                     (_lastUnsolicitedIncomingTime < currTime))
-                                    || (!_acceptedUnsolicitedIncoming)) {
-                                    // we set according to the message listener
-                                    _acceptedUnsolicitedIncoming = 
-                                        ml._gotIncoming;
-                                }
-                                messageRouter.get().unregisterMessageListener(cbGuid.bytes(), ml);
-                            }
-                        };
-                    backgroundExecutor.schedule(checkThread, 
-                            acceptor.get().getWaitTimeAfterRequests(),
-                            TimeUnit.MILLISECONDS);
-                }
-                else
-                    messageRouter.get().unregisterMessageListener(cbGuid.bytes(), ml);
-            }
-        }
     }
 
     private class PeriodicPinger implements Runnable {

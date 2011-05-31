@@ -29,7 +29,6 @@ public class SearchServicesImpl implements SearchServices {
     private final Provider<QueryUnicaster> queryUnicaster;
     private final Provider<SearchResultHandler> searchResultHandler;
     private final Provider<MessageRouter> messageRouter;
-    private final Provider<ConnectionServices> connectionServices;
     private final Provider<QueryDispatcher> queryDispatcher;
     private final Provider<MutableGUIDFilter> mutableGUIDFilter;
     private final Provider<QueryStats> queryStats; 
@@ -42,7 +41,6 @@ public class SearchServicesImpl implements SearchServices {
             Provider<QueryUnicaster> queryUnicaster,
             Provider<SearchResultHandler> searchResultHandler,
             Provider<MessageRouter> messageRouter,
-            Provider<ConnectionServices> connectionServices,
             Provider<QueryDispatcher> queryDispatcher,
             Provider<MutableGUIDFilter> mutableGUIDFilter,
             Provider<QueryStats> queryStats,
@@ -53,7 +51,6 @@ public class SearchServicesImpl implements SearchServices {
         this.queryUnicaster = queryUnicaster;
         this.searchResultHandler = searchResultHandler;
         this.messageRouter = messageRouter;
-        this.connectionServices = connectionServices;
         this.queryDispatcher = queryDispatcher;
         this.mutableGUIDFilter = mutableGUIDFilter;
         this.queryStats = queryStats;
@@ -87,12 +84,12 @@ public class SearchServicesImpl implements SearchServices {
      * @see com.limegroup.gnutella.SearchServices#stopQuery(com.limegroup.gnutella.GUID)
      */
     public void stopQuery(GUID guid) {
-        queryUnicaster.get().purgeQuery(guid);
-        searchResultHandler.get().removeQuery(guid);
-        messageRouter.get().queryKilled(guid);
-        if(connectionServices.get().isSupernode())
-            queryDispatcher.get().addToRemove(guid);
-        mutableGUIDFilter.get().removeGUID(guid.bytes());
+//        queryUnicaster.get().purgeQuery(guid);
+//        searchResultHandler.get().removeQuery(guid);
+//        messageRouter.get().queryKilled(guid);
+//        if(connectionServices.get().isSupernode())
+//            queryDispatcher.get().addToRemove(guid);
+//        mutableGUIDFilter.get().removeGUID(guid.bytes());
     }
 
     /* (non-Javadoc)

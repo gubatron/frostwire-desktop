@@ -157,14 +157,14 @@ public class SharedFilesTransferHandler extends LimeTransferHandler {
 		}
 		
 		if (!dirs.isEmpty()) {
-			final RecursiveSharingDialog dialog = new RecursiveSharingDialog(GUIMediator.getAppFrame(), dirs.toArray(new File[0]));
-			if (dialog.showChooseDialog(MessageService.getParentComponent()) == State.OK) {
-				BackgroundExecutorService.schedule(new Runnable() {
-					public void run() {
-						fileManager.addSharedFolders(dialog.getRootsToShare(), dialog.getFoldersToExclude());
-					}
-				});
-			}
+//			final RecursiveSharingDialog dialog = new RecursiveSharingDialog(GUIMediator.getAppFrame(), dirs.toArray(new File[0]));
+//			if (dialog.showChooseDialog(MessageService.getParentComponent()) == State.OK) {
+//				BackgroundExecutorService.schedule(new Runnable() {
+//					public void run() {
+//						fileManager.addSharedFolders(dialog.getRootsToShare(), dialog.getFoldersToExclude());
+//					}
+//				});
+//			}
 		}
 		
 		BackgroundExecutorService.schedule(new Runnable() {

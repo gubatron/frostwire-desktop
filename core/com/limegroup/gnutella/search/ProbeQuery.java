@@ -102,19 +102,19 @@ final class ProbeQuery {
         LinkedList<RoutedConnection> oldConnections  = new LinkedList<RoutedConnection>();
         LinkedList<RoutedConnection> hitConnections  = new LinkedList<RoutedConnection>();
 
-        // iterate through our connections, adding them to the hit, miss, or
-        // old connections list
-        for(RoutedConnection mc : connections) {
-            if(mc.getConnectionCapabilities().isUltrapeerQueryRoutingConnection()) {
-                if(mc.shouldForwardQuery(query)) { 
-                    hitConnections.add(mc);
-                } else {
-                    missConnections.add(mc);
-                }
-            } else {
-                oldConnections.add(mc);
-            }
-        }
+//        // iterate through our connections, adding them to the hit, miss, or
+//        // old connections list
+//        for(RoutedConnection mc : connections) {
+//            if(mc.getConnectionCapabilities().isUltrapeerQueryRoutingConnection()) {
+//                if(mc.shouldForwardQuery(query)) { 
+//                    hitConnections.add(mc);
+//                } else {
+//                    missConnections.add(mc);
+//                }
+//            } else {
+//                oldConnections.add(mc);
+//            }
+//        }
 
         // final list of connections to query
         List<List<RoutedConnection>> returnLists = new ArrayList<List<RoutedConnection>>(2);

@@ -103,12 +103,10 @@ class NodeAssignerImpl implements NodeAssigner {
 
     private final Provider<BandwidthTracker> uploadTracker;
     private final Provider<BandwidthTracker> downloadTracker;
-    private final Provider<ConnectionManager> connectionManager;
     private final NetworkManager networkManager;
     private final SearchServices searchServices;
     private final ScheduledExecutorService backgroundExecutor;
     private final Executor unlimitedExecutor;
-    private final ConnectionServices connectionServices;
     private final TcpBandwidthStatistics tcpBandwidthStatistics;
     private final NetworkInstanceUtils networkInstanceUtils;
     
@@ -125,21 +123,17 @@ class NodeAssignerImpl implements NodeAssigner {
     @Inject
     public NodeAssignerImpl(@Named("uploadTracker") Provider<BandwidthTracker>uploadTracker, 
                         @Named("downloadTracker") Provider<BandwidthTracker> downloadTracker,
-                        Provider<ConnectionManager> connectionManager,
                         NetworkManager networkManager,
                         SearchServices searchServices,
                         @Named("backgroundExecutor") ScheduledExecutorService backgroundExecutor,
                         @Named("unlimitedExecutor") Executor unlimitedExecutor,
-                        ConnectionServices connectionServices,
                         TcpBandwidthStatistics tcpBandwidthStatistics,
                         NetworkInstanceUtils networkInstanceUtils) {
         this.uploadTracker = uploadTracker;
         this.downloadTracker = downloadTracker;  
-        this.connectionManager = connectionManager;
         this.networkManager = networkManager;
         this.searchServices = searchServices;
         this.backgroundExecutor = backgroundExecutor;
-        this.connectionServices = connectionServices;
         this.unlimitedExecutor = unlimitedExecutor;
         this.tcpBandwidthStatistics = tcpBandwidthStatistics;
         this.networkInstanceUtils = networkInstanceUtils;
@@ -175,36 +169,35 @@ class NodeAssignerImpl implements NodeAssigner {
      * and downloads.
      */
     private void collectBandwidthData() {
-        _currentUptime += TIMER_DELAY_IN_SECONDS;
-        uploadTracker.get().measureBandwidth();
-        downloadTracker.get().measureBandwidth();
-        connectionManager.get().measureBandwidth();
-        float bandwidth = 0;
-        try {
-            bandwidth = uploadTracker.get().getMeasuredBandwidth();
-        }catch(InsufficientDataException ide) {
-            bandwidth = 0;
-        }
-        int newUpstreamBytesPerSec = 
-            (int)bandwidth
-           +(int)connectionManager.get().getMeasuredUpstreamBandwidth();
-        bandwidth = 0;
-        try {
-            bandwidth = downloadTracker.get().getMeasuredBandwidth();
-        } catch (InsufficientDataException ide) {
-            bandwidth = 0;
-        }
-        int newDownstreamBytesPerSec = 
-            (int)bandwidth
-           +(int)connectionManager.get().getMeasuredDownstreamBandwidth();
-        if(newUpstreamBytesPerSec > _maxUpstreamBytesPerSec) {
-            _maxUpstreamBytesPerSec = newUpstreamBytesPerSec;
-            UploadSettings.MAX_UPLOAD_BYTES_PER_SEC.setValue(_maxUpstreamBytesPerSec);
-        }
-        if(newDownstreamBytesPerSec > _maxDownstreamBytesPerSec) {
-            _maxDownstreamBytesPerSec = newDownstreamBytesPerSec;
-            DownloadSettings.MAX_DOWNLOAD_BYTES_PER_SEC.setValue(_maxDownstreamBytesPerSec);
-        }
+//        _currentUptime += TIMER_DELAY_IN_SECONDS;
+//        uploadTracker.get().measureBandwidth();
+//        downloadTracker.get().measureBandwidth();
+//        float bandwidth = 0;
+//        try {
+//            bandwidth = uploadTracker.get().getMeasuredBandwidth();
+//        }catch(InsufficientDataException ide) {
+//            bandwidth = 0;
+//        }
+//        int newUpstreamBytesPerSec = 
+//            (int)bandwidth
+//           +(int)connectionManager.get().getMeasuredUpstreamBandwidth();
+//        bandwidth = 0;
+//        try {
+//            bandwidth = downloadTracker.get().getMeasuredBandwidth();
+//        } catch (InsufficientDataException ide) {
+//            bandwidth = 0;
+//        }
+//        int newDownstreamBytesPerSec = 
+//            (int)bandwidth
+//           +(int)connectionManager.get().getMeasuredDownstreamBandwidth();
+//        if(newUpstreamBytesPerSec > _maxUpstreamBytesPerSec) {
+//            _maxUpstreamBytesPerSec = newUpstreamBytesPerSec;
+//            UploadSettings.MAX_UPLOAD_BYTES_PER_SEC.setValue(_maxUpstreamBytesPerSec);
+//        }
+//        if(newDownstreamBytesPerSec > _maxDownstreamBytesPerSec) {
+//            _maxDownstreamBytesPerSec = newDownstreamBytesPerSec;
+//            DownloadSettings.MAX_DOWNLOAD_BYTES_PER_SEC.setValue(_maxDownstreamBytesPerSec);
+//        }
     }
     
     /**
@@ -243,73 +236,73 @@ class NodeAssignerImpl implements NodeAssigner {
      * @return true if we are or will try to become an ultrapeer, false otherwise
      */
     private void assignUltrapeerNode() {
-        if (UltrapeerSettings.DISABLE_ULTRAPEER_MODE.getValue()) {
-            LOG.debug("Ultrapeer mode disabled");
-            UltrapeerSettings.EVER_ULTRAPEER_CAPABLE.setValue(false);
-            return;
-        }
-        
-        // If we're already an Ultrapeer then don't bother
-        if (connectionServices.isSupernode()) {
-            LOG.debug("Already an ultrapeer, exiting");
-            return;
-        }
-        
-        boolean avgUptimePasses = ApplicationSettings.AVERAGE_UPTIME.getValue() >= UltrapeerSettings.MIN_AVG_UPTIME.getValue();
-        boolean curUptimePasses = _currentUptime >= UltrapeerSettings.MIN_INITIAL_UPTIME.getValue();
-        boolean uptimePasses = avgUptimePasses | curUptimePasses;
-        
-        boolean isUltrapeerCapable = _isHardcoreCapable && uptimePasses && networkManager.isGUESSCapable();
-        
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Node is ultrapeer capable: " + isUltrapeerCapable + "(hc: "
-                    + _isHardcoreCapable + ", up: " + uptimePasses + ", gc: "
-                    + networkManager.isGUESSCapable());
-        }
-
-        long curTime = System.currentTimeMillis();
-
-        // check if this node has such good values that we simply can't pass
-        // it up as an Ultrapeer -- it will just get forced to be one
-        _isTooGoodUltrapeerToPassUp = isUltrapeerCapable &&
-            networkManager.acceptedIncomingConnection() &&
-            (curTime - searchServices.getLastQueryTime() > 5*60*1000) &&
-            (tcpBandwidthStatistics.getAverageHttpUpstream() < 1);
-
-        if(LOG.isDebugEnabled()) {
-            LOG.debug("Node is "+(_isTooGoodUltrapeerToPassUp?"":"NOT")+" to good to pass up");
-        }
-        
-        // record new ultrapeer capable value.
-        if(isUltrapeerCapable)
-            UltrapeerSettings.EVER_ULTRAPEER_CAPABLE.setValue(true);
-
-        if(_isTooGoodUltrapeerToPassUp && 
-                shouldTryToBecomeAnUltrapeer(curTime) && 
-                switchFromActiveDHTNodeToUltrapeer()) {
-            
-            if(LOG.isDebugEnabled()) {
-                LOG.debug("Node WILL try to become an ultrapeer");
-            }
-            
-            _ultrapeerTries++;
-            // try to become an Ultrapeer -- how persistent we are depends on
-            // how many times we've tried, and so how long we've been
-            // running for
-            final int demotes = 4 * _ultrapeerTries;
-            Runnable ultrapeerRunner = new Runnable() {
-                public void run() {
-                    connectionManager.get().tryToBecomeAnUltrapeer(demotes);
-                }
-            };
-                
-            unlimitedExecutor.execute(ultrapeerRunner);
-            return;
-        } 
-        
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Node will not try to become an ultrapeer");
-        }
+//        if (UltrapeerSettings.DISABLE_ULTRAPEER_MODE.getValue()) {
+//            LOG.debug("Ultrapeer mode disabled");
+//            UltrapeerSettings.EVER_ULTRAPEER_CAPABLE.setValue(false);
+//            return;
+//        }
+//        
+//        // If we're already an Ultrapeer then don't bother
+//        if (connectionServices.isSupernode()) {
+//            LOG.debug("Already an ultrapeer, exiting");
+//            return;
+//        }
+//        
+//        boolean avgUptimePasses = ApplicationSettings.AVERAGE_UPTIME.getValue() >= UltrapeerSettings.MIN_AVG_UPTIME.getValue();
+//        boolean curUptimePasses = _currentUptime >= UltrapeerSettings.MIN_INITIAL_UPTIME.getValue();
+//        boolean uptimePasses = avgUptimePasses | curUptimePasses;
+//        
+//        boolean isUltrapeerCapable = _isHardcoreCapable && uptimePasses && networkManager.isGUESSCapable();
+//        
+//        if (LOG.isDebugEnabled()) {
+//            LOG.debug("Node is ultrapeer capable: " + isUltrapeerCapable + "(hc: "
+//                    + _isHardcoreCapable + ", up: " + uptimePasses + ", gc: "
+//                    + networkManager.isGUESSCapable());
+//        }
+//
+//        long curTime = System.currentTimeMillis();
+//
+//        // check if this node has such good values that we simply can't pass
+//        // it up as an Ultrapeer -- it will just get forced to be one
+//        _isTooGoodUltrapeerToPassUp = isUltrapeerCapable &&
+//            networkManager.acceptedIncomingConnection() &&
+//            (curTime - searchServices.getLastQueryTime() > 5*60*1000) &&
+//            (tcpBandwidthStatistics.getAverageHttpUpstream() < 1);
+//
+//        if(LOG.isDebugEnabled()) {
+//            LOG.debug("Node is "+(_isTooGoodUltrapeerToPassUp?"":"NOT")+" to good to pass up");
+//        }
+//        
+//        // record new ultrapeer capable value.
+//        if(isUltrapeerCapable)
+//            UltrapeerSettings.EVER_ULTRAPEER_CAPABLE.setValue(true);
+//
+//        if(_isTooGoodUltrapeerToPassUp && 
+//                shouldTryToBecomeAnUltrapeer(curTime) && 
+//                switchFromActiveDHTNodeToUltrapeer()) {
+//            
+//            if(LOG.isDebugEnabled()) {
+//                LOG.debug("Node WILL try to become an ultrapeer");
+//            }
+//            
+//            _ultrapeerTries++;
+//            // try to become an Ultrapeer -- how persistent we are depends on
+//            // how many times we've tried, and so how long we've been
+//            // running for
+//            final int demotes = 4 * _ultrapeerTries;
+//            Runnable ultrapeerRunner = new Runnable() {
+//                public void run() {
+//                    connectionManager.get().tryToBecomeAnUltrapeer(demotes);
+//                }
+//            };
+//                
+//            unlimitedExecutor.execute(ultrapeerRunner);
+//            return;
+//        } 
+//        
+//        if (LOG.isDebugEnabled()) {
+//            LOG.debug("Node will not try to become an ultrapeer");
+//        }
     }
     
     /**
@@ -362,8 +355,7 @@ class NodeAssignerImpl implements NodeAssigner {
     }
     
     private long getAverageTime() {
-        return Math.max(connectionManager.get().getCurrentAverageUptime(),
-                ApplicationSettings.AVERAGE_CONNECTION_TIME.getValue());
+        return 0;
     }
 
 }

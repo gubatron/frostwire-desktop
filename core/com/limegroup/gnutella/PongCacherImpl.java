@@ -29,12 +29,9 @@ public final class PongCacherImpl implements PongCacher {
     private final Map<String, BucketQueue<PingReply>> PONGS =
         new HashMap<String, BucketQueue<PingReply>>();
 
-
-    private final ConnectionServices connectionServices;
     
     @Inject
-    public PongCacherImpl(ConnectionServices connectionServices) {
-        this.connectionServices = connectionServices;
+    public PongCacherImpl() {
     }
 
     /**
@@ -151,27 +148,27 @@ public final class PongCacherImpl implements PongCacher {
      * @param pr the <tt>PingReply</tt> to add
      */
     public void addPong(PingReply pr) {
-        // if we're not an Ultrapeer, we don't care about caching the pong
-        if (!connectionServices.isSupernode())
-            return;
-
-        // Make sure we don't cache pongs that aren't from Ultrapeers.
-        if(!pr.isUltrapeer()) return;      
-        
-        // if the hops are too high, ignore it
-        if(pr.getHops() >= NUM_HOPS) return;
-        synchronized(PONGS) {
-            //check the map for the locale and create or retrieve the set
-            if(PONGS.containsKey(pr.getClientLocale())) {
-                BucketQueue<PingReply> bq = PONGS.get(pr.getClientLocale());
-                bq.insert(pr, pr.getHops());
-            }
-            else {
-                BucketQueue<PingReply> bq = new BucketQueue<PingReply>(NUM_HOPS, NUM_PONGS_PER_HOP);
-                bq.insert(pr, pr.getHops());
-                PONGS.put(pr.getClientLocale(), bq);
-            }
-        }
+//        // if we're not an Ultrapeer, we don't care about caching the pong
+//        if (!connectionServices.isSupernode())
+//            return;
+//
+//        // Make sure we don't cache pongs that aren't from Ultrapeers.
+//        if(!pr.isUltrapeer()) return;      
+//        
+//        // if the hops are too high, ignore it
+//        if(pr.getHops() >= NUM_HOPS) return;
+//        synchronized(PONGS) {
+//            //check the map for the locale and create or retrieve the set
+//            if(PONGS.containsKey(pr.getClientLocale())) {
+//                BucketQueue<PingReply> bq = PONGS.get(pr.getClientLocale());
+//                bq.insert(pr, pr.getHops());
+//            }
+//            else {
+//                BucketQueue<PingReply> bq = new BucketQueue<PingReply>(NUM_HOPS, NUM_PONGS_PER_HOP);
+//                bq.insert(pr, pr.getHops());
+//                PONGS.put(pr.getClientLocale(), bq);
+//            }
+//        }
     }
 }
 

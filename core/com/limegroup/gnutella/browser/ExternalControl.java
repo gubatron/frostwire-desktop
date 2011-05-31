@@ -16,7 +16,6 @@ import org.limewire.i18n.I18nMarker;
 import org.limewire.io.ByteReader;
 import org.limewire.io.IOUtils;
 import org.limewire.io.NetworkUtils;
-import org.limewire.net.SocketsManager;
 import org.limewire.service.ErrorService;
 import org.limewire.service.MessageService;
 import org.limewire.util.CommonUtils;
@@ -43,15 +42,12 @@ public class ExternalControl {
     
     private final DownloadServices downloadServices;
     private final Provider<ActivityCallback> activityCallback;
-    private final SocketsManager socketsManager;
     
     @Inject
     public ExternalControl(DownloadServices downloadServices,
-            Provider<ActivityCallback> activityCallback,
-            SocketsManager socketsManager) {
+            Provider<ActivityCallback> activityCallback) {
         this.downloadServices = downloadServices;
         this.activityCallback = activityCallback;
-        this.socketsManager = socketsManager;
     }
 
     public String preprocessArgs(String args[]) {
@@ -298,29 +294,29 @@ public class ExternalControl {
 		    ConnectionSettings.PORT.revertToDefault();
 		    port = ConnectionSettings.PORT.getValue();
         }   
-		try {
-			socket = socketsManager.connect(new InetSocketAddress(LOCALHOST, port), 1000);
-			InputStream istream = socket.getInputStream(); 
-			socket.setSoTimeout(1000); 
-		    ByteReader byteReader = new ByteReader(istream);
-		    OutputStream os = socket.getOutputStream();
-		    OutputStreamWriter osw = new OutputStreamWriter(os);
-		    BufferedWriter out = new BufferedWriter(osw);
-		    out.write(type+" "+arg+" ");
-		    out.write("\r\n");
-		    out.flush();
-		    String str = byteReader.readLine();
-		    return(str != null && str.startsWith(CommonUtils.getUserName()));
-		} catch (IOException e2) {
-		} finally {
-		    if(socket != null) {
-		        try {
-                    socket.close();
-                } catch (IOException e) {
-                    // nothing we can do
-                }
-            }
-        }
+//		try {
+//			socket = socketsManager.connect(new InetSocketAddress(LOCALHOST, port), 1000);
+//			InputStream istream = socket.getInputStream(); 
+//			socket.setSoTimeout(1000); 
+//		    ByteReader byteReader = new ByteReader(istream);
+//		    OutputStream os = socket.getOutputStream();
+//		    OutputStreamWriter osw = new OutputStreamWriter(os);
+//		    BufferedWriter out = new BufferedWriter(osw);
+//		    out.write(type+" "+arg+" ");
+//		    out.write("\r\n");
+//		    out.flush();
+//		    String str = byteReader.readLine();
+//		    return(str != null && str.startsWith(CommonUtils.getUserName()));
+//		} catch (IOException e2) {
+//		} finally {
+//		    if(socket != null) {
+//		        try {
+//                    socket.close();
+//                } catch (IOException e) {
+//                    // nothing we can do
+//                }
+//            }
+//        }
         
 	    return false;
 	}

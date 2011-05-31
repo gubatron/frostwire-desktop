@@ -29,9 +29,9 @@ import com.limegroup.gnutella.messages.vendor.VendorMessage;
  */
 public interface Connection extends IpPort, Connectable {
 
-    public ConnectionCapabilities getConnectionCapabilities();
+    //public ConnectionCapabilities getConnectionCapabilities();
 
-    public ConnectionBandwidthStatistics getConnectionBandwidthStatistics();
+    //public ConnectionBandwidthStatistics getConnectionBandwidthStatistics();
 
     /**
      * Call this method when you want to handle us to handle a VM. We may....

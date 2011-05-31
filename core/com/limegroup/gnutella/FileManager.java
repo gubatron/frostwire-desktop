@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeoutException;
 
-import com.limegroup.gnutella.downloader.VerifyingFile;
 import com.limegroup.gnutella.messages.QueryRequest;
 import com.limegroup.gnutella.routing.QueryRouteTable;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
@@ -188,22 +187,7 @@ public interface FileManager {
      */
     public abstract void removeFolderIfShared(File folder);
 
-    /**
-     * Adds a set of folders to be shared and a black list of subfolders that should
-     * not be shared.
-     * 
-     * @param folders set of folders to  be shared
-     * @param blackListedSet the subfolders or subsubfolders that are not to be
-     * shared
-     */
-    public abstract void addSharedFolders(Set<File> folders, Set<File> blackListedSet);
-
     public abstract Set<File> getFolderNotToShare();
-
-    /**
-     * Adds a given folder to be shared.
-     */
-    public abstract boolean addSharedFolder(File folder);
 
     /**
      * Always shares the given file.
@@ -284,19 +268,6 @@ public interface FileManager {
      *  disk.
      */
     public abstract FileDesc removeFileIfShared(File f);
-
-    /**
-     * Adds an incomplete file to be used for partial file sharing.
-     *
-     * @modifies this
-     * @param incompleteFile the incomplete file.
-     * @param urns the set of all known URNs for this incomplete file
-     * @param name the completed name of this incomplete file
-     * @param size the completed size of this incomplete file
-     * @param vf the VerifyingFile containing the ranges for this inc. file
-     */
-    public abstract void addIncompleteFile(File incompleteFile, Set<? extends URN> urns,
-            String name, long size, VerifyingFile vf);
 
     /**
      * Notification that a file has changed and new hashes should be

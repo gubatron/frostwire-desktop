@@ -28,7 +28,6 @@ public final class Pinger implements Runnable {
     public static final int PING_INTERVAL = 3000;
     
     private final ScheduledExecutorService backgroundExecutor;
-    private final ConnectionServices connectionServices;
     private final Provider<MessageRouter> messageRouter;
 
     private final PingRequestFactory pingRequestFactory;
@@ -36,11 +35,9 @@ public final class Pinger implements Runnable {
     @Inject
     public Pinger(
             @Named("backgroundExecutor") ScheduledExecutorService backgroundExecutor,
-            ConnectionServices connectionServices,
             Provider<MessageRouter> messageRouter,
             PingRequestFactory pingRequestFactory) {
         this.backgroundExecutor = backgroundExecutor;
-        this.connectionServices = connectionServices;
         this.messageRouter = messageRouter;
         this.pingRequestFactory = pingRequestFactory;
     }
@@ -59,9 +56,9 @@ public final class Pinger implements Runnable {
      * Broadcasts a ping to all connections.
      */
     public void run() {
-        if (connectionServices.isSupernode() && PingPongSettings.PINGS_ACTIVE.getValue()) {
-            messageRouter.get().broadcastPingRequest(pingRequestFactory.createPingRequest((byte) 3));
-        }
+//        if (connectionServices.isSupernode() && PingPongSettings.PINGS_ACTIVE.getValue()) {
+//            messageRouter.get().broadcastPingRequest(pingRequestFactory.createPingRequest((byte) 3));
+//        }
     }
 }
 

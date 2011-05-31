@@ -88,8 +88,7 @@ public final class Initializer {
 
         // Various tasks that can be done after core is glued & started.
         //System.out.println("Initializer.initialize() glue core");
-        glueCore(limeWireCore);        
-        validateEarlyCore(limeWireCore);
+        glueCore(limeWireCore);       
         
         // Validate any arguments or properties outside of the LW environment.
         //System.out.println("Initializer.initialize() run external checks");
@@ -233,14 +232,6 @@ public final class Initializer {
     /** Wires together remaining non-Guiced pieces. */
     private void glueCore(LimeWireCore limeWireCore) {
         limeWireCore.getLimeCoreGlue().install();
-    }
-    
-    /** Tasks that can be done after core is created, before it's started. */
-    private void validateEarlyCore(LimeWireCore limeWireCore) {        
-        // See if our NIODispatcher clunked out.
-        if(!limeWireCore.getNIODispatcher().isRunning()) {
-            failInternetBlocked();
-        }
     }
     
     /**

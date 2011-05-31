@@ -8,10 +8,10 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.gudy.azureus2.plugins.network.ConnectionManager;
 import org.limewire.inspection.Inspectable;
 import org.limewire.service.ErrorService;
 
-import com.limegroup.gnutella.ConnectionManager;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MessageRouter;
 import com.limegroup.gnutella.ReplyHandler;
@@ -296,26 +296,26 @@ final class QueryHandlerImpl implements Inspectable, QueryHandler {
 
         // 2) If we haven't sent the probe query, send it
         if (!_probeQuerySent) {
-            ProbeQuery pq = new ProbeQuery(connectionManager.getInitializedConnections(), this);
-            long timeToWait = pq.getTimeToWait();
-            _theoreticalHostsQueried += pq.sendProbe();
-            _nextQueryTime = System.currentTimeMillis() + timeToWait;
-            _probeQuerySent = true;
-            return;
+//            ProbeQuery pq = new ProbeQuery(connectionManager.getInitializedConnections(), this);
+//            long timeToWait = pq.getTimeToWait();
+//            _theoreticalHostsQueried += pq.sendProbe();
+//            _nextQueryTime = System.currentTimeMillis() + timeToWait;
+//            _probeQuerySent = true;
+//            return;
         }
 
         // 3) If we haven't yet satisfied the query, keep trying
         else {
             // Otherwise, just send a normal query -- make a copy of the
             // connections because we'll be modifying it.
-            int newHosts = sendQuery(new ArrayList<RoutedConnection>(connectionManager
-                    .getInitializedConnections()));
-            if (newHosts == 0) {
-                // if we didn't query any new hosts, wait awhile for new
-                // connections to potentially appear
-                _nextQueryTime = System.currentTimeMillis() + 6000;
-            }
-            _theoreticalHostsQueried += newHosts;
+//            int newHosts = sendQuery(new ArrayList<RoutedConnection>(connectionManager
+//                    .getInitializedConnections()));
+//            if (newHosts == 0) {
+//                // if we didn't query any new hosts, wait awhile for new
+//                // connections to potentially appear
+//                _nextQueryTime = System.currentTimeMillis() + 6000;
+//            }
+//            _theoreticalHostsQueried += newHosts;
 
             // if we've already queried quite a few hosts, not gotten
             // many results, and have been querying for awhile, start
@@ -364,111 +364,7 @@ final class QueryHandlerImpl implements Inspectable, QueryHandler {
      */
     int sendQuery(List<? extends RoutedConnection> ultrapeersAll) {
 
-        // we want to try to use all connections in ultrapeersLocale first.
-        List<? extends RoutedConnection> ultrapeers = // method returns a copy
-        connectionManager.getInitializedConnectionsMatchLocale(_prefLocale);
-
-        QUERIED_CONNECTIONS.retainAll(ultrapeersAll);
-        QUERIED_PROBE_CONNECTIONS.retainAll(ultrapeersAll);
-
-        // if we did get a list of connections that matches the locale
-        // of the query
-        if (!ultrapeers.isEmpty()) {
-            ultrapeers.removeAll(QUERIED_CONNECTIONS);
-            ultrapeers.removeAll(QUERIED_PROBE_CONNECTIONS);
-            // at this point ultrapeers could become empty
-        }
-
-        if (ultrapeers.isEmpty()) {
-            ultrapeers = ultrapeersAll;
-            // now, remove any connections we've used from our current list
-            // of connections to try
-            ultrapeers.removeAll(QUERIED_CONNECTIONS);
-            ultrapeers.removeAll(QUERIED_PROBE_CONNECTIONS);
-        }
-
-        int length = ultrapeers.size();
-        if (LOG.isTraceEnabled())
-            LOG.trace("potential querier size: " + length);
-        byte ttl = 0;
-        RoutedConnection mc = null;
-
-        // add randomization to who we send our queries to
-        Collections.shuffle(ultrapeers);
-
-        // weed out all connections that aren't yet stable
-        for (int i = 0; i < length; i++) {
-            RoutedConnection curConnection = ultrapeers.get(i);
-
-            // if the connection hasn't been up for long, don't use it,
-            // as the replies will never make it back to us if the
-            // connection is dropped, wasting bandwidth
-            if (!curConnection.isStable(_curTime))
-                continue;
-            mc = curConnection;
-            break;
-        }
-
-        int remainingConnections = Math.max(length + QUERIED_PROBE_CONNECTIONS.size(), 0);
-
-        // return if we don't have any connections to query at this time
-        if (remainingConnections == 0)
-            return 0;
-
-        // pretend we have fewer connections than we do in case we
-        // lose some
-        if (remainingConnections > 4)
-            remainingConnections -= 4;
-
-        boolean probeConnection = false;
-
-        // mc can still be null if the list of connections was empty.
-        if (mc == null) {
-            // if we have no connections to query, simply return for now
-            if (QUERIED_PROBE_CONNECTIONS.isEmpty()) {
-                return 0;
-            }
-
-            // we actually remove this from the list to make sure that
-            // QUERIED_CONNECTIONS and QUERIED_PROBE_CONNECTIONS do
-            // not have any of the same entries, as this connection
-            // will be added to QUERIED_CONNECTIONS
-            mc = QUERIED_PROBE_CONNECTIONS.remove(0);
-            probeConnection = true;
-        }
-
-        int results = (_numResultsReportedByLeaf > 0 ? _numResultsReportedByLeaf : RESULT_COUNTER
-                .getNumResults());
-        double resultsPerHost = (double) results / (double) _theoreticalHostsQueried;
-
-        int resultsNeeded = RESULTS - results;
-        int hostsToQuery = 40000;
-        if (resultsPerHost != 0) {
-            hostsToQuery = (int) (resultsNeeded / resultsPerHost);
-        }
-
-        int hostsToQueryPerConnection = hostsToQuery / remainingConnections;
-        ;
-
-        ttl = calculateNewTTL(hostsToQueryPerConnection, mc.getConnectionCapabilities()
-                .getNumIntraUltrapeerConnections(), mc.getConnectionCapabilities().getHeadersRead()
-                .getMaxTTL());
-
-        // If we're sending the query down a probe connection and we've
-        // already used that connection, or that connection doesn't have
-        // a hit for the query, send it at TTL=2. In these cases,
-        // sending the query at TTL=1 is pointless because we've either
-        // already sent this query, or the Ultrapeer doesn't have a
-        // match anyway
-        if (ttl == 1
-                && ((mc.isUltrapeerQueryRoutingConnection() && !mc.shouldForwardQuery(QUERY)) || probeConnection)) {
-            ttl = 2;
-        }
-        QueryRequest query = createQuery(QUERY, ttl);
-
-        // send out the query on the network, returning the number of new
-        // hosts theoretically reached
-        return sendQueryToHost(query, mc);
+        return 0;
     }
 
     /*
@@ -492,13 +388,13 @@ final class QueryHandlerImpl implements Inspectable, QueryHandler {
         // adds the connection to the list of probe connections if it's
         // a TTL=1 query to a connection that supports probe extensions,
         // otherwise add it to the list of connections we've queried
-        if (ttl == 1 && mc.getConnectionCapabilities().supportsProbeQueries()) {
-            this.QUERIED_PROBE_CONNECTIONS.add(mc);
-        } else {
-            this.QUERIED_CONNECTIONS.add(mc);
-            if (LOG.isTraceEnabled())
-                LOG.trace("QUERIED_CONNECTIONS.size() = " + this.QUERIED_CONNECTIONS.size());
-        }
+//        if (ttl == 1 && mc.getConnectionCapabilities().supportsProbeQueries()) {
+//            this.QUERIED_PROBE_CONNECTIONS.add(mc);
+//        } else {
+//            this.QUERIED_CONNECTIONS.add(mc);
+//            if (LOG.isTraceEnabled())
+//                LOG.trace("QUERIED_CONNECTIONS.size() = " + this.QUERIED_CONNECTIONS.size());
+//        }
 
         if (LOG.isTraceEnabled())
             LOG.trace("Querying host " + mc.getAddress() + " with ttl " + query.getTTL());
@@ -548,8 +444,7 @@ final class QueryHandlerImpl implements Inspectable, QueryHandler {
      * @param ttl the TTL of the query to add
      */
     static int calculateNewHosts(RoutedConnection conn, byte ttl) {
-        return calculateNewHosts(
-                conn.getConnectionCapabilities().getNumIntraUltrapeerConnections(), ttl);
+        return 0;
     }
 
     /**

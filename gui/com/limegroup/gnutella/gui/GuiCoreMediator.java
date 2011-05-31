@@ -5,12 +5,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import org.limewire.io.NetworkInstanceUtils;
 
 import com.google.inject.Inject;
-import com.limegroup.gnutella.Acceptor;
 import com.limegroup.gnutella.ActivityCallback;
 import com.limegroup.gnutella.ApplicationServices;
-import com.limegroup.gnutella.BandwidthManager;
-import com.limegroup.gnutella.ConnectionManager;
-import com.limegroup.gnutella.ConnectionServices;
 import com.limegroup.gnutella.DownloadManager;
 import com.limegroup.gnutella.DownloadServices;
 import com.limegroup.gnutella.FileManager;
@@ -28,8 +24,6 @@ import com.limegroup.gnutella.UploadManager;
 import com.limegroup.gnutella.UploadServices;
 import com.limegroup.gnutella.altlocs.AltLocManager;
 import com.limegroup.gnutella.browser.ExternalControl;
-import com.limegroup.gnutella.browser.LocalAcceptor;
-import com.limegroup.gnutella.connection.ConnectionCheckerManager;
 import com.limegroup.gnutella.downloader.DiskController;
 import com.limegroup.gnutella.filters.IPFilter;
 import com.limegroup.gnutella.licenses.LicenseVerifier;
@@ -50,10 +44,8 @@ public class GuiCoreMediator {
     
     public static LimeWireCore getCore() { return core; }
     
-    public static Acceptor getAcceptor() {  return core.getAcceptor(); }    
     public static UDPService getUdpService() {  return core.getUdpService(); }    
     public static NetworkManager getNetworkManager() {  return core.getNetworkManager(); }    
-    public static ConnectionManager getConnectionManager() {  return core.getConnectionManager(); }    
     public static UploadManager getUploadManager() {  return core.getUploadManager(); }
     public static FileManager getFileManager() {  return core.getFileManager(); }
     public static UploadSlotManager getUploadSlotManager() {  return core.getUploadSlotManager(); }
@@ -61,10 +53,8 @@ public class GuiCoreMediator {
     public static DiskController getDiskController() {  return core.getDiskController(); }    
     public static LocalFileDetailsFactory getLocalFileDetailsFactory() {  return core.getLocalFileDetailsFactory(); }
     public static DownloadManager getDownloadManager() {  return core.getDownloadManager(); }
-    public static LocalAcceptor getLocalAcceptor() {  return core.getLocalAcceptor(); }
     public static AltLocManager getAltLocManager() {  return core.getAltLocManager(); }
     public static IPFilter getIpFilter() {  return core.getIpFilter(); }
-    public static BandwidthManager getBandwidthManager() {  return core.getBandwidthManager(); }
     public static SavedFileManager getSavedFileManager() { return core.getSavedFileManager(); }
     public static UPnPManager getUPnPManager() { return core.getUPnPManager(); }
     public static LimeXMLSchemaRepository getLimeXMLSchemaRepository() { return core.getLimeXMLSchemaRepository(); }
@@ -72,14 +62,12 @@ public class GuiCoreMediator {
     public static RatingTable getRatingTable() { return core.getRatingTable(); }
     public static SpamManager getSpamManager() { return core.getSpamManager(); }
     public static LifecycleManager getLifecycleManager() { return core.getLifecycleManager(); }
-    public static ConnectionServices getConnectionServices() { return core.getConnectionServices(); }
     public static SearchServices getSearchServices() { return core.getSearchServices(); }
     public static ScheduledExecutorService getCoreBackgroundExecutor() { return core.getBackgroundExecutor(); }
     public static DownloadServices getDownloadServices() { return core.getDownloadServices(); }
     public static UploadServices  getUploadServices() { return core.getUploadServices(); }
     public static ApplicationServices getApplicationServices() { return core.getApplicationServices(); }
     public static SpamServices getSpamServices() { return core.getSpamServices(); }
-    public static ConnectionCheckerManager getConnectionCheckerManager() { return core.getConnectionCheckerManager(); }
     public static ExternalControl getExternalControl() { return core.getExternalControl(); }
     public static ActivityCallback getActivityCallback() { return core.getActivityCallback(); }
     public static LimeXMLDocumentFactory getLimeXMLDocumentFactory() { return core.getLimeXMLDocumentFactory(); }

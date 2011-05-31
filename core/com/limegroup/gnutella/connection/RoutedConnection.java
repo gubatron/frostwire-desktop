@@ -35,7 +35,7 @@ public interface RoutedConnection extends Connection, ReplyHandler {
     /**
      * Attempts to initialize the connection. This will return immediately.
      */
-    public void initialize(GnetConnectObserver observer) throws IOException;
+    public void initialize() throws IOException;
 
     /**
      * Resets the query route table for this connection. The new table will be

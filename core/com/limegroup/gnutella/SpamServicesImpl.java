@@ -17,35 +17,33 @@ import com.limegroup.gnutella.settings.FilterSettings;
 @Singleton
 public class SpamServicesImpl implements SpamServices {
     
-    private final Provider<ConnectionManager> connectionManager;
     private final SpamFilterFactory spamFilterFactory;
     private final UDPReplyHandlerCache udpReplyHandlerCache;
 
     @Inject
-    public SpamServicesImpl(Provider<ConnectionManager> connectionManager,
+    public SpamServicesImpl(
             SpamFilterFactory spamFilterFactory,
             UDPReplyHandlerCache udpReplyHandlerCache) {
-        this.connectionManager = connectionManager;
         this.spamFilterFactory = spamFilterFactory;
         this.udpReplyHandlerCache = udpReplyHandlerCache;
     }
     
     public void adjustSpamFilters() {
-        udpReplyHandlerCache.setPersonalFilter(spamFilterFactory.createPersonalFilter());
-        
-        //Just replace the spam filters.  No need to do anything
-        //fancy like incrementally updating them.
-        for(RoutedConnection c : connectionManager.get().getConnections()) {
-//            if(ipFilter.get().allow(c.getAddress())) {
-//                c.setPersonalFilter(spamFilterFactory.createPersonalFilter());
-//                c.setRouteFilter(spamFilterFactory.createRouteFilter());
-//            } else {
-//                // If the connection isn't allowed now, close it.
-//                c.close();
-//            }
-        }
-        
-        // TODO: notify DownloadManager & UploadManager about new banned IP ranges
+//        udpReplyHandlerCache.setPersonalFilter(spamFilterFactory.createPersonalFilter());
+//        
+//        //Just replace the spam filters.  No need to do anything
+//        //fancy like incrementally updating them.
+//        for(RoutedConnection c : connectionManager.get().getConnections()) {
+////            if(ipFilter.get().allow(c.getAddress())) {
+////                c.setPersonalFilter(spamFilterFactory.createPersonalFilter());
+////                c.setRouteFilter(spamFilterFactory.createRouteFilter());
+////            } else {
+////                // If the connection isn't allowed now, close it.
+////                c.close();
+////            }
+//        }
+//        
+//        // TODO: notify DownloadManager & UploadManager about new banned IP ranges
     }
 
     public void reloadIPFilter() {

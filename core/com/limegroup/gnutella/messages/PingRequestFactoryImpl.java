@@ -7,23 +7,19 @@ import org.limewire.collection.NameValue;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.limegroup.gnutella.ConnectionServices;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.messages.Message.Network;
 import com.limegroup.gnutella.settings.ConnectionSettings;
-import com.limegroup.gnutella.settings.SSLSettings;
 
 @Singleton
 public class PingRequestFactoryImpl implements PingRequestFactory {
 
     public final NetworkManager networkManager;
-    private final ConnectionServices connectionServices;
 
     @Inject
-    public PingRequestFactoryImpl(NetworkManager networkManager, ConnectionServices connectionServices) {
+    public PingRequestFactoryImpl(NetworkManager networkManager) {
         this.networkManager = networkManager;
-        this.connectionServices = connectionServices;
     }
     
     /* (non-Javadoc)
@@ -120,16 +116,7 @@ public class PingRequestFactoryImpl implements PingRequestFactory {
     }
     
     byte[] getSCPData() {
-        byte[] data = new byte[1];
-        if(connectionServices.isSupernode())
-            data[0] = PingRequest.SCP_ULTRAPEER;
-        else
-            data[0] = PingRequest.SCP_LEAF;
-        
-        if(SSLSettings.isIncomingTLSEnabled())
-            data[0] |= PingRequest.SCP_TLS; // add our support for TLS.
-        
-        return data;
+        return null;
     }
     
 }

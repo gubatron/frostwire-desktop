@@ -23,7 +23,6 @@ import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.FileManagerEvent;
-import com.limegroup.gnutella.IncompleteFileDesc;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.settings.DaapSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
@@ -140,9 +139,9 @@ public final class DaapManager implements FinalizeListener {
                     config.setAuthenticationScheme(DaapConfig.BASIC_SCHEME);
                 }
                 
-                if(USE_LIME_NIO)
-                    server = new LimeDaapServerNIO(library, config);
-                else
+//                if(USE_LIME_NIO)
+//                    server = new LimeDaapServerNIO(library, config);
+//                else
                     server = DaapServerFactory.createServer(library, config, true);
 
                 server.setAuthenticator(new LimeAuthenticator());
@@ -401,7 +400,7 @@ public final class DaapManager implements FinalizeListener {
         }
         
         FileDesc file = evt.getFileDescs()[0];
-        if (!(file instanceof IncompleteFileDesc)) {
+        if (true) {
 
             String name = file.getFileName().toLowerCase(Locale.US);
 
@@ -512,9 +511,9 @@ public final class DaapManager implements FinalizeListener {
         
         for(int i = 0; i < files.length; i++) {
             FileDesc file = files[i];
-            if(file instanceof IncompleteFileDesc) {
-                continue;
-            }
+//            if(file instanceof IncompleteFileDesc) {
+//                continue;
+//            }
             
             String name = file.getFileName().toLowerCase(Locale.US);
             boolean audio = isSupportedAudioFormat(name);

@@ -1,21 +1,20 @@
 package com.limegroup.gnutella.messages;
 
+import org.gudy.azureus2.plugins.network.ConnectionManager;
+
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import com.limegroup.gnutella.ConnectionManager;
 import com.limegroup.gnutella.FileManager;
 
 @Singleton
 public class LocalPongInfoImpl implements LocalPongInfo {
     
-    private final Provider<ConnectionManager> connectionManager;
     private final Provider<FileManager> fileManager;
 
     @Inject
-    public LocalPongInfoImpl(Provider<ConnectionManager> connectionManager,
+    public LocalPongInfoImpl(
             Provider<FileManager> fileManager) {
-        this.connectionManager = connectionManager;
         this.fileManager = fileManager;
     }
 
@@ -24,14 +23,14 @@ public class LocalPongInfoImpl implements LocalPongInfo {
      * @return the number of free non-leaf slots available for limewires.
      */
     public byte getNumFreeLimeWireNonLeafSlots() {
-        return (byte)connectionManager.get().getNumFreeLimeWireNonLeafSlots();
+        return 0;//(byte)connectionManager.get().getNumFreeLimeWireNonLeafSlots();
     }
 
     /**
      * @return the number of free leaf slots available for limewires.
      */
     public byte getNumFreeLimeWireLeafSlots() {
-        return (byte)connectionManager.get().getNumFreeLimeWireLeafSlots();
+        return 0;//(byte)connectionManager.get().getNumFreeLimeWireLeafSlots();
     }
 
     public long getNumSharedFiles() {
@@ -43,6 +42,6 @@ public class LocalPongInfoImpl implements LocalPongInfo {
     }
 
     public boolean isSupernode() {
-        return connectionManager.get().isSupernode();
+        return false;//connectionManager.get().isSupernode();
     }
 }

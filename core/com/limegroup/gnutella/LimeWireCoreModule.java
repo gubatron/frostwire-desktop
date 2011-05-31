@@ -13,11 +13,6 @@ import org.limewire.inspection.Inspector;
 import org.limewire.inspection.InspectorImpl;
 import org.limewire.io.LimeWireIOModule;
 import org.limewire.io.LocalSocketAddressProvider;
-import org.limewire.net.ConnectionDispatcher;
-import org.limewire.net.ConnectionDispatcherImpl;
-import org.limewire.net.LimeWireNetModule;
-import org.limewire.nio.ByteBufferCache;
-import org.limewire.nio.NIODispatcher;
 import org.limewire.security.SecureMessageVerifier;
 import org.limewire.security.SecureMessageVerifierImpl;
 import org.limewire.security.SecurityToken;
@@ -29,33 +24,17 @@ import com.google.inject.Provider;
 import com.google.inject.Scopes;
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
-import com.limegroup.gnutella.altlocs.AlternateLocationFactory;
-import com.limegroup.gnutella.altlocs.AlternateLocationFactoryImpl;
 import com.limegroup.gnutella.auth.IpPortContentAuthorityFactory;
 import com.limegroup.gnutella.auth.IpPortContentAuthorityFactoryImpl;
 import com.limegroup.gnutella.bootstrap.UDPHostCacheFactory;
 import com.limegroup.gnutella.bootstrap.UDPHostCacheFactoryImpl;
-import com.limegroup.gnutella.connection.ConnectionBandwidthStatistics;
-import com.limegroup.gnutella.connection.ConnectionBandwidthStatisticsImpl;
-import com.limegroup.gnutella.connection.ConnectionCapabilities;
-import com.limegroup.gnutella.connection.ConnectionCapabilitiesImpl;
-import com.limegroup.gnutella.connection.ConnectionCheckerManager;
-import com.limegroup.gnutella.connection.ConnectionCheckerManagerImpl;
 import com.limegroup.gnutella.connection.MessageReaderFactory;
 import com.limegroup.gnutella.connection.MessageReaderFactoryImpl;
 import com.limegroup.gnutella.connection.RoutedConnectionFactory;
 import com.limegroup.gnutella.connection.RoutedConnectionFactoryImpl;
-import com.limegroup.gnutella.connection.UDPConnectionChecker;
-import com.limegroup.gnutella.connection.UDPConnectionCheckerImpl;
 import com.limegroup.gnutella.downloader.LimeWireDownloadModule;
 import com.limegroup.gnutella.filters.SpamFilterFactory;
 import com.limegroup.gnutella.filters.SpamFilterFactoryImpl;
-import com.limegroup.gnutella.handshaking.HandshakeResponderFactory;
-import com.limegroup.gnutella.handshaking.HandshakeResponderFactoryImpl;
-import com.limegroup.gnutella.handshaking.HandshakeServices;
-import com.limegroup.gnutella.handshaking.HandshakeServicesImpl;
-import com.limegroup.gnutella.handshaking.HeadersFactory;
-import com.limegroup.gnutella.handshaking.HeadersFactoryImpl;
 import com.limegroup.gnutella.licenses.LicenseFactory;
 import com.limegroup.gnutella.licenses.LicenseFactoryImpl;
 import com.limegroup.gnutella.messagehandlers.MessageHandlerBinderImpl;
@@ -95,10 +74,7 @@ import com.limegroup.gnutella.search.QueryDispatcher;
 import com.limegroup.gnutella.search.QueryDispatcherImpl;
 import com.limegroup.gnutella.search.QueryHandlerFactory;
 import com.limegroup.gnutella.search.QueryHandlerFactoryImpl;
-import com.limegroup.gnutella.settings.SettingsBackedProxySettings;
-import com.limegroup.gnutella.settings.SettingsBackedSocketBindingSettings;
 import com.limegroup.gnutella.statistics.LimeWireGnutellaStatisticsModule;
-import com.limegroup.gnutella.tigertree.LimeWireHashTreeModule;
 import com.limegroup.gnutella.uploader.UploadSlotManager;
 import com.limegroup.gnutella.uploader.UploadSlotManagerImpl;
 import com.limegroup.gnutella.version.UpdateCollectionFactory;
@@ -131,9 +107,7 @@ public class LimeWireCoreModule extends AbstractModule {
     @Override
     protected void configure() {
         binder().install(new LimeWireCommonModule());
-        binder().install(new LimeWireNetModule(SettingsBackedProxySettings.class, SettingsBackedSocketBindingSettings.class));
         binder().install(new LimeWireDownloadModule());
-        binder().install(new LimeWireHashTreeModule());        
         binder().install(new LimeWireStatisticsModule());
         binder().install(new LimeWireGnutellaStatisticsModule());
         binder().install(new LimeWireIOModule());
@@ -147,15 +121,12 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(DownloadCallback.class).to(ActivityCallback.class);
         bind(NetworkManager.class).to(NetworkManagerImpl.class);
         bind(PingReplyFactory.class).to(PingReplyFactoryImpl.class);
-        bind(HandshakeResponderFactory.class).to(HandshakeResponderFactoryImpl.class);
-        bind(HeadersFactory.class).to(HeadersFactoryImpl.class);
         bind(PushEndpointFactory.class).to(PushEndpointFactoryImpl.class);
         bind(HeadPongFactory.class).to(HeadPongFactoryImpl.class);
         bind(QueryHandlerFactory.class).to(QueryHandlerFactoryImpl.class);
         bind(QueryRequestFactory.class).to(QueryRequestFactoryImpl.class);
         bind(RoutedConnectionFactory.class).to(RoutedConnectionFactoryImpl.class);
         bind(HostDataFactory.class).to(HostDataFactoryImpl.class);
-        bind(AlternateLocationFactory.class).to(AlternateLocationFactoryImpl.class);
         bind(LocalFileDetailsFactory.class).to(LocalFileDetailsFactoryImpl.class);
         bind(FileManagerController.class).to(FileManagerControllerImpl.class);
         bind(ResponseFactory.class).to(ResponseFactoryImpl.class);
@@ -163,17 +134,14 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(CapabilitiesVMFactory.class).to(CapabilitiesVMFactoryImpl.class);
         bind(LifecycleManager.class).to(LifecycleManagerImpl.class);
         bind(LocalPongInfo.class).to(LocalPongInfoImpl.class);
-        bind(ConnectionServices.class).to(ConnectionServicesImpl.class);
         bind(SearchServices.class).to(SearchServicesImpl.class);
         bind(DownloadServices.class).to(DownloadServicesImpl.class);
         bind(UploadServices.class).to(UploadServicesImpl.class);
         bind(ApplicationServices.class).to(ApplicationServicesImpl.class);
         bind(SpamServices.class).to(SpamServicesImpl.class);
         bind(SpamFilterFactory.class).to(SpamFilterFactoryImpl.class);
-        bind(ConnectionCheckerManager.class).to(ConnectionCheckerManagerImpl.class);
         bind(UDPReplyHandlerFactory.class).to(UDPReplyHandlerFactoryImpl.class);
         bind(UDPReplyHandlerCache.class).to(UDPReplyHandlerCacheImpl.class);
-        bind(SocketProcessor.class).to(AcceptorImpl.class);
         bind(DownloadManager.class).to(DownloadManagerImpl.class).asEagerSingleton();
         bind(ReplyNumberVendorMessageFactory.class).to(ReplyNumberVendorMessageFactoryImpl.class);
         bind(GuidMapManager.class).to(GuidMapManagerImpl.class);
@@ -192,32 +160,20 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(PingRequestFactory.class).to(PingRequestFactoryImpl.class);
         bind(IpPortContentAuthorityFactory.class).to(IpPortContentAuthorityFactoryImpl.class);
         bind(UpdateCollectionFactory.class).to(UpdateCollectionFactoryImpl.class);
-        bind(ConnectionDispatcher.class).annotatedWith(Names.named("global")).to(ConnectionDispatcherImpl.class).in(Scopes.SINGLETON);
-        bind(ConnectionDispatcher.class).annotatedWith(Names.named("local")).to(ConnectionDispatcherImpl.class).in(Scopes.SINGLETON);
         bind(UDPPinger.class).to(UDPPingerImpl.class);
-        bind(UDPConnectionChecker.class).to(UDPConnectionCheckerImpl.class);
         bind(Inspector.class).to(InspectorImpl.class);
-        bind(ConnectionCapabilities.class).to(ConnectionCapabilitiesImpl.class);
-        bind(ConnectionBandwidthStatistics.class).to(ConnectionBandwidthStatisticsImpl.class);
         bind(LocalSocketAddressProvider.class).to(LocalSocketAddressProviderImpl.class);
         bind(SettingsProvider.class).to(MacCalculatorSettingsProviderImpl.class);
-        bind(ReplyHandler.class).annotatedWith(Names.named("forMeReplyHandler")).to(ForMeReplyHandler.class);
         bind(MessageRouter.class).to(StandardMessageRouter.class);
         bind(UploadSlotManager.class).to(UploadSlotManagerImpl.class);
-        bind(BandwidthManager.class).to(BandwidthManagerImpl.class);
         bind(SecureMessageVerifier.class).toProvider(SecureMessageVerifierProvider.class);
         bind(SecureMessageVerifier.class).annotatedWith(Names.named("inspection")).toProvider(InspectionVerifierProvider.class);
         bind(PongCacher.class).to(PongCacherImpl.class);        
         bind(BandwidthTracker.class).annotatedWith(Names.named("uploadTracker")).to(UploadManager.class);     // For NodeAssigner.
         bind(BandwidthTracker.class).annotatedWith(Names.named("downloadTracker")).to(DownloadManager.class); // For NodeAssigner.
-        bind(NIODispatcher.class).toProvider(NIODispatcherProvider.class);
-        bind(ByteBufferCache.class).toProvider(ByteBufferCacheProvider.class);
         bind(ResponseVerifier.class).to(ResponseVerifierImpl.class);
-        bind(HandshakeServices.class).to(HandshakeServicesImpl.class);
-        bind(ConnectionManager.class).to(ConnectionManagerImpl.class);
         bind(MessageHandlerBinder.class).to(MessageHandlerBinderImpl.class);
         bind(QueryDispatcher.class).to(QueryDispatcherImpl.class);
-        bind(Acceptor.class).to(AcceptorImpl.class);        
         bind(SecurityToken.TokenProvider.class).to(SecurityToken.AddressSecurityTokenProvider.class);
         bind(UpdateMessageVerifier.class).to(UpdateMessageVerifierImpl.class);
         bind(InspectionResponseFactory.class).to(InspectionResponseFactoryImpl.class);
@@ -228,7 +184,6 @@ public class LimeWireCoreModule extends AbstractModule {
         bindAll(Names.named("backgroundExecutor"), ScheduledExecutorService.class, BackgroundTimerProvider.class, ExecutorService.class, Executor.class);
         bindAll(Names.named("dhtExecutor"), ExecutorService.class, DHTExecutorProvider.class, Executor.class);
         bindAll(Names.named("messageExecutor"), ExecutorService.class, MessageExecutorProvider.class, Executor.class);
-        bindAll(Names.named("nioExecutor"), ScheduledExecutorService.class, NIOScheduledExecutorServiceProvider.class, ExecutorService.class, Executor.class);
                         
         // TODO: This is odd -- move to initialize & LifecycleManager?
         bind(Statistics.class).asEagerSingleton();
@@ -306,41 +261,7 @@ public class LimeWireCoreModule extends AbstractModule {
     ///////////////////////////////////////////////////////////////////////////
     /// BELOW ARE ALL HACK PROVIDERS THAT NEED TO BE UPDATED TO CONSTRUCT OBJECTS!
     // (This needs to wait till components are injected and stop using singletons too.)
-    
-    @Singleton
-    private static class NIODispatcherProvider implements Provider<NIODispatcher> {
-        public NIODispatcher get() {
-            return NIODispatcher.instance();
-        }
-    };
-    
-    @Singleton
-    private static class ByteBufferCacheProvider implements Provider<ByteBufferCache> {
-        private final Provider<NIODispatcher> nioDispatcher;
-        
-        @Inject
-        public ByteBufferCacheProvider(Provider<NIODispatcher> nioDispatcher) {
-            this.nioDispatcher = nioDispatcher;
-        }
-        
-        public ByteBufferCache get() {
-            return nioDispatcher.get().getBufferCache();
-        }
-    };
-    
-    @Singleton
-    private static class NIOScheduledExecutorServiceProvider implements Provider<ScheduledExecutorService> {
-        private final Provider<NIODispatcher> nioDispatcher;
-        
-        @Inject
-        public NIOScheduledExecutorServiceProvider(Provider<NIODispatcher> nioDispatcher) {
-            this.nioDispatcher = nioDispatcher;
-        }
-        
-        public ScheduledExecutorService get() {
-            return nioDispatcher.get().getScheduledExecutorService();
-        }
-    };
+
         
     ///////////////////////////////////////////////////////////////
     // !!! DO NOT ADD THINGS BELOW HERE !!!  PUT THEM ABOVE THE HACKS!

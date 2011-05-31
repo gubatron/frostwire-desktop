@@ -10,7 +10,6 @@ import java.util.WeakHashMap;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.limewire.nio.observer.Shutdownable;
 import org.limewire.io.IP;
 
 import com.google.inject.Inject;
@@ -140,9 +139,9 @@ public class NetworkUpdateSanityChecker {
                 }
             }
         }
-        
-        if(handler instanceof Shutdownable)
-            ((Shutdownable)handler).shutdown();
+//        
+//        if(handler instanceof Shutdownable)
+//            ((Shutdownable)handler).shutdown();
     }
     
     /** Adds a single incoming request to the maps. */

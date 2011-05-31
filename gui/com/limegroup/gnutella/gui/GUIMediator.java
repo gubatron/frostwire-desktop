@@ -1519,14 +1519,14 @@ public final class GUIMediator {
 	 * Connects the user from the network.
 	 */
 	public void connect() {
-		GuiCoreMediator.getConnectionServices().connect();
+		//GuiCoreMediator.getConnectionServices().connect();
 	}
 
 	/**
 	 * Disconnects the user to the network.
 	 */
 	public void disconnect() {
-		GuiCoreMediator.getConnectionServices().disconnect();
+		//GuiCoreMediator.getConnectionServices().disconnect();
 	}
 
 	/**

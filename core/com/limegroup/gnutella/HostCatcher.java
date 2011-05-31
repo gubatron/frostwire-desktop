@@ -310,8 +310,6 @@ public class HostCatcher {
     private boolean dirty = false;
     
     private final ScheduledExecutorService backgroundExecutor;
-    private final ConnectionServices connectionServices;
-    private final Provider<ConnectionManager> connectionManager;
     private final Provider<UDPService> udpService;
     private final Provider<QueryUnicaster> queryUnicaster;
     private final Provider<MulticastService> multicastService;
@@ -323,8 +321,6 @@ public class HostCatcher {
     @Inject
 	public HostCatcher(
 	        @Named("backgroundExecutor") ScheduledExecutorService backgroundExecutor,
-            ConnectionServices connectionServices,
-            Provider<ConnectionManager> connectionManager,
             Provider<UDPService> udpService,
             Provider<QueryUnicaster> queryUnicaster,
             Provider<MulticastService> multicastService,
@@ -333,8 +329,6 @@ public class HostCatcher {
             PingRequestFactory pingRequestFactory,
             NetworkInstanceUtils networkInstanceUtils) {
         this.backgroundExecutor = backgroundExecutor;
-        this.connectionServices = connectionServices;
-        this.connectionManager = connectionManager;
         this.udpService = udpService;
         this.queryUnicaster = queryUnicaster;
         this.multicastService = multicastService;
@@ -461,30 +455,31 @@ public class HostCatcher {
      * Determines if UDP Pongs need to be sent out.
      */
     private synchronized boolean needsPongRanking() {
-        if(connectionServices.isFullyConnected())
-            return false;
-        int have = connectionManager.get().getInitializedConnections().size();
-        if(have >= MAX_CONNECTIONS)
-            return false;
-            
-        long now = System.currentTimeMillis();
-        if(now > lastAllowedPongRankTime)
-            return false;
-
-        int size;
-        if(connectionServices.isSupernode()) {
-            synchronized(this) {
-                size = FREE_ULTRAPEER_SLOTS_SET.size();
-            }
-        } else {
-            synchronized(this) {
-                size = FREE_LEAF_SLOTS_SET.size();
-            }
-        }
-
-        int preferred = connectionManager.get().getPreferredConnectionCount();
-        
-        return size < preferred - have;
+//        if(connectionServices.isFullyConnected())
+//            return false;
+//        int have = connectionManager.get().getInitializedConnections().size();
+//        if(have >= MAX_CONNECTIONS)
+//            return false;
+//            
+//        long now = System.currentTimeMillis();
+//        if(now > lastAllowedPongRankTime)
+//            return false;
+//
+//        int size;
+//        if(connectionServices.isSupernode()) {
+//            synchronized(this) {
+//                size = FREE_ULTRAPEER_SLOTS_SET.size();
+//            }
+//        } else {
+//            synchronized(this) {
+//                size = FREE_LEAF_SLOTS_SET.size();
+//            }
+//        }
+//
+//        int preferred = connectionManager.get().getPreferredConnectionCount();
+//        
+//        return size < preferred - have;
+        return false;
     }
     
     /**
@@ -1131,50 +1126,50 @@ public class HostCatcher {
      *  of quick-connect settings, etc.  Returns null if this is empty.
      */
     protected ExtendedEndpoint getAnEndpointInternal() {
-        //LOG.trace("entered getAnEndpointInternal");
-        // If we're already an ultrapeer and we know about hosts with free
-        // ultrapeer slots, try them.
-        if(connectionServices.isSupernode() && !FREE_ULTRAPEER_SLOTS_SET.isEmpty()) {
-            return preferenceWithLocale(FREE_ULTRAPEER_SLOTS_SET);
-                                    
-        } 
-        // Otherwise, if we're already a leaf and we know about ultrapeers with
-        // free leaf slots, try those.
-        else if(connectionServices.isShieldedLeaf() && 
-                !FREE_LEAF_SLOTS_SET.isEmpty()) {
-            return preferenceWithLocale(FREE_LEAF_SLOTS_SET);
-        } 
-        // Otherwise, assume we'll be a leaf and we're trying to connect, since
-        // this is more common than wanting to become an ultrapeer and because
-        // we want to fill any remaining leaf slots if we can.
-        else if(!FREE_ULTRAPEER_SLOTS_SET.isEmpty()) {
-            return preferenceWithLocale(FREE_ULTRAPEER_SLOTS_SET);
-        } 
-        // Otherwise, might as well use the leaf slots hosts up as well
-        // since we added them to the size and they can give us other info
-        else if(!FREE_LEAF_SLOTS_SET.isEmpty()) {
-            Iterator<ExtendedEndpoint> iter = FREE_LEAF_SLOTS_SET.keySet().iterator();
-            ExtendedEndpoint ee = iter.next();
-            FREE_LEAF_SLOTS_SET.remove(ee);
-            return ee;
-        } 
-        else if (! ENDPOINT_QUEUE.isEmpty()) {
-            //pop e from queue and remove from set.
-            ExtendedEndpoint e= ENDPOINT_QUEUE.extractMax();
-            ExtendedEndpoint removed=ENDPOINT_SET.remove(e);
-            //check that e actually was in set.
-            assert removed == e : "Rep. invariant for HostCatcher broken.";
-            return e;
-        } 
-        else if (!restoredHosts.isEmpty()) {
-            // highest partition has highest uptimes
-            List<ExtendedEndpoint> best = uptimePartitions.getLastPartition();
-            ExtendedEndpoint e = best.remove((int)(Math.random() * best.size()));
-            return e;
-        }
-        else {
+//        //LOG.trace("entered getAnEndpointInternal");
+//        // If we're already an ultrapeer and we know about hosts with free
+//        // ultrapeer slots, try them.
+//        if(connectionServices.isSupernode() && !FREE_ULTRAPEER_SLOTS_SET.isEmpty()) {
+//            return preferenceWithLocale(FREE_ULTRAPEER_SLOTS_SET);
+//                                    
+//        } 
+//        // Otherwise, if we're already a leaf and we know about ultrapeers with
+//        // free leaf slots, try those.
+//        else if(connectionServices.isShieldedLeaf() && 
+//                !FREE_LEAF_SLOTS_SET.isEmpty()) {
+//            return preferenceWithLocale(FREE_LEAF_SLOTS_SET);
+//        } 
+//        // Otherwise, assume we'll be a leaf and we're trying to connect, since
+//        // this is more common than wanting to become an ultrapeer and because
+//        // we want to fill any remaining leaf slots if we can.
+//        else if(!FREE_ULTRAPEER_SLOTS_SET.isEmpty()) {
+//            return preferenceWithLocale(FREE_ULTRAPEER_SLOTS_SET);
+//        } 
+//        // Otherwise, might as well use the leaf slots hosts up as well
+//        // since we added them to the size and they can give us other info
+//        else if(!FREE_LEAF_SLOTS_SET.isEmpty()) {
+//            Iterator<ExtendedEndpoint> iter = FREE_LEAF_SLOTS_SET.keySet().iterator();
+//            ExtendedEndpoint ee = iter.next();
+//            FREE_LEAF_SLOTS_SET.remove(ee);
+//            return ee;
+//        } 
+//        else if (! ENDPOINT_QUEUE.isEmpty()) {
+//            //pop e from queue and remove from set.
+//            ExtendedEndpoint e= ENDPOINT_QUEUE.extractMax();
+//            ExtendedEndpoint removed=ENDPOINT_SET.remove(e);
+//            //check that e actually was in set.
+//            assert removed == e : "Rep. invariant for HostCatcher broken.";
+//            return e;
+//        } 
+//        else if (!restoredHosts.isEmpty()) {
+//            // highest partition has highest uptimes
+//            List<ExtendedEndpoint> best = uptimePartitions.getLastPartition();
+//            ExtendedEndpoint e = best.remove((int)(Math.random() * best.size()));
+//            return e;
+//        }
+//        else {
             return null;
-        }
+        //}
     }
 
     
@@ -1184,28 +1179,29 @@ public class HostCatcher {
      */
     private ExtendedEndpoint preferenceWithLocale(RandomAccessMap<ExtendedEndpoint, ExtendedEndpoint> base) {
 
-        String loc = ApplicationSettings.LANGUAGE.getValue();
-        ExtendedEndpoint ret = null;
-        // preference a locale host if we haven't matched any locales yet
-        if(!connectionManager.get().isLocaleMatched()) {
-            if(LOCALE_SET_MAP.containsKey(loc)) {
-                Set<ExtendedEndpoint> locales = LOCALE_SET_MAP.get(loc);
-                for(ExtendedEndpoint e : base.keySet()) {
-                    if(locales.contains(e)) {
-                        locales.remove(e);
-                        ret = e;
-                        break;
-                    }
-                }
-            }
-        }
-        
-        if (ret == null)
-            ret = base.getKeyAt(RND.nextInt(base.size()));
-        
-        Object removed = base.remove(ret);
-        assert ret == removed : "Key: " + ret + ", value: " + removed;
-        return ret;
+//        String loc = ApplicationSettings.LANGUAGE.getValue();
+//        ExtendedEndpoint ret = null;
+//        // preference a locale host if we haven't matched any locales yet
+//        if(!connectionManager.get().isLocaleMatched()) {
+//            if(LOCALE_SET_MAP.containsKey(loc)) {
+//                Set<ExtendedEndpoint> locales = LOCALE_SET_MAP.get(loc);
+//                for(ExtendedEndpoint e : base.keySet()) {
+//                    if(locales.contains(e)) {
+//                        locales.remove(e);
+//                        ret = e;
+//                        break;
+//                    }
+//                }
+//            }
+//        }
+//        
+//        if (ret == null)
+//            ret = base.getKeyAt(RND.nextInt(base.size()));
+//        
+//        Object removed = base.remove(ret);
+//        assert ret == removed : "Key: " + ret + ", value: " + removed;
+//        return ret;
+        return null;
     }
 
     /**
@@ -1530,10 +1526,11 @@ public class HostCatcher {
          * Determines whether or not we need more hosts.
          */
         private synchronized boolean needsHosts(long now) {
-            synchronized(HostCatcher.this) { 
-                return getNumHosts() == 0 ||
-                    (!connectionServices.isConnected() && _failures > 100);
-            }
+//            synchronized(HostCatcher.this) { 
+//                return getNumHosts() == 0 ||
+//                    (!connectionServices.isConnected() && _failures > 100);
+//            }
+            return false;
         }
         
         /**

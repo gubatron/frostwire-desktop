@@ -318,18 +318,7 @@ public final class SearchMediator {
                 return false;
             }
             
-	        // only show search messages if not doing browse host.
-	        if(!info.isBrowseHostSearch() && !searchingTorrents) {
-	            if(!GuiCoreMediator.getConnectionServices().isConnected()) {
-	                if(!GuiCoreMediator.getConnectionServices().isConnecting()) {
-	                    // if not connected or connecting, show one message.
-	                    GUIMediator.showMessage(I18n.tr("You are not connected to the network. To connect, select \"Connect\" from the \"File\" menu. Your search may not return any results until you connect."), QuestionsHandler.NO_NOT_CONNECTED);
-	                } else { 
-	                    // if attempting to connect, show another.
-	                    GUIMediator.showMessage(I18n.tr("FrostWire is currently connecting to the network. Your search may not return many results until you are fully connected to the network."), QuestionsHandler.NO_STILL_CONNECTING);
-	                }
-	            }
-	        }
+	        
 			return true;
 		}
     }

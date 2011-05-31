@@ -47,7 +47,6 @@ import com.google.inject.Inject;
 import com.limegroup.gnutella.FileManagerEvent.Type;
 import com.limegroup.gnutella.auth.ContentResponseData;
 import com.limegroup.gnutella.auth.ContentResponseObserver;
-import com.limegroup.gnutella.downloader.VerifyingFile;
 import com.limegroup.gnutella.library.LibraryData;
 import com.limegroup.gnutella.library.SharingUtils;
 import com.limegroup.gnutella.messages.QueryRequest;
@@ -512,7 +511,7 @@ public abstract class FileManagerImpl implements FileManager {
      */
     public synchronized boolean isUrnShared(final URN urn) {
         FileDesc fd = getFileDescForUrn(urn);
-        return fd != null && !(fd instanceof IncompleteFileDesc);
+        return fd != null;
     }
 
 	/* (non-Javadoc)
@@ -530,7 +529,7 @@ public abstract class FileManagerImpl implements FileManager {
         //Pick the first non-null non-Incomplete FileDesc.
         FileDesc ret = null;
 		while ( iter.hasNext() 
-               && ( ret == null || ret instanceof IncompleteFileDesc) ) {
+               && ( ret == null) ) {
 			int index = iter.next();
             ret = _files.get(index);
 		}
@@ -922,19 +921,6 @@ public abstract class FileManagerImpl implements FileManager {
         }
     }
     
-	/* (non-Javadoc)
-     * @see com.limegroup.gnutella.FileManager#addSharedFolders(java.util.Set, java.util.Set)
-     */
-	public void addSharedFolders(Set<File> folders, Set<File> blackListedSet) {
-		if (folders.isEmpty()) {
-			throw new IllegalArgumentException("Only blacklisting without sharing, not allowed");
-		}
-	    _data.DIRECTORIES_NOT_TO_SHARE.addAll(canonicalize(blackListedSet));
-	    for (File folder : folders) {
-	    	addSharedFolder(folder);
-	    }
-	}
-	
 	/**
 	 * Returns set of canonicalized files or the same set if there
 	 * was an IOException for one of the files while canconicalizing. 
@@ -963,28 +949,6 @@ public abstract class FileManagerImpl implements FileManager {
 	}
 	
     /* (non-Javadoc)
-     * @see com.limegroup.gnutella.FileManager#addSharedFolder(java.io.File)
-     */
-    public boolean addSharedFolder(File folder) {
-//		if (!folder.isDirectory())
-//			throw new IllegalArgumentException("Expected a directory, but given: "+folder);
-//	
-//        try {
-//            folder = FileUtils.getCanonicalFile(folder);
-//        } catch(IOException ignored) {}
-//        
-//        if(!isFolderShareable(folder, false))
-//            return false;
-//        
-//        _data.DIRECTORIES_NOT_TO_SHARE.remove(folder);
-//		_isUpdating = true;
-//        updateSharedDirectories(folder, null, _revision);
-//        _isUpdating = false;
-        
-        return true;
-    }
-    
-	/* (non-Javadoc)
      * @see com.limegroup.gnutella.FileManager#addFileAlways(java.io.File)
      */
 	public void addFileAlways(File file) {
@@ -1323,25 +1287,7 @@ public abstract class FileManagerImpl implements FileManager {
         _fileToFileDescMap.remove(f);
         _needRebuild = true;
 
-        // If it's an incomplete file, the only reference we 
-        // have is the URN, so remove that and be done.
-        // We also return false, because the file was never really
-        // "shared" to begin with.
-        if (fd instanceof IncompleteFileDesc) {
-            removeUrnIndex(fd, false);
-            removeKeywords(_incompleteKeywordTrie, fd);
-            _numIncompleteFiles--;
-            boolean removed = _incompletesShared.remove(i);
-            assert removed : "File "+i+" not found in " + _incompletesShared;
-
-			// Notify the GUI...
-	        if (notify) {
-	            FileManagerEvent evt = new FileManagerEvent(this, Type.REMOVE_FILE, fd);
-	                                            
-	            dispatchFileEvent(evt);
-	        }
-            return fd;
-        }
+        
 
         _numFiles--;
         _filesSize -= fd.getFileSize();
@@ -1384,69 +1330,6 @@ public abstract class FileManagerImpl implements FileManager {
     }
     
     /* (non-Javadoc)
-     * @see com.limegroup.gnutella.FileManager#addIncompleteFile(java.io.File, java.util.Set, java.lang.String, long, com.limegroup.gnutella.downloader.VerifyingFile)
-     */
-    public synchronized void addIncompleteFile(File incompleteFile,
-                                               Set<? extends URN> urns,
-                                               String name,
-                                               long size,
-                                               VerifyingFile vf) {
-        
-        if (!SharingSettings.ALLOW_PARTIAL_SHARING.getValue()) {
-            return;
-        }
-        
-        try {
-            incompleteFile = FileUtils.getCanonicalFile(incompleteFile);
-        } catch(IOException ioe) {
-            //invalid file?... don't add incomplete file.
-            return;
-        }
-
-        // We want to ensure that incomplete files are never added twice.
-        // This may happen if IncompleteFileManager is deserialized before
-        // FileManager finishes loading ...
-        // So, every time an incomplete file is added, we check to see if
-        // it already was... and if so, ignore it.
-        // This is somewhat expensive, but it is called very rarely, so it's ok
-        for(URN urn : urns) {
-            if (!urn.isSHA1())
-                continue;
-            // if there were indices for this URN, exit.
-            IntSet shared = _urnMap.get(urn);
-            // nothing was shared for this URN, look at another
-            if (shared == null)
-                continue;
-                
-            for (IntSet.IntSetIterator isIter = shared.iterator(); isIter.hasNext(); ) {
-                int i = isIter.next();
-                FileDesc desc = _files.get(i);
-                // unshared, keep looking.
-                if (desc == null)
-                    continue;
-                String incPath = incompleteFile.getAbsolutePath();
-                String path  = desc.getFile().getAbsolutePath();
-                // the files are the same, exit.
-                if (incPath.equals(path))
-                    return;
-            }
-        }
-        
-        // no indices were found for any URN associated with this
-        // IncompleteFileDesc... add it.
-        int fileIndex = _files.size();
-        _incompletesShared.add(fileIndex);
-        IncompleteFileDesc ifd = new IncompleteFileDesc(
-            incompleteFile, urns, fileIndex, name, size, vf);            
-        _files.add(ifd);
-        _fileToFileDescMap.put(incompleteFile, ifd);
-        fileURNSUpdated(ifd);
-        _numIncompleteFiles++;
-        _needRebuild = true;
-        dispatchFileEvent(new FileManagerEvent(this, Type.ADD_FILE, ifd));
-    }
-
-    /* (non-Javadoc)
      * @see com.limegroup.gnutella.FileManager#fileChanged(java.io.File)
      */
     public abstract void fileChanged(File f);
@@ -1472,15 +1355,7 @@ public abstract class FileManagerImpl implements FileManager {
 	
     public synchronized void fileURNSUpdated(FileDesc fd) {
         updateUrnIndex(fd);
-        if (fd instanceof IncompleteFileDesc) {
-            IncompleteFileDesc ifd = (IncompleteFileDesc) fd;
-            if (SharingSettings.ALLOW_PARTIAL_SHARING.getValue() &&
-                    SharingSettings.LOAD_PARTIAL_KEYWORDS.getValue() &&
-                    ifd.hasUrnsAndPartialData()) {
-                loadKeywords(_incompleteKeywordTrie, fd);
-                _needRebuild = true;
-            }
-        }
+        
     }
     
     /**
@@ -1520,24 +1395,7 @@ public abstract class FileManagerImpl implements FileManager {
      * @param purgeState true if any state should also be removed (creation time, altlocs) 
      */
     private synchronized void removeUrnIndex(FileDesc fileDesc, boolean purgeState) {
-        for(URN urn : fileDesc.getUrns()) {
-            if (!urn.isSHA1())
-                continue;
-            //Lookup each of desc's URN's ind _urnMap.  
-            //(It better be there!)
-            IntSet indices=_urnMap.get(urn);
-            if (indices == null) {
-                assert fileDesc instanceof IncompleteFileDesc;
-                return;
-            }
-            
-            //Delete index from set.  Remove set if empty.
-            indices.remove(fileDesc.getIndex());
-            if (indices.size()==0 && purgeState) {
-                fileManagerController.lastUrnRemoved(urn);
-                _urnMap.remove(urn);
-            }
-		}
+        
     }
     
     /* (non-Javadoc)
@@ -1831,26 +1689,7 @@ public abstract class FileManagerImpl implements FileManager {
      * _queryRouteTable variable. (see xml/MetaFileManager.java)
      */
     protected synchronized void buildQRT() {
-        _queryRouteTable = new QueryRouteTable();
-        if (SearchSettings.PUBLISH_LIME_KEYWORDS.getBoolean()) {
-            for (String entry : SearchSettings.LIME_QRP_ENTRIES.getValue())
-                _queryRouteTable.addIndivisible(entry);
-        }
-        FileDesc[] fds = getAllSharedFileDescriptors();
-        for(int i = 0; i < fds.length; i++) {
-            if (fds[i] instanceof IncompleteFileDesc) {
-                if (!SharingSettings.ALLOW_PARTIAL_SHARING.getValue())
-                    continue;
-                if (!SharingSettings.PUBLISH_PARTIAL_QRP.getValue())
-                    continue;
-                IncompleteFileDesc ifd = (IncompleteFileDesc)fds[i];
-                if (!ifd.hasUrnsAndPartialData())
-                    continue;
-                
-                _queryRouteTable.add(ifd.getFileName());
-            } else
-                _queryRouteTable.add(fds[i].getPath());
-        }
+        
     }
 
     ////////////////////////////////// Queries ///////////////////////////////
@@ -1944,7 +1783,7 @@ public abstract class FileManagerImpl implements FileManager {
             
             // should never happen since we don't add times for IFDs and
             // we clear removed files...
-            if ((desc==null) || (desc instanceof IncompleteFileDesc))
+            if ((desc==null))
                 throw new RuntimeException("Bad Rep - No IFDs allowed!");
             
             // Formulate the response
@@ -1977,7 +1816,7 @@ public abstract class FileManagerImpl implements FileManager {
             FileDesc desc = _files.get(i);
             // If the file was unshared or is an incomplete file,
             // DO NOT SEND IT.
-            if (desc==null || desc instanceof IncompleteFileDesc || SharingUtils.isForcedShare(desc)) 
+            if (desc==null || SharingUtils.isForcedShare(desc)) 
                 continue;
         
             assert j<ret.length : "_numFiles is too small";
@@ -2092,7 +1931,7 @@ public abstract class FileManagerImpl implements FileManager {
                     FileDesc fd = _files.get(iter.next());
         		    // If the file is unshared or an incomplete file
         		    // DO NOT SEND IT.
-        		    if(fd == null || fd instanceof IncompleteFileDesc)
+        		    if(fd == null )
         			    continue;
                     if(fd.containsUrn(urn)) {
                         // still valid
@@ -2215,7 +2054,7 @@ public abstract class FileManagerImpl implements FileManager {
                         index++;
 
                         // skip, if the file was unshared or is an incomplete file,
-                        if (desc == null || desc instanceof IncompleteFileDesc || SharingUtils.isForcedShare(desc)) 
+                        if (desc == null || SharingUtils.isForcedShare(desc)) 
                             continue;
 
                         preview = fileManagerController.createResponse(desc);
@@ -2375,8 +2214,6 @@ public abstract class FileManagerImpl implements FileManager {
                 int rare = 0;
                 int total = 0;
                 for(int i = 0; i < fds.length; i++) {
-                    if (fds[i] instanceof IncompleteFileDesc)
-                        continue;
                     total++;
                     if (isRareFile(fds[i]))
                         rare++;

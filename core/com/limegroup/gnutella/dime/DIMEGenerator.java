@@ -75,9 +75,9 @@ public class DIMEGenerator {
             current.write(out);
         }
     }
-
-    public AsyncDimeWriter createAsyncWriter() {
-        return new AsyncDimeWriter(RECORDS);
-    }
+//
+//    public AsyncDimeWriter createAsyncWriter() {
+//        return new AsyncDimeWriter(RECORDS);
+//    }
     
 }

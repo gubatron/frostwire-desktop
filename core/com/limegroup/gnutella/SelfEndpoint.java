@@ -16,20 +16,17 @@ import com.google.inject.Singleton;
 @Singleton
 public class SelfEndpoint extends PushEndpoint {
     private final NetworkManager networkManager;
-    private final Provider<ConnectionManager> connectionManager;
     private final Provider<UDPService> udpService;
     private final NetworkInstanceUtils networkInstanceUtils;
     
     @Inject
     SelfEndpoint(NetworkManager networkManager,
             ApplicationServices applicationServices,
-            Provider<ConnectionManager> connectionManager,
             Provider<UDPService> udpService,
             NetworkInstanceUtils networkInstanceUtils) {
         super(applicationServices.getMyGUID(), IpPort.EMPTY_SET,
                 PushEndpoint.PLAIN, 0, null, null, networkInstanceUtils);
         this.networkManager = networkManager;
-        this.connectionManager = connectionManager;
         this.udpService = udpService;
         this.networkInstanceUtils = networkInstanceUtils;
     }
@@ -39,7 +36,7 @@ public class SelfEndpoint extends PushEndpoint {
      */
     @Override
     public Set<? extends IpPort> getProxies() {
-        return connectionManager.get().getPushProxies();
+        return null;//connectionManager.get().getPushProxies();
     }
 
     /**

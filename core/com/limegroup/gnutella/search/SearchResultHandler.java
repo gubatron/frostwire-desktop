@@ -7,40 +7,31 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Vector;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.gudy.azureus2.plugins.network.ConnectionManager;
 import org.limewire.collection.FixedsizeForgetfulHashMap;
 import org.limewire.inspection.Inspectable;
 import org.limewire.inspection.InspectionPoint;
-import org.limewire.io.IpPort;
 import org.limewire.io.NetworkInstanceUtils;
-import org.limewire.security.SecureMessage;
 import org.limewire.util.ByteOrder;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.limegroup.gnutella.ActivityCallback;
-import com.limegroup.gnutella.ConnectionManager;
-import com.limegroup.gnutella.ConnectionServices;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.NetworkManager;
-import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.Response;
 import com.limegroup.gnutella.SearchServices;
 import com.limegroup.gnutella.URN;
-import com.limegroup.gnutella.messages.BadPacketException;
 import com.limegroup.gnutella.messages.QueryReply;
 import com.limegroup.gnutella.messages.QueryRequest;
 import com.limegroup.gnutella.messages.vendor.QueryStatusResponse;
-import com.limegroup.gnutella.settings.ApplicationSettings;
-import com.limegroup.gnutella.settings.SearchSettings;
 import com.limegroup.gnutella.spam.SpamManager;
 import com.limegroup.gnutella.util.ClassCNetworks;
-import com.limegroup.gnutella.xml.LimeXMLDocument;
 
 /**
  * Handles incoming search results from the network.  This class parses the 
@@ -86,8 +77,6 @@ public final class SearchResultHandler {
     private final NetworkManager networkManager;
     private final SearchServices searchServices;
     private final Provider<ActivityCallback> activityCallback;
-    private final Provider<ConnectionManager> connectionManager;
-    private final ConnectionServices connectionServices;
     private final Provider<SpamManager> spamManager;
     private final NetworkInstanceUtils networkInstanceUtils;
 
@@ -95,15 +84,11 @@ public final class SearchResultHandler {
     public SearchResultHandler(NetworkManager networkManager,
             SearchServices searchServices,
             Provider<ActivityCallback> activityCallback,
-            Provider<ConnectionManager> connectionManager,
-            ConnectionServices connectionServices,
             Provider<SpamManager> spamManager,
             NetworkInstanceUtils networkInstanceUtils) {
         this.networkManager = networkManager;
         this.searchServices = searchServices;
         this.activityCallback = activityCallback;
-        this.connectionManager = connectionManager;
-        this.connectionServices = connectionServices;
         this.spamManager = spamManager;
         this.networkInstanceUtils = networkInstanceUtils;
     }
@@ -144,7 +129,7 @@ public final class SearchResultHandler {
             // deal if it does....
             QueryStatusResponse stat = new QueryStatusResponse(guid, 
                                                                MAX_RESULTS);
-            connectionManager.get().updateQueryStatus(stat);
+            //connectionManager.get().updateQueryStatus(stat);
         }
     }
 
@@ -356,26 +341,26 @@ public final class SearchResultHandler {
             LOG.trace("SRH.accountAndUpdateDynamicQueriers(): incrementing.");
             gc.increment(numGoodSentToFrontEnd);
 
-            // inform proxying Ultrapeers....
-            if (connectionServices.isShieldedLeaf()) {
-                if (!gc.isFinished() && 
-                    (gc.getNumResults() > gc.getNextReportNum())) {
-                    LOG.trace("SRH.accountAndUpdateDynamicQueriers(): telling UPs.");
-                    gc.tallyReport();
-                    if (gc.getNumResults() > QueryHandler.ULTRAPEER_RESULTS)
-                        gc.markAsFinished();
-                    // if you think you are done, then undeniably shut off the
-                    // query.
-                    final int numResultsToReport = (gc.isFinished() ?
-                                                    MAX_RESULTS :
-                                                    gc.getNumResults()/4);
-                    QueryStatusResponse stat = 
-                        new QueryStatusResponse(gc.getGUID(), 
-                                                numResultsToReport);
-                    connectionManager.get().updateQueryStatus(stat);
-                }
-
-            }
+//            // inform proxying Ultrapeers....
+//            if (connectionServices.isShieldedLeaf()) {
+//                if (!gc.isFinished() && 
+//                    (gc.getNumResults() > gc.getNextReportNum())) {
+//                    LOG.trace("SRH.accountAndUpdateDynamicQueriers(): telling UPs.");
+//                    gc.tallyReport();
+//                    if (gc.getNumResults() > QueryHandler.ULTRAPEER_RESULTS)
+//                        gc.markAsFinished();
+//                    // if you think you are done, then undeniably shut off the
+//                    // query.
+//                    final int numResultsToReport = (gc.isFinished() ?
+//                                                    MAX_RESULTS :
+//                                                    gc.getNumResults()/4);
+//                    QueryStatusResponse stat = 
+//                        new QueryStatusResponse(gc.getGUID(), 
+//                                                numResultsToReport);
+//                    connectionManager.get().updateQueryStatus(stat);
+//                }
+//
+//            }
         }
         LOG.trace("SRH.accountAndUpdateDynamicQueriers(): returning.");
     }

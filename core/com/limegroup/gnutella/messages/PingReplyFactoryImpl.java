@@ -18,7 +18,6 @@ import org.limewire.util.ByteOrder;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import com.limegroup.gnutella.ConnectionManager;
 import com.limegroup.gnutella.Endpoint;
 import com.limegroup.gnutella.HostCatcher;
 import com.limegroup.gnutella.NetworkManager;
@@ -34,7 +33,6 @@ public class PingReplyFactoryImpl implements PingReplyFactory {
     private final NetworkManager networkManager;
     private final Provider<Statistics> statistics;
     private final Provider<UDPService> udpService;
-    private final Provider<ConnectionManager> connectionManager;
     private final Provider<HostCatcher> hostCatcher;
     private final LocalPongInfo localPongInfo;
     private final MACCalculatorRepositoryManager macCalculatorRepositoryManager;
@@ -44,7 +42,6 @@ public class PingReplyFactoryImpl implements PingReplyFactory {
     @Inject
     public PingReplyFactoryImpl(NetworkManager networkManager,
             Provider<Statistics> statistics, Provider<UDPService> udpService,
-            Provider<ConnectionManager> connectionManager,
             Provider<HostCatcher> hostCatcher,
             LocalPongInfo localPongInfo,
             MACCalculatorRepositoryManager MACCalculatorRepositoryManager,
@@ -52,7 +49,6 @@ public class PingReplyFactoryImpl implements PingReplyFactory {
         this.networkManager = networkManager;
         this.statistics = statistics;
         this.udpService = udpService;
-        this.connectionManager = connectionManager;
         this.hostCatcher = hostCatcher;
         this.localPongInfo = localPongInfo;
         this.macCalculatorRepositoryManager = MACCalculatorRepositoryManager;
@@ -75,7 +71,7 @@ public class PingReplyFactoryImpl implements PingReplyFactory {
                 ApplicationSettings.LANGUAGE.getValue().equals("") ? ApplicationSettings.DEFAULT_LOCALE
                         .getValue()
                         : ApplicationSettings.LANGUAGE.getValue(),
-                connectionManager.get().getNumLimeWireLocalePrefSlots(), gnutHosts,
+                0, gnutHosts,
                 dhtHosts);
     }
 
@@ -90,23 +86,7 @@ public class PingReplyFactoryImpl implements PingReplyFactory {
     public PingReply create(byte[] guid, byte ttl, IpPort returnAddr,
             Collection<? extends IpPort> gnutHosts,
             Collection<? extends IpPort> dhtHosts) {
-        GGEP ggep = newGGEP(statistics.get().calculateDailyUptime(),
-                localPongInfo.isSupernode(), udpService
-                        .get().isGUESSCapable());
-
-        String locale = ApplicationSettings.LANGUAGE.getValue().equals("") ? ApplicationSettings.DEFAULT_LOCALE
-                .getValue()
-                : ApplicationSettings.LANGUAGE.getValue();
-        addLocale(ggep, locale, connectionManager
-                .get().getNumLimeWireLocalePrefSlots());
-
-        addAddress(ggep, returnAddr);
-
-        addPackedHosts(ggep, gnutHosts, dhtHosts);
-
-        return create(guid, ttl, networkManager.getPort(), networkManager
-                .getAddress(), localPongInfo.getNumSharedFiles(), localPongInfo
-                .getSharedFileSize() / 1024, localPongInfo.isSupernode(), ggep);
+        return null;
     }
 
     public PingReply createQueryKeyReply(byte[] guid, byte ttl,

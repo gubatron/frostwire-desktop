@@ -13,13 +13,11 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.limewire.collection.Cancellable;
 import org.limewire.collection.FixedSizeExpiringSet;
 import org.limewire.io.NetworkInstanceUtils;
 import org.limewire.io.NetworkUtils;
 
 import com.google.inject.Provider;
-import com.limegroup.gnutella.ConnectionServices;
 import com.limegroup.gnutella.ExtendedEndpoint;
 import com.limegroup.gnutella.MessageListener;
 import com.limegroup.gnutella.MessageRouter;
@@ -84,8 +82,6 @@ public class UDPHostCache {
     private final Provider<MessageRouter> messageRouter;
 
     private final PingRequestFactory pingRequestFactory;
-
-    private final ConnectionServices connectionServices;
     
     private final NetworkInstanceUtils networkInstanceUtils;
     
@@ -94,9 +90,9 @@ public class UDPHostCache {
      * minutes.
      */
     protected UDPHostCache(UDPPinger pinger, Provider<MessageRouter> messageRouter,
-            PingRequestFactory pingRequestFactory, ConnectionServices connectionServices,
+            PingRequestFactory pingRequestFactory, 
             NetworkInstanceUtils networkInstanceUtils) {
-        this(10 * 60 * 1000, pinger, messageRouter, pingRequestFactory, connectionServices,
+        this(10 * 60 * 1000, pinger, messageRouter, pingRequestFactory, 
                 networkInstanceUtils);
 
     }
@@ -109,8 +105,7 @@ public class UDPHostCache {
      */
     protected UDPHostCache(long expiryTime, UDPPinger pinger,
             Provider<MessageRouter> messageRouter, PingRequestFactory pingRequestFactory,
-            ConnectionServices connectionServices, NetworkInstanceUtils networkInstanceUtils) {
-        this.connectionServices = connectionServices;
+            NetworkInstanceUtils networkInstanceUtils) {
         attemptedHosts = new FixedSizeExpiringSet<ExtendedEndpoint>(PERMANENT_SIZE, expiryTime);
         this.pinger = pinger;
         this.messageRouter = messageRouter;
@@ -217,25 +212,25 @@ public class UDPHostCache {
       * Fetches endpoints from the given collection of hosts.
       */
      protected synchronized boolean fetch(Collection<? extends ExtendedEndpoint> hosts) {
-        if(hosts.isEmpty()) {
-            LOG.debug("No hosts to fetch");
-            return false;
-        }
-
-        if(LOG.isDebugEnabled())
-            LOG.debug("Fetching endpoints from " + hosts + " host caches");
-
-        pinger.rank(
-            hosts,
-            new HostExpirer(hosts),
-            // cancel when connected -- don't send out any more pings
-            new Cancellable() {
-                public boolean isCancelled() {
-                    return connectionServices.isConnected();
-                }
-            },
-            getPing()
-        );
+//        if(hosts.isEmpty()) {
+//            LOG.debug("No hosts to fetch");
+//            return false;
+//        }
+//
+//        if(LOG.isDebugEnabled())
+//            LOG.debug("Fetching endpoints from " + hosts + " host caches");
+//
+//        pinger.rank(
+//            hosts,
+//            new HostExpirer(hosts),
+//            // cancel when connected -- don't send out any more pings
+//            new Cancellable() {
+//                public boolean isCancelled() {
+//                    return connectionServices.isConnected();
+//                }
+//            },
+//            getPing()
+//        );
         return true;
     }
     

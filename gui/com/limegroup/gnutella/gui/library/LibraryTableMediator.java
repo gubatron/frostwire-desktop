@@ -474,60 +474,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
         DATA_MODEL.refresh();
     }
 
-    /**
-     * Prepare a detail page of magnet link info for selected files 
-     * in the library.
-     */
-    void doMagnetLookup() {
-        doMagnetCommand("/magcmd/detail?");
-    }
 	
-    /**
-     * Fire a local lookup with file/magnet details
-     */
-    void doMagnetCommand(String cmd) {
-        // get the selected files.  Build up a url to display details.
-        int[] rows = TABLE.getSelectedRows();
-        int k = rows.length;
-        if(k == 0)
-            return;
-
-        boolean haveValidMagnet = false;
-
-        int    count     = 0;
-        int    port      = GuiCoreMediator.getLocalAcceptor().getPort();
-        int    eport     = GuiCoreMediator.getAcceptor().getPort(true);
-        byte[] eaddr     = GuiCoreMediator.getAcceptor().getAddress(true);
-        String lookupUrl = "http://localhost:"+port+
-          cmd+
-          "addr="+NetworkUtils.ip2string(eaddr)+":"+eport;
-        for(int i=0; i<k; i++) {
-            FileDesc fd = DATA_MODEL.getFileDesc(rows[i]);
-            if (fd==null) {
-                // Only report valid files
-                continue;
-            }
-            URN urn = fd.getSHA1Urn();
-			if(urn == null) {
-                // Only report valid sha1s
-                continue;
-            }
-            String urnStr = urn.toString();
-            int hashstart = 1 + urnStr.indexOf(":", 4);
-             
-            String sha1 = urnStr.substring(hashstart);
-            lookupUrl +=
-              "&n"+count+"="+EncodingUtils.encode(fd.getFileName())+
-              "&u"+count+"="+sha1;
-            count++;
-            haveValidMagnet = true;
-        }
-        
-        if (haveValidMagnet) {
-            GUIMediator.openURL(lookupUrl);
-        }
-    }
-
     /**
      * Returns the options offered to the user when removing files.
      * 
@@ -1068,7 +1015,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		}
 		
         public void actionPerformed(ActionEvent e) {
-            doMagnetLookup();
+            //doMagnetLookup();
         }
     }
 
