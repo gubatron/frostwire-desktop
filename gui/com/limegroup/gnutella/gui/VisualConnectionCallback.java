@@ -406,6 +406,6 @@ public final class VisualConnectionCallback implements ActivityCallback {
 
 	@Override
 	public void handleTorrentMagnet(final String request) {
-		GUIMediator.instance().openTorrentMagnet(request);
+		GUIMediator.instance().openTorrentURI(request);
 	}
 }

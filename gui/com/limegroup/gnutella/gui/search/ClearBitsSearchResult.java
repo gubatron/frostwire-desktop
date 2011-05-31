@@ -22,14 +22,12 @@ import com.limegroup.gnutella.xml.LimeXMLDocument;
 public class ClearBitsSearchResult extends AbstractSearchResult {
 	public static String redirectUrl=null;
 	
-	private boolean _isDownloading;
 	private ClearBitsItem _item;
 	private SearchInformation _info;
 	
 	public ClearBitsSearchResult(ClearBitsItem item, SearchInformation info) {
 		_item = item;
 		_info = info;
-		_isDownloading = false;
 	}
 	
 	@Override
@@ -112,11 +110,6 @@ public class ClearBitsSearchResult extends AbstractSearchResult {
 	}
 
 	@Override
-	public boolean isDownloading() {
-		return _isDownloading;
-	}
-
-	@Override
 	public boolean isMeasuredSpeed() {
 		return false;
 	}
@@ -124,12 +117,7 @@ public class ClearBitsSearchResult extends AbstractSearchResult {
 	@Override
 	public void takeAction(TableLine line, GUID guid, File saveDir,
 			String fileName, boolean saveAs, SearchInformation searchInfo) {
-		_isDownloading = true;
-		try {
-			GUIMediator.instance().openTorrentURI(new URI(_item.torrent_url));
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
+		GUIMediator.instance().openTorrentURI(_item.torrent_url);
 		
 		showTorrentDetails(BittorrentSettings.SHOW_TORRENT_DETAILS_DELAY);
 	}

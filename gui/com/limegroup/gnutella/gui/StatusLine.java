@@ -398,7 +398,7 @@ public final class StatusLine implements ThemeObserver {
     /**
      * Updates the status text.
      */
-    void setStatusText(final String text) {
+    public void setStatusText(final String text) {
         GUIMediator.safeInvokeAndWait(new Runnable() {
             public void run() {
                 STATUS_COMPONENT.setText(text);
