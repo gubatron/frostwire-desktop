@@ -8,6 +8,7 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -23,9 +24,9 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.limewire.util.OSUtils;
-import org.limewire.util.StringUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultTreeCellRenderer;
 
+import com.frostwire.bittorrent.AzureusCoreUtil;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -184,20 +185,20 @@ final class LibraryTree extends JTree implements MouseObserver {
         // There are two non SharedFilesDirectoryHolders that are inserted:
         //   the 'torrent' holder & the 'specially shared files' holder
         // Of these, we want special first, torrent second.
-		if(!(child.getDirectoryHolder() instanceof SharedFilesDirectoryHolder)) {
+		//if(!(child.getDirectoryHolder() instanceof SharedFilesDirectoryHolder)) {
             insert = children;
             // decrease insert by one if it's the specially shared & torrent is visible
             if(insert != 0)
                 insert--;
-		} else {
-    		for(; insert < children; insert++) {
-                LibraryTreeNode current = (LibraryTreeNode)parent.getChildAt(insert);
-                File f = current.getFile();
-                if(f == null                       // nor specially shared files
-                  || StringUtils.compareFullPrimary(f.getName(), child.getFile().getName()) >= 0) // alphabetically
-    		        break;
-    		}
-        }
+//		} else {
+//    		for(; insert < children; insert++) {
+//                LibraryTreeNode current = (LibraryTreeNode)parent.getChildAt(insert);
+//                File f = current.getFile();
+//                if(f == null                       // nor specially shared files
+//                  || StringUtils.compareFullPrimary(f.getName(), child.getFile().getName()) >= 0) // alphabetically
+//    		        break;
+//    		}
+//        }
         
 		TREE_MODEL.insertNodeInto(child, parent, insert);
 		
@@ -394,7 +395,7 @@ final class LibraryTree extends JTree implements MouseObserver {
 		public void valueChanged(TreeSelectionEvent e) {	
 			LibraryTreeNode node = getSelectedNode();
 
-			addDirToPlaylistAction.setEnabled(isEnqueueable());
+			addDirToPlaylistAction.setEnabled(true);
 			
 			if (node == null)
 				return;
@@ -573,28 +574,10 @@ final class LibraryTree extends JTree implements MouseObserver {
 	}
 
 	/**
-	 * Enable enqueue action when non-incomplete, non-shared, and has a playable file. 
-	 */
-	private boolean isEnqueueable() {
-		LibraryTreeNode node = getSelectedNode();
-		boolean enqueueable = false;
-		if (node != null) {
-			File[] files = node.getDirectoryHolder().getFiles();
-			if (files != null && files.length > 0) {
-				for (int i = 0; i < files.length; i++) {
-					if (GUIMediator.isPlaylistVisible() && PlaylistMediator.isPlayableFile(files[i]))
-						enqueueable = true;
-				}
-			}
-		}
-		return enqueueable;
-	}
-
-	/**
 	 * Updates the LibraryTree based on whether the player is enabled. 
 	 */
 	public void setPlayerEnabled(boolean value) {
-		addDirToPlaylistAction.setEnabled(isEnqueueable());
+		addDirToPlaylistAction.setEnabled(true);
 	}
 	
 
@@ -734,10 +717,10 @@ final class LibraryTree extends JTree implements MouseObserver {
             });
             
             File file = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
-            search(file);
+            search(file, AzureusCoreUtil.getIncompleteFiles());
         }
         
-        private void search(File file) {
+        private void search(File file, Set<File> incompleteFiles) {
             
             if (!file.isDirectory()) {
                 return;
@@ -747,6 +730,9 @@ final class LibraryTree extends JTree implements MouseObserver {
             final List<File> files = new ArrayList<File>();
             
             for (File child : file.listFiles()) {
+                if (incompleteFiles.contains(child)) {
+                    continue;
+                }
                 if (child.isHidden()) {
                     continue;
                 }
@@ -765,7 +751,7 @@ final class LibraryTree extends JTree implements MouseObserver {
             GUIMediator.safeInvokeLater(r);
             
             for (File directory : directories) {
-                search(directory);
+                search(directory, incompleteFiles);
             }
         }
     }

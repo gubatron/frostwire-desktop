@@ -132,9 +132,6 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
      * column's position in this array.
      */
     private static LimeTableColumn[] ltColumns;
-    
-	/** If the file is a directory */
-	private boolean _isDirectory;
 
 	/** Variable for the name */
 	private String _name;
@@ -215,7 +212,7 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
 		_name = initializer.getName();
 		_type = "";
         if (!file.isDirectory()) {
-        	_isDirectory = false;
+        	//_isDirectory = false;
             int index = _name.lastIndexOf(".");
             int index2 = fullPath.lastIndexOf(File.separator);
             _path = fullPath.substring(0,index2);
@@ -225,7 +222,7 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
             }
         } else {
         	_path = fullPath;
-        	_isDirectory = true;
+        	//_isDirectory = true;
         }
 
         // only load file sizes, do nothing for directories

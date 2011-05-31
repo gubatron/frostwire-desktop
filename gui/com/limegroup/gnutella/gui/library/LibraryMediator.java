@@ -17,18 +17,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
 
-import com.limegroup.gnutella.FileManagerEvent;
-import com.limegroup.gnutella.gui.ButtonRow;
-import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.GUIConstants;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.MessageService;
-import com.limegroup.gnutella.gui.library.RecursiveSharingDialog.State;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
-import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.gui.util.DividerLocationSettingUpdater;
 import com.limegroup.gnutella.settings.UISettings;
 
@@ -59,15 +52,11 @@ public final class LibraryMediator implements ThemeObserver {
     private static LibraryTableMediator LIBRARY_TABLE;
 
     private static final String TABLE_KEY = "LIBRARY_TABLE";
-    private static final String SHARED_KEY = "SHARED";
     /**
      * Constant handle to the file update handler.
      */
     private final HandleFileUpdate FILE_UPDATER = new HandleFileUpdate();
-   
-	/** Panel for the Shared Files node. */
-	private static JPanel jpShared = null;
-
+    
     ///////////////////////////////////////////////////////////////////////////
 	//  Singleton Pattern
 	///////////////////////////////////////////////////////////////////////////
