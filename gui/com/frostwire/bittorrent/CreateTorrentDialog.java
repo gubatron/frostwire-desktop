@@ -1,5 +1,13 @@
 package com.frostwire.bittorrent;
 
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -7,7 +15,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
 import org.gudy.azureus2.core3.config.COConfigurationManager;
@@ -97,6 +112,14 @@ public class CreateTorrentDialog extends JDialog {
 
 	private LabeledTextField trackersTextField;
 	LimeTextField tt;
+	private JPanel _container;
+	private JButton _buttonSelectFile;
+	private JButton _buttonSelectFolder;
+	private JTextArea _textTrackers;
+	private JCheckBox _checkStartSeeding;
+	private JCheckBox _checkUseDHT;
+	private JButton _buttonSaveAs;
+	private Component _progressBar;
 
 	public CreateTorrentDialog() {
 		try {
@@ -107,6 +130,7 @@ public class CreateTorrentDialog extends JDialog {
 			e.printStackTrace();
 		}
 
+		//they had it like this
 		trackers.add(new ArrayList());
 
 		trackersTextField = new LabeledTextField(I18n.tr("Trackers"), 80);
@@ -115,9 +139,99 @@ public class CreateTorrentDialog extends JDialog {
 
 		// trackersTextField.setText();
 		// trackerURL = Utils.getLinkFromClipboard(display,false);
-
+		initComponents();
 	}
 	
+	private void initComponents() {
+		setTitle(I18n.tr("Create New Torrent"));
+		setSize(480, 570);
+		
+		_container = new JPanel();		
+		_container.setLayout(new GridLayout(4,1));
+		
+		//TORRENT CONTENTS: Add file...  Add directory
+		{
+		JPanel torrentContentsPanel = new JPanel(new FlowLayout());
+		torrentContentsPanel.setBorder(BorderFactory.createTitledBorder(I18n.tr("Torrent Contents")));
+		
+		_buttonSelectFile = new JButton(I18n.tr("Select a file..."));
+		_buttonSelectFolder = new JButton("Select a folder...");
+		
+		torrentContentsPanel.add(_buttonSelectFile);
+		torrentContentsPanel.add(_buttonSelectFolder);
+
+		_container.add(torrentContentsPanel);
+		}
+		
+		//TORRENT PROPERTIES: Trackers, Start Seeding, Trackerless
+		{
+			JPanel torrentPropertiesPanel = new JPanel(new GridLayout(3,2));
+			torrentPropertiesPanel.setBorder(BorderFactory.createTitledBorder(I18n.tr("Torrent Properties")));
+			
+			//Trackers
+			JPanel trackersPanel = new JPanel(new FlowLayout());
+			torrentPropertiesPanel.add(new JLabel("Trackers"));
+			_textTrackers = new JTextArea(10,80);
+			_textTrackers.setText("THIS IS TEST");
+			trackersPanel.add(_textTrackers);
+			
+			torrentPropertiesPanel.add(trackersPanel);
+			
+			//Start seeding checkbox
+			_checkStartSeeding = new JCheckBox(I18n.tr("Start seeding"));
+			torrentPropertiesPanel.add(_checkStartSeeding);
+			
+			//Trackerless
+			_checkUseDHT = new JCheckBox(I18n.tr("Trackerless Torrent (DHT)"));
+			torrentPropertiesPanel.add(_checkUseDHT);
+			
+			_container.add(torrentPropertiesPanel);
+		}
+		
+		//CREATE AND SAVE AS
+		{
+			JPanel saveAsContainer = new JPanel(new FlowLayout());
+			_buttonSaveAs = new JButton(I18n.tr("Save torrent as..."));
+			saveAsContainer.add(_buttonSaveAs);
+			_container.add(saveAsContainer);
+		}
+		
+		//PROGRESS BAR
+		_progressBar = new JProgressBar();
+		_container.add(_progressBar);
+		
+		setContentPane(_container);
+		
+		buildListeners();
+	}
+
+	private void buildListeners() {
+		_buttonSelectFile.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("select file action performed uninplemented.");
+			}
+		});
+
+		_buttonSelectFolder.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("select folder action performed uninplemented.");
+			}
+		});
+		
+		_buttonSaveAs.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.out.println("save as action performed uninplemented.");
+			}
+		});
+
+	}
+
 	protected int getTrackerType() {
 		return (tracker_type);
 	}
@@ -426,5 +540,16 @@ public class CreateTorrentDialog extends JDialog {
 		
 //		shell = UIFunctionsManagerSWT.getUIFunctionsSWT().showCoreWaitDlg();
 	}
-
+	
+	public static void main(String[] args) {
+		CreateTorrentDialog dlg = new CreateTorrentDialog();
+		dlg.setVisible(true);
+		dlg.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				System.out.println("End of Test");
+				System.exit(0);
+			}
+		});
+	}
 }
