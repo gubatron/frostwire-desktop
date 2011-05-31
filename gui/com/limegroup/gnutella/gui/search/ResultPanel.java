@@ -14,19 +14,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.OverlayLayout;
@@ -38,7 +34,6 @@ import javax.swing.event.MouseInputListener;
 import javax.swing.plaf.metal.MetalBorders;
 
 import org.limewire.i18n.I18nMarker;
-import org.limewire.io.IpPort;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.bittorrent.TorrentUtil;
@@ -47,14 +42,12 @@ import com.limegroup.gnutella.FileDetails;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.RemoteFileDesc;
-import com.limegroup.gnutella.SpamServices;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.FileDetailsProvider;
 import com.limegroup.gnutella.gui.GUIConstants;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
-import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LicenseWindow;
 import com.limegroup.gnutella.gui.PaddedPanel;
@@ -75,7 +68,6 @@ import com.limegroup.gnutella.gui.util.PopupUtils;
 import com.limegroup.gnutella.licenses.License;
 import com.limegroup.gnutella.licenses.VerificationListener;
 import com.limegroup.gnutella.search.QueryHandler;
-import com.limegroup.gnutella.settings.FilterSettings;
 import com.limegroup.gnutella.settings.SearchSettings;
 import com.limegroup.gnutella.util.QueryUtils;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
@@ -593,54 +585,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
     
     
 
-    /**
-     * Blocks the hosts that sent the selected result.
-     */
-    void blockHosts() {
-        TableLine[] lines = getAllSelectedLines();
-        Set<String> uniqueHosts = new HashSet<String>();
-        
-        SpamServices spamServices = GuiCoreMediator.getSpamServices();
-        
-        for (TableLine line : lines) {
-        	Set<? extends IpPort> alts = line.getAlts();
-        	
-        	if (!spamServices.isHostile(line.getHostname())) {
-        		uniqueHosts.add(line.getHostname());
-        	}
-
-        	for (IpPort alt : alts) {
-        		String host = alt.getAddress();
-        		if (!spamServices.isHostile(host)) {
-        			uniqueHosts.add(host);
-        		}
-        	}
-        	
-        	for (SearchResult result : line.getOtherResults()) {
-        		String host = result.getHost();
-        		if (!spamServices.isHostile(host)) {
-        			uniqueHosts.add(host);
-        		}
-        	}
-        }
-        
-        //nothing to block
-        if (uniqueHosts.size()==0) {
-        	return;
-        }
-        
-        
-        int answer = GUIMediator.showConfirmListMessage(I18n.tr("Do you want to block search results from the following list of hosts?"), 
-        		uniqueHosts.toArray(), JOptionPane.YES_NO_OPTION, null);
-        if (answer == JOptionPane.YES_OPTION) {
-            // FIXME move into SpamServicesImpl / IPFilter
-            String[] bannedIps = FilterSettings.BLACK_LISTED_IP_ADDRESSES.getValue();
-            uniqueHosts.addAll(Arrays.asList(bannedIps));
-            FilterSettings.BLACK_LISTED_IP_ADDRESSES.setValue(uniqueHosts.toArray(new String[uniqueHosts.size()]));
-            GuiCoreMediator.getSpamServices().reloadIPFilter();
-        }
-    }
-    
     /**
      * Shows a LicenseWindow for the selected line.
      */
