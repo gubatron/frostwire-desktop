@@ -167,7 +167,6 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(UpdateMessageVerifier.class).to(UpdateMessageVerifierImpl.class);
         bind(InspectionResponseFactory.class).to(InspectionResponseFactoryImpl.class);
         bind(NodeAssigner.class).to(NodeAssignerImpl.class);
-        bind(UPnPManagerConfiguration.class).to(UPnPManagerConfigurationImpl.class);
         
         bindAll(Names.named("unlimitedExecutor"), ExecutorService.class, UnlimitedExecutorProvider.class, Executor.class);
         bindAll(Names.named("backgroundExecutor"), ScheduledExecutorService.class, BackgroundTimerProvider.class, ExecutorService.class, Executor.class);

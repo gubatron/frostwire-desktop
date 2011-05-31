@@ -19,7 +19,6 @@ import com.limegroup.gnutella.SavedFileManager;
 import com.limegroup.gnutella.SearchServices;
 import com.limegroup.gnutella.SpamServices;
 import com.limegroup.gnutella.UDPService;
-import com.limegroup.gnutella.UPnPManager;
 import com.limegroup.gnutella.UploadManager;
 import com.limegroup.gnutella.UploadServices;
 import com.limegroup.gnutella.altlocs.AltLocManager;
@@ -56,7 +55,6 @@ public class GuiCoreMediator {
     public static AltLocManager getAltLocManager() {  return core.getAltLocManager(); }
     public static IPFilter getIpFilter() {  return core.getIpFilter(); }
     public static SavedFileManager getSavedFileManager() { return core.getSavedFileManager(); }
-    public static UPnPManager getUPnPManager() { return core.getUPnPManager(); }
     public static LimeXMLSchemaRepository getLimeXMLSchemaRepository() { return core.getLimeXMLSchemaRepository(); }
     public static LimeXMLProperties getLimeXMLProperties() { return core.getLimeXMLProperties(); }
     public static RatingTable getRatingTable() { return core.getRatingTable(); }

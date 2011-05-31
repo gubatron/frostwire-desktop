@@ -240,10 +240,6 @@ public class LimeWireCore {
         return injector.getInstance(PongCacher.class);
     }
 
-    public UPnPManager getUPnPManager() {
-        return injector.getInstance(UPnPManager.class);
-    }
-
     public MutableGUIDFilter getMutableGUIDFilter() {
         return injector.getInstance(MutableGUIDFilter.class);
     }

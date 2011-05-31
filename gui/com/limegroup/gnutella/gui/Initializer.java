@@ -462,11 +462,6 @@ public final class Initializer {
         limeWireCore.getLifecycleManager().start();
         stopwatch.resetAndLog("lifecycle manager start");
         
-        if (!ConnectionSettings.DISABLE_UPNP.getValue()) {
-            limeWireCore.getUPnPManager().start();
-            stopwatch.resetAndLog("start UPnPManager");
-        }
-        
         // Instruct the gui to perform tasks that can only be performed
         // after the backend has been constructed.
         GUIMediator.instance().coreInitialized();        
