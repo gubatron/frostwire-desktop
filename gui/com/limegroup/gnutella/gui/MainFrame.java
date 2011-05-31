@@ -55,7 +55,6 @@ import com.limegroup.gnutella.gui.tabs.SearchDownloadTab;
 import com.limegroup.gnutella.gui.tabs.Tab;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
-import com.limegroup.gnutella.gui.upload.UploadMediator;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.PlayerSettings;
 
@@ -82,18 +81,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      */
     private DownloadMediator DOWNLOAD_MEDIATOR;
     private BTDownloadMediator BT_DOWNLOAD_MEDIATOR;
-
-    /**
-     * Constant handle to the <tt>MonitorView</tt> class that is
-     * responsible for displaying incoming search queries to the user.
-     */
-    private MonitorView MONITOR_VIEW;
-    
-    /**
-     * Constant handle to the <tt>UploadMediator</tt> class that is
-     * responsible for displaying active uploads to the user.
-     */
-    private UploadMediator UPLOAD_MEDIATOR;
 
     /**
      * Constant handle to the <tt>LibraryView</tt> class that is
@@ -337,7 +324,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
     	TABBED_PANE.addMouseListener(com.frostwire.gnutella.gui.tabs.TabRightClickAdapter.getInstance());
     	
     	SEARCH_MEDIATOR = new SearchMediator();
-    	MONITOR_VIEW = new MonitorView();
         
     	TABS.put(GUIMediator.Tabs.SEARCH, new SearchDownloadTab(SEARCH_MEDIATOR, getBTDownloadMediator()));
         TABS.put(GUIMediator.Tabs.LIBRARY, new LibraryPlayListTab(getLibraryMediator()));
@@ -683,27 +669,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
             BT_DOWNLOAD_MEDIATOR = BTDownloadMediator.instance();
         }
         return BT_DOWNLOAD_MEDIATOR;
-    }
-
-    /**
-     * Returns a reference to the <tt>MonitorView</tt> instance.
-     *
-     * @return a reference to the <tt>MonitorView</tt> instance
-     */
-    final MonitorView getMonitorView() {
-        return MONITOR_VIEW;
-    }
-
-    /**
-     * Returns a reference to the <tt>UploadMediator</tt> instance.
-     *
-     * @return a reference to the <tt>UploadMediator</tt> instance
-     */
-    final UploadMediator getUploadMediator() {
-        if (UPLOAD_MEDIATOR == null) {
-            UPLOAD_MEDIATOR = UploadMediator.instance();
-        }
-        return UPLOAD_MEDIATOR;
     }
 
     /**

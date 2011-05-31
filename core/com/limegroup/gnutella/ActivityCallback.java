@@ -46,13 +46,7 @@ public interface ActivityCallback extends DownloadCallback
     /**
      * Add a query string to the monitor screen
      */
-    public void handleQueryString( String query );
-
-    /** Add an uploader to the upload window */
-    public void addUpload(Uploader u);
-
-    /** Remove an uploader from the upload window. */
-    public void removeUpload(Uploader u);    
+    public void handleQueryString( String query ); 
 
     /** display an error message since the browse host failed. 
      *  @param guid The GUID of the browse host.

@@ -108,7 +108,7 @@ public final class VisualConnectionCallback implements ActivityCallback {
             while (list.size() > 0) {
                 query = list.elementAt(0);
                 list.remove(0);
-			    mf().getMonitorView().handleQueryString(query);
+			    //mf().getMonitorView().handleQueryString(query);
             }
             active = false;
         }
@@ -249,58 +249,11 @@ public final class VisualConnectionCallback implements ActivityCallback {
 	///////////////////////////////////////////////////////////////////////////
 	//  Upload-related callbacks
 	///////////////////////////////////////////////////////////////////////////
-	
-    public void addUpload(Uploader uploader) {
-        UploadType type = uploader.getUploadType();
-        if(!type.isInternal()) {
-            SwingUtilities.invokeLater(new AddUpload(uploader));
-        } else if(type == UploadType.BROWSE_HOST)
-            SwingUtilities.invokeLater(new BrowseHosted(uploader));
-    }
-
-    public void removeUpload(Uploader uploader) {
-        UploadType type = uploader.getUploadType();
-        if(type != null && !type.isInternal()) {
-            SwingUtilities.invokeLater(new RemoveUpload(uploader));
-        }
-    }
     
     public void uploadsComplete() {
         Finalizer.setUploadsComplete();
     }
-    
-    private class BrowseHosted implements Runnable {
-        private Uploader up;
-        public BrowseHosted(Uploader up) {
-            this.up = up;
-        }
-        public void run() {
-            mf().getLoggingMediator().add(new LogEvent(up));
-        }
-    }
-
-    private class AddUpload implements Runnable {
-        private Uploader up;
-        public AddUpload(Uploader up) {
-            this.up = up;
-        }
-        public void run() {
-            mf().getUploadMediator().add(up);
-            mf().getLoggingMediator().add(new LogEvent(up));
-		}
-    }
-
-    private class RemoveUpload implements Runnable {
-        private Uploader mgr;
-        public RemoveUpload(Uploader mgr) {
-            this.mgr = mgr;
-        }
-        public void run() {
-            mf().getUploadMediator().remove(mgr);
-	    }
-    }
-
-	
+    	
 	///////////////////////////////////////////////////////////////////////////
 	//  Other stuff
 	///////////////////////////////////////////////////////////////////////////
