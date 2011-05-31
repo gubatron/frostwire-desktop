@@ -3,7 +3,6 @@ package com.limegroup.gnutella.gui;
 import java.io.File;
 import java.util.Set;
 import java.util.Vector;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.SwingUtilities;
 
@@ -14,22 +13,15 @@ import com.google.inject.Singleton;
 import com.limegroup.gnutella.ActivityCallback;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.Downloader.DownloadStatus;
-import com.limegroup.gnutella.FileManagerEvent;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.RemoteFileDesc;
-import com.limegroup.gnutella.Uploader;
 import com.limegroup.gnutella.browser.MagnetOptions;
-import com.limegroup.gnutella.connection.ConnectionLifecycleEvent;
-import com.limegroup.gnutella.connection.RoutedConnection;
 import com.limegroup.gnutella.gui.search.SearchInformation;
 import com.limegroup.gnutella.gui.search.SearchMediator;
-import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.search.HostData;
-import com.limegroup.gnutella.settings.DaapSettings;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 import com.limegroup.gnutella.settings.iTunesSettings;
-import com.limegroup.gnutella.uploader.UploadType;
 import com.limegroup.gnutella.util.QueryUtils;
 import com.limegroup.gnutella.version.UpdateInformation;
 
@@ -117,22 +109,7 @@ public final class VisualConnectionCallback implements ActivityCallback {
 	//  Files-related callbacks
 	///////////////////////////////////////////////////////////////////////////
 	
-    /**
-     * File manager finished loading.
-     */
-    public void fileManagerLoaded() {
-        if (DaapSettings.DAAP_ENABLED.getValue()) {
-            Runnable r = new Runnable() {
-                public void run() {
-                    DaapManager.instance().fileManagerLoaded();
-                }
-            };
-
-            BackgroundExecutorService.schedule(r);
-        }
-    }
-    
-	/** 
+    /** 
 	 * This method notifies the frontend that the data for the 
 	 * specified shared <tt>File</tt> instance has been 
 	 * updated.
@@ -157,16 +134,6 @@ public final class VisualConnectionCallback implements ActivityCallback {
                 mf().getLibraryMediator().clearLibrary();
             }
         });
-        
-        if (DaapSettings.DAAP_ENABLED.getValue()) {
-            Runnable r = new Runnable() {
-                public void run() {
-                    DaapManager.instance().fileManagerLoading();
-                }
-            };
-
-            BackgroundExecutorService.schedule(r);
-        }
     }
     
 

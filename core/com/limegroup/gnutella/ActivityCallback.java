@@ -57,11 +57,6 @@ public interface ActivityCallback extends DownloadCallback
 	 * Notification that the file manager is beginning loading.
 	 */
 	public void fileManagerLoading();
-
-    /**
-     * Notifies a user that the filemanager has completely loaded.
-     */
-    public void fileManagerLoaded();
     
     /**
      * Notifies the GUI that the given shared file has new information.

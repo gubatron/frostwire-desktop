@@ -47,9 +47,6 @@ import com.limegroup.gnutella.gui.options.panes.AutoCompletePaneItem;
 import com.limegroup.gnutella.gui.options.panes.BrowserPaneItem;
 import com.limegroup.gnutella.gui.options.panes.BugsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ChatCommunityPaneItem;
-import com.limegroup.gnutella.gui.options.panes.DaapBufferSizePaneItem;
-import com.limegroup.gnutella.gui.options.panes.DaapPasswordPaneItem;
-import com.limegroup.gnutella.gui.options.panes.DaapSupportPaneItem;
 import com.limegroup.gnutella.gui.options.panes.DefaultActionPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ForceIPPaneItem;
 import com.limegroup.gnutella.gui.options.panes.IgnoreResultsPaneItem;
@@ -305,11 +302,11 @@ public final class OptionsConstructor {
         addOption(OptionsMediator.ROOT_NODE_KEY, STATUS_BAR_KEY, I18n.tr("Status Bar"), StatusBarConnectionQualityPaneItem.class, StatusBarFirewallPaneItem.class, StatusBarBandwidthPaneItem.class); // Removed Lime Store
         
         //itunes
-        addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, ITUNES_KEY, I18n.tr("iTunes"));
-		if (OSUtils.isMacOSX()) {
+        if (OSUtils.isMacOSX()) {
+            addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, ITUNES_KEY, I18n.tr("iTunes"));
 			addOption(ITUNES_KEY, ITUNES_IMPORT_KEY, I18n.tr("Importing"), iTunesPreferencePaneItem.class); 
 		}
-		addOption(ITUNES_KEY, ITUNES_DAAP_KEY, I18n.tr("Sharing"), DaapSupportPaneItem.class, DaapPasswordPaneItem.class, DaapBufferSizePaneItem.class);
+		//addOption(ITUNES_KEY, ITUNES_DAAP_KEY, I18n.tr("Sharing"), DaapSupportPaneItem.class, DaapPasswordPaneItem.class, DaapBufferSizePaneItem.class);
 
 		
 		if (!OSUtils.isWindows() && !OSUtils.isAnyMac()) {

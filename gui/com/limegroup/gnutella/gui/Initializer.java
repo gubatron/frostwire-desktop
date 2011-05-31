@@ -33,7 +33,6 @@ import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.ConnectionSettings;
-import com.limegroup.gnutella.settings.DaapSettings;
 import com.limegroup.gnutella.settings.StartupSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
@@ -135,7 +134,6 @@ public final class Initializer {
         //System.out.println("Initializer.initialize() start core");
         startCore(limeWireCore);
         runQueuedRequests(limeWireCore);
-        startDAAP();
         
         startAzureusCore();
         
@@ -489,22 +487,6 @@ public final class Initializer {
         // Activate a download for magnet URL locally if one exists
         limeWireCore.getExternalControl().runQueuedControlRequest();
         stopwatch.resetAndLog("run queued control req");
-    }
-
-    /** Starts DAAP. */
-    private void startDAAP() {
-        if (DaapSettings.DAAP_ENABLED.getValue()) {
-            try {
-                GUIMediator.setSplashScreenString(I18n.tr("Loading Digital Audio Access Protocol..."));
-                DaapManager.instance().start();
-                stopwatch.resetAndLog("daap start");
-                DaapManager.instance().init();
-                stopwatch.resetAndLog("daap init");
-            } catch (IOException err) {
-                GUIMediator.showError(I18n.tr("FrostWire was unable to start the Digital Audio Access Protocol Service (for sharing files in iTunes). This feature will be turned off. You can turn it back on in options, under iTunes -> Sharing."));
-                DaapSettings.DAAP_ENABLED.setValue(false);
-            }
-        }
     }
     
     /** Runs post initialization tasks. */

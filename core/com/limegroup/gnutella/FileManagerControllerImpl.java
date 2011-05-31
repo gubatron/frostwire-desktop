@@ -201,7 +201,7 @@ public class FileManagerControllerImpl implements FileManagerController {
 
     public void loadFinishedPostSave() {
         savedFileManager.get().run();
-        activityCallback.get().fileManagerLoaded();
+        //activityCallback.get().fileManagerLoaded();
     }
 
 //    public void addSimppListener(SimppListener listener) {
