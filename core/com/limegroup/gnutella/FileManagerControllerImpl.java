@@ -228,10 +228,6 @@ public class FileManagerControllerImpl implements FileManagerController {
         activityCallback.get().setAnnotateEnabled(enabled);
     }
 
-    public boolean warnAboutSharingSensitiveDirectory(File directory) {
-        return activityCallback.get().warnAboutSharingSensitiveDirectory(directory);
-    }
-
     public LimeXMLDocument createLimeXMLDocument(
             Collection<? extends Entry<String, String>> nameValueList,
             String schemaURI) {

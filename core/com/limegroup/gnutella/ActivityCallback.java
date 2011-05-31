@@ -64,12 +64,6 @@ public interface ActivityCallback extends DownloadCallback
     public void fileManagerLoaded();
     
     /**
-     * Notifies the GUI that the user is attempting to share a sensitive
-     * directory.  Returns true if the sensitive directory should be shared. 
-     */
-    public boolean warnAboutSharingSensitiveDirectory(File dir);
-    
-    /**
      * Notifies the GUI that the given shared file has new information.
      *
      * @param file The File that needs updating

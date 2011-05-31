@@ -296,21 +296,21 @@ public class DownloaderDialog extends JDialog {
 		    ext = originalName.substring(dot);
 		}
 
-		Set<?> downloads = DownloadMediator.instance().getFileNames();
-		File newFile = originalFile;
-		String newName = originalName;
-		for (int i = 1; newFile.exists() || downloads.contains(newName); i++) {
-		    newName = preExt + "(" + i + ")" + ext;
-		    newFile = new File(originalFile.getParent(), newName);
-		}
-
-		try {
-			factory.setSaveFile(newFile);
-			downloader = factory.createDownloader(false);
-			dispose();
-		} catch (SaveLocationException sle) {
-			setContentFromException(sle);
-		}
+//		Set<?> downloads = DownloadMediator.instance().getFileNames();
+//		File newFile = originalFile;
+//		String newName = originalName;
+//		for (int i = 1; newFile.exists() || downloads.contains(newName); i++) {
+//		    newName = preExt + "(" + i + ")" + ext;
+//		    newFile = new File(originalFile.getParent(), newName);
+//		}
+//
+//		try {
+//			factory.setSaveFile(newFile);
+//			downloader = factory.createDownloader(false);
+//			dispose();
+//		} catch (SaveLocationException sle) {
+//			setContentFromException(sle);
+//		}
 	}
 
 	private class OverWriteAction extends AbstractAction {

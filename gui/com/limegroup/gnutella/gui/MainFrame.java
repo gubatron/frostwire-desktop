@@ -42,9 +42,7 @@ import com.frostwire.gnutella.gui.tabs.ChatTab;
 import com.frostwire.gui.download.bittorrent.BTDownloadMediator;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.TransferHandlerDropTargetListener;
-import com.limegroup.gnutella.gui.download.DownloadMediator;
 import com.limegroup.gnutella.gui.library.LibraryMediator;
-import com.limegroup.gnutella.gui.logging.LoggingMediator;
 import com.limegroup.gnutella.gui.menu.MenuMediator;
 import com.limegroup.gnutella.gui.options.OptionsMediator;
 import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
@@ -75,11 +73,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      */
     private SearchMediator SEARCH_MEDIATOR;
 
-     /**
-     * Constant handle to the <tt>DownloadMediator</tt> class that is
-     * responsible for displaying active downloads to the user.
-     */
-    private DownloadMediator DOWNLOAD_MEDIATOR;
     private BTDownloadMediator BT_DOWNLOAD_MEDIATOR;
 
     /**
@@ -92,8 +85,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
 
     private ChatMediator CHAT_MEDIATOR;
     
-    private LoggingMediator LOGGING_MEDIATOR;
-
     /**
      * Constant handle to the <tt>OptionsMediator</tt> class that is
      * responsible for displaying customizable options to the user.
@@ -652,18 +643,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         }
     }
     
-    /**
-     * Returns a reference to the <tt>DownloadMediator</tt> instance.
-     *
-     * @return a reference to the <tt>DownloadMediator</tt> instance
-     */
-    final DownloadMediator getDownloadMediator() {
-        if (DOWNLOAD_MEDIATOR == null) {
-            DOWNLOAD_MEDIATOR = DownloadMediator.instance();
-        }
-        return DOWNLOAD_MEDIATOR;
-    }
-    
     final BTDownloadMediator getBTDownloadMediator() {
         if (BT_DOWNLOAD_MEDIATOR == null) {
             BT_DOWNLOAD_MEDIATOR = BTDownloadMediator.instance();
@@ -697,14 +676,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         return CHAT_MEDIATOR;
     }
         
-    /** Returns the logging mediator. */
-    final LoggingMediator getLoggingMediator() {
-        if (LOGGING_MEDIATOR == null) {
-            LOGGING_MEDIATOR = LoggingMediator.instance();
-        }
-        return LOGGING_MEDIATOR;
-    }
-    
     /**
      * Returns a reference to the <tt>PlaylistMediator</tt> instance.
      *

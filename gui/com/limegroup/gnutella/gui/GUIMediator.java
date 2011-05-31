@@ -811,13 +811,6 @@ public final class GUIMediator {
 	}
 
 	/**
-	 * Tells the library to add a new top-level (shared) folder.
-	 */
-	public final void addSharedLibraryFolder() {
-		getLibraryMediator().addSharedLibraryFolder();
-	}
-
-	/**
 	 * Returns the active playlist or <code>null</code> if the playlist is not
 	 * enabled.
 	 */

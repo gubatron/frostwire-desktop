@@ -22,10 +22,8 @@ import com.limegroup.gnutella.Uploader;
 import com.limegroup.gnutella.browser.MagnetOptions;
 import com.limegroup.gnutella.connection.ConnectionLifecycleEvent;
 import com.limegroup.gnutella.connection.RoutedConnection;
-import com.limegroup.gnutella.gui.logging.LogEvent;
 import com.limegroup.gnutella.gui.search.SearchInformation;
 import com.limegroup.gnutella.gui.search.SearchMediator;
-import com.limegroup.gnutella.gui.sharing.ShareManager;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.search.HostData;
 import com.limegroup.gnutella.settings.DaapSettings;
@@ -240,7 +238,7 @@ public final class VisualConnectionCallback implements ActivityCallback {
             //mf().getBTDownloadMediator().remove(mgr);
             mf().getLibraryMediator().quickRefresh();
             SearchMediator.updateResults();
-            mf().getLoggingMediator().add(new LogEvent(mgr));
+            //mf().getLoggingMediator().add(new LogEvent(mgr));
 	    }
             
     }
@@ -284,22 +282,6 @@ public final class VisualConnectionCallback implements ActivityCallback {
     }
 
 
-    /**
-     * Pops up a dialog that the user is attempting to share a sensitive
-     * directory, and allows the user to either share or not share
-     * the folder.  Returns true if the sensitive directory should be shared. 
-     */
-    public boolean warnAboutSharingSensitiveDirectory(final File dir) {
-        final AtomicBoolean bool = new AtomicBoolean(false);
-        GUIMediator.safeInvokeAndWait(new Runnable() {
-            public void run() {
-                bool.set(ShareManager.warnAboutSensitiveDirectory(dir));
-            }
-        });
-        
-        return bool.get();
-    }
-    
     public void setAnnotateEnabled(final boolean enabled) {
     	    SwingUtilities.invokeLater(new Runnable() {
             public void run() {

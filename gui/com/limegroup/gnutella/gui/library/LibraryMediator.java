@@ -26,7 +26,6 @@ import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.MessageService;
 import com.limegroup.gnutella.gui.library.RecursiveSharingDialog.State;
-import com.limegroup.gnutella.gui.sharing.ShareManager;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
@@ -223,30 +222,6 @@ public final class LibraryMediator implements ThemeObserver {
     public void forceRefresh() {
         updateTableFiles(getLibraryTree().getSelectedDirectoryHolder());
     }
-		
-    /** 
-	 * Displays a file chooser for selecting a new folder to share and 
-	 * adds that new folder to the settings and FileManager.
-	 */
-    public void addSharedLibraryFolder() {
-		File dir = FileChooserHandler.getInputDirectory();
-		if (dir == null)
-			return;
-		addSharedLibraryFolder(dir);
-    }
-	
-	public void addSharedLibraryFolder(final File dir) {
-		if(ShareManager.checkAndWarnNewSharedFolder(dir)) {    		
-    		final RecursiveSharingDialog dialog = new RecursiveSharingDialog(GUIMediator.getAppFrame(), dir);
-    		if (dialog.showChooseDialog(MessageService.getParentComponent()) == State.OK) {
-    			BackgroundExecutorService.schedule(new Runnable() {
-    			    public void run() {
-    			        GuiCoreMediator.getFileManager().addSharedFolders(dialog.getRootsToShare(), dialog.getFoldersToExclude());
-    	            }
-    	        });	
-    		}
-		}
-	}
 	
 	/**
 	 * Update the this file's statistic

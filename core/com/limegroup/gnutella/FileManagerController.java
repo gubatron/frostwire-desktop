@@ -56,8 +56,6 @@ public interface FileManagerController {
 
     public void fileManagerLoading();
 
-    public boolean warnAboutSharingSensitiveDirectory(File directory);
-
     public void handleSharedFileUpdate(File file);
 
     public void scheduleWithFixedDelay(Runnable command, int initialDelay, int delay, TimeUnit unit);
