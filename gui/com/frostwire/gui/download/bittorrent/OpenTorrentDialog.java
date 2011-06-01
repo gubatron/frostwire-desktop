@@ -1,14 +1,21 @@
 package com.frostwire.gui.download.bittorrent;
 
+import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.JTable;
 
 import com.limegroup.gnutella.gui.I18n;
 
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class OpenTorrentDialog extends JDialog {
     
@@ -16,28 +23,112 @@ public class OpenTorrentDialog extends JDialog {
     
     private JLabel _label;
     private JTable _table;
+    private JScrollPane _scrollPane;
+    private JButton _buttonOK;
+    private JButton _buttonCancel;
     
-    public OpenTorrentDialog() {
+    public OpenTorrentDialog(JFrame frame) {
+        super(frame, I18n.tr("Select files to download"));
         setupUI();
     }
     
     protected void setupUI() {
+        setSize(400, 400);
+        setResizable(false);
+        
         getContentPane().setLayout(new GridBagLayout());
         
-        GridBagConstraints gbc;
+        GridBagConstraints c;
         
+        // title
         _label = new JLabel(I18n.tr("Torrent name...."));
-        gbc = new GridBagConstraints();
-        gbc.insets = new Insets(0, 0, 5, 0);
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        getContentPane().add(_label, gbc);
+        c = new GridBagConstraints();
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        //c.insets = new Insets(0, 0, 5, 5);
+        //c.gridx = 0;
+        //c.gridy = 0;
+        getContentPane().add(_label, c);
         
-        _table = new JTable();
-        gbc = new GridBagConstraints();
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        getContentPane().add(_table, gbc);
+        // table
+        _table = new JTable(new FilesTableMode());
+        _scrollPane = new JScrollPane(_table);
+        _table.setFillsViewportHeight(true);
+        c = new GridBagConstraints();
+        c.fill = GridBagConstraints.BOTH;
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        //c.gridx = 0;
+        //c.gridy = 1;
+        getContentPane().add(_scrollPane, c);
+        
+        // ok button
+        _buttonOK = new JButton(I18n.tr("OK"));
+        _buttonOK.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                buttonOK_actionPerformed(e);
+            }
+        });
+        c = new GridBagConstraints();
+        c.insets = new Insets(0, 250, 0, 0);
+        c.fill = GridBagConstraints.NONE;
+        c.gridwidth = GridBagConstraints.RELATIVE;
+        c.anchor = GridBagConstraints.EAST;
+        c.ipadx = 40;
+        //c.gridx = 0;
+        //c.gridy = 3;
+        getContentPane().add(_buttonOK, c);
+        
+        // cancel button
+        _buttonCancel = new JButton(I18n.tr("Cancel"));
+        _buttonCancel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                buttonCancel_actionPerformed(e);
+            }
+        });
+        c = new GridBagConstraints();
+        c.fill = GridBagConstraints.NONE;
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.anchor = GridBagConstraints.EAST;
+        c.ipadx = 20;
+        //c.weighty = 34.0;
+        //c.gridx = 0;
+        //c.gridy = 3;
+        getContentPane().add(_buttonCancel, c);
+        
+        pack();
+        setLocationRelativeTo(null);
+    }
+    
+    protected void buttonOK_actionPerformed(ActionEvent e) {
+        // TODO Auto-generated method stub
+        
+    }
+    
+    protected void buttonCancel_actionPerformed(ActionEvent e) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    private final class FilesTableMode  extends AbstractTableModel {
+
+        @Override
+        public int getRowCount() {
+            return 2;
+        }
+
+        @Override
+        public int getColumnCount() {
+            return 2;
+        }
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            return "Hello";
+        }
+        
+    }
+    
+    public static void main(String[] args) {
+        OpenTorrentDialog dlg = new OpenTorrentDialog(null);
+        dlg.setVisible(true);
     }
 }
