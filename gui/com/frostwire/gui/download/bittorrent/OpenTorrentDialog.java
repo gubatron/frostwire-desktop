@@ -44,9 +44,8 @@ public class OpenTorrentDialog extends JDialog {
         _label = new JLabel(I18n.tr("Torrent name...."));
         c = new GridBagConstraints();
         c.gridwidth = GridBagConstraints.REMAINDER;
-        //c.insets = new Insets(0, 0, 5, 5);
-        //c.gridx = 0;
-        //c.gridy = 0;
+        c.anchor = GridBagConstraints.WEST;
+        c.insets = new Insets(5, 5, 5, 5);
         getContentPane().add(_label, c);
         
         // table
@@ -54,10 +53,9 @@ public class OpenTorrentDialog extends JDialog {
         _scrollPane = new JScrollPane(_table);
         _table.setFillsViewportHeight(true);
         c = new GridBagConstraints();
+        c.insets = new Insets(5, 5, 5, 5);
         c.fill = GridBagConstraints.BOTH;
         c.gridwidth = GridBagConstraints.REMAINDER;
-        //c.gridx = 0;
-        //c.gridy = 1;
         getContentPane().add(_scrollPane, c);
         
         // ok button
@@ -68,13 +66,11 @@ public class OpenTorrentDialog extends JDialog {
             }
         });
         c = new GridBagConstraints();
-        c.insets = new Insets(0, 250, 0, 0);
+        c.insets = new Insets(4, 250, 8, 4);
         c.fill = GridBagConstraints.NONE;
         c.gridwidth = GridBagConstraints.RELATIVE;
         c.anchor = GridBagConstraints.EAST;
         c.ipadx = 40;
-        //c.gridx = 0;
-        //c.gridy = 3;
         getContentPane().add(_buttonOK, c);
         
         // cancel button
@@ -85,13 +81,11 @@ public class OpenTorrentDialog extends JDialog {
             }
         });
         c = new GridBagConstraints();
+        c.insets = new Insets(4, 4, 8, 6);
         c.fill = GridBagConstraints.NONE;
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.anchor = GridBagConstraints.EAST;
         c.ipadx = 20;
-        //c.weighty = 34.0;
-        //c.gridx = 0;
-        //c.gridy = 3;
         getContentPane().add(_buttonCancel, c);
         
         pack();
