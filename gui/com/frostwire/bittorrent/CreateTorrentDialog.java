@@ -12,11 +12,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -24,6 +28,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -90,9 +95,9 @@ public class CreateTorrentDialog extends JDialog {
 
 	// false : singleMode, true: directory
 	boolean create_from_dir;
-	String singlePath = "";
-	String directoryPath = "";
-	String savePath = "";
+	String singlePath = null;
+	String directoryPath = null;
+	String savePath = null;
 
 	String trackerURL = TT_EXTERNAL_DEFAULT;
 
@@ -130,7 +135,8 @@ public class CreateTorrentDialog extends JDialog {
 	private final Dimension MINIMUM_DIALOG_DIMENSIONS = new Dimension(600, 570);
 	private JLabel _labelTrackers;
 	private JScrollPane _textTrackersScrollPane;
-	private JFileChooser _fileChooser;;
+	private JFileChooser _fileChooser;
+	private String _invalidTrackerURL;;
 
 	public CreateTorrentDialog() {
 		try {
@@ -362,7 +368,7 @@ public class CreateTorrentDialog extends JDialog {
 	private void initFileChooser(int fileSelectionMode) {
 		if (_fileChooser == null) {
 			_fileChooser = new JFileChooser();
-			// _fileChooser.setMultiSelectionEnabled(false);
+			_fileChooser.setMultiSelectionEnabled(false);
 		}
 
 		_fileChooser.setFileSelectionMode(fileSelectionMode);
@@ -428,8 +434,50 @@ public class CreateTorrentDialog extends JDialog {
 	}
 
 	protected void onButtonSaveAs() {
-		// TODO Auto-generated method stub
+		//Make sure a readable file or folder has been selected.
+		if (singlePath == null && directoryPath == null) {
+			JOptionPane.showMessageDialog(this, I18n.tr("Please select a file or a folder.\nYour new torrent will need content to index."),I18n.tr("Something's missing"),JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
+		//if it's not trackerless make sure we have valid tracker urls
+		if (!_checkUseDHT.isSelected()) {
+			if (!validateTrackerURLS()) {
+				JOptionPane.showMessageDialog(this, I18n.tr("Check again your tracker URL(s).\n"+_invalidTrackerURL),I18n.tr("Invalid Tracker URL\n"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+		}
+		
+		//show save as dialog
+		
+		//create torrent and notify UI
+		
+		//if torrent is to be seeded, start a download of the torrent using a mediator.
+	}
 
+	private boolean validateTrackerURLS() {
+		String trackersText = _textTrackers.getText();
+		if (trackersText == null || trackersText.length()==0) {
+			return false;
+		}
+		
+		String patternStr = "\\b(https?|udp)://[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]";
+		Pattern pattern = Pattern.compile(patternStr);
+		
+		
+		String[] tracker_urls = trackersText.split("\n");
+		
+		for (String tracker_url : tracker_urls) {
+			Matcher matcher = pattern.matcher(tracker_url.trim());
+			if (!matcher.matches()) {
+				_invalidTrackerURL = tracker_url.trim();
+				return false;
+			}
+		}
+		
+		_invalidTrackerURL = null;
+		
+		return true;
 	}
 
 	protected int getTrackerType() {
