@@ -1,7 +1,6 @@
 package com.frostwire.gui.download.bittorrent;
 
 import java.io.File;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -498,6 +497,13 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
 
     public void openTorrent(File file) {
         try {
+            
+            OpenTorrentDialog dlg = new OpenTorrentDialog(GUIMediator.instance().getAppFrame(), file);
+            dlg.setVisible(true);
+//            if (true) {
+//                return;
+//            }
+            
             BTDownloaderFactory factory = new BTDownloaderFactory(AzureusStarter.getAzureusCore().getGlobalManager(), file);
             final BTDownloader downloader = BTDownloaderUtils.createDownloader(factory);
             

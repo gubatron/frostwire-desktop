@@ -48,11 +48,13 @@ public class OpenTorrentDialog extends JDialog {
     private JButton _buttonCancel;
 
     private final TOTorrent _torrent;
+    private final String _name;
 
     public OpenTorrentDialog(JFrame frame, File torrentFile) throws TOTorrentException {
         super(frame, I18n.tr("Select files to download"));
 
         _torrent = TorrentUtils.readFromFile(torrentFile, false);
+        _name = torrentFile.getName();
 
         setupUI();
     }
@@ -65,7 +67,7 @@ public class OpenTorrentDialog extends JDialog {
         GridBagConstraints c;
 
         // title
-        _label = new JLabel(I18n.tr("Torrent name...."));
+        _label = new JLabel(_name);
         c = new GridBagConstraints();
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.anchor = GridBagConstraints.WEST;
@@ -297,11 +299,5 @@ public class OpenTorrentDialog extends JDialog {
                 fireEditingStopped();
             }
         }
-    }
-
-    public static void main(String[] args) throws TOTorrentException {
-        OpenTorrentDialog dlg = new OpenTorrentDialog(null, new File("/home/atorres/FrostWire/Torrents/[isoHunt] AVATAR.SoundTracks.And.WallPapers-MMR4U.5229527.TPB.torrent"));
-        dlg.setVisible(true);
-        System.out.println("End");
     }
 }
