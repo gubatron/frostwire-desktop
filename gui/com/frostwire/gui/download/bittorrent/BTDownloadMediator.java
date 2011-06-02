@@ -496,47 +496,41 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     }
 
     public void openTorrent(final File file, final boolean partialSelection) {
-        try {
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                try {
 
-            GUIMediator.safeInvokeLater(new Runnable() {
-                public void run() {
-                    try {
-                        if (partialSelection) {
-                            OpenTorrentDialog dlg = new OpenTorrentDialog(GUIMediator.getAppFrame(), file);
-                            dlg.setVisible(true);
+                    boolean[] filesSelection = null;
+
+                    if (partialSelection) {
+                        OpenTorrentDialog dlg = new OpenTorrentDialog(GUIMediator.getAppFrame(), file);
+                        dlg.setVisible(true);
+                        filesSelection = dlg.getFilesSelection();
+                        if (filesSelection == null) {
+                            return;
                         }
-                    } catch (Exception e) {
-
                     }
-                }
-            });
 
-            if (true) {
-                return;
-            }
+                    BTDownloaderFactory factory = new BTDownloaderFactory(AzureusStarter.getAzureusCore().getGlobalManager(), file, filesSelection);
+                    BTDownloader downloader = BTDownloaderUtils.createDownloader(factory);
 
-            BTDownloaderFactory factory = new BTDownloaderFactory(AzureusStarter.getAzureusCore().getGlobalManager(), file);
-            final BTDownloader downloader = BTDownloaderUtils.createDownloader(factory);
-
-            if (downloader != null) {
-                GUIMediator.safeInvokeLater(new Runnable() {
-                    public void run() {
+                    if (downloader != null) {
                         add(downloader);
                     }
-                });
-            }
-        } catch (Exception ioe) {
-            ioe.printStackTrace();
-            if (!ioe.toString().contains("No files selected by user")) {
-                // could not read torrent file or bad torrent file.
-                GUIMediator
-                        .showError(
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    if (!e.toString().contains("No files selected by user")) {
+                        // could not read torrent file or bad torrent file.
+                        GUIMediator.showError(
                                 I18n.tr("FrostWire was unable to load the torrent file \"{0}\", - it may be malformed or FrostWire does not have permission to access this file.",
                                         file.getName()), QuestionsHandler.TORRENT_OPEN_FAILURE);
-                //System.out.println("***Error happened from Download Mediator: " +  ioe);
-                //GUIMediator.showMessage("Error was: " + ioe); //FTA: debug
+                        //System.out.println("***Error happened from Download Mediator: " +  ioe);
+                        //GUIMediator.showMessage("Error was: " + ioe); //FTA: debug
+                    }
+                }
             }
-        }
+        });
     }
 
     public BTDownloader[] getSelectedDownloaders() {

@@ -41,6 +41,8 @@ public class OpenTorrentDialog extends JDialog {
     private final TOTorrent _torrent;
     private final String _name;
     private final TorrentTableModel _model;
+    
+    private boolean[] _filesSelection;
 
     public OpenTorrentDialog(JFrame frame, File torrentFile) throws TOTorrentException {
         super(frame, I18n.tr("Select files to download"));
@@ -134,6 +136,13 @@ public class OpenTorrentDialog extends JDialog {
     }
 
     protected void buttonOK_actionPerformed(ActionEvent e) {
+        
+        TorrentFileInfo[] fileInfos = _model.getFileInfos();
+        _filesSelection = new boolean[fileInfos.length];
+        for (int i = 0; i < _filesSelection.length; i++) {
+            _filesSelection[i] = fileInfos[i].selected;
+        }
+        
         GUIUtils.getDisposeAction().actionPerformed(e);
     }
 
@@ -143,6 +152,10 @@ public class OpenTorrentDialog extends JDialog {
 
     private void performCheckBoxValidation() {
         _checkBoxHeader.setSelected(_model.isAllSelected(), false);
+    }
+    
+    public boolean[] getFilesSelection() {
+        return _filesSelection;
     }
 
     private final class TorrentTableModel extends AbstractTableModel {
@@ -229,6 +242,10 @@ public class OpenTorrentDialog extends JDialog {
                 }
             }
             return true;
+        }
+        
+        public TorrentFileInfo[] getFileInfos() {
+            return _fileInfos;
         }
     }
 }

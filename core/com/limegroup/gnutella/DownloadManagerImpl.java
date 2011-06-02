@@ -179,7 +179,7 @@ public class DownloadManagerImpl implements DownloadManager {
             if (obj instanceof org.gudy.azureus2.core3.download.DownloadManager) {
 
             	org.gudy.azureus2.core3.download.DownloadManager dlMgr = (org.gudy.azureus2.core3.download.DownloadManager) obj;
-                BTDownloader downloader = new BTDownloaderFactory(globalManager, null).createDownloader(dlMgr);
+                BTDownloader downloader = new BTDownloaderFactory(globalManager, null, null).createDownloader(dlMgr);
                 
             	if (!SharingSettings.SEED_FINISHED_TORRENTS.getValue()) {
             		
