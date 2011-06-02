@@ -3,13 +3,10 @@ package com.limegroup.gnutella.gui.search;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 
-import org.limewire.io.Connectable;
-import org.limewire.io.ConnectableImpl;
 import org.limewire.io.IpPort;
 import org.limewire.setting.evt.SettingEvent;
 import org.limewire.setting.evt.SettingListener;
@@ -30,7 +27,6 @@ import com.frostwire.gnutella.gui.filters.SearchFilterFactory;
 import com.frostwire.gnutella.gui.filters.SearchFilterFactoryImpl;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
@@ -511,15 +507,6 @@ public final class SearchMediator {
     private static ResultPanel addResultTab(GUID guid,
                                             SearchInformation info) {
         return getSearchResultDisplayer().addResultTab(guid, info);
-    }
-    
-    /**
-     * Adds a browse host tab with the given description.
-     */
-    private static ResultPanel addBrowseHostTab(GUID guid, String desc) {
-        return getSearchResultDisplayer().addResultTab(guid, 
-            SearchInformation.createBrowseHostSearch(desc)
-        );
     }
 
     //private static HashMap<String, Character> BLACKLISTED_URNS = null;
