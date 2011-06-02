@@ -468,14 +468,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
         
         menu.add(createSearchAgainMenu(lines.length > 0 ? lines[0] : null));
         
-        menu.addSeparator();
-        
-        PopupUtils.addMenuItem(SearchMediator.STOP_STRING, TORRENT_DETAILS_LISTENER, menu, !isStopped());
-        
-        boolean allSpam = true;
-        boolean allNot = true;
-        
-        return (new SearchResultMenu(this)).addToMenu(menu, lines, !allSpam, !allNot);
+        return (new SearchResultMenu(this)).addToMenu(menu, lines);
     }
     
     /**
@@ -484,7 +477,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
     protected final JMenu createSearchAgainMenu(TableLine line) {
         JMenu menu = new SkinMenu(I18n.tr("Search More"));
         menu.add(new SkinMenuItem(new RepeatSearchAction()));
-        menu.add(new SkinMenuItem(new RepeatSearchNoClearAction()));
 
         if (line == null) {
             menu.setEnabled(isRepeatSearchEnabled());
@@ -1070,22 +1062,4 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
             repeatSearch(true);
         }
     }
-
-    private final class RepeatSearchNoClearAction extends AbstractAction {
-
-        /**
-		 * 
-		 */
-		private static final long serialVersionUID = -4696794773922819241L;
-
-		public RepeatSearchNoClearAction() {
-            putValue(Action.NAME, SearchMediator.REPEAT_SEARCH_NO_CLEAR_STRING);
-            setEnabled(isRepeatSearchEnabled());
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            repeatSearch(false);
-        }
-    }  
-    
 }

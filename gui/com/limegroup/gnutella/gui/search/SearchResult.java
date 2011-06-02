@@ -164,7 +164,7 @@ public interface SearchResult {
      */
     void initialize(TableLine line);
     
-    JPopupMenu createMenu(JPopupMenu popupMenu, TableLine[] lines, boolean markAsSpam, boolean markAsNot, ResultPanel rp);
+    JPopupMenu createMenu(JPopupMenu popupMenu, TableLine[] lines, ResultPanel rp);
     
     /**
      * Wether or not this result can be marked as Junk.

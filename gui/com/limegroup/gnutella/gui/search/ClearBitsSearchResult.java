@@ -125,8 +125,7 @@ public class ClearBitsSearchResult extends AbstractSearchResult {
 	}
 
 	@Override
-	public JPopupMenu createMenu(JPopupMenu popupMenu, TableLine[] lines,
-			boolean markAsSpam, boolean markAsNot, ResultPanel resultPanel) {
+	public JPopupMenu createMenu(JPopupMenu popupMenu, TableLine[] lines, ResultPanel resultPanel) {
 		
 		PopupUtils.addMenuItem(I18n.tr("Buy this item now"), resultPanel.BUY_LISTENER, 
     			popupMenu, lines.length == 1, 0);

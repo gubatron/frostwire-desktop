@@ -73,32 +73,9 @@ public final class SearchMediator {
 
     static final String KILL_STRING = I18n.tr("Close Search");
 
-    static final String STOP_STRING = I18n.tr("Stop Search");
-
     static final String LAUNCH_STRING = I18n.tr("Launch Action");
 
-    static final String BROWSE_STRING = I18n.tr("Browse Host");
-
-    static final String CHAT_STRING = I18n.tr("Chat With Host");
-
     static final String REPEAT_SEARCH_STRING = I18n.tr("Repeat Search");
-
-    static final String BROWSE_HOST_STRING = I18n.tr("Browse Host");
-
-    static final String BITZI_LOOKUP_STRING = I18n.tr("Lookup File with Bitzi");
-
-    static final String BLOCK_STRING = I18n.tr("Block Hosts");
-
-    static final String MARK_AS_STRING = I18n.tr("Mark As");
-
-    static final String SPAM_STRING = I18n.tr("Junk");
-
-    static final String NOT_SPAM_STRING = I18n.tr("Not Junk");
-
-    static final String REPEAT_SEARCH_NO_CLEAR_STRING = I18n.tr("Get More Results");
-
-    /** A name of attribute, which holds a query in state of downloaded file. */
-    public static final String SEARCH_INFORMATION_KEY = "searchInformationMap";
 
     /**
      * Variable for the component that handles all search input from the user.
