@@ -133,7 +133,7 @@ public class MininovaVuzeSearchResult extends AbstractSearchResult {
                 takeAction(null, null, null, null, false, null);
             }
         }, popupMenu, lines.length > 0, 1);
-        PopupUtils.addMenuItem(SearchMediator.DOWNLOAD_PARTIAL_FILES_STRING, resultPanel.DOWNLOAD_PARTIAL_FILES_LISTENER, popupMenu, lines.length == 1, 0);
+        PopupUtils.addMenuItem(SearchMediator.DOWNLOAD_PARTIAL_FILES_STRING, resultPanel.DOWNLOAD_PARTIAL_FILES_LISTENER, popupMenu, lines.length == 1, 2);
         PopupUtils.addMenuItem(SearchMediator.TORRENT_DETAILS_STRING, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 showTorrentDetails(0);
