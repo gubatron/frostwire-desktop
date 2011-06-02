@@ -138,6 +138,8 @@ public final class ThemeSettings extends LimeProps {
     static final File OTHER_THEME_FILE =
         new File(THEME_DIR_FILE, OTHER_THEME_NAME);
     
+    public static ColorSetting PLAYING_DATA_LINE_COLOR = FACTORY.createColorSetting("PLAYING_DATA_LINE_COLOR", new Color(7, 170, 0));
+    
     /**
      * Expands the specified theme zip file to the specified directory.
      *

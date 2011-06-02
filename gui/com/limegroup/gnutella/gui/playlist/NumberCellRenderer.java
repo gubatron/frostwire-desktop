@@ -17,44 +17,33 @@ import org.pushingpixels.substance.internal.ui.SubstanceTableUI.TableCellId;
 import org.pushingpixels.substance.internal.utils.SubstanceColorSchemeUtilities;
 import org.pushingpixels.substance.internal.utils.UpdateOptimizationInfo;
 
-import com.limegroup.gnutella.gui.mp3.MediaPlayerComponent;
+import com.limegroup.gnutella.gui.themes.ThemeSettings;
 
 /**
- *  Creates both a renderer and an editor for cells in the playlist table that display the name
- *  of the file being played. When displaying a preview item from the LWS, buttons are
- *  displayed which enable the user to purchase the song directly from the playlist
+ *  Numbers each row in the table
  */
-public class PlaylistItemNameRendererEditor extends SubstanceDefaultTableCellRenderer {
+class NumberCellRenderer extends SubstanceDefaultTableCellRenderer {
 
     /**
      * 
      */
-    private static final long serialVersionUID = -6309702261794142462L;
+    private static final long serialVersionUID = -195070901980682985L;
 
-    public PlaylistItemNameRendererEditor() {
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSel, boolean hasFocus, int row, int column) {
+        NumberCell cell = (NumberCell) value;
+        String formatted = Integer.toString(row + 1);
+        super.getTableCellRendererComponent(table, formatted, isSel, hasFocus, row, column);
+        setFontColor(cell.isPlaying(), table, row, column);
+        return this;
     }
-
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-
-        PlaylistDataLine line = ((PlaylistItemName) value).getLine();
-        setFontColor(line, table, row, column);
-        return super.getTableCellRendererComponent(table, line.getSongName(), isSelected, hasFocus, row, column);
-    }
-
-    /**
-     * @return true if this PlayListItem is currently playing, false otherwise
-     */
-    protected boolean isPlaying(PlaylistDataLine line) {
-        return MediaPlayerComponent.getInstance().getCurrentSong() == line.getPlayListItem();
-    }
-
+    
     /**
      * Check what font color to use if this song is playing. 
      */
-    private void setFontColor(PlaylistDataLine line, JTable table, int row, int column) {
+    private void setFontColor(boolean playing, JTable table, int row, int column) {
 
-        if (line != null && isPlaying(line)) {
-            setForeground(line.getColor(true));
+        if (playing) {
+            setForeground(ThemeSettings.PLAYING_DATA_LINE_COLOR.getValue());
         } else {
             Color color = Color.BLACK;
             if (SubstanceLookAndFeel.isCurrentLookAndFeel()) {

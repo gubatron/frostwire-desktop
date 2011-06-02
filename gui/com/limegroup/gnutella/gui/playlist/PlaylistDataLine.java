@@ -1,6 +1,5 @@
 package com.limegroup.gnutella.gui.playlist;
 
-import java.awt.Color;
 import java.io.File;
 
 import com.limegroup.gnutella.gui.I18n;
@@ -8,13 +7,10 @@ import com.limegroup.gnutella.gui.dnd.FileTransfer;
 import com.limegroup.gnutella.gui.mp3.MediaPlayerComponent;
 import com.limegroup.gnutella.gui.mp3.PlayListItem;
 import com.limegroup.gnutella.gui.tables.AbstractDataLine;
-import com.limegroup.gnutella.gui.tables.ColoredCell;
-import com.limegroup.gnutella.gui.tables.ColoredCellImpl;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
-import com.limegroup.gnutella.gui.themes.SkinHandler;
 
-public final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
+final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
                                     implements FileTransfer {
 
     /**
@@ -39,14 +35,14 @@ public final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
     static final int ARTIST_IDX = 2;
     private static final LimeTableColumn ARTIST_COLUMN =
         new LimeTableColumn(ARTIST_IDX, "PLAYLIST_TABLE_ARTIST", I18n.tr("Artist"),
-                 80, false, ColoredCell.class);
+                 80, false, PlaylistItemProperty.class);
     /**
      * Title column
      */
     static final int TITLE_IDX = 3;
     private static final LimeTableColumn TITLE_COLUMN =
         new LimeTableColumn(TITLE_IDX, "PLAYLIST_TABLE_TITLE", I18n.tr("Title"),
-                 80, false, ColoredCell.class);
+                 80, false, PlaylistItemProperty.class);
     
     /**
      * Length column (in hour:minutes:seconds format)
@@ -54,7 +50,7 @@ public final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
     static final int LENGTH_IDX = 4;
     private static final LimeTableColumn LENGTH_COLUMN =
         new LimeTableColumn(LENGTH_IDX, "PLAYLIST_TABLE_LENGTH", I18n.tr("Length"),
-                150, true, ColoredCell.class);
+                150, true, PlaylistItemProperty.class);
     
     /**
      * Album column
@@ -62,7 +58,7 @@ public final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
     static final int ALBUM_IDX = 5;
     private static final LimeTableColumn ALBUM_COLUMN =
         new LimeTableColumn(ALBUM_IDX, "PLAYLIST_TABLE_ALBUM", I18n.tr("Album"),
-                120, false, ColoredCell.class);
+                120, false, PlaylistItemProperty.class);
        
     /**
      * Track column
@@ -70,7 +66,7 @@ public final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
     static final int TRACK_IDX = 6;
     private static final LimeTableColumn TRACK_COLUMN =
         new LimeTableColumn(TRACK_IDX, "PLAYLIST_TABLE_TRACK", I18n.tr("Track"),
-                20, false, ColoredCell.class);
+                20, false, PlaylistItemProperty.class);
     
     
     /**
@@ -79,7 +75,7 @@ public final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
     static final int BITRATE_IDX = 7;
     private static final LimeTableColumn BITRATE_COLUMN =
         new LimeTableColumn(BITRATE_IDX, "PLAYLIST_TABLE_BITRATE",I18n.tr("Bitrate"),
-                60, true, ColoredCell.class);
+                60, true, PlaylistItemProperty.class);
     
     /**
      * Comment column info
@@ -87,7 +83,7 @@ public final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
     static final int COMMENT_IDX = 8;
     private static final LimeTableColumn COMMENT_COLUMN =
         new LimeTableColumn(COMMENT_IDX, "PLAYLIST_TABLE_COMMENT", I18n.tr("Comment"),
-                20, false, ColoredCell.class);
+                20, false, PlaylistItemProperty.class);
     
     /**
      * Genre column
@@ -95,7 +91,7 @@ public final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
     static final int GENRE_IDX = 9;
     private static final LimeTableColumn GENRE_COLUMN =
         new LimeTableColumn(GENRE_IDX, "PLAYLIST_TABLE_GENRE", I18n.tr("Genre"),
-                 80, false, ColoredCell.class);
+                 80, false, PlaylistItemProperty.class);
            
     /**
      * Size column (in bytes)
@@ -103,7 +99,7 @@ public final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
     static final int SIZE_IDX = 10;
     private static final LimeTableColumn SIZE_COLUMN =
         new LimeTableColumn(SIZE_IDX, "PLAYLIST_TABLE_SIZE", I18n.tr("Size"),
-                80, false, ColoredCell.class);
+                80, false, PlaylistItemProperty.class);
     
     
     /**
@@ -112,7 +108,7 @@ public final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
     static final int TYPE_IDX = 11;
     private static final LimeTableColumn TYPE_COLUMN = 
         new LimeTableColumn(TYPE_IDX, "PLAYLIST_TABLE_TYPE", I18n.tr("Type"),
-                 40, false, ColoredCell.class);
+                 40, false, PlaylistItemProperty.class);
     
     /**
      * YEAR column
@@ -120,7 +116,7 @@ public final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
     static final int YEAR_IDX = 12;
     private static final LimeTableColumn YEAR_COLUMN =
         new LimeTableColumn(YEAR_IDX, "PLAYLIST_TABLE_YEAR", I18n.tr("Year"),
-                 30, false, ColoredCell.class);
+                 30, false, PlaylistItemProperty.class);
     
     /**
      * Total number of columns
@@ -131,12 +127,6 @@ public final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
      * Number of columns
      */
     public int getColumnCount() { return NUMBER_OF_COLUMNS; }
-       
-	/**
-	 * The colors for cells.
-	 */
-	private Color _cellColor;
-	private Color _othercellColor;    
 
     /**
      * Holder for painting the filename/buttons in a single cell
@@ -168,58 +158,44 @@ public final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
             holder = new SizeHolder(Integer.parseInt(item.getProperty(PlayListItem.SIZE)));
         else
             holder = new SizeHolder(0);
-        
-        updateTheme();
     }
 
     /**
      * Returns the value for the specified index.
      */
     public Object getValueAt(int idx) {
-        Color color = getColor(MediaPlayerComponent.getInstance().getCurrentSong() == initializer);
+        boolean playing = MediaPlayerComponent.getInstance().getCurrentSong() == initializer;
         switch(idx) {
             case ALBUM_IDX:
-                return new ColoredCellImpl( initializer.getProperty(PlayListItem.ALBUM), color);
+                return new PlaylistItemProperty(initializer.getProperty(PlayListItem.ALBUM), playing);
             case ARTIST_IDX:
-                return new ColoredCellImpl(initializer.getProperty(PlayListItem.ARTIST), color);
+                return new PlaylistItemProperty(initializer.getProperty(PlayListItem.ARTIST), playing);
             case BITRATE_IDX:
-                return new ColoredCellImpl(initializer.getProperty(PlayListItem.BITRATE, ""), color);
+                return new PlaylistItemProperty(initializer.getProperty(PlayListItem.BITRATE, ""), playing);
             case COMMENT_IDX:
-                return new ColoredCellImpl(initializer.getProperty(PlayListItem.COMMENT), color);
+                return new PlaylistItemProperty(initializer.getProperty(PlayListItem.COMMENT), playing);
             case GENRE_IDX:
-                return new ColoredCellImpl(initializer.getProperty(PlayListItem.GENRE),color);
+                return new PlaylistItemProperty(initializer.getProperty(PlayListItem.GENRE),playing);
             case LENGTH_IDX:
-                return new ColoredCellImpl( initializer.getProperty(PlayListItem.TIME, ""), color);
+                return new PlaylistItemProperty( initializer.getProperty(PlayListItem.TIME, ""), playing);
             case NAME_IDX:
                 return name;
             case NUMBER_IDX:
+                numberCell.setPlaying(playing);
                 return numberCell;
             case SIZE_IDX:
-                return new ColoredCellImpl(holder, color);
+                return new PlaylistItemProperty(holder.toString(), playing);
             case TITLE_IDX:
-                return new ColoredCellImpl(initializer.getProperty(PlayListItem.TITLE), color);
+                return new PlaylistItemProperty(initializer.getProperty(PlayListItem.TITLE), playing);
             case TRACK_IDX:
-                return new ColoredCellImpl(initializer.getProperty(PlayListItem.TRACK, ""), color);
+                return new PlaylistItemProperty(initializer.getProperty(PlayListItem.TRACK, ""), playing);
             case TYPE_IDX:
-                return new ColoredCellImpl(initializer.getProperty(PlayListItem.TYPE), color);
+                return new PlaylistItemProperty(initializer.getProperty(PlayListItem.TYPE), playing);
             case YEAR_IDX:
-                return new ColoredCellImpl(initializer.getProperty(PlayListItem.YEAR), color);
+                return new PlaylistItemProperty(initializer.getProperty(PlayListItem.YEAR), playing);
         }
         return null;
     }
-    
-    /**
-     * Gets the color for whether or not the row is playing.
-     */
-    protected Color getColor(boolean playing) {
-        return playing ? _othercellColor : _cellColor;
-    }
-    
-	// inherit doc comment
-	public void updateTheme() {
-		_cellColor = SkinHandler.getWindow8Color();
-		_othercellColor = SkinHandler.getSearchResultSpeedColor();
-	}    
 
 	/**
 	 * Return the table column for this index.

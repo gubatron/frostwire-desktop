@@ -8,12 +8,11 @@ import com.limegroup.gnutella.gui.mp3.PlayList;
 import com.limegroup.gnutella.gui.mp3.PlayListItem;
 import com.limegroup.gnutella.gui.tables.BasicDataLineModel;
 
-
 /**
  * A model for playlists.  Keeps track of what song is next,
  * what has/hasn't been played during shuffling, etc...
  */
-public final class PlaylistModel extends BasicDataLineModel<PlaylistDataLine, PlayListItem> {
+final class PlaylistModel extends BasicDataLineModel<PlaylistDataLine, PlayListItem> {
 
     /**
      * 

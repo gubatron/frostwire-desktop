@@ -498,8 +498,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     public void openTorrent(File file) {
         try {
             
-            OpenTorrentDialog dlg = new OpenTorrentDialog(GUIMediator.instance().getAppFrame(), file);
-            dlg.setVisible(true);
+            //OpenTorrentDialog dlg = new OpenTorrentDialog(GUIMediator.instance().getAppFrame(), file);
+            //dlg.setVisible(true);
 //            if (true) {
 //                return;
 //            }

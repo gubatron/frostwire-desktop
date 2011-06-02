@@ -6,5 +6,14 @@ package com.limegroup.gnutella.gui.playlist;
  *  what row this cell is currently in so no information is needed to be passed in
  *  to the constructor of this class.
  */
-public class NumberCell {
+class NumberCell {
+    private boolean _playing;
+    
+    public boolean isPlaying() {
+        return _playing;
+    }
+    
+    public void setPlaying(boolean playing) {
+        _playing = playing;
+    }
 }
