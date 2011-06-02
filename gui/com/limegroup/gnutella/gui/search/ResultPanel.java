@@ -142,6 +142,8 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
      */
     ActionListener BUY_LISTENER;
     
+    ActionListener DOWNLOAD_PARTIAL_FILES_LISTENER;
+    
     public BuyAction BUY_ACTION;    
     
     protected Box SOUTH_PANEL;
@@ -443,7 +445,15 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
         		}
         	}
         };
-
+        
+        DOWNLOAD_PARTIAL_FILES_LISTENER = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                TableLine[] lines = getAllSelectedLines();
+                if (lines.length == 1 && lines[0] != null) {
+                    GUIMediator.instance().openTorrentURI(lines[0].getInitializeObject().getTorrentURI(), true);
+                }
+            }
+        };
     }
     
     /**

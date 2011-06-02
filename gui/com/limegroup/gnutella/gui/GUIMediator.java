@@ -791,14 +791,22 @@ public final class GUIMediator {
 	public final int getCurrentDownloads() {
 		return getBTDownloadMediator().getActiveDownloads();
 	}
-
+	
 	public final void openTorrent(File torrentFile) {
-	    getBTDownloadMediator().openTorrent(torrentFile);
-		setWindow(GUIMediator.Tabs.SEARCH);
+	    openTorrent(torrentFile, false);
 	}
 
+	public final void openTorrent(File torrentFile, boolean partialSelection) {
+	    getBTDownloadMediator().openTorrent(torrentFile, partialSelection);
+		setWindow(GUIMediator.Tabs.SEARCH);
+	}
+	
 	public final void openTorrentURI(String uri) {
-	    getBTDownloadMediator().openTorrentURI(uri);
+	    openTorrentURI(uri, false);
+	}
+
+	public final void openTorrentURI(String uri, boolean partialSelection) {
+	    getBTDownloadMediator().openTorrentURI(uri, partialSelection);
 		setWindow(GUIMediator.Tabs.SEARCH);
 	}
 

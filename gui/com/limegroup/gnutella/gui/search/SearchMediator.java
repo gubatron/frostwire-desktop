@@ -76,6 +76,12 @@ public final class SearchMediator {
     static final String LAUNCH_STRING = I18n.tr("Launch Action");
 
     static final String REPEAT_SEARCH_STRING = I18n.tr("Repeat Search");
+    
+    static final String BUY_NOW_STRING = I18n.tr("Buy this item now");
+    
+    static final String DOWNLOAD_PARTIAL_FILES_STRING = I18n.tr("Download Partial Files");
+    
+    static final String TORRENT_DETAILS_STRING = I18n.tr("Torrent Details");
 
     /**
      * Variable for the component that handles all search input from the user.

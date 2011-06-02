@@ -175,4 +175,6 @@ public interface SearchResult {
     public void showTorrentDetails(long delay);
 
     public String getHash();
+
+    public String getTorrentURI();
 }

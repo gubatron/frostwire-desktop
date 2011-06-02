@@ -46,9 +46,9 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     private static BTDownloadMediator INSTANCE;
 
     public static BTDownloadMediator instance() {
-        
+
         AzureusStarter.start();
-        
+
         if (INSTANCE == null) {
             INSTANCE = new BTDownloadMediator();
         }
@@ -199,11 +199,11 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     //    }
 
     public double getDownloadsBandwidth() {
-        return DATA_MODEL.getDownloadsBandwidth()/1000;
+        return DATA_MODEL.getDownloadsBandwidth() / 1000;
     }
 
     public double getUploadsBandwidth() {
-        return DATA_MODEL.getUploadsBandwidth()/1000;
+        return DATA_MODEL.getUploadsBandwidth() / 1000;
     }
 
     /**
@@ -389,7 +389,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     protected JPopupMenu createPopupMenu() {
 
         JPopupMenu menu = new SkinPopupMenu();
-        
+
         menu.add(new SkinMenuItem(resumeAction));
         menu.add(new SkinMenuItem(pauseAction));
         menu.add(new SkinMenuItem(launchAction));
@@ -402,7 +402,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         menu.add(new SkinMenuItem(removeAction));
         menu.add(new SkinMenuItem(BTDownloadActions.REMOVE_TORRENT_ACTION));
         menu.add(new SkinMenuItem(BTDownloadActions.REMOVE_TORRENT_AND_DATA_ACTION));
-        
+
         SkinMenu advancedMenu = MenuUtil.createAdvancedSubMenu();
         if (advancedMenu != null) {
             menu.addSeparator();
@@ -466,13 +466,13 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         _copyHashAction.setEnabled(false);
     }
 
-    public void openTorrentURI(final String uri) {
+    public void openTorrentURI(final String uri, final boolean partialSelection) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
                 GUIMediator.instance().getStatusLine().setStatusText(I18n.tr("Fetching .torrent from Internet"));
             }
         });
-        
+
         TorrentDownloader downloader = TorrentDownloaderFactory.create(new TorrentDownloaderCallBackInterface() {
             public void TorrentDownloaderEvent(int state, TorrentDownloader inf) {
                 if (state == TorrentDownloader.STATE_FINISHED) {
@@ -481,7 +481,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
                             GUIMediator.instance().getStatusLine().setStatusText(I18n.tr("Torrent file downloaded from Internet"));
                         }
                     });
-                	openTorrent(inf.getFile());
+                    openTorrent(inf.getFile(), partialSelection);
                 } else if (state == TorrentDownloader.STATE_ERROR) {
                     GUIMediator.safeInvokeLater(new Runnable() {
                         public void run() {
@@ -495,18 +495,29 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         downloader.start();
     }
 
-    public void openTorrent(File file) {
+    public void openTorrent(final File file, final boolean partialSelection) {
         try {
-            
-            //OpenTorrentDialog dlg = new OpenTorrentDialog(GUIMediator.instance().getAppFrame(), file);
-            //dlg.setVisible(true);
-//            if (true) {
-//                return;
-//            }
-            
+
+            GUIMediator.safeInvokeLater(new Runnable() {
+                public void run() {
+                    try {
+                        if (partialSelection) {
+                            OpenTorrentDialog dlg = new OpenTorrentDialog(GUIMediator.getAppFrame(), file);
+                            dlg.setVisible(true);
+                        }
+                    } catch (Exception e) {
+
+                    }
+                }
+            });
+
+            if (true) {
+                return;
+            }
+
             BTDownloaderFactory factory = new BTDownloaderFactory(AzureusStarter.getAzureusCore().getGlobalManager(), file);
             final BTDownloader downloader = BTDownloaderUtils.createDownloader(factory);
-            
+
             if (downloader != null) {
                 GUIMediator.safeInvokeLater(new Runnable() {
                     public void run() {
@@ -538,39 +549,42 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         }
         return downloaders.toArray(new BTDownloader[0]);
     }
-    
+
     public long getTotalBytesDownloaded() {
-    	AzureusCore azureusCore = AzureusStarter.getAzureusCore();
-    	if (azureusCore == null) return 0;
-    	return azureusCore.getGlobalManager().getStats().getTotalDataBytesReceived();
+        AzureusCore azureusCore = AzureusStarter.getAzureusCore();
+        if (azureusCore == null)
+            return 0;
+        return azureusCore.getGlobalManager().getStats().getTotalDataBytesReceived();
     }
-    
+
     public long getTotalBytesUploaded() {
-    	AzureusCore azureusCore = AzureusStarter.getAzureusCore();
-    	if (azureusCore == null) return 0;
-    	return azureusCore.getGlobalManager().getStats().getTotalDataBytesSent();
+        AzureusCore azureusCore = AzureusStarter.getAzureusCore();
+        if (azureusCore == null)
+            return 0;
+        return azureusCore.getGlobalManager().getStats().getTotalDataBytesSent();
     }
-//
-//	public void removeCompleted() {
-//		int n = DATA_MODEL.getRowCount();
-//		for (int i=n-1; i >= 0; i--) {
-//			BTDownloadDataLine btDownloadDataLine = DATA_MODEL.get(i);
-//			BTDownloader initializeObject = btDownloadDataLine.getInitializeObject();
-//			if (initializeObject.isCompleted()) {
-//				DATA_MODEL.remove(i);
-//			}			
-//		}		
-//	}
-//	
-	public void stopCompleted() {
-		int n = DATA_MODEL.getRowCount();
-		for (int i=n-1; i >= 0; i--) {
-			BTDownloadDataLine btDownloadDataLine = DATA_MODEL.get(i);
-			BTDownloader initializeObject = btDownloadDataLine.getInitializeObject();
-			if (initializeObject.isCompleted()) {
-				initializeObject.pause();
-			}			
-		}		
-	}
+
+    //
+    //	public void removeCompleted() {
+    //		int n = DATA_MODEL.getRowCount();
+    //		for (int i=n-1; i >= 0; i--) {
+    //			BTDownloadDataLine btDownloadDataLine = DATA_MODEL.get(i);
+    //			BTDownloader initializeObject = btDownloadDataLine.getInitializeObject();
+    //			if (initializeObject.isCompleted()) {
+    //				DATA_MODEL.remove(i);
+    //			}			
+    //		}		
+    //	}
+    //	
+    public void stopCompleted() {
+        int n = DATA_MODEL.getRowCount();
+        for (int i = n - 1; i >= 0; i--) {
+            BTDownloadDataLine btDownloadDataLine = DATA_MODEL.get(i);
+            BTDownloader initializeObject = btDownloadDataLine.getInitializeObject();
+            if (initializeObject.isCompleted()) {
+                initializeObject.pause();
+            }
+        }
+    }
 
 }

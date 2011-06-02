@@ -13,136 +13,133 @@ import com.frostwire.bittorrent.settings.BittorrentSettings;
 import com.frostwire.bittorrent.websearch.mininova.MininovaVuzeItem;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
 
-public class MininovaVuzeSearchResult extends AbstractSearchResult  {
+public class MininovaVuzeSearchResult extends AbstractSearchResult {
 
-	public static String redirectUrl=null;
-	private MininovaVuzeItem _item;
-	private SearchInformation _info;
-	
-	public MininovaVuzeSearchResult(MininovaVuzeItem item, SearchInformation searchInfo) {
-		_item = item;
-		_info = searchInfo;
-	}
+    public static String redirectUrl = null;
+    private MininovaVuzeItem _item;
+    private SearchInformation _info;
 
-	@Override
-	public long getCreationTime() {
-		SimpleDateFormat date = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z");
-		long result = System.currentTimeMillis();
-		try {
-			result = date.parse(_item.date).getTime();
-		} catch (ParseException e) {
-		}
-		return result;
-	}
+    public MininovaVuzeSearchResult(MininovaVuzeItem item, SearchInformation searchInfo) {
+        _item = item;
+        _info = searchInfo;
+    }
 
-	@Override
-	public String getExtension() {
-		return "torrent";
-	}
+    @Override
+    public long getCreationTime() {
+        SimpleDateFormat date = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z");
+        long result = System.currentTimeMillis();
+        try {
+            result = date.parse(_item.date).getTime();
+        } catch (ParseException e) {
+        }
+        return result;
+    }
 
-	@Override
-	public String getFileName() {
-		String titleNoTags = _item.title.replace("<b>", "").replace("</b>", "");
-		return  titleNoTags + ".torrent";
-	}
+    @Override
+    public String getExtension() {
+        return "torrent";
+    }
 
-	@Override
-	public String getFilenameNoExtension() {
-		return "<html>"+_item.title+"</html>";
-	}
+    @Override
+    public String getFileName() {
+        String titleNoTags = _item.title.replace("<b>", "").replace("</b>", "");
+        return titleNoTags + ".torrent";
+    }
 
-	@Override
-	public String getHost() {
-		return "http://www.mininova.org";
-	}
+    @Override
+    public String getFilenameNoExtension() {
+        return "<html>" + _item.title + "</html>";
+    }
 
-	@Override
-	public int getQuality() {
-		return QualityRenderer.EXCELLENT_QUALITY;
-	}
+    @Override
+    public String getHost() {
+        return "http://www.mininova.org";
+    }
 
-	public String getHash() {
+    @Override
+    public int getQuality() {
+        return QualityRenderer.EXCELLENT_QUALITY;
+    }
+
+    public String getHash() {
         return _item.hash;
     }
 
-	@Override
-	public int getSecureStatus() {
-		return 0;
-	}
+    public String getTorrentURI() {
+        return _item.download;
+    }
 
-	@Override
-	public long getSize() {
-		return Long.valueOf(_item.size);
-	}
+    @Override
+    public int getSecureStatus() {
+        return 0;
+    }
 
-	@Override
-	public float getSpamRating() {
-		return 0;
-	}
+    @Override
+    public long getSize() {
+        return Long.valueOf(_item.size);
+    }
 
-	@Override
-	public int getSpeed() {
-		return Integer.MAX_VALUE-2;
-	}
+    @Override
+    public float getSpamRating() {
+        return 0;
+    }
 
-	@Override
-	public String getVendor() {
-		return "Mininova";
-	}
+    @Override
+    public int getSpeed() {
+        return Integer.MAX_VALUE - 2;
+    }
 
-	@Override
-	public LimeXMLDocument getXMLDocument() {
-		return null;
-	}
+    @Override
+    public String getVendor() {
+        return "Mininova";
+    }
 
-	@Override
-	public void initialize(TableLine line) {
-		line.setAddedOn(getCreationTime());
-		int seeds = Integer.valueOf(_item.seeds)+Integer.valueOf(_item.superseeds);
-		line.initLocations(seeds);
-	}
-	
-	@Override
-	public boolean isMeasuredSpeed() {
-		return false;
-	}
+    @Override
+    public LimeXMLDocument getXMLDocument() {
+        return null;
+    }
 
-	@Override
-	public void takeAction(TableLine line, GUID guid, File saveDir,
-			String fileName, boolean saveAs, SearchInformation searchInfo) {
-		GUIMediator.instance().openTorrentURI(_item.download);
-		showTorrentDetails(BittorrentSettings.SHOW_TORRENT_DETAILS_DELAY);
-	}
-	
-	public void showTorrentDetails(long delay) {
-		GuiFrostWireUtils.showTorrentDetails(delay,redirectUrl,_info.getQuery(),_item.cdp,getFileName());
-	}
-	
+    @Override
+    public void initialize(TableLine line) {
+        line.setAddedOn(getCreationTime());
+        int seeds = Integer.valueOf(_item.seeds) + Integer.valueOf(_item.superseeds);
+        line.initLocations(seeds);
+    }
 
-	@Override
-	public JPopupMenu createMenu(JPopupMenu popupMenu, TableLine[] lines, ResultPanel resultPanel) {
-		
-		PopupUtils.addMenuItem(I18n.tr("Buy this item now"), resultPanel.BUY_LISTENER, 
-    			popupMenu, lines.length == 1, 0);
+    @Override
+    public boolean isMeasuredSpeed() {
+        return false;
+    }
+
+    @Override
+    public void takeAction(TableLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
+        GUIMediator.instance().openTorrentURI(_item.download);
+        showTorrentDetails(BittorrentSettings.SHOW_TORRENT_DETAILS_DELAY);
+    }
+
+    public void showTorrentDetails(long delay) {
+        GuiFrostWireUtils.showTorrentDetails(delay, redirectUrl, _info.getQuery(), _item.cdp, getFileName());
+    }
+
+    @Override
+    public JPopupMenu createMenu(JPopupMenu popupMenu, TableLine[] lines, ResultPanel resultPanel) {
+
+        PopupUtils.addMenuItem(SearchMediator.BUY_NOW_STRING, resultPanel.BUY_LISTENER, popupMenu, lines.length == 1, 0);
         PopupUtils.addMenuItem(SearchMediator.DOWNLOAD_STRING, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                takeAction(null, null, null, null, false, null);
+            }
+        }, popupMenu, lines.length > 0, 1);
+        PopupUtils.addMenuItem(SearchMediator.DOWNLOAD_PARTIAL_FILES_STRING, resultPanel.DOWNLOAD_PARTIAL_FILES_LISTENER, popupMenu, lines.length == 1, 0);
+        PopupUtils.addMenuItem(SearchMediator.TORRENT_DETAILS_STRING, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                showTorrentDetails(0);
+            }
+        }, popupMenu, lines.length == 1, 3);
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				takeAction(null, null, null, null, false, null);
-			}},
-                popupMenu, lines.length > 0, 1);
-        
-        PopupUtils.addMenuItem(I18n.tr("Torrent Details"), new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				showTorrentDetails(0);
-			}}, popupMenu, lines.length == 1, 2);
-        
         return popupMenu;
-	}
+    }
 }
