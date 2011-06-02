@@ -1,10 +1,11 @@
 package com.frostwire.bittorrent;
 
 import java.awt.Component;
-import java.awt.FlowLayout;
+import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -23,7 +24,9 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import org.gudy.azureus2.core3.config.COConfigurationManager;
@@ -111,14 +114,16 @@ public class CreateTorrentDialog extends JDialog {
 
 	private LabeledTextField trackersTextField;
 	LimeTextField tt;
-	private JPanel _container;
+	private Container _container;
 	private JButton _buttonSelectFile;
 	private JButton _buttonSelectFolder;
 	private JTextArea _textTrackers;
-	private JCheckBox _checkStartSeeding;
+	private JCheckBox _check_start_seeding;
 	private JCheckBox _checkUseDHT;
 	private JButton _buttonSaveAs;
 	private Component _progressBar;
+	private JTextField _textSelectedContent;
+	private final Dimension MINIMUM_DIALOG_DIMENSIONS = new Dimension(600,570);;
 
 	public CreateTorrentDialog() {
 		try {
@@ -143,107 +148,161 @@ public class CreateTorrentDialog extends JDialog {
 	
 	private void initComponents() {
 		setTitle(I18n.tr("Create New Torrent"));
-		setSize(480, 570);
+		setSize(MINIMUM_DIALOG_DIMENSIONS);
+		setMinimumSize(MINIMUM_DIALOG_DIMENSIONS);
 		
-		_container = new JPanel();		
+		_container = getContentPane();		
 		_container.setLayout(new GridBagLayout());
 		
 		GridBagConstraints c = null;
 		
 		//TORRENT CONTENTS: Add file...  Add directory
-		{
-			JPanel torrentContentsPanel = new JPanel(new GridBagLayout());
-			torrentContentsPanel.setBorder(BorderFactory.createTitledBorder(I18n.tr("Torrent Contents")));
-			
-			_buttonSelectFile = new JButton(I18n.tr("Select a file..."));
-			_buttonSelectFolder = new JButton("Select a folder...");
-			
-			c = new GridBagConstraints();
-			c.anchor = GridBagConstraints.LINE_START;
-			c.gridx = 0;
-			c.gridy = 0;
-			c.weightx = 0.5;
-			
-			torrentContentsPanel.add(_buttonSelectFile,c);
-	
-			c = new GridBagConstraints();
-			c.anchor = GridBagConstraints.LINE_START;
-			c.gridx = 1;
-			c.gridy = 0;
-			c.weightx = 0.5;
-			torrentContentsPanel.add(_buttonSelectFolder, c);
-	
-			c = new GridBagConstraints();
-			c.anchor = GridBagConstraints.LINE_START;
-			c.gridx = 0;
-			c.gridy = 0;
-			//TODO: WEIGHT Y
-			_container.add(torrentContentsPanel,c);
-		}
+		initTorrentContents();
 		
 		//TORRENT PROPERTIES: Trackers, Start Seeding, Trackerless
-		{
-			JPanel torrentPropertiesPanel = new JPanel(new GridBagLayout());
-			torrentPropertiesPanel.setBorder(BorderFactory.createTitledBorder(I18n.tr("Torrent Properties")));
-			
-			//Trackerless
-			c = new GridBagConstraints();
-			c.gridx = 0;
-			c.gridy = 0;
-			_checkUseDHT = new JCheckBox(I18n.tr("Trackerless Torrent (DHT)"));
-			torrentPropertiesPanel.add(_checkUseDHT,c);
-
-			//Start seeding checkbox
-			c = new GridBagConstraints();
-			c.gridx = 0;
-			c.gridy = 1;
-			_checkStartSeeding = new JCheckBox(I18n.tr("Start seeding"));
-			torrentPropertiesPanel.add(_checkStartSeeding,c);
-			
-			//Trackers
-			c = new GridBagConstraints();
-			c.gridx = 0;
-			c.gridy = 2;
-			torrentPropertiesPanel.add(new JLabel("Trackers"),c);
-
-			c = new GridBagConstraints();
-			c.gridx = 1;
-			c.gridy = 2;
-			c.fill = GridBagConstraints.BOTH;
-			_textTrackers = new JTextArea(10,80);
-			torrentPropertiesPanel.add(_textTrackers,c);
-			
-			//Start seeding checkbox
-			c = new GridBagConstraints();
-			c.gridx = 0;
-			c.gridy = 1;
-			_container.add(torrentPropertiesPanel,c);
-		}
+		initTorrentProperties();
 		
 		//CREATE AND SAVE AS
-		{
-			c = new GridBagConstraints();
-			c.gridx = 0;
-			c.gridy = 2;
-			c.anchor = GridBagConstraints.PAGE_END;
-			_buttonSaveAs = new JButton(I18n.tr("Save torrent as..."));
-			_container.add(_buttonSaveAs,c);
-			_container.add(_buttonSaveAs,c);
-		}
+		initSaveButton();
 		
 		//PROGRESS BAR
-		{
-			c = new GridBagConstraints();
-			c.gridx = 0;
-			c.gridy = 3;
-			c.fill = GridBagConstraints.HORIZONTAL;
-			_progressBar = new JProgressBar();
-			_container.add(_progressBar,c);
-		}
-		
-		setContentPane(_container);
+		initProgressBar();
 		
 		buildListeners();
+	}
+
+
+	private void initTorrentContents() {
+		GridBagConstraints c;
+		JPanel torrentContentsPanel = new JPanel(new GridBagLayout());
+		torrentContentsPanel.setBorder(BorderFactory.createTitledBorder(I18n.tr("Torrent Contents")));
+		
+		_buttonSelectFile = new JButton(I18n.tr("Select a file..."));
+		_buttonSelectFolder = new JButton("Select a folder...");
+		
+		c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.LINE_START;
+		c.gridx = 0;
+		c.gridy = 0;
+		c.weightx = 1;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		torrentContentsPanel.add(_buttonSelectFile,c);
+
+		c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.LINE_START;
+		c.gridx = 1;
+		c.gridy = 0;
+		c.weightx = 1;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		torrentContentsPanel.add(_buttonSelectFolder, c);
+		
+		c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.LINE_START;
+		c.gridx = 0;
+		c.gridy = 1;
+		c.weightx = 1;
+		c.gridwidth = 2;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		_textSelectedContent = new JTextField();
+		_textSelectedContent.setEnabled(false);
+		_textSelectedContent.setEditable(false);
+		torrentContentsPanel.add(_textSelectedContent,c);
+
+		//add to content pane
+		c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.PAGE_START;
+		c.gridx = 0;
+		c.gridy = 0;
+		c.weightx = 1.0;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(10,10,10,10);
+		c.ipady = 50;
+		c.ipadx = 50;
+		_container.add(torrentContentsPanel,c);
+	}
+
+	private void initTorrentProperties() {
+		GridBagConstraints c;
+		JPanel torrentPropertiesPanel = new JPanel(new GridBagLayout());
+		torrentPropertiesPanel.setBorder(BorderFactory.createTitledBorder(I18n.tr("Torrent Properties")));
+		
+		//Trackerless
+		c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth=2;
+		c.anchor = GridBagConstraints.LINE_START;
+		c.fill = GridBagConstraints.NONE;
+		_checkUseDHT = new JCheckBox(I18n.tr("Trackerless Torrent (DHT)"));
+		torrentPropertiesPanel.add(_checkUseDHT,c);
+
+		//Start seeding checkbox
+		c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 1;
+		c.gridwidth=2;
+		c.anchor = GridBagConstraints.LINE_START;
+		c.fill = GridBagConstraints.NONE;
+		_check_start_seeding = new JCheckBox(I18n.tr("Start seeding"));
+		torrentPropertiesPanel.add(_check_start_seeding,c);
+		
+		//Trackers
+		c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 2;
+		c.weightx = 0.3;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.anchor = GridBagConstraints.FIRST_LINE_START;
+		c.insets = new Insets(10,5,5,5);
+		torrentPropertiesPanel.add(new JLabel("<html><p>Tracker Announce URLs</p><p>(Enter one per line)</p></html>"),c);
+
+		c = new GridBagConstraints();
+		c.gridx = 1;
+		c.gridy = 2;
+		c.fill = GridBagConstraints.BOTH;
+		c.anchor = GridBagConstraints.FIRST_LINE_END;
+		c.weighty = 1.0;
+		c.weightx = 0.7;
+		c.insets = new Insets(5,5,5,5);
+		_textTrackers = new JTextArea(10,80);
+		_textTrackers.setLineWrap(false);
+		torrentPropertiesPanel.add(new JScrollPane(_textTrackers),c);
+		
+		//add to content pane
+		c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 1;
+		c.weightx = 1.0;
+		c.weighty = 1.0;
+		c.anchor = GridBagConstraints.LINE_END;
+		c.fill = GridBagConstraints.BOTH;
+		c.insets = new Insets(0,10,10,10);
+		
+		_container.add(torrentPropertiesPanel,c);
+	}
+	
+	private void initSaveButton() {
+		GridBagConstraints c;
+		c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 2;
+		c.anchor = GridBagConstraints.PAGE_END;
+		c.insets = new Insets(0,10,10,10);
+		_buttonSaveAs = new JButton(I18n.tr("Save torrent as..."));
+		_container.add(_buttonSaveAs,c);
+	}
+	
+	private void initProgressBar() {
+		GridBagConstraints c;
+		c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 3;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 1.0;
+		c.anchor = GridBagConstraints.PAGE_END;
+		c.insets = new Insets(0,10,10,10);
+		_progressBar = new JProgressBar();
+		_container.add(_progressBar,c);
 	}
 
 	private void buildListeners() {
