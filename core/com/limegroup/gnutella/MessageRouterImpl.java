@@ -300,7 +300,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
     protected final DownloadManager downloadManager;
     protected final UDPService udpService;
     protected final SearchResultHandler searchResultHandler;
-    protected final HostCatcher hostCatcher;
     protected final QueryReplyFactory queryReplyFactory;
     protected final StaticMessages staticMessages;
     protected final Provider<MessageDispatcher> messageDispatcher;
@@ -338,7 +337,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
             DownloadManager downloadManager,
             UDPService udpService,
             SearchResultHandler searchResultHandler,
-            HostCatcher hostCatcher,
             QueryReplyFactory queryReplyFactory,
             StaticMessages staticMessages,
             Provider<MessageDispatcher> messageDispatcher,
@@ -364,7 +362,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
         this.downloadManager = downloadManager;
         this.udpService = udpService;
         this.searchResultHandler = searchResultHandler;
-        this.hostCatcher = hostCatcher;
         this.queryReplyFactory = queryReplyFactory;
         this.staticMessages = staticMessages;
         this.messageDispatcher = messageDispatcher;

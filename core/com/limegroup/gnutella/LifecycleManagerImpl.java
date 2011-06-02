@@ -28,7 +28,6 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 import com.limegroup.gnutella.auth.ContentManager;
-import com.limegroup.gnutella.filters.IPFilter;
 import com.limegroup.gnutella.licenses.LicenseFactory;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.ConnectionSettings;
@@ -57,12 +56,10 @@ public class LifecycleManagerImpl implements LifecycleManager {
     private final Provider<MessageRouter> messageRouter;
     private final Provider<DownloadManager> downloadManager;
     private final Provider<NodeAssigner> nodeAssigner;
-    private final Provider<HostCatcher> hostCatcher;
     private final Provider<FileManager> fileManager;
     private final Provider<RatingTable> ratingTable;
     private final Provider<NetworkManager> networkManager;
     private final Provider<Statistics> statistics;
-    private final Provider<SpamServices> spamServices;
     private final Provider<LimeCoreGlue> limeCoreGlue;
     private final Provider<StatisticAccumulator> statisticAccumulator;
     
@@ -102,13 +99,11 @@ public class LifecycleManagerImpl implements LifecycleManager {
             Provider<MessageRouter> messageRouter,
             Provider<DownloadManager> downloadManager,
             Provider<NodeAssigner> nodeAssigner,
-            Provider<HostCatcher> hostCatcher,
             Provider<FileManager> fileManager,
             Provider<RatingTable> ratingTable,
             @Named("backgroundExecutor") Provider<ScheduledExecutorService> backgroundExecutor,
             Provider<NetworkManager> networkManager,
             Provider<Statistics> statistics,
-            Provider<SpamServices> spamServices,
             Provider<LicenseFactory> licenseFactory,
             Provider<LimeCoreGlue> limeCoreGlue,
             Provider<StatisticAccumulator> statisticAccumulator,
@@ -123,12 +118,10 @@ public class LifecycleManagerImpl implements LifecycleManager {
         this.messageRouter = messageRouter;
         this.downloadManager = downloadManager;
         this.nodeAssigner = nodeAssigner;
-        this.hostCatcher = hostCatcher;
         this.fileManager = fileManager;
         this.ratingTable = ratingTable;
         this.networkManager = networkManager;
         this.statistics = statistics;
-        this.spamServices = spamServices;
         this.licenseFactory = licenseFactory;
         this.limeCoreGlue = limeCoreGlue;
         this.statisticAccumulator = statisticAccumulator;

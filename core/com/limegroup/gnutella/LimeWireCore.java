@@ -14,7 +14,6 @@ import com.google.inject.name.Names;
 import com.limegroup.gnutella.altlocs.AltLocManager;
 import com.limegroup.gnutella.auth.ContentManager;
 import com.limegroup.gnutella.auth.IpPortContentAuthorityFactory;
-import com.limegroup.gnutella.bootstrap.UDPHostCacheFactory;
 import com.limegroup.gnutella.browser.ExternalControl;
 import com.limegroup.gnutella.connection.MessageReaderFactory;
 import com.limegroup.gnutella.connection.RoutedConnectionFactory;
@@ -148,10 +147,6 @@ public class LimeWireCore {
         return injector.getInstance(DownloadManager.class);
     }
     
-    public HostCatcher getHostCatcher() {
-        return injector.getInstance(HostCatcher.class);
-    }
-
     public PushManager getPushManager() {
         return injector.getInstance(PushManager.class);
     }
@@ -374,10 +369,6 @@ public class LimeWireCore {
 
     public UDPCrawlerPongFactory getUDPCrawlerPongFactory() {
         return injector.getInstance(UDPCrawlerPongFactory.class);
-    }
-
-    public UDPHostCacheFactory getUDPHostCacheFactory() {
-        return injector.getInstance(UDPHostCacheFactory.class);
     }
     
     public LicenseFactory getLicenseFactory() {

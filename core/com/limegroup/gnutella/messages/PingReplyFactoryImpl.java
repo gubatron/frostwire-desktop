@@ -14,7 +14,6 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.limegroup.gnutella.Endpoint;
-import com.limegroup.gnutella.HostCatcher;
 import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.Statistics;
 import com.limegroup.gnutella.UDPService;
@@ -28,7 +27,6 @@ public class PingReplyFactoryImpl implements PingReplyFactory {
     private final NetworkManager networkManager;
     private final Provider<Statistics> statistics;
     private final Provider<UDPService> udpService;
-    private final Provider<HostCatcher> hostCatcher;
     private final LocalPongInfo localPongInfo;
     private final NetworkInstanceUtils networkInstanceUtils;
     
@@ -36,13 +34,11 @@ public class PingReplyFactoryImpl implements PingReplyFactory {
     @Inject
     public PingReplyFactoryImpl(NetworkManager networkManager,
             Provider<Statistics> statistics, Provider<UDPService> udpService,
-            Provider<HostCatcher> hostCatcher,
             LocalPongInfo localPongInfo,
             NetworkInstanceUtils networkInstanceUtils) {
         this.networkManager = networkManager;
         this.statistics = statistics;
         this.udpService = udpService;
-        this.hostCatcher = hostCatcher;
         this.localPongInfo = localPongInfo;
         this.networkInstanceUtils = networkInstanceUtils;
     }
@@ -391,15 +387,7 @@ public class PingReplyFactoryImpl implements PingReplyFactory {
      * 
      */
     private byte[] getTLSData(Collection<? extends IpPort> hosts) {
-        BitNumbers bn = new BitNumbers(hosts.size());
-        int i = 0;
-        for (IpPort ipp : hosts) {
-            if (hostCatcher.get().isHostTLSCapable(ipp))
-                bn.set(i);
-            i++;
-        }
-
-        return bn.toByteArray();
+        return null;
     }
 
     /**
