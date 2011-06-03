@@ -22,8 +22,10 @@ import java.util.regex.Pattern;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -57,6 +59,7 @@ import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.AzureusCoreRunningListener;
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
 
@@ -133,7 +136,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	private JFileChooser _saveAsDialog;
 	private JButton _buttonClose;
 
-	public CreateTorrentDialog() {
+	public CreateTorrentDialog(JFrame frame) {
+	    super(frame);
 		//don't add edonkey hashes.
 		addOtherHashes = false;
 
@@ -141,6 +145,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		trackers.add(new ArrayList<String>());
 		
 		initComponents();
+		setLocationRelativeTo(frame);
 	}
 
 	private void initComponents() {
@@ -164,6 +169,10 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		initProgressBar();		
 
 		buildListeners();
+		
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        setModalityType(ModalityType.APPLICATION_MODAL);
+		GUIUtils.addHideAction((JComponent) getContentPane());
 	}
 
 	private void initTorrentContents() {
@@ -343,7 +352,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		_buttonClose.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				onButtonClose();
+				onButtonClose(e);
 			}
 		});
 		
@@ -373,8 +382,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
 	}
 
-	protected void onButtonClose() {
-		dispose();
+	protected void onButtonClose(ActionEvent e) {
+	    GUIUtils.getDisposeAction().actionPerformed(e);
 	}
 
 	private void initFileChooser(int fileSelectionMode) {
@@ -899,7 +908,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	public static void main(String[] args) {
 		AzureusStarter.start();
 		
-		CreateTorrentDialog dlg = new CreateTorrentDialog();
+		CreateTorrentDialog dlg = new CreateTorrentDialog(null);
 		dlg.setVisible(true);
 		dlg.addWindowListener(new WindowAdapter() {
 			@Override

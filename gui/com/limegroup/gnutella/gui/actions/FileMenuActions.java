@@ -313,7 +313,7 @@ public class FileMenuActions {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			CreateTorrentDialog dlg = new CreateTorrentDialog();
+			CreateTorrentDialog dlg = new CreateTorrentDialog(GUIMediator.getAppFrame());
 			dlg.setVisible(true);
 		}
     	
