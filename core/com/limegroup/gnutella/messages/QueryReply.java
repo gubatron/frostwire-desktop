@@ -8,14 +8,13 @@ import java.util.List;
 import java.util.Set;
 
 import org.limewire.io.IpPort;
-import org.limewire.security.SecureMessage;
 
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.Response;
 import com.limegroup.gnutella.search.HostData;
 
-public interface QueryReply extends Message, SecureMessage {
+public interface QueryReply extends Message{
 
     public static final int TRUE=1;
     public static final int FALSE=0;

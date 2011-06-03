@@ -32,7 +32,6 @@ import org.pushingpixels.substance.internal.utils.UpdateOptimizationInfo;
 import org.pushingpixels.substance.internal.utils.border.SubstanceTableCellBorder;
 
 import com.limegroup.gnutella.gui.LimeJProgressBar;
-import com.limegroup.gnutella.gui.themes.PlasticThemeSettings;
 
 /**
  * This class handles rendering a <tt>JProgressBar</tt> for improved
@@ -365,7 +364,7 @@ public class ProgressBarRenderer extends LimeJProgressBar implements TableCellRe
         if(row % 2 == 0) {
             return table.getBackground();
         } else {
-            return PlasticThemeSettings.TABLE_ALTERNATE_COLOR.getValue();
+            return Color.GRAY;//PlasticThemeSettings.TABLE_ALTERNATE_COLOR.getValue();
         }
     }
 }

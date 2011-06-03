@@ -27,8 +27,6 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.MessageService;
 import com.limegroup.gnutella.gui.MultiLineLabel;
-import com.limegroup.gnutella.gui.library.RecursiveSharingDialog;
-import com.limegroup.gnutella.gui.library.RecursiveSharingDialog.State;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 
@@ -157,14 +155,14 @@ public class SharedFilesTransferHandler extends LimeTransferHandler {
 		}
 		
 		if (!dirs.isEmpty()) {
-			final RecursiveSharingDialog dialog = new RecursiveSharingDialog(GUIMediator.getAppFrame(), dirs.toArray(new File[0]));
-			if (dialog.showChooseDialog(MessageService.getParentComponent()) == State.OK) {
-				BackgroundExecutorService.schedule(new Runnable() {
-					public void run() {
-						fileManager.addSharedFolders(dialog.getRootsToShare(), dialog.getFoldersToExclude());
-					}
-				});
-			}
+//			final RecursiveSharingDialog dialog = new RecursiveSharingDialog(GUIMediator.getAppFrame(), dirs.toArray(new File[0]));
+//			if (dialog.showChooseDialog(MessageService.getParentComponent()) == State.OK) {
+//				BackgroundExecutorService.schedule(new Runnable() {
+//					public void run() {
+//						fileManager.addSharedFolders(dialog.getRootsToShare(), dialog.getFoldersToExclude());
+//					}
+//				});
+//			}
 		}
 		
 		BackgroundExecutorService.schedule(new Runnable() {

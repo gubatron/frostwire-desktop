@@ -8,12 +8,6 @@ import java.nio.ByteBuffer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.limewire.io.NetworkUtils;
-import org.limewire.net.SocketsManager;
-import org.limewire.net.SocketsManager.ConnectType;
-import org.limewire.nio.channel.ChannelWriter;
-import org.limewire.nio.channel.InterestWritableByteChannel;
-import org.limewire.nio.channel.NIOMultiplexor;
-import org.limewire.nio.observer.ConnectObserver;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -36,18 +30,15 @@ public final class PushManager {
     private static final int CONNECT_TIMEOUT = 10000;//10 secs
     
     private final Provider<FileManager> fileManager;
-    private final Provider<SocketsManager> socketsManager;
-
+    
     /**
      * @param fileManager
      * @param socketsManager
      * @param httpAcceptor
      */
     @Inject
-    public PushManager(Provider<FileManager> fileManager,
-            Provider<SocketsManager> socketsManager) {
+    public PushManager(Provider<FileManager> fileManager) {
         this.fileManager = fileManager;
-        this.socketsManager = socketsManager;
     }    
 
 	/**
@@ -144,90 +135,6 @@ public final class PushManager {
         public int getPort() {
             return port;
         }
-    }
-    
-    /** Non-blocking observer for connect events related to pushing. */
-    private static class PushObserver implements ConnectObserver {
-        private final PushData data;
-        private final boolean fwt;
-        
-        PushObserver(PushData data, boolean fwt) {
-            this.data = data;
-            this.fwt = fwt;
-        }        
-        
-        public void handleIOException(IOException iox) {}
-
-        /** Increments the PUSH_FAILED stat and does nothing else. */
-        public void shutdown() {
-            if(LOG.isDebugEnabled())
-                LOG.debug("Push (fwt: " + fwt + ") connect to: " + data.getHost() + ":" + data.getPort() + " failed");
-        }
-
-        /** Starts a new thread that'll do the pushing. */
-        public void handleConnect(Socket socket) throws IOException {
-//            if(LOG.isDebugEnabled())
-//                LOG.debug("Push (fwt: " + fwt + ") connect to: " + data.getHost() + ":" + data.getPort() + " succeeded");
-//            ((NIOMultiplexor) socket).setWriteObserver(new PushConnector(socket, data, fwt, httpAcceptor));
-        }
-    }    
-
-    /** Non-blocking observer for connect events related to pushing. */
-    private static class PushConnector implements ChannelWriter {
-        
-        private InterestWritableByteChannel channel;
-        private final ByteBuffer buffer;
-        private final Socket socket;
-        private HTTPConnectionData data;
-
-        public PushConnector(Socket socket, PushData data, boolean fwTransfer) throws IOException {
-            this.socket = socket;
-            this.data = new HTTPConnectionData();
-            this.data.setPush(true);
-            this.data.setLocal(data.isLan());
-            this.data.setFirewalled(fwTransfer);
-            
-            socket.setSoTimeout(30 * 1000);
-            
-            String giv = "GIV 0:" + data.getGuid() + "/file\n\n";
-            this.buffer = ByteBuffer.wrap(giv.getBytes());
-        }
-
-        public boolean handleWrite() throws IOException {
-//            if (!buffer.hasRemaining()) {
-//                return false;
-//            }
-//
-//            while (buffer.hasRemaining()) {
-//                int written = channel.write(buffer);
-//                if (written == 0) {
-//                    return true;
-//                }
-//            }
-//
-//            httpAcceptor.acceptConnection(socket, data);
-            return false;
-        }
-
-        public void handleIOException(IOException iox) {
-            throw new RuntimeException();
-        }
-
-        public void shutdown() {
-            // ignore
-    }
-
-        public InterestWritableByteChannel getWriteChannel() {
-            return channel;
-        }
-
-        public void setWriteChannel(InterestWritableByteChannel newChannel) {
-            this.channel = newChannel;
-
-            if (newChannel != null) {
-                newChannel.interestWrite(this, true);
-        }
-    }
     }
 
 

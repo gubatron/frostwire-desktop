@@ -13,7 +13,6 @@ import org.limewire.i18n.I18nMarker;
 import com.frostwire.bittorrent.BTDownloader;
 import com.frostwire.bittorrent.BTDownloaderFactory;
 import com.limegroup.gnutella.FileDesc;
-import com.limegroup.gnutella.IncompleteFileDesc;
 import com.limegroup.gnutella.SaveLocationException;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.FileChooserHandler;
@@ -121,11 +120,7 @@ public class BTDownloaderUtils {
 	 * @return
 	 */
 	public static FileDesc getFromLibrary(URN urn) {
-		if (urn == null) {
-			return null;
-		}
-		FileDesc desc = GuiCoreMediator.getFileManager().getFileDescForUrn(urn);
-		return (desc instanceof IncompleteFileDesc) ? null : desc;
+		return null;
 	}
 
 	private static boolean showHashConflict(FileDesc desc) {

@@ -321,22 +321,6 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
     }
     
     /**
-     * Slow match -- file/size lookups.
-     */
-    private int slowMatch(SearchResult sr) {
-        if(_grouper == null)
-            _grouper = new TableLineGrouper();
-        
-        // OK we created a Line out of a response.
-        // Do the grouping.  This is expensive!  May return null.
-        SearchResult group = _grouper.match(sr);
-        if (group == null)
-            _grouper.add(sr);
-            
-        return super.getRow(group);
-    }
-    
-    /**
      * Fast match -- lookup in the table.
      */
     private int fastMatch(URN sha1) {

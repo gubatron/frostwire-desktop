@@ -43,8 +43,14 @@
  */
 package com.frostwire.bittorrent;
 
+import java.io.File;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
+import org.gudy.azureus2.core3.disk.DiskManagerFileInfoSet;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.global.GlobalManagerDownloadRemovalVetoException;
 import org.gudy.azureus2.core3.internat.MessageText;
@@ -115,6 +121,55 @@ public class TorrentUtil {
 
     public static void removeDownload(DownloadManager downloadManager, boolean deleteTorrent, boolean deleteData) {
         asyncStopDelete(downloadManager, DownloadManager.STATE_STOPPED, deleteTorrent, deleteData, null);
+        
+        Set<File> filesToDelete = getIncompleteFiles(downloadManager);
+        for (File f: filesToDelete) {
+            try {
+                if (!f.delete()) {
+                    System.out.println("Can't delete file: " + f);
+                }
+            } catch (Exception e) {
+                System.out.println("Can't delete file: " + f + ", ex: " + e.getMessage());
+            }
+        }
+    }
+    
+    public static Set<File> getIncompleteFiles(DownloadManager dm) {
+        Set<File> set = new HashSet<File>();
+        DiskManagerFileInfoSet infoSet = dm.getDiskManagerFileInfoSet();
+        for (DiskManagerFileInfo fileInfo : infoSet.getFiles()) {
+            if (getDownloadPercent(fileInfo) < 100) {
+                set.add(fileInfo.getFile(false));
+            }
+        }
+        return set;
+    }
+    
+    public static Set<File> getIncompleteFiles() {
+        Set<File> set = new HashSet<File>();
+        
+        List<?> dms = AzureusStarter.getAzureusCore().getGlobalManager().getDownloadManagers();
+        for (Object obj : dms) {
+            DownloadManager dm = (DownloadManager) obj;
+            
+            DiskManagerFileInfoSet infoSet = dm.getDiskManagerFileInfoSet();
+            for (DiskManagerFileInfo fileInfo : infoSet.getFiles()) {
+                if (getDownloadPercent(fileInfo) < 100) {
+                    set.add(fileInfo.getFile(false));
+                }
+            }
+        }
+        
+        return set;
+    }
+    
+    public static int getDownloadPercent(DiskManagerFileInfo fileInfo) {
+        long length = fileInfo.getLength();
+        if (length == 0 || fileInfo.getDownloaded() == length) {
+            return 100;
+        } else {
+            return (int) (fileInfo.getDownloaded() * 100 / length);
+        }
     }
 
     public static boolean isStartable(DownloadManager dm) {

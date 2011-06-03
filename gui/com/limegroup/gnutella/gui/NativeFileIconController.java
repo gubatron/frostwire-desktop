@@ -1,7 +1,6 @@
 package com.limegroup.gnutella.gui;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -17,14 +16,13 @@ import javax.swing.filechooser.FileSystemView;
 import javax.swing.filechooser.FileView;
 import javax.swing.plaf.FileChooserUI;
 
+import org.limewire.collection.FixedsizeForgetfulHashMap;
 import org.limewire.collection.FixedsizeForgetfulHashSet;
 import org.limewire.concurrent.ExecutorsHelper;
-import org.limewire.collection.FixedsizeForgetfulHashMap;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.UISettings;
 
 /** A FileIconController that attempts to return native icons. */

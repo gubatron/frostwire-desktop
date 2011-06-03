@@ -12,7 +12,6 @@ import org.limewire.util.I18NConvert;
 import org.limewire.util.RPNParser.StringLookup;
 
 import com.limegroup.gnutella.licenses.License;
-import com.limegroup.gnutella.routing.HashFunction;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
 
 
@@ -432,35 +431,35 @@ public class FileDesc implements StringLookup {
      * like being rare.
      */
     public String lookup(String key) {
-        if (key == null)
-            return null;
-        if ("hits".equals(key))
-            return String.valueOf(getHitCount());
-        else if ("ups".equals(key))
-            return String.valueOf(getAttemptedUploads());
-        else if ("cups".equals(key))
-            return String.valueOf(getCompletedUploads());
-        else if ("lastup".equals(key))
-            return String.valueOf(System.currentTimeMillis() - getLastAttemptedUploadTime());
-        else if ("licensed".equals(key))
-            return String.valueOf(isLicensed());
-        else if ("hasXML".equals(key))
-            return String.valueOf(getXMLDocument() != null);
-        else if ("size".equals(key))
-            return String.valueOf(_size);
-        else if ("lastM".equals(key))
-            return String.valueOf(lastModified());
-        else if ("numKW".equals(key))
-            return String.valueOf(HashFunction.keywords(getPath()).length);
-        else if ("numKWP".equals(key))
-            return String.valueOf(HashFunction.getPrefixes(HashFunction.keywords(getPath())).length);
-        else if (key.startsWith("xml_") && getXMLDocument() != null) {
-            key = key.substring(4,key.length());
-            return getXMLDocument().lookup(key);
-            
-        // Note: Removed 'firewalled' check -- might not be necessary, but
-        // should see if other ways to re-add can be done.
-        }
+//        if (key == null)
+//            return null;
+//        if ("hits".equals(key))
+//            return String.valueOf(getHitCount());
+//        else if ("ups".equals(key))
+//            return String.valueOf(getAttemptedUploads());
+//        else if ("cups".equals(key))
+//            return String.valueOf(getCompletedUploads());
+//        else if ("lastup".equals(key))
+//            return String.valueOf(System.currentTimeMillis() - getLastAttemptedUploadTime());
+//        else if ("licensed".equals(key))
+//            return String.valueOf(isLicensed());
+//        else if ("hasXML".equals(key))
+//            return String.valueOf(getXMLDocument() != null);
+//        else if ("size".equals(key))
+//            return String.valueOf(_size);
+//        else if ("lastM".equals(key))
+//            return String.valueOf(lastModified());
+//        else if ("numKW".equals(key))
+//            return String.valueOf(HashFunction.keywords(getPath()).length);
+//        else if ("numKWP".equals(key))
+//            return String.valueOf(HashFunction.getPrefixes(HashFunction.keywords(getPath())).length);
+//        else if (key.startsWith("xml_") && getXMLDocument() != null) {
+//            key = key.substring(4,key.length());
+//            return getXMLDocument().lookup(key);
+//            
+//        // Note: Removed 'firewalled' check -- might not be necessary, but
+//        // should see if other ways to re-add can be done.
+//        }
         return null;
     }
     

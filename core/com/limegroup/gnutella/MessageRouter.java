@@ -17,7 +17,6 @@ import com.limegroup.gnutella.messages.QueryReply;
 import com.limegroup.gnutella.messages.QueryRequest;
 import com.limegroup.gnutella.messages.vendor.InspectionRequest;
 import com.limegroup.gnutella.messages.vendor.ReplyNumberVendorMessage;
-import com.limegroup.gnutella.routing.QueryRouteTable;
 
 public interface MessageRouter extends Service {
 
@@ -290,15 +289,6 @@ public interface MessageRouter extends Service {
      */
     public Iterable<QueryReply> responsesToQueryReplies(Response[] responses,
             QueryRequest queryRequest);
-
-    /**
-     * Accessor for the most recently calculated <tt>QueryRouteTable</tt>
-     * for this node.  If this node is an Ultrapeer, the table will include
-     * all data for leaf nodes in addition to data for this node's files.
-     *
-     * @return the <tt>QueryRouteTable</tt> for this node
-     */
-    public QueryRouteTable getQueryRouteTable();
 
     /**
      * Adds the specified MessageListener for messages with this GUID.

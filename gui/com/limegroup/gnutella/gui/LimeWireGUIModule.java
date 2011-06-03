@@ -21,7 +21,6 @@ public class LimeWireGUIModule extends AbstractModule {
         
         bind(ActivityCallback.class).to(VisualConnectionCallback.class);
         
-        bind(SessionInfo.class).to(LimeSessionInfo.class);
         bind(LocalClientInfoFactory.class).to(LocalClientInfoFactoryImpl.class);
     }
 }

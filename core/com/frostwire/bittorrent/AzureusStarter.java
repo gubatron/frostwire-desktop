@@ -1,14 +1,11 @@
 package com.frostwire.bittorrent;
 
 import java.io.File;
-import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.gudy.azureus2.core3.config.COConfigurationManager;
-import org.gudy.azureus2.core3.config.impl.ConfigurationManager;
-import org.gudy.azureus2.core3.download.DownloadManager;
 import org.limewire.util.CommonUtils;
 
 import com.aelitis.azureus.core.AzureusCore;
@@ -16,10 +13,7 @@ import com.aelitis.azureus.core.AzureusCoreComponent;
 import com.aelitis.azureus.core.AzureusCoreException;
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.AzureusCoreLifecycleListener;
-import com.frostwire.bittorrent.settings.BittorrentSettings;
-import com.limegroup.gnutella.settings.ConnectionSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
-import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * Class to initialize the azureus core. Keeps a static reference to the initialized core
@@ -150,44 +144,4 @@ public final class AzureusStarter {
 			} 
 		}
 	} //azureusInit
-
-	public static float getLastMeasuredUploadBandwidth() {
-		if (AZUREUS_CORE == null || !AZUREUS_CORE.isStarted()|| AZUREUS_CORE.getGlobalManager() == null || AZUREUS_CORE.getGlobalManager().getStats() == null)
-			return 0;
-		
-		return (float) (AZUREUS_CORE.getGlobalManager().getStats().getDataSendRate()/1000);
-	}
-	
-	public ConfigurationManager getConfigManager() {
-		return ConfigurationManager.getInstance();
-	}
-
-	/**
-	 * Checks how many allowable active torrents exist.
-	 * @return
-	 */
-	@SuppressWarnings("rawtypes")
-	public static boolean allowNewTorrent() {
-		List downloadManagers = AZUREUS_CORE.getGlobalManager().getDownloadManagers();
-		
-		int size = downloadManagers.size();
-		int activeDownloads=0;
-		for (int i=0 ; i < size; i++) {
-			DownloadManager manager = (DownloadManager) downloadManagers.get(i);
-			
-			int state = manager.getState();
-			if (state == DownloadManager.STATE_WAITING ||
-				state == DownloadManager.STATE_INITIALIZING ||
-				state == DownloadManager.STATE_INITIALIZED ||
-				state == DownloadManager.STATE_ALLOCATING ||
-				state == DownloadManager.STATE_CHECKING ||
-				state == DownloadManager.STATE_READY ||
-				state == DownloadManager.STATE_DOWNLOADING ||
-				state == DownloadManager.STATE_STOPPING)
-				activeDownloads++;
-		}
-		
-		return activeDownloads < BittorrentSettings.TORRENT_MAX_ACTIVE_DOWNLOADS.getValue();
-	}
-	
 }

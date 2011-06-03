@@ -6,9 +6,6 @@ import java.util.concurrent.Executor;
 
 import org.limewire.io.IP;
 import org.limewire.io.NetworkInstanceUtils;
-import org.limewire.security.SecureMessage;
-import org.limewire.security.SecureMessageCallback;
-import org.limewire.security.SecureMessageVerifier;
 import org.limewire.setting.LongSetting;
 import org.limewire.setting.StringArraySetting;
 
@@ -29,8 +26,6 @@ abstract class RestrictedResponder implements MessageHandler {
     private volatile IPList allowed;
     /** setting to check for updates to the host list */
     private final StringArraySetting setting;
-    /** an optional verifier to very secure messages */
-    private final SecureMessageVerifier verifier;
     /** The last version of the routable message that was routed */
     private final LongSetting lastRoutedVersion;
     
@@ -44,7 +39,7 @@ abstract class RestrictedResponder implements MessageHandler {
              UDPReplyHandlerFactory udpReplyHandlerFactory,
             UDPReplyHandlerCache udpReplyHandlerCache, Executor messageExecutor,
             NetworkInstanceUtils networkInstanceUtils) {
-        this(setting, null, null, networkManager,  udpReplyHandlerFactory,
+        this(setting, null, networkManager,  udpReplyHandlerFactory,
                 udpReplyHandlerCache, messageExecutor, networkInstanceUtils);
     }
     
@@ -57,13 +52,11 @@ abstract class RestrictedResponder implements MessageHandler {
     // TODO cleanup: SimmpManager registration should be done in extra initialize method
     // and also cleaned up
     public RestrictedResponder(StringArraySetting setting, 
-            SecureMessageVerifier verifier,
             LongSetting lastRoutedVersion, NetworkManager networkManager,
              UDPReplyHandlerFactory udpReplyHandlerFactory,
             UDPReplyHandlerCache udpReplyHandlerCache, Executor messageExecutorService,
             NetworkInstanceUtils networkInstanceUtils) {
         this.setting = setting;
-        this.verifier = verifier;
         this.lastRoutedVersion = lastRoutedVersion;
         this.networkManager = networkManager;
         this.udpReplyHandlerFactory = udpReplyHandlerFactory;
@@ -91,19 +84,19 @@ abstract class RestrictedResponder implements MessageHandler {
     }
     
     public final void handleMessage(Message msg, InetSocketAddress addr, ReplyHandler handler) {
-	System.out.print("Handling message: " + msg);
-        if (msg instanceof RoutableGGEPMessage) {
-            // if we have a verifier, verify
-            if (verifier != null && msg instanceof SecureMessage)
-                verifier.verify((SecureMessage)msg, new SecureCallback(addr, handler));
-            else
-                processRoutableMessage((RoutableGGEPMessage)msg, addr, handler);
-        } else {
-            // just check the return address.
-            if (!allowed.contains(new IP(handler.getAddress())))
-                return;
-            processAllowedMessage(msg, addr, handler);
-        }
+//	System.out.print("Handling message: " + msg);
+//        if (msg instanceof RoutableGGEPMessage) {
+//            // if we have a verifier, verify
+//            if (verifier != null && msg instanceof SecureMessage)
+//                verifier.verify((SecureMessage)msg, new SecureCallback(addr, handler));
+//            else
+//                processRoutableMessage((RoutableGGEPMessage)msg, addr, handler);
+//        } else {
+//            // just check the return address.
+//            if (!allowed.contains(new IP(handler.getAddress())))
+//                return;
+//            processAllowedMessage(msg, addr, handler);
+//        }
     }
     
     /** 
@@ -147,27 +140,7 @@ abstract class RestrictedResponder implements MessageHandler {
         
     }
     
-    /** 
-     * small listener that will process a message if it verifies.
-     */
-    private class SecureCallback implements SecureMessageCallback {
-        private final InetSocketAddress addr;
-        private final ReplyHandler handler;
-        SecureCallback(InetSocketAddress addr, ReplyHandler handler) {
-            this.addr = addr;
-            this.handler = handler;
-        }
-        
-        public void handleSecureMessage(final SecureMessage sm, boolean passed) {
-            if (!passed)
-                return;
-            messageExecutorService.execute(new Runnable() {
-                public void run() {
-                    processRoutableMessage((RoutableGGEPMessage)sm, addr, handler);
-                }
-            });
-        }
-    }
+   
 
     /**
      * Process the specified message because it has been approved.

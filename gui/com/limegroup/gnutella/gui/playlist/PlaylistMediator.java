@@ -71,14 +71,16 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
     private static final PlaylistMediator INSTANCE = new PlaylistMediator();
     
     /**
-     * Performs the rendering of the Name column in the playlist
-     */
-    private PlaylistItemNameRendererEditor STORE_RENDERER;
-    
-    /**
      * Adds a row number to each row in the table
      */
-    private NumberTableCellRenderer TABLE_NUMBER_RENDERER;
+    private NumberCellRenderer TABLE_NUMBER_RENDERER;
+    
+    /**
+     * Performs the rendering of the Name column in the playlist
+     */
+    private PlaylistItemNameRenderer PLAYLIST_ITEM_NAME_RENDERER;
+    
+    private PlaylistItemPropertyRenderer PLAYLIST_ITEM_PROPERTY_RENDERER;
     
     /**
      * A lock to use for access to pl stuff.
@@ -148,8 +150,9 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
 		DATA_MODEL = MODEL = new PlaylistModel();
 		TABLE = new LimeJTable(DATA_MODEL);
         BUTTON_ROW = (new PlaylistButtons(this)).getComponent();
-        STORE_RENDERER = new PlaylistItemNameRendererEditor();
-        TABLE_NUMBER_RENDERER = new NumberTableCellRenderer();
+        TABLE_NUMBER_RENDERER = new NumberCellRenderer();
+        PLAYLIST_ITEM_NAME_RENDERER = new PlaylistItemNameRenderer();
+        PLAYLIST_ITEM_PROPERTY_RENDERER = new PlaylistItemPropertyRenderer();
     }
 	
     /**
@@ -198,7 +201,8 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
     protected void setDefaultRenderers() {
         super.setDefaultRenderers();
         TABLE.setDefaultRenderer(NumberCell.class, TABLE_NUMBER_RENDERER );
-        TABLE.setDefaultRenderer(PlaylistItemName.class, STORE_RENDERER);
+        TABLE.setDefaultRenderer(PlaylistItemName.class, PLAYLIST_ITEM_NAME_RENDERER);
+        TABLE.setDefaultRenderer(PlaylistItemProperty.class, PLAYLIST_ITEM_PROPERTY_RENDERER);
     }
     
     /**

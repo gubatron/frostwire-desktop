@@ -8,7 +8,6 @@ import java.security.SignatureException;
 import org.limewire.io.IPPortCombo;
 import org.limewire.io.InvalidDataException;
 import org.limewire.io.IpPort;
-import org.limewire.security.SecureMessage;
 import org.limewire.service.ErrorService;
 
 import com.limegroup.gnutella.messages.BadGGEPPropertyException;
@@ -22,14 +21,12 @@ import com.limegroup.gnutella.messages.SecureGGEPData;
  * A ggep-based message that may have a specific return address.  It requires
  * a routing version number and must be secure.
  */
-public class RoutableGGEPMessage extends AbstractVendorMessage implements SecureMessage, VendorMessage.ControlMessage {
+public class RoutableGGEPMessage extends AbstractVendorMessage implements VendorMessage.ControlMessage {
     
     static final String RETURN_ADDRESS_KEY = "RA";
     static final String VERSION_KEY = "V";
     static final String TO_ADDRESS_KEY = "TO";
 
-    /** Whether or not this message has been verified as secure. */
-    private int _secureStatus = SecureMessage.INSECURE;
     
     /**
      * The ggep field that this message is.
@@ -160,11 +157,11 @@ public class RoutableGGEPMessage extends AbstractVendorMessage implements Secure
     }
 
     public int getSecureStatus() {
-        return _secureStatus;
+        return 0;//_secureStatus;
     }
 
     public void setSecureStatus(int secureStatus) {
-        _secureStatus = secureStatus;
+        //_secureStatus = secureStatus;
     }
 
     public void updateSignatureWithSecuredBytes(Signature signature) throws SignatureException {

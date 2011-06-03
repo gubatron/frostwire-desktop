@@ -12,8 +12,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.limewire.security.AddressSecurityToken;
-import org.limewire.security.MACCalculatorRepositoryManager;
 import org.limewire.service.ErrorService;
 import org.limewire.util.ByteOrder;
 import org.limewire.util.I18NConvert;
@@ -92,11 +90,6 @@ public class QueryRequestImpl extends AbstractMessage implements QueryRequest {
     private final Set<URN> QUERY_URNS;
 
     /**
-     * The Query Key associated with this query -- can be null.
-     */
-    private final AddressSecurityToken QUERY_KEY;
-
-    /**
      * The flag in the 'M' GGEP extension - if non-null, the query is requesting
      * only certain types.
      */
@@ -138,7 +131,7 @@ public class QueryRequestImpl extends AbstractMessage implements QueryRequest {
     QueryRequestImpl(byte[] guid, byte ttl, int minSpeed,
                         String query, String richQuery, 
                         Set<? extends URN> queryUrns,
-                        AddressSecurityToken addressSecurityToken, boolean isFirewalled, 
+                        boolean isFirewalled, 
                         Network network, boolean canReceiveOutOfBandReplies,
                         int featureSelector, boolean doNotProxy,
                         int metaFlagMask, boolean normalize,
@@ -234,8 +227,6 @@ public class QueryRequestImpl extends AbstractMessage implements QueryRequest {
 		} else {
 			tempQueryUrns = URN.NO_URN_SET;
 		}
-
-        this.QUERY_KEY = addressSecurityToken;
         this._doNotProxy = doNotProxy;
 		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -273,15 +264,15 @@ public class QueryRequestImpl extends AbstractMessage implements QueryRequest {
             // *----------------------------
             // construct the GGEP block
             GGEP ggepBlock = new GGEP(true); // do COBS
-
-            // add the query key?
-            if (this.QUERY_KEY != null) {
-                // get query key in byte form....
-                ByteArrayOutputStream qkBytes = new ByteArrayOutputStream();
-                this.QUERY_KEY.write(qkBytes);
-                ggepBlock.put(GGEP.GGEP_HEADER_QUERY_KEY_SUPPORT,
-                              qkBytes.toByteArray());
-            }
+//
+//            // add the query key?
+//            if (this.QUERY_KEY != null) {
+//                // get query key in byte form....
+//                ByteArrayOutputStream qkBytes = new ByteArrayOutputStream();
+//                this.QUERY_KEY.write(qkBytes);
+//                ggepBlock.put(GGEP.GGEP_HEADER_QUERY_KEY_SUPPORT,
+//                              qkBytes.toByteArray());
+//            }
 
             // add the What Is header
             if (_featureSelector > 0)
@@ -352,11 +343,11 @@ public class QueryRequestImpl extends AbstractMessage implements QueryRequest {
 	 * @throws <tt>BadPacketException</tt> if this is not a valid query
      */
     QueryRequestImpl(byte[] guid, byte ttl, byte hops, byte[] payload, Network network,
-            LimeXMLDocumentFactory limeXMLDocumentFactory, MACCalculatorRepositoryManager manager) throws BadPacketException {
+            LimeXMLDocumentFactory limeXMLDocumentFactory) throws BadPacketException {
         super(guid, Message.F_QUERY, ttl, hops, payload.length, network);
 		PAYLOAD=payload;
 		
-        QueryRequestPayloadParser parser = new QueryRequestPayloadParser(payload, manager);
+        QueryRequestPayloadParser parser = new QueryRequestPayloadParser(payload);
         
 		QUERY = parser.query;
 
@@ -386,7 +377,7 @@ public class QueryRequestImpl extends AbstractMessage implements QueryRequest {
 		else {
 			QUERY_URNS = Collections.unmodifiableSet(parser.queryUrns);
 		}
-        QUERY_KEY = parser.addressSecurityToken;
+        //QUERY_KEY = parser.addressSecurityToken;
 		if(QUERY.length() == 0 &&
 		   parser.richQuery.length() == 0 &&
 		   QUERY_URNS.size() == 0) {
@@ -668,14 +659,7 @@ public class QueryRequestImpl extends AbstractMessage implements QueryRequest {
         }
         return false;
     }
-        
-    /**
-     * Returns the AddressSecurityToken associated with this Request.  May very well be
-     * null.  Usually only UDP QueryRequests will have non-null QueryKeys.
-     */
-    public AddressSecurityToken getQueryKey() {
-        return QUERY_KEY;
-    }
+     
 
     /** @return true if the query has no constraints on the type of results
      *  it wants back.
@@ -836,9 +820,9 @@ public class QueryRequestImpl extends AbstractMessage implements QueryRequest {
 			if( XML_DOC != null )
 			    result = (37*result) + XML_DOC.hashCode();
 			result = (37*result) + QUERY_URNS.hashCode();
-			if(QUERY_KEY != null) {
-				result = (37*result) + QUERY_KEY.hashCode();
-			}
+//			if(QUERY_KEY != null) {
+//				result = (37*result) + QUERY_KEY.hashCode();
+//			}
 			// TODO:: ADD GUID!!
 			_hashCode = result;
 		}
@@ -869,8 +853,8 @@ public class QueryRequestImpl extends AbstractMessage implements QueryRequest {
     }
 
 
-    static byte[] patchInGGEP(byte[] payload, GGEP ggep, MACCalculatorRepositoryManager manager) throws BadPacketException {
-        QueryRequestPayloadParser parser = new QueryRequestPayloadParser(payload, manager);
+    static byte[] patchInGGEP(byte[] payload, GGEP ggep) throws BadPacketException {
+        QueryRequestPayloadParser parser = new QueryRequestPayloadParser(payload);
         HUGEExtension huge = parser.huge;
         if (huge != null) {
             // we write in the last modifiable block if available, so our
@@ -955,7 +939,7 @@ public class QueryRequestImpl extends AbstractMessage implements QueryRequest {
         int minSpeed = 0;
         Set<URN> queryUrns = null;
         Set<URN.Type> requestedUrnTypes = null;
-        AddressSecurityToken addressSecurityToken = null;
+        //AddressSecurityToken addressSecurityToken = null;
         
         HUGEExtension huge;
         
@@ -975,7 +959,7 @@ public class QueryRequestImpl extends AbstractMessage implements QueryRequest {
         
         int hugeEnd;
         
-        public QueryRequestPayloadParser(byte[] payload, MACCalculatorRepositoryManager manager) throws BadPacketException {
+        public QueryRequestPayloadParser(byte[] payload) throws BadPacketException {
             try {
                 PositionByteArrayInputStream bais = new PositionByteArrayInputStream(payload);
                 short sp = ByteOrder.leb2short(bais);
@@ -991,10 +975,10 @@ public class QueryRequestImpl extends AbstractMessage implements QueryRequest {
 
                 if(ggep != null) {
                     try {
-                        if (ggep.hasKey(GGEP.GGEP_HEADER_QUERY_KEY_SUPPORT)) {
-                            byte[] qkBytes = ggep.getBytes(GGEP.GGEP_HEADER_QUERY_KEY_SUPPORT);
-                            addressSecurityToken = new AddressSecurityToken(qkBytes, manager);
-                        }
+//                        if (ggep.hasKey(GGEP.GGEP_HEADER_QUERY_KEY_SUPPORT)) {
+//                            byte[] qkBytes = ggep.getBytes(GGEP.GGEP_HEADER_QUERY_KEY_SUPPORT);
+//                            addressSecurityToken = new AddressSecurityToken(qkBytes, manager);
+//                        }
                         if (ggep.hasKey(GGEP.GGEP_HEADER_FEATURE_QUERY))
                             featureSelector = ggep.getInt(GGEP.GGEP_HEADER_FEATURE_QUERY);
                         if (ggep.hasKey(GGEP.GGEP_HEADER_NO_PROXY)) {

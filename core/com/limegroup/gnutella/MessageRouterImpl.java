@@ -3,10 +3,8 @@ package com.limegroup.gnutella;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,14 +32,8 @@ import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.concurrent.ManagedThread;
 import org.limewire.inspection.Inspectable;
 import org.limewire.inspection.InspectionPoint;
-import org.limewire.io.IOUtils;
 import org.limewire.io.IpPort;
 import org.limewire.io.NetworkUtils;
-import org.limewire.net.SocketsManager;
-import org.limewire.net.SocketsManager.ConnectType;
-import org.limewire.security.AddressSecurityToken;
-import org.limewire.security.MACCalculatorRepositoryManager;
-import org.limewire.security.SecurityToken;
 import org.limewire.service.ErrorService;
 import org.limewire.setting.evt.SettingEvent;
 import org.limewire.setting.evt.SettingListener;
@@ -57,11 +49,9 @@ import com.limegroup.gnutella.connection.ConnectionLifecycleEvent;
 import com.limegroup.gnutella.connection.ConnectionLifecycleListener;
 import com.limegroup.gnutella.connection.RoutedConnection;
 import com.limegroup.gnutella.guess.GUESSEndpoint;
-import com.limegroup.gnutella.guess.OnDemandUnicaster;
 import com.limegroup.gnutella.messagehandlers.DualMessageHandler;
 import com.limegroup.gnutella.messagehandlers.InspectionRequestHandler;
 import com.limegroup.gnutella.messagehandlers.MessageHandler;
-import com.limegroup.gnutella.messagehandlers.OOBHandler;
 import com.limegroup.gnutella.messagehandlers.UDPCrawlerPingHandler;
 import com.limegroup.gnutella.messages.BadPacketException;
 import com.limegroup.gnutella.messages.Message;
@@ -79,7 +69,6 @@ import com.limegroup.gnutella.messages.vendor.ContentResponse;
 import com.limegroup.gnutella.messages.vendor.HeadPing;
 import com.limegroup.gnutella.messages.vendor.HeadPong;
 import com.limegroup.gnutella.messages.vendor.HeadPongFactory;
-import com.limegroup.gnutella.messages.vendor.HopsFlowVendorMessage;
 import com.limegroup.gnutella.messages.vendor.InspectionRequest;
 import com.limegroup.gnutella.messages.vendor.LimeACKVendorMessage;
 import com.limegroup.gnutella.messages.vendor.PushProxyAcknowledgement;
@@ -95,16 +84,13 @@ import com.limegroup.gnutella.messages.vendor.UpdateRequest;
 import com.limegroup.gnutella.messages.vendor.UpdateResponse;
 import com.limegroup.gnutella.messages.vendor.VendorMessage;
 import com.limegroup.gnutella.routing.PatchTableMessage;
-import com.limegroup.gnutella.routing.QueryRouteTable;
 import com.limegroup.gnutella.routing.ResetTableMessage;
-import com.limegroup.gnutella.routing.RouteTableMessage;
 import com.limegroup.gnutella.search.QueryDispatcher;
 import com.limegroup.gnutella.search.QueryHandler;
 import com.limegroup.gnutella.search.QueryHandlerFactory;
 import com.limegroup.gnutella.search.ResultCounter;
 import com.limegroup.gnutella.search.SearchResultHandler;
 import com.limegroup.gnutella.settings.ConnectionSettings;
-import com.limegroup.gnutella.settings.DownloadSettings;
 import com.limegroup.gnutella.settings.FilterSettings;
 import com.limegroup.gnutella.settings.MessageSettings;
 import com.limegroup.gnutella.settings.SearchSettings;
@@ -240,14 +226,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
 	 */
 	private final QRPPropagator QRP_PROPAGATOR = new QRPPropagator();
 
-
-    /**
-     * Variable for the most recent <tt>QueryRouteTable</tt> created
-     * for this node.  If this node is an Ultrapeer, the routing
-     * table will include the tables from its leaves.
-     */
-    private QueryRouteTable _lastQueryRouteTable;
-
     /**
      * The maximum number of response to send to a query that has
      * a "high" number of hops.
@@ -305,35 +283,27 @@ public abstract class MessageRouterImpl implements MessageRouter {
     protected final NetworkManager networkManager;
     protected final QueryRequestFactory queryRequestFactory;
     protected final QueryHandlerFactory queryHandlerFactory;
-    protected final OnDemandUnicaster onDemandUnicaster;
     protected final HeadPongFactory headPongFactory;
     protected final PingReplyFactory pingReplyFactory;
-    protected final ConnectionManager connectionManager;
-    protected final ReplyHandler forMeReplyHandler;
     protected final QueryUnicaster queryUnicaster;
     protected final FileManager fileManager;
     protected final ContentManager contentManager;
     protected final DownloadManager downloadManager;
     protected final UDPService udpService;
     protected final SearchResultHandler searchResultHandler;
-    protected final SocketsManager socketsManager;
-    protected final HostCatcher hostCatcher;
     protected final QueryReplyFactory queryReplyFactory;
     protected final StaticMessages staticMessages;
     protected final Provider<MessageDispatcher> messageDispatcher;
     protected final MulticastService multicastService;
     protected final QueryDispatcher queryDispatcher;
     protected final Provider<ActivityCallback> activityCallback;
-    protected final ConnectionServices connectionServices;
     protected final ScheduledExecutorService backgroundExecutor;
     protected final Provider<PongCacher> pongCacher;
     protected final UDPReplyHandlerCache udpReplyHandlerCache;
     protected final GuidMap multicastGuidMap;
     private final Provider<InspectionRequestHandler> inspectionRequestHandlerFactory;
     private final Provider<UDPCrawlerPingHandler> udpCrawlerPingHandlerFactory;
-    private final Provider<OOBHandler> oobHandlerFactory;
-    private final Provider<MACCalculatorRepositoryManager> MACCalculatorRepositoryManager;
-
+    
     private final PingRequestFactory pingRequestFactory;
 
     private final MessageHandlerBinder messageHandlerBinder;
@@ -350,26 +320,20 @@ public abstract class MessageRouterImpl implements MessageRouter {
     protected MessageRouterImpl(NetworkManager networkManager,
             QueryRequestFactory queryRequestFactory,
             QueryHandlerFactory queryHandlerFactory,
-            OnDemandUnicaster onDemandUnicaster, 
             HeadPongFactory headPongFactory,
             PingReplyFactory pingReplyFactory,
-            ConnectionManager connectionManager,
-            @Named("forMeReplyHandler") ReplyHandler forMeReplyHandler,
             QueryUnicaster queryUnicaster,
             FileManager fileManager,
             ContentManager contentManager,
             DownloadManager downloadManager,
             UDPService udpService,
             SearchResultHandler searchResultHandler,
-            SocketsManager socketsManager,
-            HostCatcher hostCatcher,
             QueryReplyFactory queryReplyFactory,
             StaticMessages staticMessages,
             Provider<MessageDispatcher> messageDispatcher,
             MulticastService multicastService,
             QueryDispatcher queryDispatcher,
             Provider<ActivityCallback> activityCallback,
-            ConnectionServices connectionServices,
             ApplicationServices applicationServices,
             @Named("backgroundExecutor") ScheduledExecutorService backgroundExecutor,
             Provider<PongCacher> pongCacher,
@@ -377,32 +341,24 @@ public abstract class MessageRouterImpl implements MessageRouter {
             UDPReplyHandlerCache udpReplyHandlerCache,
             Provider<InspectionRequestHandler> inspectionRequestHandlerFactory,
             Provider<UDPCrawlerPingHandler> udpCrawlerPingHandlerFactory,
-            PingRequestFactory pingRequestFactory, MessageHandlerBinder messageHandlerBinder,
-            Provider<OOBHandler> oobHandlerFactory,
-            Provider<MACCalculatorRepositoryManager> MACCalculatorRepositoryManager) {
+            PingRequestFactory pingRequestFactory, MessageHandlerBinder messageHandlerBinder) {
         this.networkManager = networkManager;
         this.queryRequestFactory = queryRequestFactory;
         this.queryHandlerFactory = queryHandlerFactory;
-        this.onDemandUnicaster = onDemandUnicaster;
         this.headPongFactory = headPongFactory;
         this.pingReplyFactory = pingReplyFactory;
-        this.connectionManager = connectionManager;
-        this.forMeReplyHandler = forMeReplyHandler;
         this.queryUnicaster = queryUnicaster;
         this.fileManager = fileManager;
         this.contentManager = contentManager;
         this.downloadManager = downloadManager;
         this.udpService = udpService;
         this.searchResultHandler = searchResultHandler;
-        this.socketsManager = socketsManager;
-        this.hostCatcher = hostCatcher;
         this.queryReplyFactory = queryReplyFactory;
         this.staticMessages = staticMessages;
         this.messageDispatcher = messageDispatcher;
         this.multicastService = multicastService;
         this.queryDispatcher = queryDispatcher;
         this.activityCallback = activityCallback;
-        this.connectionServices = connectionServices;
         this.backgroundExecutor = backgroundExecutor;
         this.pongCacher = pongCacher;
         this.udpCrawlerPingHandlerFactory = udpCrawlerPingHandlerFactory;
@@ -411,8 +367,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
         this.multicastGuidMap = guidMapManager.getMap();
         this.udpReplyHandlerCache = udpReplyHandlerCache;
         this.inspectionRequestHandlerFactory = inspectionRequestHandlerFactory;
-        this.oobHandlerFactory = oobHandlerFactory;
-        this.MACCalculatorRepositoryManager = MACCalculatorRepositoryManager;
 
         _clientGUID = applicationServices.getMyGUID();
         _bypassedResultsCache = new BypassedResultsCache(activityCallback, downloadManager);
@@ -529,7 +483,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
     public void start() {
         
 		// TODO listener leaking, we should have a shutdown event
-		connectionManager.addEventListener(connectionListener);
+		//connectionManager.addEventListener(connectionListener);
 		
 	    QRP_PROPAGATOR.start();
 
@@ -544,9 +498,9 @@ public abstract class MessageRouterImpl implements MessageRouter {
         backgroundExecutor.scheduleWithFixedDelay(new UDPReplyCleaner(), UDP_REPLY_CACHE_TIME, UDP_REPLY_CACHE_TIME, TimeUnit.MILLISECONDS);
         
         // runner to clean up OOB sessions
-        OOBHandler oobHandler = oobHandlerFactory.get();
-        backgroundExecutor.scheduleWithFixedDelay(oobHandler, CLEAR_TIME, CLEAR_TIME, TimeUnit.MILLISECONDS);
-        
+//        OOBHandler oobHandler = oobHandlerFactory.get();
+//        backgroundExecutor.scheduleWithFixedDelay(oobHandler, CLEAR_TIME, CLEAR_TIME, TimeUnit.MILLISECONDS);
+//        
         // handler for inspection requests
         InspectionRequestHandler inspectionHandler = inspectionRequestHandlerFactory.get();
         
@@ -574,11 +528,11 @@ public abstract class MessageRouterImpl implements MessageRouter {
         setMessageHandler(InspectionRequest.class, inspectionHandler);
         
         setUDPMessageHandler(QueryRequest.class, new UDPQueryRequestHandler());
-        setUDPMessageHandler(QueryReply.class, new UDPQueryReplyHandler(oobHandler));
+        //setUDPMessageHandler(QueryReply.class, new UDPQueryReplyHandler(oobHandler));
         setUDPMessageHandler(PingRequest.class, new UDPPingRequestHandler());
         setUDPMessageHandler(PingReply.class, new UDPPingReplyHandler());
         setUDPMessageHandler(LimeACKVendorMessage.class, new UDPLimeACKVendorMessageHandler());
-        setUDPMessageHandler(ReplyNumberVendorMessage.class, oobHandler);
+        //setUDPMessageHandler(ReplyNumberVendorMessage.class, oobHandler);
         setUDPMessageHandler(UDPCrawlerPing.class, udpCrawlerPingHandlerFactory.get());
         setUDPMessageHandler(HeadPing.class, new UDPHeadPingHandler());
         setUDPMessageHandler(UpdateRequest.class, new UDPUpdateRequestHandler());
@@ -592,14 +546,14 @@ public abstract class MessageRouterImpl implements MessageRouter {
     }
     
     public void stop() {
-        connectionManager.removeEventListener(connectionListener);
+        //connectionManager.removeEventListener(connectionListener);
     }
 
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.MessageRouter#originateQueryGUID(byte[])
      */
     public void originateQueryGUID(byte[] guid) {
-        _queryRouteTable.routeReply(guid, forMeReplyHandler);
+        //_queryRouteTable.routeReply(guid, forMeReplyHandler);
     }
 
     /* (non-Javadoc)
@@ -775,35 +729,19 @@ public abstract class MessageRouterImpl implements MessageRouter {
      */
     protected boolean hasValidQueryKey(InetAddress ip, int port, 
                                        QueryRequest qr) {
-        AddressSecurityToken qk = qr.getQueryKey();
-        if (qk == null)
-            return false;
-        
-        return qk.isFor(ip, port);
+//        AddressSecurityToken qk = qr.getQueryKey();
+//        if (qk == null)
+//            return false;
+//        
+//        return qk.isFor(ip, port);
+        return false;
     }
 
 	/**
 	 * Sends an ack back to the GUESS client node.  
 	 */
 	protected void sendAcknowledgement(InetSocketAddress addr, byte[] guid) {
-		Endpoint host = connectionManager.getConnectedGUESSUltrapeer();
-		PingReply reply;
-		if(host != null) {
-			try {
-                
-                reply = pingReplyFactory.createGUESSReply(guid, (byte)1, host);
-            } catch(UnknownHostException e) {
-				reply = createPingReply(guid);
-            }
-		} else {
-			reply = createPingReply(guid);
-		}
 		
-		// No GUESS endpoints existed and our IP/port was invalid.
-		if( reply == null )
-		    return;
-
-        udpService.send(reply, addr.getAddress(), addr.getPort());
 	}
 
 	/**
@@ -1005,33 +943,33 @@ public abstract class MessageRouterImpl implements MessageRouter {
         // fast!
         InetAddress address = addr.getAddress();
         int port = addr.getPort();
-        AddressSecurityToken key = new AddressSecurityToken(address, port, MACCalculatorRepositoryManager.get());
-        
-        // respond with Pong with QK, as GUESS requires....
-        PingReply reply = 
-            pingReplyFactory.createQueryKeyReply(pr.getGUID(), (byte)1, key);
-        udpService.send(reply, addr.getAddress(), addr.getPort());
+//        AddressSecurityToken key = new AddressSecurityToken(address, port, MACCalculatorRepositoryManager.get());
+//        
+//        // respond with Pong with QK, as GUESS requires....
+//        PingReply reply = 
+//            pingReplyFactory.createQueryKeyReply(pr.getGUID(), (byte)1, key);
+//        udpService.send(reply, addr.getAddress(), addr.getPort());
     }
 
 
     protected void handleUDPPingReply(PingReply reply, ReplyHandler handler,
                                       InetAddress address, int port) {
-        if (reply.getQueryKey() != null) {
-            // this is a PingReply in reply to my AddressSecurityToken Request - 
-            //consume the Pong and return, don't process as usual....
-            onDemandUnicaster.handleQueryKeyPong(reply);
-            return;
-        }
-
-        // do not process the pong if different from the host
-        // described in the reply 
-        if((reply.getPort() != port) || 
-           (!reply.getInetAddress().equals(address))) {
-            return;
-		}
-        
-        // normal pong processing...
-        handlePingReply(reply, handler);
+//        if (reply.getQueryKey() != null) {
+//            // this is a PingReply in reply to my AddressSecurityToken Request - 
+//            //consume the Pong and return, don't process as usual....
+//            onDemandUnicaster.handleQueryKeyPong(reply);
+//            return;
+//        }
+//
+//        // do not process the pong if different from the host
+//        // described in the reply 
+//        if((reply.getPort() != port) || 
+//           (!reply.getInetAddress().equals(address))) {
+//            return;
+//		}
+//        
+//        // normal pong processing...
+//        handlePingReply(reply, handler);
     }
 
     
@@ -1111,17 +1049,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
                                                                       counter), 
 								 handler);
 			}
-		} else if(request.getTTL() > 0 && connectionServices.isSupernode()) {
-            // send the request to intra-Ultrapeer connections -- this does
-			// not send the request to leaves
-            if(handler.isGoodUltrapeer()) {
-                // send it to everyone
-                forwardQueryToUltrapeers(request, handler);
-            } else {
-                // otherwise, only send it to some connections
-                forwardLimitedQueryToUltrapeers(request, handler);
-            }
-		}
+		} 
 			
         if (locallyEvaluate) {
             // always forward any queries to leaves -- this only does
@@ -1146,36 +1074,36 @@ public abstract class MessageRouterImpl implements MessageRouter {
     protected void handleLimeACKMessage(LimeACKVendorMessage ack,
                                         InetSocketAddress addr) {
 
-        GUID.TimedGUID refGUID = new GUID.TimedGUID(new GUID(ack.getGUID()),
-                                                    TIMED_GUID_LIFETIME);
-        QueryResponseBundle bundle = _outOfBandReplies.remove(refGUID);
-        
-        // token is null for old oob messages, it will just be ignored then
-        SecurityToken securityToken = ack.getSecurityToken();
-       
-        if ((bundle != null) && (ack.getNumResults() > 0)) {
-            InetAddress iaddr = addr.getAddress();
-            int port = addr.getPort();
-
-            //convert responses to QueryReplies, but only send as many as the
-            //node wants
-            Iterable<QueryReply> iterable;
-            if (ack.getNumResults() < bundle._responses.length) {
-                // TODO move selection to responseToQueryReplies methods for randomization
-                Response[] desired = new Response[ack.getNumResults()];
-                System.arraycopy(bundle._responses, 0, desired, 0, desired.length);
-                iterable = responsesToQueryReplies(desired, bundle._query, 1, securityToken);
-            } else { 
-                iterable = responsesToQueryReplies(bundle._responses, 
-                                                   bundle._query, 1, securityToken);
-            }
-            
-            //send the query replies
-            for(QueryReply queryReply : iterable)
-                udpService.send(queryReply, iaddr, port);
-        }
-        // else some sort of routing error or attack?
-        // TODO: tally some stat stuff here
+//        GUID.TimedGUID refGUID = new GUID.TimedGUID(new GUID(ack.getGUID()),
+//                                                    TIMED_GUID_LIFETIME);
+//        QueryResponseBundle bundle = _outOfBandReplies.remove(refGUID);
+//        
+//        // token is null for old oob messages, it will just be ignored then
+//        SecurityToken securityToken = ack.getSecurityToken();
+//       
+//        if ((bundle != null) && (ack.getNumResults() > 0)) {
+//            InetAddress iaddr = addr.getAddress();
+//            int port = addr.getPort();
+//
+//            //convert responses to QueryReplies, but only send as many as the
+//            //node wants
+//            Iterable<QueryReply> iterable;
+//            if (ack.getNumResults() < bundle._responses.length) {
+//                // TODO move selection to responseToQueryReplies methods for randomization
+//                Response[] desired = new Response[ack.getNumResults()];
+//                System.arraycopy(bundle._responses, 0, desired, 0, desired.length);
+//                iterable = responsesToQueryReplies(desired, bundle._query, 1, securityToken);
+//            } else { 
+//                iterable = responsesToQueryReplies(bundle._responses, 
+//                                                   bundle._query, 1, securityToken);
+//            }
+//            
+//            //send the query replies
+//            for(QueryReply queryReply : iterable)
+//                udpService.send(queryReply, iaddr, port);
+//        }
+//        // else some sort of routing error or attack?
+//        // TODO: tally some stat stuff here
     }
     
     /**
@@ -1261,7 +1189,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
      * @see com.limegroup.gnutella.MessageRouter#isHostUnicastQueried(com.limegroup.gnutella.GUID, org.limewire.io.IpPort)
      */
     public boolean isHostUnicastQueried(GUID guid, IpPort host) {
-        return onDemandUnicaster.isHostQueriedForGUID(guid, host);
+        return false;//onDemandUnicaster.isHostQueriedForGUID(guid, host);
     }
     
     /**
@@ -1271,28 +1199,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
     protected void handleUDPConnectBackRequest(UDPConnectBackVendorMessage udp,
                                                Connection source) {
 
-        GUID guidToUse = udp.getConnectBackGUID();
-        int portToContact = udp.getConnectBackPort();
-        InetAddress sourceAddr = source.getInetAddress();
-        Message msg = new UDPConnectBackRedirect(guidToUse, sourceAddr, 
-                                                 portToContact);
-
-        int sentTo = 0;
-        List<RoutedConnection> peers =
-            new ArrayList<RoutedConnection>(connectionManager.getInitializedConnections());
-        Collections.shuffle(peers);
-        for(RoutedConnection currMC : peers) {
-            if(sentTo >= MAX_UDP_CONNECTBACK_FORWARDS)
-                break;
-            
-            if(currMC == source)
-                continue;
-
-            if (currMC.getConnectionCapabilities().remoteHostSupportsUDPRedirect() >= 0) {
-                currMC.send(msg);
-                sentTo++;
-            }
-        }
+        
     }
 
 
@@ -1301,32 +1208,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
      */
     protected void handleUDPConnectBackRedirect(UDPConnectBackRedirect udp,
                                                Connection source) {
-        // only allow other UPs to send you this message....
-        if (!source.getConnectionCapabilities().isSupernodeSupernodeConnection())
-            return;
-
-        GUID guidToUse = udp.getConnectBackGUID();
-        int portToContact = udp.getConnectBackPort();
-        InetAddress addrToContact = udp.getConnectBackAddress();
-
-        // only connect back if you aren't connected to the host - that is the
-        // whole point of redirect after all....
-        Endpoint endPoint = new Endpoint(addrToContact.getAddress(),
-                                         portToContact);
-        if (connectionManager.isConnectedTo(endPoint.getAddress()))
-            return;
-
-        // keep track of who you tried connecting back too, don't do it too
-        // much....
-        String addrString = addrToContact.getHostAddress();
-        if (!shouldServiceRedirect(_udpConnectBacks,addrString))
-            return;
-
-        // mutating twice restores the original guid
-        UDPService.mutateGUID(guidToUse.bytes(), addrToContact, portToContact);
-        PingRequest pr = pingRequestFactory.createPingRequest(guidToUse.bytes(), (byte) 1,
-                (byte) 0);
-        udpService.send(pr, addrToContact, portToContact);
+        
     }
     
     /**
@@ -1358,26 +1240,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
      */
     protected void handleTCPConnectBackRequest(TCPConnectBackVendorMessage tcp,
                                                Connection source) {
-        final int portToContact = tcp.getConnectBackPort();
-        InetAddress sourceAddr = source.getInetAddress();
-        Message msg = new TCPConnectBackRedirect(sourceAddr, portToContact);
-
-        int sentTo = 0;
-        List<RoutedConnection> peers =
-            new ArrayList<RoutedConnection>(connectionManager.getInitializedConnections());
-        Collections.shuffle(peers);
-        for(RoutedConnection currMC : peers) {
-            if(sentTo >= MAX_TCP_CONNECTBACK_FORWARDS)
-                break;
-            
-            if(currMC == source)
-                continue;
-
-            if (currMC.getConnectionCapabilities().remoteHostSupportsTCPRedirect() >= 0) {
-                currMC.send(msg);
-                sentTo++;
-            }
-        }        
+                
     }
 
     /**
@@ -1386,56 +1249,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
      */
     protected void handleTCPConnectBackRedirect(TCPConnectBackRedirect tcp,
                                                 Connection source) {
-        // only allow other UPs to send you this message....
-        if (!source.getConnectionCapabilities().isSupernodeSupernodeConnection())
-            return;
-
-        final int portToContact = tcp.getConnectBackPort();
-        final String addrToContact =tcp.getConnectBackAddress().getHostAddress();
-
-        // only connect back if you aren't connected to the host - that is the
-        // whole point of redirect after all....
-        Endpoint endPoint = new Endpoint(addrToContact, portToContact);
-        if (connectionManager.isConnectedTo(endPoint.getAddress()))
-            return;
-
-        // keep track of who you tried connecting back too, don't do it too
-        // much....
-        if (!shouldServiceRedirect(_tcpConnectBacks,addrToContact))
-            return;
-
-        TCP_CONNECT_BACKER.execute(new Runnable() {
-            public void run() {
-                Socket sock = null;
-                try {
-                    try {
-                        sock = socketsManager.connect(new InetSocketAddress(addrToContact, portToContact), 6000, ConnectType.TLS);
-                        sock.setSoTimeout(6000);
-                        OutputStream os = sock.getOutputStream();
-                        os.write("CONNECT BACK\r\n\r\n".getBytes());
-                        os.flush();
-                    } catch (IOException noTls) {
-                        IOUtils.close(sock);
-                        sock = socketsManager.connect(new InetSocketAddress(addrToContact, portToContact), 12000, ConnectType.PLAIN);                        
-                        sock.setSoTimeout(12000);
-                        OutputStream os = sock.getOutputStream();
-                        os.write("CONNECT BACK\r\n\r\n".getBytes());
-                        os.flush();
-                    }
-                    if(LOG.isTraceEnabled())
-                        LOG.trace("Succesful connectback to: " + addrToContact);
-                    try {
-                        Thread.sleep(500); // let the other side get it.
-                    } catch(InterruptedException ignored) {
-                        LOG.warn("Interrupted connectback", ignored);
-                    }
-                } catch (IOException ignored) {
-                    LOG.warn("IOX during connectback", ignored);
-                } finally {
-                    IOUtils.close(sock);
-                }
-            }
-        });
+        // 
     }
 
 
@@ -1493,14 +1307,14 @@ public abstract class MessageRouterImpl implements MessageRouter {
      */
     public void sendPingRequest(PingRequest request,
                                 RoutedConnection connection) {
-        if(request == null) {
-            throw new NullPointerException("null ping");
-        }
-        if(connection == null) {
-            throw new NullPointerException("null connection");
-        }
-        _pingRouteTable.routeReply(request.getGUID(), forMeReplyHandler);
-        connection.send(request);
+//        if(request == null) {
+//            throw new NullPointerException("null ping");
+//        }
+//        if(connection == null) {
+//            throw new NullPointerException("null connection");
+//        }
+//        _pingRouteTable.routeReply(request.getGUID(), forMeReplyHandler);
+//        connection.send(request);
     }
 
     /* (non-Javadoc)
@@ -1508,48 +1322,28 @@ public abstract class MessageRouterImpl implements MessageRouter {
      */
     public void sendQueryRequest(QueryRequest request,
                                  RoutedConnection connection) {        
-        if(request == null) {
-            throw new NullPointerException("null query");
-        }
-        if(connection == null) {
-            throw new NullPointerException("null connection");
-        }
-        _queryRouteTable.routeReply(request.getGUID(), forMeReplyHandler);
-        connection.send(request);
+//        if(request == null) {
+//            throw new NullPointerException("null query");
+//        }
+//        if(connection == null) {
+//            throw new NullPointerException("null connection");
+//        }
+//        _queryRouteTable.routeReply(request.getGUID(), forMeReplyHandler);
+//        connection.send(request);
     }
 
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.MessageRouter#broadcastPingRequest(com.limegroup.gnutella.messages.PingRequest)
      */
     public void broadcastPingRequest(PingRequest ping) {
-		if(ping == null) {
-			throw new NullPointerException("null ping");
-		}
-        _pingRouteTable.routeReply(ping.getGUID(), forMeReplyHandler);
-        broadcastPingRequest(ping, forMeReplyHandler, connectionManager);
+		
     }
 
 	/* (non-Javadoc)
      * @see com.limegroup.gnutella.MessageRouter#sendDynamicQuery(com.limegroup.gnutella.messages.QueryRequest)
      */
 	public void sendDynamicQuery(QueryRequest query) {
-		if(query == null) {
-			throw new NullPointerException("null QueryHandler");
-		}
-		// get the result counter so we can track the number of results
-		ResultCounter counter = 
-			_queryRouteTable.routeReply(query.getGUID(), 
-										forMeReplyHandler);
-		if(connectionServices.isSupernode()) {
-			sendDynamicQuery(queryHandlerFactory.createHandlerForMe(query, 
-                                                             counter), 
-							 forMeReplyHandler);
-		} else {
-            originateLeafQuery(query);
-		} 
 		
-		// always send the query to your multicast people
-        originateMulticastQuery(query);
     }
     
     /**
@@ -1591,89 +1385,12 @@ public abstract class MessageRouterImpl implements MessageRouter {
         queryDispatcher.addQuery(qh);
 	}
 
-    /**
-     * Broadcasts the ping request to all initialized connections that
-     * are not the receivingConnection, setting up the routing
-     * to the designated PingReplyHandler.  This is called from the default
-     * handlePingRequest and the default broadcastPingRequest(PingRequest)
-     *
-     * If different (smarter) broadcasting functionality is desired, override
-     * as desired.  If you do, note that receivingConnection may be null (for
-     * requests originating here).
-     */
-    private void broadcastPingRequest(PingRequest request,
-                                      ReplyHandler receivingConnection,
-                                      ConnectionManager manager) {
-        // Note the use of initializedConnections only.
-        // Note that we have zero allocations here.
-
-        //Broadcast the ping to other connected nodes (supernodes or older
-        //nodes), but DON'T forward any ping not originating from me 
-        //along leaf to ultrapeer connections.
-        List<RoutedConnection> list = manager.getInitializedConnections();
-        int size = list.size();
-
-        boolean randomlyForward = false;
-        if(size > 3) randomlyForward = true;
-        double percentToIgnore;
-        for(int i=0; i<size; i++) {
-            RoutedConnection mc = list.get(i);
-            if(!mc.isStable()) continue;
-            if (receivingConnection == forMeReplyHandler || 
-                (mc != receivingConnection && 
-                 !mc.getConnectionCapabilities().isClientSupernodeConnection())) {
-
-                if(mc.supportsPongCaching()) {
-                    percentToIgnore = 0.70;
-                } else {
-                    percentToIgnore = 0.90;
-                }
-                if(randomlyForward && 
-                   (Math.random() < percentToIgnore)) {
-                    continue;
-                } else {
-                    mc.send(request);
-                }
-            }
-        }
-    }
-
-	/* (non-Javadoc)
+    /* (non-Javadoc)
      * @see com.limegroup.gnutella.MessageRouter#forwardQueryRequestToLeaves(com.limegroup.gnutella.messages.QueryRequest, com.limegroup.gnutella.ReplyHandler)
      */
 	public final void forwardQueryRequestToLeaves(QueryRequest query,
                                                   ReplyHandler handler) {
-		if(!connectionServices.isSupernode()) return;
-        //use query routing to route queries to client connections
-        //send queries only to the clients from whom query routing 
-        //table has been received
-        List<RoutedConnection> list = connectionManager.getInitializedClientConnections();
-        List<RoutedConnection> hitConnections = new ArrayList<RoutedConnection>();
-        for(int i=0; i<list.size(); i++) {
-            RoutedConnection mc = list.get(i);
-            if(mc == handler) continue;
-            if(mc.shouldForwardQuery(query)) {
-                hitConnections.add(mc);
-            }
-        }
-        //forward only to a quarter of the leaves in case the query is
-        //very popular.
-        if(list.size() > 8 && 
-           (double)hitConnections.size()/(double)list.size() > .8) {
-        	int startIndex = (int) Math.floor(
-        			Math.random() * hitConnections.size() * 0.75);
-            hitConnections = 
-                hitConnections.subList(startIndex, startIndex+hitConnections.size()/4);
-        }
-        
-        for(int i=0; i<hitConnections.size(); i++) {
-            RoutedConnection mc = hitConnections.get(i);
-            
-            // sendRoutedQueryToHost is not called because 
-            // we have already ensured it hits the routing table
-            // by filling up the 'hitsConnection' list.
-            mc.send(query);
-        }
+		
 	}
 
 	/**
@@ -1735,20 +1452,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
     // default access for testing
     void forwardQueryToUltrapeers(QueryRequest query,
                                           ReplyHandler handler) {
-		// Note the use of initializedConnections only.
-		// Note that we have zero allocations here.
 		
-		//Broadcast the query to other connected nodes (ultrapeers or older
-		//nodes), but DON'T forward any queries not originating from me 
-		//along leaf to ultrapeer connections.
-	 
-		List<RoutedConnection> list = connectionManager.getInitializedConnections();
-        int limit = list.size();
-
-		for(int i=0; i<limit; i++) {
-			RoutedConnection mc = list.get(i);      
-            forwardQueryToUltrapeer(query, handler, mc);  
-        }
     }
 
     /**
@@ -1764,34 +1468,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
     // default access for testing
     void forwardLimitedQueryToUltrapeers(QueryRequest query,
                                                  ReplyHandler handler) {
-		//Broadcast the query to other connected nodes (ultrapeers or older
-		//nodes), but DON'T forward any queries not originating from me 
-		//along leaf to ultrapeer connections.
-	 
-		List<RoutedConnection> list = connectionManager.getInitializedConnections();
-        int limit = list.size();
-
-        int connectionsNeededForOld = OLD_CONNECTIONS_TO_USE;
-		for(int i=0; i<limit; i++) {
-            
-            // if we've already queried enough old connections for
-            // an old-style query, break out
-            if(connectionsNeededForOld == 0) break;
-
-			RoutedConnection mc = list.get(i);
-            
-            // if the query is comiing from an old connection, try to
-            // send it's traffic to old connections.  Only send it to
-            // new connections if we only have a minimum number left
-            if(mc.isGoodUltrapeer() && 
-               (limit-i) > connectionsNeededForOld) {
-                continue;
-            }
-            forwardQueryToUltrapeer(query, handler, mc);
-            
-            // decrement the connections to use
-            connectionsNeededForOld--;
-		}    
+		
     }
 
     /**
@@ -1810,29 +1487,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
     void forwardQueryToUltrapeer(QueryRequest query, 
                                          ReplyHandler handler,
                                          RoutedConnection ultrapeer) {    
-        // don't send a query back to the guy who sent it
-        if(ultrapeer == handler) return;
-
-        // make double-sure we don't send a query received
-        // by a leaf to other Ultrapeers
-        if(ultrapeer.getConnectionCapabilities().isClientSupernodeConnection()) return;
-
-        // make sure that the ultrapeer understands feature queries.
-        if(query.isFeatureQuery() && 
-           !ultrapeer.getConnectionCapabilities().getRemoteHostSupportsFeatureQueries())
-             return;
-
-        // is this the last hop for the query??
-		boolean lastHop = query.getTTL() == 1; 
-           
-        // if it's the last hop to an Ultrapeer that sends
-        // query route tables, route it.
-        if(lastHop && ultrapeer.isUltrapeerQueryRoutingConnection()) {
-            sendRoutedQueryToHost(query, ultrapeer, handler);
-        } else {
-            // otherwise, just send it out
-            ultrapeer.send(query);
-        }
+        
     }
 
 
@@ -1843,44 +1498,14 @@ public abstract class MessageRouterImpl implements MessageRouter {
      */
     // default access for testing
     void originateLeafQuery(QueryRequest qr) {
-		List<RoutedConnection> list = connectionManager.getInitializedConnections();
-
-        // only send to at most 4 Ultrapeers, as we could have more
-        // as a result of race conditions - also, don't send what is new
-        // requests down too many connections
-        final int max = qr.isWhatIsNewRequest() ? 2 : 4;
-	int start = !qr.isWhatIsNewRequest() ? 0 :
-		(int) (Math.floor(Math.random()*(list.size()-1)));
-        int limit = Math.min(max, list.size());
-        final boolean wantsOOB = qr.desiresOutOfBandReplies();
-        for(int i=start; i<start+limit; i++) {
-			RoutedConnection mc = list.get(i);
-            QueryRequest qrToSend = qr;
-            if (wantsOOB && (mc.getConnectionCapabilities().remoteHostSupportsLeafGuidance() < 0))
-                qrToSend = queryRequestFactory.unmarkOOBQuery(qr);
-            mc.originateQuery(qrToSend);
-        }
+		
     }
     
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.MessageRouter#originateQuery(com.limegroup.gnutella.messages.QueryRequest, com.limegroup.gnutella.RoutedConnection)
      */
     public boolean originateQuery(QueryRequest query, RoutedConnection mc) {
-        if( query == null )
-            throw new NullPointerException("null query");
-        if( mc == null )
-            throw new NullPointerException("null connection");
-    
-        // if this is a feature query & the other side doesn't
-        // support it, then don't send it
-        // This is an optimization of network traffic, and doesn't
-        // necessarily need to exist.  We could be shooting ourselves
-        // in the foot by not sending this, rendering Feature Searches
-        // inoperable for some users connected to bad Ultrapeers.
-        if(query.isFeatureQuery() && !mc.getConnectionCapabilities().getRemoteHostSupportsFeatureQueries())
-            return false;
         
-        mc.originateQuery(query);
         return true;
     }
     
@@ -1933,40 +1558,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
      */
     protected void handlePingReply(PingReply reply,
                                    ReplyHandler handler) {
-        //update hostcatcher (even if the reply isn't for me)
-        boolean newAddress = hostCatcher.add(reply);
-
-        if(newAddress && !reply.isUDPHostCache()) {
-            pongCacher.get().addPong(reply);
-        }
-
-        //First route to originator in usual manner.
-        ReplyHandler replyHandler =
-            _pingRouteTable.getReplyHandler(reply.getGUID());
-
-        if (replyHandler != null) {
-            replyHandler.handlePingReply(reply, handler);
-        } else {
-            handler.countDroppedMessage();
-        }
-        boolean supportsUnicast = reply.supportsUnicast();
         
-        //Then, if a marked pong from an Ultrapeer that we've never seen before,
-        //send to all leaf connections except replyHandler (which may be null),
-        //irregardless of GUID.  The leafs will add the address then drop the
-        //pong as they have no routing entry.  Note that if Ultrapeers are very
-        //prevalent, this may consume too much bandwidth.
-		//Also forward any GUESS pongs to all leaves.
-        if (newAddress && (reply.isUltrapeer() || supportsUnicast)) {
-            List<RoutedConnection> list=connectionManager.getInitializedClientConnections();
-            for (int i=0; i<list.size(); i++) {
-                RoutedConnection c = list.get(i);
-                assert c != null : "null c.";
-                if (c!=handler && c!=replyHandler && c.allowNewPongs()) {
-                    c.handlePingReply(reply, handler);
-                }
-            }
-        }
     }
 
     /* (non-Javadoc)
@@ -1974,60 +1566,60 @@ public abstract class MessageRouterImpl implements MessageRouter {
      */
     public void handleQueryReply(QueryReply queryReply,
                                  ReplyHandler handler) {
-        if(queryReply == null) {
-            throw new NullPointerException("null query reply");
-        }
-        if(handler == null) {
-            throw new NullPointerException("null ReplyHandler");
-        }
-        
-        // check the altloc count
-        if (!altCountOk(queryReply))
-            return;
-        
-        //For flow control reasons, we keep track of the bytes routed for this
-        //GUID.  Replies with less volume have higher priorities (i.e., lower
-        //numbers).
-        RouteTable.ReplyRoutePair rrp =
-            _queryRouteTable.getReplyHandler(queryReply.getGUID(),
-                                             queryReply.getTotalLength(),
-											 queryReply.getUniqueResultCount(),
-											 queryReply.getPartialResultCount(),
-                                             ByteOrder.beb2int(queryReply.getIPBytes(), 0));
-
-        if(rrp != null) {
-            queryReply.setPriority(rrp.getBytesRouted());
-            // Prepare a routing for a PushRequest, which works
-            // here like a QueryReplyReply
-            // Note the use of getClientGUID() here, not getGUID()
-            _pushRouteTable.routeReply(queryReply.getClientGUID(),
-                                       handler);
-            //Simple flow control: don't route this message along other
-            //connections if we've already routed too many replies for this
-            //GUID.  Note that replies destined for me all always delivered to
-            //the GUI.
-
-            ReplyHandler rh = rrp.getReplyHandler();
-            
-            // remember more stats
-            _queryRouteTable.countHopsTTLNet(queryReply);
-            // if this reply is for us, remember even more stats
-            if (rh == forMeReplyHandler)
-                _queryRouteTable.timeStampResults(queryReply);
-            
-            if(!shouldDropReply(rrp, rh, queryReply)) {                
-                rh.handleQueryReply(queryReply, handler);
-                // also add to the QueryUnicaster for accounting - basically,
-                // most results will not be relevant, but since it is a simple
-                // HashSet lookup, it isn't a prohibitive expense...
-                queryUnicaster.handleQueryReply(queryReply);
-
-            } else {
-                handler.countDroppedMessage();
-            }
-        } else {
-            handler.countDroppedMessage();
-        }
+//        if(queryReply == null) {
+//            throw new NullPointerException("null query reply");
+//        }
+//        if(handler == null) {
+//            throw new NullPointerException("null ReplyHandler");
+//        }
+//        
+//        // check the altloc count
+//        if (!altCountOk(queryReply))
+//            return;
+//        
+//        //For flow control reasons, we keep track of the bytes routed for this
+//        //GUID.  Replies with less volume have higher priorities (i.e., lower
+//        //numbers).
+//        RouteTable.ReplyRoutePair rrp =
+//            _queryRouteTable.getReplyHandler(queryReply.getGUID(),
+//                                             queryReply.getTotalLength(),
+//											 queryReply.getUniqueResultCount(),
+//											 queryReply.getPartialResultCount(),
+//                                             ByteOrder.beb2int(queryReply.getIPBytes(), 0));
+//
+//        if(rrp != null) {
+//            queryReply.setPriority(rrp.getBytesRouted());
+//            // Prepare a routing for a PushRequest, which works
+//            // here like a QueryReplyReply
+//            // Note the use of getClientGUID() here, not getGUID()
+//            _pushRouteTable.routeReply(queryReply.getClientGUID(),
+//                                       handler);
+//            //Simple flow control: don't route this message along other
+//            //connections if we've already routed too many replies for this
+//            //GUID.  Note that replies destined for me all always delivered to
+//            //the GUI.
+//
+//            ReplyHandler rh = rrp.getReplyHandler();
+//            
+//            // remember more stats
+//            _queryRouteTable.countHopsTTLNet(queryReply);
+//            // if this reply is for us, remember even more stats
+//            if (rh == forMeReplyHandler)
+//                _queryRouteTable.timeStampResults(queryReply);
+//            
+//            if(!shouldDropReply(rrp, rh, queryReply)) {                
+//                rh.handleQueryReply(queryReply, handler);
+//                // also add to the QueryUnicaster for accounting - basically,
+//                // most results will not be relevant, but since it is a simple
+//                // HashSet lookup, it isn't a prohibitive expense...
+//                queryUnicaster.handleQueryReply(queryReply);
+//
+//            } else {
+//                handler.countDroppedMessage();
+//            }
+//        } else {
+//            handler.countDroppedMessage();
+//        }
     }
 
     private boolean altCountOk(QueryReply qr) {
@@ -2069,39 +1661,40 @@ public abstract class MessageRouterImpl implements MessageRouter {
     private boolean shouldDropReply(RouteTable.ReplyRoutePair rrp,
                                     ReplyHandler rh,
                                     QueryReply qr) {
-        byte ttl = qr.getTTL();
-                                           
-        // Reason 2 --  The reply is meant for me, do not drop it.
-        if( rh == forMeReplyHandler ) return false;
-        
-        // Reason 3 -- drop if TTL is 0.
-        if( ttl == 0 ) {
-            droppedReplyCounter.dropTTL0();
-            return true;                
-        }
-
-        // Reason 1 ...
-        
-        int resultsRouted = rrp.getResultsRouted();
-
-        // drop the reply if we've already sent more than the specified number
-        // of results for this GUID
-        if(resultsRouted > 100) {
-            droppedReplyCounter.tooManyResults((short)resultsRouted);
-            return true;
-        }
-
-        int bytesRouted = rrp.getBytesRouted();
-        // send replies with ttl above 2 if we've routed under 50K 
-        if(ttl > 2 && bytesRouted < 50    * 1024) return false;
-        // send replies with ttl 1 if we've routed under 1000K 
-        if(ttl == 1 && bytesRouted < 200 * 1024) return false;
-        // send replies with ttl 2 if we've routed under 333K 
-        if(ttl == 2 && bytesRouted < 100  * 1024) return false;
-
-        droppedReplyCounter.ttlByteDrop(ttl, bytesRouted);
-        // if none of the above conditions holds true, drop the reply
-        return true;
+//        byte ttl = qr.getTTL();
+//                                           
+//        // Reason 2 --  The reply is meant for me, do not drop it.
+//        if( rh == forMeReplyHandler ) return false;
+//        
+//        // Reason 3 -- drop if TTL is 0.
+//        if( ttl == 0 ) {
+//            droppedReplyCounter.dropTTL0();
+//            return true;                
+//        }
+//
+//        // Reason 1 ...
+//        
+//        int resultsRouted = rrp.getResultsRouted();
+//
+//        // drop the reply if we've already sent more than the specified number
+//        // of results for this GUID
+//        if(resultsRouted > 100) {
+//            droppedReplyCounter.tooManyResults((short)resultsRouted);
+//            return true;
+//        }
+//
+//        int bytesRouted = rrp.getBytesRouted();
+//        // send replies with ttl above 2 if we've routed under 50K 
+//        if(ttl > 2 && bytesRouted < 50    * 1024) return false;
+//        // send replies with ttl 1 if we've routed under 1000K 
+//        if(ttl == 1 && bytesRouted < 200 * 1024) return false;
+//        // send replies with ttl 2 if we've routed under 333K 
+//        if(ttl == 2 && bytesRouted < 100  * 1024) return false;
+//
+//        droppedReplyCounter.ttlByteDrop(ttl, bytesRouted);
+//        // if none of the above conditions holds true, drop the reply
+//        return true;
+        return false;
     }
 
 
@@ -2131,12 +1724,12 @@ public abstract class MessageRouterImpl implements MessageRouter {
      * FOR_ME_REPLY_HANDLER, even if it's not in the table.
      */
     public ReplyHandler getPushHandler(byte[] guid) {
-        ReplyHandler replyHandler = _pushRouteTable.getReplyHandler(guid);
-        if(replyHandler != null)
-            return replyHandler;
-        else if(Arrays.equals(_clientGUID, guid))
-            return forMeReplyHandler;
-        else
+//        ReplyHandler replyHandler = _pushRouteTable.getReplyHandler(guid);
+//        if(replyHandler != null)
+//            return replyHandler;
+//        else if(Arrays.equals(_clientGUID, guid))
+//            return forMeReplyHandler;
+//        else
             return null;
     }
 
@@ -2192,18 +1785,18 @@ public abstract class MessageRouterImpl implements MessageRouter {
      */
     public void sendPushRequest(PushRequest push)
         throws IOException {
-        if(push == null) {
-            throw new NullPointerException("null push");
-        }
-        
-
-        // Note the use of getClientGUID() here, not getGUID()
-        ReplyHandler replyHandler = getPushHandler(push.getClientGUID());
-
-        if(replyHandler != null)
-            replyHandler.handlePushRequest(push, forMeReplyHandler);
-        else
-            throw new IOException("no route for push");
+//        if(push == null) {
+//            throw new NullPointerException("null push");
+//        }
+//        
+//
+//        // Note the use of getClientGUID() here, not getGUID()
+//        ReplyHandler replyHandler = getPushHandler(push.getClientGUID());
+//
+//        if(replyHandler != null)
+//            replyHandler.handlePushRequest(push, forMeReplyHandler);
+//        else
+//            throw new IOException("no route for push");
     }
     
     /* (non-Javadoc)
@@ -2226,7 +1819,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
      */
     public Iterable<QueryReply> responsesToQueryReplies(Response[] responses,
                                             QueryRequest queryRequest) {
-        return responsesToQueryReplies(responses, queryRequest, 10, null);
+        return null;// responsesToQueryReplies(responses, queryRequest, 10, null);
     }
 
 
@@ -2247,7 +1840,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
     // default access for testing
     Iterable<QueryReply> responsesToQueryReplies(Response[] responses,
                                              QueryRequest queryRequest,
-                                             final int REPLY_LIMIT, SecurityToken securityToken) {
+                                             final int REPLY_LIMIT) {
 
         //List to store Query Replies
         List<QueryReply> queryReplies = new LinkedList<QueryReply>();
@@ -2354,24 +1947,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
         return queryReplies;
     }
 
-    /**
-     * Abstract method for creating query hits.  Subclasses must specify
-     * how this list is created.
-     * 
-     * @param securityToken might be null, otherwise must be sent in GGEP
-     * of QHD with header "SO"
-     *
-     * @return a <tt>List</tt> of <tt>QueryReply</tt> instances
-     */
-    protected abstract List<QueryReply> createQueryReply(byte[] guid, byte ttl,
-                                            long speed, 
-                                             Response[] res, byte[] clientGUID, 
-                                             boolean busy, 
-                                             boolean uploaded, 
-                                             boolean measuredSpeed, 
-                                             boolean isFromMcast,
-                                             boolean shouldMarkForFWTransfer,
-                                             SecurityToken securityToken);
 
     /**
      * Handles a message to reset the query route table for the given
@@ -2384,21 +1959,21 @@ public abstract class MessageRouterImpl implements MessageRouter {
      */
     private void handleResetTableMessage(ResetTableMessage rtm,
                                          RoutedConnection mc) {
-        // if it's not from a leaf or an Ultrapeer advertising 
-        // QRP support, ignore it
-        if(!isQRPConnection(mc)) return;
-
-        // reset the query route table for this connection
-        synchronized (mc.getQRPLock()) {
-            mc.resetQueryRouteTable(rtm);
-        }
-
-        // if this is coming from a leaf, make sure we update
-        // our tables so that the dynamic querier has correct
-        // data
-        if(mc.isLeafConnection()) {
-            _lastQueryRouteTable = createRouteTable();
-        }
+//        // if it's not from a leaf or an Ultrapeer advertising 
+//        // QRP support, ignore it
+//        if(!isQRPConnection(mc)) return;
+//
+//        // reset the query route table for this connection
+//        synchronized (mc.getQRPLock()) {
+//            mc.resetQueryRouteTable(rtm);
+//        }
+//
+//        // if this is coming from a leaf, make sure we update
+//        // our tables so that the dynamic querier has correct
+//        // data
+//        if(mc.isLeafConnection()) {
+//            _lastQueryRouteTable = createRouteTable();
+//        }
     }
 
     /**
@@ -2412,49 +1987,26 @@ public abstract class MessageRouterImpl implements MessageRouter {
      */
     private void handlePatchTableMessage(PatchTableMessage ptm,
                                          RoutedConnection mc) {
-        // if it's not from a leaf or an Ultrapeer advertising 
-        // QRP support, ignore it
-        if(!isQRPConnection(mc)) return;
-
-        // patch the query route table for this connection
-        synchronized(mc.getQRPLock()) {
-            mc.patchQueryRouteTable(ptm);
-        }
-
-        // if this is coming from a leaf, make sure we update
-        // our tables so that the dynamic querier has correct
-        // data
-        if(mc.isLeafConnection()) {
-            _lastQueryRouteTable = createRouteTable();
-        }
+//        // if it's not from a leaf or an Ultrapeer advertising 
+//        // QRP support, ignore it
+//        if(!isQRPConnection(mc)) return;
+//
+//        // patch the query route table for this connection
+//        synchronized(mc.getQRPLock()) {
+//            mc.patchQueryRouteTable(ptm);
+//        }
+//
+//        // if this is coming from a leaf, make sure we update
+//        // our tables so that the dynamic querier has correct
+//        // data
+//        if(mc.isLeafConnection()) {
+//            _lastQueryRouteTable = createRouteTable();
+//        }
     }
 
     private void updateMessage(QueryRequest request, ReplyHandler handler) {
         
-        if (SearchSettings.SEND_LIME_RESPONSES.getBoolean() &&
-                request.isQueryForLW() && staticMessages.getLimeReply() != null) {
-            QueryReply qr = queryReplyFactory.createQueryReply(request.getGUID(), staticMessages.getLimeReply());
-            qr.setHops((byte)0);
-            qr.setTTL((byte)(request.getHops()+1));
-            try {
-                sendQueryReply(qr);
-            } catch (IOException ignored) {}
-        }
         
-        if (!(handler instanceof Connection)) 
-            return;
-        
-        Connection c = (Connection) handler;
-        QueryReply update = staticMessages.getUpdateReply();
-        if (request.getHops() == 1 && c.getConnectionCapabilities().isOldLimeWire()) {
-            if (update != null) {
-                QueryReply qr = queryReplyFactory.createQueryReply(request.getGUID(), update);
-                try {
-                    sendQueryReply(qr);
-                } catch (IOException ignored) {
-                }
-            }
-        }
     }
 
     /**
@@ -2466,10 +2018,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
      *  otherwise <tt>false</tt>
      */
     private static boolean isQRPConnection(Connection c) {
-        if (c.getConnectionCapabilities().isSupernodeClientConnection())
-            return true;
-        if (c.getConnectionCapabilities().isUltrapeerQueryRoutingConnection())
-            return true;
+        
         return false;
     }
 
@@ -2504,134 +2053,8 @@ public abstract class MessageRouterImpl implements MessageRouter {
      */
     // default access for testing
     void forwardQueryRouteTables() {
-		//Check the time to decide if it needs an update.
-		long time = System.currentTimeMillis();
-
-		//For all connections to new hosts c needing an update...
-		List<RoutedConnection> list=connectionManager.getInitializedConnections();
-		QueryRouteTable table = null;
-		List<RouteTableMessage> patches = null;
-		QueryRouteTable lastSent = null;
 		
-		for(int i=0; i<list.size(); i++) {                        
-			RoutedConnection c = list.get(i);
-			
-
-			// continue if I'm an Ultrapeer and the node on the
-			// other end doesn't support Ultrapeer-level query
-			// routing
-			if(connectionServices.isSupernode()) { 
-				// only skip it if it's not an Ultrapeer query routing
-				// connection
-				if(!c.isUltrapeerQueryRoutingConnection()) { 
-					continue;
-				}
-			} 				
-			// otherwise, I'm a leaf, and don't send routing
-			// tables if it's not a connection to an Ultrapeer
-			// or if query routing is not enabled on the connection
-			else if (!(c.getConnectionCapabilities().isClientSupernodeConnection() && 
-					   c.getConnectionCapabilities().isQueryRoutingEnabled())) {
-				continue;
-			}
-			
-			// See if it is time for this connections QRP update
-			// This call is safe since only this thread updates time
-			if (time<c.getRoutedConnectionStatistics().getNextQRPForwardTime())
-				continue;
-
-			c.getRoutedConnectionStatistics().incrementNextQRPForwardTime(time);
-				
-			// Create a new query route table if we need to
-			if (table == null) {
-				table = createRouteTable();     //  Ignores busy leaves
-                _lastQueryRouteTable = table;
-			} 
-
-			//..and send each piece.
-			
-			// Because we tend to send the same list of patches to lots of
-			// Connections, we can reuse the list of RouteTableMessages
-			// between those connections if their last sent
-			// table is exactly the same.
-			// This allows us to only reduce the amount of times we have
-			// to call encode.
-			
-			//  (This if works for 'null' sent tables too)
-			if( lastSent == c.getRoutedConnectionStatistics().getQueryRouteTableSent() ) {
-			    // if we have not constructed the patches yet, then do so.
-			    if( patches == null )
-			        patches = table.encode(lastSent, true);
-			}
-			// If they aren't the same, we have to encode a new set of
-			// patches for this connection.
-			else {
-			    lastSent = c.getRoutedConnectionStatistics().getQueryRouteTableSent();
-			    patches = table.encode(lastSent, true);
-            }
-            
-            // If sending QRP tables is turned off, don't send them.  
-            if(!ConnectionSettings.SEND_QRP.getValue()) {
-                return;
-            }
-            
-            for(RouteTableMessage next : patches)
-		        c.send(next);
-    	    
-            c.getRoutedConnectionStatistics().setQueryRouteTableSent(table);
-		}
     }
-
-    /* (non-Javadoc)
-     * @see com.limegroup.gnutella.MessageRouter#getQueryRouteTable()
-     */
-    public QueryRouteTable getQueryRouteTable() {
-        return _lastQueryRouteTable;
-    }
-
-    /**
-     * Creates a query route table appropriate for forwarding to connection c.
-     * This will not include information from c.
-     *     @requires queryUpdateLock held
-     */
-    //default access for testing
-    QueryRouteTable createRouteTable() {
-        QueryRouteTable ret = fileManager.getQRT();
-        
-        // Add leaves' files if we're an Ultrapeer.
-        if(connectionServices.isSupernode()) {
-            addQueryRoutingEntriesForLeaves(ret);
-        }
-        return ret;
-    }
-
-
-	/**
-	 * Adds all query routing tables of leaves to the query routing table for
-	 * this node for propagation to other Ultrapeers at 1 hop.
-	 * 
-	 * Added "busy leaf" support to prevent a busy leaf from having its QRT
-	 * 	table added to the Ultrapeer's last-hop QRT table.  This should reduce
-	 *  BW costs for UPs with busy leaves.  
-	 *
-	 * @param qrt the <tt>QueryRouteTable</tt> to add to
-	 */
-	private void addQueryRoutingEntriesForLeaves(QueryRouteTable qrt) {
-		List<RoutedConnection> leaves = connectionManager.getInitializedClientConnections();
-		
-		for(int i=0; i<leaves.size(); i++) {
-			RoutedConnection mc = leaves.get(i);
-        	synchronized (mc.getQRPLock()) {
-        	    //	Don't include busy leaves
-        	    if( !mc.isBusyLeaf() ){
-                	QueryRouteTable qrtr = mc.getRoutedConnectionStatistics().getQueryRouteTableReceived();
-					if(qrtr != null) {
-						qrt.addAll(qrtr);
-					}
-        	    }
-			}
-		}
-	}
 
     
     /* (non-Javadoc)
@@ -2689,44 +2112,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
      * Replies to a head ping sent from the given ReplyHandler.
      */
     private void handleHeadPing(HeadPing ping, ReplyHandler handler) {
-        if (DownloadSettings.DROP_HEADPINGS.getValue())
-            return;
         
-        GUID clientGUID = ping.getClientGuid();
-        ReplyHandler pingee;
-        
-        if(clientGUID != null)
-            pingee = getPushHandler(clientGUID.bytes());
-        else
-            pingee = forMeReplyHandler; // handle ourselves.
-        
-        //drop the ping if no entry for the given clientGUID
-        if (pingee == null) 
-           return; 
-        
-        //don't bother routing if this is intended for me. 
-        // TODO:  Clean up ReplyHandler interface so we aren't
-        //        afraid to use it like it's intended.
-        //        That way, we can do pingee.handleHeadPing(ping)
-        //        and not need this anti-OO instanceof check.
-        if (pingee instanceof ForMeReplyHandler) {
-            // If it's for me, reply directly to the person who sent it.
-            HeadPong pong = headPongFactory.create(ping);
-            handler.reply(pong); // 
-        } else {
-            // Otherwise, remember who sent it and forward it on.
-            //remember where to send the pong to. 
-            //the pong will have the same GUID as the ping. 
-            // Note that this uses the messageGUID, not the clientGUID
-            _headPongRouteTable.routeReply(ping.getGUID(), handler); 
-            
-            //and send off the routed ping 
-            if ( !(handler instanceof Connection) ||
-                    ((Connection)handler).getConnectionCapabilities().supportsVMRouting())
-                pingee.reply(ping);
-            else
-                pingee.reply(new HeadPing(ping)); 
-        }
    }
     
     /**
@@ -2741,34 +2127,14 @@ public abstract class MessageRouterImpl implements MessageRouter {
      * Handles a pong received from the given handler.
      */ 
     private void handleHeadPong(HeadPong pong, ReplyHandler handler) { 
-        ReplyHandler forwardTo =  _headPongRouteTable.getReplyHandler(pong.getGUID()); 
-
-        // TODO: Clean up ReplyHandler interface so we're not afraid
-        //       to use it correctly.
-        //       Ideally, we'd do forwardTo.handleHeadPong(pong)
-        //       instead of this instanceof check
-         
-        // if this pong is for me, process it as usual (not implemented yet)
-        if (forwardTo != null && !(forwardTo instanceof ForMeReplyHandler)) { 
-            forwardTo.reply(pong); 
-            _headPongRouteTable.removeReplyHandler(forwardTo); 
-        } 
+        
     } 
     
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.MessageRouter#forwardInspectionRequestToLeaves(com.limegroup.gnutella.messages.vendor.InspectionRequest)
      */
     public void forwardInspectionRequestToLeaves(InspectionRequest ir) {
-        if (!connectionManager.isSupernode())
-            return;
-        // only inspection requests with return address are forwarded.
-        if (ir.getReturnAddress() == null)
-            return;
         
-        for (RoutedConnection mc : connectionManager.getInitializedClientConnections()) {
-            if (mc.getConnectionCapabilities().remoteHostSupportsInspections() >= ir.getVersion())
-                mc.send(ir);
-        }
     }
     
     /**
@@ -2848,62 +2214,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
         }
     }
 
-    private static class HopsFlowManager implements Runnable {
-        private final UploadManager uploadManager;
-        private final ConnectionManager connectionManager;
-        
-        public HopsFlowManager(UploadManager uploadManager, ConnectionManager connectionManager) {
-            this.uploadManager = uploadManager;
-            this.connectionManager = connectionManager;
-        }
-        
-        /* in case we don't want any queries any more */
-        private static final byte BUSY_HOPS_FLOW = 0;
-
-    	/* in case we want to reenable queries */
-    	private static final byte FREE_HOPS_FLOW = 5;
-
-        /* small optimization:
-           send only HopsFlowVendorMessages if the busy state changed */
-        private static boolean _oldBusyState = false;
-           
-        public void run() {
-            // only leafs should use HopsFlow
-            if (connectionManager.isSupernode())
-                return;
-            // busy hosts don't want to receive any queries, if this node is not
-            // busy, we need to reset the HopsFlow value
-            boolean isBusy = !uploadManager.mayBeServiceable();
-            
-            // state changed? don't bother the ultrapeer with information
-            // that it already knows. we need to inform new ultrapeers, though.
-            final List<RoutedConnection> connections = connectionManager.getInitializedConnections();
-            final HopsFlowVendorMessage hops = 
-                new HopsFlowVendorMessage(isBusy ? BUSY_HOPS_FLOW :
-                                          FREE_HOPS_FLOW);
-            if (isBusy == _oldBusyState) {
-                for (int i = 0; i < connections.size(); i++) {
-                    RoutedConnection c = connections.get(i);
-                    // Yes, we may tell a new ultrapeer twice, but
-                    // without a buffer of some kind, we might forget
-                    // some ultrapeers. The clean solution would be
-                    // to remember the hops-flow value in the connection.
-                    if (c != null 
-                        && c.getConnectionTime() + 1.25 * HOPS_FLOW_INTERVAL 
-                            > System.currentTimeMillis()
-                        && c.getConnectionCapabilities().isClientSupernodeConnection() )
-                        c.send(hops);
-                }
-            } else { 
-                _oldBusyState = isBusy;
-                for (int i = 0; i < connections.size(); i++) {
-                    RoutedConnection c = connections.get(i);
-                    if (c != null && c.getConnectionCapabilities().isClientSupernodeConnection())
-                        c.send(hops);
-                }
-            }
-        }
-    }
+    
     
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.MessageRouter#getOOBExpireTime()
@@ -3134,26 +2445,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
      * {@link OOBHandler} if they are not replies to multicast or unicast
      * queries.
      */
-    public class UDPQueryReplyHandler implements MessageHandler {
-
-        private final OOBHandler oobHandler;
-        
-        public UDPQueryReplyHandler(OOBHandler oobHandler) {
-            this.oobHandler = oobHandler;
-        }
-        
-        public void handleMessage(Message msg, InetSocketAddress addr, ReplyHandler handler) {
-            QueryReply reply = (QueryReply)msg;
-            if (reply.isReplyToMulticastQuery()
-                    || isHostUnicastQueried(new GUID(reply.getGUID()), handler)) {
-                handleQueryReply(reply, handler);
-            }
-            else {
-                oobHandler.handleMessage(msg, addr, handler);
-            }
-        }
-        
-    }
+    
     
     /**
      * tracks information about messages with a specified guid.

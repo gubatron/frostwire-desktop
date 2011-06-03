@@ -124,9 +124,9 @@ public class SlideshowPanel extends JPanel {
                     }
                     if (slide.torrent != null) {
                         if (slide.torrent.toLowerCase().startsWith("http")) {
-                            GUIMediator.instance().openTorrentURI(new URI(slide.torrent));
+                            GUIMediator.instance().openTorrentURI(slide.torrent);
                         } else if (slide.torrent.toLowerCase().startsWith("magnet:?")) {
-                            GUIMediator.instance().openTorrentMagnet(slide.torrent);
+                            GUIMediator.instance().openTorrentURI(slide.torrent);
                         }
                     }
                 } catch (Exception ex) {

@@ -16,7 +16,6 @@ import org.limewire.i18n.I18nMarker;
 import org.limewire.io.ByteReader;
 import org.limewire.io.IOUtils;
 import org.limewire.io.NetworkUtils;
-import org.limewire.net.SocketsManager;
 import org.limewire.service.ErrorService;
 import org.limewire.service.MessageService;
 import org.limewire.util.CommonUtils;
@@ -43,15 +42,12 @@ public class ExternalControl {
     
     private final DownloadServices downloadServices;
     private final Provider<ActivityCallback> activityCallback;
-    private final SocketsManager socketsManager;
     
     @Inject
     public ExternalControl(DownloadServices downloadServices,
-            Provider<ActivityCallback> activityCallback,
-            SocketsManager socketsManager) {
+            Provider<ActivityCallback> activityCallback) {
         this.downloadServices = downloadServices;
         this.activityCallback = activityCallback;
-        this.socketsManager = socketsManager;
     }
 
     public String preprocessArgs(String args[]) {
@@ -234,52 +230,6 @@ public class ExternalControl {
 		}
 	}
 	
-	/**
-	 *  Handle a Magnet request via a socket (for TCP handling).
-	 *  Deiconify the application, fire MAGNET request
-	 *  and return true as a sign that FrostWire is running.
-	 */
-	public void fireControlThread(Socket socket, boolean magnet) {
-	    LOG.trace("enter fireControl");
-	    
-        Thread.currentThread().setName("IncomingControlThread");
-		try {
-			// Only allow control from localhost
-			if (!NetworkUtils.isLocalHost(socket)) {
-                if(LOG.isWarnEnabled())
-				    LOG.warn("Invalid control request from: " + socket.getInetAddress().getHostAddress());
-				return;
-            }
-
-			// First read extra parameter
-			socket.setSoTimeout(Constants.TIMEOUT);
-			ByteReader br = new ByteReader(socket.getInputStream());
-            // read the first line. if null, throw an exception
-            String line = br.readLine();
-			socket.setSoTimeout(0);
-
-			BufferedOutputStream out =
-			  new BufferedOutputStream(socket.getOutputStream());
-			String s = CommonUtils.getUserName() + "\r\n";
-			byte[] bytes=s.getBytes();
-			out.write(bytes);
-			out.flush();
-			
-			if (isTorrentMagnetRequest(line))
-				handleTorrentMagnetRequest(line);
-			else if (magnet)
-				handleMagnetRequest(line);
-			else
-				handleTorrentRequest(line);
-		} catch (IOException e) {
-		    LOG.warn("Exception while responding to control request", e);
-		} finally {
-		    IOUtils.close(socket);
-        }
-	}
-
-	
-
 	/**  Check if the client is already running, and if so, pop it up.
 	 *   Sends the MAGNET message along the given socket. 
 	 *   @returns  true if a local FrostWire responded with a true.
@@ -298,29 +248,29 @@ public class ExternalControl {
 		    ConnectionSettings.PORT.revertToDefault();
 		    port = ConnectionSettings.PORT.getValue();
         }   
-		try {
-			socket = socketsManager.connect(new InetSocketAddress(LOCALHOST, port), 1000);
-			InputStream istream = socket.getInputStream(); 
-			socket.setSoTimeout(1000); 
-		    ByteReader byteReader = new ByteReader(istream);
-		    OutputStream os = socket.getOutputStream();
-		    OutputStreamWriter osw = new OutputStreamWriter(os);
-		    BufferedWriter out = new BufferedWriter(osw);
-		    out.write(type+" "+arg+" ");
-		    out.write("\r\n");
-		    out.flush();
-		    String str = byteReader.readLine();
-		    return(str != null && str.startsWith(CommonUtils.getUserName()));
-		} catch (IOException e2) {
-		} finally {
-		    if(socket != null) {
-		        try {
-                    socket.close();
-                } catch (IOException e) {
-                    // nothing we can do
-                }
-            }
-        }
+//		try {
+//			socket = socketsManager.connect(new InetSocketAddress(LOCALHOST, port), 1000);
+//			InputStream istream = socket.getInputStream(); 
+//			socket.setSoTimeout(1000); 
+//		    ByteReader byteReader = new ByteReader(istream);
+//		    OutputStream os = socket.getOutputStream();
+//		    OutputStreamWriter osw = new OutputStreamWriter(os);
+//		    BufferedWriter out = new BufferedWriter(osw);
+//		    out.write(type+" "+arg+" ");
+//		    out.write("\r\n");
+//		    out.flush();
+//		    String str = byteReader.readLine();
+//		    return(str != null && str.startsWith(CommonUtils.getUserName()));
+//		} catch (IOException e2) {
+//		} finally {
+//		    if(socket != null) {
+//		        try {
+//                    socket.close();
+//                } catch (IOException e) {
+//                    // nothing we can do
+//                }
+//            }
+//        }
         
 	    return false;
 	}

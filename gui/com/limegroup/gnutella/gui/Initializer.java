@@ -33,7 +33,6 @@ import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.ConnectionSettings;
-import com.limegroup.gnutella.settings.DaapSettings;
 import com.limegroup.gnutella.settings.StartupSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
@@ -88,8 +87,7 @@ public final class Initializer {
 
         // Various tasks that can be done after core is glued & started.
         //System.out.println("Initializer.initialize() glue core");
-        glueCore(limeWireCore);        
-        validateEarlyCore(limeWireCore);
+        glueCore(limeWireCore);       
         
         // Validate any arguments or properties outside of the LW environment.
         //System.out.println("Initializer.initialize() run external checks");
@@ -136,7 +134,6 @@ public final class Initializer {
         //System.out.println("Initializer.initialize() start core");
         startCore(limeWireCore);
         runQueuedRequests(limeWireCore);
-        startDAAP();
         
         startAzureusCore();
         
@@ -233,14 +230,6 @@ public final class Initializer {
     /** Wires together remaining non-Guiced pieces. */
     private void glueCore(LimeWireCore limeWireCore) {
         limeWireCore.getLimeCoreGlue().install();
-    }
-    
-    /** Tasks that can be done after core is created, before it's started. */
-    private void validateEarlyCore(LimeWireCore limeWireCore) {        
-        // See if our NIODispatcher clunked out.
-        if(!limeWireCore.getNIODispatcher().isRunning()) {
-            failInternetBlocked();
-        }
     }
     
     /**
@@ -473,11 +462,6 @@ public final class Initializer {
         limeWireCore.getLifecycleManager().start();
         stopwatch.resetAndLog("lifecycle manager start");
         
-        if (!ConnectionSettings.DISABLE_UPNP.getValue()) {
-            limeWireCore.getUPnPManager().start();
-            stopwatch.resetAndLog("start UPnPManager");
-        }
-        
         // Instruct the gui to perform tasks that can only be performed
         // after the backend has been constructed.
         GUIMediator.instance().coreInitialized();        
@@ -498,22 +482,6 @@ public final class Initializer {
         // Activate a download for magnet URL locally if one exists
         limeWireCore.getExternalControl().runQueuedControlRequest();
         stopwatch.resetAndLog("run queued control req");
-    }
-
-    /** Starts DAAP. */
-    private void startDAAP() {
-        if (DaapSettings.DAAP_ENABLED.getValue()) {
-            try {
-                GUIMediator.setSplashScreenString(I18n.tr("Loading Digital Audio Access Protocol..."));
-                DaapManager.instance().start();
-                stopwatch.resetAndLog("daap start");
-                DaapManager.instance().init();
-                stopwatch.resetAndLog("daap init");
-            } catch (IOException err) {
-                GUIMediator.showError(I18n.tr("FrostWire was unable to start the Digital Audio Access Protocol Service (for sharing files in iTunes). This feature will be turned off. You can turn it back on in options, under iTunes -> Sharing."));
-                DaapSettings.DAAP_ENABLED.setValue(false);
-            }
-        }
     }
     
     /** Runs post initialization tasks. */

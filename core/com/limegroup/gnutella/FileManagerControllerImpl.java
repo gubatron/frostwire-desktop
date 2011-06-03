@@ -201,7 +201,7 @@ public class FileManagerControllerImpl implements FileManagerController {
 
     public void loadFinishedPostSave() {
         savedFileManager.get().run();
-        activityCallback.get().fileManagerLoaded();
+        //activityCallback.get().fileManagerLoaded();
     }
 
 //    public void addSimppListener(SimppListener listener) {
@@ -226,10 +226,6 @@ public class FileManagerControllerImpl implements FileManagerController {
 
     public void setAnnotateEnabled(boolean enabled) {
         activityCallback.get().setAnnotateEnabled(enabled);
-    }
-
-    public boolean warnAboutSharingSensitiveDirectory(File directory) {
-        return activityCallback.get().warnAboutSharingSensitiveDirectory(directory);
     }
 
     public LimeXMLDocument createLimeXMLDocument(

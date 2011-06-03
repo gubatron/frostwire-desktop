@@ -38,11 +38,6 @@ public interface SearchResult {
     long getCreationTime();
     
     /**
-     * @return <code>true</code> if this result is currently being downloaded
-     */
-    boolean isDownloading();
-    
-    /**
      * @return the name of vendor who created this artifact
      */
     String getVendor();
@@ -169,7 +164,7 @@ public interface SearchResult {
      */
     void initialize(TableLine line);
     
-    JPopupMenu createMenu(JPopupMenu popupMenu, TableLine[] lines, boolean markAsSpam, boolean markAsNot, ResultPanel rp);
+    JPopupMenu createMenu(JPopupMenu popupMenu, TableLine[] lines, ResultPanel rp);
     
     /**
      * Wether or not this result can be marked as Junk.
@@ -180,4 +175,6 @@ public interface SearchResult {
     public void showTorrentDetails(long delay);
 
     public String getHash();
+
+    public String getTorrentURI();
 }

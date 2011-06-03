@@ -8,28 +8,18 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.io.File;
 import java.util.List;
-import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.SwingUtilities;
 
-import com.limegroup.gnutella.FileManagerEvent;
-import com.limegroup.gnutella.gui.ButtonRow;
-import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.GUIConstants;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.MessageService;
-import com.limegroup.gnutella.gui.library.RecursiveSharingDialog.State;
-import com.limegroup.gnutella.gui.sharing.ShareManager;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
-import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.gui.util.DividerLocationSettingUpdater;
 import com.limegroup.gnutella.settings.UISettings;
 
@@ -60,15 +50,7 @@ public final class LibraryMediator implements ThemeObserver {
     private static LibraryTableMediator LIBRARY_TABLE;
 
     private static final String TABLE_KEY = "LIBRARY_TABLE";
-    private static final String SHARED_KEY = "SHARED";
-    /**
-     * Constant handle to the file update handler.
-     */
-    private final HandleFileUpdate FILE_UPDATER = new HandleFileUpdate();
-   
-	/** Panel for the Shared Files node. */
-	private static JPanel jpShared = null;
-
+    
     ///////////////////////////////////////////////////////////////////////////
 	//  Singleton Pattern
 	///////////////////////////////////////////////////////////////////////////
@@ -94,8 +76,7 @@ public final class LibraryMediator implements ThemeObserver {
 	 */
     private LibraryMediator() {
         getComponent(); // creates MAIN_PANEL
-		GUIMediator.setSplashScreenString(
-		    I18n.tr("Loading Library Window..."));
+		GUIMediator.setSplashScreenString(I18n.tr("Loading Library Window..."));
 		ThemeMediator.addThemeObserver(this);
 
 		addView(getLibraryTable().getScrolledTablePane(), TABLE_KEY);
@@ -138,8 +119,6 @@ public final class LibraryMediator implements ThemeObserver {
 	// inherit doc comment
 	public void updateTheme() {
 	    getLibraryTree().updateTheme();
-//		Color tableColor = SkinHandler.getTableBackgroundColor();
-//		TREE_SCROLL_PANE.getViewport().setBackground(tableColor);
 	}
 
 	/**
@@ -216,37 +195,6 @@ public final class LibraryMediator implements ThemeObserver {
 		if(dh instanceof SavedFilesDirectoryHolder)
             updateTableFiles(dh);
     }
-    
-    /**
-     * Forces a refresh of the currently selected folder.
-     */
-    public void forceRefresh() {
-        updateTableFiles(getLibraryTree().getSelectedDirectoryHolder());
-    }
-		
-    /** 
-	 * Displays a file chooser for selecting a new folder to share and 
-	 * adds that new folder to the settings and FileManager.
-	 */
-    public void addSharedLibraryFolder() {
-		File dir = FileChooserHandler.getInputDirectory();
-		if (dir == null)
-			return;
-		addSharedLibraryFolder(dir);
-    }
-	
-	public void addSharedLibraryFolder(final File dir) {
-		if(ShareManager.checkAndWarnNewSharedFolder(dir)) {    		
-    		final RecursiveSharingDialog dialog = new RecursiveSharingDialog(GUIMediator.getAppFrame(), dir);
-    		if (dialog.showChooseDialog(MessageService.getParentComponent()) == State.OK) {
-    			BackgroundExecutorService.schedule(new Runnable() {
-    			    public void run() {
-    			        GuiCoreMediator.getFileManager().addSharedFolders(dialog.getRootsToShare(), dialog.getFoldersToExclude());
-    	            }
-    	        });	
-    		}
-		}
-	}
 	
 	/**
 	 * Update the this file's statistic
@@ -266,7 +214,7 @@ public final class LibraryMediator implements ThemeObserver {
 		    // instead of allocating a new one every single time
 		    // a query is hit.
 		    // Very useful for large libraries and generic searches (ala: mp3)
-		    FILE_UPDATER.addFileUpdate(file);
+		    //FILE_UPDATER.addFileUpdate(file);
 	    }
 	}
 	
@@ -307,46 +255,7 @@ public final class LibraryMediator implements ThemeObserver {
     		//&& !getLibraryTree().incompleteDirectoryIsSelected();
     }
     
-    /**
-     *  Class to handle updates to shared file stats
-     *  without creating tons of runnables.
-     *  Idea taken from HandleQueryString in VisualConnectionCallback
-     */
-    private static final class HandleFileUpdate implements Runnable {
-        private Vector<File>  list;
-        private boolean active;
-    
-        public HandleFileUpdate( ) {
-            list   = new Vector<File>();
-            active = false;
-        }
-    
-        public void addFileUpdate(File f) {
-            list.addElement(f);
-            if(active == false) {
-                active = true;
-                SwingUtilities.invokeLater(this);
-            }
-        }
-    
-        public void run() {
-            try {
-                File f;
-                while (list.size() > 0) {
-                    f = list.firstElement();
-                    list.removeElementAt(0);
-                    getLibraryTable().update(f);
-                }
-			} catch (IndexOutOfBoundsException e) {
-        	    //this really should never happen, but
-        	    //who really cares if we're not sharing it?
-			} finally {
-			    active = false;
-            }
-        }
-    }
-
-	public static void showView(String key) {
+    public static void showView(String key) {
 		VIEW_LAYOUT.show(getViewPanel(), key);
 	}
 	

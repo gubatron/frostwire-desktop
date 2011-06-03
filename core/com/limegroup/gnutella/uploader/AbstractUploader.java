@@ -6,7 +6,6 @@ import java.net.InetSocketAddress;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.limewire.nio.ssl.SSLUtils;
 
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.InsufficientDataException;

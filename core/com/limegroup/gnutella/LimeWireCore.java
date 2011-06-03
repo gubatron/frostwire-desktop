@@ -4,10 +4,6 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import org.limewire.io.NetworkInstanceUtils;
 import org.limewire.lifecycle.ServiceRegistry;
-import org.limewire.net.ConnectionDispatcher;
-import org.limewire.net.SocketsManager;
-import org.limewire.nio.NIODispatcher;
-import org.limewire.security.SecureMessageVerifier;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -16,23 +12,15 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 import com.limegroup.gnutella.altlocs.AltLocManager;
-import com.limegroup.gnutella.altlocs.AlternateLocationFactory;
 import com.limegroup.gnutella.auth.ContentManager;
 import com.limegroup.gnutella.auth.IpPortContentAuthorityFactory;
-import com.limegroup.gnutella.bootstrap.UDPHostCacheFactory;
 import com.limegroup.gnutella.browser.ExternalControl;
-import com.limegroup.gnutella.browser.LocalAcceptor;
-import com.limegroup.gnutella.connection.ConnectionCheckerManager;
 import com.limegroup.gnutella.connection.MessageReaderFactory;
 import com.limegroup.gnutella.connection.RoutedConnectionFactory;
 import com.limegroup.gnutella.downloader.CoreDownloaderFactory;
-import com.limegroup.gnutella.downloader.DiskController;
 import com.limegroup.gnutella.filters.IPFilter;
 import com.limegroup.gnutella.filters.MutableGUIDFilter;
 import com.limegroup.gnutella.filters.SpamFilterFactory;
-import com.limegroup.gnutella.guess.OnDemandUnicaster;
-import com.limegroup.gnutella.handshaking.HandshakeResponderFactory;
-import com.limegroup.gnutella.handshaking.HeadersFactory;
 import com.limegroup.gnutella.http.FeaturesWriter;
 import com.limegroup.gnutella.licenses.LicenseCache;
 import com.limegroup.gnutella.licenses.LicenseFactory;
@@ -94,14 +82,6 @@ public class LimeWireCore {
         return injector.getInstance(LocalFileDetailsFactory.class);
     }
 
-    public AlternateLocationFactory getAlternateLocationFactory() {
-        return injector.getInstance(AlternateLocationFactory.class);
-    }
-
-    public SocketsManager getSocketsManager() {
-        return injector.getInstance(SocketsManager.class);
-    }
-
     public HostDataFactory getHostDataFactory() {
         return injector.getInstance(HostDataFactory.class);
     }
@@ -141,21 +121,9 @@ public class LimeWireCore {
     public PushEndpointFactory getPushEndpointFactory() {
         return injector.getInstance(PushEndpointFactory.class);
     }
-
-    public HeadersFactory getHeadersFactory() {
-        return injector.getInstance(HeadersFactory.class);
-    }
-
-    public HandshakeResponderFactory getHandshakeResponderFactory() {
-        return injector.getInstance(HandshakeResponderFactory.class);
-    }
-
+    
     public PingReplyFactory getPingReplyFactory() {
         return injector.getInstance(PingReplyFactory.class);
-    }
-
-    public ConnectionManager getConnectionManager() {
-        return injector.getInstance(ConnectionManager.class);
     }
 
     public NetworkManager getNetworkManager() {
@@ -165,21 +133,9 @@ public class LimeWireCore {
     public UDPService getUdpService() {
         return injector.getInstance(UDPService.class);
     }
-
-    public Acceptor getAcceptor() {
-        return injector.getInstance(Acceptor.class);
-    }
-    
-    public ForMeReplyHandler getForMeReplyHandler() {
-        return injector.getInstance(ForMeReplyHandler.class);
-    }
     
     public QueryUnicaster getQueryUnicaster() {
         return injector.getInstance(QueryUnicaster.class);
-    }
-    
-    public OnDemandUnicaster getOnDemandUnicaster() {
-        return injector.getInstance(OnDemandUnicaster.class);
     }
 
     public MessageRouter getMessageRouter() {
@@ -189,29 +145,9 @@ public class LimeWireCore {
     public DownloadManager getDownloadManager() {
         return injector.getInstance(DownloadManager.class);
     }
-
-    public ConnectionDispatcher getLocalConnectionDispatcher() {
-        return injector.getInstance(Key.get(ConnectionDispatcher.class, Names.named("local")));
-    }
-
-    public ConnectionDispatcher getConnectionDispatcher() {
-        return injector.getInstance(Key.get(ConnectionDispatcher.class, Names.named("global")));
-    }
-
-    public LocalAcceptor getLocalAcceptor() {
-        return injector.getInstance(LocalAcceptor.class);
-    }
     
-    public HostCatcher getHostCatcher() {
-        return injector.getInstance(HostCatcher.class);
-    }
-
     public PushManager getPushManager() {
         return injector.getInstance(PushManager.class);
-    }
-
-    public ResponseVerifier getResponseVerifier() {
-        return injector.getInstance(ResponseVerifier.class);
     }
 
     public SearchResultHandler getSearchResultHandler() {
@@ -229,15 +165,7 @@ public class LimeWireCore {
     public IPFilter getIpFilter() {
         return injector.getInstance(IPFilter.class);
     }
-
-    public NetworkUpdateSanityChecker getNetworkUpdateSanityChecker() {
-        return injector.getInstance(NetworkUpdateSanityChecker.class);
-    }
-
-    public BandwidthManager getBandwidthManager() {
-        return injector.getInstance(BandwidthManager.class);
-    }
-
+    
     public QueryStats getQueryStats() {
         return injector.getInstance(QueryStats.class);
     }
@@ -248,10 +176,6 @@ public class LimeWireCore {
 
     public Statistics getStatistics() {
         return injector.getInstance(Statistics.class);
-    }
-
-    public SecureMessageVerifier getSecureMessageVerifier() {
-        return injector.getInstance(SecureMessageVerifier.class);
     }
 
     public CreationTimeCache getCreationTimeCache() {
@@ -294,20 +218,8 @@ public class LimeWireCore {
         return injector.getInstance(MulticastService.class);
     }
 
-    public ConnectionWatchdog getConnectionWatchdog() {
-        return injector.getInstance(ConnectionWatchdog.class);
-    }
-
-    public Pinger getPinger() {
-        return injector.getInstance(Pinger.class);
-    }
-
     public PongCacher getPongCacher() {
         return injector.getInstance(PongCacher.class);
-    }
-
-    public UPnPManager getUPnPManager() {
-        return injector.getInstance(UPnPManager.class);
     }
 
     public MutableGUIDFilter getMutableGUIDFilter() {
@@ -354,10 +266,6 @@ public class LimeWireCore {
         return injector.getInstance(LifecycleManager.class);
     }
 
-    public ConnectionServices getConnectionServices() {
-        return injector.getInstance(ConnectionServices.class);
-    }
-
     public SearchServices getSearchServices() {
         return injector.getInstance(SearchServices.class);
     }
@@ -382,16 +290,8 @@ public class LimeWireCore {
         return injector.getInstance(SpamServices.class);
     }
     
-    public ConnectionCheckerManager getConnectionCheckerManager() {
-        return injector.getInstance(ConnectionCheckerManager.class);
-    }
-    
     public ExternalControl getExternalControl() {
         return injector.getInstance(ExternalControl.class);
-    }
-    
-    public NIODispatcher getNIODispatcher() {
-        return injector.getInstance(NIODispatcher.class);
     }
     
     public DownloadCallback getDownloadCallback() {
@@ -457,10 +357,6 @@ public class LimeWireCore {
     public UDPCrawlerPongFactory getUDPCrawlerPongFactory() {
         return injector.getInstance(UDPCrawlerPongFactory.class);
     }
-
-    public UDPHostCacheFactory getUDPHostCacheFactory() {
-        return injector.getInstance(UDPHostCacheFactory.class);
-    }
     
     public LicenseFactory getLicenseFactory() {
         return injector.getInstance(LicenseFactory.class);
@@ -504,10 +400,6 @@ public class LimeWireCore {
 
     public LicenseVerifier getLicenseVerifier() {
         return injector.getInstance(LicenseVerifier.class);
-    }
-    
-    public DiskController getDiskController() {
-        return injector.getInstance(DiskController.class);
     }
     
     public TcpBandwidthStatistics getTcpBandwidthStatistics() {

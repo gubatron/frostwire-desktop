@@ -5,7 +5,6 @@ import java.net.InetSocketAddress;
 import java.util.List;
 
 import org.limewire.io.IpPort;
-import org.limewire.security.AddressSecurityToken;
 
 public interface PingReply extends Message {
 
@@ -116,7 +115,7 @@ public interface PingReply extends Message {
      * @return the <tt>AddressSecurityToken</tt> for this pong, or <tt>null</tt> if no
      *  key was specified
      */
-    AddressSecurityToken getQueryKey();
+    //AddressSecurityToken getQueryKey();
 
     /**
      * Gets the list of packed IP/Ports.

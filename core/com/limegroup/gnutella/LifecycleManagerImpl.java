@@ -28,13 +28,10 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 import com.limegroup.gnutella.auth.ContentManager;
-import com.limegroup.gnutella.browser.LocalAcceptor;
-import com.limegroup.gnutella.filters.IPFilter;
 import com.limegroup.gnutella.licenses.LicenseFactory;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.ConnectionSettings;
 import com.limegroup.gnutella.spam.RatingTable;
-import com.limegroup.gnutella.tigertree.HashTreeCache;
 
 @Singleton
 public class LifecycleManagerImpl implements LifecycleManager {
@@ -54,21 +51,15 @@ public class LifecycleManagerImpl implements LifecycleManager {
     
     private static enum State { NONE, STARTING, STARTED, STOPPED };
 
-    private final Provider<Acceptor> acceptor;
     private final Provider<ActivityCallback> activityCallback;
     private final Provider<ContentManager> contentManager;
     private final Provider<MessageRouter> messageRouter;
-    private final Provider<ConnectionManager> connectionManager;
     private final Provider<DownloadManager> downloadManager;
     private final Provider<NodeAssigner> nodeAssigner;
-    private final Provider<HostCatcher> hostCatcher;
     private final Provider<FileManager> fileManager;
-    private final Provider<LocalAcceptor> localAcceptor;
     private final Provider<RatingTable> ratingTable;
-    private final Provider<HashTreeCache> tigerTreeCache;
     private final Provider<NetworkManager> networkManager;
     private final Provider<Statistics> statistics;
-    private final Provider<SpamServices> spamServices;
     private final Provider<LimeCoreGlue> limeCoreGlue;
     private final Provider<StatisticAccumulator> statisticAccumulator;
     
@@ -103,22 +94,16 @@ public class LifecycleManagerImpl implements LifecycleManager {
     /**/
     @Inject
     public LifecycleManagerImpl(             
-            Provider<Acceptor> acceptor,
             Provider<ActivityCallback> activityCallback,
             Provider<ContentManager> contentManager,
             Provider<MessageRouter> messageRouter,
-            Provider<ConnectionManager> connectionManager,
             Provider<DownloadManager> downloadManager,
             Provider<NodeAssigner> nodeAssigner,
-            Provider<HostCatcher> hostCatcher,
             Provider<FileManager> fileManager,
-            Provider<LocalAcceptor> localAcceptor,
             Provider<RatingTable> ratingTable,
-            Provider<HashTreeCache> tigerTreeCache,
             @Named("backgroundExecutor") Provider<ScheduledExecutorService> backgroundExecutor,
             Provider<NetworkManager> networkManager,
             Provider<Statistics> statistics,
-            Provider<SpamServices> spamServices,
             Provider<LicenseFactory> licenseFactory,
             Provider<LimeCoreGlue> limeCoreGlue,
             Provider<StatisticAccumulator> statisticAccumulator,
@@ -128,21 +113,15 @@ public class LifecycleManagerImpl implements LifecycleManager {
         this.listenerList = new EventListenerList<LifeCycleEvent>();
 
         
-        this.acceptor = acceptor;
         this.activityCallback = activityCallback;
         this.contentManager = contentManager;
         this.messageRouter = messageRouter;
-        this.connectionManager = connectionManager;
         this.downloadManager = downloadManager;
         this.nodeAssigner = nodeAssigner;
-        this.hostCatcher = hostCatcher;
         this.fileManager = fileManager;
-        this.localAcceptor = localAcceptor;
         this.ratingTable = ratingTable;
-        this.tigerTreeCache = tigerTreeCache;
         this.networkManager = networkManager;
         this.statistics = statistics;
-        this.spamServices = spamServices;
         this.licenseFactory = licenseFactory;
         this.limeCoreGlue = limeCoreGlue;
         this.statisticAccumulator = statisticAccumulator;
@@ -449,15 +428,15 @@ public class LifecycleManagerImpl implements LifecycleManager {
         
         nodeAssigner.get().stop();
 
-        try {
-            acceptor.get().setListeningPort(0);
-        } catch (IOException e) {
-            LOG.error("Error stopping acceptor", e);
-        }
-        acceptor.get().shutdown();
+//        try {
+//            acceptor.get().setListeningPort(0);
+//        } catch (IOException e) {
+//            LOG.error("Error stopping acceptor", e);
+//        }
+//        acceptor.get().shutdown();
         
         //clean-up connections and record connection uptime for this session
-        connectionManager.get().disconnect(false);
+        //connectionManager.get().disconnect(false);
         
         //Update fractional uptime statistics (before writing frostwire.props)
         statistics.get().shutdown();
@@ -468,12 +447,12 @@ public class LifecycleManagerImpl implements LifecycleManager {
         //Update firewalled status
         ConnectionSettings.EVER_ACCEPTED_INCOMING.setValue(networkManager.get().acceptedIncomingConnection());
 
-        //Write gnutella.net
-        try {
-            hostCatcher.get().write();
-        } catch (IOException e) {
-            LOG.error("Error saving host catcher file", e);   
-        }
+//        //Write gnutella.net
+//        try {
+//            hostCatcher.get().write();
+//        } catch (IOException e) {
+//            LOG.error("Error saving host catcher file", e);   
+//        }
         
         // save frostwire.props & other settings
         SettingsGroupManager.instance().save();
@@ -490,7 +469,7 @@ public class LifecycleManagerImpl implements LifecycleManager {
         
         fileManager.get().stop(); // Saves UrnCache and CreationTimeCache
 
-        tigerTreeCache.get().persistCache(fileManager.get(), downloadManager.get());
+        //tigerTreeCache.get().persistCache(fileManager.get(), downloadManager.get());
 
         licenseFactory.get().persistCache();
         
@@ -498,7 +477,7 @@ public class LifecycleManagerImpl implements LifecycleManager {
         
         messageRouter.get().stop();
         
-        localAcceptor.get().stop();
+        //localAcceptor.get().stop();
         
         statisticAccumulator.get().stop();
         
@@ -591,7 +570,7 @@ public class LifecycleManagerImpl implements LifecycleManager {
         
         limeCoreGlue.get().install(); // ensure glue is set before running tasks.
         
-        acceptor.get().init();
+        //acceptor.get().init();
         backgroundDone.set(true);
     }
 

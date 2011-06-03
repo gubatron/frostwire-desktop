@@ -1,6 +1,5 @@
 package com.limegroup.gnutella.gui.library;
 
-import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -8,8 +7,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.Icon;
-
-import org.limewire.collection.NameValue;
 
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.FileManager;
@@ -19,14 +16,8 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.dnd.FileTransfer;
 import com.limegroup.gnutella.gui.tables.AbstractDataLine;
-import com.limegroup.gnutella.gui.tables.ColoredCell;
-import com.limegroup.gnutella.gui.tables.ColoredCellImpl;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
-import com.limegroup.gnutella.gui.tables.UploadCountHolder;
-import com.limegroup.gnutella.gui.themes.SkinHandler;
-import com.limegroup.gnutella.gui.themes.ThemeMediator;
-import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.gui.xml.XMLUtils;
 import com.limegroup.gnutella.licenses.License;
@@ -38,20 +29,8 @@ import com.limegroup.gnutella.xml.MetaFileManager;
  * the necessary Library info.
  * @author Sam Berlin
  */
-public final class LibraryTableDataLine extends AbstractDataLine<File>
-	implements ThemeObserver, FileTransfer {
+public final class LibraryTableDataLine extends AbstractDataLine<File> implements FileTransfer {
 
-    /**
-     * 0 final constant to preserve memory & allocations
-     */
-    private static final Integer ZERO_INTEGER = new Integer(0);
-
-    /**
-     * 0 / 0 final constant UploadCountHolder to preserve memory & allocations
-     */
-    private static final UploadCountHolder ZERO_UPLOAD_COUNT_HOLDER
-                                            = new UploadCountHolder(0, 0);
-    
     /**
      * Whether or not tooltips will display XML info.
      */
@@ -92,39 +71,11 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
 	 * Constant for the column storing the file's path
 	 */
 	static final int PATH_IDX = 4;
-	
-	/**
-	 * Constant for the column storing the number of upload count info
-	 *
-	 */
-	static final int UPLOADS_IDX = 5;
-	
-	/**
-	 * Constant for the column storing the numbe of hits
-	 * of the file.
-	 */
-	static final int HITS_IDX = 6;
-	
-	/**
-	 * Constant for the column storing the number of alt locations
-	 *
-	 */
-	static final int ALT_LOC_IDX = 7;
-	
-    /**
-     * Constant for the license index.
-     */
-    static final int LICENSE_IDX = 8;
     
     /**
      * Constant for the column indicating the mod time of a file.
      */
-    static final int MODIFICATION_TIME_IDX = 9;
-    
-    /**
-     * Constant for the column indicating the shared state of a file.
-     */
-    static final int SHARED_IDX = 10;
+    static final int MODIFICATION_TIME_IDX = 5;
     
     /**
      * Add the columns to static array _in the proper order_.
@@ -132,9 +83,6 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
      * column's position in this array.
      */
     private static LimeTableColumn[] ltColumns;
-    
-	/** If the file is a directory */
-	private boolean _isDirectory;
 
 	/** Variable for the name */
 	private String _name;
@@ -153,11 +101,6 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
 
 	/** Variable for the path */
 	private String _path;
-
-	/**
-	 * The colors for cells.
-	 */
-	private Color _sharedCellColor;
 	
 	/**
 	 * The model this is being displayed on
@@ -177,21 +120,6 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
 	public LibraryTableDataLine(LibraryTableModel ltm) {
 		super();
 		_model = ltm;
-		updateTheme();
-		ThemeMediator.addThemeObserver(this);
-	}
-	
-	/**
-	 * This must be removed from the theme observer list in
-	 * order to be garbage-collected.
-	 */
-	public void cleanup() {
-	    ThemeMediator.removeThemeObserver(this);
-	}
-
-	// inherit doc comment
-	public void updateTheme() {
-		_sharedCellColor = SkinHandler.getWindow8Color();
 	}
 
 	public FileDesc getFileDesc() { return _fileDesc; }
@@ -215,7 +143,7 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
 		_name = initializer.getName();
 		_type = "";
         if (!file.isDirectory()) {
-        	_isDirectory = false;
+        	//_isDirectory = false;
             int index = _name.lastIndexOf(".");
             int index2 = fullPath.lastIndexOf(File.separator);
             _path = fullPath.substring(0,index2);
@@ -225,7 +153,7 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
             }
         } else {
         	_path = fullPath;
-        	_isDirectory = true;
+        	//_isDirectory = true;
         }
 
         // only load file sizes, do nothing for directories
@@ -282,41 +210,13 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
                 return null;
             }
 	    case NAME_IDX:
-	        String nm = _name;
-	        return new ColoredCellImpl(nm, getColor());	                    
+	        return _name;	                    
 	    case SIZE_IDX:
-	        return new ColoredCellImpl(_sizeHolder, getColor());
+	        return _sizeHolder == null ? "" : _sizeHolder.toString();
 	    case TYPE_IDX:
-	        return new ColoredCellImpl(_type, getColor());
-	    case HITS_IDX:
-	        if ( _fileDesc == null ) return null;
-	        int hits = _fileDesc.getHitCount();
-	        // don't allocate if we don't have to
-	        return hits == 0 ? ZERO_INTEGER : new Integer(hits);
-	        //note: we use Integer here because its compareTo is
-	        //      smarter than String's, and it has a toString anyway.
-	    case ALT_LOC_IDX:
-	        if ( _fileDesc == null ) return null;
-	        int locs = GuiCoreMediator.getAltLocManager().getNumLocs(_fileDesc.getSHA1Urn()) - 1;
-	        return locs <= 0 ? ZERO_INTEGER : new Integer(locs);
-	    case UPLOADS_IDX:
-	        if ( _fileDesc == null ) return null;
-	        int a = _fileDesc.getAttemptedUploads();
-	        int c = _fileDesc.getCompletedUploads();
-	        return a == 0 && c == 0 ? ZERO_UPLOAD_COUNT_HOLDER :
-	                                  new UploadCountHolder(a, c);
+	        return _type;
 	    case PATH_IDX:
-	        return new ColoredCellImpl(_path, getColor());
-        case LICENSE_IDX:
-            License lc = getLicense();
-            if(lc != null) {
-                if(lc.isValid(_fileDesc.getSHA1Urn()))
-                    return new NameValue<Integer>(lc.getLicenseName(), new Integer(License.VERIFIED));
-                else
-                    return new NameValue<Integer>(lc.getLicenseName(), new Integer(License.UNVERIFIED));
-            } else {
-                return null;
-            }
+	        return _path;
         case MODIFICATION_TIME_IDX:
 			// it's cheaper to use the cached value if available,
 			// hope it's always uptodate
@@ -324,12 +224,6 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
 				return new Date(_fileDesc.lastModified());
 			}
 			return new Date(initializer.lastModified());
-        case SHARED_IDX:
-            if (GuiCoreMediator.getFileManager().isFileShared(initializer) ||
-                GuiCoreMediator.getFileManager().isFolderShared(initializer))
-                return GUIMediator.getThemeImage("sharing_on");
-                
-            return GUIMediator.getThemeImage("sharing_off");
 	    }
 	    return null;
 	}
@@ -352,12 +246,6 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
     }
 
 	public boolean isDynamic(int idx) {
-	    switch(idx) {
-	        case HITS_IDX:
-	        case ALT_LOC_IDX:
-	        case UPLOADS_IDX:
-	            return true;
-	    }
 	    return false;
 	}
 
@@ -403,25 +291,7 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
     }
 
 	public String[] getToolTipArray(int col) {
-        if (SHARED_IDX == col) {
-            boolean shared = false;
-            boolean isfile = getFile().isFile();
-            
-            if (GuiCoreMediator.getFileManager().isFileShared(initializer) ||
-                GuiCoreMediator.getFileManager().isFolderShared(initializer))
-                shared = true;
-                
-            if (isfile && shared)
-                return new String[] { I18n.tr("This file is shared.") };
-            else if (isfile && !shared)
-                return new String[] { I18n.tr("This file is not shared.") };
-            else if (!isfile && shared)
-                return new String[] { I18n.tr("This folder is shared.") };
-            else if (!isfile && !shared)
-                return new String[] { I18n.tr("This folder is not shared.") };
-        }
-        
-	    // if XML isn't finished loading, no schemas exist,
+        // if XML isn't finished loading, no schemas exist,
 	    // we don't have a meta file manager, or we don't
 	    // have a FileDesc, get out of here.
 	    if ( !_allowXML
@@ -445,14 +315,6 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
 	    }
 	}
 	
-	private Color getColor() {
-		//if (_fileDesc != null)
-			return _sharedCellColor;
-		//if (GuiCoreMediator.getFileManager().isFolderShared(initializer))
-		//	return _sharedCellColor;
-		//return _unsharedCellColor;
-	}
-	
 	private LimeTableColumn[] getLimeTableColumns() {
 	    if (ltColumns == null) {
 	        LimeTableColumn[] temp =
@@ -461,35 +323,20 @@ public final class LibraryTableDataLine extends AbstractDataLine<File>
 	                    GUIMediator.getThemeImage("question_mark"), 18, true, Icon.class),
 	            
 	            new LimeTableColumn(NAME_IDX, "LIBRARY_TABLE_NAME", I18n.tr("Name"),
-	                    239, true, ColoredCell.class),
+	                    239, true, String.class),
 	            
 	            new LimeTableColumn(SIZE_IDX, "LIBRARY_TABLE_SIZE", I18n.tr("Size"),
-	                    62, true, ColoredCell.class),
+	                    62, true, String.class),
 
 	            new LimeTableColumn(TYPE_IDX, "LIBRARY_TABLE_TYPE", I18n.tr("Type"),
-	                    48, true, ColoredCell.class),
+	                    48, true, String.class),
 	                                                    
 	            new LimeTableColumn(PATH_IDX, "LIBRARY_TABLE_PATH", I18n.tr("Path"),
-	                    108, true, ColoredCell.class),
-
-//	            new LimeTableColumn(UPLOADS_IDX, "LIBRARY_TABLE_UPLOAD_COUNT", I18n.tr("Uploads"),
-//	                    62, true, UploadCountHolder.class),
-//
-//	            new LimeTableColumn(HITS_IDX, "LIBRARY_TABLE_HITCOUNT", I18n.tr("Hits"),
-//	                    39, true, Integer.class),
-	                            
-//	            new LimeTableColumn(ALT_LOC_IDX, "LIBRARY_TABLE_NUMALTLOC", I18n.tr("Locations"),
-//	                    72, true, Integer.class),
-
-//	            new LimeTableColumn(LICENSE_IDX, "LIBRARY_TABLE_LICENSE", I18n.tr("License"),
-//	                    20, true, License.class),
+	                    108, true, String.class),
 
 	            new LimeTableColumn(MODIFICATION_TIME_IDX, 
 	                    "LIBRARY_TABLE_MODIFICATION_TIME", I18n.tr("Last Modified"),
 	                    20, false, Date.class),
-
-//	            new LimeTableColumn(SHARED_IDX, "LIBRARY_TABLE_SHARED", I18n.tr("Shared"),
-//	                    20, true, Icon.class)
 	        };
 	        ltColumns = temp;
 	    }

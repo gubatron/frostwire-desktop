@@ -99,11 +99,11 @@ public class ResponseFactoryImpl implements ResponseFactory {
     public Response createResponse(FileDesc fd) {
         IntervalSet ranges = null;
         boolean verified = false;
-        if (fd instanceof IncompleteFileDesc) {
-            IncompleteFileDesc ifd = (IncompleteFileDesc)fd;
-            ranges = new IntervalSet();
-            verified = ifd.loadResponseRanges(ranges);
-        }
+//        if (fd instanceof IncompleteFileDesc) {
+//            IncompleteFileDesc ifd = (IncompleteFileDesc)fd;
+//            ranges = new IntervalSet();
+//            verified = ifd.loadResponseRanges(ranges);
+//        }
         
         GGEPContainer container = new GGEPContainer(getAsIpPorts(altLocManager
                 .getDirect(fd.getSHA1Urn())), creationTimeCache.get()

@@ -3,13 +3,10 @@ package com.limegroup.gnutella.gui.search;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 
-import org.limewire.io.Connectable;
-import org.limewire.io.ConnectableImpl;
 import org.limewire.io.IpPort;
 import org.limewire.setting.evt.SettingEvent;
 import org.limewire.setting.evt.SettingListener;
@@ -30,7 +27,6 @@ import com.frostwire.gnutella.gui.filters.SearchFilterFactory;
 import com.frostwire.gnutella.gui.filters.SearchFilterFactoryImpl;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
@@ -77,32 +73,15 @@ public final class SearchMediator {
 
     static final String KILL_STRING = I18n.tr("Close Search");
 
-    static final String STOP_STRING = I18n.tr("Stop Search");
-
     static final String LAUNCH_STRING = I18n.tr("Launch Action");
 
-    static final String BROWSE_STRING = I18n.tr("Browse Host");
-
-    static final String CHAT_STRING = I18n.tr("Chat With Host");
-
     static final String REPEAT_SEARCH_STRING = I18n.tr("Repeat Search");
-
-    static final String BROWSE_HOST_STRING = I18n.tr("Browse Host");
-
-    static final String BITZI_LOOKUP_STRING = I18n.tr("Lookup File with Bitzi");
-
-    static final String BLOCK_STRING = I18n.tr("Block Hosts");
-
-    static final String MARK_AS_STRING = I18n.tr("Mark As");
-
-    static final String SPAM_STRING = I18n.tr("Junk");
-
-    static final String NOT_SPAM_STRING = I18n.tr("Not Junk");
-
-    static final String REPEAT_SEARCH_NO_CLEAR_STRING = I18n.tr("Get More Results");
-
-    /** A name of attribute, which holds a query in state of downloaded file. */
-    public static final String SEARCH_INFORMATION_KEY = "searchInformationMap";
+    
+    static final String BUY_NOW_STRING = I18n.tr("Buy this item now");
+    
+    static final String DOWNLOAD_PARTIAL_FILES_STRING = I18n.tr("Download Partial Files");
+    
+    static final String TORRENT_DETAILS_STRING = I18n.tr("Torrent Details");
 
     /**
      * Variable for the component that handles all search input from the user.
@@ -318,18 +297,7 @@ public final class SearchMediator {
                 return false;
             }
             
-	        // only show search messages if not doing browse host.
-	        if(!info.isBrowseHostSearch() && !searchingTorrents) {
-	            if(!GuiCoreMediator.getConnectionServices().isConnected()) {
-	                if(!GuiCoreMediator.getConnectionServices().isConnecting()) {
-	                    // if not connected or connecting, show one message.
-	                    GUIMediator.showMessage(I18n.tr("You are not connected to the network. To connect, select \"Connect\" from the \"File\" menu. Your search may not return any results until you connect."), QuestionsHandler.NO_NOT_CONNECTED);
-	                } else { 
-	                    // if attempting to connect, show another.
-	                    GUIMediator.showMessage(I18n.tr("FrostWire is currently connecting to the network. Your search may not return many results until you are fully connected to the network."), QuestionsHandler.NO_STILL_CONNECTING);
-	                }
-	            }
-	        }
+	        
 			return true;
 		}
     }
@@ -522,15 +490,6 @@ public final class SearchMediator {
     private static ResultPanel addResultTab(GUID guid,
                                             SearchInformation info) {
         return getSearchResultDisplayer().addResultTab(guid, info);
-    }
-    
-    /**
-     * Adds a browse host tab with the given description.
-     */
-    private static ResultPanel addBrowseHostTab(GUID guid, String desc) {
-        return getSearchResultDisplayer().addResultTab(guid, 
-            SearchInformation.createBrowseHostSearch(desc)
-        );
     }
 
     //private static HashMap<String, Character> BLACKLISTED_URNS = null;

@@ -10,6 +10,7 @@ import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -19,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.text.Document;
 
+import com.frostwire.bittorrent.TorrentUtil;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.AutoCompleteTextField;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -140,10 +142,10 @@ public class LibrarySearchPanel extends JPanel {
             });
             
             File file = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
-            search(file);
+            search(file, TorrentUtil.getIncompleteFiles());
         }
         
-        private void search(File file) {
+        private void search(File file, Set<File> incompleteFiles) {
             
             if (!file.isDirectory()) {
                 return;
@@ -153,6 +155,16 @@ public class LibrarySearchPanel extends JPanel {
             final List<File> files = new ArrayList<File>();
             
             for (File child : file.listFiles(new SearchFileFilter(_query))) {
+                
+                DirectoryHolder directoryHolder = LibraryTree.instance().getSelectedDirectoryHolder();
+                LibrarySearchResultsHolder searchResultsHolder = LibraryTree.instance().getSearchResultsHolder();
+                if (directoryHolder != null && !searchResultsHolder.equals(directoryHolder)) {
+                    return;
+                }
+                
+                if (incompleteFiles.contains(child)) {
+                    continue;
+                }
                 if (child.isHidden()) {
                     continue;
                 }
@@ -171,7 +183,7 @@ public class LibrarySearchPanel extends JPanel {
             GUIMediator.safeInvokeLater(r);
             
             for (File directory : directories) {
-                search(directory);
+                search(directory, incompleteFiles);
             }
         }
     }

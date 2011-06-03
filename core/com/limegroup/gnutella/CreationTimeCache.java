@@ -301,7 +301,7 @@ public final class CreationTimeCache {
                         
                         FileDesc fd = fileManager.getFileDescForUrn(currURN);
                         // unfortunately fds can turn into ifds so ignore
-                        if ((fd == null) || (fd instanceof IncompleteFileDesc)) {
+                        if ((fd == null)) {
                             if (toRemove == null)
                                 toRemove = new ArrayList<URN>();
                             toRemove.add(currURN);

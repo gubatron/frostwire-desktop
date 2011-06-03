@@ -47,7 +47,7 @@ public final class FatalBugManager {
         // Build the LocalClientInfo out of the info ...
         LocalClientInfoFactory factoryToUse = localClientInfoFactory;
         if(factoryToUse == null)
-            factoryToUse = new LocalClientInfoFactoryImpl(Providers.of((SessionInfo)new FatalSessionInfo()));
+            factoryToUse = new LocalClientInfoFactoryImpl();
         final LocalClientInfo info = factoryToUse.createLocalClientInfo(bug, Thread.currentThread().getName(), null, true);
         
         SwingUtilities.invokeLater(new Runnable() {

@@ -3,8 +3,6 @@ package com.limegroup.gnutella.search;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import com.limegroup.gnutella.ConnectionManager;
-import com.limegroup.gnutella.ForMeReplyHandler;
 import com.limegroup.gnutella.MessageRouter;
 import com.limegroup.gnutella.ReplyHandler;
 import com.limegroup.gnutella.messages.QueryRequest;
@@ -36,51 +34,35 @@ public class QueryHandlerFactoryImpl implements QueryHandlerFactory {
 
     private final QueryRequestFactory queryRequestFactory;
 
-    private final ForMeReplyHandler forMeReplyHandler;
-
-    private final Provider<ConnectionManager> connectionManager;
-
+    
     private final Provider<MessageRouter> messageRouter;
 
     @Inject
     public QueryHandlerFactoryImpl(QueryRequestFactory queryRequestFactory,
-            ForMeReplyHandler forMeReplyHandler,
-            Provider<ConnectionManager> connectionManager,
             Provider<MessageRouter> messageRouter) {
         this.queryRequestFactory = queryRequestFactory;
-        this.forMeReplyHandler = forMeReplyHandler;
-        this.connectionManager = connectionManager;
         this.messageRouter = messageRouter;
     }
 
     public QueryHandlerImpl createHandler(QueryRequest query, ReplyHandler handler,
             ResultCounter counter) {
-        return new QueryHandlerImpl(query, QueryHandler.ULTRAPEER_RESULTS, handler,
-                counter, queryRequestFactory, connectionManager.get(), messageRouter.get());
+        return null;
     }
 
     public QueryHandlerImpl createHandlerForMe(QueryRequest query,
             ResultCounter counter) {
         // because UPs seem to get less results, give them more than usual
-        return new QueryHandlerImpl(
-                query,
-                (int) (QueryHandler.ULTRAPEER_RESULTS * UP_RESULT_BUMP),
-                forMeReplyHandler, counter, queryRequestFactory, connectionManager.get(),
-                messageRouter.get());
+        return null;
     }
 
     public QueryHandlerImpl createHandlerForOldLeaf(QueryRequest query,
             ReplyHandler handler, ResultCounter counter) {
-        return new QueryHandlerImpl(query,
-                OLD_LEAF_RESULTS, handler, counter,
-                queryRequestFactory, connectionManager.get(), messageRouter.get());
+        return null;
     }
 
     public QueryHandlerImpl createHandlerForNewLeaf(QueryRequest query,
             ReplyHandler handler, ResultCounter counter) {
-        return new QueryHandlerImpl(query,
-                NEW_LEAF_RESULTS, handler, counter,
-                queryRequestFactory, connectionManager.get(), messageRouter.get());
+        return null;
     }
 
 }

@@ -3,15 +3,11 @@ package com.limegroup.gnutella.messages.vendor;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Arrays;
 
-import org.limewire.security.SecurityToken;
 import org.limewire.service.ErrorService;
 import org.limewire.util.ByteOrder;
 
 import com.limegroup.gnutella.GUID;
-import com.limegroup.gnutella.messages.BadGGEPBlockException;
-import com.limegroup.gnutella.messages.BadGGEPPropertyException;
 import com.limegroup.gnutella.messages.BadPacketException;
 import com.limegroup.gnutella.messages.GGEP;
 
@@ -82,17 +78,6 @@ public final class LimeACKVendorMessage extends AbstractVendorMessage {
         setGUID(replyGUID);
     }
     
-    /**
-     * Constructs a V3 LimeACKVendor message to be sent out.
-     * @param securityToken the token to prevent spoofing.
-     */
-    public LimeACKVendorMessage(GUID replyGUID, 
-                                int numResults, SecurityToken securityToken) {
-        super(F_LIME_VENDOR_ID, F_LIME_ACK, VERSION,
-                derivePayloadV3(numResults,securityToken.getBytes()));
-        setGUID(replyGUID);
-    }
-    
     /** @return an int (0-255) representing the amount of results that a host
      *  wants for a given query (as specified by the guid of this message).
      */
@@ -100,23 +85,6 @@ public final class LimeACKVendorMessage extends AbstractVendorMessage {
         return ByteOrder.ubyte2int(getPayload()[0]);
     }
     
-    /**
-     * @return the security token of the message if it has one or <code>null</code>
-     */
-    public SecurityToken getSecurityToken() {
-        if (getVersion() > OLD_VERSION) {
-            try {
-                GGEP ggep = new GGEP(getPayload(), 1);
-                if (ggep.hasKey(GGEP.GGEP_HEADER_SECURE_OOB)) {
-                    // we return a oob query key, but cannot verify it when it is not from us
-                    return new UnknownSecurityToken(ggep.getBytes(GGEP.GGEP_HEADER_SECURE_OOB));
-                }
-            }
-            catch (BadGGEPPropertyException corrupt) {} 
-            catch (BadGGEPBlockException e) {}
-        }
-        return null;
-    }
     
     /**
      * Constructs the payload for a LimeACKVendorMessage with the given
@@ -154,23 +122,18 @@ public final class LimeACKVendorMessage extends AbstractVendorMessage {
     }
 
     public boolean equals(Object other) {
-        if (other instanceof LimeACKVendorMessage) {
-            LimeACKVendorMessage o = (LimeACKVendorMessage)other;
-            GUID myGuid = new GUID(getGUID());
-            GUID otherGuid = new GUID(o.getGUID());
-            int otherResults = o.getNumResults();
-            return ((myGuid.equals(otherGuid)) && 
-                    (getNumResults() == otherResults) &&
-                    areEqualTokens(getSecurityToken(), o.getSecurityToken()) &&
-                    super.equals(other));
-        }
+//        if (other instanceof LimeACKVendorMessage) {
+//            LimeACKVendorMessage o = (LimeACKVendorMessage)other;
+//            GUID myGuid = new GUID(getGUID());
+//            GUID otherGuid = new GUID(o.getGUID());
+//            int otherResults = o.getNumResults();
+//            return ((myGuid.equals(otherGuid)) && 
+//                    (getNumResults() == otherResults) &&
+//                    areEqualTokens(getSecurityToken(), o.getSecurityToken()) &&
+//                    super.equals(other));
+//        }
         return false;
     }
-    
-    private final boolean areEqualTokens(SecurityToken t1, SecurityToken t2) {
-        return t1 == t2 || (t1 != null && t2 != null && Arrays.equals(t1.getBytes(), t2.getBytes()));
-    }
-
     /** Overridden purely for stats handling.
      */
     protected void writePayload(OutputStream out) throws IOException {
@@ -181,30 +144,10 @@ public final class LimeACKVendorMessage extends AbstractVendorMessage {
     public String toString() {
         StringBuilder builder = new StringBuilder(super.toString());
         builder.append(", num results: ").append(getNumResults());
-        builder.append(", security token: ").append(getSecurityToken());
+        //builder.append(", security token: ").append(getSecurityToken());
         return builder.toString();
     }
 
-    private class UnknownSecurityToken implements SecurityToken {
-
-        private final byte[] data;
-        
-        public UnknownSecurityToken(byte[] data) {
-            this.data = data;
-        }
-        
-        public byte[] getBytes() {
-            return data;
-        }
-
-        public boolean isFor(TokenData data) {
-            return false;
-        }
-
-        public void write(OutputStream out) throws IOException {
-            out.write(data);            
-        }
-        
-    }
+   
     
 }

@@ -2,9 +2,7 @@ package com.limegroup.gnutella.downloader;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.limewire.nio.observer.Shutdownable;
 
-import com.limegroup.gnutella.ConnectionServices;
 import com.limegroup.gnutella.DownloadManager;
 import com.limegroup.gnutella.messages.QueryRequest;
 import com.limegroup.gnutella.util.FrostWireUtils;
@@ -52,32 +50,23 @@ class RequeryManager  {
     /** True if requerying has been activated by the user. */
     protected volatile boolean activated;
     
-    /** 
-     * a dht lookup to Shutdownable if we get shut down 
-     * not null if a DHT query is currently out (and not finished, success or failure)
-     */
-    private volatile Shutdownable dhtQuery;
-    
-    private final ConnectionServices connectionServices;
     
     RequeryManager(RequeryListener requeryListener, 
-            DownloadManager manager,
-            ConnectionServices connectionServices) {
+            DownloadManager manager) {
         this.requeryListener = requeryListener;
         this.downloadManager = manager;
-        this.connectionServices = connectionServices;
     }
     
     /** Returns true if we're currently waiting for any kinds of results. */
     boolean isWaitingForResults() {
-        if(lastQueryType == null)
-            return false;
-        
-        switch(lastQueryType) {
-        case DHT: return dhtQuery != null && getTimeLeftInQuery() > 0;
-        case GNUTELLA: return getTimeLeftInQuery() > 0;
-        }
-        
+//        if(lastQueryType == null)
+//            return false;
+//        
+//        switch(lastQueryType) {
+//        case DHT: return dhtQuery != null && getTimeLeftInQuery() > 0;
+//        case GNUTELLA: return getTimeLeftInQuery() > 0;
+//        }
+//        
         return false;
     }
     
@@ -125,19 +114,19 @@ class RequeryManager  {
     
    /** Removes all event listeners, cancels ongoing searches and cleans up references. */
     void cleanUp() {
-        Shutdownable f = dhtQuery;
-        dhtQuery = null;
-        if (f != null)
-            f.shutdown();
+//        Shutdownable f = dhtQuery;
+//        dhtQuery = null;
+//        if (f != null)
+//            f.shutdown();
     }
     
     public void handleAltLocSearchDone(boolean success){
-        dhtQuery = null;
-        // This changes the state to GAVE_UP regardless of success,
-        // because even if this was a success (it found results),
-        // it's possible the download isn't going to want to use
-        // those results.
-        requeryListener.lookupFinished(QueryType.DHT);
+//        dhtQuery = null;
+//        // This changes the state to GAVE_UP regardless of success,
+//        // because even if this was a success (it found results),
+//        // it's possible the download isn't going to want to use
+//        // those results.
+//        requeryListener.lookupFinished(QueryType.DHT);
     }
 
     
@@ -178,16 +167,17 @@ class RequeryManager  {
      *  Determines if we have any stable connections to send a requery down.
      */
     private boolean hasStableConnections() {
-        if ( NO_DELAY )
-            return true;  // For Testing without network connection
-
-        // TODO: Note that on a private network, these conditions might
-        //       be too strict.
-        
-        // Wait till your connections are stable enough to get the minimum 
-        // number of messages
-        return connectionServices.countConnectionsWithNMessages(MIN_CONNECTION_MESSAGES) 
-                    >= MIN_NUM_CONNECTIONS &&
-                    connectionServices.getActiveConnectionMessages() >= MIN_TOTAL_MESSAGES;
+//        if ( NO_DELAY )
+//            return true;  // For Testing without network connection
+//
+//        // TODO: Note that on a private network, these conditions might
+//        //       be too strict.
+//        
+//        // Wait till your connections are stable enough to get the minimum 
+//        // number of messages
+//        return connectionServices.countConnectionsWithNMessages(MIN_CONNECTION_MESSAGES) 
+//                    >= MIN_NUM_CONNECTIONS &&
+//                    connectionServices.getActiveConnectionMessages() >= MIN_TOTAL_MESSAGES;
+        return false;
     }
 }

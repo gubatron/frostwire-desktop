@@ -2,9 +2,9 @@ package com.limegroup.gnutella.gui.playlist;
 
 /**
  *  Wraps the current dataline to be displayed in the table to pass it
- *  to the {@link PlaylistItemNameRendererEditor}
+ *  to the {@link PlaylistItemNameRenderer}
  */
-public class PlaylistItemName implements Comparable<Object>{
+class PlaylistItemName implements Comparable<Object>{
     
     /**
      * The current line to display in the table

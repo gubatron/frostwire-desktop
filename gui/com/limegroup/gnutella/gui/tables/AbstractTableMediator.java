@@ -235,7 +235,6 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         this.buildSettings();
         this.buildListeners();
         this.setupConstants();
-        //Assert.that(MAIN_PANEL != null, "MAIN_PANEL not set.");
         assert DATA_MODEL != null : "DATA_MODEL not set.";
         assert TABLE != null : "TABLE not set.";
         this.setupTable();
@@ -473,7 +472,7 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         tablePane.add(SCROLL_PANE);
 
         TABLE_PANE = tablePane;
-        updateTheme();
+        
         return tablePane;
     }
 

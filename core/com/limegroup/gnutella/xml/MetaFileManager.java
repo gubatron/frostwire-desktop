@@ -23,7 +23,6 @@ import com.limegroup.gnutella.FileManagerController;
 import com.limegroup.gnutella.FileManagerEvent;
 import com.limegroup.gnutella.FileManagerEvent.Type;
 import com.limegroup.gnutella.FileManagerImpl;
-import com.limegroup.gnutella.IncompleteFileDesc;
 import com.limegroup.gnutella.Response;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.messages.QueryRequest;
@@ -342,12 +341,12 @@ public class MetaFileManager extends FileManagerImpl {
      * to QRT
      */
     protected void buildQRT() {
-        super.buildQRT();
-        for (String string : getXMLKeyWords())
-            _queryRouteTable.add(string);
-
-        for (String string : getXMLIndivisibleKeyWords())
-            _queryRouteTable.addIndivisible(string);
+//        super.buildQRT();
+//        for (String string : getXMLKeyWords())
+//            _queryRouteTable.add(string);
+//
+//        for (String string : getXMLIndivisibleKeyWords())
+//            _queryRouteTable.addIndivisible(string);
     }
 
     /**

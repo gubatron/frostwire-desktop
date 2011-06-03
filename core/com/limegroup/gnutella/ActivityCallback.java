@@ -46,13 +46,7 @@ public interface ActivityCallback extends DownloadCallback
     /**
      * Add a query string to the monitor screen
      */
-    public void handleQueryString( String query );
-
-    /** Add an uploader to the upload window */
-    public void addUpload(Uploader u);
-
-    /** Remove an uploader from the upload window. */
-    public void removeUpload(Uploader u);    
+    public void handleQueryString( String query ); 
 
     /** display an error message since the browse host failed. 
      *  @param guid The GUID of the browse host.
@@ -63,17 +57,6 @@ public interface ActivityCallback extends DownloadCallback
 	 * Notification that the file manager is beginning loading.
 	 */
 	public void fileManagerLoading();
-
-    /**
-     * Notifies a user that the filemanager has completely loaded.
-     */
-    public void fileManagerLoaded();
-    
-    /**
-     * Notifies the GUI that the user is attempting to share a sensitive
-     * directory.  Returns true if the sensitive directory should be shared. 
-     */
-    public boolean warnAboutSharingSensitiveDirectory(File dir);
     
     /**
      * Notifies the GUI that the given shared file has new information.

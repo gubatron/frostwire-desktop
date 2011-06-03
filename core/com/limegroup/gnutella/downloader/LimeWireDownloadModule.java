@@ -7,8 +7,6 @@ import com.limegroup.gnutella.downloader.serial.DownloadSerializeSettings;
 import com.limegroup.gnutella.downloader.serial.DownloadSerializeSettingsImpl;
 import com.limegroup.gnutella.downloader.serial.DownloadSerializer;
 import com.limegroup.gnutella.downloader.serial.DownloadSerializerImpl;
-import com.limegroup.gnutella.downloader.serial.OldDownloadConverter;
-import com.limegroup.gnutella.downloader.serial.conversion.OldDownloadConverterImpl;
 
 public class LimeWireDownloadModule extends AbstractModule {
     
@@ -19,7 +17,5 @@ public class LimeWireDownloadModule extends AbstractModule {
         bind(CoreDownloaderFactory.class).to(CoreDownloaderFactoryImpl.class);
         bind(DownloadSerializer.class).to(DownloadSerializerImpl.class);
         bind(DownloadSerializeSettings.class).to(DownloadSerializeSettingsImpl.class);
-        bind(OldDownloadConverter.class).to(OldDownloadConverterImpl.class);
     }
-
 }

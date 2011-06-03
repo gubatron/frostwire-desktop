@@ -154,69 +154,7 @@ public final class ConnectionDoctor { //made public for being available from eve
 	 * Initialize connection Doctor	 
 	 */
 	public void initialize() {
-		//We'll try to get the external ipAddress from RouterService
-		//and try, and try, 1 second at the time.
-		_initializer = new Thread(new Runnable() {
-			public void run() {
-				boolean ConnDocEnded=false;
-				if (GuiCoreMediator.getConnectionServices().isConnected() == true)
-					ConnDocEnded=true;
-
-				//WAITING_TIME = this.WAITING_TIME;
-				//System.out.println("Initializing Connection Doctor...");
-
-				int seconds=0;
-				
-				//while UI and Core aren't ready, or we haven't tried hard enough...
-				while (!(GUIMediator.isConstructed() && 
-						GuiCoreMediator.getCore() != null && 
-						GuiCoreMediator.getLifecycleManager().isLoaded()) || 
-						(ConnDocEnded == false && 
-						GuiCoreMediator.getConnectionServices().isConnected() == false &&
-						CURRTRY < MAXTRY) 
-						) {
-					//System.out.println("is FrostWire currently connecting?: " + GuiCoreMediator.getConnectionServices().isConnecting() + " Currently connected: " + GuiCoreMediator.getConnectionServices().isConnected() + " Should be ended?: " + ConnDocEnded);
-					
-					if (GuiCoreMediator.getConnectionServices().isConnecting() && !GuiCoreMediator.getConnectionServices().isConnected()) {
-						seconds = seconds + 1;
-						//System.out.println("FrostWire's connection doctor will be started at "+  WAITING_TIME + " seconds, now waiting: " + seconds + " seconds");
-						if (CURRTRY >= MAXTRY) {
-							GUIMediator.showError(I18n.tr("FrostWire could not detect an internet connection. Please, check your firewall settings and try to restart FrostWire."));
-							ConnDocEnded=true;
-							return;
-						}
-						if (seconds >= WAITING_TIME) { // try to fix connection problems after WAITING_TIME seconds of no connection
-							//new ConnectionDoctor().loadHosts();
-							//System.out.println("****************Getting new hosts from Connection Doctor...*************");
-						    try {
-						        ConnDocEnded=loadHosts();
-						    } catch (Exception e) {
-						        ConnDocEnded = false;
-						    }
-							seconds=0;
-						}
-						
-						if (GuiCoreMediator.getConnectionServices().isConnected() == true)
-							ConnDocEnded=true;
-
-					}
-					
-					try { Thread.sleep(1000); } catch (Exception e) {};
-
-				}
-				
-				/*
-				boolean condA = !(GUIMediator.isConstructed() && 
-                    GuiCoreMediator.getCore() != null && 
-                    GuiCoreMediator.getLifecycleManager().isLoaded());
-				*/
-				
-				//System.out.println("Connection Doctor timer is now ended.\n\tConnDocEnded=" + ConnDocEnded +
-				//        "\n\tCURRTRY="+CURRTRY+"\n\tCondA="+condA);
-
-			}
-		});
-		_initializer.start();
+		
 	}
 
 }

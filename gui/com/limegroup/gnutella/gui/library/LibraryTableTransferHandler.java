@@ -234,7 +234,7 @@ public class LibraryTableTransferHandler extends LimeTransferHandler {
         	return;
         }
         
-        boolean reloaded = false;
+        //boolean reloaded = false;
         FileManager fileManager = GuiCoreMediator.getFileManager();
         for(File f : files) {
 			// TODO race conditions can occur here when the native drop
@@ -249,7 +249,7 @@ public class LibraryTableTransferHandler extends LimeTransferHandler {
             		// things, and we'd like to remove them all from being
             		// shared, which is difficult to do now that we don't know where
             		// the directory moved to.
-        			reloaded = true;
+        			//reloaded = true;
             		fileManager.loadSettings();
             		break;
         		}
@@ -258,8 +258,8 @@ public class LibraryTableTransferHandler extends LimeTransferHandler {
         
         // If we didn't already tell files to reload, then do a quick refresh to
         // immediately show that we moved some things.
-        if(!reloaded)
-        	LibraryMediator.instance().forceRefresh();
+//        if(!reloaded)
+//        	LibraryMediator.instance().forceRefresh();
     
         // notify status line of changed files
         GUIMediator.instance().refreshGUI();

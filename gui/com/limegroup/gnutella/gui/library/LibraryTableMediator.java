@@ -24,10 +24,7 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.collection.Tuple;
-import org.limewire.io.NetworkUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
@@ -37,8 +34,6 @@ import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.FileDetails;
 import com.limegroup.gnutella.FileManager;
-import com.limegroup.gnutella.FileManagerEvent;
-import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.SaveLocationException;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.downloader.CantResumeException;
@@ -74,7 +69,6 @@ import com.limegroup.gnutella.licenses.License;
 import com.limegroup.gnutella.licenses.VerificationListener;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 import com.limegroup.gnutella.settings.SharingSettings;
-import com.limegroup.gnutella.util.EncodingUtils;
 import com.limegroup.gnutella.util.QueryUtils;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
 
@@ -85,8 +79,6 @@ import com.limegroup.gnutella.xml.LimeXMLDocument;
  */
 final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel, LibraryTableDataLine, File>
 	implements VerificationListener, FileDetailsProvider {
-
-    private static final Log LOG = LogFactory.getLog(LibraryTableMediator.class);
 	
 	/**
      * Variables so the PopupMenu & ButtonRow can have the same listeners
@@ -253,7 +245,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
      */
     private LibraryTableMediator() {
         super("LIBRARY_TABLE");
-        //GUIMediator.addRefreshListener(this);
         ThemeMediator.addThemeObserver(this);
     }
     
@@ -407,42 +398,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
     }
     
     /**
-     * 
-     */
-    private boolean isSupportedFormat(FileDesc[] fds) {
-        boolean audio = false;
-        boolean video = false;
-        boolean program = false;
-        boolean document = false;
-        boolean image = false;
-        
-        for(int i = 0; i < fds.length; i++) {
-            String name = fds[i].getFileName();
-            
-            if (MediaType.getAudioMediaType().matches(name)
-                    && !video && !program && !document && !image) {
-                audio = true;
-            } else if (MediaType.getVideoMediaType().matches(name)
-                    && !audio && !program && !document && !image) {
-                video = true;
-            } else if (MediaType.getProgramMediaType().matches(name)
-                    && !audio && !video && !document && !image) {
-                program = true;
-            } else if (MediaType.getDocumentMediaType().matches(name)
-                    && !audio && !video && !program && !image) {
-                document = true;
-            } else if (MediaType.getImageMediaType().matches(name)
-                    && !audio && !video && !program && !document) {
-                image = true;
-            } else {
-                return false;
-            }
-        }
-        
-        return true;
-    }
-
-    /**
      * Programatically starts a rename of the selected item.
      */
     void startRename() {
@@ -474,60 +429,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
         DATA_MODEL.refresh();
     }
 
-    /**
-     * Prepare a detail page of magnet link info for selected files 
-     * in the library.
-     */
-    void doMagnetLookup() {
-        doMagnetCommand("/magcmd/detail?");
-    }
 	
-    /**
-     * Fire a local lookup with file/magnet details
-     */
-    void doMagnetCommand(String cmd) {
-        // get the selected files.  Build up a url to display details.
-        int[] rows = TABLE.getSelectedRows();
-        int k = rows.length;
-        if(k == 0)
-            return;
-
-        boolean haveValidMagnet = false;
-
-        int    count     = 0;
-        int    port      = GuiCoreMediator.getLocalAcceptor().getPort();
-        int    eport     = GuiCoreMediator.getAcceptor().getPort(true);
-        byte[] eaddr     = GuiCoreMediator.getAcceptor().getAddress(true);
-        String lookupUrl = "http://localhost:"+port+
-          cmd+
-          "addr="+NetworkUtils.ip2string(eaddr)+":"+eport;
-        for(int i=0; i<k; i++) {
-            FileDesc fd = DATA_MODEL.getFileDesc(rows[i]);
-            if (fd==null) {
-                // Only report valid files
-                continue;
-            }
-            URN urn = fd.getSHA1Urn();
-			if(urn == null) {
-                // Only report valid sha1s
-                continue;
-            }
-            String urnStr = urn.toString();
-            int hashstart = 1 + urnStr.indexOf(":", 4);
-             
-            String sha1 = urnStr.substring(hashstart);
-            lookupUrl +=
-              "&n"+count+"="+EncodingUtils.encode(fd.getFileName())+
-              "&u"+count+"="+sha1;
-            count++;
-            haveValidMagnet = true;
-        }
-        
-        if (haveValidMagnet) {
-            GUIMediator.openURL(lookupUrl);
-        }
-    }
-
     /**
      * Returns the options offered to the user when removing files.
      * 
@@ -678,10 +580,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	private String getCompleteFileName(File file) {
 		return file.getName();
 	}
-	
-	private boolean hasActiveDownloader(File incompleteFile) {
-		return GuiCoreMediator.getDownloadManager().getDownloaderForIncompleteFile(incompleteFile) != null;
-    }
     
 	/**
 	 * Handles a name change of one of the files displayed.
@@ -1068,7 +966,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		}
 		
         public void actionPerformed(ActionEvent e) {
-            doMagnetLookup();
+            //doMagnetLookup();
         }
     }
 

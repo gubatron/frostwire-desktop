@@ -32,14 +32,13 @@ import org.limewire.concurrent.ExecutorsHelper;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.browser.MagnetOptions;
 import com.limegroup.gnutella.gui.ButtonRow;
+import com.limegroup.gnutella.gui.CheckBoxList.TextProvider;
 import com.limegroup.gnutella.gui.CheckBoxListPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.MessageService;
 import com.limegroup.gnutella.gui.MultiLineLabel;
-import com.limegroup.gnutella.gui.CheckBoxList.TextProvider;
-import com.limegroup.gnutella.gui.download.DownloaderUtils;
 import com.limegroup.gnutella.util.QueryUtils;
 
 
@@ -190,15 +189,15 @@ public class MagnetClipboardListener extends WindowAdapter {
     	Runnable r = new Runnable() {
     		public void run() {
     			if (!showDialog) {
-    				for (MagnetOptions magnet : downloadCandidates) {
-						//TODO: DownloaderUtils.createDownloader(magnet);
-					}
+//    				for (MagnetOptions magnet : downloadCandidates) {
+//						//TODO: DownloaderUtils.createDownloader(magnet);
+//					}
     			}
     			else if (downloadCandidates.length > 0 ) {
-					List<MagnetOptions> userChosen = showStartDownloadsDialog(downloadCandidates);
-					for (MagnetOptions magnet : userChosen) {
-					  //TODO: DownloaderUtils.createDownloader(magnet);
-					}
+					//List<MagnetOptions> userChosen = showStartDownloadsDialog(downloadCandidates);
+//					for (MagnetOptions magnet : userChosen) {
+//					  //TODO: DownloaderUtils.createDownloader(magnet);
+//					}
 				}
 				boolean oneSearchStarted = false;
 				for (int i = 0; i < magnets.length; i++) {

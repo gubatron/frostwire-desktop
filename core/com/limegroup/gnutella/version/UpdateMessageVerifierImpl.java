@@ -3,7 +3,6 @@ package com.limegroup.gnutella.version;
 import java.io.IOException;
 
 import org.limewire.io.IOUtils;
-import org.limewire.security.SignatureVerifier;
 
 import com.google.inject.Singleton;
 
@@ -29,7 +28,7 @@ public class UpdateMessageVerifierImpl implements UpdateMessageVerifier {
     
     
     public String getVerifiedData(byte[] data) {
-        return SignatureVerifier.getVerifiedData(data, KEY, "DSA", "SHA1");
+        return "";//SignatureVerifier.getVerifiedData(data, KEY, "DSA", "SHA1");
     }
     
     public byte[] inflateNetworkData(byte[] input) throws IOException {

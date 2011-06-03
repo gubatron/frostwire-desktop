@@ -25,8 +25,6 @@ import org.limewire.io.InvalidDataException;
 import org.limewire.io.IpPort;
 import org.limewire.io.IpPortSet;
 import org.limewire.io.NetworkUtils;
-import org.limewire.security.SecureMessage;
-import org.limewire.security.SecurityToken;
 import org.limewire.service.ErrorService;
 import org.limewire.util.ByteOrder;
 
@@ -83,7 +81,7 @@ public class QueryReplyImpl extends AbstractMessage implements QueryReply {
     private byte[] _address = new byte[4];    
     
     /** Whether or not this message has been verified as secure. */
-    private int _secureStatus = SecureMessage.INSECURE;
+    private int _secureStatus = 0;//SecureMessage.INSECURE;
     
     /** True if the responses and metadata have been extracted. */  
     private boolean _parsed = false;
@@ -133,8 +131,7 @@ public class QueryReplyImpl extends AbstractMessage implements QueryReply {
             boolean includeQHD, boolean needsPush, boolean isBusy,
             boolean finishedUpload, boolean measuredSpeed,
             boolean supportsChat, boolean supportsBH, boolean isMulticastReply,
-            boolean supportsFWTransfer, Set<? extends IpPort> proxies,
-            SecurityToken securityToken, HostDataFactory hostDataFactory,
+            boolean supportsFWTransfer, Set<? extends IpPort> proxies, HostDataFactory hostDataFactory,
             ResponseFactory responseFactory) {
         super(guid, Message.F_QUERY_REPLY, ttl, (byte) 0, 0, Network.UNKNOWN);
 
@@ -162,7 +159,7 @@ public class QueryReplyImpl extends AbstractMessage implements QueryReply {
         _data.setXmlBytes(xmlBytes);
         _data.setProxies(proxies);
         _data.setSupportsFWTransfer(supportsFWTransfer);
-        _data.setSecurityToken(securityToken != null ? securityToken.getBytes() : null);
+        //_data.setSecurityToken(securityToken != null ? securityToken.getBytes() : null);
         boolean supportsTLS = SSLSettings.isIncomingTLSEnabled();
         _data.setTLSCapable(supportsTLS);
         
@@ -181,73 +178,73 @@ public class QueryReplyImpl extends AbstractMessage implements QueryReply {
                 Response r=responses[n-left];
                 r.writeToStream(baos);
             }
-            //Write QHD if desired
-            if (includeQHD || securityToken != null) {
-                //a) vendor code.  This is hardcoded here for simplicity,
-                //efficiency, and to prevent character decoding problems.  If you
-                //change this, be sure to change CommonUtils.QHD_VENDOR_NAME as
-                //well.
-                baos.write(76); //'L'
-                baos.write(73); //'I'
-                baos.write(77); //'M'
-                baos.write(69); //'E'
-                
-                //b) payload length
-                baos.write(COMMON_PAYLOAD_LEN);
-                
-                // size of standard, no options, ggep block...
-                int ggepLen=
-                    _ggepUtil.getQRGGEP(false, false, false, false,
-                                        IpPort.EMPTY_SET, null).length;
-                
-                //c) PART 1: common area flags and controls.  See format in
-                //parseResults2.
-                boolean hasProxies = (proxies != null) && (proxies.size() > 0);
-                byte flags=
-                    (byte)((needsPush && !isMulticastReply ? PUSH_MASK : 0) 
-                           | BUSY_MASK 
-                           | UPLOADED_MASK 
-                           | SPEED_MASK
-                           | GGEP_MASK);
-                byte controls=
-                    (byte)(PUSH_MASK
-                           | (isBusy && !isMulticastReply ? BUSY_MASK : 0) 
-                           | (finishedUpload ? UPLOADED_MASK : 0)
-                           | (measuredSpeed || isMulticastReply ? SPEED_MASK : 0)
-                           | (supportsBH || isMulticastReply || hasProxies ||
-                              supportsFWTransfer || securityToken != null ||
-                              supportsTLS ? 
-                                      GGEP_MASK : (ggepLen > 0 ? GGEP_MASK : 0)) );
-                baos.write(flags);
-                baos.write(controls);
-                
-                //d) PART 2: size of xmlBytes + 1.
-                int xmlSize = xmlBytes.length + 1;
-                if (xmlSize > XML_MAX_SIZE)
-                    xmlSize = XML_MAX_SIZE;  // yes, truncate!
-                ByteOrder.short2leb(((short) xmlSize), baos);
-                
-                //e) private area: one byte with flags 
-                //for chat support
-                byte chatSupport = supportsChat ? CHAT_MASK : 0;
-                baos.write(chatSupport);
-                
-                //f) the GGEP block
-                byte[] ggepBytes = _ggepUtil.getQRGGEP(supportsBH,
-                                                       isMulticastReply,
-                                                       supportsFWTransfer,
-                                                       supportsTLS,
-                                                       proxies, securityToken);
-                baos.write(ggepBytes, 0, ggepBytes.length);
-                
-                writeSecureGGEP(baos, xmlBytes);
-                
-                //g) actual xml.
-                baos.write(xmlBytes, 0, xmlBytes.length);
-                
-                // write null after xml, as specified
-                baos.write(0);
-            }
+//            //Write QHD if desired
+//            if (includeQHD || securityToken != null) {
+//                //a) vendor code.  This is hardcoded here for simplicity,
+//                //efficiency, and to prevent character decoding problems.  If you
+//                //change this, be sure to change CommonUtils.QHD_VENDOR_NAME as
+//                //well.
+//                baos.write(76); //'L'
+//                baos.write(73); //'I'
+//                baos.write(77); //'M'
+//                baos.write(69); //'E'
+//                
+//                //b) payload length
+//                baos.write(COMMON_PAYLOAD_LEN);
+//                
+//                // size of standard, no options, ggep block...
+//                int ggepLen=
+//                    _ggepUtil.getQRGGEP(false, false, false, false,
+//                                        IpPort.EMPTY_SET, null).length;
+//                
+//                //c) PART 1: common area flags and controls.  See format in
+//                //parseResults2.
+//                boolean hasProxies = (proxies != null) && (proxies.size() > 0);
+//                byte flags=
+//                    (byte)((needsPush && !isMulticastReply ? PUSH_MASK : 0) 
+//                           | BUSY_MASK 
+//                           | UPLOADED_MASK 
+//                           | SPEED_MASK
+//                           | GGEP_MASK);
+//                byte controls=
+//                    (byte)(PUSH_MASK
+//                           | (isBusy && !isMulticastReply ? BUSY_MASK : 0) 
+//                           | (finishedUpload ? UPLOADED_MASK : 0)
+//                           | (measuredSpeed || isMulticastReply ? SPEED_MASK : 0)
+//                           | (supportsBH || isMulticastReply || hasProxies ||
+//                              supportsFWTransfer || securityToken != null ||
+//                              supportsTLS ? 
+//                                      GGEP_MASK : (ggepLen > 0 ? GGEP_MASK : 0)) );
+//                baos.write(flags);
+//                baos.write(controls);
+//                
+//                //d) PART 2: size of xmlBytes + 1.
+//                int xmlSize = xmlBytes.length + 1;
+//                if (xmlSize > XML_MAX_SIZE)
+//                    xmlSize = XML_MAX_SIZE;  // yes, truncate!
+//                ByteOrder.short2leb(((short) xmlSize), baos);
+//                
+//                //e) private area: one byte with flags 
+//                //for chat support
+//                byte chatSupport = supportsChat ? CHAT_MASK : 0;
+//                baos.write(chatSupport);
+//                
+//                //f) the GGEP block
+//                byte[] ggepBytes = _ggepUtil.getQRGGEP(supportsBH,
+//                                                       isMulticastReply,
+//                                                       supportsFWTransfer,
+//                                                       supportsTLS,
+//                                                       proxies, securityToken);
+//                baos.write(ggepBytes, 0, ggepBytes.length);
+//                
+//                writeSecureGGEP(baos, xmlBytes);
+//                
+//                //g) actual xml.
+//                baos.write(xmlBytes, 0, xmlBytes.length);
+//                
+//                // write null after xml, as specified
+//                baos.write(0);
+//            }
 
             //Write footer
             baos.write(clientGUID, 0, 16);
@@ -1080,82 +1077,8 @@ public class QueryReplyImpl extends AbstractMessage implements QueryReply {
                                 boolean isMulticastResponse,
                                 boolean supportsFWTransfer,
                                 boolean supportsTLS,
-                                Set<? extends IpPort> proxies,
-                                SecurityToken securityToken) {
-            byte[] retGGEPBlock = _standardGGEP;
-
-            // we have specific field values so we can't use precached ggeps
-            if ((proxies != null && !proxies.isEmpty()) || securityToken != null) {
-                if (proxies == null)
-                    proxies = Collections.emptySet();
-
-                final int MAX_PROXIES = 4;
-                GGEP retGGEP = new GGEP(true);
-
-                // write easy extensions if applicable
-                if (supportsBH)
-                    retGGEP.put(GGEP.GGEP_HEADER_BROWSE_HOST);
-                if (isMulticastResponse)
-                    retGGEP.put(GGEP.GGEP_HEADER_MULTICAST_RESPONSE);
-                if (supportsTLS)
-                    retGGEP.put(GGEP.GGEP_HEADER_TLS_CAPABLE);
-//                if (supportsFWTransfer)
-//                    retGGEP.put(GGEP.GGEP_HEADER_FW_TRANS,
-//                                new byte[] {RUDPUtils.VERSION});
-                if (securityToken != null) {
-                    retGGEP.put(GGEP.GGEP_HEADER_SECURE_OOB, securityToken.getBytes());
-                }
-
-                // if a PushProxyInterface is valid, write up to MAX_PROXIES
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                int numWritten = 0;
-//                BitNumbers bn = HTTPHeaderUtils.getTLSIndices(proxies, Math.min(MAX_PROXIES, proxies.size()));
-//                if (!proxies.isEmpty()) {
-//                    Iterator<? extends IpPort> iter = proxies.iterator();
-//                    while(iter.hasNext() && (numWritten < MAX_PROXIES)) {
-//                        IpPort ppi = iter.next();
-//                        IPPortCombo combo = new IPPortCombo(ppi.getInetSocketAddress());
-//                        try {
-//                            baos.write(combo.toBytes());
-//                            numWritten++;
-//                        } catch (IOException ignored) { } // cannot happen on ByteArrayOutputStream
-//                    }
-//                }
-//
-//                try {
-//                    // add the PushProxies
-//                    if (numWritten > 0) {
-//                        retGGEP.put(GGEP.GGEP_HEADER_PUSH_PROXY, baos.toByteArray());
-//                        // add the TLS push proxies info, if any.
-//                        if(!bn.isEmpty())
-//                            retGGEP.put(GGEP.GGEP_HEADER_PUSH_PROXY_TLS, bn.toByteArray());
-//                    }
-//                    // set up return value
-//                    baos.reset();
-//                    retGGEP.write(baos);
-//                    retGGEPBlock = baos.toByteArray();
-//                } catch (IOException ignored) { } // cannot happen on ByteArrayOutputStream
-            }
-            // else if (supportsBH && supportsFWTransfer &&
-            // isMulticastResponse), since supportsFWTransfer is only helpful
-            // if we have proxies
-            else if (supportsBH && isMulticastResponse && supportsTLS)
-                retGGEPBlock = _bhMCAndTLS;
-            else if (supportsBH && isMulticastResponse)
-                retGGEPBlock = _bhAndMC;
-            else if (supportsBH && supportsTLS)
-                retGGEPBlock = _bhTLSGGEP;
-            else if (supportsBH)
-                retGGEPBlock = _bhGGEP;
-            else if(isMulticastResponse && supportsTLS)
-                retGGEPBlock = _mcTLSGGEP;
-            else if(isMulticastResponse)
-                retGGEPBlock = _mcGGEP;
-            else if(supportsTLS)
-                retGGEPBlock = _tlsGGEP;
-            else
-                retGGEPBlock = _standardGGEP;
-            return retGGEPBlock;
+                                Set<? extends IpPort> proxies) {
+            return null;
         }
         
         /** @return a <tt>Set</tt> of <tt>IpPortCombo</tt> instances,

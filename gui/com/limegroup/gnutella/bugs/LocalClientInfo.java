@@ -15,7 +15,6 @@ import java.util.Properties;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.limewire.nio.NIODispatcher;
 import org.limewire.setting.Setting;
 import org.limewire.setting.SettingsFactory;
 import org.limewire.util.CommonUtils;
@@ -102,13 +101,13 @@ public final class LocalClientInfo extends LocalAbstractInfo {
 		if( GUIMediator.isConstructed() && GuiCoreMediator.getCore() != null && GuiCoreMediator.getLifecycleManager().isLoaded() ) {
             _upTime = CommonUtils.seconds2time(
                 (int)(sessionInfo.getCurrentUptime()/1000));
-            _connected = "" + GuiCoreMediator.getConnectionServices().isConnected();
+            //_connected = "" + GuiCoreMediator.getConnectionServices().isConnected();
             _upToUp = ""+sessionInfo.getNumUltrapeerToUltrapeerConnections();
             _upToLeaf = "" + sessionInfo.getNumUltrapeerToLeafConnections();
             _leafToUp = "" + sessionInfo.getNumLeafToUltrapeerConnections();
             _oldConnections = "" + sessionInfo.getNumOldConnections();
-            _ultrapeer = "" + GuiCoreMediator.getConnectionServices().isSupernode();
-            _leaf = "" + GuiCoreMediator.getConnectionServices().isShieldedLeaf();
+            //_ultrapeer = "" + GuiCoreMediator.getConnectionServices().isSupernode();
+            //_leaf = "" + GuiCoreMediator.getConnectionServices().isShieldedLeaf();
             _activeUploads = "" + GuiCoreMediator.getUploadServices().getNumUploads();
             _queuedUploads = "" + GuiCoreMediator.getUploadServices().getNumQueuedUploads();
             _activeDownloads = "" + GuiCoreMediator.getDownloadServices().getNumActiveDownloads();
@@ -131,12 +130,12 @@ public final class LocalClientInfo extends LocalAbstractInfo {
             _vfQueueSize = "" + sessionInfo.getDiskControllerQueueSize();
             _waitingSockets = "" + sessionInfo.getNumberOfWaitingSockets();
             _pendingTimeouts = "" + sessionInfo.getNumberOfPendingTimeouts();
-            _sp2Workarounds = "" + GuiCoreMediator.getConnectionCheckerManager().getNumWorkarounds();
+            //_sp2Workarounds = "" + GuiCoreMediator.getConnectionCheckerManager().getNumWorkarounds();
             _slotManager = ""+ GuiCoreMediator.getUploadSlotManager(); // null if not inited
-            long [] selectStats = NIODispatcher.instance().getSelectStats();
-            _numSelects = ""+ selectStats[0];
-            _numImmediateSelects = "" + selectStats[1];
-            _avgSelectTime = "" + selectStats[2];
+            //long [] selectStats = NIODispatcher.instance().getSelectStats();
+            //_numSelects = ""+ selectStats[0];
+            //_numImmediateSelects = "" + selectStats[1];
+            //_avgSelectTime = "" + selectStats[2];
          }
             
         

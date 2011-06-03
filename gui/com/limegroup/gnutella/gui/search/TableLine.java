@@ -16,7 +16,6 @@ import javax.swing.Icon;
 import org.limewire.collection.NameValue;
 import org.limewire.io.IpPort;
 import org.limewire.io.IpPortSet;
-import org.limewire.security.SecureMessage;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.GUID;
@@ -155,7 +154,7 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
             _mediaType = NamedMediaType.getFromExtension(getExtension());
         _speed = new ResultSpeed(sr.getSpeed(), sr.isMeasuredSpeed());
         _quality = sr.getQuality();
-        _secure = sr.getSecureStatus() == SecureMessage.SECURE;
+        _secure = false;//sr.getSecureStatus() == SecureMessage.SECURE;
     }
 
     private void initializeEnd() {
@@ -196,7 +195,7 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
         
         // Set the quality correctly.
         _quality = Math.max(sr.getQuality(), _quality);
-        _secure |= sr.getSecureStatus() == SecureMessage.SECURE;        
+        _secure = false;//|= sr.getSecureStatus() == SecureMessage.SECURE;        
         
 //        if (sr instanceof GnutellaSearchResult) {
 //            GnutellaSearchResult gsr = (GnutellaSearchResult)sr;
@@ -354,23 +353,7 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
      * Gets the quality of this line.
      */
     int getQuality() {
-        boolean downloading = RESULT.isDownloading();
-//        if(downloading != _downloading)
-//            updateFileStatus();
-        //_downloading = downloading;
-        
-        if(_savedFile)
-            return QualityRenderer.SAVED_FILE_QUALITY;
-        else if(downloading)
-            return QualityRenderer.DOWNLOADING_FILE_QUALITY;
-        else if(_incompleteFile)
-            return QualityRenderer.INCOMPLETE_FILE_QUALITY;
-        else if (_secure)
-            return QualityRenderer.SECURE_QUALITY;
-        else if (SearchSettings.ENABLE_SPAM_FILTER.getValue() && SpamFilter.isAboveSpamThreshold(this))
-            return QualityRenderer.SPAM_FILE_QUALITY;
-        else
-            return _quality;
+        return _quality;
     }
     
     /**

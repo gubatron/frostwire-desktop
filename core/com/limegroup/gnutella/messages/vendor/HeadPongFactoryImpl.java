@@ -25,11 +25,9 @@ import com.limegroup.gnutella.DownloadManager;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.FileManager;
 import com.limegroup.gnutella.GUID;
-import com.limegroup.gnutella.IncompleteFileDesc;
 import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.PushEndpointFactory;
 import com.limegroup.gnutella.URN;
-import com.limegroup.gnutella.UploadManager;
 import com.limegroup.gnutella.altlocs.AltLocManager;
 import com.limegroup.gnutella.altlocs.AlternateLocation;
 import com.limegroup.gnutella.altlocs.AlternateLocationCollection;
@@ -39,7 +37,6 @@ import com.limegroup.gnutella.messages.BadPacketException;
 import com.limegroup.gnutella.messages.GGEP;
 import com.limegroup.gnutella.messages.Message.Network;
 import com.limegroup.gnutella.settings.SSLSettings;
-import com.limegroup.gnutella.settings.UploadSettings;
 
 @Singleton
 public class HeadPongFactoryImpl implements HeadPongFactory {
@@ -176,18 +173,6 @@ public class HeadPongFactoryImpl implements HeadPongFactory {
         if(!networkManager.acceptedIncomingConnection()) {
             code = HeadPong.FIREWALLED;
         }
-        
-        if(fd instanceof IncompleteFileDesc) {
-            code |= HeadPong.PARTIAL_FILE;
-            
-            if (downloadManager.get().isActivelyDownloading(fd.getSHA1Urn())) {
-                code |= HeadPong.DOWNLOADING;
-            }
-            
-        } else {
-            code |= HeadPong.COMPLETE_FILE;
-        }
-        
         return code;
     }
 
@@ -370,7 +355,7 @@ public class HeadPongFactoryImpl implements HeadPongFactory {
 
     /** Returns the byte[] of the ranges. */
     private final IntervalSet.ByteIntervals deriveRanges(FileDesc desc) {
-        return ((IncompleteFileDesc)desc).getRangesAsByte();
+        return null;// ((IncompleteFileDesc)desc).getRangesAsByte();
     }
 
     /**

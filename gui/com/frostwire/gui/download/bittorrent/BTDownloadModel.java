@@ -92,29 +92,12 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
 	 */
 	public Object refresh() {
 		int size = getRowCount();
-		boolean inactiveDownloadPresent = false;
 		for(int i=0; i<size; i++) {
 			BTDownloadDataLine ud = get(i);
 			ud.update();
-			inactiveDownloadPresent |= ud.isInactive();
 		}
         fireTableRowsUpdated(0, size);
-        return inactiveDownloadPresent ? Boolean.TRUE : Boolean.FALSE;
-	}
-
-	/**
-	 * Clears all completed downloads from the download list.
-	 */
-	void clearCompleted() {
-		for(int i=getRowCount()-1; i>=0; i--) {
-			BTDownloadDataLine line = get(i);
-			if(line.isInactive()) {
-                remove(i);
-//                // we also will 'kill' GAVE_UP downloaders for the user....
-//                if (line.getState()==DownloadStatus.GAVE_UP)
-//                    line.cleanup();
-            }
-		}
+        return Boolean.TRUE;
 	}
 
 	public void remove(int i) {
@@ -123,27 +106,7 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
 		BTDownloader downloader = line.getInitializeObject();
 		
 		downloader.remove();
-		
-//		if (line.getDownloader() instanceof TorrentFileFetcher) {
-//            downloader = ((TorrentFileFetcher) line.getDownloader()).getDownloader();
-//        } else if (line.getDownloader() instanceof BTDownloaderImpl) {
-//            downloader = line.getDownloader();
-//        }
-//        
-//        
-//        if (downloader != null && downloader instanceof BTDownloaderImpl) {
-//            ((BTDownloaderImpl) downloader).removeFromDownloadManager();
-//            UploadMediator.instance().remove((BTDownloaderImpl) downloader);
-//        }
 
         super.remove(i);
 	}
 }
-
-
-
-
-
-
-
-
