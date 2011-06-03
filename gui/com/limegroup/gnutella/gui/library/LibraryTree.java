@@ -26,7 +26,7 @@ import javax.swing.tree.TreeSelectionModel;
 import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultTreeCellRenderer;
 
-import com.frostwire.bittorrent.AzureusCoreUtil;
+import com.frostwire.bittorrent.TorrentUtil;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -717,7 +717,7 @@ final class LibraryTree extends JTree implements MouseObserver {
             });
             
             File file = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
-            search(file, AzureusCoreUtil.getIncompleteFiles());
+            search(file, TorrentUtil.getIncompleteFiles());
         }
         
         private void search(File file, Set<File> incompleteFiles) {

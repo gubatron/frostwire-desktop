@@ -5,7 +5,7 @@ import java.util.Set;
 
 import javax.swing.Icon;
 
-import com.frostwire.bittorrent.AzureusCoreUtil;
+import com.frostwire.bittorrent.TorrentUtil;
 
 /**
  * Abstract implementation of the DirectoryHolder interface, providing a filtered
@@ -21,7 +21,7 @@ public abstract class AbstractDirectoryHolder implements DirectoryHolder {
      */
     public File[] getFiles() {
         
-        _incompleteFiles = AzureusCoreUtil.getIncompleteFiles();
+        _incompleteFiles = TorrentUtil.getIncompleteFiles();
         
         File[] files = getDirectory().listFiles(this);
         return (files != null) ? files : new File[0];

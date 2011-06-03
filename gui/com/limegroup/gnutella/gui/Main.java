@@ -138,7 +138,7 @@ public class Main {
 
         try {
             for (String entry : classPathEntries) {
-            	System.out.println("class path entry = " + entry);
+            	//System.out.println("class path entry = " + entry);
         		if (entry.endsWith("splash.jar")) {
         			result = countImagesInJar(entry);
         			break;

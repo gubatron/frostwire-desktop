@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.text.Document;
 
-import com.frostwire.bittorrent.AzureusCoreUtil;
+import com.frostwire.bittorrent.TorrentUtil;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.AutoCompleteTextField;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -142,7 +142,7 @@ public class LibrarySearchPanel extends JPanel {
             });
             
             File file = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
-            search(file, AzureusCoreUtil.getIncompleteFiles());
+            search(file, TorrentUtil.getIncompleteFiles());
         }
         
         private void search(File file, Set<File> incompleteFiles) {
