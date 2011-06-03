@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import com.frostwire.bittorrent.CreateTorrentDialog;
 import com.limegroup.gnutella.browser.MagnetOptions;
 import com.limegroup.gnutella.gui.AutoCompleteTextField;
 import com.limegroup.gnutella.gui.ButtonRow;
@@ -336,5 +337,21 @@ public class FileMenuActions {
         public void actionPerformed(ActionEvent e) {
             GUIMediator.shutdown();
         }
+    }
+    
+    public static class CreateTorrentAction extends AbstractAction {
+		private static final long serialVersionUID = 1494672346951877693L;
+		
+		public CreateTorrentAction() {
+			super(I18n.tr("Create New Torrent"));
+			putValue(Action.LONG_DESCRIPTION,I18n.tr("Create a new .torrent file"));
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			CreateTorrentDialog dlg = new CreateTorrentDialog();
+			dlg.setVisible(true);
+		}
+    	
     }
 }
