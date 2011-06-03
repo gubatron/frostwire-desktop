@@ -23,7 +23,6 @@ import com.limegroup.gnutella.UploadManager;
 import com.limegroup.gnutella.UploadServices;
 import com.limegroup.gnutella.altlocs.AltLocManager;
 import com.limegroup.gnutella.browser.ExternalControl;
-import com.limegroup.gnutella.downloader.DiskController;
 import com.limegroup.gnutella.filters.IPFilter;
 import com.limegroup.gnutella.licenses.LicenseVerifier;
 import com.limegroup.gnutella.messages.QueryRequestFactory;
@@ -49,7 +48,6 @@ public class GuiCoreMediator {
     public static FileManager getFileManager() {  return core.getFileManager(); }
     public static UploadSlotManager getUploadSlotManager() {  return core.getUploadSlotManager(); }
     public static QueryRequestFactory getQueryRequestFactory() {  return core.getQueryRequestFactory(); }    
-    public static DiskController getDiskController() {  return core.getDiskController(); }    
     public static LocalFileDetailsFactory getLocalFileDetailsFactory() {  return core.getLocalFileDetailsFactory(); }
     public static DownloadManager getDownloadManager() {  return core.getDownloadManager(); }
     public static AltLocManager getAltLocManager() {  return core.getAltLocManager(); }
