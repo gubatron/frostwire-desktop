@@ -37,8 +37,6 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 
 import org.gudy.azureus2.core3.config.COConfigurationManager;
-import org.gudy.azureus2.core3.config.impl.ConfigurationDefaults;
-import org.gudy.azureus2.core3.config.impl.ConfigurationParameterNotFoundException;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.internat.LocaleTorrentUtil;
 import org.gudy.azureus2.core3.internat.MessageText;
@@ -58,6 +56,7 @@ import org.gudy.azureus2.core3.util.TrackersUtil;
 import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.AzureusCoreRunningListener;
+import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
 
@@ -134,16 +133,11 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	private JFileChooser _fileChooser;
 	private String _invalidTrackerURL;
 	private JFileChooser _saveAsDialog;
-	private JButton _buttonCancel;;
+	private JButton _buttonClose;
 
 	public CreateTorrentDialog() {
-		//try {
-			addOtherHashes = true; //ConfigurationDefaults.getInstance()
-					//.getBooleanParameter("CreateTorrent.default.addhashes");
-//		} catch (ConfigurationParameterNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		//don't add edonkey hashes.
+		addOtherHashes = false;
 
 		// they had it like this
 		trackers.add(new ArrayList());
@@ -168,7 +162,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		initTorrentProperties();
 
 		// CREATE AND SAVE AS
-		initSaveCancelButtons();
+		initSaveCloseButtons();
 
 		// PROGRESS BAR
 		initProgressBar();		
@@ -255,7 +249,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		c.gridwidth = 2;
 		c.anchor = GridBagConstraints.LINE_START;
 		c.fill = GridBagConstraints.NONE;
-		_checkStartSeeding = new JCheckBox(I18n.tr("Start seeding"));
+		_checkStartSeeding = new JCheckBox(I18n.tr("Start seeding"),true);
 		torrentPropertiesPanel.add(_checkStartSeeding, c);
 
 		// Trackers
@@ -297,7 +291,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		_container.add(torrentPropertiesPanel, c);
 	}
 
-	private void initSaveCancelButtons() {
+	private void initSaveCloseButtons() {
 
 		GridBagConstraints c;
 		c = new GridBagConstraints();
@@ -306,8 +300,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		c.weightx = 1;
 		c.anchor = GridBagConstraints.LINE_END;
 		c.insets = new Insets(0, 10, 10, 10);
-		_buttonCancel = new JButton(I18n.tr("Cancel"));
-		_container.add(_buttonCancel, c);
+		_buttonClose = new JButton(I18n.tr("Close"));
+		_container.add(_buttonClose, c);
 
 		c = new GridBagConstraints();
 		c.gridx = 1;
@@ -350,10 +344,10 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 			}
 		});
 
-		_buttonCancel.addActionListener(new ActionListener() {
+		_buttonClose.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				onButtonCancel();
+				onButtonClose();
 			}
 		});
 		
@@ -383,7 +377,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
 	}
 
-	protected void onButtonCancel() {
+	protected void onButtonClose() {
 		dispose();
 	}
 
@@ -487,7 +481,28 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		//show save as dialog
 		showSaveAsDialog();
 		
-		makeTorrent();
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				if (makeTorrent()) {
+					revertSaveCloseButtons();
+					_progressBar.setString(I18n.tr("Torrent Created."));
+					
+					SwingUtilities.invokeLater(new Runnable() {
+						public void run() { CreateTorrentDialog.this.dispose(); }
+					});
+					
+					
+					if (autoOpen) {
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() { GUIMediator.instance().openTorrent(new File(savePath)); }
+						});
+					}
+				}
+			}
+		}).start();
+
 	}
 
 	private void showSaveAsDialog() {
@@ -507,6 +522,11 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 				}
 			});
 		}
+		
+		File suggestedFileName =  null;
+		File torrContents = (create_from_dir) ? new File(directoryPath) : new File(singlePath);
+		suggestedFileName = new File(torrContents.getParent(),torrContents.getName() + ".torrent");
+		_saveAsDialog.setSelectedFile(suggestedFileName);
 		
 		int result = _saveAsDialog.showSaveDialog(this);
 
@@ -614,20 +634,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 				default_save_dir);
 	}
 
-	protected void setAddOtherHashes(boolean o) {
-		addOtherHashes = o;
-
-		COConfigurationManager.setParameter("CreateTorrent.default.addhashes",
-				addOtherHashes);
-
-	}
-
-	protected boolean getAddOtherHashes() {
-		return (addOtherHashes);
-	}
-
-	public void makeTorrent() {
-		
+	public boolean makeTorrent() {
 		switchToClose();
 
 		int tracker_type = getTrackerType();
@@ -653,7 +660,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
 				creator = TOTorrentFactory
 						.createFromFileOrDirWithComputedPieceLength(f, url,
-								getAddOtherHashes());
+								addOtherHashes);
 
 				torrent = creator.create();
 				
@@ -664,7 +671,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 				// SINCE UI OPTIONS WILL BE A LOT SIMPLER
 				TOTorrentCreator c = TOTorrentFactory
 						.createFromFileOrDirWithFixedPieceLength(f, url,
-								getAddOtherHashes(), getPieceSizeManual());
+								addOtherHashes, getPieceSizeManual());
 
 				c.addListener(this);
 
@@ -785,7 +792,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 												torrent, true, false);
 
 									} catch (TRHostException e) {
-										revertSaveCancelButtons();
+										revertSaveCloseButtons();
 										Logger.log(new LogAlert(
 												LogAlert.REPEATABLE,
 												"Host operation fails", e));
@@ -797,7 +804,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 			}
 		} catch (Exception e) {
 			
-			revertSaveCancelButtons();
+			revertSaveCloseButtons();
 			
 			if (e instanceof TOTorrentException) {
 
@@ -817,12 +824,14 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 				//reportCurrentTask(Debug.getStackTrace(e));
 			}
 
-
+			return false;
 		}
+		
+		return true;
 	}
 
-	private void revertSaveCancelButtons() {
-		_buttonCancel.setEnabled(true);
+	private void revertSaveCloseButtons() {
+		_buttonClose.setEnabled(true);
 
 		_buttonSaveAs.setText(I18n.tr("Save torrent as..."));
 		_buttonSaveAs.setEnabled(true);
@@ -833,9 +842,13 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	 * buttons of the wizard from next|cancel to close
 	 */
 	private void switchToClose() {
-		_buttonSaveAs.setText(I18n.tr("Saving Torrent..."));
-		_buttonSaveAs.setEnabled(false);
-		_buttonCancel.setEnabled(false);
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				_buttonSaveAs.setText(I18n.tr("Saving Torrent..."));
+				_buttonSaveAs.setEnabled(false);
+				_buttonClose.setEnabled(false);
+			}
+		});
 	}
 
 	public static void waitForCore(final TriggerInThread triggerInThread,
