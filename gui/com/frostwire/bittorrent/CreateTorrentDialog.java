@@ -43,12 +43,14 @@ import org.gudy.azureus2.core3.config.impl.ConfigurationDefaults;
 import org.gudy.azureus2.core3.config.impl.ConfigurationParameterNotFoundException;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.internat.LocaleTorrentUtil;
+import org.gudy.azureus2.core3.internat.MessageText;
 import org.gudy.azureus2.core3.logging.LogAlert;
 import org.gudy.azureus2.core3.logging.Logger;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentCreator;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.torrent.TOTorrentFactory;
+import org.gudy.azureus2.core3.torrent.TOTorrentProgressListener;
 import org.gudy.azureus2.core3.tracker.host.TRHostException;
 import org.gudy.azureus2.core3.util.AEThread2;
 import org.gudy.azureus2.core3.util.Debug;
@@ -63,7 +65,7 @@ import com.limegroup.gnutella.gui.LabeledTextField;
 import com.limegroup.gnutella.gui.LimeTextField;
 import com.limegroup.gnutella.settings.SharingSettings;
 
-public class CreateTorrentDialog extends JDialog {
+public class CreateTorrentDialog extends JDialog implements TOTorrentProgressListener {
 
 	/**
 	 * TRACKER TYPES
@@ -130,7 +132,7 @@ public class CreateTorrentDialog extends JDialog {
 	private JCheckBox _checkStartSeeding;
 	private JCheckBox _checkUseDHT;
 	private JButton _buttonSaveAs;
-	private Component _progressBar;
+	private JProgressBar _progressBar;
 	private JTextField _textSelectedContent;
 	private final Dimension MINIMUM_DIALOG_DIMENSIONS = new Dimension(600, 570);
 	private JLabel _labelTrackers;
@@ -318,7 +320,7 @@ public class CreateTorrentDialog extends JDialog {
 		c.weightx = 1.0;
 		c.anchor = GridBagConstraints.PAGE_END;
 		c.insets = new Insets(0, 10, 10, 10);
-		_progressBar = new JProgressBar();
+		_progressBar = new JProgressBar(0,100);
 		_container.add(_progressBar, c);
 	}
 
@@ -381,10 +383,10 @@ public class CreateTorrentDialog extends JDialog {
 
 			File chosenFile = _fileChooser.getSelectedFile();
 
-			// if we don't have read permissions on that folder...
+			// if we don't have read permissions on that file/folder...
 			if (!chosenFile.canRead()) {
 				_textSelectedContent.setText(I18n
-						.tr("Error: You can't read on that folder."));
+						.tr("Error: You can't read on that file/folder."));
 				return;
 			}
 
@@ -420,7 +422,9 @@ public class CreateTorrentDialog extends JDialog {
 		if (chosenFile.isDirectory()
 				&& _fileChooser.getFileSelectionMode() == JFileChooser.FILES_ONLY) {
 			_fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		}
+		} 
+		
+		create_from_dir = _fileChooser.getFileSelectionMode() == JFileChooser.DIRECTORIES_ONLY;
 	}
 
 	protected void onButtonSelectFolder() {
@@ -440,8 +444,9 @@ public class CreateTorrentDialog extends JDialog {
 			return;
 		}
 		
-		//if it's not trackerless make sure we have valid tracker urls
-		if (!_checkUseDHT.isSelected()) {
+		//if it's not tracker-less make sure we have valid tracker urls
+		boolean useTrackers = !_checkUseDHT.isSelected();
+		if (useTrackers) {
 			if (!validateAndFixTrackerURLS()) {
 				if (_invalidTrackerURL==null) {
 					_invalidTrackerURL="";
@@ -449,16 +454,23 @@ public class CreateTorrentDialog extends JDialog {
 				JOptionPane.showMessageDialog(this, I18n.tr("Check again your tracker URL(s).\n"+_invalidTrackerURL),I18n.tr("Invalid Tracker URL\n"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
+			
+			setTrackerType(TT_EXTERNAL);
 		} else {
 			trackers.clear();
+			setTrackerType(TT_DECENTRAL);
 		}
+		
+		//Whether or not to start seeding this torrent right away
+		autoOpen = _checkStartSeeding.isSelected();
 		
 		//show save as dialog
 		showSaveAsDialog();
 		
 		//create torrent and notify UI
+		_buttonSaveAs.setEnabled(false);
 		
-		//if torrent is to be seeded, start a download of the torrent using a mediator.
+		makeTorrent();
 	}
 
 	private void showSaveAsDialog() {
@@ -511,6 +523,9 @@ public class CreateTorrentDialog extends JDialog {
 		//update the trackers list of lists
 		trackers.clear();
 		trackers.add(valid_tracker_urls);
+		trackerURL = valid_tracker_urls.get(0);
+
+		useMultiTracker = valid_tracker_urls.size() > 1;
 		
 		_invalidTrackerURL = null;
 		
@@ -605,15 +620,9 @@ public class CreateTorrentDialog extends JDialog {
 						.createFromFileOrDirWithComputedPieceLength(f, url,
 								getAddOtherHashes());
 
-				// GUBATRON: NOT SURE IF WE NEED THIS.
-				// That addListener Method comes from Wizard and the Listener
-				// class has a closed()
-				// method that is called when this window is called. I guess
-				// they want
-				// the torrent creator to notify this window so that it's
-				// closed.
-
 				torrent = creator.create();
+				
+				creator.addListener(this);
 
 			} else {
 				// GUBATRON: I THINK THIS else WILL NEVER HAPPEN
@@ -652,9 +661,7 @@ public class CreateTorrentDialog extends JDialog {
 			}
 
 			if (useMultiTracker) {
-				// TODO: (MIGHT DO) Notify the UI Thread of current progress
-				// this.reportCurrentTask(MessageText.getString("wizard.addingmt"));
-
+				reportCurrentTask(MessageText.getString("wizard.addingmt"));
 				TorrentUtils.listToAnnounceGroups(trackers, torrent);
 			}
 
@@ -763,15 +770,13 @@ public class CreateTorrentDialog extends JDialog {
 					// expected failure, don't log exception
 				} else {
 
-					// reportCurrentTask(MessageText
-					// .getString("wizard.operationfailed"));
-					// reportCurrentTask(TorrentUtils.exceptionToText(te));
+					reportCurrentTask(MessageText.getString("wizard.operationfailed"));
+					reportCurrentTask(TorrentUtils.exceptionToText(te));
 				}
 			} else {
 				Debug.printStackTrace(e);
-				// reportCurrentTask(MessageText
-				// .getString("wizard.operationfailed"));
-				// reportCurrentTask(Debug.getStackTrace(e));
+				reportCurrentTask(MessageText.getString("wizard.operationfailed"));
+				//reportCurrentTask(Debug.getStackTrace(e));
 			}
 
 			switchToClose();
@@ -783,10 +788,7 @@ public class CreateTorrentDialog extends JDialog {
 	 * buttons of the wizard from next|cancel to close
 	 */
 	private void switchToClose() {
-		// TODO Auto-generated method stub
-		System.out
-				.println("CreateTorrentDialog.switchToClose() UNIMPLEMENTED.");
-
+		_buttonSaveAs.setText(I18n.tr("Saving Torrent..."));
 	}
 
 	public static void waitForCore(final TriggerInThread triggerInThread,
@@ -841,15 +843,30 @@ public class CreateTorrentDialog extends JDialog {
 		// shell = UIFunctionsManagerSWT.getUIFunctionsSWT().showCoreWaitDlg();
 	}
 
+	@Override
+	public void reportProgress(int percent_complete) {
+		_progressBar.setValue(percent_complete);
+	}
+
+	@Override
+	public void reportCurrentTask(String task_description) {
+		_progressBar.setString(task_description);
+	}
+	
 	public static void main(String[] args) {
+		AzureusStarter.start();
+		
 		CreateTorrentDialog dlg = new CreateTorrentDialog();
 		dlg.setVisible(true);
 		dlg.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				System.out.println("End of Test");
+				AzureusStarter.getAzureusCore().stop();
+				System.out.println("Stopped");
 				System.exit(0);
 			}
 		});
 	}
+
 }
