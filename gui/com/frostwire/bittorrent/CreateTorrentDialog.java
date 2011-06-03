@@ -442,7 +442,10 @@ public class CreateTorrentDialog extends JDialog {
 		
 		//if it's not trackerless make sure we have valid tracker urls
 		if (!_checkUseDHT.isSelected()) {
-			if (!validateTrackerURLS()) {
+			if (!validateAndFixTrackerURLS()) {
+				if (_invalidTrackerURL==null) {
+					_invalidTrackerURL="";
+				}
 				JOptionPane.showMessageDialog(this, I18n.tr("Check again your tracker URL(s).\n"+_invalidTrackerURL),I18n.tr("Invalid Tracker URL\n"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -455,29 +458,54 @@ public class CreateTorrentDialog extends JDialog {
 		//if torrent is to be seeded, start a download of the torrent using a mediator.
 	}
 
-	private boolean validateTrackerURLS() {
+	private boolean validateAndFixTrackerURLS() {
 		String trackersText = _textTrackers.getText();
 		if (trackersText == null || trackersText.length()==0) {
 			return false;
 		}
 		
-		String patternStr = "\\b(https?|udp)://[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]";
+		String patternStr = "^(https?|udp)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
 		Pattern pattern = Pattern.compile(patternStr);
 		
 		
 		String[] tracker_urls = trackersText.split("\n");
+		List<String> valid_tracker_urls = new ArrayList<String>();
 		
 		for (String tracker_url : tracker_urls) {
+			
+			if (tracker_url.trim().equals("")) {
+				continue;
+			}
+			
+			//asume http if the user does not specify it
+			if (!tracker_url.startsWith("http://") && !tracker_url.startsWith("udp://")) {
+				tracker_url = "http://" + tracker_url.trim();
+			}
+			
 			Matcher matcher = pattern.matcher(tracker_url.trim());
 			if (!matcher.matches()) {
 				_invalidTrackerURL = tracker_url.trim();
 				return false;
+			} else {
+				valid_tracker_urls.add(tracker_url.trim());
 			}
 		}
+		
+		fixValidTrackers(valid_tracker_urls);
 		
 		_invalidTrackerURL = null;
 		
 		return true;
+	}
+
+	private void fixValidTrackers(List<String> valid_tracker_urls) {
+		//re-write the tracker's text area with corrections
+		StringBuilder builder = new StringBuilder();
+		for (String valid_tracker_url : valid_tracker_urls) {
+			builder.append(valid_tracker_url + "\n");
+		}
+		
+		_textTrackers.setText(builder.toString());
 	}
 
 	protected int getTrackerType() {
