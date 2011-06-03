@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
@@ -46,7 +47,10 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
      */
     private final ButtonGroup BUTTONS = new ButtonGroup();
     private final JRadioButton UPNP = new JRadioButton(I18n.tr("Use UPnP (Recommended)"));
-    private final JRadioButton PORT = new JRadioButton(I18n.tr("Manual Port Forward:"));
+    private final JRadioButton PORT = new JRadioButton(I18n.tr("Manual Port Forward"));
+    
+    private JLabel _labelTCP;
+    private JLabel _labelUDP;
     
 	/**
 	 * The constructor constructs all of the elements of this 
@@ -65,10 +69,27 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
 		c.anchor = GridBagConstraints.WEST;
 		c.insets = new Insets(0, 0, 0, 6);
 		panel.add(UPNP, c);
-		c.gridwidth = GridBagConstraints.RELATIVE;
-		panel.add(PORT, c);
 		c.gridwidth = GridBagConstraints.REMAINDER;
+		panel.add(PORT, c);
+		
+		_labelTCP = new JLabel(I18n.tr("TCP:"));
+		c = new GridBagConstraints();
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 0, 5);
+		panel.add(_labelTCP, c);
+		c = new GridBagConstraints();
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.anchor = GridBagConstraints.WEST;
 		panel.add(TCP_PORT_FIELD, c);
+		
+		_labelUDP = new JLabel(I18n.tr("UDP:"));
+		c = new GridBagConstraints();
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0, 10, 0, 5);
+		panel.add(_labelUDP, c);
+		c = new GridBagConstraints();
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.anchor = GridBagConstraints.WEST;
 		panel.add(UDP_PORT_FIELD, c);
 		
         c.weightx = 1;
@@ -81,8 +102,10 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
 	}
 	
 	private void updateState() {
+	    _labelTCP.setEnabled(PORT.isSelected());
+	    _labelUDP.setEnabled(PORT.isSelected());
 	    TCP_PORT_FIELD.setEnabled(PORT.isSelected());
-        UDP_PORT_FIELD.setEditable(PORT.isSelected());
+        UDP_PORT_FIELD.setEnabled(PORT.isSelected());
     }
 
     /** 
