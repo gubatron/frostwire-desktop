@@ -1,6 +1,5 @@
 package com.limegroup.gnutella.connection;
 
-import com.limegroup.gnutella.routing.QueryRouteTable;
 
 /**
  * Defines the interface to retrieve statistics about
@@ -8,16 +7,6 @@ import com.limegroup.gnutella.routing.QueryRouteTable;
  * {@link RoutedConnection}.
  */
 public interface ConnectionRoutingStatistics {
-
-    /**
-     * Accessor for the <tt>QueryRouteTable</tt> received along this
-     * connection. Can be <tt>null</tt> if no query routing table has been
-     * received yet.
-     * 
-     * @return the last <tt>QueryRouteTable</tt> received along this
-     *         connection
-     */
-    public QueryRouteTable getQueryRouteTableReceived();
 
     /**
      * Accessor for the last QueryRouteTable's percent full.
@@ -55,23 +44,5 @@ public interface ConnectionRoutingStatistics {
      *        next update time
      */
     public void incrementNextQRPForwardTime(long curTime);
-
-    /**
-     * Accessor for the query route table associated with this. This is
-     * guaranteed to be non-null, but it may not yet contain any data.
-     * 
-     * @return the <tt>QueryRouteTable</tt> instance containing query route
-     *         table data sent along this connection, or <tt>null</tt> if no
-     *         data has yet been sent
-     */
-    public QueryRouteTable getQueryRouteTableSent();
-
-    /**
-     * Mutator for the last query route table that was sent along this
-     * connection.
-     * 
-     * @param qrt the last query route table that was sent along this connection
-     */
-    public void setQueryRouteTableSent(QueryRouteTable qrt);
 
 }

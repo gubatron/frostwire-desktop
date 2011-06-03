@@ -158,7 +158,6 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(PongCacher.class).to(PongCacherImpl.class);        
         bind(BandwidthTracker.class).annotatedWith(Names.named("uploadTracker")).to(UploadManager.class);     // For NodeAssigner.
         bind(BandwidthTracker.class).annotatedWith(Names.named("downloadTracker")).to(DownloadManager.class); // For NodeAssigner.
-        bind(ResponseVerifier.class).to(ResponseVerifierImpl.class);
         bind(MessageHandlerBinder.class).to(MessageHandlerBinderImpl.class);
         bind(QueryDispatcher.class).to(QueryDispatcherImpl.class);
         bind(UpdateMessageVerifier.class).to(UpdateMessageVerifierImpl.class);

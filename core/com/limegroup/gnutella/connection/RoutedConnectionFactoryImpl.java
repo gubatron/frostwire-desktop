@@ -11,7 +11,6 @@ import com.limegroup.gnutella.ApplicationServices;
 import com.limegroup.gnutella.GuidMapManager;
 import com.limegroup.gnutella.MessageDispatcher;
 import com.limegroup.gnutella.NetworkManager;
-import com.limegroup.gnutella.NetworkUpdateSanityChecker;
 import com.limegroup.gnutella.filters.SpamFilterFactory;
 import com.limegroup.gnutella.messages.MessageFactory;
 import com.limegroup.gnutella.messages.QueryReplyFactory;
@@ -20,7 +19,6 @@ import com.limegroup.gnutella.messages.vendor.CapabilitiesVMFactory;
 import com.limegroup.gnutella.messages.vendor.MessagesSupportedVendorMessage;
 import com.limegroup.gnutella.search.SearchResultHandler;
 import com.limegroup.gnutella.statistics.OutOfBandStatistics;
-import com.sun.corba.se.pept.transport.Acceptor;
 
 /**
  * An implementation of {@link RoutedConnectionFactory} that constructs {@link GnutellaConnection GnutellaConnections}.
@@ -36,8 +34,6 @@ public class RoutedConnectionFactoryImpl implements RoutedConnectionFactory {
     private final QueryReplyFactory queryReplyFactory;
 
     private final Provider<MessageDispatcher> messageDispatcher;
-
-    private final Provider<NetworkUpdateSanityChecker> networkUpdateSanityChecker;
 
     private final Provider<SearchResultHandler> searchResultHandler;
 
@@ -63,7 +59,6 @@ public class RoutedConnectionFactoryImpl implements RoutedConnectionFactory {
     public RoutedConnectionFactoryImpl(
             NetworkManager networkManager, QueryRequestFactory queryRequestFactory,
            QueryReplyFactory queryReplyFactory, Provider<MessageDispatcher> messageDispatcher,
-            Provider<NetworkUpdateSanityChecker> networkUpdateSanityChecker,
             Provider<SearchResultHandler> searchResultHandler,
             CapabilitiesVMFactory capabilitiesVMFactory, 
             MessagesSupportedVendorMessage supportedVendorMessage, 
@@ -76,7 +71,6 @@ public class RoutedConnectionFactoryImpl implements RoutedConnectionFactory {
         this.queryRequestFactory = queryRequestFactory;
         this.queryReplyFactory = queryReplyFactory;
         this.messageDispatcher = messageDispatcher;
-        this.networkUpdateSanityChecker = networkUpdateSanityChecker;
         this.applicationServices = applicationServices;
         this.searchResultHandler = searchResultHandler;
         this.capabilitiesVMFactory = capabilitiesVMFactory;

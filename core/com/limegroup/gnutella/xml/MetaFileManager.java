@@ -341,12 +341,12 @@ public class MetaFileManager extends FileManagerImpl {
      * to QRT
      */
     protected void buildQRT() {
-        super.buildQRT();
-        for (String string : getXMLKeyWords())
-            _queryRouteTable.add(string);
-
-        for (String string : getXMLIndivisibleKeyWords())
-            _queryRouteTable.addIndivisible(string);
+//        super.buildQRT();
+//        for (String string : getXMLKeyWords())
+//            _queryRouteTable.add(string);
+//
+//        for (String string : getXMLIndivisibleKeyWords())
+//            _queryRouteTable.addIndivisible(string);
     }
 
     /**

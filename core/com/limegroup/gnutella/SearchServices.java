@@ -1,39 +1,9 @@
 package com.limegroup.gnutella;
 
-import java.util.Set;
-
-import org.limewire.io.Connectable;
-import org.limewire.io.IpPort;
-
 import com.limegroup.gnutella.search.HostData;
 
 public interface SearchServices {
-
-    /** 
-     * Returns true if the given response for the query with the given guid is a
-     * result of the Madragore worm (8KB files of form "x.exe").  Returns false
-     * if guid is not recognized.  <i>Ideally this would be done by the normal
-     * filtering mechanism, but it is not powerful enough without the query
-     * string.</i>
-     *
-     * @param guid the value returned by query(..).  MUST be 16 byts long.
-     * @param resp a response delivered by ActivityCallback.handleQueryReply
-     * @see ResponseVerifier#isMandragoreWorm(byte[], Response) 
-     */
-    public boolean isMandragoreWorm(byte[] guid, Response response);
-
-    public boolean matchesQuery(byte[] guid, Response response);
-
-    /** 
-     * Returns true if the given response is of the same type as the the query
-     * with the given guid.  Returns 100 if guid is not recognized.
-     *
-     * @param guid the value returned by query(..).  MUST be 16 bytes long.
-     * @param resp a response delivered by ActivityCallback.handleQueryReply
-     * @see ResponseVerifier#matchesType(byte[], Response) 
-     */
-    public boolean matchesType(byte[] guid, Response response);
-
+    
     /** Purges the query from the QueryUnicaster (GUESS) and the ResultHandler
      *  (which maintains query stats for the purpose of leaf guidance).
      *  @param guid The GUID of the query you want to get rid of....

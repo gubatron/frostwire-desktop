@@ -150,10 +150,6 @@ public class LimeWireCore {
         return injector.getInstance(PushManager.class);
     }
 
-    public ResponseVerifier getResponseVerifier() {
-        return injector.getInstance(ResponseVerifier.class);
-    }
-
     public SearchResultHandler getSearchResultHandler() {
         return injector.getInstance(SearchResultHandler.class);
     }
@@ -168,10 +164,6 @@ public class LimeWireCore {
 
     public IPFilter getIpFilter() {
         return injector.getInstance(IPFilter.class);
-    }
-
-    public NetworkUpdateSanityChecker getNetworkUpdateSanityChecker() {
-        return injector.getInstance(NetworkUpdateSanityChecker.class);
     }
     
     public QueryStats getQueryStats() {
@@ -224,10 +216,6 @@ public class LimeWireCore {
 
     public MulticastService getMulticastService() {
         return injector.getInstance(MulticastService.class);
-    }
-
-    public Pinger getPinger() {
-        return injector.getInstance(Pinger.class);
     }
 
     public PongCacher getPongCacher() {

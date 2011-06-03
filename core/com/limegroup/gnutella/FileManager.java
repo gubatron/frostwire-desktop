@@ -8,7 +8,6 @@ import java.util.Set;
 import java.util.concurrent.TimeoutException;
 
 import com.limegroup.gnutella.messages.QueryRequest;
-import com.limegroup.gnutella.routing.QueryRouteTable;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
 
 
@@ -366,13 +365,6 @@ public interface FileManager {
      * @return true if the folder can be shared
      */
     public abstract boolean isFolderShareable(File folder, boolean includeExcludedDirectories);
-
-    /**
-     * Returns the QRTable. If the shared files have changed, then it will
-     * rebuild the QRT. A copy is returned so that FileManager does not expose
-     * its internal data structure.
-     */
-    public abstract QueryRouteTable getQRT();
 
     /**
      * Returns an array of all responses matching the given request.  If there

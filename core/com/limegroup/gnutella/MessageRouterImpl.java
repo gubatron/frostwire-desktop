@@ -84,7 +84,6 @@ import com.limegroup.gnutella.messages.vendor.UpdateRequest;
 import com.limegroup.gnutella.messages.vendor.UpdateResponse;
 import com.limegroup.gnutella.messages.vendor.VendorMessage;
 import com.limegroup.gnutella.routing.PatchTableMessage;
-import com.limegroup.gnutella.routing.QueryRouteTable;
 import com.limegroup.gnutella.routing.ResetTableMessage;
 import com.limegroup.gnutella.search.QueryDispatcher;
 import com.limegroup.gnutella.search.QueryHandler;
@@ -226,14 +225,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
 	 * A handle to the thread that deals with QRP Propagation
 	 */
 	private final QRPPropagator QRP_PROPAGATOR = new QRPPropagator();
-
-
-    /**
-     * Variable for the most recent <tt>QueryRouteTable</tt> created
-     * for this node.  If this node is an Ultrapeer, the routing
-     * table will include the tables from its leaves.
-     */
-    private QueryRouteTable _lastQueryRouteTable;
 
     /**
      * The maximum number of response to send to a query that has
@@ -1968,21 +1959,21 @@ public abstract class MessageRouterImpl implements MessageRouter {
      */
     private void handleResetTableMessage(ResetTableMessage rtm,
                                          RoutedConnection mc) {
-        // if it's not from a leaf or an Ultrapeer advertising 
-        // QRP support, ignore it
-        if(!isQRPConnection(mc)) return;
-
-        // reset the query route table for this connection
-        synchronized (mc.getQRPLock()) {
-            mc.resetQueryRouteTable(rtm);
-        }
-
-        // if this is coming from a leaf, make sure we update
-        // our tables so that the dynamic querier has correct
-        // data
-        if(mc.isLeafConnection()) {
-            _lastQueryRouteTable = createRouteTable();
-        }
+//        // if it's not from a leaf or an Ultrapeer advertising 
+//        // QRP support, ignore it
+//        if(!isQRPConnection(mc)) return;
+//
+//        // reset the query route table for this connection
+//        synchronized (mc.getQRPLock()) {
+//            mc.resetQueryRouteTable(rtm);
+//        }
+//
+//        // if this is coming from a leaf, make sure we update
+//        // our tables so that the dynamic querier has correct
+//        // data
+//        if(mc.isLeafConnection()) {
+//            _lastQueryRouteTable = createRouteTable();
+//        }
     }
 
     /**
@@ -1996,21 +1987,21 @@ public abstract class MessageRouterImpl implements MessageRouter {
      */
     private void handlePatchTableMessage(PatchTableMessage ptm,
                                          RoutedConnection mc) {
-        // if it's not from a leaf or an Ultrapeer advertising 
-        // QRP support, ignore it
-        if(!isQRPConnection(mc)) return;
-
-        // patch the query route table for this connection
-        synchronized(mc.getQRPLock()) {
-            mc.patchQueryRouteTable(ptm);
-        }
-
-        // if this is coming from a leaf, make sure we update
-        // our tables so that the dynamic querier has correct
-        // data
-        if(mc.isLeafConnection()) {
-            _lastQueryRouteTable = createRouteTable();
-        }
+//        // if it's not from a leaf or an Ultrapeer advertising 
+//        // QRP support, ignore it
+//        if(!isQRPConnection(mc)) return;
+//
+//        // patch the query route table for this connection
+//        synchronized(mc.getQRPLock()) {
+//            mc.patchQueryRouteTable(ptm);
+//        }
+//
+//        // if this is coming from a leaf, make sure we update
+//        // our tables so that the dynamic querier has correct
+//        // data
+//        if(mc.isLeafConnection()) {
+//            _lastQueryRouteTable = createRouteTable();
+//        }
     }
 
     private void updateMessage(QueryRequest request, ReplyHandler handler) {
@@ -2064,38 +2055,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
     void forwardQueryRouteTables() {
 		
     }
-
-    /* (non-Javadoc)
-     * @see com.limegroup.gnutella.MessageRouter#getQueryRouteTable()
-     */
-    public QueryRouteTable getQueryRouteTable() {
-        return _lastQueryRouteTable;
-    }
-
-    /**
-     * Creates a query route table appropriate for forwarding to connection c.
-     * This will not include information from c.
-     *     @requires queryUpdateLock held
-     */
-    //default access for testing
-    QueryRouteTable createRouteTable() {
-       return null;
-    }
-
-
-	/**
-	 * Adds all query routing tables of leaves to the query routing table for
-	 * this node for propagation to other Ultrapeers at 1 hop.
-	 * 
-	 * Added "busy leaf" support to prevent a busy leaf from having its QRT
-	 * 	table added to the Ultrapeer's last-hop QRT table.  This should reduce
-	 *  BW costs for UPs with busy leaves.  
-	 *
-	 * @param qrt the <tt>QueryRouteTable</tt> to add to
-	 */
-	private void addQueryRoutingEntriesForLeaves(QueryRouteTable qrt) {
-		
-	}
 
     
     /* (non-Javadoc)

@@ -3,9 +3,6 @@ package com.limegroup.gnutella;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.limewire.concurrent.ThreadExecutor;
-import org.limewire.io.Connectable;
-import org.limewire.io.IpPort;
 import org.limewire.service.ErrorService;
 
 import com.google.inject.Inject;
@@ -15,7 +12,6 @@ import com.limegroup.gnutella.filters.MutableGUIDFilter;
 import com.limegroup.gnutella.messages.QueryRequest;
 import com.limegroup.gnutella.messages.QueryRequestFactory;
 import com.limegroup.gnutella.search.HostData;
-import com.limegroup.gnutella.search.QueryDispatcher;
 import com.limegroup.gnutella.search.SearchResultHandler;
 import com.limegroup.gnutella.settings.FilterSettings;
 import com.limegroup.gnutella.settings.MessageSettings;
@@ -25,11 +21,8 @@ import com.limegroup.gnutella.statistics.QueryStats;
 @Singleton
 public class SearchServicesImpl implements SearchServices {
     
-    private final Provider<ResponseVerifier> responseVerifier;
-    private final Provider<QueryUnicaster> queryUnicaster;
     private final Provider<SearchResultHandler> searchResultHandler;
     private final Provider<MessageRouter> messageRouter;
-    private final Provider<QueryDispatcher> queryDispatcher;
     private final Provider<MutableGUIDFilter> mutableGUIDFilter;
     private final Provider<QueryStats> queryStats; 
     private final Provider<NetworkManager> networkManager;
@@ -37,47 +30,21 @@ public class SearchServicesImpl implements SearchServices {
     private final OutOfBandStatistics outOfBandStatistics;
     
     @Inject
-    public SearchServicesImpl(Provider<ResponseVerifier> responseVerifier,
-            Provider<QueryUnicaster> queryUnicaster,
+    public SearchServicesImpl(
             Provider<SearchResultHandler> searchResultHandler,
             Provider<MessageRouter> messageRouter,
-            Provider<QueryDispatcher> queryDispatcher,
             Provider<MutableGUIDFilter> mutableGUIDFilter,
             Provider<QueryStats> queryStats,
             Provider<NetworkManager> networkManager,
             Provider<QueryRequestFactory> queryRequestFactory,
             OutOfBandStatistics outOfBandStatistics) {
-        this.responseVerifier = responseVerifier;
-        this.queryUnicaster = queryUnicaster;
         this.searchResultHandler = searchResultHandler;
         this.messageRouter = messageRouter;
-        this.queryDispatcher = queryDispatcher;
         this.mutableGUIDFilter = mutableGUIDFilter;
         this.queryStats = queryStats;
         this.networkManager = networkManager;
         this.queryRequestFactory = queryRequestFactory;
         this.outOfBandStatistics = outOfBandStatistics;
-    }
-
-    /* (non-Javadoc)
-     * @see com.limegroup.gnutella.SearchServices#isMandragoreWorm(byte[], com.limegroup.gnutella.Response)
-     */
-    public boolean isMandragoreWorm(byte[] guid, Response response) {
-        return responseVerifier.get().isMandragoreWorm(guid, response);
-    }
-
-    /* (non-Javadoc)
-     * @see com.limegroup.gnutella.SearchServices#matchesQuery(byte[], com.limegroup.gnutella.Response)
-     */
-    public boolean matchesQuery(byte [] guid, Response response) {
-        return responseVerifier.get().matchesQuery(guid, response);
-    }
-
-    /* (non-Javadoc)
-     * @see com.limegroup.gnutella.SearchServices#matchesType(byte[], com.limegroup.gnutella.Response)
-     */
-    public boolean matchesType(byte[] guid, Response response) {
-        return responseVerifier.get().matchesType(guid, response);
     }
 
     /* (non-Javadoc)
@@ -104,7 +71,6 @@ public class SearchServicesImpl implements SearchServices {
     private void recordAndSendQuery(final QueryRequest qr, 
                                            final MediaType type) {
         queryStats.get().recordQuery();
-        responseVerifier.get().record(qr, type);
         searchResultHandler.get().addQuery(qr); // so we can leaf guide....
         messageRouter.get().sendDynamicQuery(qr);
     }

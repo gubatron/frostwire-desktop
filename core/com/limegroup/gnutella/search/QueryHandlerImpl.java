@@ -1,7 +1,6 @@
 package com.limegroup.gnutella.search;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +18,6 @@ import com.limegroup.gnutella.connection.RoutedConnection;
 import com.limegroup.gnutella.messages.BadPacketException;
 import com.limegroup.gnutella.messages.QueryRequest;
 import com.limegroup.gnutella.messages.QueryRequestFactory;
-import com.limegroup.gnutella.routing.QueryRouteTable;
 
 /**
  * This class is a factory for creating <tt>QueryRequest</tt> instances for
@@ -258,91 +256,91 @@ final class QueryHandlerImpl implements Inspectable, QueryHandler {
      * @see com.limegroup.gnutella.search.QueryHandler#sendQuery()
      */
     public void sendQuery() {
-        if (hasEnoughResults())
-            return;
-
-        _curTime = System.currentTimeMillis();
-        if (_curTime < _nextQueryTime)
-            return;
-
-        if (LOG.isTraceEnabled())
-            LOG.trace("Query = " + QUERY.getQuery() + ", numHostsQueried: "
-                    + _theoreticalHostsQueried);
-
-        if (_queryStartTime == 0) {
-            _queryStartTime = _curTime;
-        }
-
-        // handle 3 query cases
-
-        // 1) If we haven't sent the query to our leaves, send it
-        if (!_forwardedToLeaves) {
-
-            _forwardedToLeaves = true;
-            QueryRouteTable qrt = messageRouter.getQueryRouteTable();
-
-            QueryRequest query = createQuery(QUERY, (byte) 1);
-
-            _theoreticalHostsQueried += 25;
-
-            // send the query to our leaves if there's a hit and wait,
-            // otherwise we'll move on to the probe
-            if (qrt != null && qrt.contains(query)) {
-                messageRouter.forwardQueryRequestToLeaves(query, REPLY_HANDLER);
-                _nextQueryTime = System.currentTimeMillis() + _timeToWaitPerHop;
-                return;
-            }
-        }
-
-        // 2) If we haven't sent the probe query, send it
-        if (!_probeQuerySent) {
-//            ProbeQuery pq = new ProbeQuery(connectionManager.getInitializedConnections(), this);
-//            long timeToWait = pq.getTimeToWait();
-//            _theoreticalHostsQueried += pq.sendProbe();
-//            _nextQueryTime = System.currentTimeMillis() + timeToWait;
-//            _probeQuerySent = true;
+//        if (hasEnoughResults())
 //            return;
-        }
-
-        // 3) If we haven't yet satisfied the query, keep trying
-        else {
-            // Otherwise, just send a normal query -- make a copy of the
-            // connections because we'll be modifying it.
-//            int newHosts = sendQuery(new ArrayList<RoutedConnection>(connectionManager
-//                    .getInitializedConnections()));
-//            if (newHosts == 0) {
-//                // if we didn't query any new hosts, wait awhile for new
-//                // connections to potentially appear
-//                _nextQueryTime = System.currentTimeMillis() + 6000;
+//
+//        _curTime = System.currentTimeMillis();
+//        if (_curTime < _nextQueryTime)
+//            return;
+//
+//        if (LOG.isTraceEnabled())
+//            LOG.trace("Query = " + QUERY.getQuery() + ", numHostsQueried: "
+//                    + _theoreticalHostsQueried);
+//
+//        if (_queryStartTime == 0) {
+//            _queryStartTime = _curTime;
+//        }
+//
+//        // handle 3 query cases
+//
+//        // 1) If we haven't sent the query to our leaves, send it
+//        if (!_forwardedToLeaves) {
+//
+//            _forwardedToLeaves = true;
+//            QueryRouteTable qrt = messageRouter.getQueryRouteTable();
+//
+//            QueryRequest query = createQuery(QUERY, (byte) 1);
+//
+//            _theoreticalHostsQueried += 25;
+//
+//            // send the query to our leaves if there's a hit and wait,
+//            // otherwise we'll move on to the probe
+//            if (qrt != null && qrt.contains(query)) {
+//                messageRouter.forwardQueryRequestToLeaves(query, REPLY_HANDLER);
+//                _nextQueryTime = System.currentTimeMillis() + _timeToWaitPerHop;
+//                return;
 //            }
-//            _theoreticalHostsQueried += newHosts;
-
-            // if we've already queried quite a few hosts, not gotten
-            // many results, and have been querying for awhile, start
-            // decreasing the per-hop wait time
-            if (_timeToWaitPerHop > 100 && (System.currentTimeMillis() - _queryStartTime) > 6000) {
-                _timeToWaitPerHop -= _timeToDecreasePerHop;
-
-                int resultFactor = Math.max(1, (RESULTS / 2)
-                        - (30 * RESULT_COUNTER.getNumResults()));
-
-                int decrementFactor = Math.max(1, (_numDecrements / 6));
-
-                // the current decrease is weighted based on the number
-                // of results returned and on the number of connections
-                // we've tried -- the fewer results and the more
-                // connections, the more the decrease
-                int currentDecrease = resultFactor * decrementFactor;
-
-                currentDecrease = Math.max(5, currentDecrease);
-                _timeToDecreasePerHop += currentDecrease;
-
-                _numDecrements++;
-                if (_timeToWaitPerHop < 100) {
-                    _timeToWaitPerHop = 100;
-                }
-            }
-        }
+//        }
+//
+//        // 2) If we haven't sent the probe query, send it
+//        if (!_probeQuerySent) {
+////            ProbeQuery pq = new ProbeQuery(connectionManager.getInitializedConnections(), this);
+////            long timeToWait = pq.getTimeToWait();
+////            _theoreticalHostsQueried += pq.sendProbe();
+////            _nextQueryTime = System.currentTimeMillis() + timeToWait;
+////            _probeQuerySent = true;
+////            return;
+//        }
+//
+//        // 3) If we haven't yet satisfied the query, keep trying
+//        else {
+//            // Otherwise, just send a normal query -- make a copy of the
+//            // connections because we'll be modifying it.
+////            int newHosts = sendQuery(new ArrayList<RoutedConnection>(connectionManager
+////                    .getInitializedConnections()));
+////            if (newHosts == 0) {
+////                // if we didn't query any new hosts, wait awhile for new
+////                // connections to potentially appear
+////                _nextQueryTime = System.currentTimeMillis() + 6000;
+////            }
+////            _theoreticalHostsQueried += newHosts;
+//
+//            // if we've already queried quite a few hosts, not gotten
+//            // many results, and have been querying for awhile, start
+//            // decreasing the per-hop wait time
+//            if (_timeToWaitPerHop > 100 && (System.currentTimeMillis() - _queryStartTime) > 6000) {
+//                _timeToWaitPerHop -= _timeToDecreasePerHop;
+//
+//                int resultFactor = Math.max(1, (RESULTS / 2)
+//                        - (30 * RESULT_COUNTER.getNumResults()));
+//
+//                int decrementFactor = Math.max(1, (_numDecrements / 6));
+//
+//                // the current decrease is weighted based on the number
+//                // of results returned and on the number of connections
+//                // we've tried -- the fewer results and the more
+//                // connections, the more the decrease
+//                int currentDecrease = resultFactor * decrementFactor;
+//
+//                currentDecrease = Math.max(5, currentDecrease);
+//                _timeToDecreasePerHop += currentDecrease;
+//
+//                _numDecrements++;
+//                if (_timeToWaitPerHop < 100) {
+//                    _timeToWaitPerHop = 100;
+//                }
+//            }
+//        }
     }
 
     /**
