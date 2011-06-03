@@ -12,6 +12,7 @@ import com.frostwire.bittorrent.BTDownloader;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.library.LibraryMediator;
 import com.limegroup.gnutella.gui.notify.Notification;
@@ -67,9 +68,9 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
      * Variable for how much time is left.
      */
     private long _timeLeft;
-    
+
     private String _seeds;
-    
+
     private String _peers;
 
     /**
@@ -85,12 +86,6 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
      */
     private boolean _cleaned = false;
 
-    /**
-     * The colors for cells.
-     */
-    private Color _cellColor;
-    private Color _othercellColor;
-
     private int lastState = -1;
 
     private Notification lastNotification;
@@ -99,7 +94,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
      * Column index for the file name.
      */
     static final int FILE_INDEX = 0;
-    private static final LimeTableColumn FILE_COLUMN = new LimeTableColumn(FILE_INDEX, "DOWNLOAD_NAME_COLUMN", I18n.tr("Name"), 201, true, ColoredCell.class);
+    private static final LimeTableColumn FILE_COLUMN = new LimeTableColumn(FILE_INDEX, "DOWNLOAD_NAME_COLUMN", I18n.tr("Name"), 201, true, IconAndNameHolder.class);
 
     /**
      * Column index for the file size.
@@ -144,13 +139,12 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
     static final int TIME_INDEX = 7;
     private static final LimeTableColumn TIME_COLUMN = new LimeTableColumn(TIME_INDEX, "DOWNLOAD_TIME_REMAINING_COLUMN", I18n.tr("Time"), 49, true,
             TimeRemainingHolder.class);
-    
+
     static final int SEEDS_INDEX = 8;
     private static final LimeTableColumn SEEDS_COLUMN = new LimeTableColumn(SEEDS_INDEX, "SEEDS_STATUS_COLUMN", I18n.tr("Seeds"), 80, true, String.class);
-    
+
     static final int PEERS_INDEX = 9;
     private static final LimeTableColumn PEERS_COLUMN = new LimeTableColumn(PEERS_INDEX, "PEERS_STATUS_COLUMN", I18n.tr("Peers"), 80, false, String.class);
-
 
     /**
      * Number of columns to display
@@ -173,7 +167,6 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
         super.initialize(downloader);
         _size = initializer.getSize();
         _status = "";
-        initColors();
         update();
     }
 
@@ -211,8 +204,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
     public Object getValueAt(int index) {
         switch (index) {
         case FILE_INDEX:
-            Color color = getColor(false);
-            return new ColoredCellImpl(new IconAndNameHolderImpl(getIcon(), initializer.getDisplayName()), color, IconAndNameHolder.class);
+            return new IconAndNameHolderImpl(getIcon(), initializer.getDisplayName());
         case SIZE_INDEX:
             return new SizeHolder(_size);
         case STATUS_INDEX:
@@ -346,50 +338,8 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
     //	    return info;
     //	}
 
-    /**
-     * Returns the total size in bytes of the file being downloaded.
-     *
-     * @return the total size in bytes of the file being downloaded
-     */
-    long getLength() {
-        return _size;
-    }
-
-    /**
-     * Returns whether or not the <tt>Downloader</tt> for this download
-     * is equal to the one passed in.
-     *
-     * @return <tt>true</tt> if the passed-in downloader is equal to the
-     *  <tt>Downloader</tt> for this download, <tt>false</tt> otherwise
-     */
-    boolean containsDownloader(BTDownloader downloader) {
-        return initializer.equals(downloader);
-    }
-
-    /**
-     * Return the state of the Downloader
-     *
-     * @return the state of the downloader
-     */
-    int getState() {
-        return _state;
-    }
-
-    /**
-     * Returns whether or not the download has completed.
-     *
-     * @return <tt>true</tt> if the download is complete, <tt>false</tt> otherwise
-     */
-    boolean isCompleted() {
-        return false;//_state == DownloadStatus.COMPLETE;
-    }
-
     private Icon getIcon() {
-        //	    if (initializer.getCustomIconDescriptor() == Downloader.BITTORRENT_DOWNLOAD)
-        //	        return GUIMediator.getThemeImage("bittorrent_download");
-        //	    else
-        //	        return IconManager.instance().getIconForFile(initializer.getFile());
-        return null;
+        return IconManager.instance().getIconForFile(initializer.getSaveLocation());
     }
 
     /**
@@ -399,34 +349,6 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
      * @implements DataLine interface
      */
     public void update() {
-        //		synchronized(initializer) {
-        //		// always get new file name it might have changed
-        //		_fileName = initializer.getSaveFile().getName();
-        //	    _speed = -1;
-        //	    _size = initializer.getContentLength();
-        //		_amountRead = initializer.getAmountRead();
-        //		_chatEnabled = initializer.hasChatEnabledHost();
-        //        _browseEnabled = initializer.hasBrowseEnabledHost();
-        //        _timeLeft = 0;
-        //        //note: we *always* want to update progress
-        //        // specifically for when the user has downloaded stuff,
-        //        // closed the app, and then re-opened the app.
-        //        //previously, because progress was only set while downloading
-        //        //or corrupted, the GUI would display 0 progress, even
-        //        //though it actually had progress.
-        //		double d = (double)_amountRead/(double)_size;
-        //		_progress = (int)(d*100);
-        //		if (_progress > 100) {
-        //			_progress = 100;
-        //		}
-        //		if (_progress < 0) {
-        //			_progress = 0;
-        //		}
-        //		this.updateStatus();
-        //		// downloads can go from inactive to active through resuming.
-        //		if ( !this.isInactive() ) _endTime = -1;
-        //	}
-
         _status = getInitializeObject().getStateString();
         _progress = getInitializeObject().getProgress();
         _amountRead = getInitializeObject().getBytesReceived();
@@ -440,7 +362,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
     private void showNotification() {
         if (lastState != _state) {
             Notification notification = null;
-            if (isCompleted()) {
+            if (getInitializeObject().isCompleted()) {
                 Action[] actions = null;
                 //	            File file = getFile();
                 //	            if (file != null) {
@@ -467,7 +389,6 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
         }
     }
 
-    
     /**
      * Returns whether or not this download is in what
      * is considered an "inactive"
@@ -494,15 +415,6 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
      */
     boolean isDownloading() {
         return false;// _state == DownloadStatus.DOWNLOADING;
-    }
-
-    private void initColors() {
-        _cellColor = SkinHandler.getWindow8Color();
-        _othercellColor = SkinHandler.getSearchResultSpeedColor();
-    }
-
-    private Color getColor(boolean playing) {
-        return playing ? _othercellColor : _cellColor;
     }
 
     private final class LaunchAction extends AbstractAction {

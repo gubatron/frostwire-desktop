@@ -426,23 +426,13 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         boolean pausable = dataLine.getInitializeObject().isPausable();
         boolean resumable = dataLine.getInitializeObject().isResumable();
 
-        if (dataLine.isCompleted()) {
-            removeAction.putValue(Action.NAME, I18n.tr("Clear Download"));
-            removeAction.putValue(LimeAction.SHORT_NAME, I18n.tr("Clear"));
-            removeAction.putValue(Action.SHORT_DESCRIPTION, I18n.tr("Clear Selected Downloads"));
-            launchAction.putValue(Action.NAME, I18n.tr("Launch Download"));
-            launchAction.putValue(LimeAction.SHORT_NAME, I18n.tr("Launch"));
-            launchAction.putValue(Action.SHORT_DESCRIPTION, I18n.tr("Launch Selected Downloads"));
-            exploreAction.setEnabled(TABLE.getSelectedRowCount() == 1);
-        } else {
-            removeAction.putValue(Action.NAME, I18n.tr("Cancel Download"));
-            removeAction.putValue(LimeAction.SHORT_NAME, I18n.tr("Cancel"));
-            removeAction.putValue(Action.SHORT_DESCRIPTION, I18n.tr("Cancel Selected Downloads"));
-            launchAction.putValue(Action.NAME, I18n.tr("Preview Download"));
-            launchAction.putValue(LimeAction.SHORT_NAME, I18n.tr("Preview"));
-            launchAction.putValue(Action.SHORT_DESCRIPTION, I18n.tr("Preview Selected Downloads"));
-            exploreAction.setEnabled(false);
-        }
+        removeAction.putValue(Action.NAME, I18n.tr("Cancel Download"));
+        removeAction.putValue(LimeAction.SHORT_NAME, I18n.tr("Cancel"));
+        removeAction.putValue(Action.SHORT_DESCRIPTION, I18n.tr("Cancel Selected Downloads"));
+        launchAction.putValue(Action.NAME, I18n.tr("Preview Download"));
+        launchAction.putValue(LimeAction.SHORT_NAME, I18n.tr("Preview"));
+        launchAction.putValue(Action.SHORT_DESCRIPTION, I18n.tr("Preview Selected Downloads"));
+        exploreAction.setEnabled(false);
 
         removeAction.setEnabled(true);
         resumeAction.setEnabled(resumable);
