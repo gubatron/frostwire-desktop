@@ -1,7 +1,6 @@
 package com.frostwire.bittorrent;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -12,8 +11,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +34,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileFilter;
 
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.config.impl.ConfigurationDefaults;
@@ -61,8 +59,6 @@ import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.AzureusCoreRunningListener;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.LabeledTextField;
-import com.limegroup.gnutella.gui.LimeTextField;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 public class CreateTorrentDialog extends JDialog implements TOTorrentProgressListener {
@@ -123,8 +119,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
 	TOTorrentCreator creator = null;
 
-	private LabeledTextField trackersTextField;
-	LimeTextField tt;
 	private Container _container;
 	private JButton _buttonSelectFile;
 	private JButton _buttonSelectFolder;
@@ -138,7 +132,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	private JLabel _labelTrackers;
 	private JScrollPane _textTrackersScrollPane;
 	private JFileChooser _fileChooser;
-	private String _invalidTrackerURL;;
+	private String _invalidTrackerURL;
+	private JFileChooser _saveAsDialog;;
 
 	public CreateTorrentDialog() {
 		try {
@@ -151,13 +146,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
 		// they had it like this
 		trackers.add(new ArrayList());
-
-		trackersTextField = new LabeledTextField(I18n.tr("Trackers"), 80);
-
-		// IDEA: If user has URL(s) in clipboard, autofill trackers textfield
-
-		// trackersTextField.setText();
-		// trackerURL = Utils.getLinkFromClipboard(display,false);
+		
 		initComponents();
 	}
 
@@ -181,7 +170,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		initSaveButton();
 
 		// PROGRESS BAR
-		initProgressBar();
+		initProgressBar();		
 
 		buildListeners();
 	}
@@ -321,6 +310,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		c.anchor = GridBagConstraints.PAGE_END;
 		c.insets = new Insets(0, 10, 10, 10);
 		_progressBar = new JProgressBar(0,100);
+		_progressBar.setStringPainted(true);
 		_container.add(_progressBar, c);
 	}
 
@@ -474,15 +464,31 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	}
 
 	private void showSaveAsDialog() {
-		JFileChooser saveAsDialog = new JFileChooser();
-		int result = saveAsDialog.showSaveDialog(this);
+		if (_saveAsDialog == null) {
+			_saveAsDialog = new JFileChooser(SharingSettings.DEFAULT_TORRENTS_DIR);
+			
+			_saveAsDialog.setFileFilter(new FileFilter() {
+				
+				@Override
+				public String getDescription() {
+					return I18n.tr("Torrent File");
+				}
+				
+				@Override
+				public boolean accept(File f) {
+					return f.getName().endsWith(".torrent");
+				}
+			});
+		}
+		
+		int result = _saveAsDialog.showSaveDialog(this);
 
 		if (result != JFileChooser.APPROVE_OPTION) {
 			savePath = null;
 			return;
 		}
 		
-		savePath = saveAsDialog.getSelectedFile().getAbsolutePath();		
+		savePath = _saveAsDialog.getSelectedFile().getAbsolutePath();		
 	}
 
 	private boolean validateAndFixTrackerURLS() {
@@ -631,7 +637,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 						.createFromFileOrDirWithFixedPieceLength(f, url,
 								getAddOtherHashes(), getPieceSizeManual());
 
-				// c.addListener(this);
+				c.addListener(this);
 
 				torrent = c.create();
 			}
@@ -696,12 +702,12 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 			//
 			// }
 
-			// this.reportCurrentTask(MessageText.getString("wizard.savingfile"));
+			reportCurrentTask(MessageText.getString("wizard.savingfile"));
 
 			final File torrent_file = new File(savePath);
 
 			torrent.serialiseToBEncodedFile(torrent_file);
-			// this.reportCurrentTask(MessageText.getString("wizard.filesaved"));
+			reportCurrentTask(MessageText.getString("wizard.filesaved"));
 			switchToClose();
 
 			// if the user wants to start seeding right away
@@ -823,34 +829,36 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 					}
 				});
 
-		if (!AzureusCoreFactory.isCoreRunning()) {
-			SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
-					showWaitWindow();
-				}
-			});
-		}
+//		if (!AzureusCoreFactory.isCoreRunning()) {
+//			SwingUtilities.invokeLater(new Runnable() {
+//				public void run() {
+//					showWaitWindow();
+//				}
+//			});
+//		}
 
-	}
-
-	// TODO
-	protected static void showWaitWindow() {
-		// if (shell != null && !shell.isDisposed()) {
-		// shell.forceActive();
-		// return;
-		// }
-
-		// shell = UIFunctionsManagerSWT.getUIFunctionsSWT().showCoreWaitDlg();
 	}
 
 	@Override
-	public void reportProgress(int percent_complete) {
-		_progressBar.setValue(percent_complete);
+	public void reportProgress(final int percent_complete) {
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				_progressBar.setValue(percent_complete);
+			}
+		});		
 	}
 
 	@Override
-	public void reportCurrentTask(String task_description) {
-		_progressBar.setString(task_description);
+	public void reportCurrentTask(final String task_description) {
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				_progressBar.setString(task_description);
+			}
+		});
+		
 	}
 	
 	public static void main(String[] args) {
