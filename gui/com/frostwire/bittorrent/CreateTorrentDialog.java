@@ -449,13 +449,28 @@ public class CreateTorrentDialog extends JDialog {
 				JOptionPane.showMessageDialog(this, I18n.tr("Check again your tracker URL(s).\n"+_invalidTrackerURL),I18n.tr("Invalid Tracker URL\n"),JOptionPane.ERROR_MESSAGE);
 				return;
 			}
+		} else {
+			trackers.clear();
 		}
 		
 		//show save as dialog
+		showSaveAsDialog();
 		
 		//create torrent and notify UI
 		
 		//if torrent is to be seeded, start a download of the torrent using a mediator.
+	}
+
+	private void showSaveAsDialog() {
+		JFileChooser saveAsDialog = new JFileChooser();
+		int result = saveAsDialog.showSaveDialog(this);
+
+		if (result != JFileChooser.APPROVE_OPTION) {
+			savePath = null;
+			return;
+		}
+		
+		savePath = saveAsDialog.getSelectedFile().getAbsolutePath();		
 	}
 
 	private boolean validateAndFixTrackerURLS() {
@@ -492,6 +507,10 @@ public class CreateTorrentDialog extends JDialog {
 		}
 		
 		fixValidTrackers(valid_tracker_urls);
+		
+		//update the trackers list of lists
+		trackers.clear();
+		trackers.add(valid_tracker_urls);
 		
 		_invalidTrackerURL = null;
 		
