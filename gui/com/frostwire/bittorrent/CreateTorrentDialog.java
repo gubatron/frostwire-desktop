@@ -62,6 +62,7 @@ import com.limegroup.gnutella.settings.SharingSettings;
 
 public class CreateTorrentDialog extends JDialog implements TOTorrentProgressListener {
 
+	private static final long serialVersionUID = -985586062136324042L;
 	/**
 	 * TRACKER TYPES
 	 */
@@ -79,14 +80,11 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	static final String TT_DECENTRAL_DEFAULT = TorrentUtils
 			.getDecentralisedEmptyURL().toString();
 
-	private static String default_open_dir = COConfigurationManager
-			.getStringParameter("CreateTorrent.default.open", "");
-
 	private static String default_save_dir = SharingSettings.TORRENTS_DIR_SETTING
-			.getValueAsString();// COConfigurationManager.getStringParameter(
-								// "CreateTorrent.default.save", "" );
-	private static String comment = I18n
-			.tr("Torrent File Created with FrostWire");
+			.getValueAsString();
+	
+	private static String comment = I18n.tr("Torrent File Created with FrostWire");
+	
 	private static int tracker_type = COConfigurationManager.getIntParameter(
 			"CreateTorrent.default.trackertype", TT_EXTERNAL);
 
@@ -106,7 +104,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	private boolean addOtherHashes = false;
 
 	String multiTrackerConfig = "";
-	List trackers = new ArrayList();
+	List<List<String>> trackers = new ArrayList<List<String>>();
 
 	String webSeedConfig = "";
 	Map webseeds = new HashMap();
@@ -140,7 +138,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		addOtherHashes = false;
 
 		// they had it like this
-		trackers.add(new ArrayList());
+		trackers.add(new ArrayList<String>());
 		
 		initComponents();
 	}
@@ -152,8 +150,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
 		_container = getContentPane();
 		_container.setLayout(new GridBagLayout());
-
-		GridBagConstraints c = null;
 
 		// TORRENT CONTENTS: Add file... Add directory
 		initTorrentContents();
@@ -868,13 +864,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
 						SwingUtilities.invokeLater(new Runnable() {
 							public void run() {
-								// TODO: Need to detect cancel (can't rely on
-								// shell status since it may never open)
-								// if (shell != null && !shell.isDisposed()) {
-								// shell.dispose();
-								// shell = null;
-								// }
-
 								if (triggerInThread == TriggerInThread.SWT_THREAD) {
 									l.azureusCoreRunning(core);
 								}
@@ -882,15 +871,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 						});
 					}
 				});
-
-//		if (!AzureusCoreFactory.isCoreRunning()) {
-//			SwingUtilities.invokeLater(new Runnable() {
-//				public void run() {
-//					showWaitWindow();
-//				}
-//			});
-//		}
-
 	}
 
 	@Override
