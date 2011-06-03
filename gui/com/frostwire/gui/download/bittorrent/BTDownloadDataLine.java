@@ -229,83 +229,34 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
         return FILE_INDEX;
     }
 
-    //    public boolean isTooltipRequired(int col) {
-    //        return _state == DownloadStatus.INVALID;
-    //    }
+    public String[] getToolTipArray(int col) {
+        String[] info = new String[11];
+        String name = getInitializeObject().getDisplayName();
+        String status = I18n.tr("Status") + ": " + getInitializeObject().getStateString();
+        String progress = I18n.tr("Progress") + ": " + getInitializeObject().getProgress() + "%";
+        String downSpeed = I18n.tr("Down Speed") + ": " + GUIUtils.rate2speed(getInitializeObject().getDownloadSpeed());
+        String upSpeed = I18n.tr("Up Speed") + ": " + GUIUtils.rate2speed(getInitializeObject().getUploadSpeed());
+        String downloaded = I18n.tr("Downloaded") + ": " + new SizeHolder(getInitializeObject().getBytesReceived());
+        String uploaded = I18n.tr("Uploaded") + ": " + new SizeHolder(getInitializeObject().getBytesSent());
+        String peers = I18n.tr("Peers") + ": " + getInitializeObject().getPeersString();
+        String seeds = I18n.tr("Seeds") + ": " + getInitializeObject().getSeedsString();
+        String size = I18n.tr("Size") + ": " + new SizeHolder(getInitializeObject().getSize());
+        String time = I18n.tr("ETA") + ": " + new TimeRemainingHolder(getInitializeObject().getETA());
 
-    //	public String[] getToolTipArray(int col) {
-    //	    // give a new message if we gave up
-    //	    if( _state == DownloadStatus.GAVE_UP )
-    //	        return GAVE_UP_MESSAGE;
-    //        
-    //        if(_state == DownloadStatus.INVALID )
-    //            return INVALID_MESSAGE;
-    //        
-    //        if (_state == DownloadStatus.WAITING_FOR_USER) {
-    //            String custom = (String)initializer.getAttribute(Downloader.CUSTOM_INACTIVITY_KEY);
-    //            if (custom != null)
-    //                return new String[]{TRACKER_FAILURE_REASON,custom};
-    //        }
-    //	    	    
-    //	    String[] info = new String[11];
-    //	    String bandwidth = AVERAGE_BANDWIDTH + ": " + GUIUtils.rate2speed(
-    //	        initializer.getAverageBandwidth()
-    //	    );
-    //	    String numHosts = POSSIBLE_HOSTS + ": " + 
-    //	                     initializer.getPossibleHostCount();
-    //        String busyHosts = BUSY_HOSTS + ": " +initializer.getBusyHostCount();
-    //        String queuedHosts=QUEUED_HOSTS + ": "+initializer.getQueuedHostCount();
-    //	    String numLocs = ALTERNATE_LOCATIONS + ": " +
-    //	                     initializer.getNumberOfAlternateLocations();
-    //        String numInvalidLocs = INVALID_ALTERNATE_LOCATIONS + ": " +
-    //                         initializer.getNumberOfInvalidAlternateLocations();
-    //		int chunkSize = 0;
-    //		String numChunks = null;
-    //		String lost;
-    //		// DPINJ: pass in the shared disk controller!!!
-    //        int totalPending = GuiCoreMediator.getDiskController().getNumPendingItems();
-    //		synchronized(initializer) {
-    //			if (_endTime == -1) {
-    //				chunkSize = initializer.getChunkSize();
-    //				numChunks = CHUNKS + ": "+initializer.getAmountVerified() / chunkSize +"/"+
-    //				initializer.getAmountRead() / chunkSize+ "["+ 
-    //				initializer.getAmountPending()+"|"+totalPending+"]"+ 
-    //				"/"+
-    //				initializer.getContentLength() / chunkSize+
-    //				", "+chunkSize/1024+KB;
-    //		
-    //			}
-    //		 	lost = LOST+": "+initializer.getAmountLost()/1024+KB;
-    //		}
-    //
-    //        info[0] = STARTED_ON + " " + GUIUtils.msec2DateTime( _startTime );
-    //	    if( _endTime != -1 ) {
-    //	        info[1] = FINISHED_ON + " " + GUIUtils.msec2DateTime( _endTime );
-    //	        info[2] = TIME_SPENT + ": " + CommonUtils.seconds2time(
-    //	            (int)((_endTime - _startTime) / 1000 ) );
-    //	        info[3] = "";
-    //	        info[4] = bandwidth;
-    //	        info[5] = numHosts;
-    //            info[6] = busyHosts;
-    //            info[7] = queuedHosts;
-    //	        info[8] = numLocs;
-    //            info[9] = numInvalidLocs;
-    //			info[10] = lost;
-    //	    } else {
-    //	        info[1] = TIME_SPENT + ": " + CommonUtils.seconds2time(
-    //	            (int) ((System.currentTimeMillis() - _startTime) / 1000 ) );
-    //	        info[2] = "";
-    //	        info[3] = bandwidth;
-    //	        info[4] = numHosts;
-    //            info[5] = busyHosts;
-    //            info[6] = queuedHosts;
-    //	        info[7] = numLocs;
-    //            info[8] = numInvalidLocs;
-    //			info[9] = numChunks;
-    //			info[10] = lost;}
-    //
-    //	    return info;
-    //	}
+        info[0] = name;
+        info[1] = status;
+        info[2] = progress;
+        info[3] = downSpeed;
+        info[4] = upSpeed;
+        info[5] = downloaded;
+        info[6] = uploaded;
+        info[7] = peers;
+        info[8] = seeds;
+        info[9] = size;
+        info[10] = time;
+
+        return info;
+    }
 
     private Icon getIcon() {
         return IconManager.instance().getIconForFile(initializer.getSaveLocation());
@@ -362,17 +313,6 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
         }
     }
 
-    /**
-     * Returns whether or not the
-     * download for this line is currently downloading
-     *
-     * @return <tt>true</tt> if this download is currently downloading,
-     *  <tt>false</tt> otherwise
-     */
-    boolean isDownloading() {
-        return false;// _state == DownloadStatus.DOWNLOADING;
-    }
-
     private final class LaunchAction extends AbstractAction {
 
         private static final long serialVersionUID = 4020797972200661119L;
@@ -414,13 +354,11 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
 
     @Override
     public boolean isDynamic(int col) {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public boolean isClippable(int col) {
-        // TODO Auto-generated method stub
         return false;
     }
 }

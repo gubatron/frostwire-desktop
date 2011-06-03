@@ -31,6 +31,8 @@ public interface BTDownloader {
     public String getStateString();
 
     public long getBytesReceived();
+    
+    public long getBytesSent();
 
     public double getDownloadSpeed();
 

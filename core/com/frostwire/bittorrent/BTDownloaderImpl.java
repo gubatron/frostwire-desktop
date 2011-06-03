@@ -78,6 +78,10 @@ public class BTDownloaderImpl implements BTDownloader {
     public long getBytesReceived() {
         return _downloadManager.getStats().getTotalGoodDataBytesReceived();
     }
+    
+    public long getBytesSent() {
+        return _downloadManager.getStats().getTotalDataBytesSent();
+    }
 
     public double getDownloadSpeed() {
         return _downloadManager.getStats().getDataReceiveRate()/1000;
