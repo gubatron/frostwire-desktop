@@ -69,18 +69,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
 
     private String _peers;
 
-    /**
-     * Stores the current state of this download, as of the last update.
-     * This is the state the everything should work off of to avoid the
-     * <tt>Downloader</tt> instance being in a different state than
-     * this data line.
-     */
-    private int _state;
-
-    private int _lastState = -1;
-
-    private Notification _lastNotification;
-
+    private boolean _notification;
     /**
      * Column index for the file name.
      */
@@ -158,7 +147,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
     public void initialize(BTDownloader downloader) {
         super.initialize(downloader);
         _size = initializer.getSize();
-        _lastState = _state = downloader.getState();
+        _notification = downloader.isCompleted();
         update();
     }
 
@@ -278,16 +267,14 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
         _seeds = getInitializeObject().getSeedsString();
         _peers = getInitializeObject().getPeersString();
 
-        _state = getInitializeObject().getState();
-
         if (getInitializeObject().isCompleted()) {
             showNotification();
         }
     }
 
     private void showNotification() {
-        if (_lastState != _state) {
-            _lastState = _state;
+        if (!_notification) {
+            _notification = true;
             Notification notification = null;
             if (getInitializeObject().isCompleted()) {
                 Action[] actions = null;
@@ -295,20 +282,13 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
                 if (file != null) {
                     actions = new Action[] { new LaunchAction(file), new ShowInLibraryAction(file) };
                 }
-                //if (file == null || !(file.getName().endsWith(".torrent") && BittorrentSettings.TORRENT_AUTO_START.getValue()))
                 notification = new Notification(getInitializeObject().getDisplayName(), getIcon(), actions);
-                //} else if (isDownloading() || isInactive() || lastState == -1) {
-                //    notification =  new Notification(getFileName() + ": " + _status, getIcon());
             } else {
                 return;
             }
 
             if (notification != null) {
-                if (_lastNotification != null) {
-                    NotifyUserProxy.instance().hideMessage(_lastNotification);
-                }
                 NotifyUserProxy.instance().showMessage(notification);
-                _lastNotification = notification;
             }
         }
     }

@@ -27,8 +27,6 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.MessageService;
 import com.limegroup.gnutella.gui.MultiLineLabel;
-import com.limegroup.gnutella.gui.library.RecursiveSharingDialog;
-import com.limegroup.gnutella.gui.library.RecursiveSharingDialog.State;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 

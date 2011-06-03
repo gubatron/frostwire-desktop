@@ -155,6 +155,13 @@ public class LibrarySearchPanel extends JPanel {
             final List<File> files = new ArrayList<File>();
             
             for (File child : file.listFiles(new SearchFileFilter(_query))) {
+                
+                DirectoryHolder directoryHolder = LibraryTree.instance().getSelectedDirectoryHolder();
+                LibrarySearchResultsHolder searchResultsHolder = LibraryTree.instance().getSearchResultsHolder();
+                if (directoryHolder != null && !searchResultsHolder.equals(directoryHolder)) {
+                    return;
+                }
+                
                 if (incompleteFiles.contains(child)) {
                     continue;
                 }

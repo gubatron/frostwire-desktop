@@ -8,14 +8,12 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.io.File;
 import java.util.List;
-import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.SwingUtilities;
 
 import com.limegroup.gnutella.gui.GUIConstants;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -52,10 +50,6 @@ public final class LibraryMediator implements ThemeObserver {
     private static LibraryTableMediator LIBRARY_TABLE;
 
     private static final String TABLE_KEY = "LIBRARY_TABLE";
-    /**
-     * Constant handle to the file update handler.
-     */
-    private final HandleFileUpdate FILE_UPDATER = new HandleFileUpdate();
     
     ///////////////////////////////////////////////////////////////////////////
 	//  Singleton Pattern
@@ -82,8 +76,7 @@ public final class LibraryMediator implements ThemeObserver {
 	 */
     private LibraryMediator() {
         getComponent(); // creates MAIN_PANEL
-		GUIMediator.setSplashScreenString(
-		    I18n.tr("Loading Library Window..."));
+		GUIMediator.setSplashScreenString(I18n.tr("Loading Library Window..."));
 		ThemeMediator.addThemeObserver(this);
 
 		addView(getLibraryTable().getScrolledTablePane(), TABLE_KEY);
@@ -126,8 +119,6 @@ public final class LibraryMediator implements ThemeObserver {
 	// inherit doc comment
 	public void updateTheme() {
 	    getLibraryTree().updateTheme();
-//		Color tableColor = SkinHandler.getTableBackgroundColor();
-//		TREE_SCROLL_PANE.getViewport().setBackground(tableColor);
 	}
 
 	/**
@@ -204,13 +195,6 @@ public final class LibraryMediator implements ThemeObserver {
 		if(dh instanceof SavedFilesDirectoryHolder)
             updateTableFiles(dh);
     }
-    
-    /**
-     * Forces a refresh of the currently selected folder.
-     */
-    public void forceRefresh() {
-        updateTableFiles(getLibraryTree().getSelectedDirectoryHolder());
-    }
 	
 	/**
 	 * Update the this file's statistic
@@ -230,7 +214,7 @@ public final class LibraryMediator implements ThemeObserver {
 		    // instead of allocating a new one every single time
 		    // a query is hit.
 		    // Very useful for large libraries and generic searches (ala: mp3)
-		    FILE_UPDATER.addFileUpdate(file);
+		    //FILE_UPDATER.addFileUpdate(file);
 	    }
 	}
 	
@@ -271,46 +255,7 @@ public final class LibraryMediator implements ThemeObserver {
     		//&& !getLibraryTree().incompleteDirectoryIsSelected();
     }
     
-    /**
-     *  Class to handle updates to shared file stats
-     *  without creating tons of runnables.
-     *  Idea taken from HandleQueryString in VisualConnectionCallback
-     */
-    private static final class HandleFileUpdate implements Runnable {
-        private Vector<File>  list;
-        private boolean active;
-    
-        public HandleFileUpdate( ) {
-            list   = new Vector<File>();
-            active = false;
-        }
-    
-        public void addFileUpdate(File f) {
-            list.addElement(f);
-            if(active == false) {
-                active = true;
-                SwingUtilities.invokeLater(this);
-            }
-        }
-    
-        public void run() {
-            try {
-                File f;
-                while (list.size() > 0) {
-                    f = list.firstElement();
-                    list.removeElementAt(0);
-                    getLibraryTable().update(f);
-                }
-			} catch (IndexOutOfBoundsException e) {
-        	    //this really should never happen, but
-        	    //who really cares if we're not sharing it?
-			} finally {
-			    active = false;
-            }
-        }
-    }
-
-	public static void showView(String key) {
+    public static void showView(String key) {
 		VIEW_LAYOUT.show(getViewPanel(), key);
 	}
 	

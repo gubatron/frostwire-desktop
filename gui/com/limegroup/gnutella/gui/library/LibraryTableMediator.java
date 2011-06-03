@@ -245,7 +245,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
      */
     private LibraryTableMediator() {
         super("LIBRARY_TABLE");
-        //GUIMediator.addRefreshListener(this);
         ThemeMediator.addThemeObserver(this);
     }
     
