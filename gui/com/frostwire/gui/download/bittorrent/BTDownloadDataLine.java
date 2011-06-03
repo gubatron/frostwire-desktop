@@ -1,6 +1,5 @@
 package com.frostwire.gui.download.bittorrent;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
@@ -18,8 +17,6 @@ import com.limegroup.gnutella.gui.library.LibraryMediator;
 import com.limegroup.gnutella.gui.notify.Notification;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
 import com.limegroup.gnutella.gui.tables.AbstractDataLine;
-import com.limegroup.gnutella.gui.tables.ColoredCell;
-import com.limegroup.gnutella.gui.tables.ColoredCellImpl;
 import com.limegroup.gnutella.gui.tables.IconAndNameHolder;
 import com.limegroup.gnutella.gui.tables.IconAndNameHolderImpl;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
@@ -27,7 +24,6 @@ import com.limegroup.gnutella.gui.tables.ProgressBarHolder;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
 import com.limegroup.gnutella.gui.tables.SpeedRenderer;
 import com.limegroup.gnutella.gui.tables.TimeRemainingHolder;
-import com.limegroup.gnutella.gui.themes.SkinHandler;
 
 /**
  * This class handles all of the data for a single download, representing
@@ -81,20 +77,16 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
      */
     private int _state;
 
-    /**
-     * Whether or not we've cleaned up this line.
-     */
-    private boolean _cleaned = false;
+    private int _lastState = -1;
 
-    private int lastState = -1;
-
-    private Notification lastNotification;
+    private Notification _lastNotification;
 
     /**
      * Column index for the file name.
      */
     static final int FILE_INDEX = 0;
-    private static final LimeTableColumn FILE_COLUMN = new LimeTableColumn(FILE_INDEX, "DOWNLOAD_NAME_COLUMN", I18n.tr("Name"), 201, true, IconAndNameHolder.class);
+    private static final LimeTableColumn FILE_COLUMN = new LimeTableColumn(FILE_INDEX, "DOWNLOAD_NAME_COLUMN", I18n.tr("Name"), 201, true,
+            IconAndNameHolder.class);
 
     /**
      * Column index for the file size.
@@ -166,31 +158,8 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
     public void initialize(BTDownloader downloader) {
         super.initialize(downloader);
         _size = initializer.getSize();
-        _status = "";
+        _lastState = _state = downloader.getState();
         update();
-    }
-
-    /**
-     * Tell the downloader to close its sockets.
-     */
-    public void cleanup() {
-        //	    BackgroundExecutorService.schedule(new Runnable() {
-        //	        public void run() {
-        //	        	if (initializer.getClass().equals(BTDownloaderImpl.class)) {
-        //	        		((BTDownloaderImpl) initializer).setCancelled(true);
-        //	        	}
-        //	        	
-        //	            initializer.stop();
-        //            }
-        //        });
-        _cleaned = true;
-    }
-
-    /**
-     * Determines if this was cleaned up.
-     */
-    public boolean isCleaned() {
-        return _cleaned;
     }
 
     /**
@@ -357,53 +326,40 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
         _timeLeft = getInitializeObject().getETA();
         _seeds = getInitializeObject().getSeedsString();
         _peers = getInitializeObject().getPeersString();
+
+        _state = getInitializeObject().getState();
+
+        if (getInitializeObject().isCompleted()) {
+            showNotification();
+        }
     }
 
     private void showNotification() {
-        if (lastState != _state) {
+        if (_lastState != _state) {
+            _lastState = _state;
             Notification notification = null;
             if (getInitializeObject().isCompleted()) {
                 Action[] actions = null;
-                //	            File file = getFile();
-                //	            if (file != null) {
-                //	                actions = new Action[] { new LaunchAction(file), new ShowInLibraryAction(file) };
-                //	            }
-                //                if (file == null || !(file.getName().endsWith(".torrent") &&
-                //                        BittorrentSettings.TORRENT_AUTO_START.getValue()))
-                //                    notification = new Notification(getFileName() + ": " + _status, getIcon(), actions);
-                //	        } else if (isDownloading() || isInactive() || lastState == -1) {
-                //	            notification =  new Notification(getFileName() + ": " + _status, getIcon());
+                File file = getInitializeObject().getSaveLocation();
+                if (file != null) {
+                    actions = new Action[] { new LaunchAction(file), new ShowInLibraryAction(file) };
+                }
+                //if (file == null || !(file.getName().endsWith(".torrent") && BittorrentSettings.TORRENT_AUTO_START.getValue()))
+                notification = new Notification(getInitializeObject().getDisplayName(), getIcon(), actions);
+                //} else if (isDownloading() || isInactive() || lastState == -1) {
+                //    notification =  new Notification(getFileName() + ": " + _status, getIcon());
             } else {
                 return;
             }
 
             if (notification != null) {
-                if (lastNotification != null) {
-                    NotifyUserProxy.instance().hideMessage(lastNotification);
+                if (_lastNotification != null) {
+                    NotifyUserProxy.instance().hideMessage(_lastNotification);
                 }
                 NotifyUserProxy.instance().showMessage(notification);
-                lastNotification = notification;
+                _lastNotification = notification;
             }
-
-            lastState = _state;
         }
-    }
-
-    /**
-     * Returns whether or not this download is in what
-     * is considered an "inactive"
-     * state, such as completeed, aborted, failed, etc.
-     *
-     * @return <tt>true</tt> if this download is in an inactive state,
-     *  <tt>false</tt> otherwise
-     */
-    boolean isInactive() {
-        //		return (_state == DownloadStatus.COMPLETE ||
-        //				_state == DownloadStatus.ABORTED ||
-        //				_state == DownloadStatus.GAVE_UP ||
-        //				_state == DownloadStatus.DISK_PROBLEM ||
-        //                _state == DownloadStatus.CORRUPT_FILE);
-        return false;
     }
 
     /**
