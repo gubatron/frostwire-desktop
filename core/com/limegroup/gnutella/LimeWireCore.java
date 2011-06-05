@@ -49,7 +49,6 @@ import com.limegroup.gnutella.spam.RatingTable;
 import com.limegroup.gnutella.spam.SpamManager;
 import com.limegroup.gnutella.statistics.QueryStats;
 import com.limegroup.gnutella.statistics.TcpBandwidthStatistics;
-import com.limegroup.gnutella.uploader.UploadSlotManager;
 import com.limegroup.gnutella.version.UpdateCollectionFactory;
 import com.limegroup.gnutella.xml.LimeXMLDocumentFactory;
 import com.limegroup.gnutella.xml.LimeXMLDocumentHelper;
@@ -98,18 +97,10 @@ public class LimeWireCore {
         return injector.getInstance(QueryHandlerFactory.class);
     }
 
-    public UploadSlotManager getUploadSlotManager() {
-        return injector.getInstance(UploadSlotManager.class);
-    }
-
     public FileManager getFileManager() {
         return injector.getInstance(FileManager.class);
     }
-
-    public UploadManager getUploadManager() {
-        return injector.getInstance(UploadManager.class);
-    }
-
+    
     public HeadPongFactory getHeadPongFactory() {
         return injector.getInstance(HeadPongFactory.class);
     }
@@ -276,10 +267,6 @@ public class LimeWireCore {
 
     public DownloadServices getDownloadServices() {
         return injector.getInstance(DownloadServices.class);
-    }
-
-    public UploadServices getUploadServices() {
-        return injector.getInstance(UploadServices.class);
     }
 
     public ApplicationServices getApplicationServices() {

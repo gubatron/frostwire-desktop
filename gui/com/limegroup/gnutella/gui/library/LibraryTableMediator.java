@@ -527,7 +527,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
                 fileManager.removeFileIfShared(file);
             
             if (fd != null) { 
-                GuiCoreMediator.getUploadManager().killUploadsForFileDesc(fd);
+                //GuiCoreMediator.getUploadManager().killUploadsForFileDesc(fd);
             }
 
             // removeOptions > 2 => OS offers trash options

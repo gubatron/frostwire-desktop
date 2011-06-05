@@ -108,8 +108,8 @@ public final class LocalClientInfo extends LocalAbstractInfo {
             _oldConnections = "" + sessionInfo.getNumOldConnections();
             //_ultrapeer = "" + GuiCoreMediator.getConnectionServices().isSupernode();
             //_leaf = "" + GuiCoreMediator.getConnectionServices().isShieldedLeaf();
-            _activeUploads = "" + GuiCoreMediator.getUploadServices().getNumUploads();
-            _queuedUploads = "" + GuiCoreMediator.getUploadServices().getNumQueuedUploads();
+            //_activeUploads = "" + GuiCoreMediator.getUploadServices().getNumUploads();
+            //_queuedUploads = "" + GuiCoreMediator.getUploadServices().getNumQueuedUploads();
             _activeDownloads = "" + GuiCoreMediator.getDownloadServices().getNumActiveDownloads();
             _httpDownloaders = "" +sessionInfo.getNumIndividualDownloaders();
             _waitingDownloaders = "" + sessionInfo.getNumWaitingDownloads();
@@ -131,7 +131,7 @@ public final class LocalClientInfo extends LocalAbstractInfo {
             _waitingSockets = "" + sessionInfo.getNumberOfWaitingSockets();
             _pendingTimeouts = "" + sessionInfo.getNumberOfPendingTimeouts();
             //_sp2Workarounds = "" + GuiCoreMediator.getConnectionCheckerManager().getNumWorkarounds();
-            _slotManager = ""+ GuiCoreMediator.getUploadSlotManager(); // null if not inited
+            //_slotManager = ""+ GuiCoreMediator.getUploadSlotManager(); // null if not inited
             //long [] selectStats = NIODispatcher.instance().getSelectStats();
             //_numSelects = ""+ selectStats[0];
             //_numImmediateSelects = "" + selectStats[1];

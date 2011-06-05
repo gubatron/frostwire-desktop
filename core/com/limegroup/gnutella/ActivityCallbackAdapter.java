@@ -19,10 +19,6 @@ public class ActivityCallbackAdapter implements ActivityCallback {
         
     }
 
-    public void addUpload(Uploader u) {
-        
-    }
-
     public void browseHostFailed(GUID guid) {
         
     }
@@ -78,10 +74,6 @@ public class ActivityCallbackAdapter implements ActivityCallback {
 
     public boolean isQueryAlive(GUID guid) {
         return false;
-    }
-
-    public void removeUpload(Uploader u) {
-        
     }
 
     public void restoreApplication() {

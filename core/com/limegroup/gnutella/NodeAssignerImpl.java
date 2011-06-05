@@ -101,7 +101,6 @@ class NodeAssignerImpl implements NodeAssigner {
     private ScheduledFuture<?>  timer;
     
 
-    private final Provider<BandwidthTracker> uploadTracker;
     private final Provider<BandwidthTracker> downloadTracker;
     private final NetworkManager networkManager;
     private final SearchServices searchServices;
@@ -121,7 +120,7 @@ class NodeAssignerImpl implements NodeAssigner {
      * @param connectionManager Reference to the ConnectionManager for this node
      */
     @Inject
-    public NodeAssignerImpl(@Named("uploadTracker") Provider<BandwidthTracker>uploadTracker, 
+    public NodeAssignerImpl(
                         @Named("downloadTracker") Provider<BandwidthTracker> downloadTracker,
                         NetworkManager networkManager,
                         SearchServices searchServices,
@@ -129,7 +128,6 @@ class NodeAssignerImpl implements NodeAssigner {
                         @Named("unlimitedExecutor") Executor unlimitedExecutor,
                         TcpBandwidthStatistics tcpBandwidthStatistics,
                         NetworkInstanceUtils networkInstanceUtils) {
-        this.uploadTracker = uploadTracker;
         this.downloadTracker = downloadTracker;  
         this.networkManager = networkManager;
         this.searchServices = searchServices;

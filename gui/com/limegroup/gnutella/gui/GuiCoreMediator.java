@@ -19,8 +19,6 @@ import com.limegroup.gnutella.SavedFileManager;
 import com.limegroup.gnutella.SearchServices;
 import com.limegroup.gnutella.SpamServices;
 import com.limegroup.gnutella.UDPService;
-import com.limegroup.gnutella.UploadManager;
-import com.limegroup.gnutella.UploadServices;
 import com.limegroup.gnutella.altlocs.AltLocManager;
 import com.limegroup.gnutella.browser.ExternalControl;
 import com.limegroup.gnutella.filters.IPFilter;
@@ -30,7 +28,6 @@ import com.limegroup.gnutella.metadata.MetaDataFactory;
 import com.limegroup.gnutella.spam.RatingTable;
 import com.limegroup.gnutella.spam.SpamManager;
 import com.limegroup.gnutella.statistics.TcpBandwidthStatistics;
-import com.limegroup.gnutella.uploader.UploadSlotManager;
 import com.limegroup.gnutella.xml.LimeXMLDocumentFactory;
 import com.limegroup.gnutella.xml.LimeXMLProperties;
 import com.limegroup.gnutella.xml.LimeXMLSchemaRepository;
@@ -44,9 +41,7 @@ public class GuiCoreMediator {
     
     public static UDPService getUdpService() {  return core.getUdpService(); }    
     public static NetworkManager getNetworkManager() {  return core.getNetworkManager(); }    
-    public static UploadManager getUploadManager() {  return core.getUploadManager(); }
     public static FileManager getFileManager() {  return core.getFileManager(); }
-    public static UploadSlotManager getUploadSlotManager() {  return core.getUploadSlotManager(); }
     public static QueryRequestFactory getQueryRequestFactory() {  return core.getQueryRequestFactory(); }    
     public static LocalFileDetailsFactory getLocalFileDetailsFactory() {  return core.getLocalFileDetailsFactory(); }
     public static DownloadManager getDownloadManager() {  return core.getDownloadManager(); }
@@ -61,7 +56,6 @@ public class GuiCoreMediator {
     public static SearchServices getSearchServices() { return core.getSearchServices(); }
     public static ScheduledExecutorService getCoreBackgroundExecutor() { return core.getBackgroundExecutor(); }
     public static DownloadServices getDownloadServices() { return core.getDownloadServices(); }
-    public static UploadServices  getUploadServices() { return core.getUploadServices(); }
     public static ApplicationServices getApplicationServices() { return core.getApplicationServices(); }
     public static SpamServices getSpamServices() { return core.getSpamServices(); }
     public static ExternalControl getExternalControl() { return core.getExternalControl(); }

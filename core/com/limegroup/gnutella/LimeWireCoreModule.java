@@ -66,8 +66,6 @@ import com.limegroup.gnutella.search.QueryDispatcherImpl;
 import com.limegroup.gnutella.search.QueryHandlerFactory;
 import com.limegroup.gnutella.search.QueryHandlerFactoryImpl;
 import com.limegroup.gnutella.statistics.LimeWireGnutellaStatisticsModule;
-import com.limegroup.gnutella.uploader.UploadSlotManager;
-import com.limegroup.gnutella.uploader.UploadSlotManagerImpl;
 import com.limegroup.gnutella.version.UpdateCollectionFactory;
 import com.limegroup.gnutella.version.UpdateCollectionFactoryImpl;
 import com.limegroup.gnutella.version.UpdateMessageVerifier;
@@ -127,7 +125,6 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(LocalPongInfo.class).to(LocalPongInfoImpl.class);
         bind(SearchServices.class).to(SearchServicesImpl.class);
         bind(DownloadServices.class).to(DownloadServicesImpl.class);
-        bind(UploadServices.class).to(UploadServicesImpl.class);
         bind(ApplicationServices.class).to(ApplicationServicesImpl.class);
         bind(SpamServices.class).to(SpamServicesImpl.class);
         bind(SpamFilterFactory.class).to(SpamFilterFactoryImpl.class);
@@ -154,9 +151,7 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(Inspector.class).to(InspectorImpl.class);
         bind(LocalSocketAddressProvider.class).to(LocalSocketAddressProviderImpl.class);
         bind(MessageRouter.class).to(StandardMessageRouter.class);
-        bind(UploadSlotManager.class).to(UploadSlotManagerImpl.class);
         bind(PongCacher.class).to(PongCacherImpl.class);        
-        bind(BandwidthTracker.class).annotatedWith(Names.named("uploadTracker")).to(UploadManager.class);     // For NodeAssigner.
         bind(BandwidthTracker.class).annotatedWith(Names.named("downloadTracker")).to(DownloadManager.class); // For NodeAssigner.
         bind(MessageHandlerBinder.class).to(MessageHandlerBinderImpl.class);
         bind(QueryDispatcher.class).to(QueryDispatcherImpl.class);
