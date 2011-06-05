@@ -1,6 +1,6 @@
 package com.limegroup.gnutella.gui.search;
 
-import java.awt.event.ActionListener;
+import java.util.EventListener;
 
 import org.limewire.i18n.I18nMarker;
 
@@ -48,8 +48,8 @@ final class SearchButtons {
         	I18nMarker.marktr("Download All Selected Files"),
             I18nMarker.marktr("See detail web page about the selected torrent (Contents, Comments, Seeds)")
 		};
-
-		ActionListener[] buttonListeners = {
+        
+		EventListener[] buttonListeners = {
 			rp.BUY_LISTENER,
 		    rp.DOWNLOAD_LISTENER,
 		    rp.TORRENT_DETAILS_LISTENER

@@ -11,6 +11,7 @@ import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Box;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JPanel;
@@ -29,6 +31,8 @@ import javax.swing.OverlayLayout;
 import javax.swing.UIManager;
 import javax.swing.border.AbstractBorder;
 import javax.swing.border.Border;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.event.MouseInputListener;
 import javax.swing.plaf.metal.MetalBorders;
@@ -37,6 +41,7 @@ import org.limewire.i18n.I18nMarker;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.bittorrent.TorrentUtil;
+import com.frostwire.bittorrent.settings.BittorrentSettings;
 import com.frostwire.gnutella.gui.actions.BuyAction;
 import com.limegroup.gnutella.FileDetails;
 import com.limegroup.gnutella.GUID;
@@ -61,6 +66,7 @@ import com.limegroup.gnutella.gui.tables.ColumnPreferenceHandler;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.TableSettings;
+import com.limegroup.gnutella.gui.themes.SkinCheckBoxMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinMenu;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
@@ -128,10 +134,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
      * The browse host listener.
      */
     
-    /**
-     * The torrent details listener.
-     */
-    ActionListener TORRENT_DETAILS_LISTENER;
+    MouseAdapter TORRENT_DETAILS_LISTENER;
     
     private ActionListener COPY_MAGNET_ACTION_LISTENER;
     
@@ -405,11 +408,46 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
             }
         };
         
-        TORRENT_DETAILS_LISTENER = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                SearchMediator.showTorrentDetails(ResultPanel.this, 0);
+        TORRENT_DETAILS_LISTENER = new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		if (e.getButton() == MouseEvent.BUTTON1) {
+        			onLeftClick();
+        		} else {
+        			onRightClick(e);
+        		}
+        		
+        	}
+
+        	/**
+        	 * Show popup menu with option to toggle torrent detail display.
+        	 * @param e
+        	 */
+        	private void onRightClick(MouseEvent e) {
+				final JPopupMenu menu = new SkinPopupMenu();
+				final JCheckBoxMenuItem menuItem = new SkinCheckBoxMenuItem(I18n.tr("Show Torrent Details page when a download starts"),BittorrentSettings.TORRENT_DETAIL_PAGE_SHOWN_AFTER_DOWNLOAD.getValue());
+				menuItem.addChangeListener(new ChangeListener() {
+					
+					@Override
+					public void stateChanged(ChangeEvent e) {
+						BittorrentSettings.TORRENT_DETAIL_PAGE_SHOWN_AFTER_DOWNLOAD.setValue(menuItem.isSelected());
+					}
+				});
+				menu.add(menuItem);
+
+				JComponent source = (JComponent) e.getComponent();
+				menu.show(source, source.getX()-100, source.getY());
+
+        	}
+        	
+        	/**
+        	 * Show torrent details.
+        	 */
+            private void onLeftClick() {
+            	SearchMediator.showTorrentDetails(ResultPanel.this, 0);
             }
-        };
+
+        }; 
         
         COPY_MAGNET_ACTION_LISTENER = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
