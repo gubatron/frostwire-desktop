@@ -11,6 +11,7 @@ import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileFilter;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -115,6 +116,8 @@ public class RecursiveSharingPanel extends JPanel {
         super(new BorderLayout());
         this.roots = new TreeSet<File>(FileTreeModel.DEFAULT_COMPARATOR);
         this.deselected = new HashSet<File>(blackListSet);
+        
+        addFoldersToExclude(new HashSet<File>(Arrays.asList(roots)));
 
         // center
         directoryTreeModel = new FileTreeModel("");
