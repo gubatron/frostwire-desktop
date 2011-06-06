@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
+import javax.swing.JCheckBox;
 import javax.swing.JRadioButton;
 
 import org.limewire.i18n.I18nMarker;
@@ -44,6 +45,8 @@ public class ShutdownPaneItem extends AbstractPaneItem {
      * option is only displayed on systems that support the tray.
      */    
     private JRadioButton minimizeToTray;
+    
+    private JCheckBox _checkBoxShowHideExitDialog;
 
     /** Creates new ShutdownOptionsPaneItem
      *
@@ -62,6 +65,9 @@ public class ShutdownPaneItem extends AbstractPaneItem {
         shutdownAfterTransfers = new JRadioButton(I18n.tr(whenReadyLabel));
         minimizeToTray = new JRadioButton(I18n.tr(minimizeLabel));
         
+        String showHideExitDialogLabel = I18nMarker.marktr("Show dialog to ask before close");
+        _checkBoxShowHideExitDialog = new JCheckBox(showHideExitDialogLabel);
+        
         ButtonGroup bg = new ButtonGroup();
         buttonPanel.add(shutdownImmediately);
         buttonPanel.add(shutdownAfterTransfers);
@@ -74,6 +80,8 @@ public class ShutdownPaneItem extends AbstractPaneItem {
         
         BoxPanel mainPanel = new BoxPanel(BoxPanel.X_AXIS);
         mainPanel.add(buttonPanel);
+        mainPanel.add(Box.createHorizontalGlue());
+        mainPanel.add(_checkBoxShowHideExitDialog);
         mainPanel.add(Box.createHorizontalGlue());
         
         add(mainPanel);
@@ -95,6 +103,9 @@ public class ShutdownPaneItem extends AbstractPaneItem {
             ApplicationSettings.MINIMIZE_TO_TRAY.setValue(false);
             ApplicationSettings.SHUTDOWN_AFTER_TRANSFERS.setValue(false);
         }
+        
+        ApplicationSettings.SHOW_HIDE_EXIT_DIALOG.setValue(_checkBoxShowHideExitDialog.isSelected());
+        
         return false;
     }
     
@@ -114,6 +125,8 @@ public class ShutdownPaneItem extends AbstractPaneItem {
         } else {
             shutdownImmediately.setSelected(true);
         }
+        
+        _checkBoxShowHideExitDialog.setSelected(ApplicationSettings.SHOW_HIDE_EXIT_DIALOG.getValue());
     }
     
     public boolean isDirty() {
@@ -134,6 +147,7 @@ public class ShutdownPaneItem extends AbstractPaneItem {
         
         return minimizeToTray.isSelected() != reallyMinimized ||
                shutdownAfterTransfers.isSelected() != reallyAfterTransfers ||
-               shutdownImmediately.isSelected() != immediate;
+               shutdownImmediately.isSelected() != immediate ||
+               _checkBoxShowHideExitDialog.isSelected() != ApplicationSettings.SHOW_HIDE_EXIT_DIALOG.getValue();
     }
 }

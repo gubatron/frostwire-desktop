@@ -282,6 +282,9 @@ public class ApplicationSettings extends LimeProps {
     public static final BooleanSetting USAGE_STATS =
         FACTORY.createBooleanSetting("USAGE_STATS", false);
     
+    public static final BooleanSetting SHOW_HIDE_EXIT_DIALOG =
+        FACTORY.createBooleanSetting("SHOW_HIDE_EXIT_DIALOG", true);
+    
     /**
      * Gets the current language setting.
      */

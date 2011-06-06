@@ -56,6 +56,7 @@ import org.limewire.util.VersionUtils;
 
 import com.frostwire.bittorrent.AzureusStarter;
 import com.frostwire.gnutella.connectiondoctor.ConnectionDoctor;
+import com.frostwire.gnutella.gui.HideExitDialog;
 import com.frostwire.gnutella.gui.chat.ChatMediator;
 import com.google.inject.Provider;
 import com.limegroup.bittorrent.gui.TorrentUploadCanceller;
@@ -1086,7 +1087,16 @@ public final class GUIMediator {
 	 * exiting after all file transfers in progress are complete.
 	 */
 	public static void close(boolean fromFrame) {
-		if (ApplicationSettings.MINIMIZE_TO_TRAY.getValue()) {
+	    
+	    boolean minimizeToTray = ApplicationSettings.MINIMIZE_TO_TRAY.getValue();
+	    
+	    if (!OSUtils.isMacOSX() && ApplicationSettings.SHOW_HIDE_EXIT_DIALOG.getValue()) {
+	        HideExitDialog dlg = new HideExitDialog(getAppFrame());
+	        dlg.setVisible(true);
+	        minimizeToTray = dlg.getMinimizeToTray();
+	    }
+	    
+		if (minimizeToTray) {
 			// if we want to minimize to the tray, but LimeWire wasn't
 			// able to load the tray library, then shutdown after transfers.
 			if (OSUtils.supportsTray()
