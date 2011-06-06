@@ -48,11 +48,9 @@ import com.frostwire.gnutella.gui.actions.BuyAction;
 import com.limegroup.gnutella.BrowseHostHandler;
 import com.limegroup.gnutella.FileDetails;
 import com.limegroup.gnutella.GUID;
-import com.limegroup.gnutella.LimeCoreGlue;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.SpamServices;
-import com.limegroup.gnutella.SpamServicesImpl;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.FileDetailsProvider;
@@ -69,6 +67,8 @@ import com.limegroup.gnutella.gui.actions.ActionUtils;
 import com.limegroup.gnutella.gui.actions.SearchAction;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.MulticastTransferHandler;
+import com.limegroup.gnutella.gui.options.ConfigureOptionsAction;
+import com.limegroup.gnutella.gui.options.OptionsConstructor;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.ColumnPreferenceHandler;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
@@ -188,7 +188,11 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
      */
     private JButton BUY_BUTTON;
     
-    public BuyAction BUY_ACTION;    
+    public BuyAction BUY_ACTION;
+    
+    private JButton CONFIGURE_SHARING_BUTTON;
+    
+    private Action CONFIGURE_SHARING_ACTION;
     
     protected Box SOUTH_PANEL;
 
@@ -365,7 +369,14 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
 
         BUY_BUTTON = new IconButton(BUY_ACTION);
         BUY_BUTTON.setEnabled(false);
-        BUY_BUTTON.addActionListener(BUY_LISTENER);    
+        BUY_BUTTON.addActionListener(BUY_LISTENER);
+        
+        CONFIGURE_SHARING_ACTION = new ConfigureOptionsAction(
+                OptionsConstructor.SHARED_KEY,
+                I18n.tr("Options"),
+                I18n.tr("You can configure the folders you share in FrostWire\'s Options."));
+        CONFIGURE_SHARING_BUTTON = new IconButton(CONFIGURE_SHARING_ACTION);
+        CONFIGURE_SHARING_BUTTON.setEnabled(true);
     }
     
     
@@ -1168,7 +1179,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
                 JPanel buttonPanel = new JPanel();
                 buttonPanel.setLayout(new GridBagLayout());
                 GridBagConstraints gbc = null;
-
+                
                 gbc = new GridBagConstraints();                
                 gbc.gridx = 0;
                 gbc.gridy = 0;
@@ -1176,6 +1187,13 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
                 gbc.fill = GridBagConstraints.NONE;
                 gbc.gridwidth = GridBagConstraints.RELATIVE;
                 buttonPanel.add(BUY_BUTTON, gbc);
+
+                gbc.gridx = 1;
+                gbc.gridy = 0;
+                gbc.anchor = GridBagConstraints.WEST;
+                gbc.fill = GridBagConstraints.NONE;
+                gbc.gridwidth = GridBagConstraints.RELATIVE;
+                buttonPanel.add(CONFIGURE_SHARING_BUTTON, gbc);
                 
                 gbc.gridx = 1;
                 gbc.gridy = 0;
@@ -1186,7 +1204,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
                 buttonPanel.add(BUTTON_ROW, gbc);
                 
                 gbc = new GridBagConstraints();
-                gbc.gridx = 2;
+                gbc.gridx = 1;
                 gbc.gridy = 0;
                 gbc.anchor = GridBagConstraints.EAST;
                 gbc.fill = GridBagConstraints.NONE;
