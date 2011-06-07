@@ -1090,11 +1090,14 @@ public final class GUIMediator {
 	    
 	    boolean minimizeToTray = ApplicationSettings.MINIMIZE_TO_TRAY.getValue();
 	    
+	    /** Possible dialog when user hits the Window [x] button */
+	    /*
 	    if (!OSUtils.isMacOSX() && ApplicationSettings.SHOW_HIDE_EXIT_DIALOG.getValue()) {
 	        HideExitDialog dlg = new HideExitDialog(getAppFrame());
 	        dlg.setVisible(true);
 	        minimizeToTray = dlg.getMinimizeToTray();
 	    }
+	    */
 	    
 		if (minimizeToTray) {
 			// if we want to minimize to the tray, but LimeWire wasn't

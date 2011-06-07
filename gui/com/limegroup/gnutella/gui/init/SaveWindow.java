@@ -97,9 +97,9 @@ class SaveWindow extends SetupWindow {
 	
 	private static String describeText(boolean migrate) {
 	    if(!migrate)
-	        return I18nMarker.marktr("Please choose a folder where you would like your files to be downloaded.\nYou can also choose folders you would like to share with other users on the Gnutella and BitTorrent Networks.");
+	        return I18nMarker.marktr("Please choose a folder where you would like your files to be downloaded.\nYou can also choose folders you would like to share with other users on the Gnutella and BitTorrent networks.");
 	    else
-	        return I18nMarker.marktr("FrostWire now downloads files to a new, different folder.\nPlease confirm the folder where you would like your files to be downloaded. You can also choose folders you would like to share with other users on the Gnutella and BitTorrent Networks.");
+	        return I18nMarker.marktr("FrostWire now downloads files to a new, different folder.\nPlease confirm the folder where you would like your files to be downloaded. You can also choose folders you would like to share with other users on the Gnutella and BitTorrent networks.");
 	}
     
     protected void createWindow() {
@@ -147,7 +147,7 @@ class SaveWindow extends SetupWindow {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.weightx = 1;
-        gbc.weighty = 1;
+        //gbc.weighty = 1;
 		mainPanel.add(saveFolderPanel, gbc);
 		
         // "Saved Torrent Data" container
@@ -157,7 +157,7 @@ class SaveWindow extends SetupWindow {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.weightx = 1;
-        gbc.weighty = 1;
+        //gbc.weighty = 1;
         mainPanel.add(torrentSaveFolderComponent,gbc);        
 
         
@@ -316,14 +316,14 @@ class SaveWindow extends SetupWindow {
     private void setExplanationText(boolean showMessage) {
         if (CHECK_BOX.isSelected()) {
             //explanationLabel.setText(I18n.tr("All downloads will be shared. INDIVIDUAL FILE NOTICE (FORGOT PREVIOUS FILES)"));
-            explanationLabel.setText(I18n.tr("Currently sharing downloaded files to the 'Save Folder' with everybody."));
+            explanationLabel.setText(I18n.tr("Currently sharing downloaded files to the 'Save Folder' with everybody in the Gnutella network."));
             if (showMessage) {
             	SwingUtilities.invokeLater(new Runnable() {
 
 					@Override
 					public void run() {
 		                JOptionPane.showMessageDialog(SaveWindow.this,
-		                        I18n.tr("All files downloaded to the 'Save Folder' will be shared as 'individually shared files' with everybody on the network.\nYour 'Save Folder' won't be shared as a whole unless you decide to make it a shared folder.\n\nYou can check the files you are sharing individually in the Library Tab."),
+		                        I18n.tr("All files downloaded to the 'Save Folder' will be shared as 'individually shared files' with everybody in the Gnutella network.\nYour 'Save Folder' won't be shared as a whole unless you decide to make it a shared folder.\n\nYou can check the files you are sharing individually in the Library Tab."),
 		                        I18n.tr("How finished downloads are being shared"),
 		                        JOptionPane.WARNING_MESSAGE); 
 					}});
