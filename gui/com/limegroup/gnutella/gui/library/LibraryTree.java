@@ -923,7 +923,7 @@ final class LibraryTree extends JTree implements MouseObserver {
 	private Action exploreAction = new ExploreAction();
 	private Action configureSharingAction = new ConfigureOptionsAction(
             OptionsConstructor.SHARED_KEY,
-            I18n.tr("Options"),
+            I18n.tr("Sharing Options"),
             I18n.tr("You can configure the folders you share in FrostWire\'s Options."));
             
     private Action showTorrentMetaAction = new ShowHideTorrentMetaAction();

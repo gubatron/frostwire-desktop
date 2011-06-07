@@ -38,15 +38,22 @@ final class HelpMenu extends AbstractMenu {
 	 */
 	HelpMenu() {
 	    super(I18n.tr("&Help"));
-		addMenuItem(new OpenLinkAction("http://www.frostwire.com/?id=support",
-		        I18n.tr("&Using FrostWire"),
-		        I18n.tr("Help for Using FrostWire")));
-		
-		addMenuItem(new ShowTipOfTheDayAction());
-		
+
 		addMenuItem(new OpenLinkAction("http://www.frostwire.com/?id=faq",
 		        I18n.tr("&FAQ"),
 		        I18n.tr("Frequently Asked Questions for FrostWire")));
+
+	    addMenuItem(new OpenLinkAction("http://frostwire.wordpress.com/2007/03/19/dont-get-scammed-frostwire-is-free/",
+		        I18n.tr("&Did you pay for FrostWire?"),
+		        I18n.tr("Did you pay for FrostWire? FrostWire is Free as in Free Beer. Avoid Scams.")));
+		
+		addMenuItem(new OpenLinkAction("http://www.frostwire.com/?id=faq#fil1",
+				I18n.tr("How to share/unshare files?"),
+				I18n.tr("How to control what files are shared or not.")));		
+
+		addMenuItem(new OpenLinkAction("http://www.frostwire.com/?id=faq#fil7",
+				I18n.tr("What is \"Seeding\"?"),
+				I18n.tr("Learn about BitTorrent Seeding")));		
 		
 		addMenuItem(new OpenLinkAction("http://www.frostwire.com/forum/viewforum.php?f=1",
 		        I18n.tr("Foru&m"),
@@ -59,6 +66,8 @@ final class HelpMenu extends AbstractMenu {
 		addMenuItem(new OpenLinkAction("http://www.frostwire.com/twitter",
 				I18n.tr("Follow us on Twitter"),
 				I18n.tr("Follow us on Twitter")));
+		
+		addMenuItem(new ShowTipOfTheDayAction());
 		
 		if(!OSUtils.isMacOSX()) {
             addSeparator();

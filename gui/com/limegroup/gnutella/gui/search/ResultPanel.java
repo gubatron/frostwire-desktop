@@ -373,7 +373,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
         
         CONFIGURE_SHARING_ACTION = new ConfigureOptionsAction(
                 OptionsConstructor.SHARED_KEY,
-                I18n.tr("Options"),
+                I18n.tr("Sharing Options"),
                 I18n.tr("You can configure the folders you share in FrostWire\'s Options."));
         CONFIGURE_SHARING_BUTTON = new IconButton(CONFIGURE_SHARING_ACTION);
         CONFIGURE_SHARING_BUTTON.setEnabled(true);
