@@ -19,6 +19,7 @@ import com.limegroup.bittorrent.BTMetaInfo;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
+import com.limegroup.gnutella.library.SharingUtils;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 public final class GuiFrostWireUtils extends CoreFrostWireUtils {
@@ -60,8 +61,9 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
 	} // shareTorrent
 
 	/**
-	 * Makes sure the Torrents/ folder exists. If it's shareable it will make
-	 * sure the folder is shared. If not it'll make sure all the torrents inside
+	 * Makes sure the Torrents/ folder exists. 
+	 * If it's shareable it will make sure the folder is shared. 
+	 * If it's not shareable not it'll make sure all the torrents inside
 	 * are not shared.
 	 */
 	public final static void verifySharedTorrentFolderCorrecteness() {
@@ -75,13 +77,16 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
 		// share/unshare all torrents inside
 		File[] torrents = SharingSettings.DEFAULT_SHARED_TORRENTS_DIR
 				.listFiles();
+		
 		if (torrents != null && torrents.length > 0) {
 			for (File t : torrents) {
-				if (SharingSettings.SHARE_TORRENT_META_FILES.getValue() &&
-				    GuiCoreMediator.getFileManager().isFolderShared(SharingSettings.DEFAULT_SHARED_TORRENTS_DIR))
-					GuiCoreMediator.getFileManager().addFileAlways(t);
-				else
-					GuiCoreMediator.getFileManager().stopSharingFile(t);
+				if (SharingSettings.SHARE_TORRENT_META_FILES.getValue()) {
+					if (!GuiCoreMediator.getFileManager().isFolderShared(SharingSettings.DEFAULT_SHARED_TORRENTS_DIR)) {
+						//GuiCoreMediator.getFileManager().addFileAlways(t);
+					}
+				} else {
+					//GuiCoreMediator.getFileManager().stopSharingFile(t);
+				}
 			}
 		}
 
@@ -177,6 +182,9 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
 	}
 	
 	public static void correctIndividuallySharedFiles(boolean loadSettings) {
+		unshareAllIndividuallySharedFiles(loadSettings);
+		
+		/**
 	    correctIndividuallySharedFiles(SharingSettings.getSaveDirectory(), loadSettings);
 	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getDocumentMediaType()).getValue(), loadSettings);
 	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getProgramMediaType()).getValue(), loadSettings);
@@ -184,6 +192,24 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
 	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getVideoMediaType()).getValue(), loadSettings);
 	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getImageMediaType()).getValue(), loadSettings);
 	    correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getTorrentMediaType()).getValue(), loadSettings);
+	    */
+	}
+	
+	public static void unshareAllIndividuallySharedFiles(boolean loadSettings) {
+	    if (!SharingSettings.SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES.getValue()) {
+	    	
+	    	File[] files = GuiCoreMediator.getFileManager().getIndividualFiles();
+
+            if (files != null) {
+                for (File f : files) {
+                    GuiCoreMediator.getFileManager().removeIndividuallySharedFile(f);
+                }
+            }
+        }
+	    
+	    if (loadSettings) {
+	        GuiCoreMediator.getFileManager().loadSettings();
+	    }
 	}
 	
 	public static void correctIndividuallySharedFiles(File directory, boolean loadSettings) {

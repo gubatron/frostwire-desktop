@@ -248,7 +248,7 @@ public class SharingSettings extends LimeProps {
 		"mpg;mpeg;asf;qt;mov;avi;mpe;swf;dcr;gif;jpg;jpeg;jpe;png;tif;tiff;"+
 		"exe;zip;gz;gzip;hqx;tar;tgz;z;rmj;lqt;rar;ace;sit;smi;img;ogg;rm;"+
 		"bin;dmg;jve;nsv;med;mod;7z;iso;fwtp;lwtp;pmf;m4a;bz2;sea;pf;arc;arj;"+
-		"bz;tbz;mime;taz;ua;toast;lit;rpm;deb;pkg;sxw;l6t;srt;sub;idx;mkv;"+
+		"bz;tbz;mime;taz;ua;toast;lit;rpm;deb;pkg;sxw;l6t;srt;sub;torrent;idx;mkv;"+
 		"ogm;shn;dvi;rmvp;kar;cdg;ccd;cue;c;h;m;java;jar;pl;py;pyc;"+
 		"pyo;pyz";
     

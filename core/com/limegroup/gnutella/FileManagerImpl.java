@@ -99,7 +99,7 @@ public abstract class FileManagerImpl implements FileManager {
     /**
      * All of the data for FileManager.
      */
-    private final LibraryData _data = new LibraryData();
+	private final LibraryData _data = new LibraryData();
 
     /** 
      * The list of complete and incomplete files.  An entry is null if it
@@ -858,11 +858,14 @@ public abstract class FileManagerImpl implements FileManager {
 				.listFiles();
 		if (torrents != null && torrents.length > 0) {
 			for (File t : torrents) {
-				if (SharingSettings.SHARE_TORRENT_META_FILES.getValue() &&
-				    isFolderShared(SharingSettings.DEFAULT_SHARED_TORRENTS_DIR))
-					addFileAlways(t);
-				else
-					stopSharingFile(t);
+				if (SharingSettings.SHARE_TORRENT_META_FILES.getValue()) {
+					if (!isFolderShared(SharingSettings.DEFAULT_SHARED_TORRENTS_DIR)) {
+						//addFileAlways(t);
+					}
+				}
+				else {
+					//stopSharingFile(t);
+				}
 			}
 		}
 
@@ -1456,6 +1459,7 @@ public abstract class FileManagerImpl implements FileManager {
 		// remove file already here to heed against race conditions
 		// wrt to filemanager events being handled on other threads
 		boolean removed = _individualSharedFiles.remove(file); 
+
 		FileDesc fd = removeFileIfShared(file);
 		if (fd == null) {
             fileManagerController.clearPendingShare(file);
