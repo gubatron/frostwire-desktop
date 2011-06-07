@@ -33,9 +33,9 @@ import com.limegroup.gnutella.settings.SharingSettings;
 //2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public final class SharedDirPaneItem extends AbstractPaneItem {
 
-    public final static String TITLE = I18n.tr("Shared Folders");
+    public final static String TITLE = I18n.tr("Gnutella Network Shared Folders");
     
-    public final static String LABEL = I18n.tr("You can choose the folders for sharing files. Files in these folders are displayed in the library.");
+    public final static String LABEL = I18n.tr("You can choose the folders for sharing files with everybody connected to the Gnutella network.\nFiles in these folders are displayed in the library.");
 
 	private final RecursiveSharingPanel sharingPanel = new RecursiveSharingPanel();
 

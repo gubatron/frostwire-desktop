@@ -2,6 +2,7 @@ package com.limegroup.gnutella.gui.search;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -36,10 +37,13 @@ import javax.swing.JViewport;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.text.BadLocationException;
 
 import org.limewire.io.NetworkInstanceUtils;
 import org.limewire.io.NetworkUtils;
+import org.limewire.setting.evt.SettingEvent;
+import org.limewire.setting.evt.SettingListener;
 
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.NetworkManager;
@@ -58,6 +62,7 @@ import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.gui.xml.InputPanel;
 import com.limegroup.gnutella.settings.FilterSettings;
 import com.limegroup.gnutella.settings.SearchSettings;
+import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.xml.LimeXMLSchema;
 
 /**
@@ -155,6 +160,8 @@ class SearchInputPanel extends JPanel {
     
     private final NetworkManager networkManager;
     private final NetworkInstanceUtils networkInstanceUtils;
+
+	private SettingListener SEED_FINISHED_TORRENTS_CHANGE_LISTENER;
         
     SearchInputPanel(NetworkManager networkManager, NetworkInstanceUtils networkInstanceUtils) {
         super(new BorderLayout(0, 5));
@@ -470,10 +477,40 @@ class SearchInputPanel extends JPanel {
 				openMagnetTorrentAction.actionPerformed(null);
 			}
 		});
-        
+
         search.add(GUIUtils.center(openTorrentButton));
+        search.add(Box.createVerticalStrut(10));
+        
+        
+        final JLabel seedingDisclosureLabel = new JLabel();
+        setSeedingDisclosureText(seedingDisclosureLabel);
+        
+        if (SEED_FINISHED_TORRENTS_CHANGE_LISTENER == null) {
+        	SEED_FINISHED_TORRENTS_CHANGE_LISTENER = new SettingListener() {
+				
+				@Override
+				public void settingChanged(SettingEvent evt) {
+			        setSeedingDisclosureText(seedingDisclosureLabel);
+				}
+			};
+        	SharingSettings.SEED_FINISHED_TORRENTS.addSettingListener(SEED_FINISHED_TORRENTS_CHANGE_LISTENER);
+        }
+        
+        TitledBorder titledBorder = BorderFactory.createTitledBorder("Seeding Status");
+        titledBorder.setTitleJustification(TitledBorder.CENTER);
+        seedingDisclosureLabel.setBorder(titledBorder);
+        search.add(GUIUtils.center(seedingDisclosureLabel));
+
         return search;
     }
+    
+	private void setSeedingDisclosureText(final JLabel seedingDisclosure) {
+		boolean seedingStatus = SharingSettings.SEED_FINISHED_TORRENTS.getValue();
+        String SEEDING_TEXT = (seedingStatus)?  I18n.tr("<html><b>SEEDING</b><p>completed torrent downloads.</html>") :
+        		I18n.tr("<html><b>NOT SEEDING</b>.<p>File chunks might be shared<p>only during a torrent download.</html>");
+        seedingDisclosure.setText(SEEDING_TEXT);
+	}
+
     
 	private void createInputPanelForNamedMediaType(NamedMediaType nmt) {
         String name = nmt.getName();

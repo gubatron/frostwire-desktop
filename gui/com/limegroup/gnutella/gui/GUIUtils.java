@@ -8,6 +8,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -310,6 +312,28 @@ public final class GUIUtils {
         p.add(c);
         return p;
     }  
+    
+    public static JPanel fillHorizontal(JComponent comp) {
+    	JPanel p = new JPanel(new GridBagLayout());
+    	GridBagConstraints c = new GridBagConstraints();
+    	c.fill = GridBagConstraints.HORIZONTAL;
+    	c.weightx = 1.0;
+    	c.gridwidth = GridBagConstraints.REMAINDER;
+    	p.add(comp,c);
+    	return center(p);
+    }
+
+    public static JPanel fillVertical(JComponent comp) {
+    	JPanel p = new JPanel(new GridBagLayout());
+    	GridBagConstraints c = new GridBagConstraints();
+    	c.fill = GridBagConstraints.BOTH;
+    	c.weighty = 1.0;
+    	c.weightx = 1.0;    	
+    	c.gridwidth = GridBagConstraints.REMAINDER;
+    	p.add(comp,c);
+    	return p;
+    }
+    
     
     /**
      * Left flushes the given component.

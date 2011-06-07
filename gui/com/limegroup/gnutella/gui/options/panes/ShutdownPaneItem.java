@@ -81,8 +81,9 @@ public class ShutdownPaneItem extends AbstractPaneItem {
         BoxPanel mainPanel = new BoxPanel(BoxPanel.X_AXIS);
         mainPanel.add(buttonPanel);
         mainPanel.add(Box.createHorizontalGlue());
-        mainPanel.add(_checkBoxShowHideExitDialog);
-        mainPanel.add(Box.createHorizontalGlue());
+        
+//        mainPanel.add(_checkBoxShowHideExitDialog);
+//        mainPanel.add(Box.createHorizontalGlue());
         
         add(mainPanel);
     }
@@ -104,7 +105,7 @@ public class ShutdownPaneItem extends AbstractPaneItem {
             ApplicationSettings.SHUTDOWN_AFTER_TRANSFERS.setValue(false);
         }
         
-        ApplicationSettings.SHOW_HIDE_EXIT_DIALOG.setValue(_checkBoxShowHideExitDialog.isSelected());
+        //ApplicationSettings.SHOW_HIDE_EXIT_DIALOG.setValue(_checkBoxShowHideExitDialog.isSelected());
         
         return false;
     }
