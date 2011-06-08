@@ -542,7 +542,7 @@ public class ManagedTorrent implements Torrent, DiskManagerListener,
 		}
 	}
 	
-	protected void stopSeeding() {
+	public void stopSeeding() {
 		removeFromAzureus();
 		dispatchEvent(TorrentEvent.Type.STOP_SEEDING);
 		//UploadMediator.instance().stopSeeding(ManagedTorrent.this);

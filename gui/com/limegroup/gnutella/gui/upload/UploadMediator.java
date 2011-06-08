@@ -520,4 +520,28 @@ public final class UploadMediator extends AbstractTableMediator<UploadModel, Upl
             e.printStackTrace();
         }		
 	}
+
+    public void stopSeeding() {
+        try {
+            int count = DATA_MODEL.getRowCount();
+            for (int i = count - 1; i >= 0; i--) {
+                try {
+                    UploadDataLine line = DATA_MODEL.get(i);
+
+                    if (line.getInitializeObject() instanceof BTUploader) {
+                        BTUploader uploader = (BTUploader) line.getInitializeObject();
+
+                        ManagedTorrent mt = (ManagedTorrent) uploader.getBTDownloader().getTorrent();
+                        if (mt.isComplete()) {
+                            mt.stopSeeding();
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

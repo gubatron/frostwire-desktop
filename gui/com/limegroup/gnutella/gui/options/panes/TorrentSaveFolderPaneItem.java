@@ -7,6 +7,8 @@ import com.frostwire.components.TorrentSaveFolderComponent;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.download.DownloadMediator;
+import com.limegroup.gnutella.gui.upload.UploadMediator;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 public class TorrentSaveFolderPaneItem extends AbstractPaneItem {
@@ -38,6 +40,10 @@ public class TorrentSaveFolderPaneItem extends AbstractPaneItem {
 		
         SharingSettings.TORRENT_DATA_DIR_SETTING.setValue(new File(COMPONENT.getTorrentSaveFolderPath()));
         SharingSettings.SEED_FINISHED_TORRENTS.setValue(COMPONENT.isSeedingSelected());
+        
+        if (!SharingSettings.SEED_FINISHED_TORRENTS.getValue()) {
+            UploadMediator.instance().stopSeeding();
+        }
 		
 		return restart;
 	}
