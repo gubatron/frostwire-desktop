@@ -333,6 +333,13 @@ public interface FileManager {
      * to SENSITIVE_DIRECTORIES_VALIDATED'.
      */
     public abstract void validateSensitiveFile(File dir);
+    
+    /**
+	 * Makes sure the Torrents/ folder exists. If it's shareable it will make
+	 * sure the folder is shared. If not it'll make sure all the torrents inside
+	 * are not shared.
+	 */
+    public void verifySharedTorrentFolderCorrecteness();
 
     /**
      * Invalidates a file, removing it from the shared directories, validated

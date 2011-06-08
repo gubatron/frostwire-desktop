@@ -853,18 +853,21 @@ public abstract class FileManagerImpl implements FileManager {
 			//		SharingSettings.DEFAULT_SHARED_TORRENTS_DIR);
 		}
 
-		// share/unshare all torrents inside
+		//get all torrents inside (dot) Torrents folder.
 		File[] torrents = SharingSettings.DEFAULT_SHARED_TORRENTS_DIR
 				.listFiles();
+		
 		if (torrents != null && torrents.length > 0) {
 			for (File t : torrents) {
 				if (SharingSettings.SHARE_TORRENT_META_FILES.getValue()) {
 					if (!isFolderShared(SharingSettings.DEFAULT_SHARED_TORRENTS_DIR)) {
-						//addFileAlways(t);
+						addFileAlways(t);
 					}
 				}
 				else {
-					//stopSharingFile(t);
+					if (!isFolderShared(SharingSettings.DEFAULT_SHARED_TORRENTS_DIR)) {
+						stopSharingFile(t);
+					}
 				}
 			}
 		}
@@ -872,10 +875,16 @@ public abstract class FileManagerImpl implements FileManager {
 	} // verifySharedTorrentFolderCorrecteness
 	
 	public void correctIndividuallySharedFiles(File directory) {
+
+		if (!isFolderShared(directory)) {
+			return;
+		}
+		
 	    if (!SharingSettings.SHARE_DOWNLOADED_FILES_IN_NON_SHARED_DIRECTORIES.getValue()) {
             File[] files = directory.listFiles();
             if (files != null) {
                 for (File f : files) {
+
                     removeIndividuallySharedFile(f);
                 }
             }
@@ -886,32 +895,42 @@ public abstract class FileManagerImpl implements FileManager {
 
     
     private void updateSharedDirectories(File directory, File parent, int revision) {
-        updateSharedDirectories(directory, directory, parent, revision, 1);
+    	
+    	updateSharedDirectories(directory, directory, parent, revision, 1);
         
         if (directory.equals(SharingSettings.DEFAULT_SHARED_TORRENTS_DIR)) {
             verifySharedTorrentFolderCorrecteness();
         }
+        
         if (directory.equals(SharingSettings.getSaveDirectory())) {
             correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getDocumentMediaType()).getValue());
         }
+        
         if (directory.equals(SharingSettings.getFileSettingForMediaType(MediaType.getDocumentMediaType()).getValue())) {
             correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getDocumentMediaType()).getValue());
         }
+        
         if (directory.equals(SharingSettings.getFileSettingForMediaType(MediaType.getProgramMediaType()).getValue())) {
             correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getProgramMediaType()).getValue());
         }
+        
         if (directory.equals(SharingSettings.getFileSettingForMediaType(MediaType.getAudioMediaType()).getValue())) {
             correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getAudioMediaType()).getValue());
         }
+        
         if (directory.equals(SharingSettings.getFileSettingForMediaType(MediaType.getVideoMediaType()).getValue())) {
             correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getVideoMediaType()).getValue());
         }
+        
         if (directory.equals(SharingSettings.getFileSettingForMediaType(MediaType.getImageMediaType()).getValue())) {
             correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getImageMediaType()).getValue());
         }
+        
         if (directory.equals(SharingSettings.getFileSettingForMediaType(MediaType.getTorrentMediaType()).getValue())) {
             correctIndividuallySharedFiles(SharingSettings.getFileSettingForMediaType(MediaType.getTorrentMediaType()).getValue());
         }
+        
+        
     }
     
     /**

@@ -238,7 +238,7 @@ public final class LibraryMediator implements ThemeObserver {
 	
 	public void addSharedLibraryFolder(final File dir) {
 		if(ShareManager.checkAndWarnNewSharedFolder(dir)) {    		
-    		final RecursiveSharingDialog dialog = new RecursiveSharingDialog(GUIMediator.getAppFrame(), dir);
+    		final RecursiveSharingDialog dialog = new RecursiveSharingDialog(true, GUIMediator.getAppFrame(), dir);
     		if (dialog.showChooseDialog(MessageService.getParentComponent()) == State.OK) {
     			BackgroundExecutorService.schedule(new Runnable() {
     			    public void run() {

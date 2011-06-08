@@ -48,18 +48,18 @@ public class RecursiveSharingDialog extends JDialog {
     /**
      * Constructs a new recursive sharing dialog with a list of roots. 
      */
-    public RecursiveSharingDialog(Frame owner, File... roots) {
+    public RecursiveSharingDialog(boolean precheckFolders,Frame owner, File... roots) {
         super(owner);
-        initialize(roots);
+        initialize(precheckFolders,roots);
     }
     
-    public RecursiveSharingDialog(Dialog owner, File...roots) {
+    public RecursiveSharingDialog(boolean precheckFolders, Dialog owner, File...roots) {
         super(owner);
-        initialize(roots);
+        initialize(precheckFolders,roots);
     }
     
-    private void initialize(File... roots) {
-        sharingPanel = new RecursiveSharingPanel(roots);
+    private void initialize(boolean precheckFolders, File... roots) {
+        sharingPanel = new RecursiveSharingPanel(precheckFolders,roots);
         sharingPanel.setRootsExpanded();
         
         JTree tree = sharingPanel.getTree();

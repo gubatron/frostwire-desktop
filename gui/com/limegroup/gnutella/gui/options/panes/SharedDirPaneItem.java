@@ -37,7 +37,7 @@ public final class SharedDirPaneItem extends AbstractPaneItem {
     
     public final static String LABEL = I18n.tr("You can choose the folders for sharing files with everybody connected to the Gnutella network.\nFiles in these folders are displayed in the library.");
 
-	private final RecursiveSharingPanel sharingPanel = new RecursiveSharingPanel();
+	private final RecursiveSharingPanel sharingPanel = new RecursiveSharingPanel(true);
 
 	private Set<File> initialFoldersToShare;
 	
@@ -145,7 +145,7 @@ public final class SharedDirPaneItem extends AbstractPaneItem {
 //	    // the actual applying of shared folders is done in OptionsPaneManager,
 	    // since it needs to be _after_ everything else is done.
 	    
-	    GuiFrostWireUtils.verifySharedTorrentFolderCorrecteness();
+		GuiCoreMediator.getFileManager().verifySharedTorrentFolderCorrecteness();
 	    
 	    if (!TorrentSaveFolderComponent.isTorrentSaveFolderPathValid(true, SharingSettings.TORRENT_DATA_DIR_SETTING.getValue(), 
 	    														SharingSettings.getAllSaveDirectories(), 

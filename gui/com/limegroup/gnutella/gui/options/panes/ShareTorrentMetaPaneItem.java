@@ -7,15 +7,16 @@ import javax.swing.JCheckBox;
 import org.limewire.i18n.I18nMarker;
 
 import com.frostwire.GuiFrostWireUtils;
+import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 public class ShareTorrentMetaPaneItem extends AbstractPaneItem {
     
-    public final static String TITLE = I18n.tr("Torrent Sharing");
+    public final static String TITLE = I18n.tr("Gnutella (dot) Torrent Sharing");
     
-    public final static String LABEL = I18n.tr("You can automatically share .torrent files.");
+    public final static String LABEL = I18n.tr("Share newly downloaded .torrent files in the Gnutella Network");
 
     /**
      * Constant for the key of the locale-specific <tt>String</tt> for the 
@@ -48,7 +49,7 @@ public class ShareTorrentMetaPaneItem extends AbstractPaneItem {
         SharingSettings.SHARE_TORRENT_META_FILES.
             setValue(CHECK_BOX.isSelected());
         
-        GuiFrostWireUtils.verifySharedTorrentFolderCorrecteness();
+        GuiCoreMediator.getFileManager().verifySharedTorrentFolderCorrecteness();
         
         return false;
     }

@@ -103,8 +103,8 @@ public class RecursiveSharingPanel extends JPanel {
     /**
      * Constructs the tree view with a list of roots, can be null. 
      */
-    public RecursiveSharingPanel(File... roots) {
-        this(emptyFileSet(), roots);
+    public RecursiveSharingPanel(boolean precheckFolders, File... roots) {
+        this(precheckFolders, emptyFileSet(), roots);
     }
     
     /**
@@ -112,12 +112,14 @@ public class RecursiveSharingPanel extends JPanel {
      * @param blackListSet set of subfolders that are marked as not shared, cannot be null
      * @param roots list of roots, can be null
      */
-    public RecursiveSharingPanel(Set<File> blackListSet, File... roots) {
+    public RecursiveSharingPanel(boolean precheckFolders,Set<File> blackListSet, File... roots) {
         super(new BorderLayout());
         this.roots = new TreeSet<File>(FileTreeModel.DEFAULT_COMPARATOR);
         this.deselected = new HashSet<File>(blackListSet);
         
-        addFoldersToExclude(new HashSet<File>(Arrays.asList(roots)));
+        if (!precheckFolders) {
+        	addFoldersToExclude(new HashSet<File>(Arrays.asList(roots)));
+        }
 
         // center
         directoryTreeModel = new FileTreeModel("");

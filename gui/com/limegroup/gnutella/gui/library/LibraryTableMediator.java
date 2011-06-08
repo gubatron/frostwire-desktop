@@ -1459,7 +1459,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 			}
 
 			final RecursiveSharingDialog dialog = 
-				new RecursiveSharingDialog(GUIMediator.getAppFrame(), files.toArray(new File[0]));
+				new RecursiveSharingDialog(true, GUIMediator.getAppFrame(), files.toArray(new File[0]));
 			if (dialog.showChooseDialog(MessageService.getParentComponent()) == State.OK) {
 				BackgroundExecutorService.schedule(new Runnable() {
 				    public void run() {

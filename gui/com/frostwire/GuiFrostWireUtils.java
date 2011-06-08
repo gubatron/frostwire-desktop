@@ -16,10 +16,8 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.bittorrent.BTMetaInfo;
-import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
-import com.limegroup.gnutella.library.SharingUtils;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 public final class GuiFrostWireUtils extends CoreFrostWireUtils {
@@ -39,7 +37,7 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
 			bos.write(body);
 			bos.flush();
 
-			verifySharedTorrentFolderCorrecteness();
+			GuiCoreMediator.getFileManager().verifySharedTorrentFolderCorrecteness();
 		} catch (Exception e) {
 			// we tried...
 		} finally {
@@ -57,40 +55,8 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
 				f.getName());
 		FileUtils.copy(f, newTorrent);
 
-		verifySharedTorrentFolderCorrecteness();
+		GuiCoreMediator.getFileManager().verifySharedTorrentFolderCorrecteness();
 	} // shareTorrent
-
-	/**
-	 * Makes sure the Torrents/ folder exists. 
-	 * If it's shareable it will make sure the folder is shared. 
-	 * If it's not shareable not it'll make sure all the torrents inside
-	 * are not shared.
-	 */
-	public final static void verifySharedTorrentFolderCorrecteness() {
-		canShareTorrentMetaFiles();
-
-		if (SharingSettings.SHARE_TORRENT_META_FILES.getValue()) {
-			//GuiCoreMediator.getFileManager().addSharedFolder(
-			//		SharingSettings.DEFAULT_SHARED_TORRENTS_DIR);
-		}
-
-		// share/unshare all torrents inside
-		File[] torrents = SharingSettings.DEFAULT_SHARED_TORRENTS_DIR
-				.listFiles();
-		
-		if (torrents != null && torrents.length > 0) {
-			for (File t : torrents) {
-				if (SharingSettings.SHARE_TORRENT_META_FILES.getValue()) {
-					if (!GuiCoreMediator.getFileManager().isFolderShared(SharingSettings.DEFAULT_SHARED_TORRENTS_DIR)) {
-						//GuiCoreMediator.getFileManager().addFileAlways(t);
-					}
-				} else {
-					//GuiCoreMediator.getFileManager().stopSharingFile(t);
-				}
-			}
-		}
-
-	} // verifySharedTorrentFolderCorrecteness
 
 	/**
 	 * The idea is to find the first of the given options for Font Families.

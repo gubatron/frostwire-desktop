@@ -136,7 +136,7 @@ public final class SaveDirPaneItem extends AbstractDirPaneItem {
         
         boolean restart = _mtddMediator.applyOptions(newDirs);
         if(!newDirs.isEmpty()) {
-            RecursiveSharingDialog dialog = new RecursiveSharingDialog(OptionsMediator.instance().getMainOptionsComponent(), newDirs.toArray(new File[newDirs.size()]));
+            RecursiveSharingDialog dialog = new RecursiveSharingDialog(false,OptionsMediator.instance().getMainOptionsComponent(), newDirs.toArray(new File[newDirs.size()]));
             dialog.setTitleText(I18n.tr("Would you like to share your new save folders? The following new folders will be shared:"));
             if (dialog.showChooseDialog(OptionsMediator.instance().getMainOptionsComponent(), false) == State.OK) {
                 shareData.addAndKeepDirtyStatus(dialog.getRootsToShare(), dialog.getFoldersToExclude());

@@ -85,7 +85,7 @@ class SaveWindow extends SetupWindow {
 			SharingSettings.DIRECTORIES_TO_SHARE.add(oldSaveDir);
 		}
 
-		recursiveSharingPanel = new RecursiveSharingPanel();
+		recursiveSharingPanel = new RecursiveSharingPanel(true);
 		recursiveSharingPanel.getTree().setRootVisible(false);
         recursiveSharingPanel.getTree().setShowsRootHandles(true);
         recursiveSharingPanel.setRoots(SharingSettings.DIRECTORIES_TO_SHARE.getValueAsArray());
