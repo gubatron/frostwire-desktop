@@ -64,14 +64,14 @@ public class ShareSpeciallyPaneItem extends AbstractPaneItem {
 	
 	private void setExplanationText(boolean showMessage) {
         if (CHECK_BOX.isSelected()) {
-            explanationLabel.setText(I18n.tr("Currently sharing downloaded files to the 'Save Folder' with everybody in the Gnutella network"));
+            explanationLabel.setText(I18n.tr("Currently sharing downloaded files to the 'Save Folder' with everybody on the Gnutella network"));
             if (showMessage) {
             	SwingUtilities.invokeLater(new Runnable() {
 
 					@Override
 					public void run() {
 						JOptionPane.showMessageDialog(null,
-                        I18n.tr("All files downloaded to the 'Save Folder' will be shared as 'individually shared files' with everybody in the Gnutella network.\nYour 'Save Folder' won't be shared as a whole unless you decide to make it a shared folder.\n\nYou can check the files you are sharing individually in the Library Tab."),
+                        I18n.tr("All files downloaded to the 'Save Folder' will be shared as 'individually shared files' with everybody on the Gnutella network.\nYour 'Save Folder' won't be shared as a whole unless you decide to make it a shared folder.\n\nYou can check the files you are sharing individually in the Library Tab."),
                         I18n.tr("How finished downloads are being shared"),
                         JOptionPane.WARNING_MESSAGE);
 					}});

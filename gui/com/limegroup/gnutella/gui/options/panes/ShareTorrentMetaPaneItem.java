@@ -16,7 +16,7 @@ public class ShareTorrentMetaPaneItem extends AbstractPaneItem {
     
     public final static String TITLE = I18n.tr("Gnutella (dot) Torrent Sharing");
     
-    public final static String LABEL = I18n.tr("Share newly downloaded .torrent files in the Gnutella Network");
+    public final static String LABEL = I18n.tr("Share newly downloaded .torrent files on the Gnutella Network");
 
     /**
      * Constant for the key of the locale-specific <tt>String</tt> for the 
