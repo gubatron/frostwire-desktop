@@ -1,3 +1,24 @@
+frostwire (4.21.8) stable; urgency=high
+  * Fixes a possible freeze reported by some users when the configuration 
+    wizard is shown.
+  * Fixes issue when a user changes default Gnutella Save Folder
+    and unchecks Sharing finished downloads. Individually shared
+    files from the old Save Folder would still be shared.
+    Now all individually shared files will be unshared if you uncheck
+    this setting.
+  * Now users don't have to re-start to stop seeding after they've changed
+    their torrent Seeding Configuration. All torrents old and new will stop
+    seeding as soon as the setting is applied.
+  * Better wording to explain on which networks files are being shared on,
+    Gnutella or BitTorrent.
+  * Changed color of "Sharing Options" gear icon to blue, gray
+    icon may have seemed as if the button was disabled.
+  * Added "Sharing Options" gear button on Search Tab. It's only visible
+    once a search has been started.
+  * Added Help Menu options to learn about how to share/unshare files,
+    torrent seeding, and how to avoid being scammed into paying for
+    FrostWire. DO NOT PAY FOR FROSTWIRE.
+  
 frostwire (4.21.7) stable; urgency=high
 
   * Makes sure cancelling torrents that have finished are not deleted.
