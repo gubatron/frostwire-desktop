@@ -36,9 +36,14 @@
 		- on PluginInitializer disable:
 		PluginManagerDefaults.PID_START_STOP_RULES
 		PluginManagerDefaults.PID_SHARE_HOSTER
+		PluginManagerDefaults.PID_PLUGIN_UPDATE_CHECKER
 		PluginManagerDefaults.PID_CORE_UPDATE_CHECKER
 		PluginManagerDefaults.PID_CORE_PATCH_CHECKER
+		PluginManagerDefaults.PID_JPC
+		PluginManagerDefaults.PID_NET_STATUS
+		PluginManagerDefaults.PID_BUDDY
 		PluginManagerDefaults.PID_RSS
+		PluginManagerDefaults.PID_TRACKER_PEER_AUTH
 		//UpdateManagerImpl.getSingleton( azureus_core );	// initialise the update manager (around 453)
 		
 	- AzureusRestarterFactory returns null.
