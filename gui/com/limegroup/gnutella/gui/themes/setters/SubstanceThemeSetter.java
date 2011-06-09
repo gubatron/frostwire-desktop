@@ -163,8 +163,7 @@ public class SubstanceThemeSetter implements ThemeSetter {
 
     public ComponentUI createComboBoxUI(JComponent comp) {
         SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
-        SkinComboBoxUI ui = new SkinComboBoxUI((JComboBox) comp);
-        return ui;
+        return new SkinComboBoxUI((JComboBox) comp);
     }
 
     public ComponentUI createTreeUI(JComponent comp) {
