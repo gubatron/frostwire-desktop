@@ -110,7 +110,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	String webSeedConfig = "";
 	Map webseeds = new HashMap();
 
-	boolean autoOpen = false;
+	boolean autoOpen = true;
 	boolean autoHost = false;
 	boolean permitDHT = true;
 	boolean privateTorrent = false;
@@ -206,7 +206,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		c.gridx = 3;
 		c.gridy = 1;
 		c.gridwidth = 1;
-		//c.fill = GridBagConstraints.HORIZONTAL;
 		c.insets = MARGINS;
 		c.weightx = 1.0;
 		torrentContentsPanel.add(_buttonSelectFile, c);
@@ -218,7 +217,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		c.gridy = 1;
 		c.gridwidth = 1;
 		c.insets = MARGINS;
-		//c.fill = GridBagConstraints.HORIZONTAL;
 		torrentContentsPanel.add(_buttonSelectFolder, c);
 		
 		// add to content pane
@@ -258,7 +256,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		c.gridwidth = 2;
 		c.anchor = GridBagConstraints.LINE_START;
 		c.fill = GridBagConstraints.NONE;
-		_checkStartSeeding = new JCheckBox(I18n.tr("Start seeding"));
+		_checkStartSeeding = new JCheckBox(I18n.tr("Start seeding"),true);
 		torrentPropertiesPanel.add(_checkStartSeeding, c);
 
 		// Trackers
@@ -464,21 +462,31 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		
 		create_from_dir = _fileChooser.getFileSelectionMode() == JFileChooser.DIRECTORIES_ONLY;
 	}
+	
+	protected void onContentSelectionButton(int onContentSelectionButton) {
+		initFileChooser(onContentSelectionButton);
+		showFileChooser();
+		revertSaveCloseButtons();
+	}
 
 	protected void onButtonSelectFolder() {
-		initFileChooser(JFileChooser.DIRECTORIES_ONLY);
-		showFileChooser();
+		onContentSelectionButton(JFileChooser.DIRECTORIES_ONLY);
 	}
 
 	protected void onButtonSelectFile() {
-		initFileChooser(JFileChooser.FILES_ONLY);
-		showFileChooser();
+		onContentSelectionButton(JFileChooser.FILES_ONLY);
 	}
 
 	protected void onButtonSaveAs() {
 		//Make sure a readable file or folder has been selected.
 		if (singlePath == null && directoryPath == null) {
 			JOptionPane.showMessageDialog(this, I18n.tr("Please select a file or a folder.\nYour new torrent will need content to index."),I18n.tr("Something's missing"),JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
+		//if user chose a folder that's empty
+		if (directoryPath != null && new File(directoryPath).listFiles().length == 0) {
+			JOptionPane.showMessageDialog(this, I18n.tr("The folder you selected is empty."),I18n.tr("Invalid Folder"),JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		
@@ -659,7 +667,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	}
 
 	public boolean makeTorrent() {
-		switchToClose();
+		disableSaveCloseButtons();
 
 		int tracker_type = getTrackerType();
 
@@ -868,7 +876,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	 * Not sure if we need to implement this, I suppose this changed one of the
 	 * buttons of the wizard from next|cancel to close
 	 */
-	private void switchToClose() {
+	private void disableSaveCloseButtons() {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				_buttonSaveAs.setText(I18n.tr("Saving Torrent..."));
