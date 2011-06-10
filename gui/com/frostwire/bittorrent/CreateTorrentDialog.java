@@ -669,9 +669,10 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 						.createFromFileOrDirWithComputedPieceLength(f, url,
 								addOtherHashes);
 
+				creator.addListener(this);
+				
 				torrent = creator.create();
 				
-				creator.addListener(this);
 
 			} else {
 				// GUBATRON: I THINK THIS else WILL NEVER HAPPEN
