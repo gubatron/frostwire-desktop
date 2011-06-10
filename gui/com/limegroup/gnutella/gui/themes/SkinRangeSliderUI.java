@@ -30,6 +30,8 @@
 package com.limegroup.gnutella.gui.themes;
 
 import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
@@ -413,15 +415,17 @@ public class SkinRangeSliderUI extends BasicSliderUI implements
             if (this.slider.getOrientation() == SwingConstants.HORIZONTAL) {
                 int middleOfThumb = this.thumbRect.x
                         + (this.thumbRect.width / 2) - paintRect.x;
+                int middleOfUpperThumb = this.upperThumbRect.x
+                        + (this.upperThumbRect.width / 2) - paintRect.x;
                 int fillMinX;
                 int fillMaxX;
 
                 if (drawInverted) {
                     fillMinX = middleOfThumb;
-                    fillMaxX = width;
+                    fillMaxX = middleOfUpperThumb;
                 } else {
-                    fillMinX = 0;
-                    fillMaxX = middleOfThumb;
+                    fillMinX = middleOfThumb;
+                    fillMaxX = middleOfUpperThumb;
                 }
 
                 int fillWidth = fillMaxX - fillMinX;
@@ -618,7 +622,11 @@ public class SkinRangeSliderUI extends BasicSliderUI implements
         Rectangle thumbB = this.thumbRect;
         if (thumbB == null)
             return false;
-        return thumbB.contains(me.getX(), me.getY());
+        Rectangle upperThumbB = this.upperThumbRect;
+        if (upperThumbB == null) {
+            return false;
+        }
+        return thumbB.contains(me.getX(), me.getY()) || upperThumbB.contains(me.getX(), me.getY());
     }
 
     /*
@@ -1086,7 +1094,7 @@ public class SkinRangeSliderUI extends BasicSliderUI implements
     }
 
     public class RangeTrackListener extends TrackListener {
-
+        
         @Override
         public void mousePressed(MouseEvent e) {
             if (!slider.isEnabled()) {
