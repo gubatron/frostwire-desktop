@@ -118,6 +118,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	boolean privateTorrent = false;
 
 	TOTorrentCreator creator = null;
+	
+	private File _saveDir;
 
 	private Container _container;
 	private JButton _buttonSelectFile;
@@ -501,7 +503,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 					
 					if (autoOpen) {
 						SwingUtilities.invokeLater(new Runnable() {
-							public void run() { GUIMediator.instance().openTorrent(new File(savePath)); }
+							public void run() { GUIMediator.instance().openTorrent(new File(savePath), false, true, _saveDir); }
 						});
 					}
 				}
@@ -706,6 +708,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 			} else {
 				save_dir = f.getParentFile();
 			}
+			
+			_saveDir = save_dir;
 
 			if (useMultiTracker) {
 				reportCurrentTask(MessageText.getString("wizard.addingmt"));
@@ -750,63 +754,63 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 			torrent.serialiseToBEncodedFile(torrent_file);
 			reportCurrentTask(MessageText.getString("wizard.filesaved"));
 
-			// if the user wants to start seeding right away
-			if (autoOpen) {
-				waitForCore(TriggerInThread.NEW_THREAD,
-						new AzureusCoreRunningListener() {
-							public void azureusCoreRunning(AzureusCore core) {
-								boolean default_start_stopped = COConfigurationManager
-										.getBooleanParameter("Default Start Torrents Stopped");
-
-								byte[] hash = null;
-								try {
-									hash = torrent.getHash();
-								} catch (TOTorrentException e1) {
-								}
-
-								DownloadManager dm = core
-										.getGlobalManager()
-										.addDownloadManager(
-												torrent_file.toString(),
-												hash,
-												save_dir.toString(),
-												default_start_stopped ? DownloadManager.STATE_STOPPED
-														: DownloadManager.STATE_QUEUED,
-												true, // persistent
-												true, // for seeding
-												null); // no adapter required
-
-								if (!default_start_stopped && dm != null) {
-									// We want this to move to seeding ASAP, so
-									// move it to the top
-									// of the download list, where it will do
-									// the quick check and
-									// move to the seeding list
-									// (the for seeding flag should really be
-									// smarter and verify
-									// it's a seeding torrent and set
-									// appropriately)
-									dm.getGlobalManager().moveTop(
-											new DownloadManager[] { dm });
-								}
-
-								if (autoHost && getTrackerType() != TT_EXTERNAL) {
-
-									try {
-										core.getTrackerHost().hostTorrent(
-												torrent, true, false);
-
-									} catch (TRHostException e) {
-										revertSaveCloseButtons();
-										Logger.log(new LogAlert(
-												LogAlert.REPEATABLE,
-												"Host operation fails", e));
-									}
-								}
-
-							}
-						});
-			}
+//			// if the user wants to start seeding right away
+//			if (autoOpen) {
+//				waitForCore(TriggerInThread.NEW_THREAD,
+//						new AzureusCoreRunningListener() {
+//							public void azureusCoreRunning(AzureusCore core) {
+//								boolean default_start_stopped = COConfigurationManager
+//										.getBooleanParameter("Default Start Torrents Stopped");
+//
+//								byte[] hash = null;
+//								try {
+//									hash = torrent.getHash();
+//								} catch (TOTorrentException e1) {
+//								}
+//
+//								DownloadManager dm = core
+//										.getGlobalManager()
+//										.addDownloadManager(
+//												torrent_file.toString(),
+//												hash,
+//												save_dir.toString(),
+//												default_start_stopped ? DownloadManager.STATE_STOPPED
+//														: DownloadManager.STATE_QUEUED,
+//												true, // persistent
+//												true, // for seeding
+//												null); // no adapter required
+//
+//								if (!default_start_stopped && dm != null) {
+//									// We want this to move to seeding ASAP, so
+//									// move it to the top
+//									// of the download list, where it will do
+//									// the quick check and
+//									// move to the seeding list
+//									// (the for seeding flag should really be
+//									// smarter and verify
+//									// it's a seeding torrent and set
+//									// appropriately)
+//									dm.getGlobalManager().moveTop(
+//											new DownloadManager[] { dm });
+//								}
+//
+//								if (autoHost && getTrackerType() != TT_EXTERNAL) {
+//
+//									try {
+//										core.getTrackerHost().hostTorrent(
+//												torrent, true, false);
+//
+//									} catch (TRHostException e) {
+//										revertSaveCloseButtons();
+//										Logger.log(new LogAlert(
+//												LogAlert.REPEATABLE,
+//												"Host operation fails", e));
+//									}
+//								}
+//
+//							}
+//						});
+//			}
 		} catch (Exception e) {
 			
 			revertSaveCloseButtons();

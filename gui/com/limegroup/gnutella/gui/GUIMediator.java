@@ -792,11 +792,11 @@ public final class GUIMediator {
 	}
 	
 	public final void openTorrent(File torrentFile) {
-	    openTorrent(torrentFile, false);
+	    openTorrent(torrentFile, false, false, null);
 	}
 
-	public final void openTorrent(File torrentFile, boolean partialSelection) {
-	    getBTDownloadMediator().openTorrent(torrentFile, partialSelection);
+	public final void openTorrent(File torrentFile, boolean partialSelection, boolean initialSeed, File saveDir) {
+	    getBTDownloadMediator().openTorrent(torrentFile, partialSelection, initialSeed, saveDir);
 		setWindow(GUIMediator.Tabs.SEARCH);
 	}
 	

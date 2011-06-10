@@ -19,11 +19,15 @@ public class BTDownloaderFactory {
     private final GlobalManager _globalManager;
     private final File _file;
     private final boolean[] _filesSelection;
+    private final boolean _initialSeed;
+    private final File _saveDir;
 
-    public BTDownloaderFactory(GlobalManager globalManager, File file, boolean[] filesSelection) {
+    public BTDownloaderFactory(GlobalManager globalManager, File file, boolean[] filesSelection, boolean initialSeed, File saveDir) {
         _globalManager = globalManager;
         _file = file;
         _filesSelection = filesSelection;
+        _initialSeed = initialSeed;
+        _saveDir = saveDir;
     }
 
     public File getSaveFile() {
@@ -35,7 +39,7 @@ public class BTDownloaderFactory {
 
     public BTDownloader createDownloader(boolean overwrite) throws SaveLocationException, TOTorrentException {
 
-        File saveDir = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
+        File saveDir = _saveDir == null ? SharingSettings.TORRENT_DATA_DIR_SETTING.getValue() : _saveDir;
         if (!saveDir.exists()) {
             saveDir.mkdirs();
         }
@@ -46,7 +50,7 @@ public class BTDownloaderFactory {
 
         if ((manager = _globalManager.getDownloadManager(torrent)) == null) {
             if (_filesSelection == null) {
-                manager = _globalManager.addDownloadManager(_file.getAbsolutePath(), saveDir.getAbsolutePath());
+                manager = _globalManager.addDownloadManager(_file.getAbsolutePath(), null, saveDir.getAbsolutePath(), DownloadManager.STATE_WAITING, true, _initialSeed, null);
             } else {
                 manager = _globalManager.addDownloadManager(_file.getAbsolutePath(), torrent.getHash(), saveDir.getAbsolutePath(), null,
                         DownloadManager.STATE_WAITING, true, false, new DownloadManagerInitialisationAdapter() {

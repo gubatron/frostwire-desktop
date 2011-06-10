@@ -471,7 +471,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
                             GUIMediator.instance().getStatusLine().setStatusText(I18n.tr("Torrent file downloaded from Internet"));
                         }
                     });
-                    openTorrent(inf.getFile(), partialSelection);
+                    openTorrent(inf.getFile(), partialSelection, false, null);
                 } else if (state == TorrentDownloader.STATE_ERROR) {
                     GUIMediator.safeInvokeLater(new Runnable() {
                         public void run() {
@@ -485,7 +485,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         downloader.start();
     }
 
-    public void openTorrent(final File file, final boolean partialSelection) {
+    public void openTorrent(final File file, final boolean partialSelection, final boolean initialSeed, final File saveDir) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
                 try {
@@ -501,7 +501,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
                         }
                     }
 
-                    BTDownloaderFactory factory = new BTDownloaderFactory(AzureusStarter.getAzureusCore().getGlobalManager(), file, filesSelection);
+                    BTDownloaderFactory factory = new BTDownloaderFactory(AzureusStarter.getAzureusCore().getGlobalManager(), file, filesSelection, initialSeed, saveDir);
                     BTDownloader downloader = BTDownloaderUtils.createDownloader(factory);
 
                     if (downloader != null) {
