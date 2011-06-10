@@ -8,6 +8,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -39,17 +41,13 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 
 import org.gudy.azureus2.core3.config.COConfigurationManager;
-import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.internat.LocaleTorrentUtil;
 import org.gudy.azureus2.core3.internat.MessageText;
-import org.gudy.azureus2.core3.logging.LogAlert;
-import org.gudy.azureus2.core3.logging.Logger;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentCreator;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.torrent.TOTorrentFactory;
 import org.gudy.azureus2.core3.torrent.TOTorrentProgressListener;
-import org.gudy.azureus2.core3.tracker.host.TRHostException;
 import org.gudy.azureus2.core3.util.AEThread2;
 import org.gudy.azureus2.core3.util.Debug;
 import org.gudy.azureus2.core3.util.TorrentUtils;
@@ -188,37 +186,41 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		
 		final Insets MARGINS = new Insets(5,5,5,5);
 
+		//text that shows what content has been selected
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.LINE_START;
 		c.gridx = 0;
 		c.gridy = 0;
 		c.weightx = 1;
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.insets = MARGINS;
-		torrentContentsPanel.add(_buttonSelectFile, c);
-
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.LINE_START;
-		c.gridx = 1;
-		c.gridy = 0;
-		c.weightx = 1;
-		c.insets = MARGINS;
-		c.fill = GridBagConstraints.HORIZONTAL;
-		torrentContentsPanel.add(_buttonSelectFolder, c);
-
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.LINE_START;
-		c.gridx = 0;
-		c.gridy = 1;
-		c.weightx = 1;
-		c.gridwidth = 2;
+		c.gridwidth = 5;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.insets = MARGINS;
 		_textSelectedContent = new JTextField();
-		_textSelectedContent.setEnabled(false);
 		_textSelectedContent.setEditable(false);
 		torrentContentsPanel.add(_textSelectedContent, c);
+		
+		
+		//button to select single files
+		c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.LINE_END;
+		c.gridx = 3;
+		c.gridy = 1;
+		c.gridwidth = 1;
+		//c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = MARGINS;
+		c.weightx = 1.0;
+		torrentContentsPanel.add(_buttonSelectFile, c);
 
+		//button to select folders
+		c = new GridBagConstraints();
+		c.anchor = GridBagConstraints.LINE_END;
+		c.gridx = 4;
+		c.gridy = 1;
+		c.gridwidth = 1;
+		c.insets = MARGINS;
+		//c.fill = GridBagConstraints.HORIZONTAL;
+		torrentContentsPanel.add(_buttonSelectFolder, c);
+		
 		// add to content pane
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.PAGE_START;
@@ -246,7 +248,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		c.gridwidth = 2;
 		c.anchor = GridBagConstraints.LINE_START;
 		c.fill = GridBagConstraints.NONE;
-		_checkUseDHT = new JCheckBox(I18n.tr("Trackerless Torrent (DHT)"));
+		_checkUseDHT = new JCheckBox(I18n.tr("Trackerless Torrent (DHT)"),true);
 		torrentPropertiesPanel.add(_checkUseDHT, c);
 
 		// Start seeding checkbox
@@ -256,7 +258,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		c.gridwidth = 2;
 		c.anchor = GridBagConstraints.LINE_START;
 		c.fill = GridBagConstraints.NONE;
-		_checkStartSeeding = new JCheckBox(I18n.tr("Start seeding"),true);
+		_checkStartSeeding = new JCheckBox(I18n.tr("Start seeding"));
 		torrentPropertiesPanel.add(_checkStartSeeding, c);
 
 		// Trackers
@@ -283,6 +285,9 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		_textTrackers.setLineWrap(false);
 		_textTrackersScrollPane = new JScrollPane(_textTrackers);
 		torrentPropertiesPanel.add(_textTrackersScrollPane, c);
+		
+		//by default suggest DHT
+		updateTrackerRelatedControlsAvailability(true);
 
 		// add to content pane
 		c = new GridBagConstraints();
@@ -371,19 +376,31 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 			public void stateChanged(ChangeEvent arg0) {
 				boolean useDHT = _checkUseDHT.isSelected();
 
-				_labelTrackers.setEnabled(!useDHT);
-				_textTrackers.setEnabled(!useDHT);
-				_textTrackersScrollPane.setEnabled(!useDHT);
-				_textTrackersScrollPane.getHorizontalScrollBar().setEnabled(
-						!useDHT);
-				_textTrackersScrollPane.getVerticalScrollBar().setEnabled(
-						!useDHT);
-				_labelTrackers.setForeground(useDHT ? Color.GRAY : Color.BLACK);
+				updateTrackerRelatedControlsAvailability(useDHT);
+			}
+		});
+		
+		_textTrackers.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (_checkUseDHT.isSelected()) {
+					_checkUseDHT.setSelected(false);
+				}
 			}
 		});
 
 	}
 
+	private void updateTrackerRelatedControlsAvailability(boolean useDHT) {
+		_labelTrackers.setEnabled(!useDHT);
+		_textTrackers.setEnabled(!useDHT);
+		_textTrackersScrollPane.setEnabled(!useDHT);
+		_textTrackersScrollPane.getHorizontalScrollBar().setEnabled(!useDHT);
+		_textTrackersScrollPane.getVerticalScrollBar().setEnabled(!useDHT);
+		_labelTrackers.setForeground(useDHT ? Color.GRAY : Color.BLACK);
+	}
+
+	
 	protected void onButtonClose(ActionEvent e) {
 	    GUIUtils.getDisposeAction().actionPerformed(e);
 	}
