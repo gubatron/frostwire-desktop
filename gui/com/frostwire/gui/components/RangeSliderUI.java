@@ -13,16 +13,19 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.basic.BasicSliderUI;
 
+/**
+ * Initial implementation from: https://github.com/ernieyu/Swing-range-slider
+ */
 class RangeSliderUI extends BasicSliderUI {
 
-    private Rectangle upperThumbRect;
-    private boolean upperThumbSelected;
+    protected Rectangle upperThumbRect;
+    protected boolean upperThumbSelected;
 
     private transient boolean lowerDragging;
     private transient boolean upperDragging;
 
     protected RangeSlider slider;
-    private int _lastUpperValue;
+    protected int lastUpperValue;
 
     public RangeSliderUI(RangeSlider b) {
         super(b);
@@ -32,7 +35,7 @@ class RangeSliderUI extends BasicSliderUI {
     public void installUI(JComponent c) {
         slider = (RangeSlider) c;
         upperThumbRect = new Rectangle();
-        _lastUpperValue = slider.getUpperValue();
+        lastUpperValue = slider.getUpperValue();
         super.installUI(c);
     }
 
@@ -79,7 +82,7 @@ class RangeSliderUI extends BasicSliderUI {
                     int whichTick = Math.round(temp);
 
                     // This is the fix for the bug #6401380
-                    if (temp - (int) temp == .5 && upperValue < _lastUpperValue) {
+                    if (temp - (int) temp == .5 && upperValue < lastUpperValue) {
                         whichTick--;
                     }
                     snappedValue = slider.getMinimum() + (whichTick * tickSpacing);
@@ -93,12 +96,12 @@ class RangeSliderUI extends BasicSliderUI {
 
         if (slider.getOrientation() == JSlider.HORIZONTAL) {
             int upperPosition = xPositionForValue(slider.getValue() + slider.getExtent());
-            
+
             upperThumbRect.x = upperPosition - (upperThumbRect.width / 2);
             upperThumbRect.y = trackRect.y;
         } else {
             int upperPosition = yPositionForValue(slider.getValue() + slider.getExtent());
-            
+
             upperThumbRect.x = trackRect.x;
             upperThumbRect.y = upperPosition - (upperThumbRect.height / 2);
         }
@@ -134,106 +137,100 @@ class RangeSliderUI extends BasicSliderUI {
     @Override
     public void paintThumb(Graphics g) {
     }
-    
-    public void paintThumb(Graphics g, Rectangle thumbRect)  {
+
+    public void paintThumb(Graphics g, Rectangle thumbRect) {
         Rectangle knobBounds = thumbRect;
         int w = knobBounds.width;
         int h = knobBounds.height;
 
         g.translate(knobBounds.x, knobBounds.y);
 
-        if ( slider.isEnabled() ) {
+        if (slider.isEnabled()) {
             g.setColor(slider.getBackground());
-        }
-        else {
+        } else {
             g.setColor(slider.getBackground().darker());
         }
 
-        Boolean paintThumbArrowShape =
-            (Boolean)slider.getClientProperty("Slider.paintThumbArrowShape");
+        Boolean paintThumbArrowShape = (Boolean) slider.getClientProperty("Slider.paintThumbArrowShape");
 
-        if ((!slider.getPaintTicks() && paintThumbArrowShape == null) ||
-            paintThumbArrowShape == Boolean.FALSE) {
+        if ((!slider.getPaintTicks() && paintThumbArrowShape == null) || paintThumbArrowShape == Boolean.FALSE) {
 
             // "plain" version
             g.fillRect(0, 0, w, h);
 
             g.setColor(Color.black);
-            g.drawLine(0, h-1, w-1, h-1);
-            g.drawLine(w-1, 0, w-1, h-1);
+            g.drawLine(0, h - 1, w - 1, h - 1);
+            g.drawLine(w - 1, 0, w - 1, h - 1);
 
             g.setColor(getHighlightColor());
-            g.drawLine(0, 0, 0, h-2);
-            g.drawLine(1, 0, w-2, 0);
+            g.drawLine(0, 0, 0, h - 2);
+            g.drawLine(1, 0, w - 2, 0);
 
             g.setColor(getShadowColor());
-            g.drawLine(1, h-2, w-2, h-2);
-            g.drawLine(w-2, 1, w-2, h-3);
-        }
-        else if ( slider.getOrientation() == JSlider.HORIZONTAL ) {
+            g.drawLine(1, h - 2, w - 2, h - 2);
+            g.drawLine(w - 2, 1, w - 2, h - 3);
+        } else if (slider.getOrientation() == JSlider.HORIZONTAL) {
             int cw = w / 2;
-            g.fillRect(1, 1, w-3, h-1-cw);
+            g.fillRect(1, 1, w - 3, h - 1 - cw);
             Polygon p = new Polygon();
-            p.addPoint(1, h-cw);
-            p.addPoint(cw-1, h-1);
-            p.addPoint(w-2, h-1-cw);
+            p.addPoint(1, h - cw);
+            p.addPoint(cw - 1, h - 1);
+            p.addPoint(w - 2, h - 1 - cw);
             g.fillPolygon(p);
 
             g.setColor(getHighlightColor());
-            g.drawLine(0, 0, w-2, 0);
-            g.drawLine(0, 1, 0, h-1-cw);
-            g.drawLine(0, h-cw, cw-1, h-1);
+            g.drawLine(0, 0, w - 2, 0);
+            g.drawLine(0, 1, 0, h - 1 - cw);
+            g.drawLine(0, h - cw, cw - 1, h - 1);
 
             g.setColor(Color.black);
-            g.drawLine(w-1, 0, w-1, h-2-cw);
-            g.drawLine(w-1, h-1-cw, w-1-cw, h-1);
+            g.drawLine(w - 1, 0, w - 1, h - 2 - cw);
+            g.drawLine(w - 1, h - 1 - cw, w - 1 - cw, h - 1);
 
             g.setColor(getShadowColor());
-            g.drawLine(w-2, 1, w-2, h-2-cw);
-            g.drawLine(w-2, h-1-cw, w-1-cw, h-2);
-        }
-        else {  // vertical
+            g.drawLine(w - 2, 1, w - 2, h - 2 - cw);
+            g.drawLine(w - 2, h - 1 - cw, w - 1 - cw, h - 2);
+        } else { // vertical
             int cw = h / 2;
-            if(slider.getComponentOrientation().isLeftToRight()) {
-                  g.fillRect(1, 1, w-1-cw, h-3);
-                  Polygon p = new Polygon();
-                  p.addPoint(w-cw-1, 0);
-                  p.addPoint(w-1, cw);
-                  p.addPoint(w-1-cw, h-2);
-                  g.fillPolygon(p);
+            if (slider.getComponentOrientation().isLeftToRight()) {
+                g.fillRect(1, 1, w - 1 - cw, h - 3);
+                Polygon p = new Polygon();
+                p.addPoint(w - cw - 1, 0);
+                p.addPoint(w - 1, cw);
+                p.addPoint(w - 1 - cw, h - 2);
+                g.fillPolygon(p);
 
-                  g.setColor(getHighlightColor());
-                  g.drawLine(0, 0, 0, h - 2);                  // left
-                  g.drawLine(1, 0, w-1-cw, 0);                 // top
-                  g.drawLine(w-cw-1, 0, w-1, cw);              // top slant
+                g.setColor(getHighlightColor());
+                g.drawLine(0, 0, 0, h - 2); // left
+                g.drawLine(1, 0, w - 1 - cw, 0); // top
+                g.drawLine(w - cw - 1, 0, w - 1, cw); // top slant
 
-                  g.setColor(Color.black);
-                  g.drawLine(0, h-1, w-2-cw, h-1);             // bottom
-                  g.drawLine(w-1-cw, h-1, w-1, h-1-cw);        // bottom slant
+                g.setColor(Color.black);
+                g.drawLine(0, h - 1, w - 2 - cw, h - 1); // bottom
+                g.drawLine(w - 1 - cw, h - 1, w - 1, h - 1 - cw); // bottom slant
 
-                  g.setColor(getShadowColor());
-                  g.drawLine(1, h-2, w-2-cw,  h-2 );         // bottom
-                  g.drawLine(w-1-cw, h-2, w-2, h-cw-1 );     // bottom slant
-            }
-            else {
-                  g.fillRect(5, 1, w-1-cw, h-3);
-                  Polygon p = new Polygon();
-                  p.addPoint(cw, 0);
-                  p.addPoint(0, cw);
-                  p.addPoint(cw, h-2);
-                  g.fillPolygon(p);
+                g.setColor(getShadowColor());
+                g.drawLine(1, h - 2, w - 2 - cw, h - 2); // bottom
+                g.drawLine(w - 1 - cw, h - 2, w - 2, h - cw - 1); // bottom slant
+            } else {
+                g.fillRect(5, 1, w - 1 - cw, h - 3);
+                Polygon p = new Polygon();
+                p.addPoint(cw, 0);
+                p.addPoint(0, cw);
+                p.addPoint(cw, h - 2);
+                g.fillPolygon(p);
 
-                  g.setColor(getHighlightColor());
-                  g.drawLine(cw-1, 0, w-2, 0);             // top
-                  g.drawLine(0, cw, cw, 0);                // top slant
+                g.setColor(getHighlightColor());
+                g.drawLine(cw - 1, 0, w - 2, 0); // top
+                g.drawLine(0, cw, cw, 0); // top slant
 
-                  g.setColor(Color.black);
-                  g.drawLine(0, h-1-cw, cw, h-1 );         // bottom slant
-                  g.drawLine(cw, h-1, w-1, h-1);           // bottom
+                g.setColor(Color.black);
+                g.drawLine(0, h - 1 - cw, cw, h - 1); // bottom slant
+                g.drawLine(cw, h - 1, w - 1, h - 1); // bottom
 
-                  g.setColor(getShadowColor());
-                  g.drawLine(cw, h-2, w-2,  h-2 );         // bottom
-                  g.drawLine(w-1, 1, w-1,  h-2 );          // right
+                g.setColor(getShadowColor());
+                g.drawLine(cw, h - 2, w - 2, h - 2); // bottom
+                g.drawLine(w - 1, 1, w - 1, h - 2); // right
             }
         }
 
@@ -310,11 +307,6 @@ class RangeSliderUI extends BasicSliderUI {
         }
     }
 
-    /**
-     * Listener to handle model change events.  This calculates the thumb 
-     * locations and repaints the slider if the value change is not caused by
-     * dragging a thumb.
-     */
     public class ChangeHandler implements ChangeListener {
         public void stateChanged(ChangeEvent arg0) {
             if (!lowerDragging && !upperDragging) {
@@ -324,9 +316,6 @@ class RangeSliderUI extends BasicSliderUI {
         }
     }
 
-    /**
-     * Listener to handle mouse movements in the slider track.
-     */
     public class RangeTrackListener extends TrackListener {
 
         @Override

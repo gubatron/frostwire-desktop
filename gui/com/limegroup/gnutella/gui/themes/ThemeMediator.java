@@ -230,6 +230,7 @@ public class ThemeMediator {
         UIManager.put("ComboBoxUI", "com.limegroup.gnutella.gui.themes.SkinComboBoxUI");
         UIManager.put("TreeUI", "com.limegroup.gnutella.gui.themes.SkinTreeUI");
         UIManager.put("TableUI", "com.limegroup.gnutella.gui.themes.SkinTableUI");
+        UIManager.put("RangeSliderUI", "com.limegroup.gnutella.gui.themes.SkinRangeSliderUI");
         
         UIManager.put("ComboBox.editorInsets", new InsetsUIResource(2, 2, 3, 2));
     }

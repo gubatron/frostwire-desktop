@@ -1,7 +1,12 @@
 package com.frostwire.gui.components;
 
 import javax.swing.JSlider;
+import javax.swing.UIManager;
+import javax.swing.plaf.ComponentUI;
 
+/**
+ * Initial implementation from: https://github.com/ernieyu/Swing-range-slider
+ */
 public class RangeSlider extends JSlider {
 
     /**
@@ -20,7 +25,11 @@ public class RangeSlider extends JSlider {
 
     @Override
     public void updateUI() {
-        setUI(new RangeSliderUI(this));
+        ComponentUI ui = UIManager.getUI(this);
+        if (ui == null) {
+            ui = new RangeSliderUI(this);
+        }
+        setUI(ui);
         updateLabelUIs();
     }
 
@@ -50,5 +59,10 @@ public class RangeSlider extends JSlider {
         int newExtent = Math.min(Math.max(0, value - lowerValue), getMaximum() - lowerValue);
 
         setExtent(newExtent);
+    }
+    
+    @Override
+    public String getUIClassID() {
+        return "RangeSliderUI";
     }
 }

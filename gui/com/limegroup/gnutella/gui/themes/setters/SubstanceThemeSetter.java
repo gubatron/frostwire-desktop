@@ -5,6 +5,7 @@ import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JSlider;
 import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.FontUIResource;
@@ -23,8 +24,10 @@ import org.pushingpixels.substance.internal.ui.SubstanceTableUI;
 import org.pushingpixels.substance.internal.ui.SubstanceTreeUI;
 import org.pushingpixels.substance.internal.utils.SubstanceCoreUtilities;
 
+import com.frostwire.gui.components.RangeSlider;
 import com.limegroup.gnutella.gui.themes.SkinComboBoxUI;
 import com.limegroup.gnutella.gui.themes.SkinListUI;
+import com.limegroup.gnutella.gui.themes.SkinRangeSliderUI;
 import com.limegroup.gnutella.gui.themes.SkinTextAreaUI;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSetter;
@@ -172,5 +175,10 @@ public class SubstanceThemeSetter implements ThemeSetter {
 
     public ComponentUI createTableUI(JComponent comp) {
         return SubstanceTableUI.createUI(comp);
+    }
+
+    public ComponentUI createRangeSliderUI(JComponent comp) {
+        SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
+        return new SkinRangeSliderUI((RangeSlider) comp);
     }
 }
