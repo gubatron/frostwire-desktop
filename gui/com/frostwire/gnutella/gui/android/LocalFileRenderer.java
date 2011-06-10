@@ -30,7 +30,7 @@ import javax.swing.ListCellRenderer;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileSystemView;
 
-import com.frostwire.gnutella.gui.GraphicPanel;
+import com.frostwire.gui.components.GraphicPanel;
 
 public class LocalFileRenderer extends JPanel implements ListCellRenderer {
 

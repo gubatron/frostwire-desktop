@@ -25,7 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.ListCellRenderer;
 
-import com.frostwire.gnutella.gui.GraphicPanel;
+import com.frostwire.gui.components.GraphicPanel;
 import com.limegroup.gnutella.gui.mp3.AudioSource;
 import com.limegroup.gnutella.gui.mp3.LimeWirePlayer;
 import com.limegroup.gnutella.gui.mp3.PlayerState;

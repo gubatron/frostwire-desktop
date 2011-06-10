@@ -23,7 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.ListCellRenderer;
 
-import com.frostwire.gnutella.gui.GraphicPanel;
+import com.frostwire.gui.components.GraphicPanel;
 import com.limegroup.gnutella.gui.I18n;
 
 public class TaskRenderer extends JPanel implements ListCellRenderer {

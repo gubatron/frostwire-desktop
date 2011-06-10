@@ -1,4 +1,4 @@
-package com.frostwire.gnutella.gui;
+package com.frostwire.gui.components;
 
 public class Slide {
     

@@ -29,8 +29,8 @@ import javax.swing.plaf.TabbedPaneUI;
 
 import org.limewire.util.DebugRunnable;
 
-import com.frostwire.gnutella.gui.Slide;
-import com.frostwire.gnutella.gui.SlideshowPanel;
+import com.frostwire.gui.components.Slide;
+import com.frostwire.gui.components.SlideshowPanel;
 import com.frostwire.settings.UpdateManagerSettings;
 import com.limegroup.gnutella.FileManager;
 import com.limegroup.gnutella.GUID;

@@ -22,8 +22,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 
 import com.frostwire.GuiFrostWireUtils;
-import com.frostwire.gnutella.gui.GraphicPanel;
 import com.frostwire.gnutella.gui.android.Task.OnChangedListener;
+import com.frostwire.gui.components.GraphicPanel;
 import com.limegroup.gnutella.gui.I18n;
 
 public class ProgressPanel extends JPanel {

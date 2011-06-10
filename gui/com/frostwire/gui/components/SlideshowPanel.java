@@ -1,4 +1,4 @@
-package com.frostwire.gnutella.gui;
+package com.frostwire.gui.components;
 
 import java.awt.Cursor;
 import java.awt.Graphics;

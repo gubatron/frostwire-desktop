@@ -24,10 +24,10 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
-import com.frostwire.gnutella.gui.GraphicPanel;
-import com.frostwire.gnutella.gui.HintTextField;
-import com.frostwire.gnutella.gui.SlideshowPanel;
 import com.frostwire.gnutella.gui.android.Task.OnChangedListener;
+import com.frostwire.gui.components.GraphicPanel;
+import com.frostwire.gui.components.HintTextField;
+import com.frostwire.gui.components.SlideshowPanel;
 
 public class DeviceExplorer extends JPanel {
 

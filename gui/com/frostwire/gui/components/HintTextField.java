@@ -1,4 +1,4 @@
-package com.frostwire.gnutella.gui;
+package com.frostwire.gui.components;
 
 import java.awt.Color;
 import java.awt.event.FocusEvent;
