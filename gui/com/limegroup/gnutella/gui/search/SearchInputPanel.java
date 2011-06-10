@@ -34,6 +34,7 @@ import javax.swing.text.BadLocationException;
 import org.jdesktop.swingx.JXCollapsiblePane;
 
 import com.frostwire.bittorrent.websearch.SearchEnginesSettings;
+import com.frostwire.gui.components.RangeSlider;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIUtils;
@@ -238,6 +239,7 @@ class SearchInputPanel extends JPanel {
         fullPanel.add(createSearchOptionsPanel());
         return GUIUtils.left(fullPanel);
     }
+    
 
     private Component createSearchOptionsPanel() {
 		SEARCH_OPTIONS_COLLAPSIBLE_PANEL = new JXCollapsiblePane();
@@ -278,12 +280,28 @@ class SearchInputPanel extends JPanel {
 		controls.add(checkBoxMininova);
 		controls.add(checkBoxISOHunt);
 		
-		controls.setBorder(new TitledBorder("Choose Search Engines"));
+		controls.setBorder(new TitledBorder(I18n.tr("Choose Search Engines")));
 		
 		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.add(controls, BorderLayout.PAGE_START);
+		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.add(createSearchFilterPanel(), BorderLayout.PAGE_START);
 
 		return SEARCH_OPTIONS_COLLAPSIBLE_PANEL;
 	}
+    
+    private Component createSearchFilterPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel.setBorder(new TitledBorder(I18n.tr("Filter")));
+        
+        RangeSlider rangeSlider = new RangeSlider();
+        
+        
+        final JCheckBox checkboxClearbits = new JCheckBox("Clearbits");
+        
+        panel.add(rangeSlider);
+        
+        return panel;
+    }
 
 	/**
      * Creates the search button & inserts it in a panel.
