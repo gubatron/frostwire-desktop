@@ -47,11 +47,6 @@ public interface ActivityCallback extends DownloadCallback
      * Add a query string to the monitor screen
      */
     public void handleQueryString( String query ); 
-
-    /** display an error message since the browse host failed. 
-     *  @param guid The GUID of the browse host.
-     */    
-    public void browseHostFailed(GUID guid);
         
 	/**
 	 * Notification that the file manager is beginning loading.

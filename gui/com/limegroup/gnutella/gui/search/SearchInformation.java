@@ -35,22 +35,6 @@ public class SearchInformation {
     public static final int KEYWORD = 0;
     
     /**
-     * A what is new search.
-     */
-    public static final int WHATS_NEW = 1;
-    
-    /**
-     * A browse host search.
-     */
-    public static final int BROWSE_HOST = 2;
-    
-    /**
-     * The string to use to describe a what's new search.
-     */
-    public static final String WHATS_NEW_DESC =
-        I18n.tr("New");
-    
-    /**
      * The kind of search this is.
      */
     private final int type;
@@ -145,22 +129,6 @@ public class SearchInformation {
 	}
     
     /**
-     * Creates a what's new search.
-     */
-    public static SearchInformation createWhatsNewSearch(String name, MediaType type){
-        return new SearchInformation(WHATS_NEW, 
-            WHATS_NEW_DESC + " - " + name, null, type);
-    }
-    
-    /**
-     * Create's a browse host search.
-     */
-    public static SearchInformation createBrowseHostSearch(String desc) {
-        return new SearchInformation(BROWSE_HOST, desc, null, 
-            MediaType.getAnyTypeMediaType());
-    }
-    
-    /**
      * Retrieves the basic query of the search.
      */
     public String getQuery() {
@@ -184,27 +152,6 @@ public class SearchInformation {
 	public String getTitle() {
 		return title;
 	}
-	
-    /**
-     * Gets the IP/Port if this is a browse-host.
-     */
-    IpPort getIpPort() {
-        if(!isBrowseHostSearch())
-            throw new IllegalStateException();
-
-        StringTokenizer st = new StringTokenizer(getQuery(), ":");
-        String host = null;
-        int port = 6346;
-        if (st.hasMoreTokens())
-            host = st.nextToken();
-        if (st.hasMoreTokens()) {
-            try {
-                port = Integer.parseInt(st.nextToken());
-            } catch(NumberFormatException ignored) {}
-        }
-        
-        return new IpPortImpl(InetSocketAddress.createUnresolved(host, port), host);
-    }
     
     /**
      * Determines whether or not this is an XML search.
@@ -218,20 +165,6 @@ public class SearchInformation {
      */
     public boolean isKeywordSearch() {
         return type == KEYWORD;
-    }
-    
-    /**
-     * Determines if this is a what's new search.
-     */
-    public boolean isWhatsNewSearch() {
-        return type == WHATS_NEW;
-    }
-    
-    /**
-     * Determines if this is a browse host search.
-     */
-    public boolean isBrowseHostSearch() {
-        return type == BROWSE_HOST;
     }
     
     /** Returns a string representation of the SearchInfo. */

@@ -496,21 +496,6 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
     }
 
     /**
-     * Notification that a browse host for the given GUID has failed.
-     *
-     * Removes the panel associated with that search.
-     */
-    void browseHostFailed(GUID guid) {
-        int i = getIndexForGUID(guid);
-        if (i > -1) {
-            ResultPanel rp = getPanelAtIndex(i);
-            killSearchAtIndex(i);
-            GUIMediator.showError(I18n.tr("Could not browse host {0}.", rp.getTitle()),
-                    QuestionsHandler.BROWSE_HOST_FAILED);
-        }
-    }
-
-    /**
      * @modifies spinning lime state
      * @effects If all searches are stopped, then the Lime stops spinning.
      */

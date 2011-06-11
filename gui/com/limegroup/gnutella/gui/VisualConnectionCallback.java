@@ -263,18 +263,6 @@ public final class VisualConnectionCallback implements ActivityCallback {
     public void updateAvailable(UpdateInformation update) {
         GUIMediator.instance().showUpdateNotification(update);
     }
-    
-    /**
-     * Display an error message for a ResultPanel (if it still exists)
-     * @param guid The GUID of the ResultPanel.
-     */
-    public void browseHostFailed(final GUID guid) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-                SearchMediator.browseHostFailed(guid);
-			}
-		});
-    }
 
     /**
      * Shows the user a message informing her that a file being downloaded 

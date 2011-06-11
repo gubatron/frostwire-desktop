@@ -201,30 +201,10 @@ public final class SearchMediator {
             getSearchInputManager().panelReset(rp);
         }
         
-        if(info.isBrowseHostSearch()) {
-            IpPort ipport = info.getIpPort();
-            String host = ipport.getAddress();
-            int port = ipport.getPort();
-            if(host != null && port != 0) {
-                GUIMediator.instance().setSearching(true);
-                //reBrowseHost(new ConnectableImpl(ipport, false), rp);
-            }
-        } else {
-            GUIMediator.instance().setSearching(true);
-            doSearch(guidBytes, info);
-        }
-
+        GUIMediator.instance().setSearching(true);
+        doSearch(guidBytes, info);
+        
         return guidBytes;
-    }
-
-  
-
-    /**
-     * Call this when a Browse Host fails.
-     * @param guid The guid associated with this Browse. 
-     */
-    public static void browseHostFailed(GUID guid) {
-        getSearchResultDisplayer().browseHostFailed(guid);
     }
     
     /**
@@ -239,10 +219,7 @@ public final class SearchMediator {
             
         // generate a guid for the search.
         final byte[] guid = GuiCoreMediator.getSearchServices().newQueryGUID();
-        // only add tab if this isn't a browse-host search.
-        if(!info.isBrowseHostSearch()) {
-            addResultTab(new GUID(guid), info);
-        }
+        addResultTab(new GUID(guid), info);
         
         doSearch(guid, info);
         
