@@ -182,9 +182,4 @@ public class SubstanceThemeSetter implements ThemeSetter {
         SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
         return new SkinRangeSliderUI((RangeSlider) comp);
     }
-
-    public ComponentUI createFileChooserUI(JComponent comp) {
-        SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
-        return new SkinFileChooserUI((JFileChooser) comp);
-    }
 }

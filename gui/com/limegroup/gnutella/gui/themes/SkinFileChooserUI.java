@@ -51,7 +51,7 @@ import org.pushingpixels.substance.internal.utils.SubstanceCoreUtilities;
  * 
  * @author Kirill Grouchnikov
  */
-public class SkinFileChooserUI extends MetalFileChooserUI {
+public class SkinFileChooserUI extends BaseFileChooserUI {
     
     /**
      * Custom file view - for system icons on the files.
@@ -153,7 +153,8 @@ public class SkinFileChooserUI extends MetalFileChooserUI {
     }
 
     public static ComponentUI createUI(JComponent comp) {
-        return ThemeMediator.CURRENT_THEME.createFileChooserUI(comp);
+    	SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
+        return new SkinFileChooserUI((JFileChooser) comp);
     }
 
     /**
