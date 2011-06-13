@@ -680,8 +680,9 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
      * the first still-visible one.
      */
     boolean filterChanged(TableLineFilter filter, int depth) {
-        if(!FILTER.setFilter(depth, filter))
-            return false;
+        FILTER.setFilter(depth, filter);
+        //if(!FILTER.setFilter(depth, filter))
+        //    return false;
         
         // store the selection & visible rows
         int[] rows = TABLE.getSelectedRows();
