@@ -521,7 +521,9 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		autoOpen = _checkStartSeeding.isSelected();
 		
 		//show save as dialog
-		showSaveAsDialog();
+		if (!showSaveAsDialog()) {
+			return;
+		}
 		
 		new Thread(new Runnable() {
 
@@ -547,7 +549,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
 	}
 
-	private void showSaveAsDialog() {
+	private boolean showSaveAsDialog() {
 		if (_saveAsDialog == null) {
 			_saveAsDialog = new JFileChooser(SharingSettings.DEFAULT_TORRENTS_DIR);
 			
@@ -560,24 +562,29 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 				
 				@Override
 				public boolean accept(File f) {
-					return f.getName().endsWith(".torrent");
+					return f.isDirectory() || f.getName().endsWith(".torrent");
 				}
 			});
 		}
 		
 		File suggestedFileName =  null;
 		File torrContents = (create_from_dir) ? new File(directoryPath) : new File(singlePath);
-		suggestedFileName = new File(torrContents.getParent(),torrContents.getName() + ".torrent");
+		
+		//suggestedFileName = new File(torrContents.getParent(),torrContents.getName() + ".torrent");
+		suggestedFileName = new File(_saveAsDialog.getSelectedFile(),torrContents.getName() + ".torrent");
+		
 		_saveAsDialog.setSelectedFile(suggestedFileName);
 		
 		int result = _saveAsDialog.showSaveDialog(this);
 
 		if (result != JFileChooser.APPROVE_OPTION) {
 			savePath = null;
-			return;
+			return false;
 		}
 		
-		savePath = _saveAsDialog.getSelectedFile().getAbsolutePath();		
+		savePath = _saveAsDialog.getSelectedFile().getAbsolutePath();	
+		
+		return true;
 	}
 
 	private boolean validateAndFixTrackerURLS() {
