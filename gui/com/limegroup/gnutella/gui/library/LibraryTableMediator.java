@@ -29,6 +29,7 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
+import com.frostwire.bittorrent.CreateTorrentDialog;
 import com.frostwire.components.TorrentSaveFolderComponent;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.FileDesc;
@@ -86,8 +87,10 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
     public static Action LAUNCH_ACTION;
     public static Action OPEN_IN_FOLDER_ACTION;
     public static Action ENQUEUE_ACTION;
-	public static Action DELETE_ACTION;
+    public static Action CREATE_TORRENT_ACTION;
+    public static Action DELETE_ACTION;
     public static Action RENAME_ACTION;
+    
 	
     private Action MAGNET_LOOKUP_ACTION;
 	private Action COPY_MAGNET_TO_CLIPBOARD_ACTION;
@@ -113,7 +116,8 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
         LAUNCH_ACTION = new LaunchAction();
         OPEN_IN_FOLDER_ACTION = new OpenInFolderAction();
         ENQUEUE_ACTION = new EnqueueAction();
-		DELETE_ACTION = new RemoveAction();
+		CREATE_TORRENT_ACTION = new CreateTorrentAction();
+        DELETE_ACTION = new RemoveAction();
         RENAME_ACTION = new RenameAction();
         MAGNET_LOOKUP_ACTION = new MagnetLookupAction();
 		COPY_MAGNET_TO_CLIPBOARD_ACTION = new CopyMagnetLinkToClipboardAction(this);
@@ -147,6 +151,10 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		if (hasExploreAction()) {
 		    menu.add(new SkinMenuItem(OPEN_IN_FOLDER_ACTION));
 		}
+		
+		menu.addSeparator();
+		menu.add(new SkinMenuItem(CREATE_TORRENT_ACTION));
+		
 		menu.addSeparator();
 		menu.add(new SkinMenuItem(DELETE_ACTION));
 		menu.add(new SkinMenuItem(RENAME_ACTION));
@@ -727,6 +735,8 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		LAUNCH_ACTION.setEnabled(true);
 		DELETE_ACTION.setEnabled(true);
 		
+		CREATE_TORRENT_ACTION.setEnabled(sel.length == 1);
+		
 		if (sel.length == 1 && selectedFile.isFile() && selectedFile.getParentFile() != null) {
             OPEN_IN_FOLDER_ACTION.setEnabled(true);
         } else {
@@ -804,6 +814,9 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		LAUNCH_ACTION.setEnabled(false);
 		OPEN_IN_FOLDER_ACTION.setEnabled(false);
 		ENQUEUE_ACTION.setEnabled(false);
+		
+		CREATE_TORRENT_ACTION.setEnabled(false);
+		
 		DELETE_ACTION.setEnabled(false);
 		
 		RENAME_ACTION.setEnabled(false);
@@ -913,6 +926,39 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
         }
     }
 
+    private final class CreateTorrentAction extends AbstractAction {
+
+		private static final long serialVersionUID = 1898917632888388860L;
+		
+		public CreateTorrentAction() {
+			super(I18n.tr("Create New Torrent"));
+			putValue(Action.LONG_DESCRIPTION,I18n.tr("Create a new .torrent file"));
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			File selectedFile = DATA_MODEL.getFile(TABLE.getSelectedRow());
+
+			//can't create torrents out of empty folders.
+			if (selectedFile.isDirectory() && selectedFile.listFiles().length == 0) {
+				JOptionPane.showMessageDialog(null, I18n.tr("The folder you selected is empty."),I18n.tr("Invalid Folder"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			//can't create torrents if the folder/file can't be read
+			if (!selectedFile.canRead()) {
+				JOptionPane.showMessageDialog(null, I18n
+						.tr("Error: You can't read on that file/folder."), I18n.tr("Error"), JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			CreateTorrentDialog dlg = new CreateTorrentDialog(GUIMediator.getAppFrame());
+			dlg.setChosenContent(selectedFile);
+			dlg.setVisible(true);
+			
+		}
+    }
+    
     private final class RemoveAction extends AbstractAction {
 		
 		/**

@@ -419,22 +419,26 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
 			File chosenFile = _fileChooser.getSelectedFile();
 
-			// if we don't have read permissions on that file/folder...
-			if (!chosenFile.canRead()) {
-				_textSelectedContent.setText(I18n
-						.tr("Error: You can't read on that file/folder."));
-				return;
-			}
-
-			correctFileSelectionMode(chosenFile);
-			setTorrentPathFromChosenFile(chosenFile);
-			displayChosenContent(chosenFile);
+			setChosenContent(chosenFile);
 
 		} else if (result == JFileChooser.ERROR_OPTION) {
 			_textSelectedContent.setText(I18n
 					.tr("Unkown error. Try again please."));
 		}
 
+	}
+
+	public void setChosenContent(File chosenFile) {
+		// if we don't have read permissions on that file/folder...
+		if (!chosenFile.canRead()) {
+			_textSelectedContent.setText(I18n
+					.tr("Error: You can't read on that file/folder."));
+			return;
+		}
+
+		correctFileSelectionMode(chosenFile);
+		setTorrentPathFromChosenFile(chosenFile);
+		displayChosenContent(chosenFile);
 	}
 
 	private void displayChosenContent(File chosenFile) {
@@ -454,6 +458,12 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	}
 
 	private void correctFileSelectionMode(File chosenFile) {
+		
+		//when invoked from the library, we have to init the file chooser.
+		if (_fileChooser == null) {
+			initFileChooser((chosenFile.isDirectory()) ? JFileChooser.DIRECTORIES_ONLY : JFileChooser.FILES_ONLY);
+		}
+		
 		// user chose a folder that looks like a file (aka MacOSX .app files)
 		if (chosenFile.isDirectory()
 				&& _fileChooser.getFileSelectionMode() == JFileChooser.FILES_ONLY) {
