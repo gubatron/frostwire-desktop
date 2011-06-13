@@ -64,11 +64,6 @@ public interface ActivityCallback extends DownloadCallback
 	 * Notification that an update became available.
 	 */
 	public void updateAvailable(UpdateInformation info);
-
-	/**
-	 * Sets the enabled/disabled state of file annotation.
-	 */
-	public void setAnnotateEnabled(boolean enabled);
     
     /** 
      * Notifies the GUI that all active uploads have been completed.

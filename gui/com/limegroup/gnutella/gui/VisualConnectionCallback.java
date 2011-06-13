@@ -248,53 +248,11 @@ public final class VisualConnectionCallback implements ActivityCallback {
         });
     }
 
-
-    public void setAnnotateEnabled(final boolean enabled) {
-    	    SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-//                mf().getLibraryMediator().setAnnotateEnabled(enabled);
-            }
-        });
-    }
-
 	/**
      * Notification that a new update is available.
      */
     public void updateAvailable(UpdateInformation update) {
         GUIMediator.instance().showUpdateNotification(update);
-    }
-
-    /**
-     * Shows the user a message informing her that a file being downloaded 
-     * is corrupt.
-     * <p>
-     * This method MUST call dloader.discardCorruptDownload(boolean b) 
-     * otherwise there will be threads piling up waiting for a notification
-     */
-    public void promptAboutCorruptDownload(Downloader downloader) {    
-        final Downloader dloader = downloader;
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                DialogOption resp=GUIMediator.showYesNoMessage(
-                              I18n.tr("FrostWire has detected a corruption in the file {0}. Do you want to continue the download?",dloader.getSaveFile().getName()),
-                              QuestionsHandler.CORRUPT_DOWNLOAD, DialogOption.NO
-                              );
-                    
-                // discard if they didn't want to save.                              
-                dloader.discardCorruptDownload(
-                    resp == DialogOption.NO);
-            }
-        });
-    }
-    
-    public boolean promptAboutStopping() {
-        DialogOption resp = GUIMediator.showYesNoMessage(I18n.tr("If you stop this upload, the torrent download will stop. Are you sure you want to do this?"), DialogOption.NO);
-    	return resp == DialogOption.YES;
-    }
-    
-    public boolean promptAboutSeeding() {
-        DialogOption resp = GUIMediator.showYesNoMessage(I18n.tr("This upload is a torrent and it hasn\'t seeded enough. You should let it upload some more. Are you sure you want to stop it?"), DialogOption.NO);
-    	return resp == DialogOption.YES;
     }
 
 	/**
@@ -331,10 +289,6 @@ public final class VisualConnectionCallback implements ActivityCallback {
 			}
 		});
 	}
-
-	public String getHostValue(String key) {
-        return I18n.tr(key);
-    }
     
     /**
      * Returns the MainFrame.
