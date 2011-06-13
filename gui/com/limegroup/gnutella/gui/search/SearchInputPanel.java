@@ -13,6 +13,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -269,6 +270,8 @@ class SearchInputPanel extends JPanel {
                 SearchEnginesSettings.CLEARBITS_SEARCH_ENABLED.setValue(checkboxClearbits.isSelected());
                 SearchEnginesSettings.MININOVA_SEARCH_ENABLED.setValue(checkBoxMininova.isSelected());
                 SearchEnginesSettings.ISOHUNT_SEARCH_ENABLED.setValue(checkBoxISOHunt.isSelected());
+                
+                updateSearchResults(new SearchEngineFilter());
             }
         };
 		
@@ -295,12 +298,16 @@ class SearchInputPanel extends JPanel {
         
         RangeSlider rangeSlider = new RangeSlider();
         
-        
-        final JCheckBox checkboxClearbits = new JCheckBox("Clearbits");
-        
         panel.add(rangeSlider);
         
         return panel;
+    }
+    
+    private void updateSearchResults(TableLineFilter filter) {
+        List<ResultPanel> resultPanels = SearchMediator.getSearchResultDisplayer().getResultPanels();
+        for (ResultPanel resultPanel : resultPanels) {
+            resultPanel.filterChanged(filter, 0);
+        }
     }
 
 	/**

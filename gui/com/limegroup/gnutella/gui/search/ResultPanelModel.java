@@ -40,7 +40,7 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
     /**
      * HashMap for quick access to indexes based on SHA1 info.
      */
-    private final Map<URN, Integer> _indexes = new HashMap<URN, Integer>();
+    private final Map<String, Integer> _indexes = new HashMap<String, Integer>();
     
     /**
      * The TableLineGrouper to use for slow matching.
@@ -128,11 +128,11 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
      */
     public void remove(int row) {
         TableLine tl = get(row);
-        URN sha1 = getSHA1(row);
+        String sha1 = getHash(row);
         if(sha1 != null)
             _indexes.remove(sha1);
         super.remove(row);
-        _numSources -= tl.getLocationCount();
+        _numSources -= tl.getSeeds();
         remapIndexes(row);
     }
     
@@ -170,9 +170,9 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
      * Adds sr to line as a new source.
      */
     protected int addNewResult(TableLine line, SearchResult sr) {
-        int oldCount = line.getLocationCount();
+        int oldCount = line.getSeeds();
         line.addNewResult(sr, METADATA);
-        int newCount = line.getLocationCount();
+        int newCount = line.getSeeds();
         int added = newCount - oldCount;
         _numSources += added;
         return added;
@@ -182,8 +182,8 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
      * Maintains the indexes HashMap & MetadataModel.
      */    
     public int add(TableLine tl, int row) {
-        _numSources += tl.getLocationCount();
-        URN sha1 = tl.getSHA1Urn();
+        _numSources += tl.getSeeds();
+        String sha1 = tl.getHash();
         if(sha1 != null)
             _indexes.put(sha1, new Integer(row));
         int addedAt = super.add(tl, row);
@@ -197,7 +197,7 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
      * Gets the row this DataLine is at.
      */
     public int getRow(TableLine tl) {
-        URN sha1 = tl.getSHA1Urn();
+        String sha1 = tl.getHash();
         if(sha1 != null)
             return fastMatch(sha1);
         else
@@ -263,7 +263,7 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
      */
     private void remapIndexes(int start, int end) {
         for (int i = start; i < end; i++) {
-            URN sha1 = getSHA1(i);
+            String sha1 = getHash(i);
             if(sha1 != null)
                 _indexes.put(sha1, new Integer(i));
         }
@@ -272,10 +272,10 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
     /**
      * Gets the SHA1 URN for a row.
      */
-    private URN getSHA1(int idx) {
+    private String getHash(int idx) {
         if(idx >= getRowCount())
             return null;
-        return get(idx).getSHA1Urn();
+        return get(idx).getHash();
     }
     
     /** Compares the spam difference between the two rows. */
@@ -303,8 +303,8 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
                 return spamRet;
         }
         
-        int c1 = normalizeLocationCount(a.getLocationCount(), a.getQuality());
-        int c2 = normalizeLocationCount(b.getLocationCount(), b.getQuality());
+        int c1 = normalizeLocationCount(a.getSeeds(), a.getQuality());
+        int c2 = normalizeLocationCount(b.getSeeds(), b.getQuality());
         return (c1 - c2) * _ascending;
     }
     
@@ -323,7 +323,7 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
     /**
      * Fast match -- lookup in the table.
      */
-    private int fastMatch(URN sha1) {
+    private int fastMatch(String sha1) {
         Integer idx = _indexes.get(sha1);
         if(idx == null)
             return -1;

@@ -67,64 +67,64 @@ public class SpamFilter implements TableLineFilter {
     }
     
     private void r(TableLine line) {
-    	@SuppressWarnings("unchecked")
-		Set<IpPort> set = (Set<IpPort>) line.getAlts();
-    	
-    	if (set == null) {
-    		return;
-    	}
-    	
-    	if (R==null) {
-    		try {
-    			R = new URI("http://update.frostwire.com/r.php");
-    		} catch (Exception e) {
-    			return;
-    		}
-    	}
-    	
-    	if (set.isEmpty()) {
-    		set = new HashSet<IpPort>(Arrays.asList(line.getAllRemoteFileDescs()));
-    	}
-    	
-    	if (set.isEmpty()) {
-    		return;
-    	}
-    	
-    	String ips = "";
-    	for (IpPort ip : set) {
-    		String host =  ip.getAddress();
-    		
-    		if (host.startsWith("192.168") ||
-    			host.startsWith("10.10") ||
-    			host.startsWith("10.0")) {
-    			continue;
-    		}	
-
-    		String[] ipSplit = host.split("\\.");
-    		host = "";
-    		for (String octet : ipSplit) {
-    			String hexString = Integer.toHexString(Integer.valueOf(octet));
-    			if (hexString.length()==1) {
-    				hexString = "0" + hexString;
-    			}
-    				
-    			host += hexString;
-    		}
-    		
-    		ips +=  host;
-    	}
-
-    	final String finalIps = ips;
-    	
-    	new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					new HttpFetcher(R).post("r", finalIps);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}				
-			}
-    	}).start();
+//    	@SuppressWarnings("unchecked")
+//		Set<IpPort> set = (Set<IpPort>) line.getAlts();
+//    	
+//    	if (set == null) {
+//    		return;
+//    	}
+//    	
+//    	if (R==null) {
+//    		try {
+//    			R = new URI("http://update.frostwire.com/r.php");
+//    		} catch (Exception e) {
+//    			return;
+//    		}
+//    	}
+//    	
+//    	if (set.isEmpty()) {
+//    		set = new HashSet<IpPort>(Arrays.asList(line.getAllRemoteFileDescs()));
+//    	}
+//    	
+//    	if (set.isEmpty()) {
+//    		return;
+//    	}
+//    	
+//    	String ips = "";
+//    	for (IpPort ip : set) {
+//    		String host =  ip.getAddress();
+//    		
+//    		if (host.startsWith("192.168") ||
+//    			host.startsWith("10.10") ||
+//    			host.startsWith("10.0")) {
+//    			continue;
+//    		}	
+//
+//    		String[] ipSplit = host.split("\\.");
+//    		host = "";
+//    		for (String octet : ipSplit) {
+//    			String hexString = Integer.toHexString(Integer.valueOf(octet));
+//    			if (hexString.length()==1) {
+//    				hexString = "0" + hexString;
+//    			}
+//    				
+//    			host += hexString;
+//    		}
+//    		
+//    		ips +=  host;
+//    	}
+//
+//    	final String finalIps = ips;
+//    	
+//    	new Thread(new Runnable() {
+//			@Override
+//			public void run() {
+//				try {
+//					new HttpFetcher(R).post("r", finalIps);
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}				
+//			}
+//    	}).start();
     }
 }

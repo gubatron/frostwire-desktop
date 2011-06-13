@@ -177,4 +177,8 @@ public interface SearchResult {
     public String getHash();
 
     public String getTorrentURI();
+
+    public int getSeeds();
+    
+    public SearchEngine getSearchEngine();
 }
