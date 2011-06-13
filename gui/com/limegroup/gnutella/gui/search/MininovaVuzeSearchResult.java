@@ -105,8 +105,6 @@ public class MininovaVuzeSearchResult extends AbstractSearchResult {
     @Override
     public void initialize(TableLine line) {
         line.setAddedOn(getCreationTime());
-        int seeds = Integer.valueOf(_item.seeds) + Integer.valueOf(_item.superseeds);
-        line.initLocations(seeds);
     }
 
     @Override
@@ -141,5 +139,13 @@ public class MininovaVuzeSearchResult extends AbstractSearchResult {
         }, popupMenu, lines.length == 1, 3);
 
         return popupMenu;
+    }
+
+    public int getSeeds() {
+        return _item.seeds + _item.superseeds;
+    }
+    
+    public SearchEngine getSearchEngine() {
+        return SearchEngine.MININOVA;
     }
 }

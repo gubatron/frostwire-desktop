@@ -629,15 +629,15 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
      * Shows a LicenseWindow for the selected line.
      */
     void showLicense() {
-        TableLine line = getSelectedLine();
-        if(line == null)
-            return;
-            
-        URN urn = line.getSHA1Urn();
-        LimeXMLDocument doc = line.getXMLDocument();
-        LicenseWindow window = LicenseWindow.create(line.getLicense(), urn, doc, this);
-        GUIUtils.centerOnScreen(window);
-        window.setVisible(true);
+//        TableLine line = getSelectedLine();
+//        if(line == null)
+//            return;
+//            
+//        URN urn = line.getSHA1Urn();
+//        LimeXMLDocument doc = line.getXMLDocument();
+//        LicenseWindow window = LicenseWindow.create(line.getLicense(), urn, doc, this);
+//        GUIUtils.centerOnScreen(window);
+//        window.setVisible(true);
     }
     
     public void licenseVerified(License license) {
@@ -1021,7 +1021,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
         for (int i = 0; i < sel.length; i++) {
             TableLine line = DATA_MODEL.get(sel[i]);
             // prefer non-firewalled rfds for the magnet action
-            RemoteFileDesc rfd = line.getNonFirewalledRFD();
+            RemoteFileDesc rfd = null;//line.getNonFirewalledRFD();
             
             if (rfd != null) {
                 list.add(rfd);

@@ -92,9 +92,9 @@ public class BuyAction extends AbstractAction implements LimeAction {
 		String mode = "mode=aps&"; //this will change depending on the MediaType: (blended:all products, books, photo, digital-music, software, amazontv)
 		
 		MediaType mt = this.getTableLine().getNamedMediaType().getMediaType();
-		String sha1 = "";
-		if (this.getTableLine().getSHA1Urn()!=null)
-			sha1 = this.getTableLine().getSHA1Urn().toString();
+//		String sha1 = "";
+//		if (this.getTableLine().getSHA1Urn()!=null)
+//			sha1 = this.getTableLine().getSHA1Urn().toString();
 		
 		String size = String.valueOf(this.getTableLine().getSize());
 		
@@ -129,7 +129,7 @@ public class BuyAction extends AbstractAction implements LimeAction {
 				mode + 
 				"keywords=" + encoded_keywords + 
 				"&fwUseragent=" + fwUserAgent + 
-				"&sha1=" + sha1 + 
+				//"&sha1=" + sha1 + 
 				"&size=" + size;
 			//System.out.println("The Buy URL is: " + this._buyUrl);
 		} else { 

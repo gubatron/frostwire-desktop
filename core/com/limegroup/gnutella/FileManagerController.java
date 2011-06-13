@@ -50,18 +50,12 @@ public interface FileManagerController {
 
     public void loadFinishedPostSave();
 
-//    public void addSimppListener(SimppListener listener);
-//    
-//    public void removeSimppListener(SimppListener listener);
-
     public void fileManagerLoading();
 
     public void handleSharedFileUpdate(File file);
 
     public void scheduleWithFixedDelay(Runnable command, int initialDelay, int delay, TimeUnit unit);
 
-    public void setAnnotateEnabled(boolean enabled);
-    
     public LimeXMLDocument createLimeXMLDocument(Collection<? extends Entry<String, String>> nameValueList,
             String schemaURI);
     

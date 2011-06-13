@@ -410,6 +410,10 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 	ResultPanel getPanelAtIndex(int index) {
         return entries.get(index);
 	}
+	
+	List<ResultPanel> getResultPanels() {
+	    return new ArrayList<ResultPanel>(entries);
+	}
 
 	/**
 	 * Returns the index in the list of search panels that corresponds

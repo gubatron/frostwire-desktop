@@ -224,10 +224,6 @@ public class FileManagerControllerImpl implements FileManagerController {
         backgroundExecutor.scheduleWithFixedDelay(command, initialDelay, delay, unit);
     }
 
-    public void setAnnotateEnabled(boolean enabled) {
-        activityCallback.get().setAnnotateEnabled(enabled);
-    }
-
     public LimeXMLDocument createLimeXMLDocument(
             Collection<? extends Entry<String, String>> nameValueList,
             String schemaURI) {

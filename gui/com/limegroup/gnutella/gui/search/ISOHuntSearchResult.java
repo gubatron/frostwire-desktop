@@ -106,15 +106,7 @@ public class ISOHuntSearchResult extends AbstractSearchResult {
     @Override
     public void initialize(TableLine line) {
         line.setAddedOn(getCreationTime());
-        int seeds = 0;
-
-        try {
-            seeds = Integer.valueOf(_item.Seeds);
-        } catch (Exception e) {
-            //oh well
-        }
-
-        line.initLocations(seeds);
+        
 
         //hack this to show the icon for mininova or for isohunt.
     }
@@ -151,5 +143,18 @@ public class ISOHuntSearchResult extends AbstractSearchResult {
         }, popupMenu, lines.length == 1, 3);
 
         return popupMenu;
+    }
+
+    public int getSeeds() {
+        try {
+            return Integer.valueOf(_item.Seeds);
+        } catch (Exception e) {
+            //oh well
+            return 0;
+        }
+    }
+    
+    public SearchEngine getSearchEngine() {
+        return SearchEngine.ISOHUNT;
     }
 }

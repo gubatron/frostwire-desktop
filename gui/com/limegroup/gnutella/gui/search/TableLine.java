@@ -60,32 +60,9 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
     private List<SearchResult> _otherResults;
     
     /**
-     * The SHA1 of this line.
-     */
-    private URN _sha1;
-    
-    /**
      * The media type of this document.
      */
     private NamedMediaType _mediaType;
-    
-    /**
-     * The set of other locations that have this result.
-     */
-    private Set<IpPort> _alts;
-
-    /**
-     * Whether or not this file is saved in the library.
-     */
-    private boolean _savedFile;
-    
-    /**
-     * Whether or not this file is incomplete.
-     */
-    private boolean _incompleteFile;
-    
-    /** Whether or not this result is a secure result. */
-    private boolean _secure;
 
     /**
      * The speed of this line.
@@ -96,31 +73,11 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
      * The quality of this line.
      */
     private int _quality;
-    
-    /**
-     * A chat enabled host if there is one.
-     */
-    private RemoteFileDesc _chatHost;
-    
-    /**
-     * A browse enabled host if there is one.
-     */
-    private RemoteFileDesc _browseHost;
-    
-	/**
-	 * A non firewalled host if there is one.
-	 */
-	private RemoteFileDesc _nonFirewalledHost;
 	
     /**
      * The LimeXMLDocument for this line.
      */
     private LimeXMLDocument _doc;
-    
-    /**
-     * The location of this line.
-     */
-    private EndpointHolder _location = null;
     
     /**
      * The date this was added to the network.
@@ -154,7 +111,6 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
             _mediaType = NamedMediaType.getFromExtension(getExtension());
         _speed = new ResultSpeed(sr.getSpeed(), sr.isMeasuredSpeed());
         _quality = sr.getQuality();
-        _secure = false;//sr.getSecureStatus() == SecureMessage.SECURE;
     }
 
     private void initializeEnd() {
@@ -194,28 +150,7 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
         }
         
         // Set the quality correctly.
-        _quality = Math.max(sr.getQuality(), _quality);
-        _secure = false;//|= sr.getSecureStatus() == SecureMessage.SECURE;        
-        
-//        if (sr instanceof GnutellaSearchResult) {
-//            GnutellaSearchResult gsr = (GnutellaSearchResult)sr;
-//            RemoteFileDesc rfd = gsr.getRemoteFileDesc();
-//            if(rfd.getCreationTime() > 0)
-//                _addedOn = Math.min(_addedOn, rfd.getCreationTime());
-//                                      
-//            // Set chat host correctly.
-//            if (_chatHost == null && rfd.isChatEnabled()) {
-//    			_chatHost = rfd;
-//            }
-//            // Set browse host correctly.
-//    		if (_browseHost == null && rfd.isBrowseHostEnabled()) {
-//    			_browseHost = rfd;
-//    		}
-//    		if (_nonFirewalledHost == null && !rfd.isFirewalled()) {
-//    			_nonFirewalledHost = rfd;
-//    		}
-//        }
-        
+        _quality = Math.max(sr.getQuality(), _quality);        
         
         if(sr.getCreationTime() > 0)
             _addedOn = Math.min(_addedOn, sr.getCreationTime());        
@@ -290,22 +225,17 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
      * Updates the license status.
      */
     private void updateLicense() {
-        if(_doc != null && _sha1 != null) {
-            String licenseString = _doc.getLicenseString();
-            LicenseFactory factory = _doc.getLicenseFactory();
-            if(licenseString != null) {
-                if(factory.isVerifiedAndValid(_sha1, licenseString))
-                    _licenseState = License.VERIFIED;
-                else
-                    _licenseState = License.UNVERIFIED;
-                _licenseName = factory.getLicenseName(licenseString);
-            }
-        }
-    }
-    
-    /** Determines if this TableLine is secure. */
-    boolean isSecure() { 
-        return _secure;
+//        if(_doc != null && _sha1 != null) {
+//            String licenseString = _doc.getLicenseString();
+//            LicenseFactory factory = _doc.getLicenseFactory();
+//            if(licenseString != null) {
+//                if(factory.isVerifiedAndValid(_sha1, licenseString))
+//                    _licenseState = License.VERIFIED;
+//                else
+//                    _licenseState = License.UNVERIFIED;
+//                _licenseName = factory.getLicenseName(licenseString);
+//            }
+//        }
     }
     
     /**
@@ -319,17 +249,10 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
      * Gets the license associated with this line.
      */
     License getLicense() {
-        if(_doc != null && _sha1 != null)
-            return _doc.getLicense();
-        else
+//        if(_doc != null && _sha1 != null)
+//            return _doc.getLicense();
+//        else
         return null;
-    }
-    
-    /**
-     * Gets the SHA1 urn of this line.
-     */
-    public URN getSHA1Urn() { 
-        return _sha1;
     }
     
     /**
@@ -371,18 +294,6 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
     }
     
     /**
-     * Gets the EndpointHolder holding locations.
-     */
-    EndpointHolder getLocation() {
-        return _location;
-    }
-    
-    public void initLocations(int hardCodedLocations) {
-    	_location = new EndpointHolder(null, 0, true);
-    	_location.setHardCodedNumLocations(hardCodedLocations);
-    }
-    
-    /**
      * Gets the other results for this line.
      */
     List<SearchResult> getOtherResults() {
@@ -393,54 +304,13 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
     		return _otherResults;
     	}
     }
-    
-    /**
-     * Gets the alternate locations for this line.
-     */
-    Set<? extends IpPort> getAlts() {
-        if(_alts == null)
-            return Collections.emptySet();
-        else
-            return _alts;
-    }
-    
-    /**
-     * Gets the number of locations this line holds.
-     */
-    int getLocationCount() {
-        //
-        // The location will be null for store song or special lines
-        //
-        return _location == null ? 1 : _location.numLocations();
-    }
-    
+        
     /**
      * Returns the license name of null if File(s) have no license
      */
     String getLicenseName() {
         return _licenseName;
     }
-    
-    /**
-     * Determines whether or not chat is enabled.
-     */
-    boolean isChatEnabled() {
-        return _chatHost != null;
-    }
-    
-    /**
-     * Determines whether or not browse host is enabled.
-     */
-    boolean isBrowseHostEnabled() {
-        return _browseHost != null;
-    }
-	
-	/**
-	 * Determines whether there is a non firewalled host for this result.
-	 */
-	boolean hasNonFirewalledRFD() {
-		return _nonFirewalledHost != null;
-	}
     
     /**
      * Determines if this line is launchable.
@@ -549,12 +419,7 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
     public Object getValueAt(int index){
         switch (index) {
         case SearchTableColumns.QUALITY_IDX: return new Integer(getQuality());
-        case SearchTableColumns.COUNT_IDX:
-            int count = getLocationCount();
-            if(count == 1)
-                return null;
-            else
-                return new Integer(count);
+        case SearchTableColumns.COUNT_IDX: return new Integer(RESULT.getSeeds());
         case SearchTableColumns.ICON_IDX: return getIcon();
         case SearchTableColumns.NAME_IDX: return new ResultNameHolder(this);
         case SearchTableColumns.SIZE_IDX: return new SizeHolder(getSize());
@@ -586,10 +451,6 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
         }
         
         List<String> tips = new LinkedList<String>();
-        if(isSecure()) {
-            tips.add(I18n.tr("This is a secure result. No information in this result has been tampered."));
-            tips.add("");
-        }
         
         if(isLink()) {
             tips.add(getLinkUrl());
@@ -657,27 +518,6 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
 	}
     
     /**
-     * Gets the first browse-host enabled RFD or <code>null</code>.
-     */
-    RemoteFileDesc getBrowseHostEnabledRFD() {
-        return _browseHost;
-    }
-	
-	/**
-	 * Returns the first non-firewalled rfd for this result or <code>null</code>.
-	 */
-	RemoteFileDesc getNonFirewalledRFD() {
-		return _nonFirewalledHost;
-	}
-	
-	/**
-	 * Returns the first chat enabled rfd for this result or <code>null</code>.
-	 */
-	RemoteFileDesc getChatEnabledRFD() {
-		return _chatHost;
-	}
-    
-    /**
      * Returns the underlying search result.  This is needed by {@link StoreResultPanel}.
      * 
      * @return the underlying search result
@@ -728,15 +568,6 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
      * TableLine in initialization.
      * ----------------------------------------------------------------------------- 
      */
-    
-    /**
-     * Sets the value for the chat host {@link RemoteFileDesc}.
-     * 
-     * @param rfd new chat host
-     */
-    final void setChatHost(RemoteFileDesc rfd) {
-        _chatHost = rfd;
-    }
 
     /**
      * Sets the new 'added on' date.
@@ -747,33 +578,15 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
         _addedOn = creationTime;
     }
 
-    /**
-     * Sets the value for the non-firewalled host {@link RemoteFileDesc}.
-     * 
-     * @param rfd new non-firewalled host
-     */
-    final void setNonFirewalledHost(RemoteFileDesc rfd) {
-        _nonFirewalledHost = rfd;
+    public int getSeeds() {
+        return RESULT.getSeeds();
     }
 
-    /**
-     * Sets the value for the browse host {@link RemoteFileDesc}.
-     * 
-     * @param rfd new browse host
-     */
-    final void setBrowseHost(RemoteFileDesc rfd) {
-        _browseHost = rfd;
+    public String getHash() {
+        return RESULT.getHash();
     }
-
-    final void createEndpointHolder(String host, int port, boolean isReplyToMulticast) {
-        _location = new EndpointHolder(host, port, isReplyToMulticast);
-    }       
     
-
-    final Set<IpPort> getAltIpPortSet() {
-        if(_alts == null)
-            _alts = new IpPortSet();
-        return _alts;
+    public SearchEngine getSearchEngine() {
+        return RESULT.getSearchEngine();
     }
-
 }

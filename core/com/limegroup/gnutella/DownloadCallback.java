@@ -25,16 +25,5 @@ public interface DownloadCallback {
 	 *  Show active downloads
 	 */
 	public void showDownloads();
-
-    /**
-     * Shows the user a message informing her that a file being downloaded 
-     * is corrupt.
-     * <p>
-     * This method MUST call dloader.discardCorruptDownload(boolean b) 
-     * otherwise there will be threads piling up waiting for a notification
-     */
-    public void promptAboutCorruptDownload(Downloader dloader);
-
-    public String getHostValue(String key);
     
 }

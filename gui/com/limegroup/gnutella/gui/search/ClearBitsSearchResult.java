@@ -106,8 +106,6 @@ public class ClearBitsSearchResult extends AbstractSearchResult {
     @Override
     public void initialize(TableLine line) {
         line.setAddedOn(getCreationTime());
-        int seeds = Integer.valueOf(_item.seeds);
-        line.initLocations(seeds);
     }
 
     @Override
@@ -145,4 +143,11 @@ public class ClearBitsSearchResult extends AbstractSearchResult {
         return popupMenu;
     }
 
+    public int getSeeds() {
+        return _item.seeds;
+    }
+
+    public SearchEngine getSearchEngine() {
+        return SearchEngine.CLEARBITS;
+    }
 }
