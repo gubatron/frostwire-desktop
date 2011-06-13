@@ -95,6 +95,7 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
 		    _labelDateModified.setText(DATE_FORMAT.format(new Date(file.lastModified())));
 		    _labelSize.setText(UI_TOOL.getBytesInHuman(file.length()));
 		}		
+
 		setToolTip(file);
 		
 		return this;
@@ -131,9 +132,6 @@ public class LocalFileRenderer extends JPanel implements ListCellRenderer {
         
         int w = getWidth();
         int h = getHeight();
-        
-        g.setColor(Color.WHITE);
-        g.fillRect(0, 0, w, h);
         
         if (_selected) {
             g.setColor(FILL_COLOR);
