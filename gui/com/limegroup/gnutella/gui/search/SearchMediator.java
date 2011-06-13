@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.limewire.io.IpPort;
 import org.limewire.setting.evt.SettingEvent;
@@ -110,15 +112,15 @@ public final class SearchMediator {
         GUIMediator.addRefreshListener(getSearchResultDisplayer());
         
         // Link up the tabs of results with the filters of the input screen.
-//        getSearchResultDisplayer().setSearchListener(new ChangeListener() {
-//            public void stateChanged(ChangeEvent e) {
-//                ResultPanel panel = getSearchResultDisplayer().getSelectedResultPanel();
-//                if(panel == null)
-//                    getSearchInputManager().clearFilters();
-//                else
-//                    getSearchInputManager().setFiltersFor(panel);
-//            }
-//        });
+        getSearchResultDisplayer().setSearchListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                ResultPanel panel = getSearchResultDisplayer().getSelectedResultPanel();
+                if(panel == null)
+                    getSearchInputManager().clearFilters();
+                else
+                    getSearchInputManager().setFiltersFor(panel);
+            }
+        });
         initBanner();
     }
     

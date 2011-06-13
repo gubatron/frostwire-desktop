@@ -448,4 +448,12 @@ class SearchInputPanel extends JPanel {
 		}
     	
     }
+
+    public void clearFilters() {
+        _filterPanel.clearFilters();
+    }
+
+    public void setFiltersFor(ResultPanel rp) {
+        _filterPanel.setFilterFor(rp);
+    }
 }

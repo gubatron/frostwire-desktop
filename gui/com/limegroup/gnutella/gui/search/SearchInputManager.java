@@ -128,4 +128,12 @@ final class SearchInputManager implements ThemeObserver {
         }
         return MAIN_PANEL;
     }
+
+    public void clearFilters() {
+        SEARCH.clearFilters();
+    }
+
+    public void setFiltersFor(ResultPanel rp) {
+        SEARCH.setFiltersFor(rp);
+    }
 }

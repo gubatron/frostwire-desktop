@@ -1,10 +1,11 @@
 package com.limegroup.gnutella.gui.search;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -12,7 +13,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 
 import com.frostwire.gui.components.RangeSlider;
-import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 
 public class FilterPanel extends JPanel {
@@ -35,9 +35,15 @@ public class FilterPanel extends JPanel {
     private int _maxSeeds;
     private int _minSize;
     private int _maxSize;
+    
+    private GeneralResultFilter _activeFilter;
+    
+    private final Map<ResultPanel, GeneralResultFilter> ACTIVE_FILTERS =
+        new HashMap<ResultPanel, GeneralResultFilter>();
 
     public FilterPanel() {
         setupUI();
+        setSlidersEnabled(false);
     }
 
     protected void setupUI() {
@@ -56,10 +62,10 @@ public class FilterPanel extends JPanel {
         _labelMaxSeeds = new JLabel(I18n.tr("Max"));
         panelSeeds.add(_labelMaxSeeds, BorderLayout.LINE_END);
         
-        _rangeSliderSeeds = new RangeSlider(0, Integer.MAX_VALUE);
+        _rangeSliderSeeds = new RangeSlider(0, 100);
         _rangeSliderSeeds.setPreferredSize(new Dimension(80, (int) _rangeSliderSeeds.getPreferredSize().getHeight()));
         _rangeSliderSeeds.setValue(0);
-        _rangeSliderSeeds.setUpperValue(Integer.MAX_VALUE);
+        _rangeSliderSeeds.setUpperValue(100);
         panelSeeds.add(_rangeSliderSeeds, BorderLayout.PAGE_END);
         
         add(panelSeeds);
@@ -76,12 +82,48 @@ public class FilterPanel extends JPanel {
         _labelMaxSize = new JLabel(I18n.tr("Max"));
         panelSize.add(_labelMaxSize, BorderLayout.LINE_END);
         
-        _rangeSliderSize = new RangeSlider(0, Integer.MAX_VALUE);
+        _rangeSliderSize = new RangeSlider(0, 100);
         _rangeSliderSize.setPreferredSize(new Dimension(80, (int) _rangeSliderSize.getPreferredSize().getHeight()));
         _rangeSliderSize.setValue(0);
-        _rangeSliderSize.setUpperValue(Integer.MAX_VALUE);
+        _rangeSliderSize.setUpperValue(100);
         panelSize.add(_rangeSliderSize, BorderLayout.PAGE_END);
         
         add(panelSize);
+    }
+    
+    public void setSlidersEnabled(boolean enabled) {
+        _rangeSliderSeeds.setEnabled(enabled);
+        _rangeSliderSize.setEnabled(enabled);
+    }
+    
+    public void reset() {
+        _rangeSliderSeeds.setMinimum(0);
+        _rangeSliderSeeds.setMaximum(100);
+        _rangeSliderSeeds.setValue(0);
+        _rangeSliderSeeds.setUpperValue(100);
+        _rangeSliderSize.setMinimum(0);
+        _rangeSliderSize.setMaximum(100);
+        _rangeSliderSize.setValue(0);
+        _rangeSliderSize.setUpperValue(100);
+    }
+
+    public void clearFilters() {
+        ACTIVE_FILTERS.clear();
+        setSlidersEnabled(false);
+        reset();
+    }
+
+    public void setFilterFor(ResultPanel rp) {
+        GeneralResultFilter filter = ACTIVE_FILTERS.get(rp);
+        if(filter == null) {
+            filter = new GeneralResultFilter(rp);
+            ACTIVE_FILTERS.put(rp, filter);
+            setActiveFilter(filter);
+        }
+    }
+    
+    private void setActiveFilter(GeneralResultFilter filter) {
+        _activeFilter = filter;
+        setSlidersEnabled(true);
     }
 }
