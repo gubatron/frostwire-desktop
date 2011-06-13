@@ -110,6 +110,8 @@ class SearchInputPanel extends JPanel {
     private final ActionListener SEARCH_LISTENER = new SearchListener();
 
 	private JXCollapsiblePane SEARCH_OPTIONS_COLLAPSIBLE_PANEL;
+	
+	private FilterPanel _filterPanel;
 
     SearchInputPanel() {
         super(new BorderLayout(0, 5));
@@ -285,23 +287,13 @@ class SearchInputPanel extends JPanel {
 		
 		controls.setBorder(new TitledBorder(I18n.tr("Choose Search Engines")));
 		
-		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.add(controls, BorderLayout.PAGE_START);
-		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.add(createSearchFilterPanel(), BorderLayout.PAGE_START);
+		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.add(controls);
+		
+		_filterPanel = new FilterPanel();
+		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.add(_filterPanel);
 
 		return SEARCH_OPTIONS_COLLAPSIBLE_PANEL;
 	}
-    
-    private Component createSearchFilterPanel() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-        panel.setBorder(new TitledBorder(I18n.tr("Filter")));
-        
-        RangeSlider rangeSlider = new RangeSlider();
-        
-        panel.add(rangeSlider);
-        
-        return panel;
-    }
     
     private void updateSearchResults(TableLineFilter filter) {
         List<ResultPanel> resultPanels = SearchMediator.getSearchResultDisplayer().getResultPanels();
