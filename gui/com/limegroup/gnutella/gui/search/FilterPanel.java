@@ -118,12 +118,28 @@ public class FilterPanel extends JPanel {
         if(filter == null) {
             filter = new GeneralResultFilter(rp);
             ACTIVE_FILTERS.put(rp, filter);
-            setActiveFilter(filter);
         }
+        setActiveFilter(filter);
     }
     
     private void setActiveFilter(GeneralResultFilter filter) {
         _activeFilter = filter;
         setSlidersEnabled(true);
+    }
+
+    public void panelReset(ResultPanel rp) {
+        GeneralResultFilter filter = ACTIVE_FILTERS.get(rp);
+        if(filter != null) {
+            ACTIVE_FILTERS.remove(rp);
+            setFilterFor(rp);
+        }
+    }
+
+    public boolean panelRemoved(ResultPanel rp) {
+        GeneralResultFilter filter = ACTIVE_FILTERS.get(rp);
+        if(filter != null) {
+            ACTIVE_FILTERS.remove(rp);
+        }
+        return ACTIVE_FILTERS.isEmpty();
     }
 }

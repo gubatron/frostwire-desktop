@@ -456,4 +456,18 @@ class SearchInputPanel extends JPanel {
     public void setFiltersFor(ResultPanel rp) {
         _filterPanel.setFilterFor(rp);
     }
+    
+    /**
+     * Resets the FilterPanel for the specified ResultPanel.
+     */
+    void panelReset(ResultPanel rp) {
+        _filterPanel.panelReset(rp);
+    }
+    
+    /**
+     * Removes the filter associated with the specified result panel.
+     */
+    boolean panelRemoved(ResultPanel rp) {
+        return _filterPanel.panelRemoved(rp);
+    }
 }

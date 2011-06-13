@@ -96,12 +96,15 @@ final class SearchInputManager implements ThemeObserver {
      * Resets the FilterPanel for the specified ResultPanel.
      */
     void panelReset(ResultPanel rp) {
+        SEARCH.panelReset(rp);
     }
-
+    
     /**
      * Removes the filter associated with the specified result panel.
      */
     void panelRemoved(ResultPanel rp) {
+        if(SEARCH.panelRemoved(rp))
+            showSearchCard(false);
     }
 
     /**
