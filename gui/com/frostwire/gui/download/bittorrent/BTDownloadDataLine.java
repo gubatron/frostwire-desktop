@@ -176,7 +176,13 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
         case UPLOAD_SPEED_INDEX:
             return new Double(_uploadSpeed);
         case TIME_INDEX:
-            return new TimeRemainingHolder(_timeLeft);
+            if (initializer.isCompleted()) {
+                return new TimeRemainingHolder(0);
+            } else if (_downloadSpeed < 0.001) {
+                return new TimeRemainingHolder(-1);
+            } else {
+                return new TimeRemainingHolder(_timeLeft);
+            }
         case SEEDS_INDEX:
             return _seeds;
         case PEERS_INDEX:
@@ -230,7 +236,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
         String peers = I18n.tr("Peers") + ": " + getInitializeObject().getPeersString();
         String seeds = I18n.tr("Seeds") + ": " + getInitializeObject().getSeedsString();
         String size = I18n.tr("Size") + ": " + new SizeHolder(getInitializeObject().getSize());
-        String time = I18n.tr("ETA") + ": " + new TimeRemainingHolder(getInitializeObject().getETA());
+        String time = I18n.tr("ETA") + ": " + (getInitializeObject().isCompleted() ? new TimeRemainingHolder(0) : (getInitializeObject().getDownloadSpeed() < 0.001 ? new TimeRemainingHolder(-1) : new TimeRemainingHolder(getInitializeObject().getETA())));
 
         info[0] = name;
         info[1] = status;
