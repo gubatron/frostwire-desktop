@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -151,7 +152,7 @@ public class LibrarySearchPanel extends JPanel {
                 return;
             }
             
-            List<File> directories = new ArrayList<File>();
+            final List<File> directories = new ArrayList<File>();
             final List<File> files = new ArrayList<File>();
             
             for (File child : file.listFiles(new SearchFileFilter(_query))) {
@@ -177,7 +178,8 @@ public class LibrarySearchPanel extends JPanel {
             
             Runnable r = new Runnable() {
                 public void run() {
-                    LibraryMediator.instance().addFilesToLibraryTable(files);
+                	directories.addAll(files);
+                    LibraryMediator.instance().addFilesToLibraryTable(directories);
                 }
             };
             GUIMediator.safeInvokeLater(r);
@@ -200,10 +202,6 @@ public class LibrarySearchPanel extends JPanel {
 	    }
 	    
         public boolean accept(File pathname) {
-            
-            if (pathname.isDirectory()) {
-                return true;
-            }
             
             String name = pathname.getName();
             
