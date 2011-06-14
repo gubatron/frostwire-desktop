@@ -37,6 +37,13 @@ public class LinkRenderer extends SubstanceDefaultTableCellRenderer {
             value = sb.toString();
         }
         
+        if (value != null) {
+            String strValue = value.toString();
+            strValue = strValue.replace("<html>", "<html><div width=\"1000000px\">");
+            strValue = strValue.replace("</html>", "</div></html>");
+            value = strValue;
+        }
+        
         return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
     }
 
