@@ -724,11 +724,19 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
         return ((ResultPanelModel)DATA_MODEL).getTotalSources();
     }
     
+    int totalResults() {
+        return ((ResultPanelModel)DATA_MODEL).getTotalResults();
+    }
+    
     /**
      * Returns the total number of filtered source found for this search.
      */
     int filteredSources() {
         return DATA_MODEL.getFilteredSources();
+    }
+    
+    int filteredResults() {
+        return DATA_MODEL.getFilteredResults();
     }
 
     /**

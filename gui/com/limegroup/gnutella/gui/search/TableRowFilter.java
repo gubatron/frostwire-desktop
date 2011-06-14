@@ -40,6 +40,8 @@ public class TableRowFilter extends ResultPanelModel {
      * The number of sources in the hidden list.
      */
     private int _numSources;
+    
+    private int _numResults;
 
     /**
      * Constructs a TableRowFilter with the specified TableLineFilter.
@@ -53,6 +55,7 @@ public class TableRowFilter extends ResultPanelModel {
         FILTER = f;
         HIDDEN = new ArrayList<TableLine>(QueryHandler.ULTRAPEER_RESULTS);
         _numSources = 0;
+        _numResults = 0;
     }
     
     /**
@@ -91,6 +94,7 @@ public class TableRowFilter extends ResultPanelModel {
                 remove(row);
                 METADATA.remove(tl);
                 _numSources += tl.getSeeds();
+                _numResults += 1;
                 return 0;
             } else {
                 return added;
@@ -133,9 +137,11 @@ public class TableRowFilter extends ResultPanelModel {
                     METADATA.addNew(tl);
                 }
                 _numSources += tl.getSeeds();
+                _numResults += 1;
             }
         } else {
             _numSources += tl.getSeeds();
+            _numResults += 1;
         }
         return -1;
     }
@@ -145,6 +151,7 @@ public class TableRowFilter extends ResultPanelModel {
      */
     protected void simpleClear() {
         _numSources = 0;
+        _numResults = 0;
         HIDDEN.clear();
         super.simpleClear();
     }
@@ -203,12 +210,18 @@ public class TableRowFilter extends ResultPanelModel {
             SearchResult sr = tl.getInitializeObject();
             String urn = sr.getHash();
             
-            TableLine tableLine = mergeMap.get(urn);
-            if (tableLine == null) {
-                mergeMap.put(urn, tl); // re-use TableLines
+            if(isSorted()) {
+                addSorted(tl);
             } else {
-                tableLine.addNewResult(sr, METADATA);
+                add(tl);
             }
+            
+//            TableLine tableLine = mergeMap.get(urn);
+//            if (tableLine == null) {
+//                mergeMap.put(urn, tl); // re-use TableLines
+//            } else {
+//                tableLine.addNewResult(sr, METADATA);
+//            }
         }
         
         // And add them
@@ -221,5 +234,13 @@ public class TableRowFilter extends ResultPanelModel {
         }
         
         setUseMetadata(true);
+    }
+
+    public int getFilteredResults() {
+        return super.getTotalResults();
+    }
+    
+   public int getTotalResults() {
+        return getFilteredResults() + _numResults;
     }
 }

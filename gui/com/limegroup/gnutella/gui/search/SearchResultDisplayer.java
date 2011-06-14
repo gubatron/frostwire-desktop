@@ -611,8 +611,8 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
      * Returns the title of the specified ResultPanel.
      */
     private String titleOf(ResultPanel rp) {
-        int current = rp.filteredSources();
-        int total = rp.totalSources();
+        int current = rp.filteredResults();
+        int total = rp.totalResults();
         if(current < total)
             return rp.getTitle() + " ("  + current + "/" + total + ")";
         else

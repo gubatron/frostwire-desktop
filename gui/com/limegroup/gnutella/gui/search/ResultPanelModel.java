@@ -54,6 +54,8 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
      */
     private int _numSources;
     
+    private int _numResults;
+    
     /**
      * Constructs a new ResultPanelModel with a new MetadataModel.
      */
@@ -133,6 +135,7 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
             _indexes.remove(sha1);
         super.remove(row);
         _numSources -= tl.getSeeds();
+        _numResults -= 1;
         remapIndexes(row);
     }
     
@@ -175,6 +178,7 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
         int newCount = line.getSeeds();
         int added = newCount - oldCount;
         _numSources += added;
+        _numResults += 1;
         return added;
     }
 
@@ -183,6 +187,7 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
      */    
     public int add(TableLine tl, int row) {
         _numSources += tl.getSeeds();
+        _numResults += 1;
         String sha1 = tl.getHash();
         if(sha1 != null)
             _indexes.put(sha1, new Integer(row));
@@ -244,6 +249,7 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
      */
     protected void simpleClear() {
         _numSources = 0;
+        _numResults = 0;
         _indexes.clear();
         super.clear();
     }
@@ -329,6 +335,10 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
             return -1;
         else
             return idx.intValue();
+    }
+
+    public int getTotalResults() {
+        return _numResults;
     }        
 }
 

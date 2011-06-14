@@ -63,24 +63,44 @@ public class GeneralResultFilter implements TableLineFilter {
             _rangeSliderSize.getMinimumValueLabel().setText(GUIUtils.toUnitbytes(_minResultsSize));
             _rangeSliderSize.getMaximumValueLabel().setText(GUIUtils.toUnitbytes(_maxResultsSize));
         }
+        
+        boolean inSeedRange = false;
 
         if (_maxResultsSeeds > _minResultsSeeds) {
             int seedNorm = ((seeds - _minResultsSeeds) * 1000) / (_maxResultsSeeds - _minResultsSeeds);
-
-            if (seedNorm < _minSeeds || seedNorm > _maxSeeds) {
-                return false;
+            
+            if (_minSeeds == 0 && _maxSeeds == 1000) {
+                inSeedRange = true;
+            } else if (_minSeeds == 0) {
+                inSeedRange = seedNorm <= _maxSeeds;
+            } else if (_maxSeeds == 1000) {
+                inSeedRange = seedNorm >= _minSeeds;
+            } else {
+                inSeedRange = seedNorm >= _minSeeds && seedNorm <= _maxSeeds;
             }
+        } else {
+            inSeedRange = seeds == _maxResultsSeeds;
         }
-
+        
+        boolean inSizeRange = false;
+        
         if (_maxResultsSize > _minResultsSize) {
             long sizeNorm = ((size - _minResultsSize) * 1000) / (_maxResultsSize - _minResultsSize);
 
-            if (sizeNorm < _minSize || sizeNorm > _maxSize) {
-                return false;
+            if (_minSize == 0 && _maxSize == 1000) {
+                inSizeRange = true;
+            } else if (_minSize == 0) {
+                inSizeRange = sizeNorm <= _maxSize;
+            } else if (_maxSize == 1000) {
+                inSizeRange = sizeNorm >= _minSize;
+            } else {
+                inSizeRange = sizeNorm >= _minSize && sizeNorm <= _maxSize;
             }
+        } else {
+            inSizeRange = size == _maxResultsSize;
         }
 
-        return true;
+        return inSeedRange && inSizeRange;
     }
 
     public int getMinResultsSeeds() {
