@@ -6,8 +6,8 @@ public class GeneralResultFilter implements TableLineFilter {
     
     private int _minSeeds;
     private int _maxSeeds;
-    private long _minSize;
-    private long _maxSize;
+    private int _minSize;
+    private int _maxSize;
 
     public GeneralResultFilter(ResultPanel rp) {
         _rp = rp;
@@ -28,6 +28,22 @@ public class GeneralResultFilter implements TableLineFilter {
 //        }
         return true;
     }
+    
+    public int getMinSeeds() {
+        return _minSeeds;
+    }
+    
+    public int getMaxSeeds() {
+        return _maxSeeds;
+    }
+    
+    public int getMinSize() {
+        return _minSize;
+    }
+    
+    public int getMaxSize() {
+        return _maxSize;
+    }
 
     public void setRangeSeeds(int min, int max) {
         _minSeeds = min;
@@ -35,7 +51,7 @@ public class GeneralResultFilter implements TableLineFilter {
         _rp.filterChanged(this, 1);
     }
 
-    public void setRangeSize(long min, long max) {
+    public void setRangeSize(int min, int max) {
         _minSize = min;
         _maxSize = max;
         _rp.filterChanged(this, 1);

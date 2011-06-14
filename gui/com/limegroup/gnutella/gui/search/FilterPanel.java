@@ -20,19 +20,13 @@ public class FilterPanel extends JPanel {
      * 
      */
     private static final long serialVersionUID = 346186974515196119L;
-    
+
     private LabeledRangeSlider _rangeSliderSeeds;
     private LabeledRangeSlider _rangeSliderSize;
 
-    private int _minSeeds;
-    private int _maxSeeds;
-    private int _minSize;
-    private int _maxSize;
-    
     private GeneralResultFilter _activeFilter;
-    
-    private final Map<ResultPanel, GeneralResultFilter> ACTIVE_FILTERS =
-        new HashMap<ResultPanel, GeneralResultFilter>();
+
+    private final Map<ResultPanel, GeneralResultFilter> ACTIVE_FILTERS = new HashMap<ResultPanel, GeneralResultFilter>();
 
     public FilterPanel() {
         setupUI();
@@ -45,28 +39,28 @@ public class FilterPanel extends JPanel {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1.0;
         c.gridwidth = GridBagConstraints.REMAINDER;
-        
+
         setBorder(new TitledBorder(I18n.tr("Filter Results")));
 
-        _rangeSliderSeeds = new LabeledRangeSlider("Download Sources", null, 0, 50000);
+        _rangeSliderSeeds = new LabeledRangeSlider("Download Sources", null, 0, 1000);
         _rangeSliderSeeds.setPreferredSize(new Dimension(80, (int) _rangeSliderSeeds.getPreferredSize().getHeight()));
         _rangeSliderSeeds.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 rangeSliderSeeds_stateChanged(e);
             }
         });
-        add(_rangeSliderSeeds,c);
+        add(_rangeSliderSeeds, c);
 
-        _rangeSliderSize = new LabeledRangeSlider("File Size",null,0,1000);
+        _rangeSliderSize = new LabeledRangeSlider("File Size", null, 0, 1000);
         _rangeSliderSize.setPreferredSize(new Dimension(80, (int) _rangeSliderSize.getPreferredSize().getHeight()));
         _rangeSliderSize.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 rangeSliderSize_stateChanged(e);
             }
         });
-        add(_rangeSliderSize,c);
+        add(_rangeSliderSize, c);
     }
-    
+
     protected void rangeSliderSeeds_stateChanged(ChangeEvent e) {
         if (_activeFilter != null) {
             _activeFilter.setRangeSeeds(_rangeSliderSeeds.getValue(), _rangeSliderSeeds.getUpperValue());
@@ -83,8 +77,9 @@ public class FilterPanel extends JPanel {
         _rangeSliderSeeds.setEnabled(enabled);
         _rangeSliderSize.setEnabled(enabled);
     }
-    
+
     public void reset() {
+        _activeFilter = null;
         _rangeSliderSeeds.setMinimum(0);
         _rangeSliderSeeds.setMaximum(1000);
         _rangeSliderSeeds.setValue(0);
@@ -93,6 +88,18 @@ public class FilterPanel extends JPanel {
         _rangeSliderSize.setMaximum(1000);
         _rangeSliderSize.setValue(0);
         _rangeSliderSize.setUpperValue(1000);
+    }
+    
+    private void reset(GeneralResultFilter filter) {
+        _activeFilter = null;
+        _rangeSliderSeeds.setMinimum(0);
+        _rangeSliderSeeds.setMaximum(1000);
+        _rangeSliderSeeds.setValue(filter.getMinSeeds());
+        _rangeSliderSeeds.setUpperValue(filter.getMaxSeeds());
+        _rangeSliderSize.setMinimum(0);
+        _rangeSliderSize.setMaximum(1000);
+        _rangeSliderSize.setValue(filter.getMinSize());
+        _rangeSliderSize.setUpperValue(filter.getMaxSize());
     }
 
     public void clearFilters() {
@@ -103,21 +110,23 @@ public class FilterPanel extends JPanel {
 
     public void setFilterFor(ResultPanel rp) {
         GeneralResultFilter filter = ACTIVE_FILTERS.get(rp);
-        if(filter == null) {
+        if (filter == null) {
             filter = new GeneralResultFilter(rp);
             ACTIVE_FILTERS.put(rp, filter);
         }
         setActiveFilter(filter);
     }
-    
+
     private void setActiveFilter(GeneralResultFilter filter) {
-        _activeFilter = filter;
+        _activeFilter = null;
         setSlidersEnabled(true);
+        reset(filter);
+        _activeFilter = filter;
     }
 
     public void panelReset(ResultPanel rp) {
         GeneralResultFilter filter = ACTIVE_FILTERS.get(rp);
-        if(filter != null) {
+        if (filter != null) {
             ACTIVE_FILTERS.remove(rp);
             setFilterFor(rp);
         }
@@ -125,7 +134,7 @@ public class FilterPanel extends JPanel {
 
     public boolean panelRemoved(ResultPanel rp) {
         GeneralResultFilter filter = ACTIVE_FILTERS.get(rp);
-        if(filter != null) {
+        if (filter != null) {
             ACTIVE_FILTERS.remove(rp);
         }
         return ACTIVE_FILTERS.isEmpty();

@@ -115,11 +115,6 @@ public class LabeledRangeSlider extends JPanel {
     	slider.setMaximum(max);
     }
     
-    @Override
-    public String getUIClassID() {
-        return "RangeSliderUI";
-    }
-    
     public JLabel getMinimumValueLabel() {
     	return minLabel;
     }
@@ -130,5 +125,11 @@ public class LabeledRangeSlider extends JPanel {
     
     public JLabel getTitleLabel() {
     	return titleLabel;
+    }
+    
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        slider.setEnabled(enabled);
     }
 }
