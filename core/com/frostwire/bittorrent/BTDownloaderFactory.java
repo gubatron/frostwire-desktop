@@ -10,9 +10,12 @@ import org.gudy.azureus2.core3.global.GlobalManager;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.util.TorrentUtils;
+import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.SaveLocationException;
+import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.settings.SharingSettings;
+import com.limegroup.gnutella.settings.iTunesSettings;
 
 public class BTDownloaderFactory {
 
@@ -111,6 +114,13 @@ public class BTDownloaderFactory {
                     if (manager.getAssumedComplete()) {
                         btDownloader.pause();
                     }
+                }
+                
+                if (manager.getAssumedComplete()) {
+					if ((OSUtils.isMacOSX() || OSUtils.isWindows())
+							&& iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue()) {
+						iTunesMediator.instance().scanForSongs(manager.getSaveLocation());
+					}
                 }
             }
         });

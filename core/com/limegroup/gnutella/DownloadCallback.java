@@ -14,7 +14,7 @@ public interface DownloadCallback {
     public void addDownload(BTDownloader d);
 
     /** Remove a downloader from the download window. */
-    public void removeDownload(Downloader d);
+    //public void removeDownload(Downloader d);
 
      /** 
       * Notifies the GUI that all active downloads have been completed.

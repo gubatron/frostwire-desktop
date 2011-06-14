@@ -46,7 +46,7 @@ public final class iTunesMediator {
      * If running on OSX, iTunes integration is enabled and the downloaded file
      * is a supported type, send it to iTunes.
      */
-    public void addSong(File file) {
+    private void addSongsOSX(File file) {
         
         // If not on OSX don't do anything.
         if (!OSUtils.isMacOSX()) {
@@ -114,7 +114,8 @@ public final class iTunesMediator {
             "-e",           "set thisPlaylist to make new playlist", 
             "-e",           "set name of thisPlaylist to thePlaylist", 
             "-e",       "end if",
-            "-e",       "add hfsFile to playlist thePlaylist", 
+
+            "-e",       "add hfsFile to playlist thePlaylist",
             "-e",   "end tell",
             "-e", "end tell" 
         };
@@ -149,4 +150,12 @@ public final class iTunesMediator {
             }
         }
     }
+
+	public void scanForSongs(File saveLocation) {
+		if (OSUtils.isMacOSX()) {
+			addSongsOSX(saveLocation);
+		} else if (OSUtils.isWindows()) {
+			//TO-DO
+		}
+	}
 }

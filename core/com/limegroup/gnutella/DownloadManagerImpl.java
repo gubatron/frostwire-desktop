@@ -136,7 +136,7 @@ public class DownloadManagerImpl implements DownloadManager {
      * @see com.limegroup.gnutella.DownloadMI#initialize()
      */
     public void initialize() {
-        scheduleWaitingPump();
+        //scheduleWaitingPump();
     }
     
     /**
@@ -333,50 +333,50 @@ public class DownloadManagerImpl implements DownloadManager {
     }
     
     
-    public void scheduleWaitingPump() {
-        if(_waitingPump != null)
-            return;
-            
-        _waitingPump = new Runnable() {
-            public void run() {
-                pumpDownloads();
-            }
-        };
-        backgroundExecutor.scheduleWithFixedDelay(_waitingPump,
-                               1000,
-                               1000, TimeUnit.MILLISECONDS);
-    }
+//    public void scheduleWaitingPump() {
+//        if(_waitingPump != null)
+//            return;
+//            
+//        _waitingPump = new Runnable() {
+//            public void run() {
+//                pumpDownloads();
+//            }
+//        };
+//        backgroundExecutor.scheduleWithFixedDelay(_waitingPump,
+//                               1000,
+//                               1000, TimeUnit.MILLISECONDS);
+//    }
     
     /**
      * Pumps through each waiting download, either removing it because it was
      * stopped, or adding it because there's an active slot and it requires
      * attention.
      */
-    protected synchronized void pumpDownloads() {
-        int index = 1;
-        for(Iterator<CoreDownloader> i = waiting.iterator(); i.hasNext(); ) {
-            CoreDownloader md = i.next();
-            
-            
-            if(md.isAlive()) {
-                continue;
-            } else if(md.shouldBeRemoved()) {
-                i.remove();
-                cleanupCompletedDownload(md, false);
-            }
-            else if(hasFreeSlot() && (md.shouldBeRestarted())) {
-                i.remove();
-                if(md.getDownloadType() == DownloaderType.INNETWORK)
-                    innetworkCount++;
-                active.add(md);
-                md.startDownload();
-            } else {
-                if(md.isQueuable())
-                    md.setInactivePriority(index++);
-                md.handleInactivity();
-            }
-        }
-    }
+//    protected synchronized void pumpDownloads() {
+//        int index = 1;
+//        for(Iterator<CoreDownloader> i = waiting.iterator(); i.hasNext(); ) {
+//            CoreDownloader md = i.next();
+//            
+//            
+//            if(md.isAlive()) {
+//                continue;
+//            } else if(md.shouldBeRemoved()) {
+//                i.remove();
+//                cleanupCompletedDownload(md, false);
+//            }
+//            else if(hasFreeSlot() && (md.shouldBeRestarted())) {
+//                i.remove();
+//                if(md.getDownloadType() == DownloaderType.INNETWORK)
+//                    innetworkCount++;
+//                active.add(md);
+//                md.startDownload();
+//            } else {
+//                if(md.isQueuable())
+//                    md.setInactivePriority(index++);
+//                md.handleInactivity();
+//            }
+//        }
+//    }
     
     public boolean allowNewTorrents() {
     	return true;
@@ -793,15 +793,15 @@ public class DownloadManagerImpl implements DownloadManager {
      */
     public synchronized void remove(CoreDownloader downloader, 
                                     boolean completed) {
-        active.remove(downloader);
-        if(downloader.getDownloadType() == DownloaderType.INNETWORK)
-            innetworkCount--;
-        
-        waiting.remove(downloader);
-        if(completed)
-            cleanupCompletedDownload(downloader, true);
-        else
-            waiting.add(downloader);
+//        active.remove(downloader);
+//        if(downloader.getDownloadType() == DownloaderType.INNETWORK)
+//            innetworkCount--;
+//        
+//        waiting.remove(downloader);
+//        if(completed)
+//            cleanupCompletedDownload(downloader, true);
+//        else
+//            waiting.add(downloader);
     }
 
     /* (non-Javadoc)
@@ -840,21 +840,21 @@ public class DownloadManagerImpl implements DownloadManager {
      *
      * If ser is true, also writes a snapshot to the disk.
      */
-    private void cleanupCompletedDownload(CoreDownloader dl, boolean ser) {
-        dl.finish();
-        if (dl.getQueryGUID() != null)
-            messageRouter.get().downloadFinished(dl.getQueryGUID());
-        callback(dl).removeDownload(dl);
-        
-        //Save this' state to disk for crash recovery.
-        if(ser)
-            writeSnapshot();
-
-        // Enable auto shutdown
-        if(active.isEmpty() && waiting.isEmpty())
-            callback(dl).downloadsComplete();
-    }           
-    
+//    private void cleanupCompletedDownload(CoreDownloader dl, boolean ser) {
+//        dl.finish();
+//        if (dl.getQueryGUID() != null)
+//            messageRouter.get().downloadFinished(dl.getQueryGUID());
+//        callback(dl).removeDownload(dl);
+//        
+//        //Save this' state to disk for crash recovery.
+//        if(ser)
+//            writeSnapshot();
+//
+//        // Enable auto shutdown
+//        if(active.isEmpty() && waiting.isEmpty())
+//            callback(dl).downloadsComplete();
+//    }           
+//    
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.DownloadMI#sendQuery(com.limegroup.gnutella.downloader.ManagedDownloader, com.limegroup.gnutella.messages.QueryRequest)
      */

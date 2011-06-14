@@ -160,16 +160,16 @@ public final class VisualConnectionCallback implements ActivityCallback {
         SwingUtilities.invokeLater(doWorkRunnable);
     }
 
-    public void removeDownload(Downloader mgr) {
-        Runnable doWorkRunnable = new RemoveDownload(mgr);
-        SwingUtilities.invokeLater(doWorkRunnable);
-        
-        if (iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue() 
-                && mgr.getState() == DownloadStatus.COMPLETE) {
-            
-            iTunesMediator.instance().addSong(mgr.getSaveFile());
-        }
-    }
+//    public void removeDownload(Downloader mgr) {
+//        Runnable doWorkRunnable = new RemoveDownload(mgr);
+//        SwingUtilities.invokeLater(doWorkRunnable);
+//        
+//        if (iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue() 
+//                && mgr.getState() == DownloadStatus.COMPLETE) {
+//            
+//            iTunesMediator.instance().scanForSongs(mgr.getSaveFile());
+//        }
+//    }
     
     public void downloadsComplete() {
         Finalizer.setDownloadsComplete();
