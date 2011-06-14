@@ -4,16 +4,16 @@ import com.frostwire.gui.components.LabeledRangeSlider;
 import com.limegroup.gnutella.gui.GUIUtils;
 
 public class GeneralResultFilter implements TableLineFilter {
-    
+
     private ResultPanel _rp;
     private LabeledRangeSlider _rangeSliderSeeds;
     private LabeledRangeSlider _rangeSliderSize;
-    
+
     private int _minResultsSeeds;
     private int _maxResultsSeeds;
     private long _minResultsSize;
     private long _maxResultsSize;
-    
+
     private int _minSeeds;
     private int _maxSeeds;
     private int _minSize;
@@ -54,14 +54,7 @@ public class GeneralResultFilter implements TableLineFilter {
             _maxResultsSize = size;
             sizeNeedUpdate = true;
         }
-//        if (seeds < _minSeeds || seeds > _maxSeeds) {
-//            return false;
-//        }
-//        long size = node.getSize();
-//        if (size < _minSize || size > _maxSize) {
-//            return false;
-//        }
-        
+
         if (seedsNeedUpdate) {
             _rangeSliderSeeds.getMinimumValueLabel().setText(String.valueOf(_minResultsSeeds));
             _rangeSliderSeeds.getMaximumValueLabel().setText(String.valueOf(_maxResultsSeeds));
@@ -70,38 +63,54 @@ public class GeneralResultFilter implements TableLineFilter {
             _rangeSliderSize.getMinimumValueLabel().setText(GUIUtils.toUnitbytes(_minResultsSize));
             _rangeSliderSize.getMaximumValueLabel().setText(GUIUtils.toUnitbytes(_maxResultsSize));
         }
-        
+
+        if (_maxResultsSeeds > _minResultsSeeds) {
+            int seedNorm = ((seeds - _minResultsSeeds) * 1000) / (_maxResultsSeeds - _minResultsSeeds);
+
+            if (seedNorm < _minSeeds || seedNorm > _maxSeeds) {
+                return false;
+            }
+        }
+
+        if (_maxResultsSize > _minResultsSize) {
+            long sizeNorm = ((size - _minResultsSize) * 1000) / (_maxResultsSize - _minResultsSize);
+
+            if (sizeNorm < _minSize || sizeNorm > _maxSize) {
+                return false;
+            }
+        }
+
         return true;
     }
-    
+
     public int getMinResultsSeeds() {
         return _minResultsSeeds;
     }
-    
+
     public int getMaxResultsSeeds() {
         return _maxResultsSeeds;
     }
-    
+
     public long getMinResultsSize() {
         return _minResultsSize;
     }
-    
+
     public long getMaxResultsSize() {
         return _maxResultsSize;
     }
-    
+
     public int getMinSeeds() {
         return _minSeeds;
     }
-    
+
     public int getMaxSeeds() {
         return _maxSeeds;
     }
-    
+
     public int getMinSize() {
         return _minSize;
     }
-    
+
     public int getMaxSize() {
         return _maxSize;
     }
