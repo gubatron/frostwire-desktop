@@ -5,20 +5,20 @@ import java.io.File;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.tracker.client.TRTrackerScraperResponse;
+import org.gudy.azureus2.core3.util.Constants;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
-
 
 public class BTDownloaderImpl implements BTDownloader {
 
     private final DownloadManager _downloadManager;
-    
+
     private boolean _deleteTorrentWhenRemove;
-    
+
     private boolean _deleteDataWhenRemove;
 
     public BTDownloaderImpl(DownloadManager downloadManager) {
         _downloadManager = downloadManager;
-        
+
         _deleteTorrentWhenRemove = false;
         _deleteDataWhenRemove = false;
     }
@@ -78,17 +78,17 @@ public class BTDownloaderImpl implements BTDownloader {
     public long getBytesReceived() {
         return _downloadManager.getStats().getTotalGoodDataBytesReceived();
     }
-    
+
     public long getBytesSent() {
         return _downloadManager.getStats().getTotalDataBytesSent();
     }
 
     public double getDownloadSpeed() {
-        return _downloadManager.getStats().getDataReceiveRate()/1000;
+        return _downloadManager.getStats().getDataReceiveRate() / 1000;
     }
 
     public double getUploadSpeed() {
-        return _downloadManager.getStats().getDataSendRate()/1000;
+        return _downloadManager.getStats().getDataSendRate() / 1000;
     }
 
     public long getETA() {
@@ -187,23 +187,23 @@ public class BTDownloaderImpl implements BTDownloader {
 
         return tmp;
     }
-    
+
     public boolean isDeleteTorrentWhenRemove() {
         return _deleteTorrentWhenRemove;
     }
-    
+
     public void setDeleteTorrentWhenRemove(boolean deleteTorrentWhenRemove) {
         _deleteTorrentWhenRemove = deleteTorrentWhenRemove;
     }
-    
+
     public boolean isDeleteDataWhenRemove() {
         return _deleteDataWhenRemove;
     }
-    
+
     public void setDeleteDataWhenRemove(boolean deleteDataWhenRemove) {
         _deleteDataWhenRemove = deleteDataWhenRemove;
     }
-    
+
     public byte[] getHash() {
         try {
             return _downloadManager.getTorrent().getHash();
@@ -211,5 +211,77 @@ public class BTDownloaderImpl implements BTDownloader {
             e.printStackTrace();
             return new byte[0];
         }
+    }
+
+    public String getSeedToPeerRatio() {
+        float ratio = -1;
+
+        DownloadManager dm = _downloadManager;
+        if (dm != null) {
+            TRTrackerScraperResponse response = dm.getTrackerScrapeResponse();
+            int seeds;
+            int peers;
+
+            if (response != null && response.isValid()) {
+                seeds = Math.max(dm.getNbSeeds(), response.getSeeds());
+
+                int trackerPeerCount = response.getPeers();
+                peers = dm.getNbPeers();
+                if (peers == 0 || trackerPeerCount > peers) {
+                    if (trackerPeerCount <= 0) {
+                        peers = dm.getActivationCount();
+                    } else {
+                        peers = trackerPeerCount;
+                    }
+                }
+            } else {
+                seeds = dm.getNbSeeds();
+                peers = dm.getNbPeers();
+            }
+
+            if (peers < 0 || seeds < 0) {
+                ratio = 0;
+            } else {
+                if (peers == 0) {
+                    if (seeds == 0)
+                        ratio = 0;
+                    else
+                        ratio = Float.POSITIVE_INFINITY;
+                } else {
+                    ratio = (float) seeds / peers;
+                }
+            }
+        }
+
+        if (ratio == -1) {
+            return "";
+        } else if (ratio == 0) {
+            return "??";
+        } else {
+            return DisplayFormatters.formatDecimal(ratio, 3);
+        }
+    }
+
+    public String getShareRatio() {
+        DownloadManager dm = _downloadManager;
+
+        int sr = (dm == null) ? 0 : dm.getStats().getShareRatio();
+
+        if (sr == Integer.MAX_VALUE) {
+            sr = Integer.MAX_VALUE - 1;
+        }
+        if (sr == -1) {
+            sr = Integer.MAX_VALUE;
+        }
+
+        String shareRatio = "";
+
+        if (sr == Integer.MAX_VALUE) {
+            shareRatio = Constants.INFINITY_STRING;
+        } else {
+            shareRatio = DisplayFormatters.formatDecimal((double) sr / 1000, 3);
+        }
+
+        return shareRatio;
     }
 }
