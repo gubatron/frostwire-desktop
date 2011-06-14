@@ -1,16 +1,32 @@
 package com.limegroup.gnutella.gui.search;
 
+import com.frostwire.gui.components.LabeledRangeSlider;
+import com.limegroup.gnutella.gui.GUIUtils;
+
 public class GeneralResultFilter implements TableLineFilter {
     
     private ResultPanel _rp;
+    private LabeledRangeSlider _rangeSliderSeeds;
+    private LabeledRangeSlider _rangeSliderSize;
+    
+    private int _minResultsSeeds;
+    private int _maxResultsSeeds;
+    private long _minResultsSize;
+    private long _maxResultsSize;
     
     private int _minSeeds;
     private int _maxSeeds;
     private int _minSize;
     private int _maxSize;
 
-    public GeneralResultFilter(ResultPanel rp) {
+    public GeneralResultFilter(ResultPanel rp, LabeledRangeSlider rangeSliderSeeds, LabeledRangeSlider rangeSliderSize) {
         _rp = rp;
+        _rangeSliderSeeds = rangeSliderSeeds;
+        _rangeSliderSize = rangeSliderSize;
+        _minResultsSeeds = Integer.MAX_VALUE;
+        _maxResultsSeeds = 0;
+        _minResultsSize = Long.MAX_VALUE;
+        _maxResultsSize = 0;
         _minSeeds = 0;
         _maxSeeds = Integer.MAX_VALUE;
         _minSize = 0;
@@ -18,15 +34,60 @@ public class GeneralResultFilter implements TableLineFilter {
     }
 
     public boolean allow(TableLine node) {
+        boolean seedsNeedUpdate = false;
         int seeds = node.getSeeds();
-        if (seeds < _minSeeds || seeds > _maxSeeds) {
-            return false;
+        if (seeds < _minResultsSeeds) {
+            _minResultsSeeds = seeds;
+            seedsNeedUpdate = true;
         }
+        if (seeds > _maxResultsSeeds) {
+            _maxResultsSeeds = seeds;
+            seedsNeedUpdate = true;
+        }
+        boolean sizeNeedUpdate = false;
+        long size = node.getSize();
+        if (size < _minResultsSize) {
+            _minResultsSize = size;
+            sizeNeedUpdate = true;
+        }
+        if (size > _maxResultsSize) {
+            _maxResultsSize = size;
+            sizeNeedUpdate = true;
+        }
+//        if (seeds < _minSeeds || seeds > _maxSeeds) {
+//            return false;
+//        }
 //        long size = node.getSize();
 //        if (size < _minSize || size > _maxSize) {
 //            return false;
 //        }
+        
+        if (seedsNeedUpdate) {
+            _rangeSliderSeeds.getMinimumValueLabel().setText(String.valueOf(_minResultsSeeds));
+            _rangeSliderSeeds.getMaximumValueLabel().setText(String.valueOf(_maxResultsSeeds));
+        }
+        if (sizeNeedUpdate) {
+            _rangeSliderSize.getMinimumValueLabel().setText(GUIUtils.toUnitbytes(_minResultsSize));
+            _rangeSliderSize.getMaximumValueLabel().setText(GUIUtils.toUnitbytes(_maxResultsSize));
+        }
+        
         return true;
+    }
+    
+    public int getMinResultsSeeds() {
+        return _minResultsSeeds;
+    }
+    
+    public int getMaxResultsSeeds() {
+        return _maxResultsSeeds;
+    }
+    
+    public long getMinResultsSize() {
+        return _minResultsSize;
+    }
+    
+    public long getMaxResultsSize() {
+        return _maxResultsSize;
     }
     
     public int getMinSeeds() {

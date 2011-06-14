@@ -80,13 +80,6 @@ public class LabeledRangeSlider extends JPanel {
 	public void addChangeListener(ChangeListener listener) {
 		slider.addChangeListener(listener);
 	}
-	
-    @Override
-    public void updateUI() {
-    	if (slider != null) {
-    		slider.updateUI();
-    	}
-    }
 
     /**
      * Sets the lower value in the range.

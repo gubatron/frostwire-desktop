@@ -12,6 +12,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import com.frostwire.gui.components.LabeledRangeSlider;
+import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 
 public class FilterPanel extends JPanel {
@@ -88,6 +89,11 @@ public class FilterPanel extends JPanel {
         _rangeSliderSize.setMaximum(1000);
         _rangeSliderSize.setValue(0);
         _rangeSliderSize.setUpperValue(1000);
+        
+        _rangeSliderSeeds.getMinimumValueLabel().setText(I18n.tr("0"));
+        _rangeSliderSeeds.getMaximumValueLabel().setText(I18n.tr("Max"));
+        _rangeSliderSize.getMinimumValueLabel().setText(I18n.tr("0"));
+        _rangeSliderSize.getMaximumValueLabel().setText(I18n.tr("Max"));
     }
     
     private void reset(GeneralResultFilter filter) {
@@ -100,6 +106,27 @@ public class FilterPanel extends JPanel {
         _rangeSliderSize.setMaximum(1000);
         _rangeSliderSize.setValue(filter.getMinSize());
         _rangeSliderSize.setUpperValue(filter.getMaxSize());
+        
+        if (filter.getMinResultsSeeds() == Integer.MAX_VALUE) {
+            _rangeSliderSeeds.getMinimumValueLabel().setText(I18n.tr("0"));
+        } else {
+            _rangeSliderSeeds.getMinimumValueLabel().setText(String.valueOf(filter.getMinResultsSeeds()));
+        }
+        if (filter.getMaxResultsSeeds() == 0) {
+            _rangeSliderSeeds.getMaximumValueLabel().setText(I18n.tr("Max"));
+        } else {
+            _rangeSliderSeeds.getMaximumValueLabel().setText(String.valueOf(filter.getMaxResultsSeeds()));
+        }
+        if (filter.getMinResultsSize() == Long.MAX_VALUE) {
+            _rangeSliderSize.getMinimumValueLabel().setText(I18n.tr("0"));
+        } else {
+            _rangeSliderSize.getMinimumValueLabel().setText(GUIUtils.toUnitbytes(filter.getMinResultsSize()));
+        }
+        if (filter.getMaxResultsSize() == 0) {
+            _rangeSliderSize.getMaximumValueLabel().setText(I18n.tr("Max"));
+        } else {
+            _rangeSliderSize.getMaximumValueLabel().setText(GUIUtils.toUnitbytes(filter.getMaxResultsSize()));
+        }
     }
 
     public void clearFilters() {
@@ -111,8 +138,9 @@ public class FilterPanel extends JPanel {
     public void setFilterFor(ResultPanel rp) {
         GeneralResultFilter filter = ACTIVE_FILTERS.get(rp);
         if (filter == null) {
-            filter = new GeneralResultFilter(rp);
+            filter = new GeneralResultFilter(rp, _rangeSliderSeeds, _rangeSliderSize);
             ACTIVE_FILTERS.put(rp, filter);
+            rp.filterChanged(filter, 1);
         }
         setActiveFilter(filter);
     }
