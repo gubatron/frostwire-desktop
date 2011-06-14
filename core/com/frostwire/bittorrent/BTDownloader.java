@@ -55,4 +55,8 @@ public interface BTDownloader {
     public void setDeleteDataWhenRemove(boolean deleteDataWhenRemove);
     
     public byte[] getHash();
+
+    public String getSeedToPeerRatio();
+
+    public String getShareRatio();
 }

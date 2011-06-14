@@ -41,7 +41,9 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
     /**
      * Variable for the amount of the file that has been read.
      */
-    private long _amountRead = 0;
+    private long _download = 0;
+
+    private long _upload;
 
     /**
      * Variable for the progress made in the progressbar.
@@ -68,6 +70,10 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
     private String _seeds;
 
     private String _peers;
+
+    private String _shareRatio;
+
+    private String _seedToPeerRatio;
 
     private boolean _notification;
     /**
@@ -103,34 +109,46 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
     private static final LimeTableColumn BYTES_DOWNLOADED_COLUMN = new LimeTableColumn(BYTES_DOWNLOADED_INDEX, "DOWNLOAD_BYTES_DOWNLOADED_COLUMN",
             I18n.tr("Downloaded"), 20, true, SizeHolder.class);
 
+    static final int BYTES_UPLOADED_INDEX = 5;
+    private static final LimeTableColumn BYTES_UPLOADED_COLUMN = new LimeTableColumn(BYTES_UPLOADED_INDEX, "DOWNLOAD_BYTES_UPLOADED_COLUMN", I18n.tr("Uploaded"), 20,
+            false, SizeHolder.class);
+
     /**
      * Column index for the download speed.
      */
-    static final int DOWNLOAD_SPEED_INDEX = 5;
+    static final int DOWNLOAD_SPEED_INDEX = 6;
     private static final LimeTableColumn DOWNLOAD_SPEED_COLUMN = new LimeTableColumn(DOWNLOAD_SPEED_INDEX, "DOWNLOAD_SPEED_COLUMN", I18n.tr("Down Speed"), 58,
             true, SpeedRenderer.class);
 
-    static final int UPLOAD_SPEED_INDEX = 6;
+    static final int UPLOAD_SPEED_INDEX = 7;
     private static final LimeTableColumn UPLOAD_SPEED_COLUMN = new LimeTableColumn(UPLOAD_SPEED_INDEX, "UPLOAD_SPEED_COLUMN", I18n.tr("Up Speed"), 58, true,
             SpeedRenderer.class);
 
     /**
      * Column index for the download time remaining.
      */
-    static final int TIME_INDEX = 7;
+    static final int TIME_INDEX = 8;
     private static final LimeTableColumn TIME_COLUMN = new LimeTableColumn(TIME_INDEX, "DOWNLOAD_TIME_REMAINING_COLUMN", I18n.tr("Time"), 49, true,
             TimeRemainingHolder.class);
 
-    static final int SEEDS_INDEX = 8;
+    static final int SEEDS_INDEX = 9;
     private static final LimeTableColumn SEEDS_COLUMN = new LimeTableColumn(SEEDS_INDEX, "SEEDS_STATUS_COLUMN", I18n.tr("Seeds"), 80, true, String.class);
 
-    static final int PEERS_INDEX = 9;
+    static final int PEERS_INDEX = 10;
     private static final LimeTableColumn PEERS_COLUMN = new LimeTableColumn(PEERS_INDEX, "PEERS_STATUS_COLUMN", I18n.tr("Peers"), 80, false, String.class);
+
+    static final int SHARE_RATIO_INDEX = 11;
+    private static final LimeTableColumn SHARE_RATIO_COLUMN = new LimeTableColumn(SHARE_RATIO_INDEX, "SHARE_RATIO_COLUMN", I18n.tr("Share Ratio"), 80, false,
+            String.class);
+
+    static final int SEED_TO_PEER_RATIO_INDEX = 12;
+    private static final LimeTableColumn SEED_TO_PEER_RATIO_COLUMN = new LimeTableColumn(SEED_TO_PEER_RATIO_INDEX, "SEED_TO_PEER_RATIO_COLUMN",
+            I18n.tr("Seeds/Peers"), 80, false, String.class);
 
     /**
      * Number of columns to display
      */
-    static final int NUMBER_OF_COLUMNS = 10;
+    static final int NUMBER_OF_COLUMNS = 13;
 
     // Implements DataLine interface
     public int getColumnCount() {
@@ -170,17 +188,29 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
         case PROGRESS_INDEX:
             return Integer.valueOf(_progress);
         case BYTES_DOWNLOADED_INDEX:
-            return new SizeHolder(_amountRead);
+            return new SizeHolder(_download);
+        case BYTES_UPLOADED_INDEX:
+            return new SizeHolder(_upload);
         case DOWNLOAD_SPEED_INDEX:
             return new Double(_downloadSpeed);
         case UPLOAD_SPEED_INDEX:
             return new Double(_uploadSpeed);
         case TIME_INDEX:
-            return new TimeRemainingHolder(_timeLeft);
+            if (initializer.isCompleted()) {
+                return new TimeRemainingHolder(0);
+            } else if (_downloadSpeed < 0.001) {
+                return new TimeRemainingHolder(-1);
+            } else {
+                return new TimeRemainingHolder(_timeLeft);
+            }
         case SEEDS_INDEX:
             return _seeds;
         case PEERS_INDEX:
             return _peers;
+        case SHARE_RATIO_INDEX:
+            return _shareRatio;
+        case SEED_TO_PEER_RATIO_INDEX:
+            return _seedToPeerRatio;
         }
         return null;
     }
@@ -200,6 +230,8 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
             return PROGRESS_COLUMN;
         case BYTES_DOWNLOADED_INDEX:
             return BYTES_DOWNLOADED_COLUMN;
+        case BYTES_UPLOADED_INDEX:
+            return BYTES_UPLOADED_COLUMN;
         case DOWNLOAD_SPEED_INDEX:
             return DOWNLOAD_SPEED_COLUMN;
         case UPLOAD_SPEED_INDEX:
@@ -210,6 +242,10 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
             return SEEDS_COLUMN;
         case PEERS_INDEX:
             return PEERS_COLUMN;
+        case SHARE_RATIO_INDEX:
+            return SHARE_RATIO_COLUMN;
+        case SEED_TO_PEER_RATIO_INDEX:
+            return SEED_TO_PEER_RATIO_COLUMN;
         }
         return null;
     }
@@ -230,7 +266,11 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
         String peers = I18n.tr("Peers") + ": " + getInitializeObject().getPeersString();
         String seeds = I18n.tr("Seeds") + ": " + getInitializeObject().getSeedsString();
         String size = I18n.tr("Size") + ": " + new SizeHolder(getInitializeObject().getSize());
-        String time = I18n.tr("ETA") + ": " + new TimeRemainingHolder(getInitializeObject().getETA());
+        String time = I18n.tr("ETA")
+                + ": "
+                + (getInitializeObject().isCompleted() ? new TimeRemainingHolder(0)
+                        : (getInitializeObject().getDownloadSpeed() < 0.001 ? new TimeRemainingHolder(-1) : new TimeRemainingHolder(getInitializeObject()
+                                .getETA())));
 
         info[0] = name;
         info[1] = status;
@@ -260,12 +300,15 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
     public void update() {
         _status = getInitializeObject().getStateString();
         _progress = getInitializeObject().getProgress();
-        _amountRead = getInitializeObject().getBytesReceived();
+        _download = getInitializeObject().getBytesReceived();
+        _upload = getInitializeObject().getBytesSent();
         _downloadSpeed = getInitializeObject().getDownloadSpeed();
         _uploadSpeed = getInitializeObject().getUploadSpeed();
         _timeLeft = getInitializeObject().getETA();
         _seeds = getInitializeObject().getSeedsString();
         _peers = getInitializeObject().getPeersString();
+        _shareRatio = getInitializeObject().getShareRatio();
+        _seedToPeerRatio = getInitializeObject().getSeedToPeerRatio();
 
         if (getInitializeObject().isCompleted()) {
             showNotification();
