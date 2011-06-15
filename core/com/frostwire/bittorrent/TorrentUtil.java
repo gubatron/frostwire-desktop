@@ -124,6 +124,7 @@ public class TorrentUtil {
         asyncStopDelete(downloadManager, DownloadManager.STATE_STOPPED, deleteTorrent, deleteData, null);
     }
     
+    /** Deletes incomplete files and the save location from the itunes import settings */
     private static void finalCleanup(DownloadManager downloadManager) {
         Set<File> filesToDelete = getIncompleteFiles(downloadManager);
         for (File f: filesToDelete) {
