@@ -53,7 +53,8 @@ public class BTDownloaderFactory {
 
         if ((manager = _globalManager.getDownloadManager(torrent)) == null) {
             if (_filesSelection == null) {
-                manager = _globalManager.addDownloadManager(_file.getAbsolutePath(), null, saveDir.getAbsolutePath(), DownloadManager.STATE_WAITING, true, _initialSeed, null);
+                manager = _globalManager.addDownloadManager(_file.getAbsolutePath(), null, saveDir.getAbsolutePath(), DownloadManager.STATE_WAITING, true,
+                        _initialSeed, null);
             } else {
                 manager = _globalManager.addDownloadManager(_file.getAbsolutePath(), torrent.getHash(), saveDir.getAbsolutePath(), null,
                         DownloadManager.STATE_WAITING, true, false, new DownloadManagerInitialisationAdapter() {
@@ -115,12 +116,14 @@ public class BTDownloaderFactory {
                         btDownloader.pause();
                     }
                 }
-                
-                if (manager.getAssumedComplete()) {
-					if ((OSUtils.isMacOSX() || OSUtils.isWindows())
-							&& iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue()) {
-						iTunesMediator.instance().scanForSongs(manager.getSaveLocation());
-					}
+
+                if (btDownloader.isCompleted() && iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue()) {
+                    if (OSUtils.isMacOSX() || OSUtils.isWindows() || OSUtils.isUbuntu()) {
+                        boolean scanned = iTunesMediator.instance().isScanned(manager.getSaveLocation());
+                        if (!scanned) {
+                            iTunesMediator.instance().scanForSongs(manager.getSaveLocation());
+                        }
+                    }
                 }
             }
         });

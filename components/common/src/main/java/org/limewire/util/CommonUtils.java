@@ -576,23 +576,7 @@ public class CommonUtils {
         
         File settingsDir = new File(userDir, FROSTWIRE_5_PREFS_DIR_NAME);
 
-        if (OSUtils.isWindows()) {
-            
-//            String appdata = System.getProperty("LIMEWIRE_PREFS_DIR", SystemUtils.getSpecialPath(SpecialLocations.APPLICATION_DATA));
-//
-//            if (appdata != null && appdata.length() > 0) {
-//                appdata = stripQuotes(appdata);
-//                File tempSettingsDir = new File(appdata, "FrostWire"); // CHECK THE CASE OF WINDOWS
-//                if (tempSettingsDir.isDirectory() || !settingsDir.exists()) {
-//                    FileUtils.setWriteable(new File(appdata));
-//                    try {
-//                        CommonUtils.validateSettingsDirectory(tempSettingsDir);
-//                        return tempSettingsDir;
-//                    } catch (IOException e) { // Ignore errors and fall back on default
-//                    } catch (SecurityException e) {} // Ignore errors and fall back on default
-//                }
-//            }
-        } else if(OSUtils.isMacOSX()) {
+        if(OSUtils.isMacOSX()) {
             settingsDir = new File(CommonUtils.getUserHomeDir(), "Library/Preferences/FrostWire5");
         } 
       

@@ -5,8 +5,6 @@ import org.limewire.setting.IntSetting;
 import org.limewire.setting.SettingsFactory;
 import org.limewire.setting.StringSetting;
 
-import com.limegroup.gnutella.util.FrostWireUtils;
-
 /**
  * Handles installation preferences.
  */

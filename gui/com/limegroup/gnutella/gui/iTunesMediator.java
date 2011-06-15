@@ -10,6 +10,7 @@ import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
+import com.limegroup.gnutella.settings.iTunesImportSettings;
 import com.limegroup.gnutella.settings.iTunesSettings;
 
 /**
@@ -25,7 +26,7 @@ public final class iTunesMediator {
      * The queue that will process the tunes to add.
      */
     private final ExecutorService QUEUE = ExecutorsHelper.newProcessingQueue("iTunesAdderThread");
-
+    
     /**
      * Returns the sole instance of this class.
      */
@@ -151,11 +152,22 @@ public final class iTunesMediator {
         }
     }
 
-	public void scanForSongs(File saveLocation) {
-		if (OSUtils.isMacOSX()) {
-			addSongsOSX(saveLocation);
+	public void scanForSongs(File file) {
+	    iTunesImportSettings.IMPORT_FILES.add(file);
+	    if (OSUtils.isMacOSX()) {
+			addSongsOSX(file);
 		} else if (OSUtils.isWindows()) {
 			//TO-DO
+		} else if (OSUtils.isUbuntu()) {
+		    System.out.println("Import in Banshee: " + file);
 		}
 	}
+
+    public boolean isScanned(File file) {
+        return iTunesImportSettings.IMPORT_FILES.contains(file);
+    }
+    
+    public void removeFromScanned(File file) {
+        iTunesImportSettings.IMPORT_FILES.remove(file);
+    }
 }

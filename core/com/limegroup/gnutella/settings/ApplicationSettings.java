@@ -14,10 +14,6 @@ import org.limewire.util.OSUtils;
  */
 public class ApplicationSettings extends LimeProps {
     private ApplicationSettings() {}
-
-    /** Setting for whether or not FW should use SIMPP. */
-    public static final BooleanSetting USE_SIMPP =
-        FACTORY.createBooleanSetting("USE_SIMPP", false);
     
     /**
      * The Client ID number

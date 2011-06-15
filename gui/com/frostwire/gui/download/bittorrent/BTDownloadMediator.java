@@ -2,7 +2,6 @@ package com.frostwire.gui.download.bittorrent;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import javax.swing.Action;
@@ -17,7 +16,6 @@ import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.bittorrent.AzureusStarter;
 import com.frostwire.bittorrent.BTDownloader;
 import com.frostwire.bittorrent.BTDownloaderFactory;
-import com.frostwire.bittorrent.TorrentUtil;
 import com.limegroup.gnutella.FileDetails;
 import com.limegroup.gnutella.gui.FileDetailsProvider;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -72,8 +70,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     /** The actual download buttons instance.
      */
     private BTDownloadButtons _downloadButtons;
-    
-    private HashSet<String> _hashDownloads;
 
     /**
      * Overriden to have different default values for tooltips.
@@ -149,8 +145,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         super("DOWNLOAD_TABLE");
         GUIMediator.addRefreshListener(this);
         ThemeMediator.addThemeObserver(this);
-        
-        _hashDownloads = new HashSet<String>();
     }
 
     /**
@@ -224,7 +218,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     public void add(BTDownloader downloader) {
         if (!DATA_MODEL.contains(downloader)) {
             super.add(downloader);
-            _hashDownloads.add(TorrentUtil.hashToString(downloader.getHash()));
         }
     }
 
@@ -284,10 +277,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         //        }
 
         super.remove(dloader);
-
-        dloader.remove();
-        
-        _hashDownloads.add(TorrentUtil.hashToString(dloader.getHash()));
     }
 
     /**
@@ -581,6 +570,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     }
 
     public boolean isDownloading(String hash) {
-        return _hashDownloads.contains(hash);
+        return DATA_MODEL.isDownloading(hash);
     }
 }

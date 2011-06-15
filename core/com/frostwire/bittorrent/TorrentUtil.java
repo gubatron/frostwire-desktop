@@ -72,6 +72,7 @@ import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.ui.UIFunctions;
 import com.aelitis.azureus.ui.UIFunctionsManager;
 import com.aelitis.azureus.ui.selectedcontent.SelectedContent;
+import com.limegroup.gnutella.settings.iTunesImportSettings;
 
 public class TorrentUtil {
 
@@ -121,7 +122,9 @@ public class TorrentUtil {
 
     public static void removeDownload(DownloadManager downloadManager, boolean deleteTorrent, boolean deleteData) {
         asyncStopDelete(downloadManager, DownloadManager.STATE_STOPPED, deleteTorrent, deleteData, null);
-        
+    }
+    
+    private static void finalCleanup(DownloadManager downloadManager) {
         Set<File> filesToDelete = getIncompleteFiles(downloadManager);
         for (File f: filesToDelete) {
             try {
@@ -132,6 +135,7 @@ public class TorrentUtil {
                 System.out.println("Can't delete file: " + f + ", ex: " + e.getMessage());
             }
         }
+        iTunesImportSettings.IMPORT_FILES.remove(downloadManager.getSaveLocation());
     }
     
     public static Set<File> getIncompleteFiles(DownloadManager dm) {
@@ -315,6 +319,8 @@ public class TorrentUtil {
                         deleteFailed.runSupport();
                     }
                 }
+                
+                finalCleanup(dm);
             }
         });
     }
