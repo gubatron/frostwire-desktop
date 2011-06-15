@@ -36,75 +36,7 @@ import com.limegroup.gnutella.version.UpdateInformation;
 @Singleton
 public final class VisualConnectionCallback implements ActivityCallback {
 	
-	///////////////////////////////////////////////////////////////////////////
-	//  Query-related callbacks
-	///////////////////////////////////////////////////////////////////////////
-
-	/**
-	 * Handle to the class that handles query strings.
-	 */
-    private final HandleQueryString HANDLE_QUERY_STRING = new HandleQueryString();
-    
-    /**
-     *  Add a query string to the monitor screen
-     */
-    public void handleQueryString(String query) {
-        HANDLE_QUERY_STRING.addQueryString(query);
-    }
 	
-    /**
-     *  Add a query reply to a query screen
-     */
-
-    public void handleQueryResult(final RemoteFileDesc rfd,
-                                  final HostData data,
-                                  final Set<? extends IpPort> locs) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-			    //SearchMediator.handleQueryResult(rfd, data, (Set<IpPort>) locs);
-			}
-		});
-    }
-
-    /**
-     * @return true if the guid is still viewable to the user, else false.
-     */
-    public boolean isQueryAlive(GUID guid) {
-        return SearchMediator.queryIsAlive(guid);
-    }
-
-    /**
-     *  Add a query string to the monitor screen
-     */
-    private class HandleQueryString implements Runnable {
-        private Vector<String>  list;
-        private boolean active;
-
-        public HandleQueryString() {
-            list   = new Vector<String>();
-            active = false;
-        }
-
-        public void addQueryString(String query) {
-            list.add(query);
-            if (active == false) {
-                active = true;
-                SwingUtilities.invokeLater(this);
-            }
-        }
-
-        public void run() {
-            String query;
-            while (list.size() > 0) {
-                query = list.elementAt(0);
-                list.remove(0);
-			    //mf().getMonitorView().handleQueryString(query);
-            }
-            active = false;
-        }
-    }
-
-
 	///////////////////////////////////////////////////////////////////////////
 	//  Files-related callbacks
 	///////////////////////////////////////////////////////////////////////////
@@ -194,20 +126,6 @@ public final class VisualConnectionCallback implements ActivityCallback {
         public void run() {
             mf().getBTDownloadMediator().add(mgr);
 		}
-    }
-
-    private class RemoveDownload implements Runnable {
-        private Downloader mgr;
-        public RemoveDownload(Downloader mgr) {
-            this.mgr = mgr;
-        }
-        public void run() {
-            //mf().getBTDownloadMediator().remove(mgr);
-            mf().getLibraryMediator().quickRefresh();
-            SearchMediator.updateResults();
-            //mf().getLoggingMediator().add(new LogEvent(mgr));
-	    }
-            
     }
 
 	

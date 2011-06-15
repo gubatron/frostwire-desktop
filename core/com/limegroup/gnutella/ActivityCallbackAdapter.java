@@ -50,16 +50,7 @@ public class ActivityCallbackAdapter implements ActivityCallback {
     public boolean handleMagnets(MagnetOptions[] magnets) {
         return false;
     }
-
-    public void handleQueryResult(RemoteFileDesc rfd, HostData data,
-            Set<? extends IpPort> locs) {
-        
-    }
-
-    public void handleQueryString(String query) {
-        
-    }
-
+    
     public void handleSharedFileUpdate(File file) {
         
     }
@@ -70,10 +61,6 @@ public class ActivityCallbackAdapter implements ActivityCallback {
 
     public void installationCorrupted() {
         
-    }
-
-    public boolean isQueryAlive(GUID guid) {
-        return false;
     }
 
     public void restoreApplication() {

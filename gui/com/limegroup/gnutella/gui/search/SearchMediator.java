@@ -638,14 +638,7 @@ public final class SearchMediator {
     static ResultPanel getResultPanelForGUID(GUID rguid) {
         return getSearchResultDisplayer().getResultPanelForGUID(rguid);
     }
-
-    /** @returns true if the user is still using the query results for the input
-     *  guid, else false.
-     */
-    public static boolean queryIsAlive(GUID guid) {
-        return (getResultPanelForGUID(guid) != null);
-    }
-
+    
     /**
      * Returns the search input panel component.
      *

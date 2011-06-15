@@ -185,8 +185,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
         new Hashtable<GUID.TimedGUID, QueryResponseBundle>();
 
     
-    private final BypassedResultsCache _bypassedResultsCache;
-    
     /**
      * Keeps track of what hosts we have recently tried to connect back to via
      * UDP.  The size is limited and once the size is reached, no more connect
@@ -369,7 +367,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
         this.inspectionRequestHandlerFactory = inspectionRequestHandlerFactory;
 
         _clientGUID = applicationServices.getMyGUID();
-        _bypassedResultsCache = new BypassedResultsCache(activityCallback, downloadManager);
     }
     
     /** Sets a new handler to the given handlerMap, for the given class. */
@@ -560,9 +557,9 @@ public abstract class MessageRouterImpl implements MessageRouter {
      * @see com.limegroup.gnutella.MessageRouter#queryKilled(com.limegroup.gnutella.GUID)
      */
     public void queryKilled(GUID guid) throws IllegalArgumentException {
-        if (guid == null)
-            throw new IllegalArgumentException("Input GUID is null!");
-        _bypassedResultsCache.queryKilled(guid);
+//        if (guid == null)
+//            throw new IllegalArgumentException("Input GUID is null!");
+//        _bypassedResultsCache.queryKilled(guid);
     }
 
     /* (non-Javadoc)
@@ -571,14 +568,14 @@ public abstract class MessageRouterImpl implements MessageRouter {
     public void downloadFinished(GUID guid) throws IllegalArgumentException {
         if (guid == null)
             throw new IllegalArgumentException("Input GUID is null!");
-        _bypassedResultsCache.downloadFinished(guid);
+        //_bypassedResultsCache.downloadFinished(guid);
     }
     
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.MessageRouter#getQueryLocs(com.limegroup.gnutella.GUID)
      */
     public Set<GUESSEndpoint> getQueryLocs(GUID guid) {
-        return _bypassedResultsCache.getQueryLocs(guid);
+        return null;//_bypassedResultsCache.getQueryLocs(guid);
     }
     
     /* (non-Javadoc)
@@ -998,7 +995,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
         // Apply the personal filter to decide whether the callback
         // should be informed of the query
         if (!handler.isPersonalSpam(request)) {
-            activityCallback.get().handleQueryString(request.getQuery());
+            //activityCallback.get().handleQueryString(request.getQuery());
         }
         
 		// if it's a request from a leaf and we GUESS, send it out via GUESS --
@@ -1120,7 +1117,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
         }
 
         GUESSEndpoint ep = new GUESSEndpoint(handler.getInetAddress(), handler.getPort());
-        return _bypassedResultsCache.addBypassedSource(new GUID(reply.getGUID()), ep);
+        return false;//_bypassedResultsCache.addBypassedSource(new GUID(reply.getGUID()), ep);
     }
 
     /**
@@ -1137,7 +1134,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
             return false;
         }
         GUESSEndpoint ep = new GUESSEndpoint(handler.getInetAddress(), handler.getPort());
-        return _bypassedResultsCache.addBypassedSource(new GUID(reply.getGUID()), ep);
+        return false;//_bypassedResultsCache.addBypassedSource(new GUID(reply.getGUID()), ep);
     }
 
     /* (non-Javadoc)

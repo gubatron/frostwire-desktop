@@ -33,20 +33,6 @@ public interface ActivityCallback extends DownloadCallback
      * just accepted our first incoming connection.
      */
     public void handleAddressStateChanged();
-
-    /**
-     * Notifies the UI that a new query result has come in to the backend.
-     * 
-     * @param rfd the descriptor for the remote file
-     * @param data the data for the host returning the result
-     * @param locs the <tt>Set</tt> of alternate locations for the file
-     */
-	public void handleQueryResult(RemoteFileDesc rfd, HostData data, Set<? extends IpPort> locs);
-
-    /**
-     * Add a query string to the monitor screen
-     */
-    public void handleQueryString( String query ); 
         
 	/**
 	 * Notification that the file manager is beginning loading.
@@ -74,12 +60,6 @@ public interface ActivityCallback extends DownloadCallback
 	 *  Tell the GUI to deiconify.
 	 */
 	public void restoreApplication();
-
-    /**
-     * @return true If the guid that maps to a query result screen is still
-     * available/viewable to the user.
-     */
-    public boolean isQueryAlive(GUID guid);
     
     /**
      * Indicates a component is loading.

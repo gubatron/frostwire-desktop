@@ -9,7 +9,6 @@ import com.frostwire.bittorrent.AzureusStarter;
 import com.frostwire.bittorrent.BTDownloader;
 import com.frostwire.bittorrent.TorrentUtil;
 import com.limegroup.gnutella.gui.tables.BasicDataLineModel;
-import com.limegroup.gnutella.settings.iTunesImportSettings;
 
 /**
  * This class provides access to the <tt>ArrayList</tt> that stores all of the
