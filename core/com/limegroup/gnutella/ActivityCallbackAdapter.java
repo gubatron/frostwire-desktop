@@ -126,8 +126,5 @@ public class ActivityCallbackAdapter implements ActivityCallback {
 
 	@Override
 	public void handleTorrentMagnet(String request) {
-		// TODO Auto-generated method stub
-		
 	}
-
 }

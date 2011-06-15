@@ -10,12 +10,9 @@ import org.gudy.azureus2.core3.global.GlobalManager;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.util.TorrentUtils;
-import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.SaveLocationException;
-import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.settings.SharingSettings;
-import com.limegroup.gnutella.settings.iTunesSettings;
 
 public class BTDownloaderFactory {
 
@@ -24,7 +21,7 @@ public class BTDownloaderFactory {
     private final boolean[] _filesSelection;
     private final boolean _initialSeed;
     private final File _saveDir;
-
+    
     public BTDownloaderFactory(GlobalManager globalManager, File file, boolean[] filesSelection, boolean initialSeed, File saveDir) {
         _globalManager = globalManager;
         _file = file;
@@ -53,8 +50,7 @@ public class BTDownloaderFactory {
 
         if ((manager = _globalManager.getDownloadManager(torrent)) == null) {
             if (_filesSelection == null) {
-                manager = _globalManager.addDownloadManager(_file.getAbsolutePath(), null, saveDir.getAbsolutePath(), DownloadManager.STATE_WAITING, true,
-                        _initialSeed, null);
+                manager = _globalManager.addDownloadManager(_file.getAbsolutePath(), null, saveDir.getAbsolutePath(), DownloadManager.STATE_WAITING, true, _initialSeed, null);
             } else {
                 manager = _globalManager.addDownloadManager(_file.getAbsolutePath(), torrent.getHash(), saveDir.getAbsolutePath(), null,
                         DownloadManager.STATE_WAITING, true, false, new DownloadManagerInitialisationAdapter() {
@@ -114,15 +110,6 @@ public class BTDownloaderFactory {
                 if (!SharingSettings.SEED_FINISHED_TORRENTS.getValue()) {
                     if (manager.getAssumedComplete()) {
                         btDownloader.pause();
-                    }
-                }
-
-                if (btDownloader.isCompleted() && iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue()) {
-                    if (OSUtils.isMacOSX() || OSUtils.isWindows() || OSUtils.isUbuntu()) {
-                        boolean scanned = iTunesMediator.instance().isScanned(manager.getSaveLocation());
-                        if (!scanned) {
-                            iTunesMediator.instance().scanForSongs(manager.getSaveLocation());
-                        }
                     }
                 }
             }

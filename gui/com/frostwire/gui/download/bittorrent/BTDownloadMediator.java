@@ -2,11 +2,15 @@ package com.frostwire.gui.download.bittorrent;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.swing.Action;
 import javax.swing.JPopupMenu;
 
+import org.gudy.azureus2.core3.download.DownloadManager;
+import org.gudy.azureus2.core3.download.DownloadManagerListener;
+import org.gudy.azureus2.core3.download.impl.DownloadManagerAdapter;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloader;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderCallBackInterface;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderFactory;
@@ -16,11 +20,13 @@ import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.bittorrent.AzureusStarter;
 import com.frostwire.bittorrent.BTDownloader;
 import com.frostwire.bittorrent.BTDownloaderFactory;
+import com.frostwire.bittorrent.TorrentUtil;
 import com.limegroup.gnutella.FileDetails;
 import com.limegroup.gnutella.gui.FileDetailsProvider;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
+import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.dnd.FileTransfer;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
@@ -32,6 +38,7 @@ import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 import com.limegroup.gnutella.settings.SharingSettings;
+import com.limegroup.gnutella.settings.iTunesSettings;
 
 /**
  * This class acts as a mediator between all of the components of the
@@ -70,6 +77,9 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     /** The actual download buttons instance.
      */
     private BTDownloadButtons _downloadButtons;
+    
+    private HashSet<String> _hashDownloads;
+	private final DownloadManagerListener ITUNES_SONG_SCANNER_LISTENER;
 
     /**
      * Overriden to have different default values for tooltips.
@@ -145,6 +155,22 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         super("DOWNLOAD_TABLE");
         GUIMediator.addRefreshListener(this);
         ThemeMediator.addThemeObserver(this);
+        
+        _hashDownloads = new HashSet<String>();
+        
+        ITUNES_SONG_SCANNER_LISTENER = new DownloadManagerAdapter() {
+        	@Override
+        	public void stateChanged(DownloadManager manager, int state) {
+                if (manager.getAssumedComplete()) {
+					if ((OSUtils.isMacOSX() || OSUtils.isWindows())
+							&& iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue()) {
+						System.out.println("BTDownloadMediator.ITUNES_SONG_SCANNER_LISTENER invoked.");
+						iTunesMediator.instance().scanForSongs(manager.getSaveLocation());
+					}
+                }
+
+        	}
+        };
     }
 
     /**
@@ -218,6 +244,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     public void add(BTDownloader downloader) {
         if (!DATA_MODEL.contains(downloader)) {
             super.add(downloader);
+            downloader.getDownloadManager().addListener(ITUNES_SONG_SCANNER_LISTENER, false);
         }
     }
 
@@ -277,6 +304,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         //        }
 
         super.remove(dloader);
+
+        dloader.remove();
+        
+        _hashDownloads.add(TorrentUtil.hashToString(dloader.getHash()));
     }
 
     /**
@@ -570,6 +601,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     }
 
     public boolean isDownloading(String hash) {
-        return DATA_MODEL.isDownloading(hash);
+        return _hashDownloads.contains(hash);
     }
 }
