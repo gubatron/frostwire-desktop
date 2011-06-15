@@ -38,6 +38,7 @@ import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 import com.limegroup.gnutella.settings.SharingSettings;
+import com.limegroup.gnutella.settings.iTunesImportSettings;
 import com.limegroup.gnutella.settings.iTunesSettings;
 
 /**
@@ -161,9 +162,9 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         ITUNES_SONG_SCANNER_LISTENER = new DownloadManagerAdapter() {
         	@Override
         	public void stateChanged(DownloadManager manager, int state) {
-                if (manager.getAssumedComplete()) {
-					if ((OSUtils.isMacOSX() || OSUtils.isWindows())
-							&& iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue()) {
+                if (manager.getAssumedComplete() && iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue()
+                        && !iTunesMediator.instance().isScanned(manager.getSaveLocation())) {
+                    if ((OSUtils.isMacOSX() || OSUtils.isWindows())) {
 						System.out.println("BTDownloadMediator.ITUNES_SONG_SCANNER_LISTENER invoked.");
 						iTunesMediator.instance().scanForSongs(manager.getSaveLocation());
 					}
