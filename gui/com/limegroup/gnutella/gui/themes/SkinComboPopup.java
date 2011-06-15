@@ -44,7 +44,6 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicComboPopup;
 
-import org.pushingpixels.substance.internal.ui.SubstanceListUI;
 import org.pushingpixels.substance.internal.utils.SubstanceCoreUtilities;
 import org.pushingpixels.substance.internal.utils.border.SubstanceBorder;
 
@@ -55,6 +54,11 @@ import org.pushingpixels.substance.internal.utils.border.SubstanceBorder;
  * @author Kirill Grouchnikov
  */
 public class SkinComboPopup extends BasicComboPopup {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -3629162645341440812L;
 
     /**
      * Creates combo popup for the specified combobox.

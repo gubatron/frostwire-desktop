@@ -5,7 +5,6 @@ import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JFileChooser;
 import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.FontUIResource;
@@ -26,7 +25,6 @@ import org.pushingpixels.substance.internal.utils.SubstanceCoreUtilities;
 
 import com.frostwire.gui.components.RangeSlider;
 import com.limegroup.gnutella.gui.themes.SkinComboBoxUI;
-import com.limegroup.gnutella.gui.themes.SkinFileChooserUI;
 import com.limegroup.gnutella.gui.themes.SkinListUI;
 import com.limegroup.gnutella.gui.themes.SkinRangeSliderUI;
 import com.limegroup.gnutella.gui.themes.SkinTextAreaUI;

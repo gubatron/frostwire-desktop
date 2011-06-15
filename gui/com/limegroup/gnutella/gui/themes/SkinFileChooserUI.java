@@ -40,7 +40,6 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileView;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicFileChooserUI;
-import javax.swing.plaf.metal.MetalFileChooserUI;
 
 import org.pushingpixels.substance.internal.utils.SubstanceCoreUtilities;
 

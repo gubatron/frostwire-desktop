@@ -81,7 +81,7 @@ public class BaseFileChooserUI extends BasicFileChooserUI {
     private JComboBox filterComboBox;
 
     private static final Dimension hstrut5 = new Dimension(5, 1);
-    private static final Dimension hstrut11 = new Dimension(11, 1);
+    //private static final Dimension hstrut11 = new Dimension(11, 1);
 
     private static final Dimension vstrut5  = new Dimension(1, 5);
 
@@ -243,6 +243,11 @@ public class BaseFileChooserUI extends BasicFileChooserUI {
 
         // CurrentDir ComboBox
         directoryComboBox = new JComboBox() {
+            /**
+             * 
+             */
+            private static final long serialVersionUID = -4607302139516491757L;
+
             public Dimension getPreferredSize() {
                 Dimension d = super.getPreferredSize();
                 // Must be small enough to not affect total width.
@@ -389,6 +394,11 @@ public class BaseFileChooserUI extends BasicFileChooserUI {
         fileNamePanel.add(fileNameLabel);
 
         fileNameTextField = new JTextField(35) {
+            /**
+             * 
+             */
+            private static final long serialVersionUID = -8830541272140418635L;
+
             public Dimension getMaximumSize() {
                 return new Dimension(Short.MAX_VALUE, super.getPreferredSize().height);
             }
@@ -512,15 +522,15 @@ public class BaseFileChooserUI extends BasicFileChooserUI {
 
     protected void installListeners(JFileChooser fc) {
         super.installListeners(fc);
-        ActionMap actionMap = getActionMap();
+        ActionMap actionMap = getActionMap2();
         SwingUtilities.replaceUIActionMap(fc, actionMap);
     }
 
-    protected ActionMap getActionMap() {
-        return createActionMap();
+    protected ActionMap getActionMap2() {
+        return createActionMap2();
     }
 
-    protected ActionMap createActionMap() {
+    protected ActionMap createActionMap2() {
         ActionMap map = new ActionMapUIResource();
         FilePane.addActionsToMap(map, filePane.getActions());
         return map;
@@ -552,6 +562,11 @@ public class BaseFileChooserUI extends BasicFileChooserUI {
 
     // Obsolete class, not used in this version.
     protected class FileRenderer extends DefaultListCellRenderer  {
+
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -7138220426570463430L;
     }
 
     public void uninstallUI(JComponent c) {
@@ -872,6 +887,10 @@ public class BaseFileChooserUI extends BasicFileChooserUI {
     // Renderer for DirectoryComboBox
     //
     class DirectoryComboBoxRenderer extends DefaultListCellRenderer  {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -8500297350257807164L;
         IndentIcon ii = new IndentIcon();
         public Component getListCellRendererComponent(JList list, Object value,
                                                       int index, boolean isSelected,
@@ -929,7 +948,11 @@ public class BaseFileChooserUI extends BasicFileChooserUI {
      * Data model for a type-face selection combo-box.
      */
     protected class DirectoryComboBoxModel extends AbstractListModel implements ComboBoxModel {
-        Vector directories = new Vector();
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -4248097879659126453L;
+        Vector<File> directories = new Vector<File>();
         int[] depths = null;
         File selectedDirectory = null;
         JFileChooser chooser = getFileChooser();
@@ -985,7 +1008,7 @@ public class BaseFileChooserUI extends BasicFileChooserUI {
                 File sf = useShellFolder ? ShellFolder.getShellFolder(canonical)
                                          : canonical;
                 File f = sf;
-                Vector path = new Vector(10);
+                Vector<File> path = new Vector<File>(10);
                 do {
                     path.addElement(f);
                 } while ((f = f.getParentFile()) != null);
@@ -1059,6 +1082,11 @@ public class BaseFileChooserUI extends BasicFileChooserUI {
      * Render different type sizes and styles.
      */
     public class FilterComboBoxRenderer extends DefaultListCellRenderer {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -33803419008776614L;
+
         public Component getListCellRendererComponent(JList list,
             Object value, int index, boolean isSelected,
             boolean cellHasFocus) {
@@ -1084,6 +1112,10 @@ public class BaseFileChooserUI extends BasicFileChooserUI {
      * Data model for a type-face selection combo-box.
      */
     protected class FilterComboBoxModel extends AbstractListModel implements ComboBoxModel, PropertyChangeListener {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -1131578002217361954L;
         protected FileFilter[] filters;
         protected FilterComboBoxModel() {
             super();
@@ -1161,6 +1193,11 @@ public class BaseFileChooserUI extends BasicFileChooserUI {
      * Acts when DirectoryComboBox has changed the selected item.
      */
     protected class DirectoryComboBoxAction extends AbstractAction {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -372782296185641300L;
+
         protected DirectoryComboBoxAction() {
             super("DirectoryComboBoxAction");
         }
@@ -1261,6 +1298,10 @@ public class BaseFileChooserUI extends BasicFileChooserUI {
     }
 
     private class AlignedLabel extends JLabel {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 5729395346234189975L;
         private AlignedLabel[] group;
         private int maxWidth = 0;
 

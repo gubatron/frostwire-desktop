@@ -1,30 +1,14 @@
 package com.limegroup.gnutella.gui.themes;
 
 import java.awt.Color;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Locale;
-import java.util.StringTokenizer;
-import java.util.zip.ZipException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.limewire.service.ErrorService;
 import org.limewire.setting.ColorSetting;
 import org.limewire.setting.FileSetting;
 import org.limewire.setting.IntSetting;
 import org.limewire.util.CommonUtils;
-import org.limewire.util.FileUtils;
 
-import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.LimeProps;
-import com.limegroup.gnutella.util.Expand;
 
 /**
  * Class for handling all LimeWire settings that are stored to disk.  To
@@ -39,8 +23,6 @@ import com.limegroup.gnutella.util.Expand;
  */
 public final class ThemeSettings extends LimeProps {
     
-    private static final Log LOG = LogFactory.getLog(ThemeSettings.class);
-    
     private ThemeSettings() {}
             
     /**
@@ -53,12 +35,6 @@ public final class ThemeSettings extends LimeProps {
     
     public static final File THEME_DIR_FILE =
 		new File(CommonUtils.getUserSettingsDir(), "themes");
-    
-    /**
-     * The normal 'LimeWire' theme.
-     */
-    public static final String FROSTWIRE_THEME_NAME =
-		"frostwirePro_theme."+EXTENSION;
     
     /**
      * The default name of the theme file name for OS X.
@@ -95,18 +71,6 @@ public final class ThemeSettings extends LimeProps {
      */
     public static final String OTHER_THEME_NAME =
         "other_theme." + EXTENSION;
-    
-    /**
-     * The full path to the LimeWire theme file.
-     */
-    public static final File FROSTWIRE_THEME_FILE =
-		new File(THEME_DIR_FILE, FROSTWIRE_THEME_NAME);
-    
-    /**
-     * The full path to the default theme file on OS X.
-     */
-    static final File PINSTRIPES_OSX_THEME_FILE =
-		new File(THEME_DIR_FILE, PINSTRIPES_OSX_THEME_NAME);
 		
     /**
      * The full path to the metal theme file on OS X.
@@ -140,59 +104,6 @@ public final class ThemeSettings extends LimeProps {
     
     public static ColorSetting PLAYING_DATA_LINE_COLOR = FACTORY.createColorSetting("PLAYING_DATA_LINE_COLOR", new Color(7, 170, 0));
     
-    /**
-     * Expands the specified theme zip file to the specified directory.
-     *
-     * @param themeFile the theme zip file to expand
-     * @param themeDir the directory to expand to -- the themes directory
-     *  plus the name of the theme
-     * @param overwrite whether or not to force the overwriting of existing
-     *  files in the destination folder when we expand the zip, regardless 
-     *  of File/ZipEntry timestamp
-     */
-    static boolean expandTheme(File themeFile, File themeDir, 
-                            boolean overwrite, boolean showError) {
-        themeDir.mkdirs();
-        try {
-            FileUtils.setWriteable(themeDir);
-            Expand.expandFile(themeFile, themeDir, overwrite);
-        } catch(ZipException ze) {
-            // invalid theme, tell the user.
-            GUIMediator.showError(I18n.tr("The theme you are applying is invalid. FrostWire will revert to the default theme."));
-            return false;
-        } catch(IOException e) {
-            // this should never really happen, so report it
-            if (showError)
-                ErrorService.error(e);
-            return false;
-        }
-        return true;
-    }
-    
-    /**
-     * Convenience method for determining in the path of the themes directory
-     * for a given theme file.  The directory is the path of the themes
-     * directory plus the name of the theme.
-     *
-     * @param themeFile the <tt>File</tt> instance denoting the location 
-     *  of the theme file on disk
-     * @return a new <tt>File</tt> instance denoting the appropriate path
-     *  for the directory for this specific theme
-     */
-    static File extractThemeDir(File themeFile) {
-		String dirName = themeFile.getName();
-		dirName = dirName.substring(0, dirName.length()-5);
-		return new File(new File(CommonUtils.getUserSettingsDir(),"themes"), 
-                        dirName);
-        
-    }
-    
-    /**
-     * Determines whether or not the specified file is a theme file.
-     */
-    static boolean isThemeFile(File f) {
-        return f.getName().toLowerCase().endsWith("." + EXTENSION);
-    }
     
     /**
      * Determines whether or not the current theme file is the default theme
@@ -230,13 +141,6 @@ public final class ThemeSettings extends LimeProps {
     }
     
     /**
-     * Determines if the theme is the pinstripes theme.
-     */
-    public static boolean isPinstripesTheme() {
-        return THEME_FILE.getValue().equals(PINSTRIPES_OSX_THEME_FILE);
-    }
-    
-    /**
      * Determines if the current theme is the native OSX theme.
      */
     public static boolean isNativeOSXTheme() {
@@ -256,94 +160,7 @@ public final class ThemeSettings extends LimeProps {
      */
     public static boolean isOtherTheme() {
         return THEME_FILE.getValue().equals(OTHER_THEME_FILE);
-    }
-    
-    /**
-     * Determines whether or not the current theme is valid.
-     */
-    public static boolean isValid() {
-        if(isOtherTheme()) {
-            String name = getOtherLF();
-            if(name != null) {
-                try {
-                    Class.forName(name);
-                    return true;
-                } catch(ClassNotFoundException nfe) {}
-            }
-            return false;
-        }
-        return true;
-    }
-    
-    /**
-     * Gets the L&F that should be used if this is the 'other' theme.
-     */
-    public static String getOtherLF() {
-        BufferedReader in = null;
-        try {
-            in = new BufferedReader(
-                    new InputStreamReader(
-                        new FileInputStream(
-                            new File(THEME_DIR_FILE, "other_theme/name.txt"))));
-            String classname = in.readLine();
-            if(classname != null)
-                return classname.trim();
-        } catch(IOException ignored) {
-        	//System.out.println("ThemeSettings - GetOtherLF - Cannot set other look and feel:" + ignored.getMessage());
-            LOG.warn("Ignoring IOX", ignored);
-        } finally {
-            if(in != null)
-                try { in.close(); } catch(IOException ignored) {}
-        }
-        return null;
-    }
-    
-    /**
-     * Sets the other L&F classname.
-     */
-    public static void setOtherLF(String classname) {
-        BufferedWriter out = null;
-        try {
-            out = new BufferedWriter(
-                    new FileWriter(
-                        new File(THEME_DIR_FILE, "other_theme/name.txt"), false));
-            out.write(classname);
-            out.flush();
-        } catch(IOException ignored) {
-            LOG.warn("Ignoring IOX", ignored);
-        } finally {
-            if(out != null)
-                try { out.close(); } catch(IOException ignored) {}
-        }
-    }
-        
-    /**
-     * Formats a theme name, removing the underscore characters,
-     * capitalizing the first letter of each word, and removing
-     * the 'fwtp'.
-     */
-    public static String formatName(String name) {
-        // strip off the .fwtp
-        name = name.substring(0, name.length()-5);
-        StringBuilder formatted = new StringBuilder(name.length());
-        StringTokenizer st = new StringTokenizer(name, "_");
-        String next;
-        for(; st.hasMoreTokens(); ) {
-            next = st.nextToken();
-            String lower = next.toLowerCase();
-            if(lower.equals("osx"))
-                next = "(OSX)";
-            else if(lower.equals("limewire"))
-                next = "LimeWire";
-            else if(lower.equals("frostwirepro"))
-                next = "FrostWire";
-            formatted.append(" " + next.substring(0,1).toUpperCase(Locale.US));
-            if(next.length() > 1)
-                formatted.append(next.substring(1));
-            
-        }
-        return formatted.toString().trim();
-    }        
+    }       
     
     /**
      * Setting for the default theme file to use for FrostWire display.
