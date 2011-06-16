@@ -32,18 +32,15 @@ import org.limewire.util.DebugRunnable;
 import com.frostwire.gui.components.Slide;
 import com.frostwire.gui.components.SlideshowPanel;
 import com.frostwire.settings.UpdateManagerSettings;
-import com.limegroup.gnutella.FileManager;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
-import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.ProgTabUIFactory;
 import com.limegroup.gnutella.gui.RefreshListener;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
-import com.limegroup.gnutella.settings.QuestionsHandler;
 import com.limegroup.gnutella.settings.SearchSettings;
 
 /**

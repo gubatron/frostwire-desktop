@@ -20,7 +20,7 @@ public class MininovaWebSearchPerformer implements WebSearchPerformer {
 
         MininovaVuzeResponse response = searchMininovaVuze(keywords);
 
-        if (response.results != null)
+        if (response != null && response.results != null)
             for (MininovaVuzeItem item : response.results) {
 
                 WebSearchResult sr = new MininovaVuzeWebSearchResult(item);

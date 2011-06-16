@@ -328,14 +328,16 @@ public final class SearchMediator {
                                 final List<SearchResult> results = normalizeWebResults(webResults, searchEngine, info);
                                 
                                 SwingUtilities.invokeLater(new Runnable() {
-                                    
-                                    @Override
                                     public void run() {
-                                        SearchFilter filter = getSearchFilterFactory().createFilter();
-                                        for (SearchResult sr : results) {
-                                            if (filter.allow(sr)) {
-                                                getSearchResultDisplayer().addQueryResult(guid, sr, rp);
+                                        try {
+                                            SearchFilter filter = getSearchFilterFactory().createFilter();
+                                            for (SearchResult sr : results) {
+                                                if (filter.allow(sr)) {
+                                                    getSearchResultDisplayer().addQueryResult(guid, sr, rp);
+                                                }
                                             }
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
                                         }
                                     }
                                 });

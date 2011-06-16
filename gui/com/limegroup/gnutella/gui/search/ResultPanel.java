@@ -514,9 +514,18 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
   
 
         JPopupMenu menu = new SkinPopupMenu();
-        
-        PopupUtils.addMenuItem(I18n.tr("Copy Magnet"), COPY_MAGNET_ACTION_LISTENER, menu, !isStopped());
-        PopupUtils.addMenuItem(I18n.tr("Copy Hash"), COPY_HASH_ACTION_LISTENER, menu, !isStopped());
+
+        if (lines.length > 0) {
+            boolean allWithHash = true;
+            for (int i = 0; i < lines.length; i++) {
+                if (lines[i].getHash() == null) {
+                    allWithHash = false;
+                    break;
+                }
+            }
+            PopupUtils.addMenuItem(I18n.tr("Copy Magnet"), COPY_MAGNET_ACTION_LISTENER, menu, !isStopped() && allWithHash);
+            PopupUtils.addMenuItem(I18n.tr("Copy Hash"), COPY_HASH_ACTION_LISTENER, menu, !isStopped() && allWithHash);
+        }
         
         menu.add(createSearchAgainMenu(lines.length > 0 ? lines[0] : null));
         
