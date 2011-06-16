@@ -287,22 +287,26 @@ class SearchInputPanel extends JPanel {
 		final JCheckBox checkboxClearbits = new JCheckBox("Clearbits");
 		final JCheckBox checkBoxMininova = new JCheckBox("Mininova");
 		final JCheckBox checkBoxISOHunt = new JCheckBox("IsoHunt");
+		final JCheckBox checkBoxBTJunkie = new JCheckBox("BTJunkie");
 		
 		checkboxClearbits.setSelected(SearchEnginesSettings.CLEARBITS_SEARCH_ENABLED.getValue());
         checkBoxMininova.setSelected(SearchEnginesSettings.MININOVA_SEARCH_ENABLED.getValue());
         checkBoxISOHunt.setSelected(SearchEnginesSettings.ISOHUNT_SEARCH_ENABLED.getValue());
+        checkBoxBTJunkie.setSelected(SearchEnginesSettings.BTJUNKIE_SEARCH_ENABLED.getValue());
 		
 		ItemListener listener = new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 if (!checkboxClearbits.isSelected() &&
                     !checkBoxMininova.isSelected() &&
-                    !checkBoxISOHunt.isSelected()) {
+                    !checkBoxISOHunt.isSelected() &&
+                    !checkBoxBTJunkie.isSelected()) {
                     ((JCheckBox)e.getItemSelectable()).setSelected(true);
                 }
                 
                 SearchEnginesSettings.CLEARBITS_SEARCH_ENABLED.setValue(checkboxClearbits.isSelected());
                 SearchEnginesSettings.MININOVA_SEARCH_ENABLED.setValue(checkBoxMininova.isSelected());
                 SearchEnginesSettings.ISOHUNT_SEARCH_ENABLED.setValue(checkBoxISOHunt.isSelected());
+                SearchEnginesSettings.BTJUNKIE_SEARCH_ENABLED.setValue(checkBoxBTJunkie.isSelected());
                 
                 updateSearchResults(new SearchEngineFilter());
             }
@@ -311,10 +315,12 @@ class SearchInputPanel extends JPanel {
 		checkboxClearbits.addItemListener(listener);
 		checkBoxMininova.addItemListener(listener);
 		checkBoxISOHunt.addItemListener(listener);
+		checkBoxBTJunkie.addItemListener(listener);
 		
 		controls.add(checkboxClearbits);
 		controls.add(checkBoxMininova);
 		controls.add(checkBoxISOHunt);
+		controls.add(checkBoxBTJunkie);
 		
 		controls.setBorder(new TitledBorder(I18n.tr("Choose Search Engines")));
 		

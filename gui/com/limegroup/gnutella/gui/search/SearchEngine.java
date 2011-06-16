@@ -7,6 +7,7 @@ import org.limewire.setting.BooleanSetting;
 
 import com.frostwire.bittorrent.websearch.SearchEnginesSettings;
 import com.frostwire.bittorrent.websearch.WebSearchPerformer;
+import com.frostwire.bittorrent.websearch.btjunkie.BTJunkieWebSearchPerformer;
 import com.frostwire.bittorrent.websearch.clearbits.ClearBitsWebSearchPerformer;
 import com.frostwire.bittorrent.websearch.isohunt.ISOHuntWebSearchPerformer;
 import com.frostwire.bittorrent.websearch.mininova.MininovaWebSearchPerformer;
@@ -14,22 +15,25 @@ import com.frostwire.bittorrent.websearch.mininova.MininovaWebSearchPerformer;
 public final class SearchEngine {
 
     public String redirectUrl = null;
-    
+
     private final int _id;
     private final String _name;
     private final WebSearchPerformer _performer;
     private final BooleanSetting _setting;
 
-    public static final int ISOHUNT_ID = 0;
-    public static final int CLEARBITS_ID = 1;
-    public static final int MININOVA_ID = 2;
+    public static final int CLEARBITS_ID = 0;
+    public static final int MININOVA_ID = 1;
+    public static final int ISOHUNT_ID = 2;
+    public static final int BTJUNKIE_ID = 3;
 
-    public static final SearchEngine ISOHUNT = new SearchEngine(ISOHUNT_ID, "ISOHunt", new ISOHuntWebSearchPerformer(),
-            SearchEnginesSettings.ISOHUNT_SEARCH_ENABLED);
     public static final SearchEngine CLEARBITS = new SearchEngine(CLEARBITS_ID, "ClearBits", new ClearBitsWebSearchPerformer(),
             SearchEnginesSettings.CLEARBITS_SEARCH_ENABLED);
     public static final SearchEngine MININOVA = new SearchEngine(MININOVA_ID, "Mininova", new MininovaWebSearchPerformer(),
             SearchEnginesSettings.MININOVA_SEARCH_ENABLED);
+    public static final SearchEngine ISOHUNT = new SearchEngine(ISOHUNT_ID, "ISOHunt", new ISOHuntWebSearchPerformer(),
+            SearchEnginesSettings.ISOHUNT_SEARCH_ENABLED);
+    public static final SearchEngine BTJUNKIE = new SearchEngine(MININOVA_ID, "BTJunkie", new BTJunkieWebSearchPerformer(),
+            SearchEnginesSettings.BTJUNKIE_SEARCH_ENABLED);
 
     private SearchEngine(int id, String name, WebSearchPerformer performer, BooleanSetting setting) {
         _id = id;
@@ -56,7 +60,7 @@ public final class SearchEngine {
     }
 
     public static List<SearchEngine> getSearchEngines() {
-        return Arrays.asList(ISOHUNT, CLEARBITS, MININOVA);
+        return Arrays.asList(CLEARBITS, MININOVA, ISOHUNT, BTJUNKIE);
     }
 
     public WebSearchPerformer getPerformer() {
