@@ -105,11 +105,11 @@ public final class SearchResultHandler {
      * @param qr The query that has been started.  We really just acces the guid.
      */ 
     public void addQuery(QueryRequest qr) {
-        LOG.trace("entered SearchResultHandler.addQuery(QueryRequest)");
-        if (!qr.isBrowseHostQuery() && !qr.isWhatIsNewRequest())
-            spamManager.get().startedQuery(qr);
-        GuidCount gc = new GuidCount(qr);
-        GUID_COUNTS.add(gc);
+//        LOG.trace("entered SearchResultHandler.addQuery(QueryRequest)");
+//        if (!qr.isBrowseHostQuery() && !qr.isWhatIsNewRequest())
+//            spamManager.get().startedQuery(qr);
+//        GuidCount gc = new GuidCount(qr);
+//        GUID_COUNTS.add(gc);
     }
 
     /**

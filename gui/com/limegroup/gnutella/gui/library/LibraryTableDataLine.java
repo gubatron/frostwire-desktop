@@ -9,7 +9,6 @@ import java.util.List;
 import javax.swing.Icon;
 
 import com.limegroup.gnutella.FileDesc;
-import com.limegroup.gnutella.FileManager;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -22,7 +21,6 @@ import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.gui.xml.XMLUtils;
 import com.limegroup.gnutella.licenses.License;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
-import com.limegroup.gnutella.xml.MetaFileManager;
 
 /**
  * This class acts as a single line containing all
@@ -40,11 +38,6 @@ public final class LibraryTableDataLine extends AbstractDataLine<File> implement
      * The schemas available
      */
     private static String[] _schemas;
-
-    /**
-     * The meta file manager
-     */
-    private static MetaFileManager _mfm;
     
     /**
      * Constant for the column with the icon of the file.
@@ -133,8 +126,7 @@ public final class LibraryTableDataLine extends AbstractDataLine<File> implement
 	 */
     public void initialize(File file) {
         super.initialize(file);
-        _fileDesc = GuiCoreMediator.getFileManager().getFileDescForFile(file);
-
+        
         String fullPath = file.getPath();
         try {
             fullPath = file.getCanonicalPath();
@@ -257,11 +249,9 @@ public final class LibraryTableDataLine extends AbstractDataLine<File> implement
 	    if ( _allowXML ) {
 	        _schemas =
 	            GuiCoreMediator.getLimeXMLSchemaRepository().getAvailableSchemaURIs();
-    	    FileManager fm = GuiCoreMediator.getFileManager();
-    	    if ( fm instanceof MetaFileManager ) _mfm = (MetaFileManager)fm;
+    	    
 	    } else {
 	        _schemas = null;
-	        _mfm = null;
 	    }
 	}
 	
@@ -296,7 +286,7 @@ public final class LibraryTableDataLine extends AbstractDataLine<File> implement
 	    // have a FileDesc, get out of here.
 	    if ( !_allowXML
 	         || _schemas == null || _schemas.length == 0
-	         || _mfm == null || _fileDesc == null
+	         || _fileDesc == null
 	        ) return null;
 
         // Dynamically add the information.

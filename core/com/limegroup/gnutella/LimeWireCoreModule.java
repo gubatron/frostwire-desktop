@@ -29,8 +29,6 @@ import com.limegroup.gnutella.filters.SpamFilterFactoryImpl;
 import com.limegroup.gnutella.licenses.LicenseFactory;
 import com.limegroup.gnutella.licenses.LicenseFactoryImpl;
 import com.limegroup.gnutella.messagehandlers.MessageHandlerBinderImpl;
-import com.limegroup.gnutella.messages.LocalPongInfo;
-import com.limegroup.gnutella.messages.LocalPongInfoImpl;
 import com.limegroup.gnutella.messages.MessageFactory;
 import com.limegroup.gnutella.messages.MessageFactoryImpl;
 import com.limegroup.gnutella.messages.MessageParserBinder;
@@ -72,7 +70,6 @@ import com.limegroup.gnutella.version.UpdateMessageVerifier;
 import com.limegroup.gnutella.version.UpdateMessageVerifierImpl;
 import com.limegroup.gnutella.xml.LimeXMLDocumentFactory;
 import com.limegroup.gnutella.xml.LimeXMLDocumentFactoryImpl;
-import com.limegroup.gnutella.xml.MetaFileManager;
 
 /**
  * The module that defines what implementations are used within
@@ -117,12 +114,10 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(RoutedConnectionFactory.class).to(RoutedConnectionFactoryImpl.class);
         bind(HostDataFactory.class).to(HostDataFactoryImpl.class);
         bind(LocalFileDetailsFactory.class).to(LocalFileDetailsFactoryImpl.class);
-        bind(FileManagerController.class).to(FileManagerControllerImpl.class);
         bind(ResponseFactory.class).to(ResponseFactoryImpl.class);
         bind(QueryReplyFactory.class).to(QueryReplyFactoryImpl.class);
         bind(CapabilitiesVMFactory.class).to(CapabilitiesVMFactoryImpl.class);
         bind(LifecycleManager.class).to(LifecycleManagerImpl.class);
-        bind(LocalPongInfo.class).to(LocalPongInfoImpl.class);
         bind(SearchServices.class).to(SearchServicesImpl.class);
         bind(DownloadServices.class).to(DownloadServicesImpl.class);
         bind(ApplicationServices.class).to(ApplicationServicesImpl.class);
@@ -166,10 +161,6 @@ public class LimeWireCoreModule extends AbstractModule {
                         
         // TODO: This is odd -- move to initialize & LifecycleManager?
         bind(Statistics.class).asEagerSingleton();
-        
-        // TODO: Need to add interface to these classes
-        //----------------------------------------------
-        bind(FileManager.class).to(MetaFileManager.class);
     }
     
     

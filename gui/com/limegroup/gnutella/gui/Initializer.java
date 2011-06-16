@@ -128,7 +128,6 @@ public final class Initializer {
         
         // Initialize late tasks, like Icon initialization & install listeners.
         loadLateTasksForUI();
-        installListenersForUI(limeWireCore);
         
         // Start the core & run any queued control requests, and load DAAP.
         //System.out.println("Initializer.initialize() start core");
@@ -448,11 +447,6 @@ public final class Initializer {
         GUIMediator.setSplashScreenString(I18n.tr("Loading Internationalization Support..."));
         I18NConvert.instance();
         stopwatch.resetAndLog("I18nConvert instance");
-    }
-    
-    /** Sets up any listeners for the UI. */
-    private void installListenersForUI(LimeWireCore limeWireCore) {        
-        limeWireCore.getFileManager().addFileEventListener(new FileManagerWarningManager(NotifyUserProxy.instance()));
     }
     
     /** Starts the core. */

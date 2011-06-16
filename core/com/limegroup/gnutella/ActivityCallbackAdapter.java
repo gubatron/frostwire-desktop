@@ -43,10 +43,6 @@ public class ActivityCallbackAdapter implements ActivityCallback {
         
     }
 
-    public void handleFileEvent(FileManagerEvent evt) {
-        
-    }
-
     public boolean handleMagnets(MagnetOptions[] magnets) {
         return false;
     }

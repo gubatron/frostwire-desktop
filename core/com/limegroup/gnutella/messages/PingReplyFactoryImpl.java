@@ -27,40 +27,38 @@ public class PingReplyFactoryImpl implements PingReplyFactory {
     private final NetworkManager networkManager;
     private final Provider<Statistics> statistics;
     private final Provider<UDPService> udpService;
-    private final LocalPongInfo localPongInfo;
     private final NetworkInstanceUtils networkInstanceUtils;
     
     // TODO: All these objects should be folded into LocalPongInfo
     @Inject
     public PingReplyFactoryImpl(NetworkManager networkManager,
             Provider<Statistics> statistics, Provider<UDPService> udpService,
-            LocalPongInfo localPongInfo,
             NetworkInstanceUtils networkInstanceUtils) {
         this.networkManager = networkManager;
         this.statistics = statistics;
         this.udpService = udpService;
-        this.localPongInfo = localPongInfo;
         this.networkInstanceUtils = networkInstanceUtils;
     }
 
     public PingReply create(byte[] guid, byte ttl,
             Collection<? extends IpPort> gnutHosts,
             Collection<? extends IpPort> dhtHosts) {
-        return create(
-                guid,
-                ttl,
-                networkManager.getPort(),
-                networkManager.getAddress(),
-                localPongInfo.getNumSharedFiles(),
-                localPongInfo.getSharedFileSize() / 1024,
-                localPongInfo.isSupernode(),
-                statistics.get().calculateDailyUptime(),
-                udpService.get().isGUESSCapable(),
-                ApplicationSettings.LANGUAGE.getValue().equals("") ? ApplicationSettings.DEFAULT_LOCALE
-                        .getValue()
-                        : ApplicationSettings.LANGUAGE.getValue(),
-                0, gnutHosts,
-                dhtHosts);
+//        return create(
+//                guid,
+//                ttl,
+//                networkManager.getPort(),
+//                networkManager.getAddress(),
+//                localPongInfo.getNumSharedFiles(),
+//                localPongInfo.getSharedFileSize() / 1024,
+//                localPongInfo.isSupernode(),
+//                statistics.get().calculateDailyUptime(),
+//                udpService.get().isGUESSCapable(),
+//                ApplicationSettings.LANGUAGE.getValue().equals("") ? ApplicationSettings.DEFAULT_LOCALE
+//                        .getValue()
+//                        : ApplicationSettings.LANGUAGE.getValue(),
+//                0, gnutHosts,
+//                dhtHosts);
+        return null;
     }
 
     public PingReply create(byte[] guid, byte ttl) {
@@ -406,8 +404,8 @@ public class PingReplyFactoryImpl implements PingReplyFactory {
         // or increment the version, we can include it somewhere else in a more scalable
         // form.
         payload[0] = 0;
-        payload[1] = localPongInfo.getNumFreeLimeWireLeafSlots();
-        payload[2] = localPongInfo.getNumFreeLimeWireNonLeafSlots();
+//        payload[1] = localPongInfo.getNumFreeLimeWireLeafSlots();
+//        payload[2] = localPongInfo.getNumFreeLimeWireNonLeafSlots();
         ggep.put(GGEP.GGEP_HEADER_UP_SUPPORT, payload);
     }
 

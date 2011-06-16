@@ -96,10 +96,6 @@ public class LimeWireCore {
     public QueryHandlerFactory getQueryHandlerFactory() {
         return injector.getInstance(QueryHandlerFactory.class);
     }
-
-    public FileManager getFileManager() {
-        return injector.getInstance(FileManager.class);
-    }
     
     public HeadPongFactory getHeadPongFactory() {
         return injector.getInstance(HeadPongFactory.class);
@@ -136,10 +132,6 @@ public class LimeWireCore {
     public DownloadManager getDownloadManager() {
         return injector.getInstance(DownloadManager.class);
     }
-    
-    public PushManager getPushManager() {
-        return injector.getInstance(PushManager.class);
-    }
 
     public SearchResultHandler getSearchResultHandler() {
         return injector.getInstance(SearchResultHandler.class);
@@ -168,17 +160,9 @@ public class LimeWireCore {
     public Statistics getStatistics() {
         return injector.getInstance(Statistics.class);
     }
-
-    public CreationTimeCache getCreationTimeCache() {
-        return injector.getInstance(CreationTimeCache.class);
-    }
     
     public UrnCache getUrnCache() {
         return injector.getInstance(UrnCache.class);
-    }
-
-    public FileManagerController getFileManagerController() {
-        return injector.getInstance(FileManagerController.class);
     }
 
     public ResponseFactory getResponseFactory() {

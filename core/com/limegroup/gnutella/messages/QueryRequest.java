@@ -173,11 +173,6 @@ public interface QueryRequest extends Message {
     public boolean isFeatureQuery();
 
     /**
-     * @return whether this is a browse host query
-     */
-    public boolean isBrowseHostQuery();
-
-    /**
      * Returns 0 if this is not a "feature" query, else it returns the selector
      * of the feature query, e.g. What Is New returns 1.
      */

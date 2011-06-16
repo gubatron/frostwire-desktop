@@ -7,14 +7,12 @@ import org.limewire.util.OSUtils;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.limegroup.gnutella.FileManager;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.UrnSet;
 import com.limegroup.gnutella.messages.Message.Network;
-import com.limegroup.gnutella.settings.SearchSettings;
 import com.limegroup.gnutella.xml.LimeXMLDocumentFactory;
 
 @Singleton

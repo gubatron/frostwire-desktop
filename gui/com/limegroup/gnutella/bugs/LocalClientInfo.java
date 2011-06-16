@@ -114,7 +114,7 @@ public final class LocalClientInfo extends LocalAbstractInfo {
             _httpDownloaders = "" +sessionInfo.getNumIndividualDownloaders();
             _waitingDownloaders = "" + sessionInfo.getNumWaitingDownloads();
             _acceptedIncoming = "" +sessionInfo.acceptedIncomingConnection();
-            _sharedFiles = "" +GuiCoreMediator.getFileManager().getNumFiles();
+            //_sharedFiles = "" +GuiCoreMediator.getFileManager().getNumFiles();
             _guessCapable = "" + sessionInfo.isGUESSCapable();
             _solicitedCapable= ""+sessionInfo.canReceiveSolicited();
             _portStable = "" +GuiCoreMediator.getUdpService().portStable();

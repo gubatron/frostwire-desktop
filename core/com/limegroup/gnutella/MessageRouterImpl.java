@@ -284,7 +284,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
     protected final HeadPongFactory headPongFactory;
     protected final PingReplyFactory pingReplyFactory;
     protected final QueryUnicaster queryUnicaster;
-    protected final FileManager fileManager;
     protected final ContentManager contentManager;
     protected final DownloadManager downloadManager;
     protected final UDPService udpService;
@@ -321,7 +320,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
             HeadPongFactory headPongFactory,
             PingReplyFactory pingReplyFactory,
             QueryUnicaster queryUnicaster,
-            FileManager fileManager,
             ContentManager contentManager,
             DownloadManager downloadManager,
             UDPService udpService,
@@ -346,7 +344,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
         this.headPongFactory = headPongFactory;
         this.pingReplyFactory = pingReplyFactory;
         this.queryUnicaster = queryUnicaster;
-        this.fileManager = fileManager;
         this.contentManager = contentManager;
         this.downloadManager = downloadManager;
         this.udpService = udpService;

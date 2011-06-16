@@ -9,7 +9,6 @@ import com.limegroup.gnutella.ActivityCallback;
 import com.limegroup.gnutella.ApplicationServices;
 import com.limegroup.gnutella.DownloadManager;
 import com.limegroup.gnutella.DownloadServices;
-import com.limegroup.gnutella.FileManager;
 import com.limegroup.gnutella.LifecycleManager;
 import com.limegroup.gnutella.LimeWireCore;
 import com.limegroup.gnutella.LocalFileDetailsFactory;
@@ -41,7 +40,6 @@ public class GuiCoreMediator {
     
     public static UDPService getUdpService() {  return core.getUdpService(); }    
     public static NetworkManager getNetworkManager() {  return core.getNetworkManager(); }    
-    public static FileManager getFileManager() {  return core.getFileManager(); }
     public static QueryRequestFactory getQueryRequestFactory() {  return core.getQueryRequestFactory(); }    
     public static LocalFileDetailsFactory getLocalFileDetailsFactory() {  return core.getLocalFileDetailsFactory(); }
     public static DownloadManager getDownloadManager() {  return core.getDownloadManager(); }

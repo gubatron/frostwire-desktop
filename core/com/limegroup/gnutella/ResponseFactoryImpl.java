@@ -63,17 +63,14 @@ public class ResponseFactoryImpl implements ResponseFactory {
     private static final String KHZ = "kHz";
 
     private final AltLocManager altLocManager;
-    private final Provider<CreationTimeCache> creationTimeCache;
     private final NetworkInstanceUtils networkInstanceUtils;
 
     private final LimeXMLDocumentFactory limeXMLDocumentFactory;
 
     @Inject
     public ResponseFactoryImpl(AltLocManager altLocManager,
-            Provider<CreationTimeCache> creationTimeCache, 
             LimeXMLDocumentFactory limeXMLDocumentFactory, NetworkInstanceUtils networkInstanceUtils) {
         this.altLocManager = altLocManager;
-        this.creationTimeCache = creationTimeCache;
         this.limeXMLDocumentFactory = limeXMLDocumentFactory;
         this.networkInstanceUtils = networkInstanceUtils;
     }
@@ -105,13 +102,14 @@ public class ResponseFactoryImpl implements ResponseFactory {
 //            verified = ifd.loadResponseRanges(ranges);
 //        }
         
-        GGEPContainer container = new GGEPContainer(getAsIpPorts(altLocManager
-                .getDirect(fd.getSHA1Urn())), creationTimeCache.get()
-                .getCreationTimeAsLong(fd.getSHA1Urn()), fd.getFileSize(), ranges, 
-                verified, fd.getTTROOTUrn());
-
-        return createResponse(fd.getIndex(), fd.getFileSize(),
-                fd.getFileName(), -1, fd.getUrns(), null, container, null);
+//        GGEPContainer container = new GGEPContainer(getAsIpPorts(altLocManager
+//                .getDirect(fd.getSHA1Urn())), creationTimeCache.get()
+//                .getCreationTimeAsLong(fd.getSHA1Urn()), fd.getFileSize(), ranges, 
+//                verified, fd.getTTROOTUrn());
+//
+//        return createResponse(fd.getIndex(), fd.getFileSize(),
+//                fd.getFileName(), -1, fd.getUrns(), null, container, null);
+        return null;
     }
 
     /* (non-Javadoc)

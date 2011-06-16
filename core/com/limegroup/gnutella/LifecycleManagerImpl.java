@@ -56,7 +56,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
     private final Provider<MessageRouter> messageRouter;
     private final Provider<DownloadManager> downloadManager;
     private final Provider<NodeAssigner> nodeAssigner;
-    private final Provider<FileManager> fileManager;
     private final Provider<RatingTable> ratingTable;
     private final Provider<NetworkManager> networkManager;
     private final Provider<Statistics> statistics;
@@ -99,7 +98,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
             Provider<MessageRouter> messageRouter,
             Provider<DownloadManager> downloadManager,
             Provider<NodeAssigner> nodeAssigner,
-            Provider<FileManager> fileManager,
             Provider<RatingTable> ratingTable,
             @Named("backgroundExecutor") Provider<ScheduledExecutorService> backgroundExecutor,
             Provider<NetworkManager> networkManager,
@@ -118,7 +116,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
         this.messageRouter = messageRouter;
         this.downloadManager = downloadManager;
         this.nodeAssigner = nodeAssigner;
-        this.fileManager = fileManager;
         this.ratingTable = ratingTable;
         this.networkManager = networkManager;
         this.statistics = statistics;
@@ -325,12 +322,7 @@ public class LifecycleManagerImpl implements LifecycleManager {
 //                LOG.trace("STOP connect");
 //            }
 //		}
-        // Asynchronously load files now that the GUI is up, notifying
-        // callback.
-        LOG.trace("START FileManager");
-        activityCallback.get().componentLoading(I18nMarker.marktr("Loading Shared Files..."));
-        fileManager.get().start();
-        LOG.trace("STOP FileManager");
+        
 
 //        LOG.trace("START TorrentManager");
 //        activityCallback.get().componentLoading(I18nMarker.marktr("Loading BitTorrent Management..."));
@@ -465,12 +457,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
         
         downloadManager.get().writeSnapshot();
         
-        //torrentManager.writeSnapshot();
-        
-        fileManager.get().stop(); // Saves UrnCache and CreationTimeCache
-
-        //tigerTreeCache.get().persistCache(fileManager.get(), downloadManager.get());
-
         licenseFactory.get().persistCache();
         
         contentManager.get().stop();

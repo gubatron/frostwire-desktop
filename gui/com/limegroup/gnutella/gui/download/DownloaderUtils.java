@@ -160,7 +160,7 @@ public class DownloaderUtils {
 		if (urn == null) {
 			return null;
 		}
-		FileDesc desc = GuiCoreMediator.getFileManager().getFileDescForUrn(urn);
+		//FileDesc desc = GuiCoreMediator.getFileManager().getFileDescForUrn(urn);
 		return null;// (desc instanceof IncompleteFileDesc) ? null : desc;
 	}
 
