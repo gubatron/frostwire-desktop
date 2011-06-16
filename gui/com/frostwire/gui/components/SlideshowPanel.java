@@ -58,19 +58,43 @@ public class SlideshowPanel extends JPanel {
         setup(slides, false);
     }
     
-    public SlideshowPanel(String url) {
+    public SlideshowPanel(final String url) {
+        new Thread(new Runnable() {
+            public void run() {
+                load(url);
+            }
+        }).start();
+    }
+    
+    private void load(final String url) {
         try {
             HttpFetcher fetcher = new HttpFetcher(new URI(url));
             
             byte[] jsonBytes = fetcher.fetch();
             
             if (jsonBytes != null) {
-                SlideList slideList = new JsonEngine().toObject(new String(jsonBytes), SlideList.class);
-                setup(slideList.slides, slideList.randomStart);
-            }    
+                final SlideList slideList = new JsonEngine().toObject(new String(jsonBytes), SlideList.class);
+                GUIMediator.safeInvokeLater(new Runnable() {
+                    public void run() {
+                        try {
+                            setup(slideList.slides, slideList.randomStart);
+                            repaint();
+                        } catch (Exception e) {
+                            System.out.println("Failed load of Slide Show:" + url);
+                            _slides = null;
+                            // nothing happens
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+            }
+            //System.out.println("Loaded Slide Show for:" + url);
         } catch (Exception e) {
+            System.out.println("Failed load of Slide Show:" + url);
+            _slides = null;
             // nothing happens
-        	e.printStackTrace();
+            e.printStackTrace();
         }
     }
     
