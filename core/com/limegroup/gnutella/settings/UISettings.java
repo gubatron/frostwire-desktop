@@ -99,7 +99,7 @@ public final class UISettings extends LimeProps {
      * was resized by the user.
      */
     public static final IntSetting UI_OPTIONS_DIALOG_WIDTH = 
-        FACTORY.createIntSetting("UI_OPTIONS_DIALOG_WIDTH", 800);
+        FACTORY.createIntSetting("UI_OPTIONS_DIALOG_WIDTH", 844);
     
     /**
      * Setting to persist the height of the options dialog if the dialog
@@ -130,8 +130,6 @@ public final class UISettings extends LimeProps {
     public static interface ImageInfo {     
         /** The URL to pull the image from. */
         public String getImageUrl();
-        /** Whether or not PRO users should show this pic. */
-        public boolean canProShowPic();
         /** Whether or not this pic can have an outgoing link. */
         public boolean canLink();
         /** The outgoing link if triggered from the backup image. */
@@ -236,28 +234,13 @@ public final class UISettings extends LimeProps {
         		AFTER_SEARCH_TORRENT_LINK.setValue(torrentUrl);
         	}
         }
-       
-        private String key(String key) {
-            return intro ? "INTRO_" + key : "AFTER_SEARCH_" + key;
-        }
-        
-        private String remoteKey(String key) {
-            // DO NOT CHANGE THIS -- A BUG THAT MUST STAY.
-            return intro ? "UI.intro" + key : " + UI.afterSearch" + key;
-        }
 
         public boolean canLink() {
             return intro ? INTRO_HAS_LINK.getValue() : AFTER_SEARCH_HAS_LINK.getValue();
         }
 
-        public boolean canProShowPic() {
-            //return (intro() INTRO_PRO_SHOW.getValue() : AFTER_SEARCH_PRO_SHOW.getValue();
-        	return false;
-        }
-
         public String getImageUrl() {
             return intro ? INTRO_URL.getValue() : AFTER_SEARCH_URL.getValue();
-	    //return imageUrl;
         }
 
         public String getLocalLinkUrl() {
