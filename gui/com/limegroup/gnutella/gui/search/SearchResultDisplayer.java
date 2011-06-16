@@ -136,7 +136,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
             promoSlides = new SlideshowPanel(UpdateManagerSettings.OVERLAY_SLIDESHOW_JSON_URL.getValue());
         }
         
-        if (promoSlides != null && promoSlides.hasSlides()) {
+        if (promoSlides != null) {
 	        promoSlides.setBackground(Color.WHITE);
 	        Dimension promoDimensions = new Dimension(720, 380);
 	        promoSlides.setPreferredSize(promoDimensions);
