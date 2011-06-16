@@ -10,7 +10,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -184,9 +183,9 @@ public class TorrentSaveFolderComponent extends JPanel {
 	
 	private void setExplanationText() {
         if (CHECK_BOX.isSelected()) {
-            explanationLabel.setText(I18n.tr("Finished torrents will be seeded with other peers on the BitTorrent Network"));
+            explanationLabel.setText(I18n.tr("Finished torrents will be seeded with other peers in the BitTorrent network"));
         } else {
-            explanationLabel.setText(I18n.tr("<html>Finished torrents will not be seeded. <b>You will become a Leecher</b>.<p>You still have to seed pieces of the torrent data files during their download."));
+            explanationLabel.setText(I18n.tr("<html>Finished torrents will not be seeded. <b>You will become a Leecher</b>.<p>You still might share chunks of the torrent data files with the swarm during downloads."));
         }
     }
 	
