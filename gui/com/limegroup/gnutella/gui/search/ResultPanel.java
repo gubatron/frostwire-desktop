@@ -442,7 +442,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
         	 * Show torrent details.
         	 */
             private void onLeftClick() {
-            	SearchMediator.showTorrentDetails(ResultPanel.this, 0);
+            	SearchMediator.showTorrentDetails(ResultPanel.this, -1);
             }
 
         }; 

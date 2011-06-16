@@ -103,14 +103,23 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
 		}
 	}
 	
+	/*
+	 * @param delay - How long to wait before opening the torrent detail page.
+	 * NOTE: Pass delay == -1 if you want to ignore the BittorrentSettings.TORRENT_DETAIL_PAGE_SHOWN_AFTER_DOWNLOAD
+	 * and force the show of the torrent detail page.
+	 */
 	public static void showTorrentDetails(long delay, 
 			String redirectUrl, 
 			String query, 
 			String torrentDetailsURL, 
 			String torrentFileName) {
 		
-		if (!BittorrentSettings.TORRENT_DETAIL_PAGE_SHOWN_AFTER_DOWNLOAD.getValue())
+		if (delay!=-1 && !BittorrentSettings.TORRENT_DETAIL_PAGE_SHOWN_AFTER_DOWNLOAD.getValue())
 			return;
+		
+		if (delay == -1) {
+			delay = 0;
+		}
 		
 		try {
 			if (redirectUrl != null) {
