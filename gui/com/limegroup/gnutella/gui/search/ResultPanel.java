@@ -47,14 +47,11 @@ import com.limegroup.gnutella.FileDetails;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.RemoteFileDesc;
-import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.FileDetailsProvider;
 import com.limegroup.gnutella.gui.GUIConstants;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.LicenseWindow;
 import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.ProgTabUIFactory;
 import com.limegroup.gnutella.gui.actions.ActionUtils;
@@ -140,6 +137,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
     
     private ActionListener COPY_HASH_ACTION_LISTENER;
 
+    ActionListener CONFIGURE_SHARING_LISTENER;
     /**
      * The BUY this item listener
      */
@@ -470,6 +468,12 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
                     str += "\n";
                 }
                 GUIMediator.setClipboardContent(str);
+            }
+        };
+        
+        CONFIGURE_SHARING_LISTENER = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                GUIMediator.instance().setOptionsVisible(true, I18n.tr("Options"));
             }
         };
             
