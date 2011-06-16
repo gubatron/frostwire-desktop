@@ -2,7 +2,6 @@ package com.frostwire.gui.download.bittorrent;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import javax.swing.Action;
@@ -20,7 +19,6 @@ import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.bittorrent.AzureusStarter;
 import com.frostwire.bittorrent.BTDownloader;
 import com.frostwire.bittorrent.BTDownloaderFactory;
-import com.frostwire.bittorrent.TorrentUtil;
 import com.limegroup.gnutella.FileDetails;
 import com.limegroup.gnutella.gui.FileDetailsProvider;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -38,7 +36,6 @@ import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 import com.limegroup.gnutella.settings.SharingSettings;
-import com.limegroup.gnutella.settings.iTunesImportSettings;
 import com.limegroup.gnutella.settings.iTunesSettings;
 
 /**
@@ -79,7 +76,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
      */
     private BTDownloadButtons _downloadButtons;
     
-    private HashSet<String> _hashDownloads;
 	private final DownloadManagerListener ITUNES_SONG_SCANNER_LISTENER;
 
     /**
@@ -156,8 +152,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         super("DOWNLOAD_TABLE");
         GUIMediator.addRefreshListener(this);
         ThemeMediator.addThemeObserver(this);
-        
-        _hashDownloads = new HashSet<String>();
         
         ITUNES_SONG_SCANNER_LISTENER = new DownloadManagerAdapter() {
         	@Override
@@ -307,8 +301,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         super.remove(dloader);
 
         dloader.remove();
-        
-        _hashDownloads.add(TorrentUtil.hashToString(dloader.getHash()));
     }
 
     /**
@@ -602,6 +594,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     }
 
     public boolean isDownloading(String hash) {
-        return _hashDownloads.contains(hash);
+        return DATA_MODEL.isDownloading(hash);
     }
 }

@@ -126,10 +126,10 @@ public class TorrentUtil {
     
     /** Deletes incomplete files and the save location from the itunes import settings */
     private static void finalCleanup(DownloadManager downloadManager) {
-        Set<File> filesToDelete = getIncompleteFiles(downloadManager);
+        Set<File> filesToDelete = getSkippedFiles(downloadManager);
         for (File f: filesToDelete) {
             try {
-                if (!f.delete()) {
+                if (f.exists() && !f.delete()) {
                     System.out.println("Can't delete file: " + f);
                 }
             } catch (Exception e) {
@@ -139,11 +139,11 @@ public class TorrentUtil {
         iTunesImportSettings.IMPORT_FILES.remove(downloadManager.getSaveLocation());
     }
     
-    public static Set<File> getIncompleteFiles(DownloadManager dm) {
+    private static Set<File> getSkippedFiles(DownloadManager dm) {
         Set<File> set = new HashSet<File>();
         DiskManagerFileInfoSet infoSet = dm.getDiskManagerFileInfoSet();
         for (DiskManagerFileInfo fileInfo : infoSet.getFiles()) {
-            if (getDownloadPercent(fileInfo) < 100) {
+            if (fileInfo.isSkipped()) {
                 set.add(fileInfo.getFile(false));
             }
         }
