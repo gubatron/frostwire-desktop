@@ -73,27 +73,10 @@ public interface SearchResult {
      */
     int getQuality();
     
-    /**
-     * @return the secure status of the search result as one of
-     * <ul>
-     *  <li>{@link SecureMessage#FAILED</li>
-     *  <li>{@link SecureMessage#SECURE</li>
-     *  <li>{@link SecureMessage#INSECURE</li>
-     * </ul>
-     */
-    int getSecureStatus();
-    
     /** 
      * @return <code>0</code> for not spam or a higher value for spam
      */
     float getSpamRating();
-
-    /**
-     * Returns host or <code>null</code> for no host.
-     * 
-     * @return host or <code>null</code> for no host.
-     */
-    String getHost();
     
     boolean isOverrideRowColor();
 

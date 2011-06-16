@@ -499,13 +499,6 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
     }
 
     /**
-     * Gets the main result's host.
-     */
-    String getHostname() {
-        return RESULT.getHost();
-    }
-
-    /**
      * Gets all RemoteFileDescs for this line.
      */
     RemoteFileDesc[] getAllRemoteFileDescs() {

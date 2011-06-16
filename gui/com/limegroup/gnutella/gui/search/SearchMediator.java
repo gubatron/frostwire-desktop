@@ -9,21 +9,13 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.limewire.io.IpPort;
 import org.limewire.setting.evt.SettingEvent;
 import org.limewire.setting.evt.SettingListener;
 import org.limewire.util.I18NConvert;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.bittorrent.AzureusStarter;
-import com.frostwire.bittorrent.websearch.SearchEnginesSettings;
-import com.frostwire.bittorrent.websearch.WebTorrentSearch;
-import com.frostwire.bittorrent.websearch.clearbits.ClearBitsItem;
-import com.frostwire.bittorrent.websearch.clearbits.ClearBitsResponse;
-import com.frostwire.bittorrent.websearch.isohunt.ISOHuntItem;
-import com.frostwire.bittorrent.websearch.isohunt.ISOHuntResponse;
-import com.frostwire.bittorrent.websearch.mininova.MininovaVuzeItem;
-import com.frostwire.bittorrent.websearch.mininova.MininovaVuzeResponse;
+import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gnutella.gui.filters.SearchFilter;
 import com.frostwire.gnutella.gui.filters.SearchFilterFactory;
 import com.frostwire.gnutella.gui.filters.SearchFilterFactoryImpl;
@@ -320,147 +312,54 @@ public final class SearchMediator {
      */
     private static void doSearch(final byte[] guid, final SearchInformation info) {
         final String query = info.getQuery();
-
-        //ClearBits (formerly known as LegalTorrents.com) Search Thread.
-        if (SearchEnginesSettings.CLEARBITS_SEARCH_ENABLED.getValue()) {
-	        new Thread(new Runnable() {
-	            public void run() {
-	
-	                final ResultPanel rp = getResultPanelForGUID(new GUID(guid));
-	                if (rp != null) {
-	
-	                    ClearBitsResponse response = WebTorrentSearch.searchClearBits(query);
-	
-	                    if (response != null) {
-	                        final List<SearchResult> results = normalizeClearBitsResponse(response, info);
-	
-	                        SwingUtilities.invokeLater(new Runnable() {
-	
-	                            @Override
-	                            public void run() {
-	                                SearchFilter filter = getSearchFilterFactory().createFilter();
-	                                for (SearchResult sr : results) {
-	                                    if (filter.allow(sr)) {
-	                                        getSearchResultDisplayer().addQueryResult(guid, sr, rp);
-	                                    }
-	                                }
-	                            }
-	                        });
-	                    }
-	                }
-	            }
-	        }).start();
-        }
-
-        //ISOHunt Search Thread.
-        if (SearchEnginesSettings.ISOHUNT_SEARCH_ENABLED.getValue()) {
-	        new Thread(new Runnable() {
-	            public void run() {
-	
-	                final ResultPanel rp = getResultPanelForGUID(new GUID(guid));
-	                if (rp != null) {
-	
-	                    ISOHuntResponse response = WebTorrentSearch.searchISOHunt(query);
-	
-	                    if (response != null) {
-	                        final List<SearchResult> results = normalizeISOHuntResponse(response, info);
-	
-	                        SwingUtilities.invokeLater(new Runnable() {
-	
-	                            @Override
-	                            public void run() {
-	                                SearchFilter filter = getSearchFilterFactory().createFilter();
-	                                for (SearchResult sr : results) {
-	                                    if (filter.allow(sr)) {
-	                                        getSearchResultDisplayer().addQueryResult(guid, sr, rp);
-	                                    }
-	                                }
-	                            }
-	                        });
-	                    }
-	                }
-	            }
-	        }).start();
-        }
-
-        //MininovaVuze Search Thread.
-        if (SearchEnginesSettings.MININOVA_SEARCH_ENABLED.getValue()) {
-	        new Thread(new Runnable() {
-	            public void run() {
-	
-	                final ResultPanel rp = getResultPanelForGUID(new GUID(guid));
-	                if (rp != null) {
-	
-	                    MininovaVuzeResponse response = WebTorrentSearch.searchMininovaVuze(query);
-	
-	                    if (response != null) {
-	                        final List<SearchResult> results = normalizeMininovaVuzeResponse(response, info);
-	
-	                        SwingUtilities.invokeLater(new Runnable() {
-	
-	                            @Override
-	                            public void run() {
-	                                SearchFilter filter = getSearchFilterFactory().createFilter();
-	                                for (SearchResult sr : results) {
-	                                    if (filter.allow(sr)) {
-	                                        getSearchResultDisplayer().addQueryResult(guid, sr, rp);
-	                                    }
-	                                }
-	                            }
-	                        });
-	                    }
-	                }
-	            }
-	        }).start();
+        
+        List<SearchEngine> searchEngines = SearchEngine.getSearchEngines();
+        
+        for (final SearchEngine searchEngine : searchEngines) {
+            if (searchEngine.isEnabled()) {
+                new Thread(new Runnable() {
+                    public void run() {
+        
+                        final ResultPanel rp = getResultPanelForGUID(new GUID(guid));
+                        if (rp != null) {
+                            List<WebSearchResult> webResults = searchEngine.getPerformer().search(query);
+                            
+                            if (webResults.size() > 0) {
+                                final List<SearchResult> results = normalizeWebResults(webResults, searchEngine, info);
+                                
+                                SwingUtilities.invokeLater(new Runnable() {
+                                    
+                                    @Override
+                                    public void run() {
+                                        SearchFilter filter = getSearchFilterFactory().createFilter();
+                                        for (SearchResult sr : results) {
+                                            if (filter.allow(sr)) {
+                                                getSearchResultDisplayer().addQueryResult(guid, sr, rp);
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    }
+                }).start();
+            }
         }
     }
     
-    private static List<SearchResult> normalizeClearBitsResponse(ClearBitsResponse response, SearchInformation info) {
-    	
-    	List<SearchResult> result = new ArrayList<SearchResult>();
-    	
-    	if (response.results != null)
-    		for (ClearBitsItem bucket : response.results) {
-    			
-    			SearchResult sr = new ClearBitsSearchResult(bucket, info);
-    			
-    			result.add(sr);
-    		}
-    	
-    	return result;
-    }
-
-    
-    private static List<SearchResult> normalizeISOHuntResponse(ISOHuntResponse response, SearchInformation info) {
-    	
-    	List<SearchResult> result = new ArrayList<SearchResult>();
-    	
-    	if (response.items != null && response.items.list != null)
-    		for (ISOHuntItem item : response.items.list) {
-    			
-    			SearchResult sr = new ISOHuntSearchResult(item, info);
-    			
-    			result.add(sr);
-    		}
-    	
-    	return result;
-    }
-
-    private static List<SearchResult> normalizeMininovaVuzeResponse(MininovaVuzeResponse response, SearchInformation info) {
-    	
-    	List<SearchResult> result = new ArrayList<SearchResult>();
-    	
-    	if (response.results != null)
-    		for (MininovaVuzeItem item : response.results) {
-    			
-    			SearchResult sr = new MininovaVuzeSearchResult(item, info);
-    			
-    			result.add(sr);
-    		}
-    	
-    	return result;
-    }
-    
+    private static List<SearchResult> normalizeWebResults(List<WebSearchResult> webResults, SearchEngine engine, SearchInformation info) {
+        
+        List<SearchResult> result = new ArrayList<SearchResult>();
+        
+        for (WebSearchResult webResult : webResults) {
+                
+                SearchResult sr = new SearchEngineSearchResult(webResult, engine, info);
+                
+                result.add(sr);
+            }
+        
+        return result;
+    }    
     
     /**
      * Adds a single result tab for the specified GUID, type,

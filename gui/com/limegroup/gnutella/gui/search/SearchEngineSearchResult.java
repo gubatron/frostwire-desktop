@@ -10,33 +10,28 @@ import javax.swing.JPopupMenu;
 
 import com.frostwire.GuiFrostWireUtils;
 import com.frostwire.bittorrent.settings.BittorrentSettings;
-import com.frostwire.bittorrent.websearch.clearbits.ClearBitsItem;
+import com.frostwire.bittorrent.websearch.WebSearchResult;
+import com.frostwire.bittorrent.websearch.isohunt.ISOHuntItem;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
 
-public class ClearBitsSearchResult extends AbstractSearchResult {
-    public static String redirectUrl = null;
+public class SearchEngineSearchResult extends AbstractSearchResult {
 
-    private ClearBitsItem _item;
+    private WebSearchResult _item;
+    private SearchEngine _searchEngine;
     private SearchInformation _info;
 
-    public ClearBitsSearchResult(ClearBitsItem item, SearchInformation info) {
+    public SearchEngineSearchResult(WebSearchResult item, SearchEngine searchEngine, SearchInformation searchInfo) {
         _item = item;
-        _info = info;
+        _searchEngine = searchEngine;
+        _info = searchInfo;
     }
 
     @Override
     public long getCreationTime() {
-        //2010-07-15T16:02:42Z
-        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-        long result = System.currentTimeMillis();
-        try {
-            result = date.parse(_item.created_at).getTime();
-        } catch (ParseException e) {
-        }
-        return result;
+        return _item.getCreationTime();
     }
 
     @Override
@@ -46,41 +41,30 @@ public class ClearBitsSearchResult extends AbstractSearchResult {
 
     @Override
     public String getFileName() {
-        String titleNoTags = _item.title.replace("<b>", "").replace("</b>", "");
-        return titleNoTags + ".torrent";
+        return _item.getFileName();
     }
 
     @Override
     public String getFilenameNoExtension() {
-        return "<html>" + _item.title + "</html>";
-    }
-
-    @Override
-    public String getHost() {
-        return "http://www.clearbits.net/";
+        return _item.getFilenameNoExtension();
     }
 
     @Override
     public int getQuality() {
-        return QualityRenderer.EXCELLENT_QUALITY;
+        return QualityRenderer.EXCELLENT_QUALITY;//(int)(Double.parseDouble(_item.Seeds) / Double.parseDouble(_item.leechers));
     }
 
     public String getHash() {
-        return _item.hashstr;
-    }
-    
-    public String getTorrentURI() {
-        return _item.torrent_url;
+        return _item.getHash();
     }
 
-    @Override
-    public int getSecureStatus() {
-        return 0;
+    public String getTorrentURI() {
+        return _item.getTorrentURI();
     }
 
     @Override
     public long getSize() {
-        return Long.valueOf(_item.mb_size * 1024 * 1024);
+        return _item.getSize();
     }
 
     @Override
@@ -95,7 +79,7 @@ public class ClearBitsSearchResult extends AbstractSearchResult {
 
     @Override
     public String getVendor() {
-        return "ClearBits";
+        return _item.getVendor();
     }
 
     @Override
@@ -106,6 +90,9 @@ public class ClearBitsSearchResult extends AbstractSearchResult {
     @Override
     public void initialize(TableLine line) {
         line.setAddedOn(getCreationTime());
+        
+
+        //hack this to show the icon for mininova or for isohunt.
     }
 
     @Override
@@ -115,13 +102,12 @@ public class ClearBitsSearchResult extends AbstractSearchResult {
 
     @Override
     public void takeAction(TableLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
-        GUIMediator.instance().openTorrentURI(_item.torrent_url);
-
+        GUIMediator.instance().openTorrentURI(getTorrentURI());
         showTorrentDetails(BittorrentSettings.SHOW_TORRENT_DETAILS_DELAY);
     }
 
     public void showTorrentDetails(long delay) {
-        GuiFrostWireUtils.showTorrentDetails(delay, redirectUrl, _info.getQuery(), _item.location, getFileName());
+        GuiFrostWireUtils.showTorrentDetails(delay, _searchEngine.redirectUrl, _info.getQuery(), _item.getTorrentDetailsURL(), getFileName());
     }
 
     @Override
@@ -144,10 +130,10 @@ public class ClearBitsSearchResult extends AbstractSearchResult {
     }
 
     public int getSeeds() {
-        return _item.seeds;
+        return _item.getSeeds();
     }
-
+    
     public SearchEngine getSearchEngine() {
-        return SearchEngine.CLEARBITS;
+        return _searchEngine;
     }
 }

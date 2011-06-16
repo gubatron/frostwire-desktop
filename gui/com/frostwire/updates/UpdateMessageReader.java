@@ -18,8 +18,7 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.XMLReaderFactory;
 
 import com.frostwire.gnutella.gui.actions.BuyAction;
-import com.limegroup.gnutella.gui.search.ISOHuntSearchResult;
-import com.limegroup.gnutella.gui.search.MininovaVuzeSearchResult;
+import com.limegroup.gnutella.gui.search.SearchEngine;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.ChatSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
@@ -423,8 +422,14 @@ public final class UpdateMessageReader implements ContentHandler {
 			if (atts.getValue("torrentDetailsUrl") != null
 					&& atts.getValue("torrentDetailsUrl").length() > 0) {
 				String torrentDetailsUrl = atts.getValue("torrentDetailsUrl");
-				ISOHuntSearchResult.redirectUrl = MininovaVuzeSearchResult.redirectUrl = torrentDetailsUrl;
-				// not doing it for ClearBits on purpose.
+				
+				List<SearchEngine> searchEngines = SearchEngine.getSearchEngines();
+				for (SearchEngine searchEngine : searchEngines) {
+				    // not doing it for ClearBits on purpose.
+				    if (!searchEngine.equals(SearchEngine.CLEARBITS)) {
+				        searchEngine.redirectUrl = torrentDetailsUrl;
+				    }
+				}
 			}
 		} else if (localName.equalsIgnoreCase("message")) {
 			String type = atts.getValue("type");

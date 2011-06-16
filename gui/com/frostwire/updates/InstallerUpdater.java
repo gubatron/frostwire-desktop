@@ -27,7 +27,6 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.library.SharingUtils;
 import com.limegroup.gnutella.settings.UpdateSettings;
-import com.limegroup.gnutella.util.FrostWireUtils;
 
 public class InstallerUpdater implements Runnable, DownloadManagerListener {
 	
