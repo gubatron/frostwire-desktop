@@ -122,7 +122,7 @@ public class SearchEngineSearchResult extends AbstractSearchResult {
         PopupUtils.addMenuItem(SearchMediator.DOWNLOAD_PARTIAL_FILES_STRING, resultPanel.DOWNLOAD_PARTIAL_FILES_LISTENER, popupMenu, lines.length == 1, 2);
         PopupUtils.addMenuItem(SearchMediator.TORRENT_DETAILS_STRING, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                showTorrentDetails(0);
+                showTorrentDetails(-1);
             }
         }, popupMenu, lines.length == 1, 3);
 

@@ -24,7 +24,7 @@ public class VertorResponseWebSearchResult implements WebSearchResult {
 
     public long getCreationTime() {
       //8 Jun 11
-        SimpleDateFormat date = new SimpleDateFormat("dd MMM yyyy");
+        SimpleDateFormat date = new SimpleDateFormat("dd MMM yy");
         long result = System.currentTimeMillis();
         try {
             result = date.parse(_item.cdate).getTime();
@@ -34,7 +34,7 @@ public class VertorResponseWebSearchResult implements WebSearchResult {
     }
 
     public String getVendor() {
-        return "Extratorrent";
+        return "Vertor";
     }
 
     public String getFilenameNoExtension() {
