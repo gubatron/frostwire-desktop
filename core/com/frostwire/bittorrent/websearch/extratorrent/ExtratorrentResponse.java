@@ -4,22 +4,22 @@ import java.util.List;
 
 /**
 {
- "title":"Extratorrent Search: shakira",
+ "title":"Extratorrent Search: ...",
  "link":"http://extratorrent.com",
- "description":"Extratorrent Search: shakira",
+ "description":"Extratorrent Search: ...",
  "total_results":224,
  "list":[
     {
-    "title":"Shakira Waka Waka(This Time for Africa)Official 2010 FIFA 1080p ShoukaT",
+    "title":"...",
     "category":"Music",
     "subcategory":"Music Videos",
-    "link":"http://extratorrent.com/torrent/2246241/",
-    "guid":"http://extratorrent.com/torrent/2246241/",
+    "link":"...",
+    "guid":"...",
     "pubDate":"Wed, 09 Jun 2010 18:08:27 +0100",
-    "torrentLink":"http://extratorrent.com/download/2246241/",
+    "torrentLink":"...",
     "files":1,
     "comments":11,
-    "hash":"3ec46f3dc2bb62caca4801bdeb6fbb2e7d3bcd5f",
+    "hash":"...",
     "peers":393,
     "seeds":388,
     "leechs":5,

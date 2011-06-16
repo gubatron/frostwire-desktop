@@ -12,6 +12,7 @@ import com.frostwire.bittorrent.websearch.clearbits.ClearBitsWebSearchPerformer;
 import com.frostwire.bittorrent.websearch.extratorrent.ExtratorrentWebSearchPerformer;
 import com.frostwire.bittorrent.websearch.isohunt.ISOHuntWebSearchPerformer;
 import com.frostwire.bittorrent.websearch.mininova.MininovaWebSearchPerformer;
+import com.frostwire.bittorrent.websearch.vertor.VertorWebSearchPerformer;
 
 public final class SearchEngine {
 
@@ -26,7 +27,8 @@ public final class SearchEngine {
     public static final int MININOVA_ID = 1;
     public static final int ISOHUNT_ID = 2;
     public static final int BTJUNKIE_ID = 3;
-    public static final int EXTRATORRENT_ID = 3;
+    public static final int EXTRATORRENT_ID = 4;
+    public static final int VERTOR_ID = 5;
 
     public static final SearchEngine CLEARBITS = new SearchEngine(CLEARBITS_ID, "ClearBits", new ClearBitsWebSearchPerformer(),
             SearchEnginesSettings.CLEARBITS_SEARCH_ENABLED);
@@ -38,6 +40,8 @@ public final class SearchEngine {
             SearchEnginesSettings.BTJUNKIE_SEARCH_ENABLED);
     public static final SearchEngine EXTRATORRENT = new SearchEngine(EXTRATORRENT_ID, "Extratorrent", new ExtratorrentWebSearchPerformer(),
             SearchEnginesSettings.EXTRATORRENT_SEARCH_ENABLED);
+    public static final SearchEngine VERTOR = new SearchEngine(VERTOR_ID, "Vertor", new VertorWebSearchPerformer(),
+            SearchEnginesSettings.VERTOR_SEARCH_ENABLED);
 
     private SearchEngine(int id, String name, WebSearchPerformer performer, BooleanSetting setting) {
         _id = id;
@@ -64,7 +68,7 @@ public final class SearchEngine {
     }
 
     public static List<SearchEngine> getSearchEngines() {
-        return Arrays.asList(CLEARBITS, MININOVA, ISOHUNT, BTJUNKIE, EXTRATORRENT);
+        return Arrays.asList(CLEARBITS, MININOVA, ISOHUNT, BTJUNKIE, EXTRATORRENT, VERTOR);
     }
 
     public WebSearchPerformer getPerformer() {

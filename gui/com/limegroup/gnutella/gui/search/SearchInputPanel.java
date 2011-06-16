@@ -289,12 +289,14 @@ class SearchInputPanel extends JPanel {
 		final JCheckBox checkBoxISOHunt = new JCheckBox("ISOHunt");
 		final JCheckBox checkBoxBTJunkie = new JCheckBox("BTJunkie");
 		final JCheckBox checkBoxExtratorrent = new JCheckBox("Extratorrent");
+		final JCheckBox checkBoxVertor = new JCheckBox("Vertor");
 		
 		checkboxClearbits.setSelected(SearchEnginesSettings.CLEARBITS_SEARCH_ENABLED.getValue());
         checkBoxMininova.setSelected(SearchEnginesSettings.MININOVA_SEARCH_ENABLED.getValue());
         checkBoxISOHunt.setSelected(SearchEnginesSettings.ISOHUNT_SEARCH_ENABLED.getValue());
         checkBoxBTJunkie.setSelected(SearchEnginesSettings.BTJUNKIE_SEARCH_ENABLED.getValue());
         checkBoxExtratorrent.setSelected(SearchEnginesSettings.EXTRATORRENT_SEARCH_ENABLED.getValue());
+        checkBoxVertor.setSelected(SearchEnginesSettings.VERTOR_SEARCH_ENABLED.getValue());
 		
 		ItemListener listener = new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
@@ -302,7 +304,8 @@ class SearchInputPanel extends JPanel {
                     !checkBoxMininova.isSelected() &&
                     !checkBoxISOHunt.isSelected() &&
                     !checkBoxBTJunkie.isSelected() &&
-                    !checkBoxExtratorrent.isSelected()) {
+                    !checkBoxExtratorrent.isSelected() &&
+                    !checkBoxVertor.isSelected()) {
                     ((JCheckBox)e.getItemSelectable()).setSelected(true);
                 }
                 
@@ -311,6 +314,7 @@ class SearchInputPanel extends JPanel {
                 SearchEnginesSettings.ISOHUNT_SEARCH_ENABLED.setValue(checkBoxISOHunt.isSelected());
                 SearchEnginesSettings.BTJUNKIE_SEARCH_ENABLED.setValue(checkBoxBTJunkie.isSelected());
                 SearchEnginesSettings.EXTRATORRENT_SEARCH_ENABLED.setValue(checkBoxExtratorrent.isSelected());
+                SearchEnginesSettings.VERTOR_SEARCH_ENABLED.setValue(checkBoxVertor.isSelected());
                 
                 updateSearchResults(new SearchEngineFilter());
             }
@@ -321,12 +325,14 @@ class SearchInputPanel extends JPanel {
 		checkBoxISOHunt.addItemListener(listener);
 		checkBoxBTJunkie.addItemListener(listener);
 		checkBoxExtratorrent.addItemListener(listener);
+		checkBoxVertor.addItemListener(listener);
 		
 		controls.add(checkboxClearbits);
 		controls.add(checkBoxMininova);
 		controls.add(checkBoxISOHunt);
 		controls.add(checkBoxBTJunkie);
 		controls.add(checkBoxExtratorrent);
+		controls.add(checkBoxVertor);
 		
 		controls.setBorder(new TitledBorder(I18n.tr("Choose Search Engines")));
 		
