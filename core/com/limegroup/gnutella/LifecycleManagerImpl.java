@@ -29,7 +29,6 @@ import com.google.inject.name.Named;
 import com.limegroup.gnutella.licenses.LicenseFactory;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.ConnectionSettings;
-import com.limegroup.gnutella.spam.RatingTable;
 
 @Singleton
 public class LifecycleManagerImpl implements LifecycleManager {
@@ -52,7 +51,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
     private final Provider<ActivityCallback> activityCallback;
     private final Provider<MessageRouter> messageRouter;
     private final Provider<DownloadManager> downloadManager;
-    private final Provider<RatingTable> ratingTable;
     private final Provider<NetworkManager> networkManager;
     private final Provider<Statistics> statistics;
     private final Provider<LimeCoreGlue> limeCoreGlue;
@@ -81,7 +79,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
             Provider<ActivityCallback> activityCallback,
             Provider<MessageRouter> messageRouter,
             Provider<DownloadManager> downloadManager,
-            Provider<RatingTable> ratingTable,
             @Named("backgroundExecutor") Provider<ScheduledExecutorService> backgroundExecutor,
             Provider<NetworkManager> networkManager,
             Provider<Statistics> statistics,
@@ -96,7 +93,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
         this.activityCallback = activityCallback;
         this.messageRouter = messageRouter;
         this.downloadManager = downloadManager;
-        this.ratingTable = ratingTable;
         this.networkManager = networkManager;
         this.statistics = statistics;
         this.licenseFactory = licenseFactory;
@@ -261,9 +257,7 @@ public class LifecycleManagerImpl implements LifecycleManager {
         // save frostwire.props & other settings
         SettingsGroupManager.instance().save();
 		
-		ratingTable.get().ageAndSave();
-        
-        cleanupPreviewFiles();
+		cleanupPreviewFiles();
         
         licenseFactory.get().persistCache();
         

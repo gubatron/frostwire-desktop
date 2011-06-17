@@ -19,8 +19,6 @@ import com.limegroup.gnutella.browser.ExternalControl;
 import com.limegroup.gnutella.licenses.LicenseVerifier;
 import com.limegroup.gnutella.messages.QueryRequestFactory;
 import com.limegroup.gnutella.metadata.MetaDataFactory;
-import com.limegroup.gnutella.spam.RatingTable;
-import com.limegroup.gnutella.spam.SpamManager;
 import com.limegroup.gnutella.xml.LimeXMLDocumentFactory;
 import com.limegroup.gnutella.xml.LimeXMLProperties;
 import com.limegroup.gnutella.xml.LimeXMLSchemaRepository;
@@ -40,8 +38,6 @@ public class GuiCoreMediator {
     public static SavedFileManager getSavedFileManager() { return core.getSavedFileManager(); }
     public static LimeXMLSchemaRepository getLimeXMLSchemaRepository() { return core.getLimeXMLSchemaRepository(); }
     public static LimeXMLProperties getLimeXMLProperties() { return core.getLimeXMLProperties(); }
-    public static RatingTable getRatingTable() { return core.getRatingTable(); }
-    public static SpamManager getSpamManager() { return core.getSpamManager(); }
     public static LifecycleManager getLifecycleManager() { return core.getLifecycleManager(); }
     public static ScheduledExecutorService getCoreBackgroundExecutor() { return core.getBackgroundExecutor(); }
     public static ApplicationServices getApplicationServices() { return core.getApplicationServices(); }

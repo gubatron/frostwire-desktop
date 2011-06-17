@@ -16,7 +16,6 @@ import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 
 public class SpamFilter implements TableLineFilter {
     
-    private static final Saver SAVER = new Saver();
     private static URI R;
 
 	/**
@@ -37,26 +36,17 @@ public class SpamFilter implements TableLineFilter {
 	 *            whether or not it is spam or not.
 	 */
 	public void markAsSpamUser(TableLine line, boolean isSpam) {
-		RemoteFileDesc[] descs = line.getAllRemoteFileDescs();
-		if (isSpam) {
-			GuiCoreMediator.getSpamManager().handleUserMarkedSpam(descs);
-			r(line);
-			
-		}
-		else {
-			GuiCoreMediator.getSpamManager().handleUserMarkedGood(descs);
-		}
+//		RemoteFileDesc[] descs = line.getAllRemoteFileDescs();
+//		if (isSpam) {
+//			GuiCoreMediator.getSpamManager().handleUserMarkedSpam(descs);
+//			r(line);
+//			
+//		}
+//		else {
+//			GuiCoreMediator.getSpamManager().handleUserMarkedGood(descs);
+//		}
 		line.update();
-        
-        // save the rating data after each user action
-        BackgroundExecutorService.schedule(SAVER);
 	}
-
-    private static class Saver implements Runnable {
-        public void run() {
-            GuiCoreMediator.getRatingTable().save();
-        }
-    }
 
     /**
      * Returns true if TableLine's spam rating is above 
