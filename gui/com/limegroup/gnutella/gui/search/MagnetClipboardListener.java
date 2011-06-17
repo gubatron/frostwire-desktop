@@ -227,6 +227,25 @@ public class MagnetClipboardListener extends WindowAdapter {
 	}
 	
 	/**
+	 * @return A magnet link or torrent url. "" if the clipboard has something else.
+	 */
+	public static String getMagnetOrTorrentURLFromClipboard() {
+		String clipboardText = extractStringContentFromClipboard(null);
+		
+		//if the text in the clipboard has several URLs it will only parse the first line.
+		if (clipboardText.contains("\n")) {
+			clipboardText = clipboardText.split("\n")[0].trim();
+		}
+		
+		if (clipboardText.startsWith("magnet:?xt=urn:btih:") ||
+			clipboardText.matches("^http.*\\.torrent$")) {
+			return clipboardText;
+		}
+		
+		return null;
+	}
+	
+	/**
 	 * Extracts magnets that are not keyword topic only magnets
 	 * @param magnets
 	 * @return

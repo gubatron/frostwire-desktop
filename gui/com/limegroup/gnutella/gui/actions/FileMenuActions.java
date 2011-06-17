@@ -53,7 +53,7 @@ public class FileMenuActions {
                 createDialog();
 
             // clear input before dialog is shown
-            PATH_FIELD.setText(MagnetClipboardListener.extractStringContentFromClipboard(null));
+            PATH_FIELD.setText(MagnetClipboardListener.getMagnetOrTorrentURLFromClipboard());
             
             // display modal dialog centered
             dialog.pack();
