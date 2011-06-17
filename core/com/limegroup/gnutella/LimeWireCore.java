@@ -17,23 +17,8 @@ import com.limegroup.gnutella.http.FeaturesWriter;
 import com.limegroup.gnutella.licenses.LicenseCache;
 import com.limegroup.gnutella.licenses.LicenseFactory;
 import com.limegroup.gnutella.licenses.LicenseVerifier;
-import com.limegroup.gnutella.messages.MessageFactory;
-import com.limegroup.gnutella.messages.PingReplyFactory;
-import com.limegroup.gnutella.messages.PingRequestFactory;
-import com.limegroup.gnutella.messages.QueryReplyFactory;
-import com.limegroup.gnutella.messages.QueryRequestFactory;
-import com.limegroup.gnutella.messages.StaticMessages;
-import com.limegroup.gnutella.messages.vendor.CapabilitiesVMFactory;
-import com.limegroup.gnutella.messages.vendor.HeadPongFactory;
-import com.limegroup.gnutella.messages.vendor.MessagesSupportedVendorMessage;
-import com.limegroup.gnutella.messages.vendor.ReplyNumberVendorMessageFactory;
-import com.limegroup.gnutella.messages.vendor.UDPCrawlerPongFactory;
-import com.limegroup.gnutella.messages.vendor.VendorMessageFactory;
 import com.limegroup.gnutella.metadata.MetaDataFactory;
 import com.limegroup.gnutella.metadata.MetaDataReader;
-import com.limegroup.gnutella.search.HostDataFactory;
-import com.limegroup.gnutella.search.QueryDispatcher;
-import com.limegroup.gnutella.search.QueryHandlerFactory;
 import com.limegroup.gnutella.version.UpdateCollectionFactory;
 import com.limegroup.gnutella.xml.LimeXMLDocumentFactory;
 import com.limegroup.gnutella.xml.LimeXMLDocumentHelper;
@@ -66,44 +51,12 @@ public class LimeWireCore {
         return injector.getInstance(LocalFileDetailsFactory.class);
     }
 
-    public HostDataFactory getHostDataFactory() {
-        return injector.getInstance(HostDataFactory.class);
-    }
-
-    public QueryRequestFactory getQueryRequestFactory() {
-        return injector.getInstance(QueryRequestFactory.class);
-    }
-
-    public QueryHandlerFactory getQueryHandlerFactory() {
-        return injector.getInstance(QueryHandlerFactory.class);
-    }
-    
-    public HeadPongFactory getHeadPongFactory() {
-        return injector.getInstance(HeadPongFactory.class);
-    }
-
     public FeaturesWriter getFeaturesWriter() {
         return injector.getInstance(FeaturesWriter.class);
     }
 
-    public PushEndpointFactory getPushEndpointFactory() {
-        return injector.getInstance(PushEndpointFactory.class);
-    }
-    
-    public PingReplyFactory getPingReplyFactory() {
-        return injector.getInstance(PingReplyFactory.class);
-    }
-
     public NetworkManager getNetworkManager() {
         return injector.getInstance(NetworkManager.class);
-    }
-
-    public UDPService getUdpService() {
-        return injector.getInstance(UDPService.class);
-    }
-    
-    public QueryUnicaster getQueryUnicaster() {
-        return injector.getInstance(QueryUnicaster.class);
     }
 
     public DownloadManager getDownloadManager() {
@@ -118,18 +71,6 @@ public class LimeWireCore {
         return injector.getInstance(Statistics.class);
     }
     
-    public ResponseFactory getResponseFactory() {
-        return injector.getInstance(ResponseFactory.class);
-    }
-
-    public QueryReplyFactory getQueryReplyFactory() {
-        return injector.getInstance(QueryReplyFactory.class);
-    }
-
-    public StaticMessages getStaticMessages() {
-        return injector.getInstance(StaticMessages.class);
-    }
-
     public SavedFileManager getSavedFileManager() {
         return injector.getInstance(SavedFileManager.class);
     }
@@ -137,33 +78,17 @@ public class LimeWireCore {
     public DownloadCallback getInNetworkCallback() {
         return injector.getInstance(Key.get(DownloadCallback.class, Names.named("inNetwork")));
     }
-    
-    public PongCacher getPongCacher() {
-        return injector.getInstance(PongCacher.class);
-    }
 
     public LicenseCache getLicenseCache() {
         return injector.getInstance(LicenseCache.class);
     }
-
-    public MessagesSupportedVendorMessage getMessagesSupportedVendorMessage() {
-        return injector.getInstance(MessagesSupportedVendorMessage.class);
-    }
-
-    public QueryDispatcher getQueryDispatcher() {
-        return injector.getInstance(QueryDispatcher.class);
-    }
-
+    
     public LimeXMLProperties getLimeXMLProperties() {
         return injector.getInstance(LimeXMLProperties.class);
     }
 
     public LimeXMLSchemaRepository getLimeXMLSchemaRepository() {
         return injector.getInstance(LimeXMLSchemaRepository.class);
-    }
-
-    public CapabilitiesVMFactory getCapabilitiesVMFactory() {
-        return injector.getInstance(CapabilitiesVMFactory.class);
     }
     
     public ActivityCallback getActivityCallback() {
@@ -190,10 +115,6 @@ public class LimeWireCore {
         return injector.getInstance(DownloadCallback.class);
     }
 
-    public ReplyNumberVendorMessageFactory getReplyNumberVendorMessageFactory() {
-        return injector.getInstance(ReplyNumberVendorMessageFactory.class);
-    }
-
     public ScheduledExecutorService getNIOExecutor() {
         return injector.getInstance(Key.get(ScheduledExecutorService.class, Names.named("nioExecutor")));
     }
@@ -204,21 +125,6 @@ public class LimeWireCore {
 
     public PushEndpointCache getPushEndpointCache() {
         return injector.getInstance(PushEndpointCache.class);
-    }
-    
-    public UDPReplyHandlerCache getUDPReplyHandlerCache() {
-        return injector.getInstance(UDPReplyHandlerCache.class);
-    }
-    
-    public MessageFactory getMessageFactory() {
-        return injector.getInstance(MessageFactory.class);
-    }
-    public VendorMessageFactory getVendorMessageFactory() {
-        return injector.getInstance(VendorMessageFactory.class);
-    }
-
-    public UDPCrawlerPongFactory getUDPCrawlerPongFactory() {
-        return injector.getInstance(UDPCrawlerPongFactory.class);
     }
     
     public LicenseFactory getLicenseFactory() {
@@ -243,10 +149,6 @@ public class LimeWireCore {
     
     public CoreDownloaderFactory getCoreDownloaderFactory() {
     	return injector.getInstance(CoreDownloaderFactory.class);
-    }
-
-    public PingRequestFactory getPingRequestFactory() {
-        return injector.getInstance(PingRequestFactory.class);
     }
     
     public UpdateCollectionFactory getUpdateCollectionFactory() {

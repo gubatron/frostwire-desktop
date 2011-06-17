@@ -69,7 +69,6 @@ import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 import com.limegroup.gnutella.licenses.License;
 import com.limegroup.gnutella.licenses.VerificationListener;
-import com.limegroup.gnutella.search.QueryHandler;
 import com.limegroup.gnutella.settings.BittorrentSettings;
 import com.limegroup.gnutella.settings.SearchSettings;
 import com.limegroup.gnutella.util.QueryUtils;
@@ -235,7 +234,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
 		private static final long serialVersionUID = 1L;
 
 		public double calculatePercentage(long now) {
-            return ResultPanel.this.calculatePercentage(now);
+            return 0;//ResultPanel.this.calculatePercentage(now);
         }
     }
 
@@ -852,37 +851,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
      */
     final TableLine getLine(int index) {
         return DATA_MODEL.get(index);
-    }      
-    
-    /**
-     * Calculates the percentange of results that have been received for this
-     * ResultPanel.
-     */
-    double calculatePercentage(long currentTime) {
-        if(guid.equals(STOPPED_GUID))
-            return 1d;
-
-        // first calculate the percentage solely based on 
-        // the number of results we've received.
-        int ideal = QueryHandler.ULTRAPEER_RESULTS;
-        double resultPerc = (double)totalSources() / ideal;
-        
-        // then calculate the percentage solely based on
-        // the time we've spent querying.
-        long spent = currentTime - startTime;
-        double timePerc = (double)spent / QueryHandler.MAX_QUERY_TIME;
-        
-        // If the results are already enough to fill it up, just use that.
-        if( resultPerc >= 1 )
-            return 1d;
-        
-        // Otherwise, the time percentage should fill up what remains in
-        // the progress.
-        timePerc = timePerc * (1 - resultPerc);
-        
-        // Return the results received + time spent.
-        return resultPerc + timePerc;
-    }            
+    }
     
     /**
      * Sets extra values for non dummy ResultPanels.

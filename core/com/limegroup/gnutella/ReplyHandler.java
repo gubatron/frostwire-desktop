@@ -3,11 +3,6 @@ package com.limegroup.gnutella;
 
 import org.limewire.io.IpPort;
 
-import com.limegroup.gnutella.messages.Message;
-import com.limegroup.gnutella.messages.PingReply;
-import com.limegroup.gnutella.messages.PushRequest;
-import com.limegroup.gnutella.messages.QueryReply;
-
 /**
  * An interface for those things that handle replies and thus are placed
  * as values in RouteTables.
@@ -15,27 +10,12 @@ import com.limegroup.gnutella.messages.QueryReply;
 // TODO: move methods out of here that are only for Connections
 public interface ReplyHandler extends IpPort {
 
-    /**
-     * Handle the PingReply, failing silently
-     */
-    void handlePingReply(PingReply pingReply, ReplyHandler handler);
-
-    /**
-     * Handle the QueryReply, failing silently
-     */
-    void handleQueryReply(QueryReply queryReply, ReplyHandler handler);
-
-    /**
-     * Handle the PushRequest, failing silently
-     */
-    void handlePushRequest(PushRequest pushRequest, ReplyHandler handler);
 
     // TODO: remove this
 	int getNumMessagesReceived();
 
 	void countDroppedMessage();
 	
-	boolean isPersonalSpam(Message m);
 
 	boolean isOutgoing();
 
@@ -150,11 +130,6 @@ public interface ReplyHandler extends IpPort {
      * access the locale thats associated with this replyhandler
      */
     public String getLocalePref();
-
-    /**
-     * Just sends whatever message we ask it to.
-     */
-    public void reply(Message m);
     
     /**
      * Gets the clientGUID of this ReplyHandler.

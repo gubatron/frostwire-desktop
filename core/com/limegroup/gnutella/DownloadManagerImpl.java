@@ -22,10 +22,6 @@ import com.limegroup.gnutella.downloader.CoreDownloader;
 import com.limegroup.gnutella.downloader.DownloaderType;
 import com.limegroup.gnutella.downloader.InNetworkDownloader;
 import com.limegroup.gnutella.downloader.ManagedDownloader;
-import com.limegroup.gnutella.messages.BadPacketException;
-import com.limegroup.gnutella.messages.QueryReply;
-import com.limegroup.gnutella.messages.QueryRequest;
-import com.limegroup.gnutella.search.HostData;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.UpdateSettings;
 import com.limegroup.gnutella.version.DownloadInformation;
@@ -341,76 +337,6 @@ public class DownloadManagerImpl implements DownloadManager {
     }
     
     /* (non-Javadoc)
-     * @see com.limegroup.gnutella.DownloadMI#handleQueryReply(com.limegroup.gnutella.messages.QueryReply)
-     */
-    public void handleQueryReply(QueryReply qr) {
-        // first check if the qr is of 'sufficient quality', if not just
-        // short-circuit.
-        if (qr.calculateQualityOfService(
-                !networkManager.acceptedIncomingConnection(), networkManager) < 1)
-            return;
-
-        List<Response> responses;
-        HostData data;
-        try {
-            responses = qr.getResultsAsList();
-            data = qr.getHostData();
-        } catch(BadPacketException bpe) {
-            return; // bad packet, do nothing.
-        }
-        
-        addDownloadWithResponses(responses, data);
-    }
-
-    /**
-     * Iterates through all responses seeing if they can be matched
-     * up to any existing downloaders, adding them as possible
-     * sources if they do.
-     */
-    private void addDownloadWithResponses(List<? extends Response> responses, HostData data) {
-//        if(responses == null)
-//            throw new NullPointerException("null responses");
-//        if(data == null)
-//            throw new NullPointerException("null hostdata");
-//
-//        // need to synch because active and waiting are not thread safe
-//        List<CoreDownloader> downloaders = new ArrayList<CoreDownloader>(active.size() + waiting.size());
-//        synchronized (this) { 
-//            // add to all downloaders, even if they are waiting....
-//            downloaders.addAll(active);
-//            downloaders.addAll(waiting);
-//        }
-//        
-//        // short-circuit.
-//        if(downloaders.isEmpty())
-//            return;
-//
-//        //For each response i, offer it to each downloader j.  Give a response
-//        // to at most one downloader.
-//        // TODO: it's possible that downloader x could accept response[i] but
-//        //that would cause a conflict with downloader y.  Check for this.
-//        for(Response r : responses) {
-//            // Don't bother with making XML from the EQHD.
-//            RemoteFileDesc rfd = r.toRemoteFileDesc(data, remoteFileDescFactory);
-//            for(Downloader current : downloaders) {
-//                if ( !(current instanceof ManagedDownloader))
-//                    continue; // can't add sources to torrents yet
-//                ManagedDownloader currD = (ManagedDownloader) current;
-//                // If we were able to add this specific rfd,
-//                // add any alternates that this response might have
-//                // also.
-//                if (currD.addDownload(rfd, true)) {
-//                    for(IpPort ipp : r.getLocations()) {
-//                        // don't cache alts.
-//                        currD.addDownload(remoteFileDescFactory.createRemoteFileDesc(rfd, ipp), false);
-//                    }
-//                    break;
-//                }
-//            }
-//        }
-    }
-    
-    /* (non-Javadoc)
      * @see com.limegroup.gnutella.DownloadMI#remove(com.limegroup.gnutella.downloader.CoreDownloader, boolean)
      */
     public synchronized void remove(CoreDownloader downloader, 
@@ -457,32 +383,6 @@ public class DownloadManagerImpl implements DownloadManager {
         }
     }
 
-    /**
-     * Cleans up the given Downloader after completion.
-     *
-     * If ser is true, also writes a snapshot to the disk.
-     */
-//    private void cleanupCompletedDownload(CoreDownloader dl, boolean ser) {
-//        dl.finish();
-//        if (dl.getQueryGUID() != null)
-//            messageRouter.get().downloadFinished(dl.getQueryGUID());
-//        callback(dl).removeDownload(dl);
-//        
-//        //Save this' state to disk for crash recovery.
-//        if(ser)
-//            writeSnapshot();
-//
-//        // Enable auto shutdown
-//        if(active.isEmpty() && waiting.isEmpty())
-//            callback(dl).downloadsComplete();
-//    }           
-//    
-    /* (non-Javadoc)
-     * @see com.limegroup.gnutella.DownloadMI#sendQuery(com.limegroup.gnutella.downloader.ManagedDownloader, com.limegroup.gnutella.messages.QueryRequest)
-     */
-    public void sendQuery(QueryRequest query) {
-        
-    }
 
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.DownloadMI#measureBandwidth()

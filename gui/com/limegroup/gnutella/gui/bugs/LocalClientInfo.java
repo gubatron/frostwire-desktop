@@ -117,11 +117,11 @@ public final class LocalClientInfo extends LocalAbstractInfo {
             //_sharedFiles = "" +GuiCoreMediator.getFileManager().getNumFiles();
             _guessCapable = "" + sessionInfo.isGUESSCapable();
             _solicitedCapable= ""+sessionInfo.canReceiveSolicited();
-            _portStable = "" +GuiCoreMediator.getUdpService().portStable();
-            _canDoFWT = "" + GuiCoreMediator.getUdpService().canDoFWT();
-            _lastReportedPort = ""+GuiCoreMediator.getUdpService().lastReportedPort();
+            //_portStable = "" +GuiCoreMediator.getUdpService().portStable();
+            //_canDoFWT = "" + GuiCoreMediator.getUdpService().canDoFWT();
+            //_lastReportedPort = ""+GuiCoreMediator.getUdpService().lastReportedPort();
             _externalPort = ""+sessionInfo.getPort();
-            _receivedIpPong = ""+GuiCoreMediator.getUdpService().receivedIpPong();
+            //_receivedIpPong = ""+GuiCoreMediator.getUdpService().receivedIpPong();
             _responseSize = "" + sessionInfo.getContentResponsesSize();
             _creationCacheSize = "" + sessionInfo.getCreationCacheSize();
             _vfByteSize = "" + sessionInfo.getDiskControllerByteCacheSize();

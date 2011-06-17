@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.limegroup.gnutella.URN;
-import com.limegroup.gnutella.search.QueryHandler;
 import com.limegroup.gnutella.settings.SearchSettings;
 
 /**
@@ -53,7 +51,7 @@ public class TableRowFilter extends ResultPanelModel {
             throw new NullPointerException("null filter");
 
         FILTER = f;
-        HIDDEN = new ArrayList<TableLine>(QueryHandler.ULTRAPEER_RESULTS);
+        HIDDEN = new ArrayList<TableLine>();
         _numSources = 0;
         _numResults = 0;
     }

@@ -505,11 +505,11 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 		
 		// Decide if we definitely can stop the lime
 		boolean stopLime = true;
-		for (int i=0; i<entries.size(); i++) {
-			panel = entries.get(i);
-            stopLime &= panel.isStopped() ||
-                        panel.calculatePercentage(now) >= 1d;
-		}
+//		for (int i=0; i<entries.size(); i++) {
+//			panel = entries.get(i);
+//            stopLime &= panel.isStopped() ||
+//                        panel.calculatePercentage(now) >= 1d;
+//		}
         
 		if ( stopLime ) {
 			GUIMediator.instance().setSearching(false);

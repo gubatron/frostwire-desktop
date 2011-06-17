@@ -6,8 +6,6 @@ import java.util.Collection;
 
 import com.limegroup.gnutella.downloader.CoreDownloader;
 import com.limegroup.gnutella.downloader.PushedSocketHandler;
-import com.limegroup.gnutella.messages.QueryReply;
-import com.limegroup.gnutella.messages.QueryRequest;
 import com.limegroup.gnutella.version.DownloadInformation;
 
 
@@ -105,12 +103,6 @@ public interface DownloadManager extends BandwidthTracker, SaveLocationManager, 
      */
     public boolean isSaveLocationTaken(File candidateFile);
 
-    /** 
-     * Adds all responses (and alternates) in qr to any downloaders, if
-     * appropriate.
-     */
-    public void handleQueryReply(QueryReply qr);
-
     /**
      * Removes downloader entirely from the list of current downloads.
      * Notifies callback of the change in status.
@@ -126,15 +118,6 @@ public interface DownloadManager extends BandwidthTracker, SaveLocationManager, 
      */
     public void bumpPriority(Downloader downl, boolean up, int amt);
 
-    /** 
-     * Attempts to send the given requery to provide the given downloader with 
-     * more sources to download.  May not actually send the requery if it doing
-     * so would exceed the maximum requery rate.
-     * @param query the requery to send, which should have a marked GUID.
-     *  Queries are subjected to global rate limiting iff they have marked 
-     *  requery GUIDs.
-     */
-    public void sendQuery(QueryRequest query);
 
     /** Calls measureBandwidth on each uploader. */
     public void measureBandwidth();

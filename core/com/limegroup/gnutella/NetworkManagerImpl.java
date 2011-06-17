@@ -12,15 +12,13 @@ import com.google.inject.Singleton;
 @Singleton
 public class NetworkManagerImpl implements NetworkManager {
     
-    private final Provider<UDPService> udpService;
     private final Provider<ActivityCallback> activityCallback;
     private final NetworkInstanceUtils networkInstanceUtils;
     
     @Inject
-    public NetworkManagerImpl(Provider<UDPService> udpService,
+    public NetworkManagerImpl(
             Provider<ActivityCallback> activityCallback,
             NetworkInstanceUtils networkInstanceUtils) {
-        this.udpService = udpService;
         this.activityCallback = activityCallback;
         this.networkInstanceUtils = networkInstanceUtils;
     }
@@ -38,7 +36,7 @@ public class NetworkManagerImpl implements NetworkManager {
      * @see com.limegroup.gnutella.NetworkManager#getUDPConnectBackGUID()
      */
     public GUID getUDPConnectBackGUID() {
-        return udpService.get().getConnectBackGUID();
+        return null;//udpService.get().getConnectBackGUID();
     }
 
     /* (non-Javadoc)
@@ -52,7 +50,7 @@ public class NetworkManagerImpl implements NetworkManager {
      * @see com.limegroup.gnutella.NetworkManager#isGUESSCapable()
      */
     public boolean isGUESSCapable() {
-    	return udpService.get().isGUESSCapable();
+    	return false;//udpService.get().isGUESSCapable();
     }
 
     /* (non-Javadoc)
@@ -165,29 +163,29 @@ public class NetworkManagerImpl implements NetworkManager {
      * @see com.limegroup.gnutella.NetworkManager#canReceiveUnsolicited()
      */
     public boolean canReceiveUnsolicited() {
-    	return udpService.get().canReceiveUnsolicited();
+    	return false;//udpService.get().canReceiveUnsolicited();
     }
 
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.NetworkManager#canReceiveSolicited()
      */
     public boolean canReceiveSolicited() {
-    	return udpService.get().canReceiveSolicited();
+    	return false;//udpService.get().canReceiveSolicited();
     }
 
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.NetworkManager#canDoFWT()
      */
     public boolean canDoFWT() {
-        return udpService.get().canDoFWT();
+        return false;//udpService.get().canDoFWT();
     }
     
     public int getStableUDPPort() {
-        return udpService.get().getStableUDPPort();
+        return 0;//udpService.get().getStableUDPPort();
     }
 
     public GUID getSolicitedGUID() {
-        return udpService.get().getSolicitedGUID();
+        return null;//udpService.get().getSolicitedGUID();
     }
 
     public int supportsFWTVersion() {

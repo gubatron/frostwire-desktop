@@ -12,12 +12,9 @@ import com.limegroup.gnutella.LifecycleManager;
 import com.limegroup.gnutella.LimeWireCore;
 import com.limegroup.gnutella.LocalFileDetailsFactory;
 import com.limegroup.gnutella.NetworkManager;
-import com.limegroup.gnutella.ResponseFactory;
 import com.limegroup.gnutella.SavedFileManager;
-import com.limegroup.gnutella.UDPService;
 import com.limegroup.gnutella.browser.ExternalControl;
 import com.limegroup.gnutella.licenses.LicenseVerifier;
-import com.limegroup.gnutella.messages.QueryRequestFactory;
 import com.limegroup.gnutella.metadata.MetaDataFactory;
 import com.limegroup.gnutella.xml.LimeXMLDocumentFactory;
 import com.limegroup.gnutella.xml.LimeXMLProperties;
@@ -30,9 +27,7 @@ public class GuiCoreMediator {
     
     public static LimeWireCore getCore() { return core; }
     
-    public static UDPService getUdpService() {  return core.getUdpService(); }    
     public static NetworkManager getNetworkManager() {  return core.getNetworkManager(); }    
-    public static QueryRequestFactory getQueryRequestFactory() {  return core.getQueryRequestFactory(); }    
     public static LocalFileDetailsFactory getLocalFileDetailsFactory() {  return core.getLocalFileDetailsFactory(); }
     public static DownloadManager getDownloadManager() {  return core.getDownloadManager(); }
     public static SavedFileManager getSavedFileManager() { return core.getSavedFileManager(); }
@@ -46,6 +41,5 @@ public class GuiCoreMediator {
     public static LimeXMLDocumentFactory getLimeXMLDocumentFactory() { return core.getLimeXMLDocumentFactory(); }
     public static MetaDataFactory getMetaDataFactory() { return core.getMetaDataFactory(); }
     public static LicenseVerifier getLicenseVerifier() { return core.getLicenseVerifier(); }
-    public static ResponseFactory getResponseFactory() { return core.getResponseFactory(); }
     public static NetworkInstanceUtils getNetworkInstanceUtils() { return core.getNetworkInstanceUtils(); }
 }
