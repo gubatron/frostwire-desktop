@@ -12,6 +12,7 @@ import org.limewire.util.OSUtils;
 
 import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.AzureusStarter;
+import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.limegroup.gnutella.FileDetails;
 import com.limegroup.gnutella.gui.FileDetailsProvider;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -451,72 +452,62 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         _copyHashAction.setEnabled(false);
     }
 
-    public void openTorrentURI(final String uri) {
-        //        TorrentDownloader downloader = TorrentDownloaderFactory.create(new TorrentDownloaderCallBackInterface() {
-        //            public void TorrentDownloaderEvent(int state, TorrentDownloader inf) {
-        //                if (state == TorrentDownloader.STATE_FINISHED) {
-        //                    GUIMediator.safeInvokeLater(new Runnable() {
-        //                        public void run() {
-        //                            GUIMediator.instance().getStatusLine().setStatusText(I18n.tr("Torrent file downloaded from Internet"));
-        //                        }
-        //                    });
-        //                    openTorrent(inf.getFile(), partialSelection, false, null);
-        //                } else if (state == TorrentDownloader.STATE_ERROR) {
-        //                    GUIMediator.safeInvokeLater(new Runnable() {
-        //                        public void run() {
-        //                            GUIMediator.instance().getStatusLine().setStatusText(I18n.tr("Error downloading the .torrent file"));
-        //                        }
-        //                    });
-        //                }
-        //            }
-        //        }, uri, null, SharingSettings.TORRENT_DATA_DIR_SETTING.getValue().getAbsolutePath());
-        //
-        //        downloader.start();
+    public void openTorrentSearchResult(final WebSearchResult webSearchResult, final boolean partialDownload) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
-                BTDownload downloader = new TorrentFetcherDownload(uri);
+                BTDownload downloader = new TorrentFetcherDownload(webSearchResult.getTorrentURI(), webSearchResult.getFilenameNoExtension(), webSearchResult
+                        .getHash(), webSearchResult.getSize(), partialDownload);
                 add(downloader);
             }
         });
     }
 
-    public void openTorrent(final File file, final boolean partialSelection, final boolean initialSeed, final File saveDir) {
+    public void openTorrentURI(final String uri, final boolean partialDownload) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
-                try {
-
-                    boolean[] filesSelection = null;
-
-                    if (partialSelection) {
-                        OpenTorrentDialog dlg = new OpenTorrentDialog(GUIMediator.getAppFrame(), file);
-                        dlg.setVisible(true);
-                        filesSelection = dlg.getFilesSelection();
-                        if (filesSelection == null) {
-                            return;
-                        }
-                    }
-
-                    BTDownloaderFactory factory = new BTDownloaderFactory(AzureusStarter.getAzureusCore().getGlobalManager(), file, filesSelection,
-                            initialSeed, saveDir);
-                    BTDownload downloader = BTDownloaderUtils.createDownloader(factory);
-
-                    if (downloader != null) {
-                        add(downloader);
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    if (!e.toString().contains("No files selected by user")) {
-                        // could not read torrent file or bad torrent file.
-                        GUIMediator.showError(
-                                I18n.tr("FrostWire was unable to load the torrent file \"{0}\", - it may be malformed or FrostWire does not have permission to access this file.",
-                                        file.getName()), QuestionsHandler.TORRENT_OPEN_FAILURE);
-                        //System.out.println("***Error happened from Download Mediator: " +  ioe);
-                        //GUIMediator.showMessage("Error was: " + ioe); //FTA: debug
-                    }
-                }
+                BTDownload downloader = new TorrentFetcherDownload(uri, partialDownload);
+                add(downloader);
             }
         });
+    }
+
+    public void openTorrentFile(final File file, final boolean partialSelection) {
+//        GUIMediator.safeInvokeLater(new Runnable() {
+//            public void run() {
+//                try {
+//
+//                    boolean[] filesSelection = null;
+//
+//                    if (partialSelection) {
+//                        OpenTorrentDialog dlg = new OpenTorrentDialog(GUIMediator.getAppFrame(), file);
+//                        dlg.setVisible(true);
+//                        filesSelection = dlg.getFilesSelection();
+//                        if (filesSelection == null) {
+//                            return;
+//                        }
+//                    }
+//
+//                    BTDownloaderFactory factory = new BTDownloaderFactory(AzureusStarter.getAzureusCore().getGlobalManager(), file, filesSelection,
+//                            initialSeed, saveDir);
+//                    BTDownload downloader = BTDownloaderUtils.createDownloader(factory);
+//
+//                    if (downloader != null) {
+//                        add(downloader);
+//                    }
+//
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                    if (!e.toString().contains("No files selected by user")) {
+//                        // could not read torrent file or bad torrent file.
+//                        GUIMediator.showError(
+//                                I18n.tr("FrostWire was unable to load the torrent file \"{0}\", - it may be malformed or FrostWire does not have permission to access this file.",
+//                                        file.getName()), QuestionsHandler.TORRENT_OPEN_FAILURE);
+//                        //System.out.println("***Error happened from Download Mediator: " +  ioe);
+//                        //GUIMediator.showMessage("Error was: " + ioe); //FTA: debug
+//                    }
+//                }
+//            }
+//        });
     }
 
     public BTDownload[] getSelectedDownloaders() {

@@ -3,10 +3,12 @@ package com.frostwire.gui.bittorrent;
 import java.io.File;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
+import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloader;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderCallBackInterface;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderFactory;
 
+import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
 
@@ -15,29 +17,31 @@ public class TorrentFetcherDownload implements BTDownload {
     private static final String STATE_DOWNLOADING = I18n.tr("Downloading Torrent");
     private static final String STATE_ERROR = I18n.tr("Error");
     private static final String STATE_DUPLICATED = I18n.tr("Duplicated");
+    private static final String STATE_CANCELED = I18n.tr("Canceled");
 
     private final TorrentDownloader _torrentDownloader;
     private final String _displayName;
     private final String _hash;
     private final long _size;
+    private final boolean _partialDownload;
 
     private String _state;
     private BTDownload _delegate;
 
-    public TorrentFetcherDownload(String uri, String displayName, String hash, long size) {
+    public TorrentFetcherDownload(String uri, String displayName, String hash, long size, boolean partialDownload) {
         String saveDir = SharingSettings.TORRENTS_DIR_SETTING.getValue().getAbsolutePath();
         _torrentDownloader = TorrentDownloaderFactory.create(new TorrentDownloaderListener(), uri, null, saveDir);
-        _torrentDownloader.start();
-
         _displayName = displayName;
         _hash = hash;
         _size = size;
+        _partialDownload = partialDownload;
 
         _state = STATE_DOWNLOADING;
+        _torrentDownloader.start();
     }
 
-    public TorrentFetcherDownload(String uri) {
-        this(uri, uri, "", -1);
+    public TorrentFetcherDownload(String uri, boolean partialDownload) {
+        this(uri, uri, "", -1, partialDownload);
     }
 
     public long getSize() {
@@ -159,14 +163,35 @@ public class TorrentFetcherDownload implements BTDownload {
     }
 
     public boolean isPartialDownload() {
-        return _delegate != null ? _delegate.isPartialDownload() : false;
+        return _delegate != null ? _delegate.isPartialDownload() : _partialDownload;
     }
 
     private final class TorrentDownloaderListener implements TorrentDownloaderCallBackInterface {
-        public void TorrentDownloaderEvent(int state, TorrentDownloader inf) {
+        private boolean[] filesSelection;
+
+        public void TorrentDownloaderEvent(int state, final TorrentDownloader inf) {
             if (state == TorrentDownloader.STATE_FINISHED) {
                 try {
-                    BTDownloadCreator creator = new BTDownloadCreator(inf.getFile());
+                    if (_partialDownload) {
+                        GUIMediator.safeInvokeAndWait(new Runnable() {
+                            public void run() {
+                                try {
+                                    OpenTorrentDialog dlg = new OpenTorrentDialog(GUIMediator.getAppFrame(), inf.getFile());
+                                    dlg.setVisible(true);
+                                    filesSelection = dlg.getFilesSelection();
+                                } catch (TOTorrentException e) {
+                                    e.printStackTrace();
+                                    filesSelection = null;
+                                }
+                            }
+                        });
+                        if (filesSelection == null) {
+                            _state = STATE_CANCELED;
+                            return;
+                        }
+                    }
+
+                    BTDownloadCreator creator = new BTDownloadCreator(inf.getFile(), filesSelection);
                     if (!creator.isTorrentInGlobalManager()) {
                         _delegate = creator.createDownload();
                     } else {

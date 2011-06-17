@@ -267,7 +267,14 @@ public class MenuUtil {
 
         ArrayList<DownloadManager> list = new ArrayList<DownloadManager>(downloaders.length);
         for (BTDownload downloader : downloaders) {
-            list.add(downloader.getDownloadManager());
+            DownloadManager dm = downloader.getDownloadManager();
+            if (dm != null) {
+                list.add(dm);
+            }
+        }
+        
+        if (list.size() == 0) {
+            return null;
         }
 
         final DownloadManager[] dms = list.toArray(new DownloadManager[0]);

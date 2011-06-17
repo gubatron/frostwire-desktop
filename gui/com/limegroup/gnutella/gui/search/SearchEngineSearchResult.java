@@ -102,7 +102,7 @@ public class SearchEngineSearchResult extends AbstractSearchResult {
 
     @Override
     public void takeAction(TableLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
-        GUIMediator.instance().openTorrentURI(getTorrentURI());
+        GUIMediator.instance().openTorrentSearchResult(_item, false);
         showTorrentDetails(BittorrentSettings.SHOW_TORRENT_DETAILS_DELAY);
     }
 

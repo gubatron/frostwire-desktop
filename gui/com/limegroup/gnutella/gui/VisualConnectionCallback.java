@@ -242,7 +242,7 @@ public final class VisualConnectionCallback implements ActivityCallback {
 	public void handleTorrent(final File torrentFile) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				GUIMediator.instance().openTorrent(torrentFile);
+				GUIMediator.instance().openTorrentFile(torrentFile);
 			}
 		});
 	}

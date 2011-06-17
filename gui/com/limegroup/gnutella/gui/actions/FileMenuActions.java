@@ -249,7 +249,7 @@ public class FileMenuActions {
             File file = new File(userText);
             if (isFileSystemPath(file)) {
                 if(file.exists()) {
-                    GUIMediator.instance().openTorrent(file); // Open the torrent file
+                    GUIMediator.instance().openTorrentFile(file); // Open the torrent file
                     return true;
                 } else {
                     // TODO show error dialog telling

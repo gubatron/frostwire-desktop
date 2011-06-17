@@ -48,6 +48,7 @@ import org.limewire.util.StringUtils;
 import org.limewire.util.VersionUtils;
 
 import com.frostwire.CoreFrostWireUtils;
+import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.ChatMediator;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.tabs.LibraryPlayListTab;
@@ -788,21 +789,31 @@ public final class GUIMediator {
 		return getBTDownloadMediator().getActiveDownloads();
 	}
 	
-	public final void openTorrent(File torrentFile) {
-	    openTorrent(torrentFile, false, false, null);
+	public final void openTorrentSearchResult(WebSearchResult webSearchResult, boolean partialDownload) {
+	    getBTDownloadMediator().openTorrentSearchResult(webSearchResult, partialDownload);
+        setWindow(GUIMediator.Tabs.SEARCH);
+	}
+	
+	public final void openTorrentFile(File torrentFile) {
+	    openTorrentFile(torrentFile, false);
 	}
 
-	public final void openTorrent(File torrentFile, boolean partialSelection, boolean initialSeed, File saveDir) {
-	    getBTDownloadMediator().openTorrent(torrentFile, partialSelection, initialSeed, saveDir);
+	public final void openTorrentFile(File torrentFile, boolean partialSelection) {
+	    getBTDownloadMediator().openTorrentFile(torrentFile, partialSelection);
 		setWindow(GUIMediator.Tabs.SEARCH);
 	}
+
+    public void openTorrent(File file, boolean b, boolean c, File _saveDir) {
+        // TODO Auto-generated method stub
+        
+    }
 	
 	public final void openTorrentURI(String uri) {
 	    openTorrentURI(uri, false);
 	}
 
-	public final void openTorrentURI(String uri, boolean partialSelection) {
-	    getBTDownloadMediator().openTorrentURI(uri);
+	public final void openTorrentURI(String uri, boolean partialDownload) {
+	    getBTDownloadMediator().openTorrentURI(uri, partialDownload);
 		setWindow(GUIMediator.Tabs.SEARCH);
 	}
 
