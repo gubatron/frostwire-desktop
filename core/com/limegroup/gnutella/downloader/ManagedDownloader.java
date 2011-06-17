@@ -5,7 +5,6 @@ import java.util.Collection;
 
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.RemoteFileDesc;
-import com.limegroup.gnutella.altlocs.AlternateLocation;
 
 public interface ManagedDownloader extends MeshHandler, CoreDownloader {
 
@@ -19,11 +18,6 @@ public interface ManagedDownloader extends MeshHandler, CoreDownloader {
      * Determines if this is in an 'active' downloading state.
      */
     public boolean isActive();
-
-    /**
-     * notifies this downloader that an alternate location has been added.
-     */
-    public void locationAdded(AlternateLocation loc);
 
     /** 
      * Attempts to add the given location to this.  If rfd is accepted, this

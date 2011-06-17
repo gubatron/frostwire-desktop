@@ -3,10 +3,7 @@ package com.limegroup.gnutella;
 import java.io.File;
 import java.net.Socket;
 import java.util.Collection;
-import java.util.List;
 
-import com.limegroup.gnutella.browser.MagnetOptions;
-import com.limegroup.gnutella.downloader.CantResumeException;
 import com.limegroup.gnutella.downloader.CoreDownloader;
 import com.limegroup.gnutella.downloader.PushedSocketHandler;
 import com.limegroup.gnutella.messages.QueryReply;

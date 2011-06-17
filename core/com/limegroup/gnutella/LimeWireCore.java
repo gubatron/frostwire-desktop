@@ -11,9 +11,6 @@ import com.google.inject.Key;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
-import com.limegroup.gnutella.altlocs.AltLocManager;
-import com.limegroup.gnutella.auth.ContentManager;
-import com.limegroup.gnutella.auth.IpPortContentAuthorityFactory;
 import com.limegroup.gnutella.browser.ExternalControl;
 import com.limegroup.gnutella.connection.MessageReaderFactory;
 import com.limegroup.gnutella.connection.RoutedConnectionFactory;
@@ -128,14 +125,6 @@ public class LimeWireCore {
 
     public DownloadManager getDownloadManager() {
         return injector.getInstance(DownloadManager.class);
-    }
-
-    public AltLocManager getAltLocManager() {
-        return injector.getInstance(AltLocManager.class);
-    }
-
-    public ContentManager getContentManager() {
-        return injector.getInstance(ContentManager.class);
     }
 
     public IPFilter getIpFilter() {
@@ -325,11 +314,7 @@ public class LimeWireCore {
     public PingRequestFactory getPingRequestFactory() {
         return injector.getInstance(PingRequestFactory.class);
     }
-
-    public IpPortContentAuthorityFactory getIpPortContentAuthorityFactory() {
-        return injector.getInstance(IpPortContentAuthorityFactory.class);
-    }
-
+    
     public UpdateCollectionFactory getUpdateCollectionFactory() {
         return injector.getInstance(UpdateCollectionFactory.class);
     }

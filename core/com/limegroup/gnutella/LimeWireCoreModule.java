@@ -16,8 +16,6 @@ import org.limewire.io.LocalSocketAddressProvider;
 
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
-import com.limegroup.gnutella.auth.IpPortContentAuthorityFactory;
-import com.limegroup.gnutella.auth.IpPortContentAuthorityFactoryImpl;
 import com.limegroup.gnutella.connection.MessageReaderFactory;
 import com.limegroup.gnutella.connection.MessageReaderFactoryImpl;
 import com.limegroup.gnutella.connection.RoutedConnectionFactory;
@@ -133,7 +131,6 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(MetaDataFactory.class).to(MetaDataFactoryImpl.class);
         bind(SaveLocationManager.class).to(DownloadManager.class);
         bind(PingRequestFactory.class).to(PingRequestFactoryImpl.class);
-        bind(IpPortContentAuthorityFactory.class).to(IpPortContentAuthorityFactoryImpl.class);
         bind(UpdateCollectionFactory.class).to(UpdateCollectionFactoryImpl.class);
         bind(UDPPinger.class).to(UDPPingerImpl.class);
         bind(Inspector.class).to(InspectorImpl.class);

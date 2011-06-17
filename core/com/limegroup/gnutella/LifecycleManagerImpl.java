@@ -26,7 +26,6 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
-import com.limegroup.gnutella.auth.ContentManager;
 import com.limegroup.gnutella.licenses.LicenseFactory;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.ConnectionSettings;
@@ -51,7 +50,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
     private static enum State { NONE, STARTING, STARTED, STOPPED };
 
     private final Provider<ActivityCallback> activityCallback;
-    private final Provider<ContentManager> contentManager;
     private final Provider<MessageRouter> messageRouter;
     private final Provider<DownloadManager> downloadManager;
     private final Provider<RatingTable> ratingTable;
@@ -81,7 +79,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
     @Inject
     public LifecycleManagerImpl(             
             Provider<ActivityCallback> activityCallback,
-            Provider<ContentManager> contentManager,
             Provider<MessageRouter> messageRouter,
             Provider<DownloadManager> downloadManager,
             Provider<RatingTable> ratingTable,
@@ -97,7 +94,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
 
         
         this.activityCallback = activityCallback;
-        this.contentManager = contentManager;
         this.messageRouter = messageRouter;
         this.downloadManager = downloadManager;
         this.ratingTable = ratingTable;
@@ -270,8 +266,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
         cleanupPreviewFiles();
         
         licenseFactory.get().persistCache();
-        
-        contentManager.get().stop();
         
         messageRouter.get().stop();
         

@@ -40,7 +40,6 @@ import org.limewire.util.ByteOrder;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.name.Named;
-import com.limegroup.gnutella.auth.ContentManager;
 import com.limegroup.gnutella.connection.Connection;
 import com.limegroup.gnutella.connection.RoutedConnection;
 import com.limegroup.gnutella.messagehandlers.DualMessageHandler;
@@ -244,7 +243,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
     protected final HeadPongFactory headPongFactory;
     protected final PingReplyFactory pingReplyFactory;
     protected final QueryUnicaster queryUnicaster;
-    protected final ContentManager contentManager;
     protected final DownloadManager downloadManager;
     protected final UDPService udpService;
     protected final QueryReplyFactory queryReplyFactory;
@@ -275,7 +273,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
             HeadPongFactory headPongFactory,
             PingReplyFactory pingReplyFactory,
             QueryUnicaster queryUnicaster,
-            ContentManager contentManager,
             DownloadManager downloadManager,
             UDPService udpService,
             QueryReplyFactory queryReplyFactory,
@@ -298,7 +295,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
         this.headPongFactory = headPongFactory;
         this.pingReplyFactory = pingReplyFactory;
         this.queryUnicaster = queryUnicaster;
-        this.contentManager = contentManager;
         this.downloadManager = downloadManager;
         this.udpService = udpService;
         this.queryReplyFactory = queryReplyFactory;
@@ -1476,7 +1472,7 @@ public abstract class MessageRouterImpl implements MessageRouter {
     
     /** Handles a ContentResponse msg -- passing it to the ContentManager. */
     private void handleContentResponse(ContentResponse msg, ReplyHandler handler) {
-        contentManager.handleContentResponse(msg);
+        
     }
 
     /**
