@@ -2,8 +2,6 @@ package com.limegroup.gnutella.gui.options;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.FocusAdapter;
@@ -33,7 +31,6 @@ import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.IconButton;
 import com.limegroup.gnutella.gui.IconTextField;
 import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.options.panes.AbstractPaneItem;
@@ -255,14 +252,6 @@ public final class OptionsConstructor {
 		filterPanel.add(iconTextField);
 
 		filterPanel.add(Box.createHorizontalStrut(2));
-		
-		IconButton eraseButton = new IconButton("CLEAR_TEXT");
-		eraseButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				filterTextField.setText("");
-			}			
-		});
-		filterPanel.add(eraseButton);
 		
 		treePanel.add(Box.createVerticalStrut(3));
 		
