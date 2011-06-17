@@ -43,7 +43,7 @@ public class BTDownloaderUtils {
 	 *         hash, or incomplete file, or the user cancelled the download at
 	 *         some point.
 	 */
-	public static BTDownloader createDownloader(BTDownloaderFactory factory) {
+	public static BTDownload createDownloader(BTDownloaderFactory factory) {
 
 		// check for already downloading conflicts
 		if (isAlreadyDownloading(factory)) {
@@ -75,7 +75,7 @@ public class BTDownloaderUtils {
 	 * @param overwrite
 	 * @return <code>null</null> if the user cancelled at some point
 	 */
-	public static BTDownloader createDownloader(BTDownloaderFactory factory,
+	public static BTDownload createDownloader(BTDownloaderFactory factory,
 											  boolean overwrite) {
 		try {
 			return factory.createDownloader(overwrite);

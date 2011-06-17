@@ -30,7 +30,7 @@ import com.limegroup.gnutella.gui.tables.TimeRemainingHolder;
  * displayed data for the download from the contained <tt>Downloader</tt>
  * instance.
  */
-final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
+final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
     
     private static final String PARTIAL_DOWNLOAD_TEXT = I18n.tr(" (Partial)");
 
@@ -163,7 +163,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
      *  that provides access to
      *  information about the download
      */
-    public void initialize(BTDownloader downloader) {
+    public void initialize(BTDownload downloader) {
         super.initialize(downloader);
         _size = initializer.getSize();
         _notification = downloader.isCompleted();

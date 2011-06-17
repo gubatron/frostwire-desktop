@@ -41,7 +41,7 @@ import com.limegroup.gnutella.settings.iTunesSettings;
  * download window.  It also constructs all of the download window
  * components.
  */
-public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadModel, BTDownloadDataLine, BTDownloader> implements FileDetailsProvider {
+public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadModel, BTDownloadDataLine, BTDownload> implements FileDetailsProvider {
 
     /**
      * instance, for singleton access
@@ -177,7 +177,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         if (selRows.length > 0) {
             BTDownloadDataLine dataLine = DATA_MODEL.get(selRows[0]);
 
-            BTDownloader dl = dataLine.getInitializeObject();
+            BTDownload dl = dataLine.getInitializeObject();
 
             boolean resumable = dl.isResumable();
             boolean pausable = dl.isPausable();
@@ -233,7 +233,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
      * If the download is not already in the list, then it is added.
      *  <p>
      */
-    public void add(BTDownloader downloader) {
+    public void add(BTDownload downloader) {
         if (!DATA_MODEL.contains(downloader)) {
             super.add(downloader);
             downloader.getDownloadManager().addListener(ITUNES_SONG_SCANNER_LISTENER, false);
@@ -253,7 +253,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
      * @param downloader the <tt>Downloader</tt> to remove from the list if it is
      *  complete.
      */
-    public void remove(BTDownloader dloader) {
+    public void remove(BTDownload dloader) {
         //        DownloadStatus state = dloader.getState();
         //        
         //        if (state == DownloadStatus.COMPLETE 
@@ -331,7 +331,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
      */
     void launchExplorer() {
         int[] sel = TABLE.getSelectedRows();
-        BTDownloader dl = DATA_MODEL.get(sel[sel.length - 1]).getInitializeObject();
+        BTDownload dl = DATA_MODEL.get(sel[sel.length - 1]).getInitializeObject();
         File toExplore = dl.getSaveLocation();
 
         if (toExplore == null) {
@@ -366,7 +366,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         int[] sel = TABLE.getSelectedRows();
         for (int i = 0; i < sel.length; i++) {
             BTDownloadDataLine dd = DATA_MODEL.get(sel[i]);
-            BTDownloader downloader = dd.getInitializeObject();
+            BTDownload downloader = dd.getInitializeObject();
             downloader.resume();
         }
     }
@@ -516,7 +516,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
 
                     BTDownloaderFactory factory = new BTDownloaderFactory(AzureusStarter.getAzureusCore().getGlobalManager(), file, filesSelection,
                             initialSeed, saveDir);
-                    BTDownloader downloader = BTDownloaderUtils.createDownloader(factory);
+                    BTDownload downloader = BTDownloaderUtils.createDownloader(factory);
 
                     if (downloader != null) {
                         add(downloader);
@@ -537,15 +537,15 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         });
     }
 
-    public BTDownloader[] getSelectedDownloaders() {
+    public BTDownload[] getSelectedDownloaders() {
         int[] sel = TABLE.getSelectedRows();
-        ArrayList<BTDownloader> downloaders = new ArrayList<BTDownloader>(sel.length);
+        ArrayList<BTDownload> downloaders = new ArrayList<BTDownload>(sel.length);
         for (int i = 0; i < sel.length; i++) {
             BTDownloadDataLine line = DATA_MODEL.get(sel[i]);
-            BTDownloader downloader = line.getInitializeObject();
+            BTDownload downloader = line.getInitializeObject();
             downloaders.add(downloader);
         }
-        return downloaders.toArray(new BTDownloader[0]);
+        return downloaders.toArray(new BTDownload[0]);
     }
 
     public long getTotalBytesDownloaded() {
@@ -578,7 +578,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         int n = DATA_MODEL.getRowCount();
         for (int i = n - 1; i >= 0; i--) {
             BTDownloadDataLine btDownloadDataLine = DATA_MODEL.get(i);
-            BTDownloader initializeObject = btDownloadDataLine.getInitializeObject();
+            BTDownload initializeObject = btDownloadDataLine.getInitializeObject();
             if (initializeObject.isCompleted()) {
                 initializeObject.pause();
             }
@@ -590,7 +590,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     }
 
     public void addDownloadManager(DownloadManager mgr) {
-        BTDownloader downloader = new BTDownloaderFactory(AzureusStarter.getAzureusCore().getGlobalManager(), null, null, false, null).createDownloader(mgr);
+        BTDownload downloader = new BTDownloaderFactory(AzureusStarter.getAzureusCore().getGlobalManager(), null, null, false, null).createDownloader(mgr);
         add(downloader);
     }
 }

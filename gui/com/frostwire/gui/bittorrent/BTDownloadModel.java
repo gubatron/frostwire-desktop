@@ -12,7 +12,7 @@ import com.limegroup.gnutella.gui.tables.BasicDataLineModel;
  * This class provides access to the <tt>ArrayList</tt> that stores all of the
  * downloads displayed in the download window.
  */
-public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDownloader> {
+public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDownload> {
 
     /**
      * 
@@ -41,7 +41,7 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
         int count = 0;
 
         for (int i = 0; i < size; i++) {
-            BTDownloader downloader = get(i).getInitializeObject();
+            BTDownload downloader = get(i).getInitializeObject();
             if (!downloader.isCompleted() && downloader.getState() == DownloadManager.STATE_DOWNLOADING) {
                 count++;
             }
@@ -54,7 +54,7 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
         int count = 0;
 
         for (int i = 0; i < size; i++) {
-            BTDownloader downloader = get(i).getInitializeObject();
+            BTDownload downloader = get(i).getInitializeObject();
             if (downloader.isCompleted() && downloader.getState() == DownloadManager.STATE_SEEDING) {
                 count++;
             }
@@ -104,7 +104,7 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
     }
 
     @Override
-    public int add(BTDownloader downloader) {
+    public int add(BTDownload downloader) {
         _hashDownloads.add(TorrentUtil.hashToString(downloader.getHash()));
         return super.add(downloader);
     }
@@ -113,7 +113,7 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
     public void remove(int i) {
         BTDownloadDataLine line = get(i);
 
-        BTDownloader downloader = line.getInitializeObject();
+        BTDownload downloader = line.getInitializeObject();
 
         downloader.remove();
 

@@ -10,7 +10,7 @@ import org.gudy.azureus2.core3.tracker.client.TRTrackerScraperResponse;
 import org.gudy.azureus2.core3.util.Constants;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
 
-public class BTDownloaderImpl implements BTDownloader {
+public class BTDownloaderImpl implements BTDownload {
 
     private final DownloadManager _downloadManager;
     private final boolean _partialDownload;

@@ -4,7 +4,7 @@ import java.io.File;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
 
-public interface BTDownloader {
+public interface BTDownload {
 
     public long getSize();
 

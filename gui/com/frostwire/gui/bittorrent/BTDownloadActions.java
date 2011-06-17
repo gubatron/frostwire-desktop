@@ -75,7 +75,7 @@ final class BTDownloadActions {
         }
 
         public void performAction(ActionEvent e) {
-            BTDownloader[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
+            BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
             if (downloaders.length > 0) {
                 File toExplore = downloaders[0].getSaveLocation();
 
@@ -103,7 +103,7 @@ final class BTDownloadActions {
         }
 
         public void performAction(ActionEvent e) {
-            BTDownloader[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
+            BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
             if (downloaders.length > 0) {
 
                 LaunchableProvider[] providers = new LaunchableProvider[downloaders.length];
@@ -133,7 +133,7 @@ final class BTDownloadActions {
         public void performAction(ActionEvent e) {
         	boolean oneIsCompleted = false;
         	
-            BTDownloader[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
+            BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
 
             for (int i = 0; i < downloaders.length; i++) {
                 if (downloaders[i].isCompleted()) {
@@ -178,7 +178,7 @@ final class BTDownloadActions {
         }
 
         public void performAction(ActionEvent e) {
-            BTDownloader[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
+            BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
             for (int i = 0; i < downloaders.length; i++) {
                 downloaders[i].pause();
             }
@@ -216,7 +216,7 @@ final class BTDownloadActions {
         }
 
         public void performAction(ActionEvent e) {
-            BTDownloader[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
+            BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
             for (int i = 0; i < downloaders.length; i++) {
                 downloaders[i].setDeleteTorrentWhenRemove(_deleteTorrent);
                 downloaders[i].setDeleteDataWhenRemove(_deleteData);
@@ -240,7 +240,7 @@ final class BTDownloadActions {
         }
 
         public void performAction(ActionEvent e) {
-            BTDownloader[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
+            BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
             String str = "";
             for (int i = 0; i < downloaders.length; i++) {
                 str += TorrentUtil.getMagnet(downloaders[i].getHash());
@@ -265,7 +265,7 @@ final class BTDownloadActions {
         }
 
         public void performAction(ActionEvent e) {
-            BTDownloader[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
+            BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
             String str = "";
             for (int i = 0; i < downloaders.length; i++) {
                 str += TorrentUtil.hashToString(downloaders[i].getHash());
@@ -277,13 +277,13 @@ final class BTDownloadActions {
 
     private static class DownloaderProvider implements LaunchableProvider {
 
-        private final BTDownloader downloader;
+        private final BTDownload downloader;
 
-        public DownloaderProvider(BTDownloader downloader) {
+        public DownloaderProvider(BTDownload downloader) {
             this.downloader = downloader;
         }
 
-        public BTDownloader getDownloader() {
+        public BTDownload getDownloader() {
             return downloader;
         }
 

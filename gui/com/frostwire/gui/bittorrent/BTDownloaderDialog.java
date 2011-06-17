@@ -56,7 +56,7 @@ public class BTDownloaderDialog extends JDialog {
     public static final int DEFAULT_SAVE_AS = 2;
 
 	private BTDownloaderFactory factory;
-	private BTDownloader downloader;
+	private BTDownload downloader;
 	private JLabel titleLabel = new JLabel();
 	private JLabel descLabel = new JLabel();
 	private JLabel noteLabel = new JLabel();
@@ -250,7 +250,7 @@ public class BTDownloaderDialog extends JDialog {
 		setLabel(noteLabel, text);
 	}
 	
-	public static BTDownloader handle(BTDownloaderFactory factory,
+	public static BTDownload handle(BTDownloaderFactory factory,
 			SaveLocationException sle) {
 		
 		if (sle.getErrorCode() == SaveLocationException.FILE_ALREADY_DOWNLOADING) {
@@ -274,7 +274,7 @@ public class BTDownloaderDialog extends JDialog {
 	 * the dialog was cancelled.
 	 * @return
 	 */
-	public BTDownloader getDownloader() {
+	public BTDownload getDownloader() {
 		return downloader;
 	}
 	

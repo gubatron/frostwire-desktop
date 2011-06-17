@@ -6,7 +6,7 @@ import javax.swing.SwingUtilities;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
 
-import com.frostwire.gui.bittorrent.BTDownloader;
+import com.frostwire.gui.bittorrent.BTDownload;
 import com.google.inject.Singleton;
 import com.limegroup.gnutella.ActivityCallback;
 import com.limegroup.gnutella.Downloader;
@@ -78,7 +78,7 @@ public final class VisualConnectionCallback implements ActivityCallback {
 //        SwingUtilities.invokeLater(doWorkRunnable);
     }
     
-    public void addDownload(BTDownloader mgr) {
+    public void addDownload(BTDownload mgr) {
         Runnable doWorkRunnable = new AddDownload(mgr);
         
         SwingUtilities.invokeLater(doWorkRunnable);
@@ -100,8 +100,8 @@ public final class VisualConnectionCallback implements ActivityCallback {
 	}	
     
     private class AddDownload implements Runnable {
-        private BTDownloader mgr;
-        public AddDownload(BTDownloader mgr) {
+        private BTDownload mgr;
+        public AddDownload(BTDownload mgr) {
             this.mgr = mgr;
         }
         public void run() {

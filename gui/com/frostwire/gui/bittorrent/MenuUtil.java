@@ -259,14 +259,14 @@ public class MenuUtil {
 
     public static SkinMenu createAdvancedSubMenu() {
 
-        BTDownloader[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
+        BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
 
         if (downloaders.length != 1) {
             return null;
         }
 
         ArrayList<DownloadManager> list = new ArrayList<DownloadManager>(downloaders.length);
-        for (BTDownloader downloader : downloaders) {
+        for (BTDownload downloader : downloaders) {
             list.add(downloader.getDownloadManager());
         }
 

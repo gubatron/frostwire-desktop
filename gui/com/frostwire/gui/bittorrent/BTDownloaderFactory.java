@@ -37,7 +37,7 @@ public class BTDownloaderFactory {
     public void setSaveFile(File newFile) {
     }
 
-    public BTDownloader createDownloader(boolean overwrite) throws SaveLocationException, TOTorrentException {
+    public BTDownload createDownloader(boolean overwrite) throws SaveLocationException, TOTorrentException {
 
         File saveDir = _saveDir == null ? SharingSettings.TORRENT_DATA_DIR_SETTING.getValue() : _saveDir;
         if (!saveDir.exists()) {
@@ -95,8 +95,8 @@ public class BTDownloaderFactory {
         return createDownloader(manager);
     }
 
-    public BTDownloader createDownloader(DownloadManager downloadManager) {
-        final BTDownloader btDownloader = new BTDownloaderImpl(downloadManager);
+    public BTDownload createDownloader(DownloadManager downloadManager) {
+        final BTDownload btDownloader = new BTDownloaderImpl(downloadManager);
 
         downloadManager.addListener(new DownloadManagerAdapter() {
             @Override
