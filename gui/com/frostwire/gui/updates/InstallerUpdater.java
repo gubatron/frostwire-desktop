@@ -21,8 +21,8 @@ import org.gudy.azureus2.core3.global.GlobalManagerDownloadRemovalVetoException;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
+import com.frostwire.AzureusStarter;
 import com.frostwire.CoreFrostWireUtils;
-import com.frostwire.bittorrent.AzureusStarter;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.library.SharingUtils;

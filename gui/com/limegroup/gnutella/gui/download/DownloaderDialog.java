@@ -328,13 +328,13 @@ public class DownloaderDialog extends JDialog {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			try {
-				downloader = factory.createDownloader(true);
-				dispose();
-			}
-			catch (SaveLocationException sle) {
-				setContentFromException(sle);
-			}
+//			try {
+//				downloader = factory.createDownloader(true);
+//				dispose();
+//			}
+//			catch (SaveLocationException sle) {
+//				setContentFromException(sle);
+//			}
 		}
 	}
 	
@@ -353,21 +353,21 @@ public class DownloaderDialog extends JDialog {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			File file = DownloaderUtils.showFileChooser(factory, 
-					DownloaderDialog.this);
-			if (file != null) {
-				try {
-					factory.setSaveFile(file);
-					// OSX's FileDialog box already prompts the user that they're
-					// going to be overwriting a file, so we don't need to do that
-					// particular check again.
-					downloader = factory.createDownloader(OSUtils.isAnyMac());
-					dispose();
-				}
-				catch (SaveLocationException sle) {
-					setContentFromException(sle);
-				}
-			}
+//			File file = DownloaderUtils.showFileChooser(factory, 
+//					DownloaderDialog.this);
+//			if (file != null) {
+//				try {
+//					factory.setSaveFile(file);
+//					// OSX's FileDialog box already prompts the user that they're
+//					// going to be overwriting a file, so we don't need to do that
+//					// particular check again.
+//					downloader = factory.createDownloader(OSUtils.isAnyMac());
+//					dispose();
+//				}
+//				catch (SaveLocationException sle) {
+//					setContentFromException(sle);
+//				}
+//			}
 		}
 	}
 	

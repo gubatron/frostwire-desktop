@@ -4,7 +4,9 @@ import java.io.File;
 
 import javax.swing.SwingUtilities;
 
-import com.frostwire.bittorrent.BTDownloader;
+import org.gudy.azureus2.core3.download.DownloadManager;
+
+import com.frostwire.gui.bittorrent.BTDownloader;
 import com.google.inject.Singleton;
 import com.limegroup.gnutella.ActivityCallback;
 import com.limegroup.gnutella.Downloader;
@@ -81,17 +83,6 @@ public final class VisualConnectionCallback implements ActivityCallback {
         
         SwingUtilities.invokeLater(doWorkRunnable);
     }
-
-//    public void removeDownload(Downloader mgr) {
-//        Runnable doWorkRunnable = new RemoveDownload(mgr);
-//        SwingUtilities.invokeLater(doWorkRunnable);
-//        
-//        if (iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue() 
-//                && mgr.getState() == DownloadStatus.COMPLETE) {
-//            
-//            iTunesMediator.instance().scanForSongs(mgr.getSaveFile());
-//        }
-//    }
     
     public void downloadsComplete() {
         Finalizer.setDownloadsComplete();
@@ -116,6 +107,16 @@ public final class VisualConnectionCallback implements ActivityCallback {
         public void run() {
             mf().getBTDownloadMediator().add(mgr);
 		}
+    }
+    
+    private class AddDownloadManager implements Runnable {
+        private DownloadManager mgr;
+        public AddDownloadManager(DownloadManager mgr) {
+            this.mgr = mgr;
+        }
+        public void run() {
+            mf().getBTDownloadMediator().addDownloadManager(mgr);
+        }
     }
 
 	
@@ -258,4 +259,10 @@ public final class VisualConnectionCallback implements ActivityCallback {
 	public void handleTorrentMagnet(final String request) {
 		GUIMediator.instance().openTorrentURI(request);
 	}
+
+    public void addDownloadManager(DownloadManager dm) {
+        Runnable doWorkRunnable = new AddDownloadManager(dm);
+        
+        SwingUtilities.invokeLater(doWorkRunnable);
+    }
 }

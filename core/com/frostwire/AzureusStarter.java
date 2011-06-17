@@ -1,4 +1,4 @@
-package com.frostwire.bittorrent;
+package com.frostwire;
 
 import java.io.File;
 import java.util.concurrent.CountDownLatch;

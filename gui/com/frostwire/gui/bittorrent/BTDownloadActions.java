@@ -6,8 +6,6 @@ import java.io.File;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 
-import com.frostwire.bittorrent.BTDownloader;
-import com.frostwire.bittorrent.TorrentUtil;
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;

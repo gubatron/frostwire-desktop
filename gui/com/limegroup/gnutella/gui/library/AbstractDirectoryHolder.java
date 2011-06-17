@@ -5,7 +5,7 @@ import java.util.Set;
 
 import javax.swing.Icon;
 
-import com.frostwire.bittorrent.TorrentUtil;
+import com.frostwire.gui.bittorrent.TorrentUtil;
 
 /**
  * Abstract implementation of the DirectoryHolder interface, providing a filtered

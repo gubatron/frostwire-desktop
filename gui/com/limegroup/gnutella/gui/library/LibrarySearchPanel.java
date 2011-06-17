@@ -21,7 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.text.Document;
 
-import com.frostwire.bittorrent.TorrentUtil;
+import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.AutoCompleteTextField;
 import com.limegroup.gnutella.gui.GUIMediator;

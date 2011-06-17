@@ -41,7 +41,7 @@
  * AELITIS, SAS au capital de 46,603.30 euros,
  * 8 Allee Lenotre, La Grille Royale, 78600 Le Mesnil le Roi, France.
  */
-package com.frostwire.bittorrent;
+package com.frostwire.gui.bittorrent;
 
 import java.io.File;
 import java.util.Arrays;
@@ -72,6 +72,7 @@ import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.ui.UIFunctions;
 import com.aelitis.azureus.ui.UIFunctionsManager;
 import com.aelitis.azureus.ui.selectedcontent.SelectedContent;
+import com.frostwire.AzureusStarter;
 import com.limegroup.gnutella.settings.iTunesImportSettings;
 
 public class TorrentUtil {

@@ -14,7 +14,7 @@ import org.limewire.setting.evt.SettingListener;
 import org.limewire.util.I18NConvert;
 import org.limewire.util.StringUtils;
 
-import com.frostwire.bittorrent.AzureusStarter;
+import com.frostwire.AzureusStarter;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.filters.SearchFilter;
 import com.frostwire.gui.filters.SearchFilterFactory;

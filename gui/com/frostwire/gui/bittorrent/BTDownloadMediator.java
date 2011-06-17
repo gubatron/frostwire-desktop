@@ -16,9 +16,7 @@ import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderFactory;
 import org.limewire.util.OSUtils;
 
 import com.aelitis.azureus.core.AzureusCore;
-import com.frostwire.bittorrent.AzureusStarter;
-import com.frostwire.bittorrent.BTDownloader;
-import com.frostwire.bittorrent.BTDownloaderFactory;
+import com.frostwire.AzureusStarter;
 import com.limegroup.gnutella.FileDetails;
 import com.limegroup.gnutella.gui.FileDetailsProvider;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -478,12 +476,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     }
 
     public void openTorrentURI(final String uri, final boolean partialSelection) {
-        GUIMediator.safeInvokeLater(new Runnable() {
-            public void run() {
-                GUIMediator.instance().getStatusLine().setStatusText(I18n.tr("Fetching .torrent from Internet"));
-            }
-        });
-
         TorrentDownloader downloader = TorrentDownloaderFactory.create(new TorrentDownloaderCallBackInterface() {
             public void TorrentDownloaderEvent(int state, TorrentDownloader inf) {
                 if (state == TorrentDownloader.STATE_FINISHED) {
@@ -595,5 +587,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
 
     public boolean isDownloading(String hash) {
         return DATA_MODEL.isDownloading(hash);
+    }
+
+    public void addDownloadManager(DownloadManager mgr) {
+        BTDownloader downloader = new BTDownloaderFactory(AzureusStarter.getAzureusCore().getGlobalManager(), null, null, false, null).createDownloader(mgr);
+        add(downloader);
     }
 }

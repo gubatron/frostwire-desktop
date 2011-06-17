@@ -33,7 +33,6 @@ import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.util.Debug;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
 
-import com.frostwire.bittorrent.BTDownloader;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.themes.SkinMenu;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;

@@ -608,54 +608,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		launch();
     }
 
-    /**
-     * Resume incomplete downloads
-     */    
-    void resumeIncomplete() {        
-        //For each selected row...
-        int[] rows = TABLE.getSelectedRows();
-        boolean startedDownload=false;
-        List<Exception> errors = new ArrayList<Exception>();
-        for (int i=0; i<rows.length; i++) {
-            //...try to download the incomplete
-            File incomplete = DATA_MODEL.getFile(rows[i]);
-            try {
-                GuiCoreMediator.getDownloadServices().download(incomplete);
-                startedDownload=true;
-            } catch (SaveLocationException e) { 
-                // we must cache errors to display later so we don't wait
-                // while the table might change in the background.
-                errors.add(e);
-            } catch(CantResumeException e) {
-                errors.add(e);
-            }
-        }
-        
-        // traverse back through the errors and show them.
-        for(int i = 0; i < errors.size(); i++) {
-            Exception e = errors.get(i);
-            if(e instanceof SaveLocationException) {
-				SaveLocationException sle = (SaveLocationException)e;
-				if (sle.getErrorCode() == SaveLocationException.FILE_ALREADY_DOWNLOADING) {
-					GUIMediator.showError(I18n.tr("You are already downloading this file to \"{0}\".", sle.getFile()),
-					        QuestionsHandler.ALREADY_DOWNLOADING);
-				}
-				else {
-					String msg = CoreExceptionHandler.getSaveLocationErrorString(sle);
-					GUIMediator.showError(msg);
-				}
-            } else if ( e instanceof CantResumeException ) {
-                GUIMediator.showError(I18n.tr("The file \"{0}\" is not a valid incomplete file and cannot be resumed.", 
-                        ((CantResumeException)e).getFilename()),
-                        QuestionsHandler.CANT_RESUME);
-            }
-        }       
-
-        //Switch to download tab (if we actually started anything).
-        if (startedDownload)
-            switchToDownloadTab();
-    }
-
     private void switchToDownloadTab() {
         GUIMediator.instance().setWindow(GUIMediator.Tabs.SEARCH);
     }

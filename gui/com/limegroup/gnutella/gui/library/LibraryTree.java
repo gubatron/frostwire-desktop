@@ -26,7 +26,7 @@ import javax.swing.tree.TreeSelectionModel;
 import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultTreeCellRenderer;
 
-import com.frostwire.bittorrent.TorrentUtil;
+import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIMediator;

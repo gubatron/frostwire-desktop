@@ -27,7 +27,6 @@ import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.AzureusCoreComponent;
 import com.aelitis.azureus.core.AzureusCoreException;
 import com.aelitis.azureus.core.AzureusCoreLifecycleListener;
-import com.frostwire.bittorrent.AzureusStarter;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 public class CoreFrostWireUtils {

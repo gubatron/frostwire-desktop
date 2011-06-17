@@ -114,7 +114,6 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(QueryReplyFactory.class).to(QueryReplyFactoryImpl.class);
         bind(CapabilitiesVMFactory.class).to(CapabilitiesVMFactoryImpl.class);
         bind(LifecycleManager.class).to(LifecycleManagerImpl.class);
-        bind(DownloadServices.class).to(DownloadServicesImpl.class);
         bind(ApplicationServices.class).to(ApplicationServicesImpl.class);
         bind(SpamFilterFactory.class).to(SpamFilterFactoryImpl.class);
         bind(UDPReplyHandlerFactory.class).to(UDPReplyHandlerFactoryImpl.class);

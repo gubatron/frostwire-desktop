@@ -31,11 +31,6 @@ import com.limegroup.gnutella.version.DownloadInformation;
  * serialized.  
  */
 public interface DownloadManager extends BandwidthTracker, SaveLocationManager, PushedSocketHandler {
-    
-    /**
-     * Adds a new downloader that this will manager.
-     */
-    public void addNewDownloader(CoreDownloader downloader);
 
     /** 
      * Initializes this manager. <b>This method must be called before any other
@@ -95,77 +90,6 @@ public interface DownloadManager extends BandwidthTracker, SaveLocationManager, 
     public Downloader getDownloaderForIncompleteFile(File file);
 
     public boolean isGuidForQueryDownloading(GUID guid);
-
-    /** 
-     * Tries to "smart download" any of the given files.<p>  
-     *
-     * If any of the files already being downloaded (or queued for downloaded)
-     * has the same temporary name as any of the files in 'files', throws
-     * AlreadyDownloadingException.  Note, however, that this doesn't guarantee
-     * that a successfully downloaded file can be moved to the library.<p>
-     *
-     * If overwrite==false, then if any of the files already exists in the
-     * download directory, FileExistsException is thrown and no files are
-     * modified.  If overwrite==true, the files may be overwritten.<p>
-     * 
-     * Otherwise returns a Downloader that allows you to stop and resume this
-     * download.  The DownloadCallback will also be notified of this download,
-     * so the return value can usually be ignored.  The download begins
-     * immediately, unless it is queued.  It stops after any of the files
-     * succeeds.
-     * 
-     * @param files a group of "similar" files to smart download
-     * @param alts a List of secondary RFDs to use for other sources
-     * @param queryGUID the guid of the query that resulted in the RFDs being
-     * downloaded.
-     * @param saveDir can be null, then the default save directory is used
-     * @param fileName can be null, then the first filename of one of element of
-     * <code>files</code> is taken.
-     * @throws SaveLocationException when there was an error setting the
-     * location of the final download destination.
-     *
-     *     @modifies this, disk 
-     */
-    public Downloader download(RemoteFileDesc[] files, List<? extends RemoteFileDesc> alts,
-            GUID queryGUID, boolean overwrite, File saveDir, String fileName)
-            throws SaveLocationException;
-
-    /**
-     * Creates a new MAGNET downloader.  Immediately tries to download from
-     * <tt>defaultURL</tt>, if specified.  If that fails, or if defaultURL does
-     * not provide alternate locations, issues a requery with <tt>textQuery</tt>
-     * and </tt>urn</tt>, as provided.  (At least one must be non-null.)  If
-     * <tt>filename</tt> is specified, it will be used as the name of the
-     * complete file; otherwise it will be taken from any search results or
-     * guessed from <tt>defaultURLs</tt>.
-     *
-     * @param urn the hash of the file (exact topic), or null if unknown
-     * @param textQuery requery keywords (keyword topic), or null if unknown
-     * @param filename the final file name, or <code>null</code> if unknown
-     * @param saveLocation can be null, then the default save location is used
-     * @param defaultURLs the initial locations to try (exact source), or null 
-     *  if unknown
-     *
-     * @exception IllegalArgumentException all urn, textQuery, filename are
-     *  null 
-     * @throws SaveLocationException 
-     */
-    public Downloader download(MagnetOptions magnet, boolean overwrite, File saveDir,
-            String fileName) throws IllegalArgumentException, SaveLocationException;
-
-    /**
-     * Starts a resume download for the given incomplete file.
-     * @exception CantResumeException incompleteFile is not a valid 
-     *  incomplete file
-     * @throws SaveLocationException 
-     */
-    public Downloader download(File incompleteFile) throws CantResumeException,
-            SaveLocationException;
-
-    /**
-     * Downloads an InNetwork update, using the info from the DownloadInformation.
-     */
-    public Downloader download(DownloadInformation info, long now) throws SaveLocationException;
 
 
     /**

@@ -8,7 +8,6 @@ import com.google.inject.Inject;
 import com.limegroup.gnutella.ActivityCallback;
 import com.limegroup.gnutella.ApplicationServices;
 import com.limegroup.gnutella.DownloadManager;
-import com.limegroup.gnutella.DownloadServices;
 import com.limegroup.gnutella.LifecycleManager;
 import com.limegroup.gnutella.LimeWireCore;
 import com.limegroup.gnutella.LocalFileDetailsFactory;
@@ -49,7 +48,6 @@ public class GuiCoreMediator {
     public static SpamManager getSpamManager() { return core.getSpamManager(); }
     public static LifecycleManager getLifecycleManager() { return core.getLifecycleManager(); }
     public static ScheduledExecutorService getCoreBackgroundExecutor() { return core.getBackgroundExecutor(); }
-    public static DownloadServices getDownloadServices() { return core.getDownloadServices(); }
     public static ApplicationServices getApplicationServices() { return core.getApplicationServices(); }
     public static ExternalControl getExternalControl() { return core.getExternalControl(); }
     public static ActivityCallback getActivityCallback() { return core.getActivityCallback(); }

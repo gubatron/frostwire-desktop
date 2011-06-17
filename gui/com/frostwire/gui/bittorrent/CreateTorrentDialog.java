@@ -56,7 +56,7 @@ import org.gudy.azureus2.core3.util.TrackersUtil;
 import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.AzureusCoreRunningListener;
-import com.frostwire.bittorrent.AzureusStarter;
+import com.frostwire.AzureusStarter;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;

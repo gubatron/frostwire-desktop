@@ -21,7 +21,7 @@ import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.OSUtils;
 import org.limewire.util.SystemUtils;
 
-import com.frostwire.bittorrent.AzureusStarter;
+import com.frostwire.AzureusStarter;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;

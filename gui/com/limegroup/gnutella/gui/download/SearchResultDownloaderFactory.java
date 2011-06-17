@@ -38,11 +38,6 @@ public class SearchResultDownloaderFactory implements GuiDownloaderFactory {
 		return rfds[0].getSHA1Urn();
 	}
 
-	public Downloader createDownloader(boolean overwrite)
-		throws SaveLocationException {
-		return GuiCoreMediator.getDownloadServices().download(rfds, alts, queryGUID, overwrite, saveDir, fileName);
-	}
-
 	/** 
 	 * can be 
 	 * <code>null</code>, then the 

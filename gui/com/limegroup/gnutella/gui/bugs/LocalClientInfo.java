@@ -110,7 +110,7 @@ public final class LocalClientInfo extends LocalAbstractInfo {
             //_leaf = "" + GuiCoreMediator.getConnectionServices().isShieldedLeaf();
             //_activeUploads = "" + GuiCoreMediator.getUploadServices().getNumUploads();
             //_queuedUploads = "" + GuiCoreMediator.getUploadServices().getNumQueuedUploads();
-            _activeDownloads = "" + GuiCoreMediator.getDownloadServices().getNumActiveDownloads();
+            //_activeDownloads = "" + GuiCoreMediator.getDownloadServices().getNumActiveDownloads();
             _httpDownloaders = "" +sessionInfo.getNumIndividualDownloaders();
             _waitingDownloaders = "" + sessionInfo.getNumWaitingDownloads();
             _acceptedIncoming = "" +sessionInfo.acceptedIncomingConnection();

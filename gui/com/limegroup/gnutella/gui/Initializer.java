@@ -19,7 +19,7 @@ import org.limewire.util.OSUtils;
 import org.limewire.util.Stopwatch;
 import org.limewire.util.SystemUtils;
 
-import com.frostwire.bittorrent.AzureusStarter;
+import com.frostwire.AzureusStarter;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.limegroup.gnutella.LimeCoreGlue;

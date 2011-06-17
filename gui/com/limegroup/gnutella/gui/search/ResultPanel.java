@@ -40,9 +40,9 @@ import javax.swing.plaf.metal.MetalBorders;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.util.OSUtils;
 
-import com.frostwire.bittorrent.BittorrentSettings;
-import com.frostwire.bittorrent.TorrentUtil;
 import com.frostwire.gui.BuyAction;
+import com.frostwire.gui.bittorrent.BittorrentSettings;
+import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.limegroup.gnutella.FileDetails;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MediaType;

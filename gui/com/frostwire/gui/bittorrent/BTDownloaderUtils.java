@@ -10,8 +10,6 @@ import javax.swing.JOptionPane;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.limewire.i18n.I18nMarker;
 
-import com.frostwire.bittorrent.BTDownloader;
-import com.frostwire.bittorrent.BTDownloaderFactory;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.SaveLocationException;
 import com.limegroup.gnutella.URN;

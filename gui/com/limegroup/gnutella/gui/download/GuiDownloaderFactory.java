@@ -32,21 +32,6 @@ public interface GuiDownloaderFactory {
 	 * <code>null</code>.
 	 * @return
 	 */
-	URN getURN();
-	/**
-	 * Tries to create a new downloader object for the given parameters, hiding
-	 * which kind of downloader is created, e.g.
-	 * {@link com.limegroup.gnutella.downloader.ManagedDownloader}
-	 * or {@link com.limegroup.gnutella.downloader.MagnetDownloader}.
-	 * @param saveDir can be <code>null</code>
-	 * @param fileName the final filename
-	 * @param overwrite whether or not to overwrite an existing file at the
-	 * given location
-	 * @return
-	 * @throws SaveLocationException when the file could not be saved there
-	 */
-	Downloader createDownloader(boolean overwrite) 
-		throws SaveLocationException;
-	
+	URN getURN();	
 }
 

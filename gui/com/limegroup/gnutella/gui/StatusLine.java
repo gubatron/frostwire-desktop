@@ -28,7 +28,7 @@ import org.gudy.azureus2.plugins.network.ConnectionManager;
 import org.limewire.setting.BooleanSetting;
 
 import com.aelitis.azureus.core.AzureusCore;
-import com.frostwire.bittorrent.AzureusStarter;
+import com.frostwire.AzureusStarter;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.gui.mp3.MediaPlayerComponent;

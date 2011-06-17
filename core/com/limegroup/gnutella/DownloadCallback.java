@@ -1,6 +1,6 @@
 package com.limegroup.gnutella;
 
-import com.frostwire.bittorrent.BTDownloader;
+import com.frostwire.gui.bittorrent.BTDownloader;
 
 /**
  * A callback for download information.
@@ -9,7 +9,7 @@ public interface DownloadCallback {
     
 
     /** Add a file to the download window */
-    public void addDownload(Downloader d);
+    public void addDownloadManager(org.gudy.azureus2.core3.download.DownloadManager d);
     
     public void addDownload(BTDownloader d);
 

@@ -120,11 +120,12 @@ public class DownloaderUtils {
 	 */
 	public static Downloader createDownloader(GuiDownloaderFactory factory,
 											  boolean overwrite) {
-		try {
-			return factory.createDownloader(overwrite);
-		} catch (SaveLocationException sle) {
-			return DownloaderDialog.handle(factory, sle);
-		}
+//		try {
+//			return factory.createDownloader(overwrite);
+//		} catch (SaveLocationException sle) {
+//			return DownloaderDialog.handle(factory, sle);
+//		}
+	    return null;
 	}
 
 	/**
