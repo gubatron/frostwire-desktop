@@ -26,6 +26,7 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.MultiLineLabel;
 import com.limegroup.gnutella.gui.download.TorrentFileFilter;
+import com.limegroup.gnutella.gui.search.MagnetClipboardListener;
 
 public class FileMenuActions {
     
@@ -52,7 +53,7 @@ public class FileMenuActions {
                 createDialog();
 
             // clear input before dialog is shown
-            PATH_FIELD.setText("");
+            PATH_FIELD.setText(MagnetClipboardListener.extractStringContentFromClipboard(null));
             
             // display modal dialog centered
             dialog.pack();

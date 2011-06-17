@@ -54,7 +54,7 @@ public class MagnetClipboardListener extends WindowAdapter {
 	private static final MagnetClipboardListener instance = new MagnetClipboardListener();
 	
 	//the system clipboard
-	private final Clipboard CLIPBOARD = Toolkit.getDefaultToolkit().getSystemClipboard();
+	private final static Clipboard CLIPBOARD = Toolkit.getDefaultToolkit().getSystemClipboard();
 	
 	//dummy clipboard content
 	private final StringSelection empty =new StringSelection("");
@@ -77,36 +77,7 @@ public class MagnetClipboardListener extends WindowAdapter {
 	 * parse the clipboard anymore.
 	 */
 	private void parseAndLaunch() {
-	    Transferable data = null;
-    	try{
-    	//check if there's anything in the clipboard
-    		data = CLIPBOARD.getContents(this);
-    	}catch(IllegalStateException isx) {
-    		//we can't use the clipboard, give up.
-    		return;
-    	}
-    	
-    	//is there anything in the clipboard?
-    	if (data==null) 
-    		return;
-    	
-    	//then, check if the data in the clipboard is text
-    	if (!data.isDataFlavorSupported(DataFlavor.stringFlavor)) 
-    		return;
-    		
-    	
-    	//next, extract the content into a string
-    	String contents=null;
-    	
-    	try{
-    		contents = (String)data.getTransferData(DataFlavor.stringFlavor);
-    	} catch (IOException iox) {
-    		LOG.info("problem occured while trying to parse clipboard, do nothing",iox);
-    		return;
-    	} catch (UnsupportedFlavorException ufx) {
-    		LOG.error("UnsupportedFlavor??",ufx);
-    		return;
-    	} 
+	    String contents = extractStringContentFromClipboard(this); 
     	
     	//could not extract the clipboard as text.
     	if (contents == null)
@@ -219,6 +190,40 @@ public class MagnetClipboardListener extends WindowAdapter {
     		}
     	};
    	    GUIMediator.safeInvokeLater(r);
+	}
+	
+	public static String extractStringContentFromClipboard(Object requestor) {
+		Transferable data = null;
+    	try{
+    	//check if there's anything in the clipboard
+    		data = CLIPBOARD.getContents(requestor);
+    	}catch(IllegalStateException isx) {
+    		//we can't use the clipboard, give up.
+    		return null;
+    	}
+    	
+    	//is there anything in the clipboard?
+    	if (data==null) 
+    		return null;
+    	
+    	//then, check if the data in the clipboard is text
+    	if (!data.isDataFlavorSupported(DataFlavor.stringFlavor)) 
+    		return null;
+    		
+    	
+    	//next, extract the content into a string
+    	String contents=null;
+    	
+    	try{
+    		contents = (String)data.getTransferData(DataFlavor.stringFlavor);
+    	} catch (IOException iox) {
+    		LOG.info("problem occured while trying to parse clipboard, do nothing",iox);
+    		return null;
+    	} catch (UnsupportedFlavorException ufx) {
+    		LOG.error("UnsupportedFlavor??",ufx);
+    		return null;
+    	}
+		return contents;
 	}
 	
 	/**
