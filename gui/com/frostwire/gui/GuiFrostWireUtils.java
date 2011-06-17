@@ -13,9 +13,9 @@ import org.limewire.collection.SortedList;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.CoreFrostWireUtils;
-import com.frostwire.gui.bittorrent.BittorrentSettings;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.http.HTTPUtils;
+import com.limegroup.gnutella.settings.BittorrentSettings;
 
 public final class GuiFrostWireUtils extends CoreFrostWireUtils {
 

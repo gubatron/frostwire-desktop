@@ -6,12 +6,12 @@ import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.config.impl.ConfigurationManager;
 import org.limewire.i18n.I18nMarker;
 
-import com.frostwire.gui.bittorrent.BittorrentSettings;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.gui.SizedWholeNumberField;
 import com.limegroup.gnutella.gui.WholeNumberField;
+import com.limegroup.gnutella.settings.BittorrentSettings;
 
 public class BittorrentConnectionPaneItem extends AbstractPaneItem {
 

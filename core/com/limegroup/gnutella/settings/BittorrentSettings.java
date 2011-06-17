@@ -1,10 +1,9 @@
-package com.frostwire.gui.bittorrent;
+package com.limegroup.gnutella.settings;
 
 import org.limewire.setting.BooleanSetting;
 import org.limewire.setting.IntSetting;
 import org.limewire.setting.ProbabilisticBooleanSetting;
 
-import com.limegroup.gnutella.settings.LimeProps;
 
 /**
  * Bittorrent settings

@@ -11,10 +11,10 @@ import javax.swing.JPopupMenu;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.bittorrent.websearch.isohunt.ISOHuntItem;
 import com.frostwire.gui.GuiFrostWireUtils;
-import com.frostwire.gui.bittorrent.BittorrentSettings;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
+import com.limegroup.gnutella.settings.BittorrentSettings;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
 
 public class SearchEngineSearchResult extends AbstractSearchResult {

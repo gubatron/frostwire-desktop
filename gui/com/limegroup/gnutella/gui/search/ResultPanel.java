@@ -41,7 +41,6 @@ import org.limewire.i18n.I18nMarker;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.BuyAction;
-import com.frostwire.gui.bittorrent.BittorrentSettings;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.limegroup.gnutella.FileDetails;
 import com.limegroup.gnutella.GUID;
@@ -71,6 +70,7 @@ import com.limegroup.gnutella.gui.util.PopupUtils;
 import com.limegroup.gnutella.licenses.License;
 import com.limegroup.gnutella.licenses.VerificationListener;
 import com.limegroup.gnutella.search.QueryHandler;
+import com.limegroup.gnutella.settings.BittorrentSettings;
 import com.limegroup.gnutella.settings.SearchSettings;
 import com.limegroup.gnutella.util.QueryUtils;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
