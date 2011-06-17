@@ -49,7 +49,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
     private static enum State { NONE, STARTING, STARTED, STOPPED };
 
     private final Provider<ActivityCallback> activityCallback;
-    private final Provider<MessageRouter> messageRouter;
     private final Provider<DownloadManager> downloadManager;
     private final Provider<NetworkManager> networkManager;
     private final Provider<Statistics> statistics;
@@ -77,7 +76,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
     @Inject
     public LifecycleManagerImpl(             
             Provider<ActivityCallback> activityCallback,
-            Provider<MessageRouter> messageRouter,
             Provider<DownloadManager> downloadManager,
             @Named("backgroundExecutor") Provider<ScheduledExecutorService> backgroundExecutor,
             Provider<NetworkManager> networkManager,
@@ -91,7 +89,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
 
         
         this.activityCallback = activityCallback;
-        this.messageRouter = messageRouter;
         this.downloadManager = downloadManager;
         this.networkManager = networkManager;
         this.statistics = statistics;
@@ -260,8 +257,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
 		cleanupPreviewFiles();
         
         licenseFactory.get().persistCache();
-        
-        messageRouter.get().stop();
         
         AzureusStarter.getAzureusCore().stop();
         

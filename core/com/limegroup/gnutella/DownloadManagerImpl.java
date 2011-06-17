@@ -64,15 +64,12 @@ public class DownloadManagerImpl implements DownloadManager {
     
     private final NetworkManager networkManager;
     private final Provider<DownloadCallback> downloadCallback;
-    private final Provider<MessageRouter> messageRouter;
     
     @Inject
     public DownloadManagerImpl(NetworkManager networkManager,
-            Provider<DownloadCallback> downloadCallback,
-            Provider<MessageRouter> messageRouter) {
+            Provider<DownloadCallback> downloadCallback) {
         this.networkManager = networkManager;
         this.downloadCallback = downloadCallback;
-        this.messageRouter = messageRouter;
     }
 
 
@@ -484,7 +481,7 @@ public class DownloadManagerImpl implements DownloadManager {
      * @see com.limegroup.gnutella.DownloadMI#sendQuery(com.limegroup.gnutella.downloader.ManagedDownloader, com.limegroup.gnutella.messages.QueryRequest)
      */
     public void sendQuery(QueryRequest query) {
-        messageRouter.get().sendDynamicQuery(query);
+        
     }
 
     /* (non-Javadoc)

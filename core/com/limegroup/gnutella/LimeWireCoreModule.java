@@ -21,7 +21,6 @@ import com.limegroup.gnutella.connection.MessageReaderFactoryImpl;
 import com.limegroup.gnutella.downloader.LimeWireDownloadModule;
 import com.limegroup.gnutella.licenses.LicenseFactory;
 import com.limegroup.gnutella.licenses.LicenseFactoryImpl;
-import com.limegroup.gnutella.messagehandlers.MessageHandlerBinderImpl;
 import com.limegroup.gnutella.messages.MessageFactory;
 import com.limegroup.gnutella.messages.MessageFactoryImpl;
 import com.limegroup.gnutella.messages.MessageParserBinder;
@@ -125,13 +124,10 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(SaveLocationManager.class).to(DownloadManager.class);
         bind(PingRequestFactory.class).to(PingRequestFactoryImpl.class);
         bind(UpdateCollectionFactory.class).to(UpdateCollectionFactoryImpl.class);
-        bind(UDPPinger.class).to(UDPPingerImpl.class);
         bind(Inspector.class).to(InspectorImpl.class);
         bind(LocalSocketAddressProvider.class).to(LocalSocketAddressProviderImpl.class);
-        bind(MessageRouter.class).to(StandardMessageRouter.class);
         bind(PongCacher.class).to(PongCacherImpl.class);        
         bind(BandwidthTracker.class).annotatedWith(Names.named("downloadTracker")).to(DownloadManager.class); // For NodeAssigner.
-        bind(MessageHandlerBinder.class).to(MessageHandlerBinderImpl.class);
         bind(QueryDispatcher.class).to(QueryDispatcherImpl.class);
         bind(UpdateMessageVerifier.class).to(UpdateMessageVerifierImpl.class);
         bind(InspectionResponseFactory.class).to(InspectionResponseFactoryImpl.class);

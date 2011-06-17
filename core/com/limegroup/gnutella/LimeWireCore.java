@@ -9,7 +9,6 @@ import org.limewire.lifecycle.ServiceRegistry;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.Key;
-import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 import com.limegroup.gnutella.browser.ExternalControl;
@@ -19,7 +18,6 @@ import com.limegroup.gnutella.http.FeaturesWriter;
 import com.limegroup.gnutella.licenses.LicenseCache;
 import com.limegroup.gnutella.licenses.LicenseFactory;
 import com.limegroup.gnutella.licenses.LicenseVerifier;
-import com.limegroup.gnutella.messagehandlers.InspectionRequestHandler;
 import com.limegroup.gnutella.messages.MessageFactory;
 import com.limegroup.gnutella.messages.PingReplyFactory;
 import com.limegroup.gnutella.messages.PingRequestFactory;
@@ -109,10 +107,6 @@ public class LimeWireCore {
         return injector.getInstance(QueryUnicaster.class);
     }
 
-    public MessageRouter getMessageRouter() {
-        return injector.getInstance(MessageRouter.class);
-    }
-
     public DownloadManager getDownloadManager() {
         return injector.getInstance(DownloadManager.class);
     }
@@ -144,15 +138,7 @@ public class LimeWireCore {
     public DownloadCallback getInNetworkCallback() {
         return injector.getInstance(Key.get(DownloadCallback.class, Names.named("inNetwork")));
     }
-
-    public MessageDispatcher getMessageDispatcher() {
-        return injector.getInstance(MessageDispatcher.class);
-    }
-
-    public MulticastService getMulticastService() {
-        return injector.getInstance(MulticastService.class);
-    }
-
+    
     public PongCacher getPongCacher() {
         return injector.getInstance(PongCacher.class);
     }
@@ -209,14 +195,6 @@ public class LimeWireCore {
         return injector.getInstance(ReplyNumberVendorMessageFactory.class);
     }
 
-    public UDPPinger getUDPPinger() {
-        return injector.getInstance(UDPPinger.class);
-    }
-
-    public UniqueHostPinger getUniqueHostPinger() {
-        return injector.getInstance(UniqueHostPinger.class);
-    }
-
     public ScheduledExecutorService getNIOExecutor() {
         return injector.getInstance(Key.get(ScheduledExecutorService.class, Names.named("nioExecutor")));
     }
@@ -233,10 +211,6 @@ public class LimeWireCore {
         return injector.getInstance(UDPReplyHandlerCache.class);
     }
     
-    public Provider<InspectionRequestHandler> getInspectionRequestHandlerFactory() {
-        return injector.getProvider(InspectionRequestHandler.class);
-    }
-
     public MessageFactory getMessageFactory() {
         return injector.getInstance(MessageFactory.class);
     }

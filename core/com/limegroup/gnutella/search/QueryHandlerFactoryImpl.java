@@ -3,7 +3,6 @@ package com.limegroup.gnutella.search;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import com.limegroup.gnutella.MessageRouter;
 import com.limegroup.gnutella.ReplyHandler;
 import com.limegroup.gnutella.messages.QueryRequest;
 import com.limegroup.gnutella.messages.QueryRequestFactory;
@@ -34,14 +33,9 @@ public class QueryHandlerFactoryImpl implements QueryHandlerFactory {
 
     private final QueryRequestFactory queryRequestFactory;
 
-    
-    private final Provider<MessageRouter> messageRouter;
-
     @Inject
-    public QueryHandlerFactoryImpl(QueryRequestFactory queryRequestFactory,
-            Provider<MessageRouter> messageRouter) {
+    public QueryHandlerFactoryImpl(QueryRequestFactory queryRequestFactory) {
         this.queryRequestFactory = queryRequestFactory;
-        this.messageRouter = messageRouter;
     }
 
     public QueryHandlerImpl createHandler(QueryRequest query, ReplyHandler handler,

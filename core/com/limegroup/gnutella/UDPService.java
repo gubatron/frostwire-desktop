@@ -116,15 +116,11 @@ public class UDPService {
      * A buffer used for reading the header of incoming messages.
      */
     private static final byte[] IN_HEADER_BUF = new byte[23];
-    
-    private final Provider<MessageDispatcher> messageDispatcher;
     private final MessageFactory messageFactory;
     
 	@Inject
     public UDPService(
-            Provider<MessageDispatcher> messageDispatcher,
             MessageFactory messageFactory) {
-        this.messageDispatcher = messageDispatcher;
         this.messageFactory = messageFactory;
         
         byte[] backing = new byte[BUFFER_SIZE];
@@ -315,12 +311,7 @@ public class UDPService {
 	 * Processes a single message.
 	 */
     protected void processMessage(Message message, InetSocketAddress addr) {
-//        if (!hostileFilter.get().allow(message))
-//            return;
-        if (message instanceof PingReply) 
-            mutateGUID(message.getGUID(), addr.getAddress(), addr.getPort());
-        updateState(message, addr);
-        messageDispatcher.get().dispatchUDP(message, addr);
+
     }
 	
 	/** Updates internal state of the UDP Service. */

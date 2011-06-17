@@ -12,7 +12,6 @@ import org.limewire.inspection.Inspectable;
 import org.limewire.service.ErrorService;
 
 import com.limegroup.gnutella.GUID;
-import com.limegroup.gnutella.MessageRouter;
 import com.limegroup.gnutella.ReplyHandler;
 import com.limegroup.gnutella.connection.RoutedConnection;
 import com.limegroup.gnutella.messages.BadPacketException;
@@ -155,8 +154,6 @@ final class QueryHandlerImpl implements Inspectable, QueryHandler {
 
     private final ConnectionManager connectionManager;
 
-    private final MessageRouter messageRouter;
-
     /**
      * Private constructor to ensure that only this class creates new
      * <tt>QueryFactory</tt> instances.
@@ -171,10 +168,8 @@ final class QueryHandlerImpl implements Inspectable, QueryHandler {
      *        results have been returned for this query
      */
     QueryHandlerImpl(QueryRequest query, int results, ReplyHandler handler, ResultCounter counter,
-            QueryRequestFactory queryRequestFactory, ConnectionManager connectionManager,
-            MessageRouter messageRouter) {
+            QueryRequestFactory queryRequestFactory, ConnectionManager connectionManager) {
         this.connectionManager = connectionManager;
-        this.messageRouter = messageRouter;
         if (query == null)
             throw new IllegalArgumentException("null query");
         if (handler == null)
@@ -372,34 +367,7 @@ final class QueryHandlerImpl implements Inspectable, QueryHandler {
      *      com.limegroup.gnutella.connection.RoutedConnection)
      */
     public int sendQueryToHost(QueryRequest query, RoutedConnection mc) {
-
-        // send the query directly along the connection, but if the query didn't
-        // go through send back 0....
-        if (!messageRouter.originateQuery(query, mc))
-            return 0;
-
-        byte ttl = query.getTTL();
-
-        // add the reply handler to the list of queried hosts if it's not
-        // a TTL=1 query or the connection does not support probe queries
-
-        // adds the connection to the list of probe connections if it's
-        // a TTL=1 query to a connection that supports probe extensions,
-        // otherwise add it to the list of connections we've queried
-//        if (ttl == 1 && mc.getConnectionCapabilities().supportsProbeQueries()) {
-//            this.QUERIED_PROBE_CONNECTIONS.add(mc);
-//        } else {
-//            this.QUERIED_CONNECTIONS.add(mc);
-//            if (LOG.isTraceEnabled())
-//                LOG.trace("QUERIED_CONNECTIONS.size() = " + this.QUERIED_CONNECTIONS.size());
-//        }
-
-        if (LOG.isTraceEnabled())
-            LOG.trace("Querying host " + mc.getAddress() + " with ttl " + query.getTTL());
-
-        this._nextQueryTime = System.currentTimeMillis() + (ttl * this._timeToWaitPerHop);
-
-        return calculateNewHosts(mc, ttl);
+        return 0;
     }
 
     /**
