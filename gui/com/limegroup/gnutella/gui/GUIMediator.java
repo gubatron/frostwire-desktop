@@ -48,11 +48,11 @@ import org.limewire.util.StringUtils;
 import org.limewire.util.VersionUtils;
 
 import com.frostwire.CoreFrostWireUtils;
-import com.frostwire.gnutella.connectiondoctor.ConnectionDoctor;
-import com.frostwire.gnutella.gui.chat.ChatMediator;
-import com.frostwire.gui.download.bittorrent.BTDownloadMediator;
-import com.limegroup.gnutella.bugs.FatalBugManager;
+import com.frostwire.gui.ChatMediator;
+import com.frostwire.gui.bittorrent.BTDownloadMediator;
+import com.frostwire.gui.tabs.LibraryPlayListTab;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
+import com.limegroup.gnutella.gui.bugs.FatalBugManager;
 import com.limegroup.gnutella.gui.library.LibraryMediator;
 import com.limegroup.gnutella.gui.mp3.MediaPlayerComponent;
 import com.limegroup.gnutella.gui.mp3.PlayListItem;
@@ -62,7 +62,6 @@ import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
 import com.limegroup.gnutella.gui.search.SearchMediator;
 import com.limegroup.gnutella.gui.shell.FrostAssociations;
 import com.limegroup.gnutella.gui.shell.ShellAssociationManager;
-import com.limegroup.gnutella.gui.tabs.LibraryPlayListTab;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.PlayerSettings;
@@ -400,8 +399,6 @@ public final class GUIMediator {
 	 */
 	public void coreInitialized() {
 		startTimer();
-		new ConnectionDoctor().initialize(); // Initialize the Connection Doctor
-												// timer
 	}
 
 	private final void startTimer() {

@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.frostwire.HttpFetcher;
+import com.frostwire.JsonEngine;
 import com.frostwire.bittorrent.websearch.WebSearchPerformer;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
-import com.frostwire.json.JsonEngine;
 
 public class BTJunkieWebSearchPerformer implements WebSearchPerformer {
 

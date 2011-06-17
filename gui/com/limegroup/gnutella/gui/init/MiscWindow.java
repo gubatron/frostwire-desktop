@@ -17,7 +17,7 @@ import javax.swing.border.TitledBorder;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.util.OSUtils;
 
-import com.frostwire.gnutella.gui.chat.ChatMediator;
+import com.frostwire.gui.ChatMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;

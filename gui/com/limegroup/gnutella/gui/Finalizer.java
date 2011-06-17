@@ -1,6 +1,6 @@
 package com.limegroup.gnutella.gui;
 
-import com.limegroup.gnutella.bugs.BugManager;
+import com.limegroup.gnutella.gui.bugs.BugManager;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
 
 /**

@@ -21,8 +21,8 @@ import org.limewire.util.OSUtils;
 
 import com.frostwire.HttpFetcher;
 import com.frostwire.ImageCache;
+import com.frostwire.JsonEngine;
 import com.frostwire.ImageCache.OnLoadedListener;
-import com.frostwire.json.JsonEngine;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 

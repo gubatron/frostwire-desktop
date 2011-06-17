@@ -16,9 +16,9 @@ import org.limewire.util.StringUtils;
 
 import com.frostwire.bittorrent.AzureusStarter;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
-import com.frostwire.gnutella.gui.filters.SearchFilter;
-import com.frostwire.gnutella.gui.filters.SearchFilterFactory;
-import com.frostwire.gnutella.gui.filters.SearchFilterFactoryImpl;
+import com.frostwire.gui.filters.SearchFilter;
+import com.frostwire.gui.filters.SearchFilterFactory;
+import com.frostwire.gui.filters.SearchFilterFactoryImpl;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.DialogOption;

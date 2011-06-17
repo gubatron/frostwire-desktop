@@ -15,7 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.frostwire.bittorrent.CreateTorrentDialog;
+import com.frostwire.gui.bittorrent.CreateTorrentDialog;
 import com.limegroup.gnutella.gui.AutoCompleteTextField;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.ClearableAutoCompleteTextField;

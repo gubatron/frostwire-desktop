@@ -11,8 +11,8 @@ import javax.swing.JPanel;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.util.StringUtils;
 
-import com.frostwire.components.TorrentSaveFolderComponent;
-import com.frostwire.updates.UpdateManager;
+import com.frostwire.gui.bittorrent.TorrentSaveFolderComponent;
+import com.frostwire.gui.updates.UpdateManager;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
 /**

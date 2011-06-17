@@ -16,7 +16,7 @@ import javax.swing.Icon;
 import org.limewire.collection.NameValue;
 import org.limewire.util.OSUtils;
 
-import com.frostwire.gui.download.bittorrent.BTDownloadMediator;
+import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.gui.GuiCoreMediator;

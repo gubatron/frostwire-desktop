@@ -35,11 +35,14 @@ import javax.swing.plaf.TabbedPaneUI;
 import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.OSUtils;
 
-import com.frostwire.gnutella.gui.android.AndroidMediator;
-import com.frostwire.gnutella.gui.chat.ChatMediator;
-import com.frostwire.gnutella.gui.tabs.AndroidTab;
-import com.frostwire.gnutella.gui.tabs.ChatTab;
-import com.frostwire.gui.download.bittorrent.BTDownloadMediator;
+import com.frostwire.gui.ChatMediator;
+import com.frostwire.gui.android.AndroidMediator;
+import com.frostwire.gui.bittorrent.BTDownloadMediator;
+import com.frostwire.gui.tabs.AndroidTab;
+import com.frostwire.gui.tabs.ChatTab;
+import com.frostwire.gui.tabs.LibraryPlayListTab;
+import com.frostwire.gui.tabs.SearchDownloadTab;
+import com.frostwire.gui.tabs.Tab;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.TransferHandlerDropTargetListener;
 import com.limegroup.gnutella.gui.library.LibraryMediator;
@@ -48,9 +51,6 @@ import com.limegroup.gnutella.gui.options.OptionsMediator;
 import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
 import com.limegroup.gnutella.gui.search.MagnetClipboardListener;
 import com.limegroup.gnutella.gui.search.SearchMediator;
-import com.limegroup.gnutella.gui.tabs.LibraryPlayListTab;
-import com.limegroup.gnutella.gui.tabs.SearchDownloadTab;
-import com.limegroup.gnutella.gui.tabs.Tab;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.settings.ApplicationSettings;
@@ -155,7 +155,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
     MainFrame(JFrame frame) {
         //starts the Frostwire update manager, and will trigger a task in 5 seconds.
         // RELEASE
-        com.frostwire.updates.UpdateManager.scheduleUpdateCheckTask(0);
+        com.frostwire.gui.updates.UpdateManager.scheduleUpdateCheckTask(0);
         
         // DEBUG
         //com.frostwire.updates.UpdateManager.DEBUGGING_NON_UI_MESSAGES = true;
@@ -312,7 +312,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      */
     public void buildTabs() {
     	//Enable right click on Tabs to hide/show tabs
-    	TABBED_PANE.addMouseListener(com.frostwire.gnutella.gui.tabs.TabRightClickAdapter.getInstance());
+    	TABBED_PANE.addMouseListener(com.frostwire.gui.tabs.TabRightClickAdapter.getInstance());
     	
     	SEARCH_MEDIATOR = new SearchMediator();
         

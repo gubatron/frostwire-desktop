@@ -638,7 +638,7 @@ public class PixxMDIInterface extends IRCInterface implements PixxTaskBarListene
             currentServer.disconnect();
         else {
             try {
-                com.frostwire.gnutella.gui.chat.ChatMediator.instance().ensureValidNickname();
+                com.frostwire.gui.ChatMediator.instance().ensureValidNickname();
                 currentServer.connect();
             } catch (Exception e) {
                 e.printStackTrace();

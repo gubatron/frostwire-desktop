@@ -26,7 +26,7 @@ import com.limegroup.gnutella.LimeCoreGlue;
 import com.limegroup.gnutella.LimeCoreGlue.InstallFailedException;
 import com.limegroup.gnutella.LimeWireCore;
 import com.limegroup.gnutella.browser.ExternalControl;
-import com.limegroup.gnutella.bugs.BugManager;
+import com.limegroup.gnutella.gui.bugs.BugManager;
 import com.limegroup.gnutella.gui.init.SetupManager;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;

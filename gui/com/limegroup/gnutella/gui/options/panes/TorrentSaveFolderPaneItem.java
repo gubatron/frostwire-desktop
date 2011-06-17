@@ -3,8 +3,8 @@ package com.limegroup.gnutella.gui.options.panes;
 import java.io.File;
 import java.io.IOException;
 
-import com.frostwire.components.TorrentSaveFolderComponent;
-import com.frostwire.gui.download.bittorrent.BTDownloadMediator;
+import com.frostwire.gui.bittorrent.BTDownloadMediator;
+import com.frostwire.gui.bittorrent.TorrentSaveFolderComponent;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;

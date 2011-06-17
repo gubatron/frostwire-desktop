@@ -20,7 +20,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
-import com.frostwire.gnutella.gui.chat.ChatMediator;
+import com.frostwire.gui.ChatMediator;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
 import com.limegroup.gnutella.settings.StatusBarSettings;
 
@@ -180,7 +180,7 @@ public class LanguageWindow extends JDialog {
 
             String message = I18n.trl(
                     "FrostWire must be restarted for the new language to take effect.", locale);
-	    com.frostwire.updates.UpdateManager.getInstance().checkForUpdates(); // check if it's possible to load the new overlay ad for next frostwire load. In the future should be loaded automatically from this function checkforupdates.
+	    com.frostwire.gui.updates.UpdateManager.getInstance().checkForUpdates(); // check if it's possible to load the new overlay ad for next frostwire load. In the future should be loaded automatically from this function checkforupdates.
 	    GUIMediator.showMessage(message);
         }
 

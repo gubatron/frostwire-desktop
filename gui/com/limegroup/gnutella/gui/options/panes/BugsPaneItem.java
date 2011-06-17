@@ -17,12 +17,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import com.google.inject.Inject;
-import com.limegroup.gnutella.bugs.LocalClientInfo;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LocalClientInfoFactory;
 import com.limegroup.gnutella.gui.MessageService;
 import com.limegroup.gnutella.gui.GUIUtils.SizePolicy;
+import com.limegroup.gnutella.gui.bugs.LocalClientInfo;
 import com.limegroup.gnutella.settings.BugSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
 

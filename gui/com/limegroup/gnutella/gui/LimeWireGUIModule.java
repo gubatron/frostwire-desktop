@@ -2,10 +2,10 @@ package com.limegroup.gnutella.gui;
 
 import com.google.inject.AbstractModule;
 import com.limegroup.gnutella.ActivityCallback;
-import com.limegroup.gnutella.bugs.BugManager;
-import com.limegroup.gnutella.bugs.DeadlockBugManager;
-import com.limegroup.gnutella.bugs.FatalBugManager;
-import com.limegroup.gnutella.bugs.SessionInfo;
+import com.limegroup.gnutella.gui.bugs.BugManager;
+import com.limegroup.gnutella.gui.bugs.DeadlockBugManager;
+import com.limegroup.gnutella.gui.bugs.FatalBugManager;
+import com.limegroup.gnutella.gui.bugs.SessionInfo;
 import com.limegroup.gnutella.gui.options.panes.BugsPaneItem;
 
 public class LimeWireGUIModule extends AbstractModule {

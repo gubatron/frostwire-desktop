@@ -3,8 +3,8 @@ package com.limegroup.gnutella.gui;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import com.limegroup.gnutella.bugs.LocalClientInfo;
-import com.limegroup.gnutella.bugs.SessionInfo;
+import com.limegroup.gnutella.gui.bugs.LocalClientInfo;
+import com.limegroup.gnutella.gui.bugs.SessionInfo;
 
 /** A factory for creating LocalClientInfo objects. */
 @Singleton

@@ -29,7 +29,7 @@ import org.limewire.setting.BooleanSetting;
 
 import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.bittorrent.AzureusStarter;
-import com.frostwire.gui.download.bittorrent.BTDownloadMediator;
+import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.gui.mp3.MediaPlayerComponent;
 import com.limegroup.gnutella.gui.themes.SkinCheckBoxMenuItem;

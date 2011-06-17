@@ -29,7 +29,7 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
-import com.frostwire.bittorrent.CreateTorrentDialog;
+import com.frostwire.gui.bittorrent.CreateTorrentDialog;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.FileDetails;
