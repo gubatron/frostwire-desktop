@@ -14,12 +14,10 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
-import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.ConnectionSettings;
 import com.limegroup.gnutella.settings.DownloadSettings;
 import com.limegroup.gnutella.settings.UltrapeerSettings;
 import com.limegroup.gnutella.settings.UploadSettings;
-import com.limegroup.gnutella.statistics.TcpBandwidthStatistics;
 
 
 /**
@@ -103,10 +101,8 @@ class NodeAssignerImpl implements NodeAssigner {
 
     private final Provider<BandwidthTracker> downloadTracker;
     private final NetworkManager networkManager;
-    private final SearchServices searchServices;
     private final ScheduledExecutorService backgroundExecutor;
     private final Executor unlimitedExecutor;
-    private final TcpBandwidthStatistics tcpBandwidthStatistics;
     private final NetworkInstanceUtils networkInstanceUtils;
     
 
@@ -123,17 +119,13 @@ class NodeAssignerImpl implements NodeAssigner {
     public NodeAssignerImpl(
                         @Named("downloadTracker") Provider<BandwidthTracker> downloadTracker,
                         NetworkManager networkManager,
-                        SearchServices searchServices,
                         @Named("backgroundExecutor") ScheduledExecutorService backgroundExecutor,
                         @Named("unlimitedExecutor") Executor unlimitedExecutor,
-                        TcpBandwidthStatistics tcpBandwidthStatistics,
                         NetworkInstanceUtils networkInstanceUtils) {
         this.downloadTracker = downloadTracker;  
         this.networkManager = networkManager;
-        this.searchServices = searchServices;
         this.backgroundExecutor = backgroundExecutor;
         this.unlimitedExecutor = unlimitedExecutor;
-        this.tcpBandwidthStatistics = tcpBandwidthStatistics;
         this.networkInstanceUtils = networkInstanceUtils;
     }
     

@@ -13,7 +13,6 @@ import org.limewire.inspection.Inspector;
 import org.limewire.inspection.InspectorImpl;
 import org.limewire.io.LimeWireIOModule;
 import org.limewire.io.LocalSocketAddressProvider;
-import org.limewire.statistic.LimeWireStatisticsModule;
 
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
@@ -63,7 +62,6 @@ import com.limegroup.gnutella.search.QueryDispatcher;
 import com.limegroup.gnutella.search.QueryDispatcherImpl;
 import com.limegroup.gnutella.search.QueryHandlerFactory;
 import com.limegroup.gnutella.search.QueryHandlerFactoryImpl;
-import com.limegroup.gnutella.statistics.LimeWireGnutellaStatisticsModule;
 import com.limegroup.gnutella.version.UpdateCollectionFactory;
 import com.limegroup.gnutella.version.UpdateCollectionFactoryImpl;
 import com.limegroup.gnutella.version.UpdateMessageVerifier;
@@ -94,8 +92,6 @@ public class LimeWireCoreModule extends AbstractModule {
     protected void configure() {
         binder().install(new LimeWireCommonModule());
         binder().install(new LimeWireDownloadModule());
-        binder().install(new LimeWireStatisticsModule());
-        binder().install(new LimeWireGnutellaStatisticsModule());
         binder().install(new LimeWireIOModule());
         
         bind(LimeWireCore.class);
@@ -118,7 +114,6 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(QueryReplyFactory.class).to(QueryReplyFactoryImpl.class);
         bind(CapabilitiesVMFactory.class).to(CapabilitiesVMFactoryImpl.class);
         bind(LifecycleManager.class).to(LifecycleManagerImpl.class);
-        bind(SearchServices.class).to(SearchServicesImpl.class);
         bind(DownloadServices.class).to(DownloadServicesImpl.class);
         bind(ApplicationServices.class).to(ApplicationServicesImpl.class);
         bind(SpamServices.class).to(SpamServicesImpl.class);

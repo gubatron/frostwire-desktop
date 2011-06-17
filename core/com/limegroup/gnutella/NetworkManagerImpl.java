@@ -1,7 +1,6 @@
 package com.limegroup.gnutella;
 
 import java.io.IOException;
-import java.util.Properties;
 
 import org.limewire.io.NetworkInstanceUtils;
 import org.limewire.io.NetworkUtils;
@@ -9,27 +8,20 @@ import org.limewire.io.NetworkUtils;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import com.limegroup.gnutella.connection.RoutedConnection;
-import com.limegroup.gnutella.messages.vendor.HeaderUpdateVendorMessage;
-import com.limegroup.gnutella.settings.SearchSettings;
-import com.limegroup.gnutella.statistics.OutOfBandStatistics;
 
 @Singleton
 public class NetworkManagerImpl implements NetworkManager {
     
     private final Provider<UDPService> udpService;
     private final Provider<ActivityCallback> activityCallback;
-    private final OutOfBandStatistics outOfBandStatistics;
     private final NetworkInstanceUtils networkInstanceUtils;
     
     @Inject
     public NetworkManagerImpl(Provider<UDPService> udpService,
             Provider<ActivityCallback> activityCallback,
-            OutOfBandStatistics outOfBandStatistics,
             NetworkInstanceUtils networkInstanceUtils) {
         this.udpService = udpService;
         this.activityCallback = activityCallback;
-        this.outOfBandStatistics = outOfBandStatistics;
         this.networkInstanceUtils = networkInstanceUtils;
     }
     

@@ -89,7 +89,6 @@ import com.limegroup.gnutella.search.QueryDispatcher;
 import com.limegroup.gnutella.search.QueryHandler;
 import com.limegroup.gnutella.search.QueryHandlerFactory;
 import com.limegroup.gnutella.search.ResultCounter;
-import com.limegroup.gnutella.search.SearchResultHandler;
 import com.limegroup.gnutella.settings.ConnectionSettings;
 import com.limegroup.gnutella.settings.FilterSettings;
 import com.limegroup.gnutella.settings.MessageSettings;
@@ -287,7 +286,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
     protected final ContentManager contentManager;
     protected final DownloadManager downloadManager;
     protected final UDPService udpService;
-    protected final SearchResultHandler searchResultHandler;
     protected final QueryReplyFactory queryReplyFactory;
     protected final StaticMessages staticMessages;
     protected final Provider<MessageDispatcher> messageDispatcher;
@@ -323,7 +321,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
             ContentManager contentManager,
             DownloadManager downloadManager,
             UDPService udpService,
-            SearchResultHandler searchResultHandler,
             QueryReplyFactory queryReplyFactory,
             StaticMessages staticMessages,
             Provider<MessageDispatcher> messageDispatcher,
@@ -347,7 +344,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
         this.contentManager = contentManager;
         this.downloadManager = downloadManager;
         this.udpService = udpService;
-        this.searchResultHandler = searchResultHandler;
         this.queryReplyFactory = queryReplyFactory;
         this.staticMessages = staticMessages;
         this.messageDispatcher = messageDispatcher;
@@ -1132,24 +1128,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
         }
         GUESSEndpoint ep = new GUESSEndpoint(handler.getInetAddress(), handler.getPort());
         return false;//_bypassedResultsCache.addBypassedSource(new GUID(reply.getGUID()), ep);
-    }
-
-    /* (non-Javadoc)
-     * @see com.limegroup.gnutella.MessageRouter#getNumOOBToRequest(com.limegroup.gnutella.messages.vendor.ReplyNumberVendorMessage)
-     */
-    public int getNumOOBToRequest(ReplyNumberVendorMessage reply) {
-    	GUID qGUID = new GUID(reply.getGUID());
-    	
-        int numResults = searchResultHandler.getNumResultsForQuery(qGUID);
-    	
-        if (numResults < 0) // this may be a proxy query
-    		numResults = queryDispatcher.getLeafResultsForQuery(qGUID);
-
-        if (numResults < 0 || numResults > QueryHandler.ULTRAPEER_RESULTS) {
-            return -1;
-        }
-        
-    	return reply.getNumResults();
     }
     
     /* (non-Javadoc)

@@ -1,56 +1,31 @@
 package com.limegroup.gnutella;
 
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.limewire.io.IPPortCombo;
-import org.limewire.io.IpPort;
-import org.limewire.io.NetworkUtils;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 import com.limegroup.gnutella.auth.ContentManager;
-import com.limegroup.gnutella.connection.RoutedConnection;
 import com.limegroup.gnutella.messagehandlers.InspectionRequestHandler;
 import com.limegroup.gnutella.messagehandlers.UDPCrawlerPingHandler;
-import com.limegroup.gnutella.messages.FeatureSearchData;
-import com.limegroup.gnutella.messages.PingReply;
 import com.limegroup.gnutella.messages.PingReplyFactory;
 import com.limegroup.gnutella.messages.PingRequest;
 import com.limegroup.gnutella.messages.PingRequestFactory;
-import com.limegroup.gnutella.messages.QueryReply;
 import com.limegroup.gnutella.messages.QueryReplyFactory;
 import com.limegroup.gnutella.messages.QueryRequest;
 import com.limegroup.gnutella.messages.QueryRequestFactory;
 import com.limegroup.gnutella.messages.StaticMessages;
 import com.limegroup.gnutella.messages.vendor.HeadPongFactory;
-import com.limegroup.gnutella.messages.vendor.ReplyNumberVendorMessage;
 import com.limegroup.gnutella.messages.vendor.ReplyNumberVendorMessageFactory;
 import com.limegroup.gnutella.search.QueryDispatcher;
 import com.limegroup.gnutella.search.QueryHandlerFactory;
-import com.limegroup.gnutella.search.SearchResultHandler;
-import com.limegroup.gnutella.settings.ChatSettings;
-import com.limegroup.gnutella.settings.ConnectionSettings;
-import com.limegroup.gnutella.settings.MessageSettings;
-import com.limegroup.gnutella.util.DataUtils;
-import com.limegroup.gnutella.xml.LimeXMLDocumentHelper;
-import com.limegroup.gnutella.xml.LimeXMLUtils;
 
 /**
  * This class is the message routing implementation for TCP messages.
@@ -71,7 +46,6 @@ public class StandardMessageRouter extends MessageRouterImpl {
             HeadPongFactory headPongFactory, PingReplyFactory pingReplyFactory,
             QueryUnicaster queryUnicaster, ContentManager contentManager,
             DownloadManager downloadManager, UDPService udpService,
-            SearchResultHandler searchResultHandler,
             QueryReplyFactory queryReplyFactory, StaticMessages staticMessages,
             Provider<MessageDispatcher> messageDispatcher,
             MulticastService multicastService, QueryDispatcher queryDispatcher,
@@ -91,7 +65,7 @@ public class StandardMessageRouter extends MessageRouterImpl {
                 headPongFactory, pingReplyFactory,
                 queryUnicaster,
                 contentManager,
-                downloadManager, udpService, searchResultHandler,
+                downloadManager, udpService,
                 queryReplyFactory, staticMessages,
                 messageDispatcher, multicastService, queryDispatcher,
                 activityCallback, applicationServices,
@@ -302,7 +276,5 @@ public class StandardMessageRouter extends MessageRouterImpl {
         Response[][] splits = splitResponses(toSplit);
         addTo.add(splits[0]);
         addTo.add(splits[1]);
-    }
-
-    
+    }    
 }

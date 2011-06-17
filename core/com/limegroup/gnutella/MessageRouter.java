@@ -178,13 +178,6 @@ public interface MessageRouter extends Service {
     public boolean addBypassedSource(QueryReply reply, ReplyHandler handler);
 
     /**
-     * Returns the number of results to request from source of <code>reply</code>.
-     * 
-     * @return -1 if no results are desired
-     */
-    public int getNumOOBToRequest(ReplyNumberVendorMessage reply);
-
-    /**
      * @return true if there is still a route for this reply
      */
     public boolean isQueryAlive(GUID guid);

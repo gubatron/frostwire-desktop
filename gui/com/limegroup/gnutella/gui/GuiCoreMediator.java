@@ -15,7 +15,6 @@ import com.limegroup.gnutella.LocalFileDetailsFactory;
 import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.ResponseFactory;
 import com.limegroup.gnutella.SavedFileManager;
-import com.limegroup.gnutella.SearchServices;
 import com.limegroup.gnutella.SpamServices;
 import com.limegroup.gnutella.UDPService;
 import com.limegroup.gnutella.altlocs.AltLocManager;
@@ -26,7 +25,6 @@ import com.limegroup.gnutella.messages.QueryRequestFactory;
 import com.limegroup.gnutella.metadata.MetaDataFactory;
 import com.limegroup.gnutella.spam.RatingTable;
 import com.limegroup.gnutella.spam.SpamManager;
-import com.limegroup.gnutella.statistics.TcpBandwidthStatistics;
 import com.limegroup.gnutella.xml.LimeXMLDocumentFactory;
 import com.limegroup.gnutella.xml.LimeXMLProperties;
 import com.limegroup.gnutella.xml.LimeXMLSchemaRepository;
@@ -51,7 +49,6 @@ public class GuiCoreMediator {
     public static RatingTable getRatingTable() { return core.getRatingTable(); }
     public static SpamManager getSpamManager() { return core.getSpamManager(); }
     public static LifecycleManager getLifecycleManager() { return core.getLifecycleManager(); }
-    public static SearchServices getSearchServices() { return core.getSearchServices(); }
     public static ScheduledExecutorService getCoreBackgroundExecutor() { return core.getBackgroundExecutor(); }
     public static DownloadServices getDownloadServices() { return core.getDownloadServices(); }
     public static ApplicationServices getApplicationServices() { return core.getApplicationServices(); }
@@ -62,6 +59,5 @@ public class GuiCoreMediator {
     public static MetaDataFactory getMetaDataFactory() { return core.getMetaDataFactory(); }
     public static LicenseVerifier getLicenseVerifier() { return core.getLicenseVerifier(); }
     public static ResponseFactory getResponseFactory() { return core.getResponseFactory(); }
-    public static TcpBandwidthStatistics getTcpBandwidthStatistics() { return core.getTcpBandwidthStatistics(); }
     public static NetworkInstanceUtils getNetworkInstanceUtils() { return core.getNetworkInstanceUtils(); }
 }

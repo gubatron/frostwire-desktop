@@ -44,11 +44,8 @@ import com.limegroup.gnutella.metadata.MetaDataReader;
 import com.limegroup.gnutella.search.HostDataFactory;
 import com.limegroup.gnutella.search.QueryDispatcher;
 import com.limegroup.gnutella.search.QueryHandlerFactory;
-import com.limegroup.gnutella.search.SearchResultHandler;
 import com.limegroup.gnutella.spam.RatingTable;
 import com.limegroup.gnutella.spam.SpamManager;
-import com.limegroup.gnutella.statistics.QueryStats;
-import com.limegroup.gnutella.statistics.TcpBandwidthStatistics;
 import com.limegroup.gnutella.version.UpdateCollectionFactory;
 import com.limegroup.gnutella.xml.LimeXMLDocumentFactory;
 import com.limegroup.gnutella.xml.LimeXMLDocumentHelper;
@@ -133,10 +130,6 @@ public class LimeWireCore {
         return injector.getInstance(DownloadManager.class);
     }
 
-    public SearchResultHandler getSearchResultHandler() {
-        return injector.getInstance(SearchResultHandler.class);
-    }
-
     public AltLocManager getAltLocManager() {
         return injector.getInstance(AltLocManager.class);
     }
@@ -147,10 +140,6 @@ public class LimeWireCore {
 
     public IPFilter getIpFilter() {
         return injector.getInstance(IPFilter.class);
-    }
-    
-    public QueryStats getQueryStats() {
-        return injector.getInstance(QueryStats.class);
     }
 
     public NodeAssigner getNodeAssigner() {
@@ -239,10 +228,6 @@ public class LimeWireCore {
     
     public LifecycleManager getLifecycleManager() {
         return injector.getInstance(LifecycleManager.class);
-    }
-
-    public SearchServices getSearchServices() {
-        return injector.getInstance(SearchServices.class);
     }
 
     public ScheduledExecutorService getBackgroundExecutor() {
@@ -373,10 +358,6 @@ public class LimeWireCore {
         return injector.getInstance(LicenseVerifier.class);
     }
     
-    public TcpBandwidthStatistics getTcpBandwidthStatistics() {
-        return injector.getInstance(TcpBandwidthStatistics.class);
-    }
-    
     public NetworkInstanceUtils getNetworkInstanceUtils() {
         return injector.getInstance(NetworkInstanceUtils.class);
     }
@@ -384,5 +365,4 @@ public class LimeWireCore {
     public ServiceRegistry getServiceRegistry() {
         return injector.getInstance(ServiceRegistry.class);
     }
-
 }

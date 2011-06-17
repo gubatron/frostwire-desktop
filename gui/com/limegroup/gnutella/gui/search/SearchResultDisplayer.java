@@ -463,12 +463,6 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
      */
     void killSearchAtIndex(int i) {
         ResultPanel killed = entries.remove(i);
-        final GUID killedGUID = new GUID(killed.getGUID());
-        BackgroundExecutorService.schedule(new DebugRunnable(new Runnable() {
-            public void run() {
-                GuiCoreMediator.getSearchServices().stopQuery(killedGUID);
-            }
-        }));
         
         try {
             tabbedPane.removeTabAt(i);

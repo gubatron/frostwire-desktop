@@ -27,6 +27,7 @@ import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.banner.Ad;
 import com.limegroup.gnutella.gui.banner.Banner;
+import com.limegroup.gnutella.settings.MessageSettings;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 import com.limegroup.gnutella.settings.SearchSettings;
 
@@ -186,10 +187,9 @@ public final class SearchMediator {
             return null;
 
         // 1. Update panel with new GUID
-        byte [] guidBytes = GuiCoreMediator.getSearchServices().newQueryGUID();
+        byte [] guidBytes = newQueryGUID();
         final GUID newGuid = new GUID(guidBytes);
 
-        GuiCoreMediator.getSearchServices().stopQuery(new GUID(rp.getGUID()));
         rp.setGUID(newGuid);
         if ( clearingResults ) {
             getSearchInputManager().panelReset(rp);
@@ -199,6 +199,10 @@ public final class SearchMediator {
         doSearch(guidBytes, info);
         
         return guidBytes;
+    }
+
+    private static byte[] newQueryGUID() {
+        return GUID.makeGuid();
     }
     
     /**
@@ -212,7 +216,7 @@ public final class SearchMediator {
             return null;
             
         // generate a guid for the search.
-        final byte[] guid = GuiCoreMediator.getSearchServices().newQueryGUID();
+        final byte[] guid = newQueryGUID();
         addResultTab(new GUID(guid), info);
         
         doSearch(guid, info);

@@ -17,8 +17,6 @@ import com.limegroup.gnutella.messages.QueryReplyFactory;
 import com.limegroup.gnutella.messages.QueryRequestFactory;
 import com.limegroup.gnutella.messages.vendor.CapabilitiesVMFactory;
 import com.limegroup.gnutella.messages.vendor.MessagesSupportedVendorMessage;
-import com.limegroup.gnutella.search.SearchResultHandler;
-import com.limegroup.gnutella.statistics.OutOfBandStatistics;
 
 /**
  * An implementation of {@link RoutedConnectionFactory} that constructs {@link GnutellaConnection GnutellaConnections}.
@@ -35,8 +33,6 @@ public class RoutedConnectionFactoryImpl implements RoutedConnectionFactory {
 
     private final Provider<MessageDispatcher> messageDispatcher;
 
-    private final Provider<SearchResultHandler> searchResultHandler;
-
     private final CapabilitiesVMFactory capabilitiesVMFactory;
 
     private final MessagesSupportedVendorMessage supportedVendorMessage;
@@ -50,36 +46,30 @@ public class RoutedConnectionFactoryImpl implements RoutedConnectionFactory {
     private final MessageReaderFactory messageReaderFactory;
 
     private final ApplicationServices applicationServices;
-    
-    private final OutOfBandStatistics outOfBandStatistics;
-    
+        
     private final NetworkInstanceUtils networkInstanceUtils;
 
     @Inject
     public RoutedConnectionFactoryImpl(
             NetworkManager networkManager, QueryRequestFactory queryRequestFactory,
            QueryReplyFactory queryReplyFactory, Provider<MessageDispatcher> messageDispatcher,
-            Provider<SearchResultHandler> searchResultHandler,
             CapabilitiesVMFactory capabilitiesVMFactory, 
             MessagesSupportedVendorMessage supportedVendorMessage, 
             GuidMapManager guidMapManager,
             SpamFilterFactory spamFilterFactory, MessageFactory messageFactory,
             MessageReaderFactory messageReaderFactory, ApplicationServices applicationServices,
-            OutOfBandStatistics outOfBandStatistics,
             NetworkInstanceUtils networkInstanceUtils) {
         this.networkManager = networkManager;
         this.queryRequestFactory = queryRequestFactory;
         this.queryReplyFactory = queryReplyFactory;
         this.messageDispatcher = messageDispatcher;
         this.applicationServices = applicationServices;
-        this.searchResultHandler = searchResultHandler;
         this.capabilitiesVMFactory = capabilitiesVMFactory;
         this.supportedVendorMessage = supportedVendorMessage;
         this.guidMapManager = guidMapManager;
         this.spamFilterFactory = spamFilterFactory;
         this.messageFactory = messageFactory;
         this.messageReaderFactory = messageReaderFactory;
-        this.outOfBandStatistics = outOfBandStatistics;
         this.networkInstanceUtils = networkInstanceUtils;
     }
 

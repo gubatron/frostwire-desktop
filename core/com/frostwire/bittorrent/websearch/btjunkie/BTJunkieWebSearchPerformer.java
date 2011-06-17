@@ -20,7 +20,7 @@ public class BTJunkieWebSearchPerformer implements WebSearchPerformer {
 
         BTJunkieResponse response = searchBTJunkie(keywords);
 
-        if (response.results != null)
+        if (response != null && response.results != null)
             for (BTJunkieItem item : response.results) {
 
                 WebSearchResult sr = new BTJunkieResponseWebSearchResult(item);
