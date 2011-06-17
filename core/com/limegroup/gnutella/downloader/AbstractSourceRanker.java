@@ -30,8 +30,6 @@ public abstract class AbstractSourceRanker implements SourceRanker {
 	
     public abstract boolean hasMore();
     
-    public abstract RemoteFileDesc getBest();
-    
     /**
      * @return the collection of hosts that can be shared with other rankers
      */

@@ -8,7 +8,6 @@ import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.SaveLocationException;
 import com.limegroup.gnutella.browser.MagnetOptions;
-import com.limegroup.gnutella.downloader.serial.DownloadMemento;
 import com.limegroup.gnutella.version.DownloadInformation;
 
 /**
@@ -31,10 +30,4 @@ public interface CoreDownloaderFactory {
 
     public ResumeDownloader createResumeDownloader(File incompleteFile, String name, long size)
             throws SaveLocationException;
-
-    /**
-     * Creates the appropriate kind of downloader from a given DownloadMemento.
-     */
-    public CoreDownloader createFromMemento(DownloadMemento memento) throws InvalidDataException; 
-
 }

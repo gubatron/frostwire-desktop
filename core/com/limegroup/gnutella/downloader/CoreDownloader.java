@@ -2,12 +2,9 @@ package com.limegroup.gnutella.downloader;
 
 import java.io.File;
 
-import org.limewire.io.InvalidDataException;
-
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.URN;
-import com.limegroup.gnutella.downloader.serial.DownloadMemento;
 
 /**
  * Extends the {@link Downloader} interface to provide more functionality,
@@ -71,16 +68,5 @@ public interface CoreDownloader extends Downloader {
      */
     public DownloaderType getDownloadType();
     
-    /** Constructs a memento that will be used for serialization. */
-    DownloadMemento toMemento();
-    
-    /**
-     * Initializes this object from the given memento.
-     * 
-     * @throws InvalidDataException if the memento contains invalid data.
-     */
-    void initFromMemento(DownloadMemento memento) throws InvalidDataException;
-    
     public void setOverwrite(boolean override);
-
 }

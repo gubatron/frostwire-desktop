@@ -1,18 +1,13 @@
 package com.limegroup.gnutella.downloader;
 
 import java.io.File;
-import java.util.Arrays;
-
-import org.limewire.io.InvalidDataException;
 
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.SaveLocationException;
 import com.limegroup.gnutella.browser.MagnetOptions;
-import com.limegroup.gnutella.downloader.serial.DownloadMemento;
 import com.limegroup.gnutella.version.DownloadInformation;
 
 @Singleton
@@ -66,32 +61,4 @@ public class CoreDownloaderFactoryImpl implements CoreDownloaderFactory {
 //        return rd;
         return null;
     }
-
-    public CoreDownloader createFromMemento(DownloadMemento memento) throws InvalidDataException {
-        try {
-            Provider<? extends CoreDownloader> coreFactory = providerForMemento(memento);
-            CoreDownloader downloader = coreFactory.get();
-            downloader.initFromMemento(memento);
-            return downloader;
-        } catch (ClassCastException cce) {
-            throw new InvalidDataException("invalid memento!", cce);
-        }
-    }
-
-    private Provider<? extends CoreDownloader> providerForMemento(DownloadMemento memento)
-            throws InvalidDataException {
-        switch (memento.getDownloadType()) {
-//        case INNETWORK:
-//            return inNetworkDownloaderFactory;
-//        case MAGNET:
-//            return magnetDownloaderFactory;
-//        case MANAGED:
-//            return managedDownloaderFactory;
-        case TORRENTFETCHER:
-        default:
-            throw new InvalidDataException("invalid memento type: " + memento.getDownloadType());
-        }
-
-    }
-
 }

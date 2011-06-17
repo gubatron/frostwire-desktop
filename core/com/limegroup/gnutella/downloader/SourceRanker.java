@@ -24,11 +24,6 @@ public interface SourceRanker {
     public boolean hasMore();
 
     /**
-     * @return the source that should be tried next
-     */
-    public RemoteFileDesc getBest();
-
-    /**
      * @return the number of hosts this ranker knows about
      */
     public int getNumKnownHosts();

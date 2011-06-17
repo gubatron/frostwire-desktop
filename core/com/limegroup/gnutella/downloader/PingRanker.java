@@ -6,9 +6,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -16,7 +14,6 @@ import java.util.TreeSet;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.limewire.collection.Cancellable;
-import org.limewire.collection.DualIterator;
 import org.limewire.io.IpPort;
 
 import com.limegroup.gnutella.GUID;
@@ -29,7 +26,6 @@ import com.limegroup.gnutella.UDPPinger;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.messages.Message;
 import com.limegroup.gnutella.messages.vendor.HeadPing;
-import com.limegroup.gnutella.messages.vendor.HeadPong;
 import com.limegroup.gnutella.settings.DownloadSettings;
 
 public class PingRanker extends AbstractSourceRanker implements MessageListener, Cancellable {
@@ -114,20 +110,11 @@ public class PingRanker extends AbstractSourceRanker implements MessageListener,
      * adds the collection of hosts to to the internal structures
      */
     private boolean addInternal(Collection<? extends RemoteFileDesc> c) {
-        boolean ret = false;
-        for(RemoteFileDesc rfd : c) { 
-            if (addInternal(rfd))
-                ret = true;
-        }
-        
-        pingNewHosts();
-        return ret;
+        return false;
     }
     
     public synchronized boolean addToPool(RemoteFileDesc host){
-        boolean ret = addInternal(host);
-        pingNewHosts();
-        return ret;
+        return false;
     }
     
     private boolean addInternal(RemoteFileDesc host) {
@@ -174,120 +161,8 @@ public class PingRanker extends AbstractSourceRanker implements MessageListener,
             testedLocations.contains(host);
     }
     
-    public synchronized RemoteFileDesc getBest() throws NoSuchElementException {
-        if (!hasMore())
-            return null;
-        RemoteFileDesc ret;
-        
-        // try a verified host
-        if (!verifiedHosts.isEmpty()){
-            LOG.debug("getting a verified host");
-            ret = verifiedHosts.first();
-            verifiedHosts.remove(ret);
-        }
-        else {
-            LOG.debug("getting a non-verified host");
-            // use the legacy ranking logic to select a non-verified host
-            Iterator<RemoteFileDesc> dual =
-                new DualIterator<RemoteFileDesc>(testedLocations.iterator(),newHosts.iterator());
-            ret = LegacyRanker.getBest(dual);
-            newHosts.remove(ret);
-            testedLocations.remove(ret);
-            if (ret.needsPush()) {
-                for(IpPort ipp : ret.getPushProxies())
-                    pingedHosts.remove(ipp);
-            } else
-                pingedHosts.remove(ret);
-        }
-        
-        pingNewHosts();
-        
-        if (LOG.isDebugEnabled())
-            LOG.debug("the best host we came up with is "+ret+" "+ret.getPushAddr());
-        return ret;
-    }
-    
-    /**
-     * pings a bunch of hosts if necessary
-     */
-    private void pingNewHosts() {
-        // if we have reached our desired # of altlocs, don't ping
-        if (isCancelled())
-            return;
-        
-        // if we don't have anybody to ping, don't ping
-        if (!hasNonBusy())
-            return;
-        
-        // if we haven't found a single RFD with URN, don't ping anybody
-        if (sha1 == null)
-            return;
-        
-        // if its not time to ping yet, don't ping 
-        // use the same interval as workers for now
-        long now = System.currentTimeMillis();
-        if (now - lastPingTime < DownloadSettings.WORKER_INTERVAL.getValue())
-            return;
-        
-        // create a ping for the non-firewalled hosts
-        HeadPing ping = new HeadPing(myGUID,sha1,getPingFlags());
-        
-        // prepare a batch of hosts to ping
-        int batch = DownloadSettings.PING_BATCH.getValue();
-        List<RemoteFileDesc> toSend = new ArrayList<RemoteFileDesc>(batch);
-        int sent = 0;
-        for (Iterator<RemoteFileDesc> iter = newHosts.iterator(); iter.hasNext() && sent < batch;) {
-            RemoteFileDesc rfd = iter.next();
-            if (rfd.isBusy(now))
-                continue;
-            iter.remove();
-            
-            if (rfd.needsPush()) {
-                if (rfd.getPushProxies().size() > 0 && rfd.getSHA1Urn() != null)
-                    pingProxies(rfd);
-            } else {
-                pingedHosts.put(rfd,rfd);
-                toSend.add(rfd);
-            }
-            testedLocations.add(rfd);
-            sent++;
-        }
-        
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("\nverified hosts " +verifiedHosts.size()+
-                    "\npingedHosts "+pingedHosts.values().size()+
-                    "\nnewHosts "+newHosts.size()+
-                    "\npinging hosts: "+sent);
-        }
-        
-        udpPinger.rank(toSend,null,this,ping);
-        lastPingTime = now;
-    }
-    
-    
     protected Collection<RemoteFileDesc> getPotentiallyBusyHosts() {
         return newHosts;
-    }
-    
-    /**
-     * schedules a push ping to each proxy of the given host
-     */
-    private void pingProxies(RemoteFileDesc rfd) {
-        if (networkManager.acceptedIncomingConnection() || 
-                (networkManager.canDoFWT() && rfd.supportsFWTransfer())) {
-            HeadPing pushPing = 
-                new HeadPing(myGUID,rfd.getSHA1Urn(),
-                        new GUID(rfd.getPushAddr().getClientGUID()),getPingFlags());
-            
-            for(IpPort ipp : rfd.getPushProxies()) 
-                pingedHosts.put(ipp, rfd);
-            
-            if (LOG.isDebugEnabled())
-                LOG.debug("pinging push location "+rfd.getPushAddr());
-            
-            udpPinger.rank(rfd.getPushProxies(),null,this,pushPing);
-        }
-        
     }
     
     /**
@@ -309,66 +184,6 @@ public class PingRanker extends AbstractSourceRanker implements MessageListener,
      * Informs the Ranker that a host has replied with a HeadPing
      */
     public void processMessage(Message m, ReplyHandler handler) {
-        
-        MeshHandler mesh;
-        RemoteFileDesc rfd;
-        Collection<RemoteFileDesc> alts = null;
-        // this -> meshHandler NOT ok
-        synchronized(this) {
-            if (!running)
-                return;
-            
-            if (! (m instanceof HeadPong))
-                return;
-            
-            HeadPong pong = (HeadPong)m;
-            
-            if (!pingedHosts.containsKey(handler)) 
-                return;
-            
-            rfd = pingedHosts.remove(handler);
-            testedLocations.remove(rfd);
-            
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("received a pong "+ pong+ " from "+handler +
-                        " for rfd "+rfd+" with PE "+rfd.getPushAddr());
-            }
-            
-            // older push proxies do not route but respond directly, we want to get responses
-            // from other push proxies
-            if (!pong.hasFile() && pong.isRoutingBroken() && rfd.needsPush()) {
-                return;
-            }
-            
-            // if the pong is firewalled, remove the other proxies from the 
-            // pinged set
-            if (pong.isFirewalled()) {
-                for(IpPort ipp : rfd.getPushProxies())
-                    pingedHosts.remove(ipp);
-            }
-            
-            mesh = meshHandler;
-            if (pong.hasFile()) {
-                //update the rfd with information from the pong
-                pong.updateRFD(rfd);
-                
-                // if the remote host is busy, re-add him for later ranking
-                if (rfd.isBusy()) 
-                    newHosts.add(rfd);
-                else     
-                    verifiedHosts.add(rfd);
-
-                //alts = pong.getAllLocsRFD(rfd, remoteFileDescFactory);
-            }
-        }
-        
-        // if the pong didn't have the file, drop it
-        // otherwise add any altlocs the pong had to our known hosts
-        if (alts == null)  {
-            mesh.informMesh(rfd,false);
-        } else {
-            mesh.addPossibleSources(alts);
-        }
     }
 
 

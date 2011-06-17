@@ -4,11 +4,9 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.limewire.io.InvalidDataException;
 import org.limewire.util.CommonUtils;
 
 import com.limegroup.gnutella.SaveLocationException;
-import com.limegroup.gnutella.downloader.serial.DownloadMemento;
 
 /**
  * A basic implementation of CoreDownloader.
@@ -62,7 +60,7 @@ public abstract class AbstractCoreDownloader implements CoreDownloader {
      * @see com.limegroup.gnutella.downloader.CoreDownloader#setAttribute(java.lang.String, java.io.Serializable)
      */
 	public Object setAttribute(String key, Object value, boolean serialize) {
-	    return attributes.put( key, new Attribute(serialize, value) );
+	    return null;//attributes.put( key, new Attribute(serialize, value) );
 	}
 
 	/* (non-Javadoc)
@@ -186,52 +184,10 @@ public abstract class AbstractCoreDownloader implements CoreDownloader {
         this.defaultFileName = defaultFileName;
     }
     
-    public synchronized void initFromMemento(DownloadMemento memento) throws InvalidDataException {
-        this.saveFile = memento.getSaveFile();
-        setDefaultFileName(memento.getDefaultFileName());
-        if(memento.getAttributes() != null) {
-            for(Map.Entry<String, Object> entry : memento.getAttributes().entrySet()) {
-                attributes.put(entry.getKey(), new Attribute(true, entry.getValue()));
-            }
-        }
-    }
-    
-    public final synchronized DownloadMemento toMemento() {
-        DownloadMemento memento = createMemento();
-        fillInMemento(memento);
-        return memento;
-    }
-    
-    /** Constructs the correct type of memento. */
-    protected abstract DownloadMemento createMemento();
-
-    /** Fills in all data this class wants to store. */
-    protected void fillInMemento(DownloadMemento memento) {
-        memento.setDownloadType(getDownloadType());
-        memento.setSaveFile(saveFile);
-        memento.setDefaultFileName(defaultFileName);
-        Map<String, Object> saveAttributes = new HashMap<String, Object>(attributes.size());
-        for(Map.Entry<String, Attribute> entry : attributes.entrySet()) {
-            if(entry.getValue().isSerialize())
-                saveAttributes.put(entry.getKey(), entry.getValue().getObject());
-        }
-        memento.setAttributes(saveAttributes);
-    }
-    
     /** A wrapper for an attribute. */
     private static class Attribute {
-        private final boolean serialize;
-        private final Object object;
+        private Object object;
         
-        public Attribute(boolean serialize, Object object) {
-            this.serialize = serialize;
-            this.object = object;
-        }
-
-        public boolean isSerialize() {
-            return serialize;
-        }
-
         public Object getObject() {
             return object;
         }        
