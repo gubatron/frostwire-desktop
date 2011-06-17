@@ -116,7 +116,6 @@ public final class IgnoreResultTypesPaneItem extends AbstractPaneItem {
 		FilterSettings.FILTER_VBS.setValue(IGNORE_VBS_CHECK_BOX.isSelected());
 		FilterSettings.FILTER_HTML.setValue(IGNORE_HTML_CHECK_BOX.isSelected());
 		FilterSettings.FILTER_WMV_ASF.setValue(IGNORE_WMV_ASF_CHECK_BOX.isSelected());
-		GuiCoreMediator.getSpamServices().adjustSpamFilters();
 		if(adultChanged)
 		    SearchMediator.rebuildInputPanel();
         return false;

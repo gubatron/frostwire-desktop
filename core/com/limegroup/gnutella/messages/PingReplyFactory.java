@@ -1,11 +1,9 @@
 package com.limegroup.gnutella.messages;
 
-import java.net.UnknownHostException;
 import java.util.Collection;
 
 import org.limewire.io.IpPort;
 
-import com.limegroup.gnutella.Endpoint;
 import com.limegroup.gnutella.messages.Message.Network;
 
 public interface PingReplyFactory {
@@ -107,20 +105,6 @@ public interface PingReplyFactory {
      */
     public PingReply createExternal(byte[] guid, byte ttl, int port,
             byte[] address, int uptime, boolean ultrapeer);
-
-    /**
-     * Creates a new <tt>PingReply</tt> instance for a GUESS node.  This
-     * method should only be called if the caller is sure that the given
-     * node is, in fact, a GUESS-capable node.  This method is only used
-     * to create pongs for nodes other than ourselves.  
-     *
-     * @param guid the Globally Unique Identifier (GUID) for this message
-     * @param ttl the time to live for this message
-     * @param ep the <tt>Endpoint</tt> instance containing data about 
-     *  the remote host
-     */
-    public PingReply createGUESSReply(byte[] guid, byte ttl, Endpoint ep)
-            throws UnknownHostException;
 
     /**
      * Creates a new <tt>PingReply</tt> instance for a GUESS node.  This

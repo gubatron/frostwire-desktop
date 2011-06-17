@@ -1,14 +1,12 @@
 package com.limegroup.gnutella;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.limewire.util.CommonUtils;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * This class is the glue that holds LimeWire together.

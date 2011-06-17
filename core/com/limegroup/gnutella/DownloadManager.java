@@ -8,7 +8,6 @@ import java.util.List;
 import com.limegroup.gnutella.browser.MagnetOptions;
 import com.limegroup.gnutella.downloader.CantResumeException;
 import com.limegroup.gnutella.downloader.CoreDownloader;
-import com.limegroup.gnutella.downloader.CoreDownloaderFactory;
 import com.limegroup.gnutella.downloader.PushedSocketHandler;
 import com.limegroup.gnutella.messages.QueryReply;
 import com.limegroup.gnutella.messages.QueryRequest;
@@ -55,14 +54,6 @@ public interface DownloadManager extends BandwidthTracker, SaveLocationManager, 
      * snapshots and scheduling snapshot checkpointing.
      */
     public void loadSavedDownloadsAndScheduleWriting();
-
-    /** True if saved downloads have been loaded from disk. */
-    public boolean isSavedDownloadsLoaded();
-
-    /**
-     * Determines if an 'In Network' download exists in either active or waiting.
-     */
-    public boolean hasInNetworkDownload();
 
     /**
      * Kills all in-network downloaders that are not present in the list of URNs
@@ -234,21 +225,4 @@ public interface DownloadManager extends BandwidthTracker, SaveLocationManager, 
      * returns the summed average of the downloads
      */
     public float getAverageBandwidth();
-
-    /**
-     * Returns the measured bandwidth as calculated from the last
-     * getMeasuredBandwidth() call.
-     */
-    public float getLastMeasuredBandwidth();
-
-    public Iterable<CoreDownloader> getAllDownloaders();
-    
-    /** Writes a snapshot of all downloaders in this and all incomplete files to
-     *  the file named DOWNLOAD_SNAPSHOT_FILE.  It is safe to call this method
-     *  at any time for checkpointing purposes.  Returns true iff the file was
-     *  successfully written. */
-    public void writeSnapshot();
-    
-    public CoreDownloaderFactory getCoreDownloaderFactory();
-
 }

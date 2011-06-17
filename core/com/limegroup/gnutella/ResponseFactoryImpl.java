@@ -21,19 +21,11 @@ import org.limewire.io.IPPortCombo;
 import org.limewire.io.InvalidDataException;
 import org.limewire.io.IpPort;
 import org.limewire.io.IpPortSet;
-import org.limewire.io.NetworkInstanceUtils;
-import org.limewire.io.NetworkUtils;
 import org.limewire.service.ErrorService;
 import org.limewire.util.ByteOrder;
 
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import com.limegroup.gnutella.altlocs.AltLocManager;
-import com.limegroup.gnutella.altlocs.AlternateLocation;
-import com.limegroup.gnutella.altlocs.AlternateLocationCollection;
-import com.limegroup.gnutella.altlocs.DirectAltLoc;
-import com.limegroup.gnutella.filters.IPFilter;
 import com.limegroup.gnutella.messages.BadGGEPPropertyException;
 import com.limegroup.gnutella.messages.GGEP;
 import com.limegroup.gnutella.messages.HUGEExtension;
@@ -47,12 +39,6 @@ import com.limegroup.gnutella.xml.LimeXMLNames;
 @Singleton
 public class ResponseFactoryImpl implements ResponseFactory {
 
-    /**
-     * The maximum number of alternate locations to include in responses in the
-     * GGEP block
-     */
-    private static final int MAX_LOCATIONS = 10;
-
     /** The magic byte to use as extension separators. */
     private static final byte EXT_SEPARATOR = 0x1c;
 
@@ -62,17 +48,12 @@ public class ResponseFactoryImpl implements ResponseFactory {
     /** Constant for kHz to string to avoid excessive string construction. */
     private static final String KHZ = "kHz";
 
-    private final AltLocManager altLocManager;
-    private final NetworkInstanceUtils networkInstanceUtils;
-
     private final LimeXMLDocumentFactory limeXMLDocumentFactory;
 
     @Inject
-    public ResponseFactoryImpl(AltLocManager altLocManager,
-            LimeXMLDocumentFactory limeXMLDocumentFactory, NetworkInstanceUtils networkInstanceUtils) {
-        this.altLocManager = altLocManager;
+    public ResponseFactoryImpl(
+            LimeXMLDocumentFactory limeXMLDocumentFactory) {
         this.limeXMLDocumentFactory = limeXMLDocumentFactory;
-        this.networkInstanceUtils = networkInstanceUtils;
     }
 
     /* (non-Javadoc)
@@ -94,8 +75,8 @@ public class ResponseFactoryImpl implements ResponseFactory {
      * @see com.limegroup.gnutella.ResponseFactory#createResponse(com.limegroup.gnutella.FileDesc)
      */
     public Response createResponse(FileDesc fd) {
-        IntervalSet ranges = null;
-        boolean verified = false;
+        //IntervalSet ranges = null;
+        //boolean verified = false;
 //        if (fd instanceof IncompleteFileDesc) {
 //            IncompleteFileDesc ifd = (IncompleteFileDesc)fd;
 //            ranges = new IntervalSet();
@@ -371,43 +352,7 @@ public class ResponseFactoryImpl implements ResponseFactory {
     private boolean isEmpty(Set<?> set) {
         return set == null || set.isEmpty();
     }
-
-    /**
-     * Utility method for converting the non-firewalled elements of an
-     * AlternateLocationCollection to a smaller set of endpoints.
-     */
-    private Set<? extends IpPort> getAsIpPorts(
-            AlternateLocationCollection<DirectAltLoc> col) {
-        if (col == null || !col.hasAlternateLocations())
-            return Collections.emptySet();
-
-        long now = System.currentTimeMillis();
-        synchronized (col) {
-            Set<IpPort> endpoints = null;
-            int i = 0;
-            for (Iterator<DirectAltLoc> iter = col.iterator(); iter.hasNext()
-                    && i < MAX_LOCATIONS;) {
-                DirectAltLoc al = iter.next();
-                if (al.canBeSent(AlternateLocation.MESH_RESPONSE)) {
-                    IpPort host = al.getHost();
-                    if (!networkInstanceUtils.isMe(host)) {
-                        if (endpoints == null)
-                            endpoints = new IpPortSet();
-
-                        endpoints.add(host);
-                        i++;
-                        al.send(now, AlternateLocation.MESH_RESPONSE);
-                    }
-                } else if (!al.canBeSentAny())
-                    iter.remove();
-            }
-            if (endpoints == null)
-                return Collections.emptySet();
-            else
-                return endpoints;
-        }
-    }
-
+    
     /**
      * Adds a GGEP block with the specified alternate locations to the output
      * stream.

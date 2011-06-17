@@ -4,40 +4,21 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Collection;
 
-import org.limewire.collection.BitNumbers;
 import org.limewire.io.IpPort;
-import org.limewire.io.NetworkInstanceUtils;
 import org.limewire.io.NetworkUtils;
 import org.limewire.util.ByteOrder;
 
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import com.limegroup.gnutella.Endpoint;
-import com.limegroup.gnutella.NetworkManager;
-import com.limegroup.gnutella.Statistics;
-import com.limegroup.gnutella.UDPService;
 import com.limegroup.gnutella.messages.Message.Network;
-import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.SSLSettings;
 
 @Singleton
 public class PingReplyFactoryImpl implements PingReplyFactory {
 
-    private final NetworkManager networkManager;
-    private final Provider<Statistics> statistics;
-    private final Provider<UDPService> udpService;
-    private final NetworkInstanceUtils networkInstanceUtils;
-    
     // TODO: All these objects should be folded into LocalPongInfo
     @Inject
-    public PingReplyFactoryImpl(NetworkManager networkManager,
-            Provider<Statistics> statistics, Provider<UDPService> udpService,
-            NetworkInstanceUtils networkInstanceUtils) {
-        this.networkManager = networkManager;
-        this.statistics = statistics;
-        this.udpService = udpService;
-        this.networkInstanceUtils = networkInstanceUtils;
+    public PingReplyFactoryImpl() {
     }
 
     public PingReply create(byte[] guid, byte ttl,
@@ -96,12 +77,6 @@ public class PingReplyFactoryImpl implements PingReplyFactory {
     public PingReply createExternal(byte[] guid, byte ttl, int port,
             byte[] address, int uptime, boolean ultrapeer) {
         return create(guid, ttl, port, address, 0, 0, ultrapeer, uptime, false);
-    }
-
-    public PingReply createGUESSReply(byte[] guid, byte ttl, Endpoint ep)
-            throws UnknownHostException {
-        return create(guid, ttl, ep.getPort(), ep.getHostBytes(), 0, 0, true,
-                -1, true);
     }
 
     public PingReply createGUESSReply(byte[] guid, byte ttl, int port,
@@ -336,18 +311,6 @@ public class PingReplyFactoryImpl implements PingReplyFactory {
     }
 
     /**
-     * Adds the address GGEP.
-     */
-    private GGEP addAddress(GGEP ggep, IpPort address) {
-        byte[] payload = new byte[6];
-        System.arraycopy(address.getInetAddress().getAddress(), 0, payload, 0,
-                4);
-        ByteOrder.short2leb((short) address.getPort(), payload, 4);
-        ggep.put(GGEP.GGEP_HEADER_IPPORT, payload);
-        return ggep;
-    }
-
-    /**
      * Adds the packed hosts into this GGEP.
      */
     private GGEP addPackedHosts(GGEP ggep,
@@ -425,77 +388,5 @@ public class PingReplyFactoryImpl implements PingReplyFactory {
         } catch (BadGGEPBlockException e) {
             return null;
         }
-    }
-
-    /** Marks the given kbytes field */
-    private long mark(long kbytes) {
-        int x = ByteOrder.long2int(kbytes);
-        //Returns the power of two nearest to x.  TODO3: faster algorithms are
-        //possible.  At the least, you can do binary search.  I imagine some bit
-        //operations can be done as well.  This brute-force approach was
-        //generated with the help of the the following Python program:
-        //
-        //  for i in xrange(0, 32):
-        //      low=1<<i
-        //      high=1<<(i+1)
-        //      split=(low+high)/2
-        //      print "else if (x<%d)" % split
-        //      print "    return %d; //1<<%d" % (low, i)        
-        if (x < 12)
-            return 8; //1<<3
-        else if (x < 24)
-            return 16; //1<<4
-        else if (x < 48)
-            return 32; //1<<5
-        else if (x < 96)
-            return 64; //1<<6
-        else if (x < 192)
-            return 128; //1<<7
-        else if (x < 384)
-            return 256; //1<<8
-        else if (x < 768)
-            return 512; //1<<9
-        else if (x < 1536)
-            return 1024; //1<<10
-        else if (x < 3072)
-            return 2048; //1<<11
-        else if (x < 6144)
-            return 4096; //1<<12
-        else if (x < 12288)
-            return 8192; //1<<13
-        else if (x < 24576)
-            return 16384; //1<<14
-        else if (x < 49152)
-            return 32768; //1<<15
-        else if (x < 98304)
-            return 65536; //1<<16
-        else if (x < 196608)
-            return 131072; //1<<17
-        else if (x < 393216)
-            return 262144; //1<<18
-        else if (x < 786432)
-            return 524288; //1<<19
-        else if (x < 1572864)
-            return 1048576; //1<<20
-        else if (x < 3145728)
-            return 2097152; //1<<21
-        else if (x < 6291456)
-            return 4194304; //1<<22
-        else if (x < 12582912)
-            return 8388608; //1<<23
-        else if (x < 25165824)
-            return 16777216; //1<<24
-        else if (x < 50331648)
-            return 33554432; //1<<25
-        else if (x < 100663296)
-            return 67108864; //1<<26
-        else if (x < 201326592)
-            return 134217728; //1<<27
-        else if (x < 402653184)
-            return 268435456; //1<<28
-        else if (x < 805306368)
-            return 536870912; //1<<29
-        else
-            return 1073741824; //1<<30
     }
 }

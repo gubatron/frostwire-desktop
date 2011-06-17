@@ -75,8 +75,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     /** The actual download buttons instance.
      */
     private BTDownloadButtons _downloadButtons;
-    
-	private final DownloadManagerListener ITUNES_SONG_SCANNER_LISTENER;
+
+    private final DownloadManagerListener ITUNES_SONG_SCANNER_LISTENER;
 
     /**
      * Overriden to have different default values for tooltips.
@@ -152,19 +152,18 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         super("DOWNLOAD_TABLE");
         GUIMediator.addRefreshListener(this);
         ThemeMediator.addThemeObserver(this);
-        
+
         ITUNES_SONG_SCANNER_LISTENER = new DownloadManagerAdapter() {
-        	@Override
-        	public void stateChanged(DownloadManager manager, int state) {
+            @Override
+            public void stateChanged(DownloadManager manager, int state) {
                 if (manager.getAssumedComplete() && iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue()
                         && !iTunesMediator.instance().isScanned(manager.getSaveLocation())) {
                     if ((OSUtils.isMacOSX() || OSUtils.isWindows())) {
-						System.out.println("BTDownloadMediator.ITUNES_SONG_SCANNER_LISTENER invoked.");
-						iTunesMediator.instance().scanForSongs(manager.getSaveLocation());
-					}
+                        iTunesMediator.instance().scanForSongs(manager.getSaveLocation());
+                    }
                 }
 
-        	}
+            }
         };
     }
 
@@ -523,7 +522,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
                         }
                     }
 
-                    BTDownloaderFactory factory = new BTDownloaderFactory(AzureusStarter.getAzureusCore().getGlobalManager(), file, filesSelection, initialSeed, saveDir);
+                    BTDownloaderFactory factory = new BTDownloaderFactory(AzureusStarter.getAzureusCore().getGlobalManager(), file, filesSelection,
+                            initialSeed, saveDir);
                     BTDownloader downloader = BTDownloaderUtils.createDownloader(factory);
 
                     if (downloader != null) {

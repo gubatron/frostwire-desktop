@@ -66,11 +66,6 @@ public class Response {
 	 * an empty array.
 	 */
     private final byte[] extBytes;
-    
-    /**
-     * The cached RemoteFileDesc created from this Response.
-     */
-    private volatile RemoteFileDesc cachedRFD;
         
     /**
      * If this is a response for a metafile, i.e. a file

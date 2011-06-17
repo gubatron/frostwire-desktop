@@ -15,7 +15,6 @@ import com.limegroup.gnutella.LocalFileDetailsFactory;
 import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.ResponseFactory;
 import com.limegroup.gnutella.SavedFileManager;
-import com.limegroup.gnutella.SpamServices;
 import com.limegroup.gnutella.UDPService;
 import com.limegroup.gnutella.altlocs.AltLocManager;
 import com.limegroup.gnutella.browser.ExternalControl;
@@ -52,7 +51,6 @@ public class GuiCoreMediator {
     public static ScheduledExecutorService getCoreBackgroundExecutor() { return core.getBackgroundExecutor(); }
     public static DownloadServices getDownloadServices() { return core.getDownloadServices(); }
     public static ApplicationServices getApplicationServices() { return core.getApplicationServices(); }
-    public static SpamServices getSpamServices() { return core.getSpamServices(); }
     public static ExternalControl getExternalControl() { return core.getExternalControl(); }
     public static ActivityCallback getActivityCallback() { return core.getActivityCallback(); }
     public static LimeXMLDocumentFactory getLimeXMLDocumentFactory() { return core.getLimeXMLDocumentFactory(); }

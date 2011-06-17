@@ -21,7 +21,6 @@ import org.limewire.io.NetworkInstanceUtils;
 import org.limewire.io.NetworkUtils;
 import org.limewire.util.ByteOrder;
 
-import com.limegroup.gnutella.ExtendedEndpoint;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 
 /**
@@ -358,13 +357,13 @@ public class PingReplyImpl extends AbstractMessage implements IpPort, Connectabl
         int hostIdx = 0;
         for(IpPort next : hosts) {
             if(tlsBits.isSet(hostIdx)) {
-                ExtendedEndpoint ep = new ExtendedEndpoint(next.getInetAddress(), next.getPort());
-                ep.setTLSCapable(true);
-                if(decorated == null) {
-                    decorated = new ArrayList<IpPort>(hosts.size());
-                    decorated.addAll(hosts.subList(0, hostIdx)); // add all prior hosts.
-                }
-                decorated.add(ep);
+//                ExtendedEndpoint ep = new ExtendedEndpoint(next.getInetAddress(), next.getPort());
+//                ep.setTLSCapable(true);
+//                if(decorated == null) {
+//                    decorated = new ArrayList<IpPort>(hosts.size());
+//                    decorated.addAll(hosts.subList(0, hostIdx)); // add all prior hosts.
+//                }
+//                decorated.add(ep);
             } else if(decorated != null) {
                 decorated.add(next); // preserve decorated
             }

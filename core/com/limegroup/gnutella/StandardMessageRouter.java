@@ -2,11 +2,7 @@ package com.limegroup.gnutella;
 
 
 import java.net.InetSocketAddress;
-import java.util.List;
 import java.util.concurrent.ScheduledExecutorService;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -23,7 +19,6 @@ import com.limegroup.gnutella.messages.QueryRequest;
 import com.limegroup.gnutella.messages.QueryRequestFactory;
 import com.limegroup.gnutella.messages.StaticMessages;
 import com.limegroup.gnutella.messages.vendor.HeadPongFactory;
-import com.limegroup.gnutella.messages.vendor.ReplyNumberVendorMessageFactory;
 import com.limegroup.gnutella.search.QueryDispatcher;
 import com.limegroup.gnutella.search.QueryHandlerFactory;
 
@@ -32,12 +27,6 @@ import com.limegroup.gnutella.search.QueryHandlerFactory;
  */
 @Singleton
 public class StandardMessageRouter extends MessageRouterImpl {
-    
-    private static final Log LOG = LogFactory.getLog(StandardMessageRouter.class);
-    
-    private final Statistics statistics;
-
-    private final ReplyNumberVendorMessageFactory replyNumberVendorMessageFactory;
     
     @Inject
     public StandardMessageRouter(NetworkManager networkManager,
@@ -58,8 +47,6 @@ public class StandardMessageRouter extends MessageRouterImpl {
             UDPReplyHandlerCache udpReplyHandlerCache,
             Provider<InspectionRequestHandler> inspectionRequestHandlerFactory,
             Provider<UDPCrawlerPingHandler> udpCrawlerPingHandlerFactory,
-            Statistics statistics,
-            ReplyNumberVendorMessageFactory replyNumberVendorMessageFactory,
             PingRequestFactory pingRequestFactory, MessageHandlerBinder messageHandlerBinder) {
         super(networkManager, queryRequestFactory, queryHandlerFactory,
                 headPongFactory, pingReplyFactory,
@@ -72,9 +59,7 @@ public class StandardMessageRouter extends MessageRouterImpl {
                 backgroundExecutor, pongCacher,
                 guidMapManager, udpReplyHandlerCache, inspectionRequestHandlerFactory, 
                 udpCrawlerPingHandlerFactory, 
-                pingRequestFactory, messageHandlerBinder);
-        this.statistics = statistics;
-        this.replyNumberVendorMessageFactory = replyNumberVendorMessageFactory;
+                messageHandlerBinder);
     }
     
     /**
@@ -109,17 +94,6 @@ public class StandardMessageRouter extends MessageRouterImpl {
         
         
 	}
-
-    /**
-     * Handles the crawler ping of Hops=0 & TTL=2, by sending pongs 
-     * corresponding to all its leaves
-     * @param m The ping request received
-     * @param handler the <tt>ReplyHandler</tt> that should handle any
-     *  replies
-     */
-    private void handleCrawlerPing(PingRequest m, ReplyHandler handler) {
-           
-    }
     
     @Override
     protected boolean respondToQueryRequest(QueryRequest queryRequest,
@@ -151,130 +125,4 @@ public class StandardMessageRouter extends MessageRouterImpl {
         return false;
         
     }
-
-    private boolean sendResponses(Response[] responses, QueryRequest query,
-                                 ReplyHandler handler) {
-//        // if either there are no responses or, the
-//        // response array came back null for some reason,
-//        // exit this method
-//        if ( (responses == null) || ((responses.length < 1)) )
-//            return false;
-//
-//        // if we cannot service a regular query, only send back results for
-//        // application-shared metafiles, if any.
-//        if (!uploadManager.isServiceable()) {
-//        	
-//        	List<Response> filtered = new ArrayList<Response>(responses.length);
-//        	for(Response r : responses) {
-//        		if (r.isMetaFile() && 
-//        				fileManager.isFileApplicationShared(r.getName()))
-//        			filtered.add(r);
-//        	}
-//        	
-//        	if (filtered.isEmpty()) // nothing to send..
-//        		return false;
-//        	
-//        	if (filtered.size() != responses.length)
-//        		responses = filtered.toArray(new Response[filtered.size()]);
-//        }
-//        
-//        // Here we can do a couple of things - if the query wants
-//        // out-of-band replies we should do things differently.  else just
-//        // send it off as usual.  only send out-of-band if you can
-//        // receive solicited udp AND not servicing too many
-//        // uploads AND not connected to the originator of the query
-//        if (query.desiresOutOfBandReplies() &&
-//            !isConnectedTo(query, handler) && 
-//			networkManager.canReceiveSolicited() &&
-//            NetworkUtils.isValidAddressAndPort(query.getReplyAddress(), query.getReplyPort())) {
-//            
-//            // send the replies out-of-band - we need to
-//            // 1) buffer the responses
-//            // 2) send a ReplyNumberVM with the number of responses
-//            if (bufferResponsesForLaterDelivery(query, responses)) {
-//                // special out of band handling....
-//                InetAddress addr = null;
-//                try {
-//                    addr = InetAddress.getByName(query.getReplyAddress());
-//                } catch (UnknownHostException uhe) {}
-//                final int port = query.getReplyPort();
-//                
-//                if(addr != null) { 
-//                    // send a ReplyNumberVM to the host - he'll ACK you if he
-//                    // wants the whole shebang
-//                    int resultCount = 
-//                        (responses.length > 255) ? 255 : responses.length;
-//                    final ReplyNumberVendorMessage vm = query.desiresOutOfBandRepliesV3() ?
-//                            replyNumberVendorMessageFactory.createV3ReplyNumberVendorMessage(new GUID(query.getGUID()), resultCount) :
-//                                replyNumberVendorMessageFactory.createV2ReplyNumberVendorMessage(new GUID(query.getGUID()), resultCount);
-//                    udpService.send(vm, addr, port);
-//                    if (MessageSettings.OOB_REDUNDANCY.getValue() && 
-//                            query.desiresOutOfBandRepliesV3()) {
-//                        final InetAddress addrf = addr;
-//                        backgroundExecutor.schedule(new Runnable() {
-//                            public void run () {
-//                                udpService.send(vm, addrf, port);
-//                            }
-//                        }, 100, TimeUnit.MILLISECONDS);
-//                    }
-//                    return true;
-//                }
-//            } else {
-//                // else i couldn't buffer the responses due to busy-ness, oh, scrap
-//                // them.....
-//                return false;                
-//            }
-//        }
-//
-//        // send the replies in-band
-//        // -----------------------------
-//
-//        //convert responses to QueryReplies
-//        Iterable<QueryReply> iterable = responsesToQueryReplies(responses,
-//                                                                  query);
-//        //send the query replies
-//        try {
-//            for(QueryReply queryReply : iterable)
-//                sendQueryReply(queryReply);
-//        }  catch (IOException e) {
-//            // if there is an error, do nothing..
-//        }
-//        // -----------------------------
-//        
-//        return true;
-        return false;
-
-    }
-
-    /** Returns whether or not we are connected to the originator of this query.
-     *  PRE: assumes query.desiresOutOfBandReplies == true
-     */
-    private final boolean isConnectedTo(QueryRequest query, 
-                                        ReplyHandler handler) {
-        return query.matchesReplyAddress(handler.getInetAddress().getAddress());
-    }
-
-    
-
-    
-    /** @return Simply splits the input array into two (almost) equally sized
-     *  arrays.
-     */
-    private Response[][] splitResponses(Response[] in) {
-        int middle = in.length/2;
-        Response[][] retResps = new Response[2][];
-        retResps[0] = new Response[middle];
-        retResps[1] = new Response[in.length-middle];
-        for (int i = 0; i < middle; i++)
-            retResps[0][i] = in[i];
-        for (int i = 0; i < (in.length-middle); i++)
-            retResps[1][i] = in[i+middle];
-        return retResps;
-    }
-
-    private void splitAndAddResponses(List<Response[]> addTo, Response[] toSplit) {
-        Response[][] splits = splitResponses(toSplit);
-        addTo.add(splits[0]);
-        addTo.add(splits[1]);
-    }    
 }

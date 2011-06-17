@@ -1,38 +1,22 @@
 package com.limegroup.gnutella;
 
 import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.limewire.collection.Buffer;
 import org.limewire.concurrent.ThreadExecutor;
-import org.limewire.io.NetworkUtils;
 
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import com.google.inject.name.Named;
-import com.limegroup.gnutella.guess.GUESSEndpoint;
 import com.limegroup.gnutella.messages.PingReply;
-import com.limegroup.gnutella.messages.PingRequest;
-import com.limegroup.gnutella.messages.PingRequestFactory;
 import com.limegroup.gnutella.messages.QueryReply;
 import com.limegroup.gnutella.messages.QueryRequest;
-import com.limegroup.gnutella.messages.QueryRequestFactory;
-import com.limegroup.gnutella.settings.ConnectionSettings;
-import com.limegroup.gnutella.settings.SearchSettings;
 
 /** 
  * This class runs a single thread which sends unicast UDP queries to a master
@@ -80,62 +64,13 @@ public final class QueryUnicaster {
      */
     private final Map<ReplyHandler, Set<GUID>> _querySets;
 
-    /** 
-     * The unicast enabled hosts I should contact for queries.  Add to the
-     * front, remove from the end.  Therefore, the OLDEST entries are at the
-     * end.
-     */
-    private final LinkedList<GUESSEndpoint> _queryHosts;
-
-
-    /** The fixed size list of endpoints i've pinged.
-     */
-    private final Buffer<GUESSEndpoint> _pingList;
-
     /** A List of query GUIDS to purge.
      */
     private final List<GUID> _qGuidsToRemove;
 
-    /** The last time I sent a broadcast ping.
-     */
-    private long _lastPingTime = 0;
-
-	/** 
-     * Variable for how many test pings have been sent out to determine 
-	 * whether or not we can accept incoming connections.
-	 */
-	private int _testUDPPingsSent = 0;
-
-	/**
-	 * Records whether or not someone has called init on me....
-	 */
-	private boolean _initialized = false;
-		
-	private final NetworkManager networkManager;
-	private final QueryRequestFactory queryRequestFactory;
-    private final ScheduledExecutorService backgroundExecutor;
-    private final Provider<MessageRouter> messageRouter;
-    private final Provider<UDPService> udpService;
-
-    private final PingRequestFactory pingRequestFactory;
-
 	@Inject
-    public QueryUnicaster(NetworkManager networkManager,
-            QueryRequestFactory queryRequestFactory,
-            @Named("backgroundExecutor") ScheduledExecutorService backgroundExecutor,
-            Provider<MessageRouter> messageRouter,
-            Provider<UDPService> udpService,
-            PingRequestFactory pingRequestFactory) {
-        this.networkManager = networkManager;
-        this.queryRequestFactory = queryRequestFactory;
-        this.backgroundExecutor = backgroundExecutor;
-        this.messageRouter = messageRouter;
-        this.udpService = udpService;
-        this.pingRequestFactory = pingRequestFactory;
-        
+    public QueryUnicaster() {
         _queries = new Hashtable<GUID, QueryBundle>();
-        _queryHosts = new LinkedList<GUESSEndpoint>();
-        _pingList = new Buffer<GUESSEndpoint>(25);
         _querySets = new Hashtable<ReplyHandler, Set<GUID>>();
         _qGuidsToRemove = new Vector<GUID>();
     
@@ -156,42 +91,6 @@ public final class QueryUnicaster {
         return _queries.size();
     }
 
-
-    /** 
-     * Returns a List of unicast Endpoints.  These Endpoints are the NEWEST 
-     * we've seen.
-     */
-    public List<GUESSEndpoint> getUnicastEndpoints() {
-        List<GUESSEndpoint> retList = new ArrayList<GUESSEndpoint>();
-        synchronized (_queryHosts) {
-            LOG.debug("QueryUnicaster.getUnicastEndpoints(): obtained lock.");
-            int size = _queryHosts.size();
-            if (size > 0) {
-                int max = (size > 10 ? 10 : size);
-                for (int i = 0; i < max; i++)
-                    retList.add(_queryHosts.get(i));
-            }
-            LOG.debug("QueryUnicaster.getUnicastEndpoints(): releasing lock.");
-        }
-        return retList;
-    }
-
-	/** 
-     * Returns a <tt>GUESSEndpoint</tt> from the current cache of 
-	 * GUESS endpoints.
-	 *
-	 * @return a <tt>GUESSEndpoint</tt> from the list of GUESS hosts
-	 *  to query, or <tt>null</tt> if there are no available hosts
-	 *  to return
-	 */
-	public GUESSEndpoint getUnicastEndpoint() {
-		synchronized(_queryHosts) {
-			if(_queryHosts.isEmpty())
-                return null;
-            else
-                return _queryHosts.getFirst();
-		}
-	}
     
     /**
      * Starts the query unicaster thread.
@@ -281,21 +180,6 @@ public final class QueryUnicaster {
         }
     }
 
-
-    private void waitForQueries() throws InterruptedException {
-        LOG.debug("QueryUnicaster.waitForQueries(): waiting for Queries.");
-        synchronized (_queries) {
-            if (_queries.isEmpty()) {
-                // i'll be notifed when stuff is added...
-                _queries.wait();
-			}
-        }
-        if(LOG.isDebugEnabled())
-            LOG.debug("QueryUnicaster.waitForQueries(): numQueries = " + 
-                      _queries.size());
-    }
-
-
     /** 
      * @return true if the query was added (maybe false if it existed).
      * @param query The Query to add, to start unicasting.
@@ -338,58 +222,14 @@ public final class QueryUnicaster {
     /** Just feed me ExtendedEndpoints - I'll check if I could use them or not.
      */
     public void addUnicastEndpoint(InetAddress address, int port) {
-        if (!SearchSettings.GUESS_ENABLED.getValue()) return;
-        if (notMe(address, port) && NetworkUtils.isValidPort(port) &&
-          NetworkUtils.isValidAddress(address)) {
-			GUESSEndpoint endpoint = new GUESSEndpoint(address, port);
-			addUnicastEndpoint(endpoint);
-        }
+//        if (!SearchSettings.GUESS_ENABLED.getValue()) return;
+//        if (notMe(address, port) && NetworkUtils.isValidPort(port) &&
+//          NetworkUtils.isValidAddress(address)) {
+//			GUESSEndpoint endpoint = new GUESSEndpoint(address, port);
+//			addUnicastEndpoint(endpoint);
+//        }
     }
-
-	/** Adds the <tt>GUESSEndpoint</tt> instance to the host data.
-	 *
-	 *  @param endpoint the <tt>GUESSEndpoint</tt> to add
-	 */
-	private void addUnicastEndpoint(GUESSEndpoint endpoint) {
-		synchronized (_queryHosts) {
-			LOG.debug("QueryUnicaster.addUnicastEndpoint(): obtained lock.");
-			if (_queryHosts.size() == MAX_ENDPOINTS)
-				_queryHosts.removeLast(); // evict a old guy...
-			_queryHosts.addFirst(endpoint);
-			_queryHosts.notify();
-			if(udpService.get().isListening() &&
-			   !networkManager.isGUESSCapable() &&
-			   (_testUDPPingsSent < 10) &&
-               !(ConnectionSettings.LOCAL_IS_PRIVATE.getValue() && 
-                 NetworkUtils.isCloseIP(networkManager.getAddress(),
-                                        endpoint.getInetAddress().getAddress())) ) {
-				PingRequest pr = 
-                pingRequestFactory.createPingRequest(udpService.get().getSolicitedGUID().bytes(),
-                        (byte)1, (byte)0);
-                udpService.get().send(pr, endpoint.getInetAddress(), endpoint.getPort());
-				_testUDPPingsSent++;
-			}
-			LOG.debug("QueryUnicaster.addUnicastEndpoint(): released lock.");
-		}
-	}
-
-
-    /** 
-     * Returns whether or not the Endpoint refers to me!  True if it doesn't,
-     * false if it does (NOT not me == me).
-     */
-    private boolean notMe(InetAddress address, int port) {
-        boolean retVal = true;
-
-        if ((port == networkManager.getPort()) &&
-				 Arrays.equals(address.getAddress(), 
-				         networkManager.getAddress())) {			
-			retVal = false;
-		}
-
-        return retVal;
-    }
-
+    
     /** 
      * Gets rid of a Query according to ReplyHandler.  
      * Use this if a leaf connection dies and you want to stop the query.
@@ -470,79 +310,40 @@ public final class QueryUnicaster {
             
         }
     }
-
-    /** May block if no hosts exist.
-     */
-    private GUESSEndpoint getUnicastHost() throws InterruptedException {
-        LOG.debug("QueryUnicaster.getUnicastHost(): waiting for hosts.");
-        synchronized (_queryHosts) {
-            LOG.debug("QueryUnicaster.getUnicastHost(): obtained lock.");
-            while (_queryHosts.isEmpty()) {
-                if ((System.currentTimeMillis() - _lastPingTime) >
-                    20000) { // don't sent too many pings..
-                    // first send a Ping, hopefully we'll get some pongs....
-                    PingRequest pr = 
-                    pingRequestFactory.createPingRequest(ConnectionSettings.TTL.getValue());
-                    messageRouter.get().broadcastPingRequest(pr);
-                    _lastPingTime = System.currentTimeMillis();
-                }
-
-				// now wait, what else can we do?
-				_queryHosts.wait();
-            }
-            LOG.debug("QueryUnicaster.getUnicastHost(): got a host, let go lock!");
-        }
-
-        if (_queryHosts.size() < MIN_ENDPOINTS) {
-            // send a ping to the guy you are popping if cache too small
-            GUESSEndpoint toReturn = _queryHosts.removeLast();
-            // if i haven't pinged him 'recently', then ping him...
-            synchronized (_pingList) {
-                if (!_pingList.contains(toReturn)) {
-                    PingRequest pr = pingRequestFactory.createPingRequest((byte)1);
-                    InetAddress ip = toReturn.getInetAddress();
-                    udpService.get().send(pr, ip, toReturn.getPort());
-                    _pingList.add(toReturn);
-                }
-            }
-            return toReturn;
-        }
-        return _queryHosts.removeLast();
-    }
     
     /** removes all Unicast Endpoints, reset associated members
      */
     void resetUnicastEndpointsAndQueries() {
-        LOG.debug("Resetting unicast endpoints.");        
-        synchronized (_queries) {
-            _queries.clear();
-            _queries.notifyAll();
-        }
-
-        synchronized (_queryHosts) {
-            _queryHosts.clear();
-            _queryHosts.notifyAll();
-        }
-        synchronized (_pingList) {
-            _pingList.clear();
-            _pingList.notifyAll();
-        }
-
-        _lastPingTime=0;        
-        _testUDPPingsSent=0;
-        
+//        LOG.debug("Resetting unicast endpoints.");        
+//        synchronized (_queries) {
+//            _queries.clear();
+//            _queries.notifyAll();
+//        }
+//
+//        synchronized (_queryHosts) {
+//            _queryHosts.clear();
+//            _queryHosts.notifyAll();
+//        }
+//        synchronized (_pingList) {
+//            _pingList.clear();
+//            _pingList.notifyAll();
+//        }
+//
+//        //_lastPingTime=0;        
+//        _testUDPPingsSent=0;
+//        
     }
 
 
     private static class QueryBundle {
         public static final int MAX_RESULTS = 250;
-        public static final int MAX_QUERIES = 1000;
+        //public static final int MAX_QUERIES = 1000;
         final QueryRequest _qr;
         // the number of results received per Query...
         int _numResults = 0;
         /** The Set of Endpoints queried for this Query.
          */
-        final Set<GUESSEndpoint> _hostsQueried = new HashSet<GUESSEndpoint>();
+        //final Set<GUESSEndpoint> _hostsQueried = new HashSet<GUESSEndpoint>();
 
         public QueryBundle(QueryRequest qr) {
             _qr = qr;

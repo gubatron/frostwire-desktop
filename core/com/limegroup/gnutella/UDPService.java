@@ -9,36 +9,22 @@ import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.limewire.inspection.Inspectable;
-import org.limewire.inspection.InspectionPoint;
-import org.limewire.io.ByteBufferOutputStream;
 import org.limewire.io.IpPort;
-import org.limewire.io.NetworkInstanceUtils;
 import org.limewire.io.NetworkUtils;
 import org.limewire.service.ErrorService;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
-import com.google.inject.name.Named;
-import com.limegroup.gnutella.filters.IPFilter;
-import com.limegroup.gnutella.guess.GUESSEndpoint;
 import com.limegroup.gnutella.messages.BadPacketException;
 import com.limegroup.gnutella.messages.Message;
+import com.limegroup.gnutella.messages.Message.Network;
 import com.limegroup.gnutella.messages.MessageFactory;
 import com.limegroup.gnutella.messages.PingReply;
 import com.limegroup.gnutella.messages.PingRequest;
-import com.limegroup.gnutella.messages.PingRequestFactory;
-import com.limegroup.gnutella.messages.Message.Network;
-import com.limegroup.gnutella.messages.vendor.ReplyNumberVendorMessage;
-import com.limegroup.gnutella.settings.ConnectionSettings;
 
 /**
  * This class handles UDP messaging services.  It both sends and
@@ -62,12 +48,7 @@ public class UDPService {
 	 * The DatagramChannel we're reading from & writing to.
 	 */
 	private DatagramChannel _channel;
-	
-	/**
-	 * The list of messages to be sent, as SendBundles.
-	 */
-	private final List<SendBundle> OUTGOING_MSGS;
-	
+		
 	/**
 	 * The buffer that's re-used for reading incoming messages.
 	 */
@@ -87,10 +68,6 @@ public class UDPService {
      *  packet.
      */
     private volatile boolean _acceptedUnsolicitedIncoming = false;
-    
-    /** The last time the _acceptedUnsolicitedIncoming was set.
-     */
-    private long _lastUnsolicitedIncomingTime = 0;
 
     /**
      * The last time we received any udp packet
@@ -99,7 +76,6 @@ public class UDPService {
     
     /** The last time we sent a UDP Connect Back.
      */
-    private long _lastConnectBackTime = System.currentTimeMillis();
     void resetLastConnectBackTime() {
 //        _lastConnectBackTime = 
 //             System.currentTimeMillis() - acceptor.get().getIncomingExpireTime();
@@ -136,58 +112,22 @@ public class UDPService {
      */
     private boolean _started = false;
 
-
-    /**
-     * The time between UDP pings.  Used by the PeriodicPinger.  This is
-     * useful for nodes behind certain firewalls (notably the MS firewall).
-     */
-    private static final long PING_PERIOD = 85 * 1000;  // 85 seconds
-    
     /**
      * A buffer used for reading the header of incoming messages.
      */
     private static final byte[] IN_HEADER_BUF = new byte[23];
     
-    private final NetworkManager networkManager;
     private final Provider<MessageDispatcher> messageDispatcher;
-    private final Provider<MessageRouter> messageRouter;
-    private final Provider<QueryUnicaster> queryUnicaster;
-    private final ScheduledExecutorService backgroundExecutor;
     private final MessageFactory messageFactory;
-    private final PingRequestFactory pingRequestFactory;
-    private final NetworkInstanceUtils networkInstanceUtils;
     
-    @InspectionPoint("udp sent messages")
-    private final Message.MessageCounter sentMessageCounter = new Message.MessageCounter(50);
-    
-    @InspectionPoint("fwt capable")
-    @SuppressWarnings("unused")
-    private final Inspectable fwtCapable = new Inspectable() {
-        public Object inspect() {
-            return canDoFWT();
-        }
-    };
-
 	@Inject
-    public UDPService(NetworkManager networkManager,
+    public UDPService(
             Provider<MessageDispatcher> messageDispatcher,
-            Provider<MessageRouter> messageRouter, 
-            Provider<QueryUnicaster> queryUnicaster,
-            @Named("backgroundExecutor") ScheduledExecutorService backgroundExecutor,
-            MessageFactory messageFactory,
-            PingRequestFactory pingRequestFactory,
-            NetworkInstanceUtils networkInstanceUtils) {
-        this.networkManager = networkManager;
+            MessageFactory messageFactory) {
         this.messageDispatcher = messageDispatcher;
-        this.messageRouter = messageRouter;
-        this.queryUnicaster = queryUnicaster;
-        this.backgroundExecutor = backgroundExecutor;
         this.messageFactory = messageFactory;
-        this.pingRequestFactory = pingRequestFactory;
-        this.networkInstanceUtils = networkInstanceUtils;
-
-        OUTGOING_MSGS = new LinkedList<SendBundle>();
-	    byte[] backing = new byte[BUFFER_SIZE];
+        
+        byte[] backing = new byte[BUFFER_SIZE];
 	    BUFFER = ByteBuffer.wrap(backing);
         scheduleServices();
     }
@@ -396,7 +336,7 @@ public class UDPService {
                 if(CONNECT_BACK_GUID.equals(guid) && isValidForIncoming(addr)) {
                     _acceptedUnsolicitedIncoming = true;
                 }
-                _lastUnsolicitedIncomingTime = _lastReceivedAny;
+                //_lastUnsolicitedIncomingTime = _lastReceivedAny;
             }
             else if (message instanceof PingReply) {
                 GUID guid = new GUID(message.getGUID());
@@ -423,8 +363,8 @@ public class UDPService {
         // ReplyNumberVMs are always sent in an unsolicited manner,
         // so we can use this fact to keep the last unsolicited up
         // to date
-        if (message instanceof ReplyNumberVendorMessage)
-            _lastUnsolicitedIncomingTime = _lastReceivedAny;
+//        if (message instanceof ReplyNumberVendorMessage)
+//            _lastUnsolicitedIncomingTime = _lastReceivedAny;
 	}
 	
     public static void mutateGUID(byte[] guid, InetAddress ip, int port) {
@@ -573,19 +513,6 @@ public class UDPService {
 	    return false;
     }       
 	
-	/** Wrapper for outgoing data */
-	private static class SendBundle {
-	    private final ByteBuffer buffer;
-	    private final SocketAddress addr;
-        private final boolean custom;
-	    
-	    SendBundle(ByteBuffer b, InetSocketAddress addr, boolean custom) {
-	        buffer = b;
-	        this.addr = addr;
-            this.custom = custom;
-	    }
-	}
-
 
 	/**
 	 * Returns whether or not this node is capable of sending its own
@@ -755,35 +682,4 @@ public class UDPService {
 	public String toString() {
 		return "UDPService::channel: " + _channel;
 	}
-
-    private static class MLImpl implements MessageListener {
-        public boolean _gotIncoming = false;
-
-        public void processMessage(Message m, ReplyHandler handler) {
-            if ((m instanceof PingRequest))
-                _gotIncoming = true;
-        }
-        
-        public void registered(byte[] guid) {}
-        public void unregistered(byte[] guid) {}
-    }
-
-    private class PeriodicPinger implements Runnable {
-        public void run() {
-            // straightforward - send a UDP ping to a host.  it doesn't really
-            // matter who the guy is - we are just sending to open up any
-            // potential firewall to UDP traffic
-            GUESSEndpoint ep = queryUnicaster.get().getUnicastEndpoint();
-            if (ep == null) return;
-            // only do this if you can receive some form of UDP traffic.
-            if (!canReceiveSolicited() && !canReceiveUnsolicited()) return;
-
-            // good to use the solicited guid
-            PingRequest pr = pingRequestFactory.createPingRequest(getSolicitedGUID().bytes(), (byte)1,
-                    (byte)0);
-            
-            pr.addIPRequest();
-            send(pr, ep.getInetAddress(), ep.getPort());
-        }
-    }
 }

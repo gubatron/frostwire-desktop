@@ -142,18 +142,10 @@ public class LimeWireCore {
         return injector.getInstance(IPFilter.class);
     }
 
-    public NodeAssigner getNodeAssigner() {
-        return injector.getInstance(NodeAssigner.class);
-    }
-
     public Statistics getStatistics() {
         return injector.getInstance(Statistics.class);
     }
     
-    public UrnCache getUrnCache() {
-        return injector.getInstance(UrnCache.class);
-    }
-
     public ResponseFactory getResponseFactory() {
         return injector.getInstance(ResponseFactory.class);
     }
@@ -242,10 +234,6 @@ public class LimeWireCore {
         return injector.getInstance(ApplicationServices.class);
     }
 
-    public SpamServices getSpamServices() {
-        return injector.getInstance(SpamServices.class);
-    }
-    
     public ExternalControl getExternalControl() {
         return injector.getInstance(ExternalControl.class);
     }

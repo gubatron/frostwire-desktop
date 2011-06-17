@@ -1,14 +1,8 @@
 package com.limegroup.gnutella;
 
 import java.io.File;
-import java.util.Set;
-
-import org.limewire.io.IpPort;
 
 import com.limegroup.gnutella.browser.MagnetOptions;
-import com.limegroup.gnutella.connection.ConnectionLifecycleEvent;
-import com.limegroup.gnutella.connection.ConnectionLifecycleListener;
-import com.limegroup.gnutella.search.HostData;
 import com.limegroup.gnutella.version.UpdateInformation;
 
 /**

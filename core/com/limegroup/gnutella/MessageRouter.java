@@ -2,13 +2,11 @@ package com.limegroup.gnutella;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.Set;
 
 import org.limewire.io.IpPort;
 import org.limewire.service.Service;
 
 import com.limegroup.gnutella.connection.RoutedConnection;
-import com.limegroup.gnutella.guess.GUESSEndpoint;
 import com.limegroup.gnutella.messagehandlers.MessageHandler;
 import com.limegroup.gnutella.messages.Message;
 import com.limegroup.gnutella.messages.PingRequest;
@@ -119,12 +117,6 @@ public interface MessageRouter extends Service {
      *  @throws IllegalArgumentException if the guid is null
      */
     public void downloadFinished(GUID guid) throws IllegalArgumentException;
-
-    /** @returns a Set with GUESSEndpoints that had matches for the
-     *  original query guid.  may be empty.
-     *  @param guid the guid of the query you want endpoints for.
-     */
-    public Set<GUESSEndpoint> getQueryLocs(GUID guid);
 
     public String getPingRouteTableDump();
 

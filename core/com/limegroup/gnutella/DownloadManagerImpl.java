@@ -1,27 +1,18 @@
 package com.limegroup.gnutella;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.gudy.azureus2.core3.global.GlobalManager;
 import org.limewire.collection.DualIterator;
 import org.limewire.collection.MultiIterable;
-import org.limewire.i18n.I18nMarker;
-import org.limewire.io.InvalidDataException;
-import org.limewire.service.MessageService;
 
 import com.frostwire.bittorrent.AzureusStarter;
 import com.frostwire.bittorrent.BTDownloader;
@@ -39,28 +30,17 @@ import com.limegroup.gnutella.downloader.InNetworkDownloader;
 import com.limegroup.gnutella.downloader.MagnetDownloader;
 import com.limegroup.gnutella.downloader.ManagedDownloader;
 import com.limegroup.gnutella.downloader.ResumeDownloader;
-import com.limegroup.gnutella.downloader.serial.DownloadMemento;
-import com.limegroup.gnutella.downloader.serial.DownloadSerializer;
 import com.limegroup.gnutella.library.SharingUtils;
 import com.limegroup.gnutella.messages.BadPacketException;
 import com.limegroup.gnutella.messages.QueryReply;
 import com.limegroup.gnutella.messages.QueryRequest;
 import com.limegroup.gnutella.search.HostData;
-import com.limegroup.gnutella.settings.DownloadSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.UpdateSettings;
 import com.limegroup.gnutella.version.DownloadInformation;
 
 @Singleton
 public class DownloadManagerImpl implements DownloadManager {
-    
-    private static final Log LOG = LogFactory.getLog(DownloadManagerImpl.class);
-    
-    /** The time in milliseconds between checkpointing downloads.dat.  The more
-     * often this is written, the less the lost data during a crash, but the
-     * greater the chance that downloads.dat itself is corrupt.  */
-    private int SNAPSHOT_CHECKPOINT_TIME=30*1000; //30 seconds
-
 
     /** The list of all ManagedDownloader's attempting to download.
      *  INVARIANT: active.size()<=slots() && active contains no duplicates 
@@ -73,12 +53,7 @@ public class DownloadManagerImpl implements DownloadManager {
     private final List <CoreDownloader> waiting=new LinkedList<CoreDownloader>();
     
     private final MultiIterable<CoreDownloader> activeAndWaiting = 
-        new MultiIterable<CoreDownloader>(active,waiting); 
-    
-    /**
-     * Whether or not the GUI has been init'd.
-     */
-    private volatile boolean downloadsReadFromDisk = false;
+        new MultiIterable<CoreDownloader>(active,waiting);
     
     /** The number if IN-NETWORK active downloaders.  We don't count these when
      * determing how many downloaders are active.
@@ -96,37 +71,23 @@ public class DownloadManagerImpl implements DownloadManager {
      */
     private float averageBandwidth = 0;
     
-    /** The last measured bandwidth, as counted from measureBandwidth. */
-    private volatile float lastMeasuredBandwidth;
-    
-    /**
-     * The runnable that pumps inactive downloads to the correct state.
-     */
-    private Runnable _waitingPump;
-    
     private final NetworkManager networkManager;
     private final DownloadCallback innetworkCallback;
     private final Provider<DownloadCallback> downloadCallback;
     private final Provider<MessageRouter> messageRouter;
-    private final ScheduledExecutorService backgroundExecutor;
     private final CoreDownloaderFactory coreDownloaderFactory;
-    private final DownloadSerializer downloadSerializer;
     
     @Inject
     public DownloadManagerImpl(NetworkManager networkManager,
             @Named("inNetwork") DownloadCallback innetworkCallback,
             Provider<DownloadCallback> downloadCallback,
             Provider<MessageRouter> messageRouter,
-            @Named("backgroundExecutor") ScheduledExecutorService backgroundExecutor,
-            CoreDownloaderFactory coreDownloaderFactory,
-            DownloadSerializer downloaderSerializer) {
+            CoreDownloaderFactory coreDownloaderFactory) {
         this.networkManager = networkManager;
         this.innetworkCallback = innetworkCallback;
         this.downloadCallback = downloadCallback;
         this.messageRouter = messageRouter;
-        this.backgroundExecutor = backgroundExecutor;
         this.coreDownloaderFactory = coreDownloaderFactory;
-        this.downloadSerializer = downloaderSerializer;
     }
 
 
@@ -191,90 +152,6 @@ public class DownloadManagerImpl implements DownloadManager {
                 addNewDownloader(downloader);
             }
         }
-    }
-    
-    public void loadSavedDownloads() {
-        boolean failedAll = true;
-        boolean failedSome = false;
-        
-        List<DownloadMemento> mementos;
-        try {
-            mementos = downloadSerializer.readFromDisk();
-            if(mementos.isEmpty())
-                failedAll = false;
-        } catch(IOException ioex) {
-            mementos = Collections.emptyList();
-        }
-        for(DownloadMemento memento : mementos) {
-            CoreDownloader coreDownloader = prepareMemento(memento);
-            if(coreDownloader != null) {
-                failedAll = false;
-                addNewDownloader(coreDownloader);
-            } else {
-                failedSome = true;
-            }
-        }
-        
-        downloadsReadFromDisk = true;
-        
-        if(failedAll)
-            MessageService.showError(I18nMarker.marktr("Sorry, FrostWire couldn't read your old downloads.  You can restart them by going to your Library, viewing your 'Incomplete Files', and clicking to 'Resume' your downloads."));
-        else if(failedSome)
-            MessageService.showError(I18nMarker.marktr("Sorry, FrostWire couldn't read some of your old downloads.  You can restart them by going to your Library, viewing your 'Incomplete Files', and clicking to 'Resume' your downloads."));
-    }
-    
-    public CoreDownloader prepareMemento(DownloadMemento memento) {
-        try {
-            return coreDownloaderFactory.createFromMemento(memento);
-        } catch(InvalidDataException ide) {
-            LOG.warn("Unable to read download from memento: " + memento, ide);
-            return null;
-        }
-    }
-    
-    public void scheduleSnapshots() {
-        Runnable checkpointer=new Runnable() {
-            public void run() {
-                if (downloadsInProgress() > 0) { //optimization
-                    writeSnapshot();
-                }
-            }
-        };
-        backgroundExecutor.scheduleWithFixedDelay(checkpointer, 
-                               SNAPSHOT_CHECKPOINT_TIME, 
-                               SNAPSHOT_CHECKPOINT_TIME, TimeUnit.MILLISECONDS);   
-    }      
-    
-    public void writeSnapshot() {
-        List<DownloadMemento> mementos;
-        synchronized(this) {
-            mementos = new ArrayList<DownloadMemento>(active.size() + waiting.size());
-            for(CoreDownloader downloader : activeAndWaiting) {
-                mementos.add(downloader.toMemento());
-            }
-        }
-        
-        downloadSerializer.writeToDisk(mementos);
-    }
-    
-    /* (non-Javadoc)
-     * @see com.limegroup.gnutella.DownloadMI#isGUIInitd()
-     */
-    public boolean isSavedDownloadsLoaded() {
-        return downloadsReadFromDisk;
-    }
-    
-    /* (non-Javadoc)
-     * @see com.limegroup.gnutella.DownloadMI#hasInNetworkDownload()
-     */
-    public synchronized boolean hasInNetworkDownload() {
-        if(innetworkCount > 0)
-            return true;
-        for(Iterator<CoreDownloader> i = waiting.iterator(); i.hasNext(); ) {
-            if(i.next().getDownloadType() == DownloaderType.INNETWORK)
-                return true;
-        }
-        return false;
     }
     
     /* (non-Javadoc)
@@ -639,11 +516,6 @@ public class DownloadManagerImpl implements DownloadManager {
         md.initialize();
         waiting.add(md);
         callback(md).addDownload(md);
-        backgroundExecutor.execute(new Runnable() {
-            public void run() {
-                writeSnapshot(); // Save state for crash recovery.
-            }
-        });
     }
     
     /**
@@ -779,14 +651,6 @@ public class DownloadManagerImpl implements DownloadManager {
 //            }
 //        }
     }
-
-    // //////////// Callback Methods for ManagedDownloaders ///////////////////
-
-    /** @requires this monitor' held by caller */
-    private boolean hasFreeSlot() {
-        return active.size() - innetworkCount
-            < DownloadSettings.MAX_SIM_DOWNLOAD.getValue();
-    }
     
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.DownloadMI#remove(com.limegroup.gnutella.downloader.CoreDownloader, boolean)
@@ -913,7 +777,6 @@ public class DownloadManagerImpl implements DownloadManager {
             sum+=curr;
         }
                 
-        lastMeasuredBandwidth = sum;
         return sum;
     }
     
@@ -924,29 +787,10 @@ public class DownloadManagerImpl implements DownloadManager {
         return averageBandwidth;
     }
     
-    /* (non-Javadoc)
-     * @see com.limegroup.gnutella.DownloadMI#getLastMeasuredBandwidth()
-     */
-    public float getLastMeasuredBandwidth() {
-        return lastMeasuredBandwidth;
-    }
-    
     private String getFileName(RemoteFileDesc[] rfds, String fileName) {
         for (int i = 0; i < rfds.length && fileName == null; i++) {
             fileName = rfds[i].getFileName();
         }
         return fileName;
     }
-    
-    /*
-     * @see com.limegroup.gnutella.DownloadMI#getAllDownloaders()
-     */
-    public final Iterable<CoreDownloader> getAllDownloaders() {
-        return activeAndWaiting;
-    }
-    
-    public final CoreDownloaderFactory getCoreDownloaderFactory() {
-        return coreDownloaderFactory;
-    }
-
 }

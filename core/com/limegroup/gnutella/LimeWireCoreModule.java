@@ -116,7 +116,6 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(LifecycleManager.class).to(LifecycleManagerImpl.class);
         bind(DownloadServices.class).to(DownloadServicesImpl.class);
         bind(ApplicationServices.class).to(ApplicationServicesImpl.class);
-        bind(SpamServices.class).to(SpamServicesImpl.class);
         bind(SpamFilterFactory.class).to(SpamFilterFactoryImpl.class);
         bind(UDPReplyHandlerFactory.class).to(UDPReplyHandlerFactoryImpl.class);
         bind(UDPReplyHandlerCache.class).to(UDPReplyHandlerCacheImpl.class);
@@ -147,7 +146,6 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(QueryDispatcher.class).to(QueryDispatcherImpl.class);
         bind(UpdateMessageVerifier.class).to(UpdateMessageVerifierImpl.class);
         bind(InspectionResponseFactory.class).to(InspectionResponseFactoryImpl.class);
-        bind(NodeAssigner.class).to(NodeAssignerImpl.class);
         
         bindAll(Names.named("unlimitedExecutor"), ExecutorService.class, UnlimitedExecutorProvider.class, Executor.class);
         bindAll(Names.named("backgroundExecutor"), ScheduledExecutorService.class, BackgroundTimerProvider.class, ExecutorService.class, Executor.class);

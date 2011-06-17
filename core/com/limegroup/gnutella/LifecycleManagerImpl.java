@@ -54,7 +54,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
     private final Provider<ContentManager> contentManager;
     private final Provider<MessageRouter> messageRouter;
     private final Provider<DownloadManager> downloadManager;
-    private final Provider<NodeAssigner> nodeAssigner;
     private final Provider<RatingTable> ratingTable;
     private final Provider<NetworkManager> networkManager;
     private final Provider<Statistics> statistics;
@@ -85,7 +84,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
             Provider<ContentManager> contentManager,
             Provider<MessageRouter> messageRouter,
             Provider<DownloadManager> downloadManager,
-            Provider<NodeAssigner> nodeAssigner,
             Provider<RatingTable> ratingTable,
             @Named("backgroundExecutor") Provider<ScheduledExecutorService> backgroundExecutor,
             Provider<NetworkManager> networkManager,
@@ -102,7 +100,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
         this.contentManager = contentManager;
         this.messageRouter = messageRouter;
         this.downloadManager = downloadManager;
-        this.nodeAssigner = nodeAssigner;
         this.ratingTable = ratingTable;
         this.networkManager = networkManager;
         this.statistics = statistics;
@@ -259,23 +256,11 @@ public class LifecycleManagerImpl implements LifecycleManager {
         
         serviceRegistry.stop();
         
-        nodeAssigner.get().stop();
-        
         //Update fractional uptime statistics (before writing frostwire.props)
         statistics.get().shutdown();
-        
-		// start closing all active torrents
-		//torrentManager.shutdown();
 		
         //Update firewalled status
         ConnectionSettings.EVER_ACCEPTED_INCOMING.setValue(networkManager.get().acceptedIncomingConnection());
-
-//        //Write gnutella.net
-//        try {
-//            hostCatcher.get().write();
-//        } catch (IOException e) {
-//            LOG.error("Error saving host catcher file", e);   
-//        }
         
         // save frostwire.props & other settings
         SettingsGroupManager.instance().save();
@@ -283,8 +268,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
 		ratingTable.get().ageAndSave();
         
         cleanupPreviewFiles();
-        
-        downloadManager.get().writeSnapshot();
         
         licenseFactory.get().persistCache();
         

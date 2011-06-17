@@ -7,7 +7,6 @@ import java.net.InetSocketAddress;
 import java.util.Collections;
 import java.util.Set;
 
-import org.limewire.collection.BitNumbers;
 import org.limewire.io.Connectable;
 import org.limewire.io.ConnectableImpl;
 import org.limewire.io.IpPort;
@@ -197,7 +196,7 @@ public class PushEndpoint implements HTTPHeaderValue, IpPort {
 	    if (where.length-offset < neededSpace)
 			throw new IllegalArgumentException ("target array too small");
 	    
-        int featureIdx = offset;
+        //int featureIdx = offset;
 		//store the number of proxies
 		where[offset] = (byte)(Math.min(MAX_PROXIES,proxies.size()) 
 		        | getFeatures() 
@@ -221,7 +220,7 @@ public class PushEndpoint implements HTTPHeaderValue, IpPort {
         
         // If we're including TLS, then add a byte for which proxies support it.
         
-        int pptlsIdx = offset;
+        //int pptlsIdx = offset;
         int i=0;
         if(includeTLS) {
             // If any of the proxies are TLS-capable, increment the offset

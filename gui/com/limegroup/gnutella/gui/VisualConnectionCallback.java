@@ -1,27 +1,17 @@
 package com.limegroup.gnutella.gui;
 
 import java.io.File;
-import java.util.Set;
-import java.util.Vector;
 
 import javax.swing.SwingUtilities;
-
-import org.limewire.io.IpPort;
 
 import com.frostwire.bittorrent.BTDownloader;
 import com.google.inject.Singleton;
 import com.limegroup.gnutella.ActivityCallback;
 import com.limegroup.gnutella.Downloader;
-import com.limegroup.gnutella.Downloader.DownloadStatus;
-import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.browser.MagnetOptions;
 import com.limegroup.gnutella.gui.search.SearchInformation;
 import com.limegroup.gnutella.gui.search.SearchMediator;
-import com.limegroup.gnutella.search.HostData;
-import com.limegroup.gnutella.settings.QuestionsHandler;
-import com.limegroup.gnutella.settings.iTunesSettings;
 import com.limegroup.gnutella.util.QueryUtils;
 import com.limegroup.gnutella.version.UpdateInformation;
 

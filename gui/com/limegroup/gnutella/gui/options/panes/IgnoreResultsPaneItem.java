@@ -85,8 +85,7 @@ public final class IgnoreResultsPaneItem extends AbstractPaneItem {
 		
         FilterSettings.BANNED_WORDS.setValue(bannedResults);
         FilterSettings.FILTER_ADULT.setValue(IGNORE_ADULT_CHECK_BOX.isSelected());
-		GuiCoreMediator.getSpamServices().adjustSpamFilters();
-        return false;
+		return false;
 	}
 
     public boolean isDirty() {
