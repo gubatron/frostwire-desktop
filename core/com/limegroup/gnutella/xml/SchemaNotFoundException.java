@@ -8,6 +8,11 @@ package com.limegroup.gnutella.xml;
 public class SchemaNotFoundException
     extends Exception
 {
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 7611804483678565946L;
+
     public SchemaNotFoundException() {}
 
     public SchemaNotFoundException(String message)

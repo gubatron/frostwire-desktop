@@ -12,7 +12,6 @@ import com.google.inject.Key;
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 import com.limegroup.gnutella.browser.ExternalControl;
-import com.limegroup.gnutella.downloader.CoreDownloaderFactory;
 import com.limegroup.gnutella.http.FeaturesWriter;
 import com.limegroup.gnutella.licenses.LicenseCache;
 import com.limegroup.gnutella.licenses.LicenseFactory;
@@ -145,10 +144,6 @@ public class LimeWireCore {
 
     public MetaDataReader getMetaDataReader() {
         return injector.getInstance(MetaDataReader.class);
-    }
-    
-    public CoreDownloaderFactory getCoreDownloaderFactory() {
-    	return injector.getInstance(CoreDownloaderFactory.class);
     }
     
     public UpdateCollectionFactory getUpdateCollectionFactory() {

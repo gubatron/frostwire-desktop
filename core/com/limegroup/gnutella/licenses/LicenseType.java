@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import com.limegroup.gnutella.metadata.audio.reader.AudioDataReader;
 import com.limegroup.gnutella.metadata.audio.reader.WRMXML;
 import com.limegroup.gnutella.metadata.audio.reader.WeedInfo;
 

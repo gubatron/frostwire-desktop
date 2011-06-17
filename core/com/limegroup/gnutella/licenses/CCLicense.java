@@ -256,14 +256,11 @@ class CCLicense extends AbstractLicense {
         List<String> prohibited;
         
         // for de-serializing.
+        @SuppressWarnings("unused")
         Details() { }
         
         Details(URL url) {
             licenseURL = url;
-        }
-        
-        boolean isDescriptionAvailable() {
-            return required != null || permitted != null || prohibited != null;
         }
         
         public String toString() {
@@ -272,63 +269,6 @@ class CCLicense extends AbstractLicense {
     }   
     
     ///// VERIFICATION CODE ///
-    
-    /**
-     * Locates RDF from a big string of HTML.
-     */
-    private String locateRDF(String body) {
-        if(body == null || body.trim().equals(""))
-            return null;
-        
-        // look for two rdf:RDF's.
-        int startRDF = body.indexOf("<rdf:RDF");
-        if(startRDF >= body.length() - 1)
-            return null;
-            
-        int endRDF = body.indexOf("rdf:RDF", startRDF+6);
-        if(startRDF == -1 || endRDF == -1)
-            return null;
-        
-        // find the closing tag.
-        endRDF = body.indexOf('>', endRDF);
-        if(endRDF == -1)
-            return null;
-        
-        // Alright, we got where the rdf is at!
-        return body.substring(startRDF, endRDF + 1);
-    }   
-
-//    /**
-//     * Parses through the XML.  If this is live data, we look for works.
-//     * Otherwise (it isn't from the verifier), we only look for licenses.
-//     */
-//    protected void parseDocumentNode(Node doc, LicenseCache licenseCache, LimeHttpClient httpClient) {
-//        NodeList children = doc.getChildNodes();
-//        
-//        // Do a first pass for Work elements.
-//        if(licenseCache != null) {
-//            for(int i = 0; i < children.getLength(); i++) {
-//                Node child = children.item(i);
-//                if(child.getNodeName().equals("Work"))
-//                    parseWorkItem(child);
-//            }
-//        }
-//        
-//        // And a second pass for License elements.
-//        for(int i = 0; i < children.getLength(); i++) {
-//            Node child = children.item(i);
-//            if(child.getNodeName().equals("License"))
-//                parseLicenseItem(child);
-//        }
-//        
-//        // If this was from the verifier, see if we need to get any more
-//        // license details.
-//        if (licenseCache != null) {
-//            updateLicenseDetails(licenseCache, httpClient);
-//        }
-//            
-//        return;
-//    }
     
     /**
      * Parses the 'Work' item.

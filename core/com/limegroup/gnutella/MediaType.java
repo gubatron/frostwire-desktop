@@ -418,10 +418,6 @@ public class MediaType implements Serializable {
         private List<MediaType> _filters = new LinkedList<MediaType>();
 
         private Aggregator() {}
-        /** I don't check for duplicates. */
-        private void addFilter(MediaType filter) {
-            _filters.add(filter);
-        }
 
         /** @return true if the Response falls within one of the MediaTypes
          *  this aggregates.

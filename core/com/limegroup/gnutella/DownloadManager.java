@@ -4,8 +4,6 @@ import java.io.File;
 import java.net.Socket;
 import java.util.Collection;
 
-import com.limegroup.gnutella.downloader.CoreDownloader;
-import com.limegroup.gnutella.downloader.PushedSocketHandler;
 import com.limegroup.gnutella.version.DownloadInformation;
 
 
@@ -25,7 +23,7 @@ import com.limegroup.gnutella.version.DownloadInformation;
  * completed downloads.  Downloads in the COULDNT_DOWNLOAD state are not 
  * serialized.  
  */
-public interface DownloadManager extends BandwidthTracker, SaveLocationManager, PushedSocketHandler {
+public interface DownloadManager extends BandwidthTracker, SaveLocationManager {
 
     /** 
      * Initializes this manager. <b>This method must be called before any other
@@ -102,15 +100,6 @@ public interface DownloadManager extends BandwidthTracker, SaveLocationManager, 
      * @return
      */
     public boolean isSaveLocationTaken(File candidateFile);
-
-    /**
-     * Removes downloader entirely from the list of current downloads.
-     * Notifies callback of the change in status.
-     * If completed is true, finishes the download completely.  Otherwise,
-     * puts the download back in the waiting list to be finished later.
-     *     @modifies this, callback
-     */
-    public void remove(CoreDownloader downloader, boolean completed);
 
     /**
      * Bumps the priority of an inactive download either up or down

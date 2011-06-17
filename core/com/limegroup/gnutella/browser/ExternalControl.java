@@ -1,22 +1,16 @@
 package com.limegroup.gnutella.browser;
 
 import java.io.File;
-import java.net.Socket;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.limewire.i18n.I18nMarker;
 import org.limewire.io.NetworkUtils;
-import org.limewire.service.ErrorService;
-import org.limewire.service.MessageService;
 import org.limewire.util.OSUtils;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.limegroup.gnutella.ActivityCallback;
-import com.limegroup.gnutella.SaveLocationException;
-import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.settings.ConnectionSettings;
 
 @Singleton
@@ -24,7 +18,7 @@ public class ExternalControl {
     
     private static final Log LOG = LogFactory.getLog(ExternalControl.class);
 
-	private final String LOCALHOST = "127.0.0.1";
+	//private final String LOCALHOST = "127.0.0.1";
     private boolean initialized = false;
     private volatile String  enqueuedRequest = null;
     
@@ -126,7 +120,7 @@ public class ExternalControl {
 	    	return;
 	    }
 
-	    ActivityCallback callback = restoreApplication();
+	    //ActivityCallback callback = restoreApplication();
 	    MagnetOptions options[] = MagnetOptions.parseMagnet(arg);
 
 		if (options.length == 0) {
@@ -159,7 +153,7 @@ public class ExternalControl {
 	 *   @returns  true if a local FrostWire responded with a true.
 	 */
 	private boolean testForLimeWire(String arg) {
-		Socket socket = null;
+		//Socket socket = null;
 		int port = ConnectionSettings.PORT.getValue();
 		// Check to see if the port is valid.
 		// If it is not, revert it to the default value.
@@ -167,7 +161,7 @@ public class ExternalControl {
 		// FrostWires to start if somehow the existing one
 		// set its port to 0, but that should not happen
 		// in normal program flow.
-		String type = isTorrentRequest(arg) ? "TORRENT" : "MAGNET";
+		//String type = isTorrentRequest(arg) ? "TORRENT" : "MAGNET";
 		if( !NetworkUtils.isValidPort(port) ) {
 		    ConnectionSettings.PORT.revertToDefault();
 		    port = ConnectionSettings.PORT.getValue();

@@ -16,15 +16,12 @@ import org.limewire.io.LocalSocketAddressProvider;
 
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
-import com.limegroup.gnutella.downloader.LimeWireDownloadModule;
 import com.limegroup.gnutella.licenses.LicenseFactory;
 import com.limegroup.gnutella.licenses.LicenseFactoryImpl;
 import com.limegroup.gnutella.metadata.MetaDataFactory;
 import com.limegroup.gnutella.metadata.MetaDataFactoryImpl;
 import com.limegroup.gnutella.version.UpdateCollectionFactory;
 import com.limegroup.gnutella.version.UpdateCollectionFactoryImpl;
-import com.limegroup.gnutella.version.UpdateMessageVerifier;
-import com.limegroup.gnutella.version.UpdateMessageVerifierImpl;
 import com.limegroup.gnutella.xml.LimeXMLDocumentFactory;
 import com.limegroup.gnutella.xml.LimeXMLDocumentFactoryImpl;
 
@@ -50,7 +47,6 @@ public class LimeWireCoreModule extends AbstractModule {
     @Override
     protected void configure() {
         binder().install(new LimeWireCommonModule());
-        binder().install(new LimeWireDownloadModule());
         binder().install(new LimeWireIOModule());
         
         bind(LimeWireCore.class);
@@ -75,7 +71,6 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(Inspector.class).to(InspectorImpl.class);
         bind(LocalSocketAddressProvider.class).to(LocalSocketAddressProviderImpl.class);
         bind(BandwidthTracker.class).annotatedWith(Names.named("downloadTracker")).to(DownloadManager.class); // For NodeAssigner.
-        bind(UpdateMessageVerifier.class).to(UpdateMessageVerifierImpl.class);
         
         bindAll(Names.named("unlimitedExecutor"), ExecutorService.class, UnlimitedExecutorProvider.class, Executor.class);
         bindAll(Names.named("backgroundExecutor"), ScheduledExecutorService.class, BackgroundTimerProvider.class, ExecutorService.class, Executor.class);

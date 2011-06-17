@@ -7,7 +7,11 @@ import java.io.IOException;
  */
 public class LaunchException extends IOException {
 	
-	private final String[] command;
+	/**
+     * 
+     */
+    private static final long serialVersionUID = -3994751041116114570L;
+    private final String[] command;
 
 	/**
 	 * @param cause the exception that occurred during execution of command

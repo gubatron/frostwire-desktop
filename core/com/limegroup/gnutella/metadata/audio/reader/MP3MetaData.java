@@ -59,7 +59,7 @@ public class MP3MetaData extends AudioDataReader {
                     List<TagField> priv = vTag.get(PRIV_ID); 
                     Iterator<TagField> iter = license.iterator();
                     while(iter.hasNext()) {
-                        TagField t = iter.next();
+                        //TagField t = iter.next();
                     }
                     iter = priv.iterator();
                     while(iter.hasNext()) {
@@ -84,10 +84,10 @@ public class MP3MetaData extends AudioDataReader {
      * content byte array instead. 
      */
     private void isPRIVCheck(byte[] contentBytes) {
-        try {
-            String content = new String(contentBytes,"UTF-8");
-        } catch (UnsupportedEncodingException e) {
-        }
+//        try {
+//            //String content = new String(contentBytes,"UTF-8");
+//        } catch (UnsupportedEncodingException e) {
+//        }
     }
 
     /**

@@ -5,15 +5,10 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.net.URI;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 /**
  * A base license class, implementing common functionality.
  */
 public abstract class AbstractLicense implements MutableLicense, Serializable, Cloneable {
-    
-    private static final Log LOG = LogFactory.getLog(AbstractLicense.class);
     
     private static final long serialVersionUID = 6508972367931096578L;
     
