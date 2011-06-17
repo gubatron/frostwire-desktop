@@ -16,7 +16,6 @@ import com.limegroup.gnutella.ResponseFactory;
 import com.limegroup.gnutella.SavedFileManager;
 import com.limegroup.gnutella.UDPService;
 import com.limegroup.gnutella.browser.ExternalControl;
-import com.limegroup.gnutella.filters.IPFilter;
 import com.limegroup.gnutella.licenses.LicenseVerifier;
 import com.limegroup.gnutella.messages.QueryRequestFactory;
 import com.limegroup.gnutella.metadata.MetaDataFactory;
@@ -38,7 +37,6 @@ public class GuiCoreMediator {
     public static QueryRequestFactory getQueryRequestFactory() {  return core.getQueryRequestFactory(); }    
     public static LocalFileDetailsFactory getLocalFileDetailsFactory() {  return core.getLocalFileDetailsFactory(); }
     public static DownloadManager getDownloadManager() {  return core.getDownloadManager(); }
-    public static IPFilter getIpFilter() {  return core.getIpFilter(); }
     public static SavedFileManager getSavedFileManager() { return core.getSavedFileManager(); }
     public static LimeXMLSchemaRepository getLimeXMLSchemaRepository() { return core.getLimeXMLSchemaRepository(); }
     public static LimeXMLProperties getLimeXMLProperties() { return core.getLimeXMLProperties(); }

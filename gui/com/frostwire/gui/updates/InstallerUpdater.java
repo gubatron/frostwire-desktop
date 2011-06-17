@@ -25,7 +25,6 @@ import com.frostwire.AzureusStarter;
 import com.frostwire.CoreFrostWireUtils;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.library.SharingUtils;
 import com.limegroup.gnutella.settings.UpdateSettings;
 
 public class InstallerUpdater implements Runnable, DownloadManagerListener {
@@ -43,31 +42,31 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 	}
 	
 	public void run() {
-		if (!UpdateSettings.AUTOMATIC_INSTALLER_DOWNLOAD.getValue()) {
-			return;
-		}
-		
-		if (checkIfDownloaded()) {
-			showUpdateMessage();
-		}
-		else {
-			
-			File torrentFileLocation = downloadDotTorrent();
-			
-			try {
-				CoreFrostWireUtils.waitForAzureusCoreToStart();
-				
-				_manager = CoreFrostWireUtils.startTorrentDownload(torrentFileLocation
-						.getAbsolutePath(), SharingUtils.APPLICATION_SPECIAL_SHARE.getAbsolutePath(),
-						(DownloadManagerListener) this);
-				
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			
-		}
+//		if (!UpdateSettings.AUTOMATIC_INSTALLER_DOWNLOAD.getValue()) {
+//			return;
+//		}
+//		
+//		if (checkIfDownloaded()) {
+//			showUpdateMessage();
+//		}
+//		else {
+//			
+//			File torrentFileLocation = downloadDotTorrent();
+//			
+//			try {
+//				CoreFrostWireUtils.waitForAzureusCoreToStart();
+//				
+//				_manager = CoreFrostWireUtils.startTorrentDownload(torrentFileLocation
+//						.getAbsolutePath(), SharingUtils.APPLICATION_SPECIAL_SHARE.getAbsolutePath(),
+//						(DownloadManagerListener) this);
+//				
+//			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+//			
+//		}
 	}
 
 	private void showUpdateMessage() {
@@ -113,15 +112,15 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 
 	private File downloadDotTorrent() {
 		
-		File appSpecialShareFolder = SharingUtils.APPLICATION_SPECIAL_SHARE;
-		
-		int index = _updateMessage.getTorrent().lastIndexOf('/');
-		File torrentFileLocation = new File(appSpecialShareFolder, _updateMessage.getTorrent().substring(index + 1));
-
-		if (!appSpecialShareFolder.exists()) {
-			appSpecialShareFolder.mkdir();
-			appSpecialShareFolder.setWritable(true);
-		}
+//		File appSpecialShareFolder = SharingUtils.APPLICATION_SPECIAL_SHARE;
+//		
+//		int index = _updateMessage.getTorrent().lastIndexOf('/');
+//		File torrentFileLocation = new File(appSpecialShareFolder, _updateMessage.getTorrent().substring(index + 1));
+//
+//		if (!appSpecialShareFolder.exists()) {
+//			appSpecialShareFolder.mkdir();
+//			appSpecialShareFolder.setWritable(true);
+//		}
 		
 		//We always re-download the torrent just in case.
 //		try {
@@ -132,9 +131,10 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 //			e.printStackTrace();
 //		}
 
-		assert (torrentFileLocation.exists());
-		
-		return torrentFileLocation;
+//		assert (torrentFileLocation.exists());
+//		
+//		return torrentFileLocation;
+	    return null;
 	}
 	
 	private final InstallerMetaData getLastInstallerMetaData() {
@@ -168,33 +168,34 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 
 	private boolean checkIfDownloaded() {
 		
-		InstallerMetaData md = getLastInstallerMetaData();
-		
-		if (md == null)
-			return false;
-		
-		if (!md.frostwireVersion.equals(_updateMessage.getVersion()))
-			return false;
-		
-		int indx1 = _updateMessage.getTorrent().lastIndexOf('/') + 1;
-		int indx2 = _updateMessage.getTorrent().lastIndexOf(".torrent");
-		
-		String subStr = _updateMessage.getTorrent().substring(indx1, indx2);
-		
-		File f = new File(SharingUtils.APPLICATION_SPECIAL_SHARE, subStr);
-		
-		if (!f.exists())
-			return false;
-		
-		_executableFile = f;
-		
-		try {
-			return CoreFrostWireUtils.checkMD5(f, _updateMessage.getRemoteMD5());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return false;
-		}
+//		InstallerMetaData md = getLastInstallerMetaData();
+//		
+//		if (md == null)
+//			return false;
+//		
+//		if (!md.frostwireVersion.equals(_updateMessage.getVersion()))
+//			return false;
+//		
+//		int indx1 = _updateMessage.getTorrent().lastIndexOf('/') + 1;
+//		int indx2 = _updateMessage.getTorrent().lastIndexOf(".torrent");
+//		
+//		String subStr = _updateMessage.getTorrent().substring(indx1, indx2);
+//		
+//		File f = new File(SharingUtils.APPLICATION_SPECIAL_SHARE, subStr);
+//		
+//		if (!f.exists())
+//			return false;
+//		
+//		_executableFile = f;
+//		
+//		try {
+//			return CoreFrostWireUtils.checkMD5(f, _updateMessage.getRemoteMD5());
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			return false;
+//		}
+	    return false;
 	}
 
 	@Override
@@ -266,25 +267,25 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 	
 	private void cleanupOldUpdates() {
 		
-		final Pattern p = Pattern.compile("^frostwire-([0-9]+[0-9]?\\.[0-9]+[0-9]?\\.[0-9]+[0-9]?)\\.windows\\.exe(\\.torrent)?$");
-		
-		for (File f : SharingUtils.APPLICATION_SPECIAL_SHARE.listFiles(new FilenameFilter() {
-			
-			@Override
-			public boolean accept(File dir, String name) {
-				
-				Matcher m = p.matcher(name);
-				
-				if (m.matches()) {
-					return !m.group(1).equals(_updateMessage.getVersion());
-				}
-				
-				return false;
-			}
-		})) {
-			
-			f.delete();
-		}
+//		final Pattern p = Pattern.compile("^frostwire-([0-9]+[0-9]?\\.[0-9]+[0-9]?\\.[0-9]+[0-9]?)\\.windows\\.exe(\\.torrent)?$");
+//		
+//		for (File f : SharingUtils.APPLICATION_SPECIAL_SHARE.listFiles(new FilenameFilter() {
+//			
+//			@Override
+//			public boolean accept(File dir, String name) {
+//				
+//				Matcher m = p.matcher(name);
+//				
+//				if (m.matches()) {
+//					return !m.group(1).equals(_updateMessage.getVersion());
+//				}
+//				
+//				return false;
+//			}
+//		})) {
+//			
+//			f.delete();
+//		}
 	}
 
 	private final String getInstallerDatPath()  {
@@ -319,19 +320,20 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 
 	private boolean torrentDataDownloadedToDisk() {
 		
-		if (_manager == null || _manager.getDiskManager() == null)
-			return false;
-	
-		String saveLocation = SharingUtils.APPLICATION_SPECIAL_SHARE.getAbsolutePath();
-		File f = new File(saveLocation);
-		System.out.println(f.length());
-
-		DiskManager dm = _manager.getDiskManager();
-		//boolean filesExist = dm.filesExist();		
-		int percentDone = dm.getPercentDone();		
-		long totalLength = dm.getTotalLength();
-		int rechecking = dm.getCompleteRecheckStatus();
-		
-		return f.exists() && f.length() == totalLength && percentDone == 1000 && rechecking == -1;		
+//		if (_manager == null || _manager.getDiskManager() == null)
+//			return false;
+//	
+//		String saveLocation = SharingUtils.APPLICATION_SPECIAL_SHARE.getAbsolutePath();
+//		File f = new File(saveLocation);
+//		System.out.println(f.length());
+//
+//		DiskManager dm = _manager.getDiskManager();
+//		//boolean filesExist = dm.filesExist();		
+//		int percentDone = dm.getPercentDone();		
+//		long totalLength = dm.getTotalLength();
+//		int rechecking = dm.getCompleteRecheckStatus();
+//		
+//		return f.exists() && f.length() == totalLength && percentDone == 1000 && rechecking == -1;	
+	    return false;
 	}
 }

@@ -2,6 +2,7 @@ package com.limegroup.gnutella;
 
 import java.util.concurrent.ScheduledExecutorService;
 
+import org.gudy.azureus2.plugins.ipfilter.IPFilter;
 import org.limewire.io.NetworkInstanceUtils;
 import org.limewire.lifecycle.ServiceRegistry;
 
@@ -13,17 +14,12 @@ import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 import com.limegroup.gnutella.browser.ExternalControl;
 import com.limegroup.gnutella.connection.MessageReaderFactory;
-import com.limegroup.gnutella.connection.RoutedConnectionFactory;
 import com.limegroup.gnutella.downloader.CoreDownloaderFactory;
-import com.limegroup.gnutella.filters.IPFilter;
-import com.limegroup.gnutella.filters.MutableGUIDFilter;
-import com.limegroup.gnutella.filters.SpamFilterFactory;
 import com.limegroup.gnutella.http.FeaturesWriter;
 import com.limegroup.gnutella.licenses.LicenseCache;
 import com.limegroup.gnutella.licenses.LicenseFactory;
 import com.limegroup.gnutella.licenses.LicenseVerifier;
 import com.limegroup.gnutella.messagehandlers.InspectionRequestHandler;
-import com.limegroup.gnutella.messagehandlers.UDPCrawlerPingHandler;
 import com.limegroup.gnutella.messages.MessageFactory;
 import com.limegroup.gnutella.messages.PingReplyFactory;
 import com.limegroup.gnutella.messages.PingRequestFactory;
@@ -77,10 +73,6 @@ public class LimeWireCore {
 
     public HostDataFactory getHostDataFactory() {
         return injector.getInstance(HostDataFactory.class);
-    }
-
-    public RoutedConnectionFactory getManagedConnectionFactory() {
-        return injector.getInstance(RoutedConnectionFactory.class);
     }
 
     public QueryRequestFactory getQueryRequestFactory() {
@@ -167,10 +159,6 @@ public class LimeWireCore {
         return injector.getInstance(PongCacher.class);
     }
 
-    public MutableGUIDFilter getMutableGUIDFilter() {
-        return injector.getInstance(MutableGUIDFilter.class);
-    }
-
     public LicenseCache getLicenseCache() {
         return injector.getInstance(LicenseCache.class);
     }
@@ -251,24 +239,12 @@ public class LimeWireCore {
         return injector.getInstance(PushEndpointCache.class);
     }
     
-    public SpamFilterFactory getSpamFilterFactory() {
-        return injector.getInstance(SpamFilterFactory.class);
-    }
-
-    public UDPReplyHandlerFactory getUDPReplyHandlerFactory() {
-        return injector.getInstance(UDPReplyHandlerFactory.class);
-    }
-
     public UDPReplyHandlerCache getUDPReplyHandlerCache() {
         return injector.getInstance(UDPReplyHandlerCache.class);
     }
     
     public Provider<InspectionRequestHandler> getInspectionRequestHandlerFactory() {
         return injector.getProvider(InspectionRequestHandler.class);
-    }
-    
-    public Provider<UDPCrawlerPingHandler> getUDPCrawlerPingHandlerFactory() {
-        return injector.getProvider(UDPCrawlerPingHandler.class);
     }
 
     public MessageFactory getMessageFactory() {

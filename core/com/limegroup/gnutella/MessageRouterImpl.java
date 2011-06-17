@@ -45,7 +45,6 @@ import com.limegroup.gnutella.connection.RoutedConnection;
 import com.limegroup.gnutella.messagehandlers.DualMessageHandler;
 import com.limegroup.gnutella.messagehandlers.InspectionRequestHandler;
 import com.limegroup.gnutella.messagehandlers.MessageHandler;
-import com.limegroup.gnutella.messagehandlers.UDPCrawlerPingHandler;
 import com.limegroup.gnutella.messages.BadPacketException;
 import com.limegroup.gnutella.messages.Message;
 import com.limegroup.gnutella.messages.PingReply;
@@ -71,7 +70,6 @@ import com.limegroup.gnutella.messages.vendor.TCPConnectBackRedirect;
 import com.limegroup.gnutella.messages.vendor.TCPConnectBackVendorMessage;
 import com.limegroup.gnutella.messages.vendor.UDPConnectBackRedirect;
 import com.limegroup.gnutella.messages.vendor.UDPConnectBackVendorMessage;
-import com.limegroup.gnutella.messages.vendor.UDPCrawlerPing;
 import com.limegroup.gnutella.messages.vendor.UpdateRequest;
 import com.limegroup.gnutella.messages.vendor.UpdateResponse;
 import com.limegroup.gnutella.messages.vendor.VendorMessage;
@@ -256,7 +254,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
     protected final UDPReplyHandlerCache udpReplyHandlerCache;
     protected final GuidMap multicastGuidMap;
     private final Provider<InspectionRequestHandler> inspectionRequestHandlerFactory;
-    private final Provider<UDPCrawlerPingHandler> udpCrawlerPingHandlerFactory;
     
     private final MessageHandlerBinder messageHandlerBinder;
     
@@ -287,7 +284,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
             GuidMapManager guidMapManager,	
             UDPReplyHandlerCache udpReplyHandlerCache,
             Provider<InspectionRequestHandler> inspectionRequestHandlerFactory,
-            Provider<UDPCrawlerPingHandler> udpCrawlerPingHandlerFactory,
             MessageHandlerBinder messageHandlerBinder) {
         this.networkManager = networkManager;
         this.queryRequestFactory = queryRequestFactory;
@@ -305,7 +301,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
         this.activityCallback = activityCallback;
         this.backgroundExecutor = backgroundExecutor;
         this.pongCacher = pongCacher;
-        this.udpCrawlerPingHandlerFactory = udpCrawlerPingHandlerFactory;
         this.messageHandlerBinder = messageHandlerBinder;
         this.multicastGuidMap = guidMapManager.getMap();
         this.udpReplyHandlerCache = udpReplyHandlerCache;
@@ -475,7 +470,6 @@ public abstract class MessageRouterImpl implements MessageRouter {
         setUDPMessageHandler(PingReply.class, new UDPPingReplyHandler());
         setUDPMessageHandler(LimeACKVendorMessage.class, new UDPLimeACKVendorMessageHandler());
         //setUDPMessageHandler(ReplyNumberVendorMessage.class, oobHandler);
-        setUDPMessageHandler(UDPCrawlerPing.class, udpCrawlerPingHandlerFactory.get());
         setUDPMessageHandler(HeadPing.class, new UDPHeadPingHandler());
         setUDPMessageHandler(UpdateRequest.class, new UDPUpdateRequestHandler());
         setUDPMessageHandler(ContentResponse.class, new UDPContentResponseHandler());

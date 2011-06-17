@@ -13,12 +13,11 @@
     <import file="collection/build.xml"/>
     <import file="io/build.xml"/>
     <import file="setting/build.xml"/>
-    <import file="statistic/build.xml"/>
     <import file="resources/build.xml"/>
     <import file="azureus/build.xml"/>
     <import file="osx_stub/build.xml" />
 	
-    <target name="initialize" depends="lw-setting.initialize, lw-statistic.initialize, lw-io.initialize, lw-collection.initialize, lw-common.initialize, lw-resources.initialize, azureus.initialize, osx_stub.initialize" unless="initialized.all">
+    <target name="initialize" depends="lw-setting.initialize, lw-io.initialize, lw-collection.initialize, lw-common.initialize, lw-resources.initialize, azureus.initialize, osx_stub.initialize" unless="initialized.all">
         <do.setup-properties component="all">
 	  <tests-classpath>
             <path refid="tests.limewire.components.common.classpath"/>
@@ -27,7 +26,6 @@
 	    <path refid="tests.limewire.components.io.classpath"/>
 	    <path refid="tests.limewire.components.nio.classpath"/>
 	    <path refid="tests.limewire.components.setting.classpath"/>
-	    <path refid="tests.limewire.components.statistic.classpath"/>
 	    <path refid="tests.limewire.components.test-util.classpath"/>
 	    <path refid="tests.limewire.components.resources.classpath"/>
 	    <path refid="tests.limewire.components.http.classpath"/>
@@ -45,8 +43,7 @@
             <pathelement location="${build.limewire.components.io.classes}"/>
             <pathelement location="${build.limewire.components.nio.classes}"/>
             <pathelement location="${build.limewire.components.setting.classes}"/>
-            <pathelement location="${build.limewire.components.statistic.classes}"/>
- 	    <pathelement location="${build.limewire.components.http.classes}"/>
+            <pathelement location="${build.limewire.components.http.classes}"/>
  	    <pathelement location="${build.limewire.components.net.classes}"/>
  	    <pathelement location="${build.limewire.components.azureus.classes}"/>
             <pathelement location="${build.limewire.components.osx_stub.classes}"/>
@@ -68,7 +65,6 @@
 			<include name="${limewire.components.io.relative.antglob.allsources}"/>
 			<include name="${limewire.components.nio.relative.antglob.allsources}"/>
 			<include name="${limewire.components.setting.relative.antglob.allsources}"/>
-			<include name="${limewire.components.statistic.relative.antglob.allsources}"/>
 	     	<include name="${limewire.components.http.relative.antglob.allsources}"/>    
 	     	<include name="${limewire.components.net.relative.antglob.allsources}"/>    
    			<!-- Add as components are added! -->
@@ -81,9 +77,8 @@
 			<include name="${limewire.components.io.relative.antglob.tests}"/>
 			<include name="${limewire.components.nio.relative.antglob.tests}"/>
 			<include name="${limewire.components.setting.relative.antglob.tests}"/>
-			<include name="${limewire.components.statistic.relative.antglob.tests}"/>
-	     	<include name="${limewire.components.http.relative.antglob.tests}"/>    
-	     	<include name="${limewire.components.net.relative.antglob.tests}"/>    
+			<include name="${limewire.components.http.relative.antglob.tests}"/>    
+			<include name="${limewire.components.net.relative.antglob.tests}"/>    
     		<!-- Add as components are added! -->
 		</fileset>
     
@@ -91,7 +86,7 @@
 	
 	<target name="clean"
 	        description="Cleans all generated data in every component."
-	        depends="lw-setting.clean, lw-statistic.clean, lw-io.clean, lw-collection.clean, lw-common.clean, azureus.clean, osx_stub.clean">
+	        depends="lw-setting.clean, lw-io.clean, lw-collection.clean, lw-common.clean, azureus.clean, osx_stub.clean">
 	    <do.clean component="all"/>
     </target>
     
@@ -101,7 +96,7 @@
     
     <target name="compile-core"
             description="Compiles the source and tests of every non-UI component."
-            depends="lw-setting.compile, lw-statistic.compile, lw-io.compile, lw-collection.compile, lw-common.compile">
+            depends="lw-setting.compile, lw-io.compile, lw-collection.compile, lw-common.compile">
         <mkdir dir="${build.limewire.components.all.classes}"/>
         <mkdir dir="${build.limewire.components.all.tests}"/>
 	</target>
@@ -119,7 +114,7 @@
 	
 	<target name="compile-core-src"
 	        description="Compiles only the source code of every non-UI component."
-	        depends="lw-setting.compile-src, lw-statistic.compile-src, lw-io.compile-src, lw-collection.compile-src, lw-common.compile-src, azureus.compile-src, osx_stub.compile-src">
+	        depends="lw-setting.compile-src, lw-io.compile-src, lw-collection.compile-src, lw-common.compile-src, azureus.compile-src, osx_stub.compile-src">
         <mkdir dir="${build.limewire.components.all.classes}"/>
 	</target>
 	
@@ -131,19 +126,19 @@
     
 	<target name="clean-src"
 	        description="Cleans files generated from compiling the source code of every component."
-	        depends="lw-setting.clean-src, lw-statistic.clean-src, lw-io.clean-src, lw-collection.clean-src, lw-common.clean-src">
+	        depends="lw-setting.clean-src, lw-io.clean-src, lw-collection.clean-src, lw-common.clean-src">
 		<do.clean-src component="all"/>
 	</target>
 	
 	<target name="compile-tests"
 	        description="Compiles the tests of every component (and the source if necessary)"
-	        depends="compile-src, lw-setting.compile-tests, lw-statistic.compile-tests, lw-io.compile-tests, lw-collection.compile-tests, lw-common.compile-tests">
+	        depends="compile-src, lw-setting.compile-tests, lw-io.compile-tests, lw-collection.compile-tests, lw-common.compile-tests">
         <mkdir dir="${build.limewire.components.all.tests}"/>
 	</target>
     
 	<target name="clean-tests"
 	        description="Cleans data generated from compiling and running the tests of every component."
-	        depends="initialize, lw-setting.clean-tests, lw-statistic.clean-tests, lw-io.clean-tests, lw-collection.clean-tests, lw-common.clean-tests">
+	        depends="initialize, lw-setting.clean-tests, lw-io.clean-tests, lw-collection.clean-tests, lw-common.clean-tests">
 	    <do.clean-tests component="all"/>
 	</target>
 	
@@ -171,11 +166,8 @@
     	        <fileset dir="${build.limewire.components.io.tests}" includes="**/*Test.class"/>
     	        <fileset dir="${build.limewire.components.nio.tests}" includes="**/*Test.class"/>
     	        <fileset dir="${build.limewire.components.setting.tests}" includes="**/*Test.class"/>
-    	        <fileset dir="${build.limewire.components.statistic.tests}" includes="**/*Test.class"/> 
                	<fileset dir="${build.limewire.components.http.tests}" includes="**/*Test.class"/>
            	<fileset dir="${build.limewire.components.net.tests}" includes="**/*Test.class"/>
-           	<!-- <fileset dir="${build.limewire.components.lwsserver.tests}" includes="**/*Test.class"/> -->
-	            <!-- Add as tests are added. -->
 	         </testLocations>
 	    </do.test-all>
 	</target>
@@ -194,12 +186,11 @@
       <delete file="${limewire.components.home}/io/dist/lw-io.jar"/>
       <delete file="${limewire.components.home}/resources/dist/lw-resources.jar"/>
       <delete file="${limewire.components.home}/setting/dist/lw-setting.jar"/>
-      <delete file="${limewire.components.home}/statistic/dist/lw-statistic.jar"/>
       <delete file="${limewire.components.home}/all/dist/lw-all.jar"/>
     </target>
 
     <!-- creates a jar for every component -->
-    <target name="jar" depends="clean-jars, azureus.jar, osx_stub.jar, lw-collection.jar, lw-common.jar, lw-io.jar, lw-resources.jar, lw-statistic.jar, lw-setting.jar">
+    <target name="jar" depends="clean-jars, azureus.jar, osx_stub.jar, lw-collection.jar, lw-common.jar, lw-io.jar, lw-resources.jar, lw-setting.jar">
       <echo message="done with jars"/>
     </target>
 
@@ -217,7 +208,6 @@
     	  <fileset dir="${build.limewire.components.io.classes}" />
       	  <fileset dir="${build.limewire.components.nio.classes}" />
     	  <fileset dir="${build.limewire.components.setting.classes}" />
-    	  <fileset dir="${build.limewire.components.statistic.classes}" />
     	  <fileset dir="${limewire.components.resources.src.resources}" />
     	  <fileset dir="${build.limewire.components.http.classes}" />
     	  <fileset dir="${build.limewire.components.net.classes}" />

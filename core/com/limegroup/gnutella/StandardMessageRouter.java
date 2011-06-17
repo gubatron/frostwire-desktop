@@ -9,7 +9,6 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 import com.limegroup.gnutella.messagehandlers.InspectionRequestHandler;
-import com.limegroup.gnutella.messagehandlers.UDPCrawlerPingHandler;
 import com.limegroup.gnutella.messages.PingReplyFactory;
 import com.limegroup.gnutella.messages.PingRequest;
 import com.limegroup.gnutella.messages.PingRequestFactory;
@@ -45,7 +44,6 @@ public class StandardMessageRouter extends MessageRouterImpl {
             GuidMapManager guidMapManager, 
             UDPReplyHandlerCache udpReplyHandlerCache,
             Provider<InspectionRequestHandler> inspectionRequestHandlerFactory,
-            Provider<UDPCrawlerPingHandler> udpCrawlerPingHandlerFactory,
             PingRequestFactory pingRequestFactory, MessageHandlerBinder messageHandlerBinder) {
         super(networkManager, queryRequestFactory, queryHandlerFactory,
                 headPongFactory, pingReplyFactory,
@@ -56,7 +54,6 @@ public class StandardMessageRouter extends MessageRouterImpl {
                 activityCallback, applicationServices,
                 backgroundExecutor, pongCacher,
                 guidMapManager, udpReplyHandlerCache, inspectionRequestHandlerFactory, 
-                udpCrawlerPingHandlerFactory, 
                 messageHandlerBinder);
     }
     

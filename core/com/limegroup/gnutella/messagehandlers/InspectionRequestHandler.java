@@ -16,13 +16,11 @@ import com.limegroup.gnutella.MessageRouter;
 import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.ReplyHandler;
 import com.limegroup.gnutella.UDPReplyHandlerCache;
-import com.limegroup.gnutella.UDPReplyHandlerFactory;
 import com.limegroup.gnutella.messages.Message;
 import com.limegroup.gnutella.messages.vendor.InspectionRequest;
 import com.limegroup.gnutella.messages.vendor.InspectionResponse;
 import com.limegroup.gnutella.messages.vendor.InspectionResponseFactory;
 import com.limegroup.gnutella.settings.FilterSettings;
-import com.limegroup.gnutella.settings.MessageSettings;
 
 /**
  * Handles an incoming InspectionRequest, sending a response
@@ -54,14 +52,11 @@ public class InspectionRequestHandler extends RestrictedResponder {
     
     @Inject
     public InspectionRequestHandler(Provider<MessageRouter> router, NetworkManager networkManager,
-            UDPReplyHandlerFactory udpReplyHandlerFactory,
             UDPReplyHandlerCache udpReplyHandlerCache, InspectionResponseFactory factory,
             @Named("messageExecutor")
             ExecutorService dispatch, @Named("backgroundExecutor")
             ScheduledExecutorService background, NetworkInstanceUtils networkInstanceUtils) {
-        super(FilterSettings.INSPECTOR_IP_ADDRESSES, 
-                MessageSettings.INSPECTION_VERSION, networkManager,
-                udpReplyHandlerFactory, udpReplyHandlerCache, dispatch, networkInstanceUtils);
+        super(FilterSettings.INSPECTOR_IP_ADDRESSES);
         this.router = router;
         this.factory = factory;
         sender = new Periodic(new Runnable() {

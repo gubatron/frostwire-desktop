@@ -18,11 +18,7 @@ import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 import com.limegroup.gnutella.connection.MessageReaderFactory;
 import com.limegroup.gnutella.connection.MessageReaderFactoryImpl;
-import com.limegroup.gnutella.connection.RoutedConnectionFactory;
-import com.limegroup.gnutella.connection.RoutedConnectionFactoryImpl;
 import com.limegroup.gnutella.downloader.LimeWireDownloadModule;
-import com.limegroup.gnutella.filters.SpamFilterFactory;
-import com.limegroup.gnutella.filters.SpamFilterFactoryImpl;
 import com.limegroup.gnutella.licenses.LicenseFactory;
 import com.limegroup.gnutella.licenses.LicenseFactoryImpl;
 import com.limegroup.gnutella.messagehandlers.MessageHandlerBinderImpl;
@@ -105,7 +101,6 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(HeadPongFactory.class).to(HeadPongFactoryImpl.class);
         bind(QueryHandlerFactory.class).to(QueryHandlerFactoryImpl.class);
         bind(QueryRequestFactory.class).to(QueryRequestFactoryImpl.class);
-        bind(RoutedConnectionFactory.class).to(RoutedConnectionFactoryImpl.class);
         bind(HostDataFactory.class).to(HostDataFactoryImpl.class);
         bind(LocalFileDetailsFactory.class).to(LocalFileDetailsFactoryImpl.class);
         bind(ResponseFactory.class).to(ResponseFactoryImpl.class);
@@ -113,8 +108,6 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(CapabilitiesVMFactory.class).to(CapabilitiesVMFactoryImpl.class);
         bind(LifecycleManager.class).to(LifecycleManagerImpl.class);
         bind(ApplicationServices.class).to(ApplicationServicesImpl.class);
-        bind(SpamFilterFactory.class).to(SpamFilterFactoryImpl.class);
-        bind(UDPReplyHandlerFactory.class).to(UDPReplyHandlerFactoryImpl.class);
         bind(UDPReplyHandlerCache.class).to(UDPReplyHandlerCacheImpl.class);
         bind(DownloadManager.class).to(DownloadManagerImpl.class).asEagerSingleton();
         bind(ReplyNumberVendorMessageFactory.class).to(ReplyNumberVendorMessageFactoryImpl.class);

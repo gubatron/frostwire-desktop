@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import com.limegroup.gnutella.BandwidthTracker;
 import com.limegroup.gnutella.ReplyHandler;
-import com.limegroup.gnutella.filters.SpamFilter;
 import com.limegroup.gnutella.messages.Message;
 import com.limegroup.gnutella.messages.QueryRequest;
 import com.limegroup.gnutella.routing.PatchTableMessage;
@@ -85,22 +84,6 @@ public interface RoutedConnection extends Connection, ReplyHandler {
      * @param query the <tt>QueryRequest</tt> to send
      */
     public void originateQuery(QueryRequest query);
-
-    /**
-     * @modifies this
-     * @effects sets the underlying routing filter. Note that most filters are
-     *          not thread-safe, so they should not be shared among multiple
-     *          connections.
-     */
-    public void setRouteFilter(SpamFilter filter);
-
-    /**
-     * @modifies this
-     * @effects sets the underlying personal filter. Note that most filters are
-     *          not thread-safe, so they should not be shared among multiple
-     *          connections.
-     */
-    public void setPersonalFilter(SpamFilter filter);
 
     /**
      * Returns whether or not this connection is a push proxy for me
