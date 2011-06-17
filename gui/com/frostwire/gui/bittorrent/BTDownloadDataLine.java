@@ -165,7 +165,6 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
      */
     public void initialize(BTDownload downloader) {
         super.initialize(downloader);
-        _size = initializer.getSize();
         _notification = downloader.isCompleted();
         update();
     }
@@ -303,17 +302,18 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
      * @implements DataLine interface
      */
     public void update() {
-        _status = getInitializeObject().getStateString();
-        _progress = getInitializeObject().getProgress();
-        _download = getInitializeObject().getBytesReceived();
-        _upload = getInitializeObject().getBytesSent();
-        _downloadSpeed = getInitializeObject().getDownloadSpeed();
-        _uploadSpeed = getInitializeObject().getUploadSpeed();
-        _timeLeft = getInitializeObject().getETA();
-        _seeds = getInitializeObject().getSeedsString();
-        _peers = getInitializeObject().getPeersString();
-        _shareRatio = getInitializeObject().getShareRatio();
-        _seedToPeerRatio = getInitializeObject().getSeedToPeerRatio();
+        _status = initializer.getStateString();
+        _progress = initializer.getProgress();
+        _download = initializer.getBytesReceived();
+        _upload = initializer.getBytesSent();
+        _downloadSpeed = initializer.getDownloadSpeed();
+        _uploadSpeed = initializer.getUploadSpeed();
+        _timeLeft = initializer.getETA();
+        _seeds = initializer.getSeedsString();
+        _peers = initializer.getPeersString();
+        _shareRatio = initializer.getShareRatio();
+        _seedToPeerRatio = initializer.getSeedToPeerRatio();
+        _size = initializer.getSize();
 
         if (getInitializeObject().isCompleted()) {
             showNotification();

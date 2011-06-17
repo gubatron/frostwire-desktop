@@ -105,7 +105,7 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
 
     @Override
     public int add(BTDownload downloader) {
-        _hashDownloads.add(TorrentUtil.hashToString(downloader.getHash()));
+        _hashDownloads.add(downloader.getHash());
         return super.add(downloader);
     }
 
@@ -117,7 +117,7 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
 
         downloader.remove();
 
-        _hashDownloads.remove(TorrentUtil.hashToString(downloader.getHash()));
+        _hashDownloads.remove(downloader.getHash());
 
         super.remove(i);
     }

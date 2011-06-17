@@ -802,7 +802,7 @@ public final class GUIMediator {
 	}
 
 	public final void openTorrentURI(String uri, boolean partialSelection) {
-	    getBTDownloadMediator().openTorrentURI(uri, partialSelection);
+	    getBTDownloadMediator().openTorrentURI(uri);
 		setWindow(GUIMediator.Tabs.SEARCH);
 	}
 

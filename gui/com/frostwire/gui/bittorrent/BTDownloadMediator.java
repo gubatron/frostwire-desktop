@@ -8,11 +8,6 @@ import javax.swing.Action;
 import javax.swing.JPopupMenu;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
-import org.gudy.azureus2.core3.download.DownloadManagerListener;
-import org.gudy.azureus2.core3.download.impl.DownloadManagerAdapter;
-import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloader;
-import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderCallBackInterface;
-import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderFactory;
 import org.limewire.util.OSUtils;
 
 import com.aelitis.azureus.core.AzureusCore;
@@ -22,7 +17,6 @@ import com.limegroup.gnutella.gui.FileDetailsProvider;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
-import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.dnd.FileTransfer;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
@@ -33,8 +27,6 @@ import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.settings.QuestionsHandler;
-import com.limegroup.gnutella.settings.SharingSettings;
-import com.limegroup.gnutella.settings.iTunesSettings;
 
 /**
  * This class acts as a mediator between all of the components of the
@@ -73,8 +65,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     /** The actual download buttons instance.
      */
     private BTDownloadButtons _downloadButtons;
-
-    private final DownloadManagerListener ITUNES_SONG_SCANNER_LISTENER;
 
     /**
      * Overriden to have different default values for tooltips.
@@ -150,19 +140,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         super("DOWNLOAD_TABLE");
         GUIMediator.addRefreshListener(this);
         ThemeMediator.addThemeObserver(this);
-
-        ITUNES_SONG_SCANNER_LISTENER = new DownloadManagerAdapter() {
-            @Override
-            public void stateChanged(DownloadManager manager, int state) {
-                if (manager.getAssumedComplete() && iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue()
-                        && !iTunesMediator.instance().isScanned(manager.getSaveLocation())) {
-                    if ((OSUtils.isMacOSX() || OSUtils.isWindows())) {
-                        iTunesMediator.instance().scanForSongs(manager.getSaveLocation());
-                    }
-                }
-
-            }
-        };
     }
 
     /**
@@ -236,7 +213,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     public void add(BTDownload downloader) {
         if (!DATA_MODEL.contains(downloader)) {
             super.add(downloader);
-            downloader.getDownloadManager().addListener(ITUNES_SONG_SCANNER_LISTENER, false);
         }
     }
 
@@ -475,27 +451,33 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         _copyHashAction.setEnabled(false);
     }
 
-    public void openTorrentURI(final String uri, final boolean partialSelection) {
-        TorrentDownloader downloader = TorrentDownloaderFactory.create(new TorrentDownloaderCallBackInterface() {
-            public void TorrentDownloaderEvent(int state, TorrentDownloader inf) {
-                if (state == TorrentDownloader.STATE_FINISHED) {
-                    GUIMediator.safeInvokeLater(new Runnable() {
-                        public void run() {
-                            GUIMediator.instance().getStatusLine().setStatusText(I18n.tr("Torrent file downloaded from Internet"));
-                        }
-                    });
-                    openTorrent(inf.getFile(), partialSelection, false, null);
-                } else if (state == TorrentDownloader.STATE_ERROR) {
-                    GUIMediator.safeInvokeLater(new Runnable() {
-                        public void run() {
-                            GUIMediator.instance().getStatusLine().setStatusText(I18n.tr("Error downloading the .torrent file"));
-                        }
-                    });
-                }
+    public void openTorrentURI(final String uri) {
+        //        TorrentDownloader downloader = TorrentDownloaderFactory.create(new TorrentDownloaderCallBackInterface() {
+        //            public void TorrentDownloaderEvent(int state, TorrentDownloader inf) {
+        //                if (state == TorrentDownloader.STATE_FINISHED) {
+        //                    GUIMediator.safeInvokeLater(new Runnable() {
+        //                        public void run() {
+        //                            GUIMediator.instance().getStatusLine().setStatusText(I18n.tr("Torrent file downloaded from Internet"));
+        //                        }
+        //                    });
+        //                    openTorrent(inf.getFile(), partialSelection, false, null);
+        //                } else if (state == TorrentDownloader.STATE_ERROR) {
+        //                    GUIMediator.safeInvokeLater(new Runnable() {
+        //                        public void run() {
+        //                            GUIMediator.instance().getStatusLine().setStatusText(I18n.tr("Error downloading the .torrent file"));
+        //                        }
+        //                    });
+        //                }
+        //            }
+        //        }, uri, null, SharingSettings.TORRENT_DATA_DIR_SETTING.getValue().getAbsolutePath());
+        //
+        //        downloader.start();
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                BTDownload downloader = new TorrentFetcherDownload(uri);
+                add(downloader);
             }
-        }, uri, null, SharingSettings.TORRENT_DATA_DIR_SETTING.getValue().getAbsolutePath());
-
-        downloader.start();
+        });
     }
 
     public void openTorrent(final File file, final boolean partialSelection, final boolean initialSeed, final File saveDir) {

@@ -433,4 +433,8 @@ public class TorrentUtil {
         
         return hex;
     }
+    
+    static DownloadManager createDownloadManager(File torrent) {
+        return null;
+    }
 }

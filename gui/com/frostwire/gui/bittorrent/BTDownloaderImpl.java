@@ -16,6 +16,7 @@ public class BTDownloaderImpl implements BTDownload {
     private final boolean _partialDownload;
     private final long _size;
     private final Set<DiskManagerFileInfo> _fileInfoSet;
+    private String _hash;
 
     private boolean _deleteTorrentWhenRemove;
 
@@ -35,6 +36,12 @@ public class BTDownloaderImpl implements BTDownload {
         } else {
             _fileInfoSet = null;
             _size = downloadManager.getSize();
+        }
+        try {
+            _hash = TorrentUtil.hashToString(downloadManager.getTorrent().getHash());
+        } catch (TOTorrentException e) {
+            e.printStackTrace();
+            _hash = "";
         }
 
         _deleteTorrentWhenRemove = false;
@@ -230,13 +237,8 @@ public class BTDownloaderImpl implements BTDownload {
         _deleteDataWhenRemove = deleteDataWhenRemove;
     }
 
-    public byte[] getHash() {
-        try {
-            return _downloadManager.getTorrent().getHash();
-        } catch (TOTorrentException e) {
-            e.printStackTrace();
-            return new byte[0];
-        }
+    public String getHash() {
+        return _hash;
     }
 
     public String getSeedToPeerRatio() {

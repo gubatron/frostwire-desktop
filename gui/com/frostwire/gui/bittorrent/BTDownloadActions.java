@@ -268,7 +268,7 @@ final class BTDownloadActions {
             BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
             String str = "";
             for (int i = 0; i < downloaders.length; i++) {
-                str += TorrentUtil.hashToString(downloaders[i].getHash());
+                str += downloaders[i].getHash();
                 str += "\n";
             }
             GUIMediator.setClipboardContent(str);
