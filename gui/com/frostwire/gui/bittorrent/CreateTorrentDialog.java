@@ -10,14 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -56,7 +52,6 @@ import org.gudy.azureus2.core3.util.TrackersUtil;
 import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.AzureusCoreRunningListener;
-import com.frostwire.AzureusStarter;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
@@ -109,7 +104,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	List<List<String>> trackers = new ArrayList<List<String>>();
 
 	String webSeedConfig = "";
-	Map webseeds = new HashMap();
+	//Map webseeds = new HashMap();
 
 	boolean autoOpen = true;
 	boolean autoHost = false;
@@ -541,7 +536,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 					
 					if (autoOpen) {
 						SwingUtilities.invokeLater(new Runnable() {
-							public void run() { GUIMediator.instance().openTorrent(new File(savePath), false, true, _saveDir); }
+							public void run() { GUIMediator.instance().openTorrentForSeed(new File(savePath), _saveDir); }
 						});
 					}
 				}

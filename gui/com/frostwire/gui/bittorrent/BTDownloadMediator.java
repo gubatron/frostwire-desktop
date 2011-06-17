@@ -471,43 +471,66 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         });
     }
 
-    public void openTorrentFile(final File file, final boolean partialSelection) {
-//        GUIMediator.safeInvokeLater(new Runnable() {
-//            public void run() {
-//                try {
-//
-//                    boolean[] filesSelection = null;
-//
-//                    if (partialSelection) {
-//                        OpenTorrentDialog dlg = new OpenTorrentDialog(GUIMediator.getAppFrame(), file);
-//                        dlg.setVisible(true);
-//                        filesSelection = dlg.getFilesSelection();
-//                        if (filesSelection == null) {
-//                            return;
-//                        }
-//                    }
-//
-//                    BTDownloaderFactory factory = new BTDownloaderFactory(AzureusStarter.getAzureusCore().getGlobalManager(), file, filesSelection,
-//                            initialSeed, saveDir);
-//                    BTDownload downloader = BTDownloaderUtils.createDownloader(factory);
-//
-//                    if (downloader != null) {
-//                        add(downloader);
-//                    }
-//
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                    if (!e.toString().contains("No files selected by user")) {
-//                        // could not read torrent file or bad torrent file.
-//                        GUIMediator.showError(
-//                                I18n.tr("FrostWire was unable to load the torrent file \"{0}\", - it may be malformed or FrostWire does not have permission to access this file.",
-//                                        file.getName()), QuestionsHandler.TORRENT_OPEN_FAILURE);
-//                        //System.out.println("***Error happened from Download Mediator: " +  ioe);
-//                        //GUIMediator.showMessage("Error was: " + ioe); //FTA: debug
-//                    }
-//                }
-//            }
-//        });
+    public void openTorrentFileForSeed(final File torrentFile, final File saveDir) {
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                try {
+                    BTDownloadCreator creator = new BTDownloadCreator(torrentFile, saveDir, true, null);
+                    if (!creator.isTorrentInGlobalManager()) {
+                        BTDownload download = creator.createDownload();
+                        add(download);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    if (!e.toString().contains("No files selected by user")) {
+                        // could not read torrent file or bad torrent file.
+                        GUIMediator.showError(
+                                I18n.tr("FrostWire was unable to load the torrent file \"{0}\", - it may be malformed or FrostWire does not have permission to access this file.",
+                                        torrentFile.getName()), QuestionsHandler.TORRENT_OPEN_FAILURE);
+                        //System.out.println("***Error happened from Download Mediator: " +  ioe);
+                        //GUIMediator.showMessage("Error was: " + ioe); //FTA: debug
+                    }
+                }
+
+            }
+        });
+    }
+
+    public void openTorrentFile(final File torrentFile, final boolean partialDownload) {
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                try {
+
+                    boolean[] filesSelection = null;
+
+                    if (partialDownload) {
+                        OpenTorrentDialog dlg = new OpenTorrentDialog(GUIMediator.getAppFrame(), torrentFile);
+                        dlg.setVisible(true);
+                        filesSelection = dlg.getFilesSelection();
+                        if (filesSelection == null) {
+                            return;
+                        }
+                    }
+
+                    BTDownloadCreator creator = new BTDownloadCreator(torrentFile, null, false, filesSelection);
+                    if (!creator.isTorrentInGlobalManager()) {
+                        BTDownload download = creator.createDownload();
+                        add(download);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    if (!e.toString().contains("No files selected by user")) {
+                        // could not read torrent file or bad torrent file.
+                        GUIMediator.showError(
+                                I18n.tr("FrostWire was unable to load the torrent file \"{0}\", - it may be malformed or FrostWire does not have permission to access this file.",
+                                        torrentFile.getName()), QuestionsHandler.TORRENT_OPEN_FAILURE);
+                        //System.out.println("***Error happened from Download Mediator: " +  ioe);
+                        //GUIMediator.showMessage("Error was: " + ioe); //FTA: debug
+                    }
+                }
+            }
+        });
     }
 
     public BTDownload[] getSelectedDownloaders() {
@@ -563,7 +586,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     }
 
     public void addDownloadManager(DownloadManager mgr) {
-        BTDownload downloader = new BTDownloaderFactory(AzureusStarter.getAzureusCore().getGlobalManager(), null, null, false, null).createDownloader(mgr);
-        add(downloader);
+        try {
+            add(BTDownloadCreator.createDownload(mgr));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

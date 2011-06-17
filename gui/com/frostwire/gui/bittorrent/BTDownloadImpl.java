@@ -10,7 +10,7 @@ import org.gudy.azureus2.core3.tracker.client.TRTrackerScraperResponse;
 import org.gudy.azureus2.core3.util.Constants;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
 
-public class BTDownloaderImpl implements BTDownload {
+public class BTDownloadImpl implements BTDownload {
 
     private final DownloadManager _downloadManager;
     private final boolean _partialDownload;
@@ -22,7 +22,7 @@ public class BTDownloaderImpl implements BTDownload {
 
     private boolean _deleteDataWhenRemove;
 
-    public BTDownloaderImpl(DownloadManager downloadManager) {
+    public BTDownloadImpl(DownloadManager downloadManager) {
         _downloadManager = downloadManager;
         _partialDownload = TorrentUtil.getSkippedFiles(downloadManager).size() > 0;
 

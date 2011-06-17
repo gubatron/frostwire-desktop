@@ -803,9 +803,9 @@ public final class GUIMediator {
 		setWindow(GUIMediator.Tabs.SEARCH);
 	}
 
-    public void openTorrent(File file, boolean b, boolean c, File _saveDir) {
-        // TODO Auto-generated method stub
-        
+    public void openTorrentForSeed(File torrentFile, File saveDir) {
+        getBTDownloadMediator().openTorrentFileForSeed(torrentFile, saveDir);
+        setWindow(GUIMediator.Tabs.SEARCH);
     }
 	
 	public final void openTorrentURI(String uri) {

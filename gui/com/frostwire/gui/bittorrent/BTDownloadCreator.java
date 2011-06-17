@@ -100,10 +100,14 @@ public class BTDownloadCreator {
     public boolean isTorrentInGlobalManager() {
         return _torrentInGlobalManager;
     }
-
+    
     public BTDownload createDownload() throws SaveLocationException, TOTorrentException {
+        return createDownload(_downloadManager);
+    }
 
-        _downloadManager.addListener(new DownloadManagerAdapter() {
+    public static BTDownload createDownload(DownloadManager downloadManager) throws SaveLocationException, TOTorrentException {
+
+        downloadManager.addListener(new DownloadManagerAdapter() {
             @Override
             public void stateChanged(DownloadManager manager, int state) {
                 if (state == DownloadManager.STATE_READY) {
@@ -127,10 +131,10 @@ public class BTDownloadCreator {
             }
         });
 
-        if (_downloadManager.getState() != DownloadManager.STATE_STOPPED) {
-            _downloadManager.initialize();
+        if (downloadManager.getState() != DownloadManager.STATE_STOPPED) {
+            downloadManager.initialize();
         }
 
-        return new BTDownloaderImpl(_downloadManager);
+        return new BTDownloadImpl(downloadManager);
     }
 }
