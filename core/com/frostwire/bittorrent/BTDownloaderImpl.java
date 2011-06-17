@@ -1,7 +1,9 @@
 package com.frostwire.bittorrent;
 
 import java.io.File;
+import java.util.Set;
 
+import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.tracker.client.TRTrackerScraperResponse;
@@ -11,6 +13,9 @@ import org.gudy.azureus2.core3.util.DisplayFormatters;
 public class BTDownloaderImpl implements BTDownloader {
 
     private final DownloadManager _downloadManager;
+    private final boolean _partialDownload;
+    private final long _size;
+    private final Set<DiskManagerFileInfo> _fileInfoSet;
 
     private boolean _deleteTorrentWhenRemove;
 
@@ -18,13 +23,26 @@ public class BTDownloaderImpl implements BTDownloader {
 
     public BTDownloaderImpl(DownloadManager downloadManager) {
         _downloadManager = downloadManager;
+        _partialDownload = TorrentUtil.getSkippedFiles(downloadManager).size() > 0;
+
+        if (_partialDownload) {
+            _fileInfoSet = TorrentUtil.getNoSkippedFileInfoSet(downloadManager);
+            long size = 0;
+            for (DiskManagerFileInfo fileInfo : _fileInfoSet) {
+                size += fileInfo.getLength();
+            }
+            _size = size;
+        } else {
+            _fileInfoSet = null;
+            _size = downloadManager.getSize();
+        }
 
         _deleteTorrentWhenRemove = false;
         _deleteDataWhenRemove = false;
     }
 
     public long getSize() {
-        return _downloadManager.getSize();
+        return _size;
     }
 
     public String getDisplayName() {
@@ -68,7 +86,15 @@ public class BTDownloaderImpl implements BTDownloader {
     }
 
     public int getProgress() {
-        return _downloadManager.getStats().getDownloadCompleted(true) / 10;
+        if (_partialDownload) {
+            long downloaded = 0;
+            for (DiskManagerFileInfo fileInfo : _fileInfoSet) {
+                downloaded += fileInfo.getDownloaded();
+            }
+            return (int) ((downloaded * 100) / _size);
+        } else {
+            return _downloadManager.getStats().getDownloadCompleted(true) / 10;
+        }
     }
 
     public String getStateString() {
@@ -283,5 +309,9 @@ public class BTDownloaderImpl implements BTDownloader {
         }
 
         return shareRatio;
+    }
+
+    public boolean isPartialDownload() {
+        return _partialDownload;
     }
 }

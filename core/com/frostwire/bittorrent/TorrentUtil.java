@@ -139,12 +139,23 @@ public class TorrentUtil {
         iTunesImportSettings.IMPORT_FILES.remove(downloadManager.getSaveLocation());
     }
     
-    private static Set<File> getSkippedFiles(DownloadManager dm) {
+    public static Set<File> getSkippedFiles(DownloadManager dm) {
         Set<File> set = new HashSet<File>();
         DiskManagerFileInfoSet infoSet = dm.getDiskManagerFileInfoSet();
         for (DiskManagerFileInfo fileInfo : infoSet.getFiles()) {
             if (fileInfo.isSkipped()) {
                 set.add(fileInfo.getFile(false));
+            }
+        }
+        return set;
+    }
+    
+    public static Set<DiskManagerFileInfo> getNoSkippedFileInfoSet(DownloadManager dm) {
+        Set<DiskManagerFileInfo> set = new HashSet<DiskManagerFileInfo>();
+        DiskManagerFileInfoSet infoSet = dm.getDiskManagerFileInfoSet();
+        for (DiskManagerFileInfo fileInfo : infoSet.getFiles()) {
+            if (!fileInfo.isSkipped()) {
+                set.add(fileInfo);
             }
         }
         return set;

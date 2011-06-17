@@ -59,4 +59,6 @@ public interface BTDownloader {
     public String getSeedToPeerRatio();
 
     public String getShareRatio();
+
+    public boolean isPartialDownload();
 }

@@ -32,6 +32,8 @@ import com.limegroup.gnutella.gui.tables.TimeRemainingHolder;
  * instance.
  */
 final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
+    
+    private static final String PARTIAL_DOWNLOAD_TEXT = I18n.tr(" (Partial)");
 
     /**
      * Variable for the status of the download.
@@ -182,7 +184,11 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownloader> {
         case FILE_INDEX:
             return new IconAndNameHolderImpl(getIcon(), initializer.getDisplayName());
         case SIZE_INDEX:
-            return new SizeHolder(_size);
+            if (initializer.isPartialDownload()) {
+                return new SizeHolder(_size, PARTIAL_DOWNLOAD_TEXT);
+            } else {
+                return new SizeHolder(_size);
+            }
         case STATUS_INDEX:
             return _status;
         case PROGRESS_INDEX:

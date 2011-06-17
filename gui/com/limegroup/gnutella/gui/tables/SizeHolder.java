@@ -25,14 +25,18 @@ public final class SizeHolder implements Comparable<SizeHolder> {
 	 *
 	 * @param size the size of the file in kilobytes
 	 */
-	public SizeHolder(long size) {
+	public SizeHolder(long size, String moreInfo) {
 	    if(size >= 0) {
-    		_string = GUIUtils.toUnitbytes(size);
+    		_string = GUIUtils.toUnitbytes(size) + moreInfo;
     		_size = size;
 	    } else {
 	        _string = "--";
 	        _size = -1;
 	    }
+	}
+	
+	public SizeHolder(long size) {
+	    this(size, "");
 	}
 	
 	public int compareTo(SizeHolder o) {
