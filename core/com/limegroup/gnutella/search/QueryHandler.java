@@ -2,7 +2,6 @@ package com.limegroup.gnutella.search;
 
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.ReplyHandler;
-import com.limegroup.gnutella.connection.RoutedConnection;
 import com.limegroup.gnutella.messages.QueryRequest;
 
 public interface QueryHandler {
@@ -35,15 +34,6 @@ public interface QueryHandler {
      * yet ready to be processed, this returns immediately.
      */
     public void sendQuery();
-
-    /**
-     * Sends a query to the specified host.
-     *
-     * @param query the <tt>QueryRequest</tt> to send
-     * @param mc the <tt>RoutedConnection</tt> to send the query to
-     * @return the number of new hosts theoretically hit by this query
-     */
-    public int sendQueryToHost(QueryRequest query, RoutedConnection mc);
 
     /**
      * Returns whether or not this query has received enough results.

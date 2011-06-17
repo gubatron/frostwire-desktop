@@ -16,8 +16,6 @@ import org.limewire.io.LocalSocketAddressProvider;
 
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
-import com.limegroup.gnutella.connection.MessageReaderFactory;
-import com.limegroup.gnutella.connection.MessageReaderFactoryImpl;
 import com.limegroup.gnutella.downloader.LimeWireDownloadModule;
 import com.limegroup.gnutella.licenses.LicenseFactory;
 import com.limegroup.gnutella.licenses.LicenseFactoryImpl;
@@ -113,7 +111,6 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(GuidMapManager.class).to(GuidMapManagerImpl.class);
         bind(PushEndpointCache.class).to(PushEndpointCacheImpl.class);
         bind(MessageFactory.class).to(MessageFactoryImpl.class);
-        bind(MessageReaderFactory.class).to(MessageReaderFactoryImpl.class);
         bind(MessageParserBinder.class).to(MessageParserBinderImpl.class);
         bind(VendorMessageFactory.class).to(VendorMessageFactoryImpl.class);
         bind(VendorMessageParserBinder.class).to(VendorMessageParserBinderImpl.class);

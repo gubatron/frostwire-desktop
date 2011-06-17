@@ -13,7 +13,6 @@ import org.limewire.service.ErrorService;
 
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.ReplyHandler;
-import com.limegroup.gnutella.connection.RoutedConnection;
 import com.limegroup.gnutella.messages.BadPacketException;
 import com.limegroup.gnutella.messages.QueryRequest;
 import com.limegroup.gnutella.messages.QueryRequestFactory;
@@ -102,16 +101,6 @@ final class QueryHandlerImpl implements Inspectable, QueryHandler {
     private final ResultCounter RESULT_COUNTER;
 
     /**
-     * Constant list of connections that have already been queried.
-     */
-    private final List<RoutedConnection> QUERIED_CONNECTIONS = new ArrayList<RoutedConnection>();
-
-    /**
-     * <tt>List</tt> of TTL=1 probe connections that we've already used.
-     */
-    private final List<RoutedConnection> QUERIED_PROBE_CONNECTIONS = new ArrayList<RoutedConnection>();
-
-    /**
      * The time the query started.
      */
     private volatile long _queryStartTime = 0;
@@ -190,11 +179,6 @@ final class QueryHandlerImpl implements Inspectable, QueryHandler {
         REPLY_HANDLER = handler;
         RESULT_COUNTER = counter;
         _prefLocale = handler.getLocalePref();
-    }
-
-    /** Returns the connections that have already been queried. */
-    List<RoutedConnection> getQueriedConnections() {
-        return QUERIED_CONNECTIONS;
     }
 
     /**
@@ -339,38 +323,6 @@ final class QueryHandlerImpl implements Inspectable, QueryHandler {
     }
 
     /**
-     * Sends a query to one of the specified <tt>List</tt> of connections.
-     * This is the heart of the dynamic query. We dynamically calculate the
-     * appropriate TTL to use based on our current estimate of how widely the
-     * file is distributed, how many connections we have, etc. This is static to
-     * decouple the algorithm from the specific <tt>QueryHandler</tt>
-     * instance, making testing significantly easier.
-     * 
-     * @param handler the <tt>QueryHandler</tt> instance containing data for
-     *        this query
-     * @param list the <tt>List</tt> of Gnutella connections to send queries
-     *        over
-     * @return the number of new hosts theoretically reached by this query
-     *         iteration
-     * 
-     * Default access for testing
-     */
-    int sendQuery(List<? extends RoutedConnection> ultrapeersAll) {
-
-        return 0;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see com.limegroup.gnutella.search.QueryHandler#sendQueryToHost(com.limegroup.gnutella.messages.QueryRequest,
-     *      com.limegroup.gnutella.connection.RoutedConnection)
-     */
-    public int sendQueryToHost(QueryRequest query, RoutedConnection mc) {
-        return 0;
-    }
-
-    /**
      * Calculates the new TTL to use based on the number of hosts per connection
      * we still need to query.
      * 
@@ -399,18 +351,6 @@ final class QueryHandlerImpl implements Inspectable, QueryHandler {
             }
         }
         return maxTTL;
-    }
-
-    /**
-     * Calculate the number of new hosts that would be added to the theoretical
-     * horizon if a query with the given ttl were sent down the given
-     * connection.
-     * 
-     * @param conn the <tt>Connection</tt> that will received the query
-     * @param ttl the TTL of the query to add
-     */
-    static int calculateNewHosts(RoutedConnection conn, byte ttl) {
-        return 0;
     }
 
     /**
@@ -558,16 +498,6 @@ final class QueryHandlerImpl implements Inspectable, QueryHandler {
             ret.put("rc", RESULT_COUNTER.getNumResults());
         ret.put("rh", REPLY_HANDLER.getAddress());
         
-        // we could inspect() these here, but they can be cross-referenced with the
-        // IPs in ConnectionManagerImpl
-        List<String> probes = new ArrayList<String>(QUERIED_PROBE_CONNECTIONS.size());
-        for (RoutedConnection rc : QUERIED_PROBE_CONNECTIONS)
-            probes.add(rc.getAddress());
-        ret.put("probes",probes);
-        List<String> queried = new ArrayList<String>(QUERIED_CONNECTIONS.size());
-        for (RoutedConnection rc : QUERIED_CONNECTIONS)
-            queried.add(rc.getAddress());
-        ret.put("queried",queried);
         
         return ret;
     }
