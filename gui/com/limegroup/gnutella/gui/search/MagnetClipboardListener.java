@@ -232,6 +232,10 @@ public class MagnetClipboardListener extends WindowAdapter {
 	public static String getMagnetOrTorrentURLFromClipboard() {
 		String clipboardText = extractStringContentFromClipboard(null);
 		
+		if (clipboardText == null) {
+			return "";
+		}
+		
 		//if the text in the clipboard has several URLs it will only parse the first line.
 		if (clipboardText.contains("\n")) {
 			clipboardText = clipboardText.split("\n")[0].trim();
