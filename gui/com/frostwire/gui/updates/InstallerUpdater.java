@@ -4,16 +4,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
-import org.gudy.azureus2.core3.disk.DiskManager;
 import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.download.DownloadManagerListener;
@@ -25,7 +21,6 @@ import com.frostwire.AzureusStarter;
 import com.frostwire.CoreFrostWireUtils;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.settings.UpdateSettings;
 
 public class InstallerUpdater implements Runnable, DownloadManagerListener {
 	
@@ -42,6 +37,7 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 	}
 	
 	public void run() {
+// TODO: Important, bring this back with new torrent download code, otherwise we won't have automatic update downloads
 //		if (!UpdateSettings.AUTOMATIC_INSTALLER_DOWNLOAD.getValue()) {
 //			return;
 //		}

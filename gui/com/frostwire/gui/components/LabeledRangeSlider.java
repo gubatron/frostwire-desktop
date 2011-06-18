@@ -10,6 +10,11 @@ import javax.swing.event.ChangeListener;
 
 import com.limegroup.gnutella.gui.I18n;
 
+/**
+ * 
+ * @author gubatron
+ *
+ */
 public class LabeledRangeSlider extends JPanel {
 
 	private static final long serialVersionUID = 17039376083098413L;

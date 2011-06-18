@@ -355,8 +355,7 @@ public final class UpdateMessageReader implements ContentHandler {
 			src = new InputSource(connection.getInputStream());
 
 			XMLReader rdr = XMLReaderFactory
-					.createXMLReader("com.sun.org.apache.xerces.internal.parsers.SAXParser");// "org.apache.xerces.parsers.SAXParser"
-																								// );
+					.createXMLReader("com.sun.org.apache.xerces.internal.parsers.SAXParser");
 			rdr.setContentHandler(this);
 
 			rdr.parse(src);

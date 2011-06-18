@@ -64,9 +64,6 @@ public final class UpdateManager implements Serializable {
 	private static final int OPTION_LATER = 0;
 	private static final int OPTION_DOWNLOAD_TORRENT = 2;
 
-	/** Don't process overlays, or banners if this is true */
-	public static boolean DEBUGGING_NON_UI_MESSAGES = false;
-
 	transient private static HashSet<UpdateMessage> _seenMessages;
 
 	transient Timer _timer = null;
@@ -176,12 +173,6 @@ public final class UpdateManager implements Serializable {
 		umr.readUpdateFile();
 		// if it fails to read an update, we just go on, might be that the
 		// website is down, or the XML is malformed.
-
-		if (DEBUGGING_NON_UI_MESSAGES) {
-			System.out
-					.println("UpdateManager.checkForUpdates: Only processing Non UI Messages [DEBUGGING_NON_UI_MESSAGES=true]");
-			return;
-		}
 
 		//show a message update, download a torrent update, or let user know update has been downloaded	
 		handlePossibleUpdateMessage(umr);

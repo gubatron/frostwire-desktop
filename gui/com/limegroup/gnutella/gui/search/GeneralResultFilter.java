@@ -18,6 +18,7 @@ public class GeneralResultFilter implements TableLineFilter {
     private int _maxSeeds;
     private int _minSize;
     private int _maxSize;
+	private String _keywords;
 
     public GeneralResultFilter(ResultPanel rp, LabeledRangeSlider rangeSliderSeeds, LabeledRangeSlider rangeSliderSize) {
         _rp = rp;
@@ -31,6 +32,7 @@ public class GeneralResultFilter implements TableLineFilter {
         _maxSeeds = Integer.MAX_VALUE;
         _minSize = 0;
         _maxSize = Integer.MAX_VALUE;
+        _keywords = "";
     }
 
     public boolean allow(TableLine node) {
@@ -99,11 +101,37 @@ public class GeneralResultFilter implements TableLineFilter {
         } else {
             inSizeRange = size == _maxResultsSize;
         }
+        
+        boolean hasKeywords = hasKeywords(node.getFilenameNoExtension());
 
-        return inSeedRange && inSizeRange;
+        return inSeedRange && inSizeRange && hasKeywords;
     }
 
-    public int getMinResultsSeeds() {
+    private boolean hasKeywords(String filename) {
+
+    	if (_keywords == null || _keywords.trim().length()==0) {
+    		return true;
+    	}
+    	
+    	//if it's just one keyword.
+    	String[] keywords = _keywords.split(" ");
+    	
+    	if (keywords.length == 1) {
+    		return filename.contains(_keywords);
+    	} else {
+    		String fname = filename.toLowerCase();
+    		//all keywords must be in the file name.
+    		for (String k : keywords) {
+    			if (!fname.contains(k.toLowerCase())) {
+    				return false;
+    			}
+    		}
+    	}
+    	
+    	return true;
+	}
+
+	public int getMinResultsSeeds() {
         return _minResultsSeeds;
     }
 
@@ -146,4 +174,9 @@ public class GeneralResultFilter implements TableLineFilter {
         _maxSize = max;
         _rp.filterChanged(this, 1);
     }
+
+	public void updateKeywordFiltering(String text) {
+		_keywords = text;
+		_rp.filterChanged(this,1);
+	}
 }
