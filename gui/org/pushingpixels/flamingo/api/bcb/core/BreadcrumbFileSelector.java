@@ -45,6 +45,10 @@ import org.pushingpixels.flamingo.api.common.StringValuePair;
  */
 public class BreadcrumbFileSelector extends JBreadcrumbBar<File> {
 	/**
+     * 
+     */
+    private static final long serialVersionUID = 716505688423557046L;
+    /**
 	 * If <code>true</code>, the path selectors will use native icons.
 	 */
 	protected boolean useNativeIcons;

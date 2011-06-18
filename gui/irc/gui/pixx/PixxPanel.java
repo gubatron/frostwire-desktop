@@ -40,6 +40,10 @@ import javax.swing.JPanel;
 public class PixxPanel extends JPanel
 {
   /**
+     * 
+     */
+    private static final long serialVersionUID = 471843120347739076L;
+/**
    * Black.
    */
   public static final int COLOR_BLACK=PixxColorModel.COLOR_BLACK;

@@ -48,6 +48,10 @@ import org.pushingpixels.flamingo.api.common.JCommandToggleButton;
 public class ActionToggleButtonModel extends ToggleButtonModel implements
 		ActionButtonModel {
 	/**
+     * 
+     */
+    private static final long serialVersionUID = 3631908999726974594L;
+    /**
 	 * Indication whether the action is fired on mouse press (as opposed to
 	 * mouse release).
 	 */

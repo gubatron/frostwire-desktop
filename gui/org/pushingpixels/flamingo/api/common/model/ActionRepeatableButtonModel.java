@@ -50,6 +50,11 @@ import org.pushingpixels.flamingo.api.common.JCommandButton.CommandButtonKind;
 public class ActionRepeatableButtonModel extends DefaultButtonModel implements
 		ActionButtonModel {
 	/**
+     * 
+     */
+    private static final long serialVersionUID = 6486079055692195829L;
+
+    /**
 	 * The button behind the model.
 	 */
 	private JCommandButton commandButton;

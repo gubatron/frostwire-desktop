@@ -49,6 +49,11 @@ import org.pushingpixels.flamingo.api.common.icon.ResizableIcon;
  */
 public abstract class AbstractFileViewPanel<T> extends JCommandButtonPanel {
 	/**
+     * 
+     */
+    private static final long serialVersionUID = 4959112630742283926L;
+
+    /**
 	 * Maps from file name to the buttons.
 	 */
 	protected Map<String, JCommandButton> buttonMap;

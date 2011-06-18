@@ -83,7 +83,8 @@ public class BasicCommandButtonListener implements MouseListener,
 	 * 
 	 * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
 	 */
-	@Override
+	@SuppressWarnings("rawtypes")
+    @Override
 	public void mousePressed(MouseEvent e) {
 		if (SwingUtilities.isLeftMouseButton(e)) {
 			AbstractCommandButton b = (AbstractCommandButton) e.getSource();
@@ -294,6 +295,11 @@ public class BasicCommandButtonListener implements MouseListener,
 	 */
 	private static class PressAction extends AbstractAction {
 		/**
+         * 
+         */
+        private static final long serialVersionUID = 5015170597903468386L;
+
+        /**
 		 * Press action name.
 		 */
 		private static final String PRESS = "pressed";
@@ -348,6 +354,11 @@ public class BasicCommandButtonListener implements MouseListener,
 	 */
 	private static class ReleaseAction extends AbstractAction {
 		/**
+         * 
+         */
+        private static final long serialVersionUID = -5428351061815800522L;
+
+        /**
 		 * Release action name.
 		 */
 		private static final String RELEASE = "released";

@@ -83,6 +83,11 @@ public class BasicCommandPopupMenuUI extends BasicPopupPanelUI {
 	 */
 	protected static class ScrollableCommandButtonPanel extends JComponent {
 		/**
+         * 
+         */
+        private static final long serialVersionUID = 2894593799409670914L;
+
+        /**
 		 * Maximum dimension of <code>this</code> popup gallery.
 		 */
 		protected Dimension maxDimension;
@@ -574,7 +579,12 @@ public class BasicCommandPopupMenuUI extends BasicPopupPanelUI {
 	}
 
 	protected static class MenuPanel extends JPanel {
-		@Override
+		/**
+         * 
+         */
+        private static final long serialVersionUID = 6535339097610317387L;
+
+        @Override
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			JCommandPopupMenu menu = (JCommandPopupMenu) SwingUtilities

@@ -9,6 +9,11 @@ public class AWTStatus extends BaseAWTSource implements StatusListener,ReplyServ
 {
 
   /**
+     * 
+     */
+    private static final long serialVersionUID = 4322157273662520645L;
+
+/**
    * Create a new AWTStatus.
    * @param config global irc configuration.
    * @param s source status.

@@ -38,7 +38,11 @@ import javax.swing.JPanel;
  */
 public class ScrollablePixxNickList extends PixxPanel implements PixxScrollBarListener
 {
-  private PixxNickList _list;
+  /**
+     * 
+     */
+    private static final long serialVersionUID = 4546462702612938581L;
+private PixxNickList _list;
   private PixxVerticalScrollBar _scroll;
 
   /**

@@ -39,6 +39,11 @@ package org.pushingpixels.flamingo.api.bcb;
  */
 public class BreadcrumbBarException extends RuntimeException {
 	/**
+     * 
+     */
+    private static final long serialVersionUID = -2121461705316891344L;
+
+    /**
 	 * Creates the new exception instance.
 	 * 
 	 * @param cause

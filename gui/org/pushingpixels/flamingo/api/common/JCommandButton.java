@@ -49,6 +49,11 @@ import org.pushingpixels.flamingo.internal.ui.common.CommandButtonUI;
  */
 public class JCommandButton extends AbstractCommandButton {
 	/**
+     * 
+     */
+    private static final long serialVersionUID = 2154679838511144772L;
+
+    /**
 	 * The UI class ID string.
 	 */
 	public static final String uiClassID = "CommandButtonUI";
@@ -255,9 +260,14 @@ public class JCommandButton extends AbstractCommandButton {
 	private static class DefaultPopupButtonModel extends DefaultButtonModel
 			implements PopupButtonModel {
 		/**
+         * 
+         */
+        private static final long serialVersionUID = 3485587075103858159L;
+
+        /**
 		 * Timer for the auto-repeat action mode.
 		 */
-		protected Timer autoRepeatTimer;
+		//protected Timer autoRepeatTimer;
 
 		/**
 		 * Identifies the "popup showing" bit in the bitmask, which indicates

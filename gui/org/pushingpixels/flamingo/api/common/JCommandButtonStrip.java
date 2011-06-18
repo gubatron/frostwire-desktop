@@ -47,6 +47,11 @@ import org.pushingpixels.flamingo.internal.ui.common.CommandButtonStripUI;
  */
 public class JCommandButtonStrip extends JComponent {
 	/**
+     * 
+     */
+    private static final long serialVersionUID = -1331154967051870968L;
+
+    /**
 	 * The UI class ID string.
 	 */
 	public static final String uiClassID = "CommandButtonStripUI";

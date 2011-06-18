@@ -30,24 +30,45 @@
 package org.pushingpixels.flamingo.internal.ui.common.popup;
 
 import java.applet.Applet;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.AWTEvent;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Toolkit;
+import java.awt.Window;
+import java.awt.event.AWTEventListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.List;
 
-import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.plaf.*;
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.JComponent;
+import javax.swing.JRootPane;
+import javax.swing.KeyStroke;
+import javax.swing.LookAndFeel;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.plaf.ActionMapUIResource;
+import javax.swing.plaf.BorderUIResource;
+import javax.swing.plaf.ComponentInputMapUIResource;
+import javax.swing.plaf.ComponentUI;
+import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.ComboPopup;
 
 import org.pushingpixels.flamingo.api.common.JCommandButton;
 import org.pushingpixels.flamingo.api.common.popup.JPopupPanel;
 import org.pushingpixels.flamingo.api.common.popup.PopupPanelManager;
 import org.pushingpixels.flamingo.api.common.popup.PopupPanelManager.PopupEvent;
-//import org.pushingpixels.flamingo.api.ribbon.JRibbon;
-//import org.pushingpixels.flamingo.internal.ui.ribbon.JRibbonTaskToggleButton;
-//import org.pushingpixels.flamingo.internal.ui.ribbon.appmenu.JRibbonApplicationMenuPopupPanel;
 import org.pushingpixels.flamingo.internal.utils.FlamingoUtilities;
-import org.pushingpixels.flamingo.internal.utils.KeyTipManager;
 
 /**
  * Basic UI for popup panel {@link JPopupPanel}.
@@ -272,7 +293,12 @@ public class BasicPopupPanelUI extends PopupPanelUI {
 
 				newActionMap = new ActionMapUIResource();
 				newActionMap.put("hidePopupPanel", new AbstractAction() {
-					@Override
+					/**
+                     * 
+                     */
+                    private static final long serialVersionUID = -7560942737495351946L;
+
+                    @Override
 					public void actionPerformed(ActionEvent e) {
 						// Hide the last sequence popup for every ESC keystroke.
 						// There is special case - if the keytips are shown
@@ -281,8 +307,8 @@ public class BasicPopupPanelUI extends PopupPanelUI {
 						List<PopupPanelManager.PopupInfo> popups = PopupPanelManager
 								.defaultManager().getShownPath();
 						if (popups.size() > 0) {
-							PopupPanelManager.PopupInfo lastPopup = popups
-									.get(popups.size() - 1);
+//							PopupPanelManager.PopupInfo lastPopup = popups
+//									.get(popups.size() - 1);
 //							if (lastPopup.getPopupPanel() instanceof JRibbonApplicationMenuPopupPanel) {
 //								JRibbonApplicationMenuPopupPanel appMenuPopupPanel = (JRibbonApplicationMenuPopupPanel) lastPopup
 //										.getPopupPanel();
@@ -462,7 +488,7 @@ public class BasicPopupPanelUI extends PopupPanelUI {
 		void grabWindow(List<PopupPanelManager.PopupInfo> shownPath) {
 			final Toolkit tk = Toolkit.getDefaultToolkit();
 			java.security.AccessController
-					.doPrivileged(new java.security.PrivilegedAction() {
+					.doPrivileged(new java.security.PrivilegedAction<Object>() {
 						public Object run() {
 							tk.addAWTEventListener(WindowTracker.this,
 									AWTEvent.MOUSE_EVENT_MASK
@@ -489,7 +515,7 @@ public class BasicPopupPanelUI extends PopupPanelUI {
 			final Toolkit tk = Toolkit.getDefaultToolkit();
 			// The grab should be removed
 			java.security.AccessController
-					.doPrivileged(new java.security.PrivilegedAction() {
+					.doPrivileged(new java.security.PrivilegedAction<Object>() {
 						public Object run() {
 							tk.removeAWTEventListener(WindowTracker.this);
 							return null;

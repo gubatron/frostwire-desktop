@@ -9,7 +9,11 @@ import java.awt.event.*;
  */
 public class AWTQuery extends BaseAWTSource implements QueryListener,ReplyServerListener
 {
-  private NickMenuHandler _menu;
+  /**
+     * 
+     */
+    private static final long serialVersionUID = 8185656731283004453L;
+private NickMenuHandler _menu;
 
   /**
    * Create a new AWTQuery.

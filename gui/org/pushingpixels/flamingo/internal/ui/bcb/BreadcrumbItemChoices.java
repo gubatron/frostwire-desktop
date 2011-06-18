@@ -43,6 +43,7 @@ import org.pushingpixels.flamingo.api.common.StringValuePair;
  * This is the model for the popup that is shown by clicking on the path
  * selector.
  */
+@SuppressWarnings({"rawtypes", "unchecked"})
 final class BreadcrumbItemChoices<T> {
 	/**
 	 * Contains all possible choices.

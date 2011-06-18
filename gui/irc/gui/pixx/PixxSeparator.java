@@ -40,7 +40,11 @@ import javax.swing.JPanel;
  */
 public class PixxSeparator extends JPanel
 {
-  private int _type;
+  /**
+     * 
+     */
+    private static final long serialVersionUID = 6403536477182386073L;
+private int _type;
   /**
    * Upside border.
    */

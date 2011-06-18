@@ -96,7 +96,12 @@ abstract class IcoWrapperIcon implements Icon, AsynchronousLoading {
 		this.height = h;
 		this.listenerList = new EventListenerList();
 		this.cachedImages = new LinkedHashMap<String, BufferedImage>() {
-			@Override
+			/**
+             * 
+             */
+            private static final long serialVersionUID = 4194699915706769408L;
+
+            @Override
 			protected boolean removeEldestEntry(
 					Map.Entry<String, BufferedImage> eldest) {
 				return size() > 5;
@@ -673,7 +678,12 @@ class Ico {
 }
 
 class BadIcoResException extends Exception {
-	public BadIcoResException(String message) {
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 6016243171967862024L;
+
+    public BadIcoResException(String message) {
 		super(message);
 	}
 }
