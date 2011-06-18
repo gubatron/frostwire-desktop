@@ -13,7 +13,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -78,25 +77,30 @@ public final class UpdateManager implements Serializable {
 	 * Starts an Update Task in <secondsAfter> seconds after.
 	 * 
 	 */
-	public static void scheduleUpdateCheckTask(int secondsAfter,
+	public static void scheduleUpdateCheckTask(final int secondsAfter,
 			final String updateURL) {
 
-		TimerTask checkForUpdatesTask = new TimerTask() {
+		Runnable checkForUpdatesTask = new Runnable() {
 
 			// Uses the UpdateManager to check for updates. Then kills the
 			// timer.
 			public void run() {
 				System.out
-						.println("UpdateManager.scheduleUpdateCheckTask() - TimerTask.run()");
+				.println("UpdateManager.scheduleUpdateCheckTask() - about to check for update in "+secondsAfter+" seconds");
+
+				try {
+					Thread.sleep(secondsAfter*1000);
+				} catch (InterruptedException e) {
+
+				}
+				
+				System.out.println("UpdateManager.scheduleUpdateCheckTask() Runnable: here we go!");
 				UpdateManager um = UpdateManager.getInstance();
 				um.checkForUpdates(updateURL);
 			}
-
 		};
-
-		// schedule the update check task
-		UpdateManager.getInstance().getTimer().schedule(checkForUpdatesTask,
-				secondsAfter * 1000);
+		
+		new Thread(checkForUpdatesTask).start();
 	}
 
 	/**

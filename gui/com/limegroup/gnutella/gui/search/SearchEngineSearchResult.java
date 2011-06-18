@@ -3,13 +3,10 @@ package com.limegroup.gnutella.gui.search;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import javax.swing.JPopupMenu;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;
-import com.frostwire.bittorrent.websearch.isohunt.ISOHuntItem;
 import com.frostwire.gui.GuiFrostWireUtils;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;

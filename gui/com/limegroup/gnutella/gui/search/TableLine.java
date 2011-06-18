@@ -10,11 +10,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.Icon;
 
 import org.limewire.collection.NameValue;
-import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.limegroup.gnutella.GUID;
@@ -28,7 +29,6 @@ import com.limegroup.gnutella.gui.tables.IconAndNameHolderImpl;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.Linkable;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
-import com.limegroup.gnutella.gui.xml.XMLUtils;
 import com.limegroup.gnutella.gui.xml.XMLValue;
 import com.limegroup.gnutella.licenses.License;
 import com.limegroup.gnutella.settings.SearchSettings;
@@ -347,6 +347,20 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
      */
     Icon getIcon() {
         String ext = getExtension();
+        
+      //let's try to extract the extension from inside the torrent name
+        if (ext.equals("torrent")) {
+        	String filename = getFilename().replace(".torrent", "");
+        	
+        	Matcher fileExtensionMatcher = Pattern.compile(".*\\.(\\S*)$").matcher(filename);
+        	
+        	
+        	if (fileExtensionMatcher.matches()) {
+        		ext = fileExtensionMatcher.group(1);
+        	}
+        	
+        }
+        
         return IconManager.instance().getIconForExtension(ext);
     }
 
@@ -449,40 +463,6 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
         }
     }
 
-    /**
-     * Returns the XMLDocument as a tool tip.
-     */
-    public String[] getToolTipArray(int col) {
-        // only works on windows, which gives good toString descriptions
-        // of its native file icons.
-        if (col == SearchTableColumns.ICON_IDX && OSUtils.isWindows()) {
-            Icon icon = getIcon();
-            if (icon != null) {
-                String str = icon.toString();
-                if (str != null)
-                    return new String[] { icon.toString() };
-            }
-            return null;
-        }
-
-        List<String> tips = new LinkedList<String>();
-
-        if (isLink()) {
-            tips.add(getLinkUrl());
-            tips.add("");
-        }
-
-        if (_doc != null)
-            tips.addAll(XMLUtils.getDisplayList(_doc));
-
-        if (!tips.isEmpty()) {
-            // if it had data, display the filename in the tooltip also.
-            tips.add(0, getFilenameNoExtension());
-            return tips.toArray(new String[tips.size()]);
-        } else {
-            return null;
-        }
-    }
 
     /**
      * Returns <code>true</code> if <code>this</code> {@link SearchResult}
