@@ -35,6 +35,11 @@ package irc;
 public class NotEnoughParametersException extends Exception
 {
   /**
+     * 
+     */
+    private static final long serialVersionUID = -7081056025626892983L;
+
+/**
    * Create a new NotEnoughParametersException.
    * @param msg message.
    */

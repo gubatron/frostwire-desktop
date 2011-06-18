@@ -45,7 +45,6 @@ import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.limegroup.gnutella.FileDetails;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.FileDetailsProvider;
 import com.limegroup.gnutella.gui.GUIConstants;
@@ -105,11 +104,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
      *  May be a DummyGUID for the empty result list hack.
      */
     protected volatile GUID guid;
-    
-    /**
-     * Start time of the query that this specific ResultPane handles
-     */
-    private long startTime = System.currentTimeMillis();
     
     /**
      * The CompositeFilter for this ResultPanel.
@@ -772,7 +766,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
           clearTable();
           resetFilters();
         }
-        startTime = System.currentTimeMillis();
         
         SearchMediator.setTabDisplayCount(this);
         SearchMediator.repeatSearch(this, SEARCH_INFO, clearTable);
@@ -1009,22 +1002,22 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
     public FileDetails[] getFileDetails() {
         int[] sel = TABLE.getSelectedRows();
         List<FileDetails> list = new ArrayList<FileDetails>(sel.length);
-        for (int i = 0; i < sel.length; i++) {
-            TableLine line = DATA_MODEL.get(sel[i]);
-            // prefer non-firewalled rfds for the magnet action
-            RemoteFileDesc rfd = null;//line.getNonFirewalledRFD();
-            
-            if (rfd != null) {
-                list.add(rfd);
-            }
-            else {
-                // fall back on first rfd
-                rfd = line.getRemoteFileDesc();
-                if (rfd != null) {
-                    list.add(rfd);
-                }
-            }
-        }
+//        for (int i = 0; i < sel.length; i++) {
+//            TableLine line = DATA_MODEL.get(sel[i]);
+//            // prefer non-firewalled rfds for the magnet action
+//            RemoteFileDesc rfd = null;//line.getNonFirewalledRFD();
+//            
+//            if (rfd != null) {
+//                list.add(rfd);
+//            }
+//            else {
+//                // fall back on first rfd
+//                rfd = line.getRemoteFileDesc();
+//                if (rfd != null) {
+//                    list.add(rfd);
+//                }
+//            }
+//        }
         if (list.isEmpty()) {
             return new FileDetails[0];
         }

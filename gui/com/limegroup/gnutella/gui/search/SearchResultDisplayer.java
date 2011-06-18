@@ -27,20 +27,16 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.TabbedPaneUI;
 
-import org.limewire.util.DebugRunnable;
-
 import com.frostwire.UpdateManagerSettings;
 import com.frostwire.gui.components.Slide;
 import com.frostwire.gui.components.SlideshowPanel;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.ProgTabUIFactory;
 import com.limegroup.gnutella.gui.RefreshListener;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
-import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.SearchSettings;
 
 /**
@@ -500,8 +496,8 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 			return;
 		}
 			
-		ResultPanel panel;
-		long now = System.currentTimeMillis();
+//		ResultPanel panel;
+//		long now = System.currentTimeMillis();
 		
 		// Decide if we definitely can stop the lime
 		boolean stopLime = true;

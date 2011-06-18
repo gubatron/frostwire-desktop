@@ -93,7 +93,7 @@ public class AnimatedWindow extends JWindow {
                 window.setBounds(location.x, location.y + preferredSize.height
                         - window.getInitialHeight(), preferredSize.width,
                         window.getInitialHeight());
-                window.setOpacity(1.0f);
+                window.setOpacity2(1.0f);
                 break;
             case TOP_TO_BOTTOM:
                 // see above
@@ -104,12 +104,12 @@ public class AnimatedWindow extends JWindow {
                 // see above
                 window.setBounds(location.x, location.y, preferredSize.width,
                         window.getInitialHeight());
-                window.setOpacity(1.0f);
+                window.setOpacity2(1.0f);
                 break;
             case FADE:
                 window.setBounds(location.x, location.y, preferredSize.width,
                         preferredSize.height);
-                window.setOpacity(0.0f);
+                window.setOpacity2(0.0f);
                 window.setBackground(TRANSPARENT);
                 break;
             }
@@ -145,10 +145,10 @@ public class AnimatedWindow extends JWindow {
                 window.validate();
                 return false;
             case FADE:
-                if (window.getOpacity() >= 1.0f) {
+                if (window.getOpacity2() >= 1.0f) {
                     return true;
                 }
-                window.setOpacity(Math.min(window.getOpacity()
+                window.setOpacity2(Math.min(window.getOpacity2()
                         + FADE_PER_INTERVAL, 1.0f));
                 window.repaint();
                 return false;
@@ -187,10 +187,10 @@ public class AnimatedWindow extends JWindow {
                 window.validate();
                 return false;
             case FADE:
-                if (window.getOpacity() == 0.0f) {
+                if (window.getOpacity2() == 0.0f) {
                     return true;
                 }
-                window.setOpacity(Math.max(window.getOpacity()
+                window.setOpacity2(Math.max(window.getOpacity2()
                         - FADE_PER_INTERVAL, 0.0f));
                 window.repaint();
                 return false;
@@ -218,7 +218,7 @@ public class AnimatedWindow extends JWindow {
                 }
                 Graphics2D gFade = (Graphics2D) g.create();
                 AlphaComposite newComposite = AlphaComposite.getInstance(
-                        AlphaComposite.SRC_OVER, window.getOpacity());
+                        AlphaComposite.SRC_OVER, window.getOpacity2());
                 gFade.setComposite(newComposite);
                 gFade.drawImage(animationImage, 0, 0, null);
                 gFade.dispose();
@@ -601,11 +601,11 @@ public class AnimatedWindow extends JWindow {
         this.finalLocation = finalLocation;
     }
 
-    public float getOpacity() {
+    public float getOpacity2() {
         return opacity;
     }
 
-    public void setOpacity(float opacity) {
+    public void setOpacity2(float opacity) {
         if (opacity < 0.0f || opacity > 1.0f) {
             throw new IllegalArgumentException();
         }

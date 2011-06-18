@@ -17,8 +17,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
-import org.limewire.inject.Providers;
-
 import com.google.inject.Inject;
 import com.limegroup.gnutella.gui.LocalClientInfoFactory;
 import com.limegroup.gnutella.gui.LocalClientInfoFactoryImpl;
@@ -173,104 +171,5 @@ public final class FatalBugManager {
 				  toDisplay,
 				  "Fatal Error - Review",
 				  JOptionPane.INFORMATION_MESSAGE);	
-    }
-    
-    private static class FatalSessionInfo implements SessionInfo {
-
-        public boolean acceptedIncomingConnection() {
-            // TODO Auto-generated method stub
-            return false;
-        }
-
-        public boolean canReceiveSolicited() {
-            // TODO Auto-generated method stub
-            return false;
-        }
-
-        public long getByteBufferCacheSize() {
-            // TODO Auto-generated method stub
-            return 0;
-        }
-
-        public long getContentResponsesSize() {
-            // TODO Auto-generated method stub
-            return 0;
-        }
-
-        public long getCreationCacheSize() {
-            // TODO Auto-generated method stub
-            return 0;
-        }
-
-        public long getCurrentUptime() {
-            // TODO Auto-generated method stub
-            return 0;
-        }
-
-        public long getDiskControllerByteCacheSize() {
-            // TODO Auto-generated method stub
-            return 0;
-        }
-
-        public int getDiskControllerQueueSize() {
-            // TODO Auto-generated method stub
-            return 0;
-        }
-
-        public long getDiskControllerVerifyingCacheSize() {
-            // TODO Auto-generated method stub
-            return 0;
-        }
-
-        public int getNumIndividualDownloaders() {
-            // TODO Auto-generated method stub
-            return 0;
-        }
-
-        public int getNumLeafToUltrapeerConnections() {
-            // TODO Auto-generated method stub
-            return 0;
-        }
-
-        public int getNumOldConnections() {
-            // TODO Auto-generated method stub
-            return 0;
-        }
-
-        public int getNumUltrapeerToLeafConnections() {
-            // TODO Auto-generated method stub
-            return 0;
-        }
-
-        public int getNumUltrapeerToUltrapeerConnections() {
-            // TODO Auto-generated method stub
-            return 0;
-        }
-
-        public int getNumWaitingDownloads() {
-            // TODO Auto-generated method stub
-            return 0;
-        }
-
-        public int getNumberOfPendingTimeouts() {
-            // TODO Auto-generated method stub
-            return 0;
-        }
-
-        public int getNumberOfWaitingSockets() {
-            // TODO Auto-generated method stub
-            return 0;
-        }
-
-        public int getPort() {
-            // TODO Auto-generated method stub
-            return 0;
-        }
-
-        public boolean isGUESSCapable() {
-            // TODO Auto-generated method stub
-            return false;
-        }
-        
     }
 }

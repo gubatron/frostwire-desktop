@@ -16,14 +16,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
-
-import javax.swing.Box;
-import javax.swing.Icon;
-import javax.swing.JOptionPane;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,14 +25,7 @@ import org.limewire.concurrent.ExecutorsHelper;
 
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.browser.MagnetOptions;
-import com.limegroup.gnutella.gui.ButtonRow;
-import com.limegroup.gnutella.gui.CheckBoxList.TextProvider;
-import com.limegroup.gnutella.gui.CheckBoxListPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.GUIUtils;
-import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.MessageService;
-import com.limegroup.gnutella.gui.MultiLineLabel;
 import com.limegroup.gnutella.util.QueryUtils;
 
 
@@ -271,52 +258,52 @@ public class MagnetClipboardListener extends WindowAdapter {
 		}
 	}
 
-    private static List<MagnetOptions> showStartDownloadsDialog(MagnetOptions[] opts) {
-		
-		CheckBoxListPanel<MagnetOptions> listPanel =
-			new CheckBoxListPanel<MagnetOptions>(Arrays.asList(opts), new MagnetOptionsTextProvider(), true);
-		listPanel.getList().setVisibleRowCount(5);
-		
-		Object[] content = new Object[] {
-				new MultiLineLabel(I18n.tr
-						   ("Would you like to start downloads from the following magnets?"), 400),
-				Box.createVerticalStrut(ButtonRow.BUTTON_SEP),
-				listPanel,
-				Box.createVerticalStrut(ButtonRow.BUTTON_SEP),
-				new MultiLineLabel(I18n.tr("All folders you select will also have their subfolders shared."), 400),
-		};
-		
-		int response = JOptionPane.showConfirmDialog
-            (MessageService.getParentComponent(), content, 
-			 I18n.tr("Message"),
-			 JOptionPane.YES_NO_OPTION);
-		
-		List<MagnetOptions> selected = listPanel.getSelectedElements();
-		
-		if (response == JOptionPane.YES_OPTION) {
-		    return selected;
-		}
-		else {
-		    return Collections.emptyList();
-		}
-	}
+//    private static List<MagnetOptions> showStartDownloadsDialog(MagnetOptions[] opts) {
+//		
+//		CheckBoxListPanel<MagnetOptions> listPanel =
+//			new CheckBoxListPanel<MagnetOptions>(Arrays.asList(opts), new MagnetOptionsTextProvider(), true);
+//		listPanel.getList().setVisibleRowCount(5);
+//		
+//		Object[] content = new Object[] {
+//				new MultiLineLabel(I18n.tr
+//						   ("Would you like to start downloads from the following magnets?"), 400),
+//				Box.createVerticalStrut(ButtonRow.BUTTON_SEP),
+//				listPanel,
+//				Box.createVerticalStrut(ButtonRow.BUTTON_SEP),
+//				new MultiLineLabel(I18n.tr("All folders you select will also have their subfolders shared."), 400),
+//		};
+//		
+//		int response = JOptionPane.showConfirmDialog
+//            (MessageService.getParentComponent(), content, 
+//			 I18n.tr("Message"),
+//			 JOptionPane.YES_NO_OPTION);
+//		
+//		List<MagnetOptions> selected = listPanel.getSelectedElements();
+//		
+//		if (response == JOptionPane.YES_OPTION) {
+//		    return selected;
+//		}
+//		else {
+//		    return Collections.emptyList();
+//		}
+//	}
 	
-	private static class MagnetOptionsTextProvider implements TextProvider<MagnetOptions> {
-		
-		public String getText(MagnetOptions magnet) {
-			String fileName = magnet.getDisplayName();
-			if (fileName == null) {
-				fileName = I18n.tr("No Filename");
-			}
-			return fileName;
-		}
-
-		public String getToolTipText(MagnetOptions magnet) {
-			return GUIUtils.restrictWidth(magnet.toString(), 400);		
-		}
-
-		public Icon getIcon(MagnetOptions magnet) {
-			return null;
-		}
-	}
+//	private static class MagnetOptionsTextProvider implements TextProvider<MagnetOptions> {
+//		
+//		public String getText(MagnetOptions magnet) {
+//			String fileName = magnet.getDisplayName();
+//			if (fileName == null) {
+//				fileName = I18n.tr("No Filename");
+//			}
+//			return fileName;
+//		}
+//
+//		public String getToolTipText(MagnetOptions magnet) {
+//			return GUIUtils.restrictWidth(magnet.toString(), 400);		
+//		}
+//
+//		public Icon getIcon(MagnetOptions magnet) {
+//			return null;
+//		}
+//	}
 }

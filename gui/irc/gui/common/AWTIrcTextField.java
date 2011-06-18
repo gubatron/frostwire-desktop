@@ -22,7 +22,11 @@ import javax.swing.JTextField;
  */
 public class AWTIrcTextField extends Container implements ActionListener,KeyListener,FocusListener
 {
-  private int _index;
+  /**
+     * 
+     */
+    private static final long serialVersionUID = -6337322713107986340L;
+private int _index;
   private int _tabCount;
   private String _completing;
   private String[] _completeList;
@@ -54,7 +58,7 @@ public class AWTIrcTextField extends Container implements ActionListener,KeyList
 
     try
     {
-      Class c=_field.getClass();
+      Class<?> c=_field.getClass();
       java.lang.reflect.Method m=c.getMethod("setFocusTraversalKeysEnabled",new Class[] {boolean.class});
       m.invoke(_field,new Object[] {new Boolean(false)});
     }

@@ -37,7 +37,7 @@ import java.util.*;
  */
 public class StreamParameterProvider implements ParameterProvider
 {
-  private Hashtable _table;
+  private Hashtable<String, String> _table;
 
   /**
    * Create a new StreamParameterProvider loading the given input stream.
@@ -46,7 +46,7 @@ public class StreamParameterProvider implements ParameterProvider
    */
   public StreamParameterProvider(InputStream is)
   {
-    _table=new Hashtable();
+    _table=new Hashtable<String, String>();
     if(is==null) return;
 
     try

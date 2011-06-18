@@ -63,14 +63,14 @@ class SmileyItemOld
  */
 public class SmileyTable
 {
-  private Vector _table;
+  private Vector<SmileyItem> _table;
 
 	/**
 	 * Create a new, empty, smiley table.
 	 */
 	public SmileyTable()
 	{
-	  _table=new Vector();
+	  _table=new Vector<SmileyItem>();
 	}
 
 	/**

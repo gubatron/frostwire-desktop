@@ -2,15 +2,13 @@ package com.limegroup.gnutella.gui.search;
 
 import com.frostwire.gui.components.LabeledRangeSlider;
 import com.limegroup.gnutella.gui.GUIUtils;
-import com.limegroup.gnutella.gui.LabeledTextField;
 
 public class GeneralResultFilter implements TableLineFilter {
 
     private ResultPanel _rp;
     private LabeledRangeSlider _rangeSliderSeeds;
     private LabeledRangeSlider _rangeSliderSize;
-    private LabeledTextField _keywordFilterTextField;
-
+    
     private int _minResultsSeeds;
     private int _maxResultsSeeds;
     private long _minResultsSize;
@@ -22,7 +20,7 @@ public class GeneralResultFilter implements TableLineFilter {
     private int _maxSize;
 	private String _keywords;
 
-    public GeneralResultFilter(ResultPanel rp, LabeledRangeSlider rangeSliderSeeds, LabeledRangeSlider rangeSliderSize, LabeledTextField keywordFilterTextField) {
+    public GeneralResultFilter(ResultPanel rp, LabeledRangeSlider rangeSliderSeeds, LabeledRangeSlider rangeSliderSize) {
         _rp = rp;
         _rangeSliderSeeds = rangeSliderSeeds;
         _rangeSliderSize = rangeSliderSize;
@@ -35,7 +33,6 @@ public class GeneralResultFilter implements TableLineFilter {
         _minSize = 0;
         _maxSize = Integer.MAX_VALUE;
         _keywords = "";
-        _keywordFilterTextField = keywordFilterTextField;
     }
 
     public boolean allow(TableLine node) {

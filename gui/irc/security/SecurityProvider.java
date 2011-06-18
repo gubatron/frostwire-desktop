@@ -69,23 +69,6 @@ public class SecurityProvider implements ActionListener
     _provider=new DefaultSecuredProvider();
   }
 
-  private boolean tryProvider(String name)
-  {
-    SecuredProvider old=_provider;
-    try
-    {
-      Class cl=Class.forName("irc.security.prv.Specific"+name+"SecuredProvider");
-      _provider=(SecuredProvider)cl.newInstance();
-      if(!_provider.tryProvider()) throw new Exception();
-      return true;
-    }
-    catch(Exception ex)
-    {
-      _provider=old;
-      return false;
-    }
-  }
-
   /**
    * Get the used provider name.
    * @return used provider name.
@@ -212,7 +195,7 @@ public class SecurityProvider implements ActionListener
   {
     JButton b=(JButton)e.getSource();
     _answer=false;
-    if(b.getLabel().equals("Yes")) _answer=true;
+    if(b.getText().equals("Yes")) _answer=true;
     /*synchronized(_lock)
     {
       _lock.notifyAll();

@@ -73,7 +73,7 @@ public class Channel extends IRCSource implements ReplyServerListener
   private String _topic;
   private ModeHandler _mode;
   private ListenerGroup _listeners;
-  private Hashtable _nicks;
+  private Hashtable<String, Nick> _nicks;
 
   /**
    * Create a new Channel.
@@ -88,7 +88,7 @@ public class Channel extends IRCSource implements ReplyServerListener
     _topic="";
     _mode=new ModeHandler(s.getChannelModes(),s.getNickModes());
     _listeners=new ListenerGroup();
-    _nicks=new Hashtable();
+    _nicks=new Hashtable<String, Nick>();
 		s.addReplyServerListener(this);
 		if(_ircConfiguration.getASLMaster()) getIRCServer().execute("WHO "+_name);
 		setInterpretor(new ChannelInterpretor(config));
@@ -241,7 +241,7 @@ public class Channel extends IRCSource implements ReplyServerListener
   public String[] getNicks()
   {
     String[] ans=new String[_nicks.size()];
-    Enumeration e=_nicks.elements();
+    Enumeration<Nick> e=_nicks.elements();
     int i=0;
     while(e.hasMoreElements())
       ans[i++]=((Nick)e.nextElement()).Name;

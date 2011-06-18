@@ -21,14 +21,11 @@ import com.frostwire.gui.filters.SearchFilterFactory;
 import com.frostwire.gui.filters.SearchFilterFactoryImpl;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.banner.Ad;
 import com.limegroup.gnutella.gui.banner.Banner;
-import com.limegroup.gnutella.settings.MessageSettings;
-import com.limegroup.gnutella.settings.QuestionsHandler;
 import com.limegroup.gnutella.settings.SearchSettings;
 
 /**
@@ -475,16 +472,16 @@ public final class SearchMediator {
         line.takeAction(line, guid, saveDir, fileName, saveAs, searchInfo);
     }    
 
-
-    /**
-     * Prompts the user if they want to download an .exe file.
-     * Returns true s/he said yes.
-     */
-    private static boolean userWantsExeDownload() {        
-        DialogOption response = GUIMediator.showYesNoMessage(I18n.tr("One of the selected files is an executable program and could contain a virus. Are you sure you want to download it?"),
-                                            QuestionsHandler.PROMPT_FOR_EXE, DialogOption.NO);
-        return response == DialogOption.YES;
-    }
+//
+//    /**
+//     * Prompts the user if they want to download an .exe file.
+//     * Returns true s/he said yes.
+//     */
+//    private static boolean userWantsExeDownload() {        
+//        DialogOption response = GUIMediator.showYesNoMessage(I18n.tr("One of the selected files is an executable program and could contain a virus. Are you sure you want to download it?"),
+//                                            QuestionsHandler.PROMPT_FOR_EXE, DialogOption.NO);
+//        return response == DialogOption.YES;
+//    }
 
     ////////////////////////// Other Controls ///////////////////////////
 

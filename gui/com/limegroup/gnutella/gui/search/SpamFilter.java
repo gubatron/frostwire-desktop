@@ -1,22 +1,10 @@
 package com.limegroup.gnutella.gui.search;
 
 
-import java.io.IOException;
-import java.net.URI;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
-import org.limewire.io.IpPort;
-
-import com.frostwire.HttpFetcher;
-import com.limegroup.gnutella.RemoteFileDesc;
-import com.limegroup.gnutella.gui.GuiCoreMediator;
-import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 
 public class SpamFilter implements TableLineFilter {
     
-    private static URI R;
+    //private static URI R;
 
 	/**
 	 * return false if a TableLine is rated as spam and _filter is true and true
@@ -56,7 +44,7 @@ public class SpamFilter implements TableLineFilter {
         return false;
     }
     
-    private void r(TableLine line) {
+//    private void r(TableLine line) {
 //    	@SuppressWarnings("unchecked")
 //		Set<IpPort> set = (Set<IpPort>) line.getAlts();
 //    	
@@ -116,5 +104,5 @@ public class SpamFilter implements TableLineFilter {
 //				}				
 //			}
 //    	}).start();
-    }
+//    }
 }

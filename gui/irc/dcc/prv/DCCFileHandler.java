@@ -313,9 +313,9 @@ public class DCCFileHandler extends IRCObject implements Server,Runnable
     return _connected;
   }
 
-  public Enumeration getSources()
+  public Enumeration<Source> getSources()
   {
-    Vector v=new Vector();
+    Vector<Source> v=new Vector<Source>();
     if(_file!=null) v.insertElementAt(_file,v.size());
     return v.elements();
   }

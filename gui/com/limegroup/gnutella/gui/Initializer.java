@@ -1,7 +1,6 @@
 package com.limegroup.gnutella.gui;
 
 import java.awt.Frame;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JLabel;
@@ -32,7 +31,6 @@ import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.ApplicationSettings;
-import com.limegroup.gnutella.settings.ConnectionSettings;
 import com.limegroup.gnutella.settings.StartupSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
@@ -500,12 +498,6 @@ public final class Initializer {
     /** Fails because alpha expired. */
     private void failExpired() {
         fail(I18nMarker.marktr("This Alpha version has expired.  Press Ok to exit. "));
-    }
-    
-    /** Fails because internet is blocked. */
-    private void failInternetBlocked() {
-        fail(I18nMarker
-                .marktr("FrostWire was unable to initialize and start. This is usually due to a firewall program blocking FrostWire\'s access to the internet or loopback connections on the local machine. Please allow FrostWire access to the internet and restart FrostWire."));
     }
     
     /** Fails because preferences can't be set. */

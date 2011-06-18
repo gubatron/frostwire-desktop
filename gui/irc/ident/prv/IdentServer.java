@@ -74,7 +74,7 @@ public class IdentServer extends IRCObject implements Runnable
 {
   private Thread _thread;
   private boolean _running;
-  private Hashtable _table;
+  private Hashtable<Integer, LocalInfo> _table;
   private ServerSocket _serverSocket;
   private boolean _defaultUser;
   private String _system;
@@ -90,7 +90,7 @@ public class IdentServer extends IRCObject implements Runnable
   {
     super(config);
     resetDefaultUser();
-    _table=new Hashtable();
+    _table=new Hashtable<Integer, LocalInfo>();
     _listeners=new ListenerGroup();
     _thread=null;
   }

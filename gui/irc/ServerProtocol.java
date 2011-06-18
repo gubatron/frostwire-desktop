@@ -95,7 +95,7 @@ public class ServerProtocol extends IRCObject implements Runnable
 
   private void decodeLine(String line)
   {
-    Vector res=new Vector();
+    Vector<String> res=new Vector<String>();
     while(line.length()!=0)
     {
       if(line.startsWith(":") && (res.size()!=0))

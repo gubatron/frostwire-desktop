@@ -72,7 +72,7 @@ public class IRCConfiguration
   private ListHandler _mayJoinList;
   private ListHandler _mayLeaveList;
   private ListHandler _mayCommandList;
-  private Hashtable _htable;
+  private Hashtable<String, Object> _htable;
   private SecurityProvider _provider;
   private ParameterProvider _paramProvider;
   private ParameterProvider _interfaceParamProvider;
@@ -98,7 +98,7 @@ public class IRCConfiguration
     _paramProvider=paramProvider;
     _interfaceParamProvider=interfaceParamProvider;
 
-    _htable=new Hashtable();
+    _htable=new Hashtable<String, Object>();
 
     _backgroundImageRules=new RuleList();
     _backgroundTilingRules=new RuleList();

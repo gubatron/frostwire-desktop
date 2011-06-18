@@ -604,10 +604,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		launch();
     }
 
-    private void switchToDownloadTab() {
-        GUIMediator.instance().setWindow(GUIMediator.Tabs.SEARCH);
-    }
-
     /**
 	 * Launches the associated applications for each selected file
 	 * in the library if it can.

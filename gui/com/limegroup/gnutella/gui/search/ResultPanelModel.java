@@ -3,7 +3,6 @@ package com.limegroup.gnutella.gui.search;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.tables.BasicDataLineModel;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.settings.SearchSettings;

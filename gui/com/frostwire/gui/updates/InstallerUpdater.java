@@ -1,32 +1,25 @@
 package com.frostwire.gui.updates;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
-import javax.swing.JOptionPane;
 
 import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.download.DownloadManagerListener;
 import org.gudy.azureus2.core3.global.GlobalManagerDownloadRemovalVetoException;
 import org.limewire.util.CommonUtils;
-import org.limewire.util.OSUtils;
 
 import com.frostwire.AzureusStarter;
 import com.frostwire.CoreFrostWireUtils;
-import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.I18n;
 
 public class InstallerUpdater implements Runnable, DownloadManagerListener {
 	
 	private DownloadManager _manager = null;
 	private UpdateMessage _updateMessage;
-	private File _executableFile;
+	//private File _executableFile;
 
 	public InstallerUpdater(UpdateMessage updateMessage) {
 		_updateMessage = updateMessage;
@@ -65,48 +58,48 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 //		}
 	}
 
-	private void showUpdateMessage() {
-		
-		if (_executableFile == null)
-			return;
-		
-		int result = JOptionPane.showConfirmDialog(null, 
-                _updateMessage.getMessageInstallerReady(),
-                I18n.tr("Update"), 
-                JOptionPane.YES_NO_OPTION, 
-                JOptionPane.INFORMATION_MESSAGE);
-		
-		if (result == JOptionPane.YES_OPTION) {
-			try {
-				if (OSUtils.isWindows()) {
-					String[] commands =  new String[] {
-							"CMD.EXE",
-							"/C",
-							_executableFile.getAbsolutePath()
-					};
-					
-					ProcessBuilder pbuilder = new ProcessBuilder(commands);
-					pbuilder.start();					
-				}  else if (OSUtils.isLinux() && OSUtils.isUbuntu()) {
-					String[] commands = new String[] {
-							"gdebi-gtk",
-							_executableFile.getAbsolutePath() };
-							
-					ProcessBuilder pbuilder = new ProcessBuilder(commands);
-					pbuilder.start();
-					//Runtime.getRuntime().exec("gdebi", new String[] {_executableFile.getAbsolutePath() });
-				}
-				
-				GUIMediator.shutdown();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
-	}
+//	private void showUpdateMessage() {
+//		
+//		if (_executableFile == null)
+//			return;
+//		
+//		int result = JOptionPane.showConfirmDialog(null, 
+//                _updateMessage.getMessageInstallerReady(),
+//                I18n.tr("Update"), 
+//                JOptionPane.YES_NO_OPTION, 
+//                JOptionPane.INFORMATION_MESSAGE);
+//		
+//		if (result == JOptionPane.YES_OPTION) {
+//			try {
+//				if (OSUtils.isWindows()) {
+//					String[] commands =  new String[] {
+//							"CMD.EXE",
+//							"/C",
+//							_executableFile.getAbsolutePath()
+//					};
+//					
+//					ProcessBuilder pbuilder = new ProcessBuilder(commands);
+//					pbuilder.start();					
+//				}  else if (OSUtils.isLinux() && OSUtils.isUbuntu()) {
+//					String[] commands = new String[] {
+//							"gdebi-gtk",
+//							_executableFile.getAbsolutePath() };
+//							
+//					ProcessBuilder pbuilder = new ProcessBuilder(commands);
+//					pbuilder.start();
+//					//Runtime.getRuntime().exec("gdebi", new String[] {_executableFile.getAbsolutePath() });
+//				}
+//				
+//				GUIMediator.shutdown();
+//			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+//		}
+//	}
 
-	private File downloadDotTorrent() {
+	//private File downloadDotTorrent() {
 		
 //		File appSpecialShareFolder = SharingUtils.APPLICATION_SPECIAL_SHARE;
 //		
@@ -130,39 +123,39 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 //		assert (torrentFileLocation.exists());
 //		
 //		return torrentFileLocation;
-	    return null;
-	}
+//	    return null;
+//	}
 	
-	private final InstallerMetaData getLastInstallerMetaData() {
-		InstallerMetaData result = null;
-		try {
-			File installerDatFile = new File(getInstallerDatPath());
+//	private final InstallerMetaData getLastInstallerMetaData() {
+//		InstallerMetaData result = null;
+//		try {
+//			File installerDatFile = new File(getInstallerDatPath());
+//
+//			if (!installerDatFile.exists())
+//				return null;
+//
+//			FileInputStream fis = new FileInputStream(installerDatFile);
+//			ObjectInputStream ois = new ObjectInputStream(fis);
+//
+//			result = (InstallerMetaData) ois.readObject();
+//
+//			if (result == null)
+//				return null;
+//
+//			System.out.println(result);
+//			
+//			fis.close();
+//
+//			return result;
+//
+//		} catch (Exception e) {
+//			// processMessage will deal with us returning null
+//			e.printStackTrace();
+//			return null;
+//		}
+//	}
 
-			if (!installerDatFile.exists())
-				return null;
-
-			FileInputStream fis = new FileInputStream(installerDatFile);
-			ObjectInputStream ois = new ObjectInputStream(fis);
-
-			result = (InstallerMetaData) ois.readObject();
-
-			if (result == null)
-				return null;
-
-			System.out.println(result);
-			
-			fis.close();
-
-			return result;
-
-		} catch (Exception e) {
-			// processMessage will deal with us returning null
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	private boolean checkIfDownloaded() {
+//	private boolean checkIfDownloaded() {
 		
 //		InstallerMetaData md = getLastInstallerMetaData();
 //		
@@ -191,8 +184,8 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 //			e.printStackTrace();
 //			return false;
 //		}
-	    return false;
-	}
+//	    return false;
+//	}
 
 	@Override
 	public void completionChanged(DownloadManager manager, boolean bCompleted) {		

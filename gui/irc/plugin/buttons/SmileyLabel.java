@@ -64,7 +64,12 @@ public class SmileyLabel extends Canvas
 	//----------------------------------------------------
 	// Instance variables.
 	
-	// The actual Smiley drawn on the canvas. 
+	/**
+     * 
+     */
+    private static final long serialVersionUID = -6659942014558080823L;
+
+    // The actual Smiley drawn on the canvas. 
 	private Image smiley;
 	
 	// A String corresponding to the URL of the smiley

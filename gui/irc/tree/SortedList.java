@@ -108,7 +108,7 @@ class TreeNode
   /**
    * Objects in this node.
    */
-  public Vector objects;
+  public Vector<Object> objects;
   //private int count;
   private Comparator _comparator;
 
@@ -121,7 +121,7 @@ class TreeNode
   {
     _comparator=comparator;
     //item=itm;
-    objects=new Vector(1,0);
+    objects=new Vector<Object>(1,0);
     objects.insertElementAt(itm,objects.size());
     //count=1;
     left=new TreeNode(comparator);
@@ -136,7 +136,7 @@ class TreeNode
   {
     _comparator=comparator;
     //item=null;
-    objects=new Vector(1,0);
+    objects=new Vector<Object>(1,0);
     left=null;
     right=null;
     //count=0;

@@ -9,7 +9,6 @@ import javax.swing.JCheckBox;
 
 import org.limewire.i18n.I18nMarker;
 
-import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.ListEditor;
 import com.limegroup.gnutella.settings.FilterSettings;

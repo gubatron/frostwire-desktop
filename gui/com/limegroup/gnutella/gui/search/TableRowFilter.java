@@ -205,8 +205,8 @@ public class TableRowFilter extends ResultPanelModel {
         Map<String, TableLine> mergeMap = new HashMap<String, TableLine>();
         for(int i = 0; i < hidden.size(); i++) {
             TableLine tl = hidden.get(i);
-            SearchResult sr = tl.getInitializeObject();
-            String urn = sr.getHash();
+            //SearchResult sr = tl.getInitializeObject();
+            //String urn = sr.getHash();
             
             if(isSorted()) {
                 addSorted(tl);

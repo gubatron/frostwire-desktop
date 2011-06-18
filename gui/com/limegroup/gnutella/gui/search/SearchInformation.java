@@ -2,16 +2,10 @@ package com.limegroup.gnutella.gui.search;
 
 
 import java.io.Serializable;
-import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.StringTokenizer;
-
-import org.limewire.io.IpPort;
-import org.limewire.io.IpPortImpl;
 
 import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.gui.I18n;
 
 /**
  * Simple struct-like class containing information about a search.

@@ -201,7 +201,7 @@ public class EventDispatcher
   
   private static final String[] _names={"User","Security"};
   
-  private static Hashtable _cache=new Hashtable();
+  private static Hashtable<Class<?>, Method[]> _cache=new Hashtable<Class<?>, Method[]>();
   private static DispatchThread[] _thread=new DispatchThread[2];
   private static boolean _warning=true;
 
@@ -213,7 +213,7 @@ public class EventDispatcher
     }
   }
   
-  private static boolean match(Class[] t1,Class[] t2)
+  private static boolean match(Class<?>[] t1,Class<?>[] t2)
   {
     if(t1.length!=t2.length) return false;
     for(int i=0;i<t1.length;i++)
@@ -296,7 +296,7 @@ public class EventDispatcher
     
     try
     {
-      Class c=target.getClass();
+      Class<?> c=target.getClass();
       
       Method m[];
       synchronized(_cache)
@@ -309,7 +309,7 @@ public class EventDispatcher
         }
       }
 
-      Class types[]=new Class[params.length];
+      Class<?> types[]=new Class[params.length];
       for(int i=0;i<params.length;i++)
       {
         if(params[i]!=null)

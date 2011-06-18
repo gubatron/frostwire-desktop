@@ -1,21 +1,5 @@
 package com.limegroup.gnutella.gui.bugs;
 
-import java.io.IOException;
-import java.util.List;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.params.HttpClientParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.util.EntityUtils;
-
-import com.limegroup.gnutella.gui.GuiCoreMediator;
-import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * This class handles accessing the servlet, sending it data about the client
@@ -25,25 +9,12 @@ import com.limegroup.gnutella.util.FrostWireUtils;
 //2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 final class ServletAccessor {
     
-    private static final Log LOG = LogFactory.getLog(ServletAccessor.class);
-    
     /**
-	 * Constant number of milliseconds to wait before timing out the
-	 * connection to the servlet.
-	 */
-	private static final int CONNECT_TIMEOUT = 10 * 1000; // 10 seconds.
-    
-	/**
 	 * Constant for the servlet url.
 	 */
 	private static final String DEFAULT_SERVLET_URL =
 		"http://doctor.frostwire.com/bug-manager"; //"http://www.cybercultura.net/fwbugman.py";
 	
-	private final String SERVLET_URL;
-    
-    /** Whether or not HttpClient can use NIO */
-    private final boolean ALLOW_NIO;
-
 	/** Constructs an accessor that can use NIO */
 	ServletAccessor() {
 	    this(true);
@@ -57,8 +28,7 @@ final class ServletAccessor {
     /** Constructs an accessor that may or may not use NIO.  Use true if it can. 
      *  Also takes a URL value as a parameter to be assigned to SERVLET_URL */
     ServletAccessor(boolean allowNIO, String servlet_url) {
-        this.ALLOW_NIO = allowNIO;
-        SERVLET_URL = servlet_url;
+        
     }
 
 	/**
@@ -117,11 +87,6 @@ final class ServletAccessor {
 //        }
 //        return remoteInfo;
 	    return null;
-    }
-
-    private void fail(RemoteClientInfo remoteInfo, Throwable e) {
-        LOG.error("Error connecting to bug servlet", e);
-        remoteInfo.connectFailed();
     }
 }
 

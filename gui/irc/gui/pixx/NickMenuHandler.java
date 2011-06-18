@@ -39,8 +39,6 @@ import java.awt.event.ActionListener;
 import java.util.Enumeration;
 
 import javax.swing.JComponent;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
 
 /**
  * Popupmenu handling for nicknames.
@@ -152,7 +150,7 @@ public class NickMenuHandler implements ActionListener
 
     _menu.removeAll();
 
-    Enumeration keys=_pixxConfiguration.getNickMenuVector().elements();
+    Enumeration<?> keys=_pixxConfiguration.getNickMenuVector().elements();
     while(keys.hasMoreElements())
     {
       String[] v=(String[])keys.nextElement();
