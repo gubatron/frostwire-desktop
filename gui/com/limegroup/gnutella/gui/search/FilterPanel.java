@@ -122,6 +122,8 @@ public class FilterPanel extends JPanel {
 		_rangeSliderSeeds.getMaximumValueLabel().setText(I18n.tr("Max"));
 		_rangeSliderSize.getMinimumValueLabel().setText(I18n.tr("0"));
 		_rangeSliderSize.getMaximumValueLabel().setText(I18n.tr("Max"));
+		
+		_keywordFilterTextField.setText("");
 	}
 
 	private void reset(GeneralResultFilter filter) {
@@ -134,6 +136,8 @@ public class FilterPanel extends JPanel {
 		_rangeSliderSize.setMaximum(1000);
 		_rangeSliderSize.setValue(filter.getMinSize());
 		_rangeSliderSize.setUpperValue(filter.getMaxSize());
+		
+		_keywordFilterTextField.setText("");
 
 		if (filter.getMinResultsSeeds() == Integer.MAX_VALUE) {
 			_rangeSliderSeeds.getMinimumValueLabel().setText(I18n.tr("0"));
@@ -171,7 +175,7 @@ public class FilterPanel extends JPanel {
 		GeneralResultFilter filter = ACTIVE_FILTERS.get(rp);
 		if (filter == null) {
 			filter = new GeneralResultFilter(rp, _rangeSliderSeeds,
-					_rangeSliderSize);
+					_rangeSliderSize,_keywordFilterTextField);
 			ACTIVE_FILTERS.put(rp, filter);
 			rp.filterChanged(filter, 1);
 		}
