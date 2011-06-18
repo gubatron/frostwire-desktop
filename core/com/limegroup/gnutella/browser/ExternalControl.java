@@ -1,24 +1,26 @@
 package com.limegroup.gnutella.browser;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Socket;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.limewire.io.NetworkUtils;
+import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.limewire.util.OSUtils;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.limegroup.gnutella.ActivityCallback;
-import com.limegroup.gnutella.settings.ConnectionSettings;
 
 @Singleton
 public class ExternalControl {
     
     private static final Log LOG = LogFactory.getLog(ExternalControl.class);
 
-	//private final String LOCALHOST = "127.0.0.1";
+	private final String LOCALHOST = "127.0.0.1";
     private boolean initialized = false;
     private volatile String  enqueuedRequest = null;
     
@@ -47,14 +49,14 @@ public class ExternalControl {
      * for 'allow multiple instances' -- only the instance that was just
      * started.
      */
-	public void checkForActiveLimeWire() {
-	    if( testForLimeWire(null) ) {
+	public void checkForActiveFrostWire() {
+	    if( testForFrostWire(null) ) {
 		    System.exit(0);	
 		}
 	}
 
-	public void checkForActiveLimeWire(String arg) {
-	    if ((OSUtils.isWindows() || OSUtils.isLinux()) && testForLimeWire(arg)) {
+	public void checkForActiveFrostWire(String arg) {
+	    if ((OSUtils.isWindows() || OSUtils.isLinux()) && testForFrostWire(arg)) {
 		    System.exit(0);	
 		}
 	}
@@ -152,43 +154,23 @@ public class ExternalControl {
 	 *   Sends the MAGNET message along the given socket. 
 	 *   @returns  true if a local FrostWire responded with a true.
 	 */
-	private boolean testForLimeWire(String arg) {
-		//Socket socket = null;
-		int port = ConnectionSettings.PORT.getValue();
-		// Check to see if the port is valid.
-		// If it is not, revert it to the default value.
-		// This has the side effect of possibly allowing two 
-		// FrostWires to start if somehow the existing one
-		// set its port to 0, but that should not happen
-		// in normal program flow.
-		//String type = isTorrentRequest(arg) ? "TORRENT" : "MAGNET";
-		if( !NetworkUtils.isValidPort(port) ) {
-		    ConnectionSettings.PORT.revertToDefault();
-		    port = ConnectionSettings.PORT.getValue();
-        }   
-//		try {
-//			socket = socketsManager.connect(new InetSocketAddress(LOCALHOST, port), 1000);
-//			InputStream istream = socket.getInputStream(); 
-//			socket.setSoTimeout(1000); 
-//		    ByteReader byteReader = new ByteReader(istream);
-//		    OutputStream os = socket.getOutputStream();
-//		    OutputStreamWriter osw = new OutputStreamWriter(os);
-//		    BufferedWriter out = new BufferedWriter(osw);
-//		    out.write(type+" "+arg+" ");
-//		    out.write("\r\n");
-//		    out.flush();
-//		    String str = byteReader.readLine();
-//		    return(str != null && str.startsWith(CommonUtils.getUserName()));
-//		} catch (IOException e2) {
-//		} finally {
-//		    if(socket != null) {
-//		        try {
-//                    socket.close();
-//                } catch (IOException e) {
-//                    // nothing we can do
-//                }
-//            }
-//        }
+	private boolean testForFrostWire(String arg) {
+		Socket socket = null;
+		int port = COConfigurationManager.getIntParameter("TCP.Listen.Port");
+		try {
+		    socket = new Socket();
+			socket.connect(new InetSocketAddress(LOCALHOST, port), 1000);
+			return true;
+		} catch (IOException e2) {
+		} finally {
+		    if(socket != null) {
+		        try {
+                    socket.close();
+                } catch (IOException e) {
+                    // nothing we can do
+                }
+            }
+        }
         
 	    return false;
 	}

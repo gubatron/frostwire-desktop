@@ -239,29 +239,21 @@ public final class Initializer {
      */ 
     private void runExternalChecks(LimeWireCore limeWireCore, String[] args) {        
         ExternalControl externalControl = limeWireCore.getExternalControl();
-        //stopwatch.resetAndLog("Get externalControl");
         if(OSUtils.isMacOSX()) {
             GURLHandler.getInstance().enable(externalControl);
-            //stopwatch.resetAndLog("Enable GURL");
             MacEventHandler.instance().enable(externalControl, this);
-            //stopwatch.resetAndLog("Enable macEventHandler");
         }
         
-        // Test for preexisting LimeWire and pass it a magnet URL if one
+        // Test for preexisting FrostWire and pass it a magnet URL if one
         // has been passed in.
         if (args.length > 0 && !args[0].equals("-startup")) {
             String arg = externalControl.preprocessArgs(args);
-            //JOptionPane.showMessageDialog(null, "Initializer.runExternalChecks() - arg => \n" + arg);
-            //stopwatch.resetAndLog("Preprocess args");
-            externalControl.checkForActiveLimeWire(arg);
-            //stopwatch.resetAndLog("Check for active LW");
+            externalControl.checkForActiveFrostWire(arg);
             externalControl.enqueueControlRequest(arg);
-            //stopwatch.resetAndLog("Enqueue control req");
         } else if (!StartupSettings.ALLOW_MULTIPLE_INSTANCES.getValue()) {
             // if we don't want multiple instances, we need to check if
             // frostwire is already active.
-            externalControl.checkForActiveLimeWire();
-            //stopwatch.resetAndLog("Check for active FW");
+            externalControl.checkForActiveFrostWire();
         }
     }
     

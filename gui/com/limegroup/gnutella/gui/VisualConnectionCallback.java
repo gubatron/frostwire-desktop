@@ -172,8 +172,7 @@ public final class VisualConnectionCallback implements ActivityCallback {
 	        public void run() {
 		        GUIMediator.restoreView();
             }
-        });
-		    
+        }); 
 	}
 	
 	/**
