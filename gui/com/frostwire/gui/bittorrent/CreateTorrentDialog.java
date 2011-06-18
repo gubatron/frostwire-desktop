@@ -178,7 +178,10 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 				.tr("Torrent Contents")));
 
 		_buttonSelectFile = new JButton(I18n.tr("Select a file..."));
+		_buttonSelectFile.setToolTipText(I18n.tr("Click here to select a single file as the content indexed by your new .torrent"));
+		
 		_buttonSelectFolder = new JButton("Select a folder...");
+		_buttonSelectFolder.setToolTipText(I18n.tr("Click here to select a folder as the content indexed by your new .torrent"));
 		
 		final Insets MARGINS = new Insets(5,5,5,5);
 
@@ -193,6 +196,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		c.insets = MARGINS;
 		_textSelectedContent = new JTextField();
 		_textSelectedContent.setEditable(false);
+		_textSelectedContent.setToolTipText(I18n.tr("These box shows the contents you've selected for your new .torrent. Either a file, or the contents of a folder."));
 		torrentContentsPanel.add(_textSelectedContent, c);
 		
 		
@@ -243,6 +247,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		c.anchor = GridBagConstraints.LINE_START;
 		c.fill = GridBagConstraints.NONE;
 		_checkUseDHT = new JCheckBox(I18n.tr("Trackerless Torrent (DHT)"),true);
+		_checkUseDHT.setToolTipText(I18n.tr("Select this option to create torrents that don't need trackers, completely descentralized. (Recommended)"));
 		torrentPropertiesPanel.add(_checkUseDHT, c);
 
 		// Start seeding checkbox
@@ -253,6 +258,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		c.anchor = GridBagConstraints.LINE_START;
 		c.fill = GridBagConstraints.NONE;
 		_checkStartSeeding = new JCheckBox(I18n.tr("Start seeding"),true);
+		_checkStartSeeding.setToolTipText(I18n.tr("Announce yourself as a seed for the content indexed by this torrent as soon as it's created. If nobody is seeding the torrent won't work. (Recommended)"));
 		torrentPropertiesPanel.add(_checkStartSeeding, c);
 
 		// Trackers
@@ -265,7 +271,9 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		c.insets = new Insets(10, 5, 5, 5);
 		_labelTrackers = new JLabel(
 				"<html><p>Tracker Announce URLs</p><p>(One tracker per line)</p></html>");
+		_labelTrackers.setToolTipText(I18n.tr("Enter a list of valid BitTorrent Tracker Server URLs.\nYour new torrent will be announced to these trackers if you start seeding the torrent."));		
 		torrentPropertiesPanel.add(_labelTrackers, c);
+		
 
 		c = new GridBagConstraints();
 		c.gridx = 1;
@@ -276,6 +284,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		c.weightx = 0.7;
 		c.insets = new Insets(5, 5, 5, 5);
 		_textTrackers = new JTextArea(10, 80);
+		_textTrackers.setToolTipText(_labelTrackers.getToolTipText());
 		_textTrackers.setLineWrap(false);
 		_textTrackersScrollPane = new JScrollPane(_textTrackers);
 		torrentPropertiesPanel.add(_textTrackersScrollPane, c);
