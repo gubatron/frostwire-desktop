@@ -265,7 +265,7 @@ class TreeNode
 public class SortedList implements TreeTraversalListener
 {
   private TreeNode _root;
-  private Vector _items;
+  private Vector<Object> _items;
   private Comparator _comparator;
   private boolean _upToDate;
 
@@ -277,7 +277,7 @@ public class SortedList implements TreeTraversalListener
   {
     _comparator=comparator;
     _root=new TreeNode(_comparator);
-    _items=new Vector();
+    _items=new Vector<Object>();
     _upToDate=false;
   }
 
@@ -325,7 +325,7 @@ public class SortedList implements TreeTraversalListener
 
   public void begin(Object param)
   {
-    _items=new Vector();
+    _items=new Vector<Object>();
   }
 
   public void nextItem(Object item,Object param)
@@ -347,7 +347,7 @@ public class SortedList implements TreeTraversalListener
    * Get a sorted enumeration of items.
    * @return a sorted enumeration of items in the list.
    */
-  public Enumeration getItems()
+  public Enumeration<Object> getItems()
   {
     if(!_upToDate) computeVector();
     return _items.elements();
@@ -382,7 +382,7 @@ public class SortedList implements TreeTraversalListener
   public void clear()
   {
     _root=new TreeNode(_comparator);
-    _items=new Vector();
+    _items=new Vector<Object>();
     _upToDate=false;
   }
   

@@ -103,7 +103,7 @@ public class AWTInterpretor extends RootInterpretor
       else if(cmd.equals("focus"))
       {
         test(cmd,parts,2);
-        Enumeration e=source.getServer().getSources();
+        Enumeration<?> e=source.getServer().getSources();
         while(e.hasMoreElements())
         {
           Source s=(Source)e.nextElement();

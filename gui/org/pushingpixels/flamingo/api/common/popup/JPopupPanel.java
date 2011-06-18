@@ -46,6 +46,11 @@ import org.pushingpixels.flamingo.internal.ui.common.popup.PopupPanelUI;
  */
 public abstract class JPopupPanel extends JPanel {
 	/**
+     * 
+     */
+    private static final long serialVersionUID = 7895933252007203585L;
+
+    /**
 	 * @see #getUIClassID
 	 */
 	public static final String uiClassID = "PopupPanelUI";

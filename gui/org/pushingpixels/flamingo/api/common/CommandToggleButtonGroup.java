@@ -46,6 +46,11 @@ import javax.swing.event.ChangeListener;
  */
 public class CommandToggleButtonGroup implements Serializable {
 	/**
+     * 
+     */
+    private static final long serialVersionUID = -4150970973665997190L;
+
+    /**
 	 * Contains all group buttons.
 	 */
 	protected Vector<JCommandToggleButton> buttons;

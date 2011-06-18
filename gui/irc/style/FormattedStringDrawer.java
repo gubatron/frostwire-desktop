@@ -310,15 +310,15 @@ public class FormattedStringDrawer implements ImageObserver
 	  String decoded=_drawer.decodeLine(str);
 	  ans.decoded=decoded;
     ans.decoded_stripped=getStripped(decoded);
-    Vector v=doWords(str,decoded);
+    Vector<WordItem> v=doWords(str,decoded);
     ans.words=new WordItem[v.size()];
     for(int i=0;i<ans.words.length;i++) ans.words[i]=(WordItem)v.elementAt(i);
 	  return ans;
 	}
 
-  private Vector doWords(String ostr,String dstr)
+  private Vector<WordItem> doWords(String ostr,String dstr)
   {
-    Vector words=new Vector();
+    Vector<WordItem> words=new Vector<WordItem>();
     CharacterInfo info=new CharacterInfo();
     info.frontColor=_cols[1];
     info.backColor=_cols[0];
@@ -421,7 +421,7 @@ public class FormattedStringDrawer implements ImageObserver
 
   private WordItem decodeWord(CharacterInfo base,String str,Color[] cols)
   {
-    Vector v=new Vector();
+    Vector<CharacterGroupItem> v=new Vector<CharacterGroupItem>();
     CharacterInfo current=new CharacterInfo(base);
     CharacterGroupItem currentItem=new CharacterGroupItem(new CharacterInfo(current));
     int size=str.length();
@@ -568,7 +568,7 @@ public class FormattedStringDrawer implements ImageObserver
 		return res;
 	}
 
-  private int drawPart(Graphics g,CharacterInfo nfo,String str,int x,int y,FontMetrics plainMetrics,int clipxl,int clipxr,ImageObserver obs,Vector handles)
+  private int drawPart(Graphics g,CharacterInfo nfo,String str,int x,int y,FontMetrics plainMetrics,int clipxl,int clipxr,ImageObserver obs,Vector<Object> handles)
   {
     FontMetrics fm=plainMetrics;
     //int up=plainMetrics.getAscent();
@@ -612,7 +612,7 @@ public class FormattedStringDrawer implements ImageObserver
     return width;
   }
 
-  private void drawWord(Graphics g,WordItem word,int x,int y,boolean last,FontMetrics plainMetrics,int clipxl,int clipxr,ImageObserver obs,Vector handles)
+  private void drawWord(Graphics g,WordItem word,int x,int y,boolean last,FontMetrics plainMetrics,int clipxl,int clipxr,ImageObserver obs,Vector<Object> handles)
   {
     for(int pos=0;pos<word.items.length;pos++)
     {
@@ -766,7 +766,7 @@ public class FormattedStringDrawer implements ImageObserver
     WordItem[] words=((DecodedLineInternal)str).words;
     if(res.updateHandles==null)
     {
-      res.updateHandles=new Vector();
+      res.updateHandles=new Vector<Object>();
     }
     else
     {

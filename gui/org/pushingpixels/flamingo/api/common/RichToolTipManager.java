@@ -63,7 +63,12 @@ public class RichToolTipManager extends MouseAdapter implements
 	private static final String TRACKED_FOR_RICH_TOOLTIP = "flamingo.internal.trackedForRichTooltip";
 
 	public static abstract class JTrackableComponent extends JComponent {
-		public abstract RichTooltip getRichTooltip(MouseEvent mouseEvent);
+		/**
+         * 
+         */
+        private static final long serialVersionUID = -8362592521024792934L;
+
+        public abstract RichTooltip getRichTooltip(MouseEvent mouseEvent);
 	}
 
 	RichToolTipManager() {

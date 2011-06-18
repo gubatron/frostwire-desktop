@@ -11,7 +11,11 @@ import javax.swing.JPanel;
 public class AWTProgressBar extends JPanel
 {
 
-  private double _v;
+  /**
+     * 
+     */
+    private static final long serialVersionUID = -2123371744045378595L;
+private double _v;
   private Color _c;
 
   /**

@@ -43,7 +43,11 @@ import javax.swing.JPanel;
  */
 public class MouseWheelPanel extends JPanel implements MouseWheelListener
 {
-  private ListenerGroup _listeners;
+  /**
+     * 
+     */
+    private static final long serialVersionUID = 2490906195425259798L;
+private ListenerGroup _listeners;
 
   /**
    * Create a new MouseWheelPanel.

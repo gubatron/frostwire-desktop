@@ -37,6 +37,11 @@ import javax.swing.JTextField;
 public class NonFocusableTextField extends JTextField
 {
   /**
+     * 
+     */
+    private static final long serialVersionUID = -8644056845111525495L;
+
+/**
    * Create a new NonFocusableTextField.
    */
   public NonFocusableTextField()

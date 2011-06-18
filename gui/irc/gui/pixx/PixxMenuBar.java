@@ -24,7 +24,11 @@ import java.awt.event.MouseMotionListener;
 public class PixxMenuBar extends PixxPanel implements MouseListener,MouseMotionListener,Runnable,FormattedStringDrawerListener
 {
 
-  private int _pressedIndex;
+  /**
+     * 
+     */
+    private static final long serialVersionUID = 5289774818741275230L;
+private int _pressedIndex;
   private boolean _closePressed;
   private boolean _dockPressed;
   private ListenerGroup _listeners;

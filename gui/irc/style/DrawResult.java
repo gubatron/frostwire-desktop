@@ -39,7 +39,7 @@ public class DrawResult
   /**
    * The list of all update handles for this draw result.
    */
-  public Vector updateHandles;
+  public Vector<Object> updateHandles;
 
   /**
    * The result rectangle.

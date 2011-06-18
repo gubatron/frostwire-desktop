@@ -53,7 +53,8 @@ public class RenderingUtils {
 	 *            Graphics context.
 	 * @return Map of old rendering hints.
 	 */
-	public static Map installDesktopHints(Graphics2D g2) {
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+    public static Map installDesktopHints(Graphics2D g2) {
 		Map oldRenderingHints = null;
 		Map desktopHints = desktopHints(g2);
 		if (desktopHints != null && !desktopHints.isEmpty()) {
@@ -75,6 +76,7 @@ public class RenderingUtils {
 	 *            Graphics context.
 	 * @return The desktop hints for the specified graphics context.
 	 */
+	@SuppressWarnings({ "rawtypes"})
 	private static Map desktopHints(Graphics2D g2) {
 		if (isPrinting(g2)) {
 			return null;

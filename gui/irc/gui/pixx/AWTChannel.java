@@ -58,10 +58,14 @@ class NickNameComparator implements irc.tree.Comparator
  */
 public class AWTChannel extends BaseAWTSource implements ChannelListener2,PixxNickListListener
 {
-  private ScrollablePixxNickList _nicks;
+  /**
+     * 
+     */
+    private static final long serialVersionUID = -85696794146183168L;
+private ScrollablePixxNickList _nicks;
 	private JLabel _label;
   private SortedList _sortedList;
-  private Hashtable _modeMapping;
+  private Hashtable<String, String> _modeMapping;
   private NickMenuHandler _menu;
 
   /**
@@ -78,7 +82,7 @@ public class AWTChannel extends BaseAWTSource implements ChannelListener2,PixxNi
     c.addChannelListener2(this);
     _nicks.addPixxNickListListener(this);
     _sortedList=new SortedList(new NickNameComparator(c.getIRCServer().getNickPrefixes()));
-    _modeMapping=new Hashtable();
+    _modeMapping=new Hashtable<String, String>();
 		_label=new JLabel("");
     _label.setBackground(_pixxConfiguration.getColor(PixxColorModel.COLOR_BACK));
     _label.setForeground(_pixxConfiguration.getColor(PixxColorModel.COLOR_WHITE));
@@ -236,7 +240,7 @@ public class AWTChannel extends BaseAWTSource implements ChannelListener2,PixxNi
   private void update()
   {
     String[] n=new String[_modeMapping.size()];
-    Enumeration e=_modeMapping.keys();
+    Enumeration<?> e=_modeMapping.keys();
     int i=0;
     while(e.hasMoreElements()) n[i++]=(String)e.nextElement();
     _textField.setCompleteList(n);

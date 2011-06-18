@@ -75,6 +75,11 @@ public class PopupPanelManager {
 	 */
 	public static class PopupEvent extends ComponentEvent {
 		/**
+         * 
+         */
+        private static final long serialVersionUID = 1488596793690739922L;
+
+        /**
 		 * ID of "popup shown" event.
 		 */
 		public static final int POPUP_SHOWN = 100;

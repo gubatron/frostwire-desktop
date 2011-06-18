@@ -74,7 +74,12 @@ public class FilteredResizableIcon implements ResizableIcon {
 		this.delegate = delegate;
 		this.operation = operation;
 		this.cachedImages = new LinkedHashMap<String, BufferedImage>() {
-			@Override
+			/**
+             * 
+             */
+            private static final long serialVersionUID = -4121092643345681151L;
+
+            @Override
 			protected boolean removeEldestEntry(
 					java.util.Map.Entry<String, BufferedImage> eldest) {
 				return size() > 5;

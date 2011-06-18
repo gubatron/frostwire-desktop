@@ -62,11 +62,12 @@ import org.pushingpixels.flamingo.internal.utils.FlamingoUtilities;
  * @author Kirill Grouchnikov
  * @author Pawel Hajda
  */
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class BasicBreadcrumbBarUI extends BreadcrumbBarUI {
 	/**
 	 * The associated breadcrumb bar.
 	 */
-	protected JBreadcrumbBar breadcrumbBar;
+    protected JBreadcrumbBar breadcrumbBar;
 
 	protected JPanel mainPanel;
 
@@ -408,7 +409,7 @@ public class BasicBreadcrumbBarUI extends BreadcrumbBarUI {
 					buttonStack.add(button);
 				} else {
 					JCommandButton button = buttonStack.getLast();
-					int oldW = button.getPreferredSize().width;
+					//int oldW = button.getPreferredSize().width;
 					button
 							.setCommandButtonKind(CommandButtonKind.ACTION_AND_POPUP_MAIN_ACTION);
 					configurePopupAction(button, bic);
@@ -563,8 +564,8 @@ public class BasicBreadcrumbBarUI extends BreadcrumbBarUI {
 								public void actionPerformed(ActionEvent e) {
 									SwingUtilities.invokeLater(new Runnable() {
 										public void run() {
-											if (bi == null)
-												return;
+											//if (bi == null)
+											//	return;
 
 											BreadcrumbBarModel barModel = breadcrumbBar
 													.getModel();
@@ -701,7 +702,7 @@ public class BasicBreadcrumbBarUI extends BreadcrumbBarUI {
 	protected synchronized Object pushChoice(BreadcrumbItem bi,
 			boolean toUpdateUI) {
 		assert (bi != null);
-		Object result;
+		//Object result;
 		// synchronized (stack) {
 		if (!modelStack.isEmpty() && modelStack.size() % 2 == 0) {
 			modelStack.pop();

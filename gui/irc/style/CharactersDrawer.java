@@ -219,7 +219,7 @@ public class CharactersDrawer
    * @param obs the image observer in case of bitmap display.
    * @param handles target vector, where all update handles will be put.
 	 */
-  public void draw(String str,Graphics g,FontMetrics fm,int x,int y,ImageObserver obs,Vector handles)
+  public void draw(String str,Graphics g,FontMetrics fm,int x,int y,ImageObserver obs,Vector<Object> handles)
   {
     if(_current.length<str.length()) _current=new char[str.length()*2];
     int size=0;
@@ -233,7 +233,7 @@ public class CharactersDrawer
         x+=fm.charsWidth(_current,0,size);
         size=0;
         Object handle=drawBitmapSmiley(g,fm,c,x,y,obs);
-        if(handles==null) handles=new Vector();
+        if(handles==null) handles=new Vector<Object>();
         handles.insertElementAt(handle,handles.size());
         x+=getBitmapSmileyWidth(c,obs);
       }

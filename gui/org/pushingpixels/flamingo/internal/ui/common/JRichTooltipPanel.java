@@ -35,7 +35,12 @@ import javax.swing.UIManager;
 import org.pushingpixels.flamingo.api.common.RichTooltip;
 
 public class JRichTooltipPanel extends JPanel {
-	protected RichTooltip tooltipInfo;
+	/**
+     * 
+     */
+    private static final long serialVersionUID = 2962861969276912881L;
+
+    protected RichTooltip tooltipInfo;
 
 	/**
 	 * @see #getUIClassID
