@@ -26,6 +26,7 @@ public class TorrentFetcherDownload implements BTDownload {
     private final boolean _partialDownload;
 
     private String _state;
+    private boolean _removed;
     private BTDownload _delegate;
 
     public TorrentFetcherDownload(String uri, String displayName, String hash, long size, boolean partialDownload) {
@@ -71,6 +72,9 @@ public class TorrentFetcherDownload implements BTDownload {
     public void remove() {
         if (_delegate != null) {
             _delegate.remove();
+        } else {
+            _removed = true;
+            _torrentDownloader.cancel();
         }
     }
 
@@ -170,6 +174,9 @@ public class TorrentFetcherDownload implements BTDownload {
         private boolean[] filesSelection;
 
         public void TorrentDownloaderEvent(int state, final TorrentDownloader inf) {
+            if (_removed) {
+                return;
+            }
             if (state == TorrentDownloader.STATE_FINISHED) {
                 try {
                     if (_partialDownload) {
