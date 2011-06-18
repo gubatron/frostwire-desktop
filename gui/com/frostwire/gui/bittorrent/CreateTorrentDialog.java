@@ -196,7 +196,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		c.insets = MARGINS;
 		_textSelectedContent = new JTextField();
 		_textSelectedContent.setEditable(false);
-		_textSelectedContent.setToolTipText(I18n.tr("These box shows the contents you've selected for your new .torrent. Either a file, or the contents of a folder."));
+		_textSelectedContent.setToolTipText(I18n.tr("These box shows the contents you've selected for your new .torrent.\nEither a file, or the contents of a folder."));
 		torrentContentsPanel.add(_textSelectedContent, c);
 		
 		
@@ -258,7 +258,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		c.anchor = GridBagConstraints.LINE_START;
 		c.fill = GridBagConstraints.NONE;
 		_checkStartSeeding = new JCheckBox(I18n.tr("Start seeding"),true);
-		_checkStartSeeding.setToolTipText(I18n.tr("Announce yourself as a seed for the content indexed by this torrent as soon as it's created. If nobody is seeding the torrent won't work. (Recommended)"));
+		_checkStartSeeding.setToolTipText(I18n.tr("Announce yourself as a seed for the content indexed by this torrent as soon as it's created.\nIf nobody is seeding the torrent won't work. (Recommended)"));
 		torrentPropertiesPanel.add(_checkStartSeeding, c);
 
 		// Trackers
