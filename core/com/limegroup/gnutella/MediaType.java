@@ -13,8 +13,6 @@ import java.util.TreeSet;
 import org.limewire.collection.Comparators;
 import org.limewire.i18n.I18nMarker;
 
-import com.limegroup.gnutella.messages.QueryRequest;
-
 /**
  * A generic type of media, i.e., "video" or "audio".
  * Many different file formats can be of the same media type.
@@ -410,30 +408,6 @@ public class MediaType implements Serializable {
         return TYPE_PROGRAMS;
     }
     
-    /** @return a MediaType.Aggregator to use for your query.  Null is a
-     *  possible return value.
-     */
-    public static Aggregator getAggregator(QueryRequest query) {
-        if (query.desiresAll())
-            return null;
-
-        Aggregator retAggr = new Aggregator();
-        if (query.desiresLinuxOSXPrograms())
-            retAggr.addFilter(TYPE_LINUX_OSX_PROGRAMS);
-        if (query.desiresWindowsPrograms())
-            retAggr.addFilter(TYPE_WINDOWS_PROGRAMS);
-        if (query.desiresDocuments())
-            retAggr.addFilter(TYPE_DOCUMENTS);
-        if (query.desiresAudio())
-            retAggr.addFilter(TYPE_AUDIO);
-        if (query.desiresVideo())
-            retAggr.addFilter(TYPE_VIDEO);
-        if (query.desiresImages())
-            retAggr.addFilter(TYPE_IMAGES);
-        if (query.desiresTorrents())
-            retAggr.addFilter(TYPE_TORRENTS);
-        return retAggr;
-    }
 
     /** Utility class for aggregating MediaTypes.
      *  This class is not synchronized - it should never be used in a fashion
@@ -444,10 +418,6 @@ public class MediaType implements Serializable {
         private List<MediaType> _filters = new LinkedList<MediaType>();
 
         private Aggregator() {}
-        /** I don't check for duplicates. */
-        private void addFilter(MediaType filter) {
-            _filters.add(filter);
-        }
 
         /** @return true if the Response falls within one of the MediaTypes
          *  this aggregates.

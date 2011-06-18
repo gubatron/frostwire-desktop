@@ -18,15 +18,11 @@ import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import javax.swing.AbstractButton;
 import javax.swing.Action;
@@ -38,9 +34,6 @@ import javax.swing.JOptionPane;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 
-import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloader;
-import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderCallBackInterface;
-import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderFactory;
 import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.service.ErrorService;
@@ -55,12 +48,12 @@ import org.limewire.util.StringUtils;
 import org.limewire.util.VersionUtils;
 
 import com.frostwire.CoreFrostWireUtils;
-import com.frostwire.bittorrent.AzureusStarter;
-import com.frostwire.gnutella.connectiondoctor.ConnectionDoctor;
-import com.frostwire.gnutella.gui.chat.ChatMediator;
-import com.frostwire.gui.download.bittorrent.BTDownloadMediator;
-import com.limegroup.gnutella.bugs.FatalBugManager;
+import com.frostwire.bittorrent.websearch.WebSearchResult;
+import com.frostwire.gui.ChatMediator;
+import com.frostwire.gui.bittorrent.BTDownloadMediator;
+import com.frostwire.gui.tabs.LibraryPlayListTab;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
+import com.limegroup.gnutella.gui.bugs.FatalBugManager;
 import com.limegroup.gnutella.gui.library.LibraryMediator;
 import com.limegroup.gnutella.gui.mp3.MediaPlayerComponent;
 import com.limegroup.gnutella.gui.mp3.PlayListItem;
@@ -70,12 +63,10 @@ import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
 import com.limegroup.gnutella.gui.search.SearchMediator;
 import com.limegroup.gnutella.gui.shell.FrostAssociations;
 import com.limegroup.gnutella.gui.shell.ShellAssociationManager;
-import com.limegroup.gnutella.gui.tabs.LibraryPlayListTab;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.PlayerSettings;
 import com.limegroup.gnutella.settings.QuestionsHandler;
-import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.StartupSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
 import com.limegroup.gnutella.util.LaunchException;
@@ -409,8 +400,6 @@ public final class GUIMediator {
 	 */
 	public void coreInitialized() {
 		startTimer();
-		new ConnectionDoctor().initialize(); // Initialize the Connection Doctor
-												// timer
 	}
 
 	private final void startTimer() {
@@ -799,22 +788,33 @@ public final class GUIMediator {
 	public final int getCurrentDownloads() {
 		return getBTDownloadMediator().getActiveDownloads();
 	}
+	
+	public final void openTorrentSearchResult(WebSearchResult webSearchResult, boolean partialDownload) {
+	    getBTDownloadMediator().openTorrentSearchResult(webSearchResult, partialDownload);
+        setWindow(GUIMediator.Tabs.SEARCH);
+	}
+	
+	public final void openTorrentFile(File torrentFile) {
+	    openTorrentFile(torrentFile, false);
+	}
 
-	public final void openTorrent(File torrentFile) {
-	    getBTDownloadMediator().openTorrent(torrentFile);
+	public final void openTorrentFile(File torrentFile, boolean partialSelection) {
+	    getBTDownloadMediator().openTorrentFile(torrentFile, partialSelection);
 		setWindow(GUIMediator.Tabs.SEARCH);
 	}
 
-	public final void openTorrentURI(URI torrentURI) {
-	    getBTDownloadMediator().openTorrentURI(torrentURI);
-		setWindow(GUIMediator.Tabs.SEARCH);
+    public void openTorrentForSeed(File torrentFile, File saveDir) {
+        getBTDownloadMediator().openTorrentFileForSeed(torrentFile, saveDir);
+        setWindow(GUIMediator.Tabs.SEARCH);
+    }
+	
+	public final void openTorrentURI(String uri) {
+	    openTorrentURI(uri, false);
 	}
 
-	/**
-	 * Tells the library to add a new top-level (shared) folder.
-	 */
-	public final void addSharedLibraryFolder() {
-		getLibraryMediator().addSharedLibraryFolder();
+	public final void openTorrentURI(String uri, boolean partialDownload) {
+	    getBTDownloadMediator().openTorrentURI(uri, partialDownload);
+		setWindow(GUIMediator.Tabs.SEARCH);
 	}
 
 	/**
@@ -1526,14 +1526,14 @@ public final class GUIMediator {
 	 * Connects the user from the network.
 	 */
 	public void connect() {
-		GuiCoreMediator.getConnectionServices().connect();
+		//GuiCoreMediator.getConnectionServices().connect();
 	}
 
 	/**
 	 * Disconnects the user to the network.
 	 */
 	public void disconnect() {
-		GuiCoreMediator.getConnectionServices().disconnect();
+		//GuiCoreMediator.getConnectionServices().disconnect();
 	}
 
 	/**
@@ -1828,50 +1828,6 @@ public final class GUIMediator {
 	 */
 	public void setFrameCursor(Cursor cursor) {
 	    getAppFrame().setCursor(cursor);
-	}
-
-	public void openTorrentMagnet(final String request) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				GUIMediator.setSplashScreenString("Fetching .torrent from the DHT...");
-			}
-		});
-
-		Runnable runner = new Runnable() {
-			public void run() {
-				try {
-					azureusInit();
-
-					final CountDownLatch signal = new CountDownLatch(1);
-
-					TorrentDownloader downloader = TorrentDownloaderFactory.create(
-									new TorrentDownloaderCallBackInterface() {
-										public void TorrentDownloaderEvent(int state, TorrentDownloader inf) {
-											if (state == TorrentDownloader.STATE_FINISHED) {
-												signal.countDown();
-												GUIMediator.instance().getStatusLine().setStatusText("Done");
-											}
-										}
-									}, request, null,
-									SharingSettings.DEFAULT_TORRENTS_DIR.getCanonicalPath());
-
-					downloader.start();
-
-					if (!signal.await(1, TimeUnit.MINUTES))
-						throw new TimeoutException("Error downloading torrent magnet");
-
-					GUIMediator.instance().openTorrent(downloader.getFile());
-				} catch (Exception e) {
-					throw new RuntimeException(e);
-				}
-			}
-		};
-
-		ThreadExecutor.startThread(runner, "MagnetTorrentFetcher");
-	} // openTorrentMagnet
-
-	private void azureusInit() {
-		AzureusStarter.start();
 	}
 
 	public static void waitAndOpenURL(final String link, final long wait) {

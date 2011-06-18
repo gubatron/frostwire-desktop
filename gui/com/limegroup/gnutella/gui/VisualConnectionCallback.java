@@ -1,37 +1,19 @@
 package com.limegroup.gnutella.gui;
 
 import java.io.File;
-import java.util.Set;
-import java.util.Vector;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.SwingUtilities;
 
-import org.limewire.io.IpPort;
+import org.gudy.azureus2.core3.download.DownloadManager;
 
-import com.frostwire.bittorrent.BTDownloader;
+import com.frostwire.gui.bittorrent.BTDownload;
 import com.google.inject.Singleton;
 import com.limegroup.gnutella.ActivityCallback;
 import com.limegroup.gnutella.Downloader;
-import com.limegroup.gnutella.Downloader.DownloadStatus;
-import com.limegroup.gnutella.FileManagerEvent;
-import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.RemoteFileDesc;
-import com.limegroup.gnutella.Uploader;
 import com.limegroup.gnutella.browser.MagnetOptions;
-import com.limegroup.gnutella.connection.ConnectionLifecycleEvent;
-import com.limegroup.gnutella.connection.RoutedConnection;
-import com.limegroup.gnutella.gui.logging.LogEvent;
 import com.limegroup.gnutella.gui.search.SearchInformation;
 import com.limegroup.gnutella.gui.search.SearchMediator;
-import com.limegroup.gnutella.gui.sharing.ShareManager;
-import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
-import com.limegroup.gnutella.search.HostData;
-import com.limegroup.gnutella.settings.DaapSettings;
-import com.limegroup.gnutella.settings.QuestionsHandler;
-import com.limegroup.gnutella.settings.iTunesSettings;
-import com.limegroup.gnutella.uploader.UploadType;
 import com.limegroup.gnutella.util.QueryUtils;
 import com.limegroup.gnutella.version.UpdateInformation;
 
@@ -46,95 +28,12 @@ import com.limegroup.gnutella.version.UpdateInformation;
 @Singleton
 public final class VisualConnectionCallback implements ActivityCallback {
 	
-	///////////////////////////////////////////////////////////////////////////
-	//  Query-related callbacks
-	///////////////////////////////////////////////////////////////////////////
-
-	/**
-	 * Handle to the class that handles query strings.
-	 */
-    private final HandleQueryString HANDLE_QUERY_STRING = new HandleQueryString();
-    
-    /**
-     *  Add a query string to the monitor screen
-     */
-    public void handleQueryString(String query) {
-        HANDLE_QUERY_STRING.addQueryString(query);
-    }
 	
-    /**
-     *  Add a query reply to a query screen
-     */
-
-    public void handleQueryResult(final RemoteFileDesc rfd,
-                                  final HostData data,
-                                  final Set<? extends IpPort> locs) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-			    //SearchMediator.handleQueryResult(rfd, data, (Set<IpPort>) locs);
-			}
-		});
-    }
-
-    /**
-     * @return true if the guid is still viewable to the user, else false.
-     */
-    public boolean isQueryAlive(GUID guid) {
-        return SearchMediator.queryIsAlive(guid);
-    }
-
-    /**
-     *  Add a query string to the monitor screen
-     */
-    private class HandleQueryString implements Runnable {
-        private Vector<String>  list;
-        private boolean active;
-
-        public HandleQueryString() {
-            list   = new Vector<String>();
-            active = false;
-        }
-
-        public void addQueryString(String query) {
-            list.add(query);
-            if (active == false) {
-                active = true;
-                SwingUtilities.invokeLater(this);
-            }
-        }
-
-        public void run() {
-            String query;
-            while (list.size() > 0) {
-                query = list.elementAt(0);
-                list.remove(0);
-			    mf().getMonitorView().handleQueryString(query);
-            }
-            active = false;
-        }
-    }
-
-
 	///////////////////////////////////////////////////////////////////////////
 	//  Files-related callbacks
 	///////////////////////////////////////////////////////////////////////////
 	
-    /**
-     * File manager finished loading.
-     */
-    public void fileManagerLoaded() {
-        if (DaapSettings.DAAP_ENABLED.getValue()) {
-            Runnable r = new Runnable() {
-                public void run() {
-                    DaapManager.instance().fileManagerLoaded();
-                }
-            };
-
-            BackgroundExecutorService.schedule(r);
-        }
-    }
-    
-	/** 
+    /** 
 	 * This method notifies the frontend that the data for the 
 	 * specified shared <tt>File</tt> instance has been 
 	 * updated.
@@ -159,16 +58,6 @@ public final class VisualConnectionCallback implements ActivityCallback {
                 mf().getLibraryMediator().clearLibrary();
             }
         });
-        
-        if (DaapSettings.DAAP_ENABLED.getValue()) {
-            Runnable r = new Runnable() {
-                public void run() {
-                    DaapManager.instance().fileManagerLoading();
-                }
-            };
-
-            BackgroundExecutorService.schedule(r);
-        }
     }
     
 
@@ -189,21 +78,10 @@ public final class VisualConnectionCallback implements ActivityCallback {
 //        SwingUtilities.invokeLater(doWorkRunnable);
     }
     
-    public void addDownload(BTDownloader mgr) {
+    public void addDownload(BTDownload mgr) {
         Runnable doWorkRunnable = new AddDownload(mgr);
         
         SwingUtilities.invokeLater(doWorkRunnable);
-    }
-
-    public void removeDownload(Downloader mgr) {
-        Runnable doWorkRunnable = new RemoveDownload(mgr);
-        SwingUtilities.invokeLater(doWorkRunnable);
-        
-        if (iTunesSettings.ITUNES_SUPPORT_ENABLED.getValue() 
-                && mgr.getState() == DownloadStatus.COMPLETE) {
-            
-            iTunesMediator.instance().addSong(mgr.getSaveFile());
-        }
     }
     
     public void downloadsComplete() {
@@ -222,85 +100,34 @@ public final class VisualConnectionCallback implements ActivityCallback {
 	}	
     
     private class AddDownload implements Runnable {
-        private BTDownloader mgr;
-        public AddDownload(BTDownloader mgr) {
+        private BTDownload mgr;
+        public AddDownload(BTDownload mgr) {
             this.mgr = mgr;
         }
         public void run() {
             mf().getBTDownloadMediator().add(mgr);
 		}
     }
-
-    private class RemoveDownload implements Runnable {
-        private Downloader mgr;
-        public RemoveDownload(Downloader mgr) {
+    
+    private class AddDownloadManager implements Runnable {
+        private DownloadManager mgr;
+        public AddDownloadManager(DownloadManager mgr) {
             this.mgr = mgr;
         }
         public void run() {
-            //mf().getBTDownloadMediator().remove(mgr);
-            mf().getLibraryMediator().quickRefresh();
-            SearchMediator.updateResults();
-            mf().getLoggingMediator().add(new LogEvent(mgr));
-	    }
-            
+            mf().getBTDownloadMediator().addDownloadManager(mgr);
+        }
     }
 
 	
 	///////////////////////////////////////////////////////////////////////////
 	//  Upload-related callbacks
 	///////////////////////////////////////////////////////////////////////////
-	
-    public void addUpload(Uploader uploader) {
-        UploadType type = uploader.getUploadType();
-        if(!type.isInternal()) {
-            SwingUtilities.invokeLater(new AddUpload(uploader));
-        } else if(type == UploadType.BROWSE_HOST)
-            SwingUtilities.invokeLater(new BrowseHosted(uploader));
-    }
-
-    public void removeUpload(Uploader uploader) {
-        UploadType type = uploader.getUploadType();
-        if(type != null && !type.isInternal()) {
-            SwingUtilities.invokeLater(new RemoveUpload(uploader));
-        }
-    }
     
     public void uploadsComplete() {
         Finalizer.setUploadsComplete();
     }
-    
-    private class BrowseHosted implements Runnable {
-        private Uploader up;
-        public BrowseHosted(Uploader up) {
-            this.up = up;
-        }
-        public void run() {
-            mf().getLoggingMediator().add(new LogEvent(up));
-        }
-    }
-
-    private class AddUpload implements Runnable {
-        private Uploader up;
-        public AddUpload(Uploader up) {
-            this.up = up;
-        }
-        public void run() {
-            mf().getUploadMediator().add(up);
-            mf().getLoggingMediator().add(new LogEvent(up));
-		}
-    }
-
-    private class RemoveUpload implements Runnable {
-        private Uploader mgr;
-        public RemoveUpload(Uploader mgr) {
-            this.mgr = mgr;
-        }
-        public void run() {
-            mf().getUploadMediator().remove(mgr);
-	    }
-    }
-
-	
+    	
 	///////////////////////////////////////////////////////////////////////////
 	//  Other stuff
 	///////////////////////////////////////////////////////////////////////////
@@ -330,81 +157,11 @@ public final class VisualConnectionCallback implements ActivityCallback {
         });
     }
 
-
-    /**
-     * Pops up a dialog that the user is attempting to share a sensitive
-     * directory, and allows the user to either share or not share
-     * the folder.  Returns true if the sensitive directory should be shared. 
-     */
-    public boolean warnAboutSharingSensitiveDirectory(final File dir) {
-        final AtomicBoolean bool = new AtomicBoolean(false);
-        GUIMediator.safeInvokeAndWait(new Runnable() {
-            public void run() {
-                bool.set(ShareManager.warnAboutSensitiveDirectory(dir));
-            }
-        });
-        
-        return bool.get();
-    }
-    
-    public void setAnnotateEnabled(final boolean enabled) {
-    	    SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-//                mf().getLibraryMediator().setAnnotateEnabled(enabled);
-            }
-        });
-    }
-
 	/**
      * Notification that a new update is available.
      */
     public void updateAvailable(UpdateInformation update) {
         GUIMediator.instance().showUpdateNotification(update);
-    }
-    
-    /**
-     * Display an error message for a ResultPanel (if it still exists)
-     * @param guid The GUID of the ResultPanel.
-     */
-    public void browseHostFailed(final GUID guid) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-                SearchMediator.browseHostFailed(guid);
-			}
-		});
-    }
-
-    /**
-     * Shows the user a message informing her that a file being downloaded 
-     * is corrupt.
-     * <p>
-     * This method MUST call dloader.discardCorruptDownload(boolean b) 
-     * otherwise there will be threads piling up waiting for a notification
-     */
-    public void promptAboutCorruptDownload(Downloader downloader) {    
-        final Downloader dloader = downloader;
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                DialogOption resp=GUIMediator.showYesNoMessage(
-                              I18n.tr("FrostWire has detected a corruption in the file {0}. Do you want to continue the download?",dloader.getSaveFile().getName()),
-                              QuestionsHandler.CORRUPT_DOWNLOAD, DialogOption.NO
-                              );
-                    
-                // discard if they didn't want to save.                              
-                dloader.discardCorruptDownload(
-                    resp == DialogOption.NO);
-            }
-        });
-    }
-    
-    public boolean promptAboutStopping() {
-        DialogOption resp = GUIMediator.showYesNoMessage(I18n.tr("If you stop this upload, the torrent download will stop. Are you sure you want to do this?"), DialogOption.NO);
-    	return resp == DialogOption.YES;
-    }
-    
-    public boolean promptAboutSeeding() {
-        DialogOption resp = GUIMediator.showYesNoMessage(I18n.tr("This upload is a torrent and it hasn\'t seeded enough. You should let it upload some more. Are you sure you want to stop it?"), DialogOption.NO);
-    	return resp == DialogOption.YES;
     }
 
 	/**
@@ -415,8 +172,7 @@ public final class VisualConnectionCallback implements ActivityCallback {
 	        public void run() {
 		        GUIMediator.restoreView();
             }
-        });
-		    
+        }); 
 	}
 	
 	/**
@@ -441,10 +197,6 @@ public final class VisualConnectionCallback implements ActivityCallback {
 			}
 		});
 	}
-
-	public String getHostValue(String key) {
-        return I18n.tr(key);
-    }
     
     /**
      * Returns the MainFrame.
@@ -489,7 +241,7 @@ public final class VisualConnectionCallback implements ActivityCallback {
 	public void handleTorrent(final File torrentFile) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				GUIMediator.instance().openTorrent(torrentFile);
+				GUIMediator.instance().openTorrentFile(torrentFile);
 			}
 		});
 	}
@@ -504,6 +256,12 @@ public final class VisualConnectionCallback implements ActivityCallback {
 
 	@Override
 	public void handleTorrentMagnet(final String request) {
-		GUIMediator.instance().openTorrentMagnet(request);
+		GUIMediator.instance().openTorrentURI(request);
 	}
+
+    public void addDownloadManager(DownloadManager dm) {
+        Runnable doWorkRunnable = new AddDownloadManager(dm);
+        
+        SwingUtilities.invokeLater(doWorkRunnable);
+    }
 }

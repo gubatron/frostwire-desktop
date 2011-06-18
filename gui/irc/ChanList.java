@@ -37,7 +37,7 @@ import java.util.*;
 public class ChanList extends IRCSource
 {
   private ListenerGroup _listeners;
-  private Vector _channels;
+  private Vector<ChannelInfo> _channels;
   private String _name;
   private boolean _running;
   private int _ignored;
@@ -54,7 +54,7 @@ public class ChanList extends IRCSource
     _name=name;
     _server=server;
     _listeners=new ListenerGroup();
-    _channels=new Vector();
+    _channels=new Vector<ChannelInfo>();
     _running=false;
   }
 
@@ -123,7 +123,7 @@ public class ChanList extends IRCSource
   {
     _ignored=0;
     _running=true;
-    _channels=new Vector();
+    _channels=new Vector<ChannelInfo>();
     _listeners.sendEvent("channelBegin",this);
   }
 

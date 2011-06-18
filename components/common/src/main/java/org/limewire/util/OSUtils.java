@@ -2,7 +2,6 @@ package org.limewire.util;
 
 import java.util.Locale;
 
-import com.frostwire.UnameReader;
 
 /**
  * Provides methods to get operating system properties, resources and versions, 

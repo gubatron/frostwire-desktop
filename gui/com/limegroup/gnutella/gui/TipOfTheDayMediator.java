@@ -34,7 +34,6 @@ import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.settings.StartupSettings;
-import com.limegroup.gnutella.util.FrostWireUtils;
 
 public final class TipOfTheDayMediator implements ThemeObserver {
 

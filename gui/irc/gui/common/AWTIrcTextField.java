@@ -22,11 +22,15 @@ import javax.swing.JTextField;
  */
 public class AWTIrcTextField extends Container implements ActionListener,KeyListener,FocusListener
 {
-  private int _index;
+  /**
+     * 
+     */
+    private static final long serialVersionUID = -6337322713107986340L;
+private int _index;
   private int _tabCount;
   private String _completing;
   private String[] _completeList;
-  private Vector _historic;
+  private Vector<String> _historic;
   private ListenerGroup _listeners;
   private JTextField _field;
   private boolean _useEnterTextHere;
@@ -48,13 +52,13 @@ public class AWTIrcTextField extends Container implements ActionListener,KeyList
     _completing="";
     _index=0;
     _listeners=new ListenerGroup();
-    _historic=new Vector();
+    _historic=new Vector<String>();
     _field.addActionListener(this);
     _field.addKeyListener(this);
 
     try
     {
-      Class c=_field.getClass();
+      Class<?> c=_field.getClass();
       java.lang.reflect.Method m=c.getMethod("setFocusTraversalKeysEnabled",new Class[] {boolean.class});
       m.invoke(_field,new Object[] {new Boolean(false)});
     }
@@ -75,7 +79,7 @@ public class AWTIrcTextField extends Container implements ActionListener,KeyList
     removeFocusListener(this);
     _field.removeActionListener(this);
     _field.removeKeyListener(this);
-    _historic=new Vector();
+    _historic=new Vector<String>();
     _field=null;
     removeAll();
   }
@@ -220,7 +224,7 @@ public class AWTIrcTextField extends Container implements ActionListener,KeyList
   {
     if(_completing.length()==0) return;
     String begin=_completing.toLowerCase(java.util.Locale.ENGLISH);
-    Vector match=new Vector();
+    Vector<String> match=new Vector<String>();
     for(int i=0;i<_completeList.length;i++)
     {
       if(_completeList[i].toLowerCase(java.util.Locale.ENGLISH).startsWith(begin))

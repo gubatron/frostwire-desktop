@@ -475,7 +475,7 @@ public class SkinComboBoxUI extends BasicComboBoxUI implements
      */
     @Override
     protected ComboPopup createPopup() {
-        final ComboPopup sPopup = new SubstanceComboPopup(this.comboBox);
+        final ComboPopup sPopup = new SkinComboPopup(this.comboBox);
 
         final ComponentOrientation currOrientation = this.comboBox
                 .getComponentOrientation();

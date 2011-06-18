@@ -24,24 +24,16 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.collection.Tuple;
-import org.limewire.io.NetworkUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
-import com.frostwire.components.TorrentSaveFolderComponent;
+import com.frostwire.gui.bittorrent.CreateTorrentDialog;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.FileDetails;
-import com.limegroup.gnutella.FileManager;
-import com.limegroup.gnutella.FileManagerEvent;
-import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.SaveLocationException;
 import com.limegroup.gnutella.URN;
-import com.limegroup.gnutella.downloader.CantResumeException;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.CheckBoxList;
 import com.limegroup.gnutella.gui.CheckBoxListPanel;
@@ -56,7 +48,6 @@ import com.limegroup.gnutella.gui.LicenseWindow;
 import com.limegroup.gnutella.gui.MessageService;
 import com.limegroup.gnutella.gui.MultiLineLabel;
 import com.limegroup.gnutella.gui.actions.ActionUtils;
-import com.limegroup.gnutella.gui.actions.CopyMagnetLinkToClipboardAction;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.actions.SearchAction;
 import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
@@ -66,15 +57,10 @@ import com.limegroup.gnutella.gui.themes.SkinMenu;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
-import com.limegroup.gnutella.gui.util.CoreExceptionHandler;
 import com.limegroup.gnutella.gui.util.GUILauncher;
 import com.limegroup.gnutella.gui.util.GUILauncher.LaunchableProvider;
-import com.limegroup.gnutella.library.SharingUtils;
 import com.limegroup.gnutella.licenses.License;
 import com.limegroup.gnutella.licenses.VerificationListener;
-import com.limegroup.gnutella.settings.QuestionsHandler;
-import com.limegroup.gnutella.settings.SharingSettings;
-import com.limegroup.gnutella.util.EncodingUtils;
 import com.limegroup.gnutella.util.QueryUtils;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
 
@@ -85,8 +71,6 @@ import com.limegroup.gnutella.xml.LimeXMLDocument;
  */
 final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel, LibraryTableDataLine, File>
 	implements VerificationListener, FileDetailsProvider {
-
-    private static final Log LOG = LogFactory.getLog(LibraryTableMediator.class);
 	
 	/**
      * Variables so the PopupMenu & ButtonRow can have the same listeners
@@ -94,11 +78,9 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
     public static Action LAUNCH_ACTION;
     public static Action OPEN_IN_FOLDER_ACTION;
     public static Action ENQUEUE_ACTION;
-	public static Action DELETE_ACTION;
+    public static Action CREATE_TORRENT_ACTION;
+    public static Action DELETE_ACTION;
     public static Action RENAME_ACTION;
-	
-    private Action MAGNET_LOOKUP_ACTION;
-	private Action COPY_MAGNET_TO_CLIPBOARD_ACTION;
 
     /**
      * instance, for singelton access
@@ -121,10 +103,9 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
         LAUNCH_ACTION = new LaunchAction();
         OPEN_IN_FOLDER_ACTION = new OpenInFolderAction();
         ENQUEUE_ACTION = new EnqueueAction();
-		DELETE_ACTION = new RemoveAction();
+		CREATE_TORRENT_ACTION = new CreateTorrentAction();
+        DELETE_ACTION = new RemoveAction();
         RENAME_ACTION = new RenameAction();
-        MAGNET_LOOKUP_ACTION = new MagnetLookupAction();
-		COPY_MAGNET_TO_CLIPBOARD_ACTION = new CopyMagnetLinkToClipboardAction(this);
     }
 
     /**
@@ -155,6 +136,10 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		if (hasExploreAction()) {
 		    menu.add(new SkinMenuItem(OPEN_IN_FOLDER_ACTION));
 		}
+		
+		menu.addSeparator();
+		menu.add(new SkinMenuItem(CREATE_TORRENT_ACTION));
+		
 		menu.addSeparator();
 		menu.add(new SkinMenuItem(DELETE_ACTION));
 		menu.add(new SkinMenuItem(RENAME_ACTION));
@@ -188,30 +173,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	        // only allow single selection for renames
 	        RENAME_ACTION.setEnabled(LibraryMediator.isRenameEnabled() && rows.length == 1);
 		}
-		menu.addSeparator();
 		
         LibraryTableDataLine line = DATA_MODEL.get(rows[0]);
 		menu.add(createSearchSubMenu(line));
-		menu.add(createAdvancedMenu(line));
 
 		return menu;
-    }
-
-	private JMenu createAdvancedMenu(LibraryTableDataLine dl) {
-		JMenu menu = new SkinMenu(I18n.tr("Advanced"));
-		if (dl != null) {
-			menu.add(new SkinMenuItem(MAGNET_LOOKUP_ACTION));
-			menu.add(new SkinMenuItem(COPY_MAGNET_TO_CLIPBOARD_ACTION));
-			File file = getFile(TABLE.getSelectedRow());
-			menu.setEnabled(GuiCoreMediator.getFileManager().isFileShared(file)); 
-		}
-		
-        if (menu.getItemCount() == 0)
-            menu.setEnabled(false);
-
-		return menu;
-	}
-	
+    }	
 
 	private JMenu createSearchSubMenu(LibraryTableDataLine dl) {
 		JMenu menu = new SkinMenu(I18n.tr("Search"));
@@ -253,7 +220,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
      */
     private LibraryTableMediator() {
         super("LIBRARY_TABLE");
-        //GUIMediator.addRefreshListener(this);
         ThemeMediator.addThemeObserver(this);
     }
     
@@ -407,42 +373,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
     }
     
     /**
-     * 
-     */
-    private boolean isSupportedFormat(FileDesc[] fds) {
-        boolean audio = false;
-        boolean video = false;
-        boolean program = false;
-        boolean document = false;
-        boolean image = false;
-        
-        for(int i = 0; i < fds.length; i++) {
-            String name = fds[i].getFileName();
-            
-            if (MediaType.getAudioMediaType().matches(name)
-                    && !video && !program && !document && !image) {
-                audio = true;
-            } else if (MediaType.getVideoMediaType().matches(name)
-                    && !audio && !program && !document && !image) {
-                video = true;
-            } else if (MediaType.getProgramMediaType().matches(name)
-                    && !audio && !video && !document && !image) {
-                program = true;
-            } else if (MediaType.getDocumentMediaType().matches(name)
-                    && !audio && !video && !program && !image) {
-                document = true;
-            } else if (MediaType.getImageMediaType().matches(name)
-                    && !audio && !video && !program && !document) {
-                image = true;
-            } else {
-                return false;
-            }
-        }
-        
-        return true;
-    }
-
-    /**
      * Programatically starts a rename of the selected item.
      */
     void startRename() {
@@ -474,60 +404,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
         DATA_MODEL.refresh();
     }
 
-    /**
-     * Prepare a detail page of magnet link info for selected files 
-     * in the library.
-     */
-    void doMagnetLookup() {
-        doMagnetCommand("/magcmd/detail?");
-    }
 	
-    /**
-     * Fire a local lookup with file/magnet details
-     */
-    void doMagnetCommand(String cmd) {
-        // get the selected files.  Build up a url to display details.
-        int[] rows = TABLE.getSelectedRows();
-        int k = rows.length;
-        if(k == 0)
-            return;
-
-        boolean haveValidMagnet = false;
-
-        int    count     = 0;
-        int    port      = GuiCoreMediator.getLocalAcceptor().getPort();
-        int    eport     = GuiCoreMediator.getAcceptor().getPort(true);
-        byte[] eaddr     = GuiCoreMediator.getAcceptor().getAddress(true);
-        String lookupUrl = "http://localhost:"+port+
-          cmd+
-          "addr="+NetworkUtils.ip2string(eaddr)+":"+eport;
-        for(int i=0; i<k; i++) {
-            FileDesc fd = DATA_MODEL.getFileDesc(rows[i]);
-            if (fd==null) {
-                // Only report valid files
-                continue;
-            }
-            URN urn = fd.getSHA1Urn();
-			if(urn == null) {
-                // Only report valid sha1s
-                continue;
-            }
-            String urnStr = urn.toString();
-            int hashstart = 1 + urnStr.indexOf(":", 4);
-             
-            String sha1 = urnStr.substring(hashstart);
-            lookupUrl +=
-              "&n"+count+"="+EncodingUtils.encode(fd.getFileName())+
-              "&u"+count+"="+sha1;
-            count++;
-            haveValidMagnet = true;
-        }
-        
-        if (haveValidMagnet) {
-            GUIMediator.openURL(lookupUrl);
-        }
-    }
-
     /**
      * Returns the options offered to the user when removing files.
      * 
@@ -611,7 +488,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
         // remove still selected files
         List<Tuple<File, FileDesc>> selected = listPanel.getSelectedElements();
         List<String> undeletedFileNames = new ArrayList<String>();
-        FileManager fileManager = GuiCoreMediator.getFileManager();
 
         for (Tuple<File, FileDesc> tuple : selected) {
             File file = tuple.getFirst();
@@ -621,11 +497,10 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 //                continue;
 //            }
             
-            if (fd != null) 
-                fileManager.removeFileIfShared(file);
+            
             
             if (fd != null) { 
-                GuiCoreMediator.getUploadManager().killUploadsForFileDesc(fd);
+                //GuiCoreMediator.getUploadManager().killUploadsForFileDesc(fd);
             }
 
             // removeOptions > 2 => OS offers trash options
@@ -678,10 +553,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 	private String getCompleteFileName(File file) {
 		return file.getName();
 	}
-	
-	private boolean hasActiveDownloader(File incompleteFile) {
-		return GuiCoreMediator.getDownloadManager().getDownloaderForIncompleteFile(incompleteFile) != null;
-    }
     
 	/**
 	 * Handles a name change of one of the files displayed.
@@ -702,7 +573,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		File newFile = new File(parent, nameWithExtension);
         if (!ltm.getName(row).equals(newName)) {
             if (oldFile.renameTo(newFile)) {
-                GuiCoreMediator.getFileManager().renameFileIfSharedOrStore(oldFile, newFile);
+               // GuiCoreMediator.getFileManager().renameFileIfSharedOrStore(oldFile, newFile);
                 // Ideally, renameFileIfShared should immediately send RENAME or REMOVE
                 // callbacks. But, if it doesn't, it should atleast have immediately
                 // internally removed the file from being shared. So, we immediately
@@ -731,58 +602,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 				return;
 		}
 		launch();
-    }
-
-    /**
-     * Resume incomplete downloads
-     */    
-    void resumeIncomplete() {        
-        //For each selected row...
-        int[] rows = TABLE.getSelectedRows();
-        boolean startedDownload=false;
-        List<Exception> errors = new ArrayList<Exception>();
-        for (int i=0; i<rows.length; i++) {
-            //...try to download the incomplete
-            File incomplete = DATA_MODEL.getFile(rows[i]);
-            try {
-                GuiCoreMediator.getDownloadServices().download(incomplete);
-                startedDownload=true;
-            } catch (SaveLocationException e) { 
-                // we must cache errors to display later so we don't wait
-                // while the table might change in the background.
-                errors.add(e);
-            } catch(CantResumeException e) {
-                errors.add(e);
-            }
-        }
-        
-        // traverse back through the errors and show them.
-        for(int i = 0; i < errors.size(); i++) {
-            Exception e = errors.get(i);
-            if(e instanceof SaveLocationException) {
-				SaveLocationException sle = (SaveLocationException)e;
-				if (sle.getErrorCode() == SaveLocationException.FILE_ALREADY_DOWNLOADING) {
-					GUIMediator.showError(I18n.tr("You are already downloading this file to \"{0}\".", sle.getFile()),
-					        QuestionsHandler.ALREADY_DOWNLOADING);
-				}
-				else {
-					String msg = CoreExceptionHandler.getSaveLocationErrorString(sle);
-					GUIMediator.showError(msg);
-				}
-            } else if ( e instanceof CantResumeException ) {
-                GUIMediator.showError(I18n.tr("The file \"{0}\" is not a valid incomplete file and cannot be resumed.", 
-                        ((CantResumeException)e).getFilename()),
-                        QuestionsHandler.CANT_RESUME);
-            }
-        }       
-
-        //Switch to download tab (if we actually started anything).
-        if (startedDownload)
-            switchToDownloadTab();
-    }
-
-    private void switchToDownloadTab() {
-        GUIMediator.instance().setWindow(GUIMediator.Tabs.SEARCH);
     }
 
     /**
@@ -823,11 +642,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		} 
 		
 		File selectedFile = getFile(sel[0]);
-		boolean firstShared = GuiCoreMediator.getFileManager().isFileShared(selectedFile);
 		
 		//  always turn on Launch, Delete, Magnet Lookup, Bitzi Lookup
 		LAUNCH_ACTION.setEnabled(true);
 		DELETE_ACTION.setEnabled(true);
+		
+		CREATE_TORRENT_ACTION.setEnabled(sel.length == 1);
 		
 		if (sel.length == 1 && selectedFile.isFile() && selectedFile.getParentFile() != null) {
             OPEN_IN_FOLDER_ACTION.setEnabled(true);
@@ -848,54 +668,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 			ENQUEUE_ACTION.setEnabled(false);
 
 		RENAME_ACTION.setEnabled(LibraryMediator.isRenameEnabled() && sel.length == 1);
-		 
-		//  enable Share File action when any selected file is not shared
-		boolean shareAllowed = false;
-		boolean unshareAllowed = false;
-		boolean shareFolderAllowed = false;
-		boolean unshareFolderAllowed = false;
-		boolean foundDir = false;
-		for (int i = 0; i < sel.length; i++) {
-			File file = getFile(sel[i]);
-			if (file.isDirectory()) {
-				
-				//  turn off delete (only once) if non-torrent directory found
-				if (!foundDir){
-					DELETE_ACTION.setEnabled(false);
-					foundDir = true;
-				}
-				if (!GuiCoreMediator.getFileManager().isFolderShared(file))
-					shareFolderAllowed = true;
-				else
-					unshareFolderAllowed = true;
-				
-			} else {
-				if (!GuiCoreMediator.getFileManager().isFileShared(file)) {
-					if (!SharingUtils.isFilePhysicallyShareable(file))
-						continue;
-					shareAllowed = true;
-				} else {
-					unshareAllowed = true;
-				}
-				
-				if (shareAllowed && unshareAllowed && shareFolderAllowed && unshareFolderAllowed)
-					break;
-			}
-			
-			if (TorrentSaveFolderComponent.isParentOrChild(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue(), file, "")) {
-				shareAllowed = false;
-				unshareAllowed = false;
-				shareFolderAllowed = false;
-				unshareFolderAllowed = false;
-			}
-			
-			
-		}
-		
-		//  enable / disable advanced items if file shared / not shared
-		MAGNET_LOOKUP_ACTION.setEnabled(firstShared);
-
-		COPY_MAGNET_TO_CLIPBOARD_ACTION.setEnabled(getFileDesc(sel[0]) != null);
 	}
 
 	/**
@@ -906,12 +678,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		LAUNCH_ACTION.setEnabled(false);
 		OPEN_IN_FOLDER_ACTION.setEnabled(false);
 		ENQUEUE_ACTION.setEnabled(false);
+		
+		CREATE_TORRENT_ACTION.setEnabled(false);
+		
 		DELETE_ACTION.setEnabled(false);
 		
 		RENAME_ACTION.setEnabled(false);
-
-		COPY_MAGNET_TO_CLIPBOARD_ACTION.setEnabled(false);
-		MAGNET_LOOKUP_ACTION.setEnabled(false);
 	}
 
 	/**
@@ -1015,6 +787,39 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
         }
     }
 
+    private final class CreateTorrentAction extends AbstractAction {
+
+		private static final long serialVersionUID = 1898917632888388860L;
+		
+		public CreateTorrentAction() {
+			super(I18n.tr("Create New Torrent"));
+			putValue(Action.LONG_DESCRIPTION,I18n.tr("Create a new .torrent file"));
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			File selectedFile = DATA_MODEL.getFile(TABLE.getSelectedRow());
+
+			//can't create torrents out of empty folders.
+			if (selectedFile.isDirectory() && selectedFile.listFiles().length == 0) {
+				JOptionPane.showMessageDialog(null, I18n.tr("The folder you selected is empty."),I18n.tr("Invalid Folder"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			//can't create torrents if the folder/file can't be read
+			if (!selectedFile.canRead()) {
+				JOptionPane.showMessageDialog(null, I18n
+						.tr("Error: You can't read on that file/folder."), I18n.tr("Error"), JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			CreateTorrentDialog dlg = new CreateTorrentDialog(GUIMediator.getAppFrame());
+			dlg.setChosenContent(selectedFile);
+			dlg.setVisible(true);
+			
+		}
+    }
+    
     private final class RemoveAction extends AbstractAction {
 		
 		/**
@@ -1054,24 +859,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 			startRename();
 		}
     }
-
-	private final class MagnetLookupAction extends AbstractAction {
-		
-		/**
-         * 
-         */
-        private static final long serialVersionUID = 5081688548976571828L;
-
-        public MagnetLookupAction() {
-			putValue(Action.NAME, I18n.tr
-					("Show Magnet Details"));
-		}
-		
-        public void actionPerformed(ActionEvent e) {
-            doMagnetLookup();
-        }
-    }
-
+    
 	/**
 	 * Sets an icon based on the filename extension. 
 	 */

@@ -22,7 +22,7 @@ class RuleItem
  */
 public class RuleList
 {
-  private Vector _list;
+  private Vector<RuleItem> _list;
   private Object _def;
 
   /**
@@ -30,7 +30,7 @@ public class RuleList
    */
   public RuleList()
   {
-    _list=new Vector();
+    _list=new Vector<RuleItem>();
     _def=null;
   }
 

@@ -101,7 +101,12 @@ abstract class ImageWrapperIcon implements Icon, AsynchronousLoading {
 		this.height = h;
 		this.listenerList = new EventListenerList();
 		this.cachedImages = new LinkedHashMap<String, BufferedImage>() {
-			@Override
+			/**
+             * 
+             */
+            private static final long serialVersionUID = -3530498496478193681L;
+
+            @Override
 			protected boolean removeEldestEntry(
 					Map.Entry<String, BufferedImage> eldest) {
 				return size() > 5;
@@ -127,7 +132,12 @@ abstract class ImageWrapperIcon implements Icon, AsynchronousLoading {
 		this.height = h;
 		this.listenerList = new EventListenerList();
 		this.cachedImages = new LinkedHashMap<String, BufferedImage>() {
-			@Override
+			/**
+             * 
+             */
+            private static final long serialVersionUID = -163294647834172981L;
+
+            @Override
 			protected boolean removeEldestEntry(
 					Map.Entry<String, BufferedImage> eldest) {
 				return size() > 5;

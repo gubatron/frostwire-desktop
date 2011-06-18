@@ -13,11 +13,9 @@ import org.limewire.util.OSUtils;
  * Settings for LimeWire application
  */
 public class ApplicationSettings extends LimeProps {
-    private ApplicationSettings() {}
+    public static BooleanSetting SEARCH_OPTIONS_COLLAPSED = FACTORY.createBooleanSetting("SEARCH_OPTIONS_COLLAPSED", true);
 
-    /** Setting for whether or not FW should use SIMPP. */
-    public static final BooleanSetting USE_SIMPP =
-        FACTORY.createBooleanSetting("USE_SIMPP", false);
+	private ApplicationSettings() {}
     
     /**
      * The Client ID number

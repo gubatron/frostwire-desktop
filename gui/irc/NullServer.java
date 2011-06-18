@@ -119,9 +119,9 @@ public class NullServer implements Server
     //empty default implementation
   }
 
-  public Enumeration getSources()
+  public Enumeration<Source> getSources()
   {
-    return new Vector().elements();
+    return new Vector<Source>().elements();
   }
 
 }

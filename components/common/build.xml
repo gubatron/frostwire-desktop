@@ -9,9 +9,8 @@
 	</description>
 	
     <import file="build-macros.xml" />
-    <import file="../test-util/build.xml"/>
     
-    <target name="initialize" depends="lw-test-util.initialize" unless="initialized.common">
+    <target name="initialize" unless="initialized.common">
         <do.setup-properties component="common">
 			<src-classpath>
 				<pathelement location="${limewire.lib.jars}/commons-logging.jar"/>
@@ -23,11 +22,11 @@
         </do.setup-properties>
     </target>
 	
-	<target name="clean" depends="initialize, lw-test-util.clean-src">
+	<target name="clean" depends="initialize">
 	    <do.clean component="common"/>
 	</target>
     
-    <target name="compile" depends="initialize, lw-test-util.compile-src">
+    <target name="compile" depends="initialize">
     	<do.compile component="common"/>
     </target>
 	
@@ -39,11 +38,11 @@
 	    <do.clean-src component="common"/>
 	</target>
 	
-	<target name="compile-tests" depends="initialize, compile-src, lw-test-util.compile-src">
+	<target name="compile-tests" depends="initialize, compile-src">
 	    <do.compile-tests component="common"/>
 	</target>
     
-	<target name="clean-tests" depends="initialize, lw-test-util.clean-src">
+	<target name="clean-tests" depends="initialize">
 	    <do.clean-tests component="common"/>
 	</target>
 	

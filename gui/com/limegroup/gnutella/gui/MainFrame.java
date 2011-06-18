@@ -35,27 +35,24 @@ import javax.swing.plaf.TabbedPaneUI;
 import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.OSUtils;
 
-import com.frostwire.gnutella.gui.android.AndroidMediator;
-import com.frostwire.gnutella.gui.chat.ChatMediator;
-import com.frostwire.gnutella.gui.tabs.AndroidTab;
-import com.frostwire.gnutella.gui.tabs.ChatTab;
-import com.frostwire.gui.download.bittorrent.BTDownloadMediator;
+import com.frostwire.gui.ChatMediator;
+import com.frostwire.gui.android.AndroidMediator;
+import com.frostwire.gui.bittorrent.BTDownloadMediator;
+import com.frostwire.gui.tabs.AndroidTab;
+import com.frostwire.gui.tabs.ChatTab;
+import com.frostwire.gui.tabs.LibraryPlayListTab;
+import com.frostwire.gui.tabs.SearchDownloadTab;
+import com.frostwire.gui.tabs.Tab;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.TransferHandlerDropTargetListener;
-import com.limegroup.gnutella.gui.download.DownloadMediator;
 import com.limegroup.gnutella.gui.library.LibraryMediator;
-import com.limegroup.gnutella.gui.logging.LoggingMediator;
 import com.limegroup.gnutella.gui.menu.MenuMediator;
 import com.limegroup.gnutella.gui.options.OptionsMediator;
 import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
 import com.limegroup.gnutella.gui.search.MagnetClipboardListener;
 import com.limegroup.gnutella.gui.search.SearchMediator;
-import com.limegroup.gnutella.gui.tabs.LibraryPlayListTab;
-import com.limegroup.gnutella.gui.tabs.SearchDownloadTab;
-import com.limegroup.gnutella.gui.tabs.Tab;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
-import com.limegroup.gnutella.gui.upload.UploadMediator;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.PlayerSettings;
 
@@ -76,24 +73,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      */
     private SearchMediator SEARCH_MEDIATOR;
 
-     /**
-     * Constant handle to the <tt>DownloadMediator</tt> class that is
-     * responsible for displaying active downloads to the user.
-     */
-    private DownloadMediator DOWNLOAD_MEDIATOR;
     private BTDownloadMediator BT_DOWNLOAD_MEDIATOR;
-
-    /**
-     * Constant handle to the <tt>MonitorView</tt> class that is
-     * responsible for displaying incoming search queries to the user.
-     */
-    private MonitorView MONITOR_VIEW;
-    
-    /**
-     * Constant handle to the <tt>UploadMediator</tt> class that is
-     * responsible for displaying active uploads to the user.
-     */
-    private UploadMediator UPLOAD_MEDIATOR;
 
     /**
      * Constant handle to the <tt>LibraryView</tt> class that is
@@ -105,8 +85,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
 
     private ChatMediator CHAT_MEDIATOR;
     
-    private LoggingMediator LOGGING_MEDIATOR;
-
     /**
      * Constant handle to the <tt>OptionsMediator</tt> class that is
      * responsible for displaying customizable options to the user.
@@ -177,7 +155,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
     MainFrame(JFrame frame) {
         //starts the Frostwire update manager, and will trigger a task in 5 seconds.
         // RELEASE
-        com.frostwire.updates.UpdateManager.scheduleUpdateCheckTask(0);
+        com.frostwire.gui.updates.UpdateManager.scheduleUpdateCheckTask(0);
         
         // DEBUG
         //com.frostwire.updates.UpdateManager.DEBUGGING_NON_UI_MESSAGES = true;
@@ -334,10 +312,9 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      */
     public void buildTabs() {
     	//Enable right click on Tabs to hide/show tabs
-    	TABBED_PANE.addMouseListener(com.frostwire.gnutella.gui.tabs.TabRightClickAdapter.getInstance());
+    	TABBED_PANE.addMouseListener(com.frostwire.gui.tabs.TabRightClickAdapter.getInstance());
     	
     	SEARCH_MEDIATOR = new SearchMediator();
-    	MONITOR_VIEW = new MonitorView();
         
     	TABS.put(GUIMediator.Tabs.SEARCH, new SearchDownloadTab(SEARCH_MEDIATOR, getBTDownloadMediator()));
         TABS.put(GUIMediator.Tabs.LIBRARY, new LibraryPlayListTab(getLibraryMediator()));
@@ -666,44 +643,11 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         }
     }
     
-    /**
-     * Returns a reference to the <tt>DownloadMediator</tt> instance.
-     *
-     * @return a reference to the <tt>DownloadMediator</tt> instance
-     */
-    final DownloadMediator getDownloadMediator() {
-        if (DOWNLOAD_MEDIATOR == null) {
-            DOWNLOAD_MEDIATOR = DownloadMediator.instance();
-        }
-        return DOWNLOAD_MEDIATOR;
-    }
-    
     final BTDownloadMediator getBTDownloadMediator() {
         if (BT_DOWNLOAD_MEDIATOR == null) {
             BT_DOWNLOAD_MEDIATOR = BTDownloadMediator.instance();
         }
         return BT_DOWNLOAD_MEDIATOR;
-    }
-
-    /**
-     * Returns a reference to the <tt>MonitorView</tt> instance.
-     *
-     * @return a reference to the <tt>MonitorView</tt> instance
-     */
-    final MonitorView getMonitorView() {
-        return MONITOR_VIEW;
-    }
-
-    /**
-     * Returns a reference to the <tt>UploadMediator</tt> instance.
-     *
-     * @return a reference to the <tt>UploadMediator</tt> instance
-     */
-    final UploadMediator getUploadMediator() {
-        if (UPLOAD_MEDIATOR == null) {
-            UPLOAD_MEDIATOR = UploadMediator.instance();
-        }
-        return UPLOAD_MEDIATOR;
     }
 
     /**
@@ -732,14 +676,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         return CHAT_MEDIATOR;
     }
         
-    /** Returns the logging mediator. */
-    final LoggingMediator getLoggingMediator() {
-        if (LOGGING_MEDIATOR == null) {
-            LOGGING_MEDIATOR = LoggingMediator.instance();
-        }
-        return LOGGING_MEDIATOR;
-    }
-    
     /**
      * Returns a reference to the <tt>PlaylistMediator</tt> instance.
      *

@@ -55,7 +55,7 @@ final class ToolsMenu extends AbstractMenu {
 	        long now = new java.util.Date().getTime();
 	        
 	        lastTimeWeChecked = now;
-	        com.frostwire.updates.UpdateManager.scheduleUpdateCheckTask(0);
+	        com.frostwire.gui.updates.UpdateManager.scheduleUpdateCheckTask(0);
 
 
             setEnabled(false);

@@ -11,8 +11,8 @@ import javax.swing.JPanel;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.util.StringUtils;
 
-import com.frostwire.components.TorrentSaveFolderComponent;
-import com.frostwire.updates.UpdateManager;
+import com.frostwire.gui.bittorrent.TorrentSaveFolderComponent;
+import com.frostwire.gui.updates.UpdateManager;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
 /**
@@ -30,15 +30,12 @@ class SaveWindow extends SetupWindow {
 	/**
 	 * Creates the window and its components
 	 */
-	SaveWindow(SetupManager manager, boolean migrate) {
-		super(manager, I18nMarker.marktr("Torrent Data Save Folder"), describeText(migrate), LEARN_MORE_URL);
+	SaveWindow(SetupManager manager) {
+		super(manager, I18nMarker.marktr("Torrent Data Save Folder"), describeText(), LEARN_MORE_URL);
     }
 	
-	private static String describeText(boolean migrate) {
-	    if(!migrate)
-	        return I18nMarker.marktr("Please choose a folder where you would like your files to be downloaded.\n");
-	    else
-	        return I18nMarker.marktr("FrostWire now downloads files to a new, different folder.\nPlease confirm the folder where you would like your files to be downloaded.");
+	private static String describeText() {
+	    return I18nMarker.marktr("Please choose a folder where you would like your files to be downloaded from the BitTorrent network.");
 	}
     
     protected void createWindow() {

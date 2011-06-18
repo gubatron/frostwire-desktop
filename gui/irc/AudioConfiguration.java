@@ -40,7 +40,7 @@ public class AudioConfiguration
 
 	private String _query;
 	private String _beep;
-	private Hashtable _word;
+	private Hashtable<String,String> _word;
 
   /**
    * Create a new AudioConfiguration, using the given SoundHandler.
@@ -51,7 +51,7 @@ public class AudioConfiguration
 	  _sound=sound;
 		_query=null;
 		_beep=null;
-		_word=new Hashtable();
+		_word=new Hashtable<String,String>();
 	}
 
   /**
@@ -121,7 +121,7 @@ public class AudioConfiguration
    * Get an enumeration of all know sound words.
    * @return an enumeration of string.
    */
-  public Enumeration getSoundWords()
+  public Enumeration<String> getSoundWords()
   {
     return _word.keys();
   }

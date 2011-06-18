@@ -44,6 +44,10 @@ import org.pushingpixels.flamingo.internal.ui.common.CommandButtonUI;
  */
 public class JCommandToggleMenuButton extends JCommandToggleButton {
 	/**
+     * 
+     */
+    private static final long serialVersionUID = -20637892549688640L;
+    /**
 	 * The UI class ID string.
 	 */
 	public static final String uiClassID = "CommandToggleMenuButtonUI";

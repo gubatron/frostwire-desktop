@@ -1,6 +1,7 @@
 package com.limegroup.gnutella.gui;
 
 import java.awt.Dimension;
+import java.awt.event.KeyListener;
 
 import javax.swing.AbstractAction;
 import javax.swing.Box;
@@ -119,6 +120,12 @@ public class LabeledTextField extends JPanel {
      */
     public void addActionListener(AbstractAction aa) {
         _field.addActionListener(aa);
+    }
+    
+    @Override
+    public synchronized void addKeyListener(KeyListener l) {
+    	super.addKeyListener(l);
+    	_field.addKeyListener(l);
     }
 
 }

@@ -8,8 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 import javax.swing.Action;
 import javax.swing.JDialog;
@@ -17,8 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.frostwire.bittorrent.CreateTorrentDialog;
-import com.limegroup.gnutella.browser.MagnetOptions;
+import com.frostwire.gui.bittorrent.CreateTorrentDialog;
 import com.limegroup.gnutella.gui.AutoCompleteTextField;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.ClearableAutoCompleteTextField;
@@ -30,7 +27,6 @@ import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.MultiLineLabel;
 import com.limegroup.gnutella.gui.download.TorrentFileFilter;
 import com.limegroup.gnutella.gui.search.MagnetClipboardListener;
-import com.limegroup.gnutella.http.URIUtils;
 
 public class FileMenuActions {
     
@@ -57,7 +53,7 @@ public class FileMenuActions {
                 createDialog();
 
             // clear input before dialog is shown
-            PATH_FIELD.setText("");
+            PATH_FIELD.setText(MagnetClipboardListener.getMagnetOrTorrentURLFromClipboard());
             
             // display modal dialog centered
             dialog.pack();
@@ -244,53 +240,22 @@ public class FileMenuActions {
      */
     public static boolean openMagnetOrTorrent(final String userText) {
 
-    	if (userText.startsWith("magnet:?xt=urn:btih")) {
-    	    GUIMediator.instance().openTorrentMagnet(userText);    				
+    	if (userText.startsWith("magnet:?xt=urn:btih") || userText.startsWith("http://")) {
+    	    GUIMediator.instance().openTorrentURI(userText);    				
     		return true;
-    	}
-    	
-        // See if it's a magnet link
-        MagnetOptions[] magnets = MagnetOptions.parseMagnets(userText);
-        if (magnets.length != 0) {
-            MagnetClipboardListener.handleMagnets(magnets, false); // Open the magnet link
-            return true;
-
-        // Not a magnet
-        } else {
+    	} else {
             
             // See if it's a path to a file on the disk
             File file = new File(userText);
             if (isFileSystemPath(file)) {
                 if(file.exists()) {
-                    GUIMediator.instance().openTorrent(file); // Open the torrent file
+                    GUIMediator.instance().openTorrentFile(file); // Open the torrent file
                     return true;
                 } else {
                     // TODO show error dialog telling
                     // user that they entered a bad file name    
                 }
             // Not a file
-            } else {
-
-                // See if it's a Web address
-                try {
-                    URI uri = URIUtils.toURI(userText);
-                    String scheme = uri.getScheme();
-                    if (scheme != null && scheme.equalsIgnoreCase("http")) {
-                        // TODO what about https or tls?
-                        String authority = uri.getAuthority(); // Check the authority
-                        if (authority != null && authority.length() != 0 && authority.indexOf(' ') == -1) {
-                            uri = URIUtils.toURI(uri.toString()); // Extra checks, what happens in HTTPClient
-
-                            // The text is a valid Web address
-                            GUIMediator.instance().openTorrentURI(uri); // Open the torrent address
-                            return true;
-                        }
-                    }
-                } catch (URISyntaxException e) {
-                    // TODO show error dialog telling
-                    // user that they entered a bad URL
-                    URIUtils.error(e);
-                }
             }
         }
 
@@ -349,7 +314,7 @@ public class FileMenuActions {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			CreateTorrentDialog dlg = new CreateTorrentDialog();
+			CreateTorrentDialog dlg = new CreateTorrentDialog(GUIMediator.getAppFrame());
 			dlg.setVisible(true);
 		}
     	

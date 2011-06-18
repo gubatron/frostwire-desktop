@@ -17,7 +17,11 @@ import javax.swing.JPanel;
  */
 public class AWTStyleSelectorEx extends JPanel implements ActionListener,FontSelectorListener
 {
-  private ListenerGroup _lis;
+  /**
+     * 
+     */
+    private static final long serialVersionUID = -1384171400904617575L;
+private ListenerGroup _lis;
   private AWTStyleSelector _selector;
   private FontSelector _fs;
   private JButton _b;

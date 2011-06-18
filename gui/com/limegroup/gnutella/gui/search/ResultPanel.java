@@ -11,52 +11,45 @@ import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Box;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.OverlayLayout;
 import javax.swing.UIManager;
 import javax.swing.border.AbstractBorder;
 import javax.swing.border.Border;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.event.MouseInputListener;
 import javax.swing.plaf.metal.MetalBorders;
 
 import org.limewire.i18n.I18nMarker;
-import org.limewire.io.IpPort;
 import org.limewire.util.OSUtils;
 
-import com.frostwire.bittorrent.TorrentUtil;
-import com.frostwire.gnutella.gui.actions.BuyAction;
+import com.frostwire.gui.BuyAction;
+import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.limegroup.gnutella.FileDetails;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.RemoteFileDesc;
-import com.limegroup.gnutella.SpamServices;
-import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.FileDetailsProvider;
 import com.limegroup.gnutella.gui.GUIConstants;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.GUIUtils;
-import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.LicenseWindow;
 import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.ProgTabUIFactory;
 import com.limegroup.gnutella.gui.actions.ActionUtils;
@@ -68,14 +61,14 @@ import com.limegroup.gnutella.gui.tables.ColumnPreferenceHandler;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.TableSettings;
+import com.limegroup.gnutella.gui.themes.SkinCheckBoxMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinMenu;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 import com.limegroup.gnutella.licenses.License;
 import com.limegroup.gnutella.licenses.VerificationListener;
-import com.limegroup.gnutella.search.QueryHandler;
-import com.limegroup.gnutella.settings.FilterSettings;
+import com.limegroup.gnutella.settings.BittorrentSettings;
 import com.limegroup.gnutella.settings.SearchSettings;
 import com.limegroup.gnutella.util.QueryUtils;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
@@ -113,11 +106,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
     protected volatile GUID guid;
     
     /**
-     * Start time of the query that this specific ResultPane handles
-     */
-    private long startTime = System.currentTimeMillis();
-    
-    /**
      * The CompositeFilter for this ResultPanel.
      */
     CompositeFilter FILTER;
@@ -136,19 +124,19 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
      * The browse host listener.
      */
     
-    /**
-     * The torrent details listener.
-     */
-    ActionListener TORRENT_DETAILS_LISTENER;
+    MouseAdapter TORRENT_DETAILS_LISTENER;
     
     private ActionListener COPY_MAGNET_ACTION_LISTENER;
     
     private ActionListener COPY_HASH_ACTION_LISTENER;
 
+    ActionListener CONFIGURE_SHARING_LISTENER;
     /**
      * The BUY this item listener
      */
     ActionListener BUY_LISTENER;
+    
+    ActionListener DOWNLOAD_PARTIAL_FILES_LISTENER;
     
     public BuyAction BUY_ACTION;    
     
@@ -240,7 +228,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
 		private static final long serialVersionUID = 1L;
 
 		public double calculatePercentage(long now) {
-            return ResultPanel.this.calculatePercentage(now);
+            return 0;//ResultPanel.this.calculatePercentage(now);
         }
     }
 
@@ -411,11 +399,46 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
             }
         };
         
-        TORRENT_DETAILS_LISTENER = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                SearchMediator.showTorrentDetails(ResultPanel.this, 0);
+        TORRENT_DETAILS_LISTENER = new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		if (e.getButton() == MouseEvent.BUTTON1) {
+        			onLeftClick();
+        		} else {
+        			onRightClick(e);
+        		}
+        		
+        	}
+
+        	/**
+        	 * Show popup menu with option to toggle torrent detail display.
+        	 * @param e
+        	 */
+        	private void onRightClick(MouseEvent e) {
+				final JPopupMenu menu = new SkinPopupMenu();
+				final JCheckBoxMenuItem menuItem = new SkinCheckBoxMenuItem(I18n.tr("Show Torrent Details page when a download starts"),BittorrentSettings.TORRENT_DETAIL_PAGE_SHOWN_AFTER_DOWNLOAD.getValue());
+				menuItem.addChangeListener(new ChangeListener() {
+					
+					@Override
+					public void stateChanged(ChangeEvent e) {
+						BittorrentSettings.TORRENT_DETAIL_PAGE_SHOWN_AFTER_DOWNLOAD.setValue(menuItem.isSelected());
+					}
+				});
+				menu.add(menuItem);
+
+				JComponent source = (JComponent) e.getComponent();
+				menu.show(source, source.getX()-100, source.getY());
+
+        	}
+        	
+        	/**
+        	 * Show torrent details.
+        	 */
+            private void onLeftClick() {
+            	SearchMediator.showTorrentDetails(ResultPanel.this, -1);
             }
-        };
+
+        }; 
         
         COPY_MAGNET_ACTION_LISTENER = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -440,6 +463,12 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
                 GUIMediator.setClipboardContent(str);
             }
         };
+        
+        CONFIGURE_SHARING_LISTENER = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                GUIMediator.instance().setOptionsVisible(true, I18n.tr("Options"));
+            }
+        };
             
         BUY_LISTENER = new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -451,7 +480,15 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
         		}
         	}
         };
-
+        
+        DOWNLOAD_PARTIAL_FILES_LISTENER = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                TableLine[] lines = getAllSelectedLines();
+                if (lines.length == 1 && lines[0] != null) {
+                    GUIMediator.instance().openTorrentURI(lines[0].getInitializeObject().getTorrentURI(), true);
+                }
+            }
+        };
     }
     
     /**
@@ -470,20 +507,22 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
   
 
         JPopupMenu menu = new SkinPopupMenu();
-        
-        PopupUtils.addMenuItem(I18n.tr("Copy Magnet"), COPY_MAGNET_ACTION_LISTENER, menu, !isStopped());
-        PopupUtils.addMenuItem(I18n.tr("Copy Hash"), COPY_HASH_ACTION_LISTENER, menu, !isStopped());
+
+        if (lines.length > 0) {
+            boolean allWithHash = true;
+            for (int i = 0; i < lines.length; i++) {
+                if (lines[i].getHash() == null) {
+                    allWithHash = false;
+                    break;
+                }
+            }
+            PopupUtils.addMenuItem(I18n.tr("Copy Magnet"), COPY_MAGNET_ACTION_LISTENER, menu, !isStopped() && allWithHash);
+            PopupUtils.addMenuItem(I18n.tr("Copy Hash"), COPY_HASH_ACTION_LISTENER, menu, !isStopped() && allWithHash);
+        }
         
         menu.add(createSearchAgainMenu(lines.length > 0 ? lines[0] : null));
         
-        menu.addSeparator();
-        
-        PopupUtils.addMenuItem(SearchMediator.STOP_STRING, TORRENT_DETAILS_LISTENER, menu, !isStopped());
-        
-        boolean allSpam = true;
-        boolean allNot = true;
-        
-        return (new SearchResultMenu(this)).addToMenu(menu, lines, !allSpam, !allNot);
+        return (new SearchResultMenu(this)).addToMenu(menu, lines);
     }
     
     /**
@@ -492,7 +531,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
     protected final JMenu createSearchAgainMenu(TableLine line) {
         JMenu menu = new SkinMenu(I18n.tr("Search More"));
         menu.add(new SkinMenuItem(new RepeatSearchAction()));
-        menu.add(new SkinMenuItem(new RepeatSearchNoClearAction()));
 
         if (line == null) {
             menu.setEnabled(isRepeatSearchEnabled());
@@ -594,66 +632,18 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
     
 
     /**
-     * Blocks the hosts that sent the selected result.
-     */
-    void blockHosts() {
-        TableLine[] lines = getAllSelectedLines();
-        Set<String> uniqueHosts = new HashSet<String>();
-        
-        SpamServices spamServices = GuiCoreMediator.getSpamServices();
-        
-        for (TableLine line : lines) {
-        	Set<? extends IpPort> alts = line.getAlts();
-        	
-        	if (!spamServices.isHostile(line.getHostname())) {
-        		uniqueHosts.add(line.getHostname());
-        	}
-
-        	for (IpPort alt : alts) {
-        		String host = alt.getAddress();
-        		if (!spamServices.isHostile(host)) {
-        			uniqueHosts.add(host);
-        		}
-        	}
-        	
-        	for (SearchResult result : line.getOtherResults()) {
-        		String host = result.getHost();
-        		if (!spamServices.isHostile(host)) {
-        			uniqueHosts.add(host);
-        		}
-        	}
-        }
-        
-        //nothing to block
-        if (uniqueHosts.size()==0) {
-        	return;
-        }
-        
-        
-        int answer = GUIMediator.showConfirmListMessage(I18n.tr("Do you want to block search results from the following list of hosts?"), 
-        		uniqueHosts.toArray(), JOptionPane.YES_NO_OPTION, null);
-        if (answer == JOptionPane.YES_OPTION) {
-            // FIXME move into SpamServicesImpl / IPFilter
-            String[] bannedIps = FilterSettings.BLACK_LISTED_IP_ADDRESSES.getValue();
-            uniqueHosts.addAll(Arrays.asList(bannedIps));
-            FilterSettings.BLACK_LISTED_IP_ADDRESSES.setValue(uniqueHosts.toArray(new String[uniqueHosts.size()]));
-            GuiCoreMediator.getSpamServices().reloadIPFilter();
-        }
-    }
-    
-    /**
      * Shows a LicenseWindow for the selected line.
      */
     void showLicense() {
-        TableLine line = getSelectedLine();
-        if(line == null)
-            return;
-            
-        URN urn = line.getSHA1Urn();
-        LimeXMLDocument doc = line.getXMLDocument();
-        LicenseWindow window = LicenseWindow.create(line.getLicense(), urn, doc, this);
-        GUIUtils.centerOnScreen(window);
-        window.setVisible(true);
+//        TableLine line = getSelectedLine();
+//        if(line == null)
+//            return;
+//            
+//        URN urn = line.getSHA1Urn();
+//        LimeXMLDocument doc = line.getXMLDocument();
+//        LicenseWindow window = LicenseWindow.create(line.getLicense(), urn, doc, this);
+//        GUIUtils.centerOnScreen(window);
+//        window.setVisible(true);
     }
     
     public void licenseVerified(License license) {
@@ -696,8 +686,9 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
      * the first still-visible one.
      */
     boolean filterChanged(TableLineFilter filter, int depth) {
-        if(!FILTER.setFilter(depth, filter))
-            return false;
+        FILTER.setFilter(depth, filter);
+        //if(!FILTER.setFilter(depth, filter))
+        //    return false;
         
         // store the selection & visible rows
         int[] rows = TABLE.getSelectedRows();
@@ -739,11 +730,19 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
         return ((ResultPanelModel)DATA_MODEL).getTotalSources();
     }
     
+    int totalResults() {
+        return ((ResultPanelModel)DATA_MODEL).getTotalResults();
+    }
+    
     /**
      * Returns the total number of filtered source found for this search.
      */
     int filteredSources() {
         return DATA_MODEL.getFilteredSources();
+    }
+    
+    int filteredResults() {
+        return DATA_MODEL.getFilteredResults();
     }
 
     /**
@@ -767,7 +766,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
           clearTable();
           resetFilters();
         }
-        startTime = System.currentTimeMillis();
         
         SearchMediator.setTabDisplayCount(this);
         SearchMediator.repeatSearch(this, SEARCH_INFO, clearTable);
@@ -846,37 +844,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
      */
     final TableLine getLine(int index) {
         return DATA_MODEL.get(index);
-    }      
-    
-    /**
-     * Calculates the percentange of results that have been received for this
-     * ResultPanel.
-     */
-    double calculatePercentage(long currentTime) {
-        if(guid.equals(STOPPED_GUID))
-            return 1d;
-
-        // first calculate the percentage solely based on 
-        // the number of results we've received.
-        int ideal = QueryHandler.ULTRAPEER_RESULTS;
-        double resultPerc = (double)totalSources() / ideal;
-        
-        // then calculate the percentage solely based on
-        // the time we've spent querying.
-        long spent = currentTime - startTime;
-        double timePerc = (double)spent / QueryHandler.MAX_QUERY_TIME;
-        
-        // If the results are already enough to fill it up, just use that.
-        if( resultPerc >= 1 )
-            return 1d;
-        
-        // Otherwise, the time percentage should fill up what remains in
-        // the progress.
-        timePerc = timePerc * (1 - resultPerc);
-        
-        // Return the results received + time spent.
-        return resultPerc + timePerc;
-    }            
+    }
     
     /**
      * Sets extra values for non dummy ResultPanels.
@@ -1034,22 +1002,22 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
     public FileDetails[] getFileDetails() {
         int[] sel = TABLE.getSelectedRows();
         List<FileDetails> list = new ArrayList<FileDetails>(sel.length);
-        for (int i = 0; i < sel.length; i++) {
-            TableLine line = DATA_MODEL.get(sel[i]);
-            // prefer non-firewalled rfds for the magnet action
-            RemoteFileDesc rfd = line.getNonFirewalledRFD();
-            
-            if (rfd != null) {
-                list.add(rfd);
-            }
-            else {
-                // fall back on first rfd
-                rfd = line.getRemoteFileDesc();
-                if (rfd != null) {
-                    list.add(rfd);
-                }
-            }
-        }
+//        for (int i = 0; i < sel.length; i++) {
+//            TableLine line = DATA_MODEL.get(sel[i]);
+//            // prefer non-firewalled rfds for the magnet action
+//            RemoteFileDesc rfd = null;//line.getNonFirewalledRFD();
+//            
+//            if (rfd != null) {
+//                list.add(rfd);
+//            }
+//            else {
+//                // fall back on first rfd
+//                rfd = line.getRemoteFileDesc();
+//                if (rfd != null) {
+//                    list.add(rfd);
+//                }
+//            }
+//        }
         if (list.isEmpty()) {
             return new FileDetails[0];
         }
@@ -1126,22 +1094,4 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
             repeatSearch(true);
         }
     }
-
-    private final class RepeatSearchNoClearAction extends AbstractAction {
-
-        /**
-		 * 
-		 */
-		private static final long serialVersionUID = -4696794773922819241L;
-
-		public RepeatSearchNoClearAction() {
-            putValue(Action.NAME, SearchMediator.REPEAT_SEARCH_NO_CLEAR_STRING);
-            setEnabled(isRepeatSearchEnabled());
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            repeatSearch(false);
-        }
-    }  
-    
 }

@@ -138,7 +138,7 @@ public class ConfigurationLoader
 
   private String[] getArray(String name)
   {
-    Vector v=new Vector();
+    Vector<String> v=new Vector<String>();
     String cmd;
     int i=1;
     do
@@ -348,7 +348,7 @@ public class ConfigurationLoader
 
   private ServerItem[] readServers(String dhost,int dport,String dpass)
   {
-    Vector res=new Vector();
+    Vector<ServerItem> res=new Vector<ServerItem>();
     ServerItem item=new ServerItem();
     item.host=dhost;
     item.port=new Integer(dport).intValue();

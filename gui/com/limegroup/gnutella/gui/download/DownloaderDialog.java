@@ -6,9 +6,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.File;
 import java.text.MessageFormat;
-import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -23,8 +21,6 @@ import javax.swing.JRadioButton;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
-
-import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.FileDesc;
@@ -63,7 +59,7 @@ public class DownloaderDialog extends JDialog {
 	private JLabel descLabel = new JLabel();
 	private JLabel noteLabel = new JLabel();
     private ButtonRow buttons;
-    private File originalFile;
+    //private File originalFile;
         
     /**
      * Creates a new dialog for a factory and an already thrown exception.
@@ -74,7 +70,7 @@ public class DownloaderDialog extends JDialog {
         super(GUIMediator.getAppFrame());
         
         this.factory = factory;
-        originalFile = factory.getSaveFile();
+        //originalFile = factory.getSaveFile();
         
         final int defaultAction = QuestionsHandler.DEFAULT_ACTION_FILE_EXISTS.getValue();
         if(defaultAction != DEFAULT_ASK) {
@@ -287,30 +283,30 @@ public class DownloaderDialog extends JDialog {
 	 * the file extension.
 	 */
 	void createUniqueFilenameDownloader() {
-		String originalName = originalFile.getName();
-		String preExt = originalName;
-		String ext = "";
-		int dot = originalName.lastIndexOf(".");
-		if (dot != -1) {
-		    preExt = originalName.substring(0, dot);
-		    ext = originalName.substring(dot);
-		}
+//		String originalName = originalFile.getName();
+//		String preExt = originalName;
+//		String ext = "";
+//		int dot = originalName.lastIndexOf(".");
+//		if (dot != -1) {
+//		    preExt = originalName.substring(0, dot);
+//		    ext = originalName.substring(dot);
+//		}
 
-		Set<?> downloads = DownloadMediator.instance().getFileNames();
-		File newFile = originalFile;
-		String newName = originalName;
-		for (int i = 1; newFile.exists() || downloads.contains(newName); i++) {
-		    newName = preExt + "(" + i + ")" + ext;
-		    newFile = new File(originalFile.getParent(), newName);
-		}
-
-		try {
-			factory.setSaveFile(newFile);
-			downloader = factory.createDownloader(false);
-			dispose();
-		} catch (SaveLocationException sle) {
-			setContentFromException(sle);
-		}
+//		Set<?> downloads = DownloadMediator.instance().getFileNames();
+//		File newFile = originalFile;
+//		String newName = originalName;
+//		for (int i = 1; newFile.exists() || downloads.contains(newName); i++) {
+//		    newName = preExt + "(" + i + ")" + ext;
+//		    newFile = new File(originalFile.getParent(), newName);
+//		}
+//
+//		try {
+//			factory.setSaveFile(newFile);
+//			downloader = factory.createDownloader(false);
+//			dispose();
+//		} catch (SaveLocationException sle) {
+//			setContentFromException(sle);
+//		}
 	}
 
 	private class OverWriteAction extends AbstractAction {
@@ -328,13 +324,13 @@ public class DownloaderDialog extends JDialog {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			try {
-				downloader = factory.createDownloader(true);
-				dispose();
-			}
-			catch (SaveLocationException sle) {
-				setContentFromException(sle);
-			}
+//			try {
+//				downloader = factory.createDownloader(true);
+//				dispose();
+//			}
+//			catch (SaveLocationException sle) {
+//				setContentFromException(sle);
+//			}
 		}
 	}
 	
@@ -353,21 +349,21 @@ public class DownloaderDialog extends JDialog {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			File file = DownloaderUtils.showFileChooser(factory, 
-					DownloaderDialog.this);
-			if (file != null) {
-				try {
-					factory.setSaveFile(file);
-					// OSX's FileDialog box already prompts the user that they're
-					// going to be overwriting a file, so we don't need to do that
-					// particular check again.
-					downloader = factory.createDownloader(OSUtils.isAnyMac());
-					dispose();
-				}
-				catch (SaveLocationException sle) {
-					setContentFromException(sle);
-				}
-			}
+//			File file = DownloaderUtils.showFileChooser(factory, 
+//					DownloaderDialog.this);
+//			if (file != null) {
+//				try {
+//					factory.setSaveFile(file);
+//					// OSX's FileDialog box already prompts the user that they're
+//					// going to be overwriting a file, so we don't need to do that
+//					// particular check again.
+//					downloader = factory.createDownloader(OSUtils.isAnyMac());
+//					dispose();
+//				}
+//				catch (SaveLocationException sle) {
+//					setContentFromException(sle);
+//				}
+//			}
 		}
 	}
 	

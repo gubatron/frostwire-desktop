@@ -1,6 +1,5 @@
 package com.limegroup.gnutella;
 
-import com.frostwire.bittorrent.BTDownloader;
 
 /**
  * A callback for download information.
@@ -9,12 +8,10 @@ public interface DownloadCallback {
     
 
     /** Add a file to the download window */
-    public void addDownload(Downloader d);
-    
-    public void addDownload(BTDownloader d);
+    public void addDownloadManager(org.gudy.azureus2.core3.download.DownloadManager d);
 
     /** Remove a downloader from the download window. */
-    public void removeDownload(Downloader d);
+    //public void removeDownload(Downloader d);
 
      /** 
       * Notifies the GUI that all active downloads have been completed.
@@ -25,16 +22,5 @@ public interface DownloadCallback {
 	 *  Show active downloads
 	 */
 	public void showDownloads();
-
-    /**
-     * Shows the user a message informing her that a file being downloaded 
-     * is corrupt.
-     * <p>
-     * This method MUST call dloader.discardCorruptDownload(boolean b) 
-     * otherwise there will be threads piling up waiting for a notification
-     */
-    public void promptAboutCorruptDownload(Downloader dloader);
-
-    public String getHostValue(String key);
     
 }

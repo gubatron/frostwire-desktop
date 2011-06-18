@@ -7,7 +7,6 @@ import java.util.concurrent.Future;
 import org.limewire.concurrent.ExecutorsHelper;
 
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 import com.google.inject.Singleton;
 
 @Singleton
@@ -18,12 +17,9 @@ public class LicenseVerifier {
      */
     private static final ExecutorService VQUEUE = ExecutorsHelper
             .newProcessingQueue("LicenseVerifier");
-
-    private final Provider<LicenseCache> licenseCache;
     
     @Inject
-    public LicenseVerifier(Provider<LicenseCache> licenseCache) {
-        this.licenseCache = licenseCache;
+    public LicenseVerifier() {
     }
 
     /**
@@ -48,13 +44,13 @@ public class LicenseVerifier {
      */
     private class Verifier implements Runnable {
 
-        private final License license;
+        //private final License license;
 
-        private final VerificationListener verificationListener;
+        //private final VerificationListener verificationListener;
 
         public Verifier(License license, VerificationListener verificationListener) {
-            this.license = license;
-            this.verificationListener = verificationListener;
+//            this.license = license;
+//            this.verificationListener = verificationListener;
         }
 
         public void run() {

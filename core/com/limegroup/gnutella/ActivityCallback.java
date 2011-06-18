@@ -1,14 +1,8 @@
 package com.limegroup.gnutella;
 
 import java.io.File;
-import java.util.Set;
-
-import org.limewire.io.IpPort;
 
 import com.limegroup.gnutella.browser.MagnetOptions;
-import com.limegroup.gnutella.connection.ConnectionLifecycleEvent;
-import com.limegroup.gnutella.connection.ConnectionLifecycleListener;
-import com.limegroup.gnutella.search.HostData;
 import com.limegroup.gnutella.version.UpdateInformation;
 
 /**
@@ -33,47 +27,11 @@ public interface ActivityCallback extends DownloadCallback
      * just accepted our first incoming connection.
      */
     public void handleAddressStateChanged();
-
-    /**
-     * Notifies the UI that a new query result has come in to the backend.
-     * 
-     * @param rfd the descriptor for the remote file
-     * @param data the data for the host returning the result
-     * @param locs the <tt>Set</tt> of alternate locations for the file
-     */
-	public void handleQueryResult(RemoteFileDesc rfd, HostData data, Set<? extends IpPort> locs);
-
-    /**
-     * Add a query string to the monitor screen
-     */
-    public void handleQueryString( String query );
-
-    /** Add an uploader to the upload window */
-    public void addUpload(Uploader u);
-
-    /** Remove an uploader from the upload window. */
-    public void removeUpload(Uploader u);    
-
-    /** display an error message since the browse host failed. 
-     *  @param guid The GUID of the browse host.
-     */    
-    public void browseHostFailed(GUID guid);
         
 	/**
 	 * Notification that the file manager is beginning loading.
 	 */
 	public void fileManagerLoading();
-
-    /**
-     * Notifies a user that the filemanager has completely loaded.
-     */
-    public void fileManagerLoaded();
-    
-    /**
-     * Notifies the GUI that the user is attempting to share a sensitive
-     * directory.  Returns true if the sensitive directory should be shared. 
-     */
-    public boolean warnAboutSharingSensitiveDirectory(File dir);
     
     /**
      * Notifies the GUI that the given shared file has new information.
@@ -86,11 +44,6 @@ public interface ActivityCallback extends DownloadCallback
 	 * Notification that an update became available.
 	 */
 	public void updateAvailable(UpdateInformation info);
-
-	/**
-	 * Sets the enabled/disabled state of file annotation.
-	 */
-	public void setAnnotateEnabled(boolean enabled);
     
     /** 
      * Notifies the GUI that all active uploads have been completed.
@@ -101,12 +54,6 @@ public interface ActivityCallback extends DownloadCallback
 	 *  Tell the GUI to deiconify.
 	 */
 	public void restoreApplication();
-
-    /**
-     * @return true If the guid that maps to a query result screen is still
-     * available/viewable to the user.
-     */
-    public boolean isQueryAlive(GUID guid);
     
     /**
      * Indicates a component is loading.

@@ -72,7 +72,7 @@ public class StringParser
    */
   public String[] parseString(String line)
   {
-    Vector res=new Vector();
+    Vector<String> res=new Vector<String>();
     while(line.length()!=0)
     {
       int pos=indexOf(line,' ');

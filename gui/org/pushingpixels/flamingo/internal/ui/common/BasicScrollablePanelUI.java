@@ -51,7 +51,7 @@ public class BasicScrollablePanelUI extends ScrollablePanelUI {
 	/**
 	 * The associated scrollable panel.
 	 */
-	protected JScrollablePanel scrollablePanel;
+	protected JScrollablePanel<?> scrollablePanel;
 
 	private JPanel viewport;
 
@@ -83,7 +83,7 @@ public class BasicScrollablePanelUI extends ScrollablePanelUI {
 	 */
 	@Override
 	public void installUI(JComponent c) {
-		this.scrollablePanel = (JScrollablePanel) c;
+		this.scrollablePanel = (JScrollablePanel<?>) c;
 		super.installUI(this.scrollablePanel);
 		installDefaults();
 		installComponents();
@@ -279,17 +279,17 @@ public class BasicScrollablePanelUI extends ScrollablePanelUI {
 		}
 	}
 
-	private void addScrollers() {
-		this.scrollablePanel.add(this.leadingScroller);
-		this.scrollablePanel.add(this.trailingScroller);
-		this.scrollablePanel.revalidate();
-		JComponent view = this.scrollablePanel.getView();
-		view.setPreferredSize(view.getMinimumSize());
-		view.setSize(view.getMinimumSize());
-		this.scrollablePanel.doLayout();
-
-		this.scrollablePanel.repaint();
-	}
+//	private void addScrollers() {
+//		this.scrollablePanel.add(this.leadingScroller);
+//		this.scrollablePanel.add(this.trailingScroller);
+//		this.scrollablePanel.revalidate();
+//		JComponent view = this.scrollablePanel.getView();
+//		view.setPreferredSize(view.getMinimumSize());
+//		view.setSize(view.getMinimumSize());
+//		this.scrollablePanel.doLayout();
+//
+//		this.scrollablePanel.repaint();
+//	}
 
 	protected void configureLeftScrollerButtonAction() {
 		this.leadingScroller.setAutoRepeatAction(true);

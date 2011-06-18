@@ -9,7 +9,6 @@ import javax.swing.JCheckBox;
 
 import org.limewire.i18n.I18nMarker;
 
-import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.ListEditor;
 import com.limegroup.gnutella.settings.FilterSettings;
@@ -85,8 +84,7 @@ public final class IgnoreResultsPaneItem extends AbstractPaneItem {
 		
         FilterSettings.BANNED_WORDS.setValue(bannedResults);
         FilterSettings.FILTER_ADULT.setValue(IGNORE_ADULT_CHECK_BOX.isSelected());
-		GuiCoreMediator.getSpamServices().adjustSpamFilters();
-        return false;
+		return false;
 	}
 
     public boolean isDirty() {

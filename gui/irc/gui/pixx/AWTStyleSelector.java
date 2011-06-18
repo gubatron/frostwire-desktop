@@ -46,7 +46,11 @@ import javax.swing.JPanel;
  */
 public class AWTStyleSelector extends JPanel implements MouseListener
 {
-  private PixxConfiguration _pixxConfiguration;
+  /**
+     * 
+     */
+    private static final long serialVersionUID = -5179213192361559478L;
+private PixxConfiguration _pixxConfiguration;
   private StyleContext _ct;
   private int _color;
   private int _backColor;

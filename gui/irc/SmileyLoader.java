@@ -40,7 +40,7 @@ public class SmileyLoader implements ImageLoader {
 		if (imageUrl == null) {
 			
 			if (_classLoader != null) {
-				imageUrl = _classLoader.getSystemResource(source);
+				imageUrl = ClassLoader.getSystemResource(source);
 			}
 			
 			if (imageUrl == null) {

@@ -92,7 +92,7 @@ public class BasicInterpretor extends RootInterpretor implements Interpretor
       {
         test(cmd,parts,2);
         boolean said=false;
-        Enumeration e=server.getSources();
+        Enumeration<?> e=server.getSources();
         while(e.hasMoreElements())
         {
           Source s=(Source)e.nextElement();

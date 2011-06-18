@@ -50,6 +50,11 @@ import org.pushingpixels.flamingo.internal.ui.common.CommandButtonUI;
 public abstract class AbstractCommandButton extends
 		RichToolTipManager.JTrackableComponent {
 	/**
+     * 
+     */
+    private static final long serialVersionUID = 8584281320351152581L;
+
+    /**
 	 * Associated icon.
 	 * 
 	 * @see #setIcon(ResizableIcon)

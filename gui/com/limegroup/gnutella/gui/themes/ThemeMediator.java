@@ -20,12 +20,9 @@ import javax.swing.plaf.FontUIResource;
 import javax.swing.plaf.InsetsUIResource;
 
 import org.limewire.util.FileUtils;
-import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.gui.TipOfTheDayMediator;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
-import com.limegroup.gnutella.gui.themes.setters.AquaThemeSetter;
-import com.limegroup.gnutella.gui.themes.setters.PlasticThemeSetter;
 import com.limegroup.gnutella.gui.themes.setters.SubstanceThemeSetter;
 
 /**
@@ -130,12 +127,6 @@ public class ThemeMediator {
         
         List<ThemeSetter> themes = new ArrayList<ThemeSetter>();
         
-        themes.add(PlasticThemeSetter.INSTANCE);
-        
-        if (OSUtils.isMacOSX()) {
-            themes.add(AquaThemeSetter.INSTANCE);
-        }
-        
         // from FrostWire
         themes.add(SubstanceThemeSetter.SEA_GLASS);
         
@@ -176,12 +167,7 @@ public class ThemeMediator {
         themes.add(SubstanceThemeSetter.MANGO);
         themes.add(SubstanceThemeSetter.STREETLIGHTS);
         
-        if (OSUtils.isMacOSX()) {
-            //DEFAULT_THEME = AquaThemeSetter.INSTANCE;
-        	DEFAULT_THEME = SubstanceThemeSetter.SEA_GLASS; //to make FrostWire 5 statement, plus looks a lot better.
-        } else {
-            DEFAULT_THEME = SubstanceThemeSetter.SEA_GLASS;
-        }
+        DEFAULT_THEME = SubstanceThemeSetter.SEA_GLASS;
         THEMES = themes;
         CURRENT_THEME = loadCurrentTheme();
         
@@ -244,6 +230,8 @@ public class ThemeMediator {
         UIManager.put("ComboBoxUI", "com.limegroup.gnutella.gui.themes.SkinComboBoxUI");
         UIManager.put("TreeUI", "com.limegroup.gnutella.gui.themes.SkinTreeUI");
         UIManager.put("TableUI", "com.limegroup.gnutella.gui.themes.SkinTableUI");
+        UIManager.put("RangeSliderUI", "com.limegroup.gnutella.gui.themes.SkinRangeSliderUI");
+        UIManager.put("FileChooserUI", "com.limegroup.gnutella.gui.themes.SkinFileChooserUI");
         
         UIManager.put("ComboBox.editorInsets", new InsetsUIResource(2, 2, 3, 2));
     }

@@ -53,6 +53,11 @@ import org.pushingpixels.flamingo.internal.ui.common.popup.PopupPanelUI;
  */
 public class JCommandPopupMenu extends JPopupPanel {
 	/**
+     * 
+     */
+    private static final long serialVersionUID = 9008035248190868840L;
+
+    /**
 	 * @see #getUIClassID
 	 */
 	public static final String uiClassID = "CommandPopupMenuUI";

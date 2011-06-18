@@ -22,6 +22,10 @@ public final class TimeRemainingHolder implements Comparable<TimeRemainingHolder
 	}
 	
     public String toString() {
-        return _timeRemaining <= 0 ? "" : CommonUtils.seconds2time(_timeRemaining);
+        if (_timeRemaining < 0) {
+            return "\u221E";
+        } else {
+            return _timeRemaining == 0 ? "" : CommonUtils.seconds2time(_timeRemaining);
+        }
     }
 }

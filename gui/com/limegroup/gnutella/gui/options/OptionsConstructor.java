@@ -2,8 +2,6 @@ package com.limegroup.gnutella.gui.options;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.FocusAdapter;
@@ -28,28 +26,24 @@ import org.limewire.setting.IntSetting;
 import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.OSUtils;
 
-import com.frostwire.updates.AutomaticInstallerDownloadPaneItem;
-import com.limegroup.bittorrent.gui.options.panes.BitTorrentDownloadSpeedPaneItem;
-import com.limegroup.bittorrent.gui.options.panes.BittorrentConnectionPaneItem;
-import com.limegroup.bittorrent.gui.options.panes.BittorrentPaneItem;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.IconButton;
 import com.limegroup.gnutella.gui.IconTextField;
 import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.options.panes.AbstractPaneItem;
 import com.limegroup.gnutella.gui.options.panes.AssociationPreferencePaneItem;
 import com.limegroup.gnutella.gui.options.panes.AudioPlayerPaneItem;
 import com.limegroup.gnutella.gui.options.panes.AutoCompletePaneItem;
+import com.limegroup.gnutella.gui.options.panes.AutomaticInstallerDownloadPaneItem;
+import com.limegroup.gnutella.gui.options.panes.BitTorrentDownloadSpeedPaneItem;
+import com.limegroup.gnutella.gui.options.panes.BittorrentConnectionPaneItem;
+import com.limegroup.gnutella.gui.options.panes.BittorrentPaneItem;
 import com.limegroup.gnutella.gui.options.panes.BrowserPaneItem;
 import com.limegroup.gnutella.gui.options.panes.BugsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ChatCommunityPaneItem;
-import com.limegroup.gnutella.gui.options.panes.DaapBufferSizePaneItem;
-import com.limegroup.gnutella.gui.options.panes.DaapPasswordPaneItem;
-import com.limegroup.gnutella.gui.options.panes.DaapSupportPaneItem;
 import com.limegroup.gnutella.gui.options.panes.DefaultActionPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ForceIPPaneItem;
 import com.limegroup.gnutella.gui.options.panes.IgnoreResultsPaneItem;
@@ -259,14 +253,6 @@ public final class OptionsConstructor {
 
 		filterPanel.add(Box.createHorizontalStrut(2));
 		
-		IconButton eraseButton = new IconButton("CLEAR_TEXT");
-		eraseButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				filterTextField.setText("");
-			}			
-		});
-		filterPanel.add(eraseButton);
-		
 		treePanel.add(Box.createVerticalStrut(3));
 		
 		Component treeComponent = TREE_MANAGER.getComponent();
@@ -305,11 +291,11 @@ public final class OptionsConstructor {
         addOption(OptionsMediator.ROOT_NODE_KEY, STATUS_BAR_KEY, I18n.tr("Status Bar"), StatusBarConnectionQualityPaneItem.class, StatusBarFirewallPaneItem.class, StatusBarBandwidthPaneItem.class); // Removed Lime Store
         
         //itunes
-        addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, ITUNES_KEY, I18n.tr("iTunes"));
-		if (OSUtils.isMacOSX()) {
+        if (OSUtils.isMacOSX()) {
+            addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, ITUNES_KEY, I18n.tr("iTunes"));
 			addOption(ITUNES_KEY, ITUNES_IMPORT_KEY, I18n.tr("Importing"), iTunesPreferencePaneItem.class); 
 		}
-		addOption(ITUNES_KEY, ITUNES_DAAP_KEY, I18n.tr("Sharing"), DaapSupportPaneItem.class, DaapPasswordPaneItem.class, DaapBufferSizePaneItem.class);
+		//addOption(ITUNES_KEY, ITUNES_DAAP_KEY, I18n.tr("Sharing"), DaapSupportPaneItem.class, DaapPasswordPaneItem.class, DaapBufferSizePaneItem.class);
 
 		
 		if (!OSUtils.isWindows() && !OSUtils.isAnyMac()) {

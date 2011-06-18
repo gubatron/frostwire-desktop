@@ -4,9 +4,7 @@ import java.awt.Font;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
@@ -18,7 +16,6 @@ import javax.swing.LookAndFeel;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
-import javax.swing.plaf.FontUIResource;
 
 import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
@@ -354,39 +351,40 @@ public final class ResourceManager {
      * This prevents the UI from appearing as all boxes.
      */
     public static void validateLocaleAndFonts(Locale locale) {
-        if (true) {
-            return;
-        }
-        // OSX can always display everything, and if it can't,
-        // we have no way of correcting things 'cause canDisplayUpTo
-        // is broken on it.
-        if (OSUtils.isMacOSX())
-            return;
-
-        String s = locale.getDisplayName();
-        if (!checkUIFonts("dialog", s)) {
-            // if it couldn't display, revert the locale to english.
-            ApplicationSettings.LANGUAGE.setValue("en");
-            ApplicationSettings.COUNTRY.setValue("");
-            ApplicationSettings.LOCALE_VARIANT.setValue("");
-            GUIMediator.resetLocale();
-        }
-
-        // Ensure that the Table.font can always display intl characters
-        // since we can always get i18n stuff there, but only if we'd actually
-        // be capable of displaying an intl character with the font...
-        // unicode string == country name of simplified chinese
-        String i18n = "\u4e2d\u56fd";
-        checkFont("TextField.font", "dialog", i18n, true);
-        checkFont("Table.font", "dialog", i18n, true);
-        checkFont("ProgressBar.font", "dialog", i18n, true);
-        checkFont("TabbedPane.font", "dialog", i18n, true);
+//        if (true) {
+//            return;
+//        }
+//        // OSX can always display everything, and if it can't,
+//        // we have no way of correcting things 'cause canDisplayUpTo
+//        // is broken on it.
+////        if (OSUtils.isMacOSX())
+////            return;
+//
+//        String s = locale.getDisplayName();
+//        if (!checkUIFonts("dialog", s)) {
+//            // if it couldn't display, revert the locale to english.
+//            ApplicationSettings.LANGUAGE.setValue("en");
+//            ApplicationSettings.COUNTRY.setValue("");
+//            ApplicationSettings.LOCALE_VARIANT.setValue("");
+//            GUIMediator.resetLocale();
+//        }
+//
+//        // Ensure that the Table.font can always display intl characters
+//        // since we can always get i18n stuff there, but only if we'd actually
+//        // be capable of displaying an intl character with the font...
+//        // unicode string == country name of simplified chinese
+//        String i18n = "\u4e2d\u56fd";
+//        checkFont("TextField.font", "dialog", i18n, true);
+//        checkFont("Table.font", "dialog", i18n, true);
+//        checkFont("ProgressBar.font", "dialog", i18n, true);
+//        checkFont("TabbedPane.font", "dialog", i18n, true);
     }
 
     /**
      * Alters all Fonts in UIManager to use Dialog, to correctly display foreign
      * strings.
      */
+    @SuppressWarnings("unused")
     private static boolean checkUIFonts(String newFont, String testString) {
         String[] comps = new String[] { "TextField.font", "PasswordField.font",
                 "TextArea.font", "TextPane.font", "EditorPane.font",

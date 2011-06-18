@@ -36,14 +36,14 @@ import java.util.*;
  */
 public class MultipleWordCatcher implements WordCatcher
 {
-  private Vector _recognizers;
+  private Vector<WordRecognizer> _recognizers;
 
   /**
    * Create a new MultipleWordCatcher.
    */
   public MultipleWordCatcher()
   {
-    _recognizers=new Vector();
+    _recognizers=new Vector<WordRecognizer>();
   }
 
   /**
@@ -57,7 +57,7 @@ public class MultipleWordCatcher implements WordCatcher
 
   public String getType(String word)
   {
-    Enumeration e=_recognizers.elements();
+    Enumeration<WordRecognizer> e=_recognizers.elements();
     while(e.hasMoreElements())
     {
       WordRecognizer wr=(WordRecognizer)e.nextElement();

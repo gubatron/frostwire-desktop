@@ -8,7 +8,6 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LanguageWindow;
-import com.limegroup.gnutella.gui.ResourceManager;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
 import com.limegroup.gnutella.gui.actions.ToggleSettingAction;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
@@ -127,6 +126,11 @@ final class ViewMenu extends AbstractMenu {
 
         public void actionPerformed(ActionEvent e) {
             int inc = ThemeSettings.FONT_SIZE_INCREMENT.getValue();
+            
+            if (inc <= -4 || inc >= 4) {
+                return;
+            }
+            
             inc += increment;
             ThemeSettings.FONT_SIZE_INCREMENT.setValue(inc);
             ThemeMediator.setFontSizeDelta(increment);

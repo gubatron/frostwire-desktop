@@ -40,7 +40,11 @@ import javax.swing.JPanel;
  */
 public class MouseWheelPanelWrapper extends JPanel
 {
-  private Object _panel;
+  /**
+     * 
+     */
+    private static final long serialVersionUID = -5950174475017208731L;
+private Object _panel;
   private Method _add;
   private Method _remove;
 
@@ -53,9 +57,9 @@ public class MouseWheelPanelWrapper extends JPanel
     setLayout(new GridLayout(1,1));
     try
     {
-      Class cl=Class.forName("irc.gui.prv.MouseWheelPanel");
+      Class<?> cl=Class.forName("irc.gui.prv.MouseWheelPanel");
       _panel=cl.newInstance();
-      Class[] types={MouseWheelPanelListener.class};
+      Class<?>[] types={MouseWheelPanelListener.class};
       _add=cl.getMethod("addMouseWheelPanelListener",types);
       _remove=cl.getMethod("removeMouseWheelPanelListener",types);
       add((Component)_panel);

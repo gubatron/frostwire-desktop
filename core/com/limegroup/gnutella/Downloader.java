@@ -171,12 +171,6 @@ public interface Downloader extends BandwidthTracker {
      * Returns the vendor of the last downloading host.
      */
     public String getVendor();
-	
-	/**
-	 * Returns a chat-enabled <tt>Endpoint</tt> instance for this
-	 * <tt>Downloader</tt>.
-	 */
-	public Endpoint getChatEnabledHost();
 
 	/**
 	 * Returns whether or not there is a chat-enabled host available for

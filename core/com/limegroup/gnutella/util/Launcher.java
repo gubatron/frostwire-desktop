@@ -296,10 +296,9 @@ public final class Launcher {
 	 * @throws <tt>IOException</tt> if an exception occurs loading the
 	 *         necessary classes
 	 */
-	@SuppressWarnings("unchecked")
-    private static void loadMacClasses() throws IOException {
+	private static void loadMacClasses() throws IOException {
 		try {
-			Class mrjAdapter = Class.forName("net.roydesign.mac.MRJAdapter");
+			Class<?> mrjAdapter = Class.forName("net.roydesign.mac.MRJAdapter");
 			_openURL = mrjAdapter.getDeclaredMethod("openURL", new Class[]{String.class});
 		} catch (ClassNotFoundException cnfe) {
 			throw new IOException();

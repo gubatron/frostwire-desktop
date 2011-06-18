@@ -105,6 +105,6 @@ public class ClearBitsItem {
 		urlBuilder.append(filenameNoExtension);
 		location = urlBuilder.toString();
 		
-		title = "(Clearbits.net) " + title;
+		//title = "(Clearbits.net) " + title;
 	}
 }

@@ -11,8 +11,8 @@ import org.apache.commons.logging.LogFactory;
 import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.util.VersionUtils;
 
-import com.limegroup.gnutella.bugs.DeadlockBugManager;
-import com.limegroup.gnutella.bugs.DeadlockException;
+import com.limegroup.gnutella.gui.bugs.DeadlockBugManager;
+import com.limegroup.gnutella.gui.bugs.DeadlockException;
 
 /** Simple class to help monitor deadlocking. */
 public class DeadlockSupport {

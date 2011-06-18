@@ -9,11 +9,10 @@ import javax.swing.JTextField;
 import org.limewire.i18n.I18nMarker;
 
 import com.limegroup.gnutella.gui.ButtonRow;
-import com.limegroup.gnutella.gui.GuiCoreMediator;
+import com.limegroup.gnutella.gui.GUIUtils.SizePolicy;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.gui.SizedTextField;
-import com.limegroup.gnutella.gui.GUIUtils.SizePolicy;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 /**
@@ -109,7 +108,7 @@ public final class ExtensionsPaneItem extends AbstractPaneItem {
         // The loadSettings method is non-blocking, so threads are needed.
         if(!ext.equals(_extensions)) {
 			SharingSettings.EXTENSIONS_TO_SHARE.setValue(_extField.getText());
-            GuiCoreMediator.getFileManager().loadSettings();
+            //GuiCoreMediator.getFileManager().loadSettings();
             _extensions = _extField.getText();
         }
         

@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -26,7 +25,6 @@ import javax.swing.JPanel;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.setting.FileSetting;
 import org.limewire.setting.SettingsGroupManager;
-import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.gui.ButtonRow;
@@ -108,7 +106,7 @@ public class SetupManager {
     	return !GUIMediator.getAssociationManager().checkAndGrab(false);
     }
     
-    private static enum SaveStatus { NO, NEEDS, MIGRATE };
+    private static enum SaveStatus { NO, NEEDS };
     private SaveStatus shouldShowSaveDirectoryWindow() {
         // If it's not setup, definitely show it!
         if(!InstallSettings.SAVE_DIRECTORY.getValue())
@@ -120,12 +118,12 @@ public class SetupManager {
         // else.
         FileSetting saveSetting = SharingSettings.DIRECTORY_FOR_SAVING_FILES;
         if(saveSetting.isDefault()) {
-            // If the directory is default, it could be because older versions
-            // of LW didn't write out their save directory (if it was default).
-            // Check to see if the new one doesn't exist, but the old one does.
-            File oldDefaultDir = new File(CommonUtils.getUserHomeDir(), "Shared");
-            if(!saveSetting.getValue().exists() && oldDefaultDir.exists())
-                return SaveStatus.MIGRATE;
+//            // If the directory is default, it could be because older versions
+//            // of LW didn't write out their save directory (if it was default).
+//            // Check to see if the new one doesn't exist, but the old one does.
+//            File oldDefaultDir = new File(CommonUtils.getUserHomeDir(), "Shared");
+//            if(!saveSetting.getValue().exists() && oldDefaultDir.exists())
+//                return SaveStatus.MIGRATE;
         }
         
         if (!InstallSettings.LAST_FROSTWIRE_VERSION_WIZARD_INVOKED.getValue().equals(FrostWireUtils.getFrostWireVersion())) {
@@ -145,7 +143,7 @@ public class SetupManager {
 
         SaveStatus saveDirectoryStatus = shouldShowSaveDirectoryWindow();
         if(saveDirectoryStatus != SaveStatus.NO)
-            windows.add(new SaveWindow(this, saveDirectoryStatus == SaveStatus.MIGRATE));
+            windows.add(new SaveWindow(this));
             
         if( !InstallSettings.SPEED.getValue() ||
             !InstallSettings.START_STARTUP.getValue() && GUIUtils.shouldShowStartOnStartupWindow()) //FTA removed in FrostWire  ||             !InstallSettings.FILTER_OPTION.getValue() 

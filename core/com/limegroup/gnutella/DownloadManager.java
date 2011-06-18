@@ -3,15 +3,7 @@ package com.limegroup.gnutella;
 import java.io.File;
 import java.net.Socket;
 import java.util.Collection;
-import java.util.List;
 
-import com.limegroup.gnutella.browser.MagnetOptions;
-import com.limegroup.gnutella.downloader.CantResumeException;
-import com.limegroup.gnutella.downloader.CoreDownloader;
-import com.limegroup.gnutella.downloader.CoreDownloaderFactory;
-import com.limegroup.gnutella.downloader.PushedSocketHandler;
-import com.limegroup.gnutella.messages.QueryReply;
-import com.limegroup.gnutella.messages.QueryRequest;
 import com.limegroup.gnutella.version.DownloadInformation;
 
 
@@ -31,12 +23,7 @@ import com.limegroup.gnutella.version.DownloadInformation;
  * completed downloads.  Downloads in the COULDNT_DOWNLOAD state are not 
  * serialized.  
  */
-public interface DownloadManager extends BandwidthTracker, SaveLocationManager, PushedSocketHandler {
-    
-    /**
-     * Adds a new downloader that this will manager.
-     */
-    public void addNewDownloader(CoreDownloader downloader);
+public interface DownloadManager extends BandwidthTracker, SaveLocationManager {
 
     /** 
      * Initializes this manager. <b>This method must be called before any other
@@ -55,14 +42,6 @@ public interface DownloadManager extends BandwidthTracker, SaveLocationManager, 
      * snapshots and scheduling snapshot checkpointing.
      */
     public void loadSavedDownloadsAndScheduleWriting();
-
-    /** True if saved downloads have been loaded from disk. */
-    public boolean isSavedDownloadsLoaded();
-
-    /**
-     * Determines if an 'In Network' download exists in either active or waiting.
-     */
-    public boolean hasInNetworkDownload();
 
     /**
      * Kills all in-network downloaders that are not present in the list of URNs
@@ -105,77 +84,6 @@ public interface DownloadManager extends BandwidthTracker, SaveLocationManager, 
 
     public boolean isGuidForQueryDownloading(GUID guid);
 
-    /** 
-     * Tries to "smart download" any of the given files.<p>  
-     *
-     * If any of the files already being downloaded (or queued for downloaded)
-     * has the same temporary name as any of the files in 'files', throws
-     * AlreadyDownloadingException.  Note, however, that this doesn't guarantee
-     * that a successfully downloaded file can be moved to the library.<p>
-     *
-     * If overwrite==false, then if any of the files already exists in the
-     * download directory, FileExistsException is thrown and no files are
-     * modified.  If overwrite==true, the files may be overwritten.<p>
-     * 
-     * Otherwise returns a Downloader that allows you to stop and resume this
-     * download.  The DownloadCallback will also be notified of this download,
-     * so the return value can usually be ignored.  The download begins
-     * immediately, unless it is queued.  It stops after any of the files
-     * succeeds.
-     * 
-     * @param files a group of "similar" files to smart download
-     * @param alts a List of secondary RFDs to use for other sources
-     * @param queryGUID the guid of the query that resulted in the RFDs being
-     * downloaded.
-     * @param saveDir can be null, then the default save directory is used
-     * @param fileName can be null, then the first filename of one of element of
-     * <code>files</code> is taken.
-     * @throws SaveLocationException when there was an error setting the
-     * location of the final download destination.
-     *
-     *     @modifies this, disk 
-     */
-    public Downloader download(RemoteFileDesc[] files, List<? extends RemoteFileDesc> alts,
-            GUID queryGUID, boolean overwrite, File saveDir, String fileName)
-            throws SaveLocationException;
-
-    /**
-     * Creates a new MAGNET downloader.  Immediately tries to download from
-     * <tt>defaultURL</tt>, if specified.  If that fails, or if defaultURL does
-     * not provide alternate locations, issues a requery with <tt>textQuery</tt>
-     * and </tt>urn</tt>, as provided.  (At least one must be non-null.)  If
-     * <tt>filename</tt> is specified, it will be used as the name of the
-     * complete file; otherwise it will be taken from any search results or
-     * guessed from <tt>defaultURLs</tt>.
-     *
-     * @param urn the hash of the file (exact topic), or null if unknown
-     * @param textQuery requery keywords (keyword topic), or null if unknown
-     * @param filename the final file name, or <code>null</code> if unknown
-     * @param saveLocation can be null, then the default save location is used
-     * @param defaultURLs the initial locations to try (exact source), or null 
-     *  if unknown
-     *
-     * @exception IllegalArgumentException all urn, textQuery, filename are
-     *  null 
-     * @throws SaveLocationException 
-     */
-    public Downloader download(MagnetOptions magnet, boolean overwrite, File saveDir,
-            String fileName) throws IllegalArgumentException, SaveLocationException;
-
-    /**
-     * Starts a resume download for the given incomplete file.
-     * @exception CantResumeException incompleteFile is not a valid 
-     *  incomplete file
-     * @throws SaveLocationException 
-     */
-    public Downloader download(File incompleteFile) throws CantResumeException,
-            SaveLocationException;
-
-    /**
-     * Downloads an InNetwork update, using the info from the DownloadInformation.
-     */
-    public Downloader download(DownloadInformation info, long now) throws SaveLocationException;
-
 
     /**
      * Returns <code>true</code> if there already is a download with the same urn. 
@@ -193,36 +101,12 @@ public interface DownloadManager extends BandwidthTracker, SaveLocationManager, 
      */
     public boolean isSaveLocationTaken(File candidateFile);
 
-    /** 
-     * Adds all responses (and alternates) in qr to any downloaders, if
-     * appropriate.
-     */
-    public void handleQueryReply(QueryReply qr);
-
-    /**
-     * Removes downloader entirely from the list of current downloads.
-     * Notifies callback of the change in status.
-     * If completed is true, finishes the download completely.  Otherwise,
-     * puts the download back in the waiting list to be finished later.
-     *     @modifies this, callback
-     */
-    public void remove(CoreDownloader downloader, boolean completed);
-
     /**
      * Bumps the priority of an inactive download either up or down
      * by amt (if amt==0, bump to start/end of list).
      */
     public void bumpPriority(Downloader downl, boolean up, int amt);
 
-    /** 
-     * Attempts to send the given requery to provide the given downloader with 
-     * more sources to download.  May not actually send the requery if it doing
-     * so would exceed the maximum requery rate.
-     * @param query the requery to send, which should have a marked GUID.
-     *  Queries are subjected to global rate limiting iff they have marked 
-     *  requery GUIDs.
-     */
-    public void sendQuery(QueryRequest query);
 
     /** Calls measureBandwidth on each uploader. */
     public void measureBandwidth();
@@ -234,21 +118,4 @@ public interface DownloadManager extends BandwidthTracker, SaveLocationManager, 
      * returns the summed average of the downloads
      */
     public float getAverageBandwidth();
-
-    /**
-     * Returns the measured bandwidth as calculated from the last
-     * getMeasuredBandwidth() call.
-     */
-    public float getLastMeasuredBandwidth();
-
-    public Iterable<CoreDownloader> getAllDownloaders();
-    
-    /** Writes a snapshot of all downloaders in this and all incomplete files to
-     *  the file named DOWNLOAD_SNAPSHOT_FILE.  It is safe to call this method
-     *  at any time for checkpointing purposes.  Returns true iff the file was
-     *  successfully written. */
-    public void writeSnapshot();
-    
-    public CoreDownloaderFactory getCoreDownloaderFactory();
-
 }

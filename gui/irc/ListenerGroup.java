@@ -36,14 +36,14 @@ import java.util.*;
  */
 public class ListenerGroup
 {
-  private Vector _listeners;
+  private Vector<Object> _listeners;
 
   /**
    * Create a new ListenerGroup.
    */
   public ListenerGroup()
   {
-    _listeners=new Vector();
+    _listeners=new Vector<Object>();
   }
 
   /**
@@ -78,7 +78,7 @@ public class ListenerGroup
    */
   public synchronized void sendEventAsync(String method,Object[] params)
   {
-    Enumeration e=_listeners.elements();
+    Enumeration<Object> e=_listeners.elements();
     while(e.hasMoreElements())
       EventDispatcher.dispatchEventAsync(e.nextElement(),method,params);
   }
@@ -161,7 +161,7 @@ public class ListenerGroup
   {
     Object[] res=new Object[_listeners.size()];
     int i=0;
-    Enumeration e=_listeners.elements();
+    Enumeration<Object> e=_listeners.elements();
     while(e.hasMoreElements())
     {
       try

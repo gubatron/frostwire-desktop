@@ -32,4 +32,6 @@ public interface ThemeSetter {
     public ComponentUI createTreeUI(JComponent comp);
 
     public ComponentUI createTableUI(JComponent comp);
+
+    public ComponentUI createRangeSliderUI(JComponent comp);
 }

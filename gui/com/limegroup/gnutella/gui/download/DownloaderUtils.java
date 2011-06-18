@@ -12,7 +12,6 @@ import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.FileDesc;
-import com.limegroup.gnutella.IncompleteFileDesc;
 import com.limegroup.gnutella.SaveLocationException;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.FileChooserHandler;
@@ -121,11 +120,12 @@ public class DownloaderUtils {
 	 */
 	public static Downloader createDownloader(GuiDownloaderFactory factory,
 											  boolean overwrite) {
-		try {
-			return factory.createDownloader(overwrite);
-		} catch (SaveLocationException sle) {
-			return DownloaderDialog.handle(factory, sle);
-		}
+//		try {
+//			return factory.createDownloader(overwrite);
+//		} catch (SaveLocationException sle) {
+//			return DownloaderDialog.handle(factory, sle);
+//		}
+	    return null;
 	}
 
 	/**
@@ -161,8 +161,8 @@ public class DownloaderUtils {
 		if (urn == null) {
 			return null;
 		}
-		FileDesc desc = GuiCoreMediator.getFileManager().getFileDescForUrn(urn);
-		return (desc instanceof IncompleteFileDesc) ? null : desc;
+		//FileDesc desc = GuiCoreMediator.getFileManager().getFileDescForUrn(urn);
+		return null;// (desc instanceof IncompleteFileDesc) ? null : desc;
 	}
 
 	/**

@@ -13,6 +13,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -32,6 +33,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.text.BadLocationException;
 
 import org.jdesktop.swingx.JXCollapsiblePane;
+import org.limewire.setting.evt.SettingEvent;
+import org.limewire.setting.evt.SettingListener;
 
 import com.frostwire.bittorrent.websearch.SearchEnginesSettings;
 import com.limegroup.gnutella.MediaType;
@@ -46,7 +49,9 @@ import com.limegroup.gnutella.gui.actions.FileMenuActions.OpenMagnetTorrentActio
 import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.gui.xml.InputPanel;
+import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.SearchSettings;
+import com.limegroup.gnutella.settings.SharingSettings;
 
 /**
  * Inner panel that switches between the various kinds of
@@ -108,6 +113,10 @@ class SearchInputPanel extends JPanel {
     private final ActionListener SEARCH_LISTENER = new SearchListener();
 
 	private JXCollapsiblePane SEARCH_OPTIONS_COLLAPSIBLE_PANEL;
+	
+	private FilterPanel _filterPanel;
+	
+	private SettingListener SEED_FINISHED_TORRENTS_CHANGE_LISTENER;
 
     SearchInputPanel() {
         super(new BorderLayout(0, 5));
@@ -221,7 +230,34 @@ class SearchInputPanel extends JPanel {
         });
 
         search.add(GUIUtils.center(openTorrentButton));
+        search.add(Box.createVerticalStrut(10));
+        
+        final JLabel seedingDisclosureLabel = new JLabel();
+        setSeedingDisclosureText(seedingDisclosureLabel);
+
+        if (SEED_FINISHED_TORRENTS_CHANGE_LISTENER == null) {
+            SEED_FINISHED_TORRENTS_CHANGE_LISTENER = new SettingListener() {
+                public void settingChanged(SettingEvent evt) {
+                    setSeedingDisclosureText(seedingDisclosureLabel);
+                }
+            };
+            SharingSettings.SEED_FINISHED_TORRENTS.addSettingListener(SEED_FINISHED_TORRENTS_CHANGE_LISTENER);
+        }
+
+        TitledBorder titledBorder = BorderFactory.createTitledBorder(I18n.tr("Seeding Status"));
+        titledBorder.setTitleJustification(TitledBorder.CENTER);
+        seedingDisclosureLabel.setBorder(titledBorder);
+        seedingDisclosureLabel.setPreferredSize(new Dimension(165, 110));
+        search.add(GUIUtils.center(seedingDisclosureLabel));
+        
         return search;
+    }
+
+    private void setSeedingDisclosureText(final JLabel seedingDisclosure) {
+        boolean seedingStatus = SharingSettings.SEED_FINISHED_TORRENTS.getValue();
+        String SEEDING_TEXT = (seedingStatus) ? I18n.tr("<html><b>Seeding</b><p>completed torrent downloads.</html>") : I18n
+                .tr("<html><b>Not Seeding</b>.<p>File chunks might be shared only during<p>a torrent download.</html>");
+        seedingDisclosure.setText(SEEDING_TEXT);
     }
 
     /**
@@ -238,10 +274,13 @@ class SearchInputPanel extends JPanel {
         fullPanel.add(createSearchOptionsPanel());
         return GUIUtils.left(fullPanel);
     }
+    
 
     private Component createSearchOptionsPanel() {
 		SEARCH_OPTIONS_COLLAPSIBLE_PANEL = new JXCollapsiblePane();
-		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setCollapsed(true);
+		
+		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setCollapsed(ApplicationSettings.SEARCH_OPTIONS_COLLAPSED.getValue());
+		
 		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setLayout(new GridLayout(0, 1));
 		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setAnimated(true);
 		
@@ -250,40 +289,70 @@ class SearchInputPanel extends JPanel {
 		controls.setLayout(new BoxLayout(controls, BoxLayout.PAGE_AXIS));
 		final JCheckBox checkboxClearbits = new JCheckBox("Clearbits");
 		final JCheckBox checkBoxMininova = new JCheckBox("Mininova");
-		final JCheckBox checkBoxISOHunt = new JCheckBox("IsoHunt");
+		final JCheckBox checkBoxISOHunt = new JCheckBox("ISOHunt");
+		final JCheckBox checkBoxBTJunkie = new JCheckBox("BTJunkie");
+		final JCheckBox checkBoxExtratorrent = new JCheckBox("Extratorrent");
+		final JCheckBox checkBoxVertor = new JCheckBox("Vertor");
 		
 		checkboxClearbits.setSelected(SearchEnginesSettings.CLEARBITS_SEARCH_ENABLED.getValue());
         checkBoxMininova.setSelected(SearchEnginesSettings.MININOVA_SEARCH_ENABLED.getValue());
         checkBoxISOHunt.setSelected(SearchEnginesSettings.ISOHUNT_SEARCH_ENABLED.getValue());
+        checkBoxBTJunkie.setSelected(SearchEnginesSettings.BTJUNKIE_SEARCH_ENABLED.getValue());
+        checkBoxExtratorrent.setSelected(SearchEnginesSettings.EXTRATORRENT_SEARCH_ENABLED.getValue());
+        checkBoxVertor.setSelected(SearchEnginesSettings.VERTOR_SEARCH_ENABLED.getValue());
 		
 		ItemListener listener = new ItemListener() {
             public void itemStateChanged(ItemEvent e) {
                 if (!checkboxClearbits.isSelected() &&
                     !checkBoxMininova.isSelected() &&
-                    !checkBoxISOHunt.isSelected()) {
+                    !checkBoxISOHunt.isSelected() &&
+                    !checkBoxBTJunkie.isSelected() &&
+                    !checkBoxExtratorrent.isSelected() &&
+                    !checkBoxVertor.isSelected()) {
                     ((JCheckBox)e.getItemSelectable()).setSelected(true);
                 }
                 
                 SearchEnginesSettings.CLEARBITS_SEARCH_ENABLED.setValue(checkboxClearbits.isSelected());
                 SearchEnginesSettings.MININOVA_SEARCH_ENABLED.setValue(checkBoxMininova.isSelected());
                 SearchEnginesSettings.ISOHUNT_SEARCH_ENABLED.setValue(checkBoxISOHunt.isSelected());
+                SearchEnginesSettings.BTJUNKIE_SEARCH_ENABLED.setValue(checkBoxBTJunkie.isSelected());
+                SearchEnginesSettings.EXTRATORRENT_SEARCH_ENABLED.setValue(checkBoxExtratorrent.isSelected());
+                SearchEnginesSettings.VERTOR_SEARCH_ENABLED.setValue(checkBoxVertor.isSelected());
+                
+                updateSearchResults(new SearchEngineFilter());
             }
         };
 		
 		checkboxClearbits.addItemListener(listener);
 		checkBoxMininova.addItemListener(listener);
 		checkBoxISOHunt.addItemListener(listener);
+		checkBoxBTJunkie.addItemListener(listener);
+		checkBoxExtratorrent.addItemListener(listener);
+		checkBoxVertor.addItemListener(listener);
 		
 		controls.add(checkboxClearbits);
 		controls.add(checkBoxMininova);
 		controls.add(checkBoxISOHunt);
+		controls.add(checkBoxBTJunkie);
+		controls.add(checkBoxExtratorrent);
+		controls.add(checkBoxVertor);
 		
-		controls.setBorder(new TitledBorder("Choose Search Engines"));
+		controls.setBorder(new TitledBorder(I18n.tr("Choose Search Engines")));
 		
-		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.add(controls, BorderLayout.PAGE_START);
+		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.add(controls);
+		
+		_filterPanel = new FilterPanel();
+		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.add(_filterPanel);
 
 		return SEARCH_OPTIONS_COLLAPSIBLE_PANEL;
 	}
+    
+    private void updateSearchResults(TableLineFilter filter) {
+        List<ResultPanel> resultPanels = SearchMediator.getSearchResultDisplayer().getResultPanels();
+        for (ResultPanel resultPanel : resultPanels) {
+            resultPanel.filterChanged(filter, 0);
+        }
+    }
 
 	/**
      * Creates the search button & inserts it in a panel.
@@ -304,7 +373,7 @@ class SearchInputPanel extends JPanel {
         
         JButton iconButton = new JButton();
         iconButton.setAction(new ToggleSearchOptionsPanelAction());
-        iconButton.setIcon(IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_MORE"));
+        iconButton.setIcon((ApplicationSettings.SEARCH_OPTIONS_COLLAPSED.getValue()) ? IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_MORE") : IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_LESS"));
         fixIconButton(iconButton);        
         
         paddedButtonPanel.add(iconButton);
@@ -422,13 +491,37 @@ class SearchInputPanel extends JPanel {
 			
 			if (!SEARCH_OPTIONS_COLLAPSIBLE_PANEL.isCollapsed()) {
 				iconForButton = IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_LESS");
+				ApplicationSettings.SEARCH_OPTIONS_COLLAPSED.setValue(false);
 			} else {
-				iconForButton = IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_MORE");	
+				iconForButton = IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_MORE");
+				ApplicationSettings.SEARCH_OPTIONS_COLLAPSED.setValue(true);
 			}
 
 			iconButton.setIcon(iconForButton);
 			fixIconButton(iconButton);
 		}
     	
+    }
+
+    public void clearFilters() {
+        _filterPanel.clearFilters();
+    }
+
+    public void setFiltersFor(ResultPanel rp) {
+        _filterPanel.setFilterFor(rp);
+    }
+    
+    /**
+     * Resets the FilterPanel for the specified ResultPanel.
+     */
+    void panelReset(ResultPanel rp) {
+        _filterPanel.panelReset(rp);
+    }
+    
+    /**
+     * Removes the filter associated with the specified result panel.
+     */
+    boolean panelRemoved(ResultPanel rp) {
+        return _filterPanel.panelRemoved(rp);
     }
 }

@@ -16,14 +16,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
-
-import javax.swing.Box;
-import javax.swing.Icon;
-import javax.swing.JOptionPane;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,15 +25,7 @@ import org.limewire.concurrent.ExecutorsHelper;
 
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.browser.MagnetOptions;
-import com.limegroup.gnutella.gui.ButtonRow;
-import com.limegroup.gnutella.gui.CheckBoxListPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.GUIUtils;
-import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.MessageService;
-import com.limegroup.gnutella.gui.MultiLineLabel;
-import com.limegroup.gnutella.gui.CheckBoxList.TextProvider;
-import com.limegroup.gnutella.gui.download.DownloaderUtils;
 import com.limegroup.gnutella.util.QueryUtils;
 
 
@@ -55,7 +41,7 @@ public class MagnetClipboardListener extends WindowAdapter {
 	private static final MagnetClipboardListener instance = new MagnetClipboardListener();
 	
 	//the system clipboard
-	private final Clipboard CLIPBOARD = Toolkit.getDefaultToolkit().getSystemClipboard();
+	private final static Clipboard CLIPBOARD = Toolkit.getDefaultToolkit().getSystemClipboard();
 	
 	//dummy clipboard content
 	private final StringSelection empty =new StringSelection("");
@@ -78,36 +64,7 @@ public class MagnetClipboardListener extends WindowAdapter {
 	 * parse the clipboard anymore.
 	 */
 	private void parseAndLaunch() {
-	    Transferable data = null;
-    	try{
-    	//check if there's anything in the clipboard
-    		data = CLIPBOARD.getContents(this);
-    	}catch(IllegalStateException isx) {
-    		//we can't use the clipboard, give up.
-    		return;
-    	}
-    	
-    	//is there anything in the clipboard?
-    	if (data==null) 
-    		return;
-    	
-    	//then, check if the data in the clipboard is text
-    	if (!data.isDataFlavorSupported(DataFlavor.stringFlavor)) 
-    		return;
-    		
-    	
-    	//next, extract the content into a string
-    	String contents=null;
-    	
-    	try{
-    		contents = (String)data.getTransferData(DataFlavor.stringFlavor);
-    	} catch (IOException iox) {
-    		LOG.info("problem occured while trying to parse clipboard, do nothing",iox);
-    		return;
-    	} catch (UnsupportedFlavorException ufx) {
-    		LOG.error("UnsupportedFlavor??",ufx);
-    		return;
-    	} 
+	    String contents = extractStringContentFromClipboard(this); 
     	
     	//could not extract the clipboard as text.
     	if (contents == null)
@@ -190,15 +147,15 @@ public class MagnetClipboardListener extends WindowAdapter {
     	Runnable r = new Runnable() {
     		public void run() {
     			if (!showDialog) {
-    				for (MagnetOptions magnet : downloadCandidates) {
-						//TODO: DownloaderUtils.createDownloader(magnet);
-					}
+//    				for (MagnetOptions magnet : downloadCandidates) {
+//						//TODO: DownloaderUtils.createDownloader(magnet);
+//					}
     			}
     			else if (downloadCandidates.length > 0 ) {
-					List<MagnetOptions> userChosen = showStartDownloadsDialog(downloadCandidates);
-					for (MagnetOptions magnet : userChosen) {
-					  //TODO: DownloaderUtils.createDownloader(magnet);
-					}
+					//List<MagnetOptions> userChosen = showStartDownloadsDialog(downloadCandidates);
+//					for (MagnetOptions magnet : userChosen) {
+//					  //TODO: DownloaderUtils.createDownloader(magnet);
+//					}
 				}
 				boolean oneSearchStarted = false;
 				for (int i = 0; i < magnets.length; i++) {
@@ -220,6 +177,63 @@ public class MagnetClipboardListener extends WindowAdapter {
     		}
     	};
    	    GUIMediator.safeInvokeLater(r);
+	}
+	
+	public static String extractStringContentFromClipboard(Object requestor) {
+		Transferable data = null;
+    	try{
+    	//check if there's anything in the clipboard
+    		data = CLIPBOARD.getContents(requestor);
+    	}catch(IllegalStateException isx) {
+    		//we can't use the clipboard, give up.
+    		return null;
+    	}
+    	
+    	//is there anything in the clipboard?
+    	if (data==null) 
+    		return null;
+    	
+    	//then, check if the data in the clipboard is text
+    	if (!data.isDataFlavorSupported(DataFlavor.stringFlavor)) 
+    		return null;
+    		
+    	
+    	//next, extract the content into a string
+    	String contents=null;
+    	
+    	try{
+    		contents = (String)data.getTransferData(DataFlavor.stringFlavor);
+    	} catch (IOException iox) {
+    		LOG.info("problem occured while trying to parse clipboard, do nothing",iox);
+    		return null;
+    	} catch (UnsupportedFlavorException ufx) {
+    		LOG.error("UnsupportedFlavor??",ufx);
+    		return null;
+    	}
+		return contents;
+	}
+	
+	/**
+	 * @return A magnet link or torrent url. "" if the clipboard has something else.
+	 */
+	public static String getMagnetOrTorrentURLFromClipboard() {
+		String clipboardText = extractStringContentFromClipboard(null);
+		
+		if (clipboardText == null) {
+			return "";
+		}
+		
+		//if the text in the clipboard has several URLs it will only parse the first line.
+		if (clipboardText.contains("\n")) {
+			clipboardText = clipboardText.split("\n")[0].trim();
+		}
+		
+		if (clipboardText.startsWith("magnet:?xt=urn:btih:") ||
+			clipboardText.matches("^http.*\\.torrent$")) {
+			return clipboardText;
+		}
+		
+		return null;
 	}
 	
 	/**
@@ -244,52 +258,52 @@ public class MagnetClipboardListener extends WindowAdapter {
 		}
 	}
 
-    private static List<MagnetOptions> showStartDownloadsDialog(MagnetOptions[] opts) {
-		
-		CheckBoxListPanel<MagnetOptions> listPanel =
-			new CheckBoxListPanel<MagnetOptions>(Arrays.asList(opts), new MagnetOptionsTextProvider(), true);
-		listPanel.getList().setVisibleRowCount(5);
-		
-		Object[] content = new Object[] {
-				new MultiLineLabel(I18n.tr
-						   ("Would you like to start downloads from the following magnets?"), 400),
-				Box.createVerticalStrut(ButtonRow.BUTTON_SEP),
-				listPanel,
-				Box.createVerticalStrut(ButtonRow.BUTTON_SEP),
-				new MultiLineLabel(I18n.tr("All folders you select will also have their subfolders shared."), 400),
-		};
-		
-		int response = JOptionPane.showConfirmDialog
-            (MessageService.getParentComponent(), content, 
-			 I18n.tr("Message"),
-			 JOptionPane.YES_NO_OPTION);
-		
-		List<MagnetOptions> selected = listPanel.getSelectedElements();
-		
-		if (response == JOptionPane.YES_OPTION) {
-		    return selected;
-		}
-		else {
-		    return Collections.emptyList();
-		}
-	}
+//    private static List<MagnetOptions> showStartDownloadsDialog(MagnetOptions[] opts) {
+//		
+//		CheckBoxListPanel<MagnetOptions> listPanel =
+//			new CheckBoxListPanel<MagnetOptions>(Arrays.asList(opts), new MagnetOptionsTextProvider(), true);
+//		listPanel.getList().setVisibleRowCount(5);
+//		
+//		Object[] content = new Object[] {
+//				new MultiLineLabel(I18n.tr
+//						   ("Would you like to start downloads from the following magnets?"), 400),
+//				Box.createVerticalStrut(ButtonRow.BUTTON_SEP),
+//				listPanel,
+//				Box.createVerticalStrut(ButtonRow.BUTTON_SEP),
+//				new MultiLineLabel(I18n.tr("All folders you select will also have their subfolders shared."), 400),
+//		};
+//		
+//		int response = JOptionPane.showConfirmDialog
+//            (MessageService.getParentComponent(), content, 
+//			 I18n.tr("Message"),
+//			 JOptionPane.YES_NO_OPTION);
+//		
+//		List<MagnetOptions> selected = listPanel.getSelectedElements();
+//		
+//		if (response == JOptionPane.YES_OPTION) {
+//		    return selected;
+//		}
+//		else {
+//		    return Collections.emptyList();
+//		}
+//	}
 	
-	private static class MagnetOptionsTextProvider implements TextProvider<MagnetOptions> {
-		
-		public String getText(MagnetOptions magnet) {
-			String fileName = magnet.getDisplayName();
-			if (fileName == null) {
-				fileName = I18n.tr("No Filename");
-			}
-			return fileName;
-		}
-
-		public String getToolTipText(MagnetOptions magnet) {
-			return GUIUtils.restrictWidth(magnet.toString(), 400);		
-		}
-
-		public Icon getIcon(MagnetOptions magnet) {
-			return null;
-		}
-	}
+//	private static class MagnetOptionsTextProvider implements TextProvider<MagnetOptions> {
+//		
+//		public String getText(MagnetOptions magnet) {
+//			String fileName = magnet.getDisplayName();
+//			if (fileName == null) {
+//				fileName = I18n.tr("No Filename");
+//			}
+//			return fileName;
+//		}
+//
+//		public String getToolTipText(MagnetOptions magnet) {
+//			return GUIUtils.restrictWidth(magnet.toString(), 400);		
+//		}
+//
+//		public Icon getIcon(MagnetOptions magnet) {
+//			return null;
+//		}
+//	}
 }

@@ -27,23 +27,16 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.TabbedPaneUI;
 
-import org.limewire.util.DebugRunnable;
-
-import com.frostwire.gnutella.gui.Slide;
-import com.frostwire.gnutella.gui.SlideshowPanel;
-import com.frostwire.settings.UpdateManagerSettings;
-import com.limegroup.gnutella.FileManager;
+import com.frostwire.UpdateManagerSettings;
+import com.frostwire.gui.components.Slide;
+import com.frostwire.gui.components.SlideshowPanel;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.GuiCoreMediator;
-import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.ProgTabUIFactory;
 import com.limegroup.gnutella.gui.RefreshListener;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
-import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
-import com.limegroup.gnutella.settings.QuestionsHandler;
 import com.limegroup.gnutella.settings.SearchSettings;
 
 /**
@@ -136,7 +129,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
             promoSlides = new SlideshowPanel(UpdateManagerSettings.OVERLAY_SLIDESHOW_JSON_URL.getValue());
         }
         
-        if (promoSlides != null && promoSlides.hasSlides()) {
+        if (promoSlides != null) {
 	        promoSlides.setBackground(Color.WHITE);
 	        Dimension promoDimensions = new Dimension(720, 380);
 	        promoSlides.setPreferredSize(promoDimensions);
@@ -410,6 +403,10 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 	ResultPanel getPanelAtIndex(int index) {
         return entries.get(index);
 	}
+	
+	List<ResultPanel> getResultPanels() {
+	    return new ArrayList<ResultPanel>(entries);
+	}
 
 	/**
 	 * Returns the index in the list of search panels that corresponds
@@ -462,12 +459,6 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
      */
     void killSearchAtIndex(int i) {
         ResultPanel killed = entries.remove(i);
-        final GUID killedGUID = new GUID(killed.getGUID());
-        BackgroundExecutorService.schedule(new DebugRunnable(new Runnable() {
-            public void run() {
-                GuiCoreMediator.getSearchServices().stopQuery(killedGUID);
-            }
-        }));
         
         try {
             tabbedPane.removeTabAt(i);
@@ -496,21 +487,6 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
     }
 
     /**
-     * Notification that a browse host for the given GUID has failed.
-     *
-     * Removes the panel associated with that search.
-     */
-    void browseHostFailed(GUID guid) {
-        int i = getIndexForGUID(guid);
-        if (i > -1) {
-            ResultPanel rp = getPanelAtIndex(i);
-            killSearchAtIndex(i);
-            GUIMediator.showError(I18n.tr("Could not browse host {0}.", rp.getTitle()),
-                    QuestionsHandler.BROWSE_HOST_FAILED);
-        }
-    }
-
-    /**
      * @modifies spinning lime state
      * @effects If all searches are stopped, then the Lime stops spinning.
      */
@@ -520,16 +496,16 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 			return;
 		}
 			
-		ResultPanel panel;
-		long now = System.currentTimeMillis();
+//		ResultPanel panel;
+//		long now = System.currentTimeMillis();
 		
 		// Decide if we definitely can stop the lime
 		boolean stopLime = true;
-		for (int i=0; i<entries.size(); i++) {
-			panel = entries.get(i);
-            stopLime &= panel.isStopped() ||
-                        panel.calculatePercentage(now) >= 1d;
-		}
+//		for (int i=0; i<entries.size(); i++) {
+//			panel = entries.get(i);
+//            stopLime &= panel.isStopped() ||
+//                        panel.calculatePercentage(now) >= 1d;
+//		}
         
 		if ( stopLime ) {
 			GUIMediator.instance().setSearching(false);
@@ -622,8 +598,8 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
      * Returns the title of the specified ResultPanel.
      */
     private String titleOf(ResultPanel rp) {
-        int current = rp.filteredSources();
-        int total = rp.totalSources();
+        int current = rp.filteredResults();
+        int total = rp.totalResults();
         if(current < total)
             return rp.getTitle() + " ("  + current + "/" + total + ")";
         else
@@ -741,7 +717,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
          * Forwards events to the activeSearchListener.
          */
         public void stateChanged(ChangeEvent e) {
-           //_activeSearchListener.stateChanged(e);
+           _activeSearchListener.stateChanged(e);
            fixIcons();
         }
     }

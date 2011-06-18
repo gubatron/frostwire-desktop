@@ -9,8 +9,6 @@ import org.limewire.collection.IntervalSet;
 import org.limewire.io.Connectable;
 import org.limewire.io.IpPort;
 
-import com.limegroup.gnutella.downloader.serial.RemoteHostMemento;
-
 /**
  * A reference to a single file on a remote machine.  In this respect
  * RemoteFileDesc is similar to a URL, but it contains Gnutella-
@@ -260,10 +258,4 @@ public interface RemoteFileDesc extends IpPort, Connectable, FileDetails {
     public int getSecureStatus();
 
     public void setSecureStatus(int secureStatus);
-
-    /**
-     * Returns a memento that can be used for serializing this object.
-     */
-    public RemoteHostMemento toMemento();
-
 }

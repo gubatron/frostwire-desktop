@@ -40,6 +40,10 @@ import com.limegroup.gnutella.gui.GUIMediator;
 public class BaseAWTSource extends JPanel implements GUISource,SourceListener,ActionListener,PixxScrollBarListener,FocusListener,StyledListListener,WindowListener,MouseWheelPanelListener,AWTStyleSelectorExListener
 {
   /**
+     * 
+     */
+    private static final long serialVersionUID = 3685469382360871848L;
+/**
    * Enclosed source.
    */
   protected Source _source;
@@ -487,7 +491,7 @@ public class BaseAWTSource extends JPanel implements GUISource,SourceListener,Ac
       if(msg.indexOf(myNick)!=-1) return true;
     }
 
-    Enumeration e=_pixxConfiguration.getHighLightWords();
+    Enumeration<?> e=_pixxConfiguration.getHighLightWords();
     while(e.hasMoreElements())
     {
       String word=((String)(e.nextElement())).toLowerCase(java.util.Locale.ENGLISH);
@@ -505,7 +509,7 @@ public class BaseAWTSource extends JPanel implements GUISource,SourceListener,Ac
   {
     msg=msg.toLowerCase(java.util.Locale.ENGLISH);
     AudioConfiguration ac=_pixxConfiguration.getIRCConfiguration().getAudioConfiguration();
-    Enumeration e=ac.getSoundWords();
+    Enumeration<?> e=ac.getSoundWords();
     while(e.hasMoreElements())
     {
       String word=((String)(e.nextElement())).toLowerCase(java.util.Locale.ENGLISH);

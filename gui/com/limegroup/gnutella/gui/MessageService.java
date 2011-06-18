@@ -71,11 +71,15 @@ public final class MessageService {
 	 *
 	 * @param message the message to display to the user
 	 */
-	final void showError(String message) {
-    	JOptionPane.showMessageDialog(getParentComponent(), 
-                  getLabel(message),
-				  I18n.tr("Error"),
-				  JOptionPane.ERROR_MESSAGE);
+	final void showError(final String message) {
+	    GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                JOptionPane.showMessageDialog(getParentComponent(), 
+                        getLabel(message),
+                        I18n.tr("Error"),
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        });
 	}
 	
 	/**
@@ -107,14 +111,16 @@ public final class MessageService {
 	 * @param ignore the Boolean setting to store/retrieve whether or not to
 	 *  ignore this message in the future.	 
 	 */
-	final void showWarning(String message, Switch ignore) {
-	    if ( !ignore.getValue() ) {
-		    JOptionPane.showMessageDialog(getParentComponent(), 
-                      doNotDisplayAgainLabel(message, ignore),
-					  I18n.tr("Warning"),
-					  JOptionPane.WARNING_MESSAGE);
+    final void showWarning(final String message, final Switch ignore) {
+        if (!ignore.getValue()) {
+            GUIMediator.safeInvokeLater(new Runnable() {
+                public void run() {
+                    JOptionPane.showMessageDialog(getParentComponent(), doNotDisplayAgainLabel(message, ignore), I18n.tr("Warning"),
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            });
         }
-	}
+    }
 
 	/**
 	 * Display a standardly formatted warning message with
@@ -122,12 +128,12 @@ public final class MessageService {
 	 *
 	 * @param message the message to display to the user
 	 */
-	final void showWarning(String message) {
-		JOptionPane.showMessageDialog(getParentComponent(), 
-                                      getLabel(message),
-									  I18n.tr
-									  ("Warning"),
-									  JOptionPane.WARNING_MESSAGE);
+	final void showWarning(final String message) {
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                JOptionPane.showMessageDialog(getParentComponent(), getLabel(message), I18n.tr("Warning"), JOptionPane.WARNING_MESSAGE);
+            }
+        });
 	}
 	
 	
@@ -137,11 +143,12 @@ public final class MessageService {
 	 *
 	 * @param toDisplay the object to display in the message
 	 */
-	public final void showMessage(Component toDisplay) {
-		JOptionPane.showMessageDialog(getParentComponent(), 
-				  toDisplay,
-				  I18n.tr("Message"),
-				  JOptionPane.INFORMATION_MESSAGE);	
+    public final void showMessage(final Component toDisplay) {
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                JOptionPane.showMessageDialog(getParentComponent(), toDisplay, I18n.tr("Message"), JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
     }
 
 	/**
@@ -150,12 +157,13 @@ public final class MessageService {
 	 *
 	 * @param message the message to display to the user
 	 */	
-	final void showMessage(String message) {
-		JOptionPane.showMessageDialog(getParentComponent(),
-                  getLabel(message),
-				  I18n.tr("Message"),
-				  JOptionPane.INFORMATION_MESSAGE);
-	}
+    final void showMessage(final String message) {
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                JOptionPane.showMessageDialog(getParentComponent(), getLabel(message), I18n.tr("Message"), JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+    }
 	
 	/**
 	 * Display a standardly formatted information message with
@@ -166,14 +174,16 @@ public final class MessageService {
 	 * @param ignore the Boolean setting to store/retrieve whether or not to
 	 *  ignore this message in the future.
 	 */	
-	final void showMessage(String message, Switch ignore) {
-	    if ( !ignore.getValue() ) {
-    		JOptionPane.showMessageDialog(getParentComponent(),
-                      doNotDisplayAgainLabel(message, ignore),
-					  I18n.tr("Message"),
-					  JOptionPane.INFORMATION_MESSAGE);
+    final void showMessage(final String message, final Switch ignore) {
+        if (!ignore.getValue()) {
+            GUIMediator.safeInvokeLater(new Runnable() {
+                public void run() {
+                    JOptionPane.showMessageDialog(getParentComponent(), doNotDisplayAgainLabel(message, ignore), I18n.tr("Message"),
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+            });
         }
-	}	
+    }
 
     /**
      * Display a disposable message with the specified String.
@@ -201,14 +211,10 @@ public final class MessageService {
      *        May be one of ERROR_MESSAGE, WARNING_MESSAGE, INFORMATION_MESSAGE,
      *        or PLAIN_MESSAGE.
      */ 
-    final void showDisposableMessage(
-            String dialogKey,
-            String message,
-            Switch ignore,
-            int msgType) {
-        
+    final void showDisposableMessage(final String dialogKey, final String message, final Switch ignore, final int msgType) {
+
         String title;
-        switch(msgType) {
+        switch (msgType) {
         case JOptionPane.ERROR_MESSAGE:
             title = I18n.tr("Error");
             break;
@@ -222,37 +228,47 @@ public final class MessageService {
         default:
             throw new IllegalArgumentException("Unsupported Message Type: " + msgType);
         }
-        
-        if(ignore==null || !ignore.getValue()) {
-            if(_disposableMessageMap.containsKey(dialogKey)) {
-                JDialog dialog = _disposableMessageMap.get(dialogKey);
-                dialog.toFront();
-                dialog.setVisible(true);
-            } else {
-                Object component = message;
-                if(ignore != null)
-                    component = doNotDisplayAgainLabel(message, ignore);
-                JOptionPane pane = new JOptionPane(component, msgType);
-                JDialog dialog = pane.createDialog(getParentComponent(), title);
-                dialog.setModal(true);
-                _disposableMessageMap.put(dialogKey,dialog);
-                dialog.setVisible(true);
-                // dialog has been disposed by user OR by core
-                _disposableMessageMap.remove(dialogKey);            
-            }
+
+        final String finalTitle = title;
+
+        if (ignore == null || !ignore.getValue()) {
+            GUIMediator.safeInvokeLater(new Runnable() {
+                public void run() {
+                    if (_disposableMessageMap.containsKey(dialogKey)) {
+                        JDialog dialog = _disposableMessageMap.get(dialogKey);
+                        dialog.toFront();
+                        dialog.setVisible(true);
+                    } else {
+                        Object component = message;
+                        if (ignore != null)
+                            component = doNotDisplayAgainLabel(message, ignore);
+                        JOptionPane pane = new JOptionPane(component, msgType);
+                        JDialog dialog = pane.createDialog(getParentComponent(), finalTitle);
+                        dialog.setModal(true);
+                        _disposableMessageMap.put(dialogKey, dialog);
+                        dialog.setVisible(true);
+                        // dialog has been disposed by user OR by core
+                        _disposableMessageMap.remove(dialogKey);
+                    }
+                }
+            });
         }
-    };
+    }
     
     
     /**
      * Hides the disposable message specified by the dialogKey.
      */
-    final void hideDisposableMessage(String dialogKey) {
-        JDialog dialog = _disposableMessageMap.get(dialogKey);
-        if(dialog != null) {
-            dialog.setVisible(false);
-            dialog.dispose();
-        }
+    final void hideDisposableMessage(final String dialogKey) {
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                JDialog dialog = _disposableMessageMap.get(dialogKey);
+                if (dialog != null) {
+                    dialog.setVisible(false);
+                    dialog.dispose();
+                }
+            }
+        });
     }
 
 	/**
@@ -261,11 +277,12 @@ public final class MessageService {
 	 *
 	 * @param message the message to display to the user
 	 */	
-	final void showConfirmMessage(String message) {
-		JOptionPane.showConfirmDialog(getParentComponent(), 
-                      getLabel(message),
-					  I18n.tr("Message"),
-					  JOptionPane.INFORMATION_MESSAGE);
+	final void showConfirmMessage(final String message) {
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                JOptionPane.showConfirmDialog(getParentComponent(), getLabel(message), I18n.tr("Message"), JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
 	}
 	
 	/**
@@ -277,12 +294,14 @@ public final class MessageService {
 	 * @param ignore the Boolean setting to store/retrieve whether or not to
 	 *  ignore this message in the future.	 
 	 */	
-	final void showConfirmMessage(String message, Switch ignore) {
+	final void showConfirmMessage(final String message, final Switch ignore) {
 	    if ( !ignore.getValue() ) {
+	        GUIMediator.safeInvokeLater(new Runnable() {
+                public void run() {
     		JOptionPane.showConfirmDialog(getParentComponent(), 
 						  doNotDisplayAgainLabel(message, ignore),
 						  I18n.tr("Message"),
-						  JOptionPane.INFORMATION_MESSAGE);
+						  JOptionPane.INFORMATION_MESSAGE);}});
         }
 	}	
 

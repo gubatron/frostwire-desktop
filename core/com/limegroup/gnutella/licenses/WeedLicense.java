@@ -1,17 +1,14 @@
 package com.limegroup.gnutella.licenses;
 
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import org.limewire.service.ErrorService;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.http.URIUtils;
-import com.limegroup.gnutella.xml.LimeXMLUtils;
 
 /**
  * A concrete implementation of a License, for Weed licenses.

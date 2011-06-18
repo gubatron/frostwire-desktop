@@ -41,6 +41,11 @@ import org.pushingpixels.flamingo.internal.ui.common.ScrollablePanelUI;
  */
 public class JScrollablePanel<T extends JComponent> extends JPanel {
 	/**
+     * 
+     */
+    private static final long serialVersionUID = -92331809397718611L;
+
+    /**
 	 * @see #getUIClassID
 	 */
 	public static final String uiClassID = "ScrollablePanelUI";

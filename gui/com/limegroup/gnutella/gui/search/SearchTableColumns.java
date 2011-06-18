@@ -25,7 +25,7 @@ final class SearchTableColumns {
     
     static final int COUNT_IDX = 1;
     private final LimeTableColumn COUNT_COLUMN =
-        new SearchColumn(COUNT_IDX, "RESULT_PANEL_COUNT", I18n.tr("#"),
+        new SearchColumn(COUNT_IDX, "RESULT_PANEL_COUNT", I18n.tr("Seeds"),
                             24, true,  Integer.class);
                             
     static final int LICENSE_IDX = 2;

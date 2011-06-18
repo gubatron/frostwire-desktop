@@ -49,7 +49,7 @@ public class TorrentFilesTransferHandler extends LimeTransferHandler {
 			File[] files = DNDUtils.getFiles(t);
 			if (files.length > 0 && areAllTorrentFiles(files)) {
 				for (File file : files) {
-					GUIMediator.instance().openTorrent(file);
+					GUIMediator.instance().openTorrentFile(file);
 				}
 				return true;
 			}

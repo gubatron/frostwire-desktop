@@ -583,7 +583,7 @@ public class ThreadPoolExecutor extends java.util.concurrent.ThreadPoolExecutor 
      * from the queue during shutdown. The method is non-private to
      * allow access from ScheduledThreadPoolExecutor.
      */
-    final void tryTerminate() {
+    final void tryTerminate2() {
         for (;;) {
             int c = ctl.get();
             int rs = runStateOf(c);
@@ -747,7 +747,7 @@ public class ThreadPoolExecutor extends java.util.concurrent.ThreadPoolExecutor 
      * invocation of shutdown.  A no-op here, but used by
      * ScheduledThreadPoolExecutor to cancel delayed tasks.
      */
-    void onShutdown() {
+    void onShutdown2() {
     }
 
     /**
@@ -755,7 +755,7 @@ public class ThreadPoolExecutor extends java.util.concurrent.ThreadPoolExecutor 
      * enable running tasks during shutdown;
      * @param shutdownOK true if should return true if SHUTDOWN
      */
-    final boolean isRunningOrShutdown(boolean shutdownOK) {
+    final boolean isRunningOrShutdown2(boolean shutdownOK) {
         int rs = runStateOf(ctl.get());
         return rs == RUNNING || (rs == SHUTDOWN && shutdownOK);
     }
@@ -833,7 +833,7 @@ public class ThreadPoolExecutor extends java.util.concurrent.ThreadPoolExecutor 
         Thread t = w.thread;
         if (t == null) {  // Back out on ThreadFactory failure
             decrementWorkerCount();
-            tryTerminate();
+            tryTerminate2();
             return false;
         }
 
@@ -878,7 +878,7 @@ public class ThreadPoolExecutor extends java.util.concurrent.ThreadPoolExecutor 
             mainLock.unlock();
         }
 
-        tryTerminate();
+        tryTerminate2();
 
         if (!completedAbruptly) {
             int min = allowCoreThreadTimeOut ? 0 : corePoolSize;
@@ -1256,11 +1256,11 @@ public class ThreadPoolExecutor extends java.util.concurrent.ThreadPoolExecutor 
             checkShutdownAccess();
             advanceRunState(SHUTDOWN);
             interruptIdleWorkers();
-            onShutdown(); // hook for ScheduledThreadPoolExecutor
+            onShutdown2(); // hook for ScheduledThreadPoolExecutor
         } finally {
             mainLock.unlock();
         }
-        tryTerminate();
+        tryTerminate2();
     }
 
     /**
@@ -1293,7 +1293,7 @@ public class ThreadPoolExecutor extends java.util.concurrent.ThreadPoolExecutor 
         } finally {
             mainLock.unlock();
         }
-        tryTerminate();
+        tryTerminate2();
         return tasks;
     }
 
@@ -1609,7 +1609,7 @@ public class ThreadPoolExecutor extends java.util.concurrent.ThreadPoolExecutor 
             mainLock.unlock();
         }
         if (removed)
-            tryTerminate(); // In case SHUTDOWN and now empty
+            tryTerminate2(); // In case SHUTDOWN and now empty
         return removed;
     }
 
@@ -1641,7 +1641,7 @@ public class ThreadPoolExecutor extends java.util.concurrent.ThreadPoolExecutor 
 		    q.remove(r);
         }
 
-        tryTerminate(); // In case SHUTDOWN and now empty
+        tryTerminate2(); // In case SHUTDOWN and now empty
     }
 
     /* Statistics */

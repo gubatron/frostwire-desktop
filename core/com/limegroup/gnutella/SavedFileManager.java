@@ -33,8 +33,7 @@ public final class SavedFileManager implements Runnable {
        
     
     @Inject
-    SavedFileManager(UrnCache urnCache,
-                     @Named("backgroundExecutor") ScheduledExecutorService backgroundExecutor) {
+    SavedFileManager(@Named("backgroundExecutor") ScheduledExecutorService backgroundExecutor) {
         
         // TODO: move to an initialize method!
         // Run the task every three minutes, starting in 10 seconds.

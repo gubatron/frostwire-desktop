@@ -436,6 +436,7 @@ public class LimeJTable extends JTable implements JSortTable {
         int dataWidth = getDataWidth(row, colModel);
         if (columnWidth < dataWidth) {
             tips = CLIPPED_TIP;
+            stripHTMLFromTips();
             return ((DataLineModel<?, ?>)dataModel).get(row).toString() + col;
         } else {
             tips = DataUtils.EMPTY_STRING_ARRAY;
@@ -443,7 +444,25 @@ public class LimeJTable extends JTable implements JSortTable {
         }
     }
     
-    /**
+    private void stripHTMLFromTips() {
+    	if (tips==null || tips.length == 0) {
+    		return;
+    	}
+    	
+    	int i=0;
+    	for (String s : tips) {
+    		tips[i++] = stripHTML(s);
+    	}
+	}
+    
+    private String stripHTML(String html) {
+    	String clean = html.replaceAll("\\<.*?>","");
+    	clean = clean.replaceAll("&nbsp;","");
+    	clean = clean.replaceAll("&amp;","&");
+        return clean;
+    }
+ 
+	/**
      * Gets the width of the data in the specified row/column.
      *
      * @param row the row of the data

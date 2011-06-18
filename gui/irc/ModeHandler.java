@@ -37,7 +37,7 @@ import java.util.*;
 public class ModeHandler
 {
   private String _mode;
-  private Vector _parameters;
+  private Vector<String> _parameters;
   private char[][] _modes;
   private char[] _prefix;
 
@@ -62,7 +62,7 @@ public class ModeHandler
     _modes=modes;
     _prefix=prefix;
     _mode="";
-    _parameters=new Vector();
+    _parameters=new Vector<String>();
     if(mode.startsWith("+")) mode=mode.substring(1);
     apply("+"+mode);
   }

@@ -19,8 +19,7 @@ public class WindowsUtils {
      * Determines if we know how to set the login status.
      */    
     public static boolean isLoginStatusAvailable() {
-	System.out.println("****STARTUP DEBUG: Is this a supported windows or Mac? " + OSUtils.isGoodWindows());
-        return OSUtils.isGoodWindows();
+	    return OSUtils.isGoodWindows();
     }
 
     /**

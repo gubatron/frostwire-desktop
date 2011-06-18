@@ -14,7 +14,6 @@ import org.limewire.io.IpPort;
 import org.limewire.service.ErrorService;
 import org.limewire.util.ByteOrder;
 
-import com.limegroup.gnutella.search.HostData;
 import com.limegroup.gnutella.xml.LimeXMLDocument;
 
 
@@ -66,11 +65,6 @@ public class Response {
 	 * an empty array.
 	 */
     private final byte[] extBytes;
-    
-    /**
-     * The cached RemoteFileDesc created from this Response.
-     */
-    private volatile RemoteFileDesc cachedRFD;
         
     /**
      * If this is a response for a metafile, i.e. a file
@@ -291,25 +285,7 @@ public class Response {
     public boolean isVerified() {
         return verified;
     }
-    
-    /**
-     * Returns this Response as a RemoteFileDesc.
-     */
-    public RemoteFileDesc toRemoteFileDesc(HostData data){
-//        if(cachedRFD != null &&
-//           cachedRFD.getPort() == data.getPort() &&
-//           cachedRFD.getHost().equals(data.getIP()))
-//            return cachedRFD;
-//        else {
-//            RemoteFileDesc rfd = remoteFileDescFactory.createRemoteFileDesc(data.getIP(), data.getPort(), getIndex(),
-//                    getName(), getSize(), data.getClientGUID(), data.getSpeed(), data.isChatEnabled(), data.getQuality(), data.isBrowseHostEnabled(),
-//                    getDocument(), getUrns(), data.isReplyToMulticastQuery(), data.isFirewalled(), data.getVendorCode(), data.getPushProxies(), getCreateTime(),
-//                    data.getFWTVersionSupported(), data.isTLSCapable());
-//            cachedRFD = rfd;
-//            return rfd;
-//        }
-        return null;
-    }
+   
 
 	/**
 	 * Overrides equals to check that these two responses are equal.

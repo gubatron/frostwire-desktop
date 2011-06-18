@@ -47,7 +47,11 @@ import javax.swing.Icon;
 
 public class SmileyButton extends SmileyLabel implements MouseListener
 {
-	//----------------------------------------------------
+	/**
+     * 
+     */
+    private static final long serialVersionUID = -7569595727938929374L;
+    //----------------------------------------------------
 	/** Default width of 3D border around smiley.
 	 *  Currently 4.
 	 * @see SmileyLabel#setBorder
@@ -65,7 +69,7 @@ public class SmileyButton extends SmileyLabel implements MouseListener
 	 * @see SmileyLabel#getBorderColor
 	 */
 	protected static final Color defaultBorderColor =  new Color(160, 160, 160);
-	private boolean mouseIsDown = false;
+	//private boolean mouseIsDown = false;
 	//----------------------------------------------------
 	// Constructors
 	/** Create an SmileyButton with the default smiley.
@@ -160,7 +164,7 @@ public class SmileyButton extends SmileyLabel implements MouseListener
 			System.out.println("it did have an action listener\n");
 			actionListener.actionPerformed(ae);
 		}
-		mouseIsDown = false;
+		//mouseIsDown = false;
 	}
 	
 	public void mouseEntered(MouseEvent e) {
@@ -175,7 +179,7 @@ public class SmileyButton extends SmileyLabel implements MouseListener
 	
 	public void mousePressed(MouseEvent e) {
 		System.out.println("SmileyButton.mousePressed");
-		mouseIsDown = true;
+		//mouseIsDown = true;
 		Graphics g = getGraphics();
 		int border = getBorder();
 		if (hasExplicitSize())
@@ -191,7 +195,7 @@ public class SmileyButton extends SmileyLabel implements MouseListener
 	public void mouseReleased(MouseEvent e) {
 		System.out.println("SmileyButton.mouseReleased()");
 		paint(getGraphics());
-		mouseIsDown = false;
+		//mouseIsDown = false;
 	}
 	
 	public String getSmileyID()

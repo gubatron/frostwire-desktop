@@ -99,6 +99,10 @@ public class XMLParsingUtils {
      */
     public static class ParseResult extends ArrayList<Map<String, String>> {
         
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 1178244799816436535L;
         public ParseResult(int size) {
             super(size*2/3);
         }

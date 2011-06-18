@@ -39,6 +39,10 @@ public class NonFocusableButton extends JButton
 {
 
   /**
+     * 
+     */
+    private static final long serialVersionUID = 7774228150935098834L;
+/**
    * Create a new NonFocusableButton.
    */
   public NonFocusableButton()

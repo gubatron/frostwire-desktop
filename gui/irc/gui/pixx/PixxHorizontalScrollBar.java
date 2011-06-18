@@ -44,7 +44,11 @@ import java.awt.event.MouseMotionListener;
  */
 public class PixxHorizontalScrollBar extends PixxPanel implements PixxScrollBar,MouseListener,MouseMotionListener,Runnable
 {
-  private double _min;
+  /**
+     * 
+     */
+    private static final long serialVersionUID = 9126966429033134358L;
+private double _min;
   private double _max;
   private double _val;
   private boolean _mouseDown;

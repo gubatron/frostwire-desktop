@@ -3,6 +3,8 @@ package com.limegroup.gnutella.gui;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.util.EventListener;
 
 import javax.swing.Action;
 import javax.swing.Box;
@@ -95,13 +97,13 @@ public final class ButtonRow extends JPanel {
 	 */
     public ButtonRow(String[] labelKeys,
                      String[] toolTipKeys,
-                     ActionListener[] listeners) {
+                     EventListener[] listeners) {
 		this(labelKeys, toolTipKeys, listeners, null, X_AXIS, NO_GLUE);
 	}
 	
 	public ButtonRow(String[] labelKeys,
 	                 String[] toolTipKeys,
-	                 ActionListener[] listeners,
+	                 EventListener[] listeners,
 	                 String[] iconNames) {
         this(labelKeys, toolTipKeys, listeners, iconNames, X_AXIS, NO_GLUE);
     }
@@ -132,7 +134,7 @@ public final class ButtonRow extends JPanel {
      */
     public ButtonRow(String[] labelKeys,
                      String[] toolTipKeys,
-                     ActionListener[] listeners,
+                     EventListener[] listeners,
                      int orientation,
                      int glue) {
         this(labelKeys, toolTipKeys, listeners, null, orientation, glue);
@@ -140,7 +142,7 @@ public final class ButtonRow extends JPanel {
    
     public ButtonRow(String[] labelKeys,
                      String[] toolTipKeys,
-                     ActionListener[] listeners,
+                     EventListener[] listeners,
                      String[] iconNames,
                      int orientation,
                      int glue) {                        
@@ -283,14 +285,19 @@ public final class ButtonRow extends JPanel {
 	 *
 	 * @param listeners the array of listeners to assign to the buttons
 	 */
-    private void setListeners(ActionListener[] listeners) {
+    private void setListeners(EventListener[] listeners) {
         int i = 0;
         int length = _buttons.length;
         int listenLength = listeners.length;
         if(listenLength <= length) {
             while(i<length) {
-                _buttons[i].addActionListener(listeners[i]);
+            	if (listeners[i] instanceof ActionListener) {
+            		_buttons[i].addActionListener((ActionListener) listeners[i]);
+            	} else if (listeners[i] instanceof MouseAdapter) {
+            		_buttons[i].addMouseListener((MouseAdapter) listeners[i]);
+            	}
                 i++;
+            	
             }
         }
     }

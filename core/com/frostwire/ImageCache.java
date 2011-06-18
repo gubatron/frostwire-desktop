@@ -135,7 +135,7 @@ public class ImageCache {
         try {
             File file = getCacheFile(url);
             
-            if (file.exists() && file.lastModified() < date) {
+            if (file.exists()) {
                 file.delete();
             }
             
@@ -144,11 +144,12 @@ public class ImageCache {
             String ext = filename.substring(dotIndex + 1);
 
             String formatName = ImageIO.getImageReadersBySuffix(ext).next().getFormatName();
-
-            if (file.mkdirs()) {
-                ImageIO.write(image, formatName, file);
-                file.setLastModified(date);
+            
+            if (!file.getParentFile().exists()) {
+                file.mkdirs();
             }
+            ImageIO.write(image, formatName, file);
+            file.setLastModified(date);
         } catch (IOException e) {
             e.printStackTrace();
         }

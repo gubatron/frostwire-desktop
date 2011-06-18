@@ -73,7 +73,7 @@ public class EventListenerList<E> implements ListenerSupport<E>, EventBroadcaste
      *        which will result in context not being used.
      */
     public static <E> void dispatch(EventListener<E> listener, E event, EventListenerListContext context) {
-        EventListener<E> proxy = new ListenerProxy<E>(null, Objects.nonNull(listener, "listener"), context);
+        EventListener<E> proxy = new ListenerProxy<E>(Objects.nonNull(listener, "listener"), context);
         proxy.handleEvent(event);
     }
     
@@ -87,7 +87,7 @@ public class EventListenerList<E> implements ListenerSupport<E>, EventBroadcaste
     
     /** Adds the listener. */
     public void addListener(EventListener<E> listener) {
-        listenerList.add(new ListenerProxy<E>(log, Objects.nonNull(listener, "listener"), context));
+        listenerList.add(new ListenerProxy<E>(Objects.nonNull(listener, "listener"), context));
     }
     
     /** Returns true if the listener was removed. */
@@ -148,14 +148,12 @@ public class EventListenerList<E> implements ListenerSupport<E>, EventBroadcaste
     }
     
     private static final class ListenerProxy<E> implements EventListener<E> {
-        private final Log log;
         private final EventListener<E> delegate;
         private final EventListenerListContext context;
         
         private volatile DispatchStrategy strategy = DispatchStrategy.UNKNOWN;
         
-        public ListenerProxy(Log log, EventListener<E> delegate, EventListenerListContext context) {
-            this.log = log;
+        public ListenerProxy(EventListener<E> delegate, EventListenerListContext context) {
             this.delegate = delegate;
             this.context = context;
         }

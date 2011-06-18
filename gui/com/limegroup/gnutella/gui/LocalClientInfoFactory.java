@@ -1,6 +1,6 @@
 package com.limegroup.gnutella.gui;
 
-import com.limegroup.gnutella.bugs.LocalClientInfo;
+import com.limegroup.gnutella.gui.bugs.LocalClientInfo;
 
 public interface LocalClientInfoFactory {
 

@@ -13,6 +13,10 @@ import java.awt.BorderLayout;
 public class AWTChanList extends BaseAWTSource implements ChanListListener
 {
   /**
+     * 
+     */
+    private static final long serialVersionUID = -7709822829799711562L;
+/**
    * Horizontal scrollbar.
    */
   protected PixxHorizontalScrollBar _hscroll;

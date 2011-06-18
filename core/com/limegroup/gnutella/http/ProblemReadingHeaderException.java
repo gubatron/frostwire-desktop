@@ -8,6 +8,10 @@ import java.io.IOException;
 public class ProblemReadingHeaderException extends IOException {
     
     /**
+     * 
+     */
+    private static final long serialVersionUID = 7234631135836982735L;
+    /**
      * Root cause.
      */
     private final Throwable cause;

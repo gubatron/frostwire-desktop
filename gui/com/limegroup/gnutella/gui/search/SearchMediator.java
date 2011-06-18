@@ -3,41 +3,29 @@ package com.limegroup.gnutella.gui.search;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
-import org.limewire.io.Connectable;
-import org.limewire.io.ConnectableImpl;
-import org.limewire.io.IpPort;
 import org.limewire.setting.evt.SettingEvent;
 import org.limewire.setting.evt.SettingListener;
 import org.limewire.util.I18NConvert;
 import org.limewire.util.StringUtils;
 
-import com.frostwire.bittorrent.AzureusStarter;
-import com.frostwire.bittorrent.websearch.SearchEnginesSettings;
-import com.frostwire.bittorrent.websearch.WebTorrentSearch;
-import com.frostwire.bittorrent.websearch.clearbits.ClearBitsItem;
-import com.frostwire.bittorrent.websearch.clearbits.ClearBitsResponse;
-import com.frostwire.bittorrent.websearch.isohunt.ISOHuntItem;
-import com.frostwire.bittorrent.websearch.isohunt.ISOHuntResponse;
-import com.frostwire.bittorrent.websearch.mininova.MininovaVuzeItem;
-import com.frostwire.bittorrent.websearch.mininova.MininovaVuzeResponse;
-import com.frostwire.gnutella.gui.filters.SearchFilter;
-import com.frostwire.gnutella.gui.filters.SearchFilterFactory;
-import com.frostwire.gnutella.gui.filters.SearchFilterFactoryImpl;
+import com.frostwire.AzureusStarter;
+import com.frostwire.bittorrent.websearch.WebSearchResult;
+import com.frostwire.gui.filters.SearchFilter;
+import com.frostwire.gui.filters.SearchFilterFactory;
+import com.frostwire.gui.filters.SearchFilterFactoryImpl;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.RemoteFileDesc;
-import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.banner.Ad;
 import com.limegroup.gnutella.gui.banner.Banner;
-import com.limegroup.gnutella.settings.QuestionsHandler;
 import com.limegroup.gnutella.settings.SearchSettings;
 
 /**
@@ -77,32 +65,15 @@ public final class SearchMediator {
 
     static final String KILL_STRING = I18n.tr("Close Search");
 
-    static final String STOP_STRING = I18n.tr("Stop Search");
-
     static final String LAUNCH_STRING = I18n.tr("Launch Action");
 
-    static final String BROWSE_STRING = I18n.tr("Browse Host");
-
-    static final String CHAT_STRING = I18n.tr("Chat With Host");
-
     static final String REPEAT_SEARCH_STRING = I18n.tr("Repeat Search");
-
-    static final String BROWSE_HOST_STRING = I18n.tr("Browse Host");
-
-    static final String BITZI_LOOKUP_STRING = I18n.tr("Lookup File with Bitzi");
-
-    static final String BLOCK_STRING = I18n.tr("Block Hosts");
-
-    static final String MARK_AS_STRING = I18n.tr("Mark As");
-
-    static final String SPAM_STRING = I18n.tr("Junk");
-
-    static final String NOT_SPAM_STRING = I18n.tr("Not Junk");
-
-    static final String REPEAT_SEARCH_NO_CLEAR_STRING = I18n.tr("Get More Results");
-
-    /** A name of attribute, which holds a query in state of downloaded file. */
-    public static final String SEARCH_INFORMATION_KEY = "searchInformationMap";
+    
+    static final String BUY_NOW_STRING = I18n.tr("Buy this item now");
+    
+    static final String DOWNLOAD_PARTIAL_FILES_STRING = I18n.tr("Download Partial Files");
+    
+    static final String TORRENT_DETAILS_STRING = I18n.tr("Torrent Details");
 
     /**
      * Variable for the component that handles all search input from the user.
@@ -131,15 +102,15 @@ public final class SearchMediator {
         GUIMediator.addRefreshListener(getSearchResultDisplayer());
         
         // Link up the tabs of results with the filters of the input screen.
-//        getSearchResultDisplayer().setSearchListener(new ChangeListener() {
-//            public void stateChanged(ChangeEvent e) {
-//                ResultPanel panel = getSearchResultDisplayer().getSelectedResultPanel();
-//                if(panel == null)
-//                    getSearchInputManager().clearFilters();
-//                else
-//                    getSearchInputManager().setFiltersFor(panel);
-//            }
-//        });
+        getSearchResultDisplayer().setSearchListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                ResultPanel panel = getSearchResultDisplayer().getSelectedResultPanel();
+                if(panel == null)
+                    getSearchInputManager().clearFilters();
+                else
+                    getSearchInputManager().setFiltersFor(panel);
+            }
+        });
         initBanner();
     }
     
@@ -213,39 +184,22 @@ public final class SearchMediator {
             return null;
 
         // 1. Update panel with new GUID
-        byte [] guidBytes = GuiCoreMediator.getSearchServices().newQueryGUID();
+        byte [] guidBytes = newQueryGUID();
         final GUID newGuid = new GUID(guidBytes);
 
-        GuiCoreMediator.getSearchServices().stopQuery(new GUID(rp.getGUID()));
         rp.setGUID(newGuid);
         if ( clearingResults ) {
             getSearchInputManager().panelReset(rp);
         }
         
-        if(info.isBrowseHostSearch()) {
-            IpPort ipport = info.getIpPort();
-            String host = ipport.getAddress();
-            int port = ipport.getPort();
-            if(host != null && port != 0) {
-                GUIMediator.instance().setSearching(true);
-                //reBrowseHost(new ConnectableImpl(ipport, false), rp);
-            }
-        } else {
-            GUIMediator.instance().setSearching(true);
-            doSearch(guidBytes, info);
-        }
-
+        GUIMediator.instance().setSearching(true);
+        doSearch(guidBytes, info);
+        
         return guidBytes;
     }
 
-  
-
-    /**
-     * Call this when a Browse Host fails.
-     * @param guid The guid associated with this Browse. 
-     */
-    public static void browseHostFailed(GUID guid) {
-        getSearchResultDisplayer().browseHostFailed(guid);
+    private static byte[] newQueryGUID() {
+        return GUID.makeGuid();
     }
     
     /**
@@ -259,11 +213,8 @@ public final class SearchMediator {
             return null;
             
         // generate a guid for the search.
-        final byte[] guid = GuiCoreMediator.getSearchServices().newQueryGUID();
-        // only add tab if this isn't a browse-host search.
-        if(!info.isBrowseHostSearch()) {
-            addResultTab(new GUID(guid), info);
-        }
+        final byte[] guid = newQueryGUID();
+        addResultTab(new GUID(guid), info);
         
         doSearch(guid, info);
         
@@ -318,18 +269,7 @@ public final class SearchMediator {
                 return false;
             }
             
-	        // only show search messages if not doing browse host.
-	        if(!info.isBrowseHostSearch() && !searchingTorrents) {
-	            if(!GuiCoreMediator.getConnectionServices().isConnected()) {
-	                if(!GuiCoreMediator.getConnectionServices().isConnecting()) {
-	                    // if not connected or connecting, show one message.
-	                    GUIMediator.showMessage(I18n.tr("You are not connected to the network. To connect, select \"Connect\" from the \"File\" menu. Your search may not return any results until you connect."), QuestionsHandler.NO_NOT_CONNECTED);
-	                } else { 
-	                    // if attempting to connect, show another.
-	                    GUIMediator.showMessage(I18n.tr("FrostWire is currently connecting to the network. Your search may not return many results until you are fully connected to the network."), QuestionsHandler.NO_STILL_CONNECTING);
-	                }
-	            }
-	        }
+	        
 			return true;
 		}
     }
@@ -373,147 +313,56 @@ public final class SearchMediator {
      */
     private static void doSearch(final byte[] guid, final SearchInformation info) {
         final String query = info.getQuery();
-
-        //ClearBits (formerly known as LegalTorrents.com) Search Thread.
-        if (SearchEnginesSettings.CLEARBITS_SEARCH_ENABLED.getValue()) {
-	        new Thread(new Runnable() {
-	            public void run() {
-	
-	                final ResultPanel rp = getResultPanelForGUID(new GUID(guid));
-	                if (rp != null) {
-	
-	                    ClearBitsResponse response = WebTorrentSearch.searchClearBits(query);
-	
-	                    if (response != null) {
-	                        final List<SearchResult> results = normalizeClearBitsResponse(response, info);
-	
-	                        SwingUtilities.invokeLater(new Runnable() {
-	
-	                            @Override
-	                            public void run() {
-	                                SearchFilter filter = getSearchFilterFactory().createFilter();
-	                                for (SearchResult sr : results) {
-	                                    if (filter.allow(sr)) {
-	                                        getSearchResultDisplayer().addQueryResult(guid, sr, rp);
-	                                    }
-	                                }
-	                            }
-	                        });
-	                    }
-	                }
-	            }
-	        }).start();
-        }
-
-        //ISOHunt Search Thread.
-        if (SearchEnginesSettings.ISOHUNT_SEARCH_ENABLED.getValue()) {
-	        new Thread(new Runnable() {
-	            public void run() {
-	
-	                final ResultPanel rp = getResultPanelForGUID(new GUID(guid));
-	                if (rp != null) {
-	
-	                    ISOHuntResponse response = WebTorrentSearch.searchISOHunt(query);
-	
-	                    if (response != null) {
-	                        final List<SearchResult> results = normalizeISOHuntResponse(response, info);
-	
-	                        SwingUtilities.invokeLater(new Runnable() {
-	
-	                            @Override
-	                            public void run() {
-	                                SearchFilter filter = getSearchFilterFactory().createFilter();
-	                                for (SearchResult sr : results) {
-	                                    if (filter.allow(sr)) {
-	                                        getSearchResultDisplayer().addQueryResult(guid, sr, rp);
-	                                    }
-	                                }
-	                            }
-	                        });
-	                    }
-	                }
-	            }
-	        }).start();
-        }
-
-        //MininovaVuze Search Thread.
-        if (SearchEnginesSettings.MININOVA_SEARCH_ENABLED.getValue()) {
-	        new Thread(new Runnable() {
-	            public void run() {
-	
-	                final ResultPanel rp = getResultPanelForGUID(new GUID(guid));
-	                if (rp != null) {
-	
-	                    MininovaVuzeResponse response = WebTorrentSearch.searchMininovaVuze(query);
-	
-	                    if (response != null) {
-	                        final List<SearchResult> results = normalizeMininovaVuzeResponse(response, info);
-	
-	                        SwingUtilities.invokeLater(new Runnable() {
-	
-	                            @Override
-	                            public void run() {
-	                                SearchFilter filter = getSearchFilterFactory().createFilter();
-	                                for (SearchResult sr : results) {
-	                                    if (filter.allow(sr)) {
-	                                        getSearchResultDisplayer().addQueryResult(guid, sr, rp);
-	                                    }
-	                                }
-	                            }
-	                        });
-	                    }
-	                }
-	            }
-	        }).start();
+        
+        List<SearchEngine> searchEngines = SearchEngine.getSearchEngines();
+        
+        for (final SearchEngine searchEngine : searchEngines) {
+            if (searchEngine.isEnabled()) {
+                new Thread(new Runnable() {
+                    public void run() {
+        
+                        final ResultPanel rp = getResultPanelForGUID(new GUID(guid));
+                        if (rp != null) {
+                            List<WebSearchResult> webResults = searchEngine.getPerformer().search(query);
+                            
+                            if (webResults.size() > 0) {
+                                final List<SearchResult> results = normalizeWebResults(webResults, searchEngine, info);
+                                
+                                SwingUtilities.invokeLater(new Runnable() {
+                                    public void run() {
+                                        try {
+                                            SearchFilter filter = getSearchFilterFactory().createFilter();
+                                            for (SearchResult sr : results) {
+                                                if (filter.allow(sr)) {
+                                                    getSearchResultDisplayer().addQueryResult(guid, sr, rp);
+                                                }
+                                            }
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    }
+                }).start();
+            }
         }
     }
     
-    private static List<SearchResult> normalizeClearBitsResponse(ClearBitsResponse response, SearchInformation info) {
-    	
-    	List<SearchResult> result = new ArrayList<SearchResult>();
-    	
-    	if (response.results != null)
-    		for (ClearBitsItem bucket : response.results) {
-    			
-    			SearchResult sr = new ClearBitsSearchResult(bucket, info);
-    			
-    			result.add(sr);
-    		}
-    	
-    	return result;
-    }
-
-    
-    private static List<SearchResult> normalizeISOHuntResponse(ISOHuntResponse response, SearchInformation info) {
-    	
-    	List<SearchResult> result = new ArrayList<SearchResult>();
-    	
-    	if (response.items != null && response.items.list != null)
-    		for (ISOHuntItem item : response.items.list) {
-    			
-    			SearchResult sr = new ISOHuntSearchResult(item, info);
-    			
-    			result.add(sr);
-    		}
-    	
-    	return result;
-    }
-
-    private static List<SearchResult> normalizeMininovaVuzeResponse(MininovaVuzeResponse response, SearchInformation info) {
-    	
-    	List<SearchResult> result = new ArrayList<SearchResult>();
-    	
-    	if (response.results != null)
-    		for (MininovaVuzeItem item : response.results) {
-    			
-    			SearchResult sr = new MininovaVuzeSearchResult(item, info);
-    			
-    			result.add(sr);
-    		}
-    	
-    	return result;
-    }
-    
+    private static List<SearchResult> normalizeWebResults(List<WebSearchResult> webResults, SearchEngine engine, SearchInformation info) {
+        
+        List<SearchResult> result = new ArrayList<SearchResult>();
+        
+        for (WebSearchResult webResult : webResults) {
+                
+                SearchResult sr = new SearchEngineSearchResult(webResult, engine, info);
+                
+                result.add(sr);
+            }
+        
+        return result;
+    }    
     
     /**
      * Adds a single result tab for the specified GUID, type,
@@ -522,15 +371,6 @@ public final class SearchMediator {
     private static ResultPanel addResultTab(GUID guid,
                                             SearchInformation info) {
         return getSearchResultDisplayer().addResultTab(guid, info);
-    }
-    
-    /**
-     * Adds a browse host tab with the given description.
-     */
-    private static ResultPanel addBrowseHostTab(GUID guid, String desc) {
-        return getSearchResultDisplayer().addResultTab(guid, 
-            SearchInformation.createBrowseHostSearch(desc)
-        );
     }
 
     //private static HashMap<String, Character> BLACKLISTED_URNS = null;
@@ -632,16 +472,16 @@ public final class SearchMediator {
         line.takeAction(line, guid, saveDir, fileName, saveAs, searchInfo);
     }    
 
-
-    /**
-     * Prompts the user if they want to download an .exe file.
-     * Returns true s/he said yes.
-     */
-    private static boolean userWantsExeDownload() {        
-        DialogOption response = GUIMediator.showYesNoMessage(I18n.tr("One of the selected files is an executable program and could contain a virus. Are you sure you want to download it?"),
-                                            QuestionsHandler.PROMPT_FOR_EXE, DialogOption.NO);
-        return response == DialogOption.YES;
-    }
+//
+//    /**
+//     * Prompts the user if they want to download an .exe file.
+//     * Returns true s/he said yes.
+//     */
+//    private static boolean userWantsExeDownload() {        
+//        DialogOption response = GUIMediator.showYesNoMessage(I18n.tr("One of the selected files is an executable program and could contain a virus. Are you sure you want to download it?"),
+//                                            QuestionsHandler.PROMPT_FOR_EXE, DialogOption.NO);
+//        return response == DialogOption.YES;
+//    }
 
     ////////////////////////// Other Controls ///////////////////////////
 
@@ -700,14 +540,7 @@ public final class SearchMediator {
     static ResultPanel getResultPanelForGUID(GUID rguid) {
         return getSearchResultDisplayer().getResultPanelForGUID(rguid);
     }
-
-    /** @returns true if the user is still using the query results for the input
-     *  guid, else false.
-     */
-    public static boolean queryIsAlive(GUID guid) {
-        return (getResultPanelForGUID(guid) != null);
-    }
-
+    
     /**
      * Returns the search input panel component.
      *

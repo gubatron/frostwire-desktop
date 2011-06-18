@@ -28,7 +28,7 @@ import javax.swing.JTextArea;
 
 import org.limewire.util.VersionUtils;
 
-import com.limegroup.gnutella.bugs.FatalBugManager;
+import com.limegroup.gnutella.gui.bugs.FatalBugManager;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
 

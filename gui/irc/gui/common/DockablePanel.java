@@ -17,7 +17,11 @@ import javax.swing.JPanel;
  */
 public class DockablePanel extends JPanel implements WindowListener,Runnable
 {
-  private Component _comp;
+  /**
+     * 
+     */
+    private static final long serialVersionUID = -6724784129208410791L;
+private Component _comp;
   private boolean _docked;
   private JFrame _frame;
   private int _behaviour;

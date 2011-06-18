@@ -51,7 +51,7 @@ public class TorrentURITransferHandler extends LimeTransferHandler {
 			URI[] uris = DNDUtils.getURIs(t);
 			if (areAllTorrentURLs(uris)) {
 				for (URI uri : uris) {
-					GUIMediator.instance().openTorrentURI(uri);
+					GUIMediator.instance().openTorrentURI(uri.toString());
 				}
 				return true;
 			}

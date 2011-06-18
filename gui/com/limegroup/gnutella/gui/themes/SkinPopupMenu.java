@@ -1,6 +1,11 @@
 package com.limegroup.gnutella.gui.themes;
 
+import java.beans.PropertyChangeListener;
+
+import javax.swing.Action;
+import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import javax.swing.UIDefaults;
@@ -15,6 +20,35 @@ public class SkinPopupMenu extends JPopupMenu {
 	@Override
 	public void addSeparator() {
 		add(new SkinPopupMenu.Separator());
+	}
+	
+	@Override
+	public JMenuItem add(Action a) {
+	    SkinMenuItem mi = createActionComponent(a);
+        mi.setAction(a);
+        add(mi);
+        return mi;
+	}
+	
+	@Override
+	protected SkinMenuItem createActionComponent(Action a) {
+	    SkinMenuItem mi = new SkinMenuItem() {
+            /**
+             * 
+             */
+            private static final long serialVersionUID = 957774055453803270L;
+
+            protected PropertyChangeListener createActionPropertyChangeListener(Action a) {
+                PropertyChangeListener pcl = createActionChangeListener(this);
+                if (pcl == null) {
+                    pcl = super.createActionPropertyChangeListener(a);
+                }
+                return pcl;
+            }
+        };
+        mi.setHorizontalTextPosition(JButton.TRAILING);
+        mi.setVerticalTextPosition(JButton.CENTER);
+        return mi;
 	}
 
 	/**
