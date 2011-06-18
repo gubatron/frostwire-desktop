@@ -49,6 +49,7 @@ import com.limegroup.gnutella.gui.actions.FileMenuActions.OpenMagnetTorrentActio
 import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.gui.xml.InputPanel;
+import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.SearchSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
 
@@ -277,7 +278,9 @@ class SearchInputPanel extends JPanel {
 
     private Component createSearchOptionsPanel() {
 		SEARCH_OPTIONS_COLLAPSIBLE_PANEL = new JXCollapsiblePane();
-		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setCollapsed(true);
+		
+		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setCollapsed(ApplicationSettings.SEARCH_OPTIONS_COLLAPSED.getValue());
+		
 		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setLayout(new GridLayout(0, 1));
 		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setAnimated(true);
 		
@@ -370,7 +373,7 @@ class SearchInputPanel extends JPanel {
         
         JButton iconButton = new JButton();
         iconButton.setAction(new ToggleSearchOptionsPanelAction());
-        iconButton.setIcon(IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_MORE"));
+        iconButton.setIcon((ApplicationSettings.SEARCH_OPTIONS_COLLAPSED.getValue()) ? IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_MORE") : IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_LESS"));
         fixIconButton(iconButton);        
         
         paddedButtonPanel.add(iconButton);
@@ -488,8 +491,10 @@ class SearchInputPanel extends JPanel {
 			
 			if (!SEARCH_OPTIONS_COLLAPSIBLE_PANEL.isCollapsed()) {
 				iconForButton = IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_LESS");
+				ApplicationSettings.SEARCH_OPTIONS_COLLAPSED.setValue(false);
 			} else {
-				iconForButton = IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_MORE");	
+				iconForButton = IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_MORE");
+				ApplicationSettings.SEARCH_OPTIONS_COLLAPSED.setValue(true);
 			}
 
 			iconButton.setIcon(iconForButton);
