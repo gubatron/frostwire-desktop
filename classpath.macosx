@@ -4,13 +4,8 @@
 	<classpathentry kind="src" path="components/common/src/main/resources"/>
 	<classpathentry kind="src" path="components/resources/src/main/resources"/>
 	<classpathentry kind="src" output="components/common/build/classes" path="components/common/src/main/java"/>
-	<classpathentry kind="src" output="components/http/build/classes" path="components/http/src/main/java"/>
 	<classpathentry kind="src" output="components/io/build/classes" path="components/io/src/main/java"/>
-	<classpathentry kind="src" output="components/net/build/classes" path="components/net/src/main/java"/>
-	<classpathentry kind="src" output="components/nio/build/classes" path="components/nio/src/main/java"/>
-	<classpathentry kind="src" output="components/security/build/classes" path="components/security/src/main/java"/>
 	<classpathentry kind="src" output="components/setting/build/classes" path="components/setting/src/main/java"/>
-	<classpathentry kind="src" output="components/statistic/build/classes" path="components/statistic/src/main/java"/>
 	<classpathentry kind="src" path="components/azureus/src/main/java"/>
 	<classpathentry excluding="examples/*|examples/|examples/" kind="src" path="core">
 		<attributes>
