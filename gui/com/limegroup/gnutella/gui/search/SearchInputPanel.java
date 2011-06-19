@@ -476,10 +476,14 @@ class SearchInputPanel extends JPanel {
     
     private class ToggleSearchOptionsPanelAction extends AbstractAction {
 
-		/**
-         * 
-         */
-        private static final long serialVersionUID = -2415729526575357348L;
+    	private final String TOOLTIP_COLLAPSED = I18n.tr("Show search result filter controls");
+    	private final String TOOLTIP_SHOWN = I18n.tr("Hide search result filter controls");
+    	
+    	private static final long serialVersionUID = -2415729526575357348L;
+        
+        public ToggleSearchOptionsPanelAction() {
+        	putValue(SHORT_DESCRIPTION, TOOLTIP_COLLAPSED);
+		}
 
         @Override
 		public void actionPerformed(ActionEvent event) {
@@ -492,9 +496,11 @@ class SearchInputPanel extends JPanel {
 			if (!SEARCH_OPTIONS_COLLAPSIBLE_PANEL.isCollapsed()) {
 				iconForButton = IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_LESS");
 				ApplicationSettings.SEARCH_OPTIONS_COLLAPSED.setValue(false);
+				putValue(SHORT_DESCRIPTION, TOOLTIP_SHOWN);
 			} else {
 				iconForButton = IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_MORE");
 				ApplicationSettings.SEARCH_OPTIONS_COLLAPSED.setValue(true);
+				putValue(SHORT_DESCRIPTION, TOOLTIP_COLLAPSED);
 			}
 
 			iconButton.setIcon(iconForButton);
