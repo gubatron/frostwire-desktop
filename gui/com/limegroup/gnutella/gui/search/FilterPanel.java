@@ -47,7 +47,7 @@ public class FilterPanel extends JPanel {
 
         setBorder(new TitledBorder(I18n.tr("Filter Results")));
 
-        _rangeSliderSeeds = new LabeledRangeSlider("Download Sources", null, 0, 1000);
+        _rangeSliderSeeds = new LabeledRangeSlider("Seeds", null, 0, 1000);
         _rangeSliderSeeds.setPreferredSize(new Dimension(80, (int) _rangeSliderSeeds.getPreferredSize().getHeight()));
         _rangeSliderSeeds.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
@@ -56,7 +56,7 @@ public class FilterPanel extends JPanel {
         });
         add(_rangeSliderSeeds, c);
 
-        _rangeSliderSize = new LabeledRangeSlider("File Size", null, 0, 1000);
+        _rangeSliderSize = new LabeledRangeSlider("Size", null, 0, 1000);
         _rangeSliderSize.setPreferredSize(new Dimension(80, (int) _rangeSliderSize.getPreferredSize().getHeight()));
         _rangeSliderSize.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
