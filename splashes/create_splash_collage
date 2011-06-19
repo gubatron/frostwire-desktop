@@ -1,2 +1,2 @@
 #!/bin/bash
-java -classpath ./bin com.frostwire.splash.SplashCollage $1
+java -classpath ./bin:./src com.frostwire.splash.SplashCollage $1
