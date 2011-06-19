@@ -597,9 +597,9 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 			file = ltm.getFile(rows[i]);
 			// if it's a directory try to select it in the library tree
 			// if it could be selected return
-			if (file.isDirectory() 
-				&& LibraryMediator.setSelectedDirectory(file))
-				return;
+//			if (file.isDirectory() 
+//				&& LibraryMediator.setSelectedDirectory(file))
+//				return;
 		}
 		launch();
     }

@@ -25,7 +25,7 @@ final class BTDownloadActions {
     static final RemoveAction REMOVE_TORRENT_ACTION = new RemoveAction(true, false);
     static final RemoveAction REMOVE_TORRENT_AND_DATA_ACTION = new RemoveAction(true, true);
     static final CopyMagnetAction COPY_MAGNET_ACTION = new CopyMagnetAction();
-    static final CopyHashAction COPY_HASH_ACTION = new CopyHashAction();
+    static final CopyInfoHashAction COPY_HASH_ACTION = new CopyInfoHashAction();
 
     private static abstract class RefreshingAction extends AbstractAction {
 
@@ -250,17 +250,17 @@ final class BTDownloadActions {
         }
     }
     
-    private static class CopyHashAction extends RefreshingAction {
+    private static class CopyInfoHashAction extends RefreshingAction {
 
         /**
          * 
          */
         private static final long serialVersionUID = 1138409323772464985L;
 
-        public CopyHashAction() {
-            putValue(Action.NAME, I18n.tr("Copy Hash"));
-            putValue(LimeAction.SHORT_NAME, I18n.tr("Copy Hash"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Copy Hash"));
+        public CopyInfoHashAction() {
+            putValue(Action.NAME, I18n.tr("Copy Infohash"));
+            putValue(LimeAction.SHORT_NAME, I18n.tr("Copy Infohash"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Copy Infohash"));
             putValue(LimeAction.ICON_NAME, "COPY_HASH");
         }
 
