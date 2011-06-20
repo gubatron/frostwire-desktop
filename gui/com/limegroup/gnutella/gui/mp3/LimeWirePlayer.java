@@ -2,6 +2,7 @@
 package com.limegroup.gnutella.gui.mp3;
 
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import javax.swing.SwingUtilities;
 import org.limewire.concurrent.ThreadExecutor;
 
 import com.limegroup.gnutella.gui.RefreshListener;
+import com.vuze.mediaplayer.mplayer.MPlayer;
 import com.frostwire.gui.AuxMP3Player;
 
 import static com.limegroup.gnutella.gui.mp3.PlayerState.*;
@@ -150,9 +152,26 @@ public class LimeWirePlayer implements Runnable, AudioPlayer, RefreshListener {
      * Loads a AudioSource into the player to play next
      */
     public void loadSong(AudioSource source) {
-        if( source == null )
-            throw new IllegalArgumentException();
-        songBuffer.setSong(source);
+//        if( source == null )
+//            throw new IllegalArgumentException();
+//        songBuffer.setSong(source);
+        
+        MPlayer p = new MPlayer() {
+            
+            @Override
+            public void setAspectRatio(float aspectRatio) {
+                // TODO Auto-generated method stub
+                
+            }
+            
+            @Override
+            public String[] getExtraMplayerOptions() {
+                // TODO Auto-generated method stub
+                return new String[0];
+            }
+        };
+        MPlayer.initialise(new File("/usr/bin/mplayer"));
+        p.open(source.getFile().getAbsolutePath());
     }
 
     /**
