@@ -4,8 +4,8 @@ import java.io.File;
 
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.dnd.FileTransfer;
-import com.limegroup.gnutella.gui.mp3.MediaPlayerComponent;
-import com.limegroup.gnutella.gui.mp3.PlayListItem;
+import com.limegroup.gnutella.gui.player.MediaPlayerComponent;
+import com.limegroup.gnutella.gui.player.PlayListItem;
 import com.limegroup.gnutella.gui.tables.AbstractDataLine;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.SizeHolder;

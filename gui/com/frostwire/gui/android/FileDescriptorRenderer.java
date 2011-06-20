@@ -26,9 +26,9 @@ import javax.swing.JRadioButton;
 import javax.swing.ListCellRenderer;
 
 import com.frostwire.gui.components.GraphicPanel;
-import com.limegroup.gnutella.gui.mp3.AudioSource;
-import com.limegroup.gnutella.gui.mp3.LimeWirePlayer;
-import com.limegroup.gnutella.gui.mp3.PlayerState;
+import com.limegroup.gnutella.gui.player.AudioSource;
+import com.limegroup.gnutella.gui.player.LimeWirePlayer;
+import com.limegroup.gnutella.gui.player.PlayerState;
 
 public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 

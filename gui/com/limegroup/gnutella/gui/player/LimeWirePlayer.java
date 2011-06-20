@@ -1,14 +1,14 @@
 
-package com.limegroup.gnutella.gui.mp3;
+package com.limegroup.gnutella.gui.player;
 
 
-import static com.limegroup.gnutella.gui.mp3.PlayerState.PAUSED;
-import static com.limegroup.gnutella.gui.mp3.PlayerState.PLAYING;
-import static com.limegroup.gnutella.gui.mp3.PlayerState.SEEKING;
-import static com.limegroup.gnutella.gui.mp3.PlayerState.SEEKING_PAUSED;
-import static com.limegroup.gnutella.gui.mp3.PlayerState.SEEKING_PLAY;
-import static com.limegroup.gnutella.gui.mp3.PlayerState.STOPPED;
-import static com.limegroup.gnutella.gui.mp3.PlayerState.UNKNOWN;
+import static com.limegroup.gnutella.gui.player.PlayerState.PAUSED;
+import static com.limegroup.gnutella.gui.player.PlayerState.PLAYING;
+import static com.limegroup.gnutella.gui.player.PlayerState.SEEKING;
+import static com.limegroup.gnutella.gui.player.PlayerState.SEEKING_PAUSED;
+import static com.limegroup.gnutella.gui.player.PlayerState.SEEKING_PLAY;
+import static com.limegroup.gnutella.gui.player.PlayerState.STOPPED;
+import static com.limegroup.gnutella.gui.player.PlayerState.UNKNOWN;
 
 import java.io.File;
 import java.io.IOException;

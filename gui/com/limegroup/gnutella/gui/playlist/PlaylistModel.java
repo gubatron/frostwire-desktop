@@ -4,8 +4,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.limegroup.gnutella.gui.mp3.PlayList;
-import com.limegroup.gnutella.gui.mp3.PlayListItem;
+import com.limegroup.gnutella.gui.player.PlayList;
+import com.limegroup.gnutella.gui.player.PlayListItem;
 import com.limegroup.gnutella.gui.tables.BasicDataLineModel;
 
 /**

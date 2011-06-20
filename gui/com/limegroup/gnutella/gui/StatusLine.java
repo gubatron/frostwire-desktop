@@ -31,7 +31,7 @@ import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.AzureusStarter;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.limegroup.gnutella.NetworkManager;
-import com.limegroup.gnutella.gui.mp3.MediaPlayerComponent;
+import com.limegroup.gnutella.gui.player.MediaPlayerComponent;
 import com.limegroup.gnutella.gui.themes.SkinCheckBoxMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;

@@ -1,4 +1,4 @@
-package com.limegroup.gnutella.gui.mp3;
+package com.limegroup.gnutella.gui.player;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;

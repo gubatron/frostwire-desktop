@@ -48,7 +48,7 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.SpeedConstants;
-import com.limegroup.gnutella.gui.mp3.PlayListItem;
+import com.limegroup.gnutella.gui.player.PlayListItem;
 import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;

@@ -1,4 +1,4 @@
-package com.limegroup.gnutella.gui.mp3;
+package com.limegroup.gnutella.gui.player;
 
 /**
  * This event is fired by the AudioPlayer everytime the state of the player changes.
