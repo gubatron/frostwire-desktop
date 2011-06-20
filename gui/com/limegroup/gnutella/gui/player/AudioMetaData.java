@@ -30,8 +30,8 @@ public class AudioMetaData {
         return _properties.get("Genre");
     }
 
-    public long getLength() {
-        return (long) Double.parseDouble(_properties.get("ID_LENGTH"));
+    public float getLength() {
+        return Float.parseFloat(_properties.get("ID_LENGTH"));
     }
 
     public String getTitle() {

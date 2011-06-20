@@ -1,5 +1,7 @@
 package com.limegroup.gnutella.gui.player;
 
+import com.frostwire.gui.mplayer.MediaPlaybackState;
+
 /**
  * This event is fired by the AudioPlayer everytime the state of the player changes.
  * The changed state along with the updated value is passed along when applicable
@@ -9,7 +11,7 @@ public class AudioPlayerEvent {
     /**
      * Current state of the player
      */
-    private final PlayerState state;
+    private final MediaPlaybackState state;
 
     /**
      * The value that has been changed on a given component ie. current volume
@@ -22,12 +24,12 @@ public class AudioPlayerEvent {
     private final double value;
 
     
-    public AudioPlayerEvent(PlayerState state, double value) {
+    public AudioPlayerEvent(MediaPlaybackState state, double value) {
         this.value = value;
         this.state = state;
     }
 
-    public PlayerState getState() {
+    public MediaPlaybackState getState() {
         return state;
     }
 

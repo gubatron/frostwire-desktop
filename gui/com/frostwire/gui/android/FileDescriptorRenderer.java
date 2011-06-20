@@ -26,9 +26,9 @@ import javax.swing.JRadioButton;
 import javax.swing.ListCellRenderer;
 
 import com.frostwire.gui.components.GraphicPanel;
+import com.frostwire.gui.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.player.AudioSource;
 import com.limegroup.gnutella.gui.player.LimeWirePlayer;
-import com.limegroup.gnutella.gui.player.PlayerState;
 
 public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 
@@ -254,7 +254,7 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 	
 	private static void play(Device device, FileDescriptor fileDescriptor) {
 	    
-	    if (PLAYER.getStatus() == PlayerState.PLAYING && fileDescriptor.equals(LAST_PLAY)) {
+	    if (PLAYER.getStatus() == MediaPlaybackState.Playing && fileDescriptor.equals(LAST_PLAY)) {
 	        LAST_PLAY = null;
 	        AndroidMediator.instance().getDeviceExplorer().getModel().update(fileDescriptor);
 	        PLAYER.stop();

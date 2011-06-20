@@ -2,11 +2,6 @@
 package com.limegroup.gnutella.gui.player;
 
 
-import static com.limegroup.gnutella.gui.player.PlayerState.PAUSED;
-import static com.limegroup.gnutella.gui.player.PlayerState.PLAYING;
-import static com.limegroup.gnutella.gui.player.PlayerState.STOPPED;
-import static com.limegroup.gnutella.gui.player.PlayerState.UNKNOWN;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -15,6 +10,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import javax.swing.SwingUtilities;
 
 import com.frostwire.gui.mplayer.MPlayer;
+import com.frostwire.gui.mplayer.MediaPlaybackState;
 import com.frostwire.gui.mplayer.PositionListener;
 import com.limegroup.gnutella.gui.RefreshListener;
 
@@ -29,11 +25,6 @@ public class LimeWirePlayer implements AudioPlayer, RefreshListener {
      */
     private List<AudioPlayerListener> listenerList = new CopyOnWriteArrayList<AudioPlayerListener>();
        
-    /**
-     * Current state of the player
-     */
-    private volatile PlayerState playerState = UNKNOWN;
-    
     /**
      * The source that the thread is currently reading from
      */
@@ -68,8 +59,8 @@ public class LimeWirePlayer implements AudioPlayer, RefreshListener {
     /**
      * Converts the playerstate from ints to PlayerState enums
      */
-    public PlayerState getStatus() {
-        return playerState;
+    public MediaPlaybackState getStatus() {
+        return _mplayer.getCurrentState();
     }
     
     /**
@@ -86,7 +77,7 @@ public class LimeWirePlayer implements AudioPlayer, RefreshListener {
     public void playSong() {
         _mplayer.stop();
         _mplayer.open(currentSong.getFile().getAbsolutePath());
-        notifyEvent(PLAYING, -1);
+        notifyEvent(getStatus(), -1);
     }
 
     /**
@@ -94,8 +85,7 @@ public class LimeWirePlayer implements AudioPlayer, RefreshListener {
      */
     public void pause() {
         _mplayer.togglePause();
-        playerState = PAUSED;
-        notifyEvent(PAUSED, -1);
+        notifyEvent(getStatus(), -1);
     }
 
     /**
@@ -103,8 +93,7 @@ public class LimeWirePlayer implements AudioPlayer, RefreshListener {
      */
     public void unpause() {
         _mplayer.togglePause();
-        playerState = PLAYING;
-        notifyEvent(PLAYING, -1);
+        notifyEvent(getStatus(), -1);
     }
 
     /**
@@ -112,16 +101,15 @@ public class LimeWirePlayer implements AudioPlayer, RefreshListener {
      */
     public void stop() {
         _mplayer.stop();
-        playerState = STOPPED;
-        notifyEvent(STOPPED, -1);
+        notifyEvent(getStatus(), -1);
     }
     
     /**
      * Seeks to a new location in the current song
      */
-    public long seekLocation(long value) {
-        _mplayer.seek(value);
-        return value;
+    public void seek(float timeInSecs) {
+        _mplayer.seek(timeInSecs);
+        notifyEvent(getStatus(), -1);
     }
     
     /**
@@ -160,7 +148,7 @@ public class LimeWirePlayer implements AudioPlayer, RefreshListener {
      * @param value if the event was a modification such as a volume update,
      *        list the new value
      */
-    protected void notifyEvent(final PlayerState state, final double value) {
+    protected void notifyEvent(final MediaPlaybackState state, final double value) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 fireStateUpdated(new AudioPlayerEvent(state,value));
