@@ -1,8 +1,11 @@
 package com.limegroup.gnutella.gui.player;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -169,6 +172,8 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
      */
     private final Object cfnLock = new Object();
 
+    private float _progress;
+
     /**
      * Constructs a new <tt>MediaPlayerComponent</tt>.
      */
@@ -253,7 +258,7 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
         NEXT_BUTTON.addActionListener(new NextListener());
         PREV_BUTTON.addActionListener(new BackListener());
         VOLUME.addChangeListener(new VolumeSliderListener());
-        PROGRESS.addChangeListener(new ProgressBarListener());
+        PROGRESS.addMouseListener(new ProgressBarMouseAdapter());
 
     }
 
@@ -264,8 +269,7 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
         NEXT_BUTTON.removeActionListener(new NextListener());
         PREV_BUTTON.removeActionListener(new BackListener());
         VOLUME.removeChangeListener(new VolumeSliderListener());
-        PROGRESS.removeChangeListener(new ProgressBarListener());
-
+        PROGRESS.removeMouseListener(new ProgressBarMouseAdapter());
     }
 
     /**
@@ -418,7 +422,7 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
     }
 
     public void seek(float percent) {
-        if (audioProperties.isSeekable()) {
+        if (audioProperties != null && audioProperties.isSeekable()) {
             float timeInSecs = audioProperties.getLength() * percent;
             PLAYER.seek(timeInSecs);
         }
@@ -467,6 +471,8 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
      * frames that have been read, along with position and bytes read
      */
     public void progressChange(float currentTimeInSecs) {
+        
+        _progress = currentTimeInSecs;
 
         float progressUpdate = ((PROGRESS.getMaximum() * currentTimeInSecs) / audioProperties.getLength());
         setProgressValue((int) progressUpdate);
@@ -501,6 +507,7 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
             setVolumeValue();
         } else if (event.getState() == MediaPlaybackState.Stopped) {
             setProgressValue(PROGRESS.getMinimum());
+        } else if (Math.abs(_progress - audioProperties.getLength()) < 5)  {
             
             PlaylistMediator playlist = GUIMediator.getPlayList();
             if (playlist == null)
@@ -812,29 +819,10 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
      * This listener is added to the progressbar to process when the user has
      * skipped to a new part of the song with a mouse
      */
-    private class ProgressBarListener implements ChangeListener {
-
-        /**
-         * This is set to true when the user has manipulated the mouse position
-         * but has yet to "letgo" of the thumb
-         */
-        boolean dragging = false;
-        int value = 0;
-
-        /**
-         * If the user has moved the thumb and let go of it, process a skip
-         */
-        public void stateChanged(ChangeEvent arg0) {
-            if (PROGRESS.getValueIsAdjusting()) {
-                dragging = true;
-                value = PROGRESS.getValue();
-            } else {
-                if (dragging) {
-                    dragging = false;
-                    System.out.println(value * 1.0f / PROGRESS.getMaximum());
-                    seek(value * 1.0f / PROGRESS.getMaximum());
-                }
-            }
+    private class ProgressBarMouseAdapter extends MouseAdapter {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            seek(e.getX() * 1.0f / ((Component)e.getSource()).getWidth());
         }
     }
 
