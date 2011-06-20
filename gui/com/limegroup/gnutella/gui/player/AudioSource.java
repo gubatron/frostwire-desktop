@@ -19,6 +19,8 @@ public class AudioSource {
     
     private final InputStream inputStream;
     
+    private AudioMetaData metaData;
+    
     
     public AudioSource(File file){
         if( file == null )
@@ -64,5 +66,13 @@ public class AudioSource {
             } catch (MalformedURLException e) {
             }
         return null;
+    }
+    
+    public AudioMetaData getMetaData() {
+        return metaData;
+    }
+    
+    public void setMetaData(AudioMetaData metaData) {
+        this.metaData = metaData;
     }
 }

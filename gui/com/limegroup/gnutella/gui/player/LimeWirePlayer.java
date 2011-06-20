@@ -146,6 +146,7 @@ public class LimeWirePlayer implements AudioPlayer, RefreshListener {
      */
     public void loadSong(AudioSource source) {
         currentSong = source;
+        notifyOpened(source.getMetaData());
     }
 
     /**
@@ -161,22 +162,18 @@ public class LimeWirePlayer implements AudioPlayer, RefreshListener {
      * Pausing the current song
      */
     public void pause() {
-        _mplayer.pause();
-        if( !(playerState == UNKNOWN || playerState == STOPPED)){
-            playerState = PAUSED;
-            notifyEvent(PAUSED, -1);
-        }
+        _mplayer.togglePause();
+        playerState = PAUSED;
+        notifyEvent(PAUSED, -1);
     }
 
     /**
      * Unpauses the current song
      */
     public void unpause() {
-        _mplayer.play();
-        if( !(playerState == UNKNOWN || playerState == STOPPED)){
-            playerState = PLAYING;
-            notifyEvent(PLAYING, -1);
-        }
+        _mplayer.togglePause();
+        playerState = PLAYING;
+        notifyEvent(PLAYING, -1);
     }
 
     /**
@@ -184,15 +181,16 @@ public class LimeWirePlayer implements AudioPlayer, RefreshListener {
      */
     public void stop() {
         _mplayer.stop();
+        playerState = STOPPED;
+        notifyEvent(STOPPED, -1);
     }
     
     /**
      * Seeks to a new location in the current song
      */
     public long seekLocation(long value) {
-        //_mplayer.seek(timeInSecs)
-        if( !(playerState == UNKNOWN || playerState == STOPPED) ) {
-            if( playerState == PAUSED || playerState == SEEKING_PAUSED )
+        _mplayer.seek(value);
+        if( playerState == PAUSED || playerState == SEEKING_PAUSED )
                 playerState = SEEKING_PAUSED;
             else
                 playerState = SEEKING_PLAY;
@@ -200,7 +198,6 @@ public class LimeWirePlayer implements AudioPlayer, RefreshListener {
                 seekValue = value;
             }
             notifyEvent(SEEKING,value);
-        }
         return value;
     }
     
@@ -212,7 +209,7 @@ public class LimeWirePlayer implements AudioPlayer, RefreshListener {
      *         operation
      */
     public void setVolume(double fGain) {
-        //_mplayer.setv
+        _mplayer.setVolume((int)(fGain * 200));
         synchronized (volumeLock) {
             volume = fGain;
             setVolume = true;
@@ -226,10 +223,10 @@ public class LimeWirePlayer implements AudioPlayer, RefreshListener {
      * 
      * @param properties - any properties about the source that we extracted
      */
-    protected void notifyOpened(final Map<String,Object> properties){
+    protected void notifyOpened(final AudioMetaData metaData){
         SwingUtilities.invokeLater(new Runnable(){
             public void run(){
-                fireOpened(properties);
+                fireOpened(metaData);
             }
         });
     }
@@ -269,9 +266,9 @@ public class LimeWirePlayer implements AudioPlayer, RefreshListener {
      * properties map contains information about the type of song such as bit
      * rate, sample rate, media type(MPEG, Streaming,etc..), etc..
      */
-    protected void fireOpened(Map<String, Object> properties) {
+    protected void fireOpened(AudioMetaData metaData) {
         for (AudioPlayerListener listener : listenerList)
-            listener.songOpened(properties);
+            listener.songOpened(metaData);
     }
 
     /**

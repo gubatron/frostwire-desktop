@@ -45,4 +45,8 @@ public class AudioMetaData {
     public String getYear() {
         return _properties.get("Year");
     }
+
+    public boolean isSeekable() {
+        return _properties.containsKey("ID_SEEKABLE") && (Integer.parseInt(_properties.get("ID_SEEKABLE")) != 0);
+    }
 }

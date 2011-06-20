@@ -17,7 +17,7 @@ public interface AudioPlayerListener extends EventListener {
      * 
      * @param properties audio stream properties.
 	 */
-    public void songOpened(Map<String,Object> properties);
+    public void songOpened(AudioMetaData metaData);
 	
 	/**
      * Progress callback while playing.

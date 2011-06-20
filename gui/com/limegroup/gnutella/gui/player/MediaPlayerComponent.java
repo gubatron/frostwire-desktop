@@ -149,7 +149,7 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
     /**
      * Current properties of the song being played
      */
-    private Map<String,Object> audioProperties;
+    private AudioMetaData audioProperties;
 
     /**
      * The last time the scrolling song was shifted
@@ -442,19 +442,13 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
      * @param percent of the song frames to skip from begining of file
      */
     public void skip(double percent) {
-        // need to know something about the audio type to be able to skip
-//        if (audioProperties != null && audioProperties.containsKey(LimeAudioFormat.AUDIO_TYPE)) {
-//            String songType = (String) audioProperties.get(LimeAudioFormat.AUDIO_TYPE);
-//            
-//            // currently, only mp3 and wav files can be seeked upon
-//            if ( isSeekable(songType)
-//                    && audioProperties.containsKey(LimeAudioFormat.AUDIO_LENGTH_BYTES)) {
-//                final long skipBytes = Math.round((Integer) audioProperties
-//                        .get(LimeAudioFormat.AUDIO_LENGTH_BYTES)
-//                        * percent);
-//                PLAYER.seekLocation(skipBytes);
-//            }
-//        }
+
+            // currently, only mp3 and wav files can be seeked upon
+            if (audioProperties.isSeekable()) {
+                final long skipBytes = Math.round(audioProperties.getLength()
+                        * percent);
+                PLAYER.seekLocation(skipBytes);
+            }
     }
     
     private boolean isSeekable(String songType) {
@@ -488,7 +482,7 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
      * This event is thrown everytime a new song is opened and is ready to be
      * played.
      */
-    public void songOpened(Map<String, Object> properties) {
+    public void songOpened(AudioMetaData properties) {
         audioProperties = properties;
         setVolumeValue();
         // if we don't know the length of the song, hide the thumb to prevent
