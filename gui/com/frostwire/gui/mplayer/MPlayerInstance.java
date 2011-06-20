@@ -31,7 +31,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -60,10 +59,10 @@ MPlayerInstance
 		killProcesses( false );
 	}
 	
-	private PlayerPreferences preferences;
+	//private PlayerPreferences preferences;
 	
 	public MPlayerInstance(PlayerPreferences preferences) {
-		this.preferences = preferences;
+		//this.preferences = preferences;
 	}
 	
 	public static void setBinaryPath(String path) {
@@ -97,7 +96,7 @@ MPlayerInstance
 	private int	pending_sleeps;
 	private int	mute_count;
 
-	private String fileOpened;
+	//private String fileOpened;
 	
 	public void 
 	doOpen(
@@ -140,7 +139,7 @@ MPlayerInstance
 			
 		try{
 			
-			fileOpened = fileOrUrl;
+			//fileOpened = fileOrUrl;
 			
 			List<String> cmdList = new ArrayList<String>();
 			
@@ -232,10 +231,10 @@ MPlayerInstance
 						try {
 							String line;
 							while( (line = brStdOut.readLine()) != null) {
-								if ( LOG && !line.startsWith( "A:" )){
-									
-									System.out.println( "<- " + line );
-								}
+//								if ( LOG && !line.startsWith( "A:" )){
+//									
+//									System.out.println( "<- " + line );
+//								}
 								output_consumer.consume( line );
 							}
 						} catch (Exception e) {
@@ -251,11 +250,10 @@ MPlayerInstance
 						try {
 							String line;
 							while( (line = brStdErr.readLine()) != null) {
-								
-								if ( LOG && !line.startsWith( "A:" )){
-									
-									System.out.println( "<- " + line );
-								}
+//								if ( LOG && !line.startsWith( "A:" )){
+//									
+//									System.out.println( "<- " + line );
+//								}
 								output_consumer.consume( line );
 							}
 						} catch (Exception e) {

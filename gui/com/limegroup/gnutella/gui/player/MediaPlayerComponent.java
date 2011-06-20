@@ -15,8 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.service.ErrorService;
 import org.limewire.util.OSUtils;
@@ -42,11 +40,6 @@ import com.limegroup.gnutella.util.URLDecoder;
  */
 public final class MediaPlayerComponent implements AudioPlayerListener, RefreshListener, ThemeObserver {
 
-    private static final Log LOG = LogFactory.getLog(MediaPlayerComponent.class);
-
-    private static final String MP3 = "mp3";
-
-    private static final String WAVE = "wave";
 
     public static final String STREAMING_AUDIO = "Streaming Audio";
 
@@ -502,10 +495,8 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
      * OPENED->PLAYING->PAUSED->PLAYING->STOPPED->EOF, etc..
      */
     public void stateChange(AudioPlayerEvent event) {
-        System.out.println(event);
-
         if (event.getState() == MediaPlaybackState.Failed || event.getState() == MediaPlaybackState.Uninitialized) {
-            setProgressEnabled(false);
+            //setProgressEnabled(false);
         } else if (event.getState() == MediaPlaybackState.Opening) {
             setVolumeValue();
         } else if (event.getState() == MediaPlaybackState.Stopped) {
@@ -828,6 +819,7 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
          * but has yet to "letgo" of the thumb
          */
         boolean dragging = false;
+        int value = 0;
 
         /**
          * If the user has moved the thumb and let go of it, process a skip
@@ -835,13 +827,12 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
         public void stateChanged(ChangeEvent arg0) {
             if (PROGRESS.getValueIsAdjusting()) {
                 dragging = true;
+                value = PROGRESS.getValue();
             } else {
                 if (dragging) {
                     dragging = false;
-                    //if (PLAYER.getStatus() != PlayerState.SEEKING) {
-                    seek(PROGRESS.getValue() * 1.0f / PROGRESS.getMaximum());
-                    //setProgressValue(PROGRESS.getValue());
-                    //}
+                    System.out.println(value * 1.0f / PROGRESS.getMaximum());
+                    seek(value * 1.0f / PROGRESS.getMaximum());
                 }
             }
         }
