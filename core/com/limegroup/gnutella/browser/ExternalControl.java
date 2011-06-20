@@ -70,7 +70,6 @@ public class ExternalControl {
 	}
 
 	public void runQueuedControlRequest() {
-		System.out.println("ExternalControl.runQueuedControlRequest() - " + enqueuedRequest);
 		initialized = true;
 	    if ( enqueuedRequest != null ) {
 			String request   = enqueuedRequest;

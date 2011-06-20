@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -25,7 +24,6 @@ import org.limewire.util.OSUtils;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIConstants;
 import com.limegroup.gnutella.gui.GUIMediator;
-//import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.MediaButton;
 import com.limegroup.gnutella.gui.MediaSlider;
@@ -33,9 +31,9 @@ import com.limegroup.gnutella.gui.RefreshListener;
 import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
+import com.limegroup.gnutella.util.FrostWireUtils;
 import com.limegroup.gnutella.util.Tagged;
 import com.limegroup.gnutella.util.URLDecoder;
-import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * This class sets up JPanel with MediaPlayer on it, and takes care of GUI
@@ -737,16 +735,8 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
         try {
             String decodedURL = URLDecoder.decode(url);
             URL u = new URL(decodedURL);
-            Map<String,String> props = new HashMap<String,String>();
-            //props.put(PlayListItem.BITRATE, bitrateString.getValue());
-//            props.put(LimeAudioFormat.AUDIO_LENGTH_BYTES, lengthString.getValue());
-//            props.put(LimeAudioFormat.AUDIO_TYPE, "MP3");
-            props.put(PlayListItem.ARTIST, artistString.getValue());
-            if (albumString.isValid()) {
-                props.put(PlayListItem.ALBUM, albumString.getValue());
-            }
             PlayListItem song = new PlayListItem(u.toURI(), new AudioSource(u), 
-                                                 nameString.getValue(), false, props);           
+                                                 nameString.getValue(), false);           
             GUIMediator.instance().launchAudio(song);
         } catch (IOException e) {
             ErrorService.error(e, "invalid URL:" + url);
@@ -775,9 +765,8 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
         try {
             String decodedURL = URLDecoder.decode(url);
             URL u = new URL(decodedURL);
-            Map<String,String> props = new HashMap<String,String>();
             PlayListItem song = new PlayListItem(u.toURI(), new AudioSource(u), 
-                                                 name, false, props);
+                                                 name, false);
             GUIMediator.instance().launchAudio(song);
         } catch (IOException e) {
             ErrorService.error(e, "invalid URL:" + url);

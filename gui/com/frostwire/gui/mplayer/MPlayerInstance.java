@@ -31,6 +31,9 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import org.gudy.azureus2.core3.util.AESemaphore;
 import org.gudy.azureus2.core3.util.Constants;
@@ -99,7 +102,6 @@ MPlayerInstance
 	public void 
 	doOpen(
 		String 					fileOrUrl,
-		String[]				extraArgs,
 		final OutputConsumer	_outputConsumer )
 	{
 		synchronized( this ){
@@ -193,12 +195,6 @@ MPlayerInstance
 //			
 //			cmdList.add("-framedrop");
 			
-			
-			
-			for(String arg : extraArgs) {
-				cmdList.add(arg);
-			}
-			
 			//Set the volume at 0 as we load, as we don't want to hear sound before we resize / seek.
 			//cmdList.add("-volume");
 			//cmdList.add("0");
@@ -207,17 +203,17 @@ MPlayerInstance
 			
 			String[] cmd = cmdList.toArray(new String[cmdList.size()]);
 			
-			for(int i = 0 ; i < cmd.length ; i++) {
-				if(cmd[i].contains(" ")) {
-					System.out.print("\"");
-				}
-				System.out.print(cmd[i]);
-				if(cmd[i].contains(" ")) {
-					System.out.print("\"");
-				}
-				System.out.print(" ");
-			}
-			System.out.println("\n");
+//			for(int i = 0 ; i < cmd.length ; i++) {
+//				if(cmd[i].contains(" ")) {
+//					System.out.print("\"");
+//				}
+//				System.out.print(cmd[i]);
+//				if(cmd[i].contains(" ")) {
+//					System.out.print("\"");
+//				}
+//				System.out.print(" ");
+//			}
+//			System.out.println("\n");
 			
 			
 			try {
@@ -906,4 +902,82 @@ MPlayerInstance
 		consume(
 			String		output );
 	}
+
+    public void doGetProperties(String fileOrUrl, final OutputConsumer _outputConsumer) {
+        final OutputConsumer output_consumer = new OutputConsumer() {
+            public void consume(String output) {
+                _outputConsumer.consume(output);
+            }
+        };
+
+        try {
+            
+            final CountDownLatch signal = new CountDownLatch(1);
+
+            List<String> cmdList = new ArrayList<String>();
+
+            cmdList.add(BINARY_PATH.getAbsolutePath());
+
+            cmdList.add("-slave");
+            cmdList.add("-identify");
+            cmdList.add("-prefer-ipv4");
+            cmdList.add("-osdlevel");
+            cmdList.add("0");
+            cmdList.add("-noautosub");
+            cmdList.add("-vo");
+            cmdList.add("null");
+            cmdList.add("-ao");
+            cmdList.add("null");
+            cmdList.add("-frames");
+            cmdList.add("0");
+
+            cmdList.add(fileOrUrl);
+
+            String[] cmd = cmdList.toArray(new String[cmdList.size()]);
+
+//            for (int i = 0; i < cmd.length; i++) {
+//                if (cmd[i].contains(" ")) {
+//                    System.out.print("\"");
+//                }
+//                System.out.print(cmd[i]);
+//                if (cmd[i].contains(" ")) {
+//                    System.out.print("\"");
+//                }
+//                System.out.print(" ");
+//            }
+//            System.out.println("\n");
+
+            try {
+                InputStream stdOut = Runtime.getRuntime().exec(cmd).getInputStream();
+
+                final BufferedReader brStdOut = new BufferedReader(new InputStreamReader(stdOut));
+
+                Thread stdOutReader = new Thread("Player Console Out Reader") {
+                    public void run() {
+                        try {
+                            String line;
+                            while ((line = brStdOut.readLine()) != null) {
+                                if (line.startsWith("ID_EXIT")) {
+                                    signal.countDown();
+                                    break;
+                                }
+                                output_consumer.consume(line);
+                            }
+                        } catch (Exception e) {
+                            //e.printStackTrace();
+                        }
+                    };
+                };
+                stdOutReader.setDaemon(true);
+                stdOutReader.start();
+                
+                signal.await(2, TimeUnit.SECONDS);
+
+            } catch (Throwable e) {
+
+                e.printStackTrace();
+            }
+        } finally {
+        }
+    }
 }

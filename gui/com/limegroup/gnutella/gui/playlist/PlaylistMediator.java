@@ -14,7 +14,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.AbstractButton;
 import javax.swing.Box;
@@ -376,9 +375,8 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
      * @param isFile - true if this url is on local file system, false otherwise
      * @param map - contains the meta data to display in the playlist
      */
-    public void addFileToPlaylist(final URL url, final String name, final boolean isFile, 
-             final Map<String,String> map) {
-        addFileToPlaylist(url, name, isFile, map, -1);
+    public void addFileToPlaylist(final URL url, final String name, final boolean isFile) {
+        addFileToPlaylist(url, name, isFile, -1);
     }
     
     /**
@@ -390,12 +388,11 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
      * @param map - contains meta data to display in the playlist
      * @param index - index to add the playlist item
      */
-    public void addFileToPlaylist(final URL url, final String name, final boolean isFile, 
-            final Map<String,String> map, final int index) {
+    public void addFileToPlaylist(final URL url, final String name, final boolean isFile, final int index) {
         BackgroundExecutorService.schedule(new Runnable() {
             public void run(){
                 try {
-                    addFileToPlayList(new PlayListItem(url.toURI(), new AudioSource(url),name, isFile, map), index);
+                    addFileToPlayList(new PlayListItem(url.toURI(), new AudioSource(url),name, isFile), index);
                 } catch (URISyntaxException e) {
                     //TODO: notify user about failure
                 }

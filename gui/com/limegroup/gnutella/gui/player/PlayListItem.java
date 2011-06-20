@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.limewire.util.CommonUtils;
 
+import com.frostwire.gui.mplayer.MPlayer;
 import com.limegroup.gnutella.gui.I18n;
 
 /**
@@ -32,7 +33,6 @@ public class PlayListItem implements Comparable<PlayListItem>{
     public static final String TRACK = "Track";
     public static final String TYPE = "Type";
     public static final String YEAR = "Year";
-    public static final String VBR = "VBR";
     
     /**
      * Location of the audio source
@@ -89,38 +89,18 @@ public class PlayListItem implements Comparable<PlayListItem>{
      * @param audioSource - source to pass to the music player
      * @param name - default name to display if no other information is available
      * @param isLocal - true if the source is a file and stored locally
-     */
-    public PlayListItem(URI uri, AudioSource audioSource, String name, boolean isLocal){
-        this(uri,audioSource, name, isLocal, null);
-    }
-    
-    /**
-     * creates a playlistitem instance. Creation of a PlayListItem will
-     * often result in disk access or possibly network access to obtain
-     * the ID3 tag. This should never be instantiated on the swing event
-     * queue
-     * 
-     * @param url - location of the audio source
-     * @param audioSource - source to pass to the music player
-     * @param name - default name to display if no other information is available
-     * @param isLocal - true if the source is a file and stored locally
      * @param properties - meta data about the song such as Artist, Album, Track, etc.
      *              The map is stored as a reference and not a copy so changes outside
      *              will be reflected in the playlist table
      */
-    public PlayListItem(URI uri, AudioSource audioSource, String name, boolean isLocal, Map<String,String> properties){
+    public PlayListItem(URI uri, AudioSource audioSource, String name, boolean isLocal){
         if( uri == null || name == null )
             throw new IllegalArgumentException();
         this.uri = uri;
         this.audioSource = audioSource;
         this.name = name;
         this.isLocal = isLocal;
-        if( properties == null )
-            this.properties = new HashMap<String,String>();
-        else
-            this.properties = properties;
-        
-        // try and get any missing meta data
+        this.properties = new HashMap<String,String>();
         initMetaData();
     }
 
@@ -129,33 +109,28 @@ public class PlayListItem implements Comparable<PlayListItem>{
      * file. This updates any missing data in the properties map that
      * was not passed in to the constructor
      */
-    private void initMetaData(){
+    public void initMetaData(){
         //if is a file, try to read ID3 tag to fill in missing meta data
         if( isLocal ){
             try {
                 File file = new File(uri);
-//                MetaReader data = GuiCoreMediator.getMetaDataFactory().parse(file);
-//                // if we can't parse this file type return
-//                if(data == null)
-//                    return;
+                MPlayer mplayer = new MPlayer();
+                Map<String, String> props = mplayer.getProperties(file.getAbsolutePath());
 //                
-                AudioMetaData amd = new AudioMetaData();// (AudioMetaData) data.getMetaData();
-                // if it has no meta data we can read just return
-//                if(amd == null)
-//                    return;                
+                AudioMetaData amd = new AudioMetaData(props);            
                 if( !properties.containsKey(ARTIST))
                     properties.put(ARTIST, amd.getArtist());
                 if( !properties.containsKey(ALBUM))
                     properties.put(ALBUM, amd.getAlbum());
                 if( !properties.containsKey(BITRATE))
-                    properties.put(BITRATE, Integer.toString(amd.getBitrate()));
+                    properties.put(BITRATE, amd.getBitrate());
                 if( !properties.containsKey(COMMENT))
                     properties.put(COMMENT, amd.getComment());
                 if( !properties.containsKey(GENRE) && amd.getGenre() != null &&
                         amd.getGenre().length() > 0)
                     properties.put(GENRE, amd.getGenre());
                 if( !properties.containsKey(LENGTH))
-                    properties.put(LENGTH, Integer.toString(amd.getLength()));
+                    properties.put(LENGTH, CommonUtils.seconds2time(amd.getLength()));
                 if( !properties.containsKey(SIZE))
                     properties.put(SIZE, Long.toString(file.length()));
                 if( !properties.containsKey(TITLE))
@@ -171,8 +146,6 @@ public class PlayListItem implements Comparable<PlayListItem>{
                     properties.put(TIME, CommonUtils.seconds2time(amd.getLength()));
                 else
                     properties.put(TIME, "-1");
-                if( !properties.containsKey(VBR))
-                    properties.put(VBR, Boolean.toString(amd.isVBR()));
                 
             } catch (Exception e) { //dont catch
             }
@@ -260,7 +233,7 @@ public class PlayListItem implements Comparable<PlayListItem>{
             if( properties.get(TIME) != null )
                 allData.add(I18n.tr("Length") + ": " + properties.get(TIME));
             if( properties.get(BITRATE) != null )
-                allData.add(I18n.tr("Bitrate") + ": " + properties.get(BITRATE) + " kbps" + (properties.get(VBR).equals("true") ? " (VBR)" : "") );
+                allData.add(I18n.tr("Bitrate") + ": " + properties.get(BITRATE) + " kbps");
             
             toolTips = allData.toArray( new String[allData.size()]);
         }

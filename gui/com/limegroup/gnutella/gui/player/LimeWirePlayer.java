@@ -117,20 +117,7 @@ public class LimeWirePlayer implements AudioPlayer, RefreshListener {
 
     public LimeWirePlayer() {
         MPlayer.initialise(new File("/usr/bin/mplayer"));
-        _mplayer = new MPlayer() {
-            
-            @Override
-            public void setAspectRatio(float aspectRatio) {
-                // TODO Auto-generated method stub
-                
-            }
-            
-            @Override
-            public String[] getExtraMplayerOptions() {
-                // TODO Auto-generated method stub
-                return new String[0];
-            }
-        };
+        _mplayer = new MPlayer();
     }
 
     /**

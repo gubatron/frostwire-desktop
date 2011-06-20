@@ -2,9 +2,10 @@ package com.frostwire.gui.mplayer;
 
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -13,7 +14,7 @@ import org.gudy.azureus2.core3.util.Debug;
 
 
 
-public abstract class MPlayer extends BaseMediaPlayer {
+public class MPlayer extends BaseMediaPlayer {
 
 	public static void initialise(File path) {
 		MPlayerInstance.initialise(path);
@@ -139,16 +140,16 @@ public abstract class MPlayer extends BaseMediaPlayer {
 			reportPosition(time);
 		} else		
 		if(line.startsWith("VIDEO:")) {
-			Pattern p = Pattern.compile(".*?([0-9]+)x([0-9]+).*?");
-			Matcher m = p.matcher(line);
-			if(m.matches()) {
-				int width = Integer.parseInt(m.group(1));
-				int height = Integer.parseInt(m.group(2));
-				
-				if(metaDataListener != null) {
-					setAspectRatio((float)width / (float)height);
-				}
-			}
+//			Pattern p = Pattern.compile(".*?([0-9]+)x([0-9]+).*?");
+//			Matcher m = p.matcher(line);
+//			if(m.matches()) {
+//				int width = Integer.parseInt(m.group(1));
+//				int height = Integer.parseInt(m.group(2));
+//				
+//				if(metaDataListener != null) {
+//					setAspectRatio((float)width / (float)height);
+//				}
+//			}
 		} else
 		if(line.startsWith("Starting playback...")) {
 			//Ok, so the file is initialized, let's gather information
@@ -209,14 +210,14 @@ public abstract class MPlayer extends BaseMediaPlayer {
 			}
 		} else
 		if(line.startsWith(ID_VIDEO_ASPECT)) {
-			try {
-				float aspect = Float.parseFloat(line.substring(ID_VIDEO_ASPECT.length()));
-				if(aspect > 0) {
-					setAspectRatio(aspect);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+//			try {
+//				float aspect = Float.parseFloat(line.substring(ID_VIDEO_ASPECT.length()));
+//				if(aspect > 0) {
+//					setAspectRatio(aspect);
+//				}
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
 		} else
 		if(line.startsWith(ANS_WIDTH)) {
 			try {
@@ -426,10 +427,6 @@ public abstract class MPlayer extends BaseMediaPlayer {
 		}
 	}
 	
-	public abstract String[] getExtraMplayerOptions();
-	public abstract void setAspectRatio(float aspectRatio);
-
-	
 	public void 
 	doOpen(
 		String fileOrUrl ) 
@@ -450,8 +447,7 @@ public abstract class MPlayer extends BaseMediaPlayer {
 		firstVolumeReceived = false;
 		
 		instance.doOpen( 
-			fileOrUrl, 
-			getExtraMplayerOptions(),
+			fileOrUrl,
 			new MPlayerInstance.OutputConsumer()
 			{
 				public void
@@ -682,4 +678,27 @@ public abstract class MPlayer extends BaseMediaPlayer {
 		
 		doStop();
 	}
+
+    @Override
+    public Map<String, String> getProperties(String fileOrUrl) {
+        MPlayerInstance instance = new MPlayerInstance(null);
+        final Map<String, String> properties = new HashMap<String, String>();
+        instance.doGetProperties(fileOrUrl, new MPlayerInstance.OutputConsumer() {
+            private String lastKey = null;
+            public void consume(String line) {
+                if (line.startsWith("ID_CLIP_INFO_NAME")) {
+                    lastKey = line.split("=")[1];
+                } else if (line.startsWith("ID_CLIP_INFO_VALUE")) {
+                    if (lastKey != null) {
+                        properties.put(lastKey, line.split("=")[1]);
+                        lastKey = null;
+                    }
+                } else if (line.startsWith("ID_")){
+                    String[] kv = line.split("=");
+                    properties.put(kv[0], kv[1]);
+                }
+            }
+        });
+        return properties;
+    }
 }

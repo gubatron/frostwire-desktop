@@ -1,55 +1,48 @@
 package com.limegroup.gnutella.gui.player;
 
+import java.util.Map;
+
 public class AudioMetaData {
 
+    private Map<String, String> _properties;
+
+    public AudioMetaData(Map<String, String> props) {
+        _properties = props;
+    }
+
     public String getArtist() {
-        // TODO Auto-generated method stub
-        return null;
+        return _properties.get("Artist");
     }
 
     public String getAlbum() {
-        // TODO Auto-generated method stub
-        return null;
+        return _properties.get("Album");
     }
 
-    public int getBitrate() {
-        // TODO Auto-generated method stub
-        return 0;
+    public String getBitrate() {
+        return _properties.get("ID_AUDIO_BITRATE");
     }
 
     public String getComment() {
-        // TODO Auto-generated method stub
-        return null;
+        return _properties.get("Comment");
     }
 
     public String getGenre() {
-        // TODO Auto-generated method stub
-        return null;
+        return _properties.get("Genre");
     }
 
-    public int getLength() {
-        // TODO Auto-generated method stub
-        return 0;
+    public long getLength() {
+        return (long) Double.parseDouble(_properties.get("ID_LENGTH"));
     }
 
     public String getTitle() {
-        // TODO Auto-generated method stub
-        return null;
+        return _properties.get("Title");
     }
 
     public String getTrack() {
-        // TODO Auto-generated method stub
-        return null;
+        return _properties.get("Track");
     }
 
     public String getYear() {
-        // TODO Auto-generated method stub
-        return null;
+        return _properties.get("Year");
     }
-
-    public boolean isVBR() {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
 }
