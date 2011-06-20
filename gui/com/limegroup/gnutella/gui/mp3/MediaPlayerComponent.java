@@ -445,18 +445,18 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
      */
     public void skip(double percent) {
         // need to know something about the audio type to be able to skip
-        if (audioProperties != null && audioProperties.containsKey(LimeAudioFormat.AUDIO_TYPE)) {
-            String songType = (String) audioProperties.get(LimeAudioFormat.AUDIO_TYPE);
-            
-            // currently, only mp3 and wav files can be seeked upon
-            if ( isSeekable(songType)
-                    && audioProperties.containsKey(LimeAudioFormat.AUDIO_LENGTH_BYTES)) {
-                final long skipBytes = Math.round((Integer) audioProperties
-                        .get(LimeAudioFormat.AUDIO_LENGTH_BYTES)
-                        * percent);
-                PLAYER.seekLocation(skipBytes);
-            }
-        }
+//        if (audioProperties != null && audioProperties.containsKey(LimeAudioFormat.AUDIO_TYPE)) {
+//            String songType = (String) audioProperties.get(LimeAudioFormat.AUDIO_TYPE);
+//            
+//            // currently, only mp3 and wav files can be seeked upon
+//            if ( isSeekable(songType)
+//                    && audioProperties.containsKey(LimeAudioFormat.AUDIO_LENGTH_BYTES)) {
+//                final long skipBytes = Math.round((Integer) audioProperties
+//                        .get(LimeAudioFormat.AUDIO_LENGTH_BYTES)
+//                        * percent);
+//                PLAYER.seekLocation(skipBytes);
+//            }
+//        }
     }
     
     private boolean isSeekable(String songType) {
@@ -495,12 +495,12 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
         setVolumeValue();
         // if we don't know the length of the song, hide the thumb to prevent
         // skipping
-        if (audioProperties.containsKey(LimeAudioFormat.AUDIO_LENGTH_BYTES) && 
-                isSeekable((String) audioProperties.get(LimeAudioFormat.AUDIO_TYPE))) {
-            setProgressEnabled(true);
-        } else {
-            setProgressEnabled(false);
-        }
+//        if (audioProperties.containsKey(LimeAudioFormat.AUDIO_LENGTH_BYTES) && 
+//                isSeekable((String) audioProperties.get(LimeAudioFormat.AUDIO_TYPE))) {
+//            setProgressEnabled(true);
+//        } else {
+//            setProgressEnabled(false);
+//        }
         
         // notify the playlist to repaint since a new song has started playing
         GUIMediator.getPlayList().playStarted();
@@ -512,16 +512,16 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
      */
     public void progressChange(int bytesread) {
 
-        // if we know the length of the song, update the progress bar
-        if (audioProperties.containsKey(LimeAudioFormat.AUDIO_LENGTH_BYTES)) {
-            int byteslength = ((Integer) audioProperties.get(LimeAudioFormat.AUDIO_LENGTH_BYTES))
-                    .intValue();
-
-            float progressUpdate = bytesread * 1.0f / byteslength * 1.0f;
-
-            if (!(PROGRESS.getValueIsAdjusting() || PLAYER.getStatus() == PlayerState.SEEKING))
-                setProgressValue((int) (PROGRESS.getMaximum() * progressUpdate));
-        }
+//        // if we know the length of the song, update the progress bar
+//        if (audioProperties.containsKey(LimeAudioFormat.AUDIO_LENGTH_BYTES)) {
+//            int byteslength = ((Integer) audioProperties.get(LimeAudioFormat.AUDIO_LENGTH_BYTES))
+//                    .intValue();
+//
+//            float progressUpdate = bytesread * 1.0f / byteslength * 1.0f;
+//
+//            if (!(PROGRESS.getValueIsAdjusting() || PLAYER.getStatus() == PlayerState.SEEKING))
+//                setProgressValue((int) (PROGRESS.getMaximum() * progressUpdate));
+//        }
 
         // if the display name is too long, increment it
         // TODO: this should be replaced by the TimingFramework Animator
@@ -739,8 +739,8 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
             URL u = new URL(decodedURL);
             Map<String,String> props = new HashMap<String,String>();
             //props.put(PlayListItem.BITRATE, bitrateString.getValue());
-            props.put(LimeAudioFormat.AUDIO_LENGTH_BYTES, lengthString.getValue());
-            props.put(LimeAudioFormat.AUDIO_TYPE, "MP3");
+//            props.put(LimeAudioFormat.AUDIO_LENGTH_BYTES, lengthString.getValue());
+//            props.put(LimeAudioFormat.AUDIO_TYPE, "MP3");
             props.put(PlayListItem.ARTIST, artistString.getValue());
             if (albumString.isValid()) {
                 props.put(PlayListItem.ALBUM, albumString.getValue());

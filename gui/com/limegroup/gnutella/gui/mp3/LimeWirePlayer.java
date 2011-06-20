@@ -2,23 +2,24 @@
 package com.limegroup.gnutella.gui.mp3;
 
 
+import static com.limegroup.gnutella.gui.mp3.PlayerState.PAUSED;
+import static com.limegroup.gnutella.gui.mp3.PlayerState.PLAYING;
+import static com.limegroup.gnutella.gui.mp3.PlayerState.SEEKING;
+import static com.limegroup.gnutella.gui.mp3.PlayerState.SEEKING_PAUSED;
+import static com.limegroup.gnutella.gui.mp3.PlayerState.SEEKING_PLAY;
+import static com.limegroup.gnutella.gui.mp3.PlayerState.STOPPED;
+import static com.limegroup.gnutella.gui.mp3.PlayerState.UNKNOWN;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.SwingUtilities;
 
-import org.limewire.concurrent.ThreadExecutor;
-
-import com.limegroup.gnutella.gui.RefreshListener;
-import com.frostwire.gui.AuxMP3Player;
 import com.frostwire.gui.mplayer.MPlayer;
-
-import static com.limegroup.gnutella.gui.mp3.PlayerState.*;
+import com.limegroup.gnutella.gui.RefreshListener;
 
 /**
  *  An audio player to play compressed and uncompressed music.
