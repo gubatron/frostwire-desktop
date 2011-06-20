@@ -502,7 +502,11 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
      * This event is thrown a number of times a second. It updates the current
      * frames that have been read, along with position and bytes read
      */
-    public void progressChange(int bytesread) {
+    public void progressChange(float currentTimeInSecs) {
+        
+        float progressUpdate = ((PROGRESS.getMaximum() * currentTimeInSecs) / audioProperties.getLength());
+        setProgressValue((int) progressUpdate);
+        
 
 //        // if we know the length of the song, update the progress bar
 //        if (audioProperties.containsKey(LimeAudioFormat.AUDIO_LENGTH_BYTES)) {

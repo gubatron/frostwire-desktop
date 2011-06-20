@@ -4,120 +4,51 @@ package com.limegroup.gnutella.gui.player;
 
 import static com.limegroup.gnutella.gui.player.PlayerState.PAUSED;
 import static com.limegroup.gnutella.gui.player.PlayerState.PLAYING;
-import static com.limegroup.gnutella.gui.player.PlayerState.SEEKING;
-import static com.limegroup.gnutella.gui.player.PlayerState.SEEKING_PAUSED;
-import static com.limegroup.gnutella.gui.player.PlayerState.SEEKING_PLAY;
 import static com.limegroup.gnutella.gui.player.PlayerState.STOPPED;
 import static com.limegroup.gnutella.gui.player.PlayerState.UNKNOWN;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.SwingUtilities;
 
 import com.frostwire.gui.mplayer.MPlayer;
+import com.frostwire.gui.mplayer.PositionListener;
 import com.limegroup.gnutella.gui.RefreshListener;
 
 /**
  *  An audio player to play compressed and uncompressed music.
  */
 public class LimeWirePlayer implements AudioPlayer, RefreshListener {
-   
-    /**
-     * Sleep time is for when the song is loaded or paused but not playing.
-     */
-    private static final long SLEEP_NONPLAYING = 100;
-    
-    /**
-     * Sleep time for when the song is playing but the sourceLine is full and 
-     * no reading/writing occurs
-     */
-    private static final long SLEEP_PLAYING = 150;
-
-    /**
-     *  Maximum size of the buffer to read/write from
-     */
-    public static final int EXTERNAL_BUFFER_SIZE = 4096 * 4;
 
     /**
      * Our list of AudioPlayerListeners that are currently listening for events
      * from this player
      */
     private List<AudioPlayerListener> listenerList = new CopyOnWriteArrayList<AudioPlayerListener>();
-    
-    /**
-     * main thread that does the audio IO
-     */
-    private Thread playerthread;
-    
-    /**
-     * Used in playerThread to sleep when player is paused
-     */
-    private final Object threadLock = new Object();
        
     /**
      * Current state of the player
      */
     private volatile PlayerState playerState = UNKNOWN;
     
-    
-    private Object seekLock = new Object();
-    /**
-     * byte location to skip to in file
-     */
-    private long seekValue = -1;
-    
-    /**
-     * true==the thread should close the current song and load the next song
-     */
-    private volatile boolean loadSong = false;
-    
-    
-    private Object volumeLock = new Object();
-    /**
-     * true== the thread should update the volume on the sourceDataLine 
-     */
-    private boolean setVolume = false;
-    
-    /**
-     * the current volume of the player
-     */
-    private double volume = 0;
-    
     /**
      * The source that the thread is currently reading from
      */
     private AudioSource currentSong;
-    
-    /**
-     * buffer for reading from input stream/ writing to the data line
-     */
-    private final byte[] buffer = new byte[EXTERNAL_BUFFER_SIZE];
-    
-    /**
-     * bytes read from the input stream
-     */
-    private int readBytes = 0;
-    
-    /**
-     * available bytes that can be written to the sourceDataLine
-     */
-    private int avail;
-    
-    /**
-     * Keeps track of wether or not we're using the AuxMP3Player to play the current
-     * song.
-     */
-    private boolean usingAuxMP3Player = false;
     
     private MPlayer _mplayer;
 
     public LimeWirePlayer() {
         MPlayer.initialise(new File("/usr/bin/mplayer"));
         _mplayer = new MPlayer();
+        _mplayer.setPositionListener(new PositionListener() {
+            public void positionChanged(float currentTimeInSecs) {
+                fireProgress(currentTimeInSecs);
+            }
+        });
     }
 
     /**
@@ -190,14 +121,6 @@ public class LimeWirePlayer implements AudioPlayer, RefreshListener {
      */
     public long seekLocation(long value) {
         _mplayer.seek(value);
-        if( playerState == PAUSED || playerState == SEEKING_PAUSED )
-                playerState = SEEKING_PAUSED;
-            else
-                playerState = SEEKING_PLAY;
-            synchronized (seekLock) {
-                seekValue = value;
-            }
-            notifyEvent(SEEKING,value);
         return value;
     }
     
@@ -210,10 +133,6 @@ public class LimeWirePlayer implements AudioPlayer, RefreshListener {
      */
     public void setVolume(double fGain) {
         _mplayer.setVolume((int)(fGain * 200));
-        synchronized (volumeLock) {
-            volume = fGain;
-            setVolume = true;
-        }
     }  
     
     
@@ -277,9 +196,9 @@ public class LimeWirePlayer implements AudioPlayer, RefreshListener {
      * playing. This also returns a copy of the written byte[] so it can get
      * passed along to objects such as a FFT for visual feedback of the song
      */
-    protected void fireProgress(int bytesread) {
+    protected void fireProgress(float currentTimeInSecs) {
         for (AudioPlayerListener listener : listenerList)
-            listener.progressChange(bytesread);
+            listener.progressChange(currentTimeInSecs);
     }
 
     /**
@@ -300,32 +219,4 @@ public class LimeWirePlayer implements AudioPlayer, RefreshListener {
     public void refresh() {
         notifyEvent(getStatus(), -1);
     }
-
-    
-    /**
-     * Holds a reference to the next song to be played
-     */
-    private class LoadSongBuffer {
-        
-        private AudioSource nextItem;
-        
-        public synchronized void setSong(AudioSource song){ 
-            nextItem = song;
-        }
-        
-        /**
-         * @return the next song to be played, returns null if no new song is 
-         * awaiting play
-         */
-        public synchronized AudioSource getSong(){
-            AudioSource next = nextItem; 
-            nextItem = null;
-            return next;
-        }
-        
-        public synchronized boolean hasSong(){
-            return nextItem != null;
-        }
-    }
-    
 }

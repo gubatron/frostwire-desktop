@@ -61,6 +61,8 @@ public class PlayListItem implements Comparable<PlayListItem>{
      */
     private final Map<String,String> properties;
     
+    private AudioMetaData _metaData;
+    
     /**
      * List of all meta data for this song in human readable form for display
      * as a tooltip.
@@ -102,6 +104,7 @@ public class PlayListItem implements Comparable<PlayListItem>{
         this.isLocal = isLocal;
         this.properties = new HashMap<String,String>();
         initMetaData();
+        audioSource.setMetaData(_metaData);
     }
 
     /**
@@ -146,6 +149,8 @@ public class PlayListItem implements Comparable<PlayListItem>{
                     properties.put(TIME, CommonUtils.seconds2time(amd.getLength()));
                 else
                     properties.put(TIME, "-1");
+                
+                _metaData = amd;
                 
             } catch (Exception e) { //dont catch
             }
