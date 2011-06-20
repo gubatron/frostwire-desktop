@@ -1,9 +1,8 @@
-package com.frostwire;
+package com.limegroup.gnutella.settings;
 
 import org.limewire.setting.BooleanSetting;
 import org.limewire.setting.StringSetting;
 
-import com.limegroup.gnutella.settings.LimeProps;
 
 public class UpdateManagerSettings extends LimeProps {
 	private UpdateManagerSettings() {

@@ -27,7 +27,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.TabbedPaneUI;
 
-import com.frostwire.UpdateManagerSettings;
 import com.frostwire.gui.components.Slide;
 import com.frostwire.gui.components.SlideshowPanel;
 import com.limegroup.gnutella.GUID;
@@ -38,6 +37,7 @@ import com.limegroup.gnutella.gui.RefreshListener;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.settings.SearchSettings;
+import com.limegroup.gnutella.settings.UpdateManagerSettings;
 
 /**
  * This class handles the display of search results.

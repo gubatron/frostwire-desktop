@@ -11,13 +11,13 @@ import java.util.Map;
 import org.jdesktop.jdic.desktop.Desktop;
 import org.limewire.collection.SortedList;
 import org.limewire.util.OSUtils;
+import org.limewire.util.Version;
 
-import com.frostwire.CoreFrostWireUtils;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.http.HTTPUtils;
 import com.limegroup.gnutella.settings.BittorrentSettings;
 
-public final class GuiFrostWireUtils extends CoreFrostWireUtils {
+public final class GuiFrostWireUtils {
 
 	/**
 	 * The idea is to find the first of the given options for Font Families.
@@ -85,8 +85,7 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
 	 */
 	public static void launchFile(File file) {
 		try {
-			boolean isJava16orGreater = CoreFrostWireUtils
-					.isJavaMinorVersionEqualOrGreaterThan("1.6");
+			boolean isJava16orGreater = isJavaMinorVersionEqualOrGreaterThan("1.6");
 
 			if (isJava16orGreater) {
 				java.awt.Desktop.getDesktop().open(file);
@@ -103,6 +102,29 @@ public final class GuiFrostWireUtils extends CoreFrostWireUtils {
 			GUIMediator.launchFile(file);
 		}
 	}
+	
+	/** 
+     * Quick and dirty java version comparator 
+     * 
+     * If you're in java 1.6.xxx and you just ass "1.6" and it should always return true.
+     * 
+     * */
+    private static boolean isJavaMinorVersionEqualOrGreaterThan(String version) {
+        if (version == null)
+            return false;
+        
+        Version asking = null;
+        Version javaVersion = null;
+            
+        try {
+            asking = new Version(version);
+            javaVersion = new Version(System.getProperty("java.version"));
+        } catch (Exception e) {
+            return false;
+        }
+        
+        return javaVersion.compareMajorMinorTo(asking) >= 0;
+    }
 	
 	/*
 	 * @param delay - How long to wait before opening the torrent detail page.

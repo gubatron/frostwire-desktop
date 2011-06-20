@@ -47,7 +47,8 @@ import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 import org.limewire.util.VersionUtils;
 
-import com.frostwire.CoreFrostWireUtils;
+import com.aelitis.azureus.core.AzureusCore;
+import com.frostwire.AzureusStarter;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.ChatMediator;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
@@ -663,7 +664,7 @@ public final class GUIMediator {
 	 * Returns the connectiong quality.
 	 */
 	public int getConnectionQuality() {
-		if (CoreFrostWireUtils.isInternetReachable()) {
+		if (isInternetReachable()) {
 			return StatusLine.STATUS_TURBOCHARGED;
 		} else {
 			return StatusLine.STATUS_DISCONNECTED;
@@ -1874,5 +1875,16 @@ public final class GUIMediator {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    private static boolean isInternetReachable() {
+        AzureusCore azureusCore = AzureusStarter.getAzureusCore();
+        
+        if (azureusCore != null) {
+            int rate = azureusCore.getGlobalManager().getStats().getDataReceiveRate() + azureusCore.getGlobalManager().getStats().getDataSendRate();
+            return (rate > 0);
+        }
+        
+        return false;
     }
 }

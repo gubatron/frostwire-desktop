@@ -26,7 +26,6 @@ import org.limewire.setting.evt.SettingListener;
 
 import com.limegroup.gnutella.gui.banner.Ad;
 import com.limegroup.gnutella.gui.banner.Banner;
-import com.limegroup.gnutella.settings.UpdateSettings;
 
 /**
  * This class uses a timer to continually switch the hyperlink and label.
@@ -100,7 +99,7 @@ final class StatusLinkHandler implements SettingListener {
 	StatusLinkHandler() {
 	    if (GUIMediator.isEnglishLocale()) {
 	        loadLabels();
-	        UpdateSettings.PRO_ADS.addSettingListener(this);
+	        //UpdateSettings.PRO_ADS.addSettingListener(this);
 	    }
         
         // if not english or loading from props failed, load default
@@ -157,12 +156,12 @@ final class StatusLinkHandler implements SettingListener {
     }
 
     private void loadLabels() {
-        try {
-            Banner b = new Banner(UpdateSettings.PRO_ADS.getValue());
-            updateLabels(b);
-        } catch (IllegalArgumentException bad) {
-            return;
-        }
+//        try {
+//            Banner b = new Banner(UpdateSettings.PRO_ADS.getValue());
+//            updateLabels(b);
+//        } catch (IllegalArgumentException bad) {
+//            return;
+//        }
     }
 
     private void updateLabels(Banner b) {

@@ -6,9 +6,9 @@ import javax.swing.JCheckBox;
 
 import org.limewire.i18n.I18nMarker;
 
-import com.frostwire.UpdateManagerSettings;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
+import com.limegroup.gnutella.settings.UpdateManagerSettings;
 
 /**
  * Pane to let the user decide wether or not to see the FrostClick promotions.
