@@ -591,10 +591,10 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 
     public void handleActionKey() {
         int[] rows = TABLE.getSelectedRows();
-		LibraryTableModel ltm = DATA_MODEL;
-		File file;
+		//LibraryTableModel ltm = DATA_MODEL;
+		//File file;
 		for (int i = 0; i < rows.length; i++) {
-			file = ltm.getFile(rows[i]);
+			//file = ltm.getFile(rows[i]);
 			// if it's a directory try to select it in the library tree
 			// if it could be selected return
 //			if (file.isDirectory() 

@@ -180,7 +180,7 @@ public class LanguageWindow extends JDialog {
 
             String message = I18n.trl(
                     "FrostWire must be restarted for the new language to take effect.", locale);
-	    com.frostwire.gui.updates.UpdateManager.getInstance().checkForUpdates(); // check if it's possible to load the new overlay ad for next frostwire load. In the future should be loaded automatically from this function checkforupdates.
+	    //com.frostwire.gui.updates.UpdateManager.getInstance().checkForUpdates(); // check if it's possible to load the new overlay ad for next frostwire load. In the future should be loaded automatically from this function checkforupdates.
 	    GUIMediator.showMessage(message);
         }
 

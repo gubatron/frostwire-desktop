@@ -12,7 +12,6 @@ import org.limewire.i18n.I18nMarker;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.gui.bittorrent.TorrentSaveFolderComponent;
-import com.frostwire.gui.updates.UpdateManager;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
 /**
@@ -130,29 +129,6 @@ class SaveWindow extends SetupWindow {
 	 */
 	public void applySettings(boolean loadCoreComponents) throws ApplySettingsException {
 	    List<String> errors = new ArrayList<String>(2);
-//		try {
-//			String saveDirString = SAVE_FIELD.getText();
-//			File saveDir = new File(saveDirString);
-//            
-//			// Only do strict checks if we're loading...
-//			if(loadCoreComponents) {
-//    			if (!SaveDirectoryHandler.showVistaWarningIfNeeded(saveDir))
-//    			    throw new ApplySettingsException();
-//                
-//                if (!saveDir.isDirectory() && !saveDir.mkdirs())
-//                    throw new IOException();
-//			}
-//            
-//            // updates Incomplete directory etc...
-//            SharingSettings.setSaveDirectory(saveDir); 
-//		} catch(IOException ioe) {
-//		    errors.add(I18n.tr("FrostWire was unable to use the specified folder for saving files. Please try a different folder."));
-//		}
-        
-        if(loadCoreComponents) {
-        //    GuiCoreMediator.getFileManager().loadWithNewDirectories(roots, recursiveSharingPanel.getFoldersToExclude(), false);
-            UpdateManager.scheduleUpdateCheckTask(0);
-        }
 
         SharingSettings.SEED_FINISHED_TORRENTS.setValue(torrentSaveFolderComponent.isSeedingSelected());
         File folder = new File(torrentSaveFolderComponent.getTorrentSaveFolderPath());
