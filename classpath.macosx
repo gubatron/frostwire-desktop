@@ -25,15 +25,7 @@
 	<classpathentry kind="lib" path="lib/jars/httpclient-4.0.jar"/>
 	<classpathentry kind="lib" path="lib/jars/httpcore-4.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/jars/icu4j.jar"/>
-	<classpathentry kind="lib" path="lib/jars/jaudiotagger.jar"/>
-	<classpathentry kind="lib" path="lib/jars/jcraft.jar"/>
 	<classpathentry kind="lib" path="lib/jars/jdic.jar"/>
-	<classpathentry kind="lib" path="lib/jars/jflac.jar"/>
-	<classpathentry kind="lib" path="lib/jars/jl.jar"/>
-	<classpathentry kind="lib" path="lib/jars/mp3spi.jar"/>
-	<classpathentry kind="lib" path="lib/jars/ProgressTabs.jar"/>
-	<classpathentry kind="lib" path="lib/jars/tritonus.jar"/>
-	<classpathentry kind="lib" path="lib/jars/vorbisspi.jar"/>
 	<classpathentry kind="lib" path="lib/jars/osx/MRJAdapter.jar"/>
 	<classpathentry kind="lib" path="lib/jars/messages.jar"/>
 	<classpathentry kind="lib" path="lib/jars/compile/messages.jar"/>
