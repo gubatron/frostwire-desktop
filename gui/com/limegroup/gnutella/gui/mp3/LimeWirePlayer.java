@@ -15,8 +15,8 @@ import javax.swing.SwingUtilities;
 import org.limewire.concurrent.ThreadExecutor;
 
 import com.limegroup.gnutella.gui.RefreshListener;
-import com.vuze.mediaplayer.mplayer.MPlayer;
 import com.frostwire.gui.AuxMP3Player;
+import com.frostwire.gui.mplayer.MPlayer;
 
 import static com.limegroup.gnutella.gui.mp3.PlayerState.*;
 
