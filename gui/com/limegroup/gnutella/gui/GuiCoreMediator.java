@@ -15,7 +15,6 @@ import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.SavedFileManager;
 import com.limegroup.gnutella.browser.ExternalControl;
 import com.limegroup.gnutella.licenses.LicenseVerifier;
-import com.limegroup.gnutella.metadata.MetaDataFactory;
 import com.limegroup.gnutella.xml.LimeXMLDocumentFactory;
 import com.limegroup.gnutella.xml.LimeXMLProperties;
 import com.limegroup.gnutella.xml.LimeXMLSchemaRepository;
@@ -39,7 +38,6 @@ public class GuiCoreMediator {
     public static ExternalControl getExternalControl() { return core.getExternalControl(); }
     public static ActivityCallback getActivityCallback() { return core.getActivityCallback(); }
     public static LimeXMLDocumentFactory getLimeXMLDocumentFactory() { return core.getLimeXMLDocumentFactory(); }
-    public static MetaDataFactory getMetaDataFactory() { return core.getMetaDataFactory(); }
     public static LicenseVerifier getLicenseVerifier() { return core.getLicenseVerifier(); }
     public static NetworkInstanceUtils getNetworkInstanceUtils() { return core.getNetworkInstanceUtils(); }
 }

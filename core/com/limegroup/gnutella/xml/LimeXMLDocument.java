@@ -613,11 +613,7 @@ public class LimeXMLDocument implements StringLookup {
         licenseType = LicenseType.determineLicenseType(license, type);        
         if (licenseType == LicenseType.CC_LICENSE) {
             fieldToValue.put(prefix + XML_LICENSE_TYPE_ATTRIBUTE, CCConstants.CC_URI_PREFIX);
-        }        
-        if (licenseType == LicenseType.LIMEWIRE_STORE_PURCHASE) {
-            fieldToValue.put(prefix + XML_LICENSE_TYPE_ATTRIBUTE,
-                    LicenseType.LIMEWIRE_STORE_PURCHASE.toString());
-        }
+        }    
         
         // Grab the version, if it exists.
         String versionString = fieldToValue.get(prefix + XML_VERSION_ATTRIBUTE);

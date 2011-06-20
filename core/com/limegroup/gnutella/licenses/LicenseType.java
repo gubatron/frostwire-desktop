@@ -5,13 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-import com.limegroup.gnutella.metadata.audio.reader.WRMXML;
-import com.limegroup.gnutella.metadata.audio.reader.WeedInfo;
-
 public enum LicenseType {    
     NO_LICENSE(""),
     CC_LICENSE (CCConstants.CC_URI_PREFIX),
-    WEED_LICENSE (WeedInfo.LAINFO),
     DRM_LICENSE (""), 
     GPL ("http://www.gnu.org/copyleft/gpl.html"),
     LGPL ("http://www.gnu.org/copyleft/lgpl.html"),
@@ -20,8 +16,7 @@ public enum LicenseType {
     FDL ("http://www.gnu.org/copyleft/fdl.html"), 
     ARTISTIC ("http://www.opensource.org/licenses/artistic-license.php"), 
     PUBLIC_DOMAIN ("http://www.public-domain.org"), 
-    SHAREWARE ("http://en.wikipedia.org/wiki/Shareware"),
-    LIMEWIRE_STORE_PURCHASE("LIMEWIRE_STORE_PURCHASE");
+    SHAREWARE ("http://en.wikipedia.org/wiki/Shareware");
     
     private final String keyword;
     private final List<String> indivList;
@@ -34,7 +29,7 @@ public enum LicenseType {
     }
     
     public boolean isDRMLicense() {
-        return this == WEED_LICENSE || this == DRM_LICENSE || this == LIMEWIRE_STORE_PURCHASE;
+        return this == DRM_LICENSE;
     }
     
     public List<String> getIndivisibleKeywords() {
@@ -47,10 +42,6 @@ public enum LicenseType {
     public static LicenseType determineLicenseType(String license, String type) {
         if (hasCCLicense(license, type))
             return CC_LICENSE;
-        if (hasWeedLicense(type))
-            return WEED_LICENSE;
-        if (hasDRMLicense(type))
-            return DRM_LICENSE;
         
         // the other licenses do not have any special requirements 
         // for the license or type field (yet)
@@ -70,17 +61,4 @@ public enum LicenseType {
                                 && license.indexOf(CCConstants.URL_INDICATOR) != -1)
                ;
     }
-
-    private static boolean hasWeedLicense(String type) {
-        return type != null &&
-               type.startsWith(WeedInfo.LAINFO) &&
-               type.indexOf(WeedInfo.VID) != -1 &&
-               type.indexOf(WeedInfo.CID) != -1;
-    }
-    
-    private static boolean hasDRMLicense(String type) {
-        return type != null &&
-               type.startsWith(WRMXML.PROTECTED);
-    }
-  
 }

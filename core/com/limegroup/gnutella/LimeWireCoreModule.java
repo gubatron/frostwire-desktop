@@ -18,8 +18,6 @@ import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 import com.limegroup.gnutella.licenses.LicenseFactory;
 import com.limegroup.gnutella.licenses.LicenseFactoryImpl;
-import com.limegroup.gnutella.metadata.MetaDataFactory;
-import com.limegroup.gnutella.metadata.MetaDataFactoryImpl;
 import com.limegroup.gnutella.version.UpdateCollectionFactory;
 import com.limegroup.gnutella.version.UpdateCollectionFactoryImpl;
 import com.limegroup.gnutella.xml.LimeXMLDocumentFactory;
@@ -65,7 +63,6 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(PushEndpointCache.class).to(PushEndpointCacheImpl.class);
         bind(LicenseFactory.class).to(LicenseFactoryImpl.class);
         bind(LimeXMLDocumentFactory.class).to(LimeXMLDocumentFactoryImpl.class);
-        bind(MetaDataFactory.class).to(MetaDataFactoryImpl.class);
         bind(SaveLocationManager.class).to(DownloadManager.class);
         bind(UpdateCollectionFactory.class).to(UpdateCollectionFactoryImpl.class);
         bind(Inspector.class).to(InspectorImpl.class);

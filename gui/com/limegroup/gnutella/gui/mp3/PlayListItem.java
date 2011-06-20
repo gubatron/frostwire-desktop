@@ -1,7 +1,6 @@
 package com.limegroup.gnutella.gui.mp3;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -10,10 +9,7 @@ import java.util.Map;
 
 import org.limewire.util.CommonUtils;
 
-import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.metadata.MetaReader;
-import com.limegroup.gnutella.metadata.audio.AudioMetaData;
 
 /**
  *  Wrapper for a local or remote audio file/stream that is to be added to the 
@@ -138,15 +134,15 @@ public class PlayListItem implements Comparable<PlayListItem>{
         if( isLocal ){
             try {
                 File file = new File(uri);
-                MetaReader data = GuiCoreMediator.getMetaDataFactory().parse(file);
-                // if we can't parse this file type return
-                if(data == null)
-                    return;
-                
-                AudioMetaData amd = (AudioMetaData) data.getMetaData();
+//                MetaReader data = GuiCoreMediator.getMetaDataFactory().parse(file);
+//                // if we can't parse this file type return
+//                if(data == null)
+//                    return;
+//                
+                AudioMetaData amd = new AudioMetaData();// (AudioMetaData) data.getMetaData();
                 // if it has no meta data we can read just return
-                if(amd == null)
-                    return;                
+//                if(amd == null)
+//                    return;                
                 if( !properties.containsKey(ARTIST))
                     properties.put(ARTIST, amd.getArtist());
                 if( !properties.containsKey(ALBUM))
@@ -178,7 +174,7 @@ public class PlayListItem implements Comparable<PlayListItem>{
                 if( !properties.containsKey(VBR))
                     properties.put(VBR, Boolean.toString(amd.isVBR()));
                 
-            } catch (IOException e) { //dont catch
+            } catch (Exception e) { //dont catch
             }
         }
         

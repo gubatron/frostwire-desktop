@@ -12,8 +12,6 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.http.URIUtils;
-import com.limegroup.gnutella.metadata.audio.reader.WRMXML;
-import com.limegroup.gnutella.metadata.audio.reader.WeedInfo;
 
 
 /**
@@ -39,10 +37,6 @@ public final class LicenseFactoryImpl implements LicenseFactory {
     public String getLicenseName(String licenseString) {
         if(isCCLicense(licenseString))
             return CC_NAME;
-        else if(isWeedLicense(licenseString))
-            return WEED_NAME;
-        else if(isUnknownLicense(licenseString))
-            return UNKNOWN_NAME;
         else
             return null;
     }
@@ -68,10 +62,6 @@ public final class LicenseFactoryImpl implements LicenseFactory {
                     license = new CCLicense(licenseString, uri);
                 else
                     license = new BadCCLicense(licenseString);
-            } else if(isWeedLicense(licenseString) && uri != null) {
-                license = new WeedLicense(uri);
-            } else if(isUnknownLicense(licenseString)) {
-                license = new UnknownLicense();
             }
         }
         
@@ -86,16 +76,6 @@ public final class LicenseFactoryImpl implements LicenseFactory {
     /** Determines if the given string can be a CC license. */
     private static boolean isCCLicense(String s) {
         return s.toLowerCase(Locale.US).indexOf(CCConstants.URL_INDICATOR) != -1;
-    }
-    
-    /** Determines if the given string can be a Weed license. */
-    private static boolean isWeedLicense(String s) {
-        return s.startsWith(WeedInfo.LAINFO);
-    }
-    
-    /** Determines if the given string can be an Unknown license. */
-    private static boolean isUnknownLicense(String s) {
-        return s.startsWith(WRMXML.PROTECTED);
     }
     
     /**
@@ -115,10 +95,10 @@ public final class LicenseFactoryImpl implements LicenseFactory {
         // Look for CC first.
         URI uri = getCCLicenseURI(license);
         
-        // Then Weed.
-        if(uri == null)
-            uri = getWeedLicenseURI(license);
-            
+//        // Then Weed.
+//        if(uri == null)
+//            uri = getWeedLicenseURI(license);
+//            
         // ADD MORE LICENSES IN THE FORM OF
         // if( uri == null)
         //      uri = getXXXLicenseURI(license)
@@ -161,53 +141,6 @@ public final class LicenseFactoryImpl implements LicenseFactory {
         }
         
         return uri;
-    }
-    
-    /** Gets a Weed license URI from the given license string. */
-    private static URI getWeedLicenseURI(String license) {
-        int lainfo = license.indexOf(WeedInfo.LAINFO);
-        if(lainfo == -1)
-            return null;
-            
-        int cidx = license.indexOf(WeedInfo.CID);
-        int vidx = license.indexOf(WeedInfo.VID);
-        
-        // If no cid or vid, exit.
-        if(cidx == -1 || vidx == -1) {
-            LOG.debug("No cid or vid, bailing.");
-            return null;
-        }
-            
-        cidx += WeedInfo.CID.length();;
-        vidx += WeedInfo.VID.length();;
-            
-        int cend = license.indexOf(" ", cidx);
-        int vend = license.indexOf(" ", vidx);
-        // If there's no ending space for BOTH, exit.
-        // (it's okay if one is at the end, but both can't be)
-        if(cend == -1 && vend == -1) {
-            LOG.debug("No endings for both cid & vid, bailing");
-            return null;
-        }
-        if(cend == -1)
-            cend = license.length();
-        if(vend == -1)
-            vend = license.length();
-        
-        // If the cid or vid are empty, exit.
-        String cid = license.substring(cidx, cend).trim();
-        String vid = license.substring(vidx, vend).trim();
-        if(cid.length() == 0 || vid.length() == 0) {
-            LOG.debug("cid or vid is empty, bailing");
-            return null;
-        }
-        
-        if(cid.startsWith(WeedInfo.VID.trim()) || vid.startsWith(WeedInfo.CID.trim())) {
-            LOG.debug("cid starts with vid, or vice versa, bailing.");
-            return null;
-        }
-        
-        return WeedLicense.buildURI(cid, vid);
     }
 }
   
