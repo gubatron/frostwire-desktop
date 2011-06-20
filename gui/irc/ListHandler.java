@@ -37,7 +37,7 @@ import java.util.*;
 public class ListHandler
 {
   private boolean _baseAll;
-  private Hashtable _list;
+  private Hashtable<String, String> _list;
   private String _orig;
 
   /**
@@ -52,7 +52,7 @@ public class ListHandler
     _orig=list;
     list=convert(list);
     _baseAll=true;
-    _list=new Hashtable();
+    _list=new Hashtable<String, String>();
     StringTokenizer st=new StringTokenizer(list,"\1\2",true);
     if(!st.hasMoreTokens()) return;
     String base=st.nextToken();

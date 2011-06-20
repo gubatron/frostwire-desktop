@@ -38,8 +38,8 @@ public class IRCApplication extends IRCObject implements ServerListener,ServerMa
   private StartupConfiguration _start;
 
   private IRCInterface _interface;
-  private Vector _plugins;
-  private Hashtable _pluginsTable;
+  private Vector<Plugin> _plugins;
+  private Hashtable<String, Plugin> _pluginsTable;
 
   private JFrame _frame;
   private Container _container;
@@ -60,14 +60,14 @@ public class IRCApplication extends IRCObject implements ServerListener,ServerMa
     super(config);
     _container=source;
     _start=startupConfig;
-    _plugins=new Vector();
-    _pluginsTable=new Hashtable();
+    _plugins=new Vector<Plugin>();
+    _pluginsTable=new Hashtable<String, Plugin>();
 
     String gui=config.getS("gui");
     try
     {
-      Class cl=Class.forName("irc.gui."+gui+".Interface");
-      java.lang.reflect.Constructor ctr=cl.getDeclaredConstructor(new Class[] {config.getClass()});
+      Class<?> cl=Class.forName("irc.gui."+gui+".Interface");
+      java.lang.reflect.Constructor<?> ctr=cl.getDeclaredConstructor(new Class[] {config.getClass()});
       _interface=(IRCInterface)ctr.newInstance(new Object[] {config});
     }
     catch(java.lang.reflect.InvocationTargetException iex)
@@ -81,7 +81,7 @@ public class IRCApplication extends IRCObject implements ServerListener,ServerMa
       throw new Error("Unable to load interface "+gui+" : "+ex);
     }
 
-    _servers=new Hashtable();
+    _servers=new Hashtable<Server, Server>();
     _defaultSource=new DefaultSource(_ircConfiguration);
     DefaultInterpretor defaultInter=new DefaultInterpretor(_ircConfiguration,_start,this,this);
     _defaultSource.setInterpretor(defaultInter);
@@ -171,7 +171,7 @@ public class IRCApplication extends IRCObject implements ServerListener,ServerMa
     server.addServerListener(this);
     _servers.put(server,server);
 
-    Enumeration enum1=_plugins.elements();
+    Enumeration<Plugin> enum1=_plugins.elements();
     while(enum1.hasMoreElements())
     {
       Plugin plugin=(Plugin)enum1.nextElement();
@@ -187,7 +187,7 @@ public class IRCApplication extends IRCObject implements ServerListener,ServerMa
    */
   public synchronized void uninit()
   {
-    Enumeration en=_servers.keys();
+    Enumeration<Server> en=_servers.keys();
     while(en.hasMoreElements())
     {
       Server s=(Server)en.nextElement();
@@ -204,7 +204,7 @@ public class IRCApplication extends IRCObject implements ServerListener,ServerMa
     {
       unloadPlugin((Plugin)_plugins.elementAt(_plugins.size()-1));
     }
-    _pluginsTable=new Hashtable();
+    _pluginsTable=new Hashtable<String, Plugin>();
 
     if(_container!=null) _container.removeAll();
     
@@ -217,8 +217,8 @@ public class IRCApplication extends IRCObject implements ServerListener,ServerMa
     Plugin plugin;
     try
     {
-      Class cl=Class.forName("irc.plugin."+str);
-      java.lang.reflect.Constructor ctr=cl.getDeclaredConstructor(new Class[] {_ircConfiguration.getClass()});
+      Class<?> cl=Class.forName("irc.plugin."+str);
+      java.lang.reflect.Constructor<?> ctr=cl.getDeclaredConstructor(new Class[] {_ircConfiguration.getClass()});
       plugin=(Plugin)ctr.newInstance(new Object[] {_ircConfiguration});
       loadPlugin(plugin);
     }
@@ -273,7 +273,7 @@ public class IRCApplication extends IRCObject implements ServerListener,ServerMa
     _plugins.insertElementAt(plugin,_plugins.size());
     plugin.sourceCreated(_defaultSource,Boolean.TRUE);
 
-    Enumeration en=_servers.keys();
+    Enumeration<Server> en=_servers.keys();
     while(en.hasMoreElements())
     {
       Server s=(Server)en.nextElement();
@@ -316,7 +316,7 @@ public class IRCApplication extends IRCObject implements ServerListener,ServerMa
       if(_plugins.elementAt(i)==plugin)
       {
         _plugins.removeElementAt(i);
-        Enumeration en=_servers.keys();
+        Enumeration<Server> en=_servers.keys();
         while(en.hasMoreElements())
         {
           Server s=(Server)en.nextElement();
@@ -333,7 +333,7 @@ public class IRCApplication extends IRCObject implements ServerListener,ServerMa
   public void sourceCreated(Source source,Server server,Boolean bring)
   {
     source.getInterpretor().addLast(_inter);
-    Enumeration enum1=_plugins.elements();
+    Enumeration<Plugin> enum1=_plugins.elements();
     while(enum1.hasMoreElements())
     {
       Plugin plugin=(Plugin)enum1.nextElement();
@@ -344,7 +344,7 @@ public class IRCApplication extends IRCObject implements ServerListener,ServerMa
 
   public void sourceRemoved(Source source,Server server)
   {
-    Enumeration enum1=_plugins.elements();
+    Enumeration<Plugin> enum1=_plugins.elements();
     while(enum1.hasMoreElements())
     {
       Plugin plugin=(Plugin)enum1.nextElement();
@@ -354,7 +354,7 @@ public class IRCApplication extends IRCObject implements ServerListener,ServerMa
 
   public void serverLeft(Server s)
   {
-    Enumeration enum1=_plugins.elements();
+    Enumeration<Plugin> enum1=_plugins.elements();
     while(enum1.hasMoreElements())
     {
       Plugin plugin=(Plugin)enum1.nextElement();
@@ -416,7 +416,7 @@ public class IRCApplication extends IRCObject implements ServerListener,ServerMa
         server.execute(_start.getCommands()[i]);
     }
 
-    Enumeration enum1=_plugins.elements();
+    Enumeration<Plugin> enum1=_plugins.elements();
     while(enum1.hasMoreElements())
     {
       Plugin plugin=(Plugin)enum1.nextElement();
@@ -427,7 +427,7 @@ public class IRCApplication extends IRCObject implements ServerListener,ServerMa
 
   public void serverDisconnected(Server s)
   {
-    Enumeration enum1=_plugins.elements();
+    Enumeration<Plugin> enum1=_plugins.elements();
     while(enum1.hasMoreElements())
     {
       Plugin plugin=(Plugin)enum1.nextElement();
@@ -518,14 +518,14 @@ public class IRCApplication extends IRCObject implements ServerListener,ServerMa
 
   private Source getSource(String serverName,String type,String name)
   {
-    Enumeration e=_servers.keys();
+    Enumeration<Server> e=_servers.keys();
     while(e.hasMoreElements())
     {
       Server s=(Server)e.nextElement();
       String sname=s.getServerName();
       if(sname.equals(serverName) || serverName.length()==0)
       {
-        Enumeration f=s.getSources();
+        Enumeration<Source> f=s.getSources();
         while(f.hasMoreElements())
         {
           Source src=(Source)f.nextElement();

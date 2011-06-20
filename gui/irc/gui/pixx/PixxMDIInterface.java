@@ -33,7 +33,6 @@ import java.awt.event.MouseEvent;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -44,13 +43,13 @@ import com.limegroup.gnutella.gui.GUIMediator;
  * MDILayout.
  */
 class MDILayout implements LayoutManager {
-    private Hashtable _components;
+    private Hashtable<Component, Component> _components;
 
     /**
      * Create a new MDILayout
      */
     public MDILayout() {
-        _components = new Hashtable();
+        _components = new Hashtable<Component, Component>();
     }
 
     public void addLayoutComponent(String name, Component comp) {
@@ -101,16 +100,16 @@ public class PixxMDIInterface extends IRCInterface implements PixxTaskBarListene
     private JPanel _mdi;
     private PopupMenu _popMenu;
     private JTextField _nickField;
-    private Hashtable _awt2Dock;
+    private Hashtable<BaseAWTSource, DockablePanel> _awt2Dock;
     private AWTInterpretor _interpretor;
     private PixxConfiguration _pixxConfiguration;
 
-    private Hashtable _status;
-    private Hashtable _channels;
-    private Hashtable _queries;
-    private Hashtable _dccChats;
-    private Hashtable _dccFiles;
-    private Hashtable _lists;
+    private Hashtable<Status, AWTStatus> _status;
+    private Hashtable<Channel, AWTChannel> _channels;
+    private Hashtable<Query, AWTQuery> _queries;
+    private Hashtable<DCCChat, AWTDCCChat> _dccChats;
+    private Hashtable<DCCFile, AWTDCCFile> _dccFiles;
+    private Hashtable<ChanList, AWTChanList> _lists;
     private DefaultSource _defaultSource;
     private AWTDefaultSource _awtDefaultSource;
 
@@ -132,7 +131,7 @@ public class PixxMDIInterface extends IRCInterface implements PixxTaskBarListene
             _defaultSource = null;
             _task = new PixxTaskBar(_pixxConfiguration);
             _interpretor = new AWTInterpretor(_pixxConfiguration, this);
-            _awt2Dock = new Hashtable();
+            _awt2Dock = new Hashtable<BaseAWTSource, DockablePanel>();
             _popMenu = new PopupMenu();
             _panel.setLayout(new BorderLayout());
             _mdi = new JPanel();
@@ -176,12 +175,12 @@ public class PixxMDIInterface extends IRCInterface implements PixxTaskBarListene
                 _panel.add(bottom, BorderLayout.SOUTH);
             }
 
-            _channels = new Hashtable();
-            _queries = new Hashtable();
-            _dccChats = new Hashtable();
-            _dccFiles = new Hashtable();
-            _lists = new Hashtable();
-            _status = new Hashtable();
+            _channels = new Hashtable<Channel, AWTChannel>();
+            _queries = new Hashtable<Query, AWTQuery>();
+            _dccChats = new Hashtable<DCCChat, AWTDCCChat>();
+            _dccFiles = new Hashtable<DCCFile, AWTDCCFile>();
+            _lists = new Hashtable<ChanList, AWTChanList>();
+            _status = new Hashtable<Status, AWTStatus>();
 
             _panel.validate();
         } catch (Exception ex) {
@@ -536,7 +535,7 @@ public class PixxMDIInterface extends IRCInterface implements PixxTaskBarListene
      * @return AWTSource relative to the given source, or null if not found.
      */
     public BaseAWTSource findBaseAWTSource(Source src) {
-        Enumeration e = _awt2Dock.keys();
+        Enumeration<BaseAWTSource> e = _awt2Dock.keys();
         while (e.hasMoreElements()) {
             BaseAWTSource asrc = (BaseAWTSource) e.nextElement();
             if (asrc.getSource() == src)
@@ -714,7 +713,7 @@ public class PixxMDIInterface extends IRCInterface implements PixxTaskBarListene
 
     public void DockablePanelWindowClosing(DockablePanel panel) {
         BaseAWTSource source;
-        Enumeration e = _awt2Dock.keys();
+        Enumeration<BaseAWTSource> e = _awt2Dock.keys();
         while (e.hasMoreElements()) {
             source = (BaseAWTSource) e.nextElement();
             if (_awt2Dock.get(source) == panel) {

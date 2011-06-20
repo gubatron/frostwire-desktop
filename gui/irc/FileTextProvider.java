@@ -8,8 +8,8 @@ import java.io.*;
  */
 public class FileTextProvider implements TextProvider
 {
-  private Hashtable _mainlist;
-  private Hashtable _backlist;
+  private Hashtable<Integer, String> _mainlist;
+  private Hashtable<Integer, String> _backlist;
 
 	/**
 	 * Create a new file text provider.
@@ -21,13 +21,13 @@ public class FileTextProvider implements TextProvider
 	 */
   public FileTextProvider(String fname,String encoding,String backname,String backencoding,FileHandler file)
 	{
-	  _mainlist=new Hashtable();
-    _backlist=new Hashtable();
+	  _mainlist=new Hashtable<Integer, String>();
+    _backlist=new Hashtable<Integer, String>();
     load(_mainlist,fname,encoding,file);
     load(_backlist,backname,backencoding,file);
   }
 
-	private void parse(Hashtable dest,String line)
+	private void parse(Hashtable<Integer, String> dest,String line)
 	{
 	  try
 		{
@@ -51,7 +51,7 @@ public class FileTextProvider implements TextProvider
 		}
 	}
 
-	private void load(Hashtable dest,String fname,String encoding,FileHandler handler)
+	private void load(Hashtable<Integer, String> dest,String fname,String encoding,FileHandler handler)
 	{
 	  InputStream stream=handler.getInputStream(fname);
 		if(stream==null) return;

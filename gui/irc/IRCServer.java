@@ -11,8 +11,6 @@ import java.util.Vector;
 class FirstLineFilter
 {
   private IRCServer _server;
-  private IRCConfiguration _ircConfiguration;
-  private ServerManager _mgr;
 
   /**
    * Create a new FirstLineFilter
@@ -22,8 +20,6 @@ class FirstLineFilter
    */
   public FirstLineFilter(IRCServer serv,ServerManager mgr,IRCConfiguration config)
   {
-    _ircConfiguration=config;
-    _mgr=mgr;
     _server=serv;
   }
 
@@ -32,7 +28,6 @@ class FirstLineFilter
    */
   public void release()
   {
-    _mgr=null;
     _server=null;
   }
 
@@ -95,10 +90,8 @@ class FirstLineFilter
       param=msg.substring(pos+1);
     }
 
-    boolean show=true;
     if(cmd.equals("action"))
     {
-      show=false;
       Query q=_server.getQuery(nick,false);
       if(q!=null) q.action(nick,param);
     }
@@ -189,12 +182,12 @@ class FirstLineFilter
 public class IRCServer extends IRCObject implements Server, ServerProtocolListener
 {
   private ServerProtocol _protocol;
-  private Hashtable _channels;
-  private Hashtable _queries;
-  private Hashtable _chanlist;
+  private Hashtable<String, Source> _channels;
+  private Hashtable<String, Source> _queries;
+  private Hashtable<String, Source> _chanlist;
   private Status _status;
 
-  private Hashtable _ignoreList;
+  private Hashtable<String, String> _ignoreList;
 
   private ListenerGroup _listeners;
   private ListenerGroup _replylisteners;
@@ -241,11 +234,11 @@ public class IRCServer extends IRCObject implements Server, ServerProtocolListen
     _askedNick[1]=altNick;
     _nick=nick;
     _connected=false;
-    _ignoreList=new Hashtable();
+    _ignoreList=new Hashtable<String, String>();
 
-    _channels=new Hashtable();
-    _queries=new Hashtable();
-    _chanlist=new Hashtable();
+    _channels=new Hashtable<String, Source>();
+    _queries=new Hashtable<String, Source>();
+    _chanlist=new Hashtable<String, Source>();
 
     _listeners=new ListenerGroup();
     _replylisteners=new ListenerGroup();
@@ -280,10 +273,10 @@ public class IRCServer extends IRCObject implements Server, ServerProtocolListen
     super.release();
   }
 
-  public Enumeration getSources()
+  public Enumeration<Source> getSources()
   {
-    Vector v=new Vector();
-    Enumeration e;
+    Vector<Source> v=new Vector<Source>();
+    Enumeration<Source> e;
     e=_channels.elements();
     while(e.hasMoreElements()) v.insertElementAt(e.nextElement(),v.size());
     e=_queries.elements();
@@ -296,7 +289,7 @@ public class IRCServer extends IRCObject implements Server, ServerProtocolListen
 
   public void enumerateSourcesAsCreated(ServerListener lis)
   {
-    Enumeration e;
+    Enumeration<Source> e;
     e=_channels.elements();while(e.hasMoreElements()) lis.sourceCreated((Source)e.nextElement(),this,new Boolean(false));
     e=_queries.elements();while(e.hasMoreElements()) lis.sourceCreated((Source)e.nextElement(),this,new Boolean(false));
     e=_chanlist.elements();while(e.hasMoreElements()) lis.sourceCreated((Source)e.nextElement(),this,new Boolean(false));
@@ -305,7 +298,7 @@ public class IRCServer extends IRCObject implements Server, ServerProtocolListen
 
   public void enumerateSourcesAsRemoved(ServerListener lis)
   {
-    Enumeration e;
+    Enumeration<Source> e;
     e=_channels.elements();while(e.hasMoreElements()) lis.sourceRemoved((Source)e.nextElement(),this);
     e=_queries.elements();while(e.hasMoreElements()) lis.sourceRemoved((Source)e.nextElement(),this);
     e=_chanlist.elements();while(e.hasMoreElements()) lis.sourceRemoved((Source)e.nextElement(),this);
@@ -473,9 +466,9 @@ public class IRCServer extends IRCObject implements Server, ServerProtocolListen
 		register();
   }
 
-  private void clear(Hashtable l)
+  private void clear(Hashtable<String, Source> l)
   {
-    Enumeration e;
+    Enumeration<Source> e;
     e=l.elements();
     while(e.hasMoreElements()) _listeners.sendEvent("sourceRemoved",e.nextElement(),this);
     e=l.elements();
@@ -516,7 +509,7 @@ public class IRCServer extends IRCObject implements Server, ServerProtocolListen
    * Get all the channels.
    * @return an enumeration of channels.
    */
-  public Enumeration getChannels()
+  public Enumeration<Source> getChannels()
   {
     return _channels.elements();
   }
@@ -525,7 +518,7 @@ public class IRCServer extends IRCObject implements Server, ServerProtocolListen
    * Get all the queries.
    * @return an enumeration of queries.
    */
-  public Enumeration getQueries()
+  public Enumeration<Source> getQueries()
   {
     return _queries.elements();
   }
@@ -534,7 +527,7 @@ public class IRCServer extends IRCObject implements Server, ServerProtocolListen
    * Get all the chanlists.
    * @return an enumeration of chanlists.
    */
-  public Enumeration getChanLists()
+  public Enumeration<Source> getChanLists()
   {
     return _chanlist.elements();
   }
@@ -817,7 +810,7 @@ public class IRCServer extends IRCObject implements Server, ServerProtocolListen
     return "";
   }
 
-  private void setNicks(Channel c,Vector nicks)
+  private void setNicks(Channel c,Vector<String> nicks)
   {
     String[] n=new String[nicks.size()];
     String[] modes=new String[nicks.size()];
@@ -939,7 +932,7 @@ public class IRCServer extends IRCObject implements Server, ServerProtocolListen
       if(c!=null)
       {
         String nick="";
-        Vector nicks=new Vector();
+        Vector<String> nicks=new Vector<String>();
         for(int i=0;i<params[first+1].length();i++)
         {
           char u=params[first+1].charAt(i);
@@ -1362,7 +1355,7 @@ public class IRCServer extends IRCObject implements Server, ServerProtocolListen
 
   private void globalNickRemove(String nick,String reason)
   {
-    Enumeration e=_channels.elements();
+    Enumeration<Source> e=_channels.elements();
     while(e.hasMoreElements())
     {
       Channel c=(Channel)e.nextElement();
@@ -1379,7 +1372,7 @@ public class IRCServer extends IRCObject implements Server, ServerProtocolListen
       com.limegroup.gnutella.settings.ChatSettings.CHAT_IRC_NICK.setValue(newNick);
     }
     
-    Enumeration e;
+    Enumeration<Source> e;
     e=_channels.elements();
     while(e.hasMoreElements())
     {

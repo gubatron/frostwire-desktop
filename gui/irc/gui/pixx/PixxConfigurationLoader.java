@@ -86,7 +86,7 @@ public class PixxConfigurationLoader
 
   private String[] getArray(String name)
   {
-    Vector v=new Vector();
+    Vector<String> v=new Vector<String>();
     String cmd;
     int i=1;
     do
@@ -138,7 +138,7 @@ public class PixxConfigurationLoader
     return new StringParser().parseString(words);
   }
 
-  private void add(Vector v,Object o)
+  private void add(Vector<Object> v,Object o)
   {
     v.insertElementAt(o,v.size());
   }
@@ -149,7 +149,7 @@ public class PixxConfigurationLoader
    */
   public void loadDefaultPopup(PixxConfiguration config)
   {
-    Vector v=config.getNickMenuVector();
+    Vector<Object> v=config.getNickMenuVector();
 //    String[] str;
     //add(v,new String[] {"View Profile","/url http://users.frostwire.com/profile.php?user=%1"});
     add(v,new String[] {"Private Message","/query %1"});
@@ -174,7 +174,7 @@ public class PixxConfigurationLoader
       loadDefaultPopup(config);
       return;
     }
-    Vector v=config.getNickMenuVector();
+    Vector<Object> v=config.getNickMenuVector();
     String[] str=getArray("popupmenustring");
     for(int i=0;i<str.length;i++)
     {
@@ -214,7 +214,7 @@ public class PixxConfigurationLoader
     PixxConfiguration config=new PixxConfiguration(_config);
     config.setTextProvider(getTextProvider());
 
-    Vector v=new Vector();
+    Vector<Object> v=new Vector<Object>();
     String[] words=getHighLightWords();
     for(int i=0;i<words.length;i++) v.insertElementAt(words[i],v.size());
     config.setHighLightConfig(getInt("highlightcolor",5),getBoolean("highlightnick",false),v);

@@ -67,11 +67,16 @@ class TaskBarItem
  */
 public class PixxTaskBar extends PixxPanel implements MouseListener,MouseMotionListener,BaseAWTSourceListener
 {
-  private ListenerGroup _listeners;
+  /**
+     * 
+     */
+    private static final long serialVersionUID = -9081050062448414641L;
+
+private ListenerGroup _listeners;
 
   private TaskBarItem _active;
   private TaskBarItem _pressed;
-  private Vector _items;
+  private Vector<TaskBarItem> _items;
 
   private int[] _itemCount;
   private int[] _visibleItemCount;
@@ -96,7 +101,7 @@ public class PixxTaskBar extends PixxPanel implements MouseListener,MouseMotionL
     _listeners=new ListenerGroup();
     _active=null;
     _pressed=null;
-    _items=new Vector();
+    _items=new Vector<TaskBarItem>();
     _itemCount=new int[2];
     _visibleItemCount=new int[2];
     _itemCount[0]=0;
@@ -148,7 +153,7 @@ public class PixxTaskBar extends PixxPanel implements MouseListener,MouseMotionL
     return null;
   }
 
-  private void removeFromVector(Vector v,Object o)
+  private void removeFromVector(Vector<TaskBarItem> v,Object o)
   {
     for(int i=0;i<v.size();i++) if(v.elementAt(i)==o) v.removeElementAt(i);
   }
@@ -545,7 +550,7 @@ public class PixxTaskBar extends PixxPanel implements MouseListener,MouseMotionL
       g.fillRect(0,0,w,h);
       int col0=0;
       int col1=0;
-      Enumeration el=_items.elements();
+      Enumeration<TaskBarItem> el=_items.elements();
       while(el.hasMoreElements())
       {
         TaskBarItem item=(TaskBarItem)el.nextElement();
@@ -668,7 +673,7 @@ public class PixxTaskBar extends PixxPanel implements MouseListener,MouseMotionL
 
     //prentre de la ligne row
     int currentcol=0;
-    Enumeration el=_items.elements();
+    Enumeration<TaskBarItem> el=_items.elements();
     while(el.hasMoreElements())
     {
       TaskBarItem item=(TaskBarItem)el.nextElement();

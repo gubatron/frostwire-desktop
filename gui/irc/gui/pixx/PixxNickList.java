@@ -18,7 +18,11 @@ import java.util.Vector;
  */
 public class PixxNickList extends PixxPanel implements MouseListener,MouseMotionListener
 {
-  private Vector _nicks;
+  /**
+     * 
+     */
+    private static final long serialVersionUID = -8604504655590607329L;
+private Vector<String> _nicks;
   private Image _buffer;
   private Font _font;
   private int _base;
@@ -47,7 +51,7 @@ public class PixxNickList extends PixxPanel implements MouseListener,MouseMotion
     addMouseListener(this);
     addMouseMotionListener(this);
     _base=0;
-    _nicks=new Vector();
+    _nicks=new Vector<String>();
     _font=new Font("",0,12);
     _leftAlign=_pixxConfiguration.getB("leftnickalign");
   }
@@ -183,7 +187,7 @@ public class PixxNickList extends PixxPanel implements MouseListener,MouseMotion
    */
   public void set(String[] nicks)
   {
-    _nicks=new Vector();
+    _nicks=new Vector<String>();
     for(int i=0;i<nicks.length;i++) _nicks.insertElementAt(nicks[i],_nicks.size());
     reinit();
     repaint();
@@ -194,7 +198,7 @@ public class PixxNickList extends PixxPanel implements MouseListener,MouseMotion
    */
   public void removeAll()
   {
-    _nicks=new Vector();
+    _nicks=new Vector<String>();
     //_buffer=null;
     reinit();
     repaint();

@@ -53,10 +53,10 @@ public class PixxConfiguration
   private TextProvider _textProvider;
 
   private RuleList _dockingRules;
-  private Hashtable _htable;
-  private Hashtable _mouseConfig;
-  private Vector _highLightWords;
-  private Vector _nickMenuVector;
+  private Hashtable<String, Object> _htable;
+  private Hashtable<String, Object> _mouseConfig;
+  private Vector<Object> _highLightWords;
+  private Vector<Object> _nickMenuVector;
 
 
   private NullItem NULL_ITEM=new NullItem();
@@ -68,19 +68,19 @@ public class PixxConfiguration
   public PixxConfiguration(IRCConfiguration config)
   {
     _config=config;
-    _htable=new Hashtable();
-    _mouseConfig=new Hashtable();
+    _htable=new Hashtable<String, Object>();
+    _mouseConfig=new Hashtable<String, Object>();
     _dockingRules=new RuleList();
     _dockingRules.setDefaultValue(new Boolean(false));
-    _highLightWords=new Vector();
-    _nickMenuVector=new Vector();
+    _highLightWords=new Vector<Object>();
+    _nickMenuVector=new Vector<Object>();
   }
 
   /**
    * Get the nick menu configuration vector.
    * @return the nick menu vector.
    */
-  public synchronized Vector getNickMenuVector()
+  public synchronized Vector<Object> getNickMenuVector()
   {
     return _nickMenuVector;
   }
@@ -214,11 +214,11 @@ public class PixxConfiguration
    * @param nick true if nick highlight enabled.
    * @param words hightlight words set.
    */
-  public synchronized void setHighLightConfig(int color,boolean nick,Vector words)
+  public synchronized void setHighLightConfig(int color,boolean nick,Vector<Object> words)
   {
     set("highlightcolor",color);
     set("highlightnick",nick);
-    _highLightWords=new Vector();
+    _highLightWords=new Vector<Object>();
     for(int i=0;i<words.size();i++) _highLightWords.insertElementAt(words.elementAt(i),_highLightWords.size());
   }
 
@@ -235,9 +235,9 @@ public class PixxConfiguration
    * Get highlight words.
    * @return enumeration of String.
    */
-  public synchronized Enumeration getHighLightWords()
+  public synchronized Enumeration<Object> getHighLightWords()
   {
-    if(!getB("highlight")) return new Vector().elements();
+    if(!getB("highlight")) return new Vector<Object>().elements();
     return _highLightWords.elements();
   }
 

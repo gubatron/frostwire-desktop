@@ -108,8 +108,12 @@ class ResultPair
  */
 public class StyledList extends JPanel implements MouseListener,MouseMotionListener,FormattedStringDrawerListener
 {
-  private LimitedArray _list;
-  private Hashtable _nickInfos;
+  /**
+     * 
+     */
+    private static final long serialVersionUID = -8753967204833163999L;
+private LimitedArray _list;
+  private Hashtable<String, String> _nickInfos;
   private boolean _wrap;
   private int _last;
   private int _first;
@@ -123,7 +127,7 @@ public class StyledList extends JPanel implements MouseListener,MouseMotionListe
   private int _bufferHeight;
   private int _lastWidth;
   private int _lastHeight;
-  private Hashtable _results;
+  private Hashtable<Integer, DrawResult> _results;
   private MultipleWordCatcher _catcher;
   private WordListRecognizer _wordListRecognizer;
   private IRCConfiguration _ircConfiguration;
@@ -151,7 +155,7 @@ public class StyledList extends JPanel implements MouseListener,MouseMotionListe
   private Color _colorfemeale;
   private Color _colorundef;
 
-  private Vector _updateItems;
+  private Vector<Integer> _updateItems;
   private long _lastRefresh=System.currentTimeMillis();
 
   private Image _backImage;
@@ -207,7 +211,7 @@ public class StyledList extends JPanel implements MouseListener,MouseMotionListe
     _colormale=male;
     _colorfemeale=femeale;
     _colorundef=undef;
-    _nickInfos=new Hashtable();
+    _nickInfos=new Hashtable<String, String>();
     _fullDraw=false;
     _addedResults=new ResultPair[64];
     for(int i=0;i<_addedResults.length;i++) _addedResults[i]=new ResultPair();
@@ -233,7 +237,7 @@ public class StyledList extends JPanel implements MouseListener,MouseMotionListe
     _catcher.addRecognizer(new ChannelRecognizer());
     _catcher.addRecognizer(new URLRecognizer());
     _catcher.addRecognizer(_wordListRecognizer);
-    _results=new Hashtable();
+    _results=new Hashtable<Integer, DrawResult>();
     _listeners=new ListenerGroup();
     addMouseListener(this);
     addMouseMotionListener(this);
@@ -560,7 +564,7 @@ public class StyledList extends JPanel implements MouseListener,MouseMotionListe
   {
     if(_buffer!=null) _buffer.flush();
     _buffer=null;
-    _results=new Hashtable();
+    _results=new Hashtable<Integer, DrawResult>();
   }
 
   /**
@@ -633,7 +637,8 @@ public class StyledList extends JPanel implements MouseListener,MouseMotionListe
     }
   }
 
-  public synchronized void paint(Graphics g)
+  @SuppressWarnings("unused")
+public synchronized void paint(Graphics g)
   {
     if(_doubleBuffer || (_toScrollX!=0) || (_toScrollY!=0))
     {
@@ -758,7 +763,7 @@ public class StyledList extends JPanel implements MouseListener,MouseMotionListe
   private void scrollDrawItems(int dx,int dy)
   {
     int h=getSize().height;
-    Enumeration e=_results.keys();
+    Enumeration<Integer> e=_results.keys();
     while(e.hasMoreElements())
     {
       Integer key=(Integer)e.nextElement();
@@ -784,7 +789,7 @@ public class StyledList extends JPanel implements MouseListener,MouseMotionListe
 
   private DrawResultItem findItem(int x,int y)
   {
-    Enumeration e=_results.elements();
+    Enumeration<DrawResult> e=_results.elements();
     while(e.hasMoreElements())
     {
       DrawResult result=(DrawResult)e.nextElement();
@@ -804,7 +809,7 @@ public class StyledList extends JPanel implements MouseListener,MouseMotionListe
 
   private int findLine(int y)
   {
-    Enumeration e=_results.keys();
+    Enumeration<Integer> e=_results.keys();
     while(e.hasMoreElements())
     {
       Integer i=(Integer)e.nextElement();
@@ -834,16 +839,16 @@ public class StyledList extends JPanel implements MouseListener,MouseMotionListe
     return _ircConfiguration.getASLColor(info,_colormale,_colorfemeale,_colorundef);
   }
 
-  private synchronized Vector getUpdateItems()
+  private synchronized Vector<Integer> getUpdateItems()
   {
-    Vector items=_updateItems;
+    Vector<Integer> items=_updateItems;
     _updateItems=null;
     return items;
   }
   
   private synchronized boolean addToUpdateItems(Integer line)
   {
-    if(_updateItems==null) _updateItems=new Vector();
+    if(_updateItems==null) _updateItems=new Vector<Integer>();
     for(int i=0;i<_updateItems.size();i++)
     {
       Integer r=(Integer)_updateItems.elementAt(i);
@@ -902,7 +907,7 @@ public class StyledList extends JPanel implements MouseListener,MouseMotionListe
 
     int scrx=getScrollX();
     int scry=getScrollY();
-    Vector items=getUpdateItems();
+    Vector<Integer> items=getUpdateItems();
 
     if(!_fullDraw)
     {
@@ -965,7 +970,7 @@ public class StyledList extends JPanel implements MouseListener,MouseMotionListe
     }
     else
     {
-      _results=new Hashtable();
+      _results=new Hashtable<Integer, DrawResult>();
       drawPart(gra,0,0,w,h,true,w,h);
       combineItems();
       _fullDraw=false;
@@ -1259,7 +1264,7 @@ public class StyledList extends JPanel implements MouseListener,MouseMotionListe
     boolean foundSome=false;
     
     //now we should go through all our draw results, and find which of them belong to this handle.
-    Enumeration e=_results.keys();
+    Enumeration<Integer> e=_results.keys();
     while(e.hasMoreElements())
     {
       Integer line=(Integer)e.nextElement();
