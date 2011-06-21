@@ -17,7 +17,6 @@ import org.limewire.util.CommonUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
-import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.iTunesImportSettings;
 import com.limegroup.gnutella.settings.iTunesSettings;
@@ -29,7 +28,9 @@ public final class iTunesMediator {
 
     private static final Log LOG = LogFactory.getLog(iTunesMediator.class);
     
-    private static final String JS_SCRIPT_NAME = "itunes_import.js";
+    private static final String JS_IMPORT_SCRIPT_NAME = "itunes_import.js";
+    
+    private static final String JS_REMOVE_PLAYLIST_SCRIPT_NAME = "itunes_remove_playlist.js";
 
     private static iTunesMediator INSTANCE;
 
@@ -142,7 +143,7 @@ public final class iTunesMediator {
     
     private static String[] createWSHScriptCommand(File[] files) {
     	
-    	createJScriptIfNeeded();
+    	createJScriptIfNeeded(JS_IMPORT_SCRIPT_NAME);
     	
         String playlist = iTunesSettings.ITUNES_PLAYLIST.getValue();
         
@@ -150,7 +151,7 @@ public final class iTunesMediator {
         command.add("wscript");
         command.add("//B");
         command.add("//NoLogo");
-        command.add(new File(CommonUtils.getUserSettingsDir(), JS_SCRIPT_NAME).getAbsolutePath());
+        command.add(new File(CommonUtils.getUserSettingsDir(), JS_IMPORT_SCRIPT_NAME).getAbsolutePath());
         command.add(playlist);
         for (File file : files) {
         	command.add(file.getAbsolutePath());
@@ -229,13 +230,13 @@ public final class iTunesMediator {
         iTunesImportSettings.IMPORT_FILES.remove(file);
     }
     
-    private static void createJScriptIfNeeded() {
-    	File fileJS = new File(CommonUtils.getUserSettingsDir(), JS_SCRIPT_NAME);
+    private static void createJScriptIfNeeded(String scriptName) {
+    	File fileJS = new File(CommonUtils.getUserSettingsDir(), scriptName);
     	if (fileJS.exists()) {
     		return;
     	}
     	
-        URL url = ResourceManager.getURLResource(JS_SCRIPT_NAME);
+        URL url = ResourceManager.getURLResource(scriptName);
         InputStream is = null;
         try {
             if(url != null) {
@@ -263,16 +264,33 @@ public final class iTunesMediator {
 			} catch (IOException e) {
 			}
     	} else if (OSUtils.isWindows()) {
-    		//TODO
+    		createJScriptIfNeeded(JS_REMOVE_PLAYLIST_SCRIPT_NAME);
+    		
+            ArrayList<String> command = new ArrayList<String>();
+            command.add("wscript");
+            command.add("//B");
+            command.add("//NoLogo");
+            command.add(new File(CommonUtils.getUserSettingsDir(), JS_REMOVE_PLAYLIST_SCRIPT_NAME).getAbsolutePath());
+
+            try {
+				Runtime.getRuntime().exec(command.toArray(new String[0]));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}            
     	}
     }
     
 	public void resetFrostWirePlaylist() {
 		deleteFrostWirePlaylist();
 		
-		BackgroundExecutorService.schedule(new Runnable() {
+		QUEUE.execute(new Runnable() {
 			@Override
 			public void run() {
+				try {
+					Thread.sleep(1000);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				iTunesMediator.instance().scanForSongs(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue());			
 			}
 		});
