@@ -203,8 +203,7 @@ public class NativeFileIconController implements FileIconController {
 			icon = iconCandidate;
 		}
 		file.delete();
-        
-        System.out.println("NativeFileIconController.getIconForExtension() - Putting new icon for ["+ext+"]" + icon);
+
         EXTENSIONS.put(ext, icon);
         
         return icon;
