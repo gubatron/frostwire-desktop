@@ -153,6 +153,8 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 			mainScreen = new JPanel(new BorderLayout());
 	        mainScreen.add(DUMMY.getComponent(), BorderLayout.CENTER);
 	        results.add("dummy", mainScreen);
+	        
+	        //TODO: Add SlideshowPanelControls here.
         }
         
         switcher.first(results);
