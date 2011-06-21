@@ -176,7 +176,7 @@ public class NativeFileIconController implements FileIconController {
     }
      
     /**
-     * Returns the icon assocated with the extension.
+     * Returns the icon associated with the extension.
      * TODO: Implement better.
      */
     public Icon getIconForExtension(String ext) {
@@ -198,7 +198,7 @@ public class NativeFileIconController implements FileIconController {
 		} catch (IOException e1) {
 		}
 
-		Icon iconCandidate = FileSystemView.getFileSystemView().getSystemIcon(file);
+		Icon iconCandidate = getNativeFileView().getIcon(file);
 		if (iconCandidate != null) {
 			icon = iconCandidate;
 		}

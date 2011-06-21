@@ -2,8 +2,6 @@ package com.limegroup.gnutella.gui.menu;
 
 import java.awt.event.ActionEvent;
 
-import javax.swing.Action;
-
 import org.limewire.i18n.I18nMarker;
 import org.limewire.util.OSUtils;
 

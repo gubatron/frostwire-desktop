@@ -17,6 +17,8 @@ import org.limewire.util.CommonUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
+import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
+import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.iTunesImportSettings;
 import com.limegroup.gnutella.settings.iTunesSettings;
 
@@ -245,4 +247,35 @@ public final class iTunesMediator {
             IOUtils.close(is);
         }
     }
+
+    public void deleteFrostWirePlaylist() {
+    	String playlistName = iTunesSettings.ITUNES_PLAYLIST.getValue();
+
+    	if (OSUtils.isMacOSX()) {
+            String[] command = new String[] { 
+                    "osascript", 
+                    "-e", "tell application \"iTunes\"", 
+                    "-e",   "delete playlist \"" + playlistName + "\"", 
+                    "-e", "end tell" 
+                };
+            try {
+				Runtime.getRuntime().exec(command);
+			} catch (IOException e) {
+			}
+    	} else if (OSUtils.isWindows()) {
+    		//TODO
+    	}
+    }
+    
+	public void resetFrostWirePlaylist() {
+		deleteFrostWirePlaylist();
+		
+		BackgroundExecutorService.schedule(new Runnable() {
+			@Override
+			public void run() {
+				iTunesMediator.instance().scanForSongs(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue());			
+			}
+		});
+	}
+	
 }
