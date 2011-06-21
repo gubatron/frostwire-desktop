@@ -275,11 +275,8 @@ public final class OptionsConstructor {
 
     @SuppressWarnings({ "unchecked" })
     private OptionsTreeNode initializePanels() {
-    	//saving
-    	OptionsTreeNode node = addOption(OptionsMediator.ROOT_NODE_KEY, SAVE_KEY, I18n.tr("Saving"), TorrentSaveFolderPaneItem.class, DefaultActionPaneItem.class);
-
         //bittorrent
-        addOption(OptionsMediator.ROOT_NODE_KEY,BITTORRENT_KEY, I18n.tr("BitTorrent"), BitTorrentDownloadSpeedPaneItem.class, BittorrentPaneItem.class, BittorrentConnectionPaneItem.class);
+    	 OptionsTreeNode node = addOption(OptionsMediator.ROOT_NODE_KEY,BITTORRENT_KEY, I18n.tr("BitTorrent"), TorrentSaveFolderPaneItem.class, BittorrentPaneItem.class, BitTorrentDownloadSpeedPaneItem.class, BittorrentConnectionPaneItem.class);
 
         //community chat
 		addOption(OptionsMediator.ROOT_NODE_KEY, CHAT_KEY, I18n.tr("Community Chat"), ChatCommunityPaneItem.class);
@@ -295,8 +292,6 @@ public final class OptionsConstructor {
             addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, ITUNES_KEY, I18n.tr("iTunes"));
 			addOption(ITUNES_KEY, ITUNES_IMPORT_KEY, I18n.tr("Importing"), iTunesPreferencePaneItem.class); 
 		}
-		//addOption(ITUNES_KEY, ITUNES_DAAP_KEY, I18n.tr("Sharing"), DaapSupportPaneItem.class, DaapPasswordPaneItem.class, DaapBufferSizePaneItem.class);
-
 		
 		if (!OSUtils.isWindows() && !OSUtils.isAnyMac()) {
 			addOption(OptionsMediator.ROOT_NODE_KEY, APPS_KEY, I18n.tr("Helper Apps"), BrowserPaneItem.class, ImageViewerPaneItem.class, VideoPlayerPaneItem.class, AudioPlayerPaneItem.class);

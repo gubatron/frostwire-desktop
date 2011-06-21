@@ -16,16 +16,14 @@ import com.limegroup.gnutella.settings.BittorrentSettings;
  */
 public class BittorrentPaneItem extends AbstractPaneItem {
 	
-    public final static String TITLE = I18n.tr("BitTorrent Settings");
+    public final static String TITLE = I18n.tr("Torrent Details Page");
     
-    public final static String LABEL = I18n.tr("You can choose whether or not FrostWire should manage your BitTorrent protocol settings. It is highly recommended that FrostWire manage these settings. Invalid or inappropriate values may cause severe performance and/or memory problems.");
-    
-    public final static String DETAILS = I18n.tr("Show torrent details after a download starts. (Recommended)");
+    public final static String DETAILS = I18n.tr("Show torrent details web page after a download starts. (Recommended)");
     
 	private final JCheckBox DETAILS_CHECK_BOX = new JCheckBox();
 	
 	public BittorrentPaneItem() {
-	    super(TITLE, LABEL);
+	    super(TITLE, "");
 
 		BoxPanel panel = new BoxPanel();
 		LabeledComponent comp = new LabeledComponent(
