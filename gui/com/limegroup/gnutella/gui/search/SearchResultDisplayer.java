@@ -29,6 +29,7 @@ import javax.swing.plaf.TabbedPaneUI;
 
 import com.frostwire.gui.components.Slide;
 import com.frostwire.gui.components.SlideshowPanel;
+import com.frostwire.gui.components.SlideshowPanel.SlideshowListener;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -127,6 +128,17 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
         	promoSlides = new SlideshowPanel(Arrays.asList(s1,s2),false);
         } else {
             promoSlides = new SlideshowPanel(UpdateManagerSettings.OVERLAY_SLIDESHOW_JSON_URL.getValue());
+            
+            final SlideshowPanel promoSlides2 = promoSlides;
+        	SlideshowListener myDummyListener = new SlideshowListener() {
+				
+				@Override
+				public void onSlideChanged() {
+					System.out.println("Slides have changed to slice index: " + promoSlides2.getCurrentSlideIndex());
+				}
+			};
+			
+			promoSlides.addListener(myDummyListener);
         }
         
         if (promoSlides != null) {

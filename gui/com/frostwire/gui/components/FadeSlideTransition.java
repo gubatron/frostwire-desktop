@@ -44,6 +44,7 @@ public class FadeSlideTransition {
                 }
 
                 _running = false;
+                _panel.onTransitionFinished();
             }
         });
         t.start();

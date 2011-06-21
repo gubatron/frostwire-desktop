@@ -23,14 +23,12 @@ import com.frostwire.HttpFetcher;
 import com.frostwire.ImageCache;
 import com.frostwire.JsonEngine;
 import com.frostwire.ImageCache.OnLoadedListener;
+import com.frostwire.gui.components.SlideshowPanel.SlideshowListener;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 
 public class SlideshowPanel extends JPanel {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = -1964953870003850981L;
 
     private List<Slide> _slides;
@@ -43,6 +41,12 @@ public class SlideshowPanel extends JPanel {
     private FadeSlideTransition _transition;
     private long _transitionTime;
     private boolean _started;
+    
+    public interface SlideshowListener {
+    	public void onSlideChanged();
+    }
+    
+    private List<SlideshowListener> _listeners;
     
     /**
      * Last time stamp a slide was loaded
@@ -356,5 +360,57 @@ public class SlideshowPanel extends JPanel {
 	        _masterImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
 	    }
 	    return _masterImage;
+	}
+	
+	public void onTransitionFinished() {
+		//notify listeners.
+		if (_listeners == null || _listeners.size() == 0) {
+			return;
+		}
+		
+		for (SlideshowListener listener : _listeners) {
+			listener.onSlideChanged();
+		}
+		
+	}
+	
+	public int getNumSlides() {
+		if (_slides == null) {
+			return -1;
+		}
+		
+		return _slides.size();
+	}
+	
+	public int getCurrentSlideIndex() {
+		return _currentSlideIndex;
+	}
+	
+	/**
+	 * This method is for a user who wants to jump at a random slide.
+	 * It'll stop the timer.
+	 * 
+	 * @param index
+	 */
+	public void switchToSlide(int index) {
+		_currentSlideIndex = index;
+		_timer.cancel();
+		tryMoveNext();
+	}
+
+	public void addListener(SlideshowListener myDummyListener) {
+		if (_listeners == null) {
+			_listeners = new ArrayList<SlideshowPanel.SlideshowListener>();
+		}
+		
+		_listeners.add(myDummyListener);
+	}
+	
+	public void removeListener(SlideshowListener myDummyListener) {
+		if (_listeners == null) {
+			return;
+		}
+		
+		_listeners.remove(myDummyListener);
 	}
 }
