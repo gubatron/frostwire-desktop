@@ -5,9 +5,11 @@ import java.awt.event.ActionEvent;
 import javax.swing.Action;
 
 import org.limewire.i18n.I18nMarker;
+import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
 
 /**
@@ -25,9 +27,29 @@ final class ToolsMenu extends AbstractMenu {
 	 */
 	ToolsMenu() {
 	    super(I18n.tr("&Tools"));
+	    
+	    if (OSUtils.isMacOSX() || OSUtils.isWindows()) {
+	    	addMenuItem(new RebuildiTunesPlaylist());
+	    }
+	    
         addMenuItem(new ShowOptionsAction());
     }
 	
+	private static class RebuildiTunesPlaylist extends AbstractAction {
+
+		private static final long serialVersionUID = 8348355619323878579L;
+
+		public RebuildiTunesPlaylist() {
+			super(I18n.tr("Rebuild iTunes \"FrostWire\" Playlist"));
+			putValue(LONG_DESCRIPTION, I18nMarker.marktr("Deletes and re-builds the \"FrostWire\" playlist on iTunes with all the audio files found on your Torrent Data Folder."));
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			iTunesMediator.instance().resetFrostWirePlaylist();
+		}
+		
+	}
 	
 	
 	private static class ShowOptionsAction extends AbstractAction {
