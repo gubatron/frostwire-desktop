@@ -348,7 +348,7 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
     Icon getIcon() {
         String ext = getExtension();
         
-      //let's try to extract the extension from inside the torrent name
+        //let's try to extract the extension from inside the torrent name
         if (ext.equals("torrent")) {
         	String filename = getFilename().replace(".torrent", "");
         	
