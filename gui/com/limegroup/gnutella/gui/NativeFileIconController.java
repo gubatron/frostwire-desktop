@@ -1,6 +1,9 @@
 package com.limegroup.gnutella.gui;
 
+import java.awt.Image;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -21,6 +24,8 @@ import org.limewire.collection.FixedsizeForgetfulHashSet;
 import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
+
+import sun.awt.shell.ShellFolder;
 
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.settings.UISettings;
@@ -191,9 +196,22 @@ public class NativeFileIconController implements FileIconController {
                 return null;
         }
 
+        File file = null;
+		try {
+			file = File.createTempFile("dummy","."+ext);
+		} catch (IOException e1) {
+		}
+
+		Icon iconCandidate = FileSystemView.getFileSystemView().getSystemIcon(file);
+		if (iconCandidate != null) {
+			icon = iconCandidate;
+		}
+		file.delete();
+        
         // If we don't know the icon for this extension yet,
         // then create a temporary file, get icon, cache it,
         // and return it.
+        System.out.println("NativeFileIconController.getIconForExtension() - Putting new icon for ["+ext+"]" + icon);
         EXTENSIONS.put(ext, icon);
         
         return icon;
