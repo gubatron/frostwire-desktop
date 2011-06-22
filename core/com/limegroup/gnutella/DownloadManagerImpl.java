@@ -12,6 +12,7 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.limegroup.gnutella.settings.SharingSettings;
+import com.limegroup.gnutella.settings.UpdateSettings;
 import com.limegroup.gnutella.version.DownloadInformation;
 
 @Singleton
@@ -67,6 +68,10 @@ public class DownloadManagerImpl implements DownloadManager {
             if (obj instanceof org.gudy.azureus2.core3.download.DownloadManager) {
 
             	org.gudy.azureus2.core3.download.DownloadManager downloadManager = (org.gudy.azureus2.core3.download.DownloadManager) obj;
+            	
+            	if (downloadManager.getSaveLocation().getParentFile().getAbsolutePath().equals(UpdateSettings.UPDATES_DIR.getAbsolutePath())) {
+            	    continue;
+            	}
                 
             	if (!SharingSettings.SEED_FINISHED_TORRENTS.getValue()) {
             		if (downloadManager.getAssumedComplete()) {
