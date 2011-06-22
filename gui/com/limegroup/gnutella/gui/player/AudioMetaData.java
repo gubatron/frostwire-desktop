@@ -19,7 +19,14 @@ public class AudioMetaData {
     }
 
     public String getBitrate() {
-        return _properties.get("ID_AUDIO_BITRATE");
+        if (!_properties.containsKey("ID_AUDIO_BITRATE")) {
+            return "";
+        }
+        try {
+            return (Integer.parseInt(_properties.get("ID_AUDIO_BITRATE")) / 1000) + " kbps";
+        } catch (Exception e) {
+            return _properties.get("ID_AUDIO_BITRATE");
+        }
     }
 
     public String getComment() {
