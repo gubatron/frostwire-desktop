@@ -39,7 +39,8 @@ public class LimeWirePlayer implements AudioPlayer, RefreshListener {
     		// this is only for debug, in release mode we need to put the installation path
     		MPlayer.initialise(new File("lib/mplayer/fwplayer.exe"));
     	} else if (OSUtils.isMacOSX()) {
-    		//TODO: put the path here
+    		// this is only for debug, in release mode we need to put the installation path
+    		MPlayer.initialise(new File("lib/mplayer/fwplayer"));
     	} else {
     		MPlayer.initialise(new File("/usr/bin/mplayer"));
     	}
