@@ -381,6 +381,8 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
     private void loadSong(final AudioSource audioSource, String displayName) {
         if (audioSource == null)
             return;
+        
+        audioProperties = audioSource.getMetaData();
 
         // load song on Executor thread
         SONG_QUEUE.execute(new SongLoader(audioSource));

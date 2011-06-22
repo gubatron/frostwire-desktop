@@ -933,17 +933,17 @@ MPlayerInstance
 
             String[] cmd = cmdList.toArray(new String[cmdList.size()]);
 
-            for (int i = 0; i < cmd.length; i++) {
-                if (cmd[i].contains(" ")) {
-                    System.out.print("\"");
-                }
-                System.out.print(cmd[i]);
-                if (cmd[i].contains(" ")) {
-                    System.out.print("\"");
-                }
-                System.out.print(" ");
-            }
-            System.out.println("\n");
+//            for (int i = 0; i < cmd.length; i++) {
+//                if (cmd[i].contains(" ")) {
+//                    System.out.print("\"");
+//                }
+//                System.out.print(cmd[i]);
+//                if (cmd[i].contains(" ")) {
+//                    System.out.print("\"");
+//                }
+//                System.out.print(" ");
+//            }
+//            System.out.println("\n");
 
             try {
                 InputStream stdOut = Runtime.getRuntime().exec(cmd).getInputStream();
