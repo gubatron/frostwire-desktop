@@ -1,5 +1,6 @@
 package com.frostwire.gui.components;
 
+import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -57,6 +58,10 @@ public class SlideshowPanel extends JPanel {
      * Timer to check if we need to switch slides
      */
     private Timer _timer;
+
+	private JPanel _container;
+
+	private boolean _useControls;
     
     public SlideshowPanel(List<Slide> slides, boolean randomStart) {
         setup(slides, false);
@@ -124,8 +129,8 @@ public class SlideshowPanel extends JPanel {
     }
     
     private void setup(List<Slide> slides, boolean randomStart) {
-    	
         _slides = filter(slides);
+
         _randomStart = randomStart;
         _currentSlideIndex = -1;
         
@@ -162,6 +167,11 @@ public class SlideshowPanel extends JPanel {
                 }
             }
         });
+        
+        if (_container != null && _useControls) {
+        	_container.add(new SlideshowPanelControls(this),BorderLayout.PAGE_END);
+        }
+
     }
 
     private void startAnimation() {
@@ -412,5 +422,10 @@ public class SlideshowPanel extends JPanel {
 		}
 		
 		_listeners.remove(myDummyListener);
+	}
+
+	public void setupContainerAndControls(JPanel container,boolean useControls) {
+		_container = container;
+		_useControls = useControls;
 	}
 }
