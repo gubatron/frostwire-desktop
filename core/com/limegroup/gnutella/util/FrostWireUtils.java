@@ -303,7 +303,7 @@ public final class FrostWireUtils {
      * @return
      */
     public static String getFrostWireJarPath() {
-    	return new File(FrostWireUtils.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getAbsolutePath();
+    	return new File(FrostWireUtils.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getParent();
     }
     
     /**
