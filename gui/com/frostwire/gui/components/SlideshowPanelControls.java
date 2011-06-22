@@ -1,7 +1,7 @@
 package com.frostwire.gui.components;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,26 +19,38 @@ public class SlideshowPanelControls extends JPanel implements SlideshowListener 
 	private ButtonGroup _buttonGroup;
 	private List<JRadioButton> _buttons;
 	
-	private MouseAdapter _selectionAdapter;
+	private ItemListener _selectionAdapter;
 	
 	public SlideshowPanelControls(SlideshowPanel panel) {
 		_thePanel = panel;
 		_thePanel.addListener(this);
 		
-		buildMouseAdapter();
 		buildButtons();
+		autoSelectCurrentSlideButton();
+		buildMouseAdapter();
+		attachListeners();
+	}
+
+	public void autoSelectCurrentSlideButton() {
+		int currentSlideIndex = _thePanel.getCurrentSlideIndex();
+		if (currentSlideIndex!=-1) {
+			_buttons.get(currentSlideIndex).setSelected(true);
+		} else {
+			_buttons.get(0).setSelected(true);
+		}
 	}
 
 	private void buildMouseAdapter() {
-		_selectionAdapter = new MouseAdapter() {
+		_selectionAdapter = new ItemListener() {
+			
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				onRadioButtonClicked(e);
+			public void itemStateChanged(ItemEvent e) {
+				onRadioButtonClicked(e);				
 			}
-		};		
+		};
 	}
 
-	protected void onRadioButtonClicked(MouseEvent e) {
+	protected void onRadioButtonClicked(ItemEvent e) {
 		int selectedIndex = _buttons.indexOf(e.getSource());
 		_thePanel.switchToSlide(selectedIndex);
 	}
@@ -51,7 +63,6 @@ public class SlideshowPanelControls extends JPanel implements SlideshowListener 
 		
 		for (int i=0; i < numSlides; i++) {
 			JRadioButton radio = new JRadioButton();
-			radio.addMouseListener(_selectionAdapter);
 			
 			//add to the list
 			_buttons.add(radio);
@@ -61,6 +72,12 @@ public class SlideshowPanelControls extends JPanel implements SlideshowListener 
 
 			//add to the panel
 			add(radio);
+		}
+	}
+	
+	private void attachListeners() {
+		for (int i=0; i < _buttons.size(); i++) {
+			_buttons.get(i).addItemListener(_selectionAdapter);
 		}
 	}
 

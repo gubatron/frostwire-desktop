@@ -22,9 +22,8 @@ import org.limewire.util.OSUtils;
 
 import com.frostwire.HttpFetcher;
 import com.frostwire.ImageCache;
-import com.frostwire.JsonEngine;
 import com.frostwire.ImageCache.OnLoadedListener;
-import com.frostwire.gui.components.SlideshowPanel.SlideshowListener;
+import com.frostwire.JsonEngine;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 
@@ -42,6 +41,8 @@ public class SlideshowPanel extends JPanel {
     private FadeSlideTransition _transition;
     private long _transitionTime;
     private boolean _started;
+    
+    private boolean _stoppedTransitions;
     
     public interface SlideshowListener {
     	public void onSlideChanged();
@@ -112,7 +113,7 @@ public class SlideshowPanel extends JPanel {
     	g.setColor(getBackground());
         g.fillRect(0, 0, getWidth(), getHeight());
 
-        if (!_started) {
+        if (!_started && !_stoppedTransitions) {
             startAnimation();
         }
         
@@ -176,7 +177,7 @@ public class SlideshowPanel extends JPanel {
 
     private void startAnimation() {
         
-        if(_slides == null || _slides.size() == 0) {
+        if(_slides == null || _slides.size() == 0 || _stoppedTransitions) {
             return;
         }
         
@@ -199,13 +200,13 @@ public class SlideshowPanel extends JPanel {
             _timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    tryMoveNext();
+                    tryMoveNext(false);
                 }
             }, 0, 200); // Check every 200 milliseconds if we should trigger a transition
         }
     }
 
-    private void tryMoveNext() {
+    private void tryMoveNext(boolean forceCurrentIndex) {
         
         if (_loadingNextImage) {
             return;
@@ -237,7 +238,26 @@ public class SlideshowPanel extends JPanel {
             }
         } else {
             slide = _slides.get(_currentSlideIndex);
-            if (slide.duration + _lastTimeSlideLoaded + _transitionTime < System.currentTimeMillis()) {
+            if (forceCurrentIndex) {
+            	//Switch Image without 
+            	try {
+                    ImageCache.getInstance().getImage(new URL(slide.imageSrc), new OnLoadedListener() {
+                        public void onLoaded(URL url, BufferedImage image, boolean fromCache, boolean fail) {
+                            _currentImage = prepareImage(image);
+                            
+                            if (_transition != null) {
+                            	_transition.stop();
+                            }
+                            
+                            _transition = null;
+                            repaint();
+                        }
+                    });
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            	return;
+            } else if (slide.duration + _lastTimeSlideLoaded + _transitionTime < System.currentTimeMillis()) {
                 _currentSlideIndex = (_currentSlideIndex + 1) % _slides.size();
                 slide = _slides.get(_currentSlideIndex);
             } else {
@@ -403,12 +423,17 @@ public class SlideshowPanel extends JPanel {
 	 * @param index
 	 */
 	public void switchToSlide(int index) {
+		System.out.println("switchToSlide ["+index+"]");
+		_stoppedTransitions = true;
 		_loadingNextImage = false;
 		_currentSlideIndex = index;
-		_timer.cancel();
-		Slide slide = _slides.get(_currentSlideIndex);
-		_lastTimeSlideLoaded = System.currentTimeMillis() - (slide.duration + _transitionTime); 
-		tryMoveNext();
+
+		if (_timer != null) {
+			_timer.cancel();
+		}
+		
+		_lastTimeSlideLoaded = 0; 
+		tryMoveNext(true);
 	}
 
 	public void addListener(SlideshowListener myDummyListener) {

@@ -29,8 +29,6 @@ import javax.swing.plaf.TabbedPaneUI;
 
 import com.frostwire.gui.components.Slide;
 import com.frostwire.gui.components.SlideshowPanel;
-import com.frostwire.gui.components.SlideshowPanel.SlideshowListener;
-import com.frostwire.gui.components.SlideshowPanelControls;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIMediator;

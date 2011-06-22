@@ -76,4 +76,8 @@ public class FadeSlideTransition {
     public long getEstimatedDuration() {
         return _cycles * _sleepTime + 50; // 50 is a draw time arbitrary correction
     }
+
+	public void stop() {
+		_counter = Integer.MAX_VALUE;		
+	}
 }
