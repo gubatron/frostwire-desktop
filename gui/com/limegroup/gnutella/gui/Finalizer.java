@@ -2,6 +2,7 @@ package com.limegroup.gnutella.gui;
 
 import com.limegroup.gnutella.gui.bugs.BugManager;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
+import com.limegroup.gnutella.gui.player.MediaPlayerComponent;
 
 /**
  * This class provides the "shutdown" method that should be
@@ -52,6 +53,7 @@ final class Finalizer {
      * @param toExecute a string to try to execute after shutting down.
      */
     static void shutdown() {
+    	MediaPlayerComponent.getInstance().stopSong();
         GUIMediator.applyWindowSettings();
         
         GUIMediator.setAppVisible(false);

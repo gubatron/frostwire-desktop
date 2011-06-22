@@ -9,6 +9,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.SwingUtilities;
 
+import org.limewire.util.OSUtils;
+
 import com.frostwire.gui.mplayer.MPlayer;
 import com.frostwire.gui.mplayer.MediaPlaybackState;
 import com.frostwire.gui.mplayer.PositionListener;
@@ -33,7 +35,14 @@ public class LimeWirePlayer implements AudioPlayer, RefreshListener {
     private MPlayer _mplayer;
 
     public LimeWirePlayer() {
-        MPlayer.initialise(new File("/usr/bin/mplayer"));
+    	if (OSUtils.isWindows()) {
+    		// this is only for debug, in release mode we need to put the installation path
+    		MPlayer.initialise(new File("lib/mplayer/fwplayer.exe"));
+    	} else if (OSUtils.isMacOSX()) {
+    		//TODO: put the path here
+    	} else {
+    		MPlayer.initialise(new File("/usr/bin/mplayer"));
+    	}
         _mplayer = new MPlayer();
         _mplayer.setPositionListener(new PositionListener() {
             public void positionChanged(float currentTimeInSecs) {
