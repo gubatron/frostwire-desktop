@@ -59,7 +59,7 @@ public class SlideshowPanel extends JPanel {
      */
     private Timer _timer;
 
-	private JPanel _container;
+	private JPanel _controlsContainer;
 
 	private boolean _useControls;
     
@@ -168,8 +168,8 @@ public class SlideshowPanel extends JPanel {
             }
         });
         
-        if (_container != null && _useControls) {
-        	_container.add(new SlideshowPanelControls(this),BorderLayout.PAGE_END);
+        if (_controlsContainer != null && _useControls) {
+        	_controlsContainer.add(new SlideshowPanelControls(this),BorderLayout.PAGE_END);
         }
 
     }
@@ -425,7 +425,7 @@ public class SlideshowPanel extends JPanel {
 	}
 
 	public void setupContainerAndControls(JPanel container,boolean useControls) {
-		_container = container;
+		_controlsContainer = container;
 		_useControls = useControls;
 	}
 }

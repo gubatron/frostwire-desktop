@@ -12,8 +12,6 @@ import java.util.regex.Pattern;
 import org.gudy.azureus2.core3.internat.MessageText;
 import org.gudy.azureus2.core3.util.Debug;
 
-
-
 public class MPlayer extends BaseMediaPlayer {
 
 	public static void initialise(File path) {
@@ -36,7 +34,6 @@ public class MPlayer extends BaseMediaPlayer {
 	public MPlayer(PlayerPreferences preferences) {
 	
 		super(preferences);
-		
 		
 		output = new LinkedList<String>();
 		
