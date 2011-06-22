@@ -33,6 +33,8 @@ public class FadeSlideTransition {
         
         Thread t = new Thread(new Runnable() {
             public void run() {
+            	_panel.onTransitionStarted();
+            	
                 for (_counter = 0; _counter < _cycles; _counter++) {
                     try {
                         Thread.sleep(_sleepTime);
@@ -44,7 +46,6 @@ public class FadeSlideTransition {
                 }
 
                 _running = false;
-                _panel.onTransitionFinished();
             }
         });
         t.start();
@@ -56,6 +57,7 @@ public class FadeSlideTransition {
         }
         Graphics2D g2d = (Graphics2D) g;
         float alpha = _counter / 100f;
+
         if (alpha < 0)
             alpha = 0;
         if (alpha > 1)
@@ -79,5 +81,6 @@ public class FadeSlideTransition {
 
 	public void stop() {
 		_counter = Integer.MAX_VALUE;		
+		_running = false;
 	}
 }

@@ -27,7 +27,7 @@ public class SlideshowPanelControls extends JPanel implements SlideshowListener 
 		
 		buildButtons();
 		autoSelectCurrentSlideButton();
-		buildMouseAdapter();
+		buildItemListener();
 		attachListeners();
 	}
 
@@ -40,12 +40,14 @@ public class SlideshowPanelControls extends JPanel implements SlideshowListener 
 		}
 	}
 
-	private void buildMouseAdapter() {
+	private void buildItemListener() {
 		_selectionAdapter = new ItemListener() {
 			
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				onRadioButtonClicked(e);				
+				if (((JRadioButton)e.getItemSelectable()).isSelected()) {				
+					onRadioButtonClicked(e);				
+				}
 			}
 		};
 	}
@@ -83,7 +85,21 @@ public class SlideshowPanelControls extends JPanel implements SlideshowListener 
 
 	@Override
 	public void onSlideChanged() {
-		_buttons.get(_thePanel.getCurrentSlideIndex()).setSelected(true);
+		int currentSlideIndex = _thePanel.getCurrentSlideIndex();
+		JRadioButton button = _buttons.get(currentSlideIndex);
+		
+		ItemListener[] itemListeners = button.getItemListeners();
+
+		for (ItemListener listener : itemListeners) {
+			button.removeItemListener(listener);
+		}
+		
+		button.setSelected(true);
+		
+		for (ItemListener listener : itemListeners) {
+			button.addItemListener(listener);
+		}
+		
 	}
 
 }

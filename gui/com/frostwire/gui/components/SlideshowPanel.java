@@ -392,7 +392,7 @@ public class SlideshowPanel extends JPanel {
 	    return _masterImage;
 	}
 	
-	public void onTransitionFinished() {
+	public void onTransitionStarted() {
 		//notify listeners.
 		if (_listeners == null || _listeners.size() == 0) {
 			return;
