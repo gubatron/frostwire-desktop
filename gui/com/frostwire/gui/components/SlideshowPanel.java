@@ -403,8 +403,11 @@ public class SlideshowPanel extends JPanel {
 	 * @param index
 	 */
 	public void switchToSlide(int index) {
+		_loadingNextImage = false;
 		_currentSlideIndex = index;
 		_timer.cancel();
+		Slide slide = _slides.get(_currentSlideIndex);
+		_lastTimeSlideLoaded = System.currentTimeMillis() - (slide.duration + _transitionTime); 
 		tryMoveNext();
 	}
 

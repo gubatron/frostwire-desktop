@@ -153,9 +153,16 @@ public class PlayListItem implements Comparable<PlayListItem>{
                 _metaData = amd;
                 
             } catch (Exception e) { //dont catch
+            	_metaData = new AudioMetaData(new HashMap<String, String>());
+            	System.out.println("PlayListItem.initMetaData() exception:");
+            	e.printStackTrace();
             }
         }
         
+    }
+    
+    public AudioMetaData getMetaData() {
+    	return _metaData;
     }
     
     /**

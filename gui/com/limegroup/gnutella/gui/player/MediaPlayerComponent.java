@@ -383,6 +383,10 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
             return;
         
         audioProperties = audioSource.getMetaData();
+        
+        if (audioProperties == null) {
+        	loadAudioProperties();
+        }
 
         // load song on Executor thread
         SONG_QUEUE.execute(new SongLoader(audioSource));
@@ -457,6 +461,11 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
      */
     public void songOpened(AudioMetaData properties) {
         audioProperties = properties;
+        
+        if (audioProperties == null) {
+        	loadAudioProperties();
+        }
+        
         setVolumeValue();
         if (properties.isSeekable()) {
             setProgressEnabled(true);
@@ -475,6 +484,11 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
     public void progressChange(float currentTimeInSecs) {
         
         _progress = currentTimeInSecs;
+        
+        //I wasn't ready
+        if (audioProperties == null) {
+        	loadAudioProperties();
+        }
 
         float progressUpdate = ((PROGRESS.getMaximum() * currentTimeInSecs) / audioProperties.getLength());
         setProgressValue((int) progressUpdate);
@@ -498,11 +512,25 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
         }
     }
 
-    /**
+    private void loadAudioProperties() {
+    	if (currentPlayListItem == null) {
+    		return;
+    	}
+    	
+    	currentPlayListItem.initMetaData();
+    	audioProperties = currentPlayListItem.getMetaData();
+	}
+
+	/**
      * This event is generated everytime the song state changes. ie.
      * OPENED->PLAYING->PAUSED->PLAYING->STOPPED->EOF, etc..
      */
     public void stateChange(AudioPlayerEvent event) {
+    	
+    	if (audioProperties == null) {
+    		loadAudioProperties();
+    	}
+    	
         if (event.getState() == MediaPlaybackState.Failed || event.getState() == MediaPlaybackState.Uninitialized) {
             //setProgressEnabled(false);
         } else if (event.getState() == MediaPlaybackState.Opening) {

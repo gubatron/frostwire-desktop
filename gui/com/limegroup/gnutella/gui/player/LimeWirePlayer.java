@@ -15,6 +15,7 @@ import com.frostwire.gui.mplayer.MPlayer;
 import com.frostwire.gui.mplayer.MediaPlaybackState;
 import com.frostwire.gui.mplayer.PositionListener;
 import com.limegroup.gnutella.gui.RefreshListener;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  *  An audio player to play compressed and uncompressed music.
@@ -34,16 +35,27 @@ public class LimeWirePlayer implements AudioPlayer, RefreshListener {
     
     private MPlayer _mplayer;
 
+    /** Wether or not we're running from source or from a binary distribution */
+    private static boolean _isRelease;
+    
+    static {
+    	_isRelease = !FrostWireUtils.getFrostWireJarPath().contains("frostwire.desktop");   	
+    }
+    
     public LimeWirePlayer() {
+    	String playerPath = new String();
+    	
     	if (OSUtils.isWindows()) {
-    		// this is only for debug, in release mode we need to put the installation path
-    		MPlayer.initialise(new File("lib/mplayer/fwplayer.exe"));
+    		playerPath = (_isRelease) ? FrostWireUtils.getFrostWireJarPath() + File.separator + "fwplayer.exe" : "lib/mplayer/fwplayer.exe";
     	} else if (OSUtils.isMacOSX()) {
-    		// this is only for debug, in release mode we need to put the installation path
-    		MPlayer.initialise(new File("lib/mplayer/fwplayer"));
+    		playerPath = (_isRelease) ? FrostWireUtils.getFrostWireJarPath() + File.separator + "fwplayer" : "lib/mplayer/fwplayer";
     	} else {
-    		MPlayer.initialise(new File("/usr/bin/mplayer"));
+    		playerPath = "/usr/bin/mplayer";
     	}
+    	
+    	System.out.println("LimeWirePlayer - player path: ["+playerPath+"]");
+    	
+		MPlayer.initialise(new File(playerPath));
         _mplayer = new MPlayer();
         _mplayer.setPositionListener(new PositionListener() {
             public void positionChanged(float currentTimeInSecs) {

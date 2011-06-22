@@ -933,6 +933,8 @@ MPlayerInstance
 
             String[] cmd = cmdList.toArray(new String[cmdList.size()]);
 
+            //COMMENT/UNCOMMENT THIS FOR TO SEE WHAT COMMAND IS BEING SENT TO MPLAYER
+            
 //            for (int i = 0; i < cmd.length; i++) {
 //                if (cmd[i].contains(" ")) {
 //                    System.out.print("\"");
@@ -969,7 +971,7 @@ MPlayerInstance
                 stdOutReader.setDaemon(true);
                 stdOutReader.start();
                 
-                signal.await(2, TimeUnit.SECONDS);
+                signal.await(5, TimeUnit.SECONDS);
 
             } catch (Throwable e) {
 

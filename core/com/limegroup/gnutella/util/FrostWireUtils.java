@@ -298,6 +298,15 @@ public final class FrostWireUtils {
     }
     
     /**
+     * Returns the path of the FrostWire.jar executable.
+     * For a windows binary distribution this is the same path as FrostWire.exe since those files live together.
+     * @return
+     */
+    public static String getFrostWireJarPath() {
+    	return new File(FrostWireUtils.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getAbsolutePath();
+    }
+    
+    /**
      * Returns the root folder from which all Saved/Shared/etc..
      * folders should be placed.
      */
