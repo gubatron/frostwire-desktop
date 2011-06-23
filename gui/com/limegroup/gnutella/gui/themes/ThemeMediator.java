@@ -159,13 +159,13 @@ public class ThemeMediator {
         themes.add(SubstanceThemeSetter.SAHARA);
         themes.add(SubstanceThemeSetter.TWILIGHT);
         
-        // from Substance extras
-        themes.add(SubstanceThemeSetter.FIELD_OF_WHEAT);
-        themes.add(SubstanceThemeSetter.FINDING_NEMO);
-        themes.add(SubstanceThemeSetter.GREEN_MAGIC);
-        themes.add(SubstanceThemeSetter.MAGMA);
-        themes.add(SubstanceThemeSetter.MANGO);
-        themes.add(SubstanceThemeSetter.STREETLIGHTS);
+//        // from Substance extras
+//        themes.add(SubstanceThemeSetter.FIELD_OF_WHEAT);
+//        themes.add(SubstanceThemeSetter.FINDING_NEMO);
+//        themes.add(SubstanceThemeSetter.GREEN_MAGIC);
+//        themes.add(SubstanceThemeSetter.MAGMA);
+//        themes.add(SubstanceThemeSetter.MANGO);
+//        themes.add(SubstanceThemeSetter.STREETLIGHTS);
         
         DEFAULT_THEME = SubstanceThemeSetter.SEA_GLASS;
         THEMES = themes;

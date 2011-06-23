@@ -117,13 +117,13 @@ public class SubstanceThemeSetter implements ThemeSetter {
     public static final SubstanceThemeSetter SAHARA = new SubstanceThemeSetter("Sahara", "org.pushingpixels.substance.api.skin.SaharaSkin");
     public static final SubstanceThemeSetter TWILIGHT = new SubstanceThemeSetter("Twilight", "org.pushingpixels.substance.api.skin.TwilightSkin");
 
-    // from Substance extras
-    public static final SubstanceThemeSetter FIELD_OF_WHEAT = new SubstanceThemeSetter("Field Of Wheat", "org.pushingpixels.substance.skinpack.FieldOfWheatSkin");
-    public static final SubstanceThemeSetter FINDING_NEMO = new SubstanceThemeSetter("Finding Nemo", "org.pushingpixels.substance.skinpack.FindingNemoSkin");
-    public static final SubstanceThemeSetter GREEN_MAGIC = new SubstanceThemeSetter("Green Magic", "org.pushingpixels.substance.skinpack.GreenMagicSkin");
-    public static final SubstanceThemeSetter MAGMA = new SubstanceThemeSetter("Magma", "org.pushingpixels.substance.skinpack.MagmaSkin");
-    public static final SubstanceThemeSetter MANGO = new SubstanceThemeSetter("Mango", "org.pushingpixels.substance.skinpack.MangoSkin");
-    public static final SubstanceThemeSetter STREETLIGHTS = new SubstanceThemeSetter("Streetlights", "org.pushingpixels.substance.skinpack.StreetlightsSkin");
+//    // from Substance extras
+//    public static final SubstanceThemeSetter FIELD_OF_WHEAT = new SubstanceThemeSetter("Field Of Wheat", "org.pushingpixels.substance.skinpack.FieldOfWheatSkin");
+//    public static final SubstanceThemeSetter FINDING_NEMO = new SubstanceThemeSetter("Finding Nemo", "org.pushingpixels.substance.skinpack.FindingNemoSkin");
+//    public static final SubstanceThemeSetter GREEN_MAGIC = new SubstanceThemeSetter("Green Magic", "org.pushingpixels.substance.skinpack.GreenMagicSkin");
+//    public static final SubstanceThemeSetter MAGMA = new SubstanceThemeSetter("Magma", "org.pushingpixels.substance.skinpack.MagmaSkin");
+//    public static final SubstanceThemeSetter MANGO = new SubstanceThemeSetter("Mango", "org.pushingpixels.substance.skinpack.MangoSkin");
+//    public static final SubstanceThemeSetter STREETLIGHTS = new SubstanceThemeSetter("Streetlights", "org.pushingpixels.substance.skinpack.StreetlightsSkin");
 
     public ComponentUI createCheckBoxMenuItemUI(JComponent comp) {
         return SubstanceCheckBoxMenuItemUI.createUI(comp);

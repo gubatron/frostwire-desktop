@@ -7,7 +7,9 @@ import java.io.ObjectInputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.ibm.icu.text.Normalizer;
+import sun.text.normalizer.NormalizerImpl;
+import sun.text.normalizer.UnicodeSet;
+
 /**
  * Removes accents and symbols, and normalizes strings.
  * 
@@ -72,7 +74,7 @@ final class I18NConvertICU extends AbstractI18NConverter {
      * Simple composition of a String.
      */
     public String compose(String s) {
-        return Normalizer.compose(s, false);
+        return compose(s, false);
     }
     
     /**
@@ -87,7 +89,7 @@ final class I18NConvertICU extends AbstractI18NConverter {
      */
     private String convert(String s) {
     	//decompose to NFKD
-    	String nfkd = Normalizer.decompose(s, true);
+    	String nfkd = decompose(s, true);
         StringBuilder buf = new StringBuilder();
     	int len = nfkd.length();
     	String lower;
@@ -110,9 +112,101 @@ final class I18NConvertICU extends AbstractI18NConverter {
     	}
     	
     	//compose to nfc and split
-    	return blockSplit(Normalizer.compose(buf.toString(), false));
+    	return blockSplit(compose(buf.toString(), false));
     }
 
+    ///////////////////////////////////////////
+    // From icu4j Normalizer
+    /////////////////////////////////////////////
+    private static final int MAX_BUF_SIZE_COMPOSE = 2;
+    private static final int MAX_BUF_SIZE_DECOMPOSE = 3;
+    
+    /**
+     * Decompose a string.
+     * The string will be decomposed to according the the specified mode.
+     * @param str       The string to decompose.
+     * @param compat    If true the string will be decomposed accoding to NFKD 
+     *                   rules and if false will be decomposed according to NFD 
+     *                   rules.
+     * @return String   The decomposed string  
+     * @draft ICU 2.2 
+     */         
+    public static String decompose(String str, boolean compat){
+       return decompose(str,compat,0);                  
+    }
+    
+    /**
+     * Decompose a string.
+     * The string will be decomposed to according the the specified mode.
+     * @param str     The string to decompose.
+     * @param compat  If true the string will be decomposed accoding to NFKD 
+     *                 rules and if false will be decomposed according to NFD 
+     *                 rules.
+     * @param options The normalization options, ORed together (0 for no options).
+     * @return String The decomposed string 
+     * @draft ICU 2.6
+     */         
+    public static String decompose(String str, boolean compat, int options){
+        
+        char[] dest = new char[str.length()*MAX_BUF_SIZE_DECOMPOSE];
+        int[] trailCC = new int[1];
+        int destSize=0;
+        UnicodeSet nx = NormalizerImpl.getNX(options);
+        for(;;){
+            destSize=NormalizerImpl.decompose(str.toCharArray(),0,str.length(),
+                                              dest,0,dest.length,
+                                              compat,trailCC, nx);
+            if(destSize<=dest.length){
+                return new String(dest,0,destSize); 
+            }else{
+                dest = new char[destSize];
+            }
+        } 
+                
+    }
+    
+    /**
+     * Compose a string.
+     * The string will be composed to according the the specified mode.
+     * @param str        The string to compose.
+     * @param compat     If true the string will be composed accoding to 
+     *                    NFKC rules and if false will be composed according to 
+     *                    NFC rules.
+     * @return String    The composed string   
+     * @draft ICU 2.2
+     */            
+    public static String compose(String str, boolean compat){
+         return compose(str,compat,0);           
+    }
+    
+    /**
+     * Compose a string.
+     * The string will be composed to according the the specified mode.
+     * @param str        The string to compose.
+     * @param compat     If true the string will be composed accoding to 
+     *                    NFKC rules and if false will be composed according to 
+     *                    NFC rules.
+     * @param options    The only recognized option is UNICODE_3_2
+     * @return String    The composed string   
+     * @draft ICU 2.6
+     */            
+    public static String compose(String str, boolean compat, int options){
+           
+        char[] dest = new char[str.length()*MAX_BUF_SIZE_COMPOSE];
+        int destSize=0;
+        char[] src = str.toCharArray();
+        UnicodeSet nx = NormalizerImpl.getNX(options);
+        for(;;){
+            destSize=NormalizerImpl.compose(src,0,src.length,
+                                            dest,0,dest.length,compat ? NormalizerImpl.OPTIONS_COMPAT : 0,
+                                            nx);
+            if(destSize<=dest.length){
+                return new String(dest,0,destSize);  
+            }else{
+                dest = new char[destSize];
+            }
+        }                   
+    }
 }
 
 
