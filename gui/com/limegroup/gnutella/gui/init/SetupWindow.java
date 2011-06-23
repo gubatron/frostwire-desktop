@@ -32,12 +32,12 @@ abstract class SetupWindow extends JPanel {
     /**
 	 * The width of the setup window.
 	 */
-	public static final int SETUP_WIDTH = 750;
+	public static final int SETUP_WIDTH = 650;
 
 	/**
 	 * The height of the setup window.
 	 */
-	public static final int SETUP_HEIGHT = 550;
+	public static final int SETUP_HEIGHT = 375;
 
 	/**
 	 * Variable for the name of this window for use with <tt>CardLayout</tt>.
@@ -124,7 +124,7 @@ abstract class SetupWindow extends JPanel {
         jtaDescription.setOpaque(false);
         jtaDescription.setBorder(BorderFactory.createEmptyBorder(5, 8, 5, 8));
         jtaDescription.setForeground(Color.black);
-        jtaDescription.setFont(jtaDescription.getFont().deriveFont(Font.PLAIN));
+        jtaDescription.setFont(new Font("Dialog", Font.PLAIN, 12));
         jpTitle.add(jtaDescription, BorderLayout.CENTER);
 
         if (_moreInfoURL != null) {
@@ -255,6 +255,7 @@ abstract class SetupWindow extends JPanel {
         setupComponent.setBorder(new EmptyBorder(20, 10, 10, 10));
         add(setupComponent, BorderLayout.CENTER);
         //revalidate();
+        invalidate();
         validate();
 	}
 	

@@ -284,7 +284,7 @@ public final class Initializer {
         boolean inFirewallException = FirewallUtils.addToFirewall();
         //stopwatch.resetAndLog("add firewall exception");
         
-        if(!inFirewallException && !setupManager.shouldShowFirewallWindow()) {
+        if(!inFirewallException) {
             limeWireCore.getLifecycleManager().loadBackgroundTasks();
             //stopwatch.resetAndLog("load background tasks");
         }

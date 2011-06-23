@@ -86,18 +86,6 @@ public class SetupManager {
 
     private List<SetupWindow> windows;
 	    
-    /**
-     * Determines if the 'a firewall warning may be displayed' window should be shown.
-     */
-    public boolean shouldShowFirewallWindow() {
-        if(InstallSettings.FIREWALL_WARNING.getValue())
-            return false;
-
-        // Only show the firewall warning if this is windows, and if
-        // we're not capable of automatically changing the firewall.
-        return OSUtils.isWindows() && !FirewallUtils.isStatuschangeCapable();
-    }
-    
     private boolean shouldShowAssociationsWindow() {
     	if (InstallSettings.ASSOCIATION_OPTION.getValue() == FrostAssociations.CURRENT_ASSOCIATIONS)
             return false;
@@ -149,9 +137,6 @@ public class SetupManager {
             !InstallSettings.START_STARTUP.getValue() && GUIUtils.shouldShowStartOnStartupWindow()) //FTA removed in FrostWire  ||             !InstallSettings.FILTER_OPTION.getValue() 
             windows.add(new MiscWindow(this));
         
-        if( shouldShowFirewallWindow() ) {
-            windows.add(new FirewallWindow(this));
-        }
         
         if (shouldShowAssociationsWindow()) {
         	windows.add(new AssociationsWindow(this));

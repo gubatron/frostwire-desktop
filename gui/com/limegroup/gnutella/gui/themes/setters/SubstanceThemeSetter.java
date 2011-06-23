@@ -37,7 +37,7 @@ public class SubstanceThemeSetter implements ThemeSetter {
     private final String _skinClassName;
     
     private final float LINUX_SCALED_FONT_POLICY_FACTOR = 0.87f;
-    private final float WINDOWS_SCALED_FONT_POLICY_FACTOR = 0.87f;
+    private final float WINDOWS_SCALED_FONT_POLICY_FACTOR = 0.92f;
     private final float MAC_SCALED_FONT_POLICY_FACTOR = 0.87f;
 
     private SubstanceThemeSetter(String name, String skinClassName) {
