@@ -543,7 +543,10 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
      */
     public static boolean isPlayableFile(File file) {
 		String name = file.getName().toLowerCase();
-		return name.endsWith(".mp3") || name.endsWith(".ogg") || name.endsWith(".wav");
+		return name.endsWith(".mp3") || 
+			name.endsWith(".ogg") || 
+			name.endsWith(".wav") || 
+			name.endsWith(".wma");
 	}
 
 	/**

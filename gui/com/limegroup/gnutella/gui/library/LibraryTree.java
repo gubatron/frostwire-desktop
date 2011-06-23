@@ -578,10 +578,14 @@ final class LibraryTree extends JTree implements MouseObserver {
 
         public void actionPerformed(ActionEvent e) {
             File exploreDir = getSelectedDirectory();
-            if (exploreDir == null)
-                return;
-
-            GUIMediator.launchExplorer(exploreDir);
+            if (exploreDir != null) {
+            	GUIMediator.launchExplorer(exploreDir);    
+            } else {
+            	LibraryTableDataLine[] lines = LibraryTableMediator.instance().getSelectedLibraryLines();
+            	if (lines!=null && lines.length == 1) {
+            		GUIMediator.launchExplorer(lines[0].getFile());
+            	}
+            }            
         }
 
     }

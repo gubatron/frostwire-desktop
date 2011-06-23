@@ -601,6 +601,7 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 //				&& LibraryMediator.setSelectedDirectory(file))
 //				return;
 		}
+		
 		launch();
     }
 
@@ -611,8 +612,22 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
     void launch() {
     	int[] rows = TABLE.getSelectedRows();
         if (rows.length == 0) {
-       	 return;
+       	 	return;
         }
+        
+        File selectedFile = DATA_MODEL.getFile(rows[0]);
+        
+        if (OSUtils.isWindows()) {
+        	if (selectedFile.isDirectory()) {
+            	GUIMediator.launchExplorer(selectedFile);
+            	return;
+        	} else if (!PlaylistMediator.isPlayableFile(selectedFile)) {
+        		GUIMediator.launchFile(selectedFile);
+        		return;
+        	}
+
+        }
+        
     	LaunchableProvider[] providers = new LaunchableProvider[rows.length];
 //    	if (_isIncomplete) {
 //    		for (int i = 0; i < rows.length; i++) {

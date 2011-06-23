@@ -7,8 +7,12 @@ import java.io.ObjectInputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import sun.text.normalizer.NormalizerImpl;
-import sun.text.normalizer.UnicodeSet;
+import com.ibm.icu.impl.NormalizerImpl;
+import com.ibm.icu.text.UnicodeSet;
+
+
+//import sun.text.normalizer.NormalizerImpl;
+//import sun.text.normalizer.UnicodeSet;
 
 /**
  * Removes accents and symbols, and normalizes strings.
@@ -198,7 +202,7 @@ final class I18NConvertICU extends AbstractI18NConverter {
         UnicodeSet nx = NormalizerImpl.getNX(options);
         for(;;){
             destSize=NormalizerImpl.compose(src,0,src.length,
-                                            dest,0,dest.length,compat ? NormalizerImpl.OPTIONS_COMPAT : 0,
+                                            dest,0,dest.length,compat,
                                             nx);
             if(destSize<=dest.length){
                 return new String(dest,0,destSize);  

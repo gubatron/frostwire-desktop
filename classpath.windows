@@ -4,32 +4,20 @@
 	<classpathentry kind="src" path="components/common/src/main/resources"/>
 	<classpathentry kind="src" path="components/resources/src/main/resources"/>
 	<classpathentry kind="src" path="components/collection/src/main/java"/>
-	<classpathentry kind="src" path="components/mojito-ui/src/main/java"/>
-	<classpathentry kind="src" path="components/lwsserver/src/main/java"/>
 	<classpathentry kind="src" path="components/setting/src/main/java"/>
-	<classpathentry kind="src" path="components/rudp/src/main/java"/>
-	<classpathentry kind="src" path="components/statistic/src/main/java"/>
-	<classpathentry kind="src" path="components/swarm/src/java"/>
-	<classpathentry kind="src" path="components/security/src/main/java"/>
-	<classpathentry kind="src" path="components/mojito/src/main/java"/>
-	<classpathentry kind="src" path="components/net/src/main/java"/>
 	<classpathentry kind="src" path="components/io/src/main/java"/>
-	<classpathentry kind="src" path="components/http/src/main/java"/>
-	<classpathentry kind="src" path="components/nio/src/main/java"/>
+	<classpathentry kind="src" path="components/azureus/src/main/java"/>
+	<classpathentry kind="src" path="components/osx_stub/src/main/java"/>
 	<classpathentry excluding="examples/" kind="src" path="core">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="frostwire.desktop/lib/native/windows"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="gui/windows"/>
-	<classpathentry excluding="macosx/*|plugins/*|test-util/*|windows/*" kind="src" path="gui">
+	<classpathentry excluding="macosx/*|plugins/*|test-util/*" kind="src" path="gui">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="frostwire.desktop/lib/native/windows"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="components/azureus/src/main/java"/>
-	<classpathentry kind="src" path="components/osx_stub/src/main/java"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/jars/commons-logging.jar"/>
 	<classpathentry kind="lib" path="lib/jars/gettext-commons.jar"/>
 	<classpathentry kind="lib" path="lib/jars/guice-1.0.jar"/>
@@ -46,5 +34,7 @@
 	<classpathentry kind="lib" path="lib/jars/gson-1.4.jar"/>
 	<classpathentry kind="lib" path="lib/jars/substance.jar"/>
 	<classpathentry kind="lib" path="lib/jars/trident.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/jars/icu4j.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

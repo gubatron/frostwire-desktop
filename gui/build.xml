@@ -79,7 +79,7 @@
     
     <!-- target for building a new jar for just the bugs classes -->
     <target name="bugjar">
-        <javac target="1.5" source="1.5" destdir="." srcdir="com/limegroup/gnutella/bugs/" includes="LocalAbstractInfo.java, RemoteAbstractInfo.java"/>
+        <javac target="1.6" source="1.6" destdir="." srcdir="com/limegroup/gnutella/bugs/" includes="LocalAbstractInfo.java, RemoteAbstractInfo.java"/>
         <delete file="lw-bugs.jar"/>
         <jar basedir="." destfile="lw-bugs.jar" includes="com/limegroup/gnutella/bugs/LocalAbstractInfo.class, com/limegroup/gnutella/bugs/RemoteAbstractInfo.class"/>
 	</target>
