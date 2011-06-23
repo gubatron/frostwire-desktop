@@ -177,8 +177,8 @@ public class SetupManager {
         // it could be possible that the LanguageWindow was the only
         // item to be installed -- if that's the case, don't even
         // insert the WelcomeWindow & FinishWindow at all.
-        if(partial && !(windows.size() == 1 && windows.get(0) instanceof IntentWindow))
-            windows.add(0, new WelcomeWindow(this, partial));
+        //if(partial && !(windows.size() == 1 && windows.get(0) instanceof IntentWindow))
+        windows.add(0, new WelcomeWindow(this, partial));
         
         // Iterate through each displayed window and set them up correctly.
         SetupWindow prior = null;

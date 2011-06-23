@@ -18,20 +18,17 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/jars/commons-codec-1.3.jar"/>
 	<classpathentry kind="lib" path="lib/jars/commons-logging.jar"/>
 	<classpathentry kind="lib" path="lib/jars/gettext-commons.jar"/>
 	<classpathentry kind="lib" path="lib/jars/guice-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/jars/httpclient-4.0.jar"/>
 	<classpathentry kind="lib" path="lib/jars/httpcore-4.0.1.jar"/>
-	<classpathentry kind="lib" path="lib/jars/icu4j.jar"/>
 	<classpathentry kind="lib" path="lib/jars/jdic.jar"/>
 	<classpathentry kind="lib" path="lib/jars/osx/MRJAdapter.jar"/>
 	<classpathentry kind="lib" path="lib/jars/messages.jar"/>
 	<classpathentry kind="lib" path="lib/jars/compile/messages.jar"/>
 	<classpathentry kind="lib" path="lib/jars/splash.jar"/>
 	<classpathentry kind="lib" path="lib/jars/gson-1.4.jar"/>
-	<classpathentry kind="lib" path="lib/jars/substance-extras.jar"/>
 	<classpathentry kind="lib" path="lib/jars/substance.jar"/>
 	<classpathentry kind="lib" path="lib/jars/trident.jar"/>
 	<classpathentry kind="output" path="bin"/>
