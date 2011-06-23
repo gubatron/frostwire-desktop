@@ -9,6 +9,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.SwingUtilities;
 
+import org.gudy.azureus2.core3.util.UrlUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.mplayer.MPlayer;
@@ -47,6 +48,7 @@ public class LimeWirePlayer implements AudioPlayer, RefreshListener {
     	
     	if (OSUtils.isWindows()) {
     		playerPath = (_isRelease) ? FrostWireUtils.getFrostWireJarPath() + File.separator + "fwplayer.exe" : "lib/mplayer/fwplayer.exe";
+    		playerPath = UrlUtils.decode(playerPath);
     	} else if (OSUtils.isMacOSX()) {
     		String macOSFolder = new File(FrostWireUtils.getFrostWireJarPath()).getParentFile().getParent() + File.separator + "MacOS";
     		
