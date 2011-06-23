@@ -2,6 +2,7 @@ package com.limegroup.gnutella.gui.search;
 
 import com.frostwire.gui.components.LabeledRangeSlider;
 import com.limegroup.gnutella.gui.GUIUtils;
+import com.limegroup.gnutella.gui.LabeledTextField;
 
 public class GeneralResultFilter implements TableLineFilter {
 
@@ -18,9 +19,10 @@ public class GeneralResultFilter implements TableLineFilter {
     private int _maxSeeds;
     private int _minSize;
     private int _maxSize;
+    
 	private String _keywords;
 
-    public GeneralResultFilter(ResultPanel rp, LabeledRangeSlider rangeSliderSeeds, LabeledRangeSlider rangeSliderSize) {
+    public GeneralResultFilter(ResultPanel rp, LabeledRangeSlider rangeSliderSeeds, LabeledRangeSlider rangeSliderSize, LabeledTextField keywordTextField) {
         _rp = rp;
         _rangeSliderSeeds = rangeSliderSeeds;
         _rangeSliderSize = rangeSliderSize;
@@ -32,7 +34,7 @@ public class GeneralResultFilter implements TableLineFilter {
         _maxSeeds = Integer.MAX_VALUE;
         _minSize = 0;
         _maxSize = Integer.MAX_VALUE;
-        _keywords = "";
+        
     }
 
     public boolean allow(TableLine node) {
@@ -109,15 +111,17 @@ public class GeneralResultFilter implements TableLineFilter {
 
     private boolean hasKeywords(String filename) {
 
-    	if (_keywords == null || _keywords.trim().length()==0) {
+    	String keywordText = _keywords;
+    	
+    	if (keywordText == null || keywordText.trim().length()==0) {
     		return true;
     	}
     	
     	//if it's just one keyword.
-    	String[] keywords = _keywords.split(" ");
+    	String[] keywords = keywordText.split(" ");
     	
     	if (keywords.length == 1) {
-    		return filename.toLowerCase().contains(_keywords.toLowerCase());
+    		return filename.toLowerCase().contains(keywordText.toLowerCase());
     	} else {
     		String fname = filename.toLowerCase();
     		//all keywords must be in the file name.
@@ -176,7 +180,11 @@ public class GeneralResultFilter implements TableLineFilter {
     }
 
 	public void updateKeywordFiltering(String text) {
-		_keywords = text;
+		_keywords = new String(text);
 		_rp.filterChanged(this,1);
+	}
+
+	public String getKeywordFilterText() {
+		return _keywords;
 	}
 }

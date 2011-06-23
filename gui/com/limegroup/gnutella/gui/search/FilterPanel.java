@@ -73,6 +73,8 @@ public class FilterPanel extends JPanel {
                 keywordFilterChanged(e);
             }
         });
+        
+
 
         add(_keywordFilterTextField, c);
     };
@@ -130,7 +132,7 @@ public class FilterPanel extends JPanel {
         _rangeSliderSize.setValue(filter.getMinSize());
         _rangeSliderSize.setUpperValue(filter.getMaxSize());
 
-        _keywordFilterTextField.setText("");
+        _keywordFilterTextField.setText(filter.getKeywordFilterText());
 
         if (filter.getMinResultsSeeds() == Integer.MAX_VALUE) {
             _rangeSliderSeeds.getMinimumValueLabel().setText(I18n.tr("0"));
@@ -163,7 +165,7 @@ public class FilterPanel extends JPanel {
     public void setFilterFor(ResultPanel rp) {
         GeneralResultFilter filter = ACTIVE_FILTERS.get(rp);
         if (filter == null) {
-            filter = new GeneralResultFilter(rp, _rangeSliderSeeds, _rangeSliderSize);
+            filter = new GeneralResultFilter(rp, _rangeSliderSeeds, _rangeSliderSize, _keywordFilterTextField);
             ACTIVE_FILTERS.put(rp, filter);
             rp.filterChanged(filter, 1);
         }
