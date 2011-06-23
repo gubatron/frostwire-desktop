@@ -102,8 +102,15 @@ public class LimeWirePlayer implements AudioPlayer, RefreshListener {
      */
     public void playSong() {
         _mplayer.stop();
-        _mplayer.open(currentSong.getFile().getAbsolutePath());
-        notifyEvent(getStatus(), -1);
+        
+        if (currentSong.getFile()==null) {
+        	_mplayer.open(currentSong.getURL().toString());
+        } else {        
+        	_mplayer.open(currentSong.getFile().getAbsolutePath());
+        	
+        }
+        
+        notifyEvent(getStatus(), -1);    
     }
 
     /**

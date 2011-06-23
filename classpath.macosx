@@ -31,5 +31,6 @@
 	<classpathentry kind="lib" path="lib/jars/gson-1.4.jar"/>
 	<classpathentry kind="lib" path="lib/jars/substance.jar"/>
 	<classpathentry kind="lib" path="lib/jars/trident.jar"/>
+	<classpathentry kind="lib" path="lib/jars/icu4j.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
