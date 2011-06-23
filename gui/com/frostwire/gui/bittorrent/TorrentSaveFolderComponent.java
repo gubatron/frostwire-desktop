@@ -1,7 +1,7 @@
 package com.frostwire.gui.bittorrent;
 
 import java.awt.Component;
-import java.awt.Font;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -59,15 +59,24 @@ public class TorrentSaveFolderComponent extends JPanel {
 		gbc.anchor = GridBagConstraints.NORTHWEST;
 		gbc.gridwidth = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
         add(createSeedingOptionsComponents(), gbc);
 		
 		// "Save Folder" buttons "User Default", "Browse..."
 		gbc = new GridBagConstraints();
 		gbc.anchor = GridBagConstraints.NORTHWEST;
-		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		add(new ButtonRow(new Action[] { new DefaultAction(), new BrowseAction() },
 				ButtonRow.X_AXIS, ButtonRow.LEFT_GLUE), gbc);
+		
+		gbc = new GridBagConstraints();
+		gbc.anchor = GridBagConstraints.LINE_START;
+		gbc.gridwidth = GridBagConstraints.REMAINDER;
+		gbc.weightx = 1.0;
+		gbc.insets = new Insets(10,0,0,0);
+		explanationLabel.setPreferredSize(new Dimension(450,40));
+		add(explanationLabel,gbc);
 		
 	}
 	
@@ -162,7 +171,7 @@ public class TorrentSaveFolderComponent extends JPanel {
 
         LabeledComponent comp = new LabeledComponent(CHECK_BOX_LABEL, CHECK_BOX, LabeledComponent.NO_GLUE, LabeledComponent.RIGHT);
 
-        explanationLabel.setFont(explanationLabel.getFont().deriveFont(Math.max(explanationLabel.getFont().getSize() - 2.0f, 9.0f)).deriveFont(Font.PLAIN));
+        //explanationLabel.setFont(explanationLabel.getFont().deriveFont(Math.max(explanationLabel.getFont().getSize() - 2.0f, 9.0f)).deriveFont(Font.PLAIN));
         CHECK_BOX.addItemListener(new ItemListener() {
            public void itemStateChanged(ItemEvent e) {
                 setExplanationText();
@@ -171,12 +180,9 @@ public class TorrentSaveFolderComponent extends JPanel {
         setExplanationText();
 
         CHECK_BOX.setSelected(SharingSettings.SEED_FINISHED_TORRENTS.getValue());
-
         comp.getComponent().setAlignmentX(Component.LEFT_ALIGNMENT);
         explanationLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-
         panel.add(comp.getComponent());
-        panel.add(explanationLabel);
 
         return panel;
     }
