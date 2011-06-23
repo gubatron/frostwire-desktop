@@ -59,7 +59,6 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(LifecycleManager.class).to(LifecycleManagerImpl.class);
         bind(ApplicationServices.class).to(ApplicationServicesImpl.class);
         bind(DownloadManager.class).to(DownloadManagerImpl.class).asEagerSingleton();
-        bind(GuidMapManager.class).to(GuidMapManagerImpl.class);
         bind(PushEndpointCache.class).to(PushEndpointCacheImpl.class);
         bind(LicenseFactory.class).to(LicenseFactoryImpl.class);
         bind(LimeXMLDocumentFactory.class).to(LimeXMLDocumentFactoryImpl.class);
@@ -67,11 +66,9 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(UpdateCollectionFactory.class).to(UpdateCollectionFactoryImpl.class);
         bind(Inspector.class).to(InspectorImpl.class);
         bind(LocalSocketAddressProvider.class).to(LocalSocketAddressProviderImpl.class);
-        bind(BandwidthTracker.class).annotatedWith(Names.named("downloadTracker")).to(DownloadManager.class); // For NodeAssigner.
         
         bindAll(Names.named("unlimitedExecutor"), ExecutorService.class, UnlimitedExecutorProvider.class, Executor.class);
         bindAll(Names.named("backgroundExecutor"), ScheduledExecutorService.class, BackgroundTimerProvider.class, ExecutorService.class, Executor.class);
-        bindAll(Names.named("dhtExecutor"), ExecutorService.class, DHTExecutorProvider.class, Executor.class);
         bindAll(Names.named("messageExecutor"), ExecutorService.class, MessageExecutorProvider.class, Executor.class);
                         
         // TODO: This is odd -- move to initialize & LifecycleManager?
@@ -99,19 +96,4 @@ public class LimeWireCoreModule extends AbstractModule {
             return ExecutorsHelper.newProcessingQueue("Message-Executor");
         }
     }
-
-    @Singleton
-    private static class DHTExecutorProvider extends AbstractLazySingletonProvider<ExecutorService> {
-        protected ExecutorService createObject() {
-            return ExecutorsHelper.newProcessingQueue("DHT-Executor");
-        }
-    }    
-    
-    ///////////////////////////////////////////////////////////////////////////
-    /// BELOW ARE ALL HACK PROVIDERS THAT NEED TO BE UPDATED TO CONSTRUCT OBJECTS!
-    // (This needs to wait till components are injected and stop using singletons too.)
-
-        
-    ///////////////////////////////////////////////////////////////
-    // !!! DO NOT ADD THINGS BELOW HERE !!!  PUT THEM ABOVE THE HACKS!
 }

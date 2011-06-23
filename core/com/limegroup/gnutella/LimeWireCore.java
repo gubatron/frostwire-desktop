@@ -116,10 +116,6 @@ public class LimeWireCore {
         return injector.getInstance(Key.get(ScheduledExecutorService.class, Names.named("nioExecutor")));
     }
 
-    public GuidMapManager getGuidMapManager() {
-        return injector.getInstance(GuidMapManager.class);
-    }
-
     public PushEndpointCache getPushEndpointCache() {
         return injector.getInstance(PushEndpointCache.class);
     }

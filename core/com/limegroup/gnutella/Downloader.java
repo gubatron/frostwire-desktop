@@ -7,7 +7,7 @@ import java.io.File;
  * its methods to stop and resume downloads.  Note that there is no start method;
  * it is assumed that the downloader will start as soon as it is instantiated.
  */
-public interface Downloader extends BandwidthTracker {
+public interface Downloader {
     
     /** The states a download can be in. */
     public static enum DownloadStatus {
