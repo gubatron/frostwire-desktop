@@ -44,7 +44,6 @@ import com.limegroup.gnutella.gui.options.panes.BittorrentPaneItem;
 import com.limegroup.gnutella.gui.options.panes.BrowserPaneItem;
 import com.limegroup.gnutella.gui.options.panes.BugsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ChatCommunityPaneItem;
-import com.limegroup.gnutella.gui.options.panes.DefaultActionPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ForceIPPaneItem;
 import com.limegroup.gnutella.gui.options.panes.IgnoreResultsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ImageViewerPaneItem;

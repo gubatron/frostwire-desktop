@@ -6,20 +6,14 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import org.limewire.common.LimeWireCommonModule;
 import org.limewire.concurrent.AbstractLazySingletonProvider;
-import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.concurrent.SimpleTimer;
 import org.limewire.inject.AbstractModule;
-import org.limewire.inspection.Inspector;
-import org.limewire.inspection.InspectorImpl;
-import org.limewire.io.LimeWireIOModule;
 import org.limewire.io.LocalSocketAddressProvider;
 
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 import com.limegroup.gnutella.licenses.LicenseFactory;
 import com.limegroup.gnutella.licenses.LicenseFactoryImpl;
-import com.limegroup.gnutella.version.UpdateCollectionFactory;
-import com.limegroup.gnutella.version.UpdateCollectionFactoryImpl;
 import com.limegroup.gnutella.xml.LimeXMLDocumentFactory;
 import com.limegroup.gnutella.xml.LimeXMLDocumentFactoryImpl;
 
@@ -45,7 +39,6 @@ public class LimeWireCoreModule extends AbstractModule {
     @Override
     protected void configure() {
         binder().install(new LimeWireCommonModule());
-        binder().install(new LimeWireIOModule());
         
         bind(LimeWireCore.class);
         
@@ -57,43 +50,19 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(NetworkManager.class).to(NetworkManagerImpl.class);
         bind(LocalFileDetailsFactory.class).to(LocalFileDetailsFactoryImpl.class);
         bind(LifecycleManager.class).to(LifecycleManagerImpl.class);
-        bind(ApplicationServices.class).to(ApplicationServicesImpl.class);
         bind(DownloadManager.class).to(DownloadManagerImpl.class).asEagerSingleton();
-        bind(PushEndpointCache.class).to(PushEndpointCacheImpl.class);
         bind(LicenseFactory.class).to(LicenseFactoryImpl.class);
         bind(LimeXMLDocumentFactory.class).to(LimeXMLDocumentFactoryImpl.class);
         bind(SaveLocationManager.class).to(DownloadManager.class);
-        bind(UpdateCollectionFactory.class).to(UpdateCollectionFactoryImpl.class);
-        bind(Inspector.class).to(InspectorImpl.class);
         bind(LocalSocketAddressProvider.class).to(LocalSocketAddressProviderImpl.class);
         
-        bindAll(Names.named("unlimitedExecutor"), ExecutorService.class, UnlimitedExecutorProvider.class, Executor.class);
         bindAll(Names.named("backgroundExecutor"), ScheduledExecutorService.class, BackgroundTimerProvider.class, ExecutorService.class, Executor.class);
-        bindAll(Names.named("messageExecutor"), ExecutorService.class, MessageExecutorProvider.class, Executor.class);
-                        
-        // TODO: This is odd -- move to initialize & LifecycleManager?
-        bind(Statistics.class).asEagerSingleton();
-    }
-    
-    
-    @Singleton
-    private static class UnlimitedExecutorProvider extends AbstractLazySingletonProvider<ExecutorService> {
-        protected ExecutorService createObject() {
-            return ExecutorsHelper.newThreadPool(ExecutorsHelper.daemonThreadFactory("IdleThread"));
-        }
     }
     
     @Singleton
     private static class BackgroundTimerProvider extends AbstractLazySingletonProvider<ScheduledExecutorService> {
         protected ScheduledExecutorService createObject() {
             return new SimpleTimer(true);
-        }
-    }
-    
-    @Singleton
-    private static class MessageExecutorProvider extends AbstractLazySingletonProvider<ExecutorService> {
-        protected ExecutorService createObject() {
-            return ExecutorsHelper.newProcessingQueue("Message-Executor");
         }
     }
 }

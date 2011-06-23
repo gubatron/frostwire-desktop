@@ -3,7 +3,6 @@ package com.limegroup.gnutella;
 import java.util.concurrent.ScheduledExecutorService;
 
 import org.gudy.azureus2.plugins.ipfilter.IPFilter;
-import org.limewire.io.NetworkInstanceUtils;
 import org.limewire.lifecycle.ServiceRegistry;
 
 import com.google.inject.Inject;
@@ -16,7 +15,6 @@ import com.limegroup.gnutella.http.FeaturesWriter;
 import com.limegroup.gnutella.licenses.LicenseCache;
 import com.limegroup.gnutella.licenses.LicenseFactory;
 import com.limegroup.gnutella.licenses.LicenseVerifier;
-import com.limegroup.gnutella.version.UpdateCollectionFactory;
 import com.limegroup.gnutella.xml.LimeXMLDocumentFactory;
 import com.limegroup.gnutella.xml.LimeXMLDocumentHelper;
 import com.limegroup.gnutella.xml.LimeXMLProperties;
@@ -63,10 +61,6 @@ public class LimeWireCore {
     public IPFilter getIpFilter() {
         return injector.getInstance(IPFilter.class);
     }
-
-    public Statistics getStatistics() {
-        return injector.getInstance(Statistics.class);
-    }
     
     public SavedFileManager getSavedFileManager() {
         return injector.getInstance(SavedFileManager.class);
@@ -99,11 +93,7 @@ public class LimeWireCore {
     public ScheduledExecutorService getBackgroundExecutor() {
         return injector.getInstance(Key.get(ScheduledExecutorService.class, Names.named("backgroundExecutor")));
     }
-
-    public ApplicationServices getApplicationServices() {
-        return injector.getInstance(ApplicationServices.class);
-    }
-
+    
     public ExternalControl getExternalControl() {
         return injector.getInstance(ExternalControl.class);
     }
@@ -114,10 +104,6 @@ public class LimeWireCore {
 
     public ScheduledExecutorService getNIOExecutor() {
         return injector.getInstance(Key.get(ScheduledExecutorService.class, Names.named("nioExecutor")));
-    }
-
-    public PushEndpointCache getPushEndpointCache() {
-        return injector.getInstance(PushEndpointCache.class);
     }
     
     public LicenseFactory getLicenseFactory() {
@@ -131,10 +117,6 @@ public class LimeWireCore {
     public LimeXMLDocumentHelper getLimeXMLDocumentHelper() {
         return injector.getInstance(LimeXMLDocumentHelper.class);
     }
-    
-    public UpdateCollectionFactory getUpdateCollectionFactory() {
-        return injector.getInstance(UpdateCollectionFactory.class);
-    }
 
     public LimeCoreGlue getLimeCoreGlue() {
         return injector.getInstance(LimeCoreGlue.class);
@@ -142,10 +124,6 @@ public class LimeWireCore {
 
     public LicenseVerifier getLicenseVerifier() {
         return injector.getInstance(LicenseVerifier.class);
-    }
-    
-    public NetworkInstanceUtils getNetworkInstanceUtils() {
-        return injector.getInstance(NetworkInstanceUtils.class);
     }
     
     public ServiceRegistry getServiceRegistry() {

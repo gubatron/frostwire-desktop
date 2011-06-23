@@ -2,11 +2,8 @@ package com.limegroup.gnutella.gui;
 
 import java.util.concurrent.ScheduledExecutorService;
 
-import org.limewire.io.NetworkInstanceUtils;
-
 import com.google.inject.Inject;
 import com.limegroup.gnutella.ActivityCallback;
-import com.limegroup.gnutella.ApplicationServices;
 import com.limegroup.gnutella.DownloadManager;
 import com.limegroup.gnutella.LifecycleManager;
 import com.limegroup.gnutella.LimeWireCore;
@@ -34,10 +31,8 @@ public class GuiCoreMediator {
     public static LimeXMLProperties getLimeXMLProperties() { return core.getLimeXMLProperties(); }
     public static LifecycleManager getLifecycleManager() { return core.getLifecycleManager(); }
     public static ScheduledExecutorService getCoreBackgroundExecutor() { return core.getBackgroundExecutor(); }
-    public static ApplicationServices getApplicationServices() { return core.getApplicationServices(); }
     public static ExternalControl getExternalControl() { return core.getExternalControl(); }
     public static ActivityCallback getActivityCallback() { return core.getActivityCallback(); }
     public static LimeXMLDocumentFactory getLimeXMLDocumentFactory() { return core.getLimeXMLDocumentFactory(); }
     public static LicenseVerifier getLicenseVerifier() { return core.getLicenseVerifier(); }
-    public static NetworkInstanceUtils getNetworkInstanceUtils() { return core.getNetworkInstanceUtils(); }
 }

@@ -241,12 +241,6 @@ public interface RemoteFileDesc extends IpPort, Connectable, FileDetails {
      */
     public boolean needsPush();
 
-    /**
-     * 
-     * @return the push address.
-     */
-    public PushEndpoint getPushAddr();
-
     public void setQueueStatus(int status);
 
     public int getQueueStatus();

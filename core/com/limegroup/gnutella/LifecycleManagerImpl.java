@@ -12,7 +12,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.i18n.I18nMarker;
-import org.limewire.inspection.InspectablePrimitive;
 import org.limewire.lifecycle.ServiceRegistry;
 import org.limewire.listener.EventListener;
 import org.limewire.listener.EventListenerList;
@@ -51,13 +50,11 @@ public class LifecycleManagerImpl implements LifecycleManager {
     private final Provider<ActivityCallback> activityCallback;
     private final Provider<DownloadManager> downloadManager;
     private final Provider<NetworkManager> networkManager;
-    private final Provider<Statistics> statistics;
     private final Provider<LimeCoreGlue> limeCoreGlue;
     
     /** A list of items that require running prior to shutting down LW. */
     private final List<Thread> SHUTDOWN_ITEMS =  Collections.synchronizedList(new LinkedList<Thread>());
     /** The time when this finished starting. */
-    @InspectablePrimitive("time lifecycle finished starting") 
     private long startFinishedTime;
 
 
@@ -79,7 +76,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
             Provider<DownloadManager> downloadManager,
             @Named("backgroundExecutor") Provider<ScheduledExecutorService> backgroundExecutor,
             Provider<NetworkManager> networkManager,
-            Provider<Statistics> statistics,
             Provider<LicenseFactory> licenseFactory,
             Provider<LimeCoreGlue> limeCoreGlue,
             ServiceRegistry serviceRegistry) {
@@ -91,7 +87,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
         this.activityCallback = activityCallback;
         this.downloadManager = downloadManager;
         this.networkManager = networkManager;
-        this.statistics = statistics;
         this.licenseFactory = licenseFactory;
         this.limeCoreGlue = limeCoreGlue;
     }
@@ -244,10 +239,7 @@ public class LifecycleManagerImpl implements LifecycleManager {
         }
         
         serviceRegistry.stop();
-        
-        //Update fractional uptime statistics (before writing frostwire.props)
-        statistics.get().shutdown();
-		
+        		
         //Update firewalled status
         ConnectionSettings.EVER_ACCEPTED_INCOMING.setValue(networkManager.get().acceptedIncomingConnection());
         

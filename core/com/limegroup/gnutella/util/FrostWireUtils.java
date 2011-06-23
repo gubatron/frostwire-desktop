@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
-import org.limewire.inspection.InspectablePrimitive;
 import org.limewire.setting.SettingsFactory;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
@@ -26,17 +25,8 @@ public final class FrostWireUtils {
 	/** 
 	 * Constant for the current version of FrostWire.
 	 */
-    @InspectablePrimitive("frostwire version")
 	private static final String FROSTWIRE_VERSION = "5.0.4";
     
-    /**
-     * The current revision of the BitTorrent protocol implementation.
-     * For an up-to-date mapping to LimeWire versions, check out
-     * http://www.limewire.org/wiki/index.php?title=BitTorrentRevision
-     */
-    @InspectablePrimitive("bittorrent revision")
-	public static final String BT_REVISION = "0002";
-
     /** True if this is a beta. */
     private static final boolean betaVersion = true;
     

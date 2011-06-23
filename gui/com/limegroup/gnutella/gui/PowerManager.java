@@ -14,11 +14,6 @@ class PowerManager implements RefreshListener, WindowListener {
     
     // The maximum idle time before we switch back to full power.
     private static final int MAX_IDLE_TIME = 5 * 60 * 1000; // 5 minutes
-    
-    /**
-     * Whether or not the window is currently active.
-     */
-    private boolean _active = true;
             
     
     /**
@@ -27,8 +22,6 @@ class PowerManager implements RefreshListener, WindowListener {
      * Sets LimeWire to use its full power.
      */
     public void windowActivated(WindowEvent e) {
-        _active = true;
-        GuiCoreMediator.getApplicationServices().setFullPower(true);
     }
     
     /**
@@ -41,13 +34,8 @@ class PowerManager implements RefreshListener, WindowListener {
         // If had an opposite, deactivated from another of our windows.
         if(e.getOppositeWindow() != null)
             return;
-        
-        _active = false;
-            
         if(SystemUtils.getIdleTime() > MAX_IDLE_TIME)
             return;
-            
-        GuiCoreMediator.getApplicationServices().setFullPower(false);
     }
     
     /** Stubbed our WindowListener method. */
@@ -69,9 +57,5 @@ class PowerManager implements RefreshListener, WindowListener {
      * the foreground application, use less power.
      */
     public void refresh() {
-        if(SystemUtils.getIdleTime() > MAX_IDLE_TIME)
-            GuiCoreMediator.getApplicationServices().setFullPower(true);
-        else if(!_active)
-            GuiCoreMediator.getApplicationServices().setFullPower(false);
     } 
 }

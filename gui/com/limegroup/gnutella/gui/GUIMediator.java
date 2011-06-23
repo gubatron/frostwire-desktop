@@ -266,10 +266,8 @@ public final class GUIMediator {
 			}
 
 			public void actionPerformed(ActionEvent e) {
-				byte[] guid = GuiCoreMediator.getApplicationServices()
-						.getMyGUID();
 				GUIMediator.openURL(FrostWireUtils
-						.addLWInfoToUrl(this.url, guid));
+						.addLWInfoToUrl(this.url, new byte[0]));
 			}
 		}
 

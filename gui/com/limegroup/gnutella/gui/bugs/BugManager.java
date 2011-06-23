@@ -19,14 +19,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ThreadFactory;
-import java.net.URL;
-import java.net.URLClassLoader;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -41,8 +41,6 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
 import org.limewire.concurrent.ExecutorsHelper;
-import org.limewire.inspection.Inspectable;
-import org.limewire.inspection.InspectionPoint;
 import org.limewire.io.IOUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.GenericsUtils;
@@ -55,7 +53,6 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LocalClientInfoFactory;
 import com.limegroup.gnutella.gui.MessageService;
 import com.limegroup.gnutella.gui.MultiLineLabel;
-import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.BugSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
@@ -144,22 +141,6 @@ public final class BugManager {
 	        INSTANCE = new BugManager();
 	    return INSTANCE;
 	}
-    
-    /** Inspectable to allow pulling of bug reports */
-    @SuppressWarnings("unused")
-    @InspectionPoint("bug report")
-    private static final Inspectable INSPECTABLE = new Inspectable() {
-        public Object inspect() {
-            
-            if (!ApplicationSettings.USAGE_STATS.getValue() && !FrostWireUtils.isAlphaRelease())
-                return "Denied";
-            
-            Exception e = new Exception();
-            e.setStackTrace(new StackTraceElement[0]);
-            LocalClientInfo info = localClientInfoFactory.createLocalClientInfo(e, "", "", false);
-            return info.getShortParamList();
-        }
-    };
     
     /**
      * Private to ensure that only this class can construct a 

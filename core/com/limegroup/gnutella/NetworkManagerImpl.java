@@ -2,7 +2,6 @@ package com.limegroup.gnutella;
 
 import java.io.IOException;
 
-import org.limewire.io.NetworkInstanceUtils;
 import org.limewire.io.NetworkUtils;
 
 import com.google.inject.Inject;
@@ -13,14 +12,11 @@ import com.google.inject.Singleton;
 public class NetworkManagerImpl implements NetworkManager {
     
     private final Provider<ActivityCallback> activityCallback;
-    private final NetworkInstanceUtils networkInstanceUtils;
     
     @Inject
     public NetworkManagerImpl(
-            Provider<ActivityCallback> activityCallback,
-            NetworkInstanceUtils networkInstanceUtils) {
+            Provider<ActivityCallback> activityCallback) {
         this.activityCallback = activityCallback;
-        this.networkInstanceUtils = networkInstanceUtils;
     }
     
 
@@ -98,8 +94,6 @@ public class NetworkManagerImpl implements NetworkManager {
         int port = getPort();
         if(!NetworkUtils.isValidAddress(addr))
             return false;
-        if(networkInstanceUtils.isPrivateAddress(addr))
-            return false;            
         if(!NetworkUtils.isValidPort(port))
             return false;
             
@@ -190,9 +184,5 @@ public class NetworkManagerImpl implements NetworkManager {
 
     public int supportsFWTVersion() {
         return  0;
-    }
-    
-    public boolean isPrivateAddress(byte[] addr) {
-        return networkInstanceUtils.isPrivateAddress(addr);
     }
 }
