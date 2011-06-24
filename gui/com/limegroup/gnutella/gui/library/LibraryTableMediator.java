@@ -55,8 +55,6 @@ import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.util.GUILauncher;
 import com.limegroup.gnutella.gui.util.GUILauncher.LaunchableProvider;
-import com.limegroup.gnutella.licenses.License;
-import com.limegroup.gnutella.licenses.VerificationListener;
 import com.limegroup.gnutella.util.QueryUtils;
 
 /**
@@ -65,7 +63,7 @@ import com.limegroup.gnutella.util.QueryUtils;
  * It is the Mediator to the Table part of the Library display.
  */
 final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel, LibraryTableDataLine, File>
-	implements VerificationListener, FileDetailsProvider {
+	implements FileDetailsProvider {
 	
 	/**
      * Variables so the PopupMenu & ButtonRow can have the same listeners
@@ -394,11 +392,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 //        window.setVisible(true);
     }
     
-
-    public void licenseVerified(License license) {
-        DATA_MODEL.refresh();
-    }
-
 	
     /**
      * Returns the options offered to the user when removing files.

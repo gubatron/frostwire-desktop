@@ -65,14 +65,12 @@ import com.limegroup.gnutella.gui.themes.SkinMenu;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.util.PopupUtils;
-import com.limegroup.gnutella.licenses.License;
-import com.limegroup.gnutella.licenses.VerificationListener;
 import com.limegroup.gnutella.settings.BittorrentSettings;
 import com.limegroup.gnutella.settings.SearchSettings;
 import com.limegroup.gnutella.util.QueryUtils;
 
 public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine, SearchResult>
-    implements VerificationListener, FileDetailsProvider {
+    implements FileDetailsProvider {
     
     protected static final String SEARCH_TABLE = "SEARCH_TABLE";
     
@@ -640,12 +638,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
 //        LicenseWindow window = LicenseWindow.create(line.getLicense(), urn, doc, this);
 //        GUIUtils.centerOnScreen(window);
 //        window.setVisible(true);
-    }
-    
-    public void licenseVerified(License license) {
-        // if it was valid at all, refresh.
-        if(license.isValid(null))
-            ((ResultPanelModel)DATA_MODEL).slowRefresh();
     }
     
     /**

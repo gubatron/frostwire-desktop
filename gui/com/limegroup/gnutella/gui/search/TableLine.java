@@ -11,8 +11,6 @@ import java.util.regex.Pattern;
 
 import javax.swing.Icon;
 
-import org.limewire.collection.NameValue;
-
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.RemoteFileDesc;
@@ -24,7 +22,6 @@ import com.limegroup.gnutella.gui.tables.IconAndNameHolderImpl;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.Linkable;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
-import com.limegroup.gnutella.licenses.License;
 import com.limegroup.gnutella.settings.SearchSettings;
 
 /** 
@@ -65,10 +62,6 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
      * The date this was added to the network.
      */
     private long _addedOn;
-
-    /** License info. */
-    private int _licenseState = License.NO_LICENSE;
-    private String _licenseName = null;
 
     public TableLine(SearchTableColumns stc) {
         COLUMNS = stc;
@@ -159,23 +152,6 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
     }
 
     /**
-     * Determines if a license is available.
-     */
-    boolean isLicenseAvailable() {
-        return _licenseState != License.NO_LICENSE;
-    }
-
-    /**
-     * Gets the license associated with this line.
-     */
-    License getLicense() {
-        //        if(_doc != null && _sha1 != null)
-        //            return _doc.getLicense();
-        //        else
-        return null;
-    }
-
-    /**
      * Gets the speed of this line.
      */
     ResultSpeed getSpeed() {
@@ -229,13 +205,6 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
         } else {
             return _otherResults;
         }
-    }
-
-    /**
-     * Returns the license name of null if File(s) have no license
-     */
-    String getLicenseName() {
-        return _licenseName;
     }
 
     /**
@@ -341,7 +310,6 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
         case SearchTableColumns.QUALITY_IDX:
         case SearchTableColumns.COUNT_IDX:
         case SearchTableColumns.ICON_IDX:
-        case SearchTableColumns.LICENSE_IDX:
             return false;
         default:
             return true;
@@ -371,8 +339,6 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
             return RESULT.getVendor();
         case SearchTableColumns.ADDED_IDX:
             return getAddedOn();
-        case SearchTableColumns.LICENSE_IDX:
-            return new NameValue.ComparableByName<Integer>(_licenseName, new Integer(_licenseState));
         default:
             return null;
         }

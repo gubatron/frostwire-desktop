@@ -18,7 +18,6 @@ import com.limegroup.gnutella.gui.tables.AbstractDataLine;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
-import com.limegroup.gnutella.licenses.License;
 
 /**
  * This class acts as a single line containing all
@@ -252,20 +251,6 @@ public final class LibraryTableDataLine extends AbstractDataLine<File> implement
 	        _schemas = null;
 	    }
 	}
-	
-	/**
-	 * Determines if this FileDesc has a license.
-	 */
-	boolean isLicensed() {
-	    return _fileDesc != null && _fileDesc.isLicensed();
-	}
-	
-	/**
-	 * Gets the license string for this FileDesc.
-	 */
-	License getLicense() {
-	    return _fileDesc != null ? _fileDesc.getLicense() : null;
-    }
 
 	public String[] getToolTipArray(int col) {
         // if XML isn't finished loading, no schemas exist,

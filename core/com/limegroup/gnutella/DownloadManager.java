@@ -23,7 +23,7 @@ import com.limegroup.gnutella.version.DownloadInformation;
  * completed downloads.  Downloads in the COULDNT_DOWNLOAD state are not 
  * serialized.  
  */
-public interface DownloadManager extends SaveLocationManager {
+public interface DownloadManager {
 
     /** 
      * Initializes this manager. <b>This method must be called before any other

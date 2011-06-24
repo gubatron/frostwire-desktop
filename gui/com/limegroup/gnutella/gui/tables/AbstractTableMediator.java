@@ -39,7 +39,6 @@ import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIConstants;
 import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
-import com.limegroup.gnutella.licenses.License;
 
 /**
  * The basics of a ComponentMediator for a Table.
@@ -159,11 +158,6 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
      * Variable for the centered renderer.
      */
     private static TableCellRenderer CENTER_RENDERER;
-        
-    /**
-     * Variable for the License renderer.
-     */
-    private static TableCellRenderer LICENSE_RENDERER;
     
     /** Variable for the date renderer. */
     private static TableCellRenderer DATE_RENDERER;
@@ -380,7 +374,6 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         TABLE.setDefaultRenderer(IconAndNameHolder.class, getIconAndNameRenderer());
         TABLE.setDefaultRenderer(Object.class, getDefaultRenderer());
         TABLE.setDefaultRenderer(CenteredHolder.class, getCenterRenderer());
-        TABLE.setDefaultRenderer(License.class, getLicenseRenderer());
         TABLE.setDefaultRenderer(SpeedRenderer.class, getSpeedRenderer());
         TABLE.setDefaultRenderer(Date.class, getDateRenderer());
     }
@@ -990,12 +983,5 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
             DATE_RENDERER = new DateRenderer();
         }
         return DATE_RENDERER;
-    }
-	
-	protected TableCellRenderer getLicenseRenderer() {
-        if (LICENSE_RENDERER == null) {
-            LICENSE_RENDERER = new LicenseRenderer();
-        }
-        return LICENSE_RENDERER;
     }
 }

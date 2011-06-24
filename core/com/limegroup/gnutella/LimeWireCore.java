@@ -12,9 +12,6 @@ import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 import com.limegroup.gnutella.browser.ExternalControl;
 import com.limegroup.gnutella.http.FeaturesWriter;
-import com.limegroup.gnutella.licenses.LicenseCache;
-import com.limegroup.gnutella.licenses.LicenseFactory;
-import com.limegroup.gnutella.licenses.LicenseVerifier;
 import com.limegroup.gnutella.xml.LimeXMLProperties;
 import com.limegroup.gnutella.xml.LimeXMLSchemaRepository;
 
@@ -67,10 +64,6 @@ public class LimeWireCore {
     public DownloadCallback getInNetworkCallback() {
         return injector.getInstance(Key.get(DownloadCallback.class, Names.named("inNetwork")));
     }
-
-    public LicenseCache getLicenseCache() {
-        return injector.getInstance(LicenseCache.class);
-    }
     
     public LimeXMLProperties getLimeXMLProperties() {
         return injector.getInstance(LimeXMLProperties.class);
@@ -103,17 +96,9 @@ public class LimeWireCore {
     public ScheduledExecutorService getNIOExecutor() {
         return injector.getInstance(Key.get(ScheduledExecutorService.class, Names.named("nioExecutor")));
     }
-    
-    public LicenseFactory getLicenseFactory() {
-        return injector.getInstance(LicenseFactory.class);
-    }
 
     public LimeCoreGlue getLimeCoreGlue() {
         return injector.getInstance(LimeCoreGlue.class);
-    }
-
-    public LicenseVerifier getLicenseVerifier() {
-        return injector.getInstance(LicenseVerifier.class);
     }
     
     public ServiceRegistry getServiceRegistry() {

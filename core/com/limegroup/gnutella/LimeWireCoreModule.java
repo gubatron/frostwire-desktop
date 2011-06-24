@@ -8,12 +8,9 @@ import org.limewire.common.LimeWireCommonModule;
 import org.limewire.concurrent.AbstractLazySingletonProvider;
 import org.limewire.concurrent.SimpleTimer;
 import org.limewire.inject.AbstractModule;
-import org.limewire.io.LocalSocketAddressProvider;
 
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
-import com.limegroup.gnutella.licenses.LicenseFactory;
-import com.limegroup.gnutella.licenses.LicenseFactoryImpl;
 
 /**
  * The module that defines what implementations are used within
@@ -49,9 +46,6 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(LocalFileDetailsFactory.class).to(LocalFileDetailsFactoryImpl.class);
         bind(LifecycleManager.class).to(LifecycleManagerImpl.class);
         bind(DownloadManager.class).to(DownloadManagerImpl.class).asEagerSingleton();
-        bind(LicenseFactory.class).to(LicenseFactoryImpl.class);
-        bind(SaveLocationManager.class).to(DownloadManager.class);
-        bind(LocalSocketAddressProvider.class).to(LocalSocketAddressProviderImpl.class);
         
         bindAll(Names.named("backgroundExecutor"), ScheduledExecutorService.class, BackgroundTimerProvider.class, ExecutorService.class, Executor.class);
     }

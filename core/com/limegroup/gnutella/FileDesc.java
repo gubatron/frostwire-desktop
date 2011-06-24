@@ -9,8 +9,6 @@ import java.util.Set;
 import org.limewire.util.I18NConvert;
 import org.limewire.util.RPNParser.StringLookup;
 
-import com.limegroup.gnutella.licenses.License;
-
 
 /**
  * This class contains data for an individual shared file.  It also provides
@@ -60,11 +58,6 @@ public class FileDesc implements StringLookup {
 	 * The constant SHA1 <tt>URN</tt> instance.
 	 */
 	private final URN SHA1_URN;
-	
-	/**
-	 * The License, if one exists, for this FileDesc.
-	 */
-	private License _license;
 	
 	/**
 	 * The number of hits this file has recieved.
@@ -249,20 +242,6 @@ public class FileDesc implements StringLookup {
 	public String getPath() {
 		return FILE.getAbsolutePath();
 	}
-	
-    /**
-     * Determines if a license exists on this FileDesc.
-     */
-    public boolean isLicensed() {
-        return _license != null;
-    }
-    
-    /**
-     * Returns the license associated with this FileDesc.
-     */
-    public License getLicense() {
-        return _license;
-    }
 	
     /**
      * Determine whether or not the given <tt>URN</tt> instance is 

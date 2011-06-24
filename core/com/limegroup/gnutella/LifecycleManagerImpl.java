@@ -25,7 +25,6 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
-import com.limegroup.gnutella.licenses.LicenseFactory;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.ConnectionSettings;
 
@@ -56,9 +55,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
     private final List<Thread> SHUTDOWN_ITEMS =  Collections.synchronizedList(new LinkedList<Thread>());
     /** The time when this finished starting. */
     private long startFinishedTime;
-
-
-    private final Provider<LicenseFactory> licenseFactory;
     
     private final EventListenerList<LifeCycleEvent> listenerList;
     
@@ -76,7 +72,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
             Provider<DownloadManager> downloadManager,
             @Named("backgroundExecutor") Provider<ScheduledExecutorService> backgroundExecutor,
             Provider<NetworkManager> networkManager,
-            Provider<LicenseFactory> licenseFactory,
             Provider<LimeCoreGlue> limeCoreGlue,
             ServiceRegistry serviceRegistry) {
         
@@ -87,7 +82,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
         this.activityCallback = activityCallback;
         this.downloadManager = downloadManager;
         this.networkManager = networkManager;
-        this.licenseFactory = licenseFactory;
         this.limeCoreGlue = limeCoreGlue;
     }
     /**/
@@ -247,8 +241,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
         SettingsGroupManager.instance().save();
 		
 		cleanupPreviewFiles();
-        
-        licenseFactory.get().persistCache();
         
         AzureusStarter.getAzureusCore().stop();
         
