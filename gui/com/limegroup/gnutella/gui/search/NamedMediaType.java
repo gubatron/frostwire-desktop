@@ -155,10 +155,6 @@ public class NamedMediaType implements IconAndNameHolder, Comparable<NamedMediaT
     public static List<NamedMediaType> getAllNamedMediaTypes() {
         List<NamedMediaType> allSchemas = new LinkedList<NamedMediaType>();
 
-        //Add all our schemas to the list.
-        for(LimeXMLSchema schema : GuiCoreMediator.getLimeXMLSchemaRepository().getAvailableSchemas())
-            allSchemas.add(getFromSchema(schema));
-
         //Add any default media types that haven't been added already.
         MediaType allTypes[] = MediaType.getDefaultMediaTypes();
         for(int i = 0; i < allTypes.length; i++) {
@@ -167,29 +163,6 @@ public class NamedMediaType implements IconAndNameHolder, Comparable<NamedMediaT
         }
         
         return allSchemas;
-    }     
-    
-    /**
-     * Retrieves the named media type for the specified schema.
-     */
-    private static NamedMediaType getFromSchema(LimeXMLSchema schema) {
-        String description = schema.getDescription();
-        NamedMediaType type = CACHED_TYPES.get(description);
-        if(type != null)
-            return type;
-        
-        MediaType mt;
-        // If it's not a default type, the MediaType is constructed.
-        if(!MediaType.isDefaultType(description)) {
-            mt = new MediaType(description);
-        } else {
-            // Otherwise, the default MediaType is used.
-            mt = MediaType.getMediaTypeForSchema(description);
-        }
-        
-        type = new NamedMediaType(mt, schema);
-        CACHED_TYPES.put(description, type);
-        return type;
     }
     
     /**

@@ -3,7 +3,6 @@ package com.limegroup.gnutella.browser;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -15,8 +14,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.StringTokenizer;
+
 import org.limewire.util.FileUtils;
-import com.limegroup.gnutella.FileDetails;
+
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.http.URIUtils;
 import com.limegroup.gnutella.util.EncodingUtils;
@@ -56,42 +56,6 @@ public class MagnetOptions implements Serializable {
 	private transient URN urn;
 	private transient String extractedFileName;
 	private transient List<URN> guidUrns;
-	
-	/**
-	 * Creates a MagnetOptions object from file details.
-	 * <p>
-	 * The resulting MagnetOptions might not be 
-	 * {@link #isDownloadable() downloadable}.
-	 * @param fileDetails
-	 * @return
-	 */
-	public static MagnetOptions createMagnet(FileDetails fileDetails) {
-		Map<Option, List<String>> map = new HashMap<Option, List<String>>();
-        List<String> name = new ArrayList<String>(1);
-        name.add(fileDetails.getFileName());
-		map.put(Option.DN, name);
-		URN urn = fileDetails.getSHA1Urn();
-		if (urn != null) {
-			addAppend(map, Option.XT, urn.httpStringValue());
-		}
-		InetSocketAddress isa = fileDetails.getInetSocketAddress();
-		String url = null;
-		if (isa != null && urn != null) {
-            StringBuilder addr = new StringBuilder("http://");
-			addr.append(isa.getAddress().getHostAddress()).append(':')
-			.append(isa.getPort()).append("/uri-res/N2R?");
-			addr.append(urn.httpStringValue());
-			url = addr.toString();
-			addAppend(map, Option.XS, url);
-		}
-		MagnetOptions magnet = new MagnetOptions(map);
-		// set already known values
-		magnet.urn = urn;
-		if (url != null) {
-			magnet.defaultURLs = new String[] { url };
-		}
-		return magnet;
-	}
 	
 	/**
 	 * Creates a MagnetOptions object from a several parameters.

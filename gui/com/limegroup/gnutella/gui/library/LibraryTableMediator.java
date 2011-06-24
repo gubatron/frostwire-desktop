@@ -32,12 +32,9 @@ import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRendere
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.FileDesc;
-import com.limegroup.gnutella.FileDetails;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.CheckBoxList;
 import com.limegroup.gnutella.gui.CheckBoxListPanel;
-import com.limegroup.gnutella.gui.FileDescProvider;
-import com.limegroup.gnutella.gui.FileDetailsProvider;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -62,8 +59,7 @@ import com.limegroup.gnutella.util.QueryUtils;
  * controlling access to the table and the various table properties.
  * It is the Mediator to the Table part of the Library display.
  */
-final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel, LibraryTableDataLine, File>
-	implements FileDetailsProvider {
+final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel, LibraryTableDataLine, File> {
 	
 	/**
      * Variables so the PopupMenu & ButtonRow can have the same listeners
@@ -232,19 +228,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		return null;
 	}
 	
-	/**
-	 * Allows annotation once XML is set up
-	 *
-	 * @param enabled whether or not annotation is allowed
-	 */
-	public void setAnnotateEnabled(boolean enabled) {
-		
-	    LibraryTableDataLine.setXMLEnabled(enabled);
-	    DATA_MODEL.refresh();
-		
-	    handleSelection(-1);
-	}
-	
     /**
      * Sets the default editors.
      */
@@ -306,36 +289,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
 		return DATA_MODEL.getFile(row);
     }
 	
-	/**
-	 * Returns the file desc object for the given row or <code>null</code> if
-	 * there is none.
-	 * @param row
-	 * @return
-	 */
-	private FileDesc getFileDesc(int row) {
-		return DATA_MODEL.getFileDesc(row);
-	}
-	
-	/**
-	 * Implements the {@link FileDescProvider} interface by returning all the
-	 * selected filedescs.
-	 */
-	public FileDetails[] getFileDetails() {
-		int[] sel = TABLE.getSelectedRows();
-		List<FileDetails> files = new ArrayList<FileDetails>(sel.length);
-		for (int i = 0; i < sel.length; i++) {
-			FileDesc desc = getFileDesc(sel[i]);
-			if (desc != null) {
-			    //DPINJ: Fix!
-				files.add(GuiCoreMediator.getLocalFileDetailsFactory().create(desc));
-			}
-		}
-		if (files.isEmpty()) {
-			return new FileDetails[0];
-		}
-		return files.toArray(new FileDetails[0]);
-	}
-    
     /**
 	 * Accessor for the table that this class wraps.
 	 *

@@ -42,8 +42,6 @@ public class LimeWireCoreModule extends AbstractModule {
         }        
 
         bind(DownloadCallback.class).to(ActivityCallback.class);
-        bind(NetworkManager.class).to(NetworkManagerImpl.class);
-        bind(LocalFileDetailsFactory.class).to(LocalFileDetailsFactoryImpl.class);
         bind(LifecycleManager.class).to(LifecycleManagerImpl.class);
         bind(DownloadManager.class).to(DownloadManagerImpl.class).asEagerSingleton();
         

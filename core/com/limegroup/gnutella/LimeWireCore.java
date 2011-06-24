@@ -2,7 +2,6 @@ package com.limegroup.gnutella;
 
 import java.util.concurrent.ScheduledExecutorService;
 
-import org.gudy.azureus2.plugins.ipfilter.IPFilter;
 import org.limewire.lifecycle.ServiceRegistry;
 
 import com.google.inject.Inject;
@@ -11,9 +10,7 @@ import com.google.inject.Key;
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 import com.limegroup.gnutella.browser.ExternalControl;
-import com.limegroup.gnutella.http.FeaturesWriter;
 import com.limegroup.gnutella.xml.LimeXMLProperties;
-import com.limegroup.gnutella.xml.LimeXMLSchemaRepository;
 
 /**
  * Contains mostly all references to singletons within LimeWire.
@@ -37,40 +34,12 @@ public class LimeWireCore {
         return injector;
     }
 
-    public LocalFileDetailsFactory getLocalFileDetailsFactory() {
-        return injector.getInstance(LocalFileDetailsFactory.class);
-    }
-
-    public FeaturesWriter getFeaturesWriter() {
-        return injector.getInstance(FeaturesWriter.class);
-    }
-
-    public NetworkManager getNetworkManager() {
-        return injector.getInstance(NetworkManager.class);
-    }
-
     public DownloadManager getDownloadManager() {
         return injector.getInstance(DownloadManager.class);
-    }
-
-    public IPFilter getIpFilter() {
-        return injector.getInstance(IPFilter.class);
-    }
-    
-    public SavedFileManager getSavedFileManager() {
-        return injector.getInstance(SavedFileManager.class);
-    }
-    
-    public DownloadCallback getInNetworkCallback() {
-        return injector.getInstance(Key.get(DownloadCallback.class, Names.named("inNetwork")));
     }
     
     public LimeXMLProperties getLimeXMLProperties() {
         return injector.getInstance(LimeXMLProperties.class);
-    }
-
-    public LimeXMLSchemaRepository getLimeXMLSchemaRepository() {
-        return injector.getInstance(LimeXMLSchemaRepository.class);
     }
     
     public ActivityCallback getActivityCallback() {
@@ -91,10 +60,6 @@ public class LimeWireCore {
     
     public DownloadCallback getDownloadCallback() {
         return injector.getInstance(DownloadCallback.class);
-    }
-
-    public ScheduledExecutorService getNIOExecutor() {
-        return injector.getInstance(Key.get(ScheduledExecutorService.class, Names.named("nioExecutor")));
     }
 
     public LimeCoreGlue getLimeCoreGlue() {

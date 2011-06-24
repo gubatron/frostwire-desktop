@@ -26,7 +26,6 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 import com.limegroup.gnutella.settings.ApplicationSettings;
-import com.limegroup.gnutella.settings.ConnectionSettings;
 
 @Singleton
 public class LifecycleManagerImpl implements LifecycleManager {
@@ -48,7 +47,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
 
     private final Provider<ActivityCallback> activityCallback;
     private final Provider<DownloadManager> downloadManager;
-    private final Provider<NetworkManager> networkManager;
     private final Provider<LimeCoreGlue> limeCoreGlue;
     
     /** A list of items that require running prior to shutting down LW. */
@@ -71,7 +69,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
             Provider<ActivityCallback> activityCallback,
             Provider<DownloadManager> downloadManager,
             @Named("backgroundExecutor") Provider<ScheduledExecutorService> backgroundExecutor,
-            Provider<NetworkManager> networkManager,
             Provider<LimeCoreGlue> limeCoreGlue,
             ServiceRegistry serviceRegistry) {
         
@@ -81,7 +78,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
         
         this.activityCallback = activityCallback;
         this.downloadManager = downloadManager;
-        this.networkManager = networkManager;
         this.limeCoreGlue = limeCoreGlue;
     }
     /**/
@@ -233,10 +229,7 @@ public class LifecycleManagerImpl implements LifecycleManager {
         }
         
         serviceRegistry.stop();
-        		
-        //Update firewalled status
-        ConnectionSettings.EVER_ACCEPTED_INCOMING.setValue(networkManager.get().acceptedIncomingConnection());
-        
+
         // save frostwire.props & other settings
         SettingsGroupManager.instance().save();
 		

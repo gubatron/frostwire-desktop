@@ -14,7 +14,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -42,11 +41,9 @@ import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.BuyAction;
 import com.frostwire.gui.bittorrent.TorrentUtil;
-import com.limegroup.gnutella.FileDetails;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.BoxPanel;
-import com.limegroup.gnutella.gui.FileDetailsProvider;
 import com.limegroup.gnutella.gui.GUIConstants;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -69,8 +66,7 @@ import com.limegroup.gnutella.settings.BittorrentSettings;
 import com.limegroup.gnutella.settings.SearchSettings;
 import com.limegroup.gnutella.util.QueryUtils;
 
-public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine, SearchResult>
-    implements FileDetailsProvider {
+public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine, SearchResult> {
     
     protected static final String SEARCH_TABLE = "SEARCH_TABLE";
     
@@ -985,31 +981,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
             
             MAIN_PANEL.add(SOUTH_PANEL);
         }
-    }
-    
-    public FileDetails[] getFileDetails() {
-        int[] sel = TABLE.getSelectedRows();
-        List<FileDetails> list = new ArrayList<FileDetails>(sel.length);
-//        for (int i = 0; i < sel.length; i++) {
-//            TableLine line = DATA_MODEL.get(sel[i]);
-//            // prefer non-firewalled rfds for the magnet action
-//            RemoteFileDesc rfd = null;//line.getNonFirewalledRFD();
-//            
-//            if (rfd != null) {
-//                list.add(rfd);
-//            }
-//            else {
-//                // fall back on first rfd
-//                rfd = line.getRemoteFileDesc();
-//                if (rfd != null) {
-//                    list.add(rfd);
-//                }
-//            }
-//        }
-        if (list.isEmpty()) {
-            return new FileDetails[0];
-        }
-        return list.toArray(new FileDetails[0]);
     }
     
     public void cleanup() {

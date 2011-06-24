@@ -2,7 +2,6 @@ package com.frostwire.gui.bittorrent;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.Action;
 import javax.swing.JPopupMenu;
@@ -13,8 +12,6 @@ import org.limewire.util.OSUtils;
 import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.AzureusStarter;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
-import com.limegroup.gnutella.FileDetails;
-import com.limegroup.gnutella.gui.FileDetailsProvider;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
@@ -34,7 +31,7 @@ import com.limegroup.gnutella.settings.QuestionsHandler;
  * download window.  It also constructs all of the download window
  * components.
  */
-public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadModel, BTDownloadDataLine, BTDownload> implements FileDetailsProvider {
+public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadModel, BTDownloadDataLine, BTDownload> {
 
     /**
      * instance, for singleton access
@@ -354,32 +351,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     public void handleActionKey() {
         if (exploreAction.isEnabled())
             exploreAction.actionPerformed(null);
-    }
-
-    /**
-     * Returns the selected {@link FileDetails}.
-     */
-    public FileDetails[] getFileDetails() {
-        int[] sel = TABLE.getSelectedRows();
-        //FileManager fmanager = GuiCoreMediator.getFileManager();
-        List<FileDetails> list = new ArrayList<FileDetails>(sel.length);
-        //        for(int i = 0; i < sel.length; i++) {
-        //            URN urn = DATA_MODEL.get(sel[i]).getDownloader().getSha1Urn();
-        //			if (urn != null) {
-        //				FileDesc fd = fmanager.getFileDescForUrn(urn);
-        //				if (fd != null) {
-        //				    // DPINJ:  Use passed in LocalFileDetailsFactory
-        //					list.add(GuiCoreMediator.getLocalFileDetailsFactory().create(fd));
-        //				}
-        //				else if (LOG.isDebugEnabled()) {
-        //					LOG.debug("not filedesc for urn " + urn);
-        //				}
-        //			}
-        //			else if (LOG.isDebugEnabled()) {
-        //				LOG.debug("no urn");
-        //			}
-        //		}
-        return list.toArray(new FileDetails[0]);
     }
 
     protected JPopupMenu createPopupMenu() {

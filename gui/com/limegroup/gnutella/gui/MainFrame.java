@@ -692,7 +692,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      */
     final StatusLine getStatusLine() {
         if (STATUS_LINE == null) {
-            STATUS_LINE = new StatusLine(GuiCoreMediator.getNetworkManager());
+            STATUS_LINE = new StatusLine();
         }
         return STATUS_LINE;
     }

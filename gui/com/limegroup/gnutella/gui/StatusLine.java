@@ -30,7 +30,6 @@ import org.limewire.setting.BooleanSetting;
 import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.AzureusStarter;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
-import com.limegroup.gnutella.NetworkManager;
 import com.limegroup.gnutella.gui.player.MediaPlayerComponent;
 import com.limegroup.gnutella.gui.themes.SkinCheckBoxMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
@@ -106,7 +105,7 @@ public final class StatusLine implements ThemeObserver {
     /**
      * Creates a new status line in the disconnected state.
      */
-    public StatusLine(NetworkManager networkManager) {
+    public StatusLine() {
         GUIMediator.setSplashScreenString(
             I18n.tr("Loading Status Window..."));
 

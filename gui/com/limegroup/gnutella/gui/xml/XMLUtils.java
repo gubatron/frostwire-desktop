@@ -1,18 +1,13 @@
 package com.limegroup.gnutella.gui.xml;
 
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.xml.LimeXMLNames;
 import com.limegroup.gnutella.xml.LimeXMLSchema;
@@ -26,13 +21,6 @@ public class XMLUtils {
     
     private static final Log LOG = LogFactory.getLog(XMLUtils.class);
     
-    /**
-     * A mapping of Schema -> ResourceBundle for that schema.
-     * These ResourceBundles are only used (and only created)
-     * if someone attempts to retrieve a resource that does not exist
-     * in the main ResourceBundle.
-     */
-    private static Map<String, ResourceBundle> bundles;
     
     private XMLUtils() {}
     
@@ -79,18 +67,6 @@ public class XMLUtils {
         int idx2 = field.indexOf(XMLStringUtils.DELIMITER, idx1);
         return getResource(field.substring(0, idx2));
     }
-        
-    
-    /**
-     * Gets the correct display name for the given schemaURI.
-     */
-    public static String getTitleForSchemaURI(String schemaURI) {
-        LimeXMLSchema schema = GuiCoreMediator.getLimeXMLSchemaRepository().getSchema(schemaURI);
-        if(schema != null)
-            return getTitleForSchema(schema);
-        else
-            return null;
-    }
     
     /**
      * Gets the correct display name for the given schema.
@@ -103,43 +79,12 @@ public class XMLUtils {
      * Gets the resource bundle for the given field name.
      */
     private static ResourceBundle getBundleForField(String field) {
-        if(bundles == null)
-            loadBundles();
-            
-        return bundles.get(getDescriptionFromField(field));
+//        if(bundles == null)
+//            loadBundles();
+//            
+//        return bundles.get(getDescriptionFromField(field));
+        return null;
     }
-    
-    /**
-     * Gets the description of the schema from a field name.
-     *
-     * That is, where the field is called audios__audio__field,
-     * the description this returns is "audio".
-     */
-    private static String getDescriptionFromField(String field) {
-        // The canonicalKey is always going to be x__x__<other stuff here>
-        int idx1 = field.indexOf(XMLStringUtils.DELIMITER) + 2;
-        int idx2 = field.indexOf(XMLStringUtils.DELIMITER, idx1);
-        if(idx2 == -1)
-            idx2 = field.length();
-        return field.substring(idx1, idx2);
-    }
-    
-    /**
-     * Populates the bundles map with the resource bundles we know about.
-     */
-    private static void loadBundles() {
-        bundles = new HashMap<String, ResourceBundle>();
-        Collection<LimeXMLSchema> schemas = GuiCoreMediator.getLimeXMLSchemaRepository().getAvailableSchemas();
-        for(LimeXMLSchema schema : schemas) {
-            String key = schema.getDescription();
-            try {
-                bundles.put(key, GUIMediator.getXMLResourceBundle(key));
-            } catch(MissingResourceException mre) {
-                if(LOG.isWarnEnabled())
-                    LOG.warn("Missing resource bundle for schema: " + key, mre);
-            }
-        }
-    }   
     
     /**
      * Gets the resource from the XML resource bundles for that field.

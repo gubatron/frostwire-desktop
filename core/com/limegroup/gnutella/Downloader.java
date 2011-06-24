@@ -192,21 +192,6 @@ public interface Downloader {
      */
     public void discardCorruptDownload(boolean delete);
 
-	/**
-	 * Returns a browse-enabled <tt>Endpoint</tt> instance for this
-	 * <tt>Downloader</tt>.
-	 */
-	public RemoteFileDesc getBrowseEnabledHost();
-
-	/**
-	 * Returns whether or not there is a browse-enabled host available for
-	 * this <tt>Downloader</tt>.
-	 *
-	 * @return <tt>true</tt> if there is a browse-enabled host for this 
-	 *  <tt>Downloader</tt>, <tt>false</tt> otherwise
-	 */
-	public boolean hasBrowseEnabledHost();
-
     /**
      * Returns the position of the download on the uploader, relavent only if
      * the downloader is queueud.
