@@ -284,11 +284,6 @@ public final class LibraryMediator implements ThemeObserver {
 	    }
 	    return false;
 	}
-
-	public void setAnnotateEnabled(boolean enabled) {
-	    getLibraryTable().setAnnotateEnabled(enabled);
-	}
-
 	
 	/**
 	 * Updates the Library GUI based on whether the player is enabled. 

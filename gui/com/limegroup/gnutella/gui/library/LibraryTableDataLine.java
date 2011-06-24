@@ -10,7 +10,6 @@ import javax.swing.Icon;
 
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.dnd.FileTransfer;
@@ -236,20 +235,6 @@ public final class LibraryTableDataLine extends AbstractDataLine<File> implement
 
 	public boolean isDynamic(int idx) {
 	    return false;
-	}
-
-	/**
-	 * Initialize things we only need to do once
-	 */
-	static void setXMLEnabled(boolean en) {
-	    _allowXML = en;
-	    if ( _allowXML ) {
-	        _schemas =
-	            GuiCoreMediator.getLimeXMLSchemaRepository().getAvailableSchemaURIs();
-    	    
-	    } else {
-	        _schemas = null;
-	    }
 	}
 
 	public String[] getToolTipArray(int col) {

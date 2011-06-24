@@ -13,7 +13,6 @@ import javax.swing.Icon;
 
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.limegroup.gnutella.GUID;
-import com.limegroup.gnutella.RemoteFileDesc;
 import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.search.Selector.PropertyType;
 import com.limegroup.gnutella.gui.tables.AbstractDataLine;
@@ -358,33 +357,7 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
     public final boolean isSameKindAs(TableLine line) {
         return getSearchResult().getClass().equals(line.getSearchResult().getClass());
     }
-
-    /**
-     * Gets all RemoteFileDescs for this line.
-     */
-    RemoteFileDesc[] getAllRemoteFileDescs() {
-        //        GnutellaSearchResult sr = (GnutellaSearchResult)RESULT;
-        //        int size = getOtherResults().size() + 1;
-        //        RemoteFileDesc[] rfds = new RemoteFileDesc[size];
-        //        rfds[0] = sr.getRemoteFileDesc();
-        //        int j = 1;
-        //        for(Iterator<?> i = getOtherResults().iterator(); i.hasNext(); j++)
-        //            rfds[j] = ((GnutellaSearchResult)i.next()).getRemoteFileDesc();
-        //        return rfds;
-        return null;
-    }
-
-    /**
-     * Returns the rfd of the search result for which this download was enabled
-     * @return
-     */
-    RemoteFileDesc getRemoteFileDesc() {
-        //        return RESULT instanceof GnutellaSearchResult 
-        //                ? ((GnutellaSearchResult)RESULT).getRemoteFileDesc() 
-        //                : null;
-        return null;
-    }
-
+    
     /**
      * Returns the underlying search result.  This is needed by {@link StoreResultPanel}.
      * 
