@@ -2,13 +2,24 @@ package org.limewire.common;
 
 import org.limewire.lifecycle.LimeWireCommonLifecycleModule;
 
-import com.google.inject.AbstractModule;
-
-public class LimeWireCommonModule extends AbstractModule {
+public class LimeWireCommonModule {
     
-    @Override
-    protected void configure() {
-        install(new LimeWireCommonLifecycleModule());
+    private static LimeWireCommonModule INSTANCE;
+    
+    public static LimeWireCommonModule instance() {
+        if (INSTANCE == null) {
+            INSTANCE = new LimeWireCommonModule();
+        }
+        return INSTANCE;
     }
-
+    
+    private final LimeWireCommonLifecycleModule limewireCommonLifecycleModule;
+    
+    private LimeWireCommonModule() {
+        limewireCommonLifecycleModule = LimeWireCommonLifecycleModule.instance();
+    }
+    
+    public LimeWireCommonLifecycleModule getLimeWireCommonLifecycleModule() {
+        return limewireCommonLifecycleModule;
+    }
 }

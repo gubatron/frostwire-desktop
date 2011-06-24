@@ -428,6 +428,11 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
     }
 
     public void seek(float percent) {
+        
+        if (audioProperties.getLength() == -1) {
+            return;
+        }
+        
         if (audioProperties != null && audioProperties.isSeekable()) {
             float timeInSecs = audioProperties.getLength() * percent;
             PLAYER.seek(timeInSecs);
@@ -483,6 +488,10 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
      */
     public void progressChange(float currentTimeInSecs) {
         
+        if (audioProperties.getLength() == -1) {
+            return;
+        }
+        
         _progress = currentTimeInSecs;
         
         //I wasn't ready
@@ -530,6 +539,10 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
     	if (audioProperties == null) {
     		loadAudioProperties();
     	}
+    	
+    	if (audioProperties != null && audioProperties.getLength() == -1) {
+            return;
+        }
     	
         if (event.getState() == MediaPlaybackState.Failed || event.getState() == MediaPlaybackState.Uninitialized) {
             //setProgressEnabled(false);

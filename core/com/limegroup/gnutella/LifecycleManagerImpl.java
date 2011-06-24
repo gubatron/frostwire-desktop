@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.commons.logging.Log;
@@ -21,13 +20,8 @@ import org.limewire.util.OSUtils;
 import org.limewire.util.SystemUtils;
 
 import com.frostwire.AzureusStarter;
-import com.google.inject.Inject;
-import com.google.inject.Provider;
-import com.google.inject.Singleton;
-import com.google.inject.name.Named;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 
-@Singleton
 public class LifecycleManagerImpl implements LifecycleManager {
     
     private static final Log LOG = LogFactory.getLog(LifecycleManagerImpl.class);
@@ -45,9 +39,9 @@ public class LifecycleManagerImpl implements LifecycleManager {
     
     private static enum State { NONE, STARTING, STARTED, STOPPED };
 
-    private final Provider<ActivityCallback> activityCallback;
-    private final Provider<DownloadManager> downloadManager;
-    private final Provider<LimeCoreGlue> limeCoreGlue;
+    private final ActivityCallback activityCallback;
+    private final DownloadManager downloadManager;
+    private final LimeCoreGlue limeCoreGlue;
     
     /** A list of items that require running prior to shutting down LW. */
     private final List<Thread> SHUTDOWN_ITEMS =  Collections.synchronizedList(new LinkedList<Thread>());
@@ -64,12 +58,10 @@ public class LifecycleManagerImpl implements LifecycleManager {
     
     
     /**/
-    @Inject
     public LifecycleManagerImpl(             
-            Provider<ActivityCallback> activityCallback,
-            Provider<DownloadManager> downloadManager,
-            @Named("backgroundExecutor") Provider<ScheduledExecutorService> backgroundExecutor,
-            Provider<LimeCoreGlue> limeCoreGlue,
+            ActivityCallback activityCallback,
+            DownloadManager downloadManager,
+            LimeCoreGlue limeCoreGlue,
             ServiceRegistry serviceRegistry) {
         
         this.serviceRegistry = serviceRegistry;
@@ -192,8 +184,8 @@ public class LifecycleManagerImpl implements LifecycleManager {
         
         // Restore any downloads in progress.
         LOG.trace("START DownloadManager.postGuiInit");
-        activityCallback.get().componentLoading(I18nMarker.marktr("Loading Old Downloads..."));
-        downloadManager.get().loadSavedDownloadsAndScheduleWriting();
+        activityCallback.componentLoading(I18nMarker.marktr("Loading Old Downloads..."));
+        downloadManager.loadSavedDownloadsAndScheduleWriting();
         LOG.trace("STOP DownloadManager.postGuiInit");
 
         if(ApplicationSettings.AUTOMATIC_MANUAL_GC.getValue())
@@ -319,7 +311,7 @@ public class LifecycleManagerImpl implements LifecycleManager {
         serviceRegistry.start("SuperEarly");
         serviceRegistry.start("EarlyBackground");
         
-        limeCoreGlue.get().install(); // ensure glue is set before running tasks.
+        limeCoreGlue.install(); // ensure glue is set before running tasks.
         
         //acceptor.get().init();
         backgroundDone.set(true);

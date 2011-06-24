@@ -1,25 +1,35 @@
 package com.limegroup.gnutella.gui;
 
-import com.google.inject.AbstractModule;
 import com.limegroup.gnutella.ActivityCallback;
-import com.limegroup.gnutella.gui.bugs.BugManager;
-import com.limegroup.gnutella.gui.bugs.DeadlockBugManager;
-import com.limegroup.gnutella.gui.bugs.FatalBugManager;
-import com.limegroup.gnutella.gui.options.panes.BugsPaneItem;
 
-public class LimeWireGUIModule extends AbstractModule {
-
-    @Override
-    protected void configure() {
-        //DPINJ: Temporary measures...
-        requestStaticInjection(GuiCoreMediator.class);        
-        requestStaticInjection(BugsPaneItem.class);
-        requestStaticInjection(BugManager.class);
-        requestStaticInjection(DeadlockBugManager.class);
-        requestStaticInjection(FatalBugManager.class);
-        
-        bind(ActivityCallback.class).to(VisualConnectionCallback.class);
-        
-        bind(LocalClientInfoFactory.class).to(LocalClientInfoFactoryImpl.class);
+public class LimeWireGUIModule {
+    
+    private static LimeWireGUIModule INSTANCE;
+    
+    public static LimeWireGUIModule instance() {
+        if (INSTANCE == null) {
+            INSTANCE = new LimeWireGUIModule();
+        }
+        return INSTANCE;
+    }
+    
+    private final ActivityCallback activityCallback;
+    private final LocalClientInfoFactory localClientInfoFactory;
+    
+    private LimeWireGUIModule() {
+        activityCallback = VisualConnectionCallback.instance();
+        localClientInfoFactory = LocalClientInfoFactoryImpl.instance();
+    }
+    
+    public ActivityCallback getActivityCallback() {
+        return activityCallback;
+    }
+    
+    public LocalClientInfoFactory getLocalClientInfoFactory() {
+        return localClientInfoFactory;
+    }
+    
+    public LimeWireGUI getLimeWireGUI() {
+        return LimeWireGUI.instance();
     }
 }

@@ -10,12 +10,8 @@ import org.apache.commons.logging.LogFactory;
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.limewire.util.OSUtils;
 
-import com.google.inject.Inject;
-import com.google.inject.Provider;
-import com.google.inject.Singleton;
 import com.limegroup.gnutella.ActivityCallback;
 
-@Singleton
 public class ExternalControl {
     
     private static final Log LOG = LogFactory.getLog(ExternalControl.class);
@@ -24,11 +20,9 @@ public class ExternalControl {
     private boolean initialized = false;
     private volatile String  enqueuedRequest = null;
     
-    private final Provider<ActivityCallback> activityCallback;
+    private final ActivityCallback activityCallback;
     
-    @Inject
-    public ExternalControl(
-            Provider<ActivityCallback> activityCallback) {
+    public ExternalControl(ActivityCallback activityCallback) {
         this.activityCallback = activityCallback;
     }
 
@@ -137,9 +131,9 @@ public class ExternalControl {
 	}
 	
 	private ActivityCallback restoreApplication() {
-		activityCallback.get().restoreApplication();
-		activityCallback.get().showDownloads();
-		return activityCallback.get();
+		activityCallback.restoreApplication();
+		activityCallback.showDownloads();
+		return activityCallback;
 	}
 	
 	private void handleTorrentRequest(String arg) {

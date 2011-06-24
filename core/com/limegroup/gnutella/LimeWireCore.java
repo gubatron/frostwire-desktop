@@ -1,14 +1,7 @@
 package com.limegroup.gnutella;
 
-import java.util.concurrent.ScheduledExecutorService;
-
 import org.limewire.lifecycle.ServiceRegistry;
 
-import com.google.inject.Inject;
-import com.google.inject.Injector;
-import com.google.inject.Key;
-import com.google.inject.Singleton;
-import com.google.inject.name.Names;
 import com.limegroup.gnutella.browser.ExternalControl;
 import com.limegroup.gnutella.xml.LimeXMLProperties;
 
@@ -20,53 +13,41 @@ import com.limegroup.gnutella.xml.LimeXMLProperties;
  * injector.injectMembers(myObject), which is still a superior
  * option to retrieving the individual objects from this class.
  */
-@Singleton
 public class LimeWireCore {
-        
-    private final Injector injector;
     
-    @Inject
-    public LimeWireCore(Injector injector) {
-        this.injector = injector;
+    private static LimeWireCore INSTANCE;
+    
+    public static LimeWireCore instance() {
+        if (INSTANCE == null) {
+            INSTANCE = new LimeWireCore();
+        }
+        return INSTANCE;
     }
-
-    public Injector getInjector() {
-        return injector;
+        
+    private LimeWireCore() {
     }
-
+    
     public DownloadManager getDownloadManager() {
-        return injector.getInstance(DownloadManager.class);
+        return LimeWireCoreModule.instance(null).getDownloadManager();
     }
     
     public LimeXMLProperties getLimeXMLProperties() {
-        return injector.getInstance(LimeXMLProperties.class);
-    }
-    
-    public ActivityCallback getActivityCallback() {
-        return injector.getInstance(ActivityCallback.class);
+        return LimeXMLProperties.instance();
     }
     
     public LifecycleManager getLifecycleManager() {
-        return injector.getInstance(LifecycleManager.class);
-    }
-
-    public ScheduledExecutorService getBackgroundExecutor() {
-        return injector.getInstance(Key.get(ScheduledExecutorService.class, Names.named("backgroundExecutor")));
+        return LimeWireCoreModule.instance(null).getLifecycleManager();
     }
     
     public ExternalControl getExternalControl() {
-        return injector.getInstance(ExternalControl.class);
+        return new ExternalControl(LimeWireCoreModule.instance(null).getActivityCallback());
     }
     
-    public DownloadCallback getDownloadCallback() {
-        return injector.getInstance(DownloadCallback.class);
-    }
-
     public LimeCoreGlue getLimeCoreGlue() {
-        return injector.getInstance(LimeCoreGlue.class);
+        return LimeCoreGlue.instance();
     }
     
     public ServiceRegistry getServiceRegistry() {
-        return injector.getInstance(ServiceRegistry.class);
+        return LimeWireCoreModule.instance(null).getLimeWireCommonModule().getLimeWireCommonLifecycleModule().getServiceRegistry();
     }
 }

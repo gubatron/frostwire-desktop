@@ -67,8 +67,6 @@ public class BitTorrentDownloadSpeedPaneItem extends AbstractPaneItem {
 
 	private void updateSpeedLabel() {
 		float value = DOWNLOAD_SLIDER.getValue();
-
-		System.out.println("updateSpeedLabel: " + value);
 		
 		NumberFormat formatter = NumberFormat.getInstance();
 		formatter.setMaximumFractionDigits(2);

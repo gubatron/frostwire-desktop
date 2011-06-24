@@ -1,14 +1,32 @@
 package com.limegroup.gnutella.gui;
-import com.google.inject.Binder;
-import com.google.inject.Module;
+
 import com.limegroup.gnutella.LimeWireCoreModule;
 
 /** The master LimeWire module. */
-public class LimeWireModule implements Module {
+public class LimeWireModule {
+    
+    private static LimeWireModule INSTANCE;
 
-    public void configure(Binder binder) {
-        binder.install(new LimeWireCoreModule());
-        binder.install(new LimeWireGUIModule());
+    public static LimeWireModule instance() {
+        if (INSTANCE == null) {
+            INSTANCE = new LimeWireModule();
+        }
+        return INSTANCE;
     }
-
+    
+    private final LimeWireCoreModule limeWireCoreModule;
+    private final LimeWireGUIModule limeWireGUIModule;
+    
+    private LimeWireModule() {
+        limeWireCoreModule = LimeWireCoreModule.instance(VisualConnectionCallback.instance());
+        limeWireGUIModule = LimeWireGUIModule.instance();
+    }
+    
+    public LimeWireCoreModule getLimeWireCoreModule() {
+        return limeWireCoreModule;
+    }
+    
+    public LimeWireGUIModule getLimeWireGUIModule() {
+        return limeWireGUIModule;
+    }
 }

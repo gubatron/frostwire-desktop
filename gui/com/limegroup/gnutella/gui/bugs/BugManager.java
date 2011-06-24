@@ -47,9 +47,9 @@ import org.limewire.util.GenericsUtils;
 import org.limewire.util.Version;
 import org.limewire.util.VersionFormatException;
 
-import com.google.inject.Inject;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.LimeWireModule;
 import com.limegroup.gnutella.gui.LocalClientInfoFactory;
 import com.limegroup.gnutella.gui.MessageService;
 import com.limegroup.gnutella.gui.MultiLineLabel;
@@ -66,7 +66,7 @@ import com.limegroup.gnutella.util.FrostWireUtils;
  */
 public final class BugManager {
 
-    @Inject private static volatile LocalClientInfoFactory localClientInfoFactory;
+    private final LocalClientInfoFactory localClientInfoFactory;
 
     /**
      * The instance of BugManager -- follows a singleton pattern.
@@ -147,6 +147,7 @@ public final class BugManager {
      * <tt>BugManager</tt>, thereby ensuring that only one instance is created.
      */
     private BugManager() {
+        localClientInfoFactory = LimeWireModule.instance().getLimeWireGUIModule().getLimeWireGUI().getLocalClientInfoFactory();
         loadOldBugs();
     }
     

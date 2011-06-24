@@ -5,12 +5,22 @@ import java.net.URL;
 
 import org.limewire.util.CommonUtils;
 
-import com.google.inject.Singleton;
-
 
 /**  Various utilities for LimeWire XML classes. */
-@Singleton
 public class LimeXMLProperties {
+    
+    private static LimeXMLProperties INSTANCE;
+    
+    public static LimeXMLProperties instance() {
+        if (INSTANCE == null) {
+            INSTANCE = new LimeXMLProperties();
+        }
+        return INSTANCE;
+    }
+    
+    private LimeXMLProperties() {
+        
+    }
 
     /**
      * The default index for responses when there is no file and 

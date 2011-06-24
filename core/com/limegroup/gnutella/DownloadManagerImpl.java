@@ -8,14 +8,10 @@ import java.util.List;
 import org.gudy.azureus2.core3.global.GlobalManager;
 
 import com.frostwire.AzureusStarter;
-import com.google.inject.Inject;
-import com.google.inject.Provider;
-import com.google.inject.Singleton;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.UpdateSettings;
 import com.limegroup.gnutella.version.DownloadInformation;
 
-@Singleton
 public class DownloadManagerImpl implements DownloadManager {
     
     /**
@@ -24,11 +20,9 @@ public class DownloadManagerImpl implements DownloadManager {
      */
     private float averageBandwidth = 0;
     
-    private final Provider<DownloadCallback> downloadCallback;
+    private final DownloadCallback downloadCallback;
     
-    @Inject
-    public DownloadManagerImpl(
-            Provider<DownloadCallback> downloadCallback) {
+    public DownloadManagerImpl(DownloadCallback downloadCallback) {
         this.downloadCallback = downloadCallback;
     }
 
@@ -209,7 +203,7 @@ public class DownloadManagerImpl implements DownloadManager {
     }
     
     private DownloadCallback callback(org.gudy.azureus2.core3.download.DownloadManager dm) {
-        return downloadCallback.get();
+        return downloadCallback;
     }
         
     

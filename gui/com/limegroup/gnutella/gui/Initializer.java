@@ -19,8 +19,6 @@ import org.limewire.util.Stopwatch;
 import org.limewire.util.SystemUtils;
 
 import com.frostwire.AzureusStarter;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 import com.limegroup.gnutella.LimeCoreGlue;
 import com.limegroup.gnutella.LimeCoreGlue.InstallFailedException;
 import com.limegroup.gnutella.LimeWireCore;
@@ -213,8 +211,7 @@ public final class Initializer {
     
     /** Wires together LimeWire. */
     private LimeWireGUI createLimeWire() {
-        Injector injector = Guice.createInjector(new LimeWireModule());
-        LimeWireGUI limeWireGUI = injector.getInstance(LimeWireGUI.class);
+        LimeWireGUI limeWireGUI = LimeWireModule.instance().getLimeWireGUIModule().getLimeWireGUI();
         return limeWireGUI;
     }
     

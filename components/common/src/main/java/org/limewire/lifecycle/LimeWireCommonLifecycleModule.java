@@ -1,11 +1,24 @@
 package org.limewire.lifecycle;
 
-import com.google.inject.AbstractModule;
 
-public class LimeWireCommonLifecycleModule extends AbstractModule {
-    @Override
-    protected void configure() {
-        bind(ServiceRegistry.class).to(ServiceRegistryImpl.class);        
+public class LimeWireCommonLifecycleModule {
+    
+    private static LimeWireCommonLifecycleModule INSTANCE;
+    
+    public static LimeWireCommonLifecycleModule instance() {
+        if (INSTANCE == null) {
+            INSTANCE = new LimeWireCommonLifecycleModule();
+        }
+        return INSTANCE;
     }
-
+    
+    private final ServiceRegistry serviceRegistry;
+    
+    private LimeWireCommonLifecycleModule() {
+        serviceRegistry = new ServiceRegistryImpl();
+    }
+    
+    public ServiceRegistry getServiceRegistry() {
+        return serviceRegistry;
+    }
 }

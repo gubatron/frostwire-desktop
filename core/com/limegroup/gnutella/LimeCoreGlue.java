@@ -5,21 +5,26 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.limewire.util.CommonUtils;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 
 /**
  * This class is the glue that holds LimeWire together.
  * All various components are wired together here.
  */
-@Singleton
 public class LimeCoreGlue {
 	
     private static AtomicBoolean preinstalled = new AtomicBoolean(false);
     private AtomicBoolean installed = new AtomicBoolean(false);
     
-    @Inject
-    public LimeCoreGlue() {
+    private static LimeCoreGlue INSTANCE;
+    
+    public static LimeCoreGlue instance() {
+        if (INSTANCE == null) {
+            INSTANCE = new LimeCoreGlue();
+        }
+        return INSTANCE;
+    }
+    
+    private LimeCoreGlue() {
 
     }    
     

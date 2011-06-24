@@ -17,9 +17,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
-import com.google.inject.Inject;
+import com.limegroup.gnutella.gui.LimeWireModule;
 import com.limegroup.gnutella.gui.LocalClientInfoFactory;
-import com.limegroup.gnutella.gui.LocalClientInfoFactoryImpl;
 import com.limegroup.gnutella.gui.MultiLineLabel;
 import com.limegroup.gnutella.gui.SplashWindow;
 
@@ -29,9 +28,8 @@ import com.limegroup.gnutella.gui.SplashWindow;
  */
 public final class FatalBugManager {
     
-    @Inject private static volatile LocalClientInfoFactory localClientInfoFactory;    
-    
-    private FatalBugManager() {}
+    private FatalBugManager() {
+    }
     
     /**
      * Handles a fatal bug.
@@ -43,9 +41,7 @@ public final class FatalBugManager {
         bug.printStackTrace();
         
         // Build the LocalClientInfo out of the info ...
-        LocalClientInfoFactory factoryToUse = localClientInfoFactory;
-        if(factoryToUse == null)
-            factoryToUse = new LocalClientInfoFactoryImpl();
+        LocalClientInfoFactory factoryToUse = LimeWireModule.instance().getLimeWireGUIModule().getLimeWireGUI().getLocalClientInfoFactory();
         final LocalClientInfo info = factoryToUse.createLocalClientInfo(bug, Thread.currentThread().getName(), null, true);
         
         SwingUtilities.invokeLater(new Runnable() {

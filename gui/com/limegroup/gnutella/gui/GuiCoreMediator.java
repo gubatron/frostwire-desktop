@@ -1,26 +1,13 @@
 package com.limegroup.gnutella.gui;
 
-import java.util.concurrent.ScheduledExecutorService;
-
-import com.google.inject.Inject;
-import com.limegroup.gnutella.ActivityCallback;
 import com.limegroup.gnutella.DownloadManager;
 import com.limegroup.gnutella.LifecycleManager;
 import com.limegroup.gnutella.LimeWireCore;
-import com.limegroup.gnutella.browser.ExternalControl;
 import com.limegroup.gnutella.xml.LimeXMLProperties;
 
 // DPINJ:  This is a temporary measure to delay refactoring the GUI.
 public class GuiCoreMediator {
-    
-    @Inject private static LimeWireCore core;
-    
-    public static LimeWireCore getCore() { return core; }
-    
-    public static DownloadManager getDownloadManager() {  return core.getDownloadManager(); }
-    public static LimeXMLProperties getLimeXMLProperties() { return core.getLimeXMLProperties(); }
-    public static LifecycleManager getLifecycleManager() { return core.getLifecycleManager(); }
-    public static ScheduledExecutorService getCoreBackgroundExecutor() { return core.getBackgroundExecutor(); }
-    public static ExternalControl getExternalControl() { return core.getExternalControl(); }
-    public static ActivityCallback getActivityCallback() { return core.getActivityCallback(); }
+    public static DownloadManager getDownloadManager() {  return LimeWireCore.instance().getDownloadManager(); }
+    public static LimeXMLProperties getLimeXMLProperties() { return LimeWireCore.instance().getLimeXMLProperties(); }
+    public static LifecycleManager getLifecycleManager() { return LimeWireCore.instance().getLifecycleManager(); }
 }

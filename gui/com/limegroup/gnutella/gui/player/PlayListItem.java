@@ -133,7 +133,7 @@ public class PlayListItem implements Comparable<PlayListItem>{
                         amd.getGenre().length() > 0)
                     properties.put(GENRE, amd.getGenre());
                 if( !properties.containsKey(LENGTH))
-                    properties.put(LENGTH, CommonUtils.seconds2time((long)amd.getLength()));
+                    properties.put(LENGTH, amd.getLength() != -1 ? CommonUtils.seconds2time((long)amd.getLength()) : "");
                 if( !properties.containsKey(SIZE))
                     properties.put(SIZE, Long.toString(file.length()));
                 if( !properties.containsKey(TITLE))
@@ -146,7 +146,7 @@ public class PlayListItem implements Comparable<PlayListItem>{
                         && amd.getYear().length() > 0)
                     properties.put(YEAR, amd.getYear());
                 if( !properties.containsKey(TIME) && properties.containsKey(LENGTH) )
-                    properties.put(TIME, CommonUtils.seconds2time((long)amd.getLength()));
+                    properties.put(TIME, amd.getLength() != -1 ? CommonUtils.seconds2time((long)amd.getLength()) : "");
                 else
                     properties.put(TIME, "-1");
                 

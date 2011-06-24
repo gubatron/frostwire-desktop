@@ -16,12 +16,12 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import com.google.inject.Inject;
 import com.limegroup.gnutella.gui.GUIUtils;
+import com.limegroup.gnutella.gui.GUIUtils.SizePolicy;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.LimeWireModule;
 import com.limegroup.gnutella.gui.LocalClientInfoFactory;
 import com.limegroup.gnutella.gui.MessageService;
-import com.limegroup.gnutella.gui.GUIUtils.SizePolicy;
 import com.limegroup.gnutella.gui.bugs.LocalClientInfo;
 import com.limegroup.gnutella.settings.BugSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
@@ -30,10 +30,9 @@ import com.limegroup.gnutella.util.FrostWireUtils;
  * This class defines the panel in the options window that allows
  * the user to handle bugs.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public final class BugsPaneItem extends AbstractPaneItem {
     
-    @Inject private static volatile LocalClientInfoFactory localClientInfoFactory;
+    private final LocalClientInfoFactory localClientInfoFactory;
     
     /**
      * The 'View Example Bug' string
@@ -76,6 +75,8 @@ public final class BugsPaneItem extends AbstractPaneItem {
                 I18n.tr("Bug Reports"),
                 I18n
                         .tr("You can choose how bug reports should be sent. To view an example bug report, click \'View Example\'. Choosing \'Always Send Immediately\' will immediately contact the bug server when FrostWire encounters an internal error. Choosing \'Always Ask for Review\' will tell FrostWire to ask for your approval before sending a bug to the bug server. Choosing \'Always Discard All Errors\' will cause FrostWire to ignore all bugs (this is not recommended)."));
+        localClientInfoFactory = LimeWireModule.instance().getLimeWireGUIModule().getLimeWireGUI().getLocalClientInfoFactory();
+        
 		        
         JButton example = new JButton(VIEW_EXAMPLE);
         example.addActionListener(new ActionListener() {

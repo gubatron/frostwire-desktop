@@ -1,16 +1,20 @@
 package com.limegroup.gnutella.gui;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import com.limegroup.gnutella.gui.bugs.LocalClientInfo;
 
 /** A factory for creating LocalClientInfo objects. */
-@Singleton
 public class LocalClientInfoFactoryImpl implements LocalClientInfoFactory {
     
+    private static LocalClientInfoFactoryImpl INSTANCE;
     
-    @Inject
-    public LocalClientInfoFactoryImpl() {
+    public static LocalClientInfoFactoryImpl instance() {
+        if (INSTANCE == null) {
+            INSTANCE = new LocalClientInfoFactoryImpl();
+        }
+        return INSTANCE;
+    }
+    
+    private LocalClientInfoFactoryImpl() {
     }
     
     /* (non-Javadoc)

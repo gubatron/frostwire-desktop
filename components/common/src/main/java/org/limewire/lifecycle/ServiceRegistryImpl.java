@@ -10,9 +10,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.limewire.concurrent.ThreadExecutor;
 
-import com.google.inject.Singleton;
-
-@Singleton
 class ServiceRegistryImpl implements ServiceRegistry {
     
     private static final Log LOG = LogFactory.getLog(ServiceRegistryImpl.class);

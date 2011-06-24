@@ -7,7 +7,6 @@ import javax.swing.SwingUtilities;
 import org.gudy.azureus2.core3.download.DownloadManager;
 
 import com.frostwire.gui.bittorrent.BTDownload;
-import com.google.inject.Singleton;
 import com.limegroup.gnutella.ActivityCallback;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.MediaType;
@@ -25,8 +24,20 @@ import com.limegroup.gnutella.version.UpdateInformation;
  * It implements the <tt>ActivityCallback</tt> callback interface, designed
  * to make it easy to swap UIs.
  */
-@Singleton
 public final class VisualConnectionCallback implements ActivityCallback {
+    
+    private static VisualConnectionCallback INSTANCE;
+    
+    public static VisualConnectionCallback instance() {
+        if (INSTANCE == null) {
+            INSTANCE = new VisualConnectionCallback();
+        }
+        return INSTANCE;
+    }
+    
+    private VisualConnectionCallback() {
+        
+    }
 	
 	
 	///////////////////////////////////////////////////////////////////////////

@@ -21,6 +21,7 @@ import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 import org.limewire.util.VersionUtils;
 
+import com.limegroup.gnutella.LimeWireCore;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.settings.LimeProps;
@@ -98,44 +99,28 @@ public final class LocalClientInfo extends LocalAbstractInfo {
 		_props = sw.toString();
 		
 		//Store extra debugging information.
-		if( GUIMediator.isConstructed() && GuiCoreMediator.getCore() != null && GuiCoreMediator.getLifecycleManager().isLoaded() ) {
-            _upTime = CommonUtils.seconds2time(
-                (int)(sessionInfo.getCurrentUptime()/1000));
-            //_connected = "" + GuiCoreMediator.getConnectionServices().isConnected();
-            _upToUp = ""+sessionInfo.getNumUltrapeerToUltrapeerConnections();
-            _upToLeaf = "" + sessionInfo.getNumUltrapeerToLeafConnections();
-            _leafToUp = "" + sessionInfo.getNumLeafToUltrapeerConnections();
-            _oldConnections = "" + sessionInfo.getNumOldConnections();
-            //_ultrapeer = "" + GuiCoreMediator.getConnectionServices().isSupernode();
-            //_leaf = "" + GuiCoreMediator.getConnectionServices().isShieldedLeaf();
-            //_activeUploads = "" + GuiCoreMediator.getUploadServices().getNumUploads();
-            //_queuedUploads = "" + GuiCoreMediator.getUploadServices().getNumQueuedUploads();
-            //_activeDownloads = "" + GuiCoreMediator.getDownloadServices().getNumActiveDownloads();
-            _httpDownloaders = "" +sessionInfo.getNumIndividualDownloaders();
-            _waitingDownloaders = "" + sessionInfo.getNumWaitingDownloads();
-            _acceptedIncoming = "" +sessionInfo.acceptedIncomingConnection();
-            //_sharedFiles = "" +GuiCoreMediator.getFileManager().getNumFiles();
-            _guessCapable = "" + sessionInfo.isGUESSCapable();
-            _solicitedCapable= ""+sessionInfo.canReceiveSolicited();
-            //_portStable = "" +GuiCoreMediator.getUdpService().portStable();
-            //_canDoFWT = "" + GuiCoreMediator.getUdpService().canDoFWT();
-            //_lastReportedPort = ""+GuiCoreMediator.getUdpService().lastReportedPort();
-            _externalPort = ""+sessionInfo.getPort();
-            //_receivedIpPong = ""+GuiCoreMediator.getUdpService().receivedIpPong();
-            _responseSize = "" + sessionInfo.getContentResponsesSize();
-            _creationCacheSize = "" + sessionInfo.getCreationCacheSize();
-            _vfByteSize = "" + sessionInfo.getDiskControllerByteCacheSize();
-            _vfVerifyingSize = "" + sessionInfo.getDiskControllerVerifyingCacheSize();
-            _bbSize = "" + sessionInfo.getByteBufferCacheSize();
-            _vfQueueSize = "" + sessionInfo.getDiskControllerQueueSize();
-            _waitingSockets = "" + sessionInfo.getNumberOfWaitingSockets();
-            _pendingTimeouts = "" + sessionInfo.getNumberOfPendingTimeouts();
-            //_sp2Workarounds = "" + GuiCoreMediator.getConnectionCheckerManager().getNumWorkarounds();
-            //_slotManager = ""+ GuiCoreMediator.getUploadSlotManager(); // null if not inited
-            //long [] selectStats = NIODispatcher.instance().getSelectStats();
-            //_numSelects = ""+ selectStats[0];
-            //_numImmediateSelects = "" + selectStats[1];
-            //_avgSelectTime = "" + selectStats[2];
+		if( GUIMediator.isConstructed() && LimeWireCore.instance() != null && GuiCoreMediator.getLifecycleManager().isLoaded() ) {
+//            _upTime = CommonUtils.seconds2time(
+//                (int)(sessionInfo.getCurrentUptime()/1000));
+//            _upToUp = ""+sessionInfo.getNumUltrapeerToUltrapeerConnections();
+//            _upToLeaf = "" + sessionInfo.getNumUltrapeerToLeafConnections();
+//            _leafToUp = "" + sessionInfo.getNumLeafToUltrapeerConnections();
+//            _oldConnections = "" + sessionInfo.getNumOldConnections();
+//            _httpDownloaders = "" +sessionInfo.getNumIndividualDownloaders();
+//            _waitingDownloaders = "" + sessionInfo.getNumWaitingDownloads();
+//            _acceptedIncoming = "" +sessionInfo.acceptedIncomingConnection();
+//            _guessCapable = "" + sessionInfo.isGUESSCapable();
+//            _solicitedCapable= ""+sessionInfo.canReceiveSolicited();
+//            _externalPort = ""+sessionInfo.getPort();
+//            _responseSize = "" + sessionInfo.getContentResponsesSize();
+//            _creationCacheSize = "" + sessionInfo.getCreationCacheSize();
+//            _vfByteSize = "" + sessionInfo.getDiskControllerByteCacheSize();
+//            _vfVerifyingSize = "" + sessionInfo.getDiskControllerVerifyingCacheSize();
+//            _bbSize = "" + sessionInfo.getByteBufferCacheSize();
+//            _vfQueueSize = "" + sessionInfo.getDiskControllerQueueSize();
+//            _waitingSockets = "" + sessionInfo.getNumberOfWaitingSockets();
+//            _pendingTimeouts = "" + sessionInfo.getNumberOfPendingTimeouts();
+
          }
             
         

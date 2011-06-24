@@ -1,24 +1,24 @@
 package com.limegroup.gnutella.gui;
 
-import com.google.inject.Inject;
-import com.google.inject.Injector;
-import com.google.inject.Singleton;
 import com.limegroup.gnutella.LimeWireCore;
 
-@Singleton
 public class LimeWireGUI {
     
-    private final Injector injector;
-    private final LimeWireCore limewireCore;
+    private static LimeWireGUI INSTANCE;
     
-    @Inject
-    LimeWireGUI(Injector injector, LimeWireCore limewireCore) {
-        this.injector = injector;
-        this.limewireCore = limewireCore;
+    static LimeWireGUI instance() {
+        if (INSTANCE == null) {
+            INSTANCE = new LimeWireGUI();
+        }
+        return INSTANCE;
     }
     
-    public Injector getInjector() {
-        return injector;
+    private final LimeWireCore limewireCore;
+    private final LocalClientInfoFactory localClientInfoFactory;
+    
+    private LimeWireGUI() {
+        limewireCore = LimeWireCore.instance();
+        localClientInfoFactory = LocalClientInfoFactoryImpl.instance();
     }
     
     public LimeWireCore getLimeWireCore() {
@@ -26,8 +26,6 @@ public class LimeWireGUI {
     }
     
     public LocalClientInfoFactory getLocalClientInfoFactory() {
-        return injector.getInstance(LocalClientInfoFactoryImpl.class);
+        return localClientInfoFactory;
     }
-    
-
 }

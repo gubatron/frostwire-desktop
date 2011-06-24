@@ -1,16 +1,6 @@
 package com.limegroup.gnutella;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.ScheduledExecutorService;
-
 import org.limewire.common.LimeWireCommonModule;
-import org.limewire.concurrent.AbstractLazySingletonProvider;
-import org.limewire.concurrent.SimpleTimer;
-import org.limewire.inject.AbstractModule;
-
-import com.google.inject.Singleton;
-import com.google.inject.name.Names;
 
 /**
  * The module that defines what implementations are used within
@@ -19,39 +9,48 @@ import com.google.inject.name.Names;
  * must explicitly identify which class is going to define the
  * ActivityCallback.
  */
-public class LimeWireCoreModule extends AbstractModule {
- 
-	private final Class<? extends ActivityCallback> activityCallbackClass;
+public class LimeWireCoreModule {
     
-    public LimeWireCoreModule() {
-        this(null);
-    }
+    private static LimeWireCoreModule INSTANCE;
     
-    public LimeWireCoreModule(Class<? extends ActivityCallback> activityCallbackClass) {
-        this.activityCallbackClass = activityCallbackClass;
-    }
-    
-    @Override
-    protected void configure() {
-        binder().install(new LimeWireCommonModule());
-        
-        bind(LimeWireCore.class);
-        
-        if(activityCallbackClass != null) {
-            bind(ActivityCallback.class).to(activityCallbackClass);
-        }        
-
-        bind(DownloadCallback.class).to(ActivityCallback.class);
-        bind(LifecycleManager.class).to(LifecycleManagerImpl.class);
-        bind(DownloadManager.class).to(DownloadManagerImpl.class).asEagerSingleton();
-        
-        bindAll(Names.named("backgroundExecutor"), ScheduledExecutorService.class, BackgroundTimerProvider.class, ExecutorService.class, Executor.class);
-    }
-    
-    @Singleton
-    private static class BackgroundTimerProvider extends AbstractLazySingletonProvider<ScheduledExecutorService> {
-        protected ScheduledExecutorService createObject() {
-            return new SimpleTimer(true);
+    public static LimeWireCoreModule instance(ActivityCallback activitCallback) {
+        if (INSTANCE == null) {
+            INSTANCE = new LimeWireCoreModule(activitCallback);
         }
+        return INSTANCE;
     }
+ 
+    private final ActivityCallback activityCallback;
+    private final DownloadCallback downloadCallback;
+    private final LimeWireCommonModule limeWireCommonModule;
+    private final LifecycleManager lifecycleManager;
+    private final DownloadManager downloadManager;
+    
+    private LimeWireCoreModule(ActivityCallback activitCallback) {
+        this.activityCallback = activitCallback;
+        downloadCallback = activitCallback;
+        limeWireCommonModule = LimeWireCommonModule.instance();
+        downloadManager = new DownloadManagerImpl(downloadCallback);
+        lifecycleManager = new LifecycleManagerImpl(activitCallback, downloadManager, LimeCoreGlue.instance(), limeWireCommonModule.getLimeWireCommonLifecycleModule().getServiceRegistry());
+    }
+    
+    public ActivityCallback getActivityCallback() {
+        return activityCallback;
+    }
+    
+	public DownloadCallback getDownloadCallback() {
+        return downloadCallback;
+    }
+	
+	public LimeWireCommonModule getLimeWireCommonModule() {
+	    return limeWireCommonModule;
+	}
+	
+	public LifecycleManager getLifecycleManager() {
+	    return lifecycleManager;
+	}
+	
+	public DownloadManager getDownloadManager() {
+	    return downloadManager;
+	}
 }
