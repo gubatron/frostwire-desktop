@@ -1,6 +1,5 @@
 package com.limegroup.gnutella.gui.init;
 
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -21,7 +20,6 @@ import com.limegroup.gnutella.gui.URLLabel;
  * this class displays information welcoming the user to the
  * setup wizard.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 final class WelcomeWindow extends SetupWindow {
 
     /**

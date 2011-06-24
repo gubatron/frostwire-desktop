@@ -28,7 +28,6 @@ import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.gui.ButtonRow;
-import com.limegroup.gnutella.gui.FirewallUtils;
 import com.limegroup.gnutella.gui.FramedDialog;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
