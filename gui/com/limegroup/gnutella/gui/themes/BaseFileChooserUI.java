@@ -25,25 +25,64 @@
 
 package com.limegroup.gnutella.gui.themes;
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.filechooser.*;
-import javax.swing.event.*;
-import javax.swing.plaf.*;
-import javax.swing.plaf.basic.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.ComponentOrientation;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Insets;
+import java.awt.LayoutManager;
+import java.awt.event.ActionEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.*;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
-import javax.accessibility.*;
+import java.util.Arrays;
+import java.util.Locale;
+import java.util.Vector;
+
+import javax.accessibility.AccessibleContext;
+import javax.swing.AbstractAction;
+import javax.swing.AbstractListModel;
+import javax.swing.Action;
+import javax.swing.ActionMap;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.Icon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JToggleButton;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileSystemView;
+import javax.swing.plaf.ActionMapUIResource;
+import javax.swing.plaf.ComponentUI;
+import javax.swing.plaf.basic.BasicDirectoryModel;
+import javax.swing.plaf.basic.BasicFileChooserUI;
 
 import sun.awt.shell.ShellFolder;
-import sun.swing.*;
+import sun.swing.FilePane;
 
 /**
  * Metal L&F implementation of a FileChooser.

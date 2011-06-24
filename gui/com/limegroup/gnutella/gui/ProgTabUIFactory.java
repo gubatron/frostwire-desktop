@@ -76,18 +76,18 @@ public final class ProgTabUIFactory {
         TabbedPaneUI oldUI = pane.getUI();
         TabbedPaneUI newUI = oldUI;
 
-        if( aquaUI != null && aquaUI.isInstance(oldUI) )
-            newUI = createNewUI("com.limegroup.gnutella.gui.AquaTab", newUI);
-        else if( windowsUI != null && windowsUI.isInstance(oldUI) )
-            newUI = createNewUI("com.limegroup.gnutella.gui.WinTab", newUI);
-        else if( metalUI != null && metalUI.isInstance(oldUI) )
-            newUI = new MetalTab();
-        // Note that this last check is an == check.
-        // This is because lots of UIs are going to extend from BasicUI
-        // and we only want to use the BasicTab if we are positive that
-        // the actual tab is using a BasicUI.
-        else if( oldUI.getClass() == basicUI ) 
-            newUI = new BasicTab();
+//        if( aquaUI != null && aquaUI.isInstance(oldUI) )
+//            newUI = createNewUI("com.limegroup.gnutella.gui.AquaTab", newUI);
+//        else if( windowsUI != null && windowsUI.isInstance(oldUI) )
+//            newUI = createNewUI("com.limegroup.gnutella.gui.WinTab", newUI);
+//        else if( metalUI != null && metalUI.isInstance(oldUI) )
+//            newUI = new MetalTab();
+//        // Note that this last check is an == check.
+//        // This is because lots of UIs are going to extend from BasicUI
+//        // and we only want to use the BasicTab if we are positive that
+//        // the actual tab is using a BasicUI.
+//        else if( oldUI.getClass() == basicUI ) 
+//            newUI = new BasicTab();
         
         pane.setUI(newUI);
     }
