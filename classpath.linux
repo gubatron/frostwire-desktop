@@ -5,13 +5,9 @@
 	<classpathentry kind="src" path="components/resources/src/main/resources"/>
 	<classpathentry kind="src" output="components/common/build/classes" path="components/common/src/main/java"/>
 	<classpathentry kind="src" output="components/io/build/classes" path="components/io/src/main/java"/>
-	<classpathentry kind="src" output="components/net/build/classes" path="components/net/src/main/java"/>
-	<classpathentry kind="src" output="components/nio/build/classes" path="components/nio/src/main/java"/>
-	<classpathentry kind="src" output="components/security/build/classes" path="components/security/src/main/java"/>
 	<classpathentry kind="src" output="components/setting/build/classes" path="components/setting/src/main/java"/>
-	<classpathentry kind="src" output="components/statistic/build/classes" path="components/statistic/src/main/java"/>
-	<classpathentry kind="src" path="components/azureus/src/main/java"/>
 	<classpathentry kind="src" path="components/osx_stub/src/main/java"/>
+	<classpathentry kind="src" path="components/azureus/src/main/java"/>
 	<classpathentry excluding="examples/*|examples/|examples/" kind="src" path="core">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="frostwire.desktop/lib/native/linux"/>
@@ -23,37 +19,16 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/jars/aopalliance.jar"/>
-	<classpathentry kind="lib" path="lib/jars/clink.jar"/>
-	<classpathentry kind="lib" path="lib/jars/commons-codec-1.3.jar"/>
 	<classpathentry kind="lib" path="lib/jars/commons-logging.jar"/>
-	<classpathentry kind="lib" path="lib/jars/daap.jar"/>
-	<classpathentry kind="lib" path="lib/jars/gettext-commons.jar"/>
-	<classpathentry kind="lib" path="lib/jars/guice-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/jars/icu4j.jar"/>
-	<classpathentry kind="lib" path="lib/jars/jaudiotagger.jar"/>
-	<classpathentry kind="lib" path="lib/jars/jcip-annotations.jar"/>
-	<classpathentry kind="lib" path="lib/jars/jcraft.jar"/>
-	<classpathentry kind="lib" path="lib/jars/jflac.jar"/>
-	<classpathentry kind="lib" path="lib/jars/jl.jar"/>
-	<classpathentry kind="lib" path="lib/jars/jmdns.jar"/>
-	<classpathentry kind="lib" path="lib/jars/mp3spi.jar"/>
-	<classpathentry kind="lib" path="lib/jars/onion-common.jar"/>
-	<classpathentry kind="lib" path="lib/jars/onion-fec.jar"/>
-	<classpathentry kind="lib" path="lib/jars/tritonus.jar"/>
-	<classpathentry kind="lib" path="lib/jars/vorbisspi.jar"/>
+	<classpathentry kind="lib" path="lib/jars/gettext-commons.jar" sourcepath="lib/jars-src"/>
 	<classpathentry kind="lib" path="lib/jars/splash.jar"/>
 	<classpathentry kind="lib" path="lib/jars/gson-1.4.jar"/>
 	<classpathentry kind="lib" path="lib/jars/jdic.jar"/>
-	<classpathentry kind="lib" path="lib/jars/osx/MRJAdapter.jar"/>
 	<classpathentry kind="lib" path="lib/jars/messages.jar"/>
-	<classpathentry kind="lib" path="lib/jars/other/themes.jar"/>
-	<classpathentry kind="lib" path="lib/jars/substance-extras.jar"/>
 	<classpathentry kind="lib" path="lib/jars/substance.jar" sourcepath="lib/jars-src/substance-58d3873"/>
 	<classpathentry kind="lib" path="lib/jars/trident.jar"/>
-	<classpathentry kind="lib" path="lib/jars/jgoodies-looks-2.4.0.jar"/>
-	<classpathentry kind="lib" path="lib/jars/jgoodies-common-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/jars/httpclient-4.0.jar"/>
 	<classpathentry kind="lib" path="lib/jars/httpcore-4.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/jars/MRJAdapter.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
