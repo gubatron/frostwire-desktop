@@ -81,9 +81,6 @@ import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicDirectoryModel;
 import javax.swing.plaf.basic.BasicFileChooserUI;
 
-import sun.awt.shell.ShellFolder;
-import sun.swing.FilePane;
-
 /**
  * Metal L&F implementation of a FileChooser.
  *

@@ -12,8 +12,6 @@ import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
 import javax.swing.UIManager;
 
-import sun.swing.FilePane;
-
 public class FilePaneEx extends FilePane {
 
     /**
