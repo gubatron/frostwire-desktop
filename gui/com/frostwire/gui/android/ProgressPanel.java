@@ -13,7 +13,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -40,7 +39,6 @@ public class ProgressPanel extends JPanel {
 	private JButton _buttonClearFinished;
 	private JList _listTasks;
 	private JScrollPane _scrollPaneTasks;
-	private JLabel _labelTitle;
 	private GraphicPanel _panelTitle;
 
 	public ProgressPanel() {
@@ -74,17 +72,20 @@ public class ProgressPanel extends JPanel {
 		_panelTitle = new GraphicPanel();
 		_panelTitle.setLayout(new BorderLayout());
 		_panelTitle.setGradient(new GradientPaint(0, 0, new Color(0x4f9fd2), 0, 25,  new Color(0x095d98)));
-		add(_panelTitle, BorderLayout.PAGE_START);
 		
+        _panelTitle = new GraphicPanel();
+        _panelTitle.setLayout(new BorderLayout());
+        _panelTitle.setGradient(new GradientPaint(0, 0, new Color(0x4f9fd2), 0, 25,  new Color(0x095d98)));
+        _panelTitle.setText(I18n.tr("File Transfers"));
+        _panelTitle.setPreferredSize(new Dimension(getPreferredSize().width,30));
+        
 		String fontFamily = GuiFrostWireUtils.getFontFamily("helvetica","arial", "Dialog","FreeSans");
         Font titleFont = new Font(fontFamily, Font.PLAIN, 18);
+        _panelTitle.setFont(titleFont);
 
-        _labelTitle = new JLabel(" " + I18n.tr("File Transfers"));
-        _labelTitle.setForeground(Color.white);
-        _labelTitle.setFont(titleFont);
-		
-		_panelTitle.add(_labelTitle, BorderLayout.CENTER);
-		
+		add(_panelTitle, BorderLayout.PAGE_START);
+
+        
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		

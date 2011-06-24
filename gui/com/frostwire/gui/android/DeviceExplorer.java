@@ -3,7 +3,9 @@ package com.frostwire.gui.android;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GradientPaint;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -24,10 +26,12 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
+import com.frostwire.gui.GuiFrostWireUtils;
 import com.frostwire.gui.android.Task.OnChangedListener;
 import com.frostwire.gui.components.GraphicPanel;
 import com.frostwire.gui.components.HintTextField;
 import com.frostwire.gui.components.SlideshowPanel;
+import com.limegroup.gnutella.gui.I18n;
 
 public class DeviceExplorer extends JPanel {
 
@@ -61,6 +65,8 @@ public class DeviceExplorer extends JPanel {
 	private JLabel _labelLoading;
 	
 	private Thread _searchThread;
+
+	private GraphicPanel _panelDeviceName;
 
 	public DeviceExplorer() {
 		_model = new FileDescriptorListModel();
@@ -101,6 +107,8 @@ public class DeviceExplorer extends JPanel {
 	    refreshBrowseButton(_buttonVideos, finger.numSharedVideoFiles);
 	    refreshBrowseButton(_buttonRingtones, finger.numSharedRingtoneFiles);
 	    refreshBrowseButton(_buttonAudio, finger.numSharedAudioFiles);
+	    
+	    _panelDeviceName.setText(_device.getName());
 	}
 	
 	public FileDescriptorListModel getModel() {
@@ -162,12 +170,24 @@ public class DeviceExplorer extends JPanel {
 	private JPanel setupPanelDevice() {
 		JPanel panel = new JPanel(new BorderLayout());
 		
-		GraphicPanel header = new GraphicPanel();
-		header.setImage(new UITool().loadImage("device_explorer_background.jpg"));
-		header.setLayout(new GridBagLayout());
-		
+		//DEVICE NAME ROW
 		GridBagConstraints c;
 		
+		_panelDeviceName = new GraphicPanel();
+		_panelDeviceName.setLayout(new BorderLayout());
+		_panelDeviceName.setGradient(new GradientPaint(0, 0, new Color(0x4f9fd2), 0, 25,  new Color(0x095d98)));
+		_panelDeviceName.setText((_device==null) ? I18n.tr("No device selected.") : _device.getName());
+		_panelDeviceName.setPreferredSize(new Dimension(getPreferredSize().width,30));
+		String fontFamily = GuiFrostWireUtils.getFontFamily("helvetica","arial", "Dialog","FreeSans");
+        Font titleFont = new Font(fontFamily, Font.PLAIN, 18);
+		_panelDeviceName.setFont(titleFont);
+		
+        //BUTTONS
+
+		GraphicPanel header = new GraphicPanel();
+		header.setGradient(new GradientPaint(0, 0, new Color(0x39acf7), 0, 100,  new Color(0x133851)));
+		header.setLayout(new GridBagLayout());
+
 		_buttonApplications = setupButtonType(DeviceConstants.FILE_TYPE_APPLICATIONS);
 		c = new GridBagConstraints();
         c.gridx = 0;
@@ -219,8 +239,6 @@ public class DeviceExplorer extends JPanel {
         _buttonGroup.add(_buttonAudio);
         _buttonGroup.add(_invisibleRadioButton = new JRadioButton());
         
-        
-        
         _textFilter = new HintTextField("Type here to search");
         _textFilter.addKeyListener(new KeyAdapter() {
             @Override
@@ -237,7 +255,13 @@ public class DeviceExplorer extends JPanel {
         c.gridwidth = 6;
         header.add(_textFilter, c);
         
-		panel.add(header, BorderLayout.PAGE_START);
+		//panel.add(header, BorderLayout.PAGE_START);
+        
+        JPanel headerPanel = new JPanel(new BorderLayout());
+        headerPanel.add(_panelDeviceName, BorderLayout.PAGE_START);
+        headerPanel.add(header, BorderLayout.CENTER);
+        
+        panel.add(headerPanel, BorderLayout.PAGE_START);
 		
 		_list = new JList(_model);
 		_list.setCellRenderer(new FileDescriptorRenderer());
