@@ -14,8 +14,6 @@ import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 import com.limegroup.gnutella.licenses.LicenseFactory;
 import com.limegroup.gnutella.licenses.LicenseFactoryImpl;
-import com.limegroup.gnutella.xml.LimeXMLDocumentFactory;
-import com.limegroup.gnutella.xml.LimeXMLDocumentFactoryImpl;
 
 /**
  * The module that defines what implementations are used within
@@ -52,7 +50,6 @@ public class LimeWireCoreModule extends AbstractModule {
         bind(LifecycleManager.class).to(LifecycleManagerImpl.class);
         bind(DownloadManager.class).to(DownloadManagerImpl.class).asEagerSingleton();
         bind(LicenseFactory.class).to(LicenseFactoryImpl.class);
-        bind(LimeXMLDocumentFactory.class).to(LimeXMLDocumentFactoryImpl.class);
         bind(SaveLocationManager.class).to(DownloadManager.class);
         bind(LocalSocketAddressProvider.class).to(LocalSocketAddressProviderImpl.class);
         

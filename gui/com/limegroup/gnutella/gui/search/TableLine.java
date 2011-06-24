@@ -4,12 +4,8 @@ import java.awt.Color;
 import java.io.File;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,7 +16,6 @@ import org.limewire.collection.NameValue;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.RemoteFileDesc;
-import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.search.Selector.PropertyType;
 import com.limegroup.gnutella.gui.tables.AbstractDataLine;
@@ -29,12 +24,8 @@ import com.limegroup.gnutella.gui.tables.IconAndNameHolderImpl;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.Linkable;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
-import com.limegroup.gnutella.gui.xml.XMLValue;
 import com.limegroup.gnutella.licenses.License;
 import com.limegroup.gnutella.settings.SearchSettings;
-import com.limegroup.gnutella.xml.LimeXMLDocument;
-import com.limegroup.gnutella.xml.LimeXMLSchema;
-import com.limegroup.gnutella.xml.SchemaFieldInfo;
 
 /** 
  * A single line of a search result.
@@ -71,11 +62,6 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
     private int _quality;
 
     /**
-     * The LimeXMLDocument for this line.
-     */
-    private LimeXMLDocument _doc;
-
-    /**
      * The date this was added to the network.
      */
     private long _addedOn;
@@ -100,11 +86,7 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
 
     private void initilizeStart(SearchResult sr) {
         RESULT = sr;
-        _doc = sr.getXMLDocument();
-        if (_doc != null)
-            _mediaType = NamedMediaType.getFromDescription(_doc.getSchemaDescription());
-        else
-            _mediaType = NamedMediaType.getFromExtension(getExtension());
+        _mediaType = NamedMediaType.getFromExtension(getExtension());
         _speed = new ResultSpeed(sr.getSpeed(), sr.isMeasuredSpeed());
         _quality = sr.getQuality();
     }
@@ -117,14 +99,14 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
         if (RESULT instanceof Linkable)
             return ((Linkable) RESULT).isLink();
         else
-            return _doc != null && !"".equals(_doc.getAction());
+            return false;
     }
 
     public String getLinkUrl() {
         if (RESULT instanceof Linkable)
             return ((Linkable) RESULT).getLinkUrl();
         else
-            return _doc.getAction();
+            return null;
     }
 
     /**
@@ -150,63 +132,6 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
 
         if (sr.getCreationTime() > 0)
             _addedOn = Math.min(_addedOn, sr.getCreationTime());
-
-        updateXMLDocument(sr.getXMLDocument(), mm);
-    }
-
-    /**
-     * Updates the XMLDocument and the MetadataModel.
-     */
-    private void updateXMLDocument(LimeXMLDocument newDoc, MetadataModel mm) {
-        // If nothing new, nothing to do.
-        if (newDoc == null)
-            return;
-
-        // If no document exists, just set it to be the new doc
-        if (_doc == null) {
-            _doc = newDoc;
-            updateLicense();
-            if (mm != null) {
-                _mediaType = NamedMediaType.getFromDescription(_doc.getSchemaDescription());
-                mm.addNewDocument(_doc, this);
-            }
-            return;
-        }
-
-        // Otherwise, if a document does exist in the group, see if the line
-        // has extra fields that can be added to the group.
-
-        // Must have the same schema...
-        if (!_doc.getSchemaURI().equals(newDoc.getSchemaURI()))
-            return;
-
-        Set<String> oldKeys = _doc.getNameSet();
-        Set<String> newKeys = newDoc.getNameSet();
-        // if the we already have everything in new, do nothing
-        if (oldKeys.containsAll(newKeys))
-            return;
-
-        // Now we want to add the values of newKeys that weren't
-        // already in oldKeys.
-        newKeys = new HashSet<String>(newKeys);
-        newKeys.removeAll(oldKeys);
-        // newKeys now only has brand new elements.
-        Map<String, String> newMap = new HashMap<String, String>(oldKeys.size() + newKeys.size());
-        for (Map.Entry<String, String> entry : _doc.getNameValueSet())
-            newMap.put(entry.getKey(), entry.getValue());
-
-        LimeXMLSchema schema = _doc.getSchema();
-        for (SchemaFieldInfo sfi : schema.getCanonicalizedFields()) {
-            String key = sfi.getCanonicalizedFieldName();
-            if (newKeys.contains(key)) {
-                String value = newDoc.getValue(key);
-                if (mm != null)
-                    mm.addField(sfi, key, value, this);
-            }
-        }
-
-        _doc = GuiCoreMediator.getLimeXMLDocumentFactory().createLimeXMLDocument(newMap.entrySet(), _doc.getSchemaURI());
-        updateLicense();
     }
 
     /**
@@ -294,14 +219,7 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
     public NamedMediaType getNamedMediaType() {
         return _mediaType;
     }
-
-    /**
-     * Gets the LimeXMLDocument for this line.
-     */
-    LimeXMLDocument getXMLDocument() {
-        return _doc;
-    }
-
+    
     /**
      * Gets the other results for this line.
      */
@@ -324,7 +242,7 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
      * Determines if this line is launchable.
      */
     boolean isLaunchable() {
-        return _doc != null && _doc.getAction() != null && !"".equals(_doc.getAction());
+        return false;
     }
 
     /**
@@ -456,10 +374,7 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
         case SearchTableColumns.LICENSE_IDX:
             return new NameValue.ComparableByName<Integer>(_licenseName, new Integer(_licenseState));
         default:
-            if (_doc == null || index == -1) // no column, no value.
-                return null;
-            XMLSearchColumn ltc = (XMLSearchColumn) getColumn(index);
-            return new XMLValue(_doc.getValue(ltc.getId()), ltc.getSchemaFieldInfo());
+            return null;
         }
     }
 

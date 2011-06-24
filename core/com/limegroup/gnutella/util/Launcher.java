@@ -169,18 +169,6 @@ public final class Launcher {
 		String path = file.getCanonicalPath();
 		String extCheckString = path.toLowerCase();
 
-        // expand pmf files before display
-        if (extCheckString.endsWith(".pmf")) {
-            file = PackagedMediaFileUtils.preparePMFFile(file.toString());
-            // don't launch an invalid file
-            if (file == null) {
-            	throw new IOException("Invalid file");
-            }
-
-            path = file.getCanonicalPath();
-            extCheckString = path.toLowerCase();
-        }
-
 		if(!extCheckString.endsWith(".exe") &&
 		   !extCheckString.endsWith(".vbs") &&
 		   !extCheckString.endsWith(".lnk") &&

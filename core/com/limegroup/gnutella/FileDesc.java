@@ -4,15 +4,12 @@ import static com.limegroup.gnutella.Constants.MAX_FILE_SIZE;
 
 import java.io.File;
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.limewire.util.I18NConvert;
 import org.limewire.util.RPNParser.StringLookup;
 
 import com.limegroup.gnutella.licenses.License;
-import com.limegroup.gnutella.xml.LimeXMLDocument;
 
 
 /**
@@ -69,11 +66,6 @@ public class FileDesc implements StringLookup {
 	 */
 	private License _license;
 	
-	/**
-	 * The LimeXMLDocs associated with this FileDesc.
-	 */
-	private final List<LimeXMLDocument> _limeXMLDocs = new CopyOnWriteArrayList<LimeXMLDocument>();
-
 	/**
 	 * The number of hits this file has recieved.
 	 */
@@ -258,82 +250,6 @@ public class FileDesc implements StringLookup {
 		return FILE.getAbsolutePath();
 	}
 	
-	/**
-	 * Adds a LimeXMLDocument to this FileDesc.
-	 */
-	public void addLimeXMLDocument(LimeXMLDocument doc) {
-        
-        _limeXMLDocs.add(doc);
-        
-	    doc.initIdentifier(FILE);
-	    if(doc.isLicenseAvailable())
-	        _license = doc.getLicense();
-    }
-    
-    /**
-     * Replaces one LimeXMLDocument with another.
-     */
-    public boolean replaceLimeXMLDocument(LimeXMLDocument oldDoc, 
-                                          LimeXMLDocument newDoc) {
-        synchronized(_limeXMLDocs) {
-            int index = _limeXMLDocs.indexOf(oldDoc);
-            if( index == -1 )
-                return false;
-            
-            _limeXMLDocs.set(index, newDoc);
-        }
-        
-        newDoc.initIdentifier(FILE);
-        if(newDoc.isLicenseAvailable())
-            _license = newDoc.getLicense();
-        else if(_license != null && oldDoc.isLicenseAvailable())
-            _license = null;        
-        return true;
-    }
-    
-    /**
-     * Removes a LimeXMLDocument from the FileDesc.
-     */
-    public boolean removeLimeXMLDocument(LimeXMLDocument toRemove) {
-        
-        if (!_limeXMLDocs.remove(toRemove))
-            return false;
-        
-        if(_license != null && toRemove.isLicenseAvailable())
-            _license = null;
-        
-        return true;
-    }   
-    
-    /**
-     * Returns the LimeXMLDocuments for this FileDesc.
-     */
-    public List<LimeXMLDocument> getLimeXMLDocuments() {
-        return _limeXMLDocs;
-    }
-    
-    /**
-     * Returns the first LimeXMLDocument or null if the 
-     * document List is empty.
-     */
-    public LimeXMLDocument getXMLDocument() {
-        List<LimeXMLDocument> docs = getLimeXMLDocuments();
-        return docs.isEmpty() ? null : docs.get(0);
-    }
-    
-    /**
-     * Returns a LimeXMLDocument whose schema URI is equal to
-     * the passed schema URI or null if no such LimeXMLDocument
-     * exists.
-     */
-    public LimeXMLDocument getXMLDocument(String schemaURI) {
-        for(LimeXMLDocument doc : getLimeXMLDocuments()) {
-            if (doc.getSchemaURI().equalsIgnoreCase(schemaURI))
-                return doc;
-        }
-        return null;
-    }
-    
     /**
      * Determines if a license exists on this FileDesc.
      */
@@ -422,8 +338,7 @@ public class FileDesc implements StringLookup {
 				"size:     "+_size+"\r\n"+
 				"modTime:  "+_modTime+"\r\n"+
 				"File:     "+FILE+"\r\n"+
-				"urns:     "+URNS+"\r\n"+
-				"docs:     "+ _limeXMLDocs+"\r\n");
+				"urns:     "+URNS+"\r\n");
 	}
     
     /**

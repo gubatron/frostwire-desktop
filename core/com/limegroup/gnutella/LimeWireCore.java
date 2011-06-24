@@ -15,8 +15,6 @@ import com.limegroup.gnutella.http.FeaturesWriter;
 import com.limegroup.gnutella.licenses.LicenseCache;
 import com.limegroup.gnutella.licenses.LicenseFactory;
 import com.limegroup.gnutella.licenses.LicenseVerifier;
-import com.limegroup.gnutella.xml.LimeXMLDocumentFactory;
-import com.limegroup.gnutella.xml.LimeXMLDocumentHelper;
 import com.limegroup.gnutella.xml.LimeXMLProperties;
 import com.limegroup.gnutella.xml.LimeXMLSchemaRepository;
 
@@ -108,14 +106,6 @@ public class LimeWireCore {
     
     public LicenseFactory getLicenseFactory() {
         return injector.getInstance(LicenseFactory.class);
-    }
-
-    public LimeXMLDocumentFactory getLimeXMLDocumentFactory() {
-        return injector.getInstance(LimeXMLDocumentFactory.class);
-    }
-
-    public LimeXMLDocumentHelper getLimeXMLDocumentHelper() {
-        return injector.getInstance(LimeXMLDocumentHelper.class);
     }
 
     public LimeCoreGlue getLimeCoreGlue() {

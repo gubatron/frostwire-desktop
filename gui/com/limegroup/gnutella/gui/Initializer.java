@@ -191,12 +191,6 @@ public final class Initializer {
         if (System.currentTimeMillis() > EXPIRATION_DATE) 
             failExpired();
         
-        // If this is a request to launch a pmf then just do it and exit.
-        if ( args.length >= 2 && "-pmf".equals(args[0]) ) {
-            PackagedMediaFileLauncher.launchFile(args[1], false); 
-            System.exit(0);
-        }
-        
         // Yield so any other events can be run to determine
         // startup status, but only if we're going to possibly
         // be starting...

@@ -18,9 +18,7 @@ import com.limegroup.gnutella.gui.tables.AbstractDataLine;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
-import com.limegroup.gnutella.gui.xml.XMLUtils;
 import com.limegroup.gnutella.licenses.License;
-import com.limegroup.gnutella.xml.LimeXMLDocument;
 
 /**
  * This class acts as a single line containing all
@@ -268,17 +266,6 @@ public final class LibraryTableDataLine extends AbstractDataLine<File> implement
 	License getLicense() {
 	    return _fileDesc != null ? _fileDesc.getLicense() : null;
     }
-    
-    /** Gets the first XML doc associated with the FileDesc, if one exists. */
-    LimeXMLDocument getXMLDocument() {
-        if(_fileDesc != null) {
-            List<?> l = _fileDesc.getLimeXMLDocuments();
-            if(!l.isEmpty())
-                return (LimeXMLDocument)l.get(0);
-        }
-        
-        return null;
-    }
 
 	public String[] getToolTipArray(int col) {
         // if XML isn't finished loading, no schemas exist,
@@ -291,8 +278,8 @@ public final class LibraryTableDataLine extends AbstractDataLine<File> implement
 
         // Dynamically add the information.
         List<String> allData = new LinkedList<String>();        
-        for(LimeXMLDocument doc : _fileDesc.getLimeXMLDocuments())
-            allData.addAll(XMLUtils.getDisplayList(doc));
+//        for(LimeXMLDocument doc : _fileDesc.getLimeXMLDocuments())
+//            allData.addAll(XMLUtils.getDisplayList(doc));
 
         
         if ( !allData.isEmpty() ) {

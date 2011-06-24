@@ -7,7 +7,6 @@ public class XMLValue implements Comparable<XMLValue> {
     
     private final String value;
     private final SchemaFieldInfo sfi;
-    private String display;
     
     public XMLValue(String value, SchemaFieldInfo sfi) {
         this.value = value;
@@ -51,15 +50,4 @@ public class XMLValue implements Comparable<XMLValue> {
         else
             return a.compareTo(b);
     }
-    
-    public String toString() {
-        if(display == null) {
-            if(value == null || sfi == null)
-                return null;
-            else
-                display = XMLUtils.getDisplay(sfi, value);
-        }
-        return display;
-    }
-
 }

@@ -33,21 +33,17 @@ import com.frostwire.gui.bittorrent.CreateTorrentDialog;
 import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.FileDetails;
-import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.CheckBoxList;
 import com.limegroup.gnutella.gui.CheckBoxListPanel;
 import com.limegroup.gnutella.gui.FileDescProvider;
 import com.limegroup.gnutella.gui.FileDetailsProvider;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
-import com.limegroup.gnutella.gui.LicenseWindow;
 import com.limegroup.gnutella.gui.MessageService;
 import com.limegroup.gnutella.gui.MultiLineLabel;
-import com.limegroup.gnutella.gui.actions.ActionUtils;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.actions.SearchAction;
 import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
@@ -62,7 +58,6 @@ import com.limegroup.gnutella.gui.util.GUILauncher.LaunchableProvider;
 import com.limegroup.gnutella.licenses.License;
 import com.limegroup.gnutella.licenses.VerificationListener;
 import com.limegroup.gnutella.util.QueryUtils;
-import com.limegroup.gnutella.xml.LimeXMLDocument;
 
 /**
  * This class wraps the JTable that displays files in the library,
@@ -189,12 +184,12 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
             if (keywords.length() > 2)
     			menu.add(new SkinMenuItem(new SearchAction(keywords)));
     		
-    		LimeXMLDocument doc = dl.getXMLDocument();
-    		if(doc != null) {
-                Action[] actions = ActionUtils.createSearchActions(doc);
-        		for (int i = 0; i < actions.length; i++)
-        			menu.add(new SkinMenuItem(actions[i]));
-            }
+//    		LimeXMLDocument doc = dl.getXMLDocument();
+//    		if(doc != null) {
+//                Action[] actions = ActionUtils.createSearchActions(doc);
+//        		for (int i = 0; i < actions.length; i++)
+//        			menu.add(new SkinMenuItem(actions[i]));
+//            }
         }
         
         if(menu.getItemCount() == 0)
@@ -387,16 +382,16 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
      * Shows the license window.
      */
     void showLicenseWindow() {
-        LibraryTableDataLine ldl = DATA_MODEL.get(TABLE.getSelectedRow());
-        if(ldl == null)
-            return;
-        FileDesc fd = ldl.getFileDesc();
-        License license = fd.getLicense();
-        URN urn = fd.getSHA1Urn();
-        LimeXMLDocument doc = ldl.getXMLDocument();
-        LicenseWindow window = LicenseWindow.create(license, urn, doc, this);
-        GUIUtils.centerOnScreen(window);
-        window.setVisible(true);
+//        LibraryTableDataLine ldl = DATA_MODEL.get(TABLE.getSelectedRow());
+//        if(ldl == null)
+//            return;
+//        FileDesc fd = ldl.getFileDesc();
+//        License license = fd.getLicense();
+//        URN urn = fd.getSHA1Urn();
+//        LimeXMLDocument doc = ldl.getXMLDocument();
+//        LicenseWindow window = LicenseWindow.create(license, urn, doc, this);
+//        GUIUtils.centerOnScreen(window);
+//        window.setVisible(true);
     }
     
 

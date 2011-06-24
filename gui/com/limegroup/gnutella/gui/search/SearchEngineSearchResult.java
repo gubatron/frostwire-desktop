@@ -12,7 +12,6 @@ import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 import com.limegroup.gnutella.settings.BittorrentSettings;
-import com.limegroup.gnutella.xml.LimeXMLDocument;
 
 public class SearchEngineSearchResult extends AbstractSearchResult {
 
@@ -78,12 +77,7 @@ public class SearchEngineSearchResult extends AbstractSearchResult {
     public String getVendor() {
         return _item.getVendor();
     }
-
-    @Override
-    public LimeXMLDocument getXMLDocument() {
-        return null;
-    }
-
+    
     @Override
     public void initialize(TableLine line) {
         line.setAddedOn(getCreationTime());

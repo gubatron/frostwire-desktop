@@ -9,7 +9,6 @@ import org.limewire.collection.ApproximateMatcher;
 
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.SpeedConstants;
-import com.limegroup.gnutella.xml.LimeXMLDocument;
 
 /**
  * A single SearchResult. These are returned in the {@link SearchInputPanel} and
@@ -26,11 +25,6 @@ public interface SearchResult {
      * Gets the size of this SearchResult.
      */
     long getSize();
-    
-    /**
-     * @return the XML document representing the search result
-     */
-    LimeXMLDocument getXMLDocument();
     
     /**
      * @return milliseconds since January 01, 1970 the artifact of t

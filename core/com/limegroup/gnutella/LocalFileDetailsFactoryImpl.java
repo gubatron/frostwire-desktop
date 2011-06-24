@@ -7,7 +7,6 @@ import java.util.Set;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.limegroup.gnutella.xml.LimeXMLDocument;
 
 @Singleton
 public class LocalFileDetailsFactoryImpl implements LocalFileDetailsFactory {
@@ -51,11 +50,7 @@ public class LocalFileDetailsFactoryImpl implements LocalFileDetailsFactory {
 
             public Set<URN> getUrns() {
                 return fd.getUrns();
-            }
-
-            public LimeXMLDocument getXMLDocument() {
-                return fd.getXMLDocument();
-            }            
+            }       
         };
     }
 

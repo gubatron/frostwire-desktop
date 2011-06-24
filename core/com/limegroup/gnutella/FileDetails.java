@@ -3,8 +3,6 @@ package com.limegroup.gnutella;
 import java.net.InetSocketAddress;
 import java.util.Set;
 
-import com.limegroup.gnutella.xml.LimeXMLDocument;
-
 /**
  * Common interface implemented by {@link FileDesc} and {@link RemoteFileDesc}.
  */
@@ -30,12 +28,6 @@ public interface FileDetails {
 	 * @return
 	 */
 	Set<URN> getUrns();
-	/**
-	 * Returns the xml document or <code>null</code> if there is none for this
-	 * file.
-	 * @return
-	 */
-	LimeXMLDocument getXMLDocument();
 	/**
 	 * Returns address of the host that holds the file.
 	 * @return

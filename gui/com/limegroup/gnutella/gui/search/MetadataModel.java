@@ -19,8 +19,6 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.search.Selector.PropertyType;
 import com.limegroup.gnutella.gui.xml.XMLValue;
 import com.limegroup.gnutella.util.DataUtils;
-import com.limegroup.gnutella.xml.LimeXMLDocument;
-import com.limegroup.gnutella.xml.LimeXMLSchema;
 import com.limegroup.gnutella.xml.SchemaFieldInfo;
 
 /**
@@ -107,11 +105,7 @@ final class MetadataModel {
             return;
 
         Map fieldMap = getMap(MODEL, mt);
-        LimeXMLDocument doc = line.getXMLDocument();
-        if(doc != null)
-            addDocument(fieldMap, mt.getSchema(), doc, line);
-        else // keep track for the schema.
-            getCollection(fieldMap, UNKNOWN).add(line);
+        getCollection(fieldMap, UNKNOWN).add(line);
     }
     
     /**
@@ -124,23 +118,7 @@ final class MetadataModel {
         if(mt == null)
             return;
         Map fieldMap = getMap(MODEL, mt);
-        LimeXMLDocument doc = line.getXMLDocument();
-        if(doc != null)
-            removeDocument(fieldMap, mt.getSchema(), doc, line);
-        else
-            getCollection(fieldMap, UNKNOWN).remove(line);
-    }
-        
-    
-    /**
-     * Adds LimeXMLDocument information to the map.
-     *
-     * It is assumed that the schema has already been added.
-     */
-    void addNewDocument(LimeXMLDocument doc, TableLine line) {
-        NamedMediaType mt = line.getNamedMediaType();
-        Map fieldMap = getMap(MODEL, mt);
-        addDocument(fieldMap, mt.getSchema(), doc, line);
+        getCollection(fieldMap, UNKNOWN).remove(line);
     }
     
     /**
@@ -282,50 +260,6 @@ final class MetadataModel {
         // Ensure that type & speed use natural ordering of the elements.
         PROPERTIES.put(PropertyType.TYPE.getKey(), new Model());
         PROPERTIES.put(PropertyType.SPEED.getKey(), new Model());
-    }    
-    
-    /**
-     * Adds the contents of the LimeXMLDocument to the internal maps.
-     */
-    private void addDocument(Map fieldMap, LimeXMLSchema schema, LimeXMLDocument doc, TableLine line) {
-        boolean added = false;
-        for(Iterator i = schema.getCanonicalizedFields().iterator(); i.hasNext(); ) {
-            SchemaFieldInfo sfi = (SchemaFieldInfo)i.next();
-            String field = sfi.getCanonicalizedFieldName();
-            String value = doc.getValue(field);
-            if(value != null) {
-                added = true;
-                // Retrieve the map of values -> list
-                Map valueMap = getMapNatural(fieldMap, field);
-                // Add this value to the ones for this value.
-                getCollection(valueMap, new XMLValue(value, sfi)).add(line);
-            }
-        }
-        // if it had no fields, make sure its still counted in the schema.
-        if(!added)
-            getCollection(fieldMap, UNKNOWN).add(line);
-    }
-    
-    /**
-     * Removes a references to this line.
-     */
-    private void removeDocument(Map fieldMap, LimeXMLSchema schema, LimeXMLDocument doc, TableLine line) {
-        boolean removed = false;
-        for(Iterator i = schema.getCanonicalizedFields().iterator(); i.hasNext(); ) {
-            SchemaFieldInfo sfi = (SchemaFieldInfo)i.next();
-            String field = sfi.getCanonicalizedFieldName();
-            String value = doc.getValue(field);
-            if(value != null) {
-                removed = true;
-                // Retrieve the map of values -> list
-                Map valueMap = getMapNatural(fieldMap, field);
-                // Add this value to the ones for this value.
-                getCollection(valueMap, new XMLValue(value, sfi)).remove(line);
-            }
-        }
-        // if it had no fields, make sure its still counted in the schema.
-        if(!removed)
-            getCollection(fieldMap, UNKNOWN).remove(line);
     }    
     
     /**

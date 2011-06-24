@@ -52,7 +52,6 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.ProgTabUIFactory;
-import com.limegroup.gnutella.gui.actions.ActionUtils;
 import com.limegroup.gnutella.gui.actions.SearchAction;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.MulticastTransferHandler;
@@ -71,7 +70,6 @@ import com.limegroup.gnutella.licenses.VerificationListener;
 import com.limegroup.gnutella.settings.BittorrentSettings;
 import com.limegroup.gnutella.settings.SearchSettings;
 import com.limegroup.gnutella.util.QueryUtils;
-import com.limegroup.gnutella.xml.LimeXMLDocument;
 
 public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine, SearchResult>
     implements VerificationListener, FileDetailsProvider {
@@ -545,13 +543,13 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
                     .marktr("Search for Keywords: {0}"))));
         }
 
-        LimeXMLDocument doc = line.getXMLDocument();
-        if (doc != null) {
-            Action[] actions = ActionUtils.createSearchActions(doc);
-            for (int i = 0; i < actions.length; i++) {
-                menu.add(new SkinMenuItem(actions[i]));
-            }
-        }
+//        LimeXMLDocument doc = line.getXMLDocument();
+//        if (doc != null) {
+//            Action[] actions = ActionUtils.createSearchActions(doc);
+//            for (int i = 0; i < actions.length; i++) {
+//                menu.add(new SkinMenuItem(actions[i]));
+//            }
+//        }
 
         return menu;
     } 

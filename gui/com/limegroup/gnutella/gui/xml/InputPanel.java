@@ -14,7 +14,6 @@ import org.limewire.collection.NameValue;
 import org.limewire.util.I18NConvert;
 
 import com.limegroup.gnutella.gui.AutoCompleteTextField;
-import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.util.QueryUtils;
 import com.limegroup.gnutella.xml.LimeXMLSchema;
 import com.limegroup.gnutella.xml.SchemaFieldInfo;
@@ -160,6 +159,6 @@ public class InputPanel extends IndentingPanel {
         if(namValList == null || namValList.isEmpty())
             return null;
         else
-            return GuiCoreMediator.getLimeXMLDocumentFactory().createLimeXMLDocument(namValList, uri).getXMLString();
+            return null;//GuiCoreMediator.getLimeXMLDocumentFactory().createLimeXMLDocument(namValList, uri).getXMLString();
     }
 }

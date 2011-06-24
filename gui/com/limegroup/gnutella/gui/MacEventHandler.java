@@ -132,7 +132,7 @@ public class MacEventHandler {
             else
                 GUIMediator.instance().openTorrentFile(file);
         } else {
-            PackagedMediaFileLauncher.launchFile(filename, false);
+            //PackagedMediaFileLauncher.launchFile(filename, false);
         }
     }
     

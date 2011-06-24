@@ -3,8 +3,6 @@ package com.limegroup.gnutella.gui.xml;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
@@ -12,16 +10,12 @@ import java.util.ResourceBundle;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.limewire.collection.NameValue;
-import org.limewire.util.CommonUtils;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.xml.LimeXMLDocument;
 import com.limegroup.gnutella.xml.LimeXMLNames;
 import com.limegroup.gnutella.xml.LimeXMLSchema;
-import com.limegroup.gnutella.xml.LimeXMLUtils;
 import com.limegroup.gnutella.xml.SchemaFieldInfo;
 import com.limegroup.gnutella.xml.XMLStringUtils;
 
@@ -41,55 +35,6 @@ public class XMLUtils {
     private static Map<String, ResourceBundle> bundles;
     
     private XMLUtils() {}
-    
-    /**
-     * Returns a list of name/values for this document, suitable for display.
-     */
-    public static List<String> getDisplayList(LimeXMLDocument doc) {
-        List<String> data = new LinkedList<String>();
-            
-        LimeXMLSchema schema = doc.getSchema();
-        List<SchemaFieldInfo> fields = schema.getCanonicalizedFields();
-        
-        // For each name/value pair...
-        for(SchemaFieldInfo sfi : fields) {
-            String name = sfi.getCanonicalizedFieldName();
-            String value = doc.getValue(name);
-            if(value == null || sfi.isHidden())
-                continue;
-            
-			NameValue<String> pair = getDisplayPair(sfi, value, schema);
-            
-            data.add(pair.getName() + ": " + pair.getValue());
-        }
-        
-        return data;
-    }
-	
-	/**
-	 * Returns the NameValue pair of the display name for the field
-	 * and a valid visual representation of the value.
-	 */
-	public static NameValue<String> getDisplayPair(SchemaFieldInfo field, String value, LimeXMLSchema schema) {
-		String name = getResource(field.getCanonicalizedFieldName());
-        value = getDisplay(field, value);
-		return new NameValue<String>(name, value);
-	}
-    
-    /**
-     * Returns the String that should be used to display a field.
-     */
-    public static String getDisplay(SchemaFieldInfo field, String value) {
-        if(field.getJavaType() == Date.class) {
-            try {
-                value = CommonUtils.seconds2time(Integer.parseInt(value));
-            } catch (NumberFormatException ignored) {}
-        } else {
-            // Try and convert any &XXX; to the right thing.
-            value = LimeXMLUtils.unencodeXML(value);
-        }
-        return value;
-    }
     
     /**
      * Returns the value as a Comparable.
