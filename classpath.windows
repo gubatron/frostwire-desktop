@@ -6,35 +6,29 @@
 	<classpathentry kind="src" path="components/collection/src/main/java"/>
 	<classpathentry kind="src" path="components/setting/src/main/java"/>
 	<classpathentry kind="src" path="components/io/src/main/java"/>
-	<classpathentry kind="src" path="components/azureus/src/main/java"/>
 	<classpathentry kind="src" path="components/osx_stub/src/main/java"/>
+	<classpathentry kind="src" path="components/azureus/src/main/java"/>
 	<classpathentry excluding="examples/" kind="src" path="core">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="frostwire.desktop/lib/native/windows"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry excluding="macosx/*|plugins/*|test-util/*" kind="src" path="gui">
+	<classpathentry excluding="macosx/*|plugins/*|test-util/*|windows/*" kind="src" path="gui">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="frostwire.desktop/lib/native/windows"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/jars/commons-logging.jar"/>
 	<classpathentry kind="lib" path="lib/jars/gettext-commons.jar"/>
-	<classpathentry kind="lib" path="lib/jars/guice-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/jars/httpclient-4.0.jar"/>
 	<classpathentry kind="lib" path="lib/jars/httpcore-4.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/jars/jdic.jar"/>
 	<classpathentry kind="lib" path="lib/jars/messages.jar"/>
 	<classpathentry kind="lib" path="lib/jars/splash.jar"/>
-	<classpathentry kind="lib" path="lib/i18nData/data/built/i18n.jar"/>
-	<classpathentry kind="lib" path="lib/jars/windows/jdic_stub.jar"/>
-	<classpathentry kind="lib" path="lib/jars/osx/MRJAdapter.jar"/>
-	<classpathentry kind="lib" path="lib/jars/compile/messages.jar"/>
-	<classpathentry kind="lib" path="lib/jars/compile/cocoaFoundation.jar"/>
 	<classpathentry kind="lib" path="lib/jars/gson-1.4.jar"/>
 	<classpathentry kind="lib" path="lib/jars/substance.jar"/>
 	<classpathentry kind="lib" path="lib/jars/trident.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/jars/icu4j.jar"/>
+	<classpathentry kind="lib" path="lib/jars/MRJAdapter.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -57,7 +57,7 @@ public class LimeWirePlayer implements AudioPlayer, RefreshListener {
     		playerPath = "/usr/bin/mplayer";
     	}
     	
-    	System.out.println("LimeWirePlayer - player path: ["+playerPath+"]");
+    	//System.out.println("LimeWirePlayer - player path: ["+playerPath+"]");
     	
 		MPlayer.initialise(new File(playerPath));
         _mplayer = new MPlayer();
