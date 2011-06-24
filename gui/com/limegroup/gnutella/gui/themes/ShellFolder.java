@@ -26,10 +26,11 @@
 package com.limegroup.gnutella.gui.themes;
 
 import java.awt.Image;
-import java.awt.Toolkit;
-import java.io.*;
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.io.IOException;
+import java.util.List;
+import java.util.Vector;
 
 /**
  * @author Michael Martak
@@ -196,11 +197,12 @@ abstract class ShellFolder extends File {
     private static ShellFolderManager shellFolderManager;
 
     static {
-        Class<?> managerClass = (Class<?>)Toolkit.getDefaultToolkit().
-            getDesktopProperty("Shell.shellFolderManager");
-        if (managerClass == null) {
-            managerClass = ShellFolderManager.class;
-        }
+//        Class<?> managerClass = (Class<?>)Toolkit.getDefaultToolkit().
+//            getDesktopProperty("Shell.shellFolderManager");
+//        if (managerClass == null) {
+//            managerClass = ShellFolderManager.class;
+//        }
+    	Class<?> managerClass = ShellFolderManager.class;
         try {
             shellFolderManager =
                 (ShellFolderManager)managerClass.newInstance();
