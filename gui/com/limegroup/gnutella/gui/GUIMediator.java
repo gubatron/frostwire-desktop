@@ -311,7 +311,7 @@ public final class GUIMediator {
 	/**
 	 * String to be displayed in title bar of LW client.
 	 */
-	private static final String APP_TITLE = I18n.tr("FrostWire: BitTorrent made easy");
+	private static final String APP_TITLE = I18n.tr("FrostWire: BitTorrent so simple");
 
 	/**
 	 * Handle to the <tt>OptionsMediator</tt> class that is responsible for
