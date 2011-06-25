@@ -4,7 +4,6 @@ import java.util.Date;
 
 import javax.swing.Icon;
 
-import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 
@@ -27,10 +26,9 @@ final class SearchTableColumns {
         new SearchColumn(COUNT_IDX, "RESULT_PANEL_COUNT", I18n.tr("Seeds"),
                             24, true,  Integer.class);
                             
-    static final int ICON_IDX = 2;
-    private final LimeTableColumn ICON_COLUMN =
-        new SearchColumn(ICON_IDX, "RESULT_PANEL_ICON", I18n.tr("Icon"),
-		    GUIMediator.getThemeImage("question_mark"),
+    static final int TYPE_IDX = 2;
+    private final LimeTableColumn TYPE_COLUMN =
+        new SearchColumn(TYPE_IDX, "RESULT_PANEL_ICON", I18n.tr("Type"),
                     18, true, Icon.class);
     
     static final int NAME_IDX = 3;
@@ -73,7 +71,7 @@ final class SearchTableColumns {
         switch (idx) {
         case QUALITY_IDX: return QUALITY_COLUMN;
         case COUNT_IDX: return COUNT_COLUMN;
-        case ICON_IDX: return ICON_COLUMN;
+        case TYPE_IDX: return TYPE_COLUMN;
         case NAME_IDX: return NAME_COLUMN;
         case SIZE_IDX: return SIZE_COLUMN;
         case SOURCE_IDX: return SOURCE_COLUMN;

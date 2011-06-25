@@ -308,7 +308,7 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
         switch (idx) {
         case SearchTableColumns.QUALITY_IDX:
         case SearchTableColumns.COUNT_IDX:
-        case SearchTableColumns.ICON_IDX:
+        case SearchTableColumns.TYPE_IDX:
             return false;
         default:
             return true;
@@ -328,7 +328,7 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
             return new Integer(getQuality());
         case SearchTableColumns.COUNT_IDX:
             return new Integer(RESULT.getSeeds());
-        case SearchTableColumns.ICON_IDX:
+        case SearchTableColumns.TYPE_IDX:
             return getIcon();
         case SearchTableColumns.NAME_IDX:
             return new ResultNameHolder(this);
