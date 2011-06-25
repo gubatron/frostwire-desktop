@@ -183,7 +183,7 @@ public class TorrentFetcherDownload implements BTDownload {
                         GUIMediator.safeInvokeAndWait(new Runnable() {
                             public void run() {
                                 try {
-                                    OpenTorrentDialog dlg = new OpenTorrentDialog(GUIMediator.getAppFrame(), inf.getFile());
+                                    PartialFilesDialog dlg = new PartialFilesDialog(GUIMediator.getAppFrame(), inf.getFile());
                                     dlg.setVisible(true);
                                     filesSelection = dlg.getFilesSelection();
                                 } catch (TOTorrentException e) {

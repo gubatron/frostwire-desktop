@@ -268,32 +268,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
         };
         BUTTON_ROW = new SearchButtons(this).getComponent();
         
-        // The initialization of the SPAM_BUTTON is a bit
-        // hackish. Use the NOT_SPAM label as it is longer
-        // and needs thus more space. As next init the button
-        // with the true label but keep the button width. See 
-        // transformButton() for more info...
-//        SPAM_BUTTON = new IconButton(
-//                I18n.tr("Not Junk"), 
-//                "SEARCH_SPAM");
-//        transformSpamButton(I18n.tr("Junk"), 
-//                I18n.tr("Mark selected search results as Junk"));
-//        
-//        SPAM_BUTTON.setEnabled(false);
-//        SPAM_BUTTON.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                TableLine[] lines = getAllSelectedLines();
-//                if (lines.length > 0) {
-//                    spamClicks++;
-//                    if (SpamFilter.isAboveSpamThreshold(lines[0])) {
-//                        MARK_AS_NOT_SPAM_LISTENER.actionPerformed(e);
-//                    } else {
-//                        MARK_AS_SPAM_LISTENER.actionPerformed(e);
-//                    }
-//                }
-//            }
-//        });    
-
         if (BUY_ACTION == null)
         	BUY_ACTION = new BuyAction();
 

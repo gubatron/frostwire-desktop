@@ -475,7 +475,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
                     boolean[] filesSelection = null;
 
                     if (partialDownload) {
-                        OpenTorrentDialog dlg = new OpenTorrentDialog(GUIMediator.getAppFrame(), torrentFile);
+                        PartialFilesDialog dlg = new PartialFilesDialog(GUIMediator.getAppFrame(), torrentFile);
                         dlg.setVisible(true);
                         filesSelection = dlg.getFilesSelection();
                         if (filesSelection == null) {
