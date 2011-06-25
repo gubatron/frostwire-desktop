@@ -1,3 +1,7 @@
+frostwire (5.0.4) stable; urgency=high
+  * UX Only BitTorrent
+ -- FrostWire Team <contact@frostwire.com>  Thu, 24 Jun 2011 12:00:00 -0500
+	
 frostwire (4.21.6) stable; urgency=high
 
   * Fixes a bug where some Debian systems that didn't support the 
