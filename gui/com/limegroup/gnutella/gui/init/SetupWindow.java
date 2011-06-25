@@ -32,12 +32,12 @@ abstract class SetupWindow extends JPanel {
     /**
 	 * The width of the setup window.
 	 */
-	public static final int SETUP_WIDTH = 670;
+	public static final int SETUP_WIDTH =  700;
 
 	/**
 	 * The height of the setup window.
 	 */
-	public static final int SETUP_HEIGHT = 375;
+	public static final int SETUP_HEIGHT =  433;
 
 	/**
 	 * Variable for the name of this window for use with <tt>CardLayout</tt>.
