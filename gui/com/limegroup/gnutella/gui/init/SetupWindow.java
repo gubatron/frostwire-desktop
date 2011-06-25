@@ -32,7 +32,7 @@ abstract class SetupWindow extends JPanel {
     /**
 	 * The width of the setup window.
 	 */
-	public static final int SETUP_WIDTH = 650;
+	public static final int SETUP_WIDTH = 670;
 
 	/**
 	 * The height of the setup window.
