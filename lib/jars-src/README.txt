@@ -162,3 +162,8 @@ substance-extras-c56d24d/ -> substance-extras.jar
 https://github.com/kirillcool/substance-extras.git -r c56d24d
 Substance look-and-feel extras pack
 https://github.com/kirillcool/substance-extras
+
+laf-widget-1543ae9/ -> laf-widget.jar
+https://github.com/kirillcool/laf-widget.git -r 1543ae9
+Support for common "feel" widgets in Swing look-and-feel libraries
+https://github.com/kirillcool/laf-widget

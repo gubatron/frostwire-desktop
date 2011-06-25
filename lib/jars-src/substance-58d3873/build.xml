@@ -46,7 +46,7 @@
 
 	<property name="substance.build.dir" value="${module.substance.basedir}/build/" />
 	<property name="substance.output.dir" value="${substance.build.dir}/classes" />
-	<property name="substance.drop.dir" value="${module.substance.basedir}/drop" />
+	<property name="substance.drop.dir" value="../dist" />
 	<property name="substance.lib.dir" value="${module.substance.basedir}/lib" />
 	<property name="substance.src.dir" value="${module.substance.basedir}/src/" />
 	<property name="substance.version" value="6.1" />
@@ -61,9 +61,9 @@
 
 	<path id="substance.module.classpath">
 		<path refid="${module.jdk.classpath.substance}" />
-		<pathelement location="${substance.lib.dir}/trident.jar" />
+		<pathelement location="../dist/trident.jar" />
 		<pathelement location="${substance.lib.dir}/build/laf-plugin.jar" />
-		<pathelement location="${substance.lib.dir}/build/laf-widget.jar" />
+		<pathelement location="../dist/laf-widget.jar" />
 		<pathelement location="${substance.lib.dir}/build/asm-all-2.2.2.jar" />
 		<pathelement location="${substance.lib.dir}/build/forms-1.2.0.jar" />
 		<pathelement location="${substance.lib.dir}/build/swingx.jar" />
@@ -96,7 +96,7 @@
 		</dirset>
 	</path>
 
-	<target name="compile.module.substance" depends="compile.module.substance.production,compile.module.substance.tests,compile.module.substance.tools" description="compile module substance" />
+	<target name="compile.module.substance" depends="compile.module.substance.production" description="compile module substance" />
 
 	<target name="compile.module.substance.production" description="compile module substance production classes">
 		<mkdir dir="${substance.output.dir}" />
@@ -163,11 +163,11 @@
 	<!-- Augment tasks definition -->
 	<property name="augment-class-path" value="${substance.lib.dir}/build/laf-widget.jar;${substance.lib.dir}/trident.jar;${substance.lib.dir}/build/asm-all-2.2.2.jar" />
 
-	<taskdef name="delegate-augment" classname="org.pushingpixels.lafwidget.ant.AugmentTask" classpath="${augment-class-path}" />
-	<taskdef name="delegate-update-augment" classname="org.pushingpixels.lafwidget.ant.AugmentUpdateTask" classpath="${augment-class-path}" />
-	<taskdef name="laf-augment" classname="org.pushingpixels.lafwidget.ant.AugmentMainTask" classpath="${augment-class-path}" />
-	<taskdef name="icon-ghosting-augment" classname="org.pushingpixels.lafwidget.ant.AugmentIconGhostingTask" classpath="${augment-class-path}" />
-	<taskdef name="container-ghosting-augment" classname="org.pushingpixels.lafwidget.ant.AugmentContainerGhostingTask" classpath="${augment-class-path}" />
+	<!--taskdef name="delegate-augment" classname="org.pushingpixels.lafwidget.ant.AugmentTask" classpath="${augment-class-path}" /-->
+	<!--taskdef name="delegate-update-augment" classname="org.pushingpixels.lafwidget.ant.AugmentUpdateTask" classpath="${augment-class-path}" /-->
+	<!--taskdef name="laf-augment" classname="org.pushingpixels.lafwidget.ant.AugmentMainTask" classpath="${augment-class-path}" /-->
+	<!--taskdef name="icon-ghosting-augment" classname="org.pushingpixels.lafwidget.ant.AugmentIconGhostingTask" classpath="${augment-class-path}" /-->
+	<!--taskdef name="container-ghosting-augment" classname="org.pushingpixels.lafwidget.ant.AugmentContainerGhostingTask" classpath="${augment-class-path}" /-->
 
 	<target name="augmentation" description="inject additional behavior in UI delegates">
 		<!-- Explode laf-plugin and laf-widget -->
@@ -295,7 +295,7 @@
 		<echo message="JavaC home: ${jdk.home}" />
 	</target>
 
-	<target name="jar" depends="jar-bin, jar-bin-lite, jar-bin-tst, jar-bin-tst-lite, jar-bin-tools" description="create all jars" />
+	<target name="jar" depends="jar-bin" description="create all jars" />
 
 	<target name="distro" description="create distribution">
 		<delete file="${module.substance.basedir}/substance-all.zip" />
@@ -332,5 +332,5 @@
 
 	<target name="clean" depends="clean.module.substance" description="cleanup all" />
 
-	<target name="all" depends="timestamp, init, clean, compile.module.substance, augmentation, jar" description="build all" />
+	<target name="all" depends="timestamp, init, clean, compile.module.substance, jar" description="build all" />
 </project>
