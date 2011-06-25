@@ -12,8 +12,8 @@
 		</delete>
 		
 		<ant dir="commons-logging-1.0.4-src"/>
-		<ant dir="httpcomponents-client-4.0"/>
 		<ant dir="httpcomponents-core-4.0.1"/>
+	    <ant dir="httpcomponents-client-4.0"/>
 		<ant dir="gettext-commons-0_9_5"/>
 		<ant dir="google-gson-1.4"/>
 		<ant dir="netx-0.5" />
