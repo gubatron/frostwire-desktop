@@ -20,7 +20,7 @@ public final class GURLHandler {
     
     static {
         try {
-            if (OSUtils.isMacOSX105() || OSUtils.isMacOSX106()) {
+            if (OSUtils.isMacOSX105() || OSUtils.isMacOSX106() || OSUtils.isMacOSX107()) {
                 System.loadLibrary("GURLLeopard");
                 System.out.println("GURLLeopard loadded.");
             }

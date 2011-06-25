@@ -96,6 +96,8 @@ public class OSUtils {
      */
     private static boolean _isOS2;
 
+	private static boolean _isMacOSX107;
+
     /**
      * Sets the operating system variables.
      */
@@ -158,6 +160,9 @@ public class OSUtils {
     			
     			if (System.getProperty("os.version").startsWith("10.6"))
     			    _isMacOSX106 = true;
+    			
+    			if (System.getProperty("os.version").startsWith("10.7"))
+    				_isMacOSX107 = true;
     		}
     	}
     }    
@@ -301,6 +306,17 @@ public class OSUtils {
     public static boolean isMacOSX106() {
         return _isMacOSX106;
     }
+    
+    /**
+     * Returns whether or not the OS version of Mac OS X is 10.6.x.
+     * 
+     *  @return <tt>true</tt> if the application is running on Mac OS X 10.6.x,
+     *         <tt>false</tt> otherwise
+     */
+    public static boolean isMacOSX107() {
+        return _isMacOSX107;
+    }
+
     
     /** 
      * Returns whether or not the OS is any Mac OS.
