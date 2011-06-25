@@ -1,15 +1,14 @@
 /*******************************************************************************
 
 	File:		StandardMacAboutFrame.java
-	Author:		Steve Roy
-	Copyright:	Copyright (c) 2003-2007 Steve Roy <sroy@mac.com>
+	Author:		Steve Roy <steve@sillybit.com>
 				
 	Part of MRJ Adapter, a unified API for easy integration of Mac OS specific
 	functionality within your cross-platform Java application.
 	
 	This library is open source and can be modified and/or distributed under
 	the terms of the Artistic License.
-	<http://homepage.mac.com/sroy/mrjadapter/license.html>
+	<http://mrjadapter.dev.java.net/license.html>
 	
 	Change History:
 	02/20/04	Created this header - Steve
@@ -45,7 +44,7 @@ import java.awt.Insets;
  * automatically on the screen and supports credits in RTF, HTML or plain
  * text formats.
  * 
- * @version MRJ Adapter 1.1
+ * @version MRJ Adapter 1.2
  */
 public class StandardMacAboutFrame extends JFrame
 {

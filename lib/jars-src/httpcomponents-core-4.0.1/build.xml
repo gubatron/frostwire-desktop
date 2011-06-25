@@ -1,23 +1,23 @@
 <project name="httpcomponents-core-4.0.1" default="main" basedir=".">
 
-	<target name="main">
+    <target name="main">
+        <mkdir dir="bin" />
 
-		<exec executable="mvn" dir=".">
-			<arg value="install"/>
-			<arg value="-Dmaven.test.skip=true"/>
-		</exec>
-		
-		<copy file="httpcore/target/httpcore-4.0.1.jar" tofile="../dist/httpcore-4.0.1.jar" overwrite="true"/>
-		<copy file="httpcore-nio/target/httpcore-nio-4.0.1.jar" tofile="../dist/httpcore-nio-4.0.1.jar" overwrite="true"/>
-		
-	</target>
+        <!-- build -->
+        <javac srcdir="httpcore/src/main/java" destdir="bin" fork="true" memoryinitialsize="256m" memorymaximumsize="256m">
+        </javac>
 
-	<target name="clean">
+        <!-- jar -->
+        <jar jarfile="../dist/httpcore-4.0.1.jar">
+            <fileset dir="bin" />
+        </jar>
 
-		<exec executable="mvn" dir=".">
-			<arg value="clean"/>
-		</exec>
+    </target>
 
-	</target>
+    <target name="clean">
+
+        <delete dir="bin" />
+
+    </target>
 
 </project>

@@ -1,15 +1,14 @@
 /*******************************************************************************
 
 	File:		MRJAdapter.java
-	Author:		Steve Roy
-	Copyright:	Copyright (c) 2003-2007 Steve Roy <sroy@mac.com>
+	Author:		Steve Roy <steve@sillybit.com>
 				
 	Part of MRJ Adapter, a unified API for easy integration of Mac OS specific
 	functionality within your cross-platform Java application.
 	
 	This library is open source and can be modified and/or distributed under
 	the terms of the Artistic License.
-	<http://homepage.mac.com/sroy/mrjadapter/license.html>
+	<http://mrjadapter.dev.java.net/license.html>
 
 	Change History:
 	03/11/03	Created this file - Steve
@@ -107,14 +106,14 @@ import java.util.Properties;
  * <code>net.roydesign.io</code> which essentially integrate this functionality
  * in a more cross-platform way.</p>
  * 
- * @version MRJ Adapter 1.1
+ * @version MRJ Adapter 1.2
  */
 public final class MRJAdapter implements MRJFolderConstants
 {
 	/**
 	 * The version of MRJ Adapter.
 	 */
-	public static final String VERSION = "1.1";
+	public static final String VERSION = "1.2";
 
 	/**
 	 * The version of the Java VM.

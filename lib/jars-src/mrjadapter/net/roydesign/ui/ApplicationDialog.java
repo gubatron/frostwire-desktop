@@ -1,15 +1,14 @@
 /*******************************************************************************
 
 	File:		ApplicationDialog.java
-	Author:		Steve Roy
-	Copyright:	Copyright (c) 2003-2007 Steve Roy <sroy@mac.com>
+	Author:		Steve Roy <steve@sillybit.com>
 				
 	Part of MRJ Adapter, a unified API for easy integration of Mac OS specific
 	functionality within your cross-platform Java application.
 	
 	This library is open source and can be modified and/or distributed under
 	the terms of the Artistic License.
-	<http://homepage.mac.com/sroy/mrjadapter/license.html>
+	<http://mrjadapter.dev.java.net/license.html>
 
 	Change History:
 	03/05/03	Created this file - Steve
@@ -40,7 +39,7 @@ import java.util.Properties;
  * make file dialogs not show application bundles as folders but as files,
  * which means you don't have to worry about any of it.
  * 
- * @version MRJ Adapter 1.1
+ * @version MRJ Adapter 1.2
  */
 public class ApplicationDialog extends FileDialog
 {

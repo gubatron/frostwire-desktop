@@ -1,22 +1,23 @@
 <project name="gettext-commons-0.9.5" default="main" basedir=".">
 
-	<target name="main">
+    <target name="main">
+        <mkdir dir="bin" />
 
-		<exec executable="mvn" dir=".">
-			<arg value="install"/>
-			<arg value="-Dmaven.test.skip=true"/>
-		</exec>
-		
-		<copy file="target/gettext-commons-0.9.5.jar" tofile="../dist/gettext-commons.jar" overwrite="true"/>
-		
-	</target>
+        <!-- build -->
+        <javac srcdir="src/java" destdir="bin" fork="true" memoryinitialsize="256m" memorymaximumsize="256m">
+        </javac>
 
-	<target name="clean">
+        <!-- jar -->
+        <jar jarfile="../dist/gettext-commons.jar">
+            <fileset dir="bin" />
+        </jar>
 
-		<exec executable="mvn" dir=".">
-			<arg value="clean"/>
-		</exec>
+    </target>
 
-	</target>
+    <target name="clean">
+
+        <delete dir="bin" />
+
+    </target>
 
 </project>

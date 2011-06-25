@@ -1,15 +1,14 @@
 /*******************************************************************************
 
 	File:		MRJ4EventProxy.java
-	Author:		Steve Roy
-	Copyright:	Copyright (c) 2003-2007 Steve Roy <sroy@mac.com>
+	Author:		Steve Roy <steve@sillybit.com>
 				
 	Part of MRJ Adapter, a unified API for easy integration of Mac OS specific
 	functionality within your cross-platform Java application.
 	
 	This library is open source and can be modified and/or distributed under
 	the terms of the Artistic License.
-	<http://homepage.mac.com/sroy/mrjadapter/license.html>
+	<http://mrjadapter.dev.java.net/license.html>
 	
 	Change History:
 	03/31/03	Created this file - Steve
@@ -34,7 +33,7 @@ import java.io.File;
  * This corresponds to MRJ 4 and above which implements Java 1.4.1 and above.
  * @see MRJEventProxy
  * 
- * @version MRJ Adapter 1.1
+ * @version MRJ Adapter 1.2
  */
 class MRJ4EventProxy extends MRJEventProxy
 {
@@ -88,8 +87,7 @@ class MRJ4EventProxy extends MRJEventProxy
 	 */
 	public void setPreferencesEnabled(boolean enabled)
 	{
-		if (enabled != application.getEnabledPreferencesMenu())
-			application.setEnabledPreferencesMenu(enabled);
+		application.setEnabledPreferencesMenu(enabled);
 	}
 	
 	/**

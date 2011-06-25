@@ -1,15 +1,14 @@
 /*******************************************************************************
 
 	File:		MRJFolderConstants.java
-	Author:		Steve Roy
-	Copyright:	Copyright (c) 2003-2007 Steve Roy <sroy@mac.com>
+	Author:		Steve Roy <steve@sillybit.com>
 				
 	Part of MRJ Adapter, a unified API for easy integration of Mac OS specific
 	functionality within your cross-platform Java application.
 	
 	This library is open source and can be modified and/or distributed under
 	the terms of the Artistic License.
-	<http://homepage.mac.com/sroy/mrjadapter/license.html>
+	<http://mrjadapter.dev.java.net/license.html>
 	
 	Change History:
 	03/13/03	Created this file - Steve
@@ -22,7 +21,7 @@ package net.roydesign.mac;
  * This interface defines some useful Mac OS constants to use with the
  * <code>MRJAdapter.findFolder()</code> method.
  * 
- * @version MRJ Adapter 1.1
+ * @version MRJ Adapter 1.2
  */
 public interface MRJFolderConstants
 {

@@ -1,22 +1,27 @@
 <project name="httpcomponents-client-4.0" default="main" basedir=".">
 
-	<target name="main">
+    <target name="main">
+        <mkdir dir="bin" />
 
-		<exec executable="mvn" dir=".">
-			<arg value="install"/>
-			<arg value="-Dmaven.test.skip=true"/>
-		</exec>
-		
-		<copy file="httpclient/target/httpclient-4.0.jar" tofile="../dist/httpclient-4.0.jar" overwrite="true"/>
-		
-	</target>
+        <!-- build -->
+        <javac srcdir="httpclient/src/main/java" destdir="bin" fork="true" memoryinitialsize="256m" memorymaximumsize="256m">
+            <classpath>
+                <pathelement location="../dist/httpcore-4.0.1.jar" />
+                <pathelement location="../dist/commons-logging.jar" />
+            </classpath>
+        </javac>
 
-	<target name="clean">
+        <!-- jar -->
+        <jar jarfile="../dist/httpclient-4.0.jar">
+            <fileset dir="bin" />
+        </jar>
 
-		<exec executable="mvn" dir=".">
-			<arg value="clean"/>
-		</exec>
+    </target>
 
-	</target>
+    <target name="clean">
+
+        <delete dir="bin" />
+
+    </target>
 
 </project>

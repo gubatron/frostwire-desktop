@@ -28,7 +28,7 @@ package org.apache.http.impl.auth;
 
 import net.jcip.annotations.NotThreadSafe;
 
-import org.apache.commons.codec.binary.Base64;
+//import org.apache.commons.codec.binary.Base64;
 import org.apache.http.Header;
 import org.apache.http.HttpRequest;
 import org.apache.http.auth.AuthenticationException;
@@ -160,8 +160,9 @@ public class BasicScheme extends RFC2617Scheme {
         tmp.append(":");
         tmp.append((credentials.getPassword() == null) ? "null" : credentials.getPassword());
 
-        byte[] base64password = Base64.encodeBase64(
-                EncodingUtils.getBytes(tmp.toString(), charset));
+//        byte[] base64password = Base64.encodeBase64(
+//                EncodingUtils.getBytes(tmp.toString(), charset));
+        byte[] base64password = new byte[0]; // not working
         
         CharArrayBuffer buffer = new CharArrayBuffer(32);
         if (proxy) {

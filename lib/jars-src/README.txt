@@ -94,7 +94,7 @@ http://sourceforge.net/projects/jflac/files/jflac/1.2/jflac-1.2-src.zip/download
 MD5 confirmed with source.
 
 JLayer1.0/ -> jl.jar
-MP3 decoder/player/converter library for Javaª platform. http://www.javazoom.net/javalayer/javalayer.html
+MP3 decoder/player/converter library for Javaï¿½ platform. http://www.javazoom.net/javalayer/javalayer.html
 http://prdownloads.sourceforge.net/javalayer/jlayer1.0.zip?download
 MD5 confirmed with source.
 
@@ -133,7 +133,7 @@ tritonus/ -> tritonus.jar
 Decompiled from included modified jar.
 
 VorbisSPI1.0.2/ -> vorbisspi.jar
-Ogg Vorbis SPI for Javaª Sound. http://www.javazoom.net/vorbisspi/vorbisspi.html
+Ogg Vorbis SPI for Javaï¿½ Sound. http://www.javazoom.net/vorbisspi/vorbisspi.html
 http://www.javazoom.net/vorbisspi/sources/vorbisspi1.0.2.zip
 Same inner files.
 
@@ -143,6 +143,9 @@ Stub for cross platform compilation.
 mrjadapter/ -> MRJAdapter.jar
 Integration of Mac features without compromising portability. https://mrjadapter.dev.java.net/
 svn checkout https://mrjadapter.dev.java.net/svn/mrjadapter/trunk mrjadapter --username guest
+UPDATE!! - New Project's Home
+http://java.net/projects/mrjadapter
+svn checkout https://svn.java.net/svn/mrjadapter~svn 
 It's not important for Linux.
 
 substance-58d3873/ -> substance.jar
