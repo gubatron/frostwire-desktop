@@ -11,3 +11,4 @@ lib/jars/other/themes.jar
 components/http/build/classes/org/limewire/http/package.html
 hs_err_*.log
 .DS_Store
+components/azureus/src/main/resources/org/gudy/azureus2/internat/*

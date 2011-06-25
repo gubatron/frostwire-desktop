@@ -223,7 +223,6 @@
 				<attribute name="Substance-BuildStamp" value="${build.time}" />
 			</manifest>
 		</jar>
-		<copy file="${substance.drop.dir}/substance.jar" todir="${module.substance.basedir}/www/webstart" />
 	</target>
 
 	<target name="jar-bin-lite" description="create runtime jar with no custom color choosers">
@@ -250,7 +249,6 @@
 				<attribute name="Class-Path" value="substance.jar ../lib/trident.jar ../lib/build/forms-1.2.0.jar ../lib/build/swingx.jar ../lib/build/substance-swingx.jar" />
 			</manifest>
 		</jar>
-		<copy file="${substance.drop.dir}/substance-tst.jar" todir="${module.substance.basedir}/www/webstart" />
 	</target>
 
 	<target name="jar-bin-tools" description="create tools runtime jar">
@@ -263,7 +261,6 @@
 				<attribute name="Substance-BuildStamp" value="${build.time}" />
 			</manifest>
 		</jar>
-		<copy file="${substance.drop.dir}/substance-tools.jar" todir="${module.substance.basedir}/www/webstart" />
 	</target>
 
 	<target name="apt" depends="jar-bin-tools">
