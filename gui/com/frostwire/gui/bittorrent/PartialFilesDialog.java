@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
 
 import javax.swing.JButton;
@@ -19,13 +21,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableRowSorter;
 
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.util.TorrentUtils;
-
-import sun.swing.table.DefaultTableCellHeaderRenderer;
 
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
@@ -37,6 +39,7 @@ public class PartialFilesDialog extends JDialog {
     private static final long serialVersionUID = 4312306965758592618L;
 
     private LabeledTextField _filter;
+    private RowFilter<Object, Object> _textBasedFilter = new RowFilterExtension();
     
     private JLabel _label;
     private JTable _table;
@@ -49,7 +52,6 @@ public class PartialFilesDialog extends JDialog {
     private final TorrentTableModel _model;
     
     private boolean[] _filesSelection;
-
 	private JCheckBox _checkBoxToggleAll;
 
     public PartialFilesDialog(JFrame frame, File torrentFile) throws TOTorrentException {
@@ -81,6 +83,25 @@ public class PartialFilesDialog extends JDialog {
         
         // filter
         _filter = new LabeledTextField("Filter files", 30);
+        
+        _filter.addKeyListener(new KeyAdapter() {
+        	
+        	@Override
+        	public void keyReleased(KeyEvent e) {
+				if (_filter.getText()==null || _filter.getText().equals("")) {
+					_table.setRowSorter(null);
+					return;
+				}
+				
+				_checkBoxToggleAll.setSelected(false);
+				
+				TableRowSorter<TorrentTableModel> sorter = new TableRowSorter<TorrentTableModel>(_model);
+		        sorter.setRowFilter(_textBasedFilter);
+		        _table.setRowSorter(sorter);
+        	}
+			
+		});
+        
         c = new GridBagConstraints();
         c.anchor = GridBagConstraints.WEST;
         c.gridwidth = GridBagConstraints.REMAINDER;
@@ -107,10 +128,11 @@ public class PartialFilesDialog extends JDialog {
         _table.setPreferredScrollableViewportSize(new Dimension(600, 300));
         _table.setModel(_model);
         _table.getColumnModel().getColumn(0).setHeaderValue("");
-        DefaultTableCellHeaderRenderer defaultTableCellHeaderRenderer = new DefaultTableCellHeaderRenderer();
-        defaultTableCellHeaderRenderer.setText("");
-
-        _table.getColumnModel().getColumn(0).setHeaderRenderer(defaultTableCellHeaderRenderer);
+        
+//        DefaultTableCellHeaderRenderer defaultTableCellHeaderRenderer = new DefaultTableCellHeaderRenderer();
+//        defaultTableCellHeaderRenderer.setText("");
+//
+//        _table.getColumnModel().getColumn(0).setHeaderRenderer(defaultTableCellHeaderRenderer);
         _table.getColumnModel().getColumn(1).setHeaderValue(I18n.tr("File"));
         _table.getColumnModel().getColumn(2).setHeaderValue(I18n.tr("Size"));
         _table.getColumnModel().getColumn(0).setPreferredWidth(10);
@@ -132,6 +154,7 @@ public class PartialFilesDialog extends JDialog {
                 buttonOK_actionPerformed(e);
             }
         });
+        
         c = new GridBagConstraints();
         c.insets = new Insets(4, 430, 8, 4);
         c.fill = GridBagConstraints.NONE;
@@ -186,7 +209,27 @@ public class PartialFilesDialog extends JDialog {
         return _filesSelection;
     }
 
-    private final class TorrentTableModel extends AbstractTableModel {
+    private final class RowFilterExtension extends RowFilter<Object, Object> {
+
+		@Override
+		public boolean include(
+				javax.swing.RowFilter.Entry<? extends Object, ? extends Object> entry) {
+			
+			String fileName = (String) entry.getValue(1);
+			
+			String[] tokens = _filter.getText().split(" ");
+			
+			for (String t : tokens) {
+				if (!fileName.toLowerCase().contains(t.toLowerCase())) {
+					return false;
+				}
+			}
+			
+			return true;
+		}
+	}
+
+	private final class TorrentTableModel extends AbstractTableModel {
 
         private static final long serialVersionUID = -8689494570949104116L;
 
