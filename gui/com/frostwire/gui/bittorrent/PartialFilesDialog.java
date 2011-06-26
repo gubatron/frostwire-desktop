@@ -1,6 +1,7 @@
 package com.frostwire.gui.bittorrent;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -11,6 +12,7 @@ import java.awt.event.ItemListener;
 import java.io.File;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -23,16 +25,20 @@ import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.util.TorrentUtils;
 
+import sun.swing.table.DefaultTableCellHeaderRenderer;
+
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.LabeledTextField;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
 
 public class PartialFilesDialog extends JDialog {
 
     private static final long serialVersionUID = 4312306965758592618L;
 
+    private LabeledTextField _filter;
+    
     private JLabel _label;
-    private CheckBoxHeader _checkBoxHeader;
     private JTable _table;
     private JScrollPane _scrollPane;
     private JButton _buttonOK;
@@ -43,6 +49,8 @@ public class PartialFilesDialog extends JDialog {
     private final TorrentTableModel _model;
     
     private boolean[] _filesSelection;
+
+	private JCheckBox _checkBoxToggleAll;
 
     public PartialFilesDialog(JFrame frame, File torrentFile) throws TOTorrentException {
         super(frame, I18n.tr("Select files to download"));
@@ -63,29 +71,52 @@ public class PartialFilesDialog extends JDialog {
         GridBagConstraints c;
 
         // title
-        _label = new JLabel(_name);
+        _label = new JLabel(_name.replace("_", " ").replace(".torrent", "").replace("&quot;", "\""));
+        _label.setFont(new Font("Dialog",Font.BOLD,18));
         c = new GridBagConstraints();
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.anchor = GridBagConstraints.WEST;
         c.insets = new Insets(5, 5, 5, 5);
         getContentPane().add(_label, c);
+        
+        // filter
+        _filter = new LabeledTextField("Filter files", 30);
+        c = new GridBagConstraints();
+        c.anchor = GridBagConstraints.WEST;
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(5,5,5,5);
+        getContentPane().add(_filter, c);
 
-        _checkBoxHeader = new CheckBoxHeader("", true, new ItemListener() {
-            public void itemStateChanged(ItemEvent e) {
-                checkBoxHeader_itemStateChanged(e);
-            }
-        });
+        _checkBoxToggleAll = new JCheckBox(I18n.tr("Select/Unselect all files"),true);
+        _checkBoxToggleAll.addItemListener(new ItemListener() {			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				onCheckBoxToggleAll(e);
+			}
+		});
+
+        c = new GridBagConstraints();
+        c.gridwidth = 1;
+        c.anchor = GridBagConstraints.WEST;
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(5,5,5,5);
+        getContentPane().add(_checkBoxToggleAll,c);        
 
         // table
         _table = new JTable();
         _table.setPreferredScrollableViewportSize(new Dimension(600, 300));
         _table.setModel(_model);
-        _table.getColumnModel().getColumn(0).setHeaderRenderer(_checkBoxHeader);
+        _table.getColumnModel().getColumn(0).setHeaderValue("");
+        DefaultTableCellHeaderRenderer defaultTableCellHeaderRenderer = new DefaultTableCellHeaderRenderer();
+        defaultTableCellHeaderRenderer.setText("");
+
+        _table.getColumnModel().getColumn(0).setHeaderRenderer(defaultTableCellHeaderRenderer);
         _table.getColumnModel().getColumn(1).setHeaderValue(I18n.tr("File"));
         _table.getColumnModel().getColumn(2).setHeaderValue(I18n.tr("Size"));
         _table.getColumnModel().getColumn(0).setPreferredWidth(10);
         _table.getColumnModel().getColumn(1).setPreferredWidth(500);
         _table.getColumnModel().getColumn(2).setPreferredWidth(60);
+
         _scrollPane = new JScrollPane(_table);
         _table.setFillsViewportHeight(true);
         c = new GridBagConstraints();
@@ -95,7 +126,7 @@ public class PartialFilesDialog extends JDialog {
         getContentPane().add(_scrollPane, c);
 
         // ok button
-        _buttonOK = new JButton(I18n.tr("OK"));
+        _buttonOK = new JButton(I18n.tr("Download Selected Files Only"));
         _buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 buttonOK_actionPerformed(e);
@@ -107,6 +138,7 @@ public class PartialFilesDialog extends JDialog {
         c.gridwidth = GridBagConstraints.RELATIVE;
         c.anchor = GridBagConstraints.EAST;
         c.ipadx = 20;
+        c.weightx=1.0;
         getContentPane().add(_buttonOK, c);
 
         // cancel button
@@ -118,7 +150,6 @@ public class PartialFilesDialog extends JDialog {
         });
         c = new GridBagConstraints();
         c.insets = new Insets(4, 0, 8, 6);
-        c.fill = GridBagConstraints.NONE;
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.anchor = GridBagConstraints.EAST;
         c.ipadx = 18;
@@ -131,9 +162,10 @@ public class PartialFilesDialog extends JDialog {
         GUIUtils.addHideAction((JComponent) getContentPane());
     }
 
-    protected void checkBoxHeader_itemStateChanged(ItemEvent e) {
-        _model.setAllSelected(_checkBoxHeader.isSelected());
-    }
+    protected void onCheckBoxToggleAll(ItemEvent e) {
+    	_model.setAllSelected(_checkBoxToggleAll.isSelected());
+    	_buttonOK.setEnabled(_checkBoxToggleAll.isSelected());
+	}
 
     protected void buttonOK_actionPerformed(ActionEvent e) {
         
@@ -150,19 +182,12 @@ public class PartialFilesDialog extends JDialog {
         GUIUtils.getDisposeAction().actionPerformed(e);
     }
 
-    private void performCheckBoxValidation() {
-        _checkBoxHeader.setSelected(_model.isAllSelected(), false);
-    }
-    
     public boolean[] getFilesSelection() {
         return _filesSelection;
     }
 
     private final class TorrentTableModel extends AbstractTableModel {
 
-        /**
-         * 
-         */
         private static final long serialVersionUID = -8689494570949104116L;
 
         private final TOTorrent _torrent;
@@ -174,6 +199,8 @@ public class PartialFilesDialog extends JDialog {
             for (int i = 0; i < _fileInfos.length; i++) {
                 _fileInfos[i] = new TorrentFileInfo(torrent.getFiles()[i], true);
             }
+            
+            
         }
 
         @Override
@@ -224,8 +251,10 @@ public class PartialFilesDialog extends JDialog {
             if (columnIndex == 0) {
                 _fileInfos[rowIndex].selected = (Boolean) aValue;
                 fireTableDataChanged();
-                performCheckBoxValidation();
             }
+            
+            checkboxToggleAllSetSelectedNoTrigger(isAllSelected());
+            _buttonOK.setEnabled(!isNoneSelected());
         }
 
         public void setAllSelected(boolean selected) {
@@ -243,9 +272,32 @@ public class PartialFilesDialog extends JDialog {
             }
             return true;
         }
+
+        public boolean isNoneSelected() {
+            for (int i = 0; i < _fileInfos.length; i++) {
+                if (_fileInfos[i].selected) {
+                    return false;
+                }
+            }
+            return true;
+        }
         
         public TorrentFileInfo[] getFileInfos() {
             return _fileInfos;
         }
     }
+
+	public void checkboxToggleAllSetSelectedNoTrigger(boolean allSelected) {
+		ItemListener[] itemListeners = _checkBoxToggleAll.getItemListeners();
+        
+        for (ItemListener l : itemListeners) {
+        	_checkBoxToggleAll.removeItemListener(l);
+        }
+        _checkBoxToggleAll.setSelected(allSelected);
+
+        for (ItemListener l : itemListeners) {
+        	_checkBoxToggleAll.addItemListener(l);
+        }
+		
+	}
 }
