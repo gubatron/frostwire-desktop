@@ -68,12 +68,11 @@ public class FilterPanel extends JPanel {
         _keywordFilterTextField = new LabeledTextField("Name", 40, -1, 100);
 
         _keywordFilterTextField.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
+        	@Override
+        	public void keyPressed(KeyEvent e) {
                 keywordFilterChanged(e);
             }
-        });
-        
+        });        
 
 
         add(_keywordFilterTextField, c);
