@@ -22,6 +22,7 @@ import org.gudy.azureus2.core3.util.TorrentUtils;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.settings.SharingSettings;
 
 public class SendFileDialog extends JDialog {
 
@@ -103,7 +104,7 @@ public class SendFileDialog extends JDialog {
         System.out.println("Progress:" + percent_complete);
     }
 
-    private void makeTorrentAndDownload(File file) {
+    private void makeTorrentAndDownload(final File file) {
         try {
 
             TOTorrent torrent;
@@ -127,13 +128,13 @@ public class SendFileDialog extends JDialog {
             TorrentUtils.setPrivate(torrent, false);
             LocaleTorrentUtil.setDefaultTorrentEncoding(torrent);
 
-            final File torrentFile = new File(file.getParentFile(), file.getName() + ".torrent");
+            final File torrentFile = new File(SharingSettings.TORRENTS_DIR_SETTING.getValue(), file.getName() + ".torrent");
 
             torrent.serialiseToBEncodedFile(torrentFile.getAbsoluteFile());
 
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
-                    GUIMediator.instance().openTorrentForSeed(torrentFile, torrentFile.getParentFile());
+                    GUIMediator.instance().openTorrentForSeed(torrentFile, file.getParentFile());
                 }
             });
 

@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -141,6 +142,7 @@ public class LibrarySearchPanel extends JPanel {
                 }
             });
             
+            search(SharingSettings.TORRENTS_DIR_SETTING.getValue(), new HashSet<File>());
             File file = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
             search(file, TorrentUtil.getIncompleteFiles());
         }
