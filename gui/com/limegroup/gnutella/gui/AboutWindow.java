@@ -178,16 +178,7 @@ final class AboutWindow {
         String hex = toHex(r) + toHex(g) + toHex(b);
         sb.append("<body text='#" + hex + "'>");
 
-        //  introduction                                                                                                                                                             
-        sb.append(I18n.tr("<h1>FrostWire Developers</h1>"));
-        sb.append("<strong>US:</strong>");
-        sb.append("<ul><li>Ian '<strong>the man</strong>' Walker</li></ul>");
-        sb.append("<strong>VE:</strong>");
-        sb.append("<ul>");
-        sb.append("<li>Alden Torres '<strong>aldenml</strong>' - <a href='http://google.com/profiles/aldenml'>Buzz</a>, <a href='http://twitter.com/aldenml'>Twitter</a></li>");
-        sb.append("<li>Angel Leon '<strong>gubatron</strong>' - <a href='http://www.gubatron.com/blog'>Blog</a>, <a href='http://google.com/profiles/gubatron'>Buzz</a>, <a href='http://twitter.com/gubatron'>Twitter</a></li>");
-        sb.append("</ul><br><br>");
-
+        //  introduction
         sb.append(I18n.tr("<h1>FrostWire Logo Designer</h1>"));
         sb.append("<ul><li>Luis Ramirez (Venezuela - <a href='http://www.elblogo.com'>ElBlogo.com</a>)</li></ul>");
 
@@ -205,6 +196,9 @@ final class AboutWindow {
         sb.append("<li>Fernando Toussaint '<strong>FTA</strong>' - <a href='http://www.cybercultura.net'>Web</a></li>");
         sb.append("<br><br>");
 
+        sb.append(I18n.tr("<h1>Thanks to the FrostWire Tester Community!</h1>"));
+        sb.append(I18n.tr("Special thanks to <strong>Hobo</strong> for being the most passionate and amazing software tester ever. <a href=\"https://groups.google.com/group/frostwire-5-testers/subscribe?note=1&hl=en&noredirect=true&pli=1\">Become a tester</a>"));
+        
         sb.append(I18n.tr("<h1>Thanks to the FrostWire Chat Community!</h1>"));
         sb.append(I18n.tr("Thanks to everybody that has helped us everyday in the forums and chatrooms, " +
         		"you not only help new users but you also warn the FrostWire team of any problem that " +
@@ -232,6 +226,13 @@ final class AboutWindow {
         sb.append(I18n.tr("And also to the Support Volunteer Helpers:"));
         sb.append("<ul>");
         appendListOfNames("dutchboy,Lelu,udsteve",sb);
+        sb.append("</ul>");
+        
+        // azureus/vuze devs.
+        sb.append("<h1>Thanks to the Azureus Core Developers</h1>");
+        String az_devs = "Olivier Chalouhi (gudy),Alon Rohter (nolar),Paul Gardner (parg),ArronM (TuxPaper),Paul Duran (fatal_2),Jonathan Ledlie(ledlie),Allan Crooks (amc1),Xyrio (muxumx),Michael Parker (shadowmatter),Aaron Grunthal (the8472)";
+        sb.append("<ul>");
+        appendListOfNames(az_devs, sb);
         sb.append("</ul>");
 
         //  developers                                                                                                                                                               
@@ -272,12 +273,6 @@ final class AboutWindow {
         		"  <li>Sean Ediger</li>\n" +
         		"  <li>Kath Whittle</li>\n" +
         "</ul>");
-        
-        sb.append("<h1>Thanks to the Azureus Core Developers</h1>");
-        String az_devs = "Olivier Chalouhi (gudy),Alon Rohter (nolar),Paul Gardner (parg),ArronM (TuxPaper),Paul Duran (fatal_2),Jonathan Ledlie(ledlie),Allan Crooks (amc1),Xyrio (muxumx),Michael Parker (shadowmatter),Aaron Grunthal (the8472)";
-        sb.append("<ul>");
-        appendListOfNames(az_devs, sb);
-        sb.append("</ul>");
         
         sb.append(I18n.tr("<h1>Thanks to the PJIRC Staff</h1>"));
         sb.append("<ul>");
