@@ -35,6 +35,8 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.event.MouseInputListener;
 import javax.swing.plaf.metal.MetalBorders;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import org.limewire.i18n.I18nMarker;
 import org.limewire.util.OSUtils;
@@ -958,6 +960,12 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
     }
     
     public void cleanup() {
+    }
+    
+    protected void setDefaultEditors() {
+        TableColumnModel model = TABLE.getColumnModel();
+        TableColumn tc = model.getColumn(SearchTableColumns.NAME_IDX);
+        tc.setCellEditor(new ActionIconAndNameEditor());
     }
 
     

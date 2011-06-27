@@ -338,6 +338,11 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
 
     public int getTotalResults() {
         return _numResults;
-    }        
+    }
+    
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return columnIndex == SearchTableColumns.NAME_IDX;
+    }
 }
 

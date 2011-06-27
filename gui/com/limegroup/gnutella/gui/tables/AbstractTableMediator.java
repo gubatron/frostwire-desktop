@@ -148,6 +148,8 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
      * Variable for the IconAndNameRenderer for all components.
      */
     private static TableCellRenderer ICON_AND_NAME_RENDERER;
+    
+    private static TableCellRenderer ACTION_ICON_AND_NAME_RENDERER;
         
     /**
      * Variable for the default renderer for all components.
@@ -372,6 +374,7 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         TABLE.setDefaultRenderer(ColoredCell.class, getColorRenderer());
         TABLE.setDefaultRenderer(Icon.class, getIconRenderer());
         TABLE.setDefaultRenderer(IconAndNameHolder.class, getIconAndNameRenderer());
+        TABLE.setDefaultRenderer(ActionIconAndNameHolder.class, getActionIconAndNameRenderer());
         TABLE.setDefaultRenderer(Object.class, getDefaultRenderer());
         TABLE.setDefaultRenderer(CenteredHolder.class, getCenterRenderer());
         TABLE.setDefaultRenderer(SpeedRenderer.class, getSpeedRenderer());
@@ -963,6 +966,13 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         }
         return ICON_AND_NAME_RENDERER;
     }
+	
+	protected TableCellRenderer getActionIconAndNameRenderer() {
+	    if (ACTION_ICON_AND_NAME_RENDERER == null) {
+	        ACTION_ICON_AND_NAME_RENDERER = new ActionIconAndNameRenderer();
+	    }
+	    return ACTION_ICON_AND_NAME_RENDERER;
+	}
 	
 	protected TableCellRenderer getDefaultRenderer() {
         if (DEFAULT_RENDERER == null) {

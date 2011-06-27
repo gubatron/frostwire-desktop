@@ -16,6 +16,7 @@ import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.search.Selector.PropertyType;
 import com.limegroup.gnutella.gui.tables.AbstractDataLine;
+import com.limegroup.gnutella.gui.tables.ActionIconAndNameHolder;
 import com.limegroup.gnutella.gui.tables.IconAndNameHolder;
 import com.limegroup.gnutella.gui.tables.IconAndNameHolderImpl;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
@@ -331,7 +332,8 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
         case SearchTableColumns.TYPE_IDX:
             return getIcon();
         case SearchTableColumns.NAME_IDX:
-            return new ResultNameHolder(this);
+            return new ActionIconAndNameHolder(getIcon(), getFilenameNoExtension());
+            //return new ResultNameHolder(this);
         case SearchTableColumns.SIZE_IDX:
             return new SizeHolder(getSize());
         case SearchTableColumns.SOURCE_IDX:
