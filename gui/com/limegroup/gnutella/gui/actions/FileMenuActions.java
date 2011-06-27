@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
+import com.frostwire.gui.bittorrent.SendFileDialog;
 import com.limegroup.gnutella.gui.AutoCompleteTextField;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.ClearableAutoCompleteTextField;
@@ -29,12 +30,12 @@ import com.limegroup.gnutella.gui.download.TorrentFileFilter;
 import com.limegroup.gnutella.gui.search.MagnetClipboardListener;
 
 public class FileMenuActions {
-    
+
     static final int SPACE = 6;
 
     /** Shows the File, Open Magnet or Torrent dialog box to let the user enter a magnet or torrent. */
     public static class OpenMagnetTorrentAction extends AbstractAction {
-        
+
         /**
          * 
          */
@@ -54,7 +55,7 @@ public class FileMenuActions {
 
             // clear input before dialog is shown
             PATH_FIELD.setText(MagnetClipboardListener.getMagnetOrTorrentURLFromClipboard());
-            
+
             // display modal dialog centered
             dialog.pack();
             GUIUtils.centerOnScreen(dialog);
@@ -71,13 +72,13 @@ public class FileMenuActions {
 
             dialog = new JDialog(GUIMediator.getAppFrame(), I18n.tr("Download .Torrent or Magnet"), true);
             dialog.addWindowListener(new OpenDialogWindowAdapter());
-            JPanel panel = (JPanel)dialog.getContentPane();
+            JPanel panel = (JPanel) dialog.getContentPane();
             GUIUtils.addHideAction(panel);
             panel.setLayout(new GridBagLayout());
             GridBagConstraints constraints = new GridBagConstraints();
-            
+
             panel.setBorder(new EmptyBorder(2 * SPACE, SPACE, SPACE, SPACE));
-            
+
             // download icon
             constraints = new GridBagConstraints();
             constraints.gridx = 0;
@@ -89,7 +90,7 @@ public class FileMenuActions {
             constraints.anchor = GridBagConstraints.CENTER;
             constraints.insets = new Insets(0, 0, 2 * SPACE, 0);
             panel.add(new JLabel(IconManager.instance().getIconForButton("SEARCH_DOWNLOAD")), constraints);
-            
+
             // instructions label
             constraints = new GridBagConstraints();
             constraints.gridx = 1;
@@ -101,8 +102,7 @@ public class FileMenuActions {
             constraints.anchor = GridBagConstraints.NORTHWEST;
             constraints.fill = GridBagConstraints.HORIZONTAL;
             constraints.insets = new Insets(0, SPACE, 2 * SPACE, 0);
-            panel.add(new MultiLineLabel(I18n.tr(
-                    "Type a magnet link, or the path or Web address of a torrent file, and FrostWire will download it for you."),
+            panel.add(new MultiLineLabel(I18n.tr("Type a magnet link, or the path or Web address of a torrent file, and FrostWire will download it for you."),
                     true), constraints);
 
             // open label
@@ -110,7 +110,7 @@ public class FileMenuActions {
             constraints.gridx = 0;
             constraints.gridy = 1;
             panel.add(new JLabel(I18n.tr("Open:")), constraints);
-            
+
             // spacer between the open label and the text field
             constraints = new GridBagConstraints();
             constraints.gridx = 1;
@@ -121,9 +121,7 @@ public class FileMenuActions {
             constraints.insets = new Insets(0, SPACE, 0, 0);
             panel.add(PATH_FIELD, constraints);
 
-            ButtonRow row = new ButtonRow(
-                    new Action[] { new PasteAction(), new BrowseAction() },
-                    ButtonRow.X_AXIS, ButtonRow.LEFT_GLUE);
+            ButtonRow row = new ButtonRow(new Action[] { new PasteAction(), new BrowseAction() }, ButtonRow.X_AXIS, ButtonRow.LEFT_GLUE);
 
             constraints = new GridBagConstraints();
             constraints.gridx = 1;
@@ -132,7 +130,7 @@ public class FileMenuActions {
             constraints.insets = new Insets(SPACE, SPACE, 0, 0);
             constraints.anchor = GridBagConstraints.WEST;
             panel.add(row, constraints);
-            
+
             // add vertical spacer/spring
             constraints = new GridBagConstraints();
             constraints.fill = GridBagConstraints.BOTH;
@@ -142,9 +140,7 @@ public class FileMenuActions {
             constraints.weighty = 1;
             panel.add(new Canvas(), constraints);
 
-            row = new ButtonRow(
-                    new Action[] { new OkAction(), new CancelAction() },
-                    ButtonRow.X_AXIS, ButtonRow.LEFT_GLUE);
+            row = new ButtonRow(new Action[] { new OkAction(), new CancelAction() }, ButtonRow.X_AXIS, ButtonRow.LEFT_GLUE);
 
             constraints = new GridBagConstraints();
             constraints.gridx = 4;
@@ -152,10 +148,10 @@ public class FileMenuActions {
             constraints.insets = new Insets(2 * SPACE, 0, 0, 0);
             constraints.anchor = GridBagConstraints.EAST;
             panel.add(row, constraints);
-            
+
             dialog.getRootPane().setDefaultButton(row.getButtonAtIndex(0));
         }
-        
+
         private class PasteAction extends AbstractAction {
 
             /**
@@ -166,12 +162,12 @@ public class FileMenuActions {
             public PasteAction() {
                 super(I18n.tr("Paste"));
             }
-            
+
             public void actionPerformed(ActionEvent a) {
                 PATH_FIELD.paste();
             }
         }
-        
+
         private class BrowseAction extends AbstractAction {
 
             /**
@@ -182,7 +178,7 @@ public class FileMenuActions {
             public BrowseAction() {
                 super(I18n.tr("Browse..."));
             }
-            
+
             public void actionPerformed(ActionEvent a) {
                 File file = FileChooserHandler.getInputFile(GUIMediator.getAppFrame(), TorrentFileFilter.INSTANCE);
                 if (file != null)
@@ -210,9 +206,9 @@ public class FileMenuActions {
                 }
             }
         }
-        
+
         private class CancelAction extends AbstractAction {
-            
+
             /**
              * 
              */
@@ -221,7 +217,7 @@ public class FileMenuActions {
             public CancelAction() {
                 super(I18n.tr("Cancel"));
             }
-            
+
             public void actionPerformed(ActionEvent a) {
                 GUIUtils.getDisposeAction().actionPerformed(a);
             }
@@ -240,22 +236,22 @@ public class FileMenuActions {
      */
     public static boolean openMagnetOrTorrent(final String userText) {
 
-    	if (userText.startsWith("magnet:?xt=urn:btih") || userText.startsWith("http://")) {
-    	    GUIMediator.instance().openTorrentURI(userText);    				
-    		return true;
-    	} else {
-            
+        if (userText.startsWith("magnet:?xt=urn:btih") || userText.startsWith("http://")) {
+            GUIMediator.instance().openTorrentURI(userText);
+            return true;
+        } else {
+
             // See if it's a path to a file on the disk
             File file = new File(userText);
             if (isFileSystemPath(file)) {
-                if(file.exists()) {
+                if (file.exists()) {
                     GUIMediator.instance().openTorrentFile(file); // Open the torrent file
                     return true;
                 } else {
                     // TODO show error dialog telling
                     // user that they entered a bad file name    
                 }
-            // Not a file
+                // Not a file
             }
         }
 
@@ -281,14 +277,14 @@ public class FileMenuActions {
             super(I18n.tr("&Close"));
             putValue(Action.LONG_DESCRIPTION, I18n.tr("Close the program's main window"));
         }
-        
+
         public void actionPerformed(ActionEvent e) {
             GUIMediator.close(false);
         }
     }
-    
+
     public static class ExitAction extends AbstractAction {
-        
+
         /**
          * 
          */
@@ -298,35 +294,35 @@ public class FileMenuActions {
             super(I18n.tr("E&xit"));
             putValue(Action.LONG_DESCRIPTION, I18n.tr("Close and exit the program"));
         }
-        
+
         public void actionPerformed(ActionEvent e) {
             GUIMediator.shutdown();
         }
     }
-    
-    public static class CreateTorrentAction extends AbstractAction {
-		private static final long serialVersionUID = 1494672346951877693L;
-		
-		public CreateTorrentAction() {
-			super(I18n.tr("Create New Torrent"));
-			putValue(Action.LONG_DESCRIPTION,I18n.tr("Create a new .torrent file"));
-		}
 
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			CreateTorrentDialog dlg = new CreateTorrentDialog(GUIMediator.getAppFrame());
-			dlg.setVisible(true);
-		}
-    	
+    public static class CreateTorrentAction extends AbstractAction {
+        private static final long serialVersionUID = 1494672346951877693L;
+
+        public CreateTorrentAction() {
+            super(I18n.tr("Create New Torrent"));
+            putValue(Action.LONG_DESCRIPTION, I18n.tr("Create a new .torrent file"));
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+            CreateTorrentDialog dlg = new CreateTorrentDialog(GUIMediator.getAppFrame());
+            dlg.setVisible(true);
+        }
+
     }
-    
+
     public static class SendFileAction extends AbstractAction {
 
         /**
          * 
          */
         private static final long serialVersionUID = -313458189470318964L;
-        
+
         public SendFileAction() {
             super(I18n.tr("Send File..."));
             putValue(Action.LONG_DESCRIPTION, I18n.tr("Send a file to a friend"));
@@ -334,23 +330,27 @@ public class FileMenuActions {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            SendFileDialog dlg = new SendFileDialog(GUIMediator.getAppFrame(), true);
+            dlg.setVisible(true);
         }
     }
-    
+
     public static class SendFolderAction extends AbstractAction {
 
         /**
          * 
          */
         private static final long serialVersionUID = 3886015102735450048L;
-        
+
         public SendFolderAction() {
             super(I18n.tr("Send Folder..."));
             putValue(Action.LONG_DESCRIPTION, I18n.tr("Send a folder to a friend"));
         }
 
         @Override
-        public void actionPerformed(ActionEvent e) {            
+        public void actionPerformed(ActionEvent e) {
+            SendFileDialog dlg = new SendFileDialog(GUIMediator.getAppFrame(), false);
+            dlg.setVisible(true);
         }
     }
 }
