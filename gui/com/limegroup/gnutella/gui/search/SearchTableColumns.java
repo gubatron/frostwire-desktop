@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.swing.Icon;
 
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.tables.ActionIconAndNameHolder;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 
 /**
@@ -34,7 +35,7 @@ final class SearchTableColumns {
     static final int NAME_IDX = 3;
     private final LimeTableColumn NAME_COLUMN =
         new SearchColumn(NAME_IDX, "RESULT_PANEL_NAME", I18n.tr("Name"),
-                            272, true,  ResultNameHolder.class);
+                            272, true,  ActionIconAndNameHolder.class);
                             
     static final int SIZE_IDX = 4;
     private final LimeTableColumn SIZE_COLUMN =

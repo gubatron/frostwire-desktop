@@ -1,6 +1,8 @@
 package com.limegroup.gnutella.gui.search;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Collections;
 import java.util.Date;
@@ -11,8 +13,11 @@ import java.util.regex.Pattern;
 
 import javax.swing.Icon;
 
+import org.pushingpixels.substance.internal.utils.icon.SubstanceIconFactory;
+
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.limegroup.gnutella.GUID;
+import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.search.Selector.PropertyType;
 import com.limegroup.gnutella.gui.tables.AbstractDataLine;
@@ -52,6 +57,8 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
      * The speed of this line.
      */
     private ResultSpeed _speed = null;
+    
+    private ActionListener _action;
 
     /**
      * The quality of this line.
@@ -82,6 +89,11 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
         _mediaType = NamedMediaType.getFromExtension(getExtension());
         _speed = new ResultSpeed(sr.getSpeed(), sr.isMeasuredSpeed());
         _quality = sr.getQuality();
+        _action = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                GUIMediator.instance().openTorrentSearchResult(getInitializeObject().getWebSearchResult(), true);
+            }
+        };
     }
 
     private void initializeEnd() {
@@ -332,7 +344,7 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
         case SearchTableColumns.TYPE_IDX:
             return getIcon();
         case SearchTableColumns.NAME_IDX:
-            return new ActionIconAndNameHolder(getIcon(), getFilenameNoExtension());
+            return new ActionIconAndNameHolder(getTreeIcon(), _action, getFilenameNoExtension());
             //return new ResultNameHolder(this);
         case SearchTableColumns.SIZE_IDX:
             return new SizeHolder(getSize());
@@ -343,6 +355,10 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
         default:
             return null;
         }
+    }
+    
+    private Icon getTreeIcon() {
+        return SubstanceIconFactory.getTreeIcon(null, true);
     }
 
 

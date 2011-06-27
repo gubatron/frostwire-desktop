@@ -1,5 +1,7 @@
 package com.limegroup.gnutella.gui.tables;
 
+import java.awt.event.ActionListener;
+
 import javax.swing.Icon;
 
 
@@ -12,10 +14,12 @@ import javax.swing.Icon;
 public final class ActionIconAndNameHolder implements Comparable<ActionIconAndNameHolder> {
 	
 	private final Icon _icon;
+	private final ActionListener _action;
 	private final String _name;
 	
-	public ActionIconAndNameHolder(Icon icon, String name) {
+	public ActionIconAndNameHolder(Icon icon, ActionListener action, String name) {
 	    _icon = icon;
+	    _action = action;
 	    _name = name;
     }
 	
@@ -33,5 +37,9 @@ public final class ActionIconAndNameHolder implements Comparable<ActionIconAndNa
 	
 	public String toString() {
 	    return _name;
+    }
+
+    public ActionListener getAction() {
+        return _action;
     }
 }

@@ -636,7 +636,11 @@ public class LimeJTable extends JTable implements JSortTable {
      * Paints the table & a focused row border.
      */
     public void paint(Graphics g) {
-        super.paint(g);
+        try {
+            super.paint(g);
+        } catch (Exception e) {
+            //ignore
+        }
         
         int focusedRow = getFocusedRow(true);
         if(focusedRow != -1 && focusedRow < getRowCount() ) {

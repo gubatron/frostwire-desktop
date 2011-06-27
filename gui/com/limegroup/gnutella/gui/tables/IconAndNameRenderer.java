@@ -42,6 +42,13 @@ public final class IconAndNameRenderer extends SubstanceDefaultTableCellRenderer
         if(in != null) {
             icon = in.getIcon();
             name = in.getName();
+            
+            if (name != null) {
+                String strValue = name.toString();
+                strValue = strValue.replace("<html>", "<html><div width=\"1000000px\">");
+                strValue = strValue.replace("</html>", "</div></html>");
+                name = strValue;
+            }
         }   
         setIcon(icon);
         return super.getTableCellRendererComponent(
