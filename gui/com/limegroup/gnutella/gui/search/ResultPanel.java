@@ -449,7 +449,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
             public void actionPerformed(ActionEvent e) {
                 TableLine[] lines = getAllSelectedLines();
                 if (lines.length == 1 && lines[0] != null) {
-                    GUIMediator.instance().openTorrentURI(lines[0].getInitializeObject().getTorrentURI(), true);
+                    GUIMediator.instance().openTorrentSearchResult(lines[0].getInitializeObject().getWebSearchResult(), true);
                 }
             }
         };

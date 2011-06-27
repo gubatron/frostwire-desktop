@@ -127,4 +127,8 @@ public class SearchEngineSearchResult extends AbstractSearchResult {
     public SearchEngine getSearchEngine() {
         return _searchEngine;
     }
+
+    public WebSearchResult getWebSearchResult() {
+        return _item;
+    }
 }

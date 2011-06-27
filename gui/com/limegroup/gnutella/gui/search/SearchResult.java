@@ -7,6 +7,7 @@ import javax.swing.JPopupMenu;
 
 import org.limewire.collection.ApproximateMatcher;
 
+import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.SpeedConstants;
 
@@ -158,4 +159,6 @@ public interface SearchResult {
     public int getSeeds();
     
     public SearchEngine getSearchEngine();
+    
+    public WebSearchResult getWebSearchResult();
 }

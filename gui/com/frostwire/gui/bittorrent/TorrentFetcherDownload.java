@@ -194,6 +194,11 @@ public class TorrentFetcherDownload implements BTDownload {
                         });
                         if (filesSelection == null) {
                             _state = STATE_CANCELED;
+                            GUIMediator.safeInvokeLater(new Runnable() {
+                                public void run() {
+                                    BTDownloadMediator.instance().remove(TorrentFetcherDownload.this);
+                                }
+                            });
                             return;
                         }
                     }
