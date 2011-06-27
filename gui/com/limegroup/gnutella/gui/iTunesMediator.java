@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
 import org.apache.commons.logging.Log;
@@ -17,6 +19,7 @@ import org.limewire.util.CommonUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
+import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.iTunesImportSettings;
 import com.limegroup.gnutella.settings.iTunesSettings;
@@ -71,7 +74,9 @@ public final class iTunesMediator {
             if (LOG.isDebugEnabled())
                 LOG.debug("File: '" + file + "' does not exist");
             return;
-        } 
+        }
+        
+        
         
         File [] files;
         if (file.isDirectory()) {
@@ -85,6 +90,18 @@ public final class iTunesMediator {
         if (files.length == 0) {
         	return;
         }
+        
+        //remove incomplete files from files.
+        Set<File> incompleteFiles = TorrentUtil.getIncompleteFiles();
+        List<File> completeFiles = new ArrayList<File>(files.length);
+        for (File f : files) {
+        	if (incompleteFiles.contains(f))
+        		continue;
+        	
+        	completeFiles.add(f);
+        }
+        
+        files = completeFiles.toArray(new File[0]);
         
         if (OSUtils.isMacOSX()) {
         	for (File toAdd : files) {

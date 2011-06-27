@@ -85,7 +85,6 @@ public class Main {
 	private static Frame showInitialSplash() {
 	    Frame splashFrame = null;
         Image image = null;
-        //URL imageURL = ClassLoader.getSystemResource("org/limewire/gui/images/splash.png");
         URL imageURL = getChosenSplashURL();
         if (imageURL != null) {
             image = Toolkit.getDefaultToolkit().createImage(imageURL);
@@ -94,7 +93,6 @@ public class Main {
             }
         }
 
-	    //System.out.println("Main.java showInitialSplash()");
 	    return splashFrame;
     }
 	
