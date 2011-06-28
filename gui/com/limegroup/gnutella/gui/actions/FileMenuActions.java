@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
-import com.frostwire.gui.bittorrent.SendFileDialog;
+import com.frostwire.gui.bittorrent.SendFileProgressDialog;
 import com.limegroup.gnutella.gui.AutoCompleteTextField;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.ClearableAutoCompleteTextField;
@@ -330,7 +330,7 @@ public class FileMenuActions {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            SendFileDialog dlg = new SendFileDialog(GUIMediator.getAppFrame(), true);
+            SendFileProgressDialog dlg = new SendFileProgressDialog(GUIMediator.getAppFrame(), true);
             dlg.setVisible(true);
         }
     }
@@ -349,7 +349,7 @@ public class FileMenuActions {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            SendFileDialog dlg = new SendFileDialog(GUIMediator.getAppFrame(), false);
+        	SendFileProgressDialog dlg = new SendFileProgressDialog(GUIMediator.getAppFrame(), false);
             dlg.setVisible(true);
         }
     }
