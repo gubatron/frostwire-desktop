@@ -41,7 +41,6 @@ public class SendFileProgressDialog extends JDialog {
     private final boolean _singleFileMode;
 	private Container _container;
 	private TOTorrentCreator _torrentCreator;
-	private String _task_description;
 	private int _percent_complete;
 
     public SendFileProgressDialog(JFrame frame, boolean singleFileMode) {
@@ -139,7 +138,7 @@ public class SendFileProgressDialog extends JDialog {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setMultiSelectionEnabled(false);
         fileChooser.setFileSelectionMode(_singleFileMode ? JFileChooser.FILES_ONLY : JFileChooser.DIRECTORIES_ONLY);
-
+        fileChooser.setDialogTitle((_singleFileMode) ? I18n.tr("Select the file you want to send") : I18n.tr("Select the folder you want to send"));
         int result = fileChooser.showOpenDialog(this);
 
         if (result == JFileChooser.APPROVE_OPTION) {
@@ -161,17 +160,12 @@ public class SendFileProgressDialog extends JDialog {
 		GUIMediator.safeInvokeLater(new Runnable() {
 			@Override
 			public void run() {
-				_progressBar.setString(_task_description + " - " + _percent_complete + " %");
+				_progressBar.setString("Preparing files (" + _percent_complete + " %)");
 				_progressBar.setValue(_percent_complete);
 			}
 		});
 	}
 	
-    protected void torrentCreator_reportCurrentTask(String task_description) {
-    	_task_description = task_description;
-    	updateProgressBarText();
-    }
-
     protected void torrentCreator_reportProgress(int percent_complete) {
     	_percent_complete = percent_complete;
     	updateProgressBarText();
@@ -190,7 +184,6 @@ public class SendFileProgressDialog extends JDialog {
                 }
 
                 public void reportCurrentTask(String task_description) {
-                    torrentCreator_reportCurrentTask(task_description);
                 }
             });
             

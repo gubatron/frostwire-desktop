@@ -74,9 +74,9 @@ public class ShareTorrentDialog extends JDialog implements ClipboardOwner {
 		TOTorrentFile[] files = _torrent.getFiles();
 		boolean folderTorrent = files.length > 1;
 		_introLabel = new JLabel(folderTorrent ? String.format(
-				I18n.tr("Share the download link for your \"%s\" folder"),
+				I18n.tr("Use the following text to share the \"%s\" folder"),
 				torrent_name) : String.format(String.format(
-				"Share the download link for your \"%s\" file", torrent_name)));
+				"Use the following text to share the \"%s\" file", torrent_name)));
 		_introLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
 		_container.add(_introLabel, c);
 
@@ -161,7 +161,7 @@ public class ShareTorrentDialog extends JDialog implements ClipboardOwner {
 	}
 
 	private void setupWindow() {
-		setTitle(I18n.tr("Share the download link."));
+		setTitle(I18n.tr("All done! Now share the link"));
 
 		Dimension prefDimension = new Dimension(540, 300);
 
