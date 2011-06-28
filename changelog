@@ -1,10 +1,12 @@
 frostwire (5.0.6) stable; urgency=high
  
-  * UX upgrade, we now have a [+] icon to show partial download dialog.
+  * UX upgrade, we now have a [+] icon next to search result file names to 
+    show partial download dialog.
   * UX update on partial download dialog. Includes new text filter.
   * UX fix - Library search now also looks for .torrents on "Torrents" folder.
   * UX fix - when a partial download is cancelled, the entry is removed
     from transfers.
+  * UX fix - Mac OSX file menu does no longer show "Exit" action.
   * Fixes bug where incomplete files would be imported to iTunes.
 
  -- FrostWire Team <contact@frostwire.com>  Mon, 27 Jun 2011 10:57:00 -0500
