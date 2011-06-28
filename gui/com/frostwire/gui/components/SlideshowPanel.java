@@ -423,7 +423,6 @@ public class SlideshowPanel extends JPanel {
 	 * @param index
 	 */
 	public void switchToSlide(int index) {
-		System.out.println("switchToSlide ["+index+"]");
 		_stoppedTransitions = true;
 		_loadingNextImage = false;
 		_currentSlideIndex = index;
