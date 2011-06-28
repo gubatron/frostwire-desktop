@@ -127,9 +127,9 @@ final class ViewMenu extends AbstractMenu {
         public void actionPerformed(ActionEvent e) {
             int inc = ThemeSettings.FONT_SIZE_INCREMENT.getValue();
             
-            if (inc <= -4 || inc >= 4) {
-                return;
-            }
+//            if (inc <= -4 || inc >= 4) {
+//                return;
+//            }
             
             inc += increment;
             ThemeSettings.FONT_SIZE_INCREMENT.setValue(inc);

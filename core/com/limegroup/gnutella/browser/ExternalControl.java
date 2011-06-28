@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
@@ -186,15 +188,30 @@ public class ExternalControl {
             String hash = (String) lc_params.get("hash");
 
             if (hash != null) {
-                handleTorrentMagnetRequest("magnet:?xt=urn:btih:" + hash);
+                writeHTTPReply(os,"checkResult(1);");
+            	handleTorrentMagnetRequest("magnet:?xt=urn:btih:" + hash);
                 return true;
             }
         }
 
+        writeHTTPReply(os,"checkResult(0);");
+        
         return true;
     }
 
-    public String preprocessArgs(String args[]) {
+    private void writeHTTPReply(OutputStream os, String string) {
+    	PrintWriter pw = new PrintWriter(new OutputStreamWriter(os));
+    	String NL = "\015\012";
+		pw.print( "HTTP/1.1 200 OK" + NL);
+		pw.print( "Cache-Control: no-cache" + NL) ;
+		pw.print( "Pragma: no-cache" + NL);
+		pw.print( "Content-Type: text/javascript" + NL);
+		pw.print( "Content-Length: " + string.length() + NL + NL);
+		pw.write(string);
+		pw.flush();
+	}
+
+	public String preprocessArgs(String args[]) {
 	    LOG.trace("enter proprocessArgs");
 
 	    StringBuilder arg = new StringBuilder();

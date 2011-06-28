@@ -35,7 +35,7 @@ final class HelpMenu extends AbstractMenu {
      *            to the menu
      */
     HelpMenu() {
-        super(I18n.tr("&Help"));
+        super(I18n.tr("Sharing &Help"));
 
         addMenuItem(new OpenLinkAction("http://www.frostwire.com/?id=faq", I18n.tr("&FAQ"), I18n.tr("Frequently Asked Questions for FrostWire")));
 

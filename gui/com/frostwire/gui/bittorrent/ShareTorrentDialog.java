@@ -157,7 +157,7 @@ public class ShareTorrentDialog extends JDialog implements ClipboardOwner {
 		_actions[2] = new CloseAction();
 
 		// Load icons for actions
-		// loadIconForAction(_actions[0],"http://static.frostwire.com/images/20x20twitter.png");
+		loadIconForAction(_actions[0],"http://static.frostwire.com/images/20x20twitter.png");
 	}
 
 	private void setupWindow() {
