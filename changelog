@@ -28,6 +28,7 @@ frostwire (5.0.4) stable; urgency=high
   * UI upgrade and bug fixes on Phone & Tablets tab.
   * UI upgrade, Ability to rebuild "FrostWire" playlist on iTunes.
   * UI upgrade, Replaced legacy skinning code for "Substance" skinning system.
+  * Core update, audio playback is now done using mplayer.
   * Core update, Vuze core integration with transfer manager 
     re-written from scratch.
   * Core update, No Gnutella support. Multiple library dependencies gone.
