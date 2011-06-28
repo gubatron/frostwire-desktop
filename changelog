@@ -3,20 +3,78 @@ frostwire (5.0.6) stable; urgency=high
   * UX upgrade, we now have a [+] icon next to search result file names to 
     show partial download dialog.
   * UX update on partial download dialog. Includes new text filter.
-  * UX fix - Library search now also looks for .torrents on "Torrents" folder.
-  * UX fix - when a partial download is cancelled, the entry is removed
+  * UX fix, Library search now also looks for .torrents on "Torrents" folder.
+  * UX fix, when a partial download is cancelled, the entry is removed
     from transfers.
-  * UX fix - Mac OSX file menu does no longer show "Exit" action.
-  * Fixes bug where incomplete files would be imported to iTunes.
+  * UX fix, Mac OSX file menu does no longer show "Exit" action.
+  * Fixes bug, incomplete files are no longer exported to iTunes playlist.
 
  -- FrostWire Team <contact@frostwire.com>  Mon, 27 Jun 2011 10:57:00 -0500
 
 frostwire (5.0.4) stable; urgency=high
 
-  * UX Only BitTorrent
+  * UI upgrade, Create and seed New Torrents.
+  * UI upgrade, Ability to throttle torrent transfer speeds
+  * UI upgrade, Copy info hash from torrent.
+  * UI upgrade, Copy magnet link url from torrent. 
+  * UI upgrade, Searchable library. Searches recursively downloaded
+    files, folders and torrents.
+  * UI upgrade, Search results filterable by Torrent Search Engine.
+  * UI upgrade, Search results filterable by file size.
+  * UI upgrade, Search results filterable by number of seeds.
+  * UI upgrade, Search results filterable by keywords as you type.
+  * UI upgrade, Ability to download partial files.
+  * UI upgrade, Promotional slides can now be switched by the user.
+  * UI upgrade and bug fixes on Phone & Tablets tab.
+  * UI upgrade, Ability to rebuild "FrostWire" playlist on iTunes.
+  * UI upgrade, Replaced legacy skinning code for "Substance" skinning system.
+  * Core update, Vuze core integration with transfer manager 
+    re-written from scratch.
+  * Core update, No Gnutella support. Multiple library dependencies gone.
 
- -- FrostWire Team <contact@frostwire.com>  Thu, 24 Jun 2011 12:00:00 -0500
-	
+ -- FrostWire Team <contact@frostwire.com>  Fri, 24 Jun 2011 12:00:00 -0500
+
+frostwire (4.21.8) stable; urgency=high
+
+  * Fixes a possible freeze reported by some users when the configuration
+    wizard is shown.
+  * Fixes issue when a user changes default Gnutella Save Folder
+    and unchecks Sharing finished downloads. Individually shared
+    files from the old Save Folder would still be shared.
+    Now all individually shared files will be unshared if you uncheck
+    this setting.
+  * Now users don’t have to re-start to stop seeding after they’ve changed
+    their torrent Seeding Configuration. All torrents old and new will stop
+    seeding as soon as the setting is applied.
+  * Better wording to explain on which networks files are being shared on,
+    Gnutella or BitTorrent.
+  * Changed color of “Sharing Options” gear icon to blue, gray
+    icon may have seemed as if the button was disabled.
+  * Added “Sharing Options” gear button on Search Tab. It’s only visible
+    once a search has been started.
+  * Added Help Menu options to learn about how to share/unshare files,
+    torrent seeding, and how to avoid being scammed into paying for
+    FrostWire. DO NOT PAY FOR FROSTWIRE.
+
+ -— FrostWire Team <contact@frostwire.com>  Thu, 9 June 2011 17:40:20 -0500
+
+frostwire (4.21.7) stable; urgency=high
+
+  * Makes sure cancelling torrents that have finished are not deleted.
+  * Folders created by torrents that are cancelled during download are deleted
+    to avoid any unwanted file sharing.
+  * Fixes a bug when migrating from an older version of FrostWire on which 
+    previously Saved and individually shared files would still be shared after
+    not sharing finished downloads on the migration wizard.
+  * Fixes a bug on configuration screens that could make the application freeze
+    for a few seconds before moving towards the next screen.
+  * Migration wizard will always be shown to make sure users are aware of what
+    they’re sharing.
+  * Sharing completed files is always set to off by default on the 
+    configuration wizard.
+
+ -— FrostWire Team <contact@frostwire.com>  Mon, 16 May 2011 17:10:25 -0500
+
 frostwire (4.21.6) stable; urgency=high
 
   * Fixes a bug where some Debian systems that didn't support the 
