@@ -40,7 +40,7 @@ public class LimeWireCore {
     }
     
     public ExternalControl getExternalControl() {
-        return new ExternalControl(LimeWireCoreModule.instance(null).getActivityCallback());
+        return ExternalControl.instance(LimeWireCoreModule.instance(null).getActivityCallback());
     }
     
     public LimeCoreGlue getLimeCoreGlue() {
