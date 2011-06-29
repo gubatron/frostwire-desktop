@@ -276,7 +276,9 @@ public final class OptionsConstructor {
     @SuppressWarnings({ "unchecked" })
     private OptionsTreeNode initializePanels() {
         //bittorrent
-    	 OptionsTreeNode node = addOption(OptionsMediator.ROOT_NODE_KEY,BITTORRENT_KEY, I18n.tr("BitTorrent"), TorrentSaveFolderPaneItem.class, TorrentSeedingSettingPaneItem.class, TorrentDetailsPaneItem.class, TorrentDownloadSpeedPaneItem.class, TorrentConnectionPaneItem.class);
+    	addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY,BITTORRENT_KEY, I18n.tr("BitTorrent")); 
+    	OptionsTreeNode node = addOption(BITTORRENT_KEY,BITTORRENT_BASIC_KEY,I18n.tr("Basic"),TorrentSaveFolderPaneItem.class, TorrentSeedingSettingPaneItem.class, TorrentDetailsPaneItem.class);
+    	addOption(BITTORRENT_KEY,BITTORRENT_ADVANCED_KEY,I18n.tr("Advanced"),TorrentDownloadSpeedPaneItem.class, TorrentConnectionPaneItem.class);
 
         //community chat
 		addOption(OptionsMediator.ROOT_NODE_KEY, CHAT_KEY, I18n.tr("Community Chat"), ChatCommunityPaneItem.class);
