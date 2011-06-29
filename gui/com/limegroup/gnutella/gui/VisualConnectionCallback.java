@@ -8,12 +8,12 @@ import org.gudy.azureus2.core3.download.DownloadManager;
 
 import com.frostwire.gui.bittorrent.BTDownload;
 import com.limegroup.gnutella.ActivityCallback;
+import com.limegroup.gnutella.MagnetOptions;
 import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.browser.MagnetOptions;
+import com.limegroup.gnutella.UpdateInformation;
 import com.limegroup.gnutella.gui.search.SearchInformation;
 import com.limegroup.gnutella.gui.search.SearchMediator;
 import com.limegroup.gnutella.util.QueryUtils;
-import com.limegroup.gnutella.version.UpdateInformation;
 
 /**
  * This class is the gateway from the backend to the frontend.  It

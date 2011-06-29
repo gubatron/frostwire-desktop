@@ -7,8 +7,8 @@ import java.io.IOException;
 
 import javax.swing.JComponent;
 
-import com.limegroup.gnutella.browser.ExternalControl;
-import com.limegroup.gnutella.browser.MagnetOptions;
+import com.limegroup.gnutella.ExternalControl;
+import com.limegroup.gnutella.MagnetOptions;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.search.MagnetClipboardListener;
 

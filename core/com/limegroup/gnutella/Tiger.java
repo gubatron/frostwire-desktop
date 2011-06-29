@@ -14,7 +14,7 @@
  * put("MessageDigest.Tiger", "com.limegroup.gnutella.security.Tiger");
  */
  
-package com.limegroup.gnutella.security;
+package com.limegroup.gnutella;
 
 import java.security.DigestException;
 import java.security.MessageDigest;

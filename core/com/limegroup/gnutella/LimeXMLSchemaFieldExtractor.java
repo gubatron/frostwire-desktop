@@ -1,4 +1,4 @@
-package com.limegroup.gnutella.xml;
+package com.limegroup.gnutella;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,6 +12,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
+import com.limegroup.gnutella.util.XMLStringUtils;
 
 /**
  * Helper class to extract field names from a schema document

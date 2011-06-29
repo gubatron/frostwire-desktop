@@ -10,14 +10,13 @@ import java.util.MissingResourceException;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
+import com.limegroup.gnutella.LimeXMLSchema;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
-import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.XMLUtils;
 import com.limegroup.gnutella.gui.tables.IconAndNameHolder;
-import com.limegroup.gnutella.gui.xml.XMLUtils;
-import com.limegroup.gnutella.xml.LimeXMLSchema;
 
 /**
  * Associates a MediaType with a LimeXMLSchema.
@@ -26,6 +25,9 @@ import com.limegroup.gnutella.xml.LimeXMLSchema;
  * and retrieving the media type associated with a specific TableLine.
  */
 public class NamedMediaType implements IconAndNameHolder, Comparable<NamedMediaType> {
+    
+    /** image resource directory. */
+    private static final String IMAGE_RESOURCE_PATH = "org/limewire/xml/image/";
 
     /**
      * The cached mapping of description -> media type,
@@ -200,7 +202,7 @@ public class NamedMediaType implements IconAndNameHolder, Comparable<NamedMediaT
         if(type == MediaType.getAnyTypeMediaType())
             icon = GUIMediator.getThemeImage("lime");
         else {
-            String location = GuiCoreMediator.getLimeXMLProperties().getXMLImagesResourcePath() + type.getMimeType();
+            String location = IMAGE_RESOURCE_PATH + type.getMimeType();
             icon = GUIMediator.getImageFromResourcePath(location);
             if(icon == null) {
                 return new GUIUtils.EmptyIcon(getName(), 16, 16);

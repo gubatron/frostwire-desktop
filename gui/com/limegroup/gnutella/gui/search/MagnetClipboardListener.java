@@ -23,8 +23,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.limewire.concurrent.ExecutorsHelper;
 
+import com.limegroup.gnutella.MagnetOptions;
 import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.browser.MagnetOptions;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.util.QueryUtils;
 

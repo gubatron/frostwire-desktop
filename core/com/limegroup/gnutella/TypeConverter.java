@@ -1,4 +1,4 @@
-package com.limegroup.gnutella.xml;
+package com.limegroup.gnutella;
 
 import java.util.Date;
 import java.util.HashMap;

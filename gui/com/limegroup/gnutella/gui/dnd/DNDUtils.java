@@ -17,7 +17,7 @@ import java.util.StringTokenizer;
 import com.limegroup.gnutella.gui.library.LibraryTableTransferable;
 import com.limegroup.gnutella.gui.library.LibraryTreeTransferable;
 import com.limegroup.gnutella.gui.playlist.PlaylistMediator.PlaylistTransferable;
-import com.limegroup.gnutella.http.URIUtils;
+import com.limegroup.gnutella.util.URIUtils;
 
 /**
  * Static helper class with DND tasks that provides methods for handling

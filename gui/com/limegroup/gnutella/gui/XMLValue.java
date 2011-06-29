@@ -1,6 +1,6 @@
-package com.limegroup.gnutella.gui.xml;
+package com.limegroup.gnutella.gui;
 
-import com.limegroup.gnutella.xml.SchemaFieldInfo;
+import com.limegroup.gnutella.SchemaFieldInfo;
 
 // Marks an object as being an XMLValue for tables.
 public class XMLValue implements Comparable<XMLValue> {

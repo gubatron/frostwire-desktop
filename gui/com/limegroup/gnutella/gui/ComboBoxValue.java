@@ -1,4 +1,4 @@
-package com.limegroup.gnutella.gui.xml;
+package com.limegroup.gnutella.gui;
 
 import org.limewire.collection.NameValue;
 

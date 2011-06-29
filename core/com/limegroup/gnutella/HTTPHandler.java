@@ -1,4 +1,4 @@
-package com.limegroup.gnutella.browser;
+package com.limegroup.gnutella;
 
 import java.io.IOException;
 import java.io.OutputStream;

@@ -1,6 +1,5 @@
-package com.limegroup.gnutella.version;
+package com.limegroup.gnutella;
 
-import com.limegroup.gnutella.URN;
 
 public interface DownloadInformation {
     

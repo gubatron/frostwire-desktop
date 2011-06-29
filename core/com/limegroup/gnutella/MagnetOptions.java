@@ -1,4 +1,4 @@
-package com.limegroup.gnutella.browser;
+package com.limegroup.gnutella;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,9 +17,8 @@ import java.util.StringTokenizer;
 
 import org.limewire.util.FileUtils;
 
-import com.limegroup.gnutella.URN;
-import com.limegroup.gnutella.http.URIUtils;
 import com.limegroup.gnutella.util.EncodingUtils;
+import com.limegroup.gnutella.util.URIUtils;
 import com.limegroup.gnutella.util.URLDecoder;
 
 /**
@@ -56,48 +55,6 @@ public class MagnetOptions implements Serializable {
 	private transient URN urn;
 	private transient String extractedFileName;
 	private transient List<URN> guidUrns;
-	
-	/**
-	 * Creates a MagnetOptions object from a several parameters.
-	 * <p>
-	 * The resulting MagnetOptions might not be 
-	 * {@link #isDownloadable() downloadable}.
-	 * @param keywordTopics can be <code>null</code>
-	 * @param fileName can be <code>null</code>
-	 * @param urn can be <code>null</code>
-	 * @param defaultURLs can be <code>null</code>
-	 * @return
-	 */
-	public static MagnetOptions createMagnet(String keywordTopics, String fileName,
-											 URN urn, String[] defaultURLs) {
-		Map<Option, List<String>> map = new HashMap<Option, List<String>>();
-        List<String> kt = new ArrayList<String>(1);
-        kt.add(keywordTopics);
-		map.put(Option.KT, kt);
-        List<String> dn = new ArrayList<String>(1);
-        dn.add(fileName);
-		map.put(Option.DN, dn);
-		if (urn != null) {
-			addAppend(map, Option.XT, urn.httpStringValue());
-		}
-		if (defaultURLs != null) {
-			for (int i = 0; i < defaultURLs.length; i++) {
-				addAppend(map, Option.AS, defaultURLs[i]);
-			}
-		}
-		MagnetOptions magnet = new MagnetOptions(map);
-		magnet.urn = urn;
-		if (defaultURLs != null) {
-			// copy array to protect against outside changes
-			magnet.defaultURLs = new String[defaultURLs.length];
-			System.arraycopy(defaultURLs, 0, magnet.defaultURLs, 0, 
-					magnet.defaultURLs.length);
-		}
-		else {
-			magnet.defaultURLs = new String[0];
-		}
-		return magnet;
-	}
 
     /**
      * Allows multiline parsing of magnet links.

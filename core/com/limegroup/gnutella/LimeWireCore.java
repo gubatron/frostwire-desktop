@@ -2,9 +2,6 @@ package com.limegroup.gnutella;
 
 import org.limewire.lifecycle.ServiceRegistry;
 
-import com.limegroup.gnutella.browser.ExternalControl;
-import com.limegroup.gnutella.xml.LimeXMLProperties;
-
 /**
  * Contains mostly all references to singletons within LimeWire.
  * This class should only be used if it is not possible to inject
@@ -29,10 +26,6 @@ public class LimeWireCore {
     
     public DownloadManager getDownloadManager() {
         return LimeWireCoreModule.instance(null).getDownloadManager();
-    }
-    
-    public LimeXMLProperties getLimeXMLProperties() {
-        return LimeXMLProperties.instance();
     }
     
     public LifecycleManager getLifecycleManager() {

@@ -1,4 +1,4 @@
-package com.limegroup.gnutella.gui.xml;
+package com.limegroup.gnutella.gui;
 
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
@@ -13,10 +13,9 @@ import javax.swing.undo.UndoManager;
 import org.limewire.collection.NameValue;
 import org.limewire.util.I18NConvert;
 
-import com.limegroup.gnutella.gui.AutoCompleteTextField;
+import com.limegroup.gnutella.LimeXMLSchema;
+import com.limegroup.gnutella.SchemaFieldInfo;
 import com.limegroup.gnutella.util.QueryUtils;
-import com.limegroup.gnutella.xml.LimeXMLSchema;
-import com.limegroup.gnutella.xml.SchemaFieldInfo;
 
 /**
  * A panel that is used to gather information from the user about

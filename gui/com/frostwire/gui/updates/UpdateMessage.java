@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.security.MessageDigest;
 import java.util.Date;
 
-import com.limegroup.gnutella.security.SHA1;
+import com.limegroup.gnutella.SHA1;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 
 /** POJO to represent an UpdateMessage. */

@@ -23,11 +23,6 @@ import org.limewire.io.IOUtils;
 import org.limewire.util.Base32;
 import org.limewire.util.SystemUtils;
 
-import com.limegroup.gnutella.http.HTTPConstants;
-import com.limegroup.gnutella.http.HTTPHeaderValue;
-import com.limegroup.gnutella.security.SHA1;
-import com.limegroup.gnutella.security.MerkleTree;
-import com.limegroup.gnutella.security.Tiger;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 /**
@@ -43,7 +38,7 @@ import com.limegroup.gnutella.settings.SharingSettings;
  * @see FileDesc
  * @see java.io.Serializable
  */
-public final class URN implements HTTPHeaderValue, Serializable {
+public final class URN implements Serializable {
     
     /** The range of all types for URNs. */
     public static enum Type {        
@@ -163,30 +158,6 @@ public final class URN implements HTTPHeaderValue, Serializable {
 	 * (Currently 5 minutes).
 	 */
 	public static final int MIN_IDLE_TIME = 5 * 60 * 1000;
-
-	/**
-	 * Cached constant to avoid making unnecessary string allocations
-	 * in validating input.
-	 */
-	private static final String SPACE = " ";
-
-	/**
-	 * Cached constant to avoid making unnecessary string allocations
-	 * in validating input.
-	 */
-	private static final String QUESTION_MARK = "?";
-
-	/**
-	 * Cached constant to avoid making unnecessary string allocations
-	 * in validating input.
-	 */
-	private static final String SLASH = "/";
-
-	/**
-	 * Cached constant to avoid making unnecessary string allocations
-	 * in validating input.
-	 */
-	private static final String TWO = "2";
 
 	/**
      * Cached constant to avoid making unnecessary string allocations
@@ -357,37 +328,6 @@ public final class URN implements HTTPHeaderValue, Serializable {
 		} else {
 			throw new IOException("could not parse string format: "+sha1String);
 		}
-	}
-
-	/**
-	 * Creates a URN instance from the specified HTTP request line.
-	 * The request must be in the standard from, as specified in
-	 * RFC 2169.  Note that com.limegroup.gnutella.Acceptor parses out
-	 * the first word in the request, such as "GET" or "HEAD."
-	 *
-	 * @param requestLine the URN HTTP request of the form specified in
-	 *  RFC 2169, for example:<p>
-	 * 
-	 * 	/uri-res/N2R?urn:sha1:PLSTHIPQGSSZTS5FJUPAKUZWUGYQYPFB HTTP/1.1
-	 *  /uri-res/N2X?urn:sha1:PLSTHIPQGSSZTS5FJUPAKUZWUGYQYPFB HTTP/1.1
-	 *  /uri-res/N2R?urn:bitprint:QLFYWY2RI5WZCTEP6MJKR5CAFGP7FQ5X.VEKXTRSJPTZJLY2IKG5FQ2TCXK26SECFPP4DX7I HTTP/1.1
-     *  /uri-res/N2X?urn:bitprint:QLFYWY2RI5WZCTEP6MJKR5CAFGP7FQ5X.VEKXTRSJPTZJLY2IKG5FQ2TCXK26SECFPP4DX7I HTTP/1.1	 
-	 *
-	 * @return a new <tt>URN</tt> instance from the specified request, or 
-	 *  <tt>null</tt> if no <tt>URN</tt> could be created
-	 *
-	 * @see com.limegroup.gnutella.AcceptorImpl
-	 */
-	public static URN createSHA1UrnFromHttpRequest(final String requestLine) 
-		throws IOException {
-		if(!URN.isValidUrnHttpRequest(requestLine)) {
-			throw new IOException("INVALID URN HTTP REQUEST");
-		}
-		String urnString = URN.extractUrnFromHttpRequest(requestLine);
-		if(urnString == null) {
-			throw new IOException("COULD NOT CONSTRUCT URN");
-		}	   
-		return createSHA1Urn(urnString);
 	}
     
     /**
@@ -629,126 +569,6 @@ public final class URN implements HTTPHeaderValue, Serializable {
 		} 
 		return false;
 	}
-
-	/**
-	 * Returns a <tt>String</tt> containing the URN for the http request.  For
-	 * a typical SHA1 request, this will return a 41 character URN, including
-	 * the 32 character hash value.
-	 *
-	 * @param requestLine the <tt>String</tt> instance containing the request
-	 * @return a <tt>String</tt> containing the URN for the http request, or 
-	 *  <tt>null</tt> if the request could not be read
-	 */
-	private static String extractUrnFromHttpRequest(final String requestLine) {
-		int qIndex     = requestLine.indexOf(QUESTION_MARK) + 1;
-		int spaceIndex = requestLine.indexOf(SPACE, qIndex);		
-		if((qIndex == -1) || (spaceIndex == -1)) {
-			return null;
-		}
-		return requestLine.substring(qIndex, spaceIndex);
-	}
-
-	/**
-	 * Returns whether or not the http request is valid, as specified in
-	 * HUGE v. 0.93 and IETF RFC 2169.  This verifies everything except
-	 * whether or not the URN itself is valid -- the URN constructor
-	 * can do that, however.
-	 *
-	 * @param requestLine the <tt>String</tt> instance containing the http 
-	 *  request
-	 * @return <tt>true</tt> if the reques is valid, <tt>false</tt> otherwise
-	 */
-	private static boolean isValidUrnHttpRequest(final String requestLine) {
-	    return (URN.isValidLength(requestLine) &&
-				URN.isValidUriRes(requestLine) &&
-				URN.isValidResolutionProtocol(requestLine) && 
-				URN.isValidHTTPSpecifier(requestLine));				
-	}
-
-	/** 
-	 * Returns whether or not the specified http request meets size 
-	 * requirements.
-	 *
-	 * @param requestLine the <tt>String</tt> instance containing the http request
-	 * @return <tt>true</tt> if the size of the request line is valid, 
-	 *  <tt>false</tt> otherwise
-	 */
-	private static final boolean isValidLength(final String requestLine) {
-		int size = requestLine.length();
-		if((size != 63) && (size != 107)) {
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * Returns whether or not the http request corresponds with the standard 
-	 * uri-res request
-	 *
-	 * @param requestLine the <tt>String</tt> instance containing the http request
-	 * @return <tt>true</tt> if the http request includes the standard "uri-res"
-	 *  (case-insensitive) request, <tt>false</tt> otherwise
-	 */
-	private static final boolean isValidUriRes(final String requestLine) {
-		int firstSlash = requestLine.indexOf(SLASH);
-		if(firstSlash == -1 || firstSlash == requestLine.length()) {
-			return false;
-		}
-		int secondSlash = requestLine.indexOf(SLASH, firstSlash+1);
-		if(secondSlash == -1) {
-			return false;
-		}
-		String uriStr = requestLine.substring(firstSlash+1, secondSlash);
-		if(!uriStr.equalsIgnoreCase(HTTPConstants.URI_RES)) {
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * Returns whether or not the "resolution protocol" for the given URN http
-	 * line is valid.  We currently only support N2R, which specifies "Given 
-	 * a URN, return the named resource," and N2X.
-	 *
-	 * @param requestLine the <tt>String</tt> instance containing the request
-	 * @return <tt>true</tt> if the resolution protocol is valid, <tt>false</tt>
-	 *  otherwise
-	 */
-	private static boolean isValidResolutionProtocol(final String requestLine) {
-		int nIndex = requestLine.indexOf(TWO);
-		if(nIndex == -1) {
-			return false;
-		}
-		String n2s = requestLine.substring(nIndex-1, nIndex+3);
-
-		// we could add more protocols to this check
-		if(!n2s.equalsIgnoreCase(HTTPConstants.NAME_TO_RESOURCE)
-           && !n2s.equalsIgnoreCase(HTTPConstants.NAME_TO_THEX)) {
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * Returns whether or not the HTTP specifier for the URN http request
-	 * is valid.
-	 *
-	 * @param requestLine the <tt>String</tt> instance containing the http request
-	 * @return <tt>true</tt> if the HTTP specifier is valid, <tt>false</tt>
-	 *  otherwise
-	 */
-	private static boolean isValidHTTPSpecifier(final String requestLine) {
-		int spaceIndex = requestLine.lastIndexOf(SPACE);
-		if(spaceIndex == -1) {
-			return false;
-		}
-		String httpStr = requestLine.substring(spaceIndex+1);
-		if(!httpStr.equalsIgnoreCase(HTTPConstants.HTTP10) &&
-		   !httpStr.equalsIgnoreCase(HTTPConstants.HTTP11)) {
-			return false;
-		}
-		return true;
-	}	
 
 	/**
 	 * Returns the URN type string for this URN.  This requires that each URN 

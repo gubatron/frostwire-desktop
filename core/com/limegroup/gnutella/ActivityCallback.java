@@ -2,8 +2,6 @@ package com.limegroup.gnutella;
 
 import java.io.File;
 
-import com.limegroup.gnutella.browser.MagnetOptions;
-import com.limegroup.gnutella.version.UpdateInformation;
 
 /**
  *  Callback to notify the GUI of asynchronous backend events.

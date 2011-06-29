@@ -14,8 +14,8 @@ import org.limewire.util.OSUtils;
 import org.limewire.util.Version;
 
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.http.HTTPUtils;
 import com.limegroup.gnutella.settings.BittorrentSettings;
+import com.limegroup.gnutella.util.HTTPUtils;
 
 public final class GuiFrostWireUtils {
 

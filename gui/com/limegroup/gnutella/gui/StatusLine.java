@@ -30,6 +30,7 @@ import org.limewire.setting.BooleanSetting;
 import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.AzureusStarter;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
+import com.limegroup.gnutella.UpdateInformation;
 import com.limegroup.gnutella.gui.player.MediaPlayerComponent;
 import com.limegroup.gnutella.gui.themes.SkinCheckBoxMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
@@ -38,7 +39,6 @@ import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.PlayerSettings;
 import com.limegroup.gnutella.settings.StatusBarSettings;
-import com.limegroup.gnutella.version.UpdateInformation;
 
 /**
  * The component for the space at the bottom of the main application

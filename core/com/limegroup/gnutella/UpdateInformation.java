@@ -1,4 +1,4 @@
-package com.limegroup.gnutella.version;
+package com.limegroup.gnutella;
 
 /**
  * Simple interface for retrieving the most recent update info.

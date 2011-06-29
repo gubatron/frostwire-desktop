@@ -17,9 +17,7 @@ import org.limewire.collection.Comparators;
 
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.search.Selector.PropertyType;
-import com.limegroup.gnutella.gui.xml.XMLValue;
 import com.limegroup.gnutella.util.DataUtils;
-import com.limegroup.gnutella.xml.SchemaFieldInfo;
 
 /**
  * Maintains information about the metadata in a list of search results.
@@ -119,20 +117,6 @@ final class MetadataModel {
             return;
         Map fieldMap = getMap(MODEL, mt);
         getCollection(fieldMap, UNKNOWN).remove(line);
-    }
-    
-    /**
-     * Adds the associated the specified schema, field and value to
-     * given TableLine.
-     *
-     * This should only be used when the full document has already been
-     * added once before.
-     */
-    void addField(SchemaFieldInfo sfi, String field, String value, TableLine line) {
-        NamedMediaType mt = line.getNamedMediaType();
-        Map fieldMap = getMap(MODEL, mt);
-        Map valueMap = getMapNatural(fieldMap, field);
-        getCollection(valueMap, new XMLValue(value, sfi)).add(line);
     }
     
     /**

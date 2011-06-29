@@ -1,4 +1,4 @@
-package com.limegroup.gnutella.http;
+package com.limegroup.gnutella.util;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -34,11 +34,6 @@ public final class HTTPUtils {
 	public static final String COLON = ":";
 	
 	/**
-	 * Cached slash to avoid excessive allocations.
-	 */
-	private static final String SLASH = "/";
-
-	/**
 	 * Private constructor to ensure that this class cannot be constructed
 	 */
 	private HTTPUtils() {}
@@ -47,25 +42,6 @@ public final class HTTPUtils {
         StringBuilder sb = new StringBuilder(name.length() + value.length() + 4);
 		return sb.append(name).append(COLON_SPACE).append(value).append(CRLF).toString();
 	}
-
-	/**
-     * Utility method for extracting the version from a feature token.
-     */
-    public static float parseFeatureToken(String token) throws
-    	ProblemReadingHeaderException{
-        int slashIndex = token.indexOf(SLASH);
-        
-        if (slashIndex == -1 || slashIndex >= token.length()-1)
-            throw new ProblemReadingHeaderException("invalid feature token");
-        
-        String versionS = token.substring(slashIndex+1);
-        
-        try {
-            return Float.parseFloat(versionS);
-        }catch (NumberFormatException bad) {
-            throw new ProblemReadingHeaderException(bad);
-        }
-    }
     
     /** Utility for extracting a value from a K=V string. */
     public static String parseValue(String keyValuePair) throws IOException {

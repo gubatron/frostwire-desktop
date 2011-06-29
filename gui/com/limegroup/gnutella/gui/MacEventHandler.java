@@ -7,7 +7,7 @@ import java.io.File;
 import net.roydesign.event.ApplicationEvent;
 import net.roydesign.mac.MRJAdapter;
 
-import com.limegroup.gnutella.browser.ExternalControl;
+import com.limegroup.gnutella.ExternalControl;
 
 /**
  * This class handles Macintosh specific events. The handled events  

@@ -4,7 +4,7 @@
  * 
  * $Id: MerkleTree.java,v 1.1 2008/01/25 16:59:25 sberlin Exp $
  */
-package com.limegroup.gnutella.security;
+package com.limegroup.gnutella;
 
 import java.security.DigestException;
 import java.security.MessageDigest;

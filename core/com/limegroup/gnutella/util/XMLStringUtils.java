@@ -4,7 +4,7 @@
  * Created on April 24, 2001, 11:03 AM
  */
 
-package com.limegroup.gnutella.xml;
+package com.limegroup.gnutella.util;
 
 import java.util.ArrayList;
 import java.util.List;

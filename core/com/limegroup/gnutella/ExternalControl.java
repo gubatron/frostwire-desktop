@@ -1,4 +1,4 @@
-package com.limegroup.gnutella.browser;
+package com.limegroup.gnutella;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -27,7 +27,6 @@ import org.gudy.azureus2.core3.util.Debug;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.HttpFetcher;
-import com.limegroup.gnutella.ActivityCallback;
 
 public class ExternalControl {
 

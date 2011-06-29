@@ -4,7 +4,7 @@
  * Created on April 12, 2001, 4:03 PM
  */
 
-package com.limegroup.gnutella.xml;
+package com.limegroup.gnutella;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;

@@ -1,4 +1,4 @@
-package com.limegroup.gnutella.gui.xml;
+package com.limegroup.gnutella.gui;
 
 import java.util.Date;
 import java.util.Locale;
@@ -8,11 +8,10 @@ import java.util.ResourceBundle;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.xml.LimeXMLNames;
-import com.limegroup.gnutella.xml.LimeXMLSchema;
-import com.limegroup.gnutella.xml.SchemaFieldInfo;
-import com.limegroup.gnutella.xml.XMLStringUtils;
+import com.limegroup.gnutella.LimeXMLNames;
+import com.limegroup.gnutella.LimeXMLSchema;
+import com.limegroup.gnutella.SchemaFieldInfo;
+import com.limegroup.gnutella.util.XMLStringUtils;
 
 /**
  * Various GUI-related XML utilities.

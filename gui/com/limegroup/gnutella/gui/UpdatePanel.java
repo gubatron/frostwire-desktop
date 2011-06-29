@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.plaf.metal.MetalLabelUI;
 
-import com.limegroup.gnutella.version.UpdateInformation;
+import com.limegroup.gnutella.UpdateInformation;
 
 final class UpdatePanel extends JLabel implements RefreshListener {
 

@@ -18,7 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import com.limegroup.gnutella.version.UpdateInformation;
+import com.limegroup.gnutella.UpdateInformation;
 
 /** 
  * Creates a new update panel for prompting the user for whether 

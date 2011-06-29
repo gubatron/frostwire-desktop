@@ -5,7 +5,7 @@ import javax.swing.SwingUtilities;
 import org.limewire.service.ErrorService;
 import org.limewire.util.OSUtils;
 
-import com.limegroup.gnutella.browser.ExternalControl;
+import com.limegroup.gnutella.ExternalControl;
 
 /**
  * JNI based GetURL AppleEvent handler for Mac OS X

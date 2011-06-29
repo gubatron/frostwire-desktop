@@ -3,7 +3,7 @@ package com.limegroup.gnutella.gui.search;
 import org.limewire.util.StringUtils;
 
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.xml.XMLUtils;
+import com.limegroup.gnutella.gui.XMLUtils;
 
 /**
  * Represents a single selector.

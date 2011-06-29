@@ -19,10 +19,10 @@ import org.limewire.util.Stopwatch;
 import org.limewire.util.SystemUtils;
 
 import com.frostwire.AzureusStarter;
+import com.limegroup.gnutella.ExternalControl;
 import com.limegroup.gnutella.LimeCoreGlue;
 import com.limegroup.gnutella.LimeCoreGlue.InstallFailedException;
 import com.limegroup.gnutella.LimeWireCore;
-import com.limegroup.gnutella.browser.ExternalControl;
 import com.limegroup.gnutella.gui.bugs.BugManager;
 import com.limegroup.gnutella.gui.init.SetupManager;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;

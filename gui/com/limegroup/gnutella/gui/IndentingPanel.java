@@ -1,4 +1,4 @@
-package com.limegroup.gnutella.gui.xml;
+package com.limegroup.gnutella.gui;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -25,12 +25,9 @@ import javax.swing.undo.UndoManager;
 
 import org.limewire.collection.NameValue;
 
-import com.limegroup.gnutella.gui.ClearableAutoCompleteTextField;
-import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.KeyProcessingTextField;
+import com.limegroup.gnutella.LimeXMLSchema;
+import com.limegroup.gnutella.SchemaFieldInfo;
 import com.limegroup.gnutella.gui.search.SearchField;
-import com.limegroup.gnutella.xml.LimeXMLSchema;
-import com.limegroup.gnutella.xml.SchemaFieldInfo;
 
 /**
  * A panel that displays fields of an XML schema.

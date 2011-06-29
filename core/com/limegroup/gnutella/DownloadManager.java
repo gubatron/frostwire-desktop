@@ -4,7 +4,6 @@ import java.io.File;
 import java.net.Socket;
 import java.util.Collection;
 
-import com.limegroup.gnutella.version.DownloadInformation;
 
 
 /** 

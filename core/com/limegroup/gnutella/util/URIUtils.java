@@ -1,4 +1,4 @@
-package com.limegroup.gnutella.http;
+package com.limegroup.gnutella.util;
 
 import java.net.URI;
 import java.net.URISyntaxException;

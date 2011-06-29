@@ -53,6 +53,7 @@ import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.ChatMediator;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.tabs.LibraryPlayListTab;
+import com.limegroup.gnutella.UpdateInformation;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
 import com.limegroup.gnutella.gui.bugs.FatalBugManager;
 import com.limegroup.gnutella.gui.library.LibraryMediator;
@@ -72,7 +73,6 @@ import com.limegroup.gnutella.settings.StartupSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
 import com.limegroup.gnutella.util.LaunchException;
 import com.limegroup.gnutella.util.Launcher;
-import com.limegroup.gnutella.version.UpdateInformation;
 
 /**
  * This class acts as a central point of access for all gui components, a sort

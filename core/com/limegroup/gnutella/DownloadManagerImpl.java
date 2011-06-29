@@ -10,7 +10,6 @@ import org.gudy.azureus2.core3.global.GlobalManager;
 import com.frostwire.AzureusStarter;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.UpdateSettings;
-import com.limegroup.gnutella.version.DownloadInformation;
 
 public class DownloadManagerImpl implements DownloadManager {
     
