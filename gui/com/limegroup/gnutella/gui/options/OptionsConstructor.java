@@ -298,10 +298,8 @@ public final class OptionsConstructor {
 
 		addOption(OptionsMediator.ROOT_NODE_KEY, BUGS_KEY, I18n.tr("Bug Reports"), BugsPaneItem.class);
 
-		addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, GUI_KEY, I18n.tr("View"));
-		addOption(GUI_KEY, POPUPS_KEY, I18n.tr("Popups"), PopupsPaneItem.class, NotificationsPaneItem.class, ShowPromoOverlaysPaneItem.class);
-        addOption(GUI_KEY, AUTOCOMPLETE_KEY, I18n.tr("Autocomplete"), AutoCompletePaneItem.class);
-        addOption(GUI_KEY, SHOW_PROMOTION_OVERLAYS_KEY, I18n.tr("FrostClick"), ShowPromoOverlaysPaneItem.class);
+		//view options
+		addOption(OptionsMediator.ROOT_NODE_KEY, GUI_KEY, I18n.tr("View"), PopupsPaneItem.class, NotificationsPaneItem.class, ShowPromoOverlaysPaneItem.class, AutoCompletePaneItem.class);
 
 		// search options
 		addOption(OptionsMediator.ROOT_NODE_KEY, SEARCH_KEY, I18n.tr("Searching"), MaximumSearchesPaneItem.class);

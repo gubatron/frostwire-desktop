@@ -39,17 +39,21 @@ final class HelpMenu extends AbstractMenu {
 
         addMenuItem(new OpenLinkAction("http://www.frostwire.com/?id=faq", I18n.tr("&FAQ"), I18n.tr("Frequently Asked Questions for FrostWire")));
 
-        addMenuItem(new OpenLinkAction("http://frostwire.wordpress.com/2007/03/19/dont-get-scammed-frostwire-is-free/", I18n.tr("&Did you pay for FrostWire?"),
-                I18n.tr("Did you pay for FrostWire? FrostWire is Free as in Free Beer. Avoid Scams.")));
-
         addMenuItem(new OpenLinkAction("http://www.frostwire.com/?id=faq#fil7", I18n.tr("What is \"Seeding\"?"), I18n.tr("Learn about BitTorrent Seeding")));
 
+        addSeparator();
+        
         addMenuItem(new OpenLinkAction("http://www.frostwire.com/forum/viewforum.php?f=1", I18n.tr("Foru&m"), I18n.tr("Access the FrostWire Users\' Forum")));
 
         addMenuItem(new OpenLinkAction("http://www.frostclick.com/wp/?from=frostwire" + com.limegroup.gnutella.util.FrostWireUtils.getFrostWireVersion(),
                 I18n.tr("FrostClick.com"), I18n.tr("Free Legal Downloads")));
 
         addMenuItem(new OpenLinkAction("http://www.frostwire.com/twitter", I18n.tr("Follow us on Twitter"), I18n.tr("Follow us on Twitter")));
+
+        addSeparator();
+        
+        addMenuItem(new OpenLinkAction("http://frostwire.wordpress.com/2007/03/19/dont-get-scammed-frostwire-is-free/", I18n.tr("&Did you pay for FrostWire?"),
+                I18n.tr("Did you pay for FrostWire? FrostWire is Free as in Free Beer. Avoid Scams.")));
 
         addMenuItem(new ShowTipOfTheDayAction());
 
