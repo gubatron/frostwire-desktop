@@ -127,7 +127,6 @@ public class ShareTorrentDialog extends JDialog implements ClipboardOwner {
 		pack();
 	}
 
-	@SuppressWarnings("unused")
 	private void loadIconForAction(final Action action, String iconURL) {
 		try {
 			ImageCache.getInstance().getImage(new URL(iconURL),

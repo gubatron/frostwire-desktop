@@ -130,7 +130,7 @@ class SaveWindow extends SetupWindow {
 	public void applySettings(boolean loadCoreComponents) throws ApplySettingsException {
 	    List<String> errors = new ArrayList<String>(2);
 
-        SharingSettings.SEED_FINISHED_TORRENTS.setValue(torrentSaveFolderComponent.isSeedingSelected());
+        //SharingSettings.SEED_FINISHED_TORRENTS.setValue(torrentSaveFolderComponent.isSeedingSelected());
         File folder = new File(torrentSaveFolderComponent.getTorrentSaveFolderPath());
         if (folder.exists() && folder.isDirectory() && folder.canWrite()) {
             SharingSettings.TORRENT_DATA_DIR_SETTING.setValue(folder);
