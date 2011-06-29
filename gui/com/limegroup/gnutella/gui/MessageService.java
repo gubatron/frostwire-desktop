@@ -11,6 +11,7 @@ import javax.swing.Box;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -74,10 +75,13 @@ public final class MessageService {
 	final void showError(final String message) {
 	    GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
-                JOptionPane.showMessageDialog(getParentComponent(), 
-                        getLabel(message),
-                        I18n.tr("Error"),
-                        JOptionPane.ERROR_MESSAGE);
+            	JOptionPane optionPane = new JOptionPane();
+            	optionPane.setMessageType(JOptionPane.ERROR_MESSAGE);
+            	JLabel messageLabel = new JLabel(message);
+            	optionPane.setMessage(messageLabel);
+            	optionPane.setOpaque(true);
+            	JDialog dialog = optionPane.createDialog(getParentComponent(),I18n.tr("Error"));
+            	dialog.setVisible(true);
             }
         });
 	}
