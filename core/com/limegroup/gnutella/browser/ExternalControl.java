@@ -53,11 +53,9 @@ public class ExternalControl {
 
     private ExternalControl(ActivityCallback activityCallback) {
         this.activityCallback = activityCallback;
-
-        startServer();
     }
 
-    private void startServer() {
+    public void startServer() {
         new Thread(new Runnable() {
             public void run() {
                 try {

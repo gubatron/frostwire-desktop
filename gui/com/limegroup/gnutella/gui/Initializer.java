@@ -88,6 +88,7 @@ public final class Initializer {
         // Validate any arguments or properties outside of the LW environment.
         //System.out.println("Initializer.initialize() run external checks");
         runExternalChecks(limeWireCore, args);
+        limeWireCore.getExternalControl().startServer();
 
         // Starts some system monitoring for deadlocks.
         //System.out.println("Initializer.initialize() monitor deadlocks");
