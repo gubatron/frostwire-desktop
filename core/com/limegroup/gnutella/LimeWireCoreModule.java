@@ -21,25 +21,19 @@ public class LimeWireCoreModule {
     }
  
     private final ActivityCallback activityCallback;
-    private final DownloadCallback downloadCallback;
     private final LimeWireCommonModule limeWireCommonModule;
     private final LifecycleManager lifecycleManager;
     private final DownloadManager downloadManager;
     
     private LimeWireCoreModule(ActivityCallback activitCallback) {
         this.activityCallback = activitCallback;
-        downloadCallback = activitCallback;
         limeWireCommonModule = LimeWireCommonModule.instance();
-        downloadManager = new DownloadManagerImpl(downloadCallback);
+        downloadManager = new DownloadManagerImpl(activitCallback);
         lifecycleManager = new LifecycleManagerImpl(activitCallback, downloadManager, LimeCoreGlue.instance(), limeWireCommonModule.getLimeWireCommonLifecycleModule().getServiceRegistry());
     }
     
     public ActivityCallback getActivityCallback() {
         return activityCallback;
-    }
-    
-	public DownloadCallback getDownloadCallback() {
-        return downloadCallback;
     }
 	
 	public LimeWireCommonModule getLimeWireCommonModule() {

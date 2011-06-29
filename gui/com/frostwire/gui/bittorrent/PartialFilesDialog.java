@@ -11,6 +11,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 
 import javax.swing.JButton;
@@ -29,6 +31,7 @@ import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.util.TorrentUtils;
 
+import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledTextField;
@@ -60,6 +63,17 @@ public class PartialFilesDialog extends JDialog {
         _torrent = TorrentUtils.readFromFile(torrentFile, false);
         _name = torrentFile.getName();
         _model = new TorrentTableModel(_torrent);
+        
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+                GUIMediator.instance().setRemoteDownloadsAllowed(false);
+            }            
+            @Override
+            public void windowClosing(WindowEvent e) {
+                GUIMediator.instance().setRemoteDownloadsAllowed(true);
+            }
+        });
 
         setupUI();
         setLocationRelativeTo(frame);

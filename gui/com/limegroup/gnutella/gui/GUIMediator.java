@@ -108,6 +108,8 @@ public final class GUIMediator {
 	 * Singleton for easy access to the mediator.
 	 */
 	private static GUIMediator _instance;
+	
+	private boolean _remoteDownloadsAllowed;
 
 	public static enum Tabs {
 		SEARCH(I18n.tr("&Search")),
@@ -372,8 +374,8 @@ public final class GUIMediator {
 	private GUIMediator() {
 	    MAIN_FRAME = new MainFrame(getAppFrame());
         MAIN_FRAME.buildTabs();
-        //MAIN_FRAME.updateLogoHeight();
         OPTIONS_MEDIATOR = MAIN_FRAME.getOptionsMediator();
+        _remoteDownloadsAllowed = true;
 	}
 
 	/**
@@ -1884,5 +1886,13 @@ public final class GUIMediator {
         }
         
         return false;
+    }
+    
+    public boolean isRemoteDownloadsAllowed() {
+        return _remoteDownloadsAllowed;
+    }
+
+    public void setRemoteDownloadsAllowed(boolean remoteDownloadsAllowed) {
+        _remoteDownloadsAllowed = remoteDownloadsAllowed;
     }
 }

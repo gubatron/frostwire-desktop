@@ -243,14 +243,17 @@ public final class VisualConnectionCallback implements ActivityCallback {
 		});
 	}
 
-	@Override
-	public void handleTorrentMagnet(final String request) {
-		GUIMediator.instance().openTorrentURI(request);
+	public void handleTorrentMagnet(String request, boolean partialDownload) {
+		GUIMediator.instance().openTorrentURI(request, partialDownload);
 	}
 
     public void addDownloadManager(DownloadManager dm) {
         Runnable doWorkRunnable = new AddDownloadManager(dm);
         
         SwingUtilities.invokeLater(doWorkRunnable);
+    }
+    
+    public boolean isRemoteDownloadsAllowed() {
+        return GUIMediator.instance().isRemoteDownloadsAllowed();
     }
 }

@@ -20,10 +20,10 @@ public class DownloadManagerImpl implements DownloadManager {
      */
     private float averageBandwidth = 0;
     
-    private final DownloadCallback downloadCallback;
+    private final ActivityCallback activityCallback;
     
-    public DownloadManagerImpl(DownloadCallback downloadCallback) {
-        this.downloadCallback = downloadCallback;
+    public DownloadManagerImpl(ActivityCallback downloadCallback) {
+        this.activityCallback = downloadCallback;
     }
 
 
@@ -157,8 +157,8 @@ public class DownloadManagerImpl implements DownloadManager {
     void clearAllDownloads() {
     }
     
-    private DownloadCallback callback(org.gudy.azureus2.core3.download.DownloadManager dm) {
-        return downloadCallback;
+    private ActivityCallback callback(org.gudy.azureus2.core3.download.DownloadManager dm) {
+        return activityCallback;
     }
         
     

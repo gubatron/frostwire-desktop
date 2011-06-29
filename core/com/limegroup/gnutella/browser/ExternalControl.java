@@ -182,8 +182,12 @@ public class ExternalControl {
             String info_hash = (String) lc_params.get("info_hash");
 
             if (info_hash != null) {
-                writeJSReply(os, "checkResult(1);");
-                handleTorrentMagnetRequest("magnet:?xt=urn:btih:" + info_hash);
+                if (activityCallback.isRemoteDownloadsAllowed()) {
+                    writeJSReply(os, "checkResult(1);");
+                    handleTorrentMagnetRequest("magnet:?xt=urn:btih:" + info_hash);
+                } else {
+                    writeJSReply(os, "checkResult(0);");
+                }
                 return true;
             }
         } else if (get.startsWith("/show")) {
@@ -192,9 +196,14 @@ public class ExternalControl {
             return true;
         }
 
-        writeJSReply(os, "checkResult(0);");
-
+        writeNotFound(os);
         return true;
+    }
+    
+    protected void writeNotFound(OutputStream os) throws IOException {
+        PrintWriter pw = new PrintWriter(new OutputStreamWriter(os));
+        pw.print("HTTP/1.0 404 Not Found" + NL + NL);
+        pw.flush();
     }
 
     private void writeJSReply(OutputStream os, String string) {
@@ -281,9 +290,9 @@ public class ExternalControl {
     }
 
     private void handleTorrentMagnetRequest(String request) {
-        LOG.trace("enter handleTorrentMagnetRequest");
+        //activityCallback.setRemoteDownloadsAllowed(false);
         ActivityCallback callback = restoreApplication();
-        callback.handleTorrentMagnet(request);
+        callback.handleTorrentMagnet(request, true);
     }
 
     /**
