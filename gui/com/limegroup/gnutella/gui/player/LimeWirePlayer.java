@@ -47,12 +47,12 @@ public class LimeWirePlayer implements AudioPlayer, RefreshListener {
     	String playerPath = new String();
     	
     	if (OSUtils.isWindows()) {
-    		playerPath = (_isRelease) ? FrostWireUtils.getFrostWireJarPath() + File.separator + "fwplayer.exe" : "lib/mplayer/fwplayer.exe";
+    		playerPath = (_isRelease) ? FrostWireUtils.getFrostWireJarPath() + File.separator + "fwplayer.exe" : "lib/native/fwplayer.exe";
     		playerPath = UrlUtils.decode(playerPath);
     	} else if (OSUtils.isMacOSX()) {
     		String macOSFolder = new File(FrostWireUtils.getFrostWireJarPath()).getParentFile().getParent() + File.separator + "MacOS";
     		
-    		playerPath = (_isRelease) ?  macOSFolder + File.separator + "fwplayer" : "lib/mplayer/fwplayer";
+    		playerPath = (_isRelease) ?  macOSFolder + File.separator + "fwplayer" : "lib/native/fwplayer";
     	} else {
     		playerPath = "/usr/bin/mplayer";
     	}
