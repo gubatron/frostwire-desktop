@@ -8,7 +8,6 @@ import org.gudy.azureus2.core3.download.DownloadManager;
 
 import com.frostwire.gui.bittorrent.BTDownload;
 import com.limegroup.gnutella.ActivityCallback;
-import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.browser.MagnetOptions;
 import com.limegroup.gnutella.gui.search.SearchInformation;
@@ -75,19 +74,6 @@ public final class VisualConnectionCallback implements ActivityCallback {
 	///////////////////////////////////////////////////////////////////////////
 	//  Download-related callbacks
 	///////////////////////////////////////////////////////////////////////////
-	
-    public void addDownload(Downloader mgr) {
-//        Runnable doWorkRunnable = new AddDownload(mgr);
-//        
-//        if (mgr instanceof BTDownloaderImpl) {
-//        	if (((BTDownloader) mgr).isCompleted()) {
-//        		//don't add it visually
-//        		return;
-//        	}
-//        }
-//        
-//        SwingUtilities.invokeLater(doWorkRunnable);
-    }
     
     public void addDownload(BTDownload mgr) {
         Runnable doWorkRunnable = new AddDownload(mgr);
@@ -256,14 +242,6 @@ public final class VisualConnectionCallback implements ActivityCallback {
 			}
 		});
 	}
-   
-    public void installationCorrupted() {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                GUIMediator.showWarning(I18n.tr("<html><b>Your FrostWire may have been corrupted by a virus or trojan!</b><br><br>Please visit <a href=\"http://www.frostwire.com/download\">www.frostwire.com</a> and download the newest official version of FrostWire.</html>"));
-            }
-        });
-    }
 
 	@Override
 	public void handleTorrentMagnet(final String request) {

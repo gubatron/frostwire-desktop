@@ -53,7 +53,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
      * the buttons & popup menu.
      */
     private Action removeAction;
-    private Action launchAction;
     private Action resumeAction;
     private Action pauseAction;
     private Action exploreAction;
@@ -90,7 +89,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         super.buildListeners();
 
         removeAction = BTDownloadActions.REMOVE_ACTION;
-        launchAction = BTDownloadActions.LAUNCH_ACTION;
         resumeAction = BTDownloadActions.RESUME_ACTION;
         pauseAction = BTDownloadActions.PAUSE_ACTION;
         exploreAction = BTDownloadActions.EXPLORE_ACTION;
@@ -105,9 +103,9 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     public Action[] getActions() {
         Action[] actions;
         if (OSUtils.isWindows() || OSUtils.isMacOSX())
-            actions = new Action[] { resumeAction, pauseAction, launchAction, exploreAction, removeAction };
+            actions = new Action[] { resumeAction, pauseAction, exploreAction, removeAction };
         else
-            actions = new Action[] { resumeAction, pauseAction, launchAction, removeAction };
+            actions = new Action[] { resumeAction, pauseAction, removeAction };
 
         return actions;
     }
@@ -359,7 +357,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
 
         menu.add(new SkinMenuItem(resumeAction));
         menu.add(new SkinMenuItem(pauseAction));
-        menu.add(new SkinMenuItem(launchAction));
         if (OSUtils.isWindows() || OSUtils.isMacOSX()) {
             menu.add(new SkinMenuItem(exploreAction));
         }
@@ -396,15 +393,11 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         removeAction.putValue(Action.NAME, I18n.tr("Cancel Download"));
         removeAction.putValue(LimeAction.SHORT_NAME, I18n.tr("Cancel"));
         removeAction.putValue(Action.SHORT_DESCRIPTION, I18n.tr("Cancel Selected Downloads"));
-        launchAction.putValue(Action.NAME, I18n.tr("Preview Download"));
-        launchAction.putValue(LimeAction.SHORT_NAME, I18n.tr("Preview"));
-        launchAction.putValue(Action.SHORT_DESCRIPTION, I18n.tr("Preview Selected Downloads"));
         exploreAction.setEnabled(false);
 
         removeAction.setEnabled(true);
         resumeAction.setEnabled(resumable);
         pauseAction.setEnabled(pausable);
-        //launchAction.setEnabled(dl.isLaunchable());
         _copyMagnetAction.setEnabled(true);
         _copyHashAction.setEnabled(true);
     }
@@ -416,7 +409,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     public void handleNoSelection() {
         removeAction.setEnabled(false);
         resumeAction.setEnabled(false);
-        launchAction.setEnabled(false);
         pauseAction.setEnabled(false);
         exploreAction.setEnabled(false);
         _copyMagnetAction.setEnabled(false);

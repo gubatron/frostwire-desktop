@@ -118,30 +118,6 @@ public class DownloadManagerImpl implements DownloadManager {
     public boolean isIncomplete(URN urn) {
         return false;//incompleteFileManager.getFileForUrn(urn) != null;
     }
-    
-    /* (non-Javadoc)
-     * @see com.limegroup.gnutella.DownloadMI#isActivelyDownloading(com.limegroup.gnutella.URN)
-     */
-    public boolean isActivelyDownloading(URN urn) {
-        Downloader md = getDownloaderForURN(urn);
-        
-        if(md == null)
-            return false;
-            
-        switch(md.getState()) {
-        case QUEUED:
-        case BUSY:
-        case ABORTED:
-        case GAVE_UP:
-        case DISK_PROBLEM:
-        case CORRUPT_FILE:
-        case REMOTE_QUEUED:
-        case WAITING_FOR_USER:
-            return false;
-        default:
-            return true;
-        }
-    }  
  
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.DownloadMI#downloadsInProgress()
@@ -172,27 +148,6 @@ public class DownloadManagerImpl implements DownloadManager {
     }
     
     /* (non-Javadoc)
-     * @see com.limegroup.gnutella.DownloadMI#getDownloaderForURN(com.limegroup.gnutella.URN)
-     */
-    public synchronized Downloader getDownloaderForURN(URN sha1) {
-        return null;
-    }
-    
-    /* (non-Javadoc)
-     * @see com.limegroup.gnutella.DownloadMI#getDownloaderForURNString(java.lang.String)
-     */
-    public synchronized Downloader getDownloaderForURNString(String urn) {
-        return null;
-    }    
-    
-    /* (non-Javadoc)
-     * @see com.limegroup.gnutella.DownloadMI#getDownloaderForIncompleteFile(java.io.File)
-     */
-    public synchronized Downloader getDownloaderForIncompleteFile(File file) {
-        return null;
-    }
-
-    /* (non-Javadoc)
      * @see com.limegroup.gnutella.DownloadMI#isGuidForQueryDownloading(com.limegroup.gnutella.GUID)
      */
     public synchronized boolean isGuidForQueryDownloading(GUID guid) {
@@ -220,14 +175,6 @@ public class DownloadManagerImpl implements DownloadManager {
     public synchronized boolean isSaveLocationTaken(File candidateFile) {
         return false;
     }
-    /* (non-Javadoc)
-     * @see com.limegroup.gnutella.DownloadMI#bumpPriority(com.limegroup.gnutella.Downloader, boolean, int)
-     */
-    public synchronized void bumpPriority(Downloader downl,
-                                          boolean up, int amt) {
-     
-    }
-
 
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.DownloadMI#measureBandwidth()

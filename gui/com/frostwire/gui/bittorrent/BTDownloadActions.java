@@ -10,15 +10,12 @@ import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.LimeAction;
-import com.limegroup.gnutella.gui.util.GUILauncher;
-import com.limegroup.gnutella.gui.util.GUILauncher.LaunchableProvider;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 final class BTDownloadActions {
 
     static final ShowDetailsAction SHOW_DETAILS_ACTION = new ShowDetailsAction();
     static final ExploreAction EXPLORE_ACTION = new ExploreAction();
-    static final LaunchAction LAUNCH_ACTION = new LaunchAction();
     static final ResumeAction RESUME_ACTION = new ResumeAction();
     static final PauseAction PAUSE_ACTION = new PauseAction();
     static final RemoveAction REMOVE_ACTION = new RemoveAction(false, false);
@@ -84,34 +81,6 @@ final class BTDownloadActions {
                 }
 
                 GUIMediator.launchExplorer(toExplore);
-            }
-        }
-    }
-
-    private static class LaunchAction extends RefreshingAction {
-
-        /**
-         * 
-         */
-        private static final long serialVersionUID = -567893064454697074L;
-
-        public LaunchAction() {
-            putValue(Action.NAME, I18n.tr("Preview Download"));
-            putValue(LimeAction.SHORT_NAME, I18n.tr("Preview"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Preview Selected Downloads"));
-            putValue(LimeAction.ICON_NAME, "DOWNLOAD_LAUNCH");
-        }
-
-        public void performAction(ActionEvent e) {
-            BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
-            if (downloaders.length > 0) {
-
-                LaunchableProvider[] providers = new LaunchableProvider[downloaders.length];
-
-                for (int i = 0; i < downloaders.length; i++) {
-                    providers[i] = new DownloaderProvider(downloaders[i]);
-                }
-                GUILauncher.launch(providers);
             }
         }
     }
@@ -273,23 +242,5 @@ final class BTDownloadActions {
             }
             GUIMediator.setClipboardContent(str);
         }
-    }
-
-    private static class DownloaderProvider implements LaunchableProvider {
-
-        private final BTDownload downloader;
-
-        public DownloaderProvider(BTDownload downloader) {
-            this.downloader = downloader;
-        }
-
-        public BTDownload getDownloader() {
-            return downloader;
-        }
-
-        public File getFile() {
-            return null;
-        }
-
     }
 }

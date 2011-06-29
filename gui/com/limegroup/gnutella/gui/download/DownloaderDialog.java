@@ -22,7 +22,6 @@ import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
-import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.SaveLocationException;
 import com.limegroup.gnutella.gui.ButtonRow;
@@ -54,7 +53,6 @@ public class DownloaderDialog extends JDialog {
     public static final int DEFAULT_SAVE_AS = 2;
 
 	private GuiDownloaderFactory factory;
-	private Downloader downloader;
 	private JLabel titleLabel = new JLabel();
 	private JLabel descLabel = new JLabel();
 	private JLabel noteLabel = new JLabel();
@@ -248,32 +246,24 @@ public class DownloaderDialog extends JDialog {
 		setLabel(noteLabel, text);
 	}
 	
-	public static Downloader handle(GuiDownloaderFactory factory,
+	public static Object handle(GuiDownloaderFactory factory,
 			SaveLocationException sle) {
 		
-		if (sle.getErrorCode() == SaveLocationException.FILE_ALREADY_DOWNLOADING) {
-			DownloaderUtils.showIsAlreadyDownloadingWarning(factory);
-			return null;
-		}
-		
-        // Capture the default action before we construct the dialog,
-        // otherwise it can change before constructing returns.
-        int defaultAction = QuestionsHandler.DEFAULT_ACTION_FILE_EXISTS.getValue();
-		DownloaderDialog dlg = new DownloaderDialog(factory, sle);
-		if(defaultAction == 0) {
-			dlg.setLocationRelativeTo(MessageService.getParentComponent());
-			dlg.setVisible(true);
-		}
-		return dlg.getDownloader();
-	}
-	
-	/**
-	 * Returns the successfully created downloader or <code>null</code> if
-	 * the dialog was cancelled.
-	 * @return
-	 */
-	public Downloader getDownloader() {
-		return downloader;
+//		if (sle.getErrorCode() == SaveLocationException.FILE_ALREADY_DOWNLOADING) {
+//			DownloaderUtils.showIsAlreadyDownloadingWarning(factory);
+//			return null;
+//		}
+//		
+//        // Capture the default action before we construct the dialog,
+//        // otherwise it can change before constructing returns.
+//        int defaultAction = QuestionsHandler.DEFAULT_ACTION_FILE_EXISTS.getValue();
+//		DownloaderDialog dlg = new DownloaderDialog(factory, sle);
+//		if(defaultAction == 0) {
+//			dlg.setLocationRelativeTo(MessageService.getParentComponent());
+//			dlg.setVisible(true);
+//		}
+//		return dlg.getDownloader();
+	    return null;
 	}
 	
 	/**

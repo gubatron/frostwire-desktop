@@ -56,11 +56,6 @@ public interface DownloadManager {
      */
     public boolean isIncomplete(URN urn);
 
-    /**
-     * Returns whether or not we are actively downloading this file.
-     */
-    public boolean isActivelyDownloading(URN urn);
-
     public int downloadsInProgress();
 
     public int getNumIndividualDownloaders();
@@ -71,16 +66,6 @@ public interface DownloadManager {
     public int getNumActiveDownloads();
 
     public int getNumWaitingDownloads();
-
-    public Downloader getDownloaderForURN(URN sha1);
-
-    /**
-     * Returns the active or waiting downloader that uses or will use 
-     * <code>file</code> as incomplete file.
-     * @param file the incomplete file candidate
-     * @return <code>null</code> if no downloader for the file is found
-     */
-    public Downloader getDownloaderForIncompleteFile(File file);
 
     public boolean isGuidForQueryDownloading(GUID guid);
 
@@ -100,12 +85,6 @@ public interface DownloadManager {
      * @return
      */
     public boolean isSaveLocationTaken(File candidateFile);
-
-    /**
-     * Bumps the priority of an inactive download either up or down
-     * by amt (if amt==0, bump to start/end of list).
-     */
-    public void bumpPriority(Downloader downl, boolean up, int amt);
 
 
     /** Calls measureBandwidth on each uploader. */

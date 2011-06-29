@@ -8,11 +8,8 @@ import java.text.MessageFormat;
 import javax.swing.JOptionPane;
 
 import org.limewire.i18n.I18nMarker;
-import org.limewire.util.OSUtils;
 
-import com.limegroup.gnutella.Downloader;
 import com.limegroup.gnutella.FileDesc;
-import com.limegroup.gnutella.SaveLocationException;
 import com.limegroup.gnutella.URN;
 import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -43,25 +40,25 @@ public class DownloaderUtils {
 	 *         hash, or incomplete file, or the user cancelled the download at
 	 *         some point.
 	 */
-	public static Downloader createDownloader(GuiDownloaderFactory factory) {
-
-		// check for already downloading conflicts
-		if (isAlreadyDownloading(factory)) {
-			return null;
-		}
-
-		// check for file name conflicts
-		if (!isSaveLocationTaken(factory)) {
-
-			// check for hash conflicts
-			if (!continueWithOrWithoutHashConflict(factory)) {
-				return null;
-			}
-		}
-
-		// try to start download
-		return createDownloader(factory, false);
-	}
+//	public static Downloader createDownloader(GuiDownloaderFactory factory) {
+//
+//		// check for already downloading conflicts
+//		if (isAlreadyDownloading(factory)) {
+//			return null;
+//		}
+//
+//		// check for file name conflicts
+//		if (!isSaveLocationTaken(factory)) {
+//
+//			// check for hash conflicts
+//			if (!continueWithOrWithoutHashConflict(factory)) {
+//				return null;
+//			}
+//		}
+//
+//		// try to start download
+//		return createDownloader(factory, false);
+//	}
 
 	/**
 	 * Tries to create a downloader for a factory asking the user for a save
@@ -78,55 +75,31 @@ public class DownloaderUtils {
 	 *         hash or incomplete file, or the user cancelled somewhere along
 	 *         the way.
 	 */
-	public static Downloader createDownloaderAs(GuiDownloaderFactory factory) {
-
-		// check for already downloading conflicts
-		if (isAlreadyDownloading(factory)) {
-			return null;
-		}
-
-		// check for hash conflicts
-		if (!continueWithOrWithoutHashConflict(factory)) {
-			return null;
-		}
-
-		File file = showFileChooser(factory, MessageService
-				.getParentComponent());
-		if (file == null) {
-			return null;
-		}
-
-		factory.setSaveFile(file);
-
-		// OSX's FileDialog box already prompts the user that they're
-		// going to be overwriting a file, so we don't need to do that
-		// particular check again.
-		return createDownloader(factory, OSUtils.isAnyMac());
-	}
-	
-	/**
-	 * Tries to create a downloader from a factory.
-	 * <p>
-	 * If the {@link GuiDownloaderFactory#createDownloader(boolean)} throws an
-	 * exception, {@link DownloaderDialog#handle(GuiDownloaderFactory, 
-	 * SaveLocationException)} is called to handle it.
-	 * <p>
-	 * If the process was successful, the final file is shared individually if
-	 * it's not in a shared directory.
-	 * 
-	 * @param factory
-	 * @param overwrite
-	 * @return <code>null</null> if the user cancelled at some point
-	 */
-	public static Downloader createDownloader(GuiDownloaderFactory factory,
-											  boolean overwrite) {
-//		try {
-//			return factory.createDownloader(overwrite);
-//		} catch (SaveLocationException sle) {
-//			return DownloaderDialog.handle(factory, sle);
+//	public static Downloader createDownloaderAs(GuiDownloaderFactory factory) {
+//
+//		// check for already downloading conflicts
+//		if (isAlreadyDownloading(factory)) {
+//			return null;
 //		}
-	    return null;
-	}
+//
+//		// check for hash conflicts
+//		if (!continueWithOrWithoutHashConflict(factory)) {
+//			return null;
+//		}
+//
+//		File file = showFileChooser(factory, MessageService
+//				.getParentComponent());
+//		if (file == null) {
+//			return null;
+//		}
+//
+//		factory.setSaveFile(file);
+//
+//		// OSX's FileDialog box already prompts the user that they're
+//		// going to be overwriting a file, so we don't need to do that
+//		// particular check again.
+//		return createDownloader(factory, OSUtils.isAnyMac());
+//	}
 
 	/**
 	 * Checks if there is a conflicting download already running with the same
@@ -227,10 +200,10 @@ public class DownloaderUtils {
 	 * @param factory
 	 * @return
 	 */
-	private static boolean isSaveLocationTaken(GuiDownloaderFactory factory) {
-		return factory.getSaveFile().exists()
-				|| GuiCoreMediator.getDownloadManager().isSaveLocationTaken(
-						factory.getSaveFile());
-	}
+//	private static boolean isSaveLocationTaken(GuiDownloaderFactory factory) {
+//		return factory.getSaveFile().exists()
+//				|| GuiCoreMediator.getDownloadManager().isSaveLocationTaken(
+//						factory.getSaveFile());
+//	}
 
 }
