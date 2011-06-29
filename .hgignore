@@ -3,7 +3,6 @@ bin/*
 builder/*
 *.class
 *.orig
-.classpath
 *dist/*.jar
 log4.log
 gui/log4.log
@@ -12,3 +11,5 @@ components/http/build/classes/org/limewire/http/package.html
 hs_err_*.log
 .DS_Store
 components/azureus/src/main/resources/org/gudy/azureus2/internat/*
+lib/jars-src/commons-logging-1.0.4-src/target/*
+builder
