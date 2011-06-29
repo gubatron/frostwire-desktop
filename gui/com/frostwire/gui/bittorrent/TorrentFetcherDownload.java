@@ -184,6 +184,7 @@ public class TorrentFetcherDownload implements BTDownload {
                             public void run() {
                                 try {
                                     PartialFilesDialog dlg = new PartialFilesDialog(GUIMediator.getAppFrame(), inf.getFile());
+                                    
                                     dlg.setVisible(true);
                                     filesSelection = dlg.getFilesSelection();
                                 } catch (TOTorrentException e) {

@@ -13,7 +13,7 @@ import com.limegroup.gnutella.gui.SizedWholeNumberField;
 import com.limegroup.gnutella.gui.WholeNumberField;
 import com.limegroup.gnutella.settings.BittorrentSettings;
 
-public class BittorrentConnectionPaneItem extends AbstractPaneItem {
+public class TorrentConnectionPaneItem extends AbstractPaneItem {
 
 	public final static String TITLE = I18n.tr("BitTorrent Connection Settings");
 
@@ -35,7 +35,7 @@ public class BittorrentConnectionPaneItem extends AbstractPaneItem {
 	
 	private WholeNumberField MAX_UPLOAD_SLOTS_FIELD = new SizedWholeNumberField(4);
 
-	public BittorrentConnectionPaneItem() {
+	public TorrentConnectionPaneItem() {
 		super(TITLE, TEXT);
 
 		BoxPanel panel = new BoxPanel();

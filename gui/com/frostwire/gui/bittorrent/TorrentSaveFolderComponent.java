@@ -1,40 +1,27 @@
 package com.frostwire.gui.bittorrent;
 
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import org.limewire.i18n.I18nMarker;
 
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 public class TorrentSaveFolderComponent extends JPanel {
 
 	private static final long serialVersionUID = -6564593945827058369L;
 	private JTextField folderTextField;
-    private final JCheckBox CHECK_BOX = new JCheckBox();
-    private final String CHECK_BOX_LABEL = I18nMarker.marktr("Seed Finished Torrent Downloads");
-    private final JLabel explanationLabel = new JLabel();
     private static String errorMessage;
 	
 	public TorrentSaveFolderComponent(boolean border) {
@@ -49,45 +36,24 @@ public class TorrentSaveFolderComponent extends JPanel {
 		
 		// "Save Folder" text field
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		gbc.weightx = 1;
-		gbc.insets = new Insets(0, 0, ButtonRow.BUTTON_SEP, 0);
-		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		gbc.anchor = GridBagConstraints.NORTHEAST;
+		gbc.weightx = 1.0;
+		gbc.insets = new Insets(10,10,10,10);
+		gbc.gridwidth = GridBagConstraints.RELATIVE;
+		gbc.anchor = GridBagConstraints.LINE_START;
 		add(folderTextField, gbc);
 
-		gbc = new GridBagConstraints();
-		gbc.anchor = GridBagConstraints.NORTHWEST;
-		gbc.gridwidth = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1.0;
-        add(createSeedingOptionsComponents(), gbc);
-		
 		// "Save Folder" buttons "User Default", "Browse..."
 		gbc = new GridBagConstraints();
-		gbc.anchor = GridBagConstraints.NORTHWEST;
+		gbc.anchor = GridBagConstraints.LINE_END;
 		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
+
 		add(new ButtonRow(new Action[] { new DefaultAction(), new BrowseAction() },
 				ButtonRow.X_AXIS, ButtonRow.LEFT_GLUE), gbc);
-		
-		gbc = new GridBagConstraints();
-		gbc.anchor = GridBagConstraints.LINE_START;
-		gbc.gridwidth = GridBagConstraints.REMAINDER;
-		gbc.weightx = 1.0;
-		gbc.insets = new Insets(10,0,0,0);
-		explanationLabel.setPreferredSize(new Dimension(450,40));
-		add(explanationLabel,gbc);
-		
 	}
 	
 	public String getTorrentSaveFolderPath() {
 		return folderTextField.getText();
 	}
-	
-	public boolean isSeedingSelected() {
-		return CHECK_BOX.isSelected();
-	}
-	
 	
 	public boolean isTorrentSaveFolderPathValid(boolean checkExist) {
 		//has to be non empty, writeable, must be a folder, and must not be Saved, Shared, or inside any of them.
@@ -121,20 +87,6 @@ public class TorrentSaveFolderComponent extends JPanel {
     		}
 	    }
 		
-//		//is parent or child of a default save folder
-//		for (File saveFolder : gnutellaSaveFolders) {
-//			if (isParentOrChild(folder, saveFolder, "Gnutella Save Folder " + saveFolder.getName())) {
-//				return false;
-//			}
-//		}
-//
-//		//is parent or child of a default share folder
-//		for (File sharedFolder : sharedFolders) {
-//			if (isParentOrChild(folder, sharedFolder, "Shared Folder " + sharedFolder.getName())) {
-//				return false;
-//			}
-//		}
-		
 		return true;
 	}
 	
@@ -164,36 +116,6 @@ public class TorrentSaveFolderComponent extends JPanel {
 		return false;
 
 	}
-	
-	private Component createSeedingOptionsComponents() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-
-        LabeledComponent comp = new LabeledComponent(CHECK_BOX_LABEL, CHECK_BOX, LabeledComponent.NO_GLUE, LabeledComponent.RIGHT);
-
-        //explanationLabel.setFont(explanationLabel.getFont().deriveFont(Math.max(explanationLabel.getFont().getSize() - 2.0f, 9.0f)).deriveFont(Font.PLAIN));
-        CHECK_BOX.addItemListener(new ItemListener() {
-           public void itemStateChanged(ItemEvent e) {
-                setExplanationText();
-            }
-        });
-        setExplanationText();
-
-        CHECK_BOX.setSelected(SharingSettings.SEED_FINISHED_TORRENTS.getValue());
-        comp.getComponent().setAlignmentX(Component.LEFT_ALIGNMENT);
-        explanationLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        panel.add(comp.getComponent());
-
-        return panel;
-    }
-	
-	private void setExplanationText() {
-        if (CHECK_BOX.isSelected()) {
-            explanationLabel.setText(I18n.tr("Finished torrents will be seeded with other peers in the BitTorrent network"));
-        } else {
-            explanationLabel.setText(I18n.tr("<html>Finished torrents will not be seeded. <b>You will become a Leecher</b>.<p>You still might share chunks of the torrent data files with the swarm during downloads."));
-        }
-    }
 	
 	private class DefaultAction extends AbstractAction {
 		

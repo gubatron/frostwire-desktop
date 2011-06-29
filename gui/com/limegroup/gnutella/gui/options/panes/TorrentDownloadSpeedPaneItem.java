@@ -16,7 +16,7 @@ import org.gudy.azureus2.core3.config.impl.TransferSpeedValidator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 
-public class BitTorrentDownloadSpeedPaneItem extends AbstractPaneItem {
+public class TorrentDownloadSpeedPaneItem extends AbstractPaneItem {
 
 	public final static String TITLE = I18n.tr("BitTorrent download speed");
 
@@ -35,7 +35,7 @@ public class BitTorrentDownloadSpeedPaneItem extends AbstractPaneItem {
 	
 	private String configKey = "Max Download Speed KBs";
 	
-	public BitTorrentDownloadSpeedPaneItem() {
+	public TorrentDownloadSpeedPaneItem() {
 		super(TITLE, LABEL);
 
 		DOWNLOAD_SLIDER.setMajorTickSpacing(1024);

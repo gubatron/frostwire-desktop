@@ -10,8 +10,10 @@ frostwire (5.0.6) stable; urgency=high
   * UX fix, Library search now also looks for .torrents on "Torrents" folder.
   * UX fix, Mac OSX file menu does no longer show "Exit" action.
   * Fixes bug, incomplete files are no longer exported to iTunes playlist.
-  * UX update, Help Menu now says "Sharing Help".
+  * UX update, Help Menu now says "Sharing Help". Items rearranged.
+  * UX update, rearranged View options into single panel.
   * UX bugfix, font size can now be increased.
+  
 
  -- FrostWire Team <contact@frostwire.com>  Mon, 27 Jun 2011 10:57:00 -0500
 

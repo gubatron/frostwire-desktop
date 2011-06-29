@@ -3,7 +3,6 @@ package com.limegroup.gnutella.gui.options.panes;
 import java.io.File;
 import java.io.IOException;
 
-import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.bittorrent.TorrentSaveFolderComponent;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -24,7 +23,7 @@ public class TorrentSaveFolderPaneItem extends AbstractPaneItem {
 
 	@Override
 	public void initOptions() {
-		// nothing the component does it.		
+		// nothing the component does it.
 	}
 
 	@Override
@@ -37,17 +36,12 @@ public class TorrentSaveFolderPaneItem extends AbstractPaneItem {
 		boolean restart = isDirty();
 		
         SharingSettings.TORRENT_DATA_DIR_SETTING.setValue(new File(COMPONENT.getTorrentSaveFolderPath()));
-        SharingSettings.SEED_FINISHED_TORRENTS.setValue(COMPONENT.isSeedingSelected());
-
-        if (!COMPONENT.isSeedingSelected()) {
-    		BTDownloadMediator.instance().stopCompleted();
-        }
 		
 		return restart;
 	}
 
 	@Override
 	public boolean isDirty() {
-		return !SharingSettings.TORRENT_DATA_DIR_SETTING.getValueAsString().equals(COMPONENT.getTorrentSaveFolderPath()) || SharingSettings.SEED_FINISHED_TORRENTS.getValue() != COMPONENT.isSeedingSelected();
+		return !SharingSettings.TORRENT_DATA_DIR_SETTING.getValueAsString().equals(COMPONENT.getTorrentSaveFolderPath());
 	}
 }

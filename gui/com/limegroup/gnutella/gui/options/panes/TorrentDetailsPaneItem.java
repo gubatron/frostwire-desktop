@@ -14,7 +14,7 @@ import com.limegroup.gnutella.settings.BittorrentSettings;
 /**
  * Defines options for BitTorrent settings.
  */
-public class BittorrentPaneItem extends AbstractPaneItem {
+public class TorrentDetailsPaneItem extends AbstractPaneItem {
 	
     public final static String TITLE = I18n.tr("Torrent Details Page");
     
@@ -22,7 +22,7 @@ public class BittorrentPaneItem extends AbstractPaneItem {
     
 	private final JCheckBox DETAILS_CHECK_BOX = new JCheckBox();
 	
-	public BittorrentPaneItem() {
+	public TorrentDetailsPaneItem() {
 	    super(TITLE, "");
 
 		BoxPanel panel = new BoxPanel();

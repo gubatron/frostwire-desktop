@@ -38,9 +38,9 @@ import com.limegroup.gnutella.gui.options.panes.AssociationPreferencePaneItem;
 import com.limegroup.gnutella.gui.options.panes.AudioPlayerPaneItem;
 import com.limegroup.gnutella.gui.options.panes.AutoCompletePaneItem;
 import com.limegroup.gnutella.gui.options.panes.AutomaticInstallerDownloadPaneItem;
-import com.limegroup.gnutella.gui.options.panes.BitTorrentDownloadSpeedPaneItem;
-import com.limegroup.gnutella.gui.options.panes.BittorrentConnectionPaneItem;
-import com.limegroup.gnutella.gui.options.panes.BittorrentPaneItem;
+import com.limegroup.gnutella.gui.options.panes.TorrentDownloadSpeedPaneItem;
+import com.limegroup.gnutella.gui.options.panes.TorrentConnectionPaneItem;
+import com.limegroup.gnutella.gui.options.panes.TorrentDetailsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.BrowserPaneItem;
 import com.limegroup.gnutella.gui.options.panes.BugsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ChatCommunityPaneItem;
@@ -60,6 +60,7 @@ import com.limegroup.gnutella.gui.options.panes.StatusBarBandwidthPaneItem;
 import com.limegroup.gnutella.gui.options.panes.StatusBarConnectionQualityPaneItem;
 import com.limegroup.gnutella.gui.options.panes.StatusBarFirewallPaneItem;
 import com.limegroup.gnutella.gui.options.panes.TorrentSaveFolderPaneItem;
+import com.limegroup.gnutella.gui.options.panes.TorrentSeedingSettingPaneItem;
 import com.limegroup.gnutella.gui.options.panes.VideoPlayerPaneItem;
 import com.limegroup.gnutella.gui.options.panes.iTunesPreferencePaneItem;
 import com.limegroup.gnutella.gui.shell.FrostAssociations;
@@ -275,7 +276,7 @@ public final class OptionsConstructor {
     @SuppressWarnings({ "unchecked" })
     private OptionsTreeNode initializePanels() {
         //bittorrent
-    	 OptionsTreeNode node = addOption(OptionsMediator.ROOT_NODE_KEY,BITTORRENT_KEY, I18n.tr("BitTorrent"), TorrentSaveFolderPaneItem.class, BittorrentPaneItem.class, BitTorrentDownloadSpeedPaneItem.class, BittorrentConnectionPaneItem.class);
+    	 OptionsTreeNode node = addOption(OptionsMediator.ROOT_NODE_KEY,BITTORRENT_KEY, I18n.tr("BitTorrent"), TorrentSaveFolderPaneItem.class, TorrentSeedingSettingPaneItem.class, TorrentDetailsPaneItem.class, TorrentDownloadSpeedPaneItem.class, TorrentConnectionPaneItem.class);
 
         //community chat
 		addOption(OptionsMediator.ROOT_NODE_KEY, CHAT_KEY, I18n.tr("Community Chat"), ChatCommunityPaneItem.class);
