@@ -43,20 +43,31 @@ import org.apache.http.util.EntityUtils;
  */
 public class HttpFetcher {
 	
-	private static final int TIMEOUT = 10000;
+    private static final String DEFAULT_USER_AGENT = "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506";
+	private static final int DEFAULT_TIMEOUT = 10000;
 	
-	private URI _uri;
-	private String _userAgent;
+	private final URI _uri;
+	private final String _userAgent;
+	private final int _timeout;
 
 	private byte[] body = null;
 
-	public HttpFetcher(URI uri, String userAgent) {
+	public HttpFetcher(URI uri, String userAgent, int timeout) {
 		_uri = uri;
 		_userAgent = userAgent;
+		_timeout = timeout;
+	}
+	
+	public HttpFetcher(URI uri, String userAgent) {
+	    this(uri, userAgent, DEFAULT_TIMEOUT);
+	}
+	
+	public HttpFetcher(URI uri, int timeout) {
+	    this(uri, DEFAULT_USER_AGENT, timeout);
 	}
 	
 	public HttpFetcher(URI uri) {
-	    this(uri, "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506");
+	    this(uri, DEFAULT_USER_AGENT);
 	}
 	
 	public Object[] fetch(boolean gzip) {
@@ -94,8 +105,8 @@ public class HttpFetcher {
 		httpGet.addHeader("Connection", "close");
 		
 		HttpParams params = httpGet.getParams();
-		HttpConnectionParams.setConnectionTimeout(params, TIMEOUT);
-        HttpConnectionParams.setSoTimeout(params, TIMEOUT);
+		HttpConnectionParams.setConnectionTimeout(params, _timeout);
+        HttpConnectionParams.setSoTimeout(params, _timeout);
         HttpConnectionParams.setStaleCheckingEnabled(params, true);
         HttpConnectionParams.setTcpNoDelay(params, true);
         HttpClientParams.setRedirecting(params, true);
@@ -178,8 +189,8 @@ public class HttpFetcher {
 		httpPost.setEntity(entity);
 		
 		HttpParams params = httpPost.getParams();
-		HttpConnectionParams.setConnectionTimeout(params, TIMEOUT);
-        HttpConnectionParams.setSoTimeout(params, TIMEOUT);
+		HttpConnectionParams.setConnectionTimeout(params, _timeout);
+        HttpConnectionParams.setSoTimeout(params, _timeout);
         HttpConnectionParams.setStaleCheckingEnabled(params, true);
         HttpConnectionParams.setTcpNoDelay(params, true);
         HttpClientParams.setRedirecting(params, true);
@@ -214,8 +225,8 @@ public class HttpFetcher {
 		httpPost.setEntity(fileEntity);
 		
 		HttpParams params = httpPost.getParams();
-		HttpConnectionParams.setConnectionTimeout(params, TIMEOUT);
-        HttpConnectionParams.setSoTimeout(params, TIMEOUT);
+		HttpConnectionParams.setConnectionTimeout(params, _timeout);
+        HttpConnectionParams.setSoTimeout(params, _timeout);
         HttpConnectionParams.setStaleCheckingEnabled(params, true);
         HttpConnectionParams.setTcpNoDelay(params, true);
         HttpClientParams.setRedirecting(params, true);
@@ -248,8 +259,8 @@ public class HttpFetcher {
 		httpPost.setEntity(fileEntity);
 		
 		HttpParams params = httpPost.getParams();
-		HttpConnectionParams.setConnectionTimeout(params, TIMEOUT);
-        HttpConnectionParams.setSoTimeout(params, TIMEOUT);
+		HttpConnectionParams.setConnectionTimeout(params, _timeout);
+        HttpConnectionParams.setSoTimeout(params, _timeout);
         HttpConnectionParams.setStaleCheckingEnabled(params, true);
         HttpConnectionParams.setTcpNoDelay(params, true);
         HttpClientParams.setRedirecting(params, true);

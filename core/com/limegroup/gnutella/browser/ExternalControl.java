@@ -9,9 +9,9 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.URI;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +26,7 @@ import org.gudy.azureus2.core3.util.Constants;
 import org.gudy.azureus2.core3.util.Debug;
 import org.limewire.util.OSUtils;
 
+import com.frostwire.HttpFetcher;
 import com.limegroup.gnutella.ActivityCallback;
 
 public class ExternalControl {
@@ -185,6 +186,10 @@ public class ExternalControl {
                 handleTorrentMagnetRequest("magnet:?xt=urn:btih:" + info_hash);
                 return true;
             }
+        } else if (get.startsWith("/show")) {
+            writeHTTPReply(os, "Running");
+            restoreApplication();
+            return true;
         }
 
         writeJSReply(os, "checkResult(0);");
@@ -198,6 +203,17 @@ public class ExternalControl {
         pw.print("Cache-Control: no-cache" + NL);
         pw.print("Pragma: no-cache" + NL);
         pw.print("Content-Type: text/javascript" + NL);
+        pw.print("Content-Length: " + string.length() + NL + NL);
+        pw.write(string);
+        pw.flush();
+    }
+    
+    private void writeHTTPReply(OutputStream os, String string) {
+        PrintWriter pw = new PrintWriter(new OutputStreamWriter(os));
+        pw.print("HTTP/1.1 200 OK" + NL);
+        pw.print("Cache-Control: no-cache" + NL);
+        pw.print("Pragma: no-cache" + NL);
+        pw.print("Content-Type: text/plain" + NL);
         pw.print("Content-Length: " + string.length() + NL + NL);
         pw.write(string);
         pw.flush();
@@ -324,17 +340,12 @@ public class ExternalControl {
      *   @returns  true if a local FrostWire responded with a true.
      */
     private boolean testForFrostWire(String arg) {
-        Socket socket = null;
         try {
-            socket = new Socket();
-            socket.connect(new InetSocketAddress(LOCALHOST_IP, SERVER_PORT), 1000);
-            return true;
-        } catch (Exception e) {
-        } finally {
-            try {
-                socket.close();
-            } catch (Exception e) {
+            HttpFetcher fetcher = new HttpFetcher(new URI("http://" + LOCALHOST_IP + ":" + SERVER_PORT + "/show"), 1000);
+            if (fetcher.fetch() != null) {
+                return true;
             }
+        } catch (Exception e) {
         }
 
         return false;
