@@ -3,7 +3,7 @@ package com.limegroup.gnutella.gui.options.panes;
 import java.io.IOException;
 
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
-import com.frostwire.gui.bittorrent.SeedingSettingComponent;
+import com.frostwire.gui.bittorrent.TorrentSeedingSettingComponent;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
 
@@ -12,12 +12,12 @@ public class TorrentSeedingSettingPaneItem extends AbstractPaneItem {
 
 	public final static String TITLE = I18n.tr("Seeding Settings");
 	
-	private SeedingSettingComponent COMPONENT;
+	private TorrentSeedingSettingComponent COMPONENT;
 
 	public TorrentSeedingSettingPaneItem() {
 		super(TITLE, I18n.tr("Seeding is the process of connecting to a torrent when you have a complete file(s). Pieces of the seeded file(s) will be available to everybody. While downloading pieces are always available to other peers in the swarm."));
 		
-		COMPONENT = new SeedingSettingComponent(true, false);
+		COMPONENT = new TorrentSeedingSettingComponent(true, false);
         add(COMPONENT);
 	}
 	

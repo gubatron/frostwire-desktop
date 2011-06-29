@@ -130,7 +130,7 @@ public class SetupManager {
 
         SaveStatus saveDirectoryStatus = shouldShowSaveDirectoryWindow();
         if(saveDirectoryStatus != SaveStatus.NO)
-            windows.add(new SaveWindow(this));
+            windows.add(new BitTorrentSettingsWindow(this));
             
         if( !InstallSettings.SPEED.getValue() ||
             !InstallSettings.START_STARTUP.getValue() && GUIUtils.shouldShowStartOnStartupWindow()) //FTA removed in FrostWire  ||             !InstallSettings.FILTER_OPTION.getValue() 

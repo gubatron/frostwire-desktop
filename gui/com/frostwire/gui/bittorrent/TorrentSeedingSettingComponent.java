@@ -12,7 +12,7 @@ import javax.swing.JRadioButton;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
 
-public class SeedingSettingComponent extends JPanel {
+public class TorrentSeedingSettingComponent extends JPanel {
 	
 	private static final long serialVersionUID = 571313077597756384L;
 	
@@ -29,7 +29,7 @@ public class SeedingSettingComponent extends JPanel {
 	 * 
 	 * @param precheck - whether or not to pre-select one of the radio buttons.
 	 */
-	public SeedingSettingComponent(boolean precheck, boolean useBorder) {
+	public TorrentSeedingSettingComponent(boolean precheck, boolean useBorder) {
 		
 		_precheck = precheck;
 		_border = useBorder;
