@@ -36,7 +36,7 @@ class BitTorrentSettingsWindow extends SetupWindow {
     }
 	
 	private static String describeText() {
-	    return I18nMarker.marktr("Choose a folder where files downloaded from the BitTorrent network should be saved to.\nPlease select if you want to \"Seed\" or not \"Seed\" finished downloads. The link below has more information about \"Seeding\".");
+	    return I18nMarker.marktr("Choose a folder where files downloaded from the BitTorrent network should be saved to.\nPlease select if you want to \"Seed\" or to not \"Seed\" finished downloads. The link below has more information about \"Seeding\".");
 	}
     
     protected void createWindow() {
