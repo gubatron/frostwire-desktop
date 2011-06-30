@@ -37,7 +37,6 @@ import com.limegroup.gnutella.gui.dnd.FileTransfer;
 import com.limegroup.gnutella.gui.dnd.MulticastTransferHandler;
 import com.limegroup.gnutella.gui.options.ConfigureOptionsAction;
 import com.limegroup.gnutella.gui.options.OptionsConstructor;
-import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
 import com.limegroup.gnutella.gui.search.NamedMediaType;
 import com.limegroup.gnutella.gui.tables.DefaultMouseListener;
 import com.limegroup.gnutella.gui.tables.MouseObserver;
@@ -282,28 +281,6 @@ final class LibraryTree extends JTree implements MouseObserver {
         return null;
     }
 
-    /**
-     * Adds files to the playlist recursively.
-     */
-    void addPlayListEntries() {
-        if (!GUIMediator.isPlaylistVisible())
-            return;
-
-        final DirectoryHolder dh = getSelectedDirectoryHolder();
-        if (dh == null)
-            return;
-
-        if (PlaylistMediator.getInstance() == null)
-            return;
-
-        PlaylistMediator pm = GUIMediator.getPlayList();
-        if (pm == null) {
-            return;
-        }
-
-        pm.addFilesToPlaylist(dh.getFiles());
-    }
-
     public DirectoryHolder getSelectedDirectoryHolder() {
         TreePath path = getSelectionPath();
         if (path != null)
@@ -391,8 +368,6 @@ final class LibraryTree extends JTree implements MouseObserver {
     private class LibraryTreeSelectionListener implements TreeSelectionListener {
         public void valueChanged(TreeSelectionEvent e) {
             LibraryTreeNode node = getSelectedNode();
-
-            addDirToPlaylistAction.setEnabled(true);
 
             if (node == null)
                 return;
@@ -495,22 +470,6 @@ final class LibraryTree extends JTree implements MouseObserver {
         }
     }
 
-    private class AddDirectoryToPlaylistAction extends AbstractAction {
-
-        /**
-         * 
-         */
-        private static final long serialVersionUID = -4408516187152426542L;
-
-        public AddDirectoryToPlaylistAction() {
-            putValue(Action.NAME, I18n.tr("Add Folder Contents to Playlist"));
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            addPlayListEntries();
-        }
-    }
-
     private class LibraryTreeCellRenderer extends SubstanceDefaultTreeCellRenderer {
 
         /**
@@ -590,20 +549,12 @@ final class LibraryTree extends JTree implements MouseObserver {
 
     }
 
-    /**
-     * Updates the LibraryTree based on whether the player is enabled. 
-     */
-    public void setPlayerEnabled(boolean value) {
-        addDirToPlaylistAction.setEnabled(true);
-    }
-
     ///////////////////////////////////////////////////////////////////////////
     //  Popups
     ///////////////////////////////////////////////////////////////////////////
 
     /** Constant for the popup menu. */
     private JPopupMenu DIRECTORY_POPUP;
-    private Action addDirToPlaylistAction = new AddDirectoryToPlaylistAction();
     private Action refreshAction = new RefreshAction();
     private Action exploreAction = new ExploreAction();
     private Action configureSharingAction = new ConfigureOptionsAction(OptionsConstructor.SHARED_KEY, I18n.tr("Options"),
@@ -617,16 +568,12 @@ final class LibraryTree extends JTree implements MouseObserver {
      */
     private void makePopupMenu() {
         DIRECTORY_POPUP = new SkinPopupMenu();
-        DIRECTORY_POPUP.add(new SkinMenuItem(addDirToPlaylistAction));
-        DIRECTORY_POPUP.addSeparator();
         DIRECTORY_POPUP.add(new SkinMenuItem(refreshAction));
         if (hasExploreAction()) {
             DIRECTORY_POPUP.add(new SkinMenuItem(exploreAction));
         }
-        DIRECTORY_POPUP.addSeparator();
-
-        DIRECTORY_POPUP.add(new SkinMenuItem(new ConfigureOptionsAction(OptionsConstructor.SHARED_KEY, I18n.tr("Configure Sharing Options"), I18n
-                .tr("You can configure the folders you share in FrostWire\'s Options."))));
+        DIRECTORY_POPUP.add(new SkinMenuItem(new ConfigureOptionsAction(OptionsConstructor.SHARED_KEY, I18n.tr("Configure Options"), I18n
+                .tr("You can configure the FrostWire\'s Options."))));
     }
 
     private boolean hasExploreAction() {

@@ -120,7 +120,6 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
             menu.add(new SkinMenuItem(OPEN_IN_FOLDER_ACTION));
         }
 
-        menu.addSeparator();
         menu.add(new SkinMenuItem(CREATE_TORRENT_ACTION));
 
         menu.addSeparator();
@@ -562,7 +561,9 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
         LAUNCH_ACTION.setEnabled(true);
         DELETE_ACTION.setEnabled(true);
 
-        CREATE_TORRENT_ACTION.setEnabled(sel.length == 1);
+        if (selectedFile != null && !selectedFile.getName().endsWith(".torrent")) {
+            CREATE_TORRENT_ACTION.setEnabled(sel.length == 1);
+        }
 
         if (sel.length == 1 && selectedFile.isFile() && selectedFile.getParentFile() != null) {
             OPEN_IN_FOLDER_ACTION.setEnabled(true);
