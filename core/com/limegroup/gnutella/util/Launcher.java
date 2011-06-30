@@ -228,7 +228,7 @@ public final class Launcher {
 	 *
 	 * @return an int for the exit code of the native method
 	 */
-	private static int launchFileWindows(String path) throws IOException {
+	public static int launchFileWindows(String path) throws IOException {
         try {
             return SystemUtils.openFile(path);
         } catch(IOException iox) {
