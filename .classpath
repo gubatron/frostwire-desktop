@@ -27,8 +27,8 @@
 	<classpathentry kind="lib" path="lib/jars/messages.jar"/>
 	<classpathentry kind="lib" path="lib/jars/substance.jar" sourcepath="lib/jars-src/substance-58d3873"/>
 	<classpathentry kind="lib" path="lib/jars/trident.jar" sourcepath="lib/jars-src"/>
-	<classpathentry kind="lib" path="lib/jars/httpclient-4.0.jar"/>
-	<classpathentry kind="lib" path="lib/jars/httpcore-4.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/jars/httpclient-4.0.jar" sourcepath="lib/jars-src"/>
+	<classpathentry kind="lib" path="lib/jars/httpcore-4.0.1.jar" sourcepath="lib/jars-src"/>
 	<classpathentry kind="lib" path="lib/jars/MRJAdapter.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

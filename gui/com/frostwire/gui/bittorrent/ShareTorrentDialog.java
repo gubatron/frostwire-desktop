@@ -14,7 +14,12 @@ import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -30,6 +35,9 @@ import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.torrent.TOTorrentFile;
 import org.gudy.azureus2.core3.util.UrlUtils;
 
+import com.frostwire.HttpFetcher;
+import com.frostwire.HttpFetcher.HttpRequestInfo;
+import com.frostwire.HttpFetcherListener;
 import com.frostwire.ImageCache;
 import com.frostwire.ImageCache.OnLoadedListener;
 import com.limegroup.gnutella.gui.ButtonRow;
@@ -39,6 +47,49 @@ import com.limegroup.gnutella.gui.I18n;
 
 public class ShareTorrentDialog extends JDialog implements ClipboardOwner {
 
+	public class GoogleShortenerResponse {
+		public String kind;
+		public String id;
+		public String longUrl;
+	}
+
+	private abstract class AbstractHttpFetcherListener implements
+			HttpFetcherListener {
+
+		private URI _shortenerUri;
+
+		public AbstractHttpFetcherListener(String uri) {
+			try {
+				_shortenerUri = new URI(uri);
+			} catch (URISyntaxException e) {
+			}
+		}
+
+		@Override
+		public void onError(Exception e) {
+			if (_shortnerListeners.size() > 1) {
+				_shortnerListeners.remove(0);
+				performAsyncURLShortening(_shortnerListeners.get(0));
+				
+				System.out.println(">>> AbstractHttpFetcherListener ERROR >>>");
+				e.printStackTrace();
+				System.out.println();
+				System.out.println("URL: [" + _shortenerUri.toString() + "]");
+				System.out.println(">>> AbstractHttpFetcherListener ERROR >>>");
+			}
+
+		}
+
+		abstract public void onSuccess(byte[] body);
+
+		public URI getShortenerURL() {
+			return _shortenerUri;
+		}
+
+		abstract HttpRequestInfo getRequestInfo();
+			
+	}
+
 	private static final long serialVersionUID = -7466273012830791935L;
 	private TOTorrent _torrent;
 	private Container _container;
@@ -47,25 +98,79 @@ public class ShareTorrentDialog extends JDialog implements ClipboardOwner {
 	private JLabel _tipsLabel;
 	private Action[] _actions;
 
+	private AbstractHttpFetcherListener _bitlyShortnerListener;
+	private AbstractHttpFetcherListener _tinyurlShortnerListener;
+
+	/** Add more URL Shortner listeners to this list on initURLShortnerListeners() for more fall back.
+	 * They will be executed in the order they were added. */
+	private List<AbstractHttpFetcherListener> _shortnerListeners;
+
+	private String _link;
+	private String _info_hash;
+	private String _torrent_name;
+
 	public ShareTorrentDialog(TOTorrent torrent) {
 		_torrent = torrent;
 
 		setupUI();
 	}
 
+	private void initURLShortnerListeners() {
+		//R_749968a37da3260493d8aa19ee021d14
+		_bitlyShortnerListener = new AbstractHttpFetcherListener("http://api.bit.ly/v3/shorten?format=txt&login=frostwire&apiKey=R_749968a37da3260493d8aa19ee021d14&longUrl="+getLongFormLink()) {
+			
+			@Override
+			public void onSuccess(byte[] body) {
+				System.out.println("SUCESS! - ["+ getShortenerURL() +"]");
+				_link = new String(body);
+				updateTextAreaWithShortenedLink();
+			}
+
+			@Override
+			HttpRequestInfo getRequestInfo() {
+				return new HttpRequestInfo(true,null,null);
+			}
+		};
+		
+		_tinyurlShortnerListener = new AbstractHttpFetcherListener(
+				"http://tinyurl.com/api-create.php?url=" + getLongFormLink()) {
+
+			@Override
+			public void onSuccess(byte[] body) {
+				_link = new String(body);
+				updateTextAreaWithShortenedLink();
+			}
+
+			@Override
+			HttpRequestInfo getRequestInfo() {
+				return new HttpRequestInfo(true,null,null);
+			}
+
+		};
+
+		_shortnerListeners = new LinkedList<ShareTorrentDialog.AbstractHttpFetcherListener>(Arrays.asList(
+				_bitlyShortnerListener,_tinyurlShortnerListener));
+
+
+	}
+
+	private void updateTextAreaWithShortenedLink() {
+		GUIMediator.safeInvokeLater(new Runnable() {
+			@Override
+			public void run() {
+				_textArea.setText("Download \"" + _torrent_name
+						+ "\" at " + _link);
+			}
+		});
+	}
+
+	
 	private void setupUI() {
 		setupWindow();
 
-		String torrent_name = _torrent.getUTF8Name();
-		
-		if (torrent_name == null) {
-			torrent_name = new String(_torrent.getName());
-		}
-		String info_hash = null;
-		try {
-			info_hash = TorrentUtil.hashToString(_torrent.getHash());
-		} catch (TOTorrentException e) {
-		}
+		initTorrentname();
+
+		initInfoHash();
 
 		GridBagConstraints c = new GridBagConstraints();
 
@@ -79,8 +184,9 @@ public class ShareTorrentDialog extends JDialog implements ClipboardOwner {
 		boolean folderTorrent = files.length > 1;
 		_introLabel = new JLabel(folderTorrent ? String.format(
 				I18n.tr("Use the following text to share the \"%s\" folder"),
-				torrent_name) : String.format(String.format(
-				"Use the following text to share the \"%s\" file", torrent_name)));
+				_torrent_name) : String.format(String.format(
+				"Use the following text to share the \"%s\" file",
+				_torrent_name)));
 		_introLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
 		_container.add(_introLabel, c);
 
@@ -94,14 +200,17 @@ public class ShareTorrentDialog extends JDialog implements ClipboardOwner {
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(10, 10, 10, 10);
 
-		_textArea = new JTextArea("Download \"" + torrent_name
-				+ "\" at http://maglnk.com/" + info_hash, 2, 80);
+		_textArea = new JTextArea("Download \"" + _torrent_name + "\" at "
+				+ getLink(), 2, 80);
 		Font f = new Font("Dialog", Font.BOLD, 13);
 		_textArea.setFont(f);
 		_textArea.setMargin(new Insets(10, 10, 10, 10));
 		_textArea.selectAll();
 		_textArea.setBorder(BorderFactory.createEtchedBorder());
 		_container.add(_textArea, c);
+
+		initURLShortnerListeners();
+		performAsyncURLShortening(_shortnerListeners.get(0));
 
 		// BUTTON ROW
 		initActions();
@@ -129,6 +238,40 @@ public class ShareTorrentDialog extends JDialog implements ClipboardOwner {
 		_container.add(_tipsLabel, c);
 
 		pack();
+	}
+
+	private void initTorrentname() {
+		_torrent_name = _torrent.getUTF8Name();
+
+		if (_torrent_name == null) {
+			_torrent_name = new String(_torrent.getName());
+		}
+	}
+
+	private void initInfoHash() {
+		try {
+			_info_hash = TorrentUtil.hashToString(_torrent.getHash());
+		} catch (TOTorrentException e) {
+		}
+	}
+
+	private String getLink() {
+		if (_link == null) {
+			_link = "http://maglnk.com/" + _info_hash;
+		}
+		return _link;
+	}
+
+	private void performAsyncURLShortening(AbstractHttpFetcherListener listener) {
+		HttpFetcher asyncFetcher = new HttpFetcher(listener.getShortenerURL(), 2000);
+
+		asyncFetcher.asyncRequest(listener.getRequestInfo(),listener);
+	}
+
+	private String getLongFormLink() {
+		return "http://maglnk.com/" + _info_hash + "/"
+				+ UrlUtils.encode(_torrent_name.replace(".torrent", ""));
+
 	}
 
 	private void loadIconForAction(final Action action, String iconURL) {
@@ -160,7 +303,8 @@ public class ShareTorrentDialog extends JDialog implements ClipboardOwner {
 		_actions[2] = new CloseAction();
 
 		// Load icons for actions
-		loadIconForAction(_actions[0],"http://static.frostwire.com/images/20x20twitter.png");
+		loadIconForAction(_actions[0],
+				"http://static.frostwire.com/images/20x20twitter.png");
 	}
 
 	private void setupWindow() {
