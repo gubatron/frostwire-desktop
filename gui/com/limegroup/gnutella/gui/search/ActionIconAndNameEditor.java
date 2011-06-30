@@ -2,6 +2,7 @@ package com.limegroup.gnutella.gui.search;
 
 import java.awt.Component;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -28,16 +29,22 @@ public class ActionIconAndNameEditor extends AbstractCellEditor implements Table
         return null;
     }
 
-    public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+    public Component getTableCellEditorComponent(final JTable table, Object value, boolean isSelected, int row, int column) {
         ActionIconAndNameHolder in = (ActionIconAndNameHolder) value;
         _action = in.getAction();
 
-        Component component = new ActionIconAndNameRenderer().getTableCellRendererComponent(table, value, isSelected, true, row, column);
+        final Component component = new ActionIconAndNameRenderer().getTableCellRendererComponent(table, value, isSelected, true, row, column);
         component.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 if (ICON_REGION.contains(e.getPoint())) {
                     component_mousePressed(e);
+                } else {
+                    Toolkit.getDefaultToolkit()
+                            .getSystemEventQueue()
+                            .postEvent(
+                                    new MouseEvent(table, e.getClickCount() >= 2 ? MouseEvent.MOUSE_CLICKED : MouseEvent.MOUSE_PRESSED, e.getWhen(), e
+                                            .getModifiers(), component.getX() + e.getX(), component.getY() + e.getY(), e.getClickCount(), false));
                 }
             }
         });
