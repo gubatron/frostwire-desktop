@@ -2,8 +2,12 @@ package com.limegroup.gnutella.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Desktop;
+import java.awt.Font;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,13 +15,15 @@ import javax.swing.Box;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
+import javax.swing.JEditorPane;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 
 import org.limewire.service.Switch;
 import org.limewire.setting.IntSetting;
@@ -77,8 +83,26 @@ public final class MessageService {
             public void run() {
             	JOptionPane optionPane = new JOptionPane();
             	optionPane.setMessageType(JOptionPane.ERROR_MESSAGE);
-            	JLabel messageLabel = new JLabel(message);
-            	optionPane.setMessage(messageLabel);
+            	JEditorPane editorPane = new JEditorPane();
+
+            	//so that it will use the font we tell it.
+            	editorPane.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
+            	editorPane.setEditable(false);
+            	editorPane.setOpaque(false);
+            	editorPane.setFont(new Font("Arial",Font.PLAIN,12));
+            	editorPane.setContentType("text/html");
+            	editorPane.addHyperlinkListener(new HyperlinkListener() {
+					
+					@Override
+					public void hyperlinkUpdate(HyperlinkEvent e) {
+						if (e.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+							GUIMediator.openURL(e.getURL().toString());
+						}
+					}
+				});
+            	editorPane.setText(message);
+            	
+            	optionPane.setMessage(editorPane);
             	optionPane.setOpaque(true);
             	JDialog dialog = optionPane.createDialog(getParentComponent(),I18n.tr("Error"));
             	dialog.setVisible(true);
