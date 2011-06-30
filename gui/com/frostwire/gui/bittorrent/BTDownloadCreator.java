@@ -96,13 +96,17 @@ public class BTDownloadCreator {
     public BTDownloadCreator(File torrentFile, boolean[] filesSelection) throws TOTorrentException {
         this(torrentFile, null, false, filesSelection);
     }
-
-    public boolean isTorrentInGlobalManager() {
-        return _torrentInGlobalManager;
-    }
     
     public BTDownload createDownload() throws SaveLocationException, TOTorrentException {
-        return createDownload(_downloadManager);
+        if (_torrentInGlobalManager) {
+            return new DuplicateDownload(new BTDownloadImpl(_downloadManager));
+        } else {
+            return createDownload(_downloadManager);
+        }
+    }
+    
+    public boolean isTorrentInGlobalManager() {
+        return _torrentInGlobalManager;
     }
 
     public static BTDownload createDownload(DownloadManager downloadManager) throws SaveLocationException, TOTorrentException {

@@ -16,7 +16,6 @@ public class TorrentFetcherDownload implements BTDownload {
 
     private static final String STATE_DOWNLOADING = I18n.tr("Downloading Torrent");
     private static final String STATE_ERROR = I18n.tr("Error");
-    private static final String STATE_DUPLICATED = I18n.tr("Duplicated");
     private static final String STATE_CANCELED = I18n.tr("Canceled");
 
     private final TorrentDownloader _torrentDownloader;
@@ -205,11 +204,7 @@ public class TorrentFetcherDownload implements BTDownload {
                     }
 
                     BTDownloadCreator creator = new BTDownloadCreator(inf.getFile(), filesSelection);
-                    if (!creator.isTorrentInGlobalManager()) {
-                        _delegate = creator.createDownload();
-                    } else {
-                        _state = STATE_DUPLICATED;
-                    }
+                    _delegate = creator.createDownload();
                 } catch (Exception e) {
                     _state = STATE_ERROR;
                     e.printStackTrace();
