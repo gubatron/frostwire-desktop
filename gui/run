@@ -13,13 +13,13 @@ OPTS="-Xms32m -Xmx128m -Djava.net.preferIPV6Addresses=false -ea -Djava.net.prefe
 PLATFORM=`uname`
 case ${PLATFORM} in 
     Linux)
-        OPTS="${OPTS} -Djava.library.path=../lib/native/linux";
-        export PATH="${PATH}:../lib/native/linux";
+        OPTS="${OPTS} -Djava.library.path=../lib/native";
+        export PATH="${PATH}:../lib/native";
         ADDITIONAL=linux
     ;;
     Darwin)
         CLASSPATH="${CLASSPATH}:/System/Library/Java";
-        OPTS="${OPTS} -Djava.library.path=../lib/native/osx";
+        OPTS="${OPTS} -Djava.library.path=../lib/native";
         OPTS="${OPTS} -Djava.endorsed.dirs=\"\"";
         OPTS="${OPTS} -Djava.nio.preferSelect=true";
         OPTS="${OPTS} -Xdock:icon=FrostWire.icns";
@@ -28,7 +28,7 @@ case ${PLATFORM} in
     ;;
     CYGWIN*)
         PS=";"
-        export PATH=$PATH:../lib/native/windows
+        export PATH=$PATH:../lib/native
         ADDITIONAL=windows
         
     ;;
