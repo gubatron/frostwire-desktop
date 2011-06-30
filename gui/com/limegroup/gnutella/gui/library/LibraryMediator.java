@@ -290,7 +290,6 @@ public final class LibraryMediator implements ThemeObserver {
 	 */
 	public void setPlayerEnabled(boolean value) {
 	    getLibraryTable().setPlayerEnabled(value);
-		getLibraryTree().setPlayerEnabled(value);
 	}
 	
 	private static LibraryTree getLibraryTree() {
