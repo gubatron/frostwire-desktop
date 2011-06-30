@@ -1,7 +1,7 @@
 frostwire (5.0.6) stable; urgency=high
 
-  * New feature, Send file.
-  * New feature, Send folder.
+  * New feature, Send file. Available on File Menu and Transfer Manager.
+  * New feature, Send folder. Available on File Menu and Transfer Manager.
   * UX upgrade, we now have a [+] icon next to search result file names to
     show partial download dialog.
   * UX upgrade, when a partial download is cancelled, the entry is removed
@@ -17,6 +17,9 @@ frostwire (5.0.6) stable; urgency=high
   * UX update, the installation wizard now forces the user to decide if
     she wants to seed or not seed to continue. Links to what is seeding
     are in place.
+  * UX update, in Windows and Linux, when the user Xs the window the user is
+    explained that the application will be hidden and is given the option
+    to exit.
   * UX bugfix, font size can now be increased.
 
  -- FrostWire Team <contact@frostwire.com>  Mon, 27 Jun 2011 10:57:00 -0500
