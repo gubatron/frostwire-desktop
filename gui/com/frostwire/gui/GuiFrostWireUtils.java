@@ -16,6 +16,7 @@ import org.limewire.util.Version;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.settings.BittorrentSettings;
 import com.limegroup.gnutella.util.HTTPUtils;
+import com.limegroup.gnutella.util.Launcher;
 
 public final class GuiFrostWireUtils {
 
@@ -88,6 +89,23 @@ public final class GuiFrostWireUtils {
 			boolean isJava16orGreater = isJavaMinorVersionEqualOrGreaterThan("1.6");
 
 			if (isJava16orGreater) {
+				
+				if(OSUtils.isWindows()) {
+					String path = file.getCanonicalPath();
+					String extCheckString = path.toLowerCase();
+				
+					if(!extCheckString.endsWith(".exe") &&
+				   !extCheckString.endsWith(".vbs") &&
+				   !extCheckString.endsWith(".lnk") &&
+				   !extCheckString.endsWith(".bat") &&
+				   !extCheckString.endsWith(".sys") &&
+				   !extCheckString.endsWith(".com")) {
+
+						Launcher.launchFileWindows(path);
+						return;
+					}
+				}
+				
 				java.awt.Desktop.getDesktop().open(file);
 			} else {
 				//try jdic if you're not a mac and you're on below 1.6
