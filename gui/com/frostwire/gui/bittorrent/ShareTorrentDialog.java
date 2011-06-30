@@ -101,8 +101,11 @@ public class ShareTorrentDialog extends JDialog implements ClipboardOwner {
 	private AbstractHttpFetcherListener _bitlyShortnerListener;
 	private AbstractHttpFetcherListener _tinyurlShortnerListener;
 
-	/** Add more URL Shortner listeners to this list on initURLShortnerListeners() for more fall back.
-	 * They will be executed in the order they were added. */
+	/**
+	 * Add more URL Shortner listeners to this list on
+	 * initURLShortnerListeners() to have more URL Shortening services to fall
+	 * back on. They will be executed in the order they were added.
+	 */
 	private List<AbstractHttpFetcherListener> _shortnerListeners;
 
 	private String _link;
@@ -116,12 +119,12 @@ public class ShareTorrentDialog extends JDialog implements ClipboardOwner {
 	}
 
 	private void initURLShortnerListeners() {
-		//R_749968a37da3260493d8aa19ee021d14
-		_bitlyShortnerListener = new AbstractHttpFetcherListener("http://api.bit.ly/v3/shorten?format=txt&login=frostwire&apiKey=R_749968a37da3260493d8aa19ee021d14&longUrl="+getLongFormLink()) {
+		_bitlyShortnerListener = new AbstractHttpFetcherListener(
+				"http://api.bit.ly/v3/shorten?format=txt&login=frostwire&apiKey=R_749968a37da3260493d8aa19ee021d14&longUrl="
+						+ getLongFormLink()) {
 			
 			@Override
 			public void onSuccess(byte[] body) {
-				System.out.println("SUCESS! - ["+ getShortenerURL() +"]");
 				_link = new String(body);
 				updateTextAreaWithShortenedLink();
 			}
