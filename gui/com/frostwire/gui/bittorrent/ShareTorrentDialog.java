@@ -16,10 +16,11 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JEditorPane;
 import javax.swing.JLabel;
-import javax.swing.JTextArea;
 
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
@@ -85,7 +86,7 @@ public class ShareTorrentDialog extends JDialog {
 	private TOTorrent _torrent;
 	private Container _container;
 	private JLabel _introLabel;
-	private JTextArea _textArea;
+	private JEditorPane _textArea;
 	private JLabel _tipsLabel;
 	private Action[] _actions;
 
@@ -152,8 +153,8 @@ public class ShareTorrentDialog extends JDialog {
 		GUIMediator.safeInvokeLater(new Runnable() {
 			@Override
 			public void run() {
-				_textArea.setText("Download \"" + _torrent_name
-						+ "\" at " + _link);
+				_textArea.setText(I18n.tr("Download") + " \"" + _torrent_name + "\" " + I18n.tr("at") + " "
+						+ getLink() + " "+ I18n.tr("via FrostWire"));
 			}
 		});
 	}
@@ -185,17 +186,22 @@ public class ShareTorrentDialog extends JDialog {
 		_container.add(_introLabel, c);
 
 		// TEXT AREA
-
 		c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.LINE_START;
 		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 1.0;
 		c.weighty = 1.0;
 		c.gridwidth = GridBagConstraints.REMAINDER;
-		c.insets = new Insets(10, 10, 10, 10);
+		c.insets = new Insets(1, 10, 1, 10);
 
-		_textArea = new JTextArea("Download \"" + _torrent_name + "\" at "
-				+ getLink(), 2, 80);
+		//_textArea = new JTextArea("Download \"" + _torrent_name + "\" at "
+		//		+ getLink(), 2, 80);
+		_textArea = new JEditorPane();
+		_textArea.setEditable(false);
+		_textArea.setText(I18n.tr("Download") + " \"" + _torrent_name + "\" " + I18n.tr("at") + " "
+						+ getLink() + " " + I18n.tr("via FrostWire"));
+		
+		
 		Font f = new Font("Dialog", Font.BOLD, 13);
 		_textArea.setFont(f);
 		_textArea.setMargin(new Insets(10, 10, 10, 10));
@@ -210,12 +216,15 @@ public class ShareTorrentDialog extends JDialog {
 		initActions();
 
 		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.LINE_END;
-		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.anchor = GridBagConstraints.CENTER;
 		c.gridwidth = GridBagConstraints.REMAINDER;
+		//c.weightx = 1.0;
 		c.insets = new Insets(10, 10, 10, 10);
 		ButtonRow buttonRow = new ButtonRow(_actions, ButtonRow.X_AXIS,
 				ButtonRow.RIGHT_GLUE);
+		
+		fixButtonBorders(buttonRow);
+		
 		_container.add(buttonRow, c);
 
 		// TIPS LABEL
@@ -232,6 +241,17 @@ public class ShareTorrentDialog extends JDialog {
 		_container.add(_tipsLabel, c);
 
 		pack();
+	}
+
+	private void fixButtonBorders(ButtonRow buttonRow) {
+		if (_actions == null) {
+			return;
+		}
+
+		for (int i = 0; i < _actions.length; i++) {
+			JButton buttonAtIndex = buttonRow.getButtonAtIndex(i);
+			buttonAtIndex.setBorderPainted(true);
+		}
 	}
 
 	private void initTorrentname() {
@@ -303,6 +323,7 @@ public class ShareTorrentDialog extends JDialog {
 
 		public TwitterAction() {
 			putValue(Action.NAME, I18n.tr("Twitter"));
+			putValue(Action.SHORT_DESCRIPTION,I18n.tr("Send the message above to Twitter"));
 			putValue(LimeAction.ICON_NAME,"TWITTER");
 		}
 
@@ -319,7 +340,8 @@ public class ShareTorrentDialog extends JDialog {
 		private static final long serialVersionUID = 2130811125951128397L;
 
 		public CopyToClipboardAction() {
-			putValue(Action.NAME, I18n.tr("Copy to Clipboard"));
+			putValue(Action.NAME, I18n.tr("All"));
+			putValue(Action.SHORT_DESCRIPTION,I18n.tr("Copy entire message to Clipboard"));
 			putValue(LimeAction.ICON_NAME,"COPY_PASTE");
 		}
 
@@ -334,7 +356,8 @@ public class ShareTorrentDialog extends JDialog {
 		private static final long serialVersionUID = 5396173442291772242L;
 
 		public CopyLinkAction() {
-			putValue(Action.NAME, I18n.tr("Copy Link"));
+			putValue(Action.NAME, I18n.tr("Link"));
+			putValue(Action.SHORT_DESCRIPTION,I18n.tr("Copy Link to Clipboard"));
 			putValue(LimeAction.ICON_NAME,"LINK");
 		}
 
@@ -350,7 +373,8 @@ public class ShareTorrentDialog extends JDialog {
 		private static final long serialVersionUID = 4972170728829407730L;
 
 		public CopyMagnetAction() {
-			putValue(Action.NAME, I18n.tr("Copy Magnet URL"));
+			putValue(Action.NAME, I18n.tr("Magnet"));
+			putValue(Action.SHORT_DESCRIPTION,I18n.tr("Copy Magnet URL to Clipboard"));
 			putValue(LimeAction.ICON_NAME,"MAGNET");
 		}
 		
