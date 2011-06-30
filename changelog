@@ -12,6 +12,11 @@ frostwire (5.0.6) stable; urgency=high
   * Fixes bug, incomplete files are no longer exported to iTunes playlist.
   * UX update, Help Menu now says "Sharing Help". Items rearranged.
   * UX update, rearranged View options into single panel.
+  * UX update, torrent seeding settings are now a control of it's own with
+    an explanation of what seeding is.
+  * UX update, the installation wizard now forces the user to decide if
+    she wants to seed or not seed to continue. Links to what is seeding
+    are in place.
   * UX bugfix, font size can now be increased.
   
 
