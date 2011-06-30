@@ -14,3 +14,4 @@ components/azureus/src/main/resources/org/gudy/azureus2/internat/*
 lib/jars-src/commons-logging-1.0.4-src/target/*
 builder
 lib/native/mplayer/config
+lib/themes/themes.jar
