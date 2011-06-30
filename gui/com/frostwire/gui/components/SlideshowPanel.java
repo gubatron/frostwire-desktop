@@ -386,7 +386,9 @@ public class SlideshowPanel extends JPanel {
 	}
 	
 	private BufferedImage getMasterImage() {
-	    if (_masterImage == null) {
+	    if (_masterImage == null ||
+	        _masterImage.getHeight() != getHeight() ||
+	        _masterImage.getWidth() != getWidth()) {
 	        _masterImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
 	    }
 	    return _masterImage;
