@@ -13,6 +13,7 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeListener;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -46,6 +47,7 @@ import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 
 public class ShareTorrentDialog extends JDialog implements ClipboardOwner {
+
 
 	public class GoogleShortenerResponse {
 		public String kind;
@@ -299,11 +301,13 @@ public class ShareTorrentDialog extends JDialog implements ClipboardOwner {
 	}
 
 	private void initActions() {
-		_actions = new Action[3];
+		_actions = new Action[5];
 
 		_actions[0] = new TwitterAction();
 		_actions[1] = new CopyToClipboardAction();
-		_actions[2] = new CloseAction();
+		_actions[2] = new CopyLinkAction();
+		_actions[3] = new CopyMagnetAction();
+		_actions[4] = new CloseAction();
 
 		// Load icons for actions
 		loadIconForAction(_actions[0],
@@ -363,6 +367,32 @@ public class ShareTorrentDialog extends JDialog implements ClipboardOwner {
 		}
 	}
 
+	public class CopyLinkAction extends AbstractAction {
+
+		public CopyLinkAction() {
+			putValue(Action.NAME, I18n.tr("Copy Link"));
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+		}
+
+	}
+	
+	private class CopyMagnetAction extends AbstractAction {
+
+		public CopyMagnetAction() {
+			putValue(Action.NAME, I18n.tr("Copy Magnet URL"));
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+		}
+
+
+	}
+	
 	private class CloseAction extends AbstractAction {
 
 		private static final long serialVersionUID = 4608358456107049224L;
