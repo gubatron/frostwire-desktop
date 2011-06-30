@@ -58,6 +58,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     private Action exploreAction;
     private Action _copyMagnetAction;
     private Action _copyHashAction;
+    private Action _shareTorrentAction;
 
     /** The actual download buttons instance.
      */
@@ -94,6 +95,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         exploreAction = BTDownloadActions.EXPLORE_ACTION;
         _copyMagnetAction = BTDownloadActions.COPY_MAGNET_ACTION;
         _copyHashAction = BTDownloadActions.COPY_HASH_ACTION;
+        _shareTorrentAction = BTDownloadActions.SHARE_TORRENT_ACTION;
     }
 
     /**
@@ -360,6 +362,9 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         if (OSUtils.isWindows() || OSUtils.isMacOSX()) {
             menu.add(new SkinMenuItem(exploreAction));
         }
+        
+        menu.addSeparator();
+        menu.add(new SkinMenuItem(_shareTorrentAction));
         menu.add(new SkinMenuItem(_copyMagnetAction));
         menu.add(new SkinMenuItem(_copyHashAction));
         menu.addSeparator();
@@ -400,6 +405,9 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         pauseAction.setEnabled(pausable);
         _copyMagnetAction.setEnabled(true);
         _copyHashAction.setEnabled(true);
+        
+		_shareTorrentAction.setEnabled(getSelectedDownloaders().length == 1
+				&& dataLine.getInitializeObject().isPausable());
     }
 
     /**
@@ -413,6 +421,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         exploreAction.setEnabled(false);
         _copyMagnetAction.setEnabled(false);
         _copyHashAction.setEnabled(false);
+        _shareTorrentAction.setEnabled(false);
     }
 
     public void openTorrentSearchResult(final WebSearchResult webSearchResult, final boolean partialDownload) {

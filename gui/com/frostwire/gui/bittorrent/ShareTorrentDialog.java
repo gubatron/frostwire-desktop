@@ -57,6 +57,10 @@ public class ShareTorrentDialog extends JDialog implements ClipboardOwner {
 		setupWindow();
 
 		String torrent_name = _torrent.getUTF8Name();
+		
+		if (torrent_name == null) {
+			torrent_name = new String(_torrent.getName());
+		}
 		String info_hash = null;
 		try {
 			info_hash = TorrentUtil.hashToString(_torrent.getHash());

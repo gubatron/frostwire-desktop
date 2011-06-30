@@ -23,6 +23,7 @@ final class BTDownloadActions {
     static final RemoveAction REMOVE_TORRENT_AND_DATA_ACTION = new RemoveAction(true, true);
     static final CopyMagnetAction COPY_MAGNET_ACTION = new CopyMagnetAction();
     static final CopyInfoHashAction COPY_HASH_ACTION = new CopyInfoHashAction();
+	public static final Action SHARE_TORRENT_ACTION = new ShareTorrentAction();
 
     private static abstract class RefreshingAction extends AbstractAction {
 
@@ -241,6 +242,32 @@ final class BTDownloadActions {
                 str += "\n";
             }
             GUIMediator.setClipboardContent(str);
+        }
+    }
+    
+    private static class ShareTorrentAction extends RefreshingAction {
+
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 1138409323772464985L;
+
+        public ShareTorrentAction() {
+            putValue(Action.NAME, I18n.tr("Send to friend"));
+            putValue(LimeAction.SHORT_NAME, I18n.tr("Send to friend"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Send to friend"));
+            putValue(LimeAction.ICON_NAME, "SEND_HASH");
+        }
+
+        public void performAction(ActionEvent e) {
+            BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
+            if (downloaders.length != 1) {
+            	return;
+            }
+            
+            BTDownload btDownload = downloaders[0];
+            
+            new ShareTorrentDialog(btDownload.getDownloadManager().getTorrent()).setVisible(true);
         }
     }
 }
