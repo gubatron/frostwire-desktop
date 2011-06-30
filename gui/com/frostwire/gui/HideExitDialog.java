@@ -51,7 +51,7 @@ public class HideExitDialog extends JDialog {
 
         GridBagConstraints c;
 
-        _label = new JLabel(I18n.tr("Closing the FrostWire window will only hide the application.\n(This way file transfers may continue in the background.)"));
+        _label = new JLabel(I18n.tr("<html>Closing the FrostWire window will only hide the application<p>This way file transfers may continue in the background.</html>"));
         c = new GridBagConstraints();
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.anchor = GridBagConstraints.WEST;
