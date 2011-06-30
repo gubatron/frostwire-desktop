@@ -90,7 +90,7 @@
 
     <target name="lw-gettext-extract"
      		description="Extracts message keys from the source code"
-     		depends="init.gettext">
+     		>
 	    <gettext-extract keysFile="frostwire.pot" poDirectory="lib/messagebundles" keywords="-kgetStringResource -kgetFormattedStringResource -ktrc -ktr -kmarktr -ktrn:1,2 -ktrl">
 			<fileset dir="components" includes="**/*.java"/>
 			<fileset dir="core" includes="**/*.java"/>
@@ -100,14 +100,13 @@
 
     <target name="lw-gettext-merge"
      		description="Merge message keys with translations"
-     		depends="init.gettext">
+     		>
 		<gettext-merge keysFile="frostwire.pot" poDirectory="lib/messagebundles"/>
     </target>
 
     <!-- generate two jars, one with almost complete translations, and a remaining one -->
     <target name="lw-bundle-messages"
-    		description="Rebuilds messages and bundles them"
-    		depends="init.gettext">
+    		description="Rebuilds messages and bundles them">
 
 	    <!-- clean up -->
 	    <delete dir="lib/messagebundles/org"/>
