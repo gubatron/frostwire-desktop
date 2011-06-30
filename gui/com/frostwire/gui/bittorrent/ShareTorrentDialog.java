@@ -6,18 +6,9 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.ClipboardOwner;
-import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
-import java.awt.image.BufferedImage;
-import java.beans.PropertyChangeListener;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,7 +16,6 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -39,14 +29,13 @@ import org.gudy.azureus2.core3.util.UrlUtils;
 import com.frostwire.HttpFetcher;
 import com.frostwire.HttpFetcher.HttpRequestInfo;
 import com.frostwire.HttpFetcherListener;
-import com.frostwire.ImageCache;
-import com.frostwire.ImageCache.OnLoadedListener;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.actions.LimeAction;
 
-public class ShareTorrentDialog extends JDialog implements ClipboardOwner {
+public class ShareTorrentDialog extends JDialog {
 
 
 	public class GoogleShortenerResponse {
@@ -279,39 +268,14 @@ public class ShareTorrentDialog extends JDialog implements ClipboardOwner {
 
 	}
 
-	private void loadIconForAction(final Action action, String iconURL) {
-		try {
-			ImageCache.getInstance().getImage(new URL(iconURL),
-					new OnLoadedListener() {
-
-						@Override
-						public void onLoaded(URL url, BufferedImage image,
-								boolean fromCache, boolean fail) {
-							if (!fail && action != null && image != null) {
-								ImageIcon imageIcon = new ImageIcon(image);
-								action.putValue(Action.LARGE_ICON_KEY,
-										imageIcon);
-								action.putValue(Action.SMALL_ICON, imageIcon);
-							}
-						}
-					});
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-	}
-
 	private void initActions() {
-		_actions = new Action[5];
+		_actions = new Action[4];
 
 		_actions[0] = new TwitterAction();
 		_actions[1] = new CopyToClipboardAction();
 		_actions[2] = new CopyLinkAction();
 		_actions[3] = new CopyMagnetAction();
-		_actions[4] = new CloseAction();
 
-		// Load icons for actions
-		loadIconForAction(_actions[0],
-				"http://static.frostwire.com/images/20x20twitter.png");
 	}
 
 	private void setupWindow() {
@@ -339,6 +303,7 @@ public class ShareTorrentDialog extends JDialog implements ClipboardOwner {
 
 		public TwitterAction() {
 			putValue(Action.NAME, I18n.tr("Twitter"));
+			putValue(LimeAction.ICON_NAME,"TWITTER");
 		}
 
 		@Override
@@ -355,60 +320,43 @@ public class ShareTorrentDialog extends JDialog implements ClipboardOwner {
 
 		public CopyToClipboardAction() {
 			putValue(Action.NAME, I18n.tr("Copy to Clipboard"));
+			putValue(LimeAction.ICON_NAME,"COPY_PASTE");
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Clipboard systemClipboard = Toolkit.getDefaultToolkit()
-					.getSystemClipboard();
-			systemClipboard.setContents(
-					new StringSelection(_textArea.getText()),
-					ShareTorrentDialog.this);
+			GUIMediator.setClipboardContent(_textArea.getText());					
 		}
 	}
 
 	public class CopyLinkAction extends AbstractAction {
 
+		private static final long serialVersionUID = 5396173442291772242L;
+
 		public CopyLinkAction() {
 			putValue(Action.NAME, I18n.tr("Copy Link"));
+			putValue(LimeAction.ICON_NAME,"LINK");
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			GUIMediator.setClipboardContent(_link);
 		}
 
 	}
 	
 	private class CopyMagnetAction extends AbstractAction {
 
+		private static final long serialVersionUID = 4972170728829407730L;
+
 		public CopyMagnetAction() {
 			putValue(Action.NAME, I18n.tr("Copy Magnet URL"));
+			putValue(LimeAction.ICON_NAME,"MAGNET");
 		}
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-
+			GUIMediator.setClipboardContent(TorrentUtil.getMagnet(_info_hash));
 		}
-
-
-	}
-	
-	private class CloseAction extends AbstractAction {
-
-		private static final long serialVersionUID = 4608358456107049224L;
-
-		public CloseAction() {
-			putValue(Action.NAME, I18n.tr("Close"));
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			ShareTorrentDialog.this.dispose();
-		}
-	}
-
-	@Override
-	public void lostOwnership(Clipboard clipboard, Transferable contents) {
-		// meh
 	}
 }
