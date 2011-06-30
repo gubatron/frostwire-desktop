@@ -38,6 +38,7 @@ import com.limegroup.gnutella.gui.options.panes.AssociationPreferencePaneItem;
 import com.limegroup.gnutella.gui.options.panes.AudioPlayerPaneItem;
 import com.limegroup.gnutella.gui.options.panes.AutoCompletePaneItem;
 import com.limegroup.gnutella.gui.options.panes.AutomaticInstallerDownloadPaneItem;
+import com.limegroup.gnutella.gui.options.panes.ShutdownPaneItem;
 import com.limegroup.gnutella.gui.options.panes.TorrentDownloadSpeedPaneItem;
 import com.limegroup.gnutella.gui.options.panes.TorrentConnectionPaneItem;
 import com.limegroup.gnutella.gui.options.panes.TorrentDetailsPaneItem;
@@ -324,6 +325,8 @@ public final class OptionsConstructor {
         if (GUIUtils.shouldShowStartOnStartupWindow()) {
             addOption(ADVANCED_KEY, STARTUP_KEY, I18n.tr("System Boot"), StartupPaneItem.class); 
         }
+        
+        addOption(OptionsMediator.ROOT_NODE_KEY, SHUTDOWN_KEY, I18n.tr("System Tray"), ShutdownPaneItem.class);
         return node;
 	}
 	
