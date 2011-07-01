@@ -28,7 +28,7 @@ final class WelcomeWindow extends SetupWindow {
     private static final long serialVersionUID = -5102133230630399469L;
 
     private static final String TEXT1 = I18n
-            .tr("FrostWire is a Peer to Peer Application that enables you to download files of your choosing with other users connected to the BitTorrent network.");
+            .tr("FrostWire is a Peer to Peer Application that enables you to share files of your choosing with other users connected to the BitTorrent network.");
     private static final String TEXT2 = I18n
             .tr("Installing and using the program does not consitute a license for obtaining or distributing unauthorized content.");
 
