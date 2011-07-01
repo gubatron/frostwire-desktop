@@ -194,8 +194,6 @@ public class ShareTorrentDialog extends JDialog {
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(1, 10, 1, 10);
 
-		//_textArea = new JTextArea("Download \"" + _torrent_name + "\" at "
-		//		+ getLink(), 2, 80);
 		_textArea = new JEditorPane();
 		_textArea.setEditable(false);
 		_textArea.setText(I18n.tr("Download") + " \"" + _torrent_name + "\" " + I18n.tr("at") + " "
