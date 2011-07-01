@@ -118,7 +118,7 @@ public class ShareTorrentDialog extends JDialog {
 			@Override
 			public void onSuccess(byte[] body) {
 				_link = new String(body);
-				updateTextAreaWithShortenedLink();
+				updateTextArea();
 			}
 
 			@Override
@@ -133,7 +133,7 @@ public class ShareTorrentDialog extends JDialog {
 			@Override
 			public void onSuccess(byte[] body) {
 				_link = new String(body);
-				updateTextAreaWithShortenedLink();
+				updateTextArea();
 			}
 
 			@Override
@@ -149,11 +149,11 @@ public class ShareTorrentDialog extends JDialog {
 
 	}
 
-	private void updateTextAreaWithShortenedLink() {
+	private void updateTextArea() {
 		GUIMediator.safeInvokeLater(new Runnable() {
 			@Override
 			public void run() {
-				_textArea.setText(I18n.tr("Download") + " \"" + _torrent_name + "\" " + I18n.tr("at") + " "
+				_textArea.setText(I18n.tr("Download") + " \"" + _torrent_name.replace("_", " ") + "\" " + I18n.tr("at") + " "
 						+ getLink() + " "+ I18n.tr("via FrostWire"));
 			}
 		});
@@ -196,9 +196,7 @@ public class ShareTorrentDialog extends JDialog {
 
 		_textArea = new JEditorPane();
 		_textArea.setEditable(false);
-		_textArea.setText(I18n.tr("Download") + " \"" + _torrent_name + "\" " + I18n.tr("at") + " "
-						+ getLink() + " " + I18n.tr("via FrostWire"));
-		
+		updateTextArea();
 		
 		Font f = new Font("Dialog", Font.BOLD, 13);
 		_textArea.setFont(f);
