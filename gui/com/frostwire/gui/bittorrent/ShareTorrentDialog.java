@@ -21,6 +21,7 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
+import javax.swing.ToolTipManager;
 
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
@@ -44,7 +45,7 @@ public class ShareTorrentDialog extends JDialog {
 		public String id;
 		public String longUrl;
 	}
-
+	
 	private abstract class AbstractHttpFetcherListener implements
 			HttpFetcherListener {
 
@@ -220,6 +221,7 @@ public class ShareTorrentDialog extends JDialog {
 				ButtonRow.RIGHT_GLUE);
 		
 		fixButtonBorders(buttonRow);
+		ToolTipManager.sharedInstance().setInitialDelay(200);
 		
 		_container.add(buttonRow, c);
 
@@ -311,14 +313,18 @@ public class ShareTorrentDialog extends JDialog {
 
 		_container = getContentPane();
 		_container.setLayout(new GridBagLayout());
+		
+		//addWindowListener(l)
 	}
+	
+	
 
 	private class TwitterAction extends AbstractAction {
 
 		private static final long serialVersionUID = -2035234758115291468L;
 
 		public TwitterAction() {
-			putValue(Action.NAME, I18n.tr("Twitter"));
+			putValue(Action.NAME, I18n.tr("Twitter it"));
 			putValue(Action.SHORT_DESCRIPTION,I18n.tr("Send the message above to Twitter"));
 			putValue(LimeAction.ICON_NAME,"TWITTER");
 		}
@@ -336,7 +342,7 @@ public class ShareTorrentDialog extends JDialog {
 		private static final long serialVersionUID = 2130811125951128397L;
 
 		public CopyToClipboardAction() {
-			putValue(Action.NAME, I18n.tr("All"));
+			putValue(Action.NAME, I18n.tr("Copy Text"));
 			putValue(Action.SHORT_DESCRIPTION,I18n.tr("Copy entire message to Clipboard"));
 			putValue(LimeAction.ICON_NAME,"COPY_PASTE");
 		}
@@ -352,7 +358,7 @@ public class ShareTorrentDialog extends JDialog {
 		private static final long serialVersionUID = 5396173442291772242L;
 
 		public CopyLinkAction() {
-			putValue(Action.NAME, I18n.tr("Link"));
+			putValue(Action.NAME, I18n.tr("Copy Link"));
 			putValue(Action.SHORT_DESCRIPTION,I18n.tr("Copy Link to Clipboard"));
 			putValue(LimeAction.ICON_NAME,"LINK");
 		}
@@ -369,7 +375,7 @@ public class ShareTorrentDialog extends JDialog {
 		private static final long serialVersionUID = 4972170728829407730L;
 
 		public CopyMagnetAction() {
-			putValue(Action.NAME, I18n.tr("Magnet"));
+			putValue(Action.NAME, I18n.tr("Copy Magnet"));
 			putValue(Action.SHORT_DESCRIPTION,I18n.tr("Copy Magnet URL to Clipboard"));
 			putValue(LimeAction.ICON_NAME,"MAGNET");
 		}
