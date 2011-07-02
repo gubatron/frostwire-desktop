@@ -7,6 +7,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -314,7 +316,12 @@ public class ShareTorrentDialog extends JDialog {
 		_container = getContentPane();
 		_container.setLayout(new GridBagLayout());
 		
-		//addWindowListener(l)
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				ToolTipManager.sharedInstance().setInitialDelay(500);
+			}
+		});
 	}
 	
 	
