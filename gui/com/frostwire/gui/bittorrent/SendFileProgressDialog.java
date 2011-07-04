@@ -30,7 +30,6 @@ import org.gudy.azureus2.core3.util.TorrentUtils;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.themes.SkinFileChooserUI;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 public class SendFileProgressDialog extends JDialog {
