@@ -81,6 +81,8 @@ import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicDirectoryModel;
 import javax.swing.plaf.basic.BasicFileChooserUI;
 
+import org.limewire.util.OSUtils;
+
 /**
  * Metal L&F implementation of a FileChooser.
  *
@@ -995,6 +997,7 @@ public class BaseFileChooserUI extends BasicFileChooserUI {
         FileSystemView fsv = chooser.getFileSystemView();
 
         public DirectoryComboBoxModel() {
+        	
             // Add the current directory to the model, and make it the
             // selectedDirectory
             File dir = getFileChooser().getCurrentDirectory();
@@ -1026,6 +1029,17 @@ public class BaseFileChooserUI extends BasicFileChooserUI {
             } else {
                 baseFolders = fsv.getRoots();
             }
+            
+        	//If on mac, we'll add the volumes.
+        	if (OSUtils.isMacOSX()) {
+        		File volumes = new File("/Volumes");
+        		for (File f : volumes.listFiles()) {
+        			if (f.isDirectory() && f.canRead()) {
+        				directories.add(f);
+        			}
+        		}
+        	}
+            
             directories.addAll(Arrays.asList(baseFolders));
 
             // Get the canonical (full) path. This has the side

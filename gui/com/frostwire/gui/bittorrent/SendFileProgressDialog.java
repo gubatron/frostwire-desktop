@@ -30,6 +30,7 @@ import org.gudy.azureus2.core3.util.TorrentUtils;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.themes.SkinFileChooserUI;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 public class SendFileProgressDialog extends JDialog {
@@ -155,6 +156,7 @@ public class SendFileProgressDialog extends JDialog {
 
 	public void chooseFile() {
 		JFileChooser fileChooser = new JFileChooser();
+
         fileChooser.setMultiSelectionEnabled(false);
         fileChooser.setFileSelectionMode(_singleFileMode ? JFileChooser.FILES_ONLY : JFileChooser.DIRECTORIES_ONLY);
         fileChooser.setDialogTitle((_singleFileMode) ? I18n.tr("Select the file you want to send") : I18n.tr("Select the folder you want to send"));
