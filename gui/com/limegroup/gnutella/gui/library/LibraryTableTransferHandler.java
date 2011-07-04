@@ -47,83 +47,8 @@ public class LibraryTableTransferHandler extends LimeTransferHandler {
      * Returns true if the drop can be imported.
      */
     public boolean canImport(JComponent comp, DataFlavor[] transferFlavors, DropInfo info) {
-    	return canImport(comp, transferFlavors);
-    	// TODO dnd 
-    	// Require:
-        //   - the visible table is not indiv-shared-files
-        //   - the table is not the same folder
-//        if(DNDUtils.contains(transferFlavors, LibraryTableTransferable.libraryTableTransferable)) {
-//            File dst = LibraryMediator.instance().getVisibleDirectory();
-//            if(dst == null)
-//                return false;
-//            
-//            info.setDropAction(MOVE);
-//            Transferable t = info.getTransferable();
-//            if(t == null)
-//                return true;
-//            
-//            LibraryTableDataLine[] lines;
-//            try {
-//                lines = (LibraryTableDataLine[])t.getTransferData(LibraryTableTransferable.libraryTableTransferable);
-//            } catch(UnsupportedFlavorException ufe) {
-//                return false;
-//            } catch(IOException iox) {
-//                return false;
-//            }
-//            
-//            // Can just check one, since they'll all have the same parent.
-//            if(lines == null || lines.length == 0)
-//                return false;
-//            
-//            if(lines[0].getFile().getParentFile().equals(dst))
-//                return false;
-//            
-//            return true;
-//        }
-//        
-//        // Require:
-//        //   - the visible table is not indiv-shared-files
-//        //   - the holder is not the same folder
-//        //   - the holder is a SharedFilesDirectoryHolder (not saved, incomplete, etc..)
-//        //   - the holder is not a parent of the visible table
-//        if(DNDUtils.contains(transferFlavors, LibraryTreeTransferable.libraryTreeFlavor)) {
-//            File dst = LibraryMediator.instance().getVisibleDirectory();
-//            if(dst == null)
-//                return false;
-//            
-//            info.setDropAction(MOVE);
-//            
-//            Transferable t = info.getTransferable();
-//            if(t == null) // unknown, can't handle.
-//                return true;
-//            
-//            DirectoryHolder holder = null;
-//            try { 
-//                holder = (DirectoryHolder)t.getTransferData(LibraryTreeTransferable.libraryTreeFlavor);
-//            } catch(UnsupportedFlavorException ufe) {
-//                return false;
-//            } catch(IOException iox) {
-//                return false;
-//            }
-//            if(!(holder instanceof SharedFilesDirectoryHolder))
-//                return false;
-//            
-//            File src = holder.getDirectory();
-//            if(src.equals(dst))
-//                return false;
-//            
-//            // Cannot transfer a parent to its child or itself
-//            if(FileUtils.isAncestor(src, dst))
-//                return false;
-//            
-//        }
-//        
-//        // Require nothing.
-//        if (DNDUtils.containsFileFlavors(transferFlavors)) {
-//            return true;
-//        }
-//        
-//        return false;
+    	return false;
+    	//return canImport(comp, transferFlavors);
     }
     
     @Override
@@ -137,19 +62,6 @@ public class LibraryTableTransferHandler extends LimeTransferHandler {
     public boolean importData(JComponent comp, Transferable t, DropInfo info) {
         return importData(comp, t);
         
-//        File dir = LibraryMediator.instance().getVisibleDirectory();
-//        try {
-//            if(t.isDataFlavorSupported(LibraryTreeTransferable.libraryTreeFlavor))
-//                return transferFromTree(dir, (DirectoryHolder)t.getTransferData(LibraryTreeTransferable.libraryTreeFlavor), info);
-//            else if(t.isDataFlavorSupported(LibraryTableTransferable.libraryTableTransferable))
-//                return transferFromTable(dir, (LibraryTableDataLine[])t.getTransferData(LibraryTableTransferable.libraryTableTransferable), info);
-//            else
-//                return transferPlainFiles(dir, DNDUtils.getFiles(t), info);
-//        } catch(IOException iox) {
-//            return false;
-//        } catch(UnsupportedFlavorException ufe) {
-//            return false;
-//        }
     }
     
     /**

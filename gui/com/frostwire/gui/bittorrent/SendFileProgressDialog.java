@@ -42,7 +42,13 @@ public class SendFileProgressDialog extends JDialog {
 	private Container _container;
 	private TOTorrentCreator _torrentCreator;
 	private int _percent_complete;
+	private File _preselectedFile;
 
+	public SendFileProgressDialog(JFrame frame, File file) {
+		this(frame, file.isFile());
+		_preselectedFile = file;
+	}
+	
     public SendFileProgressDialog(JFrame frame, boolean singleFileMode) {
         super(frame);
 
@@ -135,7 +141,20 @@ public class SendFileProgressDialog extends JDialog {
 	}
 
 	protected void this_windowOpened(WindowEvent e) {
-        JFileChooser fileChooser = new JFileChooser();
+		if (_preselectedFile == null) {
+			chooseFile();
+		} else {
+			new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					makeTorrentAndDownload(_preselectedFile.getAbsoluteFile());					
+				}}).start();
+		}
+    }
+
+	public void chooseFile() {
+		JFileChooser fileChooser = new JFileChooser();
         fileChooser.setMultiSelectionEnabled(false);
         fileChooser.setFileSelectionMode(_singleFileMode ? JFileChooser.FILES_ONLY : JFileChooser.DIRECTORIES_ONLY);
         fileChooser.setDialogTitle((_singleFileMode) ? I18n.tr("Select the file you want to send") : I18n.tr("Select the folder you want to send"));
@@ -154,7 +173,7 @@ public class SendFileProgressDialog extends JDialog {
         } else if (result == JFileChooser.ERROR_OPTION) {
             System.out.println("Error");
         }
-    }
+	}
 
 	private void updateProgressBarText() {
 		GUIMediator.safeInvokeLater(new Runnable() {

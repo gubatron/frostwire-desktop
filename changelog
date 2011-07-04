@@ -1,3 +1,10 @@
+frostwire (5.0.7) stable; urgency=high
+
+  * UX upgrade, send file or send folder support when a file or folder
+    is dropped on FrostWire.
+
+ -- FrostWire Team <contact@frostwire.com>  Mon, 47 Jul 2011 14:20:58 -0500
+
 frostwire (5.0.6) stable; urgency=high
 
   * New feature, Send file. Available on File Menu and Transfer Manager.

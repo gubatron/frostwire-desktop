@@ -85,7 +85,6 @@ public class ExternalControl {
                                                 int pos = line.lastIndexOf(' ');
 
                                                 line = line.substring(0, pos);
-
                                                 closeSocket = process(line, br, socket.getOutputStream());
                                             }
                                         }

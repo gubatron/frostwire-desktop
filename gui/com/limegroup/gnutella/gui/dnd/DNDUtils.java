@@ -48,7 +48,8 @@ public class DNDUtils {
 			Collections.unmodifiableList(Arrays.asList(
 					new MagnetTransferHandler(),
 					new TorrentURITransferHandler(),
-					new TorrentFilesTransferHandler()));
+					new TorrentFilesTransferHandler(),
+					new SendFileTransferHandler()));
 		
 		DEFAULT_TRANSFER_HANDLER = new MulticastTransferHandler(DEFAULT_TRANSFER_HANDLERS);
 	}
