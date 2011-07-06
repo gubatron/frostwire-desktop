@@ -1,6 +1,7 @@
 package com.frostwire.gui.bittorrent;
 
 import java.io.File;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
@@ -171,17 +172,19 @@ public class TorrentFetcherDownload implements BTDownload {
 
     private final class TorrentDownloaderListener implements TorrentDownloaderCallBackInterface {
         private boolean[] filesSelection;
+        private AtomicBoolean finished = new AtomicBoolean(false);
 
         public void TorrentDownloaderEvent(int state, final TorrentDownloader inf) {
             if (_removed) {
                 return;
             }
-            if (state == TorrentDownloader.STATE_FINISHED) {
+            if (state == TorrentDownloader.STATE_FINISHED && finished.compareAndSet(false,true)) {
                 try {
                     if (_partialDownload) {
                         GUIMediator.safeInvokeAndWait(new Runnable() {
                             public void run() {
                                 try {
+
                                     PartialFilesDialog dlg = new PartialFilesDialog(GUIMediator.getAppFrame(), inf.getFile());
                                     
                                     dlg.setVisible(true);
