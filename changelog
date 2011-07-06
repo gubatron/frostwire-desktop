@@ -3,6 +3,7 @@ frostwire (5.0.7) stable; urgency=high
   * UX upgrade, send file or send folder support when a file or folder
     is dropped on FrostWire.
   * UX upgrade, file choosing dialogs on Mac now also show mounted volumes.
+  * UX bugfix, fixes possible UI freeze on startup.
 
  -- FrostWire Team <contact@frostwire.com>  Mon, 4 Jul 2011 14:20:58 -0500
 

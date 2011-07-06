@@ -240,6 +240,7 @@ public class ShareTorrentDialog extends JDialog {
 		_tipsLabel.setBorder(BorderFactory.createTitledBorder(I18n.tr("Tips")));
 		_container.add(_tipsLabel, c);
 
+		GUIUtils.addHideAction((JComponent) getContentPane());
 		pack();
 	}
 

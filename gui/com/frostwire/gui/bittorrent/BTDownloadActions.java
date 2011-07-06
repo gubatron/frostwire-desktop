@@ -5,6 +5,7 @@ import java.io.File;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.JOptionPane;
 
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -186,6 +187,20 @@ final class BTDownloadActions {
         }
 
         public void performAction(ActionEvent e) {
+        	if (_deleteData) {
+				int result = JOptionPane
+						.showConfirmDialog(
+								GUIMediator.getAppFrame(),
+								I18n.tr("Are you sure you want to remove the data files from your computer?\n\nYou won't be able to recover the files."),
+								I18n.tr("Are you sure?"),
+								JOptionPane.YES_NO_OPTION,
+								JOptionPane.QUESTION_MESSAGE);
+				
+				if (result != JOptionPane.YES_OPTION) {
+					return;
+				}
+        	}
+        	
             BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
             for (int i = 0; i < downloaders.length; i++) {
                 downloaders[i].setDeleteTorrentWhenRemove(_deleteTorrent);
