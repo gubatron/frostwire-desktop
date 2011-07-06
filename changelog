@@ -4,6 +4,7 @@ frostwire (5.0.7) stable; urgency=high
     is dropped on FrostWire.
   * UX upgrade, file choosing dialogs on Mac now also show mounted volumes.
   * UX bugfix, fixes possible UI freeze on startup.
+  * UX bugfix, sending songs to iTunes is now done in a single process.
 
  -- FrostWire Team <contact@frostwire.com>  Mon, 4 Jul 2011 14:20:58 -0500
 
