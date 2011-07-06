@@ -196,28 +196,6 @@ public final class LibraryMediator implements ThemeObserver {
             updateTableFiles(dh);
     }
 	
-	/**
-	 * Update the this file's statistic
-	 */
-	public void updateSharedFile(final File file) {
-	    // if the library table is visible, and
-	    // if the selected directory is null
-	    // or if we the file exists in a directory
-	    // other than the one we selected, then there
-	    // is no need to update.
-	    // the user will see the newest stats when he/she 
-	    // selects the directory.
-	    DirectoryHolder dh = getLibraryTree().getSelectedDirectoryHolder();
-		if(getLibraryTable().getTable().isShowing() && dh != null && dh.accept(file)) {
-		    // pass the update off to the file updater
-		    // this way, only one Runnable is ever created,
-		    // instead of allocating a new one every single time
-		    // a query is hit.
-		    // Very useful for large libraries and generic searches (ala: mp3)
-		    //FILE_UPDATER.addFileUpdate(file);
-	    }
-	}
-	
     /**
      * Adds a file to the playlist.
      */

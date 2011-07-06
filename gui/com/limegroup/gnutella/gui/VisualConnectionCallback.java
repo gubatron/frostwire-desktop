@@ -35,33 +35,12 @@ public final class VisualConnectionCallback implements ActivityCallback {
     }
     
     private VisualConnectionCallback() {
-        
     }
-	
 	
 	///////////////////////////////////////////////////////////////////////////
 	//  Files-related callbacks
 	///////////////////////////////////////////////////////////////////////////
 	
-    /** 
-	 * This method notifies the frontend that the data for the 
-	 * specified shared <tt>File</tt> instance has been 
-	 * updated.
-	 *
-	 * @param file the <tt>File</tt> instance for the shared file whose
-	 *  data has been updated
-	 */
-    public void handleSharedFileUpdate(final File file) {
-        /**
-         * NOTE: Pass this off directly to the library
-         * so it can discard the update if the directory
-         * of the file isn't selected.
-         * This reduces the amount of Runnables created
-         * by a very large amount.
-         */
-         mf().getLibraryMediator().updateSharedFile(file);
-    }
-    
     public void fileManagerLoading() {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -77,7 +56,6 @@ public final class VisualConnectionCallback implements ActivityCallback {
     
     public void addDownload(BTDownload mgr) {
         Runnable doWorkRunnable = new AddDownload(mgr);
-        
         SwingUtilities.invokeLater(doWorkRunnable);
     }
     
@@ -157,8 +135,12 @@ public final class VisualConnectionCallback implements ActivityCallback {
 	/**
      * Notification that a new update is available.
      */
-    public void updateAvailable(UpdateInformation update) {
-        GUIMediator.instance().showUpdateNotification(update);
+    public void updateAvailable(final UpdateInformation update) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                GUIMediator.instance().showUpdateNotification(update);
+            }
+        });
     }
 
 	/**
@@ -243,13 +225,16 @@ public final class VisualConnectionCallback implements ActivityCallback {
 		});
 	}
 
-	public void handleTorrentMagnet(String request, boolean partialDownload) {
-		GUIMediator.instance().openTorrentURI(request, partialDownload);
+	public void handleTorrentMagnet(final String request, final boolean partialDownload) {
+	    SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                GUIMediator.instance().openTorrentURI(request, partialDownload);
+            }
+        });
 	}
 
     public void addDownloadManager(DownloadManager dm) {
         Runnable doWorkRunnable = new AddDownloadManager(dm);
-        
         SwingUtilities.invokeLater(doWorkRunnable);
     }
     

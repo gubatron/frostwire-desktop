@@ -44,13 +44,6 @@ public interface ActivityCallback {
     public void fileManagerLoading();
 
     /**
-     * Notifies the GUI that the given shared file has new information.
-     *
-     * @param file The File that needs updating
-     */
-    public void handleSharedFileUpdate(File file);
-
-    /**
      * Notification that an update became available.
      */
     public void updateAvailable(UpdateInformation info);
