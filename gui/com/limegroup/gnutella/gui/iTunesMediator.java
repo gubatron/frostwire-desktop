@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
@@ -104,12 +105,7 @@ public final class iTunesMediator {
         files = completeFiles.toArray(new File[0]);
         
         if (OSUtils.isMacOSX()) {
-        	for (File toAdd : files) {
-                if (LOG.isTraceEnabled())
-                    LOG.trace("Will add '" + toAdd + "' to Playlist");
-                
-                QUEUE.execute(new ExecOSAScriptCommand(toAdd));
-            }
+        	QUEUE.execute(new ExecOSAScriptCommand(files));
         } else {
         	if (LOG.isTraceEnabled())
                 LOG.trace("Will add '" + files.length + " files" + "' to Playlist");
@@ -133,14 +129,24 @@ public final class iTunesMediator {
     /**
      * Constructs and returns a osascript command.
      */
-    private static String[] createOSAScriptCommand(File file) {
-        String path = file.getAbsolutePath();
+    private static String[] createOSAScriptCommand(File[] files) {
+        
         String playlist = iTunesSettings.ITUNES_PLAYLIST.getValue();
-
-        String[] command = new String[] { 
+        
+        List<String> command = new ArrayList<String>();
+        command.addAll(Arrays.asList( 
             "osascript", 
-            "-e", "tell application \"Finder\"", 
-            "-e",   "set hfsFile to (POSIX file \"" + path + "\")", 
+            "-e", "tell application \"Finder\""));
+
+        for (int i=0; i < files.length; i++) {
+        	File f = files[i];
+        	String path = f.getAbsolutePath();
+        	command.add( "-e");
+        	command.add("set hfsFile"+i+" to (POSIX file \"" + path + "\")" );
+        }
+        
+
+        command.addAll(Arrays.asList(
             "-e",   "set thePlaylist to \"" + playlist + "\"", 
             "-e",   "tell application \"iTunes\"",
             //"-e",       "activate", // launch and bring to front
@@ -148,14 +154,18 @@ public final class iTunesMediator {
             "-e",       "if not (exists playlist thePlaylist) then", 
             "-e",           "set thisPlaylist to make new playlist", 
             "-e",           "set name of thisPlaylist to thePlaylist", 
-            "-e",       "end if",
+            "-e",       "end if"
+            ));
 
-            "-e",       "add hfsFile to playlist thePlaylist",
-            "-e",   "end tell",
-            "-e", "end tell" 
-        };
+        for (int i=0; i < files.length; i++) {
+        	command.addAll(Arrays.asList("-e",       "add hfsFile"+i+" to playlist thePlaylist"));
+        }
 
-        return command;
+        command.addAll(Arrays.asList(
+        "-e",   "end tell",
+        "-e", "end tell")); 
+
+        return command.toArray(new String[0]);
     }
     
     private static String[] createWSHScriptCommand(File[] files) {
@@ -184,13 +194,13 @@ public final class iTunesMediator {
         /**
          * The file to add.
          */
-        private final File file;
+        private final File[] files;
 
         /**
          * Constructs a new ExecOSAScriptCommand for the specified file.
          */
-        public ExecOSAScriptCommand(File file) {
-            this.file = file;
+        public ExecOSAScriptCommand(File[] files) {
+            this.files = files;
         }
 
         /**
@@ -198,7 +208,7 @@ public final class iTunesMediator {
          */
         public void run() {
             try {
-                Runtime.getRuntime().exec(createOSAScriptCommand(file));
+                Runtime.getRuntime().exec(createOSAScriptCommand(files));
             } catch (IOException err) {
                 LOG.debug(err);
             }

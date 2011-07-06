@@ -41,6 +41,8 @@ import com.limegroup.gnutella.gui.MessageService;
 import com.limegroup.gnutella.gui.MultiLineLabel;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.actions.SearchAction;
+import com.limegroup.gnutella.gui.dnd.DNDUtils;
+import com.limegroup.gnutella.gui.dnd.MulticastTransferHandler;
 import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
@@ -204,6 +206,8 @@ final class LibraryTableMediator extends AbstractTableMediator<LibraryTableModel
     private LibraryTableMediator() {
         super("LIBRARY_TABLE");
         ThemeMediator.addThemeObserver(this);
+        
+        TABLE.setTransferHandler(new MulticastTransferHandler(DNDUtils.DEFAULT_TRANSFER_HANDLERS));
     }
 
     /**
