@@ -228,6 +228,7 @@ public final class VisualConnectionCallback implements ActivityCallback {
 	public void handleTorrentMagnet(final String request, final boolean partialDownload) {
 	    SwingUtilities.invokeLater(new Runnable() {
             public void run() {
+            	GUIMediator.instance().setRemoteDownloadsAllowed(partialDownload);
                 GUIMediator.instance().openTorrentURI(request, partialDownload);
             }
         });

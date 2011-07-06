@@ -1,5 +1,6 @@
 package com.frostwire.gui.bittorrent;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -23,12 +24,16 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JEditorPane;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.ToolTipManager;
 
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.torrent.TOTorrentFile;
 import org.gudy.azureus2.core3.util.UrlUtils;
+import org.pushingpixels.trident.Timeline;
+import org.pushingpixels.trident.Timeline.TimelineState;
+import org.pushingpixels.trident.callback.TimelineCallbackAdapter;
 
 import com.frostwire.HttpFetcher;
 import com.frostwire.HttpFetcher.HttpRequestInfo;
@@ -92,6 +97,8 @@ public class ShareTorrentDialog extends JDialog {
 	private JEditorPane _textArea;
 	private JLabel _tipsLabel;
 	private Action[] _actions;
+	
+	private JLabel _feedbackLabel;
 
 	private AbstractHttpFetcherListener _bitlyShortnerListener;
 	private AbstractHttpFetcherListener _tinyurlShortnerListener;
@@ -193,7 +200,7 @@ public class ShareTorrentDialog extends JDialog {
 		c.anchor = GridBagConstraints.LINE_START;
 		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 1.0;
-		c.weighty = 1.0;
+		c.weighty = 0.7;
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.insets = new Insets(1, 10, 1, 10);
 
@@ -235,11 +242,22 @@ public class ShareTorrentDialog extends JDialog {
 		c.weightx = 1.0;
 		c.insets = new Insets(10, 10, 10, 10);
 		_tipsLabel = new JLabel(
-				"<html><p> > <strong>Keep FrostWire Open</strong> until the file has been downloaded by at least one other friend.</p><p>&nbsp;</p><p> > <strong>The more, the merrier.</strong> The more people sharing the faster it can be downloaded by others.</p></html>");
+				"<html><p> > <strong>Keep FrostWire Open</strong> until the file has been downloaded by at least one other friend.</p><p>&nbsp;</p><p> > <strong>The more, the merrier.</strong> The more people sharing the faster it can be downloaded by others.</p><p>&nbsp;</p><p> > <strong>Your files can be discovered by others.</strong> Once you share this link and you seed the files they will be available to everybody on the BitTorrent network.</p></html>");
 		_tipsLabel.setFont(new Font("Dialog", Font.PLAIN, 12));
 		_tipsLabel.setBorder(BorderFactory.createTitledBorder(I18n.tr("Tips")));
 		_container.add(_tipsLabel, c);
+		
+		// FEEDBACK LABEL
+		JPanel glass = (JPanel) getGlassPane();
+		glass.setLayout(null);
+		glass.setVisible(true);
+		_feedbackLabel=new JLabel("Feedback here to clipboard");
+		_feedbackLabel.setVisible(false);
+		_feedbackLabel.setFont(new Font("Arial",Font.BOLD,14));
+		glass.add(_feedbackLabel);
 
+		_feedbackLabel.setBounds(100,100,300,20);
+		
 		GUIUtils.addHideAction((JComponent) getContentPane());
 		pack();
 	}
@@ -302,7 +320,7 @@ public class ShareTorrentDialog extends JDialog {
 	private void setupWindow() {
 		setTitle(I18n.tr("All done! Now share the link"));
 
-		Dimension prefDimension = new Dimension(540, 300);
+		Dimension prefDimension = new Dimension(540, 380);
 
 		setSize(prefDimension);
 		setMinimumSize(prefDimension);
@@ -326,6 +344,85 @@ public class ShareTorrentDialog extends JDialog {
 	}
 	
 	
+	public static class TimelineJLabel {
+		public int y;
+		public Color color;
+		private JLabel _label;
+		
+		private int x;
+
+		/** Pass the label you want to animate */
+		public TimelineJLabel(JLabel wrappedLabel) {
+			_label = wrappedLabel;
+			
+			x = (int) _label.getLocation().getX();
+		}
+		
+		public void setColor(Color c) {
+			color = c;
+			GUIMediator.safeInvokeLater(new Runnable() {
+				@Override
+				public void run() {
+					_label.setForeground(color);
+				}
+			});
+		}
+		
+		public void setY(int yPos) {
+			y = yPos;
+			GUIMediator.safeInvokeLater(new Runnable() {
+				@Override
+				public void run() {
+					_label.setLocation((int) x, y);
+				}
+			});
+		}
+	}
+	
+	/**
+	 * Animates the _feedbackLabel (which lives on the Glass Pane invisibly and is shown during the animation)
+	 * 
+	 * To animate this component we wrap the JLabel on a TimelineJLabel.
+	 * If we ever need to animate more labels, we'll probably just extend JLabel in the future.
+	 * 
+	 * The animation interpolates 2 properties. The color of the text, and the y position of the text.
+	 * 
+	 * It looks like it dissapears by changing the color into the background color.
+	 * 
+	 * @param title
+	 * @param x
+	 * @param y
+	 */
+	public void showFeedback(String title, double x, double y) {
+		int startY = (int) (y-getLocationOnScreen().getY()-40);
+		
+		_feedbackLabel.setLocation((int) (x-getLocationOnScreen().getX()), startY);
+		_feedbackLabel.setVisible(true);
+		_feedbackLabel.setText(title);
+		
+		//Animate
+		int Y_DISPLACEMENT = 50;
+		
+		Timeline timeline = new Timeline(new TimelineJLabel(_feedbackLabel));
+
+		timeline.addCallback(new TimelineCallbackAdapter() {
+			
+			@Override
+			public void onTimelineStateChanged(TimelineState oldState,
+					TimelineState newState, float durationFraction,
+					float timelinePosition) {
+				if (newState == TimelineState.DONE) {
+					_feedbackLabel.setVisible(false);
+				}
+			}
+		});
+		
+		timeline.setDuration(800);
+		timeline.addPropertyToInterpolate("y", startY,(int) startY-Y_DISPLACEMENT);
+		timeline.addPropertyToInterpolate("color",Color.BLACK, _feedbackLabel.getBackground());
+		timeline.play();
+		
+	}
 
 	private class TwitterAction extends AbstractAction {
 
@@ -357,7 +454,11 @@ public class ShareTorrentDialog extends JDialog {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			GUIMediator.setClipboardContent(_textArea.getText());					
+			GUIMediator.setClipboardContent(_textArea.getText());
+			setTitle(I18n.tr("Message copied to clipboard."));
+
+			JButton source = (JButton) e.getSource();
+			showFeedback(getTitle(),source.getLocationOnScreen().getX(),source.getLocationOnScreen().getY());
 		}
 	}
 
@@ -372,8 +473,13 @@ public class ShareTorrentDialog extends JDialog {
 		}
 
 		@Override
-		public void actionPerformed(ActionEvent arg0) {
+		public void actionPerformed(ActionEvent e) {
 			GUIMediator.setClipboardContent(_link);
+			setTitle(I18n.tr("Link copied to clipboard."));
+			
+			JButton source = (JButton) e.getSource();
+			showFeedback(getTitle(),source.getLocationOnScreen().getX(),source.getLocationOnScreen().getY());
+
 		}
 
 	}
@@ -391,6 +497,12 @@ public class ShareTorrentDialog extends JDialog {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			GUIMediator.setClipboardContent(TorrentUtil.getMagnet(_info_hash));
+			setTitle(I18n.tr("Magnet copied to clipboard."));
+			
+			JButton source = (JButton) e.getSource();
+			showFeedback(getTitle(),source.getLocationOnScreen().getX(),source.getLocationOnScreen().getY());
 		}
 	}
+
+	
 }
