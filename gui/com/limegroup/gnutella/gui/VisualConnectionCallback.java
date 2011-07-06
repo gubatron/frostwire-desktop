@@ -239,6 +239,17 @@ public final class VisualConnectionCallback implements ActivityCallback {
     }
     
     public boolean isRemoteDownloadsAllowed() {
+        try {
+            SwingUtilities.invokeAndWait(new Runnable() {
+                public void run() {
+                    GUIMediator.instance();
+                }
+            });
+        } catch (Exception e) {
+            System.out.println("Failed to create GUIMediator");
+            e.printStackTrace();
+        }
+        
         return GUIMediator.instance().isRemoteDownloadsAllowed();
     }
 }
