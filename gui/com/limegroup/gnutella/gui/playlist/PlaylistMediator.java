@@ -546,7 +546,8 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
 		return name.endsWith(".mp3") || 
 			name.endsWith(".ogg") || 
 			name.endsWith(".wav") || 
-			name.endsWith(".wma");
+			name.endsWith(".wma") ||
+			name.endsWith(".m4a");
 	}
 
 	/**

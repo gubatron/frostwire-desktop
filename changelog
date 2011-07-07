@@ -1,3 +1,9 @@
+frostwire (5.0.8) stable; urgency=high
+
+  * UX upgrade, playback support for m4a files.
+
+ -- FrostWire Team <contact@frostwire.com>  Fri, 7 Jul 2011 14:20:58 -0500
+
 frostwire (5.0.7) stable; urgency=high
 
   * UX upgrade, send file or send folder support when a file or folder

@@ -147,46 +147,62 @@ public class LibrarySearchPanel extends JPanel {
             search(file, TorrentUtil.getIncompleteFiles());
         }
         
-        private void search(File file, Set<File> incompleteFiles) {
+        /**
+         * It searches _query in haystackDir.
+         * 
+         * @param haystackDir
+         * @param excludeFiles - Usually a list of incomplete files.
+         */
+        private void search(File haystackDir, Set<File> excludeFiles) {
             
-            if (!file.isDirectory()) {
+            if (!haystackDir.isDirectory()) {
                 return;
             }
             
             final List<File> directories = new ArrayList<File>();
-            final List<File> files = new ArrayList<File>();
+            final List<File> results = new ArrayList<File>();
+            SearchFileFilter searchFilter = new SearchFileFilter(_query);
             
-            for (File child : file.listFiles(new SearchFileFilter(_query))) {
-                
+            for (File child : haystackDir.listFiles(searchFilter)) {
+
+            	/////
+            	//Stop search if the user selected another item in the library tree
                 DirectoryHolder directoryHolder = LibraryTree.instance().getSelectedDirectoryHolder();
                 LibrarySearchResultsHolder searchResultsHolder = LibraryTree.instance().getSearchResultsHolder();
+
                 if (directoryHolder != null && !searchResultsHolder.equals(directoryHolder)) {
                     return;
                 }
+                /////
                 
-                if (incompleteFiles.contains(child)) {
+                if (excludeFiles.contains(child)) {
                     continue;
                 }
                 if (child.isHidden()) {
                     continue;
                 }
+
                 if (child.isDirectory()) {
                     directories.add(child);
+                    
+                    if (searchFilter.accept(child, false)) {
+                    	results.add(child);
+                    }
+                    
                 } else if (child.isFile()) {
-                    files.add(child);
+                    results.add(child);
                 }
             }
             
             Runnable r = new Runnable() {
                 public void run() {
-                	directories.addAll(files);
-                    LibraryMediator.instance().addFilesToLibraryTable(directories);
+                    LibraryMediator.instance().addFilesToLibraryTable(results);
                 }
             };
             GUIMediator.safeInvokeLater(r);
             
             for (File directory : directories) {
-                search(directory, incompleteFiles);
+                search(directory, excludeFiles);
             }
         }
     }
@@ -196,13 +212,24 @@ public class LibrarySearchPanel extends JPanel {
 	    private final String[] _tokens;
 	    
 	    public SearchFileFilter(String query) {
-	        _tokens = query.split(" ");
-	        for (int i = 0; i < _tokens.length; i++) {
-	            _tokens[i] = _tokens[i].toLowerCase(Locale.US);
-	        }
+	    	_tokens = query.toLowerCase(Locale.US).split(" ");
 	    }
 	    
-        public boolean accept(File pathname) {
+	    public boolean accept (File pathname) {
+	    	return accept(pathname, true);
+	    }
+	    
+	    /**
+	     * 
+	     * @param pathname
+	     * @param includeAllDirectories - if true, it will say TRUE to any directory
+	     * @return
+	     */
+        public boolean accept(File pathname, boolean includeAllDirectories) {
+        	
+        	if (pathname.isDirectory() && includeAllDirectories) {
+        		return true;
+        	}
             
             String name = pathname.getName();
             
