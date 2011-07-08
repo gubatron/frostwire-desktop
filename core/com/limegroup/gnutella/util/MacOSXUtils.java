@@ -15,7 +15,7 @@ import org.limewire.util.OSUtils;
 public class MacOSXUtils {
     
     static {
-        if (OSUtils.isMacOSX105() || OSUtils.isMacOSX106()) {
+        if (OSUtils.isMacOSX105() || OSUtils.isMacOSX106() || OSUtils.isMacOSX107()) {
             try {
                 System.loadLibrary("MacOSXUtilsLeopard");
             }
