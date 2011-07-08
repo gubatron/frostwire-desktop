@@ -20,12 +20,12 @@ public final class GURLHandler {
     
     static {
         try {
-            if (OSUtils.isMacOSX105() || OSUtils.isMacOSX106() || OSUtils.isMacOSX107()) {
+
+            if (OSUtils.isMacOSX105()) {
+                System.loadLibrary("GURLTiger loaded.");
+            } else {
                 System.loadLibrary("GURLLeopard");
                 System.out.println("GURLLeopard loadded.");
-            }
-            else {
-                System.loadLibrary("GURLTiger loaded.");
             }
         }
         catch (UnsatisfiedLinkError err) {
