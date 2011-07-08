@@ -196,9 +196,6 @@ final class AboutWindow {
         sb.append("<li>Fernando Toussaint '<strong>FTA</strong>' - <a href='http://www.cybercultura.net'>Web</a></li>");
         sb.append("<br><br>");
 
-        sb.append(I18n.tr("<h1>Thanks to the FrostWire Tester Community!</h1>"));
-        sb.append(I18n.tr("Special thanks to <strong>Hobo</strong> for being the most passionate and amazing software tester ever. <a href=\"https://groups.google.com/group/frostwire-5-testers/subscribe?note=1&hl=en&noredirect=true&pli=1\">Become a tester</a>"));
-        
         sb.append(I18n.tr("<h1>Thanks to the FrostWire Chat Community!</h1>"));
         sb.append(I18n.tr("Thanks to everybody that has helped us everyday in the forums and chatrooms, " +
         		"you not only help new users but you also warn the FrostWire team of any problem that " +
