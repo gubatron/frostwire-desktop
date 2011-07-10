@@ -291,7 +291,7 @@ public final class OptionsConstructor {
         addOption(OptionsMediator.ROOT_NODE_KEY, STATUS_BAR_KEY, I18n.tr("Status Bar"), StatusBarConnectionQualityPaneItem.class, StatusBarFirewallPaneItem.class, StatusBarBandwidthPaneItem.class); // Removed Lime Store
         
         //itunes
-        if (OSUtils.isMacOSX()) {
+        if (OSUtils.isMacOSX() || OSUtils.isWindows()) {
             addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, ITUNES_KEY, I18n.tr("iTunes"));
 			addOption(ITUNES_KEY, ITUNES_IMPORT_KEY, I18n.tr("Importing"), iTunesPreferencePaneItem.class); 
 		}
