@@ -46,25 +46,7 @@ public class FilterPanel extends JPanel {
         c.gridwidth = GridBagConstraints.REMAINDER;
 
         setBorder(new TitledBorder(I18n.tr("Filter Results")));
-
-        _rangeSliderSeeds = new LabeledRangeSlider("Seeds", null, 0, 1000);
-        _rangeSliderSeeds.setPreferredSize(new Dimension(80, (int) _rangeSliderSeeds.getPreferredSize().getHeight()));
-        _rangeSliderSeeds.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                rangeSliderSeeds_stateChanged(e);
-            }
-        });
-        add(_rangeSliderSeeds, c);
-
-        _rangeSliderSize = new LabeledRangeSlider("Size", null, 0, 1000);
-        _rangeSliderSize.setPreferredSize(new Dimension(80, (int) _rangeSliderSize.getPreferredSize().getHeight()));
-        _rangeSliderSize.addChangeListener(new ChangeListener() {
-            public void stateChanged(ChangeEvent e) {
-                rangeSliderSize_stateChanged(e);
-            }
-        });
-        add(_rangeSliderSize, c);
-
+        
         _keywordFilterTextField = new LabeledTextField("Name", 40, -1, 100);
 
         _keywordFilterTextField.addKeyListener(new KeyAdapter() {
@@ -74,8 +56,26 @@ public class FilterPanel extends JPanel {
             }
         });        
 
-
         add(_keywordFilterTextField, c);
+
+        _rangeSliderSize = new LabeledRangeSlider("Size", null, 0, 1000);
+        _rangeSliderSize.setPreferredSize(new Dimension(80, (int) _rangeSliderSize.getPreferredSize().getHeight()));
+        _rangeSliderSize.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                rangeSliderSize_stateChanged(e);
+            }
+        });
+        add(_rangeSliderSize, c);
+        
+        _rangeSliderSeeds = new LabeledRangeSlider("Seeds", null, 0, 1000);
+        _rangeSliderSeeds.setPreferredSize(new Dimension(80, (int) _rangeSliderSeeds.getPreferredSize().getHeight()));
+        _rangeSliderSeeds.addChangeListener(new ChangeListener() {
+            public void stateChanged(ChangeEvent e) {
+                rangeSliderSeeds_stateChanged(e);
+            }
+        });
+        add(_rangeSliderSeeds, c);
+
     };
 
     protected void keywordFilterChanged(KeyEvent e) {
