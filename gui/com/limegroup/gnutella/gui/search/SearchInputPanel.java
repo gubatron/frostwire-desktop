@@ -2,7 +2,6 @@ package com.limegroup.gnutella.gui.search;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -418,7 +417,7 @@ class SearchInputPanel extends JPanel {
         c.gridy = 0;
         c.gridy = 1;
         c.weightx = 1.0;
-        c.insets = new Insets(10,0,0,0);
+        c.insets = new Insets(10,0,10,0);
         b.add(filterLabelIconPanel,c);
 
         return b;
