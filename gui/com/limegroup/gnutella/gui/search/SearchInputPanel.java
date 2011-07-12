@@ -4,9 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -44,7 +46,6 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.InputPanel;
 import com.limegroup.gnutella.gui.KeyProcessingTextField;
-import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.actions.FileMenuActions;
 import com.limegroup.gnutella.gui.actions.FileMenuActions.OpenMagnetTorrentAction;
 import com.limegroup.gnutella.gui.themes.SkinHandler;
@@ -358,27 +359,54 @@ class SearchInputPanel extends JPanel {
      * Creates the search button & inserts it in a panel.
      */
     private JPanel createSearchButtonPanel() {
-        JPanel b = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        //JPanel b = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        
+        JPanel b = new JPanel(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        c.anchor = GridBagConstraints.LINE_START;
+        c.fill = GridBagConstraints.NONE;
+        c.gridx = 0;
+        c.gridy = 0;
+
+        
         JButton searchButton = new JButton(I18n.tr("Search"));
         searchButton.setToolTipText(I18n.tr("Search the Network for the Given Words"));
-
         searchButton.addActionListener(SEARCH_LISTENER);
+        b.add(searchButton,c);
 
-        b.add(Box.createHorizontalGlue());
-        b.add(searchButton);
         
-
-        // add collapse button
-        PaddedPanel paddedButtonPanel = new PaddedPanel();
-        
+        JPanel paddedButtonPanel = new JPanel(new GridBagLayout());
         JButton iconButton = new JButton();
         iconButton.setAction(new ToggleSearchOptionsPanelAction());
         iconButton.setIcon((ApplicationSettings.SEARCH_OPTIONS_COLLAPSED.getValue()) ? IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_MORE") : IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_LESS"));
         fixIconButton(iconButton);        
         
-        paddedButtonPanel.add(iconButton);
+        c = new GridBagConstraints();
+        c.gridx = 0;
+        c.gridy = 0;
+        c.anchor = GridBagConstraints.WEST;
+        c.fill = GridBagConstraints.NONE;
         
-        b.add(paddedButtonPanel);
+        paddedButtonPanel.add(new JLabel(I18n.tr("<html><strong>Apply Filters</strong></html>")),c);
+
+        c = new GridBagConstraints();
+        c.gridx = 1;
+        c.gridy = 0;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.WEST;
+        c.weightx = 1.0;
+        c.insets = new Insets(0,0,10,0);
+        paddedButtonPanel.add(iconButton,c);
+        
+        
+        c = new GridBagConstraints();
+        c.anchor = GridBagConstraints.WEST;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.gridy = 0;
+        c.gridy = 1;
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.weightx = 1.0;
+        b.add(paddedButtonPanel,c);
 
         return b;
     }
