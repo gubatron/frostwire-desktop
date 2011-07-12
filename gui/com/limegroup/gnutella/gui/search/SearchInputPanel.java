@@ -2,6 +2,7 @@ package com.limegroup.gnutella.gui.search;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -359,35 +360,33 @@ class SearchInputPanel extends JPanel {
      * Creates the search button & inserts it in a panel.
      */
     private JPanel createSearchButtonPanel() {
-        //JPanel b = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-        
+
+    	//The Search Button on a row of it's own
         JPanel b = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         c.anchor = GridBagConstraints.LINE_START;
         c.fill = GridBagConstraints.NONE;
         c.gridx = 0;
         c.gridy = 0;
-
+        c.insets = new Insets(0,0,10,0);
         
         JButton searchButton = new JButton(I18n.tr("Search"));
         searchButton.setToolTipText(I18n.tr("Search the Network for the Given Words"));
         searchButton.addActionListener(SEARCH_LISTENER);
         b.add(searchButton,c);
 
+        //Apply Filters <Icon Button>
+        final ToggleSearchOptionsPanelAction toggleSearchOptionsPanelAction = new ToggleSearchOptionsPanelAction();
         
-        JPanel paddedButtonPanel = new JPanel(new GridBagLayout());
-        JButton iconButton = new JButton();
-        iconButton.setAction(new ToggleSearchOptionsPanelAction());
-        iconButton.setIcon((ApplicationSettings.SEARCH_OPTIONS_COLLAPSED.getValue()) ? IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_MORE") : IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_LESS"));
-        fixIconButton(iconButton);        
-        
+        JPanel filterLabelIconPanel = new JPanel(new GridBagLayout());
         c = new GridBagConstraints();
         c.gridx = 0;
         c.gridy = 0;
         c.anchor = GridBagConstraints.WEST;
         c.fill = GridBagConstraints.NONE;
-        
-        paddedButtonPanel.add(new JLabel(I18n.tr("<html><strong>Apply Filters</strong></html>")),c);
+        JLabel filterLabel = new JLabel(I18n.tr("<html><strong>Apply Filters</strong></html>"));
+        //filterLabel.setBorder(BorderFactory.createLineBorder(Color.black));
+        filterLabelIconPanel.add(filterLabel,c);
 
         c = new GridBagConstraints();
         c.gridx = 1;
@@ -395,18 +394,32 @@ class SearchInputPanel extends JPanel {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.anchor = GridBagConstraints.WEST;
         c.weightx = 1.0;
-        c.insets = new Insets(0,0,10,0);
-        paddedButtonPanel.add(iconButton,c);
-        
+        c.insets = new Insets(0,3,0,0);
+
+        final JButton iconButton = new JButton();
+        iconButton.setAction(toggleSearchOptionsPanelAction);
+        iconButton.setIcon((ApplicationSettings.SEARCH_OPTIONS_COLLAPSED.getValue()) ? IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_MORE") : IconManager.instance().getSmallIconForButton("SEARCH_OPTIONS_LESS"));
+        fixIconButton(iconButton);        
+       
+        filterLabelIconPanel.add(iconButton,c);
+
+        filterLabel.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		ActionEvent evt = new ActionEvent(iconButton,1,null);
+        		
+        		toggleSearchOptionsPanelAction.actionPerformed(evt);
+        	}
+		});
         
         c = new GridBagConstraints();
         c.anchor = GridBagConstraints.WEST;
-        c.fill = GridBagConstraints.HORIZONTAL;
+        c.fill = GridBagConstraints.NONE;
         c.gridy = 0;
         c.gridy = 1;
-        c.gridwidth = GridBagConstraints.REMAINDER;
         c.weightx = 1.0;
-        b.add(paddedButtonPanel,c);
+        c.insets = new Insets(10,0,0,0);
+        b.add(filterLabelIconPanel,c);
 
         return b;
     }
@@ -417,6 +430,7 @@ class SearchInputPanel extends JPanel {
         iconButton.setBorder(null);
         iconButton.setFocusPainted(false);
         iconButton.setContentAreaFilled(false);
+        iconButton.setPreferredSize(new Dimension(16,16));
 	}
 
     /**
