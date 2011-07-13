@@ -4,9 +4,9 @@
     <property name="limewire.home" location="${basedir}"/>
 
     <import file="components/build.xml"/>
+
     <import file="core/build.xml"/>
     <import file="gui/build.xml" />
-
     <!-- Builds EVERYTHING from Scratch, including 3rd party jars from sources (lib/jars-src) -->
     <target name="everything">
       <touch file="lib/jars/COMPILE"/>
