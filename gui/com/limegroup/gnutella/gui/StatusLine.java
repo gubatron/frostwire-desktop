@@ -477,7 +477,7 @@ public final class StatusLine implements ThemeObserver {
      * Load connection quality theme icons
 	 */
 	public void updateTheme() {
-        _connectionQualityMeterIcons[StatusLine.STATUS_DISCONNECTED] = GUIMediator.getThemeImage("connect_small_1");
+        _connectionQualityMeterIcons[StatusLine.STATUS_DISCONNECTED] = GUIMediator.getThemeImage("connect_small_0");
         _connectionQualityMeterIcons[StatusLine.STATUS_TURBOCHARGED] = GUIMediator.getThemeImage("connect_small_6");
         
 		if (_mediaPlayer != null)
@@ -501,8 +501,8 @@ public final class StatusLine implements ThemeObserver {
         String connection = I18n.tr("Connection");
         switch(quality) {
             case STATUS_DISCONNECTED:
-                	status = I18n.tr("Idle");
-                    tip = I18n.tr("You are not transfering data. Start downloading or seeding to get TurboCharged.");
+                	status = I18n.tr("Disconnected");
+                    tip = I18n.tr("Check your internet connection, FrostWire can't connect.");
                     break;
             case STATUS_TURBOCHARGED:
                     status = I18n.tr("Turbo-Charged") + " " + connection;

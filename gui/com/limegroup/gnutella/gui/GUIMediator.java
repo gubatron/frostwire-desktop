@@ -18,8 +18,10 @@ import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.NetworkInterface;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -342,6 +344,13 @@ public final class GUIMediator {
      * for displaying the status of the network and connectivity to the user.
      */
     private StatusLine STATUS_LINE;
+
+	private long _lastConnectivityCheckTimestamp;
+
+	/** How long until you check the internet connection status in milliseconds. */
+	private long _internetConnectivityInterval = 5000;
+
+	private boolean _wasInternetReachable;
 
     /**
      * Flag for whether or not the app has ever been made visible during this
@@ -1839,8 +1848,47 @@ public final class GUIMediator {
             e.printStackTrace();
         }
     }
+    
+    
+    
+    private boolean isInternetReachable() {
+    	
+    	long now = System.currentTimeMillis();
+    	
+    	if (now - _lastConnectivityCheckTimestamp < _internetConnectivityInterval) {
+    		return _wasInternetReachable;
+    	}
+    	
+    	_lastConnectivityCheckTimestamp = now;
+    	
+    	
+    	
+    	try {
+	    	Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+	    	
+	    	if (interfaces == null) {
+	    		_wasInternetReachable = false;
+	    		return false;
+	    	}
 
-    private static boolean isInternetReachable() {
+	    	while (interfaces.hasMoreElements()) {
+	    	  NetworkInterface iface = interfaces.nextElement();
+	    	  System.out.println(iface);
+	    	  if (iface.isUp() && !iface.isLoopback()) {
+	    		  _wasInternetReachable = true;
+	    	    return true;
+	    	  }
+	    	}
+    	} catch (Exception e) {
+    		_wasInternetReachable = false;
+    		return false;
+    	}
+    	
+    	_wasInternetReachable = false;    	
+    	return false;
+    }
+
+    private static boolean isDataBeingTransfered() {
         AzureusCore azureusCore = AzureusStarter.getAzureusCore();
 
         if (azureusCore != null) {
