@@ -1873,7 +1873,7 @@ public final class GUIMediator {
 
 	    	while (interfaces.hasMoreElements()) {
 	    	  NetworkInterface iface = interfaces.nextElement();
-	    	  System.out.println(iface);
+	    	  //System.out.println(iface);
 	    	  if (iface.isUp() && !iface.isLoopback()) {
 	    		  _wasInternetReachable = true;
 	    	    return true;
