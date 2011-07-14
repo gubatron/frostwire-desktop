@@ -41,6 +41,7 @@ import org.limewire.setting.evt.SettingListener;
 import com.frostwire.bittorrent.websearch.SearchEnginesSettings;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.BoxPanel;
+import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
@@ -73,7 +74,8 @@ class SearchInputPanel extends JPanel {
     /**
      * The sole input text field that is at the top of all searches.
      */
-    private final SearchField SEARCH_FIELD = new SearchField(14);
+    //private final SearchField SEARCH_FIELD = new SearchField(14);
+    private final IconSearchField SEARCH_FIELD = new IconSearchField(10,GUIMediator.getThemeImage("search_tab"));
 
     /**
      * The JTabbedPane that switches between types of searches.
@@ -208,6 +210,12 @@ class SearchInputPanel extends JPanel {
 
     private JPanel createSearchEntryPanel() {
         SEARCH_FIELD.addActionListener(SEARCH_LISTENER);
+        SEARCH_FIELD.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		SEARCH_LISTENER.actionPerformed(null);
+        	}
+		});
 
         // add the default search input panel to the meta cards
         META_PANEL.add(createDefaultSearchPanel(), DEFAULT_PANEL_KEY);
@@ -369,10 +377,10 @@ class SearchInputPanel extends JPanel {
         c.gridy = 0;
         c.insets = new Insets(0,0,10,0);
         
-        JButton searchButton = new JButton(I18n.tr("Search"));
+        /*JButton searchButton = new JButton(I18n.tr("Search"));
         searchButton.setToolTipText(I18n.tr("Search the Network for the Given Words"));
         searchButton.addActionListener(SEARCH_LISTENER);
-        b.add(searchButton,c);
+        b.add(searchButton,c);*/
 
         //Apply Filters <Icon Button>
         final ToggleSearchOptionsPanelAction toggleSearchOptionsPanelAction = new ToggleSearchOptionsPanelAction();
