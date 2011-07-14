@@ -131,7 +131,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
         
         if (promoSlides != null) {
 	        promoSlides.setBackground(Color.WHITE);
-	        Dimension promoDimensions = new Dimension(720, 380);
+	        Dimension promoDimensions = new Dimension(717, 380);
 	        promoSlides.setPreferredSize(promoDimensions);
 	        promoSlides.setSize(promoDimensions);
 	        promoSlides.setMaximumSize(promoDimensions);
