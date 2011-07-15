@@ -10,6 +10,7 @@ frostwire (5.0.7) stable; urgency=high
   * UX upgrade, filters re-arranged.
   * UX upgrade, searches can be up to 50 characters long.
   * UX upgrade, either disconnected or turbocharged, no idle state.
+  * UX upgrade, search as you type on the library, no more search button.
     Disconnected only if it cannot connect to the internet.
   * UX bugfix, iTunes options were not visible for Windows users.
   * UX bugfix, fixes possible UI freeze on startup.

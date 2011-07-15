@@ -4,6 +4,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileFilter;
@@ -15,17 +16,14 @@ import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.KeyStroke;
 import javax.swing.text.Document;
 
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.AutoCompleteTextField;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.search.SearchField;
 import com.limegroup.gnutella.gui.search.SearchInformation;
@@ -62,18 +60,33 @@ public class LibrarySearchPanel extends JPanel {
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.weightx = 1;
 		add(queryField, gbc);
-		Action a = new SearchLibraryAction();
-		GUIUtils.bindKeyToAction(queryField, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), a);
-		gbc.fill = GridBagConstraints.NONE;
-		gbc.weightx = 0;
-		add(new JButton(a), gbc);
+		
+		
+		queryField.addKeyListener(new KeyAdapter() {
+			private Action a = new SearchLibraryAction();
+			
+			private long lastSearch;
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (queryField.getText().length() == 0 &&
+					e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+					lastSearch = 0;
+					queryField.setText(".");
+					a.actionPerformed(null);
+					queryField.setText("");
+				}
+				
+				if (System.currentTimeMillis() - lastSearch > 500) {
+					a.actionPerformed(null);
+					lastSearch = System.currentTimeMillis();
+				}
+			}
+		});
 	}
         
 	private class SearchLibraryAction extends AbstractAction {
 		
-		/**
-         * 
-         */
         private static final long serialVersionUID = -2182314529781104010L;
 
         public SearchLibraryAction() {
