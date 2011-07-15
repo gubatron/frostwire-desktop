@@ -1,19 +1,26 @@
-frostwire (5.0.8) stable; urgency=high
-
-  * UX upgrade, playback support for m4a files.
-  * UX upgrade, search result filters re-arranged.
-
- -- FrostWire Team <contact@frostwire.com>  Fri, 7 Jul 2011 14:20:58 -0500
-
 frostwire (5.0.7) stable; urgency=high
 
   * UX upgrade, send file or send folder support when a file or folder
     is dropped on FrostWire.
   * UX upgrade, file choosing dialogs on Mac now also show mounted volumes.
+  * UX upgrade, playback support for m4a files.
+  * UX upgrade, search result filters re-arranged.
+  * UX upgrade, main search button gone, updated search text box to include
+    clickable search icon.
+  * UX upgrade, filters re-arranged.
+  * UX upgrade, searches can be up to 50 characters long.
+  * UX upgrade, either disconnected or turbocharged, no idle state.
+    Disconnected only if it cannot connect to the internet.
+  * UX bugfix, iTunes options were not visible for Windows users.
   * UX bugfix, fixes possible UI freeze on startup.
-  * UX bugfix, sending songs to iTunes is now done in a single process.
+  * UI bugfix, sending songs to iTunes on Mac is now done in a single process.
+  * Mac OSX Lion compatible.
+  * Bugfix, issue where opening a torrent from maglnk.com would result in a 
+    double invocation of the Partial Dialog window.
+  * Bugfix, when user didn't start a partial download the torrent wouldn't be
+    deleted.
 
- -- FrostWire Team <contact@frostwire.com>  Mon, 4 Jul 2011 14:20:58 -0500
+ -- FrostWire Team <contact@frostwire.com>  Fri, 15 Jul 2011 15:13:16 -0500
 
 frostwire (5.0.6) stable; urgency=high
 

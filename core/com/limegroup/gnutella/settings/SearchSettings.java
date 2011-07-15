@@ -275,7 +275,7 @@ public final class SearchSettings extends LimeProps {
      * Setting for the maximum number of bytes to allow in queries.
      */
     public static final IntSetting MAX_QUERY_LENGTH =
-        FACTORY.createIntSetting("MAX_QUERY_LENGTH", 40);
+        FACTORY.createIntSetting("MAX_QUERY_LENGTH", 50);
 
     /**
      * Setting for the maximum number of bytes to allow in XML queries.
