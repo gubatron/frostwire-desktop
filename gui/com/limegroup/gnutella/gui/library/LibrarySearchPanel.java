@@ -55,7 +55,7 @@ public class LibrarySearchPanel extends JPanel {
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(0, 2, 0, 2);
 		gbc.anchor = GridBagConstraints.WEST;
-		JLabel label = new JLabel(I18n.tr("Search In Shared Files:") + " ");
+		JLabel label = new JLabel(I18n.tr("Search In Downloaded Files:") + " ");
 		label.setLabelFor(queryField);
 		label.setDisplayedMnemonic('S');
 		add(label, gbc);
