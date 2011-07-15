@@ -37,22 +37,22 @@ public class IconSearchField extends SearchField {
 		SearchField dummy = new SearchField(columns);
 		_outerDimensions = dummy.getSize();
 		
+		buildMouseHoverListener();
+	}
 
-		
+	/**
+	 * When the mouse is over the icon change the mouse cursor and revert it when it's out.
+	 * (efficiently) 
+	 */
+	public void buildMouseHoverListener() {
 		addMouseMotionListener(new MouseAdapter() {
 			private boolean putHand;
 			private boolean putDefault;
 			
 			@Override
-			public void mouseEntered(MouseEvent e) {
-				System.out.println("mouse entered");
-			}
-			
-			@Override
 			public void mouseMoved(MouseEvent e) {
 				super.mouseMoved(e);
 				
-				System.out.println("IconSearchField. Mouse Moved:");
 				
 				if (_iconRectangle != null && 
 				    _iconRectangle.contains(e.getPoint())) {
@@ -67,7 +67,6 @@ public class IconSearchField extends SearchField {
 					
 					if (!putDefault) {
 						putDefault =true;
-						System.out.println("Changing to default cursor");
 						IconSearchField.this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 					}
 					putHand = false;
