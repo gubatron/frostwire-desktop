@@ -44,15 +44,8 @@ public class IconSearchField extends SearchField {
 			private boolean putDefault;
 			
 			@Override
-			public void mouseEntered(MouseEvent e) {
-				System.out.println("mouse entered");
-			}
-			
-			@Override
 			public void mouseMoved(MouseEvent e) {
 				super.mouseMoved(e);
-				
-				System.out.println("IconSearchField. Mouse Moved:");
 				
 				if (_iconRectangle != null && 
 				    _iconRectangle.contains(e.getPoint())) {
@@ -67,7 +60,6 @@ public class IconSearchField extends SearchField {
 					
 					if (!putDefault) {
 						putDefault =true;
-						System.out.println("Changing to default cursor");
 						IconSearchField.this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 					}
 					putHand = false;

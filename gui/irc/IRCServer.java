@@ -1425,8 +1425,8 @@ public class IRCServer extends IRCObject implements Server, ServerProtocolListen
     for(int i=0;i<b.length;i++) if(((Boolean)b[i]).booleanValue()) return;
 
 
-    String toSend="";
-    for(int i=0;i<params.length;i++) toSend+=" "+params[i];
+//    String toSend="";
+//    for(int i=0;i<params.length;i++) toSend+=" "+params[i];
 
 
     command=command.toLowerCase(java.util.Locale.ENGLISH);

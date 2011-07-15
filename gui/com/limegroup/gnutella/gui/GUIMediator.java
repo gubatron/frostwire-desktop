@@ -49,8 +49,6 @@ import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 import org.limewire.util.VersionUtils;
 
-import com.aelitis.azureus.core.AzureusCore;
-import com.frostwire.AzureusStarter;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.ChatMediator;
 import com.frostwire.gui.HideExitDialog;
@@ -115,7 +113,7 @@ public final class GUIMediator {
     private boolean _remoteDownloadsAllowed;
 
     public static enum Tabs {
-        SEARCH(I18n.tr("&Search")), LIBRARY(I18n.tr("&Library"), ApplicationSettings.LIBRARY_VIEW_ENABLED), ANDROID(I18n.tr("&Phones and Tablets"),
+        SEARCH(I18n.tr("&Search")), LIBRARY(I18n.tr("&Library"), ApplicationSettings.LIBRARY_VIEW_ENABLED), LIBRARY2(I18n.tr("&Library"), ApplicationSettings.LIBRARY_VIEW_ENABLED), ANDROID(I18n.tr("&Phones and Tablets"),
                 ApplicationSettings.ANDROID_VIEW_ENABLED), CHAT(I18n.tr("Community C&hat"), ApplicationSettings.CHAT_VIEW_ENABLED);
 
         private Action navAction;
@@ -1886,17 +1884,6 @@ public final class GUIMediator {
     	
     	_wasInternetReachable = false;    	
     	return false;
-    }
-
-    private static boolean isDataBeingTransfered() {
-        AzureusCore azureusCore = AzureusStarter.getAzureusCore();
-
-        if (azureusCore != null) {
-            int rate = azureusCore.getGlobalManager().getStats().getDataReceiveRate() + azureusCore.getGlobalManager().getStats().getDataSendRate();
-            return (rate > 0);
-        }
-
-        return false;
     }
 
     public boolean isRemoteDownloadsAllowed() {
