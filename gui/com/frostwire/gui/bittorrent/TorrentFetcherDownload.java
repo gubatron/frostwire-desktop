@@ -75,6 +75,7 @@ public class TorrentFetcherDownload implements BTDownload {
         } else {
             _removed = true;
             _torrentDownloader.cancel();
+            _torrentDownloader.getFile().delete();
         }
     }
 
