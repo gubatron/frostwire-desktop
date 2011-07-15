@@ -1,10 +1,14 @@
 package com.limegroup.gnutella.gui.search;
 
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -19,7 +23,9 @@ public class IconSearchField extends SearchField {
 	private int _iconHeight;
 	
 	private Dimension _outerDimensions;
-
+	
+	private Rectangle _iconRectangle;
+	
 	public IconSearchField() {
 		super();
 	}
@@ -31,12 +37,50 @@ public class IconSearchField extends SearchField {
 		SearchField dummy = new SearchField(columns);
 		_outerDimensions = dummy.getSize();
 		
+
+		
+		addMouseMotionListener(new MouseAdapter() {
+			private boolean putHand;
+			private boolean putDefault;
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				System.out.println("mouse entered");
+			}
+			
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				super.mouseMoved(e);
+				
+				System.out.println("IconSearchField. Mouse Moved:");
+				
+				if (_iconRectangle != null && 
+				    _iconRectangle.contains(e.getPoint())) {
+					
+					if (!putHand) {
+						putHand = true;
+						IconSearchField.this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+					}
+
+					putDefault = false;
+				} else {
+					
+					if (!putDefault) {
+						putDefault =true;
+						System.out.println("Changing to default cursor");
+						IconSearchField.this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+					}
+					putHand = false;
+				}
+			}
+		});
 	}
 	
 	public void setIcon(Icon icon) {
 		_icon = icon;
 		_iconWidth = _icon.getIconWidth();
 		_iconHeight = _icon.getIconHeight();
+		
 	}
 	
 	public Icon getIcon() {
@@ -74,6 +118,12 @@ public class IconSearchField extends SearchField {
 			g2d.drawImage(((ImageIcon)_icon).getImage(), icon_x+3, icon_y+3, icon_width-3, icon_height-3, this);
 			
 			rightTextMargin += _iconWidth+5;
+			
+			//create rectangle to know if we're hovering over the icon
+			if (_iconRectangle == null) {
+				_iconRectangle = new Rectangle(icon_x-5, 0, icon_width+10,icon_height+10);
+			}
+			
 		}
 		
 		setMargin(new Insets(2, 2, 2, rightTextMargin));
