@@ -1,3 +1,9 @@
+frostwire (5.0.8) stable; urgency=high
+
+  * Removes Mininova from search engines.
+
+ -- FrostWire Team <contact@frostwire.com>  Fri, 15 Jul 2011 15:13:16 -0500
+
 frostwire (5.0.7) stable; urgency=high
 
   * UX upgrade, send file or send folder support when a file or folder
