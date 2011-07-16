@@ -8,6 +8,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class LibraryDB {
@@ -94,27 +95,20 @@ public class LibraryDB {
         }
     }
 
-    private List<List<Object>> convertResultSetToList(ResultSet resultSet) {
-//     ResultSetMetaData meta   = resultSet.getMetaData();
-//        int               numColums = meta.getColumnCount();
-//        int               i;
-//        Object            o = null;
-//
-//        // the result set is a cursor into the data.  You can only
-//        // point to one row at a time
-//        // assume we are pointing to BEFORE the first row
-//        // rs.next() points to next row and returns true
-//        // or false if there is no next row, which breaks the loop
-//        for (; rs.next(); ) {
-//            for (i = 0; i < colmax; ++i) {
-//                o = rs.getObject(i + 1);    // Is SQL the first column is indexed
-//
-//                // with 1 not 0
-//                System.out.print(o.toString() + " ");
-//            }
-//
-//            System.out.println(" ");
-//        }
-        return null;
+    private List<List<Object>> convertResultSetToList(ResultSet resultSet) throws SQLException {
+        ResultSetMetaData meta = resultSet.getMetaData();
+        int numColums = meta.getColumnCount();
+        int i;
+
+        List<List<Object>> result = new LinkedList<List<Object>>();
+
+        while (resultSet.next()) {
+            List<Object> row = new ArrayList<Object>(numColums);
+            for (i = 1; i <= numColums; i++) {
+                row.add(resultSet.getObject(i));
+            }
+            result.add(row);
+        }
+        return result;
     }
 }
