@@ -66,7 +66,7 @@ public class HttpFetcher {
 
 	}
 
-	private static final String DEFAULT_USER_AGENT = "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506";
+	private static final String DEFAULT_USER_AGENT = UserAgentGenerator.getUserAgent();
 	private static final int DEFAULT_TIMEOUT = 10000;
 	
 	private final URI _uri;

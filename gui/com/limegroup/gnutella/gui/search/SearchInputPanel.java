@@ -340,7 +340,7 @@ class SearchInputPanel extends JPanel {
 		checkBoxVertor.addItemListener(listener);
 		
 		controls.add(checkboxClearbits);
-		controls.add(checkBoxMininova);
+		//controls.add(checkBoxMininova);
 		controls.add(checkBoxISOHunt);
 		controls.add(checkBoxBTJunkie);
 		controls.add(checkBoxExtratorrent);

@@ -59,6 +59,10 @@ public final class SearchEngine {
     }
 
     public boolean isEnabled() {
+    	if (_id == MININOVA_ID) {
+    		return false;
+    	}
+    		
         return _setting.getValue();
     }
 
