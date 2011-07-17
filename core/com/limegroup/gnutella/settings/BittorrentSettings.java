@@ -19,7 +19,7 @@ public class BittorrentSettings extends LimeProps {
 
 	public static BooleanSetting TORRENT_DETAIL_PAGE_SHOWN_AFTER_DOWNLOAD = FACTORY
 			.createBooleanSetting("TORRENT_DETAIL_PAGE_SHOWN_AFTER_DOWNLOAD",
-					false);
+					true);
 
 	/**
 	 * Setting whether LimeWire should manage the BT settings automatically.

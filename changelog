@@ -1,8 +1,12 @@
 frostwire (5.0.8) stable; urgency=high
 
+  * Shows torrent details after a download starts to bring traffic back
+    to the search engine that provided the result as a default setting.
+  * Shows FrostWire icon for search results to which we can't resolve the
+    file extension.
   * Removes Mininova from search engines.
 
- -- FrostWire Team <contact@frostwire.com>  Fri, 16 Jul 2011 17:53:10 -0500
+ -- FrostWire Team <contact@frostwire.com>  Sat, 16 Jul 2011 19:41:08 -0500
 
 frostwire (5.0.7) stable; urgency=high
 
