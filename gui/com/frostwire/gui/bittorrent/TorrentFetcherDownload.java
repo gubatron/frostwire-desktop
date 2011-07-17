@@ -1,5 +1,6 @@
 package com.frostwire.gui.bittorrent;
 
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -24,25 +25,27 @@ public class TorrentFetcherDownload implements BTDownload {
     private final String _hash;
     private final long _size;
     private final boolean _partialDownload;
+    private final ActionListener _postPartialDownloadAction;
 
     private String _state;
     private boolean _removed;
     private BTDownload _delegate;
 
-    public TorrentFetcherDownload(String uri, String displayName, String hash, long size, boolean partialDownload) {
+    public TorrentFetcherDownload(String uri, String displayName, String hash, long size, boolean partialDownload, ActionListener postPartialDownloadAction) {
         String saveDir = SharingSettings.TORRENTS_DIR_SETTING.getValue().getAbsolutePath();
         _torrentDownloader = TorrentDownloaderFactory.create(new TorrentDownloaderListener(), uri, null, saveDir);
         _displayName = displayName;
         _hash = hash;
         _size = size;
         _partialDownload = partialDownload;
+        _postPartialDownloadAction = postPartialDownloadAction;
 
         _state = STATE_DOWNLOADING;
         _torrentDownloader.start();
     }
 
-    public TorrentFetcherDownload(String uri, boolean partialDownload) {
-        this(uri, uri, "", -1, partialDownload);
+    public TorrentFetcherDownload(String uri, boolean partialDownload, ActionListener postPartialDownloadAction) {
+        this(uri, uri, "", -1, partialDownload, postPartialDownloadAction);
     }
 
     public long getSize() {
@@ -204,6 +207,14 @@ public class TorrentFetcherDownload implements BTDownload {
                                 }
                             });
                             return;
+                        } else {
+                            if (_postPartialDownloadAction != null) {
+                                try {
+                                    _postPartialDownloadAction.actionPerformed(null);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
                         }
                     }
 

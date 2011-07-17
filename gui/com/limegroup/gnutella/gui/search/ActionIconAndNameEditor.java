@@ -22,8 +22,17 @@ public class ActionIconAndNameEditor extends AbstractCellEditor implements Table
      */
     private static final long serialVersionUID = 2661028644256459921L;
 
+    private final Rectangle _actionRegion;
+
     private ActionListener _action;
-    private static final Rectangle ICON_REGION = new Rectangle(3, 3, 13, 13);
+
+    public ActionIconAndNameEditor(Rectangle actionRegion) {
+        _actionRegion = actionRegion;
+    }
+
+    public ActionIconAndNameEditor() {
+        this(null);
+    }
 
     public Object getCellEditorValue() {
         return null;
@@ -37,14 +46,18 @@ public class ActionIconAndNameEditor extends AbstractCellEditor implements Table
         component.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if (ICON_REGION.contains(e.getPoint())) {
+                if (_actionRegion == null) {
                     component_mousePressed(e);
                 } else {
-                    Toolkit.getDefaultToolkit()
-                            .getSystemEventQueue()
-                            .postEvent(
-                                    new MouseEvent(table, e.getClickCount() >= 2 ? MouseEvent.MOUSE_CLICKED : MouseEvent.MOUSE_PRESSED, e.getWhen(), e
-                                            .getModifiers(), component.getX() + e.getX(), component.getY() + e.getY(), e.getClickCount(), false));
+                    if (_actionRegion.contains(e.getPoint())) {
+                        component_mousePressed(e);
+                    } else {
+                        Toolkit.getDefaultToolkit()
+                                .getSystemEventQueue()
+                                .postEvent(
+                                        new MouseEvent(table, e.getClickCount() >= 2 ? MouseEvent.MOUSE_CLICKED : MouseEvent.MOUSE_PRESSED, e.getWhen(), e
+                                                .getModifiers(), component.getX() + e.getX(), component.getY() + e.getY(), e.getClickCount(), false));
+                    }
                 }
             }
         });

@@ -9,6 +9,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -964,7 +965,10 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
     
     protected void setDefaultEditors() {
         TableColumnModel model = TABLE.getColumnModel();
-        TableColumn tc = model.getColumn(SearchTableColumns.NAME_IDX);
+        TableColumn tc;
+        tc = model.getColumn(SearchTableColumns.NAME_IDX);
+        tc.setCellEditor(new ActionIconAndNameEditor(new Rectangle(3, 3, 13, 13)));
+        tc = model.getColumn(SearchTableColumns.SOURCE_IDX);
         tc.setCellEditor(new ActionIconAndNameEditor());
     }
 

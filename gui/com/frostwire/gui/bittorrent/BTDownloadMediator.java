@@ -1,5 +1,6 @@
 package com.frostwire.gui.bittorrent;
 
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -424,20 +425,20 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         _shareTorrentAction.setEnabled(false);
     }
 
-    public void openTorrentSearchResult(final WebSearchResult webSearchResult, final boolean partialDownload) {
+    public void openTorrentSearchResult(final WebSearchResult webSearchResult, final boolean partialDownload, final ActionListener postPartialDownloadAction) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
                 BTDownload downloader = new TorrentFetcherDownload(webSearchResult.getTorrentURI(), webSearchResult.getFilenameNoExtension(), webSearchResult
-                        .getHash(), webSearchResult.getSize(), partialDownload);
+                        .getHash(), webSearchResult.getSize(), partialDownload, postPartialDownloadAction);
                 add(downloader);
             }
         });
     }
 
-    public void openTorrentURI(final String uri, final boolean partialDownload) {
+    public void openTorrentURI(final String uri, final boolean partialDownload, final ActionListener postPartialDownloadAction) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
-                BTDownload downloader = new TorrentFetcherDownload(uri, partialDownload);
+                BTDownload downloader = new TorrentFetcherDownload(uri, partialDownload, postPartialDownloadAction);
                 add(downloader);
             }
         });

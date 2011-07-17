@@ -12,6 +12,7 @@ import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -782,9 +783,13 @@ public final class GUIMediator {
     public final int getCurrentDownloads() {
         return getBTDownloadMediator().getActiveDownloads();
     }
-
+    
     public final void openTorrentSearchResult(WebSearchResult webSearchResult, boolean partialDownload) {
-        getBTDownloadMediator().openTorrentSearchResult(webSearchResult, partialDownload);
+        openTorrentSearchResult(webSearchResult, partialDownload, null);
+    }
+
+    public final void openTorrentSearchResult(WebSearchResult webSearchResult, boolean partialDownload, ActionListener postPartialDownloadAction) {
+        getBTDownloadMediator().openTorrentSearchResult(webSearchResult, partialDownload, postPartialDownloadAction);
         setWindow(GUIMediator.Tabs.SEARCH);
     }
 
@@ -805,9 +810,13 @@ public final class GUIMediator {
     public final void openTorrentURI(String uri) {
         openTorrentURI(uri, false);
     }
-
+    
     public final void openTorrentURI(String uri, boolean partialDownload) {
-        getBTDownloadMediator().openTorrentURI(uri, partialDownload);
+        openTorrentURI(uri, partialDownload, null);
+    }
+
+    public final void openTorrentURI(String uri, boolean partialDownload, ActionListener postPartialDownloadAction) {
+        getBTDownloadMediator().openTorrentURI(uri, partialDownload, postPartialDownloadAction);
         setWindow(GUIMediator.Tabs.SEARCH);
     }
 

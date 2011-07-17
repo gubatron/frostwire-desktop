@@ -75,6 +75,11 @@ public class IconManager {
      */
     public Icon getIconForExtension(String ext) {
         validate();
+        
+        if (ext != null && ext.toLowerCase().endsWith("torrent")) {
+            return GUIMediator.getThemeImage("frosthires");
+        }
+        
         return fileController.getIconForExtension(ext);
     }
     

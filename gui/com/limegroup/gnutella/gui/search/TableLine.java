@@ -27,6 +27,7 @@ import com.limegroup.gnutella.gui.tables.IconAndNameHolderImpl;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.Linkable;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
+import com.limegroup.gnutella.settings.BittorrentSettings;
 import com.limegroup.gnutella.settings.SearchSettings;
 
 /** 
@@ -58,7 +59,11 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
      */
     private ResultSpeed _speed = null;
     
-    private ActionListener _action;
+    private ActionListener _downloadAction;
+    
+    private ActionListener _torrentDetailsAction;
+    
+    private ActionListener _torrentDetailsActionWithDelay;
 
     /**
      * The quality of this line.
@@ -89,9 +94,19 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
         _mediaType = NamedMediaType.getFromExtension(getExtension());
         _speed = new ResultSpeed(sr.getSpeed(), sr.isMeasuredSpeed());
         _quality = sr.getQuality();
-        _action = new ActionListener() {
+        _downloadAction = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                GUIMediator.instance().openTorrentSearchResult(getInitializeObject().getWebSearchResult(), true);
+                GUIMediator.instance().openTorrentSearchResult(getInitializeObject().getWebSearchResult(), true, _torrentDetailsActionWithDelay);
+            }
+        };
+        _torrentDetailsAction = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                RESULT.showTorrentDetails(-1);
+            }
+        };
+        _torrentDetailsActionWithDelay = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                RESULT.showTorrentDetails(BittorrentSettings.SHOW_TORRENT_DETAILS_DELAY);
             }
         };
     }
@@ -344,12 +359,11 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
         case SearchTableColumns.TYPE_IDX:
             return getIcon();
         case SearchTableColumns.NAME_IDX:
-            return new ActionIconAndNameHolder(getTreeIcon(), _action, getFilenameNoExtension());
-            //return new ResultNameHolder(this);
+            return new ActionIconAndNameHolder(getTreeIcon(), _downloadAction, getFilenameNoExtension());
         case SearchTableColumns.SIZE_IDX:
             return new SizeHolder(getSize());
         case SearchTableColumns.SOURCE_IDX:
-            return RESULT.getVendor();
+            return new ActionIconAndNameHolder(null, _torrentDetailsAction, "<html><a href=\"#\">" + RESULT.getVendor() + "</a></html>");
         case SearchTableColumns.ADDED_IDX:
             return getAddedOn();
         default:

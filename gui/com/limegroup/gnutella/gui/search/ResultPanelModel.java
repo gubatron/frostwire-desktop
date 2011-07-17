@@ -342,7 +342,7 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
     
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return columnIndex == SearchTableColumns.NAME_IDX;
+        return columnIndex == SearchTableColumns.NAME_IDX || columnIndex == SearchTableColumns.SOURCE_IDX;
     }
 }
 
