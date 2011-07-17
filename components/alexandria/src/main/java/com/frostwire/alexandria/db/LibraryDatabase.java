@@ -11,9 +11,11 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class LibraryDB {
+public class LibraryDatabase {
 
-    private static final int LIBRARY_DATABASE_VERSION = 1;
+    public static final int OBJECT_NOT_SAVED_ID = -1;
+
+    public static final int LIBRARY_DATABASE_VERSION = 1;
 
     private final File _databaseFile;
     private final String _name;
@@ -28,7 +30,7 @@ public class LibraryDB {
         }
     }
 
-    public LibraryDB(File databaseFile) {
+    public LibraryDatabase(File databaseFile) {
         _databaseFile = databaseFile;
 
         File path = databaseFile;
@@ -129,7 +131,7 @@ public class LibraryDB {
         if (connection == null) {
             return createDatabase(path, name);
         } else {
-            return null;
+            return connection;
         }
     }
 
@@ -150,7 +152,7 @@ public class LibraryDB {
         return result;
     }
 
-    public boolean update(Connection connection, String expression) {
+    boolean update(Connection connection, String expression) {
 
         Statement statment = null;
 
