@@ -87,4 +87,9 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
             db.update("DELETE FROM PlaylistItems WHERE playlistItemId = " + obj.getId());
         }
     }
+
+    public void deleteFromAll(PlaylistItem item) {
+        db.update("DELETE FROM PlaylistsPlaylistItems WHERE playlistItemId = " + item.getId());
+        db.update("DELETE FROM PlaylistItems WHERE playlistItemId = " + item.getId());
+    }
 }

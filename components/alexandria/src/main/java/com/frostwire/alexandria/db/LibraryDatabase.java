@@ -173,7 +173,7 @@ public class LibraryDatabase {
         update(connection, "CREATE TABLE PlaylistsPlaylistItems (playlistPlaylistItemId INTEGER IDENTITY, playlistId INTEGER, playlistItemId INTEGER)");
 
         // INITIAL DATA
-        update(connection, "INSERT INTO LibraryInfo (name , version) VALUES ('" + name + "', " + LIBRARY_DATABASE_VERSION + ")");
+        update(connection, "INSERT INTO Library (name , version) VALUES ('" + name + "', " + LIBRARY_DATABASE_VERSION + ")");
 
         return connection;
     }

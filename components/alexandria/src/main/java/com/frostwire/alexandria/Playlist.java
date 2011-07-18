@@ -15,6 +15,13 @@ public class Playlist extends Entity<PlaylistDB> {
 
     private List<PlaylistItem> _items;
 
+    public Playlist(Library library) {
+        super(new PlaylistDB(library.db.getDatabase()));
+        _library = library;
+        _id = LibraryDatabase.OBJECT_INVALID_ID;
+        _items = new LinkedList<PlaylistItem>();
+    }
+
     public Playlist(Library library, int id, String name) {
         super(new PlaylistDB(library.db.getDatabase()));
         _library = library;

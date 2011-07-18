@@ -1,6 +1,7 @@
 package com.frostwire.alexandria;
 
 import java.io.File;
+import java.util.List;
 
 import com.frostwire.alexandria.db.LibraryDB;
 import com.frostwire.alexandria.db.LibraryDatabase;
@@ -41,7 +42,11 @@ public class Library extends Entity<LibraryDB> {
     }
 
     public void close() {
-        getDB().getDatabase().close();
+        db.getDatabase().close();
+    }
+
+    public List<Playlist> getPlaylists() {
+        return db.getPlaylists(this);
     }
 
     public Playlist newPlaylist(String name) {
@@ -60,6 +65,23 @@ public class Library extends Entity<LibraryDB> {
     public static void main(String[] args) {
         File dbFile = new File("/home/atorres/Downloads/testalex/testdb");
         Library library = new Library(dbFile);
+
+        Playlist newPlaylist = library.newPlaylist("testPL");
+
+        newPlaylist.save();
+
+        PlaylistItem it1 = newPlaylist.newItem("a", "a", 1, "a", "a", 1, "a", "a", "a");
+        it1.save();
+        PlaylistItem it2 = newPlaylist.newItem("b", "b", 1, "b", "b", 1, "b", "b", "b");
+        it2.save();
+
+        library.close();
+
+        library = new Library(dbFile);
+
+        Playlist pl = library.getPlaylists().get(0);
+        pl.refresh();
+        System.out.println(pl.getItems().size());
         library.close();
     }
 }

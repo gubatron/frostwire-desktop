@@ -1,8 +1,10 @@
 package com.frostwire.alexandria.db;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.frostwire.alexandria.Library;
+import com.frostwire.alexandria.Playlist;
 
 public class LibraryDB extends ObjectDB<Library> {
 
@@ -35,5 +37,19 @@ public class LibraryDB extends ObjectDB<Library> {
 
     public void delete(Library obj) {
         // nothing
+    }
+
+    public List<Playlist> getPlaylists(Library library) {
+        List<List<Object>> result = db.query("SELECT playlistId, name FROM Playlists");
+        
+        List<Playlist> playlists = new ArrayList<Playlist>(result.size());
+        
+        for (List<Object> row : result) {
+            Playlist playlist = new Playlist(library);
+            playlist.getDB().fill(row, playlist);
+            playlists.add(playlist);
+        }
+        
+        return playlists;
     }
 }

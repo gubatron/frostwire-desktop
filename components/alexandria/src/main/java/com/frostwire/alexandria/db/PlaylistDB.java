@@ -53,8 +53,8 @@ public class PlaylistDB extends ObjectDB<Playlist> {
 
     public List<PlaylistItem> getLibraryItems(Playlist playlist) {
         List<List<Object>> result = db
-                .query("SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, time, artistName, albumName, coverArtPath "
-                        + "FROM PlaylisItems INNER JOIN PlaylistsPlaylistItems ON PlaylisItems.playlisItemId = PlaylistsPlaylistItems.playlisItemId "
+                .query("SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath "
+                        + "FROM PlaylistItems INNER JOIN PlaylistsPlaylistItems ON PlaylistItems.playlistItemId = PlaylistsPlaylistItems.playlistItemId "
                         + "WHERE playlistId = " + playlist.getId());
 
         List<PlaylistItem> items = new ArrayList<PlaylistItem>(result.size());
