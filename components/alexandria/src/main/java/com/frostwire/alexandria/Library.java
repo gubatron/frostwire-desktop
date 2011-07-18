@@ -14,6 +14,7 @@ public class Library {
 
     private boolean _closed;
 
+    private int _id;
     private String _name;
     private int _version;
 
@@ -26,6 +27,14 @@ public class Library {
 
     public File getLibraryFile() {
         return _database.getDatabaseFile();
+    }
+    
+    public int getId() {
+        return _id;
+    }
+    
+    public void setId(int id) {
+        _id = id;
     }
 
     public String getName() {

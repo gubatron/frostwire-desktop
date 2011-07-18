@@ -102,7 +102,7 @@ public class LibraryDatabase {
 
         // STRUCTURE CREATION
 
-        update(connection, "CREATE TABLE LibraryInfo (name VARCHAR(500), version INTEGER)");
+        update(connection, "CREATE TABLE Library (libraryId INTEGER IDENTITY, name VARCHAR(500), version INTEGER)");
 
         //update(connection, "DROP TABLE Playlists IF EXISTS CASCADE");
         update(connection, "CREATE TABLE Playlists (playlistId INTEGER IDENTITY, name VARCHAR(500))");
