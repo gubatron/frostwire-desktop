@@ -1,6 +1,7 @@
 package com.frostwire.gui.library;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -12,6 +13,9 @@ import com.limegroup.gnutella.gui.util.DividerLocationSettingUpdater;
 import com.limegroup.gnutella.settings.UISettings;
 
 public class LibraryMediator {
+    
+    private static final String FILES_TABLE_KEY = "LIBRARY_FILES_TABLE";
+    private static final String PLAYLISTS_TABLE_KEY = "LIBRARY_PLAYLISTS_TABLE";
 
     private static JPanel MAIN_PANEL;
 
@@ -29,6 +33,9 @@ public class LibraryMediator {
         }
         return INSTANCE;
     }
+    
+    private CardLayout _tablesViewLayout = new CardLayout();
+    private JPanel _tablesPanel;
 
     public LibraryMediator() {
         getComponent(); // creates MAIN_PANEL
@@ -60,7 +67,17 @@ public class LibraryMediator {
     }
 
     private JComponent getLibraryRightPanel() {
-        JPanel panel = new JPanel();
+        JPanel panel = new JPanel(new BorderLayout());
+        
+        _tablesViewLayout = new CardLayout();
+        _tablesPanel = new JPanel(_tablesViewLayout);
+        
+        _tablesPanel.add(LibraryFilesTableMediator.instance().getScrolledTablePane(), FILES_TABLE_KEY);
+        _tablesPanel.add(LibraryPlaylistsTableMediator.instance().getScrolledTablePane(), PLAYLISTS_TABLE_KEY);
+        
+        panel.add(new LibrarySearch(), BorderLayout.PAGE_START);
+        panel.add(_tablesPanel, BorderLayout.CENTER);
+        panel.add(new LibraryPlayer(), BorderLayout.PAGE_END);
 
         return panel;
     }
