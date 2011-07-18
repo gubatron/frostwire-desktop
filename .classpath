@@ -8,6 +8,7 @@
 	<classpathentry kind="src" output="components/setting/build/classes" path="components/setting/src/main/java"/>
 	<classpathentry kind="src" path="components/osx_stub/src/main/java"/>
 	<classpathentry kind="src" path="components/azureus/src/main/java"/>
+	<classpathentry kind="src" path="components/alexandria/src/main/java"/>
 	<classpathentry excluding="build.xml" kind="src" path="core">
 		<attributes>
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="frostwire.desktop/lib/native"/>
@@ -30,5 +31,6 @@
 	<classpathentry kind="lib" path="lib/jars/httpclient-4.0.jar" sourcepath="lib/jars-src"/>
 	<classpathentry kind="lib" path="lib/jars/httpcore-4.0.1.jar" sourcepath="lib/jars-src"/>
 	<classpathentry kind="lib" path="lib/jars/MRJAdapter.jar"/>
+	<classpathentry kind="lib" path="lib/jars/hsqldb-2.2.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
