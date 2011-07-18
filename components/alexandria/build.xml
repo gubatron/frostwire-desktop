@@ -9,7 +9,7 @@
     <import file="../common/build-macros.xml" />
     <import file="../common/build.xml"/>
     
-    <target name="initialize" depends="lw-common.initialize" unless="initialized.collection">
+    <target name="initialize" depends="lw-common.initialize" unless="initialized.alexandria">
         <do.setup-properties component="alexandria">
 			<src-classpath>
 				<pathelement location="${limewire.lib.jars}/commons-logging.jar"/>
