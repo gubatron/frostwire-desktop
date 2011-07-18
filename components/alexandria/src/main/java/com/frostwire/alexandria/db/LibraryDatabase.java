@@ -14,6 +14,7 @@ import java.util.List;
 public class LibraryDatabase {
 
     public static final int OBJECT_NOT_SAVED_ID = -1;
+    public static final int OBJECT_INVALID_ID = -2;
 
     public static final int LIBRARY_DATABASE_VERSION = 1;
 
@@ -21,6 +22,8 @@ public class LibraryDatabase {
     private final String _name;
 
     private final Connection _connection;
+
+    private boolean _closed;
 
     static {
         try {
@@ -43,7 +46,18 @@ public class LibraryDatabase {
         return _databaseFile;
     }
 
+    public String getName() {
+        return _name;
+    }
+
+    public boolean isClosed() {
+        return _closed;
+    }
+
     public synchronized List<List<Object>> query(String expression) {
+        if (isClosed()) {
+            return new ArrayList<List<Object>>();
+        }
 
         Statement statment = null;
         ResultSet resultSet = null;
@@ -68,11 +82,49 @@ public class LibraryDatabase {
         return new ArrayList<List<Object>>();
     }
 
-    public synchronized boolean update(String expression) {
+    /**
+     * This method is synchronized due to possible concurrent issues, specially
+     * during recently generated id retrieval.
+     * @param expression
+     * @return
+     */
+    public synchronized int update(String expression) {
+        if (isClosed()) {
+            return -1;
+        }
+
         return update(_connection, expression);
     }
 
+    /**
+     * This method is synchronized due to possible concurrent issues, specially
+     * during recently generated id retrieval.
+     * @param expression
+     * @return
+     */
+    public synchronized int insert(String expression) {
+        if (isClosed()) {
+            return OBJECT_INVALID_ID;
+        }
+
+        if (!expression.toUpperCase().startsWith("INSERT")) {
+            return OBJECT_INVALID_ID;
+        }
+
+        if (update(expression) != -1) {
+            return getIdentity();
+        }
+
+        return OBJECT_INVALID_ID;
+    }
+
     public void close() {
+        if (isClosed()) {
+            return;
+        }
+
+        _closed = true;
+
         try {
             Statement statement = _connection.createStatement();
             statement.execute("SHUTDOWN");
@@ -110,7 +162,7 @@ public class LibraryDatabase {
 
         //update(connection, "DROP TABLE PlaylistItems IF EXISTS CASCADE");
         update(connection,
-                "CREATE TABLE PlaylistItems (playlistItemId INTEGER IDENTITY, filePath VARCHAR(10000), fileName VARCHAR(500), fileSize BIGINT, fileExtension VARCHAR(10), trackTitle VARCHAR(500), time BIGINT, artistName VARCHAR(500), albumName VARCHAR(500), coverArtPath VARCHAR(10000))");
+                "CREATE TABLE PlaylistItems (playlistItemId INTEGER IDENTITY, filePath VARCHAR(10000), fileName VARCHAR(500), fileSize BIGINT, fileExtension VARCHAR(10), trackTitle VARCHAR(500), duration BIGINT, artistName VARCHAR(500), albumName VARCHAR(500), coverArtPath VARCHAR(10000))");
         update(connection, "CREATE INDEX idx_PlaylistItems_fileName ON PlaylistItems (fileName)");
         update(connection, "CREATE INDEX idx_PlaylistItems_fileExtension ON PlaylistItems (fileExtension)");
         update(connection, "CREATE INDEX idx_PlaylistItems_trackTitle ON PlaylistItems (trackTitle)");
@@ -152,16 +204,21 @@ public class LibraryDatabase {
         return result;
     }
 
-    boolean update(Connection connection, String expression) {
+    private int getIdentity() {
+        if (isClosed()) {
+            return OBJECT_INVALID_ID;
+        }
 
         Statement statment = null;
+        ResultSet resultSet = null;
 
         try {
-            statment = connection.createStatement();
+            statment = _connection.createStatement();
+            resultSet = statment.executeQuery("CALL IDENTITY()");
 
-            int i = statment.executeUpdate(expression);
+            resultSet.next();
 
-            return i != -1;
+            return resultSet.getInt(1);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -173,6 +230,28 @@ public class LibraryDatabase {
             }
         }
 
-        return false;
+        return OBJECT_INVALID_ID;
+    }
+
+    private int update(Connection connection, String expression) {
+
+        Statement statment = null;
+
+        try {
+            statment = connection.createStatement();
+
+            return statment.executeUpdate(expression);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (statment != null) {
+                try {
+                    statment.close();
+                } catch (SQLException e) {
+                }
+            }
+        }
+
+        return -1;
     }
 }

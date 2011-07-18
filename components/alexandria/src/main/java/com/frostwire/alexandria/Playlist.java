@@ -4,9 +4,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.frostwire.alexandria.db.LibraryDatabase;
+import com.frostwire.alexandria.db.PlaylistDB;
 
-
-public class Playlist {
+public class Playlist extends Entity<PlaylistDB> {
 
     private final Library _library;
 
@@ -16,6 +16,7 @@ public class Playlist {
     private List<PlaylistItem> _items;
 
     public Playlist(Library library, int id, String name) {
+        super(new PlaylistDB(library.db.getDatabase()));
         _library = library;
         _id = id;
         _name = name;
@@ -47,35 +48,21 @@ public class Playlist {
     }
 
     public void save() {
-        _library.save(this);
+        db.save(this);
     }
-    
+
     public void delete() {
-        _library.delete(this);
+        db.delete(this);
     }
 
     public void refresh() {
         _items.clear();
-        _items.addAll(_library.getLibraryItems(this));
+        _items.addAll(db.getLibraryItems(this));
     }
 
     public PlaylistItem newItem(String filePath, String fileName, long fileSize, String fileExtension, String trackTitle, long time, String artistName,
             String albumName, String coverArtPath) {
-        return new PlaylistItem(this, LibraryDatabase.OBJECT_NOT_SAVED_ID, filePath, fileName, fileSize, fileExtension, trackTitle, time, artistName, albumName,
-                coverArtPath);
-    }
-    
-    void save(PlaylistItem item) {
-        if (item.getPlaylist().getId() != _id) {
-            return;
-        }
-        _library.save(item);
-    }
-    
-    void delete(PlaylistItem item) {
-        if (item.getPlaylist().getId() != _id) {
-            return;
-        }
-        _library.delete(item);
+        return new PlaylistItem(this, LibraryDatabase.OBJECT_NOT_SAVED_ID, filePath, fileName, fileSize, fileExtension, trackTitle, time, artistName,
+                albumName, coverArtPath);
     }
 }

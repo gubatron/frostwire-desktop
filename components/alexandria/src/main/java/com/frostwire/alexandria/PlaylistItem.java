@@ -1,6 +1,9 @@
 package com.frostwire.alexandria;
 
-public class PlaylistItem {
+import com.frostwire.alexandria.db.LibraryDatabase;
+import com.frostwire.alexandria.db.PlaylistItemDB;
+
+public class PlaylistItem extends Entity<PlaylistItemDB> {
 
     private final Playlist _playlist;
 
@@ -10,13 +13,20 @@ public class PlaylistItem {
     private long _fileSize;
     private String _fileExtension;
     private String _trackTitle;
-    private long _time;
+    private long _duration;
     private String _artistName;
     private String _albumName;
     private String _coverArtPath;
 
-    public PlaylistItem(Playlist playlist, int id, String filePath, String fileName, long fileSize, String fileExtension, String trackTitle, long time,
+    public PlaylistItem(Playlist playlist) {
+        super(new PlaylistItemDB(playlist.db.getDatabase()));
+        _playlist = playlist;
+        _id = LibraryDatabase.OBJECT_INVALID_ID;
+    }
+
+    public PlaylistItem(Playlist playlist, int id, String filePath, String fileName, long fileSize, String fileExtension, String trackTitle, long duration,
             String artistName, String albumName, String coverArtPath) {
+        super(new PlaylistItemDB(playlist.db.getDatabase()));
         _playlist = playlist;
         _id = id;
         _filePath = filePath;
@@ -24,7 +34,7 @@ public class PlaylistItem {
         _fileSize = fileSize;
         _fileExtension = fileExtension;
         _trackTitle = trackTitle;
-        _time = time;
+        _duration = duration;
         _artistName = artistName;
         _albumName = albumName;
         _coverArtPath = coverArtPath;
@@ -82,12 +92,12 @@ public class PlaylistItem {
         _trackTitle = trackTitle;
     }
 
-    public long getTime() {
-        return _time;
+    public long getDuration() {
+        return _duration;
     }
 
-    public void setTime(long time) {
-        _time = time;
+    public void setDuration(long duration) {
+        _duration = duration;
     }
 
     public String getArtistName() {
@@ -113,12 +123,12 @@ public class PlaylistItem {
     public void setCoverArtPath(String coverArtPath) {
         _coverArtPath = coverArtPath;
     }
-    
+
     public void save() {
-        _playlist.save(this);
+        db.save(this);
     }
-    
+
     public void delete() {
-        _playlist.delete(this);
+        db.delete(this);
     }
 }
