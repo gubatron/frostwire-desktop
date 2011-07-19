@@ -2,6 +2,7 @@ package com.frostwire.gui.library;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -9,10 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.ToolTipManager;
@@ -26,9 +30,14 @@ import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.actions.LimeAction;
+import com.limegroup.gnutella.gui.options.ConfigureOptionsAction;
+import com.limegroup.gnutella.gui.options.OptionsConstructor;
 import com.limegroup.gnutella.gui.search.NamedMediaType;
 import com.limegroup.gnutella.gui.tables.DefaultMouseListener;
 import com.limegroup.gnutella.gui.tables.MouseObserver;
+import com.limegroup.gnutella.gui.themes.SkinMenuItem;
+import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.SharingSettings;
 
@@ -51,6 +60,10 @@ public class LibraryFiles extends JPanel {
     private DefaultListModel _model;
     private JList _list;
     private JScrollPane _scrollPane;
+    
+    private JPopupMenu _popup;
+    private Action refreshAction = new RefreshAction();
+    private Action exploreAction = new ExploreAction();
 
     public LibraryFiles() {
         setupUI();
@@ -59,12 +72,17 @@ public class LibraryFiles extends JPanel {
     public DirectoryHolder getSelectedDirectoryHolder() {
         return ((LibraryFilesListCell)_list.getSelectedValue()).getDirectoryHolder();
     }
+    
+    public void setInitialSelection() {
+        //_list.setSelectedValue(_finishedDownloadsCell, true);
+    }
 
     protected void setupUI() {
         setLayout(new BorderLayout());
 
         setupModel();
         setupList();
+        setupPopupMenu();
 
         _scrollPane = new JScrollPane(_list);
 
@@ -110,6 +128,30 @@ public class LibraryFiles extends JPanel {
         LibraryFilesListCell cell = new LibraryFilesListCell(holder);
         _model.addElement(cell);
     }
+    
+    private void setupPopupMenu() {
+        _popup = new SkinPopupMenu();
+        _popup.add(new SkinMenuItem(refreshAction));
+        _popup.add(new SkinMenuItem(exploreAction));
+        _popup.add(new SkinMenuItem(new ConfigureOptionsAction(OptionsConstructor.SHARED_KEY, I18n.tr("Configure Options"), I18n
+                .tr("You can configure the FrostWire\'s Options."))));
+    }
+    
+    private void refreshListCellSelectionFiles() {
+        LibraryFilesListCell node = (LibraryFilesListCell) _list.getSelectedValue();
+
+        if (node == null)
+            return;
+
+        LibraryMediator.instance().updateTableFiles(node.getDirectoryHolder());
+        
+        DirectoryHolder directoryHolder = getSelectedDirectoryHolder();
+        if (directoryHolder != null && directoryHolder instanceof MediaTypeSavedFilesDirectoryHolder) {
+            LibraryMediator.instance().showView(LibraryMediator.FILES_TABLE_KEY);
+            MediaTypeSavedFilesDirectoryHolder mtsfdh = (MediaTypeSavedFilesDirectoryHolder) directoryHolder;
+            BackgroundExecutorService.schedule(new SearchByMediaTypeRunnable(mtsfdh));
+        }
+    }
 
     private class LibraryFileCellRenderer extends SubstanceDefaultListCellRenderer {
 
@@ -150,12 +192,6 @@ public class LibraryFiles extends JPanel {
     
     private class LibraryFilesMouseObserver implements MouseObserver {
         public void handleMouseClick(MouseEvent e) {
-//            DirectoryHolder directoryHolder = getSelectedDirectoryHolder();
-//            if (directoryHolder != null && directoryHolder instanceof MediaTypeSavedFilesDirectoryHolder) {
-//                LibraryMediator.instance().showView(LibraryMediator.FILES_TABLE_KEY);
-//                MediaTypeSavedFilesDirectoryHolder mtsfdh = (MediaTypeSavedFilesDirectoryHolder) directoryHolder;
-//                BackgroundExecutorService.schedule(new SearchByMediaTypeRunnable(mtsfdh));
-//            }
         }
 
         /**
@@ -174,12 +210,8 @@ public class LibraryFiles extends JPanel {
          * Handles a trigger to the popup menu.
          */
         public void handlePopupMenu(MouseEvent e) {
-//            int row = getRowForLocation(e.getX(), e.getY());
-//            if (row == -1)
-//                return;
-//
-//            setSelectionRow(row);
-//            DIRECTORY_POPUP.show(this, e.getX(), e.getY());
+            _list.setSelectedIndex(_list.locationToIndex(e.getPoint()));
+            _popup.show(_list, e.getX(), e.getY());
         }
     }
 
@@ -187,21 +219,8 @@ public class LibraryFiles extends JPanel {
         public void valueChanged(ListSelectionEvent e) {
             if (e.getValueIsAdjusting()) {
                 return;
-            }
-            
-            LibraryFilesListCell node = (LibraryFilesListCell) _list.getSelectedValue();
-
-            if (node == null)
-                return;
-
-            LibraryMediator.instance().updateTableFiles(node.getDirectoryHolder());
-            
-            DirectoryHolder directoryHolder = getSelectedDirectoryHolder();
-            if (directoryHolder != null && directoryHolder instanceof MediaTypeSavedFilesDirectoryHolder) {
-                LibraryMediator.instance().showView(LibraryMediator.FILES_TABLE_KEY);
-                MediaTypeSavedFilesDirectoryHolder mtsfdh = (MediaTypeSavedFilesDirectoryHolder) directoryHolder;
-                BackgroundExecutorService.schedule(new SearchByMediaTypeRunnable(mtsfdh));
-            }
+            }            
+            refreshListCellSelectionFiles();
         }
     }
     
@@ -267,6 +286,54 @@ public class LibraryFiles extends JPanel {
             for (File directory : directories) {
                 search(directory, ignore);
             }
+        }
+    }
+    
+    private class RefreshAction extends AbstractAction {
+
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 412879927060208864L;
+
+        public RefreshAction() {
+            putValue(Action.NAME, I18n.tr("Refresh"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Refresh selected"));
+            putValue(LimeAction.ICON_NAME, "LIBRARY_REFRESH");
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            DirectoryHolder directoryHolder = getSelectedDirectoryHolder();
+            if (directoryHolder == null) {
+                return;
+            }
+            refreshListCellSelectionFiles();
+        }
+    }
+
+    private class ExploreAction extends AbstractAction {
+
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 2767346265174793478L;
+
+        public ExploreAction() {
+            putValue(Action.NAME, I18n.tr("Explore"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Open Library Folder"));
+            putValue(LimeAction.ICON_NAME, "LIBRARY_EXPLORE");
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            DirectoryHolder directoryHolder = getSelectedDirectoryHolder();
+            if (directoryHolder == null) {
+                return;
+            }
+            File directory = directoryHolder.getDirectory();
+            if (directory == null) {
+                directory = _finishedDownloadsHolder.getDirectory();
+            }
+            GUIMediator.launchExplorer(directory);        
         }
     }
 }

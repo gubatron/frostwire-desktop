@@ -25,6 +25,8 @@ public class LibraryMediator {
      * Singleton instance of this class.
      */
     private static LibraryMediator INSTANCE;
+    
+    private LibraryFiles _libraryFiles;
 
     /**
      * @return the <tt>LibraryMediator</tt> instance
@@ -49,6 +51,8 @@ public class LibraryMediator {
         DividerLocationSettingUpdater.install(splitPane, UISettings.UI_LIBRARY_MAIN_DIVIDER_LOCATION);
 
         MAIN_PANEL.add(splitPane);
+        
+        _libraryFiles.setInitialSelection();
     }
 
     public JComponent getComponent() {
@@ -79,8 +83,10 @@ public class LibraryMediator {
 
     private JComponent getLibraryLeftPanel() {
         JPanel panel = new JPanel(new BorderLayout());
+        
+        _libraryFiles = new LibraryFiles();
 
-        panel.add(new LibraryFiles(), BorderLayout.PAGE_START);
+        panel.add(_libraryFiles, BorderLayout.PAGE_START);
         panel.add(new LibraryPlaylists(), BorderLayout.CENTER);
         panel.add(new LibraryCoverArt(), BorderLayout.PAGE_END);
 
