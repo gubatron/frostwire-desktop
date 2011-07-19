@@ -29,6 +29,9 @@ public class LibraryFiles extends JPanel {
     private LibraryFilesListCell _finishedDownloadsCell;
     private SavedFilesDirectoryHolder _finishedDownloadsHolder;
 
+    private LibraryFilesListCell _torrentsCell;
+    private TorrentDirectoryHolder _torrentsHolder;
+
     private ListSelectionListener _listSelectionListener;
 
     private DefaultListModel _model;
@@ -56,12 +59,15 @@ public class LibraryFiles extends JPanel {
         _finishedDownloadsHolder = new SavedFilesDirectoryHolder(SharingSettings.TORRENT_DATA_DIR_SETTING, I18n.tr("Finished Downloads"));
         _finishedDownloadsCell = new LibraryFilesListCell(_finishedDownloadsHolder);
 
-        //        _model.addElement(I18n.tr("Finished Downloads"));
+        _torrentsHolder = new TorrentDirectoryHolder();
+        _torrentsCell = new LibraryFilesListCell(_torrentsHolder);
+
         //        _model.addElement(I18n.tr("Audio"));
         //        _model.addElement(I18n.tr("Video"));
         //        _model.addElement(I18n.tr("Programs"));
         //        _model.addElement(I18n.tr("Documents"));
         _model.addElement(_finishedDownloadsCell);
+        _model.addElement(_torrentsCell);
     }
 
     private void setupList() {
