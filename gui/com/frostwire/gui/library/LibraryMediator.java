@@ -55,6 +55,15 @@ public class LibraryMediator {
         }
         return MAIN_PANEL;
     }
+    
+    public void showView(String key) {
+        _tablesViewLayout.show(_tablesPanel, key);
+    }
+    
+    public void updateTableFiles(DirectoryHolder dirHolder) {
+        LibraryFilesTableMediator.instance().updateTableFiles(dirHolder);
+        showView(FILES_TABLE_KEY);
+    }
 
     private JComponent getLibraryLeftPanel() {
         JPanel panel = new JPanel(new BorderLayout());

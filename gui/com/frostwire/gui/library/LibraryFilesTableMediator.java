@@ -256,22 +256,22 @@ final class LibraryFilesTableMediator extends AbstractTableMediator<LibraryFiles
         TABLE.addMouseMotionListener(listener);
     }
 
-//    /**
-//     * Updates the Table based on the selection of the given table.
-//     * Perform lookups to remove any store files from the shared folder
-//     * view and to only display store files in the store view
-//     */
-//    void updateTableFiles(DirectoryHolder dirHolder) {
-//        if (dirHolder == null)
-//            return;
-//        clearTable();
-//        File[] files = dirHolder.getFiles();
-//
-//        for (int i = 0; i < files.length; i++) {
-//            addUnsorted(files[i]);
-//        }
-//        forceResort();
-//    }
+    /**
+     * Updates the Table based on the selection of the given table.
+     * Perform lookups to remove any store files from the shared folder
+     * view and to only display store files in the store view
+     */
+    void updateTableFiles(DirectoryHolder dirHolder) {
+        if (dirHolder == null)
+            return;
+        clearTable();
+        File[] files = dirHolder.getFiles();
+
+        for (int i = 0; i < files.length; i++) {
+            addUnsorted(files[i]);
+        }
+        forceResort();
+    }
 
     /**
      * Returns the <tt>File</tt> stored at the specified row in the list.
