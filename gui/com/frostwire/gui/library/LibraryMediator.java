@@ -2,6 +2,8 @@ package com.frostwire.gui.library;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.io.File;
+import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -14,8 +16,8 @@ import com.limegroup.gnutella.settings.UISettings;
 
 public class LibraryMediator {
     
-    private static final String FILES_TABLE_KEY = "LIBRARY_FILES_TABLE";
-    private static final String PLAYLISTS_TABLE_KEY = "LIBRARY_PLAYLISTS_TABLE";
+    public static final String FILES_TABLE_KEY = "LIBRARY_FILES_TABLE";
+    public static final String PLAYLISTS_TABLE_KEY = "LIBRARY_PLAYLISTS_TABLE";
 
     private static JPanel MAIN_PANEL;
 
@@ -63,6 +65,16 @@ public class LibraryMediator {
     public void updateTableFiles(DirectoryHolder dirHolder) {
         LibraryFilesTableMediator.instance().updateTableFiles(dirHolder);
         showView(FILES_TABLE_KEY);
+    }
+    
+    public void clearLibraryTable() {
+        LibraryFilesTableMediator.instance().clearTable();
+    }
+    
+    public void addFilesToLibraryTable(List<File> files) {
+        for (File file : files) {
+            LibraryFilesTableMediator.instance().add(file);
+        }
     }
 
     private JComponent getLibraryLeftPanel() {
