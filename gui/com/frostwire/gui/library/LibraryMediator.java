@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 import com.frostwire.alexandria.Library;
+import com.frostwire.alexandria.PlaylistItem;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.util.DividerLocationSettingUpdater;
@@ -31,7 +32,7 @@ public class LibraryMediator {
     
     private LibraryFiles _libraryFiles;
     
-    private Library _library;
+    private static Library LIBRARY;
 
     /**
      * @return the <tt>LibraryMediator</tt> instance
@@ -49,8 +50,6 @@ public class LibraryMediator {
     public LibraryMediator() {
         GUIMediator.setSplashScreenString(I18n.tr("Loading Library Window..."));
         
-        _library = new Library(LibrarySettings.LIBRARY_DATABASE);
-        
         getComponent(); // creates MAIN_PANEL
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, getLibraryLeftPanel(), getLibraryRightPanel());
@@ -66,8 +65,11 @@ public class LibraryMediator {
         _libraryFiles.setInitialSelection();
     }
     
-    public Library getLibrary() {
-        return _library;
+    public static Library getLibrary() {
+        if (LIBRARY == null) {
+            LIBRARY = new Library(LibrarySettings.LIBRARY_DATABASE);
+        }
+        return LIBRARY;
     }
 
     public JComponent getComponent() {
@@ -84,6 +86,11 @@ public class LibraryMediator {
     public void updateTableFiles(DirectoryHolder dirHolder) {
         LibraryFilesTableMediator.instance().updateTableFiles(dirHolder);
         showView(FILES_TABLE_KEY);
+    }
+    
+    public void updateTableItems(List<PlaylistItem> items) {
+        LibraryPlaylistsTableMediator.instance().updateTableItems(items);
+        showView(PLAYLISTS_TABLE_KEY);
     }
     
     public void clearLibraryTable() {

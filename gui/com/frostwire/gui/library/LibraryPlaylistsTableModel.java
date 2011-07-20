@@ -5,6 +5,7 @@ import java.io.File;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
+import com.frostwire.alexandria.PlaylistItem;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.gui.tables.ColoredCellImpl;
 import com.limegroup.gnutella.gui.tables.HashBasedDataLineModel;
@@ -15,7 +16,7 @@ import com.limegroup.gnutella.gui.tables.SizeHolder;
  * Uses HashBasedDataLineModel instead of BasicDataLineModel
  * for quicker access to row's based on the file.
  */
-final class LibraryPlaylistsTableModel extends HashBasedDataLineModel<LibraryPlaylistsTableDataLine, File> {
+final class LibraryPlaylistsTableModel extends HashBasedDataLineModel<LibraryPlaylistsTableDataLine, PlaylistItem> {
 
 	/**
      * 
@@ -37,7 +38,7 @@ final class LibraryPlaylistsTableModel extends HashBasedDataLineModel<LibraryPla
      * Creates a new LibraryTableDataLine
      */
     public LibraryPlaylistsTableDataLine createDataLine() {
-        return new LibraryPlaylistsTableDataLine(this);
+        return new LibraryPlaylistsTableDataLine();
     }    	
 
 	/**
@@ -63,7 +64,7 @@ final class LibraryPlaylistsTableModel extends HashBasedDataLineModel<LibraryPla
      * OVerride default so new ones get added to the end
      */
     @Override
-    public int add(File o) {
+    public int add(PlaylistItem o) {
         return add(o, getRowCount());
     }
 
@@ -72,32 +73,32 @@ final class LibraryPlaylistsTableModel extends HashBasedDataLineModel<LibraryPla
 	 * to include the FileDesc.  Necessary for changing pending status
 	 * to shared status.
 	 */
-    @Override
-	public int add(LibraryPlaylistsTableDataLine dl, int row) {
-	    File init = dl.getInitializeObject();
-	    if ( !contains(init) ) {
-	        return forceAdd(dl, row);
-	    } else {
-	        FileDesc fd = dl.getFileDesc();
-	        if ( fd != null ) {
-	            row = getRow(init);
-	            get( row ).setFileDesc(fd);
-	            fireTableRowsUpdated( row, row );
-	        }
-	        // we aren't going to use this dl, so clean it up.
-	        dl.cleanup();
-	    }
-	    return -1;
-    }
+//    @Override
+//	public int add(LibraryPlaylistsTableDataLine dl, int row) {
+//	    File init = dl.getInitializeObject();
+//	    if ( !contains(init) ) {
+//	        return forceAdd(dl, row);
+//	    } else {
+//	        FileDesc fd = dl.getFileDesc();
+//	        if ( fd != null ) {
+//	            row = getRow(init);
+//	            get( row ).setFileDesc(fd);
+//	            fireTableRowsUpdated( row, row );
+//	        }
+//	        // we aren't going to use this dl, so clean it up.
+//	        dl.cleanup();
+//	    }
+//	    return -1;
+//    }
     
     /**
      * Reinitializes a dataline that is using the given initialize object.
      */
     void reinitialize(File f) {
         if(contains(f)) {
-            int row = getRow(f);
-            get(row).initialize(f);
-            fireTableRowsUpdated(row, row);
+//            int row = getRow(f);
+//            get(row).initialize(f);
+//            fireTableRowsUpdated(row, row);
         }
     }
     
@@ -106,10 +107,10 @@ final class LibraryPlaylistsTableModel extends HashBasedDataLineModel<LibraryPla
      */
     void reinitialize(File old, File now) {
         if(contains(old)) {
-            int row = getRow(old);
-            get(row).initialize(now);
-            initializeObjectChanged(old, now);
-            fireTableRowsUpdated(row, row);
+//            int row = getRow(old);
+//            get(row).initialize(now);
+//            initializeObjectChanged(old, now);
+//            fireTableRowsUpdated(row, row);
         }
     }
 
@@ -134,7 +135,7 @@ final class LibraryPlaylistsTableModel extends HashBasedDataLineModel<LibraryPla
 	 * @return  The <code>File</code> object stored at the specified row
 	 */
 	File getFile(int row) {
-	    return get(row).getInitializeObject();
+	    return null;//get(row).getInitializeObject();
 	}
 
 	/**
@@ -164,7 +165,7 @@ final class LibraryPlaylistsTableModel extends HashBasedDataLineModel<LibraryPla
     }
 
 	FileDesc getFileDesc(int row) {
-	    return get(row).getFileDesc();
+	    return null;//get(row).getFileDesc();
 	}
 	
 	/**

@@ -1,292 +1,240 @@
 package com.frostwire.gui.library;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
-import javax.swing.Icon;
-
-import com.limegroup.gnutella.FileDesc;
-import com.limegroup.gnutella.gui.GUIMediator;
+import com.frostwire.alexandria.PlaylistItem;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.dnd.FileTransfer;
 import com.limegroup.gnutella.gui.tables.AbstractDataLine;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
-import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 
-/**
- * This class acts as a single line containing all
- * the necessary Library info.
- * @author Sam Berlin
- */
-public final class LibraryPlaylistsTableDataLine extends AbstractDataLine<File> implements FileTransfer {
-
-    /**
-     * Whether or not tooltips will display XML info.
-     */
-    private static boolean _allowXML;
-
-    /**
-     * The schemas available
-     */
-    private static String[] _schemas;
+public final class LibraryPlaylistsTableDataLine extends AbstractDataLine<PlaylistItem> implements FileTransfer {
     
     /**
-     * Constant for the column with the icon of the file.
+     * Name column
      */
-    static final int ICON_IDX = 0;
-    
-	/**
-	 * Constant for the column with the name of the file.
-	 */
-	static final int NAME_IDX = 1;
-	
-	/**
-	 * Constant for the column storing the size of the file.
-	 */
-	static final int SIZE_IDX = 2;
-	
-	/**
-	 * Constant for the column storing the file type (extension or more
-	 * more general type) of the file.
-	 */
-	static final int TYPE_IDX = 3;
-	
-	/**
-	 * Constant for the column storing the file's path
-	 */
-	static final int PATH_IDX = 4;
+    static final int NAME_IDX = 0;
+    private static final LimeTableColumn NAME_COLUMN =
+        new LimeTableColumn(NAME_IDX, "PLAYLIST_TABLE_NAME", I18n.tr("Name"),
+                700, true, PlaylistItemName.class);
     
     /**
-     * Constant for the column indicating the mod time of a file.
+     * Artist column
      */
-    static final int MODIFICATION_TIME_IDX = 5;
+    static final int ARTIST_IDX = 1;
+    private static final LimeTableColumn ARTIST_COLUMN =
+        new LimeTableColumn(ARTIST_IDX, "PLAYLIST_TABLE_ARTIST", I18n.tr("Artist"),
+                 80, false, PlaylistItemProperty.class);
+    /**
+     * Title column
+     */
+    static final int TITLE_IDX = 2;
+    private static final LimeTableColumn TITLE_COLUMN =
+        new LimeTableColumn(TITLE_IDX, "PLAYLIST_TABLE_TITLE", I18n.tr("Title"),
+                 80, false, PlaylistItemProperty.class);
     
     /**
-     * Add the columns to static array _in the proper order_.
-     * The *_IDX variables above need to match the corresponding
-     * column's position in this array.
+     * Length column (in hour:minutes:seconds format)
      */
-    private static LimeTableColumn[] ltColumns;
-
-	/** Variable for the name */
-	private String _name;
-
-	/** Variable for the type */
-	private String _type;
-
-	/** Variable for the size */
-	private long _size;
-	
-	/** Cached SizeHolder */
-	private SizeHolder _sizeHolder;
-
-	/** Variable to hold the file descriptor */
-	private FileDesc _fileDesc;
-
-	/** Variable for the path */
-	private String _path;
-	
-	/**
-	 * The model this is being displayed on
-	 */
-	private final LibraryPlaylistsTableModel _model;
-	
-	/**
-	 * Whether or not the icon has been loaded.
-	 */
-	private boolean _iconLoaded = false;
-	
-	/**
-	 * Whether or not the icon has been scheduled to load.
-	 */
-	private boolean _iconScheduledForLoad = false;
-
-	public LibraryPlaylistsTableDataLine(LibraryPlaylistsTableModel ltm) {
-		super();
-		_model = ltm;
-	}
-
-	public FileDesc getFileDesc() { return _fileDesc; }
-
-	public int getColumnCount() { return getLimeTableColumns().length; }
-
-	/**
-	 * Initialize the object.
-	 * It will fail if not given a FileDesc or a File
-	 * (File is retained for compatability with the Incomplete folder)
-	 */
-    public void initialize(File file) {
-        super.initialize(file);
-        
-        String fullPath = file.getPath();
-        try {
-            fullPath = file.getCanonicalPath();
-        } catch(IOException ioe) {}
-        
-		_name = initializer.getName();
-		_type = "";
-        if (!file.isDirectory()) {
-        	//_isDirectory = false;
-            int index = _name.lastIndexOf(".");
-            int index2 = fullPath.lastIndexOf(File.separator);
-            _path = fullPath.substring(0,index2);
-            if (index != -1 && index != 0) {
-                _type = _name.substring(index+1);
-                _name = _name.substring(0, index);
-            }
-        } else {
-        	_path = fullPath;
-        	//_isDirectory = true;
-        }
-
-        // only load file sizes, do nothing for directories
-        // directories implicitly set SizeHolder to null and display nothing
-        if( initializer.isFile() ) {
-            long oldSize = _size; 
-            _size = initializer.length();
-            if (oldSize != _size)
-                _sizeHolder = new SizeHolder(_size);
-        }
-    }
-    
-    void setFileDesc(FileDesc fd) {
-        initialize(fd.getFile());
-        _fileDesc = fd;
-    }
+    static final int LENGTH_IDX = 3;
+    private static final LimeTableColumn LENGTH_COLUMN =
+        new LimeTableColumn(LENGTH_IDX, "PLAYLIST_TABLE_LENGTH", I18n.tr("Length"),
+                150, true, PlaylistItemProperty.class);
     
     /**
-     * Returns the file of this data line.
+     * Album column
      */
-    public File getFile() {
-        return initializer;
+    static final int ALBUM_IDX = 4;
+    private static final LimeTableColumn ALBUM_COLUMN =
+        new LimeTableColumn(ALBUM_IDX, "PLAYLIST_TABLE_ALBUM", I18n.tr("Album"),
+                120, false, PlaylistItemProperty.class);
+       
+    /**
+     * Track column
+     */
+    static final int TRACK_IDX = 5;
+    private static final LimeTableColumn TRACK_COLUMN =
+        new LimeTableColumn(TRACK_IDX, "PLAYLIST_TABLE_TRACK", I18n.tr("Track"),
+                20, false, PlaylistItemProperty.class);
+    
+    
+    /**
+     * Bitrate column info
+     */
+    static final int BITRATE_IDX = 6;
+    private static final LimeTableColumn BITRATE_COLUMN =
+        new LimeTableColumn(BITRATE_IDX, "PLAYLIST_TABLE_BITRATE",I18n.tr("Bitrate"),
+                60, true, PlaylistItemProperty.class);
+    
+    /**
+     * Comment column info
+     */
+    static final int COMMENT_IDX = 7;
+    private static final LimeTableColumn COMMENT_COLUMN =
+        new LimeTableColumn(COMMENT_IDX, "PLAYLIST_TABLE_COMMENT", I18n.tr("Comment"),
+                20, false, PlaylistItemProperty.class);
+    
+    /**
+     * Genre column
+     */
+    static final int GENRE_IDX = 8;
+    private static final LimeTableColumn GENRE_COLUMN =
+        new LimeTableColumn(GENRE_IDX, "PLAYLIST_TABLE_GENRE", I18n.tr("Genre"),
+                 80, false, PlaylistItemProperty.class);
+           
+    /**
+     * Size column (in bytes)
+     */
+    static final int SIZE_IDX = 9;
+    private static final LimeTableColumn SIZE_COLUMN =
+        new LimeTableColumn(SIZE_IDX, "PLAYLIST_TABLE_SIZE", I18n.tr("Size"),
+                80, false, PlaylistItemProperty.class);
+    
+    
+    /**
+     * TYPE column
+     */
+    static final int TYPE_IDX = 10;
+    private static final LimeTableColumn TYPE_COLUMN = 
+        new LimeTableColumn(TYPE_IDX, "PLAYLIST_TABLE_TYPE", I18n.tr("Type"),
+                 40, false, PlaylistItemProperty.class);
+    
+    /**
+     * YEAR column
+     */
+    static final int YEAR_IDX = 11;
+    private static final LimeTableColumn YEAR_COLUMN =
+        new LimeTableColumn(YEAR_IDX, "PLAYLIST_TABLE_YEAR", I18n.tr("Year"),
+                 30, false, PlaylistItemProperty.class);
+    
+    /**
+     * Total number of columns
+     */
+    static final int NUMBER_OF_COLUMNS = 12;
+
+    /**
+     * Number of columns
+     */
+    public int getColumnCount() { return NUMBER_OF_COLUMNS; }
+
+    /**
+     * Holder for painting the filename/buttons in a single cell
+     */
+    private PlaylistItemName name;
+    
+    /**
+     *  Coverts the size of the PlayListItem into readable form postfixed with
+     *  Kb or Mb
+     */
+    private SizeHolder holder;
+    
+
+    /**
+     * Sets up the dataline for use with the playlist.
+     */
+    public void initialize(PlaylistItem item) {
+        super.initialize(item);
+
+        name = new PlaylistItemName(this);
+//        if(item.getgetProperty(PlayListItem.SIZE) != null )
+//            holder = new SizeHolder(Integer.parseInt(item.getProperty(PlayListItem.SIZE)));
+//        else
+            holder = new SizeHolder(0);
     }
 
-	/**
-	 * Returns the object stored in the specified cell in the table.
-	 *
-	 * @param idx  The column of the cell to access
-	 *
-	 * @return  The <code>Object</code> stored at the specified "cell" in
-	 *          the list
-	 */
-	public Object getValueAt(int idx) {
-	    switch (idx) {
-	    case ICON_IDX:
-	    	boolean iconAvailable = IconManager.instance().isIconForFileAvailable(initializer);
-	        if(!iconAvailable && !_iconScheduledForLoad) {
-	            _iconScheduledForLoad = true;
-                BackgroundExecutorService.schedule(new Runnable() {
-                    public void run() {
-                        GUIMediator.safeInvokeAndWait(new Runnable() {
-                            public void run() {
-                                IconManager.instance().getIconForFile(initializer);
-                                _iconLoaded = true;
-                                _model.refresh();
-                            }
-                        });
-                    }
-                });
-	            return null;
-            } else if(_iconLoaded || iconAvailable) {
-	            return IconManager.instance().getIconForFile(initializer);
-            } else {
-                return null;
-            }
-	    case NAME_IDX:
-	        return _name;	                    
-	    case SIZE_IDX:
-	        return _sizeHolder == null ? "" : _sizeHolder.toString();
-	    case TYPE_IDX:
-	        return _type;
-	    case PATH_IDX:
-	        return _path;
-        case MODIFICATION_TIME_IDX:
-			// it's cheaper to use the cached value if available,
-			// hope it's always uptodate
-			if (_fileDesc != null) {
-				return new Date(_fileDesc.lastModified());
-			}
-			return new Date(initializer.lastModified());
-	    }
-	    return null;
-	}
-
-	public LimeTableColumn getColumn(int idx) {
-	    return getLimeTableColumns()[idx];
-	}
-	
-	public boolean isClippable(int idx) {
-	    switch(idx) {
-        case ICON_IDX:
-            return false;
-        default:
-            return true;
+    /**
+     * Returns the value for the specified index.
+     */
+    public Object getValueAt(int idx) {
+        boolean playing = false;//MediaPlayerComponent.getInstance().getCurrentSong() == initializer;
+        switch(idx) {
+            case ALBUM_IDX:
+                return new PlaylistItemProperty(initializer.getAlbumName(), playing);
+            case ARTIST_IDX:
+                return new PlaylistItemProperty(initializer.getArtistName(), playing);
+            case BITRATE_IDX:
+                return new PlaylistItemProperty("", playing);//initializer.getProperty(PlayListItem.BITRATE, ""), playing);
+            case COMMENT_IDX:
+                return new PlaylistItemProperty("", playing);//(initializer.getProperty(PlayListItem.COMMENT), playing);
+            case GENRE_IDX:
+                return new PlaylistItemProperty("", playing);//initializer.getProperty(PlayListItem.GENRE),playing);
+            case LENGTH_IDX:
+                return new PlaylistItemProperty(String.valueOf(initializer.getDuration()), playing);
+            case NAME_IDX:
+                return name;
+            case SIZE_IDX:
+                return new PlaylistItemProperty(holder.toString(), playing);
+            case TITLE_IDX:
+                return new PlaylistItemProperty(initializer.getTrackTitle(), playing);
+            case TRACK_IDX:
+                return new PlaylistItemProperty("", playing);//(initializer.getProperty(PlayListItem.TRACK, ""), playing);
+            case TYPE_IDX:
+                return new PlaylistItemProperty("", playing);//(initializer.getProperty(PlayListItem.TYPE), playing);
+            case YEAR_IDX:
+                return new PlaylistItemProperty("", playing);//(initializer.getProperty(PlayListItem.YEAR), playing);
         }
+        return null;
+    }
+
+    /**
+     * Return the table column for this index.
+     */
+    public LimeTableColumn getColumn(int idx) {
+        switch(idx) {
+            case ALBUM_IDX:         return ALBUM_COLUMN;
+            case ARTIST_IDX:        return ARTIST_COLUMN;
+            case BITRATE_IDX:       return BITRATE_COLUMN;
+            case COMMENT_IDX:       return COMMENT_COLUMN;
+            case GENRE_IDX:         return GENRE_COLUMN;
+            case LENGTH_IDX:        return LENGTH_COLUMN;
+            case NAME_IDX:          return NAME_COLUMN;
+            case SIZE_IDX:          return SIZE_COLUMN;
+            case TITLE_IDX:         return TITLE_COLUMN;
+            case TRACK_IDX:         return TRACK_COLUMN;
+            case TYPE_IDX:          return TYPE_COLUMN;
+            case YEAR_IDX:          return YEAR_COLUMN;
+        }
+        return null;
+    }
+    
+    public boolean isClippable(int idx) {
+        return false;
     }
     
     public int getTypeAheadColumn() {
         return NAME_IDX;
     }
 
-	public boolean isDynamic(int idx) {
-	    return false;
-	}
+    public boolean isDynamic(int idx) {
+        return false;
+    }
+    
+    /**
+     * @return the PlayListItem for this table row
+     */
+    public PlaylistItem getPlayListItem() {
+        return initializer;
+    }
+    
+    /**
+     * @return the file name of the song
+     */
+    public String getSongName() {
+        return initializer.getTrackTitle();
+    }
+    
+    /**
+     * Creates a tool tip for each row of the playlist. Tries to grab any information
+     * that was extracted from the Meta-Tag or passed in to the PlaylistItem as 
+     * a property map
+     */
+    public String[] getToolTipArray(int col) {
+        return new String[0];//initializer.getToolTips();
+    }
 
-	public String[] getToolTipArray(int col) {
-        // if XML isn't finished loading, no schemas exist,
-	    // we don't have a meta file manager, or we don't
-	    // have a FileDesc, get out of here.
-	    if ( !_allowXML
-	         || _schemas == null || _schemas.length == 0
-	         || _fileDesc == null
-	        ) return null;
-
-        // Dynamically add the information.
-        List<String> allData = new LinkedList<String>();        
-//        for(LimeXMLDocument doc : _fileDesc.getLimeXMLDocuments())
-//            allData.addAll(XMLUtils.getDisplayList(doc));
-
-        
-        if ( !allData.isEmpty() ) {
-            // if it had meta-data, display the filename in the tooltip also.
-            allData.add(0, _name);
-            return allData.toArray(new String[allData.size()]);
-	    } else {
-	        return null;
-	        //return new String[] { "No meta-data exists.", "Click 'annotate' to add some." };
-	    }
-	}
-	
-	private LimeTableColumn[] getLimeTableColumns() {
-	    if (ltColumns == null) {
-	        LimeTableColumn[] temp =
-	        {
-	            new LimeTableColumn(ICON_IDX, "LIBRARY_TABLE_ICON", I18n.tr("Icon"),
-	                    GUIMediator.getThemeImage("question_mark"), 18, true, Icon.class),
-	            
-	            new LimeTableColumn(NAME_IDX, "LIBRARY_TABLE_NAME", I18n.tr("Name"),
-	                    239, true, String.class),
-	            
-	            new LimeTableColumn(SIZE_IDX, "LIBRARY_TABLE_SIZE", I18n.tr("Size"),
-	                    62, true, String.class),
-
-	            new LimeTableColumn(TYPE_IDX, "LIBRARY_TABLE_TYPE", I18n.tr("Type"),
-	                    48, true, String.class),
-	                                                    
-	            new LimeTableColumn(PATH_IDX, "LIBRARY_TABLE_PATH", I18n.tr("Path"),
-	                    108, true, String.class),
-
-	            new LimeTableColumn(MODIFICATION_TIME_IDX, 
-	                    "LIBRARY_TABLE_MODIFICATION_TIME", I18n.tr("Last Modified"),
-	                    20, false, Date.class),
-	        };
-	        ltColumns = temp;
-	    }
-	    return ltColumns;
-	}
+    public File getFile() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

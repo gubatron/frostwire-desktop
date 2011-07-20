@@ -63,6 +63,10 @@ public class Playlist extends Entity<PlaylistDB> {
     public List<PlaylistItem> getItems() {
         return _items;
     }
+    
+    public boolean isDefault() {
+        return _name.equals(LibraryDatabase.DEFAULT_PLAYLIST_NAME);
+    }
 
     public void save() {
         db.save(this);

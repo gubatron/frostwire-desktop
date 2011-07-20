@@ -161,7 +161,7 @@ public class LibraryDatabase {
         update(connection, "CREATE TABLE Library (libraryId INTEGER IDENTITY, name VARCHAR(500), version INTEGER)");
 
         //update(connection, "DROP TABLE Playlists IF EXISTS CASCADE");
-        update(connection, "CREATE TABLE Playlists (playlistId INTEGER IDENTITY, name VARCHAR(500))");
+        update(connection, "CREATE TABLE Playlists (playlistId INTEGER IDENTITY, name VARCHAR(500), description VARCHAR(10000))");
         update(connection, "CREATE INDEX idx_Playlists_name ON Playlists (name)");
 
         //update(connection, "DROP TABLE PlaylistItems IF EXISTS CASCADE");

@@ -29,6 +29,7 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
+import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.gui.ButtonRow;
@@ -40,7 +41,6 @@ import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.MessageService;
 import com.limegroup.gnutella.gui.MultiLineLabel;
 import com.limegroup.gnutella.gui.actions.LimeAction;
-import com.limegroup.gnutella.gui.actions.SearchAction;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.MulticastTransferHandler;
 import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
@@ -52,14 +52,13 @@ import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.util.GUILauncher;
 import com.limegroup.gnutella.gui.util.GUILauncher.LaunchableProvider;
-import com.limegroup.gnutella.util.QueryUtils;
 
 /**
  * This class wraps the JTable that displays files in the library,
  * controlling access to the table and the various table properties.
  * It is the Mediator to the Table part of the Library display.
  */
-final class LibraryPlaylistsTableMediator extends AbstractTableMediator<LibraryPlaylistsTableModel, LibraryPlaylistsTableDataLine, File> {
+final class LibraryPlaylistsTableMediator extends AbstractTableMediator<LibraryPlaylistsTableModel, LibraryPlaylistsTableDataLine, PlaylistItem> {
 
     /**
      * Variables so the PopupMenu & ButtonRow can have the same listeners
@@ -168,10 +167,10 @@ final class LibraryPlaylistsTableMediator extends AbstractTableMediator<LibraryP
         JMenu menu = new SkinMenu(I18n.tr("Search"));
 
         if (dl != null) {
-            File f = dl.getInitializeObject();
-            String keywords = QueryUtils.createQueryString(f.getName());
-            if (keywords.length() > 2)
-                menu.add(new SkinMenuItem(new SearchAction(keywords)));
+//            File f = dl.getInitializeObject();
+//            String keywords = QueryUtils.createQueryString(f.getName());
+//            if (keywords.length() > 2)
+//                menu.add(new SkinMenuItem(new SearchAction(keywords)));
 
             //    		LimeXMLDocument doc = dl.getXMLDocument();
             //    		if(doc != null) {
@@ -261,17 +260,15 @@ final class LibraryPlaylistsTableMediator extends AbstractTableMediator<LibraryP
      * Perform lookups to remove any store files from the shared folder
      * view and to only display store files in the store view
      */
-//    void updateTableFiles(DirectoryHolder dirHolder) {
-//        if (dirHolder == null)
-//            return;
-//        clearTable();
-//        File[] files = dirHolder.getFiles();
-//
-//        for (int i = 0; i < files.length; i++) {
-//            addUnsorted(files[i]);
-//        }
-//        forceResort();
-//    }
+    void updateTableItems(List<PlaylistItem> items) {
+        if (items == null)
+            return;
+        clearTable();
+        for (int i = 0; i < items.size(); i++) {
+            addUnsorted(items.get(i));
+        }
+        forceResort();
+    }
 
     /**
      * Returns the <tt>File</tt> stored at the specified row in the list.
@@ -422,7 +419,7 @@ final class LibraryPlaylistsTableMediator extends AbstractTableMediator<LibraryP
             // removeOptions > 2 => OS offers trash options
             boolean removed = FileUtils.delete(file, removeOptions.length > 2 && option == 0 /* "move to trash" option index */);
             if (removed) {
-                DATA_MODEL.remove(DATA_MODEL.getRow(file));
+                //DATA_MODEL.remove(DATA_MODEL.getRow(file));
             } else {
                 undeletedFileNames.add(getCompleteFileName(file));
             }
@@ -615,12 +612,12 @@ final class LibraryPlaylistsTableMediator extends AbstractTableMediator<LibraryP
     }
 
     public boolean setFileSelected(File file) {
-        int i = DATA_MODEL.getRow(file);
-        if (i != -1) {
-            TABLE.setSelectedRow(i);
-            TABLE.ensureSelectionVisible();
-            return true;
-        }
+//        int i = DATA_MODEL.getRow(file);
+//        if (i != -1) {
+//            TABLE.setSelectedRow(i);
+//            TABLE.ensureSelectionVisible();
+//            return true;
+//        }
         return false;
     }
 

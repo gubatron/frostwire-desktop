@@ -103,7 +103,7 @@ public class LibraryFiles extends JPanel {
         _listSelectionListener = new LibraryFilesSelectionListener();
 
         _list = new JList(_model);
-        _list.setCellRenderer(new LibraryFileCellRenderer());
+        _list.setCellRenderer(new LibraryFilesCellRenderer());
         _list.addMouseListener(new DefaultMouseListener(_listMouseObserver));
         _list.addListSelectionListener(_listSelectionListener);
         _list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -132,7 +132,7 @@ public class LibraryFiles extends JPanel {
                 .tr("You can configure the FrostWire\'s Options."))));
     }
     
-    private void refreshListCellSelectionFiles() {
+    private void refreshListCellSelection() {
         LibraryFilesListCell node = (LibraryFilesListCell) _list.getSelectedValue();
 
         if (node == null)
@@ -148,7 +148,7 @@ public class LibraryFiles extends JPanel {
         }
     }
 
-    private class LibraryFileCellRenderer extends SubstanceDefaultListCellRenderer {
+    private class LibraryFilesCellRenderer extends SubstanceDefaultListCellRenderer {
 
         private static final long serialVersionUID = 4566657973124277716L;
 
@@ -214,7 +214,7 @@ public class LibraryFiles extends JPanel {
             if (e.getValueIsAdjusting()) {
                 return;
             }            
-            refreshListCellSelectionFiles();
+            refreshListCellSelection();
         }
     }
     
@@ -301,7 +301,7 @@ public class LibraryFiles extends JPanel {
             if (directoryHolder == null) {
                 return;
             }
-            refreshListCellSelectionFiles();
+            refreshListCellSelection();
         }
     }
 
