@@ -12,6 +12,7 @@ public class Playlist extends Entity<PlaylistDB> {
 
     private int _id;
     private String _name;
+    private String _description;
 
     private List<PlaylistItem> _items;
 
@@ -22,11 +23,12 @@ public class Playlist extends Entity<PlaylistDB> {
         _items = new LinkedList<PlaylistItem>();
     }
 
-    public Playlist(Library library, int id, String name) {
+    public Playlist(Library library, int id, String name, String description) {
         super(new PlaylistDB(library.db.getDatabase()));
         _library = library;
         _id = id;
         _name = name;
+        _description = description;
         _items = new LinkedList<PlaylistItem>();
     }
 
@@ -48,6 +50,14 @@ public class Playlist extends Entity<PlaylistDB> {
 
     public void setName(String name) {
         _name = name;
+    }
+    
+    public String getDescription() {
+        return _description;
+    }
+    
+    public void setDescription(String description) {
+        _description = description;
     }
 
     public List<PlaylistItem> getItems() {

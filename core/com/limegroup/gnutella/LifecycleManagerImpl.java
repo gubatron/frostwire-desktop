@@ -225,8 +225,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
         // save frostwire.props & other settings
         SettingsGroupManager.instance().save();
 		
-		cleanupPreviewFiles();
-        
         AzureusStarter.getAzureusCore().stop();
         
         shutdownDone.set(true);
@@ -350,11 +348,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
         LOG.trace("Started manual GC thread.");
     }
 
-    /** Deletes all preview files. */
-    private void cleanupPreviewFiles() {
-        
-    }
-
     public void addListener(EventListener<LifeCycleEvent> listener) {
         listenerList.addListener(listener);
     }
@@ -362,5 +355,4 @@ public class LifecycleManagerImpl implements LifecycleManager {
     public boolean removeListener(EventListener<LifeCycleEvent> listener) {
         return listenerList.removeListener(listener);
     }
-    
 }

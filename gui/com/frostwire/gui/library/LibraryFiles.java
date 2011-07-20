@@ -165,7 +165,6 @@ public class LibraryFiles extends JPanel {
             }
             return this;
         }
-
     }
 
     private class LibraryFilesListCell {

@@ -13,7 +13,7 @@ public class PlaylistDB extends ObjectDB<Playlist> {
     }
 
     public void fill(Playlist obj) {
-        List<List<Object>> result = db.query("SELECT playlistId, name, FROM Playlists WHERE playlistId = " + obj.getId());
+        List<List<Object>> result = db.query("SELECT playlistId, name, description, FROM Playlists WHERE playlistId = " + obj.getId());
         if (result.size() > 0) {
             List<Object> row = result.get(0);
             fill(row, obj);
@@ -23,9 +23,11 @@ public class PlaylistDB extends ObjectDB<Playlist> {
     public void fill(List<Object> row, Playlist obj) {
         int id = (Integer) row.get(0);
         String name = (String) row.get(1);
+        String description = (String) row.get(2);
 
         obj.setId(id);
         obj.setName(name);
+        obj.setDescription(description);
     }
 
     public void save(Playlist obj) {
@@ -34,11 +36,11 @@ public class PlaylistDB extends ObjectDB<Playlist> {
         }
 
         if (obj.getId() == LibraryDatabase.OBJECT_NOT_SAVED_ID) {
-            int id = db.insert("INSERT INTO Playlists (name) VALUES ('" + obj.getName() + "')");
+            int id = db.insert("INSERT INTO Playlists (name, description) VALUES ('" + obj.getName() + "', '" + obj.getDescription() + "')");
             obj.setId(id);
         } else {
             db.update("DELETE FROM PlaylistsPlaylistItems WHERE playlistId = " + obj.getId());
-            db.update("UPDATE Playlists SET name = '" + obj.getName() + "' WHERE playlistId = " + obj.getId());
+            db.update("UPDATE Playlists SET name = '" + obj.getName() + "', description = '" + obj.getDescription() + "' WHERE playlistId = " + obj.getId());
         }
 
         for (PlaylistItem item : obj.getItems()) {

@@ -65,6 +65,10 @@ public class LibraryMediator {
         
         _libraryFiles.setInitialSelection();
     }
+    
+    public Library getLibrary() {
+        return _library;
+    }
 
     public JComponent getComponent() {
         if (MAIN_PANEL == null) {

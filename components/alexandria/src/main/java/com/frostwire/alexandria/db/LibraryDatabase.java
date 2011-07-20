@@ -17,6 +17,7 @@ public class LibraryDatabase {
     public static final int OBJECT_INVALID_ID = -2;
     
     public static final String DEFAULT_PLAYLIST_NAME = "Default";
+    public static final String DEFAULT_PLAYLIST_DESCRIPTION = "Default playlist";
 
     public static final int LIBRARY_DATABASE_VERSION = 1;
 
@@ -120,7 +121,7 @@ public class LibraryDatabase {
         return OBJECT_INVALID_ID;
     }
 
-    public void close() {
+    public synchronized void close() {
         if (isClosed()) {
             return;
         }
@@ -156,6 +157,7 @@ public class LibraryDatabase {
 
         // STRUCTURE CREATION
 
+        //update(connection, "DROP TABLE Library IF EXISTS CASCADE");
         update(connection, "CREATE TABLE Library (libraryId INTEGER IDENTITY, name VARCHAR(500), version INTEGER)");
 
         //update(connection, "DROP TABLE Playlists IF EXISTS CASCADE");
@@ -176,7 +178,7 @@ public class LibraryDatabase {
 
         // INITIAL DATA
         update(connection, "INSERT INTO Library (name , version) VALUES ('" + name + "', " + LIBRARY_DATABASE_VERSION + ")");
-        update(connection, "INSERT INTO Playlists (name) VALUES ('" + DEFAULT_PLAYLIST_NAME + "')");
+        update(connection, "INSERT INTO Playlists (name, description) VALUES ('" + DEFAULT_PLAYLIST_NAME + "', '" + DEFAULT_PLAYLIST_DESCRIPTION + "')");
 
         return connection;
     }

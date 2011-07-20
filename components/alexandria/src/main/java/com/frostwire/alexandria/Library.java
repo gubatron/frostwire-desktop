@@ -57,11 +57,11 @@ public class Library extends Entity<LibraryDB> {
         return getPlaylist(LibraryDatabase.DEFAULT_PLAYLIST_NAME);
     }
 
-    public Playlist newPlaylist(String name) {
+    public Playlist newPlaylist(String name, String description) {
         if (name.equals(LibraryDatabase.DEFAULT_PLAYLIST_NAME)) {
             return getDefaultPlaylist();
         } else {
-            return new Playlist(this, LibraryDatabase.OBJECT_NOT_SAVED_ID, name);
+            return new Playlist(this, LibraryDatabase.OBJECT_NOT_SAVED_ID, name, description);
         }
     }
 
@@ -78,7 +78,7 @@ public class Library extends Entity<LibraryDB> {
         File dbFile = new File("/home/atorres/Downloads/testalex/testdb");
         Library library = new Library(dbFile);
 
-        Playlist newPlaylist = library.newPlaylist("testPL");
+        Playlist newPlaylist = library.newPlaylist("testPL", "test");
 
         newPlaylist.save();
 
