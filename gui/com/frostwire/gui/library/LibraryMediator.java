@@ -2,6 +2,7 @@ package com.frostwire.gui.library;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Dimension;
 import java.io.File;
 import java.util.List;
 
@@ -48,6 +49,9 @@ public class LibraryMediator {
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, getLibraryLeftPanel(), getLibraryRightPanel());
         splitPane.setContinuousLayout(true);
         splitPane.setOneTouchExpandable(true);
+
+        splitPane.setDividerSize(2);
+        
         DividerLocationSettingUpdater.install(splitPane, UISettings.UI_LIBRARY_MAIN_DIVIDER_LOCATION);
 
         MAIN_PANEL.add(splitPane);
@@ -89,7 +93,10 @@ public class LibraryMediator {
         panel.add(_libraryFiles, BorderLayout.PAGE_START);
         panel.add(new LibraryPlaylists(), BorderLayout.CENTER);
         panel.add(new LibraryCoverArt(), BorderLayout.PAGE_END);
-
+        
+        
+        Dimension size = panel.getSize();
+        panel.setMinimumSize(new Dimension(120,size.height));
         return panel;
     }
 
@@ -105,6 +112,9 @@ public class LibraryMediator {
         panel.add(new LibrarySearch(), BorderLayout.PAGE_START);
         panel.add(_tablesPanel, BorderLayout.CENTER);
         panel.add(new LibraryPlayer(), BorderLayout.PAGE_END);
+        
+        Dimension size = panel.getSize();
+        panel.setMinimumSize(new Dimension(GUIMediator.getAppSize().width-300,size.height));
 
         return panel;
     }

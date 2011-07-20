@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ToolTipManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.tree.TreePath;
 
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
@@ -43,9 +41,6 @@ import com.limegroup.gnutella.settings.SharingSettings;
 
 public class LibraryFiles extends JPanel {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 9192882931064269836L;
 
     private LibraryFilesListCell _finishedDownloadsCell;
@@ -83,7 +78,7 @@ public class LibraryFiles extends JPanel {
         setupModel();
         setupList();
         setupPopupMenu();
-
+        
         _scrollPane = new JScrollPane(_list);
 
         add(_scrollPane);

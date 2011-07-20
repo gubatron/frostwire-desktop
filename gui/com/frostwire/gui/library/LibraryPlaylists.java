@@ -11,9 +11,6 @@ import com.limegroup.gnutella.gui.I18n;
 
 public class LibraryPlaylists extends JPanel {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 6317109161466445259L;
 
     private final DefaultListModel _model;
