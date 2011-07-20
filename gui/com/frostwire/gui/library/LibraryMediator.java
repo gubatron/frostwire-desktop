@@ -10,9 +10,11 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import com.frostwire.alexandria.Library;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.util.DividerLocationSettingUpdater;
+import com.limegroup.gnutella.settings.LibrarySettings;
 import com.limegroup.gnutella.settings.UISettings;
 
 public class LibraryMediator {
@@ -28,6 +30,8 @@ public class LibraryMediator {
     private static LibraryMediator INSTANCE;
     
     private LibraryFiles _libraryFiles;
+    
+    private Library _library;
 
     /**
      * @return the <tt>LibraryMediator</tt> instance
@@ -43,8 +47,11 @@ public class LibraryMediator {
     private JPanel _tablesPanel;
 
     public LibraryMediator() {
-        getComponent(); // creates MAIN_PANEL
         GUIMediator.setSplashScreenString(I18n.tr("Loading Library Window..."));
+        
+        _library = new Library(LibrarySettings.LIBRARY_DATABASE);
+        
+        getComponent(); // creates MAIN_PANEL
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, getLibraryLeftPanel(), getLibraryRightPanel());
         splitPane.setContinuousLayout(true);

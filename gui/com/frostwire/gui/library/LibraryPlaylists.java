@@ -20,7 +20,9 @@ public class LibraryPlaylists extends JPanel {
     private DefaultListModel _model;
     
     private LibraryPlaylistsListCell _newPlaylistCell;    
-    private ActionListener _createPlaylistAction;
+    private ActionListener _newPlaylistAction;
+    
+    private LibraryPlaylistsListCell _defaultPlaylistCell;
 
     private JList _list;
     private JScrollPane _scrollPane;
@@ -42,7 +44,13 @@ public class LibraryPlaylists extends JPanel {
     
     private void setupModel() {
         _model = new DefaultListModel();
-        _model.addElement(I18n.tr("New Playlist"));
+        
+        _newPlaylistAction = new NewPlaylistActionListener();
+        _newPlaylistCell = new LibraryPlaylistsListCell(I18n.tr("New Playlist"), null, null, _newPlaylistAction);
+        
+        //_defaultPlaylistCell new LibraryPlaylistsListCell(null, null, playlist, null);
+        
+        _model.addElement(_newPlaylistCell);
     }
     
     private void setupList() {
@@ -86,7 +94,7 @@ public class LibraryPlaylists extends JPanel {
         }
     }
     
-    private class CreatePlaylistActionListener implements ActionListener {
+    private class NewPlaylistActionListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
             // TODO Auto-generated method stub
