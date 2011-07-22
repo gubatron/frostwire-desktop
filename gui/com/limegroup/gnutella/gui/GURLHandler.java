@@ -3,7 +3,6 @@ package com.limegroup.gnutella.gui;
 import javax.swing.SwingUtilities;
 
 import org.limewire.service.ErrorService;
-import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.ExternalControl;
 
@@ -20,14 +19,8 @@ public final class GURLHandler {
     
     static {
         try {
-
-            if (OSUtils.isMacOSX105()) {
-            	System.loadLibrary("GURLTiger");
-                System.out.println("GURLTiger loaded.");
-            } else {
-                System.loadLibrary("GURLLeopard");
-                System.out.println("GURLLeopard loadded.");
-            }
+        	System.loadLibrary("GURLLeopard");
+        	System.out.println("GURLLeopard loadded.");
         }
         catch (UnsatisfiedLinkError err) {
             ErrorService.error(err);
