@@ -22,7 +22,8 @@ public final class GURLHandler {
         try {
 
             if (OSUtils.isMacOSX105()) {
-                System.loadLibrary("GURLTiger loaded.");
+            	System.loadLibrary("GURLTiger");
+                System.out.println("GURLTiger loaded.");
             } else {
                 System.loadLibrary("GURLLeopard");
                 System.out.println("GURLLeopard loadded.");
