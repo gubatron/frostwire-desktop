@@ -2,7 +2,6 @@ package com.limegroup.gnutella.util;
 
 import org.limewire.service.ErrorService;
 import org.limewire.util.CommonUtils;
-import org.limewire.util.OSUtils;
 
 /**
  * A collection of utility methods for OSX.
@@ -15,20 +14,20 @@ import org.limewire.util.OSUtils;
 public class MacOSXUtils {
     
     static {
-        if (OSUtils.isMacOSX105()) {
-            try {
-                System.loadLibrary("MacOSXUtilsTiger");
-            }
-            catch (UnsatisfiedLinkError err) {
-                ErrorService.error(err);
-            }
-        } else {
+//        if (OSUtils.isMacOSX105()) {
+//            try {
+//                System.loadLibrary("MacOSXUtilsTiger");
+//            }
+//            catch (UnsatisfiedLinkError err) {
+//                ErrorService.error(err);
+//            }
+//        } else {
         	try {
         		System.loadLibrary("MacOSXUtilsLeopard");
         	} catch (UnsatisfiedLinkError err) {
             	ErrorService.error(err);
             }
-        }
+//        }
     }
     
     private MacOSXUtils() {}
