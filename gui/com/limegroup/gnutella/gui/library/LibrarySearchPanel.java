@@ -30,6 +30,7 @@ import com.limegroup.gnutella.gui.search.SearchInformation;
 import com.limegroup.gnutella.gui.search.SearchMediator;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.SharingSettings;
+import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * Panel that embeds the search bar for the library panel. 
@@ -158,6 +159,14 @@ public class LibrarySearchPanel extends JPanel {
             search(SharingSettings.TORRENTS_DIR_SETTING.getValue(), new HashSet<File>());
             File file = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
             search(file, TorrentUtil.getIncompleteFiles());
+            
+            //in case user had old FrostWire installed and files inside save folder
+            File savedFolder = new File(FrostWireUtils.getLimeWireRootFolder(),"Saved");
+            if (savedFolder.exists() &&
+            	savedFolder.canRead() &&
+            	savedFolder.isDirectory()) {
+            	search(savedFolder,new HashSet<File>());
+            }
         }
         
         /**
