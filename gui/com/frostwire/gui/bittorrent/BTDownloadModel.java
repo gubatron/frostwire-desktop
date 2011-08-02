@@ -109,6 +109,8 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
         // If I catch it and let it continue, the data line becomes unresponsive.
         // If I tell it to stop, it keeps downloading, and so on, until this
         // is not happening (when I remove the filter)
+        //
+        //
         fireTableRowsUpdated(0, size);
         
         return Boolean.TRUE;

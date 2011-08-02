@@ -6,16 +6,11 @@ import java.io.File;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JOptionPane;
-import javax.swing.RowFilter;
-import javax.swing.RowSorter;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.LimeAction;
-import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
 
