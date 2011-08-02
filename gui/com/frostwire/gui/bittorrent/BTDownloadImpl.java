@@ -5,7 +5,6 @@ import java.util.Set;
 
 import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.core3.download.DownloadManager;
-import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.tracker.client.TRTrackerScraperResponse;
 import org.gudy.azureus2.core3.util.Constants;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
@@ -39,8 +38,8 @@ public class BTDownloadImpl implements BTDownload {
         }
         try {
             _hash = TorrentUtil.hashToString(downloadManager.getTorrent().getHash());
-        } catch (TOTorrentException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+        	e.printStackTrace();
             _hash = "";
         }
 

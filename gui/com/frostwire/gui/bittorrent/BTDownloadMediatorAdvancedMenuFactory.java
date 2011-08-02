@@ -37,7 +37,8 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.themes.SkinMenu;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 
-public class MenuUtil {
+public class BTDownloadMediatorAdvancedMenuFactory {
+	
     public static void addSpeedMenu(SkinMenu menuAdvanced, boolean isTorrentContext, boolean hasSelection, boolean downSpeedDisabled,
             boolean downSpeedUnlimited, long totalDownSpeed, long downSpeedSetMax, long maxDownload, boolean upSpeedDisabled, boolean upSpeedUnlimited,
             long totalUpSpeed, long upSpeedSetMax, long maxUpload, final int num_entries, final SpeedAdapter adapter) {
@@ -327,7 +328,7 @@ public class MenuUtil {
         }
 
         final SkinMenu menuAdvanced = new SkinMenu(I18n.tr("Advanced"));
-
+        
         // advanced > Download Speed Menu //
 
         long maxDownload = COConfigurationManager.getIntParameter("Max Download Speed KBs", 0) * 1024;

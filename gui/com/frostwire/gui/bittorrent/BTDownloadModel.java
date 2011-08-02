@@ -61,6 +61,7 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
         }
         return count;
     }
+    
 
     /**
      * Returns the aggregate amount of bandwidth being consumed by active downloads.
@@ -95,11 +96,21 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
      */
     public Object refresh() {
         int size = getRowCount();
+        
         for (int i = 0; i < size; i++) {
             BTDownloadDataLine ud = get(i);
             ud.update();
         }
+        
+        //TODO: 
+        // When the Seeding filter is applied, this method throws
+        // an ArrayIndexOutOfBoundsException.
+        //
+        // If I catch it and let it continue, the data line becomes unresponsive.
+        // If I tell it to stop, it keeps downloading, and so on, until this
+        // is not happening (when I remove the filter)
         fireTableRowsUpdated(0, size);
+        
         return Boolean.TRUE;
     }
 
@@ -120,6 +131,10 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
         _hashDownloads.remove(downloader.getHash());
 
         super.remove(i);
+    }
+    
+    public BTDownloadDataLine getDataline(int i) {
+    	return get(i);
     }
 
     public boolean isDownloading(String hash) {

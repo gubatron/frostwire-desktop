@@ -7,6 +7,8 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Icon;
 
+import org.gudy.azureus2.core3.download.DownloadManager;
+
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
@@ -169,6 +171,14 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
         update();
     }
 
+    public boolean isSeeding() {
+    	if (initializer==null) {
+    		return false;
+    	}
+    		
+    	return initializer.getState() == DownloadManager.STATE_SEEDING;
+    }
+    
     /**
      * Returns the <tt>Object</tt> stored at the specified column in this
      * line of data.

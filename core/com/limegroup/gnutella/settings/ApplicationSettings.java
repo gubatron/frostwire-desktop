@@ -226,6 +226,11 @@ public class ApplicationSettings extends LimeProps {
     public static final BooleanSetting MINIMIZE_TO_TRAY = FACTORY.createBooleanSetting("MINIMIZE_TO_TRAY", OSUtils.supportsTray());
     
     public static final BooleanSetting SHOW_HIDE_EXIT_DIALOG = FACTORY.createBooleanSetting("SHOW_HIDE_EXIT_DIALOG", true);
+    
+    /**
+     * Whether or not to show SEEDING torrents on the transfer manager
+     */
+    public static final BooleanSetting SHOW_SEEDING_TRANSFERS = FACTORY.createBooleanSetting("SHOW_SEEDING_TRANSFERS", true);
 
     /**
      * Gets the current language setting.

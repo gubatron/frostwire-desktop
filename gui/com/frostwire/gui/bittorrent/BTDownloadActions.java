@@ -6,11 +6,17 @@ import java.io.File;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.RowSorter;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.LimeAction;
+import com.limegroup.gnutella.gui.tables.LimeJTable;
+import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 final class BTDownloadActions {
@@ -24,6 +30,7 @@ final class BTDownloadActions {
     static final RemoveAction REMOVE_TORRENT_AND_DATA_ACTION = new RemoveAction(true, true);
     static final CopyMagnetAction COPY_MAGNET_ACTION = new CopyMagnetAction();
     static final CopyInfoHashAction COPY_HASH_ACTION = new CopyInfoHashAction();
+    public static final ToggleSeedsVisibilityAction TOGGLE_SEEDS_VISIBILITY_ACTION = new ToggleSeedsVisibilityAction();
 	public static final Action SHARE_TORRENT_ACTION = new ShareTorrentAction();
 
     private static abstract class RefreshingAction extends AbstractAction {
@@ -284,5 +291,36 @@ final class BTDownloadActions {
             
             new ShareTorrentDialog(btDownload.getDownloadManager().getTorrent()).setVisible(true);
         }
+    }
+    
+    static class ToggleSeedsVisibilityAction extends RefreshingAction {
+		private static final long serialVersionUID = -1632629016830943795L;
+		
+		public ToggleSeedsVisibilityAction() {
+            updateName();
+            putValue(LimeAction.SHORT_NAME, I18n.tr("Show Details"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Show Torrent Details"));
+		}
+
+		private void updateName() {
+			if (ApplicationSettings.SHOW_SEEDING_TRANSFERS.getValue()) {
+	            putValue(Action.NAME, I18n.tr("Hide Seeding Transfers"));
+	            putValue(LimeAction.SHORT_NAME, I18n.tr("Hide Seeding Transfers"));
+	            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Don't show Seeding Transfers"));
+			} else {
+	            putValue(Action.NAME, I18n.tr("Show Seeding Transfers"));
+	            putValue(LimeAction.SHORT_NAME, I18n.tr("Show Seeding Transfers"));
+	            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Show Seeding Transfers"));
+			}
+			
+		}
+
+		@Override
+		protected void performAction(ActionEvent e) {
+			//toggle the setting
+			ApplicationSettings.SHOW_SEEDING_TRANSFERS.setValue(!ApplicationSettings.SHOW_SEEDING_TRANSFERS.getValue());
+			updateName();
+			BTDownloadMediator.instance().updateTableFilters();
+		}
     }
 }

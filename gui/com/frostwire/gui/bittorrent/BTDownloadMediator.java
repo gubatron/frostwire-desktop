@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import javax.swing.Action;
 import javax.swing.JPopupMenu;
+import javax.swing.RowFilter;
+import javax.swing.table.TableRowSorter;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.limewire.util.OSUtils;
@@ -25,6 +27,7 @@ import com.limegroup.gnutella.gui.themes.SkinMenu;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
+import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 
 /**
@@ -122,9 +125,49 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         TABLE = new LimeJTable(DATA_MODEL);
         _downloadButtons = new BTDownloadButtons(this);
         BUTTON_ROW = _downloadButtons.getComponent();
+        
+        updateTableFilters();
     }
-
+    
     /**
+     * Filter out all the models who are being seeded.
+     * @author gubatron
+     *
+     */
+	class SeedingFilter extends RowFilter<BTDownloadModel, Integer> {
+		@Override
+		public boolean include(
+				javax.swing.RowFilter.Entry<? extends BTDownloadModel, ? extends Integer> rowFilterEntry) {
+
+			if (rowFilterEntry == null || rowFilterEntry.getModel()==null) {
+				return false;
+			}
+			
+			BTDownloadDataLine dataline = rowFilterEntry.getModel().getDataline(rowFilterEntry.getIdentifier());
+			return !dataline.isSeeding();
+		}
+	}
+
+
+    public void updateTableFilters() {
+    	if (TABLE == null || DATA_MODEL == null) {
+    		return;
+    	}
+    	
+		//show seeds
+		if (ApplicationSettings.SHOW_SEEDING_TRANSFERS.getValue()) {
+			TABLE.setRowSorter(null);
+		} 
+		// don't show seeds
+		else {
+			TableRowSorter<BTDownloadModel> sorter = new TableRowSorter<BTDownloadModel>();
+			sorter.setRowFilter(new SeedingFilter());
+			sorter.setModel(DATA_MODEL);
+			TABLE.setRowSorter(sorter);
+		}		
+	}
+
+	/**
      * Update the splash screen.
      */
     protected void updateSplashScreen() {
@@ -373,7 +416,11 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         menu.add(new SkinMenuItem(BTDownloadActions.REMOVE_TORRENT_ACTION));
         menu.add(new SkinMenuItem(BTDownloadActions.REMOVE_TORRENT_AND_DATA_ACTION));
 
-        SkinMenu advancedMenu = MenuUtil.createAdvancedSubMenu();
+        menu.addSeparator();
+        
+        menu.add(new SkinMenuItem(BTDownloadActions.TOGGLE_SEEDS_VISIBILITY_ACTION));
+        
+        SkinMenu advancedMenu = BTDownloadMediatorAdvancedMenuFactory.createAdvancedSubMenu();
         if (advancedMenu != null) {
             menu.addSeparator();
             menu.add(advancedMenu);
