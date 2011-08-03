@@ -1,3 +1,11 @@
+frostwire (5.0.9) stable; urgency=high
+
+  * UX upgrade, ability to hide/show seeding torrents on transfer manager.
+  * Mininova is back.
+
+ -- FrostWire Team <contact@frostwire.com>  Tue, 2 Aug 2011 22:55:54 -0500
+
+
 frostwire (5.0.8) stable; urgency=high
 
   * Shows torrent details after a download starts to bring traffic back
