@@ -40,7 +40,6 @@ public class ISOHuntWebSearchPerformer implements WebSearchPerformer {
         try {
             iha = URLEncoder.encode(keywords, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

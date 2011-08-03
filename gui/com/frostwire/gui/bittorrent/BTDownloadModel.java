@@ -95,23 +95,23 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
      * set the CLEAR_BUTTON as appropriate.
      */
     public Object refresh() {
+    	
+    	int firstRowUpdated = -1;
+    	int lastRowUpdated = 0;
         int size = getRowCount();
         
         for (int i = 0; i < size; i++) {
             BTDownloadDataLine ud = get(i);
+            
             ud.update();
+            
+            if (firstRowUpdated == -1) {
+            	firstRowUpdated = i;
+            }
+            lastRowUpdated = i;
         }
         
-        //TODO: 
-        // When the Seeding filter is applied, this method throws
-        // an ArrayIndexOutOfBoundsException.
-        //
-        // If I catch it and let it continue, the data line becomes unresponsive.
-        // If I tell it to stop, it keeps downloading, and so on, until this
-        // is not happening (when I remove the filter)
-        //
-        //
-        fireTableRowsUpdated(0, size);
+        fireTableRowsUpdated(firstRowUpdated, lastRowUpdated);
         
         return Boolean.TRUE;
     }

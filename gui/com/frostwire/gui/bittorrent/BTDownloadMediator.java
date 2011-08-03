@@ -149,22 +149,46 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
 	}
 
 
-    public void updateTableFilters() {
-    	if (TABLE == null || DATA_MODEL == null) {
-    		return;
-    	}
-    	
-		//show seeds
-		if (ApplicationSettings.SHOW_SEEDING_TRANSFERS.getValue()) {
+	public void updateTableFilters() {
+		if (TABLE == null || DATA_MODEL == null
+				|| DATA_MODEL.getRowCount() == 0) {
+			return;
+		}
+
+		boolean showSeeds = ApplicationSettings.SHOW_SEEDING_TRANSFERS
+				.getValue();
+		
+		//remember who was selected before
+		int[] selectedRows = TABLE.getSelectedRows();
+		
+		//did anything change?
+		boolean changedSorter = false;
+
+		// show seeds
+		if (showSeeds && TABLE.getRowSorter() != null) {
 			TABLE.setRowSorter(null);
-		} 
-		// don't show seeds
-		else {
+			changedSorter = true;
+		}
+		// don't show seeds (do the update only if you have to, otherwise it flickers)
+		else if (!showSeeds && TABLE.getRowSorter() == null) {
 			TableRowSorter<BTDownloadModel> sorter = new TableRowSorter<BTDownloadModel>();
 			sorter.setRowFilter(new SeedingFilter());
 			sorter.setModel(DATA_MODEL);
 			TABLE.setRowSorter(sorter);
-		}		
+			changedSorter = true;
+			DATA_MODEL.refresh();
+		}
+
+		// select those that were selected before if something changed.
+		if (changedSorter) {
+			for (int i = 0; i < selectedRows.length; i++) {
+				int index = selectedRows[i];
+
+				if (TABLE.getRowCount() > index) {
+					TABLE.setSelectedRow(index);
+				}
+			}
+		}
 	}
 
 	/**
@@ -189,8 +213,9 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
      * set the clear button appropriately.
      */
     public void doRefresh() {
-        DATA_MODEL.refresh();
-
+    	DATA_MODEL.refresh();
+    	updateTableFilters();
+        
         int[] selRows = TABLE.getSelectedRows();
 
         if (selRows.length > 0) {
