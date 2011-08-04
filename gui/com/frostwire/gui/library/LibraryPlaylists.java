@@ -2,8 +2,12 @@ package com.frostwire.gui.library;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractAction;
@@ -14,6 +18,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.ToolTipManager;
 import javax.swing.event.ListSelectionEvent;
@@ -37,19 +42,21 @@ public class LibraryPlaylists extends JPanel {
     private static final long serialVersionUID = 6317109161466445259L;
 
     private DefaultListModel _model;
-    
-    private LibraryPlaylistsListCell _newPlaylistCell;    
+    private int _selectedIndexToRename;
+
+    private LibraryPlaylistsListCell _newPlaylistCell;
     private ActionListener _newPlaylistAction;
-    
+
     private LibraryPlaylistsListCell _defaultPlaylistCell;
     private ActionListener _selectedPlaylistAction;
-    
+
     private LibraryPlaylistsMouseObserver _listMouseObserver;
     private ListSelectionListener _listSelectionListener;
 
     private JList _list;
     private JScrollPane _scrollPane;
-    
+    private JTextField _textName;
+
     private JPopupMenu _popup;
     private Action refreshAction = new RefreshAction();
     private Action exploreAction = new ExploreAction();
@@ -69,7 +76,7 @@ public class LibraryPlaylists extends JPanel {
 
         add(_scrollPane);
     }
-    
+
     private void setupPopupMenu() {
         _popup = new SkinPopupMenu();
         _popup.add(new SkinMenuItem(refreshAction));
@@ -77,18 +84,18 @@ public class LibraryPlaylists extends JPanel {
         _popup.add(new SkinMenuItem(new ConfigureOptionsAction(OptionsConstructor.SHARED_KEY, I18n.tr("Configure Options"), I18n
                 .tr("You can configure the FrostWire\'s Options."))));
     }
-    
+
     private void setupModel() {
         _model = new DefaultListModel();
-        
+
         _newPlaylistAction = new NewPlaylistActionListener();
         _newPlaylistCell = new LibraryPlaylistsListCell(I18n.tr("New Playlist"), I18n.tr("Creates a new Playlist"), null, null, _newPlaylistAction);
-        
+
         Library library = LibraryMediator.getLibrary();
-        
+
         _selectedPlaylistAction = new SelectedPlaylistActionListener();
         _defaultPlaylistCell = new LibraryPlaylistsListCell(null, null, null, library.getDefaultPlaylist(), _selectedPlaylistAction);
-        
+
         _model.addElement(_newPlaylistCell);
         _model.addElement(_defaultPlaylistCell);
         for (Playlist playlist : library.getPlaylists()) {
@@ -98,19 +105,40 @@ public class LibraryPlaylists extends JPanel {
             }
         }
     }
-    
+
     private void setupList() {
         _listMouseObserver = new LibraryPlaylistsMouseObserver();
         _listSelectionListener = new LibraryFilesSelectionListener();
-        
-        _list = new JList(_model);        
+
+        _list = new JList(_model);
         _list.setCellRenderer(new LibraryPlaylistsCellRenderer());
         _list.addMouseListener(new DefaultMouseListener(_listMouseObserver));
         _list.addListSelectionListener(_listSelectionListener);
         _list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        _list.setLayoutOrientation(JList.VERTICAL);
         ToolTipManager.sharedInstance().registerComponent(_list);
+        
+        _textName = new JTextField();
+        _textName.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                textName_keyPressed(e);
+            }
+        });
+        _textName.setVisible(false);
+        
+        _list.add(_textName);
     }
     
+    protected void textName_keyPressed(KeyEvent e) {
+        int key = e.getKeyCode();
+        if (_selectedIndexToRename != -1 && key == KeyEvent.VK_ENTER) {
+            renameSelectedItem(_selectedIndexToRename);
+        } else if (key == KeyEvent.VK_ESCAPE) {
+            _textName.setVisible(false);
+        }
+    }
+
     private void refreshListCellSelection() {
         LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) _list.getSelectedValue();
 
@@ -119,15 +147,74 @@ public class LibraryPlaylists extends JPanel {
 
         Playlist playlist = cell.getPlaylist();
         playlist.refresh();
-        
+
         LibraryMediator.instance().updateTableItems(playlist.getItems());
+
+        //        DirectoryHolder directoryHolder = getSelectedDirectoryHolder();
+        //        if (directoryHolder != null && directoryHolder instanceof MediaTypeSavedFilesDirectoryHolder) {
+        //            LibraryMediator.instance().showView(LibraryMediator.FILES_TABLE_KEY);
+        //            MediaTypeSavedFilesDirectoryHolder mtsfdh = (MediaTypeSavedFilesDirectoryHolder) directoryHolder;
+        //            BackgroundExecutorService.schedule(new SearchByMediaTypeRunnable(mtsfdh));
+        //        }
+    }
+    
+    private void actionStartRename() {
+        cancelEdit();
+        int index = _list.getSelectedIndex();
+        if (index != -1) {
+            startEdit(index);
+        }
+    }
+
+    private void startEdit(int index) {
+        if (index < 0) {
+            return;
+        }
+
+        _selectedIndexToRename = index;
+        LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) _model.getElementAt(index);
+        String text = cell.getText();
+
+        LibraryPlaylistsCellRenderer renderer = (LibraryPlaylistsCellRenderer) _list.getCellRenderer().getListCellRendererComponent(_list, _list.getModel().getElementAt(index),
+                index, false, false);
+        Dimension lsize = new Dimension(100, 25);// renderer.getSize();
+        Point llocation = renderer.getLocation();
+        //lsize.setSize(lsize.getWidth() - 3, lsize.getHeight() - 8);
+        Point p = _list.indexToLocation(index);
+        p.translate(llocation.x, llocation.y + 4);
+        _textName.setSize(lsize);
+
+        _textName.setText(text);
+        _textName.setSelectionStart(0);
+        _textName.setSelectionEnd(text.length());
         
-//        DirectoryHolder directoryHolder = getSelectedDirectoryHolder();
-//        if (directoryHolder != null && directoryHolder instanceof MediaTypeSavedFilesDirectoryHolder) {
-//            LibraryMediator.instance().showView(LibraryMediator.FILES_TABLE_KEY);
-//            MediaTypeSavedFilesDirectoryHolder mtsfdh = (MediaTypeSavedFilesDirectoryHolder) directoryHolder;
-//            BackgroundExecutorService.schedule(new SearchByMediaTypeRunnable(mtsfdh));
+        _textName.setVisible(true);
+
+        _textName.requestFocusInWindow();
+        _textName.requestFocus();
+    }
+    
+    private void renameSelectedItem(int index) {
+        if (!_textName.isVisible()) {
+            return;
+        }
+//        String text = _textName.getText();
+//        if (text != null && text.length() > 0) {
+//            if (text.indexOf('.') == -1) { // no extension? put the old
+//                                           // extension
+//                LocalFile localFile = (LocalFile) _model.getElementAt(index);
+//                if (localFile != null && localFile.getFile().isFile() && localFile.getExt() != null) {
+//                    text += "." + localFile.getExt();
+//                }
+//            }
+//            _model.rename(index, text);
 //        }
+        _textName.setVisible(false);
+    }
+
+    private void cancelEdit() {
+        _selectedIndexToRename = -1;
+        _textName.setVisible(false);
     }
 
     private class LibraryPlaylistsListCell {
@@ -155,7 +242,7 @@ public class LibraryPlaylists extends JPanel {
                 return "";
             }
         }
-        
+
         public String getDescription() {
             if (_description != null) {
                 return _description;
@@ -178,7 +265,7 @@ public class LibraryPlaylists extends JPanel {
             return _action;
         }
     }
-    
+
     private class LibraryPlaylistsCellRenderer extends SubstanceDefaultListCellRenderer {
 
         /**
@@ -199,22 +286,28 @@ public class LibraryPlaylists extends JPanel {
             return this;
         }
     }
-    
+
     private class NewPlaylistActionListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             // TODO Auto-generated method stub
-            
+
         }
     }
-    
+
     private class SelectedPlaylistActionListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             refreshListCellSelection();
         }
     }
-    
+
     private class LibraryPlaylistsMouseObserver implements MouseObserver {
+
         public void handleMouseClick(MouseEvent e) {
+            int index = _list.locationToIndex(e.getPoint());
+            _list.setSelectedIndex(index);
+            if (((LibraryPlaylistsListCell) _list.getSelectedValue()).getPlaylist() == null) {
+                actionStartRename();
+            }
         }
 
         /**
@@ -243,18 +336,18 @@ public class LibraryPlaylists extends JPanel {
             if (e.getValueIsAdjusting()) {
                 return;
             }
-            
+
             LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) _list.getSelectedValue();
 
             if (cell == null)
                 return;
-            
+
             if (cell.getAction() != null) {
                 cell.getAction().actionPerformed(null);
             }
         }
     }
-    
+
     private class RefreshAction extends AbstractAction {
 
         /**
@@ -287,15 +380,15 @@ public class LibraryPlaylists extends JPanel {
         }
 
         public void actionPerformed(ActionEvent e) {
-//            DirectoryHolder directoryHolder = getSelectedDirectoryHolder();
-//            if (directoryHolder == null) {
-//                return;
-//            }
-//            File directory = directoryHolder.getDirectory();
-//            if (directory == null) {
-//                directory = _finishedDownloadsHolder.getDirectory();
-//            }
-//            GUIMediator.launchExplorer(directory);        
+            //            DirectoryHolder directoryHolder = getSelectedDirectoryHolder();
+            //            if (directoryHolder == null) {
+            //                return;
+            //            }
+            //            File directory = directoryHolder.getDirectory();
+            //            if (directory == null) {
+            //                directory = _finishedDownloadsHolder.getDirectory();
+            //            }
+            //            GUIMediator.launchExplorer(directory);        
         }
     }
 }
