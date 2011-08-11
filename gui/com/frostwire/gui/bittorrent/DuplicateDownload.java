@@ -19,6 +19,10 @@ public class DuplicateDownload implements BTDownload {
     public long getSize() {
         return _delegate.getSize();
     }
+    
+    public long getSize(boolean update) {
+    	return _delegate.getSize(update);
+    }
 
     public String getDisplayName() {
         return _delegate.getDisplayName();
@@ -122,4 +126,9 @@ public class DuplicateDownload implements BTDownload {
     public boolean isPartialDownload() {
         return false;
     }
+
+	@Override
+	public void updateDownloadManager(DownloadManager downloadManager) {
+		_delegate.updateDownloadManager(downloadManager);
+	}
 }

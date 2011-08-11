@@ -535,9 +535,12 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
             public void run() {
                 try {
                     BTDownloadCreator creator = new BTDownloadCreator(torrentFile, saveDir, true, null);
-                    if (!creator.isTorrentInGlobalManager()) {
-                        BTDownload download = creator.createDownload();
+                    BTDownload download = creator.createDownload();
+                    
+                    if (!(download instanceof DuplicateDownload)) {
                         add(download);
+                    } else {
+                    	selectRowByDownload(download);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -556,7 +559,20 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
     }
 
     
-    public void openTorrentFile(final File torrentFile, final boolean partialDownload) {
+    protected void selectRowByDownload(BTDownload download) {
+    	for (int i=0 ; i < TABLE.getRowCount(); i++) {
+    		BTDownloadDataLine btDownloadDataLine = DATA_MODEL.get(i);
+    		if (download.getHash().equals(btDownloadDataLine.getInitializeObject().getHash())) {
+    			btDownloadDataLine.getInitializeObject().getSize(true);
+    			btDownloadDataLine.getInitializeObject().updateDownloadManager(download.getDownloadManager());
+    			TABLE.setSelectedRow(i);
+    			return;
+    		}
+    	}
+
+	}
+
+	public void openTorrentFile(final File torrentFile, final boolean partialDownload) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
                 try {
@@ -573,9 +589,11 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
                     }
 
                     BTDownloadCreator creator = new BTDownloadCreator(torrentFile, null, false, filesSelection);
-                    if (!creator.isTorrentInGlobalManager()) {
-                        BTDownload download = creator.createDownload();
+                    BTDownload download = creator.createDownload();
+                    if (!(download instanceof DuplicateDownload)) {
                         add(download);
+                    } else {
+                    	selectRowByDownload(download);
                     }
 
                 } catch (Exception e) {

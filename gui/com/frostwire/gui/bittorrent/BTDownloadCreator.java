@@ -24,10 +24,11 @@ public class BTDownloadCreator {
     private final File _torrentFile;
     private final File _saveDir;
     private final boolean _initialSeed;
-    private final boolean[] _filesSelection;
+    private boolean[] _filesSelection;
 
     private DownloadManager _downloadManager;
     private boolean _torrentInGlobalManager;
+	private TOTorrent torrent;
 
     public BTDownloadCreator(File torrentFile, File saveDir, boolean initialSeed, boolean[] filesSelection) throws TOTorrentException {
         _globalManager = AzureusStarter.getAzureusCore().getGlobalManager();
@@ -41,74 +42,145 @@ public class BTDownloadCreator {
             saveDir.mkdirs();
         }
 
-        TOTorrent torrent = TorrentUtils.readFromFile(_torrentFile, false);
+        torrent = TorrentUtils.readFromFile(_torrentFile, false);
 
         _downloadManager = _globalManager.getDownloadManager(torrent);
         if (_downloadManager == null) {
+        	
+        	//Complete torrent download.
             if (_filesSelection == null) {
                 _downloadManager = _globalManager.addDownloadManager(_torrentFile.getAbsolutePath(), null, saveDir.getAbsolutePath(),
                         DownloadManager.STATE_WAITING, true, _initialSeed, null);
             } else {
-                _downloadManager = _globalManager.addDownloadManager(_torrentFile.getAbsolutePath(), torrent.getHash(), saveDir.getAbsolutePath(), null,
-                        DownloadManager.STATE_WAITING, true, false, new DownloadManagerInitialisationAdapter() {
-                            public void initialised(DownloadManager dm) {
-                                DiskManagerFileInfo[] fileInfos = dm.getDiskManagerFileInfoSet().getFiles();
-
-                                try {
-                                    dm.getDownloadState().suppressStateSave(true);
-
-                                    boolean[] toSkip = new boolean[fileInfos.length];
-                                    boolean[] toCompact = new boolean[fileInfos.length];
-
-                                    int comp_num = 0;
-
-                                    for (int iIndex = 0; iIndex < fileInfos.length; iIndex++) {
-                                        DiskManagerFileInfo fileInfo = fileInfos[iIndex];
-                                        File fDest = fileInfo.getFile(true);
-
-                                        if (!_filesSelection[iIndex]) {
-                                            toSkip[iIndex] = true;
-                                            if (!fDest.exists()) {
-                                                toCompact[iIndex] = true;
-                                                comp_num++;
-                                            }
-                                        }
-                                    }
-
-                                    if (comp_num > 0) {
-                                        dm.getDiskManagerFileInfoSet().setStorageTypes(toCompact, DiskManagerFileInfo.ST_COMPACT);
-                                    }
-
-                                    dm.getDiskManagerFileInfoSet().setSkipped(toSkip, true);
-
-                                } finally {
-                                    dm.getDownloadState().suppressStateSave(false);
-                                }
-                            }
-                        });
+                //Partial torrent download.
+                addPartialDownload(saveDir);
             }
             _torrentInGlobalManager = false;
-        } else {
+        } else { //the download manager was there...
             _torrentInGlobalManager = true;
+            
+            if (_filesSelection != null) { //I want to download partial files.
+            	boolean[] prevSelection = getPreviousFileSelections(_downloadManager);
+            	
+            	if (prevSelection.length != _filesSelection.length) {
+            		//wtf
+            		System.out.println("BTDownloadCreator::constructor warning: inconsistency between file selection count, from old state to new state. Is this the same torrent?");
+            		return;
+            	}
+            	
+            	//he was already downloading the whole torrent, you'll get the file eventually when it finishes.
+            	if (isDownloadingEntireContents(prevSelection)) {
+            		return;
+            	}
+            	
+            	//let the new _fileSelection know about the older files that were selected for download
+            	//(union)
+            	for (int i=0; i < _filesSelection.length; i++) {
+            		if (prevSelection[i]) {
+            			_filesSelection[i] = true;
+            		}
+            	}
+            	
+            	
+            } else { // I want to download the whole thing
+            	boolean[] prevSelection = getPreviousFileSelections(_downloadManager);
+            	if (isDownloadingEntireContents(prevSelection)) {
+            		//oh, it was already downloading the whole thing
+            		return;
+            	}
+            	
+            	_filesSelection = prevSelection;
+            	for (int i=0; i < _filesSelection.length; i++) {
+            		_filesSelection[i] = true;
+            	}
+
+            }
+
+            //remove it, not async.
+            TorrentUtil.removeDownload(_downloadManager, false, false, false);
+
+            addPartialDownload(saveDir);
+
         }
     }
 
+	public void addPartialDownload(File saveDir) throws TOTorrentException {
+		_downloadManager = _globalManager.addDownloadManager(_torrentFile.getAbsolutePath(), torrent.getHash(), saveDir.getAbsolutePath(), null,
+		        DownloadManager.STATE_WAITING, true, false, new DownloadManagerInitialisationAdapter() {
+		            public void initialised(DownloadManager dm) {
+		                setupPartialDownload(dm);
+		            }
+		        });
+	}
+    
+	private boolean isDownloadingEntireContents(boolean[] prevSelection) {
+		for (int i=0; i < prevSelection.length; i++) {
+			if (!prevSelection[i]) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private boolean[] getPreviousFileSelections(
+			DownloadManager dm) {
+		
+		boolean[] fileSelections = new boolean[dm.getDiskManagerFileInfoSet().getFiles().length];
+		for (int i=0; i < dm.getDiskManagerFileInfoSet().getFiles().length; i++) {
+			fileSelections[i] = !dm.getDiskManagerFileInfoSet().getFiles()[i].isSkipped();
+		}
+		
+		return fileSelections;
+	}
+
+	private void setupPartialDownload(DownloadManager dm) {
+		DiskManagerFileInfo[] fileInfos = dm.getDiskManagerFileInfoSet().getFiles();
+
+        try {
+            dm.getDownloadState().suppressStateSave(true);
+
+            boolean[] toSkip = new boolean[fileInfos.length];
+            boolean[] toCompact = new boolean[fileInfos.length];
+
+            int comp_num = 0;
+
+            for (int iIndex = 0; iIndex < fileInfos.length; iIndex++) {
+                DiskManagerFileInfo fileInfo = fileInfos[iIndex];
+                File fDest = fileInfo.getFile(true);
+
+                if (!_filesSelection[iIndex]) {
+                    toSkip[iIndex] = true;
+                    if (!fDest.exists()) {
+                        toCompact[iIndex] = true;
+                        comp_num++;
+                    }
+                }
+            }
+
+            if (comp_num > 0) {
+                dm.getDiskManagerFileInfoSet().setStorageTypes(toCompact, DiskManagerFileInfo.ST_COMPACT);
+            }
+
+            dm.getDiskManagerFileInfoSet().setSkipped(toSkip, true);
+
+        } finally {
+            dm.getDownloadState().suppressStateSave(false);
+        }
+	}
+
+    
     public BTDownloadCreator(File torrentFile, boolean[] filesSelection) throws TOTorrentException {
         this(torrentFile, null, false, filesSelection);
     }
     
     public BTDownload createDownload() throws SaveLocationException, TOTorrentException {
         if (_torrentInGlobalManager) {
-            return new DuplicateDownload(new BTDownloadImpl(_downloadManager));
+            return new DuplicateDownload(createDownload(_downloadManager));
         } else {
             return createDownload(_downloadManager);
         }
     }
     
-    public boolean isTorrentInGlobalManager() {
-        return _torrentInGlobalManager;
-    }
-
     public static BTDownload createDownload(DownloadManager downloadManager) throws SaveLocationException, TOTorrentException {
 
         downloadManager.addListener(new DownloadManagerAdapter() {

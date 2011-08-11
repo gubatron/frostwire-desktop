@@ -7,6 +7,8 @@ import org.gudy.azureus2.core3.download.DownloadManager;
 public interface BTDownload {
 
     public long getSize();
+    
+    public long getSize(boolean update);
 
     public String getDisplayName();
 
@@ -61,4 +63,6 @@ public interface BTDownload {
     public String getShareRatio();
 
     public boolean isPartialDownload();
+
+	public void updateDownloadManager(DownloadManager downloadManager);
 }

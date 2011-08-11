@@ -219,12 +219,7 @@ public class TorrentFetcherDownload implements BTDownload {
                             }
                         });
                         if (filesSelection == null) {
-                            _state = STATE_CANCELED;
-                            GUIMediator.safeInvokeLater(new Runnable() {
-                                public void run() {
-                                    BTDownloadMediator.instance().remove(TorrentFetcherDownload.this);
-                                }
-                            });
+                            cancelDownload();
                             return;
                         } else {
                             if (_postPartialDownloadAction != null) {
@@ -239,6 +234,17 @@ public class TorrentFetcherDownload implements BTDownload {
 
                     BTDownloadCreator creator = new BTDownloadCreator(inf.getFile(), filesSelection);
                     _delegate = creator.createDownload();
+                    
+                    if (_delegate instanceof DuplicateDownload) {
+                    	cancelDownload();
+                    	GUIMediator.safeInvokeLater(new Runnable() {
+
+							@Override
+							public void run() {
+								BTDownloadMediator.instance().selectRowByDownload(_delegate);
+							}});
+                    }
+                    
                 } catch (Exception e) {
                     _state = STATE_ERROR;
                     e.printStackTrace();
@@ -247,5 +253,26 @@ public class TorrentFetcherDownload implements BTDownload {
                 _state = STATE_ERROR;
             }
         }
+
+		public void cancelDownload() {
+			_state = STATE_CANCELED;
+			GUIMediator.safeInvokeLater(new Runnable() {
+			    public void run() {
+			        BTDownloadMediator.instance().remove(TorrentFetcherDownload.this);
+			    }
+			});
+		}
     }
+
+	@Override
+	public long getSize(boolean update) {
+		return _delegate != null ? _delegate.getSize(update) : _size;
+	}
+
+	@Override
+	public void updateDownloadManager(DownloadManager downloadManager) {
+		if (_delegate != null) {
+			_delegate.updateDownloadManager(downloadManager);
+		}
+	}
 }

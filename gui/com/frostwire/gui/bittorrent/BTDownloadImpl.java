@@ -11,10 +11,10 @@ import org.gudy.azureus2.core3.util.DisplayFormatters;
 
 public class BTDownloadImpl implements BTDownload {
 
-    private final DownloadManager _downloadManager;
-    private final boolean _partialDownload;
-    private final long _size;
-    private final Set<DiskManagerFileInfo> _fileInfoSet;
+    private DownloadManager _downloadManager;
+    private boolean _partialDownload;
+    private long _size;
+    private Set<DiskManagerFileInfo> _fileInfoSet;
     private String _hash;
 
     private boolean _deleteTorrentWhenRemove;
@@ -22,10 +22,14 @@ public class BTDownloadImpl implements BTDownload {
     private boolean _deleteDataWhenRemove;
 
     public BTDownloadImpl(DownloadManager downloadManager) {
-        _downloadManager = downloadManager;
-        _partialDownload = TorrentUtil.getSkippedFiles(downloadManager).size() > 0;
+        updateDownloadManager(downloadManager);
 
-        if (_partialDownload) {
+        _deleteTorrentWhenRemove = false;
+        _deleteDataWhenRemove = false;
+    }
+
+	public void updateSize(DownloadManager downloadManager) {
+		if (_partialDownload) {
             _fileInfoSet = TorrentUtil.getNoSkippedFileInfoSet(downloadManager);
             long size = 0;
             for (DiskManagerFileInfo fileInfo : _fileInfoSet) {
@@ -36,19 +40,17 @@ public class BTDownloadImpl implements BTDownload {
             _fileInfoSet = null;
             _size = downloadManager.getSize();
         }
-        try {
-            _hash = TorrentUtil.hashToString(downloadManager.getTorrent().getHash());
-        } catch (Exception e) {
-        	e.printStackTrace();
-            _hash = "";
-        }
-
-        _deleteTorrentWhenRemove = false;
-        _deleteDataWhenRemove = false;
-    }
+	}
 
     public long getSize() {
-        return _size;
+        return getSize(false);
+    }
+    
+    public long getSize(boolean update) {
+    	if (update) {
+    		updateSize(_downloadManager);
+    	}
+    	return _size;
     }
 
     public String getDisplayName() {
@@ -315,4 +317,19 @@ public class BTDownloadImpl implements BTDownload {
     public boolean isPartialDownload() {
         return _partialDownload;
     }
+
+	@Override
+	public void updateDownloadManager(DownloadManager downloadManager) {
+		_downloadManager = downloadManager;		
+        _partialDownload = TorrentUtil.getSkippedFiles(downloadManager).size() > 0;
+
+        updateSize(downloadManager);
+        try {
+            _hash = TorrentUtil.hashToString(downloadManager.getTorrent().getHash());
+        } catch (Exception e) {
+        	e.printStackTrace();
+            _hash = "";
+        }
+
+	}
 }
