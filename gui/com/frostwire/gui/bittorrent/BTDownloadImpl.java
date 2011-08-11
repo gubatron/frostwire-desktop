@@ -20,6 +20,7 @@ public class BTDownloadImpl implements BTDownload {
     private boolean _deleteTorrentWhenRemove;
 
     private boolean _deleteDataWhenRemove;
+	private String _displayName;
 
     public BTDownloadImpl(DownloadManager downloadManager) {
         updateDownloadManager(downloadManager);
@@ -54,7 +55,7 @@ public class BTDownloadImpl implements BTDownload {
     }
 
     public String getDisplayName() {
-        return _downloadManager.getDisplayName();
+        return _displayName;
     }
 
     public boolean isResumable() {
@@ -322,8 +323,11 @@ public class BTDownloadImpl implements BTDownload {
 	public void updateDownloadManager(DownloadManager downloadManager) {
 		_downloadManager = downloadManager;		
         _partialDownload = TorrentUtil.getSkippedFiles(downloadManager).size() > 0;
-
+        
         updateSize(downloadManager);
+        
+        updateName(downloadManager);
+        
         try {
             _hash = TorrentUtil.hashToString(downloadManager.getTorrent().getHash());
         } catch (Exception e) {
@@ -331,5 +335,14 @@ public class BTDownloadImpl implements BTDownload {
             _hash = "";
         }
 
+	}
+
+	private void updateName(DownloadManager downloadManager) {
+		if (TorrentUtil.getNoSkippedFileInfoSet(downloadManager).size() == 1) {
+			_displayName = TorrentUtil.getNoSkippedFileInfoSet(downloadManager).toArray(new DiskManagerFileInfo[0])[0].getFile(false).getName();
+		} else {
+			_displayName = _downloadManager.getDisplayName();
+		}
+		
 	}
 }
