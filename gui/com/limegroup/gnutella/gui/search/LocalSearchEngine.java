@@ -21,10 +21,14 @@ import com.limegroup.gnutella.GUID;
 
 public class LocalSearchEngine {
 	
-	private static final int DEEP_SEARCH_DELAY = 3000;
-	private static final int DEEP_SEARCH_MINIMUM_RESULTS = 20;
+	private static final int DEEP_SEARCH_DELAY = 1000;
+	private static final int DEEP_SEARCH_MINIMUM_RESULTS = 25;
+	private static final int DEEP_SEARCH_ROUNDS = 5;
 
 	private static LocalSearchEngine INSTANCE;
+
+	/** We'll keep here every info hash we've already processed during the session */
+	private HashSet<String> KNOWN_INFO_HASHES = new HashSet<String>();
 	
 	public static LocalSearchEngine instance() {
 		if (INSTANCE == null) {
@@ -36,7 +40,7 @@ public class LocalSearchEngine {
 
 	/** Perform a simple Database Search, immediate results should be available if there are matches.*/
 	public List<LocalSearchResult> search(String query) {
-		// TODO Auto-generated method stub
+		//TODO
 		return new ArrayList<LocalSearchResult>();
 	}
 	
@@ -44,31 +48,19 @@ public class LocalSearchEngine {
 		ResultPanel rp = null;
 		
 		//Let's wait for enough search results from different search engines.
-		try {
-			Thread.sleep(DEEP_SEARCH_DELAY);
-		} catch (InterruptedException e1) {
-		}
+		sleep();
 
 		//Wait for enough results or die if the ResultPanel has been closed.
-		int tries = 5;
-		while ((rp=SearchMediator.getResultPanelForGUID(new GUID(guid)))!=null) {
-			try {
-				if (rp.getSize() > DEEP_SEARCH_MINIMUM_RESULTS)
-					break;
-				
-				tries--;
-				
-				if (tries == 0)
-					break;
-				
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e1) {
-				}
+		int tries = DEEP_SEARCH_ROUNDS;
 
-			} catch (Exception e) {
+		for (int i=tries; i > 0; i--) {
+			if ((rp=SearchMediator.getResultPanelForGUID(new GUID(guid)))==null) {
 				return null;
 			}
+			
+			scanAvailableResults(guid, query, info, rp);
+			
+			sleep();
 		}
 		
 		//did they close rp? nothing left to do.
@@ -76,18 +68,28 @@ public class LocalSearchEngine {
 			return null;
 		}
 		
-		//See if you have to download any of these torrents.
-		
-		//Search the local database.
+		return null;
+	}
+
+	public void sleep() {
+		try {
+			Thread.sleep(DEEP_SEARCH_DELAY);
+		} catch (InterruptedException e1) {
+		}
+	}
+
+	public void scanAvailableResults(byte[] guid, String query,
+			SearchInformation info, ResultPanel rp) {
 		for (int i=0; i < Math.min(rp.getSize(), DEEP_SEARCH_MINIMUM_RESULTS); i++) {
 			TableLine line = rp.getLine(i);
 			WebSearchResult webSearchResult = line.getSearchResult().getWebSearchResult();
-			SearchEngine searchEngine = line.getSearchEngine();
-			
-			scanDotTorrent(webSearchResult, guid, query, searchEngine, info);
+
+			if (!KNOWN_INFO_HASHES.contains(webSearchResult.getHash())) {
+				KNOWN_INFO_HASHES.add(webSearchResult.getHash());
+				SearchEngine searchEngine = line.getSearchEngine();
+				scanDotTorrent(webSearchResult, guid, query, searchEngine, info);
+			}
 		}
-		
-		return null;
 	}
 	
 	/**
