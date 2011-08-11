@@ -20,7 +20,7 @@ public class VertorWebSearchPerformer implements WebSearchPerformer {
 
         VertorResponse response = searchExtratorrent(keywords);
 
-        if (response.results != null)
+        if (response!=null && response.results != null)
             for (VertorItem item : response.results) {
 
                 WebSearchResult sr = new VertorResponseWebSearchResult(item);

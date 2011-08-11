@@ -1897,7 +1897,8 @@ public final class GUIMediator {
     	return false;
     }
 
-    private static boolean isDataBeingTransfered() {
+    @SuppressWarnings("unused")
+	private static boolean isDataBeingTransfered() {
         AzureusCore azureusCore = AzureusStarter.getAzureusCore();
 
         if (azureusCore != null) {
@@ -1915,4 +1916,10 @@ public final class GUIMediator {
     public void setRemoteDownloadsAllowed(boolean remoteDownloadsAllowed) {
         _remoteDownloadsAllowed = remoteDownloadsAllowed;
     }
+
+	public void openTorrentSearchResult(WebSearchResult item,
+			String relativePath) {
+        getBTDownloadMediator().openTorrentURI(item.getTorrentURI(), relativePath, null);
+        setWindow(GUIMediator.Tabs.SEARCH);
+	}
 }

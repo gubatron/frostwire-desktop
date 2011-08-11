@@ -348,7 +348,42 @@ public final class SearchMediator {
                 }).start();
             }
         }
+        
+        //start local search.
+        doLocalSearch(guid, query, info);
     }
+
+	public static void doLocalSearch(final byte[] guid, final String query, final SearchInformation info) {
+		new Thread(new Runnable() {
+            public void run() {
+
+                final ResultPanel rp = getResultPanelForGUID(new GUID(guid));
+                if (rp != null) {
+                    final List<LocalSearchResult> localResults = LocalSearchEngine.instance().search(query);
+                    final SearchFilter filter = getSearchFilterFactory().createFilter();
+                    
+                    if (localResults.size() > 0) {
+                        SwingUtilities.invokeLater(new Runnable() {
+                            public void run() {
+                                try {
+                                    
+                                    for (SearchResult sr : localResults) {
+                                        if (filter.allow(sr)) {
+                                            getSearchResultDisplayer().addQueryResult(guid, sr, rp);
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    }
+                }
+                
+                LocalSearchEngine.instance().deepSearch(guid, query, info);
+            }
+        }).start();
+	}
     
     private static List<SearchResult> normalizeWebResults(List<WebSearchResult> webResults, SearchEngine engine, SearchInformation info) {
         

@@ -132,6 +132,11 @@ public class BTDownloadCreator {
                         iTunesMediator.instance().scanForSongs(manager.getSaveLocation());
                     }
                 }
+                
+                //if you have to hide seeds, do so.
+                if (state == DownloadManager.STATE_SEEDING) {
+                	BTDownloadMediator.instance().updateTableFilters();
+                }
             }
         });
 

@@ -5,10 +5,12 @@ import java.io.File;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
+import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloader;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderCallBackInterface;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderFactory;
+import org.gudy.azureus2.core3.util.TorrentUtils;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -30,6 +32,7 @@ public class TorrentFetcherDownload implements BTDownload {
     private String _state;
     private boolean _removed;
     private BTDownload _delegate;
+	private String relativePath;
 
     public TorrentFetcherDownload(String uri, String displayName, String hash, long size, boolean partialDownload, ActionListener postPartialDownloadAction) {
         String saveDir = SharingSettings.TORRENTS_DIR_SETTING.getValue().getAbsolutePath();
@@ -48,7 +51,13 @@ public class TorrentFetcherDownload implements BTDownload {
         this(uri, uri, "", -1, partialDownload, postPartialDownloadAction);
     }
 
-    public long getSize() {
+    public TorrentFetcherDownload(String uri, String relativePath,
+			ActionListener postPartialDownloadAction) {
+    	this(uri, uri, "", -1, true, postPartialDownloadAction);
+    	this.relativePath = relativePath;
+	}
+
+	public long getSize() {
         return _delegate != null ? _delegate.getSize() : _size;
     }
 
@@ -184,7 +193,17 @@ public class TorrentFetcherDownload implements BTDownload {
             }
             if (state == TorrentDownloader.STATE_FINISHED && finished.compareAndSet(false,true)) {
                 try {
-                    if (_partialDownload) {
+                	//single file download straight from a torrent deep search.
+                	if (relativePath != null) {
+                		TOTorrent torrent = TorrentUtils.readFromFile(inf.getFile(), false);
+                		
+                        filesSelection = new boolean[torrent.getFiles().length];
+                        for (int i = 0; i < filesSelection.length; i++) {
+                            filesSelection[i] = torrent.getFiles()[i].getRelativePath().equals(relativePath);
+                        }
+	
+                	}
+                	else if (_partialDownload) {
                         GUIMediator.safeInvokeAndWait(new Runnable() {
                             public void run() {
                                 try {
