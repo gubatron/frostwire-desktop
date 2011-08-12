@@ -359,7 +359,8 @@ public final class SearchMediator {
 
                 final ResultPanel rp = getResultPanelForGUID(new GUID(guid));
                 if (rp != null) {
-                    final List<LocalSearchResult> localResults = LocalSearchEngine.instance().search(query);
+                    final List<SmartSearchResult> localResults = LocalSearchEngine.instance().search(query);
+                    
                     final SearchFilter filter = getSearchFilterFactory().createFilter();
                     
                     if (localResults.size() > 0) {

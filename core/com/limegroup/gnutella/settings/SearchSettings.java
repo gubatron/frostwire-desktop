@@ -1,13 +1,17 @@
 package com.limegroup.gnutella.settings;
 
+import java.io.File;
+
 import org.limewire.setting.BooleanSetting;
 import org.limewire.setting.ByteSetting;
 import org.limewire.setting.CharArraySetting;
+import org.limewire.setting.FileSetting;
 import org.limewire.setting.FloatSetting;
 import org.limewire.setting.IntSetting;
 import org.limewire.setting.ProbabilisticBooleanSetting;
 import org.limewire.setting.StringArraySetting;
 import org.limewire.setting.StringSetting;
+import org.limewire.util.CommonUtils;
 
 
 /**
@@ -400,4 +404,6 @@ public final class SearchSettings extends LimeProps {
     public static boolean desiresPartialResults() {
         return DESIRES_PARTIAL_RESULTS.getValue() && DESIRES_PARTIAL_RESULTS_REMOTE.getValue();
     }
+    
+	public static final FileSetting SMART_SEARCH_DATABASE_FOLDER = FACTORY.createFileSetting("SMART_SEARCH_DATABASE_FOLDER", new File(CommonUtils.getUserSettingsDir(), "search_db"));
 }

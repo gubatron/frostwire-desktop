@@ -18,6 +18,7 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="frostwire.desktop/lib/native"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="src" path="components/alexandria/src/main/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/jars/commons-logging.jar"/>
 	<classpathentry kind="lib" path="lib/jars/gettext-commons.jar" sourcepath="lib/jars-src"/>

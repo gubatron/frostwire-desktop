@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.gudy.azureus2.core3.torrent.TOTorrent;
@@ -14,10 +16,17 @@ import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderCallBackInterf
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderFactory;
 import org.gudy.azureus2.core3.util.TorrentUtils;
 
+import com.frostwire.JsonEngine;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.filters.SearchFilter;
 import com.limegroup.gnutella.GUID;
+import com.limegroup.gnutella.gui.search.db.SmartSearchDB;
+import com.limegroup.gnutella.gui.search.db.TorrentDBPojo;
+import com.limegroup.gnutella.gui.search.db.TorrentFileDBPojo;
+import com.limegroup.gnutella.settings.SearchSettings;
+import com.limegroup.gnutella.util.FrostWireUtils;
+import com.limegroup.gnutella.util.FrostWireUtils.IndexedMapFunction;
 
 public class LocalSearchEngine {
 	
@@ -29,6 +38,14 @@ public class LocalSearchEngine {
 
 	/** We'll keep here every info hash we've already processed during the session */
 	private HashSet<String> KNOWN_INFO_HASHES = new HashSet<String>();
+	private SmartSearchDB DB;
+	private JsonEngine JSON_ENGINE;
+	
+	
+	public LocalSearchEngine() {
+		DB = new SmartSearchDB(SearchSettings.SMART_SEARCH_DATABASE_FOLDER.getValue());
+		JSON_ENGINE = new JsonEngine();
+	}
 	
 	public static LocalSearchEngine instance() {
 		if (INSTANCE == null) {
@@ -37,14 +54,120 @@ public class LocalSearchEngine {
 
 		return INSTANCE;
 	}
+	public final static HashSet<String> IGNORABLE_KEYWORDS;
+
+	static {
+		IGNORABLE_KEYWORDS = new HashSet<String>();
+		IGNORABLE_KEYWORDS.addAll(Arrays.asList("me", "you", "he", "she", "they", "them", "we", "us", "my", "your", "yours", "his", "hers", "theirs", "ours",
+				"the", "of", "in", "on", "out", "to", "at", "as", "and", "by", "not", "is", "are", "am", "was", "were", "will", "be", "for"));
+	}
+
+	/**
+	 * Avoid possible SQL errors due to escaping.
+	 * Cleans all double spaces and trims.
+	 * @param str
+	 * @return
+	 */
+	private final static String stringSanitize(String str) {
+		str = str.replace("\\", "").replace("%", "").replace("_", "").replace(";", "").replace("'", "''");
+
+		while (str.indexOf("  ") != -1) {
+			str = str.replace("  ", " ");
+		}
+		return str;
+	}
+
+	/**
+	 * @param builder
+	 * @param lastIndex
+	 * @param uniqueQueryTokensArray
+	 * @param columns
+	 * @return
+	 */
+	private static String getWhereClause(final String[] uniqueQueryTokensArray, String... columns) {
+		final StringBuilder builder = new StringBuilder();
+		final int lastIndex = columns.length - 1;
+
+		FrostWireUtils.map(Arrays.asList(columns), new IndexedMapFunction<String>() {
+			//Create a where clause that considers all the given columns for each of the words in the query.
+			public void map(int i, String column) {
+
+				int size = uniqueQueryTokensArray.length;
+
+				for (int j = 0; j < size; j++) {
+					String token = uniqueQueryTokensArray[j];
+					builder.append(column + " LIKE '%" + token + "%' COLLATE NOCASE " + ((i <= lastIndex || j < size) ? " OR " : ""));
+				}
+			}
+		});
+
+		String str = builder.toString();
+		int index = str.lastIndexOf(" OR");
+
+		return index > 0 ? str.substring(0, index) : str;
+	}
+
+	public final static String getOrWhereClause(String query, String... columns) {
+		String[] queryTokens = stringSanitize(query).split(" ");
+
+		//Let's make sure we don't send repeated tokens to SQL Engine 
+		Set<String> uniqueQueryTokens = new TreeSet<String>();
+		for (int i = 0; i < queryTokens.length; i++) {
+			String token = queryTokens[i];
+
+			if (token.length()==1 || uniqueQueryTokens.contains(token) || IGNORABLE_KEYWORDS.contains(token.toLowerCase())) {
+				continue;
+			}
+
+			uniqueQueryTokens.add(token);
+		}
+
+		String[] uniqueQueryTokensArray = uniqueQueryTokens.toArray(new String[] {});
+
+		return getWhereClause(uniqueQueryTokensArray, columns);
+	}
 
 	/** Perform a simple Database Search, immediate results should be available if there are matches.*/
-	public List<LocalSearchResult> search(String query) {
-		//TODO
-		return new ArrayList<LocalSearchResult>();
+	public List<SmartSearchResult> search(String query) {
+		String orWhereClause = getOrWhereClause(query, "fileName", "torrentName");
+		String sql = "SELECT Torrents.json, Files.json FROM Torrents INNER JOIN Files ON Torrents.torrentId = Files.torrentId WHERE " + orWhereClause;
+		
+		List<List<Object>> rows = DB.query(sql);
+
+		List<SmartSearchResult> results = new ArrayList<SmartSearchResult>();
+		
+		String[] queryTokens = query.split(" ");
+		
+		//GUBENE
+		for (List<Object> row : rows) {
+			String torrentJSON = (String) row.get(0);
+			String fileJSON = (String) row.get(1);
+			
+			
+			if (queryTokens.length ==1 || allTokensInString(queryTokens, torrentJSON + " " + fileJSON)) {
+				TorrentDBPojo torrentPojo = JSON_ENGINE.toObject(torrentJSON, TorrentDBPojo.class);
+				TorrentFileDBPojo torrentFilePojo = JSON_ENGINE.toObject(fileJSON, TorrentFileDBPojo.class);
+				
+				results.add(new SmartSearchResult(torrentPojo, torrentFilePojo));
+			}
+		}
+		
+		return results;
 	}
 	
-	public List<LocalSearchResult> deepSearch(byte[] guid, String query, SearchInformation info) {
+	private boolean allTokensInString(String[] tokens, String string) {
+		int ntokens = tokens.length;
+		if (tokens.length > 1) {
+				for (int i=0; i < ntokens; i++) {
+					if (!string.contains(tokens[i])) {
+						return false;
+					}
+				}
+		}
+		return true;
+	}
+
+	public List<DeepSearchResult> deepSearch(byte[] guid, String query, SearchInformation info) {
 		ResultPanel rp = null;
 		
 		//Let's wait for enough search results from different search engines.
@@ -110,12 +233,12 @@ public class LocalSearchEngine {
 	}
 
 	private boolean torrentHasBeenIndexed() {
+		//TODO
 		return false;
 	}
 	
 	private void indexTorrent(TOTorrent theTorrent) {
-		// TODO Auto-generated method stub
-		System.out.println("LocalSearchEngine.indexTorrent() UNIMPLEMENTED.");
+
 	}
 
 
@@ -184,7 +307,7 @@ public class LocalSearchEngine {
 			
 			TOTorrentFile[] fs = theTorrent.getFiles();
 			for (int i=0; i < fs.length ; i++) {
-				LocalSearchResult result = new LocalSearchResult(fs[i],webSearchResult, searchEngine, info);
+				DeepSearchResult result = new DeepSearchResult(fs[i],webSearchResult, searchEngine, info);
 				
 				if (!filter.allow(result))
 					continue;

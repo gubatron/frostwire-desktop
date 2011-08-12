@@ -359,7 +359,7 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
         case SearchTableColumns.TYPE_IDX:
             return getIcon();
         case SearchTableColumns.NAME_IDX:
-        	if (getSearchResult() instanceof LocalSearchResult) {
+        	if (getSearchResult() instanceof DeepSearchResult) {
         		return new ActionIconAndNameHolder(null, null, getFilenameNoExtension());
         	}
             return new ActionIconAndNameHolder(getTreeIcon(), _downloadAction, getFilenameNoExtension());

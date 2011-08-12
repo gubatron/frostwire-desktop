@@ -74,4 +74,16 @@ public final class SearchEngine {
     public WebSearchPerformer getPerformer() {
         return _performer;
     }
+
+	public static SearchEngine getSearchEngineById(int searchEngineID) {
+		List<SearchEngine> searchEngines = getSearchEngines();
+		
+		for (SearchEngine engine : searchEngines) {
+			if (engine.getId()==searchEngineID) {
+				return engine;
+			}
+		}
+		
+		return null;
+	}
 }

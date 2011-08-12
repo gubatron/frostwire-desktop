@@ -15,14 +15,14 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 import com.limegroup.gnutella.settings.BittorrentSettings;
 
-public class LocalSearchResult extends AbstractSearchResult {
+public class DeepSearchResult extends AbstractSearchResult {
 
     private WebSearchResult _item;
     private SearchEngine _searchEngine;
     private SearchInformation _info;
     private TOTorrentFile _torrentFile;
 
-    public LocalSearchResult(TOTorrentFile torrentFile, WebSearchResult item, SearchEngine searchEngine, SearchInformation searchInfo) {
+    public DeepSearchResult(TOTorrentFile torrentFile, WebSearchResult item, SearchEngine searchEngine, SearchInformation searchInfo) {
         _item = item;
         _searchEngine = searchEngine;
         _info = searchInfo;

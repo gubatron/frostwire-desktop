@@ -2,6 +2,7 @@ package com.limegroup.gnutella.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import org.limewire.setting.SettingsFactory;
@@ -329,5 +330,24 @@ public final class FrostWireUtils {
         }
         return new Tagged<String>(result, true);
     }
+    
+    public static interface IndexedMapFunction<T> {
+    	public void map(int i, T obj);
+    }
+    
+	/**
+	 * Make sure your List implements RandomAccess.
+	 * 
+	 * @param <T>
+	 * @param list
+	 * @param mapFunction
+	 */
+	public static <T> void map(List<T> list, IndexedMapFunction<T> mapFunction) {
+		int size = list.size();
+		for (int i = 0; i < size; i++) {
+			mapFunction.map(i, list.get(i));
+		}
+	}
+
 
 }
