@@ -41,6 +41,10 @@ public class SmartSearchResult extends AbstractSearchResult {
 
     @Override
     public String getFileName() {
+    	if (file.relativePath.startsWith("/")) {
+    		file.relativePath = file.relativePath.substring(1);
+    	}
+    	
     	return new File(file.relativePath).getName();
     }
 
@@ -49,6 +53,10 @@ public class SmartSearchResult extends AbstractSearchResult {
     	if (file.relativePath.indexOf("/") != -1) {
     		String fileName = file.relativePath.substring(file.relativePath.lastIndexOf("/"));
     		return fileName.substring(0,fileName.lastIndexOf("."));
+    	}
+    	
+    	if (file.relativePath.startsWith("/")) {
+    		file.relativePath = file.relativePath.substring(1);
     	}
     	
     	return file.relativePath.substring(0, file.relativePath.lastIndexOf("."));

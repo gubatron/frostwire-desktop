@@ -153,7 +153,7 @@ public class LocalSearchEngine {
 	public List<SmartSearchResult> search(String query) {
 		String orWhereClause = getOrWhereClause(query, "fileName");//,
 				//"torrentName");
-		String sql = "SELECT Torrents.json, Files.json, torrentName, fileName, FROM Torrents, Files WHERE Torrents.torrentId = Files.torrentId AND ("
+		String sql = "SELECT Torrents.json, Files.json, torrentName, fileName FROM Torrents, Files WHERE Torrents.torrentId = Files.torrentId AND ("
 				+ orWhereClause + ") ";
 		
 		System.out.println(sql);

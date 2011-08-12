@@ -41,7 +41,11 @@ public class DeepSearchResult extends AbstractSearchResult {
 
     @Override
     public String getFileName() {
-    	return new File(_torrentFile.getRelativePath()).getName();
+    	String fName = new File(_torrentFile.getRelativePath()).getName();
+    	if (fName.startsWith("/")) {
+    		return fName.substring(1);
+    	}
+    	return fName;
     }
 
     @Override
@@ -51,7 +55,12 @@ public class DeepSearchResult extends AbstractSearchResult {
     		return fileName.substring(0,fileName.lastIndexOf("."));
     	}
     	
-    	return _torrentFile.getRelativePath().substring(0, _torrentFile.getRelativePath().lastIndexOf("."));
+    	String fName = _torrentFile.getRelativePath().substring(0, _torrentFile.getRelativePath().lastIndexOf("."));
+    	if (fName.startsWith("/")) {
+    		return fName.substring(1);
+    	}
+    	
+    	return fName;
     }
 
     @Override
