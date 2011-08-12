@@ -155,21 +155,23 @@ public class SmartSearchDB {
     private Connection createDatabase(File path, String name) {
         Connection connection = openConnection(path, name, true);
 
-        // STRUCTURE CREATION
-
-        //update(connection, "DROP TABLE Library IF EXISTS CASCADE");
-        /** This table keeps only a single row to identify what version of the database we have */
-        update(connection, "CREATE TABLE SmartSearchMetaData (smartSearchId INTEGER IDENTITY, name VARCHAR(500), version INTEGER)");
-
+        update(connection, "SET IGNORECASE TRUE");
         
-        update(connection, "CREATE TABLE Torrents (torrentId INTEGER IDENTITY, infoHash VARCHAR(60), timestamp TIMESTAMP, torrentName VARCHAR(256), json VARCHAR(32768)");
+        //TORRENTS
+        update(connection, "CREATE TABLE Torrents (torrentId INTEGER IDENTITY, infoHash VARCHAR(60), timestamp BIGINT, torrentName VARCHAR(256), json VARCHAR(32768))");
         update(connection, "CREATE INDEX idxTorrents ON Torrents (infoHash)");
         
+        //FILES
         update(connection, "CREATE TABLE Files (fileId INTEGER IDENTITY, torrentId INTEGER, fileName VARCHAR(256), json VARCHAR(32768))");
+        update(connection, "CREATE INDEX idxFiles ON Files (fileName)");
         
-        // INITIAL DATA
-        update(connection, "INSERT INTO SmartSearchMetaData (name , version) VALUES ('" + name + "', " + SMART_SEARCH_DATABASE_VERSION + ")");
+        //SNAPSHOTS - (Created right before user imports a DB, this way the user can delete (rollback) all new insertions after the snapshot)
+        update(connection, "CREATE TABLE Snapshots (snapshotId INTEGER IDENTITY, timestamp BIGINT)");
 
+        /** This table keeps only a single row to identify what version of the database we have */
+        update(connection, "CREATE TABLE SmartSearchMetaData (smartSearchId INTEGER IDENTITY, name VARCHAR(500), version INTEGER)");
+        update(connection, "INSERT INTO SmartSearchMetaData (name , version) VALUES ('" + name + "', " + SMART_SEARCH_DATABASE_VERSION + ")");
+        
         return connection;
     }
 
