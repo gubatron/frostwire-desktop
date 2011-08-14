@@ -108,9 +108,9 @@ public class LocalSearchEngine {
 
 						for (int j = 0; j < size; j++) {
 							String token = uniqueQueryTokensArray[j];
-							builder.append(column
+							builder.append("LCASE(" + column + ")"
 									+ " LIKE '%"
-									+ token
+									+ token.toLowerCase()
 									+ "%' "
 									+ ((i <= lastIndex || j < size) ? " OR "
 											: ""));
