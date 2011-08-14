@@ -22,7 +22,9 @@ public class TorrentFetcherDownload implements BTDownload {
     private static final String STATE_ERROR = I18n.tr("Error");
     private static final String STATE_CANCELED = I18n.tr("Canceled");
 
-    private final TorrentDownloader _torrentDownloader;
+    private String _uri;
+    private final String _torrentSaveDir;
+    private TorrentDownloader _torrentDownloader;
     private final String _displayName;
     private final String _hash;
     private final long _size;
@@ -35,8 +37,9 @@ public class TorrentFetcherDownload implements BTDownload {
 	private String relativePath;
 
     public TorrentFetcherDownload(String uri, String displayName, String hash, long size, boolean partialDownload, ActionListener postPartialDownloadAction) {
-        String saveDir = SharingSettings.TORRENTS_DIR_SETTING.getValue().getAbsolutePath();
-        _torrentDownloader = TorrentDownloaderFactory.create(new TorrentDownloaderListener(), uri, null, saveDir);
+        _uri = uri;
+        _torrentSaveDir = SharingSettings.TORRENTS_DIR_SETTING.getValue().getAbsolutePath();
+        _torrentDownloader = TorrentDownloaderFactory.create(new TorrentDownloaderListener(), _uri, null, _torrentSaveDir);
         _displayName = displayName;
         _hash = hash;
         _size = size;
@@ -250,7 +253,14 @@ public class TorrentFetcherDownload implements BTDownload {
                     e.printStackTrace();
                 }
             } else if (state == TorrentDownloader.STATE_ERROR) {
-                _state = STATE_ERROR;
+                if (_hash != null && _hash.trim() != "" && (_uri.toLowerCase().startsWith("http://") || _uri.toLowerCase().startsWith("https://"))) {
+                    _uri = TorrentUtil.getMagnet(_hash);
+                    _torrentDownloader = TorrentDownloaderFactory.create(new TorrentDownloaderListener(), _uri, null, _torrentSaveDir);
+                    _state = STATE_DOWNLOADING;
+                    _torrentDownloader.start();
+                } else {
+                    _state = STATE_ERROR;
+                }
             }
         }
 

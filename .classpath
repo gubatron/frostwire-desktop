@@ -18,7 +18,6 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="frostwire.desktop/lib/native"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="components/alexandria/src/main/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/jars/commons-logging.jar"/>
 	<classpathentry kind="lib" path="lib/jars/gettext-commons.jar" sourcepath="lib/jars-src"/>
@@ -31,6 +30,6 @@
 	<classpathentry kind="lib" path="lib/jars/httpclient-4.0.jar" sourcepath="lib/jars-src"/>
 	<classpathentry kind="lib" path="lib/jars/httpcore-4.0.1.jar" sourcepath="lib/jars-src"/>
 	<classpathentry kind="lib" path="lib/jars/MRJAdapter.jar"/>
-	<classpathentry kind="lib" path="lib/jars/hsqldb.jar"/>
+	<classpathentry kind="lib" path="lib/jars/hsqldb-2.2.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
