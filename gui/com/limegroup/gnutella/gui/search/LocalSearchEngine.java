@@ -176,8 +176,9 @@ public class LocalSearchEngine {
 			String fileName = (String) row.get(3);
 			
 			
-			if (queryTokens.length == 1
-					|| allTokensInString(queryTokens, torrentName + " " + fileName)) {
+			//if (queryTokens.length == 1
+			//		|| allTokensInString(queryTokens, torrentName + " " + fileName)) {
+			if (new MatchLogic(query, torrentName, fileName).matchResult()) {
 				TorrentDBPojo torrentPojo = JSON_ENGINE.toObject(torrentJSON,
 						TorrentDBPojo.class);
 				TorrentFileDBPojo torrentFilePojo = JSON_ENGINE.toObject(
@@ -462,4 +463,89 @@ public class LocalSearchEngine {
 		}
 	}
 
+    private class MatchLogic {
+
+        private List<String> query;
+        private String torrentName;
+        private String fileName;
+        private List<String> substractedQuery;
+        private List<String> tokensTorrent;
+
+        public MatchLogic(String query, String torrentName, String fileName) {
+            this.query = Arrays.asList(query.toLowerCase().split(" "));
+            this.torrentName = torrentName.toLowerCase();
+            this.fileName = fileName.toLowerCase();
+
+            initSubstractedQuery();
+        }
+
+        private void initSubstractedQuery() {
+            // substract the query keywords that are already in the
+            // webSearchResult title.
+
+            String torrentFileNameNoExtension = torrentName;
+            List<String> tokensQuery = new ArrayList<String>(query);
+            tokensTorrent = Arrays.asList(torrentFileNameNoExtension.toLowerCase().split(" "));
+
+            tokensQuery.removeAll(tokensTorrent);
+            this.substractedQuery = tokensQuery;
+        }
+
+        public boolean matchResult() {
+
+            boolean foundMatch = true;
+
+            List<String> selectedQuery = substractedQuery;
+
+            // if all tokens happened to be on the title of the torrent,
+            // we'll just use the full query.
+            if (substractedQuery.size() == 0) {
+                selectedQuery = query;
+            }
+
+            // Steve Jobs style first (like iTunes search logic)
+            for (String token : selectedQuery) {
+                if (!fileName.contains(token)) {
+                    foundMatch = false;
+                    break;
+                }
+            }
+
+            // best match ever, Steve Jobs style.
+            if (foundMatch) {
+                return true;
+            }
+
+            // if Steve Jobs is too good for ya...
+            // we'll remove the tokens of the torrent title ONCE from the
+            // search result name
+            // and we'll perform a match on what's left.
+            String resultName = fileName;
+
+            HashSet<String> torrentTokenSet = new HashSet<String>(tokensTorrent);
+            for (String torrentToken : torrentTokenSet) {
+                try {
+                    torrentToken = torrentToken.replace("(", "").replace(")", "").replace("[", "").replace("]", "");
+                    resultName = resultName.replaceFirst(torrentToken, "");
+                } catch (Exception e) {
+                    // shhh
+                }
+            }
+
+            foundMatch = true; // optimism!
+
+            for (String token : selectedQuery) {
+                if (!resultName.contains(token)) {
+                    foundMatch = false;
+                    break;
+                }
+            }
+
+            if (foundMatch) {
+                return true;
+            }
+
+            return false;
+        }
+    }
 }
