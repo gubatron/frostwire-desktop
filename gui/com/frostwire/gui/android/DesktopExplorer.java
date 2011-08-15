@@ -559,14 +559,21 @@ public class DesktopExplorer extends JPanel implements ThemeObserver {
     }
 
     private void actionStartDelete() {
+    	
         int[] selectedIndices = _list.getSelectedIndices();
 
         if (selectedIndices.length > 0) {
+        	JComponent dialogParent = AndroidMediator.instance().getComponent();
+        	
+        	int r = JOptionPane.showConfirmDialog(dialogParent, I18n.tr("Are you sure you want to delete the selected files?"),I18n.tr("Are you sure?"),JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+        	if (r!=JOptionPane.YES_OPTION) {
+        		return;
+        	}
+        	
             for (int index = 0; index < selectedIndices.length; index++) {
                 LocalFile localFile = (LocalFile) _model.getElementAt(selectedIndices[index]);
                 if (localFile != null) {
-                    
-                    JComponent dialogParent = AndroidMediator.instance().getComponent();
                     
                     if (localFile.getFile().isDirectory() && localFile.getFile().list().length > 0) {
                         JOptionPane.showMessageDialog(dialogParent, I18n.tr("Can't delete not empty folder"), I18n.tr("System"), JOptionPane.INFORMATION_MESSAGE);

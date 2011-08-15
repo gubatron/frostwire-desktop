@@ -6,6 +6,7 @@ frostwire (5.0.9) stable; urgency=high
   * Core upgrade, if a .torrent fails to download from its HTTP location
     FrostWire will download it from the DHT if it can find it there.
   * UX upgrade, ability to hide/show seeding torrents on transfer manager.
+  * UX upgrade, Phone & Tablets desktop explorer asks before deleting files.
   * UX fix, search results can now be sorted by file type.
   * Mininova is back.
 
