@@ -52,15 +52,15 @@ public class DeepSearchResult extends AbstractSearchResult {
     public String getFilenameNoExtension() {
     	if (_torrentFile.getRelativePath().indexOf("/") != -1) {
     		String fileName = _torrentFile.getRelativePath().substring(_torrentFile.getRelativePath().lastIndexOf("/"));
+    		
+    		if (fileName.startsWith("/")) {
+    			fileName = fileName.substring(1);
+    		}
+    		
     		return fileName.substring(0,fileName.lastIndexOf("."));
     	}
     	
-    	String fName = _torrentFile.getRelativePath().substring(0, _torrentFile.getRelativePath().lastIndexOf("."));
-    	if (fName.startsWith("/")) {
-    		return fName.substring(1);
-    	}
-    	
-    	return fName;
+    	return _torrentFile.getRelativePath().substring(0,_torrentFile.getRelativePath().lastIndexOf("."));
     }
 
     @Override

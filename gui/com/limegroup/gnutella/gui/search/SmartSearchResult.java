@@ -50,17 +50,18 @@ public class SmartSearchResult extends AbstractSearchResult {
 
     @Override
     public String getFilenameNoExtension() {
+
     	if (file.relativePath.indexOf("/") != -1) {
     		String fileName = file.relativePath.substring(file.relativePath.lastIndexOf("/"));
+    		
+        	if (fileName.startsWith("/")) {
+        		fileName = fileName.substring(1);
+        	}
+    		
     		return fileName.substring(0,fileName.lastIndexOf("."));
     	}
     	
-    	if (file.relativePath.startsWith("/")) {
-    		file.relativePath = file.relativePath.substring(1);
-    	}
-    	
     	return file.relativePath.substring(0, file.relativePath.lastIndexOf("."));
-
     }
 
     @Override
