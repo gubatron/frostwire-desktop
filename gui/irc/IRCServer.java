@@ -5,6 +5,8 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import com.limegroup.gnutella.util.FrostWireUtils;
+
 /**
  * FirstLineFilter, used to handle CTCP codes.
  */
@@ -97,7 +99,7 @@ class FirstLineFilter
     }
     else if(cmd.equals("version"))
     {
-      String data="FrostWire Community Chat v0.4c";
+      String data="FrostWire Community Chat v0.4c - FrostWire " + FrostWireUtils.getFrostWireVersion();
       _server.execute("NOTICE "+nick+" :\1VERSION "+data+" VKEY=46o1dkNwNXnVJ5YXttPc2NVyxtu02x8C"+"\1");
     }
     else if(cmd.equals("voidkey"))

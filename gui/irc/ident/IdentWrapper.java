@@ -29,6 +29,8 @@
 
 package irc.ident;
 
+import com.limegroup.gnutella.util.FrostWireUtils;
+
 import irc.*;
 import irc.ident.prv.*;
 
@@ -62,7 +64,7 @@ public class IdentWrapper extends IRCObject
     _ident.addIdentListener(lis);
     String name=_ircConfiguration.getS("userid");
     if(name.length()==0) name=userName;
-    _ident.setDefaultUser("JAVA",name);
+    _ident.setDefaultUser("FrostWire " + FrostWireUtils.getFrostWireVersion() ,name);
     try
     {
       int port=113;

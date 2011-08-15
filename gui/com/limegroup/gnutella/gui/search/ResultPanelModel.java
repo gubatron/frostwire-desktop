@@ -3,6 +3,7 @@ package com.limegroup.gnutella.gui.search;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.BasicDataLineModel;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.settings.SearchSettings;
@@ -107,11 +108,17 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
         int spamRet = compareSpam(ta, tb);
         if (spamRet != 0)
             return spamRet;
-        
-        if (!isSorted() || _activeColumn != SearchTableColumns.COUNT_IDX)
+
+        //super.compare() will only sort Comparables and Strings.
+        //since the Type column returns an Icon, we compare by hand using the file extension.
+        if (_activeColumn == SearchTableColumns.TYPE_IDX) {
+        	return AbstractTableMediator.compare(ta.getExtension(), tb.getExtension()) * _ascending;
+        }  else if (!isSorted() || _activeColumn != SearchTableColumns.COUNT_IDX) {
             return super.compare(ta, tb);
-        else
+        }
+        else {
             return compareCount(ta, tb, false);
+        }
     }
     
     /**

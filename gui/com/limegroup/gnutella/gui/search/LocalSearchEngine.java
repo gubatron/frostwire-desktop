@@ -108,9 +108,9 @@ public class LocalSearchEngine {
 
 						for (int j = 0; j < size; j++) {
 							String token = uniqueQueryTokensArray[j];
-							builder.append("LCASE(" + column + ")"
+							builder.append(column 
 									+ " LIKE '%"
-									+ token.toLowerCase()
+									+ token
 									+ "%' "
 									+ ((i <= lastIndex || j < size) ? " OR "
 											: ""));
@@ -151,14 +151,21 @@ public class LocalSearchEngine {
 	 * if there are matches.
 	 */
 	public List<SmartSearchResult> search(String query) {
+		query = query.toLowerCase();
 		String orWhereClause = getOrWhereClause(query, "fileName");//,
 				//"torrentName");
-		String sql = "SELECT Torrents.json, Files.json, torrentName, fileName FROM Torrents, Files WHERE Torrents.torrentId = Files.torrentId AND ("
-				+ orWhereClause + ") ";
+//		String sql = "SELECT Torrents.json, Files.json, torrentName, fileName FROM Torrents, Files WHERE Torrents.torrentId = Files.torrentId AND ("
+//				+ orWhereClause + ") ";
+		String sql = "SELECT Torrents.json, Files.json, torrentName, fileName FROM Torrents JOIN Files ON Torrents.torrentId = Files.torrentId WHERE ("
+			+ orWhereClause + ") ";
+
 		
 		System.out.println(sql);
 
+		long start = System.currentTimeMillis();
 		List<List<Object>> rows = DB.query(sql);
+		long delta = System.currentTimeMillis() - start;
+		System.out.println("Found " + rows.size() + " results in " + delta + "ms.");
 
 		List<SmartSearchResult> results = new ArrayList<SmartSearchResult>();
 
@@ -186,7 +193,7 @@ public class LocalSearchEngine {
 				
 				results.add(new SmartSearchResult(torrentPojo, torrentFilePojo));
 				KNOWN_INFO_HASHES.add(torrentPojo.hash);
-				System.out.println("Found result -> " + torrentFilePojo);
+				//System.out.println("Found result -> " + torrentFilePojo);
 			}
 		}
 
@@ -301,7 +308,7 @@ public class LocalSearchEngine {
 		torrentJSON = torrentJSON.replace("'", "\'");
 		
 		int torrentID = DB.insert("INSERT INTO Torrents (infoHash, timestamp, torrentName, json) VALUES ('"+torrentPojo.hash+"', " +
-				""+ System.currentTimeMillis() + ", '" + torrentPojo.fileName +"', '"+ torrentJSON + "')");
+				""+ System.currentTimeMillis() + ", '" + torrentPojo.fileName.toLowerCase() +"', '"+ torrentJSON + "')");
 		
 		TOTorrentFile[] files = theTorrent.getFiles();
 
@@ -313,7 +320,7 @@ public class LocalSearchEngine {
 			String fileJSON = JSON_ENGINE.toJson(tfPojo);
 			fileJSON = fileJSON.replace("'", "\'");
 			
-			DB.insert("INSERT INTO Files (torrentId, fileName, json) VALUES ("+torrentID+", '"+tfPojo.relativePath+"', '"+fileJSON+"')");
+			DB.insert("INSERT INTO Files (torrentId, fileName, json) VALUES ("+torrentID+", '"+tfPojo.relativePath.toLowerCase()+"', '"+fileJSON+"')");
 			//System.out.println("INSERT INTO Files (torrentId, fileName, json) VALUES ("+torrentID+", '"+tfPojo.relativePath+"', '"+fileJSON+"')");
 		}
 		
@@ -547,5 +554,9 @@ public class LocalSearchEngine {
 
             return false;
         }
+    }
+    
+    public void shutdown() {
+    	DB.close();
     }
 }

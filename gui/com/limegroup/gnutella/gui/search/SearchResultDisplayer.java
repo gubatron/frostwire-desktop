@@ -26,6 +26,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.TabbedPaneUI;
+import javax.swing.table.TableRowSorter;
 
 import com.frostwire.gui.components.Slide;
 import com.frostwire.gui.components.SlideshowPanel;
@@ -144,9 +145,6 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 			mainScreen.add(DUMMY.getComponent(), BorderLayout.CENTER);
 	        
 	        results.add("dummy", mainScreen);
-
-
-
         }
         
         switcher.first(results);

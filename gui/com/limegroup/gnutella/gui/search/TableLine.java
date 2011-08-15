@@ -112,7 +112,7 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
     }
 
     private void initializeEnd() {
-        updateLicense();
+
     }
 
     public boolean isLink() {
@@ -158,25 +158,10 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
      * Updates cached data about this line.
      */
     public void update() {
-        updateLicense();
+
     }
 
-    /**
-     * Updates the license status.
-     */
-    private void updateLicense() {
-        //        if(_doc != null && _sha1 != null) {
-        //            String licenseString = _doc.getLicenseString();
-        //            LicenseFactory factory = _doc.getLicenseFactory();
-        //            if(licenseString != null) {
-        //                if(factory.isVerifiedAndValid(_sha1, licenseString))
-        //                    _licenseState = License.VERIFIED;
-        //                else
-        //                    _licenseState = License.UNVERIFIED;
-        //                _licenseName = factory.getLicenseName(licenseString);
-        //            }
-        //        }
-    }
+
 
     /**
      * Gets the speed of this line.

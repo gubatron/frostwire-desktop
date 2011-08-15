@@ -892,6 +892,7 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
      * 'Number', which just uses an int comparison.
      */
     @SuppressWarnings("unchecked")
+	public
     static int compare(Object o1, Object o2) {
         int retval;
         
