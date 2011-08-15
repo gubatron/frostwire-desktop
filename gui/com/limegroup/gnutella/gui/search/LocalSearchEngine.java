@@ -169,8 +169,6 @@ public class LocalSearchEngine {
 
 		List<SmartSearchResult> results = new ArrayList<SmartSearchResult>();
 
-		String[] queryTokens = query.split(" ");
-
 		// GUBENE
 		for (List<Object> row : rows) {
 			String torrentJSON = (String) row.get(0);
@@ -200,17 +198,6 @@ public class LocalSearchEngine {
 		return results;
 	}
 
-	private boolean allTokensInString(String[] tokens, String string) {
-		int ntokens = tokens.length;
-		if (tokens.length > 1) {
-			for (int i = 0; i < ntokens; i++) {
-				if (!string.contains(tokens[i])) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
 
 	public List<DeepSearchResult> deepSearch(byte[] guid, String query,
 			SearchInformation info) {

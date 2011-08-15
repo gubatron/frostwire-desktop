@@ -1,10 +1,12 @@
 frostwire (5.0.9) stable; urgency=high
 
+  * Search results now arrive under 200ms, aka, Instant Search.
   * New FrostWire "Deep Torrent" search. FrostWire will search inside
     top matching torrents for individual files matching the current query.
   * Core upgrade, if a .torrent fails to download from its HTTP location
     FrostWire will download it from the DHT if it can find it there.
   * UX upgrade, ability to hide/show seeding torrents on transfer manager.
+  * UX fix, search results can now be sorted by file type.
   * Mininova is back.
 
  -- FrostWire Team <contact@frostwire.com>  Tue, 2 Aug 2011 22:55:54 -0500
