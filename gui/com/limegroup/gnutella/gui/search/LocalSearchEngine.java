@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -168,6 +169,7 @@ public class LocalSearchEngine {
 		System.out.println("Found " + rows.size() + " results in " + delta + "ms.");
 
 		List<SmartSearchResult> results = new ArrayList<SmartSearchResult>();
+		Map<Integer,SearchEngine> searchEngines = SearchEngine.getSearchEngineMap();
 
 		// GUBENE
 		for (List<Object> row : rows) {
@@ -181,11 +183,17 @@ public class LocalSearchEngine {
 			String fileName = (String) row.get(3);
 			
 			
+			
 			//if (queryTokens.length == 1
 			//		|| allTokensInString(queryTokens, torrentName + " " + fileName)) {
 			if (new MatchLogic(query, torrentName, fileName).matchResult()) {
 				TorrentDBPojo torrentPojo = JSON_ENGINE.toObject(torrentJSON,
 						TorrentDBPojo.class);
+				
+				if (!searchEngines.get(torrentPojo.searchEngineID).isEnabled()) {
+					continue;
+				}
+				
 				TorrentFileDBPojo torrentFilePojo = JSON_ENGINE.toObject(
 						fileJSON, TorrentFileDBPojo.class);
 				
@@ -374,6 +382,11 @@ public class LocalSearchEngine {
 		}
 
 		private void matchResults(TOTorrent theTorrent) {
+			
+			if (!searchEngine.isEnabled()) {
+				return;
+			}
+			
 			ResultPanel rp = SearchMediator
 					.getResultPanelForGUID(new GUID(guid));
 

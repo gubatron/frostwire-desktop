@@ -1,7 +1,9 @@
 package com.limegroup.gnutella.gui.search;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.limewire.setting.BooleanSetting;
 
@@ -12,6 +14,7 @@ import com.frostwire.bittorrent.websearch.clearbits.ClearBitsWebSearchPerformer;
 import com.frostwire.bittorrent.websearch.extratorrent.ExtratorrentWebSearchPerformer;
 import com.frostwire.bittorrent.websearch.isohunt.ISOHuntWebSearchPerformer;
 import com.frostwire.bittorrent.websearch.mininova.MininovaWebSearchPerformer;
+import com.frostwire.bittorrent.websearch.tpb.TPBWebSearchPerformer;
 import com.frostwire.bittorrent.websearch.vertor.VertorWebSearchPerformer;
 
 public final class SearchEngine {
@@ -29,6 +32,7 @@ public final class SearchEngine {
     public static final int BTJUNKIE_ID = 3;
     public static final int EXTRATORRENT_ID = 4;
     public static final int VERTOR_ID = 5;
+    public static final int TPB_ID = 6;
 
     public static final SearchEngine CLEARBITS = new SearchEngine(CLEARBITS_ID, "ClearBits", new ClearBitsWebSearchPerformer(),
             SearchEnginesSettings.CLEARBITS_SEARCH_ENABLED);
@@ -42,6 +46,8 @@ public final class SearchEngine {
             SearchEnginesSettings.EXTRATORRENT_SEARCH_ENABLED);
     public static final SearchEngine VERTOR = new SearchEngine(VERTOR_ID, "Vertor", new VertorWebSearchPerformer(),
             SearchEnginesSettings.VERTOR_SEARCH_ENABLED);
+    public static final SearchEngine TPB = new SearchEngine(TPB_ID, "TPB", new TPBWebSearchPerformer(),
+            SearchEnginesSettings.TPB_SEARCH_ENABLED);
 
     private SearchEngine(int id, String name, WebSearchPerformer performer, BooleanSetting setting) {
         _id = id;
@@ -68,9 +74,9 @@ public final class SearchEngine {
     }
 
     public static List<SearchEngine> getSearchEngines() {
-        return Arrays.asList(CLEARBITS, MININOVA, ISOHUNT, BTJUNKIE, EXTRATORRENT, VERTOR);
+        return Arrays.asList(CLEARBITS, MININOVA, ISOHUNT, BTJUNKIE, EXTRATORRENT, VERTOR, TPB);
     }
-
+    
     public WebSearchPerformer getPerformer() {
         return _performer;
     }
@@ -85,5 +91,19 @@ public final class SearchEngine {
 		}
 		
 		return null;
+	}
+	
+	public static Map<Integer, SearchEngine> getSearchEngineMap() {
+		HashMap<Integer,SearchEngine> m = new HashMap<Integer, SearchEngine>();
+		List<SearchEngine> searchEngines = getSearchEngines();
+		
+		for (SearchEngine engine : searchEngines) {
+			m.put(engine.getId(), engine);
+		}
+		return m;
+	}
+
+	public BooleanSetting getEnabledSetting() {
+		return _setting;
 	}
 }
