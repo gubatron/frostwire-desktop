@@ -35,6 +35,7 @@ import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.ProgTabUIFactory;
 import com.limegroup.gnutella.gui.RefreshListener;
+import com.limegroup.gnutella.gui.themes.SkinTabbedPane;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.settings.SearchSettings;
@@ -54,7 +55,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 	/**
 	 * The main tabbed pane for displaying different search results.
 	 */
-	private JTabbedPane tabbedPane;
+	private SkinTabbedPane tabbedPane;
 
     /** The contents of tabbedPane. 
      *  INVARIANT: entries.size()==# of tabs in tabbedPane 
@@ -110,7 +111,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 	    MAIN_PANEL = new BoxPanel(BoxPanel.Y_AXIS);
         MAIN_PANEL.setMinimumSize(new Dimension(0,0));
         
-        tabbedPane = new JTabbedPane();
+        tabbedPane = new SkinTabbedPane();
         results = new JPanel();
         
         // make the results panel take up as much space as possible
@@ -206,7 +207,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
      */
     private void setupTabbedPane () {
     	removeTabbedPaneListeners();
-        tabbedPane = new JTabbedPane();
+        tabbedPane = new SkinTabbedPane();
         ProgTabUIFactory.extendUI(tabbedPane);
         tabbedPane.setRequestFocusEnabled(false);
         results.add("tabbedPane",tabbedPane);
@@ -283,6 +284,13 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
             // https://www.limewire.org/jira/browse/LWC-1088
         }
         
+
+        try {
+            tabbedPane.setExtraIconActiveAt(entries.size() - 1, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
         //Remove an old search if necessary
         if (entries.size() > SearchSettings.PARALLEL_SEARCH.getValue())
             killSearchAtIndex(0);
@@ -299,7 +307,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
         // If there are lots of tabs, this ensures everything
         // is properly visible. 
         MAIN_PANEL.revalidate();
-
+        
         return panel;
     }
 
@@ -329,6 +337,19 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
         //Update index on tab.  Don't forget to add 1 since line hasn't
         //actually been added!
         tabbedPane.setTitleAt(resultPanelIndex, titleOf(rp));
+    }
+    
+    void updateSearchIcon(ResultPanel rp, boolean active) {
+        int resultPanelIndex = -1;
+        // Search for the ResultPanel to verify it exists.
+        resultPanelIndex = entries.indexOf(rp);
+
+        // If we couldn't find it, silently exit.
+        if( resultPanelIndex == -1 ) return;
+        
+        //Update index on tab.  Don't forget to add 1 since line hasn't
+        //actually been added!
+        tabbedPane.setExtraIconActiveAt(resultPanelIndex, active);
     }
     
     /**

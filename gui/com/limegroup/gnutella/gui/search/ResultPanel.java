@@ -18,6 +18,7 @@ import java.awt.event.MouseListener;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -137,6 +138,8 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
     protected Box SOUTH_PANEL;
 
     private MouseInputListener ACTION_HIGHLIGHT_LISTENER;
+    
+    public AtomicInteger searchCount = new AtomicInteger(0);
         
     /**
      * Specialized constructor for creating a "dummy" result panel.
@@ -1038,5 +1041,13 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
         public void actionPerformed(ActionEvent e) {
             repeatSearch(true);
         }
+    }
+
+    public void incrementSearchCount() {
+        SearchMediator.getSearchResultDisplayer().updateSearchIcon(this, searchCount.incrementAndGet() > 0);       
+    }
+
+    public void decrementSearchCount() {
+        SearchMediator.getSearchResultDisplayer().updateSearchIcon(this, searchCount.decrementAndGet() > 0);
     }
 }

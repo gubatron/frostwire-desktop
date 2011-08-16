@@ -323,12 +323,13 @@ public final class SearchMediator {
         
                         final ResultPanel rp = getResultPanelForGUID(new GUID(guid));
                         if (rp != null) {
+                            rp.incrementSearchCount();
                             List<WebSearchResult> webResults = searchEngine.getPerformer().search(query);
-                            
+
                             if (webResults.size() > 0) {
                                 final List<SearchResult> results = normalizeWebResults(webResults, searchEngine, info);
-                                
-                                SwingUtilities.invokeLater(new Runnable() {
+
+                                GUIMediator.safeInvokeAndWait(new Runnable() {
                                     public void run() {
                                         try {
                                             SearchFilter filter = getSearchFilterFactory().createFilter();
@@ -339,6 +340,11 @@ public final class SearchMediator {
                                             }
                                         } catch (Exception e) {
                                             e.printStackTrace();
+                                        } finally {
+                                            ResultPanel trp = getResultPanelForGUID(new GUID(guid));
+                                            if (trp != null) {
+                                                trp.decrementSearchCount();
+                                            }
                                         }
                                     }
                                 });
@@ -359,15 +365,15 @@ public final class SearchMediator {
 
                 final ResultPanel rp = getResultPanelForGUID(new GUID(guid));
                 if (rp != null) {
+                    rp.incrementSearchCount();
                     final List<SmartSearchResult> localResults = LocalSearchEngine.instance().search(query);
-                    
+
                     final SearchFilter filter = getSearchFilterFactory().createFilter();
-                    
+
                     if (localResults.size() > 0) {
-                        SwingUtilities.invokeLater(new Runnable() {
+                        GUIMediator.safeInvokeLater(new Runnable() {
                             public void run() {
                                 try {
-                                    
                                     for (SearchResult sr : localResults) {
                                         if (filter.allow(sr)) {
                                             getSearchResultDisplayer().addQueryResult(guid, sr, rp);
@@ -375,10 +381,15 @@ public final class SearchMediator {
                                     }
                                 } catch (Exception e) {
                                     e.printStackTrace();
+                                } finally {
+                                    ResultPanel trp = getResultPanelForGUID(new GUID(guid));
+                                    if (trp != null) {
+                                        trp.decrementSearchCount();
+                                    }
                                 }
                             }
                         });
-                    }
+                    }  
                 }
                 
                 LocalSearchEngine.instance().deepSearch(guid, query, info);
