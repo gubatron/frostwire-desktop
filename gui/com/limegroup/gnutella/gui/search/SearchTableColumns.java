@@ -52,11 +52,16 @@ final class SearchTableColumns {
     private final LimeTableColumn ADDED_COLUMN =
         new SearchColumn(ADDED_IDX, "RESULT_PANEL_ADDED", I18n.tr("Created"),
                             55, true, Date.class);
+    
+    static final int EXTENSION_IDX = 7;
+    private final LimeTableColumn EXTENSION_COLUMN = 
+    	new SearchColumn(EXTENSION_IDX, "RESULT_PANEL_EXTENSION", I18n.tr("Extension"),
+    					55, true, String.class);
                             
     /**
      * The number of default columns.
      */
-    static final int COLUMN_COUNT = 7;
+    static final int COLUMN_COUNT = 8;
     
     /**
      * Constructs a new SearchTableColumns.
@@ -77,6 +82,7 @@ final class SearchTableColumns {
         case SIZE_IDX: return SIZE_COLUMN;
         case SOURCE_IDX: return SOURCE_COLUMN;
         case ADDED_IDX: return ADDED_COLUMN;
+        case EXTENSION_IDX: return EXTENSION_COLUMN;
         default: return null;
         }
     }

@@ -354,6 +354,8 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
             return new ActionIconAndNameHolder(null, _torrentDetailsAction, "<html><a href=\"#\">" + RESULT.getVendor() + "</a></html>");
         case SearchTableColumns.ADDED_IDX:
             return getAddedOn();
+        case SearchTableColumns.EXTENSION_IDX:
+        	return getExtension();
         default:
             return null;
         }
