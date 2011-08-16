@@ -21,12 +21,10 @@ import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.TabbedPaneUI;
-import javax.swing.table.TableRowSorter;
 
 import com.frostwire.gui.components.Slide;
 import com.frostwire.gui.components.SlideshowPanel;
@@ -111,7 +109,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 	    MAIN_PANEL = new BoxPanel(BoxPanel.Y_AXIS);
         MAIN_PANEL.setMinimumSize(new Dimension(0,0));
         
-        tabbedPane = new SkinTabbedPane();
+        tabbedPane = new SkinTabbedPane(GUIMediator.getThemeImage("indeterminate_small_progress"));
         results = new JPanel();
         
         // make the results panel take up as much space as possible
@@ -207,7 +205,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
      */
     private void setupTabbedPane () {
     	removeTabbedPaneListeners();
-        tabbedPane = new SkinTabbedPane();
+        tabbedPane = new SkinTabbedPane(GUIMediator.getThemeImage("indeterminate_small_progress"));
         ProgTabUIFactory.extendUI(tabbedPane);
         tabbedPane.setRequestFocusEnabled(false);
         results.add("tabbedPane",tabbedPane);

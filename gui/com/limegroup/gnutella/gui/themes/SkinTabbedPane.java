@@ -6,8 +6,6 @@ import java.util.Map;
 import javax.swing.Icon;
 import javax.swing.JTabbedPane;
 
-import com.limegroup.gnutella.gui.GUIMediator;
-
 public class SkinTabbedPane extends JTabbedPane {
 
     /**
@@ -18,8 +16,8 @@ public class SkinTabbedPane extends JTabbedPane {
     private Icon extraIcon;
     private Map<Integer, Boolean> activeExtraIconMap;
     
-    public SkinTabbedPane() {
-        extraIcon = GUIMediator.getThemeImage("forward");
+    public SkinTabbedPane(Icon extraIcon) {
+        this.extraIcon = extraIcon;
         activeExtraIconMap = new HashMap<Integer, Boolean>();
     }
     
