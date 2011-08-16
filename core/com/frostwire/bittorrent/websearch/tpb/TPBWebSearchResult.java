@@ -22,17 +22,41 @@ public class TPBWebSearchResult implements WebSearchResult {
 	     * 3 -> Title/Name
 	     * 4 -> .torrent URL
          * 5 -> infoHash
+         * 6 -> MM-DD&nbsp;YYYY or Today&nbsp;HH:MM or Y-day&nbsp;HH:MM 
+         * 7 -> SIZE&nbsp;(B|KiB|MiBGiB)
+         * 8 -> seeds
 		 */
 		torrentDetailsURI = matcher.group(2);
 		fileName = matcher.group(3);
 		torrentURI = matcher.group(4);
-		infoHash = "";
-		seeds = 10000;
-		size = 0;
-		creationTime = System.currentTimeMillis();
+		System.out.println("Hash: " + matcher.group(5));
+		infoHash = matcher.group(5);
+		creationTime = parseCreationTime(matcher.group(6));
+		size = parseSize(matcher.group(7));
+		seeds = parseSeeds(matcher.group(8));
+		
+		
 	}
 	
 	
+	private long parseSize(String group) {
+		System.out.println("Size: " + group);
+		return 0;
+	}
+
+
+	private int parseSeeds(String group) {
+		System.out.println("Seeds: " + group);
+		return 0;
+	}
+
+
+	private long parseCreationTime(String group) {
+		System.out.println("Creation Time: " + group);
+		return 0;
+	}
+
+
 	@Override
 	public String getFileName() {
 		return fileName;
