@@ -274,6 +274,10 @@ public class LocalSearchEngine {
 			// download the torrent
 			String saveDir = SearchSettings.SMART_SEARCH_DATABASE_FOLDER.getValue().getAbsolutePath();
 			
+			ResultPanel rp = SearchMediator.getResultPanelForGUID(new GUID(guid));
+            if (rp != null) {
+                rp.incrementSearchCount();
+            }
 			TorrentDownloaderFactory.create(
 					new LocalSearchTorrentDownloaderListener(guid, query,
 							webSearchResult, searchEngine, info),
@@ -378,6 +382,18 @@ public class LocalSearchEngine {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+			}
+			
+			switch (state) {
+			case TorrentDownloader.STATE_FINISHED:
+			case TorrentDownloader.STATE_ERROR:
+			case TorrentDownloader.STATE_DUPLICATE:
+			case TorrentDownloader.STATE_CANCELLED:
+			    ResultPanel rp = SearchMediator.getResultPanelForGUID(new GUID(guid));
+			    if (rp != null) {
+			        rp.decrementSearchCount();
+			    }
+			    break;
 			}
 		}
 

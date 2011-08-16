@@ -19,7 +19,7 @@ public class ISOHuntWebSearchPerformer implements WebSearchPerformer {
 
         ISOHuntResponse response = searchISOHunt(keywords);
 
-        if (response.items != null && response.items.list != null)
+        if (response != null && response.items != null && response.items.list != null)
             for (ISOHuntItem item : response.items.list) {
 
                 WebSearchResult sr = new ISOHuntWebSearchResult(item);
