@@ -20,7 +20,10 @@ public class TPBWebSearchResult implements WebSearchResult {
 	
 	private final static long[] BYTE_MULTIPLIERS = new long[] {1, 2 << 9, 2 << 19, 2 << 29, 2 << 39, 2 << 49};	
 
-	private static Map<String,Integer> UNIT_TO_BYTE_MULTIPLIERS_MAP;
+	private static final Map<String,Integer> UNIT_TO_BYTE_MULTIPLIERS_MAP;
+	private static final Pattern COMMON_DATE_PATTERN;
+	private static final Pattern OLDER_DATE_PATTERN;
+	private static final Pattern DATE_TIME_PATTERN;
 	
 	static {
 		UNIT_TO_BYTE_MULTIPLIERS_MAP = new HashMap<String, Integer>();
@@ -30,6 +33,10 @@ public class TPBWebSearchResult implements WebSearchResult {
 		UNIT_TO_BYTE_MULTIPLIERS_MAP.put("GiB",3);
 		UNIT_TO_BYTE_MULTIPLIERS_MAP.put("TiB",4);
 		UNIT_TO_BYTE_MULTIPLIERS_MAP.put("PiB",5);
+		
+		COMMON_DATE_PATTERN = Pattern.compile("([\\d]{2})-([\\d]{2})");
+		OLDER_DATE_PATTERN = Pattern.compile("([\\d]{2})-([\\d]{2})&nbsp;([\\d]{4})");
+		DATE_TIME_PATTERN = Pattern.compile("([\\d]{2})-([\\d]{2})&nbsp;(\\d\\d:\\d\\d)");
 	}
 
 	public TPBWebSearchResult(Matcher matcher) {
@@ -91,14 +98,6 @@ public class TPBWebSearchResult implements WebSearchResult {
 		} else if (group.contains("Y-day")) {
 			return System.currentTimeMillis()-(24*60*60*1000);
 		}
-		
-		/** Pattern to match a date this year */
-		Pattern COMMON_DATE_PATTERN = Pattern.compile("([\\d]{2})-([\\d]{2})");
-		
-		/** Pattern to match a date a previous year */
-		Pattern OLDER_DATE_PATTERN = Pattern.compile("([\\d]{2})-([\\d]{2})&nbsp;([\\d]{4})");
-		
-		Pattern DATE_TIME_PATTERN = Pattern.compile("([\\d]{2})-([\\d]{2})&nbsp;(\\d\\d:\\d\\d)");
 		
 		Matcher OLDER_DATE_PATTERN_MATCHER = OLDER_DATE_PATTERN.matcher(group);
 		Matcher COMMON_DATE_PATTERN_MATCHER = COMMON_DATE_PATTERN.matcher(group);

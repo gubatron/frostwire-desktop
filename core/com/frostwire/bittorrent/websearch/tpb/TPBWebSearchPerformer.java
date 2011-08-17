@@ -1,13 +1,8 @@
 package com.frostwire.bittorrent.websearch.tpb;
 
-import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.frostwire.bittorrent.websearch.HttpWebSearchPerformer;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
@@ -27,10 +22,10 @@ public class TPBWebSearchPerformer extends HttpWebSearchPerformer {
 	@Override
 	public String getRegex() {
 		//smoke this joint
-		//return "(?is)<td class=\"vertTh\">.*?<a href=\"[^\"]*?\" title=\"More from this category\">(.*?)</a>.*?</td>.*?<a href=\"([^\"]*?)\" class=\"detLink\" title=\"Details for ([^\"]*?)\">.*?</a>.*?<a href=\"([^\"]*?)\" title=\"Download this torrent\">.*?</a>.*?<a href=\"magnet:\\?xt=urn:btih:([\\w]*).*?[^\"]*?\" title=\"Download this torrent using magnet\">.*?</a>.*?<font class=\"detDesc\">Uploaded (.*?)&nbsp.*?Size (.*?), ULed.*?<td align=\"right\">(.*?)</td>\\s*<td align=\"right\">(.*?)</td>";
 		return "(?is)<td class=\"vertTh\">.*?<a href=\"[^\"]*?\" title=\"More from this category\">(.*?)</a>.*?</td>.*?<a href=\"([^\"]*?)\" class=\"detLink\" title=\"Details for ([^\"]*?)\">.*?</a>.*?<a href=\"([^\"]*?)\" title=\"Download this torrent\">.*?</a>.*?<a href=\"magnet:\\?xt=urn:btih:([\\w]*).*?[^\"]*?\" title=\"Download this torrent using magnet\">.*?</a>.*?<font class=\"detDesc\">Uploaded ([^,]*?), Size (.*?), ULed.*?<td align=\"right\">(.*?)</td>\\s*<td align=\"right\">(.*?)</td>";
 	}
 	
+	/*
 	public static void main(String[] args) throws IOException {
 		File f = new File("/Users/gubatron/Desktop/tpb.sample.html");
 		FileInputStream fis = new FileInputStream(f);
@@ -54,5 +49,6 @@ public class TPBWebSearchPerformer extends HttpWebSearchPerformer {
 		
 		fis.close();
 	}
+	*/
 
 }
