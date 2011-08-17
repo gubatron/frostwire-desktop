@@ -11,9 +11,10 @@ frostwire (5.1.0) stable; urgency=high
   * UX upgrade, Search tabs now have animated indicator to let user know
     a search is still going on.
   * UX fix, search results can now be sorted by file type.
+  * TPB has been added to the list of search engines.
   * Mininova is back.
 
- -- FrostWire Team <contact@frostwire.com>  Tue, 2 Aug 2011 22:55:54 -0500
+ -- FrostWire Team <contact@frostwire.com>  Wed, 17 Aug 2011 09:26:59 -0500
 
 frostwire (5.0.8) stable; urgency=high
 
