@@ -1,4 +1,4 @@
-frostwire (5.1.0) stable; urgency=high
+frostwire (5.1.1) stable; urgency=high
 
   * Search results now arrive under 200ms, aka, Instant Search.
   * New FrostWire "Smart Torrent" search. FrostWire will search inside

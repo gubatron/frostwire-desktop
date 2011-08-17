@@ -26,7 +26,7 @@ public final class FrostWireUtils {
 	/** 
 	 * Constant for the current version of FrostWire.
 	 */
-	private static final String FROSTWIRE_VERSION = "5.1.0";
+	private static final String FROSTWIRE_VERSION = "5.1.1";
     
     /** True if this is a beta. */
     private static final boolean betaVersion = true;
