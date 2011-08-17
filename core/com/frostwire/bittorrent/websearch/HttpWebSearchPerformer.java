@@ -11,6 +11,12 @@ import java.util.regex.Pattern;
 
 import com.frostwire.HttpFetcher;
 
+/**
+ * Extend this for engines that don't provide JSON APIs.
+ *
+ * @author gubatron
+ *
+ */
 public abstract class HttpWebSearchPerformer implements WebSearchPerformer {
 
     public List<WebSearchResult> search(String keywords) {
@@ -36,8 +42,6 @@ public abstract class HttpWebSearchPerformer implements WebSearchPerformer {
         }
 
         String html = new String(htmlBytes);
-        
-        System.out.println(html);
 
         String regex = getRegex();
         
@@ -45,16 +49,19 @@ public abstract class HttpWebSearchPerformer implements WebSearchPerformer {
         Matcher matcher = pattern.matcher(html);
         
         while (matcher.find()) {
-        	System.out.println("found...");
         	WebSearchResult sr = getNextSearchResult(matcher);
         	result.add(sr);
         }
-       
         
         return result;
     }
 
-	public abstract URI getURI(String keywords) throws URISyntaxException; 
-    public abstract WebSearchResult getNextSearchResult(Matcher matcher);
-	public abstract String getRegex();
+    /** Returns the URI of the search engine search command */
+	protected abstract URI getURI(String keywords) throws URISyntaxException;
+	
+	/** This method should return an implementation of WebSearchResult using a matcher that is able to find all the torrent fields*/
+    protected abstract WebSearchResult getNextSearchResult(Matcher matcher);
+
+    /** This function must return the regex necessary for a pattern matcher to find the necessary fields of a SearchResult*/
+    protected abstract String getRegex();
 }

@@ -27,7 +27,8 @@ public class TPBWebSearchPerformer extends HttpWebSearchPerformer {
 	@Override
 	public String getRegex() {
 		//smoke this joint
-		return "(?is)<td class=\"vertTh\">.*?<a href=\"[^\"]*?\" title=\"More from this category\">(.*?)</a>.*?</td>.*?<a href=\"([^\"]*?)\" class=\"detLink\" title=\"Details for ([^\"]*?)\">.*?</a>.*?<a href=\"([^\"]*?)\" title=\"Download this torrent\">.*?</a>.*?<a href=\"magnet:\\?xt=urn:btih:([\\w]*).*?[^\"]*?\" title=\"Download this torrent using magnet\">.*?</a>.*?<font class=\"detDesc\">Uploaded (.*?)&nbsp.*?Size (.*?), ULed.*?<td align=\"right\">(.*?)</td>\\s*<td align=\"right\">(.*?)</td>";
+		//return "(?is)<td class=\"vertTh\">.*?<a href=\"[^\"]*?\" title=\"More from this category\">(.*?)</a>.*?</td>.*?<a href=\"([^\"]*?)\" class=\"detLink\" title=\"Details for ([^\"]*?)\">.*?</a>.*?<a href=\"([^\"]*?)\" title=\"Download this torrent\">.*?</a>.*?<a href=\"magnet:\\?xt=urn:btih:([\\w]*).*?[^\"]*?\" title=\"Download this torrent using magnet\">.*?</a>.*?<font class=\"detDesc\">Uploaded (.*?)&nbsp.*?Size (.*?), ULed.*?<td align=\"right\">(.*?)</td>\\s*<td align=\"right\">(.*?)</td>";
+		return "(?is)<td class=\"vertTh\">.*?<a href=\"[^\"]*?\" title=\"More from this category\">(.*?)</a>.*?</td>.*?<a href=\"([^\"]*?)\" class=\"detLink\" title=\"Details for ([^\"]*?)\">.*?</a>.*?<a href=\"([^\"]*?)\" title=\"Download this torrent\">.*?</a>.*?<a href=\"magnet:\\?xt=urn:btih:([\\w]*).*?[^\"]*?\" title=\"Download this torrent using magnet\">.*?</a>.*?<font class=\"detDesc\">Uploaded ([^,]*?), Size (.*?), ULed.*?<td align=\"right\">(.*?)</td>\\s*<td align=\"right\">(.*?)</td>";
 	}
 	
 	public static void main(String[] args) throws IOException {
@@ -45,7 +46,6 @@ public class TPBWebSearchPerformer extends HttpWebSearchPerformer {
 		Matcher matcher = pattern.matcher(HTML);
 		
 		int i=0;
-
 		
 		while (matcher.find()) {
 			TPBWebSearchResult sr = new TPBWebSearchResult(matcher);
