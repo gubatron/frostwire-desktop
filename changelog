@@ -5,6 +5,7 @@ frostwire (5.1.0) stable; urgency=high
     top matching torrents for individual files matching the current query.
   * Core upgrade, if a .torrent fails to download from its HTTP location
     FrostWire will download it from the DHT if it can find it there.
+  * Functionality to see the size of the Search DB and to reset it.
   * UX upgrade, ability to hide/show seeding torrents on transfer manager.
   * UX upgrade, Phone & Tablets desktop explorer asks before deleting files.
   * UX upgrade, New file "Extension" column on search results.

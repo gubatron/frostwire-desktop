@@ -16,7 +16,9 @@ import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloader;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderCallBackInterface;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderFactory;
 import org.gudy.azureus2.core3.util.TorrentUtils;
+import org.limewire.util.FileUtils;
 
+import com.aelitis.azureus.core.peermanager.messaging.bittorrent.BTSuggestPiece;
 import com.frostwire.JsonEngine;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.bittorrent.TorrentUtil;
@@ -32,7 +34,7 @@ import com.limegroup.gnutella.util.FrostWireUtils.IndexedMapFunction;
 public class LocalSearchEngine {
 
 	private static final int DEEP_SEARCH_DELAY = 1000;
-	private static final int DEEP_SEARCH_MINIMUM_RESULTS = 25;
+	private static final int MAXIMUM_TORRENTS_TO_SCAN = 25;
 	private static final int DEEP_SEARCH_ROUNDS = 3;
 
 	private static LocalSearchEngine INSTANCE;
@@ -255,15 +257,23 @@ public class LocalSearchEngine {
 
 	public void scanAvailableResults(byte[] guid, String query,
 			SearchInformation info, ResultPanel rp) {
-		for (int i = 0; i < Math.min(rp.getSize(), DEEP_SEARCH_MINIMUM_RESULTS); i++) {
+		
+		int foundTorrents = 0;
+		
+		for (int i = 0; i < rp.getSize() && foundTorrents < MAXIMUM_TORRENTS_TO_SCAN; i++) {
 			TableLine line = rp.getLine(i);
-			WebSearchResult webSearchResult = line.getSearchResult()
-					.getWebSearchResult();
-
-			if (!KNOWN_INFO_HASHES.contains(webSearchResult.getHash())) {
-				KNOWN_INFO_HASHES.add(webSearchResult.getHash());
-				SearchEngine searchEngine = line.getSearchEngine();
-				scanDotTorrent(webSearchResult, guid, query, searchEngine, info);
+			
+			if (line.getInitializeObject() instanceof SearchEngineSearchResult) {
+				foundTorrents++;
+				
+				WebSearchResult webSearchResult = line.getSearchResult()
+						.getWebSearchResult();
+	
+				if (!KNOWN_INFO_HASHES.contains(webSearchResult.getHash())) {
+					KNOWN_INFO_HASHES.add(webSearchResult.getHash());
+					SearchEngine searchEngine = line.getSearchEngine();
+					scanDotTorrent(webSearchResult, guid, query, searchEngine, info);
+				}
 			}
 		}
 	}
@@ -604,5 +614,22 @@ public class LocalSearchEngine {
 
 	public void shutdown() {
 		DB.close();
+	}
+
+	public int getTotalTorrents() {
+		List<List<Object>> query = DB.query("SELECT COUNT(*) FROM Torrents");
+		return (Integer) query.get(0).get(0);
+	}
+	
+	public int getTotalFiles() {
+		List<List<Object>> query = DB.query("SELECT COUNT(*) FROM Files");
+		return (Integer) query.get(0).get(0);
+	}
+
+	public synchronized void resetDB() {
+		DB.close();
+		File value = SearchSettings.SMART_SEARCH_DATABASE_FOLDER.getValue();
+		FileUtils.deleteRecursive(value);
+		DB =  new SmartSearchDB(SearchSettings.SMART_SEARCH_DATABASE_FOLDER.getValue());
 	}
 }

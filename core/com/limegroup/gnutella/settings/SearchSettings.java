@@ -300,7 +300,7 @@ public final class SearchSettings extends LimeProps {
     public static final IntSetting MINIMUM_SEARCH_SPEED =
         FACTORY.createIntSetting("MINIMUM_SEARCH_SPEED", 0);
     
-    public static final int MAXIMUM_PARALLEL_SEARCH = 4;
+    public static final int MAXIMUM_PARALLEL_SEARCH = 6;
     
     /**
 	 * The maximum number of simultaneous searches to allow.

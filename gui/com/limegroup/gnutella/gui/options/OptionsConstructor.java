@@ -39,6 +39,7 @@ import com.limegroup.gnutella.gui.options.panes.AudioPlayerPaneItem;
 import com.limegroup.gnutella.gui.options.panes.AutoCompletePaneItem;
 import com.limegroup.gnutella.gui.options.panes.AutomaticInstallerDownloadPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ShutdownPaneItem;
+import com.limegroup.gnutella.gui.options.panes.SmartSearchDBPaneItem;
 import com.limegroup.gnutella.gui.options.panes.TorrentGlobalSpeedPaneItem;
 import com.limegroup.gnutella.gui.options.panes.TorrentConnectionPaneItem;
 import com.limegroup.gnutella.gui.options.panes.TorrentDetailsPaneItem;
@@ -306,7 +307,7 @@ public final class OptionsConstructor {
 		addOption(OptionsMediator.ROOT_NODE_KEY, GUI_KEY, I18n.tr("View"), PopupsPaneItem.class, NotificationsPaneItem.class, ShowPromoOverlaysPaneItem.class, AutoCompletePaneItem.class);
 
 		// search options
-		addOption(OptionsMediator.ROOT_NODE_KEY, SEARCH_KEY, I18n.tr("Searching"), MaximumSearchesPaneItem.class);
+		addOption(OptionsMediator.ROOT_NODE_KEY, SEARCH_KEY, I18n.tr("Searching"), MaximumSearchesPaneItem.class, SmartSearchDBPaneItem.class);
         
 		// filter options
 		addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, FILTERS_KEY, I18n.tr("Filters"));
