@@ -50,13 +50,19 @@ public class BTJunkieWebSearchPerformer implements WebSearchPerformer {
 
         if (jsonBytes == null)
             return null;
-
+        
         String json = new String(jsonBytes);
         json = json.replace("&#039", "'");
         
         // Feel the power of reflection
         JsonEngine engine = new JsonEngine();
-        BTJunkieResponse response = engine.toObject(json, BTJunkieResponse.class);
+        BTJunkieResponse response = null;
+        
+        try {
+        	response = engine.toObject(json, BTJunkieResponse.class);
+        } catch (Exception e) {
+        	System.out.println("BTJunkieWebSearchPerformer issue parsing JSON:\n" + json + "\n====\n");
+        }
 
         return response;
     }

@@ -33,9 +33,11 @@ public class LocalSearchEngine {
 
 	private static final int DEEP_SEARCH_DELAY = 1000;
 	private static final int DEEP_SEARCH_MINIMUM_RESULTS = 25;
-	private static final int DEEP_SEARCH_ROUNDS = 5;
+	private static final int DEEP_SEARCH_ROUNDS = 3;
 
 	private static LocalSearchEngine INSTANCE;
+
+	private static final int LOCAL_SEARCH_RESULTS_LIMIT = 128;
 
 	/**
 	 * We'll keep here every info hash we've already processed during the
@@ -109,7 +111,7 @@ public class LocalSearchEngine {
 
 						for (int j = 0; j < size; j++) {
 							String token = uniqueQueryTokensArray[j];
-							builder.append(column 
+							builder.append(column
 									+ " LIKE '%"
 									+ token
 									+ "%' "
@@ -153,59 +155,59 @@ public class LocalSearchEngine {
 	 */
 	public List<SmartSearchResult> search(String query) {
 		query = query.toLowerCase();
-		String orWhereClause = getOrWhereClause(query, "fileName");//,
-				//"torrentName");
-//		String sql = "SELECT Torrents.json, Files.json, torrentName, fileName FROM Torrents, Files WHERE Torrents.torrentId = Files.torrentId AND ("
-//				+ orWhereClause + ") ";
-		String sql = "SELECT Torrents.json, Files.json, torrentName, fileName FROM Torrents JOIN Files ON Torrents.torrentId = Files.torrentId WHERE ("
-			+ orWhereClause + ") ";
+		String orWhereClause = getOrWhereClause(query, "fileName");
 
-		
-		System.out.println(sql);
+		String sql = "SELECT Torrents.json, Files.json, torrentName, fileName FROM Torrents JOIN Files ON Torrents.torrentId = Files.torrentId WHERE ("
+				+ orWhereClause + ") LIMIT " + LOCAL_SEARCH_RESULTS_LIMIT;
 
 		long start = System.currentTimeMillis();
 		List<List<Object>> rows = DB.query(sql);
 		long delta = System.currentTimeMillis() - start;
-		System.out.println("Found " + rows.size() + " results in " + delta + "ms.");
+		System.out.println("Found " + rows.size() + " local results in " + delta
+				+ "ms.");
+
+		//no query should ever take this long.
+		if (delta > 1000) {
+			System.out.println("Warning: Results took too long, there's something wrong with the database, you might want to delete your 'search_db' folder inside the FrostWire preferences folder.");
+		}
 
 		List<SmartSearchResult> results = new ArrayList<SmartSearchResult>();
-		Map<Integer,SearchEngine> searchEngines = SearchEngine.getSearchEngineMap();
+		Map<Integer, SearchEngine> searchEngines = SearchEngine
+				.getSearchEngineMap();
 
 		// GUBENE
 		for (List<Object> row : rows) {
 			String torrentJSON = (String) row.get(0);
-			torrentJSON = torrentJSON.replace("\'","'");
-			
+			torrentJSON = torrentJSON.replace("\'", "'");
+
 			String fileJSON = (String) row.get(1);
-			fileJSON = fileJSON.replace("\'","'");
-			
+			fileJSON = fileJSON.replace("\'", "'");
+
 			String torrentName = (String) row.get(2);
 			String fileName = (String) row.get(3);
-			
-			
-			
-			//if (queryTokens.length == 1
-			//		|| allTokensInString(queryTokens, torrentName + " " + fileName)) {
+
+			// if (queryTokens.length == 1
+			// || allTokensInString(queryTokens, torrentName + " " + fileName))
+			// {
 			if (new MatchLogic(query, torrentName, fileName).matchResult()) {
 				TorrentDBPojo torrentPojo = JSON_ENGINE.toObject(torrentJSON,
 						TorrentDBPojo.class);
-				
+
 				if (!searchEngines.get(torrentPojo.searchEngineID).isEnabled()) {
 					continue;
 				}
-				
+
 				TorrentFileDBPojo torrentFilePojo = JSON_ENGINE.toObject(
 						fileJSON, TorrentFileDBPojo.class);
-				
+
 				results.add(new SmartSearchResult(torrentPojo, torrentFilePojo));
 				KNOWN_INFO_HASHES.add(torrentPojo.hash);
-				//System.out.println("Found result -> " + torrentFilePojo);
+				// System.out.println("Found result -> " + torrentFilePojo);
 			}
 		}
 
 		return results;
 	}
-
 
 	public List<DeepSearchResult> deepSearch(byte[] guid, String query,
 			SearchInformation info) {
@@ -272,12 +274,14 @@ public class LocalSearchEngine {
 			String query, SearchEngine searchEngine, SearchInformation info) {
 		if (!torrentHasBeenIndexed(webSearchResult.getHash())) {
 			// download the torrent
-			String saveDir = SearchSettings.SMART_SEARCH_DATABASE_FOLDER.getValue().getAbsolutePath();
-			
-			ResultPanel rp = SearchMediator.getResultPanelForGUID(new GUID(guid));
-            if (rp != null) {
-                rp.incrementSearchCount();
-            }
+			String saveDir = SearchSettings.SMART_SEARCH_DATABASE_FOLDER
+					.getValue().getAbsolutePath();
+
+			ResultPanel rp = SearchMediator
+					.getResultPanelForGUID(new GUID(guid));
+			if (rp != null) {
+				rp.incrementSearchCount();
+			}
 			TorrentDownloaderFactory.create(
 					new LocalSearchTorrentDownloaderListener(guid, query,
 							webSearchResult, searchEngine, info),
@@ -287,11 +291,14 @@ public class LocalSearchEngine {
 	}
 
 	private boolean torrentHasBeenIndexed(String infoHash) {
-		List<List<Object>> rows = DB.query("SELECT * FROM Torrents WHERE infoHash LIKE '"+infoHash+"'");
+		List<List<Object>> rows = DB
+				.query("SELECT * FROM Torrents WHERE infoHash LIKE '"
+						+ infoHash + "'");
 		return rows.size() > 0;
 	}
 
-	private void indexTorrent(WebSearchResult searchResult, TOTorrent theTorrent, SearchEngine searchEngine) {
+	private void indexTorrent(WebSearchResult searchResult,
+			TOTorrent theTorrent, SearchEngine searchEngine) {
 		TorrentDBPojo torrentPojo = new TorrentDBPojo();
 		torrentPojo.creationTime = searchResult.getCreationTime();
 		torrentPojo.fileName = stringSanitize(searchResult.getFileName());
@@ -302,27 +309,37 @@ public class LocalSearchEngine {
 		torrentPojo.torrentDetailsURL = searchResult.getTorrentDetailsURL();
 		torrentPojo.torrentURI = searchResult.getTorrentURI();
 		torrentPojo.vendor = searchResult.getVendor();
-		
+
 		String torrentJSON = JSON_ENGINE.toJson(torrentPojo);
 		torrentJSON = torrentJSON.replace("'", "\'");
-		
-		int torrentID = DB.insert("INSERT INTO Torrents (infoHash, timestamp, torrentName, json) VALUES ('"+torrentPojo.hash+"', " +
-				""+ System.currentTimeMillis() + ", '" + torrentPojo.fileName.toLowerCase() +"', '"+ torrentJSON + "')");
-		
+
+		int torrentID = DB
+				.insert("INSERT INTO Torrents (infoHash, timestamp, torrentName, json) VALUES ('"
+						+ torrentPojo.hash
+						+ "', "
+						+ ""
+						+ System.currentTimeMillis()
+						+ ", '"
+						+ torrentPojo.fileName.toLowerCase()
+						+ "', '"
+						+ torrentJSON + "')");
+
 		TOTorrentFile[] files = theTorrent.getFiles();
 
 		for (TOTorrentFile f : files) {
 			TorrentFileDBPojo tfPojo = new TorrentFileDBPojo();
 			tfPojo.relativePath = stringSanitize(f.getRelativePath());
 			tfPojo.size = f.getLength();
-			
+
 			String fileJSON = JSON_ENGINE.toJson(tfPojo);
 			fileJSON = fileJSON.replace("'", "\'");
-			
-			DB.insert("INSERT INTO Files (torrentId, fileName, json) VALUES ("+torrentID+", '"+tfPojo.relativePath.toLowerCase()+"', '"+fileJSON+"')");
-			//System.out.println("INSERT INTO Files (torrentId, fileName, json) VALUES ("+torrentID+", '"+tfPojo.relativePath+"', '"+fileJSON+"')");
+
+			DB.insert("INSERT INTO Files (torrentId, fileName, json) VALUES ("
+					+ torrentID + ", '" + tfPojo.relativePath.toLowerCase()
+					+ "', '" + fileJSON + "')");
+			// System.out.println("INSERT INTO Files (torrentId, fileName, json) VALUES ("+torrentID+", '"+tfPojo.relativePath+"', '"+fileJSON+"')");
 		}
-		
+
 	}
 
 	private class LocalSearchTorrentDownloaderListener implements
@@ -383,26 +400,27 @@ public class LocalSearchEngine {
 					e.printStackTrace();
 				}
 			}
-			
+
 			switch (state) {
 			case TorrentDownloader.STATE_FINISHED:
 			case TorrentDownloader.STATE_ERROR:
 			case TorrentDownloader.STATE_DUPLICATE:
 			case TorrentDownloader.STATE_CANCELLED:
-			    ResultPanel rp = SearchMediator.getResultPanelForGUID(new GUID(guid));
-			    if (rp != null) {
-			        rp.decrementSearchCount();
-			    }
-			    break;
+				ResultPanel rp = SearchMediator.getResultPanelForGUID(new GUID(
+						guid));
+				if (rp != null) {
+					rp.decrementSearchCount();
+				}
+				break;
 			}
 		}
 
 		private void matchResults(TOTorrent theTorrent) {
-			
+
 			if (!searchEngine.isEnabled()) {
 				return;
 			}
-			
+
 			ResultPanel rp = SearchMediator
 					.getResultPanelForGUID(new GUID(guid));
 
@@ -486,93 +504,95 @@ public class LocalSearchEngine {
 		}
 	}
 
-    private class MatchLogic {
+	private class MatchLogic {
 
-        private List<String> query;
-        private String torrentName;
-        private String fileName;
-        private List<String> substractedQuery;
-        private List<String> tokensTorrent;
+		private List<String> query;
+		private String torrentName;
+		private String fileName;
+		private List<String> substractedQuery;
+		private List<String> tokensTorrent;
 
-        public MatchLogic(String query, String torrentName, String fileName) {
-            this.query = Arrays.asList(query.toLowerCase().split(" "));
-            this.torrentName = torrentName.toLowerCase();
-            this.fileName = fileName.toLowerCase();
+		public MatchLogic(String query, String torrentName, String fileName) {
+			this.query = Arrays.asList(query.toLowerCase().split(" "));
+			this.torrentName = torrentName.toLowerCase();
+			this.fileName = fileName.toLowerCase();
 
-            initSubstractedQuery();
-        }
+			initSubstractedQuery();
+		}
 
-        private void initSubstractedQuery() {
-            // substract the query keywords that are already in the
-            // webSearchResult title.
+		private void initSubstractedQuery() {
+			// substract the query keywords that are already in the
+			// webSearchResult title.
 
-            String torrentFileNameNoExtension = torrentName;
-            List<String> tokensQuery = new ArrayList<String>(query);
-            tokensTorrent = Arrays.asList(torrentFileNameNoExtension.toLowerCase().split(" "));
+			String torrentFileNameNoExtension = torrentName;
+			List<String> tokensQuery = new ArrayList<String>(query);
+			tokensTorrent = Arrays.asList(torrentFileNameNoExtension
+					.toLowerCase().split(" "));
 
-            tokensQuery.removeAll(tokensTorrent);
-            this.substractedQuery = tokensQuery;
-        }
+			tokensQuery.removeAll(tokensTorrent);
+			this.substractedQuery = tokensQuery;
+		}
 
-        public boolean matchResult() {
+		public boolean matchResult() {
 
-            boolean foundMatch = true;
+			boolean foundMatch = true;
 
-            List<String> selectedQuery = substractedQuery;
+			List<String> selectedQuery = substractedQuery;
 
-            // if all tokens happened to be on the title of the torrent,
-            // we'll just use the full query.
-            if (substractedQuery.size() == 0) {
-                selectedQuery = query;
-            }
+			// if all tokens happened to be on the title of the torrent,
+			// we'll just use the full query.
+			if (substractedQuery.size() == 0) {
+				selectedQuery = query;
+			}
 
-            // Steve Jobs style first (like iTunes search logic)
-            for (String token : selectedQuery) {
-                if (!fileName.contains(token)) {
-                    foundMatch = false;
-                    break;
-                }
-            }
+			// Steve Jobs style first (like iTunes search logic)
+			for (String token : selectedQuery) {
+				if (!fileName.contains(token)) {
+					foundMatch = false;
+					break;
+				}
+			}
 
-            // best match ever, Steve Jobs style.
-            if (foundMatch) {
-                return true;
-            }
+			// best match ever, Steve Jobs style.
+			if (foundMatch) {
+				return true;
+			}
 
-            // if Steve Jobs is too good for ya...
-            // we'll remove the tokens of the torrent title ONCE from the
-            // search result name
-            // and we'll perform a match on what's left.
-            String resultName = fileName;
+			// if Steve Jobs is too good for ya...
+			// we'll remove the tokens of the torrent title ONCE from the
+			// search result name
+			// and we'll perform a match on what's left.
+			String resultName = fileName;
 
-            HashSet<String> torrentTokenSet = new HashSet<String>(tokensTorrent);
-            for (String torrentToken : torrentTokenSet) {
-                try {
-                    torrentToken = torrentToken.replace("(", "").replace(")", "").replace("[", "").replace("]", "");
-                    resultName = resultName.replaceFirst(torrentToken, "");
-                } catch (Exception e) {
-                    // shhh
-                }
-            }
+			HashSet<String> torrentTokenSet = new HashSet<String>(tokensTorrent);
+			for (String torrentToken : torrentTokenSet) {
+				try {
+					torrentToken = torrentToken.replace("(", "")
+							.replace(")", "").replace("[", "").replace("]", "");
+					resultName = resultName.replaceFirst(torrentToken, "");
+				} catch (Exception e) {
+					// shhh
+				}
+			}
 
-            foundMatch = true; // optimism!
+			foundMatch = true; // optimism!
 
-            for (String token : selectedQuery) {
-                if (!resultName.contains(token)) {
-                    foundMatch = false;
-                    break;
-                }
-            }
+			for (String token : selectedQuery) {
+				if (!resultName.contains(token)) {
+					foundMatch = false;
+					break;
+				}
+			}
 
-            if (foundMatch) {
-                return true;
-            }
+			if (foundMatch) {
+				return true;
+			}
 
-            return false;
-        }
-    }
-    
-    public void shutdown() {
-    	DB.close();
-    }
+			return false;
+		}
+	}
+
+	public void shutdown() {
+		DB.close();
+	}
 }

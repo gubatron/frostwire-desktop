@@ -39,7 +39,7 @@ import com.limegroup.gnutella.gui.options.panes.AudioPlayerPaneItem;
 import com.limegroup.gnutella.gui.options.panes.AutoCompletePaneItem;
 import com.limegroup.gnutella.gui.options.panes.AutomaticInstallerDownloadPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ShutdownPaneItem;
-import com.limegroup.gnutella.gui.options.panes.TorrentDownloadSpeedPaneItem;
+import com.limegroup.gnutella.gui.options.panes.TorrentGlobalSpeedPaneItem;
 import com.limegroup.gnutella.gui.options.panes.TorrentConnectionPaneItem;
 import com.limegroup.gnutella.gui.options.panes.TorrentDetailsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.BrowserPaneItem;
@@ -279,7 +279,7 @@ public final class OptionsConstructor {
         //bittorrent
     	addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY,BITTORRENT_KEY, I18n.tr("BitTorrent")); 
     	OptionsTreeNode node = addOption(BITTORRENT_KEY,BITTORRENT_BASIC_KEY,I18n.tr("Basic"),TorrentSaveFolderPaneItem.class, TorrentSeedingSettingPaneItem.class, TorrentDetailsPaneItem.class);
-    	addOption(BITTORRENT_KEY,BITTORRENT_ADVANCED_KEY,I18n.tr("Advanced"),TorrentDownloadSpeedPaneItem.class, TorrentConnectionPaneItem.class);
+    	addOption(BITTORRENT_KEY,BITTORRENT_ADVANCED_KEY,I18n.tr("Advanced"),TorrentGlobalSpeedPaneItem.class, TorrentConnectionPaneItem.class);
 
         //community chat
 		addOption(OptionsMediator.ROOT_NODE_KEY, CHAT_KEY, I18n.tr("Community Chat"), ChatCommunityPaneItem.class);

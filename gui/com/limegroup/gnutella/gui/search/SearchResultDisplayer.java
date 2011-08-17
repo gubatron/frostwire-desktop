@@ -289,6 +289,11 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
             e.printStackTrace();
         }
         
+        //Make sure Parallel searches are not beyond the maximum to avoid CPU from burning
+        if (SearchSettings.PARALLEL_SEARCH.getValue() > SearchSettings.MAXIMUM_PARALLEL_SEARCH) {
+        	SearchSettings.PARALLEL_SEARCH.revertToDefault();
+        }
+        
         //Remove an old search if necessary
         if (entries.size() > SearchSettings.PARALLEL_SEARCH.getValue())
             killSearchAtIndex(0);

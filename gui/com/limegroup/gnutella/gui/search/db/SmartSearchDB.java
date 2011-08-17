@@ -167,7 +167,6 @@ public class SmartSearchDB {
         update(connection, "CREATE TABLE Files (fileId INTEGER IDENTITY, torrentId INTEGER, fileName VARCHAR(256), json VARCHAR(32768))");
         update(connection, "CREATE INDEX idxFiles ON Files (fileName)");
         update(connection, "CREATE INDEX idxTorrentId ON Files (torrentId)");
-        update(connection, "CREATE INDEX idxFilesTorrentID ON Files (torrentId, fileName)");
         
         //SNAPSHOTS - (Created right before user imports a DB, this way the user can delete (rollback) all new insertions after the snapshot)
         update(connection, "CREATE TABLE Snapshots (snapshotId INTEGER IDENTITY, timestamp BIGINT)");

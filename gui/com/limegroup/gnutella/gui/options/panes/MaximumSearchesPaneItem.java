@@ -2,6 +2,8 @@ package com.limegroup.gnutella.gui.options.panes;
 
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
+
 import org.limewire.i18n.I18nMarker;
 
 import com.limegroup.gnutella.gui.I18n;
@@ -79,6 +81,12 @@ public final class MaximumSearchesPaneItem extends AbstractPaneItem {
 	 */
 	public boolean applyOptions() throws IOException {
         final int maxSearches = _maxSearchesField.getValue();
+        
+        if (maxSearches > SearchSettings.MAXIMUM_PARALLEL_SEARCH) {
+        	JOptionPane.showMessageDialog(null,I18n.tr("The maximum parallel searches you can make is " + SearchSettings.MAXIMUM_PARALLEL_SEARCH));
+        	return false;
+        }
+        
         if(maxSearches != _maxSearchesString) {
             try {
                 SearchSettings.PARALLEL_SEARCH.setValue(maxSearches);

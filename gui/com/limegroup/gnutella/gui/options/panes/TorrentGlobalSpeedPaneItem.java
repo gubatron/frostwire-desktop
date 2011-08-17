@@ -15,7 +15,7 @@ import org.gudy.azureus2.core3.config.COConfigurationManager;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 
-public class TorrentDownloadSpeedPaneItem extends AbstractPaneItem {
+public class TorrentGlobalSpeedPaneItem extends AbstractPaneItem {
 	
 	private static final int MAX_SLIDER_VALUE = (100*1024)+1;
 
@@ -54,7 +54,7 @@ public class TorrentDownloadSpeedPaneItem extends AbstractPaneItem {
 
 	private String globalUploadSpeedConfigKey = "Max Upload Speed KBs";
 	
-	public TorrentDownloadSpeedPaneItem() {
+	public TorrentGlobalSpeedPaneItem() {
 		super(TITLE_DOWNLOAD_SPEED, DESCRIPTION_DOWNLOAD_SPEED);
 
 		DOWNLOAD_SLIDER.setMajorTickSpacing(1024);
@@ -174,8 +174,8 @@ public class TorrentDownloadSpeedPaneItem extends AbstractPaneItem {
 		
 		
 		//if you're trying to download 
-		if (newUpload < (newDownload/2) && (newUpload != 0)) {
-			newUpload = (newDownload+1)/2;
+		if (newUpload < (newDownload/3) && (newUpload != 0)) {
+			newUpload = (newDownload+1)/3;
 		} 
 		//wanna receive? you gotta give.
 		else if (newDownload == 0) {
