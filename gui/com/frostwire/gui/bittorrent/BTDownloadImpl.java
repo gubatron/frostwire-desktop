@@ -32,11 +32,16 @@ public class BTDownloadImpl implements BTDownload {
 	public void updateSize(DownloadManager downloadManager) {
 		if (_partialDownload) {
             _fileInfoSet = TorrentUtil.getNoSkippedFileInfoSet(downloadManager);
-            long size = 0;
-            for (DiskManagerFileInfo fileInfo : _fileInfoSet) {
-                size += fileInfo.getLength();
-            }
+            
+            if (_fileInfoSet.isEmpty()) {
+            	_size = downloadManager.getSize();
+            } else {
+	            long size = 0;
+	            for (DiskManagerFileInfo fileInfo : _fileInfoSet) {
+	                size += fileInfo.getLength();
+	            }
             _size = size;
+            }
         } else {
             _fileInfoSet = null;
             _size = downloadManager.getSize();

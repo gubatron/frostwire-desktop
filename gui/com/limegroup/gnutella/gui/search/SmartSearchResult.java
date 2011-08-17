@@ -36,7 +36,7 @@ public class SmartSearchResult extends AbstractSearchResult {
 
     @Override
     public String getExtension() {
-        return file.relativePath.substring(file.relativePath.lastIndexOf(".")+1);
+        return file.relativePath.substring(file.relativePath.lastIndexOf(".")+1).toLowerCase();
     }
 
     @Override

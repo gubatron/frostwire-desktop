@@ -83,7 +83,7 @@ public class SkinTabbedPaneUI extends SubstanceTabbedPaneUI {
             extraIcon = ((SkinTabbedPane) tabbedPane).getExtraIcon();
         }
         if (extraIcon != null) {
-            extraIcon.paintIcon(tabPane, g, textRect.x + textRect.width + 4, textRect.y);
+           extraIcon.paintIcon(tabPane, g, textRect.x + textRect.width + 4, textRect.y);
         }
     }
 }
