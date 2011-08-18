@@ -167,3 +167,7 @@ laf-widget-1543ae9/ -> laf-widget.jar
 https://github.com/kirillcool/laf-widget.git -r 1543ae9
 Support for common "feel" widgets in Swing look-and-feel libraries
 https://github.com/kirillcool/laf-widget
+
+h2-2011-08-13/ -> h2-1.3.159.jar
+http://www.h2database.com/	
+H2 Database Engine.
