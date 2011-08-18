@@ -22,6 +22,7 @@
 	    <ant dir="trident-64a55aa"/>
 	    <ant dir="laf-widget-1543ae9"/>
 	    <ant dir="substance-58d3873"/>
+	    <ant dir="hsqldb-2.2.5" />
 		
 		<antcall target="copyjars"/>
         
@@ -43,9 +44,10 @@
 		<ant dir="netx-0.5" target="clean"/>
 		<ant dir="jdic-20060613" target="clean"/>
 		<ant dir="mrjadapter" target="clean"/>
-	    <ant dir="trident-64a55aa"/>
-	    <ant dir="laf-widget-1543ae9"/>
-	    <ant dir="substance-58d3873"/>
+	    <ant dir="trident-64a55aa" target="clean"/>
+	    <ant dir="laf-widget-1543ae9" target="clean"/>
+	    <ant dir="substance-58d3873" target="clean"/>
+	    <ant dir="hsqldb-2.2.5" target="clean"/>
 		
 		<mkdir dir="dist"/>
         
@@ -69,6 +71,7 @@
 	    <copy file="dist/trident.jar" todir="../jars/"/>
 		<copy file="dist/laf-widget.jar" todir="../jars/"/>
 	    <copy file="dist/substance.jar" todir="../jars/"/>
+	    <copy file="dist/hsqldb-2.2.5.jar" todir="../jars/"/>
 
 	</target>
 	

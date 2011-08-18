@@ -167,3 +167,7 @@ laf-widget-1543ae9/ -> laf-widget.jar
 https://github.com/kirillcool/laf-widget.git -r 1543ae9
 Support for common "feel" widgets in Swing look-and-feel libraries
 https://github.com/kirillcool/laf-widget
+
+hsqldb-2.2.5/ -> hsqldb.jar
+http://hsqldb.org/
+HSQLDB - 100% Java Database
