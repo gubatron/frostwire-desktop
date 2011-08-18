@@ -154,6 +154,7 @@
 
 	<target name="clean.module.substance" description="cleanup module">
 		<delete dir="${substance.output.dir}" />
+                <delete dir="../substance" />
 	</target>
 
 	<target name="init" description="Build initialization">
