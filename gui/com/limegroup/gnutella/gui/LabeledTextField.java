@@ -113,6 +113,10 @@ public class LabeledTextField extends JPanel {
 	public void setEditable(boolean editable) {
 		_field.setEditable(editable);
 	}
+	
+	public void setEnabled(boolean enabled) {
+		_field.setEnabled(enabled);
+	}
 
     /** 
      * Adds a ActionListener to the TextField.

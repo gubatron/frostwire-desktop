@@ -1,21 +1,31 @@
 package com.limegroup.gnutella.gui.search;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.BorderFactory;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
+
 import com.frostwire.gui.components.LabeledRangeSlider;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.gui.LabeledTextField;
 
 public class FilterPanel extends JPanel {
@@ -30,12 +40,14 @@ public class FilterPanel extends JPanel {
     private LabeledTextField _keywordFilterTextField;
 
     private GeneralResultFilter _activeFilter;
+    
+    private JComboBox _typeCombo;
 
     private final Map<ResultPanel, GeneralResultFilter> ACTIVE_FILTERS = new HashMap<ResultPanel, GeneralResultFilter>();
 
     public FilterPanel() {
         setupUI();
-        setSlidersEnabled(false);
+        setFilterControlsEnabled(false);
     }
 
     protected void setupUI() {
@@ -54,7 +66,41 @@ public class FilterPanel extends JPanel {
         	public void keyPressed(KeyEvent e) {
                 keywordFilterChanged(e);
             }
-        });        
+        }); 
+        
+        //TYPE FILTER
+        _typeCombo = new JComboBox(NamedMediaType.getAllNamedMediaTypes().toArray());
+        _typeCombo.setRenderer(new SubstanceDefaultListCellRenderer() {
+        	/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+        	public Component getListCellRendererComponent(JList list,
+        			Object value, int index, boolean isSelected,
+        			boolean cellHasFocus) {
+
+        		super.getListCellRendererComponent(list, value, index, isSelected,
+        				cellHasFocus);
+        		NamedMediaType type = (NamedMediaType) value;
+        		setIcon(type.getIcon());
+        		
+        		return this;
+        	}
+        });
+        JComponent typeComponent = new LabeledComponent(I18n.tr("Type"), _typeCombo).getComponent();
+        typeComponent.setBorder(BorderFactory.createEmptyBorder(5, 1, 5, 0));
+        
+        _typeCombo.addItemListener(new ItemListener() {
+			
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				onFileTypeComboChanged(e);
+			}
+		});
+        
+        add(typeComponent,c);
 
         add(_keywordFilterTextField, c);
 
@@ -78,7 +124,14 @@ public class FilterPanel extends JPanel {
 
     };
 
-    protected void keywordFilterChanged(KeyEvent e) {
+    protected void onFileTypeComboChanged(ItemEvent e) {
+    	if (_activeFilter != null) {
+    		_activeFilter.updateFileTypeFiltering((NamedMediaType) _typeCombo.getSelectedItem());
+    	}
+		
+	}
+
+	protected void keywordFilterChanged(KeyEvent e) {
         if (_activeFilter != null) {
             _activeFilter.updateKeywordFiltering(_keywordFilterTextField.getText());
         }
@@ -96,9 +149,11 @@ public class FilterPanel extends JPanel {
         }
     }
 
-    public void setSlidersEnabled(boolean enabled) {
+    public void setFilterControlsEnabled(boolean enabled) {
         _rangeSliderSeeds.setEnabled(enabled);
         _rangeSliderSize.setEnabled(enabled);
+        _typeCombo.setEnabled(enabled);
+        _keywordFilterTextField.setEnabled(enabled);
     }
 
     public void reset() {
@@ -118,6 +173,8 @@ public class FilterPanel extends JPanel {
         _rangeSliderSize.getMaximumValueLabel().setText(I18n.tr("Max"));
 
         _keywordFilterTextField.setText("");
+        
+        _typeCombo.setSelectedIndex(0);
     }
 
     private void reset(GeneralResultFilter filter) {
@@ -131,6 +188,8 @@ public class FilterPanel extends JPanel {
         _rangeSliderSize.setValue(filter.getMinSize());
         _rangeSliderSize.setUpperValue(filter.getMaxSize());
 
+        _typeCombo.setSelectedItem(filter.getCurrentNamedMediaType());
+        
         _keywordFilterTextField.setText(filter.getKeywordFilterText());
 
         if (filter.getMinResultsSeeds() == Integer.MAX_VALUE) {
@@ -157,14 +216,15 @@ public class FilterPanel extends JPanel {
 
     public void clearFilters() {
         ACTIVE_FILTERS.clear();
-        setSlidersEnabled(false);
+
+        setFilterControlsEnabled(false);
         reset();
     }
 
     public void setFilterFor(ResultPanel rp) {
         GeneralResultFilter filter = ACTIVE_FILTERS.get(rp);
         if (filter == null) {
-            filter = new GeneralResultFilter(rp, _rangeSliderSeeds, _rangeSliderSize, _keywordFilterTextField);
+            filter = new GeneralResultFilter(rp, _rangeSliderSeeds, _rangeSliderSize, _keywordFilterTextField, _typeCombo);
             ACTIVE_FILTERS.put(rp, filter);
             rp.filterChanged(filter, 1);
         }
@@ -173,7 +233,7 @@ public class FilterPanel extends JPanel {
 
     private void setActiveFilter(GeneralResultFilter filter) {
         _activeFilter = null;
-        setSlidersEnabled(true);
+        setFilterControlsEnabled(true);
         reset(filter);
         _activeFilter = filter;
     }

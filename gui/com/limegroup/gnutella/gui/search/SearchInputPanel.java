@@ -302,7 +302,7 @@ class SearchInputPanel extends JPanel {
 		List<SearchEngine> searchEngines = SearchEngine.getSearchEngines();
 		
 		setupCheckboxes(searchEngines, controls);
-
+		
 		_filterPanel = new FilterPanel();
 		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.add(_filterPanel);
 		

@@ -42,7 +42,7 @@ public class MediaType implements Serializable {
     // These are used as resource keys to retreive descriptions in the GUI 
     public static final String ANY_TYPE = I18nMarker.marktr("All Types");
     
-    public static final String DOCUMENTS = I18nMarker.marktr("Documents");
+    public static final String DOCUMENTS = I18nMarker.marktr("Books/Docs");
     public static final String PROGRAMS = I18nMarker.marktr("Programs");
     public static final String AUDIO = I18nMarker.marktr("Audio");
     public static final String VIDEO = I18nMarker.marktr("Video");
@@ -80,7 +80,10 @@ public class MediaType implements Serializable {
                 "wp", "wpd", "wp5", "wk3", "wk4", "shw", 
                 "sdd", "sdw", "sdp", "sdc",
                 "sxd", "sxw", "sxp", "sxc",
-                "abw", "kwd"
+                "abw", "kwd", "mobi", "azw","aeh","lrf","lrx",
+                "cbr", "cbz", "cb7", "chm","dnl","djvu",
+                "epub","pdb","fb2","xeb","ceb","prc","pkg",
+                "opf","pdg","pdb","tr2","tr3"
             });
             
     /**
