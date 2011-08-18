@@ -3,6 +3,9 @@ package com.limegroup.gnutella.gui.search;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -18,7 +21,6 @@ import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderFactory;
 import org.gudy.azureus2.core3.util.TorrentUtils;
 import org.limewire.util.FileUtils;
 
-import com.aelitis.azureus.core.peermanager.messaging.bittorrent.BTSuggestPiece;
 import com.frostwire.JsonEngine;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.bittorrent.TorrentUtil;
@@ -39,7 +41,7 @@ public class LocalSearchEngine {
 
 	private static LocalSearchEngine INSTANCE;
 
-	private static final int LOCAL_SEARCH_RESULTS_LIMIT = 128; 
+	private static final int LOCAL_SEARCH_RESULTS_LIMIT = 256; 
 
 	/**
 	 * We'll keep here every info hash we've already processed during the
@@ -64,6 +66,15 @@ public class LocalSearchEngine {
 	}
 
 	public final static HashSet<String> IGNORABLE_KEYWORDS;
+	
+	/** To sort a list of strings by their size, descending order */
+	private static final Comparator<? super String> STRING_SIZE_COMPARATOR = new Comparator<String>() {
+
+		@Override
+		public int compare(String o1, String o2) {
+			return o2.length() - o1.length();
+		}
+	};
 
 	static {
 		IGNORABLE_KEYWORDS = new HashSet<String>();
@@ -71,7 +82,7 @@ public class LocalSearchEngine {
 				"they", "them", "we", "us", "my", "your", "yours", "his",
 				"hers", "theirs", "ours", "the", "of", "in", "on", "out", "to",
 				"at", "as", "and", "by", "not", "is", "are", "am", "was",
-				"were", "will", "be", "for"));
+				"were", "will", "be", "for","el","la","es","de","los","las","en"));
 	}
 
 	/**
@@ -83,7 +94,7 @@ public class LocalSearchEngine {
 	 */
 	private final static String stringSanitize(String str) {
 		str = str.replace("\\", "").replace("%", "").replace("_", "")
-				.replace(";", "").replace("'", "''");
+				.replace(";", "").replace("'", "''").replace("-","");
 
 		while (str.indexOf("  ") != -1) {
 			str = str.replace("  ", " ");
@@ -117,14 +128,14 @@ public class LocalSearchEngine {
 									+ " LIKE '%"
 									+ token
 									+ "%' "
-									+ ((i <= lastIndex || j < size) ? " OR "
+									+ ((i <= lastIndex || j < size) ? " AND "
 											: ""));
 						}
 					}
 				});
 
 		String str = builder.toString();
-		int index = str.lastIndexOf(" OR");
+		int index = str.lastIndexOf(" AND");
 
 		return index > 0 ? str.substring(0, index) : str;
 	}
@@ -133,21 +144,28 @@ public class LocalSearchEngine {
 		String[] queryTokens = stringSanitize(query).split(" ");
 
 		// Let's make sure we don't send repeated tokens to SQL Engine
-		Set<String> uniqueQueryTokens = new TreeSet<String>();
+		Set<String> uniqueQueryTokensSet = new TreeSet<String>();
 		for (int i = 0; i < queryTokens.length; i++) {
 			String token = queryTokens[i];
 
-			if (token.length() == 1 || uniqueQueryTokens.contains(token)
+			if (token.length() == 1 || uniqueQueryTokensSet.contains(token)
 					|| IGNORABLE_KEYWORDS.contains(token.toLowerCase())) {
 				continue;
 			}
 
-			uniqueQueryTokens.add(token);
+			uniqueQueryTokensSet.add(token);
 		}
 
-		String[] uniqueQueryTokensArray = uniqueQueryTokens
-				.toArray(new String[] {});
+		List<String> uniqueQueryTokensList = new ArrayList<String>(uniqueQueryTokensSet);
+		
+		//sort tokens by token size, biggest ones first so and short circuits on the most complex one.
+		Collections.sort(uniqueQueryTokensList, STRING_SIZE_COMPARATOR);
 
+		String[] uniqueQueryTokensArray = uniqueQueryTokensList
+		.toArray(new String[] {});
+
+		
+		
 		return getWhereClause(uniqueQueryTokensArray, columns);
 	}
 
@@ -169,7 +187,7 @@ public class LocalSearchEngine {
 				+ "ms. ");
 
 		//no query should ever take this long.
-		if (delta > 1000) {
+		if (delta > 3000) {
 			System.out.println("\nWarning: Results took too long, there's something wrong with the database, you might want to delete your 'search_db' folder inside the FrostWire preferences folder.");
 		}
 
@@ -564,7 +582,9 @@ public class LocalSearchEngine {
 			if (substractedQuery.size() == 0) {
 				selectedQuery = query;
 			}
-
+			
+			//System.out.println("matchResult() - fname -> ["+fileName+"]");
+			
 			// Steve Jobs style first (like iTunes search logic)
 			for (String token : selectedQuery) {
 				if (!fileName.contains(token)) {

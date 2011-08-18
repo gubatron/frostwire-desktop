@@ -303,12 +303,13 @@ class SearchInputPanel extends JPanel {
 		
 		setupCheckboxes(searchEngines, controls);
 
+		_filterPanel = new FilterPanel();
+		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.add(_filterPanel);
+		
 		controls.setBorder(new TitledBorder(I18n.tr("Choose Search Engines")));
 		
 		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.add(controls);
 		
-		_filterPanel = new FilterPanel();
-		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.add(_filterPanel);
 
 		return SEARCH_OPTIONS_COLLAPSIBLE_PANEL;
 	}
