@@ -107,7 +107,9 @@ public class LocalSearchEngine {
 	 * @param uniqueQueryTokensArray
 	 * @param columns
 	 * @return
+	 *
 	 */
+	@SuppressWarnings("unused")
 	private static String getWhereClause(final String[] uniqueQueryTokensArray,
 			String... columns) {
 		final StringBuilder builder = new StringBuilder();
@@ -139,9 +141,17 @@ public class LocalSearchEngine {
 		return index > 0 ? str.substring(0, index) : str;
 	}
 
-	public final static String getOrWhereClause(String query, String... columns) {
-		String[] queryTokens = stringSanitize(query).split(" ");
-
+	/**
+	 * Cleans the given query tokens, eliminates duplicate torrents, and returns an array
+	 * where tokens are sorted by their length in descending order.
+	 * 
+	 * @param queryTokens
+	 * @return
+	 */
+	public static String[] prepareQueryTokens(String query) {
+		query = stringSanitize(query.toLowerCase());
+		String[] queryTokens = query.split(" ");
+		
 		// Let's make sure we don't send repeated tokens to SQL Engine
 		Set<String> uniqueQueryTokensSet = new TreeSet<String>();
 		for (int i = 0; i < queryTokens.length; i++) {
@@ -162,10 +172,7 @@ public class LocalSearchEngine {
 
 		String[] uniqueQueryTokensArray = uniqueQueryTokensList
 		.toArray(new String[] {});
-
-		
-		
-		return getWhereClause(uniqueQueryTokensArray, columns);
+		return uniqueQueryTokensArray;
 	}
 
 	/**
@@ -173,12 +180,35 @@ public class LocalSearchEngine {
 	 * if there are matches.
 	 */
 	public List<SmartSearchResult> search(String query) {
-		query = query.toLowerCase();
-		String orWhereClause = getOrWhereClause(query, "fileName");
+ 		query = cleanQuery(query);
+		
+		//FULL TEXT SEARCH, Returns the File IDs we care about.
+		String fullTextIndexSql = "SELECT * FROM FT_SEARCH('"+query+"',"+LOCAL_SEARCH_RESULTS_LIMIT+",0)";
+		
+		System.out.println(fullTextIndexSql);
+		List<List<Object>> matchedFileRows = DB.query(fullTextIndexSql);
+		
+		int fileIDStrOffset = " PUBLIC   FILES  WHERE  FILEID =".length();
+		
+		StringBuilder fileIDSet = new StringBuilder("(");
+		
+		int numFilesFound = matchedFileRows.size();
+		int i = 0;
+		
+		for (List<Object> row : matchedFileRows) {
+			String rowStr = (String) row.get(0);
+			fileIDSet.append(rowStr.substring(fileIDStrOffset));
+			
+			if (i++ < (numFilesFound-1)) {
+				fileIDSet.append(",");
+			}
+		}
+		fileIDSet.append(")");
+		
+		
 
-		String sql = "SELECT Torrents.json, Files.json, torrentName, fileName FROM Torrents JOIN Files ON Torrents.torrentId = Files.torrentId WHERE ("
-				+ orWhereClause + ") ORDER BY seeds DESC LIMIT " + LOCAL_SEARCH_RESULTS_LIMIT;
-
+		String sql = "SELECT Torrents.json, Files.json, torrentName, fileName FROM Torrents JOIN Files ON Torrents.torrentId = Files.torrentId WHERE Files.fileId in "+ fileIDSet.toString() +" ORDER BY seeds DESC LIMIT " + LOCAL_SEARCH_RESULTS_LIMIT;
+		System.out.println(sql);
 		long start = System.currentTimeMillis();
 		List<List<Object>> rows = DB.query(sql);
 		long delta = System.currentTimeMillis() - start;
@@ -235,6 +265,16 @@ public class LocalSearchEngine {
 		System.out.println("Ended up with "+ results.size() +" results");
 
 		return results;
+	}
+
+	public String cleanQuery(String query) {
+		String[] preparedQueryTokens = prepareQueryTokens(query);
+		StringBuilder sb = new StringBuilder();
+		for (String token : preparedQueryTokens) {
+			sb.append(token + " ");
+		}
+		query = sb.toString().trim();
+		return query;
 	}
 
 	public List<DeepSearchResult> deepSearch(byte[] guid, String query,
