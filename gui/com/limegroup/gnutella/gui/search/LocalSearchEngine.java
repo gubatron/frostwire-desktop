@@ -3,7 +3,6 @@ package com.limegroup.gnutella.gui.search;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -636,14 +635,14 @@ public class LocalSearchEngine {
 		DB.close();
 	}
 
-	public int getTotalTorrents() {
+	public long getTotalTorrents() {
 		List<List<Object>> query = DB.query("SELECT COUNT(*) FROM Torrents");
-		return (Integer) query.get(0).get(0);
+		return (Long) query.get(0).get(0);
 	}
 	
-	public int getTotalFiles() {
+	public long getTotalFiles() {
 		List<List<Object>> query = DB.query("SELECT COUNT(*) FROM Files");
-		return (Integer) query.get(0).get(0);
+		return (Long) query.get(0).get(0);
 	}
 
 	public synchronized void resetDB() {

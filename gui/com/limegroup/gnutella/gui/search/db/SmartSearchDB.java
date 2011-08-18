@@ -30,7 +30,8 @@ public class SmartSearchDB {
 
     static {
         try {
-            Class.forName("org.hsqldb.jdbcDriver");
+            //Class.forName("org.hsqldb.jdbcDriver");
+        	Class.forName("org.h2.Driver");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -142,9 +143,10 @@ public class SmartSearchDB {
     private Connection openConnection(File path, String name, boolean createIfNotExists) {
         try {
             StringBuilder sb = new StringBuilder();
-            sb.append("jdbc:hsqldb:file:");
+            //sb.append("jdbc:hsqldb:file:");
+            sb.append("jdbc:h2:");
             sb.append(new File(path, name).getAbsolutePath());
-            sb.append(";hsqldb.default_table_type=cached;");
+            //sb.append(";hsqldb.default_table_type=cached;");
 
             if (!createIfNotExists) {
                 sb.append(";ifexists=true");
@@ -161,20 +163,20 @@ public class SmartSearchDB {
         update(connection, "SET IGNORECASE TRUE");
         
         //TORRENTS
-        update(connection, "CREATE CACHED TABLE Torrents (torrentId INTEGER IDENTITY, infoHash VARCHAR(60), timestamp BIGINT, torrentName VARCHAR(256), seeds INTEGER, json VARCHAR(32768))");
+        update(connection, "CREATE TABLE Torrents (torrentId INTEGER IDENTITY, infoHash VARCHAR(60), timestamp BIGINT, torrentName VARCHAR(256), seeds INTEGER, json VARCHAR(32768))");
         update(connection, "CREATE INDEX idxTorrents ON Torrents (infoHash)");
         update(connection, "CREATE INDEX idxSeeds ON Torrents(seeds)");
         
         //FILES
-        update(connection, "CREATE CACHED TABLE Files (fileId INTEGER IDENTITY, torrentId INTEGER, fileName VARCHAR(256), json VARCHAR(32768))");
+        update(connection, "CREATE TABLE Files (fileId INTEGER IDENTITY, torrentId INTEGER, fileName VARCHAR(256), json VARCHAR(32768))");
         update(connection, "CREATE INDEX idxFiles ON Files (fileName)");
         update(connection, "CREATE INDEX idxTorrentId ON Files (torrentId)");
         
         //SNAPSHOTS - (Created right before user imports a DB, this way the user can delete (rollback) all new insertions after the snapshot)
-        update(connection, "CREATE CACHED TABLE Snapshots (snapshotId INTEGER IDENTITY, timestamp BIGINT)");
+        update(connection, "CREATE TABLE Snapshots (snapshotId INTEGER IDENTITY, timestamp BIGINT)");
 
         /** This table keeps only a single row to identify what version of the database we have */
-        update(connection, "CREATE CACHED TABLE SmartSearchMetaData (smartSearchId INTEGER IDENTITY, name VARCHAR(500), version INTEGER)");
+        update(connection, "CREATE TABLE SmartSearchMetaData (smartSearchId INTEGER IDENTITY, name VARCHAR(500), version INTEGER)");
         update(connection, "INSERT INTO SmartSearchMetaData (name , version) VALUES ('" + name + "', " + SMART_SEARCH_DATABASE_VERSION + ")");
         
         return connection;

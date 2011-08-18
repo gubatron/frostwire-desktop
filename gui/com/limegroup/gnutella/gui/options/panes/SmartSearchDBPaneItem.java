@@ -24,8 +24,8 @@ public final class SmartSearchDBPaneItem extends AbstractPaneItem {
 	private JLabel _numTorrentsLabel;
 	private JLabel _numFilesLabel;
 	
-	private int _numTorrents = 0;
-	private int _numFiles = 0;
+	private long _numTorrents = 0;
+	private long _numFiles = 0;
  
 
     /**
