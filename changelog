@@ -1,4 +1,4 @@
-frostwire (5.1.1) stable; urgency=high
+frostwire (5.1.2) stable; urgency=high
 
   * Search results now arrive under 200ms, aka, Instant Search.
   * New FrostWire "Smart Torrent" search. FrostWire will search inside
@@ -11,11 +11,12 @@ frostwire (5.1.1) stable; urgency=high
   * UX upgrade, New file "Extension" column on search results.
   * UX upgrade, Search tabs now have animated indicator to let user know
     a search is still going on.
+  * UX upgrade, New filter by file type. Filter controls re-arranged.
   * UX fix, search results can now be sorted by file type.
   * TPB has been added to the list of search engines.
   * Mininova is back.
 
- -- FrostWire Team <contact@frostwire.com>  Wed, 17 Aug 2011 09:26:59 -0500
+ -- FrostWire Team <contact@frostwire.com>  Thu, 18 Aug 2011 18:50:00 -0500
 
 frostwire (5.0.8) stable; urgency=high
 
