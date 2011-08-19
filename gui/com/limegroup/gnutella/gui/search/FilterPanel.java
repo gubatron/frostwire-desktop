@@ -127,8 +127,7 @@ public class FilterPanel extends JPanel {
     protected void onFileTypeComboChanged(ItemEvent e) {
     	if (_activeFilter != null) {
     		_activeFilter.updateFileTypeFiltering((NamedMediaType) _typeCombo.getSelectedItem());
-    	}
-		
+    	}		
 	}
 
 	protected void keywordFilterChanged(KeyEvent e) {
@@ -152,7 +151,6 @@ public class FilterPanel extends JPanel {
     public void setFilterControlsEnabled(boolean enabled) {
         _rangeSliderSeeds.setEnabled(enabled);
         _rangeSliderSize.setEnabled(enabled);
-        _typeCombo.setEnabled(enabled);
         _keywordFilterTextField.setEnabled(enabled);
     }
 
@@ -173,11 +171,10 @@ public class FilterPanel extends JPanel {
         _rangeSliderSize.getMaximumValueLabel().setText(I18n.tr("Max"));
 
         _keywordFilterTextField.setText("");
-        
-        _typeCombo.setSelectedIndex(0);
+       
     }
 
-    private void reset(GeneralResultFilter filter) {
+    private void updateFilterControls(GeneralResultFilter filter) {
         _activeFilter = null;
         _rangeSliderSeeds.setMinimum(0);
         _rangeSliderSeeds.setMaximum(1000);
@@ -227,14 +224,15 @@ public class FilterPanel extends JPanel {
             filter = new GeneralResultFilter(rp, _rangeSliderSeeds, _rangeSliderSize, _keywordFilterTextField, _typeCombo);
             ACTIVE_FILTERS.put(rp, filter);
             rp.filterChanged(filter, 1);
-        }
+        } 
+        
         setActiveFilter(filter);
     }
 
     private void setActiveFilter(GeneralResultFilter filter) {
         _activeFilter = null;
         setFilterControlsEnabled(true);
-        reset(filter);
+        updateFilterControls(filter);
         _activeFilter = filter;
     }
 
