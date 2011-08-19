@@ -3,7 +3,6 @@ package com.limegroup.gnutella.gui.search;
 import javax.swing.JComboBox;
 
 import com.frostwire.gui.components.LabeledRangeSlider;
-import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.LabeledTextField;
 
@@ -33,7 +32,7 @@ public class GeneralResultFilter implements TableLineFilter {
         _rangeSliderSize = rangeSliderSize;
         
         _typeComboBox = fileTypeCombo;
-        _currentMediaType = NamedMediaType.getFromMediaType(MediaType.getAnyTypeMediaType());
+        _currentMediaType = (NamedMediaType) fileTypeCombo.getSelectedItem();// NamedMediaType.getFromMediaType(MediaType.getAnyTypeMediaType());
         
         _minResultsSeeds = Integer.MAX_VALUE;
         _maxResultsSeeds = 0;

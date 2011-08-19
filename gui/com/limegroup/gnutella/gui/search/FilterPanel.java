@@ -171,7 +171,7 @@ public class FilterPanel extends JPanel {
         _rangeSliderSize.getMaximumValueLabel().setText(I18n.tr("Max"));
 
         _keywordFilterTextField.setText("");
-       
+        _typeCombo.setSelectedIndex(0);
     }
 
     private void updateFilterControls(GeneralResultFilter filter) {
