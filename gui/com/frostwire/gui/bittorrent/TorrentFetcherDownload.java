@@ -89,8 +89,18 @@ public class TorrentFetcherDownload implements BTDownload {
             _delegate.remove();
         } else {
             _removed = true;
-            _torrentDownloader.cancel();
-            _torrentDownloader.getFile().delete();
+            try {
+                _torrentDownloader.cancel();
+            } catch (Exception e) {
+                // ignore, I can't do anything
+                e.printStackTrace();
+            }
+            try {
+                _torrentDownloader.getFile().delete();
+            } catch (Exception e) {
+                // ignore, I can't do anything
+                e.printStackTrace();
+            }
         }
     }
 
