@@ -30,7 +30,7 @@ public class LibraryDatabase {
 
     static {
         try {
-            Class.forName("org.hsqldb.jdbcDriver");
+            Class.forName("org.h2.Driver");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -140,7 +140,7 @@ public class LibraryDatabase {
     private Connection openConnection(File path, String name, boolean createIfNotExists) {
         try {
             StringBuilder sb = new StringBuilder();
-            sb.append("jdbc:hsqldb:file:");
+            sb.append("jdbc:h2:");
             sb.append(new File(path, name).getAbsolutePath());
 
             if (!createIfNotExists) {
