@@ -184,7 +184,7 @@ public class BTDownloadImpl implements BTDownload {
 
     public String getSeedsString() {
         long lTotalSeeds = -1;
-        long lTotalPeers = 0;
+        //long lTotalPeers = 0;
         long lConnectedSeeds = 0;
         DownloadManager dm = _downloadManager;
         if (dm != null) {
@@ -194,17 +194,17 @@ public class BTDownloadImpl implements BTDownload {
                 TRTrackerScraperResponse response = dm.getTrackerScrapeResponse();
                 if (response != null && response.isValid()) {
                     lTotalSeeds = response.getSeeds();
-                    lTotalPeers = response.getPeers();
+                    //lTotalPeers = response.getPeers();
                 }
             }
         }
 
-        // Allows for 2097151 of each type (connected seeds, seeds, peers)
-        long value = (lConnectedSeeds << 42);
-        if (lTotalSeeds > 0)
-            value += (lTotalSeeds << 21);
-        if (lTotalPeers > 0)
-            value += lTotalPeers;
+//        // Allows for 2097151 of each type (connected seeds, seeds, peers)
+//        long value = (lConnectedSeeds << 42);
+//        if (lTotalSeeds > 0)
+//            value += (lTotalSeeds << 21);
+//        if (lTotalPeers > 0)
+//            value += lTotalPeers;
 
         //boolean bCompleteTorrent = dm == null ? false : dm.getAssumedComplete();
 
