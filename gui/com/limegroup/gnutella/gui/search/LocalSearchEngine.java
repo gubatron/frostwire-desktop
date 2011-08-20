@@ -185,7 +185,7 @@ public class LocalSearchEngine {
 		//FULL TEXT SEARCH, Returns the File IDs we care about.
 		String fullTextIndexSql = "SELECT * FROM FT_SEARCH('"+query+"',"+LOCAL_SEARCH_RESULTS_LIMIT+",0)";
 		
-		System.out.println(fullTextIndexSql);
+		//System.out.println(fullTextIndexSql);
 		List<List<Object>> matchedFileRows = DB.query(fullTextIndexSql);
 		
 		int fileIDStrOffset = " PUBLIC   FILES  WHERE  FILEID =".length();
@@ -208,7 +208,7 @@ public class LocalSearchEngine {
 		
 
 		String sql = "SELECT Torrents.json, Files.json, torrentName, fileName FROM Torrents JOIN Files ON Torrents.torrentId = Files.torrentId WHERE Files.fileId in "+ fileIDSet.toString() +" ORDER BY seeds DESC LIMIT " + LOCAL_SEARCH_RESULTS_LIMIT;
-		System.out.println(sql);
+		//System.out.println(sql);
 		long start = System.currentTimeMillis();
 		List<List<Object>> rows = DB.query(sql);
 		long delta = System.currentTimeMillis() - start;
@@ -234,10 +234,10 @@ public class LocalSearchEngine {
 				String fileJSON = (String) row.get(1);
 				fileJSON = fileJSON.replace("\'", "'");
 
-				String torrentName = (String) row.get(2);
-				String fileName = (String) row.get(3);
+//				String torrentName = (String) row.get(2);
+//				String fileName = (String) row.get(3);
 
-				if (new MatchLogic(query, torrentName, fileName).matchResult()) {
+				//if (new MatchLogic(query, torrentName, fileName).matchResult()) {
 
 					TorrentDBPojo torrentPojo = JSON_ENGINE.toObject(
 							torrentJSON, TorrentDBPojo.class);
@@ -253,7 +253,7 @@ public class LocalSearchEngine {
 					results.add(new SmartSearchResult(torrentPojo,
 							torrentFilePojo));
 					KNOWN_INFO_HASHES.add(torrentPojo.hash);
-				}
+				//}
 			} catch (Exception e) {
 				// keep going dude
 				System.out.println("Issues with POJO deserialization -> " + torrentJSON);
@@ -373,7 +373,7 @@ public class LocalSearchEngine {
 		return rows.size() > 0;
 	}
 
-	private void indexTorrent(WebSearchResult searchResult,
+	public void indexTorrent(WebSearchResult searchResult,
 			TOTorrent theTorrent, SearchEngine searchEngine) {
 		TorrentDBPojo torrentPojo = new TorrentDBPojo();
 		torrentPojo.creationTime = searchResult.getCreationTime();
@@ -581,6 +581,8 @@ public class LocalSearchEngine {
 		}
 	}
 
+	
+	@SuppressWarnings("unused")
 	private class MatchLogic {
 
 		private List<String> query;

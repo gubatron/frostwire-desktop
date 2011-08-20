@@ -35,6 +35,7 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledTextField;
+import com.limegroup.gnutella.gui.search.LocalSearchEngine;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
 
 public class PartialFilesDialog extends JDialog {
@@ -61,6 +62,7 @@ public class PartialFilesDialog extends JDialog {
         super(frame, I18n.tr("Select files to download"));
 
         _torrent = TorrentUtils.readFromFile(torrentFile, false);
+        
         _name = torrentFile.getName();
         _model = new TorrentTableModel(_torrent);
         
