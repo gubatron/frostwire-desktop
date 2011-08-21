@@ -1,4 +1,4 @@
-frostwire (5.1.2) stable; urgency=high
+frostwire (5.1.3) stable; urgency=high
 
   * Search results now arrive under 200ms, aka, Instant Search.
   * New FrostWire "Smart Torrent" search. FrostWire will search inside
@@ -46,7 +46,7 @@ frostwire (5.0.7) stable; urgency=high
   * UX bugfix, fixes possible UI freeze on startup.
   * UI bugfix, sending songs to iTunes on Mac is now done in a single process.
   * Mac OSX Lion compatible.
-  * Bugfix, issue where opening a torrent from maglnk.com would result in a 
+  * Bugfix, issue where opening a torrent from maglnk.com would result in a
     double invocation of the Partial Dialog window.
   * Bugfix, when user didn't start a partial download the torrent wouldn't be
     deleted.
