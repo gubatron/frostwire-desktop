@@ -1,3 +1,10 @@
+frostwire (5.1.4) stable; urgency=high
+
+  * Bug fix when downloading a secondary file from the second torrent
+    download would not start and would appear as seeding.
+
+ -- FrostWire Team <contact@frostwire.com>  Mon, 22 Aug 2011 13:43:00 -0500
+
 frostwire (5.1.3) stable; urgency=high
 
   * Search results now arrive under 200ms, aka, Instant Search.

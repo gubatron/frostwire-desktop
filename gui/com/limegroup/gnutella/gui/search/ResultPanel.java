@@ -45,6 +45,7 @@ import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.BuyAction;
 import com.frostwire.gui.bittorrent.TorrentUtil;
+import com.frostwire.gui.filters.TableLineFilter;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.BoxPanel;
@@ -70,7 +71,7 @@ import com.limegroup.gnutella.settings.BittorrentSettings;
 import com.limegroup.gnutella.settings.SearchSettings;
 import com.limegroup.gnutella.util.QueryUtils;
 
-public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine, SearchResult> {
+public class ResultPanel extends AbstractTableMediator<TableRowFilteredModel, TableLine, SearchResult> {
     
     protected static final String SEARCH_TABLE = "SEARCH_TABLE";
     
@@ -232,7 +233,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilter, TableLine
      * Setup the data model 
      */
     protected void setupDataModel() {
-        DATA_MODEL = new TableRowFilter(FILTER);
+        DATA_MODEL = new TableRowFilteredModel(FILTER);
     }
     
     /**

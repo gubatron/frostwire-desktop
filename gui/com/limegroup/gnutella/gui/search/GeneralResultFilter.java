@@ -3,10 +3,11 @@ package com.limegroup.gnutella.gui.search;
 import javax.swing.JComboBox;
 
 import com.frostwire.gui.components.LabeledRangeSlider;
+import com.frostwire.gui.filters.TableLineFilter;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.LabeledTextField;
 
-public class GeneralResultFilter implements TableLineFilter {
+public class GeneralResultFilter implements TableLineFilter<TableLine> {
 
     private ResultPanel _rp;
     private LabeledRangeSlider _rangeSliderSeeds;

@@ -1,9 +1,11 @@
 package com.limegroup.gnutella.gui.search;
 
+import com.frostwire.gui.filters.TableLineFilter;
+
 /**
  * Filter denoting that anything is allowed.
  */
-class AllowFilter implements TableLineFilter {
+class AllowFilter implements TableLineFilter<TableLine> {
     /**
      * The sole instance that can be returned, for convenience.
      */

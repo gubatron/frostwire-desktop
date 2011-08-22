@@ -1,8 +1,10 @@
 package com.limegroup.gnutella.gui.search;
 
+import com.frostwire.gui.filters.TableLineFilter;
 
 
-public class SpamFilter implements TableLineFilter {
+
+public class SpamFilter implements TableLineFilter<TableLine> {
     
     //private static URI R;
 

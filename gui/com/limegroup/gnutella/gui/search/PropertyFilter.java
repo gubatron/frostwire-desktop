@@ -1,12 +1,13 @@
 package com.limegroup.gnutella.gui.search;
 
+import com.frostwire.gui.filters.TableLineFilter;
 import com.limegroup.gnutella.gui.search.Selector.PropertyType;
 import com.limegroup.gnutella.gui.tables.IconAndNameHolder;
 
 /**
  * Filters TableLines based on certain properties.
  */
-class PropertyFilter implements TableLineFilter {
+class PropertyFilter implements TableLineFilter<TableLine> {
     private final TableLineFilter FILTER;
     
     /**
@@ -45,7 +46,7 @@ class PropertyFilter implements TableLineFilter {
     /**
      * A filter for extensions.
      */
-    private static class ExtensionFilter implements TableLineFilter {
+    private static class ExtensionFilter implements TableLineFilter<TableLine> {
         private final String TYPE;
         
         /**
@@ -70,7 +71,7 @@ class PropertyFilter implements TableLineFilter {
     /**
      * A filter for speeds.
      */
-    private static class SpeedFilter implements TableLineFilter {
+    private static class SpeedFilter implements TableLineFilter<TableLine> {
         private final ResultSpeed SPEED;
         
         /**
@@ -95,7 +96,7 @@ class PropertyFilter implements TableLineFilter {
     /**
      * A filter for vendor.
      */
-    private static class VendorFilter implements TableLineFilter {
+    private static class VendorFilter implements TableLineFilter<TableLine> {
         private final String VENDOR;
         
         /**

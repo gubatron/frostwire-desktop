@@ -212,8 +212,9 @@ public class TorrentFetcherDownload implements BTDownload {
                 		TOTorrent torrent = TorrentUtils.readFromFile(inf.getFile(), false);
                 		
                         filesSelection = new boolean[torrent.getFiles().length];
+                        String sanitizedRelativePath = LocalSearchEngine.stringSanitize(relativePath);
                         for (int i = 0; i < filesSelection.length; i++) {
-                            filesSelection[i] = LocalSearchEngine.stringSanitize(torrent.getFiles()[i].getRelativePath()).equals(LocalSearchEngine.stringSanitize(relativePath));
+                            filesSelection[i] = LocalSearchEngine.stringSanitize(torrent.getFiles()[i].getRelativePath()).equals(sanitizedRelativePath);
                         }
 	
                 	}

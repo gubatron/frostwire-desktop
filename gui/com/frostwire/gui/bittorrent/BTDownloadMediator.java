@@ -3,11 +3,11 @@ package com.frostwire.gui.bittorrent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.Action;
 import javax.swing.JPopupMenu;
-import javax.swing.RowFilter;
-import javax.swing.table.TableRowSorter;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.limewire.util.OSUtils;
@@ -15,6 +15,7 @@ import org.limewire.util.OSUtils;
 import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.AzureusStarter;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
+import com.frostwire.gui.filters.TableLineFilter;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
@@ -35,7 +36,7 @@ import com.limegroup.gnutella.settings.QuestionsHandler;
  * download window.  It also constructs all of the download window
  * components.
  */
-public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadModel, BTDownloadDataLine, BTDownload> {
+public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRowFilteredModel, BTDownloadDataLine, BTDownload> {
 
     /**
      * instance, for singleton access
@@ -122,7 +123,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
      */
     protected void setupConstants() {
         MAIN_PANEL = new PaddedPanel(I18n.tr("Transfers"));
-        DATA_MODEL = new BTDownloadModel();
+		_seedingFilter = new SeedingFilter();
+        DATA_MODEL = new BTDownloadRowFilteredModel(_seedingFilter);//new BTDownloadModel();
         TABLE = new LimeJTable(DATA_MODEL);
         _downloadButtons = new BTDownloadButtons(this);
         BUTTON_ROW = _downloadButtons.getComponent();
@@ -135,32 +137,40 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
      * @author gubatron
      *
      */
-	class SeedingFilter extends RowFilter<BTDownloadModel, Integer> {
+	class SeedingFilter implements TableLineFilter<BTDownloadDataLine> {
 		@Override
-		public boolean include(
-				javax.swing.RowFilter.Entry<? extends BTDownloadModel, ? extends Integer> rowFilterEntry) {
-
-			if (rowFilterEntry == null || rowFilterEntry.getModel()==null) {
+		public boolean allow(BTDownloadDataLine node) {
+			if (ApplicationSettings.SHOW_SEEDING_TRANSFERS
+				.getValue()) {
+				return true;
+			}
+			
+			if (node==null) {
 				return false;
 			}
 			
-			BTDownloadDataLine dataline = rowFilterEntry.getModel().getDataline(rowFilterEntry.getIdentifier());
-			return !dataline.isSeeding();
+			return !node.isSeeding();
 		}
 	}
 
 
 	public void updateTableFilters() {
+
 		if (TABLE == null || DATA_MODEL == null
 				|| DATA_MODEL.getRowCount() == 0) {
 			return;
 		}
 
+		DATA_MODEL.filtersChanged();
+		/*
+		
 		boolean showSeeds = ApplicationSettings.SHOW_SEEDING_TRANSFERS
 				.getValue();
 		
+		
 		//remember who was selected before
 		int[] selectedRows = TABLE.getSelectedRows();
+		
 		
 		//did anything change?
 		boolean changedSorter = false;
@@ -193,8 +203,48 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
 		} else {
 			//System.out.println("BTDownloadMediator.updateTableFilters() -> Didn't change sorter.");
 		}
+	*/
+
 	}
 
+    /**
+     * Notification that a filter on this panel has changed.
+     *
+     * Updates the data model with the new list, maintains the selection,
+     * and moves the viewport to the first still visible selected row.
+	*/
+    boolean filterChanged() {
+        // store the selection & visible rows
+        int[] rows = TABLE.getSelectedRows();
+        BTDownloadDataLine[] lines = new BTDownloadDataLine[rows.length];
+        List<BTDownloadDataLine> inView = new LinkedList<BTDownloadDataLine>();
+        for(int i = 0; i < rows.length; i++) {
+            int row = rows[i];
+            BTDownloadDataLine line = DATA_MODEL.get(row);
+            lines[i] = line;
+            if(TABLE.isRowVisible(row))
+                inView.add(line);
+        }
+        
+        // change the table.
+        DATA_MODEL.filtersChanged();
+        
+        // reselect & move the viewpoint to the first still visible row.
+        for(int i = 0; i < rows.length; i++) {
+        	BTDownloadDataLine line = lines[i];
+            int row = DATA_MODEL.getRow(line);
+            if(row != -1) {
+                TABLE.addRowSelectionInterval(row, row);
+                if(inView != null && inView.contains(line)) {
+                    TABLE.ensureRowVisible(row);
+                    inView = null;
+                }                    
+            }
+        }
+        
+        return true;
+    }
+	
 	/**
      * Update the splash screen.
      */
@@ -210,7 +260,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadMo
         super("DOWNLOAD_TABLE");
         GUIMediator.addRefreshListener(this);
         ThemeMediator.addThemeObserver(this);
-		_seedingFilter = new SeedingFilter();
     }
 
     /**

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.frostwire.gui.filters.TableLineFilter;
 import com.limegroup.gnutella.settings.SearchSettings;
 
 /**
@@ -12,7 +13,7 @@ import com.limegroup.gnutella.settings.SearchSettings;
  *
  * @author Sumeet Thadani, Sam Berlin
  */
-public class TableRowFilter extends ResultPanelModel {
+public class TableRowFilteredModel extends ResultPanelModel {
     
     /**
      * 
@@ -44,7 +45,7 @@ public class TableRowFilter extends ResultPanelModel {
     /**
      * Constructs a TableRowFilter with the specified TableLineFilter.
      */
-    public TableRowFilter(TableLineFilter f) {
+    public TableRowFilteredModel(TableLineFilter f) {
         super();
 
         if(f == null)

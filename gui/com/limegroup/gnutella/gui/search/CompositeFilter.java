@@ -1,9 +1,11 @@
 package com.limegroup.gnutella.gui.search;
 
+import com.frostwire.gui.filters.TableLineFilter;
+
 /**
  * A filter that takes multiple other filters.
  */
-class CompositeFilter implements TableLineFilter {
+class CompositeFilter implements TableLineFilter<TableLine> {
     /**
      * The underlying filters.
      */
