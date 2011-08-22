@@ -14,6 +14,7 @@ import org.gudy.azureus2.core3.util.TorrentUtils;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.search.LocalSearchEngine;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 public class TorrentFetcherDownload implements BTDownload {
@@ -212,7 +213,7 @@ public class TorrentFetcherDownload implements BTDownload {
                 		
                         filesSelection = new boolean[torrent.getFiles().length];
                         for (int i = 0; i < filesSelection.length; i++) {
-                            filesSelection[i] = torrent.getFiles()[i].getRelativePath().equals(relativePath);
+                            filesSelection[i] = LocalSearchEngine.stringSanitize(torrent.getFiles()[i].getRelativePath()).equals(LocalSearchEngine.stringSanitize(relativePath));
                         }
 	
                 	}

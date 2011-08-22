@@ -91,7 +91,7 @@ public class LocalSearchEngine {
 	 * @param str
 	 * @return
 	 */
-	private final static String stringSanitize(String str) {
+	public final static String stringSanitize(String str) {
 		str = str.replace("\\", "").replace("%", "").replace("_", "")
 				.replace(";", "").replace("'", "''").replace("-","");
 
