@@ -28,6 +28,7 @@ public class BTDownloadCreator {
 
     private DownloadManager _downloadManager;
     private boolean _torrentInGlobalManager;
+    private boolean createDownload;
 	private TOTorrent torrent;
 
     public BTDownloadCreator(File torrentFile, File saveDir, boolean initialSeed, boolean[] filesSelection) throws TOTorrentException {
@@ -43,6 +44,7 @@ public class BTDownloadCreator {
         }
 
         torrent = TorrentUtils.readFromFile(_torrentFile, false);
+        createDownload = true;
 
         _downloadManager = _globalManager.getDownloadManager(torrent);
         if (_downloadManager == null) {
@@ -86,6 +88,7 @@ public class BTDownloadCreator {
             	boolean[] prevSelection = getPreviousFileSelections(_downloadManager);
             	if (isDownloadingEntireContents(prevSelection)) {
             		//oh, it was already downloading the whole thing
+            	    createDownload = false;
             		return;
             	}
             	
@@ -175,7 +178,11 @@ public class BTDownloadCreator {
     
     public BTDownload createDownload() throws SaveLocationException, TOTorrentException {
         if (_torrentInGlobalManager) {
-            return new DuplicateDownload(createDownload(_downloadManager));
+            if (createDownload) {
+                return new DuplicateDownload(createDownload(_downloadManager));
+            } else {
+                return new DuplicateDownload(new BTDownloadImpl(_downloadManager));
+            }
         } else {
             return createDownload(_downloadManager);
         }
