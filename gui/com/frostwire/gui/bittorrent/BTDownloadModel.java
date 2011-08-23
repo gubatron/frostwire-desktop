@@ -95,24 +95,12 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
      * set the CLEAR_BUTTON as appropriate.
      */
     public Object refresh() {
-    	
-    	int firstRowUpdated = -1;
-    	int lastRowUpdated = 0;
         int size = getRowCount();
-        
         for (int i = 0; i < size; i++) {
             BTDownloadDataLine ud = get(i);
-            
             ud.update();
-            
-            if (firstRowUpdated == -1) {
-            	firstRowUpdated = i;
-            }
-            lastRowUpdated = i;
         }
-        
-        fireTableRowsUpdated(firstRowUpdated, lastRowUpdated);
-        
+        fireTableRowsUpdated(0, size);
         return Boolean.TRUE;
     }
 
