@@ -1,5 +1,8 @@
 package com.limegroup.gnutella.gui.search;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.frostwire.gui.filters.TableLineFilter;
 
 /**
@@ -9,14 +12,14 @@ class CompositeFilter implements TableLineFilter<TableLine> {
     /**
      * The underlying filters.
      */
-    private TableLineFilter[] delegates;
+    private List<TableLineFilter<TableLine>> delegates;
     
     /**
      * Creates a new CompositeFilter of the specified depth.
      * By default, all the filters are an AllowFilter.
      */
     CompositeFilter(int depth) {
-        this.delegates = new TableLineFilter[depth];
+        this.delegates = new ArrayList<TableLineFilter<TableLine>>(depth);
         reset();
     }
     
@@ -24,8 +27,8 @@ class CompositeFilter implements TableLineFilter<TableLine> {
      * Resets this filter to all AllowFilters.
      */
     public void reset() {
-        for(int i = 0; i < delegates.length; i++) {
-            delegates[i] = AllowFilter.instance();
+        for(int i = 0; i < delegates.size(); i++) {
+            delegates.set(i, AllowFilter.instance());
         }
     }
     
@@ -34,8 +37,8 @@ class CompositeFilter implements TableLineFilter<TableLine> {
      * can be displayed.
      */
     public boolean allow(TableLine line) {
-        for (int i=0; i<delegates.length; i++) {
-            if (! delegates[i].allow(line))
+        for (int i=0; i<delegates.size(); i++) {
+            if (! delegates.get(i).allow(line))
                 return false;
         }
         return true;
@@ -44,14 +47,14 @@ class CompositeFilter implements TableLineFilter<TableLine> {
     /**
      * Sets the filter at the specified depth.
      */
-    boolean setFilter(int depth, TableLineFilter filter) {
+    boolean setFilter(int depth, TableLineFilter<TableLine> filter) {
         if (filter == this) {
             throw new IllegalArgumentException("Filter must not be composed of itself");
         }
-        if(delegates[depth].equals(filter))
+        if(delegates.get(depth).equals(filter))
             return false;
         else {
-            delegates[depth] = filter;
+            delegates.set(depth, filter);
             return true;
         }
     }

@@ -352,7 +352,7 @@ class SearchInputPanel extends JPanel {
 
 	}
 
-	private void updateSearchResults(TableLineFilter filter) {
+	private void updateSearchResults(TableLineFilter<TableLine> filter) {
         List<ResultPanel> resultPanels = SearchMediator.getSearchResultDisplayer().getResultPanels();
         for (ResultPanel resultPanel : resultPanels) {
             resultPanel.filterChanged(filter, 0);

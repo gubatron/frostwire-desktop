@@ -35,7 +35,6 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledTextField;
-import com.limegroup.gnutella.gui.search.LocalSearchEngine;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
 
 public class PartialFilesDialog extends JDialog {

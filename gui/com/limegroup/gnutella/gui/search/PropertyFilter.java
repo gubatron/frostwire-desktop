@@ -8,7 +8,7 @@ import com.limegroup.gnutella.gui.tables.IconAndNameHolder;
  * Filters TableLines based on certain properties.
  */
 class PropertyFilter implements TableLineFilter<TableLine> {
-    private final TableLineFilter FILTER;
+    private final TableLineFilter<TableLine> FILTER;
     
     /**
      * Constructs a new PropertyFilter for the given property/value.

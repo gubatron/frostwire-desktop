@@ -23,12 +23,12 @@ public class TableRowFilteredModel extends ResultPanelModel {
     /**
      * The filter to use in this row filter.
      */
-    private final TableLineFilter FILTER;
+    private final TableLineFilter<TableLine> FILTER;
     
     /**
      * The Junk Filter
      */
-    private TableLineFilter junkFilter = AllowFilter.instance();
+    private TableLineFilter<TableLine> junkFilter = AllowFilter.instance();
     
     /**
      * A list of all filtered results.
@@ -45,7 +45,7 @@ public class TableRowFilteredModel extends ResultPanelModel {
     /**
      * Constructs a TableRowFilter with the specified TableLineFilter.
      */
-    public TableRowFilteredModel(TableLineFilter f) {
+    public TableRowFilteredModel(TableLineFilter<TableLine> f) {
         super();
 
         if(f == null)
@@ -166,7 +166,7 @@ public class TableRowFilteredModel extends ResultPanelModel {
     /**
      * Sets the Junk Filter. Pass null as argument to disable the filter
      */
-    void setJunkFilter(TableLineFilter junkFilter) {
+    void setJunkFilter(TableLineFilter<TableLine> junkFilter) {
         if (junkFilter != null) {
             this.junkFilter = junkFilter;
         } else {
