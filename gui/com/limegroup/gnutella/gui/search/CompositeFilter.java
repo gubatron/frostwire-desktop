@@ -20,6 +20,9 @@ class CompositeFilter implements TableLineFilter<TableLine> {
      */
     CompositeFilter(int depth) {
         this.delegates = new ArrayList<TableLineFilter<TableLine>>(depth);
+        for (int i = 0; i < depth; i++) {
+            this.delegates.add(null);
+        }
         reset();
     }
     

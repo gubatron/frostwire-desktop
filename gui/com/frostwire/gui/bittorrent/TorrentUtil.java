@@ -67,6 +67,7 @@ import org.gudy.azureus2.plugins.sharing.ShareResourceFile;
 import org.gudy.azureus2.plugins.tracker.Tracker;
 import org.gudy.azureus2.plugins.tracker.TrackerTorrent;
 import org.gudy.azureus2.pluginsimpl.local.PluginCoreUtils;
+import org.limewire.util.FileUtils;
 
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.ui.UIFunctions;
@@ -145,6 +146,7 @@ public class TorrentUtil {
                 System.out.println("Can't delete file: " + f + ", ex: " + e.getMessage());
             }
         }
+        FileUtils.deleteEmptyDirectoryRecursive(downloadManager.getSaveLocation());
         iTunesImportSettings.IMPORT_FILES.remove(downloadManager.getSaveLocation());
     }
     

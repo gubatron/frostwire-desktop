@@ -792,4 +792,39 @@ public class FileUtils {
     		}
     	}
     }
+    
+    public static boolean deleteEmptyDirectoryRecursive(File directory) {
+        // make sure we only delete canonical children of the parent file we
+        // wish to delete. I have a hunch this might be an issue on OSX and
+        // Linux under certain circumstances.
+        // If anyone can test whether this really happens (possibly related to
+        // symlinks), I would much appreciate it.
+        String canonicalParent;
+        try {
+            canonicalParent = getCanonicalPath(directory);
+        } catch (IOException ioe) {
+            return false;
+        }
+
+        if (!directory.isDirectory())
+            return false;
+        
+        boolean canDelete = true;
+
+        File[] files = directory.listFiles();
+        for (int i = 0; i < files.length; i++) {
+            try {
+                if (!getCanonicalPath(files[i]).startsWith(canonicalParent))
+                    continue;
+            } catch (IOException ioe) {
+                canDelete = false;
+            }
+            
+            if (!deleteEmptyDirectoryRecursive(files[i])) {
+                canDelete = false;
+            }
+        }
+
+        return canDelete ? directory.delete() : false;
+    }
 }
