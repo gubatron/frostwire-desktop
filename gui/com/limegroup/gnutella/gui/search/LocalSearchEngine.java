@@ -25,6 +25,7 @@ import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.filters.SearchFilter;
 import com.limegroup.gnutella.GUID;
+import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.search.db.SmartSearchDB;
 import com.limegroup.gnutella.gui.search.db.TorrentDBPojo;
 import com.limegroup.gnutella.gui.search.db.TorrentFileDBPojo;
@@ -498,7 +499,7 @@ public class LocalSearchEngine {
 				return;
 			}
 
-			ResultPanel rp = SearchMediator
+			final ResultPanel rp = SearchMediator
 					.getResultPanelForGUID(new GUID(guid));
 
 			// user closed the tab.
@@ -511,7 +512,7 @@ public class LocalSearchEngine {
 
 			TOTorrentFile[] fs = theTorrent.getFiles();
 			for (int i = 0; i < fs.length; i++) {
-				DeepSearchResult result = new DeepSearchResult(fs[i],
+				final DeepSearchResult result = new DeepSearchResult(fs[i],
 						webSearchResult, searchEngine, info);
 
 				if (!filter.allow(result))
@@ -537,8 +538,12 @@ public class LocalSearchEngine {
 
 				// best match ever, Steve Jobs style.
 				if (foundMatch) {
-					SearchMediator.getSearchResultDisplayer().addQueryResult(
-							guid, result, rp);
+				    GUIMediator.safeInvokeAndWait(new Runnable() {
+                        public void run() {
+                            SearchMediator.getSearchResultDisplayer().addQueryResult(
+                                    guid, result, rp);
+                        }
+                    });
 					return;
 				}
 
@@ -571,8 +576,12 @@ public class LocalSearchEngine {
 				}
 
 				if (foundMatch) {
-					SearchMediator.getSearchResultDisplayer().addQueryResult(
-							guid, result, rp);
+				    GUIMediator.safeInvokeAndWait(new Runnable() {
+                        public void run() {
+                            SearchMediator.getSearchResultDisplayer().addQueryResult(
+                                    guid, result, rp);
+                        }
+                    });
 					return;
 				}
 
