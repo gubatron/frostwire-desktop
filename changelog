@@ -2,8 +2,11 @@ frostwire (5.1.4) stable; urgency=high
 
   * Bug fix when downloading a secondary file from the second torrent
     download would not start and would appear as seeding.
+  * Cleans all empty folders created by a partial download once the download
+    is removed from the transfer manager.
+  * Fixes issue with transfer manager resetting the order of columns.
 
- -- FrostWire Team <contact@frostwire.com>  Mon, 22 Aug 2011 13:43:00 -0500
+ -- FrostWire Team <contact@frostwire.com>  Wed, 24 Aug 2011 00:57:38 -0500
 
 frostwire (5.1.3) stable; urgency=high
 
