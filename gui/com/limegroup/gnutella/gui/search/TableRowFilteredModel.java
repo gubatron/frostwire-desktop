@@ -242,4 +242,11 @@ public class TableRowFilteredModel extends ResultPanelModel {
    public int getTotalResults() {
         return getFilteredResults() + _numResults;
     }
+   
+	public List<TableLine> getAllData() {
+		List<TableLine> results = new ArrayList<TableLine>(HIDDEN);
+		results.addAll(_list);
+		return results;
+	}
+
 }

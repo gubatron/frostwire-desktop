@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -42,6 +43,14 @@ public class LocalSearchEngine {
 	private static LocalSearchEngine INSTANCE;
 
 	private static final int LOCAL_SEARCH_RESULTS_LIMIT = 256; 
+	
+	private static final Comparator<TableLine> TORRENT_SEED_TABLELINE_COMPARATOR = new Comparator<TableLine>() {
+
+		@Override
+		public int compare(TableLine o1, TableLine o2) {
+			return o2.getSeeds()-o1.getSeeds();
+		}
+	};
 
 	/**
 	 * We'll keep here every info hash we've already processed during the
@@ -318,8 +327,12 @@ public class LocalSearchEngine {
 		
 		int foundTorrents = 0;
 		
-		for (int i = 0; i < rp.getSize() && foundTorrents < MAXIMUM_TORRENTS_TO_SCAN; i++) {
-			TableLine line = rp.getLine(i);
+		List<TableLine> allData = rp.getAllData();
+		sortAndStripNonTorrents(allData);
+		
+		
+		for (int i = 0; i < allData.size() && foundTorrents < MAXIMUM_TORRENTS_TO_SCAN; i++) {
+			TableLine line = allData.get(i);
 			
 			if (line.getInitializeObject() instanceof SearchEngineSearchResult) {
 				foundTorrents++;
@@ -332,6 +345,22 @@ public class LocalSearchEngine {
 					SearchEngine searchEngine = line.getSearchEngine();
 					scanDotTorrent(webSearchResult, guid, query, searchEngine, info);
 				}
+			}
+		}
+	}
+	
+	/**
+	 * Remove all results that are not torrents and sort them by seed (desc. order)
+	 * @param allData
+	 */
+	private void sortAndStripNonTorrents(List<TableLine> allData) {
+		Collections.sort(allData,TORRENT_SEED_TABLELINE_COMPARATOR);
+		Iterator<TableLine> iterator = allData.iterator();
+		while (iterator.hasNext()) {
+			TableLine next = iterator.next();
+			
+			if (!next.getExtension().toLowerCase().contains("torrent")) {
+				iterator.remove();
 			}
 		}
 	}

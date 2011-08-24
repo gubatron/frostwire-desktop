@@ -161,7 +161,9 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
 
     }
 
-
+    public String toString() {
+    	return getFilename() + " ("+getSeeds()+")";
+    };
 
     /**
      * Gets the speed of this line.

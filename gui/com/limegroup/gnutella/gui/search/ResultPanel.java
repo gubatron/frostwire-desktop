@@ -749,6 +749,10 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilteredModel, Ta
         return  ((ResultPanelModel)DATA_MODEL).getMetadataModel();
     }
 
+    public List<TableLine> getAllData() {
+    	return ((TableRowFilteredModel)DATA_MODEL).getAllData();
+    }
+    
     /** Returns true if this is responsible for results with the given GUID */
     boolean matches(GUID otherGuid) {
         return this.guid.equals(otherGuid);

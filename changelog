@@ -1,5 +1,7 @@
 frostwire (5.1.4) stable; urgency=high
 
+  * Bug fix where it would not index torrents when the 
+    file type filter was in use.
   * Bug fix when downloading a secondary file from the second torrent
     download would not start and would appear as seeding.
   * Cleans all empty folders created by a partial download once the download
