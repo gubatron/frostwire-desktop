@@ -244,7 +244,9 @@ public class SetupManager {
         dialog.setLocation((screenSize.width - d.width) / 2, (screenSize.height - d.height) / 2);
 
         // create the setup buttons panel
-        _setupWindowHolder.setPreferredSize(holderPreferredSize);
+        if (OSUtils.isWindowsVista() || OSUtils.isWindows7()) {
+            _setupWindowHolder.setPreferredSize(holderPreferredSize);
+        }
         setupPanel.add(_setupWindowHolder);
         setupPanel.add(Box.createVerticalStrut(17));
 
@@ -268,8 +270,10 @@ public class SetupManager {
         // add the panel and make it visible
         container.add(setupPanel);
 
-        //((JComponent) container).setPreferredSize(new Dimension(SetupWindow.SETUP_WIDTH,
-        //        SetupWindow.SETUP_HEIGHT));
+        if (!(OSUtils.isWindowsVista() || OSUtils.isWindows7())) {
+            ((JComponent) container).setPreferredSize(new Dimension(SetupWindow.SETUP_WIDTH,
+                    SetupWindow.SETUP_HEIGHT));
+        }
         dialog.pack();
 
         SplashWindow.instance().setVisible(false);
