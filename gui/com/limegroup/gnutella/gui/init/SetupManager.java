@@ -62,6 +62,8 @@ public class SetupManager {
 	 * holder for the current setup window.
 	 */
 	private SetupWindow _currentWindow;
+	
+	private Dimension holderPreferredSize;
 
 	public static final int ACTION_PREVIOUS = 1;
 	
@@ -164,6 +166,8 @@ public class SetupManager {
         //if(partial && !(windows.size() == 1 && windows.get(0) instanceof IntentWindow))
         windows.add(0, new WelcomeWindow(this, partial));
         
+        holderPreferredSize = new Dimension(0, 0);
+        
         // Iterate through each displayed window and set them up correctly.
         SetupWindow prior = null;
         for(SetupWindow current : windows) {
@@ -178,7 +182,19 @@ public class SetupManager {
                 prior.setNext(current);
             
             prior = current;
+            
+            Dimension d = current.calculatePreferredSize();
+            if (d.width > holderPreferredSize.width) {
+            	holderPreferredSize.width = d.width;
+            }
+            if (d.height > holderPreferredSize.height) {
+            	holderPreferredSize.height = d.height;
+            }
         }
+        
+        holderPreferredSize.width += 20;
+        holderPreferredSize.height += 20;
+        
         assert prior != null;
         prior.setNext(prior);        
 		
@@ -228,6 +244,7 @@ public class SetupManager {
         dialog.setLocation((screenSize.width - d.width) / 2, (screenSize.height - d.height) / 2);
 
         // create the setup buttons panel
+        _setupWindowHolder.setPreferredSize(holderPreferredSize);
         setupPanel.add(_setupWindowHolder);
         setupPanel.add(Box.createVerticalStrut(17));
 
@@ -251,8 +268,8 @@ public class SetupManager {
         // add the panel and make it visible
         container.add(setupPanel);
 
-        ((JComponent) container).setPreferredSize(new Dimension(SetupWindow.SETUP_WIDTH,
-                SetupWindow.SETUP_HEIGHT));
+        //((JComponent) container).setPreferredSize(new Dimension(SetupWindow.SETUP_WIDTH,
+        //        SetupWindow.SETUP_HEIGHT));
         dialog.pack();
 
         SplashWindow.instance().setVisible(false);

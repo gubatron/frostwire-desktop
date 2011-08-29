@@ -2,6 +2,7 @@ package com.limegroup.gnutella.gui.init;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.BorderFactory;
@@ -290,5 +291,10 @@ abstract class SetupWindow extends JPanel {
 			this(" ");
 	    }
 
+	}
+
+	public Dimension calculatePreferredSize() {
+		createWindow();
+		return getLayout().preferredLayoutSize(this);
 	}
 }
