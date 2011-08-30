@@ -32,7 +32,7 @@ import javax.swing.filechooser.FileSystemView;
 
 import com.frostwire.gui.components.GraphicPanel;
 
-public class LocalFileRenderer extends JPanel implements ListCellRenderer {
+class LocalFileRenderer extends JPanel implements ListCellRenderer {
 
 	/**
 	 * 

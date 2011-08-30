@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 import com.frostwire.gui.GuiFrostWireUtils;
 
-public class LocalFile implements Serializable {
+class LocalFile implements Serializable {
 	
 	/**
 	 * 

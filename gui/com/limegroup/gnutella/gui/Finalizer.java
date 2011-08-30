@@ -1,5 +1,6 @@
 package com.limegroup.gnutella.gui;
 
+import com.frostwire.gui.library.LibraryMediator;
 import com.limegroup.gnutella.gui.bugs.BugManager;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
 import com.limegroup.gnutella.gui.player.MediaPlayerComponent;
@@ -57,6 +58,11 @@ final class Finalizer {
     	LocalSearchEngine.instance().shutdown();
     	
     	MediaPlayerComponent.getInstance().stopSong();
+    	
+    	// TODO: This line of code must be refactored in a better workflow of
+    	// LifecycleManager -> ActivityCallback
+    	LibraryMediator.instance().getLibrary().close();
+    	
         GUIMediator.applyWindowSettings();
         
         GUIMediator.setAppVisible(false);

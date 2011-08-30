@@ -1,5 +1,6 @@
 package com.limegroup.gnutella.util;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -198,7 +199,7 @@ public final class Launcher {
      * @return null, if not supported by platform; the launched process otherwise
      * @see #launchFile(File)
      */
-    public static LimeProcess launchExplorer(File file) throws IOException, SecurityException {
+    public static void launchExplorer(File file) throws IOException, SecurityException {
         if (OSUtils.isWindows()) {
             String explorePath = file.getPath(); 
             try { 
@@ -211,14 +212,17 @@ public final class Launcher {
                 LimeProcess.exec(new String[] { "explorer", explorePath });
             } else {
                 // launches explorer and highlights the file
-                return LimeProcess.exec(new String[] { "explorer", "/select,", explorePath });
+                LimeProcess.exec(new String[] { "explorer", "/select,", explorePath });
             }
             
         } else if (OSUtils.isMacOSX()) {
             // launches the Finder and highlights the file
-            return LimeProcess.exec(selectFileCommand(file));
+            LimeProcess.exec(selectFileCommand(file));
+        } else if (OSUtils.isLinux()) {
+            if (file.isDirectory()) {
+                Desktop.getDesktop().open(file);
+            }
         }
-        return null;
     }
     
 	/**

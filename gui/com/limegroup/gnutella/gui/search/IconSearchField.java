@@ -53,7 +53,6 @@ public class IconSearchField extends SearchField {
 			public void mouseMoved(MouseEvent e) {
 				super.mouseMoved(e);
 				
-				
 				if (_iconRectangle != null && 
 				    _iconRectangle.contains(e.getPoint())) {
 					
