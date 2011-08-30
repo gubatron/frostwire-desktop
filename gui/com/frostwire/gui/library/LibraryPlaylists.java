@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -116,6 +117,8 @@ public class LibraryPlaylists extends JPanel {
         _list.addListSelectionListener(_listSelectionListener);
         _list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         _list.setLayoutOrientation(JList.VERTICAL);
+        _list.setPrototypeCellValue(new LibraryPlaylistsListCell("test", "", null, null, null));
+        _list.setVisibleRowCount(-1);
         ToolTipManager.sharedInstance().registerComponent(_list);
         
         _textName = new JTextField();
@@ -175,14 +178,11 @@ public class LibraryPlaylists extends JPanel {
         LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) _model.getElementAt(index);
         String text = cell.getText();
 
-        LibraryPlaylistsCellRenderer renderer = (LibraryPlaylistsCellRenderer) _list.getCellRenderer().getListCellRendererComponent(_list, _list.getModel().getElementAt(index),
-                index, false, false);
-        Dimension lsize = new Dimension(100, 25);// renderer.getSize();
-        Point llocation = renderer.getLocation();
-        //lsize.setSize(lsize.getWidth() - 3, lsize.getHeight() - 8);
-        Point p = _list.indexToLocation(index);
-        p.translate(llocation.x, llocation.y + 4);
+        Rectangle rect = _list.getUI().getCellBounds(_list, index, index);
+        Dimension lsize = rect.getSize();
+        Point llocation = rect.getLocation();
         _textName.setSize(lsize);
+        _textName.setLocation(llocation);
 
         _textName.setText(text);
         _textName.setSelectionStart(0);
