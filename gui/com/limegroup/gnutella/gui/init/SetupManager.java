@@ -244,7 +244,7 @@ public class SetupManager {
         dialog.setLocation((screenSize.width - d.width) / 2, (screenSize.height - d.height) / 2);
 
         // create the setup buttons panel
-        if (OSUtils.isWindowsVista() || OSUtils.isWindows7()) {
+        if (OSUtils.isGoodWindows()) {
             _setupWindowHolder.setPreferredSize(holderPreferredSize);
         }
         setupPanel.add(_setupWindowHolder);
@@ -270,7 +270,7 @@ public class SetupManager {
         // add the panel and make it visible
         container.add(setupPanel);
 
-        if (!(OSUtils.isWindowsVista() || OSUtils.isWindows7())) {
+        if (!OSUtils.isGoodWindows()) {
             ((JComponent) container).setPreferredSize(new Dimension(SetupWindow.SETUP_WIDTH,
                     SetupWindow.SETUP_HEIGHT));
         }
