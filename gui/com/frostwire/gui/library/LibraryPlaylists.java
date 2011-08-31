@@ -97,7 +97,6 @@ public class LibraryPlaylists extends JPanel {
         _selectedPlaylistAction = new SelectedPlaylistActionListener();
         _defaultPlaylistCell = new LibraryPlaylistsListCell(null, null, null, library.getDefaultPlaylist(), _selectedPlaylistAction);
 
-        _model.addElement(_newPlaylistCell);
         _model.addElement(_defaultPlaylistCell);
         for (Playlist playlist : library.getPlaylists()) {
             if (!playlist.isDefault()) {
@@ -105,6 +104,7 @@ public class LibraryPlaylists extends JPanel {
                 _model.addElement(cell);
             }
         }
+        _model.addElement(_newPlaylistCell);
     }
 
     private void setupList() {
@@ -137,6 +137,8 @@ public class LibraryPlaylists extends JPanel {
         int key = e.getKeyCode();
         if (_selectedIndexToRename != -1 && key == KeyEvent.VK_ENTER) {
             renameSelectedItem(_selectedIndexToRename);
+        } else if (_selectedIndexToRename == -1 && key == KeyEvent.VK_ENTER) {
+            createNewPlaylist();
         } else if (key == KeyEvent.VK_ESCAPE) {
             _textName.setVisible(false);
         }
@@ -174,8 +176,9 @@ public class LibraryPlaylists extends JPanel {
             return;
         }
 
-        _selectedIndexToRename = index;
         LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) _model.getElementAt(index);
+        _selectedIndexToRename = cell.getPlaylist() != null ? index : -1;
+        
         String text = cell.getText();
 
         Rectangle rect = _list.getUI().getCellBounds(_list, index, index);
@@ -209,6 +212,22 @@ public class LibraryPlaylists extends JPanel {
 //            }
 //            _model.rename(index, text);
 //        }
+        _textName.setVisible(false);
+    }
+    
+    private void createNewPlaylist() {
+        if (!_textName.isVisible()) {
+            return;
+        }
+        
+        String name = _textName.getText();
+        
+        Library library = LibraryMediator.getLibrary();
+        
+        Playlist playlist = library.newPlaylist(name, name);
+        LibraryPlaylistsListCell cell = new LibraryPlaylistsListCell(null, null, null, playlist, _selectedPlaylistAction);
+        _model.addElement(cell);
+        
         _textName.setVisible(false);
     }
 
