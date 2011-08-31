@@ -97,6 +97,7 @@ public class LibraryPlaylists extends JPanel {
         _selectedPlaylistAction = new SelectedPlaylistActionListener();
         _defaultPlaylistCell = new LibraryPlaylistsListCell(null, null, null, library.getDefaultPlaylist(), _selectedPlaylistAction);
 
+        _model.addElement(_newPlaylistCell);
         _model.addElement(_defaultPlaylistCell);
         for (Playlist playlist : library.getPlaylists()) {
             if (!playlist.isDefault()) {
@@ -104,7 +105,6 @@ public class LibraryPlaylists extends JPanel {
                 _model.addElement(cell);
             }
         }
-        _model.addElement(_newPlaylistCell);
     }
 
     private void setupList() {
@@ -225,8 +225,10 @@ public class LibraryPlaylists extends JPanel {
         Library library = LibraryMediator.getLibrary();
         
         Playlist playlist = library.newPlaylist(name, name);
+        playlist.save();
         LibraryPlaylistsListCell cell = new LibraryPlaylistsListCell(null, null, null, playlist, _selectedPlaylistAction);
         _model.addElement(cell);
+        _list.setSelectedValue(cell, true);
         
         _textName.setVisible(false);
     }

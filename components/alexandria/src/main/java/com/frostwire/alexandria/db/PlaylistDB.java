@@ -63,7 +63,7 @@ public class PlaylistDB extends ObjectDB<Playlist> {
             query = "SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath "
                     + "FROM PlaylistItems";
         } else {
-            query = "SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath "
+            query = "SELECT PlaylistItems.playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath "
                     + "FROM PlaylistItems INNER JOIN PlaylistsPlaylistItems ON PlaylistItems.playlistItemId = PlaylistsPlaylistItems.playlistItemId "
                     + "WHERE playlistId = " + playlist.getId();
         }
