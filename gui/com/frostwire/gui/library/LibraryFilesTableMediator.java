@@ -29,6 +29,9 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
+import com.frostwire.alexandria.Library;
+import com.frostwire.alexandria.Playlist;
+import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.gui.ButtonRow;
@@ -43,6 +46,7 @@ import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.actions.SearchAction;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.MulticastTransferHandler;
+import com.limegroup.gnutella.gui.player.PlayListItem;
 import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
@@ -123,6 +127,7 @@ final class LibraryFilesTableMediator extends AbstractTableMediator<LibraryFiles
         }
 
         menu.add(new SkinMenuItem(CREATE_TORRENT_ACTION));
+        menu.add(createAddToPlaylistSubMenu());
 
         menu.addSeparator();
         menu.add(new SkinMenuItem(DELETE_ACTION));
@@ -165,7 +170,7 @@ final class LibraryFilesTableMediator extends AbstractTableMediator<LibraryFiles
     }
 
     private JMenu createSearchSubMenu(LibraryFilesTableDataLine dl) {
-        JMenu menu = new SkinMenu(I18n.tr("Search"));
+        SkinMenu menu = new SkinMenu(I18n.tr("Search"));
 
         if (dl != null) {
             File f = dl.getInitializeObject();
@@ -627,6 +632,21 @@ final class LibraryFilesTableMediator extends AbstractTableMediator<LibraryFiles
     private boolean hasExploreAction() {
         return OSUtils.isWindows() || OSUtils.isMacOSX();
     }
+    
+    private SkinMenu createAddToPlaylistSubMenu() {
+        SkinMenu menu = new SkinMenu(I18n.tr("Add to playlist"));
+        
+        menu.add(new SkinMenuItem(new CreateNewPlaylistAction()));
+        menu.addSeparator();
+        
+        Library library = LibraryMediator.getLibrary();
+
+        for (Playlist playlist : library.getPlaylists()) {
+            menu.add(new SkinMenuItem(new AddToPlaylistAction(playlist)));
+        }
+        
+        return menu;
+    }
 
     ///////////////////////////////////////////////////////
     //  ACTIONS
@@ -770,10 +790,87 @@ final class LibraryFilesTableMediator extends AbstractTableMediator<LibraryFiles
             startRename();
         }
     }
+    
+    private final class CreateNewPlaylistAction extends AbstractAction {
+
+        private static final long serialVersionUID = 3460908036485828909L;
+
+        public CreateNewPlaylistAction() {
+            super(I18n.tr("Create New Playlist"));
+            putValue(Action.LONG_DESCRIPTION, I18n.tr("Create and add to a new playlist"));
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String playlistName = (String)JOptionPane.showInputDialog(
+                    GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"),
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    null,
+                    null);
+            
+            if (playlistName != null && playlistName.length() > 0) {
+                Playlist playlist = LibraryMediator.getLibrary().newPlaylist(playlistName, playlistName);
+                
+                LibraryFilesTableDataLine[] selectedLibraryLines = getSelectedLibraryLines();
+                for (int i = 0; i < selectedLibraryLines.length; i++) {
+                    LibraryFilesTableDataLine line = selectedLibraryLines[i];
+                    PlayListItem playerItem = new PlayListItem(line.getFile());
+                    PlaylistItem item = playlist.newItem(
+                            line.getFile().getAbsolutePath(),
+                            line.getFile().getName(),
+                            line.getFile().length(),
+                            playerItem.getProperty(PlayListItem.TYPE), //TODO: wrong internal implementation with extension > 3 chars
+                            playerItem.getProperty(PlayListItem.TITLE),
+                            0, //TODO: missing time
+                            playerItem.getProperty(PlayListItem.ARTIST),
+                            playerItem.getProperty(PlayListItem.ALBUM),
+                            ""); // TODO: cover art path
+                    playlist.getItems().add(item);
+                }
+                
+                playlist.save();
+                LibraryMediator.instance().getLibraryPlaylists().addPlaylist(playlist);
+            }
+        }
+    }
+    
+    private final class AddToPlaylistAction extends AbstractAction {
+
+        private static final long serialVersionUID = 4658698262279334616L;
+        
+        private Playlist playlist;
+
+        public AddToPlaylistAction(Playlist playlist) {
+            super(playlist.getName());
+            putValue(Action.LONG_DESCRIPTION, I18n.tr("Add to playlist ") + "\"" + playlist.getName() + "\"");
+            this.playlist = playlist;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            LibraryFilesTableDataLine[] selectedLibraryLines = getSelectedLibraryLines();
+            for (int i = 0; i < selectedLibraryLines.length; i++) {
+                LibraryFilesTableDataLine line = selectedLibraryLines[i];
+                PlayListItem playerItem = new PlayListItem(line.getFile());
+                PlaylistItem item = playlist.newItem(
+                        line.getFile().getAbsolutePath(),
+                        line.getFile().getName(),
+                        line.getFile().length(),
+                        playerItem.getProperty(PlayListItem.TYPE), //TODO: wrong internal implementation with extension > 3 chars
+                        playerItem.getProperty(PlayListItem.TITLE),
+                        0, //TODO: missing time
+                        playerItem.getProperty(PlayListItem.ARTIST),
+                        playerItem.getProperty(PlayListItem.ALBUM),
+                        ""); // TODO: cover art path
+                playlist.getItems().add(item);
+                item.save();
+            }
+        }
+    }
 
     /**
-     * Sets an icon based on the filename extension. 
-     */
+     * Sets an icon based on the filename extension.      */
     private static class FileNameListCellRenderer extends SubstanceDefaultListCellRenderer {
 
         /**

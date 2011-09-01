@@ -44,6 +44,7 @@ public class PlaylistDB extends ObjectDB<Playlist> {
         }
 
         for (PlaylistItem item : obj.getItems()) {
+            item.setId(LibraryDatabase.OBJECT_NOT_SAVED_ID);
             item.save();
         }
     }

@@ -24,6 +24,8 @@ public class LibraryMediator {
     public static final String PLAYLISTS_TABLE_KEY = "LIBRARY_PLAYLISTS_TABLE";
 
     private static JPanel MAIN_PANEL;
+    
+    private LibraryPlaylists LIBRARY_PLAYLISTS;
 
     /**
      * Singleton instance of this class.
@@ -71,6 +73,13 @@ public class LibraryMediator {
         }
         return LIBRARY;
     }
+    
+    public LibraryPlaylists getLibraryPlaylists() {
+        if (LIBRARY_PLAYLISTS == null) {
+            LIBRARY_PLAYLISTS = new LibraryPlaylists();
+        }
+        return LIBRARY_PLAYLISTS;
+    }
 
     public JComponent getComponent() {
         if (MAIN_PANEL == null) {
@@ -109,7 +118,7 @@ public class LibraryMediator {
         _libraryFiles = new LibraryFiles();
 
         panel.add(_libraryFiles, BorderLayout.PAGE_START);
-        panel.add(new LibraryPlaylists(), BorderLayout.CENTER);
+        panel.add(getLibraryPlaylists(), BorderLayout.CENTER);
         panel.add(new LibraryCoverArt(), BorderLayout.PAGE_END);
         
         

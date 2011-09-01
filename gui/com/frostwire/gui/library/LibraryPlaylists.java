@@ -65,6 +65,11 @@ public class LibraryPlaylists extends JPanel {
     public LibraryPlaylists() {
         setupUI();
     }
+    
+    public void addPlaylist(Playlist playlist) {
+        LibraryPlaylistsListCell cell = new LibraryPlaylistsListCell(null, null, null, playlist, _selectedPlaylistAction);
+        _model.addElement(cell);
+    }
 
     protected void setupUI() {
         setLayout(new BorderLayout());
