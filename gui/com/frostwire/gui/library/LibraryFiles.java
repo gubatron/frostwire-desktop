@@ -2,6 +2,7 @@ package com.frostwire.gui.library;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -74,6 +75,8 @@ public class LibraryFiles extends JPanel {
 
     protected void setupUI() {
         setLayout(new BorderLayout());
+        
+        setMinimumSize(new Dimension(LibraryMediator.MIN_LEFT_SIDE_WIDTH,LibraryMediator.MIN_LEFT_SIDE_WIDTH+100));
 
         setupModel();
         setupList();

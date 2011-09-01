@@ -3,6 +3,8 @@ package com.frostwire.gui.library;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.io.File;
 import java.util.List;
 
@@ -22,6 +24,8 @@ public class LibraryMediator {
     
     public static final String FILES_TABLE_KEY = "LIBRARY_FILES_TABLE";
     public static final String PLAYLISTS_TABLE_KEY = "LIBRARY_PLAYLISTS_TABLE";
+    
+    public static final int MIN_LEFT_SIDE_WIDTH = 155;
 
     private static JPanel MAIN_PANEL;
     
@@ -113,17 +117,41 @@ public class LibraryMediator {
     }
 
     private JComponent getLibraryLeftPanel() {
-        JPanel panel = new JPanel(new BorderLayout());
+        JPanel panel = new JPanel(new GridBagLayout());
         
+        GridBagConstraints c = new GridBagConstraints();
+//        c.anchor = GridBagConstraints.NORTH;
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1.0;
+        c.gridx = 0;
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        //c.gridheight = GridBagConstraints.RELATIVE;
+        //c.weighty = 0;
         _libraryFiles = new LibraryFiles();
 
-        panel.add(_libraryFiles, BorderLayout.PAGE_START);
-        panel.add(getLibraryPlaylists(), BorderLayout.CENTER);
-        panel.add(new LibraryCoverArt(), BorderLayout.PAGE_END);
+        panel.add(_libraryFiles, c);
+        
+        c = new GridBagConstraints();
+        c.fill = GridBagConstraints.BOTH;
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.weightx = 1.0;
+        //c.gridheight = GridBagConstraints.RELATIVE;
+        c.weighty = 0.9;
+        //c.gridy = 1;
+        //c.gridheight = GridBagConstraints.REMAINDER;
+        panel.add(getLibraryPlaylists(), c);
+        
+        c = new GridBagConstraints();
+        c.fill = GridBagConstraints.BOTH;
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.weightx = 1.0;
+        //c.gridheight = GridBagConstraints.REMAINDER;
+        c.weighty = 0.1;
+        panel.add(new LibraryCoverArt(), c);
         
         
         Dimension size = panel.getSize();
-        panel.setMinimumSize(new Dimension(120,size.height));
+        panel.setMinimumSize(new Dimension(MIN_LEFT_SIDE_WIDTH,0));
         return panel;
     }
 
@@ -140,8 +168,6 @@ public class LibraryMediator {
         panel.add(_tablesPanel, BorderLayout.CENTER);
         panel.add(new LibraryPlayer(), BorderLayout.PAGE_END);
         
-        Dimension size = panel.getSize();
-        panel.setMinimumSize(new Dimension(GUIMediator.getAppSize().width-300,size.height));
 
         return panel;
     }
