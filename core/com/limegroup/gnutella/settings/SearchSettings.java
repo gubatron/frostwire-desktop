@@ -3,14 +3,9 @@ package com.limegroup.gnutella.settings;
 import java.io.File;
 
 import org.limewire.setting.BooleanSetting;
-import org.limewire.setting.ByteSetting;
 import org.limewire.setting.CharArraySetting;
 import org.limewire.setting.FileSetting;
-import org.limewire.setting.FloatSetting;
 import org.limewire.setting.IntSetting;
-import org.limewire.setting.ProbabilisticBooleanSetting;
-import org.limewire.setting.StringArraySetting;
-import org.limewire.setting.StringSetting;
 import org.limewire.util.CommonUtils;
 
 
@@ -244,30 +239,6 @@ public final class SearchSettings extends LimeProps {
     public static final int DISPLAY_JUNK_IN_PLACE = 0;
     public static final int MOVE_JUNK_TO_BOTTOM = 1;
     public static final int HIDE_JUNK = 2;
-    
-	/**
-	 * Setting for whether or not GUESS searching is enabled.
-	 */
-	public static final BooleanSetting GUESS_ENABLED =
-		FACTORY.createBooleanSetting("GUESS_ENABLED", true);
-
-
-	/**
-	 * Setting for whether or not OOB searching is enabled.
-	 */
-	public static final BooleanSetting OOB_ENABLED =
-		FACTORY.createBooleanSetting("OOB_ENABLED", true);
-
-
-    public static final ProbabilisticBooleanSetting DISABLE_OOB_V2
-        = FACTORY.createRemoteProbabilisticBooleanSetting("DISABLE_OOB_V2",
-                0f, "SearchSettings.DisableOOBV2",0f,1f);
-
-    /**
-     * The TTL for probe queries.
-     */
-    public static final ByteSetting PROBE_TTL =
-        FACTORY.createByteSetting("PROBE_TTL", (byte)2);
 
     /**
      * Setting for the characters that are not allowed in search strings
@@ -327,85 +298,6 @@ public final class SearchSettings extends LimeProps {
     
     public static boolean hideJunk() {
         return ENABLE_SPAM_FILTER.getValue() && DISPLAY_JUNK_MODE.getValue() == HIDE_JUNK;
-    }
-    
-    /**
-	 * Set how sensitive the spamfilter should be
-	 */    
-    // FIXME check min/max values
-    public static final FloatSetting FILTER_SPAM_RESULTS =
-        FACTORY.createFloatSetting("FILTER_SPAM_RESULTS", 0.85f);
-    
-    /**
-     * The minimum spam rating at which we stop counting results for 
-     * dynamic querying.  Meant to prevent very strict user settings
-     * from making dynamic querying too agressive. 
-     */
-    public static final FloatSetting QUERY_SPAM_CUTOFF =
-        FACTORY.createRemoteFloatSetting("QUERY_SPAM_CUTOFF",0.4f,
-                "SpamManager.displayTreshold",0.1f,1.0f);
-
-    /**
-     * The percentage of normal results that spam results bring to
-     * the dynamic querying mechanism
-     */
-    public static final FloatSetting SPAM_RESULT_RATIO =
-	FACTORY.createRemoteFloatSetting("SPAM_RESULT_RATIO", 0.3f,
-		"SpamManager.resultRatio",0.2f,1.0f);
-    
-	/**
-     * Do not issue query keys more than this often
-     */
-    public static final IntSetting QUERY_KEY_DELAY = 
-        FACTORY.createRemoteIntSetting("QUERY_KEY_DELAY",500,
-                "MessageRouter.QueryKeyDelay",10,10000);
-    
-    public static final ProbabilisticBooleanSetting SEND_LIME_RESPONSES =
-        FACTORY.createRemoteProbabilisticBooleanSetting("SEND_LIME_RESPONSES", 1.0f, "SearchSettings.sendLimeResponses", 0f, 1.0f);
-    
-    public static final ProbabilisticBooleanSetting PUBLISH_LIME_KEYWORDS =
-        FACTORY.createRemoteProbabilisticBooleanSetting("PUBLISH_LIME_KEYWORDS", 1.0f, "SearchSettings.publishLimeKeywords", 0f, 1f);
-    
-    public static final StringArraySetting LIME_SEARCH_TERMS =
-        FACTORY.createRemoteStringArraySetting("LIME_SEARCH_TERMS", 
-                new String[]{"frostwire"}, "SearchSettings.limeSearchTerms");
-    
-    public static final StringSetting LIME_SIGNED_RESPONSE = 
-        FACTORY.createRemoteStringSetting("LIME_SIGNED_RESPONSE", 
-                "VTWQABLTOIACAY3PNUXGY2LNMVTXE33VOAXGO3TVORSWY3DBFZ2XI2LMFZCGC5DBD4HW4LDZA65LCAQAAFNQABDEMF2GC5AAAJNUE6DQOVZAAAS3IKWPGF7YAYEFJYACAAAHQ4AAAAAUMAOKDBAD2GNL77776777"+
-                "77776AAEAAAEY2LNMVLWS4TFEBIFETZAIF3GC2LMMFRGYZJAMF2CATDJNVSVO2LSMUXGG33NAAAEYSKNIUCDYONUAAAMHASCJBAMGASTIJAIGU2JI5XDALACCR5UR6XTYJEZVCPOYJWXZXF2ESOLUKXMM4BBIFF5"+
-                "T7EFWL6YYKMY3SK65A6WH5DA53GIAPB7PBWWYIDWMVZHG2LPNY6SEMJOGARD6PR4MF2WI2LPOMQHQ43JHJXG6TTBNVSXG4DBMNSVGY3IMVWWCTDPMNQXI2LPNY6SE2DUORYDULZPO53XOLTMNFWWK53JOJSS4Y3P"+
-                "NUXXGY3IMVWWC4ZPMF2WI2LPFZ4HGZBCHY6GC5LENFXSAYLDORUW63R5EJUHI5DQHIXS653XO4XGY2LNMV3WS4TFFZRW63JPOVYGIYLUMU7WS3TDNRUWK3TUEIQGS3TEMV4D2IRQEIXT4PBPMF2WI2LPOM7AAAAA"+
-                "AAAAAAAAAAAAAAAAAAAAAAA", 
-                "SearchSettings.limeSignedResponse");
-    
-    public static final StringArraySetting LIME_QRP_ENTRIES =
-        FACTORY.createRemoteStringArraySetting("LIME_QRP_ENTRIES", 
-                new String[]{"frostwire", "frost wire", "frostwire"}, "SearchSettings.limeQRPEntries");
-    
-    public static final StringArraySetting SEARCH_WARNING = 
-        FACTORY.createRemoteStringArraySetting("SEARCH_BANNER",
-                new String[]{
-                "Only search results with a {0} are official FrostWire communications.",
-                "http://www.frostwire.com",
-                "1.0f"},
-        "ResultPanel.SearchBanner");
-    
-    /**
-     * Whether the user wishes to receive results for partial files.
-     */
-    public static final BooleanSetting DESIRES_PARTIAL_RESULTS =
-        FACTORY.createBooleanSetting("DESIRES_PARTIAL_RESULTS", true);
-    
-    /**
-     * Whether client side is enabled at all
-     */
-    public static final BooleanSetting DESIRES_PARTIAL_RESULTS_REMOTE =
-        FACTORY.createRemoteBooleanSetting("DESIRES_PARTIAL_RESULTS_REMOTE_BETA", 
-                true,"SearchSettings.desiresPartialResultsBeta");
-    
-    public static boolean desiresPartialResults() {
-        return DESIRES_PARTIAL_RESULTS.getValue() && DESIRES_PARTIAL_RESULTS_REMOTE.getValue();
     }
     
 	public static final FileSetting SMART_SEARCH_DATABASE_FOLDER = FACTORY.createFileSetting("SMART_SEARCH_DATABASE_FOLDER", new File(CommonUtils.getUserSettingsDir(), "search_db"));

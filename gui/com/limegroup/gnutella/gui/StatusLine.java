@@ -88,7 +88,6 @@ public final class StatusLine implements ThemeObserver {
      */
     private StatusComponent STATUS_COMPONENT;
     private UpdatePanel _updatePanel;
-	private StatusLinkHandler _statusLinkHandler;
 	private JPanel _centerPanel;
 	private Component _centerComponent;
 
@@ -334,13 +333,11 @@ public final class StatusLine implements ThemeObserver {
 	    STATUS_COMPONENT = new StatusComponent();
 	    _updatePanel = new UpdatePanel();
 	    _centerComponent = _updatePanel;
-	    _statusLinkHandler = new StatusLinkHandler();
 	    _centerPanel = new JPanel(new GridBagLayout());
 	    
 		_centerPanel.setOpaque(false);
         _updatePanel.setOpaque(false);
-		((JComponent)_statusLinkHandler.getComponent()).setOpaque(false);
-        STATUS_COMPONENT.setProgressPreferredSize(new Dimension(250, 20));
+		STATUS_COMPONENT.setProgressPreferredSize(new Dimension(250, 20));
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -351,7 +348,6 @@ public final class StatusLine implements ThemeObserver {
 		_centerPanel.add(STATUS_COMPONENT, gbc);
 
 		//  add right-click listeners
-		_statusLinkHandler.getComponent().addMouseListener(STATUS_BAR_LISTENER);
 		_centerPanel.addMouseListener(STATUS_BAR_LISTENER);
 		_updatePanel.addMouseListener(STATUS_BAR_LISTENER);
 		STATUS_COMPONENT.addMouseListener(STATUS_BAR_LISTENER);

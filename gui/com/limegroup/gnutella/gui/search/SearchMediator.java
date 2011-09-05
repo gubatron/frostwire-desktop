@@ -9,8 +9,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.limewire.setting.evt.SettingEvent;
-import org.limewire.setting.evt.SettingListener;
 import org.limewire.util.I18NConvert;
 import org.limewire.util.StringUtils;
 
@@ -24,8 +22,6 @@ import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.banner.Ad;
-import com.limegroup.gnutella.gui.banner.Banner;
 import com.limegroup.gnutella.settings.SearchSettings;
 
 /**
@@ -86,9 +82,6 @@ public final class SearchMediator {
      */
     private static SearchResultDisplayer RESULT_DISPLAYER;
     
-    /** Banner that shows a message in the search result panel. */
-    private static volatile Banner banner;
-    
     private static SearchFilterFactory SEARCH_FILTER_FACTORY;
 
     /**
@@ -111,33 +104,6 @@ public final class SearchMediator {
                     getSearchInputManager().setFiltersFor(panel);
             }
         });
-        initBanner();
-    }
-    
-    /**
-     * initializes a banner and registers a listener for its change.
-     */
-    private static void initBanner() {
-        reloadBanner();
-        SearchSettings.SEARCH_WARNING.addSettingListener(new SettingListener() {
-            public void settingChanged(SettingEvent evt) {
-                if (evt.getEventType() == SettingEvent.EventType.VALUE_CHANGED)
-                    reloadBanner();
-            }
-        });
-    }
-    
-    /**
-     * reloads a banner with the current value from the settings.
-     */
-    private static void reloadBanner() {
-        Banner newBanner = banner;
-        try {
-            newBanner = new Banner(SearchSettings.SEARCH_WARNING.getValue());
-        } catch (IllegalArgumentException badSimpp) {}
-        if (newBanner == null)
-            newBanner = Banner.getDefaultBanner();
-        banner = newBanner;
     }
     
     /**
@@ -606,16 +572,6 @@ public final class SearchMediator {
      */
     public static JComponent getResultComponent() {
         return getSearchResultDisplayer().getComponent();
-    }
-
-    /**
-     * @return an Ad message that should be displayed on top 
-     * of the search pannel.
-     */
-	public synchronized static Ad getAd() {
-        if (banner == null)
-            initBanner();
-	    return banner.getAd();   
     }
 
 	private static SearchInputManager getSearchInputManager() {

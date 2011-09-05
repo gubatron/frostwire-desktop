@@ -1,8 +1,6 @@
 package com.limegroup.gnutella.gui.search;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
