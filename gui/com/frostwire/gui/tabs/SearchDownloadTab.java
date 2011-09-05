@@ -38,6 +38,7 @@ public final class SearchDownloadTab extends AbstractTab {
         searchDownloadSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, SearchMediator.getResultComponent(), downloadMediator.getComponent());
         searchDownloadSplitPane.setContinuousLayout(true);
         searchDownloadSplitPane.setOneTouchExpandable(true);
+        searchDownloadSplitPane.setResizeWeight(0.6);
         searchDownloadSplitPane.setDividerLocation(1000);
 
 		JComponent searchBoxPanel = SearchMediator.getSearchComponent();
