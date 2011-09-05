@@ -82,7 +82,7 @@ public class AndroidMediator implements ThemeObserver {
 		//up and down
 		SPLIT_PANE = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		SPLIT_PANE.setAutoscrolls(true);
-		SPLIT_PANE.setDividerSize(4);
+		SPLIT_PANE.setResizeWeight(0.6);
 		SPLIT_PANE.add(DEVICE_EXPLORER);
 		SPLIT_PANE.add(PROGRESS_PANEL);
 		
