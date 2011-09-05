@@ -2,9 +2,8 @@ package com.frostwire.gui.library;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.List;
 
@@ -25,8 +24,6 @@ public class LibraryMediator {
     public static final String FILES_TABLE_KEY = "LIBRARY_FILES_TABLE";
     public static final String PLAYLISTS_TABLE_KEY = "LIBRARY_PLAYLISTS_TABLE";
     
-    public static final int MIN_LEFT_SIDE_WIDTH = 155;
-
     private static JPanel MAIN_PANEL;
     
     private LibraryPlaylists LIBRARY_PLAYLISTS;
@@ -36,7 +33,8 @@ public class LibraryMediator {
      */
     private static LibraryMediator INSTANCE;
     
-    private LibraryFiles _libraryFiles;
+    private LibraryFiles libraryFiles;
+    private LibraryLeftPanel libraryLeftPanel;
     
     private static Library LIBRARY;
 
@@ -61,14 +59,25 @@ public class LibraryMediator {
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, getLibraryLeftPanel(), getLibraryRightPanel());
         splitPane.setContinuousLayout(true);
         splitPane.setOneTouchExpandable(true);
-
-        splitPane.setDividerSize(2);
+        splitPane.setResizeWeight(0.5);
+        splitPane.addPropertyChangeListener(JSplitPane.LAST_DIVIDER_LOCATION_PROPERTY, new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent evt) {
+                JSplitPane splitPane = (JSplitPane) evt.getSource();
+                int current = splitPane.getDividerLocation();
+                if (current > LibraryLeftPanel.MAX_WIDTH) {
+                    splitPane.setDividerLocation(LibraryLeftPanel.MAX_WIDTH);
+                } else if (current < LibraryLeftPanel.MIN_WIDTH) {
+                    splitPane.setDividerLocation(LibraryLeftPanel.MIN_WIDTH);
+                }
+                
+            }
+        });
         
         DividerLocationSettingUpdater.install(splitPane, UISettings.UI_LIBRARY_MAIN_DIVIDER_LOCATION);
 
         MAIN_PANEL.add(splitPane);
         
-        _libraryFiles.setInitialSelection();
+        getLibraryFiles().setInitialSelection();
     }
     
     public static Library getLibrary() {
@@ -76,6 +85,13 @@ public class LibraryMediator {
             LIBRARY = new Library(LibrarySettings.LIBRARY_DATABASE);
         }
         return LIBRARY;
+    }
+    
+    public LibraryFiles getLibraryFiles() {
+        if (libraryFiles == null) {
+            libraryFiles = new LibraryFiles();
+        }
+        return libraryFiles;
     }
     
     public LibraryPlaylists getLibraryPlaylists() {
@@ -117,42 +133,10 @@ public class LibraryMediator {
     }
 
     private JComponent getLibraryLeftPanel() {
-        JPanel panel = new JPanel(new GridBagLayout());
-        
-        GridBagConstraints c = new GridBagConstraints();
-//        c.anchor = GridBagConstraints.NORTH;
-        c.fill = GridBagConstraints.BOTH;
-        c.weightx = 1.0;
-        c.gridx = 0;
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        //c.gridheight = GridBagConstraints.RELATIVE;
-        //c.weighty = 0;
-        _libraryFiles = new LibraryFiles();
-
-        panel.add(_libraryFiles, c);
-        
-        c = new GridBagConstraints();
-        c.fill = GridBagConstraints.BOTH;
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.weightx = 1.0;
-        //c.gridheight = GridBagConstraints.RELATIVE;
-        c.weighty = 0.9;
-        //c.gridy = 1;
-        //c.gridheight = GridBagConstraints.REMAINDER;
-        panel.add(getLibraryPlaylists(), c);
-        
-        c = new GridBagConstraints();
-        c.fill = GridBagConstraints.BOTH;
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.weightx = 1.0;
-        //c.gridheight = GridBagConstraints.REMAINDER;
-        c.weighty = 0.1;
-        panel.add(new LibraryCoverArt(), c);
-        
-        
-        Dimension size = panel.getSize();
-        panel.setMinimumSize(new Dimension(MIN_LEFT_SIDE_WIDTH,0));
-        return panel;
+        if (libraryLeftPanel == null) {
+            libraryLeftPanel = new LibraryLeftPanel(getLibraryFiles(), getLibraryPlaylists(), new LibraryCoverArt());
+        }
+        return libraryLeftPanel;
     }
 
     private JComponent getLibraryRightPanel() {

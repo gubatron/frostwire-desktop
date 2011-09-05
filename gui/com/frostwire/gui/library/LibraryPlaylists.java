@@ -66,6 +66,11 @@ public class LibraryPlaylists extends JPanel {
         setupUI();
     }
     
+    public Dimension getRowDimension() {
+        Rectangle rect = _list.getUI().getCellBounds(_list, 0, 0);
+        return rect.getSize();
+    }
+    
     public void addPlaylist(Playlist playlist) {
         LibraryPlaylistsListCell cell = new LibraryPlaylistsListCell(null, null, null, playlist, _selectedPlaylistAction);
         _model.addElement(cell);

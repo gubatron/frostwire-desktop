@@ -3,6 +3,7 @@ package com.frostwire.gui.library;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -69,6 +70,15 @@ public class LibraryFiles extends JPanel {
         return ((LibraryFilesListCell)_list.getSelectedValue()).getDirectoryHolder();
     }
     
+    public Dimension getRowDimension() {
+        Rectangle rect = _list.getUI().getCellBounds(_list, 0, 0);
+        return rect.getSize();
+    }
+    
+    public int getRowsCount() {
+        return _model.getSize();
+    }
+    
     public void setInitialSelection() {
         //_list.setSelectedValue(_finishedDownloadsCell, true);
     }
@@ -76,8 +86,6 @@ public class LibraryFiles extends JPanel {
     protected void setupUI() {
         setLayout(new BorderLayout());
         
-        setMinimumSize(new Dimension(LibraryMediator.MIN_LEFT_SIDE_WIDTH,LibraryMediator.MIN_LEFT_SIDE_WIDTH+100));
-
         setupModel();
         setupList();
         setupPopupMenu();
