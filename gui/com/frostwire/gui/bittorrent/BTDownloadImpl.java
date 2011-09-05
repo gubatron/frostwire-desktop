@@ -199,7 +199,7 @@ public class BTDownloadImpl implements BTDownload {
             }
         }
 
-        // Allows for 2097151 of each type (connected seeds, seeds, peers)
+//        // Allows for 2097151 of each type (connected seeds, seeds, peers)
 //        long value = (lConnectedSeeds << 42);
 //        if (lTotalSeeds > 0)
 //            value += (lTotalSeeds << 21);

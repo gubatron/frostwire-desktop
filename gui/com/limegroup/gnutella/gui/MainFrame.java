@@ -41,6 +41,7 @@ import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.tabs.AndroidTab;
 import com.frostwire.gui.tabs.ChatTab;
 import com.frostwire.gui.tabs.LibraryPlayListTab;
+import com.frostwire.gui.tabs.LibraryTab;
 import com.frostwire.gui.tabs.SearchDownloadTab;
 import com.frostwire.gui.tabs.Tab;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
@@ -80,6 +81,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      * responsible for displaying files in the user's repository.
      */
     private LibraryMediator LIBRARY_MEDIATOR;
+    private com.frostwire.gui.library.LibraryMediator LIBRARY_MEDIATOR2;
     
     private AndroidMediator ANDROID_MEDIATOR;
 
@@ -316,6 +318,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         
     	TABS.put(GUIMediator.Tabs.SEARCH, new SearchDownloadTab(SEARCH_MEDIATOR, getBTDownloadMediator()));
         TABS.put(GUIMediator.Tabs.LIBRARY, new LibraryPlayListTab(getLibraryMediator()));
+        TABS.put(GUIMediator.Tabs.LIBRARY2, new LibraryTab(getLibraryMediator2()));
         TABS.put(GUIMediator.Tabs.ANDROID, new AndroidTab(getAndroidMediator()));
 	    TABS.put(GUIMediator.Tabs.CHAT, new ChatTab(getChatMediator()));
 	    
@@ -653,6 +656,13 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
             LIBRARY_MEDIATOR = LibraryMediator.instance();
         }
         return LIBRARY_MEDIATOR;
+    }
+    
+    final com.frostwire.gui.library.LibraryMediator getLibraryMediator2() {
+        if (LIBRARY_MEDIATOR2 == null) {
+            LIBRARY_MEDIATOR2 = com.frostwire.gui.library.LibraryMediator.instance();
+        }
+        return LIBRARY_MEDIATOR2;
     }
     
     final AndroidMediator getAndroidMediator() {

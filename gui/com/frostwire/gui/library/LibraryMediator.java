@@ -1,0 +1,174 @@
+package com.frostwire.gui.library;
+
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.io.File;
+import java.util.List;
+
+import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
+
+import com.frostwire.alexandria.Library;
+import com.frostwire.alexandria.PlaylistItem;
+import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.util.DividerLocationSettingUpdater;
+import com.limegroup.gnutella.settings.LibrarySettings;
+import com.limegroup.gnutella.settings.UISettings;
+
+public class LibraryMediator {
+    
+    public static final String FILES_TABLE_KEY = "LIBRARY_FILES_TABLE";
+    public static final String PLAYLISTS_TABLE_KEY = "LIBRARY_PLAYLISTS_TABLE";
+    
+    public static final int MIN_LEFT_SIDE_WIDTH = 155;
+
+    private static JPanel MAIN_PANEL;
+    
+    private LibraryPlaylists LIBRARY_PLAYLISTS;
+
+    /**
+     * Singleton instance of this class.
+     */
+    private static LibraryMediator INSTANCE;
+    
+    private LibraryFiles _libraryFiles;
+    
+    private static Library LIBRARY;
+
+    /**
+     * @return the <tt>LibraryMediator</tt> instance
+     */
+    public static LibraryMediator instance() {
+        if (INSTANCE == null) {
+            INSTANCE = new LibraryMediator();
+        }
+        return INSTANCE;
+    }
+    
+    private CardLayout _tablesViewLayout = new CardLayout();
+    private JPanel _tablesPanel;
+
+    public LibraryMediator() {
+        GUIMediator.setSplashScreenString(I18n.tr("Loading Library Window..."));
+        
+        getComponent(); // creates MAIN_PANEL
+
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, getLibraryLeftPanel(), getLibraryRightPanel());
+        splitPane.setContinuousLayout(true);
+        splitPane.setOneTouchExpandable(true);
+
+        splitPane.setDividerSize(2);
+        
+        DividerLocationSettingUpdater.install(splitPane, UISettings.UI_LIBRARY_MAIN_DIVIDER_LOCATION);
+
+        MAIN_PANEL.add(splitPane);
+        
+        _libraryFiles.setInitialSelection();
+    }
+    
+    public static Library getLibrary() {
+        if (LIBRARY == null) {
+            LIBRARY = new Library(LibrarySettings.LIBRARY_DATABASE);
+        }
+        return LIBRARY;
+    }
+    
+    public LibraryPlaylists getLibraryPlaylists() {
+        if (LIBRARY_PLAYLISTS == null) {
+            LIBRARY_PLAYLISTS = new LibraryPlaylists();
+        }
+        return LIBRARY_PLAYLISTS;
+    }
+
+    public JComponent getComponent() {
+        if (MAIN_PANEL == null) {
+            MAIN_PANEL = new JPanel(new BorderLayout());
+        }
+        return MAIN_PANEL;
+    }
+    
+    public void showView(String key) {
+        _tablesViewLayout.show(_tablesPanel, key);
+    }
+    
+    public void updateTableFiles(DirectoryHolder dirHolder) {
+        LibraryFilesTableMediator.instance().updateTableFiles(dirHolder);
+        showView(FILES_TABLE_KEY);
+    }
+    
+    public void updateTableItems(List<PlaylistItem> items) {
+        LibraryPlaylistsTableMediator.instance().updateTableItems(items);
+        showView(PLAYLISTS_TABLE_KEY);
+    }
+    
+    public void clearLibraryTable() {
+        LibraryFilesTableMediator.instance().clearTable();
+    }
+    
+    public void addFilesToLibraryTable(List<File> files) {
+        for (File file : files) {
+            LibraryFilesTableMediator.instance().add(file);
+        }
+    }
+
+    private JComponent getLibraryLeftPanel() {
+        JPanel panel = new JPanel(new GridBagLayout());
+        
+        GridBagConstraints c = new GridBagConstraints();
+//        c.anchor = GridBagConstraints.NORTH;
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1.0;
+        c.gridx = 0;
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        //c.gridheight = GridBagConstraints.RELATIVE;
+        //c.weighty = 0;
+        _libraryFiles = new LibraryFiles();
+
+        panel.add(_libraryFiles, c);
+        
+        c = new GridBagConstraints();
+        c.fill = GridBagConstraints.BOTH;
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.weightx = 1.0;
+        //c.gridheight = GridBagConstraints.RELATIVE;
+        c.weighty = 0.9;
+        //c.gridy = 1;
+        //c.gridheight = GridBagConstraints.REMAINDER;
+        panel.add(getLibraryPlaylists(), c);
+        
+        c = new GridBagConstraints();
+        c.fill = GridBagConstraints.BOTH;
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.weightx = 1.0;
+        //c.gridheight = GridBagConstraints.REMAINDER;
+        c.weighty = 0.1;
+        panel.add(new LibraryCoverArt(), c);
+        
+        
+        Dimension size = panel.getSize();
+        panel.setMinimumSize(new Dimension(MIN_LEFT_SIDE_WIDTH,0));
+        return panel;
+    }
+
+    private JComponent getLibraryRightPanel() {
+        JPanel panel = new JPanel(new BorderLayout());
+        
+        _tablesViewLayout = new CardLayout();
+        _tablesPanel = new JPanel(_tablesViewLayout);
+        
+        _tablesPanel.add(LibraryFilesTableMediator.instance().getScrolledTablePane(), FILES_TABLE_KEY);
+        _tablesPanel.add(LibraryPlaylistsTableMediator.instance().getScrolledTablePane(), PLAYLISTS_TABLE_KEY);
+        
+        panel.add(new LibrarySearch(), BorderLayout.PAGE_START);
+        panel.add(_tablesPanel, BorderLayout.CENTER);
+        panel.add(new LibraryPlayer(), BorderLayout.PAGE_END);
+        
+
+        return panel;
+    }
+}

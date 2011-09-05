@@ -150,6 +150,18 @@ public class TorrentUtil {
         iTunesImportSettings.IMPORT_FILES.remove(downloadManager.getSaveLocation());
     }
     
+    public static Set<File> getSkipedFiles() {
+        Set<File> set = new HashSet<File>();
+        
+        List<?> dms = AzureusStarter.getAzureusCore().getGlobalManager().getDownloadManagers();
+        for (Object obj : dms) {
+            DownloadManager dm = (DownloadManager) obj;
+            set.addAll(getSkippedFiles(dm));
+        }
+        
+        return set;
+    }
+    
     public static Set<File> getSkippedFiles(DownloadManager dm) {
         Set<File> set = new HashSet<File>();
         DiskManagerFileInfoSet infoSet = dm.getDiskManagerFileInfoSet();
