@@ -619,22 +619,17 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
 		}
 		
         // first handle the download view
-        if (getBTDownloadMediator().getTotalDownloads() == 0 &&
-                isDownloadViewVisible) {
-            ((SearchDownloadTab)TABS.get(GUIMediator.Tabs.SEARCH)).
-                setDividerLocation(1000);
+        if (getBTDownloadMediator().getTotalDownloads() == 0 && isDownloadViewVisible) {
+            ((SearchDownloadTab)TABS.get(GUIMediator.Tabs.SEARCH)).setDividerLocation(1000);
             isDownloadViewVisible = false;
-        } else if (getBTDownloadMediator().getTotalDownloads() > 0 &&
-                 !isDownloadViewVisible) {
+        } else if (getBTDownloadMediator().getTotalDownloads() > 0 && !isDownloadViewVisible) {
             // need to turn it on....
             final int count = getBTDownloadMediator().getTotalDownloads();
             // make sure stuff didn't change on me....
             if (count > 0) {
                 final double prop = (count > 6) ? 0.60 : 0.70;
-                ((SearchDownloadTab)TABS.get(GUIMediator.Tabs.SEARCH)).
-                    setDividerLocation(prop);
-                ((SearchDownloadTab)TABS.get(GUIMediator.Tabs.SEARCH)).
-                    getComponent().revalidate();
+                ((SearchDownloadTab)TABS.get(GUIMediator.Tabs.SEARCH)).setDividerLocation(prop);
+                ((SearchDownloadTab)TABS.get(GUIMediator.Tabs.SEARCH)).getComponent().revalidate();
                 TABBED_PANE.revalidate();
                 isDownloadViewVisible = true;
             }
@@ -720,15 +715,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         }
         return OPTIONS_MEDIATOR;
     }
-
-    /**
-     * Returns a reference to the <tt>StatisticsView</tt> instance.
-     *
-     * @return a reference to the <tt>StatisticsView</tt> instance
-     */
-    //final StatisticsView getStatisticsView() {
-    //return STATISTICS_VIEW;
-    //}
 
     /**
      * Sets the searching or not searching status of the application.

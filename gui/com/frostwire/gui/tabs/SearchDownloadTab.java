@@ -1,7 +1,5 @@
 package com.frostwire.gui.tabs;
 
-import java.awt.Dimension;
-
 import javax.swing.JComponent;
 import javax.swing.JSplitPane;
 
@@ -18,13 +16,13 @@ public final class SearchDownloadTab extends AbstractTab {
 	 * Split pane for the split between the search input panel and the 
 	 * search results panel.
 	 */
-	private final JSplitPane SPLIT_PANE;
+	private final JSplitPane mainSplitPane;
 	
 	/**
 	 * Split pane for the split between the search and download sections
 	 * of the window.
 	 */
-	private final JSplitPane SEARCH_DOWNLOAD_SPLIT_PANE;
+	private final JSplitPane searchDownloadSplitPane;
 
 	/**
 	 * Constructs the tab for searches and downloads.
@@ -37,18 +35,15 @@ public final class SearchDownloadTab extends AbstractTab {
 	public SearchDownloadTab(SearchMediator searchMediator, ComponentMediator<?> downloadMediator) {
 		super(I18n.tr("Search"), I18n.tr("Search and Download Files"), "search_tab");
 
-        SEARCH_DOWNLOAD_SPLIT_PANE = new JSplitPane(JSplitPane.VERTICAL_SPLIT, SearchMediator.getResultComponent(), downloadMediator.getComponent());
-        SEARCH_DOWNLOAD_SPLIT_PANE.setContinuousLayout(true);
-        SEARCH_DOWNLOAD_SPLIT_PANE.setOneTouchExpandable(true);
-		SEARCH_DOWNLOAD_SPLIT_PANE.setPreferredSize(new Dimension(200,200));
-		SEARCH_DOWNLOAD_SPLIT_PANE.setDividerLocation(1000);
+        searchDownloadSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, SearchMediator.getResultComponent(), downloadMediator.getComponent());
+        searchDownloadSplitPane.setContinuousLayout(true);
+        searchDownloadSplitPane.setOneTouchExpandable(true);
+        searchDownloadSplitPane.setDividerLocation(1000);
 
 		JComponent searchBoxPanel = SearchMediator.getSearchComponent();
-//		int width = OSUtils.isMacOSX() ? 220 : 100;
-//		searchBoxPanel.setPreferredSize(new Dimension(width,100));
         
-        SPLIT_PANE = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, searchBoxPanel, SEARCH_DOWNLOAD_SPLIT_PANE);
-		SPLIT_PANE.setDividerSize(0);
+        mainSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, searchBoxPanel, searchDownloadSplitPane);
+		mainSplitPane.setDividerSize(0);
 	}
 
 	/**
@@ -57,7 +52,7 @@ public final class SearchDownloadTab extends AbstractTab {
 	 * @param loc the location to set the divider to
 	 */
 	public void setDividerLocation(int loc) {
-		SEARCH_DOWNLOAD_SPLIT_PANE.setDividerLocation(loc);
+		searchDownloadSplitPane.setDividerLocation(loc);
 	}
 
 	/**
@@ -66,7 +61,7 @@ public final class SearchDownloadTab extends AbstractTab {
 	 * @param loc the location to set the divider to
 	 */
 	public void setDividerLocation(double loc) {
-		SEARCH_DOWNLOAD_SPLIT_PANE.setDividerLocation(loc);
+		searchDownloadSplitPane.setDividerLocation(loc);
 	}
 	
 	/**
@@ -74,7 +69,7 @@ public final class SearchDownloadTab extends AbstractTab {
 	 * @return
 	 */
 	public int getDividerLocation() {
-		return SEARCH_DOWNLOAD_SPLIT_PANE.getDividerLocation();
+		return searchDownloadSplitPane.getDividerLocation();
 	}
 
 	public void storeState(boolean state) {
@@ -82,7 +77,7 @@ public final class SearchDownloadTab extends AbstractTab {
 	}
 
 	public JComponent getComponent() {
-		return SPLIT_PANE;
+		return mainSplitPane;
 	}
 	
 	public void mouseClicked() {
