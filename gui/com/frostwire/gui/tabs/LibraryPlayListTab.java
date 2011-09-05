@@ -62,6 +62,7 @@ public final class LibraryPlayListTab extends AbstractTab {
 												GUIMediator.getPlayList().getComponent());
             divider.setContinuousLayout(true);
 			divider.setOneTouchExpandable(true);
+			divider.setResizeWeight(0.5);
 			DividerLocationSettingUpdater.install(divider, UISettings.UI_LIBRARY_PLAY_LIST_TAB_DIVIDER_LOCATION);
 			COMPONENT = divider;
 		} else {

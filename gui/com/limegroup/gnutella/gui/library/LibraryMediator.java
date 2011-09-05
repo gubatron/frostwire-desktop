@@ -85,8 +85,8 @@ public final class LibraryMediator implements ThemeObserver {
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, getTreeScrollPanel(), getViewPanel());
         splitPane.setContinuousLayout(true);
         splitPane.setOneTouchExpandable(true);
-		DividerLocationSettingUpdater.install(splitPane,
-				UISettings.UI_LIBRARY_TREE_DIVIDER_LOCATION);
+        splitPane.setResizeWeight(0.5);
+		DividerLocationSettingUpdater.install(splitPane, UISettings.UI_LIBRARY_TREE_DIVIDER_LOCATION);
 
 		JPanel buttonPanel = new JPanel(new BorderLayout());
 		buttonPanel.add(getLibraryTree().getButtonRow(), BorderLayout.WEST);
