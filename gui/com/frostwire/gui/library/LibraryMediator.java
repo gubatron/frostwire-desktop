@@ -35,6 +35,7 @@ public class LibraryMediator {
     
     private LibraryFiles libraryFiles;
     private LibraryLeftPanel libraryLeftPanel;
+    private LibrarySearch librarySearch;
     
     private static Library LIBRARY;
 
@@ -100,6 +101,13 @@ public class LibraryMediator {
         }
         return LIBRARY_PLAYLISTS;
     }
+    
+    public LibrarySearch getLibrarySearch() {
+        if (librarySearch == null) {
+            librarySearch = new LibrarySearch();
+        }
+        return librarySearch;
+    }
 
     public JComponent getComponent() {
         if (MAIN_PANEL == null) {
@@ -124,12 +132,14 @@ public class LibraryMediator {
     
     public void clearLibraryTable() {
         LibraryFilesTableMediator.instance().clearTable();
+        getLibrarySearch().clear();
     }
     
     public void addFilesToLibraryTable(List<File> files) {
         for (File file : files) {
             LibraryFilesTableMediator.instance().add(file);
         }
+        getLibrarySearch().addResults(files.size());
     }
 
     private JComponent getLibraryLeftPanel() {
@@ -148,7 +158,7 @@ public class LibraryMediator {
         _tablesPanel.add(LibraryFilesTableMediator.instance().getScrolledTablePane(), FILES_TABLE_KEY);
         _tablesPanel.add(LibraryPlaylistsTableMediator.instance().getScrolledTablePane(), PLAYLISTS_TABLE_KEY);
         
-        panel.add(new LibrarySearch(), BorderLayout.PAGE_START);
+        panel.add(getLibrarySearch(), BorderLayout.PAGE_START);
         panel.add(_tablesPanel, BorderLayout.CENTER);
         panel.add(new LibraryPlayer(), BorderLayout.PAGE_END);
         

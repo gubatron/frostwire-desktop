@@ -1,4 +1,4 @@
-package com.limegroup.gnutella.gui.search;
+package com.frostwire.gui.components;
 
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -12,6 +12,8 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+
+import com.limegroup.gnutella.gui.search.SearchField;
 
 
 public class IconSearchField extends SearchField {
@@ -88,6 +90,10 @@ public class IconSearchField extends SearchField {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		
+		if (_icon == null) {
+		    return;
+		}
 		
 		int rightTextMargin = 2;
 		

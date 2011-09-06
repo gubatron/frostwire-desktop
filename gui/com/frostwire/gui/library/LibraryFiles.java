@@ -157,6 +157,8 @@ public class LibraryFiles extends JPanel {
             MediaTypeSavedFilesDirectoryHolder mtsfdh = (MediaTypeSavedFilesDirectoryHolder) directoryHolder;
             BackgroundExecutorService.schedule(new SearchByMediaTypeRunnable(mtsfdh));
         }
+        
+        LibraryMediator.instance().getLibrarySearch().clear();
     }
 
     private class LibraryFilesCellRenderer extends SubstanceDefaultListCellRenderer {
@@ -190,9 +192,9 @@ public class LibraryFiles extends JPanel {
             return _holder;
         }
 
-        public File getFile() {
-            return _holder.getDirectory();
-        }
+//        public File getFile() {
+//            return _holder.getDirectory();
+//        }
     }
     
     private class LibraryFilesMouseObserver implements MouseObserver {
