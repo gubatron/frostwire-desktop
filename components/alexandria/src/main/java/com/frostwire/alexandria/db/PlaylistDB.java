@@ -13,7 +13,7 @@ public class PlaylistDB extends ObjectDB<Playlist> {
     }
 
     public void fill(Playlist obj) {
-        List<List<Object>> result = db.query("SELECT playlistId, name, description, FROM Playlists WHERE playlistId = " + obj.getId());
+        List<List<Object>> result = db.query("SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath FROM Playlists WHERE playlistId = " + obj.getId());
         if (result.size() > 0) {
             List<Object> row = result.get(0);
             fill(row, obj);

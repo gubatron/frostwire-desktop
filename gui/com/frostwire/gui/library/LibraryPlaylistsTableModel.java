@@ -135,7 +135,7 @@ final class LibraryPlaylistsTableModel extends HashBasedDataLineModel<LibraryPla
 	 * @return  The <code>File</code> object stored at the specified row
 	 */
 	File getFile(int row) {
-	    return null;//get(row).getInitializeObject();
+	    return new File(get(row).getInitializeObject().getFilePath());
 	}
 
 	/**

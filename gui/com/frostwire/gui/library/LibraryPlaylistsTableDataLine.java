@@ -234,7 +234,6 @@ public final class LibraryPlaylistsTableDataLine extends AbstractDataLine<Playli
     }
 
     public File getFile() {
-        // TODO Auto-generated method stub
-        return null;
+        return new File(initializer.getFilePath());
     }
 }
