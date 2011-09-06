@@ -1,3 +1,12 @@
+frostwire (5.1.5) stable; urgency=high
+
+  * Bug fix on setup wizard for some window configurations where controls
+    would not appear unless the user resized the window.
+  * UX upgrade where the FrostWire left hand side components are laid out 
+    correctly after the user resizes the window from much smaller dimensions.
+
+ -- FrostWire Team <contact@frostwire.com>  Tue, 6 Sep 2011 15:09:48 -0500
+
 frostwire (5.1.4) stable; urgency=high
 
   * Bug fix where it would not index torrents when the 
