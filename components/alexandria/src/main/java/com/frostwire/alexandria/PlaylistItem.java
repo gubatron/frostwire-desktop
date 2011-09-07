@@ -24,7 +24,7 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
     private String year;
 
     public PlaylistItem(Playlist playlist) {
-        super(new PlaylistItemDB(playlist.db.getDatabase()));
+        super(new PlaylistItemDB(playlist != null ? playlist.db.getDatabase() : null));
         _playlist = playlist;
         _id = LibraryDatabase.OBJECT_INVALID_ID;
     }
@@ -176,14 +176,20 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
     }
 
     public void save() {
-        db.save(this);
+        if (db != null) {
+            db.save(this);
+        }
     }
 
     public void delete() {
-        db.delete(this);
+        if (db != null) {
+            db.delete(this);
+        }
     }
     
     public void deleteFromAll() {
-        db.deleteFromAll(this);
+        if (db != null) {
+            db.deleteFromAll(this);
+        }
     }
 }

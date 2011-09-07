@@ -139,6 +139,13 @@ public class LibraryMediator {
         }
         getLibrarySearch().addResults(files.size());
     }
+    
+    public void addItemsToLibraryTable(List<PlaylistItem> items) {
+        for (PlaylistItem item : items) {
+            LibraryPlaylistsTableMediator.instance().add(item);
+        }
+        getLibrarySearch().addResults(items.size());
+    }
 
     private JComponent getLibraryLeftPanel() {
         if (libraryLeftPanel == null) {
