@@ -53,16 +53,8 @@ public class Library extends Entity<LibraryDB> {
         return db.getPlaylist(this, name);
     }
 
-    public Playlist getDefaultPlaylist() {
-        return getPlaylist(LibraryDatabase.DEFAULT_PLAYLIST_NAME);
-    }
-
     public Playlist newPlaylist(String name, String description) {
-        if (name.equals(LibraryDatabase.DEFAULT_PLAYLIST_NAME)) {
-            return getDefaultPlaylist();
-        } else {
-            return new Playlist(this, LibraryDatabase.OBJECT_NOT_SAVED_ID, name, description);
-        }
+        return new Playlist(this, LibraryDatabase.OBJECT_NOT_SAVED_ID, name, description);
     }
     
     public void dump() {

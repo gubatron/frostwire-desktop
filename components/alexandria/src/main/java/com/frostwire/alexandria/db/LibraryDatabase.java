@@ -16,9 +16,6 @@ public class LibraryDatabase {
     public static final int OBJECT_NOT_SAVED_ID = -1;
     public static final int OBJECT_INVALID_ID = -2;
     
-    public static final String DEFAULT_PLAYLIST_NAME = "Default";
-    public static final String DEFAULT_PLAYLIST_DESCRIPTION = "Default playlist";
-
     public static final int LIBRARY_DATABASE_VERSION = 1;
 
     private final File _databaseFile;
@@ -190,7 +187,6 @@ public class LibraryDatabase {
 
         // INITIAL DATA
         update(connection, "INSERT INTO Library (name , version) VALUES ('" + name + "', " + LIBRARY_DATABASE_VERSION + ")");
-        update(connection, "INSERT INTO Playlists (name, description) VALUES ('" + DEFAULT_PLAYLIST_NAME + "', '" + DEFAULT_PLAYLIST_DESCRIPTION + "')");
 
         return connection;
     }
