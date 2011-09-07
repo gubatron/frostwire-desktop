@@ -866,7 +866,7 @@ final class LibraryFilesTableMediator extends AbstractTableMediator<LibraryFiles
                 playlist.getItems().add(item);
                 item.save();
             }
-            playlist.getLibrary().dump();
+            //playlist.getLibrary().dump();
         }
     }
 

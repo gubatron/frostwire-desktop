@@ -934,18 +934,7 @@ MPlayerInstance
             String[] cmd = cmdList.toArray(new String[cmdList.size()]);
 
             //COMMENT/UNCOMMENT THIS FOR TO SEE WHAT COMMAND IS BEING SENT TO MPLAYER
-            
-//            for (int i = 0; i < cmd.length; i++) {
-//                if (cmd[i].contains(" ")) {
-//                    System.out.print("\"");
-//                }
-//                System.out.print(cmd[i]);
-//                if (cmd[i].contains(" ")) {
-//                    System.out.print("\"");
-//                }
-//                System.out.print(" ");
-//            }
-//            System.out.println("\n");
+            //printCommand(cmd);
 
             try {
                 InputStream stdOut = Runtime.getRuntime().exec(cmd).getInputStream();
@@ -979,5 +968,19 @@ MPlayerInstance
             }
         } finally {
         }
+    }
+
+    private void printCommand(String[] cmd) {
+        for (int i = 0; i < cmd.length; i++) {
+            if (cmd[i].contains(" ")) {
+                System.out.print("\"");
+            }
+            System.out.print(cmd[i]);
+            if (cmd[i].contains(" ")) {
+                System.out.print("\"");
+            }
+            System.out.print(" ");
+        }
+        System.out.println("\n");
     }
 }
