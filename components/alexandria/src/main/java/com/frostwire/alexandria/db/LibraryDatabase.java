@@ -165,6 +165,9 @@ public class LibraryDatabase {
         Connection connection = openConnection(path, name, true);
 
         // STRUCTURE CREATION
+        
+        update(connection, "CREATE ALIAS IF NOT EXISTS FT_INIT FOR \"org.h2.fulltext.FullText.init\"");
+        update(connection, "CALL FT_INIT()");
 
         //update(connection, "DROP TABLE Library IF EXISTS CASCADE");
         update(connection, "CREATE TABLE Library (libraryId INTEGER IDENTITY, name VARCHAR(500), version INTEGER)");
@@ -181,6 +184,7 @@ public class LibraryDatabase {
         update(connection, "CREATE INDEX idx_PlaylistItems_trackTitle ON PlaylistItems (trackTitle)");
         update(connection, "CREATE INDEX idx_PlaylistItems_artistName ON PlaylistItems (artistName)");
         update(connection, "CREATE INDEX idx_PlaylistItems_albumName ON PlaylistItems (albumName)");
+        update(connection,"CALL FT_CREATE_INDEX('PUBLIC', 'PLAYLISTITEMS', 'FILEPATH, TRACKTITLE, ARTISTNAME, ALBUMNAME, GENRE, YEAR')");
 
         //update(connection, "DROP TABLE PlaylistsPlaylistItems IF EXISTS CASCADE");
         update(connection, "CREATE TABLE PlaylistsPlaylistItems (playlistPlaylistItemId INTEGER IDENTITY, playlistId INTEGER, playlistItemId INTEGER)");

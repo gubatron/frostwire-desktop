@@ -150,6 +150,11 @@ public class LibrarySearch extends JPanel {
             _query = query;
             directoryHolder = LibraryMediator.instance().getLibraryFiles().getSelectedDirectoryHolder();
             canceled = false;
+            
+            // weird case
+            if (directoryHolder == null) {
+                canceled = true;
+            }
         }
 
         public void cancel() {
@@ -157,7 +162,9 @@ public class LibrarySearch extends JPanel {
         }
 
         public void run() {
-
+            if (canceled) {
+                return;
+            }
             // special case for Finished Downloads
             if (_query.equals(".") && directoryHolder instanceof SavedFilesDirectoryHolder) {
                 GUIMediator.safeInvokeLater(new Runnable() {

@@ -67,7 +67,8 @@ public class LibraryFiles extends JPanel {
     }
     
     public DirectoryHolder getSelectedDirectoryHolder() {
-        return ((LibraryFilesListCell)_list.getSelectedValue()).getDirectoryHolder();
+        LibraryFilesListCell cell = (LibraryFilesListCell) _list.getSelectedValue();
+        return cell != null ? cell.getDirectoryHolder() : null;
     }
     
     public Dimension getRowDimension() {

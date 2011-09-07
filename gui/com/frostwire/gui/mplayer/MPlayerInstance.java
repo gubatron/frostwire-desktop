@@ -970,6 +970,7 @@ MPlayerInstance
         }
     }
 
+    @SuppressWarnings("unused")
     private void printCommand(String[] cmd) {
         for (int i = 0; i < cmd.length; i++) {
             if (cmd[i].contains(" ")) {

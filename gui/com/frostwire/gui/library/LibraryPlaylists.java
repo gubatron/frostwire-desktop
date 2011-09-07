@@ -372,6 +372,8 @@ public class LibraryPlaylists extends JPanel {
             if (cell.getAction() != null) {
                 cell.getAction().actionPerformed(null);
             }
+            
+            LibraryMediator.instance().getLibrarySearch().clear();
         }
     }
 
