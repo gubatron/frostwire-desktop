@@ -49,27 +49,30 @@ public class LibraryLeftPanel extends JPanel {
         libraryCoverArt.setSize(coverArtWidth, coverArtWidth);
         
         // layout files and playlists
-        int height = size.height - coverArtWidth;
+        int heightMinusCover = size.height - coverArtWidth;
         int fileRowHeight = libraryFiles.getRowDimension().height;
         int playlistRowHeight = libraryPlaylists.getRowDimension().height;
         
-        if (3 * (fileRowHeight + playlistRowHeight) > height) { // too small, split even
+        if (3 * (fileRowHeight + playlistRowHeight) > heightMinusCover) { 
+        	// too small, split even
             libraryFiles.setLocation(0, 0);
-            libraryFiles.setSize(size.width, height / 2);
-            libraryPlaylists.setLocation(0, height / 2);
-            libraryPlaylists.setSize(size.width, height - height / 2);
-        } else if ((libraryFiles.getRowsCount() + 1) * fileRowHeight + 3 * playlistRowHeight > height) { // too small for complete display of files
-            int libraryFilesHeight = height - 3 * playlistRowHeight;
+            libraryFiles.setSize(size.width, heightMinusCover / 2);
+            libraryPlaylists.setLocation(0, heightMinusCover / 2);
+            libraryPlaylists.setSize(size.width, heightMinusCover - heightMinusCover / 2);
+        } else if ((libraryFiles.getRowsCount() + 1) * fileRowHeight + 3 * playlistRowHeight > heightMinusCover) { 
+        	// too small for complete display of files
+            int libraryFilesHeight = heightMinusCover - 3 * playlistRowHeight;
             libraryFiles.setLocation(0, 0);
             libraryFiles.setSize(size.width, libraryFilesHeight);
             libraryPlaylists.setLocation(0, libraryFilesHeight);
-            libraryPlaylists.setSize(size.width, height - libraryFilesHeight);
-        } else { // complete display of files
+            libraryPlaylists.setSize(size.width, heightMinusCover - libraryFilesHeight);
+        } else { 
+        	// complete display of files
             int libraryFilesHeight = (libraryFiles.getRowsCount() + 1) * fileRowHeight;
             libraryFiles.setLocation(0, 0);
             libraryFiles.setSize(size.width, libraryFilesHeight);
             libraryPlaylists.setLocation(0, libraryFilesHeight);
-            libraryPlaylists.setSize(size.width, height - libraryFilesHeight);
+            libraryPlaylists.setSize(size.width, heightMinusCover - libraryFilesHeight);
         }
     }
 }

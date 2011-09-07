@@ -16,6 +16,7 @@ import javax.swing.Action;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -29,6 +30,7 @@ import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRendere
 
 import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
+import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.options.ConfigureOptionsAction;
@@ -60,6 +62,7 @@ public class LibraryPlaylists extends JPanel {
     private JPopupMenu _popup;
     private Action refreshAction = new RefreshAction();
     private Action exploreAction = new ExploreAction();
+    private Action deleteAction = new DeleteAction();
 
     public LibraryPlaylists() {
         setupUI();
@@ -102,6 +105,7 @@ public class LibraryPlaylists extends JPanel {
         _popup.add(new SkinMenuItem(exploreAction));
         _popup.add(new SkinMenuItem(new ConfigureOptionsAction(OptionsConstructor.SHARED_KEY, I18n.tr("Configure Options"), I18n
                 .tr("You can configure the FrostWire\'s Options."))));
+        _popup.add(new SkinMenuItem(deleteAction));
     }
 
     private void setupModel() {
@@ -423,6 +427,42 @@ public class LibraryPlaylists extends JPanel {
             //                directory = _finishedDownloadsHolder.getDirectory();
             //            }
             //            GUIMediator.launchExplorer(directory);        
+        }
+    }
+    
+    private class DeleteAction extends AbstractAction {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 520856485566457934L;
+
+        public DeleteAction() {
+            putValue(Action.NAME, I18n.tr("Delete"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Delete Playlist"));
+            putValue(LimeAction.ICON_NAME, "PLAYLIST_DELETE");
+        }
+
+        public void actionPerformed(ActionEvent e) {
+        	
+        	Playlist selectedPlaylist = getSelectedPlaylist();
+        	
+        	if (selectedPlaylist != null) {
+
+        		int showConfirmDialog = JOptionPane.showConfirmDialog(GUIMediator.getAppFrame(), 
+            			I18n.tr("Are you sure you want to delete the playlist?\n(No files will be deleted)"), 
+            			I18n.tr("Are you sure?"), 
+            			JOptionPane.YES_NO_OPTION, 
+            			JOptionPane.QUESTION_MESSAGE);
+        		
+        		if (showConfirmDialog != JOptionPane.YES_OPTION) {
+        			return;
+        		}
+
+        		
+        		selectedPlaylist.delete();
+        		_model.removeElement(_list.getSelectedValue());
+        		LibraryMediator.instance().clearLibraryTable();
+        	}
         }
     }
 }

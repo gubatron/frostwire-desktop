@@ -130,6 +130,7 @@ public class LibraryMediator {
     
     public void clearLibraryTable() {
         LibraryFilesTableMediator.instance().clearTable();
+        LibraryPlaylistsTableMediator.instance().clearTable();
         getLibrarySearch().clear();
     }
     
