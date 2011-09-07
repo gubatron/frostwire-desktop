@@ -136,6 +136,18 @@ public class LibraryDatabase {
             e.printStackTrace();
         }
     }
+    
+    public synchronized void dump() {
+        if (isClosed()) {
+            return;
+        }
+        
+        try {
+            new DumpDatabase(this, new File(_databaseFile, "dump.txt")).dump();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private Connection openConnection(File path, String name, boolean createIfNotExists) {
         try {

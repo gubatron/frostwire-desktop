@@ -64,6 +64,10 @@ public class Library extends Entity<LibraryDB> {
             return new Playlist(this, LibraryDatabase.OBJECT_NOT_SAVED_ID, name, description);
         }
     }
+    
+    public void dump() {
+        db.getDatabase().dump();
+    }
 
     @Override
     protected void finalize() throws Throwable {
