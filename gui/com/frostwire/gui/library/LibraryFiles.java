@@ -79,8 +79,8 @@ public class LibraryFiles extends JPanel {
         return _model.getSize();
     }
     
-    public void setInitialSelection() {
-        //_list.setSelectedValue(_finishedDownloadsCell, true);
+    public void clearSelection() {
+        _list.clearSelection();
     }
 
     protected void setupUI() {
@@ -146,8 +146,9 @@ public class LibraryFiles extends JPanel {
     private void refreshListCellSelection() {
         LibraryFilesListCell node = (LibraryFilesListCell) _list.getSelectedValue();
 
-        if (node == null)
+        if (node == null) {
             return;
+        }
 
         LibraryMediator.instance().updateTableFiles(node.getDirectoryHolder());
         
@@ -199,6 +200,7 @@ public class LibraryFiles extends JPanel {
     
     private class LibraryFilesMouseObserver implements MouseObserver {
         public void handleMouseClick(MouseEvent e) {
+            refreshListCellSelection();
         }
 
         /**
@@ -226,7 +228,16 @@ public class LibraryFiles extends JPanel {
         public void valueChanged(ListSelectionEvent e) {
             if (e.getValueIsAdjusting()) {
                 return;
-            }            
+            }
+            
+            LibraryFilesListCell node = (LibraryFilesListCell) _list.getSelectedValue();
+
+            if (node == null) {
+                return;
+            }
+            
+            LibraryMediator.instance().getLibraryPlaylists().clearSelection();
+            
             refreshListCellSelection();
         }
     }

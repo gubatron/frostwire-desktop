@@ -77,8 +77,6 @@ public class LibraryMediator {
         DividerLocationSettingUpdater.install(splitPane, UISettings.UI_LIBRARY_MAIN_DIVIDER_LOCATION);
 
         MAIN_PANEL.add(splitPane);
-        
-        getLibraryFiles().setInitialSelection();
     }
     
     public static Library getLibrary() {

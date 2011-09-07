@@ -74,6 +74,10 @@ public class LibraryPlaylists extends JPanel {
         LibraryPlaylistsListCell cell = new LibraryPlaylistsListCell(null, null, null, playlist, _selectedPlaylistAction);
         _model.addElement(cell);
     }
+    
+    public void clearSelection() {
+        _list.clearSelection();
+    }
 
     protected void setupUI() {
         setLayout(new BorderLayout());
@@ -159,13 +163,6 @@ public class LibraryPlaylists extends JPanel {
         playlist.refresh();
 
         LibraryMediator.instance().updateTableItems(playlist.getItems());
-
-        //        DirectoryHolder directoryHolder = getSelectedDirectoryHolder();
-        //        if (directoryHolder != null && directoryHolder instanceof MediaTypeSavedFilesDirectoryHolder) {
-        //            LibraryMediator.instance().showView(LibraryMediator.FILES_TABLE_KEY);
-        //            MediaTypeSavedFilesDirectoryHolder mtsfdh = (MediaTypeSavedFilesDirectoryHolder) directoryHolder;
-        //            BackgroundExecutorService.schedule(new SearchByMediaTypeRunnable(mtsfdh));
-        //        }
     }
     
     private void actionStartRename() {
@@ -327,12 +324,13 @@ public class LibraryPlaylists extends JPanel {
     }
 
     private class LibraryPlaylistsMouseObserver implements MouseObserver {
-
         public void handleMouseClick(MouseEvent e) {
             int index = _list.locationToIndex(e.getPoint());
             _list.setSelectedIndex(index);
             if (((LibraryPlaylistsListCell) _list.getSelectedValue()).getPlaylist() == null) {
                 actionStartRename();
+            } else {
+                refreshListCellSelection();
             }
         }
 
@@ -362,11 +360,14 @@ public class LibraryPlaylists extends JPanel {
             if (e.getValueIsAdjusting()) {
                 return;
             }
-
+            
             LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) _list.getSelectedValue();
 
-            if (cell == null)
+            if (cell == null) {
                 return;
+            }
+            
+            LibraryMediator.instance().getLibraryFiles().clearSelection();
 
             if (cell.getAction() != null) {
                 cell.getAction().actionPerformed(null);
