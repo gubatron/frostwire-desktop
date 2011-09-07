@@ -18,6 +18,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import com.frostwire.alexandria.Playlist;
+import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.components.IconSearchField;
 import com.limegroup.gnutella.MediaType;
@@ -135,18 +137,25 @@ public class LibrarySearch extends JPanel {
                 currentSearchRunnable.cancel();
             }
 
-            currentSearchRunnable = new SearchRunnable(query);
+            currentSearchRunnable = new SearchFilesRunnable(query);
             BackgroundExecutorService.schedule(currentSearchRunnable);
         }
     }
+    
+    private abstract class SearchRunnable implements Runnable {
+        protected boolean canceled;
+        
+        public void cancel() {
+            canceled = true;
+        }
+    }
 
-    private final class SearchRunnable implements Runnable {
+    private final class SearchFilesRunnable extends SearchRunnable {
 
         private final String _query;
         private final DirectoryHolder directoryHolder;
-        private boolean canceled;
-
-        public SearchRunnable(String query) {
+        
+        public SearchFilesRunnable(String query) {
             _query = query;
             directoryHolder = LibraryMediator.instance().getLibraryFiles().getSelectedDirectoryHolder();
             canceled = false;
@@ -155,10 +164,6 @@ public class LibrarySearch extends JPanel {
             if (directoryHolder == null) {
                 canceled = true;
             }
-        }
-
-        public void cancel() {
-            canceled = true;
         }
 
         public void run() {
@@ -293,6 +298,113 @@ public class LibrarySearch extends JPanel {
             }
 
             return true;
+        }
+    }
+    
+    private final class SearchPlaylistItemsRunnable extends SearchRunnable {
+
+        private final String query;
+        private final Playlist playlist;
+        
+        public SearchPlaylistItemsRunnable(String query) {
+            this.query = query;
+            playlist = LibraryMediator.instance().getLibraryPlaylists().getSelectedPlaylist();
+            canceled = false;
+            
+            // weird case
+            if (playlist == null) {
+                canceled = true;
+            }
+        }
+
+        public void run() {
+            if (canceled) {
+                return;
+            }
+
+            GUIMediator.safeInvokeLater(new Runnable() {
+                public void run() {
+                    LibraryFilesTableMediator.instance().clearTable();
+                    statusLabel.setText("");
+                    resultsCount = 0;
+                }
+            });
+
+            search();
+        }
+
+        private void search() {
+            if (canceled) {
+                return;
+            }
+
+            //FULL TEXT SEARCH, Returns the File IDs we care about.
+            String fullTextIndexSql = "SELECT * FROM FT_SEARCH('"+query+"', 0, 0)";
+            
+            List<List<Object>> matchedFileRows = LibraryMediator.getLibrary().getDB().getDatabase().query(fullTextIndexSql);
+            
+            int fileIDStrOffset = " PUBLIC   FILES  WHERE  FILEID =".length();
+            
+            StringBuilder fileIDSet = new StringBuilder("(");
+            
+            int numFilesFound = matchedFileRows.size();
+            int i = 0;
+            
+            for (List<Object> row : matchedFileRows) {
+                String rowStr = (String) row.get(0);
+                fileIDSet.append(rowStr.substring(fileIDStrOffset));
+                
+                if (i++ < (numFilesFound-1)) {
+                    fileIDSet.append(",");
+                }
+            }
+            fileIDSet.append(")");
+            
+            String sql = "SELECT Torrents.json, Files.json, torrentName, fileName FROM Torrents JOIN Files ON Torrents.torrentId = Files.torrentId WHERE Files.fileId in "+ fileIDSet.toString();
+            List<List<Object>> rows = LibraryMediator.getLibrary().getDB().getDatabase().query(sql);
+
+//            for (File child : haystackDir.listFiles(searchFilter)) {
+//                if (canceled) {
+//                    return;
+//                }
+//
+//                /////
+//                //Stop search if the user selected another item in the library tree
+//                DirectoryHolder currentDirectoryHolder = LibraryMediator.instance().getLibraryFiles().getSelectedDirectoryHolder();
+//                if (!directoryHolder.equals(currentDirectoryHolder)) {
+//                    return;
+//                }
+//                /////
+//
+//                if (excludeFiles.contains(child)) {
+//                    continue;
+//                }
+//                if (child.isHidden()) {
+//                    continue;
+//                }
+//
+//                if (child.isDirectory()) {
+//                    directories.add(child);
+//
+//                    //                    if (searchFilter.accept(child, false)) {
+//                    //                        results.add(child);
+//                    //                    }
+//
+//                } else if (child.isFile() && directoryHolder.accept(child)) {
+//                    results.add(child);
+//                }
+//            }
+//
+//            Runnable r = new Runnable() {
+//                public void run() {
+//                    LibraryMediator.instance().addFilesToLibraryTable(results);
+//                }
+//            };
+//            GUIMediator.safeInvokeLater(r);
+//
+//            for (File directory : directories) {
+//                search(directory, excludeFiles);
+//            }
         }
     }
 }

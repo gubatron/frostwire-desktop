@@ -78,6 +78,11 @@ public class LibraryPlaylists extends JPanel {
     public void clearSelection() {
         _list.clearSelection();
     }
+    
+    public Playlist getSelectedPlaylist() {
+        LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) _list.getSelectedValue();
+        return cell != null ? cell.getPlaylist() : null;
+    }
 
     protected void setupUI() {
         setLayout(new BorderLayout());
