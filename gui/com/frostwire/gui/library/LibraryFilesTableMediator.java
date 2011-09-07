@@ -825,7 +825,12 @@ final class LibraryFilesTableMediator extends AbstractTableMediator<LibraryFiles
                             0, //TODO: missing time
                             playerItem.getProperty(PlayListItem.ARTIST),
                             playerItem.getProperty(PlayListItem.ALBUM),
-                            ""); // TODO: cover art path
+                            "",// TODO: cover art path
+                            playerItem.getProperty(PlayListItem.BITRATE),
+                            playerItem.getProperty(PlayListItem.COMMENT),
+                            playerItem.getProperty(PlayListItem.GENRE),
+                            playerItem.getProperty(PlayListItem.TRACK),
+                            playerItem.getProperty(PlayListItem.YEAR)); 
                     playlist.getItems().add(item);
                 }
                 
@@ -862,7 +867,12 @@ final class LibraryFilesTableMediator extends AbstractTableMediator<LibraryFiles
                         0, //TODO: missing time
                         playerItem.getProperty(PlayListItem.ARTIST),
                         playerItem.getProperty(PlayListItem.ALBUM),
-                        ""); // TODO: cover art path
+                        "", // TODO: cover art path
+                        playerItem.getProperty(PlayListItem.BITRATE),
+                        playerItem.getProperty(PlayListItem.COMMENT),
+                        playerItem.getProperty(PlayListItem.GENRE),
+                        playerItem.getProperty(PlayListItem.TRACK),
+                        playerItem.getProperty(PlayListItem.YEAR));
                 playlist.getItems().add(item);
                 item.save();
             }

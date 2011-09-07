@@ -154,11 +154,11 @@ public final class LibraryPlaylistsTableDataLine extends AbstractDataLine<Playli
             case ARTIST_IDX:
                 return new PlaylistItemProperty(initializer.getArtistName(), playing);
             case BITRATE_IDX:
-                return new PlaylistItemProperty("", playing);//initializer.getProperty(PlayListItem.BITRATE, ""), playing);
+                return new PlaylistItemProperty(initializer.getBitrate(), playing);
             case COMMENT_IDX:
-                return new PlaylistItemProperty("", playing);//(initializer.getProperty(PlayListItem.COMMENT), playing);
+                return new PlaylistItemProperty(initializer.getComment(), playing);
             case GENRE_IDX:
-                return new PlaylistItemProperty("", playing);//initializer.getProperty(PlayListItem.GENRE),playing);
+                return new PlaylistItemProperty(initializer.getGenre(), playing);
             case LENGTH_IDX:
                 return new PlaylistItemProperty(String.valueOf(initializer.getDuration()), playing);
             case NAME_IDX:
@@ -168,11 +168,11 @@ public final class LibraryPlaylistsTableDataLine extends AbstractDataLine<Playli
             case TITLE_IDX:
                 return new PlaylistItemProperty(initializer.getTrackTitle(), playing);
             case TRACK_IDX:
-                return new PlaylistItemProperty("", playing);//(initializer.getProperty(PlayListItem.TRACK, ""), playing);
+                return new PlaylistItemProperty(initializer.getTrack(), playing);
             case TYPE_IDX:
-                return new PlaylistItemProperty("", playing);//(initializer.getProperty(PlayListItem.TYPE), playing);
+                return new PlaylistItemProperty(initializer.getFileExtension(), playing);
             case YEAR_IDX:
-                return new PlaylistItemProperty("", playing);//(initializer.getProperty(PlayListItem.YEAR), playing);
+                return new PlaylistItemProperty(initializer.getYear(), playing);
         }
         return null;
     }

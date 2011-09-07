@@ -178,7 +178,7 @@ public class LibraryDatabase {
 
         //update(connection, "DROP TABLE PlaylistItems IF EXISTS CASCADE");
         update(connection,
-                "CREATE TABLE PlaylistItems (playlistItemId INTEGER IDENTITY, filePath VARCHAR(10000), fileName VARCHAR(500), fileSize BIGINT, fileExtension VARCHAR(10), trackTitle VARCHAR(500), duration BIGINT, artistName VARCHAR(500), albumName VARCHAR(500), coverArtPath VARCHAR(10000))");
+                "CREATE TABLE PlaylistItems (playlistItemId INTEGER IDENTITY, filePath VARCHAR(10000), fileName VARCHAR(500), fileSize BIGINT, fileExtension VARCHAR(10), trackTitle VARCHAR(500), duration BIGINT, artistName VARCHAR(500), albumName VARCHAR(500), coverArtPath VARCHAR(10000), bitrate VARCHAR(10), comment VARCHAR(500), genre VARCHAR(20), track VARCHAR(6), year VARCHAR(6))");
         update(connection, "CREATE INDEX idx_PlaylistItems_fileName ON PlaylistItems (fileName)");
         update(connection, "CREATE INDEX idx_PlaylistItems_fileExtension ON PlaylistItems (fileExtension)");
         update(connection, "CREATE INDEX idx_PlaylistItems_trackTitle ON PlaylistItems (trackTitle)");

@@ -12,7 +12,7 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
 
     public void fill(PlaylistItem obj) {
         List<List<Object>> result = db
-                .query("SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath "
+                .query("SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath, bitrate, comment, genre, track, year "
                         + "FROM PlaylisItems WHERE playlistItemId = " + obj.getId());
         if (result.size() > 0) {
             List<Object> row = result.get(0);
@@ -31,6 +31,11 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
         String artistName = (String) row.get(7);
         String albumName = (String) row.get(8);
         String coverArtPath = (String) row.get(9);
+        String bitrate = (String) row.get(10);
+        String comment = (String) row.get(11);
+        String genre = (String) row.get(12);
+        String track = (String) row.get(13);
+        String year = (String) row.get(14);
 
         obj.setId(id);
         obj.setFilePath(filePath);
@@ -42,6 +47,11 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
         obj.setArtistName(artistName);
         obj.setAlbumName(albumName);
         obj.setCoverArtPath(coverArtPath);
+        obj.setBitrate(bitrate);
+        obj.setComment(comment);
+        obj.setGenre(genre);
+        obj.setTrack(track);
+        obj.setYear(year);
     }
 
     public void save(PlaylistItem obj) {
@@ -51,7 +61,7 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
 
         if (obj.getId() == LibraryDatabase.OBJECT_NOT_SAVED_ID) {
             int id = db
-                    .insert("INSERT INTO PlaylistItems (filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath) "
+                    .insert("INSERT INTO PlaylistItems (filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath, bitrate, comment, genre, track, year) "
                             + " VALUES ('"
                             + obj.getFilePath()
                             + "', '"
@@ -69,14 +79,26 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
                             + "', '"
                             + obj.getAlbumName()
                             + "', '"
-                            + obj.getCoverArtPath() + "')");
+                            + obj.getCoverArtPath()
+                            + "', '"
+                            + obj.getBitrate()
+                            + "', '"
+                            + obj.getComment()
+                            + "', '"
+                            + obj.getGenre()
+                            + "', '"
+                            + obj.getTrack()
+                            + "', '"
+                            + obj.getYear() + "')");
             obj.setId(id);
             db.update("INSERT INTO PlaylistsPlaylistItems (playlistId, playlistItemId) VALUES (" + obj.getPlaylist().getId() + ", " + obj.getId() + ")");
         } else {
             db.update("UPDATE PlaylistItems SET filePath = '" + obj.getFilePath() + "', fileName = '" + obj.getFileName() + "', fileSize = "
                     + obj.getFileSize() + ", fileExtension = '" + obj.getFileExtension() + "', trackTitle = '" + obj.getTrackTitle() + "', duration = "
                     + obj.getDuration() + ", artistName = '" + obj.getArtistName() + "', albumName = '" + obj.getAlbumName() + "', coverArtPath = '"
-                    + obj.getCoverArtPath() + "' WHERE playlistItemId = " + obj.getId());
+                    + obj.getCoverArtPath() + "', bitrate = '" + obj.getBitrate() + "', comment = '" + obj.getComment() + "', genre = '" + obj.getGenre()
+                    + "', track = '" + obj.getTrack() + "', year = '" + obj.getYear()
+                    + "' WHERE playlistItemId = " + obj.getId());
         }
     }
 

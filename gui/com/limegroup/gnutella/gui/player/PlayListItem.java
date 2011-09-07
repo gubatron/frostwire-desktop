@@ -11,6 +11,8 @@ import org.limewire.util.CommonUtils;
 
 import com.frostwire.gui.mplayer.MPlayer;
 import com.limegroup.gnutella.gui.I18n;
+import com.mpatric.mp3agic.ID3v2;
+import com.mpatric.mp3agic.Mp3File;
 
 /**
  *  Wrapper for a local or remote audio file/stream that is to be added to the 
@@ -119,8 +121,16 @@ public class PlayListItem implements Comparable<PlayListItem>{
                 File file = new File(uri);
                 MPlayer mplayer = new MPlayer();
                 Map<String, String> props = mplayer.getProperties(file.getAbsolutePath());
-//                
-                AudioMetaData amd = new AudioMetaData(props);            
+                
+                AudioMetaData amd = new AudioMetaData(props);
+                
+                if (file.getName().endsWith("mp3") &&
+                    amd.getTitle() == null && amd.getArtist() == null && amd.getAlbum() == null) {
+                    // fall back to new mp3 library
+                    readMoreMP3Tags(file, props);
+                    amd = new AudioMetaData(props);
+                }
+                
                 if( !properties.containsKey(ARTIST))
                     properties.put(ARTIST, amd.getArtist());
                 if( !properties.containsKey(ALBUM))
@@ -160,7 +170,7 @@ public class PlayListItem implements Comparable<PlayListItem>{
         }
         
     }
-    
+
     public AudioMetaData getMetaData() {
     	return _metaData;
     }
@@ -254,5 +264,23 @@ public class PlayListItem implements Comparable<PlayListItem>{
 
     public int compareTo(PlayListItem o) {
         return o.getURI().compareTo(uri);
+    }
+    
+    private void readMoreMP3Tags(File file, Map<String, String> props) {
+         try {
+            Mp3File mp3 = new Mp3File(file.getAbsolutePath());
+            if (mp3.hasId3v2Tag()) {
+                ID3v2 tag = mp3.getId3v2Tag();
+                props.put("Artist", tag.getArtist());
+                props.put("Album", tag.getAlbum());
+                props.put("Comment", tag.getComment());
+                props.put("Genre", tag.getGenreDescription());
+                props.put("Title", tag.getTitle());
+                props.put("Track", tag.getTrack());
+                props.put("Year", tag.getYear());
+            }
+        } catch (Exception e) {
+            // ignore
+        }
     }
 }

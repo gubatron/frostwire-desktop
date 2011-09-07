@@ -82,7 +82,8 @@ final class LibraryPlaylistsTableMediator extends AbstractTableMediator<LibraryP
         return INSTANCE;
     }
 
-    private com.frostwire.gui.library.PlaylistItemPropertyRenderer PLAYLIST_ITEM_PROPERTY_RENDERER;
+    private PlaylistItemNameRenderer playlistItemNameRenderer;
+    private PlaylistItemPropertyRenderer PLAYLIST_ITEM_PROPERTY_RENDERER;
 
     /**
      * Build some extra listeners
@@ -106,6 +107,7 @@ final class LibraryPlaylistsTableMediator extends AbstractTableMediator<LibraryP
         DATA_MODEL = new LibraryPlaylistsTableModel();
         TABLE = new LimeJTable(DATA_MODEL);
         DATA_MODEL.setTable(TABLE);
+        playlistItemNameRenderer = new PlaylistItemNameRenderer();
         PLAYLIST_ITEM_PROPERTY_RENDERER = new PlaylistItemPropertyRenderer();
         Action[] aa = new Action[] { LAUNCH_ACTION, ENQUEUE_ACTION, DELETE_ACTION };
         BUTTON_ROW = new ButtonRow(aa, ButtonRow.X_AXIS, ButtonRow.NO_GLUE);
@@ -230,6 +232,7 @@ final class LibraryPlaylistsTableMediator extends AbstractTableMediator<LibraryP
     @Override
     protected void setDefaultRenderers() {
         super.setDefaultRenderers();
+        TABLE.setDefaultRenderer(PlaylistItemName.class, playlistItemNameRenderer);
         TABLE.setDefaultRenderer(PlaylistItemProperty.class, PLAYLIST_ITEM_PROPERTY_RENDERER);
     }
 

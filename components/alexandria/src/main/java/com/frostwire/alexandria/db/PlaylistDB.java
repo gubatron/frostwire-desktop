@@ -61,10 +61,10 @@ public class PlaylistDB extends ObjectDB<Playlist> {
         String query;
 
         if (playlist.getName().equals(LibraryDatabase.DEFAULT_PLAYLIST_NAME)) {
-            query = "SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath "
+            query = "SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath, bitrate, comment, genre, track, year "
                     + "FROM PlaylistItems";
         } else {
-            query = "SELECT PlaylistItems.playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath "
+            query = "SELECT PlaylistItems.playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath, bitrate, comment, genre, track, year "
                     + "FROM PlaylistItems INNER JOIN PlaylistsPlaylistItems ON PlaylistItems.playlistItemId = PlaylistsPlaylistItems.playlistItemId "
                     + "WHERE playlistId = " + playlist.getId();
         }

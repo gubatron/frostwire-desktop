@@ -17,6 +17,11 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
     private String _artistName;
     private String _albumName;
     private String _coverArtPath;
+    private String bitrate;
+    private String comment;
+    private String genre;
+    private String track;
+    private String year;
 
     public PlaylistItem(Playlist playlist) {
         super(new PlaylistItemDB(playlist.db.getDatabase()));
@@ -25,7 +30,8 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
     }
 
     public PlaylistItem(Playlist playlist, int id, String filePath, String fileName, long fileSize, String fileExtension, String trackTitle, long duration,
-            String artistName, String albumName, String coverArtPath) {
+            String artistName, String albumName, String coverArtPath, String bitrate, String comment,
+            String genre, String track, String year) {
         super(new PlaylistItemDB(playlist.db.getDatabase()));
         _playlist = playlist;
         _id = id;
@@ -38,6 +44,11 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
         _artistName = artistName;
         _albumName = albumName;
         _coverArtPath = coverArtPath;
+        this.bitrate = bitrate;
+        this.comment = comment;
+        this.genre = genre;
+        this.track = track;
+        this.year = year;
     }
 
     public Playlist getPlaylist() {
@@ -122,6 +133,46 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
 
     public void setCoverArtPath(String coverArtPath) {
         _coverArtPath = coverArtPath;
+    }
+    
+    public String getBitrate() {
+        return bitrate;
+    }
+    
+    public void setBitrate(String bitrate) {
+        this.bitrate = bitrate;
+    }
+    
+    public String getComment() {
+        return comment;
+    }
+    
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+    
+    public String getGenre() {
+        return genre;
+    }
+    
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+    
+    public String getTrack() {
+        return track;
+    }
+    
+    public void setTrack(String track) {
+        this.track = track;
+    }
+    
+    public String getYear() {
+        return year;
+    }
+    
+    public void setYear(String year) {
+        this.year = year;
     }
 
     public void save() {

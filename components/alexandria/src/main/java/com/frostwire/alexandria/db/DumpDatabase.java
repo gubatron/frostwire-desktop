@@ -61,7 +61,7 @@ public class DumpDatabase {
     }
 
     private void dumpPlaylistItems(PrintWriter out) {
-        String columns = "playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath";
+        String columns = "playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath, bitrate, comment, genre, track, year";
         dumpTable(out, columns, "PlaylistItems");
     }
 }
