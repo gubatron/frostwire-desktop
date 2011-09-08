@@ -596,6 +596,8 @@ final class LibraryPlaylistsTableMediator extends AbstractTableMediator<LibraryP
             ENQUEUE_ACTION.setEnabled(false);
 
         //RENAME_ACTION.setEnabled(LibraryMediator.isRenameEnabled() && sel.length == 1);
+        
+        LibraryMediator.instance().getLibraryCoverArt().setPlaylistItem(getSelectedLibraryLines()[0].getInitializeObject());
     }
 
     /**
