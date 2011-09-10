@@ -60,7 +60,6 @@ public class LibraryMediator {
 
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, getLibraryLeftPanel(), getLibraryRightPanel());
         splitPane.setContinuousLayout(true);
-        splitPane.setOneTouchExpandable(true);
         splitPane.setResizeWeight(0.5);
         splitPane.addPropertyChangeListener(JSplitPane.LAST_DIVIDER_LOCATION_PROPERTY, new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent evt) {

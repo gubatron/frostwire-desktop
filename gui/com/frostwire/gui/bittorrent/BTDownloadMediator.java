@@ -37,6 +37,8 @@ import com.limegroup.gnutella.settings.QuestionsHandler;
  * components.
  */
 public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRowFilteredModel, BTDownloadDataLine, BTDownload> {
+    
+    public static final int MIN_HEIGHT = 150;
 
     /**
      * instance, for singleton access

@@ -112,11 +112,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
     private final JFrame FRAME;
 
     /**
-     * Is the download view currently being shown? 
-     */
-    private boolean isDownloadViewVisible = false;
-
-    /**
      * Constant for the <tt>LogoPanel</tt> used for displaying the
      * lime/spinning lime search status indicator and the logo.
      */
@@ -126,8 +121,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      * The array of tabs in the main application window.
      */
     private Map<GUIMediator.Tabs, Tab> TABS = new HashMap<GUIMediator.Tabs, Tab>(7);
-
-	private boolean isSearching = false;
     
     /**
      * The last state of the X/Y location and the time it was set.
@@ -610,33 +603,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      * re-layout window (if necessary).
      */
     public void refresh() {
-
-		if (isSearching) {
-			// if we're searching make sure the search result panel
-			// is visible
-		    SearchDownloadTab tab = (SearchDownloadTab)TABS.get(GUIMediator.Tabs.SEARCH);
-			if (tab.getDividerLocation() == 0) {
-				tab.setDividerLocation(0.5);
-				isDownloadViewVisible = true;
-			}
-		}
-		
-        // first handle the download view
-        if (getBTDownloadMediator().getTotalDownloads() == 0 && isDownloadViewVisible) {
-            ((SearchDownloadTab)TABS.get(GUIMediator.Tabs.SEARCH)).setDividerLocation(1000);
-            isDownloadViewVisible = false;
-        } else if (getBTDownloadMediator().getTotalDownloads() > 0 && !isDownloadViewVisible) {
-            // need to turn it on....
-            final int count = getBTDownloadMediator().getTotalDownloads();
-            // make sure stuff didn't change on me....
-            if (count > 0) {
-                final double prop = (count > 6) ? 0.60 : 0.70;
-                ((SearchDownloadTab)TABS.get(GUIMediator.Tabs.SEARCH)).setDividerLocation(prop);
-                ((SearchDownloadTab)TABS.get(GUIMediator.Tabs.SEARCH)).getComponent().revalidate();
-                TABBED_PANE.revalidate();
-                isDownloadViewVisible = true;
-            }
-        }
     }
     
     final BTDownloadMediator getBTDownloadMediator() {
@@ -733,7 +699,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      */
     public final void setSearching(boolean searching) {    
         LOGO_PANEL.setSearching(searching);
-		isSearching = searching;
 		refresh();
     }
 }

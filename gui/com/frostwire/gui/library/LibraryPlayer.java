@@ -5,7 +5,7 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
-import com.limegroup.gnutella.gui.player.MediaPlayerComponent2;
+import com.frostwire.gui.player.AudioPlayerComponent;
 
 public class LibraryPlayer extends JPanel {
 
@@ -23,6 +23,6 @@ public class LibraryPlayer extends JPanel {
         
         setPreferredSize(new Dimension(100, 100));
         
-        add(MediaPlayerComponent2.getInstance().getMediaPanel(), BorderLayout.LINE_END);
+        add(AudioPlayerComponent.getInstance().getMediaPanel(), BorderLayout.LINE_END);
     }
 }
