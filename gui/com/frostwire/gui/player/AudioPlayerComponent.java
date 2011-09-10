@@ -47,11 +47,6 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     public static final String STREAMING_AUDIO = "Streaming Audio";
 
     /**
-     * The sole instance.
-     */
-    private static AudioPlayerComponent INSTANCE = null;
-
-    /**
      * How fast to scroll the song title if it is too long in milliseconds
      */
     private static final long SCROLL_RATE = 200;
@@ -75,45 +70,45 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     /**
      * Constant for the play button.
      */
-    private static final MediaButton PLAY_BUTTON = new MediaButton(I18n.tr("Play"), "play_up", "play_dn");
+    private final MediaButton PLAY_BUTTON = new MediaButton(I18n.tr("Play"), "play_up", "play_dn");
 
     /**
      * Constant for the pause button.
      */
-    private static final MediaButton PAUSE_BUTTON = new MediaButton(I18n.tr("Pause"), "pause_up", "pause_dn");
+    private final MediaButton PAUSE_BUTTON = new MediaButton(I18n.tr("Pause"), "pause_up", "pause_dn");
 
     /**
      * Constant for the stop button.
      */
-    private static final MediaButton STOP_BUTTON = new MediaButton(I18n.tr("Stop"), "stop_up", "stop_dn");
+    private final MediaButton STOP_BUTTON = new MediaButton(I18n.tr("Stop"), "stop_up", "stop_dn");
 
     /**
      * Constant for the forward button.
      */
-    private static final MediaButton NEXT_BUTTON = new MediaButton(I18n.tr("Next"), "forward_up", "forward_dn");
+    private final MediaButton NEXT_BUTTON = new MediaButton(I18n.tr("Next"), "forward_up", "forward_dn");
 
     /**
      * Constant for the rewind button.
      */
-    private static final MediaButton PREV_BUTTON = new MediaButton(I18n.tr("Previous"), "rewind_up", "rewind_dn");
+    private final MediaButton PREV_BUTTON = new MediaButton(I18n.tr("Previous"), "rewind_up", "rewind_dn");
 
     /**
      * Constant for the volume control
      */
-    private static final MediaSlider VOLUME = new MediaSlider("volume_track_left", "volume_track_center", "volume_track_right", "volume_thumb_up",
+    private final MediaSlider VOLUME = new MediaSlider("volume_track_left", "volume_track_center", "volume_track_right", "volume_thumb_up",
             "volume_thumb_dn");
 
     /**
      * Constant for the progress bar
      */
-    private static final SongProgressBar PROGRESS = new SongProgressBar("progress_track_left", "progress_track_center", "progress_track_right",
+    private final SongProgressBar PROGRESS = new SongProgressBar("progress_track_left", "progress_track_center", "progress_track_right",
             "progress_thumb_up", "progress_thumb_dn", "progress_bar");
 
     /**
      * Executor to ensure all thread creation on the frostwireplayer is called from
      * a single thread
      */
-    private static final ExecutorService SONG_QUEUE = ExecutorsHelper.newProcessingQueue("SongProcessor");
+    private final ExecutorService SONG_QUEUE = ExecutorsHelper.newProcessingQueue("SongProcessor");
 
     /**
      * The MP3 player.
@@ -177,22 +172,12 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     /**
      * Constructs a new <tt>MediaPlayerComponent</tt>.
      */
-    private AudioPlayerComponent() {
-        PLAYER = new AudioPlayer();
+    public AudioPlayerComponent() {
+        PLAYER = AudioPlayer.instance();
         PLAYER.addAudioPlayerListener(this);
 
         GUIMediator.addRefreshListener(this);
         ThemeMediator.addThemeObserver(this);
-    }
-
-    /**
-     * Gets the sole instance.
-     */
-    public static AudioPlayerComponent getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new AudioPlayerComponent();
-        }
-        return INSTANCE;
     }
 
     /**

@@ -10,6 +10,7 @@ import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import com.limegroup.gnutella.gui.actions.LimeAction;
@@ -223,7 +224,11 @@ public final class ButtonRow extends JPanel {
 	 * either TOP_GLUE, BOTTOM_GLUE, LEFT_GLUE, RIGHT_GLUE,
 	 * or NO_GLUE@param orientation
 	 */
-	public ButtonRow(Action[] actions, int orientation, int glue) {
+    public ButtonRow(Action[] actions, int orientation, int glue) {
+        this(actions, orientation, glue, null);
+    }
+    
+	public ButtonRow(Action[] actions, int orientation, int glue, JComponent extraComponent) {
 		
 		BoxLayout bl = new BoxLayout(this, orientation);
         setLayout(bl);
@@ -278,6 +283,10 @@ public final class ButtonRow extends JPanel {
             add(Box.createHorizontalGlue());
         else if(glue == NO_GLUE && orientation == X_AXIS)
             add(Box.createHorizontalGlue());
+        
+        if (extraComponent != null) {
+            add(extraComponent);
+        }
 	}
 	
 	/**

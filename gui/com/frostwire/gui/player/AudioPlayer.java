@@ -33,15 +33,24 @@ public class AudioPlayer implements RefreshListener {
     private AudioSource currentSong;
 
     private MPlayer _mplayer;
-
+    
     /** Whether or not we're running from source or from a binary distribution */
     private static boolean _isRelease;
 
     static {
         _isRelease = !FrostWireUtils.getFrostWireJarPath().contains("frostwire.desktop");
     }
+    
+    private static AudioPlayer instance;
+    
+    public static AudioPlayer instance() {
+        if (instance == null) {
+            instance = new AudioPlayer();
+        }
+        return instance;
+    }
 
-    public AudioPlayer() {
+    private AudioPlayer() {
         String playerPath = new String();
 
         if (OSUtils.isWindows()) {

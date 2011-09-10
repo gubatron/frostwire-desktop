@@ -23,6 +23,6 @@ public class LibraryPlayer extends JPanel {
         
         setPreferredSize(new Dimension(100, 100));
         
-        add(AudioPlayerComponent.getInstance().getMediaPanel(), BorderLayout.LINE_END);
+        add(new AudioPlayerComponent().getMediaPanel(), BorderLayout.LINE_END);
     }
 }

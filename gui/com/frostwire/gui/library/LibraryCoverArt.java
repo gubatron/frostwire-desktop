@@ -40,8 +40,6 @@ public class LibraryCoverArt extends JPanel {
     
     @Override
     public void paint(Graphics g) {
-        super.paint(g);
-        
         if (scaledImage != null) {
             g.drawImage(scaledImage, 0, 0, null);
         }
