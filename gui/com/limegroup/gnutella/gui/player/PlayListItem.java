@@ -9,7 +9,7 @@ import java.util.Map;
 
 import org.limewire.util.CommonUtils;
 
-import com.frostwire.gui.mplayer.MPlayer;
+import com.frostwire.mplayer.MPlayer;
 import com.limegroup.gnutella.gui.I18n;
 import com.mpatric.mp3agic.ID3v2;
 import com.mpatric.mp3agic.Mp3File;

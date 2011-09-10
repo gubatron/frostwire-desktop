@@ -12,9 +12,9 @@ import javax.swing.SwingUtilities;
 import org.gudy.azureus2.core3.util.UrlUtils;
 import org.limewire.util.OSUtils;
 
-import com.frostwire.gui.mplayer.MPlayer;
-import com.frostwire.gui.mplayer.MediaPlaybackState;
-import com.frostwire.gui.mplayer.PositionListener;
+import com.frostwire.mplayer.MPlayer;
+import com.frostwire.mplayer.MediaPlaybackState;
+import com.frostwire.mplayer.PositionListener;
 import com.limegroup.gnutella.gui.RefreshListener;
 import com.limegroup.gnutella.util.FrostWireUtils;
 

@@ -1,6 +1,6 @@
 package com.limegroup.gnutella.gui.player;
 
-import com.frostwire.gui.mplayer.MediaPlaybackState;
+import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.RefreshListener;
 
 /**

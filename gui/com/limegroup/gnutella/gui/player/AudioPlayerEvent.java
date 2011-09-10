@@ -1,6 +1,6 @@
 package com.limegroup.gnutella.gui.player;
 
-import com.frostwire.gui.mplayer.MediaPlaybackState;
+import com.frostwire.mplayer.MediaPlaybackState;
 
 /**
  * This event is fired by the AudioPlayer everytime the state of the player changes.

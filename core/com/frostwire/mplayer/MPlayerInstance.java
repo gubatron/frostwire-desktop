@@ -19,7 +19,7 @@
  */
 
 
-package com.frostwire.gui.mplayer;
+package com.frostwire.mplayer;
 
 import java.io.BufferedReader;
 import java.io.File;

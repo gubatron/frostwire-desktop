@@ -1,4 +1,4 @@
-package com.frostwire.gui.mplayer;
+package com.frostwire.mplayer;
 
 import java.util.Map;
 

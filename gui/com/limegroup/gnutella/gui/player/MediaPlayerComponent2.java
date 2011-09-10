@@ -22,7 +22,7 @@ import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.service.ErrorService;
 import org.limewire.util.OSUtils;
 
-import com.frostwire.gui.mplayer.MediaPlaybackState;
+import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIConstants;
 import com.limegroup.gnutella.gui.GUIMediator;

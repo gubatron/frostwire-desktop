@@ -1,4 +1,4 @@
-package com.frostwire.gui.mplayer;
+package com.frostwire.mplayer;
 
 public enum MediaPlaybackState {
 	Uninitialized,Opening,Playing,Paused,Stopped,Closed,Failed;

@@ -26,7 +26,7 @@ import javax.swing.JRadioButton;
 import javax.swing.ListCellRenderer;
 
 import com.frostwire.gui.components.GraphicPanel;
-import com.frostwire.gui.mplayer.MediaPlaybackState;
+import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.player.AudioSource;
 import com.limegroup.gnutella.gui.player.LimeWirePlayer;
 
