@@ -14,7 +14,7 @@ import org.limewire.util.OSUtils;
  * Settings for LimeWire application
  */
 public class ApplicationSettings extends LimeProps {
-    public static BooleanSetting SEARCH_OPTIONS_COLLAPSED = FACTORY.createBooleanSetting("SEARCH_OPTIONS_COLLAPSED", true);
+    public static BooleanSetting SEARCH_OPTIONS_COLLAPSED = FACTORY.createBooleanSetting("SEARCH_OPTIONS_COLLAPSED", false);
 
     private ApplicationSettings() {
     }
