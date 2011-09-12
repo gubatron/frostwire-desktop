@@ -86,14 +86,14 @@ public class LibrarySearch extends JPanel {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                if (searchField.getText().length() == 0 && e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+                if (searchField.getText().length() == 0 && (e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_DELETE)) {
                     lastSearch = 0;
                     searchField.setText(".");
                     a.actionPerformed(null);
                     searchField.setText("");
                 }
 
-                if (System.currentTimeMillis() - lastSearch > 250) {
+                if (System.currentTimeMillis() - lastSearch > 125) {
                     a.actionPerformed(null);
                     lastSearch = System.currentTimeMillis();
                 }
