@@ -214,6 +214,7 @@ public final class MediaPlayerComponent implements AudioPlayerListener, RefreshL
                 + NEXT_BUTTON.getIcon().getIconWidth() + 2 + PREV_BUTTON.getIcon().getIconWidth() + 2;
 
         // create sliders
+        PROGRESS.setMinimumSize(progressBarDimension);
         PROGRESS.setMaximumSize(progressBarDimension);
         PROGRESS.setPreferredSize(progressBarDimension);
         PROGRESS.setString(I18n.tr("FrostWire Media Player"));

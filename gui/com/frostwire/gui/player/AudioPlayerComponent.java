@@ -199,6 +199,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
                 + NEXT_BUTTON.getIcon().getIconWidth() + 2 + PREV_BUTTON.getIcon().getIconWidth() + 2;
 
         // create sliders
+        PROGRESS.setMinimumSize(progressBarDimension);
         PROGRESS.setMaximumSize(progressBarDimension);
         PROGRESS.setPreferredSize(progressBarDimension);
         PROGRESS.setString(I18n.tr("FrostWire Media Player"));
@@ -218,7 +219,6 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
         // add everything
         JPanel buttonPanel = new BoxPanel(BoxPanel.X_AXIS);
         buttonPanel.setMaximumSize(new Dimension(tempWidth + PROGRESS.getWidth() + VOLUME.getWidth(), tempHeight));
-        buttonPanel.setMinimumSize(new Dimension(tempWidth, tempHeight));
         buttonPanel.add(Box.createHorizontalGlue());
         buttonPanel.add(VOLUME);
         buttonPanel.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 3));
@@ -263,21 +263,21 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     public void refresh() {
         PLAYER.refresh();
 
-        if (getMediaPanel().getSize().width < fullSizeWidth) {
-            GUIMediator.safeInvokeLater(new Runnable() {
-                public void run() {
-                    PROGRESS.setVisible(false);
-                    VOLUME.setVisible(false);
-                }
-            });
-        } else {
-            GUIMediator.safeInvokeLater(new Runnable() {
-                public void run() {
-                    PROGRESS.setVisible(true);
-                    VOLUME.setVisible(true);
-                }
-            });
-        }
+//        if (getMediaPanel().getSize().width < fullSizeWidth) {
+//            GUIMediator.safeInvokeLater(new Runnable() {
+//                public void run() {
+//                    //PROGRESS.setVisible(false);
+//                    //VOLUME.setVisible(false);
+//                }
+//            });
+//        } else {
+//            GUIMediator.safeInvokeLater(new Runnable() {
+//                public void run() {
+//                    PROGRESS.setVisible(true);
+//                    VOLUME.setVisible(true);
+//                }
+//            });
+//        }
     }
 
     // inherit doc comment
