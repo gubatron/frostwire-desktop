@@ -16,9 +16,6 @@ public class SmartSearchDB {
     public static final int OBJECT_NOT_SAVED_ID = -1;
     public static final int OBJECT_INVALID_ID = -2;
     
-    public static final String DEFAULT_PLAYLIST_NAME = "Default";
-    public static final String DEFAULT_PLAYLIST_DESCRIPTION = "Default playlist";
-
     public static final int SMART_SEARCH_DATABASE_VERSION = 1;
 
     private final File _databaseFile;
@@ -30,7 +27,6 @@ public class SmartSearchDB {
 
     static {
         try {
-            //Class.forName("org.hsqldb.jdbcDriver");
         	Class.forName("org.h2.Driver");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -143,10 +139,8 @@ public class SmartSearchDB {
     private Connection openConnection(File path, String name, boolean createIfNotExists) {
         try {
             StringBuilder sb = new StringBuilder();
-            //sb.append("jdbc:hsqldb:file:");
             sb.append("jdbc:h2:");
             sb.append(new File(path, name).getAbsolutePath());
-            //sb.append(";hsqldb.default_table_type=cached;");
 
             if (!createIfNotExists) {
                 sb.append(";ifexists=true");

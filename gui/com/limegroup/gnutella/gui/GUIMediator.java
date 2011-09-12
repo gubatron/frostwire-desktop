@@ -50,12 +50,12 @@ import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 import org.limewire.util.VersionUtils;
 
-import com.aelitis.azureus.core.AzureusCore;
-import com.frostwire.AzureusStarter;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.ChatMediator;
 import com.frostwire.gui.HideExitDialog;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
+import com.frostwire.gui.player.AudioPlayer;
+import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.tabs.LibraryPlayListTab;
 import com.limegroup.gnutella.UpdateInformation;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
@@ -63,8 +63,6 @@ import com.limegroup.gnutella.gui.bugs.FatalBugManager;
 import com.limegroup.gnutella.gui.library.LibraryMediator;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
 import com.limegroup.gnutella.gui.options.OptionsMediator;
-import com.limegroup.gnutella.gui.player.MediaPlayerComponent;
-import com.limegroup.gnutella.gui.player.PlayListItem;
 import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
 import com.limegroup.gnutella.gui.search.SearchMediator;
 import com.limegroup.gnutella.gui.shell.FrostAssociations;
@@ -116,7 +114,7 @@ public final class GUIMediator {
     private boolean _remoteDownloadsAllowed;
 
     public static enum Tabs {
-        SEARCH(I18n.tr("&Search")), LIBRARY(I18n.tr("&Library"), ApplicationSettings.LIBRARY_VIEW_ENABLED), ANDROID(I18n.tr("&Phones and Tablets"),
+        SEARCH(I18n.tr("&Search")), LIBRARY(I18n.tr("&Library"), ApplicationSettings.LIBRARY_VIEW_ENABLED), LIBRARY2(I18n.tr("&Library"), ApplicationSettings.LIBRARY_VIEW_ENABLED), ANDROID(I18n.tr("&Phones and Tablets"),
                 ApplicationSettings.ANDROID_VIEW_ENABLED), CHAT(I18n.tr("Community C&hat"), ApplicationSettings.CHAT_VIEW_ENABLED);
 
         private Action navAction;
@@ -1645,7 +1643,7 @@ public final class GUIMediator {
      * @param song
      *            the <tt>PlayListItem</tt> instance to launch
      */
-    public void launchAudio(PlayListItem song) {
+    public void launchAudio(AudioSource song) {
         launchAudio(song, true);
     }
 
@@ -1658,27 +1656,25 @@ public final class GUIMediator {
      *            - if true, also add this song to the playlist, otherwise just
      * 
      */
-    public void launchAudio(PlayListItem song, boolean addSongToPlaylist) {
+    public void launchAudio(AudioSource song, boolean addSongToPlaylist) {
 
-        if (MediaPlayerComponent.getInstance().getCurrentSong() != null)
+        if (AudioPlayer.instance().getCurrentSong() != null)
             try {
-                MediaPlayerComponent.getInstance().stopSong();
-                // it needs to pause for a bit, otherwise it'll play the same
-                // song.
+                AudioPlayer.instance().stop();
+                // it needs to pause for a bit, otherwise it'll play the same song.
                 // must be a sync bug somewhere, but this fixes it
                 Thread.sleep(1000);
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-        if (addSongToPlaylist) {
-            PlaylistMediator playList = PlaylistMediator.getInstance();
-            playList.add(song, playList.getSize());
-            playList.setSelectedIndex(song);
-        }
+//        if (addSongToPlaylist) {
+//            PlaylistMediator playList = PlaylistMediator.getInstance();
+//            playList.add(song, playList.getSize());
+//            playList.setSelectedIndex(song);
+//        }
 
-        MediaPlayerComponent mediaPlayer = MediaPlayerComponent.getInstance();
-        mediaPlayer.loadSong(song, !addSongToPlaylist);
+        AudioPlayer.instance().loadSong(song);
     }
 
     /**
@@ -1686,8 +1682,8 @@ public final class GUIMediator {
      * 
      */
     public boolean attemptStopAudio() {
-        MediaPlayerComponent mediaPlayer = MediaPlayerComponent.getInstance();
-        mediaPlayer.stopSong();
+        AudioPlayer mediaPlayer = AudioPlayer.instance();
+        mediaPlayer.stop();
         return true;
     }
 
@@ -1897,17 +1893,6 @@ public final class GUIMediator {
     	return false;
     }
 
-    @SuppressWarnings("unused")
-	private static boolean isDataBeingTransfered() {
-        AzureusCore azureusCore = AzureusStarter.getAzureusCore();
-
-        if (azureusCore != null) {
-            int rate = azureusCore.getGlobalManager().getStats().getDataReceiveRate() + azureusCore.getGlobalManager().getStats().getDataSendRate();
-            return (rate > 0);
-        }
-
-        return false;
-    }
 
     public boolean isRemoteDownloadsAllowed() {
         return _remoteDownloadsAllowed;

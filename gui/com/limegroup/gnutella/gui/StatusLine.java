@@ -31,7 +31,6 @@ import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.AzureusStarter;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.limegroup.gnutella.UpdateInformation;
-import com.limegroup.gnutella.gui.player.MediaPlayerComponent;
 import com.limegroup.gnutella.gui.themes.SkinCheckBoxMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
@@ -94,7 +93,7 @@ public final class StatusLine implements ThemeObserver {
     /**
      * The media player.
      */
-    private MediaPlayerComponent _mediaPlayer;
+    //private MediaPlayerComponent _mediaPlayer;
     
     
     ///////////////////////////////////////////////////////////////////////////
@@ -155,12 +154,12 @@ public final class StatusLine implements ThemeObserver {
 		
 		//  subtract player as needed
 		if (GUIMediator.isPlaylistVisible()) {
-			if (_mediaPlayer == null)
-                _mediaPlayer = MediaPlayerComponent.getInstance();
-			remainingWidth -= sepWidth;
-			remainingWidth -= GUIConstants.SEPARATOR / 2;
-            remainingWidth -= _mediaPlayer.minWidth;
-			remainingWidth -= GUIConstants.SEPARATOR;
+//			if (_mediaPlayer == null)
+//                _mediaPlayer = MediaPlayerComponent.getInstance();
+//			remainingWidth -= sepWidth;
+//			remainingWidth -= GUIConstants.SEPARATOR / 2;
+//            remainingWidth -= _mediaPlayer.minWidth;
+//			remainingWidth -= GUIConstants.SEPARATOR;
 		}
 		
 		//  subtract center component
@@ -245,18 +244,18 @@ public final class StatusLine implements ThemeObserver {
 
         //  media player
         if (GUIMediator.isPlaylistVisible()) {
-			JPanel jp = _mediaPlayer.getMediaPanel();
-            // if room to display volume and progress, do so
-            if(remainingWidth + _mediaPlayer.minWidth > _mediaPlayer.fullSizeWidth ){
-                jp.setPreferredSize( new Dimension(_mediaPlayer.fullSizeWidth, 25));
-            }
-            else {//else just display buttons
-                jp.setPreferredSize( new Dimension(_mediaPlayer.minWidth, 25));
-            }
-            
-			BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
-			BAR.add(jp, gbc);
-			BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR), gbc);
+//			JPanel jp = _mediaPlayer.getMediaPanel();
+//            // if room to display volume and progress, do so
+//            if(remainingWidth + _mediaPlayer.minWidth > _mediaPlayer.fullSizeWidth ){
+//                jp.setPreferredSize( new Dimension(_mediaPlayer.fullSizeWidth, 25));
+//            }
+//            else {//else just display buttons
+//                jp.setPreferredSize( new Dimension(_mediaPlayer.minWidth, 25));
+//            }
+//            
+//			BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
+//			BAR.add(jp, gbc);
+//			BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR), gbc);
         }
 
 		BAR.validate();
@@ -476,8 +475,8 @@ public final class StatusLine implements ThemeObserver {
         _connectionQualityMeterIcons[StatusLine.STATUS_DISCONNECTED] = GUIMediator.getThemeImage("connect_small_0");
         _connectionQualityMeterIcons[StatusLine.STATUS_TURBOCHARGED] = GUIMediator.getThemeImage("connect_small_6");
         
-		if (_mediaPlayer != null)
-			_mediaPlayer.updateTheme();
+//		if (_mediaPlayer != null)
+//			_mediaPlayer.updateTheme();
 	}
 
     /**

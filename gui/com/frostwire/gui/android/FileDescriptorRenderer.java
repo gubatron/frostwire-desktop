@@ -26,9 +26,9 @@ import javax.swing.JRadioButton;
 import javax.swing.ListCellRenderer;
 
 import com.frostwire.gui.components.GraphicPanel;
-import com.frostwire.gui.mplayer.MediaPlaybackState;
-import com.limegroup.gnutella.gui.player.AudioSource;
-import com.limegroup.gnutella.gui.player.LimeWirePlayer;
+import com.frostwire.gui.player.AudioPlayer;
+import com.frostwire.gui.player.AudioSource;
+import com.frostwire.mplayer.MediaPlaybackState;
 
 public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 
@@ -40,7 +40,7 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 	private static final Color COLOR_LIGHTER_BLUE = new Color(0xc4, 0xee, 0xfe);
 	
 	private static UITool UI_TOOL = new UITool();
-	private static LimeWirePlayer PLAYER = new LimeWirePlayer();
+	private static AudioPlayer PLAYER = AudioPlayer.instance();
 	private static FileDescriptor LAST_PLAY;
     private static Map<Integer, Image> IMAGE_TYPES = new HashMap<Integer, Image>();
     private static Image IMAGE_COPY;

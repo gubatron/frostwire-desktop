@@ -33,6 +33,8 @@ import org.limewire.i18n.I18nMarker;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.FileUtils;
 
+import com.frostwire.alexandria.PlaylistItem;
+import com.frostwire.gui.player.AudioSource;
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.GUIConstants;
@@ -44,10 +46,6 @@ import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.DropInfo;
 import com.limegroup.gnutella.gui.dnd.FileTransferable;
 import com.limegroup.gnutella.gui.dnd.LimeTransferHandler;
-import com.limegroup.gnutella.gui.player.AudioSource;
-import com.limegroup.gnutella.gui.player.MediaPlayerComponent;
-import com.limegroup.gnutella.gui.player.PlayList;
-import com.limegroup.gnutella.gui.player.PlayListItem;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
@@ -60,7 +58,7 @@ import com.limegroup.gnutella.settings.QuestionsHandler;
  * playlist table.
  */
 public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel, PlaylistDataLine, 
-        PlayListItem> implements ThemeObserver{
+        PlaylistItem> implements ThemeObserver{
 
     private static final Log LOG = LogFactory.getLog(PlaylistMediator.class);
     
@@ -245,7 +243,7 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
     /**
      * Sets the model to the specified song
      */
-    public void setSelectedIndex(PlayListItem item){
+    public void setSelectedIndex(PlaylistItem item){
         if( item == null )
             throw new NullPointerException();
         MODEL.setCurrentSong(item);
@@ -255,7 +253,7 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
      * Returns the next playListItem to play. Wraps to the 
      * beginning of the list when its reached the end
      */
-    public PlayListItem getNextSong() {
+    public PlaylistItem getNextSong() {
         return getSongToPlay();
     }
     
@@ -264,7 +262,7 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
      * 
      * @return all the playlist items
      */
-    public List<PlayListItem> getSongs() {
+    public List<PlaylistItem> getSongs() {
         return MODEL.getSongs();
     }
     
@@ -272,7 +270,7 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
      * Returns the prev playListItem to play, wraps around
      * to end if at beginning of the list
      */
-    public PlayListItem getPrevSong() {
+    public PlaylistItem getPrevSong() {
         MODEL.setBackwardsMode();
         return getSongToPlay();
     }
@@ -280,8 +278,8 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
     /**
      * Returns the next available song to play
      */
-    private PlayListItem getSongToPlay(){
-        PlayListItem retFile = null;
+    private PlaylistItem getSongToPlay(){
+        PlaylistItem retFile = null;
                 
         synchronized(PLAY_LOCK) {                        
             retFile = MODEL.getNextSong();
@@ -311,14 +309,14 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
      * Note: This can be a very time consuming operation depending on the number of files
      * to read. This should never be executed on the swing thread
      */
-    public static List<PlayListItem> createItemList(File[] files){
-        List<PlayListItem> items = new ArrayList<PlayListItem>();
+    public static List<PlaylistItem> createItemList(File[] files){
+        List<PlaylistItem> items = new ArrayList<PlaylistItem>();
         for(File f: files) {
             if( f != null ){
-                if( isPlayableFile(f))
-                    items.add( new PlayListItem(f));
-                else if( f.isDirectory())
-                    items.addAll( createItemList(f.listFiles()));
+//                if( isPlayableFile(f))
+//                    items.add( new PlaylistItem(f));
+//                else if( f.isDirectory())
+//                    items.addAll( createItemList(f.listFiles()));
             }
         }
         return items;
@@ -354,11 +352,11 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
      * @param items - list of PlayListItems to add
      * @param index - index to begin adding the files at
      */
-    private void addFilesToPlayList(final List<PlayListItem> items, final int index ){
+    private void addFilesToPlayList(final List<PlaylistItem> items, final int index ){
         GUIMediator.safeInvokeAndWait(new Runnable() {
             public void run() { 
                 synchronized(PLAY_LOCK) { 
-                    for( PlayListItem item: items )
+                    for( PlaylistItem item: items )
                         add( item, index);
                 }
                 setButtonEnabled( PlaylistButtons.CLEAR_BUTTON, true );
@@ -391,11 +389,11 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
     public void addFileToPlaylist(final URL url, final String name, final boolean isFile, final int index) {
         BackgroundExecutorService.schedule(new Runnable() {
             public void run(){
-                try {
-                    addFileToPlayList(new PlayListItem(url.toURI(), new AudioSource(url),name, isFile), index);
-                } catch (URISyntaxException e) {
-                    //TODO: notify user about failure
-                }
+//                try {
+//                    //addFileToPlayList(new PlayListItem(url.toURI(), new AudioSource(url),name, isFile), index);
+//                } catch (URISyntaxException e) {
+//                    //TODO: notify user about failure
+//                }
             }
          });
     }
@@ -418,7 +416,7 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
     public void addFileToPlaylist(final File f, final int index){
         BackgroundExecutorService.schedule(new Runnable() {
             public void run(){
-                addFileToPlayList( new PlayListItem(f), index);
+                //addFileToPlayList( new PlayListItem(f), index);
             }
         });
     }
@@ -430,7 +428,7 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
      * @param item - item to add
      * @param index - location in table row to add it to
      */
-    private void addFileToPlayList(final PlayListItem item, final int index ){
+    private void addFileToPlayList(final PlaylistItem item, final int index ){
         GUIMediator.safeInvokeAndWait(new Runnable() {
             public void run() {
                 synchronized(PLAY_LOCK) {
@@ -558,9 +556,9 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
         if(line == null)
             return;
             
-        PlayListItem f = line.getPlayListItem();
+        PlaylistItem f = line.getPlayListItem();
         MODEL.setCurrentSong(f);
-        MediaPlayerComponent.getInstance().loadSong(f);
+        //MediaPlayerComponent.getInstance().loadSong(f);
     }
 
     
@@ -630,22 +628,22 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
     private void loadPlaylist(final File selFile, final String path, final boolean overwrite) {
         BackgroundExecutorService.schedule(new Runnable() {
             public void run(){
-                final PlayList pl = new PlayList(path);
-                synchronized(PLAY_LOCK) {
-                    lastOpenedPlaylist = selFile;
-                    if (overwrite)
-                        clearTable();
-                    
-                    // put the playlist onto the swing event queue to load the playlistitem
-                    //  into the actual table
-                    GUIMediator.safeInvokeLater( new Runnable(){
-                        public void run(){
-                            MODEL.addSongs(pl);
-                            if( MODEL.getRowCount() > 0 )
-                                setButtonEnabled( PlaylistButtons.CLEAR_BUTTON, true );
-                        }
-                    });
-                }
+//                final PlayList pl = new PlayList(path);
+//                synchronized(PLAY_LOCK) {
+//                    lastOpenedPlaylist = selFile;
+//                    if (overwrite)
+//                        clearTable();
+//                    
+//                    // put the playlist onto the swing event queue to load the playlistitem
+//                    //  into the actual table
+//                    GUIMediator.safeInvokeLater( new Runnable(){
+//                        public void run(){
+//                            MODEL.addSongs(pl);
+//                            if( MODEL.getRowCount() > 0 )
+//                                setButtonEnabled( PlaylistButtons.CLEAR_BUTTON, true );
+//                        }
+//                    });
+//                }
             }
         });
     }
@@ -706,24 +704,24 @@ public final class PlaylistMediator extends AbstractTableMediator<PlaylistModel,
     private void savePlaylist( final String path ) {
         BackgroundExecutorService.schedule(new Runnable() {
             public void run(){
-                PlayList pl = new PlayList(path);
-                // lock the list and get a copy of the songs
-                synchronized(PLAY_LOCK) {
-                    lastSavedPlaylist = new File(path);
-                    pl.setSongs(MODEL.getLocalFiles());
-                }
-                
-                try {
-                    pl.save();
-                } catch(IOException ignored) {
-                    
-                    LOG.warn("Unable to save playlist", ignored);
-                    GUIMediator.safeInvokeLater( new Runnable(){
-                        public void run(){
-                            GUIMediator.showError("Unable to save playlist");
-                        }
-                    });
-                }
+//                PlayList pl = new PlayList(path);
+//                // lock the list and get a copy of the songs
+//                synchronized(PLAY_LOCK) {
+//                    lastSavedPlaylist = new File(path);
+//                    pl.setSongs(MODEL.getLocalFiles());
+//                }
+//                
+//                try {
+//                    pl.save();
+//                } catch(IOException ignored) {
+//                    
+//                    LOG.warn("Unable to save playlist", ignored);
+//                    GUIMediator.safeInvokeLater( new Runnable(){
+//                        public void run(){
+//                            GUIMediator.showError("Unable to save playlist");
+//                        }
+//                    });
+//                }
             }
         });
     }

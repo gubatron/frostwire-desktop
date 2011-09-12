@@ -4,15 +4,14 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.limegroup.gnutella.gui.player.PlayList;
-import com.limegroup.gnutella.gui.player.PlayListItem;
+import com.frostwire.alexandria.PlaylistItem;
 import com.limegroup.gnutella.gui.tables.BasicDataLineModel;
 
 /**
  * A model for playlists.  Keeps track of what song is next,
  * what has/hasn't been played during shuffling, etc...
  */
-final class PlaylistModel extends BasicDataLineModel<PlaylistDataLine, PlayListItem> {
+final class PlaylistModel extends BasicDataLineModel<PlaylistDataLine, PlaylistItem> {
 
     /**
      * 
@@ -33,12 +32,12 @@ final class PlaylistModel extends BasicDataLineModel<PlaylistDataLine, PlayListI
     /**
      * The currently playing song.
      */
-    private PlayListItem _currentSong;
+    private PlaylistItem _currentSong;
     
     /**
      * Songs already played -- used for shuffling.
      */
-    private List<PlayListItem> _songsNotPlayed;
+    private List<PlaylistItem> _songsNotPlayed;
         
     /**
      * Constructs a new playlist model.
@@ -66,7 +65,7 @@ final class PlaylistModel extends BasicDataLineModel<PlaylistDataLine, PlayListI
     /**
      * Override default so new ones get added to the end
      */
-    public int add(PlayListItem o) {
+    public int add(PlaylistItem o) {
         return add(o, getRowCount());
     }
     
@@ -85,7 +84,7 @@ final class PlaylistModel extends BasicDataLineModel<PlaylistDataLine, PlayListI
      * If shuffling, removes the song from the songs not played.
      */
     public void remove(int i) {
-        PlayListItem f = get(i).getInitializeObject();
+        PlaylistItem f = get(i).getInitializeObject();
         super.remove(i);
         if(_shuffle)
             _songsNotPlayed.remove(f);
@@ -103,7 +102,7 @@ final class PlaylistModel extends BasicDataLineModel<PlaylistDataLine, PlayListI
     /**
      * Gets the next song to play.
      */
-    PlayListItem getNextSong() {
+    PlaylistItem getNextSong() {
         int rowCount = getRowCount();
         
         if(rowCount == 0)
@@ -138,7 +137,7 @@ final class PlaylistModel extends BasicDataLineModel<PlaylistDataLine, PlayListI
     /**
      * Sets the currently playing song.
      */
-    void setCurrentSong(PlayListItem f) {
+    void setCurrentSong(PlaylistItem f) {
         if(_shuffle)
             _songsNotPlayed.remove(f);
         _currentSong = f;
@@ -154,8 +153,8 @@ final class PlaylistModel extends BasicDataLineModel<PlaylistDataLine, PlayListI
     /**
      * Returns the list of all songs.
      */
-    List<PlayListItem> getSongs() {
-        List<PlayListItem> l = new LinkedList<PlayListItem>();
+    List<PlaylistItem> getSongs() {
+        List<PlaylistItem> l = new LinkedList<PlaylistItem>();
         for(int i = 0; i < getRowCount(); i++) 
             l.add(get(i).getInitializeObject());
         return l;
@@ -164,11 +163,11 @@ final class PlaylistModel extends BasicDataLineModel<PlaylistDataLine, PlayListI
     /**
      * @return a list of playlist items which are local files
      */
-    List<PlayListItem> getLocalFiles() {
-        List<PlayListItem> l = new LinkedList<PlayListItem>();
-        for(int i = 0; i < getRowCount(); i++)
-            if( get(i).getPlayListItem().isFile() )
-                l.add(get(i).getPlayListItem());
+    List<PlaylistItem> getLocalFiles() {
+        List<PlaylistItem> l = new LinkedList<PlaylistItem>();
+//        for(int i = 0; i < getRowCount(); i++)
+//            if( get(i).getPlayListItem().isFile() )
+//                l.add(get(i).getPlayListItem());
         return l;
     }
     
@@ -183,19 +182,19 @@ final class PlaylistModel extends BasicDataLineModel<PlaylistDataLine, PlayListI
     /**
      * Adds all songs from the playlist.
      */
-    void addSongs(PlayList list) {
-        unsort();
-        List<PlayListItem> songs = list.getSongs();
-        for(PlayListItem item : songs)
-            add(item);
-    }
+//    void addSongs(PlayList list) {
+//        unsort();
+//        List<PlaylistItem> songs = list.getSongs();
+//        for(PlaylistItem item : songs)
+//            add(item);
+//    }
     
     /**
      * Sets whether or not shuffle is active.
      */
     void setShuffle(boolean shuffle) {
         if(shuffle)
-            _songsNotPlayed = new LinkedList<PlayListItem>();
+            _songsNotPlayed = new LinkedList<PlaylistItem>();
         else
             _songsNotPlayed = null;
         _shuffle = shuffle;

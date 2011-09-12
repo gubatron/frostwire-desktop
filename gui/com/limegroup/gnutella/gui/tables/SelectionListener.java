@@ -28,6 +28,9 @@ final class SelectionListener implements ListSelectionListener {
 	 * @param e the event producing the selection change
 	 */
 	public void valueChanged(ListSelectionEvent e) {
+	    if (e.getValueIsAdjusting()) { // IMPORTANT!! change that might break a lot of things
+	        return;
+	    }
 		if (atm.isResorting)
 			return;
 		

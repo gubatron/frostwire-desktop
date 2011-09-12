@@ -41,6 +41,7 @@ import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.tabs.AndroidTab;
 import com.frostwire.gui.tabs.ChatTab;
 import com.frostwire.gui.tabs.LibraryPlayListTab;
+import com.frostwire.gui.tabs.LibraryTab;
 import com.frostwire.gui.tabs.SearchDownloadTab;
 import com.frostwire.gui.tabs.Tab;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
@@ -80,6 +81,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      * responsible for displaying files in the user's repository.
      */
     private LibraryMediator LIBRARY_MEDIATOR;
+    private com.frostwire.gui.library.LibraryMediator LIBRARY_MEDIATOR2;
     
     private AndroidMediator ANDROID_MEDIATOR;
 
@@ -110,11 +112,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
     private final JFrame FRAME;
 
     /**
-     * Is the download view currently being shown? 
-     */
-    private boolean isDownloadViewVisible = false;
-
-    /**
      * Constant for the <tt>LogoPanel</tt> used for displaying the
      * lime/spinning lime search status indicator and the logo.
      */
@@ -124,8 +121,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      * The array of tabs in the main application window.
      */
     private Map<GUIMediator.Tabs, Tab> TABS = new HashMap<GUIMediator.Tabs, Tab>(7);
-
-	private boolean isSearching = false;
     
     /**
      * The last state of the X/Y location and the time it was set.
@@ -316,6 +311,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         
     	TABS.put(GUIMediator.Tabs.SEARCH, new SearchDownloadTab(SEARCH_MEDIATOR, getBTDownloadMediator()));
         TABS.put(GUIMediator.Tabs.LIBRARY, new LibraryPlayListTab(getLibraryMediator()));
+        TABS.put(GUIMediator.Tabs.LIBRARY2, new LibraryTab(getLibraryMediator2()));
         TABS.put(GUIMediator.Tabs.ANDROID, new AndroidTab(getAndroidMediator()));
 	    TABS.put(GUIMediator.Tabs.CHAT, new ChatTab(getChatMediator()));
 	    
@@ -607,33 +603,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      * re-layout window (if necessary).
      */
     public void refresh() {
-
-		if (isSearching) {
-			// if we're searching make sure the search result panel
-			// is visible
-		    SearchDownloadTab tab = (SearchDownloadTab)TABS.get(GUIMediator.Tabs.SEARCH);
-			if (tab.getDividerLocation() == 0) {
-				tab.setDividerLocation(0.5);
-				isDownloadViewVisible = true;
-			}
-		}
-		
-        // first handle the download view
-        if (getBTDownloadMediator().getTotalDownloads() == 0 && isDownloadViewVisible) {
-            ((SearchDownloadTab)TABS.get(GUIMediator.Tabs.SEARCH)).setDividerLocation(1000);
-            isDownloadViewVisible = false;
-        } else if (getBTDownloadMediator().getTotalDownloads() > 0 && !isDownloadViewVisible) {
-            // need to turn it on....
-            final int count = getBTDownloadMediator().getTotalDownloads();
-            // make sure stuff didn't change on me....
-            if (count > 0) {
-                final double prop = (count > 6) ? 0.60 : 0.70;
-                ((SearchDownloadTab)TABS.get(GUIMediator.Tabs.SEARCH)).setDividerLocation(prop);
-                ((SearchDownloadTab)TABS.get(GUIMediator.Tabs.SEARCH)).getComponent().revalidate();
-                TABBED_PANE.revalidate();
-                isDownloadViewVisible = true;
-            }
-        }
     }
     
     final BTDownloadMediator getBTDownloadMediator() {
@@ -653,6 +622,13 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
             LIBRARY_MEDIATOR = LibraryMediator.instance();
         }
         return LIBRARY_MEDIATOR;
+    }
+    
+    final com.frostwire.gui.library.LibraryMediator getLibraryMediator2() {
+        if (LIBRARY_MEDIATOR2 == null) {
+            LIBRARY_MEDIATOR2 = com.frostwire.gui.library.LibraryMediator.instance();
+        }
+        return LIBRARY_MEDIATOR2;
     }
     
     final AndroidMediator getAndroidMediator() {
@@ -723,7 +699,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      */
     public final void setSearching(boolean searching) {    
         LOGO_PANEL.setSearching(searching);
-		isSearching = searching;
 		refresh();
     }
 }

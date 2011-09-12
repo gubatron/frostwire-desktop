@@ -2,19 +2,11 @@ package com.limegroup.gnutella.util;
 
 import java.io.IOException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.limewire.util.StringUtils;
-
-
-
 /**
  * Thin wrapper class to execute a command. Stores the command, the arguments
  * and the executed process.
  */
 public class LimeProcess {
-
-	private final static Log LOG = LogFactory.getLog(LimeProcess.class);
 
 	private final String[] command;
 
@@ -25,10 +17,6 @@ public class LimeProcess {
 	}
 
 	private Process exec() throws SecurityException, LaunchException {
-		if (LOG.isInfoEnabled()) {
-			LOG.info("Running command: '" + StringUtils.explode(command, " ") + "'");
-		}
-		
 		try {
 			process = Runtime.getRuntime().exec(command);
 		} catch (IOException e) {
@@ -66,5 +54,4 @@ public class LimeProcess {
 		p.exec();
 		return p;
 	}
-
 }

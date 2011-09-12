@@ -2,15 +2,14 @@ package com.limegroup.gnutella.gui.playlist;
 
 import java.io.File;
 
+import com.frostwire.alexandria.PlaylistItem;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.dnd.FileTransfer;
-import com.limegroup.gnutella.gui.player.MediaPlayerComponent;
-import com.limegroup.gnutella.gui.player.PlayListItem;
 import com.limegroup.gnutella.gui.tables.AbstractDataLine;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
 
-final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
+final class PlaylistDataLine extends AbstractDataLine<PlaylistItem>
                                     implements FileTransfer {
 
     /**
@@ -150,13 +149,13 @@ final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
     /**
      * Sets up the dataline for use with the playlist.
      */
-    public void initialize(PlayListItem item) {
+    public void initialize(PlaylistItem item) {
         super.initialize(item);
 
         name = new PlaylistItemName(this);
-        if(item.getProperty(PlayListItem.SIZE) != null )
-            holder = new SizeHolder(Integer.parseInt(item.getProperty(PlayListItem.SIZE)));
-        else
+//        if(item.getProperty(PlayListItem.SIZE) != null )
+//            holder = new SizeHolder(Integer.parseInt(item.getProperty(PlayListItem.SIZE)));
+//        else
             holder = new SizeHolder(0);
     }
 
@@ -164,36 +163,36 @@ final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
      * Returns the value for the specified index.
      */
     public Object getValueAt(int idx) {
-        boolean playing = MediaPlayerComponent.getInstance().getCurrentSong() == initializer;
-        switch(idx) {
-            case ALBUM_IDX:
-                return new PlaylistItemProperty(initializer.getProperty(PlayListItem.ALBUM), playing);
-            case ARTIST_IDX:
-                return new PlaylistItemProperty(initializer.getProperty(PlayListItem.ARTIST), playing);
-            case BITRATE_IDX:
-                return new PlaylistItemProperty(initializer.getProperty(PlayListItem.BITRATE, ""), playing);
-            case COMMENT_IDX:
-                return new PlaylistItemProperty(initializer.getProperty(PlayListItem.COMMENT), playing);
-            case GENRE_IDX:
-                return new PlaylistItemProperty(initializer.getProperty(PlayListItem.GENRE),playing);
-            case LENGTH_IDX:
-                return new PlaylistItemProperty( initializer.getProperty(PlayListItem.TIME, ""), playing);
-            case NAME_IDX:
-                return name;
-            case NUMBER_IDX:
-                numberCell.setPlaying(playing);
-                return numberCell;
-            case SIZE_IDX:
-                return new PlaylistItemProperty(holder.toString(), playing);
-            case TITLE_IDX:
-                return new PlaylistItemProperty(initializer.getProperty(PlayListItem.TITLE), playing);
-            case TRACK_IDX:
-                return new PlaylistItemProperty(initializer.getProperty(PlayListItem.TRACK, ""), playing);
-            case TYPE_IDX:
-                return new PlaylistItemProperty(initializer.getProperty(PlayListItem.TYPE), playing);
-            case YEAR_IDX:
-                return new PlaylistItemProperty(initializer.getProperty(PlayListItem.YEAR), playing);
-        }
+        boolean playing = false;//MediaPlayerComponent.getInstance().getCurrentSong() == initializer;
+//        switch(idx) {
+//            case ALBUM_IDX:
+//                return new PlaylistItemProperty(initializer.getProperty(PlayListItem.ALBUM), playing);
+//            case ARTIST_IDX:
+//                return new PlaylistItemProperty(initializer.getProperty(PlayListItem.ARTIST), playing);
+//            case BITRATE_IDX:
+//                return new PlaylistItemProperty(initializer.getProperty(PlayListItem.BITRATE, ""), playing);
+//            case COMMENT_IDX:
+//                return new PlaylistItemProperty(initializer.getProperty(PlayListItem.COMMENT), playing);
+//            case GENRE_IDX:
+//                return new PlaylistItemProperty(initializer.getProperty(PlayListItem.GENRE),playing);
+//            case LENGTH_IDX:
+//                return new PlaylistItemProperty( initializer.getProperty(PlayListItem.TIME, ""), playing);
+//            case NAME_IDX:
+//                return name;
+//            case NUMBER_IDX:
+//                numberCell.setPlaying(playing);
+//                return numberCell;
+//            case SIZE_IDX:
+//                return new PlaylistItemProperty(holder.toString(), playing);
+//            case TITLE_IDX:
+//                return new PlaylistItemProperty(initializer.getProperty(PlayListItem.TITLE), playing);
+//            case TRACK_IDX:
+//                return new PlaylistItemProperty(initializer.getProperty(PlayListItem.TRACK, ""), playing);
+//            case TYPE_IDX:
+//                return new PlaylistItemProperty(initializer.getProperty(PlayListItem.TYPE), playing);
+//            case YEAR_IDX:
+//                return new PlaylistItemProperty(initializer.getProperty(PlayListItem.YEAR), playing);
+//        }
         return null;
     }
 
@@ -236,16 +235,16 @@ final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
      *      if the URI is not on the local file system
      */
 	public File getFile() {
-        if( initializer.isFile() ){
-            return new File(initializer.getURI());
-        }
+//        if( initializer.isFile() ){
+//            return new File(initializer.getURI());
+//        }
         return null;
     }
     
     /**
      * @return the PlayListItem for this table row
      */
-    public PlayListItem getPlayListItem() {
+    public PlaylistItem getPlayListItem() {
 	    return initializer;
 	}
     
@@ -253,7 +252,7 @@ final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
      * @return the file name of the song
      */
     public String getSongName() {
-        return initializer.getName();
+        return null;//initializer.getName();
     }
     
     /**
@@ -262,6 +261,6 @@ final class PlaylistDataLine extends AbstractDataLine<PlayListItem>
      * a property map
      */
     public String[] getToolTipArray(int col) {
-        return initializer.getToolTips();
+        return null;//initializer.getToolTips();
     }
 }

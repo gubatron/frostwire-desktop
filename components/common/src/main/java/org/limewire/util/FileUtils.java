@@ -204,16 +204,22 @@ public class FileUtils {
      */
     public static String getFileExtension(String name) {
         int index = name.lastIndexOf(".");
-        if(index == -1) return null;
-        
+        if (index == -1) {
+            return null;
+        }
+
         // the file must have a name other than the extension
-        if(index == 0) return null;
-        
+        if (index == 0) {
+            return null;
+        }
+
         // if the last character of the string is the ".", then there's
         // no extension
-        if(index == (name.length()-1)) return null;
-        
-        return name.substring(index+1);
+        if (index == (name.length() - 1)) {
+            return null;
+        }
+
+        return name.substring(index + 1);
     }
     
     /**
