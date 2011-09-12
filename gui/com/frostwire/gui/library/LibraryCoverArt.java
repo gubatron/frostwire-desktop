@@ -41,9 +41,12 @@ public class LibraryCoverArt extends JPanel {
     @Override
     public void paint(Graphics g) {
         if (scaledImage != null) {
+        	System.out.println("LibraryCoverArt.paint() in");
             g.drawImage(scaledImage, 0, 0, null);
         }
     }
+    
+
     
     private Image retrieveImage(PlaylistItem playlistItem) {
         Image image = null;
@@ -68,6 +71,15 @@ public class LibraryCoverArt extends JPanel {
                 repaint();
             }
         });
+
+        //Hack. Otherwise the cover art is not painted unless we mouse over the splitpane on the library.
+        GUIMediator.safeInvokeLater(new Runnable() {
+			@Override
+			public void run() {
+				LibraryMediator.instance().replaintSplitPane();					
+			}
+		});
+
     }
 
     private Image retrieveImageFromMP3(String filename) {

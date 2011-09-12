@@ -52,13 +52,14 @@ public class LibraryMediator {
     
     private CardLayout _tablesViewLayout = new CardLayout();
     private JPanel _tablesPanel;
+	private JSplitPane splitPane;
 
     public LibraryMediator() {
         GUIMediator.setSplashScreenString(I18n.tr("Loading Library Window..."));
         
         getComponent(); // creates MAIN_PANEL
 
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, getLibraryLeftPanel(), getLibraryRightPanel());
+        splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, getLibraryLeftPanel(), getLibraryRightPanel());
         splitPane.setContinuousLayout(true);
         splitPane.setResizeWeight(0.5);
         splitPane.addPropertyChangeListener(JSplitPane.LAST_DIVIDER_LOCATION_PROPERTY, new PropertyChangeListener() {
@@ -73,6 +74,7 @@ public class LibraryMediator {
                 
             }
         });
+        
         
         DividerLocationSettingUpdater.install(splitPane, UISettings.UI_LIBRARY_MAIN_DIVIDER_LOCATION);
 
@@ -177,5 +179,13 @@ public class LibraryMediator {
         
 
         return panel;
+    }
+    
+    /**
+     * Used by LibraryCoverArt as a hack, since the art wouldn't be repainted
+     * unless the user would mouse over the split pane divider.
+     */
+    public void replaintSplitPane() {
+    	splitPane.repaint();
     }
 }
