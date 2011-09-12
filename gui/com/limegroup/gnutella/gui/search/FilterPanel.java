@@ -63,9 +63,9 @@ public class FilterPanel extends JPanel {
 
         _keywordFilterTextField.addKeyListener(new KeyAdapter() {
         	@Override
-        	public void keyPressed(KeyEvent e) {
-                keywordFilterChanged(e);
-            }
+        	public void keyReleased(KeyEvent e) {
+        		keywordFilterChanged(e);
+        	}
         }); 
         
         //TYPE FILTER
@@ -132,6 +132,7 @@ public class FilterPanel extends JPanel {
 
 	protected void keywordFilterChanged(KeyEvent e) {
         if (_activeFilter != null) {
+        	System.out.println("FilterPanel.keywordFilterChanged KeyEvent -> " + e.getKeyCode() + " text -> " + "["+ _keywordFilterTextField.getText() +"]");
             _activeFilter.updateKeywordFiltering(_keywordFilterTextField.getText());
         }
     }
