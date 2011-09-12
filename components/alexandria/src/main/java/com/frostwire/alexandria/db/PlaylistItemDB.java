@@ -27,7 +27,7 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
         long fileSize = (Long) row.get(3);
         String fileExtension = (String) row.get(4);
         String trackTitle = (String) row.get(5);
-        long duration = (Long) row.get(6);
+        float trackDurationInSecs = (Float) row.get(6);
         String artistName = (String) row.get(7);
         String albumName = (String) row.get(8);
         String coverArtPath = (String) row.get(9);
@@ -43,7 +43,7 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
         obj.setFileSize(fileSize);
         obj.setFileExtension(fileExtension);
         obj.setTrackTitle(trackTitle);
-        obj.setDuration(duration);
+        obj.setTrackDurationInSecs(trackDurationInSecs);
         obj.setArtistName(artistName);
         obj.setAlbumName(albumName);
         obj.setCoverArtPath(coverArtPath);
@@ -73,7 +73,7 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
                             + "', '"
                             + obj.getTrackTitle()
                             + "', "
-                            + obj.getDuration()
+                            + obj.getTrackDurationInSecs()
                             + ", '"
                             + obj.getArtistName()
                             + "', '"
@@ -95,7 +95,7 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
         } else {
             db.update("UPDATE PlaylistItems SET filePath = '" + obj.getFilePath() + "', fileName = '" + obj.getFileName() + "', fileSize = "
                     + obj.getFileSize() + ", fileExtension = '" + obj.getFileExtension() + "', trackTitle = '" + obj.getTrackTitle() + "', duration = "
-                    + obj.getDuration() + ", artistName = '" + obj.getArtistName() + "', albumName = '" + obj.getAlbumName() + "', coverArtPath = '"
+                    + obj.getTrackDurationInSecs() + ", artistName = '" + obj.getArtistName() + "', albumName = '" + obj.getAlbumName() + "', coverArtPath = '"
                     + obj.getCoverArtPath() + "', bitrate = '" + obj.getBitrate() + "', comment = '" + obj.getComment() + "', genre = '" + obj.getGenre()
                     + "', track = '" + obj.getTrack() + "', year = '" + obj.getYear()
                     + "' WHERE playlistItemId = " + obj.getId());

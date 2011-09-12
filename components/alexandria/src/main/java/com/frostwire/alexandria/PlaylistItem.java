@@ -13,7 +13,7 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
     private long _fileSize;
     private String _fileExtension;
     private String _trackTitle;
-    private long _duration;
+    private float trackDurationInSecs;
     private String _artistName;
     private String _albumName;
     private String _coverArtPath;
@@ -29,7 +29,7 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
         _id = LibraryDatabase.OBJECT_INVALID_ID;
     }
 
-    public PlaylistItem(Playlist playlist, int id, String filePath, String fileName, long fileSize, String fileExtension, String trackTitle, long duration,
+    public PlaylistItem(Playlist playlist, int id, String filePath, String fileName, long fileSize, String fileExtension, String trackTitle, float trackDurationInSecs,
             String artistName, String albumName, String coverArtPath, String bitrate, String comment,
             String genre, String track, String year) {
         super(new PlaylistItemDB(playlist.db.getDatabase()));
@@ -40,7 +40,7 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
         _fileSize = fileSize;
         _fileExtension = fileExtension;
         _trackTitle = trackTitle;
-        _duration = duration;
+        this.trackDurationInSecs = trackDurationInSecs;
         _artistName = artistName;
         _albumName = albumName;
         _coverArtPath = coverArtPath;
@@ -103,12 +103,12 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
         _trackTitle = trackTitle;
     }
 
-    public long getDuration() {
-        return _duration;
+    public float getTrackDurationInSecs() {
+        return trackDurationInSecs;
     }
 
-    public void setDuration(long duration) {
-        _duration = duration;
+    public void setTrackDurationInSecs(float trackDurationInSecs) {
+        this.trackDurationInSecs = trackDurationInSecs;
     }
 
     public String getArtistName() {

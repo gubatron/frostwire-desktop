@@ -47,13 +47,12 @@ import org.apache.commons.logging.LogFactory;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
+import com.frostwire.gui.player.AudioSource;
 import com.limegroup.gnutella.SpeedConstants;
-import com.limegroup.gnutella.gui.player.PlayListItem;
 import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 /**
  *  This class serves as a holder for any static gui convenience
  *  methods.
@@ -598,10 +597,9 @@ public final class GUIUtils {
                 if( playOneTime ) {
                     BackgroundExecutorService.schedule(new Runnable() {
                         public void run(){
-                            final PlayListItem item = new PlayListItem(file);
                             GUIMediator.safeInvokeAndWait(new Runnable() {
                                 public void run() {
-                                    GUIMediator.instance().launchAudio(item, false);
+                                    GUIMediator.instance().launchAudio(new AudioSource(file), false);
                                 }
                             });
                         }
@@ -610,10 +608,9 @@ public final class GUIUtils {
                 else if (!isPlaying) { 
                     BackgroundExecutorService.schedule(new Runnable() {
                         public void run(){
-                            final PlayListItem item = new PlayListItem(file);
                             GUIMediator.safeInvokeAndWait(new Runnable() {
                                 public void run() {
-                                    GUIMediator.instance().launchAudio(item);
+                                    GUIMediator.instance().launchAudio(new AudioSource(file));
                                 }
                             });
                         }
@@ -647,8 +644,7 @@ public final class GUIUtils {
     public static boolean launchAndEnqueueFile(File file, boolean audioLaunched) {        
     	if (PlaylistMediator.isPlayableFile(file) && GUIMediator.isPlaylistVisible()) {
     		GUIMediator.instance().attemptStopAudio();
-		final PlayListItem item = new PlayListItem(file);
-    		GUIMediator.instance().launchAudio(item);    		
+			GUIMediator.instance().launchAudio(new AudioSource(file));    		
 		PlaylistMediator.getInstance().addFileToPlaylist(file);
     		return true;
     	}

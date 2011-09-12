@@ -17,7 +17,6 @@ import org.pushingpixels.substance.internal.ui.SubstanceTableUI.TableCellId;
 import org.pushingpixels.substance.internal.utils.SubstanceColorSchemeUtilities;
 import org.pushingpixels.substance.internal.utils.UpdateOptimizationInfo;
 
-import com.limegroup.gnutella.gui.player.MediaPlayerComponent;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 
 /**

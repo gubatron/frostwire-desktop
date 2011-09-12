@@ -74,6 +74,10 @@ public class AudioPlayer implements RefreshListener {
             }
         });
     }
+    
+    public AudioSource getCurrentSong() {
+        return currentSong;
+    }
 
     /**
      * Adds the specified AudioPlayer listener to the list

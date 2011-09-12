@@ -31,6 +31,8 @@ import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRendere
 
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
+import com.frostwire.gui.player.AudioPlayer;
+import com.frostwire.gui.player.AudioSource;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.CheckBoxList;
@@ -508,19 +510,19 @@ final class LibraryPlaylistsTableMediator extends AbstractTableMediator<LibraryP
     }
 
     public void handleActionKey() {
-        int[] rows = TABLE.getSelectedRows();
-        //LibraryTableModel ltm = DATA_MODEL;
-        //File file;
-        for (int i = 0; i < rows.length; i++) {
-            //file = ltm.getFile(rows[i]);
-            // if it's a directory try to select it in the library tree
-            // if it could be selected return
-            //			if (file.isDirectory() 
-            //				&& LibraryMediator.setSelectedDirectory(file))
-            //				return;
-        }
-
-        launch();
+        playSong();
+    }
+    
+    private void playSong() {
+        LibraryPlaylistsTableDataLine line = DATA_MODEL.get(TABLE.getSelectedRow());
+        if(line == null)
+            return;
+            
+        //PlayListItem f = line.getPlayListItem();
+        //MODEL.setCurrentSong(f);
+        //MediaPlayerComponent.getInstance().loadSong(f);
+        AudioPlayer.instance().loadSong(new AudioSource(line.getFile()));
+        AudioPlayer.instance().playSong();
     }
 
     /**

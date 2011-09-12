@@ -17,7 +17,6 @@ import org.pushingpixels.substance.internal.ui.SubstanceTableUI.TableCellId;
 import org.pushingpixels.substance.internal.utils.SubstanceColorSchemeUtilities;
 import org.pushingpixels.substance.internal.utils.UpdateOptimizationInfo;
 
-import com.limegroup.gnutella.gui.player.MediaPlayerComponent;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 
 /**
@@ -45,7 +44,7 @@ class PlaylistItemNameRenderer extends SubstanceDefaultTableCellRenderer {
      * @return true if this PlayListItem is currently playing, false otherwise
      */
     protected boolean isPlaying(PlaylistDataLine line) {
-        return MediaPlayerComponent.getInstance().getCurrentSong() == line.getPlayListItem();
+        return false;//MediaPlayerComponent.getInstance().getCurrentSong() == line.getPlayListItem();
     }
 
     /**

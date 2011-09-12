@@ -33,6 +33,7 @@ import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
+import com.frostwire.gui.player.AudioMetaData;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.CheckBoxList;
@@ -46,7 +47,6 @@ import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.actions.SearchAction;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.MulticastTransferHandler;
-import com.limegroup.gnutella.gui.player.PlayListItem;
 import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
@@ -647,6 +647,27 @@ final class LibraryFilesTableMediator extends AbstractTableMediator<LibraryFiles
         
         return menu;
     }
+    
+    private void addPlaylistItem(Playlist playlist, File file) {
+        AudioMetaData mt = new AudioMetaData(file);
+        PlaylistItem item = playlist.newItem(
+                file.getAbsolutePath(),
+                file.getName(),
+                file.length(),
+                FileUtils.getFileExtension(file),
+                mt.getTitle(),
+                mt.getLength(),
+                mt.getArtist(),
+                mt.getAlbum(),
+                "",// TODO: cover art path
+                mt.getBitrate(),
+                mt.getComment(),
+                mt.getGenre(),
+                mt.getTrack(),
+                mt.getYear()); 
+        playlist.getItems().add(item);
+        item.save();
+    }
 
     ///////////////////////////////////////////////////////
     //  ACTIONS
@@ -815,23 +836,7 @@ final class LibraryFilesTableMediator extends AbstractTableMediator<LibraryFiles
                 LibraryFilesTableDataLine[] selectedLibraryLines = getSelectedLibraryLines();
                 for (int i = 0; i < selectedLibraryLines.length; i++) {
                     LibraryFilesTableDataLine line = selectedLibraryLines[i];
-                    PlayListItem playerItem = new PlayListItem(line.getFile());
-                    PlaylistItem item = playlist.newItem(
-                            line.getFile().getAbsolutePath(),
-                            line.getFile().getName(),
-                            line.getFile().length(),
-                            playerItem.getProperty(PlayListItem.TYPE), //TODO: wrong internal implementation with extension > 3 chars
-                            playerItem.getProperty(PlayListItem.TITLE),
-                            0, //TODO: missing time
-                            playerItem.getProperty(PlayListItem.ARTIST),
-                            playerItem.getProperty(PlayListItem.ALBUM),
-                            "",// TODO: cover art path
-                            playerItem.getProperty(PlayListItem.BITRATE),
-                            playerItem.getProperty(PlayListItem.COMMENT),
-                            playerItem.getProperty(PlayListItem.GENRE),
-                            playerItem.getProperty(PlayListItem.TRACK),
-                            playerItem.getProperty(PlayListItem.YEAR)); 
-                    playlist.getItems().add(item);
+                    addPlaylistItem(playlist, line.getFile());
                 }
                 
                 playlist.save();
@@ -857,24 +862,7 @@ final class LibraryFilesTableMediator extends AbstractTableMediator<LibraryFiles
             LibraryFilesTableDataLine[] selectedLibraryLines = getSelectedLibraryLines();
             for (int i = 0; i < selectedLibraryLines.length; i++) {
                 LibraryFilesTableDataLine line = selectedLibraryLines[i];
-                PlayListItem playerItem = new PlayListItem(line.getFile());
-                PlaylistItem item = playlist.newItem(
-                        line.getFile().getAbsolutePath(),
-                        line.getFile().getName(),
-                        line.getFile().length(),
-                        playerItem.getProperty(PlayListItem.TYPE), //TODO: wrong internal implementation with extension > 3 chars
-                        playerItem.getProperty(PlayListItem.TITLE),
-                        0, //TODO: missing time
-                        playerItem.getProperty(PlayListItem.ARTIST),
-                        playerItem.getProperty(PlayListItem.ALBUM),
-                        "", // TODO: cover art path
-                        playerItem.getProperty(PlayListItem.BITRATE),
-                        playerItem.getProperty(PlayListItem.COMMENT),
-                        playerItem.getProperty(PlayListItem.GENRE),
-                        playerItem.getProperty(PlayListItem.TRACK),
-                        playerItem.getProperty(PlayListItem.YEAR));
-                playlist.getItems().add(item);
-                item.save();
+                addPlaylistItem(playlist, line.getFile());
             }
             //playlist.getLibrary().dump();
         }

@@ -472,7 +472,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
      */
     public void progressChange(AudioPlayer audioPlayer, float currentTimeInSecs) {
         
-        if (audioProperties.getLength() == -1) {
+        if (audioProperties != null && audioProperties.getLength() == -1) {
             return;
         }
         

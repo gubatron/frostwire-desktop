@@ -1,9 +1,9 @@
 package com.limegroup.gnutella.gui;
 
 import com.frostwire.gui.library.LibraryMediator;
+import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.gui.bugs.BugManager;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
-import com.limegroup.gnutella.gui.player.MediaPlayerComponent;
 import com.limegroup.gnutella.gui.search.LocalSearchEngine;
 
 /**
@@ -57,7 +57,7 @@ final class Finalizer {
     static void shutdown() {
     	LocalSearchEngine.instance().shutdown();
     	
-    	MediaPlayerComponent.getInstance().stopSong();
+    	AudioPlayer.instance().stop();
     	
     	// TODO: This line of code must be refactored in a better workflow of
     	// LifecycleManager -> ActivityCallback
