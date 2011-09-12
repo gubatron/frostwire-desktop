@@ -76,8 +76,4 @@ public class LibraryLeftPanel extends JPanel {
         }
     }
 
-    // not working
-//    public boolean isOptimizedDrawingEnabled() {
-//        return true;
-//    }
 }

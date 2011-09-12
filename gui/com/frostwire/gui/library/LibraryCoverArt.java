@@ -1,10 +1,14 @@
 package com.frostwire.gui.library;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.Toolkit;
+import java.awt.Transparency;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
@@ -24,16 +28,17 @@ public class LibraryCoverArt extends JPanel {
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                setPrivateImage(coverArtImage);
+                setPrivateImage(coverArtImage, true);
+                //System.out.println("componentResized:" + getWidth()+","+getHeight());
             }
         });
     }
 
     public void setPlaylistItem(final PlaylistItem playlistItem) {
-        setPrivateImage(null);
+        setPrivateImage(null,false);
         new Thread(new Runnable() {
             public void run() {
-                setPrivateImage(retrieveImage(playlistItem));
+                setPrivateImage(retrieveImage(playlistItem), false);
             }
         }).start();
     }
@@ -41,11 +46,9 @@ public class LibraryCoverArt extends JPanel {
     @Override
     public void paint(Graphics g) {
         if (scaledImage != null) {
-        	System.out.println("LibraryCoverArt.paint() in");
             g.drawImage(scaledImage, 0, 0, null);
         }
     }
-    
 
     
     private Image retrieveImage(PlaylistItem playlistItem) {
@@ -57,11 +60,32 @@ public class LibraryCoverArt extends JPanel {
         return image;
     }
     
-    private void setPrivateImage(Image image) {
+
+	public Image getScaledImageFast(Image img, int w, int h) {
+		
+		int type = BufferedImage.TYPE_INT_RGB;
+		BufferedImage tmp = new BufferedImage(w, h, type);
+		Graphics2D g2 = tmp.createGraphics();
+		g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+		g2.drawImage(img, 0, 0, w, h, null);
+		g2.dispose();
+
+		return tmp;
+	}
+    
+    private void setPrivateImage(Image image, boolean fast) {
         coverArtImage = image;
         
         if (coverArtImage != null) {
-            scaledImage = coverArtImage.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);
+        	
+        	if (fast) {
+        	scaledImage = getScaledImageFast(coverArtImage,
+                    getWidth(),
+                    getHeight());
+        	} else {
+        		scaledImage = coverArtImage.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);
+        	}
         } else {
             scaledImage = null;
         }
