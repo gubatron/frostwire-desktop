@@ -63,7 +63,7 @@ public class FilterPanel extends JPanel {
 
         _keywordFilterTextField.addKeyListener(new KeyAdapter() {
         	@Override
-        	public void keyPressed(KeyEvent e) {
+        	public void keyReleased(KeyEvent e) {
                 keywordFilterChanged(e);
             }
         }); 
