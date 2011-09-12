@@ -3,6 +3,7 @@ package com.frostwire.alexandria.db;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -15,7 +16,7 @@ public class LibraryDatabase {
 
     public static final int OBJECT_NOT_SAVED_ID = -1;
     public static final int OBJECT_INVALID_ID = -2;
-    
+
     public static final int LIBRARY_DATABASE_VERSION = 1;
 
     private final File _databaseFile;
@@ -96,6 +97,14 @@ public class LibraryDatabase {
         return update(_connection, expression);
     }
 
+    public synchronized int update(String statementSql, Object... arguments) {
+        if (isClosed()) {
+            return -1;
+        }
+
+        return update(_connection, statementSql, arguments);
+    }
+
     /**
      * This method is synchronized due to possible concurrent issues, specially
      * during recently generated id retrieval.
@@ -118,6 +127,22 @@ public class LibraryDatabase {
         return OBJECT_INVALID_ID;
     }
 
+    public synchronized int insert(String statementSql, Object... arguments) {
+        if (isClosed()) {
+            return OBJECT_INVALID_ID;
+        }
+
+        if (!statementSql.toUpperCase().startsWith("INSERT")) {
+            return OBJECT_INVALID_ID;
+        }
+
+        if (update(statementSql, arguments) != -1) {
+            return getIdentity();
+        }
+
+        return OBJECT_INVALID_ID;
+    }
+
     public synchronized void close() {
         if (isClosed()) {
             return;
@@ -133,12 +158,12 @@ public class LibraryDatabase {
             e.printStackTrace();
         }
     }
-    
+
     public synchronized void dump() {
         if (isClosed()) {
             return;
         }
-        
+
         try {
             new DumpDatabase(this, new File(_databaseFile, "dump.txt")).dump();
         } catch (Exception e) {
@@ -165,7 +190,7 @@ public class LibraryDatabase {
         Connection connection = openConnection(path, name, true);
 
         // STRUCTURE CREATION
-        
+
         update(connection, "CREATE ALIAS IF NOT EXISTS FT_INIT FOR \"org.h2.fulltext.FullText.init\"");
         update(connection, "CALL FT_INIT()");
 
@@ -184,7 +209,7 @@ public class LibraryDatabase {
         update(connection, "CREATE INDEX idx_PlaylistItems_trackTitle ON PlaylistItems (trackTitle)");
         update(connection, "CREATE INDEX idx_PlaylistItems_artistName ON PlaylistItems (artistName)");
         update(connection, "CREATE INDEX idx_PlaylistItems_albumName ON PlaylistItems (albumName)");
-        update(connection,"CALL FT_CREATE_INDEX('PUBLIC', 'PLAYLISTITEMS', 'FILEPATH, TRACKTITLE, ARTISTNAME, ALBUMNAME, GENRE, YEAR')");
+        update(connection, "CALL FT_CREATE_INDEX('PUBLIC', 'PLAYLISTITEMS', 'FILEPATH, TRACKTITLE, ARTISTNAME, ALBUMNAME, GENRE, YEAR')");
 
         //update(connection, "DROP TABLE PlaylistsPlaylistItems IF EXISTS CASCADE");
         update(connection, "CREATE TABLE PlaylistsPlaylistItems (playlistPlaylistItemId INTEGER IDENTITY, playlistId INTEGER, playlistItemId INTEGER)");
@@ -226,12 +251,12 @@ public class LibraryDatabase {
             return OBJECT_INVALID_ID;
         }
 
-        Statement statment = null;
+        Statement statement = null;
         ResultSet resultSet = null;
 
         try {
-            statment = _connection.createStatement();
-            resultSet = statment.executeQuery("CALL IDENTITY()");
+            statement = _connection.createStatement();
+            resultSet = statement.executeQuery("CALL IDENTITY()");
 
             resultSet.next();
 
@@ -239,9 +264,9 @@ public class LibraryDatabase {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (statment != null) {
+            if (statement != null) {
                 try {
-                    statment.close();
+                    statement.close();
                 } catch (SQLException e) {
                 }
             }
@@ -252,18 +277,46 @@ public class LibraryDatabase {
 
     private int update(Connection connection, String expression) {
 
-        Statement statment = null;
+        Statement statement = null;
 
         try {
-            statment = connection.createStatement();
+            statement = connection.createStatement();
 
-            return statment.executeUpdate(expression);
+            return statement.executeUpdate(expression);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (statment != null) {
+            if (statement != null) {
                 try {
-                    statment.close();
+                    statement.close();
+                } catch (SQLException e) {
+                }
+            }
+        }
+
+        return -1;
+    }
+
+    private int update(Connection connection, String statementSql, Object... arguments) {
+
+        PreparedStatement statement = null;
+
+        try {
+            statement = connection.prepareStatement(statementSql);
+
+            if (arguments != null) {
+                for (int i = 0; i < arguments.length; i++) {
+                    statement.setObject(i + 1, arguments[i]);
+                }
+            }
+
+            return statement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
                 } catch (SQLException e) {
                 }
             }

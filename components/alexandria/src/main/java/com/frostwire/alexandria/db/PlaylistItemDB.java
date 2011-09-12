@@ -60,45 +60,13 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
         }
 
         if (obj.getId() == LibraryDatabase.OBJECT_NOT_SAVED_ID) {
-            int id = db
-                    .insert("INSERT INTO PlaylistItems (filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath, bitrate, comment, genre, track, year) "
-                            + " VALUES ('"
-                            + obj.getFilePath()
-                            + "', '"
-                            + obj.getFileName()
-                            + "', "
-                            + obj.getFileSize()
-                            + ", '"
-                            + obj.getFileExtension()
-                            + "', '"
-                            + obj.getTrackTitle()
-                            + "', "
-                            + obj.getTrackDurationInSecs()
-                            + ", '"
-                            + obj.getArtistName()
-                            + "', '"
-                            + obj.getAlbumName()
-                            + "', '"
-                            + obj.getCoverArtPath()
-                            + "', '"
-                            + obj.getBitrate()
-                            + "', '"
-                            + obj.getComment()
-                            + "', '"
-                            + obj.getGenre()
-                            + "', '"
-                            + obj.getTrack()
-                            + "', '"
-                            + obj.getYear() + "')");
+            Object[] sqlAndValues = createPlaylistItemInsert(obj);
+            int id = db.insert((String) sqlAndValues[0], (Object[]) sqlAndValues[1]);
             obj.setId(id);
-            db.update("INSERT INTO PlaylistsPlaylistItems (playlistId, playlistItemId) VALUES (" + obj.getPlaylist().getId() + ", " + obj.getId() + ")");
+            db.update("INSERT INTO PlaylistsPlaylistItems (playlistId, playlistItemId) VALUES (?, ?)", obj.getPlaylist().getId(), obj.getId());
         } else {
-            db.update("UPDATE PlaylistItems SET filePath = '" + obj.getFilePath() + "', fileName = '" + obj.getFileName() + "', fileSize = "
-                    + obj.getFileSize() + ", fileExtension = '" + obj.getFileExtension() + "', trackTitle = '" + obj.getTrackTitle() + "', duration = "
-                    + obj.getTrackDurationInSecs() + ", artistName = '" + obj.getArtistName() + "', albumName = '" + obj.getAlbumName() + "', coverArtPath = '"
-                    + obj.getCoverArtPath() + "', bitrate = '" + obj.getBitrate() + "', comment = '" + obj.getComment() + "', genre = '" + obj.getGenre()
-                    + "', track = '" + obj.getTrack() + "', year = '" + obj.getYear()
-                    + "' WHERE playlistItemId = " + obj.getId());
+            Object[] sqlAndValues = createPlaylistItemUpdate(obj);
+            db.update((String) sqlAndValues[0], (Object[]) sqlAndValues[1]);
         }
     }
 
@@ -113,5 +81,26 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
     public void deleteFromAll(PlaylistItem item) {
         db.update("DELETE FROM PlaylistsPlaylistItems WHERE playlistItemId = " + item.getId());
         db.update("DELETE FROM PlaylistItems WHERE playlistItemId = " + item.getId());
+    }
+
+    private Object[] createPlaylistItemInsert(PlaylistItem item) {
+        String sql = "INSERT INTO PlaylistItems (filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath, bitrate, comment, genre, track, year) "
+                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        Object[] values = new Object[] { item.getFilePath(), item.getFileName(), item.getFileSize(), item.getFileExtension(), item.getTrackTitle(),
+                item.getTrackDurationInSecs(), item.getArtistName(), item.getAlbumName(), item.getCoverArtPath(), item.getBitrate(), item.getComment(),
+                item.getGenre(), item.getTrack(), item.getYear() };
+
+        return new Object[] { sql, values };
+    }
+
+    private Object[] createPlaylistItemUpdate(PlaylistItem item) {
+        String sql = "UPDATE PlaylistItems SET filePath = ?, fileName = ?, fileSize = ?, fileExtension = ?, trackTitle = ?, duration = ?, artistName = ?, albumName = ?, coverArtPath = ?, bitrate = ?, comment = ?, genre = ?, track = ?, year = ? WHERE playlistItemId = ?";
+
+        Object[] values = new Object[] { item.getFilePath(), item.getFileName(), item.getFileSize(), item.getFileExtension(), item.getTrackTitle(),
+                item.getTrackDurationInSecs(), item.getArtistName(), item.getAlbumName(), item.getCoverArtPath(), item.getBitrate(), item.getComment(),
+                item.getGenre(), item.getTrack(), item.getYear(), item.getId() };
+
+        return new Object[] { sql, values };
     }
 }
