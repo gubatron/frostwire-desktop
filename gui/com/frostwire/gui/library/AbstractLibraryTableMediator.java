@@ -24,7 +24,7 @@ public abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>
     }
 
     public AudioSource getNextRandomSong(AudioSource currentSong) {
-        if (mediaType != MediaType.getAudioMediaType()) {
+        if (!mediaType.equals(MediaType.getAudioMediaType())) {
             return null;
         }
 
@@ -43,12 +43,12 @@ public abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>
             lastRandomFiles.clear();
             lastRandomFiles.add(songFile);
         }
-        System.out.println(songFile);
+
         return new AudioSource(songFile);
     }
 
     public AudioSource getNextContinuousSong(AudioSource currentSong) {
-        if (mediaType != MediaType.getAudioMediaType()) {
+        if (!mediaType.equals(MediaType.getAudioMediaType())) {
             return null;
         }
 
@@ -56,12 +56,11 @@ public abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>
         for (int i = 0; i < n; i++) {
             try {
                 E line = DATA_MODEL.get(i);
-                if (line != null) {
-                    if (currentSong.getFile().equals(line.getFile())) {
-                        if (i < n - 1) {
-                            return new AudioSource(DATA_MODEL.get(i + 1).getFile());
-                        } else { // the last, returns the first
-                            return new AudioSource(DATA_MODEL.get(0).getFile());
+                if (currentSong.getFile().equals(line.getFile())) {
+                    for (int j = 1; j < n; j++) {
+                        File file = DATA_MODEL.get((j + i) % n).getFile();
+                        if (AudioPlayer.isPlayableFile(file)) {
+                            return new AudioSource(file);
                         }
                     }
                 }
@@ -69,11 +68,12 @@ public abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>
                 return null;
             }
         }
+
         return null;
     }
 
     public AudioSource getNextSong(AudioSource currentSong) {
-        if (mediaType != MediaType.getAudioMediaType()) {
+        if (!mediaType.equals(MediaType.getAudioMediaType())) {
             return null;
         }
 
@@ -81,12 +81,11 @@ public abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>
         for (int i = 0; i < n; i++) {
             try {
                 E line = DATA_MODEL.get(i);
-                if (line != null) {
-                    if (currentSong.getFile().equals(line.getFile())) {
-                        if (i < n - 1) {
-                            return new AudioSource(DATA_MODEL.get(i + 1).getFile());
-                        } else { // the last, returns null
-                            return null;
+                if (currentSong.getFile().equals(line.getFile())) {
+                    for (int j = i + 1; j < n; j++) {
+                        File file = DATA_MODEL.get(j).getFile();
+                        if (AudioPlayer.isPlayableFile(file)) {
+                            return new AudioSource(file);
                         }
                     }
                 }
@@ -94,6 +93,7 @@ public abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>
                 return null;
             }
         }
+
         return null;
     }
 

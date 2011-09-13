@@ -34,6 +34,7 @@ import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
 import com.frostwire.gui.player.AudioMetaData;
+import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.MediaType;
@@ -512,6 +513,15 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     }
 
     public void handleActionKey() {
+        LibraryFilesTableDataLine line = DATA_MODEL.get(TABLE.getSelectedRow());
+        if (line == null) {
+            return;
+        }
+        if (mediaType.equals(MediaType.getAudioMediaType()) && AudioPlayer.isPlayableFile(line.getFile())) {
+            AudioPlayer.instance().loadSong(new AudioSource(line.getFile()), true, true);
+            return;
+        }        
+        
         int[] rows = TABLE.getSelectedRows();
         //LibraryTableModel ltm = DATA_MODEL;
         //File file;

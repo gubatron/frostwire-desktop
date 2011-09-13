@@ -79,7 +79,7 @@ public class AudioPlayer implements RefreshListener {
         });
 
         repeatMode = RepeatMode.All;
-        shuffle = true;
+        shuffle = false;
         playNextSong = true;
     }
 
@@ -295,6 +295,7 @@ public class AudioPlayer implements RefreshListener {
         }
 
         if (song != null) {
+            System.out.println(song.getFile());
             loadSong(song, true, true);
         }
     }
