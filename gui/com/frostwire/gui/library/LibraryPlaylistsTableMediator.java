@@ -99,7 +99,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         OPEN_IN_FOLDER_ACTION = new OpenInFolderAction();
         ENQUEUE_ACTION = new EnqueueAction();
         CREATE_TORRENT_ACTION = new CreateTorrentAction();
-        DELETE_ACTION = new RemoveAction();
+        DELETE_ACTION = new RemoveFromPlaylistAction();
         RENAME_ACTION = new RenameAction();
     }
 
@@ -371,89 +371,21 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     }
 
     /**
-     * Override the default removal so we can actually stop sharing
-     * and delete the file.
-     * Deletes the selected rows in the table.
-     * CAUTION: THIS WILL DELETE THE FILE FROM THE DISK.
+     * Delete selected items from a playlist (not from disk)
      */
     public void removeSelection() {
-        int[] rows = TABLE.getSelectedRows();
-        if (rows.length == 0)
-            return;
+    	
+    	LibraryPlaylistsTableDataLine[] lines = getSelectedLibraryLines();
 
-        if (TABLE.isEditing()) {
-            TableCellEditor editor = TABLE.getCellEditor();
-            editor.cancelCellEditing();
-        }
-
-        List<Tuple<File, FileDesc>> files = new ArrayList<Tuple<File, FileDesc>>(rows.length);
-
-        // sort row indices and go backwards so list indices don't change when
-        // removing the files from the model list
-        Arrays.sort(rows);
-        for (int i = rows.length - 1; i >= 0; i--) {
-            File file = DATA_MODEL.getFile(rows[i]);
-            FileDesc fd = DATA_MODEL.getFileDesc(rows[i]);
-            files.add(new Tuple<File, FileDesc>(file, fd));
-        }
-
-        CheckBoxListPanel<Tuple<File, FileDesc>> listPanel = new CheckBoxListPanel<Tuple<File, FileDesc>>(files, new TupleTextProvider(), true);
-        listPanel.getList().setVisibleRowCount(4);
-
-        // display list of files that should be deleted
-        Object[] message = new Object[] {
-                new MultiLineLabel(I18n.tr("Are you sure you want to delete the selected file(s), thus removing it from your computer?"), 400),
-                Box.createVerticalStrut(ButtonRow.BUTTON_SEP), listPanel, Box.createVerticalStrut(ButtonRow.BUTTON_SEP) };
-
-        // get platform dependent options which are displayed as buttons in the dialog
-        Object[] removeOptions = createRemoveOptions();
-
-        int option = JOptionPane.showOptionDialog(MessageService.getParentComponent(), message, I18n.tr("Message"), JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE, null, removeOptions, removeOptions[0] /* default option */);
-
-        if (option == removeOptions.length - 1 /* "cancel" option index */
-                || option == JOptionPane.CLOSED_OPTION) {
-            return;
-        }
-
-        // remove still selected files
-        List<Tuple<File, FileDesc>> selected = listPanel.getSelectedElements();
-        List<String> undeletedFileNames = new ArrayList<String>();
-
-        for (Tuple<File, FileDesc> tuple : selected) {
-            File file = tuple.getFirst();
-            FileDesc fd = tuple.getSecond();
-            //            if (_isIncomplete && hasActiveDownloader(file)) {
-            //                undeletedFileNames.add(getCompleteFileName(file));
-            //                continue;
-            //            }
-
-            if (fd != null) {
-                //GuiCoreMediator.getUploadManager().killUploadsForFileDesc(fd);
-            }
-
-            // removeOptions > 2 => OS offers trash options
-            boolean removed = FileUtils.delete(file, removeOptions.length > 2 && option == 0 /* "move to trash" option index */);
-            if (removed) {
-                //DATA_MODEL.remove(DATA_MODEL.getRow(file));
-            } else {
-                undeletedFileNames.add(getCompleteFileName(file));
-            }
-        }
-
-        clearSelection();
-
-        if (undeletedFileNames.isEmpty()) {
-            return;
-        }
-
-        // display list of files that could not be deleted
-        message = new Object[] {
-                new MultiLineLabel(
-                        I18n.tr("The following files could not be deleted. They may be in use by another application or are currently being downloaded to."),
-                        400), Box.createVerticalStrut(ButtonRow.BUTTON_SEP), new JScrollPane(createFileList(undeletedFileNames)) };
-
-        JOptionPane.showMessageDialog(MessageService.getParentComponent(), message, I18n.tr("Error"), JOptionPane.ERROR_MESSAGE);
+    	for (LibraryPlaylistsTableDataLine line : lines) {
+    		PlaylistItem playlistItem = line.getInitializeObject();
+    		playlistItem.delete();
+    	}
+    	
+    	LibraryMediator.instance().getLibraryPlaylists().reselectPlaylist();
+    	
+    	clearSelection();
+    	
     }
 
     /**
@@ -750,16 +682,16 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         }
     }
 
-    private final class RemoveAction extends AbstractAction {
+    private final class RemoveFromPlaylistAction extends AbstractAction {
 
         /**
          * 
          */
         private static final long serialVersionUID = -8704093935791256631L;
 
-        public RemoveAction() {
-            putValue(Action.NAME, I18n.tr("Delete"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Delete Selected Files"));
+        public RemoveFromPlaylistAction() {
+            putValue(Action.NAME, I18n.tr("Delete from playlist"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Delete Selected Files from this playlist"));
             putValue(LimeAction.ICON_NAME, "LIBRARY_DELETE");
         }
 

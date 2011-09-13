@@ -393,7 +393,7 @@ public class LibraryPlaylists extends JPanel {
         public void valueChanged(ListSelectionEvent e) {
         	cancelEdit();
         	
-            if (e.getValueIsAdjusting()) {
+            if (e!=null && e.getValueIsAdjusting()) {
                 return;
             }
             
@@ -506,4 +506,8 @@ public class LibraryPlaylists extends JPanel {
         	startEdit(_list.getSelectedIndex());
         }
     }
+
+	public void reselectPlaylist() {
+		_listSelectionListener.valueChanged(null);
+	}
 }
