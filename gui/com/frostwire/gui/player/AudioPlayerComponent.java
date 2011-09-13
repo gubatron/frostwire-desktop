@@ -43,7 +43,6 @@ import com.limegroup.gnutella.util.URLDecoder;
  */
 public final class AudioPlayerComponent implements AudioPlayerListener, RefreshListener, ThemeObserver {
 
-
     public static final String STREAMING_AUDIO = "Streaming Audio";
 
     /**
@@ -95,14 +94,13 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     /**
      * Constant for the volume control
      */
-    private final MediaSlider VOLUME = new MediaSlider("volume_track_left", "volume_track_center", "volume_track_right", "volume_thumb_up",
-            "volume_thumb_dn");
+    private final MediaSlider VOLUME = new MediaSlider("volume_track_left", "volume_track_center", "volume_track_right", "volume_thumb_up", "volume_thumb_dn");
 
     /**
      * Constant for the progress bar
      */
-    private final SongProgressBar PROGRESS = new SongProgressBar("progress_track_left", "progress_track_center", "progress_track_right",
-            "progress_thumb_up", "progress_thumb_dn", "progress_bar");
+    private final SongProgressBar PROGRESS = new SongProgressBar("progress_track_left", "progress_track_center", "progress_track_right", "progress_thumb_up",
+            "progress_thumb_dn", "progress_bar");
 
     /**
      * Executor to ensure all thread creation on the frostwireplayer is called from
@@ -263,21 +261,21 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     public void refresh() {
         PLAYER.refresh();
 
-//        if (getMediaPanel().getSize().width < fullSizeWidth) {
-//            GUIMediator.safeInvokeLater(new Runnable() {
-//                public void run() {
-//                    //PROGRESS.setVisible(false);
-//                    //VOLUME.setVisible(false);
-//                }
-//            });
-//        } else {
-//            GUIMediator.safeInvokeLater(new Runnable() {
-//                public void run() {
-//                    PROGRESS.setVisible(true);
-//                    VOLUME.setVisible(true);
-//                }
-//            });
-//        }
+        //        if (getMediaPanel().getSize().width < fullSizeWidth) {
+        //            GUIMediator.safeInvokeLater(new Runnable() {
+        //                public void run() {
+        //                    //PROGRESS.setVisible(false);
+        //                    //VOLUME.setVisible(false);
+        //                }
+        //            });
+        //        } else {
+        //            GUIMediator.safeInvokeLater(new Runnable() {
+        //                public void run() {
+        //                    PROGRESS.setVisible(true);
+        //                    VOLUME.setVisible(true);
+        //                }
+        //            });
+        //        }
     }
 
     // inherit doc comment
@@ -337,13 +335,6 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     }
 
     /**
-     * Public accessor for loading a song to be played. 
-     */
-    public void loadSong(AudioSource item) {
-        loadSong(item, false);
-    }
-
-    /**
      * Public accessor for loading a song to be played,
      * @playOnce - if true, play song one time regardless of continous
      *			and random values and stop the player after completing, 
@@ -363,13 +354,14 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
      * Loads an audiosource to be played. 
      */
     private void loadSong(final AudioSource audioSource, String displayName) {
-        if (audioSource == null)
+        if (audioSource == null) {
             return;
-        
-        audioProperties = null;//audioSource.getMetaData();
-        
+        }
+
+        audioProperties = audioSource.getMetaData();
+
         if (audioProperties == null) {
-        	loadAudioProperties();
+            loadAudioProperties();
         }
 
         // load song on Executor thread
@@ -412,11 +404,11 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     }
 
     public void seek(float percent) {
-        
+
         if (audioProperties.getLength() == -1) {
             return;
         }
-        
+
         if (audioProperties != null && audioProperties.isSeekable()) {
             float timeInSecs = audioProperties.getLength() * percent;
             PLAYER.seek(timeInSecs);
@@ -449,21 +441,19 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
      * played.
      */
     public void songOpened(AudioPlayer audioPlayer, AudioSource audioSource) {
-        //audioProperties = properties;
-        
-        if (audioProperties == null) {
-        	loadAudioProperties();
-        }
-        
-        setVolumeValue();
-//        if (properties.isSeekable()) {
-//            setProgressEnabled(true);
-//        } else {
-//            setProgressEnabled(false);
-//        }
+        currentPlayListItem = audioSource;
+        audioProperties = audioSource.getMetaData();
 
-        // notify the playlist to repaint since a new song has started playing
-        GUIMediator.getPlayList().playStarted();
+        if (audioProperties == null) {
+            loadAudioProperties();
+        }
+
+        setVolumeValue();
+        if (audioProperties != null && audioProperties.isSeekable()) {
+            setProgressEnabled(true);
+        } else {
+            setProgressEnabled(false);
+        }
     }
 
     /**
@@ -471,71 +461,44 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
      * frames that have been read, along with position and bytes read
      */
     public void progressChange(AudioPlayer audioPlayer, float currentTimeInSecs) {
-        
-        if (audioProperties != null && audioProperties.getLength() == -1) {
+        if (audioProperties == null || audioProperties.getLength() == -1) {
             return;
         }
         
         _progress = currentTimeInSecs;
-        
-        //I wasn't ready
-        if (audioProperties == null) {
-        	loadAudioProperties();
-        }
 
         float progressUpdate = ((PROGRESS.getMaximum() * currentTimeInSecs) / audioProperties.getLength());
         setProgressValue((int) progressUpdate);
-        
-        // if the display name is too long, increment it
-        // TODO: this should be replaced by the TimingFramework Animator
-        if (currentFileName.length() <= STRING_SIZE_TO_SHOW) {
-            setProgressString(currentFileName);
-        } else if ((System.currentTimeMillis() - lastScroll) > SCROLL_RATE) {
-
-            synchronized (cfnLock) {
-                lastScroll = System.currentTimeMillis();
-                if (currentFileName == null)
-                    return;
-
-                currBeginIndex = currBeginIndex + 1;
-                if (currBeginIndex > currentFileName.length() / 2)
-                    currBeginIndex = 0;
-                setProgressString(currentFileName.substring(currBeginIndex, currBeginIndex + STRING_SIZE_TO_SHOW));
-            }
-        }
     }
 
     private void loadAudioProperties() {
-    	if (currentPlayListItem == null) {
-    		return;
-    	}
-    	
-    	//currentPlayListItem.initMetaData();
-    	//audioProperties = currentPlayListItem.getMetaData();
-	}
+        if (currentPlayListItem != null && currentPlayListItem.getFile() != null) {
+            audioProperties = new AudioMetaData(currentPlayListItem.getFile());
+        }
+    }
 
-	/**
-     * This event is generated everytime the song state changes. ie.
+    /**
+     * This event is generated every time the song state changes. ie.
      * OPENED->PLAYING->PAUSED->PLAYING->STOPPED->EOF, etc..
      */
     public void stateChange(AudioPlayer audioPlayer, MediaPlaybackState state) {
-    	
-    	if (audioProperties == null) {
-    		loadAudioProperties();
-    	}
-    	
-    	if (audioProperties != null && audioProperties.getLength() == -1) {
+
+        if (audioProperties == null) {
+            loadAudioProperties();
+        }
+
+        if (audioProperties != null && audioProperties.getLength() == -1) {
             return;
         }
-    	
+
         if (state == MediaPlaybackState.Failed || state == MediaPlaybackState.Uninitialized) {
             //setProgressEnabled(false);
         } else if (state == MediaPlaybackState.Opening) {
             setVolumeValue();
         } else if (state == MediaPlaybackState.Stopped) {
             setProgressValue(PROGRESS.getMinimum());
-        } else if (Math.abs(_progress - audioProperties.getLength()) < 5)  {
-            
+        } else if (Math.abs(_progress - audioProperties.getLength()) < 5) {
+
             PlaylistMediator playlist = GUIMediator.getPlayList();
             if (playlist == null)
                 return;
@@ -553,61 +516,61 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
         }
     }
 
-//    /**
-//     * @return [ <song> '\t' <url> '\t' <length> '\t' <isStorePreview> '|' ]*
-//     */
-//    String getSongs() {
-//        PlaylistMediator pl = GUIMediator.getPlayList();
-//        List<PlayListItem> songs = pl.getSongs();
-//        StringBuffer res = new StringBuffer();
-//        if (songs != null) {
-//            for (PlayListItem s : songs) {
-//                res.append(s.getName()).append('\t').append(s.getURI()).append('\t').append(s.getProperty(PlayListItem.LENGTH)).append('\t')
-//                        .append(s.isStorePreview()).append('|');
-//
-//            }
-//        }
-//        System.out.println("songs:" + res);
-//        return res.toString();
-//    }
+    //    /**
+    //     * @return [ <song> '\t' <url> '\t' <length> '\t' <isStorePreview> '|' ]*
+    //     */
+    //    String getSongs() {
+    //        PlaylistMediator pl = GUIMediator.getPlayList();
+    //        List<PlayListItem> songs = pl.getSongs();
+    //        StringBuffer res = new StringBuffer();
+    //        if (songs != null) {
+    //            for (PlayListItem s : songs) {
+    //                res.append(s.getName()).append('\t').append(s.getURI()).append('\t').append(s.getProperty(PlayListItem.LENGTH)).append('\t')
+    //                        .append(s.isStorePreview()).append('|');
+    //
+    //            }
+    //        }
+    //        System.out.println("songs:" + res);
+    //        return res.toString();
+    //    }
 
     /**
      * Begins playing the loaded song in url of args.
      */
     String playSong(Map<String, String> args) {
 
-//        Tagged<String> urlString = FrostWireUtils.getArg(args, "url", "AddToPlaylist");
-//        if (!urlString.isValid())
-//            return urlString.getValue();
-//        String url = urlString.getValue();
-//
-//        // Find the song with this url
-//        PlaylistMediator pl = GUIMediator.getPlayList();
-//        List<PlayListItem> songs = pl.getSongs();
-//        PlayListItem targetTrack = null;
-//        for (PlayListItem it : songs) {
-//            try {
-//                String thatOne = URLDecoder.decode(it.getURI().toString());
-//                String thisOne = URLDecoder.decode(url);
-//                if (thatOne.equals(thisOne)) {
-//                    targetTrack = it;
-//                    break;
-//                }
-//            } catch (IOException e) {
-//                // ignore
-//            }
-//        }
-//
-//        if (targetTrack != null) {
-//            loadSong(targetTrack);
-//            return "ok";
-//        }
-//
-//        if (PLAYER.getStatus() == MediaPlaybackState.Paused || PLAYER.getStatus() == MediaPlaybackState.Playing)
-//            PLAYER.unpause();
-//        else {
-//            loadSong(currentPlayListItem);
-//        }
+        //        Tagged<String> urlString = FrostWireUtils.getArg(args, "url", "AddToPlaylist");
+        //        if (!urlString.isValid())
+        //            return urlString.getValue();
+        //        String url = urlString.getValue();
+        //
+        //        // Find the song with this url
+        //        PlaylistMediator pl = GUIMediator.getPlayList();
+        //        List<PlayListItem> songs = pl.getSongs();
+        //        PlayListItem targetTrack = null;
+        //        for (PlayListItem it : songs) {
+        //            try {
+        //                String thatOne = URLDecoder.decode(it.getURI().toString());
+        //                String thisOne = URLDecoder.decode(url);
+        //                if (thatOne.equals(thisOne)) {
+        //                    targetTrack = it;
+        //                    break;
+        //                }
+        //            } catch (IOException e) {
+        //                // ignore
+        //            }
+        //        }
+        //
+        //        if (targetTrack != null) {
+        //            loadSong(targetTrack);
+        //            return "ok";
+        //        }
+        //
+        //        if (PLAYER.getStatus() == MediaPlaybackState.Paused || PLAYER.getStatus() == MediaPlaybackState.Playing)
+        //            PLAYER.unpause();
+        //        else {
+        //            loadSong(currentPlayListItem);
+        //        }
 
         return "ok";
     }
@@ -694,19 +657,19 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
             baseDir += ":" + port;
         }
 
-//        String url = baseDir + urlString.getValue();
-//        try {
-//            String decodedURL = URLDecoder.decode(url);
-//            URL u = new URL(decodedURL);
-//            PlayListItem song = new PlayListItem(u.toURI(), new AudioSource(u), nameString.getValue(), false);
-//            GUIMediator.instance().launchAudio(song);
-//        } catch (IOException e) {
-//            ErrorService.error(e, "invalid URL:" + url);
-//            return "ERROR:invalid.url:" + url;
-//        } catch (URISyntaxException e) {
-//            ErrorService.error(e, "invalid URL:" + url);
-//            return "ERROR:invalid.url:" + url;
-//        }
+        //        String url = baseDir + urlString.getValue();
+        //        try {
+        //            String decodedURL = URLDecoder.decode(url);
+        //            URL u = new URL(decodedURL);
+        //            PlayListItem song = new PlayListItem(u.toURI(), new AudioSource(u), nameString.getValue(), false);
+        //            GUIMediator.instance().launchAudio(song);
+        //        } catch (IOException e) {
+        //            ErrorService.error(e, "invalid URL:" + url);
+        //            return "ERROR:invalid.url:" + url;
+        //        } catch (URISyntaxException e) {
+        //            ErrorService.error(e, "invalid URL:" + url);
+        //            return "ERROR:invalid.url:" + url;
+        //        }
         return "ok";
     }
 
@@ -723,20 +686,20 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
             baseDir += ":" + port;
         }
 
-//        String url = baseDir + urlString.getValue();
-//        String name = getName(url);
-//        try {
-//            String decodedURL = URLDecoder.decode(url);
-//            URL u = new URL(decodedURL);
-//            PlayListItem song = new PlayListItem(u.toURI(), new AudioSource(u), name, false);
-//            GUIMediator.instance().launchAudio(song);
-//        } catch (IOException e) {
-//            ErrorService.error(e, "invalid URL:" + url);
-//            return "ERROR:invalid.url:" + url;
-//        } catch (URISyntaxException e) {
-//            ErrorService.error(e, "invalid URL:" + url);
-//            return "ERRORinvalid.url:" + url;
-//        }
+        //        String url = baseDir + urlString.getValue();
+        //        String name = getName(url);
+        //        try {
+        //            String decodedURL = URLDecoder.decode(url);
+        //            URL u = new URL(decodedURL);
+        //            PlayListItem song = new PlayListItem(u.toURI(), new AudioSource(u), name, false);
+        //            GUIMediator.instance().launchAudio(song);
+        //        } catch (IOException e) {
+        //            ErrorService.error(e, "invalid URL:" + url);
+        //            return "ERROR:invalid.url:" + url;
+        //        } catch (URISyntaxException e) {
+        //            ErrorService.error(e, "invalid URL:" + url);
+        //            return "ERRORinvalid.url:" + url;
+        //        }
         return "ok";
     }
 
@@ -752,7 +715,8 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     }
 
     private boolean isPlaying() {
-        return !(PLAYER.getStatus() == MediaPlaybackState.Stopped || PLAYER.getStatus() == MediaPlaybackState.Uninitialized || PLAYER.getStatus() == MediaPlaybackState.Paused || PLAYER.getStatus() == MediaPlaybackState.Failed);
+        return !(PLAYER.getStatus() == MediaPlaybackState.Stopped || PLAYER.getStatus() == MediaPlaybackState.Uninitialized
+                || PLAYER.getStatus() == MediaPlaybackState.Paused || PLAYER.getStatus() == MediaPlaybackState.Failed);
     }
 
     /** Attempts to stop a song if its playing any song
@@ -849,7 +813,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     private class ProgressBarMouseAdapter extends MouseAdapter {
         @Override
         public void mouseClicked(MouseEvent e) {
-            seek(e.getX() * 1.0f / ((Component)e.getSource()).getWidth());
+            seek(e.getX() * 1.0f / ((Component) e.getSource()).getWidth());
         }
     }
 
