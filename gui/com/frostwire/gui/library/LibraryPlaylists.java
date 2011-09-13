@@ -63,6 +63,7 @@ public class LibraryPlaylists extends JPanel {
     private Action refreshAction = new RefreshAction();
     private Action exploreAction = new ExploreAction();
     private Action deleteAction = new DeleteAction();
+    private Action renameAction = new StartRenamingPlaylistAction();
 
     public LibraryPlaylists() {
         setupUI();
@@ -102,10 +103,12 @@ public class LibraryPlaylists extends JPanel {
     private void setupPopupMenu() {
         _popup = new SkinPopupMenu();
         _popup.add(new SkinMenuItem(refreshAction));
+        _popup.add(new SkinMenuItem(renameAction));
         _popup.add(new SkinMenuItem(exploreAction));
         _popup.add(new SkinMenuItem(new ConfigureOptionsAction(OptionsConstructor.SHARED_KEY, I18n.tr("Configure Options"), I18n
                 .tr("You can configure the FrostWire\'s Options."))));
         _popup.add(new SkinMenuItem(deleteAction));
+        
     }
 
     private void setupModel() {
@@ -209,20 +212,16 @@ public class LibraryPlaylists extends JPanel {
     }
     
     private void renameSelectedItem(int index) {
-        if (!_textName.isVisible()) {
+        if (!_textName.isVisible() || _textName.getText().trim().length()==0) {
             return;
         }
-//        String text = _textName.getText();
-//        if (text != null && text.length() > 0) {
-//            if (text.indexOf('.') == -1) { // no extension? put the old
-//                                           // extension
-//                LocalFile localFile = (LocalFile) _model.getElementAt(index);
-//                if (localFile != null && localFile.getFile().isFile() && localFile.getExt() != null) {
-//                    text += "." + localFile.getExt();
-//                }
-//            }
-//            _model.rename(index, text);
-//        }
+        
+    	Playlist selectedPlaylist = getSelectedPlaylist();
+    	
+    	selectedPlaylist.setName(_textName.getText().trim());
+    	selectedPlaylist.save();
+    	
+    	_list.repaint();
         _textName.setVisible(false);
     }
     
@@ -463,6 +462,20 @@ public class LibraryPlaylists extends JPanel {
         		_model.removeElement(_list.getSelectedValue());
         		LibraryMediator.instance().clearLibraryTable();
         	}
+        }
+    }
+    
+    private class StartRenamingPlaylistAction extends AbstractAction {
+        private static final long serialVersionUID = 520856485566457934L;
+
+        public StartRenamingPlaylistAction() {
+            putValue(Action.NAME, I18n.tr("Rename"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Rename Playlist"));
+            putValue(LimeAction.ICON_NAME, "PLAYLIST_RENAME");
+        }
+
+        public void actionPerformed(ActionEvent e) {
+        	startEdit(_list.getSelectedIndex());
         }
     }
 }

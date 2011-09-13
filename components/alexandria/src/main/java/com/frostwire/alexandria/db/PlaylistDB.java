@@ -40,7 +40,8 @@ public class PlaylistDB extends ObjectDB<Playlist> {
             obj.setId(id);
         } else {
             db.update("DELETE FROM PlaylistsPlaylistItems WHERE playlistId = " + obj.getId());
-            db.update("UPDATE Playlists SET name = '" + obj.getName() + "', description = '" + obj.getDescription() + "' WHERE playlistId = " + obj.getId());
+            Object[] statementObjects = createPlaylistUpdateStatement(obj);
+            db.update((String) statementObjects[0], (Object[]) statementObjects[1]);
         }
 
         for (PlaylistItem item : obj.getItems()) {
@@ -71,4 +72,11 @@ public class PlaylistDB extends ObjectDB<Playlist> {
 
         return items;
     }
+    
+    private Object[] createPlaylistUpdateStatement(Playlist obj) {
+        String sql = "UPDATE Playlists SET name = ?, description = ? WHERE playlistId = ?";
+        Object[] values = new Object[] { obj.getName(), obj.getDescription(), obj.getId()};
+        return new Object[] { sql, values };
+    }
+
 }
