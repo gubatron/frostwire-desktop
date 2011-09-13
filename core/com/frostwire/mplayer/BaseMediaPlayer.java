@@ -356,12 +356,8 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 		}		
 	}
 	
-	
 	public void positionChanged(float currentTimeInSecs) {
 		if(currentPositionInSecs != currentTimeInSecs) {
-//			if(subtitleMonitor != null) {
-//				subtitleMonitor.playerPosition(currentTimeInSecs);
-//			}
 			currentPositionInSecs = currentTimeInSecs;
 			synchronized (positionListeners) {
 				for(PositionListener listener : positionListeners) {

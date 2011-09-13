@@ -13,6 +13,7 @@ import org.limewire.util.OSUtils;
 import com.frostwire.mplayer.MPlayer;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.frostwire.mplayer.PositionListener;
+import com.frostwire.mplayer.StateListener;
 import com.limegroup.gnutella.gui.RefreshListener;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
@@ -27,22 +28,13 @@ public class AudioPlayer implements RefreshListener {
      */
     private List<AudioPlayerListener> listenerList = new CopyOnWriteArrayList<AudioPlayerListener>();
 
-    /**
-     * The source that the thread is currently reading from
-     */
-    private AudioSource currentSong;
-
     private MPlayer _mplayer;
-    
-    /** Whether or not we're running from source or from a binary distribution */
-    private static boolean _isRelease;
+    private AudioSource currentSong;
+    private RepeatMode repeatMode;
+    private boolean shuffle;
 
-    static {
-        _isRelease = !FrostWireUtils.getFrostWireJarPath().contains("frostwire.desktop");
-    }
-    
     private static AudioPlayer instance;
-    
+
     public static AudioPlayer instance() {
         if (instance == null) {
             instance = new AudioPlayer();
@@ -51,15 +43,18 @@ public class AudioPlayer implements RefreshListener {
     }
 
     private AudioPlayer() {
-        String playerPath = new String();
+        String playerPath = "";
+        
+        // Whether or not we're running from source or from a binary distribution
+        boolean isRelease = !FrostWireUtils.getFrostWireJarPath().contains("frostwire.desktop");
 
         if (OSUtils.isWindows()) {
-            playerPath = (_isRelease) ? FrostWireUtils.getFrostWireJarPath() + File.separator + "fwplayer.exe" : "lib/native/fwplayer.exe";
+            playerPath = (isRelease) ? FrostWireUtils.getFrostWireJarPath() + File.separator + "fwplayer.exe" : "lib/native/fwplayer.exe";
             playerPath = UrlUtils.decode(playerPath);
         } else if (OSUtils.isMacOSX()) {
             String macOSFolder = new File(FrostWireUtils.getFrostWireJarPath()).getParentFile().getParent() + File.separator + "MacOS";
 
-            playerPath = (_isRelease) ? macOSFolder + File.separator + "fwplayer" : "lib/native/fwplayer";
+            playerPath = (isRelease) ? macOSFolder + File.separator + "fwplayer" : "lib/native/fwplayer";
         } else {
             playerPath = "/usr/bin/mplayer";
         }
@@ -70,13 +65,39 @@ public class AudioPlayer implements RefreshListener {
         _mplayer = new MPlayer();
         _mplayer.setPositionListener(new PositionListener() {
             public void positionChanged(float currentTimeInSecs) {
-                fireProgress(currentTimeInSecs);
+                notifyProgress(currentTimeInSecs);
             }
         });
+        _mplayer.setStateListener(new StateListener() {
+            public void stateChanged(MediaPlaybackState newState) {
+                if (newState == MediaPlaybackState.Closed) { // This is the case mplayer is done with the current file
+                    handleNextSong();
+                }
+            }
+        });
+        
+        repeatMode = RepeatMode.All;
+        shuffle = false;
     }
-    
+
     public AudioSource getCurrentSong() {
         return currentSong;
+    }
+    
+    public RepeatMode getRepeatMode() {
+        return repeatMode;
+    }
+    
+    public void setRepeatMode(RepeatMode repeatMode) {
+        this.repeatMode = repeatMode;
+    }
+    
+    public boolean isShuffle() {
+        return shuffle;
+    }
+    
+    public void setShuffle(boolean shuffle) {
+        this.shuffle = shuffle;
     }
 
     /**
@@ -93,19 +114,23 @@ public class AudioPlayer implements RefreshListener {
         listenerList.remove(listener);
     }
 
-    /**
-     * Converts the playerstate from ints to PlayerState enums
-     */
-    public MediaPlaybackState getStatus() {
+    public MediaPlaybackState getState() {
         return _mplayer.getCurrentState();
     }
 
     /**
      * Loads a AudioSource into the player to play next
      */
-    public void loadSong(AudioSource source) {
+    public void loadSong(AudioSource source, boolean play) {
         currentSong = source;
         notifyOpened(source);
+        if (play) {
+            playSong();
+        }
+    }
+    
+    public void loadSong(AudioSource audioSource) {
+        loadSong(audioSource, false);
     }
 
     /**
@@ -120,23 +145,15 @@ public class AudioPlayer implements RefreshListener {
             _mplayer.open(currentSong.getURL().toString());
         }
 
-        notifyEvent(getStatus());
+        notifyState(getState());
     }
 
     /**
-     * Pausing the current song
+     * Toggle pause the current song
      */
-    public void pause() {
+    public void togglePause() {
         _mplayer.togglePause();
-        notifyEvent(getStatus());
-    }
-
-    /**
-     * Unpauses the current song
-     */
-    public void unpause() {
-        _mplayer.togglePause();
-        notifyEvent(getStatus());
+        notifyState(getState());
     }
 
     /**
@@ -144,7 +161,7 @@ public class AudioPlayer implements RefreshListener {
      */
     public void stop() {
         _mplayer.stop();
-        notifyEvent(getStatus());
+        notifyState(getState());
     }
 
     /**
@@ -152,7 +169,7 @@ public class AudioPlayer implements RefreshListener {
      */
     public void seek(float timeInSecs) {
         _mplayer.seek(timeInSecs);
-        notifyEvent(getStatus());
+        notifyState(getState());
     }
 
     /**
@@ -189,10 +206,10 @@ public class AudioPlayer implements RefreshListener {
      * @param value if the event was a modification such as a volume update,
      *        list the new value
      */
-    protected void notifyEvent(final MediaPlaybackState state) {
+    protected void notifyState(final MediaPlaybackState state) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                fireStateUpdated(state);
+                fireState(state);
             }
         });
     }
@@ -201,10 +218,10 @@ public class AudioPlayer implements RefreshListener {
      * fires a progress event off a new thread. This lets us safely fire events
      * off of the player thread while using a lock on the input stream
      */
-    protected void notifyProgress(final int bytesread) {
+    protected void notifyProgress(final float currentTimeInSecs) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                fireProgress(bytesread);
+                fireProgress(currentTimeInSecs);
             }
         });
     }
@@ -237,7 +254,7 @@ public class AudioPlayer implements RefreshListener {
      * to be aware of state transitions such as from OPENED -> PLAYING ->
      * STOPPED -> EOF
      */
-    protected void fireStateUpdated(MediaPlaybackState state) {
+    protected void fireState(MediaPlaybackState state) {
         for (AudioPlayerListener listener : listenerList) {
             listener.stateChange(this, state);
         }
@@ -248,6 +265,14 @@ public class AudioPlayer implements RefreshListener {
      * played
      */
     public void refresh() {
-        notifyEvent(getStatus());
+        notifyState(getState());
+    }
+    
+    private void handleNextSong() {
+        if (repeatMode == RepeatMode.Song) {
+            if (currentSong != null) {
+                loadSong(currentSong, true);
+            }
+        }
     }
 }

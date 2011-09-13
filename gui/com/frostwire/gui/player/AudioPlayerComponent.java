@@ -260,25 +260,8 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
      */
     public void refresh() {
         PLAYER.refresh();
-
-        //        if (getMediaPanel().getSize().width < fullSizeWidth) {
-        //            GUIMediator.safeInvokeLater(new Runnable() {
-        //                public void run() {
-        //                    //PROGRESS.setVisible(false);
-        //                    //VOLUME.setVisible(false);
-        //                }
-        //            });
-        //        } else {
-        //            GUIMediator.safeInvokeLater(new Runnable() {
-        //                public void run() {
-        //                    PROGRESS.setVisible(true);
-        //                    VOLUME.setVisible(true);
-        //                }
-        //            });
-        //        }
     }
 
-    // inherit doc comment
     public void updateTheme() {
         PLAY_BUTTON.updateTheme();
         PAUSE_BUTTON.updateTheme();
@@ -286,19 +269,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
         NEXT_BUTTON.updateTheme();
         PREV_BUTTON.updateTheme();
         PROGRESS.updateTheme();
-        PROGRESS.setString(I18n.tr("FrostWire Media Player"));
         VOLUME.updateTheme();
-    }
-
-    /**
-     * Updates the displayed String on the progress bar, on the Swing thread.
-     */
-    private void setProgressString(final String update) {
-        GUIMediator.safeInvokeLater(new Runnable() {
-            public void run() {
-                PROGRESS.setString(update);
-            }
-        });
     }
 
     /**
@@ -366,22 +337,15 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
 
         // load song on Executor thread
         SONG_QUEUE.execute(new SongLoader(audioSource));
-
-        // try using the name passed in to the function, if not fallback on
-        //  the a default string
-        if (displayName != null && displayName.length() > 0)
-            currentFileName = generateNameDisplay(displayName);
-        else
-            currentFileName = generateNameDisplay(STREAMING_AUDIO);
     }
 
     /**
      * Begins playing the loaded song
      */
     public void play() {
-        if (PLAYER.getStatus() == MediaPlaybackState.Paused || PLAYER.getStatus() == MediaPlaybackState.Playing)
-            PLAYER.unpause();
-        else {
+        if (PLAYER.getState() == MediaPlaybackState.Paused || PLAYER.getState() == MediaPlaybackState.Playing) {
+            PLAYER.togglePause();
+        } else {
             loadSong(currentPlayListItem, playOneTime);
         }
     }
@@ -390,10 +354,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
      * Pauses the currently playing audio file.
      */
     public void pauseSong() {
-        if (PLAYER.getStatus() == MediaPlaybackState.Paused)
-            PLAYER.unpause();
-        else
-            PLAYER.pause();
+        PLAYER.togglePause();
     }
 
     /**
@@ -404,12 +365,11 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     }
 
     public void seek(float percent) {
-
-        if (audioProperties.getLength() == -1) {
+        if (audioProperties == null || audioProperties.getLength() == -1) {
             return;
         }
 
-        if (audioProperties != null && audioProperties.isSeekable()) {
+        if (audioProperties.isSeekable()) {
             float timeInSecs = audioProperties.getLength() * percent;
             PLAYER.seek(timeInSecs);
         }
@@ -421,19 +381,6 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
      */
     public AudioSource getCurrentSong() {
         return currentPlayListItem;
-    }
-
-    /**
-     * Modifies the filename that is displayed in the progress bar. If the name
-     * is too large to display in one string, *** are added to the end of the
-     * name and it rotates like a ticker display
-     */
-    private String generateNameDisplay(String filename) {
-        if (filename.length() > STRING_SIZE_TO_SHOW) {
-            filename += " *** " + filename + " *** ";
-        }
-        currBeginIndex = -1;
-        return filename;
     }
 
     /**
@@ -464,7 +411,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
         if (audioProperties == null || audioProperties.getLength() == -1) {
             return;
         }
-        
+
         _progress = currentTimeInSecs;
 
         float progressUpdate = ((PROGRESS.getMaximum() * currentTimeInSecs) / audioProperties.getLength());
@@ -482,12 +429,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
      * OPENED->PLAYING->PAUSED->PLAYING->STOPPED->EOF, etc..
      */
     public void stateChange(AudioPlayer audioPlayer, MediaPlaybackState state) {
-
-        if (audioProperties == null) {
-            loadAudioProperties();
-        }
-
-        if (audioProperties != null && audioProperties.getLength() == -1) {
+        if (audioProperties == null || audioProperties.getLength() == -1) {
             return;
         }
 
@@ -715,8 +657,8 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     }
 
     private boolean isPlaying() {
-        return !(PLAYER.getStatus() == MediaPlaybackState.Stopped || PLAYER.getStatus() == MediaPlaybackState.Uninitialized
-                || PLAYER.getStatus() == MediaPlaybackState.Paused || PLAYER.getStatus() == MediaPlaybackState.Failed);
+        return !(PLAYER.getState() == MediaPlaybackState.Stopped || PLAYER.getState() == MediaPlaybackState.Uninitialized
+                || PLAYER.getState() == MediaPlaybackState.Paused || PLAYER.getState() == MediaPlaybackState.Failed);
     }
 
     /** Attempts to stop a song if its playing any song
@@ -726,7 +668,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
      * */
     public boolean attemptStop() {
 
-        if (PLAYER.getStatus() != MediaPlaybackState.Stopped) {
+        if (PLAYER.getState() != MediaPlaybackState.Stopped) {
             PLAYER.stop();
             return true;
         }
@@ -853,7 +795,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
             if (audio != null)
                 PLAYER.loadSong(audio);
 
-            if (PLAYER.getStatus() != MediaPlaybackState.Playing)
+            if (PLAYER.getState() != MediaPlaybackState.Playing)
                 PLAYER.stop();
 
             try {

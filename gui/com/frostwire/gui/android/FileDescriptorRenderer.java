@@ -254,7 +254,7 @@ public class FileDescriptorRenderer extends JPanel implements ListCellRenderer {
 	
 	private static void play(Device device, FileDescriptor fileDescriptor) {
 	    
-	    if (PLAYER.getStatus() == MediaPlaybackState.Playing && fileDescriptor.equals(LAST_PLAY)) {
+	    if (PLAYER.getState() == MediaPlaybackState.Playing && fileDescriptor.equals(LAST_PLAY)) {
 	        LAST_PLAY = null;
 	        AndroidMediator.instance().getDeviceExplorer().getModel().update(fileDescriptor);
 	        PLAYER.stop();
