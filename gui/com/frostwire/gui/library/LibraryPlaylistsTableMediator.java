@@ -6,6 +6,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -85,6 +86,16 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     }
 
     public AudioSource getNextRandomSong() {
+        int n = DATA_MODEL.getRowCount();
+        int index = new Random(System.currentTimeMillis()).nextInt(n);
+        try {
+            LibraryPlaylistsTableDataLine line = DATA_MODEL.get(index);
+            if (line != null) {
+                return new AudioSource(line.getFile());
+            }
+        } catch (Exception e) {
+            return null;
+        }
         return null;
     }
 
@@ -110,6 +121,23 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     }
 
     public AudioSource getNextSong(AudioSource currentSong) {
+        int n = DATA_MODEL.getRowCount();
+        for (int i = 0; i < n; i++) {
+            try {
+                LibraryPlaylistsTableDataLine line = DATA_MODEL.get(i);
+                if (line != null) {
+                    if (currentSong.getFile().equals(line.getFile())) {
+                        if (i < n - 1) {
+                            return new AudioSource(DATA_MODEL.get(i + 1).getFile());
+                        } else { // the last, returns null
+                            return null;
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                return null;
+            }
+        }
         return null;
     }
 
