@@ -13,6 +13,7 @@ import javax.swing.JSplitPane;
 
 import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.PlaylistItem;
+import com.frostwire.gui.player.AudioSource;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.util.DividerLocationSettingUpdater;
@@ -53,6 +54,8 @@ public class LibraryMediator {
     private CardLayout _tablesViewLayout = new CardLayout();
     private JPanel _tablesPanel;
 	private JSplitPane splitPane;
+	
+	private AbstractLibraryTableMediator<?, ?, ?> currentTableMediator;
 
     public LibraryMediator() {
         GUIMediator.setSplashScreenString(I18n.tr("Loading Library Window..."));
@@ -128,11 +131,13 @@ public class LibraryMediator {
     }
     
     public void updateTableFiles(DirectoryHolder dirHolder) {
+        currentTableMediator = LibraryFilesTableMediator.instance();
         LibraryFilesTableMediator.instance().updateTableFiles(dirHolder);
         showView(FILES_TABLE_KEY);
     }
     
     public void updateTableItems(List<PlaylistItem> items) {
+        currentTableMediator = LibraryPlaylistsTableMediator.instance();
         LibraryPlaylistsTableMediator.instance().updateTableItems(items);
         showView(PLAYLISTS_TABLE_KEY);
     }
@@ -187,5 +192,17 @@ public class LibraryMediator {
      */
     public void replaintSplitPane() {
     	splitPane.repaint();
+    }
+
+    public AudioSource getNextRandomSong() {
+        return currentTableMediator != null ? currentTableMediator.getNextRandomSong() : null;
+    }
+
+    public AudioSource getNextContinuousSong() {
+        return currentTableMediator != null ? currentTableMediator.getNextContinuousSong() : null;
+    }
+
+    public AudioSource getNextSong() {
+        return currentTableMediator != null ? currentTableMediator.getNextSong() : null;
     }
 }

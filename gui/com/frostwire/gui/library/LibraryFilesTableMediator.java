@@ -34,6 +34,7 @@ import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
 import com.frostwire.gui.player.AudioMetaData;
+import com.frostwire.gui.player.AudioSource;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.CheckBoxList;
@@ -63,7 +64,7 @@ import com.limegroup.gnutella.util.QueryUtils;
  * controlling access to the table and the various table properties.
  * It is the Mediator to the Table part of the Library display.
  */
-final class LibraryFilesTableMediator extends AbstractTableMediator<LibraryFilesTableModel, LibraryFilesTableDataLine, File> {
+final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<LibraryFilesTableModel, LibraryFilesTableDataLine, File> {
 
     /**
      * Variables so the PopupMenu & ButtonRow can have the same listeners
@@ -85,6 +86,18 @@ final class LibraryFilesTableMediator extends AbstractTableMediator<LibraryFiles
             INSTANCE = new LibraryFilesTableMediator();
         }
         return INSTANCE;
+    }
+    
+    public AudioSource getNextRandomSong() {
+        return null;
+    }
+
+    public AudioSource getNextContinuousSong() {
+        return null;
+    }
+
+    public AudioSource getNextSong() {
+        return null;
     }
 
     /**

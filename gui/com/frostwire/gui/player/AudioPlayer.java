@@ -10,6 +10,7 @@ import javax.swing.SwingUtilities;
 import org.gudy.azureus2.core3.util.UrlUtils;
 import org.limewire.util.OSUtils;
 
+import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.mplayer.MPlayer;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.frostwire.mplayer.PositionListener;
@@ -32,6 +33,7 @@ public class AudioPlayer implements RefreshListener {
     private AudioSource currentSong;
     private RepeatMode repeatMode;
     private boolean shuffle;
+    private boolean playNextSong;
 
     private static AudioPlayer instance;
 
@@ -78,6 +80,7 @@ public class AudioPlayer implements RefreshListener {
         
         repeatMode = RepeatMode.All;
         shuffle = false;
+        playNextSong = true;
     }
 
     public AudioSource getCurrentSong() {
@@ -121,8 +124,9 @@ public class AudioPlayer implements RefreshListener {
     /**
      * Loads a AudioSource into the player to play next
      */
-    public void loadSong(AudioSource source, boolean play) {
+    public void loadSong(AudioSource source, boolean play, boolean playNextSong) {
         currentSong = source;
+        this.playNextSong = playNextSong;
         notifyOpened(source);
         if (play) {
             playSong();
@@ -130,7 +134,7 @@ public class AudioPlayer implements RefreshListener {
     }
     
     public void loadSong(AudioSource audioSource) {
-        loadSong(audioSource, false);
+        loadSong(audioSource, false, false);
     }
 
     /**
@@ -269,10 +273,24 @@ public class AudioPlayer implements RefreshListener {
     }
     
     private void handleNextSong() {
-        if (repeatMode == RepeatMode.Song) {
-            if (currentSong != null) {
-                loadSong(currentSong, true);
-            }
+        if (!playNextSong || getState() != MediaPlaybackState.Playing) {
+            return;
+        }
+        
+        AudioSource song = null;
+        
+        if (getRepeatMode() == RepeatMode.Song) {
+            song = currentSong;
+        } else if (isShuffle()) {
+            song = LibraryMediator.instance().getNextRandomSong();
+        } else if (getRepeatMode() == RepeatMode.All) {
+            song = LibraryMediator.instance().getNextContinuousSong();
+        } else {
+            song = LibraryMediator.instance().getNextSong();
+        }
+        
+        if (song != null) {
+            loadSong(song, true, true);
         }
     }
 }

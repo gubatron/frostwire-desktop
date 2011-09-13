@@ -60,7 +60,7 @@ import com.limegroup.gnutella.gui.util.GUILauncher.LaunchableProvider;
  * controlling access to the table and the various table properties.
  * It is the Mediator to the Table part of the Library display.
  */
-final class LibraryPlaylistsTableMediator extends AbstractTableMediator<LibraryPlaylistsTableModel, LibraryPlaylistsTableDataLine, PlaylistItem> {
+final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<LibraryPlaylistsTableModel, LibraryPlaylistsTableDataLine, PlaylistItem> {
 
     /**
      * Variables so the PopupMenu & ButtonRow can have the same listeners
@@ -82,6 +82,18 @@ final class LibraryPlaylistsTableMediator extends AbstractTableMediator<LibraryP
             INSTANCE = new LibraryPlaylistsTableMediator();
         }
         return INSTANCE;
+    }
+    
+    public AudioSource getNextRandomSong() {
+        return null;
+    }
+
+    public AudioSource getNextContinuousSong() {
+        return null;
+    }
+
+    public AudioSource getNextSong() {
+        return null;
     }
 
     private PlaylistItemNameRenderer playlistItemNameRenderer;
