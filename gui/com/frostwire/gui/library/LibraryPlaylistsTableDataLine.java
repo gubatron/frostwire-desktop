@@ -4,12 +4,10 @@ import java.io.File;
 
 import com.frostwire.alexandria.PlaylistItem;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.dnd.FileTransfer;
-import com.limegroup.gnutella.gui.tables.AbstractDataLine;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
 
-public final class LibraryPlaylistsTableDataLine extends AbstractDataLine<PlaylistItem> implements FileTransfer {
+public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDataLine<PlaylistItem> {
     
     /**
      * Name column

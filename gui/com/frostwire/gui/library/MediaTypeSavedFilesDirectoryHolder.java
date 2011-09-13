@@ -16,6 +16,10 @@ public class MediaTypeSavedFilesDirectoryHolder implements DirectoryHolder {
 		this.type = type;
 	}
 	
+	public MediaType getMediaType() {
+	    return type;
+	}
+	
 	public boolean accept(File file) {
 		return type.matches(file.getName());
 	}

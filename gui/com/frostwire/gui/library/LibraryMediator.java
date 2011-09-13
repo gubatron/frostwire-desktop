@@ -194,8 +194,8 @@ public class LibraryMediator {
     	splitPane.repaint();
     }
 
-    public AudioSource getNextRandomSong() {
-        return currentTableMediator != null ? currentTableMediator.getNextRandomSong() : null;
+    public AudioSource getNextRandomSong(AudioSource currentSong) {
+        return currentTableMediator != null ? currentTableMediator.getNextRandomSong(currentSong) : null;
     }
 
     public AudioSource getNextContinuousSong(AudioSource currentSong) {

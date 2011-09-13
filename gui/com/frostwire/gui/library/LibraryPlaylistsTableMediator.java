@@ -35,6 +35,7 @@ import com.frostwire.gui.bittorrent.CreateTorrentDialog;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.limegroup.gnutella.FileDesc;
+import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.CheckBoxList;
 import com.limegroup.gnutella.gui.CheckBoxListPanel;
@@ -83,62 +84,6 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             INSTANCE = new LibraryPlaylistsTableMediator();
         }
         return INSTANCE;
-    }
-
-    public AudioSource getNextRandomSong() {
-        int n = DATA_MODEL.getRowCount();
-        int index = new Random(System.currentTimeMillis()).nextInt(n);
-        try {
-            LibraryPlaylistsTableDataLine line = DATA_MODEL.get(index);
-            if (line != null) {
-                return new AudioSource(line.getFile());
-            }
-        } catch (Exception e) {
-            return null;
-        }
-        return null;
-    }
-
-    public AudioSource getNextContinuousSong(AudioSource currentSong) {
-        int n = DATA_MODEL.getRowCount();
-        for (int i = 0; i < n; i++) {
-            try {
-                LibraryPlaylistsTableDataLine line = DATA_MODEL.get(i);
-                if (line != null) {
-                    if (currentSong.getFile().equals(line.getFile())) {
-                        if (i < n - 1) {
-                            return new AudioSource(DATA_MODEL.get(i + 1).getFile());
-                        } else { // the last, returns the first
-                            return new AudioSource(DATA_MODEL.get(0).getFile());
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                return null;
-            }
-        }
-        return null;
-    }
-
-    public AudioSource getNextSong(AudioSource currentSong) {
-        int n = DATA_MODEL.getRowCount();
-        for (int i = 0; i < n; i++) {
-            try {
-                LibraryPlaylistsTableDataLine line = DATA_MODEL.get(i);
-                if (line != null) {
-                    if (currentSong.getFile().equals(line.getFile())) {
-                        if (i < n - 1) {
-                            return new AudioSource(DATA_MODEL.get(i + 1).getFile());
-                        } else { // the last, returns null
-                            return null;
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                return null;
-            }
-        }
-        return null;
     }
 
     private PlaylistItemNameRenderer playlistItemNameRenderer;
@@ -267,6 +212,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
      */
     private LibraryPlaylistsTableMediator() {
         super("LIBRARY_PLAYLISTS_TABLE");
+        mediaType = MediaType.getAudioMediaType();
         ThemeMediator.addThemeObserver(this);
 
         TABLE.setTransferHandler(new MulticastTransferHandler(DNDUtils.DEFAULT_TRANSFER_HANDLERS));

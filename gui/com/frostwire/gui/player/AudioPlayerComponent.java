@@ -329,11 +329,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
             return;
         }
 
-        audioProperties = audioSource.getMetaData();
-
-        if (audioProperties == null) {
-            loadAudioProperties();
-        }
+        loadAudioProperties();
 
         // load song on Executor thread
         SONG_QUEUE.execute(new SongLoader(audioSource));
@@ -389,11 +385,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
      */
     public void songOpened(AudioPlayer audioPlayer, AudioSource audioSource) {
         currentPlayListItem = audioSource;
-        audioProperties = audioSource.getMetaData();
-
-        if (audioProperties == null) {
-            loadAudioProperties();
-        }
+        loadAudioProperties();
 
         setVolumeValue();
         if (audioProperties != null && audioProperties.isSeekable()) {

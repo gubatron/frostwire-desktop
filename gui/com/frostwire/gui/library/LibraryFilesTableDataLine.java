@@ -12,8 +12,6 @@ import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
-import com.limegroup.gnutella.gui.dnd.FileTransfer;
-import com.limegroup.gnutella.gui.tables.AbstractDataLine;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
@@ -23,7 +21,7 @@ import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
  * the necessary Library info.
  * @author Sam Berlin
  */
-public final class LibraryFilesTableDataLine extends AbstractDataLine<File> implements FileTransfer {
+public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLine<File> {
 
     /**
      * Whether or not tooltips will display XML info.

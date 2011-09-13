@@ -36,6 +36,7 @@ import com.frostwire.gui.bittorrent.CreateTorrentDialog;
 import com.frostwire.gui.player.AudioMetaData;
 import com.frostwire.gui.player.AudioSource;
 import com.limegroup.gnutella.FileDesc;
+import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.CheckBoxList;
 import com.limegroup.gnutella.gui.CheckBoxListPanel;
@@ -86,18 +87,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             INSTANCE = new LibraryFilesTableMediator();
         }
         return INSTANCE;
-    }
-    
-    public AudioSource getNextRandomSong() {
-        return null;
-    }
-
-    public AudioSource getNextContinuousSong(AudioSource currentSong) {
-        return null;
-    }
-
-    public AudioSource getNextSong(AudioSource currentSong) {
-        return null;
     }
 
     /**
@@ -282,6 +271,11 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     void updateTableFiles(DirectoryHolder dirHolder) {
         if (dirHolder == null)
             return;
+        if (dirHolder instanceof MediaTypeSavedFilesDirectoryHolder) {
+            mediaType = ((MediaTypeSavedFilesDirectoryHolder) dirHolder).getMediaType();
+        } else {
+            mediaType = MediaType.getAnyTypeMediaType();
+        }
         clearTable();
         File[] files = dirHolder.getFiles();
 

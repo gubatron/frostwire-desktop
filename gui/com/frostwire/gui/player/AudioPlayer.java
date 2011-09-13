@@ -46,7 +46,7 @@ public class AudioPlayer implements RefreshListener {
 
     private AudioPlayer() {
         String playerPath = "";
-        
+
         // Whether or not we're running from source or from a binary distribution
         boolean isRelease = !FrostWireUtils.getFrostWireJarPath().contains("frostwire.desktop");
 
@@ -77,28 +77,28 @@ public class AudioPlayer implements RefreshListener {
                 }
             }
         });
-        
+
         repeatMode = RepeatMode.All;
-        shuffle = false;
+        shuffle = true;
         playNextSong = true;
     }
 
     public AudioSource getCurrentSong() {
         return currentSong;
     }
-    
+
     public RepeatMode getRepeatMode() {
         return repeatMode;
     }
-    
+
     public void setRepeatMode(RepeatMode repeatMode) {
         this.repeatMode = repeatMode;
     }
-    
+
     public boolean isShuffle() {
         return shuffle;
     }
-    
+
     public void setShuffle(boolean shuffle) {
         this.shuffle = shuffle;
     }
@@ -132,7 +132,7 @@ public class AudioPlayer implements RefreshListener {
             playSong();
         }
     }
-    
+
     public void loadSong(AudioSource audioSource) {
         loadSong(audioSource, false, false);
     }
@@ -185,6 +185,11 @@ public class AudioPlayer implements RefreshListener {
      */
     public void setVolume(double fGain) {
         _mplayer.setVolume((int) (fGain * 200));
+    }
+
+    public static boolean isPlayableFile(File file) {
+        String name = file.getName().toLowerCase();
+        return name.endsWith(".mp3") || name.endsWith(".ogg") || name.endsWith(".wav") || name.endsWith(".wma") || name.endsWith(".m4a");
     }
 
     /**
@@ -271,24 +276,24 @@ public class AudioPlayer implements RefreshListener {
     public void refresh() {
         notifyState(getState());
     }
-    
+
     private void handleNextSong() {
         if (!playNextSong) {
             return;
         }
-        
+
         AudioSource song = null;
-        
+
         if (getRepeatMode() == RepeatMode.Song) {
             song = currentSong;
         } else if (isShuffle()) {
-            song = LibraryMediator.instance().getNextRandomSong();
+            song = LibraryMediator.instance().getNextRandomSong(currentSong);
         } else if (getRepeatMode() == RepeatMode.All) {
             song = LibraryMediator.instance().getNextContinuousSong(currentSong);
         } else {
             song = LibraryMediator.instance().getNextSong(currentSong);
         }
-        
+
         if (song != null) {
             loadSong(song, true, true);
         }

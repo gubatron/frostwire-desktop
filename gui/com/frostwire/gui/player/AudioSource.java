@@ -15,8 +15,6 @@ public class AudioSource {
     private final File file;
 
     private final URL url;
-    
-    private final AudioMetaData metaData;
 
     public AudioSource(File file, AudioMetaData metaData) {
         if (file == null) {
@@ -25,7 +23,6 @@ public class AudioSource {
 
         this.file = file;
         this.url = null;
-        this.metaData = metaData;
     }
     
     public AudioSource(File file) {
@@ -39,7 +36,6 @@ public class AudioSource {
 
         this.file = null;
         this.url = url;
-        this.metaData = null;
     }
 
     public File getFile() {
@@ -55,9 +51,5 @@ public class AudioSource {
             } catch (MalformedURLException e) {
             }
         return null;
-    }
-    
-    public AudioMetaData getMetaData() {
-        return metaData;
     }
 }
