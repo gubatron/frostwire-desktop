@@ -13,7 +13,7 @@ public abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>
     
     public abstract AudioSource getNextRandomSong();
 
-    public abstract AudioSource getNextContinuousSong();
+    public abstract AudioSource getNextContinuousSong(AudioSource currentSong);
 
-    public abstract AudioSource getNextSong();
+    public abstract AudioSource getNextSong(AudioSource currentSong);
 }

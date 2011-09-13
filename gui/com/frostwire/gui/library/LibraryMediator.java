@@ -198,11 +198,11 @@ public class LibraryMediator {
         return currentTableMediator != null ? currentTableMediator.getNextRandomSong() : null;
     }
 
-    public AudioSource getNextContinuousSong() {
-        return currentTableMediator != null ? currentTableMediator.getNextContinuousSong() : null;
+    public AudioSource getNextContinuousSong(AudioSource currentSong) {
+        return currentTableMediator != null ? currentTableMediator.getNextContinuousSong(currentSong) : null;
     }
 
-    public AudioSource getNextSong() {
-        return currentTableMediator != null ? currentTableMediator.getNextSong() : null;
+    public AudioSource getNextSong(AudioSource currentSong) {
+        return currentTableMediator != null ? currentTableMediator.getNextSong(currentSong) : null;
     }
 }

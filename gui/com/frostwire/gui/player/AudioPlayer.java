@@ -65,12 +65,12 @@ public class AudioPlayer implements RefreshListener {
 
         MPlayer.initialise(new File(playerPath));
         _mplayer = new MPlayer();
-        _mplayer.setPositionListener(new PositionListener() {
+        _mplayer.addPositionListener(new PositionListener() {
             public void positionChanged(float currentTimeInSecs) {
                 notifyProgress(currentTimeInSecs);
             }
         });
-        _mplayer.setStateListener(new StateListener() {
+        _mplayer.addStateListener(new StateListener() {
             public void stateChanged(MediaPlaybackState newState) {
                 if (newState == MediaPlaybackState.Closed) { // This is the case mplayer is done with the current file
                     handleNextSong();
@@ -273,7 +273,7 @@ public class AudioPlayer implements RefreshListener {
     }
     
     private void handleNextSong() {
-        if (!playNextSong || getState() != MediaPlaybackState.Playing) {
+        if (!playNextSong) {
             return;
         }
         
@@ -284,9 +284,9 @@ public class AudioPlayer implements RefreshListener {
         } else if (isShuffle()) {
             song = LibraryMediator.instance().getNextRandomSong();
         } else if (getRepeatMode() == RepeatMode.All) {
-            song = LibraryMediator.instance().getNextContinuousSong();
+            song = LibraryMediator.instance().getNextContinuousSong(currentSong);
         } else {
-            song = LibraryMediator.instance().getNextSong();
+            song = LibraryMediator.instance().getNextSong(currentSong);
         }
         
         if (song != null) {

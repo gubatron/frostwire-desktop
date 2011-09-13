@@ -92,11 +92,11 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         return null;
     }
 
-    public AudioSource getNextContinuousSong() {
+    public AudioSource getNextContinuousSong(AudioSource currentSong) {
         return null;
     }
 
-    public AudioSource getNextSong() {
+    public AudioSource getNextSong(AudioSource currentSong) {
         return null;
     }
 

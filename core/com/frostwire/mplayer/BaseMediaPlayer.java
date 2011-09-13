@@ -342,8 +342,6 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 				listener.stateChanged( newState);
 			}
 		}
-		
-		
 	}
 	
 	

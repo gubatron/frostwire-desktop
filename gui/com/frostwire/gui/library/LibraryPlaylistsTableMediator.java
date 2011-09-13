@@ -83,16 +83,33 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         }
         return INSTANCE;
     }
-    
+
     public AudioSource getNextRandomSong() {
         return null;
     }
 
-    public AudioSource getNextContinuousSong() {
+    public AudioSource getNextContinuousSong(AudioSource currentSong) {
+        int n = DATA_MODEL.getRowCount();
+        for (int i = 0; i < n; i++) {
+            try {
+                LibraryPlaylistsTableDataLine line = DATA_MODEL.get(i);
+                if (line != null) {
+                    if (currentSong.getFile().equals(line.getFile())) {
+                        if (i < n - 1) {
+                            return new AudioSource(DATA_MODEL.get(i + 1).getFile());
+                        } else { // the last, returns the first
+                            return new AudioSource(DATA_MODEL.get(0).getFile());
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                return null;
+            }
+        }
         return null;
     }
 
-    public AudioSource getNextSong() {
+    public AudioSource getNextSong(AudioSource currentSong) {
         return null;
     }
 
@@ -185,10 +202,10 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         JMenu menu = new SkinMenu(I18n.tr("Search"));
 
         if (dl != null) {
-//            File f = dl.getInitializeObject();
-//            String keywords = QueryUtils.createQueryString(f.getName());
-//            if (keywords.length() > 2)
-//                menu.add(new SkinMenuItem(new SearchAction(keywords)));
+            //            File f = dl.getInitializeObject();
+            //            String keywords = QueryUtils.createQueryString(f.getName());
+            //            if (keywords.length() > 2)
+            //                menu.add(new SkinMenuItem(new SearchAction(keywords)));
 
             //    		LimeXMLDocument doc = dl.getXMLDocument();
             //    		if(doc != null) {
@@ -223,7 +240,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     private LibraryPlaylistsTableMediator() {
         super("LIBRARY_PLAYLISTS_TABLE");
         ThemeMediator.addThemeObserver(this);
-        
+
         TABLE.setTransferHandler(new MulticastTransferHandler(DNDUtils.DEFAULT_TRANSFER_HANDLERS));
     }
 
@@ -242,7 +259,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     public JComponent getComponent() {
         return null;
     }
-    
+
     @Override
     protected void setDefaultRenderers() {
         super.setDefaultRenderers();
@@ -524,18 +541,17 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     public void handleActionKey() {
         playSong();
     }
-    
+
     private void playSong() {
         LibraryPlaylistsTableDataLine line = DATA_MODEL.get(TABLE.getSelectedRow());
-        if(line == null) {
+        if (line == null) {
             return;
         }
-            
+
         //PlayListItem f = line.getPlayListItem();
         //MODEL.setCurrentSong(f);
         //MediaPlayerComponent.getInstance().loadSong(f);
-        AudioPlayer.instance().loadSong(new AudioSource(line.getFile()));
-        AudioPlayer.instance().playSong();
+        AudioPlayer.instance().loadSong(new AudioSource(line.getFile()), true, true);
     }
 
     /**
@@ -611,7 +627,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             ENQUEUE_ACTION.setEnabled(false);
 
         //RENAME_ACTION.setEnabled(LibraryMediator.isRenameEnabled() && sel.length == 1);
-        
+
         LibraryMediator.instance().getLibraryCoverArt().setPlaylistItem(getSelectedLibraryLines()[0].getInitializeObject());
     }
 
@@ -640,12 +656,12 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     }
 
     public boolean setFileSelected(File file) {
-//        int i = DATA_MODEL.getRow(file);
-//        if (i != -1) {
-//            TABLE.setSelectedRow(i);
-//            TABLE.ensureSelectionVisible();
-//            return true;
-//        }
+        //        int i = DATA_MODEL.getRow(file);
+        //        if (i != -1) {
+        //            TABLE.setSelectedRow(i);
+        //            TABLE.ensureSelectionVisible();
+        //            return true;
+        //        }
         return false;
     }
 
