@@ -26,6 +26,7 @@ import javax.swing.ToolTipManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
 import com.frostwire.alexandria.Library;
@@ -142,6 +143,13 @@ public class LibraryPlaylists extends JPanel {
         _list.setVisibleRowCount(-1);
         ToolTipManager.sharedInstance().registerComponent(_list);
         
+        _list.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                list_keyPressed(e);
+            }
+        });
+        
         _textName = new JTextField();
         _textName.addKeyListener(new KeyAdapter() {
             @Override
@@ -154,7 +162,25 @@ public class LibraryPlaylists extends JPanel {
         _list.add(_textName);
     }
     
-    protected void textName_keyPressed(KeyEvent e) {
+    protected void list_keyPressed(KeyEvent e) {
+        int key = e.getKeyCode();
+        if (key == KeyEvent.VK_ESCAPE) {
+            cancelEdit();
+        } else if (key == KeyEvent.VK_ENTER) {
+            if (OSUtils.isMacOSX()) {
+                actionStartRename();
+            }
+        } else if (key == KeyEvent.VK_F2) {
+            if (!OSUtils.isMacOSX()) {
+                actionStartRename();
+            }
+		} else if (key == KeyEvent.VK_DELETE
+				|| (OSUtils.isMacOSX() && key == KeyEvent.VK_BACK_SPACE)) {
+			deleteAction.actionPerformed(null);
+        }
+	}
+
+	protected void textName_keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         if (_selectedIndexToRename != -1 && key == KeyEvent.VK_ENTER) {
             renameSelectedItem(_selectedIndexToRename);
@@ -365,6 +391,8 @@ public class LibraryPlaylists extends JPanel {
 
     private class LibraryFilesSelectionListener implements ListSelectionListener {
         public void valueChanged(ListSelectionEvent e) {
+        	cancelEdit();
+        	
             if (e.getValueIsAdjusting()) {
                 return;
             }
