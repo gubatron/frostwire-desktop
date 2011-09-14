@@ -5,16 +5,10 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.dnd.DropTarget;
-import java.awt.dnd.DropTargetAdapter;
-import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.InvalidDnDOperationException;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -31,14 +25,11 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.ToolTipManager;
 import javax.swing.TransferHandler;
-import javax.swing.TransferHandler.DropLocation;
-import javax.swing.TransferHandler.TransferSupport;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
-import com.frostwire.gui.android.DesktopListTransferable;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.MediaType;
@@ -46,7 +37,6 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
-import com.limegroup.gnutella.gui.dnd.TransferHandlerDropTargetListener;
 import com.limegroup.gnutella.gui.options.ConfigureOptionsAction;
 import com.limegroup.gnutella.gui.options.OptionsConstructor;
 import com.limegroup.gnutella.gui.search.NamedMediaType;
@@ -139,13 +129,6 @@ public class LibraryFiles extends JPanel {
         _list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         _list.setDragEnabled(true);
         _list.setTransferHandler(listTransferHandler);
-        //        new DropTarget(_list, new DropTargetAdapter() {
-        //            @Override
-        //            public void drop(DropTargetDropEvent dtde) {
-        //                System.out.println("drop");
-        //                dtde.acceptDrop(dtde.getDropAction());
-        //            }
-        //        });
         ToolTipManager.sharedInstance().registerComponent(_list);
     }
 
@@ -301,6 +284,7 @@ public class LibraryFiles extends JPanel {
                         }
                     }
                 } catch (InvalidDnDOperationException e) {
+                    // this case seems to be something special with the OS
                     return true;
                 } catch (Exception e) {
                     return false;

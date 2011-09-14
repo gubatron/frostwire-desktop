@@ -9,14 +9,12 @@ import java.util.Random;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.JOptionPane;
 
 import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.DataLineModel;
@@ -190,11 +188,7 @@ public abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            AbstractLibraryTableDataLine<?>[] lines = getSelectedLines();
-            for (int i = 0; i < lines.length; i++) {
-                AbstractLibraryTableDataLine<?> line = lines[i];
-                PlaylistUtils.addPlaylistItem(playlist, line.getFile());
-            }
+            PlaylistUtils.addToPlaylist(playlist, getSelectedLines());
         }
     }
 }

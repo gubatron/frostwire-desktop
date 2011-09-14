@@ -5,16 +5,20 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.dnd.InvalidDnDOperationException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.File;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
+import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -23,6 +27,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.ToolTipManager;
+import javax.swing.TransferHandler;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -31,9 +36,11 @@ import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRendere
 
 import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
+import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.LimeAction;
+import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.options.ConfigureOptionsAction;
 import com.limegroup.gnutella.gui.options.OptionsConstructor;
 import com.limegroup.gnutella.gui.tables.DefaultMouseListener;
@@ -55,6 +62,7 @@ public class LibraryPlaylists extends JPanel {
 
     private LibraryPlaylistsMouseObserver _listMouseObserver;
     private ListSelectionListener _listSelectionListener;
+    private ListTransferHandler listTransferHandler;
 
     private JList _list;
     private JScrollPane _scrollPane;
@@ -69,21 +77,21 @@ public class LibraryPlaylists extends JPanel {
     public LibraryPlaylists() {
         setupUI();
     }
-    
+
     public Dimension getRowDimension() {
         Rectangle rect = _list.getUI().getCellBounds(_list, 0, 0);
         return rect.getSize();
     }
-    
+
     public void addPlaylist(Playlist playlist) {
         LibraryPlaylistsListCell cell = new LibraryPlaylistsListCell(null, null, null, playlist, _selectedPlaylistAction);
         _model.addElement(cell);
     }
-    
+
     public void clearSelection() {
         _list.clearSelection();
     }
-    
+
     public Playlist getSelectedPlaylist() {
         LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) _list.getSelectedValue();
         return cell != null ? cell.getPlaylist() : null;
@@ -109,7 +117,7 @@ public class LibraryPlaylists extends JPanel {
         _popup.add(new SkinMenuItem(new ConfigureOptionsAction(OptionsConstructor.SHARED_KEY, I18n.tr("Configure Options"), I18n
                 .tr("You can configure the FrostWire\'s Options."))));
         _popup.add(new SkinMenuItem(deleteAction));
-        
+
     }
 
     private void setupModel() {
@@ -121,7 +129,7 @@ public class LibraryPlaylists extends JPanel {
         Library library = LibraryMediator.getLibrary();
 
         _selectedPlaylistAction = new SelectedPlaylistActionListener();
-        
+
         _model.addElement(_newPlaylistCell);
         for (Playlist playlist : library.getPlaylists()) {
             LibraryPlaylistsListCell cell = new LibraryPlaylistsListCell(null, null, null, playlist, _selectedPlaylistAction);
@@ -132,6 +140,7 @@ public class LibraryPlaylists extends JPanel {
     private void setupList() {
         _listMouseObserver = new LibraryPlaylistsMouseObserver();
         _listSelectionListener = new LibraryFilesSelectionListener();
+        listTransferHandler = new ListTransferHandler();
 
         _list = new JList(_model);
         _list.setCellRenderer(new LibraryPlaylistsCellRenderer());
@@ -141,15 +150,17 @@ public class LibraryPlaylists extends JPanel {
         _list.setLayoutOrientation(JList.VERTICAL);
         _list.setPrototypeCellValue(new LibraryPlaylistsListCell("test", "", null, null, null));
         _list.setVisibleRowCount(-1);
+        _list.setDragEnabled(true);
+        _list.setTransferHandler(listTransferHandler);
         ToolTipManager.sharedInstance().registerComponent(_list);
-        
+
         _list.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 list_keyPressed(e);
             }
         });
-        
+
         _textName = new JTextField();
         _textName.addKeyListener(new KeyAdapter() {
             @Override
@@ -158,10 +169,10 @@ public class LibraryPlaylists extends JPanel {
             }
         });
         _textName.setVisible(false);
-        
+
         _list.add(_textName);
     }
-    
+
     protected void list_keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_ESCAPE) {
@@ -174,13 +185,12 @@ public class LibraryPlaylists extends JPanel {
             if (!OSUtils.isMacOSX()) {
                 actionStartRename();
             }
-		} else if (key == KeyEvent.VK_DELETE
-				|| (OSUtils.isMacOSX() && key == KeyEvent.VK_BACK_SPACE)) {
-			deleteAction.actionPerformed(null);
+        } else if (key == KeyEvent.VK_DELETE || (OSUtils.isMacOSX() && key == KeyEvent.VK_BACK_SPACE)) {
+            deleteAction.actionPerformed(null);
         }
-	}
+    }
 
-	protected void textName_keyPressed(KeyEvent e) {
+    protected void textName_keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         if (_selectedIndexToRename != -1 && key == KeyEvent.VK_ENTER) {
             renameSelectedItem(_selectedIndexToRename);
@@ -202,7 +212,7 @@ public class LibraryPlaylists extends JPanel {
 
         LibraryMediator.instance().updateTableItems(playlist.getItems());
     }
-    
+
     private void actionStartRename() {
         cancelEdit();
         int index = _list.getSelectedIndex();
@@ -218,7 +228,7 @@ public class LibraryPlaylists extends JPanel {
 
         LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) _model.getElementAt(index);
         _selectedIndexToRename = cell.getPlaylist() != null ? index : -1;
-        
+
         String text = cell.getText();
 
         Rectangle rect = _list.getUI().getCellBounds(_list, index, index);
@@ -230,42 +240,42 @@ public class LibraryPlaylists extends JPanel {
         _textName.setText(text);
         _textName.setSelectionStart(0);
         _textName.setSelectionEnd(text.length());
-        
+
         _textName.setVisible(true);
 
         _textName.requestFocusInWindow();
         _textName.requestFocus();
     }
-    
+
     private void renameSelectedItem(int index) {
-        if (!_textName.isVisible() || _textName.getText().trim().length()==0) {
+        if (!_textName.isVisible() || _textName.getText().trim().length() == 0) {
             return;
         }
-        
-    	Playlist selectedPlaylist = getSelectedPlaylist();
-    	
-    	selectedPlaylist.setName(_textName.getText().trim());
-    	selectedPlaylist.save();
-    	
-    	_list.repaint();
+
+        Playlist selectedPlaylist = getSelectedPlaylist();
+
+        selectedPlaylist.setName(_textName.getText().trim());
+        selectedPlaylist.save();
+
+        _list.repaint();
         _textName.setVisible(false);
     }
-    
+
     private void createNewPlaylist() {
         if (!_textName.isVisible()) {
             return;
         }
-        
+
         String name = _textName.getText();
-        
+
         Library library = LibraryMediator.getLibrary();
-        
+
         Playlist playlist = library.newPlaylist(name, name);
         playlist.save();
         LibraryPlaylistsListCell cell = new LibraryPlaylistsListCell(null, null, null, playlist, _selectedPlaylistAction);
         _model.addElement(cell);
         _list.setSelectedValue(cell, true);
-        
+
         _textName.setVisible(false);
     }
 
@@ -389,26 +399,94 @@ public class LibraryPlaylists extends JPanel {
         }
     }
 
+    private final class ListTransferHandler extends TransferHandler {
+
+        private static final long serialVersionUID = -3874985752229848555L;
+
+        @Override
+        public boolean canImport(TransferSupport support) {
+            DataFlavor[] flavors = support.getDataFlavors();
+            if (DNDUtils.containsFileFlavors(flavors)) {
+                try {
+                    File[] files = DNDUtils.getFiles(support.getTransferable());
+                    for (File file : files) {
+                        if (!AudioPlayer.isPlayableFile(file)) {
+                            return false;
+                        }
+                    }
+                } catch (InvalidDnDOperationException e) {
+                    // this case seems to be something special with the OS
+                    return true;
+                } catch (Exception e) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        @Override
+        public boolean importData(TransferSupport support) {
+            if (!canImport(support)) {
+                return false;
+            }
+
+            DropLocation location = support.getDropLocation();
+            int index = _list.locationToIndex(location.getDropPoint());
+            if (index != -1) {
+                LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) _list.getModel().getElementAt(index);
+                if (cell.getPlaylist() == null) {
+                    try {
+                        File[] files = DNDUtils.getFiles(support.getTransferable());
+                        PlaylistUtils.createNewPlaylist(files);
+                        _list.setSelectedIndex(_list.getModel().getSize() - 1);
+                        refreshListCellSelection();
+                    } catch (Exception e) {
+                        return false;
+                    }
+                } else {
+                    try {
+                        Playlist playlist = cell.getPlaylist();
+                        File[] files = DNDUtils.getFiles(support.getTransferable());
+                        PlaylistUtils.addToPlaylist(playlist, files);
+                        _list.setSelectedIndex(index);
+                        refreshListCellSelection();
+                    } catch (Exception e) {
+                        return false;
+                    }
+                }
+            } else {
+                return false;
+            }
+
+            return true;
+        }
+
+        @Override
+        public int getSourceActions(JComponent c) {
+            return COPY;
+        }
+    }
+
     private class LibraryFilesSelectionListener implements ListSelectionListener {
         public void valueChanged(ListSelectionEvent e) {
-        	cancelEdit();
-        	
-            if (e!=null && e.getValueIsAdjusting()) {
+            cancelEdit();
+
+            if (e != null && e.getValueIsAdjusting()) {
                 return;
             }
-            
+
             LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) _list.getSelectedValue();
 
             if (cell == null) {
                 return;
             }
-            
+
             LibraryMediator.instance().getLibraryFiles().clearSelection();
 
             if (cell.getAction() != null) {
                 cell.getAction().actionPerformed(null);
             }
-            
+
             LibraryMediator.instance().getLibrarySearch().clear();
         }
     }
@@ -456,7 +534,7 @@ public class LibraryPlaylists extends JPanel {
             //            GUIMediator.launchExplorer(directory);        
         }
     }
-    
+
     private class DeleteAction extends AbstractAction {
         /**
          * 
@@ -470,29 +548,26 @@ public class LibraryPlaylists extends JPanel {
         }
 
         public void actionPerformed(ActionEvent e) {
-        	
-        	Playlist selectedPlaylist = getSelectedPlaylist();
-        	
-        	if (selectedPlaylist != null) {
 
-        		int showConfirmDialog = JOptionPane.showConfirmDialog(GUIMediator.getAppFrame(), 
-            			I18n.tr("Are you sure you want to delete the playlist?\n(No files will be deleted)"), 
-            			I18n.tr("Are you sure?"), 
-            			JOptionPane.YES_NO_OPTION, 
-            			JOptionPane.QUESTION_MESSAGE);
-        		
-        		if (showConfirmDialog != JOptionPane.YES_OPTION) {
-        			return;
-        		}
+            Playlist selectedPlaylist = getSelectedPlaylist();
 
-        		
-        		selectedPlaylist.delete();
-        		_model.removeElement(_list.getSelectedValue());
-        		LibraryMediator.instance().clearLibraryTable();
-        	}
+            if (selectedPlaylist != null) {
+
+                int showConfirmDialog = JOptionPane.showConfirmDialog(GUIMediator.getAppFrame(),
+                        I18n.tr("Are you sure you want to delete the playlist?\n(No files will be deleted)"), I18n.tr("Are you sure?"),
+                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+                if (showConfirmDialog != JOptionPane.YES_OPTION) {
+                    return;
+                }
+
+                selectedPlaylist.delete();
+                _model.removeElement(_list.getSelectedValue());
+                LibraryMediator.instance().clearLibraryTable();
+            }
         }
     }
-    
+
     private class StartRenamingPlaylistAction extends AbstractAction {
         private static final long serialVersionUID = 520856485566457934L;
 
@@ -503,11 +578,11 @@ public class LibraryPlaylists extends JPanel {
         }
 
         public void actionPerformed(ActionEvent e) {
-        	startEdit(_list.getSelectedIndex());
+            startEdit(_list.getSelectedIndex());
         }
     }
 
-	public void reselectPlaylist() {
-		_listSelectionListener.valueChanged(null);
-	}
+    public void reselectPlaylist() {
+        _listSelectionListener.valueChanged(null);
+    }
 }

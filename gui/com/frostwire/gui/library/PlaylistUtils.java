@@ -55,4 +55,17 @@ class PlaylistUtils {
             LibraryMediator.instance().getLibraryPlaylists().addPlaylist(playlist);
         }
     }
+
+    public static void addToPlaylist(Playlist playlist, AbstractLibraryTableDataLine<?>[] lines) {
+        for (int i = 0; i < lines.length; i++) {
+            AbstractLibraryTableDataLine<?> line = lines[i];
+            PlaylistUtils.addPlaylistItem(playlist, line.getFile());
+        }
+    }
+
+    public static void addToPlaylist(Playlist playlist, File[] files) {
+        for (int i = 0; i < files.length; i++) {
+            PlaylistUtils.addPlaylistItem(playlist, files[i]);
+        }
+    }
 }
