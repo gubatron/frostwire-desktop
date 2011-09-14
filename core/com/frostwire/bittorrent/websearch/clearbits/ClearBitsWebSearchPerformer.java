@@ -19,7 +19,7 @@ public class ClearBitsWebSearchPerformer implements WebSearchPerformer {
 
         ClearBitsResponse response = searchClearBits(keywords);
 
-        if (response.results != null)
+        if (response != null && response.results != null)
             for (ClearBitsItem bucket : response.results) {
 
                 WebSearchResult sr = new ClearBitsWebSearchResult(bucket);
