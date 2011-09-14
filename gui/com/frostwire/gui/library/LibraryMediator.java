@@ -8,6 +8,7 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.List;
 
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
@@ -17,6 +18,9 @@ import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.player.AudioSource;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.IconButton;
+import com.limegroup.gnutella.gui.options.ConfigureOptionsAction;
+import com.limegroup.gnutella.gui.options.OptionsConstructor;
 import com.limegroup.gnutella.gui.util.DividerLocationSettingUpdater;
 import com.limegroup.gnutella.settings.LibrarySettings;
 import com.limegroup.gnutella.settings.UISettings;
@@ -185,7 +189,14 @@ public class LibraryMediator {
         
         panel.add(getLibrarySearch(), BorderLayout.PAGE_START);
         panel.add(_tablesPanel, BorderLayout.CENTER);
-        panel.add(new LibraryPlayer(), BorderLayout.PAGE_END);
+        
+        JPanel panelBottom = new JPanel(new BorderLayout());
+        panelBottom.add( new IconButton(new ConfigureOptionsAction(OptionsConstructor.SHARED_KEY, I18n.tr("Options"),
+                I18n.tr("You can configure the folders you share in FrostWire\'s Options."))), BorderLayout.LINE_START);
+        panelBottom.add(new LibraryPlayer(), BorderLayout.CENTER);
+        panelBottom.add(new JCheckBox("Repeat"), BorderLayout.PAGE_START);
+        panelBottom.add(new JCheckBox("Shuffle"), BorderLayout.PAGE_END);
+        panel.add(panelBottom, BorderLayout.PAGE_END);
         
 
         return panel;
