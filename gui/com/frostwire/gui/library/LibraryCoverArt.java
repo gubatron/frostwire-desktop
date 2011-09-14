@@ -68,16 +68,10 @@ public class LibraryCoverArt extends JPanel {
 		Graphics2D g2 = tmp.createGraphics();
 		g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
 				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-		img.setAccelerationPriority(1);
 		g2.drawImage(img, 0, 0, w, h, null);
-		MediaTracker mt = new MediaTracker(this);
-		mt.addImage(img, 0);
 		g2.dispose();
-		try {
-			mt.waitForAll();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		
+		waitForImageToLoad(img);
 		
 		return tmp;
 	}
@@ -92,19 +86,14 @@ public class LibraryCoverArt extends JPanel {
                     getWidth(),
                     getHeight());
         	} else {
-        		coverArtImage.setAccelerationPriority(1);
         		scaledImage = coverArtImage.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);
-        		MediaTracker mt = new MediaTracker(this);
-        		mt.addImage(scaledImage, 0);
-        		try {
-					mt.waitForAll();
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
         	}
         } else {
-            scaledImage = null;
+            scaledImage = LibraryMediator.instance().getDefaultCoverArt().getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);//getScaledImageFast(LibraryMediator.instance().getDefaultCoverArt(), getWidth(), getHeight());
         }
+
+		waitForImageToLoad(scaledImage);
+
         
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
@@ -121,6 +110,16 @@ public class LibraryCoverArt extends JPanel {
 		});
 
     }
+
+	private void waitForImageToLoad(Image image) {
+		MediaTracker mt = new MediaTracker(this);
+		mt.addImage(image, 0);
+		try {
+			mt.waitForAll();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 
     private Image retrieveImageFromMP3(String filename) {
          try {

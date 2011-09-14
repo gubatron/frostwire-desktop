@@ -2,6 +2,7 @@ package com.frostwire.gui.library;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Image;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -167,6 +168,10 @@ public class LibraryMediator {
             libraryLeftPanel = new LibraryLeftPanel(getLibraryFiles(), getLibraryPlaylists(), getLibraryCoverArt());
         }
         return libraryLeftPanel;
+    }
+    
+    public Image getDefaultCoverArt() {
+    	return ((LibraryLeftPanel)getLibraryLeftPanel()).getDefaultCoverArt();
     }
 
     private JComponent getLibraryRightPanel() {
