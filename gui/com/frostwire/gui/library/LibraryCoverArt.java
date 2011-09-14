@@ -3,9 +3,9 @@ package com.frostwire.gui.library;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.MediaTracker;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
-import java.awt.Transparency;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
@@ -68,9 +68,17 @@ public class LibraryCoverArt extends JPanel {
 		Graphics2D g2 = tmp.createGraphics();
 		g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
 				RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+		img.setAccelerationPriority(1);
 		g2.drawImage(img, 0, 0, w, h, null);
+		MediaTracker mt = new MediaTracker(this);
+		mt.addImage(img, 0);
 		g2.dispose();
-
+		try {
+			mt.waitForAll();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 		return tmp;
 	}
     
@@ -84,7 +92,15 @@ public class LibraryCoverArt extends JPanel {
                     getWidth(),
                     getHeight());
         	} else {
+        		coverArtImage.setAccelerationPriority(1);
         		scaledImage = coverArtImage.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);
+        		MediaTracker mt = new MediaTracker(this);
+        		mt.addImage(scaledImage, 0);
+        		try {
+					mt.waitForAll();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
         	}
         } else {
             scaledImage = null;
