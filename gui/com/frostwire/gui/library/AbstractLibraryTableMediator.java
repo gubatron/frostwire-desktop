@@ -21,24 +21,32 @@ import com.limegroup.gnutella.gui.tables.DataLineModel;
 import com.limegroup.gnutella.gui.themes.SkinMenu;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 
-public abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E extends AbstractLibraryTableDataLine<I>, I> extends
+abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E extends AbstractLibraryTableDataLine<I>, I> extends
         AbstractTableMediator<T, E, I> {
 
     private Queue<File> lastRandomFiles;
 
-    protected MediaType mediaType;
+    private MediaType mediaType;
 
     protected AbstractLibraryTableMediator(String id) {
         super(id);
         lastRandomFiles = new LinkedList<File>();
     }
 
-    AbstractLibraryTableDataLine<?>[] getSelectedLines() {
+    public AbstractLibraryTableDataLine<?>[] getSelectedLines() {
         int[] selected = TABLE.getSelectedRows();
         AbstractLibraryTableDataLine<?>[] lines = new AbstractLibraryTableDataLine[selected.length];
         for (int i = 0; i < selected.length; i++)
             lines[i] = DATA_MODEL.get(selected[i]);
         return lines;
+    }
+    
+    public MediaType getMediaType() {
+        return mediaType;
+    }
+    
+    public void setMediaType(MediaType mediaType) {
+        this.mediaType = mediaType;
     }
 
     public AudioSource getNextRandomSong(AudioSource currentSong) {

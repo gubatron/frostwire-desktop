@@ -130,7 +130,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         }
 
         menu.add(new SkinMenuItem(CREATE_TORRENT_ACTION));
-        if (mediaType.equals(MediaType.getAudioMediaType())) {
+        if (getMediaType().equals(MediaType.getAudioMediaType())) {
             menu.add(createAddToPlaylistSubMenu());
         }
 
@@ -216,8 +216,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     private LibraryFilesTableMediator() {
         super("LIBRARY_FILES_TABLE");
         ThemeMediator.addThemeObserver(this);
-
-        TABLE.setTransferHandler(new MulticastTransferHandler(DNDUtils.DEFAULT_TRANSFER_HANDLERS));
     }
 
     /**
@@ -225,7 +223,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
      */
     protected void setupDragAndDrop() {
         TABLE.setDragEnabled(true);
-        //TABLE.setTransferHandler(new LibraryTableTransferHandler());
+        TABLE.setTransferHandler(new LibraryFilesTableTransferHandler(this));
     }
 
     /**
@@ -275,9 +273,9 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         if (dirHolder == null)
             return;
         if (dirHolder instanceof MediaTypeSavedFilesDirectoryHolder) {
-            mediaType = ((MediaTypeSavedFilesDirectoryHolder) dirHolder).getMediaType();
+            setMediaType(((MediaTypeSavedFilesDirectoryHolder) dirHolder).getMediaType());
         } else {
-            mediaType = MediaType.getAnyTypeMediaType();
+            setMediaType(MediaType.getAnyTypeMediaType());
         }
         clearTable();
         File[] files = dirHolder.getFiles();
@@ -511,7 +509,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         if (line == null) {
             return;
         }
-        if (mediaType.equals(MediaType.getAudioMediaType()) && AudioPlayer.isPlayableFile(line.getFile())) {
+        if (getMediaType().equals(MediaType.getAudioMediaType()) && AudioPlayer.isPlayableFile(line.getFile())) {
             AudioPlayer.instance().loadSong(new AudioSource(line.getFile()), true, true);
             return;
         }
@@ -786,7 +784,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             startRename();
         }
     }
-
 
     /**
      * Sets an icon based on the filename extension.      */

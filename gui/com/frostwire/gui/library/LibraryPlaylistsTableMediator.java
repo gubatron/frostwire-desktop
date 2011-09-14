@@ -215,7 +215,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
      */
     private LibraryPlaylistsTableMediator() {
         super("LIBRARY_PLAYLISTS_TABLE");
-        mediaType = MediaType.getAudioMediaType();
+        setMediaType(MediaType.getAudioMediaType());
         ThemeMediator.addThemeObserver(this);
 
         TABLE.setTransferHandler(new MulticastTransferHandler(DNDUtils.DEFAULT_TRANSFER_HANDLERS));
