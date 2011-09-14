@@ -30,6 +30,8 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
+import com.frostwire.alexandria.Library;
+import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
 import com.frostwire.gui.player.AudioPlayer;
@@ -130,6 +132,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         }
 
         menu.add(new SkinMenuItem(CREATE_TORRENT_ACTION));
+        menu.add(createAddToPlaylistSubMenu());
 
         menu.addSeparator();
         menu.add(new SkinMenuItem(DELETE_ACTION));

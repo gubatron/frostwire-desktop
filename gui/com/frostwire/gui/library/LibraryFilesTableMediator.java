@@ -130,7 +130,9 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         }
 
         menu.add(new SkinMenuItem(CREATE_TORRENT_ACTION));
-        menu.add(createAddToPlaylistSubMenu());
+        if (mediaType.equals(MediaType.getAudioMediaType())) {
+            menu.add(createAddToPlaylistSubMenu());
+        }
 
         menu.addSeparator();
         menu.add(new SkinMenuItem(DELETE_ACTION));
@@ -214,7 +216,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     private LibraryFilesTableMediator() {
         super("LIBRARY_FILES_TABLE");
         ThemeMediator.addThemeObserver(this);
-        
+
         TABLE.setTransferHandler(new MulticastTransferHandler(DNDUtils.DEFAULT_TRANSFER_HANDLERS));
     }
 
@@ -310,14 +312,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
     ButtonRow getButtonRow() {
         return BUTTON_ROW;
-    }
-
-    LibraryFilesTableDataLine[] getSelectedLibraryLines() {
-        int[] selected = TABLE.getSelectedRows();
-        LibraryFilesTableDataLine[] lines = new LibraryFilesTableDataLine[selected.length];
-        for (int i = 0; i < selected.length; i++)
-            lines[i] = DATA_MODEL.get(selected[i]);
-        return lines;
     }
 
     /**
@@ -520,8 +514,8 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         if (mediaType.equals(MediaType.getAudioMediaType()) && AudioPlayer.isPlayableFile(line.getFile())) {
             AudioPlayer.instance().loadSong(new AudioSource(line.getFile()), true, true);
             return;
-        }        
-        
+        }
+
         int[] rows = TABLE.getSelectedRows();
         //LibraryTableModel ltm = DATA_MODEL;
         //File file;
@@ -648,42 +642,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
     private boolean hasExploreAction() {
         return OSUtils.isWindows() || OSUtils.isMacOSX();
-    }
-    
-    private SkinMenu createAddToPlaylistSubMenu() {
-        SkinMenu menu = new SkinMenu(I18n.tr("Add to playlist"));
-        
-        menu.add(new SkinMenuItem(new CreateNewPlaylistAction()));
-        menu.addSeparator();
-        
-        Library library = LibraryMediator.getLibrary();
-
-        for (Playlist playlist : library.getPlaylists()) {
-            menu.add(new SkinMenuItem(new AddToPlaylistAction(playlist)));
-        }
-        
-        return menu;
-    }
-    
-    private void addPlaylistItem(Playlist playlist, File file) {
-        AudioMetaData mt = new AudioMetaData(file);
-        PlaylistItem item = playlist.newItem(
-                file.getAbsolutePath(),
-                file.getName(),
-                file.length(),
-                FileUtils.getFileExtension(file),
-                mt.getTitle(),
-                mt.getLength(),
-                mt.getArtist(),
-                mt.getAlbum(),
-                "",// TODO: cover art path
-                mt.getBitrate(),
-                mt.getComment(),
-                mt.getGenre(),
-                mt.getTrack(),
-                mt.getYear()); 
-        playlist.getItems().add(item);
-        item.save();
     }
 
     ///////////////////////////////////////////////////////
@@ -828,62 +786,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             startRename();
         }
     }
-    
-    private final class CreateNewPlaylistAction extends AbstractAction {
 
-        private static final long serialVersionUID = 3460908036485828909L;
-
-        public CreateNewPlaylistAction() {
-            super(I18n.tr("Create New Playlist"));
-            putValue(Action.LONG_DESCRIPTION, I18n.tr("Create and add to a new playlist"));
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String playlistName = (String)JOptionPane.showInputDialog(
-                    GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"),
-                    JOptionPane.PLAIN_MESSAGE,
-                    null,
-                    null,
-                    null);
-            
-            if (playlistName != null && playlistName.length() > 0) {
-                Playlist playlist = LibraryMediator.getLibrary().newPlaylist(playlistName, playlistName);
-                
-                LibraryFilesTableDataLine[] selectedLibraryLines = getSelectedLibraryLines();
-                for (int i = 0; i < selectedLibraryLines.length; i++) {
-                    LibraryFilesTableDataLine line = selectedLibraryLines[i];
-                    addPlaylistItem(playlist, line.getFile());
-                }
-                
-                playlist.save();
-                LibraryMediator.instance().getLibraryPlaylists().addPlaylist(playlist);
-            }
-        }
-    }
-    
-    private final class AddToPlaylistAction extends AbstractAction {
-
-        private static final long serialVersionUID = 4658698262279334616L;
-        
-        private Playlist playlist;
-
-        public AddToPlaylistAction(Playlist playlist) {
-            super(playlist.getName());
-            putValue(Action.LONG_DESCRIPTION, I18n.tr("Add to playlist ") + "\"" + playlist.getName() + "\"");
-            this.playlist = playlist;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            LibraryFilesTableDataLine[] selectedLibraryLines = getSelectedLibraryLines();
-            for (int i = 0; i < selectedLibraryLines.length; i++) {
-                LibraryFilesTableDataLine line = selectedLibraryLines[i];
-                addPlaylistItem(playlist, line.getFile());
-            }
-            //playlist.getLibrary().dump();
-        }
-    }
 
     /**
      * Sets an icon based on the filename extension.      */
