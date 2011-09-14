@@ -11,12 +11,8 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JOptionPane;
 
-import org.limewire.util.FileUtils;
-
 import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
-import com.frostwire.alexandria.PlaylistItem;
-import com.frostwire.gui.player.AudioMetaData;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.limegroup.gnutella.MediaType;
@@ -130,16 +126,15 @@ public abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>
         List<Playlist> playlists = library.getPlaylists();
         Playlist currentPlaylist = LibraryMediator.instance().getCurrentPlaylist();
 
-        
         if (playlists.size() > 0) {
             menu.addSeparator();
 
             for (Playlist playlist : library.getPlaylists()) {
-            	
-            	if (currentPlaylist != null && currentPlaylist.equals(playlist)) {
-            		continue;
-            	}
-            	
+
+                if (currentPlaylist != null && currentPlaylist.equals(playlist)) {
+                    continue;
+                }
+
                 menu.add(new SkinMenuItem(new AddToPlaylistAction(playlist)));
             }
         }
@@ -166,15 +161,6 @@ public abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>
         return null;
     }
 
-    private void addPlaylistItem(Playlist playlist, File file) {
-        AudioMetaData mt = new AudioMetaData(file);
-        PlaylistItem item = playlist.newItem(file.getAbsolutePath(), file.getName(), file.length(), FileUtils.getFileExtension(file), mt.getTitle(),
-                mt.getLength(), mt.getArtist(), mt.getAlbum(), "",// TODO: cover art path
-                mt.getBitrate(), mt.getComment(), mt.getGenre(), mt.getTrack(), mt.getYear());
-        playlist.getItems().add(item);
-        item.save();
-    }
-
     private class CreateNewPlaylistAction extends AbstractAction {
 
         private static final long serialVersionUID = 3460908036485828909L;
@@ -186,21 +172,7 @@ public abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            String playlistName = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"),
-                    JOptionPane.PLAIN_MESSAGE, null, null, null);
-
-            if (playlistName != null && playlistName.length() > 0) {
-                Playlist playlist = LibraryMediator.getLibrary().newPlaylist(playlistName, playlistName);
-
-                AbstractLibraryTableDataLine<?>[] lines = getSelectedLines();
-                for (int i = 0; i < lines.length; i++) {
-                    AbstractLibraryTableDataLine<?> line = lines[i];
-                    addPlaylistItem(playlist, line.getFile());
-                }
-
-                playlist.save();
-                LibraryMediator.instance().getLibraryPlaylists().addPlaylist(playlist);
-            }
+            PlaylistUtils.createNewPlaylist(getSelectedLines());
         }
     }
 
@@ -221,7 +193,7 @@ public abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>
             AbstractLibraryTableDataLine<?>[] lines = getSelectedLines();
             for (int i = 0; i < lines.length; i++) {
                 AbstractLibraryTableDataLine<?> line = lines[i];
-                addPlaylistItem(playlist, line.getFile());
+                PlaylistUtils.addPlaylistItem(playlist, line.getFile());
             }
         }
     }

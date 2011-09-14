@@ -228,7 +228,7 @@ public class TorrentFetcherDownload implements BTDownload {
                                     dlg.setVisible(true);
                                     filesSelection = dlg.getFilesSelection();
                                 } catch (TOTorrentException e) {
-                                    e.printStackTrace();
+                                    System.out.println("Error reading torrent:" + e.getMessage());
                                     filesSelection = null;
                                 }
                             }
