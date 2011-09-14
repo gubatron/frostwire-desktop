@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 import com.frostwire.alexandria.Library;
+import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.player.AudioSource;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -109,6 +110,15 @@ public class LibraryMediator {
         }
         return LIBRARY_PLAYLISTS;
     }
+    
+    /**
+     * Returns null if none is selected.
+     * @return
+     */
+    public Playlist getCurrentPlaylist() {
+    	return getLibraryPlaylists().getSelectedPlaylist();
+    }
+
     
     public LibrarySearch getLibrarySearch() {
         if (librarySearch == null) {

@@ -82,4 +82,10 @@ public class Playlist extends Entity<PlaylistDB> {
         return new PlaylistItem(this, LibraryDatabase.OBJECT_NOT_SAVED_ID, filePath, fileName, fileSize, fileExtension, trackTitle, trackDurationInSecs, artistName,
                 albumName, coverArtPath, bitrate, comment, genre, track, year);
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+    	Playlist other = (Playlist) obj;
+    	return other.getId()==getId();
+    }
 }

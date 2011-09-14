@@ -128,11 +128,18 @@ public abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>
 
         Library library = LibraryMediator.getLibrary();
         List<Playlist> playlists = library.getPlaylists();
+        Playlist currentPlaylist = LibraryMediator.instance().getCurrentPlaylist();
 
+        
         if (playlists.size() > 0) {
             menu.addSeparator();
 
             for (Playlist playlist : library.getPlaylists()) {
+            	
+            	if (currentPlaylist != null && currentPlaylist.equals(playlist)) {
+            		continue;
+            	}
+            	
                 menu.add(new SkinMenuItem(new AddToPlaylistAction(playlist)));
             }
         }
