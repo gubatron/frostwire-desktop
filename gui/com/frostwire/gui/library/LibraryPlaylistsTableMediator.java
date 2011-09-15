@@ -139,6 +139,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
 
         menu.add(new SkinMenuItem(CREATE_TORRENT_ACTION));
         menu.add(createAddToPlaylistSubMenu());
+        menu.add(new SkinMenuItem(SEND_TO_FRIEND_ACTION));
 
         menu.addSeparator();
         menu.add(new SkinMenuItem(DELETE_ACTION));
@@ -525,6 +526,10 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         if (selectedFile != null && !selectedFile.getName().endsWith(".torrent")) {
             CREATE_TORRENT_ACTION.setEnabled(sel.length == 1);
         }
+        
+        if (selectedFile != null) {
+            SEND_TO_FRIEND_ACTION.setEnabled(sel.length == 1);
+        }
 
         if (sel.length == 1 && selectedFile.isFile() && selectedFile.getParentFile() != null) {
             OPEN_IN_FOLDER_ACTION.setEnabled(true);
@@ -556,6 +561,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     public void handleNoSelection() {
         LAUNCH_ACTION.setEnabled(false);
         OPEN_IN_FOLDER_ACTION.setEnabled(false);
+        SEND_TO_FRIEND_ACTION.setEnabled(false);
         ENQUEUE_ACTION.setEnabled(false);
 
         CREATE_TORRENT_ACTION.setEnabled(false);

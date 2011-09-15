@@ -9,24 +9,28 @@ import java.util.Random;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.JOptionPane;
 
 import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
+import com.frostwire.gui.bittorrent.SendFileProgressDialog;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.limegroup.gnutella.MediaType;
+import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.DataLineModel;
 import com.limegroup.gnutella.gui.themes.SkinMenu;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 
-abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E extends AbstractLibraryTableDataLine<I>, I> extends
-        AbstractTableMediator<T, E, I> {
+abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E extends AbstractLibraryTableDataLine<I>, I> extends AbstractTableMediator<T, E, I> {
 
     private Queue<File> lastRandomFiles;
 
     private MediaType mediaType;
+
+    protected Action SEND_TO_FRIEND_ACTION;
 
     protected AbstractLibraryTableMediator(String id) {
         super(id);
@@ -41,11 +45,11 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
             lines[i] = DATA_MODEL.get(selected[i]);
         return lines;
     }
-    
+
     public MediaType getMediaType() {
         return mediaType;
     }
-    
+
     public void setMediaType(MediaType mediaType) {
         this.mediaType = mediaType;
     }
@@ -124,6 +128,12 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
         return null;
     }
 
+    @Override
+    protected void buildListeners() {
+        super.buildListeners();
+        SEND_TO_FRIEND_ACTION = new SendToFriendAction();
+    }
+
     protected SkinMenu createAddToPlaylistSubMenu() {
         SkinMenu menu = new SkinMenu(I18n.tr("Add to playlist"));
 
@@ -198,6 +208,32 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
         @Override
         public void actionPerformed(ActionEvent e) {
             PlaylistUtils.addToPlaylist(playlist, getSelectedLines());
+        }
+    }
+
+    private final class SendToFriendAction extends AbstractAction {
+
+        private static final long serialVersionUID = 1329472129818371471L;
+
+        public SendToFriendAction() {
+            super(I18n.tr("Send to friend"));
+            putValue(Action.LONG_DESCRIPTION, I18n.tr("Send to friend"));
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            AbstractLibraryTableDataLine<?>[] lines = getSelectedLines();
+            if (lines.length == 1) {
+                File file = lines[0].getFile();
+                String fileFolder = file.isFile() ? I18n.tr("file") : I18n.tr("folder");
+                int result = JOptionPane.showConfirmDialog(GUIMediator.getAppFrame(), I18n.tr("Do you want to send this {0} to a friend?", fileFolder)
+                        + "\n\n\"" + file.getName() + "\"", I18n.tr("Send files with FrostWire"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+                if (result == JOptionPane.YES_OPTION) {
+                    new SendFileProgressDialog(GUIMediator.getAppFrame(), file).setVisible(true);
+                    GUIMediator.instance().setWindow(GUIMediator.Tabs.SEARCH);
+                }
+            }
         }
     }
 }

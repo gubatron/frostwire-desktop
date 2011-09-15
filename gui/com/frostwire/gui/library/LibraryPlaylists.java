@@ -435,11 +435,7 @@ public class LibraryPlaylists extends JPanel {
             if (index != -1) {
                 LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) _list.getModel().getElementAt(index);
                 
-                Playlist selectedPlaylist = getSelectedPlaylist();
                 Playlist playlist = cell.getPlaylist();
-                if (playlist != null && selectedPlaylist != null && playlist.equals(selectedPlaylist)) {
-                    return false;
-                }
                 
                 if (playlist == null) {
                     try {
