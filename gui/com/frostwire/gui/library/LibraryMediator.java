@@ -151,9 +151,9 @@ public class LibraryMediator {
         showView(FILES_TABLE_KEY);
     }
     
-    public void updateTableItems(List<PlaylistItem> items) {
+    public void updateTableItems(Playlist playlist) {
         currentTableMediator = LibraryPlaylistsTableMediator.instance();
-        LibraryPlaylistsTableMediator.instance().updateTableItems(items);
+        LibraryPlaylistsTableMediator.instance().updateTableItems(playlist);
         showView(PLAYLISTS_TABLE_KEY);
     }
     

@@ -65,6 +65,8 @@ import com.limegroup.gnutella.gui.util.GUILauncher.LaunchableProvider;
  * It is the Mediator to the Table part of the Library display.
  */
 final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<LibraryPlaylistsTableModel, LibraryPlaylistsTableDataLine, PlaylistItem> {
+    
+    private Playlist currentPlaylist;
 
     /**
      * Variables so the PopupMenu & ButtonRow can have the same listeners
@@ -86,6 +88,10 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             INSTANCE = new LibraryPlaylistsTableMediator();
         }
         return INSTANCE;
+    }
+    
+    public Playlist getCurrentPlaylist() {
+        return currentPlaylist;
     }
 
     private PlaylistItemNameRenderer playlistItemNameRenderer;
@@ -217,8 +223,6 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         super("LIBRARY_PLAYLISTS_TABLE");
         setMediaType(MediaType.getAudioMediaType());
         ThemeMediator.addThemeObserver(this);
-
-        TABLE.setTransferHandler(new MulticastTransferHandler(DNDUtils.DEFAULT_TRANSFER_HANDLERS));
     }
 
     /**
@@ -226,7 +230,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
      */
     protected void setupDragAndDrop() {
         TABLE.setDragEnabled(true);
-        //TABLE.setTransferHandler(new LibraryTableTransferHandler());
+        TABLE.setTransferHandler(new LibraryPlaylistsTableTransferHandler(this));
     }
 
     /**
@@ -279,9 +283,14 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
      * Perform lookups to remove any store files from the shared folder
      * view and to only display store files in the store view
      */
-    void updateTableItems(List<PlaylistItem> items) {
-        if (items == null)
+    void updateTableItems(Playlist playlist) {
+        if (playlist == null) {
             return;
+        }
+        
+        currentPlaylist = playlist;
+        List<PlaylistItem> items = currentPlaylist.getItems();
+        
         clearTable();
         for (int i = 0; i < items.size(); i++) {
             addUnsorted(items.get(i));

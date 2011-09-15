@@ -31,6 +31,7 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
     protected AbstractLibraryTableMediator(String id) {
         super(id);
         lastRandomFiles = new LinkedList<File>();
+        mediaType = MediaType.getAnyTypeMediaType();
     }
 
     public AbstractLibraryTableDataLine<?>[] getSelectedLines() {
