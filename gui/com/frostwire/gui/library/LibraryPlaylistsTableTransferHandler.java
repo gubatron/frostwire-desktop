@@ -42,8 +42,7 @@ class LibraryPlaylistsTableTransferHandler extends TransferHandler {
         try {
             if (mediator.getCurrentPlaylist() != null) {
                 File[] files = DNDUtils.getFiles(support.getTransferable());
-                PlaylistUtils.addToPlaylist(mediator.getCurrentPlaylist(), files);
-                LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
+                LibraryUtils.asyncAddToPlaylist(mediator.getCurrentPlaylist(), files);
             }
         } catch (Exception e) {
             return fallbackTransferHandler.importData(support);

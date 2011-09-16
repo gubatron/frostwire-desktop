@@ -218,7 +218,6 @@ public class LibraryPlaylists extends JPanel {
     }
 
     public void refreshSelection() {
-        System.out.println("ss");
         LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) _list.getSelectedValue();
 
         if (cell == null)
@@ -350,18 +349,9 @@ public class LibraryPlaylists extends JPanel {
                 try {
                     final List<File> files = M3UPlaylist.load(path);
                     if (playlist != null) {
-                        PlaylistUtils.addToPlaylist(playlist, files.toArray(new File[0]));
-                        GUIMediator.safeInvokeLater(new Runnable() {
-                            public void run() {
-                                refreshSelection();
-                            }
-                        });
+                        LibraryUtils.asyncAddToPlaylist(playlist, files.toArray(new File[0]));
                     } else {
-                        GUIMediator.safeInvokeLater(new Runnable() {
-                            public void run() {
-                                PlaylistUtils.createNewPlaylist(files.toArray(new File[0]));
-                            }
-                        });
+                        LibraryUtils.createNewPlaylist(files.toArray(new File[0]));
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -599,7 +589,7 @@ public class LibraryPlaylists extends JPanel {
                 if (playlist == null) {
                     try {
                         File[] files = DNDUtils.getFiles(support.getTransferable());
-                        PlaylistUtils.createNewPlaylist(files);
+                        LibraryUtils.createNewPlaylist(files);
                         _list.setSelectedIndex(_list.getModel().getSize() - 1);
                         refreshSelection();
                     } catch (Exception e) {
@@ -608,9 +598,9 @@ public class LibraryPlaylists extends JPanel {
                 } else {
                     try {
                         File[] files = DNDUtils.getFiles(support.getTransferable());
-                        PlaylistUtils.addToPlaylist(playlist, files);
-                        _list.setSelectedIndex(index);
-                        refreshSelection();
+                        LibraryUtils.asyncAddToPlaylist(playlist, files);
+                        //_list.setSelectedIndex(index);
+                        //refreshSelection();
                     } catch (Exception e) {
                         return false;
                     }

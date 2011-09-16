@@ -41,7 +41,7 @@ class LibraryFilesTableTransferHandler extends TransferHandler {
 
         try {
             File[] files = DNDUtils.getFiles(support.getTransferable());
-            PlaylistUtils.createNewPlaylist(files);
+            LibraryUtils.createNewPlaylist(files);
         } catch (Exception e) {
             return fallbackTransferHandler.importData(support);
         }

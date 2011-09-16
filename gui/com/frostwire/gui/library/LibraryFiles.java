@@ -300,7 +300,7 @@ public class LibraryFiles extends JPanel {
 
             try {
                 File[] files = DNDUtils.getFiles(support.getTransferable());
-                PlaylistUtils.createNewPlaylist(files);
+                LibraryUtils.createNewPlaylist(files);
             } catch (Exception e) {
                 return false;
             }

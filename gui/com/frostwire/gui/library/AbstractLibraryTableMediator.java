@@ -189,7 +189,7 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            PlaylistUtils.createNewPlaylist(getSelectedLines());
+            LibraryUtils.createNewPlaylist(getSelectedLines());
         }
     }
 
@@ -207,7 +207,7 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            PlaylistUtils.addToPlaylist(playlist, getSelectedLines());
+            LibraryUtils.asyncAddToPlaylist(playlist, getSelectedLines());
         }
     }
 

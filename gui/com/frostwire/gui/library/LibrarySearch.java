@@ -40,6 +40,7 @@ public class LibrarySearch extends JPanel {
     private SearchRunnable currentSearchRunnable;
 
     private int resultsCount;
+    private String status;
 
     public LibrarySearch() {
         setupUI();
@@ -51,13 +52,34 @@ public class LibrarySearch extends JPanel {
         }
 
         resultsCount += n;
-        statusLabel.setText(resultsCount + " " + I18n.tr("search results"));
+        setStatus(resultsCount + " " + I18n.tr("search results"));
     }
 
     public void clear() {
-        statusLabel.setText("");
+        setStatus("");
         searchField.setText("");
         resultsCount = 0;
+    }
+
+    public void pushStatus(final String newStatus) {
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                statusLabel.setText(newStatus);
+            }
+        });
+    }
+
+    public void revertStatus() {
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                statusLabel.setText(status);
+            }
+        });
+    }
+
+    private void setStatus(String status) {
+        this.status = status;
+        statusLabel.setText(status);
     }
 
     protected void setupUI() {
@@ -136,13 +158,13 @@ public class LibrarySearch extends JPanel {
             if (currentSearchRunnable != null) {
                 currentSearchRunnable.cancel();
             }
-            
+
             DirectoryHolder directoryHolder = LibraryMediator.instance().getLibraryFiles().getSelectedDirectoryHolder();
             if (directoryHolder != null) {
                 currentSearchRunnable = new SearchFilesRunnable(query);
                 BackgroundExecutorService.schedule(currentSearchRunnable);
             }
-            
+
             Playlist playlist = LibraryMediator.instance().getLibraryPlaylists().getSelectedPlaylist();
             if (playlist != null) {
                 currentSearchRunnable = new SearchPlaylistItemsRunnable(query);
@@ -150,10 +172,10 @@ public class LibrarySearch extends JPanel {
             }
         }
     }
-    
+
     private abstract class SearchRunnable implements Runnable {
         protected boolean canceled;
-        
+
         public void cancel() {
             canceled = true;
         }
@@ -163,12 +185,12 @@ public class LibrarySearch extends JPanel {
 
         private final String _query;
         private final DirectoryHolder directoryHolder;
-        
+
         public SearchFilesRunnable(String query) {
             _query = query;
             directoryHolder = LibraryMediator.instance().getLibraryFiles().getSelectedDirectoryHolder();
             canceled = false;
-            
+
             // weird case
             if (directoryHolder == null) {
                 canceled = true;
@@ -184,7 +206,7 @@ public class LibrarySearch extends JPanel {
                 GUIMediator.safeInvokeLater(new Runnable() {
                     public void run() {
                         LibraryMediator.instance().updateTableFiles(directoryHolder);
-                        statusLabel.setText("");
+                        setStatus("");
                         resultsCount = 0;
                     }
                 });
@@ -309,17 +331,17 @@ public class LibrarySearch extends JPanel {
             return true;
         }
     }
-    
+
     private final class SearchPlaylistItemsRunnable extends SearchRunnable {
 
         private final String query;
         private final Playlist playlist;
-        
+
         public SearchPlaylistItemsRunnable(String query) {
             this.query = query;
             playlist = LibraryMediator.instance().getLibraryPlaylists().getSelectedPlaylist();
             canceled = false;
-            
+
             // weird case
             if (playlist == null) {
                 canceled = true;
@@ -334,6 +356,7 @@ public class LibrarySearch extends JPanel {
             GUIMediator.safeInvokeLater(new Runnable() {
                 public void run() {
                     LibraryPlaylistsTableMediator.instance().clearTable();
+                    setStatus("");
                     statusLabel.setText("");
                     resultsCount = 0;
                 }
@@ -348,30 +371,31 @@ public class LibrarySearch extends JPanel {
             }
 
             //FULL TEXT SEARCH, Returns the File IDs we care about.
-            String fullTextIndexSql = "SELECT * FROM FT_SEARCH('"+query+"', 0, 0)";
-            
+            String fullTextIndexSql = "SELECT * FROM FT_SEARCH('" + query + "', 0, 0)";
+
             List<List<Object>> matchedFileRows = LibraryMediator.getLibrary().getDB().getDatabase().query(fullTextIndexSql);
-            
+
             int fileIDStrOffset = " PUBLIC   PLAYLISTITEMS  WHERE  PLAYLISTITEMID =".length();
-            
+
             StringBuilder fileIDSet = new StringBuilder("(");
-            
+
             int numFilesFound = matchedFileRows.size();
             int i = 0;
-            
+
             for (List<Object> row : matchedFileRows) {
                 String rowStr = (String) row.get(0);
                 fileIDSet.append(rowStr.substring(fileIDStrOffset));
-                
-                if (i++ < (numFilesFound-1)) {
+
+                if (i++ < (numFilesFound - 1)) {
                     fileIDSet.append(",");
                 }
             }
             fileIDSet.append(")");
-            
-            String sql = "SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath, bitrate, comment, genre, track, year FROM PlaylistItems WHERE playlistItemId IN "+ fileIDSet.toString();
+
+            String sql = "SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath, bitrate, comment, genre, track, year FROM PlaylistItems WHERE playlistItemId IN "
+                    + fileIDSet.toString();
             List<List<Object>> rows = LibraryMediator.getLibrary().getDB().getDatabase().query(sql);
-            
+
             final List<PlaylistItem> results = new ArrayList<PlaylistItem>();
 
             for (List<Object> row : rows) {
@@ -386,11 +410,11 @@ public class LibrarySearch extends JPanel {
                     return;
                 }
                 /////
-                
+
                 PlaylistItem item = new PlaylistItem(null);
                 item.getDB().fill(row, item);
                 results.add(item);
-                
+
                 if (results.size() > 100) {
                     Runnable r = new Runnable() {
                         public void run() {
