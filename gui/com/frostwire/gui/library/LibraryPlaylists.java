@@ -68,7 +68,6 @@ public class LibraryPlaylists extends JPanel {
     private int _selectedIndexToRename;
 
     private LibraryPlaylistsListCell _newPlaylistCell;
-    private ActionListener _newPlaylistAction;
 
     private ActionListener _selectedPlaylistAction;
 
@@ -141,8 +140,7 @@ public class LibraryPlaylists extends JPanel {
     private void setupModel() {
         _model = new DefaultListModel();
 
-        _newPlaylistAction = new NewPlaylistActionListener();
-        _newPlaylistCell = new LibraryPlaylistsListCell(I18n.tr("New Playlist"), I18n.tr("Creates a new Playlist"), null, null, _newPlaylistAction);
+        _newPlaylistCell = new LibraryPlaylistsListCell(I18n.tr("New Playlist"), I18n.tr("Creates a new Playlist"), null, null, null);
 
         Library library = LibraryMediator.getLibrary();
 
@@ -220,6 +218,7 @@ public class LibraryPlaylists extends JPanel {
     }
 
     public void refreshSelection() {
+        System.out.println("ss");
         LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) _list.getSelectedValue();
 
         if (cell == null)
@@ -522,13 +521,6 @@ public class LibraryPlaylists extends JPanel {
         }
     }
 
-    private class NewPlaylistActionListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            // TODO Auto-generated method stub
-
-        }
-    }
-
     private class SelectedPlaylistActionListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             refreshSelection();
@@ -541,8 +533,6 @@ public class LibraryPlaylists extends JPanel {
             _list.setSelectedIndex(index);
             if (((LibraryPlaylistsListCell) _list.getSelectedValue()).getPlaylist() == null) {
                 actionStartRename();
-            } else {
-                refreshSelection();
             }
         }
 
