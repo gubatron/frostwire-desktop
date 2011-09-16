@@ -45,14 +45,18 @@ class PlaylistUtils {
                 JOptionPane.PLAIN_MESSAGE, null, null, null);
 
         if (playlistName != null && playlistName.length() > 0) {
-            Playlist playlist = LibraryMediator.getLibrary().newPlaylist(playlistName, playlistName);
+            final Playlist playlist = LibraryMediator.getLibrary().newPlaylist(playlistName, playlistName);
 
             for (int i = 0; i < files.length; i++) {
                 PlaylistUtils.addPlaylistItem(playlist, files[i]);
             }
 
             playlist.save();
-            LibraryMediator.instance().getLibraryPlaylists().addPlaylist(playlist);
+            GUIMediator.safeInvokeLater(new Runnable() {
+                public void run() {
+                    LibraryMediator.instance().getLibraryPlaylists().addPlaylist(playlist);
+                }
+            });
         }
     }
 

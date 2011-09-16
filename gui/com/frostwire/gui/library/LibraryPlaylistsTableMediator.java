@@ -4,20 +4,16 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.Box;
 import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.MouseInputListener;
@@ -30,7 +26,6 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
-import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
@@ -40,17 +35,11 @@ import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.CheckBoxList;
-import com.limegroup.gnutella.gui.CheckBoxListPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
-import com.limegroup.gnutella.gui.MessageService;
-import com.limegroup.gnutella.gui.MultiLineLabel;
 import com.limegroup.gnutella.gui.actions.LimeAction;
-import com.limegroup.gnutella.gui.dnd.DNDUtils;
-import com.limegroup.gnutella.gui.dnd.MulticastTransferHandler;
 import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
-import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.themes.SkinMenu;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
@@ -77,6 +66,10 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     public static Action CREATE_TORRENT_ACTION;
     public static Action DELETE_ACTION;
     public static Action RENAME_ACTION;
+    
+    private Action importToPlaylistAction = new ImportToPlaylistAction();
+    private Action importToNewPlaylistAction = new ImportToNewPlaylistAction();
+    private Action exportPlaylistAction = new ExportPlaylistAction();
 
     /**
      * instance, for singelton access
@@ -144,7 +137,6 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         menu.addSeparator();
         menu.add(new SkinMenuItem(DELETE_ACTION));
         menu.add(new SkinMenuItem(RENAME_ACTION));
-        menu.addSeparator();
 
         int[] rows = TABLE.getSelectedRows();
         boolean dirSelected = false;
@@ -174,7 +166,13 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             // only allow single selection for renames
             //RENAME_ACTION.setEnabled(LibraryMediator.isRenameEnabled() && rows.length == 1);
         }
-
+        
+        menu.addSeparator();
+        menu.add(new SkinMenuItem(importToPlaylistAction));
+        menu.add(new SkinMenuItem(importToNewPlaylistAction));
+        menu.add(new SkinMenuItem(exportPlaylistAction));
+        
+        menu.addSeparator();
         LibraryPlaylistsTableDataLine line = DATA_MODEL.get(rows[0]);
         menu.add(createSearchSubMenu(line));
 
@@ -790,6 +788,51 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
 
         public File getFile() {
             return _file;
+        }
+    }
+    
+    private final class ImportToPlaylistAction extends AbstractAction {
+
+        private static final long serialVersionUID = -9099898749358019734L;
+
+        public ImportToPlaylistAction() {
+            putValue(Action.NAME, I18n.tr("Import to Playlist"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Impor an M3U file to selected playlist"));
+            putValue(LimeAction.ICON_NAME, "PLAYLIST_IMPORT_TO");
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            LibraryMediator.instance().getLibraryPlaylists().importM3U(currentPlaylist);
+        }
+    }
+    
+    private final class ImportToNewPlaylistAction extends AbstractAction {
+
+        private static final long serialVersionUID = 390846680458085610L;
+
+        public ImportToNewPlaylistAction() {
+            putValue(Action.NAME, I18n.tr("Import to New Playlist"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Import an M3U file to a new playlist"));
+            putValue(LimeAction.ICON_NAME, "PLAYLIST_IMPORT_NEW");
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            LibraryMediator.instance().getLibraryPlaylists().importM3U(null);
+        }
+    }
+    
+    private final class ExportPlaylistAction extends AbstractAction {
+
+        private static final long serialVersionUID = 6149822357662730490L;
+
+        public ExportPlaylistAction() {
+            putValue(Action.NAME, I18n.tr("Export Playlist"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Export an M3U from playlist"));
+            putValue(LimeAction.ICON_NAME, "PLAYLIST_IMPORT_NEW");
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            LibraryMediator.instance().getLibraryPlaylists().exportM3U(currentPlaylist);
         }
     }
 }

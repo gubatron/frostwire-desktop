@@ -14,6 +14,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -42,6 +43,7 @@ import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRendere
 
 import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
+import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.FileChooserHandler;
@@ -83,6 +85,9 @@ public class LibraryPlaylists extends JPanel {
     private Action exploreAction = new ExploreAction();
     private Action deleteAction = new DeleteAction();
     private Action renameAction = new StartRenamingPlaylistAction();
+    private Action importToPlaylistAction = new ImportToPlaylistAction();
+    private Action importToNewPlaylistAction = new ImportToNewPlaylistAction();
+    private Action exportPlaylistAction = new ExportPlaylistAction();
 
     public LibraryPlaylists() {
         setupUI();
@@ -127,7 +132,10 @@ public class LibraryPlaylists extends JPanel {
         _popup.add(new SkinMenuItem(new ConfigureOptionsAction(OptionsConstructor.SHARED_KEY, I18n.tr("Configure Options"), I18n
                 .tr("You can configure the FrostWire\'s Options."))));
         _popup.add(new SkinMenuItem(deleteAction));
-
+        _popup.addSeparator();
+        _popup.add(new SkinMenuItem(importToPlaylistAction));
+        _popup.add(new SkinMenuItem(importToNewPlaylistAction));
+        _popup.add(new SkinMenuItem(exportPlaylistAction));
     }
 
     private void setupModel() {
@@ -298,14 +306,14 @@ public class LibraryPlaylists extends JPanel {
     /**
      * Loads a playlist.
      */
-    private void importM3U() {
+    public void importM3U(Playlist playlist) {
         File parentFile = FileChooserHandler.getLastInputDirectory();
 
         if(parentFile == null)
             parentFile = CommonUtils.getCurrentDirectory();
             
         final File selFile = 
-            FileChooserHandler.getInputFile(this, 
+            FileChooserHandler.getInputFile(GUIMediator.getAppFrame(), 
                 I18nMarker.marktr("Open Playlist (.m3u)"), parentFile,
                 new PlaylistListFileFilter());
 
@@ -322,7 +330,7 @@ public class LibraryPlaylists extends JPanel {
 
         // create a new thread off of the event queue to process reading the files from
         //  disk
-        loadM3U(selFile, path);
+        loadM3U(playlist, selFile, path);
     }
     
     /**
@@ -337,29 +345,33 @@ public class LibraryPlaylists extends JPanel {
      * @param overwrite - true if the table should be cleared of all entries prior to loading
      *          the new playlist
      */
-    private void loadM3U(final File selFile, final String path) {
+    private void loadM3U(final Playlist playlist, final File selFile, final String path) {
         BackgroundExecutorService.schedule(new Runnable() {
-            public void run(){
+            public void run() {
                 try {
-                    List<File> files = M3UPlaylist.load(path);
-                } catch (IOException e) {
+                    final List<File> files = M3UPlaylist.load(path);
+                    if (playlist != null) {
+                        PlaylistUtils.addToPlaylist(playlist, files.toArray(new File[0]));
+                        GUIMediator.safeInvokeLater(new Runnable() {
+                            public void run() {
+                                refreshSelection();
+                            }
+                        });
+                    } else {
+                        GUIMediator.safeInvokeLater(new Runnable() {
+                            public void run() {
+                                PlaylistUtils.createNewPlaylist(files.toArray(new File[0]));
+                            }
+                        });
+                    }
+                } catch (Exception e) {
                     e.printStackTrace();
+                    GUIMediator.safeInvokeLater( new Runnable(){
+                        public void run(){
+                            GUIMediator.showError("Unable to save playlist");
+                        }
+                    });
                 }
-//                synchronized(PLAY_LOCK) {
-//                    lastOpenedPlaylist = selFile;
-//                    if (overwrite)
-//                        clearTable();
-//                    
-//                    // put the playlist onto the swing event queue to load the playlistitem
-//                    //  into the actual table
-//                    GUIMediator.safeInvokeLater( new Runnable(){
-//                        public void run(){
-//                            MODEL.addSongs(pl);
-//                            if( MODEL.getRowCount() > 0 )
-//                                setButtonEnabled( PlaylistButtons.CLEAR_BUTTON, true );
-//                        }
-//                    });
-//                }
             }
         });
     }
@@ -367,72 +379,75 @@ public class LibraryPlaylists extends JPanel {
     /**
      * Saves a playlist.
      */
-    private void exportM3U(String suggestedName) {
+    public void exportM3U(Playlist playlist) {
+
+        if (playlist == null) {
+            return;
+        }
+
+        String suggestedName = CommonUtils.convertFileName(playlist.getName());
+
         // get the user to select a new one....
         File suggested;
         suggested = new File(CommonUtils.getCurrentDirectory(), suggestedName + ".m3u");
-        
-        File selFile =
-            FileChooserHandler.getSaveAsFile(
-                this, 
-                I18nMarker.marktr("Save Playlist As"),
-                suggested,
+
+        File selFile = FileChooserHandler.getSaveAsFile(GUIMediator.getAppFrame(), I18nMarker.marktr("Save Playlist As"), suggested,
                 new PlaylistListFileFilter());
-                
+
         // didn't select a file?  nothing we can do.
-        if(selFile == null)
+        if (selFile == null)
             return;
-        
+
         // if the file already exists and not the one just opened, ask if it should be
         //  overwritten. 
         //TODO: this should be handled in the jfilechooser
-        if(selFile.exists()) {
-            DialogOption choice = GUIMediator.showYesNoMessage(I18n.tr("Warning: a file with the name {0} already exists in the folder. Overwrite this file?", selFile.getName()), 
-                        QuestionsHandler.PLAYLIST_OVERWRITE_OK, DialogOption.NO);
-            if(choice != DialogOption.YES)
+        if (selFile.exists()) {
+            DialogOption choice = GUIMediator.showYesNoMessage(
+                    I18n.tr("Warning: a file with the name {0} already exists in the folder. Overwrite this file?", selFile.getName()),
+                    QuestionsHandler.PLAYLIST_OVERWRITE_OK, DialogOption.NO);
+            if (choice != DialogOption.YES)
                 return;
         }
-        
+
         String path = selFile.getPath();
         try {
             path = FileUtils.getCanonicalPath(selFile);
-        } catch(IOException ignored) {
+        } catch (IOException ignored) {
             //LOG.warn("unable to get canonical path for file: " + selFile, ignored);
         }
         // force m3u on the end.
-        if(!path.toLowerCase().endsWith(".m3u"))
+        if (!path.toLowerCase().endsWith(".m3u"))
             path += ".m3u";
 
         // create a new thread to handle saving the playlist to disk
-        saveM3U(path);
-
+        saveM3U(playlist, path);
     }
     
     /**
      * Handles actually copying and writing the playlist to disk. 
      * @param path - file location to save the list to
      */
-    private void saveM3U( final String path ) {
+    private void saveM3U(final Playlist playlist, final String path ) {
         BackgroundExecutorService.schedule(new Runnable() {
             public void run(){
-//                PlayList pl = new PlayList(path);
-//                // lock the list and get a copy of the songs
-//                synchronized(PLAY_LOCK) {
-//                    lastSavedPlaylist = new File(path);
-//                    pl.setSongs(MODEL.getLocalFiles());
-//                }
-//                
-//                try {
-//                    pl.save();
-//                } catch(IOException ignored) {
-//                    
-//                    LOG.warn("Unable to save playlist", ignored);
-//                    GUIMediator.safeInvokeLater( new Runnable(){
-//                        public void run(){
-//                            GUIMediator.showError("Unable to save playlist");
-//                        }
-//                    });
-//                }
+                try {
+                    List<File> files = new ArrayList<File>();
+                    List<PlaylistItem> items = playlist.getItems();
+                    for (PlaylistItem item : items) {
+                        File file = new File(item.getFilePath());
+                        if (file.exists()) {
+                            files.add(file);
+                        }
+                    }
+                    M3UPlaylist.save(path, files);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    GUIMediator.safeInvokeLater( new Runnable(){
+                        public void run(){
+                            GUIMediator.showError("Unable to save playlist");
+                        }
+                    });
+                }
             }
         });
     }
@@ -754,6 +769,51 @@ public class LibraryPlaylists extends JPanel {
 
         public String getDescription() {
             return I18n.tr("Playlist Files (*.m3u)");
+        }
+    }
+    
+    private final class ImportToPlaylistAction extends AbstractAction {
+
+        private static final long serialVersionUID = -9099898749358019734L;
+
+        public ImportToPlaylistAction() {
+            putValue(Action.NAME, I18n.tr("Import to Playlist"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Impor an M3U file to selected playlist"));
+            putValue(LimeAction.ICON_NAME, "PLAYLIST_IMPORT_TO");
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            importM3U(getSelectedPlaylist());
+        }
+    }
+    
+    private final class ImportToNewPlaylistAction extends AbstractAction {
+
+        private static final long serialVersionUID = 390846680458085610L;
+
+        public ImportToNewPlaylistAction() {
+            putValue(Action.NAME, I18n.tr("Import to New Playlist"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Import an M3U file to a new playlist"));
+            putValue(LimeAction.ICON_NAME, "PLAYLIST_IMPORT_NEW");
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            importM3U(null);
+        }
+    }
+    
+    private final class ExportPlaylistAction extends AbstractAction {
+
+        private static final long serialVersionUID = 6149822357662730490L;
+
+        public ExportPlaylistAction() {
+            putValue(Action.NAME, I18n.tr("Export Playlist"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Export an M3U from playlist"));
+            putValue(LimeAction.ICON_NAME, "PLAYLIST_IMPORT_NEW");
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            exportM3U(getSelectedPlaylist());
         }
     }
 }
