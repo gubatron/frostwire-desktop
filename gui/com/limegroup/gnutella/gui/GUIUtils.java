@@ -47,9 +47,9 @@ import org.apache.commons.logging.LogFactory;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
+import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.limegroup.gnutella.SpeedConstants;
-import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 
@@ -590,10 +590,10 @@ public final class GUIUtils {
         }
         
         if (GUIMediator.isPlaylistVisible()) {
-            if (PlaylistMediator.getInstance().openIfPlaylist(file))
-                return false;
+//            if (PlaylistMediator.getInstance().openIfPlaylist(file))
+//                return false;
             
-            if(PlaylistMediator.isPlayableFile(file)) {
+            if(AudioPlayer.isPlayableFile(file)) {
                 if( playOneTime ) {
                     BackgroundExecutorService.schedule(new Runnable() {
                         public void run(){
@@ -617,7 +617,7 @@ public final class GUIUtils {
                     });
                 }
                 else {
-                    PlaylistMediator.getInstance().addFileToPlaylist(file);
+                    //PlaylistMediator.getInstance().addFileToPlaylist(file);
                 }
                 return true;
             }
@@ -642,11 +642,10 @@ public final class GUIUtils {
      * @return True if the song was launched with frostplayer
      */        
     public static boolean launchAndEnqueueFile(File file, boolean audioLaunched) {        
-    	if (PlaylistMediator.isPlayableFile(file) && GUIMediator.isPlaylistVisible()) {
+    	if (AudioPlayer.isPlayableFile(file) && GUIMediator.isPlaylistVisible()) {
     		GUIMediator.instance().attemptStopAudio();
 			GUIMediator.instance().launchAudio(new AudioSource(file));    		
-		PlaylistMediator.getInstance().addFileToPlaylist(file);
-    		return true;
+			return true;
     	}
     	else {
     		//use external player to launch file

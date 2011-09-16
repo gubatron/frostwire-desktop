@@ -54,16 +54,14 @@ import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.ChatMediator;
 import com.frostwire.gui.HideExitDialog;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
+import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
-import com.frostwire.gui.tabs.LibraryPlayListTab;
 import com.limegroup.gnutella.UpdateInformation;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
 import com.limegroup.gnutella.gui.bugs.FatalBugManager;
-import com.limegroup.gnutella.gui.library.LibraryMediator;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
 import com.limegroup.gnutella.gui.options.OptionsMediator;
-import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
 import com.limegroup.gnutella.gui.search.SearchMediator;
 import com.limegroup.gnutella.gui.shell.FrostAssociations;
 import com.limegroup.gnutella.gui.shell.ShellAssociationManager;
@@ -114,7 +112,7 @@ public final class GUIMediator {
     private boolean _remoteDownloadsAllowed;
 
     public static enum Tabs {
-        SEARCH(I18n.tr("&Search")), LIBRARY(I18n.tr("&Library"), ApplicationSettings.LIBRARY_VIEW_ENABLED), LIBRARY2(I18n.tr("&Library"), ApplicationSettings.LIBRARY_VIEW_ENABLED), ANDROID(I18n.tr("&Phones and Tablets"),
+        SEARCH(I18n.tr("&Search")), LIBRARY(I18n.tr("&Library"), ApplicationSettings.LIBRARY_VIEW_ENABLED), ANDROID(I18n.tr("&Phones and Tablets"),
                 ApplicationSettings.ANDROID_VIEW_ENABLED), CHAT(I18n.tr("Community C&hat"), ApplicationSettings.CHAT_VIEW_ENABLED);
 
         private Action navAction;
@@ -819,26 +817,19 @@ public final class GUIMediator {
     }
 
     /**
-     * Returns the active playlist or <code>null</code> if the playlist is not
-     * enabled.
-     */
-    public static PlaylistMediator getPlayList() {
-        return MainFrame.getPlaylistMediator();
-    }
-
-    /**
      * Determines whether or not the PlaylistMediator is being used this
      * session.
      */
     public static boolean isPlaylistVisible() {
-        // If we are not constructed yet, then make our best guess as
-        // to visibility. It is actually VERY VERY important that this
-        // returns the same thing throughout the entire course of the program,
-        // otherwise exceptions can pop up.
-        if (!isConstructed())
-            return PlayerSettings.PLAYER_ENABLED.getValue();
-        else
-            return getPlayList() != null && PlayerSettings.PLAYER_ENABLED.getValue();
+//        // If we are not constructed yet, then make our best guess as
+//        // to visibility. It is actually VERY VERY important that this
+//        // returns the same thing throughout the entire course of the program,
+//        // otherwise exceptions can pop up.
+//        if (!isConstructed())
+//            return PlayerSettings.PLAYER_ENABLED.getValue();
+//        else
+//            return getPlayList() != null && PlayerSettings.PLAYER_ENABLED.getValue();
+        return true;
     }
 
     /**
@@ -1783,8 +1774,8 @@ public final class GUIMediator {
             return;
         PlayerSettings.PLAYER_ENABLED.setValue(value);
         getStatusLine().refresh();
-        getLibraryMediator().setPlayerEnabled(value);
-        LibraryPlayListTab.setPlayerEnabled(value);
+        //getLibraryMediator().setPlayerEnabled(value);
+        //LibraryPlayListTab.setPlayerEnabled(value);
     }
 
     /** Tells CHAT_MEDIATOR to try to start the IRC Chat */

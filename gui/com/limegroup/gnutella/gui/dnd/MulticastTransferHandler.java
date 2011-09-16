@@ -54,10 +54,10 @@ public class MulticastTransferHandler extends LimeTransferHandler {
 	
 	@Override
 	public boolean canImport(JComponent c, DataFlavor[] flavors, DropInfo ddi) {
-		// TODO dnd hack to ignore internal file drops 
-		if (DNDUtils.containsLibraryFlavors(flavors)) {
-			return false;
-		}
+//		// TODO dnd hack to ignore internal file drops 
+//		if (DNDUtils.containsLibraryFlavors(flavors)) {
+//			return false;
+//		}
 		for (LimeTransferHandler handler : getHandlers()) {
 			if (handler.canImport(c, flavors, ddi)) {
 				return true;
@@ -68,10 +68,10 @@ public class MulticastTransferHandler extends LimeTransferHandler {
 	
 	@Override
 	public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {
-		// TODO dnd hack to ignore internal file drops
-		if (DNDUtils.containsLibraryFlavors(transferFlavors)) {
-			return false;
-		}
+//		// TODO dnd hack to ignore internal file drops
+//		if (DNDUtils.containsLibraryFlavors(transferFlavors)) {
+//			return false;
+//		}
 		for (LimeTransferHandler handler : getHandlers()) {
 			if (handler.canImport(comp, transferFlavors)) {
 				return true;

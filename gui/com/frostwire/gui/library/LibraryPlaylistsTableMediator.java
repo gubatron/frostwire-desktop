@@ -39,7 +39,6 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.actions.LimeAction;
-import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.themes.SkinMenu;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
@@ -160,7 +159,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             DELETE_ACTION.setEnabled(true);
             RENAME_ACTION.setEnabled(false);
         } else {
-            if (GUIMediator.isPlaylistVisible() && PlaylistMediator.isPlayableFile(DATA_MODEL.getFile(rows[0])))
+            if (GUIMediator.isPlaylistVisible() && AudioPlayer.isPlayableFile(DATA_MODEL.getFile(rows[0])))
                 ENQUEUE_ACTION.setEnabled(true);
             DELETE_ACTION.setEnabled(true);
             // only allow single selection for renames
@@ -487,7 +486,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             if (selectedFile.isDirectory()) {
                 GUIMediator.launchExplorer(selectedFile);
                 return;
-            } else if (!PlaylistMediator.isPlayableFile(selectedFile)) {
+            } else if (!AudioPlayer.isPlayableFile(selectedFile)) {
                 GUIMediator.launchFile(selectedFile);
                 return;
             }
@@ -539,7 +538,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         if (GUIMediator.isPlaylistVisible()) {
             boolean found = false;
             for (int i = 0; i < sel.length; i++)
-                if (PlaylistMediator.isPlayableFile(DATA_MODEL.getFile(sel[i]))) {
+                if (AudioPlayer.isPlayableFile(DATA_MODEL.getFile(sel[i]))) {
                     found = true;
                     break;
                 }
@@ -659,7 +658,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             for (int i = 0; i < rows.length; i++) {
                 int index = rows[i]; // current index to add
                 File file = DATA_MODEL.getFile(index);
-                if (GUIMediator.isPlaylistVisible() && PlaylistMediator.isPlayableFile(file))
+                if (GUIMediator.isPlaylistVisible() && AudioPlayer.isPlayableFile(file))
                     files.add(file);
             }
             //LibraryMediator.instance().addFilesToPlayList(files);

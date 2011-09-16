@@ -13,9 +13,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import com.limegroup.gnutella.gui.library.LibraryTableTransferable;
-import com.limegroup.gnutella.gui.library.LibraryTreeTransferable;
-import com.limegroup.gnutella.gui.playlist.PlaylistMediator.PlaylistTransferable;
 import com.limegroup.gnutella.util.URIUtils;
 
 /**
@@ -103,11 +100,6 @@ public class DNDUtils {
     public static boolean containsFileFlavors(DataFlavor[] flavors) {
         return contains(flavors, DataFlavor.javaFileListFlavor) || contains(flavors, FileTransferable.URIFlavor)
                 || contains(flavors, FileTransferable.URIFlavor16);
-    }
-
-    public static boolean containsLibraryFlavors(DataFlavor[] flavors) {
-        return contains(flavors, LibraryTableTransferable.libraryTableTransferable) || contains(flavors, LibraryTreeTransferable.libraryTreeFlavor)
-                || contains(flavors, PlaylistTransferable.playlistFlavor);
     }
 
     /**

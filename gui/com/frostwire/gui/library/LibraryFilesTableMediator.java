@@ -29,11 +29,7 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
-import com.frostwire.alexandria.Library;
-import com.frostwire.alexandria.Playlist;
-import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
-import com.frostwire.gui.player.AudioMetaData;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.limegroup.gnutella.FileDesc;
@@ -48,10 +44,6 @@ import com.limegroup.gnutella.gui.MessageService;
 import com.limegroup.gnutella.gui.MultiLineLabel;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.actions.SearchAction;
-import com.limegroup.gnutella.gui.dnd.DNDUtils;
-import com.limegroup.gnutella.gui.dnd.MulticastTransferHandler;
-import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
-import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.themes.SkinMenu;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
@@ -162,7 +154,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             DELETE_ACTION.setEnabled(true);
             RENAME_ACTION.setEnabled(false);
         } else {
-            if (GUIMediator.isPlaylistVisible() && PlaylistMediator.isPlayableFile(DATA_MODEL.getFile(rows[0])))
+            if (GUIMediator.isPlaylistVisible() && AudioPlayer.isPlayableFile(DATA_MODEL.getFile(rows[0])))
                 ENQUEUE_ACTION.setEnabled(true);
             DELETE_ACTION.setEnabled(true);
             // only allow single selection for renames
@@ -546,7 +538,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             if (selectedFile.isDirectory()) {
                 GUIMediator.launchExplorer(selectedFile);
                 return;
-            } else if (!PlaylistMediator.isPlayableFile(selectedFile)) {
+            } else if (!AudioPlayer.isPlayableFile(selectedFile)) {
                 GUIMediator.launchFile(selectedFile);
                 return;
             }
@@ -598,7 +590,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         if (GUIMediator.isPlaylistVisible()) {
             boolean found = false;
             for (int i = 0; i < sel.length; i++)
-                if (PlaylistMediator.isPlayableFile(DATA_MODEL.getFile(sel[i]))) {
+                if (AudioPlayer.isPlayableFile(DATA_MODEL.getFile(sel[i]))) {
                     found = true;
                     break;
                 }
@@ -716,7 +708,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             for (int i = 0; i < rows.length; i++) {
                 int index = rows[i]; // current index to add
                 File file = DATA_MODEL.getFile(index);
-                if (GUIMediator.isPlaylistVisible() && PlaylistMediator.isPlayableFile(file))
+                if (GUIMediator.isPlaylistVisible() && AudioPlayer.isPlayableFile(file))
                     files.add(file);
             }
             //LibraryMediator.instance().addFilesToPlayList(files);

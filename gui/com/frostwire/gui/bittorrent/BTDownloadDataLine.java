@@ -9,12 +9,12 @@ import javax.swing.Icon;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
 
+import com.frostwire.gui.library.LibraryMediator;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.actions.LimeAction;
-import com.limegroup.gnutella.gui.library.LibraryMediator;
 import com.limegroup.gnutella.gui.notify.Notification;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
 import com.limegroup.gnutella.gui.tables.AbstractDataLine;
@@ -386,7 +386,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
 
         public void actionPerformed(ActionEvent ae) {
             GUIMediator.instance().setWindow(GUIMediator.Tabs.LIBRARY);
-            LibraryMediator.setSelectedFile(file);
+            LibraryMediator.instance().setSelectedFile(file);
         }
     }
 

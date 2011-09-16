@@ -38,18 +38,16 @@ import org.limewire.util.OSUtils;
 import com.frostwire.gui.ChatMediator;
 import com.frostwire.gui.android.AndroidMediator;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
+import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.tabs.AndroidTab;
 import com.frostwire.gui.tabs.ChatTab;
-import com.frostwire.gui.tabs.LibraryPlayListTab;
 import com.frostwire.gui.tabs.LibraryTab;
 import com.frostwire.gui.tabs.SearchDownloadTab;
 import com.frostwire.gui.tabs.Tab;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.TransferHandlerDropTargetListener;
-import com.limegroup.gnutella.gui.library.LibraryMediator;
 import com.limegroup.gnutella.gui.menu.MenuMediator;
 import com.limegroup.gnutella.gui.options.OptionsMediator;
-import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
 import com.limegroup.gnutella.gui.search.MagnetClipboardListener;
 import com.limegroup.gnutella.gui.search.SearchMediator;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
@@ -81,7 +79,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      * responsible for displaying files in the user's repository.
      */
     private LibraryMediator LIBRARY_MEDIATOR;
-    private com.frostwire.gui.library.LibraryMediator LIBRARY_MEDIATOR2;
     
     private AndroidMediator ANDROID_MEDIATOR;
 
@@ -310,8 +307,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
     	SEARCH_MEDIATOR = new SearchMediator();
         
     	TABS.put(GUIMediator.Tabs.SEARCH, new SearchDownloadTab(SEARCH_MEDIATOR, getBTDownloadMediator()));
-        TABS.put(GUIMediator.Tabs.LIBRARY, new LibraryPlayListTab(getLibraryMediator()));
-        TABS.put(GUIMediator.Tabs.LIBRARY2, new LibraryTab(getLibraryMediator2()));
+        TABS.put(GUIMediator.Tabs.LIBRARY, new LibraryTab(getLibraryMediator()));
         TABS.put(GUIMediator.Tabs.ANDROID, new AndroidTab(getAndroidMediator()));
 	    TABS.put(GUIMediator.Tabs.CHAT, new ChatTab(getChatMediator()));
 	    
@@ -611,24 +607,17 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         }
         return BT_DOWNLOAD_MEDIATOR;
     }
-
+    
     /**
      * Returns a reference to the <tt>LibraryMediator</tt> instance.
      *
      * @return a reference to the <tt>LibraryMediator</tt> instance
      */
-    final LibraryMediator getLibraryMediator() {
+    final com.frostwire.gui.library.LibraryMediator getLibraryMediator() {
         if (LIBRARY_MEDIATOR == null) {
             LIBRARY_MEDIATOR = LibraryMediator.instance();
         }
         return LIBRARY_MEDIATOR;
-    }
-    
-    final com.frostwire.gui.library.LibraryMediator getLibraryMediator2() {
-        if (LIBRARY_MEDIATOR2 == null) {
-            LIBRARY_MEDIATOR2 = com.frostwire.gui.library.LibraryMediator.instance();
-        }
-        return LIBRARY_MEDIATOR2;
     }
     
     final AndroidMediator getAndroidMediator() {
@@ -644,17 +633,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         }
         return CHAT_MEDIATOR;
     }
-        
-    /**
-     * Returns a reference to the <tt>PlaylistMediator</tt> instance.
-     *
-     * @return a reference to the <tt>PlaylistMediator</tt> instance or
-     * <code>null</code> if the playlist is not enabled
-     */
-    static final PlaylistMediator getPlaylistMediator() {
-        return PlayerSettings.PLAYER_ENABLED.getValue() ?
-                PlaylistMediator.getInstance() : null;
-    }    
 
     /**
      * Returns a reference to the <tt>StatusLine</tt> instance.

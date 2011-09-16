@@ -6,10 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
@@ -19,7 +15,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.limewire.concurrent.ExecutorsHelper;
-import org.limewire.service.ErrorService;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.mplayer.MediaPlaybackState;
@@ -30,12 +25,10 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.MediaButton;
 import com.limegroup.gnutella.gui.MediaSlider;
 import com.limegroup.gnutella.gui.RefreshListener;
-import com.limegroup.gnutella.gui.playlist.PlaylistMediator;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.util.FrostWireUtils;
 import com.limegroup.gnutella.util.Tagged;
-import com.limegroup.gnutella.util.URLDecoder;
 
 /**
  * This class sets up JPanel with MediaPlayer on it, and takes care of GUI
@@ -433,20 +426,20 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
             setProgressValue(PROGRESS.getMinimum());
         } else if (Math.abs(_progress - audioProperties.getLength()) < 5) {
 
-            PlaylistMediator playlist = GUIMediator.getPlayList();
-            if (playlist == null)
-                return;
-            // inform the GUI on whether or not we're going to continue playing
-            // if the end of the playlist has been reached, stop even if continous play is selected
-            if (playOneTime || !playlist.isContinuous() || playlist.getSize() <= 0 || playlist.isEndOfList() && playlist.isContinuous() == false) {
-                playlist.playComplete();
-                PLAYER.stop();
-            } else {
-                playlist.playComplete();
-                // if we don't already have another song to play,
-                // get one.
-                //loadSong(playlist.getNextSong());
-            }
+//            PlaylistMediator playlist = GUIMediator.getPlayList();
+//            if (playlist == null)
+//                return;
+//            // inform the GUI on whether or not we're going to continue playing
+//            // if the end of the playlist has been reached, stop even if continous play is selected
+//            if (playOneTime || !playlist.isContinuous() || playlist.getSize() <= 0 || playlist.isEndOfList() && playlist.isContinuous() == false) {
+//                playlist.playComplete();
+//                PLAYER.stop();
+//            } else {
+//                playlist.playComplete();
+//                // if we don't already have another song to play,
+//                // get one.
+//                //loadSong(playlist.getNextSong());
+//            }
         }
     }
 
@@ -520,10 +513,10 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
      *         playlist and remove it;
      */
     String removeFromPlaylist(int index) {
-        PlaylistMediator pl = GUIMediator.getPlayList();
-        if (pl.removeFileFromPlaylist(index)) {
-            return "ok";
-        }
+//        PlaylistMediator pl = GUIMediator.getPlayList();
+//        if (pl.removeFileFromPlaylist(index)) {
+//            return "ok";
+//        }
         return "invalid.index: " + index;
     }
 
@@ -538,10 +531,10 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
      *         playlist and remove it;
      */
     String playIndexInPlaylist(int index) {
-        PlaylistMediator pl = GUIMediator.getPlayList();
-        if (pl.removeFileFromPlaylist(index)) {
-            return "ok";
-        }
+//        PlaylistMediator pl = GUIMediator.getPlayList();
+//        if (pl.removeFileFromPlaylist(index)) {
+//            return "ok";
+//        }
         return "invalid.index: " + index;
     }
 

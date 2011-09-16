@@ -28,8 +28,7 @@ public class SendFileTransferHandler extends LimeTransferHandler {
 	
 	@Override
 	public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {
-		return !DNDUtils.containsLibraryFlavors(transferFlavors)
-			&& DNDUtils.containsFileFlavors(transferFlavors);
+		return DNDUtils.containsFileFlavors(transferFlavors);
 	}
 	
 	@Override

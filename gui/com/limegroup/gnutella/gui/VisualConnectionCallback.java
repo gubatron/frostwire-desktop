@@ -44,7 +44,7 @@ public final class VisualConnectionCallback implements ActivityCallback {
     public void fileManagerLoading() {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                mf().getLibraryMediator().clearLibrary();
+                //mf().getLibraryMediator().clearLibrary();
             }
         });
     }

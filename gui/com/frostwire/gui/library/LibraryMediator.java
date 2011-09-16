@@ -231,4 +231,9 @@ public class LibraryMediator {
     public AudioSource getNextSong(AudioSource currentSong) {
         return currentTableMediator != null ? currentTableMediator.getNextSong(currentSong) : null;
     }
+
+    public void setSelectedFile(File file) {
+       getLibraryFiles().selectFinishedDownloads();
+       LibraryFilesTableMediator.instance().setFileSelected(file);
+    }
 }

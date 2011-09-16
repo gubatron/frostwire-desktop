@@ -427,4 +427,8 @@ public class LibraryFiles extends JPanel {
             GUIMediator.launchExplorer(directory);
         }
     }
+
+    public void selectFinishedDownloads() {
+        _list.setSelectedValue(_finishedDownloadsCell, true);
+    }
 }
