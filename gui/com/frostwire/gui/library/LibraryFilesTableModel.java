@@ -3,7 +3,6 @@ package com.frostwire.gui.library;
 import java.io.File;
 
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.gui.tables.ColoredCellImpl;
@@ -27,7 +26,7 @@ final class LibraryFilesTableModel extends HashBasedDataLineModel<LibraryFilesTa
 	 * (Needed to make sure isCellEditable
 	 *  is only true when a single thing is selected.)
 	 */
-	private JTable _table;
+	//private JTable _table;
 
 	LibraryFilesTableModel() {
 	    super(LibraryFilesTableDataLine.class);
@@ -45,7 +44,7 @@ final class LibraryFilesTableModel extends HashBasedDataLineModel<LibraryFilesTa
 	 * Needed for isCellEditable to work
 	 */
 	void setTable(JTable table) {
-	    _table = table;
+	    //_table = table;
 	}
 
 	/**

@@ -1821,7 +1821,7 @@ public final class GUIMediator {
         return BT_DOWNLOAD_MEDIATOR;
     }
 
-    private LibraryMediator getLibraryMediator() {
+    public LibraryMediator getLibraryMediator() {
         if (LIBRARY_MEDIATOR == null) {
             LIBRARY_MEDIATOR = getMainFrame().getLibraryMediator();
         }

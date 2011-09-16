@@ -1,6 +1,5 @@
 package com.frostwire.gui.library;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.ArrayList;
@@ -8,9 +7,7 @@ import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.Icon;
 import javax.swing.JComponent;
-import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
@@ -18,26 +15,18 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.MouseInputListener;
 import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 
-import org.limewire.collection.Tuple;
-import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
-import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
-import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
-import com.limegroup.gnutella.gui.CheckBoxList;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.themes.SkinMenu;
@@ -250,8 +239,8 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
      * Sets the default editors.
      */
     protected void setDefaultEditors() {
-        TableColumnModel model = TABLE.getColumnModel();
-        TableColumn tc = model.getColumn(LibraryPlaylistsTableDataLine.NAME_IDX);
+        //TableColumnModel model = TABLE.getColumnModel();
+        //TableColumn tc = model.getColumn(LibraryPlaylistsTableDataLine.NAME_IDX);
         //tc.setCellEditor(new LibraryTableCellEditor(this));
     }
 
@@ -345,7 +334,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         int row = TABLE.getSelectedRow();
         if (row == -1)
             return;
-        int viewIdx = TABLE.convertColumnIndexToView(LibraryPlaylistsTableDataLine.NAME_IDX);
+        //int viewIdx = TABLE.convertColumnIndexToView(LibraryPlaylistsTableDataLine.NAME_IDX);
         //TABLE.editCellAt(row, viewIdx, LibraryTableCellEditor.EVENT);
     }
 
@@ -371,14 +360,14 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
      * Depending on the platform these can be a subset of 
      * MOVE_TO_TRASH, DELETE, CANCEL.
      */
-    private static Object[] createRemoveOptions() {
-        if (OSUtils.supportsTrash()) {
-            String trashLabel = OSUtils.isWindows() ? I18n.tr("Move to Recycle Bin") : I18n.tr("Move to Trash");
-            return new Object[] { trashLabel, I18n.tr("Delete"), I18n.tr("Cancel") };
-        } else {
-            return new Object[] { I18n.tr("Delete"), I18n.tr("Cancel") };
-        }
-    }
+//    private static Object[] createRemoveOptions() {
+//        if (OSUtils.supportsTrash()) {
+//            String trashLabel = OSUtils.isWindows() ? I18n.tr("Move to Recycle Bin") : I18n.tr("Move to Trash");
+//            return new Object[] { trashLabel, I18n.tr("Delete"), I18n.tr("Cancel") };
+//        } else {
+//            return new Object[] { I18n.tr("Delete"), I18n.tr("Cancel") };
+//        }
+//    }
 
     /**
      * Delete selected items from a playlist (not from disk)
@@ -401,23 +390,23 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     /**
      * Creates a JList of files and sets and makes it non-selectable. 
      */
-    private static JList createFileList(List<String> fileNames) {
-        JList fileList = new JList(fileNames.toArray());
-        fileList.setVisibleRowCount(5);
-        fileList.setCellRenderer(new FileNameListCellRenderer());
-        //fileList.setSelectionForeground(fileList.getForeground());
-        //fileList.setSelectionBackground(fileList.getBackground());
-        fileList.setFocusable(false);
-        return fileList;
-    }
+//    private static JList createFileList(List<String> fileNames) {
+//        JList fileList = new JList(fileNames.toArray());
+//        fileList.setVisibleRowCount(5);
+//        fileList.setCellRenderer(new FileNameListCellRenderer());
+//        //fileList.setSelectionForeground(fileList.getForeground());
+//        //fileList.setSelectionBackground(fileList.getBackground());
+//        fileList.setFocusable(false);
+//        return fileList;
+//    }
 
-    /**
-     * Returns the human readable file name for incomplete files or
-     * just the regular file name otherwise. 
-     */
-    private String getCompleteFileName(File file) {
-        return file.getName();
-    }
+//    /**
+//     * Returns the human readable file name for incomplete files or
+//     * just the regular file name otherwise. 
+//     */
+//    private String getCompleteFileName(File file) {
+//        return file.getName();
+//    }
 
     /**
      * Handles a name change of one of the files displayed.
@@ -733,49 +722,49 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         }
     }
 
-    /**
-     * Sets an icon based on the filename extension. 
-     */
-    private static class FileNameListCellRenderer extends SubstanceDefaultListCellRenderer {
+//    /**
+//     * Sets an icon based on the filename extension. 
+//     */
+//    private static class FileNameListCellRenderer extends SubstanceDefaultListCellRenderer {
+//
+//        /**
+//         * 
+//         */
+//        private static final long serialVersionUID = 5064313639046811749L;
+//
+//        @Override
+//        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+//            super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+//            String extension = FileUtils.getFileExtension(value.toString());
+//            if (extension != null) {
+//                setIcon(IconManager.instance().getIconForExtension(extension));
+//            }
+//            return this;
+//        }
+//    }
 
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 5064313639046811749L;
-
-        @Override
-        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-            super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-            String extension = FileUtils.getFileExtension(value.toString());
-            if (extension != null) {
-                setIcon(IconManager.instance().getIconForExtension(extension));
-            }
-            return this;
-        }
-    }
-
-    /**
-     * Renders the file part of the Tuple<File, FileDesc> in CheckBoxList<Tuple<File, FileDesc>>.
-     */
-    private class TupleTextProvider implements CheckBoxList.TextProvider<Tuple<File, FileDesc>> {
-
-        public Icon getIcon(Tuple<File, FileDesc> obj) {
-            String extension = FileUtils.getFileExtension(obj.getFirst());
-            if (extension != null) {
-                return IconManager.instance().getIconForExtension(extension);
-            }
-            return null;
-        }
-
-        public String getText(Tuple<File, FileDesc> obj) {
-            return getCompleteFileName(obj.getFirst());
-        }
-
-        public String getToolTipText(Tuple<File, FileDesc> obj) {
-            return obj.getFirst().getAbsolutePath();
-        }
-
-    }
+//    /**
+//     * Renders the file part of the Tuple<File, FileDesc> in CheckBoxList<Tuple<File, FileDesc>>.
+//     */
+//    private class TupleTextProvider implements CheckBoxList.TextProvider<Tuple<File, FileDesc>> {
+//
+//        public Icon getIcon(Tuple<File, FileDesc> obj) {
+//            String extension = FileUtils.getFileExtension(obj.getFirst());
+//            if (extension != null) {
+//                return IconManager.instance().getIconForExtension(extension);
+//            }
+//            return null;
+//        }
+//
+//        public String getText(Tuple<File, FileDesc> obj) {
+//            return getCompleteFileName(obj.getFirst());
+//        }
+//
+//        public String getToolTipText(Tuple<File, FileDesc> obj) {
+//            return obj.getFirst().getAbsolutePath();
+//        }
+//
+//    }
 
     private static class FileProvider implements LaunchableProvider {
 

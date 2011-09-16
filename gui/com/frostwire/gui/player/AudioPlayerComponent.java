@@ -41,12 +41,12 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     /**
      * How fast to scroll the song title if it is too long in milliseconds
      */
-    private static final long SCROLL_RATE = 200;
+    //private static final long SCROLL_RATE = 200;
 
     /**
      * The maximum characters to show in the progress bar.
      */
-    private static final int STRING_SIZE_TO_SHOW = 20;
+    //private static final int STRING_SIZE_TO_SHOW = 20;
 
     /**
      * Width needed to fully display everything in the media player. If this width
@@ -119,7 +119,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     /**
      * Index of where to display the name in the progress bar.
      */
-    private volatile int currBeginIndex = -1;
+    //private volatile int currBeginIndex = -1;
 
     /**
      * Current properties of the song being played
@@ -129,7 +129,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     /**
      * The last time the scrolling song was shifted
      */
-    private long lastScroll = System.currentTimeMillis();
+    //private long lastScroll = System.currentTimeMillis();
 
     /**
      * The current song that is playing
@@ -144,7 +144,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     /**
      * Variable for the name of the current file being played.
      */
-    private String currentFileName;
+    //private String currentFileName;
 
     /**
      * If true, will only play current song and stop, regradless of position
@@ -156,7 +156,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     /**
      * Lock for access to the above String.
      */
-    private final Object cfnLock = new Object();
+    //private final Object cfnLock = new Object();
 
     private float _progress;
 
@@ -578,11 +578,11 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
             return albumString.getValue();
 
         // We won't accept full URLs
-        String baseDir = "http://riaa.com";
-        int port = 0;
-        if (port > 0) {
-            baseDir += ":" + port;
-        }
+//        String baseDir = "http://riaa.com";
+//        int port = 0;
+//        if (port > 0) {
+//            baseDir += ":" + port;
+//        }
 
         //        String url = baseDir + urlString.getValue();
         //        try {
@@ -607,11 +607,11 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
             return urlString.getValue();
 
         // We won't accept full URLs
-        String baseDir = "http://riaa.com";
-        int port = 0;
-        if (port > 0) {
-            baseDir += ":" + port;
-        }
+//        String baseDir = "http://riaa.com";
+//        int port = 0;
+//        if (port > 0) {
+//            baseDir += ":" + port;
+//        }
 
         //        String url = baseDir + urlString.getValue();
         //        String name = getName(url);
@@ -630,16 +630,16 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
         return "ok";
     }
 
-    private String getName(String url) {
-        int ilast = url.lastIndexOf('/');
-        if (ilast == -1) {
-            ilast = url.lastIndexOf('\\');
-        }
-        if (ilast == -1) {
-            return url;
-        }
-        return url.substring(ilast + 1);
-    }
+//    private String getName(String url) {
+//        int ilast = url.lastIndexOf('/');
+//        if (ilast == -1) {
+//            ilast = url.lastIndexOf('\\');
+//        }
+//        if (ilast == -1) {
+//            return url;
+//        }
+//        return url.substring(ilast + 1);
+//    }
 
     private boolean isPlaying() {
         return !(PLAYER.getState() == MediaPlaybackState.Stopped || PLAYER.getState() == MediaPlaybackState.Uninitialized

@@ -53,7 +53,6 @@ import com.limegroup.gnutella.gui.search.SearchMediator;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.settings.ApplicationSettings;
-import com.limegroup.gnutella.settings.PlayerSettings;
 
 /**
  * This class constructs the main <tt>JFrame</tt> for the program as well as 

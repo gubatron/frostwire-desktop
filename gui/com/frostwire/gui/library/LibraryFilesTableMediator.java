@@ -21,8 +21,6 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.MouseInputListener;
 import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 
 import org.limewire.collection.Tuple;
 import org.limewire.util.FileUtils;
@@ -231,8 +229,8 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
      * Sets the default editors.
      */
     protected void setDefaultEditors() {
-        TableColumnModel model = TABLE.getColumnModel();
-        TableColumn tc = model.getColumn(LibraryFilesTableDataLine.NAME_IDX);
+        //TableColumnModel model = TABLE.getColumnModel();
+        //TableColumn tc = model.getColumn(LibraryFilesTableDataLine.NAME_IDX);
         //tc.setCellEditor(new LibraryTableCellEditor(this));
     }
 
@@ -320,7 +318,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         int row = TABLE.getSelectedRow();
         if (row == -1)
             return;
-        int viewIdx = TABLE.convertColumnIndexToView(LibraryFilesTableDataLine.NAME_IDX);
+        //int viewIdx = TABLE.convertColumnIndexToView(LibraryFilesTableDataLine.NAME_IDX);
         //TABLE.editCellAt(row, viewIdx, LibraryTableCellEditor.EVENT);
     }
 

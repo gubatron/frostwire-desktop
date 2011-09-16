@@ -603,7 +603,7 @@ public class LibraryPlaylists extends JPanel {
             if (index != -1) {
                 LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) _list.getModel().getElementAt(index);
                 
-                Playlist selectedPlaylist = getSelectedPlaylist();
+                //Playlist selectedPlaylist = getSelectedPlaylist();
                 Playlist playlist = cell.getPlaylist();
                 
                 if (playlist == null) {
