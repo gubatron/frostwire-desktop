@@ -211,7 +211,6 @@ public class LibraryFiles extends JPanel {
 
     private class ListMouseObserver implements MouseObserver {
         public void handleMouseClick(MouseEvent e) {
-            refreshListCellSelection();
         }
 
         /**
@@ -248,7 +247,7 @@ public class LibraryFiles extends JPanel {
             }
 
             LibraryMediator.instance().getLibraryPlaylists().clearSelection();
-
+            
             refreshListCellSelection();
         }
     }
