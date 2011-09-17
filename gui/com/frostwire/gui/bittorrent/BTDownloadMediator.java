@@ -22,7 +22,9 @@ import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.dnd.FileTransfer;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
+import com.limegroup.gnutella.gui.tables.DataLine;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
+import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.TableSettings;
 import com.limegroup.gnutella.gui.themes.SkinMenu;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
@@ -52,7 +54,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         }
         return INSTANCE;
     }
-
+    
     /**
      * Variables so only one ActionListener needs to be created for both
      * the buttons & popup menu.
