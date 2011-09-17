@@ -3,6 +3,8 @@ frostwire (5.1.5) stable; urgency=high
   * Bug fix on setup wizard for some window configurations where controls
     would not appear unless the user resized the window.
   * Bug fix on keyword search filter, wrong keyboard event was being used.
+  * UX adjustement in the way transfers are sorted when the application is
+    launched.
   * UX upgrade where Search Field on the Library now reacts to the DELETE key.
   * UX upgrade where the FrostWire left hand side components are laid out 
     correctly after the user resizes the window from much smaller dimensions.
