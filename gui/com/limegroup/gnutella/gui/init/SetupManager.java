@@ -196,9 +196,9 @@ public class SetupManager {
         holderPreferredSize.height += 20;
         
         if (holderPreferredSize.width > 900) {
-            holderPreferredSize.height = 900;
+            holderPreferredSize.width = 900;
         }
-        if (holderPreferredSize.width > 750) {
+        if (holderPreferredSize.height > 750) {
             holderPreferredSize.height = 750;
         }
         
