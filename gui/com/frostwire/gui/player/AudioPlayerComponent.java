@@ -214,11 +214,15 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
         buttonPanel.add(VOLUME);
         buttonPanel.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 3));
         buttonPanel.add(PREV_BUTTON);
+        buttonPanel.add(Box.createHorizontalStrut(5));
         buttonPanel.add(PLAY_BUTTON);
+        buttonPanel.add(Box.createHorizontalStrut(5));
         buttonPanel.add(PAUSE_BUTTON);
+        buttonPanel.add(Box.createHorizontalStrut(5));
         buttonPanel.add(STOP_BUTTON);
+        buttonPanel.add(Box.createHorizontalStrut(5));
         buttonPanel.add(NEXT_BUTTON);
-        buttonPanel.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 3));
+        buttonPanel.add(Box.createHorizontalStrut(21));
         buttonPanel.add(PROGRESS);
         if (OSUtils.isMacOSX())
             buttonPanel.add(Box.createHorizontalStrut(16));
