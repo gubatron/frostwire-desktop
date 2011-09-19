@@ -10,11 +10,11 @@ import java.awt.event.MouseEvent;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
-import javax.media.j3d.Font3D;
 import javax.swing.Box;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -146,6 +146,10 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
 
     private float _progress;
 
+	private JToggleButton SHUFFLE_BUTTON;
+
+	private JToggleButton LOOP_BUTTON;
+
     /**
      * Constructs a new <tt>MediaPlayerComponent</tt>.
      */
@@ -157,19 +161,24 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
         ThemeMediator.addThemeObserver(this);
     }
 
+    public JPanel getMediaPanel() {
+    	return getMediaPanel(false);
+    }
+    
     /**
      * Gets the media panel, constructing it if necessary.
      */
-    public JPanel getMediaPanel() {
+    public JPanel getMediaPanel(boolean showPlaybackModeControls) {
         if (myMediaPanel == null)
-            myMediaPanel = constructMediaPanel();
+            myMediaPanel = constructMediaPanel(showPlaybackModeControls);
         return myMediaPanel;
     }
 
     /**
      * Constructs the media panel.
+     * @param showPlaybackModeControls 
      */
-    private JPanel constructMediaPanel() {
+    private JPanel constructMediaPanel(boolean showPlaybackModeControls) {
         int tempWidth = 0, tempHeight = 0;
         tempHeight += PLAY_BUTTON.getIcon().getIconHeight() + 2;
         tempWidth += PLAY_BUTTON.getIcon().getIconWidth() + 2 + PAUSE_BUTTON.getIcon().getIconWidth() + 2 + STOP_BUTTON.getIcon().getIconWidth() + 2
@@ -213,21 +222,64 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
         //set font for time labels.
         Font f = new Font(progressCurrentTime.getFont().getFontName(),Font.PLAIN, 10);
         progressCurrentTime.setFont(f);
-        progressSongLength.setFont(f);
-        
+        progressSongLength.setFont(f);        
         
         buttonPanel.add(progressCurrentTime);
         buttonPanel.add(Box.createHorizontalStrut(5));
         buttonPanel.add(PROGRESS);
-        buttonPanel.add(Box.createHorizontalStrut(5));
-        
+        buttonPanel.add(Box.createHorizontalStrut(5));        
         buttonPanel.add(progressSongLength);
+        
+        
+        if (showPlaybackModeControls) {
+        	initPlaylistPlaybackModeControls();
+        	
+        	buttonPanel.add(Box.createHorizontalStrut(5));
+        	buttonPanel.add(SHUFFLE_BUTTON);
+        	buttonPanel.add(Box.createHorizontalStrut(5));
+        	buttonPanel.add(LOOP_BUTTON);
+        }
+        
         if (OSUtils.isMacOSX())
             buttonPanel.add(Box.createHorizontalStrut(16));
         buttonPanel.add(Box.createHorizontalGlue());
 
         return buttonPanel;
     }
+
+	public void initPlaylistPlaybackModeControls() {
+		SHUFFLE_BUTTON = new JToggleButton();
+		SHUFFLE_BUTTON.setBorderPainted(false);
+		SHUFFLE_BUTTON.setContentAreaFilled(false);
+		SHUFFLE_BUTTON.setBackground(null);
+		SHUFFLE_BUTTON.setIcon(GUIMediator.getThemeImage("shuffle_off"));
+		SHUFFLE_BUTTON.setSelectedIcon(GUIMediator.getThemeImage("shuffle_on"));
+		SHUFFLE_BUTTON.setToolTipText(I18n.tr("Shuffle songs"));
+
+		LOOP_BUTTON = new JToggleButton();
+		LOOP_BUTTON.setBorderPainted(false);
+		LOOP_BUTTON.setContentAreaFilled(false);
+		LOOP_BUTTON.setBackground(null);
+		LOOP_BUTTON.setIcon(GUIMediator.getThemeImage("loop_off"));
+		LOOP_BUTTON.setSelectedIcon(GUIMediator.getThemeImage("loop_on"));
+		LOOP_BUTTON.setToolTipText(I18n.tr("Repeat songs"));
+		
+		SHUFFLE_BUTTON.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				PLAYER.setShuffle(SHUFFLE_BUTTON.isSelected());
+			}
+		});
+		
+		LOOP_BUTTON.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				PLAYER.setRepeatMode((LOOP_BUTTON.isSelected()) ? RepeatMode.All : RepeatMode.None);
+			}
+		});
+		
+	}
 
     public void registerListeners() {
         PLAY_BUTTON.addActionListener(new PlayListener());

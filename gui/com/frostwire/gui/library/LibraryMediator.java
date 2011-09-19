@@ -8,7 +8,6 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.List;
 
-import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
@@ -204,8 +203,6 @@ public class LibraryMediator {
         panelBottom.add( new IconButton(new ConfigureOptionsAction(OptionsConstructor.SHARED_KEY, I18n.tr("Options"),
                 I18n.tr("You can configure the folders you share in FrostWire\'s Options."))), BorderLayout.LINE_START);
         panelBottom.add(new LibraryPlayer(), BorderLayout.CENTER);
-        panelBottom.add(new JCheckBox("Repeat"), BorderLayout.PAGE_START);
-        panelBottom.add(new JCheckBox("Shuffle"), BorderLayout.PAGE_END);
         panel.add(panelBottom, BorderLayout.PAGE_END);
         
 

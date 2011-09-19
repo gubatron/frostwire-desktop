@@ -34,7 +34,7 @@ public final class MediaButton extends JButton implements ThemeObserver {
     public void updateTheme() {
         setContentAreaFilled(false);
         setBorderPainted(ThemeSettings.isNativeOSXTheme());
-        setRolloverEnabled(false);
+        setRolloverEnabled(true);
         setIcon(GUIMediator.getThemeImage(UP_NAME));
         setHorizontalAlignment(SwingConstants.CENTER);
         setPressedIcon(GUIMediator.getThemeImage(DOWN_NAME));
