@@ -82,6 +82,40 @@ public class LibraryDatabase {
 
         return new ArrayList<List<Object>>();
     }
+    
+    public synchronized List<List<Object>> query(String statementSql, Object... arguments) {
+        if (isClosed()) {
+            return new ArrayList<List<Object>>();
+        }
+
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            statement = _connection.prepareStatement(statementSql);
+
+            if (arguments != null) {
+                for (int i = 0; i < arguments.length; i++) {
+                    statement.setObject(i + 1, arguments[i]);
+                }
+            }
+
+            resultSet = statement.executeQuery();
+
+            return convertResultSetToList(resultSet);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                }
+            }
+        }
+
+        return new ArrayList<List<Object>>();
+    }
 
     /**
      * This method is synchronized due to possible concurrent issues, specially
@@ -203,16 +237,13 @@ public class LibraryDatabase {
 
         //update(connection, "DROP TABLE PlaylistItems IF EXISTS CASCADE");
         update(connection,
-                "CREATE TABLE PlaylistItems (playlistItemId INTEGER IDENTITY, filePath VARCHAR(10000), fileName VARCHAR(500), fileSize BIGINT, fileExtension VARCHAR(10), trackTitle VARCHAR(500), duration REAL, artistName VARCHAR(500), albumName VARCHAR(500), coverArtPath VARCHAR(10000), bitrate VARCHAR(10), comment VARCHAR(500), genre VARCHAR(20), track VARCHAR(6), year VARCHAR(6))");
+                "CREATE TABLE PlaylistItems (playlistItemId INTEGER IDENTITY, playlistId INTEGER, filePath VARCHAR(10000), fileName VARCHAR(500), fileSize BIGINT, fileExtension VARCHAR(10), trackTitle VARCHAR(500), duration REAL, artistName VARCHAR(500), albumName VARCHAR(500), coverArtPath VARCHAR(10000), bitrate VARCHAR(10), comment VARCHAR(500), genre VARCHAR(20), track VARCHAR(6), year VARCHAR(6))");
         update(connection, "CREATE INDEX idx_PlaylistItems_fileName ON PlaylistItems (fileName)");
         update(connection, "CREATE INDEX idx_PlaylistItems_fileExtension ON PlaylistItems (fileExtension)");
         update(connection, "CREATE INDEX idx_PlaylistItems_trackTitle ON PlaylistItems (trackTitle)");
         update(connection, "CREATE INDEX idx_PlaylistItems_artistName ON PlaylistItems (artistName)");
         update(connection, "CREATE INDEX idx_PlaylistItems_albumName ON PlaylistItems (albumName)");
         update(connection, "CALL FT_CREATE_INDEX('PUBLIC', 'PLAYLISTITEMS', 'FILEPATH, TRACKTITLE, ARTISTNAME, ALBUMNAME, GENRE, YEAR')");
-
-        //update(connection, "DROP TABLE PlaylistsPlaylistItems IF EXISTS CASCADE");
-        update(connection, "CREATE TABLE PlaylistsPlaylistItems (playlistPlaylistItemId INTEGER IDENTITY, playlistId INTEGER, playlistItemId INTEGER)");
 
         // INITIAL DATA
         update(connection, "INSERT INTO Library (name , version) VALUES ('" + name + "', " + LIBRARY_DATABASE_VERSION + ")");

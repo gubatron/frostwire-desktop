@@ -54,7 +54,7 @@ public class LibraryDB extends ObjectDB<Library> {
     }
 
     public Playlist getPlaylist(Library library, String name) {
-        List<List<Object>> result = db.query("SELECT playlistId, name, description FROM Playlists WHERE name = '" + name + "'");
+        List<List<Object>> result = db.query("SELECT playlistId, name, description FROM Playlists WHERE name = ?", name);
         Playlist playlist = null;
         if (result.size() > 0) {
             List<Object> row = result.get(0);

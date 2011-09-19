@@ -13,7 +13,7 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
     public void fill(PlaylistItem obj) {
         List<List<Object>> result = db
                 .query("SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath, bitrate, comment, genre, track, year "
-                        + "FROM PlaylisItems WHERE playlistItemId = " + obj.getId());
+                        + "FROM PlaylisItems WHERE playlistItemId = ?", obj.getId());
         if (result.size() > 0) {
             List<Object> row = result.get(0);
             fill(row, obj);
@@ -63,7 +63,6 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
             Object[] sqlAndValues = createPlaylistItemInsert(obj);
             int id = db.insert((String) sqlAndValues[0], (Object[]) sqlAndValues[1]);
             obj.setId(id);
-            db.update("INSERT INTO PlaylistsPlaylistItems (playlistId, playlistItemId) VALUES (?, ?)", obj.getPlaylist().getId(), obj.getId());
         } else {
             Object[] sqlAndValues = createPlaylistItemUpdate(obj);
             db.update((String) sqlAndValues[0], (Object[]) sqlAndValues[1]);
@@ -71,23 +70,14 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
     }
 
     public void delete(PlaylistItem obj) {
-        db.update("DELETE FROM PlaylistsPlaylistItems WHERE playlistId = " + obj.getPlaylist().getId() + " AND playlistItemId = " + obj.getId());
-        List<List<Object>> result = db.query("SELECT * FROM PlaylistsPlaylistItems WHERE playlistItemId = " + obj.getId());
-        if (result.size() == 0) {
-            db.update("DELETE FROM PlaylistItems WHERE playlistItemId = " + obj.getId());
-        }
+        db.update("DELETE FROM PlaylistItems WHERE playlistItemId = ?", obj.getId());
     }
-
-    public void deleteFromAll(PlaylistItem item) {
-        db.update("DELETE FROM PlaylistsPlaylistItems WHERE playlistItemId = " + item.getId());
-        db.update("DELETE FROM PlaylistItems WHERE playlistItemId = " + item.getId());
-    }
-
+    
     private Object[] createPlaylistItemInsert(PlaylistItem item) {
-        String sql = "INSERT INTO PlaylistItems (filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath, bitrate, comment, genre, track, year) "
-                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO PlaylistItems (playlistId, filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath, bitrate, comment, genre, track, year) "
+                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        Object[] values = new Object[] { item.getFilePath(), item.getFileName(), item.getFileSize(), item.getFileExtension(), item.getTrackTitle(),
+        Object[] values = new Object[] { item.getPlaylist().getId(), item.getFilePath(), item.getFileName(), item.getFileSize(), item.getFileExtension(), item.getTrackTitle(),
                 item.getTrackDurationInSecs(), item.getArtistName(), item.getAlbumName(), item.getCoverArtPath(), item.getBitrate(), item.getComment(),
                 item.getGenre(), item.getTrack(), item.getYear() };
 

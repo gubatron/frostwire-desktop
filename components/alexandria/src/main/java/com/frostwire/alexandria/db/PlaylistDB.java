@@ -13,7 +13,7 @@ public class PlaylistDB extends ObjectDB<Playlist> {
     }
 
     public void fill(Playlist obj) {
-        List<List<Object>> result = db.query("SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath FROM Playlists WHERE playlistId = " + obj.getId());
+        List<List<Object>> result = db.query("SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath FROM Playlists WHERE playlistId = ?", obj.getId());
         if (result.size() > 0) {
             List<Object> row = result.get(0);
             fill(row, obj);
@@ -36,10 +36,10 @@ public class PlaylistDB extends ObjectDB<Playlist> {
         }
 
         if (obj.getId() == LibraryDatabase.OBJECT_NOT_SAVED_ID) {
-            int id = db.insert("INSERT INTO Playlists (name, description) VALUES ('" + obj.getName() + "', '" + obj.getDescription() + "')");
+            int id = db.insert("INSERT INTO Playlists (name, description) VALUES (?, ?)", obj.getName(), obj.getDescription());
             obj.setId(id);
         } else {
-            db.update("DELETE FROM PlaylistsPlaylistItems WHERE playlistId = " + obj.getId());
+            db.update("DELETE FROM PlaylistItems WHERE playlistId = ?", obj.getId());
             Object[] statementObjects = createPlaylistUpdateStatement(obj);
             db.update((String) statementObjects[0], (Object[]) statementObjects[1]);
         }
@@ -51,16 +51,15 @@ public class PlaylistDB extends ObjectDB<Playlist> {
     }
 
     public void delete(Playlist obj) {
-        db.update("DELETE FROM PlaylistsPlaylistItems WHERE playlistId = " + obj.getId());
-        db.update("DELETE FROM Playlists WHERE playlistId = " + obj.getId());
+        db.update("DELETE FROM PlaylistItems WHERE playlistId = ?", obj.getId());
+        db.update("DELETE FROM Playlists WHERE playlistId = ?", obj.getId());
     }
 
     public List<PlaylistItem> getLibraryItems(Playlist playlist) {
-        String query = "SELECT PlaylistItems.playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath, bitrate, comment, genre, track, year "
-                    + "FROM PlaylistItems INNER JOIN PlaylistsPlaylistItems ON PlaylistItems.playlistItemId = PlaylistsPlaylistItems.playlistItemId "
-                    + "WHERE playlistId = " + playlist.getId();
+        String query = "SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath, bitrate, comment, genre, track, year "
+                    + "FROM PlaylistItems WHERE playlistId = ?";
         
-        List<List<Object>> result = db.query(query);
+        List<List<Object>> result = db.query(query, playlist.getId());
 
         List<PlaylistItem> items = new ArrayList<PlaylistItem>(result.size());
 

@@ -227,10 +227,4 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
             db.delete(this);
         }
     }
-    
-    public void deleteFromAll() {
-        if (db != null) {
-            db.deleteFromAll(this);
-        }
-    }
 }
