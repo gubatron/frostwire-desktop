@@ -21,6 +21,7 @@ import javax.swing.event.ChangeListener;
 import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.util.OSUtils;
 
+import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.LibraryUtils;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.BoxPanel;
@@ -761,9 +762,15 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     }
 
     private void next() {
-        stopSong();
-        //loadSong(GUIMediator.getPlayList().getNextSong());
-        play();
+    	AudioSource currentSong = PLAYER.getCurrentSong();
+    	
+    	if (currentSong != null) {
+    		AudioSource nextSong = LibraryMediator.instance().getNextSong(currentSong);
+    		
+    		if (nextSong != null) {
+    			PLAYER.loadSong(nextSong,true,true);
+    		}
+    	}
     }
 
     /**
@@ -776,7 +783,15 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     }
 
     private void back() {
-        //loadSong(GUIMediator.getPlayList().getPrevSong());
+    	AudioSource currentSong = PLAYER.getCurrentSong();
+    	
+    	if (currentSong != null) {
+    		AudioSource previousSong = LibraryMediator.instance().getPreviousSong(currentSong);
+    		
+    		if (previousSong != null) {
+    			PLAYER.loadSong(previousSong,true,true);
+    		}
+    	}
     }
 
     /**

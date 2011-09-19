@@ -128,6 +128,31 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
 
         return null;
     }
+    
+    public AudioSource getPreviousSong(AudioSource currentSong) {
+        if (!mediaType.equals(MediaType.getAudioMediaType())) {
+            return null;
+        }
+
+        int n = DATA_MODEL.getRowCount();
+        for (int i = 0; i < n; i++) {
+            try {
+                E line = DATA_MODEL.get(i);
+                if (currentSong.getFile().equals(line.getFile())) {
+                    for (int j = i - 1; j >= 0; j--) {
+                        File file = DATA_MODEL.get(j).getFile();
+                        if (AudioPlayer.isPlayableFile(file)) {
+                            return new AudioSource(file);
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                return null;
+            }
+        }
+
+        return null;
+    }
 
     @Override
     protected void buildListeners() {
