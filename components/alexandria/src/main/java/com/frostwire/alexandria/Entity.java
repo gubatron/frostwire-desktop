@@ -4,7 +4,7 @@ import com.frostwire.alexandria.db.ObjectDB;
 
 public abstract class Entity<T extends ObjectDB<?>> {
 
-    protected final T db;
+    protected T db;
 
     public Entity(T db) {
         this.db = db;
@@ -12,5 +12,9 @@ public abstract class Entity<T extends ObjectDB<?>> {
 
     public T getDB() {
         return db;
+    }
+    
+    public void setDB(T db) {
+        this.db = db;
     }
 }

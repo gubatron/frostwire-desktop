@@ -98,6 +98,9 @@ public class DNDUtils {
      * @return
      */
     public static boolean containsFileFlavors(DataFlavor[] flavors) {
+        if (flavors == null) {
+            return false;
+        }
         return contains(flavors, DataFlavor.javaFileListFlavor) || contains(flavors, FileTransferable.URIFlavor)
                 || contains(flavors, FileTransferable.URIFlavor16);
     }

@@ -55,7 +55,7 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
     }
 
     public void save(PlaylistItem obj) {
-        if (obj.getId() == LibraryDatabase.OBJECT_INVALID_ID) {
+        if (obj.getId() == LibraryDatabase.OBJECT_INVALID_ID || obj.getPlaylist() == null) {
             return;
         }
 

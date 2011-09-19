@@ -1,6 +1,8 @@
 package com.frostwire.gui.library;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -8,6 +10,7 @@ import org.limewire.util.FileUtils;
 
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
+import com.frostwire.gui.library.LibraryPlaylistTransferable.Item;
 import com.frostwire.gui.player.AudioMetaData;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -28,7 +31,7 @@ class LibraryUtils {
         }
     }
 
-    public static void createNewPlaylist(final AbstractLibraryTableDataLine<?>[] lines) {
+    public static void createNewPlaylist(final List<? extends AbstractLibraryTableDataLine<?>> lines) {
         String playlistName = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"),
                 JOptionPane.PLAIN_MESSAGE, null, null, null);
 
@@ -70,7 +73,28 @@ class LibraryUtils {
         }
     }
 
-    public static void asyncAddToPlaylist(final Playlist playlist, final AbstractLibraryTableDataLine<?>[] lines) {
+    public static void createNewPlaylist(final PlaylistItem[] playlistItems) {
+        String playlistName = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"),
+                JOptionPane.PLAIN_MESSAGE, null, null, null);
+
+        if (playlistName != null && playlistName.length() > 0) {
+            final Playlist playlist = LibraryMediator.getLibrary().newPlaylist(playlistName, playlistName);
+
+            new Thread(new Runnable() {
+                public void run() {
+                    addToPlaylist(playlist, playlistItems);
+                    playlist.save();
+                    GUIMediator.safeInvokeLater(new Runnable() {
+                        public void run() {
+                            LibraryMediator.instance().getLibraryPlaylists().addPlaylist(playlist);
+                        }
+                    });
+                }
+            }).start();
+        }
+    }
+
+    public static void asyncAddToPlaylist(final Playlist playlist, final List<? extends AbstractLibraryTableDataLine<?>> lines) {
         new Thread(new Runnable() {
             public void run() {
                 addToPlaylist(playlist, lines);
@@ -95,10 +119,72 @@ class LibraryUtils {
             }
         }).start();
     }
+    
+    public static void asyncAddToPlaylist(final Playlist playlist, final PlaylistItem[] playlistItems) {
+        new Thread(new Runnable() {
+            public void run() {
+                addToPlaylist(playlist, playlistItems);
+                playlist.save();
+                GUIMediator.safeInvokeLater(new Runnable() {
+                    public void run() {
+                        LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
+                    }
+                });
+            }
+        }).start();
+    }
 
-    private static void addToPlaylist(Playlist playlist, AbstractLibraryTableDataLine<?>[] lines) {
-        for (int i = 0; i < lines.length; i++) {
-            AbstractLibraryTableDataLine<?> line = lines[i];
+    public static List<LibraryPlaylistTransferable.Item> convertToItems(List<PlaylistItem> playlistItems) {
+        List<LibraryPlaylistTransferable.Item> items = new ArrayList<LibraryPlaylistTransferable.Item>(playlistItems.size());
+        for (PlaylistItem playlistItem : playlistItems) {
+            Item item = new LibraryPlaylistTransferable.Item();
+            item.id = playlistItem.getId();
+            item.filePath = playlistItem.getFilePath();
+            item.fileName = playlistItem.getFileName();
+            item.fileSize = playlistItem.getFileSize();
+            item.fileExtension = playlistItem.getFileExtension();
+            item.trackTitle = playlistItem.getTrackTitle();
+            item.trackDurationInSecs = playlistItem.getTrackDurationInSecs();
+            item.artistName = playlistItem.getArtistName();
+            item.albumName = playlistItem.getAlbumName();
+            item.coverArtPath = playlistItem.getCoverArtPath();
+            item.bitrate = playlistItem.getBitrate();
+            item.comment = playlistItem.getComment();
+            item.genre = playlistItem.getGenre();
+            item.track = playlistItem.getTrack();
+            item.year = playlistItem.getYear();
+            items.add(item);
+        }
+        return items;
+    }
+    
+    public static PlaylistItem[] convertToPlaylistItems(LibraryPlaylistTransferable.Item[] items) {
+        List<PlaylistItem> playlistItems = new ArrayList<PlaylistItem>(items.length);
+        for (LibraryPlaylistTransferable.Item item : items) {
+            PlaylistItem playlistItem = new PlaylistItem(null,
+                    item.id,
+                    item.filePath,
+                    item.fileName,
+                    item.fileSize,
+                    item.fileExtension,
+                    item.trackTitle,
+                    item.trackDurationInSecs,
+                    item.artistName,
+                    item.albumName,
+                    item.coverArtPath,
+                    item.bitrate,
+                    item.comment,
+                    item.genre,
+                    item.track,
+                    item.year);
+            playlistItems.add(playlistItem);
+        }
+        return playlistItems.toArray(new PlaylistItem[0]);
+    }
+
+    private static void addToPlaylist(Playlist playlist, List<? extends AbstractLibraryTableDataLine<?>> lines) {
+        for (int i = 0; i < lines.size(); i++) {
+            AbstractLibraryTableDataLine<?> line = lines.get(i);
             LibraryUtils.addPlaylistItem(playlist, line.getFile());
         }
     }
@@ -106,6 +192,13 @@ class LibraryUtils {
     private static void addToPlaylist(Playlist playlist, File[] files) {
         for (int i = 0; i < files.length; i++) {
             LibraryUtils.addPlaylistItem(playlist, files[i]);
+        }
+    }
+
+    private static void addToPlaylist(Playlist playlist, PlaylistItem[] playlistItems) {
+        for (int i = 0; i < playlistItems.length; i++) {
+            playlistItems[i].setPlaylist(playlist);
+            playlist.getItems().add(playlistItems[i]);
         }
     }
 }

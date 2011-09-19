@@ -56,10 +56,10 @@ class LibraryFilesTableTransferHandler extends TransferHandler {
 
     @Override
     protected Transferable createTransferable(JComponent c) {
-        AbstractLibraryTableDataLine<?>[] lines = mediator.getSelectedLines();
-        List<File> files = new ArrayList<File>(lines.length);
-        for (int i = 0; i < lines.length; i++) {
-            files.add(lines[i].getFile());
+        List<AbstractLibraryTableDataLine<File>> lines = mediator.getSelectedLines();
+        List<File> files = new ArrayList<File>(lines.size());
+        for (int i = 0; i < lines.size(); i++) {
+            files.add(lines.get(i).getFile());
         }
         return new FileTransferable(files);
     }

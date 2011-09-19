@@ -2,6 +2,7 @@ package com.frostwire.gui.library;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -38,11 +39,11 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
         mediaType = MediaType.getAnyTypeMediaType();
     }
 
-    public AbstractLibraryTableDataLine<?>[] getSelectedLines() {
+    public List<AbstractLibraryTableDataLine<I>> getSelectedLines() {
         int[] selected = TABLE.getSelectedRows();
-        AbstractLibraryTableDataLine<?>[] lines = new AbstractLibraryTableDataLine[selected.length];
+        List<AbstractLibraryTableDataLine<I>> lines = new ArrayList<AbstractLibraryTableDataLine<I>>(selected.length);
         for (int i = 0; i < selected.length; i++)
-            lines[i] = DATA_MODEL.get(selected[i]);
+            lines.add(DATA_MODEL.get(selected[i]));
         return lines;
     }
 
@@ -222,9 +223,9 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            AbstractLibraryTableDataLine<?>[] lines = getSelectedLines();
-            if (lines.length == 1) {
-                File file = lines[0].getFile();
+            List<AbstractLibraryTableDataLine<I>> lines = getSelectedLines();
+            if (lines.size() == 1) {
+                File file = lines.get(0).getFile();
                 String fileFolder = file.isFile() ? I18n.tr("file") : I18n.tr("folder");
                 int result = JOptionPane.showConfirmDialog(GUIMediator.getAppFrame(), I18n.tr("Do you want to send this {0} to a friend?", fileFolder)
                         + "\n\n\"" + file.getName() + "\"", I18n.tr("Send files with FrostWire"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);

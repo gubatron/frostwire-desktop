@@ -5,8 +5,7 @@ import com.frostwire.alexandria.db.PlaylistItemDB;
 
 public class PlaylistItem extends Entity<PlaylistItemDB> {
 
-    private final Playlist _playlist;
-
+    private Playlist _playlist;
     private int _id;
     private String _filePath;
     private String _fileName;
@@ -32,7 +31,7 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
     public PlaylistItem(Playlist playlist, int id, String filePath, String fileName, long fileSize, String fileExtension, String trackTitle, float trackDurationInSecs,
             String artistName, String albumName, String coverArtPath, String bitrate, String comment,
             String genre, String track, String year) {
-        super(new PlaylistItemDB(playlist.db.getDatabase()));
+        super(playlist != null ? new PlaylistItemDB(playlist.db.getDatabase()) : null);
         _playlist = playlist;
         _id = id;
         _filePath = filePath;
@@ -53,6 +52,11 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
 
     public Playlist getPlaylist() {
         return _playlist;
+    }
+    
+    public void setPlaylist(Playlist playlist) {
+        this._playlist = playlist;
+        setDB(new PlaylistItemDB(playlist != null ? playlist.db.getDatabase() : null));
     }
 
     public int getId() {

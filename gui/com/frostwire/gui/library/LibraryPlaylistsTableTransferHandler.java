@@ -10,10 +10,10 @@ import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.TransferHandler;
 
+import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
-import com.limegroup.gnutella.gui.dnd.FileTransferable;
 import com.limegroup.gnutella.gui.dnd.MulticastTransferHandler;
 
 class LibraryPlaylistsTableTransferHandler extends TransferHandler {
@@ -58,12 +58,12 @@ class LibraryPlaylistsTableTransferHandler extends TransferHandler {
 
     @Override
     protected Transferable createTransferable(JComponent c) {
-        AbstractLibraryTableDataLine<?>[] lines = mediator.getSelectedLines();
-        List<File> files = new ArrayList<File>(lines.length);
-        for (int i = 0; i < lines.length; i++) {
-            files.add(lines[i].getFile());
+        List<AbstractLibraryTableDataLine<PlaylistItem>> lines = mediator.getSelectedLines();
+        List<PlaylistItem> playlistItems = new ArrayList<PlaylistItem>(lines.size());
+        for (int i = 0; i < lines.size(); i++) {
+            playlistItems.add(lines.get(i).getInitializeObject());
         }
-        return new FileTransferable(files);
+        return new LibraryPlaylistTransferable(playlistItems);
     }
 
     private boolean canImport(TransferSupport support, boolean fallback) {

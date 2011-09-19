@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Rectangle;
-import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
 import java.awt.dnd.InvalidDnDOperationException;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
@@ -30,6 +30,7 @@ import javax.swing.event.ListSelectionListener;
 
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
+import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.MediaType;
@@ -247,7 +248,7 @@ public class LibraryFiles extends JPanel {
             }
 
             LibraryMediator.instance().getLibraryPlaylists().clearSelection();
-            
+
             refreshListCellSelection();
         }
     }
@@ -273,8 +274,9 @@ public class LibraryFiles extends JPanel {
                 return false;
             }
 
-            DataFlavor[] flavors = support.getDataFlavors();
-            if (DNDUtils.containsFileFlavors(flavors)) {
+            if (support.isDataFlavorSupported(LibraryPlaylistTransferable.ITEM_ARRAY)) {
+                return true;
+            } else if (DNDUtils.containsFileFlavors(support.getDataFlavors())) {
                 try {
                     File[] files = DNDUtils.getFiles(support.getTransferable());
                     for (File file : files) {
@@ -299,8 +301,14 @@ public class LibraryFiles extends JPanel {
             }
 
             try {
-                File[] files = DNDUtils.getFiles(support.getTransferable());
-                LibraryUtils.createNewPlaylist(files);
+                Transferable transferable = support.getTransferable();
+                if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistTransferable.ITEM_ARRAY)) {
+                    PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistTransferable.Item[]) transferable.getTransferData(LibraryPlaylistTransferable.ITEM_ARRAY));
+                    LibraryUtils.createNewPlaylist(playlistItems);
+                } else {
+                    File[] files = DNDUtils.getFiles(support.getTransferable());
+                    LibraryUtils.createNewPlaylist(files);
+                }
             } catch (Exception e) {
                 return false;
             }
