@@ -2,6 +2,7 @@ package com.frostwire.gui.player;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -9,17 +10,20 @@ import java.awt.event.MouseEvent;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
+import javax.media.j3d.Font3D;
 import javax.swing.Box;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.util.OSUtils;
 
+import com.frostwire.gui.library.LibraryUtils;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.BoxPanel;
-import com.limegroup.gnutella.gui.GUIConstants;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.MediaButton;
@@ -37,27 +41,6 @@ import com.limegroup.gnutella.util.Tagged;
 public final class AudioPlayerComponent implements AudioPlayerListener, RefreshListener, ThemeObserver {
 
     public static final String STREAMING_AUDIO = "Streaming Audio";
-
-    /**
-     * How fast to scroll the song title if it is too long in milliseconds
-     */
-    //private static final long SCROLL_RATE = 200;
-
-    /**
-     * The maximum characters to show in the progress bar.
-     */
-    //private static final int STRING_SIZE_TO_SHOW = 20;
-
-    /**
-     * Width needed to fully display everything in the media player. If this width
-     * isn't available, the progress and volume bar collapse
-     */
-    public final int fullSizeWidth = 351;
-
-    /**
-     *  Minimum width needed to display just the buttons
-     */
-    public final int minWidth = 240;
 
     /**
      * Constant for the play button.
@@ -92,7 +75,11 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     /**
      * Constant for the progress bar
      */
-    private final MediaSlider PROGRESS = new MediaSlider( "progress_track_center");
+    private final JProgressBar PROGRESS = new JProgressBar();
+    
+    private final JLabel progressCurrentTime = new JLabel();
+    
+    private final JLabel progressSongLength = new JLabel();
 
     /**
      * Executor to ensure all thread creation on the frostwireplayer is called from
@@ -108,7 +95,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     /**
      * The ProgressBar dimensions for showing the name & play progress.
      */
-    private final Dimension progressBarDimension = new Dimension(129, 19);
+    private final Dimension progressBarDimension = new Dimension(129, 10);
 
     /**
      * Volume slider dimensions for adjusting the audio level of a song
@@ -208,7 +195,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
 
         // add everything
         JPanel buttonPanel = new BoxPanel(BoxPanel.X_AXIS);
-        buttonPanel.setMaximumSize(new Dimension(355, tempHeight)); //tempWidth + PROGRESS.getWidth() + VOLUME.getWidth()
+        buttonPanel.setMaximumSize(new Dimension(370, tempHeight)); //tempWidth + PROGRESS.getWidth() + VOLUME.getWidth()
         buttonPanel.add(Box.createHorizontalGlue());
         buttonPanel.add(VOLUME);
         buttonPanel.add(Box.createHorizontalStrut(13));
@@ -221,8 +208,20 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
         buttonPanel.add(STOP_BUTTON);
         buttonPanel.add(Box.createHorizontalStrut(5));
         buttonPanel.add(NEXT_BUTTON);
-        buttonPanel.add(Box.createHorizontalStrut(21));
+        buttonPanel.add(Box.createHorizontalStrut(18));
+        
+        //set font for time labels.
+        Font f = new Font(progressCurrentTime.getFont().getFontName(),Font.PLAIN, 10);
+        progressCurrentTime.setFont(f);
+        progressSongLength.setFont(f);
+        
+        
+        buttonPanel.add(progressCurrentTime);
+        buttonPanel.add(Box.createHorizontalStrut(5));
         buttonPanel.add(PROGRESS);
+        buttonPanel.add(Box.createHorizontalStrut(5));
+        
+        buttonPanel.add(progressSongLength);
         if (OSUtils.isMacOSX())
             buttonPanel.add(Box.createHorizontalStrut(16));
         buttonPanel.add(Box.createHorizontalGlue());
@@ -264,7 +263,6 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
         STOP_BUTTON.updateTheme();
         NEXT_BUTTON.updateTheme();
         PREV_BUTTON.updateTheme();
-        PROGRESS.updateTheme();
         VOLUME.updateTheme();
     }
 
@@ -386,6 +384,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
         setVolumeValue();
         if (audioProperties != null && audioProperties.isSeekable()) {
             setProgressEnabled(true);
+            progressSongLength.setText(LibraryUtils.getSecondsInHHMMSS((int) audioProperties.getLength()));
         } else {
             setProgressEnabled(false);
         }
@@ -401,6 +400,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
         }
 
         _progress = currentTimeInSecs;
+        progressCurrentTime.setText(LibraryUtils.getSecondsInHHMMSS((int) _progress));
 
         float progressUpdate = ((PROGRESS.getMaximum() * currentTimeInSecs) / audioProperties.getLength());
         setProgressValue((int) progressUpdate);

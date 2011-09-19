@@ -106,43 +106,6 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
     public void setTrackTitle(String trackTitle) {
         _trackTitle = trackTitle;
     }
-
-    public String getTrackDurationInHHMMSS() {
-    	int s = (int) getTrackDurationInSecs();
-    	
-    	if (s < 0) {
-    		s = 0;
-    	}
-    	
-    	StringBuilder result = new StringBuilder();
-    	
-    	String HH = "";
-    	String MM = "";
-    	String SS = "";
-
-    	//math
-    	int hours=s/3600;
-    	int r = s%3600;
-    	int minutes = r/60;
-    	int seconds = r%60;
-
-    	//padding
-    	HH = (hours < 10) ? "0"+hours : String.valueOf(hours);
-    	MM = (minutes < 10) ? "0"+minutes : String.valueOf(minutes);
-    	SS = (seconds < 10) ? "0"+seconds : String.valueOf(seconds);
-    	
-    	//lazy formatting
-    	if (hours > 0) {
-    		result.append(HH);
-    		result.append(":");
-    	}
-
-    	result.append(MM);
-    	result.append(":");
-    	result.append(SS);
-    	
-    	return result.toString();    	
-    }
     
     public float getTrackDurationInSecs() {
         return trackDurationInSecs;

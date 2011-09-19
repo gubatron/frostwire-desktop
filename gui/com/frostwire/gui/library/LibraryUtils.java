@@ -15,7 +15,7 @@ import com.frostwire.gui.player.AudioMetaData;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 
-class LibraryUtils {
+public class LibraryUtils {
 
     public static void addPlaylistItem(Playlist playlist, File file) {
         try {
@@ -29,6 +29,41 @@ class LibraryUtils {
         } finally {
             LibraryMediator.instance().getLibrarySearch().revertStatus();
         }
+    }
+    
+    public static String getSecondsInHHMMSS(int s) {
+    	if (s < 0) {
+    		s = 0;
+    	}
+    	
+    	StringBuilder result = new StringBuilder();
+    	
+    	String HH = "";
+    	String MM = "";
+    	String SS = "";
+
+    	//math
+    	int hours=s/3600;
+    	int r = s%3600;
+    	int minutes = r/60;
+    	int seconds = r%60;
+
+    	//padding
+    	HH = (hours < 10) ? "0"+hours : String.valueOf(hours);
+    	MM = (minutes < 10) ? "0"+minutes : String.valueOf(minutes);
+    	SS = (seconds < 10) ? "0"+seconds : String.valueOf(seconds);
+    	
+    	//lazy formatting
+    	if (hours > 0) {
+    		result.append(HH);
+    		result.append(":");
+    	}
+
+    	result.append(MM);
+    	result.append(":");
+    	result.append(SS);
+    	
+    	return result.toString();   
     }
 
     public static void createNewPlaylist(final List<? extends AbstractLibraryTableDataLine<?>> lines) {
