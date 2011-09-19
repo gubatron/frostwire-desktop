@@ -87,13 +87,12 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     /**
      * Constant for the volume control
      */
-    private final MediaSlider VOLUME = new MediaSlider("volume_track_left", "volume_track_center", "volume_track_right", "volume_thumb_up", "volume_thumb_dn");
+    private final MediaSlider VOLUME = new MediaSlider("volume_labels");
 
     /**
      * Constant for the progress bar
      */
-    private final SongProgressBar PROGRESS = new SongProgressBar("progress_track_left", "progress_track_center", "progress_track_right", "progress_thumb_up",
-            "progress_thumb_dn", "progress_bar");
+    private final MediaSlider PROGRESS = new MediaSlider( "progress_track_center");
 
     /**
      * Executor to ensure all thread creation on the frostwireplayer is called from
@@ -114,7 +113,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     /**
      * Volume slider dimensions for adjusting the audio level of a song
      */
-    private final Dimension volumeSliderDimension = new Dimension(63, 19);
+    private final Dimension volumeSliderDimension = new Dimension(70, 19);
 
     /**
      * Index of where to display the name in the progress bar.
@@ -193,7 +192,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
         PROGRESS.setMinimumSize(progressBarDimension);
         PROGRESS.setMaximumSize(progressBarDimension);
         PROGRESS.setPreferredSize(progressBarDimension);
-        PROGRESS.setString(I18n.tr("FrostWire Media Player"));
+        //PROGRESS.setString(I18n.tr("FrostWire Media Player"));
         PROGRESS.setMaximum(3600);
         PROGRESS.setEnabled(false);
 
@@ -209,10 +208,10 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
 
         // add everything
         JPanel buttonPanel = new BoxPanel(BoxPanel.X_AXIS);
-        buttonPanel.setMaximumSize(new Dimension(tempWidth + PROGRESS.getWidth() + VOLUME.getWidth(), tempHeight));
+        buttonPanel.setMaximumSize(new Dimension(355, tempHeight)); //tempWidth + PROGRESS.getWidth() + VOLUME.getWidth()
         buttonPanel.add(Box.createHorizontalGlue());
         buttonPanel.add(VOLUME);
-        buttonPanel.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 3));
+        buttonPanel.add(Box.createHorizontalStrut(13));
         buttonPanel.add(PREV_BUTTON);
         buttonPanel.add(Box.createHorizontalStrut(5));
         buttonPanel.add(PLAY_BUTTON);
