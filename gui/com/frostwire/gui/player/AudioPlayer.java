@@ -29,11 +29,13 @@ public class AudioPlayer implements RefreshListener {
      */
     private List<AudioPlayerListener> listenerList = new CopyOnWriteArrayList<AudioPlayerListener>();
 
-    private MPlayer _mplayer;
+    private MPlayer mplayer;
     private AudioSource currentSong;
     private RepeatMode repeatMode;
     private boolean shuffle;
     private boolean playNextSong;
+
+	private double volume;
 
     private static AudioPlayer instance;
 
@@ -64,13 +66,13 @@ public class AudioPlayer implements RefreshListener {
         //System.out.println("LimeWirePlayer - player path: ["+playerPath+"]");
 
         MPlayer.initialise(new File(playerPath));
-        _mplayer = new MPlayer();
-        _mplayer.addPositionListener(new PositionListener() {
+        mplayer = new MPlayer();
+        mplayer.addPositionListener(new PositionListener() {
             public void positionChanged(float currentTimeInSecs) {
                 notifyProgress(currentTimeInSecs);
             }
         });
-        _mplayer.addStateListener(new StateListener() {
+        mplayer.addStateListener(new StateListener() {
             public void stateChanged(MediaPlaybackState newState) {
                 if (newState == MediaPlaybackState.Closed) { // This is the case mplayer is done with the current file
                     handleNextSong();
@@ -81,6 +83,7 @@ public class AudioPlayer implements RefreshListener {
         repeatMode = RepeatMode.All;
         shuffle = false;
         playNextSong = true;
+        volume=0.5;
     }
 
     public AudioSource getCurrentSong() {
@@ -118,7 +121,7 @@ public class AudioPlayer implements RefreshListener {
     }
 
     public MediaPlaybackState getState() {
-        return _mplayer.getCurrentState();
+        return mplayer.getCurrentState();
     }
 
     /**
@@ -141,12 +144,13 @@ public class AudioPlayer implements RefreshListener {
      * Begins playing a song
      */
     public void playSong() {
-        _mplayer.stop();
+        mplayer.stop();
+        setVolume(volume);
 
         if (currentSong.getFile() != null) {
-            _mplayer.open(currentSong.getFile().getAbsolutePath());
+            mplayer.open(currentSong.getFile().getAbsolutePath());
         } else if (currentSong.getURL() != null) {
-            _mplayer.open(currentSong.getURL().toString());
+            mplayer.open(currentSong.getURL().toString());
         }
 
         notifyState(getState());
@@ -156,7 +160,7 @@ public class AudioPlayer implements RefreshListener {
      * Toggle pause the current song
      */
     public void togglePause() {
-        _mplayer.togglePause();
+        mplayer.togglePause();
         notifyState(getState());
     }
 
@@ -164,7 +168,7 @@ public class AudioPlayer implements RefreshListener {
      * Stops the current song
      */
     public void stop() {
-        _mplayer.stop();
+        mplayer.stop();
         notifyState(getState());
     }
 
@@ -172,7 +176,7 @@ public class AudioPlayer implements RefreshListener {
      * Seeks to a new location in the current song
      */
     public void seek(float timeInSecs) {
-        _mplayer.seek(timeInSecs);
+        mplayer.seek(timeInSecs);
         notifyState(getState());
     }
 
@@ -184,10 +188,20 @@ public class AudioPlayer implements RefreshListener {
      *         operation
      */
     public void setVolume(double fGain) {
-        _mplayer.setVolume((int) (fGain * 200));
+    	volume = fGain;
+        mplayer.setVolume((int) (fGain * 200));
+        notifyVolumeChanged();
     }
 
-    public static boolean isPlayableFile(File file) {
+    protected void notifyVolumeChanged() {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                fireVolumeChanged(volume);
+            }
+        });
+	}
+
+	public static boolean isPlayableFile(File file) {
         String name = file.getName().toLowerCase();
         return name.endsWith(".mp3") || name.endsWith(".ogg") || name.endsWith(".wav") || name.endsWith(".wma") || name.endsWith(".m4a");
     }
@@ -255,6 +269,12 @@ public class AudioPlayer implements RefreshListener {
     protected void fireProgress(float currentTimeInSecs) {
         for (AudioPlayerListener listener : listenerList) {
             listener.progressChange(this, currentTimeInSecs);
+        }
+    }
+    
+    protected void fireVolumeChanged(double currentVolume) {
+        for (AudioPlayerListener listener : listenerList) {
+            listener.volumeChange(this, currentVolume);
         }
     }
 

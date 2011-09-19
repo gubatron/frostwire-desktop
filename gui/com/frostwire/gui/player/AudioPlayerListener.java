@@ -13,6 +13,8 @@ public interface AudioPlayerListener {
     public void songOpened(AudioPlayer audioPlayer, AudioSource audioSource);
 
     public void progressChange(AudioPlayer audioPlayer, float currentTimeInSecs);
+    
+    public void volumeChange(AudioPlayer audioPlayer, double currentVolume);
 
     /**
      * Notification callback for basicplayer events such as opened, eom ...

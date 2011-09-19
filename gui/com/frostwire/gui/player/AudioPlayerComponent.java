@@ -810,4 +810,12 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
         }
     }
 
+	@Override
+	public void volumeChange(AudioPlayer audioPlayer, double currentVolume) {
+		VolumeSliderListener oldListener = (VolumeSliderListener) VOLUME.getChangeListeners()[0];
+		VOLUME.removeChangeListener(oldListener);
+		VOLUME.setValue((int) (VOLUME.getMaximum()*currentVolume));
+		VOLUME.addChangeListener(oldListener);
+	}
+
 }
