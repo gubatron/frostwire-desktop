@@ -12,7 +12,7 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
 
     public void fill(PlaylistItem obj) {
         List<List<Object>> result = db
-                .query("SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath, bitrate, comment, genre, track, year "
+                .query("SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, trackDurationInSecs, trackArtist, trackAlbum, coverArtPath, trackBitrate, trackComment, trackGenre, trackNumber, trackYear, starred "
                         + "FROM PlaylisItems WHERE playlistItemId = ?", obj.getId());
         if (result.size() > 0) {
             List<Object> row = result.get(0);
@@ -28,14 +28,15 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
         String fileExtension = (String) row.get(4);
         String trackTitle = (String) row.get(5);
         float trackDurationInSecs = (Float) row.get(6);
-        String artistName = (String) row.get(7);
-        String albumName = (String) row.get(8);
+        String trackArtist = (String) row.get(7);
+        String trackAlbum = (String) row.get(8);
         String coverArtPath = (String) row.get(9);
-        String bitrate = (String) row.get(10);
-        String comment = (String) row.get(11);
-        String genre = (String) row.get(12);
-        String track = (String) row.get(13);
-        String year = (String) row.get(14);
+        String trackBitrate = (String) row.get(10);
+        String trackComment = (String) row.get(11);
+        String trackGenre = (String) row.get(12);
+        String trackNumber = (String) row.get(13);
+        String trackYear = (String) row.get(14);
+        boolean starred = (Boolean) row.get(15);
 
         obj.setId(id);
         obj.setFilePath(filePath);
@@ -44,14 +45,15 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
         obj.setFileExtension(fileExtension);
         obj.setTrackTitle(trackTitle);
         obj.setTrackDurationInSecs(trackDurationInSecs);
-        obj.setArtistName(artistName);
-        obj.setAlbumName(albumName);
+        obj.setTrackArtist(trackArtist);
+        obj.setTrackAlbum(trackAlbum);
         obj.setCoverArtPath(coverArtPath);
-        obj.setBitrate(bitrate);
-        obj.setComment(comment);
-        obj.setGenre(genre);
-        obj.setTrack(track);
-        obj.setYear(year);
+        obj.setTrackBitrate(trackBitrate);
+        obj.setTrackComment(trackComment);
+        obj.setTrackGenre(trackGenre);
+        obj.setTrackNumber(trackNumber);
+        obj.setTrackYear(trackYear);
+        obj.setStarred(starred);
     }
 
     public void save(PlaylistItem obj) {
@@ -74,22 +76,22 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
     }
     
     private Object[] createPlaylistItemInsert(PlaylistItem item) {
-        String sql = "INSERT INTO PlaylistItems (playlistId, filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath, bitrate, comment, genre, track, year) "
-                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO PlaylistItems (playlistId, filePath, fileName, fileSize, fileExtension, trackTitle, trackDurationInSecs, trackArtist, trackAlbum, coverArtPath, trackBitrate, trackComment, trackGenre, trackNumber, trackYear, starred) "
+                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         Object[] values = new Object[] { item.getPlaylist().getId(), item.getFilePath(), item.getFileName(), item.getFileSize(), item.getFileExtension(), item.getTrackTitle(),
-                item.getTrackDurationInSecs(), item.getArtistName(), item.getAlbumName(), item.getCoverArtPath(), item.getBitrate(), item.getComment(),
-                item.getGenre(), item.getTrack(), item.getYear() };
+                item.getTrackDurationInSecs(), item.getTrackArtist(), item.getTrackAlbum(), item.getCoverArtPath(), item.getTrackBitrate(), item.getTrackComment(),
+                item.getTrackGenre(), item.getTrackNumber(), item.getTrackYear(), item.isStarred() };
 
         return new Object[] { sql, values };
     }
 
     private Object[] createPlaylistItemUpdate(PlaylistItem item) {
-        String sql = "UPDATE PlaylistItems SET filePath = ?, fileName = ?, fileSize = ?, fileExtension = ?, trackTitle = ?, duration = ?, artistName = ?, albumName = ?, coverArtPath = ?, bitrate = ?, comment = ?, genre = ?, track = ?, year = ? WHERE playlistItemId = ?";
+        String sql = "UPDATE PlaylistItems SET filePath = ?, fileName = ?, fileSize = ?, fileExtension = ?, trackTitle = ?, trackDurationInSecs = ?, trackArtist = ?, trackAlbum = ?, coverArtPath = ?, trackBitrate = ?, trackComment = ?, trackGenre = ?, trackNumber = ?, trackYear = ?, starred = ? WHERE playlistItemId = ?";
 
         Object[] values = new Object[] { item.getFilePath(), item.getFileName(), item.getFileSize(), item.getFileExtension(), item.getTrackTitle(),
-                item.getTrackDurationInSecs(), item.getArtistName(), item.getAlbumName(), item.getCoverArtPath(), item.getBitrate(), item.getComment(),
-                item.getGenre(), item.getTrack(), item.getYear(), item.getId() };
+                item.getTrackDurationInSecs(), item.getTrackArtist(), item.getTrackAlbum(), item.getCoverArtPath(), item.getTrackBitrate(), item.getTrackComment(),
+                item.getTrackGenre(), item.getTrackNumber(), item.getTrackYear(), item.isStarred(), item.getId() };
 
         return new Object[] { sql, values };
     }

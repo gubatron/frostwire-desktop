@@ -77,10 +77,10 @@ public class Playlist extends Entity<PlaylistDB> {
         _items.addAll(db.getLibraryItems(this));
     }
 
-    public PlaylistItem newItem(String filePath, String fileName, long fileSize, String fileExtension, String trackTitle, float trackDurationInSecs, String artistName,
-            String albumName, String coverArtPath, String bitrate, String comment, String genre, String track, String year) {
-        return new PlaylistItem(this, LibraryDatabase.OBJECT_NOT_SAVED_ID, filePath, fileName, fileSize, fileExtension, trackTitle, trackDurationInSecs, artistName,
-                albumName, coverArtPath, bitrate, comment, genre, track, year);
+    public PlaylistItem newItem(String filePath, String fileName, long fileSize, String fileExtension, String trackTitle, float trackDurationInSecs, String trackArtist,
+            String trackAlbum, String coverArtPath, String trackBitrate, String trackComment, String trackGenre, String trackNumber, String trackYear, boolean starred) {
+        return new PlaylistItem(this, LibraryDatabase.OBJECT_NOT_SAVED_ID, filePath, fileName, fileSize, fileExtension, trackTitle, trackDurationInSecs, trackArtist,
+                trackAlbum, coverArtPath, trackBitrate, trackComment, trackGenre, trackNumber, trackYear, starred);
     }
     
     @Override

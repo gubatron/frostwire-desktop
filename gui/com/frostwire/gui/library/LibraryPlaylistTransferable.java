@@ -47,13 +47,14 @@ public class LibraryPlaylistTransferable implements Transferable {
         public String fileExtension;
         public String trackTitle;
         public float trackDurationInSecs;
-        public String artistName;
-        public String albumName;
+        public String trackArtist;
+        public String trackAlbum;
         public String coverArtPath;
-        public String bitrate;
-        public String comment;
-        public String genre;
-        public String track;
-        public String year;
+        public String trackBitrate;
+        public String trackComment;
+        public String trackGenre;
+        public String trackNumber;
+        public String trackYear;
+        public boolean starred;
     }
 }

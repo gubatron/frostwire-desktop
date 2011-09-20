@@ -56,7 +56,7 @@ public class PlaylistDB extends ObjectDB<Playlist> {
     }
 
     public List<PlaylistItem> getLibraryItems(Playlist playlist) {
-        String query = "SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath, bitrate, comment, genre, track, year "
+        String query = "SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, trackDurationInSecs, trackArtist, trackAlbum, coverArtPath, trackBitrate, trackComment, trackGenre, trackNumber, trackYear, starred "
                     + "FROM PlaylistItems WHERE playlistId = ?";
         
         List<List<Object>> result = db.query(query, playlist.getId());

@@ -24,7 +24,7 @@ public class LibraryUtils {
             AudioMetaData mt = new AudioMetaData(file);
             PlaylistItem item = playlist.newItem(file.getAbsolutePath(), file.getName(), file.length(), FileUtils.getFileExtension(file), mt.getTitle(),
                     mt.getLength(), mt.getArtist(), mt.getAlbum(), "",// TODO: cover art path
-                    mt.getBitrate(), mt.getComment(), mt.getGenre(), mt.getTrack(), mt.getYear());
+                    mt.getBitrate(), mt.getComment(), mt.getGenre(), mt.getTrack(), mt.getYear(), false);
             playlist.getItems().add(item);
             item.save();
         } finally {
@@ -195,14 +195,15 @@ public class LibraryUtils {
             item.fileExtension = playlistItem.getFileExtension();
             item.trackTitle = playlistItem.getTrackTitle();
             item.trackDurationInSecs = playlistItem.getTrackDurationInSecs();
-            item.artistName = playlistItem.getArtistName();
-            item.albumName = playlistItem.getAlbumName();
+            item.trackArtist = playlistItem.getTrackArtist();
+            item.trackAlbum = playlistItem.getTrackAlbum();
             item.coverArtPath = playlistItem.getCoverArtPath();
-            item.bitrate = playlistItem.getBitrate();
-            item.comment = playlistItem.getComment();
-            item.genre = playlistItem.getGenre();
-            item.track = playlistItem.getTrack();
-            item.year = playlistItem.getYear();
+            item.trackBitrate = playlistItem.getTrackBitrate();
+            item.trackComment = playlistItem.getTrackComment();
+            item.trackGenre = playlistItem.getTrackGenre();
+            item.trackNumber = playlistItem.getTrackNumber();
+            item.trackYear = playlistItem.getTrackYear();
+            item.starred = playlistItem.isStarred();
             items.add(item);
         }
         return items;
@@ -219,14 +220,15 @@ public class LibraryUtils {
                     item.fileExtension,
                     item.trackTitle,
                     item.trackDurationInSecs,
-                    item.artistName,
-                    item.albumName,
+                    item.trackArtist,
+                    item.trackAlbum,
                     item.coverArtPath,
-                    item.bitrate,
-                    item.comment,
-                    item.genre,
-                    item.track,
-                    item.year);
+                    item.trackBitrate,
+                    item.trackComment,
+                    item.trackGenre,
+                    item.trackNumber,
+                    item.trackYear,
+                    item.starred);
             playlistItems.add(playlistItem);
         }
         return playlistItems.toArray(new PlaylistItem[0]);

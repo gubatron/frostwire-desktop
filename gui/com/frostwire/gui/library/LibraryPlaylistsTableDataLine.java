@@ -144,15 +144,15 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
         boolean playing = isPlaying();
         switch(idx) {
             case ALBUM_IDX:
-                return new PlaylistItemProperty(initializer.getAlbumName(), playing);
+                return new PlaylistItemProperty(initializer.getTrackAlbum(), playing);
             case ARTIST_IDX:
-                return new PlaylistItemProperty(initializer.getArtistName(), playing);
+                return new PlaylistItemProperty(initializer.getTrackArtist(), playing);
             case BITRATE_IDX:
-                return new PlaylistItemProperty(initializer.getBitrate(), playing);
+                return new PlaylistItemProperty(initializer.getTrackBitrate(), playing);
             case COMMENT_IDX:
-                return new PlaylistItemProperty(initializer.getComment(), playing);
+                return new PlaylistItemProperty(initializer.getTrackComment(), playing);
             case GENRE_IDX:
-                return new PlaylistItemProperty(initializer.getGenre(), playing);
+                return new PlaylistItemProperty(initializer.getTrackGenre(), playing);
             case LENGTH_IDX:
                 return new PlaylistItemProperty(LibraryUtils.getSecondsInDDHHMMSS((int) initializer.getTrackDurationInSecs()), playing);
             case NAME_IDX:
@@ -162,11 +162,11 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
             case TITLE_IDX:
                 return new PlaylistItemProperty(initializer.getTrackTitle(), playing);
             case TRACK_IDX:
-                return new PlaylistItemProperty(initializer.getTrack(), playing);
+                return new PlaylistItemProperty(initializer.getTrackNumber(), playing);
             case TYPE_IDX:
                 return new PlaylistItemProperty(initializer.getFileExtension(), playing);
             case YEAR_IDX:
-                return new PlaylistItemProperty(initializer.getYear(), playing);
+                return new PlaylistItemProperty(initializer.getTrackYear(), playing);
         }
         return null;
     }

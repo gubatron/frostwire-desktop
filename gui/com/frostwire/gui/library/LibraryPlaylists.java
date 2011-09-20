@@ -228,9 +228,7 @@ public class LibraryPlaylists extends JPanel {
 
         LibraryMediator.instance().updateTableItems(playlist);
         
-        String status = LibraryUtils.getPlaylistDurationInDDHHMMSS(playlist) + ", " + playlist.getItems().size() + " " + I18n.tr("tracks");
-        System.out.println("LibraryPlaylists.refreshSelection() - " + status);
-        
+        String status = LibraryUtils.getPlaylistDurationInDDHHMMSS(playlist) + ", " + playlist.getItems().size() + " " + I18n.tr("tracks");        
         LibraryMediator.instance().getLibrarySearch().setStatus(status);
     }
 

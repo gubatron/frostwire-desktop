@@ -237,13 +237,9 @@ public class LibraryDatabase {
 
         //update(connection, "DROP TABLE PlaylistItems IF EXISTS CASCADE");
         update(connection,
-                "CREATE TABLE PlaylistItems (playlistItemId INTEGER IDENTITY, playlistId INTEGER, filePath VARCHAR(10000), fileName VARCHAR(500), fileSize BIGINT, fileExtension VARCHAR(10), trackTitle VARCHAR(500), duration REAL, artistName VARCHAR(500), albumName VARCHAR(500), coverArtPath VARCHAR(10000), bitrate VARCHAR(10), comment VARCHAR(500), genre VARCHAR(20), track VARCHAR(6), year VARCHAR(6))");
-        update(connection, "CREATE INDEX idx_PlaylistItems_fileName ON PlaylistItems (fileName)");
-        update(connection, "CREATE INDEX idx_PlaylistItems_fileExtension ON PlaylistItems (fileExtension)");
-        update(connection, "CREATE INDEX idx_PlaylistItems_trackTitle ON PlaylistItems (trackTitle)");
-        update(connection, "CREATE INDEX idx_PlaylistItems_artistName ON PlaylistItems (artistName)");
-        update(connection, "CREATE INDEX idx_PlaylistItems_albumName ON PlaylistItems (albumName)");
-        update(connection, "CALL FT_CREATE_INDEX('PUBLIC', 'PLAYLISTITEMS', 'FILEPATH, TRACKTITLE, ARTISTNAME, ALBUMNAME, GENRE, YEAR')");
+                "CREATE TABLE PlaylistItems (playlistItemId INTEGER IDENTITY, filePath VARCHAR(10000), fileName VARCHAR(500), fileSize BIGINT, fileExtension VARCHAR(10), trackTitle VARCHAR(500), trackDurationInSecs REAL, trackArtist VARCHAR(500), trackAlbum VARCHAR(500), coverArtPath VARCHAR(10000), trackBitrate VARCHAR(10), trackComment VARCHAR(500), trackGenre VARCHAR(20), trackNumber VARCHAR(6), trackYear VARCHAR(6), playlistId INTEGER, starred BOOLEAN)");
+        update(connection, "CREATE INDEX idx_PlaylistItems_starred ON PlaylistItems (starred)");
+        update(connection, "CALL FT_CREATE_INDEX('PUBLIC', 'PLAYLISTITEMS', 'FILEPATH, TRACKTITLE, TRACKARTIST, TRACKALBUM, TRACKGENRE, TRACKYEAR')");
 
         // INITIAL DATA
         update(connection, "INSERT INTO Library (name , version) VALUES ('" + name + "', " + LIBRARY_DATABASE_VERSION + ")");

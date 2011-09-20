@@ -5,106 +5,108 @@ import com.frostwire.alexandria.db.PlaylistItemDB;
 
 public class PlaylistItem extends Entity<PlaylistItemDB> {
 
-    private Playlist _playlist;
-    private int _id;
-    private String _filePath;
-    private String _fileName;
-    private long _fileSize;
-    private String _fileExtension;
-    private String _trackTitle;
+    private Playlist playlist;
+    private int id;
+    private String filePath;
+    private String fileName;
+    private long fileSize;
+    private String fileExtension;
+    private String trackTitle;
     private float trackDurationInSecs;
-    private String _artistName;
-    private String _albumName;
-    private String _coverArtPath;
-    private String bitrate;
-    private String comment;
-    private String genre;
-    private String track;
-    private String year;
+    private String trackArtist;
+    private String trackAlbum;
+    private String coverArtPath;
+    private String trackBitrate;
+    private String trackComment;
+    private String trackGenre;
+    private String trackNumber;
+    private String trackYear;
+    private boolean starred;
 
     public PlaylistItem(Playlist playlist) {
         super(new PlaylistItemDB(playlist != null ? playlist.db.getDatabase() : null));
-        _playlist = playlist;
-        _id = LibraryDatabase.OBJECT_INVALID_ID;
+        this.playlist = playlist;
+        this.id = LibraryDatabase.OBJECT_INVALID_ID;
     }
 
     public PlaylistItem(Playlist playlist, int id, String filePath, String fileName, long fileSize, String fileExtension, String trackTitle, float trackDurationInSecs,
-            String artistName, String albumName, String coverArtPath, String bitrate, String comment,
-            String genre, String track, String year) {
+            String trackArtist, String trackAlbum, String coverArtPath, String trackBitrate, String trackComment,
+            String trackGenre, String trackNumber, String trackYear, boolean starred) {
         super(playlist != null ? new PlaylistItemDB(playlist.db.getDatabase()) : null);
-        _playlist = playlist;
-        _id = id;
-        _filePath = filePath;
-        _fileName = fileName;
-        _fileSize = fileSize;
-        _fileExtension = fileExtension;
-        _trackTitle = trackTitle;
+        this.playlist = playlist;
+        this.id = id;
+        this.filePath = filePath;
+        this.fileName = fileName;
+        this.fileSize = fileSize;
+        this.fileExtension = fileExtension;
+        this.trackTitle = trackTitle;
         this.trackDurationInSecs = trackDurationInSecs;
-        _artistName = artistName;
-        _albumName = albumName;
-        _coverArtPath = coverArtPath;
-        this.bitrate = bitrate;
-        this.comment = comment;
-        this.genre = genre;
-        this.track = track;
-        this.year = year;
+        this.trackArtist = trackArtist;
+        this.trackAlbum = trackAlbum;
+        this.coverArtPath = coverArtPath;
+        this.trackBitrate = trackBitrate;
+        this.trackComment = trackComment;
+        this.trackGenre = trackGenre;
+        this.trackNumber = trackNumber;
+        this.trackYear = trackYear;
+        this.starred = starred;
     }
 
     public Playlist getPlaylist() {
-        return _playlist;
+        return playlist;
     }
     
     public void setPlaylist(Playlist playlist) {
-        this._playlist = playlist;
+        this.playlist = playlist;
         setDB(new PlaylistItemDB(playlist != null ? playlist.db.getDatabase() : null));
     }
 
     public int getId() {
-        return _id;
+        return id;
     }
 
     public void setId(int id) {
-        _id = id;
+        this.id = id;
     }
 
     public String getFilePath() {
-        return _filePath;
+        return filePath;
     }
 
     public void setFilePath(String filePath) {
-        _filePath = filePath;
+        this.filePath = filePath;
     }
 
     public String getFileName() {
-        return _fileName;
+        return fileName;
     }
 
     public void setFileName(String fileName) {
-        _fileName = fileName;
+        this.fileName = fileName;
     }
 
     public long getFileSize() {
-        return _fileSize;
+        return fileSize;
     }
 
     public void setFileSize(long fileSize) {
-        _fileSize = fileSize;
+        this.fileSize = fileSize;
     }
 
     public String getFileExtension() {
-        return _fileExtension;
+        return fileExtension;
     }
 
     public void setFileExtension(String fileExtension) {
-        _fileExtension = fileExtension;
+        this.fileExtension = fileExtension;
     }
 
     public String getTrackTitle() {
-        return _trackTitle;
+        return trackTitle;
     }
 
     public void setTrackTitle(String trackTitle) {
-        _trackTitle = trackTitle;
+        this.trackTitle = trackTitle;
     }
     
     public float getTrackDurationInSecs() {
@@ -115,68 +117,76 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
         this.trackDurationInSecs = trackDurationInSecs;
     }
 
-    public String getArtistName() {
-        return _artistName;
+    public String getTrackArtist() {
+        return trackArtist;
     }
 
-    public void setArtistName(String artistName) {
-        _artistName = artistName;
+    public void setTrackArtist(String artistName) {
+        this.trackArtist = artistName;
     }
 
-    public String getAlbumName() {
-        return _albumName;
+    public String getTrackAlbum() {
+        return trackAlbum;
     }
 
-    public void setAlbumName(String albumName) {
-        _albumName = albumName;
+    public void setTrackAlbum(String albumName) {
+        this.trackAlbum = albumName;
     }
 
     public String getCoverArtPath() {
-        return _coverArtPath;
+        return coverArtPath;
     }
 
     public void setCoverArtPath(String coverArtPath) {
-        _coverArtPath = coverArtPath;
+        this.coverArtPath = coverArtPath;
     }
     
-    public String getBitrate() {
-        return bitrate;
+    public String getTrackBitrate() {
+        return trackBitrate;
     }
     
-    public void setBitrate(String bitrate) {
-        this.bitrate = bitrate;
+    public void setTrackBitrate(String bitrate) {
+        this.trackBitrate = bitrate;
     }
     
-    public String getComment() {
-        return comment;
+    public String getTrackComment() {
+        return trackComment;
     }
     
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setTrackComment(String comment) {
+        this.trackComment = comment;
     }
     
-    public String getGenre() {
-        return genre;
+    public String getTrackGenre() {
+        return trackGenre;
     }
     
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setTrackGenre(String genre) {
+        this.trackGenre = genre;
     }
     
-    public String getTrack() {
-        return track;
+    public String getTrackNumber() {
+        return trackNumber;
     }
     
-    public void setTrack(String track) {
-        this.track = track;
+    public void setTrackNumber(String track) {
+        this.trackNumber = track;
     }
     
-    public String getYear() {
-        return year;
+    public String getTrackYear() {
+        return trackYear;
     }
     
-    public void setYear(String year) {
-        this.year = year;
+    public void setTrackYear(String year) {
+        this.trackYear = year;
+    }
+    
+    public boolean isStarred() {
+        return starred;
+    }
+    
+    public void setStarred(boolean starred) {
+        this.starred = starred;
     }
 
     public void save() {
