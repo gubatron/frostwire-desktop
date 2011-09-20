@@ -68,6 +68,8 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
         } else {
             Object[] sqlAndValues = createPlaylistItemUpdate(obj);
             db.update((String) sqlAndValues[0], (Object[]) sqlAndValues[1]);
+            sqlAndValues = updateStarred(obj);
+            db.update((String) sqlAndValues[0], (Object[]) sqlAndValues[1]);
         }
     }
 
@@ -92,6 +94,14 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
         Object[] values = new Object[] { item.getFilePath(), item.getFileName(), item.getFileSize(), item.getFileExtension(), item.getTrackTitle(),
                 item.getTrackDurationInSecs(), item.getTrackArtist(), item.getTrackAlbum(), item.getCoverArtPath(), item.getTrackBitrate(), item.getTrackComment(),
                 item.getTrackGenre(), item.getTrackNumber(), item.getTrackYear(), item.isStarred(), item.getId() };
+
+        return new Object[] { sql, values };
+    }
+
+    private Object[] updateStarred(PlaylistItem item) {
+        String sql = "UPDATE PlaylistItems SET starred = ? WHERE filePath = ?";
+
+        Object[] values = new Object[] { item.isStarred(), item.getFilePath() };
 
         return new Object[] { sql, values };
     }
