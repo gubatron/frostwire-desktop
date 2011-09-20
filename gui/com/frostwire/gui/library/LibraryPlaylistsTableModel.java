@@ -162,10 +162,6 @@ final class LibraryPlaylistsTableModel extends HashBasedDataLineModel<LibraryPla
 	        (ColoredCellImpl)get(row).getValueAt(
                 LibraryPlaylistsTableDataLine.SIZE_IDX)).getValue()).getSize();
     }
-
-	FileDesc getFileDesc(int row) {
-	    return null;//get(row).getFileDesc();
-	}
 	
 	/**
 	 * Returns a boolean specifying whether or not specific cell in the table
@@ -179,19 +175,6 @@ final class LibraryPlaylistsTableModel extends HashBasedDataLineModel<LibraryPla
 	 *         <code>false</code> otherwise
 	 */
 	public boolean isCellEditable(int row, int col) {
-//	    // check if renaming is allowed on selected table
-//        if (!LibraryMediator.isRenameEnabled())
-//            return false;
-//		if (getFile(row).isDirectory())
-//			return false;
-//            
-//		ListSelectionModel selModel = _table.getSelectionModel();
-//		int min = selModel.getMinSelectionIndex();
-//		int max = selModel.getMaxSelectionIndex();
-//		
-//		return min == max &&
-//		       col == LibraryTableDataLine.NAME_IDX &&
-//			   _table.getSelectedRow() == row;
-	    return false;
+	    return col == LibraryPlaylistsTableDataLine.STARRED_IDX;
 	}
 }
