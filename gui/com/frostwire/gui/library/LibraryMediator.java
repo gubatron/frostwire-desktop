@@ -114,10 +114,9 @@ public class LibraryMediator {
      * Returns null if none is selected.
      * @return
      */
-    public Playlist getCurrentPlaylist() {
+    public Playlist getSelectedPlaylist() {
     	return getLibraryPlaylists().getSelectedPlaylist();
     }
-
     
     public LibrarySearch getLibrarySearch() {
         if (librarySearch == null) {

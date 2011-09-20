@@ -437,7 +437,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
         setVolumeValue();
         if (audioProperties != null && audioProperties.isSeekable()) {
             setProgressEnabled(true);
-            progressSongLength.setText(LibraryUtils.getSecondsInHHMMSS((int) audioProperties.getLength()));
+            progressSongLength.setText(LibraryUtils.getSecondsInDDHHMMSS((int) audioProperties.getLength()));
         } else {
             setProgressEnabled(false);
         }
@@ -453,7 +453,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
         }
 
         _progress = currentTimeInSecs;
-        progressCurrentTime.setText(LibraryUtils.getSecondsInHHMMSS((int) _progress));
+        progressCurrentTime.setText(LibraryUtils.getSecondsInDDHHMMSS((int) _progress));
 
         float progressUpdate = ((PROGRESS.getMaximum() * currentTimeInSecs) / audioProperties.getLength());
         setProgressValue((int) progressUpdate);

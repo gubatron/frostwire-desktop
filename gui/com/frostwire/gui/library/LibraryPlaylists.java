@@ -227,6 +227,11 @@ public class LibraryPlaylists extends JPanel {
         playlist.refresh();
 
         LibraryMediator.instance().updateTableItems(playlist);
+        
+        String status = LibraryUtils.getPlaylistDurationInDDHHMMSS(playlist) + ", " + playlist.getItems().size() + " " + I18n.tr("tracks");
+        System.out.println("LibraryPlaylists.refreshSelection() - " + status);
+        
+        LibraryMediator.instance().getLibrarySearch().setStatus(status);
     }
 
     private void actionStartRename() {
@@ -650,8 +655,6 @@ public class LibraryPlaylists extends JPanel {
             if (cell.getAction() != null) {
                 cell.getAction().actionPerformed(null);
             }
-
-            LibraryMediator.instance().getLibrarySearch().clear();
         }
     }
 

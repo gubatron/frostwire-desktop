@@ -2,6 +2,7 @@ package com.frostwire.gui.library;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -31,29 +32,43 @@ public class LibraryUtils {
         }
     }
     
-    public static String getSecondsInHHMMSS(int s) {
+    public static String getSecondsInDDHHMMSS(int s) {
     	if (s < 0) {
     		s = 0;
     	}
     	
     	StringBuilder result = new StringBuilder();
     	
+    	String DD = "";
     	String HH = "";
     	String MM = "";
     	String SS = "";
 
     	//math
-    	int hours=s/3600;
-    	int r = s%3600;
+    	int days=s/86400;
+    	int r = s%86400;
+    	
+    	int hours=r/3600;
+    	r = s%3600;
     	int minutes = r/60;
     	int seconds = r%60;
 
     	//padding
+    	DD = String.valueOf(days);
     	HH = (hours < 10) ? "0"+hours : String.valueOf(hours);
     	MM = (minutes < 10) ? "0"+minutes : String.valueOf(minutes);
     	SS = (seconds < 10) ? "0"+seconds : String.valueOf(seconds);
     	
     	//lazy formatting
+    	if (days > 0) {
+    		result.append(DD);
+    		result.append(" day");
+    		if (days > 1) {
+    			result.append("s");
+    		}
+    		return result.toString();    		
+    	}
+    	
     	if (hours > 0) {
     		result.append(HH);
     		result.append(":");
@@ -236,4 +251,14 @@ public class LibraryUtils {
             playlist.getItems().add(playlistItems[i]);
         }
     }
+
+	public static String getPlaylistDurationInDDHHMMSS(Playlist playlist) {
+		List<PlaylistItem> items = playlist.getItems();
+		float totalSecs = 0;
+		for (PlaylistItem item : items) {
+			totalSecs += item.getTrackDurationInSecs();
+		}
+		
+		return getSecondsInDDHHMMSS((int) totalSecs);
+	}
 }

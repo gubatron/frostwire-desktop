@@ -154,7 +154,7 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
             case GENRE_IDX:
                 return new PlaylistItemProperty(initializer.getGenre(), playing);
             case LENGTH_IDX:
-                return new PlaylistItemProperty(LibraryUtils.getSecondsInHHMMSS((int) initializer.getTrackDurationInSecs()), playing);
+                return new PlaylistItemProperty(LibraryUtils.getSecondsInDDHHMMSS((int) initializer.getTrackDurationInSecs()), playing);
             case NAME_IDX:
                 return new PlaylistItemName(this, playing);
             case SIZE_IDX:

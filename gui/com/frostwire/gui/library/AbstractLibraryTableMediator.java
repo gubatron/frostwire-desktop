@@ -168,7 +168,7 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
 
         Library library = LibraryMediator.getLibrary();
         List<Playlist> playlists = library.getPlaylists();
-        Playlist currentPlaylist = LibraryMediator.instance().getCurrentPlaylist();
+        Playlist currentPlaylist = LibraryMediator.instance().getSelectedPlaylist();
 
         if (playlists.size() > 0) {
             menu.addSeparator();
