@@ -13,7 +13,7 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
     public void fill(PlaylistItem obj) {
         List<List<Object>> result = db
                 .query("SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, trackDurationInSecs, trackArtist, trackAlbum, coverArtPath, trackBitrate, trackComment, trackGenre, trackNumber, trackYear, starred "
-                        + "FROM PlaylisItems WHERE playlistItemId = ?", obj.getId());
+                        + "FROM PlaylistItems WHERE playlistItemId = ?", obj.getId());
         if (result.size() > 0) {
             List<Object> row = result.get(0);
             fill(row, obj);
@@ -62,6 +62,7 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
         }
 
         if (obj.getId() == LibraryDatabase.OBJECT_NOT_SAVED_ID) {
+            obj.setStarred(isStarred(obj));
             Object[] sqlAndValues = createPlaylistItemInsert(obj);
             int id = db.insert((String) sqlAndValues[0], (Object[]) sqlAndValues[1]);
             obj.setId(id);
@@ -104,5 +105,15 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
         Object[] values = new Object[] { item.isStarred(), item.getFilePath() };
 
         return new Object[] { sql, values };
+    }
+    
+    private boolean isStarred(PlaylistItem item) {
+        List<List<Object>> result = db
+                .query("SELECT starred FROM PlaylistItems WHERE filePath = ? LIMIT 1", item.getFilePath());
+        if (result.size() > 0) {
+            return (Boolean) result.get(0).get(0);
+        }
+        
+        return false;
     }
 }

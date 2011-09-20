@@ -142,7 +142,7 @@ public class AudioPlayer implements RefreshListener {
 		notifyOpened(source);
 		if (play) {
 			if (currentSong.getFile() != null) {
-				LibraryMediator.instance().getLibraryCoverArt().setPlaylistItem(currentSong.getFile());
+				LibraryMediator.instance().getLibraryCoverArt().setFile(currentSong.getFile());
 			}
 			playSong();
 		}

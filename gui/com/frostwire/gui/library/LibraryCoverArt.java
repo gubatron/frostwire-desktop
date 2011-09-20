@@ -26,6 +26,8 @@ public class LibraryCoverArt extends JPanel {
 
     private Image coverArtImage;
     private Image scaledImage;
+    
+    private File file;
 
     public LibraryCoverArt() {
         addComponentListener(new ComponentAdapter() {
@@ -39,13 +41,20 @@ public class LibraryCoverArt extends JPanel {
 
     /**
      * Async
-     * @param playlistItem
+     * @param file
      */
-    public void setPlaylistItem(final File playlistItem) {
+    public void setFile(final File file) {
+        if (this.file != null && file != null && this.file.equals(file)) {
+            return;
+        }
+        this.file = file;
         setPrivateImage(null, false);
+        if (file == null) {
+            return;
+        }
         new Thread(new Runnable() {
             public void run() {
-                setPrivateImage(retrieveImage(playlistItem), false);
+                setPrivateImage(retrieveImage(file), false);
             }
         }).start();
     }
@@ -59,11 +68,11 @@ public class LibraryCoverArt extends JPanel {
 
     /**
      * Synchronous.
-     * @param playlistItem
+     * @param file
      * @return
      */
-    private Image retrieveImage(File playlistItem) {
-    	String path = playlistItem.getAbsolutePath();
+    private Image retrieveImage(File file) {
+    	String path = file.getAbsolutePath();
         Image image = null;
         if (path.toLowerCase().endsWith(".mp3")) {
             image = retrieveImageFromMP3(path);

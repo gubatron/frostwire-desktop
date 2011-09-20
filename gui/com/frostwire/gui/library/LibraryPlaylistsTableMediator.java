@@ -64,6 +64,8 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     private Action importToNewPlaylistAction = new ImportToNewPlaylistAction();
     private Action exportPlaylistAction = new ExportPlaylistAction();
 
+    private boolean dragging;
+    
     /**
      * instance, for singelton access
      */
@@ -265,6 +267,16 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
                     currentCellColumn = hitColumn;
                     currentCellRow = hitRow;
                 }
+            }
+        });
+        TABLE.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                dragging = true;
+            }
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                dragging = false;
             }
         });
     }
@@ -560,9 +572,9 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         } else
             ENQUEUE_ACTION.setEnabled(false);
 
-        //RENAME_ACTION.setEnabled(LibraryMediator.isRenameEnabled() && sel.length == 1);
-
-        LibraryMediator.instance().getLibraryCoverArt().setPlaylistItem(getSelectedLibraryLines()[0].getFile());
+        if (!dragging) {
+            LibraryMediator.instance().getLibraryCoverArt().setFile(getSelectedLibraryLines()[0].getFile());
+        }
     }
     
     /**

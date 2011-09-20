@@ -2,6 +2,8 @@ package com.frostwire.gui.library;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -67,6 +69,8 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     public static Action CREATE_TORRENT_ACTION;
     public static Action DELETE_ACTION;
     public static Action RENAME_ACTION;
+    
+    private boolean dragging;
 
     /**
      * instance, for singelton access
@@ -239,6 +243,17 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         //TableColumnModel model = TABLE.getColumnModel();
         //TableColumn tc = model.getColumn(LibraryFilesTableDataLine.NAME_IDX);
         //tc.setCellEditor(new LibraryTableCellEditor(this));
+        
+        TABLE.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                dragging = true;
+            }
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                dragging = false;
+            }
+        });
     }
 
     /**
@@ -603,9 +618,9 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         } else
             ENQUEUE_ACTION.setEnabled(false);
         
-        LibraryMediator.instance().getLibraryCoverArt().setPlaylistItem(selectedFile);
-
-        //RENAME_ACTION.setEnabled(LibraryMediator.isRenameEnabled() && sel.length == 1);
+        if (!dragging) {
+            LibraryMediator.instance().getLibraryCoverArt().setFile(selectedFile);
+        }
     }
 
     /**
