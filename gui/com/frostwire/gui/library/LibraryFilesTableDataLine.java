@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.swing.Icon;
 
+import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -173,6 +174,7 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 	 *          the list
 	 */
 	public Object getValueAt(int idx) {
+		boolean isPlaying = isPlaying();
 	    switch (idx) {
 	    case ICON_IDX:
 	    	boolean iconAvailable = IconManager.instance().isIconForFileAvailable(initializer);
@@ -196,22 +198,31 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
                 return null;
             }
 	    case NAME_IDX:
-	        return _name;	                    
+	        return new PlayableCell(_name, isPlaying);	                    
 	    case SIZE_IDX:
-	        return _sizeHolder == null ? "" : _sizeHolder.toString();
+	        return _sizeHolder == null ? "" : new PlayableCell(_sizeHolder.toString(),isPlaying);
 	    case TYPE_IDX:
-	        return _type;
+	        return new PlayableCell(_type, isPlaying);
 	    case PATH_IDX:
-	        return _path;
+	        return new PlayableCell(_path, isPlaying);
         case MODIFICATION_TIME_IDX:
 			// it's cheaper to use the cached value if available,
 			// hope it's always uptodate
 			if (_fileDesc != null) {
-				return new Date(_fileDesc.lastModified());
+				return new PlayableCell(new Date(_fileDesc.lastModified()),isPlaying);
 			}
-			return new Date(initializer.lastModified());
+			return new PlayableCell(new Date(initializer.lastModified()),isPlaying);
 	    }
 	    return null;
+	}
+
+	private boolean isPlaying() {
+		if (initializer != null) {
+			return AudioPlayer.instance().isThisBeingPlayed(
+					initializer.getAbsolutePath());
+		}
+
+		return false;
 	}
 
 	public LimeTableColumn getColumn(int idx) {
@@ -268,20 +279,20 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 	                    GUIMediator.getThemeImage("question_mark"), 18, true, Icon.class),
 	            
 	            new LimeTableColumn(NAME_IDX, "LIBRARY_TABLE_NAME", I18n.tr("Name"),
-	                    239, true, String.class),
+	                    239, true, PlayableCell.class),
 	            
 	            new LimeTableColumn(SIZE_IDX, "LIBRARY_TABLE_SIZE", I18n.tr("Size"),
-	                    62, true, String.class),
+	                    62, true, PlayableCell.class),
 
 	            new LimeTableColumn(TYPE_IDX, "LIBRARY_TABLE_TYPE", I18n.tr("Type"),
-	                    48, true, String.class),
+	                    48, true, PlayableCell.class),
 	                                                    
 	            new LimeTableColumn(PATH_IDX, "LIBRARY_TABLE_PATH", I18n.tr("Path"),
-	                    108, true, String.class),
+	                    108, true, PlayableCell.class),
 
 	            new LimeTableColumn(MODIFICATION_TIME_IDX, 
 	                    "LIBRARY_TABLE_MODIFICATION_TIME", I18n.tr("Last Modified"),
-	                    20, false, Date.class),
+	                    20, false, PlayableCell.class),
 	        };
 	        ltColumns = temp;
 	    }

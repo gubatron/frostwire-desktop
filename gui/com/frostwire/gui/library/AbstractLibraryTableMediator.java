@@ -35,6 +35,7 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
 
     protected AbstractLibraryTableMediator(String id) {
         super(id);
+        GUIMediator.addRefreshListener(this);
         lastRandomFiles = new LinkedList<File>();
         mediaType = MediaType.getAnyTypeMediaType();
     }

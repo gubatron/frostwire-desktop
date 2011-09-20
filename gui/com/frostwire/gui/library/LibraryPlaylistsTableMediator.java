@@ -537,9 +537,9 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
 
         //RENAME_ACTION.setEnabled(LibraryMediator.isRenameEnabled() && sel.length == 1);
 
-        LibraryMediator.instance().getLibraryCoverArt().setPlaylistItem(getSelectedLibraryLines()[0].getInitializeObject());
+        LibraryMediator.instance().getLibraryCoverArt().setPlaylistItem(getSelectedLibraryLines()[0].getFile());
     }
-
+    
     /**
      * Handles the deselection of all rows in the library table,
      * disabling all necessary buttons and menu items.

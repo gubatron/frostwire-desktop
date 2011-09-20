@@ -3,6 +3,8 @@ package com.frostwire.gui.library;
 import java.io.File;
 
 import com.frostwire.alexandria.PlaylistItem;
+import com.frostwire.gui.player.AudioPlayer;
+import com.frostwire.gui.player.AudioSource;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
@@ -117,11 +119,6 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
     public int getColumnCount() { return NUMBER_OF_COLUMNS; }
 
     /**
-     * Holder for painting the filename/buttons in a single cell
-     */
-    private PlaylistItemName name;
-    
-    /**
      *  Coverts the size of the PlayListItem into readable form postfixed with
      *  Kb or Mb
      */
@@ -134,7 +131,6 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
     public void initialize(PlaylistItem item) {
         super.initialize(item);
 
-        name = new PlaylistItemName(this);
 //        if(item.getgetProperty(PlayListItem.SIZE) != null )
 //            holder = new SizeHolder(Integer.parseInt(item.getProperty(PlayListItem.SIZE)));
 //        else
@@ -145,7 +141,7 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
      * Returns the value for the specified index.
      */
     public Object getValueAt(int idx) {
-        boolean playing = false;//MediaPlayerComponent.getInstance().getCurrentSong() == initializer;
+        boolean playing = isPlaying();
         switch(idx) {
             case ALBUM_IDX:
                 return new PlaylistItemProperty(initializer.getAlbumName(), playing);
@@ -160,7 +156,7 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
             case LENGTH_IDX:
                 return new PlaylistItemProperty(LibraryUtils.getSecondsInHHMMSS((int) initializer.getTrackDurationInSecs()), playing);
             case NAME_IDX:
-                return name;
+                return new PlaylistItemName(this, playing);
             case SIZE_IDX:
                 return new PlaylistItemProperty(holder.toString(), playing);
             case TITLE_IDX:
@@ -175,7 +171,15 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
         return null;
     }
 
-    /**
+    private boolean isPlaying() {
+		if (initializer != null) {
+			return AudioPlayer.instance().isThisBeingPlayed(initializer.getFilePath());
+		}
+		
+		return false;
+	}
+
+	/**
      * Return the table column for this index.
      */
     public LimeTableColumn getColumn(int idx) {

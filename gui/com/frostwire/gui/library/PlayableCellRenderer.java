@@ -23,22 +23,19 @@ import com.limegroup.gnutella.gui.themes.ThemeSettings;
  *  Creates both a renderer and an editor for cells in the playlist table that display the name
  *  of the file being played.
  */
-class PlaylistItemNameRenderer extends SubstanceDefaultTableCellRenderer {
+class PlayableCellRenderer extends SubstanceDefaultTableCellRenderer {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -6309702261794142462L;
 
-    public PlaylistItemNameRenderer() {
+	private static final long serialVersionUID = -4060568385633696410L;
+
+	public PlayableCellRenderer() {
     }
 
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        LibraryPlaylistsTableDataLine line = ((PlaylistItemName) value).getLine();
-        PlaylistItemName itemName = (PlaylistItemName) value;
+    	PlayableCell cell = (PlayableCell) value;
         
-        super.getTableCellRendererComponent(table, line.getSongName(), isSelected, hasFocus, row, column);
-        setFontColor(itemName.isPlaying(), line, table, row, column);
+        super.getTableCellRendererComponent(table, cell.toString(), isSelected, hasFocus, row, column);
+        setFontColor(cell.isPlaying(), table, row, column);
         return this;
     }
 
@@ -46,9 +43,9 @@ class PlaylistItemNameRenderer extends SubstanceDefaultTableCellRenderer {
     /**
      * Check what font color to use if this song is playing. 
      */
-    private void setFontColor(boolean isPlaying, LibraryPlaylistsTableDataLine line, JTable table, int row, int column) {
+    private void setFontColor(boolean isPlaying, JTable table, int row, int column) {
 
-        if (line != null && isPlaying) {
+        if (isPlaying) {
             setForeground(ThemeSettings.PLAYING_DATA_LINE_COLOR.getValue());
         } else {
             Color color = Color.BLACK;

@@ -765,7 +765,13 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     	AudioSource currentSong = PLAYER.getCurrentSong();
     	
     	if (currentSong != null) {
-    		AudioSource nextSong = LibraryMediator.instance().getNextSong(currentSong);
+    		AudioSource nextSong = null;
+    		
+    		if (PLAYER.isShuffle()) {
+    			nextSong = LibraryMediator.instance().getNextRandomSong(currentSong);
+    		} else {
+    			nextSong = LibraryMediator.instance().getNextSong(currentSong);
+    		}
     		
     		if (nextSong != null) {
     			PLAYER.loadSong(nextSong,true,true);

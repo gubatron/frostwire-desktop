@@ -8,12 +8,12 @@ import java.awt.RenderingHints;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.jpeg.JPEGImageIO;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.mpatric.mp3agic.ID3v2;
@@ -37,7 +37,11 @@ public class LibraryCoverArt extends JPanel {
         });
     }
 
-    public void setPlaylistItem(final PlaylistItem playlistItem) {
+    /**
+     * Async
+     * @param playlistItem
+     */
+    public void setPlaylistItem(final File playlistItem) {
         setPrivateImage(null, false);
         new Thread(new Runnable() {
             public void run() {
@@ -53,10 +57,16 @@ public class LibraryCoverArt extends JPanel {
         }
     }
 
-    private Image retrieveImage(PlaylistItem playlistItem) {
+    /**
+     * Synchronous.
+     * @param playlistItem
+     * @return
+     */
+    private Image retrieveImage(File playlistItem) {
+    	String path = playlistItem.getAbsolutePath();
         Image image = null;
-        if (playlistItem.getFileExtension().toLowerCase().equals("mp3")) {
-            image = retrieveImageFromMP3(playlistItem.getFilePath());
+        if (path.toLowerCase().endsWith(".mp3")) {
+            image = retrieveImageFromMP3(path);
         }
 
         return image;

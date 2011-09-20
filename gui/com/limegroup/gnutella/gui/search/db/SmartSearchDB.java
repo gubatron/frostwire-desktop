@@ -131,6 +131,7 @@ public class SmartSearchDB {
             Statement statement = _connection.createStatement();
             statement.execute("SHUTDOWN");
             _connection.close();
+            System.out.println("SmartSearchDB has shut down.");
         } catch (Exception e) {
             e.printStackTrace();
         }

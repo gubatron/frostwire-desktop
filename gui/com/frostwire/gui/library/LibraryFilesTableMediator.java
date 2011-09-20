@@ -93,6 +93,13 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         DELETE_ACTION = new RemoveAction();
         RENAME_ACTION = new RenameAction();
     }
+    
+    @Override
+    protected void setDefaultRenderers() {
+        super.setDefaultRenderers();
+        TABLE.setDefaultRenderer(PlayableCell.class, new PlayableCellRenderer());
+
+    }
 
     /**
      * Set up the constants
@@ -595,6 +602,8 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             ENQUEUE_ACTION.setEnabled(found);
         } else
             ENQUEUE_ACTION.setEnabled(false);
+        
+        LibraryMediator.instance().getLibraryCoverArt().setPlaylistItem(selectedFile);
 
         //RENAME_ACTION.setEnabled(LibraryMediator.isRenameEnabled() && sel.length == 1);
     }

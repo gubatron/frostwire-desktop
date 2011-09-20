@@ -10,9 +10,15 @@ class PlaylistItemName implements Comparable<Object> {
 	 * The current line to display in the table
 	 */
 	private final LibraryPlaylistsTableDataLine line;
+	private boolean isPlaying;
 
-	public PlaylistItemName(LibraryPlaylistsTableDataLine line) {
+	public PlaylistItemName(LibraryPlaylistsTableDataLine line, boolean isPlaying) {
 		this.line = line;
+		this.isPlaying = isPlaying;
+	}
+	
+	public boolean isPlaying() {
+		return isPlaying;
 	}
 
 	/**
