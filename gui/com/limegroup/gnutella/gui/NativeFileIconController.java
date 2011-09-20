@@ -198,10 +198,20 @@ public class NativeFileIconController implements FileIconController {
 		} catch (IOException e1) {
 		}
 
-		Icon iconCandidate = getNativeFileView().getIcon(file);
+		Icon iconCandidate = null;
+		
+		try {
+			iconCandidate = getNativeFileView().getIcon(file);
+		} catch (Exception e ) {
+			file.delete();
+			return null;
+		}
+			
+			
 		if (iconCandidate != null) {
 			icon = iconCandidate;
 		}
+		
 		file.delete();
 
         EXTENSIONS.put(ext, icon);
