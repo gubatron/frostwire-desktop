@@ -1,6 +1,9 @@
 package com.frostwire.gui.library;
 
+import java.awt.Point;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +18,8 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.MouseInputListener;
 import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import org.limewire.util.OSUtils;
 
@@ -240,9 +245,28 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
      * Sets the default editors.
      */
     protected void setDefaultEditors() {
-        //TableColumnModel model = TABLE.getColumnModel();
-        //TableColumn tc = model.getColumn(LibraryPlaylistsTableDataLine.NAME_IDX);
-        //tc.setCellEditor(new LibraryTableCellEditor(this));
+        TableColumnModel model = TABLE.getColumnModel();
+        TableColumn tc = model.getColumn(LibraryPlaylistsTableDataLine.STARRED_IDX);
+        tc.setCellEditor(new PlaylistItemStarEditor());
+        
+        TABLE.addMouseMotionListener(new MouseMotionAdapter() {
+            int currentCellColumn = -1;
+            int currentCellRow = -1;
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                Point hit = e.getPoint();
+                int hitColumn = TABLE.columnAtPoint(hit);
+                int hitRow = TABLE.rowAtPoint(hit);
+                if (currentCellRow != hitRow || currentCellColumn != hitColumn) {
+                    if (TABLE.getCellRenderer(hitRow, hitColumn) instanceof PlaylistItemStarRenderer) {
+                        TABLE.editCellAt(hitRow, hitColumn);
+                    }
+                    currentCellColumn = hitColumn;
+                    currentCellRow = hitRow;
+                }
+            }
+        });
     }
 
     /**

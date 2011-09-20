@@ -1,8 +1,11 @@
 package com.frostwire.gui.library;
 
 import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.Icon;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultTableCellRenderer;
@@ -28,17 +31,34 @@ class PlaylistItemStarRenderer extends SubstanceDefaultTableCellRenderer {
     }
 
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        LibraryPlaylistsTableDataLine line = ((PlaylistItemStar) value).getLine();
-        PlaylistItemStar cell = (PlaylistItemStar) value;
+        final LibraryPlaylistsTableDataLine line = ((PlaylistItemStar) value).getLine();
+        final PlaylistItemStar cell = (PlaylistItemStar) value;
         
-        if (cell.isPlaying()) {
+        setIcon(cell.isPlaying(), line.getPlayListItem().isStarred());
+        
+        final JLabel component = (JLabel) super.getTableCellRendererComponent(table, null, isSelected, hasFocus, row, column);
+        component.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setIcon(false, line.getPlayListItem().isStarred());
+            }
+            
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setIcon(cell.isPlaying(), line.getPlayListItem().isStarred());
+            }
+        });
+        
+        return component;
+    }
+    
+    private void setIcon(boolean playing, boolean starred) {
+        if (playing) {
             setIcon(speaker);
-        } else if (line.getPlayListItem().isStarred()) {
+        } else if (starred) {
             setIcon(starOn);
         } else {
             setIcon(starOff);
         }
-        
-        return super.getTableCellRendererComponent(table, null, isSelected, hasFocus, row, column);
     }
 }
