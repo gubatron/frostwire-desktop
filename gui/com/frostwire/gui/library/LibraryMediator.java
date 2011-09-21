@@ -216,22 +216,6 @@ public class LibraryMediator {
     	splitPane.repaint();
     }
 
-    public AudioSource getNextRandomSong(AudioSource currentSong) {
-        return currentTableMediator != null ? currentTableMediator.getNextRandomSong(currentSong) : null;
-    }
-
-    public AudioSource getNextContinuousSong(AudioSource currentSong) {
-        return currentTableMediator != null ? currentTableMediator.getNextContinuousSong(currentSong) : null;
-    }
-
-    public AudioSource getNextSong(AudioSource currentSong) {
-        return currentTableMediator != null ? currentTableMediator.getNextSong(currentSong) : null;
-    }
-    
-    public AudioSource getPreviousSong(AudioSource currentSong) {
-    	return currentTableMediator != null ? currentTableMediator.getPreviousSong(currentSong) : null;
-    }
-
     public void setSelectedFile(File file) {
        getLibraryFiles().selectFinishedDownloads();
        LibraryFilesTableMediator.instance().setFileSelected(file);

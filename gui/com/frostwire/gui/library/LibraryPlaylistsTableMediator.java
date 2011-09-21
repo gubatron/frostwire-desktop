@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -492,7 +493,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         //PlayListItem f = line.getPlayListItem();
         //MODEL.setCurrentSong(f);
         //MediaPlayerComponent.getInstance().loadSong(f);
-        AudioPlayer.instance().loadSong(new AudioSource(line.getFile()), true, true);
+        AudioPlayer.instance().loadSong(new AudioSource(line.getPlayListItem()), true, true, currentPlaylist, getFileView());
     }
 
     /**
@@ -858,5 +859,19 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         public void actionPerformed(ActionEvent e) {
             LibraryMediator.instance().getLibraryPlaylists().exportM3U(currentPlaylist);
         }
+    }
+
+    @Override
+    public List<AudioSource> getFileView() {
+        int size = DATA_MODEL.getRowCount();
+        List<AudioSource> result = new ArrayList<AudioSource>(size);
+        for (int i = 0; i < size; i++) {
+            try {
+                result.add(new AudioSource(DATA_MODEL.get(i).getPlayListItem()));
+            } catch (Exception e) {
+                return Collections.emptyList();
+            }
+        }
+        return result;
     }
 }

@@ -3,10 +3,7 @@ package com.frostwire.gui.library;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
-import java.util.Random;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -15,7 +12,6 @@ import javax.swing.JOptionPane;
 import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.bittorrent.SendFileProgressDialog;
-import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -27,8 +23,6 @@ import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 
 abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E extends AbstractLibraryTableDataLine<I>, I> extends AbstractTableMediator<T, E, I> {
 
-    private Queue<File> lastRandomFiles;
-
     private MediaType mediaType;
 
     protected Action SEND_TO_FRIEND_ACTION;
@@ -38,7 +32,6 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
     protected AbstractLibraryTableMediator(String id) {
         super(id);
         GUIMediator.addRefreshListener(this);
-        lastRandomFiles = new LinkedList<File>();
         mediaType = MediaType.getAnyTypeMediaType();
     }
 
@@ -49,6 +42,8 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
             lines.add(DATA_MODEL.get(selected[i]));
         return lines;
     }
+    
+    public abstract List<AudioSource> getFileView();
 
     public MediaType getMediaType() {
         return mediaType;
@@ -58,104 +53,7 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
         this.mediaType = mediaType;
     }
 
-    public AudioSource getNextRandomSong(AudioSource currentSong) {
-        if (!mediaType.equals(MediaType.getAudioMediaType())) {
-            return null;
-        }
-
-        File songFile;
-        int count = 4;
-        while ((songFile = findRandomSongFile(currentSong.getFile())) == null && count-- > 0)
-            ;
-
-        if (count > 0) {
-            lastRandomFiles.add(songFile);
-            if (lastRandomFiles.size() > 3) {
-                lastRandomFiles.poll();
-            }
-        } else {
-            songFile = currentSong.getFile();
-            lastRandomFiles.clear();
-            lastRandomFiles.add(songFile);
-        }
-
-        return new AudioSource(songFile);
-    }
-
-    public AudioSource getNextContinuousSong(AudioSource currentSong) {
-        if (!mediaType.equals(MediaType.getAudioMediaType())) {
-            return null;
-        }
-
-        int n = DATA_MODEL.getRowCount();
-        for (int i = 0; i < n; i++) {
-            try {
-                E line = DATA_MODEL.get(i);
-                if (currentSong.getFile().equals(line.getFile())) {
-                    for (int j = 1; j < n; j++) {
-                        File file = DATA_MODEL.get((j + i) % n).getFile();
-                        if (AudioPlayer.isPlayableFile(file)) {
-                            return new AudioSource(file);
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                return null;
-            }
-        }
-
-        return null;
-    }
-
-    public AudioSource getNextSong(AudioSource currentSong) {
-        if (!mediaType.equals(MediaType.getAudioMediaType())) {
-            return null;
-        }
-
-        int n = DATA_MODEL.getRowCount();
-        for (int i = 0; i < n; i++) {
-            try {
-                E line = DATA_MODEL.get(i);
-                if (currentSong.getFile().equals(line.getFile())) {
-                    for (int j = i + 1; j < n; j++) {
-                        File file = DATA_MODEL.get(j).getFile();
-                        if (AudioPlayer.isPlayableFile(file)) {
-                            return new AudioSource(file);
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                return null;
-            }
-        }
-
-        return null;
-    }
     
-    public AudioSource getPreviousSong(AudioSource currentSong) {
-        if (!mediaType.equals(MediaType.getAudioMediaType())) {
-            return null;
-        }
-
-        int n = DATA_MODEL.getRowCount();
-        for (int i = 0; i < n; i++) {
-            try {
-                E line = DATA_MODEL.get(i);
-                if (currentSong.getFile().equals(line.getFile())) {
-                    for (int j = i - 1; j >= 0; j--) {
-                        File file = DATA_MODEL.get(j).getFile();
-                        if (AudioPlayer.isPlayableFile(file)) {
-                            return new AudioSource(file);
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                return null;
-            }
-        }
-
-        return null;
-    }
 
     @Override
     protected void buildListeners() {
@@ -186,25 +84,6 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
         }
 
         return menu;
-    }
-
-    private File findRandomSongFile(File excludeFile) {
-        int n = DATA_MODEL.getRowCount();
-        int index = new Random(System.currentTimeMillis()).nextInt(n);
-
-        for (int i = index; i < n; i++) {
-            try {
-                File file = DATA_MODEL.get(i).getFile();
-
-                if (!lastRandomFiles.contains(file) && !file.equals(excludeFile) && AudioPlayer.isPlayableFile(file)) {
-                    return file;
-                }
-            } catch (Exception e) {
-                return null;
-            }
-        }
-
-        return null;
     }
 
     private class CreateNewPlaylistAction extends AbstractAction {

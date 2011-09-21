@@ -4,6 +4,8 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import com.frostwire.alexandria.PlaylistItem;
+
 /**
  *  A wrapper for the source of an audio file that is currently playing
  */
@@ -15,18 +17,17 @@ public class AudioSource {
     private final File file;
 
     private final URL url;
+    
+    private final PlaylistItem playlistItem;
 
-    public AudioSource(File file, AudioMetaData metaData) {
+    public AudioSource(File file) {
         if (file == null) {
             throw new NullPointerException("File cannot be null");
         }
 
         this.file = file;
         this.url = null;
-    }
-    
-    public AudioSource(File file) {
-        this(file, null);
+        this.playlistItem = null;
     }
 
     public AudioSource(URL url) {
@@ -36,6 +37,17 @@ public class AudioSource {
 
         this.file = null;
         this.url = url;
+        this.playlistItem = null;
+    }
+    
+    public AudioSource(PlaylistItem playlistItem) {
+        if (playlistItem == null) {
+            throw new NullPointerException("PlaylistItem cannot be null");
+        }
+
+        this.file = null;
+        this.url = null;
+        this.playlistItem = playlistItem;
     }
 
     public File getFile() {
@@ -51,5 +63,24 @@ public class AudioSource {
             } catch (MalformedURLException e) {
             }
         return null;
+    }
+    
+    public PlaylistItem getPlaylistItem() {
+        return playlistItem;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        AudioSource o = (AudioSource) obj;
+        if (file != null && o.file != null) {
+            return file.equals(o.file);
+        }
+        if (url != null && o.url != null) {
+            return url.equals(o.url);
+        }
+        if (playlistItem != null && o.playlistItem != null) {
+            return playlistItem.equals(o.playlistItem);
+        }
+        return false;
     }
 }

@@ -219,7 +219,7 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 	private boolean isPlaying() {
 		if (initializer != null) {
 			return AudioPlayer.instance().isThisBeingPlayed(
-					initializer.getAbsolutePath());
+					initializer);
 		}
 
 		return false;

@@ -22,6 +22,7 @@ import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.components.IconSearchField;
+import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -158,6 +159,8 @@ public class LibrarySearch extends JPanel {
             if (currentSearchRunnable != null) {
                 currentSearchRunnable.cancel();
             }
+            
+            AudioPlayer.instance().setPlaylistFilesView(null);
 
             DirectoryHolder directoryHolder = LibraryMediator.instance().getLibraryFiles().getSelectedDirectoryHolder();
             if (directoryHolder != null) {

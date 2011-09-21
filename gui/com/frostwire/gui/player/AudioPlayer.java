@@ -2,7 +2,10 @@ package com.frostwire.gui.player;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.swing.SwingUtilities;
@@ -10,6 +13,8 @@ import javax.swing.SwingUtilities;
 import org.gudy.azureus2.core3.util.UrlUtils;
 import org.limewire.util.OSUtils;
 
+import com.frostwire.alexandria.Playlist;
+import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.mplayer.MPlayer;
 import com.frostwire.mplayer.MediaPlaybackState;
@@ -31,12 +36,16 @@ public class AudioPlayer implements RefreshListener {
 
 	private MPlayer mplayer;
 	private AudioSource currentSong;
+	private Playlist currentPlaylist;
+	private List<AudioSource> playlistFilesView;
 	private RepeatMode repeatMode;
 	private boolean shuffle;
 	private boolean playNextSong;
 
 	private double volume;
 
+	private Queue<AudioSource> lastRandomFiles;
+	
 	private static AudioPlayer instance;
 
 	public static AudioPlayer instance() {
@@ -47,6 +56,7 @@ public class AudioPlayer implements RefreshListener {
 	}
 
 	private AudioPlayer() {
+	    lastRandomFiles = new LinkedList<AudioSource>();
 		String playerPath = "";
 
 		// Whether or not we're running from source or from a binary
@@ -136,20 +146,28 @@ public class AudioPlayer implements RefreshListener {
 	/**
 	 * Loads a AudioSource into the player to play next
 	 */
-	public void loadSong(AudioSource source, boolean play, boolean playNextSong) {
+	public void loadSong(AudioSource source, boolean play, boolean playNextSong, Playlist currentPlaylist, List<AudioSource> playlistFilesView) {
 		currentSong = source;
 		this.playNextSong = playNextSong;
+		this.currentPlaylist = currentPlaylist;
+		this.playlistFilesView = playlistFilesView;
 		notifyOpened(source);
 		if (play) {
 			if (currentSong.getFile() != null) {
 				LibraryMediator.instance().getLibraryCoverArt().setFile(currentSong.getFile());
+			} else if (currentSong.getPlaylistItem() != null) {
+			    LibraryMediator.instance().getLibraryCoverArt().setFile(new File(currentSong.getPlaylistItem().getFilePath()));
 			}
 			playSong();
 		}
 	}
+	
+	public void loadSong(AudioSource source, boolean play, boolean playNextSong) {
+	    loadSong(source, play, playNextSong, currentPlaylist, playlistFilesView);
+	}
 
 	public void loadSong(AudioSource audioSource) {
-		loadSong(audioSource, false, false);
+		loadSong(audioSource, false, false, null, null);
 	}
 
 	/**
@@ -163,6 +181,8 @@ public class AudioPlayer implements RefreshListener {
 			mplayer.open(currentSong.getFile().getAbsolutePath());
 		} else if (currentSong.getURL() != null) {
 			mplayer.open(currentSong.getURL().toString());
+		} else if (currentSong.getPlaylistItem() != null) {
+		    mplayer.open(currentSong.getPlaylistItem().getFilePath());
 		}
 
 		notifyState(getState());
@@ -326,21 +346,20 @@ public class AudioPlayer implements RefreshListener {
 		if (getRepeatMode() == RepeatMode.Song) {
 			song = currentSong;
 		} else if (isShuffle()) {
-			song = LibraryMediator.instance().getNextRandomSong(currentSong);
+			song = getNextRandomSong(currentSong);
 		} else if (getRepeatMode() == RepeatMode.All) {
-			song = LibraryMediator.instance()
-					.getNextContinuousSong(currentSong);
+			song = getNextContinuousSong(currentSong);
 		} else {
-			song = LibraryMediator.instance().getNextSong(currentSong);
+			song = getNextSong(currentSong);
 		}
 
 		if (song != null) {
 			System.out.println(song.getFile());
-			loadSong(song, true, true);
+			loadSong(song, true, true, currentPlaylist, playlistFilesView);
 		}
 	}
 
-	public boolean isThisBeingPlayed(String filePath) {
+	public boolean isThisBeingPlayed(File file) {
 
 		AudioSource currentSong = getCurrentSong();
 		if (currentSong == null) {
@@ -350,10 +369,150 @@ public class AudioPlayer implements RefreshListener {
 		File currentSongFile = currentSong.getFile();
 
 		if (currentSongFile != null
-				&& filePath.equals(currentSongFile.getAbsolutePath()))
+				&& file.equals(currentSongFile))
 			return true;
 
 		return false;
-
 	}
+	
+	public boolean isThisBeingPlayed(PlaylistItem playlistItem) {
+
+        AudioSource currentSong = getCurrentSong();
+        if (currentSong == null) {
+            return false;
+        }
+
+        PlaylistItem currentSongFile = currentSong.getPlaylistItem();
+
+        if (currentSongFile != null
+                && playlistItem.equals(currentSongFile))
+            return true;
+
+        return false;
+    }
+	
+	public synchronized void setPlaylistFilesView(List<AudioSource> playlistFilesView) {
+	    this.playlistFilesView = playlistFilesView;
+	}
+	
+	public AudioSource getNextRandomSong(AudioSource currentSong) {
+	    if (playlistFilesView == null) {
+            return null;
+        }
+
+        AudioSource songFile;
+        int count = 4;
+        while ((songFile = findRandomSongFile(currentSong)) == null && count-- > 0)
+            ;
+
+        if (count > 0) {
+            lastRandomFiles.add(songFile);
+            if (lastRandomFiles.size() > 3) {
+                lastRandomFiles.poll();
+            }
+        } else {
+            songFile = currentSong;
+            lastRandomFiles.clear();
+            lastRandomFiles.add(songFile);
+        }
+
+        return songFile;
+    }
+
+    public AudioSource getNextContinuousSong(AudioSource currentSong) {
+        if (playlistFilesView == null) {
+            return null;
+        }
+
+        int n = playlistFilesView.size();
+        for (int i = 0; i < n; i++) {
+            try {
+                AudioSource f1 = playlistFilesView.get(i);
+                if (currentSong.getFile().equals(f1)) {
+                    for (int j = 1; j < n; j++) {
+                        AudioSource file = playlistFilesView.get((j + i) % n);
+                        if (AudioPlayer.isPlayableFile(file.getFile())) {
+                            return file;
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                return null;
+            }
+        }
+
+        return null;
+    }
+
+    public AudioSource getNextSong(AudioSource currentSong) {
+        if (playlistFilesView == null) {
+            return null;
+        }
+
+        int n = playlistFilesView.size();
+        for (int i = 0; i < n; i++) {
+            try {
+                AudioSource f1 = playlistFilesView.get(i);
+                if (currentSong.getFile().equals(f1)) {
+                    for (int j = i + 1; j < n; j++) {
+                        AudioSource file = playlistFilesView.get(j);
+                        if (AudioPlayer.isPlayableFile(file.getFile())) {
+                            return file;
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                return null;
+            }
+        }
+
+        return null;
+    }
+    
+    public AudioSource getPreviousSong(AudioSource currentSong) {
+        if (playlistFilesView == null) {
+            return null;
+        }
+
+        int n = playlistFilesView.size();
+        for (int i = 0; i < n; i++) {
+            try {
+                AudioSource f1 = playlistFilesView.get(i);
+                if (currentSong.getFile().equals(f1)) {
+                    for (int j = i - 1; j >= 0; j--) {
+                        AudioSource file = playlistFilesView.get(j);
+                        if (AudioPlayer.isPlayableFile(file.getFile())) {
+                            return file;
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                return null;
+            }
+        }
+
+        return null;
+    }
+    
+    private AudioSource findRandomSongFile(AudioSource excludeFile) {
+        if (playlistFilesView == null) {
+            return null;
+        }
+        int n = playlistFilesView.size();
+        int index = new Random(System.currentTimeMillis()).nextInt(n);
+
+        for (int i = index; i < n; i++) {
+            try {
+                AudioSource file = playlistFilesView.get(i);
+
+                if (!lastRandomFiles.contains(file) && !file.equals(excludeFile) && AudioPlayer.isPlayableFile(file.getFile())) {
+                    return file;
+                }
+            } catch (Exception e) {
+                return null;
+            }
+        }
+
+        return null;
+    }
 }

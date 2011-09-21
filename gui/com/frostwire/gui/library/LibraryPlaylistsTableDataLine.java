@@ -181,7 +181,7 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
 
     private boolean isPlaying() {
 		if (initializer != null) {
-			return AudioPlayer.instance().isThisBeingPlayed(initializer.getFilePath());
+			return AudioPlayer.instance().isThisBeingPlayed(initializer);
 		}
 		
 		return false;

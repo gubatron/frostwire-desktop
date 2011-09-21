@@ -7,7 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 
 import javax.swing.Box;
@@ -24,6 +26,7 @@ import org.limewire.util.OSUtils;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.LibraryUtils;
 import com.frostwire.mplayer.MediaPlaybackState;
+import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -768,9 +771,9 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     		AudioSource nextSong = null;
     		
     		if (PLAYER.isShuffle()) {
-    			nextSong = LibraryMediator.instance().getNextRandomSong(currentSong);
+    			nextSong = PLAYER.getNextRandomSong(currentSong);
     		} else {
-    			nextSong = LibraryMediator.instance().getNextSong(currentSong);
+    			nextSong = PLAYER.getNextSong(currentSong);
     		}
     		
     		if (nextSong != null) {
@@ -792,7 +795,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     	AudioSource currentSong = PLAYER.getCurrentSong();
     	
     	if (currentSong != null) {
-    		AudioSource previousSong = LibraryMediator.instance().getPreviousSong(currentSong);
+    		AudioSource previousSong = PLAYER.getPreviousSong(currentSong);
     		
     		if (previousSong != null) {
     			PLAYER.loadSong(previousSong,true,true);
@@ -893,5 +896,4 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
 		VOLUME.setValue((int) (VOLUME.getMaximum()*currentVolume));
 		VOLUME.addChangeListener(oldListener);
 	}
-
 }

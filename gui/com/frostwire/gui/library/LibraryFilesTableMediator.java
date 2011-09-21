@@ -7,6 +7,7 @@ import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -373,6 +374,19 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             return new Object[] { I18n.tr("Delete"), I18n.tr("Cancel") };
         }
     }
+    
+    public List<AudioSource> getFileView() {
+        int size = DATA_MODEL.getRowCount();
+        List<AudioSource> result = new ArrayList<AudioSource>(size);
+        for (int i = 0; i < size; i++) {
+            try {
+                result.add(new AudioSource(DATA_MODEL.get(i).getFile()));
+            } catch (Exception e) {
+                return Collections.emptyList();
+            }
+        }
+        return result;
+    }
 
     /**
      * Override the default removal so we can actually stop sharing
@@ -522,7 +536,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             return;
         }
         if (getMediaType().equals(MediaType.getAudioMediaType()) && AudioPlayer.isPlayableFile(line.getFile())) {
-            AudioPlayer.instance().loadSong(new AudioSource(line.getFile()), true, true);
+            AudioPlayer.instance().loadSong(new AudioSource(line.getFile()), true, true, null, getFileView());
             return;
         }
 

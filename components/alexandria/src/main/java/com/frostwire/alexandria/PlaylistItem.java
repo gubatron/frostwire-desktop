@@ -200,4 +200,9 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
             db.delete(this);
         }
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        return this.id == ((PlaylistItem) obj).id;
+    }
 }
