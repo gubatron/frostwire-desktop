@@ -123,7 +123,7 @@ public class LibraryFiles extends JPanel {
         _listSelectionListener = new LibraryFilesSelectionListener();
         listTransferHandler = new ListTransferHandler();
 
-        _list = new JList(_model);
+        _list = new SpeakerList(_model);
         _list.setCellRenderer(new LibraryFilesCellRenderer());
         _list.addMouseListener(new DefaultMouseListener(_listMouseObserver));
         _list.addListSelectionListener(_listSelectionListener);
@@ -193,7 +193,7 @@ public class LibraryFiles extends JPanel {
         }
     }
 
-    private class LibraryFilesListCell {
+    public static class LibraryFilesListCell {
 
         private DirectoryHolder _holder;
 

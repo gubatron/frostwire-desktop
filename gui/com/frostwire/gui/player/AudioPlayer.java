@@ -108,6 +108,14 @@ public class AudioPlayer implements RefreshListener {
 	public AudioSource getCurrentSong() {
 		return currentSong;
 	}
+	
+	public Playlist getCurrentPlaylist() {
+	    return currentPlaylist;
+	}
+	
+	public List<AudioSource> getPlaylistFilesView() {
+	    return playlistFilesView;
+	}
 
 	public RepeatMode getRepeatMode() {
 		return repeatMode;
@@ -428,7 +436,7 @@ public class AudioPlayer implements RefreshListener {
         for (int i = 0; i < n; i++) {
             try {
                 AudioSource f1 = playlistFilesView.get(i);
-                if (currentSong.getFile().equals(f1)) {
+                if (currentSong.equals(f1)) {
                     for (int j = 1; j < n; j++) {
                         AudioSource file = playlistFilesView.get((j + i) % n);
                         if (AudioPlayer.isPlayableFile(file.getFile())) {
@@ -453,7 +461,7 @@ public class AudioPlayer implements RefreshListener {
         for (int i = 0; i < n; i++) {
             try {
                 AudioSource f1 = playlistFilesView.get(i);
-                if (currentSong.getFile().equals(f1)) {
+                if (currentSong.equals(f1)) {
                     for (int j = i + 1; j < n; j++) {
                         AudioSource file = playlistFilesView.get(j);
                         if (AudioPlayer.isPlayableFile(file.getFile())) {
@@ -478,7 +486,7 @@ public class AudioPlayer implements RefreshListener {
         for (int i = 0; i < n; i++) {
             try {
                 AudioSource f1 = playlistFilesView.get(i);
-                if (currentSong.getFile().equals(f1)) {
+                if (currentSong.equals(f1)) {
                     for (int j = i - 1; j >= 0; j--) {
                         AudioSource file = playlistFilesView.get(j);
                         if (AudioPlayer.isPlayableFile(file.getFile())) {
