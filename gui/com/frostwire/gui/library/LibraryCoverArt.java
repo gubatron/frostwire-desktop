@@ -8,6 +8,7 @@ import java.awt.RenderingHints;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 
 import javax.imageio.IIOException;
@@ -18,7 +19,6 @@ import com.frostwire.jpeg.JPEGImageIO;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.mpatric.mp3agic.ID3v2;
 import com.mpatric.mp3agic.Mp3File;
-import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 
 public class LibraryCoverArt extends JPanel {
 
@@ -145,9 +145,9 @@ public class LibraryCoverArt extends JPanel {
                 ID3v2 tag = mp3.getId3v2Tag();
                 byte[] imageBytes = tag.getAlbumImage();
                 try {
-                    return ImageIO.read(new ByteInputStream(imageBytes, imageBytes.length));
+                    return ImageIO.read(new ByteArrayInputStream(imageBytes, 0, imageBytes.length));
                 } catch (IIOException e) {
-                    return JPEGImageIO.read(new ByteInputStream(imageBytes, imageBytes.length));
+                    return JPEGImageIO.read(new ByteArrayInputStream(imageBytes, 0, imageBytes.length));
                 }
             }
             return null;

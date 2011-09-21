@@ -70,6 +70,11 @@ public class AudioPlayer implements RefreshListener {
 					+ File.separator + "fwplayer.exe"
 					: "lib/native/fwplayer.exe";
 			playerPath = UrlUtils.decode(playerPath);
+			
+			if (!new File(playerPath).exists()) {
+				playerPath = UrlUtils.decode("../lib/native/fwplayer.exe");
+			}
+			
 		} else if (OSUtils.isMacOSX()) {
 			String macOSFolder = new File(FrostWireUtils.getFrostWireJarPath())
 					.getParentFile().getParent() + File.separator + "MacOS";

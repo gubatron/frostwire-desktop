@@ -247,28 +247,7 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 	}
 
 	public String[] getToolTipArray(int col) {
-        // if XML isn't finished loading, no schemas exist,
-	    // we don't have a meta file manager, or we don't
-	    // have a FileDesc, get out of here.
-	    if ( !_allowXML
-	         || _schemas == null || _schemas.length == 0
-	         || _fileDesc == null
-	        ) return null;
-
-        // Dynamically add the information.
-        List<String> allData = new LinkedList<String>();        
-//        for(LimeXMLDocument doc : _fileDesc.getLimeXMLDocuments())
-//            allData.addAll(XMLUtils.getDisplayList(doc));
-
-        
-        if ( !allData.isEmpty() ) {
-            // if it had meta-data, display the filename in the tooltip also.
-            allData.add(0, _name);
-            return allData.toArray(new String[allData.size()]);
-	    } else {
-	        return null;
-	        //return new String[] { "No meta-data exists.", "Click 'annotate' to add some." };
-	    }
+		return new String[] {""};
 	}
 	
 	private LimeTableColumn[] getLimeTableColumns() {

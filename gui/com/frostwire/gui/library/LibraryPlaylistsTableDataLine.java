@@ -14,7 +14,7 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
      * Starred column
      */
     static final int STARRED_IDX = 0;
-    private static final LimeTableColumn STARRED_COLUMN = new LimeTableColumn(STARRED_IDX, "PLAYLIST_TABLE_STARRED", I18n.tr(" "), 30, true,
+    private static final LimeTableColumn STARRED_COLUMN = new LimeTableColumn(STARRED_IDX, "PLAYLIST_TABLE_STARRED", I18n.tr(" "), 22, true,
             PlaylistItemStar.class);
     
     /**
@@ -241,7 +241,7 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
      * a property map
      */
     public String[] getToolTipArray(int col) {
-        return new String[0];//initializer.getToolTips();
+        return new String[] {""} ;//initializer.getToolTips();
     }
 
     public File getFile() {
