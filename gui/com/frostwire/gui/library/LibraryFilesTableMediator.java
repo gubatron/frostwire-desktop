@@ -70,8 +70,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     public static Action CREATE_TORRENT_ACTION;
     public static Action DELETE_ACTION;
     public static Action RENAME_ACTION;
-    
-    private boolean dragging;
 
     /**
      * instance, for singelton access

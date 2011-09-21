@@ -64,8 +64,6 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     private Action importToPlaylistAction = new ImportToPlaylistAction();
     private Action importToNewPlaylistAction = new ImportToNewPlaylistAction();
     private Action exportPlaylistAction = new ExportPlaylistAction();
-
-    private boolean dragging;
     
     /**
      * instance, for singelton access
@@ -278,7 +276,6 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             @Override
             public void mouseMoved(MouseEvent e) {
                 dragging = SwingUtilities.isLeftMouseButton(e);
-                System.out.println(dragging);
             }
         });
     }

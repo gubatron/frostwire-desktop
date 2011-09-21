@@ -32,6 +32,8 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
     private MediaType mediaType;
 
     protected Action SEND_TO_FRIEND_ACTION;
+    
+    protected static boolean dragging;
 
     protected AbstractLibraryTableMediator(String id) {
         super(id);
