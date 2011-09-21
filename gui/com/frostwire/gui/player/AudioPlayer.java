@@ -243,10 +243,24 @@ public class AudioPlayer implements RefreshListener {
 	}
 
 	public static boolean isPlayableFile(File file) {
-		String name = file.getName().toLowerCase();
-		return name.endsWith(".mp3") || name.endsWith(".ogg")
-				|| name.endsWith(".wav") || name.endsWith(".wma")
-				|| name.endsWith(".m4a");
+	    return isPlayableFile(file.getAbsolutePath());
+	}
+	
+	public static boolean isPlayableFile(String filename) {
+        String name = filename.toLowerCase();
+        return name.endsWith(".mp3") || name.endsWith(".ogg")
+                || name.endsWith(".wav") || name.endsWith(".wma")
+                || name.endsWith(".m4a");
+    }
+	
+	private static boolean isPlayableFile(AudioSource audioSource) {
+	    if (audioSource.getFile() != null) {
+	        return isPlayableFile(audioSource.getFile());
+	    } else if (audioSource.getPlaylistItem() != null) {
+	        return isPlayableFile(audioSource.getPlaylistItem().getFilePath());
+	    } else {
+	        return false;
+	    }
 	}
 
 	/**
@@ -439,7 +453,7 @@ public class AudioPlayer implements RefreshListener {
                 if (currentSong.equals(f1)) {
                     for (int j = 1; j < n; j++) {
                         AudioSource file = playlistFilesView.get((j + i) % n);
-                        if (AudioPlayer.isPlayableFile(file.getFile())) {
+                        if (isPlayableFile(file)) {
                             return file;
                         }
                     }
@@ -464,7 +478,7 @@ public class AudioPlayer implements RefreshListener {
                 if (currentSong.equals(f1)) {
                     for (int j = i + 1; j < n; j++) {
                         AudioSource file = playlistFilesView.get(j);
-                        if (AudioPlayer.isPlayableFile(file.getFile())) {
+                        if (isPlayableFile(file)) {
                             return file;
                         }
                     }
@@ -489,7 +503,7 @@ public class AudioPlayer implements RefreshListener {
                 if (currentSong.equals(f1)) {
                     for (int j = i - 1; j >= 0; j--) {
                         AudioSource file = playlistFilesView.get(j);
-                        if (AudioPlayer.isPlayableFile(file.getFile())) {
+                        if (isPlayableFile(file)) {
                             return file;
                         }
                     }
@@ -513,7 +527,7 @@ public class AudioPlayer implements RefreshListener {
             try {
                 AudioSource file = playlistFilesView.get(i);
 
-                if (!lastRandomFiles.contains(file) && !file.equals(excludeFile) && AudioPlayer.isPlayableFile(file.getFile())) {
+                if (!lastRandomFiles.contains(file) && !file.equals(excludeFile) && isPlayableFile(file)) {
                     return file;
                 }
             } catch (Exception e) {

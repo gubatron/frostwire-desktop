@@ -395,7 +395,7 @@ public class LibrarySearch extends JPanel {
             }
             fileIDSet.append(")");
 
-            String sql = "SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, duration, artistName, albumName, coverArtPath, bitrate, comment, genre, track, year FROM PlaylistItems WHERE playlistItemId IN "
+            String sql = "SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, trackDurationInSecs, trackArtist, trackAlbum, coverArtPath, trackBitrate, trackComment, trackGenre, trackNumber, trackYear, starred FROM PlaylistItems WHERE playlistItemId IN "
                     + fileIDSet.toString();
             List<List<Object>> rows = LibraryMediator.getLibrary().getDB().getDatabase().query(sql);
 
