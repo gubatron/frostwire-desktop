@@ -36,6 +36,7 @@ import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.RefreshListener;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.options.ConfigureOptionsAction;
@@ -48,7 +49,7 @@ import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.SharingSettings;
 
-public class LibraryFiles extends JPanel {
+public class LibraryFiles extends JPanel implements RefreshListener {
 
     private static final long serialVersionUID = 9192882931064269836L;
 
@@ -94,6 +95,7 @@ public class LibraryFiles extends JPanel {
 
     protected void setupUI() {
         setLayout(new BorderLayout());
+        GUIMediator.addRefreshListener(this);
 
         setupModel();
         setupList();
@@ -438,4 +440,9 @@ public class LibraryFiles extends JPanel {
     public void selectFinishedDownloads() {
         _list.setSelectedValue(_finishedDownloadsCell, true);
     }
+
+	@Override
+	public void refresh() {
+		_list.repaint();
+	}
 }

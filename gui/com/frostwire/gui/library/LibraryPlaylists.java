@@ -49,6 +49,7 @@ import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.RefreshListener;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.options.ConfigureOptionsAction;
@@ -60,7 +61,7 @@ import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 
-public class LibraryPlaylists extends JPanel {
+public class LibraryPlaylists extends JPanel implements RefreshListener {
 
     private static final long serialVersionUID = 6317109161466445259L;
 
@@ -113,6 +114,8 @@ public class LibraryPlaylists extends JPanel {
 
     protected void setupUI() {
         setLayout(new BorderLayout());
+        
+        GUIMediator.addRefreshListener(this);
 
         setupPopupMenu();
         setupModel();
@@ -754,6 +757,12 @@ public class LibraryPlaylists extends JPanel {
     public void reselectPlaylist() {
         _listSelectionListener.valueChanged(null);
     }
+    
+	@Override
+	public void refresh() {
+		_list.repaint();
+	}
+
     
     /**
      * <tt>FileFilter</tt> class for only displaying m3u file types in
