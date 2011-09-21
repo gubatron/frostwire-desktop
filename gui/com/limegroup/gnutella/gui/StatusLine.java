@@ -90,11 +90,7 @@ public final class StatusLine implements ThemeObserver {
 	private JPanel _centerPanel;
 	private Component _centerComponent;
 
-    /**
-     * The media player.
-     */
-    //private MediaPlayerComponent _mediaPlayer;
-    
+	private CurrentAudioStatusComponent _audioStatusComponent;
     
     ///////////////////////////////////////////////////////////////////////////
     //  Construction
@@ -116,6 +112,8 @@ public final class StatusLine implements ThemeObserver {
 			public void componentHidden(ComponentEvent arg0) { }
 		});
         
+		_audioStatusComponent = new CurrentAudioStatusComponent();
+		
 		//  make icons and panels for connection quality
         createConnectionQualityPanel();
         
@@ -153,14 +151,10 @@ public final class StatusLine implements ThemeObserver {
 			remainingWidth = ApplicationSettings.APP_WIDTH.getValue();
 		
 		//  subtract player as needed
-		if (GUIMediator.isPlaylistVisible()) {
-//			if (_mediaPlayer == null)
-//                _mediaPlayer = MediaPlayerComponent.getInstance();
-//			remainingWidth -= sepWidth;
-//			remainingWidth -= GUIConstants.SEPARATOR / 2;
-//            remainingWidth -= _mediaPlayer.minWidth;
-//			remainingWidth -= GUIConstants.SEPARATOR;
-		}
+		remainingWidth -= sepWidth;
+		remainingWidth -= GUIConstants.SEPARATOR / 2;
+		remainingWidth -= _audioStatusComponent.getWidth();
+		remainingWidth -= GUIConstants.SEPARATOR;
 		
 		//  subtract center component
 		int indicatorWidth = _centerComponent.getWidth();
@@ -242,21 +236,11 @@ public final class StatusLine implements ThemeObserver {
         gbc.weightx = 0;
 		BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
 
-        //  media player
-        if (GUIMediator.isPlaylistVisible()) {
-//			JPanel jp = _mediaPlayer.getMediaPanel();
-//            // if room to display volume and progress, do so
-//            if(remainingWidth + _mediaPlayer.minWidth > _mediaPlayer.fullSizeWidth ){
-//                jp.setPreferredSize( new Dimension(_mediaPlayer.fullSizeWidth, 25));
-//            }
-//            else {//else just display buttons
-//                jp.setPreferredSize( new Dimension(_mediaPlayer.minWidth, 25));
-//            }
-//            
-//			BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
-//			BAR.add(jp, gbc);
-//			BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR), gbc);
-        }
+		// current song component
+		BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
+		BAR.add(_audioStatusComponent, gbc);
+		BAR.add(Box.createHorizontalStrut(10));
+		BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR), gbc);
 
 		BAR.validate();
 		BAR.repaint();

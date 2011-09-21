@@ -15,6 +15,7 @@ import javax.swing.JSplitPane;
 import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
+import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -46,6 +47,10 @@ public class LibraryMediator {
     
     private static Library LIBRARY;
 
+    private CardLayout _tablesViewLayout = new CardLayout();
+    private JPanel _tablesPanel;
+	private JSplitPane splitPane;
+
     /**
      * @return the <tt>LibraryMediator</tt> instance
      */
@@ -56,11 +61,6 @@ public class LibraryMediator {
         return INSTANCE;
     }
     
-    private CardLayout _tablesViewLayout = new CardLayout();
-    private JPanel _tablesPanel;
-	private JSplitPane splitPane;
-	
-	private AbstractLibraryTableMediator<?, ?, ?> currentTableMediator;
 
     public LibraryMediator() {
         GUIMediator.setSplashScreenString(I18n.tr("Loading Library Window..."));
@@ -144,13 +144,11 @@ public class LibraryMediator {
     }
     
     public void updateTableFiles(DirectoryHolder dirHolder) {
-        currentTableMediator = LibraryFilesTableMediator.instance();
         LibraryFilesTableMediator.instance().updateTableFiles(dirHolder);
         showView(FILES_TABLE_KEY);
     }
     
     public void updateTableItems(Playlist playlist) {
-        currentTableMediator = LibraryPlaylistsTableMediator.instance();
         LibraryPlaylistsTableMediator.instance().updateTableItems(playlist);
         showView(PLAYLISTS_TABLE_KEY);
     }
@@ -220,4 +218,65 @@ public class LibraryMediator {
        getLibraryFiles().selectFinishedDownloads();
        LibraryFilesTableMediator.instance().setFileSelected(file);
     }
+
+    /**
+     * 
+     */
+	public void selectCurrentSong() {
+		//Select current playlist.
+		Playlist currentPlaylist = AudioPlayer.instance().getCurrentPlaylist();
+		final AudioSource currentSong = AudioPlayer.instance().getCurrentSong();
+		
+		//If the current song is being played from a playlist.
+		if (currentPlaylist != null && currentSong != null
+				&& currentSong.getPlaylistItem() != null) {
+			//select the song once it's available on the right hand side
+			getLibraryPlaylists().enqueueRunnable(new Runnable() {
+				
+				@Override
+				public void run() {
+					GUIMediator.safeInvokeLater(new Runnable() {
+
+						@Override
+						public void run() {
+							LibraryPlaylistsTableMediator.instance().setPlaylistItemSelected(currentSong.getPlaylistItem());
+						}
+						
+					});	
+				}
+				
+			});
+			
+			//select the playlist
+			getLibraryPlaylists().selectPlaylist(currentPlaylist);
+
+			
+		} else if (currentPlaylist != null && currentSong != null
+				&& currentSong.getFile() != null) {
+			//selects the audio node at the top
+			LibraryFiles libraryFiles = getLibraryFiles();
+			
+			//select the song once it's available on the right hand side
+			libraryFiles.enqueueRunnable(new Runnable() {
+				
+				@Override
+				public void run() {
+					GUIMediator.safeInvokeLater(new Runnable() {
+
+						@Override
+						public void run() {
+							LibraryFilesTableMediator.instance().setFileSelected(currentSong.getFile());
+						}
+						
+					});	
+				}
+				
+			});
+			
+			libraryFiles.selectAudio();
+		}
+		
+		//Scroll to current song.
+		
+	}
 }

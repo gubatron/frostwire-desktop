@@ -88,9 +88,12 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
     private Action importToPlaylistAction = new ImportToPlaylistAction();
     private Action importToNewPlaylistAction = new ImportToNewPlaylistAction();
     private Action exportPlaylistAction = new ExportPlaylistAction();
+    
+    private List<Runnable> PENDING_RUNNABLES;
 
     public LibraryPlaylists() {
         setupUI();
+        PENDING_RUNNABLES = new ArrayList<Runnable>();
     }
 
     public Dimension getRowDimension() {
@@ -233,6 +236,9 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
         
         String status = LibraryUtils.getPlaylistDurationInDDHHMMSS(playlist) + ", " + playlist.getItems().size() + " " + I18n.tr("tracks");        
         LibraryMediator.instance().getLibrarySearch().setStatus(status);
+
+        System.out.println("LibraryPlaylists.executePendingRunnables()!");
+        executePendingRunnables();
     }
 
     private void actionStartRename() {
@@ -267,6 +273,22 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
 
         _textName.requestFocusInWindow();
         _textName.requestFocus();
+    }
+    
+    public void selectPlaylist(Playlist playlist) {
+		int size = _model.getSize();
+
+		for (int i = 0; i < size; i++) {
+			try {
+				LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) _model
+						.get(i);
+				if (cell.getPlaylist()!=null && cell.getPlaylist().equals(playlist)) {
+					_list.setSelectedValue(cell, true);
+					return;
+				}
+			} catch (Exception e) {
+			}
+		}
     }
 
     private void renameSelectedItem(int index) {
@@ -753,6 +775,8 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
             startEdit(_list.getSelectedIndex());
         }
     }
+    
+    
 
     public void reselectPlaylist() {
         _listSelectionListener.valueChanged(null);
@@ -823,4 +847,22 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
             exportM3U(getSelectedPlaylist());
         }
     }
+
+
+	public void executePendingRunnables() {
+		if (PENDING_RUNNABLES != null && PENDING_RUNNABLES.size() > 0) {
+			for (Runnable t : PENDING_RUNNABLES) {
+				try {
+					t.run();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			PENDING_RUNNABLES.clear();
+		}		
+	}
+	
+	public void enqueueRunnable(Runnable r) {
+		PENDING_RUNNABLES.add(r);
+	}
 }

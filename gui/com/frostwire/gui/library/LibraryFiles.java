@@ -71,8 +71,11 @@ public class LibraryFiles extends JPanel implements RefreshListener {
     private Action refreshAction = new RefreshAction();
     private Action exploreAction = new ExploreAction();
 
+	private List<Runnable> PENDING_RUNNABLES;
+
     public LibraryFiles() {
         setupUI();
+        PENDING_RUNNABLES=new ArrayList<Runnable>();
     }
 
     public DirectoryHolder getSelectedDirectoryHolder() {
@@ -345,6 +348,8 @@ public class LibraryFiles extends JPanel implements RefreshListener {
             ignore.addAll(TorrentUtil.getSkipedFiles());
 
             search(file, ignore);
+            
+            executePendingRunnables();
         }
 
         private void search(File file, Set<File> ignore) {
@@ -441,8 +446,44 @@ public class LibraryFiles extends JPanel implements RefreshListener {
         _list.setSelectedValue(_finishedDownloadsCell, true);
     }
 
+	public void executePendingRunnables() {
+		if (PENDING_RUNNABLES != null && PENDING_RUNNABLES.size() > 0) {
+			for (Runnable t : PENDING_RUNNABLES) {
+				try {
+					t.run();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			PENDING_RUNNABLES.clear();
+		}		
+	}
+	
+	public void enqueueRunnable(Runnable r) {
+		PENDING_RUNNABLES.add(r);
+	}
+
 	@Override
 	public void refresh() {
 		_list.repaint();
+	}
+
+	public void selectAudio() {
+		int size = _model.getSize();
+
+		for (int i = 0; i < size; i++) {
+			try {
+				LibraryFilesListCell cell = (LibraryFilesListCell) _model
+						.get(i);
+
+				if (cell.getDirectoryHolder() instanceof MediaTypeSavedFilesDirectoryHolder &&
+					((MediaTypeSavedFilesDirectoryHolder) cell.getDirectoryHolder()).getMediaType().equals(MediaType.getAudioMediaType()) ) {
+					_list.setSelectedValue(cell, true);
+					return;
+				}
+			} catch (Exception e) {
+			}
+		}
+		
 	}
 }
