@@ -585,6 +585,10 @@ public class LibraryPlaylists extends JPanel {
             DropLocation location = support.getDropLocation();
             int index = _list.locationToIndex(location.getDropPoint());
             if (index != -1) {
+                Rectangle rect = _list.getUI().getCellBounds(_list, index, index);
+                if (!rect.contains(location.getDropPoint())) {
+                    index = 0;
+                }
                 LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) _list.getModel().getElementAt(index);
                 
                 //Playlist selectedPlaylist = getSelectedPlaylist();
