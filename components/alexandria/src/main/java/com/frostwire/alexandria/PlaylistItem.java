@@ -205,4 +205,9 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
     public boolean equals(Object obj) {
         return this.id == ((PlaylistItem) obj).id;
     }
+    
+    @Override
+    public int hashCode() {
+    	return id;
+    }
 }

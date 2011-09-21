@@ -7,7 +7,7 @@ set JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/1.5/home/
 CLASSPATH=
 PS=":"
 
-OPTS="-Xms32m -Xmx128m -Djava.net.preferIPV6Addresses=false -ea -Djava.net.preferIPv4stack=true"
+OPTS="-Xms64m -Xmx256m -Djava.net.preferIPV6Addresses=false -ea -Djava.net.preferIPv4stack=true"
 
 #setup the java options & initial system-dependent classpath
 PLATFORM=`uname`
