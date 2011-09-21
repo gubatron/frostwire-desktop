@@ -65,16 +65,22 @@ public class Playlist extends Entity<PlaylistDB> {
     }
 
     public void save() {
-        db.save(this);
+        if (db != null) {
+            db.save(this);
+        }
     }
 
     public void delete() {
-        db.delete(this);
+        if (db != null) {
+            db.delete(this);
+        }
     }
 
     public void refresh() {
-        _items.clear();
-        _items.addAll(db.getLibraryItems(this));
+        if (db != null) {
+            _items.clear();
+            _items.addAll(db.getLibraryItems(this));
+        }
     }
 
     public PlaylistItem newItem(String filePath, String fileName, long fileSize, String fileExtension, String trackTitle, float trackDurationInSecs, String trackArtist,

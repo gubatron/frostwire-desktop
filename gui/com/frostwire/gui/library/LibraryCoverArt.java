@@ -44,6 +44,7 @@ public class LibraryCoverArt extends JPanel {
      * @param file
      */
     public void setFile(final File file) {
+        System.out.println(file);
         if (this.file != null && file != null && this.file.equals(file)) {
             return;
         }

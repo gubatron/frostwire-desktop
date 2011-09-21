@@ -2,7 +2,6 @@ package com.frostwire.gui.library;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -90,6 +89,7 @@ public class LibraryUtils {
 
             new Thread(new Runnable() {
                 public void run() {
+                    playlist.save();
                     addToPlaylist(playlist, lines);
                     playlist.save();
                     GUIMediator.safeInvokeLater(new Runnable() {
@@ -111,6 +111,7 @@ public class LibraryUtils {
 
             new Thread(new Runnable() {
                 public void run() {
+                    playlist.save();
                     addToPlaylist(playlist, files);
                     playlist.save();
                     GUIMediator.safeInvokeLater(new Runnable() {
@@ -132,6 +133,7 @@ public class LibraryUtils {
 
             new Thread(new Runnable() {
                 public void run() {
+                    playlist.save();
                     addToPlaylist(playlist, playlistItems);
                     playlist.save();
                     GUIMediator.safeInvokeLater(new Runnable() {

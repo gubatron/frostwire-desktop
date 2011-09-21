@@ -1,6 +1,5 @@
 package com.frostwire.gui.library;
 
-import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.InvalidDnDOperationException;
 import java.io.File;
@@ -40,9 +39,17 @@ class LibraryPlaylistsTableTransferHandler extends TransferHandler {
         }
 
         try {
-            if (mediator.getCurrentPlaylist() != null) {
-                File[] files = DNDUtils.getFiles(support.getTransferable());
-                LibraryUtils.asyncAddToPlaylist(mediator.getCurrentPlaylist(), files);
+            Transferable transferable = support.getTransferable();
+            if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistTransferable.ITEM_ARRAY)) {
+                if (mediator.getCurrentPlaylist() != null) {
+                    PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistTransferable.Item[]) transferable.getTransferData(LibraryPlaylistTransferable.ITEM_ARRAY));
+                    LibraryUtils.asyncAddToPlaylist(mediator.getCurrentPlaylist(), playlistItems);
+                }
+            } else {
+                if (mediator.getCurrentPlaylist() != null) {
+                    File[] files = DNDUtils.getFiles(support.getTransferable());
+                    LibraryUtils.asyncAddToPlaylist(mediator.getCurrentPlaylist(), files);
+                }
             }
         } catch (Exception e) {
             return fallbackTransferHandler.importData(support);
@@ -71,8 +78,9 @@ class LibraryPlaylistsTableTransferHandler extends TransferHandler {
             return fallback ? fallbackTransferHandler.canImport(support) : false;
         }
 
-        DataFlavor[] flavors = support.getDataFlavors();
-        if (DNDUtils.containsFileFlavors(flavors)) {
+        if (support.isDataFlavorSupported(LibraryPlaylistTransferable.ITEM_ARRAY)) {
+            return true;
+        } else if (DNDUtils.containsFileFlavors(support.getDataFlavors())) {
             try {
                 File[] files = DNDUtils.getFiles(support.getTransferable());
                 for (File file : files) {

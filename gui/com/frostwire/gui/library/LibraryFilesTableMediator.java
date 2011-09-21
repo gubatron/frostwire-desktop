@@ -21,6 +21,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputListener;
 import javax.swing.table.TableCellEditor;
 
@@ -251,7 +252,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             }
             @Override
             public void mouseMoved(MouseEvent e) {
-                dragging = false;
+                dragging = SwingUtilities.isLeftMouseButton(e);
             }
         });
     }

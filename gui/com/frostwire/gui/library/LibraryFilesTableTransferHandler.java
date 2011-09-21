@@ -1,6 +1,5 @@
 package com.frostwire.gui.library;
 
-import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.InvalidDnDOperationException;
 import java.io.File;
@@ -10,6 +9,7 @@ import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.TransferHandler;
 
+import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
@@ -40,8 +40,14 @@ class LibraryFilesTableTransferHandler extends TransferHandler {
         }
 
         try {
-            File[] files = DNDUtils.getFiles(support.getTransferable());
-            LibraryUtils.createNewPlaylist(files);
+            Transferable transferable = support.getTransferable();
+            if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistTransferable.ITEM_ARRAY)) {
+                PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistTransferable.Item[]) transferable.getTransferData(LibraryPlaylistTransferable.ITEM_ARRAY));
+                LibraryUtils.createNewPlaylist(playlistItems);
+            } else {
+                File[] files = DNDUtils.getFiles(support.getTransferable());
+                LibraryUtils.createNewPlaylist(files);
+            }
         } catch (Exception e) {
             return fallbackTransferHandler.importData(support);
         }
@@ -69,8 +75,9 @@ class LibraryFilesTableTransferHandler extends TransferHandler {
             return fallback ? fallbackTransferHandler.canImport(support) : false;
         }
 
-        DataFlavor[] flavors = support.getDataFlavors();
-        if (DNDUtils.containsFileFlavors(flavors)) {
+        if (support.isDataFlavorSupported(LibraryPlaylistTransferable.ITEM_ARRAY)) {
+            return true;
+        } else if (DNDUtils.containsFileFlavors(support.getDataFlavors())) {
             try {
                 File[] files = DNDUtils.getFiles(support.getTransferable());
                 for (File file : files) {

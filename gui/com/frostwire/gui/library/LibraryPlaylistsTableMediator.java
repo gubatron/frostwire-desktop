@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputListener;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
@@ -276,7 +277,8 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             }
             @Override
             public void mouseMoved(MouseEvent e) {
-                dragging = false;
+                dragging = SwingUtilities.isLeftMouseButton(e);
+                System.out.println(dragging);
             }
         });
     }

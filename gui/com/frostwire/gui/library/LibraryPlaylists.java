@@ -558,7 +558,7 @@ public class LibraryPlaylists extends JPanel {
         public boolean canImport(TransferSupport support) {
             if (support.isDataFlavorSupported(LibraryPlaylistTransferable.ITEM_ARRAY)) {
                 return true;
-            } if (DNDUtils.containsFileFlavors(support.getDataFlavors())) {
+            } else if (DNDUtils.containsFileFlavors(support.getDataFlavors())) {
                 try {
                     File[] files = DNDUtils.getFiles(support.getTransferable());
                     for (File file : files) {
