@@ -21,7 +21,7 @@ public class LibraryPlayer extends JPanel {
     protected void setupUI() {
         setLayout(new BorderLayout());
         
-        setPreferredSize(new Dimension(100, 100));
+        setPreferredSize(new Dimension(100, 60));
         
         add(new AudioPlayerComponent().getMediaPanel(true), BorderLayout.LINE_END);
     }

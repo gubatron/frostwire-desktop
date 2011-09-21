@@ -14,4 +14,9 @@ public class PlayerSettings extends LimeProps {
      */
     public static BooleanSetting PLAYER_ENABLED =
         FACTORY.createBooleanSetting("PLAYER_ENABLED", true);
+    
+    public static BooleanSetting LOOP_PLAYLIST = FACTORY.createBooleanSetting("LOOP_PLAYLIST", true);
+    
+    public static BooleanSetting SHUFFLE_PLAYLIST = FACTORY.createBooleanSetting("SHUFFLE_PLAYLIST", false);
+    
 }

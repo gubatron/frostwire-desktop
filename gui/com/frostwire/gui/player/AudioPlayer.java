@@ -21,6 +21,7 @@ import com.frostwire.mplayer.MediaPlaybackState;
 import com.frostwire.mplayer.PositionListener;
 import com.frostwire.mplayer.StateListener;
 import com.limegroup.gnutella.gui.RefreshListener;
+import com.limegroup.gnutella.settings.PlayerSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
@@ -99,8 +100,8 @@ public class AudioPlayer implements RefreshListener {
 			}
 		});
 
-		repeatMode = RepeatMode.All;
-		shuffle = false;
+		repeatMode = (PlayerSettings.LOOP_PLAYLIST.getValue()) ? RepeatMode.All : RepeatMode.None;
+		shuffle = PlayerSettings.SHUFFLE_PLAYLIST.getValue();
 		playNextSong = true;
 		volume = 0.5;
 	}
@@ -123,6 +124,7 @@ public class AudioPlayer implements RefreshListener {
 
 	public void setRepeatMode(RepeatMode repeatMode) {
 		this.repeatMode = repeatMode;
+		PlayerSettings.LOOP_PLAYLIST.setValue(repeatMode == RepeatMode.All);
 	}
 
 	public boolean isShuffle() {
@@ -131,6 +133,7 @@ public class AudioPlayer implements RefreshListener {
 
 	public void setShuffle(boolean shuffle) {
 		this.shuffle = shuffle;
+		PlayerSettings.SHUFFLE_PLAYLIST.setValue(shuffle);
 	}
 
 	/**

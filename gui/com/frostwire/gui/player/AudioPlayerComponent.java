@@ -9,7 +9,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.ExecutorService;
 
 import javax.swing.Box;
@@ -23,10 +22,8 @@ import javax.swing.event.ChangeListener;
 import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.util.OSUtils;
 
-import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.LibraryUtils;
 import com.frostwire.mplayer.MediaPlaybackState;
-import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -210,6 +207,15 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
         JPanel buttonPanel = new BoxPanel(BoxPanel.X_AXIS);
         buttonPanel.setMaximumSize(new Dimension(370, tempHeight)); //tempWidth + PROGRESS.getWidth() + VOLUME.getWidth()
         buttonPanel.add(Box.createHorizontalGlue());
+        
+        if (showPlaybackModeControls) {
+        	initPlaylistPlaybackModeControls();
+        	buttonPanel.add(SHUFFLE_BUTTON);
+        	buttonPanel.add(Box.createHorizontalStrut(5));
+        	buttonPanel.add(LOOP_BUTTON);
+        	buttonPanel.add(Box.createHorizontalStrut(5));
+        }
+        
         buttonPanel.add(VOLUME);
         buttonPanel.add(Box.createHorizontalStrut(13));
         buttonPanel.add(PREV_BUTTON);
@@ -234,16 +240,6 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
         buttonPanel.add(Box.createHorizontalStrut(5));        
         buttonPanel.add(progressSongLength);
         
-        
-        if (showPlaybackModeControls) {
-        	initPlaylistPlaybackModeControls();
-        	
-        	buttonPanel.add(Box.createHorizontalStrut(5));
-        	buttonPanel.add(SHUFFLE_BUTTON);
-        	buttonPanel.add(Box.createHorizontalStrut(5));
-        	buttonPanel.add(LOOP_BUTTON);
-        }
-        
         if (OSUtils.isMacOSX())
             buttonPanel.add(Box.createHorizontalStrut(16));
         buttonPanel.add(Box.createHorizontalGlue());
@@ -259,6 +255,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
 		SHUFFLE_BUTTON.setIcon(GUIMediator.getThemeImage("shuffle_off"));
 		SHUFFLE_BUTTON.setSelectedIcon(GUIMediator.getThemeImage("shuffle_on"));
 		SHUFFLE_BUTTON.setToolTipText(I18n.tr("Shuffle songs"));
+		SHUFFLE_BUTTON.setSelected(PLAYER.isShuffle());
 
 		LOOP_BUTTON = new JToggleButton();
 		LOOP_BUTTON.setBorderPainted(false);
@@ -267,6 +264,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
 		LOOP_BUTTON.setIcon(GUIMediator.getThemeImage("loop_off"));
 		LOOP_BUTTON.setSelectedIcon(GUIMediator.getThemeImage("loop_on"));
 		LOOP_BUTTON.setToolTipText(I18n.tr("Repeat songs"));
+		LOOP_BUTTON.setSelected(PLAYER.getRepeatMode()==RepeatMode.All);
 		
 		SHUFFLE_BUTTON.addActionListener(new ActionListener() {
 			
@@ -465,6 +463,8 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     private void loadAudioProperties() {
         if (currentPlayListItem != null && currentPlayListItem.getFile() != null) {
             audioProperties = new AudioMetaData(currentPlayListItem.getFile());
+        } else if (currentPlayListItem != null && currentPlayListItem.getPlaylistItem() != null){
+        	audioProperties = new AudioMetaData(new File(currentPlayListItem.getPlaylistItem().getFilePath()));
         }
     }
 
