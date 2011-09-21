@@ -24,8 +24,8 @@ import com.frostwire.mplayer.MediaPlaybackState;
  */
 public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerListener {
 	
-	private static final int MAX_CHARS = 30;
-	private static final int BOUND_CHARS = 10;
+	private static final int MAX_CHARS = 33;
+	private static final int BOUND_CHARS = 12;
 	
 	private static final long serialVersionUID = 9206657876064353272L;
 	private Icon speakerIcon;
@@ -134,7 +134,7 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
 			@Override
 			public void run() {
 				text.setIcon(speakerIcon);
-				text.setText("<html><a href=\"\">"+currentTextFinal+"</a></html>");				
+				text.setText("<html><font color=\"496989\"><u>"+currentTextFinal+"</u></font></html>");				
 			}
 		});
 		
