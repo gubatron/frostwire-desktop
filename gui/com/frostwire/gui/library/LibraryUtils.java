@@ -11,6 +11,7 @@ import org.limewire.util.FileUtils;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.library.LibraryPlaylistTransferable.Item;
+import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 
@@ -241,13 +242,17 @@ public class LibraryUtils {
     private static void addToPlaylist(Playlist playlist, List<? extends AbstractLibraryTableDataLine<?>> lines) {
         for (int i = 0; i < lines.size() && !playlist.isDeleted(); i++) {
             AbstractLibraryTableDataLine<?> line = lines.get(i);
-            LibraryUtils.addPlaylistItem(playlist, line.getFile());
+            if (AudioPlayer.isPlayableFile(line.getFile())) {
+                LibraryUtils.addPlaylistItem(playlist, line.getFile());
+            }
         }
     }
 
     private static void addToPlaylist(Playlist playlist, File[] files) {
         for (int i = 0; i < files.length && !playlist.isDeleted(); i++) {
-            LibraryUtils.addPlaylistItem(playlist, files[i]);
+            if (AudioPlayer.isPlayableFile(files[i])) {
+                LibraryUtils.addPlaylistItem(playlist, files[i]);
+            }
         }
     }
 

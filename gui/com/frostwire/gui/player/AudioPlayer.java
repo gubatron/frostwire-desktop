@@ -256,7 +256,7 @@ public class AudioPlayer implements RefreshListener {
 	}
 
 	public static boolean isPlayableFile(File file) {
-	    return isPlayableFile(file.getAbsolutePath());
+	    return file.exists() && !file.isDirectory() && isPlayableFile(file.getAbsolutePath());
 	}
 	
 	public static boolean isPlayableFile(String filename) {
