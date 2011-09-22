@@ -93,7 +93,23 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
 		public void actionPerformed(ActionEvent e) {
 
 			AudioSource currentSong = AudioPlayer.instance().getCurrentSong();
-			File file = new File(currentSong.getPlaylistItem().getFilePath());
+			
+			if (currentSong == null) {
+				return;
+			}
+			
+			File file =  null;
+			
+			if (currentSong.getFile() != null) {
+				file = currentSong.getFile();
+			} else if (currentSong.getPlaylistItem()!=null &&
+					currentSong.getPlaylistItem().getFilePath() != null) {
+				file = new File(currentSong.getPlaylistItem().getFilePath()); 
+			}
+			
+			if (file == null){
+				return;
+			}
 
 			String fileFolder = file.isFile() ? I18n.tr("file") : I18n
 					.tr("folder");
