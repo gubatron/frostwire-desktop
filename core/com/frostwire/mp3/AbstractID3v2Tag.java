@@ -674,6 +674,9 @@ public abstract class AbstractID3v2Tag implements ID3v2 {
 				ID3v2CommentFrameData frameData;
 				try {
 					frameData = new ID3v2CommentFrameData(useFrameUnsynchronisation(), frame.getData());
+					if (!itunes && frameData.getDescription().toString().startsWith("iTun")) {
+					    continue;
+					}
 					if (itunes && ITUNES_COMMENT_DESCRIPTION.equals(frameData.getDescription().toString())) {
 						return frameData;
 					} else if (! itunes) {
