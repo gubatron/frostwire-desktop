@@ -55,7 +55,7 @@ class LibraryPlaylistsTableTransferHandler extends TransferHandler {
             return fallbackTransferHandler.importData(support);
         }
 
-        return true;
+        return false;
     }
 
     @Override
@@ -84,10 +84,11 @@ class LibraryPlaylistsTableTransferHandler extends TransferHandler {
             try {
                 File[] files = DNDUtils.getFiles(support.getTransferable());
                 for (File file : files) {
-                    if (!AudioPlayer.isPlayableFile(file)) {
-                        return fallback ? fallbackTransferHandler.canImport(support) : false;
+                    if (AudioPlayer.isPlayableFile(file)) {
+                        return true;
                     }
                 }
+                return fallback ? fallbackTransferHandler.canImport(support) : false;
             } catch (InvalidDnDOperationException e) {
                 // this case seems to be something special with the OS
                 return true;
@@ -96,6 +97,6 @@ class LibraryPlaylistsTableTransferHandler extends TransferHandler {
             }
         }
 
-        return true;
+        return false;
     }
 }

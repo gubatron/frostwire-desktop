@@ -82,7 +82,6 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
 
     private JPopupMenu _popup;
     private Action refreshAction = new RefreshAction();
-    private Action exploreAction = new ExploreAction();
     private Action deleteAction = new DeleteAction();
     private Action renameAction = new StartRenamingPlaylistAction();
     private Action importToPlaylistAction = new ImportToPlaylistAction();
@@ -591,8 +590,8 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
                 try {
                     File[] files = DNDUtils.getFiles(support.getTransferable());
                     for (File file : files) {
-                        if (!AudioPlayer.isPlayableFile(file)) {
-                            return false;
+                        if (AudioPlayer.isPlayableFile(file)) {
+                            return true;
                         }
                     }
                 } catch (InvalidDnDOperationException e) {
@@ -602,7 +601,8 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
                     return false;
                 }
             }
-            return true;
+            
+            return false;
         }
 
         @Override
@@ -660,7 +660,7 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
                 return false;
             }
 
-            return true;
+            return false;
         }
 
         @Override
@@ -706,32 +706,6 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
 
         public void actionPerformed(ActionEvent e) {
             refreshSelection();
-        }
-    }
-
-    private class ExploreAction extends AbstractAction {
-
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 520856485566457934L;
-
-        public ExploreAction() {
-            putValue(Action.NAME, I18n.tr("Explore"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Open Library Folder"));
-            putValue(LimeAction.ICON_NAME, "LIBRARY_EXPLORE");
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            //            DirectoryHolder directoryHolder = getSelectedDirectoryHolder();
-            //            if (directoryHolder == null) {
-            //                return;
-            //            }
-            //            File directory = directoryHolder.getDirectory();
-            //            if (directory == null) {
-            //                directory = _finishedDownloadsHolder.getDirectory();
-            //            }
-            //            GUIMediator.launchExplorer(directory);        
         }
     }
 

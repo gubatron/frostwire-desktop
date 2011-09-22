@@ -285,8 +285,8 @@ public class LibraryFiles extends JPanel implements RefreshListener {
                 try {
                     File[] files = DNDUtils.getFiles(support.getTransferable());
                     for (File file : files) {
-                        if (!AudioPlayer.isPlayableFile(file)) {
-                            return false;
+                        if (AudioPlayer.isPlayableFile(file)) {
+                            return true;
                         }
                     }
                 } catch (InvalidDnDOperationException e) {
@@ -296,7 +296,8 @@ public class LibraryFiles extends JPanel implements RefreshListener {
                     return false;
                 }
             }
-            return true;
+            
+            return false;
         }
 
         @Override
@@ -318,7 +319,7 @@ public class LibraryFiles extends JPanel implements RefreshListener {
                 return false;
             }
 
-            return true;
+            return false;
         }
 
         @Override
