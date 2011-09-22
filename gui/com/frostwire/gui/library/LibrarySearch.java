@@ -116,7 +116,7 @@ public class LibrarySearch extends JPanel {
                     searchField.setText("");
                 }
 
-                if (System.currentTimeMillis() - lastSearch > 125) {
+                if (System.currentTimeMillis() - lastSearch > 75) {
                     a.actionPerformed(null);
                     lastSearch = System.currentTimeMillis();
                 }

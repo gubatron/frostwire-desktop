@@ -133,6 +133,7 @@ public class LibraryCoverArt extends JPanel {
         mt.addImage(image, 0);
         try {
             mt.waitForAll();
+            mt.removeImage(image);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
