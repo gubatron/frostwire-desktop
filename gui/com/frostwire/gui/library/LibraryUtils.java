@@ -16,26 +16,13 @@ import com.limegroup.gnutella.gui.I18n;
 
 public class LibraryUtils {
 
-    public static void addPlaylistItem(Playlist playlist, File file) {
+    private static void addPlaylistItem(Playlist playlist, File file) {
         try {
             LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Importing ") + file.getName());
             AudioMetaData mt = new AudioMetaData(file);
-            PlaylistItem item = playlist.newItem(
-                    file.getAbsolutePath(),
-                    file.getName(),
-                    file.length(),
-                    FileUtils.getFileExtension(file),
-                    mt.getTitle(),
-                    mt.getDurationInSecs(),
-                    mt.getArtist(),
-                    mt.getAlbum(),
-                    "",// TODO: cover art path
-                    mt.getBitrate(),
-                    mt.getComment(),
-                    mt.getGenre(),
-                    mt.getTrack(),
-                    mt.getYear(),
-                    false);
+            PlaylistItem item = playlist.newItem(file.getAbsolutePath(), file.getName(), file.length(), FileUtils.getFileExtension(file), mt.getTitle(),
+                    mt.getDurationInSecs(), mt.getArtist(), mt.getAlbum(), "",// TODO: cover art path
+                    mt.getBitrate(), mt.getComment(), mt.getGenre(), mt.getTrack(), mt.getYear(), false);
             playlist.getItems().add(item);
             item.save();
         } finally {
@@ -252,20 +239,20 @@ public class LibraryUtils {
     }
 
     private static void addToPlaylist(Playlist playlist, List<? extends AbstractLibraryTableDataLine<?>> lines) {
-        for (int i = 0; i < lines.size(); i++) {
+        for (int i = 0; i < lines.size() && !playlist.isDeleted(); i++) {
             AbstractLibraryTableDataLine<?> line = lines.get(i);
             LibraryUtils.addPlaylistItem(playlist, line.getFile());
         }
     }
 
     private static void addToPlaylist(Playlist playlist, File[] files) {
-        for (int i = 0; i < files.length; i++) {
+        for (int i = 0; i < files.length && !playlist.isDeleted(); i++) {
             LibraryUtils.addPlaylistItem(playlist, files[i]);
         }
     }
 
     private static void addToPlaylist(Playlist playlist, PlaylistItem[] playlistItems) {
-        for (int i = 0; i < playlistItems.length; i++) {
+        for (int i = 0; i < playlistItems.length && !playlist.isDeleted(); i++) {
             playlistItems[i].setPlaylist(playlist);
             playlist.getItems().add(playlistItems[i]);
         }

@@ -13,6 +13,8 @@ public class Playlist extends Entity<PlaylistDB> {
     private int _id;
     private String _name;
     private String _description;
+    
+    private boolean deleted;
 
     private List<PlaylistItem> _items;
 
@@ -21,6 +23,7 @@ public class Playlist extends Entity<PlaylistDB> {
         _library = library;
         _id = LibraryDatabase.OBJECT_INVALID_ID;
         _items = new LinkedList<PlaylistItem>();
+        this.deleted = false;
     }
 
     public Playlist(Library library, int id, String name, String description) {
@@ -30,6 +33,7 @@ public class Playlist extends Entity<PlaylistDB> {
         _name = name;
         _description = description;
         _items = new LinkedList<PlaylistItem>();
+        this.deleted = false;
     }
 
     public Library getLibrary() {
@@ -63,6 +67,10 @@ public class Playlist extends Entity<PlaylistDB> {
     public List<PlaylistItem> getItems() {
         return _items;
     }
+    
+    public boolean isDeleted() {
+        return deleted;
+    }
 
     public void save() {
         if (db != null) {
@@ -73,6 +81,7 @@ public class Playlist extends Entity<PlaylistDB> {
     public void delete() {
         if (db != null) {
             db.delete(this);
+            deleted = true;
         }
     }
 
