@@ -98,10 +98,6 @@ public class AudioMetaData {
                 }
                 if (StringUtils.isNullOrEmpty(comment, true)) {
                     comment = tag.getComment();
-                    if (comment != null && (comment.startsWith("0") || comment.startsWith(" 0"))) {
-                        comment = tag.getItunesComment();
-                        comment = comment.substring(50);
-                    }
                 }
                 if (StringUtils.isNullOrEmpty(genre, true) || genre.trim().equals("Unknown")) {
                     genre = tag.getGenreDescription();
