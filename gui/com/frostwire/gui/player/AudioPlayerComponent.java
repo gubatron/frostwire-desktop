@@ -421,6 +421,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     public void progressChange(AudioPlayer audioPlayer, float currentTimeInSecs) {
         _progress = currentTimeInSecs;
         progressCurrentTime.setText(LibraryUtils.getSecondsInDDHHMMSS((int) _progress));
+        progressSongLength.setText(LibraryUtils.getSecondsInDDHHMMSS((int) PLAYER.getDurationInSecs()));
 
         if (PLAYER.canSeek()) {
             float progressUpdate = ((PROGRESS.getMaximum() * currentTimeInSecs) / PLAYER.getDurationInSecs());
@@ -431,8 +432,10 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     public void stateChange(AudioPlayer audioPlayer, MediaPlaybackState state) {
         if (state == MediaPlaybackState.Opening) {
             setVolumeValue();
-        } else if (state == MediaPlaybackState.Stopped) {
+        } else if (state == MediaPlaybackState.Stopped || state == MediaPlaybackState.Closed) {
             setProgressValue(PROGRESS.getMinimum());
+            progressCurrentTime.setText("");
+            progressSongLength.setText("");
         }
     }
 

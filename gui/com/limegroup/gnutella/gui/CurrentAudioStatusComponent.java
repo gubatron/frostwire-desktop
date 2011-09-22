@@ -47,7 +47,7 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
 	}
 
 	private void initComponents() {
-		Dimension dimension = new Dimension(200,22);
+		Dimension dimension = new Dimension(220,22);
 		setPreferredSize(dimension);
 		setMinimumSize(dimension);
 		

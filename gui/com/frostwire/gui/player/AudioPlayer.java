@@ -370,6 +370,10 @@ public class AudioPlayer implements RefreshListener {
 		if (!playNextSong) {
 			return;
 		}
+		
+		if (currentPlaylist != null && currentPlaylist.isDeleted()) {
+		    return;
+		}
 
 		AudioSource song = null;
 
