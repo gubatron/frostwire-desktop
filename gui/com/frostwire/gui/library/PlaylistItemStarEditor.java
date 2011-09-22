@@ -35,7 +35,7 @@ public class PlaylistItemStarEditor extends AbstractCellEditor implements TableC
         final JLabel component = (JLabel) new PlaylistItemStarRenderer().getTableCellRendererComponent(table, value, isSelected, true, row, column);
         component.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mousePressed(MouseEvent e) {
                 PlaylistItem playlistItem = line.getInitializeObject();
                 if (line.getInitializeObject().isStarred()) {
                     playlistItem.setStarred(false);
