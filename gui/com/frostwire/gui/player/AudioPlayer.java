@@ -102,13 +102,17 @@ public class AudioPlayer implements RefreshListener {
 																// current file
 					handleNextSong();
 				}
+				if(newState == MediaPlaybackState.Playing || newState == MediaPlaybackState.Paused) {
+		            setVolume(volume);
+		        }
 			}
 		});
 
-		repeatMode = (PlayerSettings.LOOP_PLAYLIST.getValue()) ? RepeatMode.All : RepeatMode.None;
+		repeatMode = PlayerSettings.LOOP_PLAYLIST.getValue() ? RepeatMode.All : RepeatMode.None;
 		shuffle = PlayerSettings.SHUFFLE_PLAYLIST.getValue();
 		playNextSong = true;
-		volume = 0.5;
+		volume = PlayerSettings.PLAYER_VOLUME.getValue();
+		notifyVolumeChanged();
 	}
 
 	public AudioSource getCurrentSong() {
@@ -238,7 +242,8 @@ public class AudioPlayer implements RefreshListener {
 	 */
 	public void setVolume(double fGain) {
 		volume = fGain;
-		mplayer.setVolume((int) (fGain * 200));
+		mplayer.setVolume((int) (fGain * 100));
+		PlayerSettings.PLAYER_VOLUME.setValue((float) volume);
 		notifyVolumeChanged();
 	}
 
