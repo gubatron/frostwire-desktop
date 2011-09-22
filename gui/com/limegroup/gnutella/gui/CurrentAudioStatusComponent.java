@@ -100,10 +100,6 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
 			return;
 		}
 		
-
-		System.out.println("CurrentAudioStatusComponent.stateChanged() : " + state);
-		System.out.println("CurrentAudioStatusComponent.stateChanged() : Let's go!");
-		
 		//update controls
 		AudioSource currentSong = audioPlayer.getCurrentSong();
 		PlaylistItem playlistItem = currentSong.getPlaylistItem();

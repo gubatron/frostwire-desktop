@@ -546,4 +546,11 @@ public class AudioPlayer implements RefreshListener {
         return null;
     }
 
+    public boolean canSeek() {
+        return mplayer.getDurationInSecs() > 0;
+    }
+
+    public float getDurationInSecs() {
+        return mplayer.getDurationInSecs();
+    }
 }

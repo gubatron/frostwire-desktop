@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
@@ -104,21 +103,6 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     private final Dimension volumeSliderDimension = new Dimension(70, 19);
 
     /**
-     * Index of where to display the name in the progress bar.
-     */
-    //private volatile int currBeginIndex = -1;
-
-    /**
-     * Current properties of the song being played
-     */
-    private AudioMetaData audioProperties;
-
-    /**
-     * The last time the scrolling song was shifted
-     */
-    //private long lastScroll = System.currentTimeMillis();
-
-    /**
      * The current song that is playing
      */
     private AudioSource currentPlayListItem;
@@ -127,11 +111,6 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
      * The lazily constructed media panel.
      */
     private JPanel myMediaPanel = null;
-
-    /**
-     * Variable for the name of the current file being played.
-     */
-    //private String currentFileName;
 
     /**
      * If true, will only play current song and stop, regradless of position
@@ -180,10 +159,8 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
      * @param showPlaybackModeControls 
      */
     private JPanel constructMediaPanel(boolean showPlaybackModeControls) {
-        int tempWidth = 0, tempHeight = 0;
+        int tempHeight = 0;
         tempHeight += PLAY_BUTTON.getIcon().getIconHeight() + 2;
-        tempWidth += PLAY_BUTTON.getIcon().getIconWidth() + 2 + PAUSE_BUTTON.getIcon().getIconWidth() + 2 + STOP_BUTTON.getIcon().getIconWidth() + 2
-                + NEXT_BUTTON.getIcon().getIconWidth() + 2 + PREV_BUTTON.getIcon().getIconWidth() + 2;
 
         // create sliders
         PROGRESS.setMinimumSize(progressBarDimension);
@@ -377,8 +354,6 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
             return;
         }
 
-        loadAudioProperties();
-
         // load song on Executor thread
         SONG_QUEUE.execute(new SongLoader(audioSource));
     }
@@ -409,12 +384,8 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     }
 
     public void seek(float percent) {
-        if (audioProperties == null || audioProperties.getLength() == -1) {
-            return;
-        }
-
-        if (audioProperties.isSeekable()) {
-            float timeInSecs = audioProperties.getLength() * percent;
+        if (PLAYER.canSeek()) {
+            float timeInSecs = PLAYER.getDurationInSecs() * percent;
             PLAYER.seek(timeInSecs);
         }
     }
@@ -433,12 +404,11 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
      */
     public void songOpened(AudioPlayer audioPlayer, AudioSource audioSource) {
         currentPlayListItem = audioSource;
-        loadAudioProperties();
 
         setVolumeValue();
-        if (audioProperties != null && audioProperties.isSeekable()) {
+        if (PLAYER.canSeek()) {
             setProgressEnabled(true);
-            progressSongLength.setText(LibraryUtils.getSecondsInDDHHMMSS((int) audioProperties.getLength()));
+            progressSongLength.setText(LibraryUtils.getSecondsInDDHHMMSS((int) PLAYER.getDurationInSecs()));
         } else {
             setProgressEnabled(false);
         }
@@ -449,76 +419,22 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
      * frames that have been read, along with position and bytes read
      */
     public void progressChange(AudioPlayer audioPlayer, float currentTimeInSecs) {
-        if (audioProperties == null || audioProperties.getLength() == -1) {
-            return;
-        }
-
         _progress = currentTimeInSecs;
         progressCurrentTime.setText(LibraryUtils.getSecondsInDDHHMMSS((int) _progress));
 
-        float progressUpdate = ((PROGRESS.getMaximum() * currentTimeInSecs) / audioProperties.getLength());
-        setProgressValue((int) progressUpdate);
-    }
-
-    private void loadAudioProperties() {
-        if (currentPlayListItem != null && currentPlayListItem.getFile() != null) {
-            audioProperties = new AudioMetaData(currentPlayListItem.getFile());
-        } else if (currentPlayListItem != null && currentPlayListItem.getPlaylistItem() != null){
-        	audioProperties = new AudioMetaData(new File(currentPlayListItem.getPlaylistItem().getFilePath()));
+        if (PLAYER.canSeek()) {
+            float progressUpdate = ((PROGRESS.getMaximum() * currentTimeInSecs) / PLAYER.getDurationInSecs());
+            setProgressValue((int) progressUpdate);
         }
     }
 
-    /**
-     * This event is generated every time the song state changes. ie.
-     * OPENED->PLAYING->PAUSED->PLAYING->STOPPED->EOF, etc..
-     */
     public void stateChange(AudioPlayer audioPlayer, MediaPlaybackState state) {
-        if (audioProperties == null || audioProperties.getLength() == -1) {
-            return;
-        }
-
-        if (state == MediaPlaybackState.Failed || state == MediaPlaybackState.Uninitialized) {
-            //setProgressEnabled(false);
-        } else if (state == MediaPlaybackState.Opening) {
+        if (state == MediaPlaybackState.Opening) {
             setVolumeValue();
         } else if (state == MediaPlaybackState.Stopped) {
             setProgressValue(PROGRESS.getMinimum());
-        } else if (Math.abs(_progress - audioProperties.getLength()) < 5) {
-
-//            PlaylistMediator playlist = GUIMediator.getPlayList();
-//            if (playlist == null)
-//                return;
-//            // inform the GUI on whether or not we're going to continue playing
-//            // if the end of the playlist has been reached, stop even if continous play is selected
-//            if (playOneTime || !playlist.isContinuous() || playlist.getSize() <= 0 || playlist.isEndOfList() && playlist.isContinuous() == false) {
-//                playlist.playComplete();
-//                PLAYER.stop();
-//            } else {
-//                playlist.playComplete();
-//                // if we don't already have another song to play,
-//                // get one.
-//                //loadSong(playlist.getNextSong());
-//            }
         }
     }
-
-    //    /**
-    //     * @return [ <song> '\t' <url> '\t' <length> '\t' <isStorePreview> '|' ]*
-    //     */
-    //    String getSongs() {
-    //        PlaylistMediator pl = GUIMediator.getPlayList();
-    //        List<PlayListItem> songs = pl.getSongs();
-    //        StringBuffer res = new StringBuffer();
-    //        if (songs != null) {
-    //            for (PlayListItem s : songs) {
-    //                res.append(s.getName()).append('\t').append(s.getURI()).append('\t').append(s.getProperty(PlayListItem.LENGTH)).append('\t')
-    //                        .append(s.isStorePreview()).append('|');
-    //
-    //            }
-    //        }
-    //        System.out.println("songs:" + res);
-    //        return res.toString();
-    //    }
 
     /**
      * Begins playing the loaded song in url of args.
