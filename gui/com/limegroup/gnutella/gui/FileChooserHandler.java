@@ -14,6 +14,7 @@ import javax.swing.filechooser.FileFilter;
 
 import org.limewire.i18n.I18nMarker;
 import org.limewire.util.CommonUtils;
+import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.settings.ApplicationSettings;
@@ -654,7 +655,19 @@ public final class FileChooserHandler {
             setLastInputDirectory(new File(dir));
 			String file = dialog.getFile();
 			if(dir != null && file != null) {
-			    File f = new File(dir, file);
+				
+				if (suggestedFile!=null ) {
+					String suggestedFileExtension = FileUtils
+							.getFileExtension(suggestedFile);
+					
+					String newFileExtension = FileUtils.getFileExtension(file);
+
+					if (newFileExtension == null && suggestedFileExtension!=null) {
+						file = file + "." + suggestedFileExtension;
+					}
+				}
+
+				File f = new File(dir, file);
 			    if(filter != null && !filter.accept(f))
 			        return null;
 			    else

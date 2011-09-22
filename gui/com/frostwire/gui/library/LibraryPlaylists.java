@@ -403,9 +403,14 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
 
         String suggestedName = CommonUtils.convertFileName(playlist.getName());
 
-        // get the user to select a new one....
+        // get the user to select a new one.... avoid FrostWire installation folder.
         File suggested;
-        suggested = new File(CommonUtils.getCurrentDirectory(), suggestedName + ".m3u");
+        File suggestedDirectory = FileChooserHandler.getLastInputDirectory();
+        if (suggestedDirectory.equals(CommonUtils.getCurrentDirectory())) {
+        	suggestedDirectory = new File(CommonUtils.getUserHomeDir(),"Desktop");
+        }
+        
+        suggested = new File(suggestedDirectory, suggestedName + ".m3u");
 
         File selFile = FileChooserHandler.getSaveAsFile(GUIMediator.getAppFrame(), I18nMarker.marktr("Save Playlist As"), suggested,
                 new PlaylistListFileFilter());

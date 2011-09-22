@@ -199,7 +199,7 @@ public class FileUtils {
      * 
      * @param name the file name <tt>String</tt> from which the extension
      *  should be extracted
-     * @return the file extension string, or <tt>null</tt> if the extension
+     * @return the file extension string (without the dot), or <tt>null</tt> if the extension
      *   could not be extracted
      */
     public static String getFileExtension(String name) {
