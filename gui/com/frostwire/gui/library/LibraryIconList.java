@@ -16,19 +16,20 @@ import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 
-public class SpeakerList extends JList {
+public class LibraryIconList extends JList {
 
     private static final long serialVersionUID = 6951236485310381795L;
 
-    private final Image speaker;
+    private Image speaker;
+    private Image loading;
 
-    public SpeakerList() {
-        speaker = GUIMediator.getThemeImage("speaker").getImage();
+    public LibraryIconList() {
+        loadIcons();
     }
 
-    public SpeakerList(ListModel dataModel) {
+    public LibraryIconList(ListModel dataModel) {
         super(dataModel);
-        speaker = GUIMediator.getThemeImage("speaker").getImage();
+        loadIcons();
     }
 
     @Override
@@ -38,21 +39,28 @@ public class SpeakerList extends JList {
         if (player.getCurrentSong() != null && player.getCurrentPlaylist() == null && player.getPlaylistFilesView() != null) {
             int index = getAudioIndex();
             if (index != -1) {
-                paintSpaker(g, index);
+                paintIcon(g, speaker, index);
             }
         } else if (player.getCurrentSong() != null && player.getCurrentPlaylist() != null && player.getPlaylistFilesView() != null) {
             int index = getPlaylistIndex(player.getCurrentPlaylist());
             if (index != -1) {
-                paintSpaker(g, index);
+                paintIcon(g, speaker, index);
             }
         }
+        
+        paintImportingIcons(g);
     }
 
-    private void paintSpaker(Graphics g, int index) {
+    private void loadIcons() {
+        speaker = GUIMediator.getThemeImage("speaker").getImage();
+        loading = GUIMediator.getThemeImage("indeterminate_small_progress").getImage();
+    }
+
+    private void paintIcon(Graphics g, Image image, int index) {
         Rectangle rect = getUI().getCellBounds(this, index, index);
         Dimension lsize = rect.getSize();
         Point llocation = rect.getLocation();
-        g.drawImage(speaker, llocation.x + lsize.width - speaker.getWidth(null) - 4, llocation.y + (lsize.height - speaker.getHeight(null)) / 2, null);
+        g.drawImage(image, llocation.x + lsize.width - speaker.getWidth(null) - 4, llocation.y + (lsize.height - speaker.getHeight(null)) / 2, null);
     }
 
     private int getAudioIndex() {
@@ -84,5 +92,20 @@ public class SpeakerList extends JList {
         }
 
         return -1;
+    }
+
+    private void paintImportingIcons(Graphics g) {
+        int n = getModel().getSize();
+        for (int i = 0; i < n; i++) {
+            Object value = getModel().getElementAt(i);
+            if (value instanceof LibraryPlaylistsListCell) {
+                Playlist p = ((LibraryPlaylistsListCell) value).getPlaylist();
+                if (LibraryMediator.instance().getLibraryPlaylists().isPlaylistImporting(p)) {
+                    paintIcon(g, loading, i);
+                }
+            } else {
+                return;
+            }
+        }
     }
 }

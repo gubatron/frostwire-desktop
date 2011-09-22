@@ -30,54 +30,54 @@ public class LibraryUtils {
             LibraryMediator.instance().getLibrarySearch().revertStatus();
         }
     }
-    
+
     public static String getSecondsInDDHHMMSS(int s) {
-    	if (s < 0) {
-    		s = 0;
-    	}
-    	
-    	StringBuilder result = new StringBuilder();
-    	
-    	String DD = "";
-    	String HH = "";
-    	String MM = "";
-    	String SS = "";
+        if (s < 0) {
+            s = 0;
+        }
 
-    	//math
-    	int days=s/86400;
-    	int r = s%86400;
-    	
-    	int hours=r/3600;
-    	r = s%3600;
-    	int minutes = r/60;
-    	int seconds = r%60;
+        StringBuilder result = new StringBuilder();
 
-    	//padding
-    	DD = String.valueOf(days);
-    	HH = (hours < 10) ? "0"+hours : String.valueOf(hours);
-    	MM = (minutes < 10) ? "0"+minutes : String.valueOf(minutes);
-    	SS = (seconds < 10) ? "0"+seconds : String.valueOf(seconds);
-    	
-    	//lazy formatting
-    	if (days > 0) {
-    		result.append(DD);
-    		result.append(" day");
-    		if (days > 1) {
-    			result.append("s");
-    		}
-    		return result.toString();    		
-    	}
-    	
-    	if (hours > 0) {
-    		result.append(HH);
-    		result.append(":");
-    	}
+        String DD = "";
+        String HH = "";
+        String MM = "";
+        String SS = "";
 
-    	result.append(MM);
-    	result.append(":");
-    	result.append(SS);
-    	
-    	return result.toString();   
+        //math
+        int days = s / 86400;
+        int r = s % 86400;
+
+        int hours = r / 3600;
+        r = s % 3600;
+        int minutes = r / 60;
+        int seconds = r % 60;
+
+        //padding
+        DD = String.valueOf(days);
+        HH = (hours < 10) ? "0" + hours : String.valueOf(hours);
+        MM = (minutes < 10) ? "0" + minutes : String.valueOf(minutes);
+        SS = (seconds < 10) ? "0" + seconds : String.valueOf(seconds);
+
+        //lazy formatting
+        if (days > 0) {
+            result.append(DD);
+            result.append(" day");
+            if (days > 1) {
+                result.append("s");
+            }
+            return result.toString();
+        }
+
+        if (hours > 0) {
+            result.append(HH);
+            result.append(":");
+        }
+
+        result.append(MM);
+        result.append(":");
+        result.append(SS);
+
+        return result.toString();
     }
 
     public static void createNewPlaylist(final List<? extends AbstractLibraryTableDataLine<?>> lines) {
@@ -86,15 +86,17 @@ public class LibraryUtils {
 
         if (playlistName != null && playlistName.length() > 0) {
             final Playlist playlist = LibraryMediator.getLibrary().newPlaylist(playlistName, playlistName);
-
+            playlist.save();
+            LibraryMediator.instance().getLibraryPlaylists().addPlaylist(playlist);
+            LibraryMediator.instance().getLibraryPlaylists().markBeginImport(playlist);
             new Thread(new Runnable() {
                 public void run() {
-                    playlist.save();
                     addToPlaylist(playlist, lines);
                     playlist.save();
                     GUIMediator.safeInvokeLater(new Runnable() {
                         public void run() {
-                            LibraryMediator.instance().getLibraryPlaylists().addPlaylist(playlist);
+                            LibraryMediator.instance().getLibraryPlaylists().markEndImport(playlist);
+                            LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
                         }
                     });
                 }
@@ -108,17 +110,22 @@ public class LibraryUtils {
 
         if (playlistName != null && playlistName.length() > 0) {
             final Playlist playlist = LibraryMediator.getLibrary().newPlaylist(playlistName, playlistName);
-
+            playlist.save();
+            LibraryMediator.instance().getLibraryPlaylists().addPlaylist(playlist);
+            LibraryMediator.instance().getLibraryPlaylists().markBeginImport(playlist);
             new Thread(new Runnable() {
                 public void run() {
-                    playlist.save();
-                    addToPlaylist(playlist, files);
-                    playlist.save();
-                    GUIMediator.safeInvokeLater(new Runnable() {
-                        public void run() {
-                            LibraryMediator.instance().getLibraryPlaylists().addPlaylist(playlist);
-                        }
-                    });
+                    try {
+                        addToPlaylist(playlist, files);
+                        playlist.save();
+                    } finally {
+                        GUIMediator.safeInvokeLater(new Runnable() {
+                            public void run() {
+                                LibraryMediator.instance().getLibraryPlaylists().markEndImport(playlist);
+                                LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
+                            }
+                        });
+                    }
                 }
             }).start();
         }
@@ -147,31 +154,41 @@ public class LibraryUtils {
     }
 
     public static void asyncAddToPlaylist(final Playlist playlist, final List<? extends AbstractLibraryTableDataLine<?>> lines) {
+        LibraryMediator.instance().getLibraryPlaylists().markBeginImport(playlist);
         new Thread(new Runnable() {
             public void run() {
-                addToPlaylist(playlist, lines);
-                GUIMediator.safeInvokeLater(new Runnable() {
-                    public void run() {
-                        LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
-                    }
-                });
+                try {
+                    addToPlaylist(playlist, lines);
+                } finally {
+                    GUIMediator.safeInvokeLater(new Runnable() {
+                        public void run() {
+                            LibraryMediator.instance().getLibraryPlaylists().markEndImport(playlist);
+                            LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
+                        }
+                    });
+                }
             }
         }).start();
     }
 
     public static void asyncAddToPlaylist(final Playlist playlist, final File[] files) {
+        LibraryMediator.instance().getLibraryPlaylists().markBeginImport(playlist);
         new Thread(new Runnable() {
             public void run() {
-                addToPlaylist(playlist, files);
-                GUIMediator.safeInvokeLater(new Runnable() {
-                    public void run() {
-                        LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
-                    }
-                });
+                try {
+                    addToPlaylist(playlist, files);
+                } finally {
+                    GUIMediator.safeInvokeLater(new Runnable() {
+                        public void run() {
+                            LibraryMediator.instance().getLibraryPlaylists().markEndImport(playlist);
+                            LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
+                        }
+                    });
+                }
             }
         }).start();
     }
-    
+
     public static void asyncAddToPlaylist(final Playlist playlist, final PlaylistItem[] playlistItems) {
         new Thread(new Runnable() {
             public void run() {
@@ -210,27 +227,13 @@ public class LibraryUtils {
         }
         return items;
     }
-    
+
     public static PlaylistItem[] convertToPlaylistItems(LibraryPlaylistTransferable.Item[] items) {
         List<PlaylistItem> playlistItems = new ArrayList<PlaylistItem>(items.length);
         for (LibraryPlaylistTransferable.Item item : items) {
-            PlaylistItem playlistItem = new PlaylistItem(null,
-                    item.id,
-                    item.filePath,
-                    item.fileName,
-                    item.fileSize,
-                    item.fileExtension,
-                    item.trackTitle,
-                    item.trackDurationInSecs,
-                    item.trackArtist,
-                    item.trackAlbum,
-                    item.coverArtPath,
-                    item.trackBitrate,
-                    item.trackComment,
-                    item.trackGenre,
-                    item.trackNumber,
-                    item.trackYear,
-                    item.starred);
+            PlaylistItem playlistItem = new PlaylistItem(null, item.id, item.filePath, item.fileName, item.fileSize, item.fileExtension, item.trackTitle,
+                    item.trackDurationInSecs, item.trackArtist, item.trackAlbum, item.coverArtPath, item.trackBitrate, item.trackComment, item.trackGenre,
+                    item.trackNumber, item.trackYear, item.starred);
             playlistItems.add(playlistItem);
         }
         return playlistItems.toArray(new PlaylistItem[0]);
@@ -256,13 +259,13 @@ public class LibraryUtils {
         }
     }
 
-	public static String getPlaylistDurationInDDHHMMSS(Playlist playlist) {
-		List<PlaylistItem> items = playlist.getItems();
-		float totalSecs = 0;
-		for (PlaylistItem item : items) {
-			totalSecs += item.getTrackDurationInSecs();
-		}
-		
-		return getSecondsInDDHHMMSS((int) totalSecs);
-	}
+    public static String getPlaylistDurationInDDHHMMSS(Playlist playlist) {
+        List<PlaylistItem> items = playlist.getItems();
+        float totalSecs = 0;
+        for (PlaylistItem item : items) {
+            totalSecs += item.getTrackDurationInSecs();
+        }
+
+        return getSecondsInDDHHMMSS((int) totalSecs);
+    }
 }

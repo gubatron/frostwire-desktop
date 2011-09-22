@@ -88,12 +88,15 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
     private Action importToPlaylistAction = new ImportToPlaylistAction();
     private Action importToNewPlaylistAction = new ImportToNewPlaylistAction();
     private Action exportPlaylistAction = new ExportPlaylistAction();
-    
+
     private List<Runnable> PENDING_RUNNABLES;
+
+    private List<Playlist> importingPlaylists;
 
     public LibraryPlaylists() {
         setupUI();
         PENDING_RUNNABLES = new ArrayList<Runnable>();
+        importingPlaylists = new ArrayList<Playlist>();
     }
 
     public Dimension getRowDimension() {
@@ -117,7 +120,7 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
 
     protected void setupUI() {
         setLayout(new BorderLayout());
-        
+
         GUIMediator.addRefreshListener(this);
 
         setupPopupMenu();
@@ -164,7 +167,7 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
         _listSelectionListener = new LibraryFilesSelectionListener();
         listTransferHandler = new ListTransferHandler();
 
-        _list = new SpeakerList(_model);
+        _list = new LibraryIconList(_model);
         _list.setCellRenderer(new LibraryPlaylistsCellRenderer());
         _list.addMouseListener(new DefaultMouseListener(_listMouseObserver));
         _list.addListSelectionListener(_listSelectionListener);
@@ -233,11 +236,10 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
         playlist.refresh();
 
         LibraryMediator.instance().updateTableItems(playlist);
-        
-        String status = LibraryUtils.getPlaylistDurationInDDHHMMSS(playlist) + ", " + playlist.getItems().size() + " " + I18n.tr("tracks");        
+
+        String status = LibraryUtils.getPlaylistDurationInDDHHMMSS(playlist) + ", " + playlist.getItems().size() + " " + I18n.tr("tracks");
         LibraryMediator.instance().getLibrarySearch().setStatus(status);
 
-        System.out.println("LibraryPlaylists.executePendingRunnables()!");
         executePendingRunnables();
     }
 
@@ -274,21 +276,20 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
         _textName.requestFocusInWindow();
         _textName.requestFocus();
     }
-    
-    public void selectPlaylist(Playlist playlist) {
-		int size = _model.getSize();
 
-		for (int i = 0; i < size; i++) {
-			try {
-				LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) _model
-						.get(i);
-				if (cell.getPlaylist()!=null && cell.getPlaylist().equals(playlist)) {
-					_list.setSelectedValue(cell, true);
-					return;
-				}
-			} catch (Exception e) {
-			}
-		}
+    public void selectPlaylist(Playlist playlist) {
+        int size = _model.getSize();
+
+        for (int i = 0; i < size; i++) {
+            try {
+                LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) _model.get(i);
+                if (cell.getPlaylist() != null && cell.getPlaylist().equals(playlist)) {
+                    _list.setSelectedValue(cell, true);
+                    return;
+                }
+            } catch (Exception e) {
+            }
+        }
     }
 
     private void renameSelectedItem(int index) {
@@ -327,7 +328,7 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
         _selectedIndexToRename = -1;
         _textName.setVisible(false);
     }
-    
+
     //// handle m3u import/export
     /**
      * Loads a playlist.
@@ -335,22 +336,20 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
     public void importM3U(Playlist playlist) {
         File parentFile = FileChooserHandler.getLastInputDirectory();
 
-        if(parentFile == null)
+        if (parentFile == null)
             parentFile = CommonUtils.getCurrentDirectory();
-            
-        final File selFile = 
-            FileChooserHandler.getInputFile(GUIMediator.getAppFrame(), 
-                I18nMarker.marktr("Open Playlist (.m3u)"), parentFile,
+
+        final File selFile = FileChooserHandler.getInputFile(GUIMediator.getAppFrame(), I18nMarker.marktr("Open Playlist (.m3u)"), parentFile,
                 new PlaylistListFileFilter());
 
         // nothing selected? exit.
-        if(selFile == null || !selFile.isFile())
+        if (selFile == null || !selFile.isFile())
             return;
-            
+
         String path = selFile.getPath();
         try {
             path = FileUtils.getCanonicalPath(selFile);
-        } catch(IOException ignored) {
+        } catch (IOException ignored) {
             //LOG.warn("unable to get canonical path for file: " + selFile, ignored);
         }
 
@@ -358,7 +357,7 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
         //  disk
         loadM3U(playlist, selFile, path);
     }
-    
+
     /**
      * Performs the actual reading of the PlayList and generation of the PlayListItems from
      * the PlayList. Once we have done the heavy weight construction of the PlayListItem
@@ -383,8 +382,8 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    GUIMediator.safeInvokeLater( new Runnable(){
-                        public void run(){
+                    GUIMediator.safeInvokeLater(new Runnable() {
+                        public void run() {
                             GUIMediator.showError("Unable to save playlist");
                         }
                     });
@@ -392,7 +391,7 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
             }
         });
     }
-    
+
     /**
      * Saves a playlist.
      */
@@ -439,14 +438,14 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
         // create a new thread to handle saving the playlist to disk
         saveM3U(playlist, path);
     }
-    
+
     /**
      * Handles actually copying and writing the playlist to disk. 
      * @param path - file location to save the list to
      */
-    private void saveM3U(final Playlist playlist, final String path ) {
+    private void saveM3U(final Playlist playlist, final String path) {
         BackgroundExecutorService.schedule(new Runnable() {
-            public void run(){
+            public void run() {
                 try {
                     List<File> files = new ArrayList<File>();
                     List<PlaylistItem> items = playlist.getItems();
@@ -459,8 +458,8 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
                     M3UPlaylist.save(path, files);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    GUIMediator.safeInvokeLater( new Runnable(){
-                        public void run(){
+                    GUIMediator.safeInvokeLater(new Runnable() {
+                        public void run() {
                             GUIMediator.showError("Unable to save playlist");
                         }
                     });
@@ -606,7 +605,7 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
             if (!canImport(support)) {
                 return false;
             }
-            
+
             DropLocation location = support.getDropLocation();
             int index = _list.locationToIndex(location.getDropPoint());
             if (index != -1) {
@@ -615,15 +614,16 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
                     index = 0;
                 }
                 LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) _list.getModel().getElementAt(index);
-                
+
                 //Playlist selectedPlaylist = getSelectedPlaylist();
                 Playlist playlist = cell.getPlaylist();
-                
+
                 if (playlist == null) {
                     try {
                         Transferable transferable = support.getTransferable();
                         if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistTransferable.ITEM_ARRAY)) {
-                            PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistTransferable.Item[]) transferable.getTransferData(LibraryPlaylistTransferable.ITEM_ARRAY));
+                            PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistTransferable.Item[]) transferable
+                                    .getTransferData(LibraryPlaylistTransferable.ITEM_ARRAY));
                             LibraryUtils.createNewPlaylist(playlistItems);
                         } else {
                             File[] files = DNDUtils.getFiles(support.getTransferable());
@@ -638,7 +638,8 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
                     try {
                         Transferable transferable = support.getTransferable();
                         if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistTransferable.ITEM_ARRAY)) {
-                            PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistTransferable.Item[]) transferable.getTransferData(LibraryPlaylistTransferable.ITEM_ARRAY));
+                            PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistTransferable.Item[]) transferable
+                                    .getTransferData(LibraryPlaylistTransferable.ITEM_ARRAY));
                             LibraryUtils.asyncAddToPlaylist(playlist, playlistItems);
                         } else {
                             File[] files = DNDUtils.getFiles(support.getTransferable());
@@ -775,34 +776,30 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
             startEdit(_list.getSelectedIndex());
         }
     }
-    
-    
 
     public void reselectPlaylist() {
         _listSelectionListener.valueChanged(null);
     }
-    
-	@Override
-	public void refresh() {
-		_list.repaint();
-	}
 
-    
+    @Override
+    public void refresh() {
+        _list.repaint();
+    }
+
     /**
      * <tt>FileFilter</tt> class for only displaying m3u file types in
      * the directory chooser.
      */
     private static class PlaylistListFileFilter extends FileFilter {
         public boolean accept(File f) {
-            return f.isDirectory() ||
-                   f.getName().toLowerCase().endsWith("m3u");
+            return f.isDirectory() || f.getName().toLowerCase().endsWith("m3u");
         }
 
         public String getDescription() {
             return I18n.tr("Playlist Files (*.m3u)");
         }
     }
-    
+
     private final class ImportToPlaylistAction extends AbstractAction {
 
         private static final long serialVersionUID = -9099898749358019734L;
@@ -817,7 +814,7 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
             importM3U(getSelectedPlaylist());
         }
     }
-    
+
     private final class ImportToNewPlaylistAction extends AbstractAction {
 
         private static final long serialVersionUID = 390846680458085610L;
@@ -832,7 +829,7 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
             importM3U(null);
         }
     }
-    
+
     private final class ExportPlaylistAction extends AbstractAction {
 
         private static final long serialVersionUID = 6149822357662730490L;
@@ -848,21 +845,47 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
         }
     }
 
+    public void executePendingRunnables() {
+        if (PENDING_RUNNABLES != null && PENDING_RUNNABLES.size() > 0) {
+            for (Runnable t : PENDING_RUNNABLES) {
+                try {
+                    t.run();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            PENDING_RUNNABLES.clear();
+        }
+    }
 
-	public void executePendingRunnables() {
-		if (PENDING_RUNNABLES != null && PENDING_RUNNABLES.size() > 0) {
-			for (Runnable t : PENDING_RUNNABLES) {
-				try {
-					t.run();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			PENDING_RUNNABLES.clear();
-		}		
-	}
-	
-	public void enqueueRunnable(Runnable r) {
-		PENDING_RUNNABLES.add(r);
-	}
+    public void enqueueRunnable(Runnable r) {
+        PENDING_RUNNABLES.add(r);
+    }
+
+    public void markBeginImport(Playlist playlist) {
+        try {
+            if (!importingPlaylists.contains(playlist)) {
+                importingPlaylists.add(playlist);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void markEndImport(Playlist playlist) {
+        try {
+            importingPlaylists.remove(playlist);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public boolean isPlaylistImporting(Playlist playlist) {
+        try {
+            return importingPlaylists.contains(playlist);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

@@ -128,7 +128,7 @@ public class LibraryFiles extends JPanel implements RefreshListener {
         _listSelectionListener = new LibraryFilesSelectionListener();
         listTransferHandler = new ListTransferHandler();
 
-        _list = new SpeakerList(_model);
+        _list = new LibraryIconList(_model);
         _list.setCellRenderer(new LibraryFilesCellRenderer());
         _list.addMouseListener(new DefaultMouseListener(_listMouseObserver));
         _list.addListSelectionListener(_listSelectionListener);
