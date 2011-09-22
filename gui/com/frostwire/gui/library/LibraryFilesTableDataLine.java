@@ -3,8 +3,6 @@ package com.frostwire.gui.library;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
 import javax.swing.Icon;
 
@@ -23,16 +21,6 @@ import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
  * @author Sam Berlin
  */
 public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLine<File> {
-
-    /**
-     * Whether or not tooltips will display XML info.
-     */
-    private static boolean _allowXML;
-
-    /**
-     * The schemas available
-     */
-    private static String[] _schemas;
     
     /**
      * Constant for the column with the icon of the file.
