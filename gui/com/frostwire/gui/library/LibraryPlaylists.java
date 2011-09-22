@@ -136,14 +136,14 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
         _popup = new SkinPopupMenu();
         _popup.add(new SkinMenuItem(refreshAction));
         _popup.add(new SkinMenuItem(renameAction));
-        _popup.add(new SkinMenuItem(exploreAction));
-        _popup.add(new SkinMenuItem(new ConfigureOptionsAction(OptionsConstructor.SHARED_KEY, I18n.tr("Configure Options"), I18n
-                .tr("You can configure the FrostWire\'s Options."))));
         _popup.add(new SkinMenuItem(deleteAction));
         _popup.addSeparator();
         _popup.add(new SkinMenuItem(importToPlaylistAction));
         _popup.add(new SkinMenuItem(importToNewPlaylistAction));
         _popup.add(new SkinMenuItem(exportPlaylistAction));
+        _popup.addSeparator();
+        _popup.add(new SkinMenuItem(new ConfigureOptionsAction(OptionsConstructor.SHARED_KEY, I18n.tr("Configure Options"), I18n
+                .tr("You can configure the FrostWire\'s Options."))));
     }
 
     private void setupModel() {
