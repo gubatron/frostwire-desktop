@@ -40,6 +40,7 @@ public class LimeTableColumn extends TableColumn {
     private final String messageId;
     private final String name;
     private final Icon icon;
+    private final boolean visName;
     private final Class<?> clazz;
     
     private boolean initialized = false;
@@ -56,11 +57,15 @@ public class LimeTableColumn extends TableColumn {
         this(model, id, name, null, width, vis, clazz);
     }
     
+    public LimeTableColumn(int model, final String id, final String name, int width, boolean vis, boolean visName, Class<?> clazz) {
+        this(model, id, name, null, width, vis, visName, clazz);
+    }
+    
     /**
      * Creates a new column.
      */
     public LimeTableColumn(int model, final String id, final String name,
-                    final Icon icon, int width, boolean vis, Class<?> clazz) {
+                    final Icon icon, int width, boolean vis, boolean visName, Class<?> clazz) {
         super(model);
         initialized = true;
 
@@ -75,10 +80,16 @@ public class LimeTableColumn extends TableColumn {
 
         this.name = name;
         this.icon = icon;
+        this.visName = visName;
 
         this.clazz = clazz;
 
         setHeaderVisible(true);
+    }
+    
+    public LimeTableColumn(int model, final String id, final String name,
+            final Icon icon, int width, boolean vis, Class<?> clazz) {
+        this(model, id, name, icon, width, vis, true, clazz);
     }
 
     /**
@@ -90,10 +101,14 @@ public class LimeTableColumn extends TableColumn {
     public LimeTableColumn setHeaderVisible(boolean vis) {
         if(vis) {
             super.setHeaderRenderer(getHeaderSortRenderer());
-            if(icon != null) {
-                super.setHeaderValue(icon);
-            } else if(name != null) {
-                super.setHeaderValue(name);
+            if (visName) {
+                if (icon != null) {
+                    super.setHeaderValue(icon);
+                } else if (name != null) {
+                    super.setHeaderValue(name);
+                } else {
+                    super.setHeaderValue("");
+                }
             } else {
                 super.setHeaderValue("");
             }

@@ -14,7 +14,7 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
      * Starred column
      */
     static final int STARRED_IDX = 0;
-    private static final LimeTableColumn STARRED_COLUMN = new LimeTableColumn(STARRED_IDX, "PLAYLIST_TABLE_STARRED", I18n.tr(" "), 22, true,
+    private static final LimeTableColumn STARRED_COLUMN = new LimeTableColumn(STARRED_IDX, "PLAYLIST_TABLE_STARRED", I18n.tr("Starred"), 22, true, false,
             PlaylistItemStar.class);
     
     /**
@@ -199,7 +199,7 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
     }
     
     public int getTypeAheadColumn() {
-        return TITLE_IDX;
+        return STARRED_IDX;
     }
 
     public boolean isDynamic(int idx) {
