@@ -96,7 +96,7 @@ public class AudioMetaData {
                 if (StringUtils.isNullOrEmpty(album, true)) {
                     album = tag.getAlbum();
                 }
-                if (StringUtils.isNullOrEmpty(comment, true)) {
+                if (StringUtils.isNullOrEmpty(comment, true) || comment.startsWith("0")) {
                     comment = tag.getComment();
                 }
                 if (StringUtils.isNullOrEmpty(genre, true) || genre.trim().equals("Unknown")) {
