@@ -631,7 +631,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         } else
             ENQUEUE_ACTION.setEnabled(false);
         
-        if (!dragging) {
+        if (!dragging && sel.length == 1) {
             LibraryMediator.instance().getLibraryCoverArt().setFile(selectedFile);
         }
     }
