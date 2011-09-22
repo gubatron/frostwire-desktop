@@ -1,17 +1,23 @@
 package com.limegroup.gnutella.gui;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 
 import javax.swing.Icon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 
 import com.frostwire.alexandria.PlaylistItem;
+import com.frostwire.gui.bittorrent.SendFileProgressDialog;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioPlayerListener;
@@ -28,6 +34,8 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
 	private static final int BOUND_CHARS = 12;
 	
 	private static final long serialVersionUID = 9206657876064353272L;
+	
+	private MediaButton shareButton;
 	private Icon speakerIcon;
 	private JLabel text;
 	private MediaPlaybackState lastState;
@@ -55,8 +63,53 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
 			}
 		});
 		
-		setLayout(new BorderLayout());
-		add(text,BorderLayout.LINE_END);
+		shareButton = new MediaButton(I18n.tr("Share this file with a friend"), "share", "share");
+		shareButton.addActionListener(new SendToFriendActionListener());
+		shareButton.setVisible(false);
+		
+		//Share Button
+		setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = GridBagConstraints.RELATIVE;
+		c.insets = new Insets(0,0,0,3);
+		add(shareButton,c);//, BorderLayout.LINE_END);
+		
+		//Go to Current Audio Control
+		c.gridx = 0;
+		c.gridx = 1;
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.anchor = GridBagConstraints.EAST;
+		c.insets = new Insets(0,0,0,0);
+		add(text,c);//, BorderLayout.LINE_END);
+	}
+	
+	private final class SendToFriendActionListener implements ActionListener {
+
+		private static final long serialVersionUID = 1329472129818371471L;
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			AudioSource currentSong = AudioPlayer.instance().getCurrentSong();
+			File file = new File(currentSong.getPlaylistItem().getFilePath());
+
+			String fileFolder = file.isFile() ? I18n.tr("file") : I18n
+					.tr("folder");
+			int result = JOptionPane.showConfirmDialog(
+					GUIMediator.getAppFrame(),
+					I18n.tr("Do you want to send this {0} to a friend?",
+							fileFolder) + "\n\n\"" + file.getName() + "\"",
+					I18n.tr("Send files with FrostWire"),
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+			if (result == JOptionPane.YES_OPTION) {
+				new SendFileProgressDialog(GUIMediator.getAppFrame(), file)
+						.setVisible(true);
+				GUIMediator.instance().setWindow(GUIMediator.Tabs.SEARCH);
+			}
+		}
 	}
 	
 	public void showCurrentSong() {
@@ -94,15 +147,27 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
 				@Override
 				public void run() {
 					text.setIcon(null);
-					text.setText("");				
+					text.setText("");
+					shareButton.setVisible(false);
 				}
 			});
 			return;
 		}
 		
+
+		
 		//update controls
 		AudioSource currentSong = audioPlayer.getCurrentSong();
 		PlaylistItem playlistItem = currentSong.getPlaylistItem();
+		
+		//only share files that exist
+		shareButton
+				.setVisible(currentSong != null
+						&& (currentSong.getFile() != null || (currentSong
+								.getPlaylistItem() != null
+								&& currentSong.getPlaylistItem().getFilePath() != null && new File(currentSong.getPlaylistItem()
+										.getFilePath())
+								.exists())));
 		
 		String currentText = null;
 		
