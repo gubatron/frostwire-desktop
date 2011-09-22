@@ -11,7 +11,6 @@ import org.limewire.util.FileUtils;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.library.LibraryPlaylistTransferable.Item;
-import com.frostwire.gui.player.AudioMetaData;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 
@@ -21,9 +20,22 @@ public class LibraryUtils {
         try {
             LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Importing ") + file.getName());
             AudioMetaData mt = new AudioMetaData(file);
-            PlaylistItem item = playlist.newItem(file.getAbsolutePath(), file.getName(), file.length(), FileUtils.getFileExtension(file), mt.getTitle(),
-                    mt.getLength(), mt.getArtist(), mt.getAlbum(), "",// TODO: cover art path
-                    mt.getBitrate(), mt.getComment(), mt.getGenre(), mt.getTrack(), mt.getYear(), false);
+            PlaylistItem item = playlist.newItem(
+                    file.getAbsolutePath(),
+                    file.getName(),
+                    file.length(),
+                    FileUtils.getFileExtension(file),
+                    mt.getTitle(),
+                    mt.getDurationInSecs(),
+                    mt.getArtist(),
+                    mt.getAlbum(),
+                    "",// TODO: cover art path
+                    mt.getBitrate(),
+                    mt.getComment(),
+                    mt.getGenre(),
+                    mt.getTrack(),
+                    mt.getYear(),
+                    false);
             playlist.getItems().add(item);
             item.save();
         } finally {

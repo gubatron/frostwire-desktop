@@ -128,7 +128,7 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
      *  Coverts the size of the PlayListItem into readable form postfixed with
      *  Kb or Mb
      */
-    private SizeHolder holder;
+    private SizeHolder sizeHolder;
     
 
     /**
@@ -136,11 +136,7 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
      */
     public void initialize(PlaylistItem item) {
         super.initialize(item);
-
-//        if(item.getgetProperty(PlayListItem.SIZE) != null )
-//            holder = new SizeHolder(Integer.parseInt(item.getProperty(PlayListItem.SIZE)));
-//        else
-            holder = new SizeHolder(0);
+        sizeHolder = new SizeHolder(item.getFileSize());
     }
 
     /**
@@ -166,7 +162,7 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
             case NAME_IDX:
                 return new PlaylistItemName(this, playing);
             case SIZE_IDX:
-                return new PlaylistItemProperty(holder.toString(), playing);
+                return new PlaylistItemProperty(sizeHolder.toString(), playing);
             case TITLE_IDX:
                 return new PlaylistItemProperty(initializer.getTrackTitle(), playing);
             case TRACK_IDX:
