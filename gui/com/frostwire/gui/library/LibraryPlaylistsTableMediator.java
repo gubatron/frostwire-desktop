@@ -81,10 +81,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     public Playlist getCurrentPlaylist() {
         return currentPlaylist;
     }
-
-    private PlaylistItemNameRenderer playlistItemNameRenderer;
-    private PlaylistItemPropertyRenderer PLAYLIST_ITEM_PROPERTY_RENDERER;
-
+    
     /**
      * Build some extra listeners
      */
@@ -107,8 +104,6 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         DATA_MODEL = new LibraryPlaylistsTableModel();
         TABLE = new LimeJTable(DATA_MODEL);
         DATA_MODEL.setTable(TABLE);
-        playlistItemNameRenderer = new PlaylistItemNameRenderer();
-        PLAYLIST_ITEM_PROPERTY_RENDERER = new PlaylistItemPropertyRenderer();
         Action[] aa = new Action[] { LAUNCH_ACTION, ENQUEUE_ACTION, DELETE_ACTION };
         BUTTON_ROW = new ButtonRow(aa, ButtonRow.X_AXIS, ButtonRow.NO_GLUE);
     }
@@ -238,8 +233,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     @Override
     protected void setDefaultRenderers() {
         super.setDefaultRenderers();
-        TABLE.setDefaultRenderer(PlaylistItemName.class, playlistItemNameRenderer);
-        TABLE.setDefaultRenderer(PlaylistItemProperty.class, PLAYLIST_ITEM_PROPERTY_RENDERER);
+        TABLE.setDefaultRenderer(PlaylistItemProperty.class, new PlaylistItemPropertyRenderer());
         TABLE.setDefaultRenderer(PlaylistItemStar.class, new PlaylistItemStarRenderer());
     }
 
@@ -444,41 +438,6 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
 //    private String getCompleteFileName(File file) {
 //        return file.getName();
 //    }
-
-    /**
-     * Handles a name change of one of the files displayed.
-     *
-     * @param newName The new name of the file
-     *
-     * @return A <tt>String</tt> that is the name of the file
-     *         after this method is called. This is the new name if
-     *         the name change succeeded, and the old name otherwise.
-     */
-    String handleNameChange(String newName) {
-        int row = TABLE.getEditingRow();
-        LibraryPlaylistsTableModel ltm = DATA_MODEL;
-
-        File oldFile = ltm.getFile(row);
-        String parent = oldFile.getParent();
-        String nameWithExtension = newName + "." + ltm.getType(row);
-        File newFile = new File(parent, nameWithExtension);
-        if (!ltm.getName(row).equals(newName)) {
-            if (oldFile.renameTo(newFile)) {
-                // GuiCoreMediator.getFileManager().renameFileIfSharedOrStore(oldFile, newFile);
-                // Ideally, renameFileIfShared should immediately send RENAME or REMOVE
-                // callbacks. But, if it doesn't, it should atleast have immediately
-                // internally removed the file from being shared. So, we immediately
-                // do a reinitialize on the oldFile to mark it as being not shared.
-                DATA_MODEL.reinitialize(oldFile);
-                return newName;
-            }
-
-            // notify the user that renaming failed
-            GUIMediator.showError(I18n.tr("Unable to rename the file \'{0}\'. It may be in use by another application.", ltm.getName(row)));
-            return ltm.getName(row);
-        }
-        return newName;
-    }
 
     public void handleActionKey() {
         playSong();

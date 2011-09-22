@@ -31,6 +31,6 @@
 	<classpathentry kind="lib" path="lib/jars/httpclient-4.0.jar" sourcepath="lib/jars-src"/>
 	<classpathentry kind="lib" path="lib/jars/httpcore-4.0.1.jar" sourcepath="lib/jars-src"/>
 	<classpathentry kind="lib" path="lib/jars/MRJAdapter.jar"/>
-	<classpathentry kind="lib" path="lib/jars/h2-1.3.159.jar"/>
+	<classpathentry kind="lib" path="lib/jars/h2-1.3.159.jar" sourcepath="lib/jars-src/h2-2011-08-13"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

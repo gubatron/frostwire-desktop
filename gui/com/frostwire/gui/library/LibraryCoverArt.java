@@ -16,9 +16,9 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import com.frostwire.jpeg.JPEGImageIO;
+import com.frostwire.mp3.ID3v2;
+import com.frostwire.mp3.Mp3File;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.mpatric.mp3agic.ID3v2;
-import com.mpatric.mp3agic.Mp3File;
 
 public class LibraryCoverArt extends JPanel {
 

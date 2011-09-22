@@ -537,5 +537,17 @@ public class StringUtils {
         }
     }
 
-    //Unit tests: tests/com/limegroup/gnutella/util/StringUtils
+    /**
+     * Check if a String is null or empty (the length is null).
+     *
+     * @param s the string to check
+     * @return true if it is null or empty
+     */
+    public static boolean isNullOrEmpty(String s, boolean trim) {
+        return s == null || (trim ? s.trim().length() == 0 : s.length() == 0);
+    }
+
+    public static boolean isNullOrEmpty(String s) {
+        return isNullOrEmpty(s, false);
+    }
 }
