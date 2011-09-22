@@ -136,19 +136,6 @@ final class LibraryPlaylistsTableModel extends HashBasedDataLineModel<LibraryPla
 	    return new File(get(row).getInitializeObject().getFilePath());
 	}
 
-	/**
-	 * Returns the name of the file at the given row.
-	 *
-	 * @param row  The row of the file
-	 *
-	 * @return  A <code>String</code> object containing the name of the file
-	 */
-	String getName(int row) {
-	    return (String)(
-	        (ColoredCellImpl)get(row).getValueAt(
-	            LibraryPlaylistsTableDataLine.NAME_IDX)).getValue();
-	}
-
  	/**
 	 * Returns the name of the file at the given row.
 	 *
