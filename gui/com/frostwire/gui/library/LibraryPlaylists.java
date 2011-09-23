@@ -784,8 +784,8 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
         private static final long serialVersionUID = -9099898749358019734L;
 
         public ImportToPlaylistAction() {
-            putValue(Action.NAME, I18n.tr("Import to Playlist"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Impor an M3U file to selected playlist"));
+            putValue(Action.NAME, I18n.tr("Import .m3u to Playlist"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Import a .m3u file into the selected playlist"));
             putValue(LimeAction.ICON_NAME, "PLAYLIST_IMPORT_TO");
         }
 
@@ -799,8 +799,8 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
         private static final long serialVersionUID = 390846680458085610L;
 
         public ImportToNewPlaylistAction() {
-            putValue(Action.NAME, I18n.tr("Import to New Playlist"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Import an M3U file to a new playlist"));
+            putValue(Action.NAME, I18n.tr("Import .m3u to New Playlist"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Import a .m3u file to a new playlist"));
             putValue(LimeAction.ICON_NAME, "PLAYLIST_IMPORT_NEW");
         }
 
@@ -814,8 +814,8 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
         private static final long serialVersionUID = 6149822357662730490L;
 
         public ExportPlaylistAction() {
-            putValue(Action.NAME, I18n.tr("Export Playlist"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Export an M3U from playlist"));
+            putValue(Action.NAME, I18n.tr("Export Playlist to .m3u"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Export this playlist into a .m3u file"));
             putValue(LimeAction.ICON_NAME, "PLAYLIST_IMPORT_NEW");
         }
 

@@ -60,10 +60,9 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     public static Action ENQUEUE_ACTION;
     public static Action CREATE_TORRENT_ACTION;
     public static Action DELETE_ACTION;
-    public static Action RENAME_ACTION;
     
     private Action importToPlaylistAction = new ImportToPlaylistAction();
-    private Action importToNewPlaylistAction = new ImportToNewPlaylistAction();
+    
     private Action exportPlaylistAction = new ExportPlaylistAction();
     
     /**
@@ -93,7 +92,6 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         ENQUEUE_ACTION = new EnqueueAction();
         CREATE_TORRENT_ACTION = new CreateTorrentAction();
         DELETE_ACTION = new RemoveFromPlaylistAction();
-        RENAME_ACTION = new RenameAction();
     }
 
     /**
@@ -115,7 +113,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
 
         JPopupMenu menu = new SkinPopupMenu();
 
-        menu.add(new SkinMenuItem(LAUNCH_ACTION));
+        //menu.add(new SkinMenuItem(LAUNCH_ACTION));
         if (hasExploreAction()) {
             menu.add(new SkinMenuItem(OPEN_IN_FOLDER_ACTION));
         }
@@ -126,7 +124,6 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
 
         menu.addSeparator();
         menu.add(new SkinMenuItem(DELETE_ACTION));
-        menu.add(new SkinMenuItem(RENAME_ACTION));
 
         int[] rows = TABLE.getSelectedRows();
         boolean dirSelected = false;
@@ -148,18 +145,14 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             if (GUIMediator.isPlaylistVisible())
                 ENQUEUE_ACTION.setEnabled(false);
             DELETE_ACTION.setEnabled(true);
-            RENAME_ACTION.setEnabled(false);
         } else {
             if (GUIMediator.isPlaylistVisible() && AudioPlayer.isPlayableFile(DATA_MODEL.getFile(rows[0])))
                 ENQUEUE_ACTION.setEnabled(true);
             DELETE_ACTION.setEnabled(true);
-            // only allow single selection for renames
-            //RENAME_ACTION.setEnabled(LibraryMediator.isRenameEnabled() && rows.length == 1);
         }
         
         menu.addSeparator();
         menu.add(new SkinMenuItem(importToPlaylistAction));
-        menu.add(new SkinMenuItem(importToNewPlaylistAction));
         menu.add(new SkinMenuItem(exportPlaylistAction));
         
         menu.addSeparator();
@@ -549,8 +542,6 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         CREATE_TORRENT_ACTION.setEnabled(false);
 
         DELETE_ACTION.setEnabled(false);
-
-        RENAME_ACTION.setEnabled(false);
     }
 
     /**
@@ -701,68 +692,6 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         }
     }
 
-    private final class RenameAction extends AbstractAction {
-
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 2673219925804729384L;
-
-        public RenameAction() {
-            putValue(Action.NAME, I18n.tr("Rename"));
-            //  "LIBRARY_RENAME"   ???
-            //  "LIBRARY_RENAME_BUTTON_TIP"   ???			
-        }
-
-        public void actionPerformed(ActionEvent ae) {
-            startRename();
-        }
-    }
-
-//    /**
-//     * Sets an icon based on the filename extension. 
-//     */
-//    private static class FileNameListCellRenderer extends SubstanceDefaultListCellRenderer {
-//
-//        /**
-//         * 
-//         */
-//        private static final long serialVersionUID = 5064313639046811749L;
-//
-//        @Override
-//        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-//            super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-//            String extension = FileUtils.getFileExtension(value.toString());
-//            if (extension != null) {
-//                setIcon(IconManager.instance().getIconForExtension(extension));
-//            }
-//            return this;
-//        }
-//    }
-
-//    /**
-//     * Renders the file part of the Tuple<File, FileDesc> in CheckBoxList<Tuple<File, FileDesc>>.
-//     */
-//    private class TupleTextProvider implements CheckBoxList.TextProvider<Tuple<File, FileDesc>> {
-//
-//        public Icon getIcon(Tuple<File, FileDesc> obj) {
-//            String extension = FileUtils.getFileExtension(obj.getFirst());
-//            if (extension != null) {
-//                return IconManager.instance().getIconForExtension(extension);
-//            }
-//            return null;
-//        }
-//
-//        public String getText(Tuple<File, FileDesc> obj) {
-//            return getCompleteFileName(obj.getFirst());
-//        }
-//
-//        public String getToolTipText(Tuple<File, FileDesc> obj) {
-//            return obj.getFirst().getAbsolutePath();
-//        }
-//
-//    }
-
     private static class FileProvider implements LaunchableProvider {
 
         private final File _file;
@@ -781,8 +710,8 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         private static final long serialVersionUID = -9099898749358019734L;
 
         public ImportToPlaylistAction() {
-            putValue(Action.NAME, I18n.tr("Import to Playlist"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Impor an M3U file to selected playlist"));
+            putValue(Action.NAME, I18n.tr("Import .m3u to Playlist"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Import a .m3u file into the selected playlist"));
             putValue(LimeAction.ICON_NAME, "PLAYLIST_IMPORT_TO");
         }
 
@@ -791,28 +720,13 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         }
     }
     
-    private final class ImportToNewPlaylistAction extends AbstractAction {
-
-        private static final long serialVersionUID = 390846680458085610L;
-
-        public ImportToNewPlaylistAction() {
-            putValue(Action.NAME, I18n.tr("Import to New Playlist"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Import an M3U file to a new playlist"));
-            putValue(LimeAction.ICON_NAME, "PLAYLIST_IMPORT_NEW");
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            LibraryMediator.instance().getLibraryPlaylists().importM3U(null);
-        }
-    }
-    
     private final class ExportPlaylistAction extends AbstractAction {
 
         private static final long serialVersionUID = 6149822357662730490L;
 
         public ExportPlaylistAction() {
-            putValue(Action.NAME, I18n.tr("Export Playlist"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Export an M3U from playlist"));
+            putValue(Action.NAME, I18n.tr("Export Playlist to .m3u"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Export this playlist into a .m3u file"));
             putValue(LimeAction.ICON_NAME, "PLAYLIST_IMPORT_NEW");
         }
 
