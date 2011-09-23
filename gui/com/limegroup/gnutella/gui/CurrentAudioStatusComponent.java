@@ -192,11 +192,18 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
 			String artistName = playlistItem.getTrackArtist();
 			String songTitle = playlistItem.getTrackTitle();
 			
+			String albumToolTip = (playlistItem.getTrackAlbum() != null && playlistItem.getTrackAlbum().length() > 0) ? " - " + playlistItem.getTrackAlbum() : "";
+			String yearToolTip = (playlistItem.getTrackYear()!=null && playlistItem.getTrackYear().length() > 0) ? " ("+playlistItem.getTrackYear() +")" : "";
+			
 			currentText = artistName + " - " + songTitle;
+			
+			text.setToolTipText(artistName + " - " + songTitle + albumToolTip + yearToolTip);
 			
 		}  else if (currentSong.getFile()!=null) {
 			//playing from Audio.
 			currentText = AudioPlayer.instance().getCurrentSong().getFile().getName();
+			
+			text.setToolTipText(currentSong.getFile().getAbsolutePath());
 		}
 		
 		//TODO: Make sure text is not too long.
