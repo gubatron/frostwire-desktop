@@ -7,7 +7,7 @@ import javax.swing.Icon;
 import org.limewire.setting.FileSetting;
 
 import com.limegroup.gnutella.MediaType;
-import com.limegroup.gnutella.gui.search.NamedMediaType;
+import com.limegroup.gnutella.gui.GUIMediator;
 
 public class SavedFilesDirectoryHolder extends FileSettingDirectoryHolder {
     
@@ -19,8 +19,7 @@ public class SavedFilesDirectoryHolder extends FileSettingDirectoryHolder {
 	}
 	
 	public Icon getIcon() {
-		NamedMediaType nmt = NamedMediaType.getFromMediaType(type);
-		return nmt.getIcon();
+		return GUIMediator.getThemeImage("save");
 	}
 	
 	public boolean accept(File file) {
