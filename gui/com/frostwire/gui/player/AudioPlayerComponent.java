@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
 
 import javax.swing.Box;
 import javax.swing.JLabel;
@@ -18,7 +17,6 @@ import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.library.LibraryUtils;
@@ -82,12 +80,6 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     private final JLabel progressSongLength = new JLabel();
 
     /**
-     * Executor to ensure all thread creation on the frostwireplayer is called from
-     * a single thread
-     */
-    private final ExecutorService SONG_QUEUE = ExecutorsHelper.newProcessingQueue("SongProcessor");
-
-    /**
      * The MP3 player.
      */
     private final AudioPlayer PLAYER;
@@ -111,18 +103,6 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
      * The lazily constructed media panel.
      */
     private JPanel myMediaPanel = null;
-
-    /**
-     * If true, will only play current song and stop, regradless of position
-     * in the playlist or value of continous or random. If false, continous
-     * and random control the play feature
-     */
-    private boolean playOneTime = false;
-
-    /**
-     * Lock for access to the above String.
-     */
-    //private final Object cfnLock = new Object();
 
     private float _progress;
 
@@ -331,41 +311,11 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     }
 
     /**
-     * Public accessor for loading a song to be played,
-     * @playOnce - if true, play song one time regardless of continous
-     *			and random values and stop the player after completing, 
-     *			if false, observe the continous and	random control 
-     */
-    public void loadSong(AudioSource item, boolean playOnce) {
-        // fail silently if there's nothing to play
-        if (item == null)
-            return;
-        currentPlayListItem = item;
-        playOneTime = playOnce;
-
-        loadSong(currentPlayListItem, "");
-    }
-
-    /**
-     * Loads an audiosource to be played. 
-     */
-    private void loadSong(final AudioSource audioSource, String displayName) {
-        if (audioSource == null) {
-            return;
-        }
-
-        // load song on Executor thread
-        SONG_QUEUE.execute(new SongLoader(audioSource));
-    }
-
-    /**
      * Begins playing the loaded song
      */
     public void play() {
         if (PLAYER.getState() == MediaPlaybackState.Paused || PLAYER.getState() == MediaPlaybackState.Playing) {
             PLAYER.togglePause();
-        } else {
-            loadSong(currentPlayListItem, playOneTime);
         }
     }
 
@@ -696,7 +646,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     		}
     		
     		if (nextSong != null) {
-    			PLAYER.loadSong(nextSong,true,true);
+    			PLAYER.asyncLoadSong(nextSong,true,true);
     		}
     	}
     }
@@ -717,7 +667,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
     		AudioSource previousSong = PLAYER.getPreviousSong(currentSong);
     		
     		if (previousSong != null) {
-    			PLAYER.loadSong(previousSong,true,true);
+    			PLAYER.asyncLoadSong(previousSong,true,true);
     		}
     	}
     }
@@ -755,60 +705,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener, RefreshL
         }
     }
 
-    /**
-     * Ensures that all songs will be loaded/played from the same thread.
-     */
-    private class SongLoader implements Runnable {
-
-        /**
-         * Audio source to load
-         */
-        private final AudioSource audio;
-
-        public SongLoader(AudioSource audio) {
-            this.audio = audio;
-        }
-
-        public void run() {
-            if (PLAYER == null) {
-                System.err.println("SongLoader.run(): There's no PLAYER to load the Song to");
-                return;
-            }
-
-            if (audio != null)
-                PLAYER.loadSong(audio);
-
-            if (PLAYER.getState() != MediaPlaybackState.Playing)
-                PLAYER.stop();
-
-            try {
-                PLAYER.playSong();
-            } catch (Exception e) {
-                PLAYER.stop();
-                //System.out.println("Could not play song " + audio.getURL().toString());
-                e.printStackTrace();
-
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e1) {
-                    // TODO Auto-generated catch block
-                    //e1.printStackTrace();
-                }
-
-                try {
-                    synchronized (PLAYER) {
-                        PLAYER.notifyAll();
-                    }
-                } catch (Exception e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
-
-            }
-        }
-    }
-
-	@Override
+    @Override
 	public void volumeChange(AudioPlayer audioPlayer, double currentVolume) {
 		VolumeSliderListener oldListener = (VolumeSliderListener) VOLUME.getChangeListeners()[0];
 		VOLUME.removeChangeListener(oldListener);

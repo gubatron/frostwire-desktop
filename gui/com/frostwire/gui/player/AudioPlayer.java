@@ -7,10 +7,12 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
 
 import javax.swing.SwingUtilities;
 
 import org.gudy.azureus2.core3.util.UrlUtils;
+import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.alexandria.Playlist;
@@ -47,6 +49,8 @@ public class AudioPlayer implements RefreshListener {
 
 	private Queue<AudioSource> lastRandomFiles;
 	
+	private final ExecutorService playExecutor;
+	
 	private static AudioPlayer instance;
 
 	public static AudioPlayer instance() {
@@ -58,6 +62,7 @@ public class AudioPlayer implements RefreshListener {
 
 	private AudioPlayer() {
 	    lastRandomFiles = new LinkedList<AudioSource>();
+	    playExecutor = ExecutorsHelper.newProcessingQueue("AudioPlayer-PlayExecutor");
 		String playerPath = "";
 
 		// Whether or not we're running from source or from a binary
@@ -182,8 +187,25 @@ public class AudioPlayer implements RefreshListener {
 		}
 	}
 	
+    public void asyncLoadSong(final AudioSource source, final boolean play, final boolean playNextSong, final Playlist currentPlaylist,
+            final List<AudioSource> playlistFilesView) {
+        playExecutor.execute(new Runnable() {
+            public void run() {
+                loadSong(source, play, playNextSong, currentPlaylist, playlistFilesView);
+            }
+        });
+    }
+	
 	public void loadSong(AudioSource source, boolean play, boolean playNextSong) {
 	    loadSong(source, play, playNextSong, currentPlaylist, playlistFilesView);
+	}
+	
+	public void asyncLoadSong(final AudioSource source, final boolean play, final boolean playNextSong) {
+	    playExecutor.execute(new Runnable() {
+            public void run() {
+                loadSong(source, play, playNextSong);
+            }
+        });
 	}
 
 	public void loadSong(AudioSource audioSource) {
@@ -393,8 +415,8 @@ public class AudioPlayer implements RefreshListener {
 		}
 
 		if (song != null) {
-			System.out.println(song.getFile());
-			loadSong(song, true, true, currentPlaylist, playlistFilesView);
+			//System.out.println(song.getFile());
+			asyncLoadSong(song, true, true, currentPlaylist, playlistFilesView);
 		}
 	}
 
@@ -464,6 +486,9 @@ public class AudioPlayer implements RefreshListener {
         }
 
         int n = playlistFilesView.size();
+        if (n == 1) {
+            return playlistFilesView.get(0);
+        }
         for (int i = 0; i < n; i++) {
             try {
                 AudioSource f1 = playlistFilesView.get(i);
@@ -489,6 +514,9 @@ public class AudioPlayer implements RefreshListener {
         }
 
         int n = playlistFilesView.size();
+        if (n == 1) {
+            return playlistFilesView.get(0);
+        }
         for (int i = 0; i < n; i++) {
             try {
                 AudioSource f1 = playlistFilesView.get(i);
@@ -538,6 +566,9 @@ public class AudioPlayer implements RefreshListener {
             return null;
         }
         int n = playlistFilesView.size();
+        if (n == 1) {
+            return playlistFilesView.get(0);
+        }
         int index = new Random(System.currentTimeMillis()).nextInt(n);
 
         for (int i = index; i < n; i++) {
