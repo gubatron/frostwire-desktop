@@ -10,6 +10,7 @@ import javax.swing.JList;
 import javax.swing.ListModel;
 
 import com.frostwire.alexandria.Playlist;
+import com.frostwire.alexandria.db.LibraryDatabase;
 import com.frostwire.gui.library.LibraryFiles.LibraryFilesListCell;
 import com.frostwire.gui.library.LibraryPlaylists.LibraryPlaylistsListCell;
 import com.frostwire.gui.player.AudioPlayer;
@@ -47,7 +48,7 @@ public class LibraryIconList extends JList {
                 paintIcon(g, speaker, index);
             }
         }
-        
+
         paintImportingIcons(g);
     }
 
@@ -80,13 +81,26 @@ public class LibraryIconList extends JList {
     }
 
     private int getPlaylistIndex(Playlist playlist) {
-        int n = getModel().getSize();
-        for (int i = 0; i < n; i++) {
-            Object value = getModel().getElementAt(i);
-            if (value instanceof LibraryPlaylistsListCell) {
-                Playlist p = ((LibraryPlaylistsListCell) value).getPlaylist();
-                if (p != null && p.equals(playlist)) {
-                    return i;
+        if (playlist.getId() == LibraryDatabase.STARRED_PLAYLIST_ID) {
+            int n = getModel().getSize();
+            for (int i = 0; i < n; i++) {
+                Object value = getModel().getElementAt(i);
+                if (value instanceof LibraryFilesListCell) {
+                    DirectoryHolder dh = ((LibraryFilesListCell) value).getDirectoryHolder();
+                    if (dh instanceof StarredDirectoryHolder) {
+                        return i;
+                    }
+                }
+            }
+        } else {
+            int n = getModel().getSize();
+            for (int i = 0; i < n; i++) {
+                Object value = getModel().getElementAt(i);
+                if (value instanceof LibraryPlaylistsListCell) {
+                    Playlist p = ((LibraryPlaylistsListCell) value).getPlaylist();
+                    if (p != null && p.equals(playlist)) {
+                        return i;
+                    }
                 }
             }
         }

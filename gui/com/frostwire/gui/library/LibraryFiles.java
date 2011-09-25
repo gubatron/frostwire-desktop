@@ -30,6 +30,7 @@ import javax.swing.event.ListSelectionListener;
 
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
+import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.player.AudioPlayer;
@@ -121,6 +122,7 @@ public class LibraryFiles extends JPanel implements RefreshListener {
         _model.addElement(_finishedDownloadsCell);
         addPerMediaTypeCells();
         _model.addElement(_torrentsCell);
+        _model.addElement(new LibraryFilesListCell(new StarredDirectoryHolder()));
     }
 
     private void setupList() {
@@ -167,13 +169,21 @@ public class LibraryFiles extends JPanel implements RefreshListener {
             return;
         }
 
-        LibraryMediator.instance().updateTableFiles(node.getDirectoryHolder());
-
         DirectoryHolder directoryHolder = getSelectedDirectoryHolder();
-        if (directoryHolder != null && directoryHolder instanceof MediaTypeSavedFilesDirectoryHolder) {
-            LibraryMediator.instance().showView(LibraryMediator.FILES_TABLE_KEY);
-            MediaTypeSavedFilesDirectoryHolder mtsfdh = (MediaTypeSavedFilesDirectoryHolder) directoryHolder;
-            BackgroundExecutorService.schedule(new SearchByMediaTypeRunnable(mtsfdh));
+
+        if (directoryHolder instanceof StarredDirectoryHolder) {
+            Playlist playlist = LibraryMediator.getLibrary().getStarredPlaylist();
+            LibraryMediator.instance().updateTableItems(playlist);
+            String status = LibraryUtils.getPlaylistDurationInDDHHMMSS(playlist) + ", " + playlist.getItems().size() + " " + I18n.tr("tracks");
+            LibraryMediator.instance().getLibrarySearch().setStatus(status);
+        } else {
+            LibraryMediator.instance().updateTableFiles(node.getDirectoryHolder());
+
+            if (directoryHolder != null && directoryHolder instanceof MediaTypeSavedFilesDirectoryHolder) {
+                LibraryMediator.instance().showView(LibraryMediator.FILES_TABLE_KEY);
+                MediaTypeSavedFilesDirectoryHolder mtsfdh = (MediaTypeSavedFilesDirectoryHolder) directoryHolder;
+                BackgroundExecutorService.schedule(new SearchByMediaTypeRunnable(mtsfdh));
+            }
         }
 
         LibraryMediator.instance().getLibrarySearch().clear();
@@ -209,10 +219,6 @@ public class LibraryFiles extends JPanel implements RefreshListener {
         public DirectoryHolder getDirectoryHolder() {
             return _holder;
         }
-
-        //        public File getFile() {
-        //            return _holder.getDirectory();
-        //        }
     }
 
     private class ListMouseObserver implements MouseObserver {
@@ -485,6 +491,23 @@ public class LibraryFiles extends JPanel implements RefreshListener {
 			} catch (Exception e) {
 			}
 		}
-		
 	}
+	
+	public void selectStarred() {
+        int size = _model.getSize();
+
+        for (int i = 0; i < size; i++) {
+            try {
+                LibraryFilesListCell cell = (LibraryFilesListCell) _model
+                        .get(i);
+
+                if (cell.getDirectoryHolder() instanceof StarredDirectoryHolder) {
+                    _list.setSelectedValue(cell, true);
+                    return;
+                }
+            } catch (Exception e) {
+            }
+        }
+        
+    }
 }

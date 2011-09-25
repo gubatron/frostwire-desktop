@@ -16,6 +16,7 @@ public class LibraryDatabase {
 
     public static final int OBJECT_NOT_SAVED_ID = -1;
     public static final int OBJECT_INVALID_ID = -2;
+    public static final int STARRED_PLAYLIST_ID = -3;
 
     public static final int LIBRARY_DATABASE_VERSION = 1;
 

@@ -87,8 +87,6 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
 	
 	private final class SendToFriendActionListener implements ActionListener {
 
-		private static final long serialVersionUID = 1329472129818371471L;
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 

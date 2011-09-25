@@ -1,10 +1,13 @@
 package com.frostwire.alexandria.db;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
+import com.frostwire.alexandria.PlaylistItem;
 
 public class LibraryDB extends ObjectDB<Library> {
 
@@ -61,6 +64,31 @@ public class LibraryDB extends ObjectDB<Library> {
             playlist = new Playlist(library);
             playlist.getDB().fill(row, playlist);
         }
+        return playlist;
+    }
+
+    public Playlist getStarredPlaylist(Library library) {
+        String query = "SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, trackDurationInSecs, trackArtist, trackAlbum, coverArtPath, trackBitrate, trackComment, trackGenre, trackNumber, trackYear, starred "
+                + "FROM PlaylistItems WHERE starred = ?";
+
+        List<List<Object>> result = db.query(query, true);
+
+        Playlist playlist = new Playlist(library, LibraryDatabase.STARRED_PLAYLIST_ID, "starred", "starred");
+
+        List<PlaylistItem> items = new ArrayList<PlaylistItem>(result.size());
+        Set<String> paths = new HashSet<String>();
+
+        for (List<Object> row : result) {
+            PlaylistItem item = new PlaylistItem(playlist);
+            item.getDB().fill(row, item);
+            if (!paths.contains(item.getFilePath())) {
+                items.add(item);
+                paths.add(item.getFilePath());
+            }
+        }
+
+        playlist.getItems().addAll(items);
+
         return playlist;
     }
 }

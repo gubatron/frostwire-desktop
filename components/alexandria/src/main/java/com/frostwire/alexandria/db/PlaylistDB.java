@@ -57,8 +57,8 @@ public class PlaylistDB extends ObjectDB<Playlist> {
 
     public List<PlaylistItem> getLibraryItems(Playlist playlist) {
         String query = "SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, trackDurationInSecs, trackArtist, trackAlbum, coverArtPath, trackBitrate, trackComment, trackGenre, trackNumber, trackYear, starred "
-                    + "FROM PlaylistItems WHERE playlistId = ?";
-        
+                + "FROM PlaylistItems WHERE playlistId = ?";
+
         List<List<Object>> result = db.query(query, playlist.getId());
 
         List<PlaylistItem> items = new ArrayList<PlaylistItem>(result.size());
@@ -71,10 +71,10 @@ public class PlaylistDB extends ObjectDB<Playlist> {
 
         return items;
     }
-    
+
     private Object[] createPlaylistUpdateStatement(Playlist obj) {
         String sql = "UPDATE Playlists SET name = ?, description = ? WHERE playlistId = ?";
-        Object[] values = new Object[] { obj.getName(), obj.getDescription(), obj.getId()};
+        Object[] values = new Object[] { obj.getName(), obj.getDescription(), obj.getId() };
         return new Object[] { sql, values };
     }
 

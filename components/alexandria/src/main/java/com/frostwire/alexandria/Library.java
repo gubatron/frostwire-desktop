@@ -69,4 +69,8 @@ public class Library extends Entity<LibraryDB> {
             super.finalize();
         }
     }
+
+    public Playlist getStarredPlaylist() {
+        return db.getStarredPlaylist(this);
+    }
 }
