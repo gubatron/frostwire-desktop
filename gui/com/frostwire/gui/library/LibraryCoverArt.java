@@ -52,7 +52,10 @@ public class LibraryCoverArt extends JPanel {
         this.file = file;
         new Thread(new Runnable() {
             public void run() {
-                setPrivateImage(retrieveImage(file));
+                Image image = retrieveImage(file);
+                if (file != null && file.equals(LibraryCoverArt.this.file)) {
+                    setPrivateImage(image);
+                }
             }
         }).start();
     }
