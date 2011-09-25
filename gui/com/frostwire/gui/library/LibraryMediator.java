@@ -2,7 +2,6 @@ package com.frostwire.gui.library;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Image;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -179,10 +178,6 @@ public class LibraryMediator {
         }
         return libraryLeftPanel;
     }
-    
-    public Image getDefaultCoverArt() {
-    	return ((LibraryLeftPanel)getLibraryLeftPanel()).getDefaultCoverArt();
-    }
 
     private JComponent getLibraryRightPanel() {
         JPanel panel = new JPanel(new BorderLayout());
@@ -204,14 +199,6 @@ public class LibraryMediator {
         
 
         return panel;
-    }
-    
-    /**
-     * Used by LibraryCoverArt as a hack, since the art wouldn't be repainted
-     * unless the user would mouse over the split pane divider.
-     */
-    public void replaintSplitPane() {
-    	splitPane.repaint();
     }
 
     public void setSelectedFile(File file) {

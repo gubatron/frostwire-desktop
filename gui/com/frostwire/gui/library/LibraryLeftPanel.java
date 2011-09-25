@@ -1,12 +1,10 @@
 package com.frostwire.gui.library;
 
 import java.awt.Dimension;
-import java.awt.Image;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import javax.swing.JPanel;
 
-import com.limegroup.gnutella.gui.GUIMediator;
+import javax.swing.JPanel;
 
 public class LibraryLeftPanel extends JPanel {
 
@@ -14,8 +12,6 @@ public class LibraryLeftPanel extends JPanel {
 
     public static final int MIN_WIDTH = 155;
     public static final int MAX_WIDTH = 300;
-    
-    private Image DEFAULT_COVER_ART;
 
     private final LibraryFiles libraryFiles;
     private final LibraryPlaylists libraryPlaylists;
@@ -25,14 +21,8 @@ public class LibraryLeftPanel extends JPanel {
         this.libraryFiles = libraryFiles;
         this.libraryPlaylists = libraryPlaylists;
         this.libraryCoverArt = libraryCoverArt;
-        
-        DEFAULT_COVER_ART = GUIMediator.getThemeImage("default_cover_art").getImage();
 
         setupUI();
-    }
-    
-    public Image getDefaultCoverArt() {
-    	return DEFAULT_COVER_ART;
     }
 
     protected void setupUI() {

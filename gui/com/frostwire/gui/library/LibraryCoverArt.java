@@ -3,7 +3,6 @@ package com.frostwire.gui.library;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.MediaTracker;
 import java.awt.RenderingHints;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -24,17 +23,20 @@ public class LibraryCoverArt extends JPanel {
 
     private static final long serialVersionUID = 4302859512245078593L;
 
+    private final BufferedImage background;
+    private final Image defaultCoverArt;
+
     private Image coverArtImage;
-    private Image scaledImage;
-    
     private File file;
 
     public LibraryCoverArt() {
+        background = new BufferedImage(350, 350, BufferedImage.TYPE_INT_RGB);
+        defaultCoverArt = GUIMediator.getThemeImage("default_cover_art").getImage();
+        setFile(null);
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                setPrivateImage(coverArtImage, true);
-                //System.out.println("componentResized:" + getWidth()+","+getHeight());
+                setPrivateImage(coverArtImage);
             }
         });
     }
@@ -44,27 +46,20 @@ public class LibraryCoverArt extends JPanel {
      * @param file
      */
     public void setFile(final File file) {
-        //System.out.println(file);
         if (this.file != null && file != null && this.file.equals(file)) {
             return;
         }
         this.file = file;
-        setPrivateImage(null, false);
-        if (file == null) {
-            return;
-        }
         new Thread(new Runnable() {
             public void run() {
-                setPrivateImage(retrieveImage(file), false);
+                setPrivateImage(retrieveImage(file));
             }
         }).start();
     }
 
     @Override
     public void paint(Graphics g) {
-        if (scaledImage != null) {
-            g.drawImage(scaledImage, 0, 0, null);
-        }
+        g.drawImage(background, 0, 0, null);
     }
 
     /**
@@ -73,7 +68,10 @@ public class LibraryCoverArt extends JPanel {
      * @return
      */
     private Image retrieveImage(File file) {
-    	String path = file.getAbsolutePath();
+        if (file == null) {
+            return defaultCoverArt;
+        }
+        String path = file.getAbsolutePath();
         Image image = null;
         if (path.toLowerCase().endsWith(".mp3")) {
             image = retrieveImageFromMP3(path);
@@ -82,61 +80,20 @@ public class LibraryCoverArt extends JPanel {
         return image;
     }
 
-    public Image getScaledImageFast(Image img, int w, int h) {
-
-        int type = BufferedImage.TYPE_INT_RGB;
-        BufferedImage tmp = new BufferedImage(w, h, type);
-        Graphics2D g2 = tmp.createGraphics();
-        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-        g2.drawImage(img, 0, 0, w, h, null);
-        g2.dispose();
-
-        waitForImageToLoad(img);
-
-        return tmp;
-    }
-
-    private void setPrivateImage(Image image, boolean fast) {
+    private void setPrivateImage(Image image) {
         coverArtImage = image;
 
-        if (coverArtImage != null) {
-
-            if (fast) {
-                scaledImage = getScaledImageFast(coverArtImage, getWidth(), getHeight());
-            } else {
-                scaledImage = coverArtImage.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);
-            }
-        } else {
-            scaledImage = LibraryMediator.instance().getDefaultCoverArt().getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);//getScaledImageFast(LibraryMediator.instance().getDefaultCoverArt(), getWidth(), getHeight());
+        if (coverArtImage == null) {
+            coverArtImage = defaultCoverArt;
         }
 
-        waitForImageToLoad(scaledImage);
+        Graphics2D g2 = background.createGraphics();
+        g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+        g2.drawImage(coverArtImage, 0, 0, getWidth(), getHeight(), null);
+        g2.dispose();
 
-        GUIMediator.safeInvokeLater(new Runnable() {
-            public void run() {
-                repaint();
-            }
-        });
-
-        //Hack. Otherwise the cover art is not painted unless we mouse over the splitpane on the library.
-        GUIMediator.safeInvokeLater(new Runnable() {
-            @Override
-            public void run() {
-                LibraryMediator.instance().replaintSplitPane();
-            }
-        });
-
-    }
-
-    private void waitForImageToLoad(Image image) {
-        MediaTracker mt = new MediaTracker(this);
-        mt.addImage(image, 0);
-        try {
-            mt.waitForAll();
-            mt.removeImage(image);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        repaint();
+        getToolkit().sync();
     }
 
     private Image retrieveImageFromMP3(String filename) {
