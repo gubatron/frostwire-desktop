@@ -592,6 +592,12 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
                     for (File file : files) {
                         if (AudioPlayer.isPlayableFile(file)) {
                             return true;
+                        } else if (file.isDirectory()) {
+                            for (File childFile : file.listFiles()) {
+                                if (AudioPlayer.isPlayableFile(childFile)) {
+                                    return true;
+                                }
+                            }
                         }
                     }
                 } catch (InvalidDnDOperationException e) {

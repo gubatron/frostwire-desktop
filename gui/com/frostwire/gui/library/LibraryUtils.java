@@ -252,6 +252,8 @@ public class LibraryUtils {
         for (int i = 0; i < files.length && !playlist.isDeleted(); i++) {
             if (AudioPlayer.isPlayableFile(files[i])) {
                 LibraryUtils.addPlaylistItem(playlist, files[i]);
+            } else if (files[i].isDirectory()) {
+                addToPlaylist(playlist, files[i].listFiles());
             }
         }
     }

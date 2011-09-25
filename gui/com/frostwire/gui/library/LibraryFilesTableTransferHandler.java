@@ -83,6 +83,12 @@ class LibraryFilesTableTransferHandler extends TransferHandler {
                 for (File file : files) {
                     if (AudioPlayer.isPlayableFile(file)) {
                         return true;
+                    } else if (file.isDirectory()) {
+                        for (File childFile : file.listFiles()) {
+                            if (AudioPlayer.isPlayableFile(childFile)) {
+                                return true;
+                            }
+                        }
                     }
                 }
                 return fallback ? fallbackTransferHandler.canImport(support) : false;
