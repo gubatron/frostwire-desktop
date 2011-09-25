@@ -72,11 +72,11 @@ public class LibraryFiles extends JPanel implements RefreshListener {
     private Action refreshAction = new RefreshAction();
     private Action exploreAction = new ExploreAction();
 
-	private List<Runnable> PENDING_RUNNABLES;
+    private List<Runnable> PENDING_RUNNABLES;
 
     public LibraryFiles() {
         setupUI();
-        PENDING_RUNNABLES=new ArrayList<Runnable>();
+        PENDING_RUNNABLES = new ArrayList<Runnable>();
     }
 
     public DirectoryHolder getSelectedDirectoryHolder() {
@@ -301,6 +301,9 @@ public class LibraryFiles extends JPanel implements RefreshListener {
                             }
                         }
                     }
+                    if (files.length == 1 && files[0].getAbsolutePath().endsWith(".m3u")) {
+                        return true;
+                    }
                 } catch (InvalidDnDOperationException e) {
                     // this case seems to be something special with the OS
                     return true;
@@ -308,7 +311,7 @@ public class LibraryFiles extends JPanel implements RefreshListener {
                     return false;
                 }
             }
-            
+
             return false;
         }
 
@@ -321,11 +324,16 @@ public class LibraryFiles extends JPanel implements RefreshListener {
             try {
                 Transferable transferable = support.getTransferable();
                 if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistTransferable.ITEM_ARRAY)) {
-                    PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistTransferable.Item[]) transferable.getTransferData(LibraryPlaylistTransferable.ITEM_ARRAY));
+                    PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistTransferable.Item[]) transferable
+                            .getTransferData(LibraryPlaylistTransferable.ITEM_ARRAY));
                     LibraryUtils.createNewPlaylist(playlistItems);
                 } else {
                     File[] files = DNDUtils.getFiles(support.getTransferable());
-                    LibraryUtils.createNewPlaylist(files);
+                    if (files.length == 1 && files[0].getAbsolutePath().endsWith(".m3u")) {
+                        LibraryUtils.createNewPlaylist(files[0]);
+                    } else {
+                        LibraryUtils.createNewPlaylist(files);
+                    }
                 }
             } catch (Exception e) {
                 return false;
@@ -361,7 +369,7 @@ public class LibraryFiles extends JPanel implements RefreshListener {
             ignore.addAll(TorrentUtil.getSkipedFiles());
 
             search(file, ignore);
-            
+
             executePendingRunnables();
         }
 
@@ -459,53 +467,51 @@ public class LibraryFiles extends JPanel implements RefreshListener {
         _list.setSelectedValue(_finishedDownloadsCell, true);
     }
 
-	public void executePendingRunnables() {
-		if (PENDING_RUNNABLES != null && PENDING_RUNNABLES.size() > 0) {
-			for (Runnable t : PENDING_RUNNABLES) {
-				try {
-					t.run();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			PENDING_RUNNABLES.clear();
-		}		
-	}
-	
-	public void enqueueRunnable(Runnable r) {
-		PENDING_RUNNABLES.add(r);
-	}
+    public void executePendingRunnables() {
+        if (PENDING_RUNNABLES != null && PENDING_RUNNABLES.size() > 0) {
+            for (Runnable t : PENDING_RUNNABLES) {
+                try {
+                    t.run();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            PENDING_RUNNABLES.clear();
+        }
+    }
 
-	@Override
-	public void refresh() {
-		_list.repaint();
-	}
+    public void enqueueRunnable(Runnable r) {
+        PENDING_RUNNABLES.add(r);
+    }
 
-	public void selectAudio() {
-		int size = _model.getSize();
+    @Override
+    public void refresh() {
+        _list.repaint();
+    }
 
-		for (int i = 0; i < size; i++) {
-			try {
-				LibraryFilesListCell cell = (LibraryFilesListCell) _model
-						.get(i);
-
-				if (cell.getDirectoryHolder() instanceof MediaTypeSavedFilesDirectoryHolder &&
-					((MediaTypeSavedFilesDirectoryHolder) cell.getDirectoryHolder()).getMediaType().equals(MediaType.getAudioMediaType()) ) {
-					_list.setSelectedValue(cell, true);
-					return;
-				}
-			} catch (Exception e) {
-			}
-		}
-	}
-	
-	public void selectStarred() {
+    public void selectAudio() {
         int size = _model.getSize();
 
         for (int i = 0; i < size; i++) {
             try {
-                LibraryFilesListCell cell = (LibraryFilesListCell) _model
-                        .get(i);
+                LibraryFilesListCell cell = (LibraryFilesListCell) _model.get(i);
+
+                if (cell.getDirectoryHolder() instanceof MediaTypeSavedFilesDirectoryHolder
+                        && ((MediaTypeSavedFilesDirectoryHolder) cell.getDirectoryHolder()).getMediaType().equals(MediaType.getAudioMediaType())) {
+                    _list.setSelectedValue(cell, true);
+                    return;
+                }
+            } catch (Exception e) {
+            }
+        }
+    }
+
+    public void selectStarred() {
+        int size = _model.getSize();
+
+        for (int i = 0; i < size; i++) {
+            try {
+                LibraryFilesListCell cell = (LibraryFilesListCell) _model.get(i);
 
                 if (cell.getDirectoryHolder() instanceof StarredDirectoryHolder) {
                     _list.setSelectedValue(cell, true);
@@ -514,6 +520,6 @@ public class LibraryFiles extends JPanel implements RefreshListener {
             } catch (Exception e) {
             }
         }
-        
+
     }
 }

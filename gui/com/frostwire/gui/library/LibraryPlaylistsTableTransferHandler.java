@@ -18,7 +18,7 @@ import com.limegroup.gnutella.gui.dnd.MulticastTransferHandler;
 class LibraryPlaylistsTableTransferHandler extends TransferHandler {
 
     private static final long serialVersionUID = -360187293186425556L;
-    
+
     private final LibraryPlaylistsTableMediator mediator;
     private final TransferHandler fallbackTransferHandler;
 
@@ -42,13 +42,18 @@ class LibraryPlaylistsTableTransferHandler extends TransferHandler {
             Transferable transferable = support.getTransferable();
             if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistTransferable.ITEM_ARRAY)) {
                 if (mediator.getCurrentPlaylist() != null) {
-                    PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistTransferable.Item[]) transferable.getTransferData(LibraryPlaylistTransferable.ITEM_ARRAY));
+                    PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistTransferable.Item[]) transferable
+                            .getTransferData(LibraryPlaylistTransferable.ITEM_ARRAY));
                     LibraryUtils.asyncAddToPlaylist(mediator.getCurrentPlaylist(), playlistItems);
                 }
             } else {
                 if (mediator.getCurrentPlaylist() != null) {
                     File[] files = DNDUtils.getFiles(support.getTransferable());
-                    LibraryUtils.asyncAddToPlaylist(mediator.getCurrentPlaylist(), files);
+                    if (files.length == 1 && files[0].getAbsolutePath().endsWith(".m3u")) {
+                        LibraryUtils.asyncAddToPlaylist(mediator.getCurrentPlaylist(), files[0]);
+                    } else {
+                        LibraryUtils.asyncAddToPlaylist(mediator.getCurrentPlaylist(), files);
+                    }
                 }
             }
         } catch (Exception e) {
@@ -93,6 +98,9 @@ class LibraryPlaylistsTableTransferHandler extends TransferHandler {
                             }
                         }
                     }
+                }
+                if (files.length == 1 && files[0].getAbsolutePath().endsWith(".m3u")) {
+                    return true;
                 }
                 return fallback ? fallbackTransferHandler.canImport(support) : false;
             } catch (InvalidDnDOperationException e) {

@@ -406,9 +406,9 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
         File suggested;
         File suggestedDirectory = FileChooserHandler.getLastInputDirectory();
         if (suggestedDirectory.equals(CommonUtils.getCurrentDirectory())) {
-        	suggestedDirectory = new File(CommonUtils.getUserHomeDir(),"Desktop");
+            suggestedDirectory = new File(CommonUtils.getUserHomeDir(), "Desktop");
         }
-        
+
         suggested = new File(suggestedDirectory, suggestedName + ".m3u");
 
         File selFile = FileChooserHandler.getSaveAsFile(GUIMediator.getAppFrame(), I18nMarker.marktr("Save Playlist As"), suggested,
@@ -600,6 +600,9 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
                             }
                         }
                     }
+                    if (files.length == 1 && files[0].getAbsolutePath().endsWith(".m3u")) {
+                        return true;
+                    }
                 } catch (InvalidDnDOperationException e) {
                     // this case seems to be something special with the OS
                     return true;
@@ -607,7 +610,7 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
                     return false;
                 }
             }
-            
+
             return false;
         }
 
@@ -638,7 +641,11 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
                             LibraryUtils.createNewPlaylist(playlistItems);
                         } else {
                             File[] files = DNDUtils.getFiles(support.getTransferable());
-                            LibraryUtils.createNewPlaylist(files);
+                            if (files.length == 1 && files[0].getAbsolutePath().endsWith(".m3u")) {
+                                LibraryUtils.createNewPlaylist(files[0]);
+                            } else {
+                                LibraryUtils.createNewPlaylist(files);
+                            }
                         }
                         _list.setSelectedIndex(_list.getModel().getSize() - 1);
                         refreshSelection();
@@ -654,7 +661,11 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
                             LibraryUtils.asyncAddToPlaylist(playlist, playlistItems);
                         } else {
                             File[] files = DNDUtils.getFiles(support.getTransferable());
-                            LibraryUtils.asyncAddToPlaylist(playlist, files);
+                            if (files.length == 1 && files[0].getAbsolutePath().endsWith(".m3u")) {
+                                LibraryUtils.asyncAddToPlaylist(playlist, files[0]);
+                            } else {
+                                LibraryUtils.asyncAddToPlaylist(playlist, files);
+                            }
                         }
                         //_list.setSelectedIndex(index);
                         //refreshSelection();
@@ -864,7 +875,7 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
             e.printStackTrace();
         }
     }
-    
+
     public boolean isPlaylistImporting(Playlist playlist) {
         try {
             return importingPlaylists.contains(playlist);

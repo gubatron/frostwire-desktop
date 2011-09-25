@@ -152,6 +152,15 @@ public class LibraryUtils {
             }).start();
         }
     }
+    
+    public static void createNewPlaylist(File m3uFile) {
+        try {
+            List<File> files = M3UPlaylist.load(m3uFile.getAbsolutePath());
+            createNewPlaylist(files.toArray(new File[0]));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void asyncAddToPlaylist(final Playlist playlist, final List<? extends AbstractLibraryTableDataLine<?>> lines) {
         LibraryMediator.instance().getLibraryPlaylists().markBeginImport(playlist);
@@ -201,6 +210,15 @@ public class LibraryUtils {
                 });
             }
         }).start();
+    }
+    
+    public static void asyncAddToPlaylist(Playlist playlist, File m3uFile) {
+        try {
+            List<File> files = M3UPlaylist.load(m3uFile.getAbsolutePath());
+            asyncAddToPlaylist(playlist, files.toArray(new File[0]));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static List<LibraryPlaylistTransferable.Item> convertToItems(List<PlaylistItem> playlistItems) {

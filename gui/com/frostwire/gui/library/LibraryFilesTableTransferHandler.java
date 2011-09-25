@@ -42,11 +42,16 @@ class LibraryFilesTableTransferHandler extends TransferHandler {
         try {
             Transferable transferable = support.getTransferable();
             if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistTransferable.ITEM_ARRAY)) {
-                PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistTransferable.Item[]) transferable.getTransferData(LibraryPlaylistTransferable.ITEM_ARRAY));
+                PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistTransferable.Item[]) transferable
+                        .getTransferData(LibraryPlaylistTransferable.ITEM_ARRAY));
                 LibraryUtils.createNewPlaylist(playlistItems);
             } else {
                 File[] files = DNDUtils.getFiles(support.getTransferable());
-                LibraryUtils.createNewPlaylist(files);
+                if (files.length == 1 && files[0].getAbsolutePath().endsWith(".m3u")) {
+                    LibraryUtils.createNewPlaylist(files[0]);
+                } else {
+                    LibraryUtils.createNewPlaylist(files);
+                }
             }
         } catch (Exception e) {
             return fallbackTransferHandler.importData(support);
@@ -90,6 +95,9 @@ class LibraryFilesTableTransferHandler extends TransferHandler {
                             }
                         }
                     }
+                }
+                if (files.length == 1 && files[0].getAbsolutePath().endsWith(".m3u")) {
+                    return true;
                 }
                 return fallback ? fallbackTransferHandler.canImport(support) : false;
             } catch (InvalidDnDOperationException e) {
