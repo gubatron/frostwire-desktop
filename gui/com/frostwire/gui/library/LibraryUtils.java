@@ -21,8 +21,7 @@ public class LibraryUtils {
         try {
             LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Importing ") + file.getName());
             AudioMetaData mt = new AudioMetaData(file);
-            PlaylistItem item = playlist.newItem(file.getAbsolutePath(), file.getName(), file.length(), FileUtils.getFileExtension(file), mt.getTitle(),
-                    mt.getDurationInSecs(), mt.getArtist(), mt.getAlbum(), "",// TODO: cover art path
+            PlaylistItem item = playlist.newItem(file.getAbsolutePath(), file.getName(), file.length(), FileUtils.getFileExtension(file), mt.getTitle(), mt.getDurationInSecs(), mt.getArtist(), mt.getAlbum(), "",// TODO: cover art path
                     mt.getBitrate(), mt.getComment(), mt.getGenre(), mt.getTrack(), mt.getYear(), false);
             playlist.getItems().add(item);
             item.save();
@@ -81,8 +80,7 @@ public class LibraryUtils {
     }
 
     public static void createNewPlaylist(final List<? extends AbstractLibraryTableDataLine<?>> lines) {
-        String playlistName = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"),
-                JOptionPane.PLAIN_MESSAGE, null, null, null);
+        String playlistName = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, null);
 
         if (playlistName != null && playlistName.length() > 0) {
             final Playlist playlist = LibraryMediator.getLibrary().newPlaylist(playlistName, playlistName);
@@ -105,8 +103,7 @@ public class LibraryUtils {
     }
 
     public static void createNewPlaylist(final File[] files) {
-        String playlistName = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"),
-                JOptionPane.PLAIN_MESSAGE, null, null, null);
+        String playlistName = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, null);
 
         if (playlistName != null && playlistName.length() > 0) {
             final Playlist playlist = LibraryMediator.getLibrary().newPlaylist(playlistName, playlistName);
@@ -132,8 +129,7 @@ public class LibraryUtils {
     }
 
     public static void createNewPlaylist(final PlaylistItem[] playlistItems) {
-        String playlistName = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"),
-                JOptionPane.PLAIN_MESSAGE, null, null, null);
+        String playlistName = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, null);
 
         if (playlistName != null && playlistName.length() > 0) {
             final Playlist playlist = LibraryMediator.getLibrary().newPlaylist(playlistName, playlistName);
@@ -152,7 +148,7 @@ public class LibraryUtils {
             }).start();
         }
     }
-    
+
     public static void createNewPlaylist(File m3uFile) {
         try {
             List<File> files = M3UPlaylist.load(m3uFile.getAbsolutePath());
@@ -211,7 +207,7 @@ public class LibraryUtils {
             }
         }).start();
     }
-    
+
     public static void asyncAddToPlaylist(Playlist playlist, File m3uFile) {
         try {
             List<File> files = M3UPlaylist.load(m3uFile.getAbsolutePath());
@@ -249,8 +245,7 @@ public class LibraryUtils {
     public static PlaylistItem[] convertToPlaylistItems(LibraryPlaylistTransferable.Item[] items) {
         List<PlaylistItem> playlistItems = new ArrayList<PlaylistItem>(items.length);
         for (LibraryPlaylistTransferable.Item item : items) {
-            PlaylistItem playlistItem = new PlaylistItem(null, item.id, item.filePath, item.fileName, item.fileSize, item.fileExtension, item.trackTitle,
-                    item.trackDurationInSecs, item.trackArtist, item.trackAlbum, item.coverArtPath, item.trackBitrate, item.trackComment, item.trackGenre,
+            PlaylistItem playlistItem = new PlaylistItem(null, item.id, item.filePath, item.fileName, item.fileSize, item.fileExtension, item.trackTitle, item.trackDurationInSecs, item.trackArtist, item.trackAlbum, item.coverArtPath, item.trackBitrate, item.trackComment, item.trackGenre,
                     item.trackNumber, item.trackYear, item.starred);
             playlistItems.add(playlistItem);
         }
@@ -291,5 +286,27 @@ public class LibraryUtils {
         }
 
         return getSecondsInDDHHMMSS((int) totalSecs);
+    }
+
+    public static boolean directoryContainsAudio(File directory, int deep) {
+        if (directory == null || !directory.isDirectory()) {
+            return false;
+        }
+
+        for (File childFile : directory.listFiles()) {
+            if (!childFile.isDirectory()) {
+                if (AudioPlayer.isPlayableFile(childFile)) {
+                    return true;
+                }
+            } else {
+                if (deep > 0) {
+                    if (directoryContainsAudio(childFile, deep - 1)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }
