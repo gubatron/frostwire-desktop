@@ -16,26 +16,34 @@ import com.limegroup.gnutella.gui.GUIMediator;
 public class PlaylistItemStarEditor extends AbstractCellEditor implements TableCellEditor {
 
     private static final long serialVersionUID = 2484867032644699734L;
-    
-    private final Icon starOn;
-    private final Icon starOff;
 
-    public PlaylistItemStarEditor() {
+    private static final Icon starOn;
+    private static final Icon starOff;
+    private static final Icon exclamation;
+
+    static {
         starOn = GUIMediator.getThemeImage("star_on");
         starOff = GUIMediator.getThemeImage("star_off");
-    }    
+        exclamation = GUIMediator.getThemeImage("exclamation");
+    }
+
+    public PlaylistItemStarEditor() {
+    }
 
     public Object getCellEditorValue() {
         return null;
     }
 
-    public Component getTableCellEditorComponent(final JTable table, Object value, boolean isSelected, int row, int column) {
+    public Component getTableCellEditorComponent(final JTable table, final Object value, boolean isSelected, int row, int column) {
         final LibraryPlaylistsTableDataLine line = ((PlaylistItemStar) value).getLine();
-        
+
         final JLabel component = (JLabel) new PlaylistItemStarRenderer().getTableCellRendererComponent(table, value, isSelected, true, row, column);
         component.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
+                if (!((PlaylistItemStar) value).exists()){
+                    return;
+                }
                 PlaylistItem playlistItem = line.getInitializeObject();
                 if (line.getInitializeObject().isStarred()) {
                     playlistItem.setStarred(false);
@@ -48,8 +56,10 @@ public class PlaylistItemStarEditor extends AbstractCellEditor implements TableC
                 }
             }
         });
-        
-        if (line.getInitializeObject().isStarred()) {
+
+        if (!((PlaylistItemStar) value).exists()) {
+            component.setIcon(exclamation);
+        } else if (line.getInitializeObject().isStarred()) {
             component.setIcon(starOn);
         } else {
             component.setIcon(starOff);

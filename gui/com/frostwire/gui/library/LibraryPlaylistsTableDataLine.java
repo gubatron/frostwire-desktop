@@ -141,7 +141,7 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
         boolean playing = isPlaying();
         switch(idx) {
             case STARRED_IDX:
-                return new PlaylistItemStar(this, playing);
+                return new PlaylistItemStar(this, playing, exists);
             case ALBUM_IDX:
                 return new PlaylistItemProperty(initializer.getTrackAlbum(), playing, exists);
             case ARTIST_IDX:

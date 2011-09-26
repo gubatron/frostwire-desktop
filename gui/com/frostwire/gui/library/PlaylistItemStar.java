@@ -11,14 +11,20 @@ class PlaylistItemStar implements Comparable<Object> {
 	 */
 	private final LibraryPlaylistsTableDataLine line;
 	private boolean isPlaying;
+	private boolean exists;
 
-	public PlaylistItemStar(LibraryPlaylistsTableDataLine line, boolean isPlaying) {
+	public PlaylistItemStar(LibraryPlaylistsTableDataLine line, boolean isPlaying, boolean exists) {
 		this.line = line;
 		this.isPlaying = isPlaying;
+		this.exists = exists;
 	}
 	
 	public boolean isPlaying() {
 		return isPlaying;
+	}
+	
+	public boolean exists() {
+	    return exists;
 	}
 
 	/**
