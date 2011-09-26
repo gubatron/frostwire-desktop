@@ -14,23 +14,24 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
      * Starred column
      */
     static final int STARRED_IDX = 0;
-    private static final LimeTableColumn STARRED_COLUMN = new LimeTableColumn(STARRED_IDX, "PLAYLIST_TABLE_STARRED", I18n.tr("Starred"), 22, true, false,
-            PlaylistItemStar.class);
+    private static final LimeTableColumn STARRED_COLUMN = new LimeTableColumn(STARRED_IDX, "PLAYLIST_TABLE_STARRED", I18n.tr("Starred"), 20, true, false,
+            false, PlaylistItemStar.class);
     
-    /**
-     * Artist column
-     */
-    static final int ARTIST_IDX = 1;
-    private static final LimeTableColumn ARTIST_COLUMN =
-        new LimeTableColumn(ARTIST_IDX, "PLAYLIST_TABLE_ARTIST", I18n.tr("Artist"),
-                 80, false, PlaylistItemProperty.class);
     /**
      * Title column
      */
-    static final int TITLE_IDX = 2;
+    static final int TITLE_IDX = 1;
     private static final LimeTableColumn TITLE_COLUMN =
         new LimeTableColumn(TITLE_IDX, "PLAYLIST_TABLE_TITLE", I18n.tr("Title"),
-                 80, false, PlaylistItemProperty.class);
+                 80, true, PlaylistItemProperty.class);
+
+    /**
+     * Artist column
+     */
+    static final int ARTIST_IDX = 2;
+    private static final LimeTableColumn ARTIST_COLUMN =
+        new LimeTableColumn(ARTIST_IDX, "PLAYLIST_TABLE_ARTIST", I18n.tr("Artist"),
+                 80, true, PlaylistItemProperty.class);
     
     /**
      * Length column (in hour:minutes:seconds format)
@@ -46,7 +47,7 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
     static final int ALBUM_IDX = 4;
     private static final LimeTableColumn ALBUM_COLUMN =
         new LimeTableColumn(ALBUM_IDX, "PLAYLIST_TABLE_ALBUM", I18n.tr("Album"),
-                120, false, PlaylistItemProperty.class);
+                120, true, PlaylistItemProperty.class);
        
     /**
      * Track column
@@ -56,11 +57,20 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
         new LimeTableColumn(TRACK_IDX, "PLAYLIST_TABLE_TRACK", I18n.tr("Track"),
                 20, false, PlaylistItemProperty.class);
     
+    /**
+     * Genre column
+     */
+    static final int GENRE_IDX = 6;
+    private static final LimeTableColumn GENRE_COLUMN =
+        new LimeTableColumn(GENRE_IDX, "PLAYLIST_TABLE_GENRE", I18n.tr("Genre"),
+                 80, true, PlaylistItemProperty.class);
+
+    
     
     /**
      * Bitrate column info
      */
-    static final int BITRATE_IDX = 6;
+    static final int BITRATE_IDX = 7;
     private static final LimeTableColumn BITRATE_COLUMN =
         new LimeTableColumn(BITRATE_IDX, "PLAYLIST_TABLE_BITRATE",I18n.tr("Bitrate"),
                 60, true, PlaylistItemProperty.class);
@@ -68,18 +78,10 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
     /**
      * Comment column info
      */
-    static final int COMMENT_IDX = 7;
+    static final int COMMENT_IDX = 8;
     private static final LimeTableColumn COMMENT_COLUMN =
         new LimeTableColumn(COMMENT_IDX, "PLAYLIST_TABLE_COMMENT", I18n.tr("Comment"),
                 20, false, PlaylistItemProperty.class);
-    
-    /**
-     * Genre column
-     */
-    static final int GENRE_IDX = 8;
-    private static final LimeTableColumn GENRE_COLUMN =
-        new LimeTableColumn(GENRE_IDX, "PLAYLIST_TABLE_GENRE", I18n.tr("Genre"),
-                 80, false, PlaylistItemProperty.class);
            
     /**
      * Size column (in bytes)
@@ -96,7 +98,7 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
     static final int TYPE_IDX = 10;
     private static final LimeTableColumn TYPE_COLUMN = 
         new LimeTableColumn(TYPE_IDX, "PLAYLIST_TABLE_TYPE", I18n.tr("Type"),
-                 40, false, PlaylistItemProperty.class);
+                 40, true, PlaylistItemProperty.class);
     
     /**
      * YEAR column

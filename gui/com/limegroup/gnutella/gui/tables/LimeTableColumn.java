@@ -56,10 +56,20 @@ public class LimeTableColumn extends TableColumn {
                     int width, boolean vis, Class<?> clazz) {
         this(model, id, name, null, width, vis, clazz);
     }
-    
+
+    public LimeTableColumn(int model, final String id, final String name, int width, boolean vis, boolean visName, boolean resizable, Class<?> clazz) {
+        this(model, id, name, null, width, vis, visName, clazz);
+        setResizable(resizable);
+        if (!resizable) {
+        	setMaxWidth(width);
+        	setMinWidth(width);
+        }
+    }
+
     public LimeTableColumn(int model, final String id, final String name, int width, boolean vis, boolean visName, Class<?> clazz) {
         this(model, id, name, null, width, vis, visName, clazz);
     }
+
     
     /**
      * Creates a new column.
