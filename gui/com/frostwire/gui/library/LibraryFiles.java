@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -28,6 +29,8 @@ import javax.swing.TransferHandler;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.limewire.util.CommonUtils;
+import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
 import com.frostwire.alexandria.Playlist;
@@ -369,13 +372,26 @@ public class LibraryFiles extends JPanel implements RefreshListener {
             ignore.addAll(TorrentUtil.getSkipedFiles());
 
             search(file, ignore);
+            
+            // special case for audio
+            if (_mtsfdh.getMediaType().equals(MediaType.getAudioMediaType())) {
+                File musicFile = null;
+                if (OSUtils.isMacOSX()) {
+                    musicFile = new File(CommonUtils.getUserHomeDir(), "Music");
+                } else if (OSUtils.isWindowsXP()) {
+                    musicFile = new File(CommonUtils.getUserHomeDir(), "My Documents" + File.separator + "My Music");
+                } else if (OSUtils.isWindowsVista() || OSUtils.isWindows7()) {
+                    musicFile = new File(CommonUtils.getUserHomeDir(), "Music");
+                }
+                search(musicFile, new HashSet<File>());
+            }
 
             executePendingRunnables();
         }
 
         private void search(File file, Set<File> ignore) {
 
-            if (!file.isDirectory()) {
+            if (!file.isDirectory() || !file.exists()) {
                 return;
             }
 

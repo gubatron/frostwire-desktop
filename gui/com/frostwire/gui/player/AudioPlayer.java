@@ -285,7 +285,7 @@ public class AudioPlayer implements RefreshListener {
         String name = filename.toLowerCase();
         return name.endsWith(".mp3") || name.endsWith(".ogg")
                 || name.endsWith(".wav") || name.endsWith(".wma")
-                || name.endsWith(".m4a");
+                || name.endsWith(".m4a") || name.endsWith(".aac");
     }
 	
 	private static boolean isPlayableFile(AudioSource audioSource) {
