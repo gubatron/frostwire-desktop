@@ -274,6 +274,7 @@ final class BTDownloadActions {
             putValue(LimeAction.SHORT_NAME, I18n.tr("Send to friend"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Send to friend"));
             putValue(LimeAction.ICON_NAME, "SEND_HASH");
+            putValue(Action.SMALL_ICON,GUIMediator.getThemeImage("share"));
         }
 
         public void performAction(ActionEvent e) {
