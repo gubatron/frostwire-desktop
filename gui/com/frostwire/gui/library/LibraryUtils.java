@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import org.limewire.util.FileUtils;
+import org.limewire.util.FilenameUtils;
 
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
@@ -80,7 +81,7 @@ public class LibraryUtils {
     }
 
     public static void createNewPlaylist(final List<? extends AbstractLibraryTableDataLine<?>> lines) {
-        String playlistName = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, null);
+        String playlistName = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, calculateName(lines));
 
         if (playlistName != null && playlistName.length() > 0) {
             final Playlist playlist = LibraryMediator.getLibrary().newPlaylist(playlistName, playlistName);
@@ -103,7 +104,7 @@ public class LibraryUtils {
     }
 
     public static void createNewPlaylist(final File[] files) {
-        String playlistName = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, null);
+        String playlistName = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, calculateName(files));
 
         if (playlistName != null && playlistName.length() > 0) {
             final Playlist playlist = LibraryMediator.getLibrary().newPlaylist(playlistName, playlistName);
@@ -129,7 +130,7 @@ public class LibraryUtils {
     }
 
     public static void createNewPlaylist(final PlaylistItem[] playlistItems) {
-        String playlistName = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, null);
+        String playlistName = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, calculateName(playlistItems));
 
         if (playlistName != null && playlistName.length() > 0) {
             final Playlist playlist = LibraryMediator.getLibrary().newPlaylist(playlistName, playlistName);
@@ -288,7 +289,11 @@ public class LibraryUtils {
         return getSecondsInDDHHMMSS((int) totalSecs);
     }
 
-    public static boolean directoryContainsAudio(File directory, int deep) {
+    public static boolean directoryContainsAudio(File directory) {
+        return directoryContainsAudio(directory, 4);
+    }
+
+    private static boolean directoryContainsAudio(File directory, int deep) {
         if (directory == null || !directory.isDirectory()) {
             return false;
         }
@@ -308,5 +313,45 @@ public class LibraryUtils {
         }
 
         return false;
+    }
+
+    private static String calculateName(File[] files) {
+        List<String> names = new ArrayList<String>(150);
+        findNames(names, files);
+        return new NameCalculator(names).getName();
+    }
+
+    private static String calculateName(List<? extends AbstractLibraryTableDataLine<?>> lines) {
+        File[] files = new File[lines.size()];
+        for (int i = 0; i < lines.size(); i++) {
+            files[i] = lines.get(i).getFile();
+        }
+        return calculateName(files);
+    }
+
+    private static String calculateName(PlaylistItem[] playlistItems) {
+        File[] files = new File[playlistItems.length];
+        for (int i = 0; i < files.length; i++) {
+            files[i] = new File(playlistItems[i].getFilePath());
+        }
+        return calculateName(files);
+    }
+
+    private static void findNames(List<String> names, File[] files) {
+        if (names.size() > 100) {
+            return;
+        }
+
+        for (File file : files) {
+            if (file.isDirectory()) {
+                String fullPathNoEndSeparator = FilenameUtils.getFullPathNoEndSeparator(file.getAbsolutePath());
+                String baseName = FilenameUtils.getBaseName(fullPathNoEndSeparator);
+                names.add(baseName);
+                findNames(names, file.listFiles());
+            } else if (AudioPlayer.isPlayableFile(file)) {
+                String baseName = FilenameUtils.getBaseName(file.getAbsolutePath());
+                names.add(baseName);
+            }
+        }
     }
 }

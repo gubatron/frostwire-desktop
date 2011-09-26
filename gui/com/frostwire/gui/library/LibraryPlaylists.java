@@ -593,7 +593,7 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
                         if (AudioPlayer.isPlayableFile(file)) {
                             return true;
                         } else if (file.isDirectory()) {
-                            if (LibraryUtils.directoryContainsAudio(file, 4)) {
+                            if (LibraryUtils.directoryContainsAudio(file)) {
                                 return true;
                             }
                         }
