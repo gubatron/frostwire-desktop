@@ -3,6 +3,8 @@ package com.frostwire.gui.library;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -125,7 +127,27 @@ public class LibrarySearch extends JPanel {
                 }
             }
         });
+        
+        searchField.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				//if there's nothing selected for search, select Audio directory holder.
+				if (LibraryMediator.instance().getLibraryFiles().getSelectedDirectoryHolder() == null
+					&& LibraryMediator.instance().getLibraryPlaylists().getSelectedPlaylist() == null) {
+					LibraryMediator.instance().getLibraryFiles().selectAudio();
+				}					
+			}
+		});
     }
+    
+    
 
     private class SearchLibraryAction extends AbstractAction {
 
