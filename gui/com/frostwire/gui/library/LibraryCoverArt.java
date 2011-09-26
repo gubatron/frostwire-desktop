@@ -1,5 +1,6 @@
 package com.frostwire.gui.library;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -92,6 +93,12 @@ public class LibraryCoverArt extends JPanel {
 
         Graphics2D g2 = background.createGraphics();
         g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+        
+        if (coverArtImage.equals(defaultCoverArt)) {
+        	g2.setColor(Color.WHITE);
+        	g2.fill3DRect(0,0, getWidth(),getHeight(),false);
+        }
+        
         g2.drawImage(coverArtImage, 0, 0, getWidth(), getHeight(), null);
         g2.dispose();
 
