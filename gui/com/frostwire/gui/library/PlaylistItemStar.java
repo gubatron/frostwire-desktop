@@ -4,7 +4,7 @@ package com.frostwire.gui.library;
  * Wraps the current dataline to be displayed in the table to pass it to the
  * {@link PlaylistItemNameRenderer}
  */
-class PlaylistItemStar implements Comparable<Object> {
+class PlaylistItemStar implements Comparable<PlaylistItemStar> {
 
 	/**
 	 * The current line to display in the table
@@ -34,21 +34,7 @@ class PlaylistItemStar implements Comparable<Object> {
 		return line;
 	}
 
-	public int compareTo(Object o) {
-		if (o == null) {
-			return 1;
-		}
-		
-		PlaylistItemStar other = (PlaylistItemStar) o;
-
-		if (other.getLine() == null ||other.getLine().getSongName() == null) {
-			return 1;
-		}
-		
-		if (getLine() == null || getLine().getSongName() == null) {
-			return -1;
-		}
-		
-		return line.getSongName().compareTo(other.getLine().getSongName());
+	public int compareTo(PlaylistItemStar o) {
+	    return Boolean.valueOf(line.getInitializeObject().isStarred()).compareTo(o.line.getInitializeObject().isStarred());
 	}
 }

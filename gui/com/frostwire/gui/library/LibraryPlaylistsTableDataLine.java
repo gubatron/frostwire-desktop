@@ -219,13 +219,6 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
     }
     
     /**
-     * @return the file name of the song
-     */
-    public String getSongName() {
-        return initializer.getTrackTitle();
-    }
-    
-    /**
      * Creates a tool tip for each row of the playlist. Tries to grab any information
      * that was extracted from the Meta-Tag or passed in to the PlaylistItem as 
      * a property map

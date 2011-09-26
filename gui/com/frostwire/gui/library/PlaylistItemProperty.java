@@ -1,6 +1,6 @@
 package com.frostwire.gui.library;
 
-class PlaylistItemProperty {
+class PlaylistItemProperty implements Comparable<PlaylistItemProperty> {
 
     private final String _value;
     private final boolean _playing;
@@ -22,5 +22,9 @@ class PlaylistItemProperty {
     
     public boolean exists() {
         return exists;
+    }
+
+    public int compareTo(PlaylistItemProperty o) {
+        return _value.compareTo(o._value);
     }
 }
