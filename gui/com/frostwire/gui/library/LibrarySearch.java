@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -17,6 +18,9 @@ import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import org.limewire.util.CommonUtils;
+import org.limewire.util.OSUtils;
 
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
@@ -233,6 +237,23 @@ public class LibrarySearch extends JPanel {
             ignore.addAll(TorrentUtil.getSkipedFiles());
 
             search(file, ignore);
+            
+            // special case for audio
+			if (directoryHolder instanceof MediaTypeSavedFilesDirectoryHolder
+					&& ((MediaTypeSavedFilesDirectoryHolder) directoryHolder)
+							.getMediaType().equals(
+									MediaType.getAudioMediaType())) {
+                File musicFile = null;
+                if (OSUtils.isMacOSX()) {
+                    musicFile = new File(CommonUtils.getUserHomeDir(), "Music");
+                } else if (OSUtils.isWindowsXP()) {
+                    musicFile = new File(CommonUtils.getUserHomeDir(), "My Documents" + File.separator + "My Music");
+                } else if (OSUtils.isWindowsVista() || OSUtils.isWindows7()) {
+                    musicFile = new File(CommonUtils.getUserHomeDir(), "Music");
+                }
+                search(musicFile, new HashSet<File>());
+            }
+
         }
 
         /**
@@ -323,7 +344,7 @@ public class LibrarySearch extends JPanel {
                 return true;
             }
 
-            String name = pathname.getName();
+            String name = pathname.getAbsolutePath();
 
             for (String token : _tokens) {
                 if (!name.toLowerCase(Locale.US).contains(token)) {
