@@ -28,16 +28,13 @@ public abstract class AbstractDirectoryHolder implements DirectoryHolder {
         return (files != null) ? files : new File[0];
     }
 
-    public boolean accept(File pathname) {
-        if (_hideFiles.contains(pathname)) {
-            return false;
-        }
-        
-        if (!isFileVisible(pathname)) {
-            return false;
-        }
+    public boolean accept(File file) {
+		if (_hideFiles.contains(file) || !isFileVisible(file)
+				|| file.getName().toLowerCase().equals(".ds_store")) {
+			return false;
+		}
 
-        File parent = pathname.getParentFile();
+        File parent = file.getParentFile();
         return parent != null && parent.equals(getDirectory());
     }
 

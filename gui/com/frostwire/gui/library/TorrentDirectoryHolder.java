@@ -23,6 +23,6 @@ public class TorrentDirectoryHolder extends FileSettingDirectoryHolder {
 	}
 	
 	public boolean accept(File file) {
-        return type.matches(file.getName());
+        return super.accept(file) && type.matches(file.getName());
     }
 }
