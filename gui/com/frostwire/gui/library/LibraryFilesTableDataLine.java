@@ -235,7 +235,7 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 	}
 
 	public String[] getToolTipArray(int col) {
-		return new String[] {""};
+		return new String[] {getInitializeObject().getAbsolutePath()};
 	}
 	
 	private LimeTableColumn[] getLimeTableColumns() {
