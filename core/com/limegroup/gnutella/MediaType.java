@@ -132,7 +132,7 @@ public class MediaType implements Serializable {
                 "au", "snd", "s3m", "aud", 
                 "mid", "midi", "rmi", "mod", "kar",
                 "ac3", "shn", "fla", "flac", "cda", 
-                "mka"
+                "mka, aac"
             });
         
     /**

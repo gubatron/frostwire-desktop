@@ -391,7 +391,7 @@ public class LibraryFiles extends JPanel implements RefreshListener {
 
         private void search(File file, Set<File> ignore) {
 
-            if (!file.isDirectory() || !file.exists()) {
+            if (file == null || !file.isDirectory() || !file.exists()) {
                 return;
             }
 

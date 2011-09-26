@@ -264,7 +264,7 @@ public class LibrarySearch extends JPanel {
                 return;
             }
 
-            if (!haystackDir.isDirectory()) {
+            if (haystackDir == null || !haystackDir.isDirectory() || !haystackDir.exists()) {
                 return;
             }
 
