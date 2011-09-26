@@ -122,6 +122,8 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
      */
     private SizeHolder sizeHolder;
     
+    private boolean exists;
+    
 
     /**
      * Sets up the dataline for use with the playlist.
@@ -129,6 +131,7 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
     public void initialize(PlaylistItem item) {
         super.initialize(item);
         sizeHolder = new SizeHolder(item.getFileSize());
+        exists = new File(item.getFilePath()).exists();
     }
 
     /**
@@ -140,27 +143,27 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
             case STARRED_IDX:
                 return new PlaylistItemStar(this, playing);
             case ALBUM_IDX:
-                return new PlaylistItemProperty(initializer.getTrackAlbum(), playing);
+                return new PlaylistItemProperty(initializer.getTrackAlbum(), playing, exists);
             case ARTIST_IDX:
-                return new PlaylistItemProperty(initializer.getTrackArtist(), playing);
+                return new PlaylistItemProperty(initializer.getTrackArtist(), playing, exists);
             case BITRATE_IDX:
-                return new PlaylistItemProperty(initializer.getTrackBitrate(), playing);
+                return new PlaylistItemProperty(initializer.getTrackBitrate(), playing, exists);
             case COMMENT_IDX:
-                return new PlaylistItemProperty(initializer.getTrackComment(), playing);
+                return new PlaylistItemProperty(initializer.getTrackComment(), playing, exists);
             case GENRE_IDX:
-                return new PlaylistItemProperty(initializer.getTrackGenre(), playing);
+                return new PlaylistItemProperty(initializer.getTrackGenre(), playing, exists);
             case LENGTH_IDX:
-                return new PlaylistItemProperty(LibraryUtils.getSecondsInDDHHMMSS((int) initializer.getTrackDurationInSecs()), playing);
+                return new PlaylistItemProperty(LibraryUtils.getSecondsInDDHHMMSS((int) initializer.getTrackDurationInSecs()), playing, exists);
             case SIZE_IDX:
-                return new PlaylistItemProperty(sizeHolder.toString(), playing);
+                return new PlaylistItemProperty(sizeHolder.toString(), playing, exists);
             case TITLE_IDX:
-                return new PlaylistItemProperty(initializer.getTrackTitle(), playing);
+                return new PlaylistItemProperty(initializer.getTrackTitle(), playing, exists);
             case TRACK_IDX:
-                return new PlaylistItemProperty(initializer.getTrackNumber(), playing);
+                return new PlaylistItemProperty(initializer.getTrackNumber(), playing, exists);
             case TYPE_IDX:
-                return new PlaylistItemProperty(initializer.getFileExtension(), playing);
+                return new PlaylistItemProperty(initializer.getFileExtension(), playing, exists);
             case YEAR_IDX:
-                return new PlaylistItemProperty(initializer.getTrackYear(), playing);
+                return new PlaylistItemProperty(initializer.getTrackYear(), playing, exists);
         }
         return null;
     }

@@ -36,16 +36,17 @@ class PlaylistItemPropertyRenderer extends SubstanceDefaultTableCellRenderer {
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         PlaylistItemProperty property = (PlaylistItemProperty) value;
         super.getTableCellRendererComponent(table, property.getValue(), isSelected, hasFocus, row, column);
-        setFontColor(property.isPlaying(), table, row, column);
+        setFontColor(property.isPlaying(), property.exists(), table, row, column);
         return this;
     }
 
     /**
      * Check what font color to use if this song is playing. 
      */
-    private void setFontColor(boolean playing, JTable table, int row, int column) {
-
-        if (playing) {
+    private void setFontColor(boolean playing, boolean exists, JTable table, int row, int column) {
+        if (!exists) {
+            setForeground(ThemeSettings.FILE_NO_EXISTS_DATA_LINE_COLOR.getValue());
+        } else if (playing) {
             setForeground(ThemeSettings.PLAYING_DATA_LINE_COLOR.getValue());
         } else {
             Color color = Color.BLACK;

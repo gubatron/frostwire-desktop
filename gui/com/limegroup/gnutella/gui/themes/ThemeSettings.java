@@ -104,6 +104,8 @@ public final class ThemeSettings extends LimeProps {
     
     public static ColorSetting PLAYING_DATA_LINE_COLOR = FACTORY.createColorSetting("PLAYING_DATA_LINE_COLOR", new Color(7, 170, 0));
     
+    public static ColorSetting FILE_NO_EXISTS_DATA_LINE_COLOR = FACTORY.createColorSetting("FILE_NO_EXISTS_DATA_LINE_COLOR", Color.RED);
+    
     
     /**
      * Determines whether or not the current theme file is the default theme

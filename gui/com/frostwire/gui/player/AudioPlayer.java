@@ -288,11 +288,11 @@ public class AudioPlayer implements RefreshListener {
                 || name.endsWith(".m4a") || name.endsWith(".aac");
     }
 	
-	private static boolean isPlayableFile(AudioSource audioSource) {
+	public static boolean isPlayableFile(AudioSource audioSource) {
 	    if (audioSource.getFile() != null) {
-	        return isPlayableFile(audioSource.getFile());
+	        return audioSource.getFile().exists() && isPlayableFile(audioSource.getFile());
 	    } else if (audioSource.getPlaylistItem() != null) {
-	        return isPlayableFile(audioSource.getPlaylistItem().getFilePath());
+	        return new File(audioSource.getPlaylistItem().getFilePath()).exists() && isPlayableFile(audioSource.getPlaylistItem().getFilePath());
 	    } else {
 	        return false;
 	    }
