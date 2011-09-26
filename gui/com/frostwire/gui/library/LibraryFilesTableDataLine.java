@@ -138,6 +138,8 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
             _size = initializer.length();
             if (oldSize != _size)
                 _sizeHolder = new SizeHolder(_size);
+        } else if (initializer.isDirectory()) {
+        	_sizeHolder = new SizeHolder(0);
         }
     }
     
@@ -188,7 +190,7 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 	    case NAME_IDX:
 	        return new PlayableCell(_name, isPlaying);	                    
 	    case SIZE_IDX:
-	        return _sizeHolder == null ? "" : new PlayableCell(_sizeHolder.toString(),isPlaying);
+	        return new PlayableCell(_sizeHolder,isPlaying);
 	    case TYPE_IDX:
 	        return new PlayableCell(_type, isPlaying);
 	    case PATH_IDX:

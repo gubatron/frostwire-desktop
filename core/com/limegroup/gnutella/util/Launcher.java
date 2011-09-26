@@ -5,7 +5,10 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.List;
 
+import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 import org.limewire.util.SystemUtils;
@@ -166,31 +169,31 @@ public final class Launcher {
 	 * @throws SecurityException
 	 *             if the file has an extension that is not allowed
 	 */
-	public static LimeProcess launchFile(File file) throws IOException, SecurityException {
-		String path = file.getCanonicalPath();
-		String extCheckString = path.toLowerCase();
+	public static LimeProcess launchFile(File file) throws IOException,
+			SecurityException {
+	
+		List<String> forbiddenExtensions = Arrays.asList("exe", "vbs", "lnk",
+				"bat", "sys", "com", "js", "scpt");
 
-		if(!extCheckString.endsWith(".exe") &&
-		   !extCheckString.endsWith(".vbs") &&
-		   !extCheckString.endsWith(".lnk") &&
-		   !extCheckString.endsWith(".bat") &&
-		   !extCheckString.endsWith(".sys") &&
-		   !extCheckString.endsWith(".com")) {
-			if(OSUtils.isWindows()) {
-				launchFileWindows(path);
-				return null;
-			}
-			else if(OSUtils.isMacOSX()) {
-				return launchFileMacOSX(path);
-			}
-			else {
-			    // Other OS, use helper apps
-				return launchFileOther(path);
-			}
-		} else {
+		if (file.isFile()
+				&& forbiddenExtensions.contains(FileUtils
+						.getFileExtension(file))) {
 			throw new SecurityException();
-		}	
-	}
+		}
+		
+		String path = file.getCanonicalPath();
+		
+		if (OSUtils.isWindows()) {
+			launchFileWindows(path);
+			return null;
+		} else if (OSUtils.isMacOSX()) {
+			return launchFileMacOSX(path);
+		} else {
+			// Other OS, use helper apps
+			return launchFileOther(path);
+		}
+	}	
+	
 
     /**
      * Launches the Explorer/Finder and highlights the file.
