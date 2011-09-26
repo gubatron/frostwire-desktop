@@ -354,4 +354,19 @@ public class LibraryUtils {
             }
         }
     }
+
+    public static void cleanup(Playlist playlist) {
+        if (playlist == null) {
+            return;
+        }
+        try {
+            for (PlaylistItem item : playlist.getItems()) {
+                if (!new File(item.getFilePath()).exists()) {
+                    item.delete();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

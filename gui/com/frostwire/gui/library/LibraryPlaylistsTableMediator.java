@@ -65,6 +65,8 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     
     private Action exportPlaylistAction = new ExportPlaylistAction();
     
+    private Action cleanupPlaylistAction = new CleanupPlaylistAction();
+    
     /**
      * instance, for singelton access
      */
@@ -154,6 +156,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         menu.addSeparator();
         menu.add(new SkinMenuItem(importToPlaylistAction));
         menu.add(new SkinMenuItem(exportPlaylistAction));
+        menu.add(new SkinMenuItem(cleanupPlaylistAction));
         
         menu.addSeparator();
         LibraryPlaylistsTableDataLine line = DATA_MODEL.get(rows[0]);
@@ -732,6 +735,22 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
 
         public void actionPerformed(ActionEvent e) {
             LibraryMediator.instance().getLibraryPlaylists().exportM3U(currentPlaylist);
+        }
+    }
+    
+    private final class CleanupPlaylistAction extends AbstractAction {
+
+        private static final long serialVersionUID = 8400749433148927596L;
+        
+        public CleanupPlaylistAction() {
+            putValue(Action.NAME, I18n.tr("Cleanup playlist"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Remove the deleted items"));
+            putValue(LimeAction.ICON_NAME, "PLAYLIST_CLEANUP");
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            LibraryUtils.cleanup(currentPlaylist);
+            LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
         }
     }
 
