@@ -104,13 +104,33 @@ public class LibraryUtils {
     }
 
     public static void createNewPlaylist(final File[] files) {
-        String playlistName = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, calculateName(files));
+    	
+    	final StringBuilder plBuilder = new StringBuilder();
+    		
+    	GUIMediator.safeInvokeAndWait(new Runnable() {
+
+			@Override
+			public void run() {
+				plBuilder.append((String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, calculateName(files)));
+			}
+    	});
+    	
+        String playlistName = plBuilder.toString();
 
         if (playlistName != null && playlistName.length() > 0) {
             final Playlist playlist = LibraryMediator.getLibrary().newPlaylist(playlistName, playlistName);
             playlist.save();
-            LibraryMediator.instance().getLibraryPlaylists().addPlaylist(playlist);
-            LibraryMediator.instance().getLibraryPlaylists().markBeginImport(playlist);
+            
+            GUIMediator.safeInvokeLater(new Runnable() {
+
+				@Override
+				public void run() {
+		            LibraryMediator.instance().getLibraryPlaylists().addPlaylist(playlist);
+		            LibraryMediator.instance().getLibraryPlaylists().markBeginImport(playlist);
+				}
+            });
+            
+            
             new Thread(new Runnable() {
                 public void run() {
                     try {
@@ -150,6 +170,8 @@ public class LibraryUtils {
         }
     }
 
+    
+    
     public static void createNewPlaylist(File m3uFile) {
         try {
             List<File> files = M3UPlaylist.load(m3uFile.getAbsolutePath());
