@@ -31,7 +31,7 @@ public class PlayableCell implements Comparable<PlayableCell> {
 		return "";
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public int compareTo(PlayableCell o) {
 		if (wrappedObject instanceof Comparable &&

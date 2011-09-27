@@ -5,8 +5,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.datatransfer.Transferable;
-import java.awt.dnd.InvalidDnDOperationException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -21,7 +19,6 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
-import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -30,7 +27,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.ToolTipManager;
-import javax.swing.TransferHandler;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileFilter;
@@ -51,7 +47,6 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.RefreshListener;
 import com.limegroup.gnutella.gui.actions.LimeAction;
-import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.options.ConfigureOptionsAction;
 import com.limegroup.gnutella.gui.options.OptionsConstructor;
 import com.limegroup.gnutella.gui.tables.DefaultMouseListener;
@@ -74,7 +69,6 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
 
     private LibraryPlaylistsMouseObserver _listMouseObserver;
     private ListSelectionListener _listSelectionListener;
-    private ListTransferHandler listTransferHandler;
 
     private JList _list;
     private JScrollPane _scrollPane;
@@ -164,7 +158,6 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
     private void setupList() {
         _listMouseObserver = new LibraryPlaylistsMouseObserver();
         _listSelectionListener = new LibraryFilesSelectionListener();
-        listTransferHandler = new ListTransferHandler();
 
         _list = new LibraryIconList(_model);
         _list.setCellRenderer(new LibraryPlaylistsCellRenderer());
@@ -175,7 +168,7 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
         _list.setPrototypeCellValue(new LibraryPlaylistsListCell("test", "", null, null, null));
         _list.setVisibleRowCount(-1);
         _list.setDragEnabled(true);
-        _list.setTransferHandler(listTransferHandler);
+        _list.setTransferHandler(new LibraryPlaylistsTransferHandler(_list));
         ToolTipManager.sharedInstance().registerComponent(_list);
 
         _list.addKeyListener(new KeyAdapter() {
@@ -228,8 +221,13 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
     public void refreshSelection() {
         LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) _list.getSelectedValue();
 
-        if (cell == null)
+        if (cell == null) {
+            // handle special case
+            if (_model.getSize() == 2 && AudioPlayer.instance().getCurrentPlaylist() == null) {
+                _list.setSelectedIndex(1);
+            }
             return;
+        }
 
         Playlist playlist = cell.getPlaylist();
         playlist.refresh();
@@ -575,112 +573,6 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
         public void handlePopupMenu(MouseEvent e) {
             _list.setSelectedIndex(_list.locationToIndex(e.getPoint()));
             _popup.show(_list, e.getX(), e.getY());
-        }
-    }
-
-    private final class ListTransferHandler extends TransferHandler {
-
-        private static final long serialVersionUID = -3874985752229848555L;
-
-        @Override
-        public boolean canImport(TransferSupport support) {
-            if (support.isDataFlavorSupported(LibraryPlaylistTransferable.ITEM_ARRAY)) {
-                return true;
-            } else if (DNDUtils.containsFileFlavors(support.getDataFlavors())) {
-                try {
-                    File[] files = DNDUtils.getFiles(support.getTransferable());
-                    for (File file : files) {
-                        if (AudioPlayer.isPlayableFile(file)) {
-                            return true;
-                        } else if (file.isDirectory()) {
-                            if (LibraryUtils.directoryContainsAudio(file)) {
-                                return true;
-                            }
-                        }
-                    }
-                    if (files.length == 1 && files[0].getAbsolutePath().endsWith(".m3u")) {
-                        return true;
-                    }
-                } catch (InvalidDnDOperationException e) {
-                    // this case seems to be something special with the OS
-                    return true;
-                } catch (Exception e) {
-                    return false;
-                }
-            }
-
-            return false;
-        }
-
-        @Override
-        public boolean importData(TransferSupport support) {
-            if (!canImport(support)) {
-                return false;
-            }
-
-            DropLocation location = support.getDropLocation();
-            int index = _list.locationToIndex(location.getDropPoint());
-            if (index != -1) {
-                Rectangle rect = _list.getUI().getCellBounds(_list, index, index);
-                if (!rect.contains(location.getDropPoint())) {
-                    index = 0;
-                }
-                LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) _list.getModel().getElementAt(index);
-
-                //Playlist selectedPlaylist = getSelectedPlaylist();
-                Playlist playlist = cell.getPlaylist();
-
-                if (playlist == null) {
-                    try {
-                        Transferable transferable = support.getTransferable();
-                        if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistTransferable.ITEM_ARRAY)) {
-                            PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistTransferable.Item[]) transferable
-                                    .getTransferData(LibraryPlaylistTransferable.ITEM_ARRAY));
-                            LibraryUtils.createNewPlaylist(playlistItems);
-                        } else {
-                            File[] files = DNDUtils.getFiles(support.getTransferable());
-                            if (files.length == 1 && files[0].getAbsolutePath().endsWith(".m3u")) {
-                                LibraryUtils.createNewPlaylist(files[0]);
-                            } else {
-                                LibraryUtils.createNewPlaylist(files);
-                            }
-                        }
-                        _list.setSelectedIndex(_list.getModel().getSize() - 1);
-                        refreshSelection();
-                    } catch (Exception e) {
-                        return false;
-                    }
-                } else {
-                    try {
-                        Transferable transferable = support.getTransferable();
-                        if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistTransferable.ITEM_ARRAY)) {
-                            PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistTransferable.Item[]) transferable
-                                    .getTransferData(LibraryPlaylistTransferable.ITEM_ARRAY));
-                            LibraryUtils.asyncAddToPlaylist(playlist, playlistItems);
-                        } else {
-                            File[] files = DNDUtils.getFiles(support.getTransferable());
-                            if (files.length == 1 && files[0].getAbsolutePath().endsWith(".m3u")) {
-                                LibraryUtils.asyncAddToPlaylist(playlist, files[0]);
-                            } else {
-                                LibraryUtils.asyncAddToPlaylist(playlist, files);
-                            }
-                        }
-                        //_list.setSelectedIndex(index);
-                        //refreshSelection();
-                    } catch (Exception e) {
-                        return false;
-                    }
-                }
-            } else {
-                return false;
-            }
-
-            return false;
-        }
-
-        @Override
-        public int getSourceActions(JComponent c) {
-            return COPY;
         }
     }
 

@@ -9,13 +9,13 @@ import java.util.List;
 
 import com.frostwire.alexandria.PlaylistItem;
 
-public class LibraryPlaylistTransferable implements Transferable {
+public class LibraryPlaylistsTableTransferable implements Transferable {
 
-    public static final DataFlavor ITEM_ARRAY = new DataFlavor(LibraryPlaylistTransferable.Item[].class, "LibraryPlaylistTransferable.Item Array");
+    public static final DataFlavor ITEM_ARRAY = new DataFlavor(LibraryPlaylistsTableTransferable.Item[].class, "LibraryPlaylistTransferable.Item Array");
 
-    private final List<LibraryPlaylistTransferable.Item> items;
+    private final List<LibraryPlaylistsTableTransferable.Item> items;
 
-    public LibraryPlaylistTransferable(List<PlaylistItem> playlistItems) {
+    public LibraryPlaylistsTableTransferable(List<PlaylistItem> playlistItems) {
         items = LibraryUtils.convertToItems(playlistItems);
     }
 

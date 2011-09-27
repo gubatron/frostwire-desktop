@@ -41,9 +41,9 @@ class LibraryFilesTableTransferHandler extends TransferHandler {
 
         try {
             Transferable transferable = support.getTransferable();
-            if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistTransferable.ITEM_ARRAY)) {
-                PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistTransferable.Item[]) transferable
-                        .getTransferData(LibraryPlaylistTransferable.ITEM_ARRAY));
+            if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {
+                PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistsTableTransferable.Item[]) transferable
+                        .getTransferData(LibraryPlaylistsTableTransferable.ITEM_ARRAY));
                 LibraryUtils.createNewPlaylist(playlistItems);
             } else {
                 File[] files = DNDUtils.getFiles(support.getTransferable());
@@ -80,7 +80,7 @@ class LibraryFilesTableTransferHandler extends TransferHandler {
             return fallback ? fallbackTransferHandler.canImport(support) : false;
         }
 
-        if (support.isDataFlavorSupported(LibraryPlaylistTransferable.ITEM_ARRAY)) {
+        if (support.isDataFlavorSupported(LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {
             return true;
         } else if (DNDUtils.containsFileFlavors(support.getDataFlavors())) {
             try {

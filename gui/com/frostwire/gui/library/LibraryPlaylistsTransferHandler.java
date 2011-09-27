@@ -1,0 +1,128 @@
+package com.frostwire.gui.library;
+
+import java.awt.Rectangle;
+import java.awt.datatransfer.Transferable;
+import java.awt.dnd.InvalidDnDOperationException;
+import java.io.File;
+
+import javax.swing.JComponent;
+import javax.swing.JList;
+import javax.swing.TransferHandler;
+
+import com.frostwire.alexandria.Playlist;
+import com.frostwire.alexandria.PlaylistItem;
+import com.frostwire.gui.library.LibraryPlaylists.LibraryPlaylistsListCell;
+import com.frostwire.gui.player.AudioPlayer;
+import com.limegroup.gnutella.gui.dnd.DNDUtils;
+
+class LibraryPlaylistsTransferHandler extends TransferHandler {
+
+    private static final long serialVersionUID = -3874985752229848555L;
+    
+    private final JList list;
+    
+    public LibraryPlaylistsTransferHandler(JList list) {
+        this.list = list;
+    }
+
+    @Override
+    public boolean canImport(TransferSupport support) {
+        if (support.isDataFlavorSupported(LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {
+            return true;
+        } else if (DNDUtils.containsFileFlavors(support.getDataFlavors())) {
+            try {
+                File[] files = DNDUtils.getFiles(support.getTransferable());
+                for (File file : files) {
+                    if (AudioPlayer.isPlayableFile(file)) {
+                        return true;
+                    } else if (file.isDirectory()) {
+                        if (LibraryUtils.directoryContainsAudio(file)) {
+                            return true;
+                        }
+                    }
+                }
+                if (files.length == 1 && files[0].getAbsolutePath().endsWith(".m3u")) {
+                    return true;
+                }
+            } catch (InvalidDnDOperationException e) {
+                // this case seems to be something special with the OS
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean importData(TransferSupport support) {
+        if (!canImport(support)) {
+            return false;
+        }
+
+        DropLocation location = support.getDropLocation();
+        int index = list.locationToIndex(location.getDropPoint());
+        if (index != -1) {
+            Rectangle rect = list.getUI().getCellBounds(list, index, index);
+            if (!rect.contains(location.getDropPoint())) {
+                index = 0;
+            }
+            LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) list.getModel().getElementAt(index);
+
+            //Playlist selectedPlaylist = getSelectedPlaylist();
+            Playlist playlist = cell.getPlaylist();
+
+            if (playlist == null) {
+                try {
+                    Transferable transferable = support.getTransferable();
+                    if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {
+                        PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistsTableTransferable.Item[]) transferable
+                                .getTransferData(LibraryPlaylistsTableTransferable.ITEM_ARRAY));
+                        LibraryUtils.createNewPlaylist(playlistItems);
+                    } else {
+                        File[] files = DNDUtils.getFiles(support.getTransferable());
+                        if (files.length == 1 && files[0].getAbsolutePath().endsWith(".m3u")) {
+                            LibraryUtils.createNewPlaylist(files[0]);
+                        } else {
+                            LibraryUtils.createNewPlaylist(files);
+                        }
+                    }
+                    list.setSelectedIndex(list.getModel().getSize() - 1);
+                    LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
+                } catch (Exception e) {
+                    return false;
+                }
+            } else {
+                try {
+                    Transferable transferable = support.getTransferable();
+                    if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {
+                        PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistsTableTransferable.Item[]) transferable
+                                .getTransferData(LibraryPlaylistsTableTransferable.ITEM_ARRAY));
+                        LibraryUtils.asyncAddToPlaylist(playlist, playlistItems);
+                    } else {
+                        File[] files = DNDUtils.getFiles(support.getTransferable());
+                        if (files.length == 1 && files[0].getAbsolutePath().endsWith(".m3u")) {
+                            LibraryUtils.asyncAddToPlaylist(playlist, files[0]);
+                        } else {
+                            LibraryUtils.asyncAddToPlaylist(playlist, files);
+                        }
+                    }
+                    //_list.setSelectedIndex(index);
+                    //refreshSelection();
+                } catch (Exception e) {
+                    return false;
+                }
+            }
+        } else {
+            return false;
+        }
+
+        return false;
+    }
+
+    @Override
+    public int getSourceActions(JComponent c) {
+        return COPY;
+    }
+}

@@ -11,7 +11,7 @@ import org.limewire.util.FilenameUtils;
 
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
-import com.frostwire.gui.library.LibraryPlaylistTransferable.Item;
+import com.frostwire.gui.library.LibraryPlaylistsTableTransferable.Item;
 import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -218,10 +218,10 @@ public class LibraryUtils {
         }
     }
 
-    public static List<LibraryPlaylistTransferable.Item> convertToItems(List<PlaylistItem> playlistItems) {
-        List<LibraryPlaylistTransferable.Item> items = new ArrayList<LibraryPlaylistTransferable.Item>(playlistItems.size());
+    public static List<LibraryPlaylistsTableTransferable.Item> convertToItems(List<PlaylistItem> playlistItems) {
+        List<LibraryPlaylistsTableTransferable.Item> items = new ArrayList<LibraryPlaylistsTableTransferable.Item>(playlistItems.size());
         for (PlaylistItem playlistItem : playlistItems) {
-            Item item = new LibraryPlaylistTransferable.Item();
+            Item item = new LibraryPlaylistsTableTransferable.Item();
             item.id = playlistItem.getId();
             item.filePath = playlistItem.getFilePath();
             item.fileName = playlistItem.getFileName();
@@ -243,9 +243,9 @@ public class LibraryUtils {
         return items;
     }
 
-    public static PlaylistItem[] convertToPlaylistItems(LibraryPlaylistTransferable.Item[] items) {
+    public static PlaylistItem[] convertToPlaylistItems(LibraryPlaylistsTableTransferable.Item[] items) {
         List<PlaylistItem> playlistItems = new ArrayList<PlaylistItem>(items.length);
-        for (LibraryPlaylistTransferable.Item item : items) {
+        for (LibraryPlaylistsTableTransferable.Item item : items) {
             PlaylistItem playlistItem = new PlaylistItem(null, item.id, item.filePath, item.fileName, item.fileSize, item.fileExtension, item.trackTitle, item.trackDurationInSecs, item.trackArtist, item.trackAlbum, item.coverArtPath, item.trackBitrate, item.trackComment, item.trackGenre,
                     item.trackNumber, item.trackYear, item.starred);
             playlistItems.add(playlistItem);

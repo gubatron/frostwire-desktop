@@ -41,10 +41,10 @@ class LibraryPlaylistsTableTransferHandler extends TransferHandler {
 
         try {
             Transferable transferable = support.getTransferable();
-            if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistTransferable.ITEM_ARRAY)) {
+            if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {
                 if (mediator.getCurrentPlaylist() != null) {
-                    PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistTransferable.Item[]) transferable
-                            .getTransferData(LibraryPlaylistTransferable.ITEM_ARRAY));
+                    PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistsTableTransferable.Item[]) transferable
+                            .getTransferData(LibraryPlaylistsTableTransferable.ITEM_ARRAY));
                     LibraryUtils.asyncAddToPlaylist(mediator.getCurrentPlaylist(), playlistItems);
                 }
             } else {
@@ -76,7 +76,7 @@ class LibraryPlaylistsTableTransferHandler extends TransferHandler {
         for (int i = 0; i < lines.size(); i++) {
             playlistItems.add(lines.get(i).getInitializeObject());
         }
-        return new LibraryPlaylistTransferable(playlistItems);
+        return new LibraryPlaylistsTableTransferable(playlistItems);
     }
 
     private boolean canImport(TransferSupport support, boolean fallback) {
@@ -87,7 +87,7 @@ class LibraryPlaylistsTableTransferHandler extends TransferHandler {
             return false;
         }
 
-        if (support.isDataFlavorSupported(LibraryPlaylistTransferable.ITEM_ARRAY)) {
+        if (support.isDataFlavorSupported(LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {
             return true;
         } else if (DNDUtils.containsFileFlavors(support.getDataFlavors())) {
             try {
