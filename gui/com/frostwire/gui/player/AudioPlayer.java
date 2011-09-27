@@ -1,5 +1,8 @@
 package com.frostwire.gui.player;
 
+import java.awt.KeyEventPostProcessor;
+import java.awt.KeyboardFocusManager;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -9,6 +12,9 @@ import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 
+import javax.swing.JCheckBox;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
 import org.gudy.azureus2.core3.util.UrlUtils;
@@ -118,6 +124,22 @@ public class AudioPlayer implements RefreshListener {
 		playNextSong = true;
 		volume = PlayerSettings.PLAYER_VOLUME.getValue();
 		notifyVolumeChanged();
+		
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventPostProcessor(new KeyEventPostProcessor() {
+
+            public boolean postProcessKeyEvent(KeyEvent e) {
+                if (e.getID() == KeyEvent.KEY_PRESSED) {
+                    Object s = e.getComponent();
+                    if (!(s instanceof JTextField) &&
+                        !(s instanceof JTable && ((JTable) s).isEditing() &&
+                        !(s instanceof JCheckBox))
+                        ) {
+                        togglePause();
+                    }
+                }
+                return true;
+            }
+        });
 	}
 
 	public AudioSource getCurrentSong() {
