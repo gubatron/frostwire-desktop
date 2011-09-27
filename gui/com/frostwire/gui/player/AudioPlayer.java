@@ -5,6 +5,7 @@ import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -19,6 +20,7 @@ import javax.swing.SwingUtilities;
 
 import org.gudy.azureus2.core3.util.UrlUtils;
 import org.limewire.concurrent.ExecutorsHelper;
+import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.alexandria.Playlist;
@@ -58,6 +60,8 @@ public class AudioPlayer implements RefreshListener {
 	private final ExecutorService playExecutor;
 	
 	private static AudioPlayer instance;
+	
+	private static List<String> playableExtensions;
 
 	public static AudioPlayer instance() {
 		if (instance == null) {
@@ -305,9 +309,12 @@ public class AudioPlayer implements RefreshListener {
 	
 	public static boolean isPlayableFile(String filename) {
         String name = filename.toLowerCase();
-        return name.endsWith(".mp3") || name.endsWith(".ogg")
-                || name.endsWith(".wav") || name.endsWith(".wma")
-                || name.endsWith(".m4a") || name.endsWith(".aac");
+        
+        if (playableExtensions == null) {
+        	playableExtensions = Arrays.asList("mp3","ogg","wav","wma","m4a","aac","flac");
+        }
+        
+        return playableExtensions.contains(FilenameUtils.getExtension(name));
     }
 	
 	public static boolean isPlayableFile(AudioSource audioSource) {
