@@ -10,6 +10,7 @@ import javax.swing.JComponent;
 import javax.swing.TransferHandler;
 
 import com.frostwire.alexandria.PlaylistItem;
+import com.frostwire.alexandria.db.LibraryDatabase;
 import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
@@ -81,6 +82,9 @@ class LibraryPlaylistsTableTransferHandler extends TransferHandler {
     private boolean canImport(TransferSupport support, boolean fallback) {
         if (!mediator.getMediaType().equals(MediaType.getAudioMediaType())) {
             return fallback ? fallbackTransferHandler.canImport(support) : false;
+        }
+        if (mediator.getCurrentPlaylist() != null && mediator.getCurrentPlaylist().getId() == LibraryDatabase.STARRED_PLAYLIST_ID) {
+            return false;
         }
 
         if (support.isDataFlavorSupported(LibraryPlaylistTransferable.ITEM_ARRAY)) {
