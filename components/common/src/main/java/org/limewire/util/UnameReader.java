@@ -37,7 +37,7 @@ public final class UnameReader {
 			    }
 			}
 		} catch (Exception e) {
-			System.out.println(e);
+		    // ignore
 		}
 		
 		return output;
