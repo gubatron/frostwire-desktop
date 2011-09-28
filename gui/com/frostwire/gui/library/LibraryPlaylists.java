@@ -236,7 +236,7 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
 
         String status = LibraryUtils.getPlaylistDurationInDDHHMMSS(playlist) + ", " + playlist.getItems().size() + " " + I18n.tr("tracks");
         LibraryMediator.instance().getLibrarySearch().setStatus(status);
-
+        
         executePendingRunnables();
     }
 

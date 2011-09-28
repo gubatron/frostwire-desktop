@@ -3,6 +3,7 @@ frostwire (5.2.1) stable; urgency=high
   * Mac OSX threading bug when importing .m3u playlist to new playlist fixed.
   * Pressing space bar pauses/resumes currently played audio.
   * FLAC playback support.
+  * When a playlist has finished importing files, it's shown to the user.
 
  -- FrostWire Team <contact@frostwire.com>  Tue, 27 Sep 2011 20:20:20 -0500
 

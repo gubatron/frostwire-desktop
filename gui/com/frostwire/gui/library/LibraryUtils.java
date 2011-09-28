@@ -92,12 +92,7 @@ public class LibraryUtils {
                 public void run() {
                     addToPlaylist(playlist, lines);
                     playlist.save();
-                    GUIMediator.safeInvokeLater(new Runnable() {
-                        public void run() {
-                            LibraryMediator.instance().getLibraryPlaylists().markEndImport(playlist);
-                            LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
-                        }
-                    });
+                    asyncAddToPlaylistFinalizer(playlist);
                 }
             }).start();
         }
@@ -137,12 +132,7 @@ public class LibraryUtils {
                         addToPlaylist(playlist, files);
                         playlist.save();
                     } finally {
-                        GUIMediator.safeInvokeLater(new Runnable() {
-                            public void run() {
-                                LibraryMediator.instance().getLibraryPlaylists().markEndImport(playlist);
-                                LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
-                            }
-                        });
+                        asyncAddToPlaylistFinalizer(playlist);
                     }
                 }
             }).start();
@@ -157,14 +147,20 @@ public class LibraryUtils {
 
             new Thread(new Runnable() {
                 public void run() {
-                    playlist.save();
-                    addToPlaylist(playlist, playlistItems);
-                    playlist.save();
-                    GUIMediator.safeInvokeLater(new Runnable() {
-                        public void run() {
-                            LibraryMediator.instance().getLibraryPlaylists().addPlaylist(playlist);
-                        }
-                    });
+					try {
+						playlist.save();
+						addToPlaylist(playlist, playlistItems);
+						playlist.save();
+						GUIMediator.safeInvokeLater(new Runnable() {
+							public void run() {
+								LibraryMediator.instance()
+										.getLibraryPlaylists()
+										.addPlaylist(playlist);
+							}
+						});
+					} finally {
+						asyncAddToPlaylistFinalizer(playlist);
+					}
                 }
             }).start();
         }
@@ -188,12 +184,7 @@ public class LibraryUtils {
                 try {
                     addToPlaylist(playlist, lines);
                 } finally {
-                    GUIMediator.safeInvokeLater(new Runnable() {
-                        public void run() {
-                            LibraryMediator.instance().getLibraryPlaylists().markEndImport(playlist);
-                            LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
-                        }
-                    });
+                    asyncAddToPlaylistFinalizer(playlist);
                 }
             }
         }).start();
@@ -206,17 +197,23 @@ public class LibraryUtils {
                 try {
                     addToPlaylist(playlist, files);
                 } finally {
-                    GUIMediator.safeInvokeLater(new Runnable() {
-                        public void run() {
-                            LibraryMediator.instance().getLibraryPlaylists().markEndImport(playlist);
-                            LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
-                        }
-                    });
+                    asyncAddToPlaylistFinalizer(playlist);
                 }
             }
         }).start();
     }
 
+	private static void asyncAddToPlaylistFinalizer(final Playlist playlist) {
+		GUIMediator.safeInvokeLater(new Runnable() {
+		    public void run() {
+		        LibraryMediator.instance().getLibraryPlaylists().markEndImport(playlist);
+		        LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
+		        LibraryMediator.instance().getLibraryPlaylists().selectPlaylist(playlist);
+		    }
+		});
+	}
+
+    
     public static void asyncAddToPlaylist(final Playlist playlist, final PlaylistItem[] playlistItems) {
         new Thread(new Runnable() {
             public void run() {
