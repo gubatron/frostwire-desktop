@@ -93,7 +93,7 @@ public class HttpFetcher {
 	    this(uri, DEFAULT_USER_AGENT);
 	}
 	
-	public Object[] fetch(boolean gzip) {
+	public Object[] fetch(boolean gzip) throws IOException {
         
         DefaultHttpClient httpClient = new DefaultHttpClient();
         
@@ -176,8 +176,6 @@ public class HttpFetcher {
 
 			return new Object[]{ body, date};
 			
-		} catch (Exception e) {
-			System.out.println("Http error: " + e.getMessage());
 		} finally {
 			httpClient.getConnectionManager().shutdown();
 			try {
@@ -185,12 +183,15 @@ public class HttpFetcher {
 			} catch (IOException e) {
 			}
 		}
-		
-		return null;
 	}
 	
 	public byte[] fetch() {
-		Object[] objArray = fetch(false);
+		Object[] objArray = null;
+        try {
+            objArray = fetch(false);
+        } catch (IOException e) {
+            // ignore
+        }
 		
 		if (objArray != null) {
 			return (byte[]) objArray[0];
