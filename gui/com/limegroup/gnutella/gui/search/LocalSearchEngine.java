@@ -37,7 +37,7 @@ import com.limegroup.gnutella.util.FrostWireUtils.IndexedMapFunction;
 public class LocalSearchEngine {
 
 	private static final int DEEP_SEARCH_DELAY = 1000;
-	private static final int MAXIMUM_TORRENTS_TO_SCAN = 25;
+	private static final int MAXIMUM_TORRENTS_TO_SCAN = 20;
 	private static final int DEEP_SEARCH_ROUNDS = 3;
 
 	private static LocalSearchEngine INSTANCE;

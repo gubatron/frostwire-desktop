@@ -54,7 +54,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         }
         return INSTANCE;
     }
-
+    
     /**
      * Variables so only one ActionListener needs to be created for both
      * the buttons & popup menu.
