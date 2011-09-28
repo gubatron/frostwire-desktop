@@ -180,6 +180,10 @@ public class NativeFileIconController implements FileIconController {
      * TODO: Implement better.
      */
     public Icon getIconForExtension(String ext) {
+    	if (ext == null) {
+    		return null;
+    	}
+    	
         ext = ext.trim().toLowerCase();
         Icon icon = EXTENSIONS.get(ext);
         // If we already had a cached icon..
