@@ -88,15 +88,15 @@ public class BTDownloadRowFilteredModel extends BTDownloadModel {
     	}
     	
     	@SuppressWarnings("unchecked")
-		int sortedPosition = Collections.binarySearch(_list, dl,  new Comparator() {
+		int sortedPosition = Collections.binarySearch(_list, dl,  new Comparator<Object>() {
 			@Override
 			public int compare(Object a, Object b) {
 				BTDownloadDataLine aDataLine = (BTDownloadDataLine) a;
 				BTDownloadDataLine bDataLine = (BTDownloadDataLine) b;
 				
 				if (isSorted()) {
-					Comparable aComparable = (Comparable) aDataLine.getValueAt(_activeColumn);
-					Comparable bComparable = (Comparable) bDataLine.getValueAt(_activeColumn);
+					Comparable<Object> aComparable = (Comparable<Object>) aDataLine.getValueAt(_activeColumn);
+					Comparable<Object> bComparable = (Comparable<Object>) bDataLine.getValueAt(_activeColumn);
 					return aComparable.compareTo(bComparable);
 				} else {
 					BTDownload torrentA = aDataLine.getInitializeObject();
