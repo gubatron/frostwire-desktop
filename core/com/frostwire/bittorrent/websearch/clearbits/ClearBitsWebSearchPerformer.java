@@ -54,7 +54,14 @@ public class ClearBitsWebSearchPerformer implements WebSearchPerformer {
 
         // Feel the power of reflection
         JsonEngine engine = new JsonEngine();
-        ClearBitsResponse response = engine.toObject(json, ClearBitsResponse.class);
+        
+        ClearBitsResponse response = null;
+        
+        try {
+        	response = engine.toObject(json, ClearBitsResponse.class);
+        } catch (Exception e) {
+        	return null;
+        }
 
         response.fixItems();
 
