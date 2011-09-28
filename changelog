@@ -1,3 +1,40 @@
+frostwire (5.2.1) stable; urgency=high
+
+  * Mac OSX threading bug when importing .m3u playlist to new playlist fixed.
+  * Pressing space bar pauses/resumes currently played audio.
+  * FLAC playback support.
+
+ -- FrostWire Team <contact@frostwire.com>  Tue, 27 Sep 2011 20:20:20 -0500
+
+frostwire (5.2.0) stable; urgency=high
+
+  * New Library Tab, code named "Alexandria"
+  * New Audio Player controls
+  * New controls to create and manage playlists
+  * Drag and drop files from Finished Downloads, Audio, File explorer
+    into new or existing playlists.
+  * New control on status bar that shows current audio file being played
+    with a "Send to friend" button. Clicking on the file name bring user
+    back to where the audio file is being played.
+  * Export playlists to .m3u
+  * Import .m3u into new or existing playlists.
+  * Filter files inside currently selected file type or playlist.
+  * Audio player can randomize playback order, or repeat playlist.
+  * New icons all over the application.
+  * Album art is displayed when an audio file is selected on a playlist.
+  * Album art can be scaled in real time with split pane.
+  * Songs on playlists can be starred, Starred songs are added to "Starred"
+  * Selected songs on a playlist can be deleted with the Delete key, or
+    on right click Delete from playlist.
+  * Playlists can be renamed.
+  * Playlists can be deleted.
+  * When songs that have been deleted from disk are attempted to be played
+    they will be highlighted in red and with an exclamation mark.
+  * Right clicking on any song on a playlist > Cleanup removes all songs
+    on a playlist that have been deleted physically from disk.
+
+ -- FrostWire Team <contact@frostwire.com>  Mon, 26 Sep 2011 18:00:00 -0500
+
 frostwire (5.1.5) stable; urgency=high
 
   * Bug fix on setup wizard for some window configurations where controls
