@@ -4,6 +4,7 @@ frostwire (5.2.1) stable; urgency=high
   * Pressing space bar pauses/resumes currently played audio.
   * FLAC playback support.
   * When a playlist has finished importing files, it's shown to the user.
+  * Transfer manager remembers the position of its JSplitPane
 
  -- FrostWire Team <contact@frostwire.com>  Tue, 27 Sep 2011 20:20:20 -0500
 

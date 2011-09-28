@@ -9,6 +9,7 @@ import javax.swing.JSplitPane;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.search.SearchMediator;
+import com.limegroup.gnutella.settings.UISettings;
 
 /**
  * This class constructs the search/download tab, including all UI elements.
@@ -41,7 +42,7 @@ public final class SearchDownloadTab extends AbstractTab {
         searchDownloadSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, SearchMediator.getResultComponent(), downloadMediator.getComponent());
         searchDownloadSplitPane.setContinuousLayout(true);
         searchDownloadSplitPane.setResizeWeight(0.6);
-        searchDownloadSplitPane.setDividerLocation(Integer.MAX_VALUE);
+        searchDownloadSplitPane.setDividerLocation(UISettings.UI_TRANSFERS_DIVIDER_LOCATION.getValue());
 
 		JComponent searchBoxPanel = SearchMediator.getSearchComponent();
         
@@ -55,6 +56,7 @@ public final class SearchDownloadTab extends AbstractTab {
                 if (splitPane.getSize().height - current < BTDownloadMediator.MIN_HEIGHT) {
                     splitPane.setDividerLocation(splitPane.getSize().height - BTDownloadMediator.MIN_HEIGHT);
                 }
+                UISettings.UI_TRANSFERS_DIVIDER_LOCATION.setValue(splitPane.getDividerLocation());
             }
         });
 	}

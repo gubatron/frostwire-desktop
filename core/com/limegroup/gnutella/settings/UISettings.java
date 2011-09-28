@@ -90,8 +90,8 @@ public final class UISettings extends LimeProps {
 	 * Setting for the divider location between incoming query monitors and
 	 * upload panel.
 	 */
-	public static final IntSetting UI_MONITOR_UPLOAD_TAB_DIVIDER_LOCATION =
-		FACTORY.createIntSetting("UI_MONITOR_UPLOAD_TAB_DIVIDER_LOCATION", 300);
+	public static final IntSetting UI_TRANSFERS_DIVIDER_LOCATION =
+		FACTORY.createIntSetting("UI_TRANSFERS_DIVIDER_LOCATION", Integer.MAX_VALUE);
     
     /** Setting for if native icons should be preloaded. */
     public static final BooleanSetting PRELOAD_NATIVE_ICONS =
