@@ -96,7 +96,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener,
 	/**
 	 * The ProgressBar dimensions for showing the name & play progress.
 	 */
-	private final Dimension progressBarDimension = new Dimension(129, 10);
+	private final Dimension progressBarDimension = new Dimension(145, 10);
 
 	/**
 	 * Volume slider dimensions for adjusting the audio level of a song
