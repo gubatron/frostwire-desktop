@@ -12,8 +12,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
 
 import javax.swing.BorderFactory;
@@ -56,10 +54,6 @@ public class GUILoader {
 	        //sanityCheck();
 	        Initializer initializer = new Initializer();
 	        initializer.initialize(args, frame);
-        } catch(StartupFailedException sfe) {
-            hideSplash(frame);
-            showCorruptionError(sfe);
-            System.exit(1);
         } catch(Throwable err) {
             hideSplash(frame);
             try {
@@ -241,60 +235,5 @@ public class GUILoader {
 		DIALOG.setLocation((screenSize.width - dialogSize.width)/2,
 						   (screenSize.height - dialogSize.height)/2);
 		DIALOG.setVisible(true);
-    }	
-	
-    
-    /**
-     * Determines the MD5 hash of the specified file.
-     */
-    public static String hash(File f) throws IOException {        
-		FileInputStream fis = null;		
-		try {
-		    fis = new FileInputStream(f);
-    		MessageDigest md = null;
-    		try {
-    			md = MessageDigest.getInstance("MD5");
-    		} catch(NoSuchAlgorithmException e) {
-    		    throw new IOException("Unknown algorithm: MD5");
-    		}
-            
-            byte[] buffer = new byte[16384];
-            int read;
-            while ((read=fis.read(buffer)) != -1) {
-                md.update(buffer, 0, read);
-            }
-            
-            return toHexString(md.digest());
-        } finally {
-            if( fis != null ) {
-                try {
-                    fis.close();
-                } catch(IOException ignored) {}
-            }
-        }
-    }
-    
-    /**
-     * Converts a 16-byte array of unsigned bytes
-     * to a 32 character hex string.
-     */
-    private static String toHexString(byte[] data) {
-        StringBuilder sb = new StringBuilder(32);
-        for(int i = 0; i < data.length; i++) {
-            int asInt = data[i] & 0x000000FF;
-            String x = Integer.toHexString(asInt);
-            if(x.length() == 1)
-                sb.append("0");
-            sb.append(x);
-        }
-        return sb.toString().toUpperCase();
-    }
-    
-    @SuppressWarnings("serial")
-	private static class StartupFailedException extends Exception {
-        @SuppressWarnings("unused")
-		StartupFailedException() {
-            super();
-        }
     }
 }

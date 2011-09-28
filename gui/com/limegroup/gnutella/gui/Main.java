@@ -34,7 +34,7 @@ public class Main {
 		if (OSUtils.isMacOSX()) {
 			System.setProperty("apple.laf.useScreenMenuBar", "true");
 		}
-		System.out.println("1: Main.main("+args+")");
+		//System.out.println("1: Main.main("+args+")");
 		
 	    Frame splash = null;
 	    try {
@@ -189,38 +189,10 @@ public class Main {
     
     /** Determines if this is running a Mac OSX lower than Leopard */
     private static boolean isOlderThanLeopard() {
-      String version = System.getProperty("os.version");
-      StringTokenizer tk = new StringTokenizer(version,".");
-      int major = Integer.parseInt(tk.nextToken());
-      int minor = Integer.parseInt(tk.nextToken());
-      return major==10 && minor < 6;
+        String version = System.getProperty("os.version");
+        StringTokenizer tk = new StringTokenizer(version, ".");
+        int major = Integer.parseInt(tk.nextToken());
+        int minor = Integer.parseInt(tk.nextToken());
+        return major == 10 && minor < 6;
     }
-    
-    /**                                                                                                                                                                                               
-     * Count the number of splash images exist inside the splash.jar                                                                                                                                  
-     * @return                                                                                                                                                                                        
-     * @throws                                                                                                                                                                                        
-     */
-    @SuppressWarnings("unused")
-	private static int countSplashes()  {
-            int n = 0;
-            try {
-            	JarFile splashes = new JarFile("splash.jar");
-            	Enumeration<JarEntry> entries = splashes.entries();
-            	while (entries.hasMoreElements()) {
-            		JarEntry nextElement = entries.nextElement();
-            		String file = nextElement.getName();
-            		if (file.endsWith("jpg") || file.endsWith("png") || file.endsWith("gif")) {
-            			n++;
-            		}
-                }
-            } catch (Exception e) {
-                    // TODO Auto-generated catch block                                                                                                                                                
-                    e.printStackTrace();
-            }
-            return n;
-    }
-
-
-    
 }
