@@ -492,7 +492,7 @@ public abstract class AbstractTableMediator<T extends DataLineModel<E, I>, E ext
         if (SETTINGS.REAL_TIME_SORT.getValue() && DATA_MODEL.isSorted())
             addedAt = DATA_MODEL.addSorted(o);
         else {
-            if( index >= 0 && index < DATA_MODEL.getRowCount()) {
+            if( index >= 0 && index <= DATA_MODEL.getRowCount()) {
                 addedAt = DATA_MODEL.add(o, index);
             }
             else

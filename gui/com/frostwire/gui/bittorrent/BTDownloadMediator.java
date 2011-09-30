@@ -258,26 +258,26 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     /**
-     * Returns the set of filenames of all downloads
-     * This includes anything that is still viewable in the Downloads view.
-     *
-     * @return Set of filenames (String) of all downloads
+     * Returns the aggregate amount of bandwidth being consumed by active downloads.
+     *  
+     * @return the total amount of bandwidth being consumed by active downloads.
      */
+    private double getBandwidth(boolean download) {
+        AzureusCore azureusCore = AzureusStarter.getAzureusCore();
 
-    //    public Set<String> getFileNames() {
-    //    	Set<String> names = new HashSet<String>();
-    //    	for(int c = 0;c < DATA_MODEL.getRowCount(); c++) {
-    //    	    names.add(DATA_MODEL.get(c).getFileName());
-    //        }
-    //    	return names;
-    //    }
+        if (azureusCore == null) {
+            return 0;
+        }
+
+        return (download) ? azureusCore.getGlobalManager().getStats().getDataReceiveRate() : azureusCore.getGlobalManager().getStats().getDataSendRate();
+    }
 
     public double getDownloadsBandwidth() {
-        return DATA_MODEL.getDownloadsBandwidth() / 1000;
+        return getBandwidth(true) / 1000;
     }
 
     public double getUploadsBandwidth() {
-        return DATA_MODEL.getUploadsBandwidth() / 1000;
+        return getBandwidth(false) / 1000;
     }
 
     /**
@@ -291,7 +291,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
      */
     public void add(BTDownload downloader) {
         if (!DATA_MODEL.contains(downloader)) {
-            super.add(downloader);
+            super.add(downloader, DATA_MODEL.getRowCount());
         }
     }
 

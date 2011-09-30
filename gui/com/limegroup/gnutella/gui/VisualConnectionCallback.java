@@ -236,7 +236,7 @@ public final class VisualConnectionCallback implements ActivityCallback {
 
     public void addDownloadManager(DownloadManager dm) {
         Runnable doWorkRunnable = new AddDownloadManager(dm);
-        SwingUtilities.invokeLater(doWorkRunnable);
+        GUIMediator.safeInvokeAndWait(doWorkRunnable);
     }
     
     public boolean isRemoteDownloadsAllowed() {

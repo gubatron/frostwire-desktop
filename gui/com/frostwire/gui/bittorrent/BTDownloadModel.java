@@ -4,8 +4,6 @@ import java.util.HashSet;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
 
-import com.aelitis.azureus.core.AzureusCore;
-import com.frostwire.AzureusStarter;
 import com.limegroup.gnutella.gui.tables.BasicDataLineModel;
 
 /**
@@ -61,30 +59,6 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
         }
         return count;
     }
-    
-
-    /**
-     * Returns the aggregate amount of bandwidth being consumed by active downloads.
-     *  
-     * @return the total amount of bandwidth being consumed by active downloads.
-     */
-    double getBandwidth(boolean download) {
-        AzureusCore azureusCore = AzureusStarter.getAzureusCore();
-
-        if (azureusCore == null) {
-            return 0;
-        }
-
-        return (download) ? azureusCore.getGlobalManager().getStats().getDataReceiveRate() : azureusCore.getGlobalManager().getStats().getDataSendRate();
-    }
-
-    public double getDownloadsBandwidth() {
-        return getBandwidth(true);
-    }
-
-    public double getUploadsBandwidth() {
-        return getBandwidth(false);
-    }
 
     public int getTotalDownloads() {
         return getRowCount();
@@ -119,6 +93,12 @@ public class BTDownloadModel extends BasicDataLineModel<BTDownloadDataLine, BTDo
     public int add(BTDownload downloader) {
         _hashDownloads.add(downloader.getHash());
         return super.add(downloader);
+    }
+    
+    @Override
+    public int add(BTDownload downloader, int row) {
+        _hashDownloads.add(downloader.getHash());
+        return super.add(downloader, row);
     }
 
     @Override

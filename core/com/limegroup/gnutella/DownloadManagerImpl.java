@@ -2,7 +2,10 @@ package com.limegroup.gnutella;
 
 import java.io.File;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.gudy.azureus2.core3.global.GlobalManager;
@@ -46,8 +49,6 @@ public class DownloadManagerImpl implements DownloadManager {
      */
     public void loadSavedDownloadsAndScheduleWriting() {
         loadTorrentDownloads();
-        //loadSavedDownloads();
-        //scheduleSnapshots();
     }
     
     /**
@@ -57,23 +58,35 @@ public class DownloadManagerImpl implements DownloadManager {
     private void loadTorrentDownloads() {
         GlobalManager globalManager = AzureusStarter.getAzureusCore().getGlobalManager();
         List<?> downloadManagers = globalManager.getDownloadManagers();
+
+        List<org.gudy.azureus2.core3.download.DownloadManager> downloads = new ArrayList<org.gudy.azureus2.core3.download.DownloadManager>();
         for (Object obj : downloadManagers) {
             if (obj instanceof org.gudy.azureus2.core3.download.DownloadManager) {
-
-            	org.gudy.azureus2.core3.download.DownloadManager downloadManager = (org.gudy.azureus2.core3.download.DownloadManager) obj;
-            	
-            	if (downloadManager.getSaveLocation().getParentFile().getAbsolutePath().equals(UpdateSettings.UPDATES_DIR.getAbsolutePath())) {
-            	    continue;
-            	}
-                
-            	if (!SharingSettings.SEED_FINISHED_TORRENTS.getValue()) {
-            		if (downloadManager.getAssumedComplete()) {
-            		    downloadManager.pause();
-            		}
-            	}
-
-                addDownloaderManager(downloadManager);
+                downloads.add((org.gudy.azureus2.core3.download.DownloadManager) obj);
             }
+        }
+
+        Collections.sort(downloads, new Comparator<org.gudy.azureus2.core3.download.DownloadManager>() {
+            public int compare(org.gudy.azureus2.core3.download.DownloadManager o1, org.gudy.azureus2.core3.download.DownloadManager o2) {
+                return Long.valueOf(o1.getCreationTime()).compareTo(Long.valueOf(o2.getCreationTime()));
+            }
+        });
+
+        for (org.gudy.azureus2.core3.download.DownloadManager obj : downloads) {
+
+            org.gudy.azureus2.core3.download.DownloadManager downloadManager = (org.gudy.azureus2.core3.download.DownloadManager) obj;
+
+            if (downloadManager.getSaveLocation().getParentFile().getAbsolutePath().equals(UpdateSettings.UPDATES_DIR.getAbsolutePath())) {
+                continue;
+            }
+
+            if (!SharingSettings.SEED_FINISHED_TORRENTS.getValue()) {
+                if (downloadManager.getAssumedComplete()) {
+                    downloadManager.pause();
+                }
+            }
+
+            addDownloaderManager(downloadManager);
         }
     }
     
