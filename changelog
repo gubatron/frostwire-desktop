@@ -5,7 +5,8 @@ frostwire (5.2.1) stable; urgency=high
   * Playlist files can be sorted correctly by track number when available.
   * FLAC playback support.
   * When a playlist has finished importing files, it's shown to the user.
-  * Transfer manager remembers the position of its JSplitPane
+  * Transfer manager remembers the position of its JSplitPane.
+  * Transfer manager sorts downloads by default based on their creation date.
 
  -- FrostWire Team <contact@frostwire.com>  Tue, 27 Sep 2011 20:20:20 -0500
 
