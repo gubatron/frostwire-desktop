@@ -19,12 +19,12 @@ import com.limegroup.gnutella.gui.I18n;
 
 public class LibraryUtils {
 
-    private static void addPlaylistItem(Playlist playlist, File file) {
+    private static void addPlaylistItem(Playlist playlist, File file, boolean starred) {
         try {
             LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Importing ") + file.getName());
             AudioMetaData mt = new AudioMetaData(file);
             PlaylistItem item = playlist.newItem(file.getAbsolutePath(), file.getName(), file.length(), FileUtils.getFileExtension(file), mt.getTitle(), mt.getDurationInSecs(), mt.getArtist(), mt.getAlbum(), "",// TODO: cover art path
-                    mt.getBitrate(), mt.getComment(), mt.getGenre(), mt.getTrack(), mt.getYear(), false);
+                    mt.getBitrate(), mt.getComment(), mt.getGenre(), mt.getTrack(), mt.getYear(), starred);
             playlist.getItems().add(item);
             item.save();
         } finally {
@@ -99,41 +99,44 @@ public class LibraryUtils {
         }
     }
 
-    public static void createNewPlaylist(final File[] files) {
-    	
-    	final StringBuilder plBuilder = new StringBuilder();
-    		
-    	GUIMediator.safeInvokeAndWait(new Runnable() {
+    public static void createNewPlaylist(File[] files) {
+        createNewPlaylist(files, false);
+    }
 
-			@Override
-			public void run() {
-			    String input = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, calculateName(files));
-			    if (!StringUtils.isNullOrEmpty(input, true)) {
-			        plBuilder.append(input);
-			    }
-			}
-    	});
-    	
+    public static void createNewPlaylist(final File[] files, final boolean starred) {
+
+        final StringBuilder plBuilder = new StringBuilder();
+
+        GUIMediator.safeInvokeAndWait(new Runnable() {
+
+            @Override
+            public void run() {
+                String input = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, calculateName(files));
+                if (!StringUtils.isNullOrEmpty(input, true)) {
+                    plBuilder.append(input);
+                }
+            }
+        });
+
         String playlistName = plBuilder.toString();
 
         if (playlistName != null && playlistName.length() > 0) {
             final Playlist playlist = LibraryMediator.getLibrary().newPlaylist(playlistName, playlistName);
             playlist.save();
-            
+
             GUIMediator.safeInvokeLater(new Runnable() {
 
-				@Override
-				public void run() {
-		            LibraryMediator.instance().getLibraryPlaylists().addPlaylist(playlist);
-		            LibraryMediator.instance().getLibraryPlaylists().markBeginImport(playlist);
-				}
+                @Override
+                public void run() {
+                    LibraryMediator.instance().getLibraryPlaylists().addPlaylist(playlist);
+                    LibraryMediator.instance().getLibraryPlaylists().markBeginImport(playlist);
+                }
             });
-            
-            
+
             new Thread(new Runnable() {
                 public void run() {
                     try {
-                        addToPlaylist(playlist, files);
+                        addToPlaylist(playlist, files, starred);
                         playlist.save();
                     } finally {
                         asyncAddToPlaylistFinalizer(playlist);
@@ -144,38 +147,61 @@ public class LibraryUtils {
     }
 
     public static void createNewPlaylist(final PlaylistItem[] playlistItems) {
-        String playlistName = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, calculateName(playlistItems));
+        createNewPlaylist(playlistItems, false);
+    }
 
-        if (playlistName != null && playlistName.length() > 0) {
-            final Playlist playlist = LibraryMediator.getLibrary().newPlaylist(playlistName, playlistName);
-
+    public static void createNewPlaylist(final PlaylistItem[] playlistItems, boolean starred) {
+        if (starred) {
             new Thread(new Runnable() {
                 public void run() {
-					try {
-						playlist.save();
-						addToPlaylist(playlist, playlistItems);
-						playlist.save();
-						GUIMediator.safeInvokeLater(new Runnable() {
-							public void run() {
-								LibraryMediator.instance()
-										.getLibraryPlaylists()
-										.addPlaylist(playlist);
-							}
-						});
-					} finally {
-						asyncAddToPlaylistFinalizer(playlist);
-					}
+                    Playlist playlist = LibraryMediator.getLibrary().getStarredPlaylist();
+                    addToPlaylist(playlist, playlistItems, true);
+                    GUIMediator.safeInvokeLater(new Runnable() {
+                        public void run() {
+                            DirectoryHolder dh = LibraryMediator.instance().getLibraryFiles().getSelectedDirectoryHolder();
+                            if (dh instanceof StarredDirectoryHolder) {
+                                LibraryMediator.instance().getLibraryFiles().refreshSelection();
+                            } else {
+                                LibraryMediator.instance().getLibraryFiles().selectStarred();
+                            }
+                        }
+                    });
                 }
             }).start();
+        } else {
+            String playlistName = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, calculateName(playlistItems));
+
+            if (playlistName != null && playlistName.length() > 0) {
+                final Playlist playlist = LibraryMediator.getLibrary().newPlaylist(playlistName, playlistName);
+
+                new Thread(new Runnable() {
+                    public void run() {
+                        try {
+                            playlist.save();
+                            addToPlaylist(playlist, playlistItems);
+                            playlist.save();
+                            GUIMediator.safeInvokeLater(new Runnable() {
+                                public void run() {
+                                    LibraryMediator.instance().getLibraryPlaylists().addPlaylist(playlist);
+                                }
+                            });
+                        } finally {
+                            asyncAddToPlaylistFinalizer(playlist);
+                        }
+                    }
+                }).start();
+            }
         }
     }
 
-    
-    
     public static void createNewPlaylist(File m3uFile) {
+        createNewPlaylist(m3uFile, false);
+    }
+
+    public static void createNewPlaylist(File m3uFile, boolean starred) {
         try {
             List<File> files = M3UPlaylist.load(m3uFile.getAbsolutePath());
-            createNewPlaylist(files.toArray(new File[0]));
+            createNewPlaylist(files.toArray(new File[0]), starred);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -199,7 +225,7 @@ public class LibraryUtils {
         new Thread(new Runnable() {
             public void run() {
                 try {
-                    addToPlaylist(playlist, files);
+                    addToPlaylist(playlist, files, false);
                 } finally {
                     asyncAddToPlaylistFinalizer(playlist);
                 }
@@ -207,17 +233,16 @@ public class LibraryUtils {
         }).start();
     }
 
-	private static void asyncAddToPlaylistFinalizer(final Playlist playlist) {
-		GUIMediator.safeInvokeLater(new Runnable() {
-		    public void run() {
-		        LibraryMediator.instance().getLibraryPlaylists().markEndImport(playlist);
-		        LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
-		        LibraryMediator.instance().getLibraryPlaylists().selectPlaylist(playlist);
-		    }
-		});
-	}
+    private static void asyncAddToPlaylistFinalizer(final Playlist playlist) {
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                LibraryMediator.instance().getLibraryPlaylists().markEndImport(playlist);
+                LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
+                LibraryMediator.instance().getLibraryPlaylists().selectPlaylist(playlist);
+            }
+        });
+    }
 
-    
     public static void asyncAddToPlaylist(final Playlist playlist, final PlaylistItem[] playlistItems) {
         new Thread(new Runnable() {
             public void run() {
@@ -280,25 +305,32 @@ public class LibraryUtils {
         for (int i = 0; i < lines.size() && !playlist.isDeleted(); i++) {
             AbstractLibraryTableDataLine<?> line = lines.get(i);
             if (AudioPlayer.isPlayableFile(line.getFile())) {
-                LibraryUtils.addPlaylistItem(playlist, line.getFile());
+                LibraryUtils.addPlaylistItem(playlist, line.getFile(), false);
             }
         }
     }
 
-    private static void addToPlaylist(Playlist playlist, File[] files) {
+    private static void addToPlaylist(Playlist playlist, File[] files, boolean starred) {
         for (int i = 0; i < files.length && !playlist.isDeleted(); i++) {
             if (AudioPlayer.isPlayableFile(files[i])) {
-                LibraryUtils.addPlaylistItem(playlist, files[i]);
+                LibraryUtils.addPlaylistItem(playlist, files[i], starred);
             } else if (files[i].isDirectory()) {
-                addToPlaylist(playlist, files[i].listFiles());
+                addToPlaylist(playlist, files[i].listFiles(), starred);
             }
         }
     }
 
     private static void addToPlaylist(Playlist playlist, PlaylistItem[] playlistItems) {
+        addToPlaylist(playlist, playlistItems, false);
+    }
+
+    private static void addToPlaylist(Playlist playlist, PlaylistItem[] playlistItems, boolean saveItem) {
         for (int i = 0; i < playlistItems.length && !playlist.isDeleted(); i++) {
             playlistItems[i].setPlaylist(playlist);
             playlist.getItems().add(playlistItems[i]);
+            if (saveItem) {
+                playlistItems[i].save();
+            }
         }
     }
 

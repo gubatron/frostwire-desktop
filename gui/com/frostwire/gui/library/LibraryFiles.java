@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Rectangle;
-import java.awt.datatransfer.Transferable;
-import java.awt.dnd.InvalidDnDOperationException;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -18,14 +16,12 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.DefaultListModel;
 import javax.swing.Icon;
-import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.ToolTipManager;
-import javax.swing.TransferHandler;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -34,15 +30,12 @@ import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
 import com.frostwire.alexandria.Playlist;
-import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.bittorrent.TorrentUtil;
-import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.RefreshListener;
 import com.limegroup.gnutella.gui.actions.LimeAction;
-import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.options.ConfigureOptionsAction;
 import com.limegroup.gnutella.gui.options.OptionsConstructor;
 import com.limegroup.gnutella.gui.search.NamedMediaType;
@@ -65,7 +58,6 @@ public class LibraryFiles extends JPanel implements RefreshListener {
 
     private ListMouseObserver _listMouseObserver;
     private ListSelectionListener _listSelectionListener;
-    private ListTransferHandler listTransferHandler;
 
     private DefaultListModel _model;
     private JList _list;
@@ -131,15 +123,14 @@ public class LibraryFiles extends JPanel implements RefreshListener {
     private void setupList() {
         _listMouseObserver = new ListMouseObserver();
         _listSelectionListener = new LibraryFilesSelectionListener();
-        listTransferHandler = new ListTransferHandler();
-
+        
         _list = new LibraryIconList(_model);
         _list.setCellRenderer(new LibraryFilesCellRenderer());
         _list.addMouseListener(new DefaultMouseListener(_listMouseObserver));
         _list.addListSelectionListener(_listSelectionListener);
         _list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         _list.setDragEnabled(true);
-        _list.setTransferHandler(listTransferHandler);
+        _list.setTransferHandler(new LibraryFilesTransferHandler(_list));
       
         ToolTipManager.sharedInstance().registerComponent(_list);
     }
@@ -166,7 +157,7 @@ public class LibraryFiles extends JPanel implements RefreshListener {
                 .tr("You can configure the FrostWire\'s Options."))));
     }
 
-    private void refreshListCellSelection() {
+    public void refreshSelection() {
         LibraryFilesListCell node = (LibraryFilesListCell) _list.getSelectedValue();
 
         if (node == null) {
@@ -264,97 +255,7 @@ public class LibraryFiles extends JPanel implements RefreshListener {
 
             LibraryMediator.instance().getLibraryPlaylists().clearSelection();
 
-            refreshListCellSelection();
-        }
-    }
-
-    private final class ListTransferHandler extends TransferHandler {
-
-        private static final long serialVersionUID = -3874985752229848555L;
-
-        @Override
-        public boolean canImport(TransferSupport support) {
-
-            DropLocation location = support.getDropLocation();
-            int index = _list.locationToIndex(location.getDropPoint());
-            if (index != -1) {
-                LibraryFilesListCell cell = (LibraryFilesListCell) _list.getModel().getElementAt(index);
-                DirectoryHolder dirHolder = cell.getDirectoryHolder();
-                if (!(dirHolder instanceof MediaTypeSavedFilesDirectoryHolder)
-                        || !((MediaTypeSavedFilesDirectoryHolder) dirHolder).getMediaType().equals(MediaType.getAudioMediaType())) {
-                    return false;
-
-                }
-            } else {
-                return false;
-            }
-
-            if (support.isDataFlavorSupported(LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {
-                return true;
-            } else if (DNDUtils.containsFileFlavors(support.getDataFlavors())) {
-            	if (OSUtils.isMacOSX()) {
-            		return true;
-            	}
-                try {
-                    File[] files = DNDUtils.getFiles(support.getTransferable());
-                    for (File file : files) {
-                        if (AudioPlayer.isPlayableFile(file)) {
-                            return true;
-                        } else if (file.isDirectory()) {
-                            if (LibraryUtils.directoryContainsAudio(file)) {
-                                return true;
-                            }
-                        }
-                    }
-                    if (files.length == 1 && files[0].getAbsolutePath().endsWith(".m3u")) {
-                        return true;
-                    }
-                } catch (InvalidDnDOperationException e) {
-                    // this case seems to be something special with the OS
-                    return true;
-                } catch (Exception e) {
-                    return false;
-                }
-            }
-
-            return false;
-        }
-
-        @Override
-        public boolean importData(TransferSupport support) {
-            if (!canImport(support)) {
-                return false;
-            }
-
-            try {
-                Transferable transferable = support.getTransferable();
-                if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {
-                    PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistsTableTransferable.Item[]) transferable
-                            .getTransferData(LibraryPlaylistsTableTransferable.ITEM_ARRAY));
-                    LibraryUtils.createNewPlaylist(playlistItems);
-                } else {
-                    File[] files = DNDUtils.getFiles(support.getTransferable());
-                    if (files.length == 1 && files[0].getAbsolutePath().endsWith(".m3u")) {
-                        LibraryUtils.createNewPlaylist(files[0]);
-                    } else {
-                        LibraryUtils.createNewPlaylist(files);
-                    }
-                }
-            } catch (Exception e) {
-                return false;
-            }
-
-            return false;
-        }
-
-        @Override
-        public int getSourceActions(JComponent c) {
-            return COPY;
-        }
-        
-        @Override
-        public Icon getVisualRepresentation(Transferable t) {
-        	return GUIMediator.getThemeImage("star_on");
+            refreshSelection();
         }
     }
 
@@ -456,7 +357,7 @@ public class LibraryFiles extends JPanel implements RefreshListener {
             if (directoryHolder == null) {
                 return;
             }
-            refreshListCellSelection();
+            refreshSelection();
         }
     }
 
