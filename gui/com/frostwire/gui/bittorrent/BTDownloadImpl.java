@@ -1,6 +1,7 @@
 package com.frostwire.gui.bittorrent;
 
 import java.io.File;
+import java.util.Date;
 import java.util.Set;
 
 import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
@@ -318,6 +319,10 @@ public class BTDownloadImpl implements BTDownload {
         }
 
         return shareRatio;
+    }
+    
+    public Date getDateCreated() {
+        return new Date(_downloadManager.getCreationTime());
     }
 
     public boolean isPartialDownload() {

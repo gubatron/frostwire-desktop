@@ -1,6 +1,7 @@
 package com.frostwire.gui.bittorrent;
 
 import java.io.File;
+import java.util.Date;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
 
@@ -121,6 +122,10 @@ public class DuplicateDownload implements BTDownload {
 
     public String getShareRatio() {
         return "";
+    }
+    
+    public Date getDateCreated() {
+        return _delegate.getDateCreated();
     }
 
     public boolean isPartialDownload() {

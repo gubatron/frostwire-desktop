@@ -2,6 +2,7 @@ package com.frostwire.gui.bittorrent;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.util.Date;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -77,6 +78,8 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
     private String _shareRatio;
 
     private String _seedToPeerRatio;
+    
+    private Date dateCreated;
 
     private boolean _notification;
     /**
@@ -147,11 +150,15 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
     static final int SEED_TO_PEER_RATIO_INDEX = 12;
     private static final LimeTableColumn SEED_TO_PEER_RATIO_COLUMN = new LimeTableColumn(SEED_TO_PEER_RATIO_INDEX, "SEED_TO_PEER_RATIO_COLUMN",
             I18n.tr("Seeds/Peers"), 80, false, String.class);
+    
+    static final int DATE_CREATED_INDEX = 13;
+    private static final LimeTableColumn DATE_CREATED_COLUMN = new LimeTableColumn(DATE_CREATED_INDEX, "DATE_CREATED_COLUMN",
+            I18n.tr("Date Created"), 80, false, Date.class);
 
     /**
      * Number of columns to display
      */
-    static final int NUMBER_OF_COLUMNS = 13;
+    static final int NUMBER_OF_COLUMNS = 14;
 
     // Implements DataLine interface
     public int getColumnCount() {
@@ -225,6 +232,8 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
             return _shareRatio;
         case SEED_TO_PEER_RATIO_INDEX:
             return _seedToPeerRatio;
+        case DATE_CREATED_INDEX:
+            return dateCreated;
         }
         return null;
     }
@@ -260,6 +269,8 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
             return SHARE_RATIO_COLUMN;
         case SEED_TO_PEER_RATIO_INDEX:
             return SEED_TO_PEER_RATIO_COLUMN;
+        case DATE_CREATED_INDEX:
+            return DATE_CREATED_COLUMN;
         }
         return null;
     }
@@ -324,6 +335,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
         _shareRatio = initializer.getShareRatio();
         _seedToPeerRatio = initializer.getSeedToPeerRatio();
         _size = initializer.getSize();
+        dateCreated = initializer.getDateCreated();
 
         if (getInitializeObject().isCompleted()) {
             showNotification();

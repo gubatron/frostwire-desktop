@@ -1,6 +1,7 @@
 package com.frostwire.gui.bittorrent;
 
 import java.io.File;
+import java.util.Date;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
 
@@ -65,4 +66,6 @@ public interface BTDownload {
     public boolean isPartialDownload();
 
 	public void updateDownloadManager(DownloadManager downloadManager);
+
+    public Date getDateCreated();
 }

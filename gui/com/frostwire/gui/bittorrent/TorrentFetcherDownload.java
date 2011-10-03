@@ -2,6 +2,7 @@ package com.frostwire.gui.bittorrent;
 
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
@@ -191,6 +192,10 @@ public class TorrentFetcherDownload implements BTDownload {
 
     public String getShareRatio() {
         return _delegate != null ? _delegate.getShareRatio() : "";
+    }
+    
+    public Date getDateCreated() {
+        return _delegate != null ? _delegate.getDateCreated() : new Date();
     }
 
     public boolean isPartialDownload() {
