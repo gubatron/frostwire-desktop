@@ -80,6 +80,7 @@ class LibraryPlaylistsTableTransferHandler extends TransferHandler {
     }
 
     private boolean canImport(TransferSupport support, boolean fallback) {
+        support.setShowDropLocation(false);
         if (!mediator.getMediaType().equals(MediaType.getAudioMediaType())) {
             return fallback ? fallbackTransferHandler.canImport(support) : false;
         }
