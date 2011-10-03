@@ -153,7 +153,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
     
     static final int DATE_CREATED_INDEX = 13;
     private static final LimeTableColumn DATE_CREATED_COLUMN = new LimeTableColumn(DATE_CREATED_INDEX, "DATE_CREATED_COLUMN",
-            I18n.tr("Date Created"), 80, false, Date.class);
+            I18n.tr("Started On"), 80, false, Date.class);
 
     /**
      * Number of columns to display

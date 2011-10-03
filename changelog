@@ -7,6 +7,9 @@ frostwire (5.2.1) stable; urgency=high
   * When a playlist has finished importing files, it's shown to the user.
   * Transfer manager remembers the position of its JSplitPane.
   * Transfer manager sorts downloads by default based on their creation date.
+  * Transfer manager has new column "Started On" showing the date the transfer
+    first started.
+  * Drag and drop issues on playlist component for Mac OSX fixed.
 
  -- FrostWire Team <contact@frostwire.com>  Tue, 27 Sep 2011 20:20:20 -0500
 
