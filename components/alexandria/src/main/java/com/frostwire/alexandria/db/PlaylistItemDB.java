@@ -62,11 +62,14 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
         }
 
         if (obj.getId() == LibraryDatabase.OBJECT_NOT_SAVED_ID) {
-            obj.setStarred(isStarred(obj));
+            obj.setStarred(isStarred(obj) || obj.isStarred());
             Object[] sqlAndValues = createPlaylistItemInsert(obj);
             int id = db.insert((String) sqlAndValues[0], (Object[]) sqlAndValues[1]);
             obj.setId(id);
+            sqlAndValues = updateStarred(obj);
+            db.update((String) sqlAndValues[0], (Object[]) sqlAndValues[1]);
         } else {
+            obj.setStarred(obj.getPlaylist().getId() == LibraryDatabase.STARRED_PLAYLIST_ID || obj.isStarred());
             Object[] sqlAndValues = createPlaylistItemUpdate(obj);
             db.update((String) sqlAndValues[0], (Object[]) sqlAndValues[1]);
             sqlAndValues = updateStarred(obj);
