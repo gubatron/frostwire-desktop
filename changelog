@@ -10,6 +10,8 @@ frostwire (5.2.1) stable; urgency=high
   * Transfer manager has new column "Started On" showing the date the transfer
     first started.
   * Drag and drop issues on playlist component for Mac OSX fixed.
+  * Partial download dialog table can adjust column widths, a horizontal
+    scrollbar will appear if the sum of the columns is wider than the dialog.
 
  -- FrostWire Team <contact@frostwire.com>  Tue, 27 Sep 2011 20:20:20 -0500
 
