@@ -140,6 +140,7 @@ public class LibraryFiles extends JPanel implements RefreshListener {
         _list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         _list.setDragEnabled(true);
         _list.setTransferHandler(listTransferHandler);
+      
         ToolTipManager.sharedInstance().registerComponent(_list);
     }
 
@@ -291,6 +292,9 @@ public class LibraryFiles extends JPanel implements RefreshListener {
             if (support.isDataFlavorSupported(LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {
                 return true;
             } else if (DNDUtils.containsFileFlavors(support.getDataFlavors())) {
+            	if (OSUtils.isMacOSX()) {
+            		return true;
+            	}
                 try {
                     File[] files = DNDUtils.getFiles(support.getTransferable());
                     for (File file : files) {
@@ -346,6 +350,11 @@ public class LibraryFiles extends JPanel implements RefreshListener {
         @Override
         public int getSourceActions(JComponent c) {
             return COPY;
+        }
+        
+        @Override
+        public Icon getVisualRepresentation(Transferable t) {
+        	return GUIMediator.getThemeImage("star_on");
         }
     }
 

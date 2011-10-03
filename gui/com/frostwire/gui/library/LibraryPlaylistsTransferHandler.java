@@ -9,6 +9,8 @@ import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.TransferHandler;
 
+import org.limewire.util.OSUtils;
+
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.library.LibraryPlaylists.LibraryPlaylistsListCell;
@@ -30,6 +32,9 @@ class LibraryPlaylistsTransferHandler extends TransferHandler {
         if (support.isDataFlavorSupported(LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {
             return true;
         } else if (DNDUtils.containsFileFlavors(support.getDataFlavors())) {
+        	if (OSUtils.isMacOSX()) {
+        		return true;
+        	}
             try {
                 File[] files = DNDUtils.getFiles(support.getTransferable());
                 for (File file : files) {
