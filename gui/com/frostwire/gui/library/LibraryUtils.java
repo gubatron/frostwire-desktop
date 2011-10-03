@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import org.limewire.util.FileUtils;
 import org.limewire.util.FilenameUtils;
+import org.limewire.util.StringUtils;
 
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
@@ -106,7 +107,10 @@ public class LibraryUtils {
 
 			@Override
 			public void run() {
-				plBuilder.append((String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, calculateName(files)));
+			    String input = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, calculateName(files));
+			    if (!StringUtils.isNullOrEmpty(input, true)) {
+			        plBuilder.append(input);
+			    }
 			}
     	});
     	
