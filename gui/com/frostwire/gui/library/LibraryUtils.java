@@ -324,11 +324,12 @@ public class LibraryUtils {
         addToPlaylist(playlist, playlistItems, false);
     }
 
-    private static void addToPlaylist(Playlist playlist, PlaylistItem[] playlistItems, boolean saveItem) {
+    private static void addToPlaylist(Playlist playlist, PlaylistItem[] playlistItems, boolean starred) {
         for (int i = 0; i < playlistItems.length && !playlist.isDeleted(); i++) {
             playlistItems[i].setPlaylist(playlist);
             playlist.getItems().add(playlistItems[i]);
-            if (saveItem) {
+            if (starred) {
+                playlistItems[i].setStarred(starred);
                 playlistItems[i].save();
             }
         }

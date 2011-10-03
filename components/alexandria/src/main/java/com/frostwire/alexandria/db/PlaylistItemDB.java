@@ -69,7 +69,6 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
             sqlAndValues = updateStarred(obj);
             db.update((String) sqlAndValues[0], (Object[]) sqlAndValues[1]);
         } else {
-            obj.setStarred(obj.getPlaylist().getId() == LibraryDatabase.STARRED_PLAYLIST_ID || obj.isStarred());
             Object[] sqlAndValues = createPlaylistItemUpdate(obj);
             db.update((String) sqlAndValues[0], (Object[]) sqlAndValues[1]);
             sqlAndValues = updateStarred(obj);
