@@ -14,6 +14,11 @@ frostwire (5.2.1) stable; urgency=high
     scrollbar will appear if the sum of the columns is wider than the dialog.
   * When playing an audio file, if it gets deleted FROM DISK from inside
     FrostWire, the audio file will stop playing.
+  * Files can be dragged to the "Starred" playlist and they will be marked
+    as starred. If files are dragged from Disk, creating a new playlist
+    will be offered, and all the elements on the playlist will be starred.
+  * Files can be deleted from the "Starred" playlist. This will cause the
+    files to be unstarred on every other playlist where they belong.
 
  -- FrostWire Team <contact@frostwire.com>  Tue, 27 Sep 2011 20:20:20 -0500
 
