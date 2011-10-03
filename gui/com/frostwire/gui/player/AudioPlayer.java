@@ -461,6 +461,11 @@ public class AudioPlayer implements RefreshListener {
 		if (currentSongFile != null
 				&& file.equals(currentSongFile))
 			return true;
+		
+		PlaylistItem playlistItem = currentSong.getPlaylistItem();
+		if (playlistItem != null && new File(playlistItem.getFilePath()).equals(file)) {
+		    return true;
+		}
 
 		return false;
 	}

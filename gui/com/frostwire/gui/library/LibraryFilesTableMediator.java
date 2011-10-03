@@ -453,6 +453,9 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             // removeOptions > 2 => OS offers trash options
             boolean removed = FileUtils.delete(file, removeOptions.length > 2 && option == 0 /* "move to trash" option index */);
             if (removed) {
+                if (AudioPlayer.instance().isThisBeingPlayed(file)) {
+                    AudioPlayer.instance().stop();
+                }
                 DATA_MODEL.remove(DATA_MODEL.getRow(file));
             } else {
                 undeletedFileNames.add(getCompleteFileName(file));
