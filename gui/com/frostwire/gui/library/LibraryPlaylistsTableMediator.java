@@ -27,6 +27,7 @@ import org.limewire.util.OSUtils;
 
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
+import com.frostwire.alexandria.db.LibraryDatabase;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
@@ -49,7 +50,7 @@ import com.limegroup.gnutella.gui.util.GUILauncher.LaunchableProvider;
  * It is the Mediator to the Table part of the Library display.
  */
 final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<LibraryPlaylistsTableModel, LibraryPlaylistsTableDataLine, PlaylistItem> {
-    
+
     private Playlist currentPlaylist;
 
     /**
@@ -60,13 +61,13 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     public static Action ENQUEUE_ACTION;
     public static Action CREATE_TORRENT_ACTION;
     public static Action DELETE_ACTION;
-    
+
     private Action importToPlaylistAction = new ImportToPlaylistAction();
-    
+
     private Action exportPlaylistAction = new ExportPlaylistAction();
-    
+
     private Action cleanupPlaylistAction = new CleanupPlaylistAction();
-    
+
     /**
      * instance, for singelton access
      */
@@ -78,11 +79,11 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         }
         return INSTANCE;
     }
-    
+
     public Playlist getCurrentPlaylist() {
         return currentPlaylist;
     }
-    
+
     /**
      * Build some extra listeners
      */
@@ -152,12 +153,12 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
                 ENQUEUE_ACTION.setEnabled(true);
             DELETE_ACTION.setEnabled(true);
         }
-        
+
         menu.addSeparator();
         menu.add(new SkinMenuItem(importToPlaylistAction));
         menu.add(new SkinMenuItem(exportPlaylistAction));
         menu.add(new SkinMenuItem(cleanupPlaylistAction));
-        
+
         menu.addSeparator();
         LibraryPlaylistsTableDataLine line = DATA_MODEL.get(rows[0]);
         menu.add(createSearchSubMenu(line));
@@ -240,7 +241,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         TableColumnModel model = TABLE.getColumnModel();
         TableColumn tc = model.getColumn(LibraryPlaylistsTableDataLine.STARRED_IDX);
         tc.setCellEditor(new PlaylistItemStarEditor());
-        
+
         TABLE.addMouseMotionListener(new MouseMotionAdapter() {
             int currentCellColumn = -1;
             int currentCellRow = -1;
@@ -264,6 +265,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             public void mouseDragged(MouseEvent e) {
                 dragging = true;
             }
+
             @Override
             public void mouseMoved(MouseEvent e) {
                 dragging = SwingUtilities.isLeftMouseButton(e);
@@ -301,10 +303,10 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         if (playlist == null) {
             return;
         }
-        
+
         currentPlaylist = playlist;
         List<PlaylistItem> items = currentPlaylist.getItems();
-        
+
         clearTable();
         for (int i = 0; i < items.size(); i++) {
             addUnsorted(items.get(i));
@@ -382,58 +384,54 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     }
 
     /**
-     * Returns the options offered to the user when removing files.
-     * 
-     * Depending on the platform these can be a subset of 
-     * MOVE_TO_TRASH, DELETE, CANCEL.
-     */
-//    private static Object[] createRemoveOptions() {
-//        if (OSUtils.supportsTrash()) {
-//            String trashLabel = OSUtils.isWindows() ? I18n.tr("Move to Recycle Bin") : I18n.tr("Move to Trash");
-//            return new Object[] { trashLabel, I18n.tr("Delete"), I18n.tr("Cancel") };
-//        } else {
-//            return new Object[] { I18n.tr("Delete"), I18n.tr("Cancel") };
-//        }
-//    }
-
-    /**
      * Delete selected items from a playlist (not from disk)
      */
     public void removeSelection() {
-    	
-    	LibraryPlaylistsTableDataLine[] lines = getSelectedLibraryLines();
 
-    	for (LibraryPlaylistsTableDataLine line : lines) {
-    		PlaylistItem playlistItem = line.getInitializeObject();
-    		playlistItem.delete();
-    	}
-    	
-    	LibraryMediator.instance().getLibraryPlaylists().reselectPlaylist();
-    	
-    	clearSelection();
-    	
+        LibraryPlaylistsTableDataLine[] lines = getSelectedLibraryLines();
+
+        if (currentPlaylist != null && currentPlaylist.getId() == LibraryDatabase.STARRED_PLAYLIST_ID) {
+            for (LibraryPlaylistsTableDataLine line : lines) {
+                PlaylistItem playlistItem = line.getInitializeObject();
+                playlistItem.setStarred(false);
+                playlistItem.save();
+            }
+
+            LibraryMediator.instance().getLibraryFiles().refreshSelection();
+            
+        } else {
+
+            for (LibraryPlaylistsTableDataLine line : lines) {
+                PlaylistItem playlistItem = line.getInitializeObject();
+                playlistItem.delete();
+            }
+
+            LibraryMediator.instance().getLibraryPlaylists().reselectPlaylist();
+
+            clearSelection();
+        }
     }
 
     /**
      * Creates a JList of files and sets and makes it non-selectable. 
      */
-//    private static JList createFileList(List<String> fileNames) {
-//        JList fileList = new JList(fileNames.toArray());
-//        fileList.setVisibleRowCount(5);
-//        fileList.setCellRenderer(new FileNameListCellRenderer());
-//        //fileList.setSelectionForeground(fileList.getForeground());
-//        //fileList.setSelectionBackground(fileList.getBackground());
-//        fileList.setFocusable(false);
-//        return fileList;
-//    }
+    //    private static JList createFileList(List<String> fileNames) {
+    //        JList fileList = new JList(fileNames.toArray());
+    //        fileList.setVisibleRowCount(5);
+    //        fileList.setCellRenderer(new FileNameListCellRenderer());
+    //        //fileList.setSelectionForeground(fileList.getForeground());
+    //        //fileList.setSelectionBackground(fileList.getBackground());
+    //        fileList.setFocusable(false);
+    //        return fileList;
+    //    }
 
-//    /**
-//     * Returns the human readable file name for incomplete files or
-//     * just the regular file name otherwise. 
-//     */
-//    private String getCompleteFileName(File file) {
-//        return file.getName();
-//    }
+    //    /**
+    //     * Returns the human readable file name for incomplete files or
+    //     * just the regular file name otherwise. 
+    //     */
+    //    private String getCompleteFileName(File file) {
+    //        return file.getName();
+    //    }
 
     public void handleActionKey() {
         playSong();
@@ -504,7 +502,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         if (selectedFile != null && !selectedFile.getName().endsWith(".torrent")) {
             CREATE_TORRENT_ACTION.setEnabled(sel.length == 1);
         }
-        
+
         if (selectedFile != null) {
             SEND_TO_FRIEND_ACTION.setEnabled(sel.length == 1);
         }
@@ -531,7 +529,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             LibraryMediator.instance().getLibraryCoverArt().setFile(getSelectedLibraryLines()[0].getFile());
         }
     }
-    
+
     /**
      * Handles the deselection of all rows in the library table,
      * disabling all necessary buttons and menu items.
@@ -555,16 +553,16 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         handleSelection(TABLE.getSelectedRow());
     }
 
-	public boolean setPlaylistItemSelected(PlaylistItem item) {
-		int i = DATA_MODEL.getRow(item);
+    public boolean setPlaylistItemSelected(PlaylistItem item) {
+        int i = DATA_MODEL.getRow(item);
 
-		if (i != -1) {
-			TABLE.setSelectedRow(i);
-			TABLE.ensureSelectionVisible();
-			return true;
-		}
-		return false;
-	}
+        if (i != -1) {
+            TABLE.setSelectedRow(i);
+            TABLE.ensureSelectionVisible();
+            return true;
+        }
+        return false;
+    }
 
     private boolean hasExploreAction() {
         return OSUtils.isWindows() || OSUtils.isMacOSX();
@@ -707,7 +705,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             return _file;
         }
     }
-    
+
     private final class ImportToPlaylistAction extends AbstractAction {
 
         private static final long serialVersionUID = -9099898749358019734L;
@@ -722,7 +720,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             LibraryMediator.instance().getLibraryPlaylists().importM3U(currentPlaylist);
         }
     }
-    
+
     private final class ExportPlaylistAction extends AbstractAction {
 
         private static final long serialVersionUID = 6149822357662730490L;
@@ -737,11 +735,11 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             LibraryMediator.instance().getLibraryPlaylists().exportM3U(currentPlaylist);
         }
     }
-    
+
     private final class CleanupPlaylistAction extends AbstractAction {
 
         private static final long serialVersionUID = 8400749433148927596L;
-        
+
         public CleanupPlaylistAction() {
             putValue(Action.NAME, I18n.tr("Cleanup playlist"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Remove the deleted items"));
