@@ -66,12 +66,12 @@ Sea Glass Disabled Border {
 
 Sea Glass Selected {
     kind=Dark
-    colorUltraLight=#A5C4E7
-    colorExtraLight=#A4C3E7
-    colorLight=#81A9DC
-    colorMid=#78A4DB
-    colorDark=#719CD7
-    colorUltraDark=#539ADC
+    colorUltraLight=#85A4C7
+    colorExtraLight=#84A3C7
+    colorLight=#6189BC
+    colorMid=#5884BB
+    colorDark=#517CB7
+    colorUltraDark=#337ABC
     colorForeground=#1C1C1C
 }
 
