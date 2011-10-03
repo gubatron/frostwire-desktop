@@ -96,6 +96,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         CREATE_TORRENT_ACTION = new CreateTorrentAction();
         DELETE_ACTION = new RemoveAction();
         RENAME_ACTION = new RenameAction();
+        
     }
     
     @Override

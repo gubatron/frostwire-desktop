@@ -5,7 +5,9 @@ import java.awt.CardLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -50,6 +52,10 @@ public class LibraryMediator {
     private CardLayout _tablesViewLayout = new CardLayout();
     private JPanel _tablesPanel;
     private JSplitPane splitPane;
+    
+    private Map<Object,Integer> scrollbarValues;
+	private Object lastSelectedKey;
+	private AbstractLibraryTableMediator<?, ?, ?> lastSelectedMediator;
 
     /**
      * @return the <tt>LibraryMediator</tt> instance
@@ -65,6 +71,8 @@ public class LibraryMediator {
         GUIMediator.setSplashScreenString(I18n.tr("Loading Library Window..."));
 
         getComponent(); // creates MAIN_PANEL
+        
+        scrollbarValues =  new HashMap<Object, Integer>();
 
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, getLibraryLeftPanel(), getLibraryRightPanel());
         splitPane.setContinuousLayout(true);
@@ -86,8 +94,16 @@ public class LibraryMediator {
 
         MAIN_PANEL.add(splitPane);
     }
+    
+    protected Object getSelectedKey() {
+		if (getSelectedPlaylist() != null) {
+			return getSelectedPlaylist();
+		} else {
+			return getLibraryFiles().getSelectedDirectoryHolder();
+		}
+	}
 
-    public static Library getLibrary() {
+	public static Library getLibrary() {
         if (LIBRARY == null) {
             LIBRARY = new Library(LibrarySettings.LIBRARY_DATABASE);
         }
@@ -139,6 +155,57 @@ public class LibraryMediator {
 
     public void showView(String key) {
         _tablesViewLayout.show(_tablesPanel, key);
+        rememberScrollbarsOnMediators(key);        
+    }
+    
+    private void rememberScrollbarsOnMediators(String key) {
+        AbstractLibraryListPanel listPanel = null;
+    	AbstractLibraryTableMediator<?, ?, ?> tableMediator = null;
+    	
+        if (key.equals(FILES_TABLE_KEY)) {
+    		listPanel = getLibraryFiles();
+    		tableMediator = LibraryFilesTableMediator.instance();
+    		
+    	} else if (key.equals(PLAYLISTS_TABLE_KEY)) {
+    		listPanel = getLibraryPlaylists();
+    		tableMediator = LibraryPlaylistsTableMediator.instance();
+    	}
+        
+        if (lastSelectedMediator != null && lastSelectedKey != null) {
+        	System.out.println(lastSelectedKey + " SCROLLBAR LAST VALUE " + lastSelectedMediator.getScrollbarValue());
+        	scrollbarValues.put(lastSelectedKey, lastSelectedMediator.getScrollbarValue());
+        }
+
+        lastSelectedMediator = tableMediator;
+        lastSelectedKey = getSelectedKey();
+        
+        
+        if (scrollbarValues.containsKey(lastSelectedKey)) {
+        	final int lastScrollValue = scrollbarValues.get(lastSelectedKey);
+        	
+        	if (tableMediator == null || listPanel == null) {
+        		//nice antipattern here.
+        		return;
+        	}
+        	
+        	//oh java...
+        	final AbstractLibraryListPanel finalListPanel = listPanel;
+        	final AbstractLibraryTableMediator<?, ?, ?> finalTableMediator = tableMediator;
+        	
+        	finalListPanel.enqueueRunnable(new Runnable() {
+    			public void run() {
+    				 GUIMediator.safeInvokeLater(new Runnable() {
+
+						@Override
+						public void run() {
+							System.out.println("SCROLL TO " + lastScrollValue);
+							finalTableMediator.scrollTo(lastScrollValue);
+						}    					 
+    				 });
+    				
+    			}
+    		});
+        }
     }
 
     public void updateTableFiles(DirectoryHolder dirHolder) {
@@ -205,9 +272,6 @@ public class LibraryMediator {
         LibraryFilesTableMediator.instance().setFileSelected(file);
     }
 
-    /**
-     * 
-     */
     public void selectCurrentSong() {
         //Select current playlist.
         Playlist currentPlaylist = AudioPlayer.instance().getCurrentPlaylist();

@@ -21,7 +21,6 @@ import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -45,7 +44,6 @@ import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.RefreshListener;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.options.ConfigureOptionsAction;
 import com.limegroup.gnutella.gui.options.OptionsConstructor;
@@ -56,7 +54,7 @@ import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 
-public class LibraryPlaylists extends JPanel implements RefreshListener {
+public class LibraryPlaylists extends AbstractLibraryListPanel {
 
     private static final long serialVersionUID = 6317109161466445259L;
 
@@ -82,13 +80,11 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
     private Action importToNewPlaylistAction = new ImportToNewPlaylistAction();
     private Action exportPlaylistAction = new ExportPlaylistAction();
 
-    private List<Runnable> PENDING_RUNNABLES;
 
     private List<Playlist> importingPlaylists;
 
     public LibraryPlaylists() {
         setupUI();
-        PENDING_RUNNABLES = new ArrayList<Runnable>();
         importingPlaylists = new ArrayList<Playlist>();
     }
 
@@ -729,23 +725,6 @@ public class LibraryPlaylists extends JPanel implements RefreshListener {
         public void actionPerformed(ActionEvent e) {
             exportM3U(getSelectedPlaylist());
         }
-    }
-
-    public void executePendingRunnables() {
-        if (PENDING_RUNNABLES != null && PENDING_RUNNABLES.size() > 0) {
-            for (Runnable t : PENDING_RUNNABLES) {
-                try {
-                    t.run();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            PENDING_RUNNABLES.clear();
-        }
-    }
-
-    public void enqueueRunnable(Runnable r) {
-        PENDING_RUNNABLES.add(r);
     }
 
     public void markBeginImport(Playlist playlist) {

@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 
 import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
@@ -41,6 +42,15 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
         for (int i = 0; i < selected.length; i++)
             lines.add(DATA_MODEL.get(selected[i]));
         return lines;
+    }
+    
+    @Override
+    protected void setupMainPanel() {
+    	super.setupMainPanel();
+    }
+    
+    public JScrollPane getScrollPane() {
+    	return SCROLL_PANE;
     }
     
     public abstract List<AudioSource> getFileView();
@@ -82,7 +92,7 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
                 menu.add(new SkinMenuItem(new AddToPlaylistAction(playlist)));
             }
         }
-
+        
         return menu;
     }
 
@@ -144,5 +154,23 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
                 }
             }
         }
+    }
+    
+
+    void scrollTo(int value) {
+    	if (SCROLL_PANE !=null && SCROLL_PANE.getVerticalScrollBar() != null) {
+    		try {
+    			SCROLL_PANE.getVerticalScrollBar().setValue(value);
+    		} catch (Exception e) {
+    			//let it be, let it beeee...
+    		}
+    	}
+    }
+    
+    int getScrollbarValue() {
+    	if (SCROLL_PANE !=null && SCROLL_PANE.getVerticalScrollBar() != null) {
+    		return SCROLL_PANE.getVerticalScrollBar().getValue();
+    	}
+    	return 0;
     }
 }

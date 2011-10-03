@@ -10,7 +10,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -46,7 +50,7 @@ import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.SharingSettings;
 
-public class LibraryFiles extends JPanel implements RefreshListener {
+public class LibraryFiles extends AbstractLibraryListPanel {
 
     private static final long serialVersionUID = 9192882931064269836L;
 
@@ -67,11 +71,8 @@ public class LibraryFiles extends JPanel implements RefreshListener {
     private Action refreshAction = new RefreshAction();
     private Action exploreAction = new ExploreAction();
 
-    private List<Runnable> PENDING_RUNNABLES;
-
     public LibraryFiles() {
         setupUI();
-        PENDING_RUNNABLES = new ArrayList<Runnable>();
     }
 
     public DirectoryHolder getSelectedDirectoryHolder() {
@@ -175,7 +176,6 @@ public class LibraryFiles extends JPanel implements RefreshListener {
             LibraryMediator.instance().updateTableFiles(node.getDirectoryHolder());
 
             if (directoryHolder != null && directoryHolder instanceof MediaTypeSavedFilesDirectoryHolder) {
-                LibraryMediator.instance().showView(LibraryMediator.FILES_TABLE_KEY);
                 MediaTypeSavedFilesDirectoryHolder mtsfdh = (MediaTypeSavedFilesDirectoryHolder) directoryHolder;
                 BackgroundExecutorService.schedule(new SearchByMediaTypeRunnable(mtsfdh));
             }
@@ -262,10 +262,13 @@ public class LibraryFiles extends JPanel implements RefreshListener {
     private final class SearchByMediaTypeRunnable implements Runnable {
 
         private final MediaTypeSavedFilesDirectoryHolder _mtsfdh;
+        private AtomicInteger runnables;
 
         public SearchByMediaTypeRunnable(MediaTypeSavedFilesDirectoryHolder mtsfdh) {
             _mtsfdh = mtsfdh;
+            runnables = new AtomicInteger();
         }
+        
 
         public void run() {
             GUIMediator.safeInvokeLater(new Runnable() {
@@ -294,7 +297,7 @@ public class LibraryFiles extends JPanel implements RefreshListener {
                 search(musicFile, new HashSet<File>());
             }
 
-            executePendingRunnables();
+            LibraryFiles.this.executePendingRunnables();
         }
 
         private void search(File file, Set<File> ignore) {
@@ -331,6 +334,7 @@ public class LibraryFiles extends JPanel implements RefreshListener {
                     LibraryMediator.instance().addFilesToLibraryTable(files);
                 }
             };
+            
             GUIMediator.safeInvokeLater(r);
 
             for (File directory : directories) {
@@ -389,23 +393,6 @@ public class LibraryFiles extends JPanel implements RefreshListener {
 
     public void selectFinishedDownloads() {
         _list.setSelectedValue(_finishedDownloadsCell, true);
-    }
-
-    public void executePendingRunnables() {
-        if (PENDING_RUNNABLES != null && PENDING_RUNNABLES.size() > 0) {
-            for (Runnable t : PENDING_RUNNABLES) {
-                try {
-                    t.run();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            PENDING_RUNNABLES.clear();
-        }
-    }
-
-    public void enqueueRunnable(Runnable r) {
-        PENDING_RUNNABLES.add(r);
     }
 
     @Override
