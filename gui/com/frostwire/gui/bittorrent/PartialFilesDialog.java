@@ -152,12 +152,13 @@ public class PartialFilesDialog extends JDialog {
         
         _table.getColumnModel().getColumn(1).setHeaderValue(I18n.tr("File"));
         _table.getColumnModel().getColumn(2).setHeaderValue(I18n.tr("Size"));
-        _table.getColumnModel().getColumn(0).setPreferredWidth(10);
-        _table.getColumnModel().getColumn(1).setPreferredWidth(500);
+        _table.getColumnModel().getColumn(0).setPreferredWidth(30);
+        _table.getColumnModel().getColumn(1).setPreferredWidth(620);
         _table.getColumnModel().getColumn(2).setPreferredWidth(60);
 
-        _scrollPane = new JScrollPane(_table);
+        _scrollPane = new JScrollPane(_table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         _table.setFillsViewportHeight(true);
+        _table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         c = new GridBagConstraints();
         c.insets = new Insets(5, 5, 5, 5);
         c.fill = GridBagConstraints.BOTH;
