@@ -50,4 +50,8 @@ public abstract class AbstractLibraryListPanel extends JPanel implements Refresh
             PENDING_RUNNABLES.clear();
         }
     }
+
+    public List<Runnable> getPendingRunnables() {
+        return PENDING_RUNNABLES;
+    }
 }

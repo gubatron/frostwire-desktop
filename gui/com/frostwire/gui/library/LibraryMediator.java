@@ -160,14 +160,17 @@ public class LibraryMediator {
     
     private void rememberScrollbarsOnMediators(String key) {
         AbstractLibraryTableMediator<?, ?, ?> tableMediator = null;
+        AbstractLibraryListPanel listPanel = null;
 
         if (key.equals(FILES_TABLE_KEY)) {
             tableMediator = LibraryFilesTableMediator.instance();
+            listPanel = getLibraryFiles();
         } else if (key.equals(PLAYLISTS_TABLE_KEY)) {
             tableMediator = LibraryPlaylistsTableMediator.instance();
+            listPanel = getLibraryPlaylists();
         }
 
-        if (tableMediator == null) {
+        if (tableMediator == null || listPanel == null) {
             //nice antipattern here.
             return;
         }
@@ -179,9 +182,11 @@ public class LibraryMediator {
         lastSelectedMediator = tableMediator;
         lastSelectedKey = getSelectedKey();
 
-        int lastScrollValue = scrollbarValues.containsKey(lastSelectedKey) ? scrollbarValues.get(lastSelectedKey) : 0;
+        if (listPanel.getPendingRunnables().size() == 0) {
+            int lastScrollValue = scrollbarValues.containsKey(lastSelectedKey) ? scrollbarValues.get(lastSelectedKey) : 0;
 
-        tableMediator.scrollTo(lastScrollValue);
+            tableMediator.scrollTo(lastScrollValue);
+        }
     }
 
     public void updateTableFiles(DirectoryHolder dirHolder) {
