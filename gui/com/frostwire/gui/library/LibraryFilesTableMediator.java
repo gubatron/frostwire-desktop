@@ -2,8 +2,6 @@ package com.frostwire.gui.library;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +20,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputListener;
 import javax.swing.table.TableCellEditor;
 
@@ -244,17 +241,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         //TableColumnModel model = TABLE.getColumnModel();
         //TableColumn tc = model.getColumn(LibraryFilesTableDataLine.NAME_IDX);
         //tc.setCellEditor(new LibraryTableCellEditor(this));
-        
-        TABLE.addMouseMotionListener(new MouseMotionAdapter() {
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                dragging = true;
-            }
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                dragging = SwingUtilities.isLeftMouseButton(e);
-            }
-        });
     }
 
     /**
@@ -635,7 +621,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         } else
             ENQUEUE_ACTION.setEnabled(false);
         
-        if (!dragging && sel.length == 1) {
+        if (sel.length == 1) {
             LibraryMediator.instance().getLibraryCoverArt().setFile(selectedFile);
         }
     }

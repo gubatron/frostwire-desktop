@@ -260,17 +260,6 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
                 }
             }
         });
-        TABLE.addMouseMotionListener(new MouseMotionAdapter() {
-            @Override
-            public void mouseDragged(MouseEvent e) {
-                dragging = true;
-            }
-
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                dragging = SwingUtilities.isLeftMouseButton(e);
-            }
-        });
     }
 
     /**
@@ -525,7 +514,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         } else
             ENQUEUE_ACTION.setEnabled(false);
 
-        if (!dragging && sel.length == 1) {
+        if (sel.length == 1) {
             LibraryMediator.instance().getLibraryCoverArt().setFile(getSelectedLibraryLines()[0].getFile());
         }
     }
