@@ -1,14 +1,16 @@
 package com.frostwire.gui.library;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 
 import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
@@ -27,7 +29,9 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
     private MediaType mediaType;
 
     protected Action SEND_TO_FRIEND_ACTION;
-    
+
+    private int needToScrollTo;
+
     protected static boolean dragging;
 
     protected AbstractLibraryTableMediator(String id) {
@@ -43,16 +47,20 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
             lines.add(DATA_MODEL.get(selected[i]));
         return lines;
     }
-    
+
     @Override
-    protected void setupMainPanel() {
-    	super.setupMainPanel();
+    protected JComponent getScrolledTablePane() {
+        JComponent comp = super.getScrolledTablePane();
+        SCROLL_PANE.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+            public void adjustmentValueChanged(AdjustmentEvent e) {
+                if (needToScrollTo > 0) {
+                    scrollTo(needToScrollTo);
+                }
+            }
+        });
+        return comp;
     }
-    
-    public JScrollPane getScrollPane() {
-    	return SCROLL_PANE;
-    }
-    
+
     public abstract List<AudioSource> getFileView();
 
     public MediaType getMediaType() {
@@ -62,8 +70,6 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
     public void setMediaType(MediaType mediaType) {
         this.mediaType = mediaType;
     }
-
-    
 
     @Override
     protected void buildListeners() {
@@ -92,7 +98,7 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
                 menu.add(new SkinMenuItem(new AddToPlaylistAction(playlist)));
             }
         }
-        
+
         return menu;
     }
 
@@ -136,7 +142,7 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
         public SendToFriendAction() {
             super(I18n.tr("Send to friend"));
             putValue(Action.LONG_DESCRIPTION, I18n.tr("Send to friend"));
-            putValue(Action.SMALL_ICON,GUIMediator.getThemeImage("share"));
+            putValue(Action.SMALL_ICON, GUIMediator.getThemeImage("share"));
         }
 
         @Override
@@ -145,8 +151,7 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
             if (lines.size() == 1) {
                 File file = lines.get(0).getFile();
                 String fileFolder = file.isFile() ? I18n.tr("file") : I18n.tr("folder");
-                int result = JOptionPane.showConfirmDialog(GUIMediator.getAppFrame(), I18n.tr("Do you want to send this {0} to a friend?", fileFolder)
-                        + "\n\n\"" + file.getName() + "\"", I18n.tr("Send files with FrostWire"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                int result = JOptionPane.showConfirmDialog(GUIMediator.getAppFrame(), I18n.tr("Do you want to send this {0} to a friend?", fileFolder) + "\n\n\"" + file.getName() + "\"", I18n.tr("Send files with FrostWire"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
                 if (result == JOptionPane.YES_OPTION) {
                     new SendFileProgressDialog(GUIMediator.getAppFrame(), file).setVisible(true);
@@ -155,22 +160,24 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
             }
         }
     }
-    
 
     void scrollTo(int value) {
-    	if (SCROLL_PANE !=null && SCROLL_PANE.getVerticalScrollBar() != null) {
-    		try {
-    			SCROLL_PANE.getVerticalScrollBar().setValue(value);
-    		} catch (Exception e) {
-    			//let it be, let it beeee...
-    		}
-    	}
+        if (SCROLL_PANE != null && SCROLL_PANE.getVerticalScrollBar() != null && SCROLL_PANE.getVerticalScrollBar().getMaximum() >= value) {
+            try {
+                SCROLL_PANE.getVerticalScrollBar().setValue(value);
+            } catch (Exception e) {
+                //let it be, let it beeee...
+            }
+            needToScrollTo = -1;
+        } else {
+            needToScrollTo = value;
+        }
     }
-    
+
     int getScrollbarValue() {
-    	if (SCROLL_PANE !=null && SCROLL_PANE.getVerticalScrollBar() != null) {
-    		return SCROLL_PANE.getVerticalScrollBar().getValue();
-    	}
-    	return 0;
+        if (SCROLL_PANE != null && SCROLL_PANE.getVerticalScrollBar() != null) {
+            return SCROLL_PANE.getVerticalScrollBar().getValue();
+        }
+        return 0;
     }
 }

@@ -154,68 +154,45 @@ public class LibraryMediator {
     }
 
     public void showView(String key) {
-        _tablesViewLayout.show(_tablesPanel, key);
-        rememberScrollbarsOnMediators(key);        
+        rememberScrollbarsOnMediators(key);
+        _tablesViewLayout.show(_tablesPanel, key);        
     }
     
     private void rememberScrollbarsOnMediators(String key) {
-        AbstractLibraryListPanel listPanel = null;
-    	AbstractLibraryTableMediator<?, ?, ?> tableMediator = null;
-    	
+        AbstractLibraryTableMediator<?, ?, ?> tableMediator = null;
+
         if (key.equals(FILES_TABLE_KEY)) {
-    		listPanel = getLibraryFiles();
-    		tableMediator = LibraryFilesTableMediator.instance();
-    		
-    	} else if (key.equals(PLAYLISTS_TABLE_KEY)) {
-    		listPanel = getLibraryPlaylists();
-    		tableMediator = LibraryPlaylistsTableMediator.instance();
-    	}
-        
+            tableMediator = LibraryFilesTableMediator.instance();
+
+        } else if (key.equals(PLAYLISTS_TABLE_KEY)) {
+            tableMediator = LibraryPlaylistsTableMediator.instance();
+        }
+
+        if (tableMediator == null) {
+            //nice antipattern here.
+            return;
+        }
+
         if (lastSelectedMediator != null && lastSelectedKey != null) {
-        	System.out.println(lastSelectedKey + " SCROLLBAR LAST VALUE " + lastSelectedMediator.getScrollbarValue());
-        	scrollbarValues.put(lastSelectedKey, lastSelectedMediator.getScrollbarValue());
+            scrollbarValues.put(lastSelectedKey, lastSelectedMediator.getScrollbarValue());
         }
 
         lastSelectedMediator = tableMediator;
         lastSelectedKey = getSelectedKey();
-        
-        
-        if (scrollbarValues.containsKey(lastSelectedKey)) {
-        	final int lastScrollValue = scrollbarValues.get(lastSelectedKey);
-        	
-        	if (tableMediator == null || listPanel == null) {
-        		//nice antipattern here.
-        		return;
-        	}
-        	
-        	//oh java...
-        	final AbstractLibraryListPanel finalListPanel = listPanel;
-        	final AbstractLibraryTableMediator<?, ?, ?> finalTableMediator = tableMediator;
-        	
-        	finalListPanel.enqueueRunnable(new Runnable() {
-    			public void run() {
-    				 GUIMediator.safeInvokeLater(new Runnable() {
 
-						@Override
-						public void run() {
-							System.out.println("SCROLL TO " + lastScrollValue);
-							finalTableMediator.scrollTo(lastScrollValue);
-						}    					 
-    				 });
-    				
-    			}
-    		});
-        }
+        int lastScrollValue = scrollbarValues.containsKey(lastSelectedKey) ? scrollbarValues.get(lastSelectedKey) : 0;
+
+        tableMediator.scrollTo(lastScrollValue);
     }
 
     public void updateTableFiles(DirectoryHolder dirHolder) {
-        LibraryFilesTableMediator.instance().updateTableFiles(dirHolder);
         showView(FILES_TABLE_KEY);
+        LibraryFilesTableMediator.instance().updateTableFiles(dirHolder);
     }
 
     public void updateTableItems(Playlist playlist) {
-        LibraryPlaylistsTableMediator.instance().updateTableItems(playlist);
         showView(PLAYLISTS_TABLE_KEY);
+        LibraryPlaylistsTableMediator.instance().updateTableItems(playlist);
     }
 
     public void clearLibraryTable() {
