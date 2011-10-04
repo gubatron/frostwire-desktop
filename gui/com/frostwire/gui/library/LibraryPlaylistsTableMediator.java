@@ -161,6 +161,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         menu.add(new SkinMenuItem(importToPlaylistAction));
         menu.add(new SkinMenuItem(exportPlaylistAction));
         menu.add(new SkinMenuItem(cleanupPlaylistAction));
+        menu.add(new SkinMenuItem(refreshID3TagsAction));
 
         menu.addSeparator();
         LibraryPlaylistsTableDataLine line = DATA_MODEL.get(rows[0]);
@@ -753,7 +754,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             for (LibraryPlaylistsTableDataLine line : lines) {
                 items.add(line.getInitializeObject());
             }
-            LibraryUtils.refreshID3Tags(items);
+            LibraryUtils.refreshID3Tags(currentPlaylist, items);
         }
     }
 

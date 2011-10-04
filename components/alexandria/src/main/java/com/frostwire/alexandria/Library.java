@@ -56,7 +56,7 @@ public class Library extends Entity<LibraryDB> {
     public Playlist newPlaylist(String name, String description) {
         return new Playlist(this, LibraryDatabase.OBJECT_NOT_SAVED_ID, name, description);
     }
-    
+
     public void dump() {
         db.getDatabase().dump();
     }
@@ -72,5 +72,9 @@ public class Library extends Entity<LibraryDB> {
 
     public Playlist getStarredPlaylist() {
         return db.getStarredPlaylist(this);
+    }
+
+    public void updatePlaylistItemProperties(String filePath, String title, String artist, String album, String comment, String genre, String track, String year) {
+        db.updatePlaylistItemProperties(filePath, title, artist, album, comment, genre, track, year);
     }
 }

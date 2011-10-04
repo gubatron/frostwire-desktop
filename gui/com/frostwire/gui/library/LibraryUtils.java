@@ -3,15 +3,18 @@ package com.frostwire.gui.library;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 import javax.swing.JOptionPane;
 
+import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.util.FileUtils;
 import org.limewire.util.FilenameUtils;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
+import com.frostwire.alexandria.db.LibraryDatabase;
 import com.frostwire.gui.library.LibraryPlaylistsTableTransferable.Item;
 import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -19,9 +22,15 @@ import com.limegroup.gnutella.gui.I18n;
 
 public class LibraryUtils {
 
+    private static final ExecutorService executor;
+
+    static {
+        executor = ExecutorsHelper.newProcessingQueue("LibraryUtils-Executor");
+    }
+
     private static void addPlaylistItem(Playlist playlist, File file, boolean starred) {
         try {
-            LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Importing ") + file.getName());
+            LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Importing") + " " + file.getName());
             AudioMetaData mt = new AudioMetaData(file);
             PlaylistItem item = playlist.newItem(file.getAbsolutePath(), file.getName(), file.length(), FileUtils.getFileExtension(file), mt.getTitle(), mt.getDurationInSecs(), mt.getArtist(), mt.getAlbum(), "",// TODO: cover art path
                     mt.getBitrate(), mt.getComment(), mt.getGenre(), mt.getTrack(), mt.getYear(), starred);
@@ -441,11 +450,44 @@ public class LibraryUtils {
     }
 
     public static void refreshID3Tags(Playlist playlist) {
-        refreshID3Tags(playlist.getItems());
+        refreshID3Tags(playlist, playlist.getItems());
     }
 
-    public static void refreshID3Tags(List<PlaylistItem> items) {
-        // TODO Auto-generated method stub
-        
+    public static void refreshID3Tags(final Playlist playlist, final List<PlaylistItem> items) {
+        executor.execute(new Runnable() {
+            public void run() {
+                for (PlaylistItem item : items) {
+                    try {
+                        LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Refreshing") + " " + item.getTrackAlbum() + " - " + item.getTrackTitle());
+                        File file = new File(item.getFilePath());
+                        if (file.exists()) {
+                            AudioMetaData mt = new AudioMetaData(file);
+                            LibraryMediator.getLibrary().updatePlaylistItemProperties(item.getFilePath(), mt.getTitle(), mt.getArtist(), mt.getAlbum(), mt.getComment(), mt.getGenre(), mt.getTrack(), mt.getYear());
+                        }
+                    } catch (Exception e) {
+                        // ignore, skip
+                    } finally {
+                        LibraryMediator.instance().getLibrarySearch().revertStatus();
+                    }
+                }
+                GUIMediator.safeInvokeLater(new Runnable() {
+                    public void run() {
+                        if (playlist != null) {
+                            if (playlist.getId() == LibraryDatabase.STARRED_PLAYLIST_ID) {
+                                DirectoryHolder dh = LibraryMediator.instance().getLibraryFiles().getSelectedDirectoryHolder();
+                                if (dh instanceof StarredDirectoryHolder) {
+                                    LibraryMediator.instance().getLibraryFiles().refreshSelection();
+                                }
+                            } else {
+                                Playlist selectedPlaylist = LibraryMediator.instance().getLibraryPlaylists().getSelectedPlaylist();
+                                if (selectedPlaylist != null && selectedPlaylist.equals(playlist)) {
+                                    LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
     }
 }

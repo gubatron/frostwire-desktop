@@ -100,7 +100,11 @@ public class Playlist extends Entity<PlaylistDB> {
     
     @Override
     public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof Playlist)) {
+            return false;
+        }
+        
     	Playlist other = (Playlist) obj;
-    	return other.getId()==getId();
+    	return other.getId() == getId();
     }
 }

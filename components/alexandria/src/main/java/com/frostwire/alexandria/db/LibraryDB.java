@@ -68,8 +68,7 @@ public class LibraryDB extends ObjectDB<Library> {
     }
 
     public Playlist getStarredPlaylist(Library library) {
-        String query = "SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, trackDurationInSecs, trackArtist, trackAlbum, coverArtPath, trackBitrate, trackComment, trackGenre, trackNumber, trackYear, starred "
-                + "FROM PlaylistItems WHERE starred = ?";
+        String query = "SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, trackDurationInSecs, trackArtist, trackAlbum, coverArtPath, trackBitrate, trackComment, trackGenre, trackNumber, trackYear, starred " + "FROM PlaylistItems WHERE starred = ?";
 
         List<List<Object>> result = db.query(query, true);
 
@@ -90,5 +89,18 @@ public class LibraryDB extends ObjectDB<Library> {
         playlist.getItems().addAll(items);
 
         return playlist;
+    }
+
+    public void updatePlaylistItemProperties(String filePath, String title, String artist, String album, String comment, String genre, String track, String year) {
+        Object[] sqlAndValues = createPlaylistItemPropertiesUpdate(filePath, title, artist, album, comment, genre, track, year);
+        db.update((String) sqlAndValues[0], (Object[]) sqlAndValues[1]);
+    }
+
+    private Object[] createPlaylistItemPropertiesUpdate(String filePath, String title, String artist, String album, String comment, String genre, String track, String year) {
+        String sql = "UPDATE PlaylistItems SET trackTitle = ?, trackArtist = ?, trackAlbum = ?, trackComment = ?, trackGenre = ?, trackNumber = ?, trackYear = ? WHERE filePath = ?";
+
+        Object[] values = new Object[] { title, artist, album, comment, genre, track, year, filePath };
+
+        return new Object[] { sql, values };
     }
 }
