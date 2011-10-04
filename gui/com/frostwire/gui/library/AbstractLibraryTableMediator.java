@@ -1,5 +1,6 @@
 package com.frostwire.gui.library;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
@@ -38,13 +39,15 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
         super(id);
         GUIMediator.addRefreshListener(this);
         mediaType = MediaType.getAnyTypeMediaType();
+        needToScrollTo = -1;
     }
 
     public List<AbstractLibraryTableDataLine<I>> getSelectedLines() {
         int[] selected = TABLE.getSelectedRows();
         List<AbstractLibraryTableDataLine<I>> lines = new ArrayList<AbstractLibraryTableDataLine<I>>(selected.length);
-        for (int i = 0; i < selected.length; i++)
+        for (int i = 0; i < selected.length; i++) {
             lines.add(DATA_MODEL.get(selected[i]));
+        }
         return lines;
     }
 
@@ -55,9 +58,7 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
         if (adjustmentListener == null) {
             adjustmentListener = new AdjustmentListener() {
                 public void adjustmentValueChanged(AdjustmentEvent e) {
-                    if (needToScrollTo > 0) {
-                        scrollTo(needToScrollTo);
-                    }
+                    adjustmentListener_adjustmentValueChanged(e);
                 }
             };
             SCROLL_PANE.getVerticalScrollBar().addAdjustmentListener(adjustmentListener);
@@ -105,6 +106,26 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
         }
 
         return menu;
+    }
+    
+    private void adjustmentListener_adjustmentValueChanged(AdjustmentEvent e) {
+        try {
+            int value = needToScrollTo;
+            if (value >= 0) {
+                if (SCROLL_PANE.getVerticalScrollBar().getMaximum() >= value) {
+                    if (value >= 0) {
+                        System.out.println("b:" + value);
+                        SCROLL_PANE.getVerticalScrollBar().setValue(value);
+                        Toolkit.getDefaultToolkit().sync();
+                    }
+                    System.out.println("a:" + value);
+                    needToScrollTo = -1;
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            needToScrollTo = -1;
+        }
     }
 
     private class CreateNewPlaylistAction extends AbstractAction {
@@ -167,16 +188,7 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
     }
 
     void scrollTo(int value) {
-        if (SCROLL_PANE != null && SCROLL_PANE.getVerticalScrollBar() != null && SCROLL_PANE.getVerticalScrollBar().getMaximum() >= value) {
-            try {
-                SCROLL_PANE.getVerticalScrollBar().setValue(value);
-            } catch (Exception e) {
-                //let it be, let it beeee...
-            }
-            needToScrollTo = -1;
-        } else {
-            needToScrollTo = value;
-        }
+        needToScrollTo = value;
     }
 
     int getScrollbarValue() {

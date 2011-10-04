@@ -185,11 +185,13 @@ public class LibraryMediator {
     }
 
     public void updateTableFiles(DirectoryHolder dirHolder) {
+        clearLibraryTable();
         showView(FILES_TABLE_KEY);
         LibraryFilesTableMediator.instance().updateTableFiles(dirHolder);
     }
 
     public void updateTableItems(Playlist playlist) {
+        clearLibraryTable();
         showView(PLAYLISTS_TABLE_KEY);
         LibraryPlaylistsTableMediator.instance().updateTableItems(playlist);
     }
