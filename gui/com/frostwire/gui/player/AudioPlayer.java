@@ -130,9 +130,8 @@ public class AudioPlayer implements RefreshListener {
 		notifyVolumeChanged();
 		
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventPostProcessor(new KeyEventPostProcessor() {
-
             public boolean postProcessKeyEvent(KeyEvent e) {
-                if (e.getID() == KeyEvent.KEY_PRESSED) {
+                if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_SPACE) {
                     Object s = e.getComponent();
                     if (!(s instanceof JTextField) &&
                         !(s instanceof JTable && ((JTable) s).isEditing() &&
