@@ -31,8 +31,8 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
     protected Action SEND_TO_FRIEND_ACTION;
 
     private int needToScrollTo;
-
-    protected static boolean dragging;
+    
+    private AdjustmentListener adjustmentListener;
 
     protected AbstractLibraryTableMediator(String id) {
         super(id);
@@ -51,13 +51,18 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
     @Override
     protected JComponent getScrolledTablePane() {
         JComponent comp = super.getScrolledTablePane();
-        SCROLL_PANE.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
-            public void adjustmentValueChanged(AdjustmentEvent e) {
-                if (needToScrollTo > 0) {
-                    scrollTo(needToScrollTo);
+
+        if (adjustmentListener == null) {
+            adjustmentListener = new AdjustmentListener() {
+                public void adjustmentValueChanged(AdjustmentEvent e) {
+                    if (needToScrollTo > 0) {
+                        scrollTo(needToScrollTo);
+                    }
                 }
-            }
-        });
+            };
+            SCROLL_PANE.getVerticalScrollBar().addAdjustmentListener(adjustmentListener);
+        }
+
         return comp;
     }
 

@@ -163,7 +163,6 @@ public class LibraryMediator {
 
         if (key.equals(FILES_TABLE_KEY)) {
             tableMediator = LibraryFilesTableMediator.instance();
-
         } else if (key.equals(PLAYLISTS_TABLE_KEY)) {
             tableMediator = LibraryPlaylistsTableMediator.instance();
         }
