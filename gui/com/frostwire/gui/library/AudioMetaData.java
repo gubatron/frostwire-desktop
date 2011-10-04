@@ -69,17 +69,22 @@ public class AudioMetaData {
 
     private void readUsingMPlayer(File file) {
         MPlayer mplayer = new MPlayer();
-        Map<String, String> properties = mplayer.getProperties(file.getAbsolutePath());
+        
+        try {
+            Map<String, String> properties = mplayer.getProperties(file.getAbsolutePath());
 
-        title = properties.get("Title");
-        durationInSecs = parseDurationInSecs(properties.get("ID_LENGTH"));
-        artist = properties.get("Artist");
-        album = properties.get("Album");
-        bitrate = parseBitrate(properties.get("ID_AUDIO_BITRATE"));
-        comment = properties.get("Comment");
-        genre = properties.get("Genre");
-        track = properties.get("Track");
-        year = properties.get("Year");
+            title = properties.get("Title");
+            durationInSecs = parseDurationInSecs(properties.get("ID_LENGTH"));
+            artist = properties.get("Artist");
+            album = properties.get("Album");
+            bitrate = parseBitrate(properties.get("ID_AUDIO_BITRATE"));
+            comment = properties.get("Comment");
+            genre = properties.get("Genre");
+            track = properties.get("Track");
+            year = properties.get("Year");
+        } finally {
+            mplayer.dispose();
+        }
     }
 
     private void readUsingMP3Tags(File file) {

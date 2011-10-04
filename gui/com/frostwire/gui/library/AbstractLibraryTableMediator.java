@@ -114,16 +114,13 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
             if (value >= 0) {
                 if (SCROLL_PANE.getVerticalScrollBar().getMaximum() >= value) {
                     if (value >= 0) {
-                        System.out.println("b:" + value);
                         SCROLL_PANE.getVerticalScrollBar().setValue(value);
                         Toolkit.getDefaultToolkit().sync();
                     }
-                    System.out.println("a:" + value);
                     needToScrollTo = -1;
                 }
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
             needToScrollTo = -1;
         }
     }
