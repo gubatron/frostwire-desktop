@@ -43,7 +43,7 @@ public class TorrentFetcherDownload implements BTDownload {
         _torrentSaveDir = SharingSettings.TORRENTS_DIR_SETTING.getValue().getAbsolutePath();
         _torrentDownloader = TorrentDownloaderFactory.create(new TorrentDownloaderListener(), _uri, null, _torrentSaveDir);
         _displayName = displayName;
-        _hash = hash;
+        _hash = hash != null ? hash : "";
         _size = size;
         _partialDownload = partialDownload;
         _postPartialDownloadAction = postPartialDownloadAction;
@@ -61,6 +61,12 @@ public class TorrentFetcherDownload implements BTDownload {
     	this(uri, uri, "", -1, true, postPartialDownloadAction);
     	this.relativePath = relativePath;
 	}
+    
+    public TorrentFetcherDownload(String uri, String relativePath, String hash,
+            ActionListener postPartialDownloadAction) {
+        this(uri, uri, hash, -1, true, postPartialDownloadAction);
+        this.relativePath = relativePath;
+    }
 
 	public long getSize() {
         return _delegate != null ? _delegate.getSize() : _size;

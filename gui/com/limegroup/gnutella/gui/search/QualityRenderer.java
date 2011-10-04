@@ -57,11 +57,6 @@ final class QualityRenderer extends SubstanceDefaultTableCellRenderer implements
 	 * Icon for a downloading file.
 	 */
 	private Icon DOWNLOADING_FILE;
-
-	/**
-	 * Icon for an incomplete file.
-	 */
-	private Icon INCOMPLETE_FILE;
 	
     /**
      * Icon for a spam file.
@@ -85,11 +80,6 @@ final class QualityRenderer extends SubstanceDefaultTableCellRenderer implements
 	 * 'Quality' for downloading file results.
 	 */
 	static final int DOWNLOADING_FILE_QUALITY = 1001;
-	
-	/**
-	 * 'Quality' for files that are incomplete (but not downloading)
-	 */
-	static final int INCOMPLETE_FILE_QUALITY = 1000;
     
     /** 'Quality' for files that are considered secure results. */
     static final int SECURE_QUALITY = 999;
@@ -141,7 +131,6 @@ final class QualityRenderer extends SubstanceDefaultTableCellRenderer implements
 		STAR_FIVE = GUIMediator.getThemeImage("05_star");
 		SAVED_FILE = GUIMediator.getThemeImage("complete");
 		DOWNLOADING_FILE = GUIMediator.getThemeImage("downloading");
-		INCOMPLETE_FILE = GUIMediator.getThemeImage("incomplete");
         SPAM_FILE = GUIMediator.getThemeImage("spam_mini");
         // that's: lime hi res, not lime hires. :)
         SECURE_FILE = GUIMediator.getThemeImage("frosthires");
@@ -171,8 +160,6 @@ final class QualityRenderer extends SubstanceDefaultTableCellRenderer implements
             curIcon = SAVED_FILE; break;
         case DOWNLOADING_FILE_QUALITY:
             curIcon = DOWNLOADING_FILE; break;
-        case INCOMPLETE_FILE_QUALITY:
-            curIcon = INCOMPLETE_FILE; break;
         case MULTICAST_QUALITY:
             curIcon = STAR_FIVE; break;
         case EXCELLENT_QUALITY:
