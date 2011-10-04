@@ -35,6 +35,7 @@ import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.LimeAction;
+import com.limegroup.gnutella.gui.actions.SearchAction;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.themes.SkinMenu;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
@@ -42,6 +43,7 @@ import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.util.GUILauncher;
 import com.limegroup.gnutella.gui.util.GUILauncher.LaunchableProvider;
+import com.limegroup.gnutella.util.QueryUtils;
 
 /**
  * This class wraps the JTable that displays files in the library,
@@ -66,6 +68,8 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     private Action exportPlaylistAction = new ExportPlaylistAction();
 
     private Action cleanupPlaylistAction = new CleanupPlaylistAction();
+    
+    private Action refreshID3TagsAction = new RefreshID3TagsAction();
 
     /**
      * instance, for singelton access
@@ -169,17 +173,10 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         JMenu menu = new SkinMenu(I18n.tr("Search"));
 
         if (dl != null) {
-            //            File f = dl.getInitializeObject();
-            //            String keywords = QueryUtils.createQueryString(f.getName());
-            //            if (keywords.length() > 2)
-            //                menu.add(new SkinMenuItem(new SearchAction(keywords)));
-
-            //    		LimeXMLDocument doc = dl.getXMLDocument();
-            //    		if(doc != null) {
-            //                Action[] actions = ActionUtils.createSearchActions(doc);
-            //        		for (int i = 0; i < actions.length; i++)
-            //        			menu.add(new SkinMenuItem(actions[i]));
-            //            }
+            File f = dl.getFile();
+            String keywords = QueryUtils.createQueryString(f.getName());
+            if (keywords.length() > 2)
+                menu.add(new SkinMenuItem(new SearchAction(keywords)));
         }
 
         if (menu.getItemCount() == 0)
@@ -737,6 +734,26 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         public void actionPerformed(ActionEvent e) {
             LibraryUtils.cleanup(currentPlaylist);
             LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
+        }
+    }
+    
+    private final class RefreshID3TagsAction extends AbstractAction {
+
+        private static final long serialVersionUID = 758150680592618044L;
+        
+        public RefreshID3TagsAction() {
+            putValue(Action.NAME, I18n.tr("Refresh Audio Properties"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Refresh the audio properties based on ID3 tags"));
+            putValue(LimeAction.ICON_NAME, "PLAYLIST_REFRESHID3TAGS");
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            LibraryPlaylistsTableDataLine[] lines = getSelectedLibraryLines();
+            List<PlaylistItem> items = new ArrayList<PlaylistItem>(lines.length);
+            for (LibraryPlaylistsTableDataLine line : lines) {
+                items.add(line.getInitializeObject());
+            }
+            LibraryUtils.refreshID3Tags(items);
         }
     }
 

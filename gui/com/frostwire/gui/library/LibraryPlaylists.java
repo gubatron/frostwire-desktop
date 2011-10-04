@@ -75,6 +75,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
 
     private JPopupMenu _popup;
     private Action refreshAction = new RefreshAction();
+    private Action refreshID3TagsAction = new RefreshID3TagsAction();
     private Action deleteAction = new DeleteAction();
     private Action renameAction = new StartRenamingPlaylistAction();
     private Action importToPlaylistAction = new ImportToPlaylistAction();
@@ -125,6 +126,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
     private void setupPopupMenu() {
         _popup = new SkinPopupMenu();
         _popup.add(new SkinMenuItem(refreshAction));
+        _popup.add(new SkinMenuItem(refreshID3TagsAction));
         _popup.add(new SkinMenuItem(renameAction));
         _popup.add(new SkinMenuItem(deleteAction));
         _popup.addSeparator();
@@ -619,6 +621,24 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
 
         public void actionPerformed(ActionEvent e) {
             refreshSelection();
+        }
+    }
+    
+    private class RefreshID3TagsAction extends AbstractAction {
+
+        private static final long serialVersionUID = -472437818841089984L;
+
+        public RefreshID3TagsAction() {
+            putValue(Action.NAME, I18n.tr("Refresh Audio Properties"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Refresh the audio properties based on ID3 tags of selected items"));
+            putValue(LimeAction.ICON_NAME, "LIBRARY_REFRESH");
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            Playlist playlist = getSelectedPlaylist();
+            if (playlist != null) {
+                LibraryUtils.refreshID3Tags(playlist);
+            }
         }
     }
 

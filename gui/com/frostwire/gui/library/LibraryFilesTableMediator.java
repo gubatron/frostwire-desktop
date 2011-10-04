@@ -182,13 +182,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             String keywords = QueryUtils.createQueryString(f.getName());
             if (keywords.length() > 2)
                 menu.add(new SkinMenuItem(new SearchAction(keywords)));
-
-            //    		LimeXMLDocument doc = dl.getXMLDocument();
-            //    		if(doc != null) {
-            //                Action[] actions = ActionUtils.createSearchActions(doc);
-            //        		for (int i = 0; i < actions.length; i++)
-            //        			menu.add(new SkinMenuItem(actions[i]));
-            //            }
         }
 
         if (menu.getItemCount() == 0)

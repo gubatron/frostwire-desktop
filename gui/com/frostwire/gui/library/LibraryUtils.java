@@ -89,13 +89,15 @@ public class LibraryUtils {
             playlist.save();
             LibraryMediator.instance().getLibraryPlaylists().addPlaylist(playlist);
             LibraryMediator.instance().getLibraryPlaylists().markBeginImport(playlist);
-            new Thread(new Runnable() {
+            Thread t = new Thread(new Runnable() {
                 public void run() {
                     addToPlaylist(playlist, lines);
                     playlist.save();
                     asyncAddToPlaylistFinalizer(playlist);
                 }
-            }).start();
+            }, "createNewPlaylist");
+            t.setDaemon(true);
+            t.start();
         }
     }
 
@@ -133,7 +135,7 @@ public class LibraryUtils {
                 }
             });
 
-            new Thread(new Runnable() {
+            Thread t = new Thread(new Runnable() {
                 public void run() {
                     try {
                         addToPlaylist(playlist, files, starred);
@@ -142,7 +144,9 @@ public class LibraryUtils {
                         asyncAddToPlaylistFinalizer(playlist);
                     }
                 }
-            }).start();
+            }, "createNewPlaylist");
+            t.setDaemon(true);
+            t.start();
         }
     }
 
@@ -152,7 +156,7 @@ public class LibraryUtils {
 
     public static void createNewPlaylist(final PlaylistItem[] playlistItems, boolean starred) {
         if (starred) {
-            new Thread(new Runnable() {
+            Thread t = new Thread(new Runnable() {
                 public void run() {
                     Playlist playlist = LibraryMediator.getLibrary().getStarredPlaylist();
                     addToPlaylist(playlist, playlistItems, true);
@@ -167,14 +171,16 @@ public class LibraryUtils {
                         }
                     });
                 }
-            }).start();
+            }, "createNewPlaylist");
+            t.setDaemon(true);
+            t.start();
         } else {
             String playlistName = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Playlist name"), I18n.tr("Playlist name"), JOptionPane.PLAIN_MESSAGE, null, null, calculateName(playlistItems));
 
             if (playlistName != null && playlistName.length() > 0) {
                 final Playlist playlist = LibraryMediator.getLibrary().newPlaylist(playlistName, playlistName);
 
-                new Thread(new Runnable() {
+                Thread t = new Thread(new Runnable() {
                     public void run() {
                         try {
                             playlist.save();
@@ -189,7 +195,9 @@ public class LibraryUtils {
                             asyncAddToPlaylistFinalizer(playlist);
                         }
                     }
-                }).start();
+                }, "createNewPlaylist");
+                t.setDaemon(true);
+                t.start();
             }
         }
     }
@@ -209,7 +217,7 @@ public class LibraryUtils {
 
     public static void asyncAddToPlaylist(final Playlist playlist, final List<? extends AbstractLibraryTableDataLine<?>> lines) {
         LibraryMediator.instance().getLibraryPlaylists().markBeginImport(playlist);
-        new Thread(new Runnable() {
+        Thread t = new Thread(new Runnable() {
             public void run() {
                 try {
                     addToPlaylist(playlist, lines);
@@ -217,12 +225,14 @@ public class LibraryUtils {
                     asyncAddToPlaylistFinalizer(playlist);
                 }
             }
-        }).start();
+        }, "asyncAddToPlaylist");
+        t.setDaemon(true);
+        t.start();
     }
 
     public static void asyncAddToPlaylist(final Playlist playlist, final File[] files) {
         LibraryMediator.instance().getLibraryPlaylists().markBeginImport(playlist);
-        new Thread(new Runnable() {
+        Thread t = new Thread(new Runnable() {
             public void run() {
                 try {
                     addToPlaylist(playlist, files, false);
@@ -230,7 +240,9 @@ public class LibraryUtils {
                     asyncAddToPlaylistFinalizer(playlist);
                 }
             }
-        }).start();
+        }, "asyncAddToPlaylist");
+        t.setDaemon(true);
+        t.start();
     }
 
     private static void asyncAddToPlaylistFinalizer(final Playlist playlist) {
@@ -244,7 +256,7 @@ public class LibraryUtils {
     }
 
     public static void asyncAddToPlaylist(final Playlist playlist, final PlaylistItem[] playlistItems) {
-        new Thread(new Runnable() {
+        Thread t = new Thread(new Runnable() {
             public void run() {
                 addToPlaylist(playlist, playlistItems);
                 playlist.save();
@@ -254,7 +266,9 @@ public class LibraryUtils {
                     }
                 });
             }
-        }).start();
+        }, "asyncAddToPlaylist");
+        t.setDaemon(true);
+        t.start();
     }
 
     public static void asyncAddToPlaylist(Playlist playlist, File m3uFile) {
@@ -424,5 +438,14 @@ public class LibraryUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void refreshID3Tags(Playlist playlist) {
+        refreshID3Tags(playlist.getItems());
+    }
+
+    public static void refreshID3Tags(List<PlaylistItem> items) {
+        // TODO Auto-generated method stub
+        
     }
 }
