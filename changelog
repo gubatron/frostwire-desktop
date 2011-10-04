@@ -19,6 +19,9 @@ frostwire (5.2.1) stable; urgency=high
     will be offered, and all the elements on the playlist will be starred.
   * Files can be deleted from the "Starred" playlist. This will cause the
     files to be unstarred on every other playlist where they belong.
+  * The tables on the library remember the last position of their scrollbars
+    during the session.
+  * Double clicking on a playlist name starts editing the playlist name.
 
  -- FrostWire Team <contact@frostwire.com>  Tue, 27 Sep 2011 20:20:20 -0500
 
