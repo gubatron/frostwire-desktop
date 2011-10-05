@@ -22,6 +22,9 @@ frostwire (5.2.1) stable; urgency=high
   * The tables on the library remember the last position of their scrollbars
     during the session.
   * Double clicking on a playlist name starts editing the playlist name.
+  * Fixes bug where downloading an individual file in a torrent wouldn't
+    be marked in the search results as downloading.
+  * Fixes a memory leak when importing ID3 tags into a playlist.
 
  -- FrostWire Team <contact@frostwire.com>  Tue, 27 Sep 2011 20:20:20 -0500
 
