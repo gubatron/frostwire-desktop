@@ -11,7 +11,7 @@ import org.limewire.setting.ProbabilisticBooleanSetting;
 public class BittorrentSettings extends LimeProps {
 	
 	/** Amount of time to wait in milliseconds before showing torrent details page */
-	public static final long SHOW_TORRENT_DETAILS_DELAY = 5000;
+	public static final long SHOW_TORRENT_DETAILS_DELAY = 8000;
 
 	private BittorrentSettings() {
 		// empty constructor
