@@ -5,6 +5,7 @@ import java.io.File;
 import javax.swing.Icon;
 import javax.swing.SwingUtilities;
 
+import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 /**
@@ -66,11 +67,17 @@ public class IconManager {
      */
     public Icon getIconForFile(File f) {
         validate();
+    	
+    	if (FileUtils.getFileExtension(f) != null &&
+    		FileUtils.getFileExtension(f).toLowerCase().endsWith("torrent")) {
+    		return GUIMediator.getThemeImage("frosthires");
+    	}
+
         return fileController.getIconForFile(f);
     }
     
     /**
-     * Returns the icon assocated with the extension.
+     * Returns the icon associated with the extension.
      * TODO: Implement better.
      */
     public Icon getIconForExtension(String ext) {
