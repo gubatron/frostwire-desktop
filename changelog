@@ -27,6 +27,7 @@ frostwire (5.2.1) stable; urgency=high
   * Fixes a memory leak when importing ID3 tags into a playlist.
   * Fixes bug where the duration of an MP3 file wasn't calculated correctly
     by MPlayer, duration is now being calculated with Java library.
+  * Fixes bug where it would import torrent skipped files to iTunes.
 
  -- FrostWire Team <contact@frostwire.com>  Wed, 05 Oct 2011 13:14:11 -0500
 

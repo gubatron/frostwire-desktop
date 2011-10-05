@@ -94,6 +94,8 @@ public final class iTunesMediator {
         
         //remove incomplete files from files.
         Set<File> incompleteFiles = TorrentUtil.getIncompleteFiles();
+        incompleteFiles.addAll(TorrentUtil.getSkipedFiles());
+        
         List<File> completeFiles = new ArrayList<File>(files.length);
         for (File f : files) {
         	if (incompleteFiles.contains(f))
