@@ -20,12 +20,14 @@ import javax.swing.SwingUtilities;
 
 import org.gudy.azureus2.core3.util.UrlUtils;
 import org.limewire.concurrent.ExecutorsHelper;
+import org.limewire.util.FileUtils;
 import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.library.LibraryMediator;
+import com.frostwire.mp3.Mp3File;
 import com.frostwire.mplayer.MPlayer;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.frostwire.mplayer.PositionListener;
@@ -62,6 +64,8 @@ public class AudioPlayer implements RefreshListener {
 	private static AudioPlayer instance;
 	
 	private static List<String> playableExtensions;
+
+	private long durationInSeconds;
 
 	public static AudioPlayer instance() {
 		if (instance == null) {
@@ -203,16 +207,34 @@ public class AudioPlayer implements RefreshListener {
 		this.playlistFilesView = playlistFilesView;
 		notifyOpened(source);
 		if (play) {
+			durationInSeconds=-1;
+			
 			if (currentSong.getFile() != null) {
 				LibraryMediator.instance().getLibraryCoverArt().setFile(currentSong.getFile());
+				calculateDurationInSecs(currentSong.getFile());
 			} else if (currentSong.getPlaylistItem() != null) {
 			    LibraryMediator.instance().getLibraryCoverArt().setFile(new File(currentSong.getPlaylistItem().getFilePath()));
+			    durationInSeconds = (long) currentSong.getPlaylistItem().getTrackDurationInSecs();
 			}
 			playSong();
 		}
 	}
 	
-    public void asyncLoadSong(final AudioSource source, final boolean play, final boolean playNextSong, final Playlist currentPlaylist,
+    private void calculateDurationInSecs(File f) {
+    	if (FileUtils.getFileExtension(f)==null || !FileUtils.getFileExtension(f).toLowerCase().endsWith("mp3")) {
+    		durationInSeconds = -1;
+    		return;
+    	}
+    	
+    	try {
+			Mp3File mp3 = new Mp3File(f.getAbsolutePath());
+			durationInSeconds = mp3.getLengthInSeconds();
+		} catch (Exception e) {
+			durationInSeconds = -1;
+		}    	
+	}
+
+	public void asyncLoadSong(final AudioSource source, final boolean play, final boolean playNextSong, final Playlist currentPlaylist,
             final List<AudioSource> playlistFilesView) {
         playExecutor.execute(new Runnable() {
             public void run() {
@@ -620,10 +642,18 @@ public class AudioPlayer implements RefreshListener {
     }
 
     public boolean canSeek() {
+    	if (durationInSeconds!=-1) {
+    		return durationInSeconds > 0;
+    	}
+    	
         return mplayer.getDurationInSecs() > 0;
     }
 
     public float getDurationInSecs() {
+    	if (durationInSeconds!=-1) {
+    		return durationInSeconds;
+    	}
+
         return mplayer.getDurationInSecs();
     }
 }

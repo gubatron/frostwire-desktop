@@ -113,6 +113,9 @@ public class AudioMetaData {
                 if (StringUtils.isNullOrEmpty(year, true)) {
                     year = tag.getYear();
                 }
+                
+                durationInSecs = mp3.getLengthInSeconds();
+                
             }
         } catch (Exception e) {
             // ignore
