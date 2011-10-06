@@ -4,6 +4,8 @@
     <property name="limewire.home" location="${basedir}"/>
 
     <import file="components/build.xml"/>
+	
+	<property name="gettexttasks.jar" value="${limewire.lib.jars}/gettext-commons.jar"/>
 
     <import file="core/build.xml"/>
     <import file="gui/build.xml" />
@@ -87,10 +89,15 @@
     </target>
 
     <property name="translation.cutoff" value="60"/>
+	
+	<target name="init.gettext" description="Loads the Ant gettext tasks">
+	  <taskdef name="gettext-extract" classname="org.xnap.commons.ant.gettext.GettextExtractKeysTask" classpath="${gettexttasks.jar}"/>
+	  <taskdef name="gettext-merge" classname="org.xnap.commons.ant.gettext.GettextMergeKeysTask" classpath="${gettexttasks.jar}"/>
+	  <taskdef name="gettext-generate-default" classname="org.xnap.commons.ant.gettext.GenerateDefaultBundleTask" classpath="${gettexttasks.jar}"/>
+	  <taskdef name="gettext-dist" classname="org.xnap.commons.ant.gettext.GettextDistTask" classpath="${gettexttasks.jar}"/>
+	</target>
 
-    <target name="lw-gettext-extract"
-     		description="Extracts message keys from the source code"
-     		>
+    <target name="gettext-extract" description="Extracts message keys from the source code" depends="init.gettext">
 	    <gettext-extract keysFile="frostwire.pot" poDirectory="lib/messagebundles" keywords="-kgetStringResource -kgetFormattedStringResource -ktrc -ktr -kmarktr -ktrn:1,2 -ktrl">
 			<fileset dir="components" includes="**/*.java"/>
 			<fileset dir="core" includes="**/*.java"/>
@@ -98,15 +105,12 @@
 	    </gettext-extract>
     </target>
 
-    <target name="lw-gettext-merge"
-     		description="Merge message keys with translations"
-     		>
+    <target name="gettext-merge" description="Merge message keys with translations" depends="init.gettext">
 		<gettext-merge keysFile="frostwire.pot" poDirectory="lib/messagebundles"/>
     </target>
 
-    <!-- generate two jars, one with almost complete translations, and a remaining one -->
-    <target name="lw-bundle-messages"
-    		description="Rebuilds messages and bundles them">
+    <!-- generate one jar with almost complete translations -->
+    <target name="bundle-messages" description="Rebuilds messages and bundles them" depends="init.gettext">
 
 	    <!-- clean up -->
 	    <delete dir="lib/messagebundles/org"/>
@@ -119,7 +123,7 @@
 	    <!-- generate complete bundles -->
 	    <gettext-dist targetBundle="org.limewire.i18n.Messages"
 	   				  poDirectory="lib/messagebundles"
-	    			          outputDirectory="lib/messagebundles"
+	    			  outputDirectory="lib/messagebundles"
 	   				  percentage="${translation.cutoff}"/>
 	
 	    <!-- generate the empty en.po file without percentage  -->
@@ -134,25 +138,6 @@
 	    	 includes="org/**"/>
 	    	
 	    <!-- clean up -->
-	    <delete dir="lib/messagebundles/org"/>
-	    	
-	    <!-- generate incomplete ones -->
-	    <gettext-dist targetBundle="org.limewire.i18n.Messages"
-	     	          poDirectory="lib/messagebundles"
-	    		  outputDirectory="lib/messagebundles"
-	    	          percentage="${translation.cutoff}"
-	                  moreOrLess="less"/>
-	
-	    <delete>
-	    	<fileset dir="lib/messagebundles/org/limewire/i18n/" includes="**/Messages_en*"/>
-	    </delete>
-	
-	    <!-- jar them -->
-	    <jar destfile="lib/jars/compile/messages.jar"
-	         basedir="lib/messagebundles"
-	    	 includes="org/**"/>
-    	
-     	    <!-- clean up -->
 	    <delete dir="lib/messagebundles/org"/>
     </target>
 
