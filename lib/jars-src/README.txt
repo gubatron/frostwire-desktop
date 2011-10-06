@@ -37,6 +37,7 @@ MD5 confirmed with source.
 gettext-commons-0_9_5/ -> gettext-commons.jar
 svn checkout http://gettext-commons.googlecode.com/svn/tags/gettext-commons-0_9_5
 Using version 9.9.5 for convenience in date.
+Now it contains the source code of gettext-ant-tasks-0.9.7 from http://code.google.com/p/gettext-commons/downloads/list
 
 google-gson-1.4/ -> gson-1.4.jar
 svn checkout http://google-gson.googlecode.com/svn/tags/1.4-beta
