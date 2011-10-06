@@ -4,7 +4,8 @@
         <mkdir dir="bin" />
 
         <!-- build -->
-        <javac srcdir="src/java" destdir="bin" fork="true" memoryinitialsize="256m" memorymaximumsize="256m">
+        <javac srcdir="src/java" destdir="bin" fork="true" memoryinitialsize="256m" memorymaximumsize="256m" includeantruntime="true">
+        	<compilerarg line="-Xlint -Xmaxwarns 0"/>
         </javac>
 
         <!-- jar -->
