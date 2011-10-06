@@ -1,6 +1,0 @@
-#apt source packages you will need to build jdic
-libgnome2-dev libxt-dev maven2 sun-java6-jdk
-
-#make sure JAVA_HOME is set
-#JAVA_HOME=/usr/lib/jvm/java-6-sun
-#export JAVA_HOME
