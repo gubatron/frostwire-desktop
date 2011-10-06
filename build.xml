@@ -99,15 +99,14 @@
 
     <target name="gettext-extract" description="Extracts message keys from the source code" depends="init.gettext">
 	    <gettext-extract keysFile="frostwire.pot" poDirectory="lib/messagebundles" keywords="-kgetStringResource -kgetFormattedStringResource -ktrc -ktr -kmarktr -ktrn:1,2 -ktrl">
-			<fileset dir="components" includes="**/*.java"/>
+			<fileset dir="components" includes="**/*.java" excludes="azureus/**"/>
 			<fileset dir="core" includes="**/*.java"/>
 			<fileset dir="gui" includes="**/*.java"/>
 	    </gettext-extract>
+
+	    <gettext-merge keysFile="frostwire.pot" poDirectory="lib/messagebundles"/>
     </target>
 
-    <target name="gettext-merge" description="Merge message keys with translations" depends="init.gettext">
-		<gettext-merge keysFile="frostwire.pot" poDirectory="lib/messagebundles"/>
-    </target>
 
     <!-- generate one jar with almost complete translations -->
     <target name="bundle-messages" description="Rebuilds messages and bundles them" depends="init.gettext">
