@@ -88,7 +88,7 @@
     	<fail message="Use maven to generate javadocs."/>
     </target>
 
-    <property name="translation.cutoff" value="60"/>
+    <property name="translation.cutoff" value="35"/>
 	
 	<target name="init.gettext" description="Loads the Ant gettext tasks">
 	  <taskdef name="gettext-extract" classname="org.xnap.commons.ant.gettext.GettextExtractKeysTask" classpath="${gettexttasks.jar}"/>
@@ -109,7 +109,7 @@
 
 
     <!-- generate one jar with almost complete translations -->
-    <target name="bundle-messages" description="Rebuilds messages and bundles them" depends="init.gettext">
+    <target name="gettext-bundle" description="Rebuilds messages and bundles them" depends="init.gettext">
 
 	    <!-- clean up -->
 	    <delete dir="lib/messagebundles/org"/>
@@ -149,16 +149,3 @@
     <target name="compile-gui"/>
 
 </project>
-
-
-
-
-
-
-
-
-
-
-
-
-
