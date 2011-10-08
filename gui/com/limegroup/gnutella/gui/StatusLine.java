@@ -123,18 +123,18 @@ public final class StatusLine implements ThemeObserver {
         //  make the 'Firewall Status' label
         createFirewallLabel();
         
-		//  make the 'Bandwidth Usage' label
-		createBandwidthLabel();
+	//  make the 'Bandwidth Usage' label
+	createBandwidthLabel();
 		
-		//  make the center panel
-		createCenterPanel();
+	//  make the center panel
+	createCenterPanel();
 		
         // Set the bars to not be connected.
         setConnectionQuality(0);
 
-	    ThemeMediator.addThemeObserver(this);
-
-		refresh();
+	ThemeMediator.addThemeObserver(this);
+	
+	refresh();
     }
 
 	/**

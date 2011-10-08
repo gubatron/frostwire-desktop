@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
@@ -25,8 +26,38 @@ final class BTDownloadActions {
     static final RemoveAction REMOVE_TORRENT_AND_DATA_ACTION = new RemoveAction(true, true);
     static final CopyMagnetAction COPY_MAGNET_ACTION = new CopyMagnetAction();
     static final CopyInfoHashAction COPY_HASH_ACTION = new CopyInfoHashAction();
+	static final SendAudioFilesToiTunes SEND_TO_ITUNES_ACTION = new SendAudioFilesToiTunes();
+	
     public static final ToggleSeedsVisibilityAction TOGGLE_SEEDS_VISIBILITY_ACTION = new ToggleSeedsVisibilityAction();
 	public static final Action SHARE_TORRENT_ACTION = new ShareTorrentAction();
+
+	
+	public static class SendAudioFilesToiTunes extends AbstractAction {
+
+		private static final long serialVersionUID = 8230574519252660781L;
+
+    	public SendAudioFilesToiTunes() {
+			putValue(Action.NAME, I18n.tr("Send audio to iTunes"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Send audio files to iTunes"));
+            //putValue(LimeAction.ICON_NAME, "LIBRARY_LAUNCH")
+    	}
+    	
+    	
+    	@Override
+		public void actionPerformed(ActionEvent e) {
+    		BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
+    		
+    		if (downloaders!=null && downloaders.length > 0) {
+    			try {
+    				System.out.println("Sending to iTunes " + downloaders[0].getSaveLocation());
+    				iTunesMediator.instance().scanForSongs(downloaders[0].getSaveLocation());
+    			} catch (Exception ex) {
+    				ex.printStackTrace();
+    			}    			
+    		}
+		}
+    	
+    }
 
     private static abstract class RefreshingAction extends AbstractAction {
 

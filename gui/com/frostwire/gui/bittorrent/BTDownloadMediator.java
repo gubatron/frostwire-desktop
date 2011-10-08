@@ -15,6 +15,7 @@ import org.limewire.util.OSUtils;
 import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.AzureusStarter;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
+import com.frostwire.gui.bittorrent.BTDownloadActions.SendAudioFilesToiTunes;
 import com.frostwire.gui.filters.TableLineFilter;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -63,14 +64,16 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     private Action resumeAction;
     private Action pauseAction;
     private Action exploreAction;
-    private Action _copyMagnetAction;
-    private Action _copyHashAction;
-    private Action _shareTorrentAction;
+    private Action copyMagnetAction;
+    private Action copyHashAction;
+    private Action shareTorrentAction;
 
     /** The actual download buttons instance.
      */
     private BTDownloadButtons _downloadButtons;
 	private SeedingFilter _seedingFilter;
+
+	private SendAudioFilesToiTunes sendToItunesAction;
 
     /**
      * Overriden to have different default values for tooltips.
@@ -101,9 +104,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         resumeAction = BTDownloadActions.RESUME_ACTION;
         pauseAction = BTDownloadActions.PAUSE_ACTION;
         exploreAction = BTDownloadActions.EXPLORE_ACTION;
-        _copyMagnetAction = BTDownloadActions.COPY_MAGNET_ACTION;
-        _copyHashAction = BTDownloadActions.COPY_HASH_ACTION;
-        _shareTorrentAction = BTDownloadActions.SHARE_TORRENT_ACTION;
+        copyMagnetAction = BTDownloadActions.COPY_MAGNET_ACTION;
+        copyHashAction = BTDownloadActions.COPY_HASH_ACTION;
+        shareTorrentAction = BTDownloadActions.SHARE_TORRENT_ACTION;
+        sendToItunesAction = BTDownloadActions.SEND_TO_ITUNES_ACTION;
     }
 
     /**
@@ -449,9 +453,14 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         }
         
         menu.addSeparator();
-        menu.add(new SkinMenuItem(_shareTorrentAction));
-        menu.add(new SkinMenuItem(_copyMagnetAction));
-        menu.add(new SkinMenuItem(_copyHashAction));
+        menu.add(new SkinMenuItem(shareTorrentAction));
+        
+        if (OSUtils.isMacOSX() || OSUtils.isWindows()) {       	
+        	menu.add(new SkinMenuItem(sendToItunesAction));
+        }
+        
+        menu.add(new SkinMenuItem(copyMagnetAction));
+        menu.add(new SkinMenuItem(copyHashAction));
         menu.addSeparator();
         menu.add(new SkinMenuItem(removeAction));
         menu.add(new SkinMenuItem(BTDownloadActions.REMOVE_TORRENT_ACTION));
@@ -483,6 +492,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
         boolean pausable = dataLine.getInitializeObject().isPausable();
         boolean resumable = dataLine.getInitializeObject().isResumable();
+        boolean isTransferFinished = dataLine.getInitializeObject().isCompleted();
+        boolean hasAudioFiles = true; //TODO: Check if transfer is complete
 
         removeAction.putValue(Action.NAME, I18n.tr("Cancel Download"));
         removeAction.putValue(LimeAction.SHORT_NAME, I18n.tr("Cancel"));
@@ -492,10 +503,12 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         removeAction.setEnabled(true);
         resumeAction.setEnabled(resumable);
         pauseAction.setEnabled(pausable);
-        _copyMagnetAction.setEnabled(true);
-        _copyHashAction.setEnabled(true);
+        copyMagnetAction.setEnabled(true);
+        copyHashAction.setEnabled(true);
         
-		_shareTorrentAction.setEnabled(getSelectedDownloaders().length == 1
+        sendToItunesAction.setEnabled(isTransferFinished && hasAudioFiles);
+        
+		shareTorrentAction.setEnabled(getSelectedDownloaders().length == 1
 				&& dataLine.getInitializeObject().isPausable());
     }
 
@@ -508,9 +521,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         resumeAction.setEnabled(false);
         pauseAction.setEnabled(false);
         exploreAction.setEnabled(false);
-        _copyMagnetAction.setEnabled(false);
-        _copyHashAction.setEnabled(false);
-        _shareTorrentAction.setEnabled(false);
+        copyMagnetAction.setEnabled(false);
+        copyHashAction.setEnabled(false);
+        shareTorrentAction.setEnabled(false);
+        sendToItunesAction.setEnabled(false);
     }
 
     public void openTorrentSearchResult(final WebSearchResult webSearchResult, final boolean partialDownload, final ActionListener postPartialDownloadAction) {

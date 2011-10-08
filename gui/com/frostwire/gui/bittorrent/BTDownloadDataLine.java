@@ -15,6 +15,7 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
+import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.notify.Notification;
 import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
@@ -362,6 +363,8 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
             }
         }
     }
+    
+    
 
     private final class LaunchAction extends AbstractAction {
 
