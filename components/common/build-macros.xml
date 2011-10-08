@@ -157,6 +157,7 @@
 	    <element name="more-src-paths" optional="true"/>
 	    <attribute name="excludes" default=""/>
         <attribute name="encoding" default="UTF-8"/>
+		<attribute name="compilerargline" default=""/>
 	    <sequential>
 	        <do.build-init component="@{component}"/>
 			<mkdir dir="${build.limewire.components.@{component}.classes}"/>
@@ -183,7 +184,7 @@
 			       includeAntRuntime = "false"
 	 	    >
 
-			<compilerarg value="-Xlint:unchecked"/>
+			<compilerarg line="-Xlint:unchecked @{compilerargline}"/>
 				<src>
 					<pathelement location="${limewire.components.@{component}.src}"/>
 				    <more-src-paths/>

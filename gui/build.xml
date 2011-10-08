@@ -34,7 +34,8 @@
 	           source	="${compile.source}"
 	           target       ="${compile.target}"
 	           srcdir	="${limewire.gui.src}"
-	           excludes     ="macosx/**, windows/**">
+	           excludes     ="macosx/**, windows/**"
+	    	includeantruntime = "false">
 		   <classpath refid="build.limewire.gui.classpath"/>
 	    </javac>
 	</target>

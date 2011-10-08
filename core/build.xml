@@ -33,6 +33,7 @@
 	           target       ="${compile.target}"
 	           srcdir	    ="${limewire.core.src}"
 			   excludes		="examples/**"
+	    	includeantruntime = "false"
 	    >
 			<classpath refid="build.limewire.core.classpath"/>
 	   	</javac>

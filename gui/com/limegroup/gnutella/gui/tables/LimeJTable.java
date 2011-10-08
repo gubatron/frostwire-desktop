@@ -116,14 +116,6 @@ public class LimeJTable extends JTable implements JSortTable {
     }
     
     /**
-     * Overriden to not manage focus.
-     * (Other it causes some problems in search results)
-     */
-    public boolean isManagingFocus() {
-        return false;
-    }
-    
-    /**
      * Sets the given row to be the only one selected.
      */
     public void setSelectedRow(int row) {

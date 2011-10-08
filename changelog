@@ -6,7 +6,7 @@ frostwire (5.2.2) stable; urgency=high
     from an internet stream url. Clicking on it will take you to the
     Android Tab if it's an android stream or to the Library otherwise.
  
--- FrostWire Team <contact@frostwire.com>  Wed, 07 Oct 2011 21:31:56 -0500
+ -- FrostWire Team <contact@frostwire.com>  Wed, 07 Oct 2011 21:31:56 -0500
 
 frostwire (5.2.1) stable; urgency=high
   * Play/Pause player buttons now share the same button depending on state.
@@ -209,14 +209,14 @@ frostwire (4.21.8) stable; urgency=high
     files from the old Save Folder would still be shared.
     Now all individually shared files will be unshared if you uncheck
     this setting.
-  * Now users donÕt have to re-start to stop seeding after theyÕve changed
+  * Now users donï¿½t have to re-start to stop seeding after theyï¿½ve changed
     their torrent Seeding Configuration. All torrents old and new will stop
     seeding as soon as the setting is applied.
   * Better wording to explain on which networks files are being shared on,
     Gnutella or BitTorrent.
-  * Changed color of ÒSharing OptionsÓ gear icon to blue, gray
+  * Changed color of ï¿½Sharing Optionsï¿½ gear icon to blue, gray
     icon may have seemed as if the button was disabled.
-  * Added ÒSharing OptionsÓ gear button on Search Tab. ItÕs only visible
+  * Added ï¿½Sharing Optionsï¿½ gear button on Search Tab. Itï¿½s only visible
     once a search has been started.
   * Added Help Menu options to learn about how to share/unshare files,
     torrent seeding, and how to avoid being scammed into paying for
