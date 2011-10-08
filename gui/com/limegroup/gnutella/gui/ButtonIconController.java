@@ -12,7 +12,7 @@ import java.util.Properties;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
-import org.limewire.io.IOUtils;
+import org.limewire.util.IOUtils;
 
 import com.limegroup.gnutella.settings.UISettings;
 

@@ -1,29 +1,21 @@
 package com.limegroup.gnutella;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InvalidObjectException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.URL;
-import java.security.MessageDigest;
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 import org.limewire.collection.IntWrapper;
-import org.limewire.io.IOUtils;
 import org.limewire.util.Base32;
-import org.limewire.util.SystemUtils;
-
-import com.limegroup.gnutella.settings.SharingSettings;
 
 /**
  * This class represents an individual Uniform Resource Name (URN), as
@@ -188,15 +180,6 @@ public final class URN implements Serializable {
 	 */
 	private static final Map<File, IntWrapper> progressMap =
 	    Collections.synchronizedMap(new HashMap<File, IntWrapper>());
-    
-    /** Cache for byte[] used while creating the hash */
-    private static final ThreadLocal<byte[]> threadLocal = new ThreadLocal<byte[]>() {
-        @Override
-        protected byte[] initialValue() {
-            return new byte[65536];
-        }
-        
-    };
 	
 	/**
 	 * Gets the amount of bytes hashed for a file that is being hashed.
@@ -208,23 +191,6 @@ public final class URN implements Serializable {
 	        return -1;
 	    else
 	        return progress.getInt();
-	}
-
-	/**
-	 * Creates a new <tt>URN</tt> instance with a SHA1 hash.
-	 *
-	 * @param file the <tt>File</tt> instance to use to create a 
-	 *  <tt>URN</tt>
-	 * @return a new <tt>URN</tt> instance
-	 * @throws <tt>IOException</tt> if there was an error constructing
-	 *  the <tt>URN</tt>
-     * @throws <tt>InterruptedException</tt> if the calling thread was 
-     *  interrupted while hashing.  (This method can take a while to
-     *  execute.)
-	 */
-	public static URN createSHA1Urn(File file) 
-		throws IOException, InterruptedException {
-		return createSHA1AndTTRootUrns(file).getSHA1();
 	}
     
 	/**
@@ -593,62 +559,6 @@ public final class URN implements Serializable {
 		    throw new IOException("no type string");
 
 		return type.substring(0,type.indexOf(':', 4)+1); 
-	}
-
-	/**
-	 * Create a new SHA1 hash string for the specified file on disk.
-	 *
-	 * @param file the file to construct the hash from
-	 * @return the SHA1 hash string
-	 * @throws <tt>IOException</tt> if there is an error creating the hash
-	 *  or if the specified algorithm cannot be found
-     * @throws <tt>InterruptedException</tt> if the calling thread was 
-     *  interrupted while hashing.  (This method can take a while to
-     *  execute.)
-	 */
-	public static UrnSet createSHA1AndTTRootUrns(final File file) 
-      throws IOException, InterruptedException {
-		MessageDigest md = new SHA1();
-        MessageDigest tt = new MerkleTree(new Tiger());
-        byte[] buffer = threadLocal.get();
-        int read;
-        IntWrapper progress = new IntWrapper(0);
-        progressMap.put( file, progress );
-        InputStream fis = null;        
-        
-        try {
-            // this is purposely NOT a BufferedInputStream because we
-            // read it in the chunks that we want to.
-		    fis = new FileInputStream(file);
-            while ((read=fis.read(buffer))!=-1) {
-                long start = System.nanoTime();
-                md.update(buffer,0,read);
-                tt.update(buffer,0,read);
-                progress.addInt( read );
-                if(SystemUtils.getIdleTime() < MIN_IDLE_TIME && SharingSettings.FRIENDLY_HASHING.getValue()) {
-                    long interval = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - start);
-                    if (interval > 0) 
-                        Thread.sleep(interval * 3);
-                    else 
-                        Thread.yield();
-                }
-            }
-        } finally {		
-            progressMap.remove(file);
-            IOUtils.close(fis);
-        }
-
-
-		// preferred casing: lowercase "urn:sha1:", uppercase encoded value
-		// note that all URNs are case-insensitive for the "urn:<type>:" part,
-		// but some MAY be case-sensitive thereafter (SHA1/Base32 is case 
-		// insensitive)
-        UrnSet ret = new UrnSet();
-        URN sha1 = new URN(Type.URN_NAMESPACE_ID + Type.SHA1.getDescriptor() + Base32.encode(md.digest()), Type.SHA1);
-        URN ttroot = new URN(Type.URN_NAMESPACE_ID + Type.TTROOT.getDescriptor() + Base32.encode(tt.digest()), Type.TTROOT);
-        ret.add(sha1);
-        ret.add(ttroot);
-        return ret;
 	}
 
 	/**

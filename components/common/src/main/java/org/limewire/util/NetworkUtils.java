@@ -1,4 +1,4 @@
-package org.limewire.io;
+package org.limewire.util;
 
 import java.io.IOException;
 import java.net.Inet4Address;

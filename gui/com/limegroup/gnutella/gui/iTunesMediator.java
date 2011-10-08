@@ -15,9 +15,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.gudy.azureus2.core3.util.FileUtil;
 import org.limewire.concurrent.ExecutorsHelper;
-import org.limewire.io.IOUtils;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.FileUtils;
+import org.limewire.util.IOUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.bittorrent.TorrentUtil;

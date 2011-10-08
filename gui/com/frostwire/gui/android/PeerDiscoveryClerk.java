@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 import javax.swing.SwingUtilities;
 
-import org.limewire.io.NetworkUtils;
+import org.limewire.util.NetworkUtils;
 
 import com.frostwire.HttpFetcher;
 import com.frostwire.JsonEngine;

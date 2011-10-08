@@ -4,8 +4,8 @@ import java.util.Comparator;
 import java.util.Locale;
 import java.util.Random;
 
-import org.limewire.io.NetworkUtils;
 import org.limewire.util.ByteOrder;
+import org.limewire.util.NetworkUtils;
 
 
 /**

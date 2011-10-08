@@ -3,7 +3,6 @@
 	<classpathentry kind="src" output="components/collection/build/classes" path="components/collection/src/main/java"/>
 	<classpathentry kind="src" path="components/resources/src/main/resources"/>
 	<classpathentry kind="src" output="components/common/build/classes" path="components/common/src/main/java"/>
-	<classpathentry kind="src" output="components/io/build/classes" path="components/io/src/main/java"/>
 	<classpathentry kind="src" output="components/setting/build/classes" path="components/setting/src/main/java"/>
 	<classpathentry kind="src" path="components/osx_stub/src/main/java"/>
 	<classpathentry kind="src" path="components/azureus/src/main/java"/>

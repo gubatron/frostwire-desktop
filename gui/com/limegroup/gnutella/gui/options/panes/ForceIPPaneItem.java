@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import org.gudy.azureus2.core3.config.COConfigurationManager;
-import org.limewire.io.NetworkUtils;
+import org.limewire.util.NetworkUtils;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;

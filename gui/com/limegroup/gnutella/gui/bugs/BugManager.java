@@ -41,9 +41,9 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
 import org.limewire.concurrent.ExecutorsHelper;
-import org.limewire.io.IOUtils;
 import org.limewire.util.FileUtils;
 import org.limewire.util.GenericsUtils;
+import org.limewire.util.IOUtils;
 import org.limewire.util.Version;
 import org.limewire.util.VersionFormatException;
 

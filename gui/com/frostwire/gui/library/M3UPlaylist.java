@@ -9,8 +9,8 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.limewire.io.IOUtils;
 import org.limewire.util.FileUtils;
+import org.limewire.util.IOUtils;
 
 public final class M3UPlaylist {
 

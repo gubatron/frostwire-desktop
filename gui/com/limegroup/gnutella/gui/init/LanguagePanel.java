@@ -21,7 +21,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.limewire.io.IOUtils;
+import org.limewire.util.IOUtils;
 
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LanguageFlagFactory;
