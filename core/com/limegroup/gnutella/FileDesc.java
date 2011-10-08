@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Set;
 
 import org.limewire.util.I18NConvert;
-import org.limewire.util.RPNParser.StringLookup;
+import org.limewire.util.StringLookup;
 
 
 /**
