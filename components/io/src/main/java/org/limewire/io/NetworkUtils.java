@@ -10,18 +10,11 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import org.limewire.util.ByteOrder;
 import org.limewire.util.ByteUtils;
-import org.limewire.util.Decorator;
 
 /**
  * Provides methods for network programming. 
@@ -58,11 +51,6 @@ public final class NetworkUtils {
     public static boolean isValidAddressAndPort(String addr, int port) {
         return isValidAddress(addr) && isValidPort(port);
     }
-    
-    /** Determines if the given IpPort is valid. */
-    public static boolean isValidIpPort(IpPort ipport) {
-        return isValidAddress(ipport.getAddress()) && isValidPort(ipport.getPort());
-    }
 
     /**
      * Returns whether or not the specified port is within the valid range of
@@ -85,14 +73,6 @@ public final class NetworkUtils {
             && !isInvalidAddress(address)
             && !isBroadcastAddress(address)
             && !isDocumentationAddress(address);
-    }
-    
-    /**
-     * Returns whether or not the specified IP is valid.
-     */
-    public static boolean isValidAddress(IP ip) {
-        int msb = (ip.addr >> 24) & 0xFF;
-        return (msb != 0x00 && msb != 0xFF);
     }
     
     /**
@@ -170,16 +150,6 @@ public final class NetworkUtils {
             }            
         }
         return false;
-    }
-
-    /**
-     * @return whether the IpPort is a valid external address.
-     */
-    static boolean isValidExternalIpPort(IpPort addr) {
-        InetAddress address = addr.getInetAddress();
-        return address != null 
-            && isValidAddress(address) 
-            && isValidPort(addr.getPort());
     }
     
     /**
@@ -407,88 +377,6 @@ public final class NetworkUtils {
     }
     
     /**
-     * Packs a Collection of IpPorts into a byte array.
-     */
-    public static byte[] packIpPorts(Collection<? extends IpPort> ipPorts) {
-        byte[] data = new byte[ipPorts.size() * 6];
-        int offset = 0;
-        for(IpPort next : ipPorts) {
-            byte[] addr = next.getInetAddress().getAddress();
-            int port = next.getPort();
-            System.arraycopy(addr, 0, data, offset, 4);
-            offset += 4;
-            ByteOrder.short2leb((short)port, data, offset);
-            offset += 2;
-        }
-        return data;
-    }
-    
-    /**
-     * parses an ip:port byte-packed values.  
-     * 
-     * @return a collection of <tt>IpPort</tt> objects.
-     * @throws InvalidDataException if an invalid IP is found or the size 
-     * is not divisible by six
-     */
-    public static List<IpPort> unpackIps(byte [] data) throws InvalidDataException {
-        return unpackIps(data, null);
-    }
-    
-    
-    /**
-     * Parses an ip:port byte-packed values.
-     * The decorator is consulted for each IpPort prior to inserted it into the list.  
-     * 
-     * @param data the packed IpPorts.
-     * @param decorator A decorator that can optionally change the IpPort that is added into the returned list.
-     * @return a collection of <tt>IpPort</tt> objects.
-     * @throws InvalidDataException if an invalid Ip is found or the size 
-     * is not divisble by six
-     */
-    public static List<IpPort> unpackIps(byte [] data, Decorator<IpPort, ? extends IpPort> decorator) throws InvalidDataException {
-    	if (data.length % 6 != 0)
-    		throw new InvalidDataException("invalid size");
-    	
-    	int size = data.length/6;
-    	List<IpPort> ret = new ArrayList<IpPort>(size);
-    	byte [] current = new byte[6];
-    	for (int i=0;i<size;i++) {
-    		System.arraycopy(data,i*6,current,0,6);
-            IpPort ipp = IPPortCombo.getCombo(current);
-            if(decorator != null) {
-                ipp = decorator.decorate(ipp);
-                if(ipp == null)
-                    throw new InvalidDataException("decorator returned null");
-            }
-    		ret.add(ipp);
-    	}
-    	
-    	return Collections.unmodifiableList(ret);
-    }
-    
-    /**
-     * Filters unique IPs based on a Class C Netmask
-     */
-    public static <T extends IpPort> Collection<T> filterOnePerClassC(Collection<T> c) {
-        return filterUnique(c, CLASS_C_NETMASK);
-    }
-    
-    /**
-     * Filters unique IPs based on a netmask.
-     */
-    public static <T extends IpPort> Collection<T> filterUnique(Collection<T> c, int netmask) {
-        ArrayList<T> ret = new ArrayList<T>(c.size());
-        Set<Integer> ips = new HashSet<Integer>();
-        for (T ip : c) {
-            if (ips.add( getMaskedIP(ip.getInetAddress(), netmask) ))
-                ret.add(ip);
-            
-        }
-        ret.trimToSize();
-        return ret;
-    }
-    
-    /**
      * Returns the Class C Network part of the given InetAddress.
      * See {@link #getMaskedIP(InetAddress, int)} for more info.
      */
@@ -552,15 +440,6 @@ public final class NetworkUtils {
         }
         
         return getBytes(iaddr.getAddress(), iaddr.getPort());
-    }
-    
-    /**
-     * Returns the IP:Port as byte array.
-     * 
-     * This method is IPv6 compliant
-     */
-    public static byte[] getBytes(IpPort ipp) {
-        return getBytes(ipp.getInetAddress(), ipp.getPort());
     }
     
     /**
@@ -966,32 +845,5 @@ public final class NetworkUtils {
             throw new IOException("invalid separator in http: " + ipPort);
         
         return separator;
-    }
-    
-    /**
-     * Returns a Connectable of the ipport as described by "a.b.c.d:port".
-     * 
-     * @param ipPort a string representing an ip and porte 
-     * @throws IOException parsing failed.
-     */
-    public static Connectable parseIpPort(String ipPort, boolean tlsCapable) throws IOException {
-        int separator = getAndCheckIpPortSeparator(ipPort);
-    	InetAddress address = getAndCheckAddress(ipPort.substring(0, separator));
-    	int port = parsePort(ipPort.substring(separator+1));
-    	return new ConnectableImpl(new InetSocketAddress(address, port), tlsCapable);
-    }
-    
-    
-    /**
-     * Returns an  
-     * @param http a string representing a port and an ip
-     * @return an object implementing IpPort 
-     * @throws IOException parsing failed.
-     */
-    public static IpPort parsePortIp(String http) throws IOException{
-        int separator = getAndCheckIpPortSeparator(http);
-        int port = parsePort(http.substring(0, separator));
-        InetAddress address = getAndCheckAddress(http.substring(separator+1));
-        return new IpPortImpl(address, port);
     }
 }
