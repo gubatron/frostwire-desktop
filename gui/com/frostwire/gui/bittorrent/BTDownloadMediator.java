@@ -10,6 +10,7 @@ import javax.swing.Action;
 import javax.swing.JPopupMenu;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
+import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 import com.aelitis.azureus.core.AzureusCore;
@@ -17,6 +18,7 @@ import com.frostwire.AzureusStarter;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.bittorrent.BTDownloadActions.SendAudioFilesToiTunes;
 import com.frostwire.gui.filters.TableLineFilter;
+import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
@@ -493,7 +495,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         boolean pausable = dataLine.getInitializeObject().isPausable();
         boolean resumable = dataLine.getInitializeObject().isResumable();
         boolean isTransferFinished = dataLine.getInitializeObject().isCompleted();
-        boolean hasAudioFiles = true; //TODO: Check if transfer is complete
+        boolean hasAudioFiles = FileUtils.directoryContainsMediaType(dataLine.getInitializeObject().getSaveLocation(), MediaType.getAudioMediaType());
 
         removeAction.putValue(Action.NAME, I18n.tr("Cancel Download"));
         removeAction.putValue(LimeAction.SHORT_NAME, I18n.tr("Cancel"));
