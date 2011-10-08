@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" output="components/collection/build/classes" path="components/collection/src/main/java"/>
-	<classpathentry kind="src" path="components/common/src/main/resources"/>
 	<classpathentry kind="src" path="components/resources/src/main/resources"/>
 	<classpathentry kind="src" output="components/common/build/classes" path="components/common/src/main/java"/>
 	<classpathentry kind="src" output="components/io/build/classes" path="components/io/src/main/java"/>

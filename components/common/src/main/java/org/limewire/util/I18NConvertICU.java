@@ -6,12 +6,9 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.text.Normalizer;
 import java.text.Normalizer.Form;
+import java.util.BitSet;
 import java.util.HashMap;
 import java.util.Map;
-
-
-//import sun.text.normalizer.NormalizerImpl;
-//import sun.text.normalizer.UnicodeSet;
 
 /**
  * Removes accents and symbols, and normalizes strings.
@@ -20,15 +17,13 @@ import java.util.Map;
 final class I18NConvertICU extends AbstractI18NConverter {
 
     /** excluded codepoints (like accents) */
-    private java.util.BitSet _excluded;
-    /** certain chars to be replaced by space (like commas, etc) */
-    private java.util.BitSet _replaceWithSpace;
+    private BitSet _excluded;
     private Map<?, ?> _cMap;
 
     /**
      * initializer:
-     * this subclass of AbstractI18NConverter uses the icu4j's 
-     * pacakges to normalize Strings.  
+     * this subclass of AbstractI18NConverter uses the java classes
+     * to normalize Strings.  
      * _excluded and _replaceWithSpace (BitSet) are read in from
      * files created by UDataFileCreator and are used to 
      * remove accents, etc. and replace certain code points with
@@ -36,30 +31,23 @@ final class I18NConvertICU extends AbstractI18NConverter {
      */
     I18NConvertICU()
         throws IOException, ClassNotFoundException {
-    	java.util.BitSet bs = null;
-        java.util.BitSet bs2 = null;
+    	BitSet bs = null;
     	Map<?, ?> hm = null;
 
-        InputStream fi = CommonUtils.getResourceStream("org/limewire/util/excluded.dat");
+        InputStream fi = CommonUtils.getResourceStream("com/frostwire/util/excluded.dat");
         //read in the explusion bitset
         ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(fi));
         bs = (java.util.BitSet)ois.readObject();
         ois.close();
         
-        fi = CommonUtils.getResourceStream("org/limewire/util/caseMap.dat");
+        fi = CommonUtils.getResourceStream("com/frostwire/util/caseMap.dat");
         //read in the case map
         ois = new ConverterObjectInputStream(new BufferedInputStream(fi));
         hm = (HashMap<?, ?>)ois.readObject();
         ois.close();
         
-        fi = CommonUtils.getResourceStream("org/limewire/util/replaceSpace.dat");
-        ois = new ObjectInputStream(new BufferedInputStream(fi));
-        bs2 = (java.util.BitSet)ois.readObject();
-        ois.close();
-
-    	_excluded = bs;
+        _excluded = bs;
     	_cMap = hm;
-        _replaceWithSpace = bs2;
     }
     
     /**
@@ -102,10 +90,7 @@ final class I18NConvertICU extends AbstractI18NConverter {
     	//and lower case if necessary
     	for(int i = 0; i < len; i++) {
     	    c = nfkd.charAt(i);
-            if(_replaceWithSpace.get(c)) {
-                buf.append(" ");
-            }
-    	    else if(!_excluded.get(c)) {
+            if(!_excluded.get(c)) {
                 lower = (String)_cMap.get(String.valueOf(c));
                 if(lower != null)
                     buf.append(lower);
