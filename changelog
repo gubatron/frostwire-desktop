@@ -1,7 +1,9 @@
 frostwire (5.2.2) stable; urgency=high
-  * iTunes importing after audio transfers finish turned off by default. 
+  * iTunes importing after audio transfers finish turned off by default.
+  * Completed transfers that contain at least one audio file can be sent
+    to iTunes from the Transfer manager.
  
--- FrostWire Team <contact@frostwire.com>  Wed, 05 Oct 2011 13:14:11 -0500
+-- FrostWire Team <contact@frostwire.com>  Wed, 07 Oct 2011 21:31:56 -0500
 
 frostwire (5.2.1) stable; urgency=high
   * Play/Pause player buttons now share the same button depending on state.
