@@ -2,6 +2,9 @@ frostwire (5.2.2) stable; urgency=high
   * iTunes importing after audio transfers finish turned off by default.
   * Completed transfers that contain at least one audio file can be sent
     to iTunes from the Transfer manager.
+  * Audio status component recognizes an Audio Stream, from an Audio file
+    from an internet stream url. Clicking on it will take you to the
+    Android Tab if it's an android stream or to the Library otherwise.
  
 -- FrostWire Team <contact@frostwire.com>  Wed, 07 Oct 2011 21:31:56 -0500
 
