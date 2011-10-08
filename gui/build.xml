@@ -16,27 +16,6 @@
             <pathelement location="${build.limewire.core.classes}"/>
         </path>
     </target>
-
-    <target name="pluginTests" depends="initialize">
-
-      <junit printsummary="on" 
-             showoutput="true"
-	     fork="true"
-	     forkmode="once"
-	     timeout="1200000"
-	     >
-        <formatter type="plain"/>
-        <classpath>
-          <pathelement location="."/>
-          <pathelement location="../core"/>
-          <pathelement location="../components/common/build/classes"/>
-          <pathelement location="../components/setting/build/classes"/>
-          <fileset dir="../lib/jars" includes="**/*.jar" excludes="tests/**"/>
-        </classpath>
-      
-        <test name="com.frostwire.plugins.tests.PluginTestSuite"/>
-      </junit>
-    </target>
     
     <!-- compiles the gui & components -->
     <target name="compile-all"

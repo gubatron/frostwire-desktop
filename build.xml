@@ -51,7 +51,7 @@
 
       <ant dir="components" target="jar"/>
 
-      <echo message="GUBA: root main.xml (jar) - Remember to invoke components/build.xml jar first than this manually"/>
+      <!-- echo message="GUBA: root main.xml (jar) - Remember to invoke components/build.xml jar first than this manually"/-->
 	  <!-- get the list of jars in a space separated list without dirnames -->
 	  <fileset dir="${limewire.lib.jars}" includes="**/*.jar" id="alljars"/>
 	  <pathconvert property="classpath" refid="alljars" pathsep=" ">
@@ -60,9 +60,9 @@
 	  
 	  <mkdir dir="${limewire.home}/dist"/>
 	  
-	  <!-- build limewire's main jar -->
-	  <delete file="${limewire.home}/dist/FrostWire.jar"/>
-	  <jar jarfile="${limewire.home}/dist/FrostWire.jar" compress="true" level="9">
+	  <!-- build FrostWire's main jar -->
+	  <delete file="${limewire.home}/dist/frostwire.jar"/>
+	  <jar jarfile="${limewire.home}/dist/frostwire.jar" compress="true" level="9">
 	    <fileset dir="${build.limewire.gui.classes}" includes="com/frostwire/**/*.class"/>
             <fileset dir="${build.limewire.core.classes}" includes="com/frostwire/**/*.class"/>
 	    <fileset dir="${build.limewire.gui.classes}" includes="com/limegroup/**/*.class"/>
@@ -74,19 +74,10 @@
 	      <attribute name="Class-Path" value=". ${classpath} lw-alexandria.jar lw-azureus.jar lw-common.jar lw-resources.jar lw-setting.jar"/>
 	    </manifest>
 	  </jar>
-	</target> 
-
-    <target name="deb-src">
-      <!-- TODO: create a .deb out of all the sources -->
-    </target>
-
+	</target>
     
     <!-- TODO: implement -->
     <target name="clean-dist"/>
-        
-    <target name="javadoc">
-    	<fail message="Use maven to generate javadocs."/>
-    </target>
 
     <property name="translation.cutoff" value="35"/>
 	
@@ -106,7 +97,6 @@
 
 	    <gettext-merge keysFile="frostwire.pot" poDirectory="lib/messagebundles"/>
     </target>
-
 
     <!-- generate one jar with almost complete translations -->
     <target name="gettext-bundle" description="Rebuilds messages and bundles them" depends="init.gettext">
