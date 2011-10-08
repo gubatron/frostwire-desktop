@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.Action;
 import javax.swing.JPopupMenu;
@@ -495,7 +496,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         boolean pausable = dataLine.getInitializeObject().isPausable();
         boolean resumable = dataLine.getInitializeObject().isResumable();
         boolean isTransferFinished = dataLine.getInitializeObject().isCompleted();
-        boolean hasAudioFiles = FileUtils.directoryContainsMediaType(dataLine.getInitializeObject().getSaveLocation(), MediaType.getAudioMediaType());
+        boolean hasAudioFiles = directoryContainsMediaType(dataLine.getInitializeObject().getSaveLocation(), MediaType.getAudioMediaType());
 
         removeAction.putValue(Action.NAME, I18n.tr("Cancel Download"));
         removeAction.putValue(LimeAction.SHORT_NAME, I18n.tr("Cancel"));
@@ -705,5 +706,31 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    /**
+     * Recursively checks this folder for at least one file with the given media type.
+     * Will return false if you passed a file.
+     * @param folder
+     * @param type
+     * @return
+     */
+    private static boolean directoryContainsMediaType(File folder, MediaType type) {
+        if (folder.isFile()) {
+            return false;
+        }
+        
+        File[] listFiles = folder.listFiles();
+        
+        for (File f : listFiles) {
+            Set<String> extensions = type.getExtensions();
+            if (f.isFile() && extensions.contains(FileUtils.getFileExtension(f))) {
+                return true;
+            } else if (f.isDirectory()) {
+                return directoryContainsMediaType(f, type);
+            }
+        }
+        
+        return false;
     }
 }

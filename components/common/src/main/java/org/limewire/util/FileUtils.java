@@ -24,9 +24,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.limegroup.gnutella.MediaType;
-
-
 /**
  * Provides file manipulation methods; ensures a file exists, makes a file 
  * writable, renames, saves and deletes a file. 
@@ -799,32 +796,6 @@ public class FileUtils {
     			FileUtils.copyDirectoryRecursively(srcElement, new File(targetDir,srcElement.getName()));
     		}
     	}
-    }
-    
-    /**
-     * Recursively checks this folder for at least one file with the given media type.
-     * Will return false if you passed a file.
-     * @param folder
-     * @param type
-     * @return
-     */
-    public static boolean directoryContainsMediaType(File folder, MediaType type) {
-    	if (folder.isFile()) {
-    		return false;
-    	}
-    	
-    	File[] listFiles = folder.listFiles();
-    	
-    	for (File f : listFiles) {
-    		Set<String> extensions = type.getExtensions();
-    		if (f.isFile() && extensions.contains(FileUtils.getFileExtension(f))) {
-    			return true;
-    		} else if (f.isDirectory()) {
-    			return directoryContainsMediaType(f, type);
-    		}
-    	}
-    	
-    	return false;
     }
     
     public static boolean deleteEmptyDirectoryRecursive(File directory) {
