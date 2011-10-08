@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.Icon;
 import javax.swing.JLabel;
@@ -59,7 +61,16 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
 		text.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				showCurrentSong();
+				if (AudioPlayer.instance().getCurrentSong().getFile()!=null) {
+					showCurrentSong();
+				} else if (AudioPlayer.instance().getCurrentSong().getURL()!=null) {
+					
+					if (text.getText().contains("android")) {
+						GUIMediator.instance().setWindow(GUIMediator.Tabs.ANDROID);
+					} else {
+						GUIMediator.instance().setWindow(GUIMediator.Tabs.LIBRARY);
+					}
+				}
 			}
 		});
 		
@@ -202,9 +213,21 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
 			currentText = AudioPlayer.instance().getCurrentSong().getFile().getName();
 			
 			text.setToolTipText(currentSong.getFile().getAbsolutePath());
+		} else if (currentSong.getFile() == null && currentSong.getURL() != null) {
+			System.out.println("StreamURL: " + currentSong.getURL().toString());
+			
+			String streamURL = currentSong.getURL().toString();
+			Pattern urlStart = Pattern.compile("(http://[\\d\\.]+:\\d+).*");
+			Matcher matcher = urlStart.matcher(streamURL);
+			
+			//Android stream
+			if (streamURL.contains("/download?type=0&id=") && matcher.matches()) {
+				currentText = "android " + matcher.group(1);	
+			} else {
+				currentText = "radio ";
+			}
 		}
-		
-		//TODO: Make sure text is not too long.
+
 		if (currentText.length() > MAX_CHARS) {
 			currentText = currentText.substring(0, BOUND_CHARS) + " ... " + currentText.substring(currentText.length()-BOUND_CHARS);
 		}
