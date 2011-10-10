@@ -570,7 +570,9 @@ public class TorrentUtil {
         return hex;
     }
     
-    static DownloadManager createDownloadManager(File torrent) {
-        return null;
+    public static Set<File> getIgnorableFiles() {
+        Set<File> set = TorrentUtil.getIncompleteFiles();
+        set.addAll(TorrentUtil.getSkipedFiles());
+        return set;
     }
 }

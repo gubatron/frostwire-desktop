@@ -7,6 +7,8 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JOptionPane;
 
+import com.frostwire.alexandria.Playlist;
+import com.frostwire.gui.library.LibraryUtils;
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -27,12 +29,10 @@ final class BTDownloadActions {
     static final CopyMagnetAction COPY_MAGNET_ACTION = new CopyMagnetAction();
     static final CopyInfoHashAction COPY_HASH_ACTION = new CopyInfoHashAction();
 	static final SendAudioFilesToiTunes SEND_TO_ITUNES_ACTION = new SendAudioFilesToiTunes();
+    static final ToggleSeedsVisibilityAction TOGGLE_SEEDS_VISIBILITY_ACTION = new ToggleSeedsVisibilityAction();
+	static final ShareTorrentAction SHARE_TORRENT_ACTION = new ShareTorrentAction();
 	
-    public static final ToggleSeedsVisibilityAction TOGGLE_SEEDS_VISIBILITY_ACTION = new ToggleSeedsVisibilityAction();
-	public static final Action SHARE_TORRENT_ACTION = new ShareTorrentAction();
-
-	
-	public static class SendAudioFilesToiTunes extends AbstractAction {
+	private static class SendAudioFilesToiTunes extends AbstractAction {
 
 		private static final long serialVersionUID = 8230574519252660781L;
 
@@ -74,7 +74,7 @@ final class BTDownloadActions {
         protected abstract void performAction(ActionEvent e);
     }
 
-    final static class ShowDetailsAction extends RefreshingAction {
+    private static class ShowDetailsAction extends RefreshingAction {
 
         /**
          * 
@@ -349,5 +349,50 @@ final class BTDownloadActions {
 			updateName();
 			BTDownloadMediator.instance().updateTableFilters();
 		}
+    }
+    
+    static class CreateNewPlaylistAction extends AbstractAction {
+
+        private static final long serialVersionUID = 3460908036485828909L;
+
+        public CreateNewPlaylistAction() {
+            super(I18n.tr("Create New Playlist"));
+            putValue(Action.LONG_DESCRIPTION, I18n.tr("Create and add to a new playlist"));
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
+
+            if (downloaders.length != 1 || !downloaders[0].isCompleted()) {
+                return;
+            }
+            LibraryUtils.createNewPlaylist(new File[] { downloaders[0].getSaveLocation() });
+            GUIMediator.instance().setWindow(GUIMediator.Tabs.LIBRARY);
+        }
+    }
+    
+    static class AddToPlaylistAction extends AbstractAction  {
+
+        private static final long serialVersionUID = 2785648153922643785L;
+        
+        private Playlist playlist;
+
+        public AddToPlaylistAction(Playlist playlist) {
+            super(playlist.getName());
+            putValue(Action.LONG_DESCRIPTION, I18n.tr("Add to playlist ") + "\"" + playlist.getName() + "\"");
+            this.playlist = playlist;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
+
+            if (downloaders.length != 1 || !downloaders[0].isCompleted()) {
+                return;
+            }
+            LibraryUtils.asyncAddToPlaylist(playlist, new File[] { downloaders[0].getSaveLocation() });
+            GUIMediator.instance().setWindow(GUIMediator.Tabs.LIBRARY);
+        }
     }
 }

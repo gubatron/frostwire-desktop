@@ -27,19 +27,26 @@ package com.frostwire.gui.bittorrent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.util.Debug;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
 
+import com.frostwire.alexandria.Library;
+import com.frostwire.alexandria.Playlist;
+import com.frostwire.gui.bittorrent.BTDownloadActions.AddToPlaylistAction;
+import com.frostwire.gui.bittorrent.BTDownloadActions.CreateNewPlaylistAction;
+import com.frostwire.gui.library.LibraryMediator;
+import com.frostwire.gui.library.LibraryUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.themes.SkinMenu;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 
 public class BTDownloadMediatorAdvancedMenuFactory {
 	
-    public static void addSpeedMenu(SkinMenu menuAdvanced, boolean isTorrentContext, boolean hasSelection, boolean downSpeedDisabled,
+    private static void addSpeedMenu(SkinMenu menuAdvanced, boolean isTorrentContext, boolean hasSelection, boolean downSpeedDisabled,
             boolean downSpeedUnlimited, long totalDownSpeed, long downSpeedSetMax, long maxDownload, boolean upSpeedDisabled, boolean upSpeedUnlimited,
             long totalUpSpeed, long upSpeedSetMax, long maxUpload, final int num_entries, final SpeedAdapter adapter) {
         // advanced > Download Speed Menu //
@@ -362,6 +369,42 @@ public class BTDownloadMediatorAdvancedMenuFactory {
                 });
 
         return menuAdvanced;
+    }
+    
+    static SkinMenu createAddToPlaylistSubMenu() {
+        
+        BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
+
+        if (downloaders.length != 1 || !downloaders[0].isCompleted()) {
+            return null;
+        }
+        
+        if (!LibraryUtils.directoryContainsAudio(downloaders[0].getSaveLocation())) {
+            return null;
+        }
+        
+        SkinMenu menu = new SkinMenu(I18n.tr("Add to playlist"));
+
+        menu.add(new SkinMenuItem(new CreateNewPlaylistAction()));
+
+        Library library = LibraryMediator.getLibrary();
+        List<Playlist> playlists = library.getPlaylists();
+        Playlist currentPlaylist = LibraryMediator.instance().getSelectedPlaylist();
+
+        if (playlists.size() > 0) {
+            menu.addSeparator();
+
+            for (Playlist playlist : library.getPlaylists()) {
+
+                if (currentPlaylist != null && currentPlaylist.equals(playlist)) {
+                    continue;
+                }
+
+                menu.add(new SkinMenuItem(new AddToPlaylistAction(playlist)));
+            }
+        }
+
+        return menu;
     }
 
     public interface SpeedAdapter {

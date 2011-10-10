@@ -17,7 +17,6 @@ import org.limewire.util.OSUtils;
 import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.AzureusStarter;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
-import com.frostwire.gui.bittorrent.BTDownloadActions.SendAudioFilesToiTunes;
 import com.frostwire.gui.filters.TableLineFilter;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -76,7 +75,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     private BTDownloadButtons _downloadButtons;
 	private SeedingFilter _seedingFilter;
 
-	private SendAudioFilesToiTunes sendToItunesAction;
+	private Action sendToItunesAction;
 
     /**
      * Overriden to have different default values for tooltips.
@@ -464,6 +463,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         
         menu.add(new SkinMenuItem(copyMagnetAction));
         menu.add(new SkinMenuItem(copyHashAction));
+        SkinMenu addToPlaylistMenu = BTDownloadMediatorAdvancedMenuFactory.createAddToPlaylistSubMenu();
+        if (addToPlaylistMenu != null) {
+            menu.add(addToPlaylistMenu);
+        }
         menu.addSeparator();
         menu.add(new SkinMenuItem(removeAction));
         menu.add(new SkinMenuItem(BTDownloadActions.REMOVE_TORRENT_ACTION));

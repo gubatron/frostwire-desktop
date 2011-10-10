@@ -3,6 +3,7 @@ package com.frostwire.gui.library;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
 import javax.swing.JOptionPane;
@@ -15,6 +16,7 @@ import org.limewire.util.StringUtils;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.alexandria.db.LibraryDatabase;
+import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.library.LibraryPlaylistsTableTransferable.Item;
 import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -147,7 +149,8 @@ public class LibraryUtils {
             Thread t = new Thread(new Runnable() {
                 public void run() {
                     try {
-                        addToPlaylist(playlist, files, starred);
+                        Set<File> ignore = TorrentUtil.getIgnorableFiles();
+                        addToPlaylist(playlist, files, starred, ignore);
                         playlist.save();
                     } finally {
                         asyncAddToPlaylistFinalizer(playlist);
@@ -244,7 +247,8 @@ public class LibraryUtils {
         Thread t = new Thread(new Runnable() {
             public void run() {
                 try {
-                    addToPlaylist(playlist, files, false);
+                    Set<File> ignore = TorrentUtil.getIgnorableFiles();
+                    addToPlaylist(playlist, files, false, ignore);
                 } finally {
                     asyncAddToPlaylistFinalizer(playlist);
                 }
@@ -333,12 +337,12 @@ public class LibraryUtils {
         }
     }
 
-    private static void addToPlaylist(Playlist playlist, File[] files, boolean starred) {
+    private static void addToPlaylist(Playlist playlist, File[] files, boolean starred, Set<File> ignore) {
         for (int i = 0; i < files.length && !playlist.isDeleted(); i++) {
-            if (AudioPlayer.isPlayableFile(files[i])) {
+            if (AudioPlayer.isPlayableFile(files[i]) && !ignore.contains(files[i])) {
                 LibraryUtils.addPlaylistItem(playlist, files[i], starred);
             } else if (files[i].isDirectory()) {
-                addToPlaylist(playlist, files[i].listFiles(), starred);
+                addToPlaylist(playlist, files[i].listFiles(), starred, ignore);
             }
         }
     }
@@ -369,22 +373,23 @@ public class LibraryUtils {
     }
 
     public static boolean directoryContainsAudio(File directory) {
-        return directoryContainsAudio(directory, 4);
+        Set<File> ignore = TorrentUtil.getIgnorableFiles();
+        return directoryContainsAudio(directory, 4, ignore);
     }
 
-    private static boolean directoryContainsAudio(File directory, int deep) {
+    private static boolean directoryContainsAudio(File directory, int deep, Set<File> ignore) {
         if (directory == null || !directory.isDirectory()) {
             return false;
         }
 
         for (File childFile : directory.listFiles()) {
             if (!childFile.isDirectory()) {
-                if (AudioPlayer.isPlayableFile(childFile)) {
+                if (AudioPlayer.isPlayableFile(childFile) && !ignore.contains(childFile)) {
                     return true;
                 }
             } else {
                 if (deep > 0) {
-                    if (directoryContainsAudio(childFile, deep - 1)) {
+                    if (directoryContainsAudio(childFile, deep - 1, ignore)) {
                         return true;
                     }
                 }
