@@ -34,6 +34,7 @@ import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.actions.SearchAction;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
@@ -62,6 +63,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     public static Action ENQUEUE_ACTION;
     public static Action CREATE_TORRENT_ACTION;
     public static Action DELETE_ACTION;
+    public static Action SEND_TO_ITUNES_ACTION;
 
     private Action importToPlaylistAction = new ImportToPlaylistAction();
 
@@ -98,6 +100,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         ENQUEUE_ACTION = new EnqueueAction();
         CREATE_TORRENT_ACTION = new CreateTorrentAction();
         DELETE_ACTION = new RemoveFromPlaylistAction();
+        SEND_TO_ITUNES_ACTION = new SendAudioFilesToiTunes();
     }
 
     /**
@@ -128,6 +131,9 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         menu.add(createAddToPlaylistSubMenu());
         menu.add(new SkinMenuItem(SEND_TO_FRIEND_ACTION));
 
+        menu.add(new SkinMenuItem(SEND_TO_ITUNES_ACTION));
+
+        
         menu.addSeparator();
         menu.add(new SkinMenuItem(DELETE_ACTION));
 
@@ -484,6 +490,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         //  always turn on Launch, Delete, Magnet Lookup, Bitzi Lookup
         LAUNCH_ACTION.setEnabled(true);
         DELETE_ACTION.setEnabled(true);
+        SEND_TO_ITUNES_ACTION.setEnabled(true);
 
         if (selectedFile != null && !selectedFile.getName().endsWith(".torrent")) {
             CREATE_TORRENT_ACTION.setEnabled(sel.length == 1);
@@ -525,10 +532,9 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         OPEN_IN_FOLDER_ACTION.setEnabled(false);
         SEND_TO_FRIEND_ACTION.setEnabled(false);
         ENQUEUE_ACTION.setEnabled(false);
-
         CREATE_TORRENT_ACTION.setEnabled(false);
-
         DELETE_ACTION.setEnabled(false);
+        SEND_TO_ITUNES_ACTION.setEnabled(false);
     }
 
     /**
@@ -659,6 +665,27 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             dlg.setVisible(true);
 
         }
+    }
+    
+    private class SendAudioFilesToiTunes extends AbstractAction {
+
+		private static final long serialVersionUID = 4726989286129406765L;
+
+		public SendAudioFilesToiTunes() {
+			putValue(Action.NAME, I18n.tr("Send to iTunes"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Send audio files to iTunes"));
+    	}
+    	
+    	@Override
+		public void actionPerformed(ActionEvent e) {
+            int[] rows = TABLE.getSelectedRows();
+            for (int i = 0; i < rows.length; i++) {
+                int index = rows[i]; // current index to add
+                File file = DATA_MODEL.getFile(index);
+                
+				iTunesMediator.instance().scanForSongs(file);                
+            }
+		}
     }
 
     private final class RemoveFromPlaylistAction extends AbstractAction {

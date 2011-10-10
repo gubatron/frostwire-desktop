@@ -41,6 +41,7 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.MessageService;
 import com.limegroup.gnutella.gui.MultiLineLabel;
+import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.actions.SearchAction;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
@@ -64,10 +65,11 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
      */
     public static Action LAUNCH_ACTION;
     public static Action OPEN_IN_FOLDER_ACTION;
-    public static Action ENQUEUE_ACTION;
+    public static Action ADD_TO_PLAYLIST_ACTION;
     public static Action CREATE_TORRENT_ACTION;
     public static Action DELETE_ACTION;
     public static Action RENAME_ACTION;
+    public static Action SEND_TO_ITUNES_ACTION;
 
     /**
      * instance, for singelton access
@@ -89,10 +91,11 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
         LAUNCH_ACTION = new LaunchAction();
         OPEN_IN_FOLDER_ACTION = new OpenInFolderAction();
-        ENQUEUE_ACTION = new EnqueueAction();
+        ADD_TO_PLAYLIST_ACTION = new AddToPlaylistAction();
         CREATE_TORRENT_ACTION = new CreateTorrentAction();
         DELETE_ACTION = new RemoveAction();
         RENAME_ACTION = new RenameAction();
+        SEND_TO_ITUNES_ACTION = new SendAudioFilesToiTunes();
         
     }
     
@@ -111,7 +114,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         DATA_MODEL = new LibraryFilesTableModel();
         TABLE = new LimeJTable(DATA_MODEL);
         DATA_MODEL.setTable(TABLE);
-        Action[] aa = new Action[] { LAUNCH_ACTION, ENQUEUE_ACTION, DELETE_ACTION };
+        Action[] aa = new Action[] { LAUNCH_ACTION, ADD_TO_PLAYLIST_ACTION, DELETE_ACTION };
 
         BUTTON_ROW = new ButtonRow(aa, ButtonRow.X_AXIS, ButtonRow.NO_GLUE);
     }
@@ -133,6 +136,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             menu.add(createAddToPlaylistSubMenu());
         }
         menu.add(new SkinMenuItem(SEND_TO_FRIEND_ACTION));
+        menu.add(new SkinMenuItem(SEND_TO_ITUNES_ACTION));
 
         menu.addSeparator();
         menu.add(new SkinMenuItem(DELETE_ACTION));
@@ -157,12 +161,12 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         }
         if (dirSelected) {
             if (GUIMediator.isPlaylistVisible())
-                ENQUEUE_ACTION.setEnabled(false);
+                ADD_TO_PLAYLIST_ACTION.setEnabled(false);
             DELETE_ACTION.setEnabled(true);
             RENAME_ACTION.setEnabled(false);
         } else {
             if (GUIMediator.isPlaylistVisible() && AudioPlayer.isPlayableFile(DATA_MODEL.getFile(rows[0])))
-                ENQUEUE_ACTION.setEnabled(true);
+                ADD_TO_PLAYLIST_ACTION.setEnabled(true);
             DELETE_ACTION.setEnabled(true);
             // only allow single selection for renames
             //RENAME_ACTION.setEnabled(LibraryMediator.isRenameEnabled() && rows.length == 1);
@@ -594,6 +598,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         
         if (selectedFile != null) {
             SEND_TO_FRIEND_ACTION.setEnabled(sel.length == 1);
+            SEND_TO_ITUNES_ACTION.setEnabled(true);
         }
 
         if (sel.length == 1 && selectedFile.isFile() && selectedFile.getParentFile() != null) {
@@ -605,14 +610,17 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         //  turn on Enqueue if play list is visible and a selected item is playable
         if (GUIMediator.isPlaylistVisible()) {
             boolean found = false;
-            for (int i = 0; i < sel.length; i++)
+            for (int i = 0; i < sel.length; i++) {
                 if (AudioPlayer.isPlayableFile(DATA_MODEL.getFile(sel[i]))) {
                     found = true;
                     break;
                 }
-            ENQUEUE_ACTION.setEnabled(found);
-        } else
-            ENQUEUE_ACTION.setEnabled(false);
+            }
+            
+            ADD_TO_PLAYLIST_ACTION.setEnabled(found);
+        } else {
+            ADD_TO_PLAYLIST_ACTION.setEnabled(false);
+        }
         
         if (sel.length == 1) {
             LibraryMediator.instance().getLibraryCoverArt().setFile(selectedFile);
@@ -627,13 +635,11 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         LAUNCH_ACTION.setEnabled(false);
         OPEN_IN_FOLDER_ACTION.setEnabled(false);
         SEND_TO_FRIEND_ACTION.setEnabled(false);
-        ENQUEUE_ACTION.setEnabled(false);
-
+        ADD_TO_PLAYLIST_ACTION.setEnabled(false);
         CREATE_TORRENT_ACTION.setEnabled(false);
-
         DELETE_ACTION.setEnabled(false);
-
         RENAME_ACTION.setEnabled(false);
+        SEND_TO_ITUNES_ACTION.setEnabled(false);
     }
 
     /**
@@ -706,14 +712,14 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         }
     }
 
-    private final class EnqueueAction extends AbstractAction {
+    private final class AddToPlaylistAction extends AbstractAction {
 
         /**
          * 
          */
         private static final long serialVersionUID = 9153310119076594713L;
 
-        public EnqueueAction() {
+        public AddToPlaylistAction() {
             putValue(Action.NAME, I18n.tr("Enqueue"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Add Selected Files to the Playlist"));
             putValue(LimeAction.ICON_NAME, "LIBRARY_TO_PLAYLIST");
@@ -799,6 +805,27 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         public void actionPerformed(ActionEvent ae) {
             startRename();
         }
+    }
+    
+	private class SendAudioFilesToiTunes extends AbstractAction {
+
+		private static final long serialVersionUID = 4726989286129406765L;
+
+		public SendAudioFilesToiTunes() {
+			putValue(Action.NAME, I18n.tr("Send to iTunes"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Send audio files to iTunes"));
+    	}
+    	
+    	@Override
+		public void actionPerformed(ActionEvent e) {
+            int[] rows = TABLE.getSelectedRows();
+            for (int i = 0; i < rows.length; i++) {
+                int index = rows[i]; // current index to add
+                File file = DATA_MODEL.getFile(index);
+                
+				iTunesMediator.instance().scanForSongs(file);                
+            }
+		}
     }
 
     /**
