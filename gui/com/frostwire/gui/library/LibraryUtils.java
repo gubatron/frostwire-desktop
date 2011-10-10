@@ -38,6 +38,10 @@ public class LibraryUtils {
                     mt.getBitrate(), mt.getComment(), mt.getGenre(), mt.getTrack(), mt.getYear(), starred);
             playlist.getItems().add(item);
             item.save();
+            
+            if (isPlaylistSelected(playlist)) {
+                LibraryPlaylistsTableMediator.instance().addUnsorted(item);
+            }
         } finally {
             LibraryMediator.instance().getLibrarySearch().revertStatus();
         }
@@ -494,5 +498,10 @@ public class LibraryUtils {
                 });
             }
         });
+    }
+    
+    private static boolean isPlaylistSelected(Playlist playlist) {
+        Playlist selectedPlaylist = LibraryMediator.instance().getLibraryPlaylists().getSelectedPlaylist();
+        return selectedPlaylist != null && selectedPlaylist.equals(playlist);
     }
 }
