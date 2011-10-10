@@ -68,7 +68,7 @@ public class IconManager {
     public Icon getIconForFile(File f) {
         validate();
     	
-    	if (FileUtils.getFileExtension(f) != null &&
+    	if (f!=null && FileUtils.getFileExtension(f) != null &&
     		FileUtils.getFileExtension(f).toLowerCase().endsWith("torrent")) {
     		return GUIMediator.getThemeImage("frosthires");
     	}
