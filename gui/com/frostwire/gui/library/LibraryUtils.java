@@ -372,12 +372,19 @@ public class LibraryUtils {
         return getSecondsInDDHHMMSS((int) totalSecs);
     }
 
+
+    public static boolean directoryContainsAudio(File directory, int depth) {
+        Set<File> ignore = TorrentUtil.getIgnorableFiles();
+        return directoryContainsAudio(directory, depth, ignore);
+    }
+
+    
     public static boolean directoryContainsAudio(File directory) {
         Set<File> ignore = TorrentUtil.getIgnorableFiles();
         return directoryContainsAudio(directory, 4, ignore);
     }
 
-    private static boolean directoryContainsAudio(File directory, int deep, Set<File> ignore) {
+    private static boolean directoryContainsAudio(File directory, int depth, Set<File> ignore) {
         if (directory == null || !directory.isDirectory()) {
             return false;
         }
@@ -388,8 +395,8 @@ public class LibraryUtils {
                     return true;
                 }
             } else {
-                if (deep > 0) {
-                    if (directoryContainsAudio(childFile, deep - 1, ignore)) {
+                if (depth > 0) {
+                    if (directoryContainsAudio(childFile, depth - 1, ignore)) {
                         return true;
                     }
                 }
