@@ -20,7 +20,7 @@ public class ExtratorrentWebSearchPerformer implements WebSearchPerformer {
 
         ExtratorrentResponse response = searchExtratorrent(keywords);
 
-        if (response.list != null)
+        if (response != null && response.list != null)
             for (ExtratorrentItem item : response.list) {
 
                 WebSearchResult sr = new ExtratorrentResponseWebSearchResult(item);

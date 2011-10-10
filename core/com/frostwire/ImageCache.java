@@ -80,7 +80,10 @@ public class ImageCache {
             BufferedImage image = ImageIO.read(file);
             listener.onLoaded(url, image, true, false);
             return image;
-        } catch (Exception e) {
+        } catch (Throwable e) {
+            if (e instanceof OutOfMemoryError) {
+                e.printStackTrace(); // this is a special condition
+            }
             listener.onLoaded(url, null, false, true);
             return null;
         }
