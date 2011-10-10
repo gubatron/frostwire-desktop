@@ -14,7 +14,7 @@ frostwire (5.2.2) stable; urgency=high
   * Real time UI feedback as audio files are being imported into playlist.
   * F5, Cmd+R or Ctrl+R will refresh the current Library table.
  
- -- FrostWire Team <contact@frostwire.com>  Wed, 07 Oct 2011 21:31:56 -0500
+ -- FrostWire Team <contact@frostwire.com>  Mon, 10 Oct 2011 18:03:10 -0500
 
 frostwire (5.2.1) stable; urgency=high
   * Play/Pause player buttons now share the same button depending on state.
