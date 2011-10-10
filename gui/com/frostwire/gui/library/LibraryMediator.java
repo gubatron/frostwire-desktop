@@ -6,8 +6,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -56,6 +58,8 @@ public class LibraryMediator {
     private Map<Object,Integer> scrollbarValues;
 	private Object lastSelectedKey;
 	private AbstractLibraryTableMediator<?, ?, ?> lastSelectedMediator;
+	
+	private Set<Integer> idScanned;
 
     /**
      * @return the <tt>LibraryMediator</tt> instance
@@ -69,6 +73,8 @@ public class LibraryMediator {
 
     public LibraryMediator() {
         GUIMediator.setSplashScreenString(I18n.tr("Loading Library Window..."));
+        
+        idScanned = new HashSet<Integer>();
 
         getComponent(); // creates MAIN_PANEL
         
@@ -313,5 +319,27 @@ public class LibraryMediator {
         }
 
         //Scroll to current song.
+    }
+
+    public boolean isScanned(int id) {
+        return idScanned.contains(id);
+    }
+
+    public void scan(int hashCode, File location) {
+        idScanned.add(hashCode);
+
+        if (location.isDirectory()) {
+            for (File file : location.listFiles()) {
+                scan(hashCode, file);
+            }
+        } else {
+            List<MediaTypeSavedFilesDirectoryHolder> holders = getLibraryFiles().getMediaTypeSavedFilesDirectoryHolders();
+            for (MediaTypeSavedFilesDirectoryHolder holder : holders) {
+                Set<File> cache = holder.getCache();
+                if (holder.accept(location) && !cache.isEmpty() && !cache.contains(location)) {
+                    cache.add(location);
+                }
+            }
+        }
     }
 }

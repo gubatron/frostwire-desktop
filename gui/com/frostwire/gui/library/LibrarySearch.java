@@ -246,14 +246,21 @@ public class LibrarySearch extends JPanel {
                     resultsCount = 0;
                 }
             });
+            
+            if (directoryHolder instanceof MediaTypeSavedFilesDirectoryHolder) {
+                List<File> cache = new ArrayList<File>(((MediaTypeSavedFilesDirectoryHolder) directoryHolder).getCache());
+                if (cache.size() > 0) {
+                    search(cache);
+                    return;
+                }
+            }
 
             File file = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
             if (directoryHolder instanceof TorrentDirectoryHolder) {
                 file = ((TorrentDirectoryHolder) directoryHolder).getDirectory();
             }
 
-            Set<File> ignore = TorrentUtil.getIncompleteFiles();
-            ignore.addAll(TorrentUtil.getSkipedFiles());
+            Set<File> ignore = TorrentUtil.getIgnorableFiles();
 
             search(file, ignore);
             
@@ -272,7 +279,6 @@ public class LibrarySearch extends JPanel {
                 }
                 search(musicFile, new HashSet<File>());
             }
-
         }
 
         /**
@@ -336,6 +342,44 @@ public class LibrarySearch extends JPanel {
             for (File directory : directories) {
                 search(directory, excludeFiles);
             }
+        }
+        
+        private void search(List<File> cache) {
+            if (canceled) {
+                return;
+            }
+            
+            final List<File> results = new ArrayList<File>();
+            SearchFileFilter searchFilter = new SearchFileFilter(_query);
+            
+            for (File file : cache) {
+                if (canceled) {
+                    return;
+                }
+
+                /////
+                //Stop search if the user selected another item in the library tree
+                DirectoryHolder currentDirectoryHolder = LibraryMediator.instance().getLibraryFiles().getSelectedDirectoryHolder();
+                if (!directoryHolder.equals(currentDirectoryHolder)) {
+                    return;
+                }
+                /////
+
+                if (file.isHidden()) {
+                    continue;
+                }
+
+                if (searchFilter.accept(file)) {
+                    results.add(file);
+                }
+            }
+
+            Runnable r = new Runnable() {
+                public void run() {
+                    LibraryMediator.instance().addFilesToLibraryTable(results);
+                }
+            };
+            GUIMediator.safeInvokeLater(r);
         }
     }
 

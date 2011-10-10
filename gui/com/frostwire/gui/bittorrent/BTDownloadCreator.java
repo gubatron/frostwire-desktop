@@ -13,6 +13,7 @@ import org.gudy.azureus2.core3.util.TorrentUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.AzureusStarter;
+import com.frostwire.gui.library.LibraryMediator;
 import com.limegroup.gnutella.SaveLocationException;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.iTunesMediator;
@@ -211,6 +212,10 @@ public class BTDownloadCreator {
                     if ((OSUtils.isMacOSX() || OSUtils.isWindows())) {
                         iTunesMediator.instance().scanForSongs(manager.getSaveLocation());
                     }
+                }
+                
+                if (manager.getAssumedComplete() && !LibraryMediator.instance().isScanned(manager.hashCode())) {
+                    LibraryMediator.instance().scan(manager.hashCode(), manager.getSaveLocation());
                 }
                 
                 //if you have to hide seeds, do so.

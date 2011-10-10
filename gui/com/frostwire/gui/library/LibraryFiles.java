@@ -151,8 +151,12 @@ public class LibraryFiles extends AbstractLibraryListPanel {
         _popup.add(new SkinMenuItem(new ConfigureOptionsAction(OptionsConstructor.SHARED_KEY, I18n.tr("Configure Options"), I18n
                 .tr("You can configure the FrostWire\'s Options."))));
     }
-
+    
     public void refreshSelection() {
+        refreshSelection(false);
+    }
+
+    public void refreshSelection(boolean clearCache) {
         LibraryFilesListCell node = (LibraryFilesListCell) _list.getSelectedValue();
 
         if (node == null) {
@@ -171,6 +175,9 @@ public class LibraryFiles extends AbstractLibraryListPanel {
 
             if (directoryHolder != null && directoryHolder instanceof MediaTypeSavedFilesDirectoryHolder) {
                 MediaTypeSavedFilesDirectoryHolder mtsfdh = (MediaTypeSavedFilesDirectoryHolder) directoryHolder;
+                if (clearCache) {
+                    mtsfdh.clearCache();
+                }
                 BackgroundExecutorService.schedule(new SearchByMediaTypeRunnable(mtsfdh));
             }
         }
@@ -249,7 +256,7 @@ public class LibraryFiles extends AbstractLibraryListPanel {
 
             LibraryMediator.instance().getLibraryPlaylists().clearSelection();
 
-            refreshSelection();
+            refreshSelection(false);
         }
     }
 
@@ -261,7 +268,6 @@ public class LibraryFiles extends AbstractLibraryListPanel {
             _mtsfdh = mtsfdh;
         }
         
-
         public void run() {
             GUIMediator.safeInvokeLater(new Runnable() {
                 public void run() {
@@ -269,24 +275,33 @@ public class LibraryFiles extends AbstractLibraryListPanel {
                 }
             });
 
-            File file = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
+            final List<File> cache = new ArrayList<File>(_mtsfdh.getCache());
+            if (cache.size() == 0) {
 
-            Set<File> ignore = TorrentUtil.getIncompleteFiles();
-            ignore.addAll(TorrentUtil.getSkipedFiles());
+                File file = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
 
-            search(file, ignore);
-            
-            // special case for audio
-            if (_mtsfdh.getMediaType().equals(MediaType.getAudioMediaType())) {
-                File musicFile = null;
-                if (OSUtils.isMacOSX()) {
-                    musicFile = new File(CommonUtils.getUserHomeDir(), "Music");
-                } else if (OSUtils.isWindowsXP()) {
-                    musicFile = new File(CommonUtils.getUserHomeDir(), "My Documents" + File.separator + "My Music");
-                } else if (OSUtils.isWindowsVista() || OSUtils.isWindows7()) {
-                    musicFile = new File(CommonUtils.getUserHomeDir(), "Music");
+                Set<File> ignore = TorrentUtil.getIgnorableFiles();
+
+                search(file, ignore);
+
+                // special case for audio
+                if (_mtsfdh.getMediaType().equals(MediaType.getAudioMediaType())) {
+                    File musicFile = null;
+                    if (OSUtils.isMacOSX()) {
+                        musicFile = new File(CommonUtils.getUserHomeDir(), "Music");
+                    } else if (OSUtils.isWindowsXP()) {
+                        musicFile = new File(CommonUtils.getUserHomeDir(), "My Documents" + File.separator + "My Music");
+                    } else if (OSUtils.isWindowsVista() || OSUtils.isWindows7()) {
+                        musicFile = new File(CommonUtils.getUserHomeDir(), "Music");
+                    }
+                    search(musicFile, new HashSet<File>());
                 }
-                search(musicFile, new HashSet<File>());
+            } else {
+                GUIMediator.safeInvokeLater(new Runnable() {
+                    public void run() {
+                        LibraryMediator.instance().addFilesToLibraryTable(cache);
+                    }
+                });
             }
 
             LibraryFiles.this.executePendingRunnables();
@@ -320,7 +335,7 @@ public class LibraryFiles extends AbstractLibraryListPanel {
                     files.add(child);
                 }
             }
-
+            _mtsfdh.addToCache(files);
             Runnable r = new Runnable() {
                 public void run() {
                     LibraryMediator.instance().addFilesToLibraryTable(files);
@@ -353,7 +368,7 @@ public class LibraryFiles extends AbstractLibraryListPanel {
             if (directoryHolder == null) {
                 return;
             }
-            refreshSelection();
+            refreshSelection(true);
         }
     }
 
@@ -424,5 +439,16 @@ public class LibraryFiles extends AbstractLibraryListPanel {
             }
         }
 
+    }
+
+    public List<MediaTypeSavedFilesDirectoryHolder> getMediaTypeSavedFilesDirectoryHolders() {
+        List<MediaTypeSavedFilesDirectoryHolder> holders = new ArrayList<MediaTypeSavedFilesDirectoryHolder>();
+        for (int i = 0; i < _model.size(); i++) {
+            DirectoryHolder holder = ((LibraryFilesListCell) _model.get(i))._holder;
+            if (holder instanceof MediaTypeSavedFilesDirectoryHolder) {
+                holders.add((MediaTypeSavedFilesDirectoryHolder) holder);
+            }
+        }
+        return holders;
     }
 }
