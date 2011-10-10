@@ -18,6 +18,7 @@ import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.AzureusStarter;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.filters.TableLineFilter;
+import com.frostwire.gui.library.LibraryUtils;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -499,7 +500,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         boolean pausable = dataLine.getInitializeObject().isPausable();
         boolean resumable = dataLine.getInitializeObject().isResumable();
         boolean isTransferFinished = dataLine.getInitializeObject().isCompleted();
-        boolean hasAudioFiles = directoryContainsMediaType(dataLine.getInitializeObject().getSaveLocation(), MediaType.getAudioMediaType());
+        boolean hasAudioFiles = LibraryUtils.directoryContainsAudio(dataLine.getInitializeObject().getSaveLocation(),Integer.MAX_VALUE);
 
         removeAction.putValue(Action.NAME, I18n.tr("Cancel Download"));
         removeAction.putValue(LimeAction.SHORT_NAME, I18n.tr("Cancel"));
@@ -709,31 +710,5 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-    
-    /**
-     * Recursively checks this folder for at least one file with the given media type.
-     * Will return false if you passed a file.
-     * @param folder
-     * @param type
-     * @return
-     */
-    private static boolean directoryContainsMediaType(File folder, MediaType type) {
-        if (folder.isFile()) {
-            return false;
-        }
-        
-        File[] listFiles = folder.listFiles();
-        
-        for (File f : listFiles) {
-            Set<String> extensions = type.getExtensions();
-            if (f.isFile() && extensions.contains(FileUtils.getFileExtension(f))) {
-                return true;
-            } else if (f.isDirectory()) {
-                return directoryContainsMediaType(f, type);
-            }
-        }
-        
-        return false;
     }
 }
