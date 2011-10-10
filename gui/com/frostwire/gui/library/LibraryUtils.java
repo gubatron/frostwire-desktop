@@ -1,5 +1,6 @@
 package com.frostwire.gui.library;
 
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -511,4 +512,10 @@ public class LibraryUtils {
         Playlist selectedPlaylist = LibraryMediator.instance().getLibraryPlaylists().getSelectedPlaylist();
         return selectedPlaylist != null && selectedPlaylist.equals(playlist);
     }
+
+	public static boolean isRefreshKeyEvent(KeyEvent e) {
+		int keyCode = e.getKeyCode();
+		boolean ctrlCmdDown = e.isControlDown() || e.isAltGraphDown() || e.isMetaDown();
+		return keyCode  == KeyEvent.VK_F5 || (ctrlCmdDown && keyCode == KeyEvent.VK_R);
+	}
 }

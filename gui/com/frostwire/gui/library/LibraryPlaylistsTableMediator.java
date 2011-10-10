@@ -2,6 +2,8 @@ package com.frostwire.gui.library;
 
 import java.awt.Point;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.File;
@@ -174,6 +176,20 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         menu.add(createSearchSubMenu(line));
 
         return menu;
+    }
+    
+    @Override
+    protected void addListeners() {
+    	super.addListeners();
+
+    	TABLE.addKeyListener(new KeyAdapter() {
+        	@Override
+        	public void keyReleased(KeyEvent e) {
+        		if (LibraryUtils.isRefreshKeyEvent(e)) {
+        			LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
+        		}        		
+        	}
+		});
     }
 
     private JMenu createSearchSubMenu(LibraryPlaylistsTableDataLine dl) {

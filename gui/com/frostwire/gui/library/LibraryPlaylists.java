@@ -213,6 +213,10 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         } else if (key == KeyEvent.VK_DELETE || (OSUtils.isMacOSX() && key == KeyEvent.VK_BACK_SPACE)) {
             deleteAction.actionPerformed(null);
         }
+        
+        if (LibraryUtils.isRefreshKeyEvent(e)) {
+        	refreshSelection();
+        }
     }
 
     protected void textName_keyPressed(KeyEvent e) {
@@ -227,6 +231,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
     }
 
     public void refreshSelection() {
+    	
         LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) _list.getSelectedValue();
 
         if (cell == null) {
@@ -239,7 +244,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
 
         Playlist playlist = cell.getPlaylist();
         playlist.refresh();
-
+        
         LibraryMediator.instance().updateTableItems(playlist);
 
         String status = LibraryUtils.getPlaylistDurationInDDHHMMSS(playlist) + ", " + playlist.getItems().size() + " " + I18n.tr("tracks");

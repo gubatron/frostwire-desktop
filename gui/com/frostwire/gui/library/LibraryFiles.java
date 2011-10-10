@@ -5,6 +5,9 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
@@ -65,6 +68,8 @@ public class LibraryFiles extends AbstractLibraryListPanel {
     private Action refreshAction = new RefreshAction();
     private Action exploreAction = new ExploreAction();
 
+	private KeyListener REFRESH_KEY_LISTENER;
+
     public LibraryFiles() {
         setupUI();
     }
@@ -118,6 +123,14 @@ public class LibraryFiles extends AbstractLibraryListPanel {
     private void setupList() {
         _listMouseObserver = new ListMouseObserver();
         _listSelectionListener = new LibraryFilesSelectionListener();
+        REFRESH_KEY_LISTENER = new KeyAdapter() {
+        	@Override
+        	public void keyReleased(KeyEvent e) {
+        		if (LibraryUtils.isRefreshKeyEvent(e)) {
+        			refreshSelection(true);
+        		}        		
+        	}
+		};
         
         _list = new LibraryIconList(_model);
         _list.setCellRenderer(new LibraryFilesCellRenderer());
@@ -126,6 +139,8 @@ public class LibraryFiles extends AbstractLibraryListPanel {
         _list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         _list.setDragEnabled(true);
         _list.setTransferHandler(new LibraryFilesTransferHandler(_list));
+        
+		_list.addKeyListener(REFRESH_KEY_LISTENER);
       
         ToolTipManager.sharedInstance().registerComponent(_list);
     }

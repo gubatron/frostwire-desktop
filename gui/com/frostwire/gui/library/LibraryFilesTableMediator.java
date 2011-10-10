@@ -2,6 +2,8 @@ package com.frostwire.gui.library;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -97,6 +99,21 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         RENAME_ACTION = new RenameAction();
         SEND_TO_ITUNES_ACTION = new SendAudioFilesToiTunes();
         
+    }
+    
+    @Override
+    protected void addListeners() {
+    	super.addListeners();
+    	
+    	TABLE.addKeyListener(new KeyAdapter() {
+        	@Override
+        	public void keyReleased(KeyEvent e) {
+        		if (LibraryUtils.isRefreshKeyEvent(e)) {
+        			LibraryMediator.instance().getLibraryFiles().refreshSelection(true);
+        		}        		
+        	}
+		});
+
     }
     
     @Override

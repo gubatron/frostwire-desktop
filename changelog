@@ -11,7 +11,8 @@ frostwire (5.2.2) stable; urgency=high
     Android Tab if it's an android stream or to the Library otherwise.
   * Fixes issues with download mediator refresh.
   * Fixes out of memory error.
-
+  * Real time UI feedback as audio files are being imported into playlist.
+  * F5, Cmd+R or Ctrl+R will refresh the current Library table.
  
  -- FrostWire Team <contact@frostwire.com>  Wed, 07 Oct 2011 21:31:56 -0500
 
