@@ -1,6 +1,9 @@
 package com.frostwire.gui.library;
 
 import java.io.File;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.swing.Icon;
 
@@ -12,8 +15,11 @@ public class MediaTypeSavedFilesDirectoryHolder implements DirectoryHolder {
 
 	private MediaType type;
 	
+	private Set<File> cache;
+	
 	public MediaTypeSavedFilesDirectoryHolder(MediaType type) {
 		this.type = type;
+		cache = new HashSet<File>();
 	}
 	
 	public MediaType getMediaType() {
@@ -51,5 +57,17 @@ public class MediaTypeSavedFilesDirectoryHolder implements DirectoryHolder {
 
     public boolean isEmpty() {
         return true;
+    }
+    
+    public Set<File> getCache() {
+        return cache;
+    }
+    
+    public void addToCache(List<File> files) {
+        cache.addAll(files);
+    }
+    
+    public void clearCache() {
+        cache.clear();
     }
 }
