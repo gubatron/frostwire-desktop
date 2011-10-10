@@ -61,11 +61,12 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
 		text.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				if (AudioPlayer.instance().getCurrentSong().getFile()!=null) {
+				if (AudioPlayer.instance().getCurrentSong().getFile()!=null ||
+					AudioPlayer.instance().getCurrentSong().getPlaylistItem()!=null) {
 					showCurrentSong();
 				} else if (AudioPlayer.instance().getCurrentSong().getURL()!=null) {
 					
-					if (text.getText().startsWith("android")) {
+					if (text.getText().startsWith("<html><font color=\"496989\"><u>android")) {
 						GUIMediator.instance().setWindow(GUIMediator.Tabs.ANDROID);
 					} else {
 						GUIMediator.instance().setWindow(GUIMediator.Tabs.LIBRARY);
