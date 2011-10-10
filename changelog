@@ -1,4 +1,7 @@
 frostwire (5.2.2) stable; urgency=high
+  * Library tables are now cached in memory, searches are done in the cache
+    speeding up the experience considerably for users with several thousand
+    files.
   * Create or add audio files to a playlist right from the Transfer manager.
   * iTunes importing after audio transfers finish turned off by default.
   * Completed transfers that contain at least one audio file can be sent

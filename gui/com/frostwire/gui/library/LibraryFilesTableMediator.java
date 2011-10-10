@@ -103,7 +103,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     protected void setDefaultRenderers() {
         super.setDefaultRenderers();
         TABLE.setDefaultRenderer(PlayableCell.class, new PlayableCellRenderer());
-
     }
 
     /**
@@ -598,7 +597,21 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         
         if (selectedFile != null) {
             SEND_TO_FRIEND_ACTION.setEnabled(sel.length == 1);
-            SEND_TO_ITUNES_ACTION.setEnabled(true);
+
+            if (getMediaType().equals(MediaType.getAnyTypeMediaType())) {
+            	boolean atLeastOneIsPlayable  = false;
+            	
+            	for (int i : sel) {
+            		if (AudioPlayer.isPlayableFile(getFile(i))) {
+            			atLeastOneIsPlayable = true;
+            			break;
+            		}
+            	}
+            	
+            	SEND_TO_ITUNES_ACTION.setEnabled(atLeastOneIsPlayable);
+            } else {
+            	SEND_TO_ITUNES_ACTION.setEnabled(getMediaType().equals(MediaType.getAudioMediaType()));
+            }
         }
 
         if (sel.length == 1 && selectedFile.isFile() && selectedFile.getParentFile() != null) {
