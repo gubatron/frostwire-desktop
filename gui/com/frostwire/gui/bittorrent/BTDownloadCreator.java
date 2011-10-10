@@ -14,6 +14,7 @@ import org.limewire.util.OSUtils;
 
 import com.frostwire.AzureusStarter;
 import com.limegroup.gnutella.SaveLocationException;
+import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.iTunesSettings;
@@ -214,7 +215,11 @@ public class BTDownloadCreator {
                 
                 //if you have to hide seeds, do so.
                 if (state == DownloadManager.STATE_SEEDING) {
-                	BTDownloadMediator.instance().updateTableFilters();
+                    GUIMediator.safeInvokeLater(new Runnable() {
+                        public void run() {
+                            BTDownloadMediator.instance().updateTableFilters();
+                        }
+                    });
                 }
             }
         });
