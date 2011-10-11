@@ -11,6 +11,7 @@ import java.util.List;
 import org.gudy.azureus2.core3.global.GlobalManager;
 
 import com.frostwire.AzureusStarter;
+import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.UpdateSettings;
 
