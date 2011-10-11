@@ -210,4 +210,9 @@ public class PlaylistItem extends Entity<PlaylistItemDB> {
     public int hashCode() {
     	return id;
     }
+    
+    @Override
+    public String toString() {
+        return "(" + id + ", title:" + trackTitle + ", number:" + trackNumber + ")";
+    }
 }

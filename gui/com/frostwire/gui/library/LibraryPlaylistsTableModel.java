@@ -2,8 +2,6 @@ package com.frostwire.gui.library;
 
 import java.io.File;
 
-import javax.swing.JTable;
-
 import com.frostwire.alexandria.PlaylistItem;
 import com.limegroup.gnutella.gui.tables.ColoredCellImpl;
 import com.limegroup.gnutella.gui.tables.HashBasedDataLineModel;
@@ -16,19 +14,9 @@ import com.limegroup.gnutella.gui.tables.SizeHolder;
  */
 final class LibraryPlaylistsTableModel extends HashBasedDataLineModel<LibraryPlaylistsTableDataLine, PlaylistItem> {
 
-	/**
-     * 
-     */
-    private static final long serialVersionUID = 2859783399965055446L;
+	private static final long serialVersionUID = 2859783399965055446L;
     
-    /**
-	 * The table this model is used for.
-	 * (Needed to make sure isCellEditable
-	 *  is only true when a single thing is selected.)
-	 */
-	//private JTable _table;
-
-	LibraryPlaylistsTableModel() {
+    LibraryPlaylistsTableModel() {
 	    super(LibraryPlaylistsTableDataLine.class);
 	}
 	
@@ -37,15 +25,7 @@ final class LibraryPlaylistsTableModel extends HashBasedDataLineModel<LibraryPla
      */
     public LibraryPlaylistsTableDataLine createDataLine() {
         return new LibraryPlaylistsTableDataLine();
-    }    	
-
-	/**
-	 * Set the table this model is used for
-	 * Needed for isCellEditable to work
-	 */
-	void setTable(JTable table) {
-	    //_table = table;
-	}
+    }
 
 	/**
 	 * Override the normal refresh.

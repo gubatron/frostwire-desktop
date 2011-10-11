@@ -30,18 +30,28 @@ public class LibraryUtils {
     static {
         executor = ExecutorsHelper.newProcessingQueue("LibraryUtils-Executor");
     }
-
+    
     private static void addPlaylistItem(Playlist playlist, File file, boolean starred) {
+        addPlaylistItem(playlist, file, starred, -1);
+    }
+
+    private static void addPlaylistItem(Playlist playlist, File file, boolean starred, int index) {
         try {
             LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Importing") + " " + file.getName());
             AudioMetaData mt = new AudioMetaData(file);
             PlaylistItem item = playlist.newItem(file.getAbsolutePath(), file.getName(), file.length(), FileUtils.getFileExtension(file), mt.getTitle(), mt.getDurationInSecs(), mt.getArtist(), mt.getAlbum(), "",// TODO: cover art path
                     mt.getBitrate(), mt.getComment(), mt.getGenre(), mt.getTrack(), mt.getYear(), starred);
-            playlist.getItems().add(item);
-            item.save();
             
-            if (isPlaylistSelected(playlist)) {
-                LibraryPlaylistsTableMediator.instance().addUnsorted(item);
+            List<PlaylistItem> items = playlist.getItems();
+            if (index != -1 && index <= items.size()) {
+                items.add(index, item);
+                item.save();
+            } else {
+                items.add(item);
+                item.save();
+                if (isPlaylistSelected(playlist)) {
+                    LibraryPlaylistsTableMediator.instance().addUnsorted(item);
+                }
             }
         } finally {
             LibraryMediator.instance().getLibrarySearch().revertStatus();
@@ -176,7 +186,7 @@ public class LibraryUtils {
             Thread t = new Thread(new Runnable() {
                 public void run() {
                     Playlist playlist = LibraryMediator.getLibrary().getStarredPlaylist();
-                    addToPlaylist(playlist, playlistItems, true);
+                    addToPlaylist(playlist, playlistItems, true, -1);
                     GUIMediator.safeInvokeLater(new Runnable() {
                         public void run() {
                             DirectoryHolder dh = LibraryMediator.instance().getLibraryFiles().getSelectedDirectoryHolder();
@@ -246,14 +256,19 @@ public class LibraryUtils {
         t.setDaemon(true);
         t.start();
     }
+    
+    public static void asyncAddToPlaylist(Playlist playlist, File[] files) {
+        asyncAddToPlaylist(playlist, files, -1);
+    }
 
-    public static void asyncAddToPlaylist(final Playlist playlist, final File[] files) {
+    public static void asyncAddToPlaylist(final Playlist playlist, final File[] files, final int index) {
         LibraryMediator.instance().getLibraryPlaylists().markBeginImport(playlist);
         Thread t = new Thread(new Runnable() {
             public void run() {
                 try {
                     Set<File> ignore = TorrentUtil.getIgnorableFiles();
-                    addToPlaylist(playlist, files, false, ignore);
+                    addToPlaylist(playlist, files, false, index, ignore);
+                    playlist.save();
                 } finally {
                     asyncAddToPlaylistFinalizer(playlist);
                 }
@@ -272,11 +287,15 @@ public class LibraryUtils {
             }
         });
     }
+    
+    public static void asyncAddToPlaylist(Playlist playlist, PlaylistItem[] playlistItems) {
+        asyncAddToPlaylist(playlist, playlistItems, -1);
+    }
 
-    public static void asyncAddToPlaylist(final Playlist playlist, final PlaylistItem[] playlistItems) {
+    public static void asyncAddToPlaylist(final Playlist playlist, final PlaylistItem[] playlistItems, final int index) {
         Thread t = new Thread(new Runnable() {
             public void run() {
-                addToPlaylist(playlist, playlistItems);
+                addToPlaylist(playlist, playlistItems, index);
                 playlist.save();
                 GUIMediator.safeInvokeLater(new Runnable() {
                     public void run() {
@@ -288,11 +307,15 @@ public class LibraryUtils {
         t.setDaemon(true);
         t.start();
     }
-
+    
     public static void asyncAddToPlaylist(Playlist playlist, File m3uFile) {
+        asyncAddToPlaylist(playlist, m3uFile, -1);
+    }
+
+    public static void asyncAddToPlaylist(Playlist playlist, File m3uFile, int index) {
         try {
             List<File> files = M3UPlaylist.load(m3uFile.getAbsolutePath());
-            asyncAddToPlaylist(playlist, files.toArray(new File[0]));
+            asyncAddToPlaylist(playlist, files.toArray(new File[0]), index);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -341,28 +364,64 @@ public class LibraryUtils {
             }
         }
     }
+    
+    private static int addToPlaylist(Playlist playlist, File[] files, boolean starred, Set<File> ignore) {
+        return addToPlaylist(playlist, files, starred, -1, ignore);
+    }
 
-    private static void addToPlaylist(Playlist playlist, File[] files, boolean starred, Set<File> ignore) {
+    private static int addToPlaylist(Playlist playlist, File[] files, boolean starred, int index, Set<File> ignore) {
+        int count = 0;
         for (int i = 0; i < files.length && !playlist.isDeleted(); i++) {
             if (AudioPlayer.isPlayableFile(files[i]) && !ignore.contains(files[i])) {
-                LibraryUtils.addPlaylistItem(playlist, files[i], starred);
+                LibraryUtils.addPlaylistItem(playlist, files[i], starred, index + count);
+                count++;
             } else if (files[i].isDirectory()) {
-                addToPlaylist(playlist, files[i].listFiles(), starred, ignore);
+                count += addToPlaylist(playlist, files[i].listFiles(), starred, index + count, ignore);
             }
         }
+        
+        return count;
     }
 
     private static void addToPlaylist(Playlist playlist, PlaylistItem[] playlistItems) {
-        addToPlaylist(playlist, playlistItems, false);
+        addToPlaylist(playlist, playlistItems, false, -1);
+    }
+    
+    private static void addToPlaylist(Playlist playlist, PlaylistItem[] playlistItems, int index) {
+        addToPlaylist(playlist, playlistItems, false, index);
     }
 
-    private static void addToPlaylist(Playlist playlist, PlaylistItem[] playlistItems, boolean starred) {
-        for (int i = 0; i < playlistItems.length && !playlist.isDeleted(); i++) {
-            playlistItems[i].setPlaylist(playlist);
-            playlist.getItems().add(playlistItems[i]);
-            if (starred) {
-                playlistItems[i].setStarred(starred);
-                playlistItems[i].save();
+    private static void addToPlaylist(Playlist playlist, PlaylistItem[] playlistItems, boolean starred, int index) {
+        List<PlaylistItem> items = playlist.getItems();
+        if (index != -1 && index <= items.size()) {
+            List<Integer> toRemove = new ArrayList<Integer>(playlistItems.length);
+            for (int i = 0; i < playlistItems.length && !playlist.isDeleted(); i++) {
+                toRemove.add(playlistItems[i].getId());
+                playlistItems[i].setId(LibraryDatabase.OBJECT_NOT_SAVED_ID);
+                playlistItems[i].setPlaylist(playlist);
+                items.add(index + i, playlistItems[i]);
+                if (starred) {
+                    playlistItems[i].setStarred(starred);
+                    playlistItems[i].save();
+                }
+            }
+            for (int i = 0; i < toRemove.size() && !playlist.isDeleted(); i++) {
+                int id = toRemove.get(i);
+                for (int j = 0; j < items.size() && !playlist.isDeleted(); j++) {
+                    if (items.get(j).getId() == id) {
+                        items.remove(j);
+                        break;
+                    }
+                }
+            }
+        } else {
+            for (int i = 0; i < playlistItems.length && !playlist.isDeleted(); i++) {
+                playlistItems[i].setPlaylist(playlist);
+                items.add(playlistItems[i]);
+                if (starred) {
+                    playlistItems[i].setStarred(starred);
+                    playlistItems[i].save();
+                }
             }
         }
     }

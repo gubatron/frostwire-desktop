@@ -5,13 +5,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import javax.swing.Action;
 import javax.swing.JPopupMenu;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
-import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 import com.aelitis.azureus.core.AzureusCore;
@@ -19,7 +17,6 @@ import com.frostwire.AzureusStarter;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.filters.TableLineFilter;
 import com.frostwire.gui.library.LibraryUtils;
-import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;

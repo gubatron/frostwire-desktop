@@ -1,12 +1,15 @@
 package com.frostwire.gui.library;
 
 import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.InvalidDnDOperationException;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JComponent;
+import javax.swing.JTable;
 import javax.swing.TransferHandler;
 
 import org.limewire.util.OSUtils;
@@ -42,20 +45,24 @@ class LibraryPlaylistsTableTransferHandler extends TransferHandler {
         }
 
         try {
+            JTable.DropLocation dl = (JTable.DropLocation) support.getDropLocation();
+            int index = dl.getRow();
+            int max = mediator.getTable().getModel().getRowCount();
+            if (index < 0 || index > max)
+               index = max;
+            
             Transferable transferable = support.getTransferable();
             if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {
                 if (mediator.getCurrentPlaylist() != null) {
-                    PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistsTableTransferable.Item[]) transferable
-                            .getTransferData(LibraryPlaylistsTableTransferable.ITEM_ARRAY));
-                    LibraryUtils.asyncAddToPlaylist(mediator.getCurrentPlaylist(), playlistItems);
+                    importPlaylistItemArrayData(transferable, index);
                 }
             } else {
                 if (mediator.getCurrentPlaylist() != null) {
                     File[] files = DNDUtils.getFiles(support.getTransferable());
                     if (files.length == 1 && files[0].getAbsolutePath().endsWith(".m3u")) {
-                        LibraryUtils.asyncAddToPlaylist(mediator.getCurrentPlaylist(), files[0]);
+                        LibraryUtils.asyncAddToPlaylist(mediator.getCurrentPlaylist(), files[0], index);
                     } else {
-                        LibraryUtils.asyncAddToPlaylist(mediator.getCurrentPlaylist(), files);
+                        LibraryUtils.asyncAddToPlaylist(mediator.getCurrentPlaylist(), files, index);
                     }
                 }
             }
@@ -82,7 +89,7 @@ class LibraryPlaylistsTableTransferHandler extends TransferHandler {
     }
 
     private boolean canImport(TransferSupport support, boolean fallback) {
-        support.setShowDropLocation(false);
+        //support.setShowDropLocation(false);
         if (!mediator.getMediaType().equals(MediaType.getAudioMediaType())) {
             return fallback ? fallbackTransferHandler.canImport(support) : false;
         }
@@ -120,5 +127,10 @@ class LibraryPlaylistsTableTransferHandler extends TransferHandler {
         }
 
         return false;
+    }
+    
+    private void importPlaylistItemArrayData(Transferable transferable, int index) throws UnsupportedFlavorException, IOException {
+        PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistsTableTransferable.Item[]) transferable.getTransferData(LibraryPlaylistsTableTransferable.ITEM_ARRAY));
+        LibraryUtils.asyncAddToPlaylist(mediator.getCurrentPlaylist(), playlistItems, index);
     }
 }

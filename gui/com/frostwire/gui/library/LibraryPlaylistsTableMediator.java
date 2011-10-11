@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.DropMode;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JOptionPane;
@@ -112,7 +113,6 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         MAIN_PANEL = null;
         DATA_MODEL = new LibraryPlaylistsTableModel();
         TABLE = new LimeJTable(DATA_MODEL);
-        DATA_MODEL.setTable(TABLE);
         Action[] aa = new Action[] { LAUNCH_ACTION, ENQUEUE_ACTION, DELETE_ACTION };
         BUTTON_ROW = new ButtonRow(aa, ButtonRow.X_AXIS, ButtonRow.NO_GLUE);
     }
@@ -235,6 +235,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
      */
     protected void setupDragAndDrop() {
         TABLE.setDragEnabled(true);
+        TABLE.setDropMode(DropMode.INSERT_ROWS);
         TABLE.setTransferHandler(new LibraryPlaylistsTableTransferHandler(this));
     }
 
