@@ -43,8 +43,10 @@ public class PlaylistDB extends ObjectDB<Playlist> {
             Object[] statementObjects = createPlaylistUpdateStatement(obj);
             db.update((String) statementObjects[0], (Object[]) statementObjects[1]);
         }
+        
+        List<PlaylistItem> items = new ArrayList<PlaylistItem>(obj.getItems());
 
-        for (PlaylistItem item : obj.getItems()) {
+        for (PlaylistItem item : items) {
             item.setId(LibraryDatabase.OBJECT_NOT_SAVED_ID);
             item.save();
         }

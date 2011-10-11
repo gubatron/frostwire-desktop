@@ -43,7 +43,7 @@ public class LibraryUtils {
                     mt.getBitrate(), mt.getComment(), mt.getGenre(), mt.getTrack(), mt.getYear(), starred);
             
             List<PlaylistItem> items = playlist.getItems();
-            if (index != -1 && index <= items.size()) {
+            if (index != -1 && index < items.size()) {
                 items.add(index, item);
                 item.save();
             } else {
