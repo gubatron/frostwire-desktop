@@ -79,4 +79,17 @@ public class BittorrentSettings extends LimeProps {
 	public static ProbabilisticBooleanSetting REPORT_DISK_PROBLEMS = FACTORY
 			.createRemoteProbabilisticBooleanSetting("REPORT_BT_DISK_PROBLEMS",
 					0f, "BTSettings.reportDiskProblems", 0f, 1f);
+	
+	/**
+	 * Records what was the last sorting order of the sort column for the transfer manager.
+	 * false -> Descending
+	 * true -> Ascending
+	 */
+	public static BooleanSetting BTMEDIATOR_COLUMN_SORT_ORDER = FACTORY.createBooleanSetting("BTMEDIATOR_COLUMN_SORT_ORDER", true);
+	
+	/**
+	 * Records what was the last column you used to sort the transfers table.
+	 */
+	public static IntSetting BTMEDIATOR_COLUMN_SORT_INDEX = FACTORY.createIntSetting("BTMEDIATOR_COLUMN_SORT_INDEX", -1);
+	
 }

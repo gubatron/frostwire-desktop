@@ -1,6 +1,9 @@
 package com.frostwire.gui.bittorrent;
 
+import java.awt.Point;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -30,6 +33,7 @@ import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.settings.ApplicationSettings;
+import com.limegroup.gnutella.settings.BittorrentSettings;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 
 /**
@@ -74,6 +78,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 	private SeedingFilter _seedingFilter;
 
 	private Action sendToItunesAction;
+
+	private boolean calledRestoreSorting = false;
 
     /**
      * Overriden to have different default values for tooltips.
@@ -136,6 +142,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         BUTTON_ROW = _downloadButtons.getComponent();
         
         updateTableFilters();
+        restoreSorting();
     }
     
     /**
@@ -167,7 +174,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 		}
 
 		DATA_MODEL.filtersChanged();
-
 	}
 
     /**
@@ -223,6 +229,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         super("DOWNLOAD_TABLE");
         GUIMediator.addRefreshListener(this);
         ThemeMediator.addThemeObserver(this);
+        
     }
 
     /**
@@ -246,6 +253,11 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             resumeAction.setEnabled(resumable);
             pauseAction.setEnabled(pausable);
             exploreAction.setEnabled(completed);
+        }
+        
+        if (!calledRestoreSorting ) {
+        	calledRestoreSorting = true;
+        	restoreSorting();
         }
     }
 
@@ -708,4 +720,26 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             e.printStackTrace();
         }
     }
+    
+    @Override
+    public void handleHeaderColumnReleased(Point p) {
+    	super.handleHeaderColumnReleased(p);
+    	BittorrentSettings.BTMEDIATOR_COLUMN_SORT_INDEX.setValue(DATA_MODEL.getSortColumn());
+    	BittorrentSettings.BTMEDIATOR_COLUMN_SORT_ORDER.setValue(DATA_MODEL.isSortAscending());  	 
+    }
+    
+    /**
+     * Load from the last settings saved the previous sorting preferences of this mediator.
+     */
+    public void restoreSorting() {
+    	System.out.println("restoreSorting!!!");
+    	
+    	DATA_MODEL.sort(BittorrentSettings.BTMEDIATOR_COLUMN_SORT_INDEX.getValue()); //ascending
+    	
+    	if (!BittorrentSettings.BTMEDIATOR_COLUMN_SORT_ORDER.getValue()) { //descending
+        	DATA_MODEL.sort(BittorrentSettings.BTMEDIATOR_COLUMN_SORT_INDEX.getValue());
+        	TABLE.repaint();
+    	}
+    }
+    
 }
