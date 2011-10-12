@@ -2,6 +2,13 @@ frostwire (5.2.3) stable; urgency=high
   * Change the order of an audio file on playlist with drag and drop.
   * Change the order of multiple audio files on a playlist with drag and drop.
   * Drop audio files and folders at a specific position inside a playlist.
+  * Remembers the column and order you last set on the transfer manager
+    after restart.
+  * Bug fix, now if you're playing a song and you resort the playlist by
+    any of the columns, the next song to be played will be the one below
+    the current song in the new order.
+  * Searching inside "Finished Downloads" now yields folder names as search
+    results.
  
  -- FrostWire Team <contact@frostwire.com>  Tue, 11 Oct 2011 15:33:10 -0500
 
