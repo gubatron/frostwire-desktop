@@ -24,6 +24,7 @@ import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.dnd.FileTransfer;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
+import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.TableSettings;
 import com.limegroup.gnutella.gui.themes.SkinMenu;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
@@ -32,6 +33,7 @@ import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.BittorrentSettings;
 import com.limegroup.gnutella.settings.QuestionsHandler;
+import com.limegroup.gnutella.settings.TablesHandlerSettings;
 
 /**
  * This class acts as a mediator between all of the components of the
@@ -715,17 +717,19 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
      * Load from the last settings saved the previous sorting preferences of this mediator.
      */
     public void restoreSorting() {
-    	int sortIndex = BittorrentSettings.BTMEDIATOR_COLUMN_SORT_INDEX.getValue();
-    	boolean sortOrder = BittorrentSettings.BTMEDIATOR_COLUMN_SORT_ORDER.getValue();
-    	
-    	if (sortIndex != -1) {
-    	    DATA_MODEL.sort(sortIndex); //ascending
-            
+        int sortIndex = BittorrentSettings.BTMEDIATOR_COLUMN_SORT_INDEX.getValue();
+        boolean sortOrder = BittorrentSettings.BTMEDIATOR_COLUMN_SORT_ORDER.getValue();
+
+        LimeTableColumn column = BTDownloadDataLine.staticGetColumn(sortIndex);
+
+        if (sortIndex != -1 && column != null && TablesHandlerSettings.getVisibility(column.getId(), column.getDefaultVisibility()).getValue()) {
+            DATA_MODEL.sort(sortIndex); //ascending
+
             if (!sortOrder) { //descending
                 DATA_MODEL.sort(sortIndex);
             }
-    	} else {
-    	    DATA_MODEL.sort(BTDownloadDataLine.DATE_CREATED_INDEX);
-    	}
+        } else {
+            DATA_MODEL.sort(BTDownloadDataLine.DATE_CREATED_INDEX);
+        }
     }
 }

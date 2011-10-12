@@ -152,7 +152,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
             I18n.tr("Seeds/Peers"), 80, false, String.class);
     
     static final int DATE_CREATED_INDEX = 13;
-    private static final LimeTableColumn DATE_CREATED_COLUMN = new LimeTableColumn(DATE_CREATED_INDEX, "DATE_CREATED_COLUMN",
+    static final LimeTableColumn DATE_CREATED_COLUMN = new LimeTableColumn(DATE_CREATED_INDEX, "DATE_CREATED_COLUMN",
             I18n.tr("Started On"), 80, false, Date.class);
 
     /**
@@ -242,6 +242,40 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
      * @implements DataLine interface
      */
     public LimeTableColumn getColumn(int idx) {
+        switch (idx) {
+        case FILE_INDEX:
+            return FILE_COLUMN;
+        case SIZE_INDEX:
+            return SIZE_COLUMN;
+        case STATUS_INDEX:
+            return STATUS_COLUMN;
+        case PROGRESS_INDEX:
+            return PROGRESS_COLUMN;
+        case BYTES_DOWNLOADED_INDEX:
+            return BYTES_DOWNLOADED_COLUMN;
+        case BYTES_UPLOADED_INDEX:
+            return BYTES_UPLOADED_COLUMN;
+        case DOWNLOAD_SPEED_INDEX:
+            return DOWNLOAD_SPEED_COLUMN;
+        case UPLOAD_SPEED_INDEX:
+            return UPLOAD_SPEED_COLUMN;
+        case TIME_INDEX:
+            return TIME_COLUMN;
+        case SEEDS_INDEX:
+            return SEEDS_COLUMN;
+        case PEERS_INDEX:
+            return PEERS_COLUMN;
+        case SHARE_RATIO_INDEX:
+            return SHARE_RATIO_COLUMN;
+        case SEED_TO_PEER_RATIO_INDEX:
+            return SEED_TO_PEER_RATIO_COLUMN;
+        case DATE_CREATED_INDEX:
+            return DATE_CREATED_COLUMN;
+        }
+        return null;
+    }
+    
+    static LimeTableColumn staticGetColumn(int idx) {
         switch (idx) {
         case FILE_INDEX:
             return FILE_COLUMN;
