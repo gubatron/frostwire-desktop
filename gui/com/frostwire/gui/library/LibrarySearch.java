@@ -321,12 +321,13 @@ public class LibrarySearch extends JPanel {
                 }
 
                 if (child.isDirectory()) {
-                    directories.add(child);
-
-                    //                    if (searchFilter.accept(child, false)) {
-                    //                        results.add(child);
-                    //                    }
-
+                    if (directoryHolder instanceof SavedFilesDirectoryHolder) {
+                        if (searchFilter.accept(child, false)) {
+                            results.add(child);
+                        }
+                    } else {
+                        directories.add(child);
+                    }
                 } else if (child.isFile() && directoryHolder.accept(child)) {
                     results.add(child);
                 }
@@ -400,9 +401,8 @@ public class LibrarySearch extends JPanel {
          * @param pathname
          * @param includeAllDirectories - if true, it will say TRUE to any directory
          * @return
-         */
+         */        
         public boolean accept(File pathname, boolean includeAllDirectories) {
-
             if (pathname.isDirectory() && includeAllDirectories) {
                 return true;
             }
