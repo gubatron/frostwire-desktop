@@ -3,7 +3,7 @@ package com.limegroup.gnutella.gui.search;
 import javax.swing.Icon;
 
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
-import com.limegroup.gnutella.settings.TablesHandler;
+import com.limegroup.gnutella.settings.TablesHandlerSettings;
 
 /**
  * Extends LimeTableColumn to store current width/order/visibility information.
@@ -36,9 +36,9 @@ class SearchColumn extends LimeTableColumn {
                     Icon icon, int width, boolean vis, Class<?> clazz) {
         super(model, id, name, icon, width, vis, clazz);
         
-        _visible = TablesHandler.getVisibility(id, vis).getValue();
-        _order = TablesHandler.getOrder(id, model).getValue();
-        _width = TablesHandler.getWidth(id, width).getValue();
+        _visible = TablesHandlerSettings.getVisibility(id, vis).getValue();
+        _order = TablesHandlerSettings.getOrder(id, model).getValue();
+        _width = TablesHandlerSettings.getWidth(id, width).getValue();
     }
     
     void setCurrentWidth(int width) {

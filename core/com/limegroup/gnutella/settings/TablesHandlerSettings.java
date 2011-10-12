@@ -15,18 +15,18 @@ import org.limewire.setting.SettingsFactory;
  * because they are accessed less-frequently and must be slightly
  * more mutable than other settings classes.
  */
-public final class TablesHandler extends LimeWireSettings {
+public final class TablesHandlerSettings extends LimeWireSettings {
 
-    private static final TablesHandler INSTANCE =
-        new TablesHandler();
+    private static final TablesHandlerSettings INSTANCE =
+        new TablesHandlerSettings();
     private static final SettingsFactory FACTORY =
         INSTANCE.getFactory();
 
-    public static TablesHandler instance() {
+    public static TablesHandlerSettings instance() {
         return INSTANCE;
     }
 
-    private TablesHandler() {
+    private TablesHandlerSettings() {
         super("tables.props", "FrostWire tables file");
     }
 

@@ -31,7 +31,6 @@ import com.frostwire.gui.components.SlideshowPanel;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.ProgTabUIFactory;
 import com.limegroup.gnutella.gui.RefreshListener;
 import com.limegroup.gnutella.gui.themes.SkinTabbedPane;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
@@ -206,7 +205,6 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
     private void setupTabbedPane () {
     	removeTabbedPaneListeners();
         tabbedPane = new SkinTabbedPane(GUIMediator.getThemeImage("indeterminate_small_progress"));
-        ProgTabUIFactory.extendUI(tabbedPane);
         tabbedPane.setRequestFocusEnabled(false);
         results.add("tabbedPane",tabbedPane);
         addTabbedPaneListeners();
@@ -582,8 +580,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 
 	// inherit doc comment
 	public void updateTheme() {
-	    ProgTabUIFactory.extendUI(tabbedPane);
-		DUMMY.updateTheme();
+	    DUMMY.updateTheme();
 		
 		CancelSearchIconProxy.updateTheme();
 		fixIcons();

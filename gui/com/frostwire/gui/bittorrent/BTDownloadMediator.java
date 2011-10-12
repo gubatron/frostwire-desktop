@@ -1,9 +1,6 @@
 package com.frostwire.gui.bittorrent;
 
-import java.awt.Point;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -79,8 +76,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
 	private Action sendToItunesAction;
 
-	private boolean calledRestoreSorting = false;
-
     /**
      * Overriden to have different default values for tooltips.
      */
@@ -142,7 +137,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         BUTTON_ROW = _downloadButtons.getComponent();
         
         updateTableFilters();
-        restoreSorting();
     }
     
     /**
@@ -230,6 +224,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         GUIMediator.addRefreshListener(this);
         ThemeMediator.addThemeObserver(this);
         
+        restoreSorting();
     }
 
     /**
@@ -253,11 +248,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             resumeAction.setEnabled(resumable);
             pauseAction.setEnabled(pausable);
             exploreAction.setEnabled(completed);
-        }
-        
-        if (!calledRestoreSorting ) {
-        	calledRestoreSorting = true;
-        	restoreSorting();
         }
     }
 
@@ -721,25 +711,21 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         }
     }
     
-    @Override
-    public void handleHeaderColumnReleased(Point p) {
-    	super.handleHeaderColumnReleased(p);
-    	BittorrentSettings.BTMEDIATOR_COLUMN_SORT_INDEX.setValue(DATA_MODEL.getSortColumn());
-    	BittorrentSettings.BTMEDIATOR_COLUMN_SORT_ORDER.setValue(DATA_MODEL.isSortAscending());  	 
-    }
-    
     /**
      * Load from the last settings saved the previous sorting preferences of this mediator.
      */
     public void restoreSorting() {
-    	System.out.println("restoreSorting!!!");
+    	int sortIndex = BittorrentSettings.BTMEDIATOR_COLUMN_SORT_INDEX.getValue();
+    	boolean sortOrder = BittorrentSettings.BTMEDIATOR_COLUMN_SORT_ORDER.getValue();
     	
-    	DATA_MODEL.sort(BittorrentSettings.BTMEDIATOR_COLUMN_SORT_INDEX.getValue()); //ascending
-    	
-    	if (!BittorrentSettings.BTMEDIATOR_COLUMN_SORT_ORDER.getValue()) { //descending
-        	DATA_MODEL.sort(BittorrentSettings.BTMEDIATOR_COLUMN_SORT_INDEX.getValue());
-        	TABLE.repaint();
+    	if (sortIndex != -1) {
+    	    DATA_MODEL.sort(sortIndex); //ascending
+            
+            if (!sortOrder) { //descending
+                DATA_MODEL.sort(sortIndex);
+            }
+    	} else {
+    	    DATA_MODEL.sort(BTDownloadDataLine.DATE_CREATED_INDEX);
     	}
     }
-    
 }

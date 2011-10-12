@@ -3,7 +3,7 @@ package com.limegroup.gnutella.gui.tables;
 import org.limewire.setting.BooleanSetting;
 import org.limewire.setting.SettingsFactory;
 
-import com.limegroup.gnutella.settings.TablesHandler;
+import com.limegroup.gnutella.settings.TablesHandlerSettings;
 
 /**
  * Manages settings for tables and their associated components.
@@ -13,7 +13,7 @@ public class TableSettings {
     /**
      * The SettingsFactory settings will be added/read to/from.
      */
-    protected static final SettingsFactory FACTORY = TablesHandler.instance().getFactory();    
+    protected static final SettingsFactory FACTORY = TablesHandlerSettings.instance().getFactory();    
     
     /**
      * Additions to the ID to identify the setting.

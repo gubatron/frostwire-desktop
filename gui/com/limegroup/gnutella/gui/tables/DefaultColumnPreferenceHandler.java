@@ -10,7 +10,7 @@ import javax.swing.event.TableColumnModelEvent;
 import javax.swing.event.TableColumnModelListener;
 import javax.swing.table.TableColumnModel;
 
-import com.limegroup.gnutella.settings.TablesHandler;
+import com.limegroup.gnutella.settings.TablesHandlerSettings;
 
 
 /**
@@ -337,7 +337,7 @@ import com.limegroup.gnutella.settings.TablesHandler;
         }
 
         if(changed)
-            TablesHandler.instance().save();
+            TablesHandlerSettings.instance().save();
 
         startListening();
     }
@@ -377,7 +377,7 @@ import com.limegroup.gnutella.settings.TablesHandler;
     }
     
     protected void save() {
-        TablesHandler.instance().save();
+        TablesHandlerSettings.instance().save();
     }
 
 
@@ -402,47 +402,47 @@ import com.limegroup.gnutella.settings.TablesHandler;
     }
 
     protected void setVisibility(LimeTableColumn col, boolean vis) {
-        TablesHandler.getVisibility(col.getId(), col.getDefaultVisibility()).
+        TablesHandlerSettings.getVisibility(col.getId(), col.getDefaultVisibility()).
             setValue(vis);
     }
 
     protected void setOrder(LimeTableColumn col, int order) {
-        TablesHandler.getOrder(col.getId(), col.getDefaultOrder()).
+        TablesHandlerSettings.getOrder(col.getId(), col.getDefaultOrder()).
             setValue(order);
     }
 
     protected void setWidth(LimeTableColumn col, int width) {
-        TablesHandler.getWidth(col.getId(), col.getDefaultWidth()).
+        TablesHandlerSettings.getWidth(col.getId(), col.getDefaultWidth()).
         setValue(width);
     }
 
     protected boolean getVisibility(LimeTableColumn col) {
-        return TablesHandler.getVisibility(
+        return TablesHandlerSettings.getVisibility(
             col.getId(), col.getDefaultVisibility()).getValue();
     }
 
     protected int getOrder(LimeTableColumn col) {
-        return TablesHandler.getOrder(col.getId(), col.getDefaultOrder()).
+        return TablesHandlerSettings.getOrder(col.getId(), col.getDefaultOrder()).
             getValue();
     }
 
     protected int getWidth(LimeTableColumn col) {
-        return TablesHandler.getWidth(col.getId(), col.getDefaultWidth()).
+        return TablesHandlerSettings.getWidth(col.getId(), col.getDefaultWidth()).
             getValue();
     }
     
     protected boolean isDefaultVisibility(LimeTableColumn col) {
-        return TablesHandler.getVisibility(
+        return TablesHandlerSettings.getVisibility(
             col.getId(), col.getDefaultVisibility()).isDefault();
     }
 
     protected boolean isDefaultOrder(LimeTableColumn col) {
-        return TablesHandler.getOrder(col.getId(), col.getDefaultOrder()).
+        return TablesHandlerSettings.getOrder(col.getId(), col.getDefaultOrder()).
             isDefault();
     }
 
     protected boolean isDefaultWidth(LimeTableColumn col) {
-        return TablesHandler.getWidth(col.getId(), col.getDefaultWidth()).
+        return TablesHandlerSettings.getWidth(col.getId(), col.getDefaultWidth()).
             isDefault();
     }
 }

@@ -4,14 +4,11 @@ import java.io.File;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import org.gudy.azureus2.core3.global.GlobalManager;
 
 import com.frostwire.AzureusStarter;
-import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.UpdateSettings;
 
@@ -67,11 +64,11 @@ public class DownloadManagerImpl implements DownloadManager {
             }
         }
 
-        Collections.sort(downloads, new Comparator<org.gudy.azureus2.core3.download.DownloadManager>() {
-            public int compare(org.gudy.azureus2.core3.download.DownloadManager o1, org.gudy.azureus2.core3.download.DownloadManager o2) {
-                return Long.valueOf(o1.getCreationTime()).compareTo(Long.valueOf(o2.getCreationTime()));
-            }
-        });
+//        Collections.sort(downloads, new Comparator<org.gudy.azureus2.core3.download.DownloadManager>() {
+//            public int compare(org.gudy.azureus2.core3.download.DownloadManager o1, org.gudy.azureus2.core3.download.DownloadManager o2) {
+//                return Long.valueOf(o1.getCreationTime()).compareTo(Long.valueOf(o2.getCreationTime()));
+//            }
+//        });
 
         for (org.gudy.azureus2.core3.download.DownloadManager obj : downloads) {
 

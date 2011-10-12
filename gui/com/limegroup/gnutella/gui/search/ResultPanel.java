@@ -53,7 +53,6 @@ import com.limegroup.gnutella.gui.GUIConstants;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
-import com.limegroup.gnutella.gui.ProgTabUIFactory;
 import com.limegroup.gnutella.gui.actions.SearchAction;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.MulticastTransferHandler;
@@ -212,22 +211,6 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilteredModel, Ta
      * Does nothing.
      */
     protected void updateSplashScreen() { }
-    
-    /**
-     * Simple inner class to allow a PaddedPanel to implement Progressor. This
-     * is necessary for the ProgTabUIFactory to get the percentage of its tabs.
-     */
-    private class PPP extends PaddedPanel
-                      implements ProgTabUIFactory.Progressor {
-        /**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-
-		public double calculatePercentage(long now) {
-            return 0;//ResultPanel.this.calculatePercentage(now);
-        }
-    }
 
     /**
      * Setup the data model 
@@ -243,7 +226,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilteredModel, Ta
     protected void setupConstants() {
 
         FILTER = new CompositeFilter(4);
-        MAIN_PANEL = new PPP();
+        MAIN_PANEL = new PaddedPanel();
 
         setupDataModel();        
         

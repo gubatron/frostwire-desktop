@@ -1,11 +1,10 @@
 package com.frostwire.gui.bittorrent;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import com.frostwire.gui.filters.TableLineFilter;
+import com.limegroup.gnutella.settings.BittorrentSettings;
 
 /**
  * Filters out certain rows from the data model.
@@ -78,41 +77,6 @@ public class BTDownloadRowFilteredModel extends BTDownloadModel {
         return FILTER.allow(tl);
     }
     
- 
-    
-    @Override
-    public int getSortedPosition(BTDownloadDataLine dl) {
-    	
-    	if (_list == null || _list.size() == 0) {
-    		return 0;
-    	}
-    	
-    	@SuppressWarnings("unchecked")
-		int sortedPosition = Collections.binarySearch(_list, dl,  new Comparator<Object>() {
-			@Override
-			public int compare(Object a, Object b) {
-				BTDownloadDataLine aDataLine = (BTDownloadDataLine) a;
-				BTDownloadDataLine bDataLine = (BTDownloadDataLine) b;
-				
-				if (isSorted()) {
-					Comparable<Object> aComparable = (Comparable<Object>) aDataLine.getValueAt(_activeColumn);
-					Comparable<Object> bComparable = (Comparable<Object>) bDataLine.getValueAt(_activeColumn);
-					return aComparable.compareTo(bComparable);
-				} else {
-					BTDownload torrentA = aDataLine.getInitializeObject();
-					BTDownload torrentB = bDataLine.getInitializeObject();
-					return new Integer(torrentA.getState()).compareTo(new Integer(torrentB.getState()));
-				}
-				
-			}
-		} );
-    	
-    	if (sortedPosition < 0) sortedPosition = -(sortedPosition + 1);
-    	
-    	
-    	return sortedPosition;
-    }
-    
     /**
      * Rebuilds the internal map to denote a new filter.
      */
@@ -145,5 +109,22 @@ public class BTDownloadRowFilteredModel extends BTDownloadModel {
            // }
         }
   
+    }
+    
+    @Override
+    public void sort(int col) {
+        super.sort(col);
+        saveSortSettings();
+    }
+    
+    @Override
+    public void unsort() {
+        super.unsort();
+        saveSortSettings();
+    }
+    
+    private void saveSortSettings() {
+        BittorrentSettings.BTMEDIATOR_COLUMN_SORT_INDEX.setValue(getSortColumn());
+        BittorrentSettings.BTMEDIATOR_COLUMN_SORT_ORDER.setValue(isSortAscending()); 
     }
 }
