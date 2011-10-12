@@ -815,4 +815,19 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         }
         return result;
     }
+    
+    @Override
+    protected void sortAndMaintainSelection(int columnToSort) {
+        super.sortAndMaintainSelection(columnToSort);
+        resetAudioPlayerFileView();
+    }
+
+    private void resetAudioPlayerFileView() {
+        Playlist playlist = AudioPlayer.instance().getCurrentPlaylist();
+        if (playlist != null && playlist.equals(currentPlaylist)) {
+            if (AudioPlayer.instance().getPlaylistFilesView() != null) {
+                AudioPlayer.instance().setPlaylistFilesView(getFileView());
+            }
+        }
+    }
 }

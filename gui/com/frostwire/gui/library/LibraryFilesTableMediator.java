@@ -30,6 +30,7 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
+import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
@@ -911,6 +912,21 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
         public File getFile() {
             return _file;
+        }
+    }
+    
+    @Override
+    protected void sortAndMaintainSelection(int columnToSort) {
+        super.sortAndMaintainSelection(columnToSort);
+        resetAudioPlayerFileView();
+    }
+
+    private void resetAudioPlayerFileView() {
+        Playlist playlist = AudioPlayer.instance().getCurrentPlaylist();
+        if (playlist == null) {
+            if (AudioPlayer.instance().getPlaylistFilesView() != null) {
+                AudioPlayer.instance().setPlaylistFilesView(getFileView());
+            }
         }
     }
 }
