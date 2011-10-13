@@ -119,7 +119,7 @@ public class SmartSearchDB {
     }
 
     public synchronized void close() {
-    	System.out.println("SmartSearchDB is shutting down.");
+    	//System.out.println("SmartSearchDB is shutting down.");
 
     	if (isClosed()) {
             return;
@@ -131,7 +131,7 @@ public class SmartSearchDB {
             Statement statement = _connection.createStatement();
             statement.execute("SHUTDOWN");
             _connection.close();
-            System.out.println("SmartSearchDB has shut down.");
+            //System.out.println("SmartSearchDB has shut down.");
         } catch (Exception e) {
             e.printStackTrace();
         }

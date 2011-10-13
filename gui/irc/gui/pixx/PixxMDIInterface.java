@@ -227,7 +227,7 @@ public class PixxMDIInterface extends IRCInterface implements PixxTaskBarListene
     }
 
     private void channelCreated(final Channel chan, final Boolean bring) {
-        GUIMediator.safeInvokeLater(new Runnable() {
+        GUIMediator.safeInvokeAndWait(new Runnable() {
             public void run() {
                 AWTChannel awt = new AWTChannel(_pixxConfiguration, chan);
                 awt.addBaseAWTSourceListener(PixxMDIInterface.this);
@@ -238,7 +238,7 @@ public class PixxMDIInterface extends IRCInterface implements PixxTaskBarListene
     }
 
     private void channelRemoved(final Channel chan) {
-        GUIMediator.safeInvokeLater(new Runnable() {
+        GUIMediator.safeInvokeAndWait(new Runnable() {
             public void run() {
                 AWTChannel s = (AWTChannel) _channels.get(chan);
                 s.removeBaseAWTSourceListener(PixxMDIInterface.this);
@@ -249,7 +249,7 @@ public class PixxMDIInterface extends IRCInterface implements PixxTaskBarListene
     }
 
     private void queryCreated(final Query query, final Boolean bring) {
-        GUIMediator.safeInvokeLater(new Runnable() {
+        GUIMediator.safeInvokeAndWait(new Runnable() {
             public void run() {
                 AWTQuery awt = new AWTQuery(_pixxConfiguration, query);
                 awt.addBaseAWTSourceListener(PixxMDIInterface.this);
@@ -270,7 +270,7 @@ public class PixxMDIInterface extends IRCInterface implements PixxTaskBarListene
     }
 
     private void statusCreated(final Status status, final Boolean bring) {
-        GUIMediator.safeInvokeLater(new Runnable() {
+        GUIMediator.safeInvokeAndWait(new Runnable() {
             public void run() {
                 AWTStatus awt = new AWTStatus(_pixxConfiguration, status);
                 _task.addStatus(awt, bring.booleanValue());
@@ -288,7 +288,7 @@ public class PixxMDIInterface extends IRCInterface implements PixxTaskBarListene
     }
 
     private void chanListCreated(final ChanList list, final Boolean bring) {
-        GUIMediator.safeInvokeLater(new Runnable() {
+        GUIMediator.safeInvokeAndWait(new Runnable() {
             public void run() {
                 AWTChanList cl = new AWTChanList(_pixxConfiguration, list);
                 _task.addChanList(cl, bring.booleanValue());
@@ -306,7 +306,7 @@ public class PixxMDIInterface extends IRCInterface implements PixxTaskBarListene
     }
 
     private void DCCChatCreated(final DCCChat chat, final Boolean bbring) {
-        GUIMediator.safeInvokeLater(new Runnable() {
+        GUIMediator.safeInvokeAndWait(new Runnable() {
             public void run() {
                 boolean bring = bbring.booleanValue();
                 AWTDCCChat awt = new AWTDCCChat(_pixxConfiguration, chat);
