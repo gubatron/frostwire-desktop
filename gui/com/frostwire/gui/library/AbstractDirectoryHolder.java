@@ -21,8 +21,7 @@ public abstract class AbstractDirectoryHolder implements DirectoryHolder {
      */
     public File[] getFiles() {
         
-        _hideFiles = TorrentUtil.getIncompleteFiles();
-        _hideFiles.addAll(TorrentUtil.getSkipedFiles());
+        _hideFiles = TorrentUtil.getIgnorableFiles();
         
         File[] files = getDirectory().listFiles(this);
         return (files != null) ? files : new File[0];

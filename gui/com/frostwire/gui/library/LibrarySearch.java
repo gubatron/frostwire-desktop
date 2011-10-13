@@ -325,11 +325,16 @@ public class LibrarySearch extends JPanel {
                         if (searchFilter.accept(child, false)) {
                             results.add(child);
                         }
-                    } else {
-                        directories.add(child);
                     }
-                } else if (child.isFile() && directoryHolder.accept(child)) {
-                    results.add(child);
+                    directories.add(child);
+                } else if (child.isFile()) {
+                    if (directoryHolder instanceof SavedFilesDirectoryHolder) {
+                        if (searchFilter.accept(child, false)) {
+                            results.add(child);
+                        }
+                    } else if (directoryHolder.accept(child)) {
+                        results.add(child);
+                    }
                 }
             }
 
