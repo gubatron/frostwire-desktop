@@ -41,7 +41,7 @@ DNSUtils
 	private static String
 	getFactory()
 	{
-		return( System.getProperty( "azureus.dns.context.factory", "com.sun.jndi.dns.DnsContextFactory" ));
+		return( System.getProperty( "azureus.dns.context.factory", "org.limewire.util.DnsContextFactory" ));
 	}
 	
 	public static DirContext
