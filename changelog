@@ -2,6 +2,8 @@ frostwire (5.2.3) stable; urgency=high
   * Change the order of an audio file on playlist with drag and drop.
   * Change the order of multiple audio files on a playlist with drag and drop.
   * Drop audio files and folders at a specific position inside a playlist.
+  * Fixes lingering popup menu issue.
+  * Fixed DNS query issue affecting Linux and Mac OSX.
  
  -- FrostWire Team <contact@frostwire.com>  Tue, 11 Oct 2011 15:33:10 -0500
 
