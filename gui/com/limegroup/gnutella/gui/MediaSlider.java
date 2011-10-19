@@ -1,12 +1,8 @@
 package com.limegroup.gnutella.gui;
 
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.MediaTracker;
-import java.awt.image.BufferedImage;
 
-import javax.swing.ImageIcon;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -51,42 +47,10 @@ public class MediaSlider extends JSlider implements ThemeObserver, ChangeListene
     }
 
     /**
-     * This only allows UIs that are subclassed from our own MediaSliderUI
-     */
-//    @Override
-//    public void setUI(SliderUI sliderUI) {
-//        if (sliderUI instanceof MediaSliderUI)
-//            super.setUI(sliderUI);
-//    }
-
-
-
-    /**
      * When the theme changes, load the new images and repaint the buffered
      * track image
      */
     public void updateTheme() {
-    }
-
-    /**
-     * Converts the image stored in an ImageIcon into a BufferedImage. If the
-	 * image is null or has not been completely loaded or loaded with errors
-	 * returns null;
-     */
-    public static BufferedImage convertIconToImage(ImageIcon icon) {
-
-		// make sure we have a valid image and it is loaded already
-        if( icon == null || icon.getImageLoadStatus() != MediaTracker.COMPLETE )
-            return null;
-        BufferedImage image = new BufferedImage(icon.getIconWidth(),
-                icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
-
-        Graphics2D bufImageGraphics = image.createGraphics();
-        bufImageGraphics.drawImage(icon.getImage(), 0, 0, null);
-
-        bufImageGraphics.dispose();
-
-        return image;
     }
 
     public void stateChanged(ChangeEvent e) {

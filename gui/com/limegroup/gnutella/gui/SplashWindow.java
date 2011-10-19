@@ -3,11 +3,12 @@ package com.limegroup.gnutella.gui;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Image;
-import java.awt.MediaTracker;
 import java.awt.Toolkit;
+import java.io.IOException;
 import java.net.URL;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
@@ -60,20 +61,18 @@ public final class SplashWindow {
         glassPane.add(Box.createVerticalStrut(8));
         glassPane.setBorder(BorderFactory.createEmptyBorder(0, 2, 0, 2));
         
-        //String name = LimeWireUtils.isPro() ? "splashpro" : "splash";
-        //URL imageURL = ClassLoader.getSystemResource("org/limewire/gui/images/" + name + ".png");
         URL imageURL = null;
         try {
             imageURL = Main.getChosenSplashURL();
         } catch (Exception e) { e.printStackTrace(); }
         assert imageURL != null;
-        Image splashImage = Toolkit.getDefaultToolkit().createImage(imageURL);
-        // Load the image
-        MediaTracker mt = new MediaTracker(splashWindow);
-        mt.addImage(splashImage,0);
+        Image splashImage = null;
         try {
-            mt.waitForID(0);
-        } catch(InterruptedException ie){}
+            splashImage = ImageIO.read(imageURL);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        assert splashImage != null;
 
         int imgWidth = splashImage.getWidth(null);
         if(imgWidth < 1)
