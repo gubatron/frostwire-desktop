@@ -17,7 +17,6 @@ import java.awt.EventQueue;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.awt.Window;
 
@@ -84,21 +83,6 @@ public class AWTSplashWindow extends Window {
     public AWTSplashWindow(Frame owner, Image splashImage) {
         super(owner);
         this.splashImage = splashImage;
-
-
-        // Load the image
-        MediaTracker mt = new MediaTracker(this);
-        mt.addImage(splashImage,0);
-        try {
-            mt.waitForID(0);
-        } catch(InterruptedException ie){}
-        
-        // If there was an error loading the image, it doesn't
-        // matter if paint gets called or not, because no
-        // image is ever going to show.
-        if(mt.isErrorAny()) {
-            paintCalled = true;
-        }
 
         // Center the window on the screen, and force the image to have a size,
         // otherwise paint will never be called.

@@ -2,8 +2,8 @@ package com.limegroup.gnutella.gui;
 
 import java.awt.Frame;
 import java.awt.Image;
-import java.awt.Toolkit;
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Calendar;
@@ -11,6 +11,8 @@ import java.util.Enumeration;
 import java.util.StringTokenizer;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+
+import javax.imageio.ImageIO;
 
 import org.limewire.util.OSUtils;
 
@@ -87,7 +89,11 @@ public class Main {
         Image image = null;
         URL imageURL = getChosenSplashURL();
         if (imageURL != null) {
-            image = Toolkit.getDefaultToolkit().createImage(imageURL);
+            try {
+                image = ImageIO.read(imageURL);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             if (image != null) {
                 splashFrame = AWTSplashWindow.splash(image);
             }
