@@ -301,4 +301,6 @@ public final class SearchSettings extends LimeProps {
     }
     
 	public static final FileSetting SMART_SEARCH_DATABASE_FOLDER = FACTORY.createFileSetting("SMART_SEARCH_DATABASE_FOLDER", new File(CommonUtils.getUserSettingsDir(), "search_db"));
+
+	public static final IntSetting LAST_MEDIA_TYPE_INDEX_USED = FACTORY.createIntSetting("LAST_MEDIA_TYPE_INDEX_USED", 0);
 }

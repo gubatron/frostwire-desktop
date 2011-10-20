@@ -4,15 +4,17 @@ frostwire (5.2.3) stable; urgency=high
   * Drop audio files and folders at a specific position inside a playlist.
   * Remembers the column and order you last set on the transfer manager
     after restart.
+  * Remembers the last file type you searched for after restart.
+  * New FrostWire icon compatible with Ubuntu 11.10
   * Bug fix, now if you're playing a song and you resort the playlist by
     any of the columns, the next song to be played will be the one below
     the current song in the new order.
   * Searching inside "Finished Downloads" now yields folder names as search
     results.
   * Fixes lingering popup menu issue.
-  * Fixed DNS query issue affecting Linux and Mac OSX.
+  * Fixed DNS query issue affecting Linux.
  
- -- FrostWire Team <contact@frostwire.com>  Wed, 19 Oct 2011 00:30:56 -0500
+ -- FrostWire Team <contact@frostwire.com>  Thu, 20 Oct 2011 17:42:08 -0500
 
 frostwire (5.2.2) stable; urgency=high
   * Library tables are now cached in memory, searches are done in the cache

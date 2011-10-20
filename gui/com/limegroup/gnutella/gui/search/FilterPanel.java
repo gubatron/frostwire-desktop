@@ -27,6 +27,7 @@ import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.gui.LabeledTextField;
+import com.limegroup.gnutella.settings.SearchSettings;
 
 public class FilterPanel extends JPanel {
 
@@ -69,7 +70,10 @@ public class FilterPanel extends JPanel {
         }); 
         
         //TYPE FILTER
+        
+        //fill it up with media types array.
         _typeCombo = new JComboBox(NamedMediaType.getAllNamedMediaTypes().toArray());
+        
         _typeCombo.setRenderer(new SubstanceDefaultListCellRenderer() {
         	/**
 			 * 
@@ -89,6 +93,10 @@ public class FilterPanel extends JPanel {
         		return this;
         	}
         });
+        
+        //remember what you used last time.
+        _typeCombo.setSelectedIndex(SearchSettings.LAST_MEDIA_TYPE_INDEX_USED.getValue());
+        
         JComponent typeComponent = new LabeledComponent(I18n.tr("Type"), _typeCombo).getComponent();
         typeComponent.setBorder(BorderFactory.createEmptyBorder(5, 1, 5, 0));
         
@@ -96,7 +104,9 @@ public class FilterPanel extends JPanel {
 			
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				onFileTypeComboChanged(e);
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					onFileTypeComboChanged(e);
+				}
 			}
 		});
         
@@ -128,6 +138,8 @@ public class FilterPanel extends JPanel {
     	if (_activeFilter != null) {
     		_activeFilter.updateFileTypeFiltering((NamedMediaType) _typeCombo.getSelectedItem());
     	}		
+    	
+		SearchSettings.LAST_MEDIA_TYPE_INDEX_USED.setValue(_typeCombo.getSelectedIndex());
 	}
 
 	protected void keywordFilterChanged(KeyEvent e) {
@@ -171,7 +183,7 @@ public class FilterPanel extends JPanel {
         _rangeSliderSize.getMaximumValueLabel().setText(I18n.tr("Max"));
 
         _keywordFilterTextField.setText("");
-        _typeCombo.setSelectedIndex(0);
+        _typeCombo.setSelectedIndex(SearchSettings.LAST_MEDIA_TYPE_INDEX_USED.getValue());
     }
 
     private void updateFilterControls(GeneralResultFilter filter) {
