@@ -419,17 +419,7 @@ public class LocalSearchEngine {
 		String torrentJSON = JSON_ENGINE.toJson(torrentPojo);
 		torrentJSON = torrentJSON.replace("'", "\'");
 
-		int torrentID = DB
-				.insert("INSERT INTO Torrents (infoHash, timestamp, torrentName, seeds, json) VALUES ('"
-						+ torrentPojo.hash
-						+ "', "
-						+ ""
-						+ System.currentTimeMillis()
-						+ ", '"
-						+ torrentPojo.fileName.toLowerCase()
-						+ "', "
-						+ torrentPojo.seeds + ", '"
-						+ torrentJSON + "')");
+        int torrentID = DB.insert("INSERT INTO Torrents (infoHash, timestamp, torrentName, seeds, json) VALUES (?, ?, LEFT(?, 10000), ?, ?)", torrentPojo.hash, System.currentTimeMillis(), torrentPojo.fileName.toLowerCase(), torrentPojo.seeds, torrentJSON);
 
 		TOTorrentFile[] files = theTorrent.getFiles();
 
@@ -441,9 +431,7 @@ public class LocalSearchEngine {
 			String fileJSON = JSON_ENGINE.toJson(tfPojo);
 			fileJSON = fileJSON.replace("'", "\'");
 
-			DB.insert("INSERT INTO Files (torrentId, fileName, json) VALUES ("
-					+ torrentID + ", '" + tfPojo.relativePath.toLowerCase()
-					+ "', '" + fileJSON + "')");
+            DB.insert("INSERT INTO Files (torrentId, fileName, json) VALUES (?, LEFT(?, 10000), ?)", torrentID, tfPojo.relativePath.toLowerCase(), fileJSON);
 			// System.out.println("INSERT INTO Files (torrentId, fileName, json) VALUES ("+torrentID+", '"+tfPojo.relativePath+"', '"+fileJSON+"')");
 		}
 

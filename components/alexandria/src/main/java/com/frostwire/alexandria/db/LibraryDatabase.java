@@ -146,6 +146,7 @@ public class LibraryDatabase {
      * @param expression
      * @return
      */
+    @Deprecated
     public synchronized int insert(String expression) {
         if (isClosed()) {
             return OBJECT_INVALID_ID;
@@ -162,6 +163,12 @@ public class LibraryDatabase {
         return OBJECT_INVALID_ID;
     }
 
+    /**
+     * This method is synchronized due to possible concurrent issues, specially
+     * during recently generated id retrieval.
+     * @param expression
+     * @return
+     */
     public synchronized int insert(String statementSql, Object... arguments) {
         if (isClosed()) {
             return OBJECT_INVALID_ID;

@@ -3,6 +3,7 @@ package com.limegroup.gnutella.gui.search.db;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -16,7 +17,7 @@ public class SmartSearchDB {
     public static final int OBJECT_NOT_SAVED_ID = -1;
     public static final int OBJECT_INVALID_ID = -2;
     
-    public static final int SMART_SEARCH_DATABASE_VERSION = 1;
+    public static final int SMART_SEARCH_DATABASE_VERSION = 2;
 
     private final File _databaseFile;
     private final String _name;
@@ -102,6 +103,7 @@ public class SmartSearchDB {
      * @param expression
      * @return
      */
+    @Deprecated
     public synchronized int insert(String expression) {
         if (isClosed()) {
             return OBJECT_INVALID_ID;
@@ -116,6 +118,36 @@ public class SmartSearchDB {
         }
 
         return OBJECT_INVALID_ID;
+    }
+    
+    /**
+     * This method is synchronized due to possible concurrent issues, specially
+     * during recently generated id retrieval.
+     * @param expression
+     * @return
+     */
+    public synchronized int insert(String statementSql, Object... arguments) {
+        if (isClosed()) {
+            return OBJECT_INVALID_ID;
+        }
+
+        if (!statementSql.toUpperCase().startsWith("INSERT")) {
+            return OBJECT_INVALID_ID;
+        }
+
+        if (update(statementSql, arguments) != -1) {
+            return getIdentity();
+        }
+
+        return OBJECT_INVALID_ID;
+    }
+    
+    public synchronized int update(String statementSql, Object... arguments) {
+        if (isClosed()) {
+            return -1;
+        }
+
+        return update(_connection, statementSql, arguments);
     }
 
     public synchronized void close() {
@@ -158,7 +190,7 @@ public class SmartSearchDB {
         update(connection, "SET IGNORECASE TRUE");
         
         //TORRENTS
-        update(connection, "CREATE TABLE TORRENTS (torrentId INTEGER IDENTITY, infoHash VARCHAR(60), timestamp BIGINT, torrentName VARCHAR(256), seeds INTEGER, json VARCHAR(32768))");
+        update(connection, "CREATE TABLE TORRENTS (torrentId INTEGER IDENTITY, infoHash VARCHAR(60), timestamp BIGINT, torrentName VARCHAR(10000), seeds INTEGER, json VARCHAR(131072))");
         update(connection, "CREATE INDEX idxTorrents ON TORRENTS (infoHash)");
         update(connection, "CREATE INDEX idxSeeds ON TORRENTS(seeds)");
         
@@ -166,7 +198,7 @@ public class SmartSearchDB {
         update(connection, "CREATE ALIAS IF NOT EXISTS FT_INIT FOR \"org.h2.fulltext.FullText.init\"");
         update(connection, "CALL FT_INIT()");
         
-        update(connection, "CREATE TABLE FILES (fileId INTEGER IDENTITY, torrentId INTEGER, fileName VARCHAR(256), json VARCHAR(32768))");
+        update(connection, "CREATE TABLE FILES (fileId INTEGER IDENTITY, torrentId INTEGER, fileName VARCHAR(10000), json VARCHAR(131072))");
         //update(connection, "CREATE INDEX idxFiles ON Files (fileName)");
         update(connection,"CALL FT_CREATE_INDEX('PUBLIC','FILES','FILENAME')");
         update(connection, "CREATE INDEX idxTorrentId ON FILES (torrentId)");
@@ -250,6 +282,34 @@ public class SmartSearchDB {
             if (statment != null) {
                 try {
                     statment.close();
+                } catch (SQLException e) {
+                }
+            }
+        }
+
+        return -1;
+    }
+    
+    private int update(Connection connection, String statementSql, Object... arguments) {
+
+        PreparedStatement statement = null;
+
+        try {
+            statement = connection.prepareStatement(statementSql);
+
+            if (arguments != null) {
+                for (int i = 0; i < arguments.length; i++) {
+                    statement.setObject(i + 1, arguments[i]);
+                }
+            }
+
+            return statement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
                 } catch (SQLException e) {
                 }
             }
