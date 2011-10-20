@@ -51,6 +51,7 @@
 	- PluginInitializer.VerifiedPluginHolder, comment block //if ( context[2] != PluginInitializer.class ){
 	
 	- Change azureus.dns.context.factory property to org.limewire.util.DnsContextFactory in DNSUtils.
+        private static String getFactory() (around line 43)
 		
     -->
     <import file="../common/build-macros.xml" />

@@ -35,13 +35,18 @@ import javax.naming.directory.Attributes;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
 
+import org.limewire.util.OSUtils;
+
 public class 
 DNSUtils 
 {
 	private static String
 	getFactory()
 	{
-		return( System.getProperty( "azureus.dns.context.factory", "org.limewire.util.DnsContextFactory" ));
+		
+		String dnsContextFactory = OSUtils.isLinux() ? "org.limewire.util.DnsContextFactory" : "com.sun.jndi.dns.DnsContextFactory";
+		
+		return( System.getProperty( "azureus.dns.context.factory", dnsContextFactory ));
 	}
 	
 	public static DirContext
