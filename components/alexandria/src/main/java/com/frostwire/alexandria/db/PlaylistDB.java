@@ -36,7 +36,7 @@ public class PlaylistDB extends ObjectDB<Playlist> {
         }
 
         if (obj.getId() == LibraryDatabase.OBJECT_NOT_SAVED_ID) {
-            int id = db.insert("INSERT INTO Playlists (name, description) VALUES (?, ?)", obj.getName(), obj.getDescription());
+            int id = db.insert("INSERT INTO Playlists (name, description) VALUES (LEFT(?, 500), LEFT(?, 10000))", obj.getName(), obj.getDescription());
             obj.setId(id);
         } else {
             db.update("DELETE FROM PlaylistItems WHERE playlistId = ?", obj.getId());
@@ -75,7 +75,7 @@ public class PlaylistDB extends ObjectDB<Playlist> {
     }
 
     private Object[] createPlaylistUpdateStatement(Playlist obj) {
-        String sql = "UPDATE Playlists SET name = ?, description = ? WHERE playlistId = ?";
+        String sql = "UPDATE Playlists SET name = LEFT(?, 500), description = LEFT(?, 10000) WHERE playlistId = ?";
         Object[] values = new Object[] { obj.getName(), obj.getDescription(), obj.getId() };
         return new Object[] { sql, values };
     }

@@ -82,7 +82,7 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
     
     private Object[] createPlaylistItemInsert(PlaylistItem item) {
         String sql = "INSERT INTO PlaylistItems (playlistId, filePath, fileName, fileSize, fileExtension, trackTitle, trackDurationInSecs, trackArtist, trackAlbum, coverArtPath, trackBitrate, trackComment, trackGenre, trackNumber, trackYear, starred) "
-                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + " VALUES (?, LEFT(?, 10000), LEFT(?, 500), ?, LEFT(?, 10), LEFT(?, 500), ?, LEFT(?, 500), LEFT(?, 500), LEFT(?, 10000), LEFT(?, 10), LEFT(?, 500), LEFT(?, 20), LEFT(?, 6), LEFT(?, 6), ?)";
 
         Object[] values = new Object[] { item.getPlaylist().getId(), item.getFilePath(), item.getFileName(), item.getFileSize(), item.getFileExtension(), item.getTrackTitle(),
                 item.getTrackDurationInSecs(), item.getTrackArtist(), item.getTrackAlbum(), item.getCoverArtPath(), item.getTrackBitrate(), item.getTrackComment(),
@@ -92,7 +92,7 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
     }
 
     private Object[] createPlaylistItemUpdate(PlaylistItem item) {
-        String sql = "UPDATE PlaylistItems SET filePath = ?, fileName = ?, fileSize = ?, fileExtension = ?, trackTitle = ?, trackDurationInSecs = ?, trackArtist = ?, trackAlbum = ?, coverArtPath = ?, trackBitrate = ?, trackComment = ?, trackGenre = ?, trackNumber = ?, trackYear = ?, starred = ? WHERE playlistItemId = ?";
+        String sql = "UPDATE PlaylistItems SET filePath = LEFT(?, 10000), fileName = LEFT(?, 500), fileSize = ?, fileExtension = LEFT(?, 10), trackTitle = LEFT(?, 500), trackDurationInSecs = ?, trackArtist = LEFT(?, 500), trackAlbum = LEFT(?, 500), coverArtPath = LEFT(?, 10000), trackBitrate = LEFT(?, 10), trackComment = LEFT(?, 500), trackGenre = LEFT(?, 20), trackNumber = LEFT(?, 6), trackYear = LEFT(?, 6), starred = ? WHERE playlistItemId = ?";
 
         Object[] values = new Object[] { item.getFilePath(), item.getFileName(), item.getFileSize(), item.getFileExtension(), item.getTrackTitle(),
                 item.getTrackDurationInSecs(), item.getTrackArtist(), item.getTrackAlbum(), item.getCoverArtPath(), item.getTrackBitrate(), item.getTrackComment(),
@@ -102,7 +102,7 @@ public class PlaylistItemDB extends ObjectDB<PlaylistItem> {
     }
 
     private Object[] updateStarred(PlaylistItem item) {
-        String sql = "UPDATE PlaylistItems SET starred = ? WHERE filePath = ?";
+        String sql = "UPDATE PlaylistItems SET starred = ? WHERE filePath = LEFT(?, 10000)";
 
         Object[] values = new Object[] { item.isStarred(), item.getFilePath() };
 

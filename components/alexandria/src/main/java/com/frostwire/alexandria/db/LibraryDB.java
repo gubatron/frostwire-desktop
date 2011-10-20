@@ -97,7 +97,7 @@ public class LibraryDB extends ObjectDB<Library> {
     }
 
     private Object[] createPlaylistItemPropertiesUpdate(String filePath, String title, String artist, String album, String comment, String genre, String track, String year) {
-        String sql = "UPDATE PlaylistItems SET trackTitle = ?, trackArtist = ?, trackAlbum = ?, trackComment = ?, trackGenre = ?, trackNumber = ?, trackYear = ? WHERE filePath = ?";
+        String sql = "UPDATE PlaylistItems SET trackTitle = LEFT(?, 500), trackArtist = LEFT(?, 500), trackAlbum = LEFT(?, 500), trackComment = LEFT(?, 500), trackGenre = LEFT(?, 20), trackNumber = LEFT(?, 6), trackYear = LEFT(?, 6) WHERE filePath = LEFT(?, 10000)";
 
         Object[] values = new Object[] { title, artist, album, comment, genre, track, year, filePath };
 
