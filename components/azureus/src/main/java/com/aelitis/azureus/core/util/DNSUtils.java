@@ -44,7 +44,7 @@ DNSUtils
 	getFactory()
 	{
 		
-		String dnsContextFactory = OSUtils.isLinux() ? "org.limewire.util.DnsContextFactory" : "com.sun.jndi.dns.DnsContextFactory";
+		String dnsContextFactory = OSUtils.isLinux() ? "org.limewire.util.LinuxDnsContextFactory" : "com.sun.jndi.dns.DnsContextFactory";
 		
 		return( System.getProperty( "azureus.dns.context.factory", dnsContextFactory ));
 	}
