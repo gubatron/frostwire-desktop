@@ -102,8 +102,8 @@ public class LocalSearchEngine {
 	 * @return
 	 */
 	public final static String stringSanitize(String str) {
-		str = str.replace("\\", "").replace("%", "").replace("_", "")
-				.replace(";", "").replace("'", "''").replace("-","");
+		str = str.replace("\\", "").replace("%", "").replace("_", " ")
+				.replace(";", "").replace("'", "''").replace("-"," ");
 
 		while (str.indexOf("  ") != -1) {
 			str = str.replace("  ", " ");
@@ -449,7 +449,7 @@ public class LocalSearchEngine {
 			fileJSON = fileJSON.replace("'", "\'");
 
             DB.insert("INSERT INTO Files (torrentId, fileName, json) VALUES (?, LEFT(?, 10000), ?)", torrentID, tfPojo.relativePath.toLowerCase(), fileJSON);
-			// System.out.println("INSERT INTO Files (torrentId, fileName, json) VALUES ("+torrentID+", '"+tfPojo.relativePath+"', '"+fileJSON+"')");
+			//System.out.println("INSERT INTO Files (torrentId, fileName, json) VALUES ("+torrentID+", '"+tfPojo.relativePath+"', '"+fileJSON+"')");
 		}
 
 	}
@@ -577,13 +577,13 @@ public class LocalSearchEngine {
                                     guid, result, rp);
                         }
                     });
-					return;
+					continue;
 				}
 
 				// if Steve Jobs is too good for ya...
 				// we'll remove the tokens of the torrent title ONCE from the
 				// search result name
-				// and we'll perform a match on what's left.
+				// and we'll perform a match on what's left	.
 				String resultName = result.getFileName().toLowerCase();
 
 				HashSet<String> torrentTokenSet = new HashSet<String>(
@@ -607,7 +607,7 @@ public class LocalSearchEngine {
 				foundMatch = true; // optimism!
 
 				for (String token : selectedQuery) {
-					if (!resultName.contains(token)) {
+					if (!resultName.isEmpty() && !resultName.contains(token)) {
 						foundMatch = false;
 						break;
 					}
@@ -620,7 +620,7 @@ public class LocalSearchEngine {
                                     guid, result, rp);
                         }
                     });
-					return;
+					continue;
 				}
 
 			}
