@@ -1,3 +1,9 @@
+frostwire (5.2.4) stable; urgency=high
+  * Smart search updates uses less DHT resources and fixes logic bugs
+    that results into faster and better search results.
+ 
+ -- FrostWire Team <contact@frostwire.com>  Tue, 25 Oct 2011 16:26:08 -0500
+
 frostwire (5.2.3) stable; urgency=high
   * Change the order of an audio file on playlist with drag and drop.
   * Change the order of multiple audio files on a playlist with drag and drop.
