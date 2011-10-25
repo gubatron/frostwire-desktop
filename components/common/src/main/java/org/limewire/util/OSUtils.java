@@ -385,6 +385,11 @@ public class OSUtils {
     public static boolean isGoodWindows() {
     	return isWindows() && isHighLoadOS();
     }
+    
+	public static boolean isModernWindows() {
+		return isWindows()
+				&& !(_isWindows98 || _isWindows95 || _isWindowsMe || _isWindowsNT || _isWindowsXP);
+	}
 
     /**
      * Return whether the current operating system supports moving files
