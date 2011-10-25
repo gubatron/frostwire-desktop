@@ -36,7 +36,7 @@ import com.limegroup.gnutella.util.FrostWireUtils.IndexedMapFunction;
 
 public class LocalSearchEngine {
 
-	private static final int DEEP_SEARCH_DELAY = 1000;
+	private static final int DEEP_SEARCH_DELAY = 2000;
 	private static final int MAXIMUM_TORRENTS_TO_SCAN = 20;
 	private static final int DEEP_SEARCH_ROUNDS = 3;
 
@@ -296,13 +296,14 @@ public class LocalSearchEngine {
 
 		// Wait for enough results or die if the ResultPanel has been closed.
 		int tries = DEEP_SEARCH_ROUNDS;
+		Set<SearchEngine> engines = new HashSet<SearchEngine>(SearchEngine.getSearchEngines());
 
 		for (int i = tries; i > 0; i--) {
 			if ((rp = SearchMediator.getResultPanelForGUID(new GUID(guid))) == null) {
 				return null;
 			}
 
-			scanAvailableResults(guid, query, info, rp);
+			scanAvailableResults(guid, query, info, rp, engines);
 
 			sleep();
 		}
@@ -323,13 +324,12 @@ public class LocalSearchEngine {
 	}
 
 	public void scanAvailableResults(byte[] guid, String query,
-			SearchInformation info, ResultPanel rp) {
+			SearchInformation info, ResultPanel rp, Set<SearchEngine> searchEnginesThatGotTorrentViaHttp) {
 		
 		int foundTorrents = 0;
 		
 		List<TableLine> allData = rp.getAllData();
 		sortAndStripNonTorrents(allData);
-		
 		
 		for (int i = 0; i < allData.size() && foundTorrents < MAXIMUM_TORRENTS_TO_SCAN; i++) {
 			TableLine line = allData.get(i);
@@ -337,13 +337,26 @@ public class LocalSearchEngine {
 			if (line.getInitializeObject() instanceof SearchEngineSearchResult) {
 				foundTorrents++;
 				
-				WebSearchResult webSearchResult = line.getSearchResult()
-						.getWebSearchResult();
+				boolean viaHttp = false;
+				
+				// download at least one (hopefully with a good seed number) via http
+				SearchEngine engine = line.getSearchResult().getSearchEngine();
+				if (searchEnginesThatGotTorrentViaHttp.contains(engine)) {
+				    searchEnginesThatGotTorrentViaHttp.remove(engine);
+				    viaHttp = true;
+				}
+				
+				WebSearchResult webSearchResult = line.getSearchResult().getWebSearchResult();
+				
+				if (webSearchResult.getHash() == null && !viaHttp) {
+				    // sorry, no possible to handle this case
+				    continue;
+				}
 	
 				if (!KNOWN_INFO_HASHES.contains(webSearchResult.getHash())) {
 					KNOWN_INFO_HASHES.add(webSearchResult.getHash());
 					SearchEngine searchEngine = line.getSearchEngine();
-					scanDotTorrent(webSearchResult, guid, query, searchEngine, info);
+					scanDotTorrent(webSearchResult, viaHttp, guid, query, searchEngine, info);
 				}
 			}
 		}
@@ -376,7 +389,7 @@ public class LocalSearchEngine {
 	 * @param searchEngine
 	 * @param info
 	 */
-	private void scanDotTorrent(WebSearchResult webSearchResult, byte[] guid,
+	private void scanDotTorrent(WebSearchResult webSearchResult, boolean viaHttp, byte[] guid,
 			String query, SearchEngine searchEngine, SearchInformation info) {
 		if (!torrentHasBeenIndexed(webSearchResult.getHash())) {
 			// download the torrent
@@ -388,10 +401,14 @@ public class LocalSearchEngine {
 			if (rp != null) {
 				rp.incrementSearchCount();
 			}
+			
+			String url = viaHttp ? webSearchResult.getTorrentURI() : TorrentUtil.getMagnet(webSearchResult.getHash());
+			System.out.println("Download - " + url);
+			
 			TorrentDownloaderFactory.create(
 					new LocalSearchTorrentDownloaderListener(guid, query,
 							webSearchResult, searchEngine, info),
-					TorrentUtil.getMagnet(webSearchResult.getHash()), null,
+					url, null,
 					saveDir).start();
 		}
 	}
