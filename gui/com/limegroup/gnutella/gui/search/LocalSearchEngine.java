@@ -485,8 +485,7 @@ public class LocalSearchEngine {
 			String torrentFileNameNoExtension = webSearchResult
 					.getFilenameNoExtension();
 			List<String> tokensQuery = new ArrayList<String>(query);
-			tokensTorrent = Arrays.asList(torrentFileNameNoExtension
-					.toLowerCase().split(" "));
+			tokensTorrent = Arrays.asList(torrentFileNameNoExtension.toLowerCase().split(" "));
 
 			tokensQuery.removeAll(tokensTorrent);
 			this.substractedQuery = tokensQuery;
@@ -593,8 +592,13 @@ public class LocalSearchEngine {
 					try {
 						torrentToken = torrentToken.replace("(", "")
 								.replace(")", "").replace("[", "")
-								.replace("]", "");
+								.replace("]", "").replace("<html>", "").replace("</html>", "")
+								.replace("<b>", "").replace("</b>", "")
+								.replace("<br>", "").replace("</br>", "").replace("<br/>", "")
+								.replace("<strong>", "").replace("</strong>", "");
+						
 						resultName = resultName.replaceFirst(torrentToken, "");
+						selectedQuery.remove(torrentToken);
 					} catch (Exception e) {
 						// shhh
 					}
