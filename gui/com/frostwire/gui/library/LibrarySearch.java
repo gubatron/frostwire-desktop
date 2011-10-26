@@ -463,9 +463,9 @@ public class LibrarySearch extends JPanel {
             }
 
             //FULL TEXT SEARCH, Returns the File IDs we care about.
-            String fullTextIndexSql = "SELECT * FROM FT_SEARCH('" + query + "', 0, 0)";
+            String fullTextIndexSql = "SELECT * FROM FT_SEARCH(?, 0, 0)";
 
-            List<List<Object>> matchedFileRows = LibraryMediator.getLibrary().getDB().getDatabase().query(fullTextIndexSql);
+            List<List<Object>> matchedFileRows = LibraryMediator.getLibrary().getDB().getDatabase().query(fullTextIndexSql, query);
 
             int fileIDStrOffset = " PUBLIC   PLAYLISTITEMS  WHERE  PLAYLISTITEMID =".length();
 

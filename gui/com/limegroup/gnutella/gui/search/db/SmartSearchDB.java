@@ -12,17 +12,19 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.limewire.util.FileUtils;
+
 public class SmartSearchDB {
 
     public static final int OBJECT_NOT_SAVED_ID = -1;
     public static final int OBJECT_INVALID_ID = -2;
     
-    public static final int SMART_SEARCH_DATABASE_VERSION = 2;
+    public static final int SMART_SEARCH_DATABASE_VERSION = 3;
 
     private final File _databaseFile;
     private final String _name;
 
-    private final Connection _connection;
+    private Connection _connection;
 
     private boolean _closed;
 
@@ -54,70 +56,39 @@ public class SmartSearchDB {
     public boolean isClosed() {
         return _closed;
     }
-
-    public synchronized List<List<Object>> query(String expression) {
+    
+    public synchronized List<List<Object>> query(String statementSql, Object... arguments) {
         if (isClosed()) {
             return new ArrayList<List<Object>>();
         }
 
-        Statement statment = null;
+        PreparedStatement statement = null;
         ResultSet resultSet = null;
 
         try {
+            statement = _connection.prepareStatement(statementSql);
 
-            statment = _connection.createStatement();
-            resultSet = statment.executeQuery(expression);
+            if (arguments != null) {
+                for (int i = 0; i < arguments.length; i++) {
+                    statement.setObject(i + 1, arguments[i]);
+                }
+            }
+
+            resultSet = statement.executeQuery();
 
             return convertResultSetToList(resultSet);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (statment != null) {
+            if (statement != null) {
                 try {
-                    statment.close();
+                    statement.close();
                 } catch (SQLException e) {
                 }
             }
         }
 
         return new ArrayList<List<Object>>();
-    }
-
-    /**
-     * This method is synchronized due to possible concurrent issues, specially
-     * during recently generated id retrieval.
-     * @param expression
-     * @return
-     */
-    public synchronized int update(String expression) {
-        if (isClosed()) {
-            return -1;
-        }
-
-        return update(_connection, expression);
-    }
-
-    /**
-     * This method is synchronized due to possible concurrent issues, specially
-     * during recently generated id retrieval.
-     * @param expression
-     * @return
-     */
-    @Deprecated
-    public synchronized int insert(String expression) {
-        if (isClosed()) {
-            return OBJECT_INVALID_ID;
-        }
-
-        if (!expression.toUpperCase().startsWith("INSERT")) {
-            return OBJECT_INVALID_ID;
-        }
-
-        if (update(expression) != -1) {
-            return getIdentity();
-        }
-
-        return OBJECT_INVALID_ID;
     }
     
     /**
@@ -142,6 +113,12 @@ public class SmartSearchDB {
         return OBJECT_INVALID_ID;
     }
     
+    /**
+     * This method is synchronized due to possible concurrent issues, specially
+     * during recently generated id retrieval.
+     * @param expression
+     * @return
+     */
     public synchronized int update(String statementSql, Object... arguments) {
         if (isClosed()) {
             return -1;
@@ -167,6 +144,22 @@ public class SmartSearchDB {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public synchronized Connection reset() {
+        try {
+            close();
+            FileUtils.deleteRecursive(_databaseFile);
+            return _connection = createDatabase(_databaseFile, _name);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
+    
+    protected Connection onUpdateDatabase() {
+        return reset();
     }
 
     private Connection openConnection(File path, String name, boolean createIfNotExists) {
@@ -198,9 +191,9 @@ public class SmartSearchDB {
         update(connection, "CREATE ALIAS IF NOT EXISTS FT_INIT FOR \"org.h2.fulltext.FullText.init\"");
         update(connection, "CALL FT_INIT()");
         
-        update(connection, "CREATE TABLE FILES (fileId INTEGER IDENTITY, torrentId INTEGER, fileName VARCHAR(10000), json VARCHAR(131072))");
+        update(connection, "CREATE TABLE FILES (fileId INTEGER IDENTITY, torrentId INTEGER, fileName VARCHAR(10000), json VARCHAR(131072), keywords VARCHAR(131072))");
         //update(connection, "CREATE INDEX idxFiles ON Files (fileName)");
-        update(connection,"CALL FT_CREATE_INDEX('PUBLIC','FILES','FILENAME')");
+        update(connection, "CALL FT_CREATE_INDEX('PUBLIC', 'FILES', 'FILENAME, KEYWORDS')");
         update(connection, "CREATE INDEX idxTorrentId ON FILES (torrentId)");
         
         //SNAPSHOTS - (Created right before user imports a DB, this way the user can delete (rollback) all new insertions after the snapshot)
@@ -208,7 +201,7 @@ public class SmartSearchDB {
 
         /** This table keeps only a single row to identify what version of the database we have */
         update(connection, "CREATE TABLE SmartSearchMetaData (smartSearchId INTEGER IDENTITY, name VARCHAR(500), version INTEGER)");
-        update(connection, "INSERT INTO SmartSearchMetaData (name , version) VALUES ('" + name + "', " + SMART_SEARCH_DATABASE_VERSION + ")");
+        update(connection, "INSERT INTO SmartSearchMetaData (name , version) VALUES (?, ?)", name, SMART_SEARCH_DATABASE_VERSION);
         
         return connection;
     }
@@ -217,8 +210,14 @@ public class SmartSearchDB {
         Connection connection = openConnection(path, name, false);
         if (connection == null) {
             return createDatabase(path, name);
-        } else {            
-            return connection;
+        } else {
+            _connection = connection; // not the best solution
+            int databaseVersion = getDatabaseVersion();
+            if (databaseVersion < SMART_SEARCH_DATABASE_VERSION) {
+                return onUpdateDatabase();
+            } else {
+                return connection;
+            }
         }
     }
 
@@ -267,28 +266,6 @@ public class SmartSearchDB {
 
         return OBJECT_INVALID_ID;
     }
-
-    private int update(Connection connection, String expression) {
-
-        Statement statment = null;
-
-        try {
-            statment = connection.createStatement();
-
-            return statment.executeUpdate(expression);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (statment != null) {
-                try {
-                    statment.close();
-                } catch (SQLException e) {
-                }
-            }
-        }
-
-        return -1;
-    }
     
     private int update(Connection connection, String statementSql, Object... arguments) {
 
@@ -316,5 +293,10 @@ public class SmartSearchDB {
         }
 
         return -1;
+    }
+    
+    private int getDatabaseVersion() {
+        List<List<Object>> query = query("SELECT version FROM SmartSearchMetaData");
+        return (Integer) query.get(0).get(0);
     }
 }

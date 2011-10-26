@@ -55,34 +55,6 @@ public class LibraryDatabase {
     public boolean isClosed() {
         return _closed;
     }
-
-    public synchronized List<List<Object>> query(String expression) {
-        if (isClosed()) {
-            return new ArrayList<List<Object>>();
-        }
-
-        Statement statment = null;
-        ResultSet resultSet = null;
-
-        try {
-
-            statment = _connection.createStatement();
-            resultSet = statment.executeQuery(expression);
-
-            return convertResultSetToList(resultSet);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (statment != null) {
-                try {
-                    statment.close();
-                } catch (SQLException e) {
-                }
-            }
-        }
-
-        return new ArrayList<List<Object>>();
-    }
     
     public synchronized List<List<Object>> query(String statementSql, Object... arguments) {
         if (isClosed()) {
@@ -124,43 +96,12 @@ public class LibraryDatabase {
      * @param expression
      * @return
      */
-    public synchronized int update(String expression) {
-        if (isClosed()) {
-            return -1;
-        }
-
-        return update(_connection, expression);
-    }
-
     public synchronized int update(String statementSql, Object... arguments) {
         if (isClosed()) {
             return -1;
         }
 
         return update(_connection, statementSql, arguments);
-    }
-
-    /**
-     * This method is synchronized due to possible concurrent issues, specially
-     * during recently generated id retrieval.
-     * @param expression
-     * @return
-     */
-    @Deprecated
-    public synchronized int insert(String expression) {
-        if (isClosed()) {
-            return OBJECT_INVALID_ID;
-        }
-
-        if (!expression.toUpperCase().startsWith("INSERT")) {
-            return OBJECT_INVALID_ID;
-        }
-
-        if (update(expression) != -1) {
-            return getIdentity();
-        }
-
-        return OBJECT_INVALID_ID;
     }
 
     /**
@@ -309,28 +250,6 @@ public class LibraryDatabase {
         }
 
         return OBJECT_INVALID_ID;
-    }
-
-    private int update(Connection connection, String expression) {
-
-        Statement statement = null;
-
-        try {
-            statement = connection.createStatement();
-
-            return statement.executeUpdate(expression);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                }
-            }
-        }
-
-        return -1;
     }
 
     private int update(Connection connection, String statementSql, Object... arguments) {
