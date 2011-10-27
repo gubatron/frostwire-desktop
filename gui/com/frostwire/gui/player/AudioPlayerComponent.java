@@ -770,4 +770,9 @@ public final class AudioPlayerComponent implements AudioPlayerListener,
 		VOLUME.setValue((int) (VOLUME.getMaximum() * currentVolume));
 		VOLUME.addChangeListener(oldListener);
 	}
+
+    @Override
+    public void icyInfo(AudioPlayer audioPlayer, String data) {
+        
+    }
 }

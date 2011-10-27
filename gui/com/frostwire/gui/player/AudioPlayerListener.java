@@ -22,4 +22,6 @@ public interface AudioPlayerListener {
      * @param event
      */
     public void stateChange(AudioPlayer audioPlayer, MediaPlaybackState state);
+    
+    public void icyInfo(AudioPlayer audioPlayer, String data);
 }

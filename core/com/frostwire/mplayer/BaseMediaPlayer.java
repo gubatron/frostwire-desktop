@@ -3,13 +3,14 @@ package com.frostwire.mplayer;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,StateListener,VolumeListener,PositionListener,TaskListener {
+public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,StateListener,VolumeListener,PositionListener,TaskListener, IcyInfoListener {
 
 	private List<MetaDataListener> metaDataListeners;
 	private List<StateListener> stateListeners;
 	private List<VolumeListener> volumeListeners;
 	private List<PositionListener> positionListeners;
 	private List<TaskListener> taskListeners;
+	private List<IcyInfoListener> icyInfoListeners;
 	
 	private MediaPlaybackState 	currentState;	
 	private int					currentVolume;
@@ -46,6 +47,7 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 		volumeListeners = new ArrayList<VolumeListener>(1);
 		positionListeners = new ArrayList<PositionListener>(1);
 		taskListeners = new ArrayList<TaskListener>(1);
+		icyInfoListeners = new ArrayList<IcyInfoListener>(1);
 		
 		initialize();
 		
@@ -53,7 +55,7 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 		setStateListener(this);
 		setVolumeListener(this);
 		setPositionListener(this);
-		
+		setIcyInfoListener(this);
 	}
 
 	private void initialize() {
@@ -107,10 +109,17 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 		
 	}
 	
+	public void addIcyInfoListener(IcyInfoListener listener) {
+        synchronized (icyInfoListeners) {
+            icyInfoListeners.add(listener);
+        }        
+    }
+	
 	public abstract void setStateListener(StateListener listener);
 	public abstract void setVolumeListener(VolumeListener listener);
 	public abstract void setMetaDataListener(MetaDataListener listener);
 	public abstract void setPositionListener(PositionListener listener);
+	public abstract void setIcyInfoListener(IcyInfoListener listener);
 	public abstract void doOpen(String fileOrUrl);
 	public abstract void doPause();
 	public abstract void doResume();
@@ -210,6 +219,15 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 		}
 		
 	}
+	
+	public void removeIcyInfoListener(IcyInfoListener listener) {
+        synchronized (icyInfoListeners) {
+            while(icyInfoListeners.contains(listener)) {
+                icyInfoListeners.remove(listener);
+            }
+        }
+        
+    }
 	
 	public synchronized void seek(float timeInSecs) {
 		if(timeInSecs < 0) timeInSecs = 0;
@@ -365,6 +383,13 @@ public abstract class BaseMediaPlayer implements MediaPlayer,MetaDataListener,St
 		}
 	}
 	
+    public void newIcyInfoData(String data) {
+        synchronized (icyInfoListeners) {
+            for (IcyInfoListener listener : icyInfoListeners) {
+                listener.newIcyInfoData(data);
+            }
+        }
+    }
 	
 	public void addTaskListener(TaskListener listener) {
 		synchronized (taskListeners) {

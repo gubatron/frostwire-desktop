@@ -95,6 +95,8 @@ public class MPlayer extends BaseMediaPlayer {
 	private static final String ID_FILE_SUB_FILENAME = "ID_FILE_SUB_FILENAME=";
 
 	private static final String ID_EXIT = "ID_EXIT=";
+	
+	private static final String ICY_INFO = "ICY Info:";
 
 	private static final Pattern v_timeInfo = Pattern
 			.compile("A:\\s*([0-9\\.]+) V:\\s*[0-9\\.]* .*");
@@ -359,6 +361,9 @@ public class MPlayer extends BaseMediaPlayer {
 		} else if (line.startsWith(ID_EXIT)) {
 
 			reportNewState(MediaPlaybackState.Closed);
+		} else if (line.startsWith(ICY_INFO)) {
+		    String data = line.substring(ICY_INFO.length()).trim();
+		    reportIcyInfo(data);
 		}
 
 		// else System.out.println(line);
@@ -574,6 +579,7 @@ public class MPlayer extends BaseMediaPlayer {
 	private StateListener stateListener;
 	private VolumeListener volumeListener;
 	private PositionListener positionListener;
+	private IcyInfoListener icyInfoListener;
 
 	public void setMetaDataListener(MetaDataListener listener) {
 		this.metaDataListener = listener;
@@ -591,6 +597,10 @@ public class MPlayer extends BaseMediaPlayer {
 
 	public void setPositionListener(PositionListener listener) {
 		this.positionListener = listener;
+	}
+	
+	public void setIcyInfoListener(IcyInfoListener listener) {
+	    this.icyInfoListener = listener;
 	}
 
 	private void reportPosition(float position) {
@@ -627,6 +637,12 @@ public class MPlayer extends BaseMediaPlayer {
 		if (stateListener != null) {
 			stateListener.stateChanged(state);
 		}
+	}
+	
+	private void reportIcyInfo(String data) {
+	    if (icyInfoListener != null) {
+	        icyInfoListener.newIcyInfoData(data);
+	    }
 	}
 
 	public void dispose() {

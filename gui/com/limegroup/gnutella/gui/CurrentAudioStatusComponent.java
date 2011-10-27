@@ -42,6 +42,9 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
 	private JLabel text;
 	private MediaPlaybackState lastState;
 	
+	private Icon currentStatusIcon;
+	private String currentStatusLabel;
+	
 	public CurrentAudioStatusComponent() {
 		AudioPlayer.instance().addAudioPlayerListener(this);
 		lastState=MediaPlaybackState.Uninitialized;
@@ -145,7 +148,46 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
 
 	@Override
 	public void songOpened(AudioPlayer audioPlayer, AudioSource audioSource) {
-		
+	  //update controls
+        AudioSource currentSong = audioPlayer.getCurrentSong();
+        PlaylistItem playlistItem = currentSong.getPlaylistItem();
+        
+        String currentText = null;
+        
+        if (playlistItem != null) {
+            //Playing from Playlist.
+            String artistName = playlistItem.getTrackArtist();
+            String songTitle = playlistItem.getTrackTitle();
+            
+            String albumToolTip = (playlistItem.getTrackAlbum() != null && playlistItem.getTrackAlbum().length() > 0) ? " - " + playlistItem.getTrackAlbum() : "";
+            String yearToolTip = (playlistItem.getTrackYear()!=null && playlistItem.getTrackYear().length() > 0) ? " ("+playlistItem.getTrackYear() +")" : "";
+            
+            currentText = artistName + " - " + songTitle;
+            
+            text.setToolTipText(artistName + " - " + songTitle + albumToolTip + yearToolTip);
+            
+        }  else if (currentSong.getFile()!=null) {
+            //playing from Audio.
+            currentText = AudioPlayer.instance().getCurrentSong().getFile().getName();
+            
+            text.setToolTipText(currentSong.getFile().getAbsolutePath());
+        } else if (currentSong.getFile() == null && currentSong.getURL() != null) {
+            System.out.println("StreamURL: " + currentSong.getURL().toString());
+            
+            String streamURL = currentSong.getURL().toString();
+            Pattern urlStart = Pattern.compile("(http://[\\d\\.]+:\\d+).*");
+            Matcher matcher = urlStart.matcher(streamURL);
+            
+            //Android stream
+            if (streamURL.contains("/download?type=0&id=") && matcher.matches()) {
+                currentText = "android " + matcher.group(1);    
+            } else {
+                currentText = "internet "; // generic internet stream
+            }
+        }
+        
+        currentStatusIcon = speakerIcon;
+        currentStatusLabel = currentText;
 	}
 
 	@Override
@@ -177,72 +219,52 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
 					shareButton.setVisible(false);
 				}
 			});
-			return;
+		} else {
+		    setupIconAndText(currentStatusIcon, currentStatusLabel);
 		}
-		
-
-		
-		//update controls
-		AudioSource currentSong = audioPlayer.getCurrentSong();
-		PlaylistItem playlistItem = currentSong.getPlaylistItem();
-		
-		//only share files that exist
-		shareButton
-				.setVisible(currentSong != null
-						&& (currentSong.getFile() != null || (currentSong
-								.getPlaylistItem() != null
-								&& currentSong.getPlaylistItem().getFilePath() != null && new File(currentSong.getPlaylistItem()
-										.getFilePath())
-								.exists())));
-		
-		String currentText = null;
-		
-		if (playlistItem != null) {
-			//Playing from Playlist.
-			String artistName = playlistItem.getTrackArtist();
-			String songTitle = playlistItem.getTrackTitle();
-			
-			String albumToolTip = (playlistItem.getTrackAlbum() != null && playlistItem.getTrackAlbum().length() > 0) ? " - " + playlistItem.getTrackAlbum() : "";
-			String yearToolTip = (playlistItem.getTrackYear()!=null && playlistItem.getTrackYear().length() > 0) ? " ("+playlistItem.getTrackYear() +")" : "";
-			
-			currentText = artistName + " - " + songTitle;
-			
-			text.setToolTipText(artistName + " - " + songTitle + albumToolTip + yearToolTip);
-			
-		}  else if (currentSong.getFile()!=null) {
-			//playing from Audio.
-			currentText = AudioPlayer.instance().getCurrentSong().getFile().getName();
-			
-			text.setToolTipText(currentSong.getFile().getAbsolutePath());
-		} else if (currentSong.getFile() == null && currentSong.getURL() != null) {
-			System.out.println("StreamURL: " + currentSong.getURL().toString());
-			
-			String streamURL = currentSong.getURL().toString();
-			Pattern urlStart = Pattern.compile("(http://[\\d\\.]+:\\d+).*");
-			Matcher matcher = urlStart.matcher(streamURL);
-			
-			//Android stream
-			if (streamURL.contains("/download?type=0&id=") && matcher.matches()) {
-				currentText = "android " + matcher.group(1);	
-			} else {
-				currentText = "internet "; // generic internet stream
-			}
-		}
-
-		if (currentText.length() > MAX_CHARS) {
-			currentText = currentText.substring(0, BOUND_CHARS) + " ... " + currentText.substring(currentText.length()-BOUND_CHARS);
-		}
-		
-		final String currentTextFinal = currentText;
-		
-		GUIMediator.safeInvokeLater(new Runnable() {
-			
-			@Override
-			public void run() {
-				text.setIcon(speakerIcon);
-				text.setText("<html><font color=\"496989\"><u>"+currentTextFinal+"</u></font></html>");				
-			}
-		});
-		
 	}
+
+    private void setupIconAndText(Icon speakerIcon2, String currentText) {
+        if (currentText.length() > MAX_CHARS) {
+            currentText = currentText.substring(0, BOUND_CHARS) + " ... " + currentText.substring(currentText.length()-BOUND_CHARS);
+        }
+        
+        final String currentTextFinal = currentText;
+        
+        AudioSource currentSong = AudioPlayer.instance().getCurrentSong();
+        
+      //only share files that exist
+        shareButton
+                .setVisible(currentSong != null
+                        && (currentSong.getFile() != null || (currentSong
+                                .getPlaylistItem() != null
+                                && currentSong.getPlaylistItem().getFilePath() != null && new File(currentSong.getPlaylistItem()
+                                        .getFilePath())
+                                .exists())));
+        
+        GUIMediator.safeInvokeLater(new Runnable() {
+            
+            @Override
+            public void run() {
+                text.setIcon(speakerIcon);
+                text.setText("<html><font color=\"496989\"><u>"+currentTextFinal+"</u></font></html>");             
+            }
+        });
+    }
+
+    @Override
+    public void icyInfo(AudioPlayer audioPlayer, String data) {
+        for (String s : data.split(";")) {
+            if (s.startsWith("StreamTitle=")) {
+                try {
+                    String streamTitle = s.substring(13, s.length() - 1);
+                    currentStatusIcon = speakerIcon;
+                    currentStatusLabel = streamTitle;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+        }
+    }
 }
