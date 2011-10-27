@@ -118,6 +118,7 @@ public class LibraryFiles extends AbstractLibraryListPanel {
         addPerMediaTypeCells();
         _model.addElement(_torrentsCell);
         _model.addElement(new LibraryFilesListCell(new StarredDirectoryHolder()));
+        _model.addElement(new LibraryFilesListCell(new InternetRadioDirectoryHolder()));
     }
 
     private void setupList() {
@@ -185,6 +186,8 @@ public class LibraryFiles extends AbstractLibraryListPanel {
             LibraryMediator.instance().updateTableItems(playlist);
             String status = LibraryUtils.getPlaylistDurationInDDHHMMSS(playlist) + ", " + playlist.getItems().size() + " " + I18n.tr("tracks");
             LibraryMediator.instance().getLibrarySearch().setStatus(status);
+        } else if (directoryHolder instanceof InternetRadioDirectoryHolder) {
+            LibraryMediator.instance().showInternetRadioStations();
         } else {
             LibraryMediator.instance().updateTableFiles(node.getDirectoryHolder());
 

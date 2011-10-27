@@ -225,7 +225,7 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
 			if (streamURL.contains("/download?type=0&id=") && matcher.matches()) {
 				currentText = "android " + matcher.group(1);	
 			} else {
-				currentText = "radio ";
+				currentText = "internet "; // generic internet stream
 			}
 		}
 
