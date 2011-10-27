@@ -288,6 +288,12 @@ public class TorrentDownloaderImpl extends AEThread implements TorrentDownloader
 			}
 	*/
       filename = this.con.getHeaderField("Content-Disposition");
+      
+      // TODO: Send patch to vuze team.
+      if (filename == null) {
+          filename = this.con.getHeaderField("Disposition");
+      }
+      
       if ((filename!=null) && filename.toLowerCase().matches(".*attachment.*")) // Some code to handle b0rked servers.
         while (filename.toLowerCase().charAt(0)!='a')
           filename = filename.substring(1);

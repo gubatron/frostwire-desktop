@@ -48,9 +48,22 @@ public abstract class HttpWebSearchPerformer implements WebSearchPerformer {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(html);
         
-        while (matcher.find()) {
-        	WebSearchResult sr = getNextSearchResult(matcher);
-        	result.add(sr);
+        //System.out.println(html);
+        
+        int max = getMax();
+        
+        int i = 0;
+        
+        while (matcher.find() && i < max) {
+            try {
+                WebSearchResult sr = getNextSearchResult(matcher);
+                if (sr != null) {
+                    result.add(sr);
+                    i++;
+                }
+            } catch (Exception e) {
+                // do nothing
+            }
         }
         
         return result;
@@ -64,4 +77,8 @@ public abstract class HttpWebSearchPerformer implements WebSearchPerformer {
 
     /** This function must return the regex necessary for a pattern matcher to find the necessary fields of a SearchResult*/
     protected abstract String getRegex();
+    
+    protected int getMax() {
+        return Integer.MAX_VALUE;
+    }
 }
