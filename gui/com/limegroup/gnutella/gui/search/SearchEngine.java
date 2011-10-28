@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.limewire.setting.BooleanSetting;
 
-import com.frostwire.bittorrent.websearch.SearchEnginesSettings;
 import com.frostwire.bittorrent.websearch.WebSearchPerformer;
 import com.frostwire.bittorrent.websearch.btjunkie.BTJunkieWebSearchPerformer;
 import com.frostwire.bittorrent.websearch.clearbits.ClearBitsWebSearchPerformer;
@@ -17,6 +16,7 @@ import com.frostwire.bittorrent.websearch.mininova.MininovaWebSearchPerformer;
 import com.frostwire.bittorrent.websearch.monova.MonovaWebSearchPerformer;
 import com.frostwire.bittorrent.websearch.tpb.TPBWebSearchPerformer;
 import com.frostwire.bittorrent.websearch.vertor.VertorWebSearchPerformer;
+import com.limegroup.gnutella.settings.SearchEnginesSettings;
 
 public final class SearchEngine {
 

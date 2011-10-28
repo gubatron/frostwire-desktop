@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import com.frostwire.HttpFetcher;
 import com.frostwire.bittorrent.websearch.HttpWebSearchPerformer;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
+import com.limegroup.gnutella.settings.SearchEnginesSettings;
 
 public class MonovaWebSearchPerformer extends HttpWebSearchPerformer {
 
@@ -42,7 +43,7 @@ public class MonovaWebSearchPerformer extends HttpWebSearchPerformer {
     
     @Override
     protected int getMax() {
-        return 10;
+        return SearchEnginesSettings.MONOVA_WEBSEARCHPERFORMER_MAX.getValue();
     }
 
     private String fetchTorrentPage(String torrentUrl) {
