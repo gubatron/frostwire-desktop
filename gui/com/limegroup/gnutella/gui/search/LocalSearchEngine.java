@@ -33,13 +33,12 @@ import com.limegroup.gnutella.settings.SearchSettings;
 
 public class LocalSearchEngine {
 
-	private static final int DEEP_SEARCH_DELAY = 2000;
-	private static final int MAXIMUM_TORRENTS_TO_SCAN = 20;
-	private static final int DEEP_SEARCH_ROUNDS = 3;
+	private final int DEEP_SEARCH_DELAY;
+	private final int MAXIMUM_TORRENTS_TO_SCAN;
+	private final int DEEP_SEARCH_ROUNDS;
+	private final int LOCAL_SEARCH_RESULTS_LIMIT;
 
 	private static LocalSearchEngine INSTANCE;
-
-	private static final int LOCAL_SEARCH_RESULTS_LIMIT = 256; 
 	
 	private static final Comparator<TableLine> TORRENT_SEED_TABLELINE_COMPARATOR = new Comparator<TableLine>() {
 
@@ -58,6 +57,11 @@ public class LocalSearchEngine {
 	private JsonEngine JSON_ENGINE;
 
 	public LocalSearchEngine() {
+	    DEEP_SEARCH_DELAY = SearchSettings.SMART_SEARCH_START_DELAY.getValue();
+	    MAXIMUM_TORRENTS_TO_SCAN = SearchSettings.SMART_SEARCH_MAXIMUM_TORRENTS_TO_SCAN.getValue();
+	    DEEP_SEARCH_ROUNDS = SearchSettings.SMART_SEARCH_DEEP_SEARCH_ROUNDS.getValue();
+	    LOCAL_SEARCH_RESULTS_LIMIT = SearchSettings.SMART_SEARCH_FULLTEXT_SEARCH_RESULTS_LIMIT.getValue();
+	    
 		DB = new SmartSearchDB(SearchSettings.SMART_SEARCH_DATABASE_FOLDER.getValue());
 		JSON_ENGINE = new JsonEngine();
 	}

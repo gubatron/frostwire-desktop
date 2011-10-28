@@ -1,8 +1,8 @@
-package com.frostwire.bittorrent.websearch;
+package com.limegroup.gnutella.settings;
 
 import org.limewire.setting.BooleanSetting;
+import org.limewire.setting.IntSetting;
 
-import com.limegroup.gnutella.settings.LimeProps;
 
 public class SearchEnginesSettings extends LimeProps {
     // In the near future, we will refactor this code to allow a configurable amount of
@@ -26,4 +26,6 @@ public class SearchEnginesSettings extends LimeProps {
     
     //	public static final BooleanSetting FROSTCLICK_SEARCH_ENABLED =
     //		FACTORY.createBooleanSetting("FROSTCLICK_SEARCH_ENABLED", true);
+    
+    public static final IntSetting MONOVA_WEBSEARCHPERFORMER_MAX = FACTORY.createIntSetting("MONOVA_WEBSEARCHPERFORMER_MAX", 10);
 }
