@@ -335,6 +335,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener,
 				PROGRESS.setEnabled(enabled);
 			}
 		});
+		setProgressValue(0);
 	}
 
 	/**
@@ -370,7 +371,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener,
 	}
 
 	public void seek(float percent) {
-		if (PLAYER.canSeek()) {
+		if (currentPlayListItem != null && currentPlayListItem.getURL() == null && PLAYER.canSeek()) {
 			float timeInSecs = PLAYER.getDurationInSecs() * percent;
 			PLAYER.seek(timeInSecs);
 		}
@@ -392,12 +393,13 @@ public final class AudioPlayerComponent implements AudioPlayerListener,
 		currentPlayListItem = audioSource;
 
 		setVolumeValue();
-		if (PLAYER.canSeek()) {
+		if (audioSource.getURL() == null && PLAYER.canSeek()) {
 			setProgressEnabled(true);
 			progressSongLength.setText(LibraryUtils
 					.getSecondsInDDHHMMSS((int) PLAYER.getDurationInSecs()));
 		} else {
 			setProgressEnabled(false);
+			progressSongLength.setText("");
 		}
 	}
 
@@ -406,17 +408,18 @@ public final class AudioPlayerComponent implements AudioPlayerListener,
 	 * frames that have been read, along with position and bytes read
 	 */
 	public void progressChange(AudioPlayer audioPlayer, float currentTimeInSecs) {
-		_progress = currentTimeInSecs;
-		progressCurrentTime.setText(LibraryUtils
-				.getSecondsInDDHHMMSS((int) _progress));
-		progressSongLength.setText(LibraryUtils
-				.getSecondsInDDHHMMSS((int) PLAYER.getDurationInSecs()));
+        _progress = currentTimeInSecs;
+        progressCurrentTime.setText(LibraryUtils.getSecondsInDDHHMMSS((int) _progress));
 
-		if (PLAYER.canSeek()) {
-			float progressUpdate = ((PROGRESS.getMaximum() * currentTimeInSecs) / PLAYER
-					.getDurationInSecs());
-			setProgressValue((int) progressUpdate);
-		}
+        if (currentPlayListItem != null && currentPlayListItem.getURL() == null) {
+            progressSongLength.setText(LibraryUtils.getSecondsInDDHHMMSS((int) PLAYER.getDurationInSecs()));
+        }
+
+        if (currentPlayListItem != null && currentPlayListItem.getURL() == null && PLAYER.canSeek()) {
+            setProgressEnabled(true);
+            float progressUpdate = ((PROGRESS.getMaximum() * currentTimeInSecs) / PLAYER.getDurationInSecs());
+            setProgressValue((int) progressUpdate);
+        }
 	}
 
 	public void stateChange(AudioPlayer audioPlayer, MediaPlaybackState state) {

@@ -1,7 +1,6 @@
 package com.frostwire.gui.player;
 
 import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import com.frostwire.alexandria.PlaylistItem;
@@ -55,14 +54,7 @@ public class AudioSource {
     }
 
     public URL getURL() {
-        if (url != null)
-            return url;
-        else if (file != null)
-            try {
-                return file.toURI().toURL();
-            } catch (MalformedURLException e) {
-            }
-        return null;
+        return url;
     }
     
     public PlaylistItem getPlaylistItem() {

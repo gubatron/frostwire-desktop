@@ -2,9 +2,7 @@ package com.frostwire.gui.library;
 
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -70,6 +68,10 @@ public class LibraryInternetRadioMediator implements RefreshListener, MouseObser
 
     final class InternetRadioTreeModel extends DefaultTreeModel {
 
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -3179653338251010625L;
         /**
          * Constant handle to the root node of the tree.
          */
@@ -177,6 +179,11 @@ public class LibraryInternetRadioMediator implements RefreshListener, MouseObser
     }
 
     public class InternetRadioTreeNode extends DefaultMutableTreeNode {
+
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 1359101368161946121L;
 
         /**
          * The key for uniquely identifying this node.
