@@ -1,12 +1,11 @@
 package com.frostwire.gui.library;
 
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,27 +15,22 @@ import javax.swing.Action;
 import javax.swing.DropMode;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
-import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.MouseInputListener;
 import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 
 import org.limewire.util.OSUtils;
 
 import com.frostwire.alexandria.InternetRadioStation;
-import com.frostwire.alexandria.Playlist;
-import com.frostwire.gui.bittorrent.CreateTorrentDialog;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.actions.SearchAction;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
@@ -98,56 +92,15 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
 
         JPopupMenu menu = new SkinPopupMenu();
 
-//        //menu.add(new SkinMenuItem(LAUNCH_ACTION));
-//        if (hasExploreAction()) {
-//            menu.add(new SkinMenuItem(OPEN_IN_FOLDER_ACTION));
-//        }
-//
-//        menu.add(new SkinMenuItem(CREATE_TORRENT_ACTION));
-//        menu.add(createAddToPlaylistSubMenu());
-//        menu.add(new SkinMenuItem(SEND_TO_FRIEND_ACTION));
-//
-//        menu.add(new SkinMenuItem(SEND_TO_ITUNES_ACTION));
-//
-//        
-//        menu.addSeparator();
-//        menu.add(new SkinMenuItem(DELETE_ACTION));
-//
-//        int[] rows = TABLE.getSelectedRows();
-//        boolean dirSelected = false;
-//        boolean fileSelected = false;
-//
-//        for (int i = 0; i < rows.length; i++) {
-//            File f = DATA_MODEL.get(rows[i]).getFile();
-//            if (f.isDirectory()) {
-//                dirSelected = true;
-//                //				if (IncompleteFileManager.isTorrentFolder(f))
-//                //					torrentSelected = true;
-//            } else
-//                fileSelected = true;
-//
-//            if (dirSelected && fileSelected)
-//                break;
-//        }
-//        if (dirSelected) {
-//            if (GUIMediator.isPlaylistVisible())
-//                ENQUEUE_ACTION.setEnabled(false);
-//            DELETE_ACTION.setEnabled(true);
-//        } else {
-//            if (GUIMediator.isPlaylistVisible() && AudioPlayer.isPlayableFile(DATA_MODEL.getFile(rows[0])))
-//                ENQUEUE_ACTION.setEnabled(true);
-//            DELETE_ACTION.setEnabled(true);
-//        }
-//
-//        menu.addSeparator();
-//        menu.add(new SkinMenuItem(importToPlaylistAction));
-//        menu.add(new SkinMenuItem(exportPlaylistAction));
-//        menu.add(new SkinMenuItem(cleanupPlaylistAction));
-//        menu.add(new SkinMenuItem(refreshID3TagsAction));
-//
-//        menu.addSeparator();
-//        LibraryPlaylistsTableDataLine line = DATA_MODEL.get(rows[0]);
-//        menu.add(createSearchSubMenu(line));
+        menu.add(new SkinMenuItem(DELETE_ACTION));
+
+        int[] rows = TABLE.getSelectedRows();
+        
+        DELETE_ACTION.setEnabled(true);
+
+        menu.addSeparator();
+        LibraryInternetRadioTableDataLine line = DATA_MODEL.get(rows[0]);
+        menu.add(createSearchSubMenu(line));
 
         return menu;
     }
@@ -160,13 +113,13 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
         	@Override
         	public void keyReleased(KeyEvent e) {
         		if (LibraryUtils.isRefreshKeyEvent(e)) {
-        			LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
+        			//LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
         		}        		
         	}
 		});
     }
 
-    private JMenu createSearchSubMenu(LibraryPlaylistsTableDataLine dl) {
+    private JMenu createSearchSubMenu(LibraryInternetRadioTableDataLine dl) {
         JMenu menu = new SkinMenu(I18n.tr("Search"));
 
         if (dl != null) {
@@ -224,36 +177,14 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
     @Override
     protected void setDefaultRenderers() {
         super.setDefaultRenderers();
-        TABLE.setDefaultRenderer(PlaylistItemProperty.class, new PlaylistItemPropertyRenderer());
-        TABLE.setDefaultRenderer(PlaylistItemStar.class, new PlaylistItemStarRenderer());
+        TABLE.setDefaultRenderer(PlayableCell.class, new PlayableCellRenderer());
     }
 
     /**
      * Sets the default editors.
      */
     protected void setDefaultEditors() {
-        TableColumnModel model = TABLE.getColumnModel();
-        TableColumn tc = model.getColumn(LibraryPlaylistsTableDataLine.STARRED_IDX);
-        tc.setCellEditor(new PlaylistItemStarEditor());
-
-        TABLE.addMouseMotionListener(new MouseMotionAdapter() {
-            int currentCellColumn = -1;
-            int currentCellRow = -1;
-
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                Point hit = e.getPoint();
-                int hitColumn = TABLE.columnAtPoint(hit);
-                int hitRow = TABLE.rowAtPoint(hit);
-                if (currentCellRow != hitRow || currentCellColumn != hitColumn) {
-                    if (TABLE.getCellRenderer(hitRow, hitColumn) instanceof PlaylistItemStarRenderer) {
-                        TABLE.editCellAt(hitRow, hitColumn);
-                    }
-                    currentCellColumn = hitColumn;
-                    currentCellRow = hitRow;
-                }
-            }
-        });
+        
     }
 
     /**
@@ -373,26 +304,14 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
 
         LibraryInternetRadioTableDataLine[] lines = getSelectedLibraryLines();
 
-//        if (currentPlaylist != null && currentPlaylist.getId() == LibraryDatabase.STARRED_PLAYLIST_ID) {
-//            for (LibraryPlaylistsTableDataLine line : lines) {
-//                PlaylistItem playlistItem = line.getInitializeObject();
-//                playlistItem.setStarred(false);
-//                playlistItem.save();
-//            }
-//
-//            LibraryMediator.instance().getLibraryFiles().refreshSelection();
-//            
-//        } else {
-//
-//            for (LibraryPlaylistsTableDataLine line : lines) {
-//                PlaylistItem playlistItem = line.getInitializeObject();
-//                playlistItem.delete();
-//            }
-//
-//            LibraryMediator.instance().getLibraryPlaylists().reselectPlaylist();
-//
-//            clearSelection();
-//        }
+        for (LibraryInternetRadioTableDataLine line : lines) {
+            InternetRadioStation item = line.getInitializeObject();
+            item.delete();
+        }
+
+        LibraryMediator.instance().getLibraryFiles().selectRadio();
+
+        clearSelection();
     }
 
     public void handleActionKey() {
@@ -400,15 +319,17 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
     }
 
     private void playSong() {
-//        LibraryInternetRadioTableDataLine line = DATA_MODEL.get(TABLE.getSelectedRow());
-//        if (line == null) {
-//            return;
-//        }
-//
-//        AudioSource audioSource = new AudioSource(line.getPlayListItem());
-//        if (AudioPlayer.isPlayableFile(audioSource)) {
-//            AudioPlayer.instance().asyncLoadSong(audioSource, true, true, currentPlaylist, getFileView());
-//        }
+        LibraryInternetRadioTableDataLine line = DATA_MODEL.get(TABLE.getSelectedRow());
+        if (line == null) {
+            return;
+        }
+
+        try {
+            AudioSource audioSource = new InternetRadioAudioSource(new URL(line.getInitializeObject().getUrl()));
+            AudioPlayer.instance().asyncLoadSong(audioSource, true, false);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -455,42 +376,16 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
             return;
         }
 
-        File selectedFile = getFile(sel[0]);
+        //File selectedFile = getFile(sel[0]);
 
-//        //  always turn on Launch, Delete, Magnet Lookup, Bitzi Lookup
-//        LAUNCH_ACTION.setEnabled(true);
-//        DELETE_ACTION.setEnabled(true);
-//        SEND_TO_ITUNES_ACTION.setEnabled(true);
-//
-//        if (selectedFile != null && !selectedFile.getName().endsWith(".torrent")) {
-//            CREATE_TORRENT_ACTION.setEnabled(sel.length == 1);
-//        }
-//
-//        if (selectedFile != null) {
-//            SEND_TO_FRIEND_ACTION.setEnabled(sel.length == 1);
-//        }
-//
-//        if (sel.length == 1 && selectedFile.isFile() && selectedFile.getParentFile() != null) {
-//            OPEN_IN_FOLDER_ACTION.setEnabled(true);
-//        } else {
-//            OPEN_IN_FOLDER_ACTION.setEnabled(false);
-//        }
-//
-//        //  turn on Enqueue if play list is visible and a selected item is playable
-//        if (GUIMediator.isPlaylistVisible()) {
-//            boolean found = false;
-//            for (int i = 0; i < sel.length; i++)
-//                if (AudioPlayer.isPlayableFile(DATA_MODEL.getFile(sel[i]))) {
-//                    found = true;
-//                    break;
-//                }
-//            ENQUEUE_ACTION.setEnabled(found);
-//        } else
-//            ENQUEUE_ACTION.setEnabled(false);
-//
-//        if (sel.length == 1) {
-//            LibraryMediator.instance().getLibraryCoverArt().setFile(getSelectedLibraryLines()[0].getFile());
-//        }
+        //  always turn on Launch, Delete, Magnet Lookup, Bitzi Lookup
+        LAUNCH_ACTION.setEnabled(true);
+        DELETE_ACTION.setEnabled(true);
+        SEND_TO_FRIEND_ACTION.setEnabled(false);
+
+        if (sel.length == 1) {
+            LibraryMediator.instance().getLibraryCoverArt().setFile(null);
+        }
     }
 
     /**
@@ -498,13 +393,10 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
      * disabling all necessary buttons and menu items.
      */
     public void handleNoSelection() {
-//        LAUNCH_ACTION.setEnabled(false);
-//        OPEN_IN_FOLDER_ACTION.setEnabled(false);
-//        SEND_TO_FRIEND_ACTION.setEnabled(false);
-//        ENQUEUE_ACTION.setEnabled(false);
-//        CREATE_TORRENT_ACTION.setEnabled(false);
-//        DELETE_ACTION.setEnabled(false);
-//        SEND_TO_ITUNES_ACTION.setEnabled(false);
+        LAUNCH_ACTION.setEnabled(false);
+        DELETE_ACTION.setEnabled(false);
+        
+        SEND_TO_FRIEND_ACTION.setEnabled(false);
     }
 
     /**
@@ -524,10 +416,6 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
             return true;
         }
         return false;
-    }
-
-    private boolean hasExploreAction() {
-        return OSUtils.isWindows() || OSUtils.isMacOSX();
     }
 
     ///////////////////////////////////////////////////////
@@ -550,112 +438,6 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
         public void actionPerformed(ActionEvent ae) {
             launch();
         }
-    }
-
-    private final class OpenInFolderAction extends AbstractAction {
-
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 1693310684299300459L;
-
-        public OpenInFolderAction() {
-            putValue(Action.NAME, I18n.tr("Open in Folder"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Open Folder Containing a Selected File"));
-            putValue(LimeAction.ICON_NAME, "LIBRARY_LAUNCH");
-        }
-
-        public void actionPerformed(ActionEvent ae) {
-            int[] sel = TABLE.getSelectedRows();
-            if (sel.length == 0) {
-                return;
-            }
-
-            File selectedFile = getFile(sel[0]);
-            if (selectedFile.isFile() && selectedFile.getParentFile() != null) {
-                GUIMediator.launchExplorer(selectedFile.getParentFile());
-            }
-        }
-    }
-
-    private final class EnqueueAction extends AbstractAction {
-
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 9153310119076594713L;
-
-        public EnqueueAction() {
-            putValue(Action.NAME, I18n.tr("Enqueue"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Add Selected Files to the Playlist"));
-            putValue(LimeAction.ICON_NAME, "LIBRARY_TO_PLAYLIST");
-        }
-
-        public void actionPerformed(ActionEvent ae) {
-            //get the selected file. If there are more than 1 we add all
-            int[] rows = TABLE.getSelectedRows();
-            List<File> files = new ArrayList<File>();
-            for (int i = 0; i < rows.length; i++) {
-                int index = rows[i]; // current index to add
-                File file = DATA_MODEL.getFile(index);
-                if (GUIMediator.isPlaylistVisible() && AudioPlayer.isPlayableFile(file))
-                    files.add(file);
-            }
-            //LibraryMediator.instance().addFilesToPlayList(files);
-        }
-    }
-
-    private final class CreateTorrentAction extends AbstractAction {
-
-        private static final long serialVersionUID = 1898917632888388860L;
-
-        public CreateTorrentAction() {
-            super(I18n.tr("Create New Torrent"));
-            putValue(Action.LONG_DESCRIPTION, I18n.tr("Create a new .torrent file"));
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent arg0) {
-            File selectedFile = DATA_MODEL.getFile(TABLE.getSelectedRow());
-
-            //can't create torrents out of empty folders.
-            if (selectedFile.isDirectory() && selectedFile.listFiles().length == 0) {
-                JOptionPane.showMessageDialog(null, I18n.tr("The folder you selected is empty."), I18n.tr("Invalid Folder"), JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            //can't create torrents if the folder/file can't be read
-            if (!selectedFile.canRead()) {
-                JOptionPane.showMessageDialog(null, I18n.tr("Error: You can't read on that file/folder."), I18n.tr("Error"), JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            CreateTorrentDialog dlg = new CreateTorrentDialog(GUIMediator.getAppFrame());
-            dlg.setChosenContent(selectedFile);
-            dlg.setVisible(true);
-
-        }
-    }
-    
-    private class SendAudioFilesToiTunes extends AbstractAction {
-
-		private static final long serialVersionUID = 4726989286129406765L;
-
-		public SendAudioFilesToiTunes() {
-			putValue(Action.NAME, I18n.tr("Send to iTunes"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Send audio files to iTunes"));
-    	}
-    	
-    	@Override
-		public void actionPerformed(ActionEvent e) {
-            int[] rows = TABLE.getSelectedRows();
-            for (int i = 0; i < rows.length; i++) {
-                int index = rows[i]; // current index to add
-                File file = DATA_MODEL.getFile(index);
-                
-				iTunesMediator.instance().scanForSongs(file);                
-            }
-		}
     }
 
     private final class RemoveFromPlaylistAction extends AbstractAction {
@@ -689,72 +471,6 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
         }
     }
 
-    private final class ImportToPlaylistAction extends AbstractAction {
-
-        private static final long serialVersionUID = -9099898749358019734L;
-
-        public ImportToPlaylistAction() {
-            putValue(Action.NAME, I18n.tr("Import .m3u to Playlist"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Import a .m3u file into the selected playlist"));
-            putValue(LimeAction.ICON_NAME, "PLAYLIST_IMPORT_TO");
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            //LibraryMediator.instance().getLibraryPlaylists().importM3U(currentPlaylist);
-        }
-    }
-
-    private final class ExportPlaylistAction extends AbstractAction {
-
-        private static final long serialVersionUID = 6149822357662730490L;
-
-        public ExportPlaylistAction() {
-            putValue(Action.NAME, I18n.tr("Export Playlist to .m3u"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Export this playlist into a .m3u file"));
-            putValue(LimeAction.ICON_NAME, "PLAYLIST_IMPORT_NEW");
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            //LibraryMediator.instance().getLibraryPlaylists().exportM3U(currentPlaylist);
-        }
-    }
-
-    private final class CleanupPlaylistAction extends AbstractAction {
-
-        private static final long serialVersionUID = 8400749433148927596L;
-
-        public CleanupPlaylistAction() {
-            putValue(Action.NAME, I18n.tr("Cleanup playlist"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Remove the deleted items"));
-            putValue(LimeAction.ICON_NAME, "PLAYLIST_CLEANUP");
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            //LibraryUtils.cleanup(currentPlaylist);
-            LibraryMediator.instance().getLibraryPlaylists().refreshSelection();
-        }
-    }
-    
-    private final class RefreshID3TagsAction extends AbstractAction {
-
-        private static final long serialVersionUID = 758150680592618044L;
-        
-        public RefreshID3TagsAction() {
-            putValue(Action.NAME, I18n.tr("Refresh Audio Properties"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Refresh the audio properties based on ID3 tags"));
-            putValue(LimeAction.ICON_NAME, "PLAYLIST_REFRESHID3TAGS");
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            //LibraryPlaylistsTableDataLine[] lines = getSelectedLibraryLines();
-//            List<PlaylistItem> items = new ArrayList<PlaylistItem>(lines.length);
-//            for (LibraryPlaylistsTableDataLine line : lines) {
-//                items.add(line.getInitializeObject());
-//            }
-            //LibraryUtils.refreshID3Tags(currentPlaylist, items);
-        }
-    }
-
     @Override
     public List<AudioSource> getFileView() {
         int size = DATA_MODEL.getRowCount();
@@ -776,7 +492,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
     }
 
     private void resetAudioPlayerFileView() {
-        Playlist playlist = AudioPlayer.instance().getCurrentPlaylist();
+//        Playlist playlist = AudioPlayer.instance().getCurrentPlaylist();
 //        if (playlist != null && playlist.equals(currentPlaylist)) {
 //            if (AudioPlayer.instance().getPlaylistFilesView() != null) {
 //                AudioPlayer.instance().setPlaylistFilesView(getFileView());

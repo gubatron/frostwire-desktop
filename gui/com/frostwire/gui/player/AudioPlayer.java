@@ -5,6 +5,7 @@ import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -510,6 +511,22 @@ public class AudioPlayer implements RefreshListener {
 
 		return false;
 	}
+	
+    public boolean isThisBeingPlayed(String file) {
+
+        AudioSource currentSong = getCurrentSong();
+        if (currentSong == null) {
+            return false;
+        }
+
+        URL currentSongUrl = currentSong.getURL();
+
+        if (currentSongUrl != null && file.toLowerCase().equals(currentSongUrl.toString().toLowerCase())) {
+            return true;
+        }
+
+        return false;
+    }
 	
 	public boolean isThisBeingPlayed(PlaylistItem playlistItem) {
 

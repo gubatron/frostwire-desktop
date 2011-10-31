@@ -260,6 +260,7 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
                     String streamTitle = s.substring(13, s.length() - 1);
                     currentStatusIcon = speakerIcon;
                     currentStatusLabel = streamTitle;
+                    setupIconAndText(currentStatusIcon, currentStatusLabel);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

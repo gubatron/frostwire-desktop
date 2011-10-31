@@ -3,10 +3,8 @@ package com.frostwire.gui.library;
 import java.io.File;
 
 import com.frostwire.alexandria.InternetRadioStation;
-import com.frostwire.alexandria.PlaylistItem;
 import com.limegroup.gnutella.gui.tables.ColoredCellImpl;
 import com.limegroup.gnutella.gui.tables.HashBasedDataLineModel;
-import com.limegroup.gnutella.gui.tables.SizeHolder;
 
 /**
  * Library specific DataLineModel.
@@ -49,29 +47,6 @@ final class LibraryInternetRadioTableModel extends HashBasedDataLineModel<Librar
     public int add(LibraryInternetRadioTableDataLine o) {
         return add(o, getRowCount());
     }
-
-	/**
-	 * Override the dataline add so we can re-initialize files
-	 * to include the FileDesc.  Necessary for changing pending status
-	 * to shared status.
-	 */
-//    @Override
-//	public int add(LibraryPlaylistsTableDataLine dl, int row) {
-//	    File init = dl.getInitializeObject();
-//	    if ( !contains(init) ) {
-//	        return forceAdd(dl, row);
-//	    } else {
-//	        FileDesc fd = dl.getFileDesc();
-//	        if ( fd != null ) {
-//	            row = getRow(init);
-//	            get( row ).setFileDesc(fd);
-//	            fireTableRowsUpdated( row, row );
-//	        }
-//	        // we aren't going to use this dl, so clean it up.
-//	        dl.cleanup();
-//	    }
-//	    return -1;
-//    }
     
     /**
      * Reinitializes a dataline that is using the given initialize object.
@@ -106,7 +81,7 @@ final class LibraryInternetRadioTableModel extends HashBasedDataLineModel<Librar
 	String getType(int row) {
 	    return (String)(
 	             (ColoredCellImpl)get(row).getValueAt(
-	                LibraryPlaylistsTableDataLine.TYPE_IDX)).getValue();
+	                LibraryInternetRadioTableDataLine.TYPE_IDX)).getValue();
 	}
 
 	/**
@@ -119,19 +94,6 @@ final class LibraryInternetRadioTableModel extends HashBasedDataLineModel<Librar
 	File getFile(int row) {
 	    return null;//new File(get(row).getInitializeObject().getFilePath());
 	}
-
- 	/**
-	 * Returns the name of the file at the given row.
-	 *
-	 * @param row  The row of the file
-	 *
-	 * @return  An <code>int</code> containing the size of the file
-	 */
-	long getSize(int row) {
-	    return ((SizeHolder)(
-	        (ColoredCellImpl)get(row).getValueAt(
-                LibraryPlaylistsTableDataLine.SIZE_IDX)).getValue()).getSize();
-    }
 	
 	/**
 	 * Returns a boolean specifying whether or not specific cell in the table
@@ -145,6 +107,6 @@ final class LibraryInternetRadioTableModel extends HashBasedDataLineModel<Librar
 	 *         <code>false</code> otherwise
 	 */
 	public boolean isCellEditable(int row, int col) {
-	    return col == LibraryPlaylistsTableDataLine.STARRED_IDX;
+	    return false;
 	}
 }

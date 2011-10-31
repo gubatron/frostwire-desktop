@@ -458,7 +458,22 @@ public class LibraryFiles extends AbstractLibraryListPanel {
             } catch (Exception e) {
             }
         }
+    }
+    
+    public void selectRadio() {
+        int size = _model.getSize();
 
+        for (int i = 0; i < size; i++) {
+            try {
+                LibraryFilesListCell cell = (LibraryFilesListCell) _model.get(i);
+
+                if (cell.getDirectoryHolder() instanceof InternetRadioDirectoryHolder) {
+                    _list.setSelectedValue(cell, true);
+                    return;
+                }
+            } catch (Exception e) {
+            }
+        }
     }
 
     public List<MediaTypeSavedFilesDirectoryHolder> getMediaTypeSavedFilesDirectoryHolders() {

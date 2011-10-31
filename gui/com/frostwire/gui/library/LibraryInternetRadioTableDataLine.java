@@ -4,15 +4,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.limewire.util.FilenameUtils;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.alexandria.InternetRadioStation;
-import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
-import com.limegroup.gnutella.gui.tables.SizeHolder;
 
 public final class LibraryInternetRadioTableDataLine extends AbstractLibraryTableDataLine<InternetRadioStation> {
 
@@ -22,10 +19,25 @@ public final class LibraryInternetRadioTableDataLine extends AbstractLibraryTabl
     static final int DESCRIPTION_IDX = 1;
     private static final LimeTableColumn DESCRIPTION_COLUMN = new LimeTableColumn(DESCRIPTION_IDX, "INTERNET_RADIO_TABLE_DESCRIPTION", I18n.tr("Description"), 80, true, PlayableCell.class);
 
+    static final int URL_IDX = 2;
+    private static final LimeTableColumn URL_COLUMN = new LimeTableColumn(URL_IDX, "INTERNET_RADIO_TABLE_URL", I18n.tr("Url"), 80, true, PlayableCell.class);
+
+    static final int BITRATE_IDX = 3;
+    private static final LimeTableColumn BITRATE_COLUMN = new LimeTableColumn(BITRATE_IDX, "INTERNET_RADIO_TABLE_BITRATE", I18n.tr("Bitrate"), 80, true, PlayableCell.class);
+
+    static final int TYPE_IDX = 4;
+    private static final LimeTableColumn TYPE_COLUMN = new LimeTableColumn(TYPE_IDX, "INTERNET_RADIO_TABLE_TYPE", I18n.tr("Type"), 80, true, PlayableCell.class);
+
+    static final int WEBSITE_IDX = 5;
+    private static final LimeTableColumn WEBSITE_COLUMN = new LimeTableColumn(WEBSITE_IDX, "INTERNET_RADIO_TABLE_WEBSITE", I18n.tr("Website"), 80, true, PlayableCell.class);
+
+    static final int GENRE_IDX = 6;
+    private static final LimeTableColumn GENRE_COLUMN = new LimeTableColumn(GENRE_IDX, "INTERNET_RADIO_TABLE_GENRE", I18n.tr("Genre"), 80, true, PlayableCell.class);
+
     /**
      * Total number of columns
      */
-    static final int NUMBER_OF_COLUMNS = 2;
+    static final int NUMBER_OF_COLUMNS = 7;
 
     /**
      * Number of columns
@@ -51,14 +63,23 @@ public final class LibraryInternetRadioTableDataLine extends AbstractLibraryTabl
             return new PlayableCell(initializer.getName(), playing);
         case DESCRIPTION_IDX:
             return new PlayableCell(initializer.getDescription(), playing);
-        
+        case URL_IDX:
+            return new PlayableCell(initializer.getUrl(), playing);
+        case BITRATE_IDX:
+            return new PlayableCell(initializer.getBitrate(), playing);
+        case TYPE_IDX:
+            return new PlayableCell(initializer.getType(), playing);
+        case WEBSITE_IDX:
+            return new PlayableCell(initializer.getWebsite(), playing);
+        case GENRE_IDX:
+            return new PlayableCell(initializer.getGenre(), playing);
         }
         return null;
     }
 
     private boolean isPlaying() {
         if (initializer != null) {
-            return false;//AudioPlayer.instance().isThisBeingPlayed(initializer.getURL());
+            return AudioPlayer.instance().isThisBeingPlayed(initializer.getUrl());
         }
 
         return false;
@@ -73,6 +94,16 @@ public final class LibraryInternetRadioTableDataLine extends AbstractLibraryTabl
             return NAME_COLUMN;
         case DESCRIPTION_IDX:
             return DESCRIPTION_COLUMN;
+        case URL_IDX:
+            return URL_COLUMN;
+        case BITRATE_IDX:
+            return BITRATE_COLUMN;
+        case TYPE_IDX:
+            return TYPE_COLUMN;
+        case WEBSITE_IDX:
+            return WEBSITE_COLUMN;
+        case GENRE_IDX:
+            return GENRE_COLUMN;
         }
         return null;
     }
@@ -80,7 +111,7 @@ public final class LibraryInternetRadioTableDataLine extends AbstractLibraryTabl
     public boolean isClippable(int idx) {
         return false;
     }
-    
+
     public boolean isDynamic(int idx) {
         return false;
     }
@@ -99,42 +130,27 @@ public final class LibraryInternetRadioTableDataLine extends AbstractLibraryTabl
      */
     public String[] getToolTipArray(int col) {
         List<String> list = new ArrayList<String>();
-//        if (!StringUtils.isNullOrEmpty(initializer.getTrackTitle(), true)) {
-//            list.add(I18n.tr("Title") + ": " + initializer.getTrackTitle());
-//        }
-//        if (!StringUtils.isNullOrEmpty(initializer.getTrackNumber(), true)) {
-//            list.add(I18n.tr("Track") + ": " + initializer.getTrackNumber());
-//        }
-//        
-//        list.add(I18n.tr("Duration") + ": " + LibraryUtils.getSecondsInDDHHMMSS((int) initializer.getTrackDurationInSecs()));
-//        
-//        if (!StringUtils.isNullOrEmpty(initializer.getTrackArtist(), true)) {
-//            list.add(I18n.tr("Artist") + ": " + initializer.getTrackArtist());
-//        }
-//        if (!StringUtils.isNullOrEmpty(initializer.getTrackAlbum(), true)) {
-//            list.add(I18n.tr("Album") + ": " + initializer.getTrackAlbum());
-//        }
-//        if (!StringUtils.isNullOrEmpty(initializer.getTrackGenre(), true)) {
-//            list.add(I18n.tr("Genre") + ": " + initializer.getTrackGenre());
-//        }
-//        if (!StringUtils.isNullOrEmpty(initializer.getTrackYear(), true)) {
-//            list.add(I18n.tr("Year") + ": " + initializer.getTrackYear());
-//        }
-//        if (!StringUtils.isNullOrEmpty(initializer.getTrackComment(), true)) {
-//            list.add(I18n.tr("Comment") + ": " + initializer.getTrackComment());
-//        }
-//
-//        if (list.size() == 1) {
-//            if (!StringUtils.isNullOrEmpty(initializer.getFileName(), true)) {
-//                list.add(I18n.tr("File") + ": " + initializer.getFileName());
-//            }
-//            if (!StringUtils.isNullOrEmpty(initializer.getFilePath(), true)) {
-//                list.add(I18n.tr("Folder") + ": " + FilenameUtils.getPath(initializer.getFilePath()));
-//            }
-//            if (!StringUtils.isNullOrEmpty(initializer.getTrackBitrate(), true)) {
-//                list.add(I18n.tr("Bitrate") + ": " + initializer.getTrackBitrate());
-//            }
-//        }
+        if (!StringUtils.isNullOrEmpty(initializer.getName(), true)) {
+            list.add(I18n.tr("Name") + ": " + initializer.getName());
+        }
+        if (!StringUtils.isNullOrEmpty(initializer.getDescription(), true)) {
+            list.add(I18n.tr("Description") + ": " + initializer.getDescription());
+        }
+        if (!StringUtils.isNullOrEmpty(initializer.getUrl(), true)) {
+            list.add(I18n.tr("Url") + ": " + initializer.getUrl());
+        }
+        if (!StringUtils.isNullOrEmpty(initializer.getBitrate(), true)) {
+            list.add(I18n.tr("Bitrate") + ": " + initializer.getBitrate());
+        }
+        if (!StringUtils.isNullOrEmpty(initializer.getType(), true)) {
+            list.add(I18n.tr("Type") + ": " + initializer.getType());
+        }
+        if (!StringUtils.isNullOrEmpty(initializer.getWebsite(), true)) {
+            list.add(I18n.tr("Website") + ": " + initializer.getWebsite());
+        }
+        if (!StringUtils.isNullOrEmpty(initializer.getGenre(), true)) {
+            list.add(I18n.tr("Genre") + ": " + initializer.getGenre());
+        }
 
         return list.toArray(new String[0]);
     }
