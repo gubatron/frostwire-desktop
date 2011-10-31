@@ -83,7 +83,8 @@ public class MediaType implements Serializable {
                 "abw", "kwd", "mobi", "azw","aeh","lrf","lrx",
                 "cbr", "cbz", "cb7", "chm","dnl","djvu",
                 "epub","pdb","fb2","xeb","ceb","prc","pkg",
-                "opf","pdg","pdb","tr2","tr3"
+                "opf","pdg","pdb","tr2","tr3","cbr","cbz","cb7",
+                "cbt","cba"
             });
             
     /**
