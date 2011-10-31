@@ -211,7 +211,7 @@ public class LibraryMediator {
     public void showInternetRadioStations() {
         clearLibraryTable();
         showView(INTERNET_RADIO_TREE_KEY);
-        LibraryInternetRadioMediator.instance().refresh();
+        LibraryInternetRadioTableMediator.instance().refresh();
     }
 
     public void clearLibraryTable() {
@@ -249,7 +249,7 @@ public class LibraryMediator {
 
         _tablesPanel.add(LibraryFilesTableMediator.instance().getScrolledTablePane(), FILES_TABLE_KEY);
         _tablesPanel.add(LibraryPlaylistsTableMediator.instance().getScrolledTablePane(), PLAYLISTS_TABLE_KEY);
-        _tablesPanel.add(LibraryInternetRadioMediator.instance().getScrolledTablePane(), INTERNET_RADIO_TREE_KEY);
+        _tablesPanel.add(LibraryInternetRadioTableMediator.instance().getScrolledTablePane(), INTERNET_RADIO_TREE_KEY);
 
         panel.add(getLibrarySearch(), BorderLayout.PAGE_START);
         panel.add(_tablesPanel, BorderLayout.CENTER);
