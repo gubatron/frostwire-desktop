@@ -18,12 +18,12 @@ public class LibraryDatabase {
     public static final int OBJECT_INVALID_ID = -2;
     public static final int STARRED_PLAYLIST_ID = -3;
 
-    public static final int LIBRARY_DATABASE_VERSION = 1;
+    public static final int LIBRARY_DATABASE_VERSION = 2;
 
     private final File _databaseFile;
     private final String _name;
 
-    private final Connection _connection;
+    private Connection _connection;
 
     private boolean _closed;
 
@@ -55,39 +55,13 @@ public class LibraryDatabase {
     public boolean isClosed() {
         return _closed;
     }
-    
+
     public synchronized List<List<Object>> query(String statementSql, Object... arguments) {
         if (isClosed()) {
             return new ArrayList<List<Object>>();
         }
 
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            statement = _connection.prepareStatement(statementSql);
-
-            if (arguments != null) {
-                for (int i = 0; i < arguments.length; i++) {
-                    statement.setObject(i + 1, arguments[i]);
-                }
-            }
-
-            resultSet = statement.executeQuery();
-
-            return convertResultSetToList(resultSet);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                }
-            }
-        }
-
-        return new ArrayList<List<Object>>();
+        return query(_connection, statementSql, arguments);
     }
 
     /**
@@ -154,6 +128,12 @@ public class LibraryDatabase {
         }
     }
 
+    protected Connection onUpdateDatabase(Connection connection) {
+        setupInternetRadioStationsTable(connection);
+
+        return connection;
+    }
+
     private Connection openConnection(File path, String name, boolean createIfNotExists) {
         try {
             StringBuilder sb = new StringBuilder();
@@ -191,6 +171,8 @@ public class LibraryDatabase {
         update(connection, "CREATE INDEX idx_PlaylistItems_starred ON PlaylistItems (starred)");
         update(connection, "CALL FT_CREATE_INDEX('PUBLIC', 'PLAYLISTITEMS', 'FILEPATH, TRACKTITLE, TRACKARTIST, TRACKALBUM, TRACKGENRE, TRACKYEAR')");
 
+        setupInternetRadioStationsTable(connection);
+
         // INITIAL DATA
         update(connection, "INSERT INTO Library (name , version) VALUES ('" + name + "', " + LIBRARY_DATABASE_VERSION + ")");
 
@@ -202,7 +184,12 @@ public class LibraryDatabase {
         if (connection == null) {
             return createDatabase(path, name);
         } else {
-            return connection;
+            int databaseVersion = getDatabaseVersion(connection);
+            if (databaseVersion < LIBRARY_DATABASE_VERSION) {
+                return onUpdateDatabase(connection);
+            } else {
+                return connection;
+            }
         }
     }
 
@@ -252,6 +239,36 @@ public class LibraryDatabase {
         return OBJECT_INVALID_ID;
     }
 
+    private List<List<Object>> query(Connection connection, String statementSql, Object... arguments) {
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            statement = connection.prepareStatement(statementSql);
+
+            if (arguments != null) {
+                for (int i = 0; i < arguments.length; i++) {
+                    statement.setObject(i + 1, arguments[i]);
+                }
+            }
+
+            resultSet = statement.executeQuery();
+
+            return convertResultSetToList(resultSet);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                }
+            }
+        }
+
+        return new ArrayList<List<Object>>();
+    }
+
     private int update(Connection connection, String statementSql, Object... arguments) {
 
         PreparedStatement statement = null;
@@ -278,5 +295,16 @@ public class LibraryDatabase {
         }
 
         return -1;
+    }
+
+    private int getDatabaseVersion(Connection connection) {
+        List<List<Object>> query = query(connection, "SELECT version FROM Library");
+        return (Integer) query.get(0).get(0);
+    }
+
+    private void setupInternetRadioStationsTable(Connection connection) {
+        update(connection, "CRAETE TABLE InternetRadioStations (internetRadioStationId INTEGER IDENTITY, name VARCHAR(10000), description VARCHAR(10000), url VARCHAR(10000), bitrate VARCHAR(100), type VARCHAR(100), website VARCHAR(10000), genre VARCHAR(10000))");
+        update(connection, "CREATE INDEX idx_InternetRadioStations_name ON InternetRadioStations (name)");
+        update(connection, "CALL FT_CREATE_INDEX('PUBLIC', 'INTERNETRADIOSTATIONS', 'NAME, DESCRIPTION, GENRE')");
     }
 }
