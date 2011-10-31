@@ -11,7 +11,7 @@ public class InternetRadioStationDB extends ObjectDB<InternetRadioStation> {
     }
 
     public void fill(InternetRadioStation obj) {
-        List<List<Object>> result = db.query("SELECT internetRadioStationId, name, description, url, bitrate, type, website, genre FROM InternetRadioStations WHERE internetRadioStationId = ?", obj.getId());
+        List<List<Object>> result = db.query("SELECT internetRadioStationId, name, description, url, bitrate, type, website, genre, pls FROM InternetRadioStations WHERE internetRadioStationId = ?", obj.getId());
         if (result.size() > 0) {
             List<Object> row = result.get(0);
             fill(row, obj);
@@ -27,6 +27,7 @@ public class InternetRadioStationDB extends ObjectDB<InternetRadioStation> {
         String type = (String) row.get(5);
         String website = (String) row.get(6);
         String genre = (String) row.get(7);
+        String pls = (String) row.get(8);
 
         obj.setId(id);
         obj.setName(name);
@@ -36,6 +37,7 @@ public class InternetRadioStationDB extends ObjectDB<InternetRadioStation> {
         obj.setType(type);
         obj.setWebsite(website);
         obj.setGenre(genre);
+        obj.setPls(pls);
     }
 
     public void save(InternetRadioStation obj) {
@@ -58,14 +60,14 @@ public class InternetRadioStationDB extends ObjectDB<InternetRadioStation> {
     }
 
     Object[] createInternetRadioStationInsertStatement(InternetRadioStation obj) {
-        String sql = "INSERT INTO InternetRadioStations (name, description, url, bitrate, type, website, genre) VALUES (LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 100), LEFT(?, 100), LEFT(?, 10000), LEFT(?, 10000))";
-        Object[] values = new Object[] { obj.getName(), obj.getDescription(), obj.getUrl(), obj.getBitrate(), obj.getType(), obj.getWebsite(), obj.getGenre() };
+        String sql = "INSERT INTO InternetRadioStations (name, description, url, bitrate, type, website, genre, pls) VALUES (LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 100), LEFT(?, 100), LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 100000))";
+        Object[] values = new Object[] { obj.getName(), obj.getDescription(), obj.getUrl(), obj.getBitrate(), obj.getType(), obj.getWebsite(), obj.getGenre(), obj.getPls() };
         return new Object[] { sql, values };
     }
 
     private Object[] createInternetRadioStationUpdateStatement(InternetRadioStation obj) {
-        String sql = "UPDATE InternetRadioStations SET name = LEFT(?, 500), description = LEFT(?, 10000) WHERE internetRadioStationId = ?";
-        Object[] values = new Object[] { obj.getName(), obj.getDescription(), obj.getId() };
+        String sql = "UPDATE InternetRadioStations SET name = LEFT(?, 500), description = LEFT(?, 10000), url = LEFT(?, 10000), bitrate = LEFT(?, 100), type = LEFT(?, 100), website = LEFT(?, 10000), genre = LEFT(?, 10000), pls = LEFT(?, 100000) WHERE internetRadioStationId = ?";
+        Object[] values = new Object[] { obj.getName(), obj.getDescription(), obj.getUrl(), obj.getBitrate(), obj.getType(), obj.getWebsite(), obj.getGenre(), obj.getPls(), obj.getId() };
         return new Object[] { sql, values };
     }
 }

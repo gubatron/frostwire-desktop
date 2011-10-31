@@ -69,7 +69,7 @@ public class LibraryDB extends ObjectDB<Library> {
     }
     
     public List<InternetRadioStation> getInternetRadioStations(Library library) {
-        List<List<Object>> result = db.query("SELECT internetRadioStationId, name, description, url, bitrate, type, website, genre FROM InternetRadioStations");
+        List<List<Object>> result = db.query("SELECT internetRadioStationId, name, description, url, bitrate, type, website, genre, pls FROM InternetRadioStations");
 
         List<InternetRadioStation> internetRadioStations = new ArrayList<InternetRadioStation>(result.size());
 
