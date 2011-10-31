@@ -27,6 +27,7 @@ import javax.swing.table.TableColumnModel;
 
 import org.limewire.util.OSUtils;
 
+import com.frostwire.alexandria.InternetRadioStation;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
 import com.frostwire.gui.player.AudioPlayer;
@@ -281,19 +282,19 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
      * Perform lookups to remove any store files from the shared folder
      * view and to only display store files in the store view
      */
-    void updateTableItems(Playlist playlist) {
-//        if (playlist == null) {
-//            return;
-//        }
-//
+    void updateTableItems(List<InternetRadioStation> items) {
+        if (items == null) {
+            return;
+        }
+
 //        currentPlaylist = playlist;
 //        List<PlaylistItem> items = currentPlaylist.getItems();
-//
-//        clearTable();
-//        for (int i = 0; i < items.size(); i++) {
-//            addUnsorted(items.get(i));
-//        }
-//        forceResort();
+
+        clearTable();
+        for (int i = 0; i < items.size(); i++) {
+            addUnsorted(items.get(i));
+        }
+        forceResort();
     }
 
     /**

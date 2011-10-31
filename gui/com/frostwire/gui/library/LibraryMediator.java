@@ -15,6 +15,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import com.frostwire.alexandria.InternetRadioStation;
 import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
@@ -208,10 +209,10 @@ public class LibraryMediator {
         LibraryPlaylistsTableMediator.instance().updateTableItems(playlist);
     }
     
-    public void showInternetRadioStations() {
+    public void showInternetRadioStations(List<InternetRadioStation> internetRadioStations) {
         clearLibraryTable();
         showView(INTERNET_RADIO_TREE_KEY);
-        LibraryInternetRadioTableMediator.instance().refresh();
+        LibraryInternetRadioTableMediator.instance().updateTableItems(internetRadioStations);
     }
 
     public void clearLibraryTable() {

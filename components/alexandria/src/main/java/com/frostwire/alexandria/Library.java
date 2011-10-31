@@ -52,6 +52,10 @@ public class Library extends Entity<LibraryDB> {
     public Playlist getPlaylist(String name) {
         return db.getPlaylist(this, name);
     }
+    
+    public List<InternetRadioStation> getInternetRadioStations() {
+        return db.getInternetRadioStations(this);
+    }
 
     public Playlist newPlaylist(String name, String description) {
         return new Playlist(this, LibraryDatabase.OBJECT_NOT_SAVED_ID, name, description);

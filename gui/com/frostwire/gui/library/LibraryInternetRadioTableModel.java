@@ -2,6 +2,7 @@ package com.frostwire.gui.library;
 
 import java.io.File;
 
+import com.frostwire.alexandria.InternetRadioStation;
 import com.frostwire.alexandria.PlaylistItem;
 import com.limegroup.gnutella.gui.tables.ColoredCellImpl;
 import com.limegroup.gnutella.gui.tables.HashBasedDataLineModel;

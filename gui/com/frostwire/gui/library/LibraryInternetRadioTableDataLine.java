@@ -7,6 +7,7 @@ import java.util.List;
 import org.limewire.util.FilenameUtils;
 import org.limewire.util.StringUtils;
 
+import com.frostwire.alexandria.InternetRadioStation;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.gui.I18n;

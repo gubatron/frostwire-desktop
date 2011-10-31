@@ -57,7 +57,7 @@ public class InternetRadioStationDB extends ObjectDB<InternetRadioStation> {
         db.update("DELETE FROM InternetRadioStations WHERE internetRadioStationId = ?", obj.getId());
     }
 
-    private Object[] createInternetRadioStationInsertStatement(InternetRadioStation obj) {
+    Object[] createInternetRadioStationInsertStatement(InternetRadioStation obj) {
         String sql = "INSERT INTO InternetRadioStations (name, description, url, bitrate, type, website, genre) VALUES (LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 100), LEFT(?, 100), LEFT(?, 10000), LEFT(?, 10000))";
         Object[] values = new Object[] { obj.getName(), obj.getDescription(), obj.getUrl(), obj.getBitrate(), obj.getType(), obj.getWebsite(), obj.getGenre() };
         return new Object[] { sql, values };

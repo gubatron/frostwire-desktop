@@ -31,6 +31,7 @@ import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
+import com.frostwire.alexandria.InternetRadioStation;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.limegroup.gnutella.MediaType;
@@ -187,7 +188,8 @@ public class LibraryFiles extends AbstractLibraryListPanel {
             String status = LibraryUtils.getPlaylistDurationInDDHHMMSS(playlist) + ", " + playlist.getItems().size() + " " + I18n.tr("tracks");
             LibraryMediator.instance().getLibrarySearch().setStatus(status);
         } else if (directoryHolder instanceof InternetRadioDirectoryHolder) {
-            LibraryMediator.instance().showInternetRadioStations();
+            List<InternetRadioStation> internetRadioStations = LibraryMediator.getLibrary().getInternetRadioStations();
+            LibraryMediator.instance().showInternetRadioStations(internetRadioStations);
         } else {
             LibraryMediator.instance().updateTableFiles(node.getDirectoryHolder());
 

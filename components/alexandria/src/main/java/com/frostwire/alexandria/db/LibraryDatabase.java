@@ -130,6 +130,8 @@ public class LibraryDatabase {
 
     protected Connection onUpdateDatabase(Connection connection) {
         setupInternetRadioStationsTable(connection);
+        
+        update(connection, "UPDATE Library SET version = ?", LIBRARY_DATABASE_VERSION);
 
         return connection;
     }
@@ -174,7 +176,7 @@ public class LibraryDatabase {
         setupInternetRadioStationsTable(connection);
 
         // INITIAL DATA
-        update(connection, "INSERT INTO Library (name , version) VALUES ('" + name + "', " + LIBRARY_DATABASE_VERSION + ")");
+        update(connection, "INSERT INTO Library (name , version) VALUES (?, ?)", name, + LIBRARY_DATABASE_VERSION);
 
         return connection;
     }
@@ -303,8 +305,14 @@ public class LibraryDatabase {
     }
 
     private void setupInternetRadioStationsTable(Connection connection) {
-        update(connection, "CRAETE TABLE InternetRadioStations (internetRadioStationId INTEGER IDENTITY, name VARCHAR(10000), description VARCHAR(10000), url VARCHAR(10000), bitrate VARCHAR(100), type VARCHAR(100), website VARCHAR(10000), genre VARCHAR(10000))");
+        update(connection, "CREATE TABLE InternetRadioStations (internetRadioStationId INTEGER IDENTITY, name VARCHAR(10000), description VARCHAR(10000), url VARCHAR(10000), bitrate VARCHAR(100), type VARCHAR(100), website VARCHAR(10000), genre VARCHAR(10000))");
         update(connection, "CREATE INDEX idx_InternetRadioStations_name ON InternetRadioStations (name)");
         update(connection, "CALL FT_CREATE_INDEX('PUBLIC', 'INTERNETRADIOSTATIONS', 'NAME, DESCRIPTION, GENRE')");
+
+        InternetRadioStationsData data = new InternetRadioStationsData();
+
+        for (List<Object> row : data.getData()) {
+            update(connection, "INSERT INTO InternetRadioStations (name, description, url, bitrate, type, website, genre) VALUES (LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 100), LEFT(?, 100), LEFT(?, 10000), LEFT(?, 10000))", row.toArray());
+        }
     }
 }
