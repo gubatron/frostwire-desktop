@@ -8,6 +8,7 @@ import javax.swing.Action;
 import javax.swing.JOptionPane;
 
 import com.frostwire.alexandria.Playlist;
+import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.LibraryUtils;
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -21,6 +22,7 @@ final class BTDownloadActions {
 
     static final ShowDetailsAction SHOW_DETAILS_ACTION = new ShowDetailsAction();
     static final ExploreAction EXPLORE_ACTION = new ExploreAction();
+    static final ShowInLibraryAction SHOW_IN_LIBRARY_ACTION = new ShowInLibraryAction();
     static final ResumeAction RESUME_ACTION = new ResumeAction();
     static final PauseAction PAUSE_ACTION = new PauseAction();
     static final RemoveAction REMOVE_ACTION = new RemoveAction(false, false);
@@ -116,6 +118,33 @@ final class BTDownloadActions {
                 }
 
                 GUIMediator.launchExplorer(toExplore);
+            }
+        }
+    }
+    
+    private static class ShowInLibraryAction extends RefreshingAction {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -4648558721588938475L;
+
+        public ShowInLibraryAction() {
+            putValue(Action.NAME, I18n.tr("Show In Library"));
+            putValue(LimeAction.SHORT_NAME, I18n.tr("Show in Library"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Shows the contents of this transfer in the Library Tab"));
+            putValue(LimeAction.ICON_NAME, "LIBRARY_TAB");
+        }
+
+        public void performAction(ActionEvent e) {
+            BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
+            if (downloaders.length > 0) {
+                final File toExplore = downloaders[0].getSaveLocation();
+
+                if (toExplore == null) {
+                    return;
+                }
+                
+		        LibraryMediator.instance().getLibrarySearch().searchFor(toExplore.getName().replace("_", " ").replace("-", " ").replace(".", " "));
             }
         }
     }

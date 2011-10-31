@@ -70,6 +70,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     private Action copyMagnetAction;
     private Action copyHashAction;
     private Action shareTorrentAction;
+    private Action showInLibraryAction;
 
     /** The actual download buttons instance.
      */
@@ -107,6 +108,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         resumeAction = BTDownloadActions.RESUME_ACTION;
         pauseAction = BTDownloadActions.PAUSE_ACTION;
         exploreAction = BTDownloadActions.EXPLORE_ACTION;
+        showInLibraryAction = BTDownloadActions.SHOW_IN_LIBRARY_ACTION;
         copyMagnetAction = BTDownloadActions.COPY_MAGNET_ACTION;
         copyHashAction = BTDownloadActions.COPY_HASH_ACTION;
         shareTorrentAction = BTDownloadActions.SHARE_TORRENT_ACTION;
@@ -120,7 +122,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     public Action[] getActions() {
         Action[] actions;
         if (OSUtils.isWindows() || OSUtils.isMacOSX())
-            actions = new Action[] { resumeAction, pauseAction, exploreAction, removeAction };
+            actions = new Action[] { resumeAction, pauseAction, showInLibraryAction, exploreAction, removeAction };
         else
             actions = new Action[] { resumeAction, pauseAction, removeAction };
 
@@ -250,6 +252,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             resumeAction.setEnabled(resumable);
             pauseAction.setEnabled(pausable);
             exploreAction.setEnabled(completed);
+            showInLibraryAction.setEnabled(completed);
         }
     }
 
@@ -442,8 +445,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
      * Handles a double-click event in the table.
      */
     public void handleActionKey() {
-        if (exploreAction.isEnabled())
-            exploreAction.actionPerformed(null);
+        if (showInLibraryAction.isEnabled())
+        	showInLibraryAction.actionPerformed(null);
     }
 
     protected JPopupMenu createPopupMenu() {
@@ -453,7 +456,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         menu.add(new SkinMenuItem(resumeAction));
         menu.add(new SkinMenuItem(pauseAction));
         if (OSUtils.isWindows() || OSUtils.isMacOSX()) {
-            menu.add(new SkinMenuItem(exploreAction));
+        	menu.add(new SkinMenuItem(showInLibraryAction));
+        	menu.add(new SkinMenuItem(exploreAction));
         }
         
         menu.addSeparator();
@@ -506,7 +510,12 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         removeAction.putValue(Action.NAME, I18n.tr("Cancel Download"));
         removeAction.putValue(LimeAction.SHORT_NAME, I18n.tr("Cancel"));
         removeAction.putValue(Action.SHORT_DESCRIPTION, I18n.tr("Cancel Selected Downloads"));
-        exploreAction.setEnabled(false);
+        
+        
+        BTDownload dl = dataLine.getInitializeObject();
+        
+        exploreAction.setEnabled(dl.isCompleted());
+        showInLibraryAction.setEnabled(dl.isCompleted());
 
         removeAction.setEnabled(true);
         resumeAction.setEnabled(resumable);
@@ -529,6 +538,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         resumeAction.setEnabled(false);
         pauseAction.setEnabled(false);
         exploreAction.setEnabled(false);
+        showInLibraryAction.setEnabled(false);
         copyMagnetAction.setEnabled(false);
         copyHashAction.setEnabled(false);
         shareTorrentAction.setEnabled(false);

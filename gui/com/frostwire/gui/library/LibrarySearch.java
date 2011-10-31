@@ -51,6 +51,33 @@ public class LibrarySearch extends JPanel {
     public LibrarySearch() {
         setupUI();
     }
+    
+    public void searchFor(final String query) {
+		GUIMediator.safeInvokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+		        GUIMediator.instance().setWindow(GUIMediator.Tabs.LIBRARY);
+		        LibraryMediator.instance().getLibraryFiles().selectFinishedDownloads();
+		        
+				if (searchField != null) {
+					SearchLibraryAction searchAction = new SearchLibraryAction();
+
+					searchField.setText(".");
+					searchAction.actionPerformed(null);
+					searchField.setText("");
+
+					if (query.length() < 50) {
+						searchField.setText(query);
+					} else {
+						searchField.setText(query.substring(0,49));
+					}
+					
+					searchAction.actionPerformed(null);
+				}
+			}
+		});
+    }
 
     public void addResults(int n) {
         if (n < 0) {
