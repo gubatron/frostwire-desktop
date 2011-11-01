@@ -54,9 +54,10 @@ import com.limegroup.gnutella.util.QueryUtils;
  */
 final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediator<LibraryInternetRadioTableModel, LibraryInternetRadioTableDataLine, InternetRadioStation> {
     
-    private static Action importRadioStationAction;
-    public static Action LAUNCH_ACTION;
-    public static Action DELETE_ACTION;
+    private Action importRadioStationAction;
+    private Action copyStreamUrlAction;
+    private Action LAUNCH_ACTION;
+    private Action DELETE_ACTION;
     
     /**
      * instance, for singelton access
@@ -77,6 +78,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
         super.buildListeners();
         
         importRadioStationAction = new ImportRadioStationAction();
+        copyStreamUrlAction = new CopyStreamUrlAction();
         LAUNCH_ACTION = new LaunchAction();
         DELETE_ACTION = new RemoveFromStationsAction();
     }
@@ -100,6 +102,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
         JPopupMenu menu = new SkinPopupMenu();
 
         menu.add(new SkinMenuItem(importRadioStationAction));
+        menu.add(new SkinMenuItem(copyStreamUrlAction));
         menu.add(new SkinMenuItem(DELETE_ACTION));
 
         int[] rows = TABLE.getSelectedRows();
@@ -388,7 +391,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
 
         //File selectedFile = getFile(sel[0]);
 
-        //  always turn on Launch, Delete, Magnet Lookup, Bitzi Lookup
+        copyStreamUrlAction.setEnabled(true);
         LAUNCH_ACTION.setEnabled(true);
         DELETE_ACTION.setEnabled(true);
         SEND_TO_FRIEND_ACTION.setEnabled(false);
@@ -403,6 +406,8 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
      * disabling all necessary buttons and menu items.
      */
     public void handleNoSelection() {
+        
+        copyStreamUrlAction.setEnabled(false);
         LAUNCH_ACTION.setEnabled(false);
         DELETE_ACTION.setEnabled(false);
         
@@ -526,5 +531,26 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
 //                AudioPlayer.instance().setPlaylistFilesView(getFileView());
 //            }
 //        }
+    }
+    
+    private final class CopyStreamUrlAction extends AbstractAction {
+
+        private static final long serialVersionUID = 5603390659365617618L;
+
+        public CopyStreamUrlAction() {
+            putValue(Action.NAME, I18n.tr("Copy Stream URL"));
+            putValue(LimeAction.SHORT_NAME, I18n.tr("Copy Stream URL"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Copy Stream URL"));
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            LibraryInternetRadioTableDataLine[] lines = getSelectedLibraryLines();
+            String str = "";
+            for (int i = 0; i < lines.length; i++) {
+                str += lines[i].getInitializeObject().getUrl();
+                str += "\n";
+            }
+            GUIMediator.setClipboardContent(str);
+        }
     }
 }
