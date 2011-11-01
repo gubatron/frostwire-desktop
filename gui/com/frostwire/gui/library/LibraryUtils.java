@@ -597,14 +597,21 @@ public class LibraryUtils {
     public static void importRadioStation(final String url) {
         try {
             LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Importing from") + " " + url);
-            InternetRadioStation item = processInternetRadioStationUrl(url);
+            final InternetRadioStation item = processInternetRadioStationUrl(url);
 
             item.save();
-            LibraryInternetRadioTableMediator.instance().addUnsorted(item);
+            
+            GUIMediator.safeInvokeLater(new Runnable() {
+            	@Override
+            	public void run() {
+            		LibraryInternetRadioTableMediator.instance().addUnsorted(item);
+            	}
+            });
+            
         } catch (Exception e) {
             GUIMediator.safeInvokeLater(new Runnable() {
                 public void run() {
-                    JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Error importing Radio Station from") + url, I18n.tr("Error"), JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(GUIMediator.getAppFrame(), I18n.tr("Error importing Radio Station from") + url, I18n.tr("Error"), JOptionPane.ERROR_MESSAGE);
                 }
             });
         } finally {
