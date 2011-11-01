@@ -13,26 +13,42 @@ import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 
 public final class LibraryInternetRadioTableDataLine extends AbstractLibraryTableDataLine<InternetRadioStation> {
 
+	/**
+	 * 	INTERNET_RADIO_TABLE_URL_ORDER=1
+	INTERNET_RADIO_TABLE_BITRATE_ORDER=2
+	INTERNET_RADIO_TABLE_GENRE_ORDER=1
+	INTERNET_RADIO_TABLE_WEBSITE_ORDER=3
+
+	INTERNET_RADIO_TABLE_TYPE_WIDTH=39
+
+	INTERNET_RADIO_TABLE_DESCRIPTION_VISIBLE=false
+	INTERNET_RADIO_TABLE_DESCRIPTION_WIDTH=274
+	INTERNET_RADIO_TABLE_URL_VISIBLE=false
+	INTERNET_RADIO_TABLE_URL_WIDTH=134
+
+	 */
+	
     static final int NAME_IDX = 0;
-    private static final LimeTableColumn NAME_COLUMN = new LimeTableColumn(NAME_IDX, "INTERNET_RADIO_TABLE_NAME", I18n.tr("Name"), 80, true, PlayableCell.class);
+    private static final LimeTableColumn NAME_COLUMN = new LimeTableColumn(NAME_IDX, "INTERNET_RADIO_TABLE_NAME", I18n.tr("Name"), 484, true, PlayableCell.class);
+    
+    static final int GENRE_IDX = 1;
+    private static final LimeTableColumn GENRE_COLUMN = new LimeTableColumn(GENRE_IDX, "INTERNET_RADIO_TABLE_GENRE", I18n.tr("Genre"), 268, true, PlayableCell.class);
 
-    static final int DESCRIPTION_IDX = 1;
-    private static final LimeTableColumn DESCRIPTION_COLUMN = new LimeTableColumn(DESCRIPTION_IDX, "INTERNET_RADIO_TABLE_DESCRIPTION", I18n.tr("Description"), 80, true, PlayableCell.class);
-
-    static final int URL_IDX = 2;
-    private static final LimeTableColumn URL_COLUMN = new LimeTableColumn(URL_IDX, "INTERNET_RADIO_TABLE_URL", I18n.tr("Url"), 80, true, PlayableCell.class);
-
-    static final int BITRATE_IDX = 3;
+    static final int BITRATE_IDX = 2;
     private static final LimeTableColumn BITRATE_COLUMN = new LimeTableColumn(BITRATE_IDX, "INTERNET_RADIO_TABLE_BITRATE", I18n.tr("Bitrate"), 80, true, PlayableCell.class);
 
+    static final int WEBSITE_IDX = 3;
+    private static final LimeTableColumn WEBSITE_COLUMN = new LimeTableColumn(WEBSITE_IDX, "INTERNET_RADIO_TABLE_WEBSITE", I18n.tr("Website"), 170, true, PlayableCell.class);
+
     static final int TYPE_IDX = 4;
-    private static final LimeTableColumn TYPE_COLUMN = new LimeTableColumn(TYPE_IDX, "INTERNET_RADIO_TABLE_TYPE", I18n.tr("Type"), 80, true, PlayableCell.class);
+    private static final LimeTableColumn TYPE_COLUMN = new LimeTableColumn(TYPE_IDX, "INTERNET_RADIO_TABLE_TYPE", I18n.tr("Type"), 40, true, PlayableCell.class);
 
-    static final int WEBSITE_IDX = 5;
-    private static final LimeTableColumn WEBSITE_COLUMN = new LimeTableColumn(WEBSITE_IDX, "INTERNET_RADIO_TABLE_WEBSITE", I18n.tr("Website"), 80, true, PlayableCell.class);
+    static final int URL_IDX = 5;
+    private static final LimeTableColumn URL_COLUMN = new LimeTableColumn(URL_IDX, "INTERNET_RADIO_TABLE_URL", I18n.tr("Url"), 80, false, PlayableCell.class);
 
-    static final int GENRE_IDX = 6;
-    private static final LimeTableColumn GENRE_COLUMN = new LimeTableColumn(GENRE_IDX, "INTERNET_RADIO_TABLE_GENRE", I18n.tr("Genre"), 80, true, PlayableCell.class);
+    static final int DESCRIPTION_IDX = 6;
+    private static final LimeTableColumn DESCRIPTION_COLUMN = new LimeTableColumn(DESCRIPTION_IDX, "INTERNET_RADIO_TABLE_DESCRIPTION", I18n.tr("Description"), 80, false, PlayableCell.class);
+
 
     /**
      * Total number of columns
