@@ -12,7 +12,7 @@ class InternetRadioDirectoryHolder implements DirectoryHolder {
     private final Icon icon;
 
     public InternetRadioDirectoryHolder() {
-        icon = GUIMediator.getThemeImage("star_on");
+        icon = GUIMediator.getThemeImage("radio_small");
     }
 
     public boolean accept(File pathname) {
