@@ -13,21 +13,6 @@ import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 
 public final class LibraryInternetRadioTableDataLine extends AbstractLibraryTableDataLine<InternetRadioStation> {
 
-	/**
-	 * 	INTERNET_RADIO_TABLE_URL_ORDER=1
-	INTERNET_RADIO_TABLE_BITRATE_ORDER=2
-	INTERNET_RADIO_TABLE_GENRE_ORDER=1
-	INTERNET_RADIO_TABLE_WEBSITE_ORDER=3
-
-	INTERNET_RADIO_TABLE_TYPE_WIDTH=39
-
-	INTERNET_RADIO_TABLE_DESCRIPTION_VISIBLE=false
-	INTERNET_RADIO_TABLE_DESCRIPTION_WIDTH=274
-	INTERNET_RADIO_TABLE_URL_VISIBLE=false
-	INTERNET_RADIO_TABLE_URL_WIDTH=134
-
-	 */
-	
     static final int NAME_IDX = 0;
     private static final LimeTableColumn NAME_COLUMN = new LimeTableColumn(NAME_IDX, "INTERNET_RADIO_TABLE_NAME", I18n.tr("Name"), 484, true, PlayableCell.class);
     
@@ -76,19 +61,19 @@ public final class LibraryInternetRadioTableDataLine extends AbstractLibraryTabl
         boolean playing = isPlaying();
         switch (idx) {
         case NAME_IDX:
-            return new PlayableCell(initializer.getName(), playing);
+            return new PlayableCell(initializer.getName(), playing, idx);
         case DESCRIPTION_IDX:
-            return new PlayableCell(initializer.getDescription(), playing);
+            return new PlayableCell(initializer.getDescription(), playing, idx);
         case URL_IDX:
-            return new PlayableCell(initializer.getUrl(), playing);
+            return new PlayableCell(initializer.getUrl(), playing, idx);
         case BITRATE_IDX:
-            return new PlayableCell(initializer.getBitrate(), playing);
+            return new PlayableCell(initializer.getBitrate(), playing, idx);
         case TYPE_IDX:
-            return new PlayableCell(initializer.getType(), playing);
+            return new PlayableCell(initializer.getType(), playing, idx);
         case WEBSITE_IDX:
-            return new PlayableCell(initializer.getWebsite(), playing);
+            return new PlayableCell(initializer.getWebsite(), playing, idx);
         case GENRE_IDX:
-            return new PlayableCell(initializer.getGenre(), playing);
+            return new PlayableCell(initializer.getGenre(), playing, idx);
         }
         return null;
     }
