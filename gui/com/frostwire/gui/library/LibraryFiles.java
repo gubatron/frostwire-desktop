@@ -31,6 +31,7 @@ import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
+import com.frostwire.alexandria.InternetRadioStation;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.limegroup.gnutella.MediaType;
@@ -118,6 +119,7 @@ public class LibraryFiles extends AbstractLibraryListPanel {
         addPerMediaTypeCells();
         _model.addElement(_torrentsCell);
         _model.addElement(new LibraryFilesListCell(new StarredDirectoryHolder()));
+        _model.addElement(new LibraryFilesListCell(new InternetRadioDirectoryHolder()));
     }
 
     private void setupList() {
@@ -185,6 +187,9 @@ public class LibraryFiles extends AbstractLibraryListPanel {
             LibraryMediator.instance().updateTableItems(playlist);
             String status = LibraryUtils.getPlaylistDurationInDDHHMMSS(playlist) + ", " + playlist.getItems().size() + " " + I18n.tr("tracks");
             LibraryMediator.instance().getLibrarySearch().setStatus(status);
+        } else if (directoryHolder instanceof InternetRadioDirectoryHolder) {
+            List<InternetRadioStation> internetRadioStations = LibraryMediator.getLibrary().getInternetRadioStations();
+            LibraryMediator.instance().showInternetRadioStations(internetRadioStations);
         } else {
             LibraryMediator.instance().updateTableFiles(node.getDirectoryHolder());
 
@@ -453,7 +458,22 @@ public class LibraryFiles extends AbstractLibraryListPanel {
             } catch (Exception e) {
             }
         }
+    }
+    
+    public void selectRadio() {
+        int size = _model.getSize();
 
+        for (int i = 0; i < size; i++) {
+            try {
+                LibraryFilesListCell cell = (LibraryFilesListCell) _model.get(i);
+
+                if (cell.getDirectoryHolder() instanceof InternetRadioDirectoryHolder) {
+                    _list.setSelectedValue(cell, true);
+                    return;
+                }
+            } catch (Exception e) {
+            }
+        }
     }
 
     public List<MediaTypeSavedFilesDirectoryHolder> getMediaTypeSavedFilesDirectoryHolders() {

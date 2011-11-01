@@ -5,6 +5,7 @@ import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,6 +29,7 @@ import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.mp3.Mp3File;
+import com.frostwire.mplayer.IcyInfoListener;
 import com.frostwire.mplayer.MPlayer;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.frostwire.mplayer.PositionListener;
@@ -126,6 +128,11 @@ public class AudioPlayer implements RefreshListener {
 		        }
 			}
 		});
+		mplayer.addIcyInfoListener(new IcyInfoListener() {
+            public void newIcyInfoData(String data) {
+                notifyIcyInfo(data);
+            }
+        });
 
 		repeatMode = PlayerSettings.LOOP_PLAYLIST.getValue() ? RepeatMode.All : RepeatMode.None;
 		shuffle = PlayerSettings.SHUFFLE_PLAYLIST.getValue();
@@ -394,6 +401,14 @@ public class AudioPlayer implements RefreshListener {
 			}
 		});
 	}
+	
+	protected void notifyIcyInfo(final String data) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                fireIcyInfo(data);
+            }
+        });
+    }
 
 	/**
 	 * This is fired every time a new song is loaded and ready to play. The
@@ -434,6 +449,12 @@ public class AudioPlayer implements RefreshListener {
 			listener.stateChange(this, state);
 		}
 	}
+	
+	protected void fireIcyInfo(String data) {
+        for (AudioPlayerListener listener : listenerList) {
+            listener.icyInfo(this, data);
+        }
+    }
 
 	/**
 	 * returns the current state of the player and position of the song being
@@ -490,6 +511,22 @@ public class AudioPlayer implements RefreshListener {
 
 		return false;
 	}
+	
+    public boolean isThisBeingPlayed(String file) {
+
+        AudioSource currentSong = getCurrentSong();
+        if (currentSong == null) {
+            return false;
+        }
+
+        URL currentSongUrl = currentSong.getURL();
+
+        if (currentSongUrl != null && file.toLowerCase().equals(currentSongUrl.toString().toLowerCase())) {
+            return true;
+        }
+
+        return false;
+    }
 	
 	public boolean isThisBeingPlayed(PlaylistItem playlistItem) {
 

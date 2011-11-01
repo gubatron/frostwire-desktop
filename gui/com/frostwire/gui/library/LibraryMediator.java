@@ -15,6 +15,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import com.frostwire.alexandria.InternetRadioStation;
 import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
@@ -32,8 +33,9 @@ import com.limegroup.gnutella.settings.UISettings;
 
 public class LibraryMediator {
 
-    public static final String FILES_TABLE_KEY = "LIBRARY_FILES_TABLE";
-    public static final String PLAYLISTS_TABLE_KEY = "LIBRARY_PLAYLISTS_TABLE";
+    private static final String FILES_TABLE_KEY = "LIBRARY_FILES_TABLE";
+    private static final String PLAYLISTS_TABLE_KEY = "LIBRARY_PLAYLISTS_TABLE";
+    private static final String INTERNET_RADIO_TREE_KEY = "LIBRARY_INTERNET_RADIO_TREE";
 
     private static JPanel MAIN_PANEL;
 
@@ -206,6 +208,12 @@ public class LibraryMediator {
         showView(PLAYLISTS_TABLE_KEY);
         LibraryPlaylistsTableMediator.instance().updateTableItems(playlist);
     }
+    
+    public void showInternetRadioStations(List<InternetRadioStation> internetRadioStations) {
+        clearLibraryTable();
+        showView(INTERNET_RADIO_TREE_KEY);
+        LibraryInternetRadioTableMediator.instance().updateTableItems(internetRadioStations);
+    }
 
     public void clearLibraryTable() {
         LibraryFilesTableMediator.instance().clearTable();
@@ -242,6 +250,7 @@ public class LibraryMediator {
 
         _tablesPanel.add(LibraryFilesTableMediator.instance().getScrolledTablePane(), FILES_TABLE_KEY);
         _tablesPanel.add(LibraryPlaylistsTableMediator.instance().getScrolledTablePane(), PLAYLISTS_TABLE_KEY);
+        _tablesPanel.add(LibraryInternetRadioTableMediator.instance().getScrolledTablePane(), INTERNET_RADIO_TREE_KEY);
 
         panel.add(getLibrarySearch(), BorderLayout.PAGE_START);
         panel.add(_tablesPanel, BorderLayout.CENTER);

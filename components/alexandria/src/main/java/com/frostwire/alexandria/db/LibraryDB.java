@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.frostwire.alexandria.InternetRadioStation;
 import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
@@ -65,6 +66,20 @@ public class LibraryDB extends ObjectDB<Library> {
             playlist.getDB().fill(row, playlist);
         }
         return playlist;
+    }
+    
+    public List<InternetRadioStation> getInternetRadioStations(Library library) {
+        List<List<Object>> result = db.query("SELECT internetRadioStationId, name, description, url, bitrate, type, website, genre, pls FROM InternetRadioStations");
+
+        List<InternetRadioStation> internetRadioStations = new ArrayList<InternetRadioStation>(result.size());
+
+        for (List<Object> row : result) {
+            InternetRadioStation internetRadioStation = new InternetRadioStation(library);
+            internetRadioStation.getDB().fill(row, internetRadioStation);
+            internetRadioStations.add(internetRadioStation);
+        }
+
+        return internetRadioStations;
     }
 
     public Playlist getStarredPlaylist(Library library) {
