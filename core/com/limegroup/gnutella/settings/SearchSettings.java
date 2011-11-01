@@ -24,7 +24,7 @@ public final class SearchSettings extends LimeProps {
         '_', '#', '!', '|', '?', '<', '>', '^', '(', ')', 
         ':', ';', '/', '\\', '[', ']', 
         '\t', '\n', '\r', '\f', // these cannot be last or first 'cause they're trimmed
-        '{', '}',
+        '{', '}', '@',
 
         /* CHARACTERS THAT TURN AFTER NORMALIZATION TO BAD CHARS */
 

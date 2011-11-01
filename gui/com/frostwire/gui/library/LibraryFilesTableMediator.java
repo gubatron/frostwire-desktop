@@ -201,7 +201,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         if (dl != null) {
             File f = dl.getInitializeObject();
             String keywords = QueryUtils.createQueryString(f.getName());
-            if (keywords.length() > 2)
+            if (keywords.length() > 0)
                 menu.add(new SkinMenuItem(new SearchAction(keywords)));
         }
 

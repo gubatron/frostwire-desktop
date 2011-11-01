@@ -198,7 +198,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         if (dl != null) {
             File f = dl.getFile();
             String keywords = QueryUtils.createQueryString(f.getName());
-            if (keywords.length() > 2)
+            if (keywords.length() > 0)
                 menu.add(new SkinMenuItem(new SearchAction(keywords)));
         }
 

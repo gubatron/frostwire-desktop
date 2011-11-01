@@ -126,9 +126,8 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
         JMenu menu = new SkinMenu(I18n.tr("Search"));
 
         if (dl != null) {
-            File f = dl.getFile();
-            String keywords = QueryUtils.createQueryString(f.getName());
-            if (keywords.length() > 2)
+            String keywords = QueryUtils.createQueryString(dl.getInitializeObject().getName());
+            if (keywords.length() > 0)
                 menu.add(new SkinMenuItem(new SearchAction(keywords)));
         }
 
