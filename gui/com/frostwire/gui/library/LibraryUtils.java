@@ -1,7 +1,12 @@
 package com.frostwire.gui.library;
 
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -14,6 +19,7 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.FilenameUtils;
 import org.limewire.util.StringUtils;
 
+import com.frostwire.alexandria.InternetRadioStation;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.alexandria.db.LibraryDatabase;
@@ -577,4 +583,120 @@ public class LibraryUtils {
 		boolean ctrlCmdDown = e.isControlDown() || e.isAltGraphDown() || e.isMetaDown();
 		return keyCode  == KeyEvent.VK_F5 || (ctrlCmdDown && keyCode == KeyEvent.VK_R);
 	}
+
+    public static void asyncImportRadioStation(final String url) {
+        Thread t = new  Thread(new Runnable() {
+            public void run() {
+                importRadioStation(url);
+            }
+        }, "ImportRadioStation");
+        t.setDaemon(true);
+        t.start();
+    }
+
+    public static void importRadioStation(final String url) {
+        try {
+            LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Importing from") + " " + url);
+            InternetRadioStation item = processInternetRadioStationUrl(url);
+
+            item.save();
+            LibraryInternetRadioTableMediator.instance().addUnsorted(item);
+        } catch (Exception e) {
+            GUIMediator.safeInvokeLater(new Runnable() {
+                public void run() {
+                    JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Error importing Radio Station from") + url, I18n.tr("Error"), JOptionPane.ERROR_MESSAGE);
+                }
+            });
+        } finally {
+            LibraryMediator.instance().getLibrarySearch().revertStatus();
+        }
+    }
+
+    private static InternetRadioStation processInternetRadioStationUrl(String urlStr) throws Exception {
+        URL url = new URL(urlStr);
+        URLConnection conn = url.openConnection();
+        conn.setConnectTimeout(10000);
+        InputStream is = conn.getInputStream();
+        BufferedReader d = null;
+        if (conn.getContentEncoding() != null) {
+            d = new BufferedReader(new InputStreamReader(is, conn.getContentEncoding()));
+        } else {
+            d = new BufferedReader(new InputStreamReader(is));
+        }
+
+        String pls = "";
+        String[] props = null;
+        String strLine;
+        while ((strLine = d.readLine()) != null) {
+            pls += strLine + "\n";
+            if (strLine.startsWith("File1=")) {
+                String streamUrl = strLine.split("=")[1];
+                props = processStreamUrl(streamUrl);
+            } else if (strLine.startsWith("icy-name:")) {
+                pls = "";
+                props = processStreamUrl(urlStr);
+                break;
+            }
+        }
+
+        is.close();
+
+        if (props != null) {
+            return LibraryMediator.getLibrary().newInternetRadioStation(props[0], props[0], props[1], props[2], props[3], props[4], props[5], pls);
+        } else {
+            return null;
+        }
+    }
+
+    private static String[] processStreamUrl(String streamUrl) throws Exception {
+        URL url = new URL(streamUrl);
+        System.out.print(" - " + streamUrl);
+        URLConnection conn = url.openConnection();
+        conn.setConnectTimeout(10000);
+        InputStream is = conn.getInputStream();
+        BufferedReader d = null;
+        if (conn.getContentEncoding() != null) {
+            d = new BufferedReader(new InputStreamReader(is, conn.getContentEncoding()));
+        } else {
+            d = new BufferedReader(new InputStreamReader(is));
+        }
+
+        String name = null;
+        String genre = null;
+        String website = null;
+        String type = null;
+        String br = null;
+
+        String strLine;
+        int i = 0;
+        while ((strLine = d.readLine()) != null && i < 10) {
+            if (strLine.startsWith("icy-name:")) {
+                name = clean(strLine.split(":")[1]);
+            } else if (strLine.startsWith("icy-genre:")) {
+                genre = clean(strLine.split(":")[1]);
+            } else if (strLine.startsWith("icy-url:")) {
+                website = strLine.split("icy-url:")[1].trim();
+            } else if (strLine.startsWith("content-type:")) {
+                String contentType = strLine.split(":")[1].trim();
+                if (contentType.equals("audio/aacp")) {
+                    type = "AAC+";
+                } else if (contentType.equals("audio/mpeg")) {
+                    type = "MP3";
+                } else if (contentType.equals("audio/aac")) {
+                    type = "AAC";
+                }
+            } else if (strLine.startsWith("icy-br:")) {
+                br = strLine.split(":")[1].trim() + " kbps";
+            }
+            i++;
+        }
+
+        is.close();
+
+        return new String[] { name, streamUrl, br, type, website, genre };
+    }
+
+    private static String clean(String str) {
+        return str.trim().replace("\"", "\\\"");
+    }
 }

@@ -15,6 +15,7 @@ import javax.swing.Action;
 import javax.swing.DropMode;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -24,6 +25,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import org.limewire.util.OSUtils;
+import org.limewire.util.StringUtils;
 
 import com.frostwire.alexandria.InternetRadioStation;
 import com.frostwire.gui.player.AudioPlayer;
@@ -52,6 +54,7 @@ import com.limegroup.gnutella.util.QueryUtils;
  */
 final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediator<LibraryInternetRadioTableModel, LibraryInternetRadioTableDataLine, InternetRadioStation> {
     
+    private static Action importRadioStationAction;
     public static Action LAUNCH_ACTION;
     public static Action DELETE_ACTION;
     
@@ -73,8 +76,9 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
     protected void buildListeners() {
         super.buildListeners();
         
+        importRadioStationAction = new ImportRadioStationAction();
         LAUNCH_ACTION = new LaunchAction();
-        DELETE_ACTION = new RemoveFromPlaylistAction();
+        DELETE_ACTION = new RemoveFromStationsAction();
     }
 
     /**
@@ -95,6 +99,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
 
         JPopupMenu menu = new SkinPopupMenu();
 
+        menu.add(new SkinMenuItem(importRadioStationAction));
         menu.add(new SkinMenuItem(DELETE_ACTION));
 
         int[] rows = TABLE.getSelectedRows();
@@ -444,17 +449,35 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
             launch();
         }
     }
+    
+    private final class ImportRadioStationAction extends AbstractAction {
 
-    private final class RemoveFromPlaylistAction extends AbstractAction {
+        private static final long serialVersionUID = 7087376528613706765L;
+
+        public ImportRadioStationAction() {
+            super(I18n.tr("Import Radio Station"));
+            putValue(Action.LONG_DESCRIPTION, I18n.tr("Import Radio Station"));
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+            String input = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("URL Radio Station"), I18n.tr("Import Internet Radio Station"), JOptionPane.PLAIN_MESSAGE, null, null, "");
+            if (!StringUtils.isNullOrEmpty(input, true)) {
+                LibraryUtils.asyncImportRadioStation(input);
+            }
+        }
+    }
+
+    private final class RemoveFromStationsAction extends AbstractAction {
 
         /**
          * 
          */
         private static final long serialVersionUID = -8704093935791256631L;
 
-        public RemoveFromPlaylistAction() {
-            putValue(Action.NAME, I18n.tr("Delete from playlist"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Delete Selected Files from this playlist"));
+        public RemoveFromStationsAction() {
+            putValue(Action.NAME, I18n.tr("Delete"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Delete Radio Station"));
             putValue(LimeAction.ICON_NAME, "LIBRARY_DELETE");
         }
 

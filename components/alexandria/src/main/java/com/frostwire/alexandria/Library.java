@@ -60,6 +60,10 @@ public class Library extends Entity<LibraryDB> {
     public Playlist newPlaylist(String name, String description) {
         return new Playlist(this, LibraryDatabase.OBJECT_NOT_SAVED_ID, name, description);
     }
+    
+    public InternetRadioStation newInternetRadioStation(String name, String description, String url, String bitrate, String type, String website, String genre, String pls) {
+        return new InternetRadioStation(this, LibraryDatabase.OBJECT_NOT_SAVED_ID, name, description, url, bitrate, type, website, genre, pls);
+    }
 
     public void dump() {
         db.getDatabase().dump();
