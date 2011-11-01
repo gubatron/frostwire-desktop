@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 
+import com.frostwire.alexandria.InternetRadioStation;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.bittorrent.TorrentUtil;
@@ -213,7 +214,11 @@ public class LibrarySearch extends JPanel {
             }
             
             DirectoryHolder directoryHolder = LibraryMediator.instance().getLibraryFiles().getSelectedDirectoryHolder();
-            if (directoryHolder != null) {
+            
+            if (directoryHolder instanceof InternetRadioDirectoryHolder) {
+                currentSearchRunnable = new SearchInternetRadioStationsRunnable(query);
+                BackgroundExecutorService.schedule(currentSearchRunnable);
+            } else if (directoryHolder != null) {
                 currentSearchRunnable = new SearchFilesRunnable(query);
                 BackgroundExecutorService.schedule(currentSearchRunnable);
             }
@@ -489,31 +494,8 @@ public class LibrarySearch extends JPanel {
                 return;
             }
 
-            //FULL TEXT SEARCH, Returns the File IDs we care about.
-            String fullTextIndexSql = "SELECT * FROM FT_SEARCH(?, 0, 0)";
-
-            List<List<Object>> matchedFileRows = LibraryMediator.getLibrary().getDB().getDatabase().query(fullTextIndexSql, query);
-
-            int fileIDStrOffset = " PUBLIC   PLAYLISTITEMS  WHERE  PLAYLISTITEMID =".length();
-
-            StringBuilder fileIDSet = new StringBuilder("(");
-
-            int numFilesFound = matchedFileRows.size();
-            int i = 0;
-
-            for (List<Object> row : matchedFileRows) {
-                String rowStr = (String) row.get(0);
-                fileIDSet.append(rowStr.substring(fileIDStrOffset));
-
-                if (i++ < (numFilesFound - 1)) {
-                    fileIDSet.append(",");
-                }
-            }
-            fileIDSet.append(")");
-
-            String sql = "SELECT playlistItemId, filePath, fileName, fileSize, fileExtension, trackTitle, trackDurationInSecs, trackArtist, trackAlbum, coverArtPath, trackBitrate, trackComment, trackGenre, trackNumber, trackYear, starred FROM PlaylistItems WHERE playlistItemId IN "
-                    + fileIDSet.toString();
-            List<List<Object>> rows = LibraryMediator.getLibrary().getDB().getDatabase().query(sql);
+            String sql = "SELECT T.playlistItemId, T.filePath, T.fileName, T.fileSize, T.fileExtension, T.trackTitle, T.trackDurationInSecs, T.trackArtist, T.trackAlbum, T.coverArtPath, T.trackBitrate, T.trackComment, T.trackGenre, T.trackNumber, T.trackYear, T.starred FROM FT_SEARCH_DATA(?, 0, 0) FT, PLAYLISTITEMS T WHERE FT.TABLE='PLAYLISTITEMS' AND T.playlistItemId = FT.KEYS[0]";
+            List<List<Object>> rows = LibraryMediator.getLibrary().getDB().getDatabase().query(sql, query);
 
             final List<PlaylistItem> results = new ArrayList<PlaylistItem>();
 
@@ -548,6 +530,79 @@ public class LibrarySearch extends JPanel {
             Runnable r = new Runnable() {
                 public void run() {
                     LibraryMediator.instance().addItemsToLibraryTable(results);
+                }
+            };
+            GUIMediator.safeInvokeLater(r);
+        }
+    }
+    
+    private final class SearchInternetRadioStationsRunnable extends SearchRunnable {
+
+        private final String query;
+
+        public SearchInternetRadioStationsRunnable(String query) {
+            this.query = query;
+            canceled = false;
+        }
+
+        public void run() {
+            if (canceled) {
+                return;
+            }
+
+            GUIMediator.safeInvokeLater(new Runnable() {
+                public void run() {
+                    LibraryInternetRadioTableMediator.instance().clearTable();
+                    setStatus("");
+                    statusLabel.setText("");
+                    resultsCount = 0;
+                }
+            });
+
+            search();
+        }
+
+        private void search() {
+            if (canceled) {
+                return;
+            }
+
+            String sql = "SELECT T.internetRadioStationId, T.name, T.description, T.url, T.bitrate, T.type, T.website, T.genre, T.pls FROM FT_SEARCH_DATA(?, 0, 0) FT, INTERNETRADIOSTATIONS T WHERE FT.TABLE='INTERNETRADIOSTATIONS' AND T.internetRadioStationId = FT.KEYS[0]";
+            List<List<Object>> rows = LibraryMediator.getLibrary().getDB().getDatabase().query(sql, query);
+
+            final List<InternetRadioStation> results = new ArrayList<InternetRadioStation>();
+
+            for (List<Object> row : rows) {
+                if (canceled) {
+                    return;
+                }
+
+                /////
+                //Stop search if the user selected another item in the playlist list
+//                Playlist currentPlaylist = LibraryMediator.instance().getLibraryPlaylists().getSelectedPlaylist();
+//                if (!playlist.equals(currentPlaylist)) {
+//                    return;
+//                }
+                /////
+
+                InternetRadioStation item = new InternetRadioStation(LibraryMediator.getLibrary());
+                item.getDB().fill(row, item);
+                results.add(item);
+
+                if (results.size() > 100) {
+                    Runnable r = new Runnable() {
+                        public void run() {
+                            LibraryMediator.instance().addInternetRadioStationsToLibraryTable(results);
+                            results.clear(); // TODO: Fix this error, check for thread issues
+                        }
+                    };
+                    GUIMediator.safeInvokeLater(r);
+                }
+            }
+
+            Runnable r = new Runnable() {
+                public void run() {
+                    LibraryMediator.instance().addInternetRadioStationsToLibraryTable(results);
                 }
             };
             GUIMediator.safeInvokeLater(r);

@@ -234,6 +234,13 @@ public class LibraryMediator {
         }
         getLibrarySearch().addResults(items.size());
     }
+    
+    public void addInternetRadioStationsToLibraryTable(List<InternetRadioStation> items) {
+        for (InternetRadioStation item : items) {
+            LibraryInternetRadioTableMediator.instance().add(item);
+        }
+        getLibrarySearch().addResults(items.size());
+    }
 
     private JComponent getLibraryLeftPanel() {
         if (libraryLeftPanel == null) {
