@@ -455,13 +455,13 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
         private static final long serialVersionUID = 7087376528613706765L;
 
         public ImportRadioStationAction() {
-            super(I18n.tr("Import Radio Station"));
-            putValue(Action.LONG_DESCRIPTION, I18n.tr("Import Radio Station"));
+            super(I18n.tr("Add Radio Station"));
+            putValue(Action.LONG_DESCRIPTION, I18n.tr("Add Radio Station"));
         }
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            String input = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("URL Radio Station"), I18n.tr("Import Internet Radio Station"), JOptionPane.PLAIN_MESSAGE, null, null, "");
+            String input = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("URL Radio Station"), I18n.tr("Add Radio Station"), JOptionPane.PLAIN_MESSAGE, null, null, "");
             if (!StringUtils.isNullOrEmpty(input, true)) {
                 LibraryUtils.asyncImportRadioStation(input);
             }

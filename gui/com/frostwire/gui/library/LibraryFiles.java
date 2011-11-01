@@ -264,7 +264,7 @@ public class LibraryFiles extends AbstractLibraryListPanel {
 
     private class LibraryFilesSelectionListener implements ListSelectionListener {
         public void valueChanged(ListSelectionEvent e) {
-            if (e.getValueIsAdjusting()) {
+            if (e != null && e.getValueIsAdjusting()) {
                 return;
             }
 
@@ -461,6 +461,11 @@ public class LibraryFiles extends AbstractLibraryListPanel {
     }
     
     public void selectRadio() {
+        Object selectedValue = _list.getSelectedValue();
+        if (selectedValue != null && ((LibraryFilesListCell) selectedValue).getDirectoryHolder() instanceof InternetRadioDirectoryHolder) {
+            // already selected
+            _listSelectionListener.valueChanged(null);
+        }
         int size = _model.getSize();
 
         for (int i = 0; i < size; i++) {
