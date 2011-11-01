@@ -20,6 +20,8 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.MouseInputListener;
 import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import org.limewire.util.OSUtils;
 
@@ -33,6 +35,7 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.actions.SearchAction;
+import com.limegroup.gnutella.gui.tables.ActionIconAndNameEditor;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
 import com.limegroup.gnutella.gui.themes.SkinMenu;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
@@ -184,7 +187,10 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
      * Sets the default editors.
      */
     protected void setDefaultEditors() {
-        
+        TableColumnModel model = TABLE.getColumnModel();
+        TableColumn tc;
+        tc = model.getColumn(LibraryInternetRadioTableDataLine.WEBSITE_IDX);
+        tc.setCellEditor(new ActionIconAndNameEditor());
     }
 
     /**

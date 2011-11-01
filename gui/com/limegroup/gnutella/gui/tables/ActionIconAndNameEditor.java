@@ -1,4 +1,4 @@
-package com.limegroup.gnutella.gui.search;
+package com.limegroup.gnutella.gui.tables;
 
 import java.awt.Component;
 import java.awt.Rectangle;
@@ -11,9 +11,6 @@ import java.awt.event.MouseEvent;
 import javax.swing.AbstractCellEditor;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
-
-import com.limegroup.gnutella.gui.tables.ActionIconAndNameHolder;
-import com.limegroup.gnutella.gui.tables.ActionIconAndNameRenderer;
 
 public class ActionIconAndNameEditor extends AbstractCellEditor implements TableCellEditor {
 

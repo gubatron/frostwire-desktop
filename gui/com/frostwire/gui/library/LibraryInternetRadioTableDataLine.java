@@ -1,5 +1,7 @@
 package com.frostwire.gui.library;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +10,9 @@ import org.limewire.util.StringUtils;
 
 import com.frostwire.alexandria.InternetRadioStation;
 import com.frostwire.gui.player.AudioPlayer;
+import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.tables.ActionIconAndNameHolder;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 
 public final class LibraryInternetRadioTableDataLine extends AbstractLibraryTableDataLine<InternetRadioStation> {
@@ -23,7 +27,7 @@ public final class LibraryInternetRadioTableDataLine extends AbstractLibraryTabl
     private static final LimeTableColumn BITRATE_COLUMN = new LimeTableColumn(BITRATE_IDX, "INTERNET_RADIO_TABLE_BITRATE", I18n.tr("Bitrate"), 80, true, PlayableCell.class);
 
     static final int WEBSITE_IDX = 3;
-    private static final LimeTableColumn WEBSITE_COLUMN = new LimeTableColumn(WEBSITE_IDX, "INTERNET_RADIO_TABLE_WEBSITE", I18n.tr("Website"), 170, true, PlayableCell.class);
+    private static final LimeTableColumn WEBSITE_COLUMN = new LimeTableColumn(WEBSITE_IDX, "INTERNET_RADIO_TABLE_WEBSITE", I18n.tr("Website"), 170, true, ActionIconAndNameHolder.class);
 
     static final int TYPE_IDX = 4;
     private static final LimeTableColumn TYPE_COLUMN = new LimeTableColumn(TYPE_IDX, "INTERNET_RADIO_TABLE_TYPE", I18n.tr("Type"), 40, true, PlayableCell.class);
@@ -39,6 +43,8 @@ public final class LibraryInternetRadioTableDataLine extends AbstractLibraryTabl
      * Total number of columns
      */
     static final int NUMBER_OF_COLUMNS = 7;
+    
+    private ActionListener detailsAction;
 
     /**
      * Number of columns
@@ -50,8 +56,14 @@ public final class LibraryInternetRadioTableDataLine extends AbstractLibraryTabl
     /**
      * Sets up the dataline for use with the playlist.
      */
-    public void initialize(InternetRadioStation item) {
+    public void initialize(final InternetRadioStation item) {
         super.initialize(item);
+        
+        detailsAction = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                GUIMediator.openURL("http://" + item.getWebsite().replace("http://", ""));
+            }
+        };
     }
 
     /**
@@ -71,7 +83,7 @@ public final class LibraryInternetRadioTableDataLine extends AbstractLibraryTabl
         case TYPE_IDX:
             return new PlayableCell(initializer.getType(), playing, idx);
         case WEBSITE_IDX:
-            return new PlayableCell(initializer.getWebsite(), playing, idx);
+            return new ActionIconAndNameHolder(null, detailsAction, "<html><a href=\"#\">" + initializer.getWebsite().replace("http://", "") + "</a></html>");
         case GENRE_IDX:
             return new PlayableCell(initializer.getGenre(), playing, idx);
         }
