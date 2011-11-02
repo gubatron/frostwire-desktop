@@ -18,9 +18,9 @@ class ResultPanelTransferHandler extends LimeTransferHandler {
     private static final long serialVersionUID = 6250741497962589713L;
     
     /** The ResultPanel this is handling. */
-    private final ResultPanel panel;
+    private final SearchResultMediator panel;
     
-    ResultPanelTransferHandler(ResultPanel panel) {
+    ResultPanelTransferHandler(SearchResultMediator panel) {
     	super(DnDConstants.ACTION_COPY | DnDConstants.ACTION_MOVE | DnDConstants.ACTION_LINK);
         this.panel = panel;
     }

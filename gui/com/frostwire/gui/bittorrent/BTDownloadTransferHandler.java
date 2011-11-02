@@ -11,10 +11,10 @@ import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.DropInfo;
 import com.limegroup.gnutella.gui.dnd.FileTransfer;
 import com.limegroup.gnutella.gui.dnd.LimeTransferHandler;
-import com.limegroup.gnutella.gui.search.ResultPanel;
+import com.limegroup.gnutella.gui.search.SearchResultMediator;
 import com.limegroup.gnutella.gui.search.SearchMediator;
 import com.limegroup.gnutella.gui.search.SearchResultTransferable;
-import com.limegroup.gnutella.gui.search.TableLine;
+import com.limegroup.gnutella.gui.search.SearchResultDataLine;
 
 class BTDownloadTransferHandler extends LimeTransferHandler {
 
@@ -44,8 +44,8 @@ class BTDownloadTransferHandler extends LimeTransferHandler {
             try {
                 SearchResultTransferable srt =
                         (SearchResultTransferable) t.getTransferData(SearchResultTransferable.dataFlavor);
-                ResultPanel rp = srt.getResultPanel();
-                TableLine[] lines = srt.getTableLines();
+                SearchResultMediator rp = srt.getResultPanel();
+                SearchResultDataLine[] lines = srt.getTableLines();
                 SearchMediator.downloadFromPanel(rp, lines);
                 return true;
             } catch (UnsupportedFlavorException e) {

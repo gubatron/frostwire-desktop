@@ -16,19 +16,19 @@ public class SearchResultTransferable implements Transferable {
     
     public static final DataFlavor dataFlavor = new DataFlavor(SearchResultTransferable.class, "FrostWire Search Result");
     
-	private ResultPanel panel;
-	private TableLine[] lines;
+	private SearchResultMediator panel;
+	private SearchResultDataLine[] lines;
 	
-	public SearchResultTransferable(ResultPanel panel, TableLine[] lines) {
+	public SearchResultTransferable(SearchResultMediator panel, SearchResultDataLine[] lines) {
 		this.panel = panel;
 		this.lines = lines;
 	}
 	
-	public ResultPanel getResultPanel() {
+	public SearchResultMediator getResultPanel() {
 		return panel;
 	}
 	
-	public TableLine[] getTableLines() {
+	public SearchResultDataLine[] getTableLines() {
 		return lines;
 	}
 	

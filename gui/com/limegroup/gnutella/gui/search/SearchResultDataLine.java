@@ -33,7 +33,7 @@ import com.limegroup.gnutella.settings.SearchSettings;
 /** 
  * A single line of a search result.
  */
-public final class TableLine extends AbstractDataLine<SearchResult> implements Linkable {
+public final class SearchResultDataLine extends AbstractDataLine<SearchResult> implements Linkable {
     /**
      * The SearchTableColumns.
      */
@@ -75,7 +75,7 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
      */
     private long _addedOn;
 
-    public TableLine(SearchTableColumns stc) {
+    public SearchResultDataLine(SearchTableColumns stc) {
         COLUMNS = stc;
     }
 
@@ -378,7 +378,7 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
      *         is the same kind as <code>line</code>'s, e.g. one from
      *         gnutella and one from gnutella
      */
-    public final boolean isSameKindAs(TableLine line) {
+    public final boolean isSameKindAs(SearchResultDataLine line) {
         return getSearchResult().getClass().equals(line.getSearchResult().getClass());
     }
     
@@ -421,10 +421,10 @@ public final class TableLine extends AbstractDataLine<SearchResult> implements L
      * Delegate to the {@link #RESULT} to take some action, such as download or
      * display in browser, etc.
      * 
-     * @see SearchResult#takeAction(TableLine, GUID, File, String, boolean,
+     * @see SearchResult#takeAction(SearchResultDataLine, GUID, File, String, boolean,
      *      SearchInformation)
      */
-    public final void takeAction(TableLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
+    public final void takeAction(SearchResultDataLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
         RESULT.takeAction(line, guid, saveDir, fileName, saveAs, searchInfo);
     }
 

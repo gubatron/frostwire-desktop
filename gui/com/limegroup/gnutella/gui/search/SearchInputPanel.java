@@ -353,9 +353,9 @@ class SearchInputPanel extends JPanel {
 
 	}
 
-	private void updateSearchResults(TableLineFilter<TableLine> filter) {
-        List<ResultPanel> resultPanels = SearchMediator.getSearchResultDisplayer().getResultPanels();
-        for (ResultPanel resultPanel : resultPanels) {
+	private void updateSearchResults(TableLineFilter<SearchResultDataLine> filter) {
+        List<SearchResultMediator> resultPanels = SearchMediator.getSearchResultDisplayer().getResultPanels();
+        for (SearchResultMediator resultPanel : resultPanels) {
             resultPanel.filterChanged(filter, 0);
         }
     }
@@ -559,21 +559,21 @@ class SearchInputPanel extends JPanel {
         _filterPanel.clearFilters();
     }
 
-    public void setFiltersFor(ResultPanel rp) {
+    public void setFiltersFor(SearchResultMediator rp) {
         _filterPanel.setFilterFor(rp);
     }
     
     /**
      * Resets the FilterPanel for the specified ResultPanel.
      */
-    void panelReset(ResultPanel rp) {
+    void panelReset(SearchResultMediator rp) {
         _filterPanel.panelReset(rp);
     }
     
     /**
      * Removes the filter associated with the specified result panel.
      */
-    boolean panelRemoved(ResultPanel rp) {
+    boolean panelRemoved(SearchResultMediator rp) {
         return _filterPanel.panelRemoved(rp);
     }
 }

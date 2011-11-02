@@ -7,20 +7,20 @@ import javax.swing.JPopupMenu;
  */
 final class SearchResultMenu {
 
-    private final ResultPanel PANEL;
+    private final SearchResultMediator PANEL;
 
     /**
      * Private constructor to ensure that this class can never be
      * created.
      */
-    SearchResultMenu(ResultPanel rp) {
+    SearchResultMenu(SearchResultMediator rp) {
         PANEL = rp;
     }
 
     /**
      * Adds search-result specific items to the JPopupMenu.
      */
-    JPopupMenu addToMenu(JPopupMenu popupMenu, TableLine[] lines) {
+    JPopupMenu addToMenu(JPopupMenu popupMenu, SearchResultDataLine[] lines) {
 
         // Check if there are lines
         if (lines.length == 0) {
@@ -34,7 +34,7 @@ final class SearchResultMenu {
                 // Bail! Bail!
                 // Just pick the first similar ones, since we're
                 // lost as to what to do otherwise...
-                TableLine[] newLines = new TableLine[i - 1];
+                SearchResultDataLine[] newLines = new SearchResultDataLine[i - 1];
                 System.arraycopy(lines, 0, newLines, 0, i - 1);
                 lines = newLines;
                 break;

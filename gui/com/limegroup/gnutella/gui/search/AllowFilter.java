@@ -5,7 +5,7 @@ import com.frostwire.gui.filters.TableLineFilter;
 /**
  * Filter denoting that anything is allowed.
  */
-class AllowFilter implements TableLineFilter<TableLine> {
+class AllowFilter implements TableLineFilter<SearchResultDataLine> {
     /**
      * The sole instance that can be returned, for convenience.
      */
@@ -21,7 +21,7 @@ class AllowFilter implements TableLineFilter<TableLine> {
     /**
      * Returns true.
      */
-    public boolean allow(TableLine line) {
+    public boolean allow(SearchResultDataLine line) {
         return true;
     }
     

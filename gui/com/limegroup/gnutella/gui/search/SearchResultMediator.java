@@ -71,7 +71,7 @@ import com.limegroup.gnutella.settings.BittorrentSettings;
 import com.limegroup.gnutella.settings.SearchSettings;
 import com.limegroup.gnutella.util.QueryUtils;
 
-public class ResultPanel extends AbstractTableMediator<TableRowFilteredModel, TableLine, SearchResult> {
+public class SearchResultMediator extends AbstractTableMediator<TableRowFilteredModel, SearchResultDataLine, SearchResult> {
     
     protected static final String SEARCH_TABLE = "SEARCH_TABLE";
     
@@ -146,7 +146,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilteredModel, Ta
      * Specialized constructor for creating a "dummy" result panel.
      * This should only be called once at search window creation-time.
      */
-    ResultPanel(JPanel overlay) {
+    SearchResultMediator(JPanel overlay) {
         super(SEARCH_TABLE);
         setupFakeTable(overlay);
 
@@ -169,7 +169,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilteredModel, Ta
      * Constructor for creating a search panel with a given title.
      * This should be used for "pre-stopped" searches.
      */
-    ResultPanel(String title, String id) {
+    SearchResultMediator(String title, String id) {
         super(id);
         
         this.SEARCH_INFO = SearchInformation.createKeywordSearch(title, null, MediaType
@@ -186,7 +186,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilteredModel, Ta
      * @param guid the guid of the query.  Used to match results.
      * @param info the info of the search
      */
-    ResultPanel(GUID guid, SearchInformation info) {
+    SearchResultMediator(GUID guid, SearchInformation info) {
         super(SEARCH_TABLE);
         SEARCH_INFO = info;
         this.guid = guid;
@@ -317,7 +317,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilteredModel, Ta
                 int colModel = TABLE.convertColumnIndexToModel(column);
                 if(colModel == SearchTableColumns.NAME_IDX) {
                     int row = TABLE.rowAtPoint(p);
-                    TableLine line = DATA_MODEL.get(row);
+                    SearchResultDataLine line = DATA_MODEL.get(row);
                     if(line != null && line.isLink()) {
                         if(lastCursor != HAND) {
                             lastCursor = HAND;
@@ -344,13 +344,13 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilteredModel, Ta
         
         DOWNLOAD_LISTENER = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                SearchMediator.doDownload(ResultPanel.this);
+                SearchMediator.doDownload(SearchResultMediator.this);
             }
         };
         
         DOWNLOAD_AS_LISTENER = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                SearchMediator.doDownloadAs(ResultPanel.this);
+                SearchMediator.doDownloadAs(SearchResultMediator.this);
             }
         };
         
@@ -390,16 +390,16 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilteredModel, Ta
         	 * Show torrent details.
         	 */
             private void onLeftClick() {
-            	SearchMediator.showTorrentDetails(ResultPanel.this, -1);
+            	SearchMediator.showTorrentDetails(SearchResultMediator.this, -1);
             }
 
         }; 
         
         COPY_MAGNET_ACTION_LISTENER = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                TableLine[] lines = getAllSelectedLines();
+                SearchResultDataLine[] lines = getAllSelectedLines();
                 String str = "";
-                for (TableLine line : lines) {
+                for (SearchResultDataLine line : lines) {
                     str += TorrentUtil.getMagnet(line.getInitializeObject().getHash());
                     str += "\n";
                 }
@@ -409,9 +409,9 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilteredModel, Ta
         
         COPY_HASH_ACTION_LISTENER = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                TableLine[] lines = getAllSelectedLines();
+                SearchResultDataLine[] lines = getAllSelectedLines();
                 String str = "";
-                for (TableLine line : lines) {
+                for (SearchResultDataLine line : lines) {
                     str += line.getInitializeObject().getHash();
                     str += "\n";
                 }
@@ -427,7 +427,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilteredModel, Ta
             
         BUY_LISTENER = new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		TableLine[] lines = getAllSelectedLines();
+        		SearchResultDataLine[] lines = getAllSelectedLines();
 
         		if (lines.length == 1 && lines[0] != null) {
         			BUY_ACTION.setTableLine(lines[0]);
@@ -438,7 +438,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilteredModel, Ta
         
         DOWNLOAD_PARTIAL_FILES_LISTENER = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                TableLine[] lines = getAllSelectedLines();
+                SearchResultDataLine[] lines = getAllSelectedLines();
                 if (lines.length == 1 && lines[0] != null) {
                     GUIMediator.instance().openTorrentSearchResult(lines[0].getInitializeObject().getWebSearchResult(), true);
                 }
@@ -455,7 +455,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilteredModel, Ta
         return createPopupMenu(getAllSelectedLines());
     }
     
-    protected JPopupMenu createPopupMenu(TableLine[] lines) {
+    protected JPopupMenu createPopupMenu(SearchResultDataLine[] lines) {
         //  do not return a menu if right-clicking on the dummy panel
         if (!isKillable())
             return null;
@@ -483,7 +483,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilteredModel, Ta
     /**
      * Returns a menu with a 'repeat search' and 'repeat search no clear' action.
      */
-    protected final JMenu createSearchAgainMenu(TableLine line) {
+    protected final JMenu createSearchAgainMenu(SearchResultDataLine line) {
         JMenu menu = new SkinMenu(I18n.tr("Search More"));
         menu.add(new SkinMenuItem(new RepeatSearchAction()));
 
@@ -543,7 +543,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilteredModel, Ta
     	setButtonEnabled(SearchButtons.DOWNLOAD_BUTTON_INDEX, true);
 
     	// Buy button only enabled for single selection.
-    	TableLine[] allSelectedLines = getAllSelectedLines();
+    	SearchResultDataLine[] allSelectedLines = getAllSelectedLines();
         setButtonEnabled(SearchButtons.BUY_BUTTON_INDEX, allSelectedLines != null && allSelectedLines.length == 1);
         setButtonEnabled(SearchButtons.TORRENT_DETAILS_BUTTON_INDEX, allSelectedLines != null && allSelectedLines.length == 1);
     }
@@ -634,18 +634,18 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilteredModel, Ta
      * anymore.  Thus, it is necessary to store all visible rows and move to
      * the first still-visible one.
      */
-    boolean filterChanged(TableLineFilter<TableLine> filter, int depth) {
+    boolean filterChanged(TableLineFilter<SearchResultDataLine> filter, int depth) {
         FILTER.setFilter(depth, filter);
         //if(!FILTER.setFilter(depth, filter))
         //    return false;
         
         // store the selection & visible rows
         int[] rows = TABLE.getSelectedRows();
-        TableLine[] lines = new TableLine[rows.length];
-        List<TableLine> inView = new LinkedList<TableLine>();
+        SearchResultDataLine[] lines = new SearchResultDataLine[rows.length];
+        List<SearchResultDataLine> inView = new LinkedList<SearchResultDataLine>();
         for(int i = 0; i < rows.length; i++) {
             int row = rows[i];
-            TableLine line = DATA_MODEL.get(row);
+            SearchResultDataLine line = DATA_MODEL.get(row);
             lines[i] = line;
             if(TABLE.isRowVisible(row))
                 inView.add(line);
@@ -656,7 +656,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilteredModel, Ta
         
         // reselect & move the viewpoint to the first still visible row.
         for(int i = 0; i < rows.length; i++) {
-            TableLine line = lines[i];
+            SearchResultDataLine line = lines[i];
             int row = DATA_MODEL.getRow(line);
             if(row != -1) {
                 TABLE.addRowSelectionInterval(row, row);
@@ -733,7 +733,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilteredModel, Ta
         return  ((ResultPanelModel)DATA_MODEL).getMetadataModel();
     }
 
-    public List<TableLine> getAllData() {
+    public List<SearchResultDataLine> getAllData() {
     	return ((TableRowFilteredModel)DATA_MODEL).getAllData();
     }
     
@@ -765,12 +765,12 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilteredModel, Ta
      * 
      * @return empty array if no lines are selected.
      */
-    TableLine[] getAllSelectedLines() {
+    SearchResultDataLine[] getAllSelectedLines() {
         int[] rows = TABLE.getSelectedRows();
         if(rows == null)
-            return new TableLine[0];
+            return new SearchResultDataLine[0];
         
-        TableLine[] lines = new TableLine[rows.length];
+        SearchResultDataLine[] lines = new SearchResultDataLine[rows.length];
         for(int i = 0; i < rows.length; i++)
             lines[i] = DATA_MODEL.get(rows[i]);
         return lines;
@@ -781,7 +781,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilteredModel, Ta
      * 
      * @return null if there is no selected line.
      */
-    TableLine getSelectedLine() {
+    SearchResultDataLine getSelectedLine() {
         int selected = TABLE.getSelectedRow();
         if(selected != -1) 
             return DATA_MODEL.get(selected);
@@ -795,7 +795,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilteredModel, Ta
      * @param index index of the line you want
      * @return null if there is no selected line.
      */
-    final TableLine getLine(int index) {
+    final SearchResultDataLine getLine(int index) {
         return DATA_MODEL.get(index);
     }
     
@@ -823,7 +823,7 @@ public class ResultPanel extends AbstractTableMediator<TableRowFilteredModel, Ta
                 if(e.isConsumed())
                     return;
                 e.consume();
-                SearchMediator.panelSelected(ResultPanel.this);
+                SearchMediator.panelSelected(SearchResultMediator.this);
             }
             public void mousePressed(MouseEvent e) {}
             public void mouseReleased(MouseEvent e) {}

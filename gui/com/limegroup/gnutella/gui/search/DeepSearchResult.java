@@ -97,7 +97,7 @@ public class DeepSearchResult extends AbstractSearchResult {
     }
     
     @Override
-    public void initialize(TableLine line) {
+    public void initialize(SearchResultDataLine line) {
         line.setAddedOn(getCreationTime());
         
 
@@ -110,7 +110,7 @@ public class DeepSearchResult extends AbstractSearchResult {
     }
 
     @Override
-    public void takeAction(TableLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
+    public void takeAction(SearchResultDataLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
         GUIMediator.instance().openTorrentSearchResult(_item, _torrentFile.getRelativePath());
         showTorrentDetails(BittorrentSettings.SHOW_TORRENT_DETAILS_DELAY);
     }
@@ -120,7 +120,7 @@ public class DeepSearchResult extends AbstractSearchResult {
     }
 
     @Override
-    public JPopupMenu createMenu(JPopupMenu popupMenu, TableLine[] lines, ResultPanel resultPanel) {
+    public JPopupMenu createMenu(JPopupMenu popupMenu, SearchResultDataLine[] lines, SearchResultMediator resultPanel) {
 
         PopupUtils.addMenuItem(SearchMediator.BUY_NOW_STRING, resultPanel.BUY_LISTENER, popupMenu, lines.length == 1, 0);
         PopupUtils.addMenuItem(SearchMediator.DOWNLOAD_STRING, new ActionListener() {

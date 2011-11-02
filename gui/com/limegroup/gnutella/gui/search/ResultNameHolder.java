@@ -9,10 +9,10 @@ import com.limegroup.gnutella.gui.tables.Linkable;
  * by ResultNameRenderer.
  */
 class ResultNameHolder implements Comparable<ResultNameHolder>, Linkable {
-    private TableLine line;   
+    private SearchResultDataLine line;   
     private String description;
 
-    public ResultNameHolder(TableLine line) {
+    public ResultNameHolder(SearchResultDataLine line) {
         this.description = line.getFilenameNoExtension();
 		this.line = line; 
     }

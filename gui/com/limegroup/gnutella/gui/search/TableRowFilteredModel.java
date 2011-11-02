@@ -23,17 +23,17 @@ public class TableRowFilteredModel extends ResultPanelModel {
     /**
      * The filter to use in this row filter.
      */
-    private final TableLineFilter<TableLine> FILTER;
+    private final TableLineFilter<SearchResultDataLine> FILTER;
     
     /**
      * The Junk Filter
      */
-    private TableLineFilter<TableLine> junkFilter = AllowFilter.instance();
+    private TableLineFilter<SearchResultDataLine> junkFilter = AllowFilter.instance();
     
     /**
      * A list of all filtered results.
      */
-    protected final List<TableLine> HIDDEN;
+    protected final List<SearchResultDataLine> HIDDEN;
     
     /**
      * The number of sources in the hidden list.
@@ -45,14 +45,14 @@ public class TableRowFilteredModel extends ResultPanelModel {
     /**
      * Constructs a TableRowFilter with the specified TableLineFilter.
      */
-    public TableRowFilteredModel(TableLineFilter<TableLine> f) {
+    public TableRowFilteredModel(TableLineFilter<SearchResultDataLine> f) {
         super();
 
         if(f == null)
             throw new NullPointerException("null filter");
 
         FILTER = f;
-        HIDDEN = new ArrayList<TableLine>();
+        HIDDEN = new ArrayList<SearchResultDataLine>();
         _numSources = 0;
         _numResults = 0;
     }
@@ -81,7 +81,7 @@ public class TableRowFilteredModel extends ResultPanelModel {
         return getFilteredSources() + _numSources;
     }
     
-    public int addNewResult(TableLine tl, SearchResult sr) {
+    public int addNewResult(SearchResultDataLine tl, SearchResult sr) {
         // If we're hiding junk check if TableLine's rating turns into
         // junk when a new SearchResult is added...
         if (SearchSettings.hideJunk()) {
@@ -123,7 +123,7 @@ public class TableRowFilteredModel extends ResultPanelModel {
     /**
      * Determines whether or not this line should be added.
      */
-    public int add(TableLine tl, int row) {
+    public int add(SearchResultDataLine tl, int row) {
         boolean isNotJunk = junkFilter.allow(tl);
         boolean allow = allow(tl);
              
@@ -166,7 +166,7 @@ public class TableRowFilteredModel extends ResultPanelModel {
     /**
      * Sets the Junk Filter. Pass null as argument to disable the filter
      */
-    void setJunkFilter(TableLineFilter<TableLine> junkFilter) {
+    void setJunkFilter(TableLineFilter<SearchResultDataLine> junkFilter) {
         if (junkFilter != null) {
             this.junkFilter = junkFilter;
         } else {
@@ -177,7 +177,7 @@ public class TableRowFilteredModel extends ResultPanelModel {
     /**
      * Determines whether or not the specified line is allowed by the filter.
      */
-    private boolean allow(TableLine line) {
+    private boolean allow(SearchResultDataLine line) {
         return FILTER.allow(line);
     }
     
@@ -185,8 +185,8 @@ public class TableRowFilteredModel extends ResultPanelModel {
      * Rebuilds the internal map to denote a new filter.
      */
     private void rebuild(){
-        List<TableLine> existing = new ArrayList<TableLine>(_list);
-        List<TableLine> hidden = new ArrayList<TableLine>(HIDDEN);
+        List<SearchResultDataLine> existing = new ArrayList<SearchResultDataLine>(_list);
+        List<SearchResultDataLine> hidden = new ArrayList<SearchResultDataLine>(HIDDEN);
         simpleClear();
         
         setUseMetadata(false);
@@ -203,9 +203,9 @@ public class TableRowFilteredModel extends ResultPanelModel {
         }
         
         // Merge the hidden TableLines
-        Map<String, TableLine> mergeMap = new HashMap<String, TableLine>();
+        Map<String, SearchResultDataLine> mergeMap = new HashMap<String, SearchResultDataLine>();
         for(int i = 0; i < hidden.size(); i++) {
-            TableLine tl = hidden.get(i);
+            SearchResultDataLine tl = hidden.get(i);
             //SearchResult sr = tl.getInitializeObject();
             //String urn = sr.getHash();
             
@@ -225,10 +225,10 @@ public class TableRowFilteredModel extends ResultPanelModel {
         
         // And add them
         if(isSorted()) {
-            for(TableLine line : mergeMap.values())
+            for(SearchResultDataLine line : mergeMap.values())
                 addSorted(line);
         } else {
-            for(TableLine line : mergeMap.values())
+            for(SearchResultDataLine line : mergeMap.values())
                 add(line);
         }
         
@@ -243,8 +243,8 @@ public class TableRowFilteredModel extends ResultPanelModel {
         return getFilteredResults() + _numResults;
     }
    
-	public List<TableLine> getAllData() {
-		List<TableLine> results = new ArrayList<TableLine>(HIDDEN);
+	public List<SearchResultDataLine> getAllData() {
+		List<SearchResultDataLine> results = new ArrayList<SearchResultDataLine>(HIDDEN);
 		results.addAll(_list);
 		return results;
 	}

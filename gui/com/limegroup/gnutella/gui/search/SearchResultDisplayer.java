@@ -62,7 +62,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
      *            results + to prevent deadlock, never obtain ResultPanel's
      *            lock if holding entries'.
      */
-    private static final List<ResultPanel> entries = new ArrayList<ResultPanel>();
+    private static final List<SearchResultMediator> entries = new ArrayList<SearchResultMediator>();
 
     /** Results is a panel that displays either a JTabbedPane when lots of
      *  results exist OR a blank ResultPanel when nothing is showing.
@@ -79,7 +79,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
     /**
      * The dummy result panel, used when no searches are active.
      */
-    private ResultPanel DUMMY; // FTA: final removed
+    private SearchResultMediator DUMMY; // FTA: final removed
 
     /** 
      * Container for the DUMMY ResultPanel. I'm keeping a reference to this
@@ -135,7 +135,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 	        promoSlides.setSize(promoDimensions);
 	        promoSlides.setMaximumSize(promoDimensions);
 	
-	        DUMMY = new ResultPanel(promoSlides);
+	        DUMMY = new SearchResultMediator(promoSlides);
 			
 			mainScreen = new JPanel(new BorderLayout());
 	        promoSlides.setupContainerAndControls(mainScreen,true);
@@ -176,8 +176,8 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
      *  to the tabbed pane.  This is used both for normal searching 
      *  and browsing.  Returns the ResultPanel added.
      */
-    ResultPanel addResultTab(GUID guid, SearchInformation info) {
-		ResultPanel panel=new ResultPanel(guid, info);
+    SearchResultMediator addResultTab(GUID guid, SearchInformation info) {
+		SearchResultMediator panel=new SearchResultMediator(guid, info);
 		return addResultPanelInternal(panel, info.getTitle());
     }
 
@@ -220,7 +220,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
      * 
      */
     private void resetTabbedPane () {
-        ArrayList<ResultPanel> ents = new ArrayList<ResultPanel>();
+        ArrayList<SearchResultMediator> ents = new ArrayList<SearchResultMediator>();
         ArrayList<Component> tabs = new ArrayList<Component>();
         ArrayList<String> titles = new ArrayList<String>();
         
@@ -241,7 +241,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
         }
     }
     
-    private ResultPanel addResultPanelInternal(ResultPanel panel, String title) {
+    private SearchResultMediator addResultPanelInternal(SearchResultMediator panel, String title) {
         entries.add(panel);
         
         // XXX: LWC-1214 (hack)
@@ -321,7 +321,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
      *           line and already in rp
      * @modifies this
      */
-    void addQueryResult(byte[] replyGUID, SearchResult line, ResultPanel rp) {
+    void addQueryResult(byte[] replyGUID, SearchResult line, SearchResultMediator rp) {
 
         //Actually add the line.   Must obtain rp's monitor first.
         if(!rp.matches(new GUID(replyGUID)))//GUID of rp!=replyGuid
@@ -340,7 +340,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
         tabbedPane.setTitleAt(resultPanelIndex, titleOf(rp));
     }
     
-    void updateSearchIcon(ResultPanel rp, boolean active) {
+    void updateSearchIcon(SearchResultMediator rp, boolean active) {
         int resultPanelIndex = -1;
         // Search for the ResultPanel to verify it exists.
         resultPanelIndex = entries.indexOf(rp);
@@ -373,9 +373,9 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 	 * Shows the popup menu that displays various options to the user.
 	 */
 	void showMenu(MouseEvent e) {
-        ResultPanel rp = getSelectedResultPanel();
+        SearchResultMediator rp = getSelectedResultPanel();
         if(rp != null) {
-            JPopupMenu menu = rp.createPopupMenu(new TableLine[0]);
+            JPopupMenu menu = rp.createPopupMenu(new SearchResultDataLine[0]);
             Point p = e.getPoint();
             if(menu != null) {
                 try {
@@ -393,7 +393,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 	 * @return the currently selected <tt>ResultPanel</tt> instance,
 	 *  or <tt>null</tt> if there is no currently selected panel
 	 */
-	ResultPanel getSelectedResultPanel() {
+	SearchResultMediator getSelectedResultPanel() {
         int i=tabbedPane.getSelectedIndex();
         if(i==-1)
             return null;
@@ -411,9 +411,9 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
      * @return the ResultPanel that matches the specified GUID, or null
      *  if none match.
      */
-     ResultPanel getResultPanelForGUID(GUID rguid) {
+     SearchResultMediator getResultPanelForGUID(GUID rguid) {
         for (int i=0; i<entries.size(); i++) {
-            ResultPanel rp = entries.get(i);
+            SearchResultMediator rp = entries.get(i);
             if (rp.matches(rguid)) //order matters: rp may be a dummy guid.
                 return rp;
         }
@@ -426,12 +426,12 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 	 * @param index the index of the desired <tt>ResultPanel</tt>
 	 * @return the <tt>ResultPanel</tt> at the specified index
 	 */
-	ResultPanel getPanelAtIndex(int index) {
+	SearchResultMediator getPanelAtIndex(int index) {
         return entries.get(index);
 	}
 	
-	List<ResultPanel> getResultPanels() {
-	    return new ArrayList<ResultPanel>(entries);
+	List<SearchResultMediator> getResultPanels() {
+	    return new ArrayList<SearchResultMediator>(entries);
 	}
 
 	/**
@@ -445,7 +445,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 	 */
 	int getIndexForGUID(GUID rguid) {
         for (int i=0; i<entries.size(); i++) {
-            ResultPanel rp = entries.get(i);
+            SearchResultMediator rp = entries.get(i);
             if (rp.matches(rguid)) //order matters: rp may be a dummy guid.
                 return i;
         }
@@ -484,7 +484,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
      * @effects removes the window at i from this
      */
     void killSearchAtIndex(int i) {
-        ResultPanel killed = entries.remove(i);
+        SearchResultMediator killed = entries.remove(i);
         
         try {
             tabbedPane.removeTabAt(i);
@@ -543,7 +543,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
      * tab to indicate the correct number of TableLines in the current
      * view.
      */
-    void setTabDisplayCount(ResultPanel rp){
+    void setTabDisplayCount(SearchResultMediator rp){
         Object panel;
         int i=0;
         boolean found = false;
@@ -584,8 +584,8 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 		
 		CancelSearchIconProxy.updateTheme();
 		fixIcons();
-		for(Iterator<ResultPanel> i = entries.iterator(); i.hasNext(); ) {
-			ResultPanel curPanel = (ResultPanel)i.next();
+		for(Iterator<SearchResultMediator> i = entries.iterator(); i.hasNext(); ) {
+			SearchResultMediator curPanel = (SearchResultMediator)i.next();
 			curPanel.updateTheme();
 		}
 	}
@@ -622,7 +622,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
     /**
      * Returns the title of the specified ResultPanel.
      */
-    private String titleOf(ResultPanel rp) {
+    private String titleOf(SearchResultMediator rp) {
         int current = rp.filteredResults();
         int total = rp.totalResults();
         if(current < total)

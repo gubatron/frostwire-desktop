@@ -7,8 +7,8 @@ import com.limegroup.gnutella.gui.tables.IconAndNameHolder;
 /**
  * Filters TableLines based on certain properties.
  */
-class PropertyFilter implements TableLineFilter<TableLine> {
-    private final TableLineFilter<TableLine> FILTER;
+class PropertyFilter implements TableLineFilter<SearchResultDataLine> {
+    private final TableLineFilter<SearchResultDataLine> FILTER;
     
     /**
      * Constructs a new PropertyFilter for the given property/value.
@@ -33,7 +33,7 @@ class PropertyFilter implements TableLineFilter<TableLine> {
             throw new IllegalArgumentException("bad property: " + property);
     }
     
-    public boolean allow(TableLine line) {
+    public boolean allow(SearchResultDataLine line) {
         return FILTER.allow(line);
     }
     
@@ -46,7 +46,7 @@ class PropertyFilter implements TableLineFilter<TableLine> {
     /**
      * A filter for extensions.
      */
-    private static class ExtensionFilter implements TableLineFilter<TableLine> {
+    private static class ExtensionFilter implements TableLineFilter<SearchResultDataLine> {
         private final String TYPE;
         
         /**
@@ -56,7 +56,7 @@ class PropertyFilter implements TableLineFilter<TableLine> {
             TYPE = ((IconAndNameHolder)value).getName();
         }
         
-        public boolean allow(TableLine line) {
+        public boolean allow(SearchResultDataLine line) {
             return TYPE.equalsIgnoreCase(line.getExtension());
         }
         
@@ -71,7 +71,7 @@ class PropertyFilter implements TableLineFilter<TableLine> {
     /**
      * A filter for speeds.
      */
-    private static class SpeedFilter implements TableLineFilter<TableLine> {
+    private static class SpeedFilter implements TableLineFilter<SearchResultDataLine> {
         private final ResultSpeed SPEED;
         
         /**
@@ -81,7 +81,7 @@ class PropertyFilter implements TableLineFilter<TableLine> {
             SPEED = (ResultSpeed)value;
         }
         
-        public boolean allow(TableLine line) {
+        public boolean allow(SearchResultDataLine line) {
             return SPEED.isSameSpeed(line.getSpeed());
         }
         
@@ -96,7 +96,7 @@ class PropertyFilter implements TableLineFilter<TableLine> {
     /**
      * A filter for vendor.
      */
-    private static class VendorFilter implements TableLineFilter<TableLine> {
+    private static class VendorFilter implements TableLineFilter<SearchResultDataLine> {
         private final String VENDOR;
         
         /**
@@ -106,7 +106,7 @@ class PropertyFilter implements TableLineFilter<TableLine> {
             VENDOR = (String)value;
         }
         
-        public boolean allow(TableLine line) {
+        public boolean allow(SearchResultDataLine line) {
             return VENDOR.equals(line.getVendor());
         }
         

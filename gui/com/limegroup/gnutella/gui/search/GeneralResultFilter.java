@@ -7,9 +7,9 @@ import com.frostwire.gui.filters.TableLineFilter;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.LabeledTextField;
 
-public class GeneralResultFilter implements TableLineFilter<TableLine> {
+public class GeneralResultFilter implements TableLineFilter<SearchResultDataLine> {
 
-    private ResultPanel _rp;
+    private SearchResultMediator _rp;
     private LabeledRangeSlider _rangeSliderSeeds;
     private LabeledRangeSlider _rangeSliderSize;
     private JComboBox _typeComboBox;
@@ -27,7 +27,7 @@ public class GeneralResultFilter implements TableLineFilter<TableLine> {
 	private String _keywords;
 	private NamedMediaType _currentMediaType;
 
-    public GeneralResultFilter(ResultPanel rp, LabeledRangeSlider rangeSliderSeeds, LabeledRangeSlider rangeSliderSize, LabeledTextField keywordTextField, JComboBox fileTypeCombo) {
+    public GeneralResultFilter(SearchResultMediator rp, LabeledRangeSlider rangeSliderSeeds, LabeledRangeSlider rangeSliderSize, LabeledTextField keywordTextField, JComboBox fileTypeCombo) {
         _rp = rp;
         _rangeSliderSeeds = rangeSliderSeeds;
         _rangeSliderSize = rangeSliderSize;
@@ -46,7 +46,7 @@ public class GeneralResultFilter implements TableLineFilter<TableLine> {
         
     }
 
-    public boolean allow(TableLine node) {
+    public boolean allow(SearchResultDataLine node) {
     	NamedMediaType selectedItem = (NamedMediaType) _typeComboBox.getSelectedItem();
     	boolean typeMatches = selectedItem.getMediaType().matches("."+node.getExtension());
     	

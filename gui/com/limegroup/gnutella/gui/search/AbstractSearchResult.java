@@ -9,7 +9,7 @@ import com.limegroup.gnutella.gui.themes.ThemeSettings;
 
 /**
  * A single SearchResult. These are returned in the {@link SearchInputPanel} and
- * are used to create {@link TableLine}s to show search results.
+ * are used to create {@link SearchResultDataLine}s to show search results.
  * 
  * (A collection of RemoteFileDesc, HostData, and Set of alternate locations.)
  */

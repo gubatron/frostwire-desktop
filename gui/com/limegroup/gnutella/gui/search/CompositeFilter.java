@@ -8,18 +8,18 @@ import com.frostwire.gui.filters.TableLineFilter;
 /**
  * A filter that takes multiple other filters.
  */
-class CompositeFilter implements TableLineFilter<TableLine> {
+class CompositeFilter implements TableLineFilter<SearchResultDataLine> {
     /**
      * The underlying filters.
      */
-    private List<TableLineFilter<TableLine>> delegates;
+    private List<TableLineFilter<SearchResultDataLine>> delegates;
     
     /**
      * Creates a new CompositeFilter of the specified depth.
      * By default, all the filters are an AllowFilter.
      */
     CompositeFilter(int depth) {
-        this.delegates = new ArrayList<TableLineFilter<TableLine>>(depth);
+        this.delegates = new ArrayList<TableLineFilter<SearchResultDataLine>>(depth);
         for (int i = 0; i < depth; i++) {
             this.delegates.add(null);
         }
@@ -39,7 +39,7 @@ class CompositeFilter implements TableLineFilter<TableLine> {
      * Determines whether or not the specified TableLine
      * can be displayed.
      */
-    public boolean allow(TableLine line) {
+    public boolean allow(SearchResultDataLine line) {
         for (int i=0; i<delegates.size(); i++) {
             if (! delegates.get(i).allow(line))
                 return false;
@@ -50,7 +50,7 @@ class CompositeFilter implements TableLineFilter<TableLine> {
     /**
      * Sets the filter at the specified depth.
      */
-    boolean setFilter(int depth, TableLineFilter<TableLine> filter) {
+    boolean setFilter(int depth, TableLineFilter<SearchResultDataLine> filter) {
         if (filter == this) {
             throw new IllegalArgumentException("Filter must not be composed of itself");
         }

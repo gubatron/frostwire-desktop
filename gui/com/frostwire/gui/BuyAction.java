@@ -11,7 +11,7 @@ import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.LimeAction;
-import com.limegroup.gnutella.gui.search.TableLine;
+import com.limegroup.gnutella.gui.search.SearchResultDataLine;
 import com.limegroup.gnutella.util.FrostWireUtils;
 import com.limegroup.gnutella.util.QueryUtils;
 
@@ -35,13 +35,13 @@ public class BuyAction extends AbstractAction implements LimeAction {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private TableLine _tableLine = null;
+	private SearchResultDataLine _tableLine = null;
 	
 	private String _buyUrl = null;
 	
-	public void setTableLine(TableLine tl) { this._tableLine = tl; }
+	public void setTableLine(SearchResultDataLine tl) { this._tableLine = tl; }
 	
-	public TableLine getTableLine() { return this._tableLine; }
+	public SearchResultDataLine getTableLine() { return this._tableLine; }
 	
 	//Use GUIMediator.openURL(String url) to open this url on a browser.
 	private static String redirect_url = null; //by default null

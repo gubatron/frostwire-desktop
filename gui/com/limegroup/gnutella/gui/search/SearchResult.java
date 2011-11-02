@@ -13,7 +13,7 @@ import com.limegroup.gnutella.SpeedConstants;
 
 /**
  * A single SearchResult. These are returned in the {@link SearchInputPanel} and
- * are used to create {@link TableLine}s to show search results. *
+ * are used to create {@link SearchResultDataLine}s to show search results. *
  */
 public interface SearchResult {
 
@@ -117,8 +117,8 @@ public interface SearchResult {
     int match(SearchResult o, ApproximateMatcher matcher);
 
     /**
-     * This method is called when a {@link TableLine} is clicked on in the
-     * {@link ResultPanel}, and the user wants to take some action, such as
+     * This method is called when a {@link SearchResultDataLine} is clicked on in the
+     * {@link SearchResultMediator}, and the user wants to take some action, such as
      * downloading or displaying the result in a browser.
      * 
      * @param line the line on which was clicked; this is needed for the
@@ -132,17 +132,17 @@ public interface SearchResult {
      * @param saveAs used for the reason above
      * @param searchInfo the info used for the original search
      */
-    void takeAction(TableLine line, GUID guid, File saveDir, String fileName,
+    void takeAction(SearchResultDataLine line, GUID guid, File saveDir, String fileName,
             boolean saveAs, SearchInformation searchInfo);
 
     /**
      * Initializes <code>line</code> to hold <code>this</code>.
      * 
-     * @param line {@link TableLine} that will hold <code>this</code>
+     * @param line {@link SearchResultDataLine} that will hold <code>this</code>
      */
-    void initialize(TableLine line);
+    void initialize(SearchResultDataLine line);
     
-    JPopupMenu createMenu(JPopupMenu popupMenu, TableLine[] lines, ResultPanel rp);
+    JPopupMenu createMenu(JPopupMenu popupMenu, SearchResultDataLine[] lines, SearchResultMediator rp);
     
     /**
      * Wether or not this result can be marked as Junk.

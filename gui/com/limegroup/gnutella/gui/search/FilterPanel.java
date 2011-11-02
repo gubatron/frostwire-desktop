@@ -44,7 +44,7 @@ public class FilterPanel extends JPanel {
     
     private JComboBox _typeCombo;
 
-    private final Map<ResultPanel, GeneralResultFilter> ACTIVE_FILTERS = new HashMap<ResultPanel, GeneralResultFilter>();
+    private final Map<SearchResultMediator, GeneralResultFilter> ACTIVE_FILTERS = new HashMap<SearchResultMediator, GeneralResultFilter>();
 
     public FilterPanel() {
         setupUI();
@@ -230,7 +230,7 @@ public class FilterPanel extends JPanel {
         reset();
     }
 
-    public void setFilterFor(ResultPanel rp) {
+    public void setFilterFor(SearchResultMediator rp) {
         GeneralResultFilter filter = ACTIVE_FILTERS.get(rp);
         if (filter == null) {
             filter = new GeneralResultFilter(rp, _rangeSliderSeeds, _rangeSliderSize, _keywordFilterTextField, _typeCombo);
@@ -248,7 +248,7 @@ public class FilterPanel extends JPanel {
         _activeFilter = filter;
     }
 
-    public void panelReset(ResultPanel rp) {
+    public void panelReset(SearchResultMediator rp) {
         GeneralResultFilter filter = ACTIVE_FILTERS.get(rp);
         if (filter != null) {
             ACTIVE_FILTERS.remove(rp);
@@ -256,7 +256,7 @@ public class FilterPanel extends JPanel {
         }
     }
 
-    public boolean panelRemoved(ResultPanel rp) {
+    public boolean panelRemoved(SearchResultMediator rp) {
         GeneralResultFilter filter = ACTIVE_FILTERS.get(rp);
         if (filter != null) {
             ACTIVE_FILTERS.remove(rp);

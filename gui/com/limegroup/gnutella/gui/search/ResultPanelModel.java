@@ -15,7 +15,7 @@ import com.limegroup.gnutella.settings.SearchSettings;
  * that the new lines are added as extra information to the existing lines,
  * instead of as brand new lines.
  */
-class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
+class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, SearchResult> {
     
     /**
      * 
@@ -67,7 +67,7 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
      * Constructs a new ResultPanelModel with the given MetadataModel.
      */
     ResultPanelModel(MetadataModel mm) {
-        super(TableLine.class);
+        super(SearchResultDataLine.class);
         METADATA = mm;
     }
     
@@ -88,8 +88,8 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
     /**
      * Creates a new TableLine.
      */
-    public TableLine createDataLine() {
-        return new TableLine(COLUMNS);
+    public SearchResultDataLine createDataLine() {
+        return new SearchResultDataLine(COLUMNS);
     }
     
     /**
@@ -104,7 +104,7 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
      * or to change the 'count' compare to use different values for
      * multicast or secure results.
      */
-    public int compare(TableLine ta, TableLine tb) {
+    public int compare(SearchResultDataLine ta, SearchResultDataLine tb) {
         int spamRet = compareSpam(ta, tb);
         if (spamRet != 0)
             return spamRet;
@@ -135,7 +135,7 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
      * @param row  the index of the row to remove.
      */
     public void remove(int row) {
-        TableLine tl = get(row);
+        SearchResultDataLine tl = get(row);
         String sha1 = getHash(row);
         if(sha1 != null)
             _indexes.remove(sha1);
@@ -155,7 +155,7 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
     /**
      * Override to fix compile error on OSX.
      */
-    public int add(TableLine dl) {
+    public int add(SearchResultDataLine dl) {
         return super.add(dl);
 	}
 	
@@ -178,7 +178,7 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
     /**
      * Adds sr to line as a new source.
      */
-    protected int addNewResult(TableLine line, SearchResult sr) {
+    protected int addNewResult(SearchResultDataLine line, SearchResult sr) {
         int oldCount = line.getSeeds();
         line.addNewResult(sr, METADATA);
         int newCount = line.getSeeds();
@@ -191,7 +191,7 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
     /**
      * Maintains the indexes HashMap & MetadataModel.
      */    
-    public int add(TableLine tl, int row) {
+    public int add(SearchResultDataLine tl, int row) {
         _numSources += tl.getSeeds();
         _numResults += 1;
         String sha1 = tl.getHash();
@@ -207,7 +207,7 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
     /**
      * Gets the row this DataLine is at.
      */
-    public int getRow(TableLine tl) {
+    public int getRow(SearchResultDataLine tl) {
         String sha1 = tl.getHash();
         if(sha1 != null)
             return fastMatch(sha1);
@@ -291,7 +291,7 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
     }
     
     /** Compares the spam difference between the two rows. */
-    private int compareSpam(TableLine a, TableLine b) {
+    private int compareSpam(SearchResultDataLine a, SearchResultDataLine b) {
         if (SearchSettings.moveJunkToBottom()) {
             if (SpamFilter.isAboveSpamThreshold(a)) {
                 if (!SpamFilter.isAboveSpamThreshold(b)) {
@@ -308,7 +308,7 @@ class ResultPanelModel extends BasicDataLineModel<TableLine, SearchResult> {
     /**
      * Compares the count between two rows.
      */
-    private int compareCount(TableLine a, TableLine b, boolean spamCompare) {
+    private int compareCount(SearchResultDataLine a, SearchResultDataLine b, boolean spamCompare) {
         if(spamCompare) {
             int spamRet = compareSpam(a, b);
             if(spamRet != 0)

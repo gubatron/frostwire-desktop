@@ -92,7 +92,7 @@ final class MetadataModel {
      * Adds a new TableLine, possibly also adding info in the LimeXMLDocument,
      * if one exists.
      */
-    void addNew(TableLine line) {
+    void addNew(SearchResultDataLine line) {
         NamedMediaType mt = line.getNamedMediaType();
         
         // populate the properties map.
@@ -109,7 +109,7 @@ final class MetadataModel {
     /**
      * Removes any references to this table line.
      */
-    void remove(TableLine line) {
+    void remove(SearchResultDataLine line) {
         NamedMediaType mt = line.getNamedMediaType();
         
         removeProperties(line);
@@ -123,7 +123,7 @@ final class MetadataModel {
      * Updates the metadata information for the specified property.
      */
     void updateProperty(String property, Object current,
-                        Object old, TableLine line) {
+                        Object old, SearchResultDataLine line) {
         Map map = getMap(PROPERTIES, property);
         getCollection(map, old).remove(line);
         getCollection(map, current).add(line);
@@ -254,7 +254,7 @@ final class MetadataModel {
      *   speed     (RESULT_PANEL_SPEED)
      *   vendor    (RESULT_PANEL_VENDOR)
      */
-    private void addProperties(TableLine line) {
+    private void addProperties(SearchResultDataLine line) {
         Map extMap = getMap(PROPERTIES, PropertyType.TYPE.getKey());
         getCollection(extMap, line.getIconAndExtension()).add(line);
             
@@ -268,7 +268,7 @@ final class MetadataModel {
     /**
      * Removes this line from its properties.
      */
-    private void removeProperties(TableLine line) {
+    private void removeProperties(SearchResultDataLine line) {
         Map extMap = getMap(PROPERTIES, PropertyType.TYPE.getKey());
         getCollection(extMap, line.getIconAndExtension()).remove(line);
             

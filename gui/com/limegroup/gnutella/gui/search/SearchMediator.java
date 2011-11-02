@@ -97,7 +97,7 @@ public final class SearchMediator {
         // Link up the tabs of results with the filters of the input screen.
         getSearchResultDisplayer().setSearchListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
-                ResultPanel panel = getSearchResultDisplayer().getSelectedResultPanel();
+                SearchResultMediator panel = getSearchResultDisplayer().getSelectedResultPanel();
                 if(panel == null)
                     getSearchInputManager().clearFilters();
                 else
@@ -138,14 +138,14 @@ public final class SearchMediator {
     /**
      * Placehold for repeatSearch
      */
-    static byte[] repeatSearch(ResultPanel rp, SearchInformation info) {
+    static byte[] repeatSearch(SearchResultMediator rp, SearchInformation info) {
       return repeatSearch (rp,info,true);
     }
     
     /** 
      * Repeats the given search.
      */
-    static byte[] repeatSearch(ResultPanel rp, SearchInformation info, boolean clearingResults) {
+    static byte[] repeatSearch(SearchResultMediator rp, SearchInformation info, boolean clearingResults) {
         if(!validate(info))
             return null;
 
@@ -287,7 +287,7 @@ public final class SearchMediator {
                 new Thread(new Runnable() {
                     public void run() {
         
-                        final ResultPanel rp = getResultPanelForGUID(new GUID(guid));
+                        final SearchResultMediator rp = getResultPanelForGUID(new GUID(guid));
                         if (rp != null) {
                             rp.incrementSearchCount();
                             List<WebSearchResult> webResults = searchEngine.getPerformer().search(query);
@@ -307,7 +307,7 @@ public final class SearchMediator {
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         } finally {
-                                            ResultPanel trp = getResultPanelForGUID(new GUID(guid));
+                                            SearchResultMediator trp = getResultPanelForGUID(new GUID(guid));
                                             if (trp != null) {
                                                 trp.decrementSearchCount();
                                             }
@@ -329,7 +329,7 @@ public final class SearchMediator {
 		new Thread(new Runnable() {
             public void run() {
 
-                final ResultPanel rp = getResultPanelForGUID(new GUID(guid));
+                final SearchResultMediator rp = getResultPanelForGUID(new GUID(guid));
                 if (rp != null) {
                     rp.incrementSearchCount();
                     final List<SmartSearchResult> localResults = LocalSearchEngine.instance().search(query);
@@ -348,7 +348,7 @@ public final class SearchMediator {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 } finally {
-                                    ResultPanel trp = getResultPanelForGUID(new GUID(guid));
+                                    SearchResultMediator trp = getResultPanelForGUID(new GUID(guid));
                                     if (trp != null) {
                                         trp.decrementSearchCount();
                                     }
@@ -381,7 +381,7 @@ public final class SearchMediator {
      * Adds a single result tab for the specified GUID, type,
      * standard query string, and XML query string.
      */
-    private static ResultPanel addResultTab(GUID guid,
+    private static SearchResultMediator addResultTab(GUID guid,
                                             SearchInformation info) {
         return getSearchResultDisplayer().addResultTab(guid, info);
     }
@@ -409,7 +409,7 @@ public final class SearchMediator {
     /**
      * Downloads all the selected table lines from the given result panel.
      */
-    public static void downloadFromPanel(ResultPanel rp, TableLine[] lines) {
+    public static void downloadFromPanel(SearchResultMediator rp, SearchResultDataLine[] lines) {
         downloadAll(lines, new GUID(rp.getGUID()), rp.getSearchInformation());
         rp.refresh();
     }
@@ -418,8 +418,8 @@ public final class SearchMediator {
      * Downloads the selected files in the currently displayed
      * <tt>ResultPanel</tt> if there is one.
      */
-    static void doDownload(final ResultPanel rp) {
-        final TableLine[] lines = rp.getAllSelectedLines();
+    static void doDownload(final SearchResultMediator rp) {
+        final SearchResultDataLine[] lines = rp.getAllSelectedLines();
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 SearchMediator.downloadAll(lines, new GUID(rp.getGUID()),
@@ -436,8 +436,8 @@ public final class SearchMediator {
 	 * @throws IllegalStateException when there is more than one file selected
 	 * for download or there is no file selected.
 	 */
-	static void doDownloadAs(final ResultPanel panel) {
-		final TableLine[] lines = panel.getAllSelectedLines();
+	static void doDownloadAs(final SearchResultMediator panel) {
+		final SearchResultDataLine[] lines = panel.getAllSelectedLines();
 		if (lines.length != 1) {
 			throw new IllegalStateException("There should only be one search result selected: " + lines.length);
 		}
@@ -445,8 +445,8 @@ public final class SearchMediator {
                      panel.getSearchInformation());
 	}
 	
-	public static void showTorrentDetails(ResultPanel panel, long delay) {
-		final TableLine[] lines = panel.getAllSelectedLines();
+	public static void showTorrentDetails(SearchResultMediator panel, long delay) {
+		final SearchResultDataLine[] lines = panel.getAllSelectedLines();
 		if (lines.length != 1) {
 			throw new IllegalStateException("There should only be one search result selected: " + lines.length);
 		}
@@ -459,7 +459,7 @@ public final class SearchMediator {
     /**
      * Downloads all the selected lines.
      */
-    private static void downloadAll(TableLine[] lines, GUID guid, 
+    private static void downloadAll(SearchResultDataLine[] lines, GUID guid, 
                                     SearchInformation searchInfo) 
     {
         for(int i = 0; i < lines.length; i++)
@@ -476,7 +476,7 @@ public final class SearchMediator {
      * <code>null</code>
      * @param searchInfo The query used to find the file being downloaded.
      */
-    private static void downloadLine(TableLine line, GUID guid, File saveDir,
+    private static void downloadLine(SearchResultDataLine line, GUID guid, File saveDir,
             String fileName, boolean saveAs, SearchInformation searchInfo) 
     {
         if (line == null)
@@ -503,7 +503,7 @@ public final class SearchMediator {
      * tab to indicate the correct number of TableLines in the current
      * view.
      */
-    static void setTabDisplayCount(ResultPanel rp) {
+    static void setTabDisplayCount(SearchResultMediator rp) {
         getSearchResultDisplayer().setTabDisplayCount(rp);
     }
 
@@ -519,16 +519,16 @@ public final class SearchMediator {
     /**
      * Notification that a given ResultPanel has been selected
      */
-    static void panelSelected(ResultPanel panel) {
+    static void panelSelected(SearchResultMediator panel) {
         //getSearchInputManager().setFiltersFor(panel);
     }
     
     /**
      * Notification that a search has been killed.
      */
-    static void searchKilled(ResultPanel panel) {
+    static void searchKilled(SearchResultMediator panel) {
         getSearchInputManager().panelRemoved(panel);
-        ResultPanel rp = getSearchResultDisplayer().getSelectedResultPanel();
+        SearchResultMediator rp = getSearchResultDisplayer().getSelectedResultPanel();
         if (rp != null) {
            // getSearchInputManager().setFiltersFor(rp);
         }
@@ -550,7 +550,7 @@ public final class SearchMediator {
      * @return the <tt>ResultPanel</tt> that matches the GUID, or null
      *  if none match.
      */
-    static ResultPanel getResultPanelForGUID(GUID rguid) {
+    static SearchResultMediator getResultPanelForGUID(GUID rguid) {
         return getSearchResultDisplayer().getResultPanelForGUID(rguid);
     }
     

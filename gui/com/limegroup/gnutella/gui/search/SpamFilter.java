@@ -4,7 +4,7 @@ import com.frostwire.gui.filters.TableLineFilter;
 
 
 
-public class SpamFilter implements TableLineFilter<TableLine> {
+public class SpamFilter implements TableLineFilter<SearchResultDataLine> {
     
     //private static URI R;
 
@@ -12,7 +12,7 @@ public class SpamFilter implements TableLineFilter<TableLine> {
 	 * return false if a TableLine is rated as spam and _filter is true and true
 	 * otherwise
 	 */
-	public boolean allow(TableLine node) {
+	public boolean allow(SearchResultDataLine node) {
 		return !isAboveSpamThreshold(node);
 	}
 
@@ -25,7 +25,7 @@ public class SpamFilter implements TableLineFilter<TableLine> {
 	 * @param isSpam
 	 *            whether or not it is spam or not.
 	 */
-	public void markAsSpamUser(TableLine line, boolean isSpam) {
+	public void markAsSpamUser(SearchResultDataLine line, boolean isSpam) {
 //		RemoteFileDesc[] descs = line.getAllRemoteFileDescs();
 //		if (isSpam) {
 //			GuiCoreMediator.getSpamManager().handleUserMarkedSpam(descs);
@@ -42,7 +42,7 @@ public class SpamFilter implements TableLineFilter<TableLine> {
      * Returns true if TableLine's spam rating is above 
      * SearchSettings.FILTER_SPAM_RESULTS threshold
      */
-    static final boolean isAboveSpamThreshold(TableLine line) {
+    static final boolean isAboveSpamThreshold(SearchResultDataLine line) {
         return false;
     }
     

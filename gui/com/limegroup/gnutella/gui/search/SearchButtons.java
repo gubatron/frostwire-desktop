@@ -39,7 +39,7 @@ final class SearchButtons {
 	 * The constructor creates the row of buttons with their associated
 	 * listeners.
 	 */
-    SearchButtons(ResultPanel rp) {
+    SearchButtons(SearchResultMediator rp) {
         String[] buttonLabelKeys = {
             I18nMarker.marktr("Options"),
         	I18nMarker.marktr("Buy"),
