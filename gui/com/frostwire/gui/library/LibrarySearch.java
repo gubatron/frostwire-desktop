@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 
 import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
+import org.limewire.util.StringUtils;
 
 import com.frostwire.alexandria.InternetRadioStation;
 import com.frostwire.alexandria.Playlist;
@@ -566,9 +567,21 @@ public class LibrarySearch extends JPanel {
             if (canceled) {
                 return;
             }
+            
+            String sql = null;
+            List<List<Object>> rows = null;
 
-            String sql = "SELECT T.internetRadioStationId, T.name, T.description, T.url, T.bitrate, T.type, T.website, T.genre, T.pls FROM FT_SEARCH_DATA(?, 0, 0) FT, INTERNETRADIOSTATIONS T WHERE FT.TABLE='INTERNETRADIOSTATIONS' AND T.internetRadioStationId = FT.KEYS[0]";
-            List<List<Object>> rows = LibraryMediator.getLibrary().getDB().getDatabase().query(sql, query);
+            //Show everything
+            if (StringUtils.isNullOrEmpty(query,true) || query.equals(".")) {
+            	LibraryMediator.instance().getLibraryFiles().selectRadio();
+            	//sql="SELECT T.internetRadioStationId, T.name, T.description, T.url, T.bitrate, T.type, T.website, T.genre, T.pls FROM INTERNETRADIOSTATIONS T";
+            	//rows = LibraryMediator.getLibrary().getDB().getDatabase().query(sql);
+            	return;
+            } else {
+            	//Full text search
+            	sql = "SELECT T.internetRadioStationId, T.name, T.description, T.url, T.bitrate, T.type, T.website, T.genre, T.pls FROM FT_SEARCH_DATA(?, 0, 0) FT, INTERNETRADIOSTATIONS T WHERE FT.TABLE='INTERNETRADIOSTATIONS' AND T.internetRadioStationId = FT.KEYS[0]";
+            	rows = LibraryMediator.getLibrary().getDB().getDatabase().query(sql, query);
+            }
 
             final List<InternetRadioStation> results = new ArrayList<InternetRadioStation>();
 

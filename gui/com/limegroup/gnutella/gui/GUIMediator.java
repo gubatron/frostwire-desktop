@@ -57,6 +57,7 @@ import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.limegroup.gnutella.UpdateInformation;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
 import com.limegroup.gnutella.gui.bugs.FatalBugManager;
@@ -1628,26 +1629,13 @@ public final class GUIMediator {
     }
 
     /**
-     * Launches the specified audio song in the player. Adds this song to the
-     * play list and begins playing it.
-     * 
-     * @param song
-     *            the <tt>PlayListItem</tt> instance to launch
-     */
-    public void launchAudio(AudioSource song) {
-        launchAudio(song, true);
-    }
-
-    /**
      * Launches the specified audio song in the player.
      * 
      * @param song
      *            - song to play now
-     * @param enqueueSong
-     *            - if true, also add this song to the playlist, otherwise just
      * 
      */
-    public void launchAudio(AudioSource song, boolean addSongToPlaylist) {
+    public void launchAudio(AudioSource song) {
 
         if (AudioPlayer.instance().getCurrentSong() != null)
             try {
@@ -1659,13 +1647,8 @@ public final class GUIMediator {
                 e.printStackTrace();
             }
 
-//        if (addSongToPlaylist) {
-//            PlaylistMediator playList = PlaylistMediator.getInstance();
-//            playList.add(song, playList.getSize());
-//            playList.setSelectedIndex(song);
-//        }
-
-        AudioPlayer.instance().loadSong(song);
+        //AudioPlayer.instance().loadSong(song);
+       AudioPlayer.instance().asyncLoadSong(song, true, !song.getClass().equals(InternetRadioAudioSource.class));
     }
 
     /**

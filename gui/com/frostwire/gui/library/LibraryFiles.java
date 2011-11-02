@@ -464,7 +464,11 @@ public class LibraryFiles extends AbstractLibraryListPanel {
         Object selectedValue = _list.getSelectedValue();
         if (selectedValue != null && ((LibraryFilesListCell) selectedValue).getDirectoryHolder() instanceof InternetRadioDirectoryHolder) {
             // already selected
-            _listSelectionListener.valueChanged(null);
+        	try {
+        		_listSelectionListener.valueChanged(null);
+        	} catch (Exception e) {
+        		System.out.println();
+        	}
             return;
         }
         int size = _model.getSize();

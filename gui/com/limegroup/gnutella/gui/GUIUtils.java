@@ -599,7 +599,7 @@ public final class GUIUtils {
                         public void run(){
                             GUIMediator.safeInvokeAndWait(new Runnable() {
                                 public void run() {
-                                    GUIMediator.instance().launchAudio(new AudioSource(file), false);
+                                    GUIMediator.instance().launchAudio(new AudioSource(file));
                                 }
                             });
                         }
