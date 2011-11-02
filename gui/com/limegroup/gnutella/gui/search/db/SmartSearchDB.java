@@ -150,7 +150,8 @@ public class SmartSearchDB {
         try {
             close();
             FileUtils.deleteRecursive(_databaseFile);
-            return _connection = createDatabase(_databaseFile, _name);
+            _connection = createDatabase(_databaseFile, _name);
+            return _connection; 
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -171,8 +172,11 @@ public class SmartSearchDB {
             if (!createIfNotExists) {
                 sb.append(";ifexists=true");
             }
+            
+            _closed = false;
             return DriverManager.getConnection(sb.toString(), "SA", "");
         } catch (Exception e) {
+        	_closed = true;
             return null;
         }
     }
