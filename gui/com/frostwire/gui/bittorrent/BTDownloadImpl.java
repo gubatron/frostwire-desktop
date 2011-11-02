@@ -353,6 +353,5 @@ public class BTDownloadImpl implements BTDownload {
 		} else {
 			_displayName = _downloadManager.getDisplayName();
 		}
-		
 	}
 }

@@ -347,7 +347,16 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
     }
 
     private Icon getIcon() {
-        return IconManager.instance().getIconForFile(initializer.getSaveLocation());
+        if (initializer.isPartialDownload()) {
+            try {
+                return IconManager.instance().getIconForFile(new File(initializer.getDisplayName()));
+            } catch (Exception e) {
+                // ignore error
+                return IconManager.instance().getIconForFile(initializer.getSaveLocation());
+            }
+        } else {
+            return IconManager.instance().getIconForFile(initializer.getSaveLocation());
+        }
     }
 
     /**
