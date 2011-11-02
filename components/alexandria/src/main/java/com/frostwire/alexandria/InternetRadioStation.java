@@ -119,7 +119,7 @@ public class InternetRadioStation extends Entity<InternetRadioStationDB> {
         this.pls = pls;
     }
     
-    public boolean getBookmarked() {
+    public boolean isBookmarked() {
         return bookmarked;
     }
     

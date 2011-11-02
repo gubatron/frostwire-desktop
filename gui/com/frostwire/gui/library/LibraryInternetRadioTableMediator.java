@@ -1,8 +1,11 @@
 package com.frostwire.gui.library;
 
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -188,6 +191,8 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
     protected void setDefaultRenderers() {
         super.setDefaultRenderers();
         TABLE.setDefaultRenderer(PlayableCell.class, new PlayableCellRenderer());
+        TABLE.setDefaultRenderer(InternetRadioBookmark.class, new InternetRadioBookmarkRenderer());
+        
     }
 
     /**
@@ -198,6 +203,34 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
         TableColumn tc;
         tc = model.getColumn(LibraryInternetRadioTableDataLine.WEBSITE_IDX);
         tc.setCellEditor(new ActionIconAndNameEditor());
+        
+        //Hey Gosling, nice inconsistency here...
+        //Why not TABLE.setDefaultCellEditor(Clazz, EditorObj)???
+        
+        
+        tc =  model.getColumn(LibraryInternetRadioTableDataLine.BOOKMARKED_IDX);
+        tc.setCellEditor(new InternetRadioBookmarkEditor());
+
+        TABLE.addMouseMotionListener(new MouseMotionAdapter() {
+            int currentCellColumn = -1;
+            int currentCellRow = -1;
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                Point hit = e.getPoint();
+                int hitColumn = TABLE.columnAtPoint(hit);
+                int hitRow = TABLE.rowAtPoint(hit);
+                if (currentCellRow != hitRow || currentCellColumn != hitColumn) {
+                    if (TABLE.getCellRenderer(hitRow, hitColumn) instanceof InternetRadioBookmarkRenderer) {
+                        TABLE.editCellAt(hitRow, hitColumn);
+                    }
+                    currentCellColumn = hitColumn;
+                    currentCellRow = hitRow;
+                }
+            }
+        });    
+        
+        
     }
 
     /**

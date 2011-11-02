@@ -115,11 +115,11 @@ public class LibraryFiles extends AbstractLibraryListPanel {
         _torrentsHolder = new TorrentDirectoryHolder();
         _torrentsCell = new LibraryFilesListCell(_torrentsHolder);
 
-        _model.addElement(_finishedDownloadsCell);
         addPerMediaTypeCells();
-        _model.addElement(_torrentsCell);
-        _model.addElement(new LibraryFilesListCell(new StarredDirectoryHolder()));
         _model.addElement(new LibraryFilesListCell(new InternetRadioDirectoryHolder()));
+        _model.addElement(new LibraryFilesListCell(new StarredDirectoryHolder()));
+        _model.addElement(_torrentsCell);
+        _model.addElement(_finishedDownloadsCell);
     }
 
     private void setupList() {

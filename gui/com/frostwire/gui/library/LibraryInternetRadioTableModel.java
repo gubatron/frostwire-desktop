@@ -107,6 +107,6 @@ final class LibraryInternetRadioTableModel extends HashBasedDataLineModel<Librar
 	 *         <code>false</code> otherwise
 	 */
 	public boolean isCellEditable(int row, int col) {
-	    return col == LibraryInternetRadioTableDataLine.WEBSITE_IDX;
+	    return col == LibraryInternetRadioTableDataLine.WEBSITE_IDX || col == LibraryInternetRadioTableDataLine.BOOKMARKED_IDX;
 	}
 }

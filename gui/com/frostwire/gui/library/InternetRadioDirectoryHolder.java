@@ -20,7 +20,7 @@ class InternetRadioDirectoryHolder implements DirectoryHolder {
     }
 
     public String getName() {
-        return I18n.tr("Radio (Beta)");
+        return I18n.tr("Radio");
     }
 
     public String getDescription() {
