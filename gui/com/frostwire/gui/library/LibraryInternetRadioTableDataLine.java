@@ -130,13 +130,6 @@ public final class LibraryInternetRadioTableDataLine extends AbstractLibraryTabl
     }
 
     /**
-     * @return the PlayListItem for this table row
-     */
-    public InternetRadioStation getPlayListItem() {
-        return initializer;
-    }
-
-    /**
      * Creates a tool tip for each row of the playlist. Tries to grab any information
      * that was extracted from the Meta-Tag or passed in to the PlaylistItem as 
      * a property map

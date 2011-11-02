@@ -28,6 +28,7 @@ import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.alexandria.InternetRadioStation;
+import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
@@ -339,12 +340,12 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
 
         try {
             AudioSource audioSource = new InternetRadioAudioSource(new URL(line.getInitializeObject().getUrl()));
-            AudioPlayer.instance().asyncLoadSong(audioSource, true, false);
+            AudioPlayer.instance().asyncLoadSong(audioSource, true, false, null, getFileView());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
     }
-
+    
     /**
      * Launches the associated applications for each selected file
      * in the library if it can.
@@ -510,7 +511,8 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
         List<AudioSource> result = new ArrayList<AudioSource>(size);
         for (int i = 0; i < size; i++) {
             try {
-                //result.add(new AudioSource(DATA_MODEL.get(i).getPlayListItem()));
+                URL url = new URL(DATA_MODEL.get(i).getInitializeObject().getUrl());
+                result.add(new InternetRadioAudioSource(url));
             } catch (Exception e) {
                 return Collections.emptyList();
             }
@@ -525,12 +527,12 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
     }
 
     private void resetAudioPlayerFileView() {
-//        Playlist playlist = AudioPlayer.instance().getCurrentPlaylist();
-//        if (playlist != null && playlist.equals(currentPlaylist)) {
-//            if (AudioPlayer.instance().getPlaylistFilesView() != null) {
-//                AudioPlayer.instance().setPlaylistFilesView(getFileView());
-//            }
-//        }
+        Playlist playlist = AudioPlayer.instance().getCurrentPlaylist();
+        if (playlist == null) {
+            if (AudioPlayer.instance().getPlaylistFilesView() != null) {
+                AudioPlayer.instance().setPlaylistFilesView(getFileView());
+            }
+        }
     }
     
     private final class CopyStreamUrlAction extends AbstractAction {
