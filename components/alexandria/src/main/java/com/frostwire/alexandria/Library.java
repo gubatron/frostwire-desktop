@@ -61,8 +61,8 @@ public class Library extends Entity<LibraryDB> {
         return new Playlist(this, LibraryDatabase.OBJECT_NOT_SAVED_ID, name, description);
     }
     
-    public InternetRadioStation newInternetRadioStation(String name, String description, String url, String bitrate, String type, String website, String genre, String pls) {
-        return new InternetRadioStation(this, LibraryDatabase.OBJECT_NOT_SAVED_ID, name, description, url, bitrate, type, website, genre, pls);
+    public InternetRadioStation newInternetRadioStation(String name, String description, String url, String bitrate, String type, String website, String genre, String pls, boolean bookmarked) {
+        return new InternetRadioStation(this, LibraryDatabase.OBJECT_NOT_SAVED_ID, name, description, url, bitrate, type, website, genre, pls, bookmarked);
     }
 
     public void dump() {
@@ -84,5 +84,13 @@ public class Library extends Entity<LibraryDB> {
 
     public void updatePlaylistItemProperties(String filePath, String title, String artist, String album, String comment, String genre, String track, String year) {
         db.updatePlaylistItemProperties(filePath, title, artist, album, comment, genre, track, year);
+    }
+
+    public long getTotalRadioStations() {
+        return db.getTotalRadioStations(this);
+    }
+
+    public void restoreDefaultRadioStations() {
+        db.restoreDefaultRadioStations(this);
     }
 }

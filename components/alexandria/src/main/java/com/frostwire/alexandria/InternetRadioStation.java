@@ -16,6 +16,7 @@ public class InternetRadioStation extends Entity<InternetRadioStationDB> {
     private String website;
     private String genre;
     private String pls;
+    private boolean bookmarked;
 
     private boolean deleted;
 
@@ -26,7 +27,7 @@ public class InternetRadioStation extends Entity<InternetRadioStationDB> {
         this.deleted = false;
     }
 
-    public InternetRadioStation(Library library, int id, String name, String description, String url, String bitrate, String type, String website, String genre, String pls) {
+    public InternetRadioStation(Library library, int id, String name, String description, String url, String bitrate, String type, String website, String genre, String pls, boolean bookmarked) {
         super(new InternetRadioStationDB(library.db.getDatabase()));
         this.library = library;
         this.id = id;
@@ -38,6 +39,7 @@ public class InternetRadioStation extends Entity<InternetRadioStationDB> {
         this.website = website;
         this.genre = genre;
         this.pls = pls;
+        this.bookmarked = bookmarked;
         this.deleted = false;
     }
 
@@ -115,6 +117,14 @@ public class InternetRadioStation extends Entity<InternetRadioStationDB> {
 
     public void setPls(String pls) {
         this.pls = pls;
+    }
+    
+    public boolean getBookmarked() {
+        return bookmarked;
+    }
+    
+    public void setBookmarked(boolean bookmarked) {
+        this.bookmarked = bookmarked;
     }
 
     public boolean isDeleted() {

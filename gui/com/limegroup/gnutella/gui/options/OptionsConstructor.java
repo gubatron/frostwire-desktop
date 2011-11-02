@@ -52,7 +52,7 @@ import com.limegroup.gnutella.gui.options.panes.ImageViewerPaneItem;
 import com.limegroup.gnutella.gui.options.panes.MaximumSearchesPaneItem;
 import com.limegroup.gnutella.gui.options.panes.NetworkInterfacePaneItem;
 import com.limegroup.gnutella.gui.options.panes.NotificationsPaneItem;
-import com.limegroup.gnutella.gui.options.panes.PlayerPreferencePaneItem;
+import com.limegroup.gnutella.gui.options.panes.LibraryPreferencePaneItem;
 import com.limegroup.gnutella.gui.options.panes.PopupsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ProxyLoginPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ProxyPaneItem;
@@ -285,8 +285,8 @@ public final class OptionsConstructor {
         //community chat
 		addOption(OptionsMediator.ROOT_NODE_KEY, CHAT_KEY, I18n.tr("Community Chat"), ChatCommunityPaneItem.class);
 
-		//audio player
-        addOption(OptionsMediator.ROOT_NODE_KEY, PLAYER_KEY, I18n.tr("Player"), PlayerPreferencePaneItem.class);    
+		// library
+        addOption(OptionsMediator.ROOT_NODE_KEY, PLAYER_KEY, I18n.tr("Library"), LibraryPreferencePaneItem.class);    
         
         //status bar
         addOption(OptionsMediator.ROOT_NODE_KEY, STATUS_BAR_KEY, I18n.tr("Status Bar"), StatusBarConnectionQualityPaneItem.class, StatusBarFirewallPaneItem.class, StatusBarBandwidthPaneItem.class); // Removed Lime Store

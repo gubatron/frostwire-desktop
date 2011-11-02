@@ -579,7 +579,7 @@ public class LibrarySearch extends JPanel {
             	return;
             } else {
             	//Full text search
-            	sql = "SELECT T.internetRadioStationId, T.name, T.description, T.url, T.bitrate, T.type, T.website, T.genre, T.pls FROM FT_SEARCH_DATA(?, 0, 0) FT, INTERNETRADIOSTATIONS T WHERE FT.TABLE='INTERNETRADIOSTATIONS' AND T.internetRadioStationId = FT.KEYS[0]";
+            	sql = "SELECT T.internetRadioStationId, T.name, T.description, T.url, T.bitrate, T.type, T.website, T.genre, T.pls, T.bookmarked FROM FT_SEARCH_DATA(?, 0, 0) FT, INTERNETRADIOSTATIONS T WHERE FT.TABLE='INTERNETRADIOSTATIONS' AND T.internetRadioStationId = FT.KEYS[0]";
             	rows = LibraryMediator.getLibrary().getDB().getDatabase().query(sql, query);
             }
 
