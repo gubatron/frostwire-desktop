@@ -222,6 +222,8 @@ public class AudioPlayer implements RefreshListener {
 			} else if (currentSong.getPlaylistItem() != null) {
 			    LibraryMediator.instance().getLibraryCoverArt().setFile(new File(currentSong.getPlaylistItem().getFilePath()));
 			    durationInSeconds = (long) currentSong.getPlaylistItem().getTrackDurationInSecs();
+			} else if (currentSong instanceof InternetRadioAudioSource) {
+			    LibraryMediator.instance().getLibraryCoverArt().setDefault();
 			}
 			playSong();
 		}
@@ -350,6 +352,8 @@ public class AudioPlayer implements RefreshListener {
 	        return audioSource.getFile().exists() && isPlayableFile(audioSource.getFile());
 	    } else if (audioSource.getPlaylistItem() != null) {
 	        return new File(audioSource.getPlaylistItem().getFilePath()).exists() && isPlayableFile(audioSource.getPlaylistItem().getFilePath());
+	    } else if (audioSource instanceof InternetRadioAudioSource) {
+	        return true;
 	    } else {
 	        return false;
 	    }

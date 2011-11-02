@@ -636,6 +636,7 @@ public class LibraryUtils {
         String pls = "";
         String[] props = null;
         String strLine;
+        int numLine = 0;
         while ((strLine = d.readLine()) != null) {
             pls += strLine + "\n";
             if (strLine.startsWith("File1=")) {
@@ -646,12 +647,19 @@ public class LibraryUtils {
                 props = processStreamUrl(urlStr);
                 break;
             }
+            
+            numLine++;
+            if (numLine > 10) {
+                if (props == null) { // not a valid pls
+                    break;
+                }
+            }
         }
 
         is.close();
 
         if (props != null) {
-            return LibraryMediator.getLibrary().newInternetRadioStation(props[0], props[0], props[1], props[2], props[3], props[4], props[5], pls);
+            return LibraryMediator.getLibrary().newInternetRadioStation(props[0], props[0], props[1], props[2], props[3], props[4], props[5], pls, false);
         } else {
             return null;
         }

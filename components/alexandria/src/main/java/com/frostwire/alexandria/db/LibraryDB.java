@@ -69,7 +69,7 @@ public class LibraryDB extends ObjectDB<Library> {
     }
     
     public List<InternetRadioStation> getInternetRadioStations(Library library) {
-        List<List<Object>> result = db.query("SELECT internetRadioStationId, name, description, url, bitrate, type, website, genre, pls FROM InternetRadioStations");
+        List<List<Object>> result = db.query("SELECT internetRadioStationId, name, description, url, bitrate, type, website, genre, pls, bookmarked FROM InternetRadioStations");
 
         List<InternetRadioStation> internetRadioStations = new ArrayList<InternetRadioStation>(result.size());
 
@@ -117,5 +117,26 @@ public class LibraryDB extends ObjectDB<Library> {
         Object[] values = new Object[] { title, artist, album, comment, genre, track, year, filePath };
 
         return new Object[] { sql, values };
+    }
+
+    public long getTotalRadioStations(Library library) {
+        List<List<Object>> query = db.query("SELECT COUNT(*) FROM InternetRadioStations");
+        return query.size() > 0 ? (Long) query.get(0).get(0) : 0;
+    }
+
+    public void restoreDefaultRadioStations(Library library) {
+        List<InternetRadioStation> internetRadioStations = getInternetRadioStations(library);
+        
+        InternetRadioStationsData data = new InternetRadioStationsData();
+        
+        for (InternetRadioStation station : internetRadioStations) {
+            data.add(station.getName(), station.getDescription(), station.getUrl(), station.getBitrate(), station.getType(), station.getWebsite(), station.getGenre(), station.getPls());
+        }
+        
+        db.update("DELETE FROM InternetRadioStations");
+
+        for (List<Object> row : data.getData()) {
+            db.update("INSERT INTO InternetRadioStations (name, description, url, bitrate, type, website, genre, pls, bookmarked) VALUES (LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 100), LEFT(?, 100), LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 100000), false)", row.toArray());
+        }
     }
 }

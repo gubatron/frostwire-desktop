@@ -394,4 +394,12 @@ public class LibraryMediator {
             }
         }
     }
+
+    public long getTotalRadioStations() {
+        return getLibrary().getTotalRadioStations();
+    }
+
+    public void restoreDefaultRadioStations() {
+        getLibrary().restoreDefaultRadioStations();
+    }
 }

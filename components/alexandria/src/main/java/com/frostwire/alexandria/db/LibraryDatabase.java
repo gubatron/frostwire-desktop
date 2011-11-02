@@ -128,8 +128,11 @@ public class LibraryDatabase {
         }
     }
 
-    protected Connection onUpdateDatabase(Connection connection) {
-        setupInternetRadioStationsTable(connection);
+    protected Connection onUpdateDatabase(Connection connection, int oldVersion, int newVersion) {
+        
+        if (oldVersion == 1 && newVersion == 2) {
+            setupInternetRadioStationsTable(connection);
+        }
 
         update(connection, "UPDATE Library SET version = ?", LIBRARY_DATABASE_VERSION);
 
@@ -188,7 +191,7 @@ public class LibraryDatabase {
         } else {
             int databaseVersion = getDatabaseVersion(connection);
             if (databaseVersion < LIBRARY_DATABASE_VERSION) {
-                return onUpdateDatabase(connection);
+                return onUpdateDatabase(connection, databaseVersion, LIBRARY_DATABASE_VERSION);
             } else {
                 return connection;
             }
@@ -305,14 +308,14 @@ public class LibraryDatabase {
     }
 
     private void setupInternetRadioStationsTable(Connection connection) {
-        update(connection, "CREATE TABLE InternetRadioStations (internetRadioStationId INTEGER IDENTITY, name VARCHAR(10000), description VARCHAR(10000), url VARCHAR(10000), bitrate VARCHAR(100), type VARCHAR(100), website VARCHAR(10000), genre VARCHAR(10000), pls VARCHAR(100000))");
+        update(connection, "CREATE TABLE InternetRadioStations (internetRadioStationId INTEGER IDENTITY, name VARCHAR(10000), description VARCHAR(10000), url VARCHAR(10000), bitrate VARCHAR(100), type VARCHAR(100), website VARCHAR(10000), genre VARCHAR(10000), pls VARCHAR(100000), bookmarked BOOLEAN)");
         update(connection, "CREATE INDEX idx_InternetRadioStations_name ON InternetRadioStations (name)");
         update(connection, "CALL FT_CREATE_INDEX('PUBLIC', 'INTERNETRADIOSTATIONS', 'NAME, DESCRIPTION, GENRE')");
 
         InternetRadioStationsData data = new InternetRadioStationsData();
 
         for (List<Object> row : data.getData()) {
-            update(connection, "INSERT INTO InternetRadioStations (name, description, url, bitrate, type, website, genre, pls) VALUES (LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 100), LEFT(?, 100), LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 100000))", row.toArray());
+            update(connection, "INSERT INTO InternetRadioStations (name, description, url, bitrate, type, website, genre, pls, bookmarked) VALUES (LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 100), LEFT(?, 100), LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 100000), false)", row.toArray());
         }
     }
 }

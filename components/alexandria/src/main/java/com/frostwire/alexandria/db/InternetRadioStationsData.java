@@ -657,6 +657,10 @@ public final class InternetRadioStationsData {
     public List<List<Object>> getData() {
         return data;
     }
+    
+    void add(String name, String description, String url, String bitrate, String type, String website, String genre, String pls) {
+        add(data, name, description, url, bitrate, type, website, genre, pls);
+    }
 
     private void add(List<List<Object>> data, String name, String description, String url, String bitrate, String type, String website, String genre, String pls) {
         if (nameSet.contains(name)) {
