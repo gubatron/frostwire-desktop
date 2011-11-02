@@ -9,7 +9,9 @@ frostwire (5.2.5) stable; urgency=high
     default action when a finished transfer has been double clicked.
   * Clicking on the currently played audio control should always take
     the user to the currently played audio file.
-  * Top Library tree nodes re-arranged. 
+  * Top Library tree nodes re-arranged.
+  * When downloading a single partial file, the transfer manager shows
+    the proper icon based on the file type of the file being downloaded. 
   * A lot of bug fixes.
  
  -- FrostWire Team <contact@frostwire.com>  Wed, 2 Nov 2011 16:14:41 -0500

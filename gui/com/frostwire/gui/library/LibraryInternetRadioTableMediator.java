@@ -349,6 +349,19 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
     public void removeSelection() {
 
         LibraryInternetRadioTableDataLine[] lines = getSelectedLibraryLines();
+    
+		int result = JOptionPane
+		.showConfirmDialog(
+				GUIMediator.getAppFrame(),
+				I18n.trn(I18n.tr("Are you sure you want to remove the selected radio station?"),I18n.tr("Are you sure you want to remove the selected radio stations?"),lines.length),
+				I18n.tr("Are you sure?"),
+				JOptionPane.YES_NO_OPTION,
+				JOptionPane.QUESTION_MESSAGE);
+
+		if (result != JOptionPane.YES_OPTION) {
+			return;
+		}
+
 
         for (LibraryInternetRadioTableDataLine line : lines) {
             InternetRadioStation item = line.getInitializeObject();
