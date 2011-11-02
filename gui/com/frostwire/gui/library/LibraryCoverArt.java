@@ -61,6 +61,16 @@ public class LibraryCoverArt extends JPanel {
             }
         }).start();
     }
+    
+    public void setDefault() {
+        this.file = null;
+        new Thread(new Runnable() {
+            public void run() {
+                Image image = retrieveImage(file);
+                setPrivateImage(image);
+            }
+        }).start();
+    }
 
     @Override
     public void paint(Graphics g) {

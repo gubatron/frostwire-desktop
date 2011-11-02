@@ -222,6 +222,8 @@ public class AudioPlayer implements RefreshListener {
 			} else if (currentSong.getPlaylistItem() != null) {
 			    LibraryMediator.instance().getLibraryCoverArt().setFile(new File(currentSong.getPlaylistItem().getFilePath()));
 			    durationInSeconds = (long) currentSong.getPlaylistItem().getTrackDurationInSecs();
+			} else if (currentSong instanceof InternetRadioAudioSource) {
+			    LibraryMediator.instance().getLibraryCoverArt().setDefault();
 			}
 			playSong();
 		}

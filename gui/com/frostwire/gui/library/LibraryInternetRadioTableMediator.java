@@ -398,7 +398,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
         SEND_TO_FRIEND_ACTION.setEnabled(false);
 
         if (sel.length == 1) {
-            LibraryMediator.instance().getLibraryCoverArt().setFile(null);
+            LibraryMediator.instance().getLibraryCoverArt().setDefault();
         }
     }
 
