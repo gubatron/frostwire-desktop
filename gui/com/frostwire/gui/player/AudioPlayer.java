@@ -496,6 +496,9 @@ public class AudioPlayer implements RefreshListener {
 	}
 
 	public boolean isThisBeingPlayed(File file) {
+	    if (getState() == MediaPlaybackState.Stopped) {
+	        return false;
+	    }
 
 		AudioSource currentSong = getCurrentSong();
 		if (currentSong == null) {
@@ -517,6 +520,9 @@ public class AudioPlayer implements RefreshListener {
 	}
 	
     public boolean isThisBeingPlayed(String file) {
+        if (getState() == MediaPlaybackState.Stopped) {
+            return false;
+        }
 
         AudioSource currentSong = getCurrentSong();
         if (currentSong == null) {
@@ -533,6 +539,9 @@ public class AudioPlayer implements RefreshListener {
     }
 	
 	public boolean isThisBeingPlayed(PlaylistItem playlistItem) {
+	    if (getState() == MediaPlaybackState.Stopped) {
+            return false;
+        }
 
         AudioSource currentSong = getCurrentSong();
         if (currentSong == null) {

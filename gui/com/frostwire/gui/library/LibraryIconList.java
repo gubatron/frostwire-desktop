@@ -15,6 +15,7 @@ import com.frostwire.gui.library.LibraryFiles.LibraryFilesListCell;
 import com.frostwire.gui.library.LibraryPlaylists.LibraryPlaylistsListCell;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.InternetRadioAudioSource;
+import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 
@@ -39,20 +40,22 @@ public class LibraryIconList extends JList {
         super.paintComponent(g);
         AudioPlayer player = AudioPlayer.instance();
         
-        if (player.getCurrentSong() instanceof InternetRadioAudioSource ){
-            int index = getRadioIndex();
-            if (index != -1) {
-                paintIcon(g, speaker, index);
-            }
-        } else if (player.getCurrentSong() != null && player.getCurrentPlaylist() == null && player.getPlaylistFilesView() != null) {
-            int index = getAudioIndex();
-            if (index != -1) {
-                paintIcon(g, speaker, index);
-            }
-        } else if (player.getCurrentSong() != null && player.getCurrentPlaylist() != null && player.getPlaylistFilesView() != null) {
-            int index = getPlaylistIndex(player.getCurrentPlaylist());
-            if (index != -1) {
-                paintIcon(g, speaker, index);
+        if (player.getState() != MediaPlaybackState.Stopped) {
+            if (player.getCurrentSong() instanceof InternetRadioAudioSource) {
+                int index = getRadioIndex();
+                if (index != -1) {
+                    paintIcon(g, speaker, index);
+                }
+            } else if (player.getCurrentSong() != null && player.getCurrentPlaylist() == null && player.getPlaylistFilesView() != null) {
+                int index = getAudioIndex();
+                if (index != -1) {
+                    paintIcon(g, speaker, index);
+                }
+            } else if (player.getCurrentSong() != null && player.getCurrentPlaylist() != null && player.getPlaylistFilesView() != null) {
+                int index = getPlaylistIndex(player.getCurrentPlaylist());
+                if (index != -1) {
+                    paintIcon(g, speaker, index);
+                }
             }
         }
 
