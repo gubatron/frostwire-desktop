@@ -288,6 +288,18 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
     }
 
     public void selectPlaylist(Playlist playlist) {
+        Object selectedValue = _list.getSelectedValue();
+        if (selectedValue != null && ((LibraryPlaylistsListCell) selectedValue).getPlaylist() != null &&
+                ((LibraryPlaylistsListCell) selectedValue).getPlaylist().equals(playlist)) {
+            // already selected
+            try {
+                _listSelectionListener.valueChanged(null);
+            } catch (Exception e) {
+                System.out.println();
+            }
+            return;
+        }
+        
         int size = _model.getSize();
 
         for (int i = 0; i < size; i++) {

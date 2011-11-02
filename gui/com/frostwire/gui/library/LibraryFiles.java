@@ -471,6 +471,7 @@ public class LibraryFiles extends AbstractLibraryListPanel {
         	}
             return;
         }
+        
         int size = _model.getSize();
 
         for (int i = 0; i < size; i++) {

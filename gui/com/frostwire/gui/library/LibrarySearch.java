@@ -494,9 +494,19 @@ public class LibrarySearch extends JPanel {
             if (canceled) {
                 return;
             }
+            
+            String sql = null;
+            List<List<Object>> rows = null;
 
-            String sql = "SELECT T.playlistItemId, T.filePath, T.fileName, T.fileSize, T.fileExtension, T.trackTitle, T.trackDurationInSecs, T.trackArtist, T.trackAlbum, T.coverArtPath, T.trackBitrate, T.trackComment, T.trackGenre, T.trackNumber, T.trackYear, T.starred FROM FT_SEARCH_DATA(?, 0, 0) FT, PLAYLISTITEMS T WHERE FT.TABLE='PLAYLISTITEMS' AND T.playlistItemId = FT.KEYS[0]";
-            List<List<Object>> rows = LibraryMediator.getLibrary().getDB().getDatabase().query(sql, query);
+            //Show everything
+            if (StringUtils.isNullOrEmpty(query,true) || query.equals(".")) {
+                LibraryMediator.instance().getLibraryPlaylists().selectPlaylist(playlist);
+                return;
+            } else {
+                //Full text search
+                sql = "SELECT T.playlistItemId, T.filePath, T.fileName, T.fileSize, T.fileExtension, T.trackTitle, T.trackDurationInSecs, T.trackArtist, T.trackAlbum, T.coverArtPath, T.trackBitrate, T.trackComment, T.trackGenre, T.trackNumber, T.trackYear, T.starred FROM FT_SEARCH_DATA(?, 0, 0) FT, PLAYLISTITEMS T WHERE FT.TABLE='PLAYLISTITEMS' AND T.playlistItemId = FT.KEYS[0]";
+                rows = LibraryMediator.getLibrary().getDB().getDatabase().query(sql, query);
+            }
 
             final List<PlaylistItem> results = new ArrayList<PlaylistItem>();
 
