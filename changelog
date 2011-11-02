@@ -11,7 +11,9 @@ frostwire (5.2.5) stable; urgency=high
     the user to the currently played audio file.
   * Top Library tree nodes re-arranged.
   * When downloading a single partial file, the transfer manager shows
-    the proper icon based on the file type of the file being downloaded. 
+    the proper icon based on the file type of the file being downloaded.
+  * Add partial downloads, and multiple transfers that contain audio files
+    to playlists right from the transfer manager.
   * A lot of bug fixes.
  
  -- FrostWire Team <contact@frostwire.com>  Wed, 2 Nov 2011 16:14:41 -0500

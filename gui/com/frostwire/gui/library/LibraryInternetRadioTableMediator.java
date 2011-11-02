@@ -347,7 +347,6 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
      * Delete selected items from a playlist (not from disk)
      */
     public void removeSelection() {
-
         LibraryInternetRadioTableDataLine[] lines = getSelectedLibraryLines();
     
 		int result = JOptionPane
@@ -362,14 +361,12 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
 			return;
 		}
 
-
         for (LibraryInternetRadioTableDataLine line : lines) {
             InternetRadioStation item = line.getInitializeObject();
             item.delete();
         }
 
         LibraryMediator.instance().getLibraryFiles().selectRadio();
-
         clearSelection();
     }
 

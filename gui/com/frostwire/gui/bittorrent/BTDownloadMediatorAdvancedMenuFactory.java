@@ -26,6 +26,7 @@ package com.frostwire.gui.bittorrent;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +41,7 @@ import com.frostwire.gui.bittorrent.BTDownloadActions.AddToPlaylistAction;
 import com.frostwire.gui.bittorrent.BTDownloadActions.CreateNewPlaylistAction;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.LibraryUtils;
+import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.themes.SkinMenu;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
@@ -372,15 +374,23 @@ public class BTDownloadMediatorAdvancedMenuFactory {
     }
     
     static SkinMenu createAddToPlaylistSubMenu() {
-        
         BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
-
-        if (downloaders.length != 1 || !downloaders[0].isCompleted()) {
-            return null;
-        }
         
-        if (!LibraryUtils.directoryContainsAudio(downloaders[0].getSaveLocation())) {
-            return null;
+        for (BTDownload dler : downloaders) {
+        	if (!dler.isCompleted()) {
+        		return null;
+        	}
+        	
+        	File saveLocation = dler.getSaveLocation();
+
+        	if (saveLocation.isDirectory()) {
+	        	//If the file(s) is(are) inside a folder
+	        	if (!LibraryUtils.directoryContainsAudio(saveLocation)) {
+	        		return null;
+	        	}
+        	} else if (!AudioPlayer.isPlayableFile(saveLocation)) {
+        		return null;
+        	}
         }
         
         SkinMenu menu = new SkinMenu(I18n.tr("Add to playlist"));
@@ -389,17 +399,11 @@ public class BTDownloadMediatorAdvancedMenuFactory {
 
         Library library = LibraryMediator.getLibrary();
         List<Playlist> playlists = library.getPlaylists();
-        Playlist currentPlaylist = LibraryMediator.instance().getSelectedPlaylist();
 
         if (playlists.size() > 0) {
             menu.addSeparator();
 
             for (Playlist playlist : library.getPlaylists()) {
-
-                if (currentPlaylist != null && currentPlaylist.equals(playlist)) {
-                    continue;
-                }
-
                 menu.add(new SkinMenuItem(new AddToPlaylistAction(playlist)));
             }
         }

@@ -155,6 +155,7 @@ public class LibraryUtils {
         String playlistName = plBuilder.toString();
 
         if (playlistName != null && playlistName.length() > 0) {
+            GUIMediator.instance().setWindow(GUIMediator.Tabs.LIBRARY);
             final Playlist playlist = LibraryMediator.getLibrary().newPlaylist(playlistName, playlistName);
             playlist.save();
 

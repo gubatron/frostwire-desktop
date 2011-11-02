@@ -2,6 +2,8 @@ package com.frostwire.gui.bittorrent;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -138,13 +140,13 @@ final class BTDownloadActions {
         public void performAction(ActionEvent e) {
             BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
             if (downloaders.length > 0) {
-                final File toExplore = downloaders[0].getSaveLocation();
+                final String toExplore = downloaders[0].getDisplayName();
 
                 if (toExplore == null) {
                     return;
                 }
                 
-		        LibraryMediator.instance().getLibrarySearch().searchFor(toExplore.getName().replace("_", " ").replace("-", " ").replace(".", " "));
+		        LibraryMediator.instance().getLibrarySearch().searchFor(toExplore.replace("_", " ").replace("-", " ").replace(".", " "));
             }
         }
     }
@@ -393,11 +395,18 @@ final class BTDownloadActions {
         public void actionPerformed(ActionEvent e) {
             BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
 
-            if (downloaders.length != 1 || !downloaders[0].isCompleted()) {
-                return;
+            List<File> playlistFiles = new ArrayList<File>(downloaders.length);
+            
+            for (BTDownload d : downloaders) {
+	            if (!d.isCompleted()) {
+	                return;
+	            }
+	            
+	            playlistFiles.add(d.getSaveLocation());
             }
-            LibraryUtils.createNewPlaylist(new File[] { downloaders[0].getSaveLocation() });
-            GUIMediator.instance().setWindow(GUIMediator.Tabs.LIBRARY);
+            
+            LibraryUtils.createNewPlaylist(playlistFiles.toArray(new File[0]));
+
         }
     }
     
@@ -417,10 +426,18 @@ final class BTDownloadActions {
         public void actionPerformed(ActionEvent e) {
             BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
 
-            if (downloaders.length != 1 || !downloaders[0].isCompleted()) {
-                return;
+            List<File> playlistFiles = new ArrayList<File>(downloaders.length);
+            
+            for (BTDownload d : downloaders) {
+	            if (!d.isCompleted()) {
+	                return;
+	            }
+	            
+	            playlistFiles.add(d.getSaveLocation());
             }
-            LibraryUtils.asyncAddToPlaylist(playlist, new File[] { downloaders[0].getSaveLocation() });
+            
+            
+            LibraryUtils.asyncAddToPlaylist(playlist, playlistFiles.toArray(new File[0]));
             GUIMediator.instance().setWindow(GUIMediator.Tabs.LIBRARY);
         }
     }
