@@ -50,6 +50,40 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
         }
         return lines;
     }
+    
+    public I getItemAt(int row) {
+    	try {
+    		return DATA_MODEL.get(row).getInitializeObject();
+    	} catch (Exception e) {
+    		return null;
+    	}
+    }
+    
+    /**
+     * This method selects the given item and ensures that it's visible (scrolls to it)
+     * @param item
+     * @return
+     */
+    public boolean setItemSelected(I item) {
+        int i = DATA_MODEL.getRow(item);
+
+        if (i != -1) {
+            TABLE.setSelectedRow(i);
+            TABLE.ensureSelectionVisible();
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Convenience method to select an item at the given row.
+     * 
+     * @param row
+     * @return
+     */
+    public boolean selectItemAt(int row) {
+    	return setItemSelected(getItemAt(row));
+    }
 
     @Override
     protected JComponent getScrolledTablePane() {

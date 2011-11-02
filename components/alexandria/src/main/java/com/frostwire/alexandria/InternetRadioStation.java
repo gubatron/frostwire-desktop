@@ -143,4 +143,9 @@ public class InternetRadioStation extends Entity<InternetRadioStationDB> {
         InternetRadioStation other = (InternetRadioStation) obj;
         return other.getId() == getId();
     }
+    
+    @Override
+    public int hashCode() {
+    	return getId();
+    }
 }

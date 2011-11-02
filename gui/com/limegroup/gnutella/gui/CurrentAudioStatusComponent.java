@@ -24,6 +24,7 @@ import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioPlayerListener;
 import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.frostwire.mplayer.MediaPlaybackState;
 
 /*
@@ -65,7 +66,8 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
 			@Override
 			public void mousePressed(MouseEvent e) {
 				if (AudioPlayer.instance().getCurrentSong().getFile()!=null ||
-					AudioPlayer.instance().getCurrentSong().getPlaylistItem()!=null) {
+					AudioPlayer.instance().getCurrentSong().getPlaylistItem()!=null ||
+					AudioPlayer.instance().getCurrentSong() instanceof InternetRadioAudioSource) {
 					showCurrentSong();
 				} else if (AudioPlayer.instance().getCurrentSong().getURL()!=null) {
 					
@@ -259,7 +261,7 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
                 try {
                     String streamTitle = s.substring(13, s.length() - 1);
                     currentStatusIcon = speakerIcon;
-                    currentStatusLabel = streamTitle;
+                    currentStatusLabel = "radio " + streamTitle;
                     setupIconAndText(currentStatusIcon, currentStatusLabel);
                 } catch (Exception e) {
                     e.printStackTrace();

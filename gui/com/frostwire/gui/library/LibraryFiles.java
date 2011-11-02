@@ -428,7 +428,21 @@ public class LibraryFiles extends AbstractLibraryListPanel {
     }
 
     public void selectAudio() {
-        int size = _model.getSize();
+    	Object selectedValue = _list.getSelectedValue();
+        if (selectedValue != null && 
+        	((LibraryFilesListCell) selectedValue).getDirectoryHolder() instanceof MediaTypeSavedFilesDirectoryHolder &&
+        	 ((MediaTypeSavedFilesDirectoryHolder) ((LibraryFilesListCell) selectedValue).getDirectoryHolder()).getMediaType().equals(MediaType.getAudioMediaType())) {
+            // already selected
+        	try {
+        		_listSelectionListener.valueChanged(null);
+        	} catch (Exception e) {
+        		System.out.println();
+        	}
+            return;
+        }
+    	
+    	int size = _model.getSize();
+        
 
         for (int i = 0; i < size; i++) {
             try {
@@ -445,45 +459,49 @@ public class LibraryFiles extends AbstractLibraryListPanel {
     }
 
     public void selectStarred() {
-        int size = _model.getSize();
+		int size = _model.getSize();
+		for (int i = 0; i < size; i++) {
+			try {
+				LibraryFilesListCell cell = (LibraryFilesListCell) _model
+						.get(i);
 
-        for (int i = 0; i < size; i++) {
-            try {
-                LibraryFilesListCell cell = (LibraryFilesListCell) _model.get(i);
-
-                if (cell.getDirectoryHolder() instanceof StarredDirectoryHolder) {
-                    _list.setSelectedValue(cell, true);
-                    return;
-                }
-            } catch (Exception e) {
-            }
-        }
+				if (cell.getDirectoryHolder() instanceof StarredDirectoryHolder) {
+					_list.setSelectedValue(cell, true);
+					return;
+				}
+			} catch (Exception e) {
+			}
+		}
     }
     
     public void selectRadio() {
-        Object selectedValue = _list.getSelectedValue();
-        if (selectedValue != null && ((LibraryFilesListCell) selectedValue).getDirectoryHolder() instanceof InternetRadioDirectoryHolder) {
-            // already selected
-        	try {
-        		_listSelectionListener.valueChanged(null);
-        	} catch (Exception e) {
-        		System.out.println();
-        	}
-            return;
-        }
-        int size = _model.getSize();
-
-        for (int i = 0; i < size; i++) {
-            try {
-                LibraryFilesListCell cell = (LibraryFilesListCell) _model.get(i);
-
-                if (cell.getDirectoryHolder() instanceof InternetRadioDirectoryHolder) {
-                    _list.setSelectedValue(cell, true);
-                    return;
-                }
-            } catch (Exception e) {
-            }
-        }
+    	try {
+	        Object selectedValue = _list.getSelectedValue();
+	        if (selectedValue != null && ((LibraryFilesListCell) selectedValue).getDirectoryHolder() instanceof InternetRadioDirectoryHolder) {
+	            // already selected
+	        	try {
+	        		_listSelectionListener.valueChanged(null);
+	        	} catch (Exception e) {
+	        		System.out.println();
+	        	}
+	            return;
+	        }
+	        int size = _model.getSize();
+	
+	        for (int i = 0; i < size; i++) {
+	            try {
+	                LibraryFilesListCell cell = (LibraryFilesListCell) _model.get(i);
+	
+	                if (cell.getDirectoryHolder() instanceof InternetRadioDirectoryHolder) {
+	                    _list.setSelectedValue(cell, true);
+	                    return;
+	                }
+	            } catch (Exception e) {
+	            }
+	        }
+    	} finally {
+    		executePendingRunnables();
+    	}
     }
 
     public List<MediaTypeSavedFilesDirectoryHolder> getMediaTypeSavedFilesDirectoryHolders() {

@@ -584,17 +584,17 @@ public class LibraryUtils {
 		return keyCode  == KeyEvent.VK_F5 || (ctrlCmdDown && keyCode == KeyEvent.VK_R);
 	}
 
-    public static void asyncImportRadioStation(final String url) {
+    public static void asyncAddRadioStation(final String url) {
         Thread t = new  Thread(new Runnable() {
             public void run() {
-                importRadioStation(url);
+                addRadioStation(url);
             }
         }, "ImportRadioStation");
         t.setDaemon(true);
         t.start();
     }
 
-    public static void importRadioStation(final String url) {
+    public static void addRadioStation(final String url) {
         try {
             LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Importing from") + " " + url);
             final InternetRadioStation item = processInternetRadioStationUrl(url);
@@ -605,6 +605,8 @@ public class LibraryUtils {
             	@Override
             	public void run() {
             		LibraryInternetRadioTableMediator.instance().addUnsorted(item);
+            		LibraryMediator.instance().getLibraryFiles().selectRadio();
+            		LibraryInternetRadioTableMediator.instance().selectItemAt(0);
             	}
             });
             

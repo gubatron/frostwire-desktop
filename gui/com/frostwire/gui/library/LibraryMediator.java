@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
@@ -20,8 +22,10 @@ import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.alexandria.db.LibraryDatabase;
+import com.frostwire.gui.library.LibraryInternetRadioTableMediator.AddRadioStationAction;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconButton;
@@ -62,6 +66,7 @@ public class LibraryMediator {
 	private AbstractLibraryTableMediator<?, ?, ?> lastSelectedMediator;
 	
 	private Set<Integer> idScanned;
+	private AddRadioStationAction addStationAction;
 
     /**
      * @return the <tt>LibraryMediator</tt> instance
@@ -262,14 +267,29 @@ public class LibraryMediator {
         panel.add(getLibrarySearch(), BorderLayout.PAGE_START);
         panel.add(_tablesPanel, BorderLayout.CENTER);
 
-        JPanel panelBottom = new JPanel(new BorderLayout());
+        //BOTTOM PART - Actions to the left and Player to the right
+        JPanel panelBottom = new JPanel();
+        panelBottom.setLayout(new BoxLayout(panelBottom,BoxLayout.LINE_AXIS));
+        //actions
         panelBottom.add(
                 new IconButton(new ConfigureOptionsAction(OptionsConstructor.SHARED_KEY, I18n.tr("Options"), I18n
-                        .tr("You can configure the folders you share in FrostWire\'s Options."))), BorderLayout.LINE_START);
-        panelBottom.add(new LibraryPlayer(), BorderLayout.CENTER);
-        panel.add(panelBottom, BorderLayout.PAGE_END);
+                        .tr("You can configure the folders you share in FrostWire\'s Options."))));
 
+        addStationAction = new LibraryInternetRadioTableMediator.AddRadioStationAction();
+        panelBottom.add(new IconButton(addStationAction));
+        
+        //empty space
+        panelBottom.add(Box.createHorizontalGlue());
+        
+        //player
+        panelBottom.add(new LibraryPlayer());
+        
+        panel.add(panelBottom, BorderLayout.PAGE_END);
         return panel;
+    }
+    
+    public void setStationActionEnabled(boolean state) {
+    	addStationAction.setEnabled(state);
     }
 
     public void setSelectedFile(File file) {
@@ -291,7 +311,7 @@ public class LibraryMediator {
                     public void run() {
                         GUIMediator.safeInvokeLater(new Runnable() {
                             public void run() {
-                                LibraryPlaylistsTableMediator.instance().setPlaylistItemSelected(currentSong.getPlaylistItem());
+                                LibraryPlaylistsTableMediator.instance().setItemSelected(currentSong.getPlaylistItem());
                             }
                         });
                     }
@@ -307,7 +327,7 @@ public class LibraryMediator {
                     public void run() {
                         GUIMediator.safeInvokeLater(new Runnable() {
                             public void run() {
-                                LibraryPlaylistsTableMediator.instance().setPlaylistItemSelected(currentSong.getPlaylistItem());
+                                LibraryPlaylistsTableMediator.instance().setItemSelected(currentSong.getPlaylistItem());
                             }
                         });
                     }
@@ -332,6 +352,22 @@ public class LibraryMediator {
             });
 
             libraryFiles.selectAudio();
+        } else if (currentSong instanceof InternetRadioAudioSource) {
+        	//selects the audio node at the top
+            LibraryFiles libraryFiles = getLibraryFiles();
+
+            //select the song once it's available on the right hand side
+            libraryFiles.enqueueRunnable(new Runnable() {
+                public void run() {
+                    GUIMediator.safeInvokeLater(new Runnable() {
+                        public void run() {
+                            LibraryInternetRadioTableMediator.instance().setItemSelected(((InternetRadioAudioSource) currentSong).getInternetRadioStation());
+                        }
+                    });
+                }
+            });
+
+            libraryFiles.selectRadio();
         }
 
         //Scroll to current song.

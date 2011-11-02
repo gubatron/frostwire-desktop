@@ -561,17 +561,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     public void setPlayerEnabled(boolean value) {
         handleSelection(TABLE.getSelectedRow());
     }
-
-    public boolean setPlaylistItemSelected(PlaylistItem item) {
-        int i = DATA_MODEL.getRow(item);
-
-        if (i != -1) {
-            TABLE.setSelectedRow(i);
-            TABLE.ensureSelectionVisible();
-            return true;
-        }
-        return false;
-    }
+    
 
     private boolean hasExploreAction() {
         return OSUtils.isWindows() || OSUtils.isMacOSX();

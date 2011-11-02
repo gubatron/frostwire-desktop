@@ -77,7 +77,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
     protected void buildListeners() {
         super.buildListeners();
         
-        importRadioStationAction = new ImportRadioStationAction();
+        importRadioStationAction = new AddRadioStationAction();
         copyStreamUrlAction = new CopyStreamUrlAction();
         LAUNCH_ACTION = new LaunchAction();
         DELETE_ACTION = new RemoveFromStationsAction();
@@ -338,7 +338,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
         }
 
         try {
-            AudioSource audioSource = new InternetRadioAudioSource(new URL(line.getInitializeObject().getUrl()));
+            AudioSource audioSource = new InternetRadioAudioSource(new URL(line.getInitializeObject().getUrl()),line.getInitializeObject());
             AudioPlayer.instance().asyncLoadSong(audioSource, true, false);
         } catch (MalformedURLException e) {
             e.printStackTrace();
@@ -455,20 +455,21 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
         }
     }
     
-    private final class ImportRadioStationAction extends AbstractAction {
+    public static final class AddRadioStationAction extends AbstractAction {
 
         private static final long serialVersionUID = 7087376528613706765L;
 
-        public ImportRadioStationAction() {
-            super(I18n.tr("Add Radio Station"));
-            putValue(Action.LONG_DESCRIPTION, I18n.tr("Add Radio Station"));
+        public AddRadioStationAction() {
+            super(I18n.tr("Add Radio"));
+            putValue(Action.LONG_DESCRIPTION, I18n.tr("Add a new Radio Station. You must enter the Stream's URL"));
+            putValue(LimeAction.ICON_NAME,"LIBRARY_ADD_RADIO_STATION");
         }
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
             String input = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("URL Radio Station"), I18n.tr("Add Radio Station"), JOptionPane.PLAIN_MESSAGE, null, null, "");
             if (!StringUtils.isNullOrEmpty(input, true)) {
-                LibraryUtils.asyncImportRadioStation(input);
+                LibraryUtils.asyncAddRadioStation(input);
             }
         }
     }
