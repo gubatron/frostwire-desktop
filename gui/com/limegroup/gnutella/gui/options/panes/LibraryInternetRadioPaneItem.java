@@ -89,7 +89,7 @@ public final class LibraryInternetRadioPaneItem extends AbstractPaneItem {
      * @throws IOException if the options could not be applied for some reason
      */
     public boolean applyOptions() throws IOException {
-        return true;
+        return false;
     }
 
     public boolean isDirty() {

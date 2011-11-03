@@ -12,11 +12,14 @@ import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileFilter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -185,7 +188,21 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
         directoryTree.cancelEditing();
         directoryTreeModel.removeSubRoots();
         this.roots.addAll(retainAncestors(newRoots));
-        for (File root : roots) {
+        
+        List<File> list = new ArrayList<File>(roots);
+        Collections.sort(list, new Comparator<File>() {
+            public int compare(File o1, File o2) {
+                if (o1.equals(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue())) {
+                    return -1;
+                }
+                if (o2.equals(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue())) {
+                    return 1;
+                }
+                return o1.compareTo(o2);
+            }
+        });
+        
+        for (File root : list) {
             directoryTreeModel.addSubRoot(root);
         }
         setRootExpanded();

@@ -3,6 +3,9 @@ package com.limegroup.gnutella.gui.options.panes;
 import java.awt.BorderLayout;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.swing.Box;
@@ -56,7 +59,7 @@ public final class LibraryFoldersPaneItem extends AbstractPaneItem {
 	    
 		directoryPanel.getTree().setRootVisible(false);
 		directoryPanel.getTree().setShowsRootHandles(true);
-		directoryPanel.getTree().addTreeSelectionListener(new TreeSelectionListener() {
+        directoryPanel.getTree().addTreeSelectionListener(new TreeSelectionListener() {
             public void valueChanged(TreeSelectionEvent e) {
                 Object comp = e.getPath().getLastPathComponent();
                 if (comp instanceof File) {
@@ -65,8 +68,12 @@ public final class LibraryFoldersPaneItem extends AbstractPaneItem {
                         return;
                     }
                 }
-                
-                buttonRemoveLibraryDirectory.setEnabled(true);
+
+                if (e.getPath().getPathCount() > 1) {
+                    buttonRemoveLibraryDirectory.setEnabled(false);
+                } else {
+                    buttonRemoveLibraryDirectory.setEnabled(true);
+                }
             }
         });
 		
@@ -113,22 +120,11 @@ public final class LibraryFoldersPaneItem extends AbstractPaneItem {
 	public void initOptions() {
 		initialFoldersToInclude = LibrarySettings.DIRECTORIES_TO_INCLUDE.getValue();
 		initialFoldersToExclude = LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue();
-		directoryPanel.setRoots(LibrarySettings.DIRECTORIES_TO_INCLUDE.getValueAsArray());
+		
+		List<File> roots = new ArrayList<File>(LibrarySettings.DIRECTORIES_TO_INCLUDE.getValue());
+		roots.addAll(LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
+		directoryPanel.setRoots(roots.toArray(new File[0]));
 		directoryPanel.setFoldersToExclude(initialFoldersToExclude);
-	}
-	
-	/**
-	 * Gets all folders to share.
-	 */
-	public Set<File> getDirectoriesToInclude() {
-	    return directoryPanel.getRootsToInclude();
-	}
-	
-	/**
-	 * Returns the folders to exclude. 
-	 */
-	public Set<File> getDirectorieToExclude() {
-	    return directoryPanel.getFoldersToExclude();
 	}
 
 	/**
@@ -148,26 +144,28 @@ public final class LibraryFoldersPaneItem extends AbstractPaneItem {
 	 */
 	public boolean applyOptions() throws IOException {
 	    
+	    LibrarySettings.DIRECTORIES_TO_INCLUDE.setValue(new HashSet<File>());
+	    LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.setValue(new HashSet<File>());
+	    
 	    for(File f : directoryPanel.getRootsToInclude()) {
 	        LibrarySettings.DIRECTORIES_TO_INCLUDE.add(f);
 	    }
 	    for(File f : directoryPanel.getFoldersToExclude()) {
-            LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.add(f);
+	        if (f.equals(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue())) {
+	            LibrarySettings.DIRECTORIES_TO_INCLUDE.add(f);
+	        } else {
+	            LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.add(f);
+	        }
         }
 	    
 	    LibraryMediator.instance().clearDirectoryHolderCaches();
-        return true;
+        return false;
 	}
 	
 	public boolean isDirty() {
 	    return !initialFoldersToInclude.equals(directoryPanel.getRootsToInclude())
 	    || !initialFoldersToExclude.equals(directoryPanel.getFoldersToExclude());
     }
-	
-	public void resetDirtyState() {
-	    initialFoldersToInclude = directoryPanel.getRootsToInclude();
-	    initialFoldersToExclude = directoryPanel.getFoldersToExclude();
-	}
 }
 
 
