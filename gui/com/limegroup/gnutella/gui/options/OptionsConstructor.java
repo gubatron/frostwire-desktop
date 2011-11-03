@@ -38,6 +38,7 @@ import com.limegroup.gnutella.gui.options.panes.AssociationPreferencePaneItem;
 import com.limegroup.gnutella.gui.options.panes.AudioPlayerPaneItem;
 import com.limegroup.gnutella.gui.options.panes.AutoCompletePaneItem;
 import com.limegroup.gnutella.gui.options.panes.AutomaticInstallerDownloadPaneItem;
+import com.limegroup.gnutella.gui.options.panes.LibraryFoldersPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ShutdownPaneItem;
 import com.limegroup.gnutella.gui.options.panes.SmartSearchDBPaneItem;
 import com.limegroup.gnutella.gui.options.panes.TorrentGlobalSpeedPaneItem;
@@ -52,7 +53,7 @@ import com.limegroup.gnutella.gui.options.panes.ImageViewerPaneItem;
 import com.limegroup.gnutella.gui.options.panes.MaximumSearchesPaneItem;
 import com.limegroup.gnutella.gui.options.panes.NetworkInterfacePaneItem;
 import com.limegroup.gnutella.gui.options.panes.NotificationsPaneItem;
-import com.limegroup.gnutella.gui.options.panes.LibraryPreferencePaneItem;
+import com.limegroup.gnutella.gui.options.panes.LibraryInternetRadioPaneItem;
 import com.limegroup.gnutella.gui.options.panes.PopupsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ProxyLoginPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ProxyPaneItem;
@@ -80,7 +81,6 @@ import com.limegroup.gnutella.settings.UISettings;
  * and add the construction of the pane to 
  * {@link OptionsPaneFactory#createOptionsPane(String)}.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public final class OptionsConstructor {
 	/**
 	 * Handle to the top-level <tt>JDialog</tt window that contains all
@@ -286,7 +286,7 @@ public final class OptionsConstructor {
 		addOption(OptionsMediator.ROOT_NODE_KEY, CHAT_KEY, I18n.tr("Community Chat"), ChatCommunityPaneItem.class);
 
 		// library
-        addOption(OptionsMediator.ROOT_NODE_KEY, PLAYER_KEY, I18n.tr("Library"), LibraryPreferencePaneItem.class);    
+        addOption(OptionsMediator.ROOT_NODE_KEY, PLAYER_KEY, I18n.tr("Library"), LibraryFoldersPaneItem.class, LibraryInternetRadioPaneItem.class);    
         
         //status bar
         addOption(OptionsMediator.ROOT_NODE_KEY, STATUS_BAR_KEY, I18n.tr("Status Bar"), StatusBarConnectionQualityPaneItem.class, StatusBarFirewallPaneItem.class, StatusBarBandwidthPaneItem.class); // Removed Lime Store

@@ -13,9 +13,9 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 
-public final class LibraryPreferencePaneItem extends AbstractPaneItem {
+public final class LibraryInternetRadioPaneItem extends AbstractPaneItem {
 
-    public final static String TITLE = I18n.tr("Library Options");
+    public final static String TITLE = I18n.tr("Internet Radio Stations");
 
     public final static String LABEL = I18n.tr("You can restore the default internet radio stations.");
 
@@ -31,7 +31,7 @@ public final class LibraryPreferencePaneItem extends AbstractPaneItem {
      *            the key for this <tt>AbstractPaneItem</tt> that the
      *            superclass uses to generate locale-specific keys
      */
-    public LibraryPreferencePaneItem() {
+    public LibraryInternetRadioPaneItem() {
         super(TITLE, LABEL);
 
         Font font = new Font("dialog", Font.BOLD, 12);
