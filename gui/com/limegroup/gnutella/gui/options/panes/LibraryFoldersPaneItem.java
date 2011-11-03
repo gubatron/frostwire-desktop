@@ -15,6 +15,7 @@ import javax.swing.event.TreeSelectionListener;
 import org.limewire.util.FileUtils;
 
 import com.frostwire.gui.library.AddLibraryDirectoryAction;
+import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.RecursiveLibraryDirectoryPanel;
 import com.frostwire.gui.library.RemoveLibraryDirectoryAction;
 import com.limegroup.gnutella.gui.I18n;
@@ -154,6 +155,7 @@ public final class LibraryFoldersPaneItem extends AbstractPaneItem {
             LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.add(f);
         }
 	    
+	    LibraryMediator.instance().clearDirectoryHolderCaches();
         return false;
 	}
 	

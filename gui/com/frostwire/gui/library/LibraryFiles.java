@@ -514,4 +514,18 @@ public class LibraryFiles extends AbstractLibraryListPanel {
         }
         return holders;
     }
+
+    /**
+     * Cleans the caches of all directory holders and refreshes the current selection.
+     */
+	public void clearDirectoryHolderCaches() {
+		for (int i = 0; i < _model.size(); i++) {
+            DirectoryHolder holder = ((LibraryFilesListCell) _model.get(i))._holder;
+            if (holder instanceof MediaTypeSavedFilesDirectoryHolder) {
+                ((MediaTypeSavedFilesDirectoryHolder) holder).clearCache();
+            }
+        }
+		
+		refreshSelection();
+	}
 }

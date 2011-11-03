@@ -1,4 +1,4 @@
-frostwire (5.2.5) stable; urgency=high
+frostwire (5.2.6) stable; urgency=high
   * Smart search updates uses less DHT resources and fixes logic bugs
     that results into faster and better search results.
   * New Internet Radio functionality on the Library. Play, Add, Remove

@@ -282,11 +282,12 @@ public final class OptionsConstructor {
     	OptionsTreeNode node = addOption(BITTORRENT_KEY,BITTORRENT_BASIC_KEY,I18n.tr("Basic"),TorrentSaveFolderPaneItem.class, TorrentSeedingSettingPaneItem.class, TorrentDetailsPaneItem.class);
     	addOption(BITTORRENT_KEY,BITTORRENT_ADVANCED_KEY,I18n.tr("Advanced"),TorrentGlobalSpeedPaneItem.class, TorrentConnectionPaneItem.class);
 
-        //community chat
-		addOption(OptionsMediator.ROOT_NODE_KEY, CHAT_KEY, I18n.tr("Community Chat"), ChatCommunityPaneItem.class);
-
 		// library
-        addOption(OptionsMediator.ROOT_NODE_KEY, PLAYER_KEY, I18n.tr("Library"), LibraryFoldersPaneItem.class, LibraryInternetRadioPaneItem.class);    
+        addOption(OptionsMediator.ROOT_NODE_KEY, PLAYER_KEY, I18n.tr("Library"), LibraryFoldersPaneItem.class, LibraryInternetRadioPaneItem.class);
+        
+		// search options
+		addOption(OptionsMediator.ROOT_NODE_KEY, SEARCH_KEY, I18n.tr("Searching"), MaximumSearchesPaneItem.class, SmartSearchDBPaneItem.class);
+
         
         //status bar
         addOption(OptionsMediator.ROOT_NODE_KEY, STATUS_BAR_KEY, I18n.tr("Status Bar"), StatusBarConnectionQualityPaneItem.class, StatusBarFirewallPaneItem.class, StatusBarBandwidthPaneItem.class); // Removed Lime Store
@@ -301,13 +302,12 @@ public final class OptionsConstructor {
 			addOption(OptionsMediator.ROOT_NODE_KEY, APPS_KEY, I18n.tr("Helper Apps"), BrowserPaneItem.class, ImageViewerPaneItem.class, VideoPlayerPaneItem.class, AudioPlayerPaneItem.class);
 		}
 
-		addOption(OptionsMediator.ROOT_NODE_KEY, BUGS_KEY, I18n.tr("Bug Reports"), BugsPaneItem.class);
-
 		//view options
 		addOption(OptionsMediator.ROOT_NODE_KEY, GUI_KEY, I18n.tr("View"), PopupsPaneItem.class, NotificationsPaneItem.class, ShowPromoOverlaysPaneItem.class, AutoCompletePaneItem.class);
 
-		// search options
-		addOption(OptionsMediator.ROOT_NODE_KEY, SEARCH_KEY, I18n.tr("Searching"), MaximumSearchesPaneItem.class, SmartSearchDBPaneItem.class);
+		
+        //community chat
+		addOption(OptionsMediator.ROOT_NODE_KEY, CHAT_KEY, I18n.tr("Community Chat"), ChatCommunityPaneItem.class);
         
 		// filter options
 		addGroupTreeNode(OptionsMediator.ROOT_NODE_KEY, FILTERS_KEY, I18n.tr("Filters"));
@@ -328,6 +328,10 @@ public final class OptionsConstructor {
         }
         
         addOption(OptionsMediator.ROOT_NODE_KEY, SHUTDOWN_KEY, I18n.tr("System Tray"), ShutdownPaneItem.class);
+        
+		// debug
+		addOption(OptionsMediator.ROOT_NODE_KEY, BUGS_KEY, I18n.tr("Bug Reports"), BugsPaneItem.class);
+
         return node;
 	}
 	

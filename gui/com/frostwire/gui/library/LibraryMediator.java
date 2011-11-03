@@ -207,6 +207,10 @@ public class LibraryMediator {
         showView(FILES_TABLE_KEY);
         LibraryFilesTableMediator.instance().updateTableFiles(dirHolder);
     }
+    
+    public void clearDirectoryHolderCaches() {    	
+    	getLibraryFiles().clearDirectoryHolderCaches();
+    }
 
     public void updateTableItems(Playlist playlist) {
         clearLibraryTable();
