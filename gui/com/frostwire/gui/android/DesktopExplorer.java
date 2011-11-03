@@ -92,7 +92,7 @@ public class DesktopExplorer extends JPanel implements ThemeObserver {
         _selectedIndexToRename = -1;
         
         File root = CommonUtils.getUserHomeDir();
-        _savedFolder = FrostWireUtils.getLimeWireRootFolder();
+        _savedFolder = FrostWireUtils.getFrostWireRootFolder();
         _documentsFolder = new File(root, "Documents");
         _musicFolder = new File(root, "Music");
         _picturesFolder = new File(root, "Pictures");

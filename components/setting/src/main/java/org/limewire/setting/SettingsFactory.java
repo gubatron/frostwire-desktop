@@ -523,21 +523,6 @@ public final class SettingsFactory implements Iterable<AbstractSetting>, RemoteS
         handleSettingInternal(result, null);
         return result;
     }
- 
-    public synchronized FileSetting createRemoteFileSetting(String key, 
-                      File defaultValue, String remoteKey) {
-        String parentString = defaultValue.getParent();
-        if( parentString != null ) {
-            File parent = new File(parentString);
-            if(!parent.isDirectory())
-                parent.mkdirs();
-        }
-
-        FileSetting result = new FileSetting(
-                   DEFAULT_PROPS, PROPS, key, defaultValue);
-        handleSettingInternal(result, remoteKey);
-        return result;
-    }
 	
 	public synchronized ProxyFileSetting createProxyFileSetting(String key,
 			FileSetting defaultSetting) {

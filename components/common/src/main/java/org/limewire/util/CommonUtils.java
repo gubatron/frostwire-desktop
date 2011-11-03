@@ -50,11 +50,11 @@ import java.util.Map;
  */
 public class CommonUtils {
     
-    public static final String LIMEWIRE_PREFS_DIR_NAME = ".frostwire4.20";
+    public static final String FROSTWIRE_420_PREFS_DIR_NAME = ".frostwire4.20";
     
-    public static final String FROSTWIRE_418_DIR_NAME = ".frostwire4.18";
+    public static final String FROSTWIRE_418_PREFS_DIR_NAME = ".frostwire4.18";
     
-    public static final String FROSTWIRE_5_PREFS_DIR_NAME = ".frostwire5";
+    public static final String FROSTWIRE_500_PREFS_DIR_NAME = ".frostwire5";
     
     /**
      * Several arrays of illegal characters on various operating systems.
@@ -555,7 +555,7 @@ public class CommonUtils {
         // On all platforms other than Windows or OSX,
         // this will return <user-home>/.frostwire<versionMajor.versionMinor>
         
-        // On OSX, this will return <user-home>/Library/Preferences/FrostWire
+        // On OSX, this will return <user-home>/Library/Preferences/FrostWire5
         
         // On Windows, this first tries to find:
         // a) <user-home>/$LIMEWIRE_PREFS_DIR/.frostwire
@@ -574,10 +574,44 @@ public class CommonUtils {
         if(!OSUtils.isPOSIX() && userDir != null && userDir.exists())
             FileUtils.setWriteable(userDir);
         
-        File settingsDir = new File(userDir, FROSTWIRE_5_PREFS_DIR_NAME);
+        File settingsDir = new File(userDir, FROSTWIRE_500_PREFS_DIR_NAME);
 
         if(OSUtils.isMacOSX()) {
             settingsDir = new File(CommonUtils.getUserHomeDir(), "Library/Preferences/FrostWire5");
+        } 
+      
+        return settingsDir;
+    }
+    
+    public static File getFrostWire4UserSettingsDir() {
+        // LOGIC:
+        
+        // On all platforms other than Windows or OSX,
+        // this will return <user-home>/.frostwire<versionMajor.versionMinor>
+        
+        // On OSX, this will return <user-home>/Library/Preferences/FrostWire
+        
+        // On Windows, this first tries to find:
+        // a) <user-home>/$LIMEWIRE_PREFS_DIR/.frostwire
+        // b) <user-home>/$APPDATA/FrostWire
+        // c) <user-home/.frostwire
+        // If the $LIMEWIRE_PREFS_DIR variable doesn't exist, it falls back
+        // to trying b).  If The $APPDATA variable can't be read or doesn't
+        // exist, it falls back to a).
+        // If using a) or b), and neither of those directories exist, but c)
+        // does, then c) is used.  Once a) or b) exist, they are used indefinitely.
+        // If neither a), b) nor c) exist, then the former is created in preference of
+        // of a), then b).        
+        File userDir = CommonUtils.getUserHomeDir();
+
+//        // Changing permissions without permission in Unix is rude
+//        if(!OSUtils.isPOSIX() && userDir != null && userDir.exists())
+//            FileUtils.setWriteable(userDir);
+        
+        File settingsDir = new File(userDir, FROSTWIRE_420_PREFS_DIR_NAME);
+
+        if(OSUtils.isMacOSX()) {
+            settingsDir = new File(CommonUtils.getUserHomeDir(), "Library/Preferences/FrostWire");
         } 
       
         return settingsDir;

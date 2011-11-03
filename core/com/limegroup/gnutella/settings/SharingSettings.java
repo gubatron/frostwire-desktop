@@ -20,7 +20,7 @@ public class SharingSettings extends LimeProps {
     private SharingSettings() {}
     
     public static final File DEFAULT_TORRENTS_DIR = 
-    	new File(FrostWireUtils.getLimeWireRootFolder(), "Torrents");
+    	new File(FrostWireUtils.getFrostWireRootFolder(), "Torrents");
     
     public static final FileSetting TORRENTS_DIR_SETTING =
     	FACTORY.createFileSetting("TORRENTS_DIR_SETTING", 
@@ -31,7 +31,7 @@ public class SharingSettings extends LimeProps {
      * to avoid sharing inconsistencies. 
      */
     public static final File DEFAULT_TORRENT_DATA_DIR =
-    	new File(FrostWireUtils.getLimeWireRootFolder(), "Torrent Data");
+    	new File(FrostWireUtils.getFrostWireRootFolder(), "Torrent Data");
 
     /**
      * The folder value where Torrent Data will be saved. This folder CANNOT BE SHARED
@@ -52,7 +52,7 @@ public class SharingSettings extends LimeProps {
      */
     public static final FileSetting DIRECTORY_FOR_SAVING_FILES = 
         FACTORY.createFileSetting("DIRECTORY_FOR_SAVING_FILES", 
-                FrostWireUtils.getLimeWireRootFolder()).setAlwaysSave(true);
+                FrostWireUtils.getFrostWireRootFolder()).setAlwaysSave(true);
     
     /**
      * Specifies whether or not completed downloads
@@ -65,7 +65,7 @@ public class SharingSettings extends LimeProps {
      * Initial directory for open desktop explorer.
      */
     public static final FileSetting DIRECTORY_FOR_OPEN_DESKTOP_EXPLORER = 
-        FACTORY.createFileSetting("DIRECTORY_FOR_OPEN_DESKTOP_EXPLORER", FrostWireUtils.getLimeWireRootFolder()).setAlwaysSave(true);
+        FACTORY.createFileSetting("DIRECTORY_FOR_OPEN_DESKTOP_EXPLORER", FrostWireUtils.getFrostWireRootFolder()).setAlwaysSave(true);
         
     
     public static final File getImageCacheDirectory() {

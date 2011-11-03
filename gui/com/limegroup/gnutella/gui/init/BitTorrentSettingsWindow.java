@@ -14,7 +14,9 @@ import org.limewire.util.StringUtils;
 import com.frostwire.gui.bittorrent.TorrentSeedingSettingComponent;
 import com.frostwire.gui.bittorrent.TorrentSaveFolderComponent;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.settings.LibrarySettings;
 import com.limegroup.gnutella.settings.SharingSettings;
+import com.limegroup.gnutella.util.FrostWireUtils;
 /**
  * This class displays a setup window for allowing the user to choose
  * the directory for saving their files.
@@ -107,7 +109,24 @@ class BitTorrentSettingsWindow extends SetupWindow {
                 SharingSettings.TORRENT_DATA_DIR_SETTING.setValue(folder);
             }
         }
+        
+        // setup initial library folders here
+        setupInitialLibraryFolders();
 	}
+
+	// TODO Pending refactor for a better place
+    private void setupInitialLibraryFolders() {
+        LibrarySettings.DIRECTORIES_TO_INCLUDE.add(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue());
+        
+        for (File f : FrostWireUtils.getFrostWire4SaveDirectories()) {
+            LibrarySettings.DIRECTORIES_TO_INCLUDE.add(f);
+            LibrarySettings.DIRECTORIES_TO_INCLUDE_FROM_FROSTWIRE4.add(f);
+        }
+        
+        if (LibrarySettings.USER_MUSIC_FOLDER.getValue().exists()) {
+            LibrarySettings.DIRECTORIES_TO_INCLUDE.add(LibrarySettings.USER_MUSIC_FOLDER.getValue());
+        }
+    }
 }
 
 

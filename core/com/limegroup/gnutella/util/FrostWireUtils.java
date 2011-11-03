@@ -1,9 +1,13 @@
 package com.limegroup.gnutella.util;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 
 import org.limewire.setting.SettingsFactory;
 import org.limewire.util.CommonUtils;
@@ -230,15 +234,7 @@ public final class FrostWireUtils {
         }
         // in case this is a mainline version or NFE was caught (strange)
         return 0;
-    }    
-
-	/**
-	 * Returns a version number appropriate for upload headers.
-     * Same as '"LimeWire "+getLimeWireVersion'.
-	 */
-	public static String getVendor() {
-		return "LimeWire " + FROSTWIRE_VERSION;
-	}    
+    }
 
 	/**
 	 * Returns the string for the server that should be reported in the HTTP
@@ -301,7 +297,7 @@ public final class FrostWireUtils {
      * Returns the root folder from which all Saved/Shared/etc..
      * folders should be placed.
      */
-    public static File getLimeWireRootFolder() {
+    public static File getFrostWireRootFolder() {
         String root = null;
         
         if (OSUtils.isWindowsVista() || OSUtils.isWindows7()) {
@@ -348,6 +344,49 @@ public final class FrostWireUtils {
 			mapFunction.map(i, list.get(i));
 		}
 	}
+	
+    public static Set<File> getFrostWire4SaveDirectories() {
+        Set<File> result = new HashSet<File>();
 
+        try {
+            File settingFile = new File(CommonUtils.getFrostWire4UserSettingsDir(), "frostwire.props");
+            Properties props = new Properties();
+            props.load(new FileInputStream(settingFile));
 
+            if (props.containsKey("DIRECTORY_FOR_SAVING_FILES")) {
+                result.add(new File(props.getProperty("DIRECTORY_FOR_SAVING_FILES")));
+            }
+
+            String[] types = new String[] { "document", "application", "audio", "video", "image" };
+
+            for (String type : types) {
+                String key = "DIRECTORY_FOR_SAVING_" + type + "_FILES";
+                if (props.containsKey(key)) {
+                    result.add(new File(props.getProperty(key)));
+                }
+            }
+
+        } catch (Exception e) {
+            // ignore
+        }
+
+        return result;
+    }
+    
+    public static File getUserMusicFolder() {
+        File musicFile = null;
+        if (OSUtils.isMacOSX()) {
+            musicFile = new File(CommonUtils.getUserHomeDir(), "Music");
+        } else if (OSUtils.isWindowsXP()) {
+            musicFile = new File(CommonUtils.getUserHomeDir(), "My Documents" + File.separator + "My Music");
+        } else if (OSUtils.isWindowsVista() || OSUtils.isWindows7()) {
+            musicFile = new File(CommonUtils.getUserHomeDir(), "Music");
+        } else if (OSUtils.isUbuntu()) {
+            musicFile = new File(CommonUtils.getUserHomeDir(), "Music");
+        } else {
+            musicFile = new File(CommonUtils.getUserHomeDir(), "Music");
+        }
+
+        return musicFile;
+    }
 }

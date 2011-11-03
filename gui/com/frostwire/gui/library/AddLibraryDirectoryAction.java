@@ -16,6 +16,8 @@ import com.limegroup.gnutella.gui.actions.AbstractAction;
  */
 public class AddLibraryDirectoryAction extends AbstractAction {
     
+    private static final long serialVersionUID = 7930650059331836863L;
+    
     private final RecursiveLibraryDirectoryPanel recursiveSharingPanel;
     private final Component parent;
 

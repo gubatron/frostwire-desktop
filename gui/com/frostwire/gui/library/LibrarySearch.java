@@ -21,8 +21,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.limewire.util.CommonUtils;
-import org.limewire.util.OSUtils;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.alexandria.InternetRadioStation;
@@ -36,6 +34,7 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.search.SearchInformation;
 import com.limegroup.gnutella.gui.search.SearchMediator;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
+import com.limegroup.gnutella.settings.LibrarySettings;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 public class LibrarySearch extends JPanel {
@@ -288,29 +287,28 @@ public class LibrarySearch extends JPanel {
                 }
             }
 
-            File file = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
+            File torrentDataDirFile = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
             if (directoryHolder instanceof TorrentDirectoryHolder) {
-                file = ((TorrentDirectoryHolder) directoryHolder).getDirectory();
+                torrentDataDirFile = ((TorrentDirectoryHolder) directoryHolder).getDirectory();
             }
 
             Set<File> ignore = TorrentUtil.getIgnorableFiles();
 
-            search(file, ignore);
-            
-            // special case for audio
-			if (directoryHolder instanceof MediaTypeSavedFilesDirectoryHolder
-					&& ((MediaTypeSavedFilesDirectoryHolder) directoryHolder)
-							.getMediaType().equals(
-									MediaType.getAudioMediaType())) {
-                File musicFile = null;
-                if (OSUtils.isMacOSX()) {
-                    musicFile = new File(CommonUtils.getUserHomeDir(), "Music");
-                } else if (OSUtils.isWindowsXP()) {
-                    musicFile = new File(CommonUtils.getUserHomeDir(), "My Documents" + File.separator + "My Music");
-                } else if (OSUtils.isWindowsVista() || OSUtils.isWindows7()) {
-                    musicFile = new File(CommonUtils.getUserHomeDir(), "Music");
+            Set<File> directories = LibrarySettings.DIRECTORIES_TO_INCLUDE.getValue();
+            directories.removeAll(LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
+            for (File dir : directories) {
+                if (dir == null) {
+                    continue;
                 }
-                search(musicFile, new HashSet<File>());
+                if (dir.equals(torrentDataDirFile)) {
+                    search(dir, ignore);
+                } else if (dir.equals(LibrarySettings.USER_MUSIC_FOLDER) &&
+                        directoryHolder instanceof MediaTypeSavedFilesDirectoryHolder &&
+                        !((MediaTypeSavedFilesDirectoryHolder) directoryHolder).getMediaType().equals(MediaType.getAudioMediaType())) {
+                    continue;
+                } else {
+                    search(dir, new HashSet<File>());
+                }
             }
         }
 

@@ -2,23 +2,24 @@ package com.limegroup.gnutella.gui.options.panes;
 
 import java.awt.BorderLayout;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 
 import org.limewire.util.FileUtils;
 
+import com.frostwire.gui.library.AddLibraryDirectoryAction;
 import com.frostwire.gui.library.RecursiveLibraryDirectoryPanel;
 import com.frostwire.gui.library.RemoveLibraryDirectoryAction;
-import com.frostwire.gui.library.AddLibraryDirectoryAction;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.settings.LibrarySettings;
+import com.limegroup.gnutella.settings.SharingSettings;
 
 /**
  * This class defines the panel in the options window that allows the user
@@ -30,9 +31,12 @@ public final class LibraryFoldersPaneItem extends AbstractPaneItem {
     
     public final static String LABEL = I18n.tr("You can choose the folders for include files when browsing the library.");
 
-	private final RecursiveLibraryDirectoryPanel sharingPanel = new RecursiveLibraryDirectoryPanel(true);
+    private final JButton buttonAddLibraryDirectory;
+    private final JButton buttonRemoveLibraryDirectory;
+    
+	private final RecursiveLibraryDirectoryPanel directoryPanel = new RecursiveLibraryDirectoryPanel(true);
 
-	private Set<File> initialFoldersToShare;
+	private Set<File> initialFoldersToInclude;
 	
 	private Set<File> initialFoldersToExclude;
 	
@@ -46,25 +50,34 @@ public final class LibraryFoldersPaneItem extends AbstractPaneItem {
 	public LibraryFoldersPaneItem() {
 	    super(TITLE, LABEL);
 	    
-		sharingPanel.setFileFilter(new FileFilter() {
-		    //private final FileManager fileManager = GuiCoreMediator.getFileManager();
-            public boolean accept(File pathname) {
-                return false;//fileManager.isFolderShareable(pathname, false);
+	    buttonAddLibraryDirectory = new JButton(new AddLibraryDirectoryAction(directoryPanel, directoryPanel));
+	    buttonRemoveLibraryDirectory = new JButton(new RemoveLibraryDirectoryAction(directoryPanel));
+	    
+		directoryPanel.getTree().setRootVisible(false);
+		directoryPanel.getTree().setShowsRootHandles(true);
+		directoryPanel.getTree().addTreeSelectionListener(new TreeSelectionListener() {
+            public void valueChanged(TreeSelectionEvent e) {
+                Object comp = e.getPath().getLastPathComponent();
+                if (comp instanceof File) {
+                    if (comp.equals(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue())) {
+                        buttonRemoveLibraryDirectory.setEnabled(false);
+                        return;
+                    }
+                }
+                
+                buttonRemoveLibraryDirectory.setEnabled(true);
             }
-		    
-		});
-		sharingPanel.getTree().setRootVisible(false);
-		sharingPanel.getTree().setShowsRootHandles(true);
+        });
 		
 		JPanel buttonPanel = new JPanel(new BorderLayout());
 		buttonPanel.setBorder(new EmptyBorder(0, 4, 0, 0));
 		JPanel buttons = new JPanel(new BorderLayout());
-		buttons.add(new JButton(new AddLibraryDirectoryAction(sharingPanel, sharingPanel)), BorderLayout.NORTH);
+		buttons.add(buttonAddLibraryDirectory, BorderLayout.NORTH);
 		buttons.add(Box.createVerticalStrut(4), BorderLayout.CENTER);
-		buttons.add(new JButton(new RemoveLibraryDirectoryAction(sharingPanel)), BorderLayout.SOUTH);
+		buttons.add(buttonRemoveLibraryDirectory, BorderLayout.SOUTH);
 		buttonPanel.add(buttons, BorderLayout.NORTH);
-		sharingPanel.addEastPanel(buttonPanel);		
-		add(sharingPanel);
+		directoryPanel.addEastPanel(buttonPanel);		
+		add(directoryPanel);
 	}
 
     /**
@@ -73,16 +86,16 @@ public final class LibraryFoldersPaneItem extends AbstractPaneItem {
      */
     void addAndKeepDirtyStatus(Set<File> foldersToShare, Set<File> foldersToExclude) {
         for (File folder : foldersToShare) {
-            sharingPanel.addRoot(folder);
+            directoryPanel.addRoot(folder);
         }
-        sharingPanel.addFoldersToExclude(foldersToExclude);
+        directoryPanel.addFoldersToExclude(foldersToExclude);
     }
     
-    boolean isAlreadyGoingToBeShared(File dir) {
-        if (sharingPanel.getFoldersToExclude().contains(dir)) {
+    boolean isAlreadyGoingToBeIncluded(File dir) {
+        if (directoryPanel.getFoldersToExclude().contains(dir)) {
             return false;
         }
-        for (File folder : sharingPanel.getRootsToShare()) {
+        for (File folder : directoryPanel.getRootsToInclude()) {
             if (FileUtils.isAncestor(folder, dir)) {
                 return true;
             }
@@ -97,25 +110,24 @@ public final class LibraryFoldersPaneItem extends AbstractPaneItem {
 	 * window is shown.
 	 */
 	public void initOptions() {
-		File[] dirs = new File[0];//SharingSettings.DIRECTORIES_TO_SHARE.getValueAsArray();
-		initialFoldersToShare = new HashSet<File>(Arrays.asList(dirs));
-		initialFoldersToExclude = new HashSet<File>();// GuiCoreMediator.getFileManager().getFolderNotToShare();
-		sharingPanel.setRoots(dirs);
-		sharingPanel.setFoldersToExclude(initialFoldersToExclude);
+		initialFoldersToInclude = LibrarySettings.DIRECTORIES_TO_INCLUDE.getValue();
+		initialFoldersToExclude = LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue();
+		directoryPanel.setRoots(LibrarySettings.DIRECTORIES_TO_INCLUDE.getValueAsArray());
+		directoryPanel.setFoldersToExclude(initialFoldersToExclude);
 	}
 	
 	/**
 	 * Gets all folders to share.
 	 */
-	public Set<File> getDirectoriesToShare() {
-	    return sharingPanel.getRootsToShare();
+	public Set<File> getDirectoriesToInclude() {
+	    return directoryPanel.getRootsToInclude();
 	}
 	
 	/**
 	 * Returns the folders to exclude. 
 	 */
 	public Set<File> getDirectorieToExclude() {
-	    return sharingPanel.getFoldersToExclude();
+	    return directoryPanel.getFoldersToExclude();
 	}
 
 	/**
@@ -134,30 +146,25 @@ public final class LibraryFoldersPaneItem extends AbstractPaneItem {
      *  for some reason
 	 */
 	public boolean applyOptions() throws IOException {
-
-//	    // the actual applying of shared folders is done in OptionsPaneManager,
-	    // since it needs to be _after_ everything else is done.
 	    
-//		GuiCoreMediator.getFileManager().verifySharedTorrentFolderCorrecteness();
-//	    
-//	    if (!TorrentSaveFolderComponent.isTorrentSaveFolderPathValid(true, SharingSettings.TORRENT_DATA_DIR_SETTING.getValue(), 
-//	    														SharingSettings.getAllSaveDirectories(), 
-//	    														sharingPanel.getRootsToShare())) {
-//	    	GUIMediator.showError(TorrentSaveFolderComponent.getError());
-//	    	throw new IOException();
-//	    }
+	    for(File f : directoryPanel.getRootsToInclude()) {
+	        LibrarySettings.DIRECTORIES_TO_INCLUDE.add(f);
+	    }
+	    for(File f : directoryPanel.getFoldersToExclude()) {
+            LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.add(f);
+        }
 	    
         return false;
 	}
 	
 	public boolean isDirty() {
-	    return !initialFoldersToShare.equals(sharingPanel.getRootsToShare())
-	    || !initialFoldersToExclude.equals(sharingPanel.getFoldersToExclude());
+	    return !initialFoldersToInclude.equals(directoryPanel.getRootsToInclude())
+	    || !initialFoldersToExclude.equals(directoryPanel.getFoldersToExclude());
     }
 	
 	public void resetDirtyState() {
-	    initialFoldersToShare = sharingPanel.getRootsToShare();
-	    initialFoldersToExclude = sharingPanel.getFoldersToExclude();
+	    initialFoldersToInclude = directoryPanel.getRootsToInclude();
+	    initialFoldersToExclude = directoryPanel.getFoldersToExclude();
 	}
 }
 

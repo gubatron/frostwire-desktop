@@ -35,31 +35,38 @@ import javax.swing.plaf.metal.MetalIconFactory;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
 
 import org.limewire.util.FileUtils;
 
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.MultiLineLabel;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.gui.trees.FileTreeModel;
+import com.limegroup.gnutella.settings.LibrarySettings;
+import com.limegroup.gnutella.settings.SharingSettings;
 
 /**
  * Provides a tree panel of a partial view of the filesystem. Folders in the
  * tree view can be selected and deselected which marks if they are going
- * to be shared or not.
+ * to be included or not.
  */
 // Implementation caveat: Before removing items from the tree, invoke
 // direcotoryTree.cancelEditing() to avoid a null pointer exception in the 
 // repaint code
 public class RecursiveLibraryDirectoryPanel extends JPanel {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 2342466847251833757L;
+
     private final FileTreeModel directoryTreeModel;
     
     private final JTree directoryTree;
     /**
-     * Set of directories that are not to be shared.
+     * Set of directories that are not to be excluded.
      */
     private final Set<File> deselected;
     /**
@@ -79,15 +86,15 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
     
     /**
      * The checkbox icon that represents the third possible state, a folder whose
-     * files are being shared but only some of its subfolders. 
+     * files are being included but only some of its subfolders. 
      */
-    private final Icon partiallySharedIcon = createPartiallySharedIcon();
+    private final Icon partiallyIncludedIcon = createPartiallyIncludedIcon();
     
     private static Set<File> emptyFileSet() {
         return Collections.emptySet();
     }
     
-    private static Icon createPartiallySharedIcon() {
+    private static Icon createPartiallyIncludedIcon() {
         if (ThemeSettings.isNativeOSXTheme()) {
             return GUIMediator.getThemeImage("sharing_checkbox_aqua");
         } else {
@@ -108,7 +115,7 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
     
     /**
      * Constructs the tree view with a list of roots.
-     * @param blackListSet set of subfolders that are marked as not shared, cannot be null
+     * @param blackListSet set of subfolders that are marked as not included, cannot be null
      * @param roots list of roots, can be null
      */
     public RecursiveLibraryDirectoryPanel(boolean precheckFolders,Set<File> blackListSet, File... roots) {
@@ -122,7 +129,7 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
 
         // center
         directoryTreeModel = new FileTreeModel("");
-        directoryTreeModel.setFileFilter(new SharedFolderFilter());
+        directoryTreeModel.setFileFilter(new IncludedFolderFilter());
         
         directoryTree = new RootNotEditableTree(directoryTreeModel);
         directoryTree.setBorder(new EmptyBorder(4, 4, 4, 4));
@@ -130,6 +137,7 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
         directoryTree.setCellEditor(new FileTreeCellEditor());
         directoryTree.setEditable(true);
         directoryTree.setVisibleRowCount(8);
+        directoryTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
         JScrollPane jspDirectories = new JScrollPane(directoryTree);
         mainPanel = new JPanel(new BorderLayout());
@@ -148,13 +156,6 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
     public void updateLanguage() {
         createLegendPanel(legendPanel);
         directoryTreeModel.changeRootText(I18n.tr("Library Folders"));
-    }
-
-    /**
-     * Sets the filter used for creating the partial filesytem view.
-     */
-    public void setFileFilter(FileFilter filter) {
-        directoryTreeModel.setFileFilter(filter);
     }
     
     /**
@@ -182,14 +183,14 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
     }
     
     /**
-     * Returns true if <code>dir</code> is on of the currenlty shared roots.
+     * Returns true if <code>dir</code> is on of the currenlty included roots.
      */
     public boolean isRoot(File dir) {
         return roots.contains(dir);
     }
     
     /**
-     * Sets the set of subfolders to mark as not shared. 
+     * Sets the set of subfolders to mark as not included. 
      */
     public void setFoldersToExclude(Set<File> blackListSet) {
         deselected.clear();
@@ -228,7 +229,7 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
     public boolean addRoot(File dir) {
         // remove from deselected in any case
         boolean changed = deselected.remove(dir);
-        // check if already shared
+        // check if already included
         for (File root : roots) {
             if (FileUtils.isAncestor(root, dir)) {
                 if (root.equals(dir)) {
@@ -237,7 +238,7 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
                     }
                     return changed;
                 }
-                // make sure it is shared
+                // make sure it is included
                 removeFromPath(dir);
                 TreePath path = getTreePath(dir);
                 directoryTree.scrollPathToVisible(path);
@@ -265,7 +266,7 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
     }
     
     /**
-     * Removes <code>root</code> from the tree of shared roots. 
+     * Removes <code>root</code> from the tree of included roots. 
      */
     public void removeRoot(File root) {
         if (roots.remove(root)) {
@@ -344,11 +345,11 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
         gbc.gridy = 1;
         panel.add(createIconLabel(checkBox), gbc);
 
-        label = new MultiLineLabel(I18n.tr("Folder is not included and no subfolders are shared."), true);
+        label = new MultiLineLabel(I18n.tr("Folder is not included and no subfolders are included."), true);
         labelGbc.gridy = 1;
         panel.add(label, labelGbc);
         
-        checkBox.setIcon(partiallySharedIcon);
+        checkBox.setIcon(partiallyIncludedIcon);
         gbc.gridy = 2;
         panel.add(createIconLabel(checkBox), gbc);
         
@@ -373,11 +374,11 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
     }
     
     /**
-     * Returns the set of folder to share.
+     * Returns the set of folder to include.
      *      
      * Deselected root folders are not returned.
      */
-    public Set<File> getRootsToShare() {
+    public Set<File> getRootsToInclude() {
         Set<File> ret = new HashSet<File>(roots);
         ret.removeAll(deselected);
         return ret;
@@ -386,11 +387,11 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
     /**
      * Returns the set of subfolder to exclude from sharing.
      * 
-     * Deselected root folders are not returned.
+     * Deselected root folders are not returned. Why???
      */
     public Set<File> getFoldersToExclude() {
         Set<File> result = new HashSet<File>(deselected);
-        result.removeAll(roots);
+        //result.removeAll(roots);
         return result;
     }
     
@@ -441,10 +442,10 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
     }
     
     /**
-     * Returns true if <code>dir</code> is shared and all of its parents 
-     * are shared. 
+     * Returns true if <code>dir</code> is included and all of its parents 
+     * are included. 
      */
-    private boolean isSharedOrParentIsShared(File dir) {
+    private boolean isIncludedOrParentIsIncluded(File dir) {
         while (dir != null) {
             if (deselected.contains(dir)) {
                 return false;
@@ -467,9 +468,9 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
     }
     
     /**
-     * Returns true if dir and all its subfolders are shared. 
+     * Returns true if dir and all its subfolders are included. 
      */
-    private boolean isFullyShared(File dir) {
+    private boolean isFullyIncluded(File dir) {
         for (File offspring : deselected) {
             if (FileUtils.isAncestor(dir, offspring)) {
                 return false;
@@ -574,12 +575,12 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
             if (isExcluded(file)) {
                 checkBox.setSelected(false);
                 checkBox.setIcon(null);
-            } else if (isFullyShared(file)) {
+            } else if (isFullyIncluded(file)) {
                 checkBox.setSelected(true);
                 checkBox.setIcon(null);
             } else {
                 checkBox.setSelected(true);
-                checkBox.setIcon(partiallySharedIcon);
+                checkBox.setIcon(partiallyIncludedIcon);
             }
             return checkBox;
         }
@@ -591,6 +592,11 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
     private class FileTreeCellEditor extends DefaultCellEditor {
 
                 
+        /**
+         * 
+         */
+        private static final long serialVersionUID = -8422311328409412824L;
+
         public FileTreeCellEditor() {
             super(configureCheckBox(new JCheckBox()));
             setColors((JCheckBox)editorComponent, true);
@@ -602,7 +608,7 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
                 @Override
                 public void setValue(Object value) {
                     File file = (File)value;
-                    ((JCheckBox)editorComponent).setSelected(isSharedOrParentIsShared(file));
+                    ((JCheckBox)editorComponent).setSelected(isIncludedOrParentIsIncluded(file));
                     ((JCheckBox)editorComponent).setText(RecursiveLibraryDirectoryPanel.this.getText(file));
                     this.value = value;
                 }
@@ -638,25 +644,46 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
      */
     private static class RootNotEditableTree extends JTree {
 
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 3856730985269585441L;
+
         public RootNotEditableTree(TreeModel newModel) {
             super(newModel);
         }
         
         @Override
         public boolean isPathEditable(TreePath path) {
+            Object comp = path.getLastPathComponent();
+            if (comp instanceof File) {
+                if (comp.equals(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue())) {
+                    return false;
+                }
+            }            
+            
             // root node is not editable
             return path.getPathCount() != 1;
         }
     }
 
-    private static class SharedFolderFilter implements FileFilter {
-        //private final FileManager manager = GuiCoreMediator.getFileManager();
+    private static class IncludedFolderFilter implements FileFilter {
         public boolean accept(File pathname) {
-            // passing in true so we don't show explicitly excluded folders
-            // from previous sessions, they would have to be explicitly 
-            // shared in an extra user interaction
-            return false;//manager.isFolderShareable(pathname, true);
+            if (FileUtils.isAncestor(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue(), pathname)) {
+                return false;
+            }
+            
+            for (File f : LibrarySettings.DIRECTORIES_TO_INCLUDE_FROM_FROSTWIRE4.getValue()) {
+                if (FileUtils.isAncestor(f, pathname)) {
+                    return false;
+                }
+            }
+            
+            if (FileUtils.isAncestor(LibrarySettings.USER_MUSIC_FOLDER.getValue(), pathname)) {
+                return false;
+            }
+            
+            return pathname.isDirectory() && !pathname.isHidden();
         }
     };
-
 }
