@@ -27,7 +27,7 @@ public final class LibraryInternetRadioTableDataLine extends AbstractLibraryTabl
     private static final LimeTableColumn NAME_COLUMN = new LimeTableColumn(NAME_IDX, "INTERNET_RADIO_TABLE_NAME", I18n.tr("Name"), 484, true, PlayableCell.class);
     
     static final int GENRE_IDX = 2;
-    private static final LimeTableColumn GENRE_COLUMN = new LimeTableColumn(GENRE_IDX, "INTERNET_RADIO_TABLE_GENRE", I18n.tr("Genre"), 268, true, PlayableCell.class);
+    static final LimeTableColumn GENRE_COLUMN = new LimeTableColumn(GENRE_IDX, "INTERNET_RADIO_TABLE_GENRE", I18n.tr("Genre"), 268, true, PlayableCell.class);
 
     static final int BITRATE_IDX = 3;
     private static final LimeTableColumn BITRATE_COLUMN = new LimeTableColumn(BITRATE_IDX, "INTERNET_RADIO_TABLE_BITRATE", I18n.tr("Bitrate"), 80, true, PlayableCell.class);

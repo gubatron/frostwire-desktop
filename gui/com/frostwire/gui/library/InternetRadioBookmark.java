@@ -30,6 +30,6 @@ class InternetRadioBookmark implements Comparable<InternetRadioBookmark> {
 	}
 
 	public int compareTo(InternetRadioBookmark o) {
-	    return Boolean.valueOf(line.getInitializeObject().isBookmarked()).compareTo(o.line.getInitializeObject().isBookmarked());
+	    return -1*Boolean.valueOf(line.getInitializeObject().isBookmarked()).compareTo(o.line.getInitializeObject().isBookmarked());
 	}
 }

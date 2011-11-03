@@ -42,12 +42,14 @@ import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.actions.SearchAction;
 import com.limegroup.gnutella.gui.tables.ActionIconAndNameEditor;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
+import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.themes.SkinMenu;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.util.GUILauncher;
 import com.limegroup.gnutella.gui.util.GUILauncher.LaunchableProvider;
+import com.limegroup.gnutella.settings.TablesHandlerSettings;
 import com.limegroup.gnutella.util.QueryUtils;
 
 /**
@@ -168,6 +170,14 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
         super("LIBRARY_INTERNET_RADIO_TABLE");
         setMediaType(MediaType.getAudioMediaType());
         ThemeMediator.addThemeObserver(this);
+        
+
+        LimeTableColumn genreColumn = LibraryInternetRadioTableDataLine.GENRE_COLUMN;
+        
+
+        if (genreColumn != null && TablesHandlerSettings.getVisibility(genreColumn.getId(), genreColumn.getDefaultVisibility()).getValue()) {
+            DATA_MODEL.sort(LibraryInternetRadioTableDataLine.GENRE_IDX); //ascending
+        }
     }
 
     /**
