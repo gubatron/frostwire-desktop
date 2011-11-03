@@ -156,7 +156,7 @@ public final class LibraryFoldersPaneItem extends AbstractPaneItem {
         }
 	    
 	    LibraryMediator.instance().clearDirectoryHolderCaches();
-        return false;
+        return true;
 	}
 	
 	public boolean isDirty() {

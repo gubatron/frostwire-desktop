@@ -331,7 +331,7 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
         checkBox.setSelected(true);
         panel.add(createIconLabel(checkBox), gbc);
         
-        MultiLineLabel label = new MultiLineLabel(I18n.tr("Folder and subfolders are scanned by the Library."), true);
+        MultiLineLabel label = new MultiLineLabel(I18n.tr("Folder and subfolders are included in the Library."), true);
         GridBagConstraints labelGbc = new GridBagConstraints();
         labelGbc.anchor = GridBagConstraints.WEST;
         labelGbc.fill = GridBagConstraints.HORIZONTAL;
@@ -345,7 +345,7 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
         gbc.gridy = 1;
         panel.add(createIconLabel(checkBox), gbc);
 
-        label = new MultiLineLabel(I18n.tr("Folder is not included and no subfolders are scanned by the Library.."), true);
+        label = new MultiLineLabel(I18n.tr("Folder is not included and no subfolders are included in the Library."), true);
         labelGbc.gridy = 1;
         panel.add(label, labelGbc);
         
@@ -353,7 +353,7 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
         gbc.gridy = 2;
         panel.add(createIconLabel(checkBox), gbc);
         
-        label = new MultiLineLabel(I18n.tr("Folder\'s files and some subfolders are scanned by the Library.."), true);
+        label = new MultiLineLabel(I18n.tr("Folder\'s files and some subfolders are included in the Library."), true);
         labelGbc.gridy = 2;
         panel.add(label, labelGbc);
         

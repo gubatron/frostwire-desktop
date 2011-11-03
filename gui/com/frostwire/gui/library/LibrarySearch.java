@@ -294,7 +294,7 @@ public class LibrarySearch extends JPanel {
 
             Set<File> ignore = TorrentUtil.getIgnorableFiles();
 
-            Set<File> directories = LibrarySettings.DIRECTORIES_TO_INCLUDE.getValue();
+            Set<File> directories = new HashSet<File>(LibrarySettings.DIRECTORIES_TO_INCLUDE.getValue());
             directories.removeAll(LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
             for (File dir : directories) {
                 if (dir == null) {

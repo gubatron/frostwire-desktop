@@ -14,6 +14,7 @@ frostwire (5.2.6) stable; urgency=high
     the proper icon based on the file type of the file being downloaded.
   * Add partial downloads, and multiple transfers that contain audio files
     to playlists right from the transfer manager.
+  * The library can now be configured to scan any folder the user desires.
   * A lot of bug fixes.
  
  -- FrostWire Team <contact@frostwire.com>  Wed, 2 Nov 2011 16:14:41 -0500
