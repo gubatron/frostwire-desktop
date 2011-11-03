@@ -68,12 +68,8 @@ public final class LibraryFoldersPaneItem extends AbstractPaneItem {
                         return;
                     }
                 }
-
-                if (e.getPath().getPathCount() > 1) {
-                    buttonRemoveLibraryDirectory.setEnabled(false);
-                } else {
-                    buttonRemoveLibraryDirectory.setEnabled(true);
-                }
+                
+                buttonRemoveLibraryDirectory.setEnabled(true);
             }
         });
 		

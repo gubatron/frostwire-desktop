@@ -309,12 +309,12 @@ public class LibraryFiles extends AbstractLibraryListPanel {
                         continue;
                     }
                     if (dir.equals(torrentDataDirFile)) {
-                        search(dir, ignore);
+                        search(dir, ignore, LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
                     } else if (dir.equals(LibrarySettings.USER_MUSIC_FOLDER) &&
                             !_mtsfdh.getMediaType().equals(MediaType.getAudioMediaType())) {
                         continue;
                     } else {
-                        search(dir, new HashSet<File>());
+                        search(dir, new HashSet<File>(), LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
                     }
                 }
             } else {
@@ -328,7 +328,7 @@ public class LibraryFiles extends AbstractLibraryListPanel {
             LibraryFiles.this.executePendingRunnables();
         }
 
-        private void search(File file, Set<File> ignore) {
+        private void search(File file, Set<File> ignore, Set<File> exludedSubFolders) {
 
             if (file == null || !file.isDirectory() || !file.exists()) {
                 return;
@@ -347,10 +347,12 @@ public class LibraryFiles extends AbstractLibraryListPanel {
                 if (ignore.contains(child)) {
                     continue;
                 }
+                
                 if (child.isHidden()) {
                     continue;
                 }
-                if (child.isDirectory()) {
+                
+                if (child.isDirectory() && !exludedSubFolders.contains(child)) {
                     directories.add(child);
                 } else if (_mtsfdh.accept(child)) {
                     files.add(child);
@@ -366,7 +368,7 @@ public class LibraryFiles extends AbstractLibraryListPanel {
             GUIMediator.safeInvokeLater(r);
 
             for (File directory : directories) {
-                search(directory, ignore);
+                search(directory, ignore, exludedSubFolders);
             }
         }
     }

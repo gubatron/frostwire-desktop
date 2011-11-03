@@ -301,13 +301,13 @@ public class LibrarySearch extends JPanel {
                     continue;
                 }
                 if (dir.equals(torrentDataDirFile)) {
-                    search(dir, ignore);
+                    search(dir, ignore, LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
                 } else if (dir.equals(LibrarySettings.USER_MUSIC_FOLDER) &&
                         directoryHolder instanceof MediaTypeSavedFilesDirectoryHolder &&
                         !((MediaTypeSavedFilesDirectoryHolder) directoryHolder).getMediaType().equals(MediaType.getAudioMediaType())) {
                     continue;
                 } else {
-                    search(dir, new HashSet<File>());
+                    search(dir, new HashSet<File>(), LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
                 }
             }
         }
@@ -318,7 +318,7 @@ public class LibrarySearch extends JPanel {
          * @param haystackDir
          * @param excludeFiles - Usually a list of incomplete files.
          */
-        private void search(File haystackDir, Set<File> excludeFiles) {
+        private void search(File haystackDir, Set<File> excludeFiles, Set<File> exludedSubFolders) {
             if (canceled) {
                 return;
             }
@@ -351,7 +351,7 @@ public class LibrarySearch extends JPanel {
                     continue;
                 }
 
-                if (child.isDirectory()) {
+                if (child.isDirectory() && !exludedSubFolders.contains(child)) {
                     if (directoryHolder instanceof SavedFilesDirectoryHolder) {
                         if (searchFilter.accept(child, false)) {
                             results.add(child);
@@ -377,7 +377,7 @@ public class LibrarySearch extends JPanel {
             GUIMediator.safeInvokeLater(r);
 
             for (File directory : directories) {
-                search(directory, excludeFiles);
+                search(directory, excludeFiles, exludedSubFolders);
             }
         }
         
