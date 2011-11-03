@@ -69,7 +69,7 @@ public class InternetRadioStationDB extends ObjectDB<InternetRadioStation> {
 
     private Object[] createInternetRadioStationUpdateStatement(InternetRadioStation obj) {
         String sql = "UPDATE InternetRadioStations SET name = LEFT(?, 500), description = LEFT(?, 10000), url = LEFT(?, 10000), bitrate = LEFT(?, 100), type = LEFT(?, 100), website = LEFT(?, 10000), genre = LEFT(?, 10000), pls = LEFT(?, 100000), bookmarked = ? WHERE internetRadioStationId = ?";
-        Object[] values = new Object[] { obj.getName(), obj.getDescription(), obj.getUrl(), obj.getBitrate(), obj.getType(), obj.getWebsite(), obj.getGenre(), obj.getPls(), obj.getId(), obj.isBookmarked() };
+        Object[] values = new Object[] { obj.getName(), obj.getDescription(), obj.getUrl(), obj.getBitrate(), obj.getType(), obj.getWebsite(), obj.getGenre(), obj.getPls(), obj.isBookmarked(), obj.getId() };
         return new Object[] { sql, values };
     }
 }
