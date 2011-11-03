@@ -1,6 +1,7 @@
 package com.frostwire.gui.library;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
@@ -31,13 +32,21 @@ import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.TreeUI;
 import javax.swing.plaf.metal.MetalIconFactory;
-import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import org.limewire.util.FileUtils;
+import org.pushingpixels.substance.api.ColorSchemeAssociationKind;
+import org.pushingpixels.substance.api.ComponentState;
+import org.pushingpixels.substance.api.SubstanceColorScheme;
+import org.pushingpixels.substance.api.SubstanceLookAndFeel;
+import org.pushingpixels.substance.api.renderers.SubstanceDefaultTreeCellRenderer;
+import org.pushingpixels.substance.internal.ui.SubstanceTreeUI;
+import org.pushingpixels.substance.internal.ui.SubstanceTreeUI.TreePathId;
+import org.pushingpixels.substance.internal.utils.SubstanceColorSchemeUtilities;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -437,7 +446,7 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
         checkBox.setBorderPainted(false);
         checkBox.setFocusPainted(false);
         checkBox.setFocusable(false);
-        checkBox.setOpaque(true);
+        checkBox.setOpaque(false);
         return checkBox;
     }
     
@@ -540,21 +549,28 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
     /**
      * Sets the colors of the checkbox depending on its state.
      */
-    private void setColors(JCheckBox checkBox, boolean isSelected) {
-        checkBox.setForeground(isSelected ? fileTreeCellRenderer.getTextSelectionColor() : fileTreeCellRenderer.getTextNonSelectionColor());
-        checkBox.setBackground(isSelected ? fileTreeCellRenderer.getBackgroundSelectionColor() : fileTreeCellRenderer.getBackgroundNonSelectionColor());
+    private void setColors(Component colorExample, JTree tree, TreePath path, JCheckBox checkBox, boolean isSelected) {
+        if (SubstanceLookAndFeel.isCurrentLookAndFeel()) {
+            checkBox.setForeground(getSubstanceForegroundColor(tree, path));
+            checkBox.setBackground(getSubstanceBackgroundColor(tree, path));
+            checkBox.setOpaque(false);
+        } else {
+            checkBox.setForeground(colorExample.getForeground());
+            checkBox.setBackground(colorExample.getBackground());
+            checkBox.setOpaque(false);
+        }
     }
     
     /**
      * Check box tree cell renderer.
      */
-    private class FileTreeCellRenderer extends DefaultTreeCellRenderer {
+    private class FileTreeCellRenderer extends SubstanceDefaultTreeCellRenderer {
         
         private static final long serialVersionUID = -8299879264709364378L;
         
         private JCheckBox checkBox = configureCheckBox(new JCheckBox());
         
-        private DefaultTreeCellRenderer labelRenderer = new DefaultTreeCellRenderer();
+        private SubstanceDefaultTreeCellRenderer labelRenderer = new SubstanceDefaultTreeCellRenderer();
         
         @Override
         public Component getTreeCellRendererComponent(JTree tree, Object value,
@@ -562,15 +578,18 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
                 boolean hasFocus) {
             super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf,
                     row, hasFocus);
+            Component compTemp = null;
             if (!(value instanceof File)) {
                 labelRenderer.getTreeCellRendererComponent(tree, value, sel, expanded, false, row, false);
                 labelRenderer.setIcon(null);
                 return labelRenderer;
+            } else {
+                compTemp = labelRenderer.getTreeCellRendererComponent(tree, RecursiveLibraryDirectoryPanel.this.getText((File)value), sel, expanded, false, row, false);
             }
             
             File file = (File)value;
             checkBox.setText(RecursiveLibraryDirectoryPanel.this.getText(file));
-            setColors(checkBox, sel);
+            setColors(compTemp, tree, tree.getPathForRow(row), checkBox, sel);
             
             if (isExcluded(file)) {
                 checkBox.setSelected(false);
@@ -599,7 +618,7 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
 
         public FileTreeCellEditor() {
             super(configureCheckBox(new JCheckBox()));
-            setColors((JCheckBox)editorComponent, true);
+            //setColors((JCheckBox)editorComponent, true);
             
             delegate = new EditorDelegate() {
                 
@@ -686,4 +705,34 @@ public class RecursiveLibraryDirectoryPanel extends JPanel {
             return pathname.isDirectory() && !pathname.isHidden();
         }
     };
+    
+    private Color getSubstanceForegroundColor(JTree tree, TreePath path) {
+        TreeUI tableUI = tree.getUI();
+        SubstanceTreeUI ui = (SubstanceTreeUI) tableUI;
+        TreePathId pathId = new TreePathId(path);
+        ComponentState currState = ui.getPathState(pathId);
+
+        SubstanceColorScheme scheme = getColorSchemeForState(tree, ui, currState);
+
+        return scheme.getForegroundColor();
+    }
+    
+    private Color getSubstanceBackgroundColor(JTree tree, TreePath path) {
+        TreeUI tableUI = tree.getUI();
+        SubstanceTreeUI ui = (SubstanceTreeUI) tableUI;
+        TreePathId pathId = new TreePathId(path);
+        ComponentState currState = ui.getPathState(pathId);
+
+        SubstanceColorScheme scheme = getColorSchemeForState(tree, ui, currState);
+
+        return scheme.getBackgroundFillColor();
+    }
+
+    private SubstanceColorScheme getColorSchemeForState(JTree tree, SubstanceTreeUI ui, ComponentState state) {
+        if (state == ComponentState.ENABLED) {
+            return SubstanceColorSchemeUtilities.getColorScheme(tree, state);
+        } else {
+            return SubstanceColorSchemeUtilities.getColorScheme(tree, ColorSchemeAssociationKind.HIGHLIGHT, state);
+        }
+    }
 }
