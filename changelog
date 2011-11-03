@@ -17,7 +17,7 @@ frostwire (5.2.6) stable; urgency=high
   * The library can now be configured to scan any folder the user desires.
   * A lot of bug fixes.
  
- -- FrostWire Team <contact@frostwire.com>  Wed, 2 Nov 2011 16:14:41 -0500
+  -- FrostWire Team <contact@frostwire.com>  Thu, 3 Nov 2011 18:32:03 -0500
 
 frostwire (5.2.3) stable; urgency=high
   * Change the order of an audio file on playlist with drag and drop.
