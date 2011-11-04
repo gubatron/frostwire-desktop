@@ -347,16 +347,12 @@ public class LibrarySearch extends JPanel {
                 if (excludeFiles.contains(child)) {
                     continue;
                 }
+                
                 if (child.isHidden()) {
                     continue;
                 }
 
                 if (child.isDirectory() && !exludedSubFolders.contains(child)) {
-                    if (directoryHolder instanceof SavedFilesDirectoryHolder) {
-                        if (searchFilter.accept(child, false)) {
-                            results.add(child);
-                        }
-                    }
                     directories.add(child);
                 } else if (child.isFile()) {
                     if (directoryHolder instanceof SavedFilesDirectoryHolder) {
