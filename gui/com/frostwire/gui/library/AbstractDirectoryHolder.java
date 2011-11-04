@@ -13,7 +13,7 @@ import com.frostwire.gui.bittorrent.TorrentUtil;
  */
 public abstract class AbstractDirectoryHolder implements DirectoryHolder {
 
-    private Set<File> _hideFiles;
+    Set<File> _hideFiles;
     
     /**
      * Uses the file filter for listing the files in the directory provided by
@@ -28,8 +28,8 @@ public abstract class AbstractDirectoryHolder implements DirectoryHolder {
     }
 
     public boolean accept(File file) {
-		if (_hideFiles.contains(file) || !isFileVisible(file)
-				|| file.getName().toLowerCase().equals(".ds_store")) {
+		if (_hideFiles!=null && (_hideFiles.contains(file) || !isFileVisible(file)
+				|| file.getName().toLowerCase().equals(".ds_store"))) {
 			return false;
 		}
 

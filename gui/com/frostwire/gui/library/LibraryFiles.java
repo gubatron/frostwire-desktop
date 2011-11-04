@@ -192,6 +192,12 @@ public class LibraryFiles extends AbstractLibraryListPanel {
         } else {
             LibraryMediator.instance().updateTableFiles(node.getDirectoryHolder());
 
+            if (directoryHolder != null && directoryHolder instanceof SavedFilesDirectoryHolder) {
+            	if (clearCache) { 
+            		((SavedFilesDirectoryHolder) directoryHolder).clearCache();
+            	}
+            }
+            
             if (directoryHolder != null && directoryHolder instanceof MediaTypeSavedFilesDirectoryHolder) {
                 MediaTypeSavedFilesDirectoryHolder mtsfdh = (MediaTypeSavedFilesDirectoryHolder) directoryHolder;
                 if (clearCache) {
