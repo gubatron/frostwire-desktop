@@ -78,16 +78,6 @@ public final class ResourceManager {
      */
     private final boolean BRUSHED_METAL;
 
-    /**
-     * Whether or not the system tray was able to load.
-     */
-    private final boolean LOADED_TRAY_LIBRARY;
-
-    /**
-     * Whether or not the jdic associations were able to load.
-     */
-    private final boolean LOADED_JDIC_LIBRARY;
-
     /** Cache of theme images (name as String -> image as ImageIcon) */
     private static final Map<String, ImageIcon> THEME_IMAGES = new HashMap<String, ImageIcon>();
 
@@ -319,28 +309,6 @@ public final class ResourceManager {
         } catch (NullPointerException npe) {
             // ignore, can't do much about it -- internal ignorable error.
         }
-
-        if (OSUtils.isWindows() || OSUtils.isLinux()) {
-            boolean loaded = false;
-            try {
-            	//System.out.println("About to load tray, java.library.path = " + System.getProperty("java.library.path"));
-                //System.loadLibrary("tray");
-                loaded = true;
-            } catch (UnsatisfiedLinkError ule) {
-            	ule.printStackTrace();
-            }
-            LOADED_TRAY_LIBRARY = loaded;
-            loaded = false;
-            try {
-                System.loadLibrary("jdic");
-                loaded = true;
-            } catch (UnsatisfiedLinkError ule) {
-            }
-            LOADED_JDIC_LIBRARY = loaded;
-        } else {
-            LOADED_TRAY_LIBRARY = false;
-            LOADED_JDIC_LIBRARY = false;
-        }
     }
 
     /**
@@ -449,24 +417,10 @@ public final class ResourceManager {
         }
         return displayable;
     }
-
-    /**
-     * Determines if the tray library has loaded.
-     */
-    public boolean isTrayLibraryLoaded() {
-        return LOADED_TRAY_LIBRARY;
-    }
     
     /** Determines if a system tray icon is available. */
     public boolean isTrayIconAvailable() {
-        return isTrayLibraryLoaded() && NotifyUserProxy.instance().supportsSystemTray();
-    }
-
-    /**
-     * Determines if the jdic library has loaded.
-     */
-    public boolean isJdicLibraryLoaded() {
-        return LOADED_JDIC_LIBRARY;
+        return (OSUtils.isWindows() || OSUtils.isLinux()) && NotifyUserProxy.instance().supportsSystemTray();
     }
 
     /**

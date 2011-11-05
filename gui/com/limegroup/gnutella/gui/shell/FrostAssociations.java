@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+import org.limewire.util.CommonUtils;
 import org.limewire.util.OSUtils;
 import org.limewire.util.SystemUtils;
 
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.ResourceManager;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 
 public class FrostAssociations {
@@ -43,10 +43,7 @@ public class FrostAssociations {
 		return !getSupportedAssociations().isEmpty();
 	}
 	
-	private static Collection<LimeAssociationOption> getSupportedAssociationsImpl() {
-		if (!ResourceManager.instance().isJdicLibraryLoaded())
-			return Collections.emptyList();
-		
+	private static Collection<LimeAssociationOption> getSupportedAssociationsImpl() {		
 		Collection<LimeAssociationOption> ret = new ArrayList<LimeAssociationOption>();
 		
 		// strings that the shell will understand 
@@ -56,6 +53,11 @@ public class FrostAssociations {
 		
 		if (OSUtils.isWindows()) {
 			String runningPath = SystemUtils.getRunningPath();
+			
+			// only to test associations
+			if (CommonUtils.isDebugMode()) {
+				runningPath = PROGRAM + ".exe";
+			}
 			
 			if (runningPath != null && runningPath.endsWith(PROGRAM+".exe")) {
 				protocolOpener = runningPath;

@@ -2,7 +2,6 @@ package com.limegroup.gnutella.gui.notify;
 
 import org.limewire.util.OSUtils;
 
-import com.limegroup.gnutella.gui.ResourceManager;
 import com.limegroup.gnutella.settings.UISettings;
 
 /**
@@ -35,7 +34,7 @@ public class NotifyUserProxy implements NotifyUser {
      * platform.  This class serves as a "proxy" for the object constructed.
      */
     private NotifyUserProxy() {
-        if (OSUtils.supportsTray() && ResourceManager.instance().isTrayLibraryLoaded()) {
+        if (OSUtils.supportsTray()) {
         	_notifier = new TrayNotifier();
         	// If add notifications failed, we're screwed.
             if(!showTrayIcon())
