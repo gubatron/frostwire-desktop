@@ -1,5 +1,6 @@
 package com.frostwire.gui;
 
+import java.awt.Desktop;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
@@ -8,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jdesktop.jdic.desktop.Desktop;
 import org.limewire.collection.SortedList;
 import org.limewire.util.OSUtils;
 import org.limewire.util.Version;
@@ -106,15 +106,10 @@ public final class GuiFrostWireUtils {
 					}
 				}
 				
-				java.awt.Desktop.getDesktop().open(file);
+				Desktop.getDesktop().open(file);
 			} else {
-				//try jdic if you're not a mac and you're on below 1.6
-				if (!OSUtils.isMacOSX()) {
-					Desktop.open(file);
-				} else {
-					//if you're an old mac, try the old way
-					GUIMediator.launchFile(file);
-				}
+				//if you're an old mac, try the old way
+				GUIMediator.launchFile(file);
 			}
 		} catch (Exception e) {
 			GUIMediator.launchFile(file);
