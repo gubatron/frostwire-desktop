@@ -422,4 +422,9 @@ public class OSUtils {
 	public static String getArchitecture() {
 		return System.getProperty("os.arch");
 	}
+	
+	public static boolean isMachineX64() {
+		String value = System.getProperty("sun.arch.data.model");
+		return value != null && value.equals("64");
+	}
 }

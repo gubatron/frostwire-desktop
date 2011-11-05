@@ -24,22 +24,24 @@ public class SystemUtils {
      */
     private static boolean isLoaded;
     
-    static {
-        boolean canLoad;
-        try {
-            // Only load the library on systems where we've made it.
-            if (OSUtils.isWindows() && !OSUtils.isGoodWindows())
-                System.loadLibrary("SystemUtilitiesA");
-            else if(OSUtils.isMacOSX() || OSUtils.isWindows()) 
-                System.loadLibrary("SystemUtilities");
-
-            System.out.println("Can load libraries!");
-            canLoad = true;
-        } catch(UnsatisfiedLinkError noGo) {
-            canLoad = false;
-        }
-        isLoaded = canLoad;
-    }
+	static {
+		boolean canLoad;
+		try {
+			if (OSUtils.isWindows() && OSUtils.isGoodWindows()) {
+				if (OSUtils.isMachineX64()) {
+					System.loadLibrary("SystemUtilitiesX64");
+				} else {
+					System.loadLibrary("SystemUtilities");
+				}
+			} else if (OSUtils.isMacOSX()) {
+				System.loadLibrary("SystemUtilities");
+			}
+			canLoad = true;
+		} catch (UnsatisfiedLinkError noGo) {
+			canLoad = false;
+		}
+		isLoaded = canLoad;
+	}
     
     private SystemUtils() {}
     

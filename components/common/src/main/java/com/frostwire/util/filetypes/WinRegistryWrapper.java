@@ -24,14 +24,25 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.URL;
 
+import org.limewire.util.OSUtils;
+
 
 /**
  * Bottom layer java wrapper for Windows registry relevant APIs
  */
 public class WinRegistryWrapper {
-    static {
-        System.loadLibrary("jdic");
-    }
+	static {
+		try {
+			if (OSUtils.isWindows() && OSUtils.isGoodWindows()) {
+				if (OSUtils.isMachineX64()) {
+					System.loadLibrary("SystemUtilitiesX64");
+				} else {
+					System.loadLibrary("SystemUtilities");
+				}
+			}
+		} catch (Throwable t) {
+		}
+	}
  
     /**
      * Windows handles to <tt>HKEY_CURRENT_USER</tt> and 
