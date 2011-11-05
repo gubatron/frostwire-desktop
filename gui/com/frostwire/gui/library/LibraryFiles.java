@@ -196,9 +196,7 @@ public class LibraryFiles extends AbstractLibraryListPanel {
             	if (clearCache) { 
             		((SavedFilesDirectoryHolder) directoryHolder).clearCache();
             	}
-            }
-            
-            if (directoryHolder != null && directoryHolder instanceof MediaTypeSavedFilesDirectoryHolder) {
+            } else if (directoryHolder != null && directoryHolder instanceof MediaTypeSavedFilesDirectoryHolder) {
                 MediaTypeSavedFilesDirectoryHolder mtsfdh = (MediaTypeSavedFilesDirectoryHolder) directoryHolder;
                 if (clearCache) {
                     mtsfdh.clearCache();

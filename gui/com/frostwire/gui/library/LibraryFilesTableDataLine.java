@@ -197,7 +197,7 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 	        return new PlayableCell(_path, isPlaying, idx);
         case MODIFICATION_TIME_IDX:
 			// it's cheaper to use the cached value if available,
-			// hope it's always uptodate
+			// hope it's always up to date
 			if (_fileDesc != null) {
 				return new PlayableCell(new Date(_fileDesc.lastModified()),isPlaying, idx);
 			}

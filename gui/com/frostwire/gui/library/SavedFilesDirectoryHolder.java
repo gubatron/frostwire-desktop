@@ -17,7 +17,7 @@ public class SavedFilesDirectoryHolder extends FileSettingDirectoryHolder {
     
     private final MediaType type;
     
-    private File[] cache;
+	private Set<File> cache;
 
 	public SavedFilesDirectoryHolder(FileSetting saveDir, String name) {
 		super(saveDir, name);
@@ -56,12 +56,14 @@ public class SavedFilesDirectoryHolder extends FileSettingDirectoryHolder {
 	public void clearCache() {
 		cache = null;
 	}
+
 	
+
 	@Override
 	public File[] getFiles() {
 		
-		if (cache != null && cache.length > 0) {
-			return cache;
+		if (cache != null && cache.size() > 0) {
+			return cache.toArray(new File[0]);
 		}
 		
 		_hideFiles = TorrentUtil.getIgnorableFiles();
@@ -69,8 +71,9 @@ public class SavedFilesDirectoryHolder extends FileSettingDirectoryHolder {
 		Set<File> directoriesToNotInclude = LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue();
 		Set<File> files = getFilesRecursively(getDirectory(),directoriesToNotInclude);
 		
-		cache = files.toArray(new File[0]);
+		cache = new HashSet<File>(files);
 		
-		return cache;
+		return cache.toArray(new File[0]);
 	}
+
 }

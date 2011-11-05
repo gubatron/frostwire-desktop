@@ -149,9 +149,11 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         }
 
         menu.add(new SkinMenuItem(CREATE_TORRENT_ACTION));
-        if (getMediaType().equals(MediaType.getAudioMediaType())) {
+        
+        if (areAllSelectedFilesPlayable()) {
             menu.add(createAddToPlaylistSubMenu());
         }
+        
         menu.add(new SkinMenuItem(SEND_TO_FRIEND_ACTION));
         menu.add(new SkinMenuItem(SEND_TO_ITUNES_ACTION));
 
@@ -194,6 +196,18 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
         return menu;
     }
+
+	private boolean areAllSelectedFilesPlayable() {
+		boolean selectionIsAllAudio = true;
+        int[] selectedRows = TABLE.getSelectedRows();
+        for (int i : selectedRows) {
+        	if (!AudioPlayer.isPlayableFile(DATA_MODEL.get(i).getInitializeObject())) {
+        		selectionIsAllAudio = false;
+        		break;
+        	}        	
+        }
+		return selectionIsAllAudio;
+	}
 
     private JMenu createSearchSubMenu(LibraryFilesTableDataLine dl) {
         SkinMenu menu = new SkinMenu(I18n.tr("Search"));
