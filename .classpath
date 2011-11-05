@@ -21,7 +21,6 @@
 	<classpathentry kind="lib" path="lib/jars/gettext-commons.jar" sourcepath="lib/jars-src"/>
 	<classpathentry kind="lib" path="lib/jars/splash.jar"/>
 	<classpathentry kind="lib" path="lib/jars/gson-1.4.jar" sourcepath="lib/jars-src"/>
-	<classpathentry kind="lib" path="lib/jars/jdic.jar"/>
 	<classpathentry kind="lib" path="lib/jars/messages.jar"/>
 	<classpathentry kind="lib" path="lib/jars/substance.jar" sourcepath="lib/jars-src/substance-58d3873"/>
 	<classpathentry kind="lib" path="lib/jars/trident.jar" sourcepath="lib/jars-src"/>

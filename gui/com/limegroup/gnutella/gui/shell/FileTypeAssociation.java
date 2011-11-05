@@ -2,13 +2,14 @@ package com.limegroup.gnutella.gui.shell;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jdesktop.jdic.filetypes.Action;
-import org.jdesktop.jdic.filetypes.Association;
-import org.jdesktop.jdic.filetypes.AssociationAlreadyRegisteredException;
-import org.jdesktop.jdic.filetypes.AssociationNotRegisteredException;
-import org.jdesktop.jdic.filetypes.AssociationService;
-import org.jdesktop.jdic.filetypes.RegisterFailedException;
 import org.limewire.util.SystemUtils;
+
+import com.frostwire.util.filetypes.Action;
+import com.frostwire.util.filetypes.Association;
+import com.frostwire.util.filetypes.AssociationAlreadyRegisteredException;
+import com.frostwire.util.filetypes.AssociationNotRegisteredException;
+import com.frostwire.util.filetypes.AssociationService;
+import com.frostwire.util.filetypes.RegisterFailedException;
 
 
 public class FileTypeAssociation implements ShellAssociation {
