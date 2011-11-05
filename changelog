@@ -1,4 +1,4 @@
-frostwire (5.2.6) stable; urgency=high
+frostwire (5.2.7) stable; urgency=high
   * Smart search updates uses less DHT resources and fixes logic bugs
     that results into faster and better search results.
   * New Internet Radio functionality on the Library. Play, Add, Remove
@@ -15,9 +15,10 @@ frostwire (5.2.6) stable; urgency=high
   * Add partial downloads, and multiple transfers that contain audio files
     to playlists right from the transfer manager.
   * The library can now be configured to scan any folder the user desires.
+  * Files can be added to playlists right out of search results.
   * A lot of bug fixes.
  
- -- FrostWire Team <contact@frostwire.com>  Thu, 3 Nov 2011 18:32:03 -0500
+ -- FrostWire Team <contact@frostwire.com>  Sat, 5 Nov 2011 00:05:03 -0500
 
 frostwire (5.2.3) stable; urgency=high
   * Change the order of an audio file on playlist with drag and drop.
