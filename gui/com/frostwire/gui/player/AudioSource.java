@@ -29,6 +29,17 @@ public class AudioSource {
         this.playlistItem = null;
     }
 
+    @Override
+    public String toString() {
+    	String name = null;
+    	if (getFile()!=null) {
+    		name = getFile().getName();
+    	} else {
+    		name = url.getPath();
+    	}
+    	return "[AudioSource@"+hashCode()+": "+name+"]";
+    }
+    
     public AudioSource(URL url) {
         if (url == null) {
             throw new NullPointerException("URL cannot be null");

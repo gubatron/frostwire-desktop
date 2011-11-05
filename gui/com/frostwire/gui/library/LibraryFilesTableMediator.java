@@ -395,7 +395,10 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         List<AudioSource> result = new ArrayList<AudioSource>(size);
         for (int i = 0; i < size; i++) {
             try {
-                result.add(new AudioSource(DATA_MODEL.get(i).getFile()));
+            	File file = DATA_MODEL.get(i).getFile();
+            	if (AudioPlayer.isPlayableFile(file)) {
+            		result.add(new AudioSource(DATA_MODEL.get(i).getFile()));
+            	}
             } catch (Exception e) {
                 return Collections.emptyList();
             }
@@ -935,12 +938,10 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         resetAudioPlayerFileView();
     }
 
-    private void resetAudioPlayerFileView() {
+    public void resetAudioPlayerFileView() {
         Playlist playlist = AudioPlayer.instance().getCurrentPlaylist();
         if (playlist == null) {
-            if (AudioPlayer.instance().getPlaylistFilesView() != null) {
-                AudioPlayer.instance().setPlaylistFilesView(getFileView());
-            }
+        	AudioPlayer.instance().setPlaylistFilesView(getFileView());
         }
     }
 }

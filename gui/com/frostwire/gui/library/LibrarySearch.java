@@ -368,6 +368,10 @@ public class LibrarySearch extends JPanel {
             Runnable r = new Runnable() {
                 public void run() {
                     LibraryMediator.instance().addFilesToLibraryTable(results);
+                    
+                    if (directoryHolder instanceof SavedFilesDirectoryHolder) {
+                    	LibraryFilesTableMediator.instance().resetAudioPlayerFileView();
+                    }
                 }
             };
             GUIMediator.safeInvokeLater(r);

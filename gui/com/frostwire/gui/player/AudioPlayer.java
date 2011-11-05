@@ -622,11 +622,20 @@ public class AudioPlayer implements RefreshListener {
         if (n == 1) {
             return playlistFilesView.get(0);
         }
+        
+        //PlaylistFilesView should probably have a HashTable<AudioSource,Integer>
+        //Where the integer is the index of the AudioSource on playlistFilesView.
+        //This way we could easily find the current song and know the index of the
+        //next or previous song.
+        //When you have lots of files, I think the search below might
+        //be too slow.
+        
+        
         for (int i = 0; i < n; i++) {
             try {
                 AudioSource f1 = playlistFilesView.get(i);
                 if (currentSong.equals(f1)) {
-                    for (int j = i + 1; j < n; j++) {
+                    for (int j = i+1; j < n; j++) {
                         AudioSource file = playlistFilesView.get(j);
                         if (isPlayableFile(file)) {
                             return file;
