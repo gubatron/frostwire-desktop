@@ -2,7 +2,6 @@ package com.frostwire.gui.library;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -12,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
@@ -24,6 +22,7 @@ import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.alexandria.db.LibraryDatabase;
+import com.frostwire.gui.library.AbstractLibraryTableMediator.SendToFriendAction;
 import com.frostwire.gui.library.LibraryInternetRadioTableMediator.AddRadioStationAction;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
@@ -31,8 +30,6 @@ import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconButton;
-import com.limegroup.gnutella.gui.actions.AbstractAction;
-import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.options.ConfigureOptionsAction;
 import com.limegroup.gnutella.gui.options.OptionsConstructor;
 import com.limegroup.gnutella.gui.util.DividerLocationSettingUpdater;
@@ -71,7 +68,8 @@ public class LibraryMediator {
 	
 	private Set<Integer> idScanned;
 	private AddRadioStationAction addStationAction;
-	private ExploreAction exploreAction;
+	private AbstractLibraryTableMediator.ExploreAction exploreAction;
+	private SendToFriendAction sendAction;
 
     /**
      * @return the <tt>LibraryMediator</tt> instance
@@ -280,16 +278,19 @@ public class LibraryMediator {
         JPanel panelBottom = new JPanel();
         panelBottom.setLayout(new BoxLayout(panelBottom,BoxLayout.LINE_AXIS));
         //actions
-        panelBottom.add(
-                new IconButton(new ConfigureOptionsAction(OptionsConstructor.SHARED_KEY, I18n.tr("Options"), I18n
-                        .tr("You can configure the folders you share in FrostWire\'s Options."))));
+        sendAction = new AbstractLibraryTableMediator.SendToFriendAction();
+        panelBottom.add(new IconButton(sendAction));
 
-        
-        exploreAction = new ExploreAction();
+        exploreAction = new AbstractLibraryTableMediator.ExploreAction();
         panelBottom.add(new IconButton(exploreAction));
         
         addStationAction = new LibraryInternetRadioTableMediator.AddRadioStationAction();
         panelBottom.add(new IconButton(addStationAction));
+
+        panelBottom.add(
+                new IconButton(new ConfigureOptionsAction(OptionsConstructor.SHARED_KEY, I18n.tr("Options"), I18n
+                        .tr("You can configure the folders you share in FrostWire\'s Options."))));
+
         
         //empty space
         panelBottom.add(Box.createHorizontalGlue());
@@ -301,10 +302,6 @@ public class LibraryMediator {
         return panel;
     }
     
-    public void setStationActionEnabled(boolean state) {
-    	addStationAction.setEnabled(state);
-    }
-
     public void setSelectedFile(File file) {
         getLibraryFiles().selectFinishedDownloads();
         LibraryFilesTableMediator.instance().setFileSelected(file);
@@ -416,28 +413,7 @@ public class LibraryMediator {
         getLibrary().restoreDefaultRadioStations();
     }
 
-    private static class ExploreAction extends AbstractAction {
-
-		private static final long serialVersionUID = 8992145937511990033L;
-
-		public ExploreAction() {
-            putValue(Action.NAME, I18n.tr("Explore"));
-            putValue(LimeAction.SHORT_NAME, I18n.tr("Explore"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Open Folder Containing the File"));
-            putValue(LimeAction.ICON_NAME, "LIBRARY_EXPLORE");
-        }
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			File toExplore = LibraryMediator.instance().getSelectedFile();
-			
-			if (toExplore != null) {
-				GUIMediator.launchExplorer(toExplore);
-			} else {
-				System.out.println("LibraryMediator.ExploreAction.actionPerformed() - Had nothing to launch.");
-			}
-		}
-    }
+    
 
     /**
      * If a file has been selected on the right hand side, this method will select such file.
@@ -445,7 +421,7 @@ public class LibraryMediator {
      * If there's a radio station, or if there's more than one file selected, or none, it will return null.
      * @return
      */
-	private File getSelectedFile() {
+	public File getSelectedFile() {
 		File toExplore = null;
 		
 		DirectoryHolder selectedDirectoryHolder = LibraryMediator.instance().getLibraryFiles().getSelectedDirectoryHolder();
@@ -477,8 +453,10 @@ public class LibraryMediator {
 		if (selectedDirectoryHolder instanceof InternetRadioDirectoryHolder ||
 			!selectedOneFile) {
 			exploreAction.setEnabled(false);
+			sendAction.setEnabled(false);
 		} else {
 			exploreAction.setEnabled(true);
+			sendAction.setEnabled(true);
 		}
 	}
 }

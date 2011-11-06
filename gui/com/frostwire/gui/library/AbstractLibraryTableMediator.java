@@ -20,6 +20,7 @@ import com.frostwire.gui.player.AudioSource;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.DataLineModel;
 import com.limegroup.gnutella.gui.themes.SkinMenu;
@@ -192,7 +193,7 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
         }
     }
 
-    private final class SendToFriendAction extends AbstractAction {
+    static class SendToFriendAction extends AbstractAction {
 
         private static final long serialVersionUID = 1329472129818371471L;
 
@@ -200,22 +201,47 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
             super(I18n.tr("Send to friend"));
             putValue(Action.LONG_DESCRIPTION, I18n.tr("Send to friend"));
             putValue(Action.SMALL_ICON, GUIMediator.getThemeImage("share"));
+            putValue(LimeAction.ICON_NAME, "LIBRARY_SEND");
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            List<AbstractLibraryTableDataLine<I>> lines = getSelectedLines();
-            if (lines.size() == 1) {
-                File file = lines.get(0).getFile();
-                String fileFolder = file.isFile() ? I18n.tr("file") : I18n.tr("folder");
-                int result = JOptionPane.showConfirmDialog(GUIMediator.getAppFrame(), I18n.tr("Do you want to send this {0} to a friend?", fileFolder) + "\n\n\"" + file.getName() + "\"", I18n.tr("Send files with FrostWire"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                File file = LibraryMediator.instance().getSelectedFile();
+                
+                if (file == null) {
+                	return;
+                }
+                
+                int result = JOptionPane.showConfirmDialog(GUIMediator.getAppFrame(), I18n.tr("Do you want to send this file to a friend?") + "\n\n\"" + file.getName() + "\"", I18n.tr("Send files with FrostWire"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
                 if (result == JOptionPane.YES_OPTION) {
                     new SendFileProgressDialog(GUIMediator.getAppFrame(), file).setVisible(true);
                     GUIMediator.instance().setWindow(GUIMediator.Tabs.SEARCH);
                 }
-            }
         }
+    }
+    
+    static class ExploreAction extends AbstractAction {
+
+		private static final long serialVersionUID = 8992145937511990033L;
+
+		public ExploreAction() {
+            putValue(Action.NAME, I18n.tr("Explore"));
+            putValue(LimeAction.SHORT_NAME, I18n.tr("Explore"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Open Folder Containing the File"));
+            putValue(LimeAction.ICON_NAME, "LIBRARY_EXPLORE");
+        }
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			File toExplore = LibraryMediator.instance().getSelectedFile();
+			
+			if (toExplore != null) {
+				GUIMediator.launchExplorer(toExplore);
+			} else {
+				System.out.println("LibraryMediator.ExploreAction.actionPerformed() - Had nothing to launch.");
+			}
+		}
     }
 
     void scrollTo(int value) {
