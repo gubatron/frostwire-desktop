@@ -522,7 +522,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
 
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            String input = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("URL Radio Station"), I18n.tr("Add Radio Station"), JOptionPane.PLAIN_MESSAGE, null, null, "");
+            String input = (String) JOptionPane.showInputDialog(GUIMediator.getAppFrame(), I18n.tr("Radio Station's stream URL"), I18n.tr("Add Radio Station"), JOptionPane.PLAIN_MESSAGE, null, null, "");
             if (!StringUtils.isNullOrEmpty(input, true)) {
                 LibraryUtils.asyncAddRadioStation(input);
             }
