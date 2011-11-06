@@ -81,19 +81,19 @@ public final class LibraryInternetRadioTableDataLine extends AbstractLibraryTabl
         case BOOKMARKED_IDX:
         	return new InternetRadioBookmark(this, playing);
         case NAME_IDX:
-            return new PlayableCell(initializer.getName(), playing, idx);
+            return new PlayableCell(this, initializer.getName(), playing, idx);
         case DESCRIPTION_IDX:
-            return new PlayableCell(initializer.getDescription(), playing, idx);
+            return new PlayableCell(this, initializer.getDescription(), playing, idx);
         case URL_IDX:
-            return new PlayableCell(initializer.getUrl(), playing, idx);
+            return new PlayableCell(this, initializer.getUrl(), playing, idx);
         case BITRATE_IDX:
-            return new PlayableCell(initializer.getBitrate(), playing, idx);
+            return new PlayableCell(this, initializer.getBitrate(), playing, idx);
         case TYPE_IDX:
-            return new PlayableCell(initializer.getType(), playing, idx);
+            return new PlayableCell(this, initializer.getType(), playing, idx);
         case WEBSITE_IDX:
             return new ActionIconAndNameHolder(null, detailsAction, "<html><a href=\"#\">" + initializer.getWebsite().replace("http://", "") + "</a></html>");
         case GENRE_IDX:
-            return new PlayableCell(initializer.getGenre(), playing, idx);
+            return new PlayableCell(this, initializer.getGenre(), playing, idx);
         }
         return null;
     }

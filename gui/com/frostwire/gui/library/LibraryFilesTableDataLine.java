@@ -188,20 +188,20 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
                 return null;
             }
 	    case NAME_IDX:
-	        return new PlayableCell(_name, isPlaying, idx);	                    
+	        return new PlayableCell(this, _name, isPlaying, idx);	                    
 	    case SIZE_IDX:
-	        return new PlayableCell(_sizeHolder,isPlaying, idx);
+	        return new PlayableCell(this, _sizeHolder,isPlaying, idx);
 	    case TYPE_IDX:
-	        return new PlayableCell(_type, isPlaying, idx);
+	        return new PlayableCell(this, _type, isPlaying, idx);
 	    case PATH_IDX:
-	        return new PlayableCell(_path, isPlaying, idx);
+	        return new PlayableCell(this, _path, isPlaying, idx);
         case MODIFICATION_TIME_IDX:
 			// it's cheaper to use the cached value if available,
 			// hope it's always up to date
 			if (_fileDesc != null) {
-				return new PlayableCell(new Date(_fileDesc.lastModified()),isPlaying, idx);
+				return new PlayableCell(this, new Date(_fileDesc.lastModified()),isPlaying, idx);
 			}
-			return new PlayableCell(new Date(initializer.lastModified()),isPlaying, idx);
+			return new PlayableCell(this, new Date(initializer.lastModified()),isPlaying, idx);
 	    }
 	    return null;
 	}

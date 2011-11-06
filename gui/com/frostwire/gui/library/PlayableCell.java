@@ -6,11 +6,13 @@ import com.limegroup.gnutella.gui.tables.SizeHolder;
 
 public class PlayableCell implements Comparable<PlayableCell> {
 
+    private Object dataLine;
     private Object wrappedObject;
     private final boolean isPlaying;
     private final int columnIndex;
 
-    public PlayableCell(Object wrapMe, boolean isPlaying, int columnIndex) {
+    public PlayableCell(Object dataLine, Object wrapMe, boolean isPlaying, int columnIndex) {
+        this.dataLine = dataLine;
         this.wrappedObject = wrapMe;
         this.isPlaying = isPlaying;
         this.columnIndex = columnIndex;
@@ -40,7 +42,7 @@ public class PlayableCell implements Comparable<PlayableCell> {
     public int compareTo(PlayableCell o) {
         if (wrappedObject instanceof Comparable && wrappedObject != null && o.wrappedObject != null && wrappedObject.getClass().equals(o.wrappedObject.getClass())) {
 
-            if (columnIndex == LibraryInternetRadioTableDataLine.BITRATE_IDX) {
+            if (dataLine instanceof LibraryInternetRadioTableDataLine && columnIndex == LibraryInternetRadioTableDataLine.BITRATE_IDX) {
                 return compareByBitrate((String) wrappedObject, (String) o.wrappedObject);
             }
 
