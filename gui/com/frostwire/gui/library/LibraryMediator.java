@@ -454,7 +454,6 @@ public class LibraryMediator {
 		selectedDirectoryHolder instanceof TorrentDirectoryHolder;
 		
 		if (fileBasedDirectoryHolderSelected &&	LibraryFilesTableMediator.instance().getSelectedLines().size() == 1) {
-			
 			toExplore = LibraryFilesTableMediator.instance().getSelectedLines().get(0).getFile();
 			
 		} else if (LibraryPlaylistsTableMediator.instance().getSelectedLines() != null &&
@@ -475,8 +474,7 @@ public class LibraryMediator {
 		boolean selectedOneFile = getSelectedFile() != null;		
 		
 		//Conditions to disable file related actions.
-		if (selectedDirectoryHolder == null ||
-			selectedDirectoryHolder instanceof InternetRadioDirectoryHolder ||
+		if (selectedDirectoryHolder instanceof InternetRadioDirectoryHolder ||
 			!selectedOneFile) {
 			exploreAction.setEnabled(false);
 		} else {
