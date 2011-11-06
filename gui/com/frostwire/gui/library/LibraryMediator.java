@@ -2,6 +2,7 @@ package com.frostwire.gui.library;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
@@ -29,6 +31,8 @@ import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconButton;
+import com.limegroup.gnutella.gui.actions.AbstractAction;
+import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.options.ConfigureOptionsAction;
 import com.limegroup.gnutella.gui.options.OptionsConstructor;
 import com.limegroup.gnutella.gui.util.DividerLocationSettingUpdater;
@@ -67,6 +71,7 @@ public class LibraryMediator {
 	
 	private Set<Integer> idScanned;
 	private AddRadioStationAction addStationAction;
+	private ExploreAction exploreAction;
 
     /**
      * @return the <tt>LibraryMediator</tt> instance
@@ -279,6 +284,10 @@ public class LibraryMediator {
                 new IconButton(new ConfigureOptionsAction(OptionsConstructor.SHARED_KEY, I18n.tr("Options"), I18n
                         .tr("You can configure the folders you share in FrostWire\'s Options."))));
 
+        
+        exploreAction = new ExploreAction();
+        panelBottom.add(new IconButton(exploreAction));
+        
         addStationAction = new LibraryInternetRadioTableMediator.AddRadioStationAction();
         panelBottom.add(new IconButton(addStationAction));
         
@@ -406,4 +415,72 @@ public class LibraryMediator {
     public void restoreDefaultRadioStations() {
         getLibrary().restoreDefaultRadioStations();
     }
+
+    private static class ExploreAction extends AbstractAction {
+
+		private static final long serialVersionUID = 8992145937511990033L;
+
+		public ExploreAction() {
+            putValue(Action.NAME, I18n.tr("Explore"));
+            putValue(LimeAction.SHORT_NAME, I18n.tr("Explore"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Open Folder Containing the File"));
+            putValue(LimeAction.ICON_NAME, "LIBRARY_EXPLORE");
+        }
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			File toExplore = LibraryMediator.instance().getSelectedFile();
+			
+			if (toExplore != null) {
+				GUIMediator.launchExplorer(toExplore);
+			} else {
+				System.out.println("LibraryMediator.ExploreAction.actionPerformed() - Had nothing to launch.");
+			}
+		}
+    }
+
+    /**
+     * If a file has been selected on the right hand side, this method will select such file.
+     * 
+     * If there's a radio station, or if there's more than one file selected, or none, it will return null.
+     * @return
+     */
+	private File getSelectedFile() {
+		File toExplore = null;
+		
+		DirectoryHolder selectedDirectoryHolder = LibraryMediator.instance().getLibraryFiles().getSelectedDirectoryHolder();
+		boolean fileBasedDirectoryHolderSelected = selectedDirectoryHolder instanceof SavedFilesDirectoryHolder || 
+		selectedDirectoryHolder instanceof MediaTypeSavedFilesDirectoryHolder ||
+		selectedDirectoryHolder instanceof TorrentDirectoryHolder;
+		
+		if (fileBasedDirectoryHolderSelected &&	LibraryFilesTableMediator.instance().getSelectedLines().size() == 1) {
+			
+			toExplore = LibraryFilesTableMediator.instance().getSelectedLines().get(0).getFile();
+			
+		} else if (LibraryPlaylistsTableMediator.instance().getSelectedLines() != null &&
+				LibraryPlaylistsTableMediator.instance().getSelectedLines().size() == 1) {
+			toExplore = LibraryPlaylistsTableMediator.instance().getSelectedLines().get(0).getFile();
+		}
+		return toExplore;
+	}
+    
+    /**
+     * Invoked by the LibraryFiles selection listener.
+     * When a selection has changed there, we gotta make some actions enabled or disabled.
+     * @param node 
+     */
+	public void refreshBottomActions() {
+		DirectoryHolder selectedDirectoryHolder = LibraryMediator.instance().getLibraryFiles().getSelectedDirectoryHolder();
+		
+		boolean selectedOneFile = getSelectedFile() != null;		
+		
+		//Conditions to disable file related actions.
+		if (selectedDirectoryHolder == null ||
+			selectedDirectoryHolder instanceof InternetRadioDirectoryHolder ||
+			!selectedOneFile) {
+			exploreAction.setEnabled(false);
+		} else {
+			exploreAction.setEnabled(true);
+		}
+	}
 }

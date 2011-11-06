@@ -538,6 +538,8 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         if (sel.length == 1) {
             LibraryMediator.instance().getLibraryCoverArt().setFile(getSelectedLibraryLines()[0].getFile());
         }
+        
+        LibraryMediator.instance().refreshBottomActions();
     }
 
     /**

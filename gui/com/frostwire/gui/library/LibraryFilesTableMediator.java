@@ -673,6 +673,8 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         if (sel.length == 1) {
             LibraryMediator.instance().getLibraryCoverArt().setFile(selectedFile);
         }
+        
+        LibraryMediator.instance().refreshBottomActions();
     }
 
     /**

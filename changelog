@@ -16,6 +16,7 @@ frostwire (5.2.7) stable; urgency=high
     to playlists right from the transfer manager.
   * The library can now be configured to scan any folder the user desires.
   * Files can be added to playlists right out of search results.
+  * New explore action button on the Library tab.
   * A lot of bug fixes.
 
  -- FrostWire Team <contact@frostwire.com>  Sat, 5 Nov 2011 00:05:03 -0500

@@ -452,6 +452,8 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
         if (sel.length == 1) {
             LibraryMediator.instance().getLibraryCoverArt().setDefault();
         }
+        
+        LibraryMediator.instance().refreshBottomActions();
     }
 
     /**

@@ -278,6 +278,7 @@ public class LibraryFiles extends AbstractLibraryListPanel {
             }
 
             LibraryMediator.instance().getLibraryPlaylists().clearSelection();
+            LibraryMediator.instance().refreshBottomActions();
 
             refreshSelection(false);
         }
