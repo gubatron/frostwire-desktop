@@ -3,7 +3,7 @@ frostwire (5.2.7) stable; urgency=high
     that results into faster and better search results.
   * New Internet Radio functionality on the Library. Play, Add, Remove
     and bookmark your favorite Internet Radio Stations.
-  * Book/Document search now crawls for .cbr, .cbz, .cb7, .cbt and .cba 
+  * Book/Document search now crawls for .cbr, .cbz, .cb7, .cbt and .cba
     file formats.
   * New "Show in Library" action for finished transfers. It is now the
     default action when a finished transfer has been double clicked.
@@ -17,7 +17,7 @@ frostwire (5.2.7) stable; urgency=high
   * The library can now be configured to scan any folder the user desires.
   * Files can be added to playlists right out of search results.
   * A lot of bug fixes.
- 
+
  -- FrostWire Team <contact@frostwire.com>  Sat, 5 Nov 2011 00:05:03 -0500
 
 frostwire (5.2.3) stable; urgency=high
@@ -35,7 +35,7 @@ frostwire (5.2.3) stable; urgency=high
     results.
   * Fixes lingering popup menu issue.
   * Fixed DNS query issue affecting Linux.
- 
+
  -- FrostWire Team <contact@frostwire.com>  Thu, 20 Oct 2011 17:42:08 -0500
 
 frostwire (5.2.2) stable; urgency=high
@@ -53,7 +53,7 @@ frostwire (5.2.2) stable; urgency=high
   * Fixes out of memory error.
   * Real time UI feedback as audio files are being imported into playlist.
   * F5, Cmd+R or Ctrl+R will refresh the current Library table.
- 
+
  -- FrostWire Team <contact@frostwire.com>  Mon, 10 Oct 2011 18:03:10 -0500
 
 frostwire (5.2.1) stable; urgency=high
@@ -126,14 +126,14 @@ frostwire (5.1.5) stable; urgency=high
   * UX adjustement in the way transfers are sorted when the application is
     launched.
   * UX upgrade where Search Field on the Library now reacts to the DELETE key.
-  * UX upgrade where the FrostWire left hand side components are laid out 
+  * UX upgrade where the FrostWire left hand side components are laid out
     correctly after the user resizes the window from much smaller dimensions.
 
  -- FrostWire Team <contact@frostwire.com>  Fri, 16 Sep 2011 18:1:34 -0500
 
 frostwire (5.1.4) stable; urgency=high
 
-  * Bug fix where it would not index torrents when the 
+  * Bug fix where it would not index torrents when the
     file type filter was in use.
   * Bug fix when downloading a secondary file from the second torrent
     download would not start and would appear as seeding.
@@ -262,9 +262,9 @@ frostwire (4.21.8) stable; urgency=high
     seeding as soon as the setting is applied.
   * Better wording to explain on which networks files are being shared on,
     Gnutella or BitTorrent.
-  * Changed color of �Sharing Options� gear icon to blue, gray
+  * Changed color of "Sharing Options" gear icon to blue, gray
     icon may have seemed as if the button was disabled.
-  * Added �Sharing Options� gear button on Search Tab. It�s only visible
+  * Added "Sharing Options" gear button on Search Tab. It's only visible
     once a search has been started.
   * Added Help Menu options to learn about how to share/unshare files,
     torrent seeding, and how to avoid being scammed into paying for
