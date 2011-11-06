@@ -17,7 +17,6 @@
 		<ant dir="gettext-commons-0_9_5"/>
 		<ant dir="google-gson-1.4"/>
 		<ant dir="netx-0.5" />
-		<ant dir="jdic-20060613"/>
 		<ant dir="mrjadapter"/>
 	    <ant dir="trident-64a55aa"/>
 	    <ant dir="laf-widget-1543ae9"/>
@@ -42,7 +41,6 @@
 		<ant dir="gettext-commons-0_9_5" target="clean"/>
 		<ant dir="google-gson-1.4" target="clean"/>
 		<ant dir="netx-0.5" target="clean"/>
-		<ant dir="jdic-20060613" target="clean"/>
 		<ant dir="mrjadapter" target="clean"/>
 	    <ant dir="trident-64a55aa" target="clean"/>
 	    <ant dir="laf-widget-1543ae9" target="clean"/>
@@ -66,7 +64,6 @@
 		<copy file="dist/httpclient-4.0.jar" todir="../jars/"/>
 		<copy file="dist/httpcore-4.0.1.jar" todir="../jars/"/>
 		<copy file="dist/netx.jar" todir="../jars/"/>
-		<copy file="dist/jdic.jar" todir="../jars/"/>
 		<copy file="dist/MRJAdapter.jar" todir="../jars/"/>
 	    <copy file="dist/trident.jar" todir="../jars/"/>
 		<copy file="dist/laf-widget.jar" todir="../jars/"/>
