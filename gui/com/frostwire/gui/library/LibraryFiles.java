@@ -174,7 +174,7 @@ public class LibraryFiles extends AbstractLibraryListPanel {
 
     public void refreshSelection(boolean clearCache) {
         LibraryFilesListCell node = (LibraryFilesListCell) _list.getSelectedValue();
-
+        
         if (node == null) {
             return;
         }

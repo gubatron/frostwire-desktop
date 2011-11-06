@@ -171,7 +171,8 @@ public class LibraryMediator {
 
     public void showView(String key) {
         rememberScrollbarsOnMediators(key);
-        _tablesViewLayout.show(_tablesPanel, key);        
+        _tablesViewLayout.show(_tablesPanel, key);
+        LibraryMediator.instance().refreshBottomActions();
     }
     
     private void rememberScrollbarsOnMediators(String key) {
@@ -279,9 +280,11 @@ public class LibraryMediator {
         panelBottom.setLayout(new BoxLayout(panelBottom,BoxLayout.LINE_AXIS));
         //actions
         sendAction = new AbstractLibraryTableMediator.SendToFriendAction();
+        sendAction.setEnabled(false);
         panelBottom.add(new IconButton(sendAction));
 
         exploreAction = new AbstractLibraryTableMediator.ExploreAction();
+        exploreAction.setEnabled(false);
         panelBottom.add(new IconButton(exploreAction));
         
         addStationAction = new LibraryInternetRadioTableMediator.AddRadioStationAction();
