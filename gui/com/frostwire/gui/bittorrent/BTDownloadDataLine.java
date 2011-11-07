@@ -396,6 +396,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
                     actions = new Action[] { new LaunchAction(file), new ShowInLibraryAction(file) };
                 }
                 notification = new Notification(getInitializeObject().getDisplayName(), getIcon(), actions);
+                LibraryMediator.instance().getLibraryFiles().clearDirectoryHolderCaches();
             } else {
                 return;
             }

@@ -561,6 +561,8 @@ public class LibraryFiles extends AbstractLibraryListPanel {
             DirectoryHolder holder = ((LibraryFilesListCell) _model.get(i))._holder;
             if (holder instanceof MediaTypeSavedFilesDirectoryHolder) {
                 ((MediaTypeSavedFilesDirectoryHolder) holder).clearCache();
+            } else if (holder instanceof SavedFilesDirectoryHolder) {
+            	((SavedFilesDirectoryHolder) holder).clearCache();
             }
         }
 		

@@ -63,10 +63,6 @@ public class LibrarySearch extends JPanel {
 				if (searchField != null) {
 					SearchLibraryAction searchAction = new SearchLibraryAction();
 
-					searchField.setText(".");
-					searchAction.actionPerformed(null);
-					searchField.setText("");
-
 					if (query.length() < 50) {
 						searchField.setText(query);
 					} else {
