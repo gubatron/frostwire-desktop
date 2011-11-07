@@ -285,6 +285,13 @@ public class LibrarySearch extends JPanel {
                     search(cache);
                     return;
                 }
+            } else if (directoryHolder instanceof SavedFilesDirectoryHolder) {
+            	List<File> cache = new ArrayList<File>(((SavedFilesDirectoryHolder) directoryHolder).getCache());
+                if (cache.size() > 0) {
+                	System.out.println("LibrarySearch.SearchFilesRunnable.run() - searching finished downloads from the cache ["+cache.size()+" files cached]");
+                    search(cache);
+                    return;
+                }
             }
 
             File torrentDataDirFile = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();

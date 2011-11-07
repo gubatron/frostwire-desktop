@@ -306,8 +306,9 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             setMediaType(MediaType.getAnyTypeMediaType());
         }
         clearTable();
+        
         File[] files = dirHolder.getFiles();
-
+        
         for (int i = 0; i < files.length; i++) {
             addUnsorted(files[i]);
         }
