@@ -64,7 +64,6 @@ public class SavedFilesDirectoryHolder extends FileSettingDirectoryHolder {
 		cache = null;
 	}
 
-	
 
 	@Override
 	public File[] getFiles() {

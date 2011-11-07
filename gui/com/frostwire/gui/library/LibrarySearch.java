@@ -149,7 +149,7 @@ public class LibrarySearch extends JPanel {
                     searchField.setText("");
                 }
 
-                if (System.currentTimeMillis() - lastSearch > 75) {
+                if (System.currentTimeMillis() - lastSearch > 50) {
                     a.actionPerformed(null);
                     lastSearch = System.currentTimeMillis();
                 }
@@ -209,6 +209,7 @@ public class LibrarySearch extends JPanel {
             }
             searchField.addToDictionary();
 
+            //cancel previous search if any
             if (currentSearchRunnable != null) {
                 currentSearchRunnable.cancel();
             }

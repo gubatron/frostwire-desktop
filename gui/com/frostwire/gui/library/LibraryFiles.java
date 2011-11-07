@@ -181,29 +181,41 @@ public class LibraryFiles extends AbstractLibraryListPanel {
 
         DirectoryHolder directoryHolder = getSelectedDirectoryHolder();
 
+        //STARRED
         if (directoryHolder instanceof StarredDirectoryHolder) {
             Playlist playlist = LibraryMediator.getLibrary().getStarredPlaylist();
             LibraryMediator.instance().updateTableItems(playlist);
             String status = LibraryUtils.getPlaylistDurationInDDHHMMSS(playlist) + ", " + playlist.getItems().size() + " " + I18n.tr("tracks");
             LibraryMediator.instance().getLibrarySearch().setStatus(status);
-        } else if (directoryHolder instanceof InternetRadioDirectoryHolder) {
+            
+        } 
+        //RADIO
+        else if (directoryHolder instanceof InternetRadioDirectoryHolder) {
+        	
             List<InternetRadioStation> internetRadioStations = LibraryMediator.getLibrary().getInternetRadioStations();
             LibraryMediator.instance().showInternetRadioStations(internetRadioStations);
-        } else {
-            LibraryMediator.instance().updateTableFiles(node.getDirectoryHolder());
-
-            if (directoryHolder != null && directoryHolder instanceof SavedFilesDirectoryHolder) {
-            	if (clearCache) { 
-            		((SavedFilesDirectoryHolder) directoryHolder).clearCache();
-            	}
-            } else if (directoryHolder != null && directoryHolder instanceof MediaTypeSavedFilesDirectoryHolder) {
-                MediaTypeSavedFilesDirectoryHolder mtsfdh = (MediaTypeSavedFilesDirectoryHolder) directoryHolder;
-                if (clearCache) {
-                    mtsfdh.clearCache();
-                }
-                BackgroundExecutorService.schedule(new SearchByMediaTypeRunnable(mtsfdh));
-            }
+        } 
+        //TORRENTS
+        else if (directoryHolder instanceof TorrentDirectoryHolder) {
+        	LibraryMediator.instance().updateTableFiles(node.getDirectoryHolder());
         }
+        //FINISHED
+        else if (directoryHolder instanceof SavedFilesDirectoryHolder) {
+			if (clearCache) {
+				((SavedFilesDirectoryHolder) directoryHolder).clearCache();
+			}
+			LibraryMediator.instance().updateTableFiles(
+					node.getDirectoryHolder());
+		} 
+        //MEDIA TYPES
+        else if (directoryHolder instanceof MediaTypeSavedFilesDirectoryHolder) {
+			MediaTypeSavedFilesDirectoryHolder mtsfdh = (MediaTypeSavedFilesDirectoryHolder) directoryHolder;
+			if (clearCache) {
+				mtsfdh.clearCache();
+			}
+			BackgroundExecutorService.schedule(new SearchByMediaTypeRunnable(
+					mtsfdh));
+		}        
 
         LibraryMediator.instance().getLibrarySearch().clear();
     }
