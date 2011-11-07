@@ -35,7 +35,6 @@ import com.limegroup.gnutella.gui.search.SearchInformation;
 import com.limegroup.gnutella.gui.search.SearchMediator;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.LibrarySettings;
-import com.limegroup.gnutella.settings.SharingSettings;
 
 public class LibrarySearch extends JPanel {
 
@@ -219,14 +218,21 @@ public class LibrarySearch extends JPanel {
             if (directoryHolder instanceof InternetRadioDirectoryHolder) {
                 currentSearchRunnable = new SearchInternetRadioStationsRunnable(query);
                 BackgroundExecutorService.schedule(currentSearchRunnable);
-            } else if (directoryHolder != null) {
+            } else if (directoryHolder != null && !(directoryHolder instanceof StarredDirectoryHolder)) {
                 currentSearchRunnable = new SearchFilesRunnable(query);
                 BackgroundExecutorService.schedule(currentSearchRunnable);
             }
 
-            Playlist playlist = LibraryMediator.instance().getLibraryPlaylists().getSelectedPlaylist();
+            Playlist playlist = null;
+            
+            if (directoryHolder instanceof StarredDirectoryHolder) {
+            	playlist = LibraryMediator.getLibrary().getStarredPlaylist();
+            } else {
+            	playlist = LibraryMediator.instance().getLibraryPlaylists().getSelectedPlaylist();
+            }
+            	
             if (playlist != null) {
-                currentSearchRunnable = new SearchPlaylistItemsRunnable(query);
+                currentSearchRunnable = new SearchPlaylistItemsRunnable(query,playlist);
                 BackgroundExecutorService.schedule(currentSearchRunnable);
             }
         }
@@ -272,7 +278,7 @@ public class LibrarySearch extends JPanel {
                 return;
             }
 
-            GUIMediator.safeInvokeLater(new Runnable() {
+            GUIMediator.safeInvokeAndWait(new Runnable() {
                 public void run() {
                     LibraryFilesTableMediator.instance().clearTable();
                     statusLabel.setText("");
@@ -294,12 +300,16 @@ public class LibrarySearch extends JPanel {
                 }
             }
 
-            File torrentDataDirFile = SharingSettings.TORRENT_DATA_DIR_SETTING.getValue();
-            if (directoryHolder instanceof TorrentDirectoryHolder) {
-                torrentDataDirFile = ((TorrentDirectoryHolder) directoryHolder).getDirectory();
-            }
-
             Set<File> ignore = TorrentUtil.getIgnorableFiles();
+            
+            
+			if (directoryHolder instanceof TorrentDirectoryHolder) {
+				search(((TorrentDirectoryHolder) directoryHolder)
+						.getDirectory(),
+						ignore, LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE
+								.getValue());
+				return;
+			}
 
             Set<File> directories = new HashSet<File>(LibrarySettings.DIRECTORIES_TO_INCLUDE.getValue());
             directories.removeAll(LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
@@ -307,9 +317,8 @@ public class LibrarySearch extends JPanel {
                 if (dir == null) {
                     continue;
                 }
-                if (dir.equals(torrentDataDirFile)) {
-                    search(dir, ignore, LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
-                } else if (dir.equals(LibrarySettings.USER_MUSIC_FOLDER) &&
+                
+                if (dir.equals(LibrarySettings.USER_MUSIC_FOLDER) &&
                         directoryHolder instanceof MediaTypeSavedFilesDirectoryHolder &&
                         !((MediaTypeSavedFilesDirectoryHolder) directoryHolder).getMediaType().equals(MediaType.getAudioMediaType())) {
                     continue;
@@ -467,9 +476,9 @@ public class LibrarySearch extends JPanel {
         private final String query;
         private final Playlist playlist;
 
-        public SearchPlaylistItemsRunnable(String query) {
+        public SearchPlaylistItemsRunnable(String query, Playlist playlist) {
             this.query = query;
-            playlist = LibraryMediator.instance().getLibraryPlaylists().getSelectedPlaylist();
+            this.playlist = playlist;
             canceled = false;
 
             // weird case
@@ -478,12 +487,13 @@ public class LibrarySearch extends JPanel {
             }
         }
 
+
         public void run() {
             if (canceled) {
                 return;
             }
 
-            GUIMediator.safeInvokeLater(new Runnable() {
+            GUIMediator.safeInvokeAndWait(new Runnable() {
                 public void run() {
                     LibraryPlaylistsTableMediator.instance().clearTable();
                     setStatus("");
@@ -496,7 +506,7 @@ public class LibrarySearch extends JPanel {
         }
 
         private void search() {
-            if (canceled) {
+            if (canceled || playlist == null) {
                 return;
             }
             
@@ -504,13 +514,25 @@ public class LibrarySearch extends JPanel {
             List<List<Object>> rows = null;
 
             //Show everything
-            if (StringUtils.isNullOrEmpty(query,true) || query.equals(".")) {
-                LibraryMediator.instance().getLibraryPlaylists().selectPlaylist(playlist);
+            if (StringUtils.isNullOrEmpty(query,true) || query.equals(".") ) {
+            	if (playlist.isStarred()) {
+            		LibraryMediator.instance().getLibraryFiles().selectStarred();
+            	} else {
+            		LibraryMediator.instance().getLibraryPlaylists().selectPlaylist(playlist);
+            	}
                 return;
             } else {
                 //Full text search
-                sql = "SELECT T.playlistItemId, T.filePath, T.fileName, T.fileSize, T.fileExtension, T.trackTitle, T.trackDurationInSecs, T.trackArtist, T.trackAlbum, T.coverArtPath, T.trackBitrate, T.trackComment, T.trackGenre, T.trackNumber, T.trackYear, T.starred FROM FT_SEARCH_DATA(?, 0, 0) FT, PLAYLISTITEMS T WHERE FT.TABLE='PLAYLISTITEMS' AND T.playlistItemId = FT.KEYS[0]";
-                rows = LibraryMediator.getLibrary().getDB().getDatabase().query(sql, query);
+            	if (!playlist.isStarred()) {
+            		sql = "SELECT T.playlistItemId, T.filePath, T.fileName, T.fileSize, T.fileExtension, T.trackTitle, T.trackDurationInSecs, T.trackArtist, T.trackAlbum, T.coverArtPath, T.trackBitrate, T.trackComment, T.trackGenre, T.trackNumber, T.trackYear, T.starred FROM FT_SEARCH_DATA(?, 0, 0) FT, PLAYLISTITEMS T WHERE FT.TABLE='PLAYLISTITEMS' AND T.playlistItemId = FT.KEYS[0] AND T.playlistId = ?";
+            		rows = LibraryMediator.getLibrary().getDB().getDatabase().query(sql, query, playlist.getId());
+            	} 
+            	//Starred playlist search
+            	else {
+            		sql = "SELECT T.playlistItemId, T.filePath, T.fileName, T.fileSize, T.fileExtension, T.trackTitle, T.trackDurationInSecs, T.trackArtist, T.trackAlbum, T.coverArtPath, T.trackBitrate, T.trackComment, T.trackGenre, T.trackNumber, T.trackYear, T.starred FROM FT_SEARCH_DATA(?, 0, 0) FT, PLAYLISTITEMS T WHERE FT.TABLE='PLAYLISTITEMS' AND T.playlistItemId = FT.KEYS[0] AND T.starred = TRUE";
+            		rows = LibraryMediator.getLibrary().getDB().getDatabase().query(sql, query);
+            	}
+                
             }
 
             final List<PlaylistItem> results = new ArrayList<PlaylistItem>();
@@ -523,7 +545,7 @@ public class LibrarySearch extends JPanel {
                 /////
                 //Stop search if the user selected another item in the playlist list
                 Playlist currentPlaylist = LibraryMediator.instance().getLibraryPlaylists().getSelectedPlaylist();
-                if (!playlist.equals(currentPlaylist)) {
+                if (!playlist.isStarred() && !playlist.equals(currentPlaylist)) {
                     return;
                 }
                 /////

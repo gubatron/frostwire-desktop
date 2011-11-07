@@ -35,6 +35,10 @@ public class Playlist extends Entity<PlaylistDB> {
         _items = new LinkedList<PlaylistItem>();
         this.deleted = false;
     }
+    
+    public boolean isStarred() {
+    	return _id == LibraryDatabase.STARRED_PLAYLIST_ID;
+    }
 
     public Library getLibrary() {
         return _library;

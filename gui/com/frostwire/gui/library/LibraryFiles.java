@@ -213,8 +213,12 @@ public class LibraryFiles extends AbstractLibraryListPanel {
 			if (clearCache) {
 				mtsfdh.clearCache();
 			}
+			
+			LibraryMediator.instance().updateTableFiles(node.getDirectoryHolder());
+			
 			BackgroundExecutorService.schedule(new SearchByMediaTypeRunnable(
 					mtsfdh));
+			
 		}        
 
         LibraryMediator.instance().getLibrarySearch().clear();
@@ -479,6 +483,11 @@ public class LibraryFiles extends AbstractLibraryListPanel {
     }
 
     public void selectStarred() {
+    	
+	  if (selectionListenerForSameItem(StarredDirectoryHolder.class)) {
+		  return;
+	  }
+    	
 		int size = _model.getSize();
 		for (int i = 0; i < size; i++) {
 			try {
@@ -493,19 +502,28 @@ public class LibraryFiles extends AbstractLibraryListPanel {
 			}
 		}
     }
+
+	public boolean selectionListenerForSameItem(Class clazz) {
+		Object selectedValue = _list.getSelectedValue();
+		
+		    if (selectedValue != null && clazz.isInstance(((LibraryFilesListCell) selectedValue).getDirectoryHolder())) {
+		        // already selected
+		    	try {
+		    		_listSelectionListener.valueChanged(null);
+		    	} catch (Exception e) {
+		    		System.out.println();
+		    	}
+		        return true;
+		    }
+		    return false;
+	}
     
     public void selectRadio() {
     	try {
-	        Object selectedValue = _list.getSelectedValue();
-	        if (selectedValue != null && ((LibraryFilesListCell) selectedValue).getDirectoryHolder() instanceof InternetRadioDirectoryHolder) {
-	            // already selected
-	        	try {
-	        		_listSelectionListener.valueChanged(null);
-	        	} catch (Exception e) {
-	        		System.out.println();
-	        	}
-	            return;
+	        if (selectionListenerForSameItem(InternetRadioDirectoryHolder.class)) {
+	        	return;
 	        }
+	        
 	        int size = _model.getSize();
 	
 	        for (int i = 0; i < size; i++) {

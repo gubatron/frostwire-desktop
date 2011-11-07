@@ -156,7 +156,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
 
     private void setupList() {
         _listMouseObserver = new LibraryPlaylistsMouseObserver();
-        _listSelectionListener = new LibraryFilesSelectionListener();
+        _listSelectionListener = new LibraryPlaylistsSelectionListener();
 
         _list = new LibraryIconList(_model);
         _list.setCellRenderer(new LibraryPlaylistsCellRenderer());
@@ -601,7 +601,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         }
     }
 
-    private class LibraryFilesSelectionListener implements ListSelectionListener {
+    private class LibraryPlaylistsSelectionListener implements ListSelectionListener {
         public void valueChanged(ListSelectionEvent e) {
             cancelEdit();
 
