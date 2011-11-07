@@ -4,12 +4,37 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
 public class CollectionUtils {
     
     private CollectionUtils() {}
+    
+    /**
+     * Split a collection in Lists of up to partitionSize elements.
+     * @param <T>
+     * @param partitionSize
+     * @param collection
+     * @return
+     */
+    public static <T> List<List<T>> split(int partitionSize, List<T> collection) {
+    	List<List<T>> lists = new LinkedList<List<T>>();
+    	
+    	for (int i = 0; i < collection.size(); i+=partitionSize) {
+    		//the compiler might not know if the collection has changed size
+    		//so it might not optimize this by itself.
+    		int jLimit = Math.min(collection.size(),i+partitionSize);
+    		List<T> newList = new LinkedList<T>();
+    		for (int j=i; j < jLimit;j++) {
+    			newList.add(collection.get(j));
+    		}
+    		lists.add(newList);
+    	}
+    	
+    	return lists;
+    }
     
     public static <T> List<T> listOf(Iterator<T> iterator) {
         List<T> list = new ArrayList<T>();

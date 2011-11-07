@@ -22,9 +22,11 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputListener;
 import javax.swing.table.TableCellEditor;
 
+import org.limewire.collection.CollectionUtils;
 import org.limewire.collection.Tuple;
 import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
@@ -52,6 +54,7 @@ import com.limegroup.gnutella.gui.themes.SkinMenu;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
+import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.gui.util.GUILauncher;
 import com.limegroup.gnutella.gui.util.GUILauncher.LaunchableProvider;
 import com.limegroup.gnutella.util.QueryUtils;
@@ -307,11 +310,30 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         }
         clearTable();
         
-        File[] files = dirHolder.getFiles();
+        List<List<File>> partitionedFiles = CollectionUtils.split(100, Arrays.asList(dirHolder.getFiles()));
         
-        for (int i = 0; i < files.length; i++) {
-            addUnsorted(files[i]);
+        for (List<File> partition : partitionedFiles) {
+        	final List<File> fPartition = partition;
+        	
+        	BackgroundExecutorService.schedule(new Runnable() {
+
+				@Override
+				public void run() {
+		        	SwingUtilities.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							for (File file : fPartition) {
+								addUnsorted(file);
+							}
+							LibraryMediator.instance().getLibrarySearch().addResults(fPartition.size());
+						}
+		        	});
+		        	Thread.yield();
+				}
+        	});
+        	
         }
+        
         forceResort();
     }
 
