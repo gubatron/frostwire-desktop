@@ -288,7 +288,6 @@ public class LibrarySearch extends JPanel {
             } else if (directoryHolder instanceof SavedFilesDirectoryHolder) {
             	List<File> cache = new ArrayList<File>(((SavedFilesDirectoryHolder) directoryHolder).getCache());
                 if (cache.size() > 0) {
-                	System.out.println("LibrarySearch.SearchFilesRunnable.run() - searching finished downloads from the cache ["+cache.size()+" files cached]");
                     search(cache);
                     return;
                 }

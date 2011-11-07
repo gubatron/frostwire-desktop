@@ -53,7 +53,6 @@ public class SavedFilesDirectoryHolder extends FileSettingDirectoryHolder {
 				!_hideFiles.contains(f)) {
 				results.add(f);
 			} else if (f.isDirectory() && !excludeFolders.contains(f)) {
-				System.out.println("getFilesRecursively - added ["+f.getAbsolutePath()+"]");
 				results.addAll(getFilesRecursively(f, excludeFolders));
 			}
 		}
