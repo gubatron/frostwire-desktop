@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="lucene" default="main" basedir=".">
+
+	<target name="main">
+		<mkdir dir="bin" />
+
+		<!-- build -->
+		<javac srcdir="." destdir="bin" fork="true" includeantruntime="false">
+		</javac>
+
+		<!-- jar -->
+		<jar jarfile="../dist/lucene-3.4.0.jar">
+			<fileset dir="bin" />
+		</jar>
+
+	</target>
+
+	<target name="clean">
+
+		<delete dir="bin" />
+
+	</target>
+
+</project>
