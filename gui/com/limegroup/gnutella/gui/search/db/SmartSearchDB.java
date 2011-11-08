@@ -192,7 +192,7 @@ public class SmartSearchDB {
         update(connection, "CREATE INDEX idxSeeds ON TORRENTS(seeds)");
         
         //FILES
-        update(connection, "CREATE ALIAS IF NOT EXISTS FT_INIT FOR \"org.h2.fulltext.FullTextLucene.init\"");
+        update(connection, "CREATE ALIAS IF NOT EXISTS FTL_INIT FOR \"org.h2.fulltext.FullTextLucene.init\"");
         update(connection, "CALL FTL_INIT()");
         
         update(connection, "CREATE TABLE FILES (fileId INTEGER IDENTITY, torrentId INTEGER, fileName VARCHAR(10000), json VARCHAR(131072), keywords VARCHAR(131072))");
