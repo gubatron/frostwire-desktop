@@ -21,7 +21,6 @@ import org.h2.store.DataHandler;
 import org.h2.store.FileStore;
 import org.h2.store.FileStoreInputStream;
 import org.h2.store.FileStoreOutputStream;
-import org.h2.store.fs.FileUtils;
 import org.h2.util.IOUtils;
 import org.h2.util.MathUtils;
 import org.h2.util.SmallLRUCache;
@@ -237,7 +236,7 @@ public class ValueLob extends Value {
             name = SysProperties.FILE_SEPARATOR + f + Constants.SUFFIX_LOBS_DIRECTORY + name;
             objectId /= SysProperties.LOB_FILES_PER_DIRECTORY;
         }
-        name = FileUtils.toRealPath(path + Constants.SUFFIX_LOBS_DIRECTORY + name);
+        name = IOUtils.getCanonicalPath(path + Constants.SUFFIX_LOBS_DIRECTORY + name);
         return name;
     }
 
@@ -255,7 +254,7 @@ public class ValueLob extends Value {
             boolean[] used = new boolean[lobsPerDir];
             for (String name : list) {
                 if (name.endsWith(Constants.SUFFIX_DB_FILE)) {
-                    name = FileUtils.getName(name);
+                    name = IOUtils.getFileName(name);
                     String n = name.substring(0, name.indexOf('.'));
                     int id;
                     try {
@@ -322,12 +321,12 @@ public class ValueLob extends Value {
         SmallLRUCache<String, String[]> cache = h.getLobFileListCache();
         String[] list;
         if (cache == null) {
-            list = FileUtils.newDirectoryStream(dir).toArray(new String[0]);
+            list = IOUtils.listFiles(dir);
         } else {
             synchronized (cache) {
                 list = cache.get(dir);
                 if (list == null) {
-                    list = FileUtils.newDirectoryStream(dir).toArray(new String[0]);
+                    list = IOUtils.listFiles(dir);
                     cache.put(dir, list);
                 }
             }
@@ -719,8 +718,8 @@ public class ValueLob extends Value {
     }
 
     private static void removeAllForTable(DataHandler handler, String dir, int tableId) {
-        for (String name : FileUtils.newDirectoryStream(dir)) {
-            if (FileUtils.isDirectory(name)) {
+        for (String name : IOUtils.listFiles(dir)) {
+            if (IOUtils.isDirectory(name)) {
                 removeAllForTable(handler, name, tableId);
             } else {
                 if (name.endsWith(".t" + tableId + Constants.SUFFIX_LOB_FILE)) {
@@ -747,21 +746,21 @@ public class ValueLob extends Value {
         // synchronize on the database, to avoid concurrent temp file creation /
         // deletion / backup
         synchronized (handler.getLobSyncObject()) {
-            FileUtils.delete(fileName);
+            IOUtils.delete(fileName);
         }
     }
 
     private static synchronized void renameFile(DataHandler handler, String oldName, String newName)
             {
         synchronized (handler.getLobSyncObject()) {
-            FileUtils.moveTo(oldName, newName);
+            IOUtils.rename(oldName, newName);
         }
     }
 
     private static void copyFileTo(DataHandler h, String sourceFileName, String targetFileName) {
         synchronized (h.getLobSyncObject()) {
             try {
-                FileUtils.copy(sourceFileName, targetFileName);
+                IOUtils.copy(sourceFileName, targetFileName);
             } catch (IOException e) {
                 throw DbException.convertIOException(e, null);
             }

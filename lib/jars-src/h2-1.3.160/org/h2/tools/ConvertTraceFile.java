@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 
 import org.h2.message.DbException;
-import org.h2.store.fs.FileUtils;
 import org.h2.util.IOUtils;
 import org.h2.util.MathUtils;
 import org.h2.util.New;
@@ -112,11 +111,11 @@ public class ConvertTraceFile extends Tool {
      */
     private void convertFile(String traceFileName, String javaClassName, String script) throws IOException {
         LineNumberReader reader = new LineNumberReader(IOUtils.getBufferedReader(
-                FileUtils.newInputStream(traceFileName)));
+                IOUtils.openFileInputStream(traceFileName)));
         PrintWriter javaWriter = new PrintWriter(IOUtils.getBufferedWriter(
-                FileUtils.newOutputStream(javaClassName + ".java", false)));
+                IOUtils.openFileOutputStream(javaClassName + ".java", false)));
         PrintWriter scriptWriter = new PrintWriter(IOUtils.getBufferedWriter(
-                FileUtils.newOutputStream(script, false)));
+                IOUtils.openFileOutputStream(script, false)));
         javaWriter.println("import java.io.*;");
         javaWriter.println("import java.sql.*;");
         javaWriter.println("import java.math.*;");

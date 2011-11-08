@@ -29,7 +29,6 @@ import org.h2.util.New;
 import org.h2.util.SmallLRUCache;
 import org.h2.util.StatementBuilder;
 import org.h2.util.StringUtils;
-import org.h2.util.SynchronizedVerifier;
 import org.h2.util.Utils;
 import org.h2.value.Value;
 
@@ -84,13 +83,12 @@ public class TableView extends Table {
         }
     }
 
-    private synchronized void init(String querySQL, ArrayList<Parameter> params,
+    private void init(String querySQL, ArrayList<Parameter> params,
             String[] columnNames, Session session, boolean recursive) {
         this.querySQL = querySQL;
         this.columnNames = columnNames;
         this.recursive = recursive;
         index = new ViewIndex(this, querySQL, params, recursive);
-        SynchronizedVerifier.check(indexCache);
         indexCache.clear();
         initColumnsAndTables(session);
     }
@@ -111,7 +109,7 @@ public class TableView extends Table {
      * @return the exception if re-compiling this or any dependent view failed
      *         (only when force is disabled)
      */
-    public synchronized DbException recompile(Session session, boolean force) {
+    public DbException recompile(Session session, boolean force) {
         try {
             compileViewQuery(session, querySQL);
         } catch (DbException e) {
@@ -123,7 +121,6 @@ public class TableView extends Table {
         if (views != null) {
             views = New.arrayList(views);
         }
-        SynchronizedVerifier.check(indexCache);
         indexCache.clear();
         initColumnsAndTables(session);
         if (views != null) {
@@ -199,11 +196,10 @@ public class TableView extends Table {
         return createException != null;
     }
 
-    public synchronized PlanItem getBestPlanItem(Session session, int[] masks) {
+    public PlanItem getBestPlanItem(Session session, int[] masks) {
         PlanItem item = new PlanItem();
         item.cost = index.getCost(session, masks);
         IntArray masksArray = new IntArray(masks == null ? Utils.EMPTY_INT_ARRAY : masks);
-        SynchronizedVerifier.check(indexCache);
         ViewIndex i2 = indexCache.get(masksArray);
         if (i2 == null || i2.getSession() != session) {
             i2 = new ViewIndex(this, index, session, masks);

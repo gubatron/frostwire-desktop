@@ -48,11 +48,11 @@ import java.sql.NClob;
 import java.sql.Struct;
 import java.sql.SQLXML;
 import java.sql.SQLClientInfoException;
-///
+//*/
 
-//## Java 1.7 ##
+/*## Java 1.7 ##
 import java.util.concurrent.Executor;
-///
+//*/
 
 /**
  * <p>
@@ -1527,7 +1527,7 @@ public class JdbcConnection extends TraceObject implements Connection {
             throw logAndConvert(e);
         }
     }
-///
+//*/
 
     /**
      * [Not supported] Create a new empty SQLXML object.
@@ -1536,7 +1536,7 @@ public class JdbcConnection extends TraceObject implements Connection {
     public SQLXML createSQLXML() throws SQLException {
         throw unsupported("SQLXML");
     }
-///
+//*/
 
     /**
      * [Not supported] Create a new empty Array object.
@@ -1546,7 +1546,7 @@ public class JdbcConnection extends TraceObject implements Connection {
             throws SQLException {
         throw unsupported("createArray");
     }
-///
+//*/
 
     /**
      * [Not supported] Create a new empty Struct object.
@@ -1556,7 +1556,7 @@ public class JdbcConnection extends TraceObject implements Connection {
             throws SQLException {
         throw unsupported("Struct");
     }
-///
+//*/
 
     /**
      * Returns true if this connection is still valid.
@@ -1589,7 +1589,7 @@ public class JdbcConnection extends TraceObject implements Connection {
             throws SQLClientInfoException {
         throw new SQLClientInfoException();
     }
-///
+//*/
 
     /**
      * [Not supported] Set the client properties.
@@ -1598,7 +1598,7 @@ public class JdbcConnection extends TraceObject implements Connection {
     public void setClientInfo(Properties properties) throws SQLClientInfoException {
         throw new SQLClientInfoException();
     }
-///
+//*/
 
     /**
      * [Not supported] Get the client properties.
@@ -1607,7 +1607,7 @@ public class JdbcConnection extends TraceObject implements Connection {
     public Properties getClientInfo() throws SQLClientInfoException {
         throw new SQLClientInfoException();
     }
-///
+//*/
 
     /**
      * [Not supported] Set a client property.
@@ -1616,7 +1616,7 @@ public class JdbcConnection extends TraceObject implements Connection {
     public String getClientInfo(String name) throws SQLException {
         throw unsupported("clientInfo");
     }
-///
+//*/
 
     /**
      * [Not supported] Return an object of this class if possible.
@@ -1627,7 +1627,7 @@ public class JdbcConnection extends TraceObject implements Connection {
     public <T> T unwrap(Class<T> iface) throws SQLException {
         throw unsupported("unwrap");
     }
-///
+//*/
 
     /**
      * [Not supported] Checks if unwrap can return an object of this class.
@@ -1638,7 +1638,7 @@ public class JdbcConnection extends TraceObject implements Connection {
     public boolean isWrapperFor(Class<?> iface) throws SQLException {
         throw unsupported("isWrapperFor");
     }
-///
+//*/
 
     /**
      * Create a Clob value from this reader.
@@ -1683,31 +1683,31 @@ public class JdbcConnection extends TraceObject implements Connection {
      *
      * @param schema the schema
      */
-//# Java 1.7 ##
+/*## Java 1.7 ##
     public void setSchema(String schema) {
         // not supported
     }
-///
+//*/
 
     /**
      * [Not supported]
      */
-//## Java 1.7 ##
+/*## Java 1.7 ##
     public String getSchema() {
         return null;
     }
-///
+//*/
 
     /**
      * [Not supported]
      *
      * @param executor the executor used by this method
      */
-//## Java 1.7 ##
+/*## Java 1.7 ##
     public void abort(Executor executor) {
         // not supported
     }
-///
+//*/
 
     /**
      * [Not supported]
@@ -1715,20 +1715,20 @@ public class JdbcConnection extends TraceObject implements Connection {
      * @param executor the executor used by this method
      * @param milliseconds the TCP connection timeout
      */
-//## Java 1.7 ##
+/*## Java 1.7 ##
     public void setNetworkTimeout(Executor executor, int milliseconds) {
         // not supported
     }
-///
+//*/
 
     /**
      * [Not supported]
      */
-//## Java 1.7 ##
+/*## Java 1.7 ##
     public int getNetworkTimeout() {
         return 0;
     }
-///
+//*/
 
     private static void checkMap(Map<String, Class<?>> map) {
         if (map != null && map.size() > 0) {

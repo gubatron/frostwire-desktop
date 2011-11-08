@@ -30,7 +30,7 @@ import java.util.Map;
 import java.sql.NClob;
 import java.sql.RowId;
 import java.sql.SQLXML;
-///
+//*/
 
 import org.h2.constant.ErrorCode;
 import org.h2.constant.SysProperties;
@@ -2856,22 +2856,24 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
         if (columnCount >= SysProperties.MIN_COLUMN_NAME_MAP) {
             if (columnLabelMap == null) {
                 HashMap<String, Integer> map = New.hashMap(columnCount);
-                // column labels have higher priority
-                for (int i = 0; i < columnCount; i++) {
-                    String c = StringUtils.toUpperEnglish(result.getAlias(i));
-                    mapColumn(map, c, i);
-                }
+                // first column names
                 for (int i = 0; i < columnCount; i++) {
                     String colName = result.getColumnName(i);
                     if (colName != null) {
                         colName = StringUtils.toUpperEnglish(colName);
-                        mapColumn(map, colName, i);
+                        map.put(colName, i);
                         String tabName = result.getTableName(i);
                         if (tabName != null) {
                             colName = StringUtils.toUpperEnglish(tabName) + "." + colName;
-                            mapColumn(map, colName, i);
+                            map.put(colName, i);
                         }
                     }
+                }
+                // column labels have higher priority
+                // column names with the same name are replaced
+                for (int i = 0; i < columnCount; i++) {
+                    String c = StringUtils.toUpperEnglish(result.getAlias(i));
+                    map.put(c, i);
                 }
                 // assign at the end so concurrent access is supported
                 columnLabelMap = map;
@@ -2904,16 +2906,6 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
             }
         }
         throw DbException.get(ErrorCode.COLUMN_NOT_FOUND_1, columnLabel);
-    }
-
-    private void mapColumn(HashMap<String, Integer> map, String label, int index) {
-        // put the index (usually that's the only operation)
-        Integer old = map.put(label, index);
-        if (old != null) {
-            // if there was a clash (which is seldom),
-            // put the old one back
-            map.put(label, old);
-        }
     }
 
     private void checkColumnIndex(int columnIndex) {
@@ -3010,7 +3002,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
     public RowId getRowId(int columnIndex) throws SQLException {
         throw unsupported("rowId");
     }
-///
+//*/
 
     /**
      * [Not supported] Returns the value of the specified column as a row id.
@@ -3021,7 +3013,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
     public RowId getRowId(String columnLabel) throws SQLException {
         throw unsupported("rowId");
     }
-///
+//*/
 
     /**
      * [Not supported] Updates a column in the current or insert row.
@@ -3033,7 +3025,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
     public void updateRowId(int columnIndex, RowId x) throws SQLException {
         throw unsupported("rowId");
     }
-///
+//*/
 
     /**
      * [Not supported] Updates a column in the current or insert row.
@@ -3045,7 +3037,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
     public void updateRowId(String columnLabel, RowId x) throws SQLException {
         throw unsupported("rowId");
     }
-///
+//*/
 
     /**
      * Returns the current result set holdability.
@@ -3096,7 +3088,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
             throw logAndConvert(e);
         }
     }
-///
+//*/
 
     /**
      * Updates a column in the current or insert row.
@@ -3117,7 +3109,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
             throw logAndConvert(e);
         }
     }
-///
+//*/
 
     /**
      * [Not supported]
@@ -3126,7 +3118,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
     public void updateNClob(int columnIndex, NClob x) throws SQLException {
         throw unsupported("NClob");
     }
-///
+//*/
 
     /**
      * [Not supported]
@@ -3135,7 +3127,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
     public void updateNClob(int columnIndex, Reader x) throws SQLException {
         throw unsupported("NClob");
     }
-///
+//*/
 
     /**
      * [Not supported]
@@ -3145,7 +3137,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
             throws SQLException {
         throw unsupported("NClob");
     }
-///
+//*/
 
     /**
      * [Not supported]
@@ -3155,7 +3147,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
             throws SQLException {
         throw unsupported("NClob");
     }
-///
+//*/
 
     /**
      * [Not supported]
@@ -3165,7 +3157,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
             throws SQLException {
         throw unsupported("NClob");
     }
-///
+//*/
 
     /**
      * [Not supported]
@@ -3174,7 +3166,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
     public void updateNClob(String columnLabel, NClob x) throws SQLException {
         throw unsupported("NClob");
     }
-///
+//*/
 
 
     /**
@@ -3195,7 +3187,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
             throw logAndConvert(e);
         }
     }
-///
+//*/
 
     /**
      * Returns the value of the specified column as a Clob.
@@ -3215,7 +3207,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
             throw logAndConvert(e);
         }
     }
-///
+//*/
 
     /**
      * [Not supported] Returns the value of the specified column as a SQLXML object.
@@ -3224,7 +3216,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
     public SQLXML getSQLXML(int columnIndex) throws SQLException {
         throw unsupported("SQLXML");
     }
-///
+//*/
 
     /**
      * [Not supported] Returns the value of the specified column as a SQLXML object.
@@ -3233,7 +3225,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
     public SQLXML getSQLXML(String columnLabel) throws SQLException {
         throw unsupported("SQLXML");
     }
-///
+//*/
 
     /**
      * [Not supported] Updates a column in the current or insert row.
@@ -3243,7 +3235,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
             throws SQLException {
         throw unsupported("SQLXML");
     }
-///
+//*/
 
     /**
      * [Not supported] Updates a column in the current or insert row.
@@ -3253,7 +3245,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
             throws SQLException {
         throw unsupported("SQLXML");
     }
-///
+//*/
 
     /**
      * Returns the value of the specified column as a String.
@@ -3272,7 +3264,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
             throw logAndConvert(e);
         }
     }
-///
+//*/
 
     /**
      * Returns the value of the specified column as a String.
@@ -3291,7 +3283,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
             throw logAndConvert(e);
         }
     }
-///
+//*/
 
     /**
      * Returns the value of the specified column as a reader.
@@ -3310,7 +3302,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
             throw logAndConvert(e);
         }
     }
-///
+//*/
 
     /**
      * Returns the value of the specified column as a reader.
@@ -3329,7 +3321,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
             throw logAndConvert(e);
         }
     }
-///
+//*/
 
     /**
      * Updates a column in the current or insert row.
@@ -3343,7 +3335,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
             throws SQLException {
         updateNCharacterStream(columnIndex, x, -1);
     }
-///
+//*/
 
     /**
      * Updates a column in the current or insert row.
@@ -3367,7 +3359,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
             throw logAndConvert(e);
         }
     }
-///
+//*/
 
     /**
      * Updates a column in the current or insert row.
@@ -3381,7 +3373,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
             throws SQLException {
         updateNCharacterStream(columnLabel, x, -1);
     }
-///
+//*/
 
     /**
      * Updates a column in the current or insert row.
@@ -3405,7 +3397,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
             throw logAndConvert(e);
         }
     }
-///
+//*/
 
     /**
      * [Not supported] Return an object of this class if possible.
@@ -3414,7 +3406,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
     public <T> T unwrap(Class<T> iface) throws SQLException {
         throw unsupported("unwrap");
     }
-///
+//*/
 
     /**
      * [Not supported] Checks if unwrap can return an object of this class.
@@ -3423,7 +3415,7 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
     public boolean isWrapperFor(Class<?> iface) throws SQLException {
         throw unsupported("isWrapperFor");
     }
-///
+//*/
 
     /**
      * [Not supported]
@@ -3431,11 +3423,11 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
      * @param columnIndex the column index (1, 2, ...)
      * @param type the class of the returned value
      */
-//## Java 1.7 ##
+/*## Java 1.7 ##
     public <T> T getObject(int columnIndex, Class<T> type) {
         return null;
     }
-///
+//*/
 
     /**
      * [Not supported]
@@ -3443,11 +3435,11 @@ public class JdbcResultSet extends TraceObject implements ResultSet {
      * @param columnName the column name
      * @param type the class of the returned value
      */
-//## Java 1.7 ##
+/*## Java 1.7 ##
     public <T> T getObject(String columnName, Class<T> type) {
         return null;
     }
-///
+//*/
 
     /**
      * INTERNAL

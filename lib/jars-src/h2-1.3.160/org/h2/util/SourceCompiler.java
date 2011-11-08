@@ -20,7 +20,6 @@ import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import org.h2.constant.ErrorCode;
 import org.h2.message.DbException;
-import org.h2.store.fs.FileUtils;
 
 /**
  * This class allows to convert source code to a class. It uses one class loader
@@ -139,12 +138,16 @@ public class SourceCompiler {
         File dir = new File(compileDir);
         if (packageName != null) {
             dir = new File(dir, packageName.replace('.', '/'));
-            FileUtils.createDirectories(dir.getAbsolutePath());
+            try {
+                IOUtils.mkdirs(dir);
+            } catch (IOException e) {
+                throw DbException.convertIOException(e, compileDir);
+            }
         }
         File javaFile = new File(dir, className + ".java");
         File classFile = new File(dir, className + ".class");
         try {
-            OutputStream f = FileUtils.newOutputStream(javaFile.getAbsolutePath(), false);
+            OutputStream f = IOUtils.openFileOutputStream(javaFile.getAbsolutePath(), false);
             PrintWriter out = new PrintWriter(IOUtils.getBufferedWriter(f));
             classFile.delete();
             if (source.startsWith("package ")) {

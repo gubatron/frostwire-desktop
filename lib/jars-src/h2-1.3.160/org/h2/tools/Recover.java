@@ -42,7 +42,6 @@ import org.h2.store.Page;
 import org.h2.store.PageFreeList;
 import org.h2.store.PageLog;
 import org.h2.store.PageStore;
-import org.h2.store.fs.FileUtils;
 import org.h2.util.BitField;
 import org.h2.util.IOUtils;
 import org.h2.util.IntArray;
@@ -184,7 +183,7 @@ public class Recover extends Tool implements DataHandler {
      * INTERNAL
      */
     public static InputStream readBlob(String fileName) throws IOException {
-        return new BufferedInputStream(FileUtils.newInputStream(fileName));
+        return new BufferedInputStream(IOUtils.openFileInputStream(fileName));
     }
 
     /**
@@ -250,7 +249,7 @@ public class Recover extends Tool implements DataHandler {
         fileName = fileName.substring(0, fileName.length() - 3);
         String outputFile = fileName + suffix;
         trace("Created file: " + outputFile);
-        return new PrintWriter(IOUtils.getBufferedWriter(FileUtils.newOutputStream(outputFile, false)));
+        return new PrintWriter(IOUtils.getBufferedWriter(IOUtils.openFileOutputStream(outputFile, false)));
     }
 
     private void writeDataError(PrintWriter writer, String error, byte[] data) {
@@ -285,7 +284,7 @@ public class Recover extends Tool implements DataHandler {
         String n = fileName + (lobCompression ? ".comp" : "") + ".txt";
         InputStream in = null;
         try {
-            fileOut = FileUtils.newOutputStream(n, false);
+            fileOut = IOUtils.openFileOutputStream(n, false);
             fileStore = FileStore.open(null, fileName, "r");
             fileStore.init();
             in = new FileStoreInputStream(fileStore, this, lobCompression, false);
@@ -300,7 +299,7 @@ public class Recover extends Tool implements DataHandler {
         }
         if (size == 0) {
             try {
-                FileUtils.delete(n);
+                IOUtils.delete(n);
             } catch (Exception e) {
                 traceError(n, e);
             }

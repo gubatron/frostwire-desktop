@@ -436,7 +436,7 @@ public class JdbcResultSetMetaData extends TraceObject implements ResultSetMetaD
     public <T> T unwrap(Class<T> iface) throws SQLException {
         throw unsupported("unwrap");
     }
-///
+//*/
 
     /**
      * [Not supported] Checks if unwrap can return an object of this class.
@@ -445,7 +445,7 @@ public class JdbcResultSetMetaData extends TraceObject implements ResultSetMetaD
     public boolean isWrapperFor(Class<?> iface) throws SQLException {
         throw unsupported("isWrapperFor");
     }
-///
+//*/
 
     /**
      * INTERNAL

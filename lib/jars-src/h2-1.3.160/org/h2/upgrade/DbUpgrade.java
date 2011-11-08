@@ -16,7 +16,7 @@ import java.util.UUID;
 import org.h2.engine.ConnectionInfo;
 import org.h2.jdbc.JdbcConnection;
 import org.h2.message.DbException;
-import org.h2.store.fs.FileUtils;
+import org.h2.util.IOUtils;
 import org.h2.util.StringUtils;
 import org.h2.util.Utils;
 
@@ -61,10 +61,10 @@ public class DbUpgrade {
             return null;
         }
         String name = ci.getName();
-        if (FileUtils.exists(name + ".h2.db")) {
+        if (IOUtils.exists(name + ".h2.db")) {
             return null;
         }
-        if (!FileUtils.exists(name + ".data.db")) {
+        if (!IOUtils.exists(name + ".data.db")) {
             return null;
         }
         if (ci.removeProperty("NO_UPGRADE", false)) {
@@ -134,10 +134,10 @@ public class DbUpgrade {
                 stat.execute("script to '" + script + "'");
             }
             conn.close();
-            FileUtils.moveTo(data, backupData);
-            FileUtils.moveTo(index, backupIndex);
-            if (FileUtils.exists(lobs)) {
-                FileUtils.moveTo(lobs, backupLobs);
+            IOUtils.rename(data, backupData);
+            IOUtils.rename(index, backupIndex);
+            if (IOUtils.exists(lobs)) {
+                IOUtils.rename(lobs, backupLobs);
             }
             ci.removeProperty("IFEXISTS", false);
             conn = new JdbcConnection(ci, true);
@@ -152,25 +152,25 @@ public class DbUpgrade {
             stat.close();
             conn.close();
             if (deleteOldDb) {
-                FileUtils.delete(backupData);
-                FileUtils.delete(backupIndex);
-                FileUtils.deleteRecursive(backupLobs, false);
+                IOUtils.delete(backupData);
+                IOUtils.delete(backupIndex);
+                IOUtils.deleteRecursive(backupLobs, false);
             }
         } catch (Exception e)  {
-            if (FileUtils.exists(backupData)) {
-                FileUtils.moveTo(backupData, data);
+            if (IOUtils.exists(backupData)) {
+                IOUtils.rename(backupData, data);
             }
-            if (FileUtils.exists(backupIndex)) {
-                FileUtils.moveTo(backupIndex, index);
+            if (IOUtils.exists(backupIndex)) {
+                IOUtils.rename(backupIndex, index);
             }
-            if (FileUtils.exists(backupLobs)) {
-                FileUtils.moveTo(backupLobs, lobs);
+            if (IOUtils.exists(backupLobs)) {
+                IOUtils.rename(backupLobs, lobs);
             }
-            FileUtils.delete(name + ".h2.db");
+            IOUtils.delete(name + ".h2.db");
             throw DbException.toSQLException(e);
         } finally {
             if (script != null) {
-                FileUtils.delete(script);
+                IOUtils.delete(script);
             }
         }
     }

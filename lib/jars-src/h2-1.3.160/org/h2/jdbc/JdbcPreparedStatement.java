@@ -52,7 +52,7 @@ import org.h2.value.ValueTimestamp;
 import java.sql.RowId;
 import java.sql.NClob;
 import java.sql.SQLXML;
-///
+//*/
 
 /**
  * Represents a prepared statement.
@@ -1281,7 +1281,7 @@ public class JdbcPreparedStatement extends JdbcStatement implements PreparedStat
     public void setRowId(int parameterIndex, RowId x) throws SQLException {
         throw unsupported("rowId");
     }
-///
+//*/
 
     /**
      * Sets the value of a parameter.
@@ -1302,7 +1302,7 @@ public class JdbcPreparedStatement extends JdbcStatement implements PreparedStat
             throw logAndConvert(e);
         }
     }
-///
+//*/
 
     /**
      * Sets the value of a parameter as a character stream.
@@ -1333,7 +1333,7 @@ public class JdbcPreparedStatement extends JdbcStatement implements PreparedStat
             throw logAndConvert(e);
         }
     }
-///
+//*/
 
     /**
      * Sets the value of a parameter as a character stream.
@@ -1349,7 +1349,7 @@ public class JdbcPreparedStatement extends JdbcStatement implements PreparedStat
             throws SQLException {
         setNCharacterStream(parameterIndex, x, -1);
     }
-///
+//*/
 
     /**
      * Sets the value of a parameter as a Clob.
@@ -1376,7 +1376,7 @@ public class JdbcPreparedStatement extends JdbcStatement implements PreparedStat
             throw logAndConvert(e);
         }
     }
-///
+//*/
 
     /**
      * Sets the value of a parameter as a Clob.
@@ -1404,7 +1404,7 @@ public class JdbcPreparedStatement extends JdbcStatement implements PreparedStat
             throw logAndConvert(e);
         }
     }
-///
+//*/
 
     /**
      * Sets the value of a parameter as a Clob.
@@ -1496,7 +1496,7 @@ public class JdbcPreparedStatement extends JdbcStatement implements PreparedStat
     public void setSQLXML(int parameterIndex, SQLXML x) throws SQLException {
         throw unsupported("SQLXML");
     }
-///
+//*/
 
     /**
      * INTERNAL

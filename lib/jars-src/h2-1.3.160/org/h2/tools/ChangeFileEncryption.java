@@ -12,7 +12,7 @@ import org.h2.message.DbException;
 import org.h2.security.SHA256;
 import org.h2.store.FileLister;
 import org.h2.store.FileStore;
-import org.h2.store.fs.FileUtils;
+import org.h2.util.IOUtils;
 import org.h2.util.Tool;
 
 /**
@@ -157,16 +157,16 @@ public class ChangeFileEncryption extends Tool {
         // (to find errors with locked files early)
         for (String fileName : files) {
             String temp = dir + "/temp.db";
-            FileUtils.delete(temp);
-            FileUtils.moveTo(fileName, temp);
-            FileUtils.moveTo(temp, fileName);
+            IOUtils.delete(temp);
+            IOUtils.rename(fileName, temp);
+            IOUtils.rename(temp, fileName);
         }
         // if this worked, the operation will (hopefully) be successful
         // TODO changeFileEncryption: this is a workaround!
         // make the operation atomic (all files or none)
         for (String fileName : files) {
             // Don't process a lob directory, just the files in the directory.
-            if (!FileUtils.isDirectory(fileName)) {
+            if (!IOUtils.isDirectory(fileName)) {
                 change.process(fileName);
             }
         }
@@ -184,11 +184,11 @@ public class ChangeFileEncryption extends Tool {
     }
 
     private void copy(String fileName, FileStore in, byte[] key) {
-        if (FileUtils.isDirectory(fileName)) {
+        if (IOUtils.isDirectory(fileName)) {
             return;
         }
         String temp = directory + "/temp.db";
-        FileUtils.delete(temp);
+        IOUtils.delete(temp);
         FileStore fileOut;
         if (key == null) {
             fileOut = FileStore.open(null, temp, "rw");
@@ -214,8 +214,8 @@ public class ChangeFileEncryption extends Tool {
         }
         in.close();
         fileOut.close();
-        FileUtils.delete(fileName);
-        FileUtils.moveTo(temp, fileName);
+        IOUtils.delete(fileName);
+        IOUtils.rename(temp, fileName);
     }
 
 }

@@ -90,7 +90,7 @@ public class Data {
     /**
      * The data itself.
      */
-    private byte[] data;
+    protected byte[] data;
 
     /**
      * The current write or read position.
@@ -102,7 +102,7 @@ public class Data {
      */
     private final DataHandler handler;
 
-    private Data(DataHandler handler, byte[] data) {
+    protected Data(DataHandler handler, byte[] data) {
         this.handler = handler;
         this.data = data;
     }
@@ -203,7 +203,7 @@ public class Data {
      * For performance reasons the internal representation of a String is
      * similar to UTF-8, but not exactly UTF-8.
      *
-     * @param len the length of the resulting string
+     * @param len
      * @return the String
      */
     private String readString(int len) {
@@ -1131,7 +1131,7 @@ public class Data {
      * @param x the value
      * @return the len
      */
-    private static int getVarIntLen(int x) {
+    public static int getVarIntLen(int x) {
         if ((x & (-1 << 7)) == 0) {
             return 1;
         } else if ((x & (-1 << 14)) == 0) {

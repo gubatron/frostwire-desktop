@@ -295,20 +295,18 @@ public class LobStorage {
         }
 
         public long skip(long n) throws IOException {
-            long remaining = n;
-            remaining -= skipSmall(remaining);
-            if (remaining > BLOCK_LENGTH) {
-                long toPos = length - remainingBytes + remaining;
+            n -= skipSmall(n);
+            if (n > BLOCK_LENGTH) {
+                long toPos = length - remainingBytes + n;
                 try {
                     long[] seqPos = skipBuffer(lob, toPos);
                     if (seqPos == null) {
-                        remaining -= super.skip(remaining);
-                        return n - remaining;
+                        return super.skip(n);
                     }
                     seq = (int) seqPos[0];
                     long p = seqPos[1];
                     remainingBytes = length - p;
-                    remaining = toPos - p;
+                    n = toPos - p;
                 } catch (SQLException e) {
                     throw DbException.convertToIOException(e);
                 }
@@ -316,9 +314,8 @@ public class LobStorage {
                 buffer = null;
             }
             fillBuffer();
-            remaining -= skipSmall(remaining);
-            remaining -= super.skip(remaining);
-            return n - remaining;
+            n -= skipSmall(n);
+            return super.skip(n);
         }
 
         private int skipSmall(long n) {

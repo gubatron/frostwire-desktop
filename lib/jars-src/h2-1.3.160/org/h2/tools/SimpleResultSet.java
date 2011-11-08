@@ -29,13 +29,12 @@ import java.util.Map;
 import org.h2.constant.ErrorCode;
 import org.h2.message.DbException;
 import org.h2.util.New;
-import org.h2.value.DataType;
 
 //## Java 1.6 ##
 import java.sql.NClob;
 import java.sql.RowId;
 import java.sql.SQLXML;
-///
+//*/
 
 /**
  * This class is a simple result set and meta data implementation.
@@ -653,59 +652,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
      * @return the value
      */
     public Array getArray(int columnIndex) throws SQLException {
-        Object[] o = (Object[]) get(columnIndex);
-        return o == null ? null : new SimpleArray(o);
-    }
-
-    /**
-     * Returns the value as a java.io.Reader.
-     * This is only supported for CLOB data.
-     *
-     * @param columnIndex (1,2,...)
-     * @return the value
-     */
-    public Reader getCharacterStream(int columnIndex) throws SQLException {
-        Clob c = (Clob) get(columnIndex);
-        return c == null ? null : c.getCharacterStream();
-    }
-
-    /**
-     * Returns the value as a java.sql.Clob.
-     * This is only supported if the
-     * result set was created using a Clob object.
-     *
-     * @param columnIndex (1,2,...)
-     * @return the value
-     */
-    public Clob getClob(int columnIndex) throws SQLException {
-        Clob c = (Clob) get(columnIndex);
-        return c == null ? null : c;
-    }
-
-    /**
-     * Returns the value as a java.sql.Blob.
-     * This is only supported if the
-     * result set was created using a Blob object.
-     *
-     * @param columnIndex (1,2,...)
-     * @return the value
-     */
-    public Blob getBlob(int columnIndex) throws SQLException {
-        Blob b = (Blob) get(columnIndex);
-        return b == null ? null : b;
-    }
-
-    /**
-     * Returns the value as a java.io.InputStream.
-     * This is only supported if the
-     * result set was created using a Blob object.
-     *
-     * @param columnIndex (1,2,...)
-     * @return the value
-     */
-    public InputStream getBinaryStream(int columnIndex) throws SQLException {
-        Blob b = (Blob) get(columnIndex);
-        return b == null ? null : b.getBinaryStream();
+        return new SimpleArray((Object[]) get(columnIndex));
     }
 
     /**
@@ -778,53 +725,6 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
         return getArray(findColumn(columnLabel));
     }
 
-    /**
-     * Returns the value as a java.io.Reader.
-     * This is only supported if the
-     * result set was created using a Clob object.
-     *
-     * @param columnLabel the column label
-     * @return the value
-     */
-    public Reader getCharacterStream(String columnLabel) throws SQLException {
-        return getCharacterStream(findColumn(columnLabel));
-    }
-
-    /**
-     * Returns the value as a java.sql.Clob.
-     * This is only supported if the
-     * result set was created using a Clob object.
-     *
-     * @param columnLabel the column label
-     * @return the value
-     */
-    public Clob getClob(String columnLabel) throws SQLException {
-        return getClob(findColumn(columnLabel));
-    }
-
-    /**
-     * Returns the value as a java.sql.Blob.
-     * This is only supported if the
-     * result set was created using a Blob object.
-     *
-     * @param columnLabel the column label
-     * @return the value
-     */
-    public Blob getBlob(String columnLabel) throws SQLException {
-        return getBlob(findColumn(columnLabel));
-    }
-
-    /**
-     * Returns the value as a java.io.InputStream.
-     * This is only supported if the
-     * result set was created using a Blob object.
-     *
-     * @param columnLabel the column label
-     * @return the value
-     */
-    public InputStream getBinaryStream(String columnLabel) throws SQLException {
-        return getBinaryStream(findColumn(columnLabel));
-    }
 
     // ---- result set meta data ---------------------------------------------
 
@@ -978,15 +878,13 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     }
 
     /**
-     * Returns the Java class name if this column.
+     * Returns null.
      *
      * @param columnIndex (1,2,...)
-     * @return the class name
+     * @return null
      */
-    public String getColumnClassName(int columnIndex) throws SQLException {
-        int sqlType = getColumn(columnIndex - 1).sqlType;
-        int type = DataType.convertSQLTypeToValueType(sqlType);
-        return DataType.getTypeClassName(type);
+    public String getColumnClassName(int columnIndex) {
+        return null;
     }
 
     /**
@@ -1010,15 +908,13 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     }
 
     /**
-     * Returns the data type name of a column.
+     * Returns null.
      *
      * @param columnIndex (1,2,...)
-     * @return the type name
+     * @return null
      */
-    public String getColumnTypeName(int columnIndex) throws SQLException {
-        int sqlType = getColumn(columnIndex - 1).sqlType;
-        int type = DataType.convertSQLTypeToValueType(sqlType);
-        return DataType.getDataType(type).name;
+    public String getColumnTypeName(int columnIndex) {
+        return null;
     }
 
     /**
@@ -1282,6 +1178,13 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     }
 
     /**
+     * INTERNAL
+     */
+    public InputStream getBinaryStream(int columnIndex) {
+        return null;
+    }
+
+    /**
      * @deprecated INTERNAL
      */
     public InputStream getUnicodeStream(int columnIndex) {
@@ -1299,6 +1202,13 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
      * INTERNAL
      */
     public void updateBinaryStream(int columnIndex, InputStream x, int length) throws SQLException {
+        throw getUnsupportedException();
+    }
+
+    /**
+     * INTERNAL
+     */
+    public Reader getCharacterStream(int columnIndex) throws SQLException {
         throw getUnsupportedException();
     }
 
@@ -1424,7 +1334,21 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
+    public Blob getBlob(int i) throws SQLException {
+        throw getUnsupportedException();
+    }
+
+    /**
+     * INTERNAL
+     */
     public void updateBlob(int columnIndex, Blob x) throws SQLException {
+        throw getUnsupportedException();
+    }
+
+    /**
+     * INTERNAL
+     */
+    public Clob getClob(int i) throws SQLException {
         throw getUnsupportedException();
     }
 
@@ -1445,7 +1369,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-    public Ref getRef(int columnIndex) throws SQLException {
+    public Ref getRef(int i) throws SQLException {
         throw getUnsupportedException();
     }
 
@@ -1478,6 +1402,13 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     }
 
     /**
+     * INTERNAL
+     */
+    public InputStream getBinaryStream(String columnLabel) throws SQLException {
+        throw getUnsupportedException();
+    }
+
+    /**
      * @deprecated INTERNAL
      */
     public InputStream getUnicodeStream(String columnLabel) throws SQLException {
@@ -1495,6 +1426,13 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
      * INTERNAL
      */
     public void updateBinaryStream(String columnLabel, InputStream x, int length) throws SQLException {
+        throw getUnsupportedException();
+    }
+
+    /**
+     * INTERNAL
+     */
+    public Reader getCharacterStream(String columnLabel) throws SQLException {
         throw getUnsupportedException();
     }
 
@@ -1522,7 +1460,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
-    public Object getObject(int columnIndex, Map<String, Class<?>> map) throws SQLException {
+    public Object getObject(int i, Map<String, Class<?>> map) throws SQLException {
         throw getUnsupportedException();
     }
 
@@ -1564,7 +1502,21 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     /**
      * INTERNAL
      */
+    public Blob getBlob(String colName) throws SQLException {
+        throw getUnsupportedException();
+    }
+
+    /**
+     * INTERNAL
+     */
     public void updateBlob(String columnLabel, Blob x) throws SQLException {
+        throw getUnsupportedException();
+    }
+
+    /**
+     * INTERNAL
+     */
+    public Clob getClob(String colName) throws SQLException {
         throw getUnsupportedException();
     }
 
@@ -1697,7 +1649,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     public RowId getRowId(int columnIndex) throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1706,7 +1658,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     public RowId getRowId(String columnLabel) throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1715,7 +1667,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     public void updateRowId(int columnIndex, RowId x) throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1724,7 +1676,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     public void updateRowId(String columnLabel, RowId x) throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * Returns the current result set holdability.
@@ -1752,7 +1704,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1762,7 +1714,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1772,7 +1724,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1782,7 +1734,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1791,7 +1743,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     public NClob getNClob(int columnIndex) throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1800,7 +1752,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     public NClob getNClob(String columnLabel) throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1809,7 +1761,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     public SQLXML getSQLXML(int columnIndex) throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1818,7 +1770,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     public SQLXML getSQLXML(String columnLabel) throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1828,7 +1780,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1838,7 +1790,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1847,7 +1799,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     public String getNString(int columnIndex) throws SQLException {
         return getString(columnIndex);
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1856,7 +1808,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     public String getNString(String columnLabel) throws SQLException {
         return getString(columnLabel);
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1865,7 +1817,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     public Reader getNCharacterStream(int columnIndex) throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1875,7 +1827,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1884,7 +1836,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     public <T> T unwrap(Class<T> iface) throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1893,7 +1845,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     public boolean isWrapperFor(Class<?> iface) throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1903,7 +1855,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1913,7 +1865,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1923,7 +1875,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1933,7 +1885,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1943,7 +1895,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1953,7 +1905,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1963,7 +1915,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1973,7 +1925,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1982,7 +1934,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     public void updateBlob(int columnIndex, InputStream x) throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -1991,7 +1943,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     public void updateBlob(String columnLabel, InputStream x) throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -2001,7 +1953,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -2011,7 +1963,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -2021,7 +1973,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -2031,7 +1983,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -2041,7 +1993,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -2051,7 +2003,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -2060,7 +2012,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     public void updateClob(int columnIndex, Reader x) throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -2069,7 +2021,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     public void updateClob(String columnLabel, Reader x) throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -2079,7 +2031,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -2089,7 +2041,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -2099,7 +2051,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -2109,7 +2061,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -2119,7 +2071,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -2129,7 +2081,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -2138,7 +2090,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     public void updateNClob(int columnIndex, Reader x) throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -2147,7 +2099,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
     public void updateNClob(String columnLabel, Reader x) throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -2157,7 +2109,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -2167,7 +2119,7 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
             throws SQLException {
         throw getUnsupportedException();
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -2175,11 +2127,11 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
      * @param columnIndex the column index (1, 2, ...)
      * @param type the class of the returned value
      */
-//## Java 1.7 ##
+/*## Java 1.7 ##
     public <T> T getObject(int columnIndex, Class<T> type) {
         return null;
     }
-///
+//*/
 
     /**
      * INTERNAL
@@ -2187,11 +2139,11 @@ public class SimpleResultSet implements ResultSet, ResultSetMetaData {
      * @param columnName the column name
      * @param type the class of the returned value
      */
-//## Java 1.7 ##
+/*## Java 1.7 ##
     public <T> T getObject(String columnName, Class<T> type) {
         return null;
     }
-///
+//*/
 
     /**
      * Set the auto-close behavior. If enabled (the default), the result set is

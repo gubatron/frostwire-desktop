@@ -18,8 +18,8 @@ import org.h2.constant.ErrorCode;
 import org.h2.constant.SysProperties;
 import org.h2.message.DbException;
 import org.h2.security.SHA256;
-import org.h2.store.fs.FilePathRec;
-import org.h2.store.fs.FileUtils;
+import org.h2.store.fs.RecordingFileSystem;
+import org.h2.util.IOUtils;
 import org.h2.util.New;
 import org.h2.util.SortedProperties;
 import org.h2.util.StringUtils;
@@ -81,13 +81,13 @@ public class ConnectionInfo implements Cloneable {
         parseName();
         String recoverTest = removeProperty("RECOVER_TEST", null);
         if (recoverTest != null) {
-            FilePathRec.register();
+            RecordingFileSystem.register();
             try {
                 Utils.callStaticMethod("org.h2.store.RecoverTester.init", recoverTest);
             } catch (Exception e) {
                 throw DbException.convert(e);
             }
-            name = "rec:" + name;
+            name = RecordingFileSystem.PREFIX + name;
         }
     }
 
@@ -159,24 +159,24 @@ public class ConnectionInfo implements Cloneable {
      */
     public void setBaseDir(String dir) {
         if (persistent) {
-            String absDir = FileUtils.unwrap(FileUtils.toRealPath(dir));
-            boolean absolute = FileUtils.isAbsolute(name);
+            String absDir = IOUtils.unwrap(IOUtils.getCanonicalPath(dir));
+            boolean absolute = IOUtils.isAbsolute(name);
             String n;
             String prefix = null;
             if (absolute) {
                 n = name;
             } else {
-                n  = FileUtils.unwrap(name);
+                n  = IOUtils.unwrap(name);
                 prefix = name.substring(0, name.length() - n.length());
                 n = dir + SysProperties.FILE_SEPARATOR + n;
             }
-            String normalizedName = FileUtils.unwrap(FileUtils.toRealPath(n));
+            String normalizedName = IOUtils.unwrap(IOUtils.getCanonicalPath(n));
             if (normalizedName.equals(absDir) || !normalizedName.startsWith(absDir)) {
                 throw DbException.get(ErrorCode.IO_EXCEPTION_1, normalizedName + " outside " +
                         absDir);
             }
             if (!absolute) {
-                name = prefix + dir + SysProperties.FILE_SEPARATOR + FileUtils.unwrap(name);
+                name = prefix + dir + SysProperties.FILE_SEPARATOR + IOUtils.unwrap(name);
             }
         }
     }
@@ -364,8 +364,8 @@ public class ConnectionInfo implements Cloneable {
         if (persistent) {
             if (nameNormalized == null) {
                 String suffix = Constants.SUFFIX_PAGE_FILE;
-                String n = FileUtils.toRealPath(name + suffix);
-                String fileName = FileUtils.getName(n);
+                String n = IOUtils.getCanonicalPath(name + suffix);
+                String fileName = IOUtils.getFileName(n);
                 if (fileName.length() < suffix.length() + 1) {
                     throw DbException.get(ErrorCode.INVALID_DATABASE_NAME_1, name);
                 }

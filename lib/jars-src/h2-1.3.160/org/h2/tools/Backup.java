@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -18,7 +19,6 @@ import org.h2.command.dml.BackupCommand;
 import org.h2.engine.Constants;
 import org.h2.message.DbException;
 import org.h2.store.FileLister;
-import org.h2.store.fs.FileUtils;
 import org.h2.util.IOUtils;
 import org.h2.util.Tool;
 
@@ -95,6 +95,7 @@ public class Backup extends Tool {
      * @param db the source database name (null if there is only one database, and
      *          and empty string to backup all files in this directory)
      * @param quiet don't print progress information
+     * @throws SQLException
      */
     public static void execute(String zipFileName, String directory, String db, boolean quiet) throws SQLException {
         try {
@@ -108,7 +109,7 @@ public class Backup extends Tool {
         List<String> list;
         boolean allFiles = db != null && db.length() == 0;
         if (allFiles) {
-            list = FileUtils.newDirectoryStream(directory);
+            list = Arrays.asList(IOUtils.listFiles(directory));
         } else {
             list = FileLister.getDatabaseFiles(directory, db, true);
         }
@@ -121,28 +122,30 @@ public class Backup extends Tool {
         if (!quiet) {
             FileLister.tryUnlockDatabase(list, "backup");
         }
-        zipFileName = FileUtils.toRealPath(zipFileName);
-        FileUtils.delete(zipFileName);
+        zipFileName = IOUtils.getCanonicalPath(zipFileName);
+        if (IOUtils.exists(zipFileName)) {
+            IOUtils.delete(zipFileName);
+        }
         OutputStream fileOut = null;
         try {
-            fileOut = FileUtils.newOutputStream(zipFileName, false);
+            fileOut = IOUtils.openFileOutputStream(zipFileName, false);
             ZipOutputStream zipOut = new ZipOutputStream(fileOut);
             String base = "";
             for (String fileName : list) {
                 if (fileName.endsWith(Constants.SUFFIX_PAGE_FILE) || allFiles) {
-                    base = FileUtils.getParent(fileName);
+                    base = IOUtils.getParent(fileName);
                     break;
                 }
             }
             for (String fileName : list) {
-                String f = FileUtils.toRealPath(fileName);
+                String f = IOUtils.getCanonicalPath(fileName);
                 if (!f.startsWith(base)) {
                     DbException.throwInternalError(f + " does not start with " + base);
                 }
                 if (f.endsWith(zipFileName)) {
                     continue;
                 }
-                if (FileUtils.isDirectory(fileName)) {
+                if (IOUtils.isDirectory(fileName)) {
                     continue;
                 }
                 f = f.substring(base.length());
@@ -151,7 +154,7 @@ public class Backup extends Tool {
                 zipOut.putNextEntry(entry);
                 InputStream in = null;
                 try {
-                    in = FileUtils.newInputStream(fileName);
+                    in = IOUtils.openFileInputStream(fileName);
                     IOUtils.copyAndCloseInput(in, zipOut);
                 } catch (FileNotFoundException e) {
                     // the file could have been deleted in the meantime

@@ -13,7 +13,6 @@ import java.sql.SQLException;
 import java.util.Properties;
 import org.h2.message.DbException;
 import org.h2.store.FileLister;
-import org.h2.store.fs.FileUtils;
 
 /**
  * Command line tools implement the tool interface so that they can be used in
@@ -64,7 +63,7 @@ public abstract class Tool {
     protected void printNoDatabaseFilesFound(String dir, String db) {
         StringBuilder buff;
         dir = FileLister.getDir(dir);
-        if (!FileUtils.isDirectory(dir)) {
+        if (!IOUtils.isDirectory(dir)) {
             buff = new StringBuilder("Directory not found: ");
             buff.append(dir);
         } else {

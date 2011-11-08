@@ -215,7 +215,7 @@ public class JdbcParameterMetaData extends TraceObject implements ParameterMetaD
     public <T> T unwrap(Class<T> iface) throws SQLException {
         throw unsupported("unwrap");
     }
-///
+//*/
 
     /**
      * [Not supported] Checks if unwrap can return an object of this class.
@@ -224,7 +224,7 @@ public class JdbcParameterMetaData extends TraceObject implements ParameterMetaD
     public boolean isWrapperFor(Class<?> iface) throws SQLException {
         throw unsupported("isWrapperFor");
     }
-///
+//*/
 
     /**
      * INTERNAL

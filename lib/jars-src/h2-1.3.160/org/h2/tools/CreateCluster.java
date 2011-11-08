@@ -13,7 +13,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import org.h2.constant.ErrorCode;
 import org.h2.engine.Constants;
-import org.h2.store.fs.FileUtils;
 import org.h2.util.IOUtils;
 import org.h2.util.JdbcUtils;
 import org.h2.util.Tool;
@@ -145,7 +144,7 @@ public class CreateCluster extends Tool {
                 script.setOut(out);
                 OutputStream scriptOut = null;
                 try {
-                    scriptOut = FileUtils.newOutputStream(scriptFile, false);
+                    scriptOut = IOUtils.openFileOutputStream(scriptFile, false);
                     Script.process(connSource, scriptOut);
                 } finally {
                     IOUtils.closeSilently(scriptOut);
@@ -173,7 +172,7 @@ public class CreateCluster extends Tool {
                 statSource.execute("SET EXCLUSIVE FALSE");
             }
         } finally {
-            FileUtils.delete(scriptFile);
+            IOUtils.delete(scriptFile);
             JdbcUtils.closeSilently(statSource);
             JdbcUtils.closeSilently(statTarget);
             JdbcUtils.closeSilently(connSource);

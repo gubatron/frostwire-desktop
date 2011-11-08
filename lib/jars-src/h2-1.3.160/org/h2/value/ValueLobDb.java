@@ -21,7 +21,6 @@ import org.h2.store.FileStore;
 import org.h2.store.FileStoreInputStream;
 import org.h2.store.FileStoreOutputStream;
 import org.h2.store.LobStorage;
-import org.h2.store.fs.FileUtils;
 import org.h2.util.IOUtils;
 import org.h2.util.MathUtils;
 import org.h2.util.StringUtils;
@@ -125,7 +124,7 @@ public class ValueLobDb extends Value implements Value.ValueClob, Value.ValueBlo
             // synchronize on the database, to avoid concurrent temp file creation /
             // deletion / backup
             synchronized (handler.getLobSyncObject()) {
-                FileUtils.delete(fileName);
+                IOUtils.delete(fileName);
             }
         }
         if (lobStorage != null) {
@@ -509,7 +508,7 @@ public class ValueLobDb extends Value implements Value.ValueClob, Value.ValueBlo
             if (path.length() == 0) {
                 path = SysProperties.PREFIX_TEMP_FILE;
             }
-            fileName = FileUtils.createTempFile(path, Constants.SUFFIX_TEMP_FILE, true, true);
+            fileName = IOUtils.createTempFile(path, Constants.SUFFIX_TEMP_FILE, true, true);
         } catch (IOException e) {
             throw DbException.convertIOException(e, null);
         }

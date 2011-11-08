@@ -78,10 +78,7 @@ public class ResultTempTable implements ResultExternal {
     }
 
     public synchronized ResultExternal createShallowCopy() {
-        if (parent != null) {
-            return parent.createShallowCopy();
-        }
-        if (closed) {
+        if (closed || parent != null) {
             return null;
         }
         childCount++;

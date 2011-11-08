@@ -36,7 +36,6 @@ import org.h2.message.DbException;
 import org.h2.message.Trace;
 import org.h2.result.Row;
 import org.h2.schema.Schema;
-import org.h2.store.fs.FileUtils;
 import org.h2.table.Column;
 import org.h2.table.IndexColumn;
 import org.h2.table.RegularTable;
@@ -46,6 +45,7 @@ import org.h2.util.Cache;
 import org.h2.util.CacheLRU;
 import org.h2.util.CacheObject;
 import org.h2.util.CacheWriter;
+import org.h2.util.IOUtils;
 import org.h2.util.IntArray;
 import org.h2.util.IntIntHashMap;
 import org.h2.util.New;
@@ -141,11 +141,6 @@ public class PageStore implements CacheWriter {
     private Cache cache;
     private int freeListPagesPerList;
     private boolean recoveryRunning;
-
-    /**
-     * The index to the first free-list page that potentially has free space.
-     */
-    private int firstFreeListIndex;
 
     /**
      * The file size in bytes.
@@ -266,8 +261,8 @@ public class PageStore implements CacheWriter {
     public synchronized void open() {
         try {
             metaRootPageId.put(META_TABLE_ID, PAGE_ID_META_ROOT);
-            if (FileUtils.exists(fileName)) {
-                long length = FileUtils.size(fileName);
+            if (IOUtils.exists(fileName)) {
+                long length = IOUtils.length(fileName);
                 if (length < MIN_PAGE_COUNT * PAGE_SIZE_MIN) {
                     if (database.isReadOnly()) {
                         throw DbException.get(ErrorCode.FILE_CORRUPTED_1, fileName + " length: " + length);
@@ -339,7 +334,7 @@ public class PageStore implements CacheWriter {
             }
             file.releaseLock();
             file.close();
-            FileUtils.delete(fileName);
+            IOUtils.delete(fileName);
             openNew();
             return;
         }
@@ -1070,9 +1065,7 @@ public class PageStore implements CacheWriter {
     }
 
     private void freePage(int pageId) {
-        int index = getFreeListId(pageId);
-        PageFreeList list = getFreeList(index);
-        firstFreeListIndex = Math.min(index, firstFreeListIndex);
+        PageFreeList list = getFreeListForPage(pageId);
         list.free(pageId);
     }
 
@@ -1124,11 +1117,11 @@ public class PageStore implements CacheWriter {
 
     private int allocatePage(BitField exclude, int first) {
         int page;
-        for (int i = firstFreeListIndex;; i++) {
+        // TODO could remember the first possible free list page
+        for (int i = 0;; i++) {
             PageFreeList list = getFreeList(i);
             page = list.allocate(exclude, first);
             if (page >= 0) {
-                firstFreeListIndex = i;
                 break;
             }
         }

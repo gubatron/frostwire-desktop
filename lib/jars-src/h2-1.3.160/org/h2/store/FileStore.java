@@ -8,14 +8,13 @@ package org.h2.store;
 
 import java.io.IOException;
 import java.lang.ref.Reference;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 import org.h2.constant.ErrorCode;
 import org.h2.constant.SysProperties;
 import org.h2.engine.Constants;
 import org.h2.message.DbException;
 import org.h2.security.SecureFileStore;
-import org.h2.store.fs.FileUtils;
+import org.h2.store.fs.FileObject;
+import org.h2.store.fs.FileSystem;
 import org.h2.util.TempFileDeleter;
 import org.h2.util.Utils;
 
@@ -30,6 +29,12 @@ public class FileStore {
      * The size of the file header in bytes.
      */
     public static final int HEADER_LENGTH = 3 * Constants.FILE_BLOCK_SIZE;
+
+    /**
+     * An empty buffer to speed up extending the file (it seems that writing 0
+     * bytes is faster then calling setLength).
+     */
+    protected static byte[] empty;
 
     /**
      * The magic file header.
@@ -47,15 +52,15 @@ public class FileStore {
      */
     protected DataHandler handler;
 
-    private FileChannel file;
+    private FileObject file;
     private long filePos;
     private long fileLength;
     private Reference<?> autoDeleteReference;
     private boolean checkedWriting = true;
+    private boolean synchronousMode;
     private String mode;
     private TempFileDeleter tempFileDeleter;
     private boolean textMode;
-    private java.nio.channels.FileLock lock;
 
     /**
      * Create a new file using the given settings.
@@ -65,6 +70,7 @@ public class FileStore {
      * @param mode the access mode ("r", "rw", "rws", "rwd")
      */
     protected FileStore(DataHandler handler, String name, String mode) {
+        FileSystem fs = FileSystem.getInstance(name);
         this.handler = handler;
         this.name = name;
         this.mode = mode;
@@ -72,16 +78,19 @@ public class FileStore {
             tempFileDeleter = handler.getTempFileDeleter();
         }
         try {
-            boolean exists = FileUtils.exists(name);
-            if (exists && !FileUtils.canWrite(name)) {
+            boolean exists = fs.exists(name);
+            if (exists && !fs.canWrite(name)) {
                 mode = "r";
                 this.mode = mode;
             } else {
-                FileUtils.createDirectories(FileUtils.getParent(name));
+                fs.createDirs(name);
             }
-            file = FileUtils.open(name, mode);
+            file = fs.openFileObject(name, mode);
+            if (mode.length() > 2) {
+                synchronousMode = true;
+            }
             if (exists) {
-                fileLength = file.size();
+                fileLength = file.length();
             }
         } catch (IOException e) {
             throw DbException.convertIOException(e, "name: " + name + " mode: " + mode);
@@ -273,7 +282,7 @@ public class FileStore {
         }
         checkPowerOff();
         try {
-            FileUtils.readFully(file, ByteBuffer.wrap(b, off, len));
+            file.readFully(b, off, len);
         } catch (IOException e) {
             throw DbException.convertIOException(e, name);
         }
@@ -291,7 +300,7 @@ public class FileStore {
         }
         try {
             if (pos != filePos) {
-                file.position(pos);
+                file.seek(pos);
                 filePos = pos;
             }
         } catch (IOException e) {
@@ -324,11 +333,11 @@ public class FileStore {
         checkWritingAllowed();
         checkPowerOff();
         try {
-            FileUtils.writeFully(file, ByteBuffer.wrap(b, off, len));
+            file.write(b, off, len);
         } catch (IOException e) {
             if (freeUpDiskSpace()) {
                 try {
-                    FileUtils.writeFully(file, ByteBuffer.wrap(b, off, len));
+                    file.write(b, off, len);
                 } catch (IOException e2) {
                     throw DbException.convertIOException(e2, name);
                 }
@@ -348,6 +357,24 @@ public class FileStore {
         return true;
     }
 
+    private void extendByWriting(long newLength) throws IOException {
+        long pos = filePos;
+        file.seek(fileLength);
+        if (empty == null) {
+            empty = new byte[16 * 1024];
+        }
+        byte[] e = empty;
+        while (true) {
+            int p = (int) Math.min(newLength - fileLength, e.length);
+            if (p <= 0) {
+                break;
+            }
+            file.write(e, 0, p);
+            fileLength += p;
+        }
+        file.seek(pos);
+    }
+
     /**
      * Set the length of the file. This will expand or shrink the file.
      *
@@ -360,19 +387,16 @@ public class FileStore {
         checkPowerOff();
         checkWritingAllowed();
         try {
-            if (newLength > fileLength) {
-                long pos = filePos;
-                file.position(newLength - 1);
-                FileUtils.writeFully(file, ByteBuffer.wrap(new byte[1]));
-                file.position(pos);
+            if (synchronousMode && newLength > fileLength) {
+                extendByWriting(newLength);
             } else {
-                file.truncate(newLength);
+                file.setFileLength(newLength);
             }
             fileLength = newLength;
         } catch (IOException e) {
             if (newLength > fileLength && freeUpDiskSpace()) {
                 try {
-                    file.truncate(newLength);
+                    file.setFileLength(newLength);
                 } catch (IOException e2) {
                     throw DbException.convertIOException(e2, name);
                 }
@@ -391,14 +415,14 @@ public class FileStore {
         try {
             long len = fileLength;
             if (SysProperties.CHECK2) {
-                len = file.size();
+                len = file.length();
                 if (len != fileLength) {
                     DbException.throwInternalError("file " + name + " length " + len + " expected " + fileLength);
                 }
             }
             if (SysProperties.CHECK2 && len % Constants.FILE_BLOCK_SIZE != 0) {
                 long newLength = len + Constants.FILE_BLOCK_SIZE - (len % Constants.FILE_BLOCK_SIZE);
-                file.truncate(newLength);
+                file.setFileLength(newLength);
                 fileLength = newLength;
                 DbException.throwInternalError("unaligned file length " + name + " len " + len);
             }
@@ -416,7 +440,7 @@ public class FileStore {
     public long getFilePointer() {
         if (SysProperties.CHECK2) {
             try {
-                if (file.position() != filePos) {
+                if (file.getFilePointer() != filePos) {
                     DbException.throwInternalError();
                 }
             } catch (IOException e) {
@@ -432,7 +456,7 @@ public class FileStore {
      */
     public void sync() {
         try {
-            file.force(true);
+            file.sync();
         } catch (IOException e) {
             throw DbException.convertIOException(e, name);
         }
@@ -469,8 +493,8 @@ public class FileStore {
      */
     public void openFile() throws IOException {
         if (file == null) {
-            file = FileUtils.open(name, mode);
-            file.position(filePos);
+            file = FileSystem.getInstance(name).openFileObject(name, mode);
+            file.seek(filePos);
         }
     }
 
@@ -494,27 +518,16 @@ public class FileStore {
      *
      * @return true if successful
      */
-    public synchronized boolean tryLock() {
-        try {
-            lock = file.tryLock();
-            return true;
-        } catch (Exception e) {
-            // ignore OverlappingFileLockException
-            return false;
-        }
+    public boolean tryLock() {
+        return file.tryLock();
     }
 
     /**
      * Release the file lock.
      */
-    public synchronized void releaseLock() {
-        if (file != null && lock != null) {
-            try {
-                lock.release();
-            } catch (Exception e) {
-                // ignore
-            }
-            lock = null;
+    public void releaseLock() {
+        if (file != null) {
+            file.releaseLock();
         }
     }
 

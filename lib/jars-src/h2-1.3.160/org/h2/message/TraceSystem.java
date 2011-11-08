@@ -17,7 +17,6 @@ import java.util.HashMap;
 import org.h2.constant.ErrorCode;
 import org.h2.engine.Constants;
 import org.h2.jdbc.JdbcSQLException;
-import org.h2.store.fs.FileUtils;
 import org.h2.util.IOUtils;
 import org.h2.util.New;
 
@@ -248,10 +247,12 @@ public class TraceSystem implements TraceWriter {
             if (checkSize++ >= CHECK_SIZE_EACH_WRITES) {
                 checkSize = 0;
                 closeWriter();
-                if (maxFileSize > 0 && FileUtils.size(fileName) > maxFileSize) {
+                if (maxFileSize > 0 && IOUtils.length(fileName) > maxFileSize) {
                     String old = fileName + ".old";
-                    FileUtils.delete(old);
-                    FileUtils.moveTo(fileName, old);
+                    if (IOUtils.exists(old)) {
+                        IOUtils.delete(old);
+                    }
+                    IOUtils.rename(fileName, old);
                 }
             }
             if (!openWriter()) {
@@ -295,13 +296,13 @@ public class TraceSystem implements TraceWriter {
     private boolean openWriter() {
         if (printWriter == null) {
             try {
-                FileUtils.createDirectories(FileUtils.getParent(fileName));
-                if (FileUtils.exists(fileName) && !FileUtils.canWrite(fileName)) {
+                IOUtils.createDirs(fileName);
+                if (IOUtils.exists(fileName) && IOUtils.isReadOnly(fileName)) {
                     // read only database: don't log error if the trace file
                     // can't be opened
                     return false;
                 }
-                fileWriter = IOUtils.getBufferedWriter(FileUtils.newOutputStream(fileName, true));
+                fileWriter = IOUtils.getBufferedWriter(IOUtils.openFileOutputStream(fileName, true));
                 printWriter = new PrintWriter(fileWriter, true);
             } catch (Exception e) {
                 logWritingError(e);

@@ -1606,9 +1606,7 @@ public class Parser {
                 }
             }
             if (readIf("FETCH")) {
-                if (!readIf("FIRST")) {
-                    read("NEXT");
-                }
+                read("FIRST");
                 if (readIf("ROW")) {
                     command.setLimit(ValueExpression.get(ValueInt.get(1)));
                 } else {
@@ -5010,17 +5008,8 @@ public class Parser {
                 command.setIndex(getSchema().findIndex(session, indexName));
             }
             return command;
-        } else if (allowIndexDefinition && (isToken("INDEX") || isToken("KEY"))) {
+        } else if (allowIndexDefinition && (readIf("INDEX") || readIf("KEY"))) {
             // MySQL
-            // need to read ahead, as it could be a column name
-            int start = lastParseIndex;
-            read();
-            if (DataType.getTypeByName(currentToken) != null) {
-                // known data type
-                parseIndex = start;
-                read();
-                return null;
-            }
             CreateIndex command = new CreateIndex(session, schema);
             command.setComment(comment);
             command.setTableName(tableName);

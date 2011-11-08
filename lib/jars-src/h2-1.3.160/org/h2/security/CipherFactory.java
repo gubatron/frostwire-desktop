@@ -30,7 +30,6 @@ import javax.net.ssl.SSLSocketFactory;
 import org.h2.constant.ErrorCode;
 import org.h2.constant.SysProperties;
 import org.h2.message.DbException;
-import org.h2.store.fs.FileUtils;
 import org.h2.util.IOUtils;
 import org.h2.util.StringUtils;
 import org.h2.util.Utils;
@@ -227,9 +226,9 @@ public class CipherFactory {
             String fileName = KEYSTORE;
             byte[] data = getKeyStoreBytes(getKeyStore(KEYSTORE_PASSWORD), KEYSTORE_PASSWORD);
             boolean needWrite = true;
-            if (FileUtils.exists(fileName) && FileUtils.size(fileName) == data.length) {
+            if (IOUtils.exists(fileName) && IOUtils.length(fileName) == data.length) {
                 // don't need to overwrite the file if it did not change
-                InputStream fin = FileUtils.newInputStream(fileName);
+                InputStream fin = IOUtils.openFileInputStream(fileName);
                 byte[] now = IOUtils.readBytesAndClose(fin, 0);
                 if (now != null && Utils.compareNotNull(data, now) == 0) {
                     needWrite = false;
@@ -237,14 +236,14 @@ public class CipherFactory {
             }
             if (needWrite) {
                 try {
-                    OutputStream out = FileUtils.newOutputStream(fileName, false);
+                    OutputStream out = IOUtils.openFileOutputStream(fileName, false);
                     out.write(data);
                     out.close();
                 } catch (Exception e) {
                     throw DbException.convertToIOException(e);
                 }
             }
-            String absolutePath = FileUtils.toRealPath(fileName);
+            String absolutePath = IOUtils.getCanonicalPath(fileName);
             System.setProperty(KEYSTORE_KEY, absolutePath);
         }
         if (p.getProperty(KEYSTORE_PASSWORD_KEY) == null) {

@@ -43,7 +43,7 @@ import org.h2.store.InDoubtTransaction;
 import org.h2.store.LobStorage;
 import org.h2.store.PageStore;
 import org.h2.store.WriterThread;
-import org.h2.store.fs.FileUtils;
+import org.h2.store.fs.FileSystemMemory;
 import org.h2.table.Column;
 import org.h2.table.IndexColumn;
 import org.h2.table.MetaTable;
@@ -53,6 +53,7 @@ import org.h2.table.TableView;
 import org.h2.tools.DeleteDbFiles;
 import org.h2.tools.Server;
 import org.h2.util.BitField;
+import org.h2.util.IOUtils;
 import org.h2.util.MathUtils;
 import org.h2.util.NetUtils;
 import org.h2.util.New;
@@ -437,7 +438,7 @@ public class Database implements DataHandler {
      * @return true if one exists
      */
     static boolean exists(String name) {
-        return FileUtils.exists(name + Constants.SUFFIX_PAGE_FILE);
+        return IOUtils.exists(name + Constants.SUFFIX_PAGE_FILE);
     }
 
     /**
@@ -451,7 +452,7 @@ public class Database implements DataHandler {
     }
 
     public FileStore openFile(String name, String openMode, boolean mustExist) {
-        if (mustExist && !FileUtils.exists(name)) {
+        if (mustExist && !IOUtils.exists(name)) {
             throw DbException.get(ErrorCode.FILE_NOT_FOUND_1, name);
         }
         FileStore store = FileStore.open(this, name, openMode, cipher, filePasswordHash);
@@ -498,15 +499,16 @@ public class Database implements DataHandler {
     private synchronized void open(int traceLevelFile, int traceLevelSystemOut) {
         if (persistent) {
             String dataFileName = databaseName + ".data.db";
-            boolean existsData = FileUtils.exists(dataFileName);
+            boolean existsData = IOUtils.exists(dataFileName);
             String pageFileName = databaseName + Constants.SUFFIX_PAGE_FILE;
-            boolean existsPage = FileUtils.exists(pageFileName);
+            boolean existsPage = IOUtils.exists(pageFileName);
             if (existsData && !existsPage) {
                 throw DbException.get(ErrorCode.FILE_VERSION_ERROR_1,
                         "Old database: " + dataFileName + " - please convert the database to a SQL script and re-create it.");
             }
-            if (existsPage && !FileUtils.canWrite(pageFileName)) {
-                readOnly = true;
+            if (existsPage && IOUtils.isReadOnly(pageFileName)) {
+                // if it is already read-only because ACCESS_MODE_DATA=r
+                readOnly = readOnly | IOUtils.isReadOnly(pageFileName);
             }
             if (readOnly) {
                 traceSystem = new TraceSystem(null);
@@ -529,7 +531,7 @@ public class Database implements DataHandler {
             }
             String lockFileName = databaseName + Constants.SUFFIX_LOCK_FILE;
             if (readOnly) {
-                if (FileUtils.exists(lockFileName)) {
+                if (IOUtils.exists(lockFileName)) {
                     throw DbException.get(ErrorCode.DATABASE_ALREADY_OPEN_1, "Lock file exists: " + lockFileName);
                 }
             }
@@ -1137,8 +1139,8 @@ public class Database implements DataHandler {
         if (deleteFilesOnDisconnect && persistent) {
             deleteFilesOnDisconnect = false;
             try {
-                String directory = FileUtils.getParent(databaseName);
-                String name = FileUtils.getName(databaseName);
+                String directory = IOUtils.getParent(databaseName);
+                String name = IOUtils.getFileName(databaseName);
                 DeleteDbFiles.execute(directory, name, true);
             } catch (Exception e) {
                 // ignore (the trace is closed already)
@@ -1348,7 +1350,7 @@ public class Database implements DataHandler {
 
     public String getDatabasePath() {
         if (persistent) {
-            return FileUtils.toRealPath(databaseName);
+            return IOUtils.getCanonicalPath(databaseName);
         }
         return null;
     }
@@ -1467,20 +1469,21 @@ public class Database implements DataHandler {
             boolean inTempDir = readOnly;
             String name = databaseName;
             if (!persistent) {
-                name = "memFS:" + name;
+                name = FileSystemMemory.PREFIX + name;
             }
-            return FileUtils.createTempFile(name, Constants.SUFFIX_TEMP_FILE, true, inTempDir);
+            return IOUtils.createTempFile(name, Constants.SUFFIX_TEMP_FILE, true, inTempDir);
         } catch (IOException e) {
             throw DbException.convertIOException(e, databaseName);
         }
     }
 
     private void deleteOldTempFiles() {
-        String path = FileUtils.getParent(databaseName);
-        for (String name : FileUtils.newDirectoryStream(path)) {
-            if (name.endsWith(Constants.SUFFIX_TEMP_FILE) && name.startsWith(databaseName)) {
+        String path = IOUtils.getParent(databaseName);
+        String[] list = IOUtils.listFiles(path);
+        for (String name : list) {
+            if (name.endsWith(Constants.SUFFIX_TEMP_FILE) && IOUtils.fileStartsWith(name, databaseName)) {
                 // can't always delete the files, they may still be open
-                FileUtils.tryDelete(name);
+                IOUtils.tryDelete(name);
             }
         }
     }

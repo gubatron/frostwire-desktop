@@ -17,9 +17,8 @@ import org.h2.engine.Constants;
 import org.h2.engine.Database;
 import org.h2.engine.Session;
 import org.h2.message.DbException;
-import org.h2.store.fs.FilePathRec;
-import org.h2.store.fs.FileUtils;
 import org.h2.store.fs.Recorder;
+import org.h2.store.fs.RecordingFileSystem;
 import org.h2.tools.Recover;
 import org.h2.util.IOUtils;
 import org.h2.util.New;
@@ -52,7 +51,7 @@ public class RecoverTester implements Recorder {
         if (StringUtils.isNumber(recoverTest)) {
             tester.setTestEvery(Integer.parseInt(recoverTest));
         }
-        FilePathRec.setRecorder(tester);
+        RecordingFileSystem.setRecorder(tester);
     }
 
     public static synchronized RecoverTester getInstance() {
@@ -63,7 +62,7 @@ public class RecoverTester implements Recorder {
     }
 
     public void log(int op, String fileName, byte[] data, long x) {
-        if (op != Recorder.WRITE && op != Recorder.TRUNCATE) {
+        if (op != Recorder.WRITE && op != Recorder.SET_LENGTH) {
             return;
         }
         if (!fileName.endsWith(Constants.SUFFIX_PAGE_FILE)) {
@@ -73,7 +72,7 @@ public class RecoverTester implements Recorder {
         if ((writeCount % testEvery) != 0) {
             return;
         }
-        if (FileUtils.size(fileName) > maxFileSize) {
+        if (IOUtils.length(fileName) > maxFileSize) {
             // System.out.println(fileName + " " + IOUtils.length(fileName));
             return;
         }
@@ -86,7 +85,7 @@ public class RecoverTester implements Recorder {
         try {
             out = new PrintWriter(
                     new OutputStreamWriter(
-                    FileUtils.newOutputStream(fileName + ".log", true)));
+                    IOUtils.openFileOutputStream(fileName + ".log", true)));
             testDatabase(fileName, out);
         } finally {
             IOUtils.closeSilently(out);
@@ -97,7 +96,7 @@ public class RecoverTester implements Recorder {
     private synchronized void testDatabase(String fileName, PrintWriter out) {
         out.println("+ write #" + writeCount + " verify #" + verifyCount);
         try {
-            FileUtils.copy(fileName, testDatabase + Constants.SUFFIX_PAGE_FILE);
+            IOUtils.copy(fileName, testDatabase + Constants.SUFFIX_PAGE_FILE);
             verifyCount++;
             // avoid using the Engine class to avoid deadlocks
             Properties p = new Properties();
@@ -142,7 +141,7 @@ public class RecoverTester implements Recorder {
         }
         testDatabase += "X";
         try {
-            FileUtils.copy(fileName, testDatabase + Constants.SUFFIX_PAGE_FILE);
+            IOUtils.copy(fileName, testDatabase + Constants.SUFFIX_PAGE_FILE);
             // avoid using the Engine class to avoid deadlocks
             Properties p = new Properties();
             ConnectionInfo ci = new ConnectionInfo("jdbc:h2:" + testDatabase + ";FILE_LOCK=NO", p);

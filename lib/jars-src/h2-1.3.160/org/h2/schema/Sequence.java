@@ -165,7 +165,7 @@ public class Sequence extends SchemaObjectBase {
     }
 
     public void setCacheSize(long cacheSize) {
-        this.cacheSize = Math.max(1, cacheSize);
+        this.cacheSize = cacheSize;
     }
 
     public long getCacheSize() {
