@@ -26,9 +26,9 @@ import org.h2.jdbc.JdbcConnection;
 import org.h2.message.TraceObject;
 import org.h2.util.StringUtils;
 
-/*## Java 1.7 ##
+//## Java 1.7 ##
 import java.util.logging.Logger;
-//*/
+///
 
 /**
  * A data source for H2 database connections. It is a factory for XAConnection
@@ -361,31 +361,31 @@ public class JdbcDataSource extends TraceObject
      *
      * @param iface the class
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public <T> T unwrap(Class<T> iface) throws SQLException {
         throw unsupported("unwrap");
     }
-//*/
+///
 
     /**
      * [Not supported] Checks if unwrap can return an object of this class.
      *
      * @param iface the class
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public boolean isWrapperFor(Class<?> iface) throws SQLException {
         throw unsupported("isWrapperFor");
     }
-//*/
+///
 
     /**
      * [Not supported]
      */
-/*## Java 1.7 ##
+//## Java 1.7 ##
     public Logger getParentLogger() {
         return null;
     }
-//*/
+///
 
     /**
      * INTERNAL

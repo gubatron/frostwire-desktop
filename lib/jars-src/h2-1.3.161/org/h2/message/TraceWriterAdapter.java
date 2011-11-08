@@ -6,8 +6,8 @@
  */
 package org.h2.message;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 /**
  * This adapter sends log output to SLF4J. SLF4J supports multiple
@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 public class TraceWriterAdapter implements TraceWriter {
 
     private String name;
-    private Logger logger = LoggerFactory.getLogger("h2database");
+    //private Logger logger = LoggerFactory.getLogger("h2database");
 
     public void setName(String name) {
         this.name = name;
@@ -34,11 +34,11 @@ public class TraceWriterAdapter implements TraceWriter {
     public boolean isEnabled(int level) {
         switch (level) {
         case TraceSystem.DEBUG:
-            return logger.isDebugEnabled();
+            //return logger.isDebugEnabled();
         case TraceSystem.INFO:
-            return logger.isInfoEnabled();
+            //return logger.isInfoEnabled();
         case TraceSystem.ERROR:
-            return logger.isErrorEnabled();
+            //return logger.isErrorEnabled();
         default:
             return false;
         }
@@ -53,13 +53,13 @@ public class TraceWriterAdapter implements TraceWriter {
             }
             switch (level) {
             case TraceSystem.DEBUG:
-                logger.debug(s, t);
+                //logger.debug(s, t);
                 break;
             case TraceSystem.INFO:
-                logger.info(s, t);
+                //logger.info(s, t);
                 break;
             case TraceSystem.ERROR:
-                logger.error(s, t);
+                //logger.error(s, t);
                 break;
             default:
             }

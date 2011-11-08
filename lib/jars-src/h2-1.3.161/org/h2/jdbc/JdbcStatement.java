@@ -871,20 +871,20 @@ public class JdbcStatement extends TraceObject implements Statement {
     /**
      * [Not supported]
      */
-/*## Java 1.7 ##
+//## Java 1.7 ##
     public void closeOnCompletion() {
         // not supported
     }
-//*/
+///
 
     /**
      * [Not supported]
      */
-/*## Java 1.7 ##
+//## Java 1.7 ##
     public boolean isCloseOnCompletion() {
         return true;
     }
-//*/
+///
 
     // =============================================================
 
@@ -999,20 +999,20 @@ public class JdbcStatement extends TraceObject implements Statement {
     /**
      * [Not supported] Return an object of this class if possible.
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public <T> T unwrap(Class<T> iface) throws SQLException {
         throw unsupported("unwrap");
     }
-//*/
+///
 
     /**
      * [Not supported] Checks if unwrap can return an object of this class.
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public boolean isWrapperFor(Class<?> iface) throws SQLException {
         throw unsupported("isWrapperFor");
     }
-//*/
+///
 
     /**
      * Returns whether this object is poolable.

@@ -42,17 +42,17 @@ import org.h2.value.ValueInt;
 import org.h2.value.ValueNull;
 import org.h2.value.ValueString;
 
-/*## Java 1.6 ##
+//## Java 1.6 ##
 import java.sql.Array;
 import java.sql.NClob;
 import java.sql.Struct;
 import java.sql.SQLXML;
 import java.sql.SQLClientInfoException;
-//*/
+///
 
-/*## Java 1.7 ##
+//## Java 1.7 ##
 import java.util.concurrent.Executor;
-//*/
+///
 
 /**
  * <p>
@@ -1509,7 +1509,7 @@ public class JdbcConnection extends TraceObject implements Connection {
      *
      * @return the object
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public NClob createNClob() throws SQLException {
         try {
             int id = getNextId(TraceObject.CLOB);
@@ -1527,36 +1527,36 @@ public class JdbcConnection extends TraceObject implements Connection {
             throw logAndConvert(e);
         }
     }
-//*/
+///
 
     /**
      * [Not supported] Create a new empty SQLXML object.
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public SQLXML createSQLXML() throws SQLException {
         throw unsupported("SQLXML");
     }
-//*/
+///
 
     /**
      * [Not supported] Create a new empty Array object.
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public Array createArrayOf(String typeName, Object[] elements)
             throws SQLException {
         throw unsupported("createArray");
     }
-//*/
+///
 
     /**
      * [Not supported] Create a new empty Struct object.
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public Struct createStruct(String typeName, Object[] attributes)
             throws SQLException {
         throw unsupported("Struct");
     }
-//*/
+///
 
     /**
      * Returns true if this connection is still valid.
@@ -1584,61 +1584,61 @@ public class JdbcConnection extends TraceObject implements Connection {
     /**
      * [Not supported] Set a client property.
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void setClientInfo(String name, String value)
             throws SQLClientInfoException {
         throw new SQLClientInfoException();
     }
-//*/
+///
 
     /**
      * [Not supported] Set the client properties.
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public void setClientInfo(Properties properties) throws SQLClientInfoException {
         throw new SQLClientInfoException();
     }
-//*/
+///
 
     /**
      * [Not supported] Get the client properties.
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public Properties getClientInfo() throws SQLClientInfoException {
         throw new SQLClientInfoException();
     }
-//*/
+///
 
     /**
      * [Not supported] Set a client property.
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public String getClientInfo(String name) throws SQLException {
         throw unsupported("clientInfo");
     }
-//*/
+///
 
     /**
      * [Not supported] Return an object of this class if possible.
      *
      * @param iface the class
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public <T> T unwrap(Class<T> iface) throws SQLException {
         throw unsupported("unwrap");
     }
-//*/
+///
 
     /**
      * [Not supported] Checks if unwrap can return an object of this class.
      *
      * @param iface the class
      */
-/*## Java 1.6 ##
+//## Java 1.6 ##
     public boolean isWrapperFor(Class<?> iface) throws SQLException {
         throw unsupported("isWrapperFor");
     }
-//*/
+///
 
     /**
      * Create a Clob value from this reader.
@@ -1683,31 +1683,31 @@ public class JdbcConnection extends TraceObject implements Connection {
      *
      * @param schema the schema
      */
-/*## Java 1.7 ##
+//# Java 1.7 ##
     public void setSchema(String schema) {
         // not supported
     }
-//*/
+///
 
     /**
      * [Not supported]
      */
-/*## Java 1.7 ##
+//## Java 1.7 ##
     public String getSchema() {
         return null;
     }
-//*/
+///
 
     /**
      * [Not supported]
      *
      * @param executor the executor used by this method
      */
-/*## Java 1.7 ##
+//## Java 1.7 ##
     public void abort(Executor executor) {
         // not supported
     }
-//*/
+///
 
     /**
      * [Not supported]
@@ -1715,20 +1715,20 @@ public class JdbcConnection extends TraceObject implements Connection {
      * @param executor the executor used by this method
      * @param milliseconds the TCP connection timeout
      */
-/*## Java 1.7 ##
+//## Java 1.7 ##
     public void setNetworkTimeout(Executor executor, int milliseconds) {
         // not supported
     }
-//*/
+///
 
     /**
      * [Not supported]
      */
-/*## Java 1.7 ##
+//## Java 1.7 ##
     public int getNetworkTimeout() {
         return 0;
     }
-//*/
+///
 
     private static void checkMap(Map<String, Class<?>> map) {
         if (map != null && map.size() > 0) {
