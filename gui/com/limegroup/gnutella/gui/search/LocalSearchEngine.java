@@ -152,7 +152,7 @@ public class LocalSearchEngine {
  		query = cleanQuery(query);
 		
 		//FULL TEXT SEARCH, Returns the File IDs we care about.
-		String fullTextIndexSql = "SELECT * FROM FT_SEARCH(?, ?, 0)";
+		String fullTextIndexSql = "SELECT * FROM FTL_SEARCH(?, ?, 0)";
 		
 		//System.out.println(fullTextIndexSql);
 		List<List<Object>> matchedFileRows = DB.query(fullTextIndexSql, query, LOCAL_SEARCH_RESULTS_LIMIT);

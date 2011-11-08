@@ -21,8 +21,8 @@
 	    <ant dir="trident-64a55aa"/>
 	    <ant dir="laf-widget-1543ae9"/>
 	    <ant dir="substance-58d3873"/>
-        <ant dir="h2-2011-08-13"/>
         <ant dir="lucene-3.4.0"/>
+        <ant dir="h2-1.3.161"/>
 		
 		<antcall target="copyjars"/>
         
@@ -46,8 +46,8 @@
 	    <ant dir="trident-64a55aa" target="clean"/>
 	    <ant dir="laf-widget-1543ae9" target="clean"/>
 	    <ant dir="substance-58d3873" target="clean"/>
-        <ant dir="h2-2011-08-13" target="clean"/>
         <ant dir="lucene-3.4.0" target="clean"/>
+        <ant dir="h2-1.3.161" target="clean"/>
 		
 		<mkdir dir="dist"/>
         
@@ -70,8 +70,8 @@
 	    <copy file="dist/trident.jar" todir="../jars/"/>
 		<copy file="dist/laf-widget.jar" todir="../jars/"/>
 	    <copy file="dist/substance.jar" todir="../jars/"/>
-	    <copy file="dist/h2-1.3.159.jar" todir="../jars/"/>
-	    <copy file="dist/lucene-3.4.0.jar" todir="../jars/"/>
+        <copy file="dist/lucene-3.4.0.jar" todir="../jars/"/>
+	    <copy file="dist/h2-1.3.161.jar" todir="../jars/"/>
 
 	</target>
 	

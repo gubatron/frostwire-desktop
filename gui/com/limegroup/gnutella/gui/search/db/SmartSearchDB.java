@@ -19,7 +19,7 @@ public class SmartSearchDB {
     public static final int OBJECT_NOT_SAVED_ID = -1;
     public static final int OBJECT_INVALID_ID = -2;
     
-    public static final int SMART_SEARCH_DATABASE_VERSION = 3;
+    public static final int SMART_SEARCH_DATABASE_VERSION = 4;
 
     private final File _databaseFile;
     private final String _name;
@@ -192,12 +192,12 @@ public class SmartSearchDB {
         update(connection, "CREATE INDEX idxSeeds ON TORRENTS(seeds)");
         
         //FILES
-        update(connection, "CREATE ALIAS IF NOT EXISTS FT_INIT FOR \"org.h2.fulltext.FullText.init\"");
-        update(connection, "CALL FT_INIT()");
+        update(connection, "CREATE ALIAS IF NOT EXISTS FT_INIT FOR \"org.h2.fulltext.FullTextLucene.init\"");
+        update(connection, "CALL FTL_INIT()");
         
         update(connection, "CREATE TABLE FILES (fileId INTEGER IDENTITY, torrentId INTEGER, fileName VARCHAR(10000), json VARCHAR(131072), keywords VARCHAR(131072))");
         //update(connection, "CREATE INDEX idxFiles ON Files (fileName)");
-        update(connection, "CALL FT_CREATE_INDEX('PUBLIC', 'FILES', 'FILENAME, KEYWORDS')");
+        update(connection, "CALL FTL_CREATE_INDEX('PUBLIC', 'FILES', 'FILENAME, KEYWORDS')");
         update(connection, "CREATE INDEX idxTorrentId ON FILES (torrentId)");
         
         //SNAPSHOTS - (Created right before user imports a DB, this way the user can delete (rollback) all new insertions after the snapshot)
