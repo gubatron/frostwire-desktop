@@ -131,12 +131,13 @@ public class LibraryDatabase {
     protected Connection onUpdateDatabase(Connection connection, int oldVersion, int newVersion) {
 
         if (oldVersion == 1 && newVersion > 2) {
-            setupInternetRadioStationsTable(connection, true, true);
-            setupLuceneIndex(connection);
+            setupInternetRadioStationsTable(connection, true, false);
+            setupLuceneIndex(connection, false);
+            setupInternetRadioStationsTable(connection, false, true);
         }
 
         if (oldVersion == 2 && newVersion == 3) {
-            setupLuceneIndex(connection);
+            setupLuceneIndex(connection, true);
         }
 
         update(connection, "UPDATE Library SET version = ?", LIBRARY_DATABASE_VERSION);
@@ -179,7 +180,7 @@ public class LibraryDatabase {
 
         setupInternetRadioStationsTable(connection, true, false);
 
-        setupLuceneIndex(connection);
+        setupLuceneIndex(connection, false);
 
         setupInternetRadioStationsTable(connection, false, true);
 
@@ -334,11 +335,21 @@ public class LibraryDatabase {
         }
     }
 
-    private void setupLuceneIndex(Connection connection) {
-        update(connection, "CREATE ALIAS IF NOT EXISTS FTL_INIT FOR \"org.h2.fulltext.FullTextLucene.init\"");
-        update(connection, "CALL FTL_INIT()");
+    private void setupLuceneIndex(final Connection connection, boolean background) {
+        Runnable r = new Runnable() {
+            public void run() {
+                update(connection, "CREATE ALIAS IF NOT EXISTS FTL_INIT FOR \"org.h2.fulltext.FullTextLucene.init\"");
+                update(connection, "CALL FTL_INIT()");
 
-        update(connection, "CALL FTL_CREATE_INDEX('PUBLIC', 'PLAYLISTITEMS', 'FILEPATH, TRACKTITLE, TRACKARTIST, TRACKALBUM, TRACKGENRE, TRACKYEAR')");
-        update(connection, "CALL FTL_CREATE_INDEX('PUBLIC', 'INTERNETRADIOSTATIONS', 'NAME, DESCRIPTION, GENRE')");
+                update(connection, "CALL FTL_CREATE_INDEX('PUBLIC', 'PLAYLISTITEMS', 'FILEPATH, TRACKTITLE, TRACKARTIST, TRACKALBUM, TRACKGENRE, TRACKYEAR')");
+                update(connection, "CALL FTL_CREATE_INDEX('PUBLIC', 'INTERNETRADIOSTATIONS', 'NAME, DESCRIPTION, GENRE')");
+            }
+        };
+        
+        if (background) {
+            new Thread(r, "Creating Lucene Index").start();
+        } else {
+            r.run();
+        }
     }
 }
