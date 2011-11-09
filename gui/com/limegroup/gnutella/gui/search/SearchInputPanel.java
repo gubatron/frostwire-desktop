@@ -30,7 +30,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
@@ -84,7 +83,7 @@ class SearchInputPanel extends JPanel {
     /**
      * The JTabbedPane that switches between types of searches.
      */
-    private final JTabbedPane PANE = new JTabbedPane(JTabbedPane.BOTTOM);
+    private final JPanel PANE = new JPanel();//TabbedPane(JTabbedPane.BOTTOM);
 
     /**
      * The CardLayout that switches between the detailed
@@ -172,7 +171,7 @@ class SearchInputPanel extends JPanel {
      * Determines if keyword is selected.
      */
     boolean isNormalSearchType() {
-        return PANE.getSelectedIndex() == 0;
+        return true;//PANE.getSelectedIndex() == 0;
     }
 
     void requestSearchFocusImmediately() {
