@@ -21,6 +21,7 @@ import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderFactory;
 import org.gudy.azureus2.core3.util.TorrentUtils;
 
 import com.frostwire.JsonEngine;
+import com.frostwire.alexandria.LibraryUtils;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.filters.SearchFilter;
@@ -149,7 +150,7 @@ public class LocalSearchEngine {
 	 * if there are matches.
 	 */
 	public List<SmartSearchResult> search(String query) {
- 		query = cleanQuery(query);
+ 		query = LibraryUtils.simpleLuceneQuery(query);
 		
 		//FULL TEXT SEARCH, Returns the File IDs we care about.
 		String fullTextIndexSql = "SELECT * FROM FTL_SEARCH(?, ?, 0)";
@@ -217,16 +218,6 @@ public class LocalSearchEngine {
 		System.out.println("Ended up with "+ results.size() +" results");
 
 		return results;
-	}
-
-	public String cleanQuery(String query) {
-		String[] preparedQueryTokens = prepareQueryTokens(query);
-		StringBuilder sb = new StringBuilder();
-		for (String token : preparedQueryTokens) {
-			sb.append(token + " ");
-		}
-		query = sb.toString().trim();
-		return query;
 	}
 
 	public List<DeepSearchResult> deepSearch(byte[] guid, String query,
