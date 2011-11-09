@@ -503,7 +503,7 @@ public class LibraryFiles extends AbstractLibraryListPanel {
 		}
     }
 
-	public boolean selectionListenerForSameItem(Class clazz) {
+	public boolean selectionListenerForSameItem(Class<?> clazz) {
 		Object selectedValue = _list.getSelectedValue();
 		
 		    if (selectedValue != null && clazz.isInstance(((LibraryFilesListCell) selectedValue).getDirectoryHolder())) {
