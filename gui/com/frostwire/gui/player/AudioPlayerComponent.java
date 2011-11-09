@@ -20,6 +20,7 @@ import javax.swing.event.ChangeListener;
 
 import org.limewire.util.OSUtils;
 
+import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.LibraryUtils;
 import com.frostwire.mplayer.MediaPlaybackState;
 import com.limegroup.gnutella.gui.BoxPanel;
@@ -349,12 +350,17 @@ public final class AudioPlayerComponent implements AudioPlayerListener,
 	/**
 	 * Begins playing the loaded song
 	 */
-	public void play() {
-		if (PLAYER.getState() == MediaPlaybackState.Paused
-				|| PLAYER.getState() == MediaPlaybackState.Playing) {
-			PLAYER.togglePause();
-		}
-	}
+    public void play() {
+        if (PLAYER.getCurrentSong() != null) {
+            if (PLAYER.getState() == MediaPlaybackState.Paused || PLAYER.getState() == MediaPlaybackState.Playing) {
+                PLAYER.togglePause();
+            }
+        } else {
+            if (GUIMediator.instance().getSelectedTab() != null && GUIMediator.instance().getSelectedTab().equals(GUIMediator.Tabs.LIBRARY)) {
+                LibraryMediator.instance().playCurrentSelection();
+            }
+        }
+    }
 
 	/**
 	 * Pauses the currently playing audio file.

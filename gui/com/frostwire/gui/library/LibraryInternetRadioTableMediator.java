@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -608,6 +609,15 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
                 str += "\n";
             }
             GUIMediator.setClipboardContent(str);
+        }
+    }
+
+    @Override
+    protected AudioSource createAudioSource(LibraryInternetRadioTableDataLine line) {
+        try {
+            return new InternetRadioAudioSource(new URL(line.getInitializeObject().getUrl()),line.getInitializeObject());
+        } catch (MalformedURLException e) {
+            return null;
         }
     }
 }

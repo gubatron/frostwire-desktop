@@ -822,4 +822,9 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             }
         }
     }
+
+    @Override
+    protected AudioSource createAudioSource(LibraryPlaylistsTableDataLine line) {
+        return new AudioSource(line.getInitializeObject());
+    }
 }

@@ -23,6 +23,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -404,6 +405,17 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         if (i == -1)
             return;
         TABBED_PANE.setSelectedIndex(i);
+    }
+    
+    public final GUIMediator.Tabs getSelectedTab() {
+        Tab tab = getTabForIndex(TABBED_PANE.getSelectedIndex());
+        for (Entry<GUIMediator.Tabs, Tab> entry : TABS.entrySet()) {
+            if (entry.getValue() == tab) {
+                return entry.getKey();
+            }
+        }
+        
+        return null;
     }
 
     /** Updates the icon in a tab. */

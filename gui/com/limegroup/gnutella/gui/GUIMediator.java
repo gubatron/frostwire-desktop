@@ -734,6 +734,10 @@ public final class GUIMediator {
     public void setWindow(GUIMediator.Tabs tab) {
         getMainFrame().setSelectedTab(tab);
     }
+    
+    public GUIMediator.Tabs getSelectedTab() {
+        return getMainFrame().getSelectedTab();
+    }
 
     /**
      * Updates the icon at the specified tab index.

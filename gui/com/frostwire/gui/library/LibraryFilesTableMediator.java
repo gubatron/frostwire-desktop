@@ -969,4 +969,13 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         	AudioPlayer.instance().setPlaylistFilesView(getFileView());
         }
     }
+
+    @Override
+    protected AudioSource createAudioSource(LibraryFilesTableDataLine line) {
+        if (AudioPlayer.isPlayableFile(line.getInitializeObject())) {
+            return new AudioSource(line.getInitializeObject());
+        } else {
+            return null;
+        }
+    }
 }

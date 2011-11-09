@@ -40,7 +40,7 @@ public class LibraryMediator {
 
     private static final String FILES_TABLE_KEY = "LIBRARY_FILES_TABLE";
     private static final String PLAYLISTS_TABLE_KEY = "LIBRARY_PLAYLISTS_TABLE";
-    private static final String INTERNET_RADIO_TREE_KEY = "LIBRARY_INTERNET_RADIO_TREE";
+    private static final String INTERNET_RADIO_TABLE_KEY = "LIBRARY_INTERNET_RADIO_TABLE";
 
     private static JPanel MAIN_PANEL;
 
@@ -70,6 +70,8 @@ public class LibraryMediator {
 	private AddRadioStationAction addStationAction;
 	private AbstractLibraryTableMediator.ExploreAction exploreAction;
 	private SendToFriendAction sendAction;
+	
+	private AbstractLibraryTableMediator<?, ?, ?> currentMediator;
 
     /**
      * @return the <tt>LibraryMediator</tt> instance
@@ -173,6 +175,16 @@ public class LibraryMediator {
         rememberScrollbarsOnMediators(key);
         _tablesViewLayout.show(_tablesPanel, key);
         LibraryMediator.instance().refreshBottomActions();
+        
+        if (key.equals(FILES_TABLE_KEY)) {
+            currentMediator = LibraryFilesTableMediator.instance();
+        } else if (key.equals(PLAYLISTS_TABLE_KEY)) {
+            currentMediator = LibraryPlaylistsTableMediator.instance();
+        } else if (key.equals(INTERNET_RADIO_TABLE_KEY)) {
+            currentMediator = LibraryInternetRadioTableMediator.instance();
+        } else {
+            currentMediator = null;
+        }
     }
     
     private void rememberScrollbarsOnMediators(String key) {
@@ -224,7 +236,7 @@ public class LibraryMediator {
     
     public void showInternetRadioStations(List<InternetRadioStation> internetRadioStations) {
         clearLibraryTable();
-        showView(INTERNET_RADIO_TREE_KEY);
+        showView(INTERNET_RADIO_TABLE_KEY);
         LibraryInternetRadioTableMediator.instance().updateTableItems(internetRadioStations);
     }
 
@@ -270,7 +282,7 @@ public class LibraryMediator {
 
         _tablesPanel.add(LibraryFilesTableMediator.instance().getScrolledTablePane(), FILES_TABLE_KEY);
         _tablesPanel.add(LibraryPlaylistsTableMediator.instance().getScrolledTablePane(), PLAYLISTS_TABLE_KEY);
-        _tablesPanel.add(LibraryInternetRadioTableMediator.instance().getScrolledTablePane(), INTERNET_RADIO_TREE_KEY);
+        _tablesPanel.add(LibraryInternetRadioTableMediator.instance().getScrolledTablePane(), INTERNET_RADIO_TABLE_KEY);
 
         panel.add(getLibrarySearch(), BorderLayout.PAGE_START);
         panel.add(_tablesPanel, BorderLayout.CENTER);
@@ -462,4 +474,10 @@ public class LibraryMediator {
 			sendAction.setEnabled(true);
 		}
 	}
+
+    public void playCurrentSelection() {
+        if (currentMediator != null) {
+            currentMediator.playCurrentSelection();
+        }
+    }
 }

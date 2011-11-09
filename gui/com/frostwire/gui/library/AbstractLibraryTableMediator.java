@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.bittorrent.SendFileProgressDialog;
+import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -254,4 +255,22 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
         }
         return 0;
     }
+
+    public void playCurrentSelection() {
+        E line = DATA_MODEL.get(TABLE.getSelectedRow());
+        if (line == null) {
+            return;
+        }
+
+        try {
+            AudioSource audioSource = createAudioSource(line);
+            if (audioSource != null) {
+                AudioPlayer.instance().asyncLoadSong(audioSource, true, false, null, getFileView());
+            }
+        } catch (Exception e) { 
+            e.printStackTrace();
+        }
+    }
+    
+    protected abstract AudioSource createAudioSource(E line);
 }
