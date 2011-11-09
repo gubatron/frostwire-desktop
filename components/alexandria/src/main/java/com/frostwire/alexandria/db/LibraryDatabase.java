@@ -131,13 +131,12 @@ public class LibraryDatabase {
     protected Connection onUpdateDatabase(Connection connection, int oldVersion, int newVersion) {
 
         if (oldVersion == 1 && newVersion > 2) {
-            setupInternetRadioStationsTable(connection, true, false);
-            setupLuceneIndex(connection, false);
-            setupInternetRadioStationsTable(connection, false, true);
+            setupInternetRadioStationsTable(connection);
+            setupLuceneIndex(connection);
         }
 
         if (oldVersion == 2 && newVersion == 3) {
-            setupLuceneIndex(connection, true);
+            setupLuceneIndex(connection);
         }
 
         update(connection, "UPDATE Library SET version = ?", LIBRARY_DATABASE_VERSION);
@@ -178,11 +177,9 @@ public class LibraryDatabase {
         update(connection, "CREATE INDEX idx_PlaylistItems_filePath ON PlaylistItems (filePath)");
         update(connection, "CREATE INDEX idx_PlaylistItems_starred ON PlaylistItems (starred)");
 
-        setupInternetRadioStationsTable(connection, true, false);
+        setupInternetRadioStationsTable(connection);
 
-        setupLuceneIndex(connection, false);
-
-        setupInternetRadioStationsTable(connection, false, true);
+        setupLuceneIndex(connection);
 
         // INITIAL DATA
         update(connection, "INSERT INTO Library (name , version) VALUES (?, ?)", name, LIBRARY_DATABASE_VERSION);
@@ -313,43 +310,22 @@ public class LibraryDatabase {
         return query.size() > 0 ? (Integer) query.get(0).get(0) : -1;
     }
 
-    private void setupInternetRadioStationsTable(final Connection connection, boolean createTable, boolean loadData) {
-        if (createTable) {
-            update(connection,
-                    "CREATE TABLE InternetRadioStations (internetRadioStationId INTEGER IDENTITY, name VARCHAR(10000), description VARCHAR(10000), url VARCHAR(10000), bitrate VARCHAR(100), type VARCHAR(100), website VARCHAR(10000), genre VARCHAR(10000), pls VARCHAR(100000), bookmarked BOOLEAN)");
-            update(connection, "CREATE INDEX idx_InternetRadioStations_name ON InternetRadioStations (name)");
-        }
+    private void setupInternetRadioStationsTable(final Connection connection) {
+        update(connection, "CREATE TABLE InternetRadioStations (internetRadioStationId INTEGER IDENTITY, name VARCHAR(10000), description VARCHAR(10000), url VARCHAR(10000), bitrate VARCHAR(100), type VARCHAR(100), website VARCHAR(10000), genre VARCHAR(10000), pls VARCHAR(100000), bookmarked BOOLEAN)");
+        update(connection, "CREATE INDEX idx_InternetRadioStations_name ON InternetRadioStations (name)");
+        
+        InternetRadioStationsData data = new InternetRadioStationsData();
 
-        if (loadData) {
-            new Thread(new Runnable() {
-                public void run() {
-                    InternetRadioStationsData data = new InternetRadioStationsData();
-
-                    for (List<Object> row : data.getData()) {
-                        update(connection, "INSERT INTO InternetRadioStations (name, description, url, bitrate, type, website, genre, pls, bookmarked) VALUES (LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 100), LEFT(?, 100), LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 100000), false)",
-                                row.toArray());
-                        Thread.yield();
-                    }
-                }
-            }, "Load Internet Radio Data").start();
+        for (List<Object> row : data.getData()) {
+            update(connection, "INSERT INTO InternetRadioStations (name, description, url, bitrate, type, website, genre, pls, bookmarked) VALUES (LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 100), LEFT(?, 100), LEFT(?, 10000), LEFT(?, 10000), LEFT(?, 100000), false)", row.toArray());
         }
     }
 
-    private void setupLuceneIndex(final Connection connection, boolean background) {
-        Runnable r = new Runnable() {
-            public void run() {
-                update(connection, "CREATE ALIAS IF NOT EXISTS FTL_INIT FOR \"org.h2.fulltext.FullTextLucene.init\"");
-                update(connection, "CALL FTL_INIT()");
+    private void setupLuceneIndex(final Connection connection) {
+        update(connection, "CREATE ALIAS IF NOT EXISTS FTL_INIT FOR \"org.h2.fulltext.FullTextLucene2.init\"");
+        update(connection, "CALL FTL_INIT()");
 
-                update(connection, "CALL FTL_CREATE_INDEX('PUBLIC', 'PLAYLISTITEMS', 'FILEPATH, TRACKTITLE, TRACKARTIST, TRACKALBUM, TRACKGENRE, TRACKYEAR')");
-                update(connection, "CALL FTL_CREATE_INDEX('PUBLIC', 'INTERNETRADIOSTATIONS', 'NAME, DESCRIPTION, GENRE')");
-            }
-        };
-        
-        if (background) {
-            new Thread(r, "Creating Lucene Index").start();
-        } else {
-            r.run();
-        }
+        update(connection, "CALL FTL_CREATE_INDEX('PUBLIC', 'PLAYLISTITEMS', 'FILEPATH, TRACKTITLE, TRACKARTIST, TRACKALBUM, TRACKGENRE, TRACKYEAR')");
+        update(connection, "CALL FTL_CREATE_INDEX('PUBLIC', 'INTERNETRADIOSTATIONS', 'NAME, DESCRIPTION, GENRE')");
     }
 }
