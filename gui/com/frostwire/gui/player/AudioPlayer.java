@@ -1,6 +1,6 @@
 package com.frostwire.gui.player;
 
-import java.awt.KeyEventPostProcessor;
+import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -140,8 +140,11 @@ public class AudioPlayer implements RefreshListener {
 		volume = PlayerSettings.PLAYER_VOLUME.getValue();
 		notifyVolumeChanged();
 		
-		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventPostProcessor(new KeyEventPostProcessor() {
-            public boolean postProcessKeyEvent(KeyEvent e) {
+		
+		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
+			
+			@Override
+			public boolean dispatchKeyEvent(KeyEvent e) {
                 if (e.getID() == KeyEvent.KEY_PRESSED && e.getKeyCode() == KeyEvent.VK_SPACE) {
                     Object s = e.getComponent();
                     if (!(s instanceof JTextField) &&
@@ -149,11 +152,12 @@ public class AudioPlayer implements RefreshListener {
                         !(s instanceof JCheckBox))
                         ) {
                         togglePause();
+                        return true;
                     }
                 }
-                return true;
-            }
-        });
+                return false;
+			}
+		});
 	}
 
 	public AudioSource getCurrentSong() {
@@ -299,6 +303,7 @@ public class AudioPlayer implements RefreshListener {
 	 */
 	public void stop() {
 		mplayer.stop();
+		currentSong = null;
 		notifyState(getState());
 	}
 
