@@ -78,8 +78,11 @@ public final class LibraryUtils {
     public static String simpleLuceneQuery(String str) {
         String luceneStr = luceneEncode(str);
         String[] tokens = luceneStr.split(" ");
-        if (tokens.length < 2) {
+        if (tokens.length == 0) {
             return luceneStr;
+        }
+        if (tokens.length == 1) {
+            return luceneStr + "~";
         }
 
         StringBuilder sb = new StringBuilder();
@@ -87,6 +90,25 @@ public final class LibraryUtils {
             sb.append(tokens[i] + "~ AND ");
         }
         sb.append(tokens[tokens.length - 1] + "~");
+
+        return sb.toString().trim();
+    }
+    
+    public static String wildcardLuceneQuery(String str) {
+        String luceneStr = luceneEncode(str);
+        String[] tokens = luceneStr.split(" ");
+        if (tokens.length == 0) {
+            return luceneStr;
+        }
+        if (tokens.length == 1) {
+            return luceneStr + "*";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < tokens.length - 1; i++) {
+            sb.append(tokens[i] + "* AND ");
+        }
+        sb.append(tokens[tokens.length - 1] + "*");
 
         return sb.toString().trim();
     }
