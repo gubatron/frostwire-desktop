@@ -75,7 +75,7 @@ public final class LibraryUtils {
         return buff.toString().replaceAll("\\s+", " ");
     }
 
-    public static String simpleLuceneQuery(String str) {
+    public static String fuzzyLuceneQuery(String str) {
         String luceneStr = luceneEncode(str);
         String[] tokens = luceneStr.split(" ");
         if (tokens.length == 0) {
