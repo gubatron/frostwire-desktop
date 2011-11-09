@@ -1,3 +1,10 @@
+frostwire (5.2.9) stable; urgency=high
+  * Bug Fix: Finished Downloads shows only finished downloads.
+  * Enhancement: Audio player will start playing currently selected audio
+    source if it's on a stopped state.
+  
+ -- FrostWire Team <contact@frostwire.com>  Wed, 9 Nov 2011 12:11:10 -0500
+
 frostwire (5.2.8) stable; urgency=high
   * Smart search updates uses less DHT resources and fixes logic bugs
     that results into faster and better search results.

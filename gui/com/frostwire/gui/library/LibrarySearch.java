@@ -306,6 +306,14 @@ public class LibrarySearch extends JPanel {
 								.getValue());
 				return;
 			}
+			
+			if (directoryHolder instanceof SavedFilesDirectoryHolder) {
+				search(((SavedFilesDirectoryHolder) directoryHolder)
+						.getDirectory(),
+						ignore, LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE
+								.getValue());
+				return;
+			}
 
             Set<File> directories = new HashSet<File>(LibrarySettings.DIRECTORIES_TO_INCLUDE.getValue());
             directories.removeAll(LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.getValue());
