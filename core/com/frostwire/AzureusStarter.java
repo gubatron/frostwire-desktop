@@ -47,6 +47,7 @@ public final class AzureusStarter {
 	 * Initializes synchronously the azureus core
 	 */
 	private static synchronized void azureusInit() {
+	    System.setProperty("azureus.loadplugins", "0"); // disable third party azureus plugins
 		try {
 			if (AZUREUS_CORE != null && AZUREUS_CORE.isStarted()) {
 				LOG.debug("azureusInit(): core already started. skipping.");
