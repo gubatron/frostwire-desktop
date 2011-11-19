@@ -35,11 +35,8 @@ public class TorrentGlobalSpeedPaneItem extends AbstractPaneItem {
 	private int storedDownloadSpeed;
 	
 	private String globalDownloadSpeedConfigKey = "Max Download Speed KBs";
-	
 
-	public final static String DESCRIPTION_UPLOAD_SPEED = I18n.tr("<html>Set the Maximum BitTorrent upload speed in KB/s.<p>Note: Minimum upload speeds could be automatically adjusted depending on your Maximum download speed.</html>");
-
-	
+	public final static String DESCRIPTION_UPLOAD_SPEED = I18n.tr("<html>Set the Maximum BitTorrent upload speed in KB/s.<p>Note: Too low upload speeds (leeching) could be penalized by some trackers, resulting in slower downloads.</html>");
 
 	private final String LABEL_UPLOAD_SPEED = I18n.tr("Upload Speed:");
 
@@ -172,15 +169,17 @@ public class TorrentGlobalSpeedPaneItem extends AbstractPaneItem {
 			newDownload = 0;
 		}
 		
-		
+		/**
 		//if you're trying to download 
 		if (newUpload < (newDownload/3) && (newUpload != 0)) {
 			newUpload = (newDownload+1)/3;
 		} 
 		//wanna receive? you gotta give.
-		else if (newDownload == 0) {
+		else 
+		if (newDownload == 0) {
 			newUpload = 0;
 		}
+		*/
 		
 		COConfigurationManager.setParameter(globalDownloadSpeedConfigKey, newDownload);
 		COConfigurationManager.setParameter(globalUploadSpeedConfigKey, newUpload);

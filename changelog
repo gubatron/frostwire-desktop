@@ -1,3 +1,9 @@
+frostwire (5.2.10) stable; urgency=high
+  * Upload ratios will not be enforced to 30% of downloads anymore.
+    Users will have free will to set the upload ratio of their preference.
+  
+ -- FrostWire Team <contact@frostwire.com>  Sat, 19 Nov 2011 06:43:56 -0500
+
 frostwire (5.2.9) stable; urgency=high
   * Enhancement: Lucene full text indexing for Smart Search database to
     allow for fuzzy searches.
