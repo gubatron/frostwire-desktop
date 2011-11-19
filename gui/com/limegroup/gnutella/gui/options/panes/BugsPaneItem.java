@@ -24,7 +24,6 @@ import com.limegroup.gnutella.gui.LocalClientInfoFactory;
 import com.limegroup.gnutella.gui.MessageService;
 import com.limegroup.gnutella.gui.bugs.LocalClientInfo;
 import com.limegroup.gnutella.settings.BugSettings;
-import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * This class defines the panel in the options window that allows
@@ -107,8 +106,7 @@ public final class BugsPaneItem extends AbstractPaneItem {
         add(REVIEW_BOX);
         add(DISCARD_BOX);
         
-        if(!FrostWireUtils.isBetaRelease())
-            add(DEADLOCK_OPTION);
+        add(DEADLOCK_OPTION);
 
         add(getVerticalSeparator());
         add(getVerticalSeparator());
@@ -128,7 +126,7 @@ public final class BugsPaneItem extends AbstractPaneItem {
 	public void initOptions() {
         if( BugSettings.IGNORE_ALL_BUGS.getValue() )
             BGROUP.setSelected(DISCARD_BOX.getModel(), true);
-        else if (BugSettings.USE_BUG_SERVLET.getValue() )
+        else if (BugSettings.USE_AUTOMATIC_BUG.getValue() )
             BGROUP.setSelected(SEND_BOX.getModel(), true);
         else
             BGROUP.setSelected(REVIEW_BOX.getModel(), true);
@@ -150,10 +148,10 @@ public final class BugsPaneItem extends AbstractPaneItem {
 	        BugSettings.IGNORE_ALL_BUGS.setValue(true);
 	    else if ( bm.equals(SEND_BOX.getModel()) ) {
 	        BugSettings.IGNORE_ALL_BUGS.setValue(false);
-	        BugSettings.USE_BUG_SERVLET.setValue(true);
+	        BugSettings.USE_AUTOMATIC_BUG.setValue(true);
 	    } else {
 	        BugSettings.IGNORE_ALL_BUGS.setValue(false);
-	        BugSettings.USE_BUG_SERVLET.setValue(false);
+	        BugSettings.USE_AUTOMATIC_BUG.setValue(false);
 	    }
         
         BugSettings.SEND_DEADLOCK_BUGS.setValue(DEADLOCK_OPTION.isSelected());
@@ -168,8 +166,8 @@ public final class BugsPaneItem extends AbstractPaneItem {
             return !BugSettings.IGNORE_ALL_BUGS.getValue();
         if(BGROUP.getSelection().equals(SEND_BOX.getModel()))
             return BugSettings.IGNORE_ALL_BUGS.getValue() ||
-                   !BugSettings.USE_BUG_SERVLET.getValue();
+                   !BugSettings.USE_AUTOMATIC_BUG.getValue();
         return BugSettings.IGNORE_ALL_BUGS.getValue() ||
-               BugSettings.USE_BUG_SERVLET.getValue();
+               BugSettings.USE_AUTOMATIC_BUG.getValue();
     }	
 }

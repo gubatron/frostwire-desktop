@@ -7,6 +7,8 @@ import java.io.InputStream;
 import java.net.URI;
 import java.util.zip.GZIPInputStream;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.Header;
 import org.apache.http.HeaderElement;
 import org.apache.http.HttpEntity;
@@ -47,6 +49,8 @@ import org.apache.http.util.EntityUtils;
  *
  */
 public class HttpFetcher {
+    
+    private static final Log LOG = LogFactory.getLog(HttpFetcher.class);
 	
     private static final String DEFAULT_USER_AGENT = UserAgentGenerator.getUserAgent();
 	private static final int DEFAULT_TIMEOUT = 10000;
@@ -277,13 +281,14 @@ public class HttpFetcher {
             public void run() {
                 try {
                     byte[] post = post(body, contentType);
-                    listener.onSuccess(post);
+                    if (listener != null) {
+                        listener.onSuccess(post);
+                    }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOG.error("Failted to perform post", e);
                     listener.onError(e);
                 }
             }
-
         });
         thread.setName("HttpFetcher-asyncPost");
         thread.start();

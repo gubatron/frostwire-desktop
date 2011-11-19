@@ -1,23 +1,14 @@
 package com.limegroup.gnutella.gui.menu;
 
 import java.awt.event.ActionEvent;
-import java.io.File;
-import java.util.Random;
-
-import javax.swing.Action;
-import javax.swing.Icon;
 
 import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.TipOfTheDayMediator;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
 import com.limegroup.gnutella.gui.actions.OpenLinkAction;
-import com.limegroup.gnutella.gui.notify.Notification;
-import com.limegroup.gnutella.gui.notify.NotifyUserProxy;
-import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * Handles all of the contents of the help menu in the menu bar.  This 
@@ -61,12 +52,6 @@ final class HelpMenu extends AbstractMenu {
             addSeparator();
             addMenuItem(new ShowAboutDialogAction());
         }
-        if (FrostWireUtils.isTestingVersion()) {
-            addSeparator();
-            addMenuItem(new ShowNotificationAction());
-            addMenuItem(new GenerateUncaughtErrorAction());
-        }
-        //addMenuItem(new GenerateUncaughtErrorAction()); // FTA: testing or debug purposes only. It generates a fake error
     }
 
     /**
@@ -90,26 +75,6 @@ final class HelpMenu extends AbstractMenu {
     }
 
     /**
-     * Opens an error report, for testing.
-     */
-    private static class GenerateUncaughtErrorAction extends AbstractAction {
-
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 7936740290025125821L;
-
-        public GenerateUncaughtErrorAction() {
-            super(I18n.tr("Generate &Error"));
-            putValue(LONG_DESCRIPTION, I18n.tr("Generate a Popup Error for Testing"));
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            throw new RuntimeException("Generated Error");
-        }
-    }
-
-    /**
      * Shows the about window with more information about the application.
      */
     private static class ShowAboutDialogAction extends AbstractAction {
@@ -128,38 +93,4 @@ final class HelpMenu extends AbstractMenu {
             GUIMediator.showAboutWindow();
         }
     }
-
-    /**
-     * Shows a notification.
-     */
-    private static class ShowNotificationAction extends AbstractAction {
-
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 7955477944674441576L;
-
-        public ShowNotificationAction() {
-            putValue(Action.NAME, "Show Notification");
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            if (new Random().nextBoolean()) {
-                Icon icon = IconManager.instance().getIconForFile(new File("frostwire.exe"));
-                Notification notification = new Notification("This is a very looooooooooooooooooooooooooooooooong message.", icon, this);
-                NotifyUserProxy.instance().showMessage(notification);
-            } else if (new Random().nextBoolean()) {
-                Icon icon = IconManager.instance().getIconForFile(new File("frostwire.html"));
-                Notification notification = new Notification(
-                        "This is a another very loooong  loooong loooong loooong loooong loooong loooong loooong loooong message.", icon, this);
-                NotifyUserProxy.instance().showMessage(notification);
-            } else {
-                Icon icon = IconManager.instance().getIconForFile(new File("frostwire.html"));
-                Notification notification = new Notification("Short message.", icon, this);
-                NotifyUserProxy.instance().showMessage(notification);
-            }
-        }
-
-    }
-
 }

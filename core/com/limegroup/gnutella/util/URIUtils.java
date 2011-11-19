@@ -1,14 +1,12 @@
 package com.limegroup.gnutella.util;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.util.StringTokenizer;
-import java.io.UnsupportedEncodingException;
 
 import org.limewire.service.ErrorService;
-
-import com.limegroup.gnutella.settings.BugSettings;
 
 /**
  * Utilities for URIs
@@ -31,8 +29,7 @@ public class URIUtils {
      * @param e
      */
     public static void error(URISyntaxException e) {
-        if (BugSettings.SEND_URI_BUGS.getValue())
-            ErrorService.error(e);
+       //ErrorService.error(e);
     }
 
     /**

@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URI;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -17,16 +18,23 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.frostwire.HttpFetcher;
 import com.limegroup.gnutella.gui.LimeWireModule;
 import com.limegroup.gnutella.gui.LocalClientInfoFactory;
 import com.limegroup.gnutella.gui.MultiLineLabel;
 import com.limegroup.gnutella.gui.SplashWindow;
+import com.limegroup.gnutella.settings.BugSettings;
 
 
 /**
  * A bare-bones bug manager, for fatal errors.
  */
 public final class FatalBugManager {
+    
+    private static final Log LOG = LogFactory.getLog(FatalBugManager.class);
     
     private FatalBugManager() {
     }
@@ -156,7 +164,11 @@ public final class FatalBugManager {
      * Sends a bug to the servlet & then exits.
      */
     private static void sendToServlet(LocalClientInfo info) {
-        new ServletAccessor().getRemoteBugInfo(info);
+        try {
+            new HttpFetcher(new URI(BugSettings.BUG_REPORT_SERVER.getValue())).post(info.toBugReport(), "text/plain");
+        } catch (Exception e) {
+            LOG.error("Error sending bug report", e);
+        }
     }
     
     /**

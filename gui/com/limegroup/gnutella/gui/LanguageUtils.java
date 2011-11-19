@@ -21,7 +21,6 @@ import org.limewire.util.FileUtils;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.settings.ApplicationSettings;
-import com.limegroup.gnutella.util.FrostWireUtils;
 
 /**
  * This class provides utility methods retrieving supported languages and
@@ -36,8 +35,6 @@ public class LanguageUtils {
     private static final String BUNDLE_POSTFIX = ".class";
 
     private static final String BUNDLE_MARKER = "org/limewire/i18n/Messages.class";
-
-    private static final String CVS_BUNDLE_FILE = "../lib/jars/compile/messages.jar";
 
     /**
      * Applies this language code to be the new language of the program.
@@ -65,10 +62,6 @@ public class LanguageUtils {
             addLocalesFromJar(locales, jar);
         } else {
             LOG.warn("Could not find bundle jar to determine locales");
-        }
-
-        if (FrostWireUtils.isTestingVersion()) { 
-            addLocalesFromJar(locales, new File(CVS_BUNDLE_FILE));
         }
         
         Collections.sort(locales, new Comparator<Locale>() {

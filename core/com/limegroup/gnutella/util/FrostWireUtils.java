@@ -31,12 +31,6 @@ public final class FrostWireUtils {
 	 * Constant for the current version of FrostWire.
 	 */
 	private static final String FROSTWIRE_VERSION = "5.2.9";
-    
-    /** True if this is a beta. */
-    private static final boolean betaVersion = true;
-    
-    /** True if this is an alpha */
-    private static final boolean alphaVersion = false;
 
     /**
      * The cached value of the major revision number.
@@ -108,15 +102,6 @@ public final class FrostWireUtils {
                            substring(0, FROSTWIRE_VERSION.length()-4)+" (Pro)");
 		}
 	}
-    
-    /** Returns true if we're a beta. */
-    public static boolean isBetaRelease() {
-        return betaVersion;
-    }
-    
-    public static boolean isAlphaRelease() {
-        return alphaVersion;
-    }
 	
 	/** Gets the major version of GUESS supported.
      */
@@ -143,8 +128,8 @@ public final class FrostWireUtils {
     }
 
 	/**
-	 * Returns the current version number of LimeWire as
-     * a string, e.g., "1.4".
+	 * Returns the current version number of FrostWire as
+     * a string, e.g., "5.2.9".
 	 */
 	public static String getFrostWireVersion() {
         return FROSTWIRE_VERSION;
@@ -167,72 +152,37 @@ public final class FrostWireUtils {
    public static int getServiceVersionNumber() {
         return _serviceVersionNumber;
    }
-    
 
     static int getMajorVersionNumberInternal(String version) {
-        if (!version.equals("@" + "version" + "@")) {
-            try {
-                int firstDot = version.indexOf(".");
-                String majorStr = version.substring(0, firstDot);
-                return new Integer(majorStr).intValue();
-            }
-            catch (NumberFormatException nfe) {
-            }
-        }
-        // in case this is a mainline version or NFE was caught (strange)
-        return 2;
+        int firstDot = version.indexOf(".");
+        String majorStr = version.substring(0, firstDot);
+        return new Integer(majorStr).intValue();
     }
-    
-    /**
-     * Accessor for whether or not this is a testing version
-     * (@version@) of LimeWire.
-     *
-     * @return <tt>true</tt> if the version is @version@,
-     *  otherwise <tt>false</tt>
-     */
-    public static boolean isTestingVersion() {
-        return FROSTWIRE_VERSION.equals("@" + "version" + "@");
-    }
-    
+
     static int getMinorVersionNumberInternal(String version) {
-        if (!version.equals("@" + "version" + "@")) {
-            try {
-                int firstDot = version.indexOf(".");
-                String minusMajor = version.substring(firstDot+1);
-                int secondDot = minusMajor.indexOf(".");
-                String minorStr = minusMajor.substring(0, secondDot);
-                return new Integer(minorStr).intValue();
-            }
-            catch (NumberFormatException nfe) {
-            }
-        }
-        // in case this is a mainline version or NFE was caught (strange)
-        return 7;
+        int firstDot = version.indexOf(".");
+        String minusMajor = version.substring(firstDot + 1);
+        int secondDot = minusMajor.indexOf(".");
+        String minorStr = minusMajor.substring(0, secondDot);
+        return new Integer(minorStr).intValue();
     }
-    
+
     static int getServiceVersionNumberInternal(String version) {
-        if (!version.equals("@" + "version" + "@")) {
-            try {
-                int firstDot = version.indexOf(".");
-                int secondDot = version.indexOf(".", firstDot+1);
-                
-                int p = secondDot+1;
-                int q = p;
-                
-                while(q < version.length() && 
-                            Character.isDigit(version.charAt(q))) {
-                    q++;
-                }
-                
-                if (p != q) {
-                    String service = version.substring(p, q);
-                    return new Integer(service).intValue();
-                }
-            }
-            catch (NumberFormatException nfe) {
-            }
+        int firstDot = version.indexOf(".");
+        int secondDot = version.indexOf(".", firstDot + 1);
+
+        int p = secondDot + 1;
+        int q = p;
+
+        while (q < version.length() && Character.isDigit(version.charAt(q))) {
+            q++;
         }
-        // in case this is a mainline version or NFE was caught (strange)
+
+        if (p != q) {
+            String service = version.substring(p, q);
+            return new Integer(service).intValue();
+        }
+
         return 0;
     }
 

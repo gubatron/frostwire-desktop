@@ -10,15 +10,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Collections;
@@ -40,13 +37,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.util.FileUtils;
-import org.limewire.util.GenericsUtils;
 import org.limewire.util.IOUtils;
 import org.limewire.util.Version;
 import org.limewire.util.VersionFormatException;
 
+import com.frostwire.HttpFetcher;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LimeWireModule;
@@ -65,6 +64,8 @@ import com.limegroup.gnutella.util.FrostWireUtils;
  *  - Supress the bug entirely
  */
 public final class BugManager {
+    
+    private static final Log LOG = LogFactory.getLog(BugManager.class);
 
     private final LocalClientInfoFactory localClientInfoFactory;
 
@@ -131,11 +132,6 @@ public final class BugManager {
 	 */
 	private final int MAX_DIALOGS = 3;
 	
-	/**
-	 * Whether or not we have dirty data after the last save.
-	 */
-	private boolean dirty = false;
-	
 	public static synchronized BugManager instance() {
 	    if(INSTANCE == null)
 	        INSTANCE = new BugManager();
@@ -148,14 +144,12 @@ public final class BugManager {
      */
     private BugManager() {
         localClientInfoFactory = LimeWireModule.instance().getLimeWireGUIModule().getLimeWireGUI().getLocalClientInfoFactory();
-        loadOldBugs();
     }
     
     /**
      * Shuts down the BugManager.
      */
     public void shutdown() {
-        writeBugsToDisk();
     }
 	
 	/**
@@ -168,13 +162,15 @@ public final class BugManager {
 	 * or ask the user to review it before sending.
 	 */
 	public void handleBug(Throwable bug, String threadName, String detail) {
-        if( bug instanceof ThreadDeath ) // must rethrow.
+        if( bug instanceof ThreadDeath ) { // must rethrow.
 	        throw (ThreadDeath)bug;
+        }
 	        
         // Try to dispatch the bug to a friendly handler.
         if(bug instanceof IOException && 
-           IOUtils.handleException((IOException)bug, IOUtils.ErrorType.GENERIC))
+           IOUtils.handleException((IOException)bug, IOUtils.ErrorType.GENERIC)) {
            return; // handled already.
+        }
         
         //Get the classpath
         String classPath = new String();
@@ -192,28 +188,30 @@ public final class BugManager {
         // Build the LocalClientInfo out of the info ...
         final LocalClientInfo info = localClientInfoFactory.createLocalClientInfo(bug, threadName, detail, false);
 
-        if( BugSettings.LOG_BUGS_LOCALLY.getValue() )
+        if( BugSettings.LOG_BUGS_LOCALLY.getValue() ) {
             logBugLocally(info);
+        }
                     
         boolean sent = false;
-        // never ignore bugs or auto-send when developing.
-        if(!FrostWireUtils.isTestingVersion()) {
-    	    if( BugSettings.IGNORE_ALL_BUGS.getValue() )
-    	        return; // ignore.
-    	        
-            // If we have already sent information about this bug, leave.
-            if( !shouldInform(info) )
-               return; // ignore.
+        if (BugSettings.IGNORE_ALL_BUGS.getValue()) {
+            return; // ignore.
+        }
 
-            // If the user wants to automatically send to the servlet, do so.
-            // Otherwise, display it for review.
-            if( isSendableVersion()) {
-            	if (FrostWireUtils.isAlphaRelease() || BugSettings.USE_BUG_SERVLET.getValue())
-            		sent = true;
+        // If we have already sent information about this bug, leave.
+        if (!shouldInform(info)) {
+            return; // ignore.
+        }
+
+        // If the user wants to automatically send to the servlet, do so.
+        // Otherwise, display it for review.
+        if (isSendableVersion()) {
+            if (BugSettings.USE_AUTOMATIC_BUG.getValue()) {
+                sent = true;
             }
-            
-            if (sent) 
-            	sendToServlet(info);
+        }
+
+        if (sent) {
+            sendToServlet(info);
         }
         
         if (!sent &&  _dialogsShowing < MAX_DIALOGS ) {
@@ -247,79 +245,6 @@ public final class BugManager {
         } catch(IOException ignored) {
         } finally {
             IOUtils.close(os);
-        }
-    }
-    
-    /**
-     * Loads bugs from disk.
-     */
-    private void loadOldBugs() {
-        ObjectInputStream in = null;
-        File f = BugSettings.BUG_INFO_FILE.getValue();
-        try {
-            // Purposely not a ConverterObjectInputStream --
-            // we never want to read old version's bug info.
-            in = new ObjectInputStream(
-                    new BufferedInputStream(
-                        new FileInputStream(f)));
-            String version = (String)in.readObject();
-            long nextTime = in.readLong();
-            if( version.equals(FrostWireUtils.getFrostWireVersion()) ) {
-                Map<String, Long> bugs = GenericsUtils.scanForMap(
-                        in.readObject(), String.class, Long.class,
-                        GenericsUtils.ScanMode.REMOVE);
-                // Only load them if we're continuing to use the same version
-                // This way bugs for newer versions get reported.
-                // We could check to make sure this is a newer version,
-                // but it's not all that necessary.
-                _nextAllowedTime = nextTime;
-                long now = System.currentTimeMillis();
-                for(Map.Entry<String, Long> entry : bugs.entrySet()) {
-                    // Only insert those whose times haven't expired.
-                    Long allowed = entry.getValue();
-                    if( allowed != null && now < allowed.longValue() )
-                        BUG_TIMES.put(entry.getKey(), allowed);
-                }
-            } else {
-                // Otherwise, we're using a different version than the last time.
-                // Unset 'discard all bugs'.
-                if(BugSettings.IGNORE_ALL_BUGS.getValue()) {
-                    BugSettings.IGNORE_ALL_BUGS.setValue(false);
-                    BugSettings.USE_BUG_SERVLET.setValue(false);
-                }
-            }
-        } catch(Throwable t) {
-            // ignore errors from disk.
-        } finally {
-            IOUtils.close(in);
-        }
-                    
-    }
-    
-    /**
-     * Write bugs out to disk.
-     */
-    private void writeBugsToDisk() {
-        synchronized(WRITE_LOCK) {
-            if(!dirty)
-                return;
-            
-            ObjectOutputStream out = null;
-            try {
-                File f = BugSettings.BUG_INFO_FILE.getValue();
-                out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(f)));
-                String version = FrostWireUtils.getFrostWireVersion();
-                out.writeObject(version);
-                out.writeLong(_nextAllowedTime);
-                out.writeObject(BUG_TIMES);
-                out.flush();
-            } catch(Exception e) {
-                // oh well, no biggie if we couldn't write to disk.
-            } finally {
-                IOUtils.close(out);
-            }
-            
-            dirty = false;
         }
     }
     
@@ -475,13 +400,12 @@ public final class BugManager {
         final JRadioButton alwaysReview = new JRadioButton(I18n.tr("Always Ask For Review"));
         final JRadioButton alwaysDiscard = new JRadioButton(I18n.tr("Always Discard All Errors"));
 		innerPanel.add(Box.createVerticalStrut(6));        
-        if(!FrostWireUtils.isTestingVersion()) {
-    		if(sendable)
-                innerPanel.add(alwaysSend);
-            innerPanel.add(alwaysReview);
-            innerPanel.add(alwaysDiscard);
+        if (sendable) {
+            innerPanel.add(alwaysSend);
         }
-		innerPanel.add(Box.createVerticalStrut(6));        
+        innerPanel.add(alwaysReview);
+        innerPanel.add(alwaysDiscard);
+        innerPanel.add(Box.createVerticalStrut(6));        
         optionsPanel.add( innerPanel, BorderLayout.WEST );
         bg.add(alwaysSend);
         bg.add(alwaysReview);
@@ -491,10 +415,10 @@ public final class BugManager {
             public void actionPerformed(ActionEvent e) {
                 if( e.getSource() == alwaysSend ) {
                     BugSettings.IGNORE_ALL_BUGS.setValue(false);
-                    BugSettings.USE_BUG_SERVLET.setValue(true);
+                    BugSettings.USE_AUTOMATIC_BUG.setValue(true);
                 } else if (e.getSource() == alwaysReview ) {
                     BugSettings.IGNORE_ALL_BUGS.setValue(false);
-                    BugSettings.USE_BUG_SERVLET.setValue(false);
+                    BugSettings.USE_AUTOMATIC_BUG.setValue(false);
                 } else if( e.getSource() == alwaysDiscard ) {                    
                     BugSettings.IGNORE_ALL_BUGS.setValue(true);
                 }
@@ -660,43 +584,38 @@ public final class BugManager {
      */
     private class ServletSender implements Runnable {
         final LocalClientInfo INFO;
-        
+
         ServletSender(LocalClientInfo info) {
             INFO = info;
         }
-        
+
         public void run() {
-            // Send this bug to the servlet & store its response.
-            // THIS CALL BLOCKS.
-            RemoteClientInfo remoteInfo =
-                new ServletAccessor().getRemoteBugInfo(INFO);
-            
-            if( remoteInfo == null ) { // could not connect
-                SwingUtilities.invokeLater( new Runnable() {
+            byte[] response = null;
+            try {
+                response = new HttpFetcher(new URI(BugSettings.BUG_REPORT_SERVER.getValue())).post(INFO.toBugReport(), "text/plain");
+            } catch (Exception e) {
+                LOG.error("Error sending bug report", e);
+            }
+
+            if (response == null) { // could not connect
+                SwingUtilities.invokeLater(new Runnable() {
                     public void run() {
                         servletSendFailed(INFO);
                     }
                 });
                 return;
             }
-            
-            long now = System.currentTimeMillis();
-            long thisNextTime = remoteInfo.getNextThisBugTime();
-            long anyNextTime = remoteInfo.getNextAnyBugTime();
 
-            synchronized(WRITE_LOCK) {    
-                if( anyNextTime != 0 ) {
-                    _nextAllowedTime = now + thisNextTime;
-                    dirty = true;
+            long now = System.currentTimeMillis();
+            long thisNextTime = 1000;
+
+            synchronized (WRITE_LOCK) {
+                _nextAllowedTime = now + thisNextTime;
+
+                if (thisNextTime != 0) {
+                    BUG_TIMES.put(INFO.getParsedBug(), new Long(now + 10 * thisNextTime));
                 }
-                
-                if( thisNextTime != 0 ) {
-                    BUG_TIMES.put(INFO.getParsedBug(), new Long(now + thisNextTime));
-                    dirty = true;
-                }
-                
-                writeBugsToDisk();
             }
         }
-    }   
+    }
 }
