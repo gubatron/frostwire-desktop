@@ -55,7 +55,8 @@ public class HttpFetcher {
     private static final String DEFAULT_USER_AGENT = UserAgentGenerator.getUserAgent();
 	private static final int DEFAULT_TIMEOUT = 10000;
 	
-	private static final HttpClient DEFAULT_HTTP_CLIENT;
+	private static HttpClient DEFAULT_HTTP_CLIENT;
+	private static HttpClient DEFAULT_HTTP_CLIENT_GZIP;
 	
 	private final URI _uri;
 	private final String _userAgent;
@@ -64,7 +65,7 @@ public class HttpFetcher {
 	private byte[] body = null;
 	
 	static {
-	    DEFAULT_HTTP_CLIENT = setupHttpClient();
+	    setupHttpClients();
 	}
 
 	public HttpFetcher(URI uri, String userAgent, int timeout) {
@@ -103,7 +104,7 @@ public class HttpFetcher {
 		
 		try {
 			
-			HttpResponse response = DEFAULT_HTTP_CLIENT.execute(httpHost, httpGet);
+			HttpResponse response = (gzip ? DEFAULT_HTTP_CLIENT_GZIP : DEFAULT_HTTP_CLIENT).execute(httpHost, httpGet);
 			
 			if (response.getStatusLine().getStatusCode() < 200 || response.getStatusLine().getStatusCode() >= 300) {
 				throw new IOException("bad status code, downloading file " + response.getStatusLine().getStatusCode());
@@ -318,7 +319,13 @@ public class HttpFetcher {
         thread.start();
     }
     
-    private static HttpClient setupHttpClient() {
+    private static void setupHttpClients() {
+        DEFAULT_HTTP_CLIENT = setupHttpClient(false);
+        DEFAULT_HTTP_CLIENT_GZIP = setupHttpClient(true);
+    }
+    
+    private static HttpClient setupHttpClient(boolean gzip) {
+
         SSLSocketFactory.getSocketFactory().setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
         SchemeRegistry schemeRegistry = new SchemeRegistry();
         schemeRegistry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
@@ -327,34 +334,36 @@ public class HttpFetcher {
         params.setParameter(ConnManagerPNames.MAX_CONNECTIONS_PER_ROUTE, new ConnPerRouteBean(20));
         params.setIntParameter(ConnManagerPNames.MAX_TOTAL_CONNECTIONS, 200);
         ThreadSafeClientConnManager cm = new ThreadSafeClientConnManager(params, schemeRegistry);
-        
+
         DefaultHttpClient httpClient = new DefaultHttpClient(cm, new BasicHttpParams());
         httpClient.setHttpRequestRetryHandler(new DefaultHttpRequestRetryHandler(0, false));
 
-        httpClient.addRequestInterceptor(new HttpRequestInterceptor() {
-            public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
-                if (!request.containsHeader("Accept-Encoding")) {
-                    request.addHeader("Accept-Encoding", "gzip");
+        if (gzip) {
+            httpClient.addRequestInterceptor(new HttpRequestInterceptor() {
+                public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
+                    if (!request.containsHeader("Accept-Encoding")) {
+                        request.addHeader("Accept-Encoding", "gzip");
+                    }
                 }
-            }
-        });
+            });
 
-        httpClient.addResponseInterceptor(new HttpResponseInterceptor() {
-            public void process(HttpResponse response, HttpContext context) throws HttpException, IOException {
-                HttpEntity entity = response.getEntity();
-                Header ceheader = entity.getContentEncoding();
-                if (ceheader != null) {
-                    HeaderElement[] codecs = ceheader.getElements();
-                    for (int i = 0; i < codecs.length; i++) {
-                        if (codecs[i].getName().equalsIgnoreCase("gzip")) {
-                            response.setEntity(new GzipDecompressingEntity(response.getEntity()));
-                            return;
+            httpClient.addResponseInterceptor(new HttpResponseInterceptor() {
+                public void process(HttpResponse response, HttpContext context) throws HttpException, IOException {
+                    HttpEntity entity = response.getEntity();
+                    Header ceheader = entity.getContentEncoding();
+                    if (ceheader != null) {
+                        HeaderElement[] codecs = ceheader.getElements();
+                        for (int i = 0; i < codecs.length; i++) {
+                            if (codecs[i].getName().equalsIgnoreCase("gzip")) {
+                                response.setEntity(new GzipDecompressingEntity(response.getEntity()));
+                                return;
+                            }
                         }
                     }
                 }
-            }
-        });
-        
+            });
+        }
+
         return httpClient;
     }
     
