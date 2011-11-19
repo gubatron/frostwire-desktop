@@ -9,12 +9,16 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.limewire.util.OSUtils;
 
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
 public class ImageCache {
+	
+	private static final Log LOG = LogFactory.getLog(ImageCache.class);
 
     private static ImageCache INSTANCE;
     
@@ -127,7 +131,7 @@ public class ImageCache {
                     }
                 } catch (Exception e) {
                     listener.onLoaded(url, null, false, true);
-                	e.printStackTrace();
+                    LOG.info("Failed to load image from: " + url, e);
                 }
                 
             }

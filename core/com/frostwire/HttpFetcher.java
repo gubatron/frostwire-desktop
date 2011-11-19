@@ -16,16 +16,24 @@ import org.apache.http.HttpRequest;
 import org.apache.http.HttpRequestInterceptor;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpResponseInterceptor;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.params.HttpClientParams;
+import org.apache.http.conn.params.ConnManagerPNames;
+import org.apache.http.conn.params.ConnPerRouteBean;
+import org.apache.http.conn.scheme.PlainSocketFactory;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.HttpEntityWrapper;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.impl.cookie.DateUtils;
+import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
@@ -40,40 +48,20 @@ import org.apache.http.util.EntityUtils;
  */
 public class HttpFetcher {
 	
-    public static class HttpRequestInfo {
-
-    	private boolean _isGet;
-		private String _body;
-		private String _contentType;
-
-		public HttpRequestInfo(boolean get, String body, String type) {
-    		_isGet = get;
-    		_body = body;
-    		_contentType = type;
-    	}
-    	
-		public String getBody() {
-			return _body;
-		}
-
-		public String getContentType() {
-			return _contentType;
-		}
-
-		public boolean isGET() {
-			return _isGet;
-		}
-
-	}
-
-	private static final String DEFAULT_USER_AGENT = UserAgentGenerator.getUserAgent();
+    private static final String DEFAULT_USER_AGENT = UserAgentGenerator.getUserAgent();
 	private static final int DEFAULT_TIMEOUT = 10000;
+	
+	private static final HttpClient DEFAULT_HTTP_CLIENT;
 	
 	private final URI _uri;
 	private final String _userAgent;
 	private final int _timeout;
 
 	private byte[] body = null;
+	
+	static {
+	    DEFAULT_HTTP_CLIENT = setupHttpClient();
+	}
 
 	public HttpFetcher(URI uri, String userAgent, int timeout) {
 		_uri = uri;
@@ -94,36 +82,7 @@ public class HttpFetcher {
 	}
 	
 	public Object[] fetch(boolean gzip) throws IOException {
-        
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        
-        if (gzip) {
-            httpClient.addRequestInterceptor(new HttpRequestInterceptor() {
-                public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
-                    if (!request.containsHeader("Accept-Encoding")) {
-                        request.addHeader("Accept-Encoding", "gzip");
-                    }
-                }
-            });
-    
-            httpClient.addResponseInterceptor(new HttpResponseInterceptor() {
-                public void process(HttpResponse response, HttpContext context) throws HttpException, IOException {
-                    HttpEntity entity = response.getEntity();
-                    Header ceheader = entity.getContentEncoding();
-                    if (ceheader != null) {
-                        HeaderElement[] codecs = ceheader.getElements();
-                        for (int i = 0; i < codecs.length; i++) {
-                            if (codecs[i].getName().equalsIgnoreCase("gzip")) {
-                                response.setEntity(new GzipDecompressingEntity(response.getEntity()));
-                                return;
-                            }
-                        }
-                    }
-                }
-            });
-        }
-
-		HttpHost httpHost = new HttpHost(_uri.getHost(), _uri.getPort());
+        HttpHost httpHost = new HttpHost(_uri.getHost(), _uri.getPort());
 		HttpGet httpGet = new HttpGet(_uri);
 		httpGet.addHeader("Connection", "close");
 		
@@ -140,7 +99,7 @@ public class HttpFetcher {
 		
 		try {
 			
-			HttpResponse response = httpClient.execute(httpHost, httpGet);
+			HttpResponse response = DEFAULT_HTTP_CLIENT.execute(httpHost, httpGet);
 			
 			if (response.getStatusLine().getStatusCode() < 200 || response.getStatusLine().getStatusCode() >= 300) {
 				throw new IOException("bad status code, downloading file " + response.getStatusLine().getStatusCode());
@@ -177,7 +136,6 @@ public class HttpFetcher {
 			return new Object[]{ body, date};
 			
 		} finally {
-			httpClient.getConnectionManager().shutdown();
 			try {
 				baos.close();
 			} catch (IOException e) {
@@ -201,11 +159,7 @@ public class HttpFetcher {
 	}
 	
 	public byte[] post(String postBody, String contentType) throws IOException {
-		DefaultHttpClient httpClient = new DefaultHttpClient();
-		SSLSocketFactory.getSocketFactory().setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
-        httpClient.setHttpRequestRetryHandler(new DefaultHttpRequestRetryHandler(0, false));
-
-        HttpHost httpHost = new HttpHost(_uri.getHost(), _uri.getPort());
+		HttpHost httpHost = new HttpHost(_uri.getHost(), _uri.getPort());
 		HttpPost httpPost = new HttpPost(_uri);
     	
 		StringEntity stringEntity = new StringEntity(postBody);
@@ -226,7 +180,7 @@ public class HttpFetcher {
         
 		try {
 			
-			HttpResponse response = httpClient.execute(httpHost, httpPost);
+			HttpResponse response = DEFAULT_HTTP_CLIENT.execute(httpHost, httpPost);
 			
 			if (response.getStatusLine().getStatusCode() < 200 || response.getStatusLine().getStatusCode() >= 300)
 				throw new IOException("bad status code, upload file " + response.getStatusLine().getStatusCode());
@@ -247,8 +201,6 @@ public class HttpFetcher {
 		} catch (Exception e) {
 			new IOException("Http error: " + e.getMessage(), e);
 		} finally {
-			httpClient.getConnectionManager().shutdown();
-			
 			try {
 				baos.close();
 			} catch (IOException e) {
@@ -259,10 +211,6 @@ public class HttpFetcher {
 	}
 	
 	public void post(File file) throws IOException {
-        
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        httpClient.setHttpRequestRetryHandler(new DefaultHttpRequestRetryHandler(0, false));
-
         HttpHost httpHost = new HttpHost(_uri.getHost(), _uri.getPort());
 		HttpPost httpPost = new HttpPost(_uri);
 		FileEntity fileEntity = new FileEntity(file, "binary/octet-stream");
@@ -280,7 +228,7 @@ public class HttpFetcher {
         
 		try {
 			
-			HttpResponse response = httpClient.execute(httpHost, httpPost);
+			HttpResponse response = DEFAULT_HTTP_CLIENT.execute(httpHost, httpPost);
 			
 			if (response.getStatusLine().getStatusCode() < 200 || response.getStatusLine().getStatusCode() >= 300)
 				throw new IOException("bad status code, upload file " + response.getStatusLine().getStatusCode());
@@ -290,15 +238,11 @@ public class HttpFetcher {
 		} catch (Exception e) {
 			new IOException("Http error: " + e.getMessage(), e);
 		} finally {
-			httpClient.getConnectionManager().shutdown();
+			//
 		}
 	}
 	
 	public void post(FileEntity fileEntity) throws IOException {
-        
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        httpClient.setHttpRequestRetryHandler(new DefaultHttpRequestRetryHandler(0, false));
-
         HttpHost httpHost = new HttpHost(_uri.getHost(), _uri.getPort());
 		HttpPost httpPost = new HttpPost(_uri);
 		httpPost.setEntity(fileEntity);
@@ -314,7 +258,7 @@ public class HttpFetcher {
         
 		try {
 			
-			HttpResponse response = httpClient.execute(httpHost, httpPost);
+			HttpResponse response = DEFAULT_HTTP_CLIENT.execute(httpHost, httpPost);
 			
 			if (response.getStatusLine().getStatusCode() < 200 || response.getStatusLine().getStatusCode() >= 300)
 				throw new IOException("bad status code, upload file " + response.getStatusLine().getStatusCode());
@@ -324,56 +268,116 @@ public class HttpFetcher {
 		} catch (Exception e) {
 			new IOException("Http error: " + e.getMessage(), e);
 		} finally {
-			httpClient.getConnectionManager().shutdown();
+			//
 		}
 	}
 	
-	public void asyncPost(final String body, final String contentType, final HttpFetcherListener listener) {
-		
-		Thread thread = new Thread(new Runnable() {
+    public void asyncPost(final String body, final String contentType, final HttpFetcherListener listener) {
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                try {
+                    byte[] post = post(body, contentType);
+                    listener.onSuccess(post);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    listener.onError(e);
+                }
+            }
 
-			@Override
-			public void run() {
-				try {
-					byte[] post = post(body, contentType);
-					listener.onSuccess(post);
-				} catch (IOException e) {
-					e.printStackTrace();
-					listener.onError(e);
-				}
-			}
+        });
+        thread.setName("HttpFetcher-asyncPost");
+        thread.start();
+    }
 
-		});
-		thread.setName("HttpFetcher-asyncPost");
-		thread.start();		
-	}
-	
-	public void asyncRequest(HttpRequestInfo reqInfo, HttpFetcherListener listener) {
-		if (reqInfo.isGET()) {
-			asyncGet(listener);
-		} else {
-			asyncPost(reqInfo.getBody(), reqInfo.getContentType(), listener);
-		}
-	}
-	
+    public void asyncRequest(HttpRequestInfo reqInfo, HttpFetcherListener listener) {
+        if (reqInfo.isGET()) {
+            asyncGet(listener);
+        } else {
+            asyncPost(reqInfo.getBody(), reqInfo.getContentType(), listener);
+        }
+    }
+
     private void asyncGet(final HttpFetcherListener listener) {
-    	Thread thread = new Thread(new Runnable() {
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                byte[] fetch = fetch();
+                if (fetch == null) {
+                    listener.onError(new Exception("HttpFetch.fetch() failed."));
+                } else {
+                    listener.onSuccess(fetch);
+                }
+            }
 
-		@Override
-		public void run() {
-			byte[] fetch = fetch();
-			if (fetch == null) {
-				listener.onError(new Exception("HttpFetch.fetch() failed."));
-			} else {
-				listener.onSuccess(fetch);
-			}
-		}
+        });
+        thread.setName("HttpFetcher-asyncGet");
+        thread.start();
+    }
+    
+    private static HttpClient setupHttpClient() {
+        SSLSocketFactory.getSocketFactory().setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+        SchemeRegistry schemeRegistry = new SchemeRegistry();
+        schemeRegistry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
+        schemeRegistry.register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
+        BasicHttpParams params = new BasicHttpParams();
+        params.setParameter(ConnManagerPNames.MAX_CONNECTIONS_PER_ROUTE, new ConnPerRouteBean(20));
+        params.setIntParameter(ConnManagerPNames.MAX_TOTAL_CONNECTIONS, 200);
+        ThreadSafeClientConnManager cm = new ThreadSafeClientConnManager(params, schemeRegistry);
+        
+        DefaultHttpClient httpClient = new DefaultHttpClient(cm, new BasicHttpParams());
+        httpClient.setHttpRequestRetryHandler(new DefaultHttpRequestRetryHandler(0, false));
 
-	});
-	thread.setName("HttpFetcher-asyncGet");
-	thread.start();		
-		
-	}
+        httpClient.addRequestInterceptor(new HttpRequestInterceptor() {
+            public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
+                if (!request.containsHeader("Accept-Encoding")) {
+                    request.addHeader("Accept-Encoding", "gzip");
+                }
+            }
+        });
+
+        httpClient.addResponseInterceptor(new HttpResponseInterceptor() {
+            public void process(HttpResponse response, HttpContext context) throws HttpException, IOException {
+                HttpEntity entity = response.getEntity();
+                Header ceheader = entity.getContentEncoding();
+                if (ceheader != null) {
+                    HeaderElement[] codecs = ceheader.getElements();
+                    for (int i = 0; i < codecs.length; i++) {
+                        if (codecs[i].getName().equalsIgnoreCase("gzip")) {
+                            response.setEntity(new GzipDecompressingEntity(response.getEntity()));
+                            return;
+                        }
+                    }
+                }
+            }
+        });
+        
+        return httpClient;
+    }
+    
+    public static class HttpRequestInfo {
+
+        private boolean _isGet;
+        private String _body;
+        private String _contentType;
+
+        public HttpRequestInfo(boolean get, String body, String type) {
+            _isGet = get;
+            _body = body;
+            _contentType = type;
+        }
+        
+        public String getBody() {
+            return _body;
+        }
+
+        public String getContentType() {
+            return _contentType;
+        }
+
+        public boolean isGET() {
+            return _isGet;
+        }
+
+    }
 
 	private static final class GzipDecompressingEntity extends HttpEntityWrapper {
 
