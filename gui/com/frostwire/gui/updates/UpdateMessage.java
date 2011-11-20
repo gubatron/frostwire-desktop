@@ -23,6 +23,7 @@ public final class UpdateMessage extends Object implements Serializable {
     private String _version = null;
     private Date _expiration = null; //only needed for messageType == "announcement"
     private String _torrent = null; //optional torrent url
+    private String installerUrl; // optional installer url
     private String _os = null; //optional OS string. If this exists and this machine
     //is not that OS, then the reader should discard this message
     private String _showOnce = "false"; //if this message is to be shown once or not
@@ -84,6 +85,14 @@ public final class UpdateMessage extends Object implements Serializable {
 
     public String getTorrent() { return _torrent; }
     public void setTorrent(String t) { _torrent = t; }
+    
+    public String getInstallerUrl() {
+        return installerUrl;
+    }
+    
+    public void setInstallerUrl(String installerUrl) {
+        this.installerUrl = installerUrl;
+    }
 
     // void setMessageType(String mt)
     // If given a wrong msgType, or none, we default to update.
@@ -157,18 +166,6 @@ public final class UpdateMessage extends Object implements Serializable {
         setMessageType(msgType);
         setMessage(message);
     }
-    
-    public final static UpdateMessage createOverlayMessage(String imageSrc, String linkUrl, boolean isIntro, String imageMD5, String torrentURL) {
-    	UpdateMessage overlay = new UpdateMessage();
-
-    	overlay.setSrc(imageSrc);
-    	overlay.setUrl(linkUrl);
-    	overlay.setIntro(isIntro);
-    	overlay.setRemoteMD5(imageMD5);
-    	overlay.setTorrent(torrentURL);
-    	
-    	return overlay;
-    }
 
     public boolean equals(Object obj) {
         return obj.hashCode() == this.hashCode() &&
@@ -215,6 +212,7 @@ public final class UpdateMessage extends Object implements Serializable {
         s.append("_version : " + getVersion() + ", \n");
         s.append("_expiration : " + String.valueOf(getExpiration()) + ", \n");
         s.append("_torrent : " + getTorrent() + ", \n");
+        s.append("installerUrl : " + getInstallerUrl() + ", \n");
         s.append("_os : " + getOs() + ", \n");
         s.append("_language : " + getLanguage() + ", \n");
         s.append("_applanguage : " + ApplicationSettings.getLanguage() + ", \n");			

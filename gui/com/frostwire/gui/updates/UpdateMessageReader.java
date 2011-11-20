@@ -435,6 +435,7 @@ public final class UpdateMessageReader implements ContentHandler {
 			String message = atts.getValue("value");
 			String url = atts.getValue("url");
 			String torrent = atts.getValue("torrent");
+			String installerUrl = atts.getValue("installerUrl");
 			String os = atts.getValue("os");
 			String showOnce = atts.getValue("showOnce");
 			String version = atts.getValue("version");
@@ -443,6 +444,7 @@ public final class UpdateMessageReader implements ContentHandler {
 			_bufferMessage = new UpdateMessage(type, message);
 			_bufferMessage.setUrl(url);
 			_bufferMessage.setTorrent(torrent);
+			_bufferMessage.setInstallerUrl(installerUrl);
 			_bufferMessage.setOs(os);
 			_bufferMessage.setShowOnce(showOnce);
 			_bufferMessage.setVersion(version);

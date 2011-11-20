@@ -19,6 +19,8 @@ import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.gudy.azureus2.core3.disk.DiskManager;
 import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.core3.disk.DiskManagerPiece;
@@ -37,6 +39,8 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.UpdateSettings;
 
 public class InstallerUpdater implements Runnable, DownloadManagerListener {
+    
+    private static final Log LOG = LogFactory.getLog(InstallerUpdater.class);
 
     private DownloadManager _manager = null;
     private UpdateMessage _updateMessage;
@@ -58,21 +62,46 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
         if (checkIfDownloaded()) {
             showUpdateMessage();
         } else {
-
-            File torrentFileLocation = downloadDotTorrent();
-
-            try {
-
-                _manager = startTorrentDownload(torrentFileLocation.getAbsolutePath(), UpdateSettings.UPDATES_DIR.getAbsolutePath(), this);
-
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (_updateMessage.getTorrent() != null) {
+                handleTorrentDownload();
+            } else if (_updateMessage.getInstallerUrl() != null) {
+                handleHttpDownload();
             }
+        }
+    }
+    
+    private void handleTorrentDownload() {
+        File torrentFileLocation = downloadDotTorrent();
 
+        try {
+
+            _manager = startTorrentDownload(torrentFileLocation.getAbsolutePath(), UpdateSettings.UPDATES_DIR.getAbsolutePath(), this);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void handleHttpDownload() {
+        File updateFolder = UpdateSettings.UPDATES_DIR;
+
+        int index = _updateMessage.getInstallerUrl().lastIndexOf('/');
+        File installerFileLocation = new File(updateFolder, _updateMessage.getInstallerUrl().substring(index + 1));
+
+        if (!updateFolder.exists()) {
+            updateFolder.mkdir();
+            updateFolder.setWritable(true);
+        }
+        try {
+            new HttpFetcher(new URI(_updateMessage.getInstallerUrl())).save(installerFileLocation);
+            saveMetaData();
+            cleanupOldUpdates();
+        } catch (Exception e) {
+            LOG.error("Failed to download installer: " + _updateMessage.getInstallerUrl(), e);
         }
     }
 
-    public final static DownloadManager startTorrentDownload(String torrentFile, String saveDataPath, DownloadManagerListener listener) throws Exception {
+    private final DownloadManager startTorrentDownload(String torrentFile, String saveDataPath, DownloadManagerListener listener) throws Exception {
 
         DownloadManager manager = AzureusStarter.getAzureusCore().getGlobalManager().addDownloadManager(torrentFile, saveDataPath);
         manager.addListener(listener);
@@ -183,14 +212,22 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
         if (!md.frostwireVersion.equals(_updateMessage.getVersion()))
             return false;
 
-        int indx1 = _updateMessage.getTorrent().lastIndexOf('/') + 1;
-        int indx2 = _updateMessage.getTorrent().lastIndexOf(".torrent");
+        String installerFilename = null;
+        
+        if (_updateMessage.getTorrent() != null) {
+            int indx1 = _updateMessage.getTorrent().lastIndexOf('/') + 1;
+            int indx2 = _updateMessage.getTorrent().lastIndexOf(".torrent");
 
-        String subStr = _updateMessage.getTorrent().substring(indx1, indx2);
+            installerFilename = _updateMessage.getTorrent().substring(indx1, indx2);
+        } else if (_updateMessage.getInstallerUrl() != null) {
+            int indx1 = _updateMessage.getInstallerUrl().lastIndexOf('/') + 1;
 
-        File f = new File(UpdateSettings.UPDATES_DIR, subStr);
+            installerFilename = _updateMessage.getInstallerUrl().substring(indx1);
+        }
 
-        if (!f.exists())
+        File f = new File(UpdateSettings.UPDATES_DIR, installerFilename);
+
+        if (installerFilename == null || !f.exists())
             return false;
 
         _executableFile = f;

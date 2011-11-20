@@ -2,8 +2,10 @@ package com.frostwire;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URI;
 import java.util.zip.GZIPInputStream;
 
@@ -41,6 +43,7 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
+import org.limewire.util.FileUtils;
 
 /**
  * A Blocking HttpClient.
@@ -163,6 +166,41 @@ public class HttpFetcher {
 	    return null;
 	}
 	
+	public void save(File file) throws IOException {
+        HttpHost httpHost = new HttpHost(_uri.getHost(), _uri.getPort());
+        HttpGet httpGet = new HttpGet(_uri);
+        httpGet.addHeader("Connection", "close");
+        
+        HttpParams params = httpGet.getParams();
+        HttpConnectionParams.setConnectionTimeout(params, _timeout);
+        HttpConnectionParams.setSoTimeout(params, _timeout);
+        HttpConnectionParams.setStaleCheckingEnabled(params, true);
+        HttpConnectionParams.setTcpNoDelay(params, true);
+        HttpClientParams.setRedirecting(params, true);
+        HttpProtocolParams.setUseExpectContinue(params, false);
+        HttpProtocolParams.setUserAgent(params, _userAgent);
+
+        FileOutputStream output = null;
+        
+        try {
+            
+            output = new FileOutputStream(file);
+            
+            HttpResponse response = DEFAULT_HTTP_CLIENT.execute(httpHost, httpGet);
+            
+            if (response.getStatusLine().getStatusCode() < 200 || response.getStatusLine().getStatusCode() >= 300) {
+                throw new IOException("bad status code, downloading file " + response.getStatusLine().getStatusCode());
+            }
+            
+            if(response.getEntity() != null) {
+                writeEntity(response.getEntity(), output);
+            }
+            
+        } finally {
+            FileUtils.close(output);
+        }
+    }
+	
 	public byte[] post(String postBody, String contentType) throws IOException {
 		HttpHost httpHost = new HttpHost(_uri.getHost(), _uri.getPort());
 		HttpPost httpPost = new HttpPost(_uri);
@@ -229,7 +267,7 @@ public class HttpFetcher {
         HttpConnectionParams.setTcpNoDelay(params, true);
         HttpClientParams.setRedirecting(params, true);
         HttpProtocolParams.setUseExpectContinue(params, false);
-        HttpProtocolParams.setUserAgent(params, "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506");
+        HttpProtocolParams.setUserAgent(params, DEFAULT_USER_AGENT);
         
 		try {
 			
@@ -259,7 +297,7 @@ public class HttpFetcher {
         HttpConnectionParams.setTcpNoDelay(params, true);
         HttpClientParams.setRedirecting(params, true);
         HttpProtocolParams.setUseExpectContinue(params, false);
-        HttpProtocolParams.setUserAgent(params, "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Trident/4.0; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506");
+        HttpProtocolParams.setUserAgent(params, DEFAULT_USER_AGENT);
         
 		try {
 			
@@ -365,6 +403,30 @@ public class HttpFetcher {
         }
 
         return httpClient;
+    }
+    
+    public static void writeEntity(final HttpEntity entity, OutputStream output) throws IOException {
+        if (entity == null) {
+            throw new IllegalArgumentException("HTTP entity may not be null");
+        }
+        InputStream instream = entity.getContent();
+        if (instream == null) {
+            return;
+        }
+        int i = (int)entity.getContentLength();
+        if (i < 0) {
+            i = 4096;
+        }
+        try {
+            byte[] tmp = new byte[4096];
+            int l;
+            while((l = instream.read(tmp)) != -1) {
+                output.write(tmp, 0, l);
+                output.flush();
+            }
+        } finally {
+            instream.close();
+        }
     }
     
     public static class HttpRequestInfo {

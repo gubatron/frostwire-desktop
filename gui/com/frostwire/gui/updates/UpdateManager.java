@@ -193,26 +193,27 @@ public final class UpdateManager implements Serializable {
      */
     private void handlePossibleUpdateMessage(UpdateMessageReader umr) {
         UpdateMessage updateMessage = umr.getUpdateMessage();
-
+        
         // attempt to show system Update Message if needed
         if (umr.hasUpdateMessage() && updateMessage.getVersion() != null && !updateMessage.getVersion().trim().equals("")
                 && UpdateManager.isFrostWireOld(updateMessage.getVersion())) {
 
             boolean hasUrl = updateMessage.getUrl() != null;
             boolean hasTorrent = updateMessage.getTorrent() != null;
+            boolean hasInstallerUrl = updateMessage.getInstallerUrl() != null;
 
             // Logic for Windows Update
             if (OSUtils.isWindows()) {
-                if (hasUrl && !hasTorrent) {
+                if (hasUrl && !hasTorrent && !hasInstallerUrl) {
                     showUpdateMessage(updateMessage);
-                } else if (hasTorrent) {
+                } else if (hasTorrent || hasInstallerUrl) {
                     new InstallerUpdater(updateMessage).start();
                 }
             }
             // Logic for Linux
             else if (OSUtils.isLinux()) {
                 if (OSUtils.isUbuntu()) {
-                    if (hasTorrent) {
+                    if (hasTorrent || hasInstallerUrl) {
                         new InstallerUpdater(updateMessage).start();
                     } else {
                         showUpdateMessage(updateMessage);
