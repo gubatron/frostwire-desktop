@@ -202,8 +202,8 @@ public final class UpdateManager implements Serializable {
             boolean hasTorrent = updateMessage.getTorrent() != null;
             boolean hasInstallerUrl = updateMessage.getInstallerUrl() != null;
 
-            // Logic for Windows Update
-            if (OSUtils.isWindows()) {
+            // Logic for Windows or Mac Update
+            if (OSUtils.isWindows() || OSUtils.isMacOSX()) {
                 if (hasUrl && !hasTorrent && !hasInstallerUrl) {
                     showUpdateMessage(updateMessage);
                 } else if (hasTorrent || hasInstallerUrl) {
@@ -219,12 +219,6 @@ public final class UpdateManager implements Serializable {
                         showUpdateMessage(updateMessage);
                     }
                 } else if (hasUrl) {
-                    showUpdateMessage(updateMessage);
-                }
-            }
-            // Logic for Mac
-            else if (OSUtils.isMacOSX()) {
-                if (hasUrl) {
                     showUpdateMessage(updateMessage);
                 }
             }

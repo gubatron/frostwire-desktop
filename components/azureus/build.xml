@@ -52,6 +52,9 @@
 	
 	- Change azureus.dns.context.factory property to org.limewire.util.DnsContextFactory in DNSUtils.
         private static String getFactory() (around line 43)
+        
+    - On MagnetPlugin.java initialize secondary lookups as true
+       boolean sl_enabled = true; 
 		
     -->
     <import file="../common/build-macros.xml" />

@@ -1,6 +1,11 @@
 frostwire (5.2.10) stable; urgency=high
   * Upload ratios will not be enforced to 30% of downloads anymore.
     Users will have free will to set the upload ratio of their preference.
+  * Update autodownload now supported for mac.
+  * Updates can now be distributed via both BitTorrent and HTTP.
+  * HttpFetcher improvements for less resource consumption.
+  * HttpFetcher now supports large HTTP file downlods (progressive download).
+  * Improvements to Send File to a friend.
   
  -- FrostWire Team <contact@frostwire.com>  Sat, 19 Nov 2011 06:43:56 -0500
 

@@ -150,8 +150,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         com.frostwire.gui.updates.UpdateManager.scheduleUpdateCheckTask(0);
         
         // DEBUG
-        //com.frostwire.updates.UpdateManager.DEBUGGING_NON_UI_MESSAGES = true;
-        //com.frostwire.gui.updates.UpdateManager.scheduleUpdateCheckTask(0,"http://update.frostwire.com/");
+        //com.frostwire.gui.updates.UpdateManager.scheduleUpdateCheckTask(0,"http://update1.frostwire.com/example.php");
 
         FRAME = frame;
         new DropTarget(FRAME, new TransferHandlerDropTargetListener(DNDUtils.DEFAULT_TRANSFER_HANDLER));
