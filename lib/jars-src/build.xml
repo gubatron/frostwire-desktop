@@ -7,7 +7,7 @@
 
 	<target name="main" depends="check-compile" if="compile.present">
 
-		<delete includeemptydirs="true">
+		<delete includeemptydirs="true" failonerror="false">
 				<fileset dir="dist" includes="*"/>
 		</delete>
 		
