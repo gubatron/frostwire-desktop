@@ -28,7 +28,6 @@ import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.components.IconClearableAutoCompleteTextField;
-import com.frostwire.gui.components.IconSearchField;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
