@@ -30,6 +30,7 @@ import org.gudy.azureus2.core3.download.DownloadManagerStats;
 import org.gudy.azureus2.core3.global.GlobalManagerDownloadRemovalVetoException;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
 import org.limewire.util.CommonUtils;
+import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.AzureusStarter;
@@ -96,6 +97,10 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
             new HttpFetcher(new URI(_updateMessage.getInstallerUrl())).save(installerFileLocation);
             saveMetaData();
             cleanupOldUpdates();
+            
+            if (checkIfDownloaded()) {
+            	showUpdateMessage();
+            }
         } catch (Exception e) {
             LOG.error("Failed to download installer: " + _updateMessage.getInstallerUrl(), e);
         }
@@ -135,12 +140,23 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
                             ProcessBuilder pbuilder = new ProcessBuilder(commands);
                             pbuilder.start();
                             //Runtime.getRuntime().exec("gdebi", new String[] {_executableFile.getAbsolutePath() });
+                        } else if (OSUtils.isMacOSX()) {
+                        	String[] mountCommand = new String[] { "hdiutil", "attach", _executableFile.getAbsolutePath() };
+                        	
+                        	String[] finderShowCommand = new String[] {"open","/Volumes/"+FilenameUtils.getBaseName(_executableFile.getName()) };
+                        	
+                        	ProcessBuilder pbuilder = new ProcessBuilder(mountCommand);
+                        	Process mountingProcess = pbuilder.start();
+                        	
+                        	mountingProcess.waitFor();
+                        	
+                        	pbuilder = new ProcessBuilder(finderShowCommand);
+                        	pbuilder.start();                        	
                         }
 
                         GUIMediator.shutdown();
                     } catch (Exception e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                        LOG.error(e.getMessage(), e);
                     }
 
                 }
@@ -304,6 +320,10 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 
         saveMetaData();
         cleanupOldUpdates();
+        
+        if (checkIfDownloaded()) {
+        	showUpdateMessage();
+        }
     }
 
     private void cleanupOldUpdates() {

@@ -16,7 +16,7 @@ public class BugSettings extends LimeProps {
     private BugSettings() {
     }
     
-    public static final StringSetting BUG_REPORT_SERVER = FACTORY.createStringSetting("BUG_REPORT_SERVER", "http://bugreport.frostwire.com");
+    public static final StringSetting BUG_REPORT_SERVER = FACTORY.createStringSetting("BUG_REPORT_SERVER", "http://doctor.frostwire.com/bug-manager");
 
     /**
      * Setting for whether or not to automatically report bugs

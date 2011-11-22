@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.limewire.util.OSUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.ContentHandler;
@@ -29,6 +31,8 @@ import com.limegroup.gnutella.util.FrostWireUtils;
  * message available.
  */
 public final class UpdateMessageReader implements ContentHandler {
+	
+	private static final Log LOG = LogFactory.getLog(UpdateMessageReader.class);
 
 	public HashSet<UpdateMessage> _announcements = null;
 
@@ -451,8 +455,8 @@ public final class UpdateMessageReader implements ContentHandler {
 
 			if (atts.getValue("md5") != null) {
 				_bufferMessage.setRemoteMD5(atts.getValue("md5"));
-				// System.out.println("UpdateMessageReader.startElement overlay md5="
-				// + atts.getValue("md5"));
+				 LOG.debug("UpdateMessageReader.startElement overlay md5="
+				 + atts.getValue("md5"));
 			}
 			
 			// language properties available only inside overlay

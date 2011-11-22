@@ -71,7 +71,6 @@ import org.gudy.azureus2.plugins.utils.resourcedownloader.ResourceDownloaderExce
 import org.gudy.azureus2.plugins.utils.resourcedownloader.ResourceDownloaderFactory;
 
 import com.aelitis.azureus.core.util.CopyOnWriteList;
-import com.aelitis.azureus.core.util.FeatureAvailability;
 import com.aelitis.net.magneturi.MagnetURIHandler;
 import com.aelitis.net.magneturi.MagnetURIHandlerException;
 import com.aelitis.net.magneturi.MagnetURIHandlerListener;
@@ -694,7 +693,7 @@ MagnetPlugin
 			long	remaining	= timeout;
 			
 			long 	overall_start 			= SystemTime.getMonotonousTime();
-			boolean	sl_enabled				= secondary_lookup.getValue() && FeatureAvailability.isMagnetSLEnabled();
+			boolean	sl_enabled				= true; //secondary_lookup.getValue() && FeatureAvailability.isMagnetSLEnabled();
 
 			long	secondary_lookup_time 	= -1;
 			

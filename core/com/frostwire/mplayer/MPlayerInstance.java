@@ -216,7 +216,9 @@ MPlayerInstance
 			
 			
 			try {
-				mPlayerProcess = Runtime.getRuntime().exec(cmd);
+				//mPlayerProcess = Runtime.getRuntime().exec(cmd);
+				ProcessBuilder pb = new ProcessBuilder(cmd);
+				mPlayerProcess = pb.start();
 				
 				InputStream stdOut = mPlayerProcess.getInputStream();
 				InputStream stdErr = mPlayerProcess.getErrorStream();
