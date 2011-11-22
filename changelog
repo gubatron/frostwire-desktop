@@ -6,9 +6,10 @@ frostwire (5.2.10) stable; urgency=high
   * HttpFetcher improvements for less resource consumption.
   * HttpFetcher now supports large HTTP file downlods (progressive download).
   * Improvements to Send File to a friend.
+  * Fixes bug where some finished Downloads wouldn't "Show in Library"
   * Bug report system revised.
   
- -- FrostWire Team <contact@frostwire.com>  Mon, 21 Nov 2011 18:21:51 -0500
+ -- FrostWire Team <contact@frostwire.com>  Mon, 22 Nov 2011 16:34:04 -0500
 
 frostwire (5.2.9) stable; urgency=high
   * Enhancement: Lucene full text indexing for Smart Search database to
