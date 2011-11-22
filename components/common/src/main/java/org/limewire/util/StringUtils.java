@@ -550,4 +550,8 @@ public class StringUtils {
     public static boolean isNullOrEmpty(String s) {
         return isNullOrEmpty(s, false);
     }
+    
+    public static String removeDoubleSpaces(String s) {
+        return s.replaceAll("\\s+", " ");
+    }
 }

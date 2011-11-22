@@ -27,6 +27,7 @@ import com.frostwire.alexandria.InternetRadioStation;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.bittorrent.TorrentUtil;
+import com.frostwire.gui.components.IconClearableAutoCompleteTextField;
 import com.frostwire.gui.components.IconSearchField;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -41,7 +42,7 @@ public class LibrarySearch extends JPanel {
     private static final long serialVersionUID = 2266243762191789491L;
 
     private JLabel statusLabel;
-    private IconSearchField searchField;
+    private IconClearableAutoCompleteTextField searchField;
 
     private SearchRunnable currentSearchRunnable;
 
@@ -124,7 +125,7 @@ public class LibrarySearch extends JPanel {
         c.weightx = 1;
         add(statusLabel, c);
 
-        searchField = new IconSearchField(10, GUIMediator.getThemeImage("search_tab"));
+        searchField = new IconClearableAutoCompleteTextField(10, GUIMediator.getThemeImage("search_tab"));
         c = new GridBagConstraints();
         c.anchor = GridBagConstraints.LINE_END;
         c.gridwidth = GridBagConstraints.REMAINDER;
@@ -445,7 +446,7 @@ public class LibrarySearch extends JPanel {
         private final String[] _tokens;
 
         public SearchFileFilter(String query) {
-            _tokens = query.toLowerCase(Locale.US).split(" ");
+            _tokens = StringUtils.removeDoubleSpaces(query).toLowerCase(Locale.US).split(" ");
         }
 
         public boolean accept(File pathname) {
