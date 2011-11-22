@@ -32,7 +32,7 @@
 
 	<target name="clean">
 
-		<delete includeemptydirs="true">
+		<delete includeemptydirs="true" failonerror="false">
     			<fileset dir="dist" includes="*"/>
   		</delete>
 

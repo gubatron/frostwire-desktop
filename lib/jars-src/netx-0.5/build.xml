@@ -60,7 +60,7 @@
 
     <!-- clean -->
     <target name="clean" depends="init">
-        <delete>
+        <delete failonerror="false">
             <fileset dir="${classes}">
                 <include name="**/*"/>
             </fileset>
