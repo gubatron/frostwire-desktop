@@ -453,7 +453,7 @@ private ListenerGroup _listeners;
     return _font.getSize()+4;
   }
 
-  private synchronized void computeWidth()
+  private void computeWidth()
   {
     int w=getSize().width-63;
     int n=Math.max(_visibleItemCount[0],_visibleItemCount[1]);
