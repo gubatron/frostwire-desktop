@@ -30,7 +30,7 @@ public final class FrostWireUtils {
 	/** 
 	 * Constant for the current version of FrostWire.
 	 */
-	private static final String FROSTWIRE_VERSION = "5.2.10";
+	private static final String FROSTWIRE_VERSION = "5.2.11";
 
     /**
      * The cached value of the major revision number.

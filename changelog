@@ -1,3 +1,9 @@
+frostwire (5.2.11) stable; urgency=high
+  * Fixes bugs where some BitTorrent configuration settings were reset
+    on startup.
+  
+ -- FrostWire Team <contact@frostwire.com>  Mon, 28 Nov 2011 16:58:31 -0500
+
 frostwire (5.2.10) stable; urgency=high
   * Upload ratios will not be enforced to 30% of downloads anymore.
     Users will have free will to set the upload ratio of their preference.
