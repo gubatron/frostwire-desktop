@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.util.StringUtils;
 
+import com.frostwire.AzureusStarter;
 import com.frostwire.gui.bittorrent.TorrentSeedingSettingComponent;
 import com.frostwire.gui.bittorrent.TorrentSaveFolderComponent;
 import com.limegroup.gnutella.gui.I18n;
@@ -126,6 +127,8 @@ class BitTorrentSettingsWindow extends SetupWindow {
         if (LibrarySettings.USER_MUSIC_FOLDER.getValue().exists()) {
             LibrarySettings.DIRECTORIES_TO_INCLUDE.add(LibrarySettings.USER_MUSIC_FOLDER.getValue());
         }
+        
+        AzureusStarter.revertToDefaultConfiguration();
     }
 }
 
