@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import org.limewire.i18n.I18nMarker;
+import org.limewire.util.CommonUtils;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.AzureusStarter;
@@ -128,7 +129,12 @@ class BitTorrentSettingsWindow extends SetupWindow {
             LibrarySettings.DIRECTORIES_TO_INCLUDE.add(LibrarySettings.USER_MUSIC_FOLDER.getValue());
         }
         
-        AzureusStarter.revertToDefaultConfiguration();
+        File azureusUserPath = new File(CommonUtils.getUserSettingsDir() + File.separator + "azureus" + File.separator);
+        if (!azureusUserPath.exists()) {
+            System.setProperty("azureus.config.path", azureusUserPath.getAbsolutePath());
+            System.setProperty("azureus.install.path", azureusUserPath.getAbsolutePath());
+            AzureusStarter.revertToDefaultConfiguration();
+        }
     }
 }
 
