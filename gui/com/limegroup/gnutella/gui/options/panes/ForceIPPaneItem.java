@@ -32,7 +32,7 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
 
     public final static String TITLE = I18n.tr("Router Configuration");
     
-    public final static String LABEL = I18n.tr("FrostWire can configure itself to work from behind a firewall or router. Using Universal Plug \'n Play (UPnP), FrostWire can automatically configure your router or firewall for optimal performance. If your router does not support UPnP, FrostWire can be set to advertise an external port manually. (You must also configure your router if you choose manual configuration.)");
+    public final static String LABEL = I18n.tr("FrostWire can configure itself to work from behind a firewall or router. Using Universal Plug \'n Play (UPnP) and other NAT traversal techniques FrostWire can automatically configure your router or firewall for optimal performance. If your router does not support UPnP, FrostWire can be set to advertise an external port manually. (You may also have to configure your router if you choose manual configuration, but FrostWire will try its best so you don't have to.)");
 
 	/**
 	 * Constant <tt>WholeNumberField</tt> instance that holds the port 
@@ -46,8 +46,8 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
      * Constant handle to the check box that enables or disables this feature.
      */
     private final ButtonGroup BUTTONS = new ButtonGroup();
-    private final JRadioButton UPNP = new JRadioButton(I18n.tr("Use UPnP (Recommended)"));
-    private final JRadioButton PORT = new JRadioButton(I18n.tr("Manual Port Forward"));
+    private final JRadioButton RANDOM_PORT = new JRadioButton(I18n.tr("Use random port (Recommended)"));
+    private final JRadioButton MANUAL_PORT = new JRadioButton(I18n.tr("Manual Port Forward"));
     
     private JLabel _labelTCP;
     private JLabel _labelUDP;
@@ -59,18 +59,18 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
 	public ForceIPPaneItem() {
 	    super(TITLE, LABEL);
 		
-		BUTTONS.add(UPNP);
-		BUTTONS.add(PORT);
-		PORT.addItemListener(new LocalPortListener());
+		BUTTONS.add(RANDOM_PORT);
+		BUTTONS.add(MANUAL_PORT);
+		MANUAL_PORT.addItemListener(new LocalPortListener());
 		
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.anchor = GridBagConstraints.WEST;
 		c.insets = new Insets(0, 0, 0, 6);
-		panel.add(UPNP, c);
+		panel.add(RANDOM_PORT, c);
 		c.gridwidth = GridBagConstraints.REMAINDER;
-		panel.add(PORT, c);
+		panel.add(MANUAL_PORT, c);
 		
 		_labelTCP = new JLabel(I18n.tr("TCP:"));
 		c = new GridBagConstraints();
@@ -102,10 +102,10 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
 	}
 	
 	private void updateState() {
-	    _labelTCP.setEnabled(PORT.isSelected());
-	    _labelUDP.setEnabled(PORT.isSelected());
-	    TCP_PORT_FIELD.setEnabled(PORT.isSelected());
-        UDP_PORT_FIELD.setEnabled(PORT.isSelected());
+	    _labelTCP.setEnabled(MANUAL_PORT.isSelected());
+	    _labelUDP.setEnabled(MANUAL_PORT.isSelected());
+	    TCP_PORT_FIELD.setEnabled(MANUAL_PORT.isSelected());
+        UDP_PORT_FIELD.setEnabled(MANUAL_PORT.isSelected());
     }
 
     /** 
@@ -129,9 +129,9 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
 	 */
 	public void initOptions() {
         if (ConnectionSettings.FORCE_IP_ADDRESS.getValue() && !ConnectionSettings.UPNP_IN_USE.getValue()) {
-            PORT.setSelected(true);
+            MANUAL_PORT.setSelected(true);
         } else {
-            UPNP.setSelected(true);
+            RANDOM_PORT.setSelected(true);
         }
 	        
         TCP_PORT_FIELD.setValue(ConnectionSettings.TCP_PORT.getValue());
@@ -157,7 +157,7 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
         //boolean oldForce = ConnectionSettings.FORCE_IP_ADDRESS.getValue();
 
 	    
-	    if(UPNP.isSelected()) {
+	    if(RANDOM_PORT.isSelected()) {
 	        if(!ConnectionSettings.UPNP_IN_USE.getValue())
 	            ConnectionSettings.FORCE_IP_ADDRESS.setValue(false);
 	        ConnectionSettings.DISABLE_UPNP.setValue(false);
@@ -208,15 +208,15 @@ public final class ForceIPPaneItem extends AbstractPaneItem {
 		
 		if(ConnectionSettings.FORCE_IP_ADDRESS.getValue() && 
 				!ConnectionSettings.UPNP_IN_USE.getValue()) {
-			if (!PORT.isSelected()) {
+			if (!MANUAL_PORT.isSelected()) {
 				return true;
 			}
 		} else {
-			if (!UPNP.isSelected()) {
+			if (!RANDOM_PORT.isSelected()) {
 				return true;
 			}
 		}
-		return PORT.isSelected() 
+		return MANUAL_PORT.isSelected() 
 			&& (TCP_PORT_FIELD.getValue() != ConnectionSettings.TCP_PORT.getValue() ||
 			    UDP_PORT_FIELD.getValue() != ConnectionSettings.UDP_PORT.getValue());
     }
