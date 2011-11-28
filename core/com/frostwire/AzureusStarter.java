@@ -47,7 +47,15 @@ public final class AzureusStarter {
 	 * Initializes synchronously the azureus core
 	 */
 	private static synchronized void azureusInit() {
+	    
+	    File azureusUserPath = new File(CommonUtils.getUserSettingsDir() + File.separator + "azureus" + File.separator);
+        if (!azureusUserPath.exists()) {
+            azureusUserPath.mkdirs();
+        }
+        
 	    System.setProperty("azureus.loadplugins", "0"); // disable third party azureus plugins
+	    System.setProperty("azureus.config.path", azureusUserPath.getAbsolutePath());
+	    System.setProperty("azureus.install.path", azureusUserPath.getAbsolutePath());
 		try {
 			if (AZUREUS_CORE != null && AZUREUS_CORE.isStarted()) {
 				LOG.debug("azureusInit(): core already started. skipping.");
@@ -59,17 +67,13 @@ public final class AzureusStarter {
 			//This does work
 			org.gudy.azureus2.core3.util.SystemProperties.APPLICATION_NAME = "azureus";
 			
-			File azureusUserPath = new File(CommonUtils.getUserSettingsDir() + File.separator + "azureus" + File.separator);
-			if (!azureusUserPath.exists()) {
-			    azureusUserPath.mkdirs();
-			}
-			
 			org.gudy.azureus2.core3.util.SystemProperties.setUserPath(azureusUserPath.getAbsolutePath());
 			
 			if (!SharingSettings.TORRENTS_DIR_SETTING.getValue().exists()) {
 			    SharingSettings.TORRENTS_DIR_SETTING.getValue().mkdirs();
 			}
 			
+			COConfigurationManager.setParameter( "Auto Adjust Transfer Defaults", false );
 			COConfigurationManager.setParameter("General_sDefaultTorrent_Directory", SharingSettings.TORRENTS_DIR_SETTING.getValue().getAbsolutePath());
 			
 			try {

@@ -5,7 +5,9 @@ import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,7 +21,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import org.gudy.azureus2.core3.util.UrlUtils;
 import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.util.FileUtils;
 import org.limewire.util.FilenameUtils;
@@ -90,10 +91,10 @@ public class AudioPlayer implements RefreshListener {
 			playerPath = (isRelease) ? FrostWireUtils.getFrostWireJarPath()
 					+ File.separator + "fwplayer.exe"
 					: "lib/native/fwplayer.exe";
-			playerPath = UrlUtils.decode(playerPath);
+			playerPath = decode(playerPath);
 			
 			if (!new File(playerPath).exists()) {
-				playerPath = UrlUtils.decode("../lib/native/fwplayer.exe");
+				playerPath = decode("../lib/native/fwplayer.exe");
 			}
 			
 		} else if (OSUtils.isMacOSX()) {
@@ -719,5 +720,16 @@ public class AudioPlayer implements RefreshListener {
     	}
 
         return mplayer.getDurationInSecs();
+    }
+    
+    private static String decode(String s) {
+        if (s == null) {
+            return "";
+        }
+        try {
+            return( URLDecoder.decode(s, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            return s;
+        }
     }
 }
