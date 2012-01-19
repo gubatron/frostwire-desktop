@@ -22,10 +22,12 @@ import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.alexandria.db.LibraryDatabase;
+import com.frostwire.gui.android.Device;
 import com.frostwire.gui.library.AbstractLibraryTableMediator.SendToFriendAction;
 import com.frostwire.gui.library.LibraryInternetRadioTableMediator.AddRadioStationAction;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.DeviceAudioSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -41,10 +43,9 @@ public class LibraryMediator {
     private static final String FILES_TABLE_KEY = "LIBRARY_FILES_TABLE";
     private static final String PLAYLISTS_TABLE_KEY = "LIBRARY_PLAYLISTS_TABLE";
     private static final String INTERNET_RADIO_TABLE_KEY = "LIBRARY_INTERNET_RADIO_TABLE";
+    private static final String DEVICE_TABLE_KEY = "DEVICE_FILES_TABLE";
 
     private static JPanel MAIN_PANEL;
-
-    private LibraryPlaylists LIBRARY_PLAYLISTS;
 
     /**
      * Singleton instance of this class.
@@ -52,9 +53,11 @@ public class LibraryMediator {
     private static LibraryMediator INSTANCE;
 
     private LibraryFiles libraryFiles;
+    private LibraryExplorer libraryPlaces;
+    private LibraryPlaylists libraryPlaylists;
+    private LibraryCoverArt libraryCoverArt;
     private LibraryLeftPanel libraryLeftPanel;
     private LibrarySearch librarySearch;
-    private LibraryCoverArt libraryCoverArt;
 
     private static Library LIBRARY;
 
@@ -134,12 +137,19 @@ public class LibraryMediator {
         }
         return libraryFiles;
     }
+    
+    public LibraryExplorer getLibraryExplorer() {
+        if (libraryPlaces == null) {
+            libraryPlaces = new LibraryExplorer();
+        }
+        return libraryPlaces;
+    }
 
     public LibraryPlaylists getLibraryPlaylists() {
-        if (LIBRARY_PLAYLISTS == null) {
-            LIBRARY_PLAYLISTS = new LibraryPlaylists();
+        if (libraryPlaylists == null) {
+            libraryPlaylists = new LibraryPlaylists();
         }
-        return LIBRARY_PLAYLISTS;
+        return libraryPlaylists;
     }
 
     /**
@@ -182,6 +192,8 @@ public class LibraryMediator {
             currentMediator = LibraryPlaylistsTableMediator.instance();
         } else if (key.equals(INTERNET_RADIO_TABLE_KEY)) {
             currentMediator = LibraryInternetRadioTableMediator.instance();
+        } else if (key.equals(DEVICE_TABLE_KEY)) {
+            currentMediator = LibraryDeviceTableMediator.instance();
         } else {
             currentMediator = null;
         }
@@ -197,6 +209,9 @@ public class LibraryMediator {
         } else if (key.equals(PLAYLISTS_TABLE_KEY)) {
             tableMediator = LibraryPlaylistsTableMediator.instance();
             listPanel = getLibraryPlaylists();
+        } else if (key.equals(DEVICE_TABLE_KEY)) {
+            tableMediator = LibraryDeviceTableMediator.instance();
+            listPanel = getLibraryExplorer();
         }
 
         if (tableMediator == null || listPanel == null) {
@@ -227,6 +242,12 @@ public class LibraryMediator {
     public void clearDirectoryHolderCaches() {    	
     	getLibraryFiles().clearDirectoryHolderCaches();
     }
+    
+    public void updateTableFiles(Device device, byte fileType) {
+        clearLibraryTable();
+        showView(DEVICE_TABLE_KEY);
+        LibraryDeviceTableMediator.instance().updateTableFiles(device, fileType);
+    }
 
     public void updateTableItems(Playlist playlist) {
         clearLibraryTable();
@@ -243,6 +264,7 @@ public class LibraryMediator {
     public void clearLibraryTable() {
         LibraryFilesTableMediator.instance().clearTable();
         LibraryPlaylistsTableMediator.instance().clearTable();
+        LibraryDeviceTableMediator.instance().clearTable();
         getLibrarySearch().clear();
     }
 
@@ -269,7 +291,7 @@ public class LibraryMediator {
 
     private JComponent getLibraryLeftPanel() {
         if (libraryLeftPanel == null) {
-            libraryLeftPanel = new LibraryLeftPanel(getLibraryFiles(), getLibraryPlaylists(), getLibraryCoverArt());
+            libraryLeftPanel = new LibraryLeftPanel(getLibraryFiles(), getLibraryExplorer(), getLibraryPlaylists(), getLibraryCoverArt());
         }
         return libraryLeftPanel;
     }
@@ -283,6 +305,7 @@ public class LibraryMediator {
         _tablesPanel.add(LibraryFilesTableMediator.instance().getScrolledTablePane(), FILES_TABLE_KEY);
         _tablesPanel.add(LibraryPlaylistsTableMediator.instance().getScrolledTablePane(), PLAYLISTS_TABLE_KEY);
         _tablesPanel.add(LibraryInternetRadioTableMediator.instance().getScrolledTablePane(), INTERNET_RADIO_TABLE_KEY);
+        _tablesPanel.add(LibraryDeviceTableMediator.instance().getScrolledTablePane(), DEVICE_TABLE_KEY);
 
         panel.add(getLibrarySearch(), BorderLayout.PAGE_START);
         panel.add(_tablesPanel, BorderLayout.CENTER);
@@ -393,6 +416,8 @@ public class LibraryMediator {
             });
 
             libraryFiles.selectRadio();
+        } else if (currentSong instanceof DeviceAudioSource) {
+            // TODO: implement this case
         }
 
         //Scroll to current song.
@@ -479,5 +504,17 @@ public class LibraryMediator {
         if (currentMediator != null) {
             currentMediator.playCurrentSelection();
         }
+    }
+
+    public void handleDeviceNew(Device device) {
+        getLibraryExplorer().handleDeviceNew(device);
+    }
+    
+    public void handleDeviceAlive(Device device) {
+        getLibraryExplorer().handleDeviceAlive(device);
+    }
+    
+    public void handleDeviceStale(Device device) {
+        getLibraryExplorer().handleDeviceStale(device);
     }
 }

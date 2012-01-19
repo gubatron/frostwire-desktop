@@ -167,26 +167,7 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 		boolean isPlaying = isPlaying();
 	    switch (idx) {
 	    case ICON_IDX:
-	    	boolean iconAvailable = IconManager.instance().isIconForFileAvailable(initializer);
-	        if(!iconAvailable && !_iconScheduledForLoad) {
-	            _iconScheduledForLoad = true;
-                BackgroundExecutorService.schedule(new Runnable() {
-                    public void run() {
-                        GUIMediator.safeInvokeAndWait(new Runnable() {
-                            public void run() {
-                                IconManager.instance().getIconForFile(initializer);
-                                _iconLoaded = true;
-                                _model.refresh();
-                            }
-                        });
-                    }
-                });
-	            return null;
-            } else if(_iconLoaded || iconAvailable) {
-	            return IconManager.instance().getIconForFile(initializer);
-            } else {
-                return null;
-            }
+	        return new PlayableIconCell(getIcon(), isPlaying);
 	    case NAME_IDX:
 	        return new PlayableCell(this, _name, isPlaying, idx);	                    
 	    case SIZE_IDX:
@@ -245,7 +226,7 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 	        LimeTableColumn[] temp =
 	        {
 	            new LimeTableColumn(ICON_IDX, "LIBRARY_TABLE_ICON", I18n.tr("Icon"),
-	                    GUIMediator.getThemeImage("question_mark"), 18, true, Icon.class),
+	                    GUIMediator.getThemeImage("question_mark"), 18, true, PlayableIconCell.class),
 	            
 	            new LimeTableColumn(NAME_IDX, "LIBRARY_TABLE_NAME", I18n.tr("Name"),
 	                    239, true, PlayableCell.class),
@@ -266,5 +247,28 @@ public final class LibraryFilesTableDataLine extends AbstractLibraryTableDataLin
 	        ltColumns = temp;
 	    }
 	    return ltColumns;
+	}
+	
+	private Icon getIcon() {
+	    boolean iconAvailable = IconManager.instance().isIconForFileAvailable(initializer);
+        if(!iconAvailable && !_iconScheduledForLoad) {
+            _iconScheduledForLoad = true;
+            BackgroundExecutorService.schedule(new Runnable() {
+                public void run() {
+                    GUIMediator.safeInvokeAndWait(new Runnable() {
+                        public void run() {
+                            IconManager.instance().getIconForFile(initializer);
+                            _iconLoaded = true;
+                            _model.refresh();
+                        }
+                    });
+                }
+            });
+            return null;
+        } else if(_iconLoaded || iconAvailable) {
+            return IconManager.instance().getIconForFile(initializer);
+        } else {
+            return null;
+        }
 	}
 }

@@ -21,7 +21,7 @@ public final class LibraryInternetRadioTableDataLine extends AbstractLibraryTabl
      * Bookmarked column
      */
     static final int BOOKMARKED_IDX = 0;
-    private static final LimeTableColumn BOOKMARKED_COLUMN = new LimeTableColumn(BOOKMARKED_IDX, "INTERNET_RADIO_TABL_BOOKMARKED", I18n.tr("Bookmarked"), 20, true, false, false, InternetRadioBookmark.class);
+    private static final LimeTableColumn BOOKMARKED_COLUMN = new LimeTableColumn(BOOKMARKED_IDX, "INTERNET_RADIO_TABLE_BOOKMARKED", I18n.tr("Bookmarked"), 20, true, false, false, InternetRadioBookmark.class);
 
     static final int NAME_IDX = 1;
     private static final LimeTableColumn NAME_COLUMN = new LimeTableColumn(NAME_IDX, "INTERNET_RADIO_TABLE_NAME", I18n.tr("Name"), 484, true, PlayableCell.class);

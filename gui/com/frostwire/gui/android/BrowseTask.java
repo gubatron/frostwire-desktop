@@ -35,7 +35,7 @@ public class BrowseTask extends Task {
 		}
 		
 		try {			
-			final List<FileDescriptor> result = _device.browse(_type);
+			final List<FileDescriptor> result = _device.browse((byte)_type);
 			
 			SwingUtilities.invokeLater(new Runnable() {
 				public void run() {

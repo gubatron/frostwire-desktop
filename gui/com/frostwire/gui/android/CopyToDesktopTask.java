@@ -75,7 +75,7 @@ public class CopyToDesktopTask extends Task {
     			try {
     				is = url.openStream();
     				
-    				File file = new File(_path, fileDescriptor.fileName);
+    				File file = new File(_path, fileDescriptor.filePath);
     				
     				fos = new FileOutputStream(file);
     				

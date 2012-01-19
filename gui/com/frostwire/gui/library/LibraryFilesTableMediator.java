@@ -123,6 +123,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     @Override
     protected void setDefaultRenderers() {
         super.setDefaultRenderers();
+        TABLE.setDefaultRenderer(PlayableIconCell.class, new PlayableIconCellRenderer());
         TABLE.setDefaultRenderer(PlayableCell.class, new PlayableCellRenderer());
     }
 

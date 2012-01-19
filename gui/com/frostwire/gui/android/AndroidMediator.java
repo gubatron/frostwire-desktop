@@ -8,6 +8,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import com.frostwire.gui.library.LibraryMediator;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
@@ -117,16 +118,16 @@ public class AndroidMediator implements ThemeObserver {
 		return MAIN_PANEL;
 	}
 
-	public static void handleNewDevice(Device device) {
-		INSTANCE.DEVICE_BAR.handleNewDevice(device);
+	public static void handleDeviceNew(Device device) {
+		LibraryMediator.instance().handleDeviceNew(device);
 	}
 	
 	public static void handleDeviceAlive(Device device) {
-		INSTANCE.DEVICE_BAR.handleDeviceAlive(device);
+	    LibraryMediator.instance().handleDeviceAlive(device);
 	}
 
 	public static void handleDeviceStale(Device device) {
-		INSTANCE.DEVICE_BAR.handleDeviceStale(device);
+	    LibraryMediator.instance().handleDeviceStale(device);
 	}
 	
 	public static void addTask(Task task) {
@@ -151,7 +152,7 @@ public class AndroidMediator implements ThemeObserver {
 	}
 	
 	public static void startAndroidClerk() {
-		PeerDiscoveryClerk clerk = new PeerDiscoveryClerk();
+		DeviceDiscoveryClerk clerk = new DeviceDiscoveryClerk();
 		clerk.start();
 	}
 }

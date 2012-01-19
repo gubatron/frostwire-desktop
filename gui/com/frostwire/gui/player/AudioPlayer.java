@@ -350,7 +350,7 @@ public class AudioPlayer implements RefreshListener {
         	playableExtensions = Arrays.asList("mp3","ogg","wav","wma","m4a","aac","flac");
         }
         
-        return playableExtensions.contains(FilenameUtils.getExtension(name));
+        return playableExtensions.contains(FilenameUtils.getExtension(name).toLowerCase());
     }
 	
 	public static boolean isPlayableFile(AudioSource audioSource) {
@@ -360,6 +360,8 @@ public class AudioPlayer implements RefreshListener {
 	        return new File(audioSource.getPlaylistItem().getFilePath()).exists() && isPlayableFile(audioSource.getPlaylistItem().getFilePath());
 	    } else if (audioSource instanceof InternetRadioAudioSource) {
 	        return true;
+	    } else if (audioSource instanceof DeviceAudioSource) {
+	        return isPlayableFile(((DeviceAudioSource)audioSource).getDeviceFileDescriptor().getFD().filePath);
 	    } else {
 	        return false;
 	    }

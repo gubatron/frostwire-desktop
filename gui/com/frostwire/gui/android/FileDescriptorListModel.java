@@ -105,8 +105,8 @@ public class FileDescriptorListModel extends AbstractListModel {
                 if (fileDescriptor.album != null)
                 	haystack.append(fileDescriptor.artist.toLowerCase() + " ");
                 
-                if (fileDescriptor.fileName != null)
-                	haystack.append(fileDescriptor.fileName.toLowerCase());
+                if (fileDescriptor.filePath != null)
+                	haystack.append(fileDescriptor.filePath.toLowerCase());
                 
                 boolean isMatch = true;
                 

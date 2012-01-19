@@ -269,7 +269,7 @@ public class DeviceExplorer extends JPanel {
 		_list.setLayoutOrientation(JList.VERTICAL);
 		_list.setDragEnabled(true);
 		_list.setTransferHandler(new DeviceListTransferHandler());
-		_list.setPrototypeCellValue(new FileDescriptor(0, DeviceConstants.FILE_TYPE_AUDIO, "", "", "", "", "", 0));
+		//_list.setPrototypeCellValue(new FileDescriptor(0, DeviceConstants.FILE_TYPE_AUDIO, "", "", "", "", "", 0));
 		_list.setVisibleRowCount(-1);
 		
 		_scrollPane = new JScrollPane(_list);		

@@ -94,7 +94,26 @@ public class UITool {
         case DeviceConstants.FILE_TYPE_VIDEOS:
             return I18n.tr("Video");
         default:
-            return "Unkown file type";
+            return I18n.tr("Unkown file type");
+        }
+    }
+    
+    public static int getNumSharedFiles(Finger finger, byte fileType) {
+        switch (fileType) {
+        case DeviceConstants.FILE_TYPE_AUDIO:
+            return finger.numSharedAudioFiles;
+        case DeviceConstants.FILE_TYPE_PICTURES:
+            return finger.numSharedPictureFiles;
+        case DeviceConstants.FILE_TYPE_VIDEOS:
+            return finger.numSharedVideoFiles;
+        case DeviceConstants.FILE_TYPE_DOCUMENTS:
+            return finger.numSharedDocumentFiles;
+        case DeviceConstants.FILE_TYPE_APPLICATIONS:
+            return finger.numSharedApplicationFiles;
+        case DeviceConstants.FILE_TYPE_RINGTONES:
+            return finger.numSharedRingtoneFiles;
+        default:
+            return 0;
         }
     }
     
@@ -105,7 +124,7 @@ public class UITool {
         }
         
         FILE_TYPES = new HashMap<String, Integer>();
-        
+        /*
         FILE_TYPES.put("mp3", DeviceConstants.FILE_TYPE_AUDIO);
         FILE_TYPES.put("wma", DeviceConstants.FILE_TYPE_AUDIO);
         FILE_TYPES.put("wav", DeviceConstants.FILE_TYPE_AUDIO);
@@ -239,5 +258,6 @@ public class UITool {
         FILE_TYPES.put("rng", DeviceConstants.FILE_TYPE_RINGTONES);
         
         FILE_TYPES.put("apk", DeviceConstants.FILE_TYPE_APPLICATIONS);
+        */
     }
 }

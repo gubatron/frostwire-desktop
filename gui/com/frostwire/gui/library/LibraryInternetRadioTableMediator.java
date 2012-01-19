@@ -569,8 +569,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
             try {
                 URL url = new URL(DATA_MODEL.get(i).getInitializeObject().getUrl());
                 result.add(new InternetRadioAudioSource(url,DATA_MODEL.get(i).getInitializeObject()));
-            } catch (Exception e) {
-                return Collections.emptyList();
+            } catch (Throwable e) {
             }
         }
         return result;

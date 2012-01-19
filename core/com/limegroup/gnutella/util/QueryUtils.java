@@ -22,7 +22,7 @@ public class QueryUtils {
     
     static {
         // must be lower-case
-        TRIVIAL_WORDS = Arrays.asList("the", "an", "a", "and");
+        TRIVIAL_WORDS = Arrays.asList("the", "an", "a", "and", "com", "net", "org");
     }
     
 

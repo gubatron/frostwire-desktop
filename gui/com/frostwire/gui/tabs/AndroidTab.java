@@ -7,7 +7,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import com.frostwire.gui.android.AndroidMediator;
-import com.frostwire.gui.android.PeerDiscoveryClerk;
+import com.frostwire.gui.android.DeviceDiscoveryClerk;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 
@@ -33,7 +33,7 @@ public final class AndroidTab extends AbstractTab {
         c.weighty = 1;
 		PANEL.add(COMPONENT,c);
 		
-		PeerDiscoveryClerk clerk = new PeerDiscoveryClerk();
+		DeviceDiscoveryClerk clerk = new DeviceDiscoveryClerk();
 		clerk.start();
 	}
 	

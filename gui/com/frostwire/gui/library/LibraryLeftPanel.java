@@ -14,11 +14,13 @@ public class LibraryLeftPanel extends JPanel {
     public static final int MAX_WIDTH = 300;
 
     private final LibraryFiles libraryFiles;
+    private final LibraryExplorer libraryPlaces;
     private final LibraryPlaylists libraryPlaylists;
     private final LibraryCoverArt libraryCoverArt;
 
-    public LibraryLeftPanel(LibraryFiles libraryFiles, LibraryPlaylists libraryPlaylists, LibraryCoverArt libraryCoverArt) {
+    public LibraryLeftPanel(LibraryFiles libraryFiles, LibraryExplorer libraryPlaces, LibraryPlaylists libraryPlaylists, LibraryCoverArt libraryCoverArt) {
         this.libraryFiles = libraryFiles;
+        this.libraryPlaces = libraryPlaces;
         this.libraryPlaylists = libraryPlaylists;
         this.libraryCoverArt = libraryCoverArt;
 
@@ -26,16 +28,17 @@ public class LibraryLeftPanel extends JPanel {
     }
 
     protected void setupUI() {
-        setLayout(null);
+        //setLayout(null);
 
         add(libraryFiles);
+        add(libraryPlaces);
         add(libraryPlaylists);
         add(libraryCoverArt);
 
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                layoutComponents();
+                //layoutComponents();
             }
         });
     }
