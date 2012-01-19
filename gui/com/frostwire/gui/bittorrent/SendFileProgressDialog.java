@@ -210,11 +210,12 @@ public class SendFileProgressDialog extends JDialog {
             
 
             torrent = _torrentCreator.create();
-
+            
             TorrentUtils.setDecentralised(torrent);
             TorrentUtils.setDHTBackupEnabled(torrent, true);
             TorrentUtils.setPrivate(torrent, false);
             LocaleTorrentUtil.setDefaultTorrentEncoding(torrent);
+            torrent.setAnnounceURL(new URL("udp://tracker.openbittorrent.com:80"));
 
             final File torrentFile = new File(SharingSettings.TORRENTS_DIR_SETTING.getValue(), file.getName() + ".torrent");
 
