@@ -40,6 +40,7 @@ import com.frostwire.gui.android.DeviceDiscoveryClerk;
 import com.frostwire.gui.android.FileDescriptor;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
 import com.frostwire.gui.library.android.DeviceFileDescriptor;
+import com.frostwire.gui.library.android.DownloadTask;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.DeviceAudioSource;
@@ -59,6 +60,7 @@ import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.gui.util.GUILauncher;
 import com.limegroup.gnutella.gui.util.GUILauncher.LaunchableProvider;
+import com.limegroup.gnutella.settings.LibrarySettings;
 import com.limegroup.gnutella.util.QueryUtils;
 
 public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<LibraryDeviceTableModel, LibraryDeviceTableDataLine, DeviceFileDescriptor> {
@@ -179,7 +181,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
     protected void setupDragAndDrop() {
         TABLE.setDragEnabled(true);
         TABLE.setDropMode(DropMode.INSERT_ROWS);
-        TABLE.setTransferHandler(new LibraryDeviceTableTransferHandler(this));
+        // TABLE.setTransferHandler(new LibraryDeviceTableTransferHandler(this));
     }
 
     /**
@@ -349,6 +351,18 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
         handleSelection(TABLE.getSelectedRow());
     }
 
+    private void downloadSelectedItems() {
+        List<AbstractLibraryTableDataLine<DeviceFileDescriptor>> selectedLines = getSelectedLines();
+
+        List<DeviceFileDescriptor> dfds = new ArrayList<DeviceFileDescriptor>(selectedLines.size());
+
+        for (AbstractLibraryTableDataLine<DeviceFileDescriptor> line : selectedLines) {
+            dfds.add(line.getInitializeObject());
+        }
+
+        BackgroundExecutorService.schedule(new DownloadTask(LibrarySettings.LIBRARY_FROM_DEVICE_DATA_DIR_SETTING.getValue(), dfds.toArray(new DeviceFileDescriptor[0])));
+    }
+
     ///////////////////////////////////////////////////////
     //  ACTIONS
     ///////////////////////////////////////////////////////
@@ -382,6 +396,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
         }
 
         public void actionPerformed(ActionEvent e) {
+            downloadSelectedItems();
         }
     }
 

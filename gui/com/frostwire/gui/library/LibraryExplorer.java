@@ -1,13 +1,10 @@
 package com.frostwire.gui.library;
 
 import java.awt.BorderLayout;
-import java.util.List;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.ToolTipManager;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -16,19 +13,15 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
-import com.frostwire.alexandria.InternetRadioStation;
-import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.android.Device;
 import com.frostwire.gui.android.DeviceConstants;
 import com.frostwire.gui.android.UITool;
-import com.frostwire.gui.library.LibraryFiles.LibraryFilesListCell;
 import com.frostwire.gui.library.android.DeviceFileTypeTreeNode;
 import com.frostwire.gui.library.android.DeviceTreeNode;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.search.NamedMediaType;
-import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 
 public class LibraryExplorer extends AbstractLibraryListPanel {
 
@@ -63,7 +56,8 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
     }
 
     public void handleDeviceStale(Device device) {
-
+        DeviceTreeNode node = findNode(device);
+        model.removeNodeFromParent(node);
     }
 
     public void refreshSelection(boolean clearCache) {

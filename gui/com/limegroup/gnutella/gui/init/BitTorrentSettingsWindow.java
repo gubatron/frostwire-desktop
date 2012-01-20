@@ -129,6 +129,8 @@ class BitTorrentSettingsWindow extends SetupWindow {
             LibrarySettings.DIRECTORIES_TO_INCLUDE.add(LibrarySettings.USER_MUSIC_FOLDER.getValue());
         }
         
+        LibrarySettings.DIRECTORIES_TO_INCLUDE.add(LibrarySettings.LIBRARY_FROM_DEVICE_DATA_DIR_SETTING.getValue());
+        
         File azureusUserPath = new File(CommonUtils.getUserSettingsDir() + File.separator + "azureus" + File.separator);
         if (!azureusUserPath.exists()) {
             System.setProperty("azureus.config.path", azureusUserPath.getAbsolutePath());

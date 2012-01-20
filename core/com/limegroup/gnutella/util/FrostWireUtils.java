@@ -31,51 +31,6 @@ public final class FrostWireUtils {
 	 * Constant for the current version of FrostWire.
 	 */
 	private static final String FROSTWIRE_VERSION = "5.2.11";
-
-    /**
-     * The cached value of the major revision number.
-     */
-    private static final int _majorVersionNumber = 
-        getMajorVersionNumberInternal(FROSTWIRE_VERSION);
-
-    /**
-     * The cached value of the minor revision number.
-     */
-    private static final int _minorVersionNumber = 
-        getMinorVersionNumberInternal(FROSTWIRE_VERSION);
-        
-    /**
-     * The cached value of the really minor version number.
-     */
-    private static final int _serviceVersionNumber =
-        getServiceVersionNumberInternal(FROSTWIRE_VERSION);
-
-    /**
-     * The cached value of the GUESS major revision number.
-     */
-    private static final int _guessMajorVersionNumber = 0;
-
-    /**
-     * The cached value of the GUESS minor revision number.
-     */
-    private static final int _guessMinorVersionNumber = 1;
-
-    /**
-     * The cached value of the Ultrapeer major revision number.
-     */
-    private static final int _upMajorVersionNumber = 0;
-
-    /**
-     * The cached value of the Ultrapeer minor revision number.
-     */
-    private static final int _upMinorVersionNumber = 1;
-    
-    /**
-     * The vendor code for QHD.  WARNING: to avoid character
-     * encoding problems, this is hard-coded in QueryReply as well.  So if you
-     * change this, you must change QueryReply.
-     */
-    public static final String QHD_VENDOR_NAME = "LIME";
      
 	/**
 	 * Cached constant for the HTTP Server: header value.
@@ -102,30 +57,6 @@ public final class FrostWireUtils {
                            substring(0, FROSTWIRE_VERSION.length()-4)+" (Pro)");
 		}
 	}
-	
-	/** Gets the major version of GUESS supported.
-     */
-    public static int getGUESSMajorVersionNumber() {    
-        return _guessMajorVersionNumber;
-    }
-    
-    /** Gets the minor version of GUESS supported.
-     */
-    public static int getGUESSMinorVersionNumber() {
-        return _guessMinorVersionNumber;
-    }
-
-    /** Gets the major version of Ultrapeer Protocol supported.
-     */
-    public static int getUPMajorVersionNumber() {    
-        return _upMajorVersionNumber;
-    }
-    
-    /** Gets the minor version of Ultrapeer Protocol supported.
-     */
-    public static int getUPMinorVersionNumber() {
-        return _upMinorVersionNumber;
-    }
 
 	/**
 	 * Returns the current version number of FrostWire as
@@ -135,58 +66,7 @@ public final class FrostWireUtils {
         return FROSTWIRE_VERSION;
 	}
 
-    /** Gets the major version of LimeWire.
-     */
-    public static int getMajorVersionNumber() {    
-        return _majorVersionNumber;
-    }
-    
-    /** Gets the minor version of LimeWire.
-     */
-    public static int getMinorVersionNumber() {
-        return _minorVersionNumber;
-    }
-    
-    /** Gets the minor minor version of LimeWire.
-     */
-   public static int getServiceVersionNumber() {
-        return _serviceVersionNumber;
-   }
-
-    static int getMajorVersionNumberInternal(String version) {
-        int firstDot = version.indexOf(".");
-        String majorStr = version.substring(0, firstDot);
-        return new Integer(majorStr).intValue();
-    }
-
-    static int getMinorVersionNumberInternal(String version) {
-        int firstDot = version.indexOf(".");
-        String minusMajor = version.substring(firstDot + 1);
-        int secondDot = minusMajor.indexOf(".");
-        String minorStr = minusMajor.substring(0, secondDot);
-        return new Integer(minorStr).intValue();
-    }
-
-    static int getServiceVersionNumberInternal(String version) {
-        int firstDot = version.indexOf(".");
-        int secondDot = version.indexOf(".", firstDot + 1);
-
-        int p = secondDot + 1;
-        int q = p;
-
-        while (q < version.length() && Character.isDigit(version.charAt(q))) {
-            q++;
-        }
-
-        if (p != q) {
-            String service = version.substring(p, q);
-            return new Integer(service).intValue();
-        }
-
-        return 0;
-    }
-
-	/**
+    /**
 	 * Returns the string for the server that should be reported in the HTTP
 	 * "Server: " tag.
 	 * 
