@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.gudy.azureus2.core3.disk.DiskManagerFileInfo;
 import org.gudy.azureus2.core3.download.DownloadManager;
+import org.gudy.azureus2.core3.download.DownloadManagerStats;
 import org.gudy.azureus2.core3.tracker.client.TRTrackerScraperResponse;
 import org.gudy.azureus2.core3.util.Constants;
 import org.gudy.azureus2.core3.util.DisplayFormatters;
@@ -300,14 +301,27 @@ public class BTDownloadImpl implements BTDownload {
 
     public String getShareRatio() {
         DownloadManager dm = _downloadManager;
+        DownloadManagerStats stats = dm.getStats();
 
-        int sr = (dm == null) ? 0 : dm.getStats().getShareRatio();
+        int sr = (dm == null) ? 0 : stats.getShareRatio();
 
         if (sr == Integer.MAX_VALUE) {
             sr = Integer.MAX_VALUE - 1;
         }
+        
+        //If getShareRatio returns -1, it means good downloaded
+        //bytes is <= 0 this could also mean the user is re-starting an old torrent
+        //that was already on disk, or downloaded with another client.
         if (sr == -1) {
-            sr = Integer.MAX_VALUE;
+            long downloaded = stats.getTotalGoodDataBytesReceived();
+            long uploaded = stats.getTotalDataBytesSent();
+
+            if (downloaded == 0 &&
+                uploaded > 0) {
+                sr = (int) ((1000 * uploaded) / dm.getDiskManager().getTotalLength());
+            } else {
+                sr = Integer.MAX_VALUE;
+            }
         }
 
         String shareRatio = "";
