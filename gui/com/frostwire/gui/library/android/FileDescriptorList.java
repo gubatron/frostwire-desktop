@@ -1,6 +1,7 @@
-package com.frostwire.gui.android;
+package com.frostwire.gui.library.android;
 
 import java.util.List;
+
 
 public class FileDescriptorList {
 

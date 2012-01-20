@@ -1,4 +1,4 @@
-package com.frostwire.gui.android;
+package com.frostwire.gui.library.android;
 
 import java.awt.image.BufferedImage;
 import java.net.URL;

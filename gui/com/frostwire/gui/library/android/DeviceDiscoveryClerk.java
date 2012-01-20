@@ -1,4 +1,4 @@
-package com.frostwire.gui.android;
+package com.frostwire.gui.library.android;
 
 import java.io.InterruptedIOException;
 import java.net.DatagramPacket;
@@ -21,6 +21,7 @@ import org.limewire.util.NetworkUtils;
 
 import com.frostwire.HttpFetcher;
 import com.frostwire.JsonEngine;
+import com.frostwire.gui.library.LibraryMediator;
 import com.limegroup.gnutella.settings.ConnectionSettings;
 
 public class DeviceDiscoveryClerk {
@@ -200,7 +201,7 @@ public class DeviceDiscoveryClerk {
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                AndroidMediator.handleDeviceNew(device);
+                LibraryMediator.instance().handleDeviceNew(device);
             }
         });
     }
@@ -212,7 +213,7 @@ public class DeviceDiscoveryClerk {
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                AndroidMediator.handleDeviceAlive(device);
+                LibraryMediator.instance().handleDeviceAlive(device);
             }
         });
     }
@@ -224,7 +225,7 @@ public class DeviceDiscoveryClerk {
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                AndroidMediator.handleDeviceStale(device);
+                LibraryMediator.instance().handleDeviceStale(device);
             }
         });
     }

@@ -3,8 +3,8 @@ package com.frostwire.gui.library;
 import java.io.File;
 
 import com.frostwire.alexandria.PlaylistItem;
-import com.frostwire.gui.android.FileDescriptor;
 import com.frostwire.gui.library.android.DeviceFileDescriptor;
+import com.frostwire.gui.library.android.FileDescriptor;
 import com.limegroup.gnutella.gui.tables.ColoredCellImpl;
 import com.limegroup.gnutella.gui.tables.HashBasedDataLineModel;
 import com.limegroup.gnutella.gui.tables.SizeHolder;

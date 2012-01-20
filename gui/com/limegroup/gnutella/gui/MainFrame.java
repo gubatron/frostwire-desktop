@@ -37,10 +37,8 @@ import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.ChatMediator;
-import com.frostwire.gui.android.AndroidMediator;
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.library.LibraryMediator;
-import com.frostwire.gui.tabs.AndroidTab;
 import com.frostwire.gui.tabs.ChatTab;
 import com.frostwire.gui.tabs.LibraryTab;
 import com.frostwire.gui.tabs.SearchDownloadTab;
@@ -79,8 +77,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      * responsible for displaying files in the user's repository.
      */
     private LibraryMediator LIBRARY_MEDIATOR;
-    
-    private AndroidMediator ANDROID_MEDIATOR;
 
     private ChatMediator CHAT_MEDIATOR;
     
@@ -307,8 +303,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         
     	TABS.put(GUIMediator.Tabs.SEARCH, new SearchDownloadTab(SEARCH_MEDIATOR, getBTDownloadMediator()));
         TABS.put(GUIMediator.Tabs.LIBRARY, new LibraryTab(getLibraryMediator()));
-        TABS.put(GUIMediator.Tabs.ANDROID, new AndroidTab(getAndroidMediator()));
-	    TABS.put(GUIMediator.Tabs.CHAT, new ChatTab(getChatMediator()));
+        TABS.put(GUIMediator.Tabs.CHAT, new ChatTab(getChatMediator()));
 	    
 	    TABBED_PANE.setPreferredSize(new Dimension(10000, 10000));
 	    
@@ -628,13 +623,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
             LIBRARY_MEDIATOR = LibraryMediator.instance();
         }
         return LIBRARY_MEDIATOR;
-    }
-    
-    final AndroidMediator getAndroidMediator() {
-        if (ANDROID_MEDIATOR == null) {
-            ANDROID_MEDIATOR = AndroidMediator.instance();
-        }
-        return ANDROID_MEDIATOR;
     }
 
     final ChatMediator getChatMediator() {

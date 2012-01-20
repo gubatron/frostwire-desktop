@@ -13,11 +13,11 @@ import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
-import com.frostwire.gui.android.Device;
-import com.frostwire.gui.android.DeviceConstants;
-import com.frostwire.gui.android.UITool;
+import com.frostwire.gui.library.android.Device;
+import com.frostwire.gui.library.android.DeviceConstants;
 import com.frostwire.gui.library.android.DeviceFileTypeTreeNode;
 import com.frostwire.gui.library.android.DeviceTreeNode;
+import com.frostwire.gui.library.android.UITool;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;

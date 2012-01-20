@@ -1,7 +1,5 @@
 package com.frostwire.gui.library.android;
 
-import com.frostwire.gui.android.Device;
-import com.frostwire.gui.android.FileDescriptor;
 
 public class DeviceFileDescriptor {
 

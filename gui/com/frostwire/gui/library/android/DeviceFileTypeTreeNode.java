@@ -2,9 +2,6 @@ package com.frostwire.gui.library.android;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import com.frostwire.gui.android.Device;
-import com.frostwire.gui.android.DeviceConstants;
-import com.frostwire.gui.android.UITool;
 
 public class DeviceFileTypeTreeNode extends DefaultMutableTreeNode {
 

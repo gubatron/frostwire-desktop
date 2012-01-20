@@ -1,4 +1,4 @@
-package com.frostwire.gui.android;
+package com.frostwire.gui.library.android;
 
 import java.io.File;
 import java.net.InetAddress;
@@ -11,7 +11,6 @@ import java.util.UUID;
 
 import com.frostwire.HttpFetcher;
 import com.frostwire.JsonEngine;
-import com.frostwire.gui.android.ProgressFileEntity.ProgressFileEntityListener;
 import com.limegroup.gnutella.util.EncodingUtils;
 
 public class Device {
@@ -167,44 +166,6 @@ public class Device {
         }
 
         return null;
-    }
-
-    public void upload(int type, File file, ProgressFileEntityListener listener) {
-
-        URI uri = null;
-
-        try {
-
-            uri = new URI("http://" + _address.getHostAddress() + ":" + _port + "/authorize?token=" + EncodingUtils.encode(_token) + "&from=" + EncodingUtils.encode(System.getProperty("user.name")));
-
-            HttpFetcher fetcher = new HttpFetcher(uri);
-            listener.onAuthorizationSent();
-
-            byte[] fetch = fetcher.fetch();
-
-            if (!(fetch != null && Arrays.equals(_token.getBytes(), fetch))) {
-                throw new Exception("Not authorized or invalid token for upload to " + finger.nickname);
-            }
-
-            setTokenAuthorized(true);
-
-            setTimestamp(System.currentTimeMillis());
-
-            uri = new URI("http://" + _address.getHostAddress() + ":" + _port + "/upload?type=" + type + "&fileName=" + EncodingUtils.encode(file.getName()) + "&token=" + EncodingUtils.encode(_token));
-
-            fetcher = new HttpFetcher(uri);
-
-            ProgressFileEntity fileEntity = new ProgressFileEntity(file);
-            fileEntity.setProgressFileEntityListener(listener);
-
-            fetcher.post(fileEntity);
-
-            setTimestamp(System.currentTimeMillis());
-
-        } catch (Exception e) {
-            notifyOnActionFailed(ACTION_UPLOAD, e);
-            throw new RuntimeException(e);
-        }
     }
 
     @Override

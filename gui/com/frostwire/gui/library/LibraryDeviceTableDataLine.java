@@ -11,9 +11,9 @@ import org.limewire.util.FilenameUtils;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.alexandria.PlaylistItem;
-import com.frostwire.gui.android.Device;
-import com.frostwire.gui.android.FileDescriptor;
+import com.frostwire.gui.library.android.Device;
 import com.frostwire.gui.library.android.DeviceFileDescriptor;
+import com.frostwire.gui.library.android.FileDescriptor;
 import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
