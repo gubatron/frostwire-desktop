@@ -14,14 +14,12 @@ public class LibraryLeftPanel extends JPanel {
     public static final int MIN_WIDTH = 155;
     public static final int MAX_WIDTH = 300;
 
-    private final LibraryFiles libraryFiles;
-    private final LibraryExplorer libraryPlaces;
+    private final LibraryExplorer libraryExplorer;
     private final LibraryPlaylists libraryPlaylists;
     private final LibraryCoverArt libraryCoverArt;
 
-    public LibraryLeftPanel(LibraryFiles libraryFiles, LibraryExplorer libraryPlaces, LibraryPlaylists libraryPlaylists, LibraryCoverArt libraryCoverArt) {
-        this.libraryFiles = libraryFiles;
-        this.libraryPlaces = libraryPlaces;
+    public LibraryLeftPanel(LibraryExplorer libraryExplorer, LibraryPlaylists libraryPlaylists, LibraryCoverArt libraryCoverArt) {
+        this.libraryExplorer = libraryExplorer;
         this.libraryPlaylists = libraryPlaylists;
         this.libraryCoverArt = libraryCoverArt;
 
@@ -29,17 +27,16 @@ public class LibraryLeftPanel extends JPanel {
     }
 
     protected void setupUI() {
-        //setLayout(null);
+        setLayout(null);
 
-        add(libraryFiles);
-        add(libraryPlaces);
+        add(libraryExplorer);
         add(libraryPlaylists);
         add(libraryCoverArt);
 
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                //layoutComponents();
+                layoutComponents();
             }
         });
     }
@@ -54,27 +51,27 @@ public class LibraryLeftPanel extends JPanel {
 
         // layout files and playlists
         int heightMinusCover = size.height - coverArtWidth;
-        int fileRowHeight = libraryFiles.getRowDimension().height;
+        int fileRowHeight = libraryExplorer.getRowDimension().height;
         int playlistRowHeight = libraryPlaylists.getRowDimension().height;
 
         if (3 * (fileRowHeight + playlistRowHeight) > heightMinusCover) {
             // too small, split even
-            libraryFiles.setLocation(0, 0);
-            libraryFiles.setSize(size.width, heightMinusCover / 2);
+            libraryExplorer.setLocation(0, 0);
+            libraryExplorer.setSize(size.width, heightMinusCover / 2);
             libraryPlaylists.setLocation(0, heightMinusCover / 2);
             libraryPlaylists.setSize(size.width, heightMinusCover - heightMinusCover / 2);
-        } else if ((libraryFiles.getRowsCount() + 1) * fileRowHeight + 3 * playlistRowHeight > heightMinusCover) {
+        } else if ((libraryExplorer.getRowsCount() + 1) * fileRowHeight + 3 * playlistRowHeight > heightMinusCover) {
             // too small for complete display of files
             int libraryFilesHeight = heightMinusCover - 3 * playlistRowHeight;
-            libraryFiles.setLocation(0, 0);
-            libraryFiles.setSize(size.width, libraryFilesHeight);
+            libraryExplorer.setLocation(0, 0);
+            libraryExplorer.setSize(size.width, libraryFilesHeight);
             libraryPlaylists.setLocation(0, libraryFilesHeight);
             libraryPlaylists.setSize(size.width, heightMinusCover - libraryFilesHeight);
         } else {
             // complete display of files
-            int libraryFilesHeight = (libraryFiles.getRowsCount() + 1) * fileRowHeight;
-            libraryFiles.setLocation(0, 0);
-            libraryFiles.setSize(size.width, libraryFilesHeight);
+            int libraryFilesHeight = (libraryExplorer.getRowsCount() + 1) * fileRowHeight;
+            libraryExplorer.setLocation(0, 0);
+            libraryExplorer.setSize(size.width, libraryFilesHeight);
             libraryPlaylists.setLocation(0, libraryFilesHeight);
             libraryPlaylists.setSize(size.width, heightMinusCover - libraryFilesHeight);
         }

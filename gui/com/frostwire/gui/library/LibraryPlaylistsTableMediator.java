@@ -406,7 +406,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
                 playlistItem.save();
             }
 
-            LibraryMediator.instance().getLibraryFiles().refreshSelection();
+            LibraryMediator.instance().getLibraryExplorer().refreshSelection();
             
         } else {
 

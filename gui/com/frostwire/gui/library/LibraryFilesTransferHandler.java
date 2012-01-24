@@ -6,12 +6,13 @@ import java.io.File;
 
 import javax.swing.JComponent;
 import javax.swing.JList;
+import javax.swing.JTree;
 import javax.swing.TransferHandler;
+import javax.swing.tree.TreePath;
 
 import org.limewire.util.OSUtils;
 
 import com.frostwire.alexandria.PlaylistItem;
-import com.frostwire.gui.library.LibraryFiles.LibraryFilesListCell;
 import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
@@ -20,22 +21,24 @@ public class LibraryFilesTransferHandler extends TransferHandler {
 
     private static final long serialVersionUID = -3874985752229848555L;
 
-    private final JList list;
+    private final JTree tree;
 
-    public LibraryFilesTransferHandler(JList list) {
-        this.list = list;
+    public LibraryFilesTransferHandler(JTree tree) {
+        this.tree = tree;
     }
 
     @Override
     public boolean canImport(TransferSupport support) {
 
         DropLocation location = support.getDropLocation();
-        int index = list.locationToIndex(location.getDropPoint());
-        if (index != -1) {
-            LibraryFilesListCell cell = (LibraryFilesListCell) list.getModel().getElementAt(index);
-            DirectoryHolder dirHolder = cell.getDirectoryHolder();
-            if ((!(dirHolder instanceof MediaTypeSavedFilesDirectoryHolder) || !((MediaTypeSavedFilesDirectoryHolder) dirHolder).getMediaType().equals(MediaType.getAudioMediaType())) && !(dirHolder instanceof StarredDirectoryHolder)) {
-                return false;
+        TreePath path = tree.getUI().getClosestPathForLocation(tree, location.getDropPoint().x, location.getDropPoint().y);
+        if (path != null) {
+            LibraryNode node = (LibraryNode)path.getLastPathComponent();
+            if (node instanceof DirectoryHolderNode) {
+                DirectoryHolder dirHolder = ((DirectoryHolderNode) node).getDirectoryHolder();
+                if ((!(dirHolder instanceof MediaTypeSavedFilesDirectoryHolder) || !((MediaTypeSavedFilesDirectoryHolder) dirHolder).getMediaType().equals(MediaType.getAudioMediaType())) && !(dirHolder instanceof StarredDirectoryHolder)) {
+                    return false;
+                }
             }
         } else {
             return false;
@@ -104,11 +107,15 @@ public class LibraryFilesTransferHandler extends TransferHandler {
     }
 
     private boolean isStarredDirectoryHolder(DropLocation location) {
-        int index = list.locationToIndex(location.getDropPoint());
-        if (index != -1) {
-            LibraryFilesListCell cell = (LibraryFilesListCell) list.getModel().getElementAt(index);
-            DirectoryHolder dirHolder = cell.getDirectoryHolder();
-            return dirHolder instanceof StarredDirectoryHolder;
+        TreePath path = tree.getUI().getClosestPathForLocation(tree, location.getDropPoint().x, location.getDropPoint().y);
+        if (path != null) {
+            LibraryNode node = (LibraryNode)path.getLastPathComponent();
+            if (node instanceof DirectoryHolderNode) {
+                DirectoryHolder dirHolder = ((DirectoryHolderNode) node).getDirectoryHolder();
+                return dirHolder instanceof StarredDirectoryHolder;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }

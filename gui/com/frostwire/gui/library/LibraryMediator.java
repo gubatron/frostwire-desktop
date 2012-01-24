@@ -53,8 +53,7 @@ public class LibraryMediator {
      */
     private static LibraryMediator INSTANCE;
 
-    private LibraryFiles libraryFiles;
-    private LibraryExplorer libraryPlaces;
+    private LibraryExplorer libraryExplorer;
     private LibraryPlaylists libraryPlaylists;
     private LibraryCoverArt libraryCoverArt;
     private LibraryLeftPanel libraryLeftPanel;
@@ -124,7 +123,7 @@ public class LibraryMediator {
 		if (getSelectedPlaylist() != null) {
 			return getSelectedPlaylist();
 		} else {
-			return getLibraryFiles().getSelectedDirectoryHolder();
+			return getLibraryExplorer().getSelectedDirectoryHolder();
 		}
 	}
 
@@ -134,19 +133,12 @@ public class LibraryMediator {
         }
         return LIBRARY;
     }
-
-    public LibraryFiles getLibraryFiles() {
-        if (libraryFiles == null) {
-            libraryFiles = new LibraryFiles();
-        }
-        return libraryFiles;
-    }
     
     public LibraryExplorer getLibraryExplorer() {
-        if (libraryPlaces == null) {
-            libraryPlaces = new LibraryExplorer();
+        if (libraryExplorer == null) {
+            libraryExplorer = new LibraryExplorer();
         }
-        return libraryPlaces;
+        return libraryExplorer;
     }
 
     public LibraryPlaylists getLibraryPlaylists() {
@@ -209,7 +201,7 @@ public class LibraryMediator {
 
         if (key.equals(FILES_TABLE_KEY)) {
             tableMediator = LibraryFilesTableMediator.instance();
-            listPanel = getLibraryFiles();
+            listPanel = getLibraryExplorer();
         } else if (key.equals(PLAYLISTS_TABLE_KEY)) {
             tableMediator = LibraryPlaylistsTableMediator.instance();
             listPanel = getLibraryPlaylists();
@@ -244,7 +236,7 @@ public class LibraryMediator {
     }
     
     public void clearDirectoryHolderCaches() {    	
-    	getLibraryFiles().clearDirectoryHolderCaches();
+        getLibraryExplorer().clearDirectoryHolderCaches();
     }
     
     public void updateTableFiles(Device device, byte fileType) {
@@ -295,7 +287,7 @@ public class LibraryMediator {
 
     private JComponent getLibraryLeftPanel() {
         if (libraryLeftPanel == null) {
-            libraryLeftPanel = new LibraryLeftPanel(getLibraryFiles(), getLibraryExplorer(), getLibraryPlaylists(), getLibraryCoverArt());
+            libraryLeftPanel = new LibraryLeftPanel(getLibraryExplorer(), getLibraryPlaylists(), getLibraryCoverArt());
         }
         return libraryLeftPanel;
     }
@@ -345,7 +337,7 @@ public class LibraryMediator {
     }
     
     public void setSelectedFile(File file) {
-        getLibraryFiles().selectFinishedDownloads();
+        getLibraryExplorer().selectFinishedDownloads();
         LibraryFilesTableMediator.instance().setFileSelected(file);
     }
 
@@ -372,7 +364,7 @@ public class LibraryMediator {
                 //select the playlist
                 getLibraryPlaylists().selectPlaylist(currentPlaylist);
             } else {
-                LibraryFiles libraryFiles = getLibraryFiles();
+                LibraryExplorer libraryFiles = getLibraryExplorer();
 
                 //select the song once it's available on the right hand side
                 libraryFiles.enqueueRunnable(new Runnable() {
@@ -390,7 +382,7 @@ public class LibraryMediator {
 
         } else if (currentSong != null && currentSong.getFile() != null) {
             //selects the audio node at the top
-            LibraryFiles libraryFiles = getLibraryFiles();
+            LibraryExplorer libraryFiles = getLibraryExplorer();
 
             //select the song once it's available on the right hand side
             libraryFiles.enqueueRunnable(new Runnable() {
@@ -406,7 +398,7 @@ public class LibraryMediator {
             libraryFiles.selectAudio();
         } else if (currentSong instanceof InternetRadioAudioSource) {
         	//selects the audio node at the top
-            LibraryFiles libraryFiles = getLibraryFiles();
+            LibraryExplorer libraryFiles = getLibraryExplorer();
 
             //select the song once it's available on the right hand side
             libraryFiles.enqueueRunnable(new Runnable() {
@@ -439,7 +431,7 @@ public class LibraryMediator {
                 scan(hashCode, file);
             }
         } else {
-            List<MediaTypeSavedFilesDirectoryHolder> holders = getLibraryFiles().getMediaTypeSavedFilesDirectoryHolders();
+            List<MediaTypeSavedFilesDirectoryHolder> holders = getLibraryExplorer().getMediaTypeSavedFilesDirectoryHolders();
             for (MediaTypeSavedFilesDirectoryHolder holder : holders) {
                 Set<File> cache = holder.getCache();
                 if (holder.accept(location) && !cache.isEmpty() && !cache.contains(location)) {
@@ -468,7 +460,7 @@ public class LibraryMediator {
 	public File getSelectedFile() {
 		File toExplore = null;
 		
-		DirectoryHolder selectedDirectoryHolder = LibraryMediator.instance().getLibraryFiles().getSelectedDirectoryHolder();
+		DirectoryHolder selectedDirectoryHolder = LibraryMediator.instance().getLibraryExplorer().getSelectedDirectoryHolder();
 		boolean fileBasedDirectoryHolderSelected = selectedDirectoryHolder instanceof SavedFilesDirectoryHolder || 
 		selectedDirectoryHolder instanceof MediaTypeSavedFilesDirectoryHolder ||
 		selectedDirectoryHolder instanceof TorrentDirectoryHolder;
@@ -489,7 +481,7 @@ public class LibraryMediator {
      * @param node 
      */
 	public void refreshBottomActions() {
-		DirectoryHolder selectedDirectoryHolder = LibraryMediator.instance().getLibraryFiles().getSelectedDirectoryHolder();
+		DirectoryHolder selectedDirectoryHolder = LibraryMediator.instance().getLibraryExplorer().getSelectedDirectoryHolder();
 		
 		boolean selectedOneFile = getSelectedFile() != null;		
 		

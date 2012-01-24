@@ -377,7 +377,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
             item.delete();
         }
 
-        LibraryMediator.instance().getLibraryFiles().selectRadio();
+        LibraryMediator.instance().getLibraryExplorer().selectRadio();
         clearSelection();
     }
 

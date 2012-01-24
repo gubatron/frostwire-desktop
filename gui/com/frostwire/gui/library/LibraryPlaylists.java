@@ -615,7 +615,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
                 return;
             }
 
-            LibraryMediator.instance().getLibraryFiles().clearSelection();
+            LibraryMediator.instance().getLibraryExplorer().clearSelection();
 
             if (cell.getAction() != null) {
                 cell.getAction().actionPerformed(null);

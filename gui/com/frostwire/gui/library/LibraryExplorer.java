@@ -60,7 +60,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
 
     private Action refreshAction = new RefreshAction();
     private Action exploreAction = new ExploreAction();
-    
+
     private TreeSelectionListener treeSelectionListener;
 
     public LibraryExplorer() {
@@ -198,7 +198,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
                 }
             }
         });
-        
+
         treeSelectionListener = new LibraryExplorerTreeSelectionListener();
         tree.addTreeSelectionListener(treeSelectionListener);
 
@@ -427,14 +427,13 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
             }
             return;
         }
-        
+
         Enumeration<?> e = root.depthFirstEnumeration();
         while (e.hasMoreElements()) {
             LibraryNode node = (LibraryNode) e.nextElement();
             if (node instanceof DirectoryHolderNode) {
                 DirectoryHolder holder = ((DirectoryHolderNode) node).getDirectoryHolder();
-                if (holder instanceof MediaTypeSavedFilesDirectoryHolder
-                        && ((MediaTypeSavedFilesDirectoryHolder) holder).getMediaType().equals(MediaType.getAudioMediaType())) {
+                if (holder instanceof MediaTypeSavedFilesDirectoryHolder && ((MediaTypeSavedFilesDirectoryHolder) holder).getMediaType().equals(MediaType.getAudioMediaType())) {
                     tree.setSelectionPath(new TreePath(node.getPath()));
                     tree.scrollPathToVisible(new TreePath(node.getPath()));
                     return;
@@ -444,22 +443,48 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
     }
 
     public void selectStarred() {
+        try {
+            if (selectionListenerForSameItem(StarredDirectoryHolder.class)) {
+                return;
+            }
 
-        if (selectionListenerForSameItem(StarredDirectoryHolder.class)) {
-            return;
-        }
-        
-        Enumeration<?> e = root.depthFirstEnumeration();
-        while (e.hasMoreElements()) {
-            LibraryNode node = (LibraryNode) e.nextElement();
-            if (node instanceof DirectoryHolderNode) {
-                DirectoryHolder holder = ((DirectoryHolderNode) node).getDirectoryHolder();
-                if (holder instanceof StarredDirectoryHolder) {
-                    tree.setSelectionPath(new TreePath(node.getPath()));
-                    tree.scrollPathToVisible(new TreePath(node.getPath()));
-                    return;
+            Enumeration<?> e = root.depthFirstEnumeration();
+            while (e.hasMoreElements()) {
+                LibraryNode node = (LibraryNode) e.nextElement();
+                if (node instanceof DirectoryHolderNode) {
+                    DirectoryHolder holder = ((DirectoryHolderNode) node).getDirectoryHolder();
+                    if (holder instanceof StarredDirectoryHolder) {
+                        tree.setSelectionPath(new TreePath(node.getPath()));
+                        tree.scrollPathToVisible(new TreePath(node.getPath()));
+                        return;
+                    }
                 }
             }
+        } finally {
+            executePendingRunnables();
+        }
+    }
+    
+    public void selectFinishedDownloads() {
+        try {
+            if (selectionListenerForSameItem(StarredDirectoryHolder.class)) {
+                return;
+            }
+
+            Enumeration<?> e = root.depthFirstEnumeration();
+            while (e.hasMoreElements()) {
+                LibraryNode node = (LibraryNode) e.nextElement();
+                if (node instanceof DirectoryHolderNode) {
+                    DirectoryHolder holder = ((DirectoryHolderNode) node).getDirectoryHolder();
+                    if (holder instanceof SavedFilesDirectoryHolder) {
+                        tree.setSelectionPath(new TreePath(node.getPath()));
+                        tree.scrollPathToVisible(new TreePath(node.getPath()));
+                        return;
+                    }
+                }
+            }
+        } finally {
+            executePendingRunnables();
         }
     }
 
@@ -483,7 +508,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
             if (selectionListenerForSameItem(InternetRadioDirectoryHolder.class)) {
                 return;
             }
-            
+
             Enumeration<?> e = root.depthFirstEnumeration();
             while (e.hasMoreElements()) {
                 LibraryNode node = (LibraryNode) e.nextElement();

@@ -11,7 +11,6 @@ import javax.swing.ListModel;
 
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.db.LibraryDatabase;
-import com.frostwire.gui.library.LibraryFiles.LibraryFilesListCell;
 import com.frostwire.gui.library.LibraryPlaylists.LibraryPlaylistsListCell;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.InternetRadioAudioSource;
@@ -39,19 +38,9 @@ public class LibraryIconList extends JList {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         AudioPlayer player = AudioPlayer.instance();
-        
+
         if (player.getState() != MediaPlaybackState.Stopped) {
-            if (player.getCurrentSong() instanceof InternetRadioAudioSource) {
-                int index = getRadioIndex();
-                if (index != -1) {
-                    paintIcon(g, speaker, index);
-                }
-            } else if (player.getCurrentSong() != null && player.getCurrentPlaylist() == null && player.getPlaylistFilesView() != null) {
-                int index = getAudioIndex();
-                if (index != -1) {
-                    paintIcon(g, speaker, index);
-                }
-            } else if (player.getCurrentSong() != null && player.getCurrentPlaylist() != null && player.getPlaylistFilesView() != null) {
+            if (player.getCurrentSong() != null && player.getCurrentPlaylist() != null && player.getPlaylistFilesView() != null) {
                 int index = getPlaylistIndex(player.getCurrentPlaylist());
                 if (index != -1) {
                     paintIcon(g, speaker, index);
@@ -74,58 +63,15 @@ public class LibraryIconList extends JList {
         g.drawImage(image, llocation.x + lsize.width - speaker.getWidth(null) - 4, llocation.y + (lsize.height - speaker.getHeight(null)) / 2, null);
     }
 
-    private int getAudioIndex() {
-        int n = getModel().getSize();
-        for (int i = 0; i < n; i++) {
-            Object value = getModel().getElementAt(i);
-            if (value instanceof LibraryFilesListCell) {
-                DirectoryHolder dh = ((LibraryFilesListCell) value).getDirectoryHolder();
-                if (dh instanceof MediaTypeSavedFilesDirectoryHolder
-                        && ((MediaTypeSavedFilesDirectoryHolder) dh).getMediaType().equals(MediaType.getAudioMediaType())) {
-                    return i;
-                }
-            }
-        }
-
-        return -1;
-    }
-    
-    private int getRadioIndex() {
-        int n = getModel().getSize();
-        for (int i = 0; i < n; i++) {
-            Object value = getModel().getElementAt(i);
-            if (value instanceof LibraryFilesListCell) {
-                DirectoryHolder dh = ((LibraryFilesListCell) value).getDirectoryHolder();
-                if (dh instanceof InternetRadioDirectoryHolder) {
-                    return i;
-                }
-            }
-        }
-
-        return -1;
-    }
-
     private int getPlaylistIndex(Playlist playlist) {
-        if (playlist.getId() == LibraryDatabase.STARRED_PLAYLIST_ID) {
-            int n = getModel().getSize();
-            for (int i = 0; i < n; i++) {
-                Object value = getModel().getElementAt(i);
-                if (value instanceof LibraryFilesListCell) {
-                    DirectoryHolder dh = ((LibraryFilesListCell) value).getDirectoryHolder();
-                    if (dh instanceof StarredDirectoryHolder) {
-                        return i;
-                    }
-                }
-            }
-        } else {
-            int n = getModel().getSize();
-            for (int i = 0; i < n; i++) {
-                Object value = getModel().getElementAt(i);
-                if (value instanceof LibraryPlaylistsListCell) {
-                    Playlist p = ((LibraryPlaylistsListCell) value).getPlaylist();
-                    if (p != null && p.equals(playlist)) {
-                        return i;
-                    }
+
+        int n = getModel().getSize();
+        for (int i = 0; i < n; i++) {
+            Object value = getModel().getElementAt(i);
+            if (value instanceof LibraryPlaylistsListCell) {
+                Playlist p = ((LibraryPlaylistsListCell) value).getPlaylist();
+                if (p != null && p.equals(playlist)) {
+                    return i;
                 }
             }
         }

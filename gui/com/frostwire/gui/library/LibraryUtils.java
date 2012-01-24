@@ -196,11 +196,11 @@ public class LibraryUtils {
                     addToPlaylist(playlist, playlistItems, true, -1);
                     GUIMediator.safeInvokeLater(new Runnable() {
                         public void run() {
-                            DirectoryHolder dh = LibraryMediator.instance().getLibraryFiles().getSelectedDirectoryHolder();
+                            DirectoryHolder dh = LibraryMediator.instance().getLibraryExplorer().getSelectedDirectoryHolder();
                             if (dh instanceof StarredDirectoryHolder) {
-                                LibraryMediator.instance().getLibraryFiles().refreshSelection();
+                                LibraryMediator.instance().getLibraryExplorer().refreshSelection();
                             } else {
-                                LibraryMediator.instance().getLibraryFiles().selectStarred();
+                                LibraryMediator.instance().getLibraryExplorer().selectStarred();
                             }
                         }
                     });
@@ -557,9 +557,9 @@ public class LibraryUtils {
                     public void run() {
                         if (playlist != null) {
                             if (playlist.getId() == LibraryDatabase.STARRED_PLAYLIST_ID) {
-                                DirectoryHolder dh = LibraryMediator.instance().getLibraryFiles().getSelectedDirectoryHolder();
+                                DirectoryHolder dh = LibraryMediator.instance().getLibraryExplorer().getSelectedDirectoryHolder();
                                 if (dh instanceof StarredDirectoryHolder) {
-                                    LibraryMediator.instance().getLibraryFiles().refreshSelection();
+                                    LibraryMediator.instance().getLibraryExplorer().refreshSelection();
                                 }
                             } else {
                                 Playlist selectedPlaylist = LibraryMediator.instance().getLibraryPlaylists().getSelectedPlaylist();
@@ -606,7 +606,7 @@ public class LibraryUtils {
             	@Override
             	public void run() {
             		LibraryInternetRadioTableMediator.instance().addUnsorted(item);
-            		LibraryMediator.instance().getLibraryFiles().selectRadio();
+            		LibraryMediator.instance().getLibraryExplorer().selectRadio();
             		LibraryInternetRadioTableMediator.instance().selectItemAt(0);
             	}
             });

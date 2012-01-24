@@ -58,7 +58,7 @@ public class LibrarySearch extends JPanel {
 			@Override
 			public void run() {
 		        GUIMediator.instance().setWindow(GUIMediator.Tabs.LIBRARY);
-		        LibraryMediator.instance().getLibraryFiles().selectFinishedDownloads();
+		        LibraryMediator.instance().getLibraryExplorer().selectFinishedDownloads();
 		        
 				if (searchField != null) {
 					SearchLibraryAction searchAction = new SearchLibraryAction();
@@ -162,9 +162,9 @@ public class LibrarySearch extends JPanel {
 			@Override
 			public void focusGained(FocusEvent e) {
 				//if there's nothing selected for search, select Audio directory holder.
-				if (LibraryMediator.instance().getLibraryFiles().getSelectedDirectoryHolder() == null
+				if (LibraryMediator.instance().getLibraryExplorer().getSelectedDirectoryHolder() == null
 					&& LibraryMediator.instance().getLibraryPlaylists().getSelectedPlaylist() == null) {
-					LibraryMediator.instance().getLibraryFiles().selectAudio();
+					LibraryMediator.instance().getLibraryExplorer().selectAudio();
 				}					
 			}
 		});
@@ -209,7 +209,7 @@ public class LibrarySearch extends JPanel {
                 currentSearchRunnable.cancel();
             }
             
-            DirectoryHolder directoryHolder = LibraryMediator.instance().getLibraryFiles().getSelectedDirectoryHolder();
+            DirectoryHolder directoryHolder = LibraryMediator.instance().getLibraryExplorer().getSelectedDirectoryHolder();
             
             if (directoryHolder instanceof InternetRadioDirectoryHolder) {
                 currentSearchRunnable = new SearchInternetRadioStationsRunnable(query);
@@ -249,7 +249,7 @@ public class LibrarySearch extends JPanel {
 
         public SearchFilesRunnable(String query) {
             _query = query;
-            directoryHolder = LibraryMediator.instance().getLibraryFiles().getSelectedDirectoryHolder();
+            directoryHolder = LibraryMediator.instance().getLibraryExplorer().getSelectedDirectoryHolder();
             canceled = false;
 
             // weird case
@@ -358,7 +358,7 @@ public class LibrarySearch extends JPanel {
 
                 /////
                 //Stop search if the user selected another item in the library tree
-                DirectoryHolder currentDirectoryHolder = LibraryMediator.instance().getLibraryFiles().getSelectedDirectoryHolder();
+                DirectoryHolder currentDirectoryHolder = LibraryMediator.instance().getLibraryExplorer().getSelectedDirectoryHolder();
                 if (!directoryHolder.equals(currentDirectoryHolder)) {
                     return;
                 }
@@ -416,7 +416,7 @@ public class LibrarySearch extends JPanel {
 
                 /////
                 //Stop search if the user selected another item in the library tree
-                DirectoryHolder currentDirectoryHolder = LibraryMediator.instance().getLibraryFiles().getSelectedDirectoryHolder();
+                DirectoryHolder currentDirectoryHolder = LibraryMediator.instance().getLibraryExplorer().getSelectedDirectoryHolder();
                 if (!directoryHolder.equals(currentDirectoryHolder)) {
                     return;
                 }
@@ -520,7 +520,7 @@ public class LibrarySearch extends JPanel {
             //Show everything
             if (StringUtils.isNullOrEmpty(query,true) || query.equals(".") ) {
             	if (playlist.isStarred()) {
-            		LibraryMediator.instance().getLibraryFiles().selectStarred();
+            		LibraryMediator.instance().getLibraryExplorer().selectStarred();
             	} else {
             		LibraryMediator.instance().getLibraryPlaylists().selectPlaylist(playlist);
             	}
@@ -615,7 +615,7 @@ public class LibrarySearch extends JPanel {
 
             //Show everything
             if (StringUtils.isNullOrEmpty(query,true) || query.equals(".")) {
-            	LibraryMediator.instance().getLibraryFiles().selectRadio();
+            	LibraryMediator.instance().getLibraryExplorer().selectRadio();
             	//sql="SELECT T.internetRadioStationId, T.name, T.description, T.url, T.bitrate, T.type, T.website, T.genre, T.pls FROM INTERNETRADIOSTATIONS T";
             	//rows = LibraryMediator.getLibrary().getDB().getDatabase().query(sql);
             	return;

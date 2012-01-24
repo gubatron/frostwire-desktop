@@ -113,7 +113,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         	@Override
         	public void keyReleased(KeyEvent e) {
         		if (LibraryUtils.isRefreshKeyEvent(e)) {
-        			LibraryMediator.instance().getLibraryFiles().refreshSelection(true);
+        			LibraryMediator.instance().getLibraryExplorer().refreshSelection(true);
         		}        		
         	}
 		});

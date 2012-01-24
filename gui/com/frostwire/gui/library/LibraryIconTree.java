@@ -7,16 +7,12 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.Enumeration;
 
-import javax.swing.JList;
 import javax.swing.JTree;
-import javax.swing.ListModel;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.db.LibraryDatabase;
-import com.frostwire.gui.library.LibraryFiles.LibraryFilesListCell;
-import com.frostwire.gui.library.LibraryPlaylists.LibraryPlaylistsListCell;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.frostwire.mplayer.MediaPlaybackState;
