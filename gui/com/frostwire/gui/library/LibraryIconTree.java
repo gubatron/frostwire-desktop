@@ -55,6 +55,11 @@ public class LibraryIconTree extends JTree {
                 if (path != null) {
                     paintIcon(g, speaker, path);
                 }
+            } else if (player.getCurrentSong() != null && player.getCurrentPlaylist() != null && player.getPlaylistFilesView() != null) {
+                TreePath path = getPlaylistPath(player.getCurrentPlaylist());
+                if (path != null) {
+                    paintIcon(g, speaker, path);
+                }
             }
         }
     }
@@ -97,6 +102,23 @@ public class LibraryIconTree extends JTree {
                 }
             }
         }
+        return null;
+    }
+    
+    private TreePath getPlaylistPath(Playlist playlist) {
+        if (playlist.getId() == LibraryDatabase.STARRED_PLAYLIST_ID) {
+            Enumeration<?> e = ((LibraryNode)getModel().getRoot()).depthFirstEnumeration();
+            while (e.hasMoreElements()) {
+                LibraryNode node = (LibraryNode) e.nextElement();
+                if (node instanceof DirectoryHolderNode) {
+                    DirectoryHolder holder = ((DirectoryHolderNode) node).getDirectoryHolder();
+                    if (holder instanceof StarredDirectoryHolder) {
+                        return new TreePath(node.getPath());
+                    }
+                }
+            }
+        }
+
         return null;
     }
 }
