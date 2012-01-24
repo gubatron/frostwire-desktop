@@ -33,7 +33,7 @@ public class LibraryPlaylistsTableTransferable implements Transferable {
     public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
         return items.toArray(new Item[0]);
     }
-
+    
     public static final class Item implements Serializable {
         private static final long serialVersionUID = 928701185904989565L;
 

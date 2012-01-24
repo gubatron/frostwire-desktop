@@ -309,7 +309,7 @@ public class BTDownloadImpl implements BTDownload {
             sr = Integer.MAX_VALUE - 1;
         }
         
-        //If getShareRatio returns -1, it means good downloaded
+        //If getShareRatio returns -1, it means total good downloaded
         //bytes is <= 0 this could also mean the user is re-starting an old torrent
         //that was already on disk, or downloaded with another client.
         if (sr == -1) {

@@ -19,6 +19,7 @@ import com.frostwire.alexandria.db.LibraryDatabase;
 import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
+import com.limegroup.gnutella.gui.dnd.FileTransferable;
 import com.limegroup.gnutella.gui.dnd.MulticastTransferHandler;
 
 class LibraryPlaylistsTableTransferHandler extends TransferHandler {
@@ -82,10 +83,13 @@ class LibraryPlaylistsTableTransferHandler extends TransferHandler {
     protected Transferable createTransferable(JComponent c) {
         List<AbstractLibraryTableDataLine<PlaylistItem>> lines = mediator.getSelectedLines();
         List<PlaylistItem> playlistItems = new ArrayList<PlaylistItem>(lines.size());
+        List<File> files = new ArrayList<File>(lines.size());
         for (int i = 0; i < lines.size(); i++) {
             playlistItems.add(lines.get(i).getInitializeObject());
+            files.add(lines.get(i).getFile());
         }
-        return new LibraryPlaylistsTableTransferable(playlistItems);
+        return new FileTransferable(files);
+        //return new LibraryPlaylistsTableTransferable(playlistItems);
     }
 
     private boolean canImport(TransferSupport support, boolean fallback) {
