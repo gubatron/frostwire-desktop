@@ -46,6 +46,7 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.MessageService;
 import com.limegroup.gnutella.gui.MultiLineLabel;
+import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.actions.SearchAction;
@@ -131,7 +132,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
      * Set up the constants
      */
     protected void setupConstants() {
-        MAIN_PANEL = null;
+        MAIN_PANEL = new PaddedPanel();
         DATA_MODEL = new LibraryFilesTableModel();
         TABLE = new LimeJTable(DATA_MODEL);
         DATA_MODEL.setTable(TABLE);
@@ -256,14 +257,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     protected void setupDragAndDrop() {
         TABLE.setDragEnabled(true);
         TABLE.setTransferHandler(new LibraryFilesTableTransferHandler(this));
-    }
-
-    /**
-     * there is no actual component that holds all of this table.
-     * The LibraryMediator is real the holder.
-     */
-    public JComponent getComponent() {
-        return null;
     }
 
     /**

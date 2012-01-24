@@ -37,6 +37,7 @@ import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.actions.SearchAction;
@@ -110,7 +111,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
      * Set up the constants
      */
     protected void setupConstants() {
-        MAIN_PANEL = null;
+        MAIN_PANEL = new PaddedPanel();
         DATA_MODEL = new LibraryPlaylistsTableModel();
         TABLE = new LimeJTable(DATA_MODEL);
         Action[] aa = new Action[] { LAUNCH_ACTION, ENQUEUE_ACTION, DELETE_ACTION };
@@ -237,14 +238,6 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         TABLE.setDragEnabled(true);
         TABLE.setDropMode(DropMode.INSERT_ROWS);
         TABLE.setTransferHandler(new LibraryPlaylistsTableTransferHandler(this));
-    }
-
-    /**
-     * there is no actual component that holds all of this table.
-     * The LibraryMediator is real the holder.
-     */
-    public JComponent getComponent() {
-        return null;
     }
 
     @Override

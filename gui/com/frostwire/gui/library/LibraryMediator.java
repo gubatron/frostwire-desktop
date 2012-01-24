@@ -298,14 +298,14 @@ public class LibraryMediator {
         _tablesViewLayout = new CardLayout();
         _tablesPanel = new JPanel(_tablesViewLayout);
 
-        _tablesPanel.add(LibraryFilesTableMediator.instance().getScrolledTablePane(), FILES_TABLE_KEY);
-        _tablesPanel.add(LibraryPlaylistsTableMediator.instance().getScrolledTablePane(), PLAYLISTS_TABLE_KEY);
-        _tablesPanel.add(LibraryInternetRadioTableMediator.instance().getScrolledTablePane(), INTERNET_RADIO_TABLE_KEY);
-        _tablesPanel.add(LibraryDeviceTableMediator.instance().getScrolledTablePane(), DEVICE_TABLE_KEY);
+        _tablesPanel.add(LibraryFilesTableMediator.instance().getComponent(), FILES_TABLE_KEY);
+        _tablesPanel.add(LibraryPlaylistsTableMediator.instance().getComponent(), PLAYLISTS_TABLE_KEY);
+        _tablesPanel.add(LibraryInternetRadioTableMediator.instance().getComponent(), INTERNET_RADIO_TABLE_KEY);
+        _tablesPanel.add(LibraryDeviceTableMediator.instance().getComponent(), DEVICE_TABLE_KEY);
 
         panel.add(getLibrarySearch(), BorderLayout.PAGE_START);
         panel.add(_tablesPanel, BorderLayout.CENTER);
-
+/*
         //BOTTOM PART - Actions to the left and Player to the right
         JPanel panelBottom = new JPanel();
         panelBottom.setLayout(new BoxLayout(panelBottom,BoxLayout.LINE_AXIS));
@@ -332,7 +332,7 @@ public class LibraryMediator {
         //player
         panelBottom.add(new LibraryPlayer());
         
-        panel.add(panelBottom, BorderLayout.PAGE_END);
+        panel.add(panelBottom, BorderLayout.PAGE_END);*/
         return panel;
     }
     
@@ -481,6 +481,9 @@ public class LibraryMediator {
      * @param node 
      */
 	public void refreshBottomActions() {
+	    if (true) {
+	        return;
+	    }
 		DirectoryHolder selectedDirectoryHolder = LibraryMediator.instance().getLibraryExplorer().getSelectedDirectoryHolder();
 		
 		boolean selectedOneFile = getSelectedFile() != null;		

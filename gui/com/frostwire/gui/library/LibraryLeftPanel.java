@@ -60,7 +60,7 @@ public class LibraryLeftPanel extends JPanel {
             libraryExplorer.setSize(size.width, heightMinusCover / 2);
             libraryPlaylists.setLocation(0, heightMinusCover / 2);
             libraryPlaylists.setSize(size.width, heightMinusCover - heightMinusCover / 2);
-        } else if ((libraryExplorer.getRowsCount() + 1) * fileRowHeight + 3 * playlistRowHeight > heightMinusCover) {
+        } else if ((libraryExplorer.getRowsCount() + 3) * fileRowHeight + 3 * playlistRowHeight > heightMinusCover) {
             // too small for complete display of files
             int libraryFilesHeight = heightMinusCover - 3 * playlistRowHeight;
             libraryExplorer.setLocation(0, 0);
@@ -69,7 +69,7 @@ public class LibraryLeftPanel extends JPanel {
             libraryPlaylists.setSize(size.width, heightMinusCover - libraryFilesHeight);
         } else {
             // complete display of files
-            int libraryFilesHeight = (libraryExplorer.getRowsCount() + 1) * fileRowHeight;
+            int libraryFilesHeight = (libraryExplorer.getRowsCount() + 3) * fileRowHeight;
             libraryExplorer.setLocation(0, 0);
             libraryExplorer.setSize(size.width, libraryFilesHeight);
             libraryPlaylists.setLocation(0, libraryFilesHeight);
