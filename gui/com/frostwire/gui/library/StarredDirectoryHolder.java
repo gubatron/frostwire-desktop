@@ -7,7 +7,7 @@ import javax.swing.Icon;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 
-class StarredDirectoryHolder implements DirectoryHolder {
+public class StarredDirectoryHolder implements DirectoryHolder {
 
     private final Icon icon;
 

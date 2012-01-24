@@ -72,6 +72,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
     private Action playAction;
     private Action saveToAction;
 
+    private Device device;
     private byte fileType;
 
     /**
@@ -228,6 +229,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
     void updateTableFiles(final Device device, final byte fileType) {
         clearTable();
 
+        this.device = device;
         this.fileType = fileType;
 
         BackgroundExecutorService.schedule(new Runnable() {
@@ -235,6 +237,10 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
             @Override
             public void run() {
                 List<FileDescriptor> fds = device.browse(fileType);
+
+                if (!LibraryDeviceTableMediator.this.device.equals(device) || LibraryDeviceTableMediator.this.fileType != fileType) {
+                    return; // selected another node in the tree
+                }
 
                 for (int i = 0; i < fds.size(); i++) {
                     addUnsorted(new DeviceFileDescriptor(device, fds.get(i)));

@@ -6,6 +6,7 @@ import java.awt.event.ComponentEvent;
 
 import javax.swing.JPanel;
 
+
 public class LibraryLeftPanel extends JPanel {
 
     private static final long serialVersionUID = -2924157073406477820L;

@@ -106,7 +106,7 @@ public class LibrarySearch extends JPanel {
         });
     }
 
-    void setStatus(String status) {
+    public void setStatus(String status) {
         this.status = status;
         statusLabel.setText(status);
     }

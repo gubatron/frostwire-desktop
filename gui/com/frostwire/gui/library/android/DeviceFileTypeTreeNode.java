@@ -2,8 +2,10 @@ package com.frostwire.gui.library.android;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import com.frostwire.gui.library.LibraryNode;
 
-public class DeviceFileTypeTreeNode extends DefaultMutableTreeNode {
+
+public class DeviceFileTypeTreeNode extends LibraryNode {
 
     private static final long serialVersionUID = 1664082200849026954L;
 
@@ -11,6 +13,7 @@ public class DeviceFileTypeTreeNode extends DefaultMutableTreeNode {
     private final byte fileType;
 
     public DeviceFileTypeTreeNode(Device device, byte fileType) {
+        super(UITool.getNumSharedFiles(device.getFinger(), fileType) + " - " + UITool.getFileTypeAsString(fileType));
         this.device = device;
         this.fileType = fileType;
     }
@@ -21,10 +24,5 @@ public class DeviceFileTypeTreeNode extends DefaultMutableTreeNode {
 
     public byte getFileType() {
         return fileType;
-    }
-
-    @Override
-    public String toString() {
-        return UITool.getNumSharedFiles(device.getFinger(), fileType) + " - " + UITool.getFileTypeAsString(fileType);
     }
 }

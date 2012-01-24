@@ -16,7 +16,7 @@ import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 
-class LibraryFilesTransferHandler extends TransferHandler {
+public class LibraryFilesTransferHandler extends TransferHandler {
 
     private static final long serialVersionUID = -3874985752229848555L;
 
