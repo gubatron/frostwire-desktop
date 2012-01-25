@@ -64,7 +64,6 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
      */
     public static Action LAUNCH_ACTION;
     public static Action OPEN_IN_FOLDER_ACTION;
-    public static Action ENQUEUE_ACTION;
     public static Action CREATE_TORRENT_ACTION;
     public static Action DELETE_ACTION;
     public static Action SEND_TO_ITUNES_ACTION;
@@ -101,7 +100,6 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
 
         LAUNCH_ACTION = new LaunchAction();
         OPEN_IN_FOLDER_ACTION = new OpenInFolderAction();
-        ENQUEUE_ACTION = new EnqueueAction();
         CREATE_TORRENT_ACTION = new CreateTorrentAction();
         DELETE_ACTION = new RemoveFromPlaylistAction();
         SEND_TO_ITUNES_ACTION = new SendAudioFilesToiTunes();
@@ -114,7 +112,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         MAIN_PANEL = new PaddedPanel();
         DATA_MODEL = new LibraryPlaylistsTableModel();
         TABLE = new LimeJTable(DATA_MODEL);
-        Action[] aa = new Action[] { LAUNCH_ACTION, ENQUEUE_ACTION, DELETE_ACTION };
+        Action[] aa = new Action[] { LAUNCH_ACTION, DELETE_ACTION };
         BUTTON_ROW = new ButtonRow(aa, ButtonRow.X_AXIS, ButtonRow.NO_GLUE);
     }
 
@@ -125,7 +123,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
 
         JPopupMenu menu = new SkinPopupMenu();
 
-        //menu.add(new SkinMenuItem(LAUNCH_ACTION));
+        menu.add(new SkinMenuItem(LAUNCH_ACTION));
         if (hasExploreAction()) {
             menu.add(new SkinMenuItem(OPEN_IN_FOLDER_ACTION));
         }
@@ -157,12 +155,8 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
                 break;
         }
         if (dirSelected) {
-            if (GUIMediator.isPlaylistVisible())
-                ENQUEUE_ACTION.setEnabled(false);
             DELETE_ACTION.setEnabled(true);
         } else {
-            if (GUIMediator.isPlaylistVisible() && AudioPlayer.isPlayableFile(DATA_MODEL.getFile(rows[0])))
-                ENQUEUE_ACTION.setEnabled(true);
             DELETE_ACTION.setEnabled(true);
         }
 
@@ -412,6 +406,8 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
 
             clearSelection();
         }
+        
+        super.removeSelection();
     }
 
     /**
@@ -515,19 +511,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         } else {
             OPEN_IN_FOLDER_ACTION.setEnabled(false);
         }
-
-        //  turn on Enqueue if play list is visible and a selected item is playable
-        if (GUIMediator.isPlaylistVisible()) {
-            boolean found = false;
-            for (int i = 0; i < sel.length; i++)
-                if (AudioPlayer.isPlayableFile(DATA_MODEL.getFile(sel[i]))) {
-                    found = true;
-                    break;
-                }
-            ENQUEUE_ACTION.setEnabled(found);
-        } else
-            ENQUEUE_ACTION.setEnabled(false);
-
+        
         if (sel.length == 1) {
             LibraryMediator.instance().getLibraryCoverArt().setFile(getSelectedLibraryLines()[0].getFile());
         }
@@ -543,7 +527,6 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         LAUNCH_ACTION.setEnabled(false);
         OPEN_IN_FOLDER_ACTION.setEnabled(false);
         SEND_TO_FRIEND_ACTION.setEnabled(false);
-        ENQUEUE_ACTION.setEnabled(false);
         CREATE_TORRENT_ACTION.setEnabled(false);
         DELETE_ACTION.setEnabled(false);
         SEND_TO_ITUNES_ACTION.setEnabled(false);
@@ -610,33 +593,6 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         }
     }
 
-    private final class EnqueueAction extends AbstractAction {
-
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 9153310119076594713L;
-
-        public EnqueueAction() {
-            putValue(Action.NAME, I18n.tr("Enqueue"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Add Selected Files to the Playlist"));
-            putValue(LimeAction.ICON_NAME, "LIBRARY_TO_PLAYLIST");
-        }
-
-        public void actionPerformed(ActionEvent ae) {
-            //get the selected file. If there are more than 1 we add all
-            int[] rows = TABLE.getSelectedRows();
-            List<File> files = new ArrayList<File>();
-            for (int i = 0; i < rows.length; i++) {
-                int index = rows[i]; // current index to add
-                File file = DATA_MODEL.getFile(index);
-                if (GUIMediator.isPlaylistVisible() && AudioPlayer.isPlayableFile(file))
-                    files.add(file);
-            }
-            //LibraryMediator.instance().addFilesToPlayList(files);
-        }
-    }
-
     private final class CreateTorrentAction extends AbstractAction {
 
         private static final long serialVersionUID = 1898917632888388860L;
@@ -698,7 +654,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         private static final long serialVersionUID = -8704093935791256631L;
 
         public RemoveFromPlaylistAction() {
-            putValue(Action.NAME, I18n.tr("Delete from playlist"));
+            putValue(Action.NAME, I18n.tr("Delete"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Delete Selected Files from this playlist"));
             putValue(LimeAction.ICON_NAME, "LIBRARY_DELETE");
         }

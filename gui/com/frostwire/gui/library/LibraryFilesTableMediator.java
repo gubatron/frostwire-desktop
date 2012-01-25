@@ -72,7 +72,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
      */
     public static Action LAUNCH_ACTION;
     public static Action OPEN_IN_FOLDER_ACTION;
-    public static Action ADD_TO_PLAYLIST_ACTION;
     public static Action CREATE_TORRENT_ACTION;
     public static Action DELETE_ACTION;
     public static Action RENAME_ACTION;
@@ -98,7 +97,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
         LAUNCH_ACTION = new LaunchAction();
         OPEN_IN_FOLDER_ACTION = new OpenInFolderAction();
-        ADD_TO_PLAYLIST_ACTION = new AddToPlaylistAction();
         CREATE_TORRENT_ACTION = new CreateTorrentAction();
         DELETE_ACTION = new RemoveAction();
         RENAME_ACTION = new RenameAction();
@@ -136,7 +134,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         DATA_MODEL = new LibraryFilesTableModel();
         TABLE = new LimeJTable(DATA_MODEL);
         DATA_MODEL.setTable(TABLE);
-        Action[] aa = new Action[] { LAUNCH_ACTION, ADD_TO_PLAYLIST_ACTION, DELETE_ACTION };
+        Action[] aa = new Action[] { LAUNCH_ACTION, DELETE_ACTION };
 
         BUTTON_ROW = new ButtonRow(aa, ButtonRow.X_AXIS, ButtonRow.NO_GLUE);
     }
@@ -184,16 +182,10 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
                 break;
         }
         if (dirSelected) {
-            if (GUIMediator.isPlaylistVisible())
-                ADD_TO_PLAYLIST_ACTION.setEnabled(false);
             DELETE_ACTION.setEnabled(true);
             RENAME_ACTION.setEnabled(false);
         } else {
-            if (GUIMediator.isPlaylistVisible() && AudioPlayer.isPlayableFile(DATA_MODEL.getFile(rows[0])))
-                ADD_TO_PLAYLIST_ACTION.setEnabled(true);
             DELETE_ACTION.setEnabled(true);
-            // only allow single selection for renames
-            //RENAME_ACTION.setEnabled(LibraryMediator.isRenameEnabled() && rows.length == 1);
         }
 
         LibraryFilesTableDataLine line = DATA_MODEL.get(rows[0]);
@@ -510,6 +502,8 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
                         400), Box.createVerticalStrut(ButtonRow.BUTTON_SEP), new JScrollPane(createFileList(undeletedFileNames)) };
 
         JOptionPane.showMessageDialog(MessageService.getParentComponent(), message, I18n.tr("Error"), JOptionPane.ERROR_MESSAGE);
+        
+        super.removeSelection();
     }
 
     /**
@@ -671,21 +665,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         } else {
             OPEN_IN_FOLDER_ACTION.setEnabled(false);
         }
-
-        //  turn on Enqueue if play list is visible and a selected item is playable
-        if (GUIMediator.isPlaylistVisible()) {
-            boolean found = false;
-            for (int i = 0; i < sel.length; i++) {
-                if (AudioPlayer.isPlayableFile(DATA_MODEL.getFile(sel[i]))) {
-                    found = true;
-                    break;
-                }
-            }
-            
-            ADD_TO_PLAYLIST_ACTION.setEnabled(found);
-        } else {
-            ADD_TO_PLAYLIST_ACTION.setEnabled(false);
-        }
         
         if (sel.length == 1) {
             LibraryMediator.instance().getLibraryCoverArt().setFile(selectedFile);
@@ -702,7 +681,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         LAUNCH_ACTION.setEnabled(false);
         OPEN_IN_FOLDER_ACTION.setEnabled(false);
         SEND_TO_FRIEND_ACTION.setEnabled(false);
-        ADD_TO_PLAYLIST_ACTION.setEnabled(false);
         CREATE_TORRENT_ACTION.setEnabled(false);
         DELETE_ACTION.setEnabled(false);
         RENAME_ACTION.setEnabled(false);
@@ -776,33 +754,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             if (selectedFile.isFile() && selectedFile.getParentFile() != null) {
                 GUIMediator.launchExplorer(selectedFile.getParentFile());
             }
-        }
-    }
-
-    private final class AddToPlaylistAction extends AbstractAction {
-
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 9153310119076594713L;
-
-        public AddToPlaylistAction() {
-            putValue(Action.NAME, I18n.tr("Enqueue"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Add Selected Files to the Playlist"));
-            putValue(LimeAction.ICON_NAME, "LIBRARY_TO_PLAYLIST");
-        }
-
-        public void actionPerformed(ActionEvent ae) {
-            //get the selected file. If there are more than 1 we add all
-            int[] rows = TABLE.getSelectedRows();
-            List<File> files = new ArrayList<File>();
-            for (int i = 0; i < rows.length; i++) {
-                int index = rows[i]; // current index to add
-                File file = DATA_MODEL.getFile(index);
-                if (GUIMediator.isPlaylistVisible() && AudioPlayer.isPlayableFile(file))
-                    files.add(file);
-            }
-            //LibraryMediator.instance().addFilesToPlayList(files);
         }
     }
 

@@ -94,7 +94,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
      * Set up the constants
      */
     protected void setupConstants() {
-        MAIN_PANEL = new PaddedPanel("Radio");
+        MAIN_PANEL = new PaddedPanel();
         DATA_MODEL = new LibraryInternetRadioTableModel();
         TABLE = new LimeJTable(DATA_MODEL);
         Action[] aa = new Action[] { LAUNCH_ACTION, DELETE_ACTION };
@@ -108,6 +108,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
 
         JPopupMenu menu = new SkinPopupMenu();
 
+        menu.add(new SkinMenuItem(LAUNCH_ACTION));
         menu.add(new SkinMenuItem(importRadioStationAction));
         menu.add(new SkinMenuItem(copyStreamUrlAction));
         menu.add(new SkinMenuItem(DELETE_ACTION));
@@ -372,6 +373,8 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
 
         LibraryMediator.instance().getLibraryExplorer().selectRadio();
         clearSelection();
+        
+        super.removeSelection();
     }
 
     public void handleActionKey() {

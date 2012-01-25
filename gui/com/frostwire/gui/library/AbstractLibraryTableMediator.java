@@ -273,4 +273,11 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
     }
     
     protected abstract AudioSource createAudioSource(E line);
+    
+    @Override
+    public void removeSelection() {
+        super.removeSelection();
+        
+        LibraryMediator.instance().clearDirectoryHolderCaches();
+    }
 }

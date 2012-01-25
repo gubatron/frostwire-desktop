@@ -1,15 +1,9 @@
 package com.frostwire.gui.library;
 
-import java.awt.Point;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -17,40 +11,28 @@ import javax.swing.Action;
 import javax.swing.DropMode;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
-import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.MouseInputListener;
 import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.limewire.util.FilenameUtils;
-import org.limewire.util.OSUtils;
 
-import com.frostwire.alexandria.Playlist;
-import com.frostwire.alexandria.PlaylistItem;
-import com.frostwire.alexandria.db.LibraryDatabase;
-import com.frostwire.gui.bittorrent.CreateTorrentDialog;
 import com.frostwire.gui.library.android.Device;
 import com.frostwire.gui.library.android.DeviceConstants;
-import com.frostwire.gui.library.android.DeviceDiscoveryClerk;
 import com.frostwire.gui.library.android.DeviceFileDescriptor;
 import com.frostwire.gui.library.android.DownloadTask;
 import com.frostwire.gui.library.android.FileDescriptor;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.DeviceAudioSource;
-import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.ButtonRow;
-import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
-import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.actions.SearchAction;
 import com.limegroup.gnutella.gui.tables.LimeJTable;
@@ -59,8 +41,6 @@ import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
-import com.limegroup.gnutella.gui.util.GUILauncher;
-import com.limegroup.gnutella.gui.util.GUILauncher.LaunchableProvider;
 import com.limegroup.gnutella.settings.LibrarySettings;
 import com.limegroup.gnutella.util.QueryUtils;
 
@@ -70,7 +50,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
     /**
      * Variables so the PopupMenu & ButtonRow can have the same listeners
      */
-    private Action playAction;
+    public static Action LAUNCH_ACTION;
     private Action saveToAction;
 
     private Device device;
@@ -94,7 +74,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
     protected void buildListeners() {
         super.buildListeners();
 
-        playAction = new PlayAction();
+        LAUNCH_ACTION = new LaunchAction();
         saveToAction = new SaveToAction();
     }
 
@@ -105,7 +85,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
         MAIN_PANEL = new PaddedPanel();
         DATA_MODEL = new LibraryDeviceTableModel();
         TABLE = new LimeJTable(DATA_MODEL);
-        Action[] aa = new Action[] { playAction };
+        Action[] aa = new Action[] { LAUNCH_ACTION };
         BUTTON_ROW = new ButtonRow(aa, ButtonRow.X_AXIS, ButtonRow.NO_GLUE);
     }
 
@@ -116,7 +96,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
 
         JPopupMenu menu = new SkinPopupMenu();
 
-        menu.add(new SkinMenuItem(playAction));
+        menu.add(new SkinMenuItem(LAUNCH_ACTION));
         menu.add(new SkinMenuItem(saveToAction));
 
         int[] rows = TABLE.getSelectedRows();
@@ -326,7 +306,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
 
         DeviceFileDescriptor dfd = DATA_MODEL.get(sel[0]).getInitializeObject();
 
-        playAction.setEnabled(sel.length == 1 && AudioPlayer.isPlayableFile(dfd.getFD().filePath));
+        LAUNCH_ACTION.setEnabled(sel.length == 1 && (fileType == DeviceConstants.FILE_TYPE_AUDIO || fileType == DeviceConstants.FILE_TYPE_RINGTONES) && AudioPlayer.isPlayableFile(dfd.getFD().filePath));
         saveToAction.setEnabled(true);
 
         LibraryMediator.instance().refreshBottomActions();
@@ -337,7 +317,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
      * disabling all necessary buttons and menu items.
      */
     public void handleNoSelection() {
-        playAction.setEnabled(false);
+        LAUNCH_ACTION.setEnabled(false);
         SEND_TO_FRIEND_ACTION.setEnabled(false);
         saveToAction.setEnabled(false);
     }
@@ -366,17 +346,17 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
     //  ACTIONS
     ///////////////////////////////////////////////////////
 
-    private final class PlayAction extends AbstractAction {
+    private final class LaunchAction extends AbstractAction {
 
         /**
          * 
          */
         private static final long serialVersionUID = 949208465372392591L;
 
-        public PlayAction() {
-            putValue(Action.NAME, I18n.tr("Play"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Play Selected File"));
-            putValue(LimeAction.ICON_NAME, "LIBRARY_PLAY");
+        public LaunchAction() {
+            putValue(Action.NAME, I18n.tr("Launch"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Launch Selected Files"));
+            putValue(LimeAction.ICON_NAME, "LIBRARY_LAUNCH");
         }
 
         public void actionPerformed(ActionEvent ae) {
