@@ -753,7 +753,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
             File selectedFile = getFile(sel[0]);
             if (selectedFile.isFile() && selectedFile.getParentFile() != null) {
-                GUIMediator.launchExplorer(selectedFile.getParentFile());
+                GUIMediator.launchExplorer(selectedFile);
             }
         }
     }

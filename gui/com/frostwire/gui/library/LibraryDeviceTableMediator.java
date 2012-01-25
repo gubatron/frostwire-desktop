@@ -86,7 +86,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
         MAIN_PANEL = new PaddedPanel();
         DATA_MODEL = new LibraryDeviceTableModel();
         TABLE = new LimeJTable(DATA_MODEL);
-        Action[] aa = new Action[] { LAUNCH_ACTION, OPTIONS_ACTION };
+        Action[] aa = new Action[] { LAUNCH_ACTION, saveToAction, OPTIONS_ACTION };
         BUTTON_ROW = new ButtonRow(aa, ButtonRow.X_AXIS, ButtonRow.RIGHT_GLUE, LIBRARY_PLAYER);
     }
 
@@ -369,8 +369,9 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
 
         public SaveToAction() {
             putValue(Action.NAME, I18n.tr("Save To"));
+            putValue(LimeAction.SHORT_NAME, I18n.tr("Save"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Save Selected Files To Folder"));
-            putValue(LimeAction.ICON_NAME, "PLAYLIST_SAVE_TO");
+            putValue(LimeAction.ICON_NAME, "LIBRARY_LAUNCH");
         }
 
         public void actionPerformed(ActionEvent e) {
