@@ -15,17 +15,19 @@ import com.limegroup.gnutella.gui.I18n;
 public class DownloadTask extends DeviceTask {
 
     private final File savePath;
-    private final DeviceFileDescriptor[] dfds;
+    private final Device device;
+    private final FileDescriptor[] fds;
 
-    private DeviceFileDescriptor currentDeviceFD;
+    private FileDescriptor currentFD;
 
-    public DownloadTask(File savePath, DeviceFileDescriptor[] dfds) {
+    public DownloadTask(File savePath, Device device, FileDescriptor[] fds) {
         this.savePath = savePath;
-        this.dfds = dfds;
+        this.device = device;
+        this.fds = fds;
     }
-
-    public DeviceFileDescriptor getCurrentDeviceFD() {
-        return currentDeviceFD;
+    
+    public FileDescriptor getCurrentFD() {
+        return currentFD;
     }
 
     @Override
@@ -44,20 +46,20 @@ public class DownloadTask extends DeviceTask {
             long totalBytes = getTotalBytes();
             long totalWritten = 0;
 
-            for (int i = 0; i < dfds.length; i++) {
+            for (int i = 0; i < fds.length; i++) {
                 if (!isRunning()) {
                     return;
                 }
 
-                currentDeviceFD = dfds[i];
+                currentFD = fds[i];
                 
                 GUIMediator.safeInvokeLater(new Runnable() {
                     public void run() {
-                        LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Downloading ") + currentDeviceFD.getFD().title);
+                        LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Downloading ") + currentFD.title);
                     }
                 });
 
-                URL url = new URL(currentDeviceFD.getDevice().getDownloadURL(currentDeviceFD.getFD()));
+                URL url = new URL(device.getDownloadURL(currentFD));
 
                 InputStream is = null;
                 FileOutputStream fos = null;
@@ -65,7 +67,7 @@ public class DownloadTask extends DeviceTask {
                 try {
                     is = url.openStream();
 
-                    File file = new File(savePath, FilenameUtils.getName(currentDeviceFD.getFD().filePath));
+                    File file = new File(savePath, FilenameUtils.getName(currentFD.filePath));
 
                     fos = new FileOutputStream(file);
 
@@ -83,7 +85,7 @@ public class DownloadTask extends DeviceTask {
                         
                         GUIMediator.safeInvokeLater(new Runnable() {
                             public void run() {
-                                LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Downloading ") + currentDeviceFD.getFD().title + " " + getProgress() + "%");
+                                LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Downloading ") + currentFD.title + " " + getProgress() + "%");
                             }
                         });
                     }
@@ -109,8 +111,8 @@ public class DownloadTask extends DeviceTask {
 
     private long getTotalBytes() {
         long total = 0;
-        for (DeviceFileDescriptor dfd : dfds) {
-            total += dfd.getFD().fileSize;
+        for (FileDescriptor fd : fds) {
+            total += fd.fileSize;
         }
         return total;
     }

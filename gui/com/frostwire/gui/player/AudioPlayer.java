@@ -361,7 +361,7 @@ public class AudioPlayer implements RefreshListener {
 	    } else if (audioSource instanceof InternetRadioAudioSource) {
 	        return true;
 	    } else if (audioSource instanceof DeviceAudioSource) {
-	        return isPlayableFile(((DeviceAudioSource)audioSource).getDeviceFileDescriptor().getFD().filePath);
+	        return isPlayableFile(((DeviceAudioSource)audioSource).getFileDescriptor().filePath);
 	    } else {
 	        return false;
 	    }

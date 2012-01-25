@@ -82,7 +82,7 @@ public final class LibraryPlaylistsTableDataLine extends AbstractLibraryTableDat
     private static final LimeTableColumn TYPE_COLUMN = new LimeTableColumn(TYPE_IDX, "PLAYLIST_TABLE_TYPE", I18n.tr("Type"), 40, true, PlaylistItemProperty.class);
 
     /**
-     * YEAR column
+     * Year column
      */
     static final int YEAR_IDX = 11;
     private static final LimeTableColumn YEAR_COLUMN = new LimeTableColumn(YEAR_IDX, "PLAYLIST_TABLE_YEAR", I18n.tr("Year"), 30, false, PlaylistItemProperty.class);

@@ -2,8 +2,7 @@ package com.frostwire.gui.library;
 
 import java.io.File;
 
-import com.frostwire.alexandria.PlaylistItem;
-import com.frostwire.gui.library.android.DeviceFileDescriptor;
+import com.frostwire.gui.library.android.Device;
 import com.frostwire.gui.library.android.FileDescriptor;
 import com.limegroup.gnutella.gui.tables.ColoredCellImpl;
 import com.limegroup.gnutella.gui.tables.HashBasedDataLineModel;
@@ -14,13 +13,23 @@ import com.limegroup.gnutella.gui.tables.SizeHolder;
  * Uses HashBasedDataLineModel instead of BasicDataLineModel
  * for quicker access to row's based on the file.
  */
-final class LibraryDeviceTableModel extends HashBasedDataLineModel<LibraryDeviceTableDataLine, DeviceFileDescriptor> {
+final class LibraryDeviceTableModel extends HashBasedDataLineModel<LibraryDeviceTableDataLine, FileDescriptor> {
 
 	private static final long serialVersionUID = 2859783399965055446L;
+	
+	private Device device;
     
     LibraryDeviceTableModel() {
 	    super(LibraryDeviceTableDataLine.class);
 	}
+    
+    public Device getDevice() {
+        return device;
+    }
+    
+    public void setDevice(Device device) {
+        this.device = device;
+    }
 	
     /**
      * Creates a new LibraryTableDataLine
@@ -44,7 +53,7 @@ final class LibraryDeviceTableModel extends HashBasedDataLineModel<LibraryDevice
      * OVerride default so new ones get added to the end
      */
     @Override
-    public int add(DeviceFileDescriptor o) {
+    public int add(FileDescriptor o) {
         return add(o, getRowCount());
     }
 
@@ -115,7 +124,7 @@ final class LibraryDeviceTableModel extends HashBasedDataLineModel<LibraryDevice
 	 * @return  The <code>File</code> object stored at the specified row
 	 */
 	File getFile(int row) {
-	    return new File(get(row).getInitializeObject().getFD().filePath);
+	    return new File(get(row).getInitializeObject().filePath);
 	}
 
  	/**

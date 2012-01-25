@@ -23,7 +23,6 @@ import org.limewire.util.FilenameUtils;
 
 import com.frostwire.gui.library.android.Device;
 import com.frostwire.gui.library.android.DeviceConstants;
-import com.frostwire.gui.library.android.DeviceFileDescriptor;
 import com.frostwire.gui.library.android.DownloadTask;
 import com.frostwire.gui.library.android.FileDescriptor;
 import com.frostwire.gui.player.AudioPlayer;
@@ -44,7 +43,7 @@ import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.LibrarySettings;
 import com.limegroup.gnutella.util.QueryUtils;
 
-public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<LibraryDeviceTableModel, LibraryDeviceTableDataLine, DeviceFileDescriptor> {
+public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<LibraryDeviceTableModel, LibraryDeviceTableDataLine, FileDescriptor> {
 
     private static final Log LOG = LogFactory.getLog(LibraryDeviceTableMediator.class);
     /**
@@ -113,7 +112,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
         JMenu menu = new SkinMenu(I18n.tr("Search"));
 
         if (dl != null) {
-            String str = buildQueryString(dl.getInitializeObject().getFD());
+            String str = buildQueryString(dl.getInitializeObject());
             String keywords = QueryUtils.createQueryString(str);
             if (keywords.length() > 0)
                 menu.add(new SkinMenuItem(new SearchAction(keywords)));
@@ -205,6 +204,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
 
         this.device = device;
         this.fileType = fileType;
+        this.DATA_MODEL.setDevice(device);
 
         BackgroundExecutorService.schedule(new Runnable() {
 
@@ -217,7 +217,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
                 }
 
                 for (int i = 0; i < fds.size(); i++) {
-                    addUnsorted(new DeviceFileDescriptor(device, fds.get(i)));
+                    addUnsorted(fds.get(i));
                 }
                 forceResort();
             }
@@ -279,8 +279,8 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
         }
 
         try {
-            URL url = new URL(line.getInitializeObject().getDevice().getDownloadURL(line.getInitializeObject().getFD()));
-            AudioSource audioSource = new DeviceAudioSource(url, line.getInitializeObject());
+            URL url = new URL(device.getDownloadURL(line.getInitializeObject()));
+            AudioSource audioSource = new DeviceAudioSource(url, device, line.getInitializeObject());
             if (AudioPlayer.isPlayableFile(audioSource)) {
                 AudioPlayer.instance().asyncLoadSong(audioSource, true, false, null, getFileView());
             }
@@ -305,9 +305,9 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
 
         SEND_TO_FRIEND_ACTION.setEnabled(false);
 
-        DeviceFileDescriptor dfd = DATA_MODEL.get(sel[0]).getInitializeObject();
+        FileDescriptor fd = DATA_MODEL.get(sel[0]).getInitializeObject();
 
-        LAUNCH_ACTION.setEnabled(sel.length == 1 && (fileType == DeviceConstants.FILE_TYPE_AUDIO || fileType == DeviceConstants.FILE_TYPE_RINGTONES) && AudioPlayer.isPlayableFile(dfd.getFD().filePath));
+        LAUNCH_ACTION.setEnabled(sel.length == 1 && (fileType == DeviceConstants.FILE_TYPE_AUDIO || fileType == DeviceConstants.FILE_TYPE_RINGTONES) && AudioPlayer.isPlayableFile(fd.filePath));
         saveToAction.setEnabled(true);
     }
 
@@ -330,15 +330,15 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
     }
 
     private void downloadSelectedItems() {
-        List<AbstractLibraryTableDataLine<DeviceFileDescriptor>> selectedLines = getSelectedLines();
+        List<AbstractLibraryTableDataLine<FileDescriptor>> selectedLines = getSelectedLines();
 
-        List<DeviceFileDescriptor> dfds = new ArrayList<DeviceFileDescriptor>(selectedLines.size());
+        List<FileDescriptor> fds = new ArrayList<FileDescriptor>(selectedLines.size());
 
-        for (AbstractLibraryTableDataLine<DeviceFileDescriptor> line : selectedLines) {
-            dfds.add(line.getInitializeObject());
+        for (AbstractLibraryTableDataLine<FileDescriptor> line : selectedLines) {
+            fds.add(line.getInitializeObject());
         }
 
-        BackgroundExecutorService.schedule(new DownloadTask(LibrarySettings.LIBRARY_FROM_DEVICE_DATA_DIR_SETTING.getValue(), dfds.toArray(new DeviceFileDescriptor[0])));
+        BackgroundExecutorService.schedule(new DownloadTask(LibrarySettings.LIBRARY_FROM_DEVICE_DATA_DIR_SETTING.getValue(), device, fds.toArray(new FileDescriptor[0])));
     }
 
     ///////////////////////////////////////////////////////
@@ -385,8 +385,8 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
         List<AudioSource> result = new ArrayList<AudioSource>(size);
         for (int i = 0; i < size; i++) {
             try {
-                URL url = new URL(DATA_MODEL.get(i).getInitializeObject().getDevice().getDownloadURL(DATA_MODEL.get(i).getInitializeObject().getFD()));
-                result.add(new DeviceAudioSource(url, DATA_MODEL.get(i).getInitializeObject()));
+                URL url = new URL(device.getDownloadURL(DATA_MODEL.get(i).getInitializeObject()));
+                result.add(new DeviceAudioSource(url, device, DATA_MODEL.get(i).getInitializeObject()));
             } catch (Throwable e) {
             }
         }
