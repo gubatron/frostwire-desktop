@@ -8,6 +8,10 @@ import java.net.URL;
 
 import org.limewire.util.FilenameUtils;
 
+import com.frostwire.gui.library.LibraryMediator;
+import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.I18n;
+
 public class DownloadTask extends DeviceTask {
 
     private final File savePath;
@@ -46,6 +50,12 @@ public class DownloadTask extends DeviceTask {
                 }
 
                 currentDeviceFD = dfds[i];
+                
+                GUIMediator.safeInvokeLater(new Runnable() {
+                    public void run() {
+                        LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Downloading ") + currentDeviceFD.getFD().title);
+                    }
+                });
 
                 URL url = new URL(currentDeviceFD.getDevice().getDownloadURL(currentDeviceFD.getFD()));
 
@@ -70,6 +80,12 @@ public class DownloadTask extends DeviceTask {
                         fos.write(buffer, 0, n);
                         totalWritten += n;
                         setProgress((int) ((totalWritten * 100) / totalBytes));
+                        
+                        GUIMediator.safeInvokeLater(new Runnable() {
+                            public void run() {
+                                LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Downloading ") + currentDeviceFD.getFD().title + " " + getProgress() + "%");
+                            }
+                        });
                     }
                 } finally {
                     close(fos);
@@ -80,6 +96,12 @@ public class DownloadTask extends DeviceTask {
             setProgress(100);
         } catch (Throwable e) {
             onError(e);
+        } finally {
+            GUIMediator.safeInvokeLater(new Runnable() {
+                public void run() {
+                    LibraryMediator.instance().getLibrarySearch().revertStatus();
+                }
+            });
         }
 
         stop();
