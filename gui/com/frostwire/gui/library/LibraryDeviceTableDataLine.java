@@ -118,11 +118,11 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
         case TITLE_IDX:
             return new PlayableCell(this, initializer.title, playing, idx);
         case ARTIST_IDX:
-            return new PlayableCell(this, initializer.artist, playing, idx);
+            return new PlayableCell(this, filterUnknown(initializer.artist), playing, idx);
         case ALBUM_IDX:
-            return new PlayableCell(this, initializer.album, playing, idx);
+            return new PlayableCell(this, filterUnknown(initializer.album), playing, idx);
         case YEAR_IDX:
-            return new PlayableCell(this, initializer.year, playing, idx);
+            return new PlayableCell(this, filterUnknown(initializer.year), playing, idx);
         case SIZE_IDX:
             return new PlayableCell(this, sizeHolder.toString(), playing, idx);
         }
@@ -187,13 +187,13 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
             list.add(I18n.tr("Title") + ": " + initializer.title);
         }
         
-        if (!StringUtils.isNullOrEmpty(initializer.artist, true)) {
+        if (!StringUtils.isNullOrEmpty(filterUnknown(initializer.artist), true)) {
             list.add(I18n.tr("Artist") + ": " + initializer.artist);
         }
-        if (!StringUtils.isNullOrEmpty(initializer.album, true)) {
+        if (!StringUtils.isNullOrEmpty(filterUnknown(initializer.album), true)) {
             list.add(I18n.tr("Album") + ": " + initializer.album);
         }
-        if (!StringUtils.isNullOrEmpty(initializer.year, true)) {
+        if (!StringUtils.isNullOrEmpty(filterUnknown(initializer.year), true)) {
             list.add(I18n.tr("Year") + ": " + initializer.year);
         }
 
@@ -203,6 +203,10 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
     @Override
     public File getFile() {
         return null;
+    }
+    
+    private String filterUnknown(String str) {
+        return str != null && str.contains("<unknown>") ? "" : str;
     }
     
     private Icon getIcon() {
