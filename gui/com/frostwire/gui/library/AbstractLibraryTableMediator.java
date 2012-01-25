@@ -17,11 +17,14 @@ import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.bittorrent.SendFileProgressDialog;
 import com.frostwire.gui.player.AudioPlayer;
+import com.frostwire.gui.player.AudioPlayerComponent;
 import com.frostwire.gui.player.AudioSource;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.actions.LimeAction;
+import com.limegroup.gnutella.gui.options.ConfigureOptionsAction;
+import com.limegroup.gnutella.gui.options.OptionsConstructor;
 import com.limegroup.gnutella.gui.tables.AbstractTableMediator;
 import com.limegroup.gnutella.gui.tables.DataLineModel;
 import com.limegroup.gnutella.gui.themes.SkinMenu;
@@ -32,16 +35,24 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
     private MediaType mediaType;
 
     protected Action SEND_TO_FRIEND_ACTION;
+    protected Action OPTIONS_ACTION;
 
     private int needToScrollTo;
     
     private AdjustmentListener adjustmentListener;
+    
+    protected JComponent LIBRARY_PLAYER;
 
     protected AbstractLibraryTableMediator(String id) {
         super(id);
         GUIMediator.addRefreshListener(this);
         mediaType = MediaType.getAnyTypeMediaType();
         needToScrollTo = -1;
+    }
+    
+    @Override
+    protected void setupConstants() {
+        LIBRARY_PLAYER = new AudioPlayerComponent().getMediaPanel(true);
     }
 
     public List<AbstractLibraryTableDataLine<I>> getSelectedLines() {
@@ -117,6 +128,8 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
     protected void buildListeners() {
         super.buildListeners();
         SEND_TO_FRIEND_ACTION = new SendToFriendAction();
+        OPTIONS_ACTION = new ConfigureOptionsAction(OptionsConstructor.SHARED_KEY, I18n.tr("Options"), I18n
+                .tr("You can configure the folders you share in FrostWire\'s Options."));
     }
 
     protected SkinMenu createAddToPlaylistSubMenu() {
@@ -200,6 +213,7 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
 
         public SendToFriendAction() {
             super(I18n.tr("Send to friend"));
+            putValue(LimeAction.SHORT_NAME, I18n.tr("Share"));
             putValue(Action.LONG_DESCRIPTION, I18n.tr("Send to friend"));
             putValue(Action.SMALL_ICON, GUIMediator.getThemeImage("share"));
             putValue(LimeAction.ICON_NAME, "LIBRARY_SEND");
@@ -222,29 +236,6 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
         }
     }
     
-    static class ExploreAction extends AbstractAction {
-
-		private static final long serialVersionUID = 8992145937511990033L;
-
-		public ExploreAction() {
-            putValue(Action.NAME, I18n.tr("Explore"));
-            putValue(LimeAction.SHORT_NAME, I18n.tr("Explore"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Open Folder Containing the File"));
-            putValue(LimeAction.ICON_NAME, "LIBRARY_EXPLORE");
-        }
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			File toExplore = LibraryMediator.instance().getSelectedFile();
-			
-			if (toExplore != null) {
-				GUIMediator.launchExplorer(toExplore);
-			} else {
-				System.out.println("LibraryMediator.ExploreAction.actionPerformed() - Had nothing to launch.");
-			}
-		}
-    }
-
     void scrollTo(int value) {
         needToScrollTo = value;
     }

@@ -316,7 +316,6 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
             }
 
             LibraryMediator.instance().getLibraryPlaylists().clearSelection();
-            LibraryMediator.instance().refreshBottomActions();
 
             refreshSelection(false);
         }

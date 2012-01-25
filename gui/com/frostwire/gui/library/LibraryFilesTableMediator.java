@@ -35,6 +35,7 @@ import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRendere
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
 import com.frostwire.gui.player.AudioPlayer;
+import com.frostwire.gui.player.AudioPlayerComponent;
 import com.frostwire.gui.player.AudioSource;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.MediaType;
@@ -130,13 +131,14 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
      * Set up the constants
      */
     protected void setupConstants() {
+        super.setupConstants();
         MAIN_PANEL = new PaddedPanel();
         DATA_MODEL = new LibraryFilesTableModel();
         TABLE = new LimeJTable(DATA_MODEL);
         DATA_MODEL.setTable(TABLE);
-        Action[] aa = new Action[] { LAUNCH_ACTION, DELETE_ACTION };
+        Action[] aa = new Action[] { LAUNCH_ACTION, OPEN_IN_FOLDER_ACTION, SEND_TO_FRIEND_ACTION, DELETE_ACTION, OPTIONS_ACTION };
 
-        BUTTON_ROW = new ButtonRow(aa, ButtonRow.X_AXIS, ButtonRow.NO_GLUE);
+        BUTTON_ROW = new ButtonRow(aa, ButtonRow.X_AXIS, ButtonRow.RIGHT_GLUE, LIBRARY_PLAYER);
     }
 
     // inherit doc comment
@@ -669,8 +671,6 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         if (sel.length == 1) {
             LibraryMediator.instance().getLibraryCoverArt().setFile(selectedFile);
         }
-        
-        LibraryMediator.instance().refreshBottomActions();
     }
 
     /**
@@ -739,9 +739,10 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         private static final long serialVersionUID = 1693310684299300459L;
 
         public OpenInFolderAction() {
-            putValue(Action.NAME, I18n.tr("Open in Folder"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Open Folder Containing a Selected File"));
-            putValue(LimeAction.ICON_NAME, "LIBRARY_LAUNCH");
+            putValue(Action.NAME, I18n.tr("Explore"));
+            putValue(LimeAction.SHORT_NAME, I18n.tr("Explore"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Open Folder Containing the File"));
+            putValue(LimeAction.ICON_NAME, "LIBRARY_EXPLORE");
         }
 
         public void actionPerformed(ActionEvent ae) {

@@ -82,11 +82,12 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
      * Set up the constants
      */
     protected void setupConstants() {
+        super.setupConstants();
         MAIN_PANEL = new PaddedPanel();
         DATA_MODEL = new LibraryDeviceTableModel();
         TABLE = new LimeJTable(DATA_MODEL);
-        Action[] aa = new Action[] { LAUNCH_ACTION };
-        BUTTON_ROW = new ButtonRow(aa, ButtonRow.X_AXIS, ButtonRow.NO_GLUE);
+        Action[] aa = new Action[] { LAUNCH_ACTION, OPTIONS_ACTION };
+        BUTTON_ROW = new ButtonRow(aa, ButtonRow.X_AXIS, ButtonRow.RIGHT_GLUE, LIBRARY_PLAYER);
     }
 
     // inherit doc comment
@@ -308,8 +309,6 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
 
         LAUNCH_ACTION.setEnabled(sel.length == 1 && (fileType == DeviceConstants.FILE_TYPE_AUDIO || fileType == DeviceConstants.FILE_TYPE_RINGTONES) && AudioPlayer.isPlayableFile(dfd.getFD().filePath));
         saveToAction.setEnabled(true);
-
-        LibraryMediator.instance().refreshBottomActions();
     }
 
     /**

@@ -109,11 +109,12 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
      * Set up the constants
      */
     protected void setupConstants() {
+        super.setupConstants();
         MAIN_PANEL = new PaddedPanel();
         DATA_MODEL = new LibraryPlaylistsTableModel();
         TABLE = new LimeJTable(DATA_MODEL);
-        Action[] aa = new Action[] { LAUNCH_ACTION, DELETE_ACTION };
-        BUTTON_ROW = new ButtonRow(aa, ButtonRow.X_AXIS, ButtonRow.NO_GLUE);
+        Action[] aa = new Action[] { LAUNCH_ACTION, OPEN_IN_FOLDER_ACTION, SEND_TO_FRIEND_ACTION, DELETE_ACTION, OPTIONS_ACTION };
+        BUTTON_ROW = new ButtonRow(aa, ButtonRow.X_AXIS, ButtonRow.RIGHT_GLUE, LIBRARY_PLAYER);
     }
 
     // inherit doc comment
@@ -515,8 +516,6 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         if (sel.length == 1) {
             LibraryMediator.instance().getLibraryCoverArt().setFile(getSelectedLibraryLines()[0].getFile());
         }
-        
-        LibraryMediator.instance().refreshBottomActions();
     }
 
     /**
@@ -575,9 +574,10 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         private static final long serialVersionUID = 1693310684299300459L;
 
         public OpenInFolderAction() {
-            putValue(Action.NAME, I18n.tr("Open in Folder"));
-            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Open Folder Containing a Selected File"));
-            putValue(LimeAction.ICON_NAME, "LIBRARY_LAUNCH");
+            putValue(Action.NAME, I18n.tr("Explore"));
+            putValue(LimeAction.SHORT_NAME, I18n.tr("Explore"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Open Folder Containing the File"));
+            putValue(LimeAction.ICON_NAME, "LIBRARY_EXPLORE");
         }
 
         public void actionPerformed(ActionEvent ae) {
@@ -588,7 +588,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
 
             File selectedFile = getFile(sel[0]);
             if (selectedFile.isFile() && selectedFile.getParentFile() != null) {
-                GUIMediator.launchExplorer(selectedFile.getParentFile());
+                GUIMediator.launchExplorer(selectedFile);
             }
         }
     }

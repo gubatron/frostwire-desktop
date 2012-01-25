@@ -70,8 +70,7 @@ public class LibraryMediator {
 	private AbstractLibraryTableMediator<?, ?, ?> lastSelectedMediator;
 	
 	private Set<Integer> idScanned;
-	private AddRadioStationAction addStationAction;
-	private AbstractLibraryTableMediator.ExploreAction exploreAction;
+	
 	private SendToFriendAction sendAction;
 	
 	private AbstractLibraryTableMediator<?, ?, ?> currentMediator;
@@ -180,7 +179,6 @@ public class LibraryMediator {
     public void showView(String key) {
         rememberScrollbarsOnMediators(key);
         _tablesViewLayout.show(_tablesPanel, key);
-        LibraryMediator.instance().refreshBottomActions();
         
         if (key.equals(FILES_TABLE_KEY)) {
             currentMediator = LibraryFilesTableMediator.instance();
@@ -305,34 +303,7 @@ public class LibraryMediator {
 
         panel.add(getLibrarySearch(), BorderLayout.PAGE_START);
         panel.add(_tablesPanel, BorderLayout.CENTER);
-/*
-        //BOTTOM PART - Actions to the left and Player to the right
-        JPanel panelBottom = new JPanel();
-        panelBottom.setLayout(new BoxLayout(panelBottom,BoxLayout.LINE_AXIS));
-        //actions
-        sendAction = new AbstractLibraryTableMediator.SendToFriendAction();
-        sendAction.setEnabled(false);
-        panelBottom.add(new IconButton(sendAction));
-
-        exploreAction = new AbstractLibraryTableMediator.ExploreAction();
-        exploreAction.setEnabled(false);
-        panelBottom.add(new IconButton(exploreAction));
         
-        addStationAction = new LibraryInternetRadioTableMediator.AddRadioStationAction();
-        panelBottom.add(new IconButton(addStationAction));
-
-        panelBottom.add(
-                new IconButton(new ConfigureOptionsAction(OptionsConstructor.SHARED_KEY, I18n.tr("Options"), I18n
-                        .tr("You can configure the folders you share in FrostWire\'s Options."))));
-
-        
-        //empty space
-        panelBottom.add(Box.createHorizontalGlue());
-        
-        //player
-        panelBottom.add(new LibraryPlayer());
-        
-        panel.add(panelBottom, BorderLayout.PAGE_END);*/
         return panel;
     }
     
@@ -473,30 +444,6 @@ public class LibraryMediator {
 			toExplore = LibraryPlaylistsTableMediator.instance().getSelectedLines().get(0).getFile();
 		}
 		return toExplore;
-	}
-    
-    /**
-     * Invoked by the LibraryFiles selection listener.
-     * When a selection has changed there, we gotta make some actions enabled or disabled.
-     * @param node 
-     */
-	public void refreshBottomActions() {
-	    if (true) {
-	        return;
-	    }
-		DirectoryHolder selectedDirectoryHolder = LibraryMediator.instance().getLibraryExplorer().getSelectedDirectoryHolder();
-		
-		boolean selectedOneFile = getSelectedFile() != null;		
-		
-		//Conditions to disable file related actions.
-		if (selectedDirectoryHolder instanceof InternetRadioDirectoryHolder ||
-			!selectedOneFile) {
-			exploreAction.setEnabled(false);
-			sendAction.setEnabled(false);
-		} else {
-			exploreAction.setEnabled(true);
-			sendAction.setEnabled(true);
-		}
 	}
 
     public void playCurrentSelection() {
