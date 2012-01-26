@@ -29,6 +29,7 @@ import javax.swing.table.TableCellEditor;
 import org.limewire.collection.CollectionUtils;
 import org.limewire.collection.Tuple;
 import org.limewire.util.FileUtils;
+import org.limewire.util.FilenameUtils;
 import org.limewire.util.OSUtils;
 import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
 
@@ -613,8 +614,20 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         }
 
         LaunchableProvider[] providers = new LaunchableProvider[rows.length];
+        boolean stopAudio = false;
         for (int i = 0; i < rows.length; i++) {
+            try {
+                MediaType mt = MediaType.getMediaTypeForExtension(FilenameUtils.getExtension(DATA_MODEL.getFile(rows[i]).getName()));
+                if (mt.equals(MediaType.getVideoMediaType())) {
+                    stopAudio = true;
+                }
+            } catch (Throwable e) {
+                // ignore
+            }
             providers[i] = new FileProvider(DATA_MODEL.getFile(rows[i]));
+        }
+        if (stopAudio) {
+            AudioPlayer.instance().stop();
         }
         GUILauncher.launch(providers);
     }
