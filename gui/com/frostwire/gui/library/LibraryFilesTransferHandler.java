@@ -31,6 +31,7 @@ public class LibraryFilesTransferHandler extends TransferHandler {
     public boolean canImport(TransferSupport support) {
 
         DropLocation location = support.getDropLocation();
+        try {
         TreePath path = tree.getUI().getClosestPathForLocation(tree, location.getDropPoint().x, location.getDropPoint().y);
         if (path != null) {
             LibraryNode node = (LibraryNode)path.getLastPathComponent();
@@ -41,6 +42,9 @@ public class LibraryFilesTransferHandler extends TransferHandler {
                 }
             }
         } else {
+            return false;
+        }
+        } catch (Exception e) {
             return false;
         }
 
