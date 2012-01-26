@@ -66,7 +66,7 @@ public class DownloadTask extends DeviceTask {
                 try {
                     is = url.openStream();
 
-                    File file = new File(savePath, FilenameUtils.getName(currentFD.filePath));
+                    File file = buildFile(savePath, FilenameUtils.getName(currentFD.filePath));
 
                     fos = new FileOutputStream(file);
 
@@ -108,6 +108,19 @@ public class DownloadTask extends DeviceTask {
         }
 
         stop();
+    }
+
+    private File buildFile(File savePath, String name) {
+        String baseName = FilenameUtils.getBaseName(name);
+        String ext = FilenameUtils.getExtension(name);
+
+        File f = new File(savePath, name);
+        int i = 1;
+        while (f.exists() && i < 100) {
+            f = new File(savePath, baseName + " (" + i + ")." + ext);
+            i++;
+        }
+        return f;
     }
 
     private long getTotalBytes() {
