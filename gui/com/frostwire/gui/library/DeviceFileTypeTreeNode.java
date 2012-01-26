@@ -1,8 +1,7 @@
-package com.frostwire.gui.library.android;
+package com.frostwire.gui.library;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import com.frostwire.gui.library.LibraryNode;
 
 
 public class DeviceFileTypeTreeNode extends LibraryNode {

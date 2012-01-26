@@ -24,8 +24,6 @@ import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.alexandria.db.LibraryDatabase;
 import com.frostwire.gui.library.AbstractLibraryTableMediator.SendToFriendAction;
 import com.frostwire.gui.library.LibraryInternetRadioTableMediator.AddRadioStationAction;
-import com.frostwire.gui.library.android.Device;
-import com.frostwire.gui.library.android.DeviceDiscoveryClerk;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.DeviceAudioSource;

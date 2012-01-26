@@ -1,4 +1,4 @@
-package com.frostwire.gui.library.android;
+package com.frostwire.gui.library;
 
 
 public class FileDescriptor implements Cloneable {

@@ -1,4 +1,4 @@
-package com.frostwire.gui.library.android;
+package com.frostwire.gui.library;
 
 import java.io.Closeable;
 import java.io.File;
@@ -8,7 +8,6 @@ import java.net.URL;
 
 import org.limewire.util.FilenameUtils;
 
-import com.frostwire.gui.library.LibraryMediator;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 
@@ -25,7 +24,7 @@ public class DownloadTask extends DeviceTask {
         this.device = device;
         this.fds = fds;
     }
-    
+
     public FileDescriptor getCurrentFD() {
         return currentFD;
     }
@@ -52,7 +51,7 @@ public class DownloadTask extends DeviceTask {
                 }
 
                 currentFD = fds[i];
-                
+
                 GUIMediator.safeInvokeLater(new Runnable() {
                     public void run() {
                         LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Downloading ") + currentFD.title);
@@ -82,12 +81,14 @@ public class DownloadTask extends DeviceTask {
                         fos.write(buffer, 0, n);
                         totalWritten += n;
                         setProgress((int) ((totalWritten * 100) / totalBytes));
-                        
-                        GUIMediator.safeInvokeLater(new Runnable() {
-                            public void run() {
-                                LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Downloading ") + currentFD.title + " " + getProgress() + "%");
-                            }
-                        });
+
+                        if (getProgress() % 5 == 0) {
+                            GUIMediator.safeInvokeLater(new Runnable() {
+                                public void run() {
+                                    LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Downloading ") + currentFD.title + " " + getProgress() + "%");
+                                }
+                            });
+                        }
                     }
                 } finally {
                     close(fos);

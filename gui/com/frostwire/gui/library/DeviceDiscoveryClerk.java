@@ -1,4 +1,4 @@
-package com.frostwire.gui.library.android;
+package com.frostwire.gui.library;
 
 import java.io.InterruptedIOException;
 import java.net.DatagramPacket;
@@ -21,7 +21,6 @@ import org.limewire.util.NetworkUtils;
 
 import com.frostwire.HttpFetcher;
 import com.frostwire.JsonEngine;
-import com.frostwire.gui.library.LibraryMediator;
 import com.limegroup.gnutella.settings.ConnectionSettings;
 
 public class DeviceDiscoveryClerk {

@@ -1,6 +1,5 @@
-package com.frostwire.gui.library.android;
+package com.frostwire.gui.library;
 
-import com.frostwire.gui.library.LibraryNode;
 
 
 public class DeviceTreeNode extends LibraryNode {

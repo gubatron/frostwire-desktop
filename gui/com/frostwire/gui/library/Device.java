@@ -1,4 +1,4 @@
-package com.frostwire.gui.library.android;
+package com.frostwire.gui.library;
 
 import java.io.File;
 import java.net.InetAddress;

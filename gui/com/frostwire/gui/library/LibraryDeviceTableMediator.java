@@ -19,12 +19,9 @@ import javax.swing.table.TableCellEditor;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.util.FilenameUtils;
 
-import com.frostwire.gui.library.android.Device;
-import com.frostwire.gui.library.android.DeviceConstants;
-import com.frostwire.gui.library.android.DownloadTask;
-import com.frostwire.gui.library.android.FileDescriptor;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.DeviceAudioSource;
@@ -337,8 +334,8 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
         for (AbstractLibraryTableDataLine<FileDescriptor> line : selectedLines) {
             fds.add(line.getInitializeObject());
         }
-
-        BackgroundExecutorService.schedule(new DownloadTask(LibrarySettings.LIBRARY_FROM_DEVICE_DATA_DIR_SETTING.getValue(), device, fds.toArray(new FileDescriptor[0])));
+        
+        ThreadExecutor.startThread(new DownloadTask(LibrarySettings.LIBRARY_FROM_DEVICE_DATA_DIR_SETTING.getValue(), device, fds.toArray(new FileDescriptor[0])), "DownloadFromDevice");
     }
 
     ///////////////////////////////////////////////////////

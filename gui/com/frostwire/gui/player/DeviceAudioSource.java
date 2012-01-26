@@ -2,8 +2,8 @@ package com.frostwire.gui.player;
 
 import java.net.URL;
 
-import com.frostwire.gui.library.android.Device;
-import com.frostwire.gui.library.android.FileDescriptor;
+import com.frostwire.gui.library.Device;
+import com.frostwire.gui.library.FileDescriptor;
 
 public class DeviceAudioSource extends AudioSource {
 
