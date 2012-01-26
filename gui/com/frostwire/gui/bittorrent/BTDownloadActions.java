@@ -293,8 +293,11 @@ final class BTDownloadActions {
             String str = "";
             for (int i = 0; i < downloaders.length; i++) {
                 str += TorrentUtil.getMagnet(downloaders[i].getHash());
-                str += "\n";
+                if (i<downloaders.length-1) {
+                    str += "\n";
+                }
             }
+            
             GUIMediator.setClipboardContent(str);
         }
     }

@@ -52,7 +52,7 @@ public class LibraryPlaylistsTableTransferable implements Transferable {
             return fileTransferable.getTransferData(flavor);
         }
     }
-
+    
     public static final class Item implements Serializable {
         private static final long serialVersionUID = 928701185904989565L;
 

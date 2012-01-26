@@ -19,6 +19,7 @@ import com.frostwire.alexandria.db.LibraryDatabase;
 import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
+import com.limegroup.gnutella.gui.dnd.FileTransferable;
 import com.limegroup.gnutella.gui.dnd.MulticastTransferHandler;
 
 class LibraryPlaylistsTableTransferHandler extends TransferHandler {
