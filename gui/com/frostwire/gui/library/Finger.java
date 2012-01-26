@@ -25,6 +25,8 @@ public class Finger {
     public String deviceManufacturer;
 
     public String deviceBrand;
+    
+    public ScreenMetrics deviceScreen;
 
     // shared data
 
@@ -59,7 +61,7 @@ public class Finger {
         StringBuilder sb = new StringBuilder();
 
         sb.append("(");
-        sb.append(nickname + ", " + totalShared + ", ");
+        sb.append(nickname + ", " + totalShared + ", " + ( deviceScreen != null ? " sc:" + deviceScreen.widthPixels + "x" + deviceScreen.heightPixels : ""));
         sb.append("[");
         sb.append("aud:" + numSharedAudioFiles + "/" + numTotalAudioFiles + ", ");
         sb.append("vid:" + numSharedVideoFiles + "/" + numTotalVideoFiles + ", ");

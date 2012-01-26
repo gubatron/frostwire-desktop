@@ -20,6 +20,7 @@ import javax.swing.JTree;
 import javax.swing.ToolTipManager;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.plaf.basic.BasicTreeUI;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
@@ -51,7 +52,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
     private JTree tree;
 
     private TextNode root;
-    private TextNode devicesNode;
+    private DevicesNode devicesNode;
 
     private Action refreshAction = new RefreshAction();
     private Action exploreAction = new ExploreAction();
@@ -68,7 +69,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
     }
 
     public void handleDeviceNew(Device device) {
-        DeviceTreeNode deviceNode = new DeviceTreeNode(device);
+        DeviceNode deviceNode = new DeviceNode(device);
         devicesNode.add(deviceNode);
         model.insertNodeInto(deviceNode, devicesNode, devicesNode.getChildCount() - 1);
         tree.expandPath(new TreePath(devicesNode.getPath()));
@@ -83,7 +84,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
     }
 
     public void handleDeviceStale(Device device) {
-        DeviceTreeNode node = findNode(device);
+        DeviceNode node = findNode(device);
         model.removeNodeFromParent(node);
     }
 
@@ -164,7 +165,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
         root.add(new DirectoryHolderNode(new TorrentDirectoryHolder()));
         root.add(new DirectoryHolderNode(new SavedFilesDirectoryHolder(SharingSettings.TORRENT_DATA_DIR_SETTING, I18n.tr("Finished Downloads"))));
 
-        devicesNode = new TextNode(I18n.tr("Devices"));
+        devicesNode = new DevicesNode(I18n.tr("Devices"));
         root.add(devicesNode);
 
         model = new DefaultTreeModel(root);
@@ -173,11 +174,13 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
     private void setupTree() {
         tree = new LibraryIconTree(model);
         tree.setRootVisible(false);
-        tree.setShowsRootHandles(true);
+        tree.setShowsRootHandles(false);
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         tree.setCellRenderer(new NodeRenderer());
         tree.setDragEnabled(true);
         tree.setTransferHandler(new LibraryFilesTransferHandler(null));
+        ((BasicTreeUI)tree.getUI()).setExpandedIcon(null);
+        ((BasicTreeUI)tree.getUI()).setCollapsedIcon(null);
 
         SkinPopupMenu popup = new SkinPopupMenu();
         popup.add(new SkinMenuItem(refreshAction));
@@ -214,14 +217,14 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
         root.add(node);
     }
 
-    private DeviceTreeNode findNode(Device device) {
-        DeviceTreeNode deviceNode = null;
+    private DeviceNode findNode(Device device) {
+        DeviceNode deviceNode = null;
 
         for (int i = 0; i < devicesNode.getChildCount() && deviceNode == null; i++) {
             TreeNode node = devicesNode.getChildAt(i);
-            if (node instanceof DeviceTreeNode) {
-                if (((DeviceTreeNode) node).getDevice().equals(device)) {
-                    deviceNode = (DeviceTreeNode) node;
+            if (node instanceof DeviceNode) {
+                if (((DeviceNode) node).getDevice().equals(device)) {
+                    deviceNode = (DeviceNode) node;
                 }
             }
         }
@@ -229,7 +232,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
         return deviceNode;
     }
 
-    private DeviceFileTypeTreeNode findNode(DeviceTreeNode deviceNode, byte fileType) {
+    private DeviceFileTypeTreeNode findNode(DeviceNode deviceNode, byte fileType) {
         DeviceFileTypeTreeNode deviceFileTypeNode = null;
 
         for (int i = 0; i < deviceNode.getChildCount() && deviceFileTypeNode == null; i++) {
@@ -245,7 +248,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
     }
 
     private void refreshDeviceNode(Device device) {
-        DeviceTreeNode node = findNode(device);
+        DeviceNode node = findNode(device);
 
         if (node == null) {
             return; // weird case, no need to do anything
@@ -259,25 +262,22 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
         refreshDeviceFileTypeNode(node, DeviceConstants.FILE_TYPE_RINGTONES);
     }
 
-    private void refreshDeviceFileTypeNode(DeviceTreeNode deviceNode, byte fileType) {
+    private void refreshDeviceFileTypeNode(DeviceNode deviceNode, byte fileType) {
         DeviceFileTypeTreeNode node = findNode(deviceNode, fileType);
 
         if (node == null) {
             if (UITool.getNumSharedFiles(deviceNode.getDevice().getFinger(), fileType) > 0) {
                 node = new DeviceFileTypeTreeNode(deviceNode.getDevice(), fileType);
                 model.insertNodeInto(node, deviceNode, 0);
-                sortFileTypeNodes(deviceNode);
                 tree.expandPath(new TreePath(deviceNode.getPath()));
             }
         } else {
             if (UITool.getNumSharedFiles(deviceNode.getDevice().getFinger(), fileType) == 0) {
                 model.removeNodeFromParent(node);
+            } else {
+                node.updateText();
             }
         }
-    }
-
-    private void sortFileTypeNodes(DeviceTreeNode deviceNode) {
-        // TODO
     }
 
     public DirectoryHolder getSelectedDirectoryHolder() {
