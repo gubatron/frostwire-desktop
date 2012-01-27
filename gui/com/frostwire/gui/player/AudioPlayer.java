@@ -608,7 +608,7 @@ public class AudioPlayer implements RefreshListener {
                 if (currentSong.equals(f1)) {
                     for (int j = 1; j < n; j++) {
                         AudioSource file = playlistFilesView.get((j + i) % n);
-                        if (isPlayableFile(file)) {
+                        if (isPlayableFile(file) || file instanceof DeviceAudioSource) {
                             return file;
                         }
                     }

@@ -609,6 +609,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
 
     public void selectDeviceFileType(Device device, byte fileType) {
         try {
+            Object selectedNode = tree.getSelectionPath().getLastPathComponent();
             Enumeration<?> e = root.depthFirstEnumeration();
             while (e.hasMoreElements()) {
                 LibraryNode node = (LibraryNode) e.nextElement();
@@ -618,6 +619,9 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
                     if (dev.equals(device) && ft == fileType) {
                         tree.setSelectionPath(new TreePath(node.getPath()));
                         tree.scrollPathToVisible(new TreePath(node.getPath()));
+                        if (selectedNode != null && selectedNode.equals(node)) {
+                            executePendingRunnables();
+                        }
                         return;
                     }
                 }
