@@ -373,7 +373,21 @@ public class LibraryMediator {
 
             libraryFiles.selectRadio();
         } else if (currentSong instanceof DeviceAudioSource) {
-            // TODO: implement this case
+          //selects the audio node at the top
+            LibraryExplorer libraryFiles = getLibraryExplorer();
+
+            //select the song once it's available on the right hand side
+            libraryFiles.enqueueRunnable(new Runnable() {
+                public void run() {
+                    GUIMediator.safeInvokeLater(new Runnable() {
+                        public void run() {
+                            LibraryDeviceTableMediator.instance().setItemSelected(((DeviceAudioSource) currentSong).getFileDescriptor());
+                        }
+                    });
+                }
+            });
+
+            libraryFiles.selectDeviceFileType(((DeviceAudioSource) currentSong).getDevice(), ((DeviceAudioSource) currentSong).getFileDescriptor().fileType);
         }
 
         //Scroll to current song.

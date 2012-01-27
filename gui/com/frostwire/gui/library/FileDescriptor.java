@@ -50,6 +50,11 @@ public class FileDescriptor implements Cloneable {
 
         return this.id == fd.id && this.fileType == fd.fileType;
     }
+    
+    @Override
+    public int hashCode() {
+        return this.id * 1000 + this.fileType;
+    }
 
     @Override
     public FileDescriptor clone() {

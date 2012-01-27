@@ -225,6 +225,8 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
                     addUnsorted(fds.get(i));
                 }
                 forceResort();
+                
+                LibraryMediator.instance().getLibraryExplorer().executePendingRunnables();
             }
         });
     }

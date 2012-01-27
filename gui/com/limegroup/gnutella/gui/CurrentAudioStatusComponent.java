@@ -20,10 +20,12 @@ import javax.swing.JPanel;
 
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.bittorrent.SendFileProgressDialog;
+import com.frostwire.gui.library.FileDescriptor;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioPlayerListener;
 import com.frostwire.gui.player.AudioSource;
+import com.frostwire.gui.player.DeviceAudioSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.frostwire.mplayer.MediaPlaybackState;
 
@@ -67,7 +69,8 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
 			public void mousePressed(MouseEvent e) {
 				if (AudioPlayer.instance().getCurrentSong().getFile()!=null ||
 					AudioPlayer.instance().getCurrentSong().getPlaylistItem()!=null ||
-					AudioPlayer.instance().getCurrentSong() instanceof InternetRadioAudioSource) {
+					AudioPlayer.instance().getCurrentSong() instanceof InternetRadioAudioSource ||
+					AudioPlayer.instance().getCurrentSong() instanceof DeviceAudioSource) {
 					showCurrentSong();
 				} else if (AudioPlayer.instance().getCurrentSong().getURL()!=null) {
 					
@@ -156,7 +159,18 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
         
         String currentText = null;
         
-        if (playlistItem != null) {
+        if (currentSong instanceof DeviceAudioSource) {
+            FileDescriptor fd = ((DeviceAudioSource)currentSong).getFileDescriptor();
+            String artistName = fd.artist;
+            String songTitle = fd.title;
+            
+            String albumToolTip = fd.album;
+            String yearToolTip = fd.year;
+            
+            currentText = artistName + " - " + songTitle;
+            
+            text.setToolTipText(artistName + " - " + songTitle + albumToolTip + yearToolTip);
+        } else if (playlistItem != null) {
             //Playing from Playlist.
             String artistName = playlistItem.getTrackArtist();
             String songTitle = playlistItem.getTrackTitle();
@@ -180,12 +194,7 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
             Pattern urlStart = Pattern.compile("(http://[\\d\\.]+:\\d+).*");
             Matcher matcher = urlStart.matcher(streamURL);
             
-            //Android stream
-            if (streamURL.contains("/download?type=0&id=") && matcher.matches()) {
-                currentText = "android " + matcher.group(1);    
-            } else {
-                currentText = "internet "; // generic internet stream
-            }
+            currentText = "internet "; // generic internet stream
         }
         
         currentStatusIcon = speakerIcon;

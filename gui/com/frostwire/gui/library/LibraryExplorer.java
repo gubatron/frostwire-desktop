@@ -606,4 +606,24 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
             }
         }
     }
+
+    public void selectDeviceFileType(Device device, byte fileType) {
+        try {
+            Enumeration<?> e = root.depthFirstEnumeration();
+            while (e.hasMoreElements()) {
+                LibraryNode node = (LibraryNode) e.nextElement();
+                if (node instanceof DeviceFileTypeTreeNode) {
+                    Device dev = ((DeviceFileTypeTreeNode) node).getDevice();
+                    byte ft = ((DeviceFileTypeTreeNode) node).getFileType();
+                    if (dev.equals(device) && ft == fileType) {
+                        tree.setSelectionPath(new TreePath(node.getPath()));
+                        tree.scrollPathToVisible(new TreePath(node.getPath()));
+                        return;
+                    }
+                }
+            }
+        } finally {
+            //executePendingRunnables();
+        }
+    }
 }
