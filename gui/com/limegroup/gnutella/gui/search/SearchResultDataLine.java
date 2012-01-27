@@ -182,19 +182,6 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> i
             return null;
     }
 
-    /**
-     * Gets the quality of this line.
-     */
-    int getQuality() {
-        if (isDownloading()) {
-            return QualityRenderer.DOWNLOADING_FILE_QUALITY;
-        } else if (SearchSettings.ENABLE_SPAM_FILTER.getValue() && SpamFilter.isAboveSpamThreshold(this)) {
-            return QualityRenderer.SPAM_FILE_QUALITY;
-        } else {
-            return _quality;
-        }
-    }
-
     private boolean isDownloading() {
         if (RESULT.getHash() != null) {
             return BTDownloadMediator.instance().isDownloading(RESULT.getHash());
@@ -247,21 +234,26 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> i
      * Returns the icon.
      */
     Icon getIcon() {
+
+        if (isDownloading()) {
+            return GUIMediator.getThemeImage("downloading");
+        }
+
         String ext = getExtension();
-        
+
         //let's try to extract the extension from inside the torrent name
         if (ext.equals("torrent")) {
-        	String filename = getFilename().replace(".torrent", "");
-        	
-        	Matcher fileExtensionMatcher = Pattern.compile(".*\\.(\\S*)$").matcher(filename);
-        	
-        	
-        	if (fileExtensionMatcher.matches()) {
-        		ext = fileExtensionMatcher.group(1);
-        	}
-        	
+            String filename = getFilename().replace(".torrent", "");
+
+            Matcher fileExtensionMatcher = Pattern.compile(".*\\.(\\S*)$")
+                    .matcher(filename);
+
+            if (fileExtensionMatcher.matches()) {
+                ext = fileExtensionMatcher.group(1);
+            }
+
         }
-        
+
         return IconManager.instance().getIconForExtension(ext);
     }
 
@@ -321,7 +313,6 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> i
      */
     public boolean isClippable(int idx) {
         switch (idx) {
-        case SearchTableColumns.QUALITY_IDX:
         case SearchTableColumns.COUNT_IDX:
         case SearchTableColumns.TYPE_IDX:
             return false;
@@ -339,8 +330,6 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> i
      */
     public Object getValueAt(int index) {
         switch (index) {
-        case SearchTableColumns.QUALITY_IDX:
-            return new Integer(getQuality());
         case SearchTableColumns.COUNT_IDX:
             return new Integer(RESULT.getSeeds());
         case SearchTableColumns.TYPE_IDX:

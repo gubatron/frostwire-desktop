@@ -47,7 +47,7 @@ public class SearchEngineSearchResult extends AbstractSearchResult {
 
     @Override
     public int getQuality() {
-        return QualityRenderer.EXCELLENT_QUALITY;//(int)(Double.parseDouble(_item.Seeds) / Double.parseDouble(_item.leechers));
+        return 0;
     }
 
     public String getHash() {

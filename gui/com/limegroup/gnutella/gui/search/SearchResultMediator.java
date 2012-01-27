@@ -80,7 +80,6 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
     protected static final GUID STOPPED_GUID = new GUID(GUID.makeGuid());
     
     private static final DateRenderer DATE_RENDERER = new DateRenderer();
-    private static final QualityRenderer QUALITY_RENDERER = new QualityRenderer();
     private static final ResultSpeedRenderer RESULT_SPEED_RENDERER = new ResultSpeedRenderer();
     private static final PercentageRenderer PERCENTAGE_RENDERER = new PercentageRenderer();
     
@@ -201,7 +200,6 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
      */
     protected void setDefaultRenderers() {
         super.setDefaultRenderers();
-        TABLE.setDefaultRenderer(QualityHolder.class, QUALITY_RENDERER);
         TABLE.setDefaultRenderer(ResultSpeed.class, RESULT_SPEED_RENDERER);
         TABLE.setDefaultRenderer(Date.class, DATE_RENDERER);
         TABLE.setDefaultRenderer(Float.class, PERCENTAGE_RENDERER);

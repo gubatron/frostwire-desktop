@@ -65,7 +65,8 @@ public class DeepSearchResult extends AbstractSearchResult {
 
     @Override
     public int getQuality() {
-        return QualityRenderer.EXCELLENT_QUALITY;//(int)(Double.parseDouble(_item.Seeds) / Double.parseDouble(_item.leechers));
+        //TODO: Delete this method
+        return 0;
     }
 
     public String getHash() {

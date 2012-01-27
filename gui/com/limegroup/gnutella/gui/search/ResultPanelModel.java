@@ -315,21 +315,9 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, SearchRe
                 return spamRet;
         }
         
-        int c1 = normalizeLocationCount(a.getSeeds(), a.getQuality());
-        int c2 = normalizeLocationCount(b.getSeeds(), b.getQuality());
+        int c1 = a.getSeeds();
+        int c2 = b.getSeeds();
         return (c1 - c2) * _ascending;
-    }
-    
-    /** Normalizes the location count, depending on the quality. */
-    private int normalizeLocationCount(int count, int quality) {
-        switch(quality) {
-        case QualityRenderer.SECURE_QUALITY:
-            return Integer.MAX_VALUE-1;
-        case QualityRenderer.MULTICAST_QUALITY:
-            return Integer.MAX_VALUE-2;
-        default:
-            return count;
-        }
     }
     
     /**
