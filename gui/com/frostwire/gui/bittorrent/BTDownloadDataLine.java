@@ -23,6 +23,7 @@ import com.limegroup.gnutella.gui.tables.IconAndNameHolder;
 import com.limegroup.gnutella.gui.tables.IconAndNameHolderImpl;
 import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.ProgressBarHolder;
+import com.limegroup.gnutella.gui.tables.SeedsHolder;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
 import com.limegroup.gnutella.gui.tables.SpeedRenderer;
 import com.limegroup.gnutella.gui.tables.TimeRemainingHolder;
@@ -225,7 +226,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
                 return new TimeRemainingHolder(_timeLeft);
             }
         case SEEDS_INDEX:
-            return _seeds;
+            return new SeedsHolder(_seeds);
         case PEERS_INDEX:
             return _peers;
         case SHARE_RATIO_INDEX:
