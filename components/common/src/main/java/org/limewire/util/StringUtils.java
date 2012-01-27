@@ -552,6 +552,6 @@ public class StringUtils {
     }
     
     public static String removeDoubleSpaces(String s) {
-        return s.replaceAll("\\s+", " ");
+        return s != null ? s.replaceAll("\\s+", " ") : null;
     }
 }

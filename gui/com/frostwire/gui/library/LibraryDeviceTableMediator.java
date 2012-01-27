@@ -4,7 +4,10 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -21,7 +24,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.util.FilenameUtils;
+import org.limewire.util.StringUtils;
 
+import com.frostwire.gui.filters.TableLineFilter;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.DeviceAudioSource;
@@ -51,6 +56,8 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
 
     private Device device;
     private byte fileType;
+    
+    private FileDescriptorFilter FILE_DESCRIPTOR_FILTER;
 
     /**
      * instance, for singelton access
@@ -80,7 +87,8 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
     protected void setupConstants() {
         super.setupConstants();
         MAIN_PANEL = new PaddedPanel();
-        DATA_MODEL = new LibraryDeviceTableModel();
+        FILE_DESCRIPTOR_FILTER = new FileDescriptorFilter();
+        DATA_MODEL = new LibraryDeviceTableModel(FILE_DESCRIPTOR_FILTER);
         TABLE = new LimeJTable(DATA_MODEL);
         Action[] aa = new Action[] { LAUNCH_ACTION, saveToAction, OPTIONS_ACTION };
         BUTTON_ROW = new ButtonRow(aa, ButtonRow.X_AXIS, ButtonRow.RIGHT_GLUE, LIBRARY_PLAYER);
@@ -409,5 +417,57 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
     protected AudioSource createAudioSource(LibraryDeviceTableDataLine line) {
         // TODO Auto-generated method stub
         return null;
+    }
+    
+    public void filter(String query) {
+        FILE_DESCRIPTOR_FILTER.setQuery(query);
+        DATA_MODEL.filtersChanged();
+    }
+    
+    @Override
+    public void clearTable() {
+        super.clearTable();
+        FILE_DESCRIPTOR_FILTER.setQuery(null);
+    }
+    
+    class FileDescriptorFilter implements TableLineFilter<LibraryDeviceTableDataLine> {
+        
+        private String query;
+        private Set<String> tokens;
+        
+        public String getQuery() {
+            return query;
+        }
+        
+        public void setQuery(String query) {
+            if (StringUtils.isNullOrEmpty(query, true) || query.equals(".")) {
+                this.query = null;
+                this.tokens = null;
+            } else {
+                this.query = StringUtils.removeDoubleSpaces(query);
+                this.tokens = new HashSet<String>(Arrays.asList(this.query.toLowerCase().split(" ")));
+            }
+        }
+        
+        @Override
+        public boolean allow(LibraryDeviceTableDataLine node) {
+            if (tokens == null) {
+                return true;
+            }
+            FileDescriptor fd = node.getInitializeObject();
+            
+            String keywords = (fd.title + " " + fd.artist + " " + fd.album + " " + fd.year).toLowerCase();
+
+            boolean foundMatch = true;
+
+            for (String token : tokens) {
+                if (!keywords.contains(token)) {
+                    foundMatch = false;
+                    break;
+                }
+            }
+            
+            return foundMatch;
+        }
     }
 }

@@ -284,6 +284,11 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
         LibraryNode node = (LibraryNode) tree.getLastSelectedPathComponent();
         return node != null && node instanceof DirectoryHolderNode ? ((DirectoryHolderNode) node).getDirectoryHolder() : null;
     }
+    
+    public Device getSelectedDeviceFiles() {
+        LibraryNode node = (LibraryNode) tree.getLastSelectedPathComponent();
+        return node != null && node instanceof DeviceFileTypeTreeNode ? ((DeviceFileTypeTreeNode) node).getDevice() : null;
+    }
 
     public Dimension getRowDimension() {
         Rectangle rect = tree.getUI().getPathBounds(tree, new TreePath(root));

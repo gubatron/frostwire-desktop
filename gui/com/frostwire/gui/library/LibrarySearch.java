@@ -163,7 +163,8 @@ public class LibrarySearch extends JPanel {
 			public void focusGained(FocusEvent e) {
 				//if there's nothing selected for search, select Audio directory holder.
 				if (LibraryMediator.instance().getLibraryExplorer().getSelectedDirectoryHolder() == null
-					&& LibraryMediator.instance().getLibraryPlaylists().getSelectedPlaylist() == null) {
+					&& LibraryMediator.instance().getLibraryPlaylists().getSelectedPlaylist() == null &&
+					LibraryMediator.instance().getLibraryExplorer().getSelectedDeviceFiles() == null) {
 					LibraryMediator.instance().getLibraryExplorer().selectAudio();
 				}					
 			}
@@ -230,6 +231,11 @@ public class LibrarySearch extends JPanel {
             if (playlist != null) {
                 currentSearchRunnable = new SearchPlaylistItemsRunnable(query,playlist);
                 BackgroundExecutorService.schedule(currentSearchRunnable);
+            }
+            
+            Device device = LibraryMediator.instance().getLibraryExplorer().getSelectedDeviceFiles();
+            if (device != null) {
+                LibraryDeviceTableMediator.instance().filter(query);
             }
         }
     }
