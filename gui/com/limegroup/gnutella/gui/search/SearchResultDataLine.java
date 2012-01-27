@@ -28,7 +28,6 @@ import com.limegroup.gnutella.gui.tables.LimeTableColumn;
 import com.limegroup.gnutella.gui.tables.Linkable;
 import com.limegroup.gnutella.gui.tables.SizeHolder;
 import com.limegroup.gnutella.settings.BittorrentSettings;
-import com.limegroup.gnutella.settings.SearchSettings;
 
 /** 
  * A single line of a search result.
@@ -235,6 +234,9 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> i
      */
     Icon getIcon() {
 
+        //gubs: seems like this didn't fly
+        //maybe the icon isn't refreshed.
+        //see MetadataModel.addProperties()
         if (isDownloading()) {
             return GUIMediator.getThemeImage("downloading");
         }

@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
@@ -78,6 +79,8 @@ public final class StatusLine implements ThemeObserver {
 	 */
 	private JLabel _bandwidthUsageDown;
 	private JLabel _bandwidthUsageUp;
+	
+	private IconButton _twitterButton;
     
     /**
      * Variables for the center portion of the status bar, which can display
@@ -100,44 +103,65 @@ public final class StatusLine implements ThemeObserver {
      * Creates a new status line in the disconnected state.
      */
     public StatusLine() {
-        GUIMediator.setSplashScreenString(
-            I18n.tr("Loading Status Window..."));
+        GUIMediator.setSplashScreenString(I18n.tr("Loading Status Window..."));
 
-		GUIMediator.addRefreshListener(REFRESH_LISTENER);
-		getComponent().addMouseListener(STATUS_BAR_LISTENER);
-		GUIMediator.getAppFrame().addComponentListener(new ComponentListener() {
-			public void componentResized(ComponentEvent arg0) { refresh(); }
-			public void componentMoved(ComponentEvent arg0) { }
-			public void componentShown(ComponentEvent arg0) { }
-			public void componentHidden(ComponentEvent arg0) { }
-		});
-        
-		_audioStatusComponent = new CurrentAudioStatusComponent();
-		
-		//  make icons and panels for connection quality
+        GUIMediator.addRefreshListener(REFRESH_LISTENER);
+        getComponent().addMouseListener(STATUS_BAR_LISTENER);
+        GUIMediator.getAppFrame().addComponentListener(new ComponentListener() {
+            public void componentResized(ComponentEvent arg0) {
+                refresh();
+            }
+
+            public void componentMoved(ComponentEvent arg0) {
+            }
+
+            public void componentShown(ComponentEvent arg0) {
+            }
+
+            public void componentHidden(ComponentEvent arg0) {
+            }
+        });
+
+        _audioStatusComponent = new CurrentAudioStatusComponent();
+
+        //  make icons and panels for connection quality
         createConnectionQualityPanel();
-        
+
         //  make the 'Language' button
         createLanguageButton();
 
         //  make the 'Firewall Status' label
         createFirewallLabel();
-        
-	//  make the 'Bandwidth Usage' label
-	createBandwidthLabel();
-		
-	//  make the center panel
-	createCenterPanel();
-		
+
+        //  make the 'Bandwidth Usage' label
+        createBandwidthLabel();
+
+        // make the Twitter button
+        createTwitterButton();
+
+        //  make the center panel
+        createCenterPanel();
+
         // Set the bars to not be connected.
         setConnectionQuality(0);
 
-	ThemeMediator.addThemeObserver(this);
-	
-	refresh();
+        ThemeMediator.addThemeObserver(this);
+
+        refresh();
     }
 
-	/**
+	private void createTwitterButton() {
+	    _twitterButton = new IconButton("TWITTER");
+	    _twitterButton.addActionListener(new ActionListener() {
+            
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                GUIMediator.openURL("https://twitter.com/#!/frostwire");
+            }
+        });
+    }
+
+    /**
 	 * Redraws the status bar based on changes to StatusBarSettings,
 	 * and makes sure it has room to add an indicator before adding it.
 	 */
@@ -229,6 +253,10 @@ public final class StatusLine implements ThemeObserver {
 			remainingWidth -= indicatorWidth;
         }
 
+        gbc = new GridBagConstraints();
+        gbc.gridx = GridBagConstraints.RELATIVE;
+        BAR.add(_twitterButton,gbc);
+        
 		BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
         //  make center panel stretchy
         gbc.weightx = 1;
