@@ -1,10 +1,13 @@
 frostwire (5.2.12) stable; urgency=high
+  * Sorts transfers by "Seeds" correctly.
   * Improvements on Library action buttons, now a "Launch" action is available
     and buttons are shown/hidden depending on context.
   * Phone & Tablets tab is gone, integration with Android devices is now
     part of the Library under a "Devices" tree item.
   * Fixes bugs where files on a audio playlist could not be dragged out.
   * Fixes bugs where deleted files would still appear on the library.
+  * When right clicking on selected finished transfers and copying an infohash
+    you won't end up with a trailing newline on the clipboard.
   
  -- FrostWire Team <contact@frostwire.com>  Mon, 28 Nov 2011 16:58:31 -0500
 
