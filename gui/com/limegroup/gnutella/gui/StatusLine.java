@@ -505,14 +505,13 @@ public final class StatusLine implements ThemeObserver {
 
         String status = null;
         String tip = null;
-        String connection = I18n.tr("Connection");
         switch(quality) {
             case STATUS_DISCONNECTED:
                 	status = I18n.tr("Disconnected");
                     tip = I18n.tr("Check your internet connection, FrostWire can't connect.");
                     break;
             case STATUS_TURBOCHARGED:
-                    status = I18n.tr("Turbo-Charged") + " " + connection;
+                    status = I18n.tr("Turbo-Charged");
                     tip = I18n.tr("Your connection to the network is extremely strong");
                     break;
         }
