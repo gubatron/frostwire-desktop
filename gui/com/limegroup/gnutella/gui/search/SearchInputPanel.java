@@ -39,6 +39,7 @@ import org.jdesktop.swingx.JXCollapsiblePane;
 import org.limewire.setting.BooleanSetting;
 
 import com.frostwire.gui.bittorrent.SendFileProgressDialog;
+import com.frostwire.gui.components.GoogleIconSearchField;
 import com.frostwire.gui.components.IconSearchField;
 import com.frostwire.gui.filters.TableLineFilter;
 import com.limegroup.gnutella.MediaType;
@@ -77,7 +78,7 @@ class SearchInputPanel extends JPanel {
      * The sole input text field that is at the top of all searches.
      */
     //private final SearchField SEARCH_FIELD = new SearchField(14);
-    private final IconSearchField SEARCH_FIELD = new IconSearchField(10,GUIMediator.getThemeImage("search_tab"));
+    private final IconSearchField SEARCH_FIELD = new GoogleIconSearchField(10,GUIMediator.getThemeImage("search_tab"));
 
     /**
      * The JTabbedPane that switches between types of searches.

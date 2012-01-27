@@ -341,14 +341,14 @@ public class ClearableAutoCompleteTextField extends AutoCompleteTextField {
     /**
      * A list that's used to show auto-complete items.
      */
-    private class AutoCompleteList extends JList {
+    protected class AutoCompleteList extends JList {
         /**
          * 
          */
         private static final long serialVersionUID = -7324769835640667828L;
         private String currentText;
         
-        AutoCompleteList() {
+        public AutoCompleteList() {
             super();
             enableEvents(AWTEvent.MOUSE_EVENT_MASK);
             setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
