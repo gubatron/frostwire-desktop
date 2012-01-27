@@ -152,6 +152,7 @@ public final class StatusLine implements ThemeObserver {
 
 	private void createTwitterButton() {
 	    _twitterButton = new IconButton("TWITTER");
+	    _twitterButton.setToolTipText("Follow us @frostwire");
 	    _twitterButton.addActionListener(new ActionListener() {
             
             @Override

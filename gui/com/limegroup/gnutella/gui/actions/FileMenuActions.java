@@ -102,7 +102,7 @@ public class FileMenuActions {
             constraints.anchor = GridBagConstraints.NORTHWEST;
             constraints.fill = GridBagConstraints.HORIZONTAL;
             constraints.insets = new Insets(0, SPACE, 2 * SPACE, 0);
-            panel.add(new MultiLineLabel(I18n.tr("Type a magnet link, or the path or Web address of a torrent file, and FrostWire will download it for you."),
+            panel.add(new MultiLineLabel(I18n.tr("Type a magnet link, the file path or Web address of a torrent file, and FrostWire will start downloading it for you."),
                     true), constraints);
 
             // open label

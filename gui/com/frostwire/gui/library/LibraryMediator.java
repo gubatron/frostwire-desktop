@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
@@ -22,17 +20,12 @@ import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.alexandria.db.LibraryDatabase;
-import com.frostwire.gui.library.AbstractLibraryTableMediator.SendToFriendAction;
-import com.frostwire.gui.library.LibraryInternetRadioTableMediator.AddRadioStationAction;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.DeviceAudioSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.IconButton;
-import com.limegroup.gnutella.gui.options.ConfigureOptionsAction;
-import com.limegroup.gnutella.gui.options.OptionsConstructor;
 import com.limegroup.gnutella.gui.util.DividerLocationSettingUpdater;
 import com.limegroup.gnutella.settings.LibrarySettings;
 import com.limegroup.gnutella.settings.UISettings;
@@ -67,9 +60,7 @@ public class LibraryMediator {
 	private Object lastSelectedKey;
 	private AbstractLibraryTableMediator<?, ?, ?> lastSelectedMediator;
 	
-	private Set<Integer> idScanned;
-	
-	private SendToFriendAction sendAction;
+	private Set<Integer> idScanned;	
 	
 	private AbstractLibraryTableMediator<?, ?, ?> currentMediator;
 

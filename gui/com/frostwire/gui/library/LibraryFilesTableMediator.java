@@ -80,7 +80,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
     public static Action SEND_TO_ITUNES_ACTION;
 
     /**
-     * instance, for singelton access
+     * instance, for singleton access
      */
     private static LibraryFilesTableMediator INSTANCE;
 
