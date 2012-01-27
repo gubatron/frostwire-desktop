@@ -35,6 +35,8 @@ public class DownloadTask extends DeviceTask {
             return;
         }
 
+        File lastFile = null;
+
         try {
             setProgress(0);
 
@@ -67,6 +69,7 @@ public class DownloadTask extends DeviceTask {
                     is = url.openStream();
 
                     File file = buildFile(savePath, FilenameUtils.getName(currentFD.filePath));
+                    lastFile = file.getAbsoluteFile();
 
                     fos = new FileOutputStream(file);
 
@@ -105,6 +108,10 @@ public class DownloadTask extends DeviceTask {
                     LibraryMediator.instance().getLibrarySearch().revertStatus();
                 }
             });
+
+            if (lastFile != null) {
+                GUIMediator.launchExplorer(lastFile);
+            }
         }
 
         stop();

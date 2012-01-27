@@ -316,6 +316,10 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
 
         LAUNCH_ACTION.setEnabled(sel.length == 1 && (fileType == DeviceConstants.FILE_TYPE_AUDIO || fileType == DeviceConstants.FILE_TYPE_RINGTONES) && AudioPlayer.isPlayableFile(fd.filePath));
         saveToAction.setEnabled(true);
+        
+        if (sel.length == 1) {
+            LibraryMediator.instance().getLibraryCoverArt().setDefault();
+        }
     }
 
     /**
@@ -375,7 +379,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
         private static final long serialVersionUID = 8400749433148927596L;
 
         public SaveToAction() {
-            putValue(Action.NAME, I18n.tr("Save To"));
+            putValue(Action.NAME, I18n.tr("Save"));
             putValue(LimeAction.SHORT_NAME, I18n.tr("Save"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Save Selected Files To Folder"));
             putValue(LimeAction.ICON_NAME, "LIBRARY_LAUNCH");
