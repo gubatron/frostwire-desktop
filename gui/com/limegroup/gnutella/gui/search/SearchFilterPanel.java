@@ -29,7 +29,7 @@ import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.gui.LabeledTextField;
 import com.limegroup.gnutella.settings.SearchSettings;
 
-public class FilterPanel extends JPanel {
+public class SearchFilterPanel extends JPanel {
 
     /**
      * 
@@ -46,7 +46,7 @@ public class FilterPanel extends JPanel {
 
     private final Map<SearchResultMediator, GeneralResultFilter> ACTIVE_FILTERS = new HashMap<SearchResultMediator, GeneralResultFilter>();
 
-    public FilterPanel() {
+    public SearchFilterPanel() {
         setupUI();
         setFilterControlsEnabled(false);
     }

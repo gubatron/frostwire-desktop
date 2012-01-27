@@ -120,7 +120,7 @@ class SearchInputPanel extends JPanel {
 
 	private JXCollapsiblePane SEARCH_OPTIONS_COLLAPSIBLE_PANEL;
 	
-	private FilterPanel _filterPanel;
+	private SearchFilterPanel _filterPanel;
 	
 	private SettingListener SEED_FINISHED_TORRENTS_CHANGE_LISTENER;
 
@@ -304,7 +304,7 @@ class SearchInputPanel extends JPanel {
 		
 		setupCheckboxes(searchEngines, controls);
 		
-		_filterPanel = new FilterPanel();
+		_filterPanel = new SearchFilterPanel();
 		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.add(_filterPanel);
 		
 		controls.setBorder(new TitledBorder(I18n.tr("Choose Search Engines")));
