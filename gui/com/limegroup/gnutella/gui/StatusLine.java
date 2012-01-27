@@ -166,6 +166,11 @@ public final class StatusLine implements ThemeObserver {
 	 * and makes sure it has room to add an indicator before adding it.
 	 */
 	public void refresh() {
+	    if (_audioStatusComponent==null ||
+	            _centerComponent==null) {
+	        return;
+	    }
+	    
 	    getComponent().removeAll();
         
 		//  figure out remaining width, and do not add indicators if no room
@@ -177,6 +182,7 @@ public final class StatusLine implements ThemeObserver {
 		//  subtract player as needed
 		remainingWidth -= sepWidth;
 		remainingWidth -= GUIConstants.SEPARATOR / 2;
+
 		remainingWidth -= _audioStatusComponent.getWidth();
 		remainingWidth -= GUIConstants.SEPARATOR;
 		

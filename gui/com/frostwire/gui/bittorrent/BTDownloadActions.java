@@ -131,8 +131,8 @@ final class BTDownloadActions {
         private static final long serialVersionUID = -4648558721588938475L;
 
         public ShowInLibraryAction() {
-            putValue(Action.NAME, I18n.tr("Show In Library"));
-            putValue(LimeAction.SHORT_NAME, I18n.tr("Show in Library"));
+            putValue(Action.NAME, I18n.tr("Show"));
+            putValue(LimeAction.SHORT_NAME, I18n.tr("Show"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Shows the contents of this transfer in the Library Tab"));
             putValue(LimeAction.ICON_NAME, "LIBRARY_TAB");
         }

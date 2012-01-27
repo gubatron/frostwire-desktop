@@ -80,7 +80,7 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
 			}
 		});
 		
-		shareButton = new MediaButton(I18n.tr("Share this file with a friend"), "share", "share");
+		shareButton = new MediaButton(I18n.tr("Send this file to a friend"), "share", "share");
 		shareButton.addActionListener(new SendToFriendActionListener());
 		shareButton.setVisible(false);
 		

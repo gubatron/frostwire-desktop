@@ -213,7 +213,7 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
 
         public SendToFriendAction() {
             super(I18n.tr("Send to friend"));
-            putValue(LimeAction.SHORT_NAME, I18n.tr("Share"));
+            putValue(LimeAction.SHORT_NAME, I18n.tr("Send"));
             putValue(Action.LONG_DESCRIPTION, I18n.tr("Send to friend"));
             putValue(Action.SMALL_ICON, GUIMediator.getThemeImage("share"));
             putValue(LimeAction.ICON_NAME, "LIBRARY_SEND");
