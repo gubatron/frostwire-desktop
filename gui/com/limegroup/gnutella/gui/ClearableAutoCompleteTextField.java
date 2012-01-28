@@ -128,16 +128,16 @@ public class ClearableAutoCompleteTextField extends AutoCompleteTextField {
                     else
                         showPopup(dict.iterator());                        
                     break;
-                }
-                break;
-            case KeyEvent.KEY_TYPED:
-                switch(evt.getKeyChar()) {
                 case KeyEvent.VK_ESCAPE:
                     if (popup != null) {
                         hidePopup();
                         selectAll();
                     }
                     break;
+                }
+                break;
+            case KeyEvent.KEY_TYPED:
+                switch(evt.getKeyChar()) {
                 case KeyEvent.VK_ENTER:
                     break;
                 default:
