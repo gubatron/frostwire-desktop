@@ -18,6 +18,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.bittorrent.SendFileProgressDialog;
 import com.frostwire.gui.library.FileDescriptor;
@@ -34,6 +37,8 @@ import com.frostwire.mplayer.MediaPlaybackState;
  * Click on it to switch to the library, playlist and scroll to it.
  */
 public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerListener {
+    
+    private static final Log LOG = LogFactory.getLog(CurrentAudioStatusComponent.class);
 	
 	private static final int MAX_CHARS = 33;
 	private static final int BOUND_CHARS = 12;
@@ -153,52 +158,56 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
 
 	@Override
 	public void songOpened(AudioPlayer audioPlayer, AudioSource audioSource) {
-	  //update controls
-        AudioSource currentSong = audioPlayer.getCurrentSong();
-        PlaylistItem playlistItem = currentSong.getPlaylistItem();
-        
-        String currentText = null;
-        
-        if (currentSong instanceof DeviceAudioSource) {
-            FileDescriptor fd = ((DeviceAudioSource)currentSong).getFileDescriptor();
-            String artistName = fd.artist;
-            String songTitle = fd.title;
-            
-            String albumToolTip = fd.album;
-            String yearToolTip = fd.year;
-            
-            currentText = artistName + " - " + songTitle;
-            
-            text.setToolTipText(artistName + " - " + songTitle + albumToolTip + yearToolTip);
-        } else if (playlistItem != null) {
-            //Playing from Playlist.
-            String artistName = playlistItem.getTrackArtist();
-            String songTitle = playlistItem.getTrackTitle();
-            
-            String albumToolTip = (playlistItem.getTrackAlbum() != null && playlistItem.getTrackAlbum().length() > 0) ? " - " + playlistItem.getTrackAlbum() : "";
-            String yearToolTip = (playlistItem.getTrackYear()!=null && playlistItem.getTrackYear().length() > 0) ? " ("+playlistItem.getTrackYear() +")" : "";
-            
-            currentText = artistName + " - " + songTitle;
-            
-            text.setToolTipText(artistName + " - " + songTitle + albumToolTip + yearToolTip);
-            
-        }  else if (currentSong.getFile()!=null) {
-            //playing from Audio.
-            currentText = AudioPlayer.instance().getCurrentSong().getFile().getName();
-            
-            text.setToolTipText(currentSong.getFile().getAbsolutePath());
-        } else if (currentSong.getFile() == null && currentSong.getURL() != null) {
-            System.out.println("StreamURL: " + currentSong.getURL().toString());
-            
-            String streamURL = currentSong.getURL().toString();
-            Pattern urlStart = Pattern.compile("(http://[\\d\\.]+:\\d+).*");
-            Matcher matcher = urlStart.matcher(streamURL);
-            
-            currentText = "internet "; // generic internet stream
+        try {
+            //update controls
+            AudioSource currentSong = audioPlayer.getCurrentSong();
+            PlaylistItem playlistItem = currentSong.getPlaylistItem();
+
+            String currentText = null;
+
+            if (currentSong instanceof DeviceAudioSource) {
+                FileDescriptor fd = ((DeviceAudioSource) currentSong).getFileDescriptor();
+                String artistName = fd.artist;
+                String songTitle = fd.title;
+
+                String albumToolTip = fd.album;
+                String yearToolTip = fd.year;
+
+                currentText = artistName + " - " + songTitle;
+
+                text.setToolTipText(artistName + " - " + songTitle + albumToolTip + yearToolTip);
+            } else if (playlistItem != null) {
+                //Playing from Playlist.
+                String artistName = playlistItem.getTrackArtist();
+                String songTitle = playlistItem.getTrackTitle();
+
+                String albumToolTip = (playlistItem.getTrackAlbum() != null && playlistItem.getTrackAlbum().length() > 0) ? " - " + playlistItem.getTrackAlbum() : "";
+                String yearToolTip = (playlistItem.getTrackYear() != null && playlistItem.getTrackYear().length() > 0) ? " (" + playlistItem.getTrackYear() + ")" : "";
+
+                currentText = artistName + " - " + songTitle;
+
+                text.setToolTipText(artistName + " - " + songTitle + albumToolTip + yearToolTip);
+
+            } else if (currentSong != null && currentSong.getFile() != null) {
+                //playing from Audio.
+                currentText = currentSong.getFile().getName();
+
+                text.setToolTipText(currentSong.getFile().getAbsolutePath());
+            } else if (currentSong != null && currentSong.getFile() == null && currentSong.getURL() != null) {
+                System.out.println("StreamURL: " + currentSong.getURL().toString());
+
+                String streamURL = currentSong.getURL().toString();
+                Pattern urlStart = Pattern.compile("(http://[\\d\\.]+:\\d+).*");
+                Matcher matcher = urlStart.matcher(streamURL);
+
+                currentText = "internet "; // generic internet stream
+            }
+
+            currentStatusIcon = speakerIcon;
+            currentStatusLabel = currentText;
+        } catch (Throwable e) {
+            LOG.error("Error doing UI updates", e);
         }
-        
-        currentStatusIcon = speakerIcon;
-        currentStatusLabel = currentText;
 	}
 
 	@Override
