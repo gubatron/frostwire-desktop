@@ -144,13 +144,17 @@ public final class LibraryFoldersPaneItem extends AbstractPaneItem {
 	    LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.setValue(new HashSet<File>());
 	    
 	    for(File f : directoryPanel.getRootsToInclude()) {
-	        LibrarySettings.DIRECTORIES_TO_INCLUDE.add(f);
+	        if (f != null) {
+	            LibrarySettings.DIRECTORIES_TO_INCLUDE.add(f);
+	        }
 	    }
 	    for(File f : directoryPanel.getFoldersToExclude()) {
-	        if (f.equals(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue())) {
-	            LibrarySettings.DIRECTORIES_TO_INCLUDE.add(f);
-	        } else {
-	            LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.add(f);
+	        if (f != null) {
+        	        if (f.equals(SharingSettings.TORRENT_DATA_DIR_SETTING.getValue())) {
+        	            LibrarySettings.DIRECTORIES_TO_INCLUDE.add(f);
+        	        } else {
+        	            LibrarySettings.DIRECTORIES_NOT_TO_INCLUDE.add(f);
+        	        }
 	        }
         }
 	    
