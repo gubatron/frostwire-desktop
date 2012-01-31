@@ -21,6 +21,7 @@ import org.limewire.util.NetworkUtils;
 
 import com.frostwire.HttpFetcher;
 import com.frostwire.JsonEngine;
+import com.frostwire.gui.library.Device.OnActionFailedListener;
 import com.limegroup.gnutella.settings.ConnectionSettings;
 
 public class DeviceDiscoveryClerk {
@@ -142,7 +143,7 @@ public class DeviceDiscoveryClerk {
         byte[] data = packet.getData();
 
         int listeningPort = ((data[0x1e] & 0xFF) << 8) + (data[0x1f] & 0xFF);
-        boolean bye = (data[0x43] & 0xFF) != 0;
+        boolean bye = (data[0x33] & 0xFF) != 0;
 
         handleDeviceState(address, listeningPort, bye);
     }
@@ -160,7 +161,7 @@ public class DeviceDiscoveryClerk {
         }
     }
 
-    private void retrieveFinger(String key, InetAddress address, int listeningPort) {
+    private boolean retrieveFinger(final String key, InetAddress address, int listeningPort) {
         try {
             URI uri = new URI("http://" + key + "/finger");
 
@@ -170,7 +171,7 @@ public class DeviceDiscoveryClerk {
 
             if (jsonBytes == null) {
                 LOG.error("Failed to connnect to " + uri);
-                return;
+                return false;
             }
 
             String json = new String(jsonBytes);
@@ -184,12 +185,21 @@ public class DeviceDiscoveryClerk {
                     handleDeviceAlive(key, device);
                 } else {
                     Device device = new Device(address, listeningPort, finger);
+                    device.setOnActionFailedListener(new OnActionFailedListener() {
+                        public void onActionFailed(Device device, int action, Exception e) {
+                            handleDeviceStale(key, device);
+                        }
+                    });
                     handleDeviceNew(key, device);
                 }
             }
+
+            return true;
         } catch (Throwable e) {
             LOG.error("Failed to connnect to " + key);
         }
+
+        return false;
     }
 
     private void handleDeviceNew(String key, final Device device) {
@@ -220,7 +230,7 @@ public class DeviceDiscoveryClerk {
     private void handleDeviceStale(String key, final Device device) {
         deviceCache.remove(key);
 
-        //LOG.info("Device Slate: " + device);
+        LOG.info("Device Slate: " + device);
 
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
@@ -237,7 +247,11 @@ public class DeviceDiscoveryClerk {
 
                     for (Device device : new ArrayList<Device>(deviceCache.values())) {
                         if (device.getTimestamp() + STALE_DEVICE_TIMEOUT < now) {
-                            handleDeviceStale(device.getKey(), device);
+
+                            // last chance
+                            if (!retrieveFinger(device.getKey(), device.getAddress(), device.getPort())) {
+                                handleDeviceStale(device.getKey(), device);
+                            }
                         }
                     }
                 } catch (Throwable e) {

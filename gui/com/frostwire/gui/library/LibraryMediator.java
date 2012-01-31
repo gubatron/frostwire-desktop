@@ -464,7 +464,6 @@ public class LibraryMediator {
     }
     
     public void handleDeviceStale(Device device) {
-        clearLibraryTable();
         getLibraryExplorer().handleDeviceStale(device);
     }
 }
