@@ -109,6 +109,11 @@ public class SlideshowPanel extends JPanel {
     }
     
     @Override
+    public int getHeight() {
+        return super.getHeight() - 4;
+    }
+    
+    @Override
     protected void paintComponent(Graphics g) {
     	g.setColor(getBackground());
         g.fillRect(0, 0, getWidth(), getHeight());
