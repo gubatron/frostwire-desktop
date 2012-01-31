@@ -16,12 +16,12 @@ public class DeviceNode extends LibraryNode {
     private static final Icon tvMinusDevices;
 
     static {
-        phonePlusDevices = GUIMediator.getThemeImage("speaker");
-        phoneMinusDevices = GUIMediator.getThemeImage("speaker");
-        tabletPlusDevices = GUIMediator.getThemeImage("speaker");
-        tabletMinusDevices = GUIMediator.getThemeImage("speaker");
-        tvPlusDevices = GUIMediator.getThemeImage("speaker");
-        tvMinusDevices = GUIMediator.getThemeImage("speaker");
+        phonePlusDevices = GUIMediator.getThemeImage("phone_small");
+        phoneMinusDevices = GUIMediator.getThemeImage("phone_small");
+        tabletPlusDevices = GUIMediator.getThemeImage("tablet_small");
+        tabletMinusDevices = GUIMediator.getThemeImage("tablet_small");
+        tvPlusDevices = GUIMediator.getThemeImage("tv_small");
+        tvMinusDevices = GUIMediator.getThemeImage("tv_small");
     }
 
     private final Device device;
