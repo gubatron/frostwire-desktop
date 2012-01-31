@@ -26,6 +26,7 @@ public class SavedFilesDirectoryHolder extends FileSettingDirectoryHolder {
 	public SavedFilesDirectoryHolder(FileSetting saveDir, String name) {
 		super(saveDir, name);
 		type = MediaType.getAnyTypeMediaType();
+		cache = new HashSet<File>();
 	}
 	
 	public Icon getIcon() {
@@ -64,7 +65,9 @@ public class SavedFilesDirectoryHolder extends FileSettingDirectoryHolder {
 	}
 	
 	public void clearCache() {
-		cache = null;
+	    if (cache != null) {
+	        cache.clear();
+	    }
 	}
 
 
