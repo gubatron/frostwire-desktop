@@ -324,8 +324,8 @@ public class FileMenuActions {
         private static final long serialVersionUID = -313458189470318964L;
 
         public SendFileAction() {
-            super(I18n.tr("Send Folder/File..."));
-            putValue(Action.LONG_DESCRIPTION, I18n.tr("Send a file to a friend"));
+            super(I18n.tr("Send File or Folder..."));
+            putValue(Action.LONG_DESCRIPTION, I18n.tr("Send a file or a folder to a friend"));
         }
 
         @Override

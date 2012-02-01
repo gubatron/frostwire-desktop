@@ -117,7 +117,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 
 	private Container _container;
 	private JButton _buttonSelectFile;
-	private JButton _buttonSelectFolder;
 	private JTextArea _textTrackers;
 	private JCheckBox _checkStartSeeding;
 	private JCheckBox _checkUseDHT;
@@ -177,11 +176,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		torrentContentsPanel.setBorder(BorderFactory.createTitledBorder(I18n
 				.tr("Torrent Contents")));
 
-		_buttonSelectFile = new JButton(I18n.tr("Select a file..."));
-		_buttonSelectFile.setToolTipText(I18n.tr("Click here to select a single file as the content indexed by your new .torrent"));
-		
-		_buttonSelectFolder = new JButton("Select a folder...");
-		_buttonSelectFolder.setToolTipText(I18n.tr("Click here to select a folder as the content indexed by your new .torrent"));
+		_buttonSelectFile = new JButton(I18n.tr("Select File or Folder..."));
+		_buttonSelectFile.setToolTipText(I18n.tr("Click here to select a single file or a folder as the content indexed by your new .torrent"));
 		
 		final Insets MARGINS = new Insets(5,5,5,5);
 
@@ -209,15 +205,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		c.insets = MARGINS;
 		c.weightx = 1.0;
 		torrentContentsPanel.add(_buttonSelectFile, c);
-
-		//button to select folders
-		c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.LINE_END;
-		c.gridx = 4;
-		c.gridy = 1;
-		c.gridwidth = 1;
-		c.insets = MARGINS;
-		torrentContentsPanel.add(_buttonSelectFolder, c);
 		
 		// add to content pane
 		c = new GridBagConstraints();
@@ -351,14 +338,6 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 			}
 		});
 
-		_buttonSelectFolder.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				onButtonSelectFolder();
-			}
-		});
-
 		_buttonClose.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -412,6 +391,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		if (_fileChooser == null) {
 			_fileChooser = new JFileChooser();
 			_fileChooser.setMultiSelectionEnabled(false);
+			_fileChooser.setApproveButtonText(I18n.tr("Select"));
 		}
 
 		_fileChooser.setFileSelectionMode(fileSelectionMode);
@@ -484,12 +464,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		revertSaveCloseButtons();
 	}
 
-	protected void onButtonSelectFolder() {
-		onContentSelectionButton(JFileChooser.DIRECTORIES_ONLY);
-	}
-
 	protected void onButtonSelectFile() {
-		onContentSelectionButton(JFileChooser.FILES_ONLY);
+		onContentSelectionButton(JFileChooser.FILES_AND_DIRECTORIES);
 	}
 
 	protected void onButtonSaveAs() {
