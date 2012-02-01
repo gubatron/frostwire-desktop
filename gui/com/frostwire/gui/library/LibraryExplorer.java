@@ -222,7 +222,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
                 }
             }
         });
-
+        
         treeSelectionListener = new LibraryExplorerTreeSelectionListener();
         tree.addTreeSelectionListener(treeSelectionListener);
 
@@ -635,16 +635,33 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
 
     public void selectDeviceFileType(Device device, byte fileType) {
         try {
-            Object selectedNode = tree.getSelectionPath().getLastPathComponent();
+            Object selectedNode = null;
+            
+            if (tree.getSelectionPath() == null) {
+                tree.setSelectionRow(0);
+            }
+
+            selectedNode = tree.getSelectionPath().getLastPathComponent();
+            
             Enumeration<?> e = root.depthFirstEnumeration();
             while (e.hasMoreElements()) {
-                LibraryNode node = (LibraryNode) e.nextElement();
+                final LibraryNode node = (LibraryNode) e.nextElement();
                 if (node instanceof DeviceFileTypeTreeNode) {
                     Device dev = ((DeviceFileTypeTreeNode) node).getDevice();
                     byte ft = ((DeviceFileTypeTreeNode) node).getFileType();
                     if (dev.equals(device) && ft == fileType) {
                         tree.setSelectionPath(new TreePath(node.getPath()));
-                        tree.scrollPathToVisible(new TreePath(node.getPath()));
+                        
+                        enqueueRunnable(new Runnable() {
+                            public void run() {
+                                GUIMediator.safeInvokeLater(new Runnable() {
+                                    public void run() {
+                                        tree.scrollPathToVisible(new TreePath(node.getPath()));
+                                    }
+                                });
+                            }
+                        });
+                        
                         if (selectedNode != null && selectedNode.equals(node)) {
                             executePendingRunnables();
                         }

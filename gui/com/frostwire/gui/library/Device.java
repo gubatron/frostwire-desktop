@@ -17,18 +17,15 @@
  */
 package com.frostwire.gui.library;
 
-import java.io.File;
 import java.net.InetAddress;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
 import com.frostwire.HttpFetcher;
 import com.frostwire.JsonEngine;
-import com.limegroup.gnutella.util.EncodingUtils;
 
 public class Device {
 
