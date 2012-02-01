@@ -86,9 +86,10 @@ public class DownloadTask extends DeviceTask {
                     is = url.openStream();
 
                     File file = buildFile(savePath, FilenameUtils.getName(currentFD.filePath));
+                    File incompleteFile = buildIncompleteFile(file);
                     lastFile = file.getAbsoluteFile();
 
-                    fos = new FileOutputStream(file);
+                    fos = new FileOutputStream(incompleteFile);
 
                     byte[] buffer = new byte[4 * 1024];
                     int n = 0;
@@ -110,6 +111,8 @@ public class DownloadTask extends DeviceTask {
                             });
                         }
                     }
+                    
+                    incompleteFile.renameTo(file);
                 } finally {
                     close(fos);
                     close(is);
@@ -145,6 +148,12 @@ public class DownloadTask extends DeviceTask {
             i++;
         }
         return f;
+    }
+    
+    private File buildIncompleteFile(File file) {
+        String prefix = FilenameUtils.removeExtension(file.getAbsolutePath());
+        String ext = FilenameUtils.getExtension(file.getAbsolutePath());
+        return new File(prefix + ".Incomplete." + ext);
     }
 
     private long getTotalBytes() {
