@@ -16,6 +16,7 @@ frostwire (5.2.12) stable; urgency=high
     correctly on top of the image overlay.
   * Lots of icons have been revamped for a more uniform look.
   * Null Pointer Exception issues #100, #103, #104
+  * Flickering issue on song progress bar resolved.
   
  -- FrostWire Team <contact@frostwire.com>  Fri, 3 Feb 2012 00:00:00 -0500
 
