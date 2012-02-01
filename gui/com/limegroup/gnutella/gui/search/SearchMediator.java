@@ -288,7 +288,7 @@ public final class SearchMediator {
                     public void run() {
         
                         final SearchResultMediator rp = getResultPanelForGUID(new GUID(guid));
-                        if (rp != null) {
+                        if (rp != null && !rp.isStopped()) {
                             rp.incrementSearchCount();
                             List<WebSearchResult> webResults = searchEngine.getPerformer().search(query);
 
@@ -330,7 +330,7 @@ public final class SearchMediator {
             public void run() {
 
                 final SearchResultMediator rp = getResultPanelForGUID(new GUID(guid));
-                if (rp != null) {
+                if (rp != null && !rp.isStopped()) {
                     rp.incrementSearchCount();
                     final List<SmartSearchResult> localResults = LocalSearchEngine.instance().search(query);
 
@@ -385,26 +385,6 @@ public final class SearchMediator {
                                             SearchInformation info) {
         return getSearchResultDisplayer().addResultTab(guid, info);
     }
-
-    //private static HashMap<String, Character> BLACKLISTED_URNS = null;
-    
-    /**
-     * If i rp is no longer the i'th panel of this, returns silently.
-     * Otherwise adds line to rp under the given group.  Updates the count
-     * on the tab in this and restarts the spinning lime.
-     * @requires this is called from Swing thread
-     * @modifies this
-     */
-//    public static void handleQueryResult(RemoteFileDesc rfd,
-//                                         HostData data,
-//                                         Set<IpPort> alts) {
-//        byte[] replyGUID = data.getMessageGUID();
-//        ResultPanel rp = getResultPanelForGUID(new GUID(replyGUID));
-//        if(rp != null) {
-//            SearchResult sr = new GnutellaSearchResult(rfd, data, alts);
-//            getSearchResultDisplayer().addQueryResult(replyGUID, sr, rp);
-//        }
-//    }
     
     /**
      * Downloads all the selected table lines from the given result panel.
@@ -485,16 +465,6 @@ public final class SearchMediator {
         line.takeAction(line, guid, saveDir, fileName, saveAs, searchInfo);
     }    
 
-//
-//    /**
-//     * Prompts the user if they want to download an .exe file.
-//     * Returns true s/he said yes.
-//     */
-//    private static boolean userWantsExeDownload() {        
-//        DialogOption response = GUIMediator.showYesNoMessage(I18n.tr("One of the selected files is an executable program and could contain a virus. Are you sure you want to download it?"),
-//                                            QuestionsHandler.PROMPT_FOR_EXE, DialogOption.NO);
-//        return response == DialogOption.YES;
-//    }
 
     ////////////////////////// Other Controls ///////////////////////////
 

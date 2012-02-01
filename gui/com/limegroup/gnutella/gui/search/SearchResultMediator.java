@@ -133,6 +133,8 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
     
     ActionListener DOWNLOAD_PARTIAL_FILES_LISTENER;
     
+    ActionListener STOP_SEARCH_LISTENER;
+    
     public BuyAction BUY_ACTION;    
     
     protected Box SOUTH_PANEL;
@@ -440,6 +442,13 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
                 if (lines.length == 1 && lines[0] != null) {
                     GUIMediator.instance().openTorrentSearchResult(lines[0].getInitializeObject().getWebSearchResult(), true);
                 }
+            }
+        };
+        
+        STOP_SEARCH_LISTENER = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                guid = STOPPED_GUID;
+                SearchMediator.getSearchResultDisplayer().updateSearchIcon(SearchResultMediator.this, false);
             }
         };
     }

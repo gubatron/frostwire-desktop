@@ -322,10 +322,14 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
      * @modifies this
      */
     void addQueryResult(byte[] replyGUID, SearchResult line, SearchResultMediator rp) {
-
+        if (rp.isStopped()) {
+            return;
+        }
+        
         //Actually add the line.   Must obtain rp's monitor first.
         if(!rp.matches(new GUID(replyGUID)))//GUID of rp!=replyGuid
             throw new IllegalArgumentException("guids don't match");
+        
         rp.add(line);
 
         int resultPanelIndex = -1;

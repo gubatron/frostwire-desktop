@@ -44,27 +44,31 @@ final class SearchButtons {
             I18nMarker.marktr("Options"),
         	I18nMarker.marktr("Buy"),
 			I18nMarker.marktr("Download"),
-            I18nMarker.marktr("Details")
+            I18nMarker.marktr("Details"),
+            I18nMarker.marktr("Stop"),
 		};
         String[] buttonTipKeys = {
             I18nMarker.marktr("Open Options dialog"),
         	I18nMarker.marktr("Search for related products on Amazon"),
         	I18nMarker.marktr("Download All Selected Files"),
-            I18nMarker.marktr("See detail web page about the selected torrent (Contents, Comments, Seeds)")
+            I18nMarker.marktr("See detail web page about the selected torrent (Contents, Comments, Seeds)"),
+            I18nMarker.marktr("Stop current searchs")
 		};
         
 		EventListener[] buttonListeners = {
 		    rp.CONFIGURE_SHARING_LISTENER,
 			rp.BUY_LISTENER,
 		    rp.DOWNLOAD_LISTENER,
-		    rp.TORRENT_DETAILS_LISTENER
+		    rp.TORRENT_DETAILS_LISTENER,
+		    rp.STOP_SEARCH_LISTENER
 		};
 		
 		String[] iconNames =  {
 		    "LIBRARY_SHARING_OPTIONS",
 			"BUY",
 		    "SEARCH_DOWNLOAD",
-		    "TORRENT_DETAILS"
+		    "TORRENT_DETAILS",
+		    "SEARCH_STOP"
 		};
 
 		BUTTONS = new ButtonRow(buttonLabelKeys,buttonTipKeys,buttonListeners, iconNames);

@@ -235,6 +235,10 @@ public class LocalSearchEngine {
 			if ((rp = SearchMediator.getResultPanelForGUID(new GUID(guid))) == null) {
 				return null;
 			}
+			
+			if (rp.isStopped()) {
+			    return null;
+			}
 
 			scanAvailableResults(guid, query, info, rp, engines);
 
@@ -464,7 +468,7 @@ public class LocalSearchEngine {
 					.getResultPanelForGUID(new GUID(guid));
 
 			// user closed the tab.
-			if (rp == null) {
+			if (rp == null || rp.isStopped()) {
 				return;
 			}
 
