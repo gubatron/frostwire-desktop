@@ -1,9 +1,27 @@
+/*
+ * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
+ * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.frostwire.gui.library;
 
 import javax.swing.Icon;
-import javax.swing.tree.DefaultMutableTreeNode;
 
+import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.search.NamedMediaType;
 
 public class DeviceFileTypeTreeNode extends LibraryNode {
 
@@ -17,12 +35,12 @@ public class DeviceFileTypeTreeNode extends LibraryNode {
     private static final Icon audio;
 
     static {
-        applications = GUIMediator.getThemeImage("speaker");
-        documents = GUIMediator.getThemeImage("speaker");
-        pictures = GUIMediator.getThemeImage("speaker");
-        videos = GUIMediator.getThemeImage("speaker");
+        applications = NamedMediaType.getFromMediaType(MediaType.getProgramMediaType()).getIcon();
+        documents = NamedMediaType.getFromMediaType(MediaType.getDocumentMediaType()).getIcon();
+        pictures = NamedMediaType.getFromMediaType(MediaType.getImageMediaType()).getIcon();
+        videos = NamedMediaType.getFromMediaType(MediaType.getVideoMediaType()).getIcon();
+        audio = NamedMediaType.getFromMediaType(MediaType.getAudioMediaType()).getIcon();
         ringtones = GUIMediator.getThemeImage("speaker");
-        audio = GUIMediator.getThemeImage("speaker");
     }
 
     private final Device device;

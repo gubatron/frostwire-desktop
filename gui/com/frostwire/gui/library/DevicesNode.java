@@ -12,8 +12,11 @@ public class DevicesNode extends LibraryNode {
     private static final Icon minusDevices;
 
     static {
-        plusDevices = GUIMediator.getThemeImage("speaker");
-        minusDevices = GUIMediator.getThemeImage("speaker");
+        //plus: has children
+        plusDevices = GUIMediator.getThemeImage("android_small");
+        
+        //minus: has no children
+        minusDevices = GUIMediator.getThemeImage("android_small");
     }
 
     public DevicesNode(String text) {
