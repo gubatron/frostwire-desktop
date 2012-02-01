@@ -21,8 +21,6 @@ import java.awt.Rectangle;
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.InvalidDnDOperationException;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JList;
@@ -35,7 +33,6 @@ import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.library.LibraryPlaylists.LibraryPlaylistsListCell;
 import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
-import com.limegroup.gnutella.gui.dnd.FileTransferable;
 
 class LibraryPlaylistsTransferHandler extends TransferHandler {
 

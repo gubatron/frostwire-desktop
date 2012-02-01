@@ -53,7 +53,6 @@ import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRendere
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.bittorrent.CreateTorrentDialog;
 import com.frostwire.gui.player.AudioPlayer;
-import com.frostwire.gui.player.AudioPlayerComponent;
 import com.frostwire.gui.player.AudioSource;
 import com.limegroup.gnutella.FileDesc;
 import com.limegroup.gnutella.MediaType;

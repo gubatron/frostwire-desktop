@@ -10,8 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.swing.Icon;
 import javax.swing.JLabel;
@@ -191,9 +189,9 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
             } else if (currentSong != null && currentSong.getFile() == null && currentSong.getURL() != null) {
                 System.out.println("StreamURL: " + currentSong.getURL().toString());
 
-                String streamURL = currentSong.getURL().toString();
-                Pattern urlStart = Pattern.compile("(http://[\\d\\.]+:\\d+).*");
-                Matcher matcher = urlStart.matcher(streamURL);
+                //sString streamURL = currentSong.getURL().toString();
+                //Pattern urlStart = Pattern.compile("(http://[\\d\\.]+:\\d+).*");
+                //Matcher matcher = urlStart.matcher(streamURL);
 
                 currentText = "internet "; // generic internet stream
             }

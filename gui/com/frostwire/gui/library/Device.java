@@ -22,7 +22,6 @@ import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import com.frostwire.HttpFetcher;
 import com.frostwire.JsonEngine;
@@ -38,7 +37,6 @@ public class Device {
     private InetAddress _address;
     private int _port;
     private Finger finger;
-    private String _token;
     private boolean _tokenAuthorized;
     private OnActionFailedListener _listener;
     private long timestamp;
@@ -47,7 +45,6 @@ public class Device {
         this._address = address;
         this._port = port;
         this.finger = finger;
-        this._token = UUID.randomUUID().toString();
     }
 
     public InetAddress getAddress() {

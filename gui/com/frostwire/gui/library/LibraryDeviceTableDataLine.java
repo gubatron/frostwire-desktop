@@ -89,8 +89,6 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
      *  Kb or Mb
      */
     private SizeHolder sizeHolder;
-
-    private boolean exists;
     
     /**
      * The model this is being displayed on

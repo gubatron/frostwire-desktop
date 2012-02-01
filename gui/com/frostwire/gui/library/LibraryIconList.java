@@ -27,12 +27,9 @@ import javax.swing.JList;
 import javax.swing.ListModel;
 
 import com.frostwire.alexandria.Playlist;
-import com.frostwire.alexandria.db.LibraryDatabase;
 import com.frostwire.gui.library.LibraryPlaylists.LibraryPlaylistsListCell;
 import com.frostwire.gui.player.AudioPlayer;
-import com.frostwire.gui.player.InternetRadioAudioSource;
 import com.frostwire.mplayer.MediaPlaybackState;
-import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 
 public class LibraryIconList extends JList {

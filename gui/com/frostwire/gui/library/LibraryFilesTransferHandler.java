@@ -22,7 +22,6 @@ import java.awt.dnd.InvalidDnDOperationException;
 import java.io.File;
 
 import javax.swing.JComponent;
-import javax.swing.JList;
 import javax.swing.JTree;
 import javax.swing.TransferHandler;
 import javax.swing.tree.TreePath;
