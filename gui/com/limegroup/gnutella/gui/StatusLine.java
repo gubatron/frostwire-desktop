@@ -37,7 +37,6 @@ import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.settings.ApplicationSettings;
-import com.limegroup.gnutella.settings.PlayerSettings;
 import com.limegroup.gnutella.settings.StatusBarSettings;
 
 /**
@@ -593,13 +592,6 @@ public final class StatusLine implements ThemeObserver {
                 jcbmi.setState(StatusBarSettings.BANDWIDTH_DISPLAY_ENABLED.getValue());
                 jpm.add(jcbmi);
                 
-                jpm.addSeparator();
-                
-                //  add 'Show Media Player' menu item
-                jcbmi = new SkinCheckBoxMenuItem(new ShowMediaPlayerAction());
-                jcbmi.setState(PlayerSettings.PLAYER_ENABLED.getValue());
-                jpm.add(jcbmi);
-                
                 jpm.pack();
                 jpm.show(me.getComponent(), me.getX(), me.getY());
             }
@@ -691,26 +683,6 @@ public final class StatusLine implements ThemeObserver {
 		public void actionPerformed(ActionEvent e) {
 			StatusBarSettings.BANDWIDTH_DISPLAY_ENABLED.invert();
 			refresh();
-		}
-	}
-	
-	/**
-	 * Action for the 'Show Media Player' menu item. 
-	 */
-	private class ShowMediaPlayerAction extends AbstractAction {
-		
-		/**
-         * 
-         */
-        private static final long serialVersionUID = 4989741761670317316L;
-
-        public ShowMediaPlayerAction() {
-			putValue(Action.NAME, I18n.tr
-					("Show Media Player"));
-		}
-		
-		public void actionPerformed(ActionEvent e) {
-			GUIMediator.instance().setPlayerEnabled(!PlayerSettings.PLAYER_ENABLED.getValue());
 		}
 	}
 	

@@ -49,8 +49,8 @@ public class AddLibraryDirectoryAction extends AbstractAction {
     
 	public void actionPerformed(ActionEvent ae) {
 		File dir = FileChooserHandler.getInputDirectory(parent);
-		//if(ShareManager.checkAndWarnNewSharedFolder(dir)) {
+		if (dir != null) {
 		    recursiveSharingPanel.addRoot(dir);
-		//}
+		}
 	}
 }

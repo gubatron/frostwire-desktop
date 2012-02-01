@@ -68,7 +68,6 @@ import com.limegroup.gnutella.gui.shell.FrostAssociations;
 import com.limegroup.gnutella.gui.shell.ShellAssociationManager;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.settings.ApplicationSettings;
-import com.limegroup.gnutella.settings.PlayerSettings;
 import com.limegroup.gnutella.settings.QuestionsHandler;
 import com.limegroup.gnutella.settings.StartupSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
@@ -1750,19 +1749,6 @@ public final class GUIMediator {
             runnable.run();
         else
             SwingUtilities.invokeLater(runnable);
-    }
-
-    /**
-     * Changes whether the media player is enabled and updates the GUI
-     * accordingly.
-     */
-    public void setPlayerEnabled(boolean value) {
-        if (value == PlayerSettings.PLAYER_ENABLED.getValue())
-            return;
-        PlayerSettings.PLAYER_ENABLED.setValue(value);
-        getStatusLine().refresh();
-        //getLibraryMediator().setPlayerEnabled(value);
-        //LibraryPlayListTab.setPlayerEnabled(value);
     }
 
     /** Tells CHAT_MEDIATOR to try to start the IRC Chat */
