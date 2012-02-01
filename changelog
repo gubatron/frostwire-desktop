@@ -13,8 +13,9 @@ frostwire (5.2.12) stable; urgency=high
     will not be infinite and will be based on the total sizes of the files
     being shared.
   * Lots of icons have been revamped for a more uniform look.
+  * Null Pointer Exception issues #100, #103, #104
   
- -- FrostWire Team <contact@frostwire.com>  Mon, 28 Nov 2011 16:58:31 -0500
+ -- FrostWire Team <contact@frostwire.com>  Fri, 3 Feb 2012 00:00:00 -0500
 
 frostwire (5.2.11) stable; urgency=high
   * Fixes bugs where some BitTorrent configuration settings were reset
