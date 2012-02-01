@@ -300,39 +300,42 @@ public class BTDownloadImpl implements BTDownload {
     }
 
     public String getShareRatio() {
-        DownloadManager dm = _downloadManager;
-        DownloadManagerStats stats = dm.getStats();
+        try {
+            DownloadManager dm = _downloadManager;
+            DownloadManagerStats stats = dm.getStats();
 
-        int sr = (dm == null) ? 0 : stats.getShareRatio();
+            int sr = (dm == null) ? 0 : stats.getShareRatio();
 
-        if (sr == Integer.MAX_VALUE) {
-            sr = Integer.MAX_VALUE - 1;
-        }
-        
-        //If getShareRatio returns -1, it means total good downloaded
-        //bytes is <= 0 this could also mean the user is re-starting an old torrent
-        //that was already on disk, or downloaded with another client.
-        if (sr == -1) {
-            long downloaded = stats.getTotalGoodDataBytesReceived();
-            long uploaded = stats.getTotalDataBytesSent();
-
-            if (downloaded == 0 &&
-                uploaded > 0) {
-                sr = (int) ((1000 * uploaded) / dm.getDiskManager().getTotalLength());
-            } else {
-                sr = Integer.MAX_VALUE;
+            if (sr == Integer.MAX_VALUE) {
+                sr = Integer.MAX_VALUE - 1;
             }
+
+            //If getShareRatio returns -1, it means total good downloaded
+            //bytes is <= 0 this could also mean the user is re-starting an old torrent
+            //that was already on disk, or downloaded with another client.
+            if (sr == -1) {
+                long downloaded = stats.getTotalGoodDataBytesReceived();
+                long uploaded = stats.getTotalDataBytesSent();
+
+                if (downloaded == 0 && uploaded > 0) {
+                    sr = (int) ((1000 * uploaded) / dm.getDiskManager().getTotalLength());
+                } else {
+                    sr = Integer.MAX_VALUE;
+                }
+            }
+
+            String shareRatio = "";
+
+            if (sr == Integer.MAX_VALUE) {
+                shareRatio = Constants.INFINITY_STRING;
+            } else {
+                shareRatio = DisplayFormatters.formatDecimal((double) sr / 1000, 3);
+            }
+
+            return shareRatio;
+        } catch (Throwable e) {
+            return "";
         }
-
-        String shareRatio = "";
-
-        if (sr == Integer.MAX_VALUE) {
-            shareRatio = Constants.INFINITY_STRING;
-        } else {
-            shareRatio = DisplayFormatters.formatDecimal((double) sr / 1000, 3);
-        }
-
-        return shareRatio;
     }
     
     public Date getDateCreated() {

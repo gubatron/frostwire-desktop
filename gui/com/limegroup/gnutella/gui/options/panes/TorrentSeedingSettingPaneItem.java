@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.frostwire.gui.bittorrent.TorrentSeedingSettingComponent;
+import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
 
@@ -39,6 +40,8 @@ public class TorrentSeedingSettingPaneItem extends AbstractPaneItem {
 		if (!COMPONENT.wantsSeeding()) {
     		BTDownloadMediator.instance().stopCompleted();
         }
+		
+		GUIMediator.instance().getStatusLine().refresh();
 
 		return false;
 	}

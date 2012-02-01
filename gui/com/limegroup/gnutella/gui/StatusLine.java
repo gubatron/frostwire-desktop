@@ -37,6 +37,7 @@ import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.settings.ApplicationSettings;
+import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.StatusBarSettings;
 
 /**
@@ -80,6 +81,8 @@ public final class StatusLine implements ThemeObserver {
 	private JLabel _bandwidthUsageUp;
 	
 	private IconButton _twitterButton;
+	
+	private JLabel labelSeedingStatus;
     
     /**
      * Variables for the center portion of the status bar, which can display
@@ -137,6 +140,9 @@ public final class StatusLine implements ThemeObserver {
 
         // make the Twitter button
         createTwitterButton();
+        
+        // male Seeding status label
+        createSeedingStatusLabel();
 
         //  make the center panel
         createCenterPanel();
@@ -151,7 +157,7 @@ public final class StatusLine implements ThemeObserver {
 
 	private void createTwitterButton() {
 	    _twitterButton = new IconButton("TWITTER");
-	    _twitterButton.setToolTipText("Follow us @frostwire");
+	    _twitterButton.setToolTipText(I18n.tr("Follow us @frostwire"));
 	    _twitterButton.addActionListener(new ActionListener() {
             
             @Override
@@ -159,6 +165,23 @@ public final class StatusLine implements ThemeObserver {
                 GUIMediator.openURL("https://twitter.com/#!/frostwire");
             }
         });
+    }
+	
+    private void createSeedingStatusLabel() {
+        labelSeedingStatus = new JLabel(GUIMediator.getThemeImage("seeding_small")) {
+            private static final long serialVersionUID = -8985154093868645203L;
+            
+            @Override
+            public String getToolTipText() {
+                boolean seedingStatus = SharingSettings.SEED_FINISHED_TORRENTS.getValue();
+                
+                String tooltip = (seedingStatus) ? I18n.tr("<html><b>Seeding</b><p>completed torrent downloads.</html>") : I18n
+                        .tr("<html><b>Not Seeding</b>.<p>File chunks might be shared only during<p>a torrent download.</html>");
+                return tooltip;
+            }
+        };
+
+        ToolTipManager.sharedInstance().registerComponent(labelSeedingStatus);
     }
 
     /**
@@ -258,6 +281,13 @@ public final class StatusLine implements ThemeObserver {
 			BAR.add(createSeparator(), gbc);
 			remainingWidth -= indicatorWidth;
         }
+        
+        gbc = new GridBagConstraints();
+        gbc.gridx = GridBagConstraints.RELATIVE;
+        BAR.add(labelSeedingStatus,gbc);
+        BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
+        BAR.add(createSeparator(), gbc);
+        updateSeedingStatusLabel();
 
         gbc = new GridBagConstraints();
         gbc.gridx = GridBagConstraints.RELATIVE;
@@ -397,6 +427,12 @@ public final class StatusLine implements ThemeObserver {
 		
 		refresh();
 	}
+	
+	private void updateSeedingStatusLabel() {
+	    boolean seedingStatus = SharingSettings.SEED_FINISHED_TORRENTS.getValue();
+        labelSeedingStatus.setText(seedingStatus ? I18n.tr("<html><b>Seeding</b></html>") : I18n.tr("<html><b>Not Seeding</b></html>"));
+	}
+	
 	private long _nextUpdateTime = System.currentTimeMillis();
 
     /**
