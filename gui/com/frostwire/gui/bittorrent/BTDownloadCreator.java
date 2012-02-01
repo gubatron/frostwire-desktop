@@ -181,16 +181,16 @@ public class BTDownloadCreator {
     public BTDownload createDownload() throws SaveLocationException, TOTorrentException {
         if (_torrentInGlobalManager) {
             if (createDownload) {
-                return new DuplicateDownload(createDownload(_downloadManager));
+                return new DuplicateDownload(createDownload(_downloadManager, false));
             } else {
                 return new DuplicateDownload(new BTDownloadImpl(_downloadManager));
             }
         } else {
-            return createDownload(_downloadManager);
+            return createDownload(_downloadManager, false);
         }
     }
     
-    public static BTDownload createDownload(DownloadManager downloadManager) throws SaveLocationException, TOTorrentException {
+    public static BTDownload createDownload(DownloadManager downloadManager, final boolean triggerFilter) throws SaveLocationException, TOTorrentException {
 
         downloadManager.addListener(new DownloadManagerAdapter() {
             @Override
@@ -219,7 +219,7 @@ public class BTDownloadCreator {
                 }
                 
                 //if you have to hide seeds, do so.
-                if (state == DownloadManager.STATE_SEEDING) {
+                if (triggerFilter && state == DownloadManager.STATE_SEEDING) {
                     GUIMediator.safeInvokeLater(new Runnable() {
                         public void run() {
                             BTDownloadMediator.instance().updateTableFilters();

@@ -717,7 +717,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
     public void addDownloadManager(DownloadManager mgr) {
         try {
-            add(BTDownloadCreator.createDownload(mgr));
+            add(BTDownloadCreator.createDownload(mgr, true));
         } catch (Exception e) {
             e.printStackTrace();
         }
