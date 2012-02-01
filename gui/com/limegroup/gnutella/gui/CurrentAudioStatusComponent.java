@@ -78,12 +78,7 @@ public class CurrentAudioStatusComponent extends JPanel implements AudioPlayerLi
 					AudioPlayer.instance().getCurrentSong() instanceof DeviceAudioSource) {
 					showCurrentSong();
 				} else if (AudioPlayer.instance().getCurrentSong().getURL()!=null) {
-					
-					if (text.getText().startsWith("<html><font color=\"496989\"><u>android")) {
-						GUIMediator.instance().setWindow(GUIMediator.Tabs.ANDROID);
-					} else {
-						GUIMediator.instance().setWindow(GUIMediator.Tabs.LIBRARY);
-					}
+					GUIMediator.instance().setWindow(GUIMediator.Tabs.LIBRARY);
 				}
 			}
 		});

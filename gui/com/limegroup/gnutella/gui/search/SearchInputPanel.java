@@ -173,7 +173,7 @@ class SearchInputPanel extends JPanel {
             
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                SendFileProgressDialog dlg = new SendFileProgressDialog(GUIMediator.getAppFrame(), false);
+                SendFileProgressDialog dlg = new SendFileProgressDialog(GUIMediator.getAppFrame());
                 dlg.setVisible(true);
             }
         });

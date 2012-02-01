@@ -20,6 +20,8 @@ import javax.swing.JFrame;
 import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.gudy.azureus2.core3.internat.LocaleTorrentUtil;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentCreator;
@@ -33,33 +35,28 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 public class SendFileProgressDialog extends JDialog {
+    
+    private static final Log LOG = LogFactory.getLog(SendFileProgressDialog.class);
 
 	private JProgressBar _progressBar;
 	private JButton _cancelButton;
 	
     private static final long serialVersionUID = 8298555975449164242L;
-    private final boolean _singleFileMode;
 	private Container _container;
 	private TOTorrentCreator _torrentCreator;
 	private int _percent_complete;
 	private File _preselectedFile;
 
 	public SendFileProgressDialog(JFrame frame, File file) {
-		this(frame, file.isFile());
+		this(frame);
 		_preselectedFile = file;
 	}
 	
-    public SendFileProgressDialog(JFrame frame, boolean singleFileMode) {
+    public SendFileProgressDialog(JFrame frame) {
         super(frame);
-
-        _singleFileMode = singleFileMode;
 
         setupUI();
         setLocationRelativeTo(frame);
-    }
-
-    public boolean isSingleFileMode() {
-        return _singleFileMode;
     }
 
     protected void setupUI() {
@@ -69,7 +66,7 @@ public class SendFileProgressDialog extends JDialog {
     }
 
 	public void setupWindow() {
-		String itemType = isSingleFileMode() ? I18n.tr("Preparing selected file") : I18n.tr("Preparing selected folder");
+		String itemType = I18n.tr("Preparing selection");
 		setTitle(itemType+", "+I18n.tr("please wait..."));
 		
 		Dimension prefDimension = new Dimension(512, 100);
@@ -157,8 +154,9 @@ public class SendFileProgressDialog extends JDialog {
 		JFileChooser fileChooser = new JFileChooser();
 
         fileChooser.setMultiSelectionEnabled(false);
-        fileChooser.setFileSelectionMode(_singleFileMode ? JFileChooser.FILES_ONLY : JFileChooser.DIRECTORIES_ONLY);
-        fileChooser.setDialogTitle((_singleFileMode) ? I18n.tr("Select the file you want to send") : I18n.tr("Select the folder you want to send"));
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        fileChooser.setDialogTitle(I18n.tr("Select the content you want to send"));
+        fileChooser.setApproveButtonText(I18n.tr("Select"));
         int result = fileChooser.showOpenDialog(this);
 
         if (result == JFileChooser.APPROVE_OPTION) {
@@ -172,7 +170,7 @@ public class SendFileProgressDialog extends JDialog {
         } else if (result == JFileChooser.CANCEL_OPTION) {
             onCancelButton();
         } else if (result == JFileChooser.ERROR_OPTION) {
-            System.out.println("Error");
+            LOG.error("Error selecting the file");
         }
 	}
 

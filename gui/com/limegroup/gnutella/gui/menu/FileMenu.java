@@ -11,7 +11,6 @@ import com.limegroup.gnutella.gui.actions.FileMenuActions;
 /**
  * Handles all of the contents of the file menu in the menu bar.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 final class FileMenu extends AbstractMenu {
 
 	/**
@@ -26,7 +25,6 @@ final class FileMenu extends AbstractMenu {
 	    super(I18n.tr("&File"));
 		
 	    MENU.add(createMenuItem(new FileMenuActions.SendFileAction()));
-	    MENU.add(createMenuItem(new FileMenuActions.SendFolderAction()));
 	    MENU.addSeparator();
 	    MENU.add(createMenuItem(new FileMenuActions.OpenMagnetTorrentAction()));
 		MENU.add(createMenuItem(new FileMenuActions.CreateTorrentAction()));

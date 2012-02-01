@@ -144,11 +144,6 @@ public class ApplicationSettings extends LimeProps {
     public static final BooleanSetting LIBRARY_VIEW_ENABLED = FACTORY.createBooleanSetting("LIBRARY_VIEW_ENABLED", true);
 
     /** 
-     * Sets wheter or not the Android Tab should be enabled
-     */
-    public static final BooleanSetting ANDROID_VIEW_ENABLED = FACTORY.createBooleanSetting("ANDROID_VIEW_ENABLED", true);
-
-    /** 
      * Sets wheter or not the Chat Tab should be enabled
      */
     public static final BooleanSetting CHAT_VIEW_ENABLED = FACTORY.createBooleanSetting("CHAT_VIEW_ENABLED", ChatSettings.CHAT_IRC_ENABLED.getValue());

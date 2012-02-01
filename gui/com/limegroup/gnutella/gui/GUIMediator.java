@@ -113,8 +113,8 @@ public final class GUIMediator {
     private boolean _remoteDownloadsAllowed;
 
     public static enum Tabs {
-        SEARCH(I18n.tr("&Search")), LIBRARY(I18n.tr("&Library"), ApplicationSettings.LIBRARY_VIEW_ENABLED), ANDROID(I18n.tr("&Phones and Tablets"),
-                ApplicationSettings.ANDROID_VIEW_ENABLED), CHAT(I18n.tr("Community C&hat"), ApplicationSettings.CHAT_VIEW_ENABLED);
+        SEARCH(I18n.tr("&Search")), LIBRARY(I18n.tr("&Library"), ApplicationSettings.LIBRARY_VIEW_ENABLED),
+                CHAT(I18n.tr("Community C&hat"), ApplicationSettings.CHAT_VIEW_ENABLED);
 
         private Action navAction;
 
@@ -269,7 +269,7 @@ public final class GUIMediator {
 
         public static Tabs[] getOptionalTabs() {
             if (OPTIONAL_TABS == null) {
-                OPTIONAL_TABS = new Tabs[] { LIBRARY, ANDROID, CHAT };
+                OPTIONAL_TABS = new Tabs[] { LIBRARY, CHAT };
             }
 
             return OPTIONAL_TABS;

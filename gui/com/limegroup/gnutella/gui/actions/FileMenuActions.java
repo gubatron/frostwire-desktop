@@ -324,32 +324,13 @@ public class FileMenuActions {
         private static final long serialVersionUID = -313458189470318964L;
 
         public SendFileAction() {
-            super(I18n.tr("Send File..."));
+            super(I18n.tr("Send Folder/File..."));
             putValue(Action.LONG_DESCRIPTION, I18n.tr("Send a file to a friend"));
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            SendFileProgressDialog dlg = new SendFileProgressDialog(GUIMediator.getAppFrame(), true);
-            dlg.setVisible(true);
-        }
-    }
-
-    public static class SendFolderAction extends AbstractAction {
-
-        /**
-         * 
-         */
-        private static final long serialVersionUID = 3886015102735450048L;
-
-        public SendFolderAction() {
-            super(I18n.tr("Send Folder..."));
-            putValue(Action.LONG_DESCRIPTION, I18n.tr("Send a folder to a friend"));
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-        	SendFileProgressDialog dlg = new SendFileProgressDialog(GUIMediator.getAppFrame(), false);
+            SendFileProgressDialog dlg = new SendFileProgressDialog(GUIMediator.getAppFrame());
             dlg.setVisible(true);
         }
     }

@@ -352,8 +352,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         // remove tabs according to Settings Manager...
         if (!ApplicationSettings.LIBRARY_VIEW_ENABLED.getValue())
             this.setTabVisible(GUIMediator.Tabs.LIBRARY, false);
-        if (!ApplicationSettings.ANDROID_VIEW_ENABLED.getValue())
-            this.setTabVisible(GUIMediator.Tabs.ANDROID, false);
         if (!ApplicationSettings.CHAT_VIEW_ENABLED.getValue())
             this.setTabVisible(GUIMediator.Tabs.CHAT, false);
 
