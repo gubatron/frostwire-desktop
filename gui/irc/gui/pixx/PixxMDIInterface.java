@@ -37,6 +37,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.limegroup.gnutella.gui.GUIMediator;
 
 /**
@@ -94,6 +97,9 @@ class MDILayout implements LayoutManager {
  */
 public class PixxMDIInterface extends IRCInterface implements PixxTaskBarListener, PixxMenuBarListener, ActionListener, MouseWheelPanelListener,
         BaseAWTSourceListener, DockablePanelListener {
+    
+    private static final Log LOG = LogFactory.getLog(PixxMDIInterface.class);
+    
     private PixxPanel _panel;
     private PixxMenuBar _menu;
     private PixxTaskBar _task;
@@ -566,11 +572,15 @@ public class PixxMDIInterface extends IRCInterface implements PixxTaskBarListene
     }
 
     public void AWTSourceDesactivated(PixxTaskBar bar, BaseAWTSource asource) {
-        DockablePanel source = getSource(asource);
-        _panel.setBackground(_ircConfiguration.getStyleColors((asource.getStyleContext()))[0]);
-        source.setVisible(false);
-        _panel.validate();
-        test();
+        try {
+            DockablePanel source = getSource(asource);
+            _panel.setBackground(_ircConfiguration.getStyleColors((asource.getStyleContext()))[0]);
+            source.setVisible(false);
+            _panel.validate();
+            test();
+        } catch (Throwable e) {
+            LOG.error("Error in chat GUI framework", e);
+        }
     }
 
     public void AWTSourceActivated(PixxTaskBar bar, BaseAWTSource asource) {
