@@ -1,10 +1,12 @@
 frostwire (5.2.12) stable; urgency=high
+  * Phone & Tablets tab is gone, integration with Android devices is now
+    part of the Library under a "Devices" tree item.
+  * Browses, Streams audio, and downloads files made public by Android devices
+    in the same network.  
   * When entering a torrent search hints are shown (powered by Google).
   * Sorts transfers by "Seeds" correctly.
   * Improvements on Library action buttons, now a "Launch" action is available
     and buttons are shown/hidden depending on context.
-  * Phone & Tablets tab is gone, integration with Android devices is now
-    part of the Library under a "Devices" tree item.
   * Fixes bugs where files on a audio playlist could not be dragged out.
   * Fixes bugs where deleted files would still appear on the library.
   * When right clicking on selected finished transfers and copying an infohash
@@ -15,7 +17,14 @@ frostwire (5.2.12) stable; urgency=high
   * Now when the transfer split pane is dragged up, the pane border is painted
     correctly on top of the image overlay.
   * Lots of icons have been revamped for a more uniform look.
-  * Null Pointer Exception issues #100, #103, #104
+  * Null Pointer Exception issues #100, #103, #104.
+  * Fixes issue #93 chat action causing frostwire crash.
+  * Flickering issue on song progress bar resolved.
+  * Simplified torrent creation. User now doesn't have to make up her mind
+    about choosing a file or a folder, the file selection dialog now
+    handles this for her.
+  * Brought back "Stop" search button.
+  * Removed lingering "Show/Hide player" menu entry on status bar context menu.
   
  -- FrostWire Team <contact@frostwire.com>  Fri, 3 Feb 2012 00:00:00 -0500
 
