@@ -24,6 +24,8 @@ public class IconButton extends JButton {
     
     private String message;
     private String iconName;
+    private boolean horizontalText;
+    
 	/**
 	 * The super constructors of JButton call {@link #updateUI()} before we
 	 * had a chance to set our values. So ignore these calls in 
@@ -33,6 +35,17 @@ public class IconButton extends JButton {
 	
 	private PropertyChangeListener listener = null;
     private boolean iconOnly;
+    
+    /**
+     * 
+     * @param text
+     * @param iconName
+     * @param horizontalTextPlacement - if true, text will be displayed to the right of the icon.
+     */
+    public IconButton(String text, String iconName, boolean horizontalTextPlacement) {
+        this(text, iconName);
+        horizontalText = horizontalTextPlacement;
+    }
     
     /**
      * Constructs a new IconButton with the given text & icon name.
@@ -136,6 +149,7 @@ public class IconButton extends JButton {
                 
         if (icon == null) {
             super.setText(message);
+            
             setVerticalTextPosition(SwingConstants.CENTER);
             setHorizontalTextPosition(SwingConstants.CENTER);
             setContentAreaFilled(true);
@@ -145,8 +159,15 @@ public class IconButton extends JButton {
             setIcon(icon);
             Icon rollover = IconManager.instance().getRolloverIconForButton(iconName);
             setRolloverIcon(rollover);
-            setVerticalTextPosition(SwingConstants.BOTTOM);
-            setHorizontalTextPosition(SwingConstants.CENTER);
+
+            if (!horizontalText) {
+                setVerticalTextPosition(SwingConstants.BOTTOM);
+                setHorizontalTextPosition(SwingConstants.CENTER);
+            } else {
+                setVerticalTextPosition(SwingConstants.CENTER);
+                setHorizontalTextPosition(SwingConstants.TRAILING);
+            }
+
             setContentAreaFilled(false);
             setBorderPainted(false);
             setOpaque(false);

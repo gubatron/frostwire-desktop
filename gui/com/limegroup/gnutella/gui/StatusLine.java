@@ -82,7 +82,7 @@ public final class StatusLine implements ThemeObserver {
 	
 	private IconButton _twitterButton;
 	
-	private JLabel labelSeedingStatus;
+	private IconButton seedingStatusButton;
     
     /**
      * Variables for the center portion of the status bar, which can display
@@ -168,7 +168,8 @@ public final class StatusLine implements ThemeObserver {
     }
 	
     private void createSeedingStatusLabel() {
-        labelSeedingStatus = new JLabel(GUIMediator.getThemeImage("seeding_small")) {
+
+        seedingStatusButton = new IconButton("","SEEDING",true)  {
             private static final long serialVersionUID = -8985154093868645203L;
             
             @Override
@@ -180,8 +181,15 @@ public final class StatusLine implements ThemeObserver {
                 return tooltip;
             }
         };
+        
+        seedingStatusButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GUIMediator.instance().setOptionsVisible(true, I18n.tr("Options"));
+            }
+        });
 
-        ToolTipManager.sharedInstance().registerComponent(labelSeedingStatus);
+        ToolTipManager.sharedInstance().registerComponent(seedingStatusButton);
     }
 
     /**
@@ -284,10 +292,10 @@ public final class StatusLine implements ThemeObserver {
         
         gbc = new GridBagConstraints();
         gbc.gridx = GridBagConstraints.RELATIVE;
-        BAR.add(labelSeedingStatus,gbc);
+        BAR.add(seedingStatusButton,gbc);
         BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
         BAR.add(createSeparator(), gbc);
-        updateSeedingStatusLabel();
+        updateSeedingStatus();
 
         gbc = new GridBagConstraints();
         gbc.gridx = GridBagConstraints.RELATIVE;
@@ -428,9 +436,10 @@ public final class StatusLine implements ThemeObserver {
 		refresh();
 	}
 	
-	private void updateSeedingStatusLabel() {
+	private void updateSeedingStatus() {
 	    boolean seedingStatus = SharingSettings.SEED_FINISHED_TORRENTS.getValue();
-        labelSeedingStatus.setText(seedingStatus ? I18n.tr("<html><b>Seeding</b></html>") : I18n.tr("<html><b>Not Seeding</b></html>"));
+        seedingStatusButton.setText(seedingStatus ? I18n.tr("<html><b>Seeding</b></html>") : I18n.tr("<html><b>Not Seeding</b></html>"));
+        seedingStatusButton.setIcon(seedingStatus ? GUIMediator.getThemeImage("seeding_small") : GUIMediator.getThemeImage("not_seeding_small"));
 	}
 	
 	private long _nextUpdateTime = System.currentTimeMillis();
