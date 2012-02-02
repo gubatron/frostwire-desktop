@@ -19,7 +19,7 @@ public class SmartSearchDB {
     public static final int OBJECT_NOT_SAVED_ID = -1;
     public static final int OBJECT_INVALID_ID = -2;
     
-    public static final int SMART_SEARCH_DATABASE_VERSION = 4;
+    public static final int SMART_SEARCH_DATABASE_VERSION = 5;
 
     private final File _databaseFile;
     private final String _name;
