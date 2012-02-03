@@ -57,6 +57,9 @@ public final class SearchDownloadTab extends AbstractTab {
                     splitPane.setDividerLocation(splitPane.getSize().height - BTDownloadMediator.MIN_HEIGHT);
                 }
                 UISettings.UI_TRANSFERS_DIVIDER_LOCATION.setValue(splitPane.getDividerLocation());
+                if (SearchMediator.getSearchResultDisplayer().getSlideshowPanel() != null) {
+                    SearchMediator.getSearchResultDisplayer().getSlideshowPanel().repaint();
+                }
             }
         });
 	}

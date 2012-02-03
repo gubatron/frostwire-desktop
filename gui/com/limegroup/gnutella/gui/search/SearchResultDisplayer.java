@@ -101,6 +101,8 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
      */
     private final PaneListener PANE_LISTENER = new PaneListener();
     
+    private SlideshowPanel promoSlides;
+    
 	/**
 	 * Constructs the search display elements.
 	 */
@@ -118,7 +120,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
         results.setBackground(Color.WHITE);
 
         //Add SlideShowPanel here.
-        SlideshowPanel promoSlides = null; 
+        promoSlides = null; 
 
         if (!UpdateManagerSettings.SHOW_PROMOTION_OVERLAYS.getValue()) { 
         	Slide s1 = new Slide( "http://static.frostwire.com/images/overlays/default_now_on_android.png","http://www.frostwire.com/?from=defaultSlide",10000);
@@ -168,6 +170,10 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
     void updateResults() {
         for(int i = 0; i < entries.size(); i++)
             entries.get(i).refresh();
+    }
+    
+    public SlideshowPanel getSlideshowPanel() {
+        return promoSlides;
     }
 
     /** 

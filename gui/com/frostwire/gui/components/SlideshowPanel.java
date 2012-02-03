@@ -430,16 +430,18 @@ public class SlideshowPanel extends JPanel {
 	 * @param index
 	 */
 	public void switchToSlide(int index) {
-		_stoppedTransitions = true;
-		_loadingNextImage = false;
-		_currentSlideIndex = index;
-
-		if (_timer != null) {
-			_timer.cancel();
-		}
-		
-		_lastTimeSlideLoaded = 0; 
+	    stopTransitions();
+	    _currentSlideIndex = index;
 		tryMoveNext(true);
+	}
+	
+	public void stopTransitions() {
+	    _stoppedTransitions = true;
+	    _loadingNextImage = false;
+	    if (_timer != null) {
+            _timer.cancel();
+        }
+	    _lastTimeSlideLoaded = 0;
 	}
 
 	public void addListener(SlideshowListener myDummyListener) {

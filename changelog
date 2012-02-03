@@ -19,6 +19,8 @@ frostwire (5.2.12) stable; urgency=high
     being shared.
   * Now when the transfer split pane is dragged up, the pane border is painted
     correctly on top of the image overlay.
+  * Fixes repainting glitch when moving split pane on top of promotional 
+    graphic.
   * Lots of icons have been revamped for a more uniform look.
   * Null Pointer Exception issues #100, #103, #104.
   * Fixes issue #93 chat action causing frostwire crash.
@@ -28,6 +30,8 @@ frostwire (5.2.12) stable; urgency=high
     handles this for her.
   * Brought back "Stop" search button.
   * Removed lingering "Show/Hide player" menu entry on status bar context menu.
+  * If seeding transfers are meant to be finished, newly finished transfers
+    are not hidden for that session.
   
  -- FrostWire Team <contact@frostwire.com>  Fri, 3 Feb 2012 00:00:00 -0500
 
