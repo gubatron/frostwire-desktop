@@ -81,45 +81,6 @@ public class TableRowFilteredModel extends ResultPanelModel {
         return getFilteredSources() + _numSources;
     }
     
-    public int addNewResult(SearchResultDataLine tl, SearchResult sr) {
-        // If we're hiding junk check if TableLine's rating turns into
-        // junk when a new SearchResult is added...
-        if (SearchSettings.hideJunk()) {
-            int added = super.addNewResult(tl, sr);
-            
-            // If so, remove the row from the Table...!
-            if (!junkFilter.allow(tl)) {
-                int row = getRow(tl);
-                remove(row);
-                METADATA.remove(tl);
-                _numSources += tl.getSeeds();
-                _numResults += 1;
-                return 0;
-            } else {
-                return added;
-            }
-        
-        // If we're moving junk results to the bottom check if the 
-        // TableLine rating changes from NOT junk to junk then remove
-        // it from the current position in the Table and move it to
-        // the bottom
-        } else if (SearchSettings.moveJunkToBottom()) {
-            boolean wasNotJunk = junkFilter.allow(tl);
-            int added = super.addNewResult(tl, sr);
-            if (wasNotJunk && !junkFilter.allow(tl)) {
-                int row = getRow(tl);
-                remove(row);
-                return super.add(tl, getSortedPosition(tl)); // re-add
-            } else {
-                return added;
-            }
-        
-        // Standard add...
-        } else {
-            return super.addNewResult(tl, sr);
-        }
-    }
-    
     /**
      * Determines whether or not this line should be added.
      */

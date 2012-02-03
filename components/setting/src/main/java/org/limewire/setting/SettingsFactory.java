@@ -423,6 +423,12 @@ public final class SettingsFactory implements Iterable<AbstractSetting>, RemoteS
         handleSettingInternal(result, null);
         return result;
     }
+    
+    public synchronized IntSetSetting createIntSetSetting(String key, Integer[] defaultValue) {
+        IntSetSetting result = new IntSetSetting(DEFAULT_PROPS, PROPS, key, defaultValue);
+        handleSettingInternal(result, null);
+        return result;
+    }
 
     public synchronized IntSetting createRemoteIntSetting(String key, 
                         int defaultValue, String remoteKey, int min, int max) {

@@ -1,33 +1,22 @@
 package com.limegroup.gnutella.gui.search;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.BorderFactory;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRenderer;
-
 import com.frostwire.gui.components.LabeledRangeSlider;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.gui.LabeledTextField;
-import com.limegroup.gnutella.settings.SearchSettings;
 
 public class SearchFilterPanel extends JPanel {
 
@@ -41,8 +30,6 @@ public class SearchFilterPanel extends JPanel {
     private LabeledTextField _keywordFilterTextField;
 
     private GeneralResultFilter _activeFilter;
-    
-    private JComboBox _typeCombo;
 
     private final Map<SearchResultMediator, GeneralResultFilter> ACTIVE_FILTERS = new HashMap<SearchResultMediator, GeneralResultFilter>();
 
@@ -58,7 +45,7 @@ public class SearchFilterPanel extends JPanel {
         c.weightx = 1.0;
         c.gridwidth = GridBagConstraints.REMAINDER;
 
-        setBorder(new TitledBorder(I18n.tr("Filter Results")));
+        setBorder(new TitledBorder(I18n.tr("Filter")));
         
         _keywordFilterTextField = new LabeledTextField("Name", 40, -1, 100);
 
@@ -69,49 +56,6 @@ public class SearchFilterPanel extends JPanel {
         	}
         }); 
         
-        //TYPE FILTER
-        
-        //fill it up with media types array.
-        _typeCombo = new JComboBox(NamedMediaType.getAllNamedMediaTypes().toArray());
-        
-        _typeCombo.setRenderer(new SubstanceDefaultListCellRenderer() {
-        	/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
-			@Override
-        	public Component getListCellRendererComponent(JList list,
-        			Object value, int index, boolean isSelected,
-        			boolean cellHasFocus) {
-
-        		super.getListCellRendererComponent(list, value, index, isSelected,
-        				cellHasFocus);
-        		NamedMediaType type = (NamedMediaType) value;
-        		setIcon(type.getIcon());
-        		
-        		return this;
-        	}
-        });
-        
-        //remember what you used last time.
-        _typeCombo.setSelectedIndex(SearchSettings.LAST_MEDIA_TYPE_INDEX_USED.getValue());
-        
-        JComponent typeComponent = new LabeledComponent(I18n.tr("Type"), _typeCombo).getComponent();
-        typeComponent.setBorder(BorderFactory.createEmptyBorder(5, 1, 5, 0));
-        
-        _typeCombo.addItemListener(new ItemListener() {
-			
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange() == ItemEvent.SELECTED) {
-					onFileTypeComboChanged(e);
-				}
-			}
-		});
-        
-        add(typeComponent,c);
-
         add(_keywordFilterTextField, c);
 
         _rangeSliderSize = new LabeledRangeSlider("Size", null, 0, 1000);
@@ -133,14 +77,6 @@ public class SearchFilterPanel extends JPanel {
         add(_rangeSliderSeeds, c);
 
     };
-
-    protected void onFileTypeComboChanged(ItemEvent e) {
-    	if (_activeFilter != null) {
-    		_activeFilter.updateFileTypeFiltering((NamedMediaType) _typeCombo.getSelectedItem());
-    	}		
-    	
-		SearchSettings.LAST_MEDIA_TYPE_INDEX_USED.setValue(_typeCombo.getSelectedIndex());
-	}
 
 	protected void keywordFilterChanged(KeyEvent e) {
         if (_activeFilter != null) {
@@ -183,7 +119,6 @@ public class SearchFilterPanel extends JPanel {
         _rangeSliderSize.getMaximumValueLabel().setText(I18n.tr("Max"));
 
         _keywordFilterTextField.setText("");
-        _typeCombo.setSelectedIndex(SearchSettings.LAST_MEDIA_TYPE_INDEX_USED.getValue());
     }
 
     private void updateFilterControls(GeneralResultFilter filter) {
@@ -196,8 +131,6 @@ public class SearchFilterPanel extends JPanel {
         _rangeSliderSize.setMaximum(1000);
         _rangeSliderSize.setValue(filter.getMinSize());
         _rangeSliderSize.setUpperValue(filter.getMaxSize());
-
-        _typeCombo.setSelectedItem(filter.getCurrentNamedMediaType());
         
         _keywordFilterTextField.setText(filter.getKeywordFilterText());
 
@@ -233,7 +166,7 @@ public class SearchFilterPanel extends JPanel {
     public void setFilterFor(SearchResultMediator rp) {
         GeneralResultFilter filter = ACTIVE_FILTERS.get(rp);
         if (filter == null) {
-            filter = new GeneralResultFilter(rp, _rangeSliderSeeds, _rangeSliderSize, _keywordFilterTextField, _typeCombo);
+            filter = new GeneralResultFilter(rp, _rangeSliderSeeds, _rangeSliderSize, _keywordFilterTextField);
             ACTIVE_FILTERS.put(rp, filter);
             rp.filterChanged(filter, 1);
         } 

@@ -29,19 +29,15 @@ import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.OverlayLayout;
-import javax.swing.UIManager;
 import javax.swing.border.AbstractBorder;
-import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.event.MouseInputListener;
-import javax.swing.plaf.metal.MetalBorders;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import org.limewire.i18n.I18nMarker;
-import org.limewire.util.OSUtils;
 
 import com.frostwire.gui.BuyAction;
 import com.frostwire.gui.bittorrent.TorrentUtil;
