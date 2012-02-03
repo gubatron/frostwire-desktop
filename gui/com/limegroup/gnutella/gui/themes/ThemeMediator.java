@@ -129,6 +129,7 @@ public class ThemeMediator {
         
         // from FrostWire
         themes.add(SubstanceThemeSetter.SEA_GLASS);
+        themes.add(SubstanceThemeSetter.FUELED);
         
         // from Substance
         themes.add(SubstanceThemeSetter.AUTUMN);

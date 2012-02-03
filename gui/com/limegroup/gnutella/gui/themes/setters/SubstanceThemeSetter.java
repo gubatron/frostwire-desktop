@@ -90,6 +90,7 @@ public class SubstanceThemeSetter implements ThemeSetter {
 
     // from FrostWire
     public static final SubstanceThemeSetter SEA_GLASS = new SubstanceThemeSetter("Sea Glass", "com.limegroup.gnutella.gui.themes.SeaGlassSkin");
+    public static final SubstanceThemeSetter FUELED = new SubstanceThemeSetter("Fueled", "com.limegroup.gnutella.gui.themes.fueled.FueledSkin");
 
     // from Substance
     public static final SubstanceThemeSetter AUTUMN = new SubstanceThemeSetter("Autumn", "org.pushingpixels.substance.api.skin.AutumnSkin");
