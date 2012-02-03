@@ -68,6 +68,13 @@ class SearchInputPanel extends JPanel {
     private static final long serialVersionUID = -5638062215253666235L;
 
     /**
+     * The current search label in normal search.
+     */
+    private final JLabel SEARCH_TYPE_LABEL = new JLabel();
+    
+    private final SchemaBox SCHEMA_BOX = new SchemaBox();
+
+    /**
      * The sole input text field that is at the top of all searches.
      */
     //private final SearchField SEARCH_FIELD = new SearchField(14);
@@ -248,7 +255,7 @@ class SearchInputPanel extends JPanel {
 
         // other mediatype panels are added lazily on demand
 
-        JPanel search = new DitherPanel(DITHERER);
+        JPanel search = new JPanel();
         search.setLayout(new BoxLayout(search, BoxLayout.Y_AXIS));
         search.add(Box.createVerticalStrut(5));
         search.add(META_PANEL);
@@ -264,6 +271,8 @@ class SearchInputPanel extends JPanel {
      */
     private JPanel createDefaultSearchPanel() {
         JPanel fullPanel = new BoxPanel(BoxPanel.Y_AXIS);
+        fullPanel.add(Box.createVerticalStrut(3));
+        fullPanel.add(SCHEMA_BOX);
         fullPanel.add(Box.createVerticalStrut(3));
         fullPanel.add(GUIUtils.left(SEARCH_FIELD));
         fullPanel.add(Box.createVerticalStrut(5));
@@ -483,7 +492,7 @@ class SearchInputPanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             InputPanel panel = getInputPanel();
             String query = SEARCH_FIELD.getText();
-            final SearchInformation info = SearchInformation.createTitledKeywordSearch(query, null, MediaType.TYPE_TORRENTS, query);
+            final SearchInformation info = SearchInformation.createTitledKeywordSearch(query, null, MediaType.getTorrentMediaType(), query);
 
             // If the search worked, store & clear it.
             if (SearchMediator.triggerSearch(info) != null) {

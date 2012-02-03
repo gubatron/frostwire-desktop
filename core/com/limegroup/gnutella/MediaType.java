@@ -174,7 +174,7 @@ public class MediaType implements Serializable {
     /**
      * Type for 'torrents'
      */
-    public static final MediaType TYPE_TORRENTS =
+    private static final MediaType TYPE_TORRENTS =
         new MediaType(SCHEMA_TORRENTS, TORRENTS,
             new String[] {
                 "torrent"

@@ -10,41 +10,35 @@ import javax.swing.JPanel;
 public class DitherPanel extends JPanel {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 6998596665800341964L;
-	private final Ditherer DITHERER;
+     * 
+     */
+    private static final long serialVersionUID = 6998596665800341964L;
+    private final Ditherer DITHERER;
     private boolean isDithering = true;
-    
+
     /**
      * Creates a FlowLayout.LEADING layout.
      *
      * @param ditherer the <tt>Ditherer</tt> that paints the dithered 
-	 *  background
+     *  background
      */
-    public DitherPanel(Ditherer ditherer) { 
+    public DitherPanel(Ditherer ditherer) {
         super();
         DITHERER = ditherer;
-    }    
+    }
 
     /** Does the actual placement of the background image.
      */
     public void paintComponent(java.awt.Graphics g) {
-        if(isDithering && 
-           isOpaque() &&
-           !DITHERER.getFromColor().equals(DITHERER.getToColor())) {
-        	Dimension size = getSize();
-        	DITHERER.draw(g, size.height, size.width);
-        }
-        else
+        if (isDithering && !DITHERER.getFromColor().equals(DITHERER.getToColor())) {
+            Dimension size = getSize();
+            DITHERER.draw(g, size.height, size.width);
+        } else
             super.paintComponent(g);
     }
-    
+
     public void setDithering(boolean dither) {
         isDithering = dither;
     }
-    
+
 }
-
-
-

@@ -15,7 +15,7 @@ public class SkinHandler {
      * Setting for the table header background Color.
      */
     public static final Color getTableHeaderBackgroundColor() {
-        return new Color(117, 142, 197);
+        return new Color(184,210,238);
     }
 
     /**
@@ -38,51 +38,26 @@ public class SkinHandler {
     public static final Color getSearchResultSpeedColor() {
         return new Color(7, 170, 0);
     }
-    
-    public static final Color getPlayingDataLineColor() {
-        return new Color(7, 170, 0);
-    }
-
-    /**
-     * Setting for the search ip private address Color.
-     */
-    public static final Color getSearchPrivateIPColor() {
-        return new Color(255, 0, 0);
-    }
-
-    /**
-     * Setting for the search ip selected private address Color.
-     */
-    public static final Color getSearchSelectedPrivateIPColor() {
-        return getSearchPrivateIPColor();
-    }
 
     /**
      * Setting for the top of the filter title color.
      */
     public static final Color getFilterTitleTopColor() {
-        return getTableHeaderBackgroundColor();
+        return new Color(255,255,255);
     }
 
     /**
      * Setting for the filter title color.
      */
     public static final Color getFilterTitleColor() {
-        return getTableHeaderBackgroundColor();
+        return new Color(255,204,0);
     }
 
     /**
      * Setting for the background grid color.
      */
     public static final Color getSearchGridColor() {
-        return new Color(0, 0, 0);
-    }
-
-    /**
-     * Setting for the not sharing label Color.
-     */
-    public static final Color getNotSharingLabelColor() {
-        return new Color(208, 0, 5);
+        return new Color(175,175,175);
     }
 
     /**

@@ -225,7 +225,7 @@ public final class SearchMediator {
 			return false;
 		case QUERY_VALID:
 		default:
-			boolean searchingTorrents = info.getMediaType().equals(MediaType.TYPE_TORRENTS);
+			boolean searchingTorrents = info.getMediaType().equals(MediaType.getTorrentMediaType());
 			boolean gnutellaStarted = GuiCoreMediator.getLifecycleManager().isStarted();
 			boolean azureusStarted = AzureusStarter.getAzureusCore().isStarted();			
 			

@@ -876,31 +876,6 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
         setupMainPanelBase();
     }
 
-    protected JPanel createWarningDitherPanel() {
-        return new DitherPanel(new Ditherer(6, new Color(255, 209, 86), new Color(255, 183, 44))) {
-            /**
-			 * 
-			 */
-			private static final long serialVersionUID = 4924459624958989577L;
-
-			@Override
-            public void updateUI() {
-                super.updateUI();
-
-                Border border = UIManager.getBorder("ScrollPane.border");
-                if (border != null && border.getClass() == MetalBorders.ScrollPaneBorder.class) {
-                    setBorder(new WarningBorder(UIManager.getColor("SplitPane.darkShadow"), 1));
-                } else {
-                    if (OSUtils.isMacOSX()) {
-                        setBorder(new WarningBorder(Color.lightGray, 0));
-                    } else {
-                        setBorder(new WarningBorder(UIManager.getColor("TextField.darkShadow"), 0));
-                    }
-                }
-            }
-        };
-    }
-
     /**
      * Adds the overlay panel into the table & converts the button
      * to 'download'.
