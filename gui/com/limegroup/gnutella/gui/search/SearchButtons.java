@@ -55,7 +55,7 @@ final class SearchButtons {
         	I18nMarker.marktr("Search for related products on Amazon"),
         	I18nMarker.marktr("Download All Selected Files"),
             I18nMarker.marktr("See detail web page about the selected torrent (Contents, Comments, Seeds)"),
-            I18nMarker.marktr("Stop current searche")
+            I18nMarker.marktr("Stop current search")
 		};
         
 		EventListener[] buttonListeners = {
