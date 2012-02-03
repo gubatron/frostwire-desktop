@@ -34,6 +34,9 @@ final class SearchButtons {
 	 * The index of the torrent details button in the button row.
 	 */
 	static final int TORRENT_DETAILS_BUTTON_INDEX = 3;
+	
+	/** The index of the Stop Current Search button in the button row. */
+	static final int STOP_SEARCH_BUTTON_INDEX = 4;
 
 	/**
 	 * The constructor creates the row of buttons with their associated
@@ -52,7 +55,7 @@ final class SearchButtons {
         	I18nMarker.marktr("Search for related products on Amazon"),
         	I18nMarker.marktr("Download All Selected Files"),
             I18nMarker.marktr("See detail web page about the selected torrent (Contents, Comments, Seeds)"),
-            I18nMarker.marktr("Stop current searches")
+            I18nMarker.marktr("Stop current searche")
 		};
         
 		EventListener[] buttonListeners = {

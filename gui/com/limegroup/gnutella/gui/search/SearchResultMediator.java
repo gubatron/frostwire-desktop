@@ -449,6 +449,7 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
             public void actionPerformed(ActionEvent e) {
                 guid = STOPPED_GUID;
                 SearchMediator.getSearchResultDisplayer().updateSearchIcon(SearchResultMediator.this, false);
+                setButtonEnabled(SearchButtons.STOP_SEARCH_BUTTON_INDEX, !isStopped());
             }
         };
     }
@@ -538,9 +539,10 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
      * Sets the appropriate buttons to be disabled.
      */
     public void handleNoSelection() {
-    	setButtonEnabled(SearchButtons.BUY_BUTTON_INDEX, false);
-    	setButtonEnabled(SearchButtons.DOWNLOAD_BUTTON_INDEX, false);
-    	setButtonEnabled(SearchButtons.TORRENT_DETAILS_BUTTON_INDEX, false);
+        	setButtonEnabled(SearchButtons.BUY_BUTTON_INDEX, false);
+        	setButtonEnabled(SearchButtons.DOWNLOAD_BUTTON_INDEX, false);
+        	setButtonEnabled(SearchButtons.TORRENT_DETAILS_BUTTON_INDEX, false);
+        	setButtonEnabled(SearchButtons.STOP_SEARCH_BUTTON_INDEX, !isStopped());
     }
     
     /**
@@ -548,6 +550,8 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
      */
     public void handleSelection(int i)  { 
     	setButtonEnabled(SearchButtons.DOWNLOAD_BUTTON_INDEX, true);
+    	
+    	setButtonEnabled(SearchButtons.STOP_SEARCH_BUTTON_INDEX, !isStopped());
 
     	// Buy button only enabled for single selection.
     	SearchResultDataLine[] allSelectedLines = getAllSelectedLines();
@@ -612,6 +616,9 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
      * Determines whether or not this panel is stopped.
      */
     boolean isStopped() {
+        if (guid==null || STOPPED_GUID==null) {
+            return false;
+        }
         return guid.equals(STOPPED_GUID);
     }
     
@@ -726,6 +733,7 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
         SearchMediator.setTabDisplayCount(this);
         SearchMediator.repeatSearch(this, SEARCH_INFO, clearTable);
         setButtonEnabled(SearchButtons.TORRENT_DETAILS_BUTTON_INDEX, false);
+        setButtonEnabled(SearchButtons.STOP_SEARCH_BUTTON_INDEX, !isStopped());
     }
     
     void resetFilters() {
