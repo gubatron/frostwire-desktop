@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -31,7 +30,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.BadLocationException;
 
@@ -68,11 +66,6 @@ class SearchInputPanel extends JPanel {
      * 
      */
     private static final long serialVersionUID = -5638062215253666235L;
-
-    /**
-     * The current search label in normal search.
-     */
-    private final JLabel SEARCH_TYPE_LABEL = new JLabel();
 
     /**
      * The sole input text field that is at the top of all searches.
@@ -141,10 +134,6 @@ class SearchInputPanel extends JPanel {
 
         add(PANE, BorderLayout.CENTER);
 
-        Font bold = UIManager.getFont("Table.font.bold");
-        Font bolder = new Font(bold.getName(), bold.getStyle(), bold.getSize() + 5);
-        SEARCH_TYPE_LABEL.setFont(bolder);
-        SEARCH_TYPE_LABEL.setPreferredSize(new Dimension(130, 20));
         schemaListener.actionPerformed(null);
         
         add(createTorrentActionsPanel(), BorderLayout.PAGE_END);
@@ -261,7 +250,6 @@ class SearchInputPanel extends JPanel {
 
         JPanel search = new DitherPanel(DITHERER);
         search.setLayout(new BoxLayout(search, BoxLayout.Y_AXIS));
-        search.add(GUIUtils.left(SEARCH_TYPE_LABEL));
         search.add(Box.createVerticalStrut(5));
         search.add(META_PANEL);
         search.add(Box.createVerticalStrut(10));
@@ -384,7 +372,7 @@ class SearchInputPanel extends JPanel {
         c.gridy = 0;
         c.anchor = GridBagConstraints.WEST;
         c.fill = GridBagConstraints.NONE;
-        JLabel filterLabel = new JLabel(I18n.tr("<html><strong>Apply Filters</strong></html>"));
+        JLabel filterLabel = new JLabel(I18n.tr("<html><strong>Refine results</strong></html>"));
         //filterLabel.setBorder(BorderFactory.createLineBorder(Color.black));
         filterLabelIconPanel.add(filterLabel,c);
 
@@ -484,7 +472,6 @@ class SearchInputPanel extends JPanel {
                 }
             }
 
-            SEARCH_TYPE_LABEL.setText(I18n.tr("Search Files"));
             requestSearchFocus();
         }
     }
