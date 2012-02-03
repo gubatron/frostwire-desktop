@@ -50,6 +50,8 @@ public final class SearchDownloadTab extends AbstractTab {
 		mainSplitPane.setDividerSize(0);		
 		
 		searchDownloadSplitPane.addPropertyChangeListener(JSplitPane.LAST_DIVIDER_LOCATION_PROPERTY, new PropertyChangeListener() {
+            private long lastSlideshowPanelRepaint;
+
             public void propertyChange(PropertyChangeEvent evt) {
                 JSplitPane splitPane = (JSplitPane) evt.getSource();
                 int current = splitPane.getDividerLocation();
@@ -57,8 +59,10 @@ public final class SearchDownloadTab extends AbstractTab {
                     splitPane.setDividerLocation(splitPane.getSize().height - BTDownloadMediator.MIN_HEIGHT);
                 }
                 UISettings.UI_TRANSFERS_DIVIDER_LOCATION.setValue(splitPane.getDividerLocation());
-                if (SearchMediator.getSearchResultDisplayer().getSlideshowPanel() != null) {
+                if (SearchMediator.getSearchResultDisplayer().getSlideshowPanel() != null &&
+                    System.currentTimeMillis()-lastSlideshowPanelRepaint > 200) {
                     SearchMediator.getSearchResultDisplayer().getSlideshowPanel().repaint();
+                    lastSlideshowPanelRepaint = System.currentTimeMillis();
                 }
             }
         });
