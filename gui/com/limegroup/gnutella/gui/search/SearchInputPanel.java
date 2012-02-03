@@ -66,11 +66,6 @@ class SearchInputPanel extends JPanel {
      * 
      */
     private static final long serialVersionUID = -5638062215253666235L;
-
-    /**
-     * The current search label in normal search.
-     */
-    private final JLabel SEARCH_TYPE_LABEL = new JLabel();
     
     private final SchemaBox SCHEMA_BOX = new SchemaBox();
 
@@ -78,7 +73,7 @@ class SearchInputPanel extends JPanel {
      * The sole input text field that is at the top of all searches.
      */
     //private final SearchField SEARCH_FIELD = new SearchField(14);
-    private final IconSearchField SEARCH_FIELD = new GoogleIconSearchField(10,GUIMediator.getThemeImage("search_tab"));
+    private final IconSearchField SEARCH_FIELD = new GoogleIconSearchField(18,GUIMediator.getThemeImage("search_tab"));
 
     /**
      * The JTabbedPane that switches between types of searches.
@@ -238,7 +233,7 @@ class SearchInputPanel extends JPanel {
             c.setOpaque(true);
         }
 
-        c.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 0));
+        c.setBorder(BorderFactory.createEmptyBorder(0, 3, 5, 0));
     }
 
     private JPanel createSearchEntryPanel() {
@@ -257,9 +252,9 @@ class SearchInputPanel extends JPanel {
 
         JPanel search = new JPanel();
         search.setLayout(new BoxLayout(search, BoxLayout.Y_AXIS));
-        search.add(Box.createVerticalStrut(5));
+        search.add(Box.createVerticalStrut(0));
         search.add(META_PANEL);
-        search.add(Box.createVerticalStrut(10));
+        //search.add(Box.createVerticalStrut(10));
         
         return search;
     }
@@ -271,7 +266,7 @@ class SearchInputPanel extends JPanel {
      */
     private JPanel createDefaultSearchPanel() {
         JPanel fullPanel = new BoxPanel(BoxPanel.Y_AXIS);
-        fullPanel.add(Box.createVerticalStrut(3));
+        //fullPanel.add(Box.createVerticalStrut(3));
         fullPanel.add(SCHEMA_BOX);
         fullPanel.add(Box.createVerticalStrut(3));
         fullPanel.add(GUIUtils.left(SEARCH_FIELD));
@@ -287,23 +282,27 @@ class SearchInputPanel extends JPanel {
 		
 		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setCollapsed(ApplicationSettings.SEARCH_OPTIONS_COLLAPSED.getValue());
 		
-		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setLayout(new GridLayout(0, 1));
+		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setLayout(new BorderLayout());
 		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setAnimated(true);
 		
-		
-		JPanel controls = new JPanel();
-		controls.setLayout(new BoxLayout(controls, BoxLayout.PAGE_AXIS));
+		JPanel p = new JPanel();
+		p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
 		
 		List<SearchEngine> searchEngines = SearchEngine.getSearchEngines();
 		
+		JPanel controls = new JPanel();
+		controls.setBorder(new TitledBorder(I18n.tr("Search Engines")));
+        controls.setLayout(new GridBagLayout());
+        controls.setAlignmentX(0.0f);
 		setupCheckboxes(searchEngines, controls);
 		
 		_filterPanel = new SearchFilterPanel();
-		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.add(_filterPanel);
+		_filterPanel.setAlignmentX(0.0f);
+		p.add(_filterPanel);
 		
-		controls.setBorder(new TitledBorder(I18n.tr("Choose Search Engines")));
 		
-		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.add(controls);
+		p.add(controls);
+		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.add(p);
 		
 
 		return SEARCH_OPTIONS_COLLAPSIBLE_PANEL;
@@ -339,7 +338,13 @@ class SearchInputPanel extends JPanel {
 		for (SearchEngine se : searchEngines) {
 			JCheckBox cBox = new JCheckBox(se.getName());
 			cBox.setSelected(se.isEnabled());
-			parent.add(cBox);
+			
+			GridBagConstraints c = new GridBagConstraints();
+	        c.fill = GridBagConstraints.HORIZONTAL;
+	        c.weightx = 1.0;
+	        c.gridwidth = GridBagConstraints.REMAINDER;
+			parent.add(cBox, c);
+			
 			cBoxes.put(cBox,se.getEnabledSetting());
 			cBox.addItemListener(listener);
 		}
@@ -381,7 +386,7 @@ class SearchInputPanel extends JPanel {
         c.gridy = 0;
         c.anchor = GridBagConstraints.WEST;
         c.fill = GridBagConstraints.NONE;
-        JLabel filterLabel = new JLabel(I18n.tr("<html><strong>Refine results</strong></html>"));
+        JLabel filterLabel = new JLabel(I18n.tr("<html><strong>Refine Results</strong></html>"));
         //filterLabel.setBorder(BorderFactory.createLineBorder(Color.black));
         filterLabelIconPanel.add(filterLabel,c);
 
@@ -553,6 +558,7 @@ class SearchInputPanel extends JPanel {
 
     public void setFiltersFor(SearchResultMediator rp) {
         _filterPanel.setFilterFor(rp);
+        SCHEMA_BOX.setFilterFor(rp);
     }
     
     /**

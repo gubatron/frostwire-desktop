@@ -1,7 +1,5 @@
 package com.limegroup.gnutella.gui.search;
 
-import javax.swing.JComboBox;
-
 import com.frostwire.gui.components.LabeledRangeSlider;
 import com.frostwire.gui.filters.TableLineFilter;
 import com.limegroup.gnutella.gui.GUIUtils;
@@ -12,7 +10,6 @@ public class GeneralResultFilter implements TableLineFilter<SearchResultDataLine
     private SearchResultMediator _rp;
     private LabeledRangeSlider _rangeSliderSeeds;
     private LabeledRangeSlider _rangeSliderSize;
-    private JComboBox _typeComboBox;
     
     private int _minResultsSeeds;
     private int _maxResultsSeeds;
@@ -25,15 +22,11 @@ public class GeneralResultFilter implements TableLineFilter<SearchResultDataLine
     private int _maxSize;
     
 	private String _keywords;
-	private NamedMediaType _currentMediaType;
 
-    public GeneralResultFilter(SearchResultMediator rp, LabeledRangeSlider rangeSliderSeeds, LabeledRangeSlider rangeSliderSize, LabeledTextField keywordTextField, JComboBox fileTypeCombo) {
+    public GeneralResultFilter(SearchResultMediator rp, LabeledRangeSlider rangeSliderSeeds, LabeledRangeSlider rangeSliderSize, LabeledTextField keywordTextField) {
         _rp = rp;
         _rangeSliderSeeds = rangeSliderSeeds;
         _rangeSliderSize = rangeSliderSize;
-        
-        _typeComboBox = fileTypeCombo;
-        _currentMediaType = (NamedMediaType) fileTypeCombo.getSelectedItem();// NamedMediaType.getFromMediaType(MediaType.getAnyTypeMediaType());
         
         _minResultsSeeds = Integer.MAX_VALUE;
         _maxResultsSeeds = 0;
@@ -47,8 +40,6 @@ public class GeneralResultFilter implements TableLineFilter<SearchResultDataLine
     }
 
     public boolean allow(SearchResultDataLine node) {
-    	NamedMediaType selectedItem = (NamedMediaType) _typeComboBox.getSelectedItem();
-    	boolean typeMatches = selectedItem.getMediaType().matches("."+node.getExtension());
     	
         boolean seedsNeedUpdate = false;
         int seeds = node.getSeeds();
@@ -118,7 +109,7 @@ public class GeneralResultFilter implements TableLineFilter<SearchResultDataLine
         
         boolean hasKeywords = hasKeywords(node.getFilenameNoExtension());
 
-        return inSeedRange && inSizeRange && hasKeywords && typeMatches;
+        return inSeedRange && inSizeRange && hasKeywords;
     }
 
     private boolean hasKeywords(String filename) {
@@ -198,14 +189,5 @@ public class GeneralResultFilter implements TableLineFilter<SearchResultDataLine
 
 	public String getKeywordFilterText() {
 		return _keywords;
-	}
-
-	public NamedMediaType getCurrentNamedMediaType() {
-		return _currentMediaType;
-	}
-	
-	public void updateFileTypeFiltering(NamedMediaType mediaType) {
-		_currentMediaType = mediaType;
-		_rp.filterChanged(this, 1);
 	}
 }

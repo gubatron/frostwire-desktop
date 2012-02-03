@@ -3,22 +3,22 @@ package com.limegroup.gnutella.gui.search;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -32,12 +32,13 @@ import org.pushingpixels.substance.api.ComponentState;
 import org.pushingpixels.substance.api.SubstanceColorScheme;
 import org.pushingpixels.substance.internal.utils.SubstanceColorSchemeUtilities;
 
+import com.frostwire.gui.filters.TableLineFilter;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.ImageManipulator;
 import com.limegroup.gnutella.gui.themes.SkinHandler;
-import com.sun.java.swing.plaf.motif.MotifRadioButtonUI;
+import com.limegroup.gnutella.settings.SearchSettings;
 
 /**
  * A group of radio buttons for each schema.
@@ -88,6 +89,8 @@ final class SchemaBox extends JPanel {
      * The ditherer for highlighted buttons.
      */
     private final Ditherer DITHERER = new Ditherer(20, SkinHandler.getFilterTitleTopColor(), SkinHandler.getFilterTitleColor());
+    
+    private Set<AbstractButton> buttons = new HashSet<AbstractButton>();
 
     /**
      * Constructs the SchemaBox.
@@ -98,7 +101,7 @@ final class SchemaBox extends JPanel {
         cols = 2;
         rows = (int) Math.ceil(allSchemas.size() / 2.0);
         SCHEMAS = new JPanel();
-        SCHEMAS.setLayout(new GridLayout(rows, cols, 0, 0));
+        SCHEMAS.setLayout(new GridLayout(rows - 1, cols, 0, 0));
         SCHEMAS.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
         addSchemas(allSchemas);
 
@@ -211,7 +214,7 @@ final class SchemaBox extends JPanel {
         Icon icon = type.getIcon();
         Icon disabledIcon = null;
         Icon rolloverIcon = null;
-        AbstractButton button = new JRadioButton(type.getName());
+        final AbstractButton button = new JRadioButton(type.getName());
         button.putClientProperty(MEDIA, type);
         button.putClientProperty(SELECTED, icon);
         if (icon != null) {
@@ -240,11 +243,39 @@ final class SchemaBox extends JPanel {
         panel.addMouseListener(CLICK_FORWARDER);
         panel.setBorder(buttonBorder);
         SCHEMAS.add(panel);
-
-        if (type.getMediaType().equals(MediaType.getAudioMediaType()))
+        
+        if (SearchSettings.LAST_MEDIA_TYPES_USED.getValue().contains(type.getMediaType().getMimeType())) {
             button.setSelected(true);
-        else
+        } else {
             button.setSelected(false);
+        }
+
+        if (SearchSettings.LAST_MEDIA_TYPES_USED.getValue().isEmpty() && type.getMediaType().equals(MediaType.getAudioMediaType())) {
+            button.setSelected(true);
+        }
+        
+        buttons.add(button);
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (checkButtonStates()) {
+                    onFileTypeChanged(button);
+                } else {
+                    button.setSelected(true);
+                }
+            }
+        });
+    }
+    
+    private boolean checkButtonStates() {
+        int count = 0;
+        
+        for (AbstractButton b : buttons) {
+            if (b.isSelected()) {
+                count++;
+            }
+        }
+        
+        return count > 0;
     }
 
     /**
@@ -295,6 +326,25 @@ final class SchemaBox extends JPanel {
         if (color != null)
             c.setBackground(color);
     }
+    
+    protected void onFileTypeChanged(AbstractButton button) {
+        NamedMediaType type = (NamedMediaType) button.getClientProperty(MEDIA); 
+        
+        if (button.isSelected()) {
+            SearchSettings.LAST_MEDIA_TYPES_USED.add(type.getMediaType().getMimeType());
+        } else {
+            SearchSettings.LAST_MEDIA_TYPES_USED.remove(type.getMediaType().getMimeType());
+        }
+        
+        updateSearchResults(new MediaTypeFilter());
+    }
+    
+    private void updateSearchResults(TableLineFilter<SearchResultDataLine> filter) {
+        List<SearchResultMediator> resultPanels = SearchMediator.getSearchResultDisplayer().getResultPanels();
+        for (SearchResultMediator resultPanel : resultPanels) {
+            resultPanel.filterChanged(filter, 2);
+        }
+    }
 
     /**
      * Forwards click events from a panel to the panel's component.
@@ -339,5 +389,9 @@ final class SchemaBox extends JPanel {
 
         public void mouseReleased(MouseEvent e) {
         }
+    }
+
+    public void setFilterFor(SearchResultMediator rp) {
+        rp.filterChanged(new MediaTypeFilter(), 2);
     }
 }

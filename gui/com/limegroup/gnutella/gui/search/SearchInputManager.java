@@ -58,7 +58,7 @@ final class SearchInputManager implements ThemeObserver {
         c.fill = GridBagConstraints.BOTH;
         c.weightx = 1;
         c.weighty = 1;
-        c.insets = new Insets(5, 0, 0, 0);
+        c.insets = new Insets(0, 0, 0, 0);
         getComponent().add(MAIN_PANEL, c);
     }
 

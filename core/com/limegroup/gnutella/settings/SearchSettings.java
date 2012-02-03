@@ -6,7 +6,10 @@ import org.limewire.setting.BooleanSetting;
 import org.limewire.setting.CharArraySetting;
 import org.limewire.setting.FileSetting;
 import org.limewire.setting.IntSetting;
+import org.limewire.setting.StringSetSetting;
 import org.limewire.util.CommonUtils;
+
+import com.limegroup.gnutella.MediaType;
 
 
 /**
@@ -302,7 +305,7 @@ public final class SearchSettings extends LimeProps {
     
 	public static final FileSetting SMART_SEARCH_DATABASE_FOLDER = FACTORY.createFileSetting("SMART_SEARCH_DATABASE_FOLDER", new File(CommonUtils.getUserSettingsDir(), "search_db"));
 
-	public static final IntSetting LAST_MEDIA_TYPE_INDEX_USED = FACTORY.createIntSetting("LAST_MEDIA_TYPE_INDEX_USED", 0);
+	public static final StringSetSetting LAST_MEDIA_TYPES_USED = FACTORY.createStringSetSetting("LAST_MEDIA_TYPES_USED", MediaType.getAudioMediaType().getMimeType());
 	
 	public static final IntSetting SMART_SEARCH_START_DELAY = FACTORY.createIntSetting("SMART_SEARCH_START_DELAY", 2000);
 	
