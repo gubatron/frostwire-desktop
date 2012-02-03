@@ -18,6 +18,7 @@
 package com.frostwire.gui.library;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -214,6 +215,17 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
     void addMouseInputListener(final MouseInputListener listener) {
         TABLE.addMouseListener(listener);
         TABLE.addMouseMotionListener(listener);
+    }
+    
+    @Override
+    public void handleMouseDoubleClick(MouseEvent e) {
+        super.handleMouseDoubleClick(e);
+        
+        if (LAUNCH_ACTION.isEnabled()) {
+            LAUNCH_ACTION.actionPerformed(null);
+        } else if (saveToAction.isEnabled()) {
+            saveToAction.actionPerformed(null);
+        }
     }
 
     /**
