@@ -89,6 +89,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
      * Variables so the PopupMenu & ButtonRow can have the same listeners
      */
     public static Action LAUNCH_ACTION;
+    public static Action LAUNCH_OS_ACTION;
     public static Action OPEN_IN_FOLDER_ACTION;
     public static Action CREATE_TORRENT_ACTION;
     public static Action DELETE_ACTION;
@@ -114,6 +115,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         super.buildListeners();
 
         LAUNCH_ACTION = new LaunchAction();
+        LAUNCH_OS_ACTION = new LaunchOSAction();
         OPEN_IN_FOLDER_ACTION = new OpenInFolderAction();
         CREATE_TORRENT_ACTION = new CreateTorrentAction();
         DELETE_ACTION = new RemoveAction();
@@ -166,6 +168,9 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         JPopupMenu menu = new SkinPopupMenu();
 
         menu.add(new SkinMenuItem(LAUNCH_ACTION));
+        if (getMediaType().equals(MediaType.getAudioMediaType())) {
+            menu.add(new SkinMenuItem(LAUNCH_OS_ACTION));
+        }
         if (hasExploreAction()) {
             menu.add(new SkinMenuItem(OPEN_IN_FOLDER_ACTION));
         }
@@ -603,14 +608,14 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             //				return;
         }
 
-        launch();
+        launch(true);
     }
 
     /**
      * Launches the associated applications for each selected file
      * in the library if it can.
      */
-    void launch() {
+    void launch(boolean playAudio) {
         int[] rows = TABLE.getSelectedRows();
         if (rows.length == 0) {
             return;
@@ -642,10 +647,15 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
             }
             providers[i] = new FileProvider(DATA_MODEL.getFile(rows[i]));
         }
-        if (stopAudio) {
+        if (stopAudio || !playAudio) {
             AudioPlayer.instance().stop();
         }
-        GUILauncher.launch(providers);
+        
+        if (playAudio) {
+            GUILauncher.launch(providers);
+        } else {
+            GUIMediator.launchFile(selectedFile);
+        }
     }
 
     /**
@@ -666,6 +676,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
 
         //  always turn on Launch, Delete, Magnet Lookup, Bitzi Lookup
         LAUNCH_ACTION.setEnabled(true);
+        LAUNCH_OS_ACTION.setEnabled(true);
         DELETE_ACTION.setEnabled(true);
 
         if (selectedFile != null && !selectedFile.getName().endsWith(".torrent")) {
@@ -708,6 +719,7 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
      */
     public void handleNoSelection() {
         LAUNCH_ACTION.setEnabled(false);
+        LAUNCH_OS_ACTION.setEnabled(false);
         OPEN_IN_FOLDER_ACTION.setEnabled(false);
         SEND_TO_FRIEND_ACTION.setEnabled(false);
         CREATE_TORRENT_ACTION.setEnabled(false);
@@ -756,7 +768,33 @@ final class LibraryFilesTableMediator extends AbstractLibraryTableMediator<Libra
         }
 
         public void actionPerformed(ActionEvent ae) {
-            launch();
+            launch(true);
+        }
+    }
+    
+    private final class LaunchOSAction extends AbstractAction {
+
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 949208465372392592L;
+
+        public LaunchOSAction() {
+            String os = "OS";
+            if (OSUtils.isWindows()) {
+                os = "Windows";
+            } else if (OSUtils.isMacOSX()) {
+                os = "Mac";
+            } else if (OSUtils.isLinux()) {
+                os = "Linux";
+            }
+            putValue(Action.NAME, I18n.tr("Launch in ") + os);
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Launch Selected Files in " + os));
+            putValue(LimeAction.ICON_NAME, "LIBRARY_LAUNCH");
+        }
+
+        public void actionPerformed(ActionEvent ae) {
+            launch(false);
         }
     }
 
