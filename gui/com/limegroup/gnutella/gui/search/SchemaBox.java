@@ -394,4 +394,8 @@ final class SchemaBox extends JPanel {
     public void setFilterFor(SearchResultMediator rp) {
         rp.filterChanged(new MediaTypeFilter(), 2);
     }
+    
+    public void panelReset(SearchResultMediator rp) {
+        rp.filterChanged(new MediaTypeFilter(), 2);
+    }
 }

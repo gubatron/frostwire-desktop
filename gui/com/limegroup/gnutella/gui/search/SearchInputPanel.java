@@ -566,6 +566,7 @@ class SearchInputPanel extends JPanel {
      */
     void panelReset(SearchResultMediator rp) {
         _filterPanel.panelReset(rp);
+        SCHEMA_BOX.panelReset(rp);
     }
     
     /**

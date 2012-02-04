@@ -715,10 +715,6 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
     boolean isRepeatSearchEnabled() {
         return FILTER != null;
     }
-
-    void repeatSearch () {
-      repeatSearch(true);
-    }
     
     void repeatSearch (boolean clearTable) {
         if ( clearTable ) {
