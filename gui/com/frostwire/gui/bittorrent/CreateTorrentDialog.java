@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -427,16 +428,21 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 	}
 
 	private void displayChosenContent(File chosenFile) {
-		String prefix = (_fileChooser.getFileSelectionMode() == JFileChooser.FILES_ONLY) ? "[file] "
+		String prefix = (chosenFile.isFile()) ? "[file] "
 				: "[folder] ";
 		_textSelectedContent.setText(prefix + chosenFile.getAbsolutePath());
 	}
 
 	private void setTorrentPathFromChosenFile(File chosenFile) {
-		if (_fileChooser.getFileSelectionMode() == JFileChooser.FILES_ONLY) {
+	    File canonicalFile = null;
+        try {
+            canonicalFile = chosenFile.getCanonicalFile();
+        } catch (IOException e) {
+        }
+		if (canonicalFile.isFile()) {
 			directoryPath = null;
 			singlePath = chosenFile.getAbsolutePath();
-		} else {
+		} else if (canonicalFile.isDirectory()){ 
 			directoryPath = chosenFile.getAbsolutePath();
 			singlePath = null;
 		}
@@ -446,7 +452,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		
 		//when invoked from the library, we have to init the file chooser.
 		if (_fileChooser == null) {
-			initFileChooser((chosenFile.isDirectory()) ? JFileChooser.DIRECTORIES_ONLY : JFileChooser.FILES_ONLY);
+			initFileChooser(JFileChooser.FILES_AND_DIRECTORIES);
 		}
 		
 		// user chose a folder that looks like a file (aka MacOSX .app files)
@@ -455,7 +461,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 			_fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		} 
 		
-		create_from_dir = _fileChooser.getFileSelectionMode() == JFileChooser.DIRECTORIES_ONLY;
+		create_from_dir = chosenFile.isDirectory();//_fileChooser.getFileSelectionMode() == JFileChooser.DIRECTORIES_ONLY;
 	}
 	
 	protected void onContentSelectionButton(int onContentSelectionButton) {
