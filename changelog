@@ -1,4 +1,6 @@
 frostwire (5.2.12) stable; urgency=high
+  * Search form looks similar to FrostWire 4 but now allows user to search
+    for more than one file type at once.
   * Improvements in search algorithm.
   * Send file/folder feature more effective between just 2 peers.
   * Simplification of search form interface, looks similar to FrostWire 4
@@ -32,8 +34,10 @@ frostwire (5.2.12) stable; urgency=high
   * Removed lingering "Show/Hide player" menu entry on status bar context menu.
   * If seeding transfers are meant to be finished, newly finished transfers
     are not hidden for that session.
+  * Audio files can be launched using the operating system's default player
+    Right click on a file "Launc in <OS>"
   
- -- FrostWire Team <contact@frostwire.com>  Fri, 3 Feb 2012 00:00:00 -0500
+ -- FrostWire Team <contact@frostwire.com>  Fri, 3 Feb 2012 23:08:00 -0500
 
 frostwire (5.2.11) stable; urgency=high
   * Fixes bugs where some BitTorrent configuration settings were reset
