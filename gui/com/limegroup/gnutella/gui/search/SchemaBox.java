@@ -53,7 +53,7 @@ final class SchemaBox extends JPanel {
     /**
      * String for 'Select Type'
      */
-    private static final String SELECT_TYPE = I18n.tr("Select Search Type:");
+    private static final String SELECT_TYPE = I18n.tr("Select Search Types:");
 
     /**
      * The property that the media type is stored in.
