@@ -96,7 +96,7 @@ public class LocalSearchEngine {
      */
     private final static String stringSanitize(String str) {
         str = stripHtml(str);
-        str = str.replaceAll("\\.torrent|www\\.|\\.com|[\\\\\\/%_;\\-\\.\\(\\)\\[\\]\\n\\r–]", " ");
+        str = str.replaceAll("\\.torrent|www\\.|\\.com|[\\\\\\/%_;\\-\\.\\(\\)\\[\\]\\n\\r"+'\uu2013'+"]", " ");
         return StringUtils.removeDoubleSpaces(str);
     }
     
