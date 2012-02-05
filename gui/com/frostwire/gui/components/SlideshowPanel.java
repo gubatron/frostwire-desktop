@@ -110,13 +110,13 @@ public class SlideshowPanel extends JPanel {
     
     @Override
     public int getHeight() {
-        return super.getHeight() - 4;
+        return super.getHeight()-1;
     }
     
     @Override
     protected void paintComponent(Graphics g) {
-    	g.setColor(getBackground());
-        g.fillRect(0, 0, getWidth(), getHeight());
+        g.setColor(getBackground());
+        g.fillRect(0, 0, getWidth(), getHeight()+4);
 
         if (!_started && !_stoppedTransitions) {
             startAnimation();
