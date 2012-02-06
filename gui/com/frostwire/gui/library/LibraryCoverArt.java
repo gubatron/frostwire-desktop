@@ -37,8 +37,10 @@ import com.frostwire.jpeg.JPEGImageIO;
 import com.frostwire.mp3.ID3v2;
 import com.frostwire.mp3.Mp3File;
 import com.limegroup.gnutella.gui.GUIMediator;
+import com.limegroup.gnutella.gui.themes.ThemeMediator;
+import com.limegroup.gnutella.gui.themes.ThemeObserver;
 
-public class LibraryCoverArt extends JPanel {
+public class LibraryCoverArt extends JPanel implements ThemeObserver {
 
     private static final long serialVersionUID = 4302859512245078593L;
 
@@ -48,6 +50,8 @@ public class LibraryCoverArt extends JPanel {
     private Image coverArtImage;
     private File file;
 
+    private Color backgroundColor;
+
     public LibraryCoverArt() {
         background = new BufferedImage(350, 350, BufferedImage.TYPE_INT_RGB);
         defaultCoverArt = GUIMediator.getThemeImage("default_cover_art").getImage();
@@ -55,10 +59,21 @@ public class LibraryCoverArt extends JPanel {
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                setPrivateImage(coverArtImage);
+                updateTheme();
             }
         });
+        ThemeMediator.addThemeObserver(this);
     }
+    
+    private void updateArtBackgroundColor() {
+        LibraryMediator LIBRARY_MEDIATOR = LibraryMediator.instance();
+        
+        if (LIBRARY_MEDIATOR!=null && LIBRARY_MEDIATOR.getLibraryCoverArt()!=null) {
+            System.out.println("LibraryMediator.MAIN_PANEL.componentShown() -> Tell Library Cover Art to update the background color to ours.");
+            LIBRARY_MEDIATOR.getLibraryCoverArt().updateBackgroundColor(LIBRARY_MEDIATOR.getLibraryExplorer().getBackground());
+        }
+    }
+
 
     /**
      * Async
@@ -122,7 +137,13 @@ public class LibraryCoverArt extends JPanel {
         Graphics2D g2 = background.createGraphics();
         g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
         
-        g2.setColor(Color.WHITE);
+        
+        if (backgroundColor != null) {
+            g2.setColor(backgroundColor);
+        } else {        
+            g2.setColor(Color.WHITE);
+        }
+        
         g2.fill(new Rectangle(0,0,getWidth(),getHeight()));
         
         g2.drawImage(coverArtImage, 0, 0, getWidth(), getHeight(), null);
@@ -149,5 +170,15 @@ public class LibraryCoverArt extends JPanel {
             // ignore
             return null;
         }
+    }
+    
+    public void updateBackgroundColor(Color color) {
+        backgroundColor = color;
+    }
+
+    @Override
+    public void updateTheme() {
+        updateArtBackgroundColor();
+        setPrivateImage(coverArtImage);
     }
 }

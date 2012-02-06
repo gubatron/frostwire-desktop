@@ -23,7 +23,7 @@ public final class LibraryTab extends AbstractTab {
     private static JPanel PANEL;
 
     private static LibraryMediator LIBRARY_MEDIATOR;
-
+    
     /**
      * Constructs the elements of the tab.
      *
