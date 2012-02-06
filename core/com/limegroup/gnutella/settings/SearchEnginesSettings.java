@@ -14,7 +14,7 @@ public class SearchEnginesSettings extends LimeProps {
 
     public static final BooleanSetting MININOVA_SEARCH_ENABLED = FACTORY.createBooleanSetting("MININOVA_SEARCH_ENABLED", true);
     
-    public static final BooleanSetting BTJUNKIE_SEARCH_ENABLED = FACTORY.createBooleanSetting("BTJUNKIE_SEARCH_ENABLED", true);
+    public static final BooleanSetting KAT_SEARCH_ENABLED = FACTORY.createBooleanSetting("KAT_SEARCH_ENABLED", true);
     
     public static final BooleanSetting EXTRATORRENT_SEARCH_ENABLED = FACTORY.createBooleanSetting("EXTRATORRENT_SEARCH_ENABLED", true);
     
