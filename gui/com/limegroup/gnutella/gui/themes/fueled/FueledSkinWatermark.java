@@ -28,10 +28,11 @@ public class FueledSkinWatermark implements SubstanceWatermark {
     /**
      * Watermark image (screen-sized).
      */
+    private Image watermarkDarkDarkImage = null;
     private Image watermarkDarkImage = null;
     private Image watermarkLightImage = null;
 
-    private int amount = 8;
+    private int amount = 5;
     private float density = 0.5f;
     private Random randomNumbers = new Random();
 
@@ -49,22 +50,26 @@ public class FueledSkinWatermark implements SubstanceWatermark {
             return;
         }
 
+        boolean darkDarkNoise = false;
         boolean darkNoise = false;
         boolean lightNoise = false;
 
         if (c instanceof JComponent) {
             JComponent jc = (JComponent) c;
+            darkDarkNoise = hasClientProperty(jc, FueledCustomColors.CLIENT_PROPERTY_DARK_DARK_NOISE);
             darkNoise = hasClientProperty(jc, FueledCustomColors.CLIENT_PROPERTY_DARK_NOISE);
             lightNoise = hasClientProperty(jc, FueledCustomColors.CLIENT_PROPERTY_LIGHT_NOISE);
-            if (!darkNoise && !lightNoise) {
+            if (!darkDarkNoise && !darkNoise && !lightNoise) {
                 return;
             }
         }
 
         int dx = c.getLocationOnScreen().x;
         int dy = c.getLocationOnScreen().y;
-
-        if (darkNoise) {
+        
+        if (darkDarkNoise) {
+            graphics.drawImage(this.watermarkDarkDarkImage, x, y, x + width, y + height, x + dx, y + dy, x + dx + width, y + dy + height, null);
+        } else if (darkNoise) {
             graphics.drawImage(this.watermarkDarkImage, x, y, x + width, y + height, x + dx, y + dy, x + dx + width, y + dy + height, null);
         } else if (lightNoise) {
             graphics.drawImage(this.watermarkLightImage, x, y, x + width, y + height, x + dx, y + dy, x + dx + width, y + dy + height, null);
@@ -83,11 +88,19 @@ public class FueledSkinWatermark implements SubstanceWatermark {
 
         int screenWidth = virtualBounds.width;
         int screenHeight = virtualBounds.height;
+        
+        this.watermarkDarkDarkImage = SubstanceCoreUtilities.getBlankImage(screenWidth, screenHeight);
+
+        Graphics2D graphics = (Graphics2D) this.watermarkDarkDarkImage.getGraphics().create();
+
+        boolean status = this.drawWatermarkImage(skin, graphics, 0, 0, screenWidth, screenHeight, false, ThemeMediator.CURRENT_THEME.getCustomColors().getDarkDarkNoise());
+        graphics.dispose();
+        
         this.watermarkDarkImage = SubstanceCoreUtilities.getBlankImage(screenWidth, screenHeight);
 
-        Graphics2D graphics = (Graphics2D) this.watermarkDarkImage.getGraphics().create();
+        graphics = (Graphics2D) this.watermarkDarkImage.getGraphics().create();
 
-        boolean status = this.drawWatermarkImage(skin, graphics, 0, 0, screenWidth, screenHeight, false, ThemeMediator.CURRENT_THEME.getCustomColors().getDarkNoise());
+        status = status & this.drawWatermarkImage(skin, graphics, 0, 0, screenWidth, screenHeight, false, ThemeMediator.CURRENT_THEME.getCustomColors().getDarkNoise());
         graphics.dispose();
 
         this.watermarkLightImage = SubstanceCoreUtilities.getBlankImage(screenWidth, screenHeight);
@@ -106,6 +119,7 @@ public class FueledSkinWatermark implements SubstanceWatermark {
 
     @Override
     public void dispose() {
+        this.watermarkDarkDarkImage = null;
         this.watermarkDarkImage = null;
         this.watermarkLightImage = null;
     }
@@ -131,13 +145,13 @@ public class FueledSkinWatermark implements SubstanceWatermark {
      */
     private boolean drawWatermarkImage(SubstanceSkin skin, Graphics2D graphics, int x, int y, int width, int height, boolean isPreview, Color color) {
         SubstanceColorScheme scheme = skin.getWatermarkColorScheme();
-        if (isPreview) {
+        //if (isPreview) {
             graphics.drawImage(getNoiseImage(skin, width, height, true, color), x, y, null);
-        } else {
-            int alpha = scheme.isDark() ? 200 : 140;
-            graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha / 255.0f));
-            graphics.drawImage(getNoiseImage(skin, width, height, false, color), x, y, null);
-        }
+        //} else {
+        //    int alpha = scheme.isDark() ? 200 : 140;
+        //    graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha / 255.0f));
+        //    graphics.drawImage(getNoiseImage(skin, width, height, false, color), x, y, null);
+        //}
         return true;
     }
 

@@ -2,6 +2,7 @@ package com.limegroup.gnutella.gui.search;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -29,6 +30,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
+import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.text.BadLocationException;
 
@@ -50,7 +52,9 @@ import com.limegroup.gnutella.gui.InputPanel;
 import com.limegroup.gnutella.gui.KeyProcessingTextField;
 import com.limegroup.gnutella.gui.actions.FileMenuActions;
 import com.limegroup.gnutella.gui.actions.FileMenuActions.OpenMagnetTorrentAction;
+import com.limegroup.gnutella.gui.themes.SkinCustomColors;
 import com.limegroup.gnutella.gui.themes.SkinHandler;
+import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.gui.themes.fueled.FueledCustomColors;
 import com.limegroup.gnutella.settings.ApplicationSettings;
@@ -74,28 +78,6 @@ class SearchInputPanel extends JPanel {
      */
     //private final SearchField SEARCH_FIELD = new SearchField(14);
     private final IconSearchField SEARCH_FIELD = new GoogleIconSearchField(18,GUIMediator.getThemeImage("search_tab"));
-
-    /**
-     * The JTabbedPane that switches between types of searches.
-     */
-    private final JPanel PANE = new JPanel();//TabbedPane(JTabbedPane.BOTTOM);
-
-    /**
-     * The CardLayout that switches between the detailed
-     * search input information for each meta-type.
-     */
-    private final CardLayout META_CARDS = new CardLayout();
-
-    /**
-     * The panel that the META_CARDS layout uses to layout
-     * the detailed search input fields.
-     */
-    private final JPanel META_PANEL = new JPanel(META_CARDS);
-
-    /**
-     * The name to use for the default panel that has no meta-data.
-     */
-    private static final String DEFAULT_PANEL_KEY = "defaultPanel";
 
     /**
      * The box that holds the schemas for searching.
@@ -123,18 +105,10 @@ class SearchInputPanel extends JPanel {
         final ActionListener schemaListener = new SchemaListener();
 
         searchEntry = createSearchEntryPanel();
-        panelize(searchEntry);
+        searchEntry.setBorder(BorderFactory.createEmptyBorder(0, 3, 5, 2));
+        //panelize(searchEntry);
 
-        PANE.add(I18n.tr("Search"), searchEntry);
-        PANE.setRequestFocusEnabled(false);
-        PANE.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                requestSearchFocusImmediately();
-            }
-        });
-
-        add(PANE, BorderLayout.CENTER);
+        add(searchEntry, BorderLayout.PAGE_START);
 
         schemaListener.actionPerformed(null);
         
@@ -200,9 +174,7 @@ class SearchInputPanel extends JPanel {
     }
 
     void requestSearchFocusImmediately() {
-        if (getInputPanel() != null) {
-            getInputPanel().requestFirstFocus();
-        } else if (SEARCH_FIELD != null) {
+        if (SEARCH_FIELD != null) {
             SEARCH_FIELD.requestFocus();
         }
     }
@@ -244,19 +216,8 @@ class SearchInputPanel extends JPanel {
         		SEARCH_LISTENER.actionPerformed(null);
         	}
 		});
-
-        // add the default search input panel to the meta cards
-        META_PANEL.add(createDefaultSearchPanel(), DEFAULT_PANEL_KEY);
-
-        // other mediatype panels are added lazily on demand
-
-        JPanel search = new JPanel();
-        search.setLayout(new BoxLayout(search, BoxLayout.Y_AXIS));
-        search.add(Box.createVerticalStrut(0));
-        search.add(META_PANEL);
-        //search.add(Box.createVerticalStrut(10));
         
-        return search;
+        return createDefaultSearchPanel();
     }
 
     /**
@@ -266,14 +227,15 @@ class SearchInputPanel extends JPanel {
      */
     private JPanel createDefaultSearchPanel() {
         JPanel fullPanel = new BoxPanel(BoxPanel.Y_AXIS);
-        //fullPanel.add(Box.createVerticalStrut(3));
         fullPanel.add(SCHEMA_BOX);
         fullPanel.add(Box.createVerticalStrut(3));
         fullPanel.add(GUIUtils.left(SEARCH_FIELD));
         fullPanel.add(Box.createVerticalStrut(5));
         fullPanel.add(createSearchButtonPanel());
         fullPanel.add(createSearchOptionsPanel());
-        return GUIUtils.left(fullPanel);
+        
+        
+        return fullPanel;
     }
     
 
@@ -291,15 +253,24 @@ class SearchInputPanel extends JPanel {
 		List<SearchEngine> searchEngines = SearchEngine.getSearchEngines();
 		
 		JPanel controls = new JPanel();
-		controls.setBorder(new TitledBorder(I18n.tr("Search Engines")));
+		controls.putClientProperty(FueledCustomColors.CLIENT_PROPERTY_DARK_DARK_NOISE, true);
+		controls.setBorder(new LineBorder(ThemeMediator.CURRENT_THEME.getCustomColors().getDarkBorder(), 1, true));
         controls.setLayout(new GridBagLayout());
         controls.setAlignmentX(0.0f);
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 1.0;
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        controls.add(new JLabel(I18n.tr("Search Engines")), c);
 		setupCheckboxes(searchEngines, controls);
 		
 		_filterPanel = new SearchFilterPanel();
+		_filterPanel.putClientProperty(FueledCustomColors.CLIENT_PROPERTY_DARK_DARK_NOISE, true);
+		_filterPanel.setBorder(new LineBorder(ThemeMediator.CURRENT_THEME.getCustomColors().getDarkBorder(), 1, true));
 		_filterPanel.setAlignmentX(0.0f);
 		p.add(_filterPanel);
 		
+		p.add(Box.createVerticalStrut(6));
 		
 		p.add(controls);
 		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.add(p);
@@ -365,6 +336,9 @@ class SearchInputPanel extends JPanel {
 
     	//The Search Button on a row of it's own
         JPanel b = new JPanel(new GridBagLayout());
+       
+        
+        
         GridBagConstraints c = new GridBagConstraints();
         c.anchor = GridBagConstraints.LINE_START;
         c.fill = GridBagConstraints.NONE;
@@ -436,42 +410,6 @@ class SearchInputPanel extends JPanel {
 	}
 
     /**
-     * Gets the visible component in META_PANEL.
-     */
-    private JComponent getVisibleComponent() {
-        for (int i = 0; i < META_PANEL.getComponentCount(); i++) {
-            Component current = META_PANEL.getComponent(i);
-            if (current.isVisible())
-                return (JComponent) current;
-        }
-        return null;
-    }
-
-    /**
-     * Gets the visible scrollpane.
-     */
-    private JScrollPane getVisibleScrollPane() {
-        JComponent parent = (JComponent) getVisibleComponent().getComponent(0);
-        for (int i = 0; i < parent.getComponentCount(); i++) {
-            Component current = parent.getComponent(i);
-            if (current.isVisible() && current instanceof JScrollPane)
-                return (JScrollPane) current;
-        }
-        return null;
-    }
-
-    /**
-     * Retrieves the InputPanel that is currently visible.
-     */
-    private InputPanel getInputPanel() {
-        JScrollPane pane = getVisibleScrollPane();
-        if (pane == null)
-            return null;
-        else
-            return (InputPanel) pane.getViewport().getView();
-    }
-
-    /**
      * Listener for selecting a new schema.
      */
     private class SchemaListener implements ActionListener {
@@ -495,20 +433,14 @@ class SearchInputPanel extends JPanel {
      */
     private class SearchListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            InputPanel panel = getInputPanel();
             String query = SEARCH_FIELD.getText();
             final SearchInformation info = SearchInformation.createTitledKeywordSearch(query, null, MediaType.getTorrentMediaType(), query);
 
             // If the search worked, store & clear it.
             if (SearchMediator.triggerSearch(info) != null) {
                 if (info.isKeywordSearch()) {
-                    // Add the necessary stuff for autocompletion.
-                    if (panel != null) {
-                        panel.storeInput();
-                        panel.clear();
-                    } else {
+                    
                         SEARCH_FIELD.addToDictionary();
-                    }
 
                     // Clear the existing search.
                     SEARCH_FIELD.setText("");

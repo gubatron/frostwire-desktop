@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
@@ -44,8 +45,8 @@ public class SearchFilterPanel extends JPanel {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1.0;
         c.gridwidth = GridBagConstraints.REMAINDER;
-
-        setBorder(new TitledBorder(I18n.tr("Filter")));
+        
+        add(new JLabel(I18n.tr("Filter")), c);
         
         _keywordFilterTextField = new LabeledTextField("Name", 40, -1, 100);
 
