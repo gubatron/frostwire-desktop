@@ -7,7 +7,9 @@ public interface SkinCustomColors {
     public static final String CLIENT_PROPERTY_DARK_NOISE = "CLIENT_PROPERTY_DARK_NOISE";
     public static final String CLIENT_PROPERTY_LIGHT_NOISE = "CLIENT_PROPERTY_LIGHT_NOISE";
 
-    public Color getDarkNoiseColor();
+    public Color getDarkNoise();
     
-    public Color getLightNoiseColor();
+    public Color getLightNoise();
+
+    public Color getDarkBorder();
 }

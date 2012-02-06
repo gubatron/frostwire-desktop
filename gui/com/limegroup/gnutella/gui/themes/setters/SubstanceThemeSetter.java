@@ -2,6 +2,7 @@ package com.limegroup.gnutella.gui.themes.setters;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Insets;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;

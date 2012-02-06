@@ -87,14 +87,14 @@ public class FueledSkinWatermark implements SubstanceWatermark {
 
         Graphics2D graphics = (Graphics2D) this.watermarkDarkImage.getGraphics().create();
 
-        boolean status = this.drawWatermarkImage(skin, graphics, 0, 0, screenWidth, screenHeight, false, ThemeMediator.CURRENT_THEME.getCustomColors().getDarkNoiseColor());
+        boolean status = this.drawWatermarkImage(skin, graphics, 0, 0, screenWidth, screenHeight, false, ThemeMediator.CURRENT_THEME.getCustomColors().getDarkNoise());
         graphics.dispose();
 
         this.watermarkLightImage = SubstanceCoreUtilities.getBlankImage(screenWidth, screenHeight);
 
         graphics = (Graphics2D) this.watermarkLightImage.getGraphics().create();
 
-        status = status & this.drawWatermarkImage(skin, graphics, 0, 0, screenWidth, screenHeight, false, ThemeMediator.CURRENT_THEME.getCustomColors().getLightNoiseColor());
+        status = status & this.drawWatermarkImage(skin, graphics, 0, 0, screenWidth, screenHeight, false, ThemeMediator.CURRENT_THEME.getCustomColors().getLightNoise());
         graphics.dispose();
         return status;
     }

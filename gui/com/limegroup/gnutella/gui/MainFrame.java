@@ -1,5 +1,6 @@
 package com.limegroup.gnutella.gui;
 
+import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
@@ -28,6 +29,7 @@ import java.util.Map.Entry;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
@@ -43,6 +45,7 @@ import com.frostwire.gui.tabs.ChatTab;
 import com.frostwire.gui.tabs.LibraryTab;
 import com.frostwire.gui.tabs.SearchDownloadTab;
 import com.frostwire.gui.tabs.Tab;
+import com.limegroup.gnutella.gui.GUIMediator.Tabs;
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.TransferHandlerDropTargetListener;
 import com.limegroup.gnutella.gui.menu.MenuMediator;
@@ -63,7 +66,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
     /**
      * Handle to the <tt>JTabbedPane</tt> instance.
      */
-    private JTabbedPane TABBED_PANE;
+    private JPanel TABBED_PANE;
 
     /**
      * Constant handle to the <tt>SearchMediator</tt> class that is
@@ -152,7 +155,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         FRAME = frame;
         new DropTarget(FRAME, new TransferHandlerDropTargetListener(DNDUtils.DEFAULT_TRANSFER_HANDLER));
 
-        TABBED_PANE = new JTabbedPane();
+        TABBED_PANE = new JPanel(new CardLayout());
         TABBED_PANE.putClientProperty(SkinCustomColors.CLIENT_PROPERTY_LIGHT_NOISE, true);
         
         // Add a listener for saving the dimensions of the window &
@@ -221,13 +224,13 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         gbc.insets = new Insets(logoTopPadding,0,0,5); //padding
         gbc.anchor = GridBagConstraints.NORTHEAST;
         LOGO_PANEL = new LogoPanel();
-        contentPane.add(LOGO_PANEL, gbc);
+        contentPane.add(new ApplicationHeader(), gbc);
         
         //ADD TABBED PANE
         gbc = new GridBagConstraints();
         gbc.gridwidth = 2; //spans all the way
         gbc.gridx = 0;
-        gbc.gridy = 0;	
+        gbc.gridy = 1;	
         gbc.weightx = 1;
         gbc.weighty = 1;
         gbc.fill = GridBagConstraints.BOTH;
@@ -236,7 +239,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         
         //ADD STATUS LINE
         gbc = new GridBagConstraints();
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.gridwidth = 2;
         gbc.weighty = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -252,12 +255,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         PowerManager pm = new PowerManager();
         FRAME.addWindowListener(pm);
         GUIMediator.addRefreshListener(pm);
-        
-        //GuiCoreMediator.getCoreBackgroundExecutor().execute(new Runnable() {
-        //	public void run() {
-        //		GuiFrostWireUtils.verifySharedTorrentFolderCorrecteness();
-        //	}
-        //});
     }
     
     /** Saves the state of the Window to settings. */
@@ -290,8 +287,8 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         //LOGO_PANEL.updateTheme();
         //setSearchIconLocation();
         //updateLogoHeight();
-        for(GUIMediator.Tabs tab : GUIMediator.Tabs.values())
-            updateTabIcon(tab);
+        //for(GUIMediator.Tabs tab : GUIMediator.Tabs.values())
+          //  updateTabIcon(tab);
 	}
     
     /**
@@ -309,6 +306,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
 	    
 	    TABBED_PANE.setPreferredSize(new Dimension(10000, 10000));
 	    
+	    /*
 	    // listener for updating the tab's titles & tooltips.
         PropertyChangeListener propertyChangeListener = new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent evt) {
@@ -321,19 +319,20 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
                         TABBED_PANE.setToolTipTextAt(idx, (String)evt.getNewValue());
                 }
             }
-        };
+        };*/
         
         // add all tabs initially....
         for(GUIMediator.Tabs tab : GUIMediator.Tabs.values()) {
             Tab t = TABS.get(tab);
             if(t != null) {
                 this.addTab(t);
-                t.addPropertyChangeListener(propertyChangeListener);
+                //t.addPropertyChangeListener(propertyChangeListener);
             }
         }
 
         TABBED_PANE.setRequestFocusEnabled(false);
 
+        /*
         TABBED_PANE.addMouseListener(new MouseListener() {
             public void mouseClicked(MouseEvent e) {
                 TabbedPaneUI ui = TABBED_PANE.getUI();
@@ -349,13 +348,13 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
             public void mouseExited(MouseEvent e) {}
             public void mousePressed(MouseEvent e) {}
             public void mouseReleased(MouseEvent e) {}
-        });          
+        });      */    
 
         // remove tabs according to Settings Manager...
-        if (!ApplicationSettings.LIBRARY_VIEW_ENABLED.getValue())
-            this.setTabVisible(GUIMediator.Tabs.LIBRARY, false);
-        if (!ApplicationSettings.CHAT_VIEW_ENABLED.getValue())
-            this.setTabVisible(GUIMediator.Tabs.CHAT, false);
+        //if (!ApplicationSettings.LIBRARY_VIEW_ENABLED.getValue())
+        //    this.setTabVisible(GUIMediator.Tabs.LIBRARY, false);
+        //if (!ApplicationSettings.CHAT_VIEW_ENABLED.getValue())
+        //    this.setTabVisible(GUIMediator.Tabs.CHAT, false);
 
     }
 
@@ -368,58 +367,18 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      *  add
      */
     private void addTab(Tab tab) {
-        TABBED_PANE.addTab(tab.getTitle(), tab.getIcon(),
-                           tab.getComponent(), tab.getToolTip());
+        TABBED_PANE.add(tab.getComponent(), tab.getTitle());
     }
-
-    /**
-     * Inserts a tab in the <tt>JTabbedPane</tt> at the specified index, 
-     * based on the data supplied in the <tt>Tab</tt> instance.
-     *
-     * @param tab the <tt>Tab</tt> instance containing data for the tab to
-     *  add
-     */
-    private void insertTab(Tab tab, int index) {
-        TABBED_PANE.insertTab(tab.getTitle(), tab.getIcon(),
-                              tab.getComponent(), tab.getToolTip(),
-                              index);
-        // the component tree must be updated so that the new tab
-        // fits the current theme (if the theme was changed at runtime)
-        SwingUtilities.updateComponentTreeUI(TABBED_PANE);
-        ThemeMediator.updateThemeObservers();
-    }
-
+    
     /**
      * Sets the selected index in the wrapped <tt>JTabbedPane</tt>.
      *
      * @param index the tab index to select
      */
     public final void setSelectedTab(GUIMediator.Tabs tab) {
-        int i = getTabIndex(tab);
-        if (i == -1)
-            return;
-        TABBED_PANE.setSelectedIndex(i);
-    }
-    
-    public final GUIMediator.Tabs getSelectedTab() {
-        Tab tab = getTabForIndex(TABBED_PANE.getSelectedIndex());
-        for (Entry<GUIMediator.Tabs, Tab> entry : TABS.entrySet()) {
-            if (entry.getValue() == tab) {
-                return entry.getKey();
-            }
-        }
-        
-        return null;
-    }
-
-    /** Updates the icon in a tab. */
-    void updateTabIcon(GUIMediator.Tabs tab) {
-        int i = getTabIndex(tab);
-        if (i != -1) {
-            Tab t = TABS.get(tab);
-            if(t != null)
-                TABBED_PANE.setIconAt(i, t.getIcon());
-        }
+        CardLayout cl = (CardLayout)(TABBED_PANE.getLayout());
+        Tab t = TABS.get(tab);
+        cl.show(TABBED_PANE, t.getTitle());
     }
 
     /**
@@ -475,70 +434,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
 
 
     /**
-     * Sets the visible/invisible state of the tab associated with the
-     * specified index.  The indices correspond to the order of the
-     * tabs whether or not they are visible, as specified in 
-     * <tt>GUIMediator</tt>.
-     *
-     * @param TAB_INDEX the index of the tab to make visible or 
-     *  invisible
-     * @param VISIBLE the visible/invisible state to set the tab to
-     */
-    void setTabVisible(GUIMediator.Tabs tabItem, boolean visible) {
-        Tab tab = TABS.get(tabItem);
-        Component comp = tab.getComponent();
-        int tabCount = TABBED_PANE.getTabCount();
-        
-        if (!visible) {
-            // remove the tab from the tabbed pane
-            for (int i = 0; i < tabCount; i++) {
-                if (comp.equals(TABBED_PANE.getComponentAt(i))) {
-                    TABBED_PANE.remove(i);
-                    break;
-                }
-            }
-        } else {
-            // make sure the current one is invisible.
-       //     JComponent selComp =
-       //         (JComponent)TABBED_PANE.getSelectedComponent();
-       //     selComp.setVisible(false);
-            
-            // We need to insert the tab in the right order,
-            // according to the ordinal value of the enum.
-            // To do this, we iterate through the visible tabs
-            // and insert the new tab once we encounter
-            // a visible tab whose 'Tab' counterpart has an
-            // ordinal higher than ours.
-            // (If we reached the end of the visible tabs
-            //  without finding a higher ordinal, we insert
-            //  at the end.)
-            
-            
-            int ordinal = tabItem.ordinal();
-            
-            // add the tab to the tabbed pane
-            for (int i = 0; i < tabCount; i++) {                
-                Component c = TABBED_PANE.getComponentAt(i);
-                int o = getOrdinalForTabComponent(c);
-                if(o > ordinal) { // reached a higher tab
-                    insertTab(tab, i);
-                    break;
-                } else if(i == tabCount - 1) { // at end of list
-                    insertTab(tab, i+1);
-                }
-            }
-            
-            JComponent jcomp = (JComponent)comp;
-            jcomp.invalidate();
-            jcomp.revalidate();
-            jcomp.repaint();
-        }
-
-        tabItem.setEnabled(visible);
-        tab.storeState(visible);
-    }
-    
-    /**
      * Returns the ordinal of the enum that points to the tab
      * holding the given component.
      */
@@ -549,55 +444,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         }
         return -1;
     }
-
-    /**
-     * Returns the index in the tabbed pane of the specified "real" index
-     * argument.  The values for this argument are listed in
-     * <tt>GUIMediator</tt>.
-     *
-     * @param index the "real" index of the tab, meaning that this index
-     *  is independent of what is currently visible in the tab
-     * @return the index in the tabbed pane of the specified real index,
-     *  or -1 if the specified index is not found
-     */
-    private int getTabIndex(GUIMediator.Tabs tab) {
-        Tab t = TABS.get(tab);
-        if(t != null) {
-            return getTabIndex(t);
-        } else {
-            return -1;
-        }
-    }
     
-    private int getTabIndex(Tab tab) {
-        int tabCount = TABBED_PANE.getTabCount();
-        Component comp = tab.getComponent();
-        for (int i = 0; i < tabCount; i++) {
-            Component tabComp = TABBED_PANE.getComponentAt(i);
-            if (tabComp.equals(comp))
-                return i;
-        }
-        return -1;
-    }
-    
-    /**
-     * Returns the tab associated with the visual index.
-     * 
-     * @param idx
-     * @return
-     */
-    private Tab getTabForIndex(int idx) {
-       Component c = TABBED_PANE.getComponentAt(idx);
-       if(c == null)
-           return null;
-       
-       for(Tab tab : TABS.values()) {
-           if(tab.getComponent() != null && tab.getComponent().equals(c))
-               return tab;
-       }
-       
-       return null;
-    }
     
     /**
      * Should be called whenever state may have changed, so MainFrame can then
@@ -676,5 +523,33 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
     public final void setSearching(boolean searching) {    
         LOGO_PANEL.setSearching(searching);
 		refresh();
+    }
+
+    public Tabs getSelectedTab() {
+        Component comp = getCurrentTabComponent();
+        if (comp != null) {
+            for (Tabs t : TABS.keySet()) {
+                if (TABS.get(t).getComponent().equals(comp)) {
+                    return t;
+                }
+            }
+        }
+       
+        return null;
+    }
+    
+    private Component getCurrentTabComponent() {
+        Component currentPanel = null;
+
+        for (Component component : TABBED_PANE.getComponents()) {
+            if (component.isVisible()) {
+                if (component instanceof JPanel) 
+                    currentPanel = component;
+                else if (component instanceof JScrollPane)
+                    currentPanel =  ((JScrollPane) component).getViewport().getComponent(0);
+            }
+        }
+
+        return currentPanel;
     }
 }

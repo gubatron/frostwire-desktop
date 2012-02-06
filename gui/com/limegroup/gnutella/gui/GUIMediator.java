@@ -117,8 +117,6 @@ public final class GUIMediator {
 
         private Action navAction;
 
-        private Action showTabAction;
-
         private String name;
 
         private final BooleanSetting visibleSetting;
@@ -134,7 +132,6 @@ public final class GUIMediator {
             navAction = new NavigationAction(nameWithAmpers, I18n.tr("Display the {0} Screen", name));
             this.visibleSetting = visibleSetting;
             this.propertyChangeSupport = new PropertyChangeSupport(this);
-            showTabAction = new ShowTabAction(this);
         }
 
         private Tabs(StringSetting nameSetting, BooleanSetting visibleSetting) {
@@ -163,8 +160,6 @@ public final class GUIMediator {
             navAction.putValue(Action.NAME, newName);
             navAction.putValue(Action.LONG_DESCRIPTION, I18n.tr("Display the {0} Screen", name));
             propertyChangeSupport.firePropertyChange("name", oldName, name);
-            showTabAction.putValue(Action.NAME, newName);
-            showTabAction.putValue(Action.LONG_DESCRIPTION, I18n.tr("Toggle the {0} Screen", name));
         }
 
         void setEnabled(boolean enabled) {
@@ -173,10 +168,6 @@ public final class GUIMediator {
 
         public Action getNavigationAction() {
             return navAction;
-        }
-
-        public Action getShowTabAction() {
-            return showTabAction;
         }
 
         public boolean isViewEnabled() {
@@ -188,37 +179,6 @@ public final class GUIMediator {
 
         public String getName() {
             return name;
-        }
-
-        private class ShowTabAction extends AbstractAction {
-
-            /**
-             * 
-             */
-            private static final long serialVersionUID = -8174130601083499183L;
-            /** The tab this listener is using. */
-            private final GUIMediator.Tabs tab;
-
-            private ShowTabAction(GUIMediator.Tabs tab) {
-                super(tab.getName());
-                putValue(LONG_DESCRIPTION, I18n.tr("Show {0} Window", tab.getName()));
-                this.tab = tab;
-                tab.addPropertyChangeListener(new PropertyChangeListener() {
-                    public void propertyChange(PropertyChangeEvent evt) {
-                        if ("name".equals(evt.getPropertyName())) {
-                            putValue(Action.NAME, evt.getNewValue());
-                            putValue(LONG_DESCRIPTION, I18n.tr("Show {0} Window", evt.getNewValue()));
-                        }
-                    }
-                });
-            }
-
-            public void actionPerformed(ActionEvent ae) {
-                AbstractButton button = (AbstractButton) ae.getSource();
-                GUIMediator.instance().setTabVisible(tab, button.isSelected());
-                GUIMediator.instance().setWindow(tab);
-                GUIMediator.instance().getMainFrame().getMenuMediator().refreshShowHideSubMenu();
-            }
         }
 
         private class NavigationAction extends AbstractAction {
@@ -738,15 +698,6 @@ public final class GUIMediator {
         return getMainFrame().getSelectedTab();
     }
 
-    /**
-     * Updates the icon at the specified tab index.
-     * 
-     * @param index
-     *            the fixed index of the tab to update
-     */
-    public void updateTabIcon(GUIMediator.Tabs tab) {
-        getMainFrame().updateTabIcon(tab);
-    }
 
     /**
      * Sets the connected/disconnected visual status of the client.
@@ -1523,18 +1474,6 @@ public final class GUIMediator {
                 DISCONNECTED_MESSAGE,
                 I18n.tr("Your machine does not appear to have an active Internet connection or a firewall is blocking FrostWire from accessing the internet. FrostWire will automatically keep trying to connect you to the network unless you select \"Disconnect\" from the File menu."),
                 QuestionsHandler.NO_INTERNET_RETRYING, JOptionPane.ERROR_MESSAGE);
-    }
-
-    /**
-     * Sets the visible/invisible state of the tab.
-     * 
-     * @param tab
-     *            the tab to make visible or invisible
-     * @param visible
-     *            the visible/invisible state to set the tab to
-     */
-    public void setTabVisible(GUIMediator.Tabs tab, boolean visible) {
-        getMainFrame().setTabVisible(tab, visible);
     }
 
     /**

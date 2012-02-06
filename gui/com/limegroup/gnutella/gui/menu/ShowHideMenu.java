@@ -25,7 +25,7 @@ final class ShowHideMenu extends AbstractMenu {
 
     private void initializeMenu() {
         for (Tabs tab : Tabs.getOptionalTabs()) {
-        	addToggleMenuItem(tab.getShowTabAction(), tab.isViewEnabled());
+        //	addToggleMenuItem(tab.getShowTabAction(), tab.isViewEnabled());
         }
         
         MENU.add(new SearchMenu().getMenu());

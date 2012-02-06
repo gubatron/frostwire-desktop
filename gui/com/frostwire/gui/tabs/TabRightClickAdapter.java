@@ -32,12 +32,13 @@ public class TabRightClickAdapter extends MouseAdapter {
 	private final void initializeMenu() {
 		_menu = new SkinPopupMenu();
 		
+		/*
 		for (Tabs tab : Tabs.getOptionalTabs() ) {
 			JCheckBoxMenuItem menuItem = 
 				new SkinCheckBoxMenuItem(tab.getShowTabAction());
 			menuItem.setState(tab.isViewEnabled());
 			_menu.add(menuItem);
-		}
+		}*/
 	}
 	
 	

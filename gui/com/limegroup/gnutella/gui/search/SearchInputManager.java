@@ -5,6 +5,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -22,11 +23,6 @@ final class SearchInputManager implements ThemeObserver {
      * This includes both 'input boxes' and 'filter boxes'.
      */
     private JPanel COMPONENT_PANEL;
-
-    /**
-     * The card layout switching between searching or filtering.
-     */
-    private final CardLayout MAIN_CARDS = new CardLayout();
 
     /**
      * The panel containing either search input or filters.
@@ -71,7 +67,7 @@ final class SearchInputManager implements ThemeObserver {
     void goToSearch() {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                showSearchCard(false);
+                requestSearchFocus(false);
             }
         });
     }
@@ -90,6 +86,8 @@ final class SearchInputManager implements ThemeObserver {
     JComponent getComponent() {
         if (COMPONENT_PANEL == null) {
             COMPONENT_PANEL = new JPanel(new GridBagLayout());
+            
+            COMPONENT_PANEL.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, ThemeMediator.CURRENT_THEME.getCustomColors().getDarkBorder()));
         }
         return COMPONENT_PANEL;
     }
@@ -106,15 +104,7 @@ final class SearchInputManager implements ThemeObserver {
      */
     void panelRemoved(SearchResultMediator rp) {
         if(SEARCH.panelRemoved(rp))
-            showSearchCard(false);
-    }
-
-    /**
-     * Displays the search card.
-     */
-    private void showSearchCard(boolean immediate) {
-        MAIN_CARDS.first(getMainPanel());
-        requestSearchFocus(immediate);
+            requestSearchFocus(false);
     }
 
     /**
@@ -129,7 +119,7 @@ final class SearchInputManager implements ThemeObserver {
 
     private JPanel getMainPanel() {
         if (MAIN_PANEL == null) {
-            MAIN_PANEL = new JPanel(MAIN_CARDS);
+            MAIN_PANEL = new JPanel();
         }
         return MAIN_PANEL;
     }
