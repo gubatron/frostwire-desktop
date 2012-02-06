@@ -49,6 +49,7 @@ import com.limegroup.gnutella.gui.menu.MenuMediator;
 import com.limegroup.gnutella.gui.options.OptionsMediator;
 import com.limegroup.gnutella.gui.search.MagnetClipboardListener;
 import com.limegroup.gnutella.gui.search.SearchMediator;
+import com.limegroup.gnutella.gui.themes.SkinCustomColors;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 import com.limegroup.gnutella.settings.ApplicationSettings;
@@ -152,6 +153,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         new DropTarget(FRAME, new TransferHandlerDropTargetListener(DNDUtils.DEFAULT_TRANSFER_HANDLER));
 
         TABBED_PANE = new JTabbedPane();
+        TABBED_PANE.putClientProperty(SkinCustomColors.CLIENT_PROPERTY_LIGHT_NOISE, true);
         
         // Add a listener for saving the dimensions of the window &
         // position the search icon overlay correctly.

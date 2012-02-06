@@ -52,6 +52,7 @@ import com.limegroup.gnutella.gui.actions.FileMenuActions;
 import com.limegroup.gnutella.gui.actions.FileMenuActions.OpenMagnetTorrentAction;
 import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
+import com.limegroup.gnutella.gui.themes.fueled.FueledCustomColors;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.SearchSettings;
 

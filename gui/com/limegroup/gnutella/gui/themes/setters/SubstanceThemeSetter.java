@@ -1,5 +1,6 @@
 package com.limegroup.gnutella.gui.themes.setters;
 
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.BorderFactory;
@@ -26,6 +27,7 @@ import org.pushingpixels.substance.internal.utils.SubstanceCoreUtilities;
 
 import com.frostwire.gui.components.RangeSlider;
 import com.limegroup.gnutella.gui.themes.SkinComboBoxUI;
+import com.limegroup.gnutella.gui.themes.SkinCustomColors;
 import com.limegroup.gnutella.gui.themes.SkinListUI;
 import com.limegroup.gnutella.gui.themes.SkinProgressBarUI;
 import com.limegroup.gnutella.gui.themes.SkinRangeSliderUI;
@@ -33,6 +35,7 @@ import com.limegroup.gnutella.gui.themes.SkinTabbedPaneUI;
 import com.limegroup.gnutella.gui.themes.SkinTextAreaUI;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSetter;
+import com.limegroup.gnutella.gui.themes.fueled.FueledCustomColors;
 
 public class SubstanceThemeSetter implements ThemeSetter {
 
@@ -42,6 +45,8 @@ public class SubstanceThemeSetter implements ThemeSetter {
     private final float LINUX_SCALED_FONT_POLICY_FACTOR = 0.87f;
     private final float WINDOWS_SCALED_FONT_POLICY_FACTOR = 0.92f;
     private final float MAC_SCALED_FONT_POLICY_FACTOR = 0.87f;
+    
+    private static final SkinCustomColors CUSTOM_COLORS = new FueledCustomColors();
 
     private SubstanceThemeSetter(String name, String skinClassName) {
         _name = name;
@@ -128,6 +133,10 @@ public class SubstanceThemeSetter implements ThemeSetter {
 //    public static final SubstanceThemeSetter MAGMA = new SubstanceThemeSetter("Magma", "org.pushingpixels.substance.skinpack.MagmaSkin");
 //    public static final SubstanceThemeSetter MANGO = new SubstanceThemeSetter("Mango", "org.pushingpixels.substance.skinpack.MangoSkin");
 //    public static final SubstanceThemeSetter STREETLIGHTS = new SubstanceThemeSetter("Streetlights", "org.pushingpixels.substance.skinpack.StreetlightsSkin");
+    
+    public SkinCustomColors getCustomColors() {
+        return CUSTOM_COLORS;
+    }
 
     public ComponentUI createCheckBoxMenuItemUI(JComponent comp) {
         return SubstanceCheckBoxMenuItemUI.createUI(comp);

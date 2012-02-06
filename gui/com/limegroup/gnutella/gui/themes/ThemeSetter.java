@@ -6,8 +6,10 @@ import javax.swing.plaf.ComponentUI;
 public interface ThemeSetter {
 
     public String getName();
-    
+
     public void apply();
+
+    public SkinCustomColors getCustomColors();
 
     public ComponentUI createCheckBoxMenuItemUI(JComponent comp);
 
@@ -28,7 +30,7 @@ public interface ThemeSetter {
     public ComponentUI createListUI(JComponent comp);
 
     public ComponentUI createComboBoxUI(JComponent comp);
-    
+
     public ComponentUI createTreeUI(JComponent comp);
 
     public ComponentUI createTableUI(JComponent comp);
@@ -36,6 +38,6 @@ public interface ThemeSetter {
     public ComponentUI createRangeSliderUI(JComponent comp);
 
     public ComponentUI createTabbedPaneUI(JComponent comp);
-    
+
     public ComponentUI createProgressBarUI(JComponent comp);
 }

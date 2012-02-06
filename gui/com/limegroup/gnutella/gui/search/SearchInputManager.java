@@ -11,6 +11,7 @@ import javax.swing.SwingUtilities;
 
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
+import com.limegroup.gnutella.gui.themes.fueled.FueledCustomColors;
 
 /**
  * Manages input for the search, including filters for active searches.
@@ -51,6 +52,7 @@ final class SearchInputManager implements ThemeObserver {
 
         getMainPanel().removeAll();
         getMainPanel().add(SEARCH, "search");
+        getMainPanel().putClientProperty(FueledCustomColors.CLIENT_PROPERTY_DARK_NOISE, true);
 
         getComponent().removeAll();
         GridBagConstraints c = new GridBagConstraints();
