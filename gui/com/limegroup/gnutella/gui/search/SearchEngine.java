@@ -8,7 +8,6 @@ import java.util.Map;
 import org.limewire.setting.BooleanSetting;
 
 import com.frostwire.bittorrent.websearch.WebSearchPerformer;
-import com.frostwire.bittorrent.websearch.btjunkie.BTJunkieWebSearchPerformer;
 import com.frostwire.bittorrent.websearch.clearbits.ClearBitsWebSearchPerformer;
 import com.frostwire.bittorrent.websearch.extratorrent.ExtratorrentWebSearchPerformer;
 import com.frostwire.bittorrent.websearch.isohunt.ISOHuntWebSearchPerformer;
@@ -42,8 +41,6 @@ public final class SearchEngine {
             SearchEnginesSettings.MININOVA_SEARCH_ENABLED);
     public static final SearchEngine ISOHUNT = new SearchEngine(ISOHUNT_ID, "ISOHunt", new ISOHuntWebSearchPerformer(),
             SearchEnginesSettings.ISOHUNT_SEARCH_ENABLED);
-    public static final SearchEngine BTJUNKIE = new SearchEngine(BTJUNKIE_ID, "BTJunkie", new BTJunkieWebSearchPerformer(),
-            SearchEnginesSettings.BTJUNKIE_SEARCH_ENABLED);
     public static final SearchEngine EXTRATORRENT = new SearchEngine(EXTRATORRENT_ID, "Extratorrent", new ExtratorrentWebSearchPerformer(),
             SearchEnginesSettings.EXTRATORRENT_SEARCH_ENABLED);
     public static final SearchEngine VERTOR = new SearchEngine(VERTOR_ID, "Vertor", new VertorWebSearchPerformer(),
@@ -77,7 +74,7 @@ public final class SearchEngine {
     }
 
     public static List<SearchEngine> getSearchEngines() {
-        return Arrays.asList(CLEARBITS, MININOVA, ISOHUNT, BTJUNKIE, EXTRATORRENT, VERTOR, TPB, MONOVA);
+        return Arrays.asList(CLEARBITS, MININOVA, ISOHUNT, EXTRATORRENT, VERTOR, TPB, MONOVA);
     }
     
     public WebSearchPerformer getPerformer() {
