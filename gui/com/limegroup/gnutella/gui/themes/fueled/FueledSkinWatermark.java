@@ -9,11 +9,13 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.util.Random;
 
 import javax.swing.JComponent;
+import javax.swing.border.Border;
 
 import org.pushingpixels.substance.api.SubstanceSkin;
 import org.pushingpixels.substance.api.watermark.SubstanceWatermark;
@@ -52,6 +54,8 @@ public class FueledSkinWatermark implements SubstanceWatermark {
         boolean darkNoise = false;
         boolean lightNoise = false;
 
+        Border border = null;
+
         if (c instanceof JComponent) {
             JComponent jc = (JComponent) c;
             darkDarkNoise = hasClientProperty(jc, FueledCustomUI.CLIENT_PROPERTY_DARK_DARK_NOISE);
@@ -60,17 +64,30 @@ public class FueledSkinWatermark implements SubstanceWatermark {
             if (!darkDarkNoise && !darkNoise && !lightNoise) {
                 return;
             }
+
+            border = jc.getBorder();
         }
 
         int dx = c.getLocationOnScreen().x;
         int dy = c.getLocationOnScreen().y;
+
         
-        if (darkDarkNoise) {
-            graphics.drawImage(this.watermarkDarkDarkImage, x, y, x + width, y + height, x + dx, y + dy, x + dx + width, y + dy + height, null);
-        } else if (darkNoise) {
-            graphics.drawImage(this.watermarkDarkImage, x, y, x + width, y + height, x + dx, y + dy, x + dx + width, y + dy + height, null);
-        } else if (lightNoise) {
+
+        if (lightNoise) {
             graphics.drawImage(this.watermarkLightImage, x, y, x + width, y + height, x + dx, y + dy, x + dx + width, y + dy + height, null);
+        }
+
+        if (darkNoise) {
+            graphics.drawImage(this.watermarkDarkImage, x, y, x + width, y + height, x + dx, y + dy, x + dx + width, y + dy + height, null);
+        }
+
+        if (darkDarkNoise) {
+            
+            if (border instanceof FueledTitledBorder) {
+                RoundRectangle2D shape = new RoundRectangle2D.Float(x, y, width, height, 16, 16);
+                graphics.setClip(shape);
+            }
+            graphics.drawImage(this.watermarkDarkDarkImage, x, y, x + width, y + height, x + dx, y + dy, x + dx + width, y + dy + height, null);
         }
     }
 
@@ -86,14 +103,14 @@ public class FueledSkinWatermark implements SubstanceWatermark {
 
         int screenWidth = virtualBounds.width;
         int screenHeight = virtualBounds.height;
-        
+
         this.watermarkDarkDarkImage = SubstanceCoreUtilities.getBlankImage(screenWidth, screenHeight);
 
         Graphics2D graphics = (Graphics2D) this.watermarkDarkDarkImage.getGraphics().create();
 
         boolean status = this.drawWatermarkImage(skin, graphics, 0, 0, screenWidth, screenHeight, false, ThemeMediator.CURRENT_THEME.getCustomUI().getDarkDarkNoise());
         graphics.dispose();
-        
+
         this.watermarkDarkImage = SubstanceCoreUtilities.getBlankImage(screenWidth, screenHeight);
 
         graphics = (Graphics2D) this.watermarkDarkImage.getGraphics().create();
@@ -144,7 +161,7 @@ public class FueledSkinWatermark implements SubstanceWatermark {
     private boolean drawWatermarkImage(SubstanceSkin skin, Graphics2D graphics, int x, int y, int width, int height, boolean isPreview, Color color) {
         //SubstanceColorScheme scheme = skin.getWatermarkColorScheme();
         //if (isPreview) {
-            graphics.drawImage(getNoiseImage(skin, width, height, true, color), x, y, null);
+        graphics.drawImage(getNoiseImage(skin, width, height, true, color), x, y, null);
         //} else {
         //    int alpha = scheme.isDark() ? 200 : 140;
         //    graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha / 255.0f));
