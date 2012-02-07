@@ -2,6 +2,7 @@ package com.limegroup.gnutella.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -16,14 +17,18 @@ import java.util.Map;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import org.pushingpixels.substance.internal.utils.SubstanceTextUtilities;
+
 import com.frostwire.gui.player.AudioPlayerComponent;
 import com.frostwire.gui.tabs.Tab;
 import com.limegroup.gnutella.gui.GUIMediator.Tabs;
+import com.limegroup.gnutella.gui.themes.ThemeMediator;
 
 public class ApplicationHeader extends JPanel {
 
@@ -42,7 +47,6 @@ public class ApplicationHeader extends JPanel {
      */
     private final MouseListener CLICK_FORWARDER = new Clicker();
     
-    private Image tile;
 
     
     /**
@@ -53,11 +57,24 @@ public class ApplicationHeader extends JPanel {
 
     private static final long serialVersionUID = 4800214468508213106L;
 
+    /** image used for the background */
+    private Image tile;
+
+    /** Button background for selected button */
+    private final Image headerButtonBackgroundSelected;
+    
+    /** Button background for unselected button */
+    private final Image headerButtonBackgroundUnselected;
+    
     private LogoPanel logoPanel;
 
     public ApplicationHeader(Map<Tabs, Tab> tabs) {
         setLayout(new BorderLayout());
+        
         tile = GUIMediator.getThemeImage("application_header_background").getImage();
+        
+        headerButtonBackgroundSelected = GUIMediator.getThemeImage("selected_header_button_background").getImage();
+        headerButtonBackgroundUnselected = GUIMediator.getThemeImage("unselected_header_button_background").getImage();
         
         setSizes();
         initBackground();
@@ -120,11 +137,20 @@ public class ApplicationHeader extends JPanel {
 
     private void addTabButtons(Map<Tabs, Tab> tabs) {
 
-        JPanel buttonContainer = new JPanel(new GridLayout(1, GUIMediator.Tabs.values().length));
+        GridLayout gridLayout = new GridLayout(1, GUIMediator.Tabs.values().length);
+        gridLayout.setHgap(8);
+        
+        JPanel buttonContainer = new JPanel(gridLayout);
+        buttonContainer.setBorder(BorderFactory.createEmptyBorder(8,8,8,8));
+        buttonContainer.setOpaque(false);
+        ButtonGroup group = new ButtonGroup();
+        
+        Font buttonFont = new Font("Helvetica",Font.BOLD,14);
 
         for (Tabs t : GUIMediator.Tabs.values()) {
             final Tabs lameFinalT = t; //java...
             AbstractButton button = createTabButton(tabs.get(t));
+            button.setFont(buttonFont);
 
             button.addActionListener(new ActionListener() {
 
@@ -134,7 +160,10 @@ public class ApplicationHeader extends JPanel {
                 }
             });
 
+            group.add(button);
             buttonContainer.add(button);
+            
+            button.setSelected(t.equals(GUIMediator.Tabs.SEARCH));
         }
 
         add(buttonContainer, BorderLayout.LINE_START);
@@ -144,7 +173,17 @@ public class ApplicationHeader extends JPanel {
         Icon icon = t.getIcon();
         Icon disabledIcon = null;
         Icon rolloverIcon = null;
-        final AbstractButton button = new JRadioButton(I18n.tr(t.getTitle()));
+
+        final AbstractButton button = new JRadioButton(I18n.tr(t.getTitle())) {
+            protected void paintComponent(Graphics g) {
+                if (isSelected()) {
+                    g.drawImage(headerButtonBackgroundSelected, 0, 0, null);
+                } else {
+                    g.drawImage(headerButtonBackgroundUnselected, 0, 0, null);
+                }
+                super.paintComponent(g);
+            }
+        };
 
         button.putClientProperty(SELECTED, icon);
         if (icon != null) {
@@ -158,23 +197,20 @@ public class ApplicationHeader extends JPanel {
         button.setBorderPainted(false);
         button.setFocusPainted(false);
         button.setContentAreaFilled(false);
-        button.setMargin(new Insets(0, 0, 0, 0));
         button.setOpaque(false);
         button.addMouseListener(CLICK_FORWARDER);
-        button.setPreferredSize(new Dimension(95, 22));
         button.setToolTipText(t.getToolTip());
-
-/*
-        DitherPanel panel = new DitherPanel(DITHERER,Color.WHITE);
-        panel.setDithering(false);
-        panel.setLayout(new FlowLayout(FlowLayout.LEFT, 7, 1));
-        panel.add(button);
-        panel.addMouseListener(CLICK_FORWARDER);
-        panel.setBorder(buttonBorder);
-        SCHEMAS.add(panel);
- */
         
+        
+        button.putClientProperty(SubstanceTextUtilities.ENFORCE_FG_COLOR, Boolean.TRUE);
+        button.setForeground(ThemeMediator.CURRENT_THEME.getCustomUI().getTabButtonForegroundColor());
+        
+        Dimension buttonDim = new Dimension(107,34);
+        button.setPreferredSize(buttonDim);
+        button.setMinimumSize(buttonDim);
+        button.setMaximumSize(buttonDim);
         button.setSelected(false);
+        
         return button;
     }
     

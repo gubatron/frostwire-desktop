@@ -21,4 +21,6 @@ public interface SkinCustomUI {
     public TitledBorder createTitledBorder(String title);
 
     public Color getLightForegroundColor();
+    
+    public Color getTabButtonForegroundColor();
 }

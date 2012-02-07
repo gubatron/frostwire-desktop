@@ -27,7 +27,7 @@ public final class ChatTab extends AbstractTab {
 	 */
 	public ChatTab(final ChatMediator CHAT_MEDIATOR) {
 	//public ChatTab(final ChatMediator cm) {
-		super(I18n.tr("Community Chat"),
+		super(I18n.tr("Chat"),
 		        I18n.tr("Show our community chat"), "chat_tab");
 		//lime style
 		COMPONENT = CHAT_MEDIATOR.getComponent();

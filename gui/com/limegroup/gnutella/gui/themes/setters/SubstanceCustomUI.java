@@ -18,6 +18,8 @@ public class SubstanceCustomUI implements SkinCustomUI {
     public static final Color DARK_BORDER = new Color(0xA9BDC7);
     
     public static final Color LIGHT_FOREGROUND = new Color(0xFFFFFF);
+    
+    public static final Color TAB_BUTTON_FOREGROUND  = new Color(0x6489a8);
 
     public Color getDarkDarkNoise() {
         return DARK_DARK_NOISE;
@@ -45,5 +47,9 @@ public class SubstanceCustomUI implements SkinCustomUI {
     @Override
     public Color getLightForegroundColor() {
         return LIGHT_FOREGROUND;
+    }
+    
+    public Color getTabButtonForegroundColor() {
+        return TAB_BUTTON_FOREGROUND;
     }
 }
