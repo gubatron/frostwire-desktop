@@ -1,6 +1,5 @@
 package com.limegroup.gnutella.gui.themes.fueled;
 
-import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
@@ -16,7 +15,6 @@ import java.util.Random;
 
 import javax.swing.JComponent;
 
-import org.pushingpixels.substance.api.SubstanceColorScheme;
 import org.pushingpixels.substance.api.SubstanceSkin;
 import org.pushingpixels.substance.api.watermark.SubstanceWatermark;
 import org.pushingpixels.substance.internal.utils.SubstanceCoreUtilities;
@@ -144,7 +142,7 @@ public class FueledSkinWatermark implements SubstanceWatermark {
      * @return Indication whether the draw succeeded.
      */
     private boolean drawWatermarkImage(SubstanceSkin skin, Graphics2D graphics, int x, int y, int width, int height, boolean isPreview, Color color) {
-        SubstanceColorScheme scheme = skin.getWatermarkColorScheme();
+        //SubstanceColorScheme scheme = skin.getWatermarkColorScheme();
         //if (isPreview) {
             graphics.drawImage(getNoiseImage(skin, width, height, true, color), x, y, null);
         //} else {

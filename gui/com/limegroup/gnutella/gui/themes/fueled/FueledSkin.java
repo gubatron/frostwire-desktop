@@ -25,20 +25,20 @@ public class FueledSkin extends SubstanceSkin {
 		SubstanceSkin.ColorSchemes schemes = SubstanceSkin
 				.getColorSchemes("org/limewire/gui/resources/fueled.colorschemes");
 
-		SubstanceColorScheme activeScheme = schemes.get("Sea Glass Active");
-		SubstanceColorScheme enabledScheme = schemes.get("Sea Glass Enabled");
-		SubstanceColorScheme disabledScheme = schemes.get("Sea Glass Disabled");
+		SubstanceColorScheme activeScheme = schemes.get("Fueled Active");
+		SubstanceColorScheme enabledScheme = schemes.get("Fueled Enabled");
+		SubstanceColorScheme disabledScheme = schemes.get("Fueled Disabled");
 
 		SubstanceColorSchemeBundle defaultSchemeBundle = new SubstanceColorSchemeBundle(
 				activeScheme, enabledScheme, disabledScheme);
 
 		// borders
 		SubstanceColorScheme activeBorderScheme = schemes
-				.get("Sea Glass Active Border");
+				.get("Fueled Active Border");
 		SubstanceColorScheme enabledBorderScheme = schemes
-				.get("Sea Glass Enabled Border");
+				.get("Fueled Enabled Border");
 		SubstanceColorScheme disabledBorderScheme = schemes
-				.get("Sea Glass Enabled Border");
+				.get("Fueled Enabled Border");
 		defaultSchemeBundle.registerColorScheme(enabledBorderScheme,
 				ColorSchemeAssociationKind.BORDER, ComponentState.ENABLED);
 		defaultSchemeBundle.registerColorScheme(activeBorderScheme,
@@ -50,17 +50,17 @@ public class FueledSkin extends SubstanceSkin {
 				ComponentState.DISABLED_UNSELECTED);
 
 		// states
-		SubstanceColorScheme defaultScheme = schemes.get("Sea Glass Default");
+		SubstanceColorScheme defaultScheme = schemes.get("Fueled Default");
 		SubstanceColorScheme defaultBorderScheme = schemes
-				.get("Sea Glass Default Border");
+				.get("Fueled Default Border");
 		defaultSchemeBundle.registerColorScheme(defaultScheme,
 				ComponentState.DEFAULT);
 		defaultSchemeBundle.registerColorScheme(defaultBorderScheme,
 				ColorSchemeAssociationKind.BORDER, ComponentState.DEFAULT);
 
-		SubstanceColorScheme pressedScheme = schemes.get("Sea Glass Pressed");
+		SubstanceColorScheme pressedScheme = schemes.get("Fueled Pressed");
 		SubstanceColorScheme pressedBorderScheme = schemes
-				.get("Sea Glass Pressed Border");
+				.get("Fueled Pressed Border");
 		defaultSchemeBundle.registerColorScheme(pressedScheme,
 				ComponentState.PRESSED_SELECTED,
 				ComponentState.PRESSED_UNSELECTED);
@@ -69,9 +69,9 @@ public class FueledSkin extends SubstanceSkin {
 				ComponentState.PRESSED_SELECTED,
 				ComponentState.PRESSED_UNSELECTED);
 
-		SubstanceColorScheme selectedScheme = schemes.get("Sea Glass Selected");
+		SubstanceColorScheme selectedScheme = schemes.get("Fueled Selected");
 		SubstanceColorScheme selectedBorderScheme = schemes
-				.get("Sea Glass Selected Border");
+				.get("Fueled Selected Border");
 		defaultSchemeBundle.registerColorScheme(selectedScheme,
 				ComponentState.SELECTED, ComponentState.ROLLOVER_SELECTED);
 		defaultSchemeBundle.registerColorScheme(selectedBorderScheme,
@@ -79,7 +79,7 @@ public class FueledSkin extends SubstanceSkin {
 				ComponentState.ROLLOVER_SELECTED);
 
 		SubstanceColorScheme backgroundScheme = schemes
-				.get("Sea Glass Background");
+				.get("Fueled Background");
 
 		this.registerDecorationAreaSchemeBundle(defaultSchemeBundle,
 				backgroundScheme, DecorationAreaType.NONE);
@@ -97,7 +97,7 @@ public class FueledSkin extends SubstanceSkin {
 
 		this.buttonShaper = new ClassicButtonShaper();
 		this.watermark = new FueledSkinWatermark();
-		this.fillPainter = new FractionBasedFillPainter("Sea Glass",
+		this.fillPainter = new FractionBasedFillPainter("Fueled",
 				new float[] { 0.0f, 0.49999f, 0.5f, 0.65f, 1.0f },
 				new ColorSchemeSingleColorQuery[] {
 						ColorSchemeSingleColorQuery.EXTRALIGHT,
@@ -109,7 +109,7 @@ public class FueledSkin extends SubstanceSkin {
 		this.decorationPainter = new MatteDecorationPainter();
 		this.highlightPainter = new ClassicHighlightPainter();
 
-		this.borderPainter = new FractionBasedBorderPainter("Sea Glass",
+		this.borderPainter = new FractionBasedBorderPainter("Fueled",
 				new float[] { 0.0f, 0.5f, 1.0f },
 				new ColorSchemeSingleColorQuery[] {
 						ColorSchemeSingleColorQuery.MID,

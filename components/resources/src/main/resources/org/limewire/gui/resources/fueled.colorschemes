@@ -1,4 +1,4 @@
-Sea Glass Enabled {
+Fueled Enabled {
     kind=Light
     colorUltraLight=#FFFFFF
     colorExtraLight=#F2FAFE
@@ -9,7 +9,7 @@ Sea Glass Enabled {
     colorForeground=#070707
 }
 
-Sea Glass Pressed {
+Fueled Pressed {
     kind=Light
     colorUltraLight=#AFDAF6
     colorExtraLight=#B6CBDD
@@ -20,7 +20,7 @@ Sea Glass Pressed {
     colorForeground=#1C1C1C
 }
 
-Sea Glass Enabled Border {
+Fueled Enabled Border {
     kind=Dark
     colorUltraLight=#ABC8EE
     colorExtraLight=#A1C2ED
@@ -31,7 +31,7 @@ Sea Glass Enabled Border {
     colorForeground=#070707
 }
 
-Sea Glass Pressed Border {
+Fueled Pressed Border {
     kind=Dark
     colorUltraLight=#648BC6
     colorExtraLight=#4E7DBF
@@ -42,7 +42,7 @@ Sea Glass Pressed Border {
     colorForeground=#070707
 }
 
-Sea Glass Disabled {
+Fueled Disabled {
     kind=Light
     colorUltraLight=#DEE8F1
     colorExtraLight=#E3EAF3
@@ -53,7 +53,7 @@ Sea Glass Disabled {
     colorForeground=#989A9E
 }
 
-Sea Glass Disabled Border {
+Fueled Disabled Border {
     kind=Light
     colorUltraLight=#D0DDEC
     colorExtraLight=#D3DEED
@@ -64,7 +64,7 @@ Sea Glass Disabled Border {
     colorForeground=#DFE7EF
 }
 
-Sea Glass Selected {
+Fueled Selected {
     kind=Dark
     colorUltraLight=#85A4C7
     colorExtraLight=#84A3C7
@@ -75,7 +75,7 @@ Sea Glass Selected {
     colorForeground=#1C1C1C
 }
 
-Sea Glass Selected Border {
+Fueled Selected Border {
     kind=Dark
     colorUltraLight=#7798DA
     colorExtraLight=#7698DB
@@ -86,7 +86,7 @@ Sea Glass Selected Border {
     colorForeground=#1C1C1C
 }
 
-Sea Glass Default {
+Fueled Default {
     kind=Light
     colorUltraLight=#31B0F3
     colorExtraLight=#98C3ED
@@ -97,7 +97,7 @@ Sea Glass Default {
     colorForeground=#010101
 }
 
-Sea Glass Default Border {
+Fueled Default Border {
     kind=Dark
     colorUltraLight=#5776D9
     colorExtraLight=#5776D9
@@ -108,7 +108,7 @@ Sea Glass Default Border {
     colorForeground=#070707
 }
 
-Sea Glass Header Background {
+Fueled Header Background {
     kind=Light
     colorUltraLight=#7393B3
     colorExtraLight=#6F90B2
@@ -119,7 +119,7 @@ Sea Glass Header Background {
     colorForeground=#000000
 }
 
-Sea Glass Background {
+Fueled Background {
     kind=Light
     colorUltraLight=#FFFFFF
     colorExtraLight=#FFFFFF
@@ -130,7 +130,7 @@ Sea Glass Background {
     colorForeground=#000000
 }
 
-Sea Glass Active {
+Fueled Active {
     kind=Light
     colorUltraLight=#A4DCF7
     colorExtraLight=#B4CEE0
@@ -141,7 +141,7 @@ Sea Glass Active {
     colorForeground=#000000
 }
 
-Sea Glass Active Border {
+Fueled Active Border {
     kind=Dark
     colorUltraLight=#4486C5
     colorExtraLight=#3F84C4
