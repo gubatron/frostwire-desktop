@@ -3,6 +3,7 @@ package com.limegroup.gnutella.gui.search;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
@@ -45,8 +46,11 @@ public class SearchFilterPanel extends JPanel {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1.0;
         c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(10, 10, 10, 10);
         
-        add(new JLabel(I18n.tr("Filter")), c);
+        add(new JLabel("<html><b>" + I18n.tr("Filter") + "</b></html>"), c);
+        
+        c.insets = new Insets(0, 10, 10, 10);
         
         _keywordFilterTextField = new LabeledTextField("Name", 40, -1, 100);
 

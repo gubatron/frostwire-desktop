@@ -249,6 +249,7 @@ class SearchInputPanel extends JPanel {
 		
 		JPanel p = new JPanel();
 		p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
+		p.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
 		
 		List<SearchEngine> searchEngines = SearchEngine.getSearchEngines();
 		
@@ -256,12 +257,14 @@ class SearchInputPanel extends JPanel {
 		controls.putClientProperty(FueledCustomColors.CLIENT_PROPERTY_DARK_DARK_NOISE, true);
 		controls.setBorder(new LineBorder(ThemeMediator.CURRENT_THEME.getCustomColors().getDarkBorder(), 1, true));
         controls.setLayout(new GridBagLayout());
+       
         controls.setAlignmentX(0.0f);
         GridBagConstraints c = new GridBagConstraints();
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1.0;
         c.gridwidth = GridBagConstraints.REMAINDER;
-        controls.add(new JLabel(I18n.tr("Search Engines")), c);
+        c.insets = new Insets(10, 10, 10, 10);
+        controls.add(new JLabel("<html><b>" +I18n.tr("Search Engines")+ "</b></html>"), c);
 		setupCheckboxes(searchEngines, controls);
 		
 		_filterPanel = new SearchFilterPanel();
@@ -270,7 +273,7 @@ class SearchInputPanel extends JPanel {
 		_filterPanel.setAlignmentX(0.0f);
 		p.add(_filterPanel);
 		
-		p.add(Box.createVerticalStrut(6));
+		p.add(Box.createVerticalStrut(15));
 		
 		p.add(controls);
 		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.add(p);
@@ -314,6 +317,7 @@ class SearchInputPanel extends JPanel {
 	        c.fill = GridBagConstraints.HORIZONTAL;
 	        c.weightx = 1.0;
 	        c.gridwidth = GridBagConstraints.REMAINDER;
+	        c.insets = new Insets(0, 10, 10, 10);
 			parent.add(cBox, c);
 			
 			cBoxes.put(cBox,se.getEnabledSetting());
@@ -344,7 +348,7 @@ class SearchInputPanel extends JPanel {
         c.fill = GridBagConstraints.NONE;
         c.gridx = 0;
         c.gridy = 0;
-        c.insets = new Insets(0,0,10,0);
+        c.insets = new Insets(0,10,10,0);
         
         /*JButton searchButton = new JButton(I18n.tr("Search"));
         searchButton.setToolTipText(I18n.tr("Search the Network for the Given Words"));
@@ -360,6 +364,7 @@ class SearchInputPanel extends JPanel {
         c.gridy = 0;
         c.anchor = GridBagConstraints.WEST;
         c.fill = GridBagConstraints.NONE;
+        c.insets = new Insets(0,10,0,0);
         JLabel filterLabel = new JLabel(I18n.tr("<html><strong>Refine Results</strong></html>"));
         //filterLabel.setBorder(BorderFactory.createLineBorder(Color.black));
         filterLabelIconPanel.add(filterLabel,c);
