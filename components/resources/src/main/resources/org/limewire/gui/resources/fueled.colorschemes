@@ -1,7 +1,7 @@
 Sea Glass Enabled {
     kind=Light
-    colorUltraLight=#EBF6FE
-    colorExtraLight=#E6F1F9
+    colorUltraLight=#FFFFFF
+    colorExtraLight=#F2FAFE
     colorLight=#CFE7F8
     colorMid=#CDE5F7
     colorDark=#A1C2ED
