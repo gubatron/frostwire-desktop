@@ -46,9 +46,7 @@ public class SearchFilterPanel extends JPanel {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1.0;
         c.gridwidth = GridBagConstraints.REMAINDER;
-        c.insets = new Insets(10, 10, 10, 10);
-        
-        add(new JLabel("<html><b>" + I18n.tr("Filter") + "</b></html>"), c);
+    
         
         c.insets = new Insets(0, 10, 10, 10);
         

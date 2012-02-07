@@ -255,21 +255,15 @@ class SearchInputPanel extends JPanel {
 		
 		JPanel controls = new JPanel();
 		controls.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_DARK_NOISE, true);
-		controls.setBorder(new LineBorder(ThemeMediator.CURRENT_THEME.getCustomUI().getDarkBorder(), 1, true));
+		controls.setBorder(ThemeMediator.CURRENT_THEME.getCustomUI().createTitledBorder(I18n.tr("Search Engines")));
         controls.setLayout(new GridBagLayout());
        
         controls.setAlignmentX(0.0f);
-        GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 1.0;
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.insets = new Insets(10, 10, 10, 10);
-        controls.add(new JLabel("<html><b>" +I18n.tr("Search Engines")+ "</b></html>"), c);
 		setupCheckboxes(searchEngines, controls);
 		
 		_filterPanel = new SearchFilterPanel();
 		_filterPanel.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_DARK_NOISE, true);
-		_filterPanel.setBorder(new LineBorder(ThemeMediator.CURRENT_THEME.getCustomUI().getDarkBorder(), 1, true));
+		_filterPanel.setBorder(ThemeMediator.CURRENT_THEME.getCustomUI().createTitledBorder(I18n.tr("Filter")));
 		_filterPanel.setAlignmentX(0.0f);
 		p.add(_filterPanel);
 		

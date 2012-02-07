@@ -9,13 +9,13 @@ import com.limegroup.gnutella.gui.themes.SkinCustomUI;
 
 public class SubstanceCustomUI implements SkinCustomUI {
 
-    private static final Color DARK_DARK_NOISE = new Color(0xC4D6E0);
+    public static final Color DARK_DARK_NOISE = new Color(0xC4D6E0);
 
-    private static final Color DARK_NOISE = new Color(0xD5E5ED);
+    public static final Color DARK_NOISE = new Color(0xD5E5ED);
 
-    private static final Color LIGHT_NOISE = new Color(0xF2FBFF);
+    public static final Color LIGHT_NOISE = new Color(0xF2FBFF);
 
-    private static final Color DARK_BORDER = new Color(0xA9BDC7);
+    public static final Color DARK_BORDER = new Color(0xA9BDC7);
 
     public Color getDarkDarkNoise() {
         return DARK_DARK_NOISE;
@@ -36,7 +36,7 @@ public class SubstanceCustomUI implements SkinCustomUI {
         return DARK_BORDER;
     }
 
-    public Border getTitledBorder(String title) {
+    public Border createTitledBorder(String title) {
         return BorderFactory.createTitledBorder(title);
     }
 }
