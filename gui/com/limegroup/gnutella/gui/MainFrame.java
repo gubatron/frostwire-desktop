@@ -1,5 +1,6 @@
 package com.limegroup.gnutella.gui;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -7,33 +8,23 @@ import java.awt.Frame;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.dnd.DropTarget;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
-import javax.swing.plaf.TabbedPaneUI;
 
 import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.OSUtils;
@@ -211,39 +202,20 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         JPanel contentPane = new JPanel();
         
         FRAME.setContentPane(contentPane);
-        contentPane.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
+        contentPane.setLayout(new BorderLayout());
         
-        int logoTopPadding = (OSUtils.isMacOSX()) ? 2 : 0;
+        buildTabs();
         
         //ADD LOGO
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.gridwidth = 1;
-        gbc.weightx = 0;
-        gbc.insets = new Insets(logoTopPadding,0,0,5); //padding
-        gbc.anchor = GridBagConstraints.NORTHEAST;
-        LOGO_PANEL = new LogoPanel();
-        contentPane.add(new ApplicationHeader(), gbc);
+        ApplicationHeader applicationHeader = new ApplicationHeader(TABS);
+        LOGO_PANEL = applicationHeader.getLogoPanel();
+        contentPane.add(applicationHeader, BorderLayout.PAGE_START);
         
         //ADD TABBED PANE
-        gbc = new GridBagConstraints();
-        gbc.gridwidth = 2; //spans all the way
-        gbc.gridx = 0;
-        gbc.gridy = 1;	
-        gbc.weightx = 1;
-        gbc.weighty = 1;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.ipady = 100;
-        contentPane.add(TABBED_PANE, gbc);
+        contentPane.add(TABBED_PANE, BorderLayout.CENTER);
         
         //ADD STATUS LINE
-        gbc = new GridBagConstraints();
-        gbc.gridy = 2;
-        gbc.gridwidth = 2;
-        gbc.weighty = 0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        contentPane.add(getStatusLine().getComponent(), gbc);
+        contentPane.add(getStatusLine().getComponent(), BorderLayout.PAGE_END);
 
         ThemeMediator.addThemeObserver(this);
         GUIMediator.addRefreshListener(this);
@@ -294,7 +266,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
     /**
      * Build the Tab Structure based on advertising mode and Windows
      */
-    public void buildTabs() {
+    private void buildTabs() {
     	//Enable right click on Tabs to hide/show tabs
     	TABBED_PANE.addMouseListener(com.frostwire.gui.tabs.TabRightClickAdapter.getInstance());
     	
@@ -434,19 +406,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
 
 
     /**
-     * Returns the ordinal of the enum that points to the tab
-     * holding the given component.
-     */
-    private int getOrdinalForTabComponent(Component c) {
-        for(Map.Entry<GUIMediator.Tabs, Tab> entry : TABS.entrySet()) {
-            if(entry.getValue().getComponent().equals(c))
-                return entry.getKey().ordinal();
-        }
-        return -1;
-    }
-    
-    
-    /**
      * Should be called whenever state may have changed, so MainFrame can then
      * re-layout window (if necessary).
      */
@@ -551,5 +510,9 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         }
 
         return currentPanel;
+    }
+
+    public Tab getTab(Tabs tabs) {
+       return TABS.get(tabs);
     }
 }

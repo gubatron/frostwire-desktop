@@ -58,6 +58,7 @@ import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.player.AudioPlayer;
 import com.frostwire.gui.player.AudioSource;
 import com.frostwire.gui.player.InternetRadioAudioSource;
+import com.frostwire.gui.tabs.Tab;
 import com.limegroup.gnutella.UpdateInformation;
 import com.limegroup.gnutella.gui.actions.AbstractAction;
 import com.limegroup.gnutella.gui.bugs.FatalBugManager;
@@ -326,7 +327,6 @@ public final class GUIMediator {
      */
     private GUIMediator() {
         MAIN_FRAME = new MainFrame(getAppFrame());
-        MAIN_FRAME.buildTabs();
         OPTIONS_MEDIATOR = MAIN_FRAME.getOptionsMediator();
         _remoteDownloadsAllowed = true;
     }
@@ -991,6 +991,15 @@ public final class GUIMediator {
         }
     }
 
+    /**
+     * 
+     * @param tabs (tabs is actually a Singular word, it referes to the Tabs enum)
+     * @return
+     */
+    public Tab getTab(Tabs tabs) {
+        return MAIN_FRAME.getTab(tabs);
+    }
+    
     /**
      * Serves as a single point of access for any icons used in the program.
      * 

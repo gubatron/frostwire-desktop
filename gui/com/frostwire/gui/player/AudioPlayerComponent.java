@@ -18,8 +18,6 @@ import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.limewire.util.OSUtils;
-
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.LibraryUtils;
 import com.frostwire.mplayer.MediaPlaybackState;
@@ -120,7 +118,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener,
 
 	private JToggleButton LOOP_BUTTON;
 
-	private CardLayout PLAY_PAYSE_CARD_LAYOUT;
+	private CardLayout PLAY_PAUSE_CARD_LAYOUT;
 
 	/**
 	 * Constructs a new <tt>MediaPlayerComponent</tt>.
@@ -169,12 +167,15 @@ public final class AudioPlayerComponent implements AudioPlayerListener,
 		VOLUME.setValue(50);
 		VOLUME.setMaximum(100);
 		VOLUME.setEnabled(true);
+		VOLUME.setOpaque(false);
 
 		// setup buttons
 		registerListeners();
 
 		// add everything
 		JPanel buttonPanel = new BoxPanel(BoxPanel.X_AXIS);
+		buttonPanel.setOpaque(false);
+		
 		buttonPanel.setMaximumSize(new Dimension(370, tempHeight)); // tempWidth
 																	// +
 																	// PROGRESS.getWidth()
@@ -195,8 +196,10 @@ public final class AudioPlayerComponent implements AudioPlayerListener,
 		buttonPanel.add(PREV_BUTTON);
 		buttonPanel.add(Box.createHorizontalStrut(5));
 
-		PLAY_PAYSE_CARD_LAYOUT = new CardLayout();
-		PLAY_PAUSE_BUTTON_CONTAINER = new JPanel(PLAY_PAYSE_CARD_LAYOUT);
+		PLAY_PAUSE_CARD_LAYOUT = new CardLayout();
+		PLAY_PAUSE_BUTTON_CONTAINER = new JPanel(PLAY_PAUSE_CARD_LAYOUT);
+		PLAY_PAUSE_BUTTON_CONTAINER.setOpaque(false);
+		
 		PLAY_PAUSE_BUTTON_CONTAINER.add(PLAY_BUTTON, "PLAY");
 		PLAY_PAUSE_BUTTON_CONTAINER.add(PAUSE_BUTTON, "PAUSE");
 		buttonPanel.add(PLAY_PAUSE_BUTTON_CONTAINER);
@@ -208,21 +211,28 @@ public final class AudioPlayerComponent implements AudioPlayerListener,
 		buttonPanel.add(Box.createHorizontalStrut(18));
 
 		// set font for time labels.
-		Font f = new Font(progressCurrentTime.getFont().getFontName(),
-				Font.PLAIN, 10);
-		progressCurrentTime.setFont(f);
+		Font f = new Font(progressCurrentTime.getFont().getFontName(),Font.PLAIN, 10);
+		
+		progressCurrentTime.setForeground(ThemeMediator.CURRENT_THEME.getCustomUI().getLightForegroundColor());
+        progressCurrentTime.setFont(f);
+
+		progressSongLength.setForeground(ThemeMediator.CURRENT_THEME.getCustomUI().getLightForegroundColor());
 		progressSongLength.setFont(f);
 
+		Dimension progressDimension = new Dimension(44,11);
+        progressCurrentTime.setMinimumSize(progressDimension);
+        progressCurrentTime.setPreferredSize(progressDimension);
+
+		progressSongLength.setPreferredSize(progressDimension);
+        progressSongLength.setMinimumSize(progressDimension);
+		
 		buttonPanel.add(progressCurrentTime);
 		buttonPanel.add(Box.createHorizontalStrut(5));
 		buttonPanel.add(PROGRESS);
 		buttonPanel.add(Box.createHorizontalStrut(5));
 		buttonPanel.add(progressSongLength);
 
-		if (OSUtils.isMacOSX())
-			buttonPanel.add(Box.createHorizontalStrut(16));
 		buttonPanel.add(Box.createHorizontalGlue());
-
 		return buttonPanel;
 	}
 
@@ -264,12 +274,12 @@ public final class AudioPlayerComponent implements AudioPlayerListener,
 	}
 
 	private void showPauseButton() {
-		PLAY_PAYSE_CARD_LAYOUT
+		PLAY_PAUSE_CARD_LAYOUT
 				.show(PLAY_PAUSE_BUTTON_CONTAINER, "PAUSE");
 	}
 
 	private void showPlayButton() {
-		PLAY_PAYSE_CARD_LAYOUT.show(PLAY_PAUSE_BUTTON_CONTAINER,
+		PLAY_PAUSE_CARD_LAYOUT.show(PLAY_PAUSE_BUTTON_CONTAINER,
 				"PLAY");
 	}
 

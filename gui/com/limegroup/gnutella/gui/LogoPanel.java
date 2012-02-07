@@ -4,6 +4,7 @@ import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -44,18 +45,16 @@ final class LogoPanel extends BoxPanel /* implements ThemeObserver */ {
 		super(BoxPanel.X_AXIS);
 		updateTheme();
 
-		final LogoPanel LOGO_PANEL = this;
-
 		this.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent me) {
 				GUIMediator.openURL("http://www.frostwire.com");
 			}
 
 			public void mouseEntered(MouseEvent me){
-				LOGO_PANEL.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 		});
-		//GUIMediator.addThemeObserver(this);
+
 	}
 
 	// inherit doc comment
@@ -84,8 +83,10 @@ final class LogoPanel extends BoxPanel /* implements ThemeObserver */ {
 	
 	private void buildPanel() {
 	    removeAll();
+	    add(Box.createHorizontalGlue());
         add(ICON_LABEL);
         add(LOGO_LABEL);
+        add(Box.createHorizontalGlue());
 	}       
 
 	/**

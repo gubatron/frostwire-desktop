@@ -16,6 +16,8 @@ public class SubstanceCustomUI implements SkinCustomUI {
     public static final Color LIGHT_NOISE = new Color(0xF2FBFF);
 
     public static final Color DARK_BORDER = new Color(0xA9BDC7);
+    
+    public static final Color LIGHT_FOREGROUND = new Color(0xFFFFFF);
 
     public Color getDarkDarkNoise() {
         return DARK_DARK_NOISE;
@@ -38,5 +40,10 @@ public class SubstanceCustomUI implements SkinCustomUI {
 
     public TitledBorder createTitledBorder(String title) {
         return BorderFactory.createTitledBorder(title);
+    }
+
+    @Override
+    public Color getLightForegroundColor() {
+        return LIGHT_FOREGROUND;
     }
 }

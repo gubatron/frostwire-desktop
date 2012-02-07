@@ -19,4 +19,6 @@ public interface SkinCustomUI {
     public Color getDarkBorder();
     
     public TitledBorder createTitledBorder(String title);
+
+    public Color getLightForegroundColor();
 }
