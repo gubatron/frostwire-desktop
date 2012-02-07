@@ -9,7 +9,7 @@ public interface ThemeSetter {
 
     public void apply();
 
-    public SkinCustomColors getCustomColors();
+    public SkinCustomUI getCustomUI();
 
     public ComponentUI createCheckBoxMenuItemUI(JComponent comp);
 

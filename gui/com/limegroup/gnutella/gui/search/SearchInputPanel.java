@@ -52,11 +52,11 @@ import com.limegroup.gnutella.gui.InputPanel;
 import com.limegroup.gnutella.gui.KeyProcessingTextField;
 import com.limegroup.gnutella.gui.actions.FileMenuActions;
 import com.limegroup.gnutella.gui.actions.FileMenuActions.OpenMagnetTorrentAction;
-import com.limegroup.gnutella.gui.themes.SkinCustomColors;
+import com.limegroup.gnutella.gui.themes.SkinCustomUI;
 import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
-import com.limegroup.gnutella.gui.themes.fueled.FueledCustomColors;
+import com.limegroup.gnutella.gui.themes.fueled.FueledCustomUI;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.SearchSettings;
 
@@ -254,8 +254,8 @@ class SearchInputPanel extends JPanel {
 		List<SearchEngine> searchEngines = SearchEngine.getSearchEngines();
 		
 		JPanel controls = new JPanel();
-		controls.putClientProperty(FueledCustomColors.CLIENT_PROPERTY_DARK_DARK_NOISE, true);
-		controls.setBorder(new LineBorder(ThemeMediator.CURRENT_THEME.getCustomColors().getDarkBorder(), 1, true));
+		controls.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_DARK_NOISE, true);
+		controls.setBorder(new LineBorder(ThemeMediator.CURRENT_THEME.getCustomUI().getDarkBorder(), 1, true));
         controls.setLayout(new GridBagLayout());
        
         controls.setAlignmentX(0.0f);
@@ -268,8 +268,8 @@ class SearchInputPanel extends JPanel {
 		setupCheckboxes(searchEngines, controls);
 		
 		_filterPanel = new SearchFilterPanel();
-		_filterPanel.putClientProperty(FueledCustomColors.CLIENT_PROPERTY_DARK_DARK_NOISE, true);
-		_filterPanel.setBorder(new LineBorder(ThemeMediator.CURRENT_THEME.getCustomColors().getDarkBorder(), 1, true));
+		_filterPanel.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_DARK_NOISE, true);
+		_filterPanel.setBorder(new LineBorder(ThemeMediator.CURRENT_THEME.getCustomUI().getDarkBorder(), 1, true));
 		_filterPanel.setAlignmentX(0.0f);
 		p.add(_filterPanel);
 		

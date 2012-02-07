@@ -56,9 +56,9 @@ public class FueledSkinWatermark implements SubstanceWatermark {
 
         if (c instanceof JComponent) {
             JComponent jc = (JComponent) c;
-            darkDarkNoise = hasClientProperty(jc, FueledCustomColors.CLIENT_PROPERTY_DARK_DARK_NOISE);
-            darkNoise = hasClientProperty(jc, FueledCustomColors.CLIENT_PROPERTY_DARK_NOISE);
-            lightNoise = hasClientProperty(jc, FueledCustomColors.CLIENT_PROPERTY_LIGHT_NOISE);
+            darkDarkNoise = hasClientProperty(jc, FueledCustomUI.CLIENT_PROPERTY_DARK_DARK_NOISE);
+            darkNoise = hasClientProperty(jc, FueledCustomUI.CLIENT_PROPERTY_DARK_NOISE);
+            lightNoise = hasClientProperty(jc, FueledCustomUI.CLIENT_PROPERTY_LIGHT_NOISE);
             if (!darkDarkNoise && !darkNoise && !lightNoise) {
                 return;
             }
@@ -93,21 +93,21 @@ public class FueledSkinWatermark implements SubstanceWatermark {
 
         Graphics2D graphics = (Graphics2D) this.watermarkDarkDarkImage.getGraphics().create();
 
-        boolean status = this.drawWatermarkImage(skin, graphics, 0, 0, screenWidth, screenHeight, false, ThemeMediator.CURRENT_THEME.getCustomColors().getDarkDarkNoise());
+        boolean status = this.drawWatermarkImage(skin, graphics, 0, 0, screenWidth, screenHeight, false, ThemeMediator.CURRENT_THEME.getCustomUI().getDarkDarkNoise());
         graphics.dispose();
         
         this.watermarkDarkImage = SubstanceCoreUtilities.getBlankImage(screenWidth, screenHeight);
 
         graphics = (Graphics2D) this.watermarkDarkImage.getGraphics().create();
 
-        status = status & this.drawWatermarkImage(skin, graphics, 0, 0, screenWidth, screenHeight, false, ThemeMediator.CURRENT_THEME.getCustomColors().getDarkNoise());
+        status = status & this.drawWatermarkImage(skin, graphics, 0, 0, screenWidth, screenHeight, false, ThemeMediator.CURRENT_THEME.getCustomUI().getDarkNoise());
         graphics.dispose();
 
         this.watermarkLightImage = SubstanceCoreUtilities.getBlankImage(screenWidth, screenHeight);
 
         graphics = (Graphics2D) this.watermarkLightImage.getGraphics().create();
 
-        status = status & this.drawWatermarkImage(skin, graphics, 0, 0, screenWidth, screenHeight, false, ThemeMediator.CURRENT_THEME.getCustomColors().getLightNoise());
+        status = status & this.drawWatermarkImage(skin, graphics, 0, 0, screenWidth, screenHeight, false, ThemeMediator.CURRENT_THEME.getCustomUI().getLightNoise());
         graphics.dispose();
         return status;
     }

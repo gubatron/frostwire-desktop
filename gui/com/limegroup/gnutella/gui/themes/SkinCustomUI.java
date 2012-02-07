@@ -2,7 +2,9 @@ package com.limegroup.gnutella.gui.themes;
 
 import java.awt.Color;
 
-public interface SkinCustomColors {
+import javax.swing.border.Border;
+
+public interface SkinCustomUI {
 
     public static final String CLIENT_PROPERTY_DARK_DARK_NOISE = "CLIENT_PROPERTY_DARK_DARK_NOISE";
     public static final String CLIENT_PROPERTY_DARK_NOISE = "CLIENT_PROPERTY_DARK_NOISE";
@@ -15,4 +17,6 @@ public interface SkinCustomColors {
     public Color getLightNoise();
 
     public Color getDarkBorder();
+    
+    public Border getTitledBorder(String title);
 }

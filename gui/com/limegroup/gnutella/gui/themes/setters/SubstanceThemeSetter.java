@@ -28,7 +28,7 @@ import org.pushingpixels.substance.internal.utils.SubstanceCoreUtilities;
 
 import com.frostwire.gui.components.RangeSlider;
 import com.limegroup.gnutella.gui.themes.SkinComboBoxUI;
-import com.limegroup.gnutella.gui.themes.SkinCustomColors;
+import com.limegroup.gnutella.gui.themes.SkinCustomUI;
 import com.limegroup.gnutella.gui.themes.SkinListUI;
 import com.limegroup.gnutella.gui.themes.SkinProgressBarUI;
 import com.limegroup.gnutella.gui.themes.SkinRangeSliderUI;
@@ -36,22 +36,26 @@ import com.limegroup.gnutella.gui.themes.SkinTabbedPaneUI;
 import com.limegroup.gnutella.gui.themes.SkinTextAreaUI;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSetter;
-import com.limegroup.gnutella.gui.themes.fueled.FueledCustomColors;
+import com.limegroup.gnutella.gui.themes.fueled.FueledCustomUI;
 
 public class SubstanceThemeSetter implements ThemeSetter {
 
     private final String _name;
     private final String _skinClassName;
+    private final SkinCustomUI customUI;
     
     private final float LINUX_SCALED_FONT_POLICY_FACTOR = 0.87f;
     private final float WINDOWS_SCALED_FONT_POLICY_FACTOR = 0.92f;
     private final float MAC_SCALED_FONT_POLICY_FACTOR = 0.87f;
     
-    private static final SkinCustomColors CUSTOM_COLORS = new FueledCustomColors();
-
-    private SubstanceThemeSetter(String name, String skinClassName) {
+    private SubstanceThemeSetter(String name, String skinClassName, SkinCustomUI customUI) {
         _name = name;
         _skinClassName = skinClassName;
+        this.customUI = customUI;
+    }
+    
+    private SubstanceThemeSetter(String name, String skinClassName) {
+        this(name, skinClassName, new SubstanceCustomUI());
     }
 
     public String getName() {
@@ -96,7 +100,7 @@ public class SubstanceThemeSetter implements ThemeSetter {
 
     // from FrostWire
     public static final SubstanceThemeSetter SEA_GLASS = new SubstanceThemeSetter("Sea Glass", "com.limegroup.gnutella.gui.themes.SeaGlassSkin");
-    public static final SubstanceThemeSetter FUELED = new SubstanceThemeSetter("Fueled", "com.limegroup.gnutella.gui.themes.fueled.FueledSkin");
+    public static final SubstanceThemeSetter FUELED = new SubstanceThemeSetter("Fueled", "com.limegroup.gnutella.gui.themes.fueled.FueledSkin", new FueledCustomUI());
 
     // from Substance
     public static final SubstanceThemeSetter AUTUMN = new SubstanceThemeSetter("Autumn", "org.pushingpixels.substance.api.skin.AutumnSkin");
@@ -135,8 +139,8 @@ public class SubstanceThemeSetter implements ThemeSetter {
 //    public static final SubstanceThemeSetter MANGO = new SubstanceThemeSetter("Mango", "org.pushingpixels.substance.skinpack.MangoSkin");
 //    public static final SubstanceThemeSetter STREETLIGHTS = new SubstanceThemeSetter("Streetlights", "org.pushingpixels.substance.skinpack.StreetlightsSkin");
     
-    public SkinCustomColors getCustomColors() {
-        return CUSTOM_COLORS;
+    public SkinCustomUI getCustomUI() {
+        return customUI;
     }
 
     public ComponentUI createCheckBoxMenuItemUI(JComponent comp) {

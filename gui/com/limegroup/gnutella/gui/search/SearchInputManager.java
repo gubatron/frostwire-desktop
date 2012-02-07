@@ -1,6 +1,5 @@
 package com.limegroup.gnutella.gui.search;
 
-import java.awt.CardLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -10,9 +9,9 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import com.limegroup.gnutella.gui.themes.SkinCustomUI;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
-import com.limegroup.gnutella.gui.themes.fueled.FueledCustomColors;
 
 /**
  * Manages input for the search, including filters for active searches.
@@ -48,7 +47,7 @@ final class SearchInputManager implements ThemeObserver {
 
         getMainPanel().removeAll();
         getMainPanel().add(SEARCH, "search");
-        getMainPanel().putClientProperty(FueledCustomColors.CLIENT_PROPERTY_DARK_NOISE, true);
+        getMainPanel().putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_NOISE, true);
 
         getComponent().removeAll();
         GridBagConstraints c = new GridBagConstraints();
@@ -87,7 +86,7 @@ final class SearchInputManager implements ThemeObserver {
         if (COMPONENT_PANEL == null) {
             COMPONENT_PANEL = new JPanel(new GridBagLayout());
             
-            COMPONENT_PANEL.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, ThemeMediator.CURRENT_THEME.getCustomColors().getDarkBorder()));
+            COMPONENT_PANEL.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 1, ThemeMediator.CURRENT_THEME.getCustomUI().getDarkBorder()));
         }
         return COMPONENT_PANEL;
     }
