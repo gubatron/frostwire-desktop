@@ -3,7 +3,7 @@ package com.limegroup.gnutella.gui.themes.setters;
 import java.awt.Color;
 
 import javax.swing.BorderFactory;
-import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 
 import com.limegroup.gnutella.gui.themes.SkinCustomUI;
 
@@ -36,7 +36,7 @@ public class SubstanceCustomUI implements SkinCustomUI {
         return DARK_BORDER;
     }
 
-    public Border createTitledBorder(String title) {
+    public TitledBorder createTitledBorder(String title) {
         return BorderFactory.createTitledBorder(title);
     }
 }

@@ -43,21 +43,14 @@ public class SkinHandler {
      * Setting for the top of the filter title color.
      */
     public static final Color getFilterTitleTopColor() {
-        return new Color(255,255,255);
+        return new Color(0xecf4f7);
     }
 
     /**
      * Setting for the filter title color.
      */
     public static final Color getFilterTitleColor() {
-        return new Color(255,204,0);
-    }
-
-    /**
-     * Setting for the background grid color.
-     */
-    public static final Color getSearchGridColor() {
-        return new Color(175,175,175);
+        return new Color(0xecf4f7);
     }
 
     /**

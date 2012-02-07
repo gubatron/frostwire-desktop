@@ -236,7 +236,7 @@ final class SchemaBox extends JPanel {
             button.setToolTipText(toolTip);
         }
 
-        DitherPanel panel = new DitherPanel(DITHERER);
+        DitherPanel panel = new DitherPanel(DITHERER,Color.WHITE);
         panel.setDithering(false);
         panel.setLayout(new FlowLayout(FlowLayout.LEFT, 7, 1));
         panel.add(button);
@@ -312,11 +312,9 @@ final class SchemaBox extends JPanel {
             if (e.getStateChange() == ItemEvent.SELECTED) {
                 button.setIcon((Icon) button.getClientProperty(SELECTED));
                 parent.setDithering(true);
-                parent.setBackground(Color.BLUE);// SkinHandler.getFilterTitleColor());
             } else {
                 button.setIcon((Icon) button.getClientProperty(DESELECTED));
                 parent.setDithering(false);
-                parent.setBackground(UIManager.getColor("TabbedPane.background"));
             }
         }
     }

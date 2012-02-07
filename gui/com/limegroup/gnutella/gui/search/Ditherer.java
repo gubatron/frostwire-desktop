@@ -43,10 +43,10 @@ public final class Ditherer {
      */
 
     public Ditherer(int steps, Color from, Color to) {
-    	this(from, to, Y_AXIS, new LinearShader(), steps);
-    	if (steps <= 0) {
-    		throw new IllegalArgumentException("steps must be greater than zero");
-    	}
+        this(from, to, Y_AXIS, new LinearShader(), steps);
+        if (steps <= 0) {
+            throw new IllegalArgumentException("steps must be greater than zero");
+        }
     }
     
     /**
@@ -62,25 +62,25 @@ public final class Ditherer {
      * nor {@link Y_AXIS} 
      */
     public Ditherer(Color from, Color to, int orientation, Shader shader) {
-    	this(from, to, orientation, shader, 0);
+        this(from, to, orientation, shader, 0);
     }
     
     private Ditherer(Color from, Color to, int orientation, Shader shader, int steps) {
-    	if (orientation != X_AXIS && orientation != Y_AXIS) {
-    		throw new IllegalArgumentException("not a valid orientation");
-    	}
-    	if (steps > 0) {
-    		STEPS = steps;
-    		fixedSteps = true;
-    	}
-    	_redT   = from.getRed();
+        if (orientation != X_AXIS && orientation != Y_AXIS) {
+            throw new IllegalArgumentException("not a valid orientation");
+        }
+        if (steps > 0) {
+            STEPS = steps;
+            fixedSteps = true;
+        }
+        _redT = from.getRed();
         _greenT = from.getGreen();
-        _blueT  = from.getBlue();
+        _blueT = from.getBlue();
 
-        _redB   = to.getRed();
+        _redB = to.getRed();
         _greenB = to.getGreen();
-        _blueB  = to.getBlue();
-        
+        _blueB = to.getBlue();
+
         this.from = from;
         this.to = to;
         this.shader = shader;

@@ -67,6 +67,7 @@ import com.limegroup.gnutella.gui.options.panes.TorrentSeedingSettingPaneItem;
 import com.limegroup.gnutella.gui.options.panes.VideoPlayerPaneItem;
 import com.limegroup.gnutella.gui.options.panes.iTunesPreferencePaneItem;
 import com.limegroup.gnutella.gui.shell.FrostAssociations;
+import com.limegroup.gnutella.gui.themes.SkinCustomUI;
 import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.settings.UISettings;
 
@@ -211,8 +212,9 @@ public final class OptionsConstructor {
 				}
 			}
         });
-
+		
 		PaddedPanel mainPanel = new PaddedPanel();
+		mainPanel.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_LIGHT_NOISE,true);
 
 		Box splitBox = new Box(BoxLayout.X_AXIS);
 

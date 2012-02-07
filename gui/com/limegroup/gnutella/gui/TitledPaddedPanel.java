@@ -10,6 +10,9 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
+import com.limegroup.gnutella.gui.themes.SkinCustomUI;
+import com.limegroup.gnutella.gui.themes.ThemeMediator;
+
 /** 
  * This is a reusable class that creates a titled panel with the specified 
  * title and the specified padding both surrounding the panel and inside
@@ -78,16 +81,24 @@ public class TitledPaddedPanel extends JPanel {
 															 outerPad,
 															 outerPad,
 															 outerPad);
-        _titledBorder = BorderFactory.createTitledBorder(title);
+        _titledBorder = ThemeMediator.CURRENT_THEME.getCustomUI().createTitledBorder(title); //BorderFactory.createTitledBorder(title);
+
         Border innerBorder = BorderFactory.createEmptyBorder((innerPad > 6) ? innerPad - 6 : 0,
 															 innerPad,
 															 innerPad,
 															 innerPad);
         setLayout(layout);
         titlePanel.setLayout(titleLayout);
+        
         setBorder(outerBorder);
+
+        titlePanel.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_DARK_NOISE, true);
+
         titlePanel.setBorder(_titledBorder);
         _mainPanel.setBorder(innerBorder);
+        
+      //put the watermark in the background.
+
         titlePanel.add(_mainPanel);
         super.add(titlePanel);
     }

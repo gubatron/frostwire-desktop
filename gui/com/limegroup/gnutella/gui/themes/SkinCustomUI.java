@@ -2,7 +2,7 @@ package com.limegroup.gnutella.gui.themes;
 
 import java.awt.Color;
 
-import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 
 public interface SkinCustomUI {
 
@@ -18,5 +18,5 @@ public interface SkinCustomUI {
 
     public Color getDarkBorder();
     
-    public Border createTitledBorder(String title);
+    public TitledBorder createTitledBorder(String title);
 }
