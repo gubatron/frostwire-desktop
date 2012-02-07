@@ -1,8 +1,6 @@
 package com.limegroup.gnutella.gui.search;
 
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -25,19 +23,15 @@ import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
 import javax.swing.text.BadLocationException;
 
 import org.jdesktop.swingx.JXCollapsiblePane;
 import org.limewire.setting.BooleanSetting;
 
-import com.frostwire.gui.bittorrent.SendFileProgressDialog;
 import com.frostwire.gui.components.GoogleIconSearchField;
 import com.frostwire.gui.components.IconSearchField;
 import com.frostwire.gui.filters.TableLineFilter;
@@ -46,17 +40,10 @@ import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.IconButton;
 import com.limegroup.gnutella.gui.IconManager;
-import com.limegroup.gnutella.gui.InputPanel;
 import com.limegroup.gnutella.gui.KeyProcessingTextField;
-import com.limegroup.gnutella.gui.actions.FileMenuActions;
-import com.limegroup.gnutella.gui.actions.FileMenuActions.OpenMagnetTorrentAction;
 import com.limegroup.gnutella.gui.themes.SkinCustomUI;
-import com.limegroup.gnutella.gui.themes.SkinHandler;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
-import com.limegroup.gnutella.gui.themes.ThemeSettings;
-import com.limegroup.gnutella.gui.themes.fueled.FueledCustomUI;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.SearchSettings;
 
@@ -86,7 +73,7 @@ class SearchInputPanel extends JPanel {
     /**
      * The ditherer to use for the tab backgrounds.
      */
-    private final Ditherer DITHERER = new Ditherer(62, SkinHandler.getSearchPanelBG1(), SkinHandler.getSearchPanelBG2());
+    /**private final Ditherer DITHERER = new Ditherer(62, SkinHandler.getSearchPanelBG1(), SkinHandler.getSearchPanelBG2());*/
 
     private JPanel searchEntry;
 
@@ -112,42 +99,9 @@ class SearchInputPanel extends JPanel {
 
         schemaListener.actionPerformed(null);
         
-        add(createTorrentActionsPanel(), BorderLayout.PAGE_END);
+        add(GUIMediator.getVerticalSeparator());
     }
 
-    private JPanel createTorrentActionsPanel() {
-        
-        JPanel buttons_container = new JPanel();
-
-        //OPEN TORRENT
-        IconButton openTorrentButton = new IconButton("Open", "OPEN_TORRENT");
-        openTorrentButton.setToolTipText(I18n.tr("Open a .torrent or Magnet link"));
-        openTorrentButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                OpenMagnetTorrentAction openMagnetTorrentAction = new FileMenuActions.OpenMagnetTorrentAction();
-                openMagnetTorrentAction.actionPerformed(null);
-            }
-        });
-        
-        //SEND FILE
-        IconButton sendFileButton = new IconButton("Send","SHARE");
-        sendFileButton.setToolTipText(I18n.tr("Send a file or folder to a friend (No size limit, No third parties involved)"));
-        sendFileButton.addActionListener(new ActionListener() {
-            
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                SendFileProgressDialog dlg = new SendFileProgressDialog(GUIMediator.getAppFrame());
-                dlg.setVisible(true);
-            }
-        });
-
-        buttons_container.add(openTorrentButton);
-        buttons_container.add(sendFileButton);
-        
-        return buttons_container;
-    }
 
     /**
      * Gets the KeyProcessingTextField that key events can be forwarded to.
@@ -199,6 +153,7 @@ class SearchInputPanel extends JPanel {
      * Sets all components in this component to be not opaque
      * and sets the correct background panel.
      */
+    /**
     private void panelize(JComponent c) {
         GUIUtils.setOpaque(false, c);
         if (!ThemeSettings.isNativeTheme()) {
@@ -207,6 +162,7 @@ class SearchInputPanel extends JPanel {
 
         c.setBorder(BorderFactory.createEmptyBorder(0, 3, 5, 0));
     }
+    */
 
     private JPanel createSearchEntryPanel() {
         SEARCH_FIELD.addActionListener(SEARCH_LISTENER);
