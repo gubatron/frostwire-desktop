@@ -23,7 +23,7 @@ public class FueledSkin extends SubstanceSkin {
 
 	public FueledSkin() {
 		SubstanceSkin.ColorSchemes schemes = SubstanceSkin
-				.getColorSchemes("org/limewire/gui/resources/seaglass.colorschemes");
+				.getColorSchemes("org/limewire/gui/resources/fueled.colorschemes");
 
 		SubstanceColorScheme activeScheme = schemes.get("Sea Glass Active");
 		SubstanceColorScheme enabledScheme = schemes.get("Sea Glass Enabled");
