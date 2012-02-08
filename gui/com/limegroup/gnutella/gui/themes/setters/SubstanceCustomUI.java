@@ -17,7 +17,7 @@ public class SubstanceCustomUI implements SkinCustomUI {
 
     public static final Color DARK_BORDER = new Color(0xA9BDC7);
     
-    public static final Color LIGHT_BORDER = new Color(0xA9BDC7);
+    public static final Color LIGHT_BORDER = new Color(0xCDD9DE);
     
     public static final Color LIGHT_FOREGROUND = new Color(0xFFFFFF);
     
