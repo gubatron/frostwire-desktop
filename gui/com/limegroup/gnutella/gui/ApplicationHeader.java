@@ -96,15 +96,15 @@ public class ApplicationHeader extends JPanel {
     }
 
     private void setSizes() {
-        setMinimumSize(new Dimension(0, 51));
-        setPreferredSize(new Dimension(Integer.MAX_VALUE, 51));
-        setMaximumSize(new Dimension(Integer.MAX_VALUE, 51));
+        setMinimumSize(new Dimension(0, 54));
+        setPreferredSize(new Dimension(Integer.MAX_VALUE, 54));
+        setMaximumSize(new Dimension(Integer.MAX_VALUE, 54));
     }
 
     private void addAudioPlayerComponent() {
         final JPanel mediaPanel = new AudioPlayerComponent().getMediaPanel(true);
-        mediaPanel.setMinimumSize(new Dimension(547,43));
-        mediaPanel.setPreferredSize(new Dimension(547,43));
+        mediaPanel.setMinimumSize(new Dimension(300,45));
+        mediaPanel.setPreferredSize(new Dimension(300,45));
         
         mediaPanel.setBorder(BorderFactory.createEmptyBorder(6,1,6,11));
 
