@@ -113,7 +113,7 @@ public class Device {
 
             URI uri = new URI("http://" + _address.getHostAddress() + ":" + _port + "/browse?type=" + fileType);
 
-            HttpFetcher fetcher = new HttpFetcher(uri, 2000); // 2 seconds http timeout
+            HttpFetcher fetcher = new HttpFetcher(uri, 10000); // 10 seconds http timeout
 
             byte[] jsonBytes = (byte[]) fetcher.fetch(true)[0];
 
