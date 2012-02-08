@@ -12,13 +12,6 @@ import javax.swing.JComponent;
 public interface Tab {
 	
 	/**
-	 * Stores the visible/invisible state of the tab to disk.
-	 *
-	 * @param visible the visibility state to apply
-	 */
-	void storeState(boolean visible);
-	
-	/**
 	 * Returns the <tt>JComponent</tt> instance containing all of the
 	 * UI elements for the tab.
 	 *
@@ -47,11 +40,6 @@ public interface Tab {
 	 * @return the <tt>Icon</tt> instance for the tab
 	 */
 	Icon getIcon();
-	
-	/**
-	 * Notification that the specified tab has been clicked.
-	 */
-	void mouseClicked();
 	
 	/** Adds a listener to property changes on this tab. */
 	void addPropertyChangeListener(PropertyChangeListener listener);

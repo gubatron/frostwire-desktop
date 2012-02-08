@@ -64,7 +64,7 @@ class SearchInputPanel extends JPanel {
      * The sole input text field that is at the top of all searches.
      */
     //private final SearchField SEARCH_FIELD = new SearchField(14);
-    private final IconSearchField SEARCH_FIELD = new GoogleIconSearchField(18,GUIMediator.getThemeImage("search_tab"));
+    private final IconSearchField SEARCH_FIELD = new GoogleIconSearchField(17,GUIMediator.getThemeImage("search_tab"));
 
     /**
      * The box that holds the schemas for searching.

@@ -137,17 +137,7 @@ public class ApplicationSettings extends LimeProps {
      * Sets whether or not Connection Tab should be enabled.
      */
     public static final BooleanSetting CONNECTION_VIEW_ENABLED = FACTORY.createBooleanSetting("CONNECTION_VIEW_ENABLED", true);
-
-    /**
-     * Sets whether or not Library Tab should be enabled.
-     */
-    public static final BooleanSetting LIBRARY_VIEW_ENABLED = FACTORY.createBooleanSetting("LIBRARY_VIEW_ENABLED", true);
-
-    /** 
-     * Sets wheter or not the Chat Tab should be enabled
-     */
-    public static final BooleanSetting CHAT_VIEW_ENABLED = FACTORY.createBooleanSetting("CHAT_VIEW_ENABLED", ChatSettings.CHAT_IRC_ENABLED.getValue());
-
+    
     /**
      * Sets whether or not Console Tab should be enabled.
      */

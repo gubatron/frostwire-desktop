@@ -113,30 +113,23 @@ public final class GUIMediator {
     private boolean _remoteDownloadsAllowed;
 
     public static enum Tabs {
-        SEARCH(I18n.tr("&Search")), LIBRARY(I18n.tr("&Library"), ApplicationSettings.LIBRARY_VIEW_ENABLED),
-                CHAT(I18n.tr("Community C&hat"), ApplicationSettings.CHAT_VIEW_ENABLED);
+        SEARCH(I18n.tr("&Search")), LIBRARY(I18n.tr("&Library")),
+                CHAT(I18n.tr("C&hat"));
 
         private Action navAction;
 
         private String name;
 
-        private final BooleanSetting visibleSetting;
-
         private final PropertyChangeSupport propertyChangeSupport;
 
-        private Tabs(String name) {
-            this(name, null);
-        }
-
-        private Tabs(String nameWithAmpers, BooleanSetting visibleSetting) {
+        private Tabs(String nameWithAmpers) {
             this.name = GUIUtils.stripAmpersand(nameWithAmpers);
             navAction = new NavigationAction(nameWithAmpers, I18n.tr("Display the {0} Screen", name));
-            this.visibleSetting = visibleSetting;
             this.propertyChangeSupport = new PropertyChangeSupport(this);
         }
 
-        private Tabs(StringSetting nameSetting, BooleanSetting visibleSetting) {
-            this(nameSetting.getValue(), visibleSetting);
+        private Tabs(StringSetting nameSetting) {
+            this(nameSetting.getValue());
             nameSetting.addSettingListener(new SettingListener() {
                 public void settingChanged(final SettingEvent evt) {
                     if (evt.getEventType() == SettingEvent.EventType.VALUE_CHANGED) {
@@ -150,8 +143,8 @@ public final class GUIMediator {
             });
         }
 
-        private Tabs(String nameWithAmpers, BooleanSetting visibleSetting, String url) {
-            this(nameWithAmpers, visibleSetting);
+        private Tabs(String nameWithAmpers, String url) {
+            this(nameWithAmpers);
             this.navAction = new BrowseAction(nameWithAmpers, url);
         }
 
@@ -169,13 +162,6 @@ public final class GUIMediator {
 
         public Action getNavigationAction() {
             return navAction;
-        }
-
-        public boolean isViewEnabled() {
-            if (visibleSetting == null) {
-                throw new IllegalStateException("Should not be called on " + getName() + " which is a non-optional tab");
-            }
-            return visibleSetting.getValue();
         }
 
         public String getName() {

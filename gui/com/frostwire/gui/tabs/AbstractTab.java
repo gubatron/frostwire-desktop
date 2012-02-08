@@ -38,8 +38,6 @@ public abstract class AbstractTab implements Tab {
 		this.icon     = GUIMediator.getThemeImage(iconFile);
 		this.propertyChangeSupport = new PropertyChangeSupport(this);
 	}
-
-	public abstract void storeState(boolean state);
 	
 	public abstract JComponent getComponent();
 
@@ -73,8 +71,5 @@ public abstract class AbstractTab implements Tab {
 	
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 	    propertyChangeSupport.addPropertyChangeListener(listener);
-	}
-	
-	public void mouseClicked() {}
-	    
+	}   
 }

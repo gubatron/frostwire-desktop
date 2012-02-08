@@ -36,10 +36,6 @@ public final class ChatTab extends AbstractTab {
 		//PANEL.add(cm.getComponent());
 	}
 
-	public void storeState(boolean visible) {
-        	ApplicationSettings.CHAT_VIEW_ENABLED.setValue(visible);
-	}
-
 	public JComponent getComponent() {
 		return PANEL;
 	}

@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.Action;
+import javax.swing.BorderFactory;
 import javax.swing.JPopupMenu;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
@@ -133,7 +134,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
      * Set up the necessary constants.
      */
     protected void setupConstants() {
-        MAIN_PANEL = new PaddedPanel(I18n.tr("Transfers"));
+        MAIN_PANEL = new PaddedPanel(I18n.tr("Transfers"));        
 		_seedingFilter = new SeedingFilter();
         DATA_MODEL = new BTDownloadRowFilteredModel(_seedingFilter);//new BTDownloadModel();
         TABLE = new LimeJTable(DATA_MODEL);

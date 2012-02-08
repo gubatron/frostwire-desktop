@@ -35,10 +35,6 @@ public final class LibraryTab extends AbstractTab {
         LIBRARY_MEDIATOR = lm;
     }
 
-    public void storeState(boolean visible) {
-        ApplicationSettings.LIBRARY_VIEW_ENABLED.setValue(visible);
-    }
-
     public JComponent getComponent() {
         return getPanel();
     }

@@ -3,12 +3,14 @@ package com.frostwire.gui.tabs;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JSplitPane;
 
 import com.frostwire.gui.bittorrent.BTDownloadMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.search.SearchMediator;
+import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.settings.UISettings;
 
 /**
@@ -40,6 +42,7 @@ public final class SearchDownloadTab extends AbstractTab {
 		super(I18n.tr("Search"), I18n.tr("Search and Download Files"), "search_tab");
 
         searchDownloadSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, SearchMediator.getResultComponent(), downloadMediator.getComponent());
+        searchDownloadSplitPane.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.CURRENT_THEME.getCustomUI().getDarkBorder()));
         searchDownloadSplitPane.setContinuousLayout(true);
         searchDownloadSplitPane.setResizeWeight(0.6);
         searchDownloadSplitPane.setDividerLocation(UISettings.UI_TRANSFERS_DIVIDER_LOCATION.getValue());
@@ -68,15 +71,7 @@ public final class SearchDownloadTab extends AbstractTab {
         });
 	}
 
-	public void storeState(boolean state) {
-		// the search tab can never be invisible, so this isn't necessary
-	}
-
 	public JComponent getComponent() {
 		return mainSplitPane;
 	}
-	
-	public void mouseClicked() {
-	    SearchMediator.showSearchInput();
-    }	    
 }

@@ -17,6 +17,8 @@ public class SubstanceCustomUI implements SkinCustomUI {
 
     public static final Color DARK_BORDER = new Color(0xA9BDC7);
     
+    public static final Color LIGHT_BORDER = new Color(0xA9BDC7);
+    
     public static final Color LIGHT_FOREGROUND = new Color(0xFFFFFF);
     
     public static final Color TAB_BUTTON_FOREGROUND  = new Color(0x6489a8);
@@ -38,6 +40,11 @@ public class SubstanceCustomUI implements SkinCustomUI {
     @Override
     public Color getDarkBorder() {
         return DARK_BORDER;
+    }
+    
+    @Override
+    public Color getLightBorder() {
+        return LIGHT_BORDER;
     }
 
     public TitledBorder createTitledBorder(String title) {
