@@ -133,7 +133,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         DATA_MODEL = new LibraryPlaylistsTableModel();
         TABLE = new LimeJTable(DATA_MODEL);
         Action[] aa = new Action[] { LAUNCH_ACTION, OPEN_IN_FOLDER_ACTION, SEND_TO_FRIEND_ACTION, DELETE_ACTION, OPTIONS_ACTION };
-        BUTTON_ROW = new ButtonRow(aa, ButtonRow.X_AXIS, ButtonRow.RIGHT_GLUE, LIBRARY_PLAYER);
+        BUTTON_ROW = new ButtonRow(aa, ButtonRow.X_AXIS, ButtonRow.NO_GLUE);
     }
 
     // inherit doc comment

@@ -168,7 +168,7 @@ public class ThemeMediator {
 //        themes.add(SubstanceThemeSetter.MANGO);
 //        themes.add(SubstanceThemeSetter.STREETLIGHTS);
         
-        DEFAULT_THEME = SubstanceThemeSetter.SEA_GLASS;
+        DEFAULT_THEME = SubstanceThemeSetter.FUELED;
         THEMES = themes;
         CURRENT_THEME = loadCurrentTheme();
         

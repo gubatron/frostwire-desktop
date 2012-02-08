@@ -115,7 +115,7 @@ final class LibraryInternetRadioTableMediator extends AbstractLibraryTableMediat
         DATA_MODEL = new LibraryInternetRadioTableModel();
         TABLE = new LimeJTable(DATA_MODEL);
         Action[] aa = new Action[] { LAUNCH_ACTION, DELETE_ACTION, importRadioStationAction, OPTIONS_ACTION };
-        BUTTON_ROW = new ButtonRow(aa, ButtonRow.X_AXIS, ButtonRow.RIGHT_GLUE, LIBRARY_PLAYER);
+        BUTTON_ROW = new ButtonRow(aa, ButtonRow.X_AXIS, ButtonRow.NO_GLUE);
     }
 
     // inherit doc comment

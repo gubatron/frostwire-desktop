@@ -34,7 +34,6 @@ import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.gui.bittorrent.SendFileProgressDialog;
 import com.frostwire.gui.player.AudioPlayer;
-import com.frostwire.gui.player.AudioPlayerComponent;
 import com.frostwire.gui.player.AudioSource;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -58,8 +57,6 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
     
     private AdjustmentListener adjustmentListener;
     
-    protected JComponent LIBRARY_PLAYER;
-
     protected AbstractLibraryTableMediator(String id) {
         super(id);
         GUIMediator.addRefreshListener(this);
@@ -69,7 +66,6 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
     
     @Override
     protected void setupConstants() {
-        LIBRARY_PLAYER = new AudioPlayerComponent().getMediaPanel(true);
     }
 
     public List<AbstractLibraryTableDataLine<I>> getSelectedLines() {

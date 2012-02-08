@@ -6,7 +6,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -141,7 +140,7 @@ public class ApplicationHeader extends JPanel {
         gridLayout.setHgap(8);
         
         JPanel buttonContainer = new JPanel(gridLayout);
-        buttonContainer.setBorder(BorderFactory.createEmptyBorder(8,8,8,8));
+        buttonContainer.setBorder(BorderFactory.createEmptyBorder(8,8,8,32));
         buttonContainer.setOpaque(false);
         ButtonGroup group = new ButtonGroup();
         

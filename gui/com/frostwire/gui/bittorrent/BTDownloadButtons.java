@@ -1,6 +1,5 @@
 package com.frostwire.gui.bittorrent;
 
-import com.frostwire.gui.player.AudioPlayerComponent;
 import com.limegroup.gnutella.gui.ButtonRow;
 
 /**
@@ -16,7 +15,7 @@ final class BTDownloadButtons {
     private ButtonRow BUTTONS;
 
     BTDownloadButtons(final BTDownloadMediator dm) {
-        BUTTONS = new ButtonRow(dm.getActions(), ButtonRow.X_AXIS, ButtonRow.RIGHT_GLUE, new AudioPlayerComponent().getMediaPanel());
+        BUTTONS = new ButtonRow(dm.getActions(), ButtonRow.X_AXIS, ButtonRow.NO_GLUE);
     }
 
     ButtonRow getComponent() {

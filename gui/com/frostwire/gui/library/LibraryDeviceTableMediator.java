@@ -109,7 +109,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
         DATA_MODEL = new LibraryDeviceTableModel(FILE_DESCRIPTOR_FILTER);
         TABLE = new LimeJTable(DATA_MODEL);
         Action[] aa = new Action[] { LAUNCH_ACTION, saveToAction, OPTIONS_ACTION };
-        BUTTON_ROW = new ButtonRow(aa, ButtonRow.X_AXIS, ButtonRow.RIGHT_GLUE, LIBRARY_PLAYER);
+        BUTTON_ROW = new ButtonRow(aa, ButtonRow.X_AXIS, ButtonRow.NO_GLUE);
     }
 
     // inherit doc comment

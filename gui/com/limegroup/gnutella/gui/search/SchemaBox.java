@@ -236,7 +236,7 @@ final class SchemaBox extends JPanel {
             button.setToolTipText(toolTip);
         }
 
-        DitherPanel panel = new DitherPanel(DITHERER,Color.WHITE);
+        DitherPanel panel = new DitherPanel(DITHERER,null);
         panel.setDithering(false);
         panel.setLayout(new FlowLayout(FlowLayout.LEFT, 7, 1));
         panel.add(button);
@@ -314,8 +314,10 @@ final class SchemaBox extends JPanel {
                 parent.setDithering(true);
             } else {
                 button.setIcon((Icon) button.getClientProperty(DESELECTED));
-                parent.setDithering(false);
+                parent.setDithering(false);                
             }
+            
+            parent.repaint();
         }
     }
 

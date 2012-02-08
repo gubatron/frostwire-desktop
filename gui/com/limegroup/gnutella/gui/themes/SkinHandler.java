@@ -43,14 +43,14 @@ public class SkinHandler {
      * Setting for the top of the filter title color.
      */
     public static final Color getFilterTitleTopColor() {
-        return new Color(0xecf4f7);
+        return new Color(0xffffff);
     }
 
     /**
      * Setting for the filter title color.
      */
     public static final Color getFilterTitleColor() {
-        return new Color(0xecf4f7);
+        return ThemeMediator.CURRENT_THEME.getCustomUI().getLightNoise();
     }
 
     /**
