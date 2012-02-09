@@ -3,6 +3,7 @@ package com.frostwire.gui.player;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,7 +22,6 @@ import javax.swing.event.ChangeListener;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.gui.library.LibraryUtils;
 import com.frostwire.mplayer.MediaPlaybackState;
-import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.MediaButton;
@@ -83,9 +83,9 @@ public final class AudioPlayerComponent implements AudioPlayerListener,
 	 */
 	private final JProgressBar PROGRESS = new JProgressBar();
 
-	private final JLabel progressCurrentTime = new JLabel();
+	private final JLabel progressCurrentTime = new JLabel("--:--:--") ;
 
-	private final JLabel progressSongLength = new JLabel();
+	private final JLabel progressSongLength = new JLabel("--:--:--");
 
 	/**
 	 * The MP3 player.
@@ -95,7 +95,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener,
 	/**
 	 * The ProgressBar dimensions for showing the name & play progress.
 	 */
-	private final Dimension progressBarDimension = new Dimension(145, 10);
+	private final Dimension progressBarDimension = new Dimension(180, 5);
 
 	/**
 	 * Volume slider dimensions for adjusting the audio level of a song
@@ -157,7 +157,6 @@ public final class AudioPlayerComponent implements AudioPlayerListener,
 		PROGRESS.setMinimumSize(progressBarDimension);
 		PROGRESS.setMaximumSize(progressBarDimension);
 		PROGRESS.setPreferredSize(progressBarDimension);
-		// PROGRESS.setString(I18n.tr("FrostWire Media Player"));
 		PROGRESS.setMaximum(3600);
 		PROGRESS.setEnabled(false);
 
@@ -173,28 +172,24 @@ public final class AudioPlayerComponent implements AudioPlayerListener,
 		registerListeners();
 
 		// add everything
-		JPanel buttonPanel = new BoxPanel(BoxPanel.X_AXIS);
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 1));
 		buttonPanel.setOpaque(false);
 		
-		buttonPanel.setMaximumSize(new Dimension(370, tempHeight)); // tempWidth
-																	// +
-																	// PROGRESS.getWidth()
-																	// +
-																	// VOLUME.getWidth()
-		buttonPanel.add(Box.createHorizontalGlue());
+		buttonPanel.setMinimumSize(new Dimension(300, tempHeight));
+		buttonPanel.setPreferredSize(new Dimension(300, tempHeight));
+		buttonPanel.setMaximumSize(new Dimension(300, tempHeight));
+
 
 		if (showPlaybackModeControls) {
 			initPlaylistPlaybackModeControls();
 			buttonPanel.add(SHUFFLE_BUTTON);
-			buttonPanel.add(Box.createHorizontalStrut(5));
 			buttonPanel.add(LOOP_BUTTON);
-			buttonPanel.add(Box.createHorizontalStrut(5));
 		}
 
 		buttonPanel.add(VOLUME);
-		buttonPanel.add(Box.createHorizontalStrut(13));
+		buttonPanel.add(Box.createHorizontalStrut(10));
 		buttonPanel.add(PREV_BUTTON);
-		buttonPanel.add(Box.createHorizontalStrut(5));
 
 		PLAY_PAUSE_CARD_LAYOUT = new CardLayout();
 		PLAY_PAUSE_BUTTON_CONTAINER = new JPanel(PLAY_PAUSE_CARD_LAYOUT);
@@ -204,11 +199,9 @@ public final class AudioPlayerComponent implements AudioPlayerListener,
 		PLAY_PAUSE_BUTTON_CONTAINER.add(PAUSE_BUTTON, "PAUSE");
 		buttonPanel.add(PLAY_PAUSE_BUTTON_CONTAINER);
 
-		buttonPanel.add(Box.createHorizontalStrut(5));
 		buttonPanel.add(STOP_BUTTON);
-		buttonPanel.add(Box.createHorizontalStrut(5));
 		buttonPanel.add(NEXT_BUTTON);
-		buttonPanel.add(Box.createHorizontalStrut(18));
+		buttonPanel.add(Box.createHorizontalStrut(10));
 
 		// set font for time labels.
 		Font f = new Font(progressCurrentTime.getFont().getFontName(),Font.PLAIN, 10);
@@ -219,20 +212,16 @@ public final class AudioPlayerComponent implements AudioPlayerListener,
 		progressSongLength.setForeground(ThemeMediator.CURRENT_THEME.getCustomUI().getLightForegroundColor());
 		progressSongLength.setFont(f);
 
-		Dimension progressDimension = new Dimension(44,11);
-        progressCurrentTime.setMinimumSize(progressDimension);
-        progressCurrentTime.setPreferredSize(progressDimension);
-
-		progressSongLength.setPreferredSize(progressDimension);
-        progressSongLength.setMinimumSize(progressDimension);
+		Dimension timeLabelsDimension = new Dimension(45,11);
+        progressCurrentTime.setMinimumSize(timeLabelsDimension);
+        progressCurrentTime.setPreferredSize(timeLabelsDimension);
+		progressSongLength.setPreferredSize(timeLabelsDimension);
+        progressSongLength.setMinimumSize(timeLabelsDimension);
 		
 		buttonPanel.add(progressCurrentTime);
-		buttonPanel.add(Box.createHorizontalStrut(5));
 		buttonPanel.add(PROGRESS);
-		buttonPanel.add(Box.createHorizontalStrut(5));
 		buttonPanel.add(progressSongLength);
 
-		buttonPanel.add(Box.createHorizontalGlue());
 		return buttonPanel;
 	}
 
@@ -415,7 +404,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener,
 					.getSecondsInDDHHMMSS((int) PLAYER.getDurationInSecs()));
 		} else {
 			setProgressEnabled(false);
-			progressSongLength.setText("");
+			progressSongLength.setText("--:--:--");
 		}
 	}
 
@@ -444,8 +433,8 @@ public final class AudioPlayerComponent implements AudioPlayerListener,
 		} else if (state == MediaPlaybackState.Stopped
 				|| state == MediaPlaybackState.Closed) {
 			setProgressValue(PROGRESS.getMinimum());
-			progressCurrentTime.setText("");
-			progressSongLength.setText("");
+			progressCurrentTime.setText("--:--:--");
+			progressSongLength.setText("--:--:--");
 			showPlayButton();
 		} else if (state == MediaPlaybackState.Playing) {
 			showPauseButton();

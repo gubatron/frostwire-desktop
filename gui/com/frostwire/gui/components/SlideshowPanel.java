@@ -115,6 +115,10 @@ public class SlideshowPanel extends JPanel {
     
     @Override
     protected void paintComponent(Graphics g) {
+        if (_currentImage!=null) {
+            System.out.println("SlideshowPanel paintComponent. Image height " + _currentImage.getHeight());
+        }
+        
         g.setColor(getBackground());
         g.fillRect(0, 0, getWidth(), getHeight()+4);
 
@@ -130,7 +134,7 @@ public class SlideshowPanel extends JPanel {
         }
         
         if (_transition == null && _currentImage != null) {
-        	g.drawImage(_currentImage, 0, 0, null);
+            g.drawImage(_currentImage, 0, 0, null);
         }
     }
     

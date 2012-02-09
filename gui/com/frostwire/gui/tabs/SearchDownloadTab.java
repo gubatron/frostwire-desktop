@@ -64,6 +64,7 @@ public final class SearchDownloadTab extends AbstractTab {
                 UISettings.UI_TRANSFERS_DIVIDER_LOCATION.setValue(splitPane.getDividerLocation());
                 if (SearchMediator.getSearchResultDisplayer().getSlideshowPanel() != null &&
                     System.currentTimeMillis()-lastSlideshowPanelRepaint > 200) {
+                    System.out.println("SearchDownloadTab searchDownloadSplitPane propertyChanged, invoking slideshowpanel repaint");
                     SearchMediator.getSearchResultDisplayer().getSlideshowPanel().repaint();
                     lastSlideshowPanelRepaint = System.currentTimeMillis();
                 }

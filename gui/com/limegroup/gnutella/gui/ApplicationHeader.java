@@ -106,7 +106,7 @@ public class ApplicationHeader extends JPanel {
         mediaPanel.setMinimumSize(new Dimension(300,45));
         mediaPanel.setPreferredSize(new Dimension(300,45));
         
-        mediaPanel.setBorder(BorderFactory.createEmptyBorder(6,1,6,11));
+        mediaPanel.setBorder(BorderFactory.createEmptyBorder(2,1,6,11));
 
         final Image audioPlayerBackground = GUIMediator.getThemeImage("audio_player_background").getImage();
         

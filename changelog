@@ -1,4 +1,4 @@
-frostwire (5.2.12) stable; urgency=high
+frostwire (5.3.0) stable; urgency=high
   * Search form looks similar to FrostWire 4 but now allows user to search
     for more than one file type at once.
   * Improvements in search algorithm.
@@ -39,7 +39,7 @@ frostwire (5.2.12) stable; urgency=high
   * Removed BTJunkie search engine.
   * Added KickAssTorrents (kat.ph) search engine.
   
- -- FrostWire Team <contact@frostwire.com>  Fri, 3 Feb 2012 23:08:00 -0500
+ -- FrostWire Team <contact@frostwire.com>  Fri, 8 Feb 2012 21:07:56 -0500
 
 frostwire (5.2.11) stable; urgency=high
   * Fixes bugs where some BitTorrent configuration settings were reset
