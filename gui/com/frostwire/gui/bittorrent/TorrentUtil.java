@@ -141,8 +141,14 @@ public final class TorrentUtil {
     /** Deletes incomplete files and the save location from the itunes import settings */
     private static void finalCleanup(DownloadManager downloadManager) {
         Set<File> filesToDelete = getSkippedFiles(downloadManager);
+        
         for (File f : filesToDelete) {
             try {
+                if (isSkippedFileComplete(f, downloadManager)) {
+                    //don't delete this one, it's probably downloaded from
+                    //a previous session that got removed from the transfer manager.
+                    continue;
+                }
                 if (f.exists() && !f.delete()) {
                     System.out.println("Can't delete file: " + f);
                 }
@@ -152,6 +158,30 @@ public final class TorrentUtil {
         }
         FileUtils.deleteEmptyDirectoryRecursive(downloadManager.getSaveLocation());
         iTunesImportSettings.IMPORT_FILES.remove(downloadManager.getSaveLocation());
+    }
+
+    /**
+     * Check if the given file, even though marked as skipped was downloaded in its entirety,
+     * so that we don't delete it by accident during finalCleanup.
+     * @param file
+     * @param downloadManager
+     * @return
+     */
+    private static boolean isSkippedFileComplete(File file, DownloadManager downloadManager) {
+        DiskManagerFileInfoSet infoSet = downloadManager.getDiskManagerFileInfoSet();
+        
+        //search for the given file on the disk manager for this download manager
+        for (DiskManagerFileInfo fileInfo : infoSet.getFiles()) {
+            if (fileInfo.isSkipped()) {
+                File f = fileInfo.getFile(false);
+                
+                //1. found the path of our file in here.
+                if (f.getAbsolutePath().equalsIgnoreCase(file.getAbsolutePath())) {
+                   return fileInfo.getLength() == file.length();
+                }
+            }
+        }
+        return false;
     }
 
     public static Set<File> getSkipedFiles() {
