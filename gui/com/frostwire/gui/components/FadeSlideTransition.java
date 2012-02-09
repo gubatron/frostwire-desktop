@@ -64,10 +64,13 @@ public class FadeSlideTransition {
             alpha = 1;
 
         java.awt.Composite oldComp = g2d.getComposite();
+        
         g2d.setComposite(java.awt.AlphaComposite.getInstance(java.awt.AlphaComposite.SRC_OVER, 1 - alpha));
         g2d.drawImage(_imageStart, null, 0, 0);
+        
         g2d.setComposite(java.awt.AlphaComposite.getInstance(java.awt.AlphaComposite.SRC_OVER, alpha));
         g2d.drawImage(_imageEnd, null, 0, 0);
+        
         g2d.setComposite(oldComp);
     }
 
