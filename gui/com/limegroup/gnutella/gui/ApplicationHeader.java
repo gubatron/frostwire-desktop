@@ -110,6 +110,7 @@ public class ApplicationHeader extends JPanel {
 
         final Image audioPlayerBackground = GUIMediator.getThemeImage("audio_player_background").getImage();
         
+        @SuppressWarnings("serial")
         final JPanel mediaPanelFrame = new JPanel() {
            @Override
            protected void paintComponent(Graphics g) {
@@ -173,6 +174,7 @@ public class ApplicationHeader extends JPanel {
         Icon disabledIcon = null;
         Icon rolloverIcon = null;
 
+        @SuppressWarnings("serial")
         final AbstractButton button = new JRadioButton(I18n.tr(t.getTitle())) {
             protected void paintComponent(Graphics g) {
                 if (isSelected()) {
@@ -194,12 +196,12 @@ public class ApplicationHeader extends JPanel {
         button.setRolloverIcon(rolloverIcon);
         button.addItemListener(HIGHLIGHTER);
         button.setBorderPainted(false);
+        button.setBorder(BorderFactory.createEmptyBorder(0, 7, 5 , 0));
         button.setFocusPainted(false);
         button.setContentAreaFilled(false);
         button.setOpaque(false);
         button.addMouseListener(CLICK_FORWARDER);
         button.setToolTipText(t.getToolTip());
-        
         
         button.putClientProperty(SubstanceTextUtilities.ENFORCE_FG_COLOR, Boolean.TRUE);
         button.setForeground(ThemeMediator.CURRENT_THEME.getCustomUI().getTabButtonForegroundColor());
@@ -236,6 +238,7 @@ public class ApplicationHeader extends JPanel {
     */
    private static class Clicker implements MouseListener {
        public void mouseEntered(MouseEvent e) {
+           /*
            JComponent c = (JComponent) e.getSource();
            AbstractButton b;
            if (c instanceof AbstractButton) {
@@ -246,9 +249,11 @@ public class ApplicationHeader extends JPanel {
            }
 //           if (!b.isSelected())
 //               setIfNotNull(c, "TabbedPane.selected");
+  */
        }
 
        public void mouseExited(MouseEvent e) {
+           /**
            JComponent c = (JComponent) e.getSource();
            AbstractButton b;
            if (c instanceof AbstractButton) {
@@ -257,6 +262,7 @@ public class ApplicationHeader extends JPanel {
            } else {
                b = (AbstractButton) c.getComponent(0);
            }
+           */
 //           if (!b.isSelected())
 //               setIfNotNull(c, "TabbedPane.background");
        }
