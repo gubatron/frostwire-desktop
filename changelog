@@ -38,6 +38,8 @@ frostwire (5.3.0) stable; urgency=high
     Right click on a file "Launc in <OS>"
   * Removed BTJunkie search engine.
   * Added KickAssTorrents (kat.ph) search engine.
+  * Fixes issue where downloading removing a partial transfer would 
+    delete previously completed downloads of that same torrent.
   
  -- FrostWire Team <contact@frostwire.com>  Fri, 8 Feb 2012 21:07:56 -0500
 
