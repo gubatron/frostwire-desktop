@@ -21,7 +21,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -50,10 +49,8 @@ public class LibraryCoverArt extends JPanel implements ThemeObserver {
     private Image coverArtImage;
     private File file;
 
-    private Color backgroundColor;
-
     public LibraryCoverArt() {
-        background = new BufferedImage(350, 350, BufferedImage.TYPE_INT_RGB);
+        background = new BufferedImage(350, 350, BufferedImage.TYPE_INT_ARGB);
         defaultCoverArt = GUIMediator.getThemeImage("default_cover_art").getImage();
         setFile(null);
         addComponentListener(new ComponentAdapter() {
@@ -64,16 +61,6 @@ public class LibraryCoverArt extends JPanel implements ThemeObserver {
         });
         ThemeMediator.addThemeObserver(this);
     }
-    
-    private void updateArtBackgroundColor() {
-        LibraryMediator LIBRARY_MEDIATOR = LibraryMediator.instance();
-        
-        if (LIBRARY_MEDIATOR!=null && LIBRARY_MEDIATOR.getLibraryCoverArt()!=null) {
-            System.out.println("LibraryMediator.MAIN_PANEL.componentShown() -> Tell Library Cover Art to update the background color to ours.");
-            LIBRARY_MEDIATOR.getLibraryCoverArt().updateBackgroundColor(LIBRARY_MEDIATOR.getLibraryExplorer().getBackground());
-        }
-    }
-
 
     /**
      * Async
@@ -106,7 +93,9 @@ public class LibraryCoverArt extends JPanel implements ThemeObserver {
 
     @Override
     public void paint(Graphics g) {
+        super.paint(g);
         g.drawImage(background, 0, 0, null);
+        //g.drawImage(coverArtImage, 0, 0, getWidth(), getHeight(), null);
     }
 
     /**
@@ -137,14 +126,8 @@ public class LibraryCoverArt extends JPanel implements ThemeObserver {
         Graphics2D g2 = background.createGraphics();
         g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
         
-        
-        if (backgroundColor != null) {
-            g2.setColor(backgroundColor);
-        } else {        
-            g2.setColor(Color.WHITE);
-        }
-        
-        g2.fill(new Rectangle(0,0,getWidth(),getHeight()));
+        g2.setBackground(new Color(255, 255, 255, 0));
+        g2.clearRect(0,0,getWidth(),getHeight());
         
         g2.drawImage(coverArtImage, 0, 0, getWidth(), getHeight(), null);
         g2.dispose();
@@ -171,14 +154,9 @@ public class LibraryCoverArt extends JPanel implements ThemeObserver {
             return null;
         }
     }
-    
-    public void updateBackgroundColor(Color color) {
-        backgroundColor = color;
-    }
 
     @Override
     public void updateTheme() {
-        updateArtBackgroundColor();
         setPrivateImage(coverArtImage);
     }
 }
