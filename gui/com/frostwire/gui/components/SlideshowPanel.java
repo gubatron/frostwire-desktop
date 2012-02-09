@@ -117,9 +117,6 @@ public class SlideshowPanel extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-        if (_currentImage != null) {
-            //System.out.println("SlideshowPanel paintComponent. Image height " + _currentImage.getHeight());
-        }
 
         g.setColor(getBackground());
         g.fillRect(0, 0, getWidth(), getHeight() + 4);
@@ -307,8 +304,7 @@ public class SlideshowPanel extends JPanel {
         }
 
         try {
-            BufferedImage bImage = masterFlag ? getMasterImage1() : getMasterImage2();
-            masterFlag = !masterFlag;
+            BufferedImage bImage = getMasterImage(800, 400);
             Graphics2D g = null;
 
             try {
@@ -395,20 +391,21 @@ public class SlideshowPanel extends JPanel {
         return _slides != null && _slides.size() > 0;
     }
 
-    private BufferedImage getMasterImage1() {
-        if (_masterImage1 == null || _masterImage1.getHeight() != getHeight() || _masterImage1.getWidth() != getWidth()) {
-            _masterImage1 = null;
-            _masterImage1 = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+    private BufferedImage getMasterImage(int w, int h) {
+        masterFlag = !masterFlag;
+        if (masterFlag) {
+            if (_masterImage1 == null) {
+                _masterImage1 = null;
+                _masterImage1 = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+            }
+            return _masterImage1;
+        } else {
+            if (_masterImage2 == null) {
+                _masterImage2 = null;
+                _masterImage2 = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+            }
+            return _masterImage2;
         }
-        return _masterImage1;
-    }
-
-    private BufferedImage getMasterImage2() {
-        if (_masterImage2 == null || _masterImage2.getHeight() != getHeight() || _masterImage2.getWidth() != getWidth()) {
-            _masterImage2 = null;
-            _masterImage2 = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
-        }
-        return _masterImage2;
     }
 
     public void onTransitionStarted() {
