@@ -25,8 +25,8 @@ final class ViewMenu extends AbstractMenu {
     ViewMenu(final String key) {
         super(I18n.tr("&View"));
         SHOW_HIDE_MENU = new ShowHideMenu();
-        MENU.add(SHOW_HIDE_MENU.getMenu());
-        addSeparator();
+        //MENU.add(SHOW_HIDE_MENU.getMenu());
+        //addSeparator();
 
         MENU.add(new ThemeMenu().getMenu());
 

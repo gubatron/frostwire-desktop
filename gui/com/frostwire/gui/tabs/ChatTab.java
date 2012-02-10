@@ -7,7 +7,6 @@ import javax.swing.JPanel;
 
 import com.frostwire.gui.ChatMediator;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.settings.ApplicationSettings;
 /**
  * This class contains access to the chat tab properties.
  */

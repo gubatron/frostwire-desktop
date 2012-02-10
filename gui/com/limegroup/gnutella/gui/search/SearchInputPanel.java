@@ -26,7 +26,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import javax.swing.border.LineBorder;
 import javax.swing.text.BadLocationException;
 
 import org.jdesktop.swingx.JXCollapsiblePane;

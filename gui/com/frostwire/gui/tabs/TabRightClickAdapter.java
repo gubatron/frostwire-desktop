@@ -3,11 +3,8 @@ package com.frostwire.gui.tabs;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JPopupMenu;
 
-import com.limegroup.gnutella.gui.GUIMediator.Tabs;
-import com.limegroup.gnutella.gui.themes.SkinCheckBoxMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 
 /**

@@ -1,7 +1,6 @@
 package com.limegroup.gnutella.gui.menu;
 
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.GUIMediator.Tabs;
 
 /**
  * The menu item that actually displays the options for dynamically
@@ -24,10 +23,6 @@ final class ShowHideMenu extends AbstractMenu {
     }
 
     private void initializeMenu() {
-        for (Tabs tab : Tabs.getOptionalTabs()) {
-        //	addToggleMenuItem(tab.getShowTabAction(), tab.isViewEnabled());
-        }
-        
         MENU.add(new SearchMenu().getMenu());
     }
     

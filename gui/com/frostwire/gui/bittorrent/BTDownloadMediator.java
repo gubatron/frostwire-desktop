@@ -7,7 +7,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.Action;
-import javax.swing.BorderFactory;
 import javax.swing.JPopupMenu;
 
 import org.gudy.azureus2.core3.download.DownloadManager;

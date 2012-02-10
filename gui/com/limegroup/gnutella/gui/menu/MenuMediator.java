@@ -42,7 +42,7 @@ public final class MenuMediator {
 	 * Constant handle to the single <tt>NavMenu</tt> instance for
 	 * the application.
 	 */
-	private final NavMenu NAV_MENU = new NavMenu();
+	//private final NavMenu NAV_MENU = new NavMenu();
 
 	/**
 	 * Constant handle to the single <tt>ToolsMenu</tt> instance for
