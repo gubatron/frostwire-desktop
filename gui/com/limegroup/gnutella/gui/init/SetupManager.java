@@ -35,6 +35,7 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.Line;
 import com.limegroup.gnutella.gui.SplashWindow;
 import com.limegroup.gnutella.gui.shell.FrostAssociations;
+import com.limegroup.gnutella.gui.themes.SkinCustomUI;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.InstallSettings;
@@ -235,6 +236,7 @@ public class SetupManager {
 
         // set the layout of the content pane
         Container container = dialog.getContentPane();
+        ((JComponent) container).putClientProperty(SkinCustomUI.CLIENT_PROPERTY_LIGHT_NOISE, true);
         GUIUtils.addHideAction((JComponent) container);
         BoxLayout containerLayout = new BoxLayout(container, BoxLayout.Y_AXIS);
         container.setLayout(containerLayout);
