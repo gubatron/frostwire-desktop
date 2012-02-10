@@ -91,7 +91,7 @@ public final class MenuMediator {
 
 		addMenu(FILE_MENU);
 		addMenu(VIEW_MENU);
-		addMenu(NAV_MENU);
+		//addMenu(NAV_MENU);
 		// addMenu(RESOURCES_MENU); //FTA: Connection Doctor disabled for release version, available only for debug.
 		addMenu(TOOLS_MENU);
         //addMenu(FILTERS_MENU);

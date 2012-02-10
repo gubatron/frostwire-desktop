@@ -8,11 +8,15 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.Hashtable;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -87,6 +91,12 @@ public final class ChatMediator implements ThemeObserver {
 	public JComponent getComponent() {
 	    if (MAIN_PANEL == null) {
 	        MAIN_PANEL = new JPanel(new GridBagLayout());
+	        
+	        
+	        Border margin = BorderFactory.createEmptyBorder(4, 4, 4, 4);
+	        Border line = BorderFactory.createMatteBorder(0, 0, 1, 0, ThemeMediator.CURRENT_THEME.getCustomUI().getLightBorder());
+	        Border border = BorderFactory.createCompoundBorder(line, margin);
+	        MAIN_PANEL.setBorder(border);
 	    }
 		return MAIN_PANEL;
 	}
