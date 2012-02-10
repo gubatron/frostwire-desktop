@@ -10,6 +10,7 @@ import java.awt.Insets;
 
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
@@ -82,9 +83,9 @@ final class MiscWindow extends SetupWindow {
             _startup.setSelected(StartupSettings.RUN_ON_STARTUP.getValue());
 	    System.out.println("********START UP AUTOMAGICALLY?: ******" + StartupSettings.RUN_ON_STARTUP.getValue());
             
-            MultiLineLabel desc = new MultiLineLabel(
-                    I18n.tr("Would you like FrostWire to start when you log into your computer? This will cause FrostWire to start faster when you use it later."));
-            desc.setOpaque(false);
+            JLabel desc = new JLabel(
+                  "<html>" + I18n.tr("Would you like FrostWire to start when you log into your computer? This will cause FrostWire to start faster when you use it later.") + "</html>");
+            //desc.setOpaque(false);
             desc.setBorder(BorderFactory.createEmptyBorder(0, 10, 5, 5));
             desc.setForeground(Color.black);
             desc.setFont(desc.getFont().deriveFont(Font.PLAIN));
@@ -152,9 +153,9 @@ final class MiscWindow extends SetupWindow {
             chatCommunityPanel.setBorder(ThemeMediator.CURRENT_THEME.getCustomUI().createTitledBorder(I18n.tr("Chat Community")));
             
             //create multiline to describe why the chat needs a nick (descChat)
-            MultiLineLabel descChat = new MultiLineLabel(
-                    I18n.tr("FrostWire's Community Chat Tab requires you to have a nickname to communicate with others in the chatrooms."));
-            descChat.setOpaque(false);
+            JLabel descChat = new JLabel(
+                    "<html>" + I18n.tr("FrostWire's Community Chat Tab requires you to have a nickname to communicate with others in the chatrooms.") + "</html>");
+            //descChat.setOpaque(false);
             descChat.setBorder(BorderFactory.createEmptyBorder(0, 10, 5, 5));
             descChat.setForeground(Color.black);
             descChat.setFont(descChat.getFont().deriveFont(Font.PLAIN));
@@ -189,8 +190,6 @@ final class MiscWindow extends SetupWindow {
         mainPanel.add(new JPanel(), gbc);
 
         setSetupComponent(mainPanel);
-
-
     }
 
     /**
