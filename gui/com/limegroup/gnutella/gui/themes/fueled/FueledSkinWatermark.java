@@ -12,6 +12,7 @@ import java.awt.Rectangle;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.util.Arrays;
 import java.util.Random;
 
 import javax.swing.JComponent;
@@ -25,9 +26,6 @@ import com.limegroup.gnutella.gui.themes.ThemeMediator;
 
 public class FueledSkinWatermark implements SubstanceWatermark {
 
-    /**
-     * Watermark image (screen-sized).
-     */
     private Image watermarkDarkDarkImage = null;
     private Image watermarkDarkImage = null;
     private Image watermarkLightImage = null;
@@ -50,18 +48,18 @@ public class FueledSkinWatermark implements SubstanceWatermark {
             return;
         }
 
-        boolean darkDarkNoise = false;
-        boolean darkNoise = false;
-        boolean lightNoise = false;
+        int darkDarkNoise = Integer.MAX_VALUE;
+        int darkNoise = Integer.MAX_VALUE;
+        int lightNoise = Integer.MAX_VALUE;        
 
         Border border = null;
 
         if (c instanceof JComponent) {
             JComponent jc = (JComponent) c;
-            darkDarkNoise = hasClientProperty(jc, FueledCustomUI.CLIENT_PROPERTY_DARK_DARK_NOISE);
-            darkNoise = hasClientProperty(jc, FueledCustomUI.CLIENT_PROPERTY_DARK_NOISE);
-            lightNoise = hasClientProperty(jc, FueledCustomUI.CLIENT_PROPERTY_LIGHT_NOISE);
-            if (!darkDarkNoise && !darkNoise && !lightNoise) {
+            darkDarkNoise = hasClientProperty(jc, FueledCustomUI.CLIENT_PROPERTY_DARK_DARK_NOISE, 0);
+            darkNoise = hasClientProperty(jc, FueledCustomUI.CLIENT_PROPERTY_DARK_NOISE, 0);
+            lightNoise = hasClientProperty(jc, FueledCustomUI.CLIENT_PROPERTY_LIGHT_NOISE, 0);
+            if (darkDarkNoise == Integer.MAX_VALUE && darkNoise == Integer.MAX_VALUE && lightNoise == Integer.MAX_VALUE) {
                 return;
             }
 
@@ -71,24 +69,47 @@ public class FueledSkinWatermark implements SubstanceWatermark {
         int dx = c.getLocationOnScreen().x;
         int dy = c.getLocationOnScreen().y;
 
-        
+        boolean clipped = false;
 
-        if (lightNoise) {
-            graphics.drawImage(this.watermarkLightImage, x, y, x + width, y + height, x + dx, y + dy, x + dx + width, y + dy + height, null);
+        if (border instanceof FueledTitledBorder) {
+            clipped = true;
         }
 
-        if (darkNoise) {
-            graphics.drawImage(this.watermarkDarkImage, x, y, x + width, y + height, x + dx, y + dy, x + dx + width, y + dy + height, null);
+        if (clipped) {
+            drawImage(graphics, getIndexedImage(1, lightNoise, darkNoise, darkDarkNoise), x, y, width, height, dx, dy);
+            RoundRectangle2D shape = new RoundRectangle2D.Float(x, y, width, height, 16, 16);
+            graphics.setClip(shape);
+            drawImage(graphics, getIndexedImage(0, lightNoise, darkNoise, darkDarkNoise), x, y, width, height, dx, dy);
+        } else {
+            drawImage(graphics, getIndexedImage(0, lightNoise, darkNoise, darkDarkNoise), x, y, width, height, dx, dy);
         }
+    }
 
-        if (darkDarkNoise) {
-            
-            if (border instanceof FueledTitledBorder) {
-                RoundRectangle2D shape = new RoundRectangle2D.Float(x, y, width, height, 16, 16);
-                graphics.setClip(shape);
-            }
-            graphics.drawImage(this.watermarkDarkDarkImage, x, y, x + width, y + height, x + dx, y + dy, x + dx + width, y + dy + height, null);
+    private void drawImage(Graphics graphics, Image image, int x, int y, int width, int height, int dx, int dy) {
+        if (image == null) {
+            return;
         }
+        graphics.drawImage(image, x, y, x + width, y + height, x + dx, y + dy, x + dx + width, y + dy + height, null);
+    }
+
+    private Image getIndexedImage(int index, int lightNoise, int darkNoise, int darkDarkNoise) {
+        Image image = null;
+        int[] arr = new int[] { lightNoise, darkNoise, darkDarkNoise };
+        Arrays.sort(arr);
+        int mark = arr[index];
+        //System.out.println(String.format("%d, %d, %d", lightNoise, darkNoise, darkDarkNoise));
+        //System.out.println(String.format("%d, %d, %d, mark=%d", arr[0], arr[1], arr[2], mark));
+        //System.out.println("-------------");
+        if (mark == Integer.MAX_VALUE) {
+            image = null;
+        } if (lightNoise == mark) {
+            image = watermarkLightImage;
+        } else if (darkNoise == mark) {
+            image = watermarkDarkImage;
+        } else if (darkDarkNoise == mark) {
+            image = watermarkDarkDarkImage;
+        }
+        return image;
     }
 
     @Override
@@ -210,14 +231,15 @@ public class FueledSkinWatermark implements SubstanceWatermark {
         return c;
     }
 
-    private boolean hasClientProperty(JComponent c, String propertyKey) {
+    private int hasClientProperty(JComponent c, String propertyKey, int depth) {
         Boolean b = (Boolean) c.getClientProperty(propertyKey);
         if (b != null) {
-            return b.booleanValue();
+            return depth;
         } else if (c.getParent() instanceof JComponent) {
-            return hasClientProperty((JComponent) c.getParent(), propertyKey);
+            int d = hasClientProperty((JComponent) c.getParent(), propertyKey, depth);
+            return d != Integer.MAX_VALUE ? d + 1 : Integer.MAX_VALUE;
         } else {
-            return false;
+            return Integer.MAX_VALUE;
         }
     }
 }

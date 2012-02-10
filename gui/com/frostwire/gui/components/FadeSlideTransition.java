@@ -30,12 +30,15 @@ public class FadeSlideTransition {
     public void start() {
         _running = true;
         _counter = 0;
-        
+
         Thread t = new Thread(new Runnable() {
             public void run() {
-            	_panel.onTransitionStarted();
-            	
+                _panel.onTransitionStarted();
+
                 for (_counter = 0; _counter < _cycles; _counter++) {
+                    if (!_panel.isShowing()) {
+                        break;
+                    }
                     try {
                         Thread.sleep(_sleepTime);
                         _panel.repaint();
@@ -64,26 +67,26 @@ public class FadeSlideTransition {
             alpha = 1;
 
         java.awt.Composite oldComp = g2d.getComposite();
-        
+
         g2d.setComposite(java.awt.AlphaComposite.getInstance(java.awt.AlphaComposite.SRC_OVER, 1 - alpha));
         g2d.drawImage(_imageStart, null, 0, 0);
-        
+
         g2d.setComposite(java.awt.AlphaComposite.getInstance(java.awt.AlphaComposite.SRC_OVER, alpha));
         g2d.drawImage(_imageEnd, null, 0, 0);
-        
+
         g2d.setComposite(oldComp);
     }
 
     public boolean isRunning() {
         return _running;
     }
-    
+
     public long getEstimatedDuration() {
         return _cycles * _sleepTime + 50; // 50 is a draw time arbitrary correction
     }
 
-	public void stop() {
-		_counter = Integer.MAX_VALUE;		
-		_running = false;
-	}
+    public void stop() {
+        _counter = Integer.MAX_VALUE;
+        _running = false;
+    }
 }
