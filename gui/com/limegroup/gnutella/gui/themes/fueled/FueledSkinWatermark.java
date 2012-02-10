@@ -26,6 +26,9 @@ import com.limegroup.gnutella.gui.themes.ThemeMediator;
 
 public class FueledSkinWatermark implements SubstanceWatermark {
 
+    private static final int WATERMARK_WIDTH = 100;
+    private static final int WATERMARK_HEIGHT = 100;
+
     private Image watermarkDarkDarkImage = null;
     private Image watermarkDarkImage = null;
     private Image watermarkLightImage = null;
@@ -50,7 +53,7 @@ public class FueledSkinWatermark implements SubstanceWatermark {
 
         int darkDarkNoise = Integer.MAX_VALUE;
         int darkNoise = Integer.MAX_VALUE;
-        int lightNoise = Integer.MAX_VALUE;        
+        int lightNoise = Integer.MAX_VALUE;
 
         Border border = null;
 
@@ -89,7 +92,17 @@ public class FueledSkinWatermark implements SubstanceWatermark {
         if (image == null) {
             return;
         }
-        graphics.drawImage(image, x, y, x + width, y + height, x + dx, y + dy, x + dx + width, y + dy + height, null);
+
+        int nx = width / WATERMARK_WIDTH;
+        int ny = height / WATERMARK_HEIGHT;
+
+        for (int i = 0; i <= nx; i++) {
+            for (int j = 0; j <= ny; j++) {
+                graphics.drawImage(image, x + i * WATERMARK_WIDTH, y + j * WATERMARK_HEIGHT, null);
+            }
+        }
+
+        //graphics.drawImage(image, x, y, x + width, y + height, x + dx, y + dy, x + dx + width, y + dy + height, null);
     }
 
     private Image getIndexedImage(int index, int lightNoise, int darkNoise, int darkDarkNoise) {
@@ -102,7 +115,8 @@ public class FueledSkinWatermark implements SubstanceWatermark {
         //System.out.println("-------------");
         if (mark == Integer.MAX_VALUE) {
             image = null;
-        } if (lightNoise == mark) {
+        }
+        if (lightNoise == mark) {
             image = watermarkLightImage;
         } else if (darkNoise == mark) {
             image = watermarkDarkImage;
@@ -122,8 +136,8 @@ public class FueledSkinWatermark implements SubstanceWatermark {
             virtualBounds = virtualBounds.union(gc.getBounds());
         }
 
-        int screenWidth = virtualBounds.width;
-        int screenHeight = virtualBounds.height;
+        int screenWidth = WATERMARK_WIDTH;// virtualBounds.width;
+        int screenHeight = WATERMARK_HEIGHT;// virtualBounds.height;
 
         this.watermarkDarkDarkImage = SubstanceCoreUtilities.getBlankImage(screenWidth, screenHeight);
 
