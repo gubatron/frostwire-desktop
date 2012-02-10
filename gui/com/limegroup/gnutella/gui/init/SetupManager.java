@@ -36,6 +36,7 @@ import com.limegroup.gnutella.gui.Line;
 import com.limegroup.gnutella.gui.SplashWindow;
 import com.limegroup.gnutella.gui.shell.FrostAssociations;
 import com.limegroup.gnutella.gui.themes.SkinCustomUI;
+import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.InstallSettings;
@@ -116,11 +117,17 @@ public class SetupManager {
 //                return SaveStatus.MIGRATE;
         }
         
+        //if (true) {
         if (!InstallSettings.LAST_FROSTWIRE_VERSION_WIZARD_INVOKED.getValue().equals(FrostWireUtils.getFrostWireVersion())) {
+            performAdditionalResets();
             return SaveStatus.NEEDS;
         }
         
         return SaveStatus.NO;
+    }
+
+    private void performAdditionalResets() {
+        ThemeMediator.changeTheme(ThemeMediator.DEFAULT_THEME);
     }
 
     /**

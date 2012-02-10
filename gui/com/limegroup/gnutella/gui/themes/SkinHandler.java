@@ -40,20 +40,6 @@ public class SkinHandler {
     }
 
     /**
-     * Setting for the top of the filter title color.
-     */
-    public static final Color getFilterTitleTopColor() {
-        return new Color(0xffffff);
-    }
-
-    /**
-     * Setting for the filter title color.
-     */
-    public static final Color getFilterTitleColor() {
-        return ThemeMediator.CURRENT_THEME.getCustomUI().getLightNoise();
-    }
-
-    /**
      * Setting for the window 4 Color.
      */
     public static final Color getWindow4Color() {

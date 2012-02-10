@@ -37,7 +37,7 @@ import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.ImageManipulator;
-import com.limegroup.gnutella.gui.themes.SkinHandler;
+import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.settings.SearchSettings;
 
 /**
@@ -88,7 +88,9 @@ final class SchemaBox extends JPanel {
     /**
      * The ditherer for highlighted buttons.
      */
-    private final Ditherer DITHERER = new Ditherer(20, SkinHandler.getFilterTitleTopColor(), SkinHandler.getFilterTitleColor());
+    private final Ditherer DITHERER = new Ditherer(20,
+            ThemeMediator.CURRENT_THEME.getCustomUI().getFilterTitleTopColor(),
+            ThemeMediator.CURRENT_THEME.getCustomUI().getFilterTitleColor());
     
     private Set<AbstractButton> buttons = new HashSet<AbstractButton>();
 

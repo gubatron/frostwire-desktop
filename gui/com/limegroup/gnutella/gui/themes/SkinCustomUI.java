@@ -25,4 +25,8 @@ public interface SkinCustomUI {
     public Color getLightForegroundColor();
     
     public Color getTabButtonForegroundColor();
+    
+    public Color getFilterTitleTopColor();
+    
+    public Color getFilterTitleColor();
 }
