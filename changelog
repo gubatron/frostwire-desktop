@@ -7,7 +7,7 @@ frostwire (5.3.0) stable; urgency=high
   * Phone & Tablets tab is gone, integration with Android devices is now
     part of the Library under a "Devices" tree item.
   * Browses, Streams audio, and downloads files made public by Android devices
-    in the same network.  
+    in the same network.
   * When entering a search hints are shown to type less (powered by Google).
   * Sorts transfers by "Seeds" correctly.
   * Improvements on Library action buttons, now a "Launch" action is available
@@ -21,7 +21,7 @@ frostwire (5.3.0) stable; urgency=high
     being shared.
   * Now when the transfer split pane is dragged up, the pane border is painted
     correctly on top of the image overlay.
-  * Fixes repainting glitch when moving split pane on top of promotional 
+  * Fixes repainting glitch when moving split pane on top of promotional
     graphic.
   * Lots of icons have been revamped for a more uniform look.
   * Null Pointer Exception issues #100, #103, #104.
@@ -38,15 +38,15 @@ frostwire (5.3.0) stable; urgency=high
     Right click on a file "Launc in <OS>"
   * Removed BTJunkie search engine.
   * Added KickAssTorrents (kat.ph) search engine.
-  * Fixes issue where downloading removing a partial transfer would 
+  * Fixes issue where downloading removing a partial transfer would
     delete previously completed downloads of that same torrent.
-  
+
  -- FrostWire Team <contact@frostwire.com>  Fri, 10 Feb 2012 13:14:10 -0500
 
 frostwire (5.2.11) stable; urgency=high
   * Fixes bugs where some BitTorrent configuration settings were reset
     on startup.
-  
+
  -- FrostWire Team <contact@frostwire.com>  Mon, 28 Nov 2011 16:58:31 -0500
 
 frostwire (5.2.10) stable; urgency=high
@@ -59,7 +59,7 @@ frostwire (5.2.10) stable; urgency=high
   * Improvements to Send File to a friend.
   * Fixes bug where some finished Downloads wouldn't "Show in Library"
   * Bug report system revised.
-  
+
  -- FrostWire Team <contact@frostwire.com>  Mon, 22 Nov 2011 16:34:04 -0500
 
 frostwire (5.2.9) stable; urgency=high
@@ -70,7 +70,7 @@ frostwire (5.2.9) stable; urgency=high
   * Enhancement: Audio player will start playing currently selected audio
     source if it's on a stopped state.
   * Bug Fix: Finished Downloads shows only finished downloads.
-  
+
  -- FrostWire Team <contact@frostwire.com>  Wed, 9 Nov 2011 12:11:10 -0500
 
 frostwire (5.2.8) stable; urgency=high
@@ -208,7 +208,7 @@ frostwire (5.1.5) stable; urgency=high
   * UX upgrade where the FrostWire left hand side components are laid out
     correctly after the user resizes the window from much smaller dimensions.
 
- -- FrostWire Team <contact@frostwire.com>  Fri, 16 Sep 2011 18:1:34 -0500
+ -- FrostWire Team <contact@frostwire.com>  Fri, 16 Sep 2011 18:51:34 -0500
 
 frostwire (5.1.4) stable; urgency=high
 
