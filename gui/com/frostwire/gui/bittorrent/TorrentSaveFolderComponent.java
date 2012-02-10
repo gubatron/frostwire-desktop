@@ -9,13 +9,14 @@ import java.io.IOException;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.themes.SkinCustomUI;
+import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.settings.SharingSettings;
 
 public class TorrentSaveFolderComponent extends JPanel {
@@ -29,7 +30,8 @@ public class TorrentSaveFolderComponent extends JPanel {
 		
 		setLayout(new GridBagLayout());
 		if (border) {
-			setBorder(BorderFactory.createTitledBorder(I18n.tr("Torrent Data Save Folder")));
+		    this.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_DARK_NOISE, true);
+			setBorder(ThemeMediator.CURRENT_THEME.getCustomUI().createTitledBorder(I18n.tr("Torrent Data Save Folder")));
 		}
 		
 		GridBagConstraints gbc = new GridBagConstraints();

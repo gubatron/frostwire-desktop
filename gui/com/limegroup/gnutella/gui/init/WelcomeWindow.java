@@ -15,6 +15,8 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.URLLabel;
+import com.limegroup.gnutella.gui.themes.SkinCustomUI;
+import com.limegroup.gnutella.gui.themes.ThemeMediator;
 
 /**
  * this class displays information welcoming the user to the
@@ -70,9 +72,11 @@ final class WelcomeWindow extends SetupWindow {
     private JComponent createPanel(String text1, String text2) {
 
         JPanel panel = new JPanel();
+        panel.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_NOISE, true);
         panel.setBackground(GUIUtils.hexToColor("F7F7F7"));
-        panel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(GUIUtils.hexToColor("C8C8C8"), 1),
-                BorderFactory.createLineBorder(GUIUtils.hexToColor("FBFBFB"), 3)));
+        panel.setBorder(BorderFactory.createLineBorder(ThemeMediator.CURRENT_THEME.getCustomUI().getDarkBorder()));
+        //panel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(GUIUtils.hexToColor("C8C8C8"), 1),
+        //        BorderFactory.createLineBorder(GUIUtils.hexToColor("FBFBFB"), 3)));
         panel.setLayout(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();

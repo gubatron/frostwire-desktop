@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.URLLabel;
+import com.limegroup.gnutella.gui.themes.SkinCustomUI;
 
 /**
  * This abstract class creates a <tt>JPanel</tt> that uses 
@@ -105,6 +106,7 @@ abstract class SetupWindow extends JPanel {
         setLayout(new BorderLayout());
 
         JPanel jpTop = new JPanel();
+        jpTop.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_NOISE, true);
         jpTop.setLayout(new BorderLayout());
         jpTop.setBackground(Color.white);
         jpTop.setBorder(BorderFactory.createEtchedBorder());

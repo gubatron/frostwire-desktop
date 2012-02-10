@@ -248,7 +248,7 @@ public class FueledSkinWatermark implements SubstanceWatermark {
     private int hasClientProperty(JComponent c, String propertyKey, int depth) {
         Boolean b = (Boolean) c.getClientProperty(propertyKey);
         if (b != null) {
-            return depth;
+            return b.booleanValue() ? depth : Integer.MAX_VALUE;
         } else if (c.getParent() instanceof JComponent) {
             int d = hasClientProperty((JComponent) c.getParent(), propertyKey, depth);
             return d != Integer.MAX_VALUE ? d + 1 : Integer.MAX_VALUE;

@@ -18,6 +18,8 @@ import com.limegroup.gnutella.gui.MultiLineLabel;
 import com.limegroup.gnutella.gui.URLLabel;
 import com.limegroup.gnutella.gui.search.DitherPanel;
 import com.limegroup.gnutella.gui.search.Ditherer;
+import com.limegroup.gnutella.gui.themes.SkinCustomUI;
+import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
 public class IntentPanel extends JPanel {
@@ -36,10 +38,13 @@ public class IntentPanel extends JPanel {
         bg.add(mightUseButton);
         bg.add(willNotButton);
         
+        putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_NOISE, true);
+        setBorder(BorderFactory.createLineBorder(ThemeMediator.CURRENT_THEME.getCustomUI().getDarkBorder()));
+        
         setBackground(GUIUtils.hexToColor("F7F7F7"));
-        setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(GUIUtils.hexToColor("C8C8C8"), 1),
-                BorderFactory.createLineBorder(GUIUtils.hexToColor("FBFBFB"), 3)));
+        //setBorder(BorderFactory.createCompoundBorder(
+        //        BorderFactory.createLineBorder(GUIUtils.hexToColor("C8C8C8"), 1),
+        //        BorderFactory.createLineBorder(GUIUtils.hexToColor("FBFBFB"), 3)));
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         

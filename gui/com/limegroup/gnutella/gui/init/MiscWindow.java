@@ -23,6 +23,8 @@ import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LabeledComponent;
 import com.limegroup.gnutella.gui.SizedTextField;
 import com.limegroup.gnutella.gui.WindowsUtils;
+import com.limegroup.gnutella.gui.themes.SkinCustomUI;
+import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.settings.ChatSettings;
 import com.limegroup.gnutella.settings.StartupSettings;
 import com.limegroup.gnutella.util.MacOSXUtils;
@@ -73,7 +75,8 @@ final class MiscWindow extends SetupWindow {
             GridBagConstraints gbc = new GridBagConstraints();
             JPanel startupPanel = new JPanel(new GridBagLayout());
             
-            startupPanel.setBorder(new TitledBorder(I18n.tr("System Startup")));
+            startupPanel.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_DARK_NOISE, true);
+            startupPanel.setBorder(ThemeMediator.CURRENT_THEME.getCustomUI().createTitledBorder(I18n.tr("System Startup")));
             
             _startup = new JCheckBox(I18n.tr("Start Automatically"));
             _startup.setSelected(StartupSettings.RUN_ON_STARTUP.getValue());
@@ -145,7 +148,8 @@ final class MiscWindow extends SetupWindow {
 
             JPanel chatCommunityPanel = new JPanel(new GridLayout(2,0));
             
-            chatCommunityPanel.setBorder(new TitledBorder(I18n.tr("Chat Community")));
+            chatCommunityPanel.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_DARK_NOISE, true);
+            chatCommunityPanel.setBorder(ThemeMediator.CURRENT_THEME.getCustomUI().createTitledBorder(I18n.tr("Chat Community")));
             
             //create multiline to describe why the chat needs a nick (descChat)
             MultiLineLabel descChat = new MultiLineLabel(
