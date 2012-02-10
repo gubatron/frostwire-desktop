@@ -184,11 +184,12 @@ final class AboutWindow {
 
         sb.append(I18n.tr("<h1>FrostWire Graphics Designers/Photographers</h1>"));
         sb.append("<ul>");
-        sb.append("<li>Kirill Grouchnikov - Breadcrumbs component and Substance library <a href='http://www.pushing-pixels.org/'>Pushing-Pixels.org</a></li>");
+        sb.append("<li>Kirill Grouchnikov - Substance library <a href='http://www.pushing-pixels.org/'>Pushing-Pixels.org</a></li>");
         sb.append("<li>Arianys Wilson - Splash 4.18 (New York - <a href='http://nanynany.com/blog/?from=frostwire'>NanyNany.com</a>)</li>");
         sb.append("<li>Scott Kellum - Splash 4.17 (New York - <a href='http://www.scottkellum.net'>ScottKellum.net</a>)</li>");
         sb.append("<li>Shelby Allen - Splash 4.13 (New Zealand - <a href='http://www.stitzu.com'>Stitzu.com</a>)</li>");
         sb.append("<li>Cecko Hanssen - <a href='http://www.flickr.com/photos/cecko/95013472/'>Frozen Brothers</a> CC Photograph for 4.17 Splash (Tilburg, Netherlands)</li>");
+        sb.append("<li>Marcelina Knitter - <a href='https://twitter.com/#!/marcelinkaaa'>@Marcelinkaaa</a></li>");
         sb.append("</ul>");
 
         sb.append(I18n.tr("<h1>Thanks to Former FrostWire Developers</h1>"));
