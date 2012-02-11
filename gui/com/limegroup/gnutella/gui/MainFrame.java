@@ -172,7 +172,6 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
             }
 
             public void componentResized(ComponentEvent e) {
-            	System.out.println(FRAME.getSize());
                 saveWindowState();
             }
         });
