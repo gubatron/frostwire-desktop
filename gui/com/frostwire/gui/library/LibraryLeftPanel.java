@@ -23,6 +23,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 import javax.swing.Box;
 import javax.swing.JPanel;
@@ -54,6 +55,33 @@ public class LibraryLeftPanel extends JPanel {
     protected void setupUI() {
         setLayout(new GridBagLayout());
 
+        splitPane.addComponentListener(new ComponentListener() {
+            
+            @Override
+            public void componentShown(ComponentEvent arg0) {
+                // TODO Auto-generated method stub
+                
+            }
+            
+            @Override
+            public void componentResized(ComponentEvent arg0) {
+                System.out.println("YES ITS THIS ONE");
+                
+            }
+            
+            @Override
+            public void componentMoved(ComponentEvent arg0) {
+                // TODO Auto-generated method stub
+                
+            }
+            
+            @Override
+            public void componentHidden(ComponentEvent arg0) {
+                // TODO Auto-generated method stub
+                
+            }
+        });
+        
          //Prepare a split pane with explorers
         splitPane.setTopComponent(libraryExplorer);
         splitPane.setBottomComponent(libraryPlaylists);

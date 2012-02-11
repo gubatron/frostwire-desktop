@@ -67,6 +67,7 @@ import com.limegroup.gnutella.gui.options.ConfigureOptionsAction;
 import com.limegroup.gnutella.gui.options.OptionsConstructor;
 import com.limegroup.gnutella.gui.tables.DefaultMouseListener;
 import com.limegroup.gnutella.gui.tables.MouseObserver;
+import com.limegroup.gnutella.gui.tables.TableSettings;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
@@ -158,7 +159,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
     private void setupModel() {
         _model = new DefaultListModel();
 
-        _newPlaylistCell = new LibraryPlaylistsListCell(I18n.tr("New Playlist"), I18n.tr("Creates a new Playlist"), null, null, null);
+        _newPlaylistCell = new LibraryPlaylistsListCell(I18n.tr("New Playlist"), I18n.tr("Creates a new Playlist"), GUIMediator.getThemeImage("playlist_plus"), null, null);
 
         Library library = LibraryMediator.getLibrary();
 
@@ -166,7 +167,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
 
         _model.addElement(_newPlaylistCell);
         for (Playlist playlist : library.getPlaylists()) {
-            LibraryPlaylistsListCell cell = new LibraryPlaylistsListCell(null, null, null, playlist, _selectedPlaylistAction);
+            LibraryPlaylistsListCell cell = new LibraryPlaylistsListCell(null, null, GUIMediator.getThemeImage("playlist"), playlist, _selectedPlaylistAction);
             _model.addElement(cell);
         }
     }
@@ -176,12 +177,13 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         _listSelectionListener = new LibraryPlaylistsSelectionListener();
 
         _list = new LibraryIconList(_model);
+        _list.setFixedCellHeight(TableSettings.DEFAULT_TABLE_ROW_HEIGHT.getValue());
         _list.setCellRenderer(new LibraryPlaylistsCellRenderer());
         _list.addMouseListener(new DefaultMouseListener(_listMouseObserver));
         _list.addListSelectionListener(_listSelectionListener);
         _list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         _list.setLayoutOrientation(JList.VERTICAL);
-        _list.setPrototypeCellValue(new LibraryPlaylistsListCell("test", "", null, null, null));
+        _list.setPrototypeCellValue(new LibraryPlaylistsListCell("test", "", GUIMediator.getThemeImage("playlist"), null, null));
         _list.setVisibleRowCount(-1);
         _list.setDragEnabled(true);
         _list.setTransferHandler(new LibraryPlaylistsTransferHandler(_list));
@@ -356,7 +358,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
 
         Playlist playlist = library.newPlaylist(name, name);
         playlist.save();
-        LibraryPlaylistsListCell cell = new LibraryPlaylistsListCell(null, null, null, playlist, _selectedPlaylistAction);
+        LibraryPlaylistsListCell cell = new LibraryPlaylistsListCell(null, null, GUIMediator.getThemeImage("playlist"), playlist, _selectedPlaylistAction);
         _model.addElement(cell);
         _list.setSelectedValue(cell, true);
 
@@ -574,6 +576,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
             LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) value;
             setText(cell.getText());
             setToolTipText(cell.getDescription());
+            setPreferredSize(new Dimension(getSize().width,TableSettings.DEFAULT_TABLE_ROW_HEIGHT.getValue()));
             Icon icon = cell.getIcon();
             if (icon != null) {
                 setIcon(icon);
