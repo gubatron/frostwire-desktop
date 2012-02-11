@@ -34,5 +34,5 @@ public class LibrarySettings extends LimeProps {
 
     public static final FileSetting LIBRARY_FROM_DEVICE_DATA_DIR_SETTING = FACTORY.createFileSetting("LIBRARY_FROM_DEVICE_DATA_DIR_SETTING", DEFAULT_LIBRARY_FROM_DEVICE_DATA_DIR).setAlwaysSave(true);
 
-    public static final IntSetting EXPLORER_SPLIT_PANE_LAST_POSITION = FACTORY.createIntSetting("EXPLORER_SPLIT_PANE_LAST_POSITION", 200);
+    public static final IntSetting EXPLORER_SPLIT_PANE_LAST_POSITION = FACTORY.createIntSetting("EXPLORER_SPLIT_PANE_LAST_POSITION", 250);
 }

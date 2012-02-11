@@ -23,11 +23,14 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.Box;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
+
+import com.limegroup.gnutella.settings.LibrarySettings;
 
 
 public class LibraryLeftPanel extends JPanel {
@@ -55,37 +58,10 @@ public class LibraryLeftPanel extends JPanel {
     protected void setupUI() {
         setLayout(new GridBagLayout());
 
-        splitPane.addComponentListener(new ComponentListener() {
-            
-            @Override
-            public void componentShown(ComponentEvent arg0) {
-                // TODO Auto-generated method stub
-                
-            }
-            
-            @Override
-            public void componentResized(ComponentEvent arg0) {
-                System.out.println("YES ITS THIS ONE");
-                
-            }
-            
-            @Override
-            public void componentMoved(ComponentEvent arg0) {
-                // TODO Auto-generated method stub
-                
-            }
-            
-            @Override
-            public void componentHidden(ComponentEvent arg0) {
-                // TODO Auto-generated method stub
-                
-            }
-        });
-        
          //Prepare a split pane with explorers
+        splitPane.setDividerLocation(LibrarySettings.EXPLORER_SPLIT_PANE_LAST_POSITION.getValue());
         splitPane.setTopComponent(libraryExplorer);
         splitPane.setBottomComponent(libraryPlaylists);
-        splitPane.setDividerLocation(0.5);
         splitPane.setAutoscrolls(true);
         
         GridBagConstraints c = new GridBagConstraints();
@@ -113,13 +89,25 @@ public class LibraryLeftPanel extends JPanel {
         add(Box.createVerticalStrut(2));
         
         add(libraryCoverArt,c);
-
+        
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 layoutComponents();
+                LibrarySettings.EXPLORER_SPLIT_PANE_LAST_POSITION.setValue(splitPane.getLastDividerLocation());
             }
         });
+        
+       splitPane.addPropertyChangeListener(new PropertyChangeListener() {
+            
+            @Override
+            public void propertyChange(PropertyChangeEvent arg0) {
+               //save position of the divider
+                LibrarySettings.EXPLORER_SPLIT_PANE_LAST_POSITION.setValue(splitPane.getDividerLocation());                
+            }
+        });
+       
+       
     }
 
     protected void layoutComponents() {
