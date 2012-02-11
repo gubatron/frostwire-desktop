@@ -12,6 +12,8 @@ frostwire (5.3.1) stable; urgency=high
   * New View > Reset Font Sizes action.  
   * The first time the Library button is used "Finished Downloads" is
     preselected to give the user a clue of what can be done.
+  * When a new playlist is created, a graphic is shown to hint the user
+    about dragging audio files there.
   
 -- FrostWire Team <contact@frostwire.com>  Fri, 10 Feb 2012 18:25:12 -0500
 
