@@ -18,10 +18,15 @@
 package com.frostwire.gui.library;
 
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
+import javax.swing.Box;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 
 
 public class LibraryLeftPanel extends JPanel {
@@ -34,21 +39,52 @@ public class LibraryLeftPanel extends JPanel {
     private final LibraryExplorer libraryExplorer;
     private final LibraryPlaylists libraryPlaylists;
     private final LibraryCoverArt libraryCoverArt;
+    
+    private final JSplitPane splitPane;
 
     public LibraryLeftPanel(LibraryExplorer libraryExplorer, LibraryPlaylists libraryPlaylists, LibraryCoverArt libraryCoverArt) {
         this.libraryExplorer = libraryExplorer;
         this.libraryPlaylists = libraryPlaylists;
         this.libraryCoverArt = libraryCoverArt;
-
+        
+        splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
         setupUI();
     }
 
     protected void setupUI() {
-        setLayout(null);
+        setLayout(new GridBagLayout());
 
-        add(libraryExplorer);
-        add(libraryPlaylists);
-        add(libraryCoverArt);
+         //Prepare a split pane with explorers
+        splitPane.setTopComponent(libraryExplorer);
+        splitPane.setBottomComponent(libraryPlaylists);
+        splitPane.setDividerLocation(0.5);
+        splitPane.setAutoscrolls(true);
+        
+        GridBagConstraints c = new GridBagConstraints();
+        c.anchor = GridBagConstraints.PAGE_START;
+        c.fill = GridBagConstraints.BOTH;
+        c.gridx=0;
+        c.gridy=0;
+        c.insets = new Insets(0,0,0,0);
+        c.weightx = 1.0;
+        c.weighty = 1.0;
+        
+        add(splitPane,c);
+        
+        c = new GridBagConstraints();
+        c.anchor = GridBagConstraints.PAGE_END;
+        c.fill = GridBagConstraints.BOTH;
+        c.gridx=0;
+        c.gridy=1;
+        c.insets = new Insets(0,0,0,0);
+        c.weightx = 1.0;
+        c.weighty = 1.0;
+        c.gridheight = 1;
+        c.gridwidth = 1;
+
+        add(Box.createVerticalStrut(2));
+        
+        add(libraryCoverArt,c);
 
         addComponentListener(new ComponentAdapter() {
             @Override
@@ -61,37 +97,19 @@ public class LibraryLeftPanel extends JPanel {
     protected void layoutComponents() {
         Dimension size = getSize();
 
-        // layout cover art
-        int coverArtWidth = size.width > MAX_WIDTH ? MAX_WIDTH : size.width;
-        libraryCoverArt.setLocation(0, coverArtWidth < size.height ? size.height - coverArtWidth : 0);
+        // layout files and playlists takes whatever is left in height
+        splitPane.setSize(new Dimension(size.width-4,size.height-(size.width+4)));
+        splitPane.setPreferredSize(new Dimension(size.width-4,size.height-(size.width+4)));
+        splitPane.setMinimumSize(new Dimension(MIN_WIDTH,size.height-(MAX_WIDTH+4)));
+
+        // the size of the cover art is proportional to the width available.
+        int coverArtWidth = size.width > MAX_WIDTH ? MAX_WIDTH : size.width-4;
+        libraryCoverArt.setLocation(0, size.height - coverArtWidth);
         libraryCoverArt.setSize(coverArtWidth, coverArtWidth);
-
-        // layout files and playlists
-        int heightMinusCover = size.height - coverArtWidth;
-        int fileRowHeight = libraryExplorer.getRowDimension().height;
-        int playlistRowHeight = libraryPlaylists.getRowDimension().height;
-
-        if (3 * (fileRowHeight + playlistRowHeight) > heightMinusCover) {
-            // too small, split even
-            libraryExplorer.setLocation(0, 0);
-            libraryExplorer.setSize(size.width, heightMinusCover / 2);
-            libraryPlaylists.setLocation(0, heightMinusCover / 2);
-            libraryPlaylists.setSize(size.width, heightMinusCover - heightMinusCover / 2);
-        } else if ((13) * fileRowHeight + 3 * playlistRowHeight > heightMinusCover) {
-            // too small for complete display of files
-            int libraryFilesHeight = heightMinusCover - 3 * playlistRowHeight;
-            libraryExplorer.setLocation(0, 0);
-            libraryExplorer.setSize(size.width, libraryFilesHeight);
-            libraryPlaylists.setLocation(0, libraryFilesHeight);
-            libraryPlaylists.setSize(size.width, heightMinusCover - libraryFilesHeight);
-        } else {
-            // complete display of files
-            int libraryFilesHeight = (13) * fileRowHeight;
-            libraryExplorer.setLocation(0, 0);
-            libraryExplorer.setSize(size.width, libraryFilesHeight);
-            libraryPlaylists.setLocation(0, libraryFilesHeight);
-            libraryPlaylists.setSize(size.width, heightMinusCover - libraryFilesHeight);
-        }
+        libraryCoverArt.setPreferredSize(new Dimension(coverArtWidth,coverArtWidth));
+        libraryCoverArt.setMaximumSize(new Dimension(coverArtWidth,coverArtWidth));
+        
+        repaint();
     }
 
 }

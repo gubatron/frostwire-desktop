@@ -95,7 +95,6 @@ public class LibraryCoverArt extends JPanel implements ThemeObserver {
     public void paint(Graphics g) {
         super.paint(g);
         g.drawImage(background, 0, 0, null);
-        //g.drawImage(coverArtImage, 0, 0, getWidth(), getHeight(), null);
     }
 
     /**

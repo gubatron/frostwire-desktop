@@ -899,7 +899,7 @@ public final class GUIMediator {
                     GUIMediator.showTrayIcon();
                     hideView();
                 }
-            }
+            } 
         } else if (OSUtils.isMacOSX() && fromFrame) {
             // If on OSX, don't close in response to clicking on the 'X'
             // as that's not normal behavior. This can only be done on Java14
