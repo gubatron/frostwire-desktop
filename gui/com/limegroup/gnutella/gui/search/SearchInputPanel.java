@@ -398,6 +398,7 @@ class SearchInputPanel extends JPanel {
 
                     // Clear the existing search.
                     SEARCH_FIELD.setText("");
+                    SEARCH_FIELD.hidePopup();
                 }
             }
         }
