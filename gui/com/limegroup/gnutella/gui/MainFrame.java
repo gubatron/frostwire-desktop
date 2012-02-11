@@ -149,7 +149,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         Dimension minFrameDimensions = null;
         if (OSUtils.isMacOSX()) {
         	minFrameDimensions = new Dimension(875,97);
-        } else if (OSUtils.isWindows()) {
+        } else {
         	minFrameDimensions = new Dimension(875,134);
         }
         FRAME.setMinimumSize(minFrameDimensions);
