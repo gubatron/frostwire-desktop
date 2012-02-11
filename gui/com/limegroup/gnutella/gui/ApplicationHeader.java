@@ -29,8 +29,9 @@ import com.frostwire.gui.player.AudioPlayerComponent;
 import com.frostwire.gui.tabs.Tab;
 import com.limegroup.gnutella.gui.GUIMediator.Tabs;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
+import com.limegroup.gnutella.gui.themes.ThemeObserver;
 
-public class ApplicationHeader extends JPanel {
+public class ApplicationHeader extends JPanel implements ThemeObserver {
 
     /*
     * The property to store the selected icon in.
@@ -97,7 +98,7 @@ public class ApplicationHeader extends JPanel {
     }
 
     private void setSizes() {
-        setMinimumSize(new Dimension(0, 54));
+        setMinimumSize(new Dimension(1, 54));
         setPreferredSize(new Dimension(Integer.MAX_VALUE, 54));
         setMaximumSize(new Dimension(Integer.MAX_VALUE, 54));
     }
@@ -306,4 +307,13 @@ public class ApplicationHeader extends JPanel {
        public void mouseReleased(MouseEvent e) {
        }
    }
+
+    @Override
+    public void updateTheme() {
+        System.out.println("ApplicationHeader.updateTheme");
+        Component[] components = getComponents();
+        for (Component c : components) {
+            c.repaint();
+        }
+    }
 }

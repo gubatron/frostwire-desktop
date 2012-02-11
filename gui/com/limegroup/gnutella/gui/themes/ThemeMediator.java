@@ -294,4 +294,14 @@ public class ThemeMediator {
         }
         UIManager.getDefaults().putDefaults(props.toArray());
     }
+    
+    public static void resetFontSizes() {
+        //get the current delta, and bring it towards 0.
+        while (ThemeSettings.FONT_SIZE_INCREMENT.getValue() != 0) {
+            int newDelta = ThemeSettings.FONT_SIZE_INCREMENT.getValue() > 0 ? -1 : 1;
+            ThemeSettings.FONT_SIZE_INCREMENT.setValue(ThemeSettings.FONT_SIZE_INCREMENT.getValue()+newDelta);
+            ThemeMediator.setFontSizeDelta(newDelta);            
+            ThemeMediator.updateComponentHierarchy();
+        }
+    }
 }

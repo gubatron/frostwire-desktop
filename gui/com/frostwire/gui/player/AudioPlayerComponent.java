@@ -150,7 +150,7 @@ public final class AudioPlayerComponent implements AudioPlayerListener,
 	 * @param showPlaybackModeControls
 	 */
 	private JPanel constructMediaPanel(boolean showPlaybackModeControls) {
-		int tempHeight = 0;
+		int tempHeight = 1;
 		tempHeight += PLAY_BUTTON.getIcon().getIconHeight() + 2;
 
 		// create sliders

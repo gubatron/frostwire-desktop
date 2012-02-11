@@ -214,6 +214,7 @@ public class SetupManager {
         prior.setNext(prior);        
 		
 		// Actually display the setup dialog.
+        ThemeMediator.resetFontSizes();
 		createDialog(windows.get(0));
     }
     
