@@ -17,6 +17,10 @@
  */
 package com.frostwire.gui.library;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
@@ -127,13 +131,49 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
     /**
      * Set up the constants
      */
+    @SuppressWarnings("serial")
     protected void setupConstants() {
         super.setupConstants();
         MAIN_PANEL = new PaddedPanel();
         DATA_MODEL = new LibraryPlaylistsTableModel();
-        TABLE = new LimeJTable(DATA_MODEL);
+        
+        
+        TABLE = new LimeJTable(DATA_MODEL) {
+            
+            private Image bigAudioIcon = GUIMediator.getThemeImage("audio128x128").getImage();
+            
+            protected void paintComponent(java.awt.Graphics g) {
+                System.out.println("LibraryPlaylistTableMediator.getRowCount() " + TABLE.getRowCount());
+                if (TABLE.getRowCount()==0) {
+                    drawHelpGraphics(g,bigAudioIcon);
+                } else {
+                    super.paintComponent(g);
+                }
+            };
+        };
         Action[] aa = new Action[] { LAUNCH_ACTION, OPEN_IN_FOLDER_ACTION, SEND_TO_FRIEND_ACTION, DELETE_ACTION, OPTIONS_ACTION };
         BUTTON_ROW = new ButtonRow(aa, ButtonRow.X_AXIS, ButtonRow.NO_GLUE);
+    }
+    
+    private void drawHelpGraphics(java.awt.Graphics g, Image icon) {
+        
+        Graphics2D g2d = (Graphics2D) g;
+        int helpPadding = 20;
+        
+        g2d.setStroke(new BasicStroke(6,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 10.0f, new float[] {16.0f,20.0f},0.0f));
+        
+        g2d.setColor(Color.WHITE);
+        g2d.fillRect(0,0, TABLE.getWidth(), TABLE.getHeight());
+        
+        g2d.setColor(ThemeMediator.CURRENT_THEME.getCustomUI().getDarkBorder());
+        g2d.drawRoundRect(helpPadding, helpPadding, TABLE.getWidth()-helpPadding*2, TABLE.getHeight()-helpPadding*2, 6, 6);
+        
+        try {
+            g2d.drawImage(icon, (TABLE.getWidth() - icon.getWidth(null)) / 2, (TABLE.getHeight() - icon.getHeight(null)) / 2, null);
+        } catch (Throwable t) { 
+            //don't stop till you get enough
+        }        
+        
     }
 
     // inherit doc comment
