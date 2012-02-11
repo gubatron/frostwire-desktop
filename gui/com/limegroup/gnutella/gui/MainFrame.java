@@ -146,7 +146,13 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         //com.frostwire.gui.updates.UpdateManager.scheduleUpdateCheckTask(0,"http://update1.frostwire.com/example.php");
 
         FRAME = frame;
-        FRAME.setMinimumSize(new Dimension(875,97));
+        Dimension minFrameDimensions = null;
+        if (OSUtils.isMacOSX()) {
+        	minFrameDimensions = new Dimension(875,97);
+        } else if (OSUtils.isWindows()) {
+        	minFrameDimensions = new Dimension(875,327);
+        }
+        FRAME.setMinimumSize(minFrameDimensions);
         new DropTarget(FRAME, new TransferHandlerDropTargetListener(DNDUtils.DEFAULT_TRANSFER_HANDLER));
 
         TABBED_PANE = new JPanel(new CardLayout());
@@ -166,6 +172,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
             }
 
             public void componentResized(ComponentEvent e) {
+            	System.out.println(FRAME.getSize());
                 saveWindowState();
             }
         });
