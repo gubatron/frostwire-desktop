@@ -1,6 +1,6 @@
 frostwire (5.3.1) stable; urgency=high
   * Updated default album cover image with an anti-aliased frostwire sphere.
-  * Fixes bug where clicking on the current song would switch to the library 
+  * Fixes bug where clicking on the current song would switch to the library
     but the button on the top would not be selected.
   * Adds missing icon for "copy magnet" on Send file dialog.
   * Library explorer and Playlist explorer are now divided by a split pane
@@ -9,13 +9,13 @@ frostwire (5.3.1) stable; urgency=high
   * Updated search icon (magnifier).
   * Fonts are reset when the setup wizard is shown so the wizard can work
     properly.
-  * New View > Reset Font Sizes action.  
+  * New View > Reset Font Sizes action.
   * The first time the Library button is used "Finished Downloads" is
     preselected to give the user a clue of what can be done.
   * When a new playlist is created, a graphic is shown to hint the user
     about dragging audio files there.
-  
--- FrostWire Team <contact@frostwire.com>  Fri, 10 Feb 2012 18:25:12 -0500
+
+ -- FrostWire Team <contact@frostwire.com>  Sat, 11 Feb 2012 18:22:15 -0500
 
 frostwire (5.3.0) stable; urgency=high
   * Search form looks similar to FrostWire 4 but now allows user to search
