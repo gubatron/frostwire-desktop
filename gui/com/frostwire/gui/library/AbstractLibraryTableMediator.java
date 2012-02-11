@@ -141,7 +141,7 @@ abstract class AbstractLibraryTableMediator<T extends DataLineModel<E, I>, E ext
     protected void buildListeners() {
         super.buildListeners();
         SEND_TO_FRIEND_ACTION = new SendToFriendAction();
-        OPTIONS_ACTION = new ConfigureOptionsAction(OptionsConstructor.SHARED_KEY, I18n.tr("Options"), I18n
+        OPTIONS_ACTION = new ConfigureOptionsAction(OptionsConstructor.LIBRARY_KEY, I18n.tr("Options"), I18n
                 .tr("You can configure the folders you share in FrostWire\'s Options."));
     }
 

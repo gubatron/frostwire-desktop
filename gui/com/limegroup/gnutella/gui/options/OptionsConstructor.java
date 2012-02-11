@@ -122,7 +122,7 @@ public final class OptionsConstructor {
 	static final String SHUTDOWN_KEY       = "OPTIONS_SHUTDOWN_MAIN_TITLE";
 	static final String UPDATE_KEY         = "OPTIONS_UPDATE_MAIN_TITLE";
 	static final String CHAT_KEY           = "OPTIONS_CHAT_MAIN_TITLE";
-	static final String PLAYER_KEY         = "OPTIONS_PLAYER_MAIN_TITLE";
+	public static final String LIBRARY_KEY         = "OPTIONS_LIBRARY_MAIN_TITLE";
     static final String STATUS_BAR_KEY     = "OPTIONS_STATUS_BAR_MAIN_TITLE";
     static final String ITUNES_KEY		   = "OPTIONS_ITUNES_MAIN_TITLE";
     static final String ITUNES_IMPORT_KEY  = "OPTIONS_ITUNES_PREFERENCE_MAIN_TITLE";
@@ -285,7 +285,7 @@ public final class OptionsConstructor {
     	addOption(BITTORRENT_KEY,BITTORRENT_ADVANCED_KEY,I18n.tr("Advanced"),TorrentGlobalSpeedPaneItem.class, TorrentConnectionPaneItem.class);
 
 		// library
-        addOption(OptionsMediator.ROOT_NODE_KEY, PLAYER_KEY, I18n.tr("Library"), LibraryFoldersPaneItem.class, LibraryInternetRadioPaneItem.class);
+        addOption(OptionsMediator.ROOT_NODE_KEY, LIBRARY_KEY, I18n.tr("Library"), LibraryFoldersPaneItem.class, LibraryInternetRadioPaneItem.class);
         
 		// search options
 		addOption(OptionsMediator.ROOT_NODE_KEY, SEARCH_KEY, I18n.tr("Searching"), MaximumSearchesPaneItem.class, SmartSearchDBPaneItem.class);
