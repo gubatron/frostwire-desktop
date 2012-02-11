@@ -146,6 +146,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         //com.frostwire.gui.updates.UpdateManager.scheduleUpdateCheckTask(0,"http://update1.frostwire.com/example.php");
 
         FRAME = frame;
+        FRAME.setMinimumSize(new Dimension(875,97));
         new DropTarget(FRAME, new TransferHandlerDropTargetListener(DNDUtils.DEFAULT_TRANSFER_HANDLER));
 
         TABBED_PANE = new JPanel(new CardLayout());
