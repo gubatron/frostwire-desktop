@@ -116,6 +116,8 @@ public final class GUIMediator {
         private Action navAction;
 
         private String name;
+        
+        public boolean navigatedTo;
 
         private final PropertyChangeSupport propertyChangeSupport;
 
@@ -675,6 +677,20 @@ public final class GUIMediator {
      */
     public void setWindow(GUIMediator.Tabs tab) {
         getMainFrame().setSelectedTab(tab);
+        selectFinishedDownloadsOnLibraryFirstTime(tab);
+    }
+
+    /**
+     * If the window to be shown is the Library tab, we automatically select "Finished Downloads"
+     * so the users have a clue of what they can do with the Library, and so that they see their
+     * finished downloads in case they came here the first time to see what they downloaded. 
+     * @param tab
+     */
+    private void selectFinishedDownloadsOnLibraryFirstTime(GUIMediator.Tabs tab) {
+        if (!tab.navigatedTo && tab.equals(GUIMediator.Tabs.LIBRARY)) {
+            LibraryMediator.instance().getLibraryExplorer().selectFinishedDownloads();
+            tab.navigatedTo = true;
+        }
     }
     
     public GUIMediator.Tabs getSelectedTab() {

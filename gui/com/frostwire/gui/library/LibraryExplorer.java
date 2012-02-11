@@ -196,6 +196,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
         root.add(devicesNode);
 
         model = new DefaultTreeModel(root);
+        
     }
 
     private void setupTree() {
@@ -227,7 +228,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
         
         treeSelectionListener = new LibraryExplorerTreeSelectionListener();
         tree.addTreeSelectionListener(treeSelectionListener);
-
+        
         ToolTipManager.sharedInstance().registerComponent(tree);
     }
 
