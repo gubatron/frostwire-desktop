@@ -117,6 +117,8 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      * maximizing, prior to the state actually becoming maximized.
      */
     private WindowState lastState = null;
+
+    private ApplicationHeader APPLICATION_HEADER;
     
     /** simple state. */
     private static class WindowState {
@@ -206,10 +208,9 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         
         buildTabs();
         
-        //ADD LOGO
-        ApplicationHeader applicationHeader = new ApplicationHeader(TABS);
-        LOGO_PANEL = applicationHeader.getLogoPanel();
-        contentPane.add(applicationHeader, BorderLayout.PAGE_START);
+        APPLICATION_HEADER = new ApplicationHeader(TABS);
+        LOGO_PANEL = APPLICATION_HEADER.getLogoPanel();
+        contentPane.add(APPLICATION_HEADER, BorderLayout.PAGE_START);
         
         //ADD TABBED PANE
         contentPane.add(TABBED_PANE, BorderLayout.CENTER);
@@ -227,6 +228,10 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         PowerManager pm = new PowerManager();
         FRAME.addWindowListener(pm);
         GUIMediator.addRefreshListener(pm);
+    }
+    
+    public ApplicationHeader getApplicationHeader() {
+        return APPLICATION_HEADER;
     }
     
     /** Saves the state of the Window to settings. */
@@ -349,8 +354,10 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
      */
     public final void setSelectedTab(GUIMediator.Tabs tab) {
         CardLayout cl = (CardLayout)(TABBED_PANE.getLayout());
+        
         Tab t = TABS.get(tab);
         cl.show(TABBED_PANE, t.getTitle());
+        APPLICATION_HEADER.selectTab(t);
     }
 
     /**

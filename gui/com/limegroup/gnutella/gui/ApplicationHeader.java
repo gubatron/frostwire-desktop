@@ -1,6 +1,7 @@
 package com.limegroup.gnutella.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -169,6 +170,28 @@ public class ApplicationHeader extends JPanel {
         add(buttonContainer, BorderLayout.LINE_START);
     }
     
+    /** Given a Tab mark that button as selected 
+     * 
+     * Since we don't keep explicit references to the buttons this method
+     * walks over the components in the ApplicationHeader until it finds
+     * the AbstractButton that has the Tab object as a client property named "tab" 
+     * @see MainFrame#setSelectedTab(Tabs)
+     */
+    public void selectTab(Tab t) {
+        Component[] components = getComponents();
+        JPanel buttonContainer = (JPanel) components[0];
+        Component[] buttons = buttonContainer.getComponents();
+        for (Component c : buttons) {
+            if (c instanceof AbstractButton) {
+                AbstractButton b = (AbstractButton) c;
+                if (b.getClientProperty("tab").equals(t)) {
+                    b.setSelected(true);
+                    return;
+                }
+            }
+        }
+    }
+    
     private AbstractButton createTabButton(Tab t) {
         Icon icon = t.getIcon();
         Icon disabledIcon = null;
@@ -185,6 +208,8 @@ public class ApplicationHeader extends JPanel {
                 super.paintComponent(g);
             }
         };
+        
+        button.putClientProperty("tab", t);
 
         button.putClientProperty(SELECTED, icon);
         if (icon != null) {
