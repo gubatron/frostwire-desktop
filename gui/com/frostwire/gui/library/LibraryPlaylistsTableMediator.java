@@ -22,6 +22,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -161,6 +162,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         int helpPadding = 20;
         
         g2d.setStroke(new BasicStroke(6,BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 10.0f, new float[] {16.0f,20.0f},0.0f));
+        g2d.setRenderingHint (RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
         g2d.setColor(Color.WHITE);
         g2d.fillRect(0,0, TABLE.getWidth(), TABLE.getHeight());
@@ -169,7 +171,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         g2d.drawRoundRect(helpPadding, helpPadding, TABLE.getWidth()-helpPadding*2, TABLE.getHeight()-helpPadding*2, 6, 6);
         
         try {
-            if (TABLE.getHeight() < (icon.getHeight(null)+10)) {
+            if ((TABLE.getHeight()-helpPadding*3) < (icon.getHeight(null))) {
                 int newIconDimension = TABLE.getHeight() - helpPadding*2 - 5;
                 if (newIconDimension > 16) {
                     g2d.drawImage(icon, (TABLE.getWidth() - newIconDimension) / 2, (TABLE.getHeight() - newIconDimension) / 2, newIconDimension, newIconDimension, null);
