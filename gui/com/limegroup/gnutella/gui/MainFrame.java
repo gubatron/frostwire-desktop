@@ -150,7 +150,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
         if (OSUtils.isMacOSX()) {
         	minFrameDimensions = new Dimension(875,97);
         } else if (OSUtils.isWindows()) {
-        	minFrameDimensions = new Dimension(875,327);
+        	minFrameDimensions = new Dimension(875,134);
         }
         FRAME.setMinimumSize(minFrameDimensions);
         new DropTarget(FRAME, new TransferHandlerDropTargetListener(DNDUtils.DEFAULT_TRANSFER_HANDLER));
