@@ -5,6 +5,7 @@ frostwire (5.3.1) stable; urgency=high
   * Adds missing icon for "copy magnet" on Send file dialog.
   * Library explorer and Playlist explorer are now divided by a split pane
     for a better experience.
+  * Hides hints popup when search is triggered with a mouse click.
   
 -- FrostWire Team <contact@frostwire.com>  Fri, 10 Feb 2012 18:25:12 -0500
 
