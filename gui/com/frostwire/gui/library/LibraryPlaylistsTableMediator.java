@@ -169,7 +169,14 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
         g2d.drawRoundRect(helpPadding, helpPadding, TABLE.getWidth()-helpPadding*2, TABLE.getHeight()-helpPadding*2, 6, 6);
         
         try {
-            g2d.drawImage(icon, (TABLE.getWidth() - icon.getWidth(null)) / 2, (TABLE.getHeight() - icon.getHeight(null)) / 2, null);
+            if (TABLE.getHeight() < (icon.getHeight(null)+10)) {
+                int newIconDimension = TABLE.getHeight() - helpPadding*2 - 5;
+                if (newIconDimension > 16) {
+                    g2d.drawImage(icon, (TABLE.getWidth() - newIconDimension) / 2, (TABLE.getHeight() - newIconDimension) / 2, newIconDimension, newIconDimension, null);
+                }
+            } else {
+                g2d.drawImage(icon, (TABLE.getWidth() - icon.getWidth(null)) / 2, (TABLE.getHeight() - icon.getHeight(null)) / 2, null);
+            }
         } catch (Throwable t) { 
             //don't stop till you get enough
         }        
