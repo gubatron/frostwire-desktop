@@ -113,6 +113,7 @@ public class LimeJTable extends JTable implements JSortTable {
         setToolTipText("");
         GUIUtils.fixInputMap(this);
         addFocusListener(FocusHandler.INSTANCE);
+        setRowHeight(TableSettings.DEFAULT_TABLE_ROW_HEIGHT.getValue());
     }
     
     /**

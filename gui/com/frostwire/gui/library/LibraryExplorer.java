@@ -55,6 +55,7 @@ import com.limegroup.gnutella.gui.options.ConfigureOptionsAction;
 import com.limegroup.gnutella.gui.options.OptionsConstructor;
 import com.limegroup.gnutella.gui.search.NamedMediaType;
 import com.limegroup.gnutella.gui.tables.DefaultMouseListener;
+import com.limegroup.gnutella.gui.tables.TableSettings;
 import com.limegroup.gnutella.gui.themes.SkinMenuItem;
 import com.limegroup.gnutella.gui.themes.SkinPopupMenu;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
@@ -199,6 +200,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
 
     private void setupTree() {
         tree = new LibraryIconTree(model);
+        tree.setRowHeight(TableSettings.DEFAULT_TABLE_ROW_HEIGHT.getValue());
         tree.setRootVisible(false);
         tree.setShowsRootHandles(false);
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);

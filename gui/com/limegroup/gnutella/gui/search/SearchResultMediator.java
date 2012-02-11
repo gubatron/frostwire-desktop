@@ -253,6 +253,7 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
                 return getLine(row).getOddRowColor();
             }
         };
+        
         BUTTON_ROW = new SearchButtons(this).getComponent();
         
         if (BUY_ACTION == null)

@@ -1,6 +1,7 @@
 package com.limegroup.gnutella.gui.tables;
 
 import org.limewire.setting.BooleanSetting;
+import org.limewire.setting.IntSetting;
 import org.limewire.setting.SettingsFactory;
 
 import com.limegroup.gnutella.settings.TablesHandlerSettings;
@@ -14,6 +15,8 @@ public class TableSettings {
      * The SettingsFactory settings will be added/read to/from.
      */
     protected static final SettingsFactory FACTORY = TablesHandlerSettings.instance().getFactory();    
+    
+    public static final IntSetting DEFAULT_TABLE_ROW_HEIGHT = FACTORY.createIntSetting("TABLE_ROW_HEIGHT",24);
     
     /**
      * Additions to the ID to identify the setting.
