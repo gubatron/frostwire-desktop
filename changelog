@@ -14,6 +14,7 @@ frostwire (5.3.1) stable; urgency=high
     preselected to give the user a clue of what can be done.
   * When a new playlist is created, a graphic is shown to hint the user
     about dragging audio files there.
+  * Updated H2 library to v1.3.164
 
  -- FrostWire Team <contact@frostwire.com>  Sat, 11 Feb 2012 18:22:15 -0500
 
