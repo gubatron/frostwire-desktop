@@ -6,6 +6,9 @@
  */
 package org.h2.message;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * This adapter sends log output to SLF4J. SLF4J supports multiple
  * implementations such as Logback, Log4j, Jakarta Commons Logging (JCL), JDK
@@ -22,16 +25,45 @@ package org.h2.message;
 public class TraceWriterAdapter implements TraceWriter {
 
     private String name;
+    private Logger logger = LoggerFactory.getLogger("h2database");
 
     public void setName(String name) {
         this.name = name;
     }
 
     public boolean isEnabled(int level) {
-	return false;
+        switch (level) {
+        case TraceSystem.DEBUG:
+            return logger.isDebugEnabled();
+        case TraceSystem.INFO:
+            return logger.isInfoEnabled();
+        case TraceSystem.ERROR:
+            return logger.isErrorEnabled();
+        default:
+            return false;
+        }
     }
 
     public void write(int level, String module, String s, Throwable t) {
+        if (isEnabled(level)) {
+            if (name != null) {
+                s = name + ":" + module + " " + s;
+            } else {
+                s = module + " " + s;
+            }
+            switch (level) {
+            case TraceSystem.DEBUG:
+                logger.debug(s, t);
+                break;
+            case TraceSystem.INFO:
+                logger.info(s, t);
+                break;
+            case TraceSystem.ERROR:
+                logger.error(s, t);
+                break;
+            default:
+            }
+        }
     }
 
 }
