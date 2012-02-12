@@ -4,7 +4,7 @@
 	<property name="jars" value="../dist" />
 
 	<path id="default.classpath">
-		<fileset dir="${jars}" includes="*.jar" excludes="h2-1.3.160.jar" />
+		<fileset dir="${jars}" includes="*.jar" excludes="h2-1.3.164.jar" />
 	</path>
 
 	<target name="main">
