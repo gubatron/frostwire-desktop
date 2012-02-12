@@ -16,7 +16,7 @@
 		</javac>
 
 		<!-- jar -->
-		<jar jarfile="../dist/h2-1.3.160.jar">
+		<jar jarfile="../dist/h2-1.3.164.jar">
 			<fileset dir="bin" />
 		</jar>
 
