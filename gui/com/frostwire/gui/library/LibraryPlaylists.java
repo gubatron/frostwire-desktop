@@ -114,7 +114,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
     }
 
     public void addPlaylist(Playlist playlist) {
-        LibraryPlaylistsListCell cell = new LibraryPlaylistsListCell(null, null, null, playlist, _selectedPlaylistAction);
+        LibraryPlaylistsListCell cell = new LibraryPlaylistsListCell(null, null, GUIMediator.getThemeImage("playlist"), playlist, _selectedPlaylistAction);
         _model.addElement(cell);
     }
 
