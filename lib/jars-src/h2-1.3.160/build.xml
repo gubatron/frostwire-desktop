@@ -11,7 +11,7 @@
 		<mkdir dir="bin" />
 
 		<!-- build -->
-		<javac srcdir="." destdir="bin" fork="true" includeantruntime="false" source="1.6">
+		<javac srcdir="." destdir="bin" fork="true" includeantruntime="false">
 			<classpath refid="default.classpath" />
 		</javac>
 
