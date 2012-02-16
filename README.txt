@@ -1,0 +1,63 @@
+Hi there FrostWire Hacker.
+
+WHAT IS FROSTWIRE.
+
+FrostWire is a file sharing client and media management tool that was made 
+using lots of cool open source projects. It was born from the legendary 
+LimeWire Gnutella client, but it's evolved a hell of a lot since then.
+FrostWire no longer supports Gnutella, it's a BitTorrent client, an Internet 
+Radio client and Media Player.
+
+The main software architecture (how things are organized) depends on the late 
+LimeWire 4, the BitTorrent power comes from the Azureus project (aka Vuze), 
+media playback comes from the mplayer project, the good looks and skinning 
+system comes from the Substance skinning project (which we've had to maintain 
+on our repo to make it fit FrostWire needs), http interaction comes from the 
+Apache Commons project, the search is built using the awesome H2 database and 
+Lucene indexes, JSON parsing comes from google-gson, and so on and so on.
+
+BUILD REQUIREMENTS
+
+Introductions aside, here's how you build this.
+
+1. Make sure your CLASSPATH and your PATH variables are set correctly.
+2. Try having the latest JDK available (OpenJDK or Sun's JDK should do it - 
+   As of this document it can be built using Java 1.7)
+3. ant
+4. Mercurial to clone, check out the project to your machine.
+
+CHECK OUT THE PROJECT FROM BITBUCKET
+hg clone https://bitbucket.org/frostwire/frostwire.desktop
+
+HOW TO BUILD
+
+cd frostwire.desktop
+ant clean
+ant
+
+HOW TO RUN
+
+./run
+
+HAVING ISSUES BUILDING?
+
+It's very hard that it happens but we might have pushed a broken build
+
+If you do have any issues building, please yell on the comments of the offending commit log at bitbucket.org so we can address the issue right away.
+
+If the build is not broken, hit us up at the developer forum http://bit.ly/y0tr40
+
+OFFICIAL FROSTWIRE SITES
+
+Main Website
+http://frostwire.com
+
+Forum
+http://forum.frostwire.com
+
+Mercurial Repository at BitBucket.org
+https://bitbucket.org/frostwire/frostwire.desktop
+
+(We recently started using Git for the FrostWire for Android source, we
+ might be moving FrostWire for Desktop there eventually)
+
