@@ -172,3 +172,8 @@ https://github.com/kirillcool/laf-widget
 h2-2012-02-03/ -> h2-1.3.164.jar
 http://www.h2database.com/	
 H2 Database Engine.
+
+lucene-3.5.0/ -> lucene-3.5.0.jar
+http://lucene.apache.org/core/
+Apache Lucene(TM) is a high-performance, full-featured text
+search engine library written entirely in Java.
