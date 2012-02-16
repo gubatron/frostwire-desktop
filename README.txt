@@ -54,7 +54,8 @@ PATH=${PATH}:${JAVA_HOME}/bin
 
 export JAVA_HOME CLASSPATH PATH
 
-Must build problems are usually solved by having those environment variables set correctly. If you are a Windows or Mac user the process is fairly similar.
+Must build problems are usually solved by having those environment variables 
+set correctly. If you are a Windows or Mac user the process is fairly similar.
 
 CHECK OUT THE PROJECT FROM BITBUCKET
 hg clone https://bitbucket.org/frostwire/frostwire.desktop
