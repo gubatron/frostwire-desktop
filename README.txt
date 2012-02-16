@@ -5,8 +5,24 @@ WHAT IS FROSTWIRE.
 FrostWire is a file sharing client and media management tool that was made 
 using lots of cool open source projects. It was born from the legendary 
 LimeWire Gnutella client, but it's evolved a hell of a lot since then.
+
 FrostWire no longer supports Gnutella, it's a BitTorrent client, an Internet 
 Radio client and Media Player.
+
+Unlike most BitTorrent clients out there, FrostWire focuses on search files 
+and tries hard to make it as easy and convenient as possible to users. 
+Old FrostWire users were used to the Gnutella experience (searching for 
+single files), so FrostWire makes use of BitTorrent a little differently to 
+make it simple for them. 
+
+FrostWire will connect to all the major BitTorrent indexes of the internet 
+and pre-fetch torrents (via the Azureus DHT or via HTTP if it can't find it 
+on the DHT), it will then index locally all the available metadata that's 
+indexed by the torrent file, as the user searches the local index gets better
+and better and search results are faster. This makes FrostWire a very powerful
+client that will help you find the rarest of files on the bittorrent network, 
+sometimes it will find files that even the BitTorrent indexes won't yield as 
+search results.
 
 The main software architecture (how things are organized) depends on the late 
 LimeWire 4, the BitTorrent power comes from the Azureus project (aka Vuze), 
@@ -43,9 +59,11 @@ HAVING ISSUES BUILDING?
 
 It's very hard that it happens but we might have pushed a broken build
 
-If you do have any issues building, please yell on the comments of the offending commit log at bitbucket.org so we can address the issue right away.
+If you do have any issues building, please yell on the comments of the 
+offending commit log at bitbucket.org so we can address the issue right away.
 
-If the build is not broken, hit us up at the developer forum http://bit.ly/y0tr40
+If the build is not broken, hit us up at the developer forum 
+http://bit.ly/y0tr40
 
 OFFICIAL FROSTWIRE SITES
 
@@ -61,3 +79,5 @@ https://bitbucket.org/frostwire/frostwire.desktop
 (We recently started using Git for the FrostWire for Android source, we
  might be moving FrostWire for Desktop there eventually)
 
+FrostWire Team
+Last updated - February 16th 2012 16:54:21 EST
