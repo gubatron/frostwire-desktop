@@ -36,11 +36,25 @@ BUILD REQUIREMENTS
 
 Introductions aside, here's how you build this.
 
-1. Make sure your CLASSPATH and your PATH variables are set correctly.
+1. Make sure your CLASSPATH, JAVA_HOME and your PATH variables are set 
+   correctly.
+
 2. Try having the latest JDK available (OpenJDK or Sun's JDK should do it - 
    As of this document it can be built using Java 1.7)
+
 3. ant
+
 4. Mercurial to clone, check out the project to your machine.
+
+Example of CLASSPATH, JAVA_HOME and PATH on a Ubuntu system's .bashrc file
+
+JAVA_HOME=/usr/lib/jvm/java-7-sun
+CLASSPATH=${CLASSPATH}:${JAVA_HOME}/lib
+PATH=${PATH}:${JAVA_HOME}/bin
+
+export JAVA_HOME CLASSPATH PATH
+
+Must build problems are usually solved by having those environment variables set correctly. If you are a Windows or Mac user the process is fairly similar.
 
 CHECK OUT THE PROJECT FROM BITBUCKET
 hg clone https://bitbucket.org/frostwire/frostwire.desktop
