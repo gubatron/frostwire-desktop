@@ -11,7 +11,7 @@ public class TPBWebSearchPerformer extends HttpWebSearchPerformer {
 
 	@Override
 	public URI getURI(String encodedKeywords) throws URISyntaxException {
-		return new URI("http://thepiratebay.org/search/"+encodedKeywords+"/0/7/0");
+		return new URI("http://thepiratebay.se/search/"+encodedKeywords+"/0/7/0");
 	}
 
 	@Override

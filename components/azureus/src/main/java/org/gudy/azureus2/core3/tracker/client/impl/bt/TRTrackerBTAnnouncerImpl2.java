@@ -1652,7 +1652,7 @@ TRTrackerBTAnnouncerImpl2
 									event,
 									ip,
 									helper.getUDPKey(),
-									(int)getLongURLParam( url_str, "numwant" ), 
+									3, 
 									getLongURLParam( url_str, "left" ), 
 									(short)getLongURLParam( url_str, "port" ),
 									getLongURLParam( url_str, "uploaded" ));	
@@ -3626,9 +3626,9 @@ TRTrackerBTAnnouncerImpl2
         return( key_id );
     }
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 	    try {
-            TRTrackerBTAnnouncerImpl2 t = new TRTrackerBTAnnouncerImpl2("1cb1d49d7541fc99c7170698efecbd779cff51b4", new String[]{"udp://tracker.openbittorrent.com"});
+            TRTrackerBTAnnouncerImpl2 t = new TRTrackerBTAnnouncerImpl2("-", new String[]{"udp://tracker.openbittorrent.com"});
             t.addListener(new TRTrackerAnnouncerListener() {
                 
                 @Override
@@ -3687,7 +3687,7 @@ TRTrackerBTAnnouncerImpl2
                 
                 @Override
                 public String getName() {
-                    return "1cb1d49d7541fc99c7170698efecbd779cff51b4";
+                    return "-";
                 }
                 
                 @Override
@@ -3720,5 +3720,7 @@ TRTrackerBTAnnouncerImpl2
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+	    
+	    System.in.read();
 	}
 }
