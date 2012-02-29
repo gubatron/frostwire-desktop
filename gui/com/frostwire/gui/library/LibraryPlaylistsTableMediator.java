@@ -144,7 +144,7 @@ final class LibraryPlaylistsTableMediator extends AbstractLibraryTableMediator<L
             private Image bigAudioIcon = GUIMediator.getThemeImage("audio128x128").getImage();
             
             protected void paintComponent(java.awt.Graphics g) {
-                System.out.println("LibraryPlaylistTableMediator.getRowCount() " + TABLE.getRowCount());
+                //System.out.println("LibraryPlaylistTableMediator.getRowCount() " + TABLE.getRowCount());
                 if (TABLE.getRowCount()==0) {
                     drawHelpGraphics(g,bigAudioIcon);
                 } else {
