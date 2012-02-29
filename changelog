@@ -1,4 +1,11 @@
 frostwire (5.3.2) stable; urgency=high
+  * Upgraded Lucene library to v3.5.0.
+  * Upgraded H2 to v1.3.164.
+
+ -- FrostWire Team <contact@frostwire.com>  Thu, 16 Feb 2012 09:53:46 -0500
+
+
+frostwire (5.3.2) stable; urgency=high
   * Reverted H2 library to v1.3.160
 
  -- FrostWire Team <contact@frostwire.com>  Sun, 12 Feb 2012 09:09:46 -0500
