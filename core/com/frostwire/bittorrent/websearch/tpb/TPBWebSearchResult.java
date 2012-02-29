@@ -53,11 +53,11 @@ public class TPBWebSearchResult implements WebSearchResult {
 		 */
 		torrentDetailsURI = matcher.group(2);
 		fileName = matcher.group(3);
-		torrentURI = matcher.group(4);
-		infoHash = matcher.group(5);
-		creationTime = parseCreationTime(matcher.group(6));
-		size = parseSize(matcher.group(7));
-		seeds = parseSeeds(matcher.group(8));
+		torrentURI = matcher.group(4); //let's assign the magnet to this for now.
+		infoHash = matcher.group(4);
+		creationTime = parseCreationTime(matcher.group(5));
+		size = parseSize(matcher.group(6));
+		seeds = parseSeeds(matcher.group(7));
 	}
 	
 	
