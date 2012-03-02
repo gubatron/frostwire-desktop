@@ -1095,7 +1095,7 @@ MagnetPlugin2
 	            TOTorrent torrent = new TOTorrent() {
 	                
 	                List<URL> urls = new ArrayList<URL>();
-	                byte[] hash = decodeHex("4502608c5d83fbe179d11deee851f727d267bd47");
+	                byte[] hash = decodeHex("54dec3e7b1169fad5587d5a9e30fafa92097eab7");
                     
                     @Override
                     public void setPrivate(boolean _private) throws TOTorrentException {
