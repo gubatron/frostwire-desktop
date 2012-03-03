@@ -61,6 +61,7 @@ import org.gudy.azureus2.core3.download.impl.DownloadManagerStateImpl;
 import org.gudy.azureus2.core3.global.GlobalManager;
 import org.gudy.azureus2.core3.logging.LogRelation;
 import org.gudy.azureus2.core3.peer.PEPeer;
+import org.gudy.azureus2.core3.peer.PEPeerListener;
 import org.gudy.azureus2.core3.peer.PEPeerManager;
 import org.gudy.azureus2.core3.peer.PEPeerManagerAdapter;
 import org.gudy.azureus2.core3.peer.PEPeerManagerFactory;
@@ -129,6 +130,7 @@ import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.peermanager.PeerManagerRegistration;
 import com.aelitis.azureus.core.peermanager.peerdb.PeerItem;
+import com.aelitis.azureus.core.peermanager.piecepicker.util.BitFlags;
 import com.aelitis.azureus.core.util.CopyOnWriteList;
 import com.aelitis.net.magneturi.MagnetURIHandler;
 import com.aelitis.net.magneturi.MagnetURIHandlerException;
@@ -1848,8 +1850,33 @@ MagnetPlugin2
                     
                     @Override
                     public void addPeer(PEPeer peer) {
-                        // TODO Auto-generated method stub
-                        
+                        peer.addListener(new PEPeerListener() {
+                            
+                            @Override
+                            public void stateChanged(PEPeer peer, int new_state) {
+                                if (new_state == PEPeer.HANDSHAKING) {
+                                    System.out.println("Handshaking with " + peer.getIp());
+                                }
+                            }
+                            
+                            @Override
+                            public void sentBadChunk(PEPeer peer, int piece_num, int total_bad_chunks) {
+                                // TODO Auto-generated method stub
+                                
+                            }
+                            
+                            @Override
+                            public void removeAvailability(PEPeer peer, BitFlags peerHavePieces) {
+                                // TODO Auto-generated method stub
+                                
+                            }
+                            
+                            @Override
+                            public void addAvailability(PEPeer peer, BitFlags peerHavePieces) {
+                                // TODO Auto-generated method stub
+                                
+                            }
+                        });
                     }
                     
                     @Override
