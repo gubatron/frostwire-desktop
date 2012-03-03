@@ -2168,15 +2168,6 @@ MagnetPlugin2
 	            
 	            System.in.read();
 	}
-	
-	protected static void tryConnect(TRTrackerAnnouncerResponse response) {
-	    for (TRTrackerAnnouncerResponsePeer peer : response.getPeers()) {
-        System.out.println(peer.getAddress() + ":" + peer.getPort());
-        
-        SimplePEPeerTransportProtocol tp = new SimplePEPeerTransportProtocol(response.getHash().getHash(), peer.getPeerID(), peer.getSource(), peer.getAddress(), peer.getPort(), peer.getUDPPort(), false, false, (byte)0, new HashMap());
-        //tp.closeConnection("");
-	    }
-    }
 
     public static byte[] decodeHex(String str) {
         str = str.toLowerCase();
