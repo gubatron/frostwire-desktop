@@ -1857,8 +1857,8 @@ MagnetPlugin2
                             public void stateChanged(PEPeer peer, int new_state) {
                                 ((PEPeerTransportProtocol)peer).setSeed(false);
                                 if (new_state == PEPeer.TRANSFERING2) {
-                                    System.out.println("Transfering2 with " + peer.getIp() + ", client: " + peer.getClient());
-                                    tryMetadata( (PEPeerTransportProtocol)peer);
+                                    //System.out.println("Transfering2 with " + peer.getIp() + ", client: " + peer.getClient());
+                                    tryMetadata(torrent, (PEPeerTransportProtocol)peer);
                                 }
                             }
                             
@@ -2211,18 +2211,17 @@ MagnetPlugin2
         return data;
     }
     
-    private static void tryMetadata(final PEPeerTransportProtocol peer) {
-        new Thread() {
-            public void run() {
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                peer.sendMetadataRequest();
-            };
-        }.start();
+    static boolean metatada_requested = false;
+    
+    private static void tryMetadata(TOTorrent torrent, final PEPeerTransportProtocol peer) {
+        if (metatada_requested) {
+            return;
+        }
+        
+        if (peer.supportsUTMETADATA()) {
+            metatada_requested = true;
+            peer.sendMetadataRequest(0, torrent);
+        }
         
     }
 }

@@ -51,7 +51,7 @@ public class LTMessageEncoder implements MessageStreamEncoder {
 	}
 
 	public RawMessage[] encodeMessage(Message message) {
-	    System.out.println("Sending [" + message.getDescription() + "]");
+	    //System.out.println("Sending [" + message.getDescription() + "]");
 		if (!(message instanceof LTMessage)) {
 			return new RawMessage[] {BTMessageFactory.createBTRawMessage(message)};
 		}

@@ -21,8 +21,13 @@
 package org.gudy.azureus2.core3.peer.impl.transport;
 
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.ByteBuffer;
 import java.util.*;
 
@@ -39,6 +44,10 @@ import org.gudy.azureus2.core3.peer.impl.PEPeerTransportFactory;
 import org.gudy.azureus2.core3.peer.util.PeerIdentityDataID;
 import org.gudy.azureus2.core3.peer.util.PeerIdentityManager;
 import org.gudy.azureus2.core3.peer.util.PeerUtils;
+import org.gudy.azureus2.core3.torrent.TOTorrent;
+import org.gudy.azureus2.core3.torrent.TOTorrentAnnounceURLSet;
+import org.gudy.azureus2.core3.torrent.TOTorrentException;
+import org.gudy.azureus2.core3.torrent.impl.TOTorrentImpl;
 import org.gudy.azureus2.core3.util.*;
 import org.gudy.azureus2.plugins.dht.mainline.MainlineDHTProvider;
 import org.gudy.azureus2.plugins.network.Connection;
@@ -54,6 +63,7 @@ import com.aelitis.azureus.core.networkmanager.impl.udp.ProtocolEndpointUDP;
 import com.aelitis.azureus.core.networkmanager.impl.udp.UDPNetworkManager;
 import com.aelitis.azureus.core.peermanager.messaging.Message;
 import com.aelitis.azureus.core.peermanager.messaging.MessageManager;
+import com.aelitis.azureus.core.peermanager.messaging.MessagingUtil;
 import com.aelitis.azureus.core.peermanager.messaging.azureus.*;
 import com.aelitis.azureus.core.peermanager.messaging.bittorrent.*;
 import com.aelitis.azureus.core.peermanager.messaging.bittorrent.ltep.*;
@@ -63,6 +73,7 @@ import com.aelitis.azureus.core.peermanager.peerdb.PeerItemFactory;
 import com.aelitis.azureus.core.peermanager.piecepicker.PiecePicker;
 import com.aelitis.azureus.core.peermanager.piecepicker.util.BitFlags;
 import com.aelitis.azureus.core.peermanager.utils.*;
+import com.frostwire.gui.BuyAction;
 
 
 public class 
@@ -2444,7 +2455,9 @@ implements PEPeerTransport
 		
 	}
   
-  
+  public boolean supportsUTMETADATA() {
+      return ut_metadata_enabled;
+  }
   protected void decodeLTHandshake(LTHandshake handshake) {
 	  String lt_handshake_name = handshake.getClientName();
 	  if (lt_handshake_name != null) {
@@ -3643,7 +3656,7 @@ implements PEPeerTransport
 					if (Logger.isEnabled())
 						Logger.log(new LogEvent(PEPeerTransportProtocol.this, LogIDs.NET,
 								"Received [" + message.getDescription() + "] message"));
-					System.out.println("Received [" + message.getDescription() + "] message");
+					//System.out.println("Received [" + message.getDescription() + "] message");
 					final long now =SystemTime.getCurrentTime();
 					last_message_received_time =now;
 					if( message.getType() == Message.TYPE_DATA_PAYLOAD ) {
@@ -3777,6 +3790,7 @@ implements PEPeerTransport
 					}
 					
 					if (message_id.equals(LTMessage.ID_UT_METADATA)) {
+					    decodeUTMetadata((UTMetadataRequest) message);
                         return true;
                     }
 
@@ -3885,8 +3899,97 @@ implements PEPeerTransport
 
 		connection.startMessageProcessing();
 	}
+	
+	private int metadataLengthReceived = 0;
+	private Map<Integer, byte[]> metadataPieces = new HashMap<Integer, byte[]>();
 
-	public void
+	protected void decodeUTMetadata(UTMetadataRequest message) {
+	    System.out.println("Recevied: " + message.getDescription());
+        if (message.getMessageType() == 0) {
+            connection.getOutgoingMessageQueue().addMessage( new UTMetadataRequest(2, message.getPiece(), 0, null, (byte)1), false);
+        } else if (message.getMessageType() == 1) {
+            metadataLengthReceived += message.getTotalSize();
+            metadataPieces.put(message.getPiece(), message.getMetadata());
+            if (metadataLengthReceived < metadata_size) {
+                sendMetadataRequest(message.getPiece() + 1, utmTorrent);
+            } else {
+                buildTorrent(metadataPieces, "/Users/aldenml/Downloads/metadata_temp.torrent");
+            }
+        } else if (message.getMessageType() == 2) {
+            System.out.println("Client refuse");
+        } else {
+            System.out.println("Buggy client");
+        }
+        message.destroy();
+    }
+
+    private void buildTorrent(Map<Integer, byte[]> metadataPieces2, String f) {
+        
+        
+        try {
+        Integer[] keys = metadataPieces2.keySet().toArray(new Integer[0]);
+        Arrays.sort(keys);
+        
+        ByteArrayOutputStream of = new ByteArrayOutputStream();
+        for (Integer p : keys) {
+            byte[] pieceMetadata = metadataPieces2.get(p);
+            of.write(pieceMetadata);
+        }
+        
+        of.close();
+        
+        DirectByteBuffer b = new DirectByteBuffer(ByteBuffer.wrap(of.toByteArray()));
+        Map<?, ?> map = MessagingUtil.convertBencodedByteStreamToPayload(b, 2, "info");
+
+        
+        FileOutputStream fos = new FileOutputStream(f);
+        Map t = new HashMap();
+        t.put("info", map);
+        t.put("announce", utmTorrent.getAnnounceURL().toString().getBytes( Constants.DEFAULT_ENCODING ));
+        
+        TOTorrentAnnounceURLSet[] sets = utmTorrent.getAnnounceURLGroup().getAnnounceURLSets();
+        
+        if (sets.length > 0 ){
+            
+            List    announce_list = new ArrayList();
+            
+            for (int i=0;i<sets.length;i++){
+                
+                TOTorrentAnnounceURLSet set = sets[i];
+                
+                URL[]   urls = set.getAnnounceURLs();
+                
+                if ( urls.length == 0 ){
+                    
+                    continue;
+                }
+                
+                List sub_list = new ArrayList();
+                
+                announce_list.add( sub_list );
+                
+                for (int j=0;j<urls.length;j++){
+                    
+                    sub_list.add(  urls[j].toString().getBytes( Constants.DEFAULT_ENCODING )); 
+                }
+            }
+            
+            if ( announce_list.size() > 0 ){
+                
+                t.put( "announce-list", announce_list );
+            }
+        }
+        DirectByteBuffer tb = MessagingUtil.convertPayloadToBencodedByteStream(t, DirectByteBuffer.AL_MSG_UT_METADATA);
+        byte[] raw = new byte[tb.remaining(DirectByteBuffer.SS_MSG)];
+        tb.get(DirectByteBuffer.SS_MSG, raw);
+        fos.write(raw);
+        fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void
 	addRateLimiter(
 			LimitedRateGroup	limiter,
 			boolean				upload )
@@ -4122,11 +4225,14 @@ implements PEPeerTransport
 			}
 		}
 	}
+	
+	private TOTorrent utmTorrent;
 
-	public void sendMetadataRequest() {
-	    System.out.println("Sending metadata request");
+	public void sendMetadataRequest(int piece, TOTorrent torrent) {
+	    this.utmTorrent = torrent;
+	    System.out.println("Sending metadata request for piece: " + piece);
 	    //connection.getOutgoingMessageQueue().setEncoder(new LTMessageEncoder(this));
-	    connection.getOutgoingMessageQueue().addMessage( new UTMetadataRequest((byte)0), false);
+	    connection.getOutgoingMessageQueue().addMessage( new UTMetadataRequest(0, piece, 0, null, (byte)1), false);
 	}
 
 
