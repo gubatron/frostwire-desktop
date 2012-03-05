@@ -3908,7 +3908,7 @@ implements PEPeerTransport
         if (message.getMessageType() == 0) {
             connection.getOutgoingMessageQueue().addMessage( new UTMetadataRequest(2, message.getPiece(), 0, null, (byte)1), false);
         } else if (message.getMessageType() == 1) {
-            metadataLengthReceived += message.getTotalSize();
+            metadataLengthReceived += message.getMetadata().length;
             metadataPieces.put(message.getPiece(), message.getMetadata());
             if (metadataLengthReceived < metadata_size) {
                 sendMetadataRequest(message.getPiece() + 1, utmTorrent);
