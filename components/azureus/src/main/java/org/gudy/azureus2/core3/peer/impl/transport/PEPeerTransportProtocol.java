@@ -1696,7 +1696,7 @@ implements PEPeerTransport
 	public boolean isSeed() {  return seeding;  }
 	public boolean isRelativeSeed() { return (relativeSeeding & RELATIVE_SEEDING_UPLOAD_ONLY_SEED) != 0; }
 	
-	private void
+	public void
 	setSeed(
 			boolean	s )
 	{
@@ -2894,11 +2894,15 @@ implements PEPeerTransport
 
 
 	protected void decodeHave( BTHave have ) {
+	    if (nbPieces == 0) {
+	        // special condition
+	        //return;
+	    }
 		final int pieceNumber =have.getPieceNumber();
 		have.destroy();
 
 		if ((pieceNumber >=nbPieces) ||(pieceNumber <0)) {
-			closeConnectionInternally("invalid pieceNumber: " +pieceNumber);
+			//closeConnectionInternally("invalid pieceNumber: " +pieceNumber);
 			return;
 		}
 
@@ -3683,18 +3687,6 @@ implements PEPeerTransport
 					if (message_id.equals(LTMessage.ID_LT_HANDSHAKE)) {
 						decodeLTHandshake((LTHandshake)message);
 						changePeerState(TRANSFERING2);
-						
-						new Thread() {
-				            public void run() {
-				                try {
-				                    Thread.sleep(2000);
-				                } catch (InterruptedException e) {
-				                    // TODO Auto-generated catch block
-				                    e.printStackTrace();
-				                }
-				                sendMetadataRequest();
-				            };
-				        }.start();
 						return true;
 					}
 
@@ -3714,6 +3706,8 @@ implements PEPeerTransport
 					if( message_id.equals( BTMessage.ID_BT_UNCHOKE ) ) {
 						decodeUnchoke( (BTUnchoke)message );
 						connection.enableEnhancedMessageProcessing( true, manager.getPartitionID() );  //make sure we use a fast handler for the resulting download
+						
+						
 						return true;
 					}
 

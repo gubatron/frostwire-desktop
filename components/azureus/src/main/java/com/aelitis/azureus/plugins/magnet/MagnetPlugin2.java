@@ -1132,7 +1132,7 @@ MagnetPlugin2
 	    final TOTorrent torrent = new TOTorrent() {
             
             List<URL> urls = new ArrayList<URL>();
-            byte[] hash = decodeHex("4502608c5d83fbe179d11deee851f727d267bd47");
+            byte[] hash = decodeHex("54dec3e7b1169fad5587d5a9e30fafa92097eab7");
             
             @Override
             public void setPrivate(boolean _private) throws TOTorrentException {
@@ -1855,6 +1855,7 @@ MagnetPlugin2
                             
                             @Override
                             public void stateChanged(PEPeer peer, int new_state) {
+                                ((PEPeerTransportProtocol)peer).setSeed(false);
                                 if (new_state == PEPeer.TRANSFERING2) {
                                     System.out.println("Transfering2 with " + peer.getIp() + ", client: " + peer.getClient());
                                     tryMetadata( (PEPeerTransportProtocol)peer);
@@ -1947,7 +1948,7 @@ MagnetPlugin2
                     @Override
                     public boolean isInteresting(int pieceNumber) {
                         // TODO Auto-generated method stub
-                        return false;
+                        return true;
                     }
                     
                     @Override
