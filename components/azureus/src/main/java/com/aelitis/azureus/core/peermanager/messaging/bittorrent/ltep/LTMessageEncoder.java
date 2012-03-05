@@ -131,4 +131,9 @@ public class LTMessageEncoder implements MessageStreamEncoder {
 		return this.extension_map.containsKey("ut_pex");
 	}
 
+	// ut_metadata
+	public boolean supportsUTMETADATA() {
+	    if (this.extension_map == null) {return false;}
+	    return this.extension_map.containsKey(LTMessage.ID_UT_METADATA);
+	}
 }

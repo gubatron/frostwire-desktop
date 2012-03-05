@@ -52,6 +52,7 @@ PEPeer
 	public final static int TRANSFERING 	= 30;
 	public final static int CLOSING      	= 40;
 	public final static int DISCONNECTED 	= 50;
+	public final static int TRANSFERING2    = 60;
 	
 	
 	// these should be maintained to match above list ordinals /10

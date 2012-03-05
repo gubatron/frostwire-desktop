@@ -202,6 +202,10 @@ implements PEPeerTransport
 	private boolean ut_pex_enabled 			= false;
 	private boolean fast_extension_enabled 	= false;
 	private boolean ml_dht_enabled 			= false;
+	
+	// ut_metadata
+	private boolean ut_metadata_enabled = false;
+	private long metadata_size = 0;
 
 	private static final int	ALLOWED_FAST_PIECE_OFFERED_NUM		= 10;
 	private static final int	ALLOWED_FAST_OTHER_PEER_PIECE_MAX	= 10;
@@ -1046,6 +1050,9 @@ implements PEPeerTransport
 		boolean require_crypto = NetworkManager.getCryptoRequired( manager.getAdapter().getCryptoLevel());
 		
 		Map data_dict = new HashMap();
+		lt_ext_map = new HashMap();
+		lt_ext_map.put("ut_pex", new Integer(1) );
+		lt_ext_map.put("ut_metadata", new Integer(3) );
 		data_dict.put("m", lt_ext_map);
 		data_dict.put("v", client_name);
 		data_dict.put("p", new Integer(localTcpPort));
@@ -2476,6 +2483,16 @@ implements PEPeerTransport
 	  encoder.updateSupportedExtensions(handshake.getExtensionMapping());
 	  this.ut_pex_enabled = UTPeerExchange.ENABLED && encoder.supportsUTPEX();
 	  
+	  // ut_metadata
+	  this.ut_metadata_enabled = encoder.supportsUTMETADATA();
+	  if (this.ut_metadata_enabled) {
+	      try {
+	          this.metadata_size = (Long) handshake.getDataMap().get("metadata_size");
+	      } catch (Throwable e) {
+	          this.metadata_size = 0; // no error change here, very delicate place
+	      }
+	  }
+	  
 	  /**
 	   * Grr... this is one thing which I'm sure I had figured out much better than it is here...
 	   * Basically, we "initialise" the connection at the BT handshake stage, because the LT handshake
@@ -3622,6 +3639,7 @@ implements PEPeerTransport
 					if (Logger.isEnabled())
 						Logger.log(new LogEvent(PEPeerTransportProtocol.this, LogIDs.NET,
 								"Received [" + message.getDescription() + "] message"));
+					System.out.println("Received [" + message.getDescription() + "] message");
 					final long now =SystemTime.getCurrentTime();
 					last_message_received_time =now;
 					if( message.getType() == Message.TYPE_DATA_PAYLOAD ) {
@@ -3664,6 +3682,19 @@ implements PEPeerTransport
 
 					if (message_id.equals(LTMessage.ID_LT_HANDSHAKE)) {
 						decodeLTHandshake((LTHandshake)message);
+						changePeerState(TRANSFERING2);
+						
+						new Thread() {
+				            public void run() {
+				                try {
+				                    Thread.sleep(2000);
+				                } catch (InterruptedException e) {
+				                    // TODO Auto-generated catch block
+				                    e.printStackTrace();
+				                }
+				                sendMetadataRequest();
+				            };
+				        }.start();
 						return true;
 					}
 
@@ -3750,6 +3781,10 @@ implements PEPeerTransport
 						decodePeerExchange((UTPeerExchange)message);
 						return true;
 					}
+					
+					if (message_id.equals(LTMessage.ID_UT_METADATA)) {
+                        return true;
+                    }
 
 					if( message_id.equals( AZMessage.ID_AZ_REQUEST_HINT ) ) {        	
 						decodeAZRequestHint( (AZRequestHint)message );
@@ -3775,6 +3810,7 @@ implements PEPeerTransport
 						decodeAZStatsReply((AZStatReply)message );
 						return true;
 					}
+					System.out.println("No know message id: " + message_id);
 					return false;
 				}
 
@@ -4093,6 +4129,11 @@ implements PEPeerTransport
 		}
 	}
 
+	public void sendMetadataRequest() {
+	    System.out.println("Sending metadata request");
+	    //connection.getOutgoingMessageQueue().setEncoder(new LTMessageEncoder(this));
+	    connection.getOutgoingMessageQueue().addMessage( new UTMetadataRequest((byte)0), false);
+	}
 
 
 	protected void decodePeerExchange( AZStylePeerExchange exchange ) {

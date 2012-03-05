@@ -68,6 +68,7 @@ import org.gudy.azureus2.core3.peer.PEPeerManagerFactory;
 import org.gudy.azureus2.core3.peer.PEPeerManagerListener;
 import org.gudy.azureus2.core3.peer.PEPiece;
 import org.gudy.azureus2.core3.peer.impl.PEPeerControl;
+import org.gudy.azureus2.core3.peer.impl.transport.PEPeerTransportProtocol;
 import org.gudy.azureus2.core3.peer.util.PeerUtils;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
 import org.gudy.azureus2.core3.torrent.TOTorrentAnnounceURLGroup;
@@ -1131,7 +1132,7 @@ MagnetPlugin2
 	    final TOTorrent torrent = new TOTorrent() {
             
             List<URL> urls = new ArrayList<URL>();
-            byte[] hash = decodeHex("54dec3e7b1169fad5587d5a9e30fafa92097eab7");
+            byte[] hash = decodeHex("4502608c5d83fbe179d11deee851f727d267bd47");
             
             @Override
             public void setPrivate(boolean _private) throws TOTorrentException {
@@ -1659,7 +1660,7 @@ MagnetPlugin2
                     @Override
                     public boolean isPeerExchangeEnabled() {
                         // TODO Auto-generated method stub
-                        return false;
+                        return true;
                     }
                     
                     @Override
@@ -1671,7 +1672,7 @@ MagnetPlugin2
                     @Override
                     public boolean isExtendedMessagingEnabled() {
                         // TODO Auto-generated method stub
-                        return false;
+                        return true;
                     }
                     
                     @Override
@@ -1854,11 +1855,14 @@ MagnetPlugin2
                             
                             @Override
                             public void stateChanged(PEPeer peer, int new_state) {
-                                if (new_state == PEPeer.HANDSHAKING) {
-                                    System.out.println("Handshaking with " + peer.getIp());
+                                if (new_state == PEPeer.TRANSFERING2) {
+                                    System.out.println("Transfering2 with " + peer.getIp() + ", client: " + peer.getClient());
+                                    tryMetadata( (PEPeerTransportProtocol)peer);
                                 }
                             }
                             
+                            
+
                             @Override
                             public void sentBadChunk(PEPeer peer, int piece_num, int total_bad_chunks) {
                                 // TODO Auto-generated method stub
@@ -2204,5 +2208,20 @@ MagnetPlugin2
             data[i / 2] = (byte) ((Character.digit(str.charAt(i), 16) << 4) + Character.digit(str.charAt(i + 1), 16));
         }
         return data;
+    }
+    
+    private static void tryMetadata(final PEPeerTransportProtocol peer) {
+        new Thread() {
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                peer.sendMetadataRequest();
+            };
+        }.start();
+        
     }
 }
