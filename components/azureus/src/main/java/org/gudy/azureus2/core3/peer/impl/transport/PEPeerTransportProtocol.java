@@ -3945,14 +3945,16 @@ implements PEPeerTransport
             if (ut_metadata_bytes_received < ut_metadata_metadata_size &&
                 ut_metadata_metadata_size == metadata.getTotalSize()) {
                 sendMetadataRequest(metadata.getPiece() + 1);
-            } else {
-                buildTorrent();
             }
+
+            updateTorrent(metadata.getTotalSize());
         } else if (metadata.getMessageType() == UTMetadata.REJECT_MESSAGE_TYPE_ID) {
+            ut_metadata_enabled = false; // disable support for this peer, not the best solution!
             if (Logger.isEnabled()) {
                 Logger.log(new LogEvent(this, LOGID, "decodeMetadata(): metadata request rejected for piece #" + metadata.getPiece()));
             }
         } else {
+            ut_metadata_enabled = false; // disable support for this peer, buggy implementation in the other side
             if (Logger.isEnabled()) {
                 Logger.log(new LogEvent(this, LOGID, "decodeMetadata(): metadata message type not supported msg_type=" + metadata.getMessageType()));
             }
@@ -3961,7 +3963,7 @@ implements PEPeerTransport
         metadata.destroy();
     }
 
-    private void buildTorrent() {
+    private void updateTorrent(int totalSize) {
         try {
             if (!(diskManager.getTorrent() instanceof TOTorrentMetadata)) {
                 if (Logger.isEnabled()) {
@@ -3971,17 +3973,7 @@ implements PEPeerTransport
             }
             
             TOTorrentMetadata torrent = (TOTorrentMetadata) diskManager.getTorrent();
-            torrent.setMetadataPieces(ut_metadata_bytes_pieces);
-            
-            // verify info hash
-            if (!torrent.validHash()) {
-                if (Logger.isEnabled()) {
-                    Logger.log(new LogEvent(this, LOGID, "buildTorrent(): wrong info-hash"));
-                }
-                return;
-            }
-            
-            torrent.save();
+            torrent.updateMetadataPieces(ut_metadata_bytes_pieces, totalSize);
             
         } catch (Throwable e) {
             if (Logger.isEnabled()) {

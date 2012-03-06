@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
@@ -37,14 +38,13 @@ public class TOTorrentMetadata implements TOTorrent {
 
     private final byte[] hash;
     private final String displayName;
-    private List<URL> trackers = new ArrayList<URL>();
     private final String saveLocation;
+    private final Map<Integer, byte[]> metadataPieces;
 
     private URL announceURL;
     private TOTorrentAnnounceURLGroup announceURLGroup;
     private List<TOTorrentAnnounceURLSet> announceURLSet;
 
-    private Map<Integer, byte[]> metadataPieces;
     private byte[] infoBytes;
 
     public TOTorrentMetadata(byte[] hash, String displayName, URL[] trackers) {
@@ -56,8 +56,13 @@ public class TOTorrentMetadata implements TOTorrent {
         }
         String filename = "metadata_" + ByteFormatter.encodeString(hash) + ".torrent";
         this.saveLocation = new File(COConfigurationManager.getStringParameter("General_sDefaultTorrent_Directory"), filename).getAbsolutePath();
+        this.metadataPieces = new HashMap<Integer, byte[]>();
 
         this.announceURL = trackers[0];
+        setAnnounceUrlGroup(trackers);
+    }
+    
+    public void setAnnounceUrlGroup(URL[] trackers) {
         this.announceURLSet = new ArrayList<TOTorrentAnnounceURLSet>();
         this.announceURLGroup = new TOTorrentAnnounceURLGroup() {
 
@@ -472,11 +477,24 @@ public class TOTorrentMetadata implements TOTorrent {
         return saveLocation;
     }
 
-    public void notifySaved() {
+    public void notifyComplete() {
     }
 
-    public void setMetadataPieces(Map<Integer, byte[]> metadataPieces) {
-        this.metadataPieces = metadataPieces;
+    public void updateMetadataPieces(Map<Integer, byte[]> metadataPieces, int totalSize) {
+        for (Entry<Integer, byte[]>  kv : metadataPieces.entrySet()) {
+            if (!this.metadataPieces.containsKey(kv.getKey())) {
+                this.metadataPieces.put(kv.getKey(), kv.getValue());
+            }
+        }
+        
+        int currentSize = 0;
+        for (byte[] piece : this.metadataPieces.values()) {
+            currentSize += piece.length;
+        }
+        
+        if (currentSize == totalSize) {
+            notifyComplete();
+        }
     }
 
     public Map<Integer, byte[]> getMetadataPieces() {
@@ -504,7 +522,6 @@ public class TOTorrentMetadata implements TOTorrent {
     public boolean save() {
         try {
             serialiseToBEncodedFile(new File(getSaveLocation()));
-            notifySaved();
             return true;
         } catch (TOTorrentException e) {
             return false;

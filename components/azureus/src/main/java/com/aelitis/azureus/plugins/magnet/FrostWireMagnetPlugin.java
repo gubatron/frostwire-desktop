@@ -71,6 +71,7 @@ import org.gudy.azureus2.plugins.utils.resourcedownloader.ResourceDownloaderExce
 import org.gudy.azureus2.plugins.utils.resourcedownloader.ResourceDownloaderFactory;
 
 import com.aelitis.azureus.core.util.CopyOnWriteList;
+import com.aelitis.azureus.plugins.magnet.metadata.MetadataPeerRequester;
 import com.aelitis.net.magneturi.MagnetURIHandler;
 import com.aelitis.net.magneturi.MagnetURIHandlerException;
 import com.aelitis.net.magneturi.MagnetURIHandlerListener;
@@ -88,6 +89,8 @@ FrostWireMagnetPlugin
 	private static final String	SECONDARY_LOOKUP 			= "http://magnet.vuze.com/";
 	private static final int	SECONDARY_LOOKUP_DELAY		= 20*1000;
 	private static final int	SECONDARY_LOOKUP_MAX_TIME	= 2*60*1000;
+	
+	private static final int METADATA_PEER_REQUEST_TIMEOUT = 15 * 1000;
 	
 	private static final String	PLUGIN_NAME				= "Magnet URI Handler";
 	private static final String PLUGIN_CONFIGSECTION_ID = "plugins.magnetplugin";
@@ -494,6 +497,18 @@ FrostWireMagnetPlugin
 		throws MagnetURIHandlerException
 	{
 		try{
+		    
+		    // ut_metadata
+            if (args != null && args.contains("tr=")) { // try to use ut_metadata extension protocol
+                MetadataPeerRequester requester = new MetadataPeerRequester(listener, hash, args, Math.min(timeout, METADATA_PEER_REQUEST_TIMEOUT));
+                byte[] torrent = requester.request();
+                if (torrent != null) {
+                    // straightforward logging for now
+                    System.out.println("Torrent " + ByteFormatter.encodeString(hash) + " data retrieved via UT_METADATA extension in less than " + METADATA_PEER_REQUEST_TIMEOUT + " milliseconds");
+                    return torrent;
+                }
+            }
+		    
 			if ( first_download ){
 			
 				listener.reportActivity( getMessageText( "report.waiting_ddb" ));

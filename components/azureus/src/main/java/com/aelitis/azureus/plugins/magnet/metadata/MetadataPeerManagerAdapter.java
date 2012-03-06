@@ -16,6 +16,45 @@ import com.aelitis.azureus.core.peermanager.PeerManagerRegistration;
 
 public class MetadataPeerManagerAdapter implements PEPeerManagerAdapter {
 
+    private final MetadataPeerListener peerListener;
+    private final PeerManagerRegistration peerMangerRegistration;
+
+    public MetadataPeerManagerAdapter(MetadataPeerListener peerListener) {
+        this.peerListener = peerListener;
+        this.peerMangerRegistration = new PeerManagerRegistration() {
+
+            @Override
+            public void unregister() {
+            }
+
+            @Override
+            public void removeLink(String link) {
+            }
+
+            @Override
+            public TOTorrentFile getLink(String link) {
+                return null;
+            }
+
+            @Override
+            public String getDescription() {
+                return null;
+            }
+
+            @Override
+            public void deactivate() {
+            }
+
+            @Override
+            public void addLink(String link, TOTorrentFile target) throws Exception {
+            }
+
+            @Override
+            public void activate(PEPeerControl peer_control) {
+            }
+        };
+    }
+
     @Override
     public void statsRequest(PEPeer originator, Map request, Map reply) {
     }
@@ -136,38 +175,7 @@ public class MetadataPeerManagerAdapter implements PEPeerManagerAdapter {
 
     @Override
     public PeerManagerRegistration getPeerManagerRegistration() {
-        return new PeerManagerRegistration() {
-
-            @Override
-            public void unregister() {
-            }
-
-            @Override
-            public void removeLink(String link) {
-            }
-
-            @Override
-            public TOTorrentFile getLink(String link) {
-                return null;
-            }
-
-            @Override
-            public String getDescription() {
-                return null;
-            }
-
-            @Override
-            public void deactivate() {
-            }
-
-            @Override
-            public void addLink(String link, TOTorrentFile target) throws Exception {
-            }
-
-            @Override
-            public void activate(PEPeerControl peer_control) {
-            }
-        };
+        return peerMangerRegistration;
     }
 
     @Override
@@ -227,7 +235,7 @@ public class MetadataPeerManagerAdapter implements PEPeerManagerAdapter {
 
     @Override
     public void addPeer(PEPeer peer) {
-        peer.addListener(new MetadataPeerListener());
+        peer.addListener(peerListener);
     }
 
     @Override
