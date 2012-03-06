@@ -19,11 +19,12 @@ make it simple for them.
 FrostWire will connect to all the major BitTorrent indexes of the internet 
 and pre-fetch torrents (via the Azureus DHT or via HTTP if it can't find it 
 on the DHT), it will then index locally all the available metadata that's 
-indexed by the torrent file, as the user searches the local index gets better
-and better and search results are faster. This makes FrostWire a very powerful
-client that will help you find the rarest of files on the bittorrent network, 
-sometimes it will find files that even the BitTorrent indexes won't yield as 
-search results.
+indexed by the torrent file, as the user searches, the local index gets better
+and better to yield richer and instant results. 
+
+This makes FrostWire a very powerful client that will help you find the rarest
+of files on the bittorrent network, sometimes it will find files that even the
+best BitTorrent indexes won't yield in the search results.
 
 The main software architecture (how things are organized) depends on the late 
 LimeWire 4, the BitTorrent power comes from the Azureus project (aka Vuze), 
@@ -40,13 +41,6 @@ Introductions aside, here's how you build this.
 1. Make sure your CLASSPATH, JAVA_HOME and your PATH variables are set 
    correctly.
 
-2. Try having the latest JDK available (OpenJDK or Sun's JDK should do it - 
-   As of this document it can be built using Java 1.7)
-
-3. ant
-
-4. Mercurial to clone, check out the project to your machine.
-
 Example of CLASSPATH, JAVA_HOME and PATH on a Ubuntu system's .bashrc file
 
 JAVA_HOME=/usr/lib/jvm/java-7-sun
@@ -57,6 +51,13 @@ export JAVA_HOME CLASSPATH PATH
 
 Must build problems are usually solved by having those environment variables 
 set correctly. If you are a Windows or Mac user the process is fairly similar.
+
+2. Try having the latest JDK available (OpenJDK or Sun's JDK should do it - 
+   As of this document it can be built using Java 1.7)
+
+3. ant
+
+4. Mercurial to clone, check out the project to your machine.
 
 We recommend using Eclipse as your development environment.
 
@@ -111,7 +112,6 @@ components/ This is the new school of thought in the process. Everytime
             of Alexandria)
 
 components/resources This is where most graphical assets are stored.
-
 
 lib/jars This is where we keep pre-compiled jars from projects we don't 
          maintain.
