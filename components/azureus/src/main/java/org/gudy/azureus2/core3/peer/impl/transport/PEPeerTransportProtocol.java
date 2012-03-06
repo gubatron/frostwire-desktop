@@ -21,13 +21,8 @@
 package org.gudy.azureus2.core3.peer.impl.transport;
 
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.ByteBuffer;
 import java.util.*;
 
@@ -44,10 +39,8 @@ import org.gudy.azureus2.core3.peer.impl.PEPeerTransportFactory;
 import org.gudy.azureus2.core3.peer.util.PeerIdentityDataID;
 import org.gudy.azureus2.core3.peer.util.PeerIdentityManager;
 import org.gudy.azureus2.core3.peer.util.PeerUtils;
-import org.gudy.azureus2.core3.torrent.TOTorrent;
-import org.gudy.azureus2.core3.torrent.TOTorrentAnnounceURLSet;
-import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.torrent.impl.TOTorrentImpl;
+import org.gudy.azureus2.core3.torrent.impl.TOTorrentMetadata;
 import org.gudy.azureus2.core3.util.*;
 import org.gudy.azureus2.plugins.dht.mainline.MainlineDHTProvider;
 import org.gudy.azureus2.plugins.network.Connection;
@@ -63,7 +56,6 @@ import com.aelitis.azureus.core.networkmanager.impl.udp.ProtocolEndpointUDP;
 import com.aelitis.azureus.core.networkmanager.impl.udp.UDPNetworkManager;
 import com.aelitis.azureus.core.peermanager.messaging.Message;
 import com.aelitis.azureus.core.peermanager.messaging.MessageManager;
-import com.aelitis.azureus.core.peermanager.messaging.MessagingUtil;
 import com.aelitis.azureus.core.peermanager.messaging.azureus.*;
 import com.aelitis.azureus.core.peermanager.messaging.bittorrent.*;
 import com.aelitis.azureus.core.peermanager.messaging.bittorrent.ltep.*;
@@ -73,7 +65,6 @@ import com.aelitis.azureus.core.peermanager.peerdb.PeerItemFactory;
 import com.aelitis.azureus.core.peermanager.piecepicker.PiecePicker;
 import com.aelitis.azureus.core.peermanager.piecepicker.util.BitFlags;
 import com.aelitis.azureus.core.peermanager.utils.*;
-import com.frostwire.gui.BuyAction;
 
 
 public class 
@@ -215,9 +206,12 @@ implements PEPeerTransport
 	private boolean ml_dht_enabled 			= false;
 	
 	// ut_metadata
-	private boolean ut_metadata_enabled = false;
-	private long metadata_size = 0;
-
+    private boolean ut_metadata_enabled                     = false;
+    private int ut_metadata_metadata_size                   = 0;
+    private int ut_metadata_bytes_received                  = 0;
+    private Map<Integer, byte[]> ut_metadata_bytes_pieces   = new HashMap<Integer, byte[]>();
+    private int torrent_metadata_size                       = 0;
+    
 	private static final int	ALLOWED_FAST_PIECE_OFFERED_NUM		= 10;
 	private static final int	ALLOWED_FAST_OTHER_PEER_PIECE_MAX	= 10;
 	
@@ -1046,10 +1040,29 @@ implements PEPeerTransport
 		}
 	}
 
-	// We could do this in a more automated way in future, but hardcoded is simple and quick,
-	// so we'll do that instead. :)
-	static Map lt_ext_map = UTPeerExchange.ENABLED ? Collections.singletonMap("ut_pex", new Integer(1) ) : Collections.EMPTY_MAP; 
-
+	// ut_metadata
+    // New comment: Making lt_ext_map an instance object
+    // Old comment (no more): We could do this in a more automated way in future, but hardcoded is simple and quick,
+    // so we'll do that instead. :)
+    // static Map lt_ext_map = UTPeerExchange.ENABLED ? Collections.singletonMap("ut_pex", new Integer(1) ) : Collections.EMPTY_MAP;
+    private Map lt_ext_map = null;
+    
+    private Map buildExtensionMap() {
+        Map map = new HashMap();
+        if (UTPeerExchange.ENABLED) {
+            map.put("ut_pex", new Integer(1) ); // exactly like the original code
+        }
+        
+        if (UTMetadata.ENABLED) { // at least to receive the data
+            map.put(LTMessage.ID_UT_METADATA, new Integer(LTMessage.SUBID_UT_METADATA));
+            // not happy with this hack since it's not exactly well designed from the beginning
+            if ((diskManager.getTorrent() instanceof TOTorrentImpl)) {
+                torrent_metadata_size = ((TOTorrentImpl) diskManager.getTorrent()).getInfoBytes().length;
+            }
+        }
+        return map;
+    }
+    
 	private void sendLTHandshake() {
 		String client_name = Constants.AZUREUS_NAME + " " + Constants.AZUREUS_VERSION;
 		int localTcpPort = TCPNetworkManager.getSingleton().getTCPListeningPortNumber();
@@ -1061,9 +1074,8 @@ implements PEPeerTransport
 		boolean require_crypto = NetworkManager.getCryptoRequired( manager.getAdapter().getCryptoLevel());
 		
 		Map data_dict = new HashMap();
-		lt_ext_map = new HashMap();
-		lt_ext_map.put("ut_pex", new Integer(1) );
-		lt_ext_map.put("ut_metadata", new Integer(3) );
+		// ut_metadata
+        if (lt_ext_map == null) lt_ext_map = buildExtensionMap();
 		data_dict.put("m", lt_ext_map);
 		data_dict.put("v", client_name);
 		data_dict.put("p", new Integer(localTcpPort));
@@ -1075,6 +1087,10 @@ implements PEPeerTransport
 		LTHandshake lt_handshake = new LTHandshake(
 				data_dict, other_peer_bt_lt_ext_version
 		);
+		
+		// ut_metadata
+        data_dict.put("metadata_size", torrent_metadata_size); // what happens when metadata_size is zero?
+        
 		connection.getOutgoingMessageQueue().addMessage(lt_handshake, false);
 	}
 
@@ -1704,10 +1720,10 @@ implements PEPeerTransport
 	 * @return true if the peer is interested in what we're offering
 	 */
 	public boolean isInterested() {  return other_peer_interested_in_me;  }
-	public boolean isSeed() {  return seeding;  }
+	public boolean isSeed() {  return diskManager.getTorrent() instanceof TOTorrentMetadata ? false : seeding;  } // ut_metadata
 	public boolean isRelativeSeed() { return (relativeSeeding & RELATIVE_SEEDING_UPLOAD_ONLY_SEED) != 0; }
 	
-	public void
+	private void
 	setSeed(
 			boolean	s )
 	{
@@ -2455,9 +2471,7 @@ implements PEPeerTransport
 		
 	}
   
-  public boolean supportsUTMETADATA() {
-      return ut_metadata_enabled;
-  }
+  
   protected void decodeLTHandshake(LTHandshake handshake) {
 	  String lt_handshake_name = handshake.getClientName();
 	  if (lt_handshake_name != null) {
@@ -2497,14 +2511,19 @@ implements PEPeerTransport
 	  this.ut_pex_enabled = UTPeerExchange.ENABLED && encoder.supportsUTPEX();
 	  
 	  // ut_metadata
-	  this.ut_metadata_enabled = encoder.supportsUTMETADATA();
-	  if (this.ut_metadata_enabled) {
-	      try {
-	          this.metadata_size = (Long) handshake.getDataMap().get("metadata_size");
-	      } catch (Throwable e) {
-	          this.metadata_size = 0; // no error change here, very delicate place
-	      }
-	  }
+      this.ut_metadata_enabled = UTMetadata.ENABLED && encoder.supportsUTMETADATA();
+      if (this.ut_metadata_enabled) {
+          try {
+              this.ut_metadata_metadata_size = ((Long) handshake.getDataMap().get("metadata_size")).intValue();
+              if (this.ut_metadata_metadata_size <= 0) { // validate special condition
+                  this.ut_metadata_enabled = false;
+                  this.ut_metadata_metadata_size = 0;
+              }
+          } catch (Throwable e) { // very delicate place
+              this.ut_metadata_enabled = false;
+              this.ut_metadata_metadata_size = 0;
+          }
+      }
 	  
 	  /**
 	   * Grr... this is one thing which I'm sure I had figured out much better than it is here...
@@ -2521,6 +2540,9 @@ implements PEPeerTransport
 	  this.doPostHandshakeProcessing();
 	  
 	  handshake.destroy();
+	  
+	  // ut_metadata
+	  changePeerState(READY_TO_ASK_FOR_METADATA);
   }
   
   protected void decodeAZHandshake(AZHandshake handshake) {
@@ -2907,16 +2929,17 @@ implements PEPeerTransport
 
 
 	protected void decodeHave( BTHave have ) {
-	    if (nbPieces == 0) {
-	        // special condition
-	        //return;
-	    }
-		final int pieceNumber =have.getPieceNumber();
-		have.destroy();
+        final int pieceNumber =have.getPieceNumber();
+        have.destroy();
 
 		if ((pieceNumber >=nbPieces) ||(pieceNumber <0)) {
-			//closeConnectionInternally("invalid pieceNumber: " +pieceNumber);
-			return;
+		    // ut_metadata
+            if (diskManager.getTorrent() instanceof TOTorrentMetadata) {
+                // special condition due to ut_metadata messages
+            } else {
+                closeConnectionInternally("invalid pieceNumber: " +pieceNumber);
+            }
+            return;
 		}
 
 		if (closing)
@@ -3656,7 +3679,6 @@ implements PEPeerTransport
 					if (Logger.isEnabled())
 						Logger.log(new LogEvent(PEPeerTransportProtocol.this, LogIDs.NET,
 								"Received [" + message.getDescription() + "] message"));
-					//System.out.println("Received [" + message.getDescription() + "] message");
 					final long now =SystemTime.getCurrentTime();
 					last_message_received_time =now;
 					if( message.getType() == Message.TYPE_DATA_PAYLOAD ) {
@@ -3699,7 +3721,6 @@ implements PEPeerTransport
 
 					if (message_id.equals(LTMessage.ID_LT_HANDSHAKE)) {
 						decodeLTHandshake((LTHandshake)message);
-						changePeerState(TRANSFERING2);
 						return true;
 					}
 
@@ -3719,8 +3740,6 @@ implements PEPeerTransport
 					if( message_id.equals( BTMessage.ID_BT_UNCHOKE ) ) {
 						decodeUnchoke( (BTUnchoke)message );
 						connection.enableEnhancedMessageProcessing( true, manager.getPartitionID() );  //make sure we use a fast handler for the resulting download
-						
-						
 						return true;
 					}
 
@@ -3789,8 +3808,9 @@ implements PEPeerTransport
 						return true;
 					}
 					
+					// ut_metadata
 					if (message_id.equals(LTMessage.ID_UT_METADATA)) {
-					    decodeUTMetadata((UTMetadataRequest) message);
+					    decodeMetadata((UTMetadata) message);
                         return true;
                     }
 
@@ -3818,7 +3838,6 @@ implements PEPeerTransport
 						decodeAZStatsReply((AZStatReply)message );
 						return true;
 					}
-					System.out.println("No know message id: " + message_id);
 					return false;
 				}
 
@@ -3899,94 +3918,86 @@ implements PEPeerTransport
 
 		connection.startMessageProcessing();
 	}
-	
-	private int metadataLengthReceived = 0;
-	private Map<Integer, byte[]> metadataPieces = new HashMap<Integer, byte[]>();
 
-	protected void decodeUTMetadata(UTMetadataRequest message) {
-	    System.out.println("Recevied: " + message.getDescription());
-        if (message.getMessageType() == 0) {
-            connection.getOutgoingMessageQueue().addMessage( new UTMetadataRequest(2, message.getPiece(), 0, null, (byte)1), false);
-        } else if (message.getMessageType() == 1) {
-            metadataLengthReceived += message.getMetadata().length;
-            metadataPieces.put(message.getPiece(), message.getMetadata());
-            if (metadataLengthReceived < metadata_size) {
-                sendMetadataRequest(message.getPiece() + 1, utmTorrent);
+	// ut_metadata
+	protected void decodeMetadata(UTMetadata metadata) {
+	    if (metadata.getMessageType() == UTMetadata.REQUEST_MESSAGE_TYPE_ID) {
+            if (diskManager.getTorrent() instanceof TOTorrentImpl) {
+                TOTorrentImpl t = (TOTorrentImpl) diskManager.getTorrent();
+                int piece = metadata.getPiece();
+                int pieceMaxSize = 16384; // 16KiB
+                int offset = piece * pieceMaxSize;
+                if (offset < t.getInfoBytes().length) {
+                    byte[] bytes = new byte[Math.min(pieceMaxSize, t.getInfoBytes().length - offset)]; 
+                    System.arraycopy(t.getInfoBytes(), offset, bytes, 0, bytes.length);
+                    UTMetadata data = new UTMetadata(UTMetadata.DATA_MESSAGE_TYPE_ID, piece, torrent_metadata_size, bytes, (byte)1);
+                    connection.getOutgoingMessageQueue().addMessage(data, false);
+                } else {
+                    connection.getOutgoingMessageQueue().addMessage(new UTMetadata(UTMetadata.REJECT_MESSAGE_TYPE_ID, metadata.getPiece(), 0, null, (byte)1), false);
+                }
             } else {
-                buildTorrent(metadataPieces, "/Users/aldenml/Downloads/metadata_temp.torrent");
+                connection.getOutgoingMessageQueue().addMessage(new UTMetadata(UTMetadata.REJECT_MESSAGE_TYPE_ID, metadata.getPiece(), 0, null, (byte)1), false);
             }
-        } else if (message.getMessageType() == 2) {
-            System.out.println("Client refuse");
+        } else if (metadata.getMessageType() == UTMetadata.DATA_MESSAGE_TYPE_ID) {
+            ut_metadata_bytes_received += metadata.getMetadata().length;
+            ut_metadata_bytes_pieces.put(metadata.getPiece(), metadata.getMetadata());
+            
+            if (ut_metadata_bytes_received < ut_metadata_metadata_size &&
+                ut_metadata_metadata_size == metadata.getTotalSize()) {
+                sendMetadataRequest(metadata.getPiece() + 1);
+            } else {
+                buildTorrent();
+            }
+        } else if (metadata.getMessageType() == UTMetadata.REJECT_MESSAGE_TYPE_ID) {
+            if (Logger.isEnabled()) {
+                Logger.log(new LogEvent(this, LOGID, "decodeMetadata(): metadata request rejected for piece #" + metadata.getPiece()));
+            }
         } else {
-            System.out.println("Buggy client");
+            if (Logger.isEnabled()) {
+                Logger.log(new LogEvent(this, LOGID, "decodeMetadata(): metadata message type not supported msg_type=" + metadata.getMessageType()));
+            }
         }
-        message.destroy();
+        
+        metadata.destroy();
     }
 
-    private void buildTorrent(Map<Integer, byte[]> metadataPieces2, String f) {
-        
-        
+    private void buildTorrent() {
         try {
-        Integer[] keys = metadataPieces2.keySet().toArray(new Integer[0]);
-        Arrays.sort(keys);
-        
-        ByteArrayOutputStream of = new ByteArrayOutputStream();
-        for (Integer p : keys) {
-            byte[] pieceMetadata = metadataPieces2.get(p);
-            of.write(pieceMetadata);
-        }
-        
-        of.close();
-        
-        DirectByteBuffer b = new DirectByteBuffer(ByteBuffer.wrap(of.toByteArray()));
-        Map<?, ?> map = MessagingUtil.convertBencodedByteStreamToPayload(b, 2, "info");
-
-        
-        FileOutputStream fos = new FileOutputStream(f);
-        Map t = new HashMap();
-        t.put("info", map);
-        t.put("announce", utmTorrent.getAnnounceURL().toString().getBytes( Constants.DEFAULT_ENCODING ));
-        
-        TOTorrentAnnounceURLSet[] sets = utmTorrent.getAnnounceURLGroup().getAnnounceURLSets();
-        
-        if (sets.length > 0 ){
-            
-            List    announce_list = new ArrayList();
-            
-            for (int i=0;i<sets.length;i++){
-                
-                TOTorrentAnnounceURLSet set = sets[i];
-                
-                URL[]   urls = set.getAnnounceURLs();
-                
-                if ( urls.length == 0 ){
-                    
-                    continue;
+            if (!(diskManager.getTorrent() instanceof TOTorrentMetadata)) {
+                if (Logger.isEnabled()) {
+                    Logger.log(new LogEvent(this, LOGID, "buildTorrent(): something wrong with the logic"));
                 }
-                
-                List sub_list = new ArrayList();
-                
-                announce_list.add( sub_list );
-                
-                for (int j=0;j<urls.length;j++){
-                    
-                    sub_list.add(  urls[j].toString().getBytes( Constants.DEFAULT_ENCODING )); 
-                }
+                return;
             }
             
-            if ( announce_list.size() > 0 ){
-                
-                t.put( "announce-list", announce_list );
+            TOTorrentMetadata torrent = (TOTorrentMetadata) diskManager.getTorrent();
+            torrent.setMetadataPieces(ut_metadata_bytes_pieces);
+            
+            // verify info hash
+            if (!torrent.validHash()) {
+                if (Logger.isEnabled()) {
+                    Logger.log(new LogEvent(this, LOGID, "buildTorrent(): wrong info-hash"));
+                }
+                return;
+            }
+            
+            torrent.save();
+            
+        } catch (Throwable e) {
+            if (Logger.isEnabled()) {
+                Logger.log(new LogEvent(this, LOGID, "buildTorrent()", e));
             }
         }
-        DirectByteBuffer tb = MessagingUtil.convertPayloadToBencodedByteStream(t, DirectByteBuffer.AL_MSG_UT_METADATA);
-        byte[] raw = new byte[tb.remaining(DirectByteBuffer.SS_MSG)];
-        tb.get(DirectByteBuffer.SS_MSG, raw);
-        fos.write(raw);
-        fos.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+    }
+    
+    public void sendMetadataRequest(int piece) {
+        if (supportsUTMETADATA()) {
+            connection.getOutgoingMessageQueue().addMessage( new UTMetadata(0, piece, 0, null, (byte)1), false);
         }
+    }
+    
+    public boolean supportsUTMETADATA() {
+        return ut_metadata_enabled;
     }
 
     public void
@@ -4225,15 +4236,7 @@ implements PEPeerTransport
 			}
 		}
 	}
-	
-	private TOTorrent utmTorrent;
 
-	public void sendMetadataRequest(int piece, TOTorrent torrent) {
-	    this.utmTorrent = torrent;
-	    System.out.println("Sending metadata request for piece: " + piece);
-	    //connection.getOutgoingMessageQueue().setEncoder(new LTMessageEncoder(this));
-	    connection.getOutgoingMessageQueue().addMessage( new UTMetadataRequest(0, piece, 0, null, (byte)1), false);
-	}
 
 
 	protected void decodePeerExchange( AZStylePeerExchange exchange ) {

@@ -51,7 +51,6 @@ public class LTMessageEncoder implements MessageStreamEncoder {
 	}
 
 	public RawMessage[] encodeMessage(Message message) {
-	    //System.out.println("Sending [" + message.getDescription() + "]");
 		if (!(message instanceof LTMessage)) {
 			return new RawMessage[] {BTMessageFactory.createBTRawMessage(message)};
 		}
@@ -135,6 +134,6 @@ public class LTMessageEncoder implements MessageStreamEncoder {
 	// ut_metadata
 	public boolean supportsUTMETADATA() {
 	    if (this.extension_map == null) {return false;}
-	    return this.extension_map.containsKey(LTMessage.ID_UT_METADATA);
+	    return this.extension_map.containsKey(LTMessage.ID_UT_METADATA) && ((Byte) this.extension_map.get(LTMessage.ID_UT_METADATA) > 0);
 	}
 }

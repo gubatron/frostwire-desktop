@@ -45,7 +45,7 @@ public interface LTMessage extends Message {
 	public static final int SUBID_DISABLED_EXT       = 2;
 	
 	// ut_metadata
-	public static final String ID_UT_METADATA             = "ut_metadata";
-    public static final byte[] ID_UT_METADATA_BYTES       = ID_UT_METADATA.getBytes();
-    public static final int SUBID_UT_METADATA             = 3;
+	public static final String ID_UT_METADATA       = "ut_metadata";
+    public static final byte[] ID_UT_METADATA_BYTES = ID_UT_METADATA.getBytes();
+    public static final int SUBID_UT_METADATA       = 3;
 }

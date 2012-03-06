@@ -74,7 +74,7 @@ DirectByteBuffer
     public static final byte        AL_MSG_BT_REJECT_REQUEST    = 31;
     public static final byte        AL_MSG_BT_SUGGEST_PIECE   	= 32;
     public static final byte        AL_MSG_BT_ALLOWED_FAST    	= 33;
-    public static final byte        AL_MSG_UT_METADATA         = 34;
+    public static final byte        AL_MSG_UT_METADATA         = 34; // ut_metadata
     
 	public static final String[] AL_DESCS =
 	{ "None", "Ext", "Other", "PeerRead", "PeerLen",
@@ -100,7 +100,8 @@ DirectByteBuffer
     "BTDHTPort",
     "BTRejectRequest",
     "BTSuggestPiece",
-    "BTAllowedFast", "UTMETADATA" };
+    "BTAllowedFast",
+    "UTMETADATA" }; // ut_metadata
 	 
     
     

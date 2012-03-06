@@ -56,8 +56,11 @@ public class LTMessageDecoder extends BTMessageDecoder {
 				return MessageManager.getSingleton().createMessage(LTMessage.ID_LT_HANDSHAKE_BYTES, ref_buff, (byte)1);
 			case 1:
 				return MessageManager.getSingleton().createMessage(LTMessage.ID_UT_PEX_BYTES, ref_buff, (byte)1);
-			case 3:
-			    return MessageManager.getSingleton().createMessage(LTMessage.ID_UT_METADATA_BYTES, ref_buff, (byte)1);
+				// ut_metadata
+            case LTMessage.SUBID_UT_METADATA: // 3
+                // this case must be handled by the default, using the addExtensionHandler method
+                // but there is no a single example of how or when to use it
+                return MessageManager.getSingleton().createMessage(LTMessage.ID_UT_METADATA_BYTES, ref_buff, (byte)1);
 			default: {
 			  byte[]	message_id;
 			  synchronized( entension_handlers ){

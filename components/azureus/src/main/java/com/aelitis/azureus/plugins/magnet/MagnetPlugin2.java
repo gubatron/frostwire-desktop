@@ -37,6 +37,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.gudy.azureus2.core3.disk.DiskManager;
 import org.gudy.azureus2.core3.disk.DiskManagerCheckRequest;
 import org.gudy.azureus2.core3.disk.DiskManagerCheckRequestListener;
@@ -77,6 +78,7 @@ import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.torrent.TOTorrentFactory;
 import org.gudy.azureus2.core3.torrent.TOTorrentFile;
 import org.gudy.azureus2.core3.torrent.TOTorrentListener;
+import org.gudy.azureus2.core3.torrent.impl.TOTorrentMetadata;
 import org.gudy.azureus2.core3.tracker.client.TRTrackerAnnouncer;
 import org.gudy.azureus2.core3.tracker.client.TRTrackerAnnouncerDataProvider;
 import org.gudy.azureus2.core3.tracker.client.TRTrackerAnnouncerException;
@@ -1123,1075 +1125,29 @@ MagnetPlugin2
 		listeners.remove( listener );
 	}
 	
-	private static PEPeerManager peerManager;
 	public static void main(String[] args) throws Exception {
 	    AzureusStarter.start();
-	    //test2();
-	    //if (true) return;
-	    
-	    final TOTorrent torrent = new TOTorrent() {
-            
-            List<URL> urls = new ArrayList<URL>();
-            byte[] hash = decodeHex("54dec3e7b1169fad5587d5a9e30fafa92097eab7");
-            
-            @Override
-            public void setPrivate(boolean _private) throws TOTorrentException {
-                // TODO Auto-generated method stub
-                
-            }
-            
-            @Override
-            public void setPieces(byte[][] pieces) throws TOTorrentException {
-                // TODO Auto-generated method stub
-                
-            }
-            
-            @Override
-            public void setHashOverride(byte[] hash) throws TOTorrentException {
-                // TODO Auto-generated method stub
-                
-            }
-            
-            @Override
-            public void setCreationDate(long date) {
-                // TODO Auto-generated method stub
-                
-            }
-            
-            @Override
-            public void setCreatedBy(byte[] cb) {
-                // TODO Auto-generated method stub
-                
-            }
-            
-            @Override
-            public void setComment(String comment) {
-                // TODO Auto-generated method stub
-                
-            }
-            
-            @Override
-            public boolean setAnnounceURL(URL url) {
-                urls.add(url);
-                return true;
-            }
-            
-            @Override
-            public void setAdditionalStringProperty(String name, String value) {
-                // TODO Auto-generated method stub
-                
-            }
-            
-            @Override
-            public void setAdditionalProperty(String name, Object value) {
-                // TODO Auto-generated method stub
-                
-            }
-            
-            @Override
-            public void setAdditionalMapProperty(String name, Map value) {
-                // TODO Auto-generated method stub
-                
-            }
-            
-            @Override
-            public void setAdditionalLongProperty(String name, Long value) {
-                // TODO Auto-generated method stub
-                
-            }
-            
-            @Override
-            public void setAdditionalListProperty(String name, List value) {
-                // TODO Auto-generated method stub
-                
-            }
-            
-            @Override
-            public void setAdditionalByteArrayProperty(String name, byte[] value) {
-                // TODO Auto-generated method stub
-                
-            }
-            
-            @Override
-            public void serialiseToXMLFile(File file) throws TOTorrentException {
-                // TODO Auto-generated method stub
-                
-            }
-            
-            @Override
-            public Map serialiseToMap() throws TOTorrentException {
-                // TODO Auto-generated method stub
-                return null;
-            }
-            
-            @Override
-            public void serialiseToBEncodedFile(File file) throws TOTorrentException {
-                // TODO Auto-generated method stub
-                
-            }
-            
-            @Override
-            public void removeListener(TOTorrentListener l) {
-                // TODO Auto-generated method stub
-                
-            }
-            
-            @Override
-            public void removeAdditionalProperty(String name) {
-                // TODO Auto-generated method stub
-                
-            }
-            
-            @Override
-            public void removeAdditionalProperties() {
-                // TODO Auto-generated method stub
-                
-            }
-            
-            @Override
-            public void print() {
-                // TODO Auto-generated method stub
-                
-            }
-            
-            @Override
-            public boolean isSimpleTorrent() {
-                return false;
-            }
-            
-            @Override
-            public boolean isCreated() {
-                // TODO Auto-generated method stub
-                return false;
-            }
-            
-            @Override
-            public boolean hasSameHashAs(TOTorrent other) {
-                // TODO Auto-generated method stub
-                return false;
-            }
-            
-            @Override
-            public String getUTF8Name() {
-                return "Probando";
-            }
-            
-            @Override
-            public long getSize() {
-                // TODO Auto-generated method stub
-                return 0;
-            }
-            
-            @Override
-            public boolean getPrivate() {
-                // TODO Auto-generated method stub
-                return false;
-            }
-            
-            @Override
-            public byte[][] getPieces() throws TOTorrentException {
-                // TODO Auto-generated method stub
-                return null;
-            }
-            
-            @Override
-            public long getPieceLength() {
-                // TODO Auto-generated method stub
-                return 0;
-            }
-            
-            @Override
-            public int getNumberOfPieces() {
-                // TODO Auto-generated method stub
-                return 0;
-            }
-            
-            @Override
-            public byte[] getName() {
-                return getUTF8Name().getBytes();
-            }
-            
-            @Override
-            public AEMonitor getMonitor() {
-                // TODO Auto-generated method stub
-                return null;
-            }
-            
-            @Override
-            public HashWrapper getHashWrapper() throws TOTorrentException {
-                return new HashWrapper(hash);
-            }
-            
-            @Override
-            public byte[] getHash() throws TOTorrentException {
-                // TODO Auto-generated method stub
-                return hash;
-            }
-            
-            @Override
-            public TOTorrentFile[] getFiles() {
-                // TODO Auto-generated method stub
-                return null;
-            }
-            
-            @Override
-            public long getCreationDate() {
-                // TODO Auto-generated method stub
-                return 0;
-            }
-            
-            @Override
-            public byte[] getCreatedBy() {
-                // TODO Auto-generated method stub
-                return null;
-            }
-            
-            @Override
-            public byte[] getComment() {
-                // TODO Auto-generated method stub
-                return null;
-            }
-            
-            @Override
-            public TOTorrentAnnounceURLGroup getAnnounceURLGroup() {
-                return new TOTorrentAnnounceURLGroup() {
-                    
-                    List<TOTorrentAnnounceURLSet> sets= new ArrayList<TOTorrentAnnounceURLSet>();
+	    URL[] trackers = new URL[] { new URL("udp://tracker.openbittorrent.com:80") };//, new URL("udp://tracker.publicbt.com:80"), new URL("udp://tracker.ccc.de:80") };
 
-                    @Override
-                    public TOTorrentAnnounceURLSet[] getAnnounceURLSets() {
-                        // TODO Auto-generated method stub
-                        return sets.toArray(new TOTorrentAnnounceURLSet[0]);
-                    }
-
-                    @Override
-                    public void setAnnounceURLSets(TOTorrentAnnounceURLSet[] sets) {
-                        
-                    }
-
-                    @Override
-                    public TOTorrentAnnounceURLSet createAnnounceURLSet(final URL[] urls) {
-                        TOTorrentAnnounceURLSet s = new TOTorrentAnnounceURLSet() {
-
-                            @Override
-                            public URL[] getAnnounceURLs() {
-                                try {
-                                    return new URL[]{new URL("udp://tracker.openbittorrent.com:80")};
-                                } catch (MalformedURLException e) {
-                                    // TODO Auto-generated catch block
-                                    e.printStackTrace();
-                                }
-                                return null;
-                            }
-
-                            @Override
-                            public void setAnnounceURLs(URL[] urls) {
-                                // TODO Auto-generated method stub
-                                
-                            }
-                            
-                        };
-                        sets.add(s);
-                        return s;
-                    }
-                    
-                };
-            }
-            
-            @Override
-            public URL getAnnounceURL() {
-                try {
-                    return new URL("udp://tracker.openbittorrent.com:80");
-                } catch (MalformedURLException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                return null;
-            }
-            
-            @Override
-            public String getAdditionalStringProperty(String name) {
-                // TODO Auto-generated method stub
-                return null;
-            }
-            
-            @Override
-            public Object getAdditionalProperty(String name) {
-                // TODO Auto-generated method stub
-                return null;
-            }
-            
-            @Override
-            public Map getAdditionalMapProperty(String name) {
-                // TODO Auto-generated method stub
-                return null;
-            }
-            
-            @Override
-            public Long getAdditionalLongProperty(String name) {
-                // TODO Auto-generated method stub
-                return null;
-            }
-            
-            @Override
-            public List getAdditionalListProperty(String name) {
-                // TODO Auto-generated method stub
-                return null;
-            }
-            
-            @Override
-            public byte[] getAdditionalByteArrayProperty(String name) {
-                // TODO Auto-generated method stub
-                return null;
-            }
-            
-            @Override
-            public void addListener(TOTorrentListener l) {
-                // TODO Auto-generated method stub
-                
-            }
+        final TOTorrentMetadata torrent = new TOTorrentMetadata(ByteFormatter.decodeString("ebae8cd0dda88a82d4e495eb49f78942b3463446"), "4502608c5d83fbe179d11deee851f727d267bd47", trackers) {
+          @Override
+        public void notifySaved() {
+            System.out.println("Torrent saved to: " + getSaveLocation());
+        }  
         };
+
         
 	     TRTrackerAnnouncer                 tracker_client;
-	     TRTrackerAnnouncerListener      tracker_client_listener = 
-	            new TRTrackerAnnouncerListener() 
-	            {
-	                public void 
-	                receivedTrackerResponse(
-	                    TRTrackerAnnouncerResponse  response) 
-	                {
-	                    peerManager.processTrackerResponse(response);
-	                }
-
-	                public void 
-	                urlChanged(
-	                    final TRTrackerAnnouncer    announcer,  
-	                    final URL                   old_url,
-	                    URL                         new_url,
-	                    boolean                     explicit ) 
-	                {
-	                }
-
-	                public void 
-	                urlRefresh() 
-	                {
-	                }
-	            };
+	     MetadataTrackerAnnouncerListener      tracker_client_listener = new MetadataTrackerAnnouncerListener() 
+	            ;
 	            
-	            
-                
-                ClientIDManagerImpl.getSingleton().setGenerator(new ClientIDGenerator() {
-                    
-                    @Override
-                    public byte[] generatePeerID(Torrent torrent, boolean for_tracker) throws ClientIDException {
-                        // TODO Auto-generated method stub
-                        return PeerUtils.createPeerID();
-                    }
-                    
-                    @Override
-                    public void generateHTTPProperties(Properties properties) throws ClientIDException {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public String[] filterHTTP(String[] lines_in) throws ClientIDException {
-                        // TODO Auto-generated method stub
-                        return null;
-                    }
-                }, false);
 	            
 	            tracker_client = TRTrackerAnnouncerFactory.create( torrent, null);
 	            tracker_client.addListener( tracker_client_listener );
-	            tracker_client.setAnnounceDataProvider(new TRTrackerAnnouncerDataProvider() {
-	                
-	                @Override
-	                public void setPeerSources(String[] allowed_sources) {
-	                    
-	                }
-	                
-	                @Override
-	                public boolean isPeerSourceEnabled(String peer_source) {
-	                    return true;
-	                }
-	                
-	                @Override
-	                public int getUploadSpeedKBSec(boolean estimate) {
-	                    return 0;
-	                }
-	                
-	                @Override
-	                public long getTotalSent() {
-	                    return 0;
-	                }
-	                
-	                @Override
-	                public long getTotalReceived() {
-	                    return 0;
-	                }
-	                
-	                @Override
-	                public long getRemaining() {
-	                    return 0;
-	                }
-	                
-	                @Override
-	                public int getPendingConnectionCount() {
-	                    return 0;
-	                }
-	                
-	                @Override
-	                public String getName() {
-	                    return "-";
-	                }
-	                
-	                @Override
-	                public int getMaxNewConnectionsAllowed() {
-	                    return 30;
-	                }
-	                
-	                @Override
-	                public long getFailedHashCheck() {
-	                    return 0;
-	                }
-	                
-	                @Override
-	                public String getExtensions() {
-	                    return null;
-	                }
-	                
-	                @Override
-	                public int getCryptoLevel() {
-	                    return 0;
-	                }
-	                
-	                @Override
-	                public int getConnectedConnectionCount() {
-	                    return 0;
-	                }
-	            });
+	            tracker_client.setAnnounceDataProvider(new MetadataTrackerAnnouncerDataProvider());
 	            
-	           peerManager = PEPeerManagerFactory.create( tracker_client.getPeerId(), new PEPeerManagerAdapter() {
-                    
-                    @Override
-                    public void statsRequest(PEPeer originator, Map request, Map reply) {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public void setTrackerRefreshDelayOverrides(int percent) {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public void setStateSeeding(boolean never_downloaded) {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public void setStateFinishing() {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public void restartDownload(boolean forceRecheck) {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public void removePiece(PEPiece piece) {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public void removePeer(PEPeer peer) {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public void protocolBytesSent(PEPeer peer, int bytes) {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public void protocolBytesReceived(PEPeer peer, int bytes) {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public void priorityConnectionChanged(boolean added) {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public void permittedSendBytesUsed(int bytes) {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public void permittedReceiveBytesUsed(int bytes) {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public boolean isPeriodicRescanEnabled() {
-                        // TODO Auto-generated method stub
-                        return false;
-                    }
-                    
-                    @Override
-                    public boolean isPeerSourceEnabled(String peer_source) {
-                        // TODO Auto-generated method stub
-                        return false;
-                    }
-                    
-                    @Override
-                    public boolean isPeerExchangeEnabled() {
-                        // TODO Auto-generated method stub
-                        return true;
-                    }
-                    
-                    @Override
-                    public boolean isNATHealthy() {
-                        // TODO Auto-generated method stub
-                        return false;
-                    }
-                    
-                    @Override
-                    public boolean isExtendedMessagingEnabled() {
-                        // TODO Auto-generated method stub
-                        return true;
-                    }
-                    
-                    @Override
-                    public boolean hasPriorityConnection() {
-                        // TODO Auto-generated method stub
-                        return false;
-                    }
-                    
-                    @Override
-                    public int getUploadRateLimitBytesPerSecond() {
-                        // TODO Auto-generated method stub
-                        return 0;
-                    }
-                    
-                    @Override
-                    public TRTrackerScraperResponse getTrackerScrapeResponse() {
-                        // TODO Auto-generated method stub
-                        return null;
-                    }
-                    
-                    @Override
-                    public String getTrackerClientExtensions() {
-                        // TODO Auto-generated method stub
-                        return null;
-                    }
-                    
-                    @Override
-                    public byte[][] getSecrets(int crypto_level) {
-                        // TODO Auto-generated method stub
-                        return null;
-                    }
-                    
-                    @Override
-                    public long getRandomSeed() {
-                        // TODO Auto-generated method stub
-                        return 0;
-                    }
-                    
-                    @Override
-                    public int getPosition() {
-                        // TODO Auto-generated method stub
-                        return 0;
-                    }
-                    
-                    @Override
-                    public int getPermittedBytesToSend() {
-                        // TODO Auto-generated method stub
-                        return 0;
-                    }
-                    
-                    @Override
-                    public int getPermittedBytesToReceive() {
-                        // TODO Auto-generated method stub
-                        return 0;
-                    }
-                    
-                    @Override
-                    public PeerManagerRegistration getPeerManagerRegistration() {
-                        // TODO Auto-generated method stub
-                        return new PeerManagerRegistration() {
-                            
-                            @Override
-                            public void unregister() {
-                                // TODO Auto-generated method stub
-                                
-                            }
-                            
-                            @Override
-                            public void removeLink(String link) {
-                                // TODO Auto-generated method stub
-                                
-                            }
-                            
-                            @Override
-                            public TOTorrentFile getLink(String link) {
-                                // TODO Auto-generated method stub
-                                return null;
-                            }
-                            
-                            @Override
-                            public String getDescription() {
-                                // TODO Auto-generated method stub
-                                return null;
-                            }
-                            
-                            @Override
-                            public void deactivate() {
-                                // TODO Auto-generated method stub
-                                
-                            }
-                            
-                            @Override
-                            public void addLink(String link, TOTorrentFile target) throws Exception {
-                                // TODO Auto-generated method stub
-                                
-                            }
-                            
-                            @Override
-                            public void activate(PEPeerControl peer_control) {
-                                // TODO Auto-generated method stub
-                                
-                            }
-                        };
-                    }
-                    
-                    @Override
-                    public int getMaxUploads() {
-                        return Integer.MAX_VALUE;
-                    }
-                    
-                    @Override
-                    public int getMaxSeedConnections() {
-                        // TODO Auto-generated method stub
-                        return 0;
-                    }
-                    
-                    @Override
-                    public int getMaxConnections() {
-                        // TODO Auto-generated method stub
-                        return 0;
-                    }
-                    
-                    @Override
-                    public LogRelation getLogRelation() {
-                        // TODO Auto-generated method stub
-                        return null;
-                    }
-                    
-                    @Override
-                    public int getDownloadRateLimitBytesPerSecond() {
-                        // TODO Auto-generated method stub
-                        return 0;
-                    }
-                    
-                    @Override
-                    public String getDisplayName() {
-                        // TODO Auto-generated method stub
-                        return null;
-                    }
-                    
-                    @Override
-                    public int getCryptoLevel() {
-                        // TODO Auto-generated method stub
-                        return 0;
-                    }
-                    
-                    @Override
-                    public void enqueueReadRequest(PEPeer peer, DiskManagerReadRequest request, DiskManagerReadRequestListener listener) {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public void discarded(PEPeer peer, int bytes) {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public void dataBytesSent(PEPeer peer, int bytes) {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public void dataBytesReceived(PEPeer peer, int bytes) {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public void addPiece(PEPiece piece) {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public void addPeer(PEPeer peer) {
-                        peer.addListener(new PEPeerListener() {
-                            
-                            @Override
-                            public void stateChanged(PEPeer peer, int new_state) {
-                                ((PEPeerTransportProtocol)peer).setSeed(false);
-                                if (new_state == PEPeer.TRANSFERING2) {
-                                    //System.out.println("Transfering2 with " + peer.getIp() + ", client: " + peer.getClient());
-                                    tryMetadata(torrent, (PEPeerTransportProtocol)peer);
-                                }
-                            }
-                            
-                            
-
-                            @Override
-                            public void sentBadChunk(PEPeer peer, int piece_num, int total_bad_chunks) {
-                                // TODO Auto-generated method stub
-                                
-                            }
-                            
-                            @Override
-                            public void removeAvailability(PEPeer peer, BitFlags peerHavePieces) {
-                                // TODO Auto-generated method stub
-                                
-                            }
-                            
-                            @Override
-                            public void addAvailability(PEPeer peer, BitFlags peerHavePieces) {
-                                // TODO Auto-generated method stub
-                                
-                            }
-                        });
-                    }
-                    
-                    @Override
-                    public void addHTTPSeed(String address, int port) {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                }, new DiskManager() {
-                    
-                    @Override
-                    public boolean stop(boolean closing) {
-                        // TODO Auto-generated method stub
-                        return false;
-                    }
-                    
-                    @Override
-                    public void start() {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public void setPieceCheckingEnabled(boolean enabled) {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public void saveState() {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public void saveResumeData(boolean interim_save) throws Exception {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public void removeListener(DiskManagerListener l) {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public DirectByteBuffer readBlock(int pieceNumber, int offset, int length) {
-                        // TODO Auto-generated method stub
-                        return null;
-                    }
-                    
-                    @Override
-                    public void moveDataFiles(File new_parent_dir, String dl_name) {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public boolean isStopped() {
-                        // TODO Auto-generated method stub
-                        return false;
-                    }
-                    
-                    @Override
-                    public boolean isInteresting(int pieceNumber) {
-                        // TODO Auto-generated method stub
-                        return true;
-                    }
-                    
-                    @Override
-                    public boolean isDone(int pieceNumber) {
-                        // TODO Auto-generated method stub
-                        return false;
-                    }
-                    
-                    @Override
-                    public boolean hasOutstandingWriteRequestForPiece(int piece_number) {
-                        // TODO Auto-generated method stub
-                        return false;
-                    }
-                    
-                    @Override
-                    public boolean hasOutstandingReadRequestForPiece(int piece_number) {
-                        // TODO Auto-generated method stub
-                        return false;
-                    }
-                    
-                    @Override
-                    public boolean hasOutstandingCheckRequestForPiece(int piece_number) {
-                        // TODO Auto-generated method stub
-                        return false;
-                    }
-                    
-                    @Override
-                    public boolean hasListener(DiskManagerListener l) {
-                        // TODO Auto-generated method stub
-                        return false;
-                    }
-                    
-                    @Override
-                    public long getTotalLength() {
-                        // TODO Auto-generated method stub
-                        return 0;
-                    }
-                    
-                    @Override
-                    public TOTorrent getTorrent() {
-                        // TODO Auto-generated method stub
-                        return torrent;
-                    }
-                    
-                    @Override
-                    public int getState() {
-                        // TODO Auto-generated method stub
-                        return 0;
-                    }
-                    
-                    @Override
-                    public File getSaveLocation() {
-                        // TODO Auto-generated method stub
-                        return null;
-                    }
-                    
-                    @Override
-                    public long getRemainingExcludingDND() {
-                        // TODO Auto-generated method stub
-                        return 0;
-                    }
-                    
-                    @Override
-                    public long getRemaining() {
-                        // TODO Auto-generated method stub
-                        return 0;
-                    }
-                    
-                    @Override
-                    public long[] getReadStats() {
-                        // TODO Auto-generated method stub
-                        return null;
-                    }
-                    
-                    @Override
-                    public DiskManagerPiece[] getPieces() {
-                        return new DiskManagerPiece[0];
-                    }
-                    
-                    @Override
-                    public DMPieceMap getPieceMap() {
-                        // TODO Auto-generated method stub
-                        return null;
-                    }
-                    
-                    @Override
-                    public DMPieceList getPieceList(int pieceNumber) {
-                        // TODO Auto-generated method stub
-                        return null;
-                    }
-                    
-                    @Override
-                    public int getPieceLength(int piece_number) {
-                        // TODO Auto-generated method stub
-                        return 0;
-                    }
-                    
-                    @Override
-                    public int getPieceLength() {
-                        // TODO Auto-generated method stub
-                        return 0;
-                    }
-                    
-                    @Override
-                    public DiskManagerPiece getPiece(int PieceNumber) {
-                        // TODO Auto-generated method stub
-                        return null;
-                    }
-                    
-                    @Override
-                    public int getPercentDone() {
-                        // TODO Auto-generated method stub
-                        return 0;
-                    }
-                    
-                    @Override
-                    public int getNbPieces() {
-                        // TODO Auto-generated method stub
-                        return 0;
-                    }
-                    
-                    @Override
-                    public DiskManagerFileInfo[] getFiles() {
-                        // TODO Auto-generated method stub
-                        return new DiskManagerFileInfo[0];
-                    }
-                    
-                    @Override
-                    public DiskManagerFileInfoSet getFileSet() {
-                        // TODO Auto-generated method stub
-                        return new DiskManagerFileInfoSetImpl(new DiskManagerFileInfoImpl[0],null );
-                    }
-                    
-                    @Override
-                    public String getErrorMessage() {
-                        // TODO Auto-generated method stub
-                        return null;
-                    }
-                    
-                    @Override
-                    public int getCompleteRecheckStatus() {
-                        // TODO Auto-generated method stub
-                        return 0;
-                    }
-                    
-                    @Override
-                    public int getCacheMode() {
-                        // TODO Auto-generated method stub
-                        return 0;
-                    }
-                    
-                    @Override
-                    public void generateEvidence(IndentWriter writer) {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public boolean filesExist() {
-                        // TODO Auto-generated method stub
-                        return false;
-                    }
-                    
-                    @Override
-                    public void enqueueWriteRequest(DiskManagerWriteRequest request, DiskManagerWriteRequestListener listener) {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public void enqueueReadRequest(DiskManagerReadRequest request, DiskManagerReadRequestListener listener) {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public void enqueueCompleteRecheckRequest(DiskManagerCheckRequest request, DiskManagerCheckRequestListener listener) {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public void enqueueCheckRequest(DiskManagerCheckRequest request, DiskManagerCheckRequestListener listener) {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public void downloadRemoved() {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public void downloadEnded() {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                    
-                    @Override
-                    public DiskManagerWriteRequest createWriteRequest(int pieceNumber, int offset, DirectByteBuffer data, Object user_data) {
-                        // TODO Auto-generated method stub
-                        return null;
-                    }
-                    
-                    @Override
-                    public DiskManagerReadRequest createReadRequest(int pieceNumber, int offset, int length) {
-                        // TODO Auto-generated method stub
-                        return null;
-                    }
-                    
-                    @Override
-                    public DiskManagerCheckRequest createCheckRequest(int pieceNumber, Object user_data) {
-                        // TODO Auto-generated method stub
-                        return null;
-                    }
-                    
-                    @Override
-                    public boolean checkBlockConsistencyForWrite(String originator, int pieceNumber, int offset, DirectByteBuffer data) {
-                        // TODO Auto-generated method stub
-                        return false;
-                    }
-                    
-                    @Override
-                    public boolean checkBlockConsistencyForRead(String originator, boolean peer_request, int pieceNumber, int offset, int length) {
-                        // TODO Auto-generated method stub
-                        return false;
-                    }
-                    
-                    @Override
-                    public boolean checkBlockConsistencyForHint(String originator, int pieceNumber, int offset, int length) {
-                        // TODO Auto-generated method stub
-                        return false;
-                    }
-                    
-                    @Override
-                    public void addListener(DiskManagerListener l) {
-                        // TODO Auto-generated method stub
-                        
-                    }
-                } );
-	            
-	            
+	            PEPeerManager peerManager = PEPeerManagerFactory.create( tracker_client.getPeerId(), new MetadataPeerManagerAdapter() , new MetadataDiskManager(torrent));
+	           tracker_client_listener.setPeerManager(peerManager);
 	           
 	            peerManager.start();
 	            peerManager.setSuperSeedMode(true);
@@ -2220,8 +1176,601 @@ MagnetPlugin2
         
         if (peer.supportsUTMETADATA()) {
             metatada_requested = true;
-            peer.sendMetadataRequest(0, torrent);
+            peer.sendMetadataRequest(0);
         }
         
+    }
+    
+    public static class MetadataDiskManager implements DiskManager {
+        
+        private final TOTorrentMetadata torrent;
+        
+        public MetadataDiskManager(TOTorrentMetadata torrent) {
+            this.torrent = torrent;
+        }
+        
+        @Override
+        public boolean stop(boolean closing) {
+            return false;
+        }
+        
+        @Override
+        public void start() {
+        }
+        
+        @Override
+        public void setPieceCheckingEnabled(boolean enabled) {
+        }
+        
+        @Override
+        public void saveState() {
+        }
+        
+        @Override
+        public void saveResumeData(boolean interim_save) throws Exception {
+        }
+        
+        @Override
+        public void removeListener(DiskManagerListener l) {
+            // TODO Auto-generated method stub
+            
+        }
+        
+        @Override
+        public DirectByteBuffer readBlock(int pieceNumber, int offset, int length) {
+            return null;
+        }
+        
+        @Override
+        public void moveDataFiles(File new_parent_dir, String dl_name) {
+        }
+        
+        @Override
+        public boolean isStopped() {
+            return false;
+        }
+        
+        @Override
+        public boolean isInteresting(int pieceNumber) {
+            return true;
+        }
+        
+        @Override
+        public boolean isDone(int pieceNumber) {
+            return false;
+        }
+        
+        @Override
+        public boolean hasOutstandingWriteRequestForPiece(int piece_number) {
+            return false;
+        }
+        
+        @Override
+        public boolean hasOutstandingReadRequestForPiece(int piece_number) {
+            return false;
+        }
+        
+        @Override
+        public boolean hasOutstandingCheckRequestForPiece(int piece_number) {
+            return false;
+        }
+        
+        @Override
+        public boolean hasListener(DiskManagerListener l) {
+            return false;
+        }
+        
+        @Override
+        public long getTotalLength() {
+            return 0;
+        }
+        
+        @Override
+        public TOTorrent getTorrent() {
+            return torrent;
+        }
+        
+        @Override
+        public int getState() {
+            return 0;
+        }
+        
+        @Override
+        public File getSaveLocation() {
+            return null;
+        }
+        
+        @Override
+        public long getRemainingExcludingDND() {
+            return 0;
+        }
+        
+        @Override
+        public long getRemaining() {
+            return 0;
+        }
+        
+        @Override
+        public long[] getReadStats() {
+            return null;
+        }
+        
+        @Override
+        public DiskManagerPiece[] getPieces() {
+            return new DiskManagerPiece[0];
+        }
+        
+        @Override
+        public DMPieceMap getPieceMap() {
+            return null;
+        }
+        
+        @Override
+        public DMPieceList getPieceList(int pieceNumber) {
+            return null;
+        }
+        
+        @Override
+        public int getPieceLength(int piece_number) {
+            return 0;
+        }
+        
+        @Override
+        public int getPieceLength() {
+            return 0;
+        }
+        
+        @Override
+        public DiskManagerPiece getPiece(int PieceNumber) {
+            return null;
+        }
+        
+        @Override
+        public int getPercentDone() {
+            return 0;
+        }
+        
+        @Override
+        public int getNbPieces() {
+            return 0;
+        }
+        
+        @Override
+        public DiskManagerFileInfo[] getFiles() {
+            return new DiskManagerFileInfo[0];
+        }
+        
+        @Override
+        public DiskManagerFileInfoSet getFileSet() {
+            return new DiskManagerFileInfoSetImpl(new DiskManagerFileInfoImpl[0],null );
+        }
+        
+        @Override
+        public String getErrorMessage() {
+            return null;
+        }
+        
+        @Override
+        public int getCompleteRecheckStatus() {
+            return 0;
+        }
+        
+        @Override
+        public int getCacheMode() {
+            return 0;
+        }
+        
+        @Override
+        public void generateEvidence(IndentWriter writer) {
+        }
+        
+        @Override
+        public boolean filesExist() {
+            return false;
+        }
+        
+        @Override
+        public void enqueueWriteRequest(DiskManagerWriteRequest request, DiskManagerWriteRequestListener listener) {
+        }
+        
+        @Override
+        public void enqueueReadRequest(DiskManagerReadRequest request, DiskManagerReadRequestListener listener) {
+        }
+        
+        @Override
+        public void enqueueCompleteRecheckRequest(DiskManagerCheckRequest request, DiskManagerCheckRequestListener listener) {
+        }
+        
+        @Override
+        public void enqueueCheckRequest(DiskManagerCheckRequest request, DiskManagerCheckRequestListener listener) {
+        }
+        
+        @Override
+        public void downloadRemoved() {
+        }
+        
+        @Override
+        public void downloadEnded() {
+        }
+        
+        @Override
+        public DiskManagerWriteRequest createWriteRequest(int pieceNumber, int offset, DirectByteBuffer data, Object user_data) {
+            return null;
+        }
+        
+        @Override
+        public DiskManagerReadRequest createReadRequest(int pieceNumber, int offset, int length) {
+            return null;
+        }
+        
+        @Override
+        public DiskManagerCheckRequest createCheckRequest(int pieceNumber, Object user_data) {
+            return null;
+        }
+        
+        @Override
+        public boolean checkBlockConsistencyForWrite(String originator, int pieceNumber, int offset, DirectByteBuffer data) {
+            return false;
+        }
+        
+        @Override
+        public boolean checkBlockConsistencyForRead(String originator, boolean peer_request, int pieceNumber, int offset, int length) {
+            return false;
+        }
+        
+        @Override
+        public boolean checkBlockConsistencyForHint(String originator, int pieceNumber, int offset, int length) {
+            return false;
+        }
+        
+        @Override
+        public void addListener(DiskManagerListener l) {
+        }
+    }
+    
+    public static class MetadataPeerManagerAdapter implements PEPeerManagerAdapter {
+        
+        @Override
+        public void statsRequest(PEPeer originator, Map request, Map reply) {            
+        }
+        
+        @Override
+        public void setTrackerRefreshDelayOverrides(int percent) {            
+        }
+        
+        @Override
+        public void setStateSeeding(boolean never_downloaded) {
+        }
+        
+        @Override
+        public void setStateFinishing() {
+        }
+        
+        @Override
+        public void restartDownload(boolean forceRecheck) {
+        }
+        
+        @Override
+        public void removePiece(PEPiece piece) {
+        }
+        
+        @Override
+        public void removePeer(PEPeer peer) {
+        }
+        
+        @Override
+        public void protocolBytesSent(PEPeer peer, int bytes) {
+        }
+        
+        @Override
+        public void protocolBytesReceived(PEPeer peer, int bytes) {
+        }
+        
+        @Override
+        public void priorityConnectionChanged(boolean added) {
+        }
+        
+        @Override
+        public void permittedSendBytesUsed(int bytes) {
+        }
+        
+        @Override
+        public void permittedReceiveBytesUsed(int bytes) {
+        }
+        
+        @Override
+        public boolean isPeriodicRescanEnabled() {
+            return false;
+        }
+        
+        @Override
+        public boolean isPeerSourceEnabled(String peer_source) {
+            return false;
+        }
+        
+        @Override
+        public boolean isPeerExchangeEnabled() {
+           return true;
+        }
+        
+        @Override
+        public boolean isNATHealthy() {
+            return false;
+        }
+        
+        @Override
+        public boolean isExtendedMessagingEnabled() {
+            return true;
+        }
+        
+        @Override
+        public boolean hasPriorityConnection() {
+            return false;
+        }
+        
+        @Override
+        public int getUploadRateLimitBytesPerSecond() {
+            return 0;
+        }
+        
+        @Override
+        public TRTrackerScraperResponse getTrackerScrapeResponse() {
+            return null;
+        }
+        
+        @Override
+        public String getTrackerClientExtensions() {
+            return null;
+        }
+        
+        @Override
+        public byte[][] getSecrets(int crypto_level) {
+            return null;
+        }
+        
+        @Override
+        public long getRandomSeed() {
+            return 0;
+        }
+        
+        @Override
+        public int getPosition() {
+            return 0;
+        }
+        
+        @Override
+        public int getPermittedBytesToSend() {
+            return 0;
+        }
+        
+        @Override
+        public int getPermittedBytesToReceive() {
+            return 0;
+        }
+        
+        @Override
+        public PeerManagerRegistration getPeerManagerRegistration() {
+            return new PeerManagerRegistration() {
+                
+                @Override
+                public void unregister() {
+                }
+                
+                @Override
+                public void removeLink(String link) {
+                }
+                
+                @Override
+                public TOTorrentFile getLink(String link) {
+                    return null;
+                }
+                
+                @Override
+                public String getDescription() {
+                    return null;
+                }
+                
+                @Override
+                public void deactivate() {
+                }
+                
+                @Override
+                public void addLink(String link, TOTorrentFile target) throws Exception {
+                }
+                
+                @Override
+                public void activate(PEPeerControl peer_control) {
+                }
+            };
+        }
+        
+        @Override
+        public int getMaxUploads() {
+            return Integer.MAX_VALUE;
+        }
+        
+        @Override
+        public int getMaxSeedConnections() {
+            return 0;
+        }
+        
+        @Override
+        public int getMaxConnections() {
+            return 0;
+        }
+        
+        @Override
+        public LogRelation getLogRelation() {
+            return null;
+        }
+        
+        @Override
+        public int getDownloadRateLimitBytesPerSecond() {
+            return 0;
+        }
+        
+        @Override
+        public String getDisplayName() {
+            return null;
+        }
+        
+        @Override
+        public int getCryptoLevel() {
+            return 0;
+        }
+        
+        @Override
+        public void enqueueReadRequest(PEPeer peer, DiskManagerReadRequest request, DiskManagerReadRequestListener listener) {
+        }
+        
+        @Override
+        public void discarded(PEPeer peer, int bytes) {
+        }
+        
+        @Override
+        public void dataBytesSent(PEPeer peer, int bytes) {
+        }
+        
+        @Override
+        public void dataBytesReceived(PEPeer peer, int bytes) {
+        }
+        
+        @Override
+        public void addPiece(PEPiece piece) {
+        }
+        
+        @Override
+        public void addPeer(PEPeer peer) {
+            peer.addListener(new MetadataPeerListener());
+        }
+        
+        @Override
+        public void addHTTPSeed(String address, int port) {
+        }
+    }
+    
+    public static class MetadataPeerListener implements PEPeerListener {
+        
+        @Override
+        public void stateChanged(PEPeer peer, int new_state) {
+            if (new_state == PEPeer.READY_TO_ASK_FOR_METADATA) {
+                tryMetadata(null, (PEPeerTransportProtocol)peer);
+            }
+        }
+
+        @Override
+        public void sentBadChunk(PEPeer peer, int piece_num, int total_bad_chunks) {
+        }
+        
+        @Override
+        public void removeAvailability(PEPeer peer, BitFlags peerHavePieces) {
+        }
+        
+        @Override
+        public void addAvailability(PEPeer peer, BitFlags peerHavePieces) {
+        }
+    }
+    
+    public static class MetadataTrackerAnnouncerListener implements TRTrackerAnnouncerListener
+    {
+        private PEPeerManager peerManager;
+        
+        public PEPeerManager getPeerManager() {
+            return peerManager;
+        }
+        
+        public void setPeerManager(PEPeerManager peerManager) {
+            this.peerManager = peerManager;
+        }
+        
+        public void 
+        receivedTrackerResponse(
+            TRTrackerAnnouncerResponse  response) 
+        {
+            if (peerManager != null) {
+            peerManager.processTrackerResponse(response);
+            }
+        }
+
+        public void 
+        urlChanged(
+            final TRTrackerAnnouncer    announcer,  
+            final URL                   old_url,
+            URL                         new_url,
+            boolean                     explicit ) 
+        {
+        }
+
+        public void 
+        urlRefresh() 
+        {
+        }
+    }
+    
+    public static class MetadataTrackerAnnouncerDataProvider implements TRTrackerAnnouncerDataProvider {
+        
+        @Override
+        public void setPeerSources(String[] allowed_sources) {
+        }
+        
+        @Override
+        public boolean isPeerSourceEnabled(String peer_source) {
+            return true;
+        }
+        
+        @Override
+        public int getUploadSpeedKBSec(boolean estimate) {
+            return 0;
+        }
+        
+        @Override
+        public long getTotalSent() {
+            return 0;
+        }
+        
+        @Override
+        public long getTotalReceived() {
+            return 0;
+        }
+        
+        @Override
+        public long getRemaining() {
+            return 0;
+        }
+        
+        @Override
+        public int getPendingConnectionCount() {
+            return 0;
+        }
+        
+        @Override
+        public String getName() {
+            return "MetadataTrackerAnnouncerDataProvider";
+        }
+        
+        @Override
+        public int getMaxNewConnectionsAllowed() {
+            return 20;
+        }
+        
+        @Override
+        public long getFailedHashCheck() {
+            return 0;
+        }
+        
+        @Override
+        public String getExtensions() {
+            return null;
+        }
+        
+        @Override
+        public int getCryptoLevel() {
+            return 0;
+        }
+        
+        @Override
+        public int getConnectedConnectionCount() {
+            return 0;
+        }
     }
 }
