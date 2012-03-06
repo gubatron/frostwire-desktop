@@ -149,7 +149,7 @@ PluginInitializer
 					"true",
 					"false"},
 			{	 PluginManagerDefaults.PID_MAGNET, 
-					"com.aelitis.azureus.plugins.magnet.MagnetPlugin", 
+					"com.aelitis.azureus.plugins.magnet.FrostWireMagnetPlugin", 
 					"azbpmagnet", 
 					"Magnet URI Handler",
 					"true",
