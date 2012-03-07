@@ -1013,6 +1013,12 @@ implements PEPeerTransport
 					manager.getPeerId(),
                     manager.isExtendedMessagingEnabled(), other_peer_handshake_version );
 			
+			// ut_metadata
+			// ugly hack
+			if (diskManager.getTorrent() instanceof TOTorrentMetadata) {
+			    handshake.getReserved()[0] = 0;
+			}
+			
 			if (Logger.isEnabled())
 			    Logger.log(new LogEvent(this, LOGID,
 			    		"Sending handshake with reserved bytes: " +
@@ -2400,6 +2406,10 @@ implements PEPeerTransport
 		boolean supports_azmp = (handshake.getReserved()[0] & 128) == 128;
 		boolean supports_ltep = (handshake.getReserved()[5] & 16) == 16;
 		
+		// ut_metadata
+		// ugly hack
+		if (diskManager.getTorrent() instanceof TOTorrentMetadata) supports_azmp = false;
+		
 		if (!supports_azmp) {
 			if (supports_ltep) {
 				if (!manager.isExtendedMessagingEnabled()) {
@@ -2542,7 +2552,9 @@ implements PEPeerTransport
 	  handshake.destroy();
 	  
 	  // ut_metadata
-	  changePeerState(READY_TO_ASK_FOR_METADATA);
+	  if (ut_metadata_enabled && diskManager.getTorrent() instanceof TOTorrentMetadata) {
+	      changePeerState(READY_TO_ASK_FOR_METADATA);
+	  }
   }
   
   protected void decodeAZHandshake(AZHandshake handshake) {
