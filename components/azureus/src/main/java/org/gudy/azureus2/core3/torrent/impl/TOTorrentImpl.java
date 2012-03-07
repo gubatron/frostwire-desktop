@@ -1333,19 +1333,4 @@ TOTorrentImpl
 		return null;
 	}
 	
-	// ut_metadata
-	private byte[] infoBytes;
-	
-    public byte[] getInfoBytes() {
-        if (infoBytes == null) {
-            try {
-                Map map = serialiseToMap();
-                infoBytes = BEncoder.encode((Map) map.get(TK_INFO));
-            } catch (Throwable e) {
-                infoBytes = new byte[0];
-            }
-        }
-
-        return infoBytes;
-    }
 }

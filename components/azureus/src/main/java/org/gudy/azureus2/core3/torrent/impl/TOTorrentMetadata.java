@@ -10,6 +10,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -61,7 +62,7 @@ public class TOTorrentMetadata implements TOTorrent {
         this.announceURL = trackers[0];
         setAnnounceUrlGroup(trackers);
     }
-    
+
     public void setAnnounceUrlGroup(URL[] trackers) {
         this.announceURLSet = new ArrayList<TOTorrentAnnounceURLSet>();
         this.announceURLGroup = new TOTorrentAnnounceURLGroup() {
@@ -481,17 +482,17 @@ public class TOTorrentMetadata implements TOTorrent {
     }
 
     public void updateMetadataPieces(Map<Integer, byte[]> metadataPieces, int totalSize) {
-        for (Entry<Integer, byte[]>  kv : metadataPieces.entrySet()) {
+        for (Entry<Integer, byte[]> kv : metadataPieces.entrySet()) {
             if (!this.metadataPieces.containsKey(kv.getKey())) {
                 this.metadataPieces.put(kv.getKey(), kv.getValue());
             }
         }
-        
+
         int currentSize = 0;
         for (byte[] piece : this.metadataPieces.values()) {
             currentSize += piece.length;
         }
-        
+
         if (currentSize == totalSize) {
             notifyComplete();
         }
@@ -535,6 +536,111 @@ public class TOTorrentMetadata implements TOTorrent {
             return BEncoder.encode(root);
         } catch (IOException e) {
             throw new TOTorrentException("Failed to serialise torrent: " + Debug.getNestedExceptionMessage(e), TOTorrentException.RT_WRITE_FAILS);
+        }
+    }
+
+    public static class TorrentWrapper {
+
+        private static final String TK_INFO = "info";
+        private static final String TK_NAME = "name";
+        private static final String TK_LENGTH = "length";
+        private static final String TK_PATH = "path";
+        private static final String TK_FILES = "files";
+        private static final String TK_PIECE_LENGTH = "piece length";
+        private static final String TK_PIECES = "pieces";
+
+        private static final String TK_NAME_UTF8 = "name.utf-8";
+
+        private static final Map<String, byte[]> INFOS = new HashMap<String, byte[]>();
+
+        private final TOTorrent torrent;
+        private String key;
+
+        public TorrentWrapper(TOTorrent torrent) {
+            this.torrent = torrent;
+            try {
+                this.key = ByteFormatter.encodeString(torrent.getHash());
+            } catch (TOTorrentException e) { // ignore for now
+                this.key = null;
+            }
+        }
+
+        public byte[] getInfoBytes() {
+            if (!INFOS.containsKey(key)) {
+                byte[] bytes = serializeInfo();
+                INFOS.put(key, bytes);
+            }
+
+            return INFOS.get(key);
+        }
+
+        private byte[] serializeInfo() {
+            byte[] bytes = null;
+
+            try {
+
+                Map info = new HashMap();
+
+                byte[][] pieces = torrent.getPieces();
+                long piece_length = torrent.getPieceLength();
+                byte[] torrent_name = torrent.getName();
+                String torrent_name_utf8 = torrent.getUTF8Name();
+                boolean simple_torrent = torrent.isSimpleTorrent();
+                TOTorrentFile[] files = torrent.getFiles();
+
+                info.put(TK_PIECE_LENGTH, new Long(piece_length));
+
+                if (pieces == null) {
+
+                    throw (new TOTorrentException("Pieces is null", TOTorrentException.RT_WRITE_FAILS));
+                }
+
+                byte[] flat_pieces = new byte[pieces.length * 20];
+
+                for (int i = 0; i < pieces.length; i++) {
+
+                    System.arraycopy(pieces[i], 0, flat_pieces, i * 20, 20);
+                }
+
+                info.put(TK_PIECES, flat_pieces);
+
+                info.put(TK_NAME, torrent_name);
+
+                if (torrent_name_utf8 != null) {
+
+                    info.put(TK_NAME_UTF8, torrent_name_utf8);
+                }
+
+                if (simple_torrent) {
+
+                    TOTorrentFile file = files[0];
+
+                    info.put(TK_LENGTH, new Long(file.getLength()));
+
+                } else {
+
+                    List meta_files = new ArrayList();
+
+                    info.put(TK_FILES, meta_files);
+
+                    for (int i = 0; i < files.length; i++) {
+
+                        TOTorrentFileImpl file = (TOTorrentFileImpl) files[i];
+
+                        Map file_map = file.serializeToMap();
+
+                        meta_files.add(file_map);
+
+                    }
+                }
+
+                bytes = BEncoder.encode(info);
+            } catch (Throwable e) {
+                // ignore
+                bytes = new byte[0];
+            }
+
+            return bytes;
         }
     }
 }
