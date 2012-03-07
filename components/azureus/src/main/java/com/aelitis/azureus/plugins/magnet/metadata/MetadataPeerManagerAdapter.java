@@ -311,6 +311,7 @@ public class MetadataPeerManagerAdapter implements PEPeerManagerAdapter {
         if (upnp_pi != null) {
             UPnPPlugin upnp = (UPnPPlugin) upnp_pi.getPlugin();
 
+            upnp.refreshMappings(true);
             UPnPPluginService[] services = upnp.getServices();
 
             for (UPnPPluginService service : services) {
