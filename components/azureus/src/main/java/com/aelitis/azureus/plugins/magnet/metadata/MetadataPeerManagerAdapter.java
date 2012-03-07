@@ -112,7 +112,7 @@ public class MetadataPeerManagerAdapter implements PEPeerManagerAdapter {
 
     @Override
     public void removePeer(PEPeer peer) {
-        //System.out.println(peer.getIp() + ":" + peer.getPort() + " removed");
+        System.out.println(peer.getIp() + ":" + peer.getPort() + " removed");
     }
 
     @Override

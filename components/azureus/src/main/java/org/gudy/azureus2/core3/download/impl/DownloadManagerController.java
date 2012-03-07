@@ -217,6 +217,9 @@ DownloadManagerController
 		stats	= (DownloadManagerStatsImpl)download_manager.getStats();
 
 		cached_values_set = false;
+		
+		// ut_metadata
+		initFixVariables();
 	}
 	
 	protected void
@@ -2070,7 +2073,16 @@ DownloadManagerController
 	private String externalIp;
     private Set<String> manualIps;
     private int localTcpPort;
-    private boolean firstTimeFix = false;
+    
+    private void initFixVariables() {
+        try {
+            this.externalIp = getExternalIp();
+            this.localTcpPort = TCPNetworkManager.getSingleton().getTCPListeningPortNumber();
+            this.manualIps = new HashSet<String>();
+        } catch (Throwable e) {
+            // not chance here
+        }
+    }
     
     private String getExternalIp() {
         Utilities utils = PluginInitializer.getDefaultInterface().getUtilities();
@@ -2108,12 +2120,6 @@ DownloadManagerController
     
 	private void fixForLocalLANPeer(PEPeer peer) {
 	    try {
-            if (firstTimeFix) {
-                firstTimeFix = true;
-                this.externalIp = getExternalIp();
-                this.localTcpPort = TCPNetworkManager.getSingleton().getTCPListeningPortNumber();
-                this.manualIps = new HashSet<String>();
-            }
             if (peer_manager != null) {
                 if (peer.getIp().equals(externalIp) && peer.getPort() != localTcpPort && !manualIps.contains(peer.getIp())) {
                     // what are the odds?
@@ -2128,6 +2134,7 @@ DownloadManagerController
                     String ip = getPeerLocalIp(peer.getPort());
                     if (ip != null) {
                         manualIps.add(ip);
+                        //System.out.println("Fixed peer to: " + ip + ":" + peer.getPort());
                         peer_manager.addPeer(ip, peer.getPort(), 0, false, new HashMap());
                     }
                 }
