@@ -5,7 +5,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 import org.gudy.azureus2.core3.peer.PEPeerManager;
 import org.gudy.azureus2.core3.peer.PEPeerManagerFactory;
@@ -52,7 +51,8 @@ public class MetadataPeerRequester {
                 }
             }
 
-            signal.await(timeout, TimeUnit.MILLISECONDS);
+            //signal.await(timeout, TimeUnit.MILLISECONDS);
+            signal.await();
 
             for (Torrent t : torrents) {
                 t.stop();
@@ -98,8 +98,10 @@ public class MetadataPeerRequester {
             tracker_client.setAnnounceDataProvider(new MetadataTrackerAnnouncerDataProvider());
             torrent.setTrackerAnnouncer(tracker_client);
 
-            PEPeerManager peerManager = PEPeerManagerFactory.create(tracker_client.getPeerId(), new MetadataPeerManagerAdapter(new MetadataPeerListener()), new MetadataDiskManager(torrent));
+            MetadataPeerManagerAdapter peerManagerAdapter = new MetadataPeerManagerAdapter(new MetadataPeerListener());
+            PEPeerManager peerManager = PEPeerManagerFactory.create(tracker_client.getPeerId(), peerManagerAdapter, new MetadataDiskManager(torrent));
             torrent.setPeerManager(peerManager);
+            peerManagerAdapter.setPeerManager(peerManager);
 
             tracker_client_listener.setPeerManager(peerManager);
 

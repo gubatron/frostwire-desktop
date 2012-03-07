@@ -8,6 +8,9 @@ import com.aelitis.azureus.core.peermanager.piecepicker.util.BitFlags;
 
 public class MetadataPeerListener implements PEPeerListener {
 
+    public MetadataPeerListener() {
+    }
+
     @Override
     public void stateChanged(PEPeer peer, int new_state) {
         if (new_state == PEPeer.READY_TO_ASK_FOR_METADATA) {
