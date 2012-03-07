@@ -821,7 +821,7 @@ implements PEPeerTransport
 	 * You probably should not invoke this directly.
 	 */
 	public void closeConnection( String reason ) {
-		performClose( reason, false, true, false );
+	    performClose( reason, false, true, false );
 	}
 
 
@@ -1736,7 +1736,7 @@ implements PEPeerTransport
 	 */
 	public boolean isInterested() {  return other_peer_interested_in_me;  }
 	public boolean isSeed() {  return torrent_is_metadata ? false : seeding;  } // ut_metadata
-	public boolean isRelativeSeed() { return (relativeSeeding & RELATIVE_SEEDING_UPLOAD_ONLY_SEED) != 0; }
+	public boolean isRelativeSeed() { return torrent_is_metadata ? false : (relativeSeeding & RELATIVE_SEEDING_UPLOAD_ONLY_SEED) != 0; } // ut_metadata
 	
 	private void
 	setSeed(

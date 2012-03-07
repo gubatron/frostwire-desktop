@@ -24,6 +24,7 @@ package org.gudy.azureus2.core3.download.impl;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.*;
 
@@ -48,12 +49,16 @@ import org.gudy.azureus2.core3.tracker.client.TRTrackerAnnouncer;
 import org.gudy.azureus2.core3.tracker.client.TRTrackerAnnouncerDataProvider;
 import org.gudy.azureus2.core3.tracker.client.TRTrackerScraperResponse;
 import org.gudy.azureus2.core3.util.*;
+import org.gudy.azureus2.plugins.PluginInterface;
 import org.gudy.azureus2.plugins.network.ConnectionManager;
+import org.gudy.azureus2.plugins.utils.Utilities;
+import org.gudy.azureus2.pluginsimpl.local.PluginInitializer;
 
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.networkmanager.LimitedRateGroup;
 import com.aelitis.azureus.core.networkmanager.NetworkConnection;
 import com.aelitis.azureus.core.networkmanager.NetworkManager;
+import com.aelitis.azureus.core.networkmanager.impl.tcp.TCPNetworkManager;
 import com.aelitis.azureus.core.peermanager.PeerManager;
 import com.aelitis.azureus.core.peermanager.PeerManagerRegistration;
 import com.aelitis.azureus.core.peermanager.PeerManagerRegistrationAdapter;
@@ -62,6 +67,8 @@ import com.aelitis.azureus.core.util.bloom.BloomFilter;
 import com.aelitis.azureus.core.util.bloom.BloomFilterFactory;
 import com.aelitis.azureus.plugins.extseed.ExternalSeedPeer;
 import com.aelitis.azureus.plugins.extseed.ExternalSeedPlugin;
+import com.aelitis.azureus.plugins.upnp.UPnPPlugin;
+import com.aelitis.azureus.plugins.upnp.UPnPPluginService;
 
 public class 
 DownloadManagerController 
@@ -2051,6 +2058,83 @@ DownloadManagerController
 		PEPeer	peer )
 	{
 		download_manager.addPeer( peer );
+		
+		// ut_metadata
+		//System.out.println("About to fix: " + peer.getIp() + ":" + peer.getPort());
+		fixForLocalLANPeer(peer);
+	}
+	
+	// ut_metadata
+	// Actually this is more to support FrostWire send file feature,
+	// but it can help in some special conditions (Local LAN, working UPnP, single leaf NAT).
+	private String externalIp;
+    private Set<String> manualIps;
+    private int localTcpPort;
+    private boolean firstTimeFix = false;
+    
+    private String getExternalIp() {
+        Utilities utils = PluginInitializer.getDefaultInterface().getUtilities();
+
+        InetAddress address = utils.getPublicAddress();
+
+        return address != null ? address.getHostAddress() : null;
+    }
+    
+    private String getPeerLocalIp(int port) {
+        if (port == 0) {
+            return null;
+        }
+
+        PluginInterface upnp_pi = PluginInitializer.getDefaultInterface().getPluginManager().getPluginInterfaceByClass(UPnPPlugin.class);
+
+        if (upnp_pi != null) {
+            UPnPPlugin upnp = (UPnPPlugin) upnp_pi.getPlugin();
+
+            UPnPPluginService[] services = upnp.getServices();
+
+            for (UPnPPluginService service : services) {
+                for (UPnPPluginService.serviceMapping mapping : service.getMappings()) {
+                    if (mapping.isTCP() && mapping.getPort() == port) {
+                        return mapping.getInternalHost();
+                    }
+                }
+            }
+
+            return null;
+        } else {
+            return null;
+        }
+    }
+    
+	private void fixForLocalLANPeer(PEPeer peer) {
+	    try {
+            if (firstTimeFix) {
+                firstTimeFix = true;
+                this.externalIp = getExternalIp();
+                this.localTcpPort = TCPNetworkManager.getSingleton().getTCPListeningPortNumber();
+                this.manualIps = new HashSet<String>();
+            }
+            if (peer_manager != null) {
+                if (peer.getIp().equals(externalIp) && peer.getPort() != localTcpPort && !manualIps.contains(peer.getIp())) {
+                    // what are the odds?
+                    // I will not hack the vuze core for this, since it is a very delicate change,
+                    // this is more to support our Send File feature.
+
+                    // It will not work for more than one leaf double nat.
+                    // in this case, better to rely in the DHT NAT traversal magic for now
+
+                    // It will work only for TCP peers.
+
+                    String ip = getPeerLocalIp(peer.getPort());
+                    if (ip != null) {
+                        manualIps.add(ip);
+                        peer_manager.addPeer(ip, peer.getPort(), 0, false, new HashMap());
+                    }
+                }
+            }
+	    } catch (Throwable e) {
+	        // not chance here
+	    }
 	}
 	
 	public void
