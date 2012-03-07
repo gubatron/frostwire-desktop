@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import org.gudy.azureus2.core3.peer.PEPeerManager;
 import org.gudy.azureus2.core3.peer.PEPeerManagerFactory;
@@ -51,8 +52,8 @@ public class MetadataPeerRequester {
                 }
             }
 
-            //signal.await(timeout, TimeUnit.MILLISECONDS);
-            signal.await();
+            signal.await(timeout, TimeUnit.MILLISECONDS);
+            //signal.await();
 
             for (Torrent t : torrents) {
                 t.stop();

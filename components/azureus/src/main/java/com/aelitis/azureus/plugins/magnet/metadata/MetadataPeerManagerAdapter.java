@@ -20,9 +20,6 @@ import org.gudy.azureus2.plugins.PluginInterface;
 import org.gudy.azureus2.plugins.utils.Utilities;
 import org.gudy.azureus2.pluginsimpl.local.PluginInitializer;
 
-import com.aelitis.azureus.core.networkmanager.admin.NetworkAdmin;
-import com.aelitis.azureus.core.networkmanager.admin.NetworkAdminNetworkInterface;
-import com.aelitis.azureus.core.networkmanager.admin.NetworkAdminNetworkInterfaceAddress;
 import com.aelitis.azureus.core.networkmanager.impl.tcp.TCPNetworkManager;
 import com.aelitis.azureus.core.peermanager.PeerManagerRegistration;
 import com.aelitis.azureus.plugins.upnp.UPnPPlugin;
@@ -281,6 +278,14 @@ public class MetadataPeerManagerAdapter implements PEPeerManagerAdapter {
                 // It will work only for TCP peers.
 
                 String ip = getPeerLocalIp(peer.getPort());
+                
+                if (ip == null) {
+                    // maybe the mapping cache is too old
+                    // doing this with an ugly logic, no room to listener here due to lack of public api
+                    refreshMappings();
+                    ip = getPeerLocalIp(peer.getPort());
+                }
+                
                 if (ip != null) {
                     manualIps.add(ip);
                     peerManager.addPeer(ip, peer.getPort(), 0, false, new HashMap());
@@ -311,7 +316,6 @@ public class MetadataPeerManagerAdapter implements PEPeerManagerAdapter {
         if (upnp_pi != null) {
             UPnPPlugin upnp = (UPnPPlugin) upnp_pi.getPlugin();
 
-            upnp.refreshMappings(true);
             UPnPPluginService[] services = upnp.getServices();
 
             for (UPnPPluginService service : services) {
@@ -325,6 +329,25 @@ public class MetadataPeerManagerAdapter implements PEPeerManagerAdapter {
             return null;
         } else {
             return null;
+        }
+    }
+    
+    private void refreshMappings() {
+        try {
+            
+            System.out.println("Refreshig UPnP mappings");
+            
+            PluginInterface upnp_pi = PluginInitializer.getDefaultInterface().getPluginManager().getPluginInterfaceByClass(UPnPPlugin.class);
+
+            if (upnp_pi != null) {
+                UPnPPlugin upnp = (UPnPPlugin) upnp_pi.getPlugin();
+
+                upnp.refreshMappings(true);
+                Thread.sleep(10000); // simply wait 10 seconds
+            }
+            
+        } catch (Throwable e) {
+            e.printStackTrace();
         }
     }
 }
