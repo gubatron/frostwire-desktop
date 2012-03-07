@@ -24,6 +24,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.gudy.azureus2.core3.internat.LocaleTorrentUtil;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
+import org.gudy.azureus2.core3.torrent.TOTorrentAnnounceURLSet;
 import org.gudy.azureus2.core3.torrent.TOTorrentCreator;
 import org.gudy.azureus2.core3.torrent.TOTorrentFactory;
 import org.gudy.azureus2.core3.torrent.TOTorrentProgressListener;
@@ -208,12 +209,15 @@ public class SendFileProgressDialog extends JDialog {
             
 
             torrent = _torrentCreator.create();
-            
             TorrentUtils.setDecentralised(torrent);
             TorrentUtils.setDHTBackupEnabled(torrent, true);
+            TOTorrentAnnounceURLSet announceURLSet = torrent.getAnnounceURLGroup().createAnnounceURLSet(new URL[] { new URL("udp://tracker.openbittorrent.com:80"), new URL("udp://tracker.publicbt.com:80"), new URL("udp://tracker.ccc.de:80") });
+            
+            torrent.getAnnounceURLGroup().setAnnounceURLSets(new TOTorrentAnnounceURLSet[] { announceURLSet });            
+            
             TorrentUtils.setPrivate(torrent, false);
+            
             LocaleTorrentUtil.setDefaultTorrentEncoding(torrent);
-            torrent.setAnnounceURL(new URL("udp://tracker.openbittorrent.com:80"));
 
             final File torrentFile = new File(SharingSettings.TORRENTS_DIR_SETTING.getValue(), file.getName() + ".torrent");
 
