@@ -182,7 +182,7 @@ public class ExternalControl {
             if (info_hash != null) {
                 if (activityCallback.isRemoteDownloadsAllowed()) {
                     writeJSReply(os, "checkResult(1);");
-                    handleTorrentMagnetRequest("magnet:?xt=urn:btih:" + info_hash);
+                    handleTorrentMagnetRequest("magnet:?xt=urn:btih:" + info_hash + '&' + arg_str);
                 } else {
                     writeJSReply(os, "checkResult(0);");
                 }

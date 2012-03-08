@@ -12,6 +12,7 @@ import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloader;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderCallBackInterface;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderFactory;
 import org.gudy.azureus2.core3.util.TorrentUtils;
+import org.gudy.azureus2.core3.util.UrlUtils;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -52,21 +53,38 @@ public class TorrentFetcherDownload implements BTDownload {
     }
 
     public TorrentFetcherDownload(String uri, boolean partialDownload, ActionListener postPartialDownloadAction) {
-        this(uri, uri, "", -1, partialDownload, postPartialDownloadAction);
+        this(uri, getDownloadNameFromMagnetURI(uri), "", -1, partialDownload, postPartialDownloadAction);
     }
 
     public TorrentFetcherDownload(String uri, String relativePath,
 			ActionListener postPartialDownloadAction) {
-    	this(uri, uri, "", -1, true, postPartialDownloadAction);
+    	this(uri, getDownloadNameFromMagnetURI(uri), "", -1, true, postPartialDownloadAction);
     	this.relativePath = relativePath;
 	}
     
     public TorrentFetcherDownload(String uri, String relativePath, String hash,
             ActionListener postPartialDownloadAction) {
-        this(uri, uri, hash, -1, true, postPartialDownloadAction);
+        this(uri, getDownloadNameFromMagnetURI(uri), hash, -1, true, postPartialDownloadAction);
         this.relativePath = relativePath;
     }
 
+    private static String getDownloadNameFromMagnetURI(String uri) {
+        if (!uri.startsWith("magnet:")) {
+            return uri;
+        }
+        
+        if (uri.contains("dn=")) {
+            String[] split = uri.split("&");
+            for (String s : split) {
+                if (s.toLowerCase().startsWith("dn=") && s.length() > 3) {
+                    return UrlUtils.decode(s.split("=")[1]);
+                }
+            }
+        }
+        
+        return uri;
+    }
+    
 	public long getSize() {
         return _delegate != null ? _delegate.getSize() : _size;
     }

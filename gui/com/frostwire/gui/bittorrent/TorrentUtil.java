@@ -74,6 +74,7 @@ import org.gudy.azureus2.plugins.tracker.Tracker;
 import org.gudy.azureus2.plugins.tracker.TrackerTorrent;
 import org.gudy.azureus2.pluginsimpl.local.PluginCoreUtils;
 import org.limewire.util.FileUtils;
+import org.limewire.util.StringUtils;
 
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.ui.UIFunctions;
@@ -584,7 +585,11 @@ public final class TorrentUtil {
     public static String getMagnetURLParameters(TOTorrent torrent) {
         StringBuilder sb = new StringBuilder();
         //dn
-        sb.append("dn=" + UrlUtils.encode(torrent.getUTF8Name()));
+        if (StringUtils.isNullOrEmpty(torrent.getUTF8Name())) {
+            sb.append("dn=" + UrlUtils.encode(new String(torrent.getName())));
+        } else {
+            sb.append("dn=" + UrlUtils.encode(torrent.getUTF8Name()));
+        }
         
         TOTorrentAnnounceURLGroup announceURLGroup = torrent.getAnnounceURLGroup();
         TOTorrentAnnounceURLSet[] announceURLSets = announceURLGroup.getAnnounceURLSets();
