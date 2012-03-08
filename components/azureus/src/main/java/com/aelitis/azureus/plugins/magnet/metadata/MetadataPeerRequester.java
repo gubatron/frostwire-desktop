@@ -1,3 +1,21 @@
+/*
+ * Created by  Alden Torres (aldenml)
+ * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.aelitis.azureus.plugins.magnet.metadata;
 
 import java.net.MalformedURLException;
@@ -18,6 +36,22 @@ import org.gudy.azureus2.core3.util.UrlUtils;
 
 import com.aelitis.azureus.plugins.magnet.MagnetPluginProgressListener;
 
+/**
+ * FrostWire: This is how we use the UT_METADATA Extension on FrostWire.
+ * This class basically tries to request the torrent metadata from all trackers specified by the magnet url (tr= params)
+ * 
+ * We create sort of a virtual TOTorrent only to retrieve the metadata from peers connected to the torrent on a tracker.
+ * 
+ * We start off by using only ONE tracker per torrent, in parallel. By this I mean, if a magnet URL has say 3 trackers we go ahead
+ * and create 3 virtual torrents, each with a different announce url set of only one URL (that tracker), and then we request
+ * the metadata from all of them at the same time and once we get the full metadata from any of the 3, we kill the other two,
+ * close all the connections, etc.
+ *
+ * Once we have the complete torrent metadata from the first one we build the real torrent, and we put all the announce urls in it.
+ * 
+ * @see MetadataPeerRequester#requestSupport(URL, URL[], CountDownLatch)
+ * 
+ */
 public class MetadataPeerRequester {
 
     private final MagnetPluginProgressListener listener;
@@ -72,6 +106,17 @@ public class MetadataPeerRequester {
         return null;
     }
 
+    /**
+     * We used CountDownLatch and not Azureus monitors because we don't feel fully comfortable with them,
+     * @parg feel free to change this syncing mechanism if you don't feel a CountDownLatch is good enough,
+     * still I feel it'd be overkill to do so, since this is not really that intensive, more likely you're only going to have
+     * a handful of threads talking to trackers.
+     * 
+     * @param tracker
+     * @param trackers
+     * @param signal
+     * @return
+     */
     private Torrent requestSupport(URL tracker, final URL[] trackers, final CountDownLatch signal) {
         try {
 
@@ -92,6 +137,8 @@ public class MetadataPeerRequester {
                 }
             };
 
+            //note that we use new implementations of TRTrackerAnnouncerListener, DiskManager, PEPeerManagerAdapter, etc. 
+            //We looked at DownloadManagerImpl to do this.
             MetadataTrackerAnnouncerListener tracker_client_listener = new MetadataTrackerAnnouncerListener();
 
             TRTrackerAnnouncer tracker_client = TRTrackerAnnouncerFactory.create(torrent, null);

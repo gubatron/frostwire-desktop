@@ -1022,8 +1022,8 @@ implements PEPeerTransport
 					manager.getPeerId(),
                     manager.isExtendedMessagingEnabled(), other_peer_handshake_version );
 			
-			// ut_metadata
-			// ugly hack
+            // ut_metadata handshake?
+            // ugly hack to let the other guy know that I don't really support AZ extension protocol
 			if (torrent_is_metadata) {
 			    handshake.getReserved()[0] = 0;
 			}
@@ -1060,18 +1060,28 @@ implements PEPeerTransport
     // Old comment (no more): We could do this in a more automated way in future, but hardcoded is simple and quick,
     // so we'll do that instead. :)
     // static Map lt_ext_map = UTPeerExchange.ENABLED ? Collections.singletonMap("ut_pex", new Integer(1) ) : Collections.EMPTY_MAP;
-    private Map lt_ext_map = null;
+    private Map lt_ext_map = null; //FrostWire Team Suggestion: you should probably rename this to bt_ext_map.
     
+    /**
+     * FrostWire Team: See commented code above, you only had ut_pex and that wasn't a very nice way to add extensions
+     * so we added this which you can extend for future extensions.
+     * 
+     */
     private Map buildExtensionMap() {
         Map map = new HashMap();
         if (UTPeerExchange.ENABLED) {
             map.put("ut_pex", new Integer(1) ); // exactly like the original code
         }
         
-        if (UTMetadata.ENABLED) { // at least to receive the data
+        if (UTMetadata.ENABLED) { // I'll let them know that at least I'm able to receive UT_METADATA messages.
             map.put(LTMessage.ID_UT_METADATA, new Integer(LTMessage.SUBID_UT_METADATA));
-            // not happy with this hack since it's not exactly well designed from the beginning
+            // not too happy with this fix since it's not exactly well designed from the beginning
             if (!torrent_is_metadata && torrent_wrapper != null) {
+                //until I have a complete torrent I cannot say that I fully support responding to UT_METADATA
+                //requests. I can request them, but I can't answer to them because I don't have the full torrent myself.
+                //
+                // If I receive a UT_METADATA request before this happens, I will be able to respond but only
+                // with a REJECT message. 
                 torrent_metadata_size = torrent_wrapper.getInfoBytes().length;
             }
         }
@@ -1104,7 +1114,7 @@ implements PEPeerTransport
 		);
 		
 		// ut_metadata
-        data_dict.put("metadata_size", torrent_metadata_size); // what happens when metadata_size is zero?
+        data_dict.put("metadata_size", torrent_metadata_size); //FrostWire Team: what happens when metadata_size is zero? Nothing. Protocol design seems weak here.
         
 		connection.getOutgoingMessageQueue().addMessage(lt_handshake, false);
 	}
@@ -2416,7 +2426,7 @@ implements PEPeerTransport
 		boolean supports_ltep = (handshake.getReserved()[5] & 16) == 16;
 		
 		// ut_metadata
-		// ugly hack
+		// ugly hack: while I'm still fetching this torrent I don't really support anything.
 		if (torrent_is_metadata) supports_azmp = false;
 		
 		if (!supports_azmp) {
@@ -2562,7 +2572,7 @@ implements PEPeerTransport
 	  
 	  // ut_metadata
 	  if (ut_metadata_enabled && torrent_is_metadata) {
-	      changePeerState(READY_TO_ASK_FOR_METADATA);
+	      changePeerState(READY_FOR_PEER_METADATA_REQUEST);
 	  }
   }
   
@@ -2956,7 +2966,7 @@ implements PEPeerTransport
 		if ((pieceNumber >=nbPieces) ||(pieceNumber <0)) {
 		    // ut_metadata
             if (torrent_is_metadata) {
-                // special condition due to ut_metadata messages
+                // special condition due to ut_metadata messages, don't close the connection please.
             } else {
                 closeConnectionInternally("invalid pieceNumber: " +pieceNumber);
             }
@@ -3829,7 +3839,7 @@ implements PEPeerTransport
 						return true;
 					}
 					
-					// ut_metadata
+					// ut_metadata ah :)
 					if (message_id.equals(LTMessage.ID_UT_METADATA)) {
 					    decodeMetadata((UTMetadata) message);
                         return true;
@@ -3944,11 +3954,13 @@ implements PEPeerTransport
 	protected void decodeMetadata(UTMetadata metadata) {
 	    if (metadata.getMessageType() == UTMetadata.REQUEST_MESSAGE_TYPE_ID) {
 	        if (torrent_is_metadata) {
+	            //I'm still not ready, so I'll send you a REJECT message for now.
 	            connection.getOutgoingMessageQueue().addMessage(new UTMetadata(UTMetadata.REJECT_MESSAGE_TYPE_ID, metadata.getPiece(), 0, null, (byte)1), false);
 	        } else if (torrent_wrapper != null) {
+	            //Downloading  a torrent via DownloadManagerImpl.
                 byte[] infoBytes = torrent_wrapper.getInfoBytes();
                 int piece = metadata.getPiece();
-                int pieceMaxSize = 16384; // 16KiB
+                int pieceMaxSize = 16384; // 16KiB, Greg Hazel & Arvid Norberg's magic number.
                 int offset = piece * pieceMaxSize;
                 if (offset < infoBytes.length) {
                     byte[] bytes = new byte[Math.min(pieceMaxSize, infoBytes.length - offset)]; 
@@ -3960,17 +3972,22 @@ implements PEPeerTransport
                 }
             }
         } else if (metadata.getMessageType() == UTMetadata.DATA_MESSAGE_TYPE_ID) {
+            //someone sent a torrent's info piece
             ut_metadata_bytes_received += metadata.getMetadata().length;
             ut_metadata_bytes_pieces.put(metadata.getPiece(), metadata.getMetadata());
             
+            //not done? ask for the next piece
             if (ut_metadata_bytes_received < ut_metadata_metadata_size &&
                 ut_metadata_metadata_size == metadata.getTotalSize()) {
                 sendMetadataRequest(metadata.getPiece() + 1);
             }
 
+            //always update the torrent
             updateTorrent(metadata.getTotalSize());
         } else if (metadata.getMessageType() == UTMetadata.REJECT_MESSAGE_TYPE_ID) {
-            ut_metadata_enabled = false; // disable support for this peer, not the best solution!
+            //the other guy doesn't support UT_metadata so we'll just turn off ut_metadata_enable for that peer.
+            
+            ut_metadata_enabled = false; 
             if (Logger.isEnabled()) {
                 Logger.log(new LogEvent(this, LOGID, "decodeMetadata(): metadata request rejected for piece #" + metadata.getPiece()));
             }
@@ -3981,6 +3998,7 @@ implements PEPeerTransport
             }
         }
         
+	    //free resources in the pool
         metadata.destroy();
     }
 

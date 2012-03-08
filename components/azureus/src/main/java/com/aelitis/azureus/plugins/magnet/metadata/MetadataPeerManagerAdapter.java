@@ -1,3 +1,21 @@
+/*
+ * Created by  Alden Torres (aldenml)
+ * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.aelitis.azureus.plugins.magnet.metadata;
 
 import java.net.InetAddress;
@@ -25,6 +43,11 @@ import com.aelitis.azureus.core.peermanager.PeerManagerRegistration;
 import com.aelitis.azureus.plugins.upnp.UPnPPlugin;
 import com.aelitis.azureus.plugins.upnp.UPnPPluginService;
 
+/**
+ * 
+ * @see MetadataPeerManagerAdapter#addPeer(PEPeer) for the meat of this
+ *
+ */
 public class MetadataPeerManagerAdapter implements PEPeerManagerAdapter {
 
     private final MetadataPeerListener peerListener;
@@ -109,7 +132,7 @@ public class MetadataPeerManagerAdapter implements PEPeerManagerAdapter {
 
     @Override
     public void removePeer(PEPeer peer) {
-        System.out.println(peer.getIp() + ":" + peer.getPort() + " removed");
+        //System.out.println(peer.getIp() + ":" + peer.getPort() + " removed");
     }
 
     @Override
@@ -267,6 +290,11 @@ public class MetadataPeerManagerAdapter implements PEPeerManagerAdapter {
         peer.addListener(peerListener);
 
         if (peerManager != null) {
+            /*
+             * Someone on my local network might be sending me a file.
+             * We both have the same IP as listed on the tracker, yet we don't have the same port.
+             * I'll refresh my UPnP cache and get his internal IP see MetadataPeerManager#getPeerLocalIp(int  port)
+             */
             if (peer.getIp().equals(externalIp) && peer.getPort() != localTcpPort && !manualIps.contains(peer.getIp())) {
                 // what are the odds?
                 // I will not hack the vuze core for this, since it is a very delicate change,
@@ -281,13 +309,13 @@ public class MetadataPeerManagerAdapter implements PEPeerManagerAdapter {
                 
                 if (ip == null) {
                     // maybe the mapping cache is too old
-                    // doing this with an ugly logic, no room to listener here due to lack of public api
+                    // doing this with an ugly logic, no room for listener here due to lack of a public api
                     refreshMappings();
                     ip = getPeerLocalIp(peer.getPort());
                 }
                 
                 if (ip != null) {
-                    manualIps.add(ip);
+                    manualIps.add(ip); //this will break future recursion
                     peerManager.addPeer(ip, peer.getPort(), 0, false, new HashMap());
                 }
             }
