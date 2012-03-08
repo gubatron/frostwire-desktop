@@ -1,9 +1,10 @@
-frostwire (5.3.2) stable; urgency=high
+frostwire (5.3.3) stable; urgency=high
+  * Updated TPB search to support magnet link search results.
+  * Added UT_METADATA extension to Vuze Core for improved magnet link support.
   * Upgraded Lucene library to v3.5.0.
   * Upgraded H2 to v1.3.164.
 
- -- FrostWire Team <contact@frostwire.com>  Thu, 16 Feb 2012 09:53:46 -0500
-
+ -- FrostWire Team <contact@frostwire.com>  Thu, 08 Mar 2012 16:07:46 -0500
 
 frostwire (5.3.2) stable; urgency=high
   * Reverted H2 library to v1.3.160
