@@ -44,6 +44,7 @@
 package com.frostwire.gui.bittorrent;
 
 import java.io.File;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -57,9 +58,12 @@ import org.gudy.azureus2.core3.download.DownloadManager;
 import org.gudy.azureus2.core3.global.GlobalManagerDownloadRemovalVetoException;
 import org.gudy.azureus2.core3.internat.MessageText;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
+import org.gudy.azureus2.core3.torrent.TOTorrentAnnounceURLGroup;
+import org.gudy.azureus2.core3.torrent.TOTorrentAnnounceURLSet;
 import org.gudy.azureus2.core3.util.AERunnable;
 import org.gudy.azureus2.core3.util.AsyncDispatcher;
 import org.gudy.azureus2.core3.util.Debug;
+import org.gudy.azureus2.core3.util.UrlUtils;
 import org.gudy.azureus2.plugins.PluginInterface;
 import org.gudy.azureus2.plugins.download.Download;
 import org.gudy.azureus2.plugins.sharing.ShareManager;
@@ -576,6 +580,26 @@ public final class TorrentUtil {
     public static String getMagnet(String hash) {
         return "magnet:?xt=urn:btih:" + hash;
     }
+    
+    public static String getMagnetURLParameters(TOTorrent torrent) {
+        StringBuilder sb = new StringBuilder();
+        //dn
+        sb.append("dn=" + UrlUtils.encode(torrent.getUTF8Name()));
+        
+        TOTorrentAnnounceURLGroup announceURLGroup = torrent.getAnnounceURLGroup();
+        TOTorrentAnnounceURLSet[] announceURLSets = announceURLGroup.getAnnounceURLSets();
+        
+        for (TOTorrentAnnounceURLSet set : announceURLSets) {
+            URL[] announceURLs = set.getAnnounceURLs();
+            for (URL url : announceURLs) {
+                sb.append("&tr=");
+                sb.append(UrlUtils.encode(url.toString()));
+            }
+        }
+        
+        return sb.toString();
+    }
+
 
     public static String hashToString(byte[] hash) {
         String hex = "";

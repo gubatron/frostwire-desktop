@@ -292,7 +292,7 @@ final class BTDownloadActions {
             BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
             String str = "";
             for (int i = 0; i < downloaders.length; i++) {
-                str += TorrentUtil.getMagnet(downloaders[i].getHash());
+                str += TorrentUtil.getMagnet(downloaders[i].getHash()) + "&" + TorrentUtil.getMagnetURLParameters(downloaders[i].getDownloadManager().getTorrent());
                 if (i<downloaders.length-1) {
                     str += "\n";
                 }

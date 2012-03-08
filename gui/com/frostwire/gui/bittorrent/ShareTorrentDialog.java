@@ -12,7 +12,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,8 +28,6 @@ import javax.swing.JPanel;
 import javax.swing.ToolTipManager;
 
 import org.gudy.azureus2.core3.torrent.TOTorrent;
-import org.gudy.azureus2.core3.torrent.TOTorrentAnnounceURLGroup;
-import org.gudy.azureus2.core3.torrent.TOTorrentAnnounceURLSet;
 import org.gudy.azureus2.core3.torrent.TOTorrentException;
 import org.gudy.azureus2.core3.torrent.TOTorrentFile;
 import org.gudy.azureus2.core3.util.UrlUtils;
@@ -126,7 +123,7 @@ public class ShareTorrentDialog extends JDialog {
 	private void initURLShortnerListeners() {
 		_bitlyShortnerListener = new AbstractHttpFetcherListener(
 				"http://api.bit.ly/v3/shorten?format=txt&login=frostwire&apiKey=R_749968a37da3260493d8aa19ee021d14&longUrl="
-						+ getLink()) {
+						+ UrlUtils.encode(getLink())) {
 			
 			@Override
 			public void onSuccess(byte[] body) {
@@ -293,29 +290,10 @@ public class ShareTorrentDialog extends JDialog {
 
 	private String getLink() {
 		if (_link == null) {
-			_link = "http://maglnk.com/" + _info_hash + "/?" + getMagnetURLParameters();
+			_link = "http://maglnk.com/" + _info_hash + "/?" + TorrentUtil.getMagnetURLParameters(_torrent);
 		}
 		return _link;
 	}
-
-	private String getMagnetURLParameters() {
-	    StringBuilder sb = new StringBuilder();
-	    //dn
-	    sb.append("dn=" + UrlUtils.encode(_torrent_name));
-	    
-	    TOTorrentAnnounceURLGroup announceURLGroup = _torrent.getAnnounceURLGroup();
-	    TOTorrentAnnounceURLSet[] announceURLSets = announceURLGroup.getAnnounceURLSets();
-	    
-	    for (TOTorrentAnnounceURLSet set : announceURLSets) {
-	        URL[] announceURLs = set.getAnnounceURLs();
-	        for (URL url : announceURLs) {
-	            sb.append("&tr=");
-	            sb.append(UrlUtils.encode(url.toString()));
-	        }
-	    }
-	    
-        return sb.toString();
-    }
 
     private void performAsyncURLShortening(AbstractHttpFetcherListener listener) {
 		HttpFetcher asyncFetcher = new HttpFetcher(listener.getShortenerURL(), 2000);
@@ -512,7 +490,7 @@ public class ShareTorrentDialog extends JDialog {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			GUIMediator.setClipboardContent(TorrentUtil.getMagnet(_info_hash) + "&" + getMagnetURLParameters());
+			GUIMediator.setClipboardContent(TorrentUtil.getMagnet(_info_hash) + "&" + TorrentUtil.getMagnetURLParameters(_torrent));
 			setTitle(I18n.tr("Magnet copied to clipboard."));
 			
 			JButton source = (JButton) e.getSource();
