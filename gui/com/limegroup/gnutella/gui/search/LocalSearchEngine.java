@@ -304,7 +304,7 @@ public class LocalSearchEngine {
             String url = viaHttp ? webSearchResult.getTorrentURI() : TorrentUtil.getMagnet(webSearchResult.getHash());
             //System.out.println("Download - " + url);
 
-            TorrentDownloaderFactory.create(new LocalSearchTorrentDownloaderListener(guid, query, webSearchResult, searchEngine, info), url, null, saveDir).start();
+            TorrentDownloaderFactory.create(new LocalSearchTorrentDownloaderListener(guid, query, webSearchResult, searchEngine, info), url, webSearchResult.getTorrentDetailsURL(), saveDir).start();
         }
     }
 

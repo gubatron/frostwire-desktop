@@ -548,7 +548,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     public void openTorrentSearchResult(final WebSearchResult webSearchResult, final boolean partialDownload, final ActionListener postPartialDownloadAction) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
-                BTDownload downloader = new TorrentFetcherDownload(webSearchResult.getTorrentURI(), webSearchResult.getFilenameNoExtension(), webSearchResult
+                BTDownload downloader = new TorrentFetcherDownload(webSearchResult.getTorrentURI(), webSearchResult.getTorrentDetailsURL(), webSearchResult.getFilenameNoExtension(), webSearchResult
                         .getHash(), webSearchResult.getSize(), partialDownload, postPartialDownloadAction);
                 add(downloader);
             }

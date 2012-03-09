@@ -90,10 +90,17 @@ public class HttpFetcher {
 	}
 	
 	public Object[] fetch(boolean gzip) throws IOException {
+	    return fetch(gzip, null);
+	}
+	
+	public Object[] fetch(boolean gzip, String referer) throws IOException {
         HttpHost httpHost = new HttpHost(_uri.getHost(), _uri.getPort());
 		HttpGet httpGet = new HttpGet(_uri);
 		httpGet.addHeader("Connection", "close");
-		
+		if (referer != null) {
+		    httpGet.addHeader("Referer", referer);
+		}
+
 		HttpParams params = httpGet.getParams();
 		HttpConnectionParams.setConnectionTimeout(params, _timeout);
         HttpConnectionParams.setSoTimeout(params, _timeout);
