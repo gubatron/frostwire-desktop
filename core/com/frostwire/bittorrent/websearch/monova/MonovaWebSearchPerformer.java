@@ -57,7 +57,7 @@ public class MonovaWebSearchPerformer extends HttpWebSearchPerformer {
     private String fetchTorrentPage(String torrentUrl) {
         HttpFetcher fetcher = null;
         try {
-            fetcher = new HttpFetcher(new URI(torrentUrl));
+            fetcher = new HttpFetcher(new URI(torrentUrl), HTTP_TIMEOUT);
         } catch (URISyntaxException e) {
             LOG.error("Error creating HttpFetcher", e);
             return null;

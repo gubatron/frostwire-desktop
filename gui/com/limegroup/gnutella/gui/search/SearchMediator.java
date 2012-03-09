@@ -284,7 +284,7 @@ public final class SearchMediator {
         
         for (final SearchEngine searchEngine : searchEngines) {
             if (searchEngine.isEnabled()) {
-                new Thread(new Runnable() {
+                Thread t = new Thread(new Runnable() {
                     public void run() {
         
                         final SearchResultMediator rp = getResultPanelForGUID(new GUID(guid));
@@ -317,7 +317,9 @@ public final class SearchMediator {
                             }
                         }
                     }
-                }).start();
+                });
+                t.setDaemon(true);
+                t.start();
             }
         }
         
@@ -326,7 +328,7 @@ public final class SearchMediator {
     }
 
 	public static void doLocalSearch(final byte[] guid, final String query, final SearchInformation info) {
-		new Thread(new Runnable() {
+		Thread t = new Thread(new Runnable() {
             public void run() {
 
                 final SearchResultMediator rp = getResultPanelForGUID(new GUID(guid));
@@ -360,7 +362,9 @@ public final class SearchMediator {
                 
                 LocalSearchEngine.instance().deepSearch(guid, query, info);
             }
-        }).start();
+        });
+		t.setDaemon(true);
+		t.start();
 	}
     
     private static List<SearchResult> normalizeWebResults(List<WebSearchResult> webResults, SearchEngine engine, SearchInformation info) {

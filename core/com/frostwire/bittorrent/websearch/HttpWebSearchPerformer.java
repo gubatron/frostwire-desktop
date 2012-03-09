@@ -30,7 +30,7 @@ public abstract class HttpWebSearchPerformer implements WebSearchPerformer {
 
         HttpFetcher fetcher = null;
         try {
-            fetcher = new HttpFetcher(getURI(keywords));
+            fetcher = new HttpFetcher(getURI(keywords), HTTP_TIMEOUT);
         } catch (URISyntaxException e) {
             e.printStackTrace();
             return result;

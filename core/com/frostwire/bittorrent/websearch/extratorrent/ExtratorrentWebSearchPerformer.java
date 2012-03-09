@@ -42,7 +42,7 @@ public class ExtratorrentWebSearchPerformer implements WebSearchPerformer {
 
         HttpFetcher fetcher = null;
         try {
-            fetcher = new HttpFetcher(new URI("http://extratorrent.com/json/?search=" + iha));
+            fetcher = new HttpFetcher(new URI("http://extratorrent.com/json/?search=" + iha), HTTP_TIMEOUT);
         } catch (URISyntaxException e) {
 
         }
