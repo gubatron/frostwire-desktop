@@ -30,7 +30,7 @@ public final class FrostWireUtils {
 	/** 
 	 * Constant for the current version of FrostWire.
 	 */
-	private static final String FROSTWIRE_VERSION = "5.3.2";
+	private static final String FROSTWIRE_VERSION = "5.3.3";
      
 	/**
 	 * Cached constant for the HTTP Server: header value.

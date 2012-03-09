@@ -19,6 +19,7 @@ package com.frostwire.gui.library;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.Icon;
@@ -71,11 +72,16 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
     static final int SIZE_IDX = 5;
     private static final LimeTableColumn SIZE_COLUMN = new LimeTableColumn(SIZE_IDX, "DEVICE_TABLE_SIZE", I18n.tr("Size"), 80, false, PlayableCell.class);
 
+    static final int DATE_ADDED_IDX = 6;
+    private static final LimeTableColumn DATE_ADDED_COLUMN = new LimeTableColumn(DATE_ADDED_IDX,"DEVICE_TABLE_DATE_ADDED",I18n.tr("Date Added"),80,true,PlayableCell.class);
 
+    static final int DATE_MODIFIED_IDX = 7;
+    private static final LimeTableColumn DATE_MODIFIED_COLUMN = new LimeTableColumn(DATE_MODIFIED_IDX, "DEVICE_TABLE_DATE_MODIFIED",I18n.tr("Date Modified"),80, false, PlayableCell.class);
+    
     /**
      * Total number of columns
      */
-    static final int NUMBER_OF_COLUMNS = 6;
+    static final int NUMBER_OF_COLUMNS = 8;
 
     /**
      * Number of columns
@@ -138,6 +144,10 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
             return new PlayableCell(this, filterUnknown(initializer.year), playing, idx);
         case SIZE_IDX:
             return new PlayableCell(this, sizeHolder.toString(), playing, idx);
+        case DATE_ADDED_IDX:
+            return new PlayableCell(this, new Date(initializer.dateAdded*1000), playing, idx);
+        case DATE_MODIFIED_IDX:
+            return new PlayableCell(this, new Date(initializer.dateModified*1000), playing, idx);
         }
         return null;
     }
@@ -168,6 +178,10 @@ public final class LibraryDeviceTableDataLine extends AbstractLibraryTableDataLi
             return YEAR_COLUMN;
         case SIZE_IDX:
             return SIZE_COLUMN;
+        case DATE_ADDED_IDX:
+            return DATE_ADDED_COLUMN;
+        case DATE_MODIFIED_IDX:
+            return DATE_MODIFIED_COLUMN;
         }
         return null;
     }

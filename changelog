@@ -3,6 +3,8 @@ frostwire (5.3.3) stable; urgency=high
   * Added UT_METADATA extension to Vuze Core for improved magnet link support.
   * Upgraded Lucene library to v3.5.0.
   * Upgraded H2 to v1.3.164.
+  * When browsing FrostWire for Android devices (0.9.6+), date added
+    and date modified fields are available on all file types.
 
  -- FrostWire Team <contact@frostwire.com>  Thu, 08 Mar 2012 16:07:46 -0500
 
