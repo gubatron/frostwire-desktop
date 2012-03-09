@@ -11,10 +11,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.limewire.util.FileUtils;
 
 public class SmartSearchDB {
+    
+    private static final Log LOG = LogFactory.getLog(SmartSearchDB.class);
 
     public static final int OBJECT_NOT_SAVED_ID = -1;
     public static final int OBJECT_INVALID_ID = -2;
@@ -26,7 +31,7 @@ public class SmartSearchDB {
 
     private Connection _connection;
 
-    private boolean _closed;
+    private final AtomicBoolean closed = new AtomicBoolean(true);
 
     static {
         try {
@@ -54,10 +59,10 @@ public class SmartSearchDB {
     }
 
     public boolean isClosed() {
-        return _closed;
+        return closed.get();
     }
     
-    public synchronized List<List<Object>> query(String statementSql, Object... arguments) {
+    public List<List<Object>> query(String statementSql, Object... arguments) {
         if (isClosed()) {
             return new ArrayList<List<Object>>();
         }
@@ -66,19 +71,21 @@ public class SmartSearchDB {
         ResultSet resultSet = null;
 
         try {
-            statement = _connection.prepareStatement(statementSql);
-
-            if (arguments != null) {
-                for (int i = 0; i < arguments.length; i++) {
-                    statement.setObject(i + 1, arguments[i]);
+            synchronized (_connection) {
+                statement = _connection.prepareStatement(statementSql);
+    
+                if (arguments != null) {
+                    for (int i = 0; i < arguments.length; i++) {
+                        statement.setObject(i + 1, arguments[i]);
+                    }
                 }
+    
+                resultSet = statement.executeQuery();
+    
+                return convertResultSetToList(resultSet);
             }
-
-            resultSet = statement.executeQuery();
-
-            return convertResultSetToList(resultSet);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Throwable e) {
+            LOG.error("Error performing SQL statement", e);
         } finally {
             if (statement != null) {
                 try {
@@ -97,7 +104,7 @@ public class SmartSearchDB {
      * @param expression
      * @return
      */
-    public synchronized int insert(String statementSql, Object... arguments) {
+    public int insert(String statementSql, Object... arguments) {
         if (isClosed()) {
             return OBJECT_INVALID_ID;
         }
@@ -106,43 +113,24 @@ public class SmartSearchDB {
             return OBJECT_INVALID_ID;
         }
 
-        if (update(statementSql, arguments) != -1) {
-            return getIdentity();
+        synchronized (_connection) {
+            if (update(_connection, statementSql, arguments) > 0) {
+                return getIdentity(_connection);
+            }
         }
 
         return OBJECT_INVALID_ID;
     }
-    
-    /**
-     * This method is synchronized due to possible concurrent issues, specially
-     * during recently generated id retrieval.
-     * @param expression
-     * @return
-     */
-    public synchronized int update(String statementSql, Object... arguments) {
-        if (isClosed()) {
-            return -1;
-        }
 
-        return update(_connection, statementSql, arguments);
-    }
-
-    public synchronized void close() {
-    	//System.out.println("SmartSearchDB is shutting down.");
-
-    	if (isClosed()) {
-            return;
-        }
-
-        _closed = true;
-
-        try {
-            Statement statement = _connection.createStatement();
-            statement.execute("SHUTDOWN");
-            _connection.close();
-            //System.out.println("SmartSearchDB has shut down.");
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void close() {
+        if (closed.compareAndSet(false, true)) {
+            try {
+                Statement statement = _connection.createStatement();
+                statement.execute("SHUTDOWN");
+                _connection.close();
+            } catch (Throwable e) {
+                LOG.error("Error closing the smart search database", e);
+            }
         }
     }
     
@@ -152,8 +140,8 @@ public class SmartSearchDB {
             FileUtils.deleteRecursive(_databaseFile);
             _connection = createDatabase(_databaseFile, _name);
             return _connection; 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Throwable e) {
+            LOG.error("Error reseting smart search database", e);
         }
         
         return null;
@@ -173,10 +161,13 @@ public class SmartSearchDB {
                 sb.append(";ifexists=true");
             }
             
-            _closed = false;
+            closed.set(false);
             return DriverManager.getConnection(sb.toString(), "SA", "");
-        } catch (Exception e) {
-        	_closed = true;
+        } catch (Throwable e) {
+            if (createIfNotExists) {
+                LOG.error("Error opening the database", e);
+            }
+            closed.set(true);
             return null;
         }
     }
@@ -242,27 +233,23 @@ public class SmartSearchDB {
         return result;
     }
 
-    private int getIdentity() {
-        if (isClosed()) {
-            return OBJECT_INVALID_ID;
-        }
-
-        Statement statment = null;
+    private static int getIdentity(Connection connection) {
+        Statement statement = null;
         ResultSet resultSet = null;
 
         try {
-            statment = _connection.createStatement();
-            resultSet = statment.executeQuery("CALL IDENTITY()");
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("CALL IDENTITY()");
 
             resultSet.next();
 
             return resultSet.getInt(1);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Throwable e) {
+            LOG.error("Error performing SQL statement", e);
         } finally {
-            if (statment != null) {
+            if (statement != null) {
                 try {
-                    statment.close();
+                    statement.close();
                 } catch (SQLException e) {
                 }
             }
@@ -285,8 +272,8 @@ public class SmartSearchDB {
             }
 
             return statement.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Throwable e) {
+            LOG.error("Error performing SQL statement", e);
         } finally {
             if (statement != null) {
                 try {
