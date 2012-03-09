@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.commons.logging.Log;
@@ -21,6 +22,7 @@ import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloader;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderCallBackInterface;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderFactory;
 import org.gudy.azureus2.core3.util.TorrentUtils;
+import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.JsonEngine;
@@ -37,6 +39,13 @@ import com.limegroup.gnutella.settings.SearchSettings;
 public class LocalSearchEngine {
 
     private static final Log LOG = LogFactory.getLog(LocalSearchEngine.class);
+    
+    private static final ExecutorService DOWNLOAD_TORRENTS_EXECUTOR;
+    private static final int MAX_TORRENT_DOWNLOADS = 10;
+
+    static {
+        DOWNLOAD_TORRENTS_EXECUTOR = ExecutorsHelper.newFixedSizePriorityThreadPool(MAX_TORRENT_DOWNLOADS, "DownloadTorrentsExecutor");
+    }
 
     private final int DEEP_SEARCH_DELAY;
     private final int MAXIMUM_TORRENTS_TO_SCAN;
@@ -302,8 +311,8 @@ public class LocalSearchEngine {
                 rp.incrementSearchCount();
             }
             
-            Thread t = new Thread(new DownloadTorrentTask(order, guid, query, webSearchResult, searchEngine, info));
-            t.start();
+            DownloadTorrentTask task = new DownloadTorrentTask(order, guid, query, webSearchResult, searchEngine, info);
+            DOWNLOAD_TORRENTS_EXECUTOR.execute(task);
         }
     }
 

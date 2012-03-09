@@ -3,6 +3,7 @@ package org.limewire.concurrent;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadFactory;
@@ -119,6 +120,19 @@ public class ExecutorsHelper {
         return Executors.unconfigurableExecutorService(tpe);
     }
     
+    /**
+     * Creates a new ThreadPool with the maximum number of available threads.
+     * Items added while no threads are available to process them will wait
+     * until an executing item is finished and then be processed.
+     */
+    public static ExecutorService newFixedSizePriorityThreadPool(int size, String name) {
+        ThreadPoolExecutor tpe =  new ThreadPoolExecutor(size, size,
+                5L, TimeUnit.SECONDS,
+                new PriorityBlockingQueue<Runnable>(),
+                daemonThreadFactory(name));
+        tpe.allowCoreThreadTimeOut(true);
+        return Executors.unconfigurableExecutorService(tpe);
+    }
     
     /** Returns the default thread factory, using the given name. 
      * */
