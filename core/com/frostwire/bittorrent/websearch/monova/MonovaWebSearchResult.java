@@ -50,7 +50,7 @@ public class MonovaWebSearchResult implements WebSearchResult {
         seeds = parseSeeds(matcher.group(3));
 
         // Monova can't handle direct download of torrents without some sort of cookie
-        torrentURI = "magnet:?xt=urn:btih:" + infoHash;
+        // torrentURI = "magnet:?xt=urn:btih:" + infoHash;
     }
 
     private long parseSize(String group) {
