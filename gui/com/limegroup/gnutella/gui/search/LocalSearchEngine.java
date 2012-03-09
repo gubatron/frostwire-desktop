@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.commons.logging.Log;
@@ -25,7 +26,6 @@ import org.limewire.util.StringUtils;
 import com.frostwire.JsonEngine;
 import com.frostwire.alexandria.LibraryUtils;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
-import com.frostwire.gui.bittorrent.TorrentUtil;
 import com.frostwire.gui.filters.SearchFilter;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -232,6 +232,8 @@ public class LocalSearchEngine {
 
         List<SearchResultDataLine> allData = rp.getAllData();
         sortAndStripNonTorrents(allData);
+        
+        int order = 0;
 
         for (int i = 0; i < allData.size() && foundTorrents < MAXIMUM_TORRENTS_TO_SCAN; i++) {
             SearchResultDataLine line = allData.get(i);
@@ -258,7 +260,7 @@ public class LocalSearchEngine {
                 if (!KNOWN_INFO_HASHES.contains(webSearchResult.getHash())) {
                     KNOWN_INFO_HASHES.add(webSearchResult.getHash());
                     SearchEngine searchEngine = line.getSearchEngine();
-                    scanDotTorrent(webSearchResult, viaHttp, guid, query, searchEngine, info);
+                    scanDotTorrent(order++, webSearchResult, viaHttp, guid, query, searchEngine, info);
                 }
             }
         }
@@ -291,20 +293,17 @@ public class LocalSearchEngine {
      * @param searchEngine
      * @param info
      */
-    private void scanDotTorrent(WebSearchResult webSearchResult, boolean viaHttp, byte[] guid, String query, SearchEngine searchEngine, SearchInformation info) {
+    private void scanDotTorrent(int order, WebSearchResult webSearchResult, boolean viaHttp, byte[] guid, String query, SearchEngine searchEngine, SearchInformation info) {
         if (!torrentHasBeenIndexed(webSearchResult.getHash())) {
             // download the torrent
-            String saveDir = SearchSettings.SMART_SEARCH_DATABASE_FOLDER.getValue().getAbsolutePath();
-
+            
             SearchResultMediator rp = SearchMediator.getResultPanelForGUID(new GUID(guid));
             if (rp != null) {
                 rp.incrementSearchCount();
             }
-
-            String url = viaHttp ? webSearchResult.getTorrentURI() : TorrentUtil.getMagnet(webSearchResult.getHash());
-            //System.out.println("Download - " + url);
-
-            TorrentDownloaderFactory.create(new LocalSearchTorrentDownloaderListener(guid, query, webSearchResult, searchEngine, info), url, webSearchResult.getTorrentDetailsURL(), saveDir).start();
+            
+            Thread t = new Thread(new DownloadTorrentTask(order, guid, query, webSearchResult, searchEngine, info));
+            t.start();
         }
     }
 
@@ -313,7 +312,7 @@ public class LocalSearchEngine {
         return rows.size() > 0;
     }
 
-    public void indexTorrent(WebSearchResult searchResult, TOTorrent theTorrent, SearchEngine searchEngine) {
+    private void indexTorrent(WebSearchResult searchResult, TOTorrent theTorrent, SearchEngine searchEngine) {
         TorrentDBPojo torrentPojo = new TorrentDBPojo();
         torrentPojo.creationTime = searchResult.getCreationTime();
         torrentPojo.fileName = searchResult.getFileName();
@@ -345,18 +344,22 @@ public class LocalSearchEngine {
 
     private class LocalSearchTorrentDownloaderListener implements TorrentDownloaderCallBackInterface {
 
-        private AtomicBoolean finished = new AtomicBoolean(false);
-        private byte[] guid;
+        private final AtomicBoolean finished = new AtomicBoolean(false);
+        
+        private final byte[] guid;
         private final Set<String> tokens;
-        private SearchEngine searchEngine;
-        private WebSearchResult webSearchResult;
-        private SearchInformation info;
-        public LocalSearchTorrentDownloaderListener(byte[] guid, String query, WebSearchResult webSearchResult, SearchEngine searchEngine, SearchInformation info) {
+        private final SearchEngine searchEngine;
+        private final WebSearchResult webSearchResult;
+        private final SearchInformation info;
+        private final CountDownLatch finishSignal;
+        
+        public LocalSearchTorrentDownloaderListener(byte[] guid, String query, WebSearchResult webSearchResult, SearchEngine searchEngine, SearchInformation info, CountDownLatch finishSignal) {
             this.guid = guid;
             this.tokens = new HashSet<String>(Arrays.asList(query.toLowerCase().split(" ")));
             this.searchEngine = searchEngine;
             this.webSearchResult = webSearchResult;
             this.info = info;
+            this.finishSignal = finishSignal;
         }
 
         @Override
@@ -377,6 +380,8 @@ public class LocalSearchEngine {
                 } catch (Throwable e) {
                     LOG.error("Error during torrent indexing", e);
                 }
+                
+                finishSignal.countDown();
             }
 
             switch (state) {
@@ -388,6 +393,7 @@ public class LocalSearchEngine {
                 if (rp != null) {
                     rp.decrementSearchCount();
                 }
+                finishSignal.countDown();
                 break;
             }
         }
@@ -404,6 +410,8 @@ public class LocalSearchEngine {
             if (rp == null || rp.isStopped()) {
                 return;
             }
+            
+            rp.decrementSearchCount();
 
             SearchFilter filter = SearchMediator.getSearchFilterFactory().createFilter();
 
@@ -456,5 +464,52 @@ public class LocalSearchEngine {
 
     public void resetDB() {
         DB.reset();
+    }
+    
+    private class DownloadTorrentTask implements Runnable, Comparable<DownloadTorrentTask> {
+        
+        private final int order;
+        private final byte[] guid;
+        private final String query;
+        private final SearchEngine searchEngine;
+        private final WebSearchResult webSearchResult;
+        private final SearchInformation info;
+        
+        public DownloadTorrentTask(int order, byte[] guid, String query, WebSearchResult webSearchResult, SearchEngine searchEngine, SearchInformation info) {
+            this.order = order;
+            this.guid = guid;
+            this.query = query;
+            this.searchEngine = searchEngine;
+            this.webSearchResult = webSearchResult;
+            this.info = info;
+        }
+
+        @Override
+        public int compareTo(DownloadTorrentTask o) {
+            return Integer.valueOf(order).compareTo(Integer.valueOf(o.order));
+        }
+
+        @Override
+        public void run() {
+            
+            SearchResultMediator rp = SearchMediator.getResultPanelForGUID(new GUID(guid));
+
+            // user closed the tab.
+            if (rp == null || rp.isStopped()) {
+                return;
+            }
+            
+            String saveDir = SearchSettings.SMART_SEARCH_DATABASE_FOLDER.getValue().getAbsolutePath();
+            
+            CountDownLatch finishSignal = new CountDownLatch(1);
+            
+            TorrentDownloaderFactory.create(new LocalSearchTorrentDownloaderListener(guid, query, webSearchResult, searchEngine, info, finishSignal), webSearchResult.getTorrentURI(), webSearchResult.getTorrentDetailsURL(), saveDir).start();
+            
+            try {
+                finishSignal.await();
+            } catch (InterruptedException e) {
+                LOG.error("Error during await in DownloadTorrentTask", e);
+            }
+        }
     }
 }
