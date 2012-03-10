@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -272,7 +273,7 @@ public class FullTextLucene2 extends FullText {
                     File f = new File(path);
                     Directory indexDir = FSDirectory.open(f);
                     boolean recreate = !IndexReader.indexExists(indexDir);
-                    Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_30);
+                    Analyzer analyzer = new StandardAnalyzer(Version.LUCENE_30, Collections.emptySet());
                     IndexWriter writer = new IndexWriter(indexDir, analyzer,
                             recreate, IndexWriter.MaxFieldLength.UNLIMITED);
                     //see http://wiki.apache.org/lucene-java/NearRealtimeSearch
