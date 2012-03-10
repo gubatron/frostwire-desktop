@@ -24,7 +24,7 @@ public class SmartSearchDB {
     public static final int OBJECT_NOT_SAVED_ID = -1;
     public static final int OBJECT_INVALID_ID = -2;
     
-    public static final int SMART_SEARCH_DATABASE_VERSION = 5;
+    public static final int SMART_SEARCH_DATABASE_VERSION = 6;
 
     private final File _databaseFile;
     private final String _name;
@@ -99,8 +99,6 @@ public class SmartSearchDB {
     }
     
     /**
-     * This method is synchronized due to possible concurrent issues, specially
-     * during recently generated id retrieval.
      * @param expression
      * @return
      */
@@ -113,6 +111,20 @@ public class SmartSearchDB {
             return OBJECT_INVALID_ID;
         }
 
+        synchronized (_connection) {
+            if (update(_connection, statementSql, arguments) > 0) {
+                return getIdentity(_connection);
+            }
+        }
+
+        return OBJECT_INVALID_ID;
+    }
+    
+    public int update(String statementSql, Object... arguments) {
+        if (isClosed()) {
+            return OBJECT_INVALID_ID;
+        }
+        
         synchronized (_connection) {
             if (update(_connection, statementSql, arguments) > 0) {
                 return getIdentity(_connection);
@@ -178,7 +190,7 @@ public class SmartSearchDB {
         update(connection, "SET IGNORECASE TRUE");
         
         //TORRENTS
-        update(connection, "CREATE TABLE TORRENTS (torrentId INTEGER IDENTITY, infoHash VARCHAR(60), timestamp BIGINT, torrentName VARCHAR(10000), seeds INTEGER, json VARCHAR(131072))");
+        update(connection, "CREATE TABLE TORRENTS (torrentId INTEGER IDENTITY, infoHash VARCHAR(60), timestamp BIGINT, torrentName VARCHAR(10000), seeds INTEGER, indexed BOOLEAN, json VARCHAR(131072))");
         update(connection, "CREATE INDEX idxTorrents ON TORRENTS (infoHash)");
         update(connection, "CREATE INDEX idxSeeds ON TORRENTS(seeds)");
         

@@ -24,6 +24,7 @@ import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloader;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderCallBackInterface;
 import org.gudy.azureus2.core3.torrentdownloader.TorrentDownloaderFactory;
 import org.gudy.azureus2.core3.util.TorrentUtils;
+import org.h2.fulltext.FullTextLucene2;
 import org.limewire.concurrent.ExecutorsHelper;
 import org.limewire.util.StringUtils;
 
@@ -190,11 +191,9 @@ public class LocalSearchEngine {
 
                 results.add(new SmartSearchResult(torrentPojo, torrentFilePojo));
                 KNOWN_INFO_HASHES.add(torrentPojo.hash);
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 // keep going dude
-                System.out.println("Issues with POJO deserialization -> " + torrentJSON);
-                e.printStackTrace();
-                System.out.println("=====================");
+                LOG.error("Issues with POJO deserialization -> " + torrentJSON, e);
             }
         }
 
@@ -320,12 +319,14 @@ public class LocalSearchEngine {
             
             DownloadTorrentTask task = new DownloadTorrentTask(order, guid, query, webSearchResult, searchEngine, info);
             DOWNLOAD_TORRENTS_EXECUTOR.execute(task);
+        } else {
+            System.out.println(webSearchResult.getHash() + " indexed");
         }
     }
 
     private boolean torrentHasBeenIndexed(String infoHash) {
-        List<List<Object>> rows = DB.query("SELECT * FROM Torrents WHERE infoHash LIKE ?", infoHash);
-        return rows.size() > 0;
+        List<List<Object>> rows = DB.query("SELECT indexed FROM Torrents WHERE infoHash LIKE ?", infoHash);
+        return rows.size() > 0 && (Boolean) rows.get(0).get(0);
     }
 
     private void indexTorrent(WebSearchResult searchResult, TOTorrent theTorrent, SearchEngine searchEngine) {
@@ -534,7 +535,7 @@ public class LocalSearchEngine {
                 int n = 0;
                 
                 ArrayList<IndexTorrentElement> list = new ArrayList<IndexTorrentElement>();
-                while (n < 100) {
+                while (n < 1000) {
                     IndexTorrentElement e = INDEX_TORRENT_QUEUE.poll();
                     if (e != null) {
                         list.add(e);
@@ -545,7 +546,10 @@ public class LocalSearchEngine {
                 }
                 
                 indexElements(list);
-                
+
+                if (n > 0) {
+                    Thread.sleep(1000);
+                }
             } catch (Throwable e) {
                 LOG.error("General error in torrent index task", e);
             }
@@ -553,6 +557,7 @@ public class LocalSearchEngine {
         
         private void indexElements(ArrayList<IndexTorrentElement> list) {
             // disable lucene indexing
+            FullTextLucene2.enableIndexing("FILES", false);
             for (int i = 0; i < list.size(); i++) {
                 indexElement(list.get(i), i == list.size() - 1);
             }
@@ -564,11 +569,12 @@ public class LocalSearchEngine {
             
             String torrentJSON = JSON_ENGINE.toJson(torrent);
 
-            int torrentID = DB.insert("INSERT INTO Torrents (infoHash, timestamp, torrentName, seeds, json) VALUES (?, ?, LEFT(?, 10000), ?, ?)", torrent.hash, System.currentTimeMillis(), torrent.fileName.toLowerCase(), torrent.seeds, torrentJSON);
+            int torrentID = DB.insert("INSERT INTO Torrents (infoHash, timestamp, torrentName, seeds, indexed, json) VALUES (?, ?, LEFT(?, 10000), ?, ?, ?)", torrent.hash, System.currentTimeMillis(), torrent.fileName.toLowerCase(), torrent.seeds, false, torrentJSON);
 
             for (int i = 0; i < files.length; i++) {
                 if (enableIndexing && i == indexTorrentElement.files.length - 1) {
                     // enable lucene indexing
+                    FullTextLucene2.enableIndexing("FILES", true);
                 }
                 
                 TorrentFileDBPojo file = files[i];
@@ -578,6 +584,8 @@ public class LocalSearchEngine {
 
                 DB.insert("INSERT INTO Files (torrentId, fileName, json, keywords) VALUES (?, LEFT(?, 10000), ?, ?)", torrentID, file.relativePath, fileJSON, keywords);
             }
+            
+            DB.update("UPDATE Torrents SET indexed=? WHERE torrentId=?", true, torrentID);
         }
     }
     
