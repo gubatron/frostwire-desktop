@@ -1,4 +1,6 @@
 frostwire (5.3.3) stable; urgency=high
+  * Noticeable improvements in CPU performance.
+  * Noticeable improvements in search result quality.
   * Updated TPB search to support magnet link search results.
   * Added UT_METADATA extension to Vuze Core for improved magnet link support.
   * Upgraded Lucene library to v3.5.0.
