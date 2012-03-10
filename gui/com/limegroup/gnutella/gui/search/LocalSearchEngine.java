@@ -566,7 +566,7 @@ public class LocalSearchEngine {
         private void indexElement(IndexTorrentElement indexTorrentElement, boolean enableIndexing) {
             TorrentDBPojo torrent = indexTorrentElement.torrent;
             TorrentFileDBPojo[] files = indexTorrentElement.files;
-            
+
             String torrentJSON = JSON_ENGINE.toJson(torrent);
 
             int torrentID = DB.insert("INSERT INTO Torrents (infoHash, timestamp, torrentName, seeds, indexed, json) VALUES (?, ?, LEFT(?, 10000), ?, ?, ?)", torrent.hash, System.currentTimeMillis(), torrent.fileName.toLowerCase(), torrent.seeds, false, torrentJSON);
@@ -576,7 +576,7 @@ public class LocalSearchEngine {
                     // enable lucene indexing
                     FullTextLucene2.enableIndexing("FILES", true);
                 }
-                
+
                 TorrentFileDBPojo file = files[i];
 
                 String fileJSON = JSON_ENGINE.toJson(file);
@@ -584,7 +584,7 @@ public class LocalSearchEngine {
 
                 DB.insert("INSERT INTO Files (torrentId, fileName, json, keywords) VALUES (?, LEFT(?, 10000), ?, ?)", torrentID, file.relativePath, fileJSON, keywords);
             }
-            
+
             DB.update("UPDATE Torrents SET indexed=? WHERE torrentId=?", true, torrentID);
         }
     }

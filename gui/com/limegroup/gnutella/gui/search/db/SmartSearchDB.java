@@ -9,6 +9,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -282,10 +283,11 @@ public class SmartSearchDB {
                     statement.setObject(i + 1, arguments[i]);
                 }
             }
-
             return statement.executeUpdate();
         } catch (Throwable e) {
-            LOG.error("Error performing SQL statement", e);
+            LOG.error("Error performing SQL statement: ", e);
+            LOG.error("SQL: " + statementSql);
+            LOG.error("Arguments: " + Arrays.asList(arguments));
         } finally {
             if (statement != null) {
                 try {
