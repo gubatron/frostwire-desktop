@@ -70,6 +70,13 @@ public class FullTextLucene2 extends FullText {
     private static final String LUCENE_FIELD_QUERY = "_QUERY";
     private static final String LUCENE_FIELD_MODIFIED = "_modified";
     private static final String LUCENE_FIELD_COLUMN_PREFIX = "_";
+    
+    // hack to enable/disable document indexing
+    private static java.util.Map<String, Boolean> TABLE_INDEXING_STATUS = new HashMap<String, Boolean>();
+    
+    public static void enableIndexing(String tableName, boolean enable) {
+        TABLE_INDEXING_STATUS.put(tableName, enable);
+    }
 
     /**
      * Initializes full text search functionality for this database. This adds
@@ -548,7 +555,7 @@ public class FullTextLucene2 extends FullText {
                     // update
                     if (hasChanged(oldRow, newRow, indexColumns)) {
                         delete(oldRow);
-                        insert(newRow, true);
+                        insert(newRow, isCommitEnabled());
                     }
                 } else {
                     // delete
@@ -556,7 +563,7 @@ public class FullTextLucene2 extends FullText {
                 }
             } else if (newRow != null) {
                 // insert
-                insert(newRow, true);
+                insert(newRow, isCommitEnabled());
             }
         }
 
@@ -716,6 +723,10 @@ public class FullTextLucene2 extends FullText {
                 }
             }
             return buff.toString();
+        }
+        
+        private boolean isCommitEnabled() {
+            return !TABLE_INDEXING_STATUS.containsKey(table) || TABLE_INDEXING_STATUS.get(table);
         }
     }
 
