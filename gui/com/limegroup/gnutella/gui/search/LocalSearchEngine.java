@@ -7,8 +7,10 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -43,8 +45,11 @@ public class LocalSearchEngine {
     private static final ExecutorService DOWNLOAD_TORRENTS_EXECUTOR;
     private static final int MAX_TORRENT_DOWNLOADS = 10;
 
+    private static final ExecutorService INDEX_TORRENTS_EXECUTOR;
+    
     static {
         DOWNLOAD_TORRENTS_EXECUTOR = ExecutorsHelper.newFixedSizePriorityThreadPool(MAX_TORRENT_DOWNLOADS, "DownloadTorrentsExecutor");
+        INDEX_TORRENTS_EXECUTOR = ExecutorsHelper.newFixedSizeThreadPool(1, "IndexTorrentsExecutor");
     }
 
     private final int DEEP_SEARCH_DELAY;
@@ -69,6 +74,8 @@ public class LocalSearchEngine {
     private HashSet<String> KNOWN_INFO_HASHES = new HashSet<String>();
     private SmartSearchDB DB;
     private JsonEngine JSON_ENGINE;
+    
+    private Queue<IndexTorrentElement> INDEX_TORRENT_QUEUE = new LinkedList<IndexTorrentElement>();
 
     public LocalSearchEngine() {
         DEEP_SEARCH_DELAY = SearchSettings.SMART_SEARCH_START_DELAY.getValue();
@@ -333,22 +340,19 @@ public class LocalSearchEngine {
         torrentPojo.torrentURI = searchResult.getTorrentURI();
         torrentPojo.vendor = searchResult.getVendor();
 
-        String torrentJSON = JSON_ENGINE.toJson(torrentPojo);
-
-        int torrentID = DB.insert("INSERT INTO Torrents (infoHash, timestamp, torrentName, seeds, json) VALUES (?, ?, LEFT(?, 10000), ?, ?)", torrentPojo.hash, System.currentTimeMillis(), torrentPojo.fileName.toLowerCase(), torrentPojo.seeds, torrentJSON);
-
         TOTorrentFile[] files = theTorrent.getFiles();
+        TorrentFileDBPojo[] tfPojos = new TorrentFileDBPojo[files.length];
 
-        for (TOTorrentFile f : files) {
+        for (int i = 0; i < files.length; i++) {
+            TOTorrentFile f = files[i];
             TorrentFileDBPojo tfPojo = new TorrentFileDBPojo();
             tfPojo.relativePath = f.getRelativePath();
             tfPojo.size = f.getLength();
-
-            String fileJSON = JSON_ENGINE.toJson(tfPojo);
-            String keywords = stringSanitize(torrentPojo.fileName + " " + tfPojo.relativePath).toLowerCase();
-
-            DB.insert("INSERT INTO Files (torrentId, fileName, json, keywords) VALUES (?, LEFT(?, 10000), ?, ?)", torrentID, tfPojo.relativePath, fileJSON, keywords);
+            tfPojos[i] = tfPojo;
         }
+        
+        INDEX_TORRENT_QUEUE.offer(new IndexTorrentElement(torrentPojo, tfPojos));
+        INDEX_TORRENTS_EXECUTOR.execute(new IndexTorrentTask());
     }
 
     private class LocalSearchTorrentDownloaderListener implements TorrentDownloaderCallBackInterface {
@@ -519,6 +523,71 @@ public class LocalSearchEngine {
             } catch (InterruptedException e) {
                 LOG.error("Error during await in DownloadTorrentTask", e);
             }
+        }
+    }
+    
+    private class IndexTorrentTask implements Runnable {
+        
+        @Override
+        public void run() {
+            try {
+                int n = 0;
+                
+                ArrayList<IndexTorrentElement> list = new ArrayList<IndexTorrentElement>();
+                while (n < 100) {
+                    IndexTorrentElement e = INDEX_TORRENT_QUEUE.poll();
+                    if (e != null) {
+                        list.add(e);
+                        n += e.files.length;
+                    } else {
+                        break;
+                    }
+                }
+                
+                indexElements(list);
+                
+            } catch (Throwable e) {
+                LOG.error("General error in torrent index task", e);
+            }
+        }
+        
+        private void indexElements(ArrayList<IndexTorrentElement> list) {
+            // disable lucene indexing
+            for (int i = 0; i < list.size(); i++) {
+                indexElement(list.get(i), i == list.size() - 1);
+            }
+        }
+
+        private void indexElement(IndexTorrentElement indexTorrentElement, boolean enableIndexing) {
+            TorrentDBPojo torrent = indexTorrentElement.torrent;
+            TorrentFileDBPojo[] files = indexTorrentElement.files;
+            
+            String torrentJSON = JSON_ENGINE.toJson(torrent);
+
+            int torrentID = DB.insert("INSERT INTO Torrents (infoHash, timestamp, torrentName, seeds, json) VALUES (?, ?, LEFT(?, 10000), ?, ?)", torrent.hash, System.currentTimeMillis(), torrent.fileName.toLowerCase(), torrent.seeds, torrentJSON);
+
+            for (int i = 0; i < files.length; i++) {
+                if (enableIndexing && i == indexTorrentElement.files.length - 1) {
+                    // enable lucene indexing
+                }
+                
+                TorrentFileDBPojo file = files[i];
+
+                String fileJSON = JSON_ENGINE.toJson(file);
+                String keywords = stringSanitize(torrent.fileName + " " + file.relativePath).toLowerCase();
+
+                DB.insert("INSERT INTO Files (torrentId, fileName, json, keywords) VALUES (?, LEFT(?, 10000), ?, ?)", torrentID, file.relativePath, fileJSON, keywords);
+            }
+        }
+    }
+    
+    private static class IndexTorrentElement {
+        public final TorrentDBPojo torrent;
+        public final TorrentFileDBPojo files[];
+        
+        public IndexTorrentElement(TorrentDBPojo torrent, TorrentFileDBPojo[] files) {
+            this.torrent = torrent;
+            this.files = files;
         }
     }
 }
