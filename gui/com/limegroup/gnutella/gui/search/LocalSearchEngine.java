@@ -210,7 +210,6 @@ public class LocalSearchEngine {
 
         // Wait for enough results or die if the ResultPanel has been closed.
         int tries = DEEP_SEARCH_ROUNDS;
-        Set<SearchEngine> engines = new HashSet<SearchEngine>(SearchEngine.getSearchEngines());
 
         for (int i = tries; i > 0; i--) {
             if ((rp = SearchMediator.getResultPanelForGUID(new GUID(guid))) == null) {
@@ -221,7 +220,7 @@ public class LocalSearchEngine {
                 return null;
             }
 
-            scanAvailableResults(guid, query, info, rp, engines);
+            scanAvailableResults(guid, query, info, rp);
 
             sleep();
         }
@@ -241,7 +240,7 @@ public class LocalSearchEngine {
         }
     }
 
-    public void scanAvailableResults(byte[] guid, String query, SearchInformation info, SearchResultMediator rp, Set<SearchEngine> searchEnginesThatGotTorrentViaHttp) {
+    public void scanAvailableResults(byte[] guid, String query, SearchInformation info, SearchResultMediator rp) {
 
         int foundTorrents = 0;
 
@@ -255,27 +254,13 @@ public class LocalSearchEngine {
 
             if (line.getInitializeObject() instanceof SearchEngineSearchResult) {
                 foundTorrents++;
-
-                boolean viaHttp = false;
-
-                // download at least one (hopefully with a good seed number) via http
-                SearchEngine engine = line.getSearchResult().getSearchEngine();
-                if (searchEnginesThatGotTorrentViaHttp.contains(engine)) {
-                    searchEnginesThatGotTorrentViaHttp.remove(engine);
-                    viaHttp = true;
-                }
-
+                
                 WebSearchResult webSearchResult = line.getSearchResult().getWebSearchResult();
-
-                if (webSearchResult.getHash() == null && !viaHttp) {
-                    // sorry, no possible to handle this case
-                    continue;
-                }
 
                 if (!KNOWN_INFO_HASHES.contains(webSearchResult.getHash())) {
                     KNOWN_INFO_HASHES.add(webSearchResult.getHash());
                     SearchEngine searchEngine = line.getSearchEngine();
-                    scanDotTorrent(order++, webSearchResult, viaHttp, guid, query, searchEngine, info);
+                    scanDotTorrent(order++, webSearchResult, guid, query, searchEngine, info);
                 }
             }
         }
@@ -308,7 +293,7 @@ public class LocalSearchEngine {
      * @param searchEngine
      * @param info
      */
-    private void scanDotTorrent(int order, WebSearchResult webSearchResult, boolean viaHttp, byte[] guid, String query, SearchEngine searchEngine, SearchInformation info) {
+    private void scanDotTorrent(int order, WebSearchResult webSearchResult, byte[] guid, String query, SearchEngine searchEngine, SearchInformation info) {
         if (!torrentHasBeenIndexed(webSearchResult.getHash())) {
             // download the torrent
             
