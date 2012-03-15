@@ -305,7 +305,7 @@ public class LocalSearchEngine {
             DownloadTorrentTask task = new DownloadTorrentTask(order, guid, query, webSearchResult, searchEngine, info);
             DOWNLOAD_TORRENTS_EXECUTOR.execute(task);
         } else {
-            System.out.println(webSearchResult.getHash() + " indexed");
+            //System.out.println(webSearchResult.getHash() + " indexed");
         }
     }
 
