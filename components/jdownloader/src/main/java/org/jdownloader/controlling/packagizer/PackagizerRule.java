@@ -17,7 +17,7 @@ public class PackagizerRule extends FilterRule implements Storable {
         ret.setIconKey(getIconKey());
         ret.setFilenameFilter(getFilenameFilter());
         ret.setFilesizeFilter(getFilesizeFilter());
-        //ret.setFiletypeFilter(getFiletypeFilter());
+        ret.setFiletypeFilter(getFiletypeFilter());
         //ret.setOnlineStatusFilter(getOnlineStatusFilter());
         //ret.setPluginStatusFilter(getPluginStatusFilter());
         ret.setHosterURLFilter(getHosterURLFilter());

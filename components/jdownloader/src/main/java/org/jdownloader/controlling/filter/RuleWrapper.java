@@ -38,10 +38,10 @@ public class RuleWrapper<T extends FilterRule> {
             //filesizeRule = new CompiledFilesizeFilter(rule.getFilesizeFilter());
             requiresLinkcheck = true;
         }
-//        if (rule.getFiletypeFilter().isEnabled()) {
-//            filetypeFilter = new CompiledFiletypeFilter(rule.getFiletypeFilter());
-//            requiresLinkcheck = true;
-//        }
+        if (rule.getFiletypeFilter().isEnabled()) {
+            filetypeFilter = new CompiledFiletypeFilter(rule.getFiletypeFilter());
+            requiresLinkcheck = true;
+        }
 
         if (rule.getHosterURLFilter().isEnabled()) {
             hosterRule = new CompiledRegexFilter(rule.getHosterURLFilter());
@@ -76,16 +76,16 @@ public class RuleWrapper<T extends FilterRule> {
 //    public CompiledFilesizeFilter getFilesizeRule() {
 //        return filesizeRule;
 //    }
-//
-//    public CompiledFiletypeFilter getFiletypeFilter() {
-//        return filetypeFilter;
-//    }
+
+    public CompiledFiletypeFilter getFiletypeFilter() {
+        return filetypeFilter;
+    }
 
     protected boolean                   requiresHoster = false;
     protected CompiledRegexFilter       hosterRule;
     protected CompiledRegexFilter       sourceRule;
     //protected CompiledFilesizeFilter    filesizeRule;
-    //protected CompiledFiletypeFilter    filetypeFilter;
+    protected CompiledFiletypeFilter    filetypeFilter;
     protected T                         rule;
     //protected CompiledOnlineStatusFiler onlineStatusFilter;
 
@@ -140,12 +140,12 @@ public class RuleWrapper<T extends FilterRule> {
     }
 
     public boolean checkFileType(CrawledLink link) {
-//        if (getFiletypeFilter() != null) {
-//            if (link.getLinkState() != LinkState.ONLINE) return false;
-//            String ext = Files.getExtension(link.getName());
-//            if (ext == null) return true;
-//            return getFiletypeFilter().matches(ext);
-//        }
+        if (getFiletypeFilter() != null) {
+            if (link.getLinkState() != LinkState.ONLINE) return false;
+            String ext = Files.getExtension(link.getName());
+            if (ext == null) return true;
+            return getFiletypeFilter().matches(ext);
+        }
         return true;
     }
 

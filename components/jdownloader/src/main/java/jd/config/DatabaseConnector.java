@@ -59,15 +59,15 @@ public class DatabaseConnector implements Serializable {
 
     static {
 
-        try {
-            Class.forName("org.hsqldb.jdbcDriver").newInstance();
-        } catch (final IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (final InstantiationException e) {
-            e.printStackTrace();
-        } catch (final ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Class.forName("org.hsqldb.jdbcDriver").newInstance();
+//        } catch (final IllegalAccessException e) {
+//            e.printStackTrace();
+//        } catch (final InstantiationException e) {
+//            e.printStackTrace();
+//        } catch (final ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
 
     }
 
@@ -81,64 +81,64 @@ public class DatabaseConnector implements Serializable {
     }
 
     public DatabaseConnector(String config) throws SQLException {
-        if (config != null) this.configpath = config;
-        if (con != null) return;
-        logger.finer("Loading database");
-        if (new File(configpath + "database.script").exists()) {
-            if (!checkDatabaseHeader()) { throw new SQLException("Database broken!");
-
-            }
-        }
-
-        con = DriverManager.getConnection("jdbc:hsqldb:file:" + configpath + "database;shutdown=true", "sa", "");
-
-        con.setAutoCommit(true);
-        con.createStatement().executeUpdate("SET LOGSIZE 1");
-
-        if (!new File(configpath + "database.script").exists()) {
-            logger.finer("No CONFIGURATION database found. Creating new one.");
-
-            con.createStatement().executeUpdate("CREATE TABLE config (name VARCHAR(256), obj OTHER)");
-            con.createStatement().executeUpdate("CREATE TABLE links (name VARCHAR(256), obj OTHER)");
-
-            final PreparedStatement pst = con.prepareStatement("INSERT INTO config VALUES (?,?)");
-            logger.finer("Starting database wrapper");
-            // cfg file conversion
-            for (final String tmppath : new File(configpath).list()) {
-                try {
-                    if (tmppath.endsWith(".cfg")) {
-                        logger.finest("Wrapping " + tmppath);
-
-                        final Object props = JDIO.loadObject(JDUtilities.getResourceFile("config/" + tmppath), false);
-
-                        if (props != null) {
-                            pst.setString(1, tmppath.split(".cfg")[0]);
-                            pst.setObject(2, props);
-                            pst.execute();
-                        }
-                    }
-                } catch (final Exception e) {
-                    JDLogger.exception(e);
-                }
-            }
-        }
-        ShutdownController.getInstance().addShutdownEvent(new ShutdownEvent() {
-
-            @Override
-            public void run() {
-                shutdownDatabase();
-            }
-
-            @Override
-            public int getHookPriority() {
-                return 0;
-            }
-
-            @Override
-            public String toString() {
-                return "save database...";
-            }
-        });
+//        if (config != null) this.configpath = config;
+//        if (con != null) return;
+//        logger.finer("Loading database");
+//        if (new File(configpath + "database.script").exists()) {
+//            if (!checkDatabaseHeader()) { throw new SQLException("Database broken!");
+//
+//            }
+//        }
+//
+//        con = DriverManager.getConnection("jdbc:hsqldb:file:" + configpath + "database;shutdown=true", "sa", "");
+//
+//        con.setAutoCommit(true);
+//        con.createStatement().executeUpdate("SET LOGSIZE 1");
+//
+//        if (!new File(configpath + "database.script").exists()) {
+//            logger.finer("No CONFIGURATION database found. Creating new one.");
+//
+//            con.createStatement().executeUpdate("CREATE TABLE config (name VARCHAR(256), obj OTHER)");
+//            con.createStatement().executeUpdate("CREATE TABLE links (name VARCHAR(256), obj OTHER)");
+//
+//            final PreparedStatement pst = con.prepareStatement("INSERT INTO config VALUES (?,?)");
+//            logger.finer("Starting database wrapper");
+//            // cfg file conversion
+//            for (final String tmppath : new File(configpath).list()) {
+//                try {
+//                    if (tmppath.endsWith(".cfg")) {
+//                        logger.finest("Wrapping " + tmppath);
+//
+//                        final Object props = JDIO.loadObject(JDUtilities.getResourceFile("config/" + tmppath), false);
+//
+//                        if (props != null) {
+//                            pst.setString(1, tmppath.split(".cfg")[0]);
+//                            pst.setObject(2, props);
+//                            pst.execute();
+//                        }
+//                    }
+//                } catch (final Exception e) {
+//                    JDLogger.exception(e);
+//                }
+//            }
+//        }
+//        ShutdownController.getInstance().addShutdownEvent(new ShutdownEvent() {
+//
+//            @Override
+//            public void run() {
+//                shutdownDatabase();
+//            }
+//
+//            @Override
+//            public int getHookPriority() {
+//                return 0;
+//            }
+//
+//            @Override
+//            public String toString() {
+//                return "save database...";
+//            }
+//        });
     }
 
     /**

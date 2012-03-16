@@ -52,7 +52,7 @@ public abstract class FilterRule implements Storable {
      * @return
      */
     public boolean isValid() {
-        return getFilenameFilter().isEnabled() || getFilesizeFilter().isEnabled() || /*getFiletypeFilter().isEnabled() ||*/ getHosterURLFilter().isEnabled() || getSourceURLFilter().isEnabled();// || getOnlineStatusFilter().isEnabled() || getPluginStatusFilter().isEnabled();
+        return getFilenameFilter().isEnabled() || getFilesizeFilter().isEnabled() || getFiletypeFilter().isEnabled() || getHosterURLFilter().isEnabled() || getSourceURLFilter().isEnabled();// || getOnlineStatusFilter().isEnabled() || getPluginStatusFilter().isEnabled();
     }
 
     public String toString(CrawledLink link) {
@@ -83,15 +83,15 @@ public abstract class FilterRule implements Storable {
             }
 
         }
-//        if (getFiletypeFilter().isEnabled()) {
-//            if (link != null && link.getName() != null && Files.getExtension(link.getName()) != null) {
-//                String ext = Files.getExtension(link.getName());
-//                cond.add(_GUI._.FilterRule_toString_type2(ext, filetypeFilter.toString()));
-//            } else {
-//                cond.add(_GUI._.FilterRule_toString_type(filetypeFilter.toString()));
-//            }
-//
-//        }
+        if (getFiletypeFilter().isEnabled()) {
+            if (link != null && link.getName() != null && Files.getExtension(link.getName()) != null) {
+                String ext = Files.getExtension(link.getName());
+                cond.add("_GUI._.FilterRule_toString_type2(ext, filetypeFilter.toString())");
+            } else {
+                cond.add("_GUI._.FilterRule_toString_type(filetypeFilter.toString())");
+            }
+
+        }
         if (getHosterURLFilter().isEnabled()) {
             if (link != null) {
                 cond.add("_GUI._.FilterRule_toString_hoster2(link.getURL(), hosterURLFilter.toString())");
@@ -144,14 +144,14 @@ public abstract class FilterRule implements Storable {
         this.sourceURLFilter = source;
     }
 
-//    public FiletypeFilter getFiletypeFilter() {
-//        if (filetypeFilter == null) filetypeFilter = new FiletypeFilter();
-//        return filetypeFilter;
-//    }
+    public FiletypeFilter getFiletypeFilter() {
+        if (filetypeFilter == null) filetypeFilter = new FiletypeFilter();
+        return filetypeFilter;
+    }
 
-//    public void setFiletypeFilter(FiletypeFilter type) {
-//        this.filetypeFilter = type;
-//    }
+    public void setFiletypeFilter(FiletypeFilter type) {
+        this.filetypeFilter = type;
+    }
 
 //    public void setOnlineStatusFilter(OnlineStatusFilter onlineStatusFilter) {
 //        this.onlineStatusFilter = onlineStatusFilter;
@@ -180,7 +180,7 @@ public abstract class FilterRule implements Storable {
         this.filenameFilter = filename;
     }
 
-    //private FiletypeFilter filetypeFilter;
+    private FiletypeFilter filetypeFilter;
     private RegexFilter    filenameFilter;
 
     private boolean        enabled;
