@@ -18,6 +18,7 @@ import org.limewire.util.OSUtils;
 import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.AzureusStarter;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
+import com.frostwire.gui.bittorrent.BTDownloadActions.RemoveAction;
 import com.frostwire.gui.filters.TableLineFilter;
 import com.frostwire.gui.library.LibraryUtils;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -67,6 +68,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
      * the buttons & popup menu.
      */
     private Action removeAction;
+    private Action removeYouTubeAction;
     private Action resumeAction;
     private Action pauseAction;
     private Action exploreAction;
@@ -108,6 +110,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         super.buildListeners();
 
         removeAction = BTDownloadActions.REMOVE_ACTION;
+        removeYouTubeAction = BTDownloadActions.REMOVE_YOUTUBE_ACTION;
         resumeAction = BTDownloadActions.RESUME_ACTION;
         pauseAction = BTDownloadActions.PAUSE_ACTION;
         exploreAction = BTDownloadActions.EXPLORE_ACTION;
@@ -453,7 +456,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     protected JPopupMenu createPopupMenu() {
-
+        
         JPopupMenu menu = new SkinPopupMenu();
 
         menu.add(new SkinMenuItem(resumeAction));
@@ -480,6 +483,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         menu.add(new SkinMenuItem(removeAction));
         menu.add(new SkinMenuItem(BTDownloadActions.REMOVE_TORRENT_ACTION));
         menu.add(new SkinMenuItem(BTDownloadActions.REMOVE_TORRENT_AND_DATA_ACTION));
+        menu.add(new SkinMenuItem(removeYouTubeAction));
 
         menu.addSeparator();
         
@@ -523,13 +527,21 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         removeAction.setEnabled(true);
         resumeAction.setEnabled(resumable);
         pauseAction.setEnabled(pausable);
-        copyMagnetAction.setEnabled(true);
-        copyHashAction.setEnabled(true);
+        copyMagnetAction.setEnabled(!isYouTubeDownload(dataLine.getInitializeObject()));
+        copyHashAction.setEnabled(!isYouTubeDownload(dataLine.getInitializeObject()));
         
         sendToItunesAction.setEnabled(isTransferFinished && hasAudioFiles);
         
 		shareTorrentAction.setEnabled(getSelectedDownloaders().length == 1
 				&& dataLine.getInitializeObject().isPausable());
+		
+		removeYouTubeAction.setEnabled(isYouTubeDownload(dataLine.getInitializeObject()));
+		BTDownloadActions.REMOVE_TORRENT_ACTION.setEnabled(!isYouTubeDownload(dataLine.getInitializeObject()));
+        BTDownloadActions.REMOVE_TORRENT_AND_DATA_ACTION.setEnabled(!isYouTubeDownload(dataLine.getInitializeObject()));
+    }
+    
+    private boolean isYouTubeDownload(BTDownload d) {
+        return d instanceof YouTubeVideoUrlDownload || d instanceof YouTubeItemDownload;
     }
 
     /**
@@ -546,6 +558,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         copyHashAction.setEnabled(false);
         shareTorrentAction.setEnabled(false);
         sendToItunesAction.setEnabled(false);
+        
+        BTDownloadActions.REMOVE_TORRENT_ACTION.setEnabled(false);
+        BTDownloadActions.REMOVE_TORRENT_AND_DATA_ACTION.setEnabled(false);
+        removeYouTubeAction.setEnabled(false);
     }
 
     public void openTorrentSearchResult(final WebSearchResult webSearchResult, final boolean partialDownload, final ActionListener postPartialDownloadAction) {

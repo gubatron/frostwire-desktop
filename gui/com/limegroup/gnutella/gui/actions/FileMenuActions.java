@@ -236,11 +236,14 @@ public class FileMenuActions {
      */
     public static boolean openMagnetOrTorrent(final String userText) {
 
-        if (userText.startsWith("magnet:?xt=urn:btih") || userText.startsWith("http://")) {
+        if (userText.startsWith("magnet:?xt=urn:btih")) {
             GUIMediator.instance().openTorrentURI(userText);
             return true;
         } else if (userText.matches(".*youtube.com.*")) {
             GUIMediator.instance().openYouTubeVideoUrl(userText);
+            return true;
+        } else if (userText.startsWith("http://")) {
+            GUIMediator.instance().openTorrentURI(userText);
             return true;
         } else {
 

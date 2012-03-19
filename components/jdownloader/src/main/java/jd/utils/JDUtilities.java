@@ -64,7 +64,7 @@ import org.xml.sax.InputSource;
  */
 public class JDUtilities {
 
-    private static final Logger      LOGGER              = JDLogger.getLogger();
+    //private static final Logger      LOGGER              = JDLogger.getLogger();
 
     /**
      * Die Konfiguration
@@ -345,9 +345,9 @@ public class JDUtilities {
                 JDLogger.exception(e);
                 final String configpath = JDUtilities.getJDHomeDirectoryFromEnvironment().getAbsolutePath() + "/config/";
                 if (e.getMessage().equals("Database broken!")) {
-                    LOGGER.severe("Database broken! Creating fresh Database");
+                    //LOGGER.severe("Database broken! Creating fresh Database");
                     if (!new File(configpath + "database.script").delete() || !new File(configpath + "database.properties").delete()) {
-                        LOGGER.severe("Could not delete broken Database");
+                        //LOGGER.severe("Could not delete broken Database");
                         //UserIO.getInstance().requestMessageDialog("Could not delete broken database. Please remove the JD_HOME/config directory and restart JD");
                     }
                 }
@@ -378,7 +378,7 @@ public class JDUtilities {
 
             return doc;
         } catch (Exception e) {
-            LOGGER.severe(xmlString);
+            //LOGGER.severe(xmlString);
             JDLogger.exception(e);
         }
         return null;

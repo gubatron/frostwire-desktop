@@ -18,7 +18,7 @@ public class PluginClassLoader extends URLClassLoader {
         }
 
         @Override
-        public Class loadClass(String name) throws ClassNotFoundException {
+        public synchronized Class loadClass(String name) throws ClassNotFoundException {
             try {
                 if (!name.startsWith("jd.plugins.hoster") && !name.startsWith("jd.plugins.decrypter")) { return super.loadClass(name); }
                 if (name.startsWith("jd.plugins.hoster.RTMPDownload")) { return super.loadClass(name); }
@@ -27,6 +27,7 @@ public class PluginClassLoader extends URLClassLoader {
                     // System.out.println("Class has already been loaded by this PluginClassLoaderChild");
                     return c;
                 }
+                
                 // Log.L.info(name.replace(".", "/") + ".class");
                 URL myUrl = Application.getRessourceURL(name.replace(".", "/") + ".class");
                 byte[] data;

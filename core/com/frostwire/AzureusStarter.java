@@ -3,8 +3,11 @@ package com.frostwire;
 import java.io.File;
 import java.util.concurrent.CountDownLatch;
 
+import jd.utils.JDUtilities;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.appwork.utils.Application;
 import org.gudy.azureus2.core3.config.COConfigurationManager;
 import org.limewire.util.CommonUtils;
 
@@ -27,7 +30,6 @@ public final class AzureusStarter {
 	private static AzureusCore AZUREUS_CORE;
 
 	public final static void start() {
-		
 		azureusInit();
 	}
 	
@@ -47,6 +49,14 @@ public final class AzureusStarter {
 	 * Initializes synchronously the azureus core
 	 */
 	private static synchronized void azureusInit() {
+	    
+	    Application.setApplication(CommonUtils.getUserSettingsDir().getAbsolutePath() + File.separator + "appwork" + File.separator);
+	    File jdHome = new File(CommonUtils.getUserSettingsDir().getAbsolutePath() + File.separator + "jd_home" + File.separator);
+	    if (!jdHome.exists()) {
+	        jdHome.mkdir();
+	    }
+	    JDUtilities.setJDHomeDirectory(jdHome);
+	    JDUtilities.getConfiguration().setProperty("DOWNLOAD_DIRECTORY", SharingSettings.TORRENT_DATA_DIR_SETTING.getValue().getAbsolutePath());
 	    
 	    File azureusUserPath = new File(CommonUtils.getUserSettingsDir() + File.separator + "azureus" + File.separator);
         if (!azureusUserPath.exists()) {

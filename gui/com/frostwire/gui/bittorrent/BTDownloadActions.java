@@ -28,6 +28,7 @@ final class BTDownloadActions {
     static final ResumeAction RESUME_ACTION = new ResumeAction();
     static final PauseAction PAUSE_ACTION = new PauseAction();
     static final RemoveAction REMOVE_ACTION = new RemoveAction(false, false);
+    static final RemoveAction REMOVE_YOUTUBE_ACTION = new RemoveYouTubeAction();
     static final RemoveAction REMOVE_TORRENT_ACTION = new RemoveAction(true, false);
     static final RemoveAction REMOVE_TORRENT_AND_DATA_ACTION = new RemoveAction(true, true);
     static final CopyMagnetAction COPY_MAGNET_ACTION = new CopyMagnetAction();
@@ -220,7 +221,7 @@ final class BTDownloadActions {
         }
     }
 
-    private static class RemoveAction extends RefreshingAction {
+    public static class RemoveAction extends RefreshingAction {
 
         /**
          * 
@@ -271,6 +272,16 @@ final class BTDownloadActions {
                 downloaders[i].setDeleteDataWhenRemove(_deleteData);
             }
             BTDownloadMediator.instance().removeSelection();
+        }
+    }
+    
+    public static class RemoveYouTubeAction extends RemoveAction {
+
+        public RemoveYouTubeAction() {
+            super(true, true);
+            putValue(Action.NAME, I18n.tr("Remove Download and Data"));
+            putValue(LimeAction.SHORT_NAME, I18n.tr("Remove Download and Data"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Remove Download and Data from selected downloads"));
         }
     }
     

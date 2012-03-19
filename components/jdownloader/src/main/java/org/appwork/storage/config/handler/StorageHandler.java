@@ -169,23 +169,23 @@ public class StorageHandler<T extends ConfigInterface> implements InvocationHand
             throw new InterfaceParseException(e);
         }
         Log.L.finer("Load Storage: "+path);
-        ShutdownController.getInstance().addShutdownEvent(new ShutdownEvent() {
-
-            @Override
-            public int getHookPriority() {
-                return 0;
-            }
-
-            @Override
-            public void run() {
-                StorageHandler.this.primitiveStorage.save();
-            }
-
-            @Override
-            public String toString() {
-                return "Save " + StorageHandler.this.path + "[" + configInterface.getName() + "]";
-            }
-        });
+//        ShutdownController.getInstance().addShutdownEvent(new ShutdownEvent() {
+//
+//            @Override
+//            public int getHookPriority() {
+//                return 0;
+//            }
+//
+//            @Override
+//            public void run() {
+//                StorageHandler.this.primitiveStorage.save();
+//            }
+//
+//            @Override
+//            public String toString() {
+//                return "Save " + StorageHandler.this.path + "[" + configInterface.getName() + "]";
+//            }
+//        });
 
     }
 

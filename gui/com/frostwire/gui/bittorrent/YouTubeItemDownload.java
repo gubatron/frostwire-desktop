@@ -11,6 +11,7 @@ import jd.plugins.FilePackage;
 import jd.plugins.LinkStatus;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
+import org.limewire.util.FilenameUtils;
 
 import com.limegroup.gnutella.gui.I18n;
 
@@ -24,6 +25,7 @@ public class YouTubeItemDownload implements BTDownload {
     private final FilePackage filePackage;
     private final DownloadLink link;
     private final Date dateCreated;
+    private final String saveLocation;
     
     private boolean deleteDataWhenRemove;
     
@@ -33,6 +35,7 @@ public class YouTubeItemDownload implements BTDownload {
         this.filePackage = filePackage;
         this.link = filePackage.getChildren().get(0);
         this.dateCreated = new Date();
+        this.saveLocation = readFilename(filePackage);
 
         this.started = false;
         start();
@@ -50,7 +53,7 @@ public class YouTubeItemDownload implements BTDownload {
 
     @Override
     public String getDisplayName() {
-        return link.getName();
+        return FilenameUtils.getName(saveLocation);
     }
 
     @Override
@@ -93,7 +96,7 @@ public class YouTubeItemDownload implements BTDownload {
 
     @Override
     public File getSaveLocation() {
-        return new File(link.getFileOutput());
+        return new File(saveLocation);
     }
 
     @Override
@@ -225,5 +228,14 @@ public class YouTubeItemDownload implements BTDownload {
             }
 
         }, true);
+    }
+    
+    private String readFilename(FilePackage filePackage) {
+        DownloadLink dl = filePackage.getChildren().get(0);
+        if (dl.getStringProperty("convertto", "").equals("AUDIOMP3")) {
+            return FilenameUtils.getFullPath(dl.getFileOutput()) + File.separator + FilenameUtils.getBaseName(dl.getName()) + ".mp3";
+        }
+
+        return dl.getName();
     }
 }
