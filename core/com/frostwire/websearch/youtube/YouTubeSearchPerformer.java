@@ -18,6 +18,7 @@
 
 package com.frostwire.websearch.youtube;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +66,13 @@ public class YouTubeSearchPerformer implements WebSearchPerformer {
             return null;
         }
 
-        String json = new String(jsonBytes);
+        String json = null;
+        
+        try {
+            json = new String(jsonBytes, "UTF-8");
+        } catch (UnsupportedEncodingException e1) {
+            json = new String(jsonBytes);
+        }
 
         json = fixJson(json);
 
