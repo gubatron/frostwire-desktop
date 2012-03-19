@@ -297,6 +297,9 @@ public class DatabaseConnector implements Serializable {
      * Returns a CONFIGURATION
      */
     public synchronized Object getData(final String name) {
+        if (true) {
+            return null;
+        }
         synchronized (LOCK) {
             Object ret = null;
             if (!isDatabaseShutdown()) {

@@ -35,6 +35,8 @@ import javax.swing.JOptionPane;
 import javax.swing.ListCellRenderer;
 import javax.swing.SwingUtilities;
 
+import jd.plugins.FilePackage;
+
 import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.i18n.I18nMarker;
 import org.limewire.service.ErrorService;
@@ -1818,4 +1820,14 @@ public final class GUIMediator {
         getBTDownloadMediator().openTorrentURI(item.getTorrentURI(), relativePath, item.getHash(), null);
         setWindow(GUIMediator.Tabs.SEARCH);
 	}
+	
+	public void openYouTubeVideoUrl(String videoUrl) {
+	    getBTDownloadMediator().openYouTubeVideoUrl(videoUrl);
+        setWindow(GUIMediator.Tabs.SEARCH);
+	}
+
+    public void openYouTubeItem(FilePackage filePackage) {
+        getBTDownloadMediator().openYouTubeItem(filePackage);
+        setWindow(GUIMediator.Tabs.SEARCH);
+    }
 }

@@ -1,3 +1,21 @@
+/*
+ * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
+ * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui.search;
 
 import java.util.Arrays;
@@ -16,6 +34,7 @@ import com.frostwire.bittorrent.websearch.mininova.MininovaWebSearchPerformer;
 import com.frostwire.bittorrent.websearch.monova.MonovaWebSearchPerformer;
 import com.frostwire.bittorrent.websearch.tpb.TPBWebSearchPerformer;
 import com.frostwire.bittorrent.websearch.vertor.VertorWebSearchPerformer;
+import com.frostwire.websearch.youtube.YouTubeSearchPerformer;
 import com.limegroup.gnutella.settings.SearchEnginesSettings;
 
 public final class SearchEngine {
@@ -35,6 +54,7 @@ public final class SearchEngine {
     public static final int VERTOR_ID = 5;
     public static final int TPB_ID = 6;
     public static final int MONOVA_ID = 7;
+    public static final int YOUTUBE_ID = 9;
 
     public static final SearchEngine CLEARBITS = new SearchEngine(CLEARBITS_ID, "ClearBits", new ClearBitsWebSearchPerformer(), SearchEnginesSettings.CLEARBITS_SEARCH_ENABLED);
     public static final SearchEngine MININOVA = new SearchEngine(MININOVA_ID, "Mininova", new MininovaWebSearchPerformer(), SearchEnginesSettings.MININOVA_SEARCH_ENABLED);
@@ -44,6 +64,7 @@ public final class SearchEngine {
     public static final SearchEngine VERTOR = new SearchEngine(VERTOR_ID, "Vertor", new VertorWebSearchPerformer(), SearchEnginesSettings.VERTOR_SEARCH_ENABLED);
     public static final SearchEngine TPB = new SearchEngine(TPB_ID, "TPB", new TPBWebSearchPerformer(), SearchEnginesSettings.TPB_SEARCH_ENABLED);
     public static final SearchEngine MONOVA = new SearchEngine(MONOVA_ID, "Monova", new MonovaWebSearchPerformer(), SearchEnginesSettings.MONOVA_SEARCH_ENABLED);
+    public static final SearchEngine YOUTUBE = new SearchEngine(YOUTUBE_ID, "YouTube", new YouTubeSearchPerformer(), SearchEnginesSettings.YOUTUBE_SEARCH_ENABLED);
 
     private SearchEngine(int id, String name, WebSearchPerformer performer, BooleanSetting setting) {
         _id = id;
@@ -70,7 +91,7 @@ public final class SearchEngine {
     }
 
     public static List<SearchEngine> getSearchEngines() {
-        return Arrays.asList(CLEARBITS, MININOVA, ISOHUNT, KAT, EXTRATORRENT, VERTOR, TPB, MONOVA);
+        return Arrays.asList(ISOHUNT, YOUTUBE, CLEARBITS, MININOVA, KAT, EXTRATORRENT, VERTOR, TPB, MONOVA);
     }
     
     public WebSearchPerformer getPerformer() {

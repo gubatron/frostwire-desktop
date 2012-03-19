@@ -317,6 +317,14 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, SearchRe
         
         int c1 = a.getSeeds();
         int c2 = b.getSeeds();
+        
+        if (a.getSearchEngine().getId() == SearchEngine.YOUTUBE_ID) {
+            c1 = 1000;
+        }
+        if (b.getSearchEngine().getId() == SearchEngine.YOUTUBE_ID) {
+            c2 = 1000;
+        }
+        
         return (c1 - c2) * _ascending;
     }
     

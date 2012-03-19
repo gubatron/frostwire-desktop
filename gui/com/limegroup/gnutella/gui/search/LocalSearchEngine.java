@@ -16,6 +16,13 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import jd.controlling.linkcollector.LinkCollectingJob;
+import jd.controlling.linkcollector.LinkCollector;
+import jd.controlling.linkcrawler.CrawledLink;
+import jd.controlling.linkcrawler.CrawledPackage;
+import jd.controlling.linkcrawler.LinkCrawler;
+import jd.plugins.FilePackage;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.gudy.azureus2.core3.torrent.TOTorrent;
@@ -32,6 +39,9 @@ import com.frostwire.JsonEngine;
 import com.frostwire.alexandria.LibraryUtils;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.filters.SearchFilter;
+import com.frostwire.websearch.youtube.YouTubeEntry;
+import com.frostwire.websearch.youtube.YouTubeEntryLink;
+import com.frostwire.websearch.youtube.YouTubeSearchResult;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.search.db.SmartSearchDB;
@@ -44,12 +54,14 @@ public class LocalSearchEngine {
     private static final Log LOG = LogFactory.getLog(LocalSearchEngine.class);
     
     private static final ExecutorService DOWNLOAD_TORRENTS_EXECUTOR;
+    private static final ExecutorService CRAWL_YOUTUBE_LINKS_EXECUTOR;
     private static final int MAX_TORRENT_DOWNLOADS = 10;
 
     private static final ExecutorService INDEX_TORRENTS_EXECUTOR;
     
     static {
         DOWNLOAD_TORRENTS_EXECUTOR = ExecutorsHelper.newFixedSizePriorityThreadPool(MAX_TORRENT_DOWNLOADS, "DownloadTorrentsExecutor");
+        CRAWL_YOUTUBE_LINKS_EXECUTOR = ExecutorsHelper.newFixedSizePriorityThreadPool(1, "CRAWL_YOUTUBE_LINKS_EXECUTOR");
         INDEX_TORRENTS_EXECUTOR = ExecutorsHelper.newFixedSizeThreadPool(1, "IndexTorrentsExecutor");
     }
 
@@ -210,6 +222,8 @@ public class LocalSearchEngine {
 
         // Wait for enough results or die if the ResultPanel has been closed.
         int tries = DEEP_SEARCH_ROUNDS;
+        
+        boolean scanYouTube = true;
 
         for (int i = tries; i > 0; i--) {
             if ((rp = SearchMediator.getResultPanelForGUID(new GUID(guid))) == null) {
@@ -220,7 +234,8 @@ public class LocalSearchEngine {
                 return null;
             }
 
-            scanAvailableResults(guid, query, info, rp);
+            scanAvailableResults(guid, query, info, rp, scanYouTube);
+            scanYouTube = false;
 
             sleep();
         }
@@ -240,7 +255,7 @@ public class LocalSearchEngine {
         }
     }
 
-    public void scanAvailableResults(byte[] guid, String query, SearchInformation info, SearchResultMediator rp) {
+    private void scanAvailableResults(byte[] guid, String query, SearchInformation info, SearchResultMediator rp, boolean scanYouTube) {
 
         int foundTorrents = 0;
 
@@ -249,10 +264,21 @@ public class LocalSearchEngine {
         
         int order = 0;
 
-        for (int i = 0; i < allData.size() && foundTorrents < MAXIMUM_TORRENTS_TO_SCAN; i++) {
+        for (int i = 0; i < allData.size(); i++) {
+            
             SearchResultDataLine line = allData.get(i);
 
             if (line.getInitializeObject() instanceof SearchEngineSearchResult) {
+                if (foundTorrents >= MAXIMUM_TORRENTS_TO_SCAN) {
+                    if (!scanYouTube) {
+                        return;
+                    }
+                    continue;
+                }
+                if (!((SearchEngineSearchResult) line.getInitializeObject()).allowDeepSearch()) {
+                    continue;
+                }
+
                 foundTorrents++;
                 
                 WebSearchResult webSearchResult = line.getSearchResult().getWebSearchResult();
@@ -262,6 +288,15 @@ public class LocalSearchEngine {
                     SearchEngine searchEngine = line.getSearchEngine();
                     scanDotTorrent(order++, webSearchResult, guid, query, searchEngine, info);
                 }
+            } else if (line.getInitializeObject() instanceof YouTubePackageSearchResult) {
+                if (!scanYouTube) {
+                    continue;
+                }
+                WebSearchResult webSearchResult = line.getSearchResult().getWebSearchResult();
+                SearchEngine searchEngine = line.getSearchEngine();
+                
+                CrawlYouTubePackage task = new CrawlYouTubePackage(order++, guid, query, (YouTubeSearchResult) webSearchResult, searchEngine, info);
+                CRAWL_YOUTUBE_LINKS_EXECUTOR.execute(task);
             }
         }
     }
@@ -276,7 +311,8 @@ public class LocalSearchEngine {
         while (iterator.hasNext()) {
             SearchResultDataLine next = iterator.next();
 
-            if (!next.getExtension().toLowerCase().contains("torrent")) {
+            if (!next.getExtension().toLowerCase().contains("torrent") &&
+                !next.getExtension().toLowerCase().contains("youtube")) {
                 iterator.remove();
             }
         }
@@ -465,7 +501,11 @@ public class LocalSearchEngine {
         DB.reset();
     }
     
-    private class DownloadTorrentTask implements Runnable, Comparable<DownloadTorrentTask> {
+    private interface DeepTask extends Runnable, Comparable<DeepTask> {
+        public int getOrder();
+    }
+    
+    private class DownloadTorrentTask implements DeepTask {
         
         private final int order;
         private final byte[] guid;
@@ -482,10 +522,15 @@ public class LocalSearchEngine {
             this.webSearchResult = webSearchResult;
             this.info = info;
         }
+        
+        @Override
+        public int getOrder() {
+            return order;
+        }
 
         @Override
-        public int compareTo(DownloadTorrentTask o) {
-            return Integer.valueOf(order).compareTo(Integer.valueOf(o.order));
+        public int compareTo(DeepTask o) {
+            return Integer.valueOf(getOrder()).compareTo(Integer.valueOf(o.getOrder()));
         }
 
         @Override
@@ -508,6 +553,114 @@ public class LocalSearchEngine {
                 finishSignal.await();
             } catch (InterruptedException e) {
                 LOG.error("Error during await in DownloadTorrentTask", e);
+            }
+        }
+    }
+    
+    private class CrawlYouTubePackage implements DeepTask {
+
+        private final int order;
+        private final byte[] guid;
+        private final String query;
+        private final SearchEngine searchEngine;
+        private final YouTubeSearchResult webSearchResult;
+        private final SearchInformation info;
+        
+        public CrawlYouTubePackage(int order, byte[] guid, String query, YouTubeSearchResult webSearchResult, SearchEngine searchEngine, SearchInformation info) {
+            this.order = order;
+            this.guid = guid;
+            this.query = query;
+            this.searchEngine = searchEngine;
+            this.webSearchResult = webSearchResult;
+            this.info = info;
+        }
+        
+        @Override
+        public int getOrder() {
+            return order;
+        }
+
+        @Override
+        public int compareTo(DeepTask o) {
+            return Integer.valueOf(getOrder()).compareTo(Integer.valueOf(o.getOrder()));
+        }
+        
+        @Override
+        public void run() {
+            try {
+                SearchResultMediator rp = SearchMediator.getResultPanelForGUID(new GUID(guid));
+
+                // user closed the tab.
+                if (rp == null || rp.isStopped()) {
+                    return;
+                }
+                
+                LinkCollector collector = LinkCollector.getInstance();
+                LinkCrawler crawler = collector.addCrawlerJob(new LinkCollectingJob(readVideoUrl(webSearchResult.getYouTubeEntry())));
+
+                crawler.waitForCrawling();
+
+                List<FilePackage> packages = new ArrayList<FilePackage>();
+                for (CrawledPackage pkg : new ArrayList<CrawledPackage>(collector.getPackages())) {
+                    for (CrawledLink link : new ArrayList<CrawledLink>(pkg.getChildren())) {
+                        ArrayList<CrawledLink> links = new ArrayList<CrawledLink>();
+                        links.add(link);
+                        packages.addAll(collector.removeAndConvert(links));
+                    }
+                }
+                
+                matchResults(packages);
+            } catch (Throwable e) {
+                LOG.error("Error crawling youtube: " + webSearchResult.getFilenameNoExtension(), e);
+            }
+        }
+        
+        private String readVideoUrl(YouTubeEntry entry) {
+            String url = null;
+
+            for (YouTubeEntryLink link : entry.link) {
+                if (link.rel.equals("alternate")) {
+                    url = link.href;
+                }
+            }
+
+            url = url.replace("https://", "http://").replace("&feature=youtube_gdata", "");
+
+            return url;
+        }
+        
+        private void matchResults(List<FilePackage> packages) {
+
+            if (!searchEngine.isEnabled()) {
+                return;
+            }
+
+            final SearchResultMediator rp = SearchMediator.getResultPanelForGUID(new GUID(guid));
+
+            // user closed the tab.
+            if (rp == null || rp.isStopped()) {
+                return;
+            }
+            
+            rp.decrementSearchCount();
+
+            SearchFilter filter = SearchMediator.getSearchFilterFactory().createFilter();
+
+            for (FilePackage p : packages) {
+                try {
+                final YouTubePackageItemSearchResult result = new YouTubePackageItemSearchResult(webSearchResult, p, searchEngine, info);
+
+                if (!filter.allow(result))
+                    continue;
+
+                    GUIMediator.safeInvokeAndWait(new Runnable() {
+                        public void run() {
+                            SearchMediator.getSearchResultDisplayer().addQueryResult(guid, result, rp);
+                        }
+                    });
+                } catch (Throwable e) {
+                    LOG.error("Error analysing youtube package", e);
+                }
             }
         }
     }

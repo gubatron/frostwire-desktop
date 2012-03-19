@@ -9,6 +9,8 @@ import java.util.List;
 import javax.swing.Action;
 import javax.swing.JPopupMenu;
 
+import jd.plugins.FilePackage;
+
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.limewire.util.OSUtils;
 
@@ -741,5 +743,23 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         } else {
             DATA_MODEL.sort(BTDownloadDataLine.DATE_CREATED_INDEX);
         }
+    }
+
+    public void openYouTubeVideoUrl(final String videoUrl) {
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                BTDownload downloader = new YouTubeVideoUrlDownload(videoUrl);
+                add(downloader);
+            }
+        });
+    }
+
+    public void openYouTubeItem(final FilePackage filePackage) {
+        GUIMediator.safeInvokeLater(new Runnable() {
+            public void run() {
+                BTDownload downloader = new YouTubeItemDownload(filePackage);
+                add(downloader);
+            }
+        });
     }
 }

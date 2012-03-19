@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.zip.GZIPInputStream;
 
 import org.apache.commons.logging.Log;
@@ -88,6 +89,14 @@ public class HttpFetcher {
 	public HttpFetcher(URI uri) {
 	    this(uri, DEFAULT_USER_AGENT);
 	}
+	
+	public HttpFetcher(String uri) {
+        this(convert(uri));
+    }
+
+    public HttpFetcher(String uri, int timeout) {
+        this(convert(uri), timeout);
+    }
 	
 	public Object[] fetch(boolean gzip) throws IOException {
 	    return fetch(gzip, null);
@@ -433,6 +442,14 @@ public class HttpFetcher {
             }
         } finally {
             instream.close();
+        }
+    }
+    
+    private static URI convert(String uri) {
+        try {
+            return new URI(uri);
+        } catch (URISyntaxException e) {
+            throw new IllegalArgumentException(e);
         }
     }
     

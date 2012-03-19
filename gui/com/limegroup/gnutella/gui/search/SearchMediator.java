@@ -17,6 +17,7 @@ import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.filters.SearchFilter;
 import com.frostwire.gui.filters.SearchFilterFactory;
 import com.frostwire.gui.filters.SearchFilterFactoryImpl;
+import com.frostwire.websearch.youtube.YouTubeSearchResult;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -70,6 +71,8 @@ public final class SearchMediator {
     static final String DOWNLOAD_PARTIAL_FILES_STRING = I18n.tr("Download Partial Files");
     
     static final String TORRENT_DETAILS_STRING = I18n.tr("Torrent Details");
+    
+    static final String YOUTUBE_DETAILS_STRING = I18n.tr("View in YouTube");
 
     /**
      * Variable for the component that handles all search input from the user.
@@ -368,18 +371,24 @@ public final class SearchMediator {
 	}
     
     private static List<SearchResult> normalizeWebResults(List<WebSearchResult> webResults, SearchEngine engine, SearchInformation info) {
-        
+
         List<SearchResult> result = new ArrayList<SearchResult>();
-        
+
         for (WebSearchResult webResult : webResults) {
-                
-                SearchResult sr = new SearchEngineSearchResult(webResult, engine, info);
-                
-                result.add(sr);
+
+            SearchResult sr = null;
+            
+            if (webResult instanceof YouTubeSearchResult) {
+                sr = new YouTubePackageSearchResult((YouTubeSearchResult) webResult, engine, info);
+            } else {
+                sr = new SearchEngineSearchResult(webResult, engine, info);
             }
-        
+
+            result.add(sr);
+        }
+
         return result;
-    }    
+    }
     
     /**
      * Adds a single result tab for the specified GUID, type,

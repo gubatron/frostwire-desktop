@@ -24,8 +24,12 @@ public class SearchEnginesSettings extends LimeProps {
     
     public static final BooleanSetting MONOVA_SEARCH_ENABLED = FACTORY.createBooleanSetting("MONOVA_SEARCH_ENABLED", true);
     
+    public static final BooleanSetting YOUTUBE_SEARCH_ENABLED = FACTORY.createBooleanSetting("YOUTUBE_SEARCH_ENABLED", true);
+    
     //	public static final BooleanSetting FROSTCLICK_SEARCH_ENABLED =
     //		FACTORY.createBooleanSetting("FROSTCLICK_SEARCH_ENABLED", true);
     
     public static final IntSetting MONOVA_WEBSEARCHPERFORMER_MAX = FACTORY.createIntSetting("MONOVA_WEBSEARCHPERFORMER_MAX", 10);
+    
+    public static final IntSetting YOUTUBE_WEBSEARCHPERFORMER_MAX_RESULTS = FACTORY.createIntSetting("YOUTUBE_WEBSEARCHPERFORMER_MAX_RESULTS", 5);
 }
