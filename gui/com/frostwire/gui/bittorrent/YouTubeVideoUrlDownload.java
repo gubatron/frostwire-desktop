@@ -38,6 +38,9 @@ public class YouTubeVideoUrlDownload implements BTDownload {
     private int progress;
 
     public YouTubeVideoUrlDownload(String videoUrl) {
+        if (!videoUrl.startsWith("http://")) {
+            videoUrl = "http://" + videoUrl;
+        }
         this.videoUrl = videoUrl;
         this.dateCreated = new Date();
         _state = STATE_CRAWLING;
@@ -205,7 +208,7 @@ public class YouTubeVideoUrlDownload implements BTDownload {
                     crawler.setFilter(LinkFilterController.getInstance());
                     crawler.crawl(videoUrl);
                     crawler.waitForCrawling();
-                    
+
                     if (_state.equals(STATE_STOPPED)) {
                         return;
                     }
@@ -214,7 +217,7 @@ public class YouTubeVideoUrlDownload implements BTDownload {
                     progress = 100;
 
                     final List<FilePackage> packages = new ArrayList<FilePackage>();
-                    
+
                     for (CrawledLink link : crawler.getCrawledLinks()) {
                         CrawledPackage parent = PackageInfo.createCrawledPackage(link);
                         parent.setControlledBy(collector);
@@ -223,7 +226,7 @@ public class YouTubeVideoUrlDownload implements BTDownload {
                         links.add(link);
                         packages.add(createFilePackage(parent, links));
                     }
-                    
+
                     /*
                     for (CrawledPackage pkg : new ArrayList<CrawledPackage>(collector.getPackages())) {
                         for (CrawledLink link : new ArrayList<CrawledLink>(pkg.getChildren())) {
@@ -252,7 +255,11 @@ public class YouTubeVideoUrlDownload implements BTDownload {
                         }
                     });
 
-                    BTDownloadMediator.instance().remove(YouTubeVideoUrlDownload.this);
+                    GUIMediator.safeInvokeAndWait(new Runnable() {
+                        public void run() {
+                            BTDownloadMediator.instance().remove(YouTubeVideoUrlDownload.this);
+                        }
+                    });
                 } catch (Throwable e) {
                     LOG.error("Error crawling youtube: " + videoUrl, e);
                     _state = STATE_ERROR;
@@ -263,7 +270,7 @@ public class YouTubeVideoUrlDownload implements BTDownload {
         t.setName("YouTube Crawl: " + videoUrl);
         t.start();
     }
-    
+
     private FilePackage createFilePackage(final CrawledPackage pkg, ArrayList<CrawledLink> plinks) {
         FilePackage ret = FilePackage.getInstance();
         /* set values */
@@ -276,7 +283,8 @@ public class YouTubeVideoUrlDownload implements BTDownload {
             /* add Children from CrawledPackage to FilePackage */
             ArrayList<DownloadLink> links = new ArrayList<DownloadLink>(pkg.getChildren().size());
             List<CrawledLink> pkgLinks = pkg.getChildren();
-            if (plinks != null && plinks.size() > 0) pkgLinks = new ArrayList<CrawledLink>(plinks);
+            if (plinks != null && plinks.size() > 0)
+                pkgLinks = new ArrayList<CrawledLink>(plinks);
             for (CrawledLink link : pkgLinks) {
                 /* extract DownloadLink from CrawledLink */
                 DownloadLink dl = link.getDownloadLink();
@@ -285,7 +293,8 @@ public class YouTubeVideoUrlDownload implements BTDownload {
                      * change filename if it is different than original
                      * downloadlink
                      */
-                    if (link.isNameSet()) dl.forceFileName(link.getName());
+                    if (link.isNameSet())
+                        dl.forceFileName(link.getName());
                     /* set correct enabled/disabled state */
                     //dl.setEnabled(link.isEnabled());
                     /* remove reference to crawledLink */

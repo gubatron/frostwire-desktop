@@ -9,6 +9,7 @@ import java.util.List;
 import javax.swing.Action;
 import javax.swing.JPopupMenu;
 
+import jd.controlling.downloadcontroller.DownloadController;
 import jd.plugins.FilePackage;
 
 import org.gudy.azureus2.core3.download.DownloadManager;
@@ -757,6 +758,17 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     public void openYouTubeItem(final FilePackage filePackage) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
+                try {
+                    List<FilePackage> pks = new ArrayList<FilePackage>(DownloadController.getInstance().getPackages());
+                    for (FilePackage p : pks) {
+                        if (p.getChildren().get(0).getName().equals(filePackage.getChildren().get(0).getName())) {
+                            System.out.println("YouTube download duplicated");
+                            return;
+                        }
+                    }
+                } catch (Throwable e) {
+                    // ignore
+                }
                 BTDownload downloader = new YouTubeItemDownload(filePackage);
                 add(downloader);
             }

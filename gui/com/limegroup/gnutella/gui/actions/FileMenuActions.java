@@ -70,7 +70,7 @@ public class FileMenuActions {
 
         private void createDialog() {
 
-            dialog = new JDialog(GUIMediator.getAppFrame(), I18n.tr("Download .Torrent or Magnet"), true);
+            dialog = new JDialog(GUIMediator.getAppFrame(), I18n.tr("Download .Torrent or Magnet or YouTube video link"), true);
             dialog.addWindowListener(new OpenDialogWindowAdapter());
             JPanel panel = (JPanel) dialog.getContentPane();
             GUIUtils.addHideAction(panel);
@@ -238,6 +238,9 @@ public class FileMenuActions {
 
         if (userText.startsWith("magnet:?xt=urn:btih") || userText.startsWith("http://")) {
             GUIMediator.instance().openTorrentURI(userText);
+            return true;
+        } else if (userText.matches(".*youtube.com.*")) {
+            GUIMediator.instance().openYouTubeVideoUrl(userText);
             return true;
         } else {
 

@@ -19,6 +19,7 @@ public class YouTubeItemDownload implements BTDownload {
     private static final String STATE_DOWNLOADING = I18n.tr("Downloading");
     private static final String STATE_ERROR = I18n.tr("Error");
     private static final String STATE_STOPPED = I18n.tr("Stopped");
+    private static final String STATE_WAITING = I18n.tr("Waiting");
 
     private final FilePackage filePackage;
     private final DownloadLink link;
@@ -112,6 +113,10 @@ public class YouTubeItemDownload implements BTDownload {
             return STATE_DOWNLOADING;
         } else if (link.getLinkStatus().isFailed()) {
             return STATE_ERROR;
+        }
+        
+        if (!started) {
+            return STATE_WAITING;
         }
         return STATE_STOPPED;
     }

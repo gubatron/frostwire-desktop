@@ -56,7 +56,7 @@ public class PartialYouTubePackageDialog extends JDialog {
     private JButton _buttonOK;
     private JButton _buttonCancel;
 
-    private final String name;
+    private String name;
     private final List<FilePackage> filePackages;
     
     private final FilePackageTableModel _model;
@@ -365,6 +365,8 @@ public class PartialYouTubePackageDialog extends JDialog {
         private String readFilename(FilePackage filePackage) {
             DownloadLink dl = filePackage.getChildren().get(0);
             if (dl.getStringProperty("convertto", "").equals("AUDIOMP3")) {
+                name = FilenameUtils.getBaseName(dl.getName());
+                _label.setText(name);
                 return FilenameUtils.getBaseName(dl.getName()) + ".mp3";
             }
 
