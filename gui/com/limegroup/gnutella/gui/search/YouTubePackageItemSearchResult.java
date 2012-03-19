@@ -41,6 +41,11 @@ public final class YouTubePackageItemSearchResult extends AbstractSearchResult {
     public String getFileName() {
         return filename;
     }
+    
+    @Override
+    public String getFilenameNoExtension() {
+        return FilenameUtils.getBaseName(filename);
+    }
 
     @Override
     public long getSize() {

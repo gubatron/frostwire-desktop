@@ -32,6 +32,11 @@ public final class YouTubePackageSearchResult extends AbstractSearchResult {
     }
 
     @Override
+    public String getFilenameNoExtension() {
+        return sr.getFilenameNoExtension();
+    }
+    
+    @Override
     public long getSize() {
         return sr.getSize();
     }
