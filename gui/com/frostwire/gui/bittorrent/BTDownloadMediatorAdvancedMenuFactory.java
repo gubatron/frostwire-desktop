@@ -375,24 +375,27 @@ public class BTDownloadMediatorAdvancedMenuFactory {
     
     static SkinMenu createAddToPlaylistSubMenu() {
         BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
-        
-        for (BTDownload dler : downloaders) {
-        	if (!dler.isCompleted()) {
-        		return null;
-        	}
-        	
-        	File saveLocation = dler.getSaveLocation();
-
-        	if (saveLocation.isDirectory()) {
-	        	//If the file(s) is(are) inside a folder
-	        	if (!LibraryUtils.directoryContainsAudio(saveLocation)) {
-	        		return null;
-	        	}
-        	} else if (!AudioPlayer.isPlayableFile(saveLocation)) {
-        		return null;
-        	}
+        if (downloaders.length == 0) {
+            return null;
         }
-        
+
+        for (BTDownload dler : downloaders) {
+            if (!dler.isCompleted()) {
+                return null;
+            }
+
+            File saveLocation = dler.getSaveLocation();
+
+            if (saveLocation.isDirectory()) {
+                //If the file(s) is(are) inside a folder
+                if (!LibraryUtils.directoryContainsAudio(saveLocation)) {
+                    return null;
+                }
+            } else if (!AudioPlayer.isPlayableFile(saveLocation)) {
+                return null;
+            }
+        }
+
         SkinMenu menu = new SkinMenu(I18n.tr("Add to playlist"));
 
         menu.add(new SkinMenuItem(new CreateNewPlaylistAction()));

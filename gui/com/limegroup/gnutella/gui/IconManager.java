@@ -67,11 +67,14 @@ public class IconManager {
      */
     public Icon getIconForFile(File f) {
         validate();
-    	
-    	if (f!=null && FileUtils.getFileExtension(f) != null &&
-    		FileUtils.getFileExtension(f).toLowerCase().endsWith("torrent")) {
-    		return GUIMediator.getThemeImage("frosthires");
-    	}
+
+        if (f != null && FileUtils.getFileExtension(f) != null && FileUtils.getFileExtension(f).toLowerCase().endsWith("torrent")) {
+            return GUIMediator.getThemeImage("frosthires");
+        }
+        
+        if (f != null && FileUtils.getFileExtension(f) != null && FileUtils.getFileExtension(f).toLowerCase().endsWith("youtube")) {
+            return GUIMediator.getThemeImage("youtube");
+        }
 
         return fileController.getIconForFile(f);
     }
@@ -85,6 +88,10 @@ public class IconManager {
         
         if (ext != null && ext.toLowerCase().endsWith("torrent")) {
             return GUIMediator.getThemeImage("frosthires");
+        }
+        
+        if (ext != null && ext.toLowerCase().endsWith("youtube")) {
+            return GUIMediator.getThemeImage("youtube");
         }
         
         return fileController.getIconForExtension(ext);

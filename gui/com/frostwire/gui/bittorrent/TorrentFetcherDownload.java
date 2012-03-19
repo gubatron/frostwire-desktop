@@ -32,6 +32,7 @@ public class TorrentFetcherDownload implements BTDownload {
     private final long _size;
     private final boolean _partialDownload;
     private final ActionListener _postPartialDownloadAction;
+    private final Date dateCreated;
 
     private String _state;
     private boolean _removed;
@@ -47,6 +48,7 @@ public class TorrentFetcherDownload implements BTDownload {
         _size = size;
         _partialDownload = partialDownload;
         _postPartialDownloadAction = postPartialDownloadAction;
+        this.dateCreated = new Date();
 
         _state = STATE_DOWNLOADING;
         _torrentDownloader.start();
@@ -222,7 +224,7 @@ public class TorrentFetcherDownload implements BTDownload {
     }
     
     public Date getDateCreated() {
-        return _delegate != null ? _delegate.getDateCreated() : new Date();
+        return _delegate != null ? _delegate.getDateCreated() : dateCreated;
     }
 
     public boolean isPartialDownload() {

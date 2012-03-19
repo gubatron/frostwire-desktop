@@ -148,7 +148,7 @@ final class SearchInputManager implements ThemeObserver {
 
         //OPEN TORRENT
         IconButton openTorrentButton = new IconButton("Open", "OPEN_TORRENT");
-        openTorrentButton.setToolTipText(I18n.tr("Open a .torrent or Magnet link"));
+        openTorrentButton.setToolTipText(I18n.tr("Open a .torrent or Magnet link or YouTube video link"));
         openTorrentButton.addActionListener(new ActionListener() {
 
             @Override

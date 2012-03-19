@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="alexandria" basedir="." default="compile-src">
+
+	<description>
+		FrostWire component 'jdownloader'.
+	</description>
+	
+    <import file="../common/build-macros.xml" />
+    <import file="../common/build.xml"/>
+    
+    <target name="initialize" depends="lw-common.initialize" unless="initialized.jdownloader">
+        <do.setup-properties component="jdownloader">
+			<src-classpath>
+				<pathelement location="${limewire.lib.jars}/commons-logging.jar"/>
+			    <path refid="build.limewire.components.common.buildpath"/>
+			</src-classpath>
+        </do.setup-properties>
+    </target>
+	
+	<target name="clean" depends="lw-common.clean">
+	    <do.clean component="jdownloader"/>
+	</target>
+    
+    <target name="compile" depends="lw-common.compile">
+    	<do.compile component="jdownloader"/>
+    </target>
+	
+	<target name="compile-src" depends="lw-common.compile-src">
+	    <do.compile-src component="jdownloader" encoding="ISO-8859-1"/>
+	</target>
+    
+	<target name="clean-src" depends="lw-common.clean-src">
+	    <do.clean-src component="jdownloader"/>
+	</target>
+	
+	<target name="compile-tests">
+	    <do.compile-tests component="jdownloader"/>
+	</target>
+	
+	<target name="clean-tests">
+	    <do.clean-tests component="jdownloader"/>
+	</target>
+	
+	<target name="test" if="class" depends="compile">
+	    <do.test component="jdownloader" class="${class}"/>
+	</target>
+	
+	<target name="test-package" if="package" depends="compile">
+	    <do.test-package component="jdownloader" package="${package}"/>
+	</target>
+	
+	<target name="test-all" depends="compile">
+	    <do.test-all component="jdownloader"/>
+	</target>
+    
+    <target name="jar" depends="initialize, compile-src">
+        <do.jar component="jdownloader"/>
+    </target>
+    
+	<target name="javadoc" depends="initialize, compile-src">
+    	<do.javadoc component="jdownloader"/>
+	</target>
+    
+    <target name="clean-dist" depends="initialize">
+        <do.clean-dist component="jdownloader"/>
+    </target>
+	
+    <target name="with.clover" depends="initialize">
+        <do.clover-setup component="jdownloader"/>
+	</target>
+    
+    <target name="clover2html" depends="initialize">
+        <do.clover2html component="jdownloader"/>
+    </target>
+    
+</project>

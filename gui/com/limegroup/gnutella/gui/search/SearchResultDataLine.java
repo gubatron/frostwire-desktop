@@ -333,14 +333,23 @@ public final class SearchResultDataLine extends AbstractDataLine<SearchResult> i
     public Object getValueAt(int index) {
         switch (index) {
         case SearchTableColumns.COUNT_IDX:
-            return new Integer(RESULT.getSeeds());
+            if (RESULT.getSeeds() < 0) {
+                return "";
+            } else {
+                return new Integer(RESULT.getSeeds());
+            }
         case SearchTableColumns.TYPE_IDX:
             return getIcon();
         case SearchTableColumns.NAME_IDX:
-        	if (getSearchResult() instanceof DeepSearchResult || getSearchResult() instanceof SmartSearchResult) {
-        		return new ActionIconAndNameHolder(null, null, getFilenameNoExtension());
-        	}
-            return new ActionIconAndNameHolder(getTreeIcon(), _downloadAction, getFilenameNoExtension());
+            if (getSearchResult() instanceof SearchEngineSearchResult) {
+            	    if (((SearchEngineSearchResult)getSearchResult()).allowDeepSearch()) {
+            	        return new ActionIconAndNameHolder(getTreeIcon(), _downloadAction, getFilenameNoExtension());
+            	    } else {
+            	        return new ActionIconAndNameHolder(null, null, getFilenameNoExtension());
+            	    }
+            	}
+            	
+            	return new ActionIconAndNameHolder(null, null, getFilenameNoExtension());            
         case SearchTableColumns.SIZE_IDX:
             return new SizeHolder(getSize());
         case SearchTableColumns.SOURCE_IDX:

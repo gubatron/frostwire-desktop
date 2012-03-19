@@ -229,7 +229,8 @@ public class MagnetClipboardListener extends WindowAdapter {
 		}
 		
 		if (clipboardText.startsWith("magnet:?xt=urn:btih:") ||
-			clipboardText.matches("^http.*\\.torrent$")) {
+			clipboardText.matches("^http.*\\.torrent$") ||
+			clipboardText.matches(".*youtube.com.*")) {
 			return clipboardText;
 		}
 		

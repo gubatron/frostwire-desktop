@@ -6,8 +6,11 @@ import java.io.File;
 
 import javax.swing.JPopupMenu;
 
+import org.limewire.util.FilenameUtils;
+
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.GuiFrostWireUtils;
+import com.frostwire.websearch.youtube.YouTubeSearchResult;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
@@ -89,6 +92,10 @@ public class SearchEngineSearchResult extends AbstractSearchResult {
     @Override
     public boolean isMeasuredSpeed() {
         return false;
+    }
+    
+    public boolean allowDeepSearch() {
+        return true; 
     }
 
     @Override
