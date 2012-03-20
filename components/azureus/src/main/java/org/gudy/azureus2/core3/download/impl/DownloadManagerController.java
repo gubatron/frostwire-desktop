@@ -369,6 +369,8 @@ DownloadManagerController
 		download_manager.informWillBeStarted( temp );
 		
 		temp.start();
+		
+		connectToInternalPeerIfAvailable(temp);
 	
 		   //The connection to the tracker
 		
@@ -640,7 +642,24 @@ DownloadManagerController
   
   
 
-	public void 
+	private void connectToInternalPeerIfAvailable(PEPeerManager peerManager) {
+	    try {
+	        Map torrentMap = download_manager.getTorrent().serialiseToMap();
+	        
+	        if (torrentMap.containsKey("peerInternalIP") && torrentMap.containsKey("peerInternalPort")) {
+	            String peerInternalIP = (String) torrentMap.get("peerInternalIP");
+	            int peerInternalPort = (Integer) torrentMap.get("peerInternalPort");
+	            
+	            if (peerInternalIP != null && peerInternalPort != -1) {
+	                peerManager.addPeer(peerInternalIP, peerInternalPort, 0, false, new HashMap());
+	            }
+	        }
+	    } catch (Throwable t) {
+	        t.printStackTrace();
+	    }
+    }
+
+    public void 
 	initializeDiskManager(
 		final boolean	open_for_seeding )
 	{

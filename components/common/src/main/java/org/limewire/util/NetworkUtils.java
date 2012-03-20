@@ -844,7 +844,7 @@ public final class NetworkUtils {
         return separator;
     }
     
-    static String convertIPPortToHex(String ip, int port) {
+    public static String convertIPPortToHex(String ip, int port) {
         String[] split_ip = ip.split("\\.");
         byte[] octets_n_port = new byte[6];
 
@@ -862,7 +862,7 @@ public final class NetworkUtils {
     }
 
     // FFFFFFFFFFFF -> 255.255.255.255:65535
-    static String convertHexToIPPort(String ipPortInHex) {
+    public static String convertHexToIPPort(String ipPortInHex) {
         
         if (ipPortInHex.length()!=12) {
             return null;
@@ -888,10 +888,10 @@ public final class NetworkUtils {
     }
     
     public static void main(String[] args) {
-        System.out.println(convertHexToIPPort("ffFFFFFF000A"));
-        String ipPort = convertHexToIPPort("FFFFfFFF000A");
+        System.out.println("c0a801131ae1 => " +convertHexToIPPort("c0a801131ae1"));
+        String ipPort = convertHexToIPPort("c0a801131ae1");
         String ip = ipPort.split(":")[0];
         int port = Integer.parseInt(ipPort.split(":")[1]);
-        System.out.println(convertIPPortToHex(ip, port));
+        System.out.println(ip + ":" + port + " => " + convertIPPortToHex(ip, port));
     }
 }

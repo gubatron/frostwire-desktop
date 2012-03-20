@@ -21,7 +21,9 @@ package com.aelitis.azureus.plugins.magnet.metadata;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -78,9 +80,18 @@ public class MetadataPeerRequester {
                 return null;// nothing to do
             }
 
+            String peerInternalHostPort = getPeerInternalHostPort();
+            String peerInternalIp = null;
+            int peerInternalPort = -1;
+            
+            if (peerInternalHostPort != null) {
+                peerInternalIp = peerInternalHostPort.split(":")[0];
+                peerInternalPort = Integer.parseInt(peerInternalHostPort.split(":")[1]);
+            }
+            
             List<Torrent> torrents = new ArrayList<Torrent>();
             for (URL tracker : trackers) {
-                Torrent torrent = requestSupport(tracker, trackers, signal);
+                Torrent torrent = requestSupport(tracker, trackers, peerInternalIp, peerInternalPort, signal);
                 if (torrent != null) {
                     torrents.add(torrent);
                 }
@@ -117,12 +128,12 @@ public class MetadataPeerRequester {
      * @param signal
      * @return
      */
-    private Torrent requestSupport(URL tracker, final URL[] trackers, final CountDownLatch signal) {
+    private Torrent requestSupport(URL tracker, final URL[] trackers, String peerInternalHost, int peerInternalPort, final CountDownLatch signal) {
         try {
 
             listener.reportActivity("Try to request metadata from peers in tracker: " + tracker);
 
-            Torrent torrent = new Torrent(hash, "", new URL[] { tracker }) {
+            Torrent torrent = new Torrent(hash, "", new URL[] { tracker }, peerInternalHost, peerInternalPort) {
                 @Override
                 public void notifyComplete() {
                     try {
@@ -150,12 +161,16 @@ public class MetadataPeerRequester {
             PEPeerManager peerManager = PEPeerManagerFactory.create(tracker_client.getPeerId(), peerManagerAdapter, new MetadataDiskManager(torrent));
             torrent.setPeerManager(peerManager);
             peerManagerAdapter.setPeerManager(peerManager);
-
             tracker_client_listener.setPeerManager(peerManager);
 
             peerManager.start();
             peerManager.setSuperSeedMode(true); // artificial state to hack inner core
-
+            
+            //add internal peer host:port if available.
+            if (peerInternalHost!=null && peerInternalPort != -1) {
+                peerManager.addPeer(peerInternalHost, peerInternalPort, 0, false, new HashMap());
+            }
+            
             tracker_client.update(true);
 
             return torrent;
@@ -181,14 +196,72 @@ public class MetadataPeerRequester {
 
         return trackers.toArray(new URL[0]);
     }
+    
+    private String getPeerInternalHostPort() {
+
+        for (String part : args.split("&")) {
+            if (part.startsWith("iipp=")) {
+                    return convertHexToIPPort(part.substring("iipp=".length())); 
+            }
+        }
+
+        return null;
+    }
+    
+    public static String convertIPPortToHex(String ip, int port) {
+        String[] split_ip = ip.split("\\.");
+        byte[] octets_n_port = new byte[6];
+
+        int i = 0;
+        for (String octet : split_ip){
+            octets_n_port[i++]= (byte) Integer.parseInt(octet);
+        }
+        
+        byte[] port_bytes = ByteUtils.smallIntToByteArray(port);
+        
+        octets_n_port[4]=port_bytes[0];
+        octets_n_port[5]=port_bytes[1];
+        
+        return ByteUtils.encodeHex(octets_n_port);
+    }
+
+    // FFFFFFFFFFFF -> 255.255.255.255:65535
+    public static String convertHexToIPPort(String ipPortInHex) {
+        
+        if (ipPortInHex.length()!=12) {
+            return null;
+        }
+
+        byte[] octets = ByteUtils.decodeHex(ipPortInHex);
+        
+        StringBuilder ipPortion = new StringBuilder();
+        
+        ipPortion.append(octets[0] & 0xFF);
+        ipPortion.append(".");
+        ipPortion.append(octets[1] & 0xFF);
+        ipPortion.append(".");
+        ipPortion.append(octets[2] & 0xFF);
+        ipPortion.append(".");
+        ipPortion.append(octets[3] & 0xFF);
+        ipPortion.append(":");
+
+        int port = ByteUtils.byteArrayToSmallInt(octets, 4);
+        ipPortion.append(port);
+        
+        return ipPortion.toString();
+    }
 
     private static class Torrent extends TOTorrentMetadata {
 
         private TRTrackerAnnouncer trackerAnnouncer;
         private PEPeerManager peerManager;
+        private String peerInternalIP;
+        private int peerInternalPort;
 
-        public Torrent(byte[] hash, String displayName, URL[] trackers) {
+        public Torrent(byte[] hash, String displayName, URL[] trackers, String peerInternalIP, int peerInternalPort) {
             super(hash, displayName, trackers);
+            this.peerInternalIP = peerInternalIP;
+            this.peerInternalPort = peerInternalPort;
         }
 
         public TRTrackerAnnouncer getTrackerAnnouncer() {
@@ -218,6 +291,19 @@ public class MetadataPeerRequester {
             } catch (Throwable e) {
                 Debug.printStackTrace(e);
             }
+        }
+        
+        @Override
+        public Map serialiseToMap() throws TOTorrentException {
+           Map map = super.serialiseToMap();
+
+            //add a little something to the torrent map :)
+           if (peerInternalIP != null && peerInternalPort != -1) {
+               map.put("peerInternalIP", peerInternalIP);
+               map.put("peerInternalPort", peerInternalPort);
+           }
+           
+           return map;
         }
     }
 }
