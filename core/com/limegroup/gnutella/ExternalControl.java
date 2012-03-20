@@ -378,6 +378,7 @@ public class ExternalControl {
             System.out.println("urlParameter = " + urlParameter);
             
             HttpFetcher fetcher = new HttpFetcher(new URI("http://" + LOCALHOST_IP + ":" + SERVER_PORT + urlParameter), 1000);
+            //HttpFetcher fetcher = new HttpFetcher(new URI("http://localtest" + urlParameter), 1000);
             if (fetcher.fetch() != null) {
                 return true;
             }
