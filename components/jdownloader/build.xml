@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="alexandria" basedir="." default="compile-src">
+<project name="jdownloader" basedir="." default="compile-src">
 
 	<description>
 		FrostWire component 'jdownloader'.
