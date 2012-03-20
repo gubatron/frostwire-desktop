@@ -25,8 +25,10 @@ import org.gudy.azureus2.core3.internat.MessageText;
 import org.gudy.azureus2.core3.util.Constants;
 import org.gudy.azureus2.core3.util.Debug;
 import org.limewire.util.OSUtils;
+import org.limewire.util.StringUtils;
 
 import com.frostwire.HttpFetcher;
+import com.limegroup.gnutella.util.UrlUtils;
 
 public class ExternalControl {
 
@@ -187,6 +189,20 @@ public class ExternalControl {
                     writeJSReply(os, "checkResult(0);");
                 }
                 return true;
+            } else {
+                //this handles when FrostWire is already open. The second instance forwarded
+                //parameters to us via HTTP.
+                String url = org.gudy.azureus2.core3.util.UrlUtils.decode((String) lc_params.get("url"));
+                
+                if (!StringUtils.isNullOrEmpty(url) && activityCallback.isRemoteDownloadsAllowed()) {
+                    if (url.startsWith("magnet:?")) {
+                        handleTorrentMagnetRequest(url);
+                    } /** local torrent files */
+                    else if (url.startsWith("file://") && url.endsWith(".torrent")) {
+                        handleTorrentRequest(url);
+                    }
+                }                    
+                return true;
             }
         } else if (get.startsWith("/show")) {
             writeHTTPReply(os, "Running");
@@ -290,6 +306,7 @@ public class ExternalControl {
     private void handleTorrentMagnetRequest(String request) {
         //activityCallback.setRemoteDownloadsAllowed(false);
         ActivityCallback callback = restoreApplication();
+        System.out.println("handleTorrentMagnetRequest restored application. About to callback.handleTorrentMagnet()");
         callback.handleTorrentMagnet(request, true);
     }
 
@@ -348,10 +365,22 @@ public class ExternalControl {
      */
     private boolean testForFrostWire(String arg) {
         try {
-            HttpFetcher fetcher = new HttpFetcher(new URI("http://" + LOCALHOST_IP + ":" + SERVER_PORT + "/show"), 1000);
+            System.out.println("testForFrostWire(arg = ["+arg+"])");
+            
+            String urlParameter = null;
+            if (arg != null && (arg.startsWith("http://") || arg.startsWith("https://") || arg.startsWith("magnet:?") || arg.startsWith("file://"))) {
+                urlParameter = "/download?url=" + UrlUtils.encode(arg);
+            }  else {
+                urlParameter = "/show";
+            }
+            
+            System.out.println("urlParameter = " + urlParameter);
+            
+            HttpFetcher fetcher = new HttpFetcher(new URI("http://" + LOCALHOST_IP + ":" + SERVER_PORT + urlParameter), 1000);
             if (fetcher.fetch() != null) {
                 return true;
             }
+            
         } catch (Exception e) {
         }
 

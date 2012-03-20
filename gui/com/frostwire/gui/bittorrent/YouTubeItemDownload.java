@@ -21,6 +21,7 @@ public class YouTubeItemDownload implements BTDownload {
     private static final String STATE_ERROR = I18n.tr("Error");
     private static final String STATE_STOPPED = I18n.tr("Stopped");
     private static final String STATE_WAITING = I18n.tr("Waiting");
+    private static final String STATE_FINISHED = I18n.tr("Finished");
 
     private final FilePackage filePackage;
     private final DownloadLink link;
@@ -30,6 +31,8 @@ public class YouTubeItemDownload implements BTDownload {
     private boolean deleteDataWhenRemove;
     
     private boolean started;
+    
+    private boolean finished;
 
     public YouTubeItemDownload(FilePackage filePackage) {
         this.filePackage = filePackage;
@@ -58,7 +61,7 @@ public class YouTubeItemDownload implements BTDownload {
 
     @Override
     public boolean isResumable() {
-        return started && !isPausable();
+        return started && !isPausable() && !finished; 
     }
 
     @Override
@@ -116,6 +119,9 @@ public class YouTubeItemDownload implements BTDownload {
             return STATE_DOWNLOADING;
         } else if (link.getLinkStatus().isFailed()) {
             return STATE_ERROR;
+        } else if (link.getLinkStatus().hasStatus(LinkStatus.FINISHED)) {
+            finished = true;
+            return STATE_FINISHED;
         }
         
         if (!started) {
