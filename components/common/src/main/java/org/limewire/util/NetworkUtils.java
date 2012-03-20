@@ -13,9 +13,6 @@ import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Enumeration;
 
-import org.limewire.util.ByteOrder;
-import org.limewire.util.ByteUtils;
-
 /**
  * Provides methods for network programming. 
  * <code>NetworkUtils</code>' methods check the validity of IP addresses, ports
@@ -845,5 +842,56 @@ public final class NetworkUtils {
             throw new IOException("invalid separator in http: " + ipPort);
         
         return separator;
+    }
+    
+    static String convertIPPortToHex(String ip, int port) {
+        String[] split_ip = ip.split("\\.");
+        byte[] octets_n_port = new byte[6];
+
+        int i = 0;
+        for (String octet : split_ip){
+            octets_n_port[i++]= (byte) Integer.parseInt(octet);
+        }
+        
+        byte[] port_bytes = ByteUtils.smallIntToByteArray(port);
+        
+        octets_n_port[4]=port_bytes[0];
+        octets_n_port[5]=port_bytes[1];
+        
+        return ByteUtils.encodeHex(octets_n_port);
+    }
+
+    // FFFFFFFFFFFF -> 255.255.255.255:65535
+    static String convertHexToIPPort(String ipPortInHex) {
+        
+        if (ipPortInHex.length()!=12) {
+            return null;
+        }
+
+        byte[] octets = ByteUtils.decodeHex(ipPortInHex);
+        
+        StringBuilder ipPortion = new StringBuilder();
+        
+        ipPortion.append(octets[0] & 0xFF);
+        ipPortion.append(".");
+        ipPortion.append(octets[1] & 0xFF);
+        ipPortion.append(".");
+        ipPortion.append(octets[2] & 0xFF);
+        ipPortion.append(".");
+        ipPortion.append(octets[3] & 0xFF);
+        ipPortion.append(":");
+
+        int port = ByteUtils.byteArrayToSmallInt(octets, 4);
+        ipPortion.append(port);
+        
+        return ipPortion.toString();
+    }
+    
+    public static void main(String[] args) {
+        System.out.println(convertHexToIPPort("ffFFFFFF000A"));
+        String ipPort = convertHexToIPPort("FFFFfFFF000A");
+        String ip = ipPort.split(":")[0];
+        int port = Integer.parseInt(ipPort.split(":")[1]);
+        System.out.println(convertIPPortToHex(ip, port));
     }
 }
