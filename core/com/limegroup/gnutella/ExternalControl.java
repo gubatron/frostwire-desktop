@@ -198,7 +198,7 @@ public class ExternalControl {
                     if (url.startsWith("magnet:?")) {
                         handleTorrentMagnetRequest(url);
                     } /** local torrent files */
-                    else if (url.startsWith("file://") && url.endsWith(".torrent")) {
+                    else if (url.startsWith("file://") || url.endsWith(".torrent")) {
                         handleTorrentRequest(url);
                     }
                 } 
@@ -369,7 +369,7 @@ public class ExternalControl {
             System.out.println("testForFrostWire(arg = ["+arg+"])");
             
             String urlParameter = null;
-            if (arg != null && (arg.startsWith("http://") || arg.startsWith("https://") || arg.startsWith("magnet:?") || arg.startsWith("file://"))) {
+            if (arg != null && (arg.startsWith("http://") || arg.startsWith("https://") || arg.startsWith("magnet:?") || arg.endsWith(".torrent"))) {
                 urlParameter = "/download?url=" + UrlUtils.encode(arg);
             }  else {
                 urlParameter = "/show";
