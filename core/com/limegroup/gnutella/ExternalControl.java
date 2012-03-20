@@ -201,7 +201,8 @@ public class ExternalControl {
                     else if (url.startsWith("file://") && url.endsWith(".torrent")) {
                         handleTorrentRequest(url);
                     }
-                }                    
+                } 
+                writeHTTPReply(os, "Running");
                 return true;
             }
         } else if (get.startsWith("/show")) {
