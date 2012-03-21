@@ -18,7 +18,6 @@ import org.limewire.util.OSUtils;
 import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.AzureusStarter;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
-import com.frostwire.gui.bittorrent.BTDownloadActions.RemoveAction;
 import com.frostwire.gui.filters.TableLineFilter;
 import com.frostwire.gui.library.LibraryUtils;
 import com.limegroup.gnutella.gui.GUIMediator;
@@ -310,7 +309,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         if (!DATA_MODEL.contains(downloader)) {
             super.add(downloader, DATA_MODEL.getRowCount());
             if (DATA_MODEL.getRowCount() > 0) {
-                TABLE.setSelectedRow(DATA_MODEL.getRowCount() - 1);
+                int row = DATA_MODEL.getRow(downloader);
+                TABLE.setSelectedRow(row);
                 TABLE.ensureSelectionVisible();
             }
         }
