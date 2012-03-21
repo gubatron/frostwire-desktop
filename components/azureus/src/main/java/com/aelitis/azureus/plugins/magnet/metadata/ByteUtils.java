@@ -1,4 +1,4 @@
-package org.limewire.util;
+package com.aelitis.azureus.plugins.magnet.metadata;
 
 import java.io.EOFException;
 import java.io.IOException;

@@ -71,6 +71,8 @@ import org.gudy.azureus2.core3.tracker.client.TRTrackerAnnouncerDataProvider;
 import org.gudy.azureus2.core3.tracker.client.TRTrackerScraperResponse;
 import org.gudy.azureus2.core3.util.AEMonitor;
 import org.gudy.azureus2.core3.util.AESemaphore;
+import org.gudy.azureus2.core3.util.BDecoder;
+import org.gudy.azureus2.core3.util.BEncoder;
 import org.gudy.azureus2.core3.util.Debug;
 import org.gudy.azureus2.core3.util.DirectByteBuffer;
 import org.gudy.azureus2.core3.util.FileUtil;
@@ -369,6 +371,8 @@ DownloadManagerController
 		download_manager.informWillBeStarted( temp );
 		
 		temp.start();
+		
+		connectToInternalPeerIfAvailable(temp);
 	
 		   //The connection to the tracker
 		
@@ -640,7 +644,24 @@ DownloadManagerController
   
   
 
-	public void 
+	private void connectToInternalPeerIfAvailable(PEPeerManager peerManager) {
+	    try {
+	        Map torrentMap = download_manager.getTorrent().serialiseToMap();
+	        
+	        if (torrentMap.containsKey("peerInternalIP") && torrentMap.containsKey("peerInternalPort")) {
+	            String peerInternalIP = new String((byte[]) torrentMap.get("peerInternalIP"));
+	            int peerInternalPort =  (int) (long) (Long) torrentMap.get("peerInternalPort");
+	            
+	            if (peerInternalIP != null && peerInternalPort != -1) {
+	                peerManager.addPeer(peerInternalIP, peerInternalPort, 0, false, new HashMap());
+	            }
+	        }
+	    } catch (Throwable t) {
+	        t.printStackTrace();
+	    }
+    }
+
+    public void 
 	initializeDiskManager(
 		final boolean	open_for_seeding )
 	{

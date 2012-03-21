@@ -74,9 +74,11 @@ import org.gudy.azureus2.plugins.tracker.Tracker;
 import org.gudy.azureus2.plugins.tracker.TrackerTorrent;
 import org.gudy.azureus2.pluginsimpl.local.PluginCoreUtils;
 import org.limewire.util.FileUtils;
+import org.limewire.util.NetworkUtils;
 import org.limewire.util.StringUtils;
 
 import com.aelitis.azureus.core.AzureusCoreFactory;
+import com.aelitis.azureus.core.networkmanager.impl.tcp.TCPNetworkManager;
 import com.aelitis.azureus.ui.UIFunctions;
 import com.aelitis.azureus.ui.UIFunctionsManager;
 import com.aelitis.azureus.ui.selectedcontent.SelectedContent;
@@ -602,10 +604,30 @@ public final class TorrentUtil {
             }
         }
         
+        if( torrent.getAnnounceURL() != null) {
+            sb.append("&tr=");
+            sb.append(UrlUtils.encode(torrent.getAnnounceURL().toString()));
+        }
+        
+        //iipp = internal ip port, for lan
+        try {
+            String localAddress = NetworkUtils.getLocalAddress().getHostAddress();
+            int localPort = TCPNetworkManager.getSingleton().getTCPListeningPortNumber();
+            
+            if (localPort != -1) {            
+                sb.append("&iipp=");
+                sb.append(NetworkUtils.convertIPPortToHex(localAddress,localPort));
+            } 
+            
+        } catch (Throwable e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        
         return sb.toString();
     }
-
-
+    
     public static String hashToString(byte[] hash) {
         String hex = "";
         for (int i = 0; i < hash.length; i++) {

@@ -16,7 +16,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import jd.controlling.linkcollector.LinkCollectingJob;
 import jd.controlling.linkcollector.LinkCollector;
 import jd.controlling.linkcrawler.CrawledLink;
 import jd.controlling.linkcrawler.CrawledPackage;
@@ -696,6 +695,11 @@ public class LocalSearchEngine {
                 try {
                 final YouTubePackageItemSearchResult result = new YouTubePackageItemSearchResult(webSearchResult, p, searchEngine, info);
 
+                //youtube mp3 filter
+                if (p.getChildren().get(0).getFileOutput().endsWith(".mp3")) {
+                    continue;
+                }
+                
                 if (!filter.allow(result))
                     continue;
 

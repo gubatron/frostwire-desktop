@@ -151,7 +151,7 @@ public class MediaType implements Serializable {
                 "wml", "vrml", "swf", "dcr", "jve", "nsv", 
                 "mkv", "ogm", 
                 "cdg", "srt", "sub", "idx",
-                "webm", "youtube"
+                "webm"
             });
         
     /**
