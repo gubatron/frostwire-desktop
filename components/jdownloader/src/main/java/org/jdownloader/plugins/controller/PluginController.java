@@ -41,6 +41,22 @@ public class PluginController<T extends Plugin> {
                 }
             }
         }
+        
+        // hack for now, later I (aldenml) need to figure out how to add from jars
+        if (ret.size() == 0) {
+            try {
+                Log.L.finer("Hard coding loading from: lw-jdownloader.jar");
+                if (hosterpath.contains("hoster")) {
+                    ret.add(new PluginInfo<T>(new File("lw-jdownloader.jar"), (Class<T>) cl.loadClass("jd.plugins.hoster.DirectHTTP")));
+                    ret.add(new PluginInfo<T>(new File("lw-jdownloader.jar"), (Class<T>) cl.loadClass("jd.plugins.hoster.Youtube")));
+                } else if (hosterpath.contains("decrypter")) {
+                    ret.add(new PluginInfo<T>(new File("lw-jdownloader.jar"), (Class<T>) cl.loadClass("jd.plugins.decrypter.TbCm")));
+                }
+            } catch (Throwable e) {
+                Log.exception(e);
+            }
+        }
+        
         return ret;
 
     }
