@@ -1,9 +1,15 @@
 frostwire (5.3.4) stable; urgency=high
+  * New frostwire.exe launcher with extended Unicode support now able to
+    handle .torrent file names with extended Unicode characters.
+  * Windows build is Windows 8 compatible.
+  * Windows build will prefer Java 7 if not JRE is found.
   * Improvements when sending files on a local area network via magnet link
     or send file to friend.
   * Bug fix when opening magnets from a website when FrostWire 
     was already running.
-  * Initial YouTube search and download support.
+  * User experience improvements on the transfer manager.
+  * Spanish translation update (93% translated)
+  * YouTube video search and download support.
 
  -- FrostWire Team <contact@frostwire.com>  Thu, 20 Mar 2012 18:00:00 -0500
 
