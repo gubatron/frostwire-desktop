@@ -122,6 +122,7 @@ public class OSUtils {
     
     	// set the operating system variables
     	_isWindows = os.indexOf("windows") != -1;
+    	System.out.println("OS: " + os);
     	
     	if (os.indexOf("windows nt") != -1)
     		_isWindowsNT = true;

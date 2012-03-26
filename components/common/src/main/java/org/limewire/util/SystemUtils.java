@@ -25,18 +25,21 @@ public class SystemUtils {
     private static boolean isLoaded;
     
 	static {
-		boolean canLoad;
+		boolean canLoad = false;
 		try {
 			if (OSUtils.isWindows() && OSUtils.isGoodWindows()) {
 				if (OSUtils.isMachineX64()) {
 					System.loadLibrary("SystemUtilitiesX64");
+					canLoad = true;
 				} else {
 					System.loadLibrary("SystemUtilities");
+					canLoad = true;
 				}
+				
 			} else if (OSUtils.isMacOSX()) {
 				System.loadLibrary("SystemUtilities");
+				canLoad = true;
 			}
-			canLoad = true;
 		} catch (UnsatisfiedLinkError noGo) {
 			canLoad = false;
 		}
@@ -104,14 +107,18 @@ public class SystemUtils {
 	 *         null on error.
 	 */
     public static final String getRunningPath() {
-    	if (OSUtils.isWindows() && isLoaded) {
-    		String path = getRunningPathNative();
-    		if (path.equals(""))
-                return null;
-    		else
-                return path;
-    	}
-    	return null;
+        try {
+            if (OSUtils.isWindows() && isLoaded) {
+                String path = getRunningPathNative();
+                if (path.equals(""))
+                    return null;
+                else
+                    return path;
+            }
+            return null;
+        } catch (Throwable e) {
+            return null;
+        }
     }
     
     /** A list of places that getSpecialPath uses. */

@@ -60,7 +60,7 @@ public class FirewallUtils {
     	String path = SystemUtils.getRunningPath();
 
     	// Only do something if the LimeWire Windows launcher ran, not Java in a development environment
-    	if (!path.equalsIgnoreCase(GUIConstants.FROSTWIRE_EXE_FILE.getPath()))
+    	if (path == null || !path.equalsIgnoreCase(GUIConstants.FROSTWIRE_EXE_FILE.getPath()))
     		return;
 
     	// Only remove our listing if it's there
@@ -74,7 +74,7 @@ public class FirewallUtils {
             return false;
         
         String path = SystemUtils.getRunningPath();
-        return path.equalsIgnoreCase(GUIConstants.FROSTWIRE_EXE_FILE.getPath());
+        return path != null && path.equalsIgnoreCase(GUIConstants.FROSTWIRE_EXE_FILE.getPath());
     }
 
 	/**
