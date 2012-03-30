@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
 import java.awt.event.KeyEvent;
@@ -46,6 +47,11 @@ import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 
+/**
+ * @author gubatron
+ * @author aldenml
+ * 
+ */
 public class LibraryUtils {
 
     private static final ExecutorService executor;
@@ -53,7 +59,7 @@ public class LibraryUtils {
     static {
         executor = ExecutorsHelper.newProcessingQueue("LibraryUtils-Executor");
     }
-    
+
     private static void addPlaylistItem(Playlist playlist, File file, boolean starred) {
         addPlaylistItem(playlist, file, starred, -1);
     }
@@ -64,7 +70,7 @@ public class LibraryUtils {
             AudioMetaData mt = new AudioMetaData(file);
             PlaylistItem item = playlist.newItem(file.getAbsolutePath(), file.getName(), file.length(), FileUtils.getFileExtension(file), mt.getTitle(), mt.getDurationInSecs(), mt.getArtist(), mt.getAlbum(), "",// TODO: cover art path
                     mt.getBitrate(), mt.getComment(), mt.getGenre(), mt.getTrack(), mt.getYear(), starred);
-            
+
             List<PlaylistItem> items = playlist.getItems();
             if (index != -1 && index < items.size()) {
                 items.add(index, item);
@@ -280,7 +286,7 @@ public class LibraryUtils {
         t.setDaemon(true);
         t.start();
     }
-    
+
     public static void asyncAddToPlaylist(Playlist playlist, File[] files) {
         asyncAddToPlaylist(playlist, files, -1);
     }
@@ -311,7 +317,7 @@ public class LibraryUtils {
             }
         });
     }
-    
+
     public static void asyncAddToPlaylist(Playlist playlist, PlaylistItem[] playlistItems) {
         asyncAddToPlaylist(playlist, playlistItems, -1);
     }
@@ -331,7 +337,7 @@ public class LibraryUtils {
         t.setDaemon(true);
         t.start();
     }
-    
+
     public static void asyncAddToPlaylist(Playlist playlist, File m3uFile) {
         asyncAddToPlaylist(playlist, m3uFile, -1);
     }
@@ -380,6 +386,14 @@ public class LibraryUtils {
         return playlistItems.toArray(new PlaylistItem[0]);
     }
 
+    public static File[] convertToFiles(PlaylistItem[] items) {
+        List<File> files = new ArrayList<File>(items.length);
+        for (PlaylistItem item : items) {
+            files.add(new File(item.getFilePath()));
+        }
+        return files.toArray(new File[0]);
+    }
+
     private static void addToPlaylist(Playlist playlist, List<? extends AbstractLibraryTableDataLine<?>> lines) {
         for (int i = 0; i < lines.size() && !playlist.isDeleted(); i++) {
             AbstractLibraryTableDataLine<?> line = lines.get(i);
@@ -388,7 +402,7 @@ public class LibraryUtils {
             }
         }
     }
-    
+
     private static int addToPlaylist(Playlist playlist, File[] files, boolean starred, Set<File> ignore) {
         return addToPlaylist(playlist, files, starred, -1, ignore);
     }
@@ -403,14 +417,14 @@ public class LibraryUtils {
                 count += addToPlaylist(playlist, files[i].listFiles(), starred, index + count, ignore);
             }
         }
-        
+
         return count;
     }
 
     private static void addToPlaylist(Playlist playlist, PlaylistItem[] playlistItems) {
         addToPlaylist(playlist, playlistItems, false, -1);
     }
-    
+
     private static void addToPlaylist(Playlist playlist, PlaylistItem[] playlistItems, int index) {
         addToPlaylist(playlist, playlistItems, false, index);
     }
@@ -460,13 +474,11 @@ public class LibraryUtils {
         return getSecondsInDDHHMMSS((int) totalSecs);
     }
 
-
     public static boolean directoryContainsAudio(File directory, int depth) {
         Set<File> ignore = TorrentUtil.getIgnorableFiles();
         return directoryContainsAudio(directory, depth, ignore);
     }
 
-    
     public static boolean directoryContainsAudio(File directory) {
         Set<File> ignore = TorrentUtil.getIgnorableFiles();
         return directoryContainsAudio(directory, 4, ignore);
@@ -590,20 +602,20 @@ public class LibraryUtils {
             }
         });
     }
-    
+
     private static boolean isPlaylistSelected(Playlist playlist) {
         Playlist selectedPlaylist = LibraryMediator.instance().getLibraryPlaylists().getSelectedPlaylist();
         return selectedPlaylist != null && selectedPlaylist.equals(playlist);
     }
 
-	public static boolean isRefreshKeyEvent(KeyEvent e) {
-		int keyCode = e.getKeyCode();
-		boolean ctrlCmdDown = e.isControlDown() || e.isAltGraphDown() || e.isMetaDown();
-		return keyCode  == KeyEvent.VK_F5 || (ctrlCmdDown && keyCode == KeyEvent.VK_R);
-	}
+    public static boolean isRefreshKeyEvent(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+        boolean ctrlCmdDown = e.isControlDown() || e.isAltGraphDown() || e.isMetaDown();
+        return keyCode == KeyEvent.VK_F5 || (ctrlCmdDown && keyCode == KeyEvent.VK_R);
+    }
 
     public static void asyncAddRadioStation(final String url) {
-        Thread t = new  Thread(new Runnable() {
+        Thread t = new Thread(new Runnable() {
             public void run() {
                 addRadioStation(url);
             }
@@ -618,16 +630,16 @@ public class LibraryUtils {
             final InternetRadioStation item = processInternetRadioStationUrl(url);
 
             item.save();
-            
+
             GUIMediator.safeInvokeLater(new Runnable() {
-            	@Override
-            	public void run() {
-            		LibraryInternetRadioTableMediator.instance().addUnsorted(item);
-            		LibraryMediator.instance().getLibraryExplorer().selectRadio();
-            		LibraryInternetRadioTableMediator.instance().selectItemAt(0);
-            	}
+                @Override
+                public void run() {
+                    LibraryInternetRadioTableMediator.instance().addUnsorted(item);
+                    LibraryMediator.instance().getLibraryExplorer().selectRadio();
+                    LibraryInternetRadioTableMediator.instance().selectItemAt(0);
+                }
             });
-            
+
         } catch (Exception e) {
             GUIMediator.safeInvokeLater(new Runnable() {
                 public void run() {
@@ -665,7 +677,7 @@ public class LibraryUtils {
                 props = processStreamUrl(urlStr);
                 break;
             }
-            
+
             numLine++;
             if (numLine > 10) {
                 if (props == null) { // not a valid pls

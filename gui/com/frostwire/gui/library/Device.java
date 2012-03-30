@@ -15,18 +15,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
+import java.io.File;
 import java.net.InetAddress;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.frostwire.HttpFetcher;
-import com.frostwire.JsonEngine;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.limewire.util.NetworkUtils;
 
+import com.frostwire.HttpFetcher;
+import com.frostwire.HttpFetcherListener;
+import com.frostwire.JsonEngine;
+import com.limegroup.gnutella.gui.GUIMediator;
+
+/**
+ * @author gubatron
+ * @author aldenml
+ * 
+ */
 public class Device {
+
+    private static final Log LOG = LogFactory.getLog(Device.class);
 
     public static int ACTION_BROWSE = 0;
     public static int ACTION_DOWNLOAD = 1;
@@ -148,7 +163,7 @@ public class Device {
 
         return null;
     }
-    
+
     public String getDownloadURL(FileDescriptor fd) {
         return "http://" + _address.getHostAddress() + ":" + _port + "/download?type=" + fd.fileType + "&id=" + fd.id;
     }
@@ -177,6 +192,57 @@ public class Device {
         }
 
         return null;
+    }
+
+    public void upload(File[] files) {
+        try {
+            DesktopUploadRequest dur = new DesktopUploadRequest();
+
+            dur.address = NetworkUtils.getLocalAddress().getHostAddress();
+            dur.files = new ArrayList<FileDescriptor>();
+
+            for (File f : files) {
+                FileDescriptor fd = new FileDescriptor();
+                fd.filePath = f.getName();
+                fd.fileSize = f.length();
+
+                dur.files.add(fd);
+            }
+
+            HttpFetcher fetcher = new HttpFetcher("http://" + _address.getHostAddress() + ":" + _port + "/dekstop-upload-request", 60000);
+
+            String json = new JsonEngine().toJson(dur);
+
+            final DeviceUploadProgressDialog dlg = new DeviceUploadProgressDialog(GUIMediator.getAppFrame());
+
+            fetcher.asyncPostJSON(json, new HttpFetcherListener() {
+
+                @Override
+                public void onSuccess(byte[] body) {
+                    GUIMediator.safeInvokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            dlg.setVisible(false);
+                        }
+                    });
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    GUIMediator.safeInvokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            dlg.setVisible(false);
+                        }
+                    });
+                }
+            });
+
+            dlg.setVisible(true);
+
+        } catch (Throwable e) {
+            LOG.error("Error uploading files to device", e);
+        }
     }
 
     @Override
