@@ -47,13 +47,13 @@ public class IOUtils {
             errorDescs.put(type, new EnumMap<DetailErrorType, String>(DetailErrorType.class));
         
         errorDescs.get(ErrorType.GENERIC).put(DetailErrorType.DISK_FULL, 
-            I18nMarker.marktr("FrostWire was unable to write a necessary file because your hard drive is full. To continue using LimeWire you must free up space on your hard drive."));
+            I18nMarker.marktr("FrostWire was unable to write a necessary file because your hard drive is full. To continue using FrostWire you must free up space on your hard drive."));
         errorDescs.get(ErrorType.GENERIC).put(DetailErrorType.FILE_LOCKED,
-            I18nMarker.marktr("FrostWire was unable to open a necessary file because another program has locked the file. LimeWire may act unexpectedly until this file is released."));
+            I18nMarker.marktr("FrostWire was unable to open a necessary file because another program has locked the file. FrostWire may act unexpectedly until this file is released."));
         errorDescs.get(ErrorType.GENERIC).put(DetailErrorType.NO_PRIVS,
-            I18nMarker.marktr("FrostWire was unable to write a necessary file because you do not have the necessary permissions. Your preferences may not be maintained the next time you start LimeWire, or LimeWire may behave in unexpected ways."));
+            I18nMarker.marktr("FrostWire was unable to write a necessary file because you do not have the necessary permissions. Your preferences may not be maintained the next time you start FrostWire, or FrostWire may behave in unexpected ways."));
         errorDescs.get(ErrorType.GENERIC).put(DetailErrorType.BAD_CHARS,
-            I18nMarker.marktr("FrostWire cannot open a necessary file because the filename contains characters which are not supported by your operating system. LimeWire may behave in unexpected ways."));        
+            I18nMarker.marktr("FrostWire cannot open a necessary file because the filename contains characters which are not supported by your operating system. FrostWire may behave in unexpected ways."));        
 
 
         errorDescs.get(ErrorType.DOWNLOAD).put(DetailErrorType.DISK_FULL,
@@ -61,7 +61,7 @@ public class IOUtils {
         errorDescs.get(ErrorType.DOWNLOAD).put(DetailErrorType.FILE_LOCKED,
             I18nMarker.marktr("FrostWire was unable to download the selected file because another program is using the file. Please close the other program and retry the download."));
         errorDescs.get(ErrorType.DOWNLOAD).put(DetailErrorType.NO_PRIVS,
-            I18nMarker.marktr("FrostWire was unable to create or continue writing an incomplete file for the selected download because you do not have permission to write files to the incomplete folder. To continue using LimeWire, please choose a different Save Folder."));
+            I18nMarker.marktr("FrostWire was unable to create or continue writing an incomplete file for the selected download because you do not have permission to write files to the incomplete folder. To continue using FrostWire, please choose a different Save Folder."));
         errorDescs.get(ErrorType.DOWNLOAD).put(DetailErrorType.BAD_CHARS,
             I18nMarker.marktr("FrostWire was unable to open the incomplete file for the selected download because the filename contains characters which are not supported by your operating system."));
         
