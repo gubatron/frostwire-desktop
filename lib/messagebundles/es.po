@@ -23,7 +23,7 @@ msgstr ""
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:50
 msgid ""
 "FrostWire was unable to write a necessary file because your hard drive is "
-"full. To continue using LimeWire you must free up space on your hard drive."
+"full. To continue using FrostWire you must free up space on your hard drive."
 msgstr ""
 "FrostWire no pudo escribir un archivo requerido debido a que no hay espacio "
 "disponible en su disco duro. Para continuar usando FrostWire debe liberar "
@@ -32,7 +32,7 @@ msgstr ""
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:52
 msgid ""
 "FrostWire was unable to open a necessary file because another program has "
-"locked the file. LimeWire may act unexpectedly until this file is released."
+"locked the file. FrostWire may act unexpectedly until this file is released."
 msgstr ""
 "FrostWire no pudo abrir un archivo necesario porque otro programa lo ha "
 "bloqueado. FrostWire puede funcionar de manera inesperada hasta que este "
@@ -42,7 +42,7 @@ msgstr ""
 msgid ""
 "FrostWire was unable to write a necessary file because you do not have the "
 "necessary permissions. Your preferences may not be maintained the next time "
-"you start LimeWire, or LimeWire may behave in unexpected ways."
+"you start FrostWire, or FrostWire may behave in unexpected ways."
 msgstr ""
 "FrostWire no pudo escribir un archivo necesario porque no tienes los "
 "permisos requeridos. Es posible que no se mantengan sus preferencias la "
@@ -52,7 +52,7 @@ msgstr ""
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:56
 msgid ""
 "FrostWire cannot open a necessary file because the filename contains "
-"characters which are not supported by your operating system. LimeWire may "
+"characters which are not supported by your operating system. FrostWire may "
 "behave in unexpected ways."
 msgstr ""
 "FrostWire no pudo abrir un archivo necesario porque el nombre del archivo "
@@ -81,7 +81,7 @@ msgstr ""
 msgid ""
 "FrostWire was unable to create or continue writing an incomplete file for "
 "the selected download because you do not have permission to write files to "
-"the incomplete folder. To continue using LimeWire, please choose a different "
+"the incomplete folder. To continue using FrostWire, please choose a different "
 "Save Folder."
 msgstr ""
 "FrostWire no pudo crear o continuar escribiendo un archivo incompleto para "
@@ -1145,7 +1145,7 @@ msgstr "La carpeta de datos de Torrent no puede contener una carpeta de"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:127
 msgid "Use Default"
-msgstr "Usar el pre&determinado"
+msgstr "Usar el predeterminado"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:128
 msgid "Use the Default Folder"
@@ -1992,11 +1992,11 @@ msgstr ""
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:115
 #: gui/com/limegroup/gnutella/gui/menu/SearchMenu.java:25
 msgid "&Search"
-msgstr "&Buscar"
+msgstr "Buscar"
 
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:115
 msgid "&Library"
-msgstr "&Biblioteca"
+msgstr "Biblioteca"
 
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:116
 msgid "C&hat"
@@ -3243,7 +3243,7 @@ msgstr "¡Ya casi terminas!"
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:55
 msgid "State your intent below to start using FrostWire "
-msgstr "Declara tus intenciones al comenzar a usar FrostWire"
+msgstr "Declara tus intenciones para comenzar a usar FrostWire "
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:57
 msgid ""
@@ -3266,7 +3266,7 @@ msgid ""
 "use FrostWire {0} for copyright infringement.</div></html>"
 msgstr ""
 "<html><div display=\"block\" color=\"#515151\" size=\"13\">I <b>No "
-"utilizaré</b>FrostWire {0} para infringir derechos de autor.</div></html>"
+"utilizaré</b> FrostWire {0} para infringir derechos de autor.</div></html>"
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:73
 #, java-format
@@ -3295,7 +3295,7 @@ msgstr "Configuraciones Varias"
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:62
 msgid "Below, are several options that affect the functionality of FrostWire."
-msgstr "Abajo, hay ciertas occiones que afectan la funcionalidad de FrostWire."
+msgstr "Abajo, hay ciertas opciones que afectan la funcionalidad de FrostWire."
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:79
 #: gui/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:22
@@ -3324,7 +3324,7 @@ msgid ""
 "communicate with others in the chatrooms."
 msgstr ""
 "La comunidad chat de FrostWire requiere un nick (seudónimo) para que te "
-"comuniques con otras personas en los chats"
+"comuniques con otras personas en las salas."
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:165
 #: gui/com/limegroup/gnutella/gui/options/panes/ChatCommunityPaneItem.java:25
@@ -3397,19 +3397,19 @@ msgstr "FrostWire es un software gratuito,"
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:115
 msgid "Do not pay for FrostWire."
-msgstr "No pagues por FrostWire"
+msgstr "No pagues por FrostWire."
 
 #: gui/com/limegroup/gnutella/gui/menu/FileMenu.java:25
 msgid "&File"
-msgstr "&Archivo"
+msgstr "Archivo"
 
 #: gui/com/limegroup/gnutella/gui/menu/FiltersMenu.java:15
 msgid "Filter&s"
-msgstr "&Filtros"
+msgstr "Filtro&s"
 
 #: gui/com/limegroup/gnutella/gui/menu/FiltersMenu.java:18
 msgid "&Configure Content Filters"
-msgstr "&Configure los Filtros de Contenido"
+msgstr "&Configure Filtros de Contenido"
 
 #: gui/com/limegroup/gnutella/gui/menu/FiltersMenu.java:19
 msgid "Configure FrostWire's Content Filtering Options"
@@ -3417,23 +3417,23 @@ msgstr "Configure las opciones de los Filtros de Contenido de FrostWire"
 
 #: gui/com/limegroup/gnutella/gui/menu/FiltersMenu.java:21
 msgid "&Learn More..."
-msgstr "&Aprenda mas..."
+msgstr "Aprenda mas..."
 
 #: gui/com/limegroup/gnutella/gui/menu/FiltersMenu.java:22
 msgid "Learn More about FrostWire's Content Filtering System"
-msgstr "Aprenda mas acerca de los Filtros de Contenido de limewire"
+msgstr "Aprenda mas acerca de los Filtros de Contenido de FrostWire"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:29
 msgid "Sharing &Help"
-msgstr "Compartiendo &Ayuda"
+msgstr "Ayuda"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:31
 msgid "&FAQ"
-msgstr "Preguntas &frecuentes"
+msgstr "Preguntas Frecuentes"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:31
 msgid "Frequently Asked Questions for FrostWire"
-msgstr "Preguntas frecuentes para FrostWire."
+msgstr "Preguntas Frecuentes para FrostWire."
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:33
 msgid "FrostWire for Android"
@@ -3442,8 +3442,7 @@ msgstr "FrostWire para Android"
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:33
 msgid "Get FrostWire on your Android phone, tablet or google tv, all free."
 msgstr ""
-"Obtén FrostWire para tu teléfono Android, tablet o google tv, completamente "
-"gratis."
+"Obtén FrostWire para tu teléfono Android, Tablet o Google Tv gratis."
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:35
 msgid "What is \"Seeding\"?"
@@ -3462,7 +3461,7 @@ msgid ""
 "Order free FrostWire stickers, we ship worldwide. Stickers are free, you pay "
 "cents for shipping."
 msgstr ""
-"Ordena calcomanías de FrostWire gratis, las enviamos a cualquier parte del "
+"Ordena pegatinas de FrostWire gratis, las enviamos a cualquier parte del "
 "mundo. Las pegatinas son gratis, solo pagas céntimos por el envío."
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:41
@@ -3476,7 +3475,7 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
 msgid "FrostClick.com"
-msgstr ""
+msgstr "FrostClick.com"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
 msgid "Free Legal Downloads"
@@ -3496,7 +3495,7 @@ msgstr "Síguenos en Twitter"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:52
 msgid "Foru&m"
-msgstr "F&oro"
+msgstr "Foro"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:52
 msgid "Access the FrostWire Users' Forum"
@@ -3513,15 +3512,15 @@ msgstr "¿Has pagado por FrostWire? FrostWire es Gratis. Evita fraudes."
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:78
 msgid "Tip of the &Day"
-msgstr "Consejo &del día"
+msgstr "Consejo del Día"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:79
 msgid "Show the Tip of the Day Window"
-msgstr "Mostrar ventana del consejo del día."
+msgstr "Mostrar el consejo del día."
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:98
 msgid "&About FrostWire"
-msgstr "Ac&erca de FrostWire"
+msgstr "Acerca de FrostWire"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:99
 msgid "Information about FrostWire"
@@ -3529,7 +3528,7 @@ msgstr "Información acerca de FrostWire."
 
 #: gui/com/limegroup/gnutella/gui/menu/MenuMediator.java:88
 msgid "Loading Menus..."
-msgstr "Cargando mens..."
+msgstr "Cargando menus..."
 
 #: gui/com/limegroup/gnutella/gui/menu/NavMenu.java:20
 msgid "&Navigation"
@@ -3549,11 +3548,11 @@ msgstr "Mostrar los filtros de los resultados de búsqueda."
 
 #: gui/com/limegroup/gnutella/gui/menu/ShowHideMenu.java:21
 msgid "Sho&w/Hide"
-msgstr "Mostrar/&Ocultar"
+msgstr "Mostrar/Ocultar"
 
 #: gui/com/limegroup/gnutella/gui/menu/ThemeMenu.java:45
 msgid "&Apply Skins"
-msgstr "Cambiar Carátulas (&Apariencia)"
+msgstr "Aplicar Caratulas"
 
 #: gui/com/limegroup/gnutella/gui/menu/ThemeMenu.java:112
 msgid "Use &Default"
@@ -3565,11 +3564,11 @@ msgstr "Usar su carátula predeterminada."
 
 #: gui/com/limegroup/gnutella/gui/menu/ToolsMenu.java:29
 msgid "&Tools"
-msgstr "&Herramientas"
+msgstr "Herramientas"
 
 #: gui/com/limegroup/gnutella/gui/menu/ToolsMenu.java:43
 msgid "Rebuild iTunes \"FrostWire\" Playlist"
-msgstr "Re-construir iTunes \"FrostWire\" Lista de reproducción"
+msgstr "Re-construir Lista de reproducción \"FrostWire\" en iTunes"
 
 #: gui/com/limegroup/gnutella/gui/menu/ToolsMenu.java:44
 msgid ""
@@ -3577,7 +3576,7 @@ msgid ""
 "audio files found on your Torrent Data Folder."
 msgstr ""
 "Borra y re-construye las listas de reproducción de \"FrostWire\"en iTunes "
-"con todos los archivos de audio en tu carpeta de datos de Torrent."
+"con todos los archivos de audio en tu carpeta \"Torrent Data\"."
 
 #: gui/com/limegroup/gnutella/gui/menu/ToolsMenu.java:50
 msgid ""
@@ -3599,7 +3598,7 @@ msgstr ""
 "iTunes\n"
 "y como resultado esto podría duplicar archivos en tu Biblioteca de iTunes\n"
 "\n"
-"¿Seguro que deseas continuar?  "
+"¿Seguro que deseas continuar?"
 
 #: gui/com/limegroup/gnutella/gui/menu/ToolsMenu.java:68
 msgid "&Options"
@@ -3607,7 +3606,7 @@ msgstr "&Opciones"
 
 #: gui/com/limegroup/gnutella/gui/menu/ToolsMenu.java:69
 msgid "Display the Options Screen"
-msgstr "Mostrar la pantalla de opciones."
+msgstr "Mostrar la pantalla de opciones"
 
 #: gui/com/limegroup/gnutella/gui/menu/ViewMenu.java:26
 msgid "&View"
@@ -3619,7 +3618,7 @@ msgstr "Ícono&s pequeños"
 
 #: gui/com/limegroup/gnutella/gui/menu/ViewMenu.java:34
 msgid "Use Small Icons"
-msgstr "Usar Íconos pequeños."
+msgstr "Usar Íconos pequeños"
 
 #: gui/com/limegroup/gnutella/gui/menu/ViewMenu.java:37
 msgid "Show Icon &Text"
@@ -3627,11 +3626,11 @@ msgstr "Mos&trar texto de Ícono"
 
 #: gui/com/limegroup/gnutella/gui/menu/ViewMenu.java:37
 msgid "Show Text Below Icons"
-msgstr "Mostrar texto bajo Íconos."
+msgstr "Mostrar texto bajo Íconos"
 
 #: gui/com/limegroup/gnutella/gui/menu/ViewMenu.java:40
 msgid "Show Smi&leys"
-msgstr "Mostrar &Emoticones"
+msgstr "Mostrar Emoticones"
 
 #: gui/com/limegroup/gnutella/gui/menu/ViewMenu.java:40
 msgid "Show emoticons in chat"
@@ -3647,7 +3646,7 @@ msgstr "Aumenta el tamaño de la fuente"
 
 #: gui/com/limegroup/gnutella/gui/menu/ViewMenu.java:45
 msgid "&Decrease Font Size"
-msgstr "Reduc&ir el tamaño de la fuente"
+msgstr "Reducir el tamaño de la fuente"
 
 #: gui/com/limegroup/gnutella/gui/menu/ViewMenu.java:45
 msgid "Decreases the Font Size"
@@ -3655,7 +3654,7 @@ msgstr "Reduce el tamaño de las letras"
 
 #: gui/com/limegroup/gnutella/gui/menu/ViewMenu.java:66
 msgid "C&hange Language"
-msgstr "Camb&iar idioma"
+msgstr "Cambiar idioma"
 
 #: gui/com/limegroup/gnutella/gui/menu/ViewMenu.java:67
 msgid "Select your Language Prefereces"
@@ -3686,7 +3685,7 @@ msgstr "Restablecer los valores predeterminados"
 #: gui/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:55
 msgid "Revert All Settings to the Factory Defaults"
 msgstr ""
-"Revertir todas las configuraciones a los valores predeterminados de fábrica."
+"Revertir todas las configuraciones a los valores por defecto."
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:198
 msgid ""
@@ -3726,7 +3725,7 @@ msgstr "iTunes"
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:304
 msgid "Helper Apps"
-msgstr "Aplicaciones de ayuda"
+msgstr "Aplicaciones Asistentes"
 
 #. view options
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:308
@@ -3811,7 +3810,7 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:59
 msgid "Use FrostWire for..."
-msgstr "&Usar FrostWire para..."
+msgstr "Usar FrostWire para..."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AudioPlayerPaneItem.java:22
 msgid "Audio Options"
@@ -5509,36 +5508,6 @@ msgstr ""
 #~ "Digital (para compartir archivos en iTunes). Esta funcionalidad sería "
 #~ "apagada. Puede encenderla de nuevo en opciones, bajo iTunes -> Compartir."
 
-#, fuzzy
-#~ msgid ""
-#~ "FrostWire was unable to start the Digital Audio Access Protocol (for "
-#~ "sharing files in iTunes) because a Microsoft patch is required or a "
-#~ "firewall is blocking access. LimeWire can direct you to Microsoft's page "
-#~ "with information if you want to use this feature. Click 'Yes' to go to "
-#~ "the patch, 'No' to disable this feature, or 'Cancel' to decide later."
-#~ msgstr ""
-#~ "FrostWire no fue capaz de iniciar el Protocolo de Acceso al Audio Digital "
-#~ "(para compartir archivos en iTunes) debido a que se necesita un parche de "
-#~ "Microsoft es requerido, o un CortaFuegos está bloqueando el acceso. "
-#~ "FrostWire puede dirigirle a la página de Microsoft la cual contiene la "
-#~ "información si Ud. desea utilizar esta funcionalidad. Haga clic en 'Si' "
-#~ "para ir hasta el parche, 'No' para deshabilitar esta funcionalidad, o "
-#~ "'Cancelar' para decidir más tarde."
-
-#, fuzzy
-#~ msgid ""
-#~ "FrostWire was unable to start the Digital Audio Access Protocol (for "
-#~ "sharing files in iTunes) because a firewall is blocking access. To "
-#~ "continue using this feature, click 'Yes' and change your firewall to "
-#~ "allow 'LimeWire.exe' full access to incoming and outgoing connections. To "
-#~ "disable this feature, click 'No'."
-#~ msgstr ""
-#~ "Frost Wire no puede abrir el protocolo digital de acceso de audio ( para "
-#~ "compartir iTunes)\n"
-#~ "porque esta boloqueado el acceso. Para continuar oprima \"si\" y cambie "
-#~ "de firewall para permitir acceso total para futuras conecsoines. Para "
-#~ "desacrivar oprima \"no\"."
-
 #~ msgid "View My Shared Files."
 #~ msgstr "Ver mis archivos compartidos."
 
@@ -6418,23 +6387,6 @@ msgstr ""
 
 #~ msgid "0.6"
 #~ msgstr "0.6"
-
-#, fuzzy
-#~ msgid ""
-#~ "You dropped the following files/folders on LimeWire, please select the "
-#~ "ones you would like to share."
-#~ msgstr ""
-#~ "Ud. arrastro los siguientes archivos/directorios en FrostWire, por favor "
-#~ "seleccione los que le gustaria compartir."
-
-#, fuzzy
-#~ msgid "All folders you select will also have their subfolders shared."
-#~ msgstr ""
-#~ "Los Directorios seleccionados (y sus Sub-directorios) seran compartidos."
-
-#, fuzzy
-#~ msgid "Share Dropped Files?"
-#~ msgstr "Archivos Compartidos"
 
 #~ msgid "Yes, Try Again"
 #~ msgstr "Si, Intentar de nuevo"
@@ -7324,18 +7276,6 @@ msgstr ""
 #~ msgid "Speed:"
 #~ msgstr "Velocidad:"
 
-#, fuzzy
-#~ msgid "LimeWire Store Indicator"
-#~ msgstr "Indicador de Cortafuegos"
-
-#, fuzzy
-#~ msgid "You can display your LimeWire Store status in the status bar."
-#~ msgstr "Puede mostrar el estado de su cortafuegos en la barra de estado."
-
-#, fuzzy
-#~ msgid "Show LimeWire Store Indicator:"
-#~ msgstr "Mostrar Indicador de Cortafuegos:"
-
 #~ msgid "Shared Files Indicator"
 #~ msgstr "Indicador de Archivos Compartidos"
 
@@ -7366,12 +7306,6 @@ msgstr ""
 
 #~ msgid "Invalid template {0}"
 #~ msgstr "Plantilla inválida {0}"
-
-#, fuzzy
-#~ msgid ""
-#~ "You can choose the folder for saving files purchased from the LimeWire "
-#~ "Store."
-#~ msgstr "Puede elegir el directorio para guardar archivos."
 
 #~ msgid "System Tray Icon"
 #~ msgstr "Ícono en bandeja del sistema"
