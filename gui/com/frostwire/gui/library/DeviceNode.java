@@ -15,12 +15,18 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
 import javax.swing.Icon;
 
 import com.limegroup.gnutella.gui.GUIMediator;
 
+/**
+ * @author gubatron
+ * @author aldenml
+ * 
+ */
 public class DeviceNode extends LibraryNode {
 
     private static final long serialVersionUID = 2733848224018434257L;

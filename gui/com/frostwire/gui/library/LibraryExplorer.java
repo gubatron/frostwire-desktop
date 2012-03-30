@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
 import java.awt.BorderLayout;
@@ -62,6 +63,11 @@ import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.LibrarySettings;
 import com.limegroup.gnutella.settings.SharingSettings;
 
+/**
+ * @author gubatron
+ * @author aldenml
+ * 
+ */
 public class LibraryExplorer extends AbstractLibraryListPanel {
 
     private static final long serialVersionUID = -5354238047697767760L;
@@ -207,7 +213,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
         tree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         tree.setCellRenderer(new NodeRenderer());
         tree.setDragEnabled(true);
-        tree.setTransferHandler(new LibraryFilesTransferHandler(null));
+        tree.setTransferHandler(new LibraryFilesTransferHandler(tree));
         ((BasicTreeUI)tree.getUI()).setExpandedIcon(null);
         ((BasicTreeUI)tree.getUI()).setCollapsedIcon(null);
 

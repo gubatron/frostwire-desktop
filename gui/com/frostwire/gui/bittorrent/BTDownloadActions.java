@@ -1,3 +1,21 @@
+/*
+ * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
+ * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.frostwire.gui.bittorrent;
 
 import java.awt.event.ActionEvent;
@@ -33,35 +51,34 @@ final class BTDownloadActions {
     static final RemoveAction REMOVE_TORRENT_AND_DATA_ACTION = new RemoveAction(true, true);
     static final CopyMagnetAction COPY_MAGNET_ACTION = new CopyMagnetAction();
     static final CopyInfoHashAction COPY_HASH_ACTION = new CopyInfoHashAction();
-	static final SendBTDownloaderAudioFilesToiTunes SEND_TO_ITUNES_ACTION = new SendBTDownloaderAudioFilesToiTunes();
+    static final SendBTDownloaderAudioFilesToiTunes SEND_TO_ITUNES_ACTION = new SendBTDownloaderAudioFilesToiTunes();
     static final ToggleSeedsVisibilityAction TOGGLE_SEEDS_VISIBILITY_ACTION = new ToggleSeedsVisibilityAction();
-	static final ShareTorrentAction SHARE_TORRENT_ACTION = new ShareTorrentAction();
-	
-	private static class SendBTDownloaderAudioFilesToiTunes extends AbstractAction {
+    static final ShareTorrentAction SHARE_TORRENT_ACTION = new ShareTorrentAction();
 
-		private static final long serialVersionUID = 8230574519252660781L;
+    private static class SendBTDownloaderAudioFilesToiTunes extends AbstractAction {
 
-    	public SendBTDownloaderAudioFilesToiTunes() {
-			putValue(Action.NAME, I18n.tr("Send audio to iTunes"));
+        private static final long serialVersionUID = 8230574519252660781L;
+
+        public SendBTDownloaderAudioFilesToiTunes() {
+            putValue(Action.NAME, I18n.tr("Send audio to iTunes"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Send audio files to iTunes"));
             //putValue(LimeAction.ICON_NAME, "LIBRARY_LAUNCH")
-    	}
-    	
-    	
-    	@Override
-		public void actionPerformed(ActionEvent e) {
-    		BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
-    		
-    		if (downloaders!=null && downloaders.length > 0) {
-    			try {
-    				System.out.println("Sending to iTunes " + downloaders[0].getSaveLocation());
-    				iTunesMediator.instance().scanForSongs(downloaders[0].getSaveLocation());
-    			} catch (Exception ex) {
-    				ex.printStackTrace();
-    			}    			
-    		}
-		}
-    	
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
+
+            if (downloaders != null && downloaders.length > 0) {
+                try {
+                    System.out.println("Sending to iTunes " + downloaders[0].getSaveLocation());
+                    iTunesMediator.instance().scanForSongs(downloaders[0].getSaveLocation());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }
+
     }
 
     private static abstract class RefreshingAction extends AbstractAction {
@@ -124,7 +141,7 @@ final class BTDownloadActions {
             }
         }
     }
-    
+
     private static class ShowInLibraryAction extends RefreshingAction {
         /**
          * 
@@ -146,8 +163,8 @@ final class BTDownloadActions {
                 if (toExplore == null) {
                     return;
                 }
-                
-		        LibraryMediator.instance().getLibrarySearch().searchFor(toExplore.replace("_", " ").replace("-", " ").replace(".", " "));
+
+                LibraryMediator.instance().getLibrarySearch().searchFor(toExplore.replace("_", " ").replace("-", " ").replace(".", " "));
             }
         }
     }
@@ -167,34 +184,34 @@ final class BTDownloadActions {
         }
 
         public void performAction(ActionEvent e) {
-        	boolean oneIsCompleted = false;
-        	
+            boolean oneIsCompleted = false;
+
             BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
 
             for (int i = 0; i < downloaders.length; i++) {
                 if (downloaders[i].isCompleted()) {
-                	oneIsCompleted = true;
-                	break;
+                    oneIsCompleted = true;
+                    break;
                 }
             }
 
             boolean allowedToResume = true;
             DialogOption answer = null;
             if (oneIsCompleted && !SharingSettings.SEED_FINISHED_TORRENTS.getValue()) {
-            	String message1 = (downloaders.length > 1) ? "One of the transfers is complete and resuming will cause it to start seeding" : "This transfer is already complete, resuming it will cause it to start seeding";
-            	String message2 = "Do you want to enable torrent seeding?";
-            	answer = GUIMediator.showYesNoMessage(I18n.tr(message1 + "\n\n" + message2),DialogOption.YES);
-            	allowedToResume = answer.equals(DialogOption.YES);
-            	
-            	if (allowedToResume) {
-            		SharingSettings.SEED_FINISHED_TORRENTS.setValue(true);
-            	}
+                String message1 = (downloaders.length > 1) ? "One of the transfers is complete and resuming will cause it to start seeding" : "This transfer is already complete, resuming it will cause it to start seeding";
+                String message2 = "Do you want to enable torrent seeding?";
+                answer = GUIMediator.showYesNoMessage(I18n.tr(message1 + "\n\n" + message2), DialogOption.YES);
+                allowedToResume = answer.equals(DialogOption.YES);
+
+                if (allowedToResume) {
+                    SharingSettings.SEED_FINISHED_TORRENTS.setValue(true);
+                }
             }
-            
+
             if (allowedToResume) {
-	            for (int i = 0; i < downloaders.length; i++) {
-	                downloaders[i].resume();
-	            }
+                for (int i = 0; i < downloaders.length; i++) {
+                    downloaders[i].resume();
+                }
             }
         }
     }
@@ -252,20 +269,14 @@ final class BTDownloadActions {
         }
 
         public void performAction(ActionEvent e) {
-        	if (_deleteData) {
-				int result = JOptionPane
-						.showConfirmDialog(
-								GUIMediator.getAppFrame(),
-								I18n.tr("Are you sure you want to remove the data files from your computer?\n\nYou won't be able to recover the files."),
-								I18n.tr("Are you sure?"),
-								JOptionPane.YES_NO_OPTION,
-								JOptionPane.QUESTION_MESSAGE);
-				
-				if (result != JOptionPane.YES_OPTION) {
-					return;
-				}
-        	}
-        	
+            if (_deleteData) {
+                int result = JOptionPane.showConfirmDialog(GUIMediator.getAppFrame(), I18n.tr("Are you sure you want to remove the data files from your computer?\n\nYou won't be able to recover the files."), I18n.tr("Are you sure?"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+                if (result != JOptionPane.YES_OPTION) {
+                    return;
+                }
+            }
+
             BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
             for (int i = 0; i < downloaders.length; i++) {
                 downloaders[i].setDeleteTorrentWhenRemove(_deleteTorrent);
@@ -274,8 +285,10 @@ final class BTDownloadActions {
             BTDownloadMediator.instance().removeSelection();
         }
     }
-    
+
     public static class RemoveYouTubeAction extends RemoveAction {
+
+        private static final long serialVersionUID = 4101890173830827703L;
 
         public RemoveYouTubeAction() {
             super(true, true);
@@ -284,7 +297,7 @@ final class BTDownloadActions {
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Remove Download and Data from selected downloads"));
         }
     }
-    
+
     private static class CopyMagnetAction extends RefreshingAction {
 
         /**
@@ -304,15 +317,15 @@ final class BTDownloadActions {
             String str = "";
             for (int i = 0; i < downloaders.length; i++) {
                 str += TorrentUtil.getMagnet(downloaders[i].getHash()) + "&" + TorrentUtil.getMagnetURLParameters(downloaders[i].getDownloadManager().getTorrent());
-                if (i<downloaders.length-1) {
+                if (i < downloaders.length - 1) {
                     str += "\n";
                 }
             }
-            
+
             GUIMediator.setClipboardContent(str);
         }
     }
-    
+
     private static class CopyInfoHashAction extends RefreshingAction {
 
         /**
@@ -332,14 +345,14 @@ final class BTDownloadActions {
             String str = "";
             for (int i = 0; i < downloaders.length; i++) {
                 str += downloaders[i].getHash();
-                if (i<downloaders.length-1) {
+                if (i < downloaders.length - 1) {
                     str += "\n";
                 }
             }
             GUIMediator.setClipboardContent(str);
         }
     }
-    
+
     private static class ShareTorrentAction extends RefreshingAction {
 
         /**
@@ -352,52 +365,52 @@ final class BTDownloadActions {
             putValue(LimeAction.SHORT_NAME, I18n.tr("Send to friend"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Send to friend"));
             putValue(LimeAction.ICON_NAME, "SEND_HASH");
-            putValue(Action.SMALL_ICON,GUIMediator.getThemeImage("share"));
+            putValue(Action.SMALL_ICON, GUIMediator.getThemeImage("share"));
         }
 
         public void performAction(ActionEvent e) {
             BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
             if (downloaders.length != 1) {
-            	return;
+                return;
             }
-            
+
             BTDownload btDownload = downloaders[0];
-            
+
             new ShareTorrentDialog(btDownload.getDownloadManager().getTorrent()).setVisible(true);
         }
     }
-    
+
     static class ToggleSeedsVisibilityAction extends RefreshingAction {
-		private static final long serialVersionUID = -1632629016830943795L;
-		
-		public ToggleSeedsVisibilityAction() {
+        private static final long serialVersionUID = -1632629016830943795L;
+
+        public ToggleSeedsVisibilityAction() {
             updateName();
             putValue(LimeAction.SHORT_NAME, I18n.tr("Show Details"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Show Torrent Details"));
-		}
+        }
 
-		private void updateName() {
-			if (ApplicationSettings.SHOW_SEEDING_TRANSFERS.getValue()) {
-	            putValue(Action.NAME, I18n.tr("Hide Seeding Transfers"));
-	            putValue(LimeAction.SHORT_NAME, I18n.tr("Hide Seeding Transfers"));
-	            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Don't show Seeding Transfers"));
-			} else {
-	            putValue(Action.NAME, I18n.tr("Show Seeding Transfers"));
-	            putValue(LimeAction.SHORT_NAME, I18n.tr("Show Seeding Transfers"));
-	            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Show Seeding Transfers"));
-			}
-			
-		}
+        private void updateName() {
+            if (ApplicationSettings.SHOW_SEEDING_TRANSFERS.getValue()) {
+                putValue(Action.NAME, I18n.tr("Hide Seeding Transfers"));
+                putValue(LimeAction.SHORT_NAME, I18n.tr("Hide Seeding Transfers"));
+                putValue(Action.SHORT_DESCRIPTION, I18n.tr("Don't show Seeding Transfers"));
+            } else {
+                putValue(Action.NAME, I18n.tr("Show Seeding Transfers"));
+                putValue(LimeAction.SHORT_NAME, I18n.tr("Show Seeding Transfers"));
+                putValue(Action.SHORT_DESCRIPTION, I18n.tr("Show Seeding Transfers"));
+            }
 
-		@Override
-		protected void performAction(ActionEvent e) {
-			//toggle the setting
-			ApplicationSettings.SHOW_SEEDING_TRANSFERS.setValue(!ApplicationSettings.SHOW_SEEDING_TRANSFERS.getValue());
-			updateName();
-			BTDownloadMediator.instance().updateTableFilters();
-		}
+        }
+
+        @Override
+        protected void performAction(ActionEvent e) {
+            //toggle the setting
+            ApplicationSettings.SHOW_SEEDING_TRANSFERS.setValue(!ApplicationSettings.SHOW_SEEDING_TRANSFERS.getValue());
+            updateName();
+            BTDownloadMediator.instance().updateTableFilters();
+        }
     }
-    
+
     static class CreateNewPlaylistAction extends AbstractAction {
 
         private static final long serialVersionUID = 3460908036485828909L;
@@ -412,24 +425,24 @@ final class BTDownloadActions {
             BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
 
             List<File> playlistFiles = new ArrayList<File>(downloaders.length);
-            
+
             for (BTDownload d : downloaders) {
-	            if (!d.isCompleted()) {
-	                return;
-	            }
-	            
-	            playlistFiles.add(d.getSaveLocation());
+                if (!d.isCompleted()) {
+                    return;
+                }
+
+                playlistFiles.add(d.getSaveLocation());
             }
-            
+
             LibraryUtils.createNewPlaylist(playlistFiles.toArray(new File[0]));
 
         }
     }
-    
-    static class AddToPlaylistAction extends AbstractAction  {
+
+    static class AddToPlaylistAction extends AbstractAction {
 
         private static final long serialVersionUID = 2785648153922643785L;
-        
+
         private Playlist playlist;
 
         public AddToPlaylistAction(Playlist playlist) {
@@ -443,16 +456,15 @@ final class BTDownloadActions {
             BTDownload[] downloaders = BTDownloadMediator.instance().getSelectedDownloaders();
 
             List<File> playlistFiles = new ArrayList<File>(downloaders.length);
-            
+
             for (BTDownload d : downloaders) {
-	            if (!d.isCompleted()) {
-	                return;
-	            }
-	            
-	            playlistFiles.add(d.getSaveLocation());
+                if (!d.isCompleted()) {
+                    return;
+                }
+
+                playlistFiles.add(d.getSaveLocation());
             }
-            
-            
+
             LibraryUtils.asyncAddToPlaylist(playlist, playlistFiles.toArray(new File[0]));
             GUIMediator.instance().setWindow(GUIMediator.Tabs.LIBRARY);
         }

@@ -1,3 +1,21 @@
+/*
+ * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
+ * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui.search;
 
 import java.awt.event.ActionEvent;
@@ -6,10 +24,10 @@ import java.io.File;
 
 import javax.swing.JPopupMenu;
 
-import org.limewire.util.FilenameUtils;
-
 import jd.plugins.DownloadLink;
 import jd.plugins.FilePackage;
+
+import org.limewire.util.FilenameUtils;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.GuiFrostWireUtils;
@@ -17,7 +35,6 @@ import com.frostwire.websearch.youtube.YouTubeSearchResult;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
-import com.limegroup.gnutella.settings.BittorrentSettings;
 
 public final class YouTubePackageItemSearchResult extends AbstractSearchResult {
 
@@ -25,23 +42,23 @@ public final class YouTubePackageItemSearchResult extends AbstractSearchResult {
     private final FilePackage filePackage;
     private final SearchEngine searchEngine;
     private final SearchInformation info;
-    
+
     private final String filename;
-    
+
     public YouTubePackageItemSearchResult(YouTubeSearchResult sr, FilePackage filePackage, SearchEngine searchEngine, SearchInformation info) {
         this.sr = sr;
         this.filePackage = filePackage;
         this.searchEngine = searchEngine;
         this.info = info;
-        
+
         this.filename = readFilename(filePackage);
     }
-    
+
     @Override
     public String getFileName() {
         return filename;
     }
-    
+
     @Override
     public String getFilenameNoExtension() {
         return FilenameUtils.getBaseName(filename);
@@ -138,7 +155,7 @@ public final class YouTubePackageItemSearchResult extends AbstractSearchResult {
     public WebSearchResult getWebSearchResult() {
         return sr;
     }
-    
+
     private String readFilename(FilePackage filePackage) {
         DownloadLink dl = filePackage.getChildren().get(0);
         if (dl.getStringProperty("convertto", "").equals("AUDIOMP3")) {

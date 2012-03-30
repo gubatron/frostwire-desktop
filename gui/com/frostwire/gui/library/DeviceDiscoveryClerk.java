@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
 import java.io.InterruptedIOException;
@@ -41,6 +42,11 @@ import com.frostwire.JsonEngine;
 import com.frostwire.gui.library.Device.OnActionFailedListener;
 import com.limegroup.gnutella.settings.ConnectionSettings;
 
+/**
+ * @author gubatron
+ * @author aldenml
+ * 
+ */
 public class DeviceDiscoveryClerk {
 
     private static final Log LOG = LogFactory.getLog(DeviceDiscoveryClerk.class);

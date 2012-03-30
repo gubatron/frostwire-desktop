@@ -1,3 +1,21 @@
+/*
+ * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
+ * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui.search;
 
 import java.awt.event.ActionEvent;
@@ -6,11 +24,8 @@ import java.io.File;
 
 import javax.swing.JPopupMenu;
 
-import org.limewire.util.FilenameUtils;
-
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.GuiFrostWireUtils;
-import com.frostwire.websearch.youtube.YouTubeSearchResult;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
@@ -80,11 +95,10 @@ public class SearchEngineSearchResult extends AbstractSearchResult {
     public String getVendor() {
         return _item.getVendor();
     }
-    
+
     @Override
     public void initialize(SearchResultDataLine line) {
         line.setAddedOn(getCreationTime());
-        
 
         //hack this to show the icon for mininova or for isohunt.
     }
@@ -93,9 +107,9 @@ public class SearchEngineSearchResult extends AbstractSearchResult {
     public boolean isMeasuredSpeed() {
         return false;
     }
-    
+
     public boolean allowDeepSearch() {
-        return true; 
+        return true;
     }
 
     @Override
@@ -130,7 +144,7 @@ public class SearchEngineSearchResult extends AbstractSearchResult {
     public int getSeeds() {
         return _item.getSeeds();
     }
-    
+
     public SearchEngine getSearchEngine() {
         return _searchEngine;
     }

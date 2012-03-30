@@ -21,9 +21,6 @@ package com.frostwire.websearch.youtube;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import jd.plugins.DownloadLink;
-import jd.plugins.FilePackage;
-
 import org.limewire.util.FilenameUtils;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;

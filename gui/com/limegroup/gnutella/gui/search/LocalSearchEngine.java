@@ -1,3 +1,21 @@
+/*
+ * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
+ * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui.search;
 
 import java.io.File;
@@ -54,13 +72,13 @@ import com.limegroup.gnutella.settings.SearchSettings;
 public class LocalSearchEngine {
 
     private static final Log LOG = LogFactory.getLog(LocalSearchEngine.class);
-    
+
     private static final ExecutorService DOWNLOAD_TORRENTS_EXECUTOR;
     private static final ExecutorService CRAWL_YOUTUBE_LINKS_EXECUTOR;
     private static final int MAX_TORRENT_DOWNLOADS = 10;
 
     private static final ExecutorService INDEX_TORRENTS_EXECUTOR;
-    
+
     static {
         DOWNLOAD_TORRENTS_EXECUTOR = ExecutorsHelper.newFixedSizePriorityThreadPool(MAX_TORRENT_DOWNLOADS, "DownloadTorrentsExecutor");
         CRAWL_YOUTUBE_LINKS_EXECUTOR = ExecutorsHelper.newFixedSizePriorityThreadPool(2, "CRAWL_YOUTUBE_LINKS_EXECUTOR");
@@ -89,7 +107,7 @@ public class LocalSearchEngine {
     private HashSet<String> KNOWN_INFO_HASHES = new HashSet<String>();
     private SmartSearchDB DB;
     private JsonEngine JSON_ENGINE;
-    
+
     private Queue<IndexTorrentElement> INDEX_TORRENT_QUEUE = new LinkedList<IndexTorrentElement>();
 
     public LocalSearchEngine() {
@@ -127,10 +145,10 @@ public class LocalSearchEngine {
      */
     private final static String stringSanitize(String str) {
         str = stripHtml(str);
-        str = str.replaceAll("\\.torrent|www\\.|\\.com|[\\\\\\/%_;\\-\\.\\(\\)\\[\\]\\n\\r"+'\uu2013'+"]", " ");
+        str = str.replaceAll("\\.torrent|www\\.|\\.com|[\\\\\\/%_;\\-\\.\\(\\)\\[\\]\\n\\r" + '\uu2013' + "]", " ");
         return StringUtils.removeDoubleSpaces(str);
     }
-    
+
     /**
      * Very simple html strip routine. Not for a wide use.
      * 
@@ -138,7 +156,7 @@ public class LocalSearchEngine {
      * @return
      */
     private static String stripHtml(String str) {
-        str = str.replaceAll("\\<.*?>","");
+        str = str.replaceAll("\\<.*?>", "");
         str = str.replaceAll("\\&.*?\\;", "");
         return str;
     }
@@ -224,7 +242,7 @@ public class LocalSearchEngine {
 
         // Wait for enough results or die if the ResultPanel has been closed.
         int tries = DEEP_SEARCH_ROUNDS;
-        
+
         boolean scanYouTube = true;
 
         for (int i = tries; i > 0; i--) {
@@ -263,11 +281,11 @@ public class LocalSearchEngine {
 
         List<SearchResultDataLine> allData = rp.getAllData();
         sortAndStripNonTorrents(allData);
-        
+
         int order = 0;
 
         for (int i = 0; i < allData.size(); i++) {
-            
+
             SearchResultDataLine line = allData.get(i);
 
             if (line.getInitializeObject() instanceof SearchEngineSearchResult) {
@@ -282,7 +300,7 @@ public class LocalSearchEngine {
                 }
 
                 foundTorrents++;
-                
+
                 WebSearchResult webSearchResult = line.getSearchResult().getWebSearchResult();
 
                 if (!KNOWN_INFO_HASHES.contains(webSearchResult.getHash())) {
@@ -296,8 +314,8 @@ public class LocalSearchEngine {
                 }
                 WebSearchResult webSearchResult = line.getSearchResult().getWebSearchResult();
                 SearchEngine searchEngine = line.getSearchEngine();
-                
-                CrawlYouTubePackage task = new CrawlYouTubePackage(order++, guid, query, (YouTubeSearchResult) webSearchResult, searchEngine, info);
+
+                CrawlYouTubePackage task = new CrawlYouTubePackage(order++, guid, (YouTubeSearchResult) webSearchResult, searchEngine, info);
                 CRAWL_YOUTUBE_LINKS_EXECUTOR.execute(task);
             }
         }
@@ -313,8 +331,7 @@ public class LocalSearchEngine {
         while (iterator.hasNext()) {
             SearchResultDataLine next = iterator.next();
 
-            if (!next.getExtension().toLowerCase().contains("torrent") &&
-                !next.getExtension().toLowerCase().contains("youtube")) {
+            if (!next.getExtension().toLowerCase().contains("torrent") && !next.getExtension().toLowerCase().contains("youtube")) {
                 iterator.remove();
             }
         }
@@ -334,12 +351,12 @@ public class LocalSearchEngine {
     private void scanDotTorrent(int order, WebSearchResult webSearchResult, byte[] guid, String query, SearchEngine searchEngine, SearchInformation info) {
         if (!torrentHasBeenIndexed(webSearchResult.getHash())) {
             // download the torrent
-            
+
             SearchResultMediator rp = SearchMediator.getResultPanelForGUID(new GUID(guid));
             if (rp != null) {
                 rp.incrementSearchCount();
             }
-            
+
             DownloadTorrentTask task = new DownloadTorrentTask(order, guid, query, webSearchResult, searchEngine, info);
             DOWNLOAD_TORRENTS_EXECUTOR.execute(task);
         } else {
@@ -374,7 +391,7 @@ public class LocalSearchEngine {
             tfPojo.size = f.getLength();
             tfPojos[i] = tfPojo;
         }
-        
+
         INDEX_TORRENT_QUEUE.offer(new IndexTorrentElement(torrentPojo, tfPojos));
         INDEX_TORRENTS_EXECUTOR.execute(new IndexTorrentTask());
     }
@@ -382,14 +399,14 @@ public class LocalSearchEngine {
     private class LocalSearchTorrentDownloaderListener implements TorrentDownloaderCallBackInterface {
 
         private final AtomicBoolean finished = new AtomicBoolean(false);
-        
+
         private final byte[] guid;
         private final Set<String> tokens;
         private final SearchEngine searchEngine;
         private final WebSearchResult webSearchResult;
         private final SearchInformation info;
         private final CountDownLatch finishSignal;
-        
+
         public LocalSearchTorrentDownloaderListener(byte[] guid, String query, WebSearchResult webSearchResult, SearchEngine searchEngine, SearchInformation info, CountDownLatch finishSignal) {
             this.guid = guid;
             this.tokens = new HashSet<String>(Arrays.asList(query.toLowerCase().split(" ")));
@@ -417,7 +434,7 @@ public class LocalSearchEngine {
                 } catch (Throwable e) {
                     LOG.error("Error during torrent indexing", e);
                 }
-                
+
                 finishSignal.countDown();
             }
 
@@ -447,7 +464,7 @@ public class LocalSearchEngine {
             if (rp == null || rp.isStopped()) {
                 return;
             }
-            
+
             rp.decrementSearchCount();
 
             SearchFilter filter = SearchMediator.getSearchFilterFactory().createFilter();
@@ -455,29 +472,29 @@ public class LocalSearchEngine {
             TOTorrentFile[] fs = theTorrent.getFiles();
             for (int i = 0; i < fs.length; i++) {
                 try {
-                final DeepSearchResult result = new DeepSearchResult(fs[i], webSearchResult, searchEngine, info);
+                    final DeepSearchResult result = new DeepSearchResult(fs[i], webSearchResult, searchEngine, info);
 
-                if (!filter.allow(result))
-                    continue;
+                    if (!filter.allow(result))
+                        continue;
 
-                boolean foundMatch = true;
-                
-                String keywords = stringSanitize(result.getFileName() + " " + fs[i].getRelativePath()).toLowerCase();
+                    boolean foundMatch = true;
 
-                for (String token : tokens) {
-                    if (!keywords.contains(token)) {
-                        foundMatch = false;
-                        break;
-                    }
-                }
+                    String keywords = stringSanitize(result.getFileName() + " " + fs[i].getRelativePath()).toLowerCase();
 
-                if (foundMatch) {
-                    GUIMediator.safeInvokeAndWait(new Runnable() {
-                        public void run() {
-                            SearchMediator.getSearchResultDisplayer().addQueryResult(guid, result, rp);
+                    for (String token : tokens) {
+                        if (!keywords.contains(token)) {
+                            foundMatch = false;
+                            break;
                         }
-                    });
-                }
+                    }
+
+                    if (foundMatch) {
+                        GUIMediator.safeInvokeAndWait(new Runnable() {
+                            public void run() {
+                                SearchMediator.getSearchResultDisplayer().addQueryResult(guid, result, rp);
+                            }
+                        });
+                    }
                 } catch (Throwable e) {
                     LOG.error("Error analysing torrent file", e);
                 }
@@ -502,20 +519,20 @@ public class LocalSearchEngine {
     public void resetDB() {
         DB.reset();
     }
-    
+
     private interface DeepTask extends Runnable, Comparable<DeepTask> {
         public int getOrder();
     }
-    
+
     private class DownloadTorrentTask implements DeepTask {
-        
+
         private final int order;
         private final byte[] guid;
         private final String query;
         private final SearchEngine searchEngine;
         private final WebSearchResult webSearchResult;
         private final SearchInformation info;
-        
+
         public DownloadTorrentTask(int order, byte[] guid, String query, WebSearchResult webSearchResult, SearchEngine searchEngine, SearchInformation info) {
             this.order = order;
             this.guid = guid;
@@ -524,7 +541,7 @@ public class LocalSearchEngine {
             this.webSearchResult = webSearchResult;
             this.info = info;
         }
-        
+
         @Override
         public int getOrder() {
             return order;
@@ -537,20 +554,20 @@ public class LocalSearchEngine {
 
         @Override
         public void run() {
-            
+
             SearchResultMediator rp = SearchMediator.getResultPanelForGUID(new GUID(guid));
 
             // user closed the tab.
             if (rp == null || rp.isStopped()) {
                 return;
             }
-            
+
             String saveDir = SearchSettings.SMART_SEARCH_DATABASE_FOLDER.getValue().getAbsolutePath();
-            
+
             CountDownLatch finishSignal = new CountDownLatch(1);
-            
+
             TorrentDownloaderFactory.create(new LocalSearchTorrentDownloaderListener(guid, query, webSearchResult, searchEngine, info, finishSignal), webSearchResult.getTorrentURI(), webSearchResult.getTorrentDetailsURL(), saveDir).start();
-            
+
             try {
                 finishSignal.await();
             } catch (InterruptedException e) {
@@ -558,25 +575,23 @@ public class LocalSearchEngine {
             }
         }
     }
-    
+
     private class CrawlYouTubePackage implements DeepTask {
 
         private final int order;
         private final byte[] guid;
-        private final String query;
         private final SearchEngine searchEngine;
         private final YouTubeSearchResult webSearchResult;
         private final SearchInformation info;
-        
-        public CrawlYouTubePackage(int order, byte[] guid, String query, YouTubeSearchResult webSearchResult, SearchEngine searchEngine, SearchInformation info) {
+
+        public CrawlYouTubePackage(int order, byte[] guid, YouTubeSearchResult webSearchResult, SearchEngine searchEngine, SearchInformation info) {
             this.order = order;
             this.guid = guid;
-            this.query = query;
             this.searchEngine = searchEngine;
             this.webSearchResult = webSearchResult;
             this.info = info;
         }
-        
+
         @Override
         public int getOrder() {
             return order;
@@ -586,7 +601,7 @@ public class LocalSearchEngine {
         public int compareTo(DeepTask o) {
             return Integer.valueOf(getOrder()).compareTo(Integer.valueOf(o.getOrder()));
         }
-        
+
         @Override
         public void run() {
             try {
@@ -596,7 +611,7 @@ public class LocalSearchEngine {
                 if (rp == null || rp.isStopped()) {
                     return;
                 }
-                
+
                 LinkCollector collector = LinkCollector.getInstance();
                 LinkCrawler crawler = new LinkCrawler();
                 crawler.setFilter(LinkFilterController.getInstance());
@@ -613,13 +628,13 @@ public class LocalSearchEngine {
                     links.add(link);
                     packages.add(createFilePackage(parent, links));
                 }
-                
+
                 matchResults(packages);
             } catch (Throwable e) {
                 LOG.error("Error crawling youtube: " + webSearchResult.getFilenameNoExtension(), e);
             }
         }
-        
+
         private String readVideoUrl(YouTubeEntry entry) {
             String url = null;
 
@@ -633,7 +648,7 @@ public class LocalSearchEngine {
 
             return url;
         }
-        
+
         private FilePackage createFilePackage(final CrawledPackage pkg, ArrayList<CrawledLink> plinks) {
             FilePackage ret = FilePackage.getInstance();
             /* set values */
@@ -673,7 +688,7 @@ public class LocalSearchEngine {
             }
             return ret;
         }
-        
+
         private void matchResults(List<FilePackage> packages) {
 
             if (!searchEngine.isEnabled()) {
@@ -686,22 +701,22 @@ public class LocalSearchEngine {
             if (rp == null || rp.isStopped()) {
                 return;
             }
-            
+
             rp.decrementSearchCount();
 
             SearchFilter filter = SearchMediator.getSearchFilterFactory().createFilter();
 
             for (FilePackage p : packages) {
                 try {
-                final YouTubePackageItemSearchResult result = new YouTubePackageItemSearchResult(webSearchResult, p, searchEngine, info);
+                    final YouTubePackageItemSearchResult result = new YouTubePackageItemSearchResult(webSearchResult, p, searchEngine, info);
 
-                //youtube mp3 filter
-                if (p.getChildren().get(0).getFileOutput().endsWith(".mp3")) {
-                    continue;
-                }
-                
-                if (!filter.allow(result))
-                    continue;
+                    //youtube mp3 filter
+                    if (p.getChildren().get(0).getFileOutput().endsWith(".mp3")) {
+                        continue;
+                    }
+
+                    if (!filter.allow(result))
+                        continue;
 
                     GUIMediator.safeInvokeAndWait(new Runnable() {
                         public void run() {
@@ -714,14 +729,14 @@ public class LocalSearchEngine {
             }
         }
     }
-    
+
     private class IndexTorrentTask implements Runnable {
-        
+
         @Override
         public void run() {
             try {
                 int n = 0;
-                
+
                 ArrayList<IndexTorrentElement> list = new ArrayList<IndexTorrentElement>();
                 while (n < 1000) {
                     IndexTorrentElement e = INDEX_TORRENT_QUEUE.poll();
@@ -732,7 +747,7 @@ public class LocalSearchEngine {
                         break;
                     }
                 }
-                
+
                 indexElements(list);
 
                 if (n > 0) {
@@ -742,7 +757,7 @@ public class LocalSearchEngine {
                 LOG.error("General error in torrent index task", e);
             }
         }
-        
+
         private void indexElements(ArrayList<IndexTorrentElement> list) {
             // disable lucene indexing
             FullTextLucene2.enableIndexing("FILES", false);
@@ -776,11 +791,11 @@ public class LocalSearchEngine {
             DB.update("UPDATE Torrents SET indexed=? WHERE torrentId=?", true, torrentID);
         }
     }
-    
+
     private static class IndexTorrentElement {
         public final TorrentDBPojo torrent;
         public final TorrentFileDBPojo files[];
-        
+
         public IndexTorrentElement(TorrentDBPojo torrent, TorrentFileDBPojo[] files) {
             this.torrent = torrent;
             this.files = files;

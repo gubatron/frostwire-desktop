@@ -22,13 +22,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import jd.controlling.linkcollector.LinkCollectingJob;
-import jd.controlling.linkcollector.LinkCollector;
-import jd.controlling.linkcrawler.CrawledLink;
-import jd.controlling.linkcrawler.CrawledPackage;
-import jd.controlling.linkcrawler.LinkCrawler;
-import jd.plugins.FilePackage;
-
 import com.frostwire.HttpFetcher;
 import com.frostwire.JsonEngine;
 import com.frostwire.bittorrent.websearch.WebSearchPerformer;
@@ -67,7 +60,7 @@ public class YouTubeSearchPerformer implements WebSearchPerformer {
         }
 
         String json = null;
-        
+
         try {
             json = new String(jsonBytes, "UTF-8");
         } catch (UnsupportedEncodingException e1) {
@@ -91,44 +84,5 @@ public class YouTubeSearchPerformer implements WebSearchPerformer {
 
     private String fixJson(String json) {
         return json.replace("\"$t\"", "\"title\"");
-    }
-
-    private List<WebSearchResult> crawlLinks(YouTubeEntry entry) {
-
-        LinkCollector collector = LinkCollector.getInstance();
-        LinkCrawler crawler = collector.addCrawlerJob(new LinkCollectingJob(readVideoUrl(entry)));
-
-        crawler.waitForCrawling();
-
-        List<FilePackage> packages = new ArrayList<FilePackage>();
-        for (CrawledPackage pkg : new ArrayList<CrawledPackage>(collector.getPackages())) {
-            for (CrawledLink link : new ArrayList<CrawledLink>(pkg.getChildren())) {
-                ArrayList<CrawledLink> links = new ArrayList<CrawledLink>();
-                links.add(link);
-                packages.addAll(collector.removeAndConvert(links));
-            }
-        }
-
-        List<WebSearchResult> results = new ArrayList<WebSearchResult>();
-
-        for (FilePackage pkg : packages) {
-            //results.add(new YouTubeSearchResult(entry, pkg));
-        }
-
-        return results;
-    }
-
-    private String readVideoUrl(YouTubeEntry entry) {
-        String url = null;
-
-        for (YouTubeEntryLink link : entry.link) {
-            if (link.rel.equals("alternate")) {
-                url = link.href;
-            }
-        }
-
-        url = url.replace("https://", "http://").replace("&feature=youtube_gdata", "");
-
-        return url;
     }
 }

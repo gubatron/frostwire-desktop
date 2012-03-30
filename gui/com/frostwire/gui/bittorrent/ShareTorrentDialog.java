@@ -66,7 +66,7 @@ public class ShareTorrentDialog extends JDialog {
 		}
 
 		@Override
-		public void onError(Exception e) {
+		public void onError(Throwable e) {
 			if (_shortnerListeners.size() > 1) {
 				_shortnerListeners.remove(0);
 				performAsyncURLShortening(_shortnerListeners.get(0));
