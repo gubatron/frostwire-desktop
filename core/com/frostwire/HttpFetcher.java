@@ -28,8 +28,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.zip.GZIPInputStream;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.http.Header;
 import org.apache.http.HeaderElement;
 import org.apache.http.HttpEntity;
@@ -72,8 +70,6 @@ import org.limewire.util.FileUtils;
  *
  */
 public class HttpFetcher {
-
-    private static final Log LOG = LogFactory.getLog(HttpFetcher.class);
 
     private static final String DEFAULT_USER_AGENT = UserAgentGenerator.getUserAgent();
     private static final int DEFAULT_TIMEOUT = 10000;
@@ -367,7 +363,6 @@ public class HttpFetcher {
                         listener.onSuccess(post);
                     }
                 } catch (Throwable e) {
-                    LOG.error("Failed to perform post", e);
                     listener.onError(e);
                 }
             }
