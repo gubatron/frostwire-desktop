@@ -1043,7 +1043,7 @@ msgstr "Descargar"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:166
 msgid "at"
-msgstr "arroba"
+msgstr "en"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:167
 msgid "via FrostWire"
