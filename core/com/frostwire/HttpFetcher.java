@@ -321,6 +321,8 @@ public class HttpFetcher {
     }
 
     public void post(FileEntity fileEntity) throws IOException {
+        HttpClient httpClient = setupHttpClient(false);
+        
         HttpHost httpHost = new HttpHost(_uri.getHost(), _uri.getPort());
         HttpPost httpPost = new HttpPost(_uri);
         httpPost.setEntity(fileEntity);
@@ -336,7 +338,7 @@ public class HttpFetcher {
 
         try {
 
-            HttpResponse response = DEFAULT_HTTP_CLIENT.execute(httpHost, httpPost);
+            HttpResponse response = httpClient.execute(httpHost, httpPost);
 
             if (response.getStatusLine().getStatusCode() < 200 || response.getStatusLine().getStatusCode() >= 300)
                 throw new IOException("bad status code, upload file " + response.getStatusLine().getStatusCode());
@@ -346,7 +348,7 @@ public class HttpFetcher {
         } catch (Exception e) {
             new IOException("Http error: " + e.getMessage(), e);
         } finally {
-            //
+            httpClient.getConnectionManager().shutdown();
         }
     }
 

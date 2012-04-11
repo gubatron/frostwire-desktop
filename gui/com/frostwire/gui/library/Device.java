@@ -23,7 +23,9 @@ import java.net.InetAddress;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
 import javax.swing.JOptionPane;
@@ -215,12 +217,14 @@ public class Device {
             dur.computerName = NetworkUtils.getLocalAddress().getHostName();
             dur.files = new ArrayList<FileDescriptor>();
 
-            for (File f : files) {
-                FileDescriptor fd = new FileDescriptor();
-                fd.filePath = f.getAbsolutePath();
-                fd.fileSize = f.length();
+            for (File f : flatFiles(files)) {
+                for (File cf : getFiles(f, 3)) {
+                    FileDescriptor fd = new FileDescriptor();
+                    fd.filePath = cf.getAbsolutePath();
+                    fd.fileSize = cf.length();
 
-                dur.files.add(fd);
+                    dur.files.add(fd);
+                }
             }
 
             HttpFetcher fetcher = new HttpFetcher("http://" + _address.getHostAddress() + ":" + _port + "/dekstop-upload-request", 60000);
@@ -318,5 +322,43 @@ public class Device {
 
     public interface OnActionFailedListener {
         public void onActionFailed(Device device, int action, Exception e);
+    }
+
+    private static List<File> flatFiles(File[] files) {
+        Set<File> set = new HashSet<File>();
+        for (File f : files) {
+            for (File cf : getFiles(f, 3)) {
+                if (!set.contains(cf)) {
+                    set.add(cf);
+                }
+            }
+        }
+
+        return new ArrayList<File>(set);
+    }
+
+    private static List<File> getFiles(File file, int depth) {
+        List<File> files = new ArrayList<File>();
+
+        if (file == null) {
+            return files;
+        }
+
+        if (!file.isDirectory()) {
+            files.add(file);
+            return files;
+        }
+
+        for (File childFile : file.listFiles()) {
+            if (!childFile.isDirectory()) {
+                files.add(childFile);
+            } else {
+                if (depth > 0) {
+                    files.addAll(getFiles(childFile, depth - 1));
+                }
+            }
+        }
+
+        return files;
     }
 }
