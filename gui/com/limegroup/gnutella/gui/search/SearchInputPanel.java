@@ -225,6 +225,7 @@ class SearchInputPanel extends JPanel {
 		p.add(Box.createVerticalStrut(15));
 		
 		p.add(controls);
+		//JScrollPane sp = new JScrollPane(p); //pending work
 		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.add(p);
 		
 

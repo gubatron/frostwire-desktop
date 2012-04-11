@@ -28,8 +28,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.zip.GZIPInputStream;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.http.Header;
 import org.apache.http.HeaderElement;
 import org.apache.http.HttpEntity;
@@ -72,8 +70,6 @@ import org.limewire.util.FileUtils;
  *
  */
 public class HttpFetcher {
-
-    private static final Log LOG = LogFactory.getLog(HttpFetcher.class);
 
     private static final String DEFAULT_USER_AGENT = UserAgentGenerator.getUserAgent();
     private static final int DEFAULT_TIMEOUT = 10000;
@@ -325,6 +321,8 @@ public class HttpFetcher {
     }
 
     public void post(FileEntity fileEntity) throws IOException {
+        HttpClient httpClient = setupHttpClient(false);
+        
         HttpHost httpHost = new HttpHost(_uri.getHost(), _uri.getPort());
         HttpPost httpPost = new HttpPost(_uri);
         httpPost.setEntity(fileEntity);
@@ -340,7 +338,7 @@ public class HttpFetcher {
 
         try {
 
-            HttpResponse response = DEFAULT_HTTP_CLIENT.execute(httpHost, httpPost);
+            HttpResponse response = httpClient.execute(httpHost, httpPost);
 
             if (response.getStatusLine().getStatusCode() < 200 || response.getStatusLine().getStatusCode() >= 300)
                 throw new IOException("bad status code, upload file " + response.getStatusLine().getStatusCode());
@@ -350,7 +348,7 @@ public class HttpFetcher {
         } catch (Exception e) {
             new IOException("Http error: " + e.getMessage(), e);
         } finally {
-            //
+            httpClient.getConnectionManager().shutdown();
         }
     }
 
@@ -367,7 +365,6 @@ public class HttpFetcher {
                         listener.onSuccess(post);
                     }
                 } catch (Throwable e) {
-                    LOG.error("Failed to perform post", e);
                     listener.onError(e);
                 }
             }

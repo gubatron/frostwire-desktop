@@ -15,11 +15,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public abstract class DeviceTask implements Runnable {
 
     private List<OnChangedListener> listeners;
