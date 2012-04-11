@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-30 19:22-0400\n"
+"POT-Creation-Date: 2012-04-11 19:11-0400\n"
 "PO-Revision-Date: 2008-07-30 21:58+0000\n"
 "Last-Translator: FTA <Unknown>\n"
 "Language-Team: none\n"
@@ -736,7 +736,7 @@ msgstr "Tühista tirimine"
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:113
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:133
 #: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:107
-#: gui/com/frostwire/gui/library/DeviceUploadProgressDialog.java:93
+#: gui/com/frostwire/gui/library/DeviceUploadDialog.java:89
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:420
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:422
 #: gui/com/limegroup/gnutella/gui/DialogOption.java:26
@@ -1069,13 +1069,11 @@ msgid "Select/Unselect all files"
 msgstr "Kustuta valitud failid."
 
 #: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:70
-#: gui/com/frostwire/gui/library/DeviceUploadProgressDialog.java:63
 #, fuzzy
 msgid "Preparing selection"
 msgstr "Käivita valitud failid."
 
 #: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:71
-#: gui/com/frostwire/gui/library/DeviceUploadProgressDialog.java:64
 msgid "please wait..."
 msgstr ""
 
@@ -1334,6 +1332,34 @@ msgstr "Kuidas kasutada FrostWire't."
 #: gui/com/limegroup/gnutella/gui/ListEditor.java:238
 msgid "Add"
 msgstr "Lisa"
+
+#: gui/com/frostwire/gui/library/Device.java:264
+msgid ""
+"The device is busy with another transfer or did not authorize your request"
+msgstr ""
+
+#: gui/com/frostwire/gui/library/Device.java:264
+#, fuzzy
+msgid "Transfer failed"
+msgstr "Välju pärast ülekandeid"
+
+#: gui/com/frostwire/gui/library/DeviceUploadDialog.java:66
+#, fuzzy
+msgid "Upload to device"
+msgstr "Üleslaadimise piir on käes"
+
+#: gui/com/frostwire/gui/library/DeviceUploadDialog.java:117
+msgid "Waiting for device authorization..."
+msgstr ""
+
+#: gui/com/frostwire/gui/library/DeviceUploadTask.java:70
+msgid "Uploading"
+msgstr "Üleslaadimine"
+
+#: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
+#, fuzzy
+msgid "Uploading "
+msgstr "Üleslaadimine"
 
 #: gui/com/frostwire/gui/library/DownloadTask.java:76
 #: gui/com/frostwire/gui/library/DownloadTask.java:109
@@ -3179,7 +3205,7 @@ msgstr "Proovimaks uusi küljendusi, pead FrostWire uuesti käivitama."
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:57
 msgid ""
 "FrostWire is a peer-to-peer program for sharing authorized files only.  "
-"Installing and using the program does not consitute a license for obtaining "
+"Installing and using the program does not constitute a license for obtaining "
 "or distributing unauthorized content."
 msgstr ""
 
@@ -4543,16 +4569,16 @@ msgstr "Sulge otsing"
 msgid "Filter"
 msgstr "Filtrid"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:317
+#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:318
 msgid "<html><strong>Refine Results</strong></html>"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:409
+#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:410
 #, fuzzy
 msgid "Show search result filter controls"
 msgstr "Näita otsingu filtreeritud tulemust."
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:410
+#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:411
 #, fuzzy
 msgid "Hide search result filter controls"
 msgstr "Näita otsingu filtreeritud tulemust."
@@ -5102,9 +5128,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "to"
 #~ msgstr "Stopp"
-
-#~ msgid "Uploading"
-#~ msgstr "Üleslaadimine"
 
 #, fuzzy
 #~ msgid "Select a file..."
@@ -6852,9 +6875,6 @@ msgstr ""
 
 #~ msgid "Remove Inactive Uploads"
 #~ msgstr "Eemalda mitteaktiivsed kaanid."
-
-#~ msgid "Upload Limit Reached"
-#~ msgstr "Üleslaadimise piir on käes"
 
 #~ msgid "Freeloader Uploading"
 #~ msgstr "Muiduleivasööjast üleslaadija"

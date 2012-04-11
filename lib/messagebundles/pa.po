@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-30 19:22-0400\n"
+"POT-Creation-Date: 2012-04-11 19:11-0400\n"
 "PO-Revision-Date: 2007-08-23 13:53+0000\n"
 "Last-Translator: FTA <saintrecall@gmail.com>\n"
 "Language-Team: none\n"
@@ -706,7 +706,7 @@ msgstr "ਡਾਉੰਲੋਡ ਨੂੰ ਹਟਾਓ"
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:113
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:133
 #: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:107
-#: gui/com/frostwire/gui/library/DeviceUploadProgressDialog.java:93
+#: gui/com/frostwire/gui/library/DeviceUploadDialog.java:89
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:420
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:422
 #: gui/com/limegroup/gnutella/gui/DialogOption.java:26
@@ -1036,13 +1036,11 @@ msgid "Select/Unselect all files"
 msgstr "ਇਹਨਾਂ ਨੂੰ ਉੜਾਓ"
 
 #: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:70
-#: gui/com/frostwire/gui/library/DeviceUploadProgressDialog.java:63
 #, fuzzy
 msgid "Preparing selection"
 msgstr "ਇਹਨਾਂ ਨੂੰ ਚਲਾਓ"
 
 #: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:71
-#: gui/com/frostwire/gui/library/DeviceUploadProgressDialog.java:64
 msgid "please wait..."
 msgstr ""
 
@@ -1296,6 +1294,35 @@ msgstr "ਲਾਇਸਵਾਇਰ ਦੇ ਇਸਤਿਮਾਲ ਤੇ ਮਦਦ"
 #: gui/com/limegroup/gnutella/gui/ListEditor.java:238
 msgid "Add"
 msgstr ""
+
+#: gui/com/frostwire/gui/library/Device.java:264
+msgid ""
+"The device is busy with another transfer or did not authorize your request"
+msgstr ""
+
+#: gui/com/frostwire/gui/library/Device.java:264
+#, fuzzy
+msgid "Transfer failed"
+msgstr "ਟਰਾੰਸਫ਼ਰਾਂ ਦੇ ਬਾਦ ਬੰਦ"
+
+#: gui/com/frostwire/gui/library/DeviceUploadDialog.java:66
+#, fuzzy
+msgid "Upload to device"
+msgstr "ਹੁਣ ਦੇ ਅੱਪਲੋਡ"
+
+#: gui/com/frostwire/gui/library/DeviceUploadDialog.java:117
+msgid "Waiting for device authorization..."
+msgstr ""
+
+#: gui/com/frostwire/gui/library/DeviceUploadTask.java:70
+#, fuzzy
+msgid "Uploading"
+msgstr "ਹੁਣ ਦੇ ਅੱਪਲੋਡ"
+
+#: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
+#, fuzzy
+msgid "Uploading "
+msgstr "ਹੁਣ ਦੇ ਅੱਪਲੋਡ"
 
 #: gui/com/frostwire/gui/library/DownloadTask.java:76
 #: gui/com/frostwire/gui/library/DownloadTask.java:109
@@ -3104,7 +3131,7 @@ msgstr ""
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:57
 msgid ""
 "FrostWire is a peer-to-peer program for sharing authorized files only.  "
-"Installing and using the program does not consitute a license for obtaining "
+"Installing and using the program does not constitute a license for obtaining "
 "or distributing unauthorized content."
 msgstr ""
 
@@ -4447,16 +4474,16 @@ msgstr "ਖੋਜ ਨੂੰ ਬੰਦ ਕਰੋ"
 msgid "Filter"
 msgstr "ਫ਼ਿਲਟਰ(&S)"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:317
+#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:318
 msgid "<html><strong>Refine Results</strong></html>"
 msgstr ""
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:409
+#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:410
 #, fuzzy
 msgid "Show search result filter controls"
 msgstr "ਖੋਜ ਦੇ ਪਰਿਣਾਮ ਦੇ ਫ਼ਿਲਟਰਾਂ ਨੂੰ ਦੇਖੋ"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:410
+#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:411
 #, fuzzy
 msgid "Hide search result filter controls"
 msgstr "ਖੋਜ ਦੇ ਪਰਿਣਾਮ ਦੇ ਫ਼ਿਲਟਰਾਂ ਨੂੰ ਦੇਖੋ"
@@ -4990,10 +5017,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "to"
 #~ msgstr "ਰੋਕੋ"
-
-#, fuzzy
-#~ msgid "Uploading"
-#~ msgstr "ਹੁਣ ਦੇ ਅੱਪਲੋਡ"
 
 #, fuzzy
 #~ msgid "Select a file..."
