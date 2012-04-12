@@ -1,9 +1,13 @@
 frostwire (5.3.5) stable; urgency=high
   * Drag and drop files and folders to your Android device running FrostWire.
+    You can upload files to 3 different devices at the same time.
   * German translation updated.
   * French translation updated.
   * Norwegian translation updated.
   * Dutch translation updated.
+  * Japanese translation updated.
+  * Filipino translation updated.
+  * Chinese (Hong Kong) translation updated.
 
  -- FrostWire Team <contact@frostwire.com>  Wed, 11 Apr 2012 18:00:00 -0500
 
