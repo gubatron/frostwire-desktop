@@ -10,7 +10,6 @@ frostwire (5.3.5) stable; urgency=high
   * Chinese (Hong Kong) translation updated.
   * Turkish translation updated.
   * Portuguese (Brazilian) updated.
-  * Language autoselection on first run.
 
  -- FrostWire Team <contact@frostwire.com>  Wed, 11 Apr 2012 18:00:00 -0500
 

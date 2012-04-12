@@ -9,8 +9,6 @@ import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
-import org.limewire.i18n.I18nMarker;
-
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
@@ -29,10 +27,8 @@ final class WelcomeWindow extends SetupWindow {
      */
     private static final long serialVersionUID = -5102133230630399469L;
 
-    private static final String TEXT1 = I18n
-            .tr("FrostWire is a Peer to Peer Application that enables you to share files of your choosing with other users connected to the BitTorrent network.");
-    private static final String TEXT2 = I18n
-            .tr("Installing and using the program does not constitute a license for obtaining or distributing unauthorized content.");
+    private static final String TEXT1 = I18n.tr("FrostWire is a Peer to Peer Application that enables you to share files of your choosing with other users connected to the BitTorrent network.");
+    private static final String TEXT2 = I18n.tr("Installing and using the program does not constitute a license for obtaining or distributing unauthorized content.");
 
     /**
      * Creates the window and its components
@@ -40,11 +36,9 @@ final class WelcomeWindow extends SetupWindow {
     WelcomeWindow(SetupManager manager, boolean partial) {
         super(
                 manager,
-                I18nMarker.marktr("Welcome"),
-                partial ? I18nMarker
-                        .marktr("Welcome to the FrostWire setup wizard. FrostWire has recently added new features that require your configuration. FrostWire will guide you through a series of steps to configure these new features.")
-                        : I18nMarker
-                                .marktr("Welcome to the FrostWire setup wizard. FrostWire will guide you through a series of steps to configure FrostWire for optimum performance."));
+                I18n.tr("Welcome"),
+                partial ? I18n.tr("Welcome to the FrostWire setup wizard. FrostWire has recently added new features that require your configuration. FrostWire will guide you through a series of steps to configure these new features.")
+                        : I18n.tr("Welcome to the FrostWire setup wizard. FrostWire will guide you through a series of steps to configure FrostWire for optimum performance."));
     }
 
     public Icon getIcon() {

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-12 15:48-0400\n"
+"POT-Creation-Date: 2012-04-12 17:19-0400\n"
 "PO-Revision-Date: 2012-04-12 09:40-0500\n"
 "Last-Translator: Yoshitaka Suzuki <goldenpotato@mail.goo.ne.jp>\n"
 "Language-Team: none\n"
@@ -3341,7 +3341,7 @@ msgstr "完了"
 msgid "Learn more about this option..."
 msgstr "このオプションについて.."
 
-#: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:33
+#: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:30
 msgid ""
 "FrostWire is a Peer to Peer Application that enables you to share files of "
 "your choosing with other users connected to the BitTorrent network."
@@ -3349,19 +3349,20 @@ msgstr ""
 "FrostWireは、BitTorrentネットワークに接続している他のユーザと選択したファイル"
 "の共有を可能にする「ピア・ツー・ピア」アプリケーションです。"
 
-#: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:35
+#: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:31
+#, fuzzy
 msgid ""
-"Installing and using the program does not consitute a license for obtaining "
+"Installing and using the program does not constitute a license for obtaining "
 "or distributing unauthorized content."
 msgstr ""
 "プログラムのインストール並びに使用は、非認証コンテンツの保持や配布のためのラ"
 "イセンスとして構築していません。"
 
-#: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:43
+#: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:39
 msgid "Welcome"
 msgstr "ようこそ"
 
-#: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:45
+#: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:40
 msgid ""
 "Welcome to the FrostWire setup wizard. FrostWire has recently added new "
 "features that require your configuration. FrostWire will guide you through a "
@@ -3370,7 +3371,7 @@ msgstr ""
 "FrostWire 設定ウィザードへようこそ。FrostWireは新機能に対応した設定が必要で"
 "す。これらの新機能の設定を一連のステップを通してご案内します。"
 
-#: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:47
+#: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:41
 msgid ""
 "Welcome to the FrostWire setup wizard. FrostWire will guide you through a "
 "series of steps to configure FrostWire for optimum performance."
@@ -3378,11 +3379,11 @@ msgstr ""
 "FrostWire設定ウィザードへようこそ。FrostWireを快適にご使用頂くための調整を、"
 "一連のステップを通してご案内します。"
 
-#: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:105
+#: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:99
 msgid "FrostWire is free software, "
 msgstr "FrostWireは無料のソフトウェアです"
 
-#: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:115
+#: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:109
 msgid "Do not pay for FrostWire."
 msgstr "FrostWireに支払わないでください"
 
