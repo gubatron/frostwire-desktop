@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-11 19:11-0400\n"
+"POT-Creation-Date: 2012-04-12 15:27-0400\n"
 "PO-Revision-Date: 2007-12-09 09:25+0000\n"
 "Last-Translator: FTA <saintrecall@gmail.com>\n"
 "Language-Team: none\n"
@@ -1298,12 +1298,12 @@ msgstr "Giúp phiên dịch FrostWire"
 msgid "Add"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/Device.java:264
+#: gui/com/frostwire/gui/library/Device.java:265
 msgid ""
 "The device is busy with another transfer or did not authorize your request"
 msgstr ""
 
-#: gui/com/frostwire/gui/library/Device.java:264
+#: gui/com/frostwire/gui/library/Device.java:265
 #, fuzzy
 msgid "Transfer failed"
 msgstr "Thoát sau khi Chuyển giao"
