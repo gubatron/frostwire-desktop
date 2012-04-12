@@ -8,9 +8,11 @@ frostwire (5.3.5) stable; urgency=high
   * Japanese translation updated.
   * Filipino translation updated.
   * Chinese (Hong Kong) translation updated.
+  * Turkish translation updated.
+  * Portuguese (Brazilian) updated.
+  * Language autoselection on first run.
 
  -- FrostWire Team <contact@frostwire.com>  Wed, 11 Apr 2012 18:00:00 -0500
-
 
 frostwire (5.3.4) stable; urgency=high
   * New frostwire.exe launcher with extended Unicode support now able to
