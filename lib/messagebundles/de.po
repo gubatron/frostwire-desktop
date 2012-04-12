@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frostwireproject\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-11 19:11-0400\n"
-"PO-Revision-Date: 2012-04-10 15:41-0500\n"
+"POT-Creation-Date: 2012-04-12 00:22-0400\n"
+"PO-Revision-Date: 2012-04-11 16:01-0500\n"
 "Last-Translator: Christian <christian@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -102,11 +102,11 @@ msgstr ""
 
 #: core/com/frostwire/mplayer/MPlayer.java:353
 msgid "azemp.failed.nocodec"
-msgstr ""
+msgstr "azemp.failed.nocodec"
 
 #: core/com/frostwire/mplayer/MPlayer.java:359
 msgid "azemp.failed.d3dbad"
-msgstr ""
+msgstr "azemp.failed.d3dbad"
 
 #: core/com/limegroup/gnutella/LifecycleManagerImpl.java:187
 msgid "Loading Old Downloads..."
@@ -442,6 +442,8 @@ msgid ""
 "\n"
 "\n"
 msgstr ""
+"\n"
+"\n"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:227
 msgid "Pause Download"
@@ -945,7 +947,7 @@ msgstr "Torrent Datei"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:745
 msgid "wizard.addingmt"
-msgstr ""
+msgstr "wizard.addingmt"
 
 #. NO WEB SEEDS FOR THIS RELEASE.
 #. if (useWebSeed && webseeds.size() > 0) {
@@ -979,16 +981,16 @@ msgstr ""
 #. }
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:780
 msgid "wizard.savingfile"
-msgstr ""
+msgstr "wizard.savingfile"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:785
 msgid "wizard.filesaved"
-msgstr ""
+msgstr "wizard.filesaved"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:857
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:862
 msgid "wizard.operationfailed"
-msgstr ""
+msgstr "wizard.operationfailed"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:886
 msgid "Saving Torrent..."
@@ -1198,7 +1200,7 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/TorrentUtil.java:389
 #: gui/com/frostwire/gui/bittorrent/TorrentUtil.java:489
 msgid "globalmanager.download.remove.veto"
-msgstr ""
+msgstr "globalmanager.download.remove.veto"
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:20
 msgid "Downloading"
@@ -4850,106 +4852,106 @@ msgstr "Sie können nicht alle Spalten ausblenden."
 
 #: gui/com/limegroup/gnutella/gui/themes/BaseFileChooserUI.java:534
 msgid "FileChooser.lookInLabelText"
-msgstr ""
+msgstr "FileChooser.lookInLabelText"
 
 #: gui/com/limegroup/gnutella/gui/themes/BaseFileChooserUI.java:535
 msgid "FileChooser.saveInLabelText"
-msgstr ""
+msgstr "FileChooser.saveInLabelText"
 
 #: gui/com/limegroup/gnutella/gui/themes/BaseFileChooserUI.java:538
 msgid "FileChooser.fileNameLabelText"
-msgstr ""
+msgstr "FileChooser.fileNameLabelText"
 
 #: gui/com/limegroup/gnutella/gui/themes/BaseFileChooserUI.java:540
 msgid "FileChooser.folderNameLabelText"
-msgstr ""
+msgstr "FileChooser.folderNameLabelText"
 
 #: gui/com/limegroup/gnutella/gui/themes/BaseFileChooserUI.java:543
 msgid "FileChooser.filesOfTypeLabelText"
-msgstr ""
+msgstr "FileChooser.filesOfTypeLabelText"
 
 #: gui/com/limegroup/gnutella/gui/themes/BaseFileChooserUI.java:545
 msgid "FileChooser.upFolderToolTipText"
-msgstr ""
+msgstr "FileChooser.upFolderToolTipText"
 
 #: gui/com/limegroup/gnutella/gui/themes/BaseFileChooserUI.java:546
 msgid "FileChooser.upFolderAccessibleName"
-msgstr ""
+msgstr "FileChooser.upFolderAccessibleName"
 
 #: gui/com/limegroup/gnutella/gui/themes/BaseFileChooserUI.java:548
 msgid "FileChooser.homeFolderToolTipText"
-msgstr ""
+msgstr "FileChooser.homeFolderToolTipText"
 
 #: gui/com/limegroup/gnutella/gui/themes/BaseFileChooserUI.java:549
 msgid "FileChooser.homeFolderAccessibleName"
-msgstr ""
+msgstr "FileChooser.homeFolderAccessibleName"
 
 #: gui/com/limegroup/gnutella/gui/themes/BaseFileChooserUI.java:551
 msgid "FileChooser.newFolderToolTipText"
-msgstr ""
+msgstr "FileChooser.newFolderToolTipText"
 
 #: gui/com/limegroup/gnutella/gui/themes/BaseFileChooserUI.java:552
 msgid "FileChooser.newFolderAccessibleName"
-msgstr ""
+msgstr "FileChooser.newFolderAccessibleName"
 
 #: gui/com/limegroup/gnutella/gui/themes/BaseFileChooserUI.java:554
 msgid "FileChooser.listViewButtonToolTipText"
-msgstr ""
+msgstr "FileChooser.listViewButtonToolTipText"
 
 #: gui/com/limegroup/gnutella/gui/themes/BaseFileChooserUI.java:555
 msgid "FileChooser.listViewButtonAccessibleName"
-msgstr ""
+msgstr "FileChooser.listViewButtonAccessibleName"
 
 #: gui/com/limegroup/gnutella/gui/themes/BaseFileChooserUI.java:557
 msgid "FileChooser.detailsViewButtonToolTipText"
-msgstr ""
+msgstr "FileChooser.detailsViewButtonToolTipText"
 
 #: gui/com/limegroup/gnutella/gui/themes/BaseFileChooserUI.java:558
 msgid "FileChooser.detailsViewButtonAccessibleName"
-msgstr ""
+msgstr ".FileChooser.detailsViewButtonAccessibleName"
 
 #: gui/com/limegroup/gnutella/gui/themes/FilePane.java:514
 #: gui/com/limegroup/gnutella/gui/themes/FilePaneEx.java:44
 msgid "FileChooser.viewMenuLabelText"
-msgstr ""
+msgstr "FileChooser.viewMenuLabelText"
 
 #: gui/com/limegroup/gnutella/gui/themes/FilePane.java:516
 msgid "FileChooser.refreshActionLabelText"
-msgstr ""
+msgstr "FileChooser.refreshActionLabelText"
 
 #: gui/com/limegroup/gnutella/gui/themes/FilePane.java:518
 msgid "FileChooser.newFolderActionLabelText"
-msgstr ""
+msgstr "FileChooser.newFolderActionLabelText"
 
 #: gui/com/limegroup/gnutella/gui/themes/FilePane.java:522
 #: gui/com/limegroup/gnutella/gui/themes/FilePaneEx.java:47
 msgid "FileChooser.listViewActionLabelText"
-msgstr ""
+msgstr "FileChooser.listViewActionLabelText"
 
 #: gui/com/limegroup/gnutella/gui/themes/FilePane.java:524
 #: gui/com/limegroup/gnutella/gui/themes/FilePaneEx.java:48
 msgid "FileChooser.detailsViewActionLabelText"
-msgstr ""
+msgstr "FileChooser.detailsViewActionLabelText"
 
 #: gui/com/limegroup/gnutella/gui/themes/FilePane.java:526
 msgid "FileChooser.fileSizeKiloBytes"
-msgstr ""
+msgstr "FileChooser.fileSizeKiloBytes"
 
 #: gui/com/limegroup/gnutella/gui/themes/FilePane.java:527
 msgid "FileChooser.fileSizeMegaBytes"
-msgstr ""
+msgstr "FileChooser.fileSizeMegaBytes"
 
 #: gui/com/limegroup/gnutella/gui/themes/FilePane.java:528
 msgid "FileChooser.fileSizeGigaBytes"
-msgstr ""
+msgstr "FileChooser.fileSizeGigaBytes"
 
 #: gui/com/limegroup/gnutella/gui/themes/FilePane.java:531
 msgid "FileChooser.renameErrorTitleText"
-msgstr ""
+msgstr "FileChooser.renameErrorTitleText"
 
 #: gui/com/limegroup/gnutella/gui/themes/FilePane.java:532
 msgid "FileChooser.renameErrorText"
-msgstr ""
+msgstr "FileChooser.renameErrorText"
 
 #: gui/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:37
 msgid "Invalid Filename"
@@ -5076,7 +5078,7 @@ msgstr "Sprache "
 #: gui/irc/ConfigurationLoader.java:132
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:80
 msgid "languageencoding"
-msgstr ""
+msgstr "languageencoding"
 
 #: gui/irc/ConfigurationLoader.java:133
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:81
@@ -5091,33 +5093,33 @@ msgstr "Backup Sprache"
 #: gui/irc/ConfigurationLoader.java:135
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:83
 msgid "backuplanguageencoding"
-msgstr ""
+msgstr "backuplanguageencoding"
 
 #: gui/irc/ConfigurationLoader.java:299 gui/irc/ConfigurationLoader.java:330
 msgid "gui"
-msgstr ""
+msgstr "gui"
 
 #: gui/irc/ConfigurationLoader.java:302
 msgid "authorizedjoinlist"
-msgstr ""
+msgstr "authorizedjoinlist"
 
 #: gui/irc/ConfigurationLoader.java:303
 msgid "authorizedleavelist"
-msgstr ""
+msgstr "authorizedleavelist"
 
 #. config.setCommandList(getString("authorizedcommandlist","all"));
 #. config.setCommandList(getString("authorizedcommandlist","none+me+away+ignore+unignore+kick+topic+ctcp+url+mode+join"));
 #: gui/irc/ConfigurationLoader.java:306
 msgid "authorizedcommandlist"
-msgstr ""
+msgstr "authorizedcommandlist"
 
 #: gui/irc/ConfigurationLoader.java:316
 msgid "aslseparatorstring"
-msgstr ""
+msgstr "aslseparatorstring"
 
 #: gui/irc/ConfigurationLoader.java:317
 msgid "noasldisplayprefix"
-msgstr ""
+msgstr "noasldisplayprefix"
 
 #: gui/irc/ConfigurationLoader.java:318
 msgid "quitmessage"
@@ -5125,11 +5127,11 @@ msgstr "Nachricht beim Beenden"
 
 #: gui/irc/ConfigurationLoader.java:320
 msgid "aslmale"
-msgstr ""
+msgstr "aslmale"
 
 #: gui/irc/ConfigurationLoader.java:321
 msgid "aslfemale"
-msgstr ""
+msgstr "aslfemale"
 
 #: gui/irc/ConfigurationLoader.java:324
 msgid "userid"
@@ -5141,19 +5143,19 @@ msgstr "ASLUnbekannt "
 
 #: gui/irc/ConfigurationLoader.java:331
 msgid "fingerreply"
-msgstr ""
+msgstr "fingerreply"
 
 #: gui/irc/ConfigurationLoader.java:332
 msgid "userinforeply"
-msgstr ""
+msgstr "userinforeply"
 
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:126
 msgid "mouse"
-msgstr ""
+msgstr "mouse"
 
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:234
 msgid "helppage"
-msgstr ""
+msgstr "helppage"
 
 #, fuzzy
 #~ msgid "Loading phones and tablets..."
