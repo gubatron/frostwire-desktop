@@ -55,7 +55,8 @@ public class Device {
     private static final ExecutorService executor;
 
     static {
-        executor = ExecutorsHelper.newProcessingQueue("UploadToDeviceExecutor");
+        //upload files to 3 different devices at the same time.
+        executor = ExecutorsHelper.newFixedSizeThreadPool(3,"UploadToDeviceExecutor");
     }
 
     public static int ACTION_BROWSE = 0;
