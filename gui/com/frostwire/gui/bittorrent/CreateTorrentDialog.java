@@ -257,8 +257,8 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		c.insets = new Insets(10, 5, 5, 5);
-		_labelTrackers = new JLabel(
-				"<html><p>Tracker Announce URLs</p><p>(One tracker per line)</p></html>");
+		_labelTrackers = new JLabel(I18n.tr(
+				"<html><p>Tracker Announce URLs</p><p>(One tracker per line)</p></html>"));
 		_labelTrackers.setToolTipText(I18n.tr("Enter a list of valid BitTorrent Tracker Server URLs.\nYour new torrent will be announced to these trackers if you start seeding the torrent."));		
 		torrentPropertiesPanel.add(_labelTrackers, c);
 		

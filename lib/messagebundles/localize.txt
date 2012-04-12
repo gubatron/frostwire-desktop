@@ -334,9 +334,6 @@ private final LocaleDef[] LANGUAGES = {
 	new LocaleDef("no", "Norwegian (standard)", "Norsk (Bokm�l)",
 		"NO", new String[]
 		{"NO"}),
-	new LocaleDef("no__N", "Norwegian (new)", "Norsk (Nynorsk)",
-		"NO", new String[]
-		{"NO"}),
 	new LocaleDef("is", "Icelandic", "�slenska",
 		"IS", new String[]
 		{"IS"}),

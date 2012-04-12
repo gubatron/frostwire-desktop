@@ -54,7 +54,7 @@ public class IntentPanel extends JPanel {
         JLabel almostDone = new JLabel(I18n.tr("You're almost done!"));
         JLabel stateIntent = new JLabel(I18n.tr("State your intent below to start using FrostWire " + FrostWireUtils.getFrostWireVersion()));
         Line line = new Line();
-        MultiLineLabel description = new MultiLineLabel(I18n.tr("FrostWire is a peer-to-peer program for sharing authorized files only.  Installing and using the program does not consitute a license for obtaining or distributing unauthorized content."), 500);
+        MultiLineLabel description = new MultiLineLabel(I18n.tr("FrostWire is a peer-to-peer program for sharing authorized files only.  Installing and using the program does not constitute a license for obtaining or distributing unauthorized content."), 500);
         URLLabel findMore = new URLLabel("http://www.frostwire.com/?id=terms", I18n.tr("Find out more..."));
         
         Ditherer ditherer = new Ditherer(GUIUtils.hexToColor("E2E2E2"), GUIUtils.hexToColor("ECECEC"), Ditherer.Y_AXIS, new Ditherer.PolygonShader(2f));
