@@ -32,7 +32,7 @@ final class WelcomeWindow extends SetupWindow {
     private static final String TEXT1 = I18n
             .tr("FrostWire is a Peer to Peer Application that enables you to share files of your choosing with other users connected to the BitTorrent network.");
     private static final String TEXT2 = I18n
-            .tr("Installing and using the program does not consitute a license for obtaining or distributing unauthorized content.");
+            .tr("Installing and using the program does not constitute a license for obtaining or distributing unauthorized content.");
 
     /**
      * Creates the window and its components
