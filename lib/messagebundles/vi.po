@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-12 17:19-0400\n"
+"POT-Creation-Date: 2012-04-14 11:28-0400\n"
 "PO-Revision-Date: 2007-12-09 09:25+0000\n"
 "Last-Translator: FTA <saintrecall@gmail.com>\n"
 "Language-Team: none\n"
@@ -19,7 +19,6 @@ msgstr ""
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:50
-#, fuzzy
 msgid ""
 "FrostWire was unable to write a necessary file because your hard drive is "
 "full. To continue using FrostWire you must free up space on your hard drive."
@@ -29,7 +28,6 @@ msgstr ""
 "không còn đầy nữa để có thể tiếp tục sử dụng FrostWire."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:52
-#, fuzzy
 msgid ""
 "FrostWire was unable to open a necessary file because another program has "
 "locked the file. FrostWire may act unexpectedly until this file is released."
@@ -39,7 +37,6 @@ msgstr ""
 "bình thường đến khi những tập tin bị khóa được mở khóa."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:54
-#, fuzzy
 msgid ""
 "FrostWire was unable to write a necessary file because you do not have the "
 "necessary permissions. Your preferences may not be maintained the next time "
@@ -50,7 +47,6 @@ msgstr ""
 "trong lần tới bạn khởi động FrostWire."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:56
-#, fuzzy
 msgid ""
 "FrostWire cannot open a necessary file because the filename contains "
 "characters which are not supported by your operating system. FrostWire may "
@@ -101,7 +97,6 @@ msgid "azemp.failed.d3dbad"
 msgstr ""
 
 #: core/com/limegroup/gnutella/LifecycleManagerImpl.java:187
-#, fuzzy
 msgid "Loading Old Downloads..."
 msgstr "Đang nạp lời khuyên..."
 
@@ -119,7 +114,6 @@ msgstr "Âm thanh"
 #: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:214
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:45
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:238
-#, fuzzy
 msgid "Title"
 msgstr "Tập tin"
 
@@ -137,7 +131,6 @@ msgstr ""
 #: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:221
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:63
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:250
-#, fuzzy
 msgid "Album"
 msgstr "Thông tin"
 
@@ -179,13 +172,11 @@ msgstr "Độ dài"
 #: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:224
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:105
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:256
-#, fuzzy
 msgid "Year"
 msgstr "Xoá"
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:96
 #: core/com/limegroup/gnutella/LimeXMLNames.java:112
-#, fuzzy
 msgid "Language"
 msgstr "T&hay đổi Ngôn Ngữ"
 
@@ -205,13 +196,11 @@ msgstr "Bình luận"
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:99
 #: core/com/limegroup/gnutella/LimeXMLNames.java:116
-#, fuzzy
 msgid "Action"
 msgstr "Tuỳ chọn"
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:100
 #: core/com/limegroup/gnutella/LimeXMLNames.java:117
-#, fuzzy
 msgid "Copyright"
 msgstr "Chép"
 
@@ -220,14 +209,12 @@ msgstr "Chép"
 #: core/com/limegroup/gnutella/LimeXMLNames.java:128
 #: core/com/limegroup/gnutella/LimeXMLNames.java:135
 #: core/com/limegroup/gnutella/LimeXMLNames.java:141
-#, fuzzy
 msgid "License Type"
 msgstr "Bản quyền"
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:103
 #: core/com/limegroup/gnutella/MediaType.java:48
 #: gui/com/frostwire/gui/library/UITool.java:112
-#, fuzzy
 msgid "Video"
 msgstr "Hiển thị"
 
@@ -330,7 +317,6 @@ msgid "Images"
 msgstr "Hình Ảnh"
 
 #: core/com/limegroup/gnutella/MediaType.java:50
-#, fuzzy
 msgid "Torrents"
 msgstr "Bình luận"
 
@@ -341,17 +327,14 @@ msgstr ""
 
 #. HERE IS WHERE WE ADD THE PJIRC OBJECT.
 #: gui/com/frostwire/gui/ChatMediator.java:110
-#, fuzzy
 msgid "Loading Community Chat..."
 msgstr "Đang nạp lời khuyên..."
 
 #: gui/com/frostwire/gui/ChatMediator.java:413
-#, fuzzy
 msgid "Loading Community Chat Window..."
 msgstr "Đang nạp lời khuyên..."
 
 #: gui/com/frostwire/gui/HideExitDialog.java:39
-#, fuzzy
 msgid "Do you want to hide FrostWire?"
 msgstr "Kết nối vào Mạng"
 
@@ -362,13 +345,11 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/HideExitDialog.java:61
-#, fuzzy
 msgid "Don't show this again"
 msgstr "Đừng hiện nữa"
 
 #. hide button
 #: gui/com/frostwire/gui/HideExitDialog.java:70
-#, fuzzy
 msgid "Hide"
 msgstr "Hiển thị"
 
@@ -397,13 +378,11 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:108
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:388
-#, fuzzy
 msgid "Show Details"
 msgstr "Mái chủ"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:109
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:389
-#, fuzzy
 msgid "Show Torrent Details"
 msgstr "Hiển thị kết quả chọn lọc"
 
@@ -414,7 +393,6 @@ msgstr "Hiển thị kết quả chọn lọc"
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:810
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:682
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:683
-#, fuzzy
 msgid "Explore"
 msgstr "Tra"
 
@@ -434,12 +412,10 @@ msgid "Shows the contents of this transfer in the Library Tab"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:180
-#, fuzzy
 msgid "Resume Download"
 msgstr "Tải về"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:181
-#, fuzzy
 msgid "Resume"
 msgstr "Khôi phục"
 
@@ -454,7 +430,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:227
-#, fuzzy
 msgid "Pause Download"
 msgstr "Tải về"
 
@@ -463,7 +438,6 @@ msgstr "Tải về"
 #.
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:228
 #: gui/com/frostwire/gui/player/AudioPlayerComponent.java:53
-#, fuzzy
 msgid "Pause"
 msgstr "Dán"
 
@@ -486,12 +460,10 @@ msgid "Remove Torrent"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:259
-#, fuzzy
 msgid "Remove Torrent from selected downloads"
 msgstr "Tìm và Tải về Dữ liệu"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:261
-#, fuzzy
 msgid "Remove Download"
 msgstr "Tải về"
 
@@ -500,12 +472,10 @@ msgstr "Tải về"
 #: gui/com/limegroup/gnutella/gui/ListEditor.java:296
 #: gui/com/limegroup/gnutella/gui/StandardListEditor.java:93
 #: gui/com/limegroup/gnutella/gui/StandardListEditor.java:103
-#, fuzzy
 msgid "Remove"
 msgstr "Khôi phục"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:263
-#, fuzzy
 msgid "Remove Selected Downloads"
 msgstr "Tìm và Tải về Dữ liệu"
 
@@ -525,12 +495,10 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:295
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:296
-#, fuzzy
 msgid "Remove Download and Data"
 msgstr "Tải về"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:297
-#, fuzzy
 msgid "Remove Download and Data from selected downloads"
 msgstr "Tìm và Tải về Dữ liệu"
 
@@ -558,7 +526,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:394
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:395
-#, fuzzy
 msgid "Hide Seeding Transfers"
 msgstr "Thoát sau khi Chuyển giao"
 
@@ -569,7 +536,6 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:398
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:399
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:400
-#, fuzzy
 msgid "Show Seeding Transfers"
 msgstr "Thoát sau khi Chuyển giao"
 
@@ -604,7 +570,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:103
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:320
-#, fuzzy
 msgid "Status"
 msgstr "Các thống kê"
 
@@ -615,25 +580,21 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:117
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:324
-#, fuzzy
 msgid "Downloaded"
 msgstr "Tải về"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:120
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:325
-#, fuzzy
 msgid "Uploaded"
 msgstr "Tải đi"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:127
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:322
-#, fuzzy
 msgid "Down Speed"
 msgstr "Tải về"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:131
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:323
-#, fuzzy
 msgid "Up Speed"
 msgstr "Tải đi"
 
@@ -644,7 +605,6 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:142
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:327
 #: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:22
-#, fuzzy
 msgid "Seeds"
 msgstr "Gửi"
 
@@ -654,7 +614,6 @@ msgid "Peers"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:148
-#, fuzzy
 msgid "Share Ratio"
 msgstr "Thư mục mới"
 
@@ -683,22 +642,18 @@ msgstr ""
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:766
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:516
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:639
-#, fuzzy
 msgid "Launch Selected Files"
 msgstr "Chạy tập tin được chọn"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:444
-#, fuzzy
 msgid "Show in Library"
 msgstr "Thư viện"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:445
-#, fuzzy
 msgid "Show Download in Library"
 msgstr "Nạp mới lại Thư viện"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediator.java:141
-#, fuzzy
 msgid "Transfers"
 msgstr "Thoát sau khi Chuyển giao"
 
@@ -707,7 +662,6 @@ msgid "Loading Download Window..."
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediator.java:517
-#, fuzzy
 msgid "Cancel Download"
 msgstr "Tải về"
 
@@ -734,7 +688,6 @@ msgid "Cancel"
 msgstr "Bỏ qua"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediator.java:519
-#, fuzzy
 msgid "Cancel Selected Downloads"
 msgstr "Chạy tập tin được chọn"
 
@@ -748,13 +701,11 @@ msgstr ""
 
 #. advanced > Download Speed Menu //
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:56
-#, fuzzy
 msgid "Set Down Speed"
 msgstr "Chọn tất cả"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:65
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:172
-#, fuzzy
 msgid "Disabled"
 msgstr "Hủy"
 
@@ -795,7 +746,6 @@ msgstr ""
 #. }
 #. advanced >Upload Speed Menu //
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:163
-#, fuzzy
 msgid "Set Up Speed"
 msgstr "Chọn tất cả"
 
@@ -812,7 +762,6 @@ msgid "Add to playlist"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:84
-#, fuzzy
 msgid "Torrent File Created with FrostWire"
 msgstr "Kết nối vào Mạng"
 
@@ -824,12 +773,10 @@ msgid "Create New Torrent"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:178
-#, fuzzy
 msgid "Torrent Contents"
 msgstr "Kết nối"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:180
-#, fuzzy
 msgid "Select File or Folder..."
 msgstr "Chọn tất cả"
 
@@ -860,7 +807,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:248
-#, fuzzy
 msgid "Start seeding"
 msgstr "Bắt Đầu Lúc"
 
@@ -889,7 +835,6 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:306
 #: gui/com/limegroup/gnutella/gui/AboutWindow.java:103
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMediator.java:78
-#, fuzzy
 msgid "Close"
 msgstr "Đóng"
 
@@ -912,7 +857,6 @@ msgstr ""
 #: gui/com/limegroup/gnutella/gui/FileChooserHandler.java:466
 #: gui/com/limegroup/gnutella/gui/FileChooserHandler.java:487
 #: gui/com/limegroup/gnutella/gui/FileChooserHandler.java:509
-#, fuzzy
 msgid "Select"
 msgstr "Chọn tất cả"
 
@@ -945,7 +889,6 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:486
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:843
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:716
-#, fuzzy
 msgid "Invalid Folder"
 msgstr "Vị Trí Luân Phiên Không Hợp Lệ"
 
@@ -962,7 +905,6 @@ msgid "Torrent Created."
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:547
-#, fuzzy
 msgid "Torrent File"
 msgstr "Mở .&torrent"
 
@@ -1014,7 +956,6 @@ msgid "wizard.operationfailed"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:886
-#, fuzzy
 msgid "Saving Torrent..."
 msgstr "Đang nạp lời khuyên..."
 
@@ -1024,31 +965,26 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:61
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:81
-#, fuzzy
 msgid "Select files to download"
 msgstr "Tìm và Tải về Dữ liệu"
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:129
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:149
-#, fuzzy
 msgid "Download Selected Files Only"
 msgstr "Xoá tập tin được chọn"
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:153
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:173
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:264
-#, fuzzy
 msgid "File"
 msgstr "Tập tin"
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:171
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:191
-#, fuzzy
 msgid "Select/Unselect all files"
 msgstr "Xoá tập tin được chọn"
 
 #: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:70
-#, fuzzy
 msgid "Preparing selection"
 msgstr "Chạy tập tin được chọn"
 
@@ -1057,24 +993,20 @@ msgid "please wait..."
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:159
-#, fuzzy
 msgid "Select the content you want to send"
 msgstr "Tìm và Tải về Dữ liệu"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:166
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:49
 #: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:61
-#, fuzzy
 msgid "Download"
 msgstr "Tải về"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:166
-#, fuzzy
 msgid "at"
 msgstr "Dán"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:167
-#, fuzzy
 msgid "via FrostWire"
 msgstr "Về LimWire"
 
@@ -1099,7 +1031,6 @@ msgid "Send the message above to Twitter"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:444
-#, fuzzy
 msgid "Copy Text"
 msgstr "Chép"
 
@@ -1112,7 +1043,6 @@ msgid "Message copied to clipboard."
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:464
-#, fuzzy
 msgid "Copy Link"
 msgstr "Chép"
 
@@ -1133,7 +1063,6 @@ msgid "Magnet copied to clipboard."
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/TorrentFetcherDownload.java:23
-#, fuzzy
 msgid "Downloading Torrent"
 msgstr "Tải về .torrent"
 
@@ -1152,13 +1081,11 @@ msgid "Error"
 msgstr "Lỗi"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentFetcherDownload.java:25
-#, fuzzy
 msgid "Canceled"
 msgstr "Bỏ qua"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:34
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentSaveFolderPaneItem.java:13
-#, fuzzy
 msgid "Torrent Data Save Folder"
 msgstr "Thư mục mới"
 
@@ -1188,13 +1115,11 @@ msgid "Use Default"
 msgstr "Sử dụng mặc định"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:128
-#, fuzzy
 msgid "Use the Default Folder"
 msgstr "Sử dụng mặc định"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:141
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:182
-#, fuzzy
 msgid "Browse..."
 msgstr "Trình duyệt"
 
@@ -1228,13 +1153,11 @@ msgid "globalmanager.download.remove.veto"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:20
-#, fuzzy
 msgid "Downloading"
 msgstr "Tải về"
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:22
 #: gui/com/frostwire/gui/bittorrent/YouTubeVideoUrlDownload.java:49
-#, fuzzy
 msgid "Stopped"
 msgstr "Chọn tất cả"
 
@@ -1244,7 +1167,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:24
 #: gui/com/frostwire/gui/bittorrent/YouTubeVideoUrlDownload.java:47
-#, fuzzy
 msgid "Finished"
 msgstr "Kết thúc"
 
@@ -1282,14 +1204,12 @@ msgid "Send"
 msgstr "Gửi"
 
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:243
-#, fuzzy
 msgid "Do you want to send this file to a friend?"
 msgstr "Kết nối vào Mạng"
 
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:243
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:136
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:65
-#, fuzzy
 msgid "Send files with FrostWire"
 msgstr "Giúp phiên dịch FrostWire"
 
@@ -1304,12 +1224,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/library/Device.java:265
-#, fuzzy
 msgid "Transfer failed"
 msgstr "Thoát sau khi Chuyển giao"
 
 #: gui/com/frostwire/gui/library/DeviceUploadDialog.java:66
-#, fuzzy
 msgid "Upload to device"
 msgstr "Tải đi"
 
@@ -1318,18 +1236,15 @@ msgid "Waiting for device authorization..."
 msgstr ""
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:70
-#, fuzzy
 msgid "Uploading"
 msgstr "Tải đi"
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
-#, fuzzy
 msgid "Uploading "
 msgstr "Tải đi"
 
 #: gui/com/frostwire/gui/library/DownloadTask.java:76
 #: gui/com/frostwire/gui/library/DownloadTask.java:109
-#, fuzzy
 msgid "Downloading "
 msgstr "Tải về"
 
@@ -1347,7 +1262,6 @@ msgid "Icon"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:76
-#, fuzzy
 msgid "Date Added"
 msgstr "Lưu ở ..."
 
@@ -1366,52 +1280,43 @@ msgstr "Tìm kiếm"
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableMediator.java:411
 #: gui/com/frostwire/gui/library/LibraryDeviceTableMediator.java:412
-#, fuzzy
 msgid "Save"
 msgstr "Lưu"
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableMediator.java:413
-#, fuzzy
 msgid "Save Selected Files To Folder"
 msgstr "Tìm và Tải về Dữ liệu"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:144
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:269
-#, fuzzy
 msgid "tracks"
 msgstr "Rãnh"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:199
-#, fuzzy
 msgid "Finished Downloads"
 msgstr "Tìm và Tải về Dữ liệu"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:201
-#, fuzzy
 msgid "Devices"
 msgstr "Đánh giá"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:223
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:155
-#, fuzzy
 msgid "Configure Options"
 msgstr "Thêm Tuỳ Chọn"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:223
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:156
-#, fuzzy
 msgid "You can configure the FrostWire's Options."
 msgstr "Kết nối vào Mạng"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:606
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:654
-#, fuzzy
 msgid "Refresh"
 msgstr "Làm mới lại"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:607
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:655
-#, fuzzy
 msgid "Refresh selected"
 msgstr "Các kết nối"
 
@@ -1420,7 +1325,6 @@ msgid "Open Library Folder"
 msgstr "Mở thư mục trong thư viện"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableDataLine.java:257
-#, fuzzy
 msgid "Path"
 msgstr "Dán"
 
@@ -1486,31 +1390,26 @@ msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:791
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:664
-#, fuzzy
 msgid "Launch in "
 msgstr "Tải về"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:792
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:665
-#, fuzzy
 msgid "Launch Selected Files in "
 msgstr "Chạy tập tin được chọn"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:834
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:707
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:317
-#, fuzzy
 msgid "Create a new .torrent file"
 msgstr "Mở .&torrent"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:869
-#, fuzzy
 msgid "Delete Selected Files"
 msgstr "Xoá tập tin được chọn"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:886
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:719
-#, fuzzy
 msgid "Rename"
 msgstr "Đổi tên thư mục"
 
@@ -1534,12 +1433,10 @@ msgid "Url"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:377
-#, fuzzy
 msgid "Are you sure you want to remove the selected radio station?"
 msgstr "Xoá tập tin được chọn"
 
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:377
-#, fuzzy
 msgid "Are you sure you want to remove the selected radio stations?"
 msgstr "Xoá tập tin được chọn"
 
@@ -1570,7 +1467,6 @@ msgid "Copy Stream URL"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryMediator.java:97
-#, fuzzy
 msgid "Loading Library Window..."
 msgstr "Đang nạp lời khuyên..."
 
@@ -1611,7 +1507,6 @@ msgid "Delete Playlist"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:701
-#, fuzzy
 msgid ""
 "Are you sure you want to delete the playlist?\n"
 "(No files will be deleted)"
@@ -1656,7 +1551,6 @@ msgstr ""
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:39
 #: gui/com/frostwire/gui/library/StarredDirectoryHolder.java:40
 #: gui/com/frostwire/gui/library/StarredDirectoryHolder.java:44
-#, fuzzy
 msgid "Starred"
 msgstr "Bắt Đầu Lúc"
 
@@ -1666,27 +1560,22 @@ msgid "Comment"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:244
-#, fuzzy
 msgid "Duration"
 msgstr "Các kết nối"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:267
-#, fuzzy
 msgid "Folder"
 msgstr "Thư mục mới"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:763
-#, fuzzy
 msgid "Delete Selected Files from this playlist"
 msgstr "Xoá tập tin được chọn"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:820
-#, fuzzy
 msgid "Cleanup playlist"
 msgstr "Tải đi"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:821
-#, fuzzy
 msgid "Remove the deleted items"
 msgstr "Xoá tập tin được chọn"
 
@@ -1695,7 +1584,6 @@ msgid "Refresh the audio properties based on ID3 tags"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibrarySearch.java:101
-#, fuzzy
 msgid "search results"
 msgstr "Hiển thị kết quả chọn lọc"
 
@@ -1712,7 +1600,6 @@ msgid "Playlist name"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryUtils.java:573
-#, fuzzy
 msgid "Refreshing"
 msgstr "Làm mới lại"
 
@@ -1729,7 +1616,6 @@ msgid "Holds the Results for "
 msgstr ""
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:187
-#, fuzzy
 msgid "Library Folders"
 msgstr "Mở thư mục trong thư viện"
 
@@ -1750,7 +1636,6 @@ msgid "Folder's files and some subfolders are included in the Library."
 msgstr ""
 
 #: gui/com/frostwire/gui/library/UITool.java:102
-#, fuzzy
 msgid "Applications"
 msgstr "Tuỳ chọn"
 
@@ -1789,12 +1674,10 @@ msgstr ""
 #. * Constant for the forward button.
 #.
 #: gui/com/frostwire/gui/player/AudioPlayerComponent.java:67
-#, fuzzy
 msgid "Next"
 msgstr "Tiếp »"
 
 #: gui/com/frostwire/gui/player/AudioPlayerComponent.java:74
-#, fuzzy
 msgid "Previous"
 msgstr "Lời khuyên trước"
 
@@ -1808,7 +1691,6 @@ msgstr ""
 
 #. public ChatTab(final ChatMediator cm) {
 #: gui/com/frostwire/gui/tabs/ChatTab.java:29
-#, fuzzy
 msgid "Chat"
 msgstr "Dán"
 
@@ -1845,7 +1727,6 @@ msgstr "Về LimWire"
 #. set up limewire version label
 #: gui/com/limegroup/gnutella/gui/AboutWindow.java:79
 #: gui/com/limegroup/gnutella/gui/notify/TrayNotifier.java:57
-#, fuzzy
 msgid "FrostWire"
 msgstr "Về LimWire"
 
@@ -1966,7 +1847,6 @@ msgid "Marks all Items as Selected"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/CheckBoxList.java:645
-#, fuzzy
 msgid "Deselect All"
 msgstr "Chọn tất cả"
 
@@ -1979,19 +1859,16 @@ msgid "Clear History"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:84
-#, fuzzy
 msgid "Send this file to a friend"
 msgstr "Tìm và Tải về Dữ liệu"
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:130
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:64
-#, fuzzy
 msgid "file"
 msgstr "Tập tin"
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:131
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:64
-#, fuzzy
 msgid "folder"
 msgstr "Thư mục mới"
 
@@ -2025,12 +1902,10 @@ msgstr "Không"
 #: gui/com/limegroup/gnutella/gui/FileChooserHandler.java:271
 #: gui/com/limegroup/gnutella/gui/FileChooserHandler.java:446
 #: gui/com/limegroup/gnutella/gui/FileChooserHandler.java:465
-#, fuzzy
 msgid "Select Folder"
 msgstr "Chọn tất cả"
 
 #: gui/com/limegroup/gnutella/gui/FileChooserHandler.java:869
-#, fuzzy
 msgid "All Folders"
 msgstr "Thư mục mới"
 
@@ -2065,12 +1940,10 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:115
 #: gui/com/limegroup/gnutella/gui/menu/SearchMenu.java:25
-#, fuzzy
 msgid "&Search"
 msgstr "Tìm kiếm"
 
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:115
-#, fuzzy
 msgid "&Library"
 msgstr "Thư viện"
 
@@ -2152,28 +2025,23 @@ msgid "KB/s"
 msgstr "KB/s"
 
 #: gui/com/limegroup/gnutella/gui/IndentingPanel.java:134
-#, fuzzy
 msgid "More Search Options"
 msgstr "Thêm Tuỳ Chọn"
 
 #. Load up the HTML engine.
 #: gui/com/limegroup/gnutella/gui/Initializer.java:307
-#, fuzzy
 msgid "Loading HTML Engine..."
 msgstr "Đang nạp lời khuyên..."
 
 #: gui/com/limegroup/gnutella/gui/Initializer.java:355
-#, fuzzy
 msgid "Loading User Interface..."
 msgstr "Đang nạp lời khuyên..."
 
 #: gui/com/limegroup/gnutella/gui/Initializer.java:366
-#, fuzzy
 msgid "Loading Core Components..."
 msgstr "Đang nạp lời khuyên..."
 
 #: gui/com/limegroup/gnutella/gui/Initializer.java:422
-#, fuzzy
 msgid "Loading Icons..."
 msgstr "Đang nạp lời khuyên..."
 
@@ -2213,7 +2081,6 @@ msgstr ""
 #: gui/com/limegroup/gnutella/gui/InputFieldDialog.java:93
 #: gui/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:44
 #: gui/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:46
-#, fuzzy
 msgid "Apply Operation"
 msgstr "Hủy thao tác"
 
@@ -2234,7 +2101,6 @@ msgid "Upgrade Java"
 msgstr "Nâng cấp Java"
 
 #: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:178
-#, fuzzy
 msgid "More Information"
 msgstr "Thêm Tuỳ Chọn"
 
@@ -2297,7 +2163,6 @@ msgid "Paste"
 msgstr "Dán"
 
 #: gui/com/limegroup/gnutella/gui/MessageResourceHandler.java:10
-#, fuzzy
 msgid "Download Page"
 msgstr "Tải về"
 
@@ -2310,7 +2175,6 @@ msgid "Magnet Links for Fast Downloads (if you have FrostWire installed)"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/MessageService.java:68
-#, fuzzy
 msgid "Loading Messages..."
 msgstr "Đang nạp lời khuyên..."
 
@@ -2364,7 +2228,6 @@ msgid "Please wait while FrostWire shuts down..."
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/SplashWindow.java:108
-#, fuzzy
 msgid "Loading FrostWire..."
 msgstr "Đang nạp lời khuyên..."
 
@@ -2382,7 +2245,6 @@ msgid "Remove Selected Item"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:108
-#, fuzzy
 msgid "Loading Status Window..."
 msgstr "Đang nạp lời khuyên..."
 
@@ -2417,7 +2279,6 @@ msgid "FrostWire has detected a firewall"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:561
-#, fuzzy
 msgid "Disconnected"
 msgstr "Ngừng kết nố&i"
 
@@ -2434,7 +2295,6 @@ msgid "Your connection to the network is extremely strong"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:658
-#, fuzzy
 msgid "Show Connection Quality"
 msgstr "Hiển thị kết nối với các Máy khác"
 
@@ -2443,7 +2303,6 @@ msgid "Show Language Status"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:705
-#, fuzzy
 msgid "Show Firewall Status"
 msgstr "Hiển thị lời khuyên khi khởi động"
 
@@ -2452,12 +2311,10 @@ msgid "Show Bandwidth Consumption"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:763
-#, fuzzy
 msgid "Downloads:"
 msgstr "Tải về"
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:770
-#, fuzzy
 msgid "Uploads:"
 msgstr "Tải đi"
 
@@ -2805,12 +2662,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:122
-#, fuzzy
 msgid "Thank you for using FrostWire"
 msgstr "Giúp phiên dịch FrostWire"
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:123
-#, fuzzy
 msgid "Visit us at www.frostwire.com"
 msgstr "Tìm thêm giao diện từ frostwire.com"
 
@@ -2852,7 +2707,6 @@ msgid "A newer version is available, update?"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:47
-#, fuzzy
 msgid "O&pen .Torrent or Magnet"
 msgstr "Tải về .torrent"
 
@@ -2861,7 +2715,6 @@ msgid "Opens a magnet link or torrent file"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:73
-#, fuzzy
 msgid "Download .Torrent or Magnet or YouTube video link"
 msgstr "Tải về .torrent"
 
@@ -2888,22 +2741,18 @@ msgid "&Close"
 msgstr "Đóng"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:287
-#, fuzzy
 msgid "Close the program's main window"
 msgstr "Đóng chương trình"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:303
-#, fuzzy
 msgid "E&xit"
 msgstr "Thoát"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:304
-#, fuzzy
 msgid "Close and exit the program"
 msgstr "Đóng chương trình"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:336
-#, fuzzy
 msgid "Send File or Folder..."
 msgstr "Thư mục mới"
 
@@ -3060,7 +2909,6 @@ msgid "Do you want to continue downloading anyway?"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderUtils.java:165
-#, fuzzy
 msgid "Continue"
 msgstr "Các kết nối"
 
@@ -3069,7 +2917,6 @@ msgid "Same File Already In Library"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderUtils.java:192
-#, fuzzy
 msgid "Save Download As"
 msgstr "Tải về"
 
@@ -3122,7 +2969,7 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:109
-#, fuzzy, java-format
+#, java-format
 msgid "FrostWire could not create the Torrent Data Folder {0}"
 msgstr ""
 "FrostWire không tìm thấy trình duyệt  Web của bạn để hiển thị trang web :  "
@@ -3144,7 +2991,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:58
-#, fuzzy
 msgid "Find out more..."
 msgstr "Bạn đã biết..."
 
@@ -3171,7 +3017,6 @@ msgid "One more thing..."
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/LanguagePanel.java:82
-#, fuzzy
 msgid "Language:"
 msgstr "T&hay đổi Ngôn Ngữ"
 
@@ -3185,12 +3030,10 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:79
 #: gui/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:22
-#, fuzzy
 msgid "System Startup"
 msgstr "Hiển thị lời khuyên khi khởi động"
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:81
-#, fuzzy
 msgid "Start Automatically"
 msgstr "Tự động cuộn"
 
@@ -3270,7 +3113,6 @@ msgid "FrostWire is free software, "
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:109
-#, fuzzy
 msgid "Do not pay for FrostWire."
 msgstr "Giúp phiên dịch FrostWire"
 
@@ -3279,7 +3121,6 @@ msgid "&File"
 msgstr "Tập tin"
 
 #: gui/com/limegroup/gnutella/gui/menu/FiltersMenu.java:15
-#, fuzzy
 msgid "Filter&s"
 msgstr "Tập tin"
 
@@ -3320,7 +3161,6 @@ msgid "Get FrostWire on your Android phone, tablet or google tv, all free."
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:35
-#, fuzzy
 msgid "What is \"Seeding\"?"
 msgstr "Các thống kê"
 
@@ -3329,7 +3169,6 @@ msgid "Learn about BitTorrent Seeding"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:39
-#, fuzzy
 msgid "Free FrostWire Stickers"
 msgstr "Về LimWire"
 
@@ -3340,7 +3179,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:41
-#, fuzzy
 msgid "FrostWire T-Shirts"
 msgstr "Về LimWire"
 
@@ -3353,7 +3191,6 @@ msgid "FrostClick.com"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
-#, fuzzy
 msgid "Free Legal Downloads"
 msgstr "Tải về"
 
@@ -3378,7 +3215,6 @@ msgid "Access the FrostWire Users' Forum"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:56
-#, fuzzy
 msgid "&Did you pay for FrostWire?"
 msgstr "Giúp phiên dịch FrostWire"
 
@@ -3388,27 +3224,22 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:78
-#, fuzzy
 msgid "Tip of the &Day"
 msgstr "Lời khuyên hàng ngày"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:79
-#, fuzzy
 msgid "Show the Tip of the Day Window"
 msgstr "Lời khuyên hàng ngày"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:98
-#, fuzzy
 msgid "&About FrostWire"
 msgstr "Về LimWire"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:99
-#, fuzzy
 msgid "Information about FrostWire"
 msgstr "Về LimWire"
 
 #: gui/com/limegroup/gnutella/gui/menu/MenuMediator.java:88
-#, fuzzy
 msgid "Loading Menus..."
 msgstr "Đang nạp lời khuyên..."
 
@@ -3417,7 +3248,6 @@ msgid "&Navigation"
 msgstr "Đi đế&n"
 
 #: gui/com/limegroup/gnutella/gui/menu/ResourcesMenu.java:22
-#, fuzzy
 msgid "&Resources"
 msgstr "Khôi phục"
 
@@ -3472,7 +3302,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/ToolsMenu.java:68
-#, fuzzy
 msgid "&Options"
 msgstr "Tuỳ chọn"
 
@@ -3580,7 +3409,6 @@ msgstr ""
 
 #. search options
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:291
-#, fuzzy
 msgid "Searching"
 msgstr "Tìm kiếm"
 
@@ -3599,7 +3427,6 @@ msgstr ""
 
 #. view options
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:308
-#, fuzzy
 msgid "View"
 msgstr "Hiển thị"
 
@@ -3611,7 +3438,6 @@ msgstr ""
 
 #. filter options
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:315
-#, fuzzy
 msgid "Filters"
 msgstr "Tập tin"
 
@@ -3620,7 +3446,6 @@ msgid "Keywords"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:320
-#, fuzzy
 msgid "Updates"
 msgstr "Thêm Tuỳ Chọn"
 
@@ -3643,7 +3468,6 @@ msgid "File Associations"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:329
-#, fuzzy
 msgid "System Boot"
 msgstr "Hiển thị lời khuyên khi khởi động"
 
@@ -3658,7 +3482,6 @@ msgid "Bug Reports"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsMediator.java:71
-#, fuzzy
 msgid "Loading Options Window..."
 msgstr "Đang nạp lời khuyên..."
 
@@ -3684,7 +3507,6 @@ msgid "Use FrostWire for..."
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AudioPlayerPaneItem.java:22
-#, fuzzy
 msgid "Audio Options"
 msgstr "Thêm Tuỳ Chọn"
 
@@ -3714,7 +3536,6 @@ msgid "Enable Autocompletion of Text Fields:"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AutomaticInstallerDownloadPaneItem.java:14
-#, fuzzy
 msgid "Automatic Installer Download"
 msgstr "Tự động cuộn"
 
@@ -3730,7 +3551,6 @@ msgid "Download new installers for me (Recommended)"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/BrowserPaneItem.java:28
-#, fuzzy
 msgid "Browser Options"
 msgstr "Thêm Tuỳ Chọn"
 
@@ -3781,7 +3601,6 @@ msgid "Warning: Forbidden name!"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ContentFilterPaneItem.java:18
-#, fuzzy
 msgid "Content Filters"
 msgstr "Kết quả chọn lọc"
 
@@ -3819,7 +3638,6 @@ msgid "Always Ask What to do"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/DownloadLicenseWarningPaneItem.java:21
-#, fuzzy
 msgid "License Warning"
 msgstr "Bản quyền"
 
@@ -3851,7 +3669,6 @@ msgid "Extensions:"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ExtensionsPaneItem.java:60
-#, fuzzy
 msgid "Use Defaults"
 msgstr "Sử dụng mặc định"
 
@@ -3951,7 +3768,6 @@ msgid "You can filter out search results containing specific words."
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ImageViewerPaneItem.java:28
-#, fuzzy
 msgid "Image Options"
 msgstr "Thêm Tuỳ Chọn"
 
@@ -3969,7 +3785,6 @@ msgid "Image Viewer"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LibraryFoldersPaneItem.java:34
-#, fuzzy
 msgid "Library Included Folders"
 msgstr "Mở thư mục trong thư viện"
 
@@ -4071,7 +3886,6 @@ msgid "Allow Partial Sharing:"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:20
-#, fuzzy
 msgid "FrostWire Popups"
 msgstr "Về LimWire"
 
@@ -4082,7 +3896,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:29
-#, fuzzy
 msgid "Revert to Default:"
 msgstr "Trở Lại Mặc định"
 
@@ -4107,7 +3920,6 @@ msgid "Password:"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:29
-#, fuzzy
 msgid "Proxy Options"
 msgstr "Tuỳ chọn"
 
@@ -4185,7 +3997,6 @@ msgid "Show dialog to ask before close"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:20
-#, fuzzy
 msgid "Smart Search"
 msgstr "Tìm kiếm"
 
@@ -4265,7 +4076,6 @@ msgid "Show Firewall Indicator:"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:18
-#, fuzzy
 msgid "BitTorrent Connection Settings"
 msgstr "Các kết nối"
 
@@ -4275,7 +4085,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:22
-#, fuzzy
 msgid "Maximum active downloads"
 msgstr "Tải về"
 
@@ -4310,7 +4119,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:26
-#, fuzzy
 msgid "Download Speed:"
 msgstr "Tải về"
 
@@ -4322,7 +4130,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:41
-#, fuzzy
 msgid "Upload Speed:"
 msgstr "Tải đi"
 
@@ -4348,7 +4155,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:28
-#, fuzzy
 msgid "Video Options"
 msgstr "Thêm Tuỳ Chọn"
 
@@ -4381,7 +4187,6 @@ msgstr ""
 #. * String for 'Select Type'
 #.
 #: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:56
-#, fuzzy
 msgid "Select Search Types:"
 msgstr "Tìm kiếm"
 
@@ -4406,12 +4211,10 @@ msgid "Search for Program Files, Including exe, zip, gz, and More"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:207
-#, fuzzy
 msgid "Search for Torrents!"
 msgstr "Tìm kiếm ở đây"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:54
-#, fuzzy
 msgid "Open Options dialog"
 msgstr "Thêm Tuỳ Chọn"
 
@@ -4420,7 +4223,6 @@ msgid "Search for related products on Amazon"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:56
-#, fuzzy
 msgid "Download All Selected Files"
 msgstr "Xoá tập tin được chọn"
 
@@ -4441,7 +4243,6 @@ msgid "0"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputManager.java:151
-#, fuzzy
 msgid "Open a .torrent or Magnet link or YouTube video link"
 msgstr "Tải về .torrent"
 
@@ -4451,12 +4252,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:213
-#, fuzzy
 msgid "Search Engines"
 msgstr "Tìm kiếm"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:221
-#, fuzzy
 msgid "Filter"
 msgstr "Tập tin"
 
@@ -4465,17 +4264,14 @@ msgid "<html><strong>Refine Results</strong></html>"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:410
-#, fuzzy
 msgid "Show search result filter controls"
 msgstr "Hiển thị kết quả chọn lọc"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:411
-#, fuzzy
 msgid "Hide search result filter controls"
 msgstr "Hiển thị kết quả chọn lọc"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:63
-#, fuzzy
 msgid "Close Search"
 msgstr "Tìm kiếm"
 
@@ -4484,7 +4280,6 @@ msgid "Launch Action"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:67
-#, fuzzy
 msgid "Repeat Search"
 msgstr "Tìm kiếm"
 
@@ -4493,12 +4288,10 @@ msgid "Buy this item now"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:71
-#, fuzzy
 msgid "Download Partial Files"
 msgstr "Tải về"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:73
-#, fuzzy
 msgid "Torrent Details"
 msgstr "Bản quyền"
 
@@ -4508,7 +4301,6 @@ msgstr ""
 
 #. Set the splash screen text...
 #: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:96
-#, fuzzy
 msgid "Loading Search Window..."
 msgstr "Đang nạp lời khuyên..."
 
@@ -4538,17 +4330,14 @@ msgid "Show Torrent Details page when a download starts"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:480
-#, fuzzy
 msgid "Copy Hash"
 msgstr "Chép"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:492
-#, fuzzy
 msgid "Search More"
 msgstr "Tìm kiếm ở đây"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:43
-#, fuzzy
 msgid "Source"
 msgstr "Khôi phục"
 
@@ -4565,7 +4354,6 @@ msgid "Speed"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/Selector.java:82
-#, fuzzy
 msgid "Vendor"
 msgstr "Hoàn tác"
 
@@ -4601,7 +4389,6 @@ msgid "Stripe Rows"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:68
-#, fuzzy
 msgid "Sort Automatically"
 msgstr "Tự động cuộn"
 
@@ -4717,7 +4504,6 @@ msgid "FileChooser.renameErrorText"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:37
-#, fuzzy
 msgid "Invalid Filename"
 msgstr "Vị Trí Luân Phiên Không Hợp Lệ"
 
@@ -4742,7 +4528,6 @@ msgid "Filename Taken"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:55
-#, fuzzy
 msgid "Not a Folder"
 msgstr "Thư mục mới"
 
@@ -4821,7 +4606,6 @@ msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:131
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:79
-#, fuzzy
 msgid "language"
 msgstr "T&hay đổi Ngôn Ngữ"
 
@@ -4837,7 +4621,6 @@ msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:134
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:82
-#, fuzzy
 msgid "backuplanguage"
 msgstr "T&hay đổi Ngôn Ngữ"
 
@@ -4885,7 +4668,6 @@ msgid "aslfemale"
 msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:324
-#, fuzzy
 msgid "userid"
 msgstr "Dán"
 
@@ -4909,123 +4691,93 @@ msgstr ""
 msgid "helppage"
 msgstr ""
 
-#, fuzzy
 #~ msgid "Loading phones and tablets..."
 #~ msgstr "Đang nạp lời khuyên..."
 
-#, fuzzy
 #~ msgid "Videos"
 #~ msgstr "Hiển thị"
 
-#, fuzzy
 #~ msgid "None"
 #~ msgstr "Không"
 
-#, fuzzy
 #~ msgid "Name Asc"
 #~ msgstr "Lưu ở ..."
 
-#, fuzzy
 #~ msgid "Size Asc"
 #~ msgstr "Lưu ở ..."
 
-#, fuzzy
 #~ msgid "Delete Files"
 #~ msgstr "Xoá tập tin được chọn"
 
-#, fuzzy
 #~ msgid "System"
 #~ msgstr "Hiển thị lời khuyên khi khởi động"
 
-#, fuzzy
 #~ msgid "Connected"
 #~ msgstr "Các kết nối"
 
-#, fuzzy
 #~ msgid "New Folder"
 #~ msgstr "Thư mục mới"
 
-#, fuzzy
 #~ msgid "File Transfers"
 #~ msgstr "Thoát sau khi Chuyển giao"
 
-#, fuzzy
 #~ msgid "Cancel All"
 #~ msgstr "Bỏ qua"
 
-#, fuzzy
 #~ msgid "Clear Finished"
 #~ msgstr "Kết Thúc Lúc"
 
-#, fuzzy
 #~ msgid "Should I stop all transfers?"
 #~ msgstr "Thoát sau khi Chuyển giao"
 
-#, fuzzy
 #~ msgid "one file"
 #~ msgstr "Kết quả chọn lọc"
 
-#, fuzzy
 #~ msgid "files"
 #~ msgstr "Tập tin"
 
-#, fuzzy
 #~ msgid "pending"
 #~ msgstr "Tải đi"
 
-#, fuzzy
 #~ msgid "canceled"
 #~ msgstr "Bỏ qua"
 
-#, fuzzy
 #~ msgid "error"
 #~ msgstr "Lỗi"
 
-#, fuzzy
 #~ msgid "Upload"
 #~ msgstr "Tải đi"
 
-#, fuzzy
 #~ msgid "Select a file..."
 #~ msgstr "Chọn tất cả"
 
-#, fuzzy
 #~ msgid "Preparing selected folder"
 #~ msgstr "Ngừng chia sẻ thư mục được chọn trong Thư viện"
 
-#, fuzzy
 #~ msgid "Open in Folder"
 #~ msgstr "Mở thư mục trong thư viện"
 
-#, fuzzy
 #~ msgid "Open Folder Containing a Selected File"
 #~ msgstr "Xoá tập tin được chọn"
 
-#, fuzzy
 #~ msgid "Toggle the {0} Screen"
 #~ msgstr "Hiển thị màn hình {0}"
 
-#, fuzzy
 #~ msgid "Connection"
 #~ msgstr "Các kết nối"
 
-#, fuzzy
 #~ msgid "Send File..."
 #~ msgstr "Đang nạp lời khuyên..."
 
-#, fuzzy
 #~ msgid "Folder:"
 #~ msgstr "Thư mục mới"
 
-#, fuzzy
 #~ msgid "Player Options"
 #~ msgstr "Thêm Tuỳ Chọn"
 
-#, fuzzy
 #~ msgid "Seeding Status"
 #~ msgstr "Các kết nối"
 
-#, fuzzy
 #~ msgid "Search Files"
 #~ msgstr "Tìm kiếm"
 
@@ -5037,14 +4789,12 @@ msgstr ""
 #~ "ngoài. Một vài chức năng của FrostWire có thể sẽ không hoạt động như mong "
 #~ "muốn."
 
-#, fuzzy
 #~ msgid "Loading TLS Encryption..."
 #~ msgstr "Đang nạp lời khuyên..."
 
 #~ msgid "Loading Safe Content Management..."
 #~ msgstr "Đang tải Safe Content Management..."
 
-#, fuzzy
 #~ msgid "Loading Message Router..."
 #~ msgstr "Đang nạp lời khuyên..."
 
@@ -5054,7 +4804,6 @@ msgstr ""
 #~ msgid "Loading Upload Management..."
 #~ msgstr "Đang tải Upload Management..."
 
-#, fuzzy
 #~ msgid "Loading Connection Listener..."
 #~ msgstr "Đang nạp lời khuyên..."
 
@@ -5067,26 +4816,21 @@ msgstr ""
 #~ msgid "Loading Ultrapeer/DHT Management..."
 #~ msgstr "Đang tải Ultrapeer/DHT Management..."
 
-#, fuzzy
 #~ msgid "Locating Peers..."
 #~ msgstr "Đang nạp lời khuyên..."
 
-#, fuzzy
 #~ msgid "Loading Directed Querier..."
 #~ msgstr "Đang nạp lời khuyên..."
 
-#, fuzzy
 #~ msgid "Loading Magnet Listener..."
 #~ msgstr "Đang nạp lời khuyên..."
 
-#, fuzzy
 #~ msgid "Loading Peer Listener..."
 #~ msgstr "Đang nạp lời khuyên..."
 
 #~ msgid "Loading Stale Connection Management..."
 #~ msgstr "Đang tải Stale Connection Management..."
 
-#, fuzzy
 #~ msgid "Loading Saved Files..."
 #~ msgstr "Đang nạp lời khuyên..."
 
@@ -5112,23 +4856,18 @@ msgstr ""
 #~ msgid "You are already downloading this file to {0}"
 #~ msgstr "Bạn đang tải tập tin này đến {0} rồi"
 
-#, fuzzy
 #~ msgid "&Refresh Connections ("
 #~ msgstr "Các kết nối"
 
-#, fuzzy
 #~ msgid "&Refreshing Connections ("
 #~ msgstr "Các kết nối"
 
-#, fuzzy
 #~ msgid "FrostWire could not download a .torrent file from the provided URL."
 #~ msgstr "Tải về tệp .torrent từ WWW"
 
-#, fuzzy
 #~ msgid "Automatically start torrents"
 #~ msgstr "Tự động cuộn"
 
-#, fuzzy
 #~ msgid "Start automatically"
 #~ msgstr "Tự động cuộn"
 
@@ -5141,58 +4880,45 @@ msgstr ""
 #~ msgid "What's New"
 #~ msgstr "Có chức năng gì mới"
 
-#, fuzzy
 #~ msgid "&Monitor"
 #~ msgstr "Theo dõi"
 
-#, fuzzy
 #~ msgid "&Connections"
 #~ msgstr "Các kết nối"
 
-#, fuzzy
 #~ msgid "C&onsole"
 #~ msgstr "Kết nối"
 
 #~ msgid "Verify"
 #~ msgstr "Chứng thực"
 
-#, fuzzy
 #~ msgid "License Details:"
 #~ msgstr "Bản quyền"
 
-#, fuzzy
 #~ msgid "Weedshare Details"
 #~ msgstr "Trở Lại Mặc Định"
 
-#, fuzzy
 #~ msgid "Loading Monitor Window..."
 #~ msgstr "Đang nạp lời khuyên..."
 
-#, fuzzy
 #~ msgid "You are not connected to the FrostWire VIP Area"
 #~ msgstr "Kết nối vào Mạng"
 
-#, fuzzy
 #~ msgid "You are currently connecting to the network"
 #~ msgstr "Kết nối vào Mạng"
 
-#, fuzzy
 #~ msgid "Show Shared Files Count"
 #~ msgstr "Hiển thị kết quả chọn lọc"
 
-#, fuzzy
 #~ msgid "Upgrade FrostWire"
 #~ msgstr "Về LimWire"
 
-#, fuzzy
 #~ msgid "Upgrade to FrostWire?"
 #~ msgstr "Về LimWire"
 
-#, fuzzy
 #~ msgid "Get FrostWire Now"
 #~ msgstr "Về LimWire"
 
-#, fuzzy
 #~ msgid "Later"
 #~ msgstr "Dán"
 
@@ -5208,42 +4934,33 @@ msgstr ""
 #~ msgid "Disconnect from the Network"
 #~ msgstr "Ngừng kết nối với mạng"
 
-#, fuzzy
 #~ msgid "Browse Host"
 #~ msgstr "Trình duyệt"
 
 #~ msgid "View All Files on the Selected Computer"
 #~ msgstr "Xem tất cả tài liệu trên máy đang được chọn."
 
-#, fuzzy
 #~ msgid "Host"
 #~ msgstr "Mái chủ"
 
-#, fuzzy
 #~ msgid "Connecting..."
 #~ msgstr "Các kết nối"
 
-#, fuzzy
 #~ msgid "Connecting"
 #~ msgstr "Các kết nối"
 
-#, fuzzy
 #~ msgid "Loading Connections Window..."
 #~ msgstr "Đang nạp lời khuyên..."
 
-#, fuzzy
 #~ msgid "Host:"
 #~ msgstr "Mái chủ"
 
-#, fuzzy
 #~ msgid "Aborted"
 #~ msgstr "Thông tin"
 
-#, fuzzy
 #~ msgid "Downloading from"
 #~ msgstr "Tải về"
 
-#, fuzzy
 #~ msgid "Paused"
 #~ msgstr "Dán"
 
@@ -5259,14 +4976,12 @@ msgstr ""
 #~ msgid "Time Spent"
 #~ msgstr "Thời Gian Sử Dụng"
 
-#, fuzzy
 #~ msgid "hosts"
 #~ msgstr "Mái chủ"
 
 #~ msgid "host"
 #~ msgstr "Mái chủ"
 
-#, fuzzy
 #~ msgid "Locating Sources..."
 #~ msgstr "Đang nạp lời khuyên..."
 
@@ -5276,81 +4991,63 @@ msgstr ""
 #~ msgid "&Refresh Skins"
 #~ msgstr "Làm mới giao diện"
 
-#, fuzzy
 #~ msgid "Search..."
 #~ msgstr "Tìm kiếm"
 
-#, fuzzy
 #~ msgid "Clear Download"
 #~ msgstr "Tải về"
 
-#, fuzzy
 #~ msgid "Launch Selected Downloads"
 #~ msgstr "Chạy tập tin được chọn"
 
-#, fuzzy
 #~ msgid "Preview Download"
 #~ msgstr "Tải về"
 
-#, fuzzy
 #~ msgid "Shared Folders"
 #~ msgstr "Ngừng chia sẻ thư mục"
 
-#, fuzzy
 #~ msgid "Incomplete Files"
 #~ msgstr "Xoá tập tin"
 
-#, fuzzy
 #~ msgid "Individual Store Files"
 #~ msgstr "Mở .&torrent"
 
-#, fuzzy
 #~ msgid "Search In Shared Files:"
 #~ msgstr "Tìm và Tải về Dữ liệu"
 
 #~ msgid "Uploads"
 #~ msgstr "Tải đi"
 
-#, fuzzy
 #~ msgid "Locations"
 #~ msgstr "Các kết nối"
 
-#, fuzzy
 #~ msgid "Add Description to Selected File"
 #~ msgstr "Xoá tập tin được chọn"
 
-#, fuzzy
 #~ msgid "Edit License..."
 #~ msgstr "Bản quyền"
 
-#, fuzzy
 #~ msgid "Stop Sharing File"
 #~ msgstr "Ngừng chia sẻ thư mục"
 
-#, fuzzy
 #~ msgid "Stop Sharing Folder"
 #~ msgstr "Ngừng chia sẻ thư mục"
 
-#, fuzzy
 #~ msgid "View License"
 #~ msgstr "Bản quyền"
 
-#, fuzzy
 #~ msgid "Reload Shared Folders"
 #~ msgstr "Ngừng chia sẻ thư mục"
 
-#, fuzzy
 #~ msgid "Loading Logging Window..."
 #~ msgstr "Đang nạp lời khuyên..."
 
-#, fuzzy
 #~ msgid "&Advanced"
 #~ msgstr "Nâng cao"
 
 #~ msgid "&Help"
 #~ msgstr "&Trợ giúp"
 
-#, fuzzy
 #~ msgid "&Using FrostWire"
 #~ msgstr "Về LimWire"
 
@@ -5363,102 +5060,78 @@ msgstr ""
 #~ msgid "Reload available skins from disk"
 #~ msgstr "Nạp mới lại dao diện có sẵn từ ổ đĩa"
 
-#, fuzzy
 #~ msgid "&Check for updates"
 #~ msgstr "Đang kiểm tra cập nhật..."
 
 #~ msgid "Connections"
 #~ msgstr "Các kết nối"
 
-#, fuzzy
 #~ msgid "Hosts"
 #~ msgstr "Mái chủ"
 
-#, fuzzy
 #~ msgid "Clear Downloads"
 #~ msgstr "Tải về"
 
-#, fuzzy
 #~ msgid "Automatically Clear Completed Uploads:"
 #~ msgstr "Tự động cuộn"
 
-#, fuzzy
 #~ msgid "Connect on Startup"
 #~ msgstr "Các kết nối"
 
-#, fuzzy
 #~ msgid "Connect on Startup:"
 #~ msgstr "Các kết nối"
 
-#, fuzzy
 #~ msgid "OOB Searching"
 #~ msgstr "Tìm kiếm"
 
-#, fuzzy
 #~ msgid "Download Bandwidth"
 #~ msgstr "Băng Thông Trung bình"
 
-#, fuzzy
 #~ msgid "Maximum Downloads:"
 #~ msgstr "Tải về"
 
-#, fuzzy
 #~ msgid "Max Upload Slots"
 #~ msgstr "Tải đi"
 
-#, fuzzy
 #~ msgid "Open Dialog to Select a Folder"
 #~ msgstr "Đổi tên thư mục được chọn trong Thư viện"
 
-#, fuzzy
 #~ msgid "Reset"
 #~ msgstr "Khôi phục"
 
-#, fuzzy
 #~ msgid "Search Result Quality"
 #~ msgstr "Hiển thị kết quả chọn lọc"
 
-#, fuzzy
 #~ msgid "Show Only Four Star Results"
 #~ msgstr "Hiển thị kết quả chọn lọc"
 
-#, fuzzy
 #~ msgid "Search Result Speed"
 #~ msgstr "Hiển thị kết quả chọn lọc"
 
-#, fuzzy
 #~ msgid "Download Sharing"
 #~ msgstr "Tải về .torrent"
 
-#, fuzzy
 #~ msgid "Connection Speed"
 #~ msgstr "Các kết nối"
 
-#, fuzzy
 #~ msgid "Upload Bandwidth"
 #~ msgstr "Băng Thông Trung bình"
 
-#, fuzzy
 #~ msgid "Loading Playlist Window..."
 #~ msgstr "Đang nạp lời khuyên..."
 
-#, fuzzy
 #~ msgid "Play Options:"
 #~ msgstr "Tuỳ chọn"
 
-#, fuzzy
 #~ msgid "Continuous"
 #~ msgstr "Các kết nối"
 
-#, fuzzy
 #~ msgid "Option"
 #~ msgstr "Tuỳ chọn"
 
-#, fuzzy
 #~ msgid "Back To Search"
 #~ msgstr "Tìm kiếm"
 
-#, fuzzy
 #~ msgid "Download As..."
 #~ msgstr "Tải về"
 
@@ -5489,26 +5162,21 @@ msgstr ""
 #~ "Hỗ trợ kỹ thuật cá nhân\n"
 #~ "Sáu tháng cập nhật miễn phí"
 
-#, fuzzy
 #~ msgid "View All Files on Selected Computer"
 #~ msgstr "Xem tất cả tài liệu trên máy đang được chọn."
 
-#, fuzzy
 #~ msgid "Direct Connect"
 #~ msgstr "Ngừng kết nố&i"
 
-#, fuzzy
 #~ msgid "Filename"
 #~ msgstr "Tập tin"
 
-#, fuzzy
 #~ msgid "Get More Results"
 #~ msgstr "Trở Lại Mặc Định"
 
 #~ msgid "Show Connections to Other Clients"
 #~ msgstr "Hiển thị kết nối với các Máy khác"
 
-#, fuzzy
 #~ msgid "Console"
 #~ msgstr "Đóng"
 
@@ -5518,47 +5186,36 @@ msgstr ""
 #~ msgid "View Searches and Uploads"
 #~ msgstr "Hiển thị Tìm kiếm và Tải đi"
 
-#, fuzzy
 #~ msgid "Get New Skins"
 #~ msgstr "Tải thêm &giao diện"
 
-#, fuzzy
 #~ msgid "Kill Upload"
 #~ msgstr "Tải đi"
 
-#, fuzzy
 #~ msgid "Stop Selected Uploads"
 #~ msgstr "Hiển thị Tìm kiếm và Tải đi"
 
-#, fuzzy
 #~ msgid "Loading Upload Window..."
 #~ msgstr "Đang nạp lời khuyên..."
 
-#, fuzzy
 #~ msgid "Publish License"
 #~ msgstr "Bản quyền"
 
-#, fuzzy
 #~ msgid "Year:"
 #~ msgstr "Xoá"
 
-#, fuzzy
 #~ msgid "License:"
 #~ msgstr "Bản quyền"
 
-#, fuzzy
 #~ msgid "License Type:"
 #~ msgstr "Bản quyền"
 
-#, fuzzy
 #~ msgid "English"
 #~ msgstr "Kết thúc"
 
-#, fuzzy
 #~ msgid "Loading Languages"
 #~ msgstr "T&hay đổi Ngôn Ngữ"
 
-#, fuzzy
 #~ msgid "false"
 #~ msgstr "Dán"
 
@@ -5577,35 +5234,27 @@ msgstr ""
 #~ msgid "URL"
 #~ msgstr "URL"
 
-#, fuzzy
 #~ msgid "Finish Setup"
 #~ msgstr "Kết thúc"
 
-#, fuzzy
 #~ msgid "Language Options"
 #~ msgstr "Thêm Tuỳ Chọn"
 
-#, fuzzy
 #~ msgid "Choose Language:"
 #~ msgstr "T&hay đổi Ngôn Ngữ"
 
-#, fuzzy
 #~ msgid "Save Folder:"
 #~ msgstr "Thư mục mới"
 
-#, fuzzy
 #~ msgid "Scan for Files"
 #~ msgstr "Tìm và Tải về Dữ liệu"
 
-#, fuzzy
 #~ msgid "Cancel Scan"
 #~ msgstr "Hủy thao tác"
 
-#, fuzzy
 #~ msgid "Connecting to the Internet Archive..."
 #~ msgstr "Kết nối vào Mạng"
 
-#, fuzzy
 #~ msgid "Connected..."
 #~ msgstr "Kết nối"
 

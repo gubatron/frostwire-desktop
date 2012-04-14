@@ -19,7 +19,6 @@ msgstr ""
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:50
-#, fuzzy
 msgid ""
 "FrostWire was unable to write a necessary file because your hard drive is "
 "full. To continue using FrostWire you must free up space on your hard drive."
@@ -28,7 +27,6 @@ msgstr ""
 "หากต้องการบันทึกรายการให้ลบข้อมูลที่ไม่ต้องการออกจากฮาร์ดดิสก์"
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:52
-#, fuzzy
 msgid ""
 "FrostWire was unable to open a necessary file because another program has "
 "locked the file. FrostWire may act unexpectedly until this file is released."
@@ -36,7 +34,6 @@ msgstr ""
 "FrostWire ไม่สามารถเปิดไฟล์ได้เนื่องจากมีโปรแกรมอื่นใช้งานอยู่  ปิดโปรแกรมเพื่อเริ่มต้นใช้ไฟล์"
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:54
-#, fuzzy
 msgid ""
 "FrostWire was unable to write a necessary file because you do not have the "
 "necessary permissions. Your preferences may not be maintained the next time "
@@ -46,7 +43,6 @@ msgstr ""
 "การปรับเปลี่ยนจะแสดงผลเมื่อเริ่มโปรแกรมใหม่ หรือ โปรแกรมอาจไม่เกิดการเปลี่ยนแปลง"
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:56
-#, fuzzy
 msgid ""
 "FrostWire cannot open a necessary file because the filename contains "
 "characters which are not supported by your operating system. FrostWire may "
@@ -54,7 +50,6 @@ msgid ""
 msgstr "FrostWire ไม่สนับสนุนไฟล์นี้บนระบบปฏิบัติการของท่าน"
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:60
-#, fuzzy
 msgid ""
 "FrostWire cannot download the selected file because your hard drive is full. "
 "To download more files, you must free up space on your hard drive."
@@ -63,7 +58,6 @@ msgstr ""
 "โปรดลบข้อมูลที่ไม่ต้องการออกจากฮาร์ดดิสก์"
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:62
-#, fuzzy
 msgid ""
 "FrostWire was unable to download the selected file because another program "
 "is using the file. Please close the other program and retry the download."
@@ -72,7 +66,6 @@ msgstr ""
 "โปรดปิดโปรแกรมเพื่อดาวน์โหลดอีกครั้ง"
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:64
-#, fuzzy
 msgid ""
 "FrostWire was unable to create or continue writing an incomplete file for "
 "the selected download because you do not have permission to write files to "
@@ -83,7 +76,6 @@ msgstr ""
 "ต้องการการอนุญาตเพื่อบันทึกข้อมูล หากต้องการใช้งาน FrostWire ให้เลือกบันทึกที่แฟ้มใหม่"
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:66
-#, fuzzy
 msgid ""
 "FrostWire was unable to open the incomplete file for the selected download "
 "because the filename contains characters which are not supported by your "
@@ -106,7 +98,6 @@ msgstr "กำลังโหลดไฟล์เก่า"
 #: core/com/limegroup/gnutella/LimeXMLNames.java:87
 #: core/com/limegroup/gnutella/MediaType.java:47
 #: gui/com/frostwire/gui/library/UITool.java:104
-#, fuzzy
 msgid "Audio"
 msgstr "เสียง"
 
@@ -118,7 +109,6 @@ msgstr "เสียง"
 #: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:214
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:45
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:238
-#, fuzzy
 msgid "Title"
 msgstr "ชื่อ"
 
@@ -136,7 +126,6 @@ msgstr "ศิลปิน"
 #: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:221
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:63
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:250
-#, fuzzy
 msgid "Album"
 msgstr "อัลบั้ม"
 
@@ -145,7 +134,6 @@ msgstr "อัลบั้ม"
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:185
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:75
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:253
-#, fuzzy
 msgid "Genre"
 msgstr "กลุ่ม"
 
@@ -222,7 +210,6 @@ msgstr ""
 #: core/com/limegroup/gnutella/LimeXMLNames.java:103
 #: core/com/limegroup/gnutella/MediaType.java:48
 #: gui/com/frostwire/gui/library/UITool.java:112
-#, fuzzy
 msgid "Video"
 msgstr "วิดีโอ"
 
@@ -309,7 +296,6 @@ msgstr ""
 
 #. These are used as resource keys to retreive descriptions in the GUI
 #: core/com/limegroup/gnutella/MediaType.java:43
-#, fuzzy
 msgid "All Types"
 msgstr "ทุกประเภท"
 
@@ -318,7 +304,6 @@ msgid "Books/Docs"
 msgstr ""
 
 #: core/com/limegroup/gnutella/MediaType.java:46
-#, fuzzy
 msgid "Programs"
 msgstr "โปรแกรม"
 
@@ -360,7 +345,6 @@ msgstr ""
 
 #. hide button
 #: gui/com/frostwire/gui/HideExitDialog.java:70
-#, fuzzy
 msgid "Hide"
 msgstr "วิดีโอ"
 
@@ -596,7 +580,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:120
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:325
-#, fuzzy
 msgid "Uploaded"
 msgstr "อัพโหลด"
 
@@ -968,7 +951,6 @@ msgid "wizard.operationfailed"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:886
-#, fuzzy
 msgid "Saving Torrent..."
 msgstr "กำลังเข้าสู่ระบบจัดการบิททอร์เ้รน"
 
@@ -989,7 +971,6 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:153
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:173
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:264
-#, fuzzy
 msgid "File"
 msgstr "ชื่อ"
 
@@ -1181,7 +1162,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:24
 #: gui/com/frostwire/gui/bittorrent/YouTubeVideoUrlDownload.java:47
-#, fuzzy
 msgid "Finished"
 msgstr "กำลังโหลดไฟล์เก่า"
 
@@ -1251,12 +1231,10 @@ msgid "Waiting for device authorization..."
 msgstr ""
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:70
-#, fuzzy
 msgid "Uploading"
 msgstr "อัพโหลด"
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
-#, fuzzy
 msgid "Uploading "
 msgstr "อัพโหลด"
 
@@ -1306,12 +1284,10 @@ msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:144
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:269
-#, fuzzy
 msgid "tracks"
 msgstr "แทร็ก"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:199
-#, fuzzy
 msgid "Finished Downloads"
 msgstr "กำลังโหลดไฟล์เก่า"
 
@@ -1879,7 +1855,6 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:130
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:64
-#, fuzzy
 msgid "file"
 msgstr "ชื่อ"
 
@@ -2767,7 +2742,6 @@ msgid "Close and exit the program"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:336
-#, fuzzy
 msgid "Send File or Folder..."
 msgstr "กำลังโหลดไฟล์บันทึก"
 
@@ -4269,7 +4243,6 @@ msgid "Search Engines"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:221
-#, fuzzy
 msgid "Filter"
 msgstr "ชื่อ"
 
@@ -4705,21 +4678,17 @@ msgstr ""
 msgid "helppage"
 msgstr ""
 
-#, fuzzy
 #~ msgid "Loading phones and tablets..."
 #~ msgstr "กำลังเข้าสู่ไฟล์แชร์"
 
-#, fuzzy
 #~ msgid "Videos"
 #~ msgstr "วิดีโอ"
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire was unable to set up a port to listen for incoming connections. "
 #~ "Some features of FrostWire may not work as expected."
 #~ msgstr "FrostWire ไม่สามารถปรับแต่งพอร์ตเชื่อมต่อได้ โปรแกรมอาจจะใช้งานได้ไม่เต็มที่"
 
-#, fuzzy
 #~ msgid ""
 #~ "Sorry, FrostWire couldn't read your old downloads.  You can restart them "
 #~ "by going to your Library, viewing your 'Incomplete Files', and clicking "
@@ -4729,7 +4698,6 @@ msgstr ""
 #~ "ท่านสามารถเริ่มการดาวน์โหลดโดยเข้าไปที่แฟ้มคลัง ค้นหาใน \"ไฟล์ไม่สมบูรณ์\" จากนั้นเลือก "
 #~ "\"ทำต่อ\" เพื่อดาวน์โหลด"
 
-#, fuzzy
 #~ msgid ""
 #~ "Sorry, FrostWire couldn't read some of your old downloads.  You can "
 #~ "restart them by going to your Library, viewing your 'Incomplete Files', "
@@ -4738,51 +4706,39 @@ msgstr ""
 #~ "FrostWire  ไม่สามารถอ่านบางไฟล์ที่ดาวน์โหลด ท่านสามารถเริ่มต้นโดยค้นหาในคลัง เลือกไฟล์ "
 #~ "\"ดาวน์โหลดไม่สมบูรณ์\" เลือก \"ทำต่อ\" เพื่อดาวน์โหลดไฟล์"
 
-#, fuzzy
 #~ msgid "Loading TLS Encryption..."
 #~ msgstr "กำลังเข้ารหัส TLS"
 
-#, fuzzy
 #~ msgid "Loading Safe Content Management..."
 #~ msgstr "กำลังเข้าระบบจัดการการสารบัญความปลอดภัย"
 
-#, fuzzy
 #~ msgid "Loading Message Router..."
 #~ msgstr "กำลังเข้าระบบจัดการเส้นทาง"
 
-#, fuzzy
 #~ msgid "Checking for Updates..."
 #~ msgstr "ตรวจสอบการอัพเดต"
 
-#, fuzzy
 #~ msgid "Loading Upload Management..."
 #~ msgstr "กำลังเข้าระบบจัดการอัพโหลด"
 
-#, fuzzy
 #~ msgid "Loading Connection Listener..."
 #~ msgstr "กำลังเข้าสู่ตัวเชื่อมระบบ"
 
-#, fuzzy
 #~ msgid "Loading Connection Management..."
 #~ msgstr "กำลังเข้าสู่ระบบจัดการเชื่อมต่อ"
 
-#, fuzzy
 #~ msgid "Loading Download Management..."
 #~ msgstr "กำลังเข้าสู่ระบบดาวน์โหลด"
 
-#, fuzzy
 #~ msgid "Loading Ultrapeer/DHT Management..."
 #~ msgstr "กำลังเข้าสู่ระบบจัดการ Ultrapeer/DHT"
 
-#, fuzzy
 #~ msgid "Locating Peers..."
 #~ msgstr "จัดตำแหน่ง Peers"
 
-#, fuzzy
 #~ msgid "Loading Directed Querier..."
 #~ msgstr "กำลังเข้าสู่ระบบจัดการลำดับ"
 
-#, fuzzy
 #~ msgid "Loading Magnet Listener..."
 #~ msgstr "กำลังเข้าสู่ระบบต่อ"
 
@@ -4792,21 +4748,17 @@ msgstr ""
 #~ msgid "Loading Stale Connection Management..."
 #~ msgstr "กำลังเข้าสู่ระบบจัดการการเชื่อต่อสเตล"
 
-#, fuzzy
 #~ msgid "Loading Spam Management..."
 #~ msgstr "กำลังเข้าระบบจัดการสแปม"
 
-#, fuzzy
 #~ msgid "Loading Network Listeners..."
 #~ msgstr "กำลังเข้าสู่ตัวเครือข่าย"
 
-#, fuzzy
 #~ msgid ""
 #~ "One or more URLs in the MAGNET link were invalid. Your file may not "
 #~ "download correctly."
 #~ msgstr "การเชื่อมโยงแมกเนตล้มเหลว ท่านไม่สามารถดาวน์โหลดได้อย่างถูกต้อง"
 
-#, fuzzy
 #~ msgid "&Check for updates"
 #~ msgstr "ตรวจสอบการอัพเดต"
 
@@ -4823,6 +4775,5 @@ msgstr ""
 #~ msgid "Modem"
 #~ msgstr "โมเด็ม"
 
-#, fuzzy
 #~ msgid "United States"
 #~ msgstr "สหรัฐ"

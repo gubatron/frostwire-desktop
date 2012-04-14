@@ -1272,12 +1272,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/library/Device.java:265
-#, fuzzy
 msgid "Transfer failed"
 msgstr "Mga Paglilipat"
 
 #: gui/com/frostwire/gui/library/DeviceUploadDialog.java:66
-#, fuzzy
 msgid "Upload to device"
 msgstr "Jakojen raja saavutettu"
 
@@ -1290,7 +1288,6 @@ msgid "Uploading"
 msgstr "Jaan"
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
-#, fuzzy
 msgid "Uploading "
 msgstr "Jaan"
 
@@ -3282,7 +3279,6 @@ msgstr ""
 "Sabihin ang iyong intensyon sa ibaba para umpisahan ang paggamit ng FrostWire"
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:57
-#, fuzzy
 msgid ""
 "FrostWire is a peer-to-peer program for sharing authorized files only.  "
 "Installing and using the program does not constitute a license for obtaining "
@@ -3403,7 +3399,6 @@ msgstr ""
 "konekta sa network ng BitTorrent."
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:31
-#, fuzzy
 msgid ""
 "Installing and using the program does not constitute a license for obtaining "
 "or distributing unauthorized content."
@@ -5159,118 +5154,90 @@ msgstr "mouse"
 msgid "helppage"
 msgstr "helppage"
 
-#, fuzzy
 #~ msgid "Loading phones and tablets..."
 #~ msgstr "Ladataan Jaettuja tiedostoja..."
 
-#, fuzzy
 #~ msgid "Videos"
 #~ msgstr "Video"
 
-#, fuzzy
 #~ msgid "Sort:"
 #~ msgstr "Heikko"
 
-#, fuzzy
 #~ msgid "None"
 #~ msgstr "Ei"
 
-#, fuzzy
 #~ msgid "Name Asc"
 #~ msgstr "Nimi"
 
-#, fuzzy
 #~ msgid "Name Desc"
 #~ msgstr "Nimi"
 
-#, fuzzy
 #~ msgid "Kind Asc"
 #~ msgstr "Laji:"
 
-#, fuzzy
 #~ msgid "Size Asc"
 #~ msgstr "Tallenna nimellä"
 
-#, fuzzy
 #~ msgid "Size Desc"
 #~ msgstr "Koko"
 
-#, fuzzy
 #~ msgid "Open"
 #~ msgstr "Avaa..."
 
-#, fuzzy
 #~ msgid "Delete Files"
 #~ msgstr "Poista ti&edosto(t)"
 
-#, fuzzy
 #~ msgid "System"
 #~ msgstr "System tray"
 
-#, fuzzy
 #~ msgid "Connected"
 #~ msgstr "Yhteydessä"
 
-#, fuzzy
 #~ msgid "New Folder"
 #~ msgstr "Uusi ka&nsio"
 
-#, fuzzy
 #~ msgid "File Transfers"
 #~ msgstr "Siirtoja"
 
-#, fuzzy
 #~ msgid "Cancel All"
 #~ msgstr "Peruuta"
 
-#, fuzzy
 #~ msgid "Clear Finished"
 #~ msgstr "Poista kaikki passiiviset lataukset"
 
-#, fuzzy
 #~ msgid "Should I stop all transfers?"
 #~ msgstr "Lopeta, kun tiedostot on siirretty"
 
-#, fuzzy
 #~ msgid "one file"
 #~ msgstr "\".torrent\"-tiedostot"
 
 #~ msgid "files"
 #~ msgstr "tiedostoa"
 
-#, fuzzy
 #~ msgid "pending"
 #~ msgstr "Haku"
 
-#, fuzzy
 #~ msgid "canceled"
 #~ msgstr "Etsintä keskeytetty"
 
-#, fuzzy
 #~ msgid "error"
 #~ msgstr "Virhe"
 
-#, fuzzy
 #~ msgid "Upload"
 #~ msgstr "Jaot"
 
-#, fuzzy
 #~ msgid "to"
 #~ msgstr "Pysäytä"
 
-#, fuzzy
 #~ msgid "Select a file..."
 #~ msgstr "Valitse hakemisto"
 
-#, fuzzy
 #~ msgid "Preparing selected folder"
 #~ msgstr "Esikatsele valittuja latauksia"
 
-#, fuzzy
 #~ msgid "Open in Folder"
 #~ msgstr "Avaa kirjastohakemisto"
 
-#, fuzzy
 #~ msgid "Open Folder Containing a Selected File"
 #~ msgstr "Avaa hakemisto, jossa tiedosto on"
 
@@ -5280,11 +5247,9 @@ msgstr "helppage"
 #~ msgid "Add Selected Files to the Playlist"
 #~ msgstr "Lisää valitut tiedostot soittolistalle."
 
-#, fuzzy
 #~ msgid "Delete from playlist"
 #~ msgstr "Poista valitut tiedostot soittolistalta."
 
-#, fuzzy
 #~ msgid "Toggle the {0} Screen"
 #~ msgstr "Näytä ruutu {0}"
 
@@ -5297,7 +5262,6 @@ msgstr "helppage"
 #~ msgid "Show Media Player"
 #~ msgstr "Näytä mediasoitin."
 
-#, fuzzy
 #~ msgid "Send File..."
 #~ msgstr "Tiedosto tallennetaan..."
 
@@ -5340,11 +5304,9 @@ msgstr "helppage"
 #~ msgid "Use FrostWire Media Player:"
 #~ msgstr "Käytä FrostWiren mediasoitinta:"
 
-#, fuzzy
 #~ msgid "Seeding Status"
 #~ msgstr "Haku"
 
-#, fuzzy
 #~ msgid "Search Files"
 #~ msgstr "Haut"
 
@@ -5409,7 +5371,6 @@ msgstr "helppage"
 #~ msgid "Loading Spam Management..."
 #~ msgstr "Ladataan spam-suodatinta..."
 
-#, fuzzy
 #~ msgid "Loading Network Listeners..."
 #~ msgstr "Lataan verkon kuuntelijoita..."
 
@@ -5423,18 +5384,15 @@ msgstr "helppage"
 #~ "Yksi tai useampi verkko-osoite MAGNET-linkissä oli epäkelpo. Tiedostosi "
 #~ "eivät välttämättä lataudu oikein."
 
-#, fuzzy
 #~ msgid "You have already downloaded {0}"
 #~ msgstr "Lataat jo tätä tiedostoa kohteeseen \"{0}\"."
 
 #~ msgid "You are already downloading this file to {0}"
 #~ msgstr "Lataat jo tätä tiedostoa kohteeseen \"{0}\"."
 
-#, fuzzy
 #~ msgid "&Refresh Connections ("
 #~ msgstr "Yhteydet"
 
-#, fuzzy
 #~ msgid "&Refreshing Connections ("
 #~ msgstr "Yhteydet"
 
@@ -5516,7 +5474,6 @@ msgstr "helppage"
 #~ "tiedostonjakoa varten). Tämä ominaisuus poistetaan käytöstä. Voit ottaa "
 #~ "sen uudestaan käyttöön asetuksista, kohdasta iTunes -> Jako."
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire was unable to start the Digital Audio Access Protocol (for "
 #~ "sharing files in iTunes) because a Microsoft patch is required or a "
@@ -5531,7 +5488,6 @@ msgstr "helppage"
 #~ "Paina 'Kyllä' siirtyäksesi paikkaukseen, 'Ei' poistaaksesi ominaisuuden "
 #~ "käytöstä tai 'Keskeytä' päättääksesi myöhemmin."
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire was unable to start the Digital Audio Access Protocol (for "
 #~ "sharing files in iTunes) because a firewall is blocking access. To "
@@ -5680,7 +5636,6 @@ msgstr "helppage"
 #~ "sinulla ei ole kirjoitusoikeuksia siihen tai siinä on jokin muu ongelma. "
 #~ "Ole hyvä ja valitse toinen hakemisto."
 
-#, fuzzy
 #~ msgid "You are not connected to the FrostWire VIP Area"
 #~ msgstr "Otetaan yhteyttä verkkoon"
 
@@ -5748,11 +5703,9 @@ msgstr "helppage"
 #~ "Ladataksesi tiedoston BitTorrentilla, klikkaa .torrent-tiedoston linnkiä "
 #~ "verkossa tai vedä .torrent-tiedosto FrostWire latauskenttään."
 
-#, fuzzy
 #~ msgid "Upgrade FrostWire"
 #~ msgstr "&FrostWiren käyttö"
 
-#, fuzzy
 #~ msgid "Upgrade to FrostWire?"
 #~ msgstr "&FrostWiren käyttö"
 
@@ -5773,7 +5726,6 @@ msgstr "helppage"
 #~ msgid "Would you like to get your free Java upgrade?"
 #~ msgstr "Haluaisitko ilmaisen Java päivityksen?"
 
-#, fuzzy
 #~ msgid "Get FrostWire Now"
 #~ msgstr "Käytä FrostWireä..."
 
@@ -5810,7 +5762,6 @@ msgstr "helppage"
 #~ msgid "Disconnect from the Network"
 #~ msgstr "Katkaise yhteys."
 
-#, fuzzy
 #~ msgid "My Shared Files"
 #~ msgstr "Jaetut Tiedostot"
 
@@ -5853,7 +5804,6 @@ msgstr "helppage"
 #~ msgid "A connection error has occurred"
 #~ msgstr "Yhteysvirhe"
 
-#, fuzzy
 #~ msgid "Could not send chat message"
 #~ msgstr "Pikaviestiä ei voitu lähettää"
 
@@ -5869,7 +5819,6 @@ msgstr "helppage"
 #~ msgid "View All Files on the Selected Computer"
 #~ msgstr "Selaa kaikkia tiedostoja valitulla koneella"
 
-#, fuzzy
 #~ msgid "Host"
 #~ msgstr "Palvelin:"
 
@@ -5948,7 +5897,6 @@ msgstr "helppage"
 #~ msgid "0.6"
 #~ msgstr "0.6"
 
-#, fuzzy
 #~ msgid ""
 #~ "You dropped the following files/folders on LimeWire, please select the "
 #~ "ones you would like to share."
@@ -5956,11 +5904,9 @@ msgstr "helppage"
 #~ "Sinä pudotit seuraavat tiedostot/kansiot FrostWireen, valitse mitkä "
 #~ "niistä haluat jakaa."
 
-#, fuzzy
 #~ msgid "All folders you select will also have their subfolders shared."
 #~ msgstr "Jaetaan kaikki valitsemasi hakemistot ja niiden alihakemistot"
 
-#, fuzzy
 #~ msgid "Share Dropped Files?"
 #~ msgstr "Jaetaanko pudotetut tiedostot?"
 
@@ -6096,7 +6042,6 @@ msgstr "helppage"
 #~ msgid "Priority"
 #~ msgstr "Prioriteetti"
 
-#, fuzzy
 #~ msgid "Downloads"
 #~ msgstr "Lataukset:"
 
@@ -6214,11 +6159,9 @@ msgstr "helppage"
 #~ msgid "Incomplete Files"
 #~ msgstr "Keskeneräiset tiedostot"
 
-#, fuzzy
 #~ msgid "Individual Store Files"
 #~ msgstr "Yksittäin jaetut tiedostot"
 
-#, fuzzy
 #~ msgid "List of All Individual Purchased Files"
 #~ msgstr "Luettelo yksittäin jaetuista tiedostoista"
 
@@ -6261,11 +6204,9 @@ msgstr "helppage"
 #~ msgid "Stop Sharing File"
 #~ msgstr "Lopeta tämän tiedoston julkaisu"
 
-#, fuzzy
 #~ msgid "Share Folder"
 #~ msgstr "Jaetut hakemistot"
 
-#, fuzzy
 #~ msgid "Stop Sharing Folder"
 #~ msgstr "Lo&peta kansion jakaminen"
 
@@ -6351,11 +6292,9 @@ msgstr "helppage"
 #~ msgid "Reload available skins from disk"
 #~ msgstr "Päivitä saatavilla olevat teemat paikalliselta levyltä."
 
-#, fuzzy
 #~ msgid "&Check for updates"
 #~ msgstr "Tarkistaa päivityksiä..."
 
-#, fuzzy
 #~ msgid "seconds left)"
 #~ msgstr "sekunttia"
 
@@ -6368,7 +6307,6 @@ msgstr "helppage"
 #~ msgid "Connections"
 #~ msgstr "Yhteydet"
 
-#, fuzzy
 #~ msgid "Junk"
 #~ msgstr "EI roskaa..."
 
@@ -6418,7 +6356,6 @@ msgstr "helppage"
 #~ msgid "Host Communication"
 #~ msgstr "Host Communication"
 
-#, fuzzy
 #~ msgid "Chat Configuration"
 #~ msgstr "Reitittimen asetukset"
 
@@ -6510,7 +6447,6 @@ msgstr "helppage"
 #~ msgid "Disable Mojito DHT Capabilities:"
 #~ msgstr "Poista Mojito DHT -toiminnot käytöstä:"
 
-#, fuzzy
 #~ msgid "Disable TLS Capabilities:"
 #~ msgstr "Poista Ultrapeer toiminnot käytöstä:"
 
@@ -6535,7 +6471,6 @@ msgstr "helppage"
 #~ msgstr ""
 #~ "Voit valita, kuinka suuri osa kaistanleveydestä omistetaan latauksille."
 
-#, fuzzy
 #~ msgid "Display"
 #~ msgstr "näytä:"
 
@@ -6732,15 +6667,12 @@ msgstr "helppage"
 #~ msgid "Speed:"
 #~ msgstr "Nopeus:"
 
-#, fuzzy
 #~ msgid "LimeWire Store Indicator"
 #~ msgstr "Näytä kauppa viite"
 
-#, fuzzy
 #~ msgid "You can display your LimeWire Store status in the status bar."
 #~ msgstr "Voit näyttää palomuurisi tilan tilapalkissa."
 
-#, fuzzy
 #~ msgid "Show LimeWire Store Indicator:"
 #~ msgstr "Näytä kauppa viite"
 
@@ -6753,7 +6685,6 @@ msgstr "helppage"
 #~ msgid "Show Shared Files Indicator:"
 #~ msgstr "Näytä jaettujen tiedostojen lkm:"
 
-#, fuzzy
 #~ msgid ""
 #~ "You can choose the folder for saving files purchased from the LimeWire "
 #~ "Store."
@@ -6977,7 +6908,6 @@ msgstr "helppage"
 #~ msgid "View Console Messages"
 #~ msgstr "Katso lokitiedot"
 
-#, fuzzy
 #~ msgid "View Logging Messages"
 #~ msgstr "Katso lokitiedot"
 
@@ -6987,7 +6917,6 @@ msgstr "helppage"
 #~ msgid "View Searches and Uploads"
 #~ msgstr "Seuraa hakuja ja tiedostonjakoja."
 
-#, fuzzy
 #~ msgid "Test action!"
 #~ msgstr "Kuvaus"
 
@@ -7020,7 +6949,6 @@ msgstr "helppage"
 #~ "Teema, jota yrität ottaa käyttöön on viallinen. FrostWire palaa "
 #~ "käyttämään oletusteemaa."
 
-#, fuzzy
 #~ msgid "Kill Upload"
 #~ msgstr "Lataa"
 
@@ -7096,7 +7024,6 @@ msgstr "helppage"
 #~ msgid "Modify the license of this file"
 #~ msgstr "Muokkaa tämän tiedoston lisenssiä"
 
-#, fuzzy
 #~ msgid "Permanently remove the license from this file"
 #~ msgstr "Poista tämän tiedoston lisenssi"
 
@@ -7126,7 +7053,6 @@ msgstr "helppage"
 #~ msgid "Title of Work:"
 #~ msgstr "Työn nimi:"
 
-#, fuzzy
 #~ msgid "Please enter the copyright holder, copright year and title."
 #~ msgstr "Anna tekijänoikeuksien omistaja, vuosi ja nimi."
 
@@ -7259,7 +7185,6 @@ msgstr "helppage"
 #~ msgid "Platform:"
 #~ msgstr "Alusta:"
 
-#, fuzzy
 #~ msgid "Description:"
 #~ msgstr "Kuvaus"
 
@@ -7350,18 +7275,15 @@ msgstr "helppage"
 #~ msgid "Cable/DSL"
 #~ msgstr "Kaapeli/DSL"
 
-#, fuzzy
 #~ msgid "United States"
 #~ msgstr "Päivitykset"
 
-#, fuzzy
 #~ msgid "English"
 #~ msgstr "Lopeta"
 
 #~ msgid "Loading Languages"
 #~ msgstr "Ladataan kieliä"
 
-#, fuzzy
 #~ msgid "false"
 #~ msgstr "Liitä"
 
@@ -7433,7 +7355,6 @@ msgstr "helppage"
 #~ msgid ". The file cannot be parsed."
 #~ msgstr "Tiedostoa ei voi parsia"
 
-#, fuzzy
 #~ msgid ""
 #~ "You have some songs in the playlist.  Would you like to clear them and "
 #~ "start a new playlist?"
@@ -8357,7 +8278,6 @@ msgstr "helppage"
 #~ msgid "FrostWire: Enabling Open Information Sharing"
 #~ msgstr "FrostWire: avoin tiedonjako otetaan käyttöön"
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire is unable to find a license for this file. Download the file "
 #~ "anyway?\n"

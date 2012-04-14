@@ -19,7 +19,6 @@ msgstr ""
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:50
-#, fuzzy
 msgid ""
 "FrostWire was unable to write a necessary file because your hard drive is "
 "full. To continue using FrostWire you must free up space on your hard drive."
@@ -28,7 +27,6 @@ msgstr ""
 "full. To continue using FrostWire you must free up space on your hard drive."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:52
-#, fuzzy
 msgid ""
 "FrostWire was unable to open a necessary file because another program has "
 "locked the file. FrostWire may act unexpectedly until this file is released."
@@ -37,7 +35,6 @@ msgstr ""
 "locked the file. FrostWire may act unexpectedly until this file is released."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:54
-#, fuzzy
 msgid ""
 "FrostWire was unable to write a necessary file because you do not have the "
 "necessary permissions. Your preferences may not be maintained the next time "
@@ -48,7 +45,6 @@ msgstr ""
 "you start FrostWire, or FrostWire may behave in unexpected ways."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:56
-#, fuzzy
 msgid ""
 "FrostWire cannot open a necessary file because the filename contains "
 "characters which are not supported by your operating system. FrostWire may "
@@ -75,7 +71,6 @@ msgstr ""
 "is using the file. Please close the other program and retry the download."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:64
-#, fuzzy
 msgid ""
 "FrostWire was unable to create or continue writing an incomplete file for "
 "the selected download because you do not have permission to write files to "
@@ -326,7 +321,6 @@ msgid "Images"
 msgstr "Images"
 
 #: core/com/limegroup/gnutella/MediaType.java:50
-#, fuzzy
 msgid "Torrents"
 msgstr "Comments"
 
@@ -360,7 +354,6 @@ msgstr ""
 
 #. hide button
 #: gui/com/frostwire/gui/HideExitDialog.java:70
-#, fuzzy
 msgid "Hide"
 msgstr "Video"
 
@@ -394,7 +387,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:109
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:389
-#, fuzzy
 msgid "Show Torrent Details"
 msgstr "BitTorrent Settings"
 
@@ -519,7 +511,6 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:311
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:486
 #: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:479
-#, fuzzy
 msgid "Copy Magnet"
 msgstr "Copy Report"
 
@@ -593,7 +584,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:117
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:324
-#, fuzzy
 msgid "Downloaded"
 msgstr "Uploaded"
 
@@ -619,7 +609,6 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:142
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:327
 #: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:22
-#, fuzzy
 msgid "Seeds"
 msgstr "Send"
 
@@ -721,7 +710,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:65
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:172
-#, fuzzy
 msgid "Disabled"
 msgstr "Discard"
 
@@ -789,12 +777,10 @@ msgid "Create New Torrent"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:178
-#, fuzzy
 msgid "Torrent Contents"
 msgstr "BitTorrent Settings"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:180
-#, fuzzy
 msgid "Select File or Folder..."
 msgstr "Select All"
 
@@ -811,7 +797,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:228
-#, fuzzy
 msgid "Torrent Properties"
 msgstr "BitTorrent Settings"
 
@@ -995,7 +980,6 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:153
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:173
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:264
-#, fuzzy
 msgid "File"
 msgstr "Files"
 
@@ -1027,7 +1011,6 @@ msgid "at"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:167
-#, fuzzy
 msgid "via FrostWire"
 msgstr "FrostWire"
 
@@ -1052,7 +1035,6 @@ msgid "Send the message above to Twitter"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:444
-#, fuzzy
 msgid "Copy Text"
 msgstr "Copy Report"
 
@@ -1103,7 +1085,6 @@ msgid "Error"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/TorrentFetcherDownload.java:25
-#, fuzzy
 msgid "Canceled"
 msgstr "Cancel Scan"
 
@@ -1152,7 +1133,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:46
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentSeedingSettingPaneItem.java:14
-#, fuzzy
 msgid "Seeding Settings"
 msgstr "BitTorrent Settings"
 
@@ -1177,7 +1157,6 @@ msgid "globalmanager.download.remove.veto"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:20
-#, fuzzy
 msgid "Downloading"
 msgstr "Uploaded"
 
@@ -1192,7 +1171,6 @@ msgstr "Waiting"
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:24
 #: gui/com/frostwire/gui/bittorrent/YouTubeVideoUrlDownload.java:47
-#, fuzzy
 msgid "Finished"
 msgstr "Old Downloads Are Being Loaded..."
 
@@ -1236,7 +1214,6 @@ msgstr ""
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:243
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:136
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:65
-#, fuzzy
 msgid "Send files with FrostWire"
 msgstr "About FrostWire"
 
@@ -1263,18 +1240,15 @@ msgid "Waiting for device authorization..."
 msgstr ""
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:70
-#, fuzzy
 msgid "Uploading"
 msgstr "Upload"
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
-#, fuzzy
 msgid "Uploading "
 msgstr "Upload"
 
 #: gui/com/frostwire/gui/library/DownloadTask.java:76
 #: gui/com/frostwire/gui/library/DownloadTask.java:109
-#, fuzzy
 msgid "Downloading "
 msgstr "Uploaded"
 
@@ -1292,7 +1266,6 @@ msgid "Icon"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:76
-#, fuzzy
 msgid "Date Added"
 msgstr "Save As"
 
@@ -1311,7 +1284,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableMediator.java:411
 #: gui/com/frostwire/gui/library/LibraryDeviceTableMediator.java:412
-#, fuzzy
 msgid "Save"
 msgstr "Save"
 
@@ -1321,23 +1293,19 @@ msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:144
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:269
-#, fuzzy
 msgid "tracks"
 msgstr "Track"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:199
-#, fuzzy
 msgid "Finished Downloads"
 msgstr "Old Downloads Are Being Loaded..."
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:201
-#, fuzzy
 msgid "Devices"
 msgstr "Review"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:223
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:155
-#, fuzzy
 msgid "Configure Options"
 msgstr "Language Options"
 
@@ -1353,7 +1321,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:607
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:655
-#, fuzzy
 msgid "Refresh selected"
 msgstr "Connections"
 
@@ -1588,7 +1555,6 @@ msgstr ""
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:39
 #: gui/com/frostwire/gui/library/StarredDirectoryHolder.java:40
 #: gui/com/frostwire/gui/library/StarredDirectoryHolder.java:44
-#, fuzzy
 msgid "Starred"
 msgstr "Stars"
 
@@ -1598,7 +1564,6 @@ msgid "Comment"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:244
-#, fuzzy
 msgid "Duration"
 msgstr "Description"
 
@@ -1655,7 +1620,6 @@ msgid "Holds the Results for "
 msgstr ""
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:187
-#, fuzzy
 msgid "Library Folders"
 msgstr "Library"
 
@@ -1676,7 +1640,6 @@ msgid "Folder's files and some subfolders are included in the Library."
 msgstr ""
 
 #: gui/com/frostwire/gui/library/UITool.java:102
-#, fuzzy
 msgid "Applications"
 msgstr "Application"
 
@@ -1905,7 +1868,6 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:130
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:64
-#, fuzzy
 msgid "file"
 msgstr "Title"
 
@@ -2797,7 +2759,6 @@ msgid "Close and exit the program"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:336
-#, fuzzy
 msgid "Send File or Folder..."
 msgstr "Saved Files Are Being Loaded..."
 
@@ -3005,7 +2966,6 @@ msgid "Ask me what to do when an association is missing."
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:39
-#, fuzzy
 msgid "BitTorrent Sharing Settings"
 msgstr "BitTorrent Settings"
 
@@ -3168,7 +3128,6 @@ msgid "FrostWire is free software, "
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:109
-#, fuzzy
 msgid "Do not pay for FrostWire."
 msgstr "About FrostWire"
 
@@ -3221,12 +3180,10 @@ msgid "What is \"Seeding\"?"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:35
-#, fuzzy
 msgid "Learn about BitTorrent Seeding"
 msgstr "BitTorrent Settings"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:39
-#, fuzzy
 msgid "Free FrostWire Stickers"
 msgstr "About FrostWire"
 
@@ -3237,7 +3194,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:41
-#, fuzzy
 msgid "FrostWire T-Shirts"
 msgstr "FrostWire"
 
@@ -3274,7 +3230,6 @@ msgid "Access the FrostWire Users' Forum"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:56
-#, fuzzy
 msgid "&Did you pay for FrostWire?"
 msgstr "About FrostWire"
 
@@ -3596,7 +3551,6 @@ msgid "Enable Autocompletion of Text Fields:"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AutomaticInstallerDownloadPaneItem.java:14
-#, fuzzy
 msgid "Automatic Installer Download"
 msgstr "Automatically Scroll"
 
@@ -3947,7 +3901,6 @@ msgid "Allow Partial Sharing:"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:20
-#, fuzzy
 msgid "FrostWire Popups"
 msgstr "FrostWire"
 
@@ -4059,7 +4012,6 @@ msgid "Show dialog to ask before close"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:20
-#, fuzzy
 msgid "Smart Search"
 msgstr "Search"
 
@@ -4139,7 +4091,6 @@ msgid "Show Firewall Indicator:"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:18
-#, fuzzy
 msgid "BitTorrent Connection Settings"
 msgstr "BitTorrent Settings"
 
@@ -4157,17 +4108,14 @@ msgid "Global maximum number of connections"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:26
-#, fuzzy
 msgid "Maximum number of connected peers per torrent"
 msgstr "Maximum uploads per torrent"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:28
-#, fuzzy
 msgid "Number of upload slots per torrent"
 msgstr "Maximum uploads per torrent"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentDetailsPaneItem.java:19
-#, fuzzy
 msgid "Torrent Details Page"
 msgstr "BitTorrent Settings"
 
@@ -4319,12 +4267,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:213
-#, fuzzy
 msgid "Search Engines"
 msgstr "Search"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:221
-#, fuzzy
 msgid "Filter"
 msgstr "Files"
 
@@ -4361,7 +4307,6 @@ msgid "Download Partial Files"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:73
-#, fuzzy
 msgid "Torrent Details"
 msgstr "BitTorrent Settings"
 
@@ -4676,7 +4621,6 @@ msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:131
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:79
-#, fuzzy
 msgid "language"
 msgstr "Language"
 
@@ -4692,7 +4636,6 @@ msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:134
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:82
-#, fuzzy
 msgid "backuplanguage"
 msgstr "Language"
 
@@ -4728,7 +4671,6 @@ msgid "noasldisplayprefix"
 msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:318
-#, fuzzy
 msgid "quitmessage"
 msgstr "messages"
 
@@ -4764,43 +4706,33 @@ msgstr ""
 msgid "helppage"
 msgstr ""
 
-#, fuzzy
 #~ msgid "Loading phones and tablets..."
 #~ msgstr "Shared Files Are Being Loaded..."
 
-#, fuzzy
 #~ msgid "Videos"
 #~ msgstr "Video"
 
-#, fuzzy
 #~ msgid "Name Asc"
 #~ msgstr "Name"
 
-#, fuzzy
 #~ msgid "Name Desc"
 #~ msgstr "Name"
 
-#, fuzzy
 #~ msgid "Size Asc"
 #~ msgstr "Save As"
 
-#, fuzzy
 #~ msgid "Connected"
 #~ msgstr "Connections"
 
-#, fuzzy
 #~ msgid "Cancel All"
 #~ msgstr "Cancel Scan"
 
-#, fuzzy
 #~ msgid "files"
 #~ msgstr "Files"
 
-#, fuzzy
 #~ msgid "error"
 #~ msgstr "Errors"
 
-#, fuzzy
 #~ msgid "Toggle the {0} Screen"
 #~ msgstr "Display the {0} Screen"
 
@@ -4859,7 +4791,6 @@ msgstr ""
 #~ msgid "Loading Network Listeners..."
 #~ msgstr "Network Listeners Are Being Loaded..."
 
-#, fuzzy
 #~ msgid "Could not process bad MAGNET link {0}"
 #~ msgstr "Bad MAGNET Link {0} Could Not Be Processed"
 
@@ -4876,11 +4807,9 @@ msgstr ""
 #~ msgid "You are already downloading this file to {0}"
 #~ msgstr "You are already downloading this file to {0}"
 
-#, fuzzy
 #~ msgid "&Refresh Connections ("
 #~ msgstr "Connections"
 
-#, fuzzy
 #~ msgid "&Refreshing Connections ("
 #~ msgstr "Connections"
 
@@ -4957,7 +4886,6 @@ msgstr ""
 #~ "sharing files in iTunes). This feature will be turned off. You can turn "
 #~ "it back on in options, under iTunes -> Sharing."
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire was unable to start the Digital Audio Access Protocol (for "
 #~ "sharing files in iTunes) because a Microsoft patch is required or a "
@@ -4971,7 +4899,6 @@ msgstr ""
 #~ "with information if you want to use this feature. Click 'Yes' to go to "
 #~ "the patch, 'No' to disable this feature, or 'Cancel' to decide later."
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire was unable to start the Digital Audio Access Protocol (for "
 #~ "sharing files in iTunes) because a firewall is blocking access. To "
@@ -4994,23 +4921,18 @@ msgstr ""
 #~ msgid "Lo&gging"
 #~ msgstr "Logging"
 
-#, fuzzy
 #~ msgid "Upgrade FrostWire"
 #~ msgstr "FrostWire"
 
-#, fuzzy
 #~ msgid "Get FrostWire Now"
 #~ msgstr "FrostWire"
 
-#, fuzzy
 #~ msgid "&Check for updates"
 #~ msgstr "Updates Are Being Checked For..."
 
-#, fuzzy
 #~ msgid "seconds left)"
 #~ msgstr "seconds"
 
-#, fuzzy
 #~ msgid "Test action!"
 #~ msgstr "Description"
 
@@ -5020,11 +4942,9 @@ msgstr ""
 #~ msgid "Cable/DSL"
 #~ msgstr "Cable/DSL"
 
-#, fuzzy
 #~ msgid "United States"
 #~ msgstr "United States"
 
-#, fuzzy
 #~ msgid "English"
 #~ msgstr "English"
 

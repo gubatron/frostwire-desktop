@@ -1263,12 +1263,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/library/Device.java:265
-#, fuzzy
 msgid "Transfer failed"
 msgstr "Overdrachten"
 
 #: gui/com/frostwire/gui/library/DeviceUploadDialog.java:66
-#, fuzzy
 msgid "Upload to device"
 msgstr "Uploadlimiet bereikt"
 
@@ -1281,7 +1279,6 @@ msgid "Uploading"
 msgstr "Bezig met uploaden"
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
-#, fuzzy
 msgid "Uploading "
 msgstr "Bezig met uploaden"
 
@@ -3247,7 +3244,6 @@ msgid "State your intent below to start using FrostWire "
 msgstr "Laat hieronder weten waarom u FrostWire wilt gaan gebruiken"
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:57
-#, fuzzy
 msgid ""
 "FrostWire is a peer-to-peer program for sharing authorized files only.  "
 "Installing and using the program does not constitute a license for obtaining "
@@ -3367,7 +3363,6 @@ msgstr ""
 "netwerk."
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:31
-#, fuzzy
 msgid ""
 "Installing and using the program does not constitute a license for obtaining "
 "or distributing unauthorized content."
@@ -5099,121 +5094,93 @@ msgstr "muis"
 msgid "helppage"
 msgstr "helppagina"
 
-#, fuzzy
 #~ msgid "Loading phones and tablets..."
 #~ msgstr "Laden van telefonen en tablets..."
 
-#, fuzzy
 #~ msgid "Videos"
 #~ msgstr "Video's"
 
-#, fuzzy
 #~ msgid "Sort:"
 #~ msgstr "Sorteer:"
 
-#, fuzzy
 #~ msgid "None"
 #~ msgstr "Geen"
 
-#, fuzzy
 #~ msgid "Name Asc"
 #~ msgstr "Naam Asc"
 
-#, fuzzy
 #~ msgid "Name Desc"
 #~ msgstr "Naam Desc"
 
-#, fuzzy
 #~ msgid "Kind Asc"
 #~ msgstr "Soort Asc:"
 
-#, fuzzy
 #~ msgid "Size Asc"
 #~ msgstr "Grootte Asc"
 
-#, fuzzy
 #~ msgid "Size Desc"
 #~ msgstr "Grootte Desc"
 
-#, fuzzy
 #~ msgid "Open"
 #~ msgstr "Open"
 
-#, fuzzy
 #~ msgid "Delete Files"
 #~ msgstr "Verwijderde Bestanden"
 
-#, fuzzy
 #~ msgid "System"
 #~ msgstr "Systeem"
 
-#, fuzzy
 #~ msgid "Error deleting file"
 #~ msgstr "Fout in verwijderen bestand"
 
-#, fuzzy
 #~ msgid "Connected"
 #~ msgstr "Verbonden"
 
-#, fuzzy
 #~ msgid "New Folder"
 #~ msgstr "Nieuwe Map"
 
-#, fuzzy
 #~ msgid "File Transfers"
 #~ msgstr "Bestand Transfers"
 
-#, fuzzy
 #~ msgid "Cancel All"
 #~ msgstr "Alles Annuleren"
 
-#, fuzzy
 #~ msgid "Clear Finished"
 #~ msgstr "Voltooide downloads wissen"
 
-#, fuzzy
 #~ msgid "Should I stop all transfers?"
 #~ msgstr "Moet ik alle transfers stoppen?"
 
-#, fuzzy
 #~ msgid "one file"
 #~ msgstr ".een bestand"
 
 #~ msgid "files"
 #~ msgstr "bestanden"
 
-#, fuzzy
 #~ msgid "pending"
 #~ msgstr "in afwachting"
 
-#, fuzzy
 #~ msgid "canceled"
 #~ msgstr "geannuleerd"
 
-#, fuzzy
 #~ msgid "error"
 #~ msgstr "error"
 
 #~ msgid "Upload"
 #~ msgstr "Upload"
 
-#, fuzzy
 #~ msgid "to"
 #~ msgstr "naar"
 
-#, fuzzy
 #~ msgid "Select a file..."
 #~ msgstr "Selecteer een bestand..."
 
-#, fuzzy
 #~ msgid "Preparing selected folder"
 #~ msgstr "Voorbereiden geselecteerde map"
 
-#, fuzzy
 #~ msgid "Open in Folder"
 #~ msgstr "Open in Map"
 
-#, fuzzy
 #~ msgid "Open Folder Containing a Selected File"
 #~ msgstr "Open Map die een geselecteerd bestand bevat"
 
@@ -5223,11 +5190,9 @@ msgstr "helppagina"
 #~ msgid "Add Selected Files to the Playlist"
 #~ msgstr "Geselecteerde bestanden toevoegen aan afspeellijst"
 
-#, fuzzy
 #~ msgid "Delete from playlist"
 #~ msgstr "Verwijder uit afspeellijst"
 
-#, fuzzy
 #~ msgid "Toggle the {0} Screen"
 #~ msgstr "Toggle het {0}-venster"
 
@@ -5240,7 +5205,6 @@ msgstr "helppagina"
 #~ msgid "Show Media Player"
 #~ msgstr "Mediaspeler tonen"
 
-#, fuzzy
 #~ msgid "Send File..."
 #~ msgstr "Verstuur Bestand..."
 
@@ -5285,11 +5249,9 @@ msgstr "helppagina"
 #~ msgid "Use FrostWire Media Player:"
 #~ msgstr "Gebruik de FrostWire Media Player:"
 
-#, fuzzy
 #~ msgid "Seeding Status"
 #~ msgstr "Seeding Status"
 
-#, fuzzy
 #~ msgid "Search Files"
 #~ msgstr "Zoek Bestanden"
 
@@ -5392,11 +5354,9 @@ msgstr "helppagina"
 #~ msgid "You are already downloading this file to {0}"
 #~ msgstr "U bent dit bestand al aan het downloaden naar \"{0}\"."
 
-#, fuzzy
 #~ msgid "&Refresh Connections ("
 #~ msgstr "&Vernieuw Verbindingen ("
 
-#, fuzzy
 #~ msgid "&Refreshing Connections ("
 #~ msgstr "&Vernieuwen van Verbindingen ("
 
@@ -5488,7 +5448,6 @@ msgstr "helppagina"
 #~ "(voor het delen in iTunes). Deze functie zal uitgezet worden. U kunt dit "
 #~ "terugdraaien in 'Opties' > 'iTunes' > 'Delen'."
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire was unable to start the Digital Audio Access Protocol (for "
 #~ "sharing files in iTunes) because a Microsoft patch is required or a "
@@ -5503,7 +5462,6 @@ msgstr "helppagina"
 #~ "naar de patch te gaan, 'Nee' om deze functie uit te schakelen, of "
 #~ "'Annuleren' om dit later te beslissen."
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire was unable to start the Digital Audio Access Protocol (for "
 #~ "sharing files in iTunes) because a firewall is blocking access. To "
@@ -5672,7 +5630,6 @@ msgstr "helppagina"
 #~ "rechten om deze te wijzigen, of er is een ander probleem. Kies a.u.b. een "
 #~ "andere map."
 
-#, fuzzy
 #~ msgid "You are not connected to the FrostWire VIP Area"
 #~ msgstr "U bent niet verbonden met het FrostWire VIP Gedeelte"
 
@@ -5887,7 +5844,6 @@ msgstr "helppagina"
 #~ "wat deze ruimtes weer moeten geven. Klik op de cirkel in de "
 #~ "linksbovenhoek van een ruimte en kies een nieuwe optie uit het menu."
 
-#, fuzzy
 #~ msgid ""
 #~ "Do you want to browse your friend's FrostWire Library? Go to Search &gt; "
 #~ "Direct Connect, then enter the ip address and port number of your "
@@ -6097,11 +6053,9 @@ msgstr "helppagina"
 #~ "'Prioriteit' aan. Selecteer de download die u als volgende wilt en druk "
 #~ "op het pijltje naar boven tot de download bovenaan staat!"
 
-#, fuzzy
 #~ msgid "Upgrade FrostWire"
 #~ msgstr "Upgrade FrostWire"
 
-#, fuzzy
 #~ msgid "Upgrade to FrostWire?"
 #~ msgstr "Upgraden naar FrostWire?"
 
@@ -6122,7 +6076,6 @@ msgstr "helppagina"
 #~ msgid "Would you like to get your free Java upgrade?"
 #~ msgstr "Wilt u een gratis update van Java?"
 
-#, fuzzy
 #~ msgid "Get FrostWire Now"
 #~ msgstr "Krijg FrostWire Nu"
 
@@ -6139,7 +6092,6 @@ msgstr "helppagina"
 #~ "FrostWire heeft een corruptie waargenomen in het bestand {0} Wilt u de "
 #~ "download door laten gaan?"
 
-#, fuzzy
 #~ msgid ""
 #~ "<html><b>Your FrostWire may have been corrupted by a virus or trojan!</"
 #~ "b><br><br>Please visit <a href=\"http://www.frostwire.com/download\">www."
@@ -6228,7 +6180,6 @@ msgstr "helppagina"
 #~ msgid "A connection error has occurred"
 #~ msgstr "Er is een probleem met het internet opgetreden."
 
-#, fuzzy
 #~ msgid "Could not send chat message"
 #~ msgstr "Kon chat bericht niet verzenden"
 
@@ -6352,7 +6303,6 @@ msgstr "helppagina"
 #~ msgid "0.6"
 #~ msgstr "0.6"
 
-#, fuzzy
 #~ msgid ""
 #~ "You dropped the following files/folders on LimeWire, please select the "
 #~ "ones you would like to share."
@@ -6360,13 +6310,11 @@ msgstr "helppagina"
 #~ "U heeft de volgende bestanden/mappen geplaatst op LimeWire, selecteer "
 #~ "degene die u wilt delen."
 
-#, fuzzy
 #~ msgid "All folders you select will also have their subfolders shared."
 #~ msgstr ""
 #~ "Van alle mappen die u heeft geselecteerd zullen ook de submappen worden "
 #~ "gedeeld."
 
-#, fuzzy
 #~ msgid "Share Dropped Files?"
 #~ msgstr "Deel geplaatste bestanden?"
 
@@ -6821,11 +6769,9 @@ msgstr "helppagina"
 #~ msgid "Reload available skins from disk"
 #~ msgstr "Beschikbare skins van schijf herladen"
 
-#, fuzzy
 #~ msgid "&Check for updates"
 #~ msgstr "&Controleer voor updates..."
 
-#, fuzzy
 #~ msgid "seconds left)"
 #~ msgstr "seconden te gaan)"
 
@@ -6896,7 +6842,6 @@ msgstr "helppagina"
 #~ msgid "Host Communication"
 #~ msgstr "Hostcommunicatie"
 
-#, fuzzy
 #~ msgid "Chat Configuration"
 #~ msgstr "Chat Configuratie"
 
@@ -7020,7 +6965,6 @@ msgstr "helppagina"
 #~ msgstr ""
 #~ "U kunt het percentage van gegeven bandbreedte aan downloads specificeren."
 
-#, fuzzy
 #~ msgid "Display"
 #~ msgstr "Weergave"
 
@@ -7243,15 +7187,12 @@ msgstr "helppagina"
 #~ msgid "Speed:"
 #~ msgstr "Snelheid:"
 
-#, fuzzy
 #~ msgid "LimeWire Store Indicator"
 #~ msgstr "LimeWire Store Indicator"
 
-#, fuzzy
 #~ msgid "You can display your LimeWire Store status in the status bar."
 #~ msgstr "U kunt uw LimeWire Store status in de statusbalk weergeven."
 
-#, fuzzy
 #~ msgid "Show LimeWire Store Indicator:"
 #~ msgstr "LimeWire Store Indicator tonen:"
 
@@ -7264,7 +7205,6 @@ msgstr "helppagina"
 #~ msgid "Show Shared Files Indicator:"
 #~ msgstr "Toon de gedeelde bestandenindicator:"
 
-#, fuzzy
 #~ msgid ""
 #~ "You can customize where store files are saved. By creating a template "
 #~ "Lime Wire can automatically save purchased files into folders using the "
@@ -7305,7 +7245,6 @@ msgstr "helppagina"
 #~ msgid "Invalid template {0}"
 #~ msgstr "Ongeldig template {0}"
 
-#, fuzzy
 #~ msgid ""
 #~ "You can choose the folder for saving files purchased from the LimeWire "
 #~ "Store."
@@ -7596,7 +7535,6 @@ msgstr "helppagina"
 #~ msgid "Do Not Share Sensitive File Types"
 #~ msgstr "Geen gevoelige bestandstypes delen"
 
-#, fuzzy
 #~ msgid ""
 #~ "This stops FrostWire from sharing certain files that may contain "
 #~ "sensitive information."
@@ -7604,7 +7542,6 @@ msgstr "helppagina"
 #~ "Dit zorgt ervoor dat FrostWire geen bestanden meer deelt die gevoelige "
 #~ "informatie kunnen bevatten."
 
-#, fuzzy
 #~ msgid "File types you added to share."
 #~ msgstr "Bestandstypes die u toegevoegd heeft om te delen."
 
@@ -7649,7 +7586,6 @@ msgstr "helppagina"
 #~ msgid "View Console Messages"
 #~ msgstr "Bekijk logberichten"
 
-#, fuzzy
 #~ msgid "View Logging Messages"
 #~ msgstr "Logberichten bekijken"
 
@@ -7659,7 +7595,6 @@ msgstr "helppagina"
 #~ msgid "View Searches and Uploads"
 #~ msgstr "Bekijk zoektermen en uploads"
 
-#, fuzzy
 #~ msgid "Test action!"
 #~ msgstr "Test actie!"
 
@@ -7693,7 +7628,6 @@ msgstr "helppagina"
 #~ "De skin die u wilt toepassen is ongeldig. FrostWire zal naar de "
 #~ "standaardskin terugkeren."
 
-#, fuzzy
 #~ msgid "Kill Upload"
 #~ msgstr "Upload stoppen"
 
@@ -7768,7 +7702,6 @@ msgstr "helppagina"
 #~ msgid "Modify the license of this file"
 #~ msgstr "De licentie van dit bestand bewerken"
 
-#, fuzzy
 #~ msgid "Permanently remove the license from this file"
 #~ msgstr "De licentie van dit bestand permanent verwijderen"
 
@@ -7801,7 +7734,6 @@ msgstr "helppagina"
 #~ msgid "Comment:"
 #~ msgstr "Commentaar:"
 
-#, fuzzy
 #~ msgid "Please enter the copyright holder, copright year and title."
 #~ msgstr "Vul a.u.b. de copyrighthouder, het copyrightjaar en de titel in."
 
@@ -8594,18 +8526,15 @@ msgstr "helppagina"
 #~ msgid "Cable/DSL"
 #~ msgstr "Kabel/ADSL"
 
-#, fuzzy
 #~ msgid "United States"
 #~ msgstr "Verenigde Staten"
 
-#, fuzzy
 #~ msgid "English"
 #~ msgstr "Engels"
 
 #~ msgid "Loading Languages"
 #~ msgstr "Talen laden..."
 
-#, fuzzy
 #~ msgid "false"
 #~ msgstr "fout"
 

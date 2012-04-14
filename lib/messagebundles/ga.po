@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-12 17:19-0400\n"
+"POT-Creation-Date: 2012-04-14 11:28-0400\n"
 "PO-Revision-Date: 2008-08-12 18:08+0000\n"
 "Last-Translator: FTA <saintrecall@gmail.com>\n"
 "Language-Team: none\n"
@@ -21,7 +21,6 @@ msgstr ""
 "X-Poedit-Language: Irish\n"
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:50
-#, fuzzy
 msgid ""
 "FrostWire was unable to write a necessary file because your hard drive is "
 "full. To continue using FrostWire you must free up space on your hard drive."
@@ -31,7 +30,6 @@ msgstr ""
 "do thiomántán crua."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:52
-#, fuzzy
 msgid ""
 "FrostWire was unable to open a necessary file because another program has "
 "locked the file. FrostWire may act unexpectedly until this file is released."
@@ -41,7 +39,6 @@ msgstr ""
 "scaoilfear an comhad seo."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:54
-#, fuzzy
 msgid ""
 "FrostWire was unable to write a necessary file because you do not have the "
 "necessary permissions. Your preferences may not be maintained the next time "
@@ -52,7 +49,6 @@ msgstr ""
 "you start FrostWire, or FrostWire may behave in unexpected ways."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:56
-#, fuzzy
 msgid ""
 "FrostWire cannot open a necessary file because the filename contains "
 "characters which are not supported by your operating system. FrostWire may "
@@ -81,7 +77,6 @@ msgstr ""
 "eile an comhad a íosluchtú."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:64
-#, fuzzy
 msgid ""
 "FrostWire was unable to create or continue writing an incomplete file for "
 "the selected download because you do not have permission to write files to "
@@ -332,13 +327,11 @@ msgid "Images"
 msgstr "Íomhánna"
 
 #: core/com/limegroup/gnutella/MediaType.java:50
-#, fuzzy
 msgid "Torrents"
 msgstr "BitTorrent"
 
 #: gui/com/frostwire/gui/BuyAction.java:70
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:48
-#, fuzzy
 msgid "Buy"
 msgstr "Gnóthach"
 
@@ -348,12 +341,10 @@ msgid "Loading Community Chat..."
 msgstr ""
 
 #: gui/com/frostwire/gui/ChatMediator.java:413
-#, fuzzy
 msgid "Loading Community Chat Window..."
 msgstr "Ag Luchtú Fuinneog na Scáileána..."
 
 #: gui/com/frostwire/gui/HideExitDialog.java:39
-#, fuzzy
 msgid "Do you want to hide FrostWire?"
 msgstr "Tá tú ag ceangailt leis an líonra faoi láthair"
 
@@ -364,13 +355,11 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/HideExitDialog.java:61
-#, fuzzy
 msgid "Don't show this again"
 msgstr "Ná taispeán an teachtaireacht seo arís."
 
 #. hide button
 #: gui/com/frostwire/gui/HideExitDialog.java:70
-#, fuzzy
 msgid "Hide"
 msgstr "Físeán"
 
@@ -382,14 +371,12 @@ msgid "Exit"
 msgstr "Scoir"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:63
-#, fuzzy
 msgid "Send audio to iTunes"
 msgstr "Cuir na sonraí i dtaisce i gcomhad"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:64
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:902
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:739
-#, fuzzy
 msgid "Send audio files to iTunes"
 msgstr "Cuir na sonraí i dtaisce i gcomhad"
 
@@ -401,13 +388,11 @@ msgstr "Mionsonraí"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:108
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:388
-#, fuzzy
 msgid "Show Details"
 msgstr "Taispeán Sonraí an Magnet"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:109
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:389
-#, fuzzy
 msgid "Show Torrent Details"
 msgstr "Taispeán Sonraí an Magnet"
 
@@ -429,7 +414,6 @@ msgstr "Oscail an Fillteán ina bhfuil an Comhad"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:152
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:153
-#, fuzzy
 msgid "Show"
 msgstr "Taispeáin an Ceann Deiridh"
 
@@ -486,12 +470,10 @@ msgid "Remove Torrent"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:259
-#, fuzzy
 msgid "Remove Torrent from selected downloads"
 msgstr "Déan Iarracht Eile na hÍosluchtaithe Roghnaithe a Íosluchtú"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:261
-#, fuzzy
 msgid "Remove Download"
 msgstr "Lean Leis an t-Íosluchtú"
 
@@ -504,12 +486,10 @@ msgid "Remove"
 msgstr "Bain"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:263
-#, fuzzy
 msgid "Remove Selected Downloads"
 msgstr "Réamhamharc ar na hÍosluchtaithe Roghnaithe"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:273
-#, fuzzy
 msgid ""
 "Are you sure you want to remove the data files from your computer?\n"
 "\n"
@@ -527,12 +507,10 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:295
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:296
-#, fuzzy
 msgid "Remove Download and Data"
 msgstr "Lean Leis an t-Íosluchtú"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:297
-#, fuzzy
 msgid "Remove Download and Data from selected downloads"
 msgstr "Déan Iarracht Eile na hÍosluchtaithe Roghnaithe a Íosluchtú"
 
@@ -541,7 +519,6 @@ msgstr "Déan Iarracht Eile na hÍosluchtaithe Roghnaithe a Íosluchtú"
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:311
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:486
 #: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:479
-#, fuzzy
 msgid "Copy Magnet"
 msgstr "Macasamhlaigh an Tuairisc"
 
@@ -561,7 +538,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:394
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:395
-#, fuzzy
 msgid "Hide Seeding Transfers"
 msgstr "Scoir tar éis Aistrithe"
 
@@ -572,13 +548,11 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:398
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:399
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:400
-#, fuzzy
 msgid "Show Seeding Transfers"
 msgstr "Múch tar éis Aistrithe"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:419
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:195
-#, fuzzy
 msgid "Create New Playlist"
 msgstr "Cuir an Seinnréim i dTaisce Mar"
 
@@ -593,7 +567,6 @@ msgid "Add to playlist "
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:39
-#, fuzzy
 msgid " (Partial)"
 msgstr "Leathchomhaid"
 
@@ -619,7 +592,6 @@ msgstr "Dul Chun Cinn"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:117
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:324
-#, fuzzy
 msgid "Downloaded"
 msgstr "Íosluchtaigh"
 
@@ -630,13 +602,11 @@ msgstr "Uasluchtaithe"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:127
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:322
-#, fuzzy
 msgid "Down Speed"
 msgstr "Luas Íosluchtaithe:"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:131
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:323
-#, fuzzy
 msgid "Up Speed"
 msgstr "Luas"
 
@@ -647,7 +617,6 @@ msgstr "Am"
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:142
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:327
 #: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:22
-#, fuzzy
 msgid "Seeds"
 msgstr "Luas"
 
@@ -657,12 +626,10 @@ msgid "Peers"
 msgstr "Comhghleachaithe"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:148
-#, fuzzy
 msgid "Share Ratio"
 msgstr "Comhroinn an Comhad"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:153
-#, fuzzy
 msgid "Seeds/Peers"
 msgstr "Comhghleachaithe"
 
@@ -746,13 +713,11 @@ msgstr ""
 
 #. advanced > Download Speed Menu //
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:56
-#, fuzzy
 msgid "Set Down Speed"
 msgstr "Roghnaigh Luas"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:65
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:172
-#, fuzzy
 msgid "Disabled"
 msgstr "Cuileáil"
 
@@ -793,7 +758,6 @@ msgstr ""
 #. }
 #. advanced >Upload Speed Menu //
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:163
-#, fuzzy
 msgid "Set Up Speed"
 msgstr "Roghnaigh Luas"
 
@@ -806,12 +770,10 @@ msgstr "Ardroghanna"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:399
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:149
-#, fuzzy
 msgid "Add to playlist"
 msgstr "Cuir Inneachair an Fillteán leis an Seinnréim"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:84
-#, fuzzy
 msgid "Torrent File Created with FrostWire"
 msgstr "Tá tú ag ceangailt leis an líonra faoi láthair"
 
@@ -823,12 +785,10 @@ msgid "Create New Torrent"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:178
-#, fuzzy
 msgid "Torrent Contents"
 msgstr "Ná Bac le Ábhar do Dhaoine Fásta"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:180
-#, fuzzy
 msgid "Select File or Folder..."
 msgstr "Roghnaigh Fillteán"
 
@@ -845,7 +805,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:228
-#, fuzzy
 msgid "Torrent Properties"
 msgstr "Socruithe BitTorrent"
 
@@ -860,7 +819,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:248
-#, fuzzy
 msgid "Start seeding"
 msgstr "Ag Tosú"
 
@@ -894,7 +852,6 @@ msgstr "Dún"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:314
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:875
-#, fuzzy
 msgid "Save torrent as..."
 msgstr "Comhroinn comhaid .torrent"
 
@@ -944,7 +901,6 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:486
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:843
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:716
-#, fuzzy
 msgid "Invalid Folder"
 msgstr "Ainm Comhad Neamhsheasmhach"
 
@@ -957,12 +913,10 @@ msgid "Invalid Tracker URL\n"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:521
-#, fuzzy
 msgid "Torrent Created."
 msgstr "Cruthaithe"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:547
-#, fuzzy
 msgid "Torrent File"
 msgstr "comhaid .torrent"
 
@@ -1014,7 +968,6 @@ msgid "wizard.operationfailed"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:886
-#, fuzzy
 msgid "Saving Torrent..."
 msgstr "Ag Cuir an Comhad i dTaisce..."
 
@@ -1024,31 +977,26 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:61
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:81
-#, fuzzy
 msgid "Select files to download"
 msgstr "Glan Íosluchtaithe Roghnaithe"
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:129
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:149
-#, fuzzy
 msgid "Download Selected Files Only"
 msgstr "Íosluchtaigh Na Comhaid Roghnaithe Uile"
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:153
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:173
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:264
-#, fuzzy
 msgid "File"
 msgstr "&Comhad"
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:171
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:191
-#, fuzzy
 msgid "Select/Unselect all files"
 msgstr "Scrios na Comhaid Roghnaithe"
 
 #: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:70
-#, fuzzy
 msgid "Preparing selection"
 msgstr "Tosaigh na Comhaid Roghnaithe"
 
@@ -1057,24 +1005,20 @@ msgid "please wait..."
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:159
-#, fuzzy
 msgid "Select the content you want to send"
 msgstr "Glan Íosluchtaithe Roghnaithe"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:166
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:49
 #: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:61
-#, fuzzy
 msgid "Download"
 msgstr "Íosluchtaigh"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:166
-#, fuzzy
 msgid "at"
 msgstr "Comhrá"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:167
-#, fuzzy
 msgid "via FrostWire"
 msgstr "FrostWire"
 
@@ -1083,7 +1027,6 @@ msgid "Use the following text to share the \"%s\" folder"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:247
-#, fuzzy
 msgid "Tips"
 msgstr "Cineálacha"
 
@@ -1100,47 +1043,38 @@ msgid "Send the message above to Twitter"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:444
-#, fuzzy
 msgid "Copy Text"
 msgstr "Macasamhlaigh an Tuairisc"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:445
-#, fuzzy
 msgid "Copy entire message to Clipboard"
 msgstr "Macasamhlaigh na Naisc Magnet chuig an Ghearrthaisce"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:452
-#, fuzzy
 msgid "Message copied to clipboard."
 msgstr "Macasamhlaigh chuig an Ghearrthaisce"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:464
-#, fuzzy
 msgid "Copy Link"
 msgstr "Macasamhlaigh"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:465
-#, fuzzy
 msgid "Copy Link to Clipboard"
 msgstr "Macasamhlaigh chuig an Ghearrthaisce"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:472
-#, fuzzy
 msgid "Link copied to clipboard."
 msgstr "Macasamhlaigh chuig an Ghearrthaisce"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:487
-#, fuzzy
 msgid "Copy Magnet URL to Clipboard"
 msgstr "Macasamhlaigh na Naisc Magnet chuig an Ghearrthaisce"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:494
-#, fuzzy
 msgid "Magnet copied to clipboard."
 msgstr "Macasamhlaigh na Naisc Magnet chuig an Ghearrthaisce"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentFetcherDownload.java:23
-#, fuzzy
 msgid "Downloading Torrent"
 msgstr "&Íosluchtaigh .torrent"
 
@@ -1159,13 +1093,11 @@ msgid "Error"
 msgstr "Botún"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentFetcherDownload.java:25
-#, fuzzy
 msgid "Canceled"
 msgstr "Cealaigh"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:34
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentSaveFolderPaneItem.java:13
-#, fuzzy
 msgid "Torrent Data Save Folder"
 msgstr "Cuir an Fillteán i dTaisce"
 
@@ -1174,23 +1106,19 @@ msgid "You forgot to enter a path for the Torrent Data Folder."
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:87
-#, fuzzy
 msgid "Please enter a valid path for the Torrent Data Folder"
 msgstr "Cuir isteach bliain seasmhach don chomhad a theastaíonn uait foilsiú."
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:99
-#, fuzzy
 msgid "The Torrent Data Folder cannot be inside the "
 msgstr "Comhad Truaillithe. Níorbh fhéidir sonraí a tharrtháil."
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:103
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:114
-#, fuzzy
 msgid "Could not resolve folder path."
 msgstr "Níorbh fhéidir an óstach {0} a shiortú."
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:110
-#, fuzzy
 msgid "The Torrent Data Folder cannot be a parent folder of the "
 msgstr ""
 "Ní féidir an fillteán roghnaithe a chomhroinnt. Roghnaigh fillteán eile le "
@@ -1215,7 +1143,6 @@ msgstr "Roghnaigh Fillteán Eile"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:46
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentSeedingSettingPaneItem.java:14
-#, fuzzy
 msgid "Seeding Settings"
 msgstr "Ag Luchtú na Socruithe..."
 
@@ -1240,13 +1167,11 @@ msgid "globalmanager.download.remove.veto"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:20
-#, fuzzy
 msgid "Downloading"
 msgstr "Íosluchtaigh"
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:22
 #: gui/com/frostwire/gui/bittorrent/YouTubeVideoUrlDownload.java:49
-#, fuzzy
 msgid "Stopped"
 msgstr "Stad"
 
@@ -1256,7 +1181,6 @@ msgstr "Ag Feitheamh"
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:24
 #: gui/com/frostwire/gui/bittorrent/YouTubeVideoUrlDownload.java:47
-#, fuzzy
 msgid "Finished"
 msgstr "Críochnaigh"
 
@@ -1297,14 +1221,12 @@ msgid "Send"
 msgstr "Seol"
 
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:243
-#, fuzzy
 msgid "Do you want to send this file to a friend?"
 msgstr "Cuardaigh comhaid leis an comhadainm céanna."
 
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:243
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:136
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:65
-#, fuzzy
 msgid "Send files with FrostWire"
 msgstr "Cabhair chun Feidhm A Bhaint As FrostWire"
 
@@ -1319,12 +1241,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/library/Device.java:265
-#, fuzzy
 msgid "Transfer failed"
 msgstr "Aistriúcháin"
 
 #: gui/com/frostwire/gui/library/DeviceUploadDialog.java:66
-#, fuzzy
 msgid "Upload to device"
 msgstr "Teorann na hUasluchtú Sroichte"
 
@@ -1333,18 +1253,15 @@ msgid "Waiting for device authorization..."
 msgstr ""
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:70
-#, fuzzy
 msgid "Uploading"
 msgstr "Ag Uasluchtú"
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
-#, fuzzy
 msgid "Uploading "
 msgstr "Ag Uasluchtú"
 
 #: gui/com/frostwire/gui/library/DownloadTask.java:76
 #: gui/com/frostwire/gui/library/DownloadTask.java:109
-#, fuzzy
 msgid "Downloading "
 msgstr "Íosluchtaigh"
 
@@ -1362,12 +1279,10 @@ msgid "Icon"
 msgstr "Deilbhín"
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:76
-#, fuzzy
 msgid "Date Added"
 msgstr "Cuir i dTaisce Mar"
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:79
-#, fuzzy
 msgid "Date Modified"
 msgstr "Dáta a Mhionathraíodh É:"
 
@@ -1382,40 +1297,33 @@ msgstr "Cuardaigh"
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableMediator.java:411
 #: gui/com/frostwire/gui/library/LibraryDeviceTableMediator.java:412
-#, fuzzy
 msgid "Save"
 msgstr "Cuir i dtaisce"
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableMediator.java:413
-#, fuzzy
 msgid "Save Selected Files To Folder"
 msgstr "Glan Íosluchtaithe Roghnaithe"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:144
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:269
-#, fuzzy
 msgid "tracks"
 msgstr "Rian"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:199
-#, fuzzy
 msgid "Finished Downloads"
 msgstr "Comhroinn Íosluchtaithe Críochnaithe:"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:201
-#, fuzzy
 msgid "Devices"
 msgstr "Athbhreithnigh"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:223
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:155
-#, fuzzy
 msgid "Configure Options"
 msgstr "Cumraigh Roghanna Comhroinnte"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:223
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:156
-#, fuzzy
 msgid "You can configure the FrostWire's Options."
 msgstr ""
 "Fáilte go draoi cumraíochta FrostWire. Chuir FrostWire gnéithe nua leis ar "
@@ -1429,7 +1337,6 @@ msgstr "Athnuaigh"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:607
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:655
-#, fuzzy
 msgid "Refresh selected"
 msgstr "&Naisc"
 
@@ -1509,20 +1416,17 @@ msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:791
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:664
-#, fuzzy
 msgid "Launch in "
 msgstr "Tosaigh Gníomh"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:792
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:665
-#, fuzzy
 msgid "Launch Selected Files in "
 msgstr "Tosaigh na Comhaid Roghnaithe"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:834
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:707
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:317
-#, fuzzy
 msgid "Create a new .torrent file"
 msgstr "Comhroinn comhaid .torrent"
 
@@ -1555,14 +1459,12 @@ msgid "Url"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:377
-#, fuzzy
 msgid "Are you sure you want to remove the selected radio station?"
 msgstr ""
 "An bhfuil tú cinnte go dteastaíonn uait an comhad/na comhaid roghnaithe a "
 "scrios?"
 
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:377
-#, fuzzy
 msgid "Are you sure you want to remove the selected radio stations?"
 msgstr ""
 "An bhfuil tú cinnte go dteastaíonn uait an comhad/na comhaid roghnaithe a "
@@ -1599,12 +1501,10 @@ msgid "Loading Library Window..."
 msgstr "Ag Luchtú Fuinneog na Leabharlann..."
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:162
-#, fuzzy
 msgid "New Playlist"
 msgstr "Seinmréim"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:162
-#, fuzzy
 msgid "Creates a new Playlist"
 msgstr "Bain Gach Comhaid ón Seinnréim"
 
@@ -1633,12 +1533,10 @@ msgid "Refresh the audio properties based on ID3 tags of selected items"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:690
-#, fuzzy
 msgid "Delete Playlist"
 msgstr "Seinmréim"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:701
-#, fuzzy
 msgid ""
 "Are you sure you want to delete the playlist?\n"
 "(No files will be deleted)"
@@ -1647,7 +1545,6 @@ msgstr ""
 "scrios?"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:720
-#, fuzzy
 msgid "Rename Playlist"
 msgstr "Cuir an Seinnréim i dTaisce Mar"
 
@@ -1675,7 +1572,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:787
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:805
-#, fuzzy
 msgid "Export Playlist to .m3u"
 msgstr "Oscail Seinnréim (.m3u)"
 
@@ -1687,7 +1583,6 @@ msgstr ""
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:39
 #: gui/com/frostwire/gui/library/StarredDirectoryHolder.java:40
 #: gui/com/frostwire/gui/library/StarredDirectoryHolder.java:44
-#, fuzzy
 msgid "Starred"
 msgstr "Comhroinnte"
 
@@ -1697,27 +1592,22 @@ msgid "Comment"
 msgstr "Nóta Tráchta"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:244
-#, fuzzy
 msgid "Duration"
 msgstr "Cur Síos"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:267
-#, fuzzy
 msgid "Folder"
 msgstr "Fillteán:"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:763
-#, fuzzy
 msgid "Delete Selected Files from this playlist"
 msgstr "Bain an Comhad Roghnaithe ón Seinnréim"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:820
-#, fuzzy
 msgid "Cleanup playlist"
 msgstr "Glanann Sé Uasluchtaithe"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:821
-#, fuzzy
 msgid "Remove the deleted items"
 msgstr "Bain an Mhír Roghnaithe"
 
@@ -1726,7 +1616,6 @@ msgid "Refresh the audio properties based on ID3 tags"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibrarySearch.java:101
-#, fuzzy
 msgid "search results"
 msgstr "Torthaí an Cuardach"
 
@@ -1739,17 +1628,14 @@ msgstr "Ag Allmhuiriú"
 #: gui/com/frostwire/gui/library/LibraryUtils.java:140
 #: gui/com/frostwire/gui/library/LibraryUtils.java:171
 #: gui/com/frostwire/gui/library/LibraryUtils.java:235
-#, fuzzy
 msgid "Playlist name"
 msgstr "Seinmréim"
 
 #: gui/com/frostwire/gui/library/LibraryUtils.java:573
-#, fuzzy
 msgid "Refreshing"
 msgstr "Athnuaigh"
 
 #: gui/com/frostwire/gui/library/LibraryUtils.java:629
-#, fuzzy
 msgid "Importing from"
 msgstr "Ag Allmhuiriú"
 
@@ -1758,12 +1644,10 @@ msgid "Error importing Radio Station from"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/MediaTypeSavedFilesDirectoryHolder.java:60
-#, fuzzy
 msgid "Holds the Results for "
 msgstr "Coimeádann sé Torthaí an Cuardach Deiridh"
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:187
-#, fuzzy
 msgid "Library Folders"
 msgstr "Oscail Fillteán na Leabharlanna"
 
@@ -1772,22 +1656,18 @@ msgid "Legend"
 msgstr "Eochair Eolais"
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:377
-#, fuzzy
 msgid "Folder and subfolders are included in the Library."
 msgstr "Lean ag Íosluchtú an Comhad Neamhiomlán Roghnaithe"
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:391
-#, fuzzy
 msgid "Folder is not included and no subfolders are included in the Library."
 msgstr "Níl an fillteán comhroinnte agus níl aon fofhillteáin comhroinnte."
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:399
-#, fuzzy
 msgid "Folder's files and some subfolders are included in the Library."
 msgstr "Lean ag Íosluchtú an Comhad Neamhiomlán Roghnaithe"
 
 #: gui/com/frostwire/gui/library/UITool.java:102
-#, fuzzy
 msgid "Applications"
 msgstr "_Áit:"
 
@@ -1804,7 +1684,6 @@ msgid "Ringtones"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/UITool.java:114
-#, fuzzy
 msgid "Unkown file type"
 msgstr "Naisc agus Cineálacha Comhaid"
 
@@ -1835,7 +1714,6 @@ msgid "Previous"
 msgstr "Roimhe"
 
 #: gui/com/frostwire/gui/player/AudioPlayerComponent.java:235
-#, fuzzy
 msgid "Shuffle songs"
 msgstr "Athsheinn go fánach"
 
@@ -1845,12 +1723,10 @@ msgstr ""
 
 #. public ChatTab(final ChatMediator cm) {
 #: gui/com/frostwire/gui/tabs/ChatTab.java:29
-#, fuzzy
 msgid "Chat"
 msgstr "Comhrá"
 
 #: gui/com/frostwire/gui/tabs/ChatTab.java:30
-#, fuzzy
 msgid "Show our community chat"
 msgstr "Taispeáin straoiseoga sa chomhrá"
 
@@ -1869,7 +1745,6 @@ msgid "Search and Download Files"
 msgstr "Cuardaigh agus Íosluchtaigh Comhaid"
 
 #: gui/com/frostwire/gui/updates/InstallerUpdater.java:127
-#, fuzzy
 msgid "Update"
 msgstr "Nuashonraithe"
 
@@ -2016,19 +1891,16 @@ msgid "Clear History"
 msgstr "Glan Stair"
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:84
-#, fuzzy
 msgid "Send this file to a friend"
 msgstr "Cuir na sonraí i dtaisce i gcomhad"
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:130
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:64
-#, fuzzy
 msgid "file"
 msgstr "comhaid"
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:131
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:64
-#, fuzzy
 msgid "folder"
 msgstr "Fillteán:"
 
@@ -2108,7 +1980,6 @@ msgid "&Library"
 msgstr "&Leabharlann"
 
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:116
-#, fuzzy
 msgid "C&hat"
 msgstr "Cuir Deireadh Leis an Comhrá"
 
@@ -2189,7 +2060,6 @@ msgid "KB/s"
 msgstr "KB/s"
 
 #: gui/com/limegroup/gnutella/gui/IndentingPanel.java:134
-#, fuzzy
 msgid "More Search Options"
 msgstr "Tuilleadh Roghanna Cuardú"
 
@@ -2246,7 +2116,6 @@ msgstr "Tá go maith"
 #: gui/com/limegroup/gnutella/gui/InputFieldDialog.java:93
 #: gui/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:44
 #: gui/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:46
-#, fuzzy
 msgid "Apply Operation"
 msgstr "Cuir Oibreáid i bhfeidhm"
 
@@ -2534,7 +2403,6 @@ msgid "Loading tips..."
 msgstr "Ag luchtú leideanna..."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:7
-#, fuzzy
 msgid ""
 "Tired of downloads stopping halfway through? It helps to pick search results "
 "with a higher number in the '#' column. The # is the amount of unique places "
@@ -2555,7 +2423,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:26
-#, fuzzy
 msgid ""
 "You can sort your search results by clicking on a column. The most useful "
 "column to sort by is the 'Seeds' column, which represents an approximate "
@@ -2797,7 +2664,6 @@ msgstr ""
 "ar aghaidh agus brúigh an saighead suas go dtí go mbeidh sé ag an bharr.'"
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:78
-#, fuzzy
 msgid ""
 "Did you just download a file that you don't want to share? In the Library, "
 "control-click it and choose 'Stop Sharing File'."
@@ -2837,7 +2703,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:92
-#, fuzzy
 msgid ""
 "Want FrostWire to look like your other Windows programs? Choose the Windows "
 "theme, available from the View &gt; Apply Skins menu."
@@ -2877,12 +2742,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:122
-#, fuzzy
 msgid "Thank you for using FrostWire"
 msgstr "Cabhair chun Feidhm A Bhaint As FrostWire"
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:123
-#, fuzzy
 msgid "Visit us at www.frostwire.com"
 msgstr "Tabhair cuairt ar http://www.frostwire.com chun nuashonrú!"
 
@@ -2927,7 +2790,6 @@ msgid "A newer version is available, update?"
 msgstr "Tá leagan nua ar fáil, nuashonraigh?"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:47
-#, fuzzy
 msgid "O&pen .Torrent or Magnet"
 msgstr "O&scail Magnet nó Torrent"
 
@@ -2936,14 +2798,12 @@ msgid "Opens a magnet link or torrent file"
 msgstr "Oscailíonn sé comhad magnet nó torrent"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:73
-#, fuzzy
 msgid "Download .Torrent or Magnet or YouTube video link"
 msgstr "Oscail Magnet nó Torrent"
 
 #. panel.add(new MultiLineLabel(I18n.tr("Type a magnet link, the file path or web address of a torrent file, or a YouTube Web address and FrostWire will start downloading it for you."),
 #. true), constraints);
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:108
-#, fuzzy
 msgid ""
 "Type a magnet link, the file path or web address of a torrent file and "
 "FrostWire will start downloading it for you."
@@ -2968,27 +2828,22 @@ msgid "&Close"
 msgstr "&Dún"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:287
-#, fuzzy
 msgid "Close the program's main window"
 msgstr "Dún an Ríomhoideas"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:303
-#, fuzzy
 msgid "E&xit"
 msgstr "Scoir"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:304
-#, fuzzy
 msgid "Close and exit the program"
 msgstr "Dún an Ríomhoideas"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:336
-#, fuzzy
 msgid "Send File or Folder..."
 msgstr "Comhroinn an Fillteán Nua"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:337
-#, fuzzy
 msgid "Send a file or a folder to a friend"
 msgstr "Cuir na sonraí i dtaisce i gcomhad"
 
@@ -3181,7 +3036,6 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/AssociationsWindow.java:72
 #: gui/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:71
-#, fuzzy
 msgid "Always take the selected associations."
 msgstr "Glac leis na comhthiomsaithe roghnaithe i gcónaí."
 
@@ -3196,7 +3050,6 @@ msgid "Ask me what to do when an association is missing."
 msgstr "Iarr orm cad a chóir déanamh nuair atá an comhthiomsaí in easnamh."
 
 #: gui/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:39
-#, fuzzy
 msgid "BitTorrent Sharing Settings"
 msgstr "Socruithe BitTorrent"
 
@@ -3217,7 +3070,7 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:109
-#, fuzzy, java-format
+#, java-format
 msgid "FrostWire could not create the Torrent Data Folder {0}"
 msgstr ""
 "Níorbh fhéidir le FrostWire do líonléitheoir a aimsiú chun an leathanach "
@@ -3228,7 +3081,6 @@ msgid "You're almost done!"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:55
-#, fuzzy
 msgid "State your intent below to start using FrostWire "
 msgstr "Chun do chraiceann nua a fheiceáil, caithfear FrostWire a atosú."
 
@@ -3240,7 +3092,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:58
-#, fuzzy
 msgid "Find out more..."
 msgstr "Arbh Eol Duit..."
 
@@ -3297,7 +3148,6 @@ msgstr ""
 "feidhm a bhaint as níos déanaí."
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:152
-#, fuzzy
 msgid "Chat Community"
 msgstr "Comhrá Pobail"
 
@@ -3368,12 +3218,10 @@ msgstr ""
 "sraith chéimeanna chun FrostWire a chumrú le haghaidh feidhmíocht den scoth."
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:99
-#, fuzzy
 msgid "FrostWire is free software, "
 msgstr "Tá FrostWire ag dúisiú ó mód codladh"
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:109
-#, fuzzy
 msgid "Do not pay for FrostWire."
 msgstr "Cabhair chun Feidhm A Bhaint As FrostWire"
 
@@ -3402,7 +3250,6 @@ msgid "Learn More about FrostWire's Content Filtering System"
 msgstr "Foghlaim Tuilleadh faoi Córas Scagadh Inneachair FrostWire"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:29
-#, fuzzy
 msgid "Sharing &Help"
 msgstr "Ag Comhroinnt"
 
@@ -3415,7 +3262,6 @@ msgid "Frequently Asked Questions for FrostWire"
 msgstr "Ceisteanna Coiteanta do FrostWire"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:33
-#, fuzzy
 msgid "FrostWire for Android"
 msgstr "Bain feidhm as FrostWire do..."
 
@@ -3424,17 +3270,14 @@ msgid "Get FrostWire on your Android phone, tablet or google tv, all free."
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:35
-#, fuzzy
 msgid "What is \"Seeding\"?"
 msgstr "Cad é seo?"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:35
-#, fuzzy
 msgid "Learn about BitTorrent Seeding"
 msgstr "Socruithe BitTorrent"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:39
-#, fuzzy
 msgid "Free FrostWire Stickers"
 msgstr "Bain feidhm as FrostWire do..."
 
@@ -3445,7 +3288,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:41
-#, fuzzy
 msgid "FrostWire T-Shirts"
 msgstr "FrostWire"
 
@@ -3458,12 +3300,10 @@ msgid "FrostClick.com"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
-#, fuzzy
 msgid "Free Legal Downloads"
 msgstr "Réamhamharc ar na hÍosluchtaithe Roghnaithe"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:48
-#, fuzzy
 msgid "FrostWire on Facebook"
 msgstr "Seinnteoir Meáin FrostWire"
 
@@ -3484,7 +3324,6 @@ msgid "Access the FrostWire Users' Forum"
 msgstr "Téigh chuig Clár Plé Lucht Feidhme FrostWire"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:56
-#, fuzzy
 msgid "&Did you pay for FrostWire?"
 msgstr "Cabhair chun Feidhm A Bhaint As FrostWire"
 
@@ -3632,7 +3471,6 @@ msgid "Select your Language Prefereces"
 msgstr "Roghnaigh do Shainroghanna Béarla"
 
 #: gui/com/limegroup/gnutella/gui/menu/ViewMenu.java:119
-#, fuzzy
 msgid "Reset Font Size"
 msgstr "Méadaigh an Chlómhéid"
 
@@ -3721,7 +3559,6 @@ msgid "Updates"
 msgstr "Nuashonraithe"
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:321
-#, fuzzy
 msgid "Firewall"
 msgstr "Cumraíocht an Balla Dóiteáin"
 
@@ -3740,7 +3577,6 @@ msgid "File Associations"
 msgstr "Comhthiomsaithe Comhad"
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:329
-#, fuzzy
 msgid "System Boot"
 msgstr "Tosú an Córas"
 
@@ -3811,7 +3647,6 @@ msgid "Enable Autocompletion of Text Fields:"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AutomaticInstallerDownloadPaneItem.java:14
-#, fuzzy
 msgid "Automatic Installer Download"
 msgstr "Uathscrollaigh"
 
@@ -3972,7 +3807,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:49
-#, fuzzy
 msgid "Use random port (Recommended)"
 msgstr "Bain Feidhm As UPnP (Molta)"
 
@@ -4037,7 +3871,6 @@ msgstr "Ná bac le Comhaid .vbs"
 #. * Key for the locale-specific string for the wmv and asf file check box label.
 #.
 #: gui/com/limegroup/gnutella/gui/options/panes/IgnoreResultTypesPaneItem.java:66
-#, fuzzy
 msgid "Ignore .wmv, .wma, .au, .asf files"
 msgstr "Ná bac le comhaid .wmv/.asf"
 
@@ -4067,12 +3900,10 @@ msgid "Image Viewer"
 msgstr "Breathnóir Íomhánna"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LibraryFoldersPaneItem.java:34
-#, fuzzy
 msgid "Library Included Folders"
 msgstr "Oscail Fillteán na Leabharlanna"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LibraryFoldersPaneItem.java:36
-#, fuzzy
 msgid "You can choose the folders for include files when browsing the library."
 msgstr ""
 "Is féidir na fillteáin do chomhroinnt comhaid a roghnú . Taispeáintear "
@@ -4083,7 +3914,6 @@ msgid "Internet Radio Stations"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:20
-#, fuzzy
 msgid "You can restore the default internet radio stations."
 msgstr "Is féidir an iompar múchadh réamhshocruithe a roghnú."
 
@@ -4173,7 +4003,6 @@ msgid "Allow Partial Sharing:"
 msgstr "Ceadaigh Páirt-roinnt:"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:20
-#, fuzzy
 msgid "FrostWire Popups"
 msgstr "FrostWire"
 
@@ -4208,7 +4037,6 @@ msgid "Password:"
 msgstr "Focal Faire:"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:29
-#, fuzzy
 msgid "Proxy Options"
 msgstr "Roghanna Seinmne:"
 
@@ -4286,7 +4114,6 @@ msgid "Show dialog to ask before close"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:20
-#, fuzzy
 msgid "Smart Search"
 msgstr "Iaigh an Cuardach"
 
@@ -4309,7 +4136,6 @@ msgid "If you continue you will erase all the information related to\n"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:77
-#, fuzzy
 msgid " torrents and "
 msgstr "Comhroinnt Torrent"
 
@@ -4336,7 +4162,6 @@ msgid "Bandwidth Indicator"
 msgstr "Táscaire Leithead Croise"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/StatusBarBandwidthPaneItem.java:23
-#, fuzzy
 msgid "You can display your bandwidth consumption in the status bar."
 msgstr "Is féidir do thomhaltas leithead croise a thaispeáint sa threo."
 
@@ -4370,7 +4195,6 @@ msgid "Show Firewall Indicator:"
 msgstr "Taispeán Táscaire an Balla Dóiteáin:"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:18
-#, fuzzy
 msgid "BitTorrent Connection Settings"
 msgstr "Socruithe BitTorrent"
 
@@ -4380,7 +4204,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:22
-#, fuzzy
 msgid "Maximum active downloads"
 msgstr "Uasmhéid Íosluchtaithe"
 
@@ -4389,17 +4212,14 @@ msgid "Global maximum number of connections"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:26
-#, fuzzy
 msgid "Maximum number of connected peers per torrent"
 msgstr "Uaslíon uasluchtaithe an torrent"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:28
-#, fuzzy
 msgid "Number of upload slots per torrent"
 msgstr "Uaslíon uasluchtaithe an torrent"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentDetailsPaneItem.java:19
-#, fuzzy
 msgid "Torrent Details Page"
 msgstr "Comhroinnt Torrent"
 
@@ -4429,7 +4249,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:41
-#, fuzzy
 msgid "Upload Speed:"
 msgstr "Luas Uasluchtú:"
 
@@ -4455,7 +4274,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:28
-#, fuzzy
 msgid "Video Options"
 msgstr "Roghanna Físe"
 
@@ -4489,7 +4307,6 @@ msgstr "Uile"
 #. * String for 'Select Type'
 #.
 #: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:56
-#, fuzzy
 msgid "Select Search Types:"
 msgstr "Roghnaigh Cineál Cuardach:"
 
@@ -4515,12 +4332,10 @@ msgstr ""
 "Cuardaigh Comhaid Ríomhoideas, ina áirítear exe, zip, gz agus Tuilleadh"
 
 #: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:207
-#, fuzzy
 msgid "Search for Torrents!"
 msgstr "Cuardaigh Tuilleadh"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:54
-#, fuzzy
 msgid "Open Options dialog"
 msgstr "Roghanna Uasluchtú"
 
@@ -4538,7 +4353,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:58
-#, fuzzy
 msgid "Stop current search"
 msgstr "An Cuardach Reatha:"
 
@@ -4550,7 +4364,6 @@ msgid "0"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputManager.java:151
-#, fuzzy
 msgid "Open a .torrent or Magnet link or YouTube video link"
 msgstr "O&scail Magnet nó Torrent"
 
@@ -4560,12 +4373,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:213
-#, fuzzy
 msgid "Search Engines"
 msgstr "Dún an Cuardach"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:221
-#, fuzzy
 msgid "Filter"
 msgstr "Scagairí"
 
@@ -4574,17 +4385,14 @@ msgid "<html><strong>Refine Results</strong></html>"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:410
-#, fuzzy
 msgid "Show search result filter controls"
 msgstr "Taispeáin na Scagairí Torthaí Cuardach"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:411
-#, fuzzy
 msgid "Hide search result filter controls"
 msgstr "Taispeáin na Scagairí Torthaí Cuardach"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:63
-#, fuzzy
 msgid "Close Search"
 msgstr "Dún an Cuardach"
 
@@ -4593,7 +4401,6 @@ msgid "Launch Action"
 msgstr "Tosaigh Gníomh"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:67
-#, fuzzy
 msgid "Repeat Search"
 msgstr "Cuardaigh Arís"
 
@@ -4602,23 +4409,19 @@ msgid "Buy this item now"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:71
-#, fuzzy
 msgid "Download Partial Files"
 msgstr "Leathchomhaid"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:73
-#, fuzzy
 msgid "Torrent Details"
 msgstr "Sonraí Clárú"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:75
-#, fuzzy
 msgid "View in YouTube"
 msgstr "Féach ar sa Líonléitheoir..."
 
 #. Set the splash screen text...
 #: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:96
-#, fuzzy
 msgid "Loading Search Window..."
 msgstr "Ag Luchtú Fuinneog na Cuardaithe..."
 
@@ -4654,17 +4457,14 @@ msgid "Show Torrent Details page when a download starts"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:480
-#, fuzzy
 msgid "Copy Hash"
 msgstr "Macasamhlaigh"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:492
-#, fuzzy
 msgid "Search More"
 msgstr "Cuardaigh Tuilleadh"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:43
-#, fuzzy
 msgid "Source"
 msgstr "Aimsigh Foinsí"
 
@@ -4673,7 +4473,6 @@ msgid "Created"
 msgstr "Cruthaithe"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:53
-#, fuzzy
 msgid "Extension"
 msgstr "Breisithe:"
 
@@ -4682,7 +4481,6 @@ msgid "Speed"
 msgstr "Luas"
 
 #: gui/com/limegroup/gnutella/gui/search/Selector.java:82
-#, fuzzy
 msgid "Vendor"
 msgstr "Díoltóir"
 
@@ -4692,12 +4490,10 @@ msgstr "Meáin"
 
 #: gui/com/limegroup/gnutella/gui/shell/FrostAssociations.java:84
 #: gui/com/limegroup/gnutella/gui/shell/FrostAssociations.java:96
-#, fuzzy
 msgid "\".torrent\" files"
 msgstr "Comhaid \".torrent\""
 
 #: gui/com/limegroup/gnutella/gui/shell/FrostAssociations.java:109
-#, fuzzy
 msgid "\"magnet:\" links"
 msgstr "Naisc \"magnet:\""
 
@@ -4720,7 +4516,6 @@ msgid "Stripe Rows"
 msgstr "Sraitheanna Síoga"
 
 #: gui/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:68
-#, fuzzy
 msgid "Sort Automatically"
 msgstr "Uathscrollaigh"
 
@@ -4836,7 +4631,6 @@ msgid "FileChooser.renameErrorText"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:37
-#, fuzzy
 msgid "Invalid Filename"
 msgstr "Ainm Comhad Neamhsheasmhach"
 
@@ -4953,7 +4747,6 @@ msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:131
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:79
-#, fuzzy
 msgid "language"
 msgstr "Béarla"
 
@@ -4964,13 +4757,11 @@ msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:133
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:81
-#, fuzzy
 msgid "lngextension"
 msgstr "Breisithe:"
 
 #: gui/irc/ConfigurationLoader.java:134
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:82
-#, fuzzy
 msgid "backuplanguage"
 msgstr "Béarla"
 
@@ -5006,7 +4797,6 @@ msgid "noasldisplayprefix"
 msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:318
-#, fuzzy
 msgid "quitmessage"
 msgstr "teachtaireachtaí"
 
@@ -5019,7 +4809,6 @@ msgid "aslfemale"
 msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:324
-#, fuzzy
 msgid "userid"
 msgstr "Curtha Ar Sos"
 
@@ -5043,121 +4832,93 @@ msgstr ""
 msgid "helppage"
 msgstr ""
 
-#, fuzzy
 #~ msgid "Loading phones and tablets..."
 #~ msgstr "Ag Luchtú Comhchomhaid..."
 
-#, fuzzy
 #~ msgid "Videos"
 #~ msgstr "Físeán"
 
-#, fuzzy
 #~ msgid "Sort:"
 #~ msgstr "Port:"
 
-#, fuzzy
 #~ msgid "None"
 #~ msgstr "Níl"
 
-#, fuzzy
 #~ msgid "Name Asc"
 #~ msgstr "Ainm"
 
-#, fuzzy
 #~ msgid "Name Desc"
 #~ msgstr "Ainm"
 
-#, fuzzy
 #~ msgid "Kind Asc"
 #~ msgstr "Cineál:"
 
-#, fuzzy
 #~ msgid "Size Asc"
 #~ msgstr "Cuir i dTaisce Mar"
 
-#, fuzzy
 #~ msgid "Size Desc"
 #~ msgstr "Méid"
 
-#, fuzzy
 #~ msgid "Open"
 #~ msgstr "Oscail:"
 
-#, fuzzy
 #~ msgid "Delete Files"
 #~ msgstr "Scrios na Comhaid Roghnaithe"
 
-#, fuzzy
 #~ msgid "System"
 #~ msgstr "Trádaire an Chórais"
 
-#, fuzzy
 #~ msgid "Error deleting file"
 #~ msgstr "Ag uasluchtú comhad"
 
-#, fuzzy
 #~ msgid "Connected"
 #~ msgstr "Nasctha ar"
 
-#, fuzzy
 #~ msgid "New Folder"
 #~ msgstr "Cuir an Fillteán i dTaisce"
 
-#, fuzzy
 #~ msgid "File Transfers"
 #~ msgstr "Aistriúcháin"
 
-#, fuzzy
 #~ msgid "Cancel All"
 #~ msgstr "Cealaigh"
 
-#, fuzzy
 #~ msgid "Clear Finished"
 #~ msgstr "Glan Míreanna Neamhghníomhacha"
 
-#, fuzzy
 #~ msgid "Should I stop all transfers?"
 #~ msgstr "Múch tar éis Aistrithe"
 
-#, fuzzy
 #~ msgid "one file"
 #~ msgstr "comhaid .torrent"
 
 #~ msgid "files"
 #~ msgstr "comhaid"
 
-#, fuzzy
 #~ msgid "pending"
 #~ msgstr "Ag Síolú"
 
-#, fuzzy
 #~ msgid "canceled"
 #~ msgstr "Scan Cealaithe"
 
-#, fuzzy
 #~ msgid "error"
 #~ msgstr "Botún"
 
 #~ msgid "Upload"
 #~ msgstr "Uasluchtaigh"
 
-#, fuzzy
 #~ msgid "to"
 #~ msgstr "Stad"
 
-#, fuzzy
 #~ msgid "Select a file..."
 #~ msgstr "Roghnaigh Fillteán"
 
-#, fuzzy
 #~ msgid "Preparing selected folder"
 #~ msgstr "Réamhamharc ar na hÍosluchtaithe Roghnaithe"
 
-#, fuzzy
 #~ msgid "Open in Folder"
 #~ msgstr "Oscail Fillteán na Leabharlanna"
 
-#, fuzzy
 #~ msgid "Open Folder Containing a Selected File"
 #~ msgstr "Oscail an Fillteán ina bhfuil an Comhad"
 
@@ -5167,14 +4928,12 @@ msgstr ""
 #~ msgid "Add Selected Files to the Playlist"
 #~ msgstr "Cuir na Comhaid Roghnaithe leis an Seinnréim"
 
-#, fuzzy
 #~ msgid "Delete from playlist"
 #~ msgstr "Bain an Comhad Roghnaithe ón Seinnréim"
 
 #~ msgid "Community C&hat"
 #~ msgstr "Comhrá &Pobail"
 
-#, fuzzy
 #~ msgid "Toggle the {0} Screen"
 #~ msgstr "Taispeáin an Scáileán {0}"
 
@@ -5187,7 +4946,6 @@ msgstr ""
 #~ msgid "Show Media Player"
 #~ msgstr "Taispeáin Seinnteoir Meáin"
 
-#, fuzzy
 #~ msgid "Send File..."
 #~ msgstr "Ag Cuir an Comhad i dTaisce..."
 
@@ -5229,11 +4987,9 @@ msgstr ""
 #~ msgid "Use FrostWire Media Player:"
 #~ msgstr "Bain feidhm as Seinnteoir Meáin FrostWire:"
 
-#, fuzzy
 #~ msgid "Seeding Status"
 #~ msgstr "Ag Síolú"
 
-#, fuzzy
 #~ msgid "Search Files"
 #~ msgstr "Cuardaithe"
 
@@ -5314,11 +5070,9 @@ msgstr ""
 #~ msgid "You are already downloading this file to {0}"
 #~ msgstr "Tá an comhad seo á íosluchtú cheana agat chuig {0}"
 
-#, fuzzy
 #~ msgid "&Refresh Connections ("
 #~ msgstr "&Naisc"
 
-#, fuzzy
 #~ msgid "&Refreshing Connections ("
 #~ msgstr "&Naisc"
 
@@ -5542,7 +5296,6 @@ msgstr ""
 #~ "ar www.frostwire.com agus brúigh an nasc 'Support'.\n"
 #~ "Scoirfidh FrostWire anois. Go raibh maith agat."
 
-#, fuzzy
 #~ msgid "You are not connected to the FrostWire VIP Area"
 #~ msgstr "Tá tú ag ceangailt leis an líonra faoi láthair"
 
@@ -5592,7 +5345,6 @@ msgstr ""
 #~ msgid "Show Shared Files Count"
 #~ msgstr "Taispeáin Líon na Comhaid Roinnte"
 
-#, fuzzy
 #~ msgid "Show Store Indicator"
 #~ msgstr "Taispeán Táscaire an Balla Dóiteáin:"
 
@@ -5608,7 +5360,6 @@ msgstr ""
 #~ msgstr[1] "Tá {0} comhaid á chomhroinnt agat (Á Luchtú...)"
 #~ msgstr[2] "Tá {0} comhaid á chomhroinnt agat (Á Luchtú...)"
 
-#, fuzzy
 #~ msgid ""
 #~ "When your downloads say <font color=\"185ea8\">Needs More Sources</font>, "
 #~ "try choosing that download and then clicking <font color=\"185ea8\">Find "
@@ -5813,11 +5564,9 @@ msgstr ""
 #~ "FrostWire leis an gréasán. Téigh chuig Uirlisí &gt, Roghanna &gt, "
 #~ "Ardroghanna &gt; Comhthiomsaithe Comhaid. "
 
-#, fuzzy
 #~ msgid "Upgrade FrostWire"
 #~ msgstr "&Ag Baint Feidhm As FrostWire"
 
-#, fuzzy
 #~ msgid "Upgrade to FrostWire?"
 #~ msgstr "&Ag Baint Feidhm As FrostWire"
 
@@ -5827,7 +5576,6 @@ msgstr ""
 #~ msgid "Would you like to get your free Java upgrade?"
 #~ msgstr "Ar mhaith leat do uasghrádú Java saor in aisce a fháil?"
 
-#, fuzzy
 #~ msgid "Get FrostWire Now"
 #~ msgstr "Bain feidhm as FrostWire do..."
 
@@ -5914,7 +5662,6 @@ msgstr ""
 #~ msgid "A connection error has occurred"
 #~ msgstr "Tharla botún ceangailt"
 
-#, fuzzy
 #~ msgid "Could not send chat message"
 #~ msgstr "Níorbh fhéidir an teachtaireacht an comhrá a sheoladh"
 
@@ -6023,7 +5770,6 @@ msgstr ""
 #~ msgid "0.6"
 #~ msgstr "0.6"
 
-#, fuzzy
 #~ msgid ""
 #~ "You dropped the following files/folders on LimeWire, please select the "
 #~ "ones you would like to share."
@@ -6031,11 +5777,9 @@ msgstr ""
 #~ "Chaill tú na comhaid/fillteáin seo a leanas ar FrostWire, roghnaigh na "
 #~ "cinn ar mhaith leat comhroinnt."
 
-#, fuzzy
 #~ msgid "All folders you select will also have their subfolders shared."
 #~ msgstr "Roinnfear fofhillteáin gach fillteáin a roghnaíonn tú."
 
-#, fuzzy
 #~ msgid "Share Dropped Files?"
 #~ msgstr "Comhroinn na Comhaid Tithe?"
 
@@ -6258,11 +6002,9 @@ msgstr ""
 #~ msgid "Incomplete Files"
 #~ msgstr "Comhaid Neamhiomlán"
 
-#, fuzzy
 #~ msgid "Individual Store Files"
 #~ msgstr "Comhaid atá Comhroinnte Ina Aonair"
 
-#, fuzzy
 #~ msgid "List of All Individual Purchased Files"
 #~ msgstr "Réim de Gach Comhaid atá Comhroinnte ina Aonair"
 
@@ -6393,11 +6135,9 @@ msgstr ""
 #~ msgid "Reload available skins from disk"
 #~ msgstr "Athluchtaigh craicinn atá ar fáil ón diosca"
 
-#, fuzzy
 #~ msgid "&Check for updates"
 #~ msgstr "Ar tóir Nuashonraithe..."
 
-#, fuzzy
 #~ msgid "seconds left)"
 #~ msgstr "soicind"
 
@@ -6444,7 +6184,6 @@ msgstr ""
 #~ msgid "Host Communication"
 #~ msgstr "Cumarsáid leis an t-Óstach"
 
-#, fuzzy
 #~ msgid "Chat Configuration"
 #~ msgstr "Cumraíocht an Ródaire"
 
@@ -6674,15 +6413,12 @@ msgstr ""
 #~ msgid "Speed:"
 #~ msgstr "Luas:"
 
-#, fuzzy
 #~ msgid "LimeWire Store Indicator"
 #~ msgstr "Táscaire Balla Dóiteáin"
 
-#, fuzzy
 #~ msgid "You can display your LimeWire Store status in the status bar."
 #~ msgstr "Is féidir treo do bhalla dóiteáin sa threo"
 
-#, fuzzy
 #~ msgid "Show LimeWire Store Indicator:"
 #~ msgstr "Taispeán Táscaire an Balla Dóiteáin:"
 
@@ -6717,7 +6453,6 @@ msgstr ""
 #~ msgid "Invalid template {0}"
 #~ msgstr "Fíoraithe {0} neamhsheasmhach"
 
-#, fuzzy
 #~ msgid ""
 #~ "You can choose the folder for saving files purchased from the LimeWire "
 #~ "Store."
@@ -6749,7 +6484,6 @@ msgstr ""
 #~ msgid "Major Releases"
 #~ msgstr "Eisiúintí Móra"
 
-#, fuzzy
 #~ msgid "Upload Bandwidth"
 #~ msgstr "Uasluchtaigh Leitheadh Croise"
 
@@ -6776,7 +6510,6 @@ msgstr ""
 #~ msgid "Loading Playlist Window..."
 #~ msgstr "Ag Luchtú Fuinneog na Seinmréim..."
 
-#, fuzzy
 #~ msgid "Play Options:"
 #~ msgstr "Roghanna Seinmne:"
 
@@ -6795,7 +6528,6 @@ msgstr ""
 #~ msgid "Back To Search"
 #~ msgstr "Fill Ar Cuardach"
 
-#, fuzzy
 #~ msgid "Download As..."
 #~ msgstr "Íosluchtaigh Mar..."
 
@@ -6854,7 +6586,6 @@ msgstr ""
 #~ msgid "Keyword"
 #~ msgstr "Treoir-fhocal"
 
-#, fuzzy
 #~ msgid "Direct Connect"
 #~ msgstr "Ceangail Díreach"
 
@@ -6900,14 +6631,12 @@ msgstr ""
 #~ msgid "Chat With Host"
 #~ msgstr "Déan Comhrá Leis An t-Óstach"
 
-#, fuzzy
 #~ msgid "Block Hosts"
 #~ msgstr "Cuir Bac Ar na Óstaigh"
 
 #~ msgid "Mark As"
 #~ msgstr "Chur Comhartha Mar"
 
-#, fuzzy
 #~ msgid "Get More Results"
 #~ msgstr "Faigh Tuilleadh Torthaí"
 
@@ -6936,7 +6665,6 @@ msgstr ""
 #~ "aicídnimh a bheith ann. An bhfuil tú cinnte go dteastaíonn uait é a "
 #~ "íosluchtú?"
 
-#, fuzzy
 #~ msgid "Location"
 #~ msgstr "Suíomh"
 
@@ -6990,7 +6718,6 @@ msgstr ""
 #~ msgid "Do Not Share Sensitive File Types"
 #~ msgstr "Ná Roinn Cineálacha Comhad Íogaireacha"
 
-#, fuzzy
 #~ msgid ""
 #~ "This stops FrostWire from sharing certain files that may contain "
 #~ "sensitive information."
@@ -6998,7 +6725,6 @@ msgstr ""
 #~ "Cuireann sé seo bac ar FrostWire comhaid áirithe a d´fhéadfadh faisnéis "
 #~ "íogair a bheith iontu a roinnt."
 
-#, fuzzy
 #~ msgid "File types you added to share."
 #~ msgstr "Cineáil comhad a chuir tú leis chun roinnt."
 
@@ -7014,7 +6740,6 @@ msgstr ""
 #~ msgid "View Console Messages"
 #~ msgstr "Féach ar Teachtaireachtaí na hEallóige"
 
-#, fuzzy
 #~ msgid "View Logging Messages"
 #~ msgstr "Féach ar Teachtaireachtaí DialannaF"
 
@@ -7024,7 +6749,6 @@ msgstr ""
 #~ msgid "View Searches and Uploads"
 #~ msgstr "Féach ar Cuardaithe agus Uasluchtaithe"
 
-#, fuzzy
 #~ msgid "Test action!"
 #~ msgstr "Cur Síos"
 
@@ -7058,11 +6782,9 @@ msgstr ""
 #~ "Tá an t-ábhar atá á chur i bhfeidhm agat neamhsheasmhach. Fillfidh "
 #~ "FrostWire ar an t-ábhar réamhshocraithe."
 
-#, fuzzy
 #~ msgid "Kill Upload"
 #~ msgstr "Scrois an t-Uasluchtú"
 
-#, fuzzy
 #~ msgid "Stop Selected Uploads"
 #~ msgstr "Cuir Stad leis na hUasluchtaithe Roghnaithe"
 
@@ -7102,7 +6824,6 @@ msgstr ""
 #~ msgid "Swarm for {0}"
 #~ msgstr "Saithigh do {0}"
 
-#, fuzzy
 #~ msgid "Loading Upload Window..."
 #~ msgstr "Ag Luchtú Fuinneog na hUasluchtaithe..."
 
@@ -7134,7 +6855,6 @@ msgstr ""
 #~ msgid "Modify the license of this file"
 #~ msgstr "Mionathraigh ceadúnas an comhad seo."
 
-#, fuzzy
 #~ msgid "Permanently remove the license from this file"
 #~ msgstr "Bain an ceadúnas go buan ón bhfillteán seo"
 
@@ -7164,7 +6884,6 @@ msgstr ""
 #~ msgid "Title of Work:"
 #~ msgstr "Teideal an tSaothar:"
 
-#, fuzzy
 #~ msgid "Please enter the copyright holder, copright year and title."
 #~ msgstr ""
 #~ "Cuir isteach sealbhóir na cóipchearta, bliain na cóipchearta agus an "
@@ -7348,18 +7067,15 @@ msgstr ""
 #~ msgid "Cable/DSL"
 #~ msgstr "Sreang/LDR"
 
-#, fuzzy
 #~ msgid "United States"
 #~ msgstr "Stáit Aontaithe Mheiriceá"
 
-#, fuzzy
 #~ msgid "English"
 #~ msgstr "Sacs-Bhéarla"
 
 #~ msgid "Loading Languages"
 #~ msgstr "Ag luchtú na béarlaí"
 
-#, fuzzy
 #~ msgid "false"
 #~ msgstr "bréagach"
 

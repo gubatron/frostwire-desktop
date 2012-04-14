@@ -19,7 +19,6 @@ msgstr ""
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:50
-#, fuzzy
 msgid ""
 "FrostWire was unable to write a necessary file because your hard drive is "
 "full. To continue using FrostWire you must free up space on your hard drive."
@@ -28,7 +27,6 @@ msgstr ""
 "full. To continue using FrostWire you must free up space on your hard drive."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:52
-#, fuzzy
 msgid ""
 "FrostWire was unable to open a necessary file because another program has "
 "locked the file. FrostWire may act unexpectedly until this file is released."
@@ -37,7 +35,6 @@ msgstr ""
 "in use. FrostWire may act unexpectedly until this file is avalieble."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:54
-#, fuzzy
 msgid ""
 "FrostWire was unable to write a necessary file because you do not have the "
 "necessary permissions. Your preferences may not be maintained the next time "
@@ -48,7 +45,6 @@ msgstr ""
 "start FrostWire, or FrostWire may behave in unexpected ways."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:56
-#, fuzzy
 msgid ""
 "FrostWire cannot open a necessary file because the filename contains "
 "characters which are not supported by your operating system. FrostWire may "
@@ -75,7 +71,6 @@ msgstr ""
 "is using the file. Please close the other program and retry the download."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:64
-#, fuzzy
 msgid ""
 "FrostWire was unable to create or continue writing an incomplete file for "
 "the selected download because you do not have permission to write files to "
@@ -359,7 +354,6 @@ msgstr ""
 
 #. hide button
 #: gui/com/frostwire/gui/HideExitDialog.java:70
-#, fuzzy
 msgid "Hide"
 msgstr "Video"
 
@@ -1177,7 +1171,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:24
 #: gui/com/frostwire/gui/bittorrent/YouTubeVideoUrlDownload.java:47
-#, fuzzy
 msgid "Finished"
 msgstr "Loading Old Downloads..."
 
@@ -1304,7 +1297,6 @@ msgid "tracks"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:199
-#, fuzzy
 msgid "Finished Downloads"
 msgstr "Loading Old Downloads..."
 
@@ -2759,7 +2751,6 @@ msgid "Close and exit the program"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:336
-#, fuzzy
 msgid "Send File or Folder..."
 msgstr "Loading Saved Files..."
 
@@ -4696,11 +4687,9 @@ msgstr ""
 msgid "helppage"
 msgstr ""
 
-#, fuzzy
 #~ msgid "Loading phones and tablets..."
 #~ msgstr "Loading Shared Files..."
 
-#, fuzzy
 #~ msgid "Videos"
 #~ msgstr "Video"
 
@@ -4775,6 +4764,5 @@ msgstr ""
 #~ msgid "You are already downloading this file to {0}"
 #~ msgstr "You are already downloading this file to {0}"
 
-#, fuzzy
 #~ msgid "&Check for updates"
 #~ msgstr "Checking for Updates..."

@@ -1258,12 +1258,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/library/Device.java:265
-#, fuzzy
 msgid "Transfer failed"
 msgstr "Overføringer"
 
 #: gui/com/frostwire/gui/library/DeviceUploadDialog.java:66
-#, fuzzy
 msgid "Upload to device"
 msgstr "Grense for Opplasting Nådd"
 
@@ -1276,7 +1274,6 @@ msgid "Uploading"
 msgstr "Laster Opp"
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
-#, fuzzy
 msgid "Uploading "
 msgstr "Laster Opp"
 
@@ -3233,7 +3230,6 @@ msgid "State your intent below to start using FrostWire "
 msgstr "Oppgi din intensjon nedenfor for å begynne å bruke FrostWire"
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:57
-#, fuzzy
 msgid ""
 "FrostWire is a peer-to-peer program for sharing authorized files only.  "
 "Installing and using the program does not constitute a license for obtaining "
@@ -3351,7 +3347,6 @@ msgstr ""
 "med andre brukere som er koblet til BitTorrent nettverket."
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:31
-#, fuzzy
 msgid ""
 "Installing and using the program does not constitute a license for obtaining "
 "or distributing unauthorized content."
@@ -5063,119 +5058,90 @@ msgstr "mus"
 msgid "helppage"
 msgstr "hjelpeside"
 
-#, fuzzy
 #~ msgid "Loading phones and tablets..."
 #~ msgstr "Laster Delte Filer..."
 
-#, fuzzy
 #~ msgid "Videos"
 #~ msgstr "Video"
 
-#, fuzzy
 #~ msgid "Sort:"
 #~ msgstr "Port:"
 
-#, fuzzy
 #~ msgid "None"
 #~ msgstr "Nei"
 
-#, fuzzy
 #~ msgid "Name Asc"
 #~ msgstr "Navn:"
 
-#, fuzzy
 #~ msgid "Name Desc"
 #~ msgstr "Navn:"
 
-#, fuzzy
 #~ msgid "Kind Asc"
 #~ msgstr "Type:"
 
-#, fuzzy
 #~ msgid "Size Asc"
 #~ msgstr "Lagre som"
 
-#, fuzzy
 #~ msgid "Size Desc"
 #~ msgstr "Størrelse"
 
-#, fuzzy
 #~ msgid "Open"
 #~ msgstr "Åpne:"
 
-#, fuzzy
 #~ msgid "Delete Files"
 #~ msgstr "Slett Valgte Filer"
 
-#, fuzzy
 #~ msgid "System"
 #~ msgstr "Systemkurven"
 
-#, fuzzy
 #~ msgid "Connected"
 #~ msgstr "Koblet På"
 
-#, fuzzy
 #~ msgid "New Folder"
 #~ msgstr "Lagre Mappe"
 
-#, fuzzy
 #~ msgid "File Transfers"
 #~ msgstr "Avslutt etter Overføringer"
 
-#, fuzzy
 #~ msgid "Cancel All"
 #~ msgstr "Avbryt"
 
-#, fuzzy
 #~ msgid "Clear Finished"
 #~ msgstr "Fjern Inaktive"
 
-#, fuzzy
 #~ msgid "Should I stop all transfers?"
 #~ msgstr "Avslutt etter Overføringer"
 
-#, fuzzy
 #~ msgid "one file"
 #~ msgstr ".torrent filer"
 
-#, fuzzy
 #~ msgid "files"
 #~ msgstr "Filter"
 
-#, fuzzy
 #~ msgid "pending"
 #~ msgstr "Seeding"
 
-#, fuzzy
 #~ msgid "canceled"
 #~ msgstr "Avbryt"
 
-#, fuzzy
 #~ msgid "error"
 #~ msgstr "Feil"
 
-#, fuzzy
 #~ msgid "Upload"
 #~ msgstr "Opplastinger"
 
-#, fuzzy
 #~ msgid "to"
 #~ msgstr "Stopp"
 
-#, fuzzy
 #~ msgid "Select a file..."
 #~ msgstr "Velg Mappe"
 
-#, fuzzy
 #~ msgid "Preparing selected folder"
 #~ msgstr "Forhåndsvis Valgte Nedlastinger"
 
-#, fuzzy
 #~ msgid "Open in Folder"
 #~ msgstr "Åpne Bibliotek Mappen"
 
-#, fuzzy
 #~ msgid "Open Folder Containing a Selected File"
 #~ msgstr "Åpne Målmappen"
 
@@ -5185,11 +5151,9 @@ msgstr "hjelpeside"
 #~ msgid "Add Selected Files to the Playlist"
 #~ msgstr "Legg til Valgte Filer i Spillelisten"
 
-#, fuzzy
 #~ msgid "Delete from playlist"
 #~ msgstr "Fjern Valgte de Valgte Filene fra Spillelisten"
 
-#, fuzzy
 #~ msgid "Toggle the {0} Screen"
 #~ msgstr "Vis {0} Skjermen"
 
@@ -5202,7 +5166,6 @@ msgstr "hjelpeside"
 #~ msgid "Show Media Player"
 #~ msgstr "Vis Mediaspiller"
 
-#, fuzzy
 #~ msgid "Send File..."
 #~ msgstr "Lagrer Fil..."
 
@@ -5247,11 +5210,9 @@ msgstr "hjelpeside"
 #~ msgid "Use FrostWire Media Player:"
 #~ msgstr "Bruk FrostWires Mp3 Spiller:"
 
-#, fuzzy
 #~ msgid "Seeding Status"
 #~ msgstr "Seeding"
 
-#, fuzzy
 #~ msgid "Search Files"
 #~ msgstr "Søk"
 
@@ -5287,7 +5248,6 @@ msgstr "hjelpeside"
 #~ msgid "Loading TLS Encryption..."
 #~ msgstr "Laster TLS Kryptering..."
 
-#, fuzzy
 #~ msgid "Loading Safe Content Management..."
 #~ msgstr "Laster inn Sikkert Innholdsbehandler"
 
@@ -5355,11 +5315,9 @@ msgstr "hjelpeside"
 #~ msgid "You are already downloading this file to {0}"
 #~ msgstr "Du laster allerede ned filen til \"{0}\"."
 
-#, fuzzy
 #~ msgid "&Refresh Connections ("
 #~ msgstr "&Tilkoblinger"
 
-#, fuzzy
 #~ msgid "&Refreshing Connections ("
 #~ msgstr "&Tilkoblinger"
 
@@ -5447,7 +5405,6 @@ msgstr "hjelpeside"
 #~ "dele filer i iTunes). denne muligheten vil bli deaktivert. Du kan skru "
 #~ "den på igjen på innstillinger, under iTunes -> Deling."
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire was unable to start the Digital Audio Access Protocol (for "
 #~ "sharing files in iTunes) because a Microsoft patch is required or a "
@@ -5461,7 +5418,6 @@ msgstr "hjelpeside"
 #~ "side med informasjon om du vil bruke denne tjenesten. Trykk 'Ja' for å gå "
 #~ "til oppgraderingen, eller 'Nei' hvis du vil vente til senere."
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire was unable to start the Digital Audio Access Protocol (for "
 #~ "sharing files in iTunes) because a firewall is blocking access. To "
@@ -5628,7 +5584,6 @@ msgstr "hjelpeside"
 #~ "Din lagringsmappe er ikke gyldig. Den kan ha blitt slettet, eller så har "
 #~ "du ikke tilgang til å lagre i den. Vennligst velg en annen mappe."
 
-#, fuzzy
 #~ msgid "You are not connected to the FrostWire VIP Area"
 #~ msgstr "Du kobles nå til Nettverket"
 
@@ -5836,7 +5791,6 @@ msgstr "hjelpeside"
 #~ "boksene viser. Trykk på sirkelen i det øvre venstre hjørnet av en boks, "
 #~ "og velg et nytt valg fra menyen."
 
-#, fuzzy
 #~ msgid ""
 #~ "Do you want to browse your friend's FrostWire Library? Go to Search &gt; "
 #~ "Direct Connect, then enter the ip address and port number of your "
@@ -6038,11 +5992,9 @@ msgstr "hjelpeside"
 #~ "Høyreklikk på kolonnen i nedlastings området og mer 'Prioritet' kolonnen. "
 #~ "Velg nedlastingen du vil starte neste gang og trykk opp pilen til toppen!"
 
-#, fuzzy
 #~ msgid "Upgrade FrostWire"
 #~ msgstr "Det å Br&uke FrostWire"
 
-#, fuzzy
 #~ msgid "Upgrade to FrostWire?"
 #~ msgstr "Det å Br&uke FrostWire"
 
@@ -6063,7 +6015,6 @@ msgstr "hjelpeside"
 #~ msgid "Would you like to get your free Java upgrade?"
 #~ msgstr "Vil du oppgradere din versjon av Java gratis?"
 
-#, fuzzy
 #~ msgid "Get FrostWire Now"
 #~ msgstr "Bruk FrostWire til..."
 
@@ -6075,7 +6026,6 @@ msgstr "hjelpeside"
 #~ "continue the download?"
 #~ msgstr "FrostWire har funnet feil i filen {0} Vil du fortsette nedlasting?"
 
-#, fuzzy
 #~ msgid ""
 #~ "<html><b>Your FrostWire may have been corrupted by a virus or trojan!</"
 #~ "b><br><br>Please visit <a href=\"http://www.frostwire.com/download\">www."
@@ -6164,7 +6114,6 @@ msgstr "hjelpeside"
 #~ msgid "A connection error has occurred"
 #~ msgstr "En tilkoblingsfeil skjedde"
 
-#, fuzzy
 #~ msgid "Could not send chat message"
 #~ msgstr "Kunne ikke sende chat melding"
 
@@ -6288,18 +6237,15 @@ msgstr "hjelpeside"
 #~ msgid "0.6"
 #~ msgstr "0.6"
 
-#, fuzzy
 #~ msgid ""
 #~ "You dropped the following files/folders on LimeWire, please select the "
 #~ "ones you would like to share."
 #~ msgstr ""
 #~ "Du slapp de følgende filene/mappene på FrostWire, velg de du vil dele."
 
-#, fuzzy
 #~ msgid "All folders you select will also have their subfolders shared."
 #~ msgstr "Alle mappene du velger vil også ha alle undermappene sine delt."
 
-#, fuzzy
 #~ msgid "Share Dropped Files?"
 #~ msgstr "Del Droppede Filer?"
 
@@ -6592,11 +6538,9 @@ msgstr "hjelpeside"
 #~ msgid "Incomplete Files"
 #~ msgstr "Uferdige Filer"
 
-#, fuzzy
 #~ msgid "Individual Store Files"
 #~ msgstr "Individuelt Delte Filer"
 
-#, fuzzy
 #~ msgid "List of All Individual Purchased Files"
 #~ msgstr "Liste over alle Individuelt Delte Filer"
 
@@ -6745,7 +6689,6 @@ msgstr "hjelpeside"
 #~ msgid "Reload available skins from disk"
 #~ msgstr "Oppdater tilgjengelige tema fra disk"
 
-#, fuzzy
 #~ msgid "&Check for updates"
 #~ msgstr "Ser etter Oppdateringer..."
 
@@ -6810,7 +6753,6 @@ msgstr "hjelpeside"
 #~ msgid "Host Communication"
 #~ msgstr "Kommunikasjon med Vert"
 
-#, fuzzy
 #~ msgid "Chat Configuration"
 #~ msgstr "Router Innstillinger"
 
@@ -7147,15 +7089,12 @@ msgstr "hjelpeside"
 #~ msgid "Speed:"
 #~ msgstr "Hastighet:"
 
-#, fuzzy
 #~ msgid "LimeWire Store Indicator"
 #~ msgstr "Vis Lagre Indikatoren"
 
-#, fuzzy
 #~ msgid "You can display your LimeWire Store status in the status bar."
 #~ msgstr "Du kan vise din Brannmurstatus på status linjen."
 
-#, fuzzy
 #~ msgid "Show LimeWire Store Indicator:"
 #~ msgstr "Vis Lagre Indikatoren"
 
@@ -7168,7 +7107,6 @@ msgstr "hjelpeside"
 #~ msgid "Show Shared Files Indicator:"
 #~ msgstr "Vis Indikator på Delte Filer:"
 
-#, fuzzy
 #~ msgid ""
 #~ "You can customize where store files are saved. By creating a template "
 #~ "Lime Wire can automatically save purchased files into folders using the "
@@ -7210,7 +7148,6 @@ msgstr "hjelpeside"
 #~ msgid "Invalid template {0}"
 #~ msgstr "Ukjent mal {0}"
 
-#, fuzzy
 #~ msgid ""
 #~ "You can choose the folder for saving files purchased from the LimeWire "
 #~ "Store."
@@ -7490,7 +7427,6 @@ msgstr "hjelpeside"
 #~ msgid "Do Not Share Sensitive File Types"
 #~ msgstr "Ikke Del Sensitiv Fil Typer"
 
-#, fuzzy
 #~ msgid ""
 #~ "This stops FrostWire from sharing certain files that may contain "
 #~ "sensitive information."
@@ -7498,7 +7434,6 @@ msgstr "hjelpeside"
 #~ "Dette stopper FrostWire fra å dele noen filtyper som kan inneholde "
 #~ "sensitiv informasjon."
 
-#, fuzzy
 #~ msgid "File types you added to share."
 #~ msgstr "Fil typer du la til å dele."
 
@@ -7546,7 +7481,6 @@ msgstr "hjelpeside"
 #~ msgid "View Console Messages"
 #~ msgstr "Vis Logg Filer"
 
-#, fuzzy
 #~ msgid "View Logging Messages"
 #~ msgstr "Vis Logg Meldinger"
 
@@ -7556,7 +7490,6 @@ msgstr "hjelpeside"
 #~ msgid "View Searches and Uploads"
 #~ msgstr "Vis Søk og Opplastinger"
 
-#, fuzzy
 #~ msgid "Test action!"
 #~ msgstr "Beskrivelse"
 
@@ -7590,7 +7523,6 @@ msgstr "hjelpeside"
 #~ "Temaet du prøver å velge er ugyldig. FrostWire vil gå tilbake til "
 #~ "standardtema."
 
-#, fuzzy
 #~ msgid "Kill Upload"
 #~ msgstr "Drep Opplasting"
 
@@ -7664,7 +7596,6 @@ msgstr "hjelpeside"
 #~ msgid "Modify the license of this file"
 #~ msgstr "Endre lisensen på denne filen"
 
-#, fuzzy
 #~ msgid "Permanently remove the license from this file"
 #~ msgstr "Permanent fjern lisensen fra denne filen"
 
@@ -7697,7 +7628,6 @@ msgstr "hjelpeside"
 #~ msgid "Comment:"
 #~ msgstr "Kommentar"
 
-#, fuzzy
 #~ msgid "Please enter the copyright holder, copright year and title."
 #~ msgstr "Vennligst skriv inn kopiretteieren, kopirettåret og tittelen."
 
@@ -7844,7 +7774,6 @@ msgstr "hjelpeside"
 #~ msgid "Ogg Vorbis"
 #~ msgstr "Ogg Vorbis"
 
-#, fuzzy
 #~ msgid ""
 #~ "Unknown file type. Please choose the type that best describes this file."
 #~ msgstr "Ukjent fil type. Vennligst velg en annen fil type"

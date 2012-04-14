@@ -1276,12 +1276,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/library/Device.java:265
-#, fuzzy
 msgid "Transfer failed"
 msgstr "Transfers"
 
 #: gui/com/frostwire/gui/library/DeviceUploadDialog.java:66
-#, fuzzy
 msgid "Upload to device"
 msgstr "Upload-Grenze erreicht"
 
@@ -1294,7 +1292,6 @@ msgid "Uploading"
 msgstr "Upload läuft"
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
-#, fuzzy
 msgid "Uploading "
 msgstr "Upload läuft"
 
@@ -3292,7 +3289,6 @@ msgid "State your intent below to start using FrostWire "
 msgstr "Erklären Sie nachfolgend Ihre Absicht, um FrostWire zu starten"
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:57
-#, fuzzy
 msgid ""
 "FrostWire is a peer-to-peer program for sharing authorized files only.  "
 "Installing and using the program does not constitute a license for obtaining "
@@ -3413,7 +3409,6 @@ msgstr ""
 "anderen Teilnehmern des BitTorrent Netzwerkes Daten auszutauschen."
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:31
-#, fuzzy
 msgid ""
 "Installing and using the program does not constitute a license for obtaining "
 "or distributing unauthorized content."
@@ -5158,121 +5153,93 @@ msgstr "mouse"
 msgid "helppage"
 msgstr "helppage"
 
-#, fuzzy
 #~ msgid "Loading phones and tablets..."
 #~ msgstr "Gespeicherte Dateien werden geladen..."
 
-#, fuzzy
 #~ msgid "Videos"
 #~ msgstr "Video"
 
-#, fuzzy
 #~ msgid "Sort:"
 #~ msgstr "Port:"
 
-#, fuzzy
 #~ msgid "None"
 #~ msgstr "Nein"
 
-#, fuzzy
 #~ msgid "Name Asc"
 #~ msgstr "Name"
 
-#, fuzzy
 #~ msgid "Name Desc"
 #~ msgstr "Name"
 
-#, fuzzy
 #~ msgid "Kind Asc"
 #~ msgstr "Art:"
 
-#, fuzzy
 #~ msgid "Size Asc"
 #~ msgstr "Speichern unter"
 
-#, fuzzy
 #~ msgid "Size Desc"
 #~ msgstr "Größe"
 
-#, fuzzy
 #~ msgid "Open"
 #~ msgstr "Öffnen:"
 
-#, fuzzy
 #~ msgid "Delete Files"
 #~ msgstr "Datei löschen"
 
-#, fuzzy
 #~ msgid "System"
 #~ msgstr "Beenden"
 
-#, fuzzy
 #~ msgid "Error deleting file"
 #~ msgstr "Datei hochladen"
 
-#, fuzzy
 #~ msgid "Connected"
 #~ msgstr "Verbunden ab"
 
-#, fuzzy
 #~ msgid "New Folder"
 #~ msgstr "Neuer Ordner"
 
-#, fuzzy
 #~ msgid "File Transfers"
 #~ msgstr "Transfers"
 
-#, fuzzy
 #~ msgid "Cancel All"
 #~ msgstr "Abbrechen"
 
-#, fuzzy
 #~ msgid "Clear Finished"
 #~ msgstr "Inaktiven Downloads aufräumen"
 
-#, fuzzy
 #~ msgid "Should I stop all transfers?"
 #~ msgstr "Erst alle Übertragungen beenden"
 
-#, fuzzy
 #~ msgid "one file"
 #~ msgstr ".torrent Datei"
 
 #~ msgid "files"
 #~ msgstr "Dateien"
 
-#, fuzzy
 #~ msgid "pending"
 #~ msgstr "Am Säen"
 
-#, fuzzy
 #~ msgid "canceled"
 #~ msgstr "Suche abgebrochen"
 
-#, fuzzy
 #~ msgid "error"
 #~ msgstr "Fehler"
 
 #~ msgid "Upload"
 #~ msgstr "Hochladen"
 
-#, fuzzy
 #~ msgid "to"
 #~ msgstr "Stop"
 
-#, fuzzy
 #~ msgid "Select a file..."
 #~ msgstr "Verzeichnis auswählen"
 
-#, fuzzy
 #~ msgid "Preparing selected folder"
 #~ msgstr "Eine Vorschau der ausgewählten Downloads anzeigen."
 
-#, fuzzy
 #~ msgid "Open in Folder"
 #~ msgstr "Verzeichnis Öffnen"
 
-#, fuzzy
 #~ msgid "Open Folder Containing a Selected File"
 #~ msgstr "Ordner mit enthaltener datei öffnen"
 
@@ -5282,11 +5249,9 @@ msgstr "helppage"
 #~ msgid "Add Selected Files to the Playlist"
 #~ msgstr "Fügt die ausgewählten Dateien zur PlayList hinzu."
 
-#, fuzzy
 #~ msgid "Delete from playlist"
 #~ msgstr "Löscht die ausgewählte Datei aus der PlayList."
 
-#, fuzzy
 #~ msgid "Toggle the {0} Screen"
 #~ msgstr "Zeigt die {0} Ansicht"
 
@@ -5299,7 +5264,6 @@ msgstr "helppage"
 #~ msgid "Show Media Player"
 #~ msgstr "Media Player anzeigen"
 
-#, fuzzy
 #~ msgid "Send File..."
 #~ msgstr "Speichert Datei..."
 
@@ -5343,11 +5307,9 @@ msgstr "helppage"
 #~ msgid "Use FrostWire Media Player:"
 #~ msgstr "FrostWires MP3-Player verwenden:"
 
-#, fuzzy
 #~ msgid "Seeding Status"
 #~ msgstr "Am Säen"
 
-#, fuzzy
 #~ msgid "Search Files"
 #~ msgstr "Suchvorgänge an"
 
@@ -5450,11 +5412,9 @@ msgstr "helppage"
 #~ msgid "You are already downloading this file to {0}"
 #~ msgstr "Diese Datei wird bereits nach {0} heruntergeladen."
 
-#, fuzzy
 #~ msgid "&Refresh Connections ("
 #~ msgstr "&Verbindung"
 
-#, fuzzy
 #~ msgid "&Refreshing Connections ("
 #~ msgstr "&Verbindung"
 
@@ -5537,7 +5497,6 @@ msgstr "helppage"
 #~ "Fehler aufgetreten. Dieses Feature wird deaktiviert. Sie können es in den "
 #~ "Einstellungen unter iTunes -> Sharing wieder aktivieren."
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire was unable to start the Digital Audio Access Protocol (for "
 #~ "sharing files in iTunes) because a Microsoft patch is required or a "
@@ -5552,7 +5511,6 @@ msgstr "helppage"
 #~ "Klicken Sie auf 'Ja', um zum Patch zu gelangen, auf 'Nein', um dieses "
 #~ "Feature abzustellen oder auf 'Abbrechen', um sich später zu entscheiden."
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire was unable to start the Digital Audio Access Protocol (for "
 #~ "sharing files in iTunes) because a firewall is blocking access. To "
@@ -5712,7 +5670,6 @@ msgstr "helppage"
 #~ "eventuell gelöscht oder ist schreibgeschützt. Bitte legen Sie einen neuen "
 #~ "Speicherort fest."
 
-#, fuzzy
 #~ msgid "You are not connected to the FrostWire VIP Area"
 #~ msgstr "Es besteht keine Verbindung zum FrostWire Store"
 
@@ -5838,11 +5795,9 @@ msgstr "helppage"
 #~ "Möchten Sie eine große Datei freigeben? FrostWire unterstützt Dateien bis "
 #~ "zu einer Größe von einem Terabyte."
 
-#, fuzzy
 #~ msgid "Upgrade FrostWire"
 #~ msgstr "FrostWire verwenden"
 
-#, fuzzy
 #~ msgid "Upgrade to FrostWire?"
 #~ msgstr "FrostWire verwenden"
 
@@ -5863,7 +5818,6 @@ msgstr "helppage"
 #~ msgid "Would you like to get your free Java upgrade?"
 #~ msgstr "Möchten Sie Ihr freies Java Upgrade?"
 
-#, fuzzy
 #~ msgid "Get FrostWire Now"
 #~ msgstr "FrostWire verwenden für..."
 
@@ -5877,7 +5831,6 @@ msgstr "helppage"
 #~ "FrostWire hat festgestellt, dass die Datei {0} korrupt ist. Möchten Sie "
 #~ "den Download fortsetzen?"
 
-#, fuzzy
 #~ msgid ""
 #~ "<html><b>Your FrostWire may have been corrupted by a virus or trojan!</"
 #~ "b><br><br>Please visit <a href=\"http://www.frostwire.com/download\">www."
@@ -5968,7 +5921,6 @@ msgstr "helppage"
 #~ msgid "A connection error has occurred"
 #~ msgstr "Ein Verbindungsfehler ist aufgetreten"
 
-#, fuzzy
 #~ msgid "Could not send chat message"
 #~ msgstr "Die Nachricht konnte nicht gesendet weden"
 
@@ -6092,7 +6044,6 @@ msgstr "helppage"
 #~ msgid "0.6"
 #~ msgstr "0.6"
 
-#, fuzzy
 #~ msgid ""
 #~ "You dropped the following files/folders on LimeWire, please select the "
 #~ "ones you would like to share."
@@ -6100,12 +6051,10 @@ msgstr "helppage"
 #~ "Sie haben die folgenden Dateien/Ordner in FrostWire hinterlegt, bitte "
 #~ "wählen Sie die Dateie(n)/Ordner aus die Sie zum Download freigeben wollen."
 
-#, fuzzy
 #~ msgid "All folders you select will also have their subfolders shared."
 #~ msgstr ""
 #~ "Alle ausgewählten Ordner sowie deren Unterordner werden freigegeben."
 
-#, fuzzy
 #~ msgid "Share Dropped Files?"
 #~ msgstr "Fogende datei freigeben"
 
@@ -6535,11 +6484,9 @@ msgstr "helppage"
 #~ msgid "Reload available skins from disk"
 #~ msgstr "Liest die verfügbaren Motive von der Festplatte neu ein."
 
-#, fuzzy
 #~ msgid "&Check for updates"
 #~ msgstr "Updates werden gesucht..."
 
-#, fuzzy
 #~ msgid "seconds left)"
 #~ msgstr "Sekunden"
 
@@ -6608,7 +6555,6 @@ msgstr "helppage"
 #~ msgid "Host Communication"
 #~ msgstr "Kommunikation mit Nutzern anderer Rechner"
 
-#, fuzzy
 #~ msgid "Chat Configuration"
 #~ msgstr "Router Einstellungen"
 
@@ -6736,7 +6682,6 @@ msgstr "helppage"
 #~ "Sie können den Prozentsatz Ihrer Bandbreite einstellen, der für Downloads "
 #~ "bereitgestellt werden soll."
 
-#, fuzzy
 #~ msgid "Display"
 #~ msgstr "Anzeige:"
 
@@ -6951,17 +6896,14 @@ msgstr "helppage"
 #~ msgid "Speed:"
 #~ msgstr "Geschwindigkeit:"
 
-#, fuzzy
 #~ msgid "LimeWire Store Indicator"
 #~ msgstr "FrostWire Store Anzeige"
 
-#, fuzzy
 #~ msgid "You can display your LimeWire Store status in the status bar."
 #~ msgstr ""
 #~ "Sie können den Status des FrostWire Stores in der Statuszeile anzeigen "
 #~ "lassen."
 
-#, fuzzy
 #~ msgid "Show LimeWire Store Indicator:"
 #~ msgstr "FrostWire Store Anzeige in der Statusleiste anzeigen:"
 
@@ -6976,7 +6918,6 @@ msgstr "helppage"
 #~ msgid "Show Shared Files Indicator:"
 #~ msgstr "Anzahl der freigegebenen Dateien anzeigen:"
 
-#, fuzzy
 #~ msgid "LimeWire Store - Subfolder Template"
 #~ msgstr "FrostWire Store - Unterordnerverzeichnis"
 
@@ -7001,11 +6942,9 @@ msgstr "helppage"
 #~ msgid "Invalid template {0}"
 #~ msgstr "Ungültige Vorlage {0}"
 
-#, fuzzy
 #~ msgid "LimeWire Store - Save Folder"
 #~ msgstr "FrostWire Store - Ordner abspeichern"
 
-#, fuzzy
 #~ msgid ""
 #~ "You can choose the folder for saving files purchased from the LimeWire "
 #~ "Store."
@@ -7293,7 +7232,6 @@ msgstr "helppage"
 #~ msgid "Do Not Share Sensitive File Types"
 #~ msgstr "Private Dateitypen nicht freigeben"
 
-#, fuzzy
 #~ msgid ""
 #~ "This stops FrostWire from sharing certain files that may contain "
 #~ "sensitive information."
@@ -7301,7 +7239,6 @@ msgstr "helppage"
 #~ "Dies verhindert, dass FrostWire gewisse Dateien freigibt, die private "
 #~ "Daten enthalten könnten."
 
-#, fuzzy
 #~ msgid "File types you added to share."
 #~ msgstr "Dateitypen, die Sie zur Freigabe hinzugefügt haben."
 
@@ -7346,7 +7283,6 @@ msgstr "helppage"
 #~ msgid "View Console Messages"
 #~ msgstr "Zeigt die Konsolenbenachrichtigungen"
 
-#, fuzzy
 #~ msgid "View Logging Messages"
 #~ msgstr "Transaktionsnachrichten anschauen"
 
@@ -7356,7 +7292,6 @@ msgstr "helppage"
 #~ msgid "View Searches and Uploads"
 #~ msgstr "Zeigt Suchanfragen und Uploads an"
 
-#, fuzzy
 #~ msgid "Test action!"
 #~ msgstr "Beschreibung"
 
@@ -7391,7 +7326,6 @@ msgstr "helppage"
 #~ "Das Motiv, das Sie verwenden, ist ungültig. FrostWire wird das "
 #~ "Standardmotiv verwenden."
 
-#, fuzzy
 #~ msgid "Kill Upload"
 #~ msgstr "Upload Abbrechen"
 
@@ -7467,7 +7401,6 @@ msgstr "helppage"
 #~ msgid "Modify the license of this file"
 #~ msgstr "Lizenz dier Datei ändern?"
 
-#, fuzzy
 #~ msgid "Permanently remove the license from this file"
 #~ msgstr "Die Lizenz von dieser Datei dauerhaft entfernen?"
 
@@ -7500,7 +7433,6 @@ msgstr "helppage"
 #~ msgid "Comment:"
 #~ msgstr "Kommentar:"
 
-#, fuzzy
 #~ msgid "Please enter the copyright holder, copright year and title."
 #~ msgstr "Bitte geben sie den Copyright Inhaber, Jahr sowie den titel an."
 
@@ -7888,15 +7820,12 @@ msgstr "helppage"
 #~ msgid "Waiting For Tracker"
 #~ msgstr "Warte auf Tracker (Server-Programm)"
 
-#, fuzzy
 #~ msgid "other"
 #~ msgstr "Andere"
 
-#, fuzzy
 #~ msgid "string"
 #~ msgstr "Starte"
 
-#, fuzzy
 #~ msgid "1"
 #~ msgstr "T1"
 
@@ -7925,18 +7854,15 @@ msgstr "helppage"
 #~ msgid "Cable/DSL"
 #~ msgstr "Kabel/DSL"
 
-#, fuzzy
 #~ msgid "United States"
 #~ msgstr "Vereinigte Staaten"
 
-#, fuzzy
 #~ msgid "English"
 #~ msgstr "Englisch"
 
 #~ msgid "Loading Languages"
 #~ msgstr "Sprache wird geladen"
 
-#, fuzzy
 #~ msgid "false"
 #~ msgstr "falsch"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-12 17:19-0400\n"
+"POT-Creation-Date: 2012-04-14 11:28-0400\n"
 "PO-Revision-Date: 2008-07-30 15:35+0000\n"
 "Last-Translator: FTA <Unknown>\n"
 "Language-Team: none\n"
@@ -20,7 +20,6 @@ msgstr ""
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:50
-#, fuzzy
 msgid ""
 "FrostWire was unable to write a necessary file because your hard drive is "
 "full. To continue using FrostWire you must free up space on your hard drive."
@@ -29,7 +28,6 @@ msgstr ""
 "pełny. By kontynuować, zwolnij miejsce na dysku twardym."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:52
-#, fuzzy
 msgid ""
 "FrostWire was unable to open a necessary file because another program has "
 "locked the file. FrostWire may act unexpectedly until this file is released."
@@ -39,7 +37,6 @@ msgstr ""
 "dopóki plik nie zostanie zwolniony."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:54
-#, fuzzy
 msgid ""
 "FrostWire was unable to write a necessary file because you do not have the "
 "necessary permissions. Your preferences may not be maintained the next time "
@@ -50,7 +47,6 @@ msgstr ""
 "uruchomisz FrostWire, lub FrostWire może się dziwnie zachowywać."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:56
-#, fuzzy
 msgid ""
 "FrostWire cannot open a necessary file because the filename contains "
 "characters which are not supported by your operating system. FrostWire may "
@@ -77,7 +73,6 @@ msgstr ""
 "używany przez inny program. Zamknij inne aplikacje i spróbuj ponownie."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:64
-#, fuzzy
 msgid ""
 "FrostWire was unable to create or continue writing an incomplete file for "
 "the selected download because you do not have permission to write files to "
@@ -242,7 +237,6 @@ msgid "Studio"
 msgstr "Studio"
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:108
-#, fuzzy
 msgid "Stars"
 msgstr "Gwiazdki"
 
@@ -251,12 +245,10 @@ msgid "Subtitles"
 msgstr "Napisy"
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:114
-#, fuzzy
 msgid "Rating"
 msgstr "Ocena"
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:119
-#, fuzzy
 msgid "Height"
 msgstr "Wysokość"
 
@@ -265,7 +257,6 @@ msgid "Width"
 msgstr "Szerokość"
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:123
-#, fuzzy
 msgid "Image"
 msgstr "Obraz"
 
@@ -282,7 +273,6 @@ msgid "License"
 msgstr "Licencja"
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:130
-#, fuzzy
 msgid "Document"
 msgstr "Dokument"
 
@@ -295,7 +285,6 @@ msgid "Author"
 msgstr "Autor"
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:137
-#, fuzzy
 msgid "Application"
 msgstr "Aplikacja"
 
@@ -305,12 +294,10 @@ msgstr "Aplikacja"
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:44
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:167
 #: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:32
-#, fuzzy
 msgid "Name"
 msgstr "Nazwa"
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:139
-#, fuzzy
 msgid "Publisher"
 msgstr "Wydawca"
 
@@ -336,7 +323,6 @@ msgid "Images"
 msgstr "Pliki graficzne"
 
 #: core/com/limegroup/gnutella/MediaType.java:50
-#, fuzzy
 msgid "Torrents"
 msgstr "BitTorrent"
 
@@ -351,12 +337,10 @@ msgid "Loading Community Chat..."
 msgstr ""
 
 #: gui/com/frostwire/gui/ChatMediator.java:413
-#, fuzzy
 msgid "Loading Community Chat Window..."
 msgstr "?adowanie panela kontrola..."
 
 #: gui/com/frostwire/gui/HideExitDialog.java:39
-#, fuzzy
 msgid "Do you want to hide FrostWire?"
 msgstr "Jesteś połączony ze sklepem LimWire"
 
@@ -367,13 +351,11 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/HideExitDialog.java:61
-#, fuzzy
 msgid "Don't show this again"
 msgstr "Nie pokazuj ponownie"
 
 #. hide button
 #: gui/com/frostwire/gui/HideExitDialog.java:70
-#, fuzzy
 msgid "Hide"
 msgstr "Filmy"
 
@@ -385,14 +367,12 @@ msgid "Exit"
 msgstr "Zamknij"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:63
-#, fuzzy
 msgid "Send audio to iTunes"
 msgstr "Zapisywanie obecnej playlisty."
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:64
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:902
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:739
-#, fuzzy
 msgid "Send audio files to iTunes"
 msgstr "Zapisywanie obecnej playlisty."
 
@@ -404,13 +384,11 @@ msgstr "Szczegóły"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:108
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:388
-#, fuzzy
 msgid "Show Details"
 msgstr "Szczegóły"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:109
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:389
-#, fuzzy
 msgid "Show Torrent Details"
 msgstr "Przeszukiwanie zasob�"
 
@@ -432,7 +410,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:152
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:153
-#, fuzzy
 msgid "Show"
 msgstr "Poka? ostatnie"
 
@@ -445,7 +422,6 @@ msgid "Resume Download"
 msgstr "Wzn�"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:181
-#, fuzzy
 msgid "Resume"
 msgstr "Zmie? nazw?"
 
@@ -460,7 +436,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:227
-#, fuzzy
 msgid "Pause Download"
 msgstr "Zatrzymaj"
 
@@ -473,7 +448,6 @@ msgid "Pause"
 msgstr "Zatrzymaj"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:229
-#, fuzzy
 msgid "Pause Selected Downloads"
 msgstr "Wstrzymanie pobierania wybranych plik�"
 
@@ -492,12 +466,10 @@ msgid "Remove Torrent"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:259
-#, fuzzy
 msgid "Remove Torrent from selected downloads"
 msgstr "Naci?nij, aby spr�bowa? podj?? pr�b? wznowienia pobierania pliku."
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:261
-#, fuzzy
 msgid "Remove Download"
 msgstr "Wzn�"
 
@@ -506,17 +478,14 @@ msgstr "Wzn�"
 #: gui/com/limegroup/gnutella/gui/ListEditor.java:296
 #: gui/com/limegroup/gnutella/gui/StandardListEditor.java:93
 #: gui/com/limegroup/gnutella/gui/StandardListEditor.java:103
-#, fuzzy
 msgid "Remove"
 msgstr "Zmie? nazw?"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:263
-#, fuzzy
 msgid "Remove Selected Downloads"
 msgstr "Preview the selected download."
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:273
-#, fuzzy
 msgid ""
 "Are you sure you want to remove the data files from your computer?\n"
 "\n"
@@ -532,12 +501,10 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:295
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:296
-#, fuzzy
 msgid "Remove Download and Data"
 msgstr "Wzn�"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:297
-#, fuzzy
 msgid "Remove Download and Data from selected downloads"
 msgstr "Naci?nij, aby spr�bowa? podj?? pr�b? wznowienia pobierania pliku."
 
@@ -546,7 +513,6 @@ msgstr "Naci?nij, aby spr�bowa? podj?? pr�b? wznowienia pobierania pliku."
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:311
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:486
 #: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:479
-#, fuzzy
 msgid "Copy Magnet"
 msgstr "Kopiuj raport"
 
@@ -566,7 +532,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:394
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:395
-#, fuzzy
 msgid "Hide Seeding Transfers"
 msgstr "Zamknij po uko?czeniu transfer�"
 
@@ -577,13 +542,11 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:398
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:399
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:400
-#, fuzzy
 msgid "Show Seeding Transfers"
 msgstr "Zamknij po uko?czeniu transfer�"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:419
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:195
-#, fuzzy
 msgid "Create New Playlist"
 msgstr "Zapisz playlist? jako..."
 
@@ -598,7 +561,6 @@ msgid "Add to playlist "
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:39
-#, fuzzy
 msgid " (Partial)"
 msgstr "HTTP content (potential)"
 
@@ -609,43 +571,36 @@ msgstr "HTTP content (potential)"
 #: gui/com/frostwire/gui/library/LibraryFilesTableDataLine.java:251
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:93
 #: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:37
-#, fuzzy
 msgid "Size"
 msgstr "Rozmiar:"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:103
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:320
-#, fuzzy
 msgid "Status"
 msgstr "Statystyki"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:109
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:321
-#, fuzzy
 msgid "Progress"
 msgstr "Programy"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:117
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:324
-#, fuzzy
 msgid "Downloaded"
 msgstr "Pobierz"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:120
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:325
-#, fuzzy
 msgid "Uploaded"
 msgstr "Przep?. wysy?ek:"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:127
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:322
-#, fuzzy
 msgid "Down Speed"
 msgstr "Przep?. pobra?:"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:131
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:323
-#, fuzzy
 msgid "Up Speed"
 msgstr "??cze:"
 
@@ -656,7 +611,6 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:142
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:327
 #: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:22
-#, fuzzy
 msgid "Seeds"
 msgstr "??cze:"
 
@@ -666,17 +620,14 @@ msgid "Peers"
 msgstr "Hosty"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:148
-#, fuzzy
 msgid "Share Ratio"
 msgstr "Udost?pniane katalogi:"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:153
-#, fuzzy
 msgid "Seeds/Peers"
 msgstr "Hosty"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:157
-#, fuzzy
 msgid "Started On"
 msgstr "??czenie"
 
@@ -689,7 +640,6 @@ msgstr ""
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:765
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:515
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:638
-#, fuzzy
 msgid "Launch"
 msgstr "?adowanie wybranego pliku"
 
@@ -702,17 +652,14 @@ msgid "Launch Selected Files"
 msgstr "Odpalenie wybranych plik�"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:444
-#, fuzzy
 msgid "Show in Library"
 msgstr "Plikoteka"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:445
-#, fuzzy
 msgid "Show Download in Library"
 msgstr "Pobieranie od"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediator.java:141
-#, fuzzy
 msgid "Transfers"
 msgstr "Zamknij po uko?czeniu transfer�"
 
@@ -760,13 +707,11 @@ msgstr ""
 
 #. advanced > Download Speed Menu //
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:56
-#, fuzzy
 msgid "Set Down Speed"
 msgstr "Wybierz spos�b wyszukiwania"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:65
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:172
-#, fuzzy
 msgid "Disabled"
 msgstr "Porzuć"
 
@@ -807,7 +752,6 @@ msgstr ""
 #. }
 #. advanced >Upload Speed Menu //
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:163
-#, fuzzy
 msgid "Set Up Speed"
 msgstr "Wybierz spos�b wyszukiwania"
 
@@ -820,12 +764,10 @@ msgstr "Zawansowane"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:399
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:149
-#, fuzzy
 msgid "Add to playlist"
 msgstr "Do playlisty"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:84
-#, fuzzy
 msgid "Torrent File Created with FrostWire"
 msgstr "Jesteś połączony ze sklepem LimWire"
 
@@ -837,12 +779,10 @@ msgid "Create New Torrent"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:178
-#, fuzzy
 msgid "Torrent Contents"
 msgstr "Ignoruj tre?ci niemoralne"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:180
-#, fuzzy
 msgid "Select File or Folder..."
 msgstr "Wybieranie katalogu"
 
@@ -859,7 +799,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:228
-#, fuzzy
 msgid "Torrent Properties"
 msgstr "Ustawienia sieci BitTorrent"
 
@@ -874,7 +813,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:248
-#, fuzzy
 msgid "Start seeding"
 msgstr "??czenie"
 
@@ -903,13 +841,11 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:306
 #: gui/com/limegroup/gnutella/gui/AboutWindow.java:103
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMediator.java:78
-#, fuzzy
 msgid "Close"
 msgstr "&Zamknij"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:314
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:875
-#, fuzzy
 msgid "Save torrent as..."
 msgstr "Zapisz jako..."
 
@@ -927,7 +863,6 @@ msgstr "Zapisz jako..."
 #: gui/com/limegroup/gnutella/gui/FileChooserHandler.java:466
 #: gui/com/limegroup/gnutella/gui/FileChooserHandler.java:487
 #: gui/com/limegroup/gnutella/gui/FileChooserHandler.java:509
-#, fuzzy
 msgid "Select"
 msgstr "Zaznacz wszystko"
 
@@ -960,7 +895,6 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:486
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:843
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:716
-#, fuzzy
 msgid "Invalid Folder"
 msgstr "Z?a nazwa pliku"
 
@@ -973,12 +907,10 @@ msgid "Invalid Tracker URL\n"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:521
-#, fuzzy
 msgid "Torrent Created."
 msgstr "Utworzony"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:547
-#, fuzzy
 msgid "Torrent File"
 msgstr "pliki .torrent"
 
@@ -1030,7 +962,6 @@ msgid "wizard.operationfailed"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:886
-#, fuzzy
 msgid "Saving Torrent..."
 msgstr "?adowanie saved-files..."
 
@@ -1040,31 +971,26 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:61
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:81
-#, fuzzy
 msgid "Select files to download"
 msgstr "Wstrzymanie pobierania wybranych plik�"
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:129
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:149
-#, fuzzy
 msgid "Download Selected Files Only"
 msgstr "Rozpocz?cie pobierania wszystkich wybranych plik�"
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:153
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:173
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:264
-#, fuzzy
 msgid "File"
 msgstr "&Plik"
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:171
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:191
-#, fuzzy
 msgid "Select/Unselect all files"
 msgstr "Skasowanie zaznaczonych plik�"
 
 #: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:70
-#, fuzzy
 msgid "Preparing selection"
 msgstr "Odpalenie wybranych plik�"
 
@@ -1073,7 +999,6 @@ msgid "please wait..."
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:159
-#, fuzzy
 msgid "Select the content you want to send"
 msgstr "Wstrzymanie pobierania wybranych plik�"
 
@@ -1084,12 +1009,10 @@ msgid "Download"
 msgstr "Pobierz"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:166
-#, fuzzy
 msgid "at"
 msgstr "Czatuj..."
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:167
-#, fuzzy
 msgid "via FrostWire"
 msgstr "&Korzystanie z FrostWire"
 
@@ -1114,47 +1037,38 @@ msgid "Send the message above to Twitter"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:444
-#, fuzzy
 msgid "Copy Text"
 msgstr "Kopiuj raport"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:445
-#, fuzzy
 msgid "Copy entire message to Clipboard"
 msgstr "Skopiuj do schowka"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:452
-#, fuzzy
 msgid "Message copied to clipboard."
 msgstr "Skopiuj do schowka"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:464
-#, fuzzy
 msgid "Copy Link"
 msgstr "Kopiuj"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:465
-#, fuzzy
 msgid "Copy Link to Clipboard"
 msgstr "Skopiuj do schowka"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:472
-#, fuzzy
 msgid "Link copied to clipboard."
 msgstr "Skopiuj do schowka"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:487
-#, fuzzy
 msgid "Copy Magnet URL to Clipboard"
 msgstr "Skopiuj do schowka"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:494
-#, fuzzy
 msgid "Magnet copied to clipboard."
 msgstr "Skopiuj do schowka"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentFetcherDownload.java:23
-#, fuzzy
 msgid "Downloading Torrent"
 msgstr "Download page"
 
@@ -1173,13 +1087,11 @@ msgid "Error"
 msgstr "B??d"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentFetcherDownload.java:25
-#, fuzzy
 msgid "Canceled"
 msgstr "Porzuć"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:34
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentSaveFolderPaneItem.java:13
-#, fuzzy
 msgid "Torrent Data Save Folder"
 msgstr "Directory:"
 
@@ -1192,36 +1104,30 @@ msgid "Please enter a valid path for the Torrent Data Folder"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:99
-#, fuzzy
 msgid "The Torrent Data Folder cannot be inside the "
 msgstr "File Corrupt. Nie uda?o si? zapisa? danych."
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:103
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:114
-#, fuzzy
 msgid "Could not resolve folder path."
 msgstr "Przegl?dni?cie hosta  {0} nie by?o mo?liwe."
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:110
-#, fuzzy
 msgid "The Torrent Data Folder cannot be a parent folder of the "
 msgstr ""
 "Wybrany katalog nie mo?e zosta? udost?pniony. Prosimy wybra? inny katalog "
 "lub zdefiniowa? domy?lny."
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:127
-#, fuzzy
 msgid "Use Default"
 msgstr "U?yj &domy?lnego"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:128
-#, fuzzy
 msgid "Use the Default Folder"
 msgstr "U?yj &domy?lnego"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:141
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:182
-#, fuzzy
 msgid "Browse..."
 msgstr "Przegl?darka"
 
@@ -1231,7 +1137,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:46
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentSeedingSettingPaneItem.java:14
-#, fuzzy
 msgid "Seeding Settings"
 msgstr "?adowanie ustawie? u?ytkownika..."
 
@@ -1256,13 +1161,11 @@ msgid "globalmanager.download.remove.veto"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:20
-#, fuzzy
 msgid "Downloading"
 msgstr "Pobierz"
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:22
 #: gui/com/frostwire/gui/bittorrent/YouTubeVideoUrlDownload.java:49
-#, fuzzy
 msgid "Stopped"
 msgstr "Stop"
 
@@ -1272,7 +1175,6 @@ msgstr "Ponowne zapytanie przes?ane, oczekiwanie"
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:24
 #: gui/com/frostwire/gui/bittorrent/YouTubeVideoUrlDownload.java:47
-#, fuzzy
 msgid "Finished"
 msgstr "Zako?cz"
 
@@ -1297,30 +1199,25 @@ msgstr "Maks."
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:173
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:47
 #: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:421
-#, fuzzy
 msgid "Options"
 msgstr "&Opcje..."
 
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:145
-#, fuzzy
 msgid "You can configure the folders you share in FrostWire's Options."
 msgstr "Mo?esz wybra? katalog do kt�rego trafi? pobrane pliki"
 
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:229
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:359
-#, fuzzy
 msgid "Send"
 msgstr "Producent"
 
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:243
-#, fuzzy
 msgid "Do you want to send this file to a friend?"
 msgstr "Wyszukuje plik�w o tej samej nazwie."
 
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:243
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:136
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:65
-#, fuzzy
 msgid "Send files with FrostWire"
 msgstr "Og�lna pomoc w korzystaniu z programu FrostWire."
 
@@ -1335,12 +1232,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/library/Device.java:265
-#, fuzzy
 msgid "Transfer failed"
 msgstr "Zamknij po uko?czeniu transfer�"
 
 #: gui/com/frostwire/gui/library/DeviceUploadDialog.java:66
-#, fuzzy
 msgid "Upload to device"
 msgstr "Osi?gni?ty limit wysy?ek"
 
@@ -1353,13 +1248,11 @@ msgid "Uploading"
 msgstr "Wysy?anie"
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
-#, fuzzy
 msgid "Uploading "
 msgstr "Wysy?anie"
 
 #: gui/com/frostwire/gui/library/DownloadTask.java:76
 #: gui/com/frostwire/gui/library/DownloadTask.java:109
-#, fuzzy
 msgid "Downloading "
 msgstr "Pobierz"
 
@@ -1377,12 +1270,10 @@ msgid "Icon"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:76
-#, fuzzy
 msgid "Date Added"
 msgstr "Zapisz"
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:79
-#, fuzzy
 msgid "Date Modified"
 msgstr "Ostatnia modyfikacja"
 
@@ -1392,46 +1283,38 @@ msgstr "Ostatnia modyfikacja"
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:261
 #: gui/com/frostwire/gui/library/LibrarySearch.java:198
 #: gui/com/frostwire/gui/tabs/SearchDownloadTab.java:42
-#, fuzzy
 msgid "Search"
 msgstr "&Szukanie"
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableMediator.java:411
 #: gui/com/frostwire/gui/library/LibraryDeviceTableMediator.java:412
-#, fuzzy
 msgid "Save"
 msgstr "Zapisz"
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableMediator.java:413
-#, fuzzy
 msgid "Save Selected Files To Folder"
 msgstr "Wstrzymanie pobierania wybranych plik�"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:144
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:269
-#, fuzzy
 msgid "tracks"
 msgstr "Ścieżka"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:199
-#, fuzzy
 msgid "Finished Downloads"
 msgstr "Wyszukiwanie i pobieranie plik�"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:201
-#, fuzzy
 msgid "Devices"
 msgstr "Podgl?d"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:223
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:155
-#, fuzzy
 msgid "Configure Options"
 msgstr "Konfiguruj opcje dzielenia sie plikami"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:223
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:156
-#, fuzzy
 msgid "You can configure the FrostWire's Options."
 msgstr "Mo?esz wybra? katalog do kt�rego trafi? pobrane pliki"
 
@@ -1442,7 +1325,6 @@ msgstr "Od?wie?"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:607
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:655
-#, fuzzy
 msgid "Refresh selected"
 msgstr "Po??czenia"
 
@@ -1518,20 +1400,17 @@ msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:791
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:664
-#, fuzzy
 msgid "Launch in "
 msgstr "Rozpocznij czynno??"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:792
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:665
-#, fuzzy
 msgid "Launch Selected Files in "
 msgstr "Odpalenie wybranych plik�"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:834
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:707
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:317
-#, fuzzy
 msgid "Create a new .torrent file"
 msgstr "pliki .torrent"
 
@@ -1564,12 +1443,10 @@ msgid "Url"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:377
-#, fuzzy
 msgid "Are you sure you want to remove the selected radio station?"
 msgstr "Czy na pewno chcesz skasowa??"
 
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:377
-#, fuzzy
 msgid "Are you sure you want to remove the selected radio stations?"
 msgstr "Czy na pewno chcesz skasowa??"
 
@@ -1604,7 +1481,6 @@ msgid "Loading Library Window..."
 msgstr "?adowanie panela plikoteki..."
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:162
-#, fuzzy
 msgid "New Playlist"
 msgstr "Playlista MP3"
 
@@ -1637,19 +1513,16 @@ msgid "Refresh the audio properties based on ID3 tags of selected items"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:690
-#, fuzzy
 msgid "Delete Playlist"
 msgstr "Playlista MP3"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:701
-#, fuzzy
 msgid ""
 "Are you sure you want to delete the playlist?\n"
 "(No files will be deleted)"
 msgstr "Czy na pewno chcesz skasowa??"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:720
-#, fuzzy
 msgid "Rename Playlist"
 msgstr "Zapisz playlist? jako..."
 
@@ -1677,7 +1550,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:787
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:805
-#, fuzzy
 msgid "Export Playlist to .m3u"
 msgstr "Wybierz playlist? (.m3u)"
 
@@ -1689,7 +1561,6 @@ msgstr ""
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:39
 #: gui/com/frostwire/gui/library/StarredDirectoryHolder.java:40
 #: gui/com/frostwire/gui/library/StarredDirectoryHolder.java:44
-#, fuzzy
 msgid "Starred"
 msgstr "??czenie"
 
@@ -1699,27 +1570,22 @@ msgid "Comment"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:244
-#, fuzzy
 msgid "Duration"
 msgstr "Opis"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:267
-#, fuzzy
 msgid "Folder"
 msgstr "Katalog:"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:763
-#, fuzzy
 msgid "Delete Selected Files from this playlist"
 msgstr "Usuwanie wybranego pliku z playlisty."
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:820
-#, fuzzy
 msgid "Cleanup playlist"
 msgstr "Usuwanie uko?czonych wysy?ek"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:821
-#, fuzzy
 msgid "Remove the deleted items"
 msgstr "Usu? wybrany element"
 
@@ -1728,7 +1594,6 @@ msgid "Refresh the audio properties based on ID3 tags"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibrarySearch.java:101
-#, fuzzy
 msgid "search results"
 msgstr "Rodzaj ??cza w wynikach wyszukiwania"
 
@@ -1741,12 +1606,10 @@ msgstr ""
 #: gui/com/frostwire/gui/library/LibraryUtils.java:140
 #: gui/com/frostwire/gui/library/LibraryUtils.java:171
 #: gui/com/frostwire/gui/library/LibraryUtils.java:235
-#, fuzzy
 msgid "Playlist name"
 msgstr "Playlista MP3"
 
 #: gui/com/frostwire/gui/library/LibraryUtils.java:573
-#, fuzzy
 msgid "Refreshing"
 msgstr "Od?wie?"
 
@@ -1759,12 +1622,10 @@ msgid "Error importing Radio Station from"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/MediaTypeSavedFilesDirectoryHolder.java:60
-#, fuzzy
 msgid "Holds the Results for "
 msgstr "Filtry trafie?"
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:187
-#, fuzzy
 msgid "Library Folders"
 msgstr "Odpalenie katalogu plikoteki."
 
@@ -1781,14 +1642,12 @@ msgid "Folder is not included and no subfolders are included in the Library."
 msgstr ""
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:399
-#, fuzzy
 msgid "Folder's files and some subfolders are included in the Library."
 msgstr ""
 "Tutaj mo?esz wybra? katalogi, kt�re chcia?by? udost?pni?. Zawarto?? tych "
 "katalog�w b?dzie widoczna w plikotece."
 
 #: gui/com/frostwire/gui/library/UITool.java:102
-#, fuzzy
 msgid "Applications"
 msgstr "Aplikacja"
 
@@ -1835,7 +1694,6 @@ msgid "Previous"
 msgstr "Cofnij"
 
 #: gui/com/frostwire/gui/player/AudioPlayerComponent.java:235
-#, fuzzy
 msgid "Shuffle songs"
 msgstr "Losowanie"
 
@@ -1845,7 +1703,6 @@ msgstr ""
 
 #. public ChatTab(final ChatMediator cm) {
 #: gui/com/frostwire/gui/tabs/ChatTab.java:29
-#, fuzzy
 msgid "Chat"
 msgstr "Czatuj..."
 
@@ -2002,12 +1859,10 @@ msgid "Marks all Items as Selected"
 msgstr "Zaznacz wszystkie elementy jako Wybrane"
 
 #: gui/com/limegroup/gnutella/gui/CheckBoxList.java:645
-#, fuzzy
 msgid "Deselect All"
 msgstr "Zaznacz wszystko"
 
 #: gui/com/limegroup/gnutella/gui/CheckBoxList.java:647
-#, fuzzy
 msgid "Deselects all Items in the List"
 msgstr "Odznacz wszystkie"
 
@@ -2016,19 +1871,16 @@ msgid "Clear History"
 msgstr "Wyczyść historię"
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:84
-#, fuzzy
 msgid "Send this file to a friend"
 msgstr "Zapisywanie obecnej playlisty."
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:130
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:64
-#, fuzzy
 msgid "file"
 msgstr "Tytuł"
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:131
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:64
-#, fuzzy
 msgid "folder"
 msgstr "Katalog:"
 
@@ -2066,12 +1918,10 @@ msgid "Select Folder"
 msgstr "Wybieranie katalogu"
 
 #: gui/com/limegroup/gnutella/gui/FileChooserHandler.java:869
-#, fuzzy
 msgid "All Folders"
 msgstr "Dopu?? wolnych strzelc�"
 
 #: gui/com/limegroup/gnutella/gui/GUIConstants.java:40
-#, fuzzy
 msgid "Dial Up"
 msgstr "Wdzwaniany"
 
@@ -2109,12 +1959,10 @@ msgid "&Search"
 msgstr "&Szukanie"
 
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:115
-#, fuzzy
 msgid "&Library"
 msgstr "Plikoteka"
 
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:116
-#, fuzzy
 msgid "C&hat"
 msgstr "Zako?cz czat"
 
@@ -2180,7 +2028,6 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:1415
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:1441
-#, fuzzy
 msgid "FrostWire could not launch the specified file."
 msgstr ""
 "FrostWire nie pozwoli uruchomi? tego pliku ze wzgl?du na regu?y bezpiecze?"
@@ -2263,7 +2110,6 @@ msgstr "Ok"
 #: gui/com/limegroup/gnutella/gui/InputFieldDialog.java:93
 #: gui/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:44
 #: gui/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:46
-#, fuzzy
 msgid "Apply Operation"
 msgstr "Anulowanie bie??cej czynno?ci i zamknij okna"
 
@@ -2273,7 +2119,6 @@ msgid "Cancel Operation"
 msgstr "Anulowanie bie??cej czynno?ci i zamknij okna"
 
 #: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:70
-#, fuzzy
 msgid ""
 "You are currently using a beta or pre-release version of Java 1.6.0. This "
 "version is known to have caused problems with FrostWire. Please upgrade to "
@@ -2284,7 +2129,6 @@ msgstr ""
 "Javę do wersji ostatecznej.\n"
 
 #: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:161
-#, fuzzy
 msgid "Upgrade Java"
 msgstr "Dokonaj upgrade-u do wersji PRO"
 
@@ -2293,7 +2137,7 @@ msgid "More Information"
 msgstr "Więcej informacji"
 
 #: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:179
-#, fuzzy, java-format
+#, java-format
 msgid "Visit {0}"
 msgstr "Wizyt {0}"
 
@@ -2314,7 +2158,6 @@ msgid "Change Language"
 msgstr "Zmień język"
 
 #: gui/com/limegroup/gnutella/gui/LanguageWindow.java:201
-#, fuzzy
 msgid "Help Translate FrostWire"
 msgstr "Og�lna pomoc w korzystaniu z programu FrostWire."
 
@@ -2371,7 +2214,6 @@ msgstr "?adowanie wiadomo?ci..."
 #: gui/com/limegroup/gnutella/gui/MessageService.java:159
 #: gui/com/limegroup/gnutella/gui/MessageService.java:247
 #: gui/com/limegroup/gnutella/gui/menu/ToolsMenu.java:56
-#, fuzzy
 msgid "Warning"
 msgstr "Ponowne zapytanie przes?ane, oczekiwanie"
 
@@ -2395,7 +2237,6 @@ msgstr ""
 "wybrać inną lokalizację?"
 
 #: gui/com/limegroup/gnutella/gui/SettingsWarningManager.java:20
-#, fuzzy
 msgid ""
 "FrostWire was unable to create your settings folder and is using a temporary "
 "folder.  Your settings may be deleted when you close FrostWire. "
@@ -2420,23 +2261,19 @@ msgstr ""
 "nieoczekiwanie."
 
 #: gui/com/limegroup/gnutella/gui/ShutdownWindow.java:25
-#, fuzzy
 msgid "Shutting down FrostWire..."
 msgstr "&Korzystanie z FrostWire"
 
 #: gui/com/limegroup/gnutella/gui/ShutdownWindow.java:35
-#, fuzzy
 msgid "Please wait while FrostWire shuts down..."
 msgstr "Trwa skanowanie zasob�w, prosimy poczeka?..."
 
 #: gui/com/limegroup/gnutella/gui/SplashWindow.java:108
-#, fuzzy
 msgid "Loading FrostWire..."
 msgstr "?adowanie zasob�w..."
 
 #: gui/com/limegroup/gnutella/gui/StandardListEditor.java:93
 #: gui/com/limegroup/gnutella/gui/StandardListEditor.java:103
-#, fuzzy
 msgid "Add..."
 msgstr "Dodaj"
 
@@ -2503,7 +2340,6 @@ msgid "Show Connection Quality"
 msgstr "Poka? jako?? po??czenia"
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:679
-#, fuzzy
 msgid "Show Language Status"
 msgstr "Poka? status zapory internetowej"
 
@@ -2516,12 +2352,10 @@ msgid "Show Bandwidth Consumption"
 msgstr "Pokaż Użycie Pasma"
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:763
-#, fuzzy
 msgid "Downloads:"
 msgstr "Pobierz"
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:770
-#, fuzzy
 msgid "Uploads:"
 msgstr "Wysy?anie"
 
@@ -2869,7 +2703,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:122
-#, fuzzy
 msgid "Thank you for using FrostWire"
 msgstr "Og�lna pomoc w korzystaniu z programu FrostWire."
 
@@ -2911,7 +2744,6 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/UpdatePanel.java:25
 #: gui/com/limegroup/gnutella/gui/UpdatePanel.java:43
-#, fuzzy
 msgid "A newer version is available, update?"
 msgstr "Instalowanie poprawek dla FrostWire"
 
@@ -2950,27 +2782,22 @@ msgid "&Close"
 msgstr "&Zamknij"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:287
-#, fuzzy
 msgid "Close the program's main window"
 msgstr "Zamknij program."
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:303
-#, fuzzy
 msgid "E&xit"
 msgstr "Zamknij"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:304
-#, fuzzy
 msgid "Close and exit the program"
 msgstr "Zamknij program."
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:336
-#, fuzzy
 msgid "Send File or Folder..."
 msgstr "Udost?pniane katalogi:"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:337
-#, fuzzy
 msgid "Send a file or a folder to a friend"
 msgstr "Zapisywanie obecnej playlisty."
 
@@ -2987,7 +2814,6 @@ msgid "Search for: {0}"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:81
-#, fuzzy
 msgid "Internal Error"
 msgstr "Błąd wewnętrzny"
 
@@ -3003,7 +2829,6 @@ msgstr ""
 "click 'Send' to notify FrostWire about the problem."
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:321
-#, fuzzy
 msgid ""
 "FrostWire has encountered an internal error. It is possible for FrostWire to "
 "recover and continue running normally. To continue using FrostWire, click "
@@ -3015,7 +2840,6 @@ msgstr ""
 "click 'Send' to notify FrostWire about the problem."
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:339
-#, fuzzy
 msgid ""
 "Please add any comments you may have (e.g what caused the error).\n"
 "Thank you and please use English."
@@ -3024,7 +2848,6 @@ msgstr ""
 "Dziękujemy i prosimy o używanie języka angielskiego."
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:368
-#, fuzzy
 msgid "Review"
 msgstr "Podgl?d"
 
@@ -3034,7 +2857,6 @@ msgstr "Porzuć"
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:399
 #: gui/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:96
-#, fuzzy
 msgid "Always Send Immediately"
 msgstr "Zamknij natychmiast"
 
@@ -3049,7 +2871,6 @@ msgid "Always Discard All Errors"
 msgstr "Zawsze odrzucaj wszystkie błędy"
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:499
-#, fuzzy
 msgid ""
 "FrostWire was unable to connect to the bug server in order to send the below "
 "bug report. For further help and to aid with debugging, please visit www."
@@ -3072,7 +2893,6 @@ msgid "Always Append (#)"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderDialog.java:131
-#, fuzzy
 msgid "Always Ask"
 msgstr "Zawsze"
 
@@ -3115,7 +2935,6 @@ msgid "Choose a different location for the Download"
 msgstr "Wybierz inn? lokalizacj? dla tego pliku"
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderDialog.java:369
-#, fuzzy
 msgid "Append (#)"
 msgstr "Odrzucone (P/W)"
 
@@ -3142,17 +2961,14 @@ msgid "Do you want to continue downloading anyway?"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderUtils.java:165
-#, fuzzy
 msgid "Continue"
 msgstr "P?tla"
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderUtils.java:179
-#, fuzzy
 msgid "Same File Already In Library"
 msgstr "Plik jest ju? ?ciagany"
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderUtils.java:192
-#, fuzzy
 msgid "Save Download As"
 msgstr "Zapisz jako�"
 
@@ -3171,7 +2987,6 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/AssociationsWindow.java:72
 #: gui/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:71
-#, fuzzy
 msgid "Always take the selected associations."
 msgstr "Roz??czanie wybranych po??cze?"
 
@@ -3186,7 +3001,6 @@ msgid "Ask me what to do when an association is missing."
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:39
-#, fuzzy
 msgid "BitTorrent Sharing Settings"
 msgstr "Ustawienia sieci BitTorrent"
 
@@ -3207,7 +3021,7 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:109
-#, fuzzy, java-format
+#, java-format
 msgid "FrostWire could not create the Torrent Data Folder {0}"
 msgstr ""
 "FrostWire nie mógł zlokalizować Twojej przeglądarki aby wyświetlić stronę: "
@@ -3218,7 +3032,6 @@ msgid "You're almost done!"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:55
-#, fuzzy
 msgid "State your intent below to start using FrostWire "
 msgstr ""
 "FrostWire powinien zosta? ponownie uruchomiony, aby by?o wida? t? sk�rk?."
@@ -3231,7 +3044,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:58
-#, fuzzy
 msgid "Find out more..."
 msgstr "Czy wiesz ?e�"
 
@@ -3271,12 +3083,10 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:79
 #: gui/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:22
-#, fuzzy
 msgid "System Startup"
 msgstr "Pokazuj wskaz�wki po starcie programu"
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:81
-#, fuzzy
 msgid "Start Automatically"
 msgstr "Sortuj automatycznie"
 
@@ -3287,7 +3097,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:152
-#, fuzzy
 msgid "Chat Community"
 msgstr "Komunikacja pomi?dzy hostami"
 
@@ -3340,7 +3149,6 @@ msgid "Welcome"
 msgstr "Witamy"
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:40
-#, fuzzy
 msgid ""
 "Welcome to the FrostWire setup wizard. FrostWire has recently added new "
 "features that require your configuration. FrostWire will guide you through a "
@@ -3360,12 +3168,10 @@ msgstr ""
 "wydajno?ci."
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:99
-#, fuzzy
 msgid "FrostWire is free software, "
 msgstr "FrostWire budzi się z trybu uśpienia"
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:109
-#, fuzzy
 msgid "Do not pay for FrostWire."
 msgstr "Konfiguruj opcje dzielenia sie plikami"
 
@@ -3374,7 +3180,6 @@ msgid "&File"
 msgstr "&Plik"
 
 #: gui/com/limegroup/gnutella/gui/menu/FiltersMenu.java:15
-#, fuzzy
 msgid "Filter&s"
 msgstr "Filtry"
 
@@ -3383,12 +3188,10 @@ msgid "&Configure Content Filters"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/FiltersMenu.java:19
-#, fuzzy
 msgid "Configure FrostWire's Content Filtering Options"
 msgstr "Konfiguruj opcje dzielenia sie plikami"
 
 #: gui/com/limegroup/gnutella/gui/menu/FiltersMenu.java:21
-#, fuzzy
 msgid "&Learn More..."
 msgstr "?adowanie menu..."
 
@@ -3397,7 +3200,6 @@ msgid "Learn More about FrostWire's Content Filtering System"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:29
-#, fuzzy
 msgid "Sharing &Help"
 msgstr "Udost?pnianie"
 
@@ -3410,7 +3212,6 @@ msgid "Frequently Asked Questions for FrostWire"
 msgstr "Najcz??ciej zadawane pytania dotycz?ce FrostWire."
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:33
-#, fuzzy
 msgid "FrostWire for Android"
 msgstr "&Korzystanie z FrostWire"
 
@@ -3419,17 +3220,14 @@ msgid "Get FrostWire on your Android phone, tablet or google tv, all free."
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:35
-#, fuzzy
 msgid "What is \"Seeding\"?"
 msgstr "Statystyki"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:35
-#, fuzzy
 msgid "Learn about BitTorrent Seeding"
 msgstr "Ustawienia sieci BitTorrent"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:39
-#, fuzzy
 msgid "Free FrostWire Stickers"
 msgstr "&Korzystanie z FrostWire"
 
@@ -3440,7 +3238,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:41
-#, fuzzy
 msgid "FrostWire T-Shirts"
 msgstr "&Korzystanie z FrostWire"
 
@@ -3453,12 +3250,10 @@ msgid "FrostClick.com"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
-#, fuzzy
 msgid "Free Legal Downloads"
 msgstr "Preview the selected download."
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:48
-#, fuzzy
 msgid "FrostWire on Facebook"
 msgstr "Odtwarzacz FrostWire"
 
@@ -3479,7 +3274,6 @@ msgid "Access the FrostWire Users' Forum"
 msgstr "Dost?p do forum u?ytkownik�w FrostWire."
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:56
-#, fuzzy
 msgid "&Did you pay for FrostWire?"
 msgstr "Og�lna pomoc w korzystaniu z programu FrostWire."
 
@@ -3517,12 +3311,10 @@ msgid "&Resources"
 msgstr "&Zasoby"
 
 #: gui/com/limegroup/gnutella/gui/menu/SearchMenu.java:28
-#, fuzzy
 msgid "Result &Filters"
 msgstr "Wyniki"
 
 #: gui/com/limegroup/gnutella/gui/menu/SearchMenu.java:29
-#, fuzzy
 msgid "Show Search Result Filters"
 msgstr "Jako?? rezultat�w wyszukiwania"
 
@@ -3539,7 +3331,6 @@ msgid "Use &Default"
 msgstr "U?yj &domy?lnego"
 
 #: gui/com/limegroup/gnutella/gui/menu/ThemeMenu.java:113
-#, fuzzy
 msgid "Use your default skin"
 msgstr "U?yj predefiniowanych"
 
@@ -3663,7 +3454,6 @@ msgstr ""
 
 #. set text before adding the document listener
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:231
-#, fuzzy
 msgid "Search here"
 msgstr "wyniki"
 
@@ -3696,7 +3486,6 @@ msgstr ""
 
 #. view options
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:308
-#, fuzzy
 msgid "View"
 msgstr "&Widok"
 
@@ -3716,12 +3505,10 @@ msgid "Keywords"
 msgstr "S?owa kluczowe"
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:320
-#, fuzzy
 msgid "Updates"
 msgstr "Opcje image"
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:321
-#, fuzzy
 msgid "Firewall"
 msgstr "Poka? status zapory internetowej"
 
@@ -3736,12 +3523,10 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:325
 #: gui/com/limegroup/gnutella/gui/shell/ShellAssociationManager.java:58
-#, fuzzy
 msgid "File Associations"
 msgstr "Miejsca"
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:329
-#, fuzzy
 msgid "System Boot"
 msgstr "Pokazuj wskaz�wki po starcie programu"
 
@@ -3777,7 +3562,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:59
-#, fuzzy
 msgid "Use FrostWire for..."
 msgstr "&Korzystanie z FrostWire"
 
@@ -3811,7 +3595,6 @@ msgid "Enable Autocompletion of Text Fields:"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AutomaticInstallerDownloadPaneItem.java:14
-#, fuzzy
 msgid "Automatic Installer Download"
 msgstr "Przewijaj automatycznie"
 
@@ -3877,7 +3660,6 @@ msgid "Warning: Forbidden name!"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ContentFilterPaneItem.java:18
-#, fuzzy
 msgid "Content Filters"
 msgstr "Filtry"
 
@@ -3919,7 +3701,6 @@ msgid "License Warning"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/DownloadLicenseWarningPaneItem.java:23
-#, fuzzy
 msgid ""
 "You can choose whether to be warned about downloading a file without a "
 "license."
@@ -3956,7 +3737,6 @@ msgid "Share the Default File Extensions"
 msgstr "Spowoduje stworzenie standardowej listy udost?pnianych typ�w plik�"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:33
-#, fuzzy
 msgid "Router Configuration"
 msgstr "Komunikacja pomi?dzy hostami"
 
@@ -3988,7 +3768,6 @@ msgid "UDP:"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:172
-#, fuzzy
 msgid ""
 "You must enter a port between 1 and 65535 when manually forcing your TCP "
 "port."
@@ -3996,7 +3775,6 @@ msgstr ""
 "Opcja wymuszania adresu IP wymaga podania numeru portu w przedziale 1-65535."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:176
-#, fuzzy
 msgid ""
 "You must enter a port between 1 and 65535 when manually forcing your UDP "
 "port."
@@ -4040,7 +3818,6 @@ msgstr "Ignoruj pliki .vbs"
 #. * Key for the locale-specific string for the wmv and asf file check box label.
 #.
 #: gui/com/limegroup/gnutella/gui/options/panes/IgnoreResultTypesPaneItem.java:66
-#, fuzzy
 msgid "Ignore .wmv, .wma, .au, .asf files"
 msgstr "Ignoruj pliki .vbs"
 
@@ -4070,12 +3847,10 @@ msgid "Image Viewer"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LibraryFoldersPaneItem.java:34
-#, fuzzy
 msgid "Library Included Folders"
 msgstr "Odpalenie katalogu plikoteki."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LibraryFoldersPaneItem.java:36
-#, fuzzy
 msgid "You can choose the folders for include files when browsing the library."
 msgstr ""
 "Tutaj mo?esz wybra? katalogi, kt�re chcia?by? udost?pni?. Zawarto?? tych "
@@ -4086,7 +3861,6 @@ msgid "Internet Radio Stations"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:20
-#, fuzzy
 msgid "You can restore the default internet radio stations."
 msgstr "Mo?esz wybra? opcje zamykania programu."
 
@@ -4095,7 +3869,6 @@ msgid "Total Radio Stations"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LocalePreferencingPaneItem.java:19
-#, fuzzy
 msgid "Locale Preferencing"
 msgstr "Preferowanie"
 
@@ -4104,7 +3877,6 @@ msgid "You can choose to preference hosts using the same language as you."
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LocalePreferencingPaneItem.java:24
-#, fuzzy
 msgid "Turn preferencing on:"
 msgstr "Preferowanie"
 
@@ -4150,7 +3922,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:20
-#, fuzzy
 msgid "Notifications"
 msgstr "Miejsca"
 
@@ -4169,7 +3940,6 @@ msgid "Partial Files"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/PartialFileSharingPaneItem.java:21
-#, fuzzy
 msgid ""
 "You can choose whether or not to automatically share partially downloaded "
 "files."
@@ -4181,7 +3951,6 @@ msgid "Allow Partial Sharing:"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:20
-#, fuzzy
 msgid "FrostWire Popups"
 msgstr "&Korzystanie z FrostWire"
 
@@ -4192,7 +3961,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:29
-#, fuzzy
 msgid "Revert to Default:"
 msgstr "Przywr�c domy?lne ustawienia"
 
@@ -4217,12 +3985,10 @@ msgid "Password:"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:29
-#, fuzzy
 msgid "Proxy Options"
 msgstr "Opcje odtwarzania:"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:31
-#, fuzzy
 msgid "Configure Proxy Options for FrostWire."
 msgstr "Konfiguruj opcje dzielenia sie plikami"
 
@@ -4255,7 +4021,6 @@ msgstr ""
 #. * label on the port text field.
 #.
 #: gui/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:56
-#, fuzzy
 msgid "Port:"
 msgstr "Host:"
 
@@ -4297,7 +4062,6 @@ msgid "Show dialog to ask before close"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:20
-#, fuzzy
 msgid "Smart Search"
 msgstr "Zamknij szukanie"
 
@@ -4320,7 +4084,6 @@ msgid "If you continue you will erase all the information related to\n"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:77
-#, fuzzy
 msgid " torrents and "
 msgstr "Liczba udost?pnianych przez ciebie plik�"
 
@@ -4331,7 +4094,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:24
-#, fuzzy
 msgid ""
 "You can choose whether or not to automatically run FrostWire when your "
 "computer starts."
@@ -4340,12 +4102,10 @@ msgstr ""
 "zosta?y ju? wys?ane."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:31
-#, fuzzy
 msgid "Run on System Startup:"
 msgstr "Po??cz na starcie:"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/StatusBarBandwidthPaneItem.java:21
-#, fuzzy
 msgid "Bandwidth Indicator"
 msgstr "Przep?ywno?? (P/W)"
 
@@ -4358,7 +4118,6 @@ msgid "Show Bandwidth Indicator:"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:21
-#, fuzzy
 msgid "Connection Quality Indicator"
 msgstr "Poka? jako?? po??czenia"
 
@@ -4368,12 +4127,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:30
-#, fuzzy
 msgid "Show Connection Quality Indicator:"
 msgstr "Poka? jako?? po??czenia"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:21
-#, fuzzy
 msgid "Firewall Indicator"
 msgstr "Zabezpieczenia"
 
@@ -4382,12 +4139,10 @@ msgid "You can display your firewall status in the status bar."
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:30
-#, fuzzy
 msgid "Show Firewall Indicator:"
 msgstr "Poka? status zapory internetowej"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:18
-#, fuzzy
 msgid "BitTorrent Connection Settings"
 msgstr "Ustawienia sieci BitTorrent"
 
@@ -4397,7 +4152,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:22
-#, fuzzy
 msgid "Maximum active downloads"
 msgstr "Maks. ilo?? jednoczesnych pobra?"
 
@@ -4406,17 +4160,14 @@ msgid "Global maximum number of connections"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:26
-#, fuzzy
 msgid "Maximum number of connected peers per torrent"
 msgstr "Maksimum wysyłań na torrent"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:28
-#, fuzzy
 msgid "Number of upload slots per torrent"
 msgstr "Maksimum wysyłań na torrent"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentDetailsPaneItem.java:19
-#, fuzzy
 msgid "Torrent Details Page"
 msgstr "Liczba udost?pnianych przez ciebie plik�"
 
@@ -4503,7 +4254,6 @@ msgstr "Pokazuj"
 #. * String for 'Select Type'
 #.
 #: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:56
-#, fuzzy
 msgid "Select Search Types:"
 msgstr "Wybierz spos�b wyszukiwania"
 
@@ -4528,12 +4278,10 @@ msgid "Search for Program Files, Including exe, zip, gz, and More"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:207
-#, fuzzy
 msgid "Search for Torrents!"
 msgstr "wyniki"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:54
-#, fuzzy
 msgid "Open Options dialog"
 msgstr "Opcje image"
 
@@ -4551,7 +4299,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:58
-#, fuzzy
 msgid "Stop current search"
 msgstr "Zamknij szukanie"
 
@@ -4572,12 +4319,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:213
-#, fuzzy
 msgid "Search Engines"
 msgstr "Zamknij szukanie"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:221
-#, fuzzy
 msgid "Filter"
 msgstr "Filtry"
 
@@ -4586,12 +4331,10 @@ msgid "<html><strong>Refine Results</strong></html>"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:410
-#, fuzzy
 msgid "Show search result filter controls"
 msgstr "Jako?? rezultat�w wyszukiwania"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:411
-#, fuzzy
 msgid "Hide search result filter controls"
 msgstr "Jako?? rezultat�w wyszukiwania"
 
@@ -4612,12 +4355,10 @@ msgid "Buy this item now"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:71
-#, fuzzy
 msgid "Download Partial Files"
 msgstr "Download page"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:73
-#, fuzzy
 msgid "Torrent Details"
 msgstr "Ustawienia sieci BitTorrent"
 
@@ -4656,17 +4397,14 @@ msgid "Show Torrent Details page when a download starts"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:480
-#, fuzzy
 msgid "Copy Hash"
 msgstr "Kopiuj"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:492
-#, fuzzy
 msgid "Search More"
 msgstr "wyniki"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:43
-#, fuzzy
 msgid "Source"
 msgstr "Find sources"
 
@@ -4675,12 +4413,10 @@ msgid "Created"
 msgstr "Utworzony"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:53
-#, fuzzy
 msgid "Extension"
 msgstr "Typy plik�"
 
 #: gui/com/limegroup/gnutella/gui/search/Selector.java:81
-#, fuzzy
 msgid "Speed"
 msgstr "??cze:"
 
@@ -4694,12 +4430,10 @@ msgstr "Media"
 
 #: gui/com/limegroup/gnutella/gui/shell/FrostAssociations.java:84
 #: gui/com/limegroup/gnutella/gui/shell/FrostAssociations.java:96
-#, fuzzy
 msgid "\".torrent\" files"
 msgstr "pliki \".torrent\""
 
 #: gui/com/limegroup/gnutella/gui/shell/FrostAssociations.java:109
-#, fuzzy
 msgid "\"magnet:\" links"
 msgstr "odnośniki \"magnet:\""
 
@@ -4710,7 +4444,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:50
-#, fuzzy
 msgid "Revert To Default"
 msgstr "Przywr�c domy?lne ustawienia"
 
@@ -4858,7 +4591,6 @@ msgid "File Already Exists"
 msgstr "Plik już istnieje"
 
 #: gui/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:52
-#, fuzzy
 msgid "Filename Taken"
 msgstr "Nazwa pliku"
 
@@ -4867,7 +4599,6 @@ msgid "Not a Folder"
 msgstr "To nie jest folder"
 
 #: gui/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:58
-#, fuzzy
 msgid "Not a File"
 msgstr "To nie jest folder"
 
@@ -4930,7 +4661,6 @@ msgid "Could not set file location due to an error in the filesystem."
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:119
-#, fuzzy
 msgid "The same file is already being downloaded."
 msgstr "Plik jest ju? ?ciagany"
 
@@ -4943,7 +4673,6 @@ msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:131
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:79
-#, fuzzy
 msgid "language"
 msgstr "Język interfejsu"
 
@@ -4954,13 +4683,11 @@ msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:133
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:81
-#, fuzzy
 msgid "lngextension"
 msgstr "Typy plik�"
 
 #: gui/irc/ConfigurationLoader.java:134
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:82
-#, fuzzy
 msgid "backuplanguage"
 msgstr "Język interfejsu"
 
@@ -4996,7 +4723,6 @@ msgid "noasldisplayprefix"
 msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:318
-#, fuzzy
 msgid "quitmessage"
 msgstr "wiadomo?ci"
 
@@ -5009,7 +4735,6 @@ msgid "aslfemale"
 msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:324
-#, fuzzy
 msgid "userid"
 msgstr "Zatrzymaj"
 
@@ -5033,123 +4758,93 @@ msgstr ""
 msgid "helppage"
 msgstr ""
 
-#, fuzzy
 #~ msgid "Loading phones and tablets..."
 #~ msgstr "Ładowanie: Udostępnione pliki"
 
-#, fuzzy
 #~ msgid "Videos"
 #~ msgstr "Filmy"
 
-#, fuzzy
 #~ msgid "Sort:"
 #~ msgstr "Host:"
 
-#, fuzzy
 #~ msgid "None"
 #~ msgstr "Nie"
 
-#, fuzzy
 #~ msgid "Name Asc"
 #~ msgstr "Nazwa"
 
-#, fuzzy
 #~ msgid "Name Desc"
 #~ msgstr "Nazwa"
 
-#, fuzzy
 #~ msgid "Kind Asc"
 #~ msgstr "Typ:"
 
-#, fuzzy
 #~ msgid "Size Asc"
 #~ msgstr "Zapisz"
 
-#, fuzzy
 #~ msgid "Size Desc"
 #~ msgstr "Rozmiar:"
 
-#, fuzzy
 #~ msgid "Open"
 #~ msgstr "Otw�rz..."
 
-#, fuzzy
 #~ msgid "Delete Files"
 #~ msgstr "Skasowanie zaznaczonych plik�"
 
-#, fuzzy
 #~ msgid "System"
 #~ msgstr "Zamykanie"
 
-#, fuzzy
 #~ msgid "Error deleting file"
 #~ msgstr "Wysy?anie"
 
-#, fuzzy
 #~ msgid "Connected"
 #~ msgstr "&Po??cz"
 
-#, fuzzy
 #~ msgid "New Folder"
 #~ msgstr "Directory:"
 
-#, fuzzy
 #~ msgid "File Transfers"
 #~ msgstr "Zamknij po uko?czeniu transfer�"
 
-#, fuzzy
 #~ msgid "Cancel All"
 #~ msgstr "Porzuć"
 
-#, fuzzy
 #~ msgid "Clear Finished"
 #~ msgstr "Zako?cz"
 
-#, fuzzy
 #~ msgid "Should I stop all transfers?"
 #~ msgstr "Zamknij po uko?czeniu transfer�"
 
-#, fuzzy
 #~ msgid "one file"
 #~ msgstr "pliki .torrent"
 
-#, fuzzy
 #~ msgid "files"
 #~ msgstr "plik�"
 
-#, fuzzy
 #~ msgid "pending"
 #~ msgstr "Wyszukiwanie"
 
-#, fuzzy
 #~ msgid "canceled"
 #~ msgstr "Porzuć"
 
-#, fuzzy
 #~ msgid "error"
 #~ msgstr "B??d"
 
-#, fuzzy
 #~ msgid "Upload"
 #~ msgstr "Wysy?anie"
 
-#, fuzzy
 #~ msgid "to"
 #~ msgstr "Stop"
 
-#, fuzzy
 #~ msgid "Select a file..."
 #~ msgstr "Wybieranie katalogu"
 
-#, fuzzy
 #~ msgid "Preparing selected folder"
 #~ msgstr "Preview the selected download."
 
-#, fuzzy
 #~ msgid "Open in Folder"
 #~ msgstr "Odpalenie katalogu plikoteki."
 
-#, fuzzy
 #~ msgid "Open Folder Containing a Selected File"
 #~ msgstr "Skasowanie zaznaczonych plik�"
 
@@ -5159,22 +4854,18 @@ msgstr ""
 #~ msgid "Add Selected Files to the Playlist"
 #~ msgstr "Dodawanie wybranych plik�w do playlisty."
 
-#, fuzzy
 #~ msgid "Delete from playlist"
 #~ msgstr "Usuwanie wybranego pliku z playlisty."
 
-#, fuzzy
 #~ msgid "Toggle the {0} Screen"
 #~ msgstr "Pokaż ekran {0}"
 
-#, fuzzy
 #~ msgid "Connection"
 #~ msgstr "&Po??cz"
 
 #~ msgid "Show Media Player"
 #~ msgstr "Poka? otwarzacz multimedi�"
 
-#, fuzzy
 #~ msgid "Send File..."
 #~ msgstr "?adowanie saved-files..."
 
@@ -5190,7 +4881,6 @@ msgstr ""
 #~ msgid "You can choose the folder for saving files."
 #~ msgstr "Mo?esz wybra? katalog do kt�rego trafi? pobrane pliki"
 
-#, fuzzy
 #~ msgid ""
 #~ "The selected save folder is invalid. You may not have permissions to "
 #~ "write to the selected folder. FrostWire will revert to your previously "
@@ -5215,11 +4905,9 @@ msgstr ""
 #~ msgid "Use FrostWire Media Player:"
 #~ msgstr "U?yj odtwarzania MP3 FrostWire"
 
-#, fuzzy
 #~ msgid "Seeding Status"
 #~ msgstr "Wyszukiwanie"
 
-#, fuzzy
 #~ msgid "Search Files"
 #~ msgstr "wyniki"
 
@@ -5318,11 +5006,9 @@ msgstr ""
 #~ msgid "You are already downloading this file to {0}"
 #~ msgstr "Aktualnie ten plik pobierany jest do {0}"
 
-#, fuzzy
 #~ msgid "&Refresh Connections ("
 #~ msgstr "Po??czenia"
 
-#, fuzzy
 #~ msgid "&Refreshing Connections ("
 #~ msgstr "Po??czenia"
 
@@ -5359,7 +5045,6 @@ msgstr ""
 #~ msgid "Start automatically"
 #~ msgstr "Uruchom automatycznie"
 
-#, fuzzy
 #~ msgid ""
 #~ "You can choose whether or not FrostWire should manage your BitTorrent "
 #~ "protocol settings. It is highly recommended that FrostWire manage these "
@@ -5413,7 +5098,6 @@ msgstr ""
 #~ "plików w iTunes). Ta funkcja zostanie wyłączona. Można ją z powrotem "
 #~ "włączyć pod iTunes -> Współdzielenie"
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire was unable to start the Digital Audio Access Protocol (for "
 #~ "sharing files in iTunes) because a Microsoft patch is required or a "
@@ -5428,7 +5112,6 @@ msgstr ""
 #~ "składniku. Kliknij \"Tak\", żeby pobrać nakładkę lub \"Nie\", żeby "
 #~ "zablokować ten składnik, lub \"Anuluj\", by zdecydować później."
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire was unable to start the Digital Audio Access Protocol (for "
 #~ "sharing files in iTunes) because a firewall is blocking access. To "
@@ -5469,15 +5152,12 @@ msgstr ""
 #~ msgid "Do not display this message again."
 #~ msgstr "NIe wyświetlaj tej wiadomości ponownie."
 
-#, fuzzy
 #~ msgid "&Monitor"
 #~ msgstr "Kontrola"
 
-#, fuzzy
 #~ msgid "&Connections"
 #~ msgstr "Po??czenia"
 
-#, fuzzy
 #~ msgid "C&onsole"
 #~ msgstr "Konsola"
 
@@ -5496,7 +5176,6 @@ msgstr ""
 #~ "plików audio (dla udostępniania plików w iTunes). Ten składnik będzie "
 #~ "wyłączony. Możesz go włączyć w opcjach, w zakładce iTunes-> Udostępnianie"
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire was unable to initialize and start. This is usually due to a "
 #~ "firewall program blocking FrostWire's access to the internet or loopback "
@@ -5553,7 +5232,6 @@ msgstr ""
 #~ "FrostWire nie zweryfikował tej licencji\n"
 #~ "Kliknij 'weryfikuj' aby zlokalizować szczegóły pliku."
 
-#, fuzzy
 #~ msgid "Weedshare Details"
 #~ msgstr "Przywr�c domy?lne ustawienia"
 
@@ -5585,7 +5263,6 @@ msgstr ""
 #~ "zosta? omy?kowo skasowany lub posiada niew?a?ciwe prawa dost?pu. Prosimy "
 #~ "wybra? inny katalog."
 
-#, fuzzy
 #~ msgid "You are not connected to the FrostWire VIP Area"
 #~ msgstr "Nie jesteś połączony ze sklepem FrostWire"
 
@@ -5595,7 +5272,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Zostałeś odłączony od sieci. By połączyć wybierz Połącz z menu Plik."
 
-#, fuzzy
 #~ msgid "You are currently connecting to the network"
 #~ msgstr "Po??cz z sieci?."
 
@@ -5617,7 +5293,6 @@ msgstr ""
 #~ msgid "Good"
 #~ msgstr "Dobrze"
 
-#, fuzzy
 #~ msgid ""
 #~ "You are not yet fully connected to the network, but have a very good "
 #~ "connection"
@@ -5630,14 +5305,12 @@ msgstr ""
 #~ msgid "Your connection to the network is very strong"
 #~ msgstr "Twoje połączenie z siecią jest bardzo dobre."
 
-#, fuzzy
 #~ msgid "Waking Up"
 #~ msgstr "Ponowne zapytanie przes?ane, oczekiwanie"
 
 #~ msgid "Show Shared Files Count"
 #~ msgstr "Pokaż licznik współdzielonych plików"
 
-#, fuzzy
 #~ msgid "Show Store Indicator"
 #~ msgstr "Poka? status zapory internetowej"
 
@@ -5667,19 +5340,15 @@ msgstr ""
 #~ "Chcesz udostępnić duży plik? FrostWire obsługuje pliki o rozmiarze do 1 "
 #~ "TB (terabajta)."
 
-#, fuzzy
 #~ msgid "Upgrade FrostWire"
 #~ msgstr "&Korzystanie z FrostWire"
 
-#, fuzzy
 #~ msgid "Upgrade to FrostWire?"
 #~ msgstr "&Korzystanie z FrostWire"
 
-#, fuzzy
 #~ msgid "Upgrade Your Java"
 #~ msgstr "Dokonaj upgrade-u do wersji"
 
-#, fuzzy
 #~ msgid "Get FrostWire Now"
 #~ msgstr "&Korzystanie z FrostWire"
 
@@ -5708,11 +5377,9 @@ msgstr ""
 #~ msgid "Disconnect from the Network"
 #~ msgstr "Od??cz od sieci."
 
-#, fuzzy
 #~ msgid "My Shared Files"
 #~ msgstr "Moje udostępniane pliki"
 
-#, fuzzy
 #~ msgid "Share"
 #~ msgstr "Zapisz"
 
@@ -5737,11 +5404,9 @@ msgstr ""
 #~ msgid "You"
 #~ msgstr "Ty"
 
-#, fuzzy
 #~ msgid "Could not send chat message"
 #~ msgstr "Przegl?dni?cie hosta  {0} nie by?o mo?liwe."
 
-#, fuzzy
 #~ msgid "Browse Host"
 #~ msgstr "Opcje przegl?darki"
 
@@ -5754,7 +5419,6 @@ msgstr ""
 #~ msgid "View All Files on the Selected Computer"
 #~ msgstr "Przegl?danie udost?pnionych na tym ho?cie plik�"
 
-#, fuzzy
 #~ msgid "Host"
 #~ msgstr "Host:"
 
@@ -5770,38 +5434,30 @@ msgstr ""
 #~ msgid "Protocol"
 #~ msgstr "Protok�"
 
-#, fuzzy
 #~ msgid "Vendor/Version"
 #~ msgstr "Producent"
 
-#, fuzzy
 #~ msgid "Compressed (I/O)"
 #~ msgstr "Odrzucone (P/W)"
 
 #~ msgid "QRP (%)"
 #~ msgstr "QRP (%/rozmiar)"
 
-#, fuzzy
 #~ msgid "Connecting..."
 #~ msgstr "&Po??cz"
 
-#, fuzzy
 #~ msgid "Outgoing"
 #~ msgstr "Wychodz?ce"
 
-#, fuzzy
 #~ msgid "Incoming"
 #~ msgstr "Przychodz?ce"
 
-#, fuzzy
 #~ msgid "Ultrapeer"
 #~ msgstr "UltraHosty"
 
-#, fuzzy
 #~ msgid "Leaf"
 #~ msgstr "Listeky"
 
-#, fuzzy
 #~ msgid "Connecting"
 #~ msgstr "&Po??cz"
 
@@ -5814,11 +5470,9 @@ msgstr ""
 #~ msgid "Loading Connections Window..."
 #~ msgstr "?adowanie panela po??cze?..."
 
-#, fuzzy
 #~ msgid "Connection Status:"
 #~ msgstr "Po??cz na starcie:"
 
-#, fuzzy
 #~ msgid "Add Gnutella Connection"
 #~ msgstr "Wiadomo?ci Gnutella (potential)"
 
@@ -5831,19 +5485,15 @@ msgstr ""
 #~ msgid "0.6"
 #~ msgstr "0.6"
 
-#, fuzzy
 #~ msgid "Share Dropped Files?"
 #~ msgstr "Udost?pniane katalogi:"
 
-#, fuzzy
 #~ msgid "No, Share Nothing"
 #~ msgstr "Liczba udost?pnianych przez ciebie plik�"
 
-#, fuzzy
 #~ msgid "Queue"
 #~ msgstr "Skolejkowane"
 
-#, fuzzy
 #~ msgid "Queued"
 #~ msgstr "Skolejkowane"
 
@@ -5868,45 +5518,36 @@ msgstr ""
 #~ msgid "Waiting {0}s for Sources"
 #~ msgstr "Ponowne zapytanie przes?ane, oczekiwanie  {0}na wyniki"
 
-#, fuzzy
 #~ msgid "Need More Sources"
 #~ msgstr "na wyniki"
 
-#, fuzzy
 #~ msgid "Waiting for Stable Connections"
 #~ msgstr "?adowanie stale-connection-management..."
 
 #~ msgid "Waiting in Line, Position"
 #~ msgstr "Zdalnie skolejkowane na pozycji"
 
-#, fuzzy
 #~ msgid "Verifying File Contents..."
 #~ msgstr "?adowanie sk?adnik�w bazowych..."
 
-#, fuzzy
 #~ msgid "Pausing..."
 #~ msgstr "Publikuj�"
 
-#, fuzzy
 #~ msgid "Paused"
 #~ msgstr "Zatrzymaj"
 
-#, fuzzy
 #~ msgid "Downloading .torrent file..."
 #~ msgstr "?adowanie saved-files..."
 
-#, fuzzy
 #~ msgid "Average Bandwidth"
 #~ msgstr "Przep?ywno?? dla wysy?ek"
 
-#, fuzzy
 #~ msgid "Invalid Alternate Locations"
 #~ msgstr "Z?a nazwa pliku"
 
 #~ msgid "Chunks"
 #~ msgstr "Części"
 
-#, fuzzy
 #~ msgid "Lost To Corruption"
 #~ msgstr "Komunikacja pomi?dzy hostami"
 
@@ -5916,33 +5557,27 @@ msgstr ""
 #~ msgid "host"
 #~ msgstr "host"
 
-#, fuzzy
 #~ msgid "Possible Hosts"
 #~ msgstr "Blokowanie host�"
 
-#, fuzzy
 #~ msgid "Busy Hosts"
 #~ msgstr "Zablokuj hosta"
 
-#, fuzzy
 #~ msgid "Locating Sources..."
 #~ msgstr "?adowanie zasob�w..."
 
 #~ msgid "Priority"
 #~ msgstr "Priorytet"
 
-#, fuzzy
 #~ msgid "Downloads"
 #~ msgstr "Pobierz"
 
-#, fuzzy
 #~ msgid "Find More Sources for Download"
 #~ msgstr "Try to locate other sources for failed download."
 
 #~ msgid "Try to Find Additional Sources for Downloads"
 #~ msgstr "Try to locate other sources for failed download."
 
-#, fuzzy
 #~ msgid "&Refresh Skins"
 #~ msgstr "Od?wie?"
 
@@ -5956,19 +5591,15 @@ msgstr ""
 #~ msgid "Search..."
 #~ msgstr "Szukaj..."
 
-#, fuzzy
 #~ msgid "Clear Download"
 #~ msgstr "Czyszczenie listy pobra?"
 
-#, fuzzy
 #~ msgid "Clear Selected Downloads"
 #~ msgstr "Wstrzymanie pobierania wybranych plik�"
 
-#, fuzzy
 #~ msgid "Launch Download"
 #~ msgstr "Zatrzymaj"
 
-#, fuzzy
 #~ msgid "Launch Selected Downloads"
 #~ msgstr "Wstrzymanie pobierania wybranych plik�"
 
@@ -5978,26 +5609,21 @@ msgstr ""
 #~ msgid "Preview"
 #~ msgstr "Podgl?d"
 
-#, fuzzy
 #~ msgid "Chat with Host"
 #~ msgstr "Rozpocznij czata z hostem"
 
-#, fuzzy
 #~ msgid "Clear All Inactive Downloads"
 #~ msgstr "Usuwanie nieaktywnych download�w z listy."
 
 #~ msgid "Remove Inactive Downloads"
 #~ msgstr "Usuwanie nieaktywnych download�w z listy."
 
-#, fuzzy
 #~ msgid "No Filename"
 #~ msgstr "Nazwa pliku"
 
-#, fuzzy
 #~ msgid "Firewall Setup"
 #~ msgstr "Poka? status zapory internetowej"
 
-#, fuzzy
 #~ msgid "T3"
 #~ msgstr "A"
 
@@ -6014,18 +5640,15 @@ msgstr ""
 #~ msgid "Incomplete Files"
 #~ msgstr "Pliki niekompletne"
 
-#, fuzzy
 #~ msgid "Individual Store Files"
 #~ msgstr "Ukryj pliki .torrent"
 
 #~ msgid "Configure..."
 #~ msgstr "Skonfiguruj�"
 
-#, fuzzy
 #~ msgid "Search In Shared Files:"
 #~ msgstr "Wyszukiwanie i pobieranie plik�"
 
-#, fuzzy
 #~ msgid "Uploads"
 #~ msgstr "Wysłane"
 
@@ -6047,29 +5670,24 @@ msgstr ""
 #~ msgid "Continue Downloading Selected Incomplete File"
 #~ msgstr "Kontynuuj ?ciaganie pliku"
 
-#, fuzzy
 #~ msgid "Stop Sharing File"
 #~ msgstr "Wstrzymaj udost?pnianie"
 
-#, fuzzy
 #~ msgid "Share Folder"
 #~ msgstr "Udost?pniane katalogi:"
 
 #~ msgid "Stop Sharing Folder"
 #~ msgstr "Wstrzymaj udost?pnianie"
 
-#, fuzzy
 #~ msgid "Saved Files"
 #~ msgstr "Udost?pniane katalogi:"
 
-#, fuzzy
 #~ msgid "FrostWire cannot stop sharing this folder."
 #~ msgstr "Czy na pewno chcesz przesta? udost?pnia? ten katalog?"
 
 #~ msgid "Are you sure you want to stop sharing this folder?"
 #~ msgstr "Czy na pewno chcesz przesta? udost?pnia? ten katalog?"
 
-#, fuzzy
 #~ msgid "Shared Files"
 #~ msgstr "Udost?pniane katalogi:"
 
@@ -6079,7 +5697,6 @@ msgstr ""
 #~ msgid "Reload Shared Folders"
 #~ msgstr "Od?wie?enie listy udost?pnionych katalog�"
 
-#, fuzzy
 #~ msgid "Loading Logging Window..."
 #~ msgstr "?adowanie okna opcji..."
 
@@ -6092,11 +5709,9 @@ msgstr ""
 #~ msgid "&Get More Skins"
 #~ msgstr "&Pobierz więcej skórek"
 
-#, fuzzy
 #~ msgid "&Check for updates"
 #~ msgstr "Sprawdzanie aktualizacji..."
 
-#, fuzzy
 #~ msgid "seconds left)"
 #~ msgstr "sekunda"
 
@@ -6106,7 +5721,6 @@ msgstr ""
 #~ msgid "Slots"
 #~ msgstr "Sloty"
 
-#, fuzzy
 #~ msgid "Connections"
 #~ msgstr "&Po??cz"
 
@@ -6153,7 +5767,6 @@ msgstr ""
 #~ msgid "Host Communication"
 #~ msgstr "Komunikacja pomi?dzy hostami"
 
-#, fuzzy
 #~ msgid "Chat Configuration"
 #~ msgstr "Komunikacja pomi?dzy hostami"
 
@@ -6198,26 +5811,21 @@ msgstr ""
 #~ msgid "Always"
 #~ msgstr "Zawsze"
 
-#, fuzzy
 #~ msgid "Shared Name:"
 #~ msgstr "Udost?pniane katalogi:"
 
 #~ msgid "Disable Ultrapeer Capabilities:"
 #~ msgstr "Wy??cz UltraHost-a:"
 
-#, fuzzy
 #~ msgid "Disable Mojito DHT Capabilities:"
 #~ msgstr "Wy??cz UltraHost-a:"
 
-#, fuzzy
 #~ msgid "Disable TLS Capabilities:"
 #~ msgstr "Wy??cz UltraHost-a:"
 
-#, fuzzy
 #~ msgid "OOB Searching"
 #~ msgstr "Wyszukiwanie"
 
-#, fuzzy
 #~ msgid "Enable OOB Searching:"
 #~ msgstr "Wyszukiwanie"
 
@@ -6260,11 +5868,9 @@ msgstr ""
 #~ msgid "Max Upload Slots:"
 #~ msgstr "Wysy?ek maks.:"
 
-#, fuzzy
 #~ msgid "Open Dialog to Select a Folder"
 #~ msgstr "Wybieranie katalogu"
 
-#, fuzzy
 #~ msgid "Reset"
 #~ msgstr "Przywr�"
 
@@ -6349,22 +5955,18 @@ msgstr ""
 #~ msgid "Show All Speeds"
 #~ msgstr "Pokazuj wszystkie wyniki"
 
-#, fuzzy
 #~ msgid "Download Sharing"
 #~ msgstr "Download page"
 
-#, fuzzy
 #~ msgid "You can automatically share .torrent files."
 #~ msgstr "Mo?esz zleci? automatyczne usuwanie niekompletnych pobra?."
 
 #~ msgid "Start Upload Slots:"
 #~ msgstr "Liczba wysy?ek:"
 
-#, fuzzy
 #~ msgid "Relaxed"
 #~ msgstr "Zmie? nazw?"
 
-#, fuzzy
 #~ msgid "Connection Speed"
 #~ msgstr "Po??czenie na starcie"
 
@@ -6378,29 +5980,23 @@ msgstr ""
 #~ msgid "Speed:"
 #~ msgstr "??cze:"
 
-#, fuzzy
 #~ msgid "LimeWire Store Indicator"
 #~ msgstr "Zabezpieczenia"
 
-#, fuzzy
 #~ msgid "Show LimeWire Store Indicator:"
 #~ msgstr "Poka? status zapory internetowej"
 
-#, fuzzy
 #~ msgid "Shared Files Indicator"
 #~ msgstr "Udost?pniane katalogi:"
 
-#, fuzzy
 #~ msgid ""
 #~ "You can choose the folder for saving files purchased from the LimeWire "
 #~ "Store."
 #~ msgstr "Mo?esz wybra? katalog do kt�rego trafi? pobrane pliki"
 
-#, fuzzy
 #~ msgid "System Tray Icon"
 #~ msgstr "Zamykanie"
 
-#, fuzzy
 #~ msgid "Show System Tray Icon:"
 #~ msgstr "Zamykanie"
 
@@ -6436,11 +6032,9 @@ msgstr ""
 #~ msgid "Option"
 #~ msgstr "Opcja"
 
-#, fuzzy
 #~ msgid "Filter Results:"
 #~ msgstr "Filtry trafie?"
 
-#, fuzzy
 #~ msgid "Back To Search"
 #~ msgstr "Zamknij szukanie"
 
@@ -6462,7 +6056,6 @@ msgstr ""
 #~ msgid "Keyword"
 #~ msgstr "S?owo kluczowe"
 
-#, fuzzy
 #~ msgid "Direct Connect"
 #~ msgstr "&Roz??cz"
 
@@ -6478,7 +6071,6 @@ msgstr ""
 #~ msgid "What To Look For?"
 #~ msgstr "Czego szukasz?"
 
-#, fuzzy
 #~ msgid "Hide Adult Content"
 #~ msgstr "Ignoruj tre?ci niemoralne"
 
@@ -6497,7 +6089,6 @@ msgstr ""
 #~ msgid "Mark As"
 #~ msgstr "Zaznacz jako�"
 
-#, fuzzy
 #~ msgid "Get More Results"
 #~ msgstr "Przywr�c domy?lne ustawienia"
 
@@ -6526,7 +6117,6 @@ msgstr ""
 #~ msgid "Enter the extension pattern:"
 #~ msgstr "Wpisz wzór rozszerzenia"
 
-#, fuzzy
 #~ msgid "File types you added to share."
 #~ msgstr "Typy plików, które dodałeś do współdzielenia"
 
@@ -6539,11 +6129,9 @@ msgstr ""
 #~ msgid "Console"
 #~ msgstr "Konsola"
 
-#, fuzzy
 #~ msgid "View Console Messages"
 #~ msgstr "Wy?lij wiadomo??"
 
-#, fuzzy
 #~ msgid "View Logging Messages"
 #~ msgstr "?adowanie wiadomo?ci..."
 
@@ -6553,11 +6141,9 @@ msgstr ""
 #~ msgid "View Searches and Uploads"
 #~ msgstr "Kontrola transfer�w oraz przegl?danie wynik�w wyszukiwania"
 
-#, fuzzy
 #~ msgid "Test action!"
 #~ msgstr "Opis"
 
-#, fuzzy
 #~ msgid ""
 #~ "The skin file you selected does not exist or is invalid. Please choose "
 #~ "another file, or use the default."
@@ -6569,7 +6155,6 @@ msgstr ""
 #~ msgstr ""
 #~ "FrostWire powinien zosta? ponownie uruchomiony, aby by?o wida? t? sk�rk?."
 
-#, fuzzy
 #~ msgid "Invalid Skin"
 #~ msgstr "Z?a nazwa pliku"
 
@@ -6590,7 +6175,6 @@ msgstr ""
 #~ "Temat, który chcesz wybrać nie jest ważny. FrostWire powróci do "
 #~ "domyślnych ustawień."
 
-#, fuzzy
 #~ msgid "Kill Upload"
 #~ msgstr "Usuwanie uko?czonych wysy?ek"
 
@@ -6612,22 +6196,18 @@ msgstr ""
 #~ msgid "Queued at"
 #~ msgstr "Skolejkowane"
 
-#, fuzzy
 #~ msgid "Range Unavailable"
 #~ msgstr "Host nieosi?galny"
 
 #~ msgid "Malformed Request"
 #~ msgstr "Źle sformułowane zapytanie"
 
-#, fuzzy
 #~ msgid "Uploading Hash Tree"
 #~ msgstr "Wysy?anie"
 
-#, fuzzy
 #~ msgid "Suspended"
 #~ msgstr "??cze:"
 
-#, fuzzy
 #~ msgid "Awaiting Requests"
 #~ msgstr "Pobranie nie by?o mo?liwe"
 
@@ -6637,7 +6217,6 @@ msgstr ""
 #~ msgid "There is nothing to preview for file {0}."
 #~ msgstr "Nie ma podglądu dla pliku {0}."
 
-#, fuzzy
 #~ msgid "Info"
 #~ msgstr "Informacje"
 
@@ -6647,7 +6226,6 @@ msgstr ""
 #~ msgid "Modify the license of this file"
 #~ msgstr "Modyfikuj licencję tego pliku."
 
-#, fuzzy
 #~ msgid "Permanently remove the license from this file"
 #~ msgstr "Usuń licencję z tego pliku na zawsze."
 
@@ -6660,11 +6238,9 @@ msgstr ""
 #~ msgid "Allow modification of your work?"
 #~ msgstr "Zezwolić na modyfikację Twoich dzieł?"
 
-#, fuzzy
 #~ msgid "Copyright Holder:"
 #~ msgstr "Wstrzymaj udost?pnianie"
 
-#, fuzzy
 #~ msgid "Title of Work:"
 #~ msgstr "Nas?uchuj na porcie:"
 
@@ -6707,7 +6283,6 @@ msgstr ""
 #~ msgid "Genre:"
 #~ msgstr "Gatunek:"
 
-#, fuzzy
 #~ msgid "Year:"
 #~ msgstr "Wyczysc"
 
@@ -6717,36 +6292,30 @@ msgstr ""
 #~ msgid "Track:"
 #~ msgstr "Utwór:"
 
-#, fuzzy
 #~ msgid "Length:"
 #~ msgstr "Czas trwania"
 
-#, fuzzy
 #~ msgid "Bitrate:"
 #~ msgstr "Rozdzielczo??"
 
-#, fuzzy
 #~ msgid "Comments:"
 #~ msgstr "Dokumenty"
 
 #~ msgid "SHA1:"
 #~ msgstr "SHA1:"
 
-#, fuzzy
 #~ msgid "Price:"
 #~ msgstr "Podgl?d"
 
 #~ msgid "Link:"
 #~ msgstr "Odnośnik:"
 
-#, fuzzy
 #~ msgid "Action:"
 #~ msgstr "Lokalizacja"
 
 #~ msgid "License:"
 #~ msgstr "Licencja:"
 
-#, fuzzy
 #~ msgid "Rating:"
 #~ msgstr "Ponowne zapytanie przes?ane, oczekiwanie"
 
@@ -6777,7 +6346,6 @@ msgstr ""
 #~ msgid "Name:"
 #~ msgstr "Imię:"
 
-#, fuzzy
 #~ msgid "Publisher:"
 #~ msgstr "Publikuj�"
 
@@ -6787,7 +6355,6 @@ msgstr ""
 #~ msgid "Description:"
 #~ msgstr "Opis:"
 
-#, fuzzy
 #~ msgid "MPEG-1 Audio Layer 3"
 #~ msgstr "Odwtarzacza audio"
 
@@ -6852,15 +6419,12 @@ msgstr ""
 #~ msgid "Cable/DSL"
 #~ msgstr "Kabl�wka lub DSL"
 
-#, fuzzy
 #~ msgid "English"
 #~ msgstr "Zako?cz"
 
-#, fuzzy
 #~ msgid "Loading Languages"
 #~ msgstr "?adowanie menu..."
 
-#, fuzzy
 #~ msgid "false"
 #~ msgstr "Wklej"
 
@@ -6877,7 +6441,6 @@ msgstr ""
 #~ "Instalacja FrostWire dobieg?a pomy?lnie ko?ca. Naci?nij na \"Finish\" i "
 #~ "rozpocznij prac? z programem."
 
-#, fuzzy
 #~ msgid "Language Options"
 #~ msgstr "Opcje image"
 
@@ -6903,7 +6466,6 @@ msgstr ""
 #~ "udost?pni?. Je?eli chcia?by? udost?pni? kt�re? z nich to po prostu "
 #~ "zaznacz je. Udost?pnione zostan? r�wnie? ich podkatalogi."
 
-#, fuzzy
 #~ msgid "The selected folders below (and their subfolders) will be shared."
 #~ msgstr ""
 #~ "Wybrany katalog nie mo?e zosta? udost?pniony. Prosimy wybra? inny katalog "
@@ -6921,7 +6483,6 @@ msgstr ""
 #~ "multimedialnych. Nast?pnie b?dziesz m�g? wybra? kt�re katalogi udost?"
 #~ "pni?, a kt�rych nie. Czy chcia?by? skorzysta? z tej mo?liwo?ci?"
 
-#, fuzzy
 #~ msgid "Scan Hard Drive?"
 #~ msgstr "Analiza zasob�"
 
@@ -6944,15 +6505,12 @@ msgstr ""
 #~ msgid "Please wait as FrostWire scans your hard drive..."
 #~ msgstr "Trwa skanowanie zasob�w, prosimy poczeka?..."
 
-#, fuzzy
 #~ msgid "Scanning Hard Drive..."
 #~ msgstr "Analiza zasob�"
 
-#, fuzzy
 #~ msgid "Cancel Scan"
 #~ msgstr "Anulowanie bie??cej czynno?ci i zamknij okna"
 
-#, fuzzy
 #~ msgid ""
 #~ "Your search must be at least three characters long to avoid too many "
 #~ "meaningless results."
@@ -6977,21 +6535,17 @@ msgstr ""
 #~ msgid "Cannot remove unsaved info."
 #~ msgstr "Usuni?cie niezapisanej informacji nie jest mo?liwe."
 
-#, fuzzy
 #~ msgid ""
 #~ "Please wait while FrostWire is uploading your files to the Internet "
 #~ "Archive"
 #~ msgstr "Trwa skanowanie zasob�w, prosimy poczeka?..."
 
-#, fuzzy
 #~ msgid "Connecting to the Internet Archive..."
 #~ msgstr "Po??cz z sieci?."
 
-#, fuzzy
 #~ msgid "Connected..."
 #~ msgstr "&Po??cz"
 
-#, fuzzy
 #~ msgid "Checking in..."
 #~ msgstr "Sprawdzanie statusu poprawek..."
 
@@ -7207,7 +6761,6 @@ msgstr ""
 #~ "Poza scenami biznesowej strategii i codziennych spraw obsługiwanych przez "
 #~ "deweloperów biznesowych FrostWire:"
 
-#, fuzzy
 #~ msgid ""
 #~ "The FrostWire <a href=\"http://www.frostwire.com/\">web site</a> and "
 #~ "FrostWire graphic design are the hard work of FrostWire's web team:"
@@ -7283,7 +6836,6 @@ msgstr ""
 #~ "Szukasz czegoś rzadkiego? Im bardziej szczegółowe zapytanie, tym masz "
 #~ "większe szanse, by znaleźć to czego szukasz."
 
-#, fuzzy
 #~ msgid ""
 #~ "Want to open this Tip Of The Day dialog after you've closed it? Go to the "
 #~ "Help menu and choose 'Tip of the Day'."
@@ -7300,7 +6852,6 @@ msgstr ""
 #~ "dowolne zadanie lub wynik wyszukiwania, które ma uśmieszek w kolumnie "
 #~ "\"Czat\", a następnie kliknij \"Czat\"."
 
-#, fuzzy
 #~ msgid "Content"
 #~ msgstr "&Po??cz"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-12 17:19-0400\n"
+"POT-Creation-Date: 2012-04-14 11:28-0400\n"
 "PO-Revision-Date: 2007-08-23 13:53+0000\n"
 "Last-Translator: FTA <saintrecall@gmail.com>\n"
 "Language-Team: none\n"
@@ -80,7 +80,6 @@ msgid "azemp.failed.d3dbad"
 msgstr ""
 
 #: core/com/limegroup/gnutella/LifecycleManagerImpl.java:187
-#, fuzzy
 msgid "Loading Old Downloads..."
 msgstr "ਇਹਨਾਂ ਨੂੰ ਸ਼ੁਰੂ ਕਰਾਓ"
 
@@ -98,7 +97,6 @@ msgstr "ਔਡ੍ਯੋ"
 #: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:214
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:45
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:238
-#, fuzzy
 msgid "Title"
 msgstr "ਫ਼ਾਇਲ(&F)"
 
@@ -116,7 +114,6 @@ msgstr ""
 #: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:221
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:63
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:250
-#, fuzzy
 msgid "Album"
 msgstr "ਲਾਇਸਵਾਇਰ ਬਾਰੇ"
 
@@ -163,7 +160,6 @@ msgstr ""
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:96
 #: core/com/limegroup/gnutella/LimeXMLNames.java:112
-#, fuzzy
 msgid "Language"
 msgstr "ਭਾਸ਼ਾ ਬਦਲੋ(Language)(&H)"
 
@@ -178,19 +174,16 @@ msgstr ""
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:98
 #: core/com/limegroup/gnutella/LimeXMLNames.java:115
-#, fuzzy
 msgid "Comments"
 msgstr "ਦਸਤਾਵੇਜ਼"
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:99
 #: core/com/limegroup/gnutella/LimeXMLNames.java:116
-#, fuzzy
 msgid "Action"
 msgstr "ਥਾਂ"
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:100
 #: core/com/limegroup/gnutella/LimeXMLNames.java:117
-#, fuzzy
 msgid "Copyright"
 msgstr "ਕੌਪੀ ਕਰੋ"
 
@@ -199,7 +192,6 @@ msgstr "ਕੌਪੀ ਕਰੋ"
 #: core/com/limegroup/gnutella/LimeXMLNames.java:128
 #: core/com/limegroup/gnutella/LimeXMLNames.java:135
 #: core/com/limegroup/gnutella/LimeXMLNames.java:141
-#, fuzzy
 msgid "License Type"
 msgstr "ਲਾਇਸੈੰਸ"
 
@@ -218,12 +210,10 @@ msgid "Producer"
 msgstr ""
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:107
-#, fuzzy
 msgid "Studio"
 msgstr "ਔਡ੍ਯੋ"
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:108
-#, fuzzy
 msgid "Stars"
 msgstr "ਵਂਡੋ"
 
@@ -232,7 +222,6 @@ msgid "Subtitles"
 msgstr ""
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:114
-#, fuzzy
 msgid "Rating"
 msgstr "ਜੰਕ ਰੇਟਿੰਗ"
 
@@ -245,7 +234,6 @@ msgid "Width"
 msgstr ""
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:123
-#, fuzzy
 msgid "Image"
 msgstr "ਚਿੱਤਰ"
 
@@ -262,7 +250,6 @@ msgid "License"
 msgstr "ਲਾਇਸੈੰਸ"
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:130
-#, fuzzy
 msgid "Document"
 msgstr "ਦਸਤਾਵੇਜ਼"
 
@@ -275,7 +262,6 @@ msgid "Author"
 msgstr ""
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:137
-#, fuzzy
 msgid "Application"
 msgstr "ਥਾਂ"
 
@@ -289,7 +275,6 @@ msgid "Name"
 msgstr "ਨਾਂ"
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:139
-#, fuzzy
 msgid "Publisher"
 msgstr "ਪਬਲਿਸ਼..."
 
@@ -315,7 +300,6 @@ msgid "Images"
 msgstr "ਚਿੱਤਰ"
 
 #: core/com/limegroup/gnutella/MediaType.java:50
-#, fuzzy
 msgid "Torrents"
 msgstr "ਦਸਤਾਵੇਜ਼"
 
@@ -326,17 +310,14 @@ msgstr ""
 
 #. HERE IS WHERE WE ADD THE PJIRC OBJECT.
 #: gui/com/frostwire/gui/ChatMediator.java:110
-#, fuzzy
 msgid "Loading Community Chat..."
 msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
 #: gui/com/frostwire/gui/ChatMediator.java:413
-#, fuzzy
 msgid "Loading Community Chat Window..."
 msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
 #: gui/com/frostwire/gui/HideExitDialog.java:39
-#, fuzzy
 msgid "Do you want to hide FrostWire?"
 msgstr "ਕਨੈੱਕਟ ਹੋ ਰਹੇ ਹੋ"
 
@@ -352,7 +333,6 @@ msgstr ""
 
 #. hide button
 #: gui/com/frostwire/gui/HideExitDialog.java:70
-#, fuzzy
 msgid "Hide"
 msgstr "ਵਿਡ੍ਯੋ"
 
@@ -364,14 +344,12 @@ msgid "Exit"
 msgstr "ਬੰਦ ਕਰੋ"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:63
-#, fuzzy
 msgid "Send audio to iTunes"
 msgstr "ਇਸ ਪਲੇਲਿਸਟ ਨੂੰ ਸੇਵ ਕਰੋ"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:64
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:902
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:739
-#, fuzzy
 msgid "Send audio files to iTunes"
 msgstr "ਇਸ ਪਲੇਲਿਸਟ ਨੂੰ ਸੇਵ ਕਰੋ"
 
@@ -383,13 +361,11 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:108
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:388
-#, fuzzy
 msgid "Show Details"
 msgstr "ਮੈਗਨੇਟ ਬਾਰੇ ਹੋਰ ਜਾਨਕਾਰੀ"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:109
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:389
-#, fuzzy
 msgid "Show Torrent Details"
 msgstr "ਮੈਗਨੇਟ ਬਾਰੇ ਹੋਰ ਜਾਨਕਾਰੀ"
 
@@ -419,12 +395,10 @@ msgid "Shows the contents of this transfer in the Library Tab"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:180
-#, fuzzy
 msgid "Resume Download"
 msgstr "ਡਾਉੰਲੋਡ"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:181
-#, fuzzy
 msgid "Resume"
 msgstr "ਨਾਂ ਬਦਲੋ"
 
@@ -439,7 +413,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:227
-#, fuzzy
 msgid "Pause Download"
 msgstr "ਚਲਾਓ"
 
@@ -448,7 +421,6 @@ msgstr "ਚਲਾਓ"
 #.
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:228
 #: gui/com/frostwire/gui/player/AudioPlayerComponent.java:53
-#, fuzzy
 msgid "Pause"
 msgstr "ਚਿਪਕਾਓ"
 
@@ -471,12 +443,10 @@ msgid "Remove Torrent"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:259
-#, fuzzy
 msgid "Remove Torrent from selected downloads"
 msgstr "ਫੇਰ ਕੋਸ਼ਿਸ਼ ਕਰੋ ਡਾਉੰਲੋਡ ਦੀ"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:261
-#, fuzzy
 msgid "Remove Download"
 msgstr "ਡਾਉੰਲੋਡ"
 
@@ -489,7 +459,6 @@ msgid "Remove"
 msgstr "ਹਟਾਓ"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:263
-#, fuzzy
 msgid "Remove Selected Downloads"
 msgstr "ਇਹਨਾਂ ਨੂੰ ਚਲਾਓ(Preview)"
 
@@ -509,12 +478,10 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:295
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:296
-#, fuzzy
 msgid "Remove Download and Data"
 msgstr "ਡਾਉੰਲੋਡ"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:297
-#, fuzzy
 msgid "Remove Download and Data from selected downloads"
 msgstr "ਫੇਰ ਕੋਸ਼ਿਸ਼ ਕਰੋ ਡਾਉੰਲੋਡ ਦੀ"
 
@@ -542,7 +509,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:394
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:395
-#, fuzzy
 msgid "Hide Seeding Transfers"
 msgstr "ਟਰਾੰਸਫ਼ਰਾਂ ਦੇ ਬਾਦ ਬੰਦ"
 
@@ -553,13 +519,11 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:398
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:399
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:400
-#, fuzzy
 msgid "Show Seeding Transfers"
 msgstr "ਟਰਾੰਸਫ਼ਰਾਂ ਦੇ ਬਾਦ ਬੰਦ"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:419
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:195
-#, fuzzy
 msgid "Create New Playlist"
 msgstr "...ਵੰਗ ਸੇਵ ਕਰੋ ਡਾਉੰਲੋਡ ਨੂੰ"
 
@@ -574,7 +538,6 @@ msgid "Add to playlist "
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:39
-#, fuzzy
 msgid " (Partial)"
 msgstr "ਫ਼ਾਇਲ ਵਂਡੋ"
 
@@ -590,37 +553,31 @@ msgstr "ਮਾਪ"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:103
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:320
-#, fuzzy
 msgid "Status"
 msgstr "ਆੰਕੜੇ"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:109
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:321
-#, fuzzy
 msgid "Progress"
 msgstr "ਪ੍ਰੋਗ੍ਰੈੰਜ਼"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:117
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:324
-#, fuzzy
 msgid "Downloaded"
 msgstr "ਡਾਉੰਲੋਡ"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:120
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:325
-#, fuzzy
 msgid "Uploaded"
 msgstr "ਹੁਣ ਦੇ ਅੱਪਲੋਡ"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:127
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:322
-#, fuzzy
 msgid "Down Speed"
 msgstr "ਡਾਉੰਲੋਡ"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:131
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:323
-#, fuzzy
 msgid "Up Speed"
 msgstr "ਗਤਿ"
 
@@ -631,7 +588,6 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:142
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:327
 #: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:22
-#, fuzzy
 msgid "Seeds"
 msgstr "ਗਤਿ"
 
@@ -641,7 +597,6 @@ msgid "Peers"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:148
-#, fuzzy
 msgid "Share Ratio"
 msgstr "ਫ਼ਾਇਲ ਵਂਡੋ"
 
@@ -662,7 +617,6 @@ msgstr ""
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:765
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:515
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:638
-#, fuzzy
 msgid "Launch"
 msgstr "ਕੰਮ ਸ਼ੁਰੂ ਕਰੋ"
 
@@ -675,7 +629,6 @@ msgid "Launch Selected Files"
 msgstr "ਇਹਨਾਂ ਨੂੰ ਚਲਾਓ"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:444
-#, fuzzy
 msgid "Show in Library"
 msgstr "ਲਾਇਬਰੇਰੀ"
 
@@ -684,17 +637,14 @@ msgid "Show Download in Library"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediator.java:141
-#, fuzzy
 msgid "Transfers"
 msgstr "ਟਰਾੰਸਫ਼ਰਾਂ ਦੇ ਬਾਦ ਬੰਦ"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediator.java:224
-#, fuzzy
 msgid "Loading Download Window..."
 msgstr "...ਵੰਗ ਡਾਉੰਲੋਡ"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediator.java:517
-#, fuzzy
 msgid "Cancel Download"
 msgstr "ਡਾਉੰਲੋਡ ਨੂੰ ਹਟਾਓ"
 
@@ -734,7 +684,6 @@ msgstr ""
 
 #. advanced > Download Speed Menu //
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:56
-#, fuzzy
 msgid "Set Down Speed"
 msgstr "ਖੋਜ ਦਾ ਢੰਗ"
 
@@ -780,7 +729,6 @@ msgstr ""
 #. }
 #. advanced >Upload Speed Menu //
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:163
-#, fuzzy
 msgid "Set Up Speed"
 msgstr "ਖੋਜ ਦਾ ਢੰਗ"
 
@@ -793,12 +741,10 @@ msgstr "ਹੋਰ ਜਾਨਕਾਰੀ"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:399
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:149
-#, fuzzy
 msgid "Add to playlist"
 msgstr "ਪਲੇਲਿਸਟ’ਚ ਪਾਓ"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:84
-#, fuzzy
 msgid "Torrent File Created with FrostWire"
 msgstr "ਕਨੈੱਕਟ ਹੋ ਰਹੇ ਹੋ"
 
@@ -810,12 +756,10 @@ msgid "Create New Torrent"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:178
-#, fuzzy
 msgid "Torrent Contents"
 msgstr "ਵਯਸਕ ਮਾਲ ਲੁਕਾਓ"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:180
-#, fuzzy
 msgid "Select File or Folder..."
 msgstr "ਫ਼ੋਲਡਰ ਵਂਡੋ"
 
@@ -832,7 +776,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:228
-#, fuzzy
 msgid "Torrent Properties"
 msgstr "ਤੁਸੀਂ ਵੰਡ ਰਹੇ ਹੋ"
 
@@ -847,7 +790,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:248
-#, fuzzy
 msgid "Start seeding"
 msgstr "ਸ਼ੁਰੂ ਹੋਯਾ"
 
@@ -876,13 +818,11 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:306
 #: gui/com/limegroup/gnutella/gui/AboutWindow.java:103
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMediator.java:78
-#, fuzzy
 msgid "Close"
 msgstr "ਬੰਦ ਕਰੋ(&C)"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:314
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:875
-#, fuzzy
 msgid "Save torrent as..."
 msgstr "ਫ਼ਾਇਲ ਵਂਡੋ"
 
@@ -932,7 +872,6 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:486
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:843
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:716
-#, fuzzy
 msgid "Invalid Folder"
 msgstr "ਫ਼ਾਇਲ ਦਾ ਨਾਂ"
 
@@ -945,12 +884,10 @@ msgid "Invalid Tracker URL\n"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:521
-#, fuzzy
 msgid "Torrent Created."
 msgstr "ਬਣੀ"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:547
-#, fuzzy
 msgid "Torrent File"
 msgstr "ਖੋਜ ਦੇ ਪਰਿਣਾਮ ਦੇ ਫ਼ਿਲਟਰਾਂ ਨੂੰ ਦੇਖੋ"
 
@@ -1002,7 +939,6 @@ msgid "wizard.operationfailed"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:886
-#, fuzzy
 msgid "Saving Torrent..."
 msgstr "ਫ਼ਾਇਲ ਵਂਡਣਾਂ ਬੰਦ ਕਰੋ"
 
@@ -1012,31 +948,26 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:61
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:81
-#, fuzzy
 msgid "Select files to download"
 msgstr "ਇਹਨਾਂ ਨੂੰ ਮਿਟਾਓ"
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:129
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:149
-#, fuzzy
 msgid "Download Selected Files Only"
 msgstr "ਸਾਰੀ ਫ਼ਾਇਲਾਂ ਡਾਉੰਲੋਡ"
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:153
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:173
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:264
-#, fuzzy
 msgid "File"
 msgstr "ਫ਼ਾਇਲ(&F)"
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:171
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:191
-#, fuzzy
 msgid "Select/Unselect all files"
 msgstr "ਇਹਨਾਂ ਨੂੰ ਉੜਾਓ"
 
 #: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:70
-#, fuzzy
 msgid "Preparing selection"
 msgstr "ਇਹਨਾਂ ਨੂੰ ਚਲਾਓ"
 
@@ -1045,7 +976,6 @@ msgid "please wait..."
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:159
-#, fuzzy
 msgid "Select the content you want to send"
 msgstr "ਇਹਨਾਂ ਨੂੰ ਮਿਟਾਓ"
 
@@ -1056,12 +986,10 @@ msgid "Download"
 msgstr "ਡਾਉੰਲੋਡ"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:166
-#, fuzzy
 msgid "at"
 msgstr "ਚੈਟ"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:167
-#, fuzzy
 msgid "via FrostWire"
 msgstr "ਲਾਇਸਵਾਇਰ PRO"
 
@@ -1086,47 +1014,38 @@ msgid "Send the message above to Twitter"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:444
-#, fuzzy
 msgid "Copy Text"
 msgstr "ਕੌਪੀ ਕਰੋ"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:445
-#, fuzzy
 msgid "Copy entire message to Clipboard"
 msgstr "ਚੁੰਬਕੀ ਲਿੰਕ ਨੂੰ ਕਲਿੱਪਬੋਰਡ ਤੇ ਚੇਪੋ"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:452
-#, fuzzy
 msgid "Message copied to clipboard."
 msgstr "ਚੁੰਬਕੀ ਲਿੰਕ ਨੂੰ ਕਲਿੱਪਬੋਰਡ ਤੇ ਚੇਪੋ"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:464
-#, fuzzy
 msgid "Copy Link"
 msgstr "ਕੌਪੀ ਕਰੋ"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:465
-#, fuzzy
 msgid "Copy Link to Clipboard"
 msgstr "ਚੁੰਬਕੀ ਲਿੰਕ ਨੂੰ ਕਲਿੱਪਬੋਰਡ ਤੇ ਚੇਪੋ"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:472
-#, fuzzy
 msgid "Link copied to clipboard."
 msgstr "ਚੁੰਬਕੀ ਲਿੰਕ ਨੂੰ ਕਲਿੱਪਬੋਰਡ ਤੇ ਚੇਪੋ"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:487
-#, fuzzy
 msgid "Copy Magnet URL to Clipboard"
 msgstr "ਚੁੰਬਕੀ ਲਿੰਕ ਨੂੰ ਕਲਿੱਪਬੋਰਡ ਤੇ ਚੇਪੋ"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:494
-#, fuzzy
 msgid "Magnet copied to clipboard."
 msgstr "ਚੁੰਬਕੀ ਲਿੰਕ ਨੂੰ ਕਲਿੱਪਬੋਰਡ ਤੇ ਚੇਪੋ"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentFetcherDownload.java:23
-#, fuzzy
 msgid "Downloading Torrent"
 msgstr "ਡਾਉੰਲੋਡ"
 
@@ -1141,18 +1060,15 @@ msgstr "ਡਾਉੰਲੋਡ"
 #: gui/com/limegroup/gnutella/gui/MessageService.java:104
 #: gui/com/limegroup/gnutella/gui/MessageService.java:124
 #: gui/com/limegroup/gnutella/gui/MessageService.java:244
-#, fuzzy
 msgid "Error"
 msgstr "ਗ਼ਲਤੀ: {0}"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentFetcherDownload.java:25
-#, fuzzy
 msgid "Canceled"
 msgstr "ਕੰਮ ਰੱਦ ਕਰੋ"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:34
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentSaveFolderPaneItem.java:13
-#, fuzzy
 msgid "Torrent Data Save Folder"
 msgstr "ਫ਼ੋਲਡਰ ਵਂਡੋ"
 
@@ -1182,7 +1098,6 @@ msgid "Use Default"
 msgstr "ਡਿਫ਼ੌਲਟ ਇਸਤਮਾਲ ਕਰੋ"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:128
-#, fuzzy
 msgid "Use the Default Folder"
 msgstr "ਡਿਫ਼ੌਲਟ ਇਸਤਮਾਲ ਕਰੋ"
 
@@ -1197,7 +1112,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:46
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentSeedingSettingPaneItem.java:14
-#, fuzzy
 msgid "Seeding Settings"
 msgstr "ਗਤਿ"
 
@@ -1222,24 +1136,20 @@ msgid "globalmanager.download.remove.veto"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:20
-#, fuzzy
 msgid "Downloading"
 msgstr "ਡਾਉੰਲੋਡ"
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:22
 #: gui/com/frostwire/gui/bittorrent/YouTubeVideoUrlDownload.java:49
-#, fuzzy
 msgid "Stopped"
 msgstr "ਰੋਕੋ"
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:23
-#, fuzzy
 msgid "Waiting"
 msgstr "ਜੰਕ ਰੇਟਿੰਗ"
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:24
 #: gui/com/frostwire/gui/bittorrent/YouTubeVideoUrlDownload.java:47
-#, fuzzy
 msgid "Finished"
 msgstr "ਖ਼ਤਮ"
 
@@ -1264,7 +1174,6 @@ msgstr ""
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:173
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:47
 #: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:421
-#, fuzzy
 msgid "Options"
 msgstr "ਓਪਸ਼ੰਜ਼(&O)"
 
@@ -1274,19 +1183,16 @@ msgstr "ਤੁਸੀ ਅਪਣੇ ਵੰਡੇ ਫ਼ੋਲਡਰ ਲਾਇੰਵ�
 
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:229
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:359
-#, fuzzy
 msgid "Send"
 msgstr "ਗਤਿ"
 
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:243
-#, fuzzy
 msgid "Do you want to send this file to a friend?"
 msgstr "ਇਸ ਪਲੇਲਿਸਟ ਨੂੰ ਸੇਵ ਕਰੋ"
 
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:243
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:136
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:65
-#, fuzzy
 msgid "Send files with FrostWire"
 msgstr "ਲਾਇਸਵਾਇਰ ਦੇ ਇਸਤਿਮਾਲ ਤੇ ਮਦਦ"
 
@@ -1301,12 +1207,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/library/Device.java:265
-#, fuzzy
 msgid "Transfer failed"
 msgstr "ਟਰਾੰਸਫ਼ਰਾਂ ਦੇ ਬਾਦ ਬੰਦ"
 
 #: gui/com/frostwire/gui/library/DeviceUploadDialog.java:66
-#, fuzzy
 msgid "Upload to device"
 msgstr "ਹੁਣ ਦੇ ਅੱਪਲੋਡ"
 
@@ -1315,18 +1219,15 @@ msgid "Waiting for device authorization..."
 msgstr ""
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:70
-#, fuzzy
 msgid "Uploading"
 msgstr "ਹੁਣ ਦੇ ਅੱਪਲੋਡ"
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
-#, fuzzy
 msgid "Uploading "
 msgstr "ਹੁਣ ਦੇ ਅੱਪਲੋਡ"
 
 #: gui/com/frostwire/gui/library/DownloadTask.java:76
 #: gui/com/frostwire/gui/library/DownloadTask.java:109
-#, fuzzy
 msgid "Downloading "
 msgstr "ਡਾਉੰਲੋਡ"
 
@@ -1344,7 +1245,6 @@ msgid "Icon"
 msgstr "ਆਇਕੰ"
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:76
-#, fuzzy
 msgid "Date Added"
 msgstr "...ਵੰਗ ਸੇਵ ਕਰੋ ਡਾਉੰਲੋਡ ਨੂੰ"
 
@@ -1358,18 +1258,15 @@ msgstr ""
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:261
 #: gui/com/frostwire/gui/library/LibrarySearch.java:198
 #: gui/com/frostwire/gui/tabs/SearchDownloadTab.java:42
-#, fuzzy
 msgid "Search"
 msgstr "ਹੋਰ ਲਭੋ"
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableMediator.java:411
 #: gui/com/frostwire/gui/library/LibraryDeviceTableMediator.java:412
-#, fuzzy
 msgid "Save"
 msgstr "ਵਂਡੋ"
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableMediator.java:413
-#, fuzzy
 msgid "Save Selected Files To Folder"
 msgstr "ਇਹਨਾਂ ਨੂੰ ਮਿਟਾਓ"
 
@@ -1379,24 +1276,20 @@ msgid "tracks"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:199
-#, fuzzy
 msgid "Finished Downloads"
 msgstr "ਲਭੋ ਅਤੇ ਡਾਉੰਲੋਡ ਕਰੋ"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:201
-#, fuzzy
 msgid "Devices"
 msgstr "ਚਲਾਓ(Preview)"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:223
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:155
-#, fuzzy
 msgid "Configure Options"
 msgstr "ਵੰਡਣ ਦੇ ਓਪਸ਼ੰਜ਼ ਕੰਫ਼ਿਗਰ ਕਰੋ"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:223
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:156
-#, fuzzy
 msgid "You can configure the FrostWire's Options."
 msgstr "ਤੁਸੀ ਅਪਣੇ ਵੰਡੇ ਫ਼ੋਲਡਰ ਲਾਇੰਵਾਇਰ ਦੇ ਓਪਸ਼ੰਜ਼ ਵਿੱਚ ਕੰਫ਼ਿਗਰ ਕਰ ਸਕਦੇ ਹੋ"
 
@@ -1407,7 +1300,6 @@ msgstr "ਰਿਫ਼੍ਰੈੱਸ਼"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:607
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:655
-#, fuzzy
 msgid "Refresh selected"
 msgstr "ਕਨੈਕਸ਼ੰਜ਼"
 
@@ -1416,7 +1308,6 @@ msgid "Open Library Folder"
 msgstr "ਲਾਇਬ੍ਰੈਰੀ ਫ਼ੋਲਡਰ ਖੋਲੋ"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableDataLine.java:257
-#, fuzzy
 msgid "Path"
 msgstr "ਚਿਪਕਾਓ"
 
@@ -1482,20 +1373,17 @@ msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:791
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:664
-#, fuzzy
 msgid "Launch in "
 msgstr "ਕੰਮ ਸ਼ੁਰੂ ਕਰੋ"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:792
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:665
-#, fuzzy
 msgid "Launch Selected Files in "
 msgstr "ਇਹਨਾਂ ਨੂੰ ਚਲਾਓ"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:834
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:707
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:317
-#, fuzzy
 msgid "Create a new .torrent file"
 msgstr "ਫ਼ਾਇਲ ਵਂਡੋ"
 
@@ -1562,12 +1450,10 @@ msgid "Copy Stream URL"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryMediator.java:97
-#, fuzzy
 msgid "Loading Library Window..."
 msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:162
-#, fuzzy
 msgid "New Playlist"
 msgstr "...ਵੰਗ ਸੇਵ ਕਰੋ ਡਾਉੰਲੋਡ ਨੂੰ"
 
@@ -1576,12 +1462,10 @@ msgid "Creates a new Playlist"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:383
-#, fuzzy
 msgid "Open Playlist (.m3u)"
 msgstr "ਪਲੇਲਿਸਟ ਫ਼ਾਇਲਾਂ (*.m3u)"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:456
-#, fuzzy
 msgid "Save Playlist As"
 msgstr "...ਵੰਗ ਸੇਵ ਕਰੋ ਡਾਉੰਲੋਡ ਨੂੰ"
 
@@ -1602,7 +1486,6 @@ msgid "Refresh the audio properties based on ID3 tags of selected items"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:690
-#, fuzzy
 msgid "Delete Playlist"
 msgstr "...ਵੰਗ ਸੇਵ ਕਰੋ ਡਾਉੰਲੋਡ ਨੂੰ"
 
@@ -1613,7 +1496,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:720
-#, fuzzy
 msgid "Rename Playlist"
 msgstr "...ਵੰਗ ਸੇਵ ਕਰੋ ਡਾਉੰਲੋਡ ਨੂੰ"
 
@@ -1641,7 +1523,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:787
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:805
-#, fuzzy
 msgid "Export Playlist to .m3u"
 msgstr "ਪਲੇਲਿਸਟ ਫ਼ਾਇਲਾਂ (*.m3u)"
 
@@ -1653,7 +1534,6 @@ msgstr ""
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:39
 #: gui/com/frostwire/gui/library/StarredDirectoryHolder.java:40
 #: gui/com/frostwire/gui/library/StarredDirectoryHolder.java:44
-#, fuzzy
 msgid "Starred"
 msgstr "ਸ਼ੁਰੂ ਹੋਯਾ"
 
@@ -1663,27 +1543,22 @@ msgid "Comment"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:244
-#, fuzzy
 msgid "Duration"
 msgstr "ਥਾਂ"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:267
-#, fuzzy
 msgid "Folder"
 msgstr "ਸਾਰੇ ਫ਼ੋਲਡਰ"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:763
-#, fuzzy
 msgid "Delete Selected Files from this playlist"
 msgstr "ਇਸ ਫ਼ਾਇਲ ਨੂੰ ਪਲੇਲਿਸਟ ਤੋਂ ਹਟਾਓ"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:820
-#, fuzzy
 msgid "Cleanup playlist"
 msgstr "ਮਿਟਾਓ ਡਾਉੰਲੋਡ"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:821
-#, fuzzy
 msgid "Remove the deleted items"
 msgstr "ਇਸ ਫ਼ਾਇਲ ਨੂੰ ਪਲੇਲਿਸਟ ਤੋਂ ਹਟਾਓ"
 
@@ -1692,7 +1567,6 @@ msgid "Refresh the audio properties based on ID3 tags"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibrarySearch.java:101
-#, fuzzy
 msgid "search results"
 msgstr "ਖੋਜ ਦੇ ਪਰਿਣਾਮ ਦੇ ਫ਼ਿਲਟਰਾਂ ਨੂੰ ਦੇਖੋ"
 
@@ -1705,12 +1579,10 @@ msgstr ""
 #: gui/com/frostwire/gui/library/LibraryUtils.java:140
 #: gui/com/frostwire/gui/library/LibraryUtils.java:171
 #: gui/com/frostwire/gui/library/LibraryUtils.java:235
-#, fuzzy
 msgid "Playlist name"
 msgstr "...ਵੰਗ ਸੇਵ ਕਰੋ ਡਾਉੰਲੋਡ ਨੂੰ"
 
 #: gui/com/frostwire/gui/library/LibraryUtils.java:573
-#, fuzzy
 msgid "Refreshing"
 msgstr "ਰਿਫ਼੍ਰੈੱਸ਼"
 
@@ -1723,12 +1595,10 @@ msgid "Error importing Radio Station from"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/MediaTypeSavedFilesDirectoryHolder.java:60
-#, fuzzy
 msgid "Holds the Results for "
 msgstr "ਨਤੀਜੇ ਫ਼ਿਲਟਰ ਕਰਆਓ"
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:187
-#, fuzzy
 msgid "Library Folders"
 msgstr "ਲਾਇਬ੍ਰੈਰੀ ਫ਼ੋਲਡਰ ਖੋਲੋ"
 
@@ -1749,7 +1619,6 @@ msgid "Folder's files and some subfolders are included in the Library."
 msgstr ""
 
 #: gui/com/frostwire/gui/library/UITool.java:102
-#, fuzzy
 msgid "Applications"
 msgstr "ਥਾਂ"
 
@@ -1805,7 +1674,6 @@ msgstr ""
 
 #. public ChatTab(final ChatMediator cm) {
 #: gui/com/frostwire/gui/tabs/ChatTab.java:29
-#, fuzzy
 msgid "Chat"
 msgstr "ਚੈਟ"
 
@@ -1842,7 +1710,6 @@ msgstr "ਲਾਇਸਵਾਇਰ ਬਾਰੇ"
 #. set up limewire version label
 #: gui/com/limegroup/gnutella/gui/AboutWindow.java:79
 #: gui/com/limegroup/gnutella/gui/notify/TrayNotifier.java:57
-#, fuzzy
 msgid "FrostWire"
 msgstr "ਲਾਇਸਵਾਇਰ PRO"
 
@@ -1951,7 +1818,6 @@ msgstr ""
 #.
 #: gui/com/limegroup/gnutella/gui/CheckBoxList.java:620
 #: gui/com/limegroup/gnutella/gui/LimeTextField.java:107
-#, fuzzy
 msgid "Select All"
 msgstr "ਸਾਰਾ ਅੰਚੁਣੋ"
 
@@ -1972,19 +1838,16 @@ msgid "Clear History"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:84
-#, fuzzy
 msgid "Send this file to a friend"
 msgstr "ਇਸ ਪਲੇਲਿਸਟ ਨੂੰ ਸੇਵ ਕਰੋ"
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:130
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:64
-#, fuzzy
 msgid "file"
 msgstr "ਫ਼ਾਇਲਾਂ"
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:131
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:64
-#, fuzzy
 msgid "folder"
 msgstr "ਸਾਰੇ ਫ਼ੋਲਡਰ"
 
@@ -2018,7 +1881,6 @@ msgstr "ਨਈ"
 #: gui/com/limegroup/gnutella/gui/FileChooserHandler.java:271
 #: gui/com/limegroup/gnutella/gui/FileChooserHandler.java:446
 #: gui/com/limegroup/gnutella/gui/FileChooserHandler.java:465
-#, fuzzy
 msgid "Select Folder"
 msgstr "ਫ਼ੋਲਡਰ ਵਂਡੋ"
 
@@ -2057,12 +1919,10 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:115
 #: gui/com/limegroup/gnutella/gui/menu/SearchMenu.java:25
-#, fuzzy
 msgid "&Search"
 msgstr "ਹੋਰ ਲਭੋ"
 
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:115
-#, fuzzy
 msgid "&Library"
 msgstr "ਲਾਇਬਰੇਰੀ"
 
@@ -2142,28 +2002,23 @@ msgid "KB/s"
 msgstr "ਕੇਬੀ/ਸੈਕਿੰਡ"
 
 #: gui/com/limegroup/gnutella/gui/IndentingPanel.java:134
-#, fuzzy
 msgid "More Search Options"
 msgstr "ਹੋਰ ਓਪਸ਼ੰਜ਼"
 
 #. Load up the HTML engine.
 #: gui/com/limegroup/gnutella/gui/Initializer.java:307
-#, fuzzy
 msgid "Loading HTML Engine..."
 msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
 #: gui/com/limegroup/gnutella/gui/Initializer.java:355
-#, fuzzy
 msgid "Loading User Interface..."
 msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
 #: gui/com/limegroup/gnutella/gui/Initializer.java:366
-#, fuzzy
 msgid "Loading Core Components..."
 msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
 #: gui/com/limegroup/gnutella/gui/Initializer.java:422
-#, fuzzy
 msgid "Loading Icons..."
 msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
@@ -2203,7 +2058,6 @@ msgstr "ਠੀਕ ਹੈ"
 #: gui/com/limegroup/gnutella/gui/InputFieldDialog.java:93
 #: gui/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:44
 #: gui/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:46
-#, fuzzy
 msgid "Apply Operation"
 msgstr "ਕੰਮ ਰੱਦ ਕਰੋ"
 
@@ -2224,7 +2078,6 @@ msgid "Upgrade Java"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:178
-#, fuzzy
 msgid "More Information"
 msgstr "ਹੋਰ ਓਪਸ਼ੰਜ਼"
 
@@ -2287,7 +2140,6 @@ msgid "Paste"
 msgstr "ਚਿਪਕਾਓ"
 
 #: gui/com/limegroup/gnutella/gui/MessageResourceHandler.java:10
-#, fuzzy
 msgid "Download Page"
 msgstr "ਡਾਉੰਲੋਡ"
 
@@ -2300,7 +2152,6 @@ msgid "Magnet Links for Fast Downloads (if you have FrostWire installed)"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/MessageService.java:68
-#, fuzzy
 msgid "Loading Messages..."
 msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
@@ -2308,7 +2159,6 @@ msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 #: gui/com/limegroup/gnutella/gui/MessageService.java:159
 #: gui/com/limegroup/gnutella/gui/MessageService.java:247
 #: gui/com/limegroup/gnutella/gui/menu/ToolsMenu.java:56
-#, fuzzy
 msgid "Warning"
 msgstr "ਖ਼ਬਰਦਾਰ: {0}"
 
@@ -2347,7 +2197,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/ShutdownWindow.java:25
-#, fuzzy
 msgid "Shutting down FrostWire..."
 msgstr "ਲਾਇਸਵਾਇਰ ਦੇ ਇਸਤਿਮਾਲ ਬਾਰੇ(&U)"
 
@@ -2356,7 +2205,6 @@ msgid "Please wait while FrostWire shuts down..."
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/SplashWindow.java:108
-#, fuzzy
 msgid "Loading FrostWire..."
 msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
@@ -2370,12 +2218,10 @@ msgid "Add New List Item"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/StandardListEditor.java:372
-#, fuzzy
 msgid "Remove Selected Item"
 msgstr "ਇਸ ਫ਼ਾਇਲ ਨੂੰ ਪਲੇਲਿਸਟ ਤੋਂ ਹਟਾਓ"
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:108
-#, fuzzy
 msgid "Loading Status Window..."
 msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
@@ -2442,12 +2288,10 @@ msgid "Show Bandwidth Consumption"
 msgstr "ਬੈੰਡਵਿਥ ਦੀ ਖਧਤ ਦੇਖੋ"
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:763
-#, fuzzy
 msgid "Downloads:"
 msgstr "ਹੁਣ ਦੇ ਡਾਉੰਲੋਡ"
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:770
-#, fuzzy
 msgid "Uploads:"
 msgstr "ਹੁਣ ਦੇ ਅੱਪਲੋਡ"
 
@@ -2795,12 +2639,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:122
-#, fuzzy
 msgid "Thank you for using FrostWire"
 msgstr "ਲਾਇਸਵਾਇਰ ਦੇ ਇਸਤਿਮਾਲ ਤੇ ਮਦਦ"
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:123
-#, fuzzy
 msgid "Visit us at www.frostwire.com"
 msgstr "ਹੋਰ ਸਕਿੰਨਾਂ ਲਭੋ frostwire.com ਤੋਂ"
 
@@ -2842,7 +2684,6 @@ msgid "A newer version is available, update?"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:47
-#, fuzzy
 msgid "O&pen .Torrent or Magnet"
 msgstr "...ਵੰਗ ਡਾਉੰਲੋਡ"
 
@@ -2851,7 +2692,6 @@ msgid "Opens a magnet link or torrent file"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:73
-#, fuzzy
 msgid "Download .Torrent or Magnet or YouTube video link"
 msgstr "...ਵੰਗ ਡਾਉੰਲੋਡ"
 
@@ -2878,27 +2718,22 @@ msgid "&Close"
 msgstr "ਬੰਦ ਕਰੋ(&C)"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:287
-#, fuzzy
 msgid "Close the program's main window"
 msgstr "ਪਰੋਗਰੈਮ ਬੰਦ ਕਰੋ"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:303
-#, fuzzy
 msgid "E&xit"
 msgstr "ਬੰਦ ਕਰੋ"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:304
-#, fuzzy
 msgid "Close and exit the program"
 msgstr "ਪਰੋਗਰੈਮ ਬੰਦ ਕਰੋ"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:336
-#, fuzzy
 msgid "Send File or Folder..."
 msgstr "ਨਵਾ ਫ਼ੋਲਡਰ ਵਂਡੋ...(R)"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:337
-#, fuzzy
 msgid "Send a file or a folder to a friend"
 msgstr "ਇਸ ਪਲੇਲਿਸਟ ਨੂੰ ਸੇਵ ਕਰੋ"
 
@@ -2915,7 +2750,6 @@ msgid "Search for: {0}"
 msgstr "{0} ਬਾਰੇ ਲੱਭੋ"
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:81
-#, fuzzy
 msgid "Internal Error"
 msgstr "ਏਰਰ ਬਣਾਓ(&E)"
 
@@ -2942,7 +2776,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:368
-#, fuzzy
 msgid "Review"
 msgstr "ਚਲਾਓ(Preview)"
 
@@ -2957,7 +2790,6 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:400
 #: gui/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:97
-#, fuzzy
 msgid "Always Ask For Review"
 msgstr "ਹਮੇਸ਼ਾਂ ਪੁੱਛੂਂ"
 
@@ -3020,7 +2852,6 @@ msgid "Overwrite the Existing File"
 msgstr "ਹੁਣ ਦੀ ਫ਼ਾਇਲ ਨੂੰ ਓਵੱਰਾਇਟ ਕਰੋ"
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderDialog.java:336
-#, fuzzy
 msgid "Save As..."
 msgstr "ਹਮੇਸ਼ਾਂ ਏੱਦਾਂ ਸੇਵ..."
 
@@ -3041,7 +2872,7 @@ msgid "Cancel the Download"
 msgstr "ਡਾਉੰਲੋਡ ਨੂੰ ਹਟਾਓ"
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderUtils.java:123
-#, fuzzy, java-format
+#, java-format
 msgid "You are already downloading this file to \"{0}\"."
 msgstr "{0} ’ਚ ਇਹ ਹੀ ਫ਼ਾਇਲ ਪਹਲਾਂ ਹੀ ਸੇਵ ਕਿੱਤੀ ਹੋਈ ਹੈ"
 
@@ -3095,7 +2926,6 @@ msgid "Ask me what to do when an association is missing."
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:39
-#, fuzzy
 msgid "BitTorrent Sharing Settings"
 msgstr "ਤੁਸੀਂ ਵੰਡ ਰਹੇ ਹੋ"
 
@@ -3136,7 +2966,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:58
-#, fuzzy
 msgid "Find out more..."
 msgstr "ਕੀ ਤੁਆਨੂੰ ਪਤਾ ਸੀ?"
 
@@ -3163,7 +2992,6 @@ msgid "One more thing..."
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/LanguagePanel.java:82
-#, fuzzy
 msgid "Language:"
 msgstr "ਭਾਸ਼ਾ ਬਦਲੋ(Language)(&H)"
 
@@ -3177,12 +3005,10 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:79
 #: gui/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:22
-#, fuzzy
 msgid "System Startup"
 msgstr "ਸ਼ੁਰੂ ਹੋਣ ਤੇ ਸੁਝਾਵ ਦਿਖਾਊਂ"
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:81
-#, fuzzy
 msgid "Start Automatically"
 msgstr "ਖ਼ੁਦ’ਬਖ਼ੁਦ ਕ੍ਮ ਬਣੇ"
 
@@ -3262,7 +3088,6 @@ msgid "FrostWire is free software, "
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:109
-#, fuzzy
 msgid "Do not pay for FrostWire."
 msgstr "ਵੰਡਣ ਦੇ ਓਪਸ਼ੰਜ਼ ਕੰਫ਼ਿਗਰ ਕਰੋ"
 
@@ -3291,7 +3116,6 @@ msgid "Learn More about FrostWire's Content Filtering System"
 msgstr "ਲਾਇਸਵਾਇਰ ਦੇ ਫ਼ਿਲਟਰ ਤੇ ਹੋਰ ਜਾਨਕਾਰੀ(L)"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:29
-#, fuzzy
 msgid "Sharing &Help"
 msgstr "ਵਂਡੋ"
 
@@ -3304,7 +3128,6 @@ msgid "Frequently Asked Questions for FrostWire"
 msgstr "ਲਾਇਸਵਾਇਰ ਬਾਰੇ ਸਵਾਲ/ਜਵਾਬ"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:33
-#, fuzzy
 msgid "FrostWire for Android"
 msgstr "ਲਾਇਸਵਾਇਰ ਦੇ ਇਸਤਿਮਾਲ ਬਾਰੇ(&U)"
 
@@ -3313,7 +3136,6 @@ msgid "Get FrostWire on your Android phone, tablet or google tv, all free."
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:35
-#, fuzzy
 msgid "What is \"Seeding\"?"
 msgstr "ਆੰਕੜੇ"
 
@@ -3322,7 +3144,6 @@ msgid "Learn about BitTorrent Seeding"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:39
-#, fuzzy
 msgid "Free FrostWire Stickers"
 msgstr "ਲਾਇਸਵਾਇਰ ਦੇ ਇਸਤਿਮਾਲ ਬਾਰੇ(&U)"
 
@@ -3333,7 +3154,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:41
-#, fuzzy
 msgid "FrostWire T-Shirts"
 msgstr "ਲਾਇਸਵਾਇਰ PRO"
 
@@ -3346,12 +3166,10 @@ msgid "FrostClick.com"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
-#, fuzzy
 msgid "Free Legal Downloads"
 msgstr "ਇਹਨਾਂ ਨੂੰ ਚਲਾਓ(Preview)"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:48
-#, fuzzy
 msgid "FrostWire on Facebook"
 msgstr "ਲਾਇੰਵਾਇਰ ਮੀਡ੍ਯਾ ਪਲੇਯਰ"
 
@@ -3372,7 +3190,6 @@ msgid "Access the FrostWire Users' Forum"
 msgstr "ਲਾਇਸਵਾਇਰ ਬਾਰੇ ਫ਼ੋਰਮ ਦੇਖੋ"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:56
-#, fuzzy
 msgid "&Did you pay for FrostWire?"
 msgstr "ਲਾਇਸਵਾਇਰ ਦੇ ਇਸਤਿਮਾਲ ਤੇ ਮਦਦ"
 
@@ -3398,7 +3215,6 @@ msgid "Information about FrostWire"
 msgstr "ਲਾਇਸਵਾਇਰ ਬਾਰੇ ਸੂਚੀ"
 
 #: gui/com/limegroup/gnutella/gui/menu/MenuMediator.java:88
-#, fuzzy
 msgid "Loading Menus..."
 msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
@@ -3554,7 +3370,6 @@ msgstr ""
 
 #. set text before adding the document listener
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:231
-#, fuzzy
 msgid "Search here"
 msgstr "ਹੋਰ ਲਭੋ"
 
@@ -3569,7 +3384,6 @@ msgstr ""
 
 #. search options
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:291
-#, fuzzy
 msgid "Searching"
 msgstr "ਹੋਰ ਲਭੋ"
 
@@ -3588,7 +3402,6 @@ msgstr ""
 
 #. view options
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:308
-#, fuzzy
 msgid "View"
 msgstr "ਵਿਊ(&V)"
 
@@ -3600,22 +3413,18 @@ msgstr ""
 
 #. filter options
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:315
-#, fuzzy
 msgid "Filters"
 msgstr "ਫ਼ਿਲਟਰ(&S)"
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:316
-#, fuzzy
 msgid "Keywords"
 msgstr "ਮੁਖਿਅ ਸ਼ਬਦ"
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:320
-#, fuzzy
 msgid "Updates"
 msgstr "ਹੋਰ ਓਪਸ਼ੰਜ਼"
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:321
-#, fuzzy
 msgid "Firewall"
 msgstr "ਫ਼ਾਯਰਵਾਲ ਦੀ ਹਾਲਤ ਦੇਖੋ"
 
@@ -3630,12 +3439,10 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:325
 #: gui/com/limegroup/gnutella/gui/shell/ShellAssociationManager.java:58
-#, fuzzy
 msgid "File Associations"
 msgstr "ਫ਼ਾਇਲ ਦੀ ਲੋਕੇਸ਼ਨ ਬਦਲੋ"
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:329
-#, fuzzy
 msgid "System Boot"
 msgstr "ਸ਼ੁਰੂ ਹੋਣ ਤੇ ਸੁਝਾਵ ਦਿਖਾਊਂ"
 
@@ -3650,7 +3457,6 @@ msgid "Bug Reports"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsMediator.java:71
-#, fuzzy
 msgid "Loading Options Window..."
 msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
@@ -3672,12 +3478,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:59
-#, fuzzy
 msgid "Use FrostWire for..."
 msgstr "ਲਾਇਸਵਾਇਰ ਦੇ ਇਸਤਿਮਾਲ ਬਾਰੇ(&U)"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AudioPlayerPaneItem.java:22
-#, fuzzy
 msgid "Audio Options"
 msgstr "ਹੋਰ ਓਪਸ਼ੰਜ਼"
 
@@ -3691,7 +3495,6 @@ msgstr ""
 #. * this <tt>PaneItem</tt>.
 #.
 #: gui/com/limegroup/gnutella/gui/options/panes/AudioPlayerPaneItem.java:31
-#, fuzzy
 msgid "Audio Player"
 msgstr "ਮੀਡੀਆ ਪਲੇਯਰ ਦੇਖੋ"
 
@@ -3708,7 +3511,6 @@ msgid "Enable Autocompletion of Text Fields:"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AutomaticInstallerDownloadPaneItem.java:14
-#, fuzzy
 msgid "Automatic Installer Download"
 msgstr "ਖ਼ੁਦ’ਬਖ਼ੁਦ ਸਕਰੌਲ"
 
@@ -3724,7 +3526,6 @@ msgid "Download new installers for me (Recommended)"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/BrowserPaneItem.java:28
-#, fuzzy
 msgid "Browser Options"
 msgstr "ਹੋਰ ਓਪਸ਼ੰਜ਼"
 
@@ -3738,7 +3539,6 @@ msgstr ""
 #. * this <tt>PaneItem</tt>.
 #.
 #: gui/com/limegroup/gnutella/gui/options/panes/BrowserPaneItem.java:37
-#, fuzzy
 msgid "Browser"
 msgstr "ਬਰਾਓਜ਼..."
 
@@ -3776,7 +3576,6 @@ msgid "Warning: Forbidden name!"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ContentFilterPaneItem.java:18
-#, fuzzy
 msgid "Content Filters"
 msgstr "ਫ਼ਿਲਟਰ(&Config.)"
 
@@ -3788,7 +3587,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ContentFilterPaneItem.java:28
-#, fuzzy
 msgid "Enable Content Filters"
 msgstr "ਫ਼ਿਲਟਰ(&Config.)"
 
@@ -3807,17 +3605,14 @@ msgid "Always Show the 'Save As' Dialog"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/DefaultActionPaneItem.java:50
-#, fuzzy
 msgid "Always Append (#) to the Filename"
 msgstr "(#) ਨੂੰ ਫ਼ਾਇਲਨੇਮ ਵਿੱਚ ਅੱਪੇੱਡ ਕਰੇਗਾ"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/DefaultActionPaneItem.java:51
-#, fuzzy
 msgid "Always Ask What to do"
 msgstr "ਹਮੇਸ਼ਾਂ ਪੁੱਛੂਂ"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/DownloadLicenseWarningPaneItem.java:21
-#, fuzzy
 msgid "License Warning"
 msgstr "ਲਾਇਸੈੰਸ"
 
@@ -3849,7 +3644,6 @@ msgid "Extensions:"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ExtensionsPaneItem.java:60
-#, fuzzy
 msgid "Use Defaults"
 msgstr "ਡਿਫ਼ੌਲਟ ਇਸਤਮਾਲ ਕਰੋ"
 
@@ -3901,7 +3695,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/IgnoreResultTypesPaneItem.java:21
-#, fuzzy
 msgid "Filter Result Types"
 msgstr "ਨਤੀਜੇ ਫ਼ਿਲਟਰ ਕਰਆਓ"
 
@@ -3915,7 +3708,6 @@ msgstr ""
 #.
 #: gui/com/limegroup/gnutella/gui/options/panes/IgnoreResultTypesPaneItem.java:49
 #: gui/com/limegroup/gnutella/gui/options/panes/IgnoreResultsPaneItem.java:42
-#, fuzzy
 msgid "Ignore Adult Content"
 msgstr "ਵਯਸਕ ਮਾਲ ਲੁਕਾਓ"
 
@@ -3943,7 +3735,6 @@ msgid "Ignore .wmv, .wma, .au, .asf files"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/IgnoreResultsPaneItem.java:23
-#, fuzzy
 msgid "Filter Results"
 msgstr "ਨਤੀਜੇ ਫ਼ਿਲਟਰ ਕਰਆਓ"
 
@@ -3952,7 +3743,6 @@ msgid "You can filter out search results containing specific words."
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ImageViewerPaneItem.java:28
-#, fuzzy
 msgid "Image Options"
 msgstr "ਹੋਰ ਓਪਸ਼ੰਜ਼"
 
@@ -3970,12 +3760,10 @@ msgid "Image Viewer"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LibraryFoldersPaneItem.java:34
-#, fuzzy
 msgid "Library Included Folders"
 msgstr "ਲਾਇਬ੍ਰੈਰੀ ਫ਼ੋਲਡਰ ਖੋਲੋ"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LibraryFoldersPaneItem.java:36
-#, fuzzy
 msgid "You can choose the folders for include files when browsing the library."
 msgstr "ਤੁਸੀ ਅਪਣੇ ਵੰਡੇ ਫ਼ੋਲਡਰ ਲਾਇੰਵਾਇਰ ਦੇ ਓਪਸ਼ੰਜ਼ ਵਿੱਚ ਕੰਫ਼ਿਗਰ ਕਰ ਸਕਦੇ ਹੋ"
 
@@ -4045,7 +3833,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:20
-#, fuzzy
 msgid "Notifications"
 msgstr "ਥਾਂ"
 
@@ -4060,7 +3847,6 @@ msgid "Show Notifications:"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/PartialFileSharingPaneItem.java:19
-#, fuzzy
 msgid "Partial Files"
 msgstr "ਫ਼ਾਇਲ ਵਂਡੋ"
 
@@ -4075,7 +3861,6 @@ msgid "Allow Partial Sharing:"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:20
-#, fuzzy
 msgid "FrostWire Popups"
 msgstr "ਲਾਇਸਵਾਇਰ PRO"
 
@@ -4086,12 +3871,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:29
-#, fuzzy
 msgid "Revert to Default:"
 msgstr "ਵਾਪਸ ਡਿਫ਼ੌਲਟ ਕਰੋ"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:25
-#, fuzzy
 msgid "Login Details"
 msgstr "ਮੈਗਨੇਟ ਬਾਰੇ ਹੋਰ ਜਾਨਕਾਰੀ"
 
@@ -4104,7 +3887,6 @@ msgid "Enable Authentication (Does Not Work for HTTP Proxies):"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:42
-#, fuzzy
 msgid "Username:"
 msgstr "ਨਾਂ ਬਦਲੋ"
 
@@ -4113,12 +3895,10 @@ msgid "Password:"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:29
-#, fuzzy
 msgid "Proxy Options"
 msgstr "ਓਪਸ਼ੰਜ਼(&O)"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:31
-#, fuzzy
 msgid "Configure Proxy Options for FrostWire."
 msgstr "ਵੰਡਣ ਦੇ ਓਪਸ਼ੰਜ਼ ਕੰਫ਼ਿਗਰ ਕਰੋ"
 
@@ -4151,7 +3931,6 @@ msgstr ""
 #. * label on the port text field.
 #.
 #: gui/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:56
-#, fuzzy
 msgid "Port:"
 msgstr "ਘਟਿਆ"
 
@@ -4193,7 +3972,6 @@ msgid "Show dialog to ask before close"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:20
-#, fuzzy
 msgid "Smart Search"
 msgstr "ਖੋਜ ਨੂੰ ਬੰਦ ਕਰੋ"
 
@@ -4216,7 +3994,6 @@ msgid "If you continue you will erase all the information related to\n"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:77
-#, fuzzy
 msgid " torrents and "
 msgstr "ਤੁਸੀਂ ਵੰਡ ਰਹੇ ਹੋ"
 
@@ -4245,12 +4022,10 @@ msgid "You can display your bandwidth consumption in the status bar."
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/StatusBarBandwidthPaneItem.java:30
-#, fuzzy
 msgid "Show Bandwidth Indicator:"
 msgstr "ਬੈੰਡਵਿਥ ਦੀ ਖਧਤ ਦੇਖੋ"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:21
-#, fuzzy
 msgid "Connection Quality Indicator"
 msgstr "ਕਨੇਕਸ਼ਨ ਕਵਾਲਿਟੀ ਦੇਖੋ"
 
@@ -4260,7 +4035,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:30
-#, fuzzy
 msgid "Show Connection Quality Indicator:"
 msgstr "ਕਨੇਕਸ਼ਨ ਕਵਾਲਿਟੀ ਦੇਖੋ"
 
@@ -4273,12 +4047,10 @@ msgid "You can display your firewall status in the status bar."
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/StatusBarFirewallPaneItem.java:30
-#, fuzzy
 msgid "Show Firewall Indicator:"
 msgstr "ਫ਼ਾਯਰਵਾਲ ਦੀ ਹਾਲਤ ਦੇਖੋ"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:18
-#, fuzzy
 msgid "BitTorrent Connection Settings"
 msgstr "ਕਨੈਕਸ਼ੰਜ਼"
 
@@ -4288,7 +4060,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:22
-#, fuzzy
 msgid "Maximum active downloads"
 msgstr "ਹੁਣ ਦੇ ਡਾਉੰਲੋਡ"
 
@@ -4305,7 +4076,6 @@ msgid "Number of upload slots per torrent"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentDetailsPaneItem.java:19
-#, fuzzy
 msgid "Torrent Details Page"
 msgstr "ਤੁਸੀਂ ਵੰਡ ਰਹੇ ਹੋ"
 
@@ -4324,7 +4094,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:26
-#, fuzzy
 msgid "Download Speed:"
 msgstr "ਡਾਉੰਲੋਡ"
 
@@ -4336,7 +4105,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:41
-#, fuzzy
 msgid "Upload Speed:"
 msgstr "ਹੁਣ ਦੇ ਅੱਪਲੋਡ"
 
@@ -4362,7 +4130,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:28
-#, fuzzy
 msgid "Video Options"
 msgstr "ਹੋਰ ਓਪਸ਼ੰਜ਼"
 
@@ -4395,7 +4162,6 @@ msgstr "ਸਭ"
 #. * String for 'Select Type'
 #.
 #: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:56
-#, fuzzy
 msgid "Select Search Types:"
 msgstr "ਖੋਜ ਦਾ ਢੰਗ"
 
@@ -4420,12 +4186,10 @@ msgid "Search for Program Files, Including exe, zip, gz, and More"
 msgstr "ਪ੍ਰੋਗ੍ਰੈਮ ਫ਼ਾਇਲਾਂ ਲਭੋ, ਜਿੱਦਾਂ ਜ਼ਿੱਪ, ਈ ਏਕਸ ਈ, ਜੀਜ਼ੈੱਡ ਵਰਗੀਆਂ."
 
 #: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:207
-#, fuzzy
 msgid "Search for Torrents!"
 msgstr "ਹੋਰ ਲਭੋ"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:54
-#, fuzzy
 msgid "Open Options dialog"
 msgstr "ਹੋਰ ਓਪਸ਼ੰਜ਼"
 
@@ -4443,7 +4207,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:58
-#, fuzzy
 msgid "Stop current search"
 msgstr "ਤਾਜ਼ਾ ਖੋਜ:"
 
@@ -4455,7 +4218,6 @@ msgid "0"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputManager.java:151
-#, fuzzy
 msgid "Open a .torrent or Magnet link or YouTube video link"
 msgstr "...ਵੰਗ ਡਾਉੰਲੋਡ"
 
@@ -4465,12 +4227,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:213
-#, fuzzy
 msgid "Search Engines"
 msgstr "ਖੋਜ ਨੂੰ ਬੰਦ ਕਰੋ"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:221
-#, fuzzy
 msgid "Filter"
 msgstr "ਫ਼ਿਲਟਰ(&S)"
 
@@ -4479,12 +4239,10 @@ msgid "<html><strong>Refine Results</strong></html>"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:410
-#, fuzzy
 msgid "Show search result filter controls"
 msgstr "ਖੋਜ ਦੇ ਪਰਿਣਾਮ ਦੇ ਫ਼ਿਲਟਰਾਂ ਨੂੰ ਦੇਖੋ"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:411
-#, fuzzy
 msgid "Hide search result filter controls"
 msgstr "ਖੋਜ ਦੇ ਪਰਿਣਾਮ ਦੇ ਫ਼ਿਲਟਰਾਂ ਨੂੰ ਦੇਖੋ"
 
@@ -4505,12 +4263,10 @@ msgid "Buy this item now"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:71
-#, fuzzy
 msgid "Download Partial Files"
 msgstr "ਫ਼ਾਇਲ ਵਂਡੋ"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:73
-#, fuzzy
 msgid "Torrent Details"
 msgstr "ਮੈਗਨੇਟ ਬਾਰੇ ਹੋਰ ਜਾਨਕਾਰੀ"
 
@@ -4520,7 +4276,6 @@ msgstr ""
 
 #. Set the splash screen text...
 #: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:96
-#, fuzzy
 msgid "Loading Search Window..."
 msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
@@ -4550,7 +4305,6 @@ msgid "Show Torrent Details page when a download starts"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:480
-#, fuzzy
 msgid "Copy Hash"
 msgstr "ਕੌਪੀ ਕਰੋ"
 
@@ -4559,7 +4313,6 @@ msgid "Search More"
 msgstr "ਹੋਰ ਲਭੋ"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:43
-#, fuzzy
 msgid "Source"
 msgstr "ਦਾਤਾਰ ਲਭੋ"
 
@@ -4726,12 +4479,10 @@ msgid "FileChooser.renameErrorText"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:37
-#, fuzzy
 msgid "Invalid Filename"
 msgstr "ਫ਼ਾਇਲ ਦਾ ਨਾਂ"
 
 #: gui/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:40
-#, fuzzy
 msgid "Download Already Finished"
 msgstr "ਸਾਰੀ ਫ਼ਾਇਲਾਂ ਡਾਉੰਲੋਡ"
 
@@ -4748,17 +4499,14 @@ msgid "File Already Exists"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:52
-#, fuzzy
 msgid "Filename Taken"
 msgstr "ਫ਼ਾਇਲ ਦਾ ਨਾਂ"
 
 #: gui/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:55
-#, fuzzy
 msgid "Not a Folder"
 msgstr "ਫ਼ੋਲਡਰ ਵਂਡੋ"
 
 #: gui/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:58
-#, fuzzy
 msgid "Not a File"
 msgstr "ਫ਼ਾਇਲ ਦਾ ਕੋਈ ਨਾਂ ਨਈ ਹੈ"
 
@@ -4767,7 +4515,6 @@ msgid "Filesystem Error"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:64
-#, fuzzy
 msgid "Same File Already Being Downloaded"
 msgstr "ਇਹ ਹੀ ਫ਼ਾਇਲ ਲਾਇਬ੍ਰੇਰੀ’ਚ ਪਹਲਾਂ ਹੀ ਹੈ"
 
@@ -4822,7 +4569,6 @@ msgid "Could not set file location due to an error in the filesystem."
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:119
-#, fuzzy
 msgid "The same file is already being downloaded."
 msgstr "\"{0}\" :ਇਹਫ਼ਾਇਲਪਹਲਾਂ"
 
@@ -4835,7 +4581,6 @@ msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:131
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:79
-#, fuzzy
 msgid "language"
 msgstr "ਭਾਸ਼ਾ ਬਦਲੋ(Language)(&H)"
 
@@ -4851,7 +4596,6 @@ msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:134
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:82
-#, fuzzy
 msgid "backuplanguage"
 msgstr "ਭਾਸ਼ਾ ਬਦਲੋ(Language)(&H)"
 
@@ -4899,7 +4643,6 @@ msgid "aslfemale"
 msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:324
-#, fuzzy
 msgid "userid"
 msgstr "ਚਿਪਕਾਓ"
 
@@ -4923,114 +4666,87 @@ msgstr ""
 msgid "helppage"
 msgstr ""
 
-#, fuzzy
 #~ msgid "Loading phones and tablets..."
 #~ msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
-#, fuzzy
 #~ msgid "Videos"
 #~ msgstr "ਵਿਡ੍ਯੋ"
 
-#, fuzzy
 #~ msgid "Sort:"
 #~ msgstr "ਘਟਿਆ"
 
-#, fuzzy
 #~ msgid "None"
 #~ msgstr "ਨਈ"
 
-#, fuzzy
 #~ msgid "Name Asc"
 #~ msgstr "ਨਾਂ"
 
-#, fuzzy
 #~ msgid "Name Desc"
 #~ msgstr "ਨਾਂ"
 
-#, fuzzy
 #~ msgid "Size Asc"
 #~ msgstr "...ਵੰਗ ਸੇਵ ਕਰੋ ਡਾਉੰਲੋਡ ਨੂੰ"
 
-#, fuzzy
 #~ msgid "Size Desc"
 #~ msgstr "ਮਾਪ"
 
-#, fuzzy
 #~ msgid "Open"
 #~ msgstr "ਖੋਲੋ..."
 
-#, fuzzy
 #~ msgid "Delete Files"
 #~ msgstr "ਇਹਨਾਂ ਨੂੰ ਉੜਾਓ"
 
-#, fuzzy
 #~ msgid "System"
 #~ msgstr "ਸ਼ੁਰੂ ਹੋਣ ਤੇ ਸੁਝਾਵ ਦਿਖਾਊਂ"
 
-#, fuzzy
 #~ msgid "Connected"
 #~ msgstr "ਕਨੈਕਸ਼ੰਜ਼"
 
-#, fuzzy
 #~ msgid "New Folder"
 #~ msgstr "ਫ਼ੋਲਡਰ ਵਂਡੋ"
 
-#, fuzzy
 #~ msgid "File Transfers"
 #~ msgstr "ਟਰਾੰਸਫ਼ਰਾਂ ਦੇ ਬਾਦ ਬੰਦ"
 
-#, fuzzy
 #~ msgid "Cancel All"
 #~ msgstr "ਕੰਮ ਰੱਦ ਕਰੋ"
 
-#, fuzzy
 #~ msgid "Clear Finished"
 #~ msgstr "ਸੁਸਤ ਡਾਉੰਲੋਡ ਮਿਟਾਓ"
 
-#, fuzzy
 #~ msgid "Should I stop all transfers?"
 #~ msgstr "ਟਰਾੰਸਫ਼ਰਾਂ ਦੇ ਬਾਦ ਬੰਦ"
 
-#, fuzzy
 #~ msgid "one file"
 #~ msgstr "ਫ਼ਾਇਲਾਂ"
 
 #~ msgid "files"
 #~ msgstr "ਫ਼ਾਇਲਾਂ"
 
-#, fuzzy
 #~ msgid "pending"
 #~ msgstr "ਗਤਿ"
 
-#, fuzzy
 #~ msgid "canceled"
 #~ msgstr "ਹੋਰ ਜਾਨਕਾਰੀ"
 
-#, fuzzy
 #~ msgid "error"
 #~ msgstr "ਗ਼ਲਤੀ: {0}"
 
-#, fuzzy
 #~ msgid "Upload"
 #~ msgstr "ਹੁਣ ਦੇ ਅੱਪਲੋਡ"
 
-#, fuzzy
 #~ msgid "to"
 #~ msgstr "ਰੋਕੋ"
 
-#, fuzzy
 #~ msgid "Select a file..."
 #~ msgstr "ਫ਼ੋਲਡਰ ਵਂਡੋ"
 
-#, fuzzy
 #~ msgid "Preparing selected folder"
 #~ msgstr "ਇਹਨਾਂ ਨੂੰ ਚਲਾਓ(Preview)"
 
-#, fuzzy
 #~ msgid "Open in Folder"
 #~ msgstr "ਲਾਇਬ੍ਰੈਰੀ ਫ਼ੋਲਡਰ ਖੋਲੋ"
 
-#, fuzzy
 #~ msgid "Open Folder Containing a Selected File"
 #~ msgstr "ਇਹ ਫ਼ਾਇਲ ਦਾ ਫ਼ੋਲਡਰ ਖੋੱਲੋ"
 
@@ -5040,18 +4756,15 @@ msgstr ""
 #~ msgid "Add Selected Files to the Playlist"
 #~ msgstr "ਪਲੇਲਿਸਟ’ਚ ਪਾਓ"
 
-#, fuzzy
 #~ msgid "Delete from playlist"
 #~ msgstr "ਇਸ ਫ਼ਾਇਲ ਨੂੰ ਪਲੇਲਿਸਟ ਤੋਂ ਹਟਾਓ"
 
-#, fuzzy
 #~ msgid "Connection"
 #~ msgstr "ਕਨੈਕਸ਼ੰਜ਼"
 
 #~ msgid "Show Media Player"
 #~ msgstr "ਮੀਡੀਆ ਪਲੇਯਰ ਦੇਖੋ"
 
-#, fuzzy
 #~ msgid "Send File..."
 #~ msgstr "ਫ਼ਾਇਲ ਵਂਡਣਾਂ ਬੰਦ ਕਰੋ"
 
@@ -5061,133 +4774,102 @@ msgstr ""
 #~ msgid "Generate a Popup Error for Testing"
 #~ msgstr "ਟੈਸਟਿੰਗ ਲਈ, ਪੌੱਪ ਅੱਪ ਏਰਰ ਬਣਾਓ"
 
-#, fuzzy
 #~ msgid "Player"
 #~ msgstr "ਚਲਾਓ"
 
-#, fuzzy
 #~ msgid "Folder:"
 #~ msgstr "ਸਾਰੇ ਫ਼ੋਲਡਰ"
 
-#, fuzzy
 #~ msgid "You can choose the folder for saving files."
 #~ msgstr "ਤੁਸੀ ਅਪਣੇ ਵੰਡੇ ਫ਼ੋਲਡਰ ਲਾਇੰਵਾਇਰ ਦੇ ਓਪਸ਼ੰਜ਼ ਵਿੱਚ ਕੰਫ਼ਿਗਰ ਕਰ ਸਕਦੇ ਹੋ"
 
-#, fuzzy
 #~ msgid "Player Options"
 #~ msgstr "ਹੋਰ ਓਪਸ਼ੰਜ਼"
 
-#, fuzzy
 #~ msgid "Use FrostWire Media Player:"
 #~ msgstr "ਲਾਇੰਵਾਇਰ ਮੀਡ੍ਯਾ ਪਲੇਯਰ"
 
-#, fuzzy
 #~ msgid "Seeding Status"
 #~ msgstr "ਗਤਿ"
 
-#, fuzzy
 #~ msgid "Search Files"
 #~ msgstr "ਹੋਰ ਲਭੋ"
 
 #~ msgid "Quality"
 #~ msgstr "ਹਾਲਤ"
 
-#, fuzzy
 #~ msgid "Loading TLS Encryption..."
 #~ msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
-#, fuzzy
 #~ msgid "Loading Message Router..."
 #~ msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
-#, fuzzy
 #~ msgid "Loading Connection Listener..."
 #~ msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
-#, fuzzy
 #~ msgid "Locating Peers..."
 #~ msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
-#, fuzzy
 #~ msgid "Loading Directed Querier..."
 #~ msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
-#, fuzzy
 #~ msgid "Loading Magnet Listener..."
 #~ msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
-#, fuzzy
 #~ msgid "Loading Peer Listener..."
 #~ msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
-#, fuzzy
 #~ msgid "Loading Saved Files..."
 #~ msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
-#, fuzzy
 #~ msgid "You are already downloading this file to {0}"
 #~ msgstr "{0} ’ਚ ਇਹ ਹੀ ਫ਼ਾਇਲ ਪਹਲਾਂ ਹੀ ਸੇਵ ਕਿੱਤੀ ਹੋਈ ਹੈ"
 
-#, fuzzy
 #~ msgid "&Refresh Connections ("
 #~ msgstr "ਕਨੈਕਸ਼ੰਜ਼"
 
-#, fuzzy
 #~ msgid "&Refreshing Connections ("
 #~ msgstr "ਕਨੈਕਸ਼ੰਜ਼"
 
-#, fuzzy
 #~ msgid "Automatically start torrents"
 #~ msgstr "ਖ਼ੁਦ’ਬਖ਼ੁਦ ਸਕਰੌਲ"
 
-#, fuzzy
 #~ msgid "Start automatically"
 #~ msgstr "ਖ਼ੁਦ’ਬਖ਼ੁਦ ਕ੍ਮ ਬਣੇ"
 
 #~ msgid "What's New"
 #~ msgstr "ਨਵਾ ਕੀ?"
 
-#, fuzzy
 #~ msgid "&Monitor"
 #~ msgstr "ਉਪਦੇਸ਼ਕ"
 
-#, fuzzy
 #~ msgid "&Connections"
 #~ msgstr "ਕਨੈਕਸ਼ੰਜ਼"
 
-#, fuzzy
 #~ msgid "C&onsole"
 #~ msgstr "ਕੰਸੋਲ"
 
-#, fuzzy
 #~ msgid "FrostWire was unable to locate the details of this license."
 #~ msgstr "\"{0}\" : ਇਸ ਫ਼ਾਇਲ ਨੂੰ ਲਾਇੰਵਾਇਰ ਵੰਡ ਨਈ ਪਾਯਾ"
 
-#, fuzzy
 #~ msgid "License Details:"
 #~ msgstr "ਲਾਇਸੈੰਸ"
 
-#, fuzzy
 #~ msgid "Creative Commons Details"
 #~ msgstr "Creative Commons License ਤੋ ਪਬਲਿਸ਼ ਕਰੋ"
 
-#, fuzzy
 #~ msgid "FrostWire was unable to locate the details of this Weed file."
 #~ msgstr "\"{0}\" : ਇਸ ਫ਼ਾਇਲ ਨੂੰ ਲਾਇੰਵਾਇਰ ਵੰਡ ਨਈ ਪਾਯਾ"
 
-#, fuzzy
 #~ msgid "Weedshare Details"
 #~ msgstr "ਮੈਗਨੇਟ ਬਾਰੇ ਹੋਰ ਜਾਨਕਾਰੀ"
 
-#, fuzzy
 #~ msgid "License Details"
 #~ msgstr "ਲਾਇਸੈੰਸ"
 
-#, fuzzy
 #~ msgid "Loading Monitor Window..."
 #~ msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
-#, fuzzy
 #~ msgid "You are not connected to the FrostWire VIP Area"
 #~ msgstr "ਕਨੈੱਕਟ ਹੋ ਰਹੇ ਹੋ"
 
@@ -5229,19 +4911,15 @@ msgstr ""
 #~ msgid "Show Shared Files Count"
 #~ msgstr "ਵੰਡਿਆਂ ਫ਼ਾਇਲਾਂ ਦੀ ਗਿਣਤੀ ਦੇਖੋ"
 
-#, fuzzy
 #~ msgid "Upgrade FrostWire"
 #~ msgstr "ਲਾਇਸਵਾਇਰ ਦੇ ਇਸਤਿਮਾਲ ਬਾਰੇ(&U)"
 
-#, fuzzy
 #~ msgid "Upgrade to FrostWire?"
 #~ msgstr "ਲਾਇਸਵਾਇਰ ਦੇ ਇਸਤਿਮਾਲ ਬਾਰੇ(&U)"
 
-#, fuzzy
 #~ msgid "Get FrostWire Now"
 #~ msgstr "ਲਾਇਸਵਾਇਰ ਦੇ ਇਸਤਿਮਾਲ ਬਾਰੇ(&U)"
 
-#, fuzzy
 #~ msgid "Later"
 #~ msgstr "ਚਿਪਕਾਓ"
 
@@ -5286,86 +4964,66 @@ msgstr ""
 #~ msgid "Opens a Window and Lets You Choose a New Folder to Share"
 #~ msgstr "ਵਿੰਡੋ ਖੋਲ ਕੇ ਵੰਡਣ ਲਈ ਨਵਾ ਫ਼ੋਲਡਰ ਚੁਨਣ ਦੇੰਦਾ ਹੇ"
 
-#, fuzzy
 #~ msgid "Block Host"
 #~ msgstr "ਹੋਸਟ ਨੂੰ ਬਲੌਕ ਕਿਤਾ ਜਾਏ"
 
-#, fuzzy
 #~ msgid "Send Message"
 #~ msgstr "ਲੌਗ ਵੇਖੋ"
 
-#, fuzzy
 #~ msgid "Block Current Host"
 #~ msgstr "ਹੋਸਟ ਨੂੰ ਬਲੌਕ ਕਿਤਾ ਜਾਏ"
 
-#, fuzzy
 #~ msgid "Browse Host"
 #~ msgstr "ਹੋਸਟ ਨੂੰ ਬਲੌਕ ਕਿਤਾ ਜਾਏ"
 
-#, fuzzy
 #~ msgid "Remove the Selected Connections"
 #~ msgstr "ਇਹਨਾਂ ਨੂੰ ਉੜਾਓ"
 
 #~ msgid "View All Files on the Selected Computer"
 #~ msgstr "ਸਾਰੀ  ਫ਼ਾਈਲਾਂ ਨੂੰ ਚੁਣੇ ਕੰਪਿਊਟਰ ਤੇ ਵੇਖੋ"
 
-#, fuzzy
 #~ msgid "Dropped (I/O)"
 #~ msgstr "ਅੱਪੇੱਡ (#)"
 
-#, fuzzy
 #~ msgid "Vendor/Version"
 #~ msgstr "ਦਾਤਾ"
 
-#, fuzzy
 #~ msgid "Connecting..."
 #~ msgstr "ਕਨੈਕਸ਼ੰਜ਼"
 
-#, fuzzy
 #~ msgid "Incoming"
 #~ msgstr "ਆਇਕੰ"
 
-#, fuzzy
 #~ msgid "Connecting"
 #~ msgstr "ਕਨੈਕਸ਼ੰਜ਼"
 
-#, fuzzy
 #~ msgid "Loading Connections Window..."
 #~ msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
-#, fuzzy
 #~ msgid "Share Dropped Files?"
 #~ msgstr "ਫ਼ਾਇਲ ਵਂਡੋ"
 
-#, fuzzy
 #~ msgid "No, Share Nothing"
 #~ msgstr "ਤੁਸੀਂ ਵੰਡ ਰਹੇ ਹੋ"
 
-#, fuzzy
 #~ msgid "Queue"
 #~ msgstr "ਕ਼ਤਾਰ’ਚ ਲਗਾਓ"
 
-#, fuzzy
 #~ msgid "Queued"
 #~ msgstr "ਕ਼ਤਾਰ’ਚ ਲਗਾਓ"
 
-#, fuzzy
 #~ msgid "Aborted"
 #~ msgstr "ਲਾਇਸਵਾਇਰ ਬਾਰੇ"
 
-#, fuzzy
 #~ msgid "Awaiting Sources"
 #~ msgstr "ਦਾਤਾਰ ਲਭੋ"
 
-#, fuzzy
 #~ msgid "Need More Sources"
 #~ msgstr "ਦਾਤਾਰ ਲਭੋ"
 
-#, fuzzy
 #~ msgid "Pausing..."
 #~ msgstr "ਪਬਲਿਸ਼..."
 
-#, fuzzy
 #~ msgid "Paused"
 #~ msgstr "ਚਿਪਕਾਓ"
 
@@ -5384,22 +5042,18 @@ msgstr ""
 #~ msgid "Time Spent"
 #~ msgstr "ਸਮਯ ਲੱਗਾ"
 
-#, fuzzy
 #~ msgid "Chunks"
 #~ msgstr "ਜੰਕ ਹੈ"
 
-#, fuzzy
 #~ msgid "Busy Hosts"
 #~ msgstr "ਹੋਸਟ ਨੂੰ ਬਲੌਕ ਕਿਤਾ ਜਾਏ"
 
-#, fuzzy
 #~ msgid "Locating Sources..."
 #~ msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
 #~ msgid "Downloads"
 #~ msgstr "ਹੁਣ ਦੇ ਡਾਉੰਲੋਡ"
 
-#, fuzzy
 #~ msgid "Find More Sources for Download"
 #~ msgstr "ਹੋਰ ਜ਼੍ਯਾਦਾ ਦਾਤਾਰ ਲਭੋ"
 
@@ -5412,7 +5066,6 @@ msgstr ""
 #~ msgid "Choose Save Location"
 #~ msgstr "ਸੇਵ ਕਰਣ ਦੀ ਜਗਹ ਦਓ"
 
-#, fuzzy
 #~ msgid "Search..."
 #~ msgstr "ਹੋਰ ਲਭੋ"
 
@@ -5428,14 +5081,12 @@ msgstr ""
 #~ msgid "Launch Selected Downloads"
 #~ msgstr "ਇਹਨਾਂ ਨੂੰ ਸ਼ੁਰੂ ਕਰਾਓ"
 
-#, fuzzy
 #~ msgid "Preview Download"
 #~ msgstr "ਇਹਨਾਂ ਨੂੰ ਚਲਾਓ(Preview)"
 
 #~ msgid "Preview"
 #~ msgstr "ਚਲਾਓ(Preview)"
 
-#, fuzzy
 #~ msgid "Chat with Host"
 #~ msgstr "ਹੋਸਟ ਨਾਲ ਗੱਲ ਕਰੋ"
 
@@ -5454,29 +5105,24 @@ msgstr ""
 #~ msgid "No Filename"
 #~ msgstr "ਫ਼ਾਇਲ ਦਾ ਕੋਈ ਨਾਂ ਨਈ ਹੈ"
 
-#, fuzzy
 #~ msgid "Firewall Setup"
 #~ msgstr "ਫ਼ਾਯਰਵਾਲ ਦੀ ਹਾਲਤ ਦੇਖੋ"
 
-#, fuzzy
 #~ msgid "Shared Folders"
 #~ msgstr "ਫ਼ੋਲਡਰ ਵਂਡੋ"
 
-#, fuzzy
 #~ msgid "Incomplete Files"
 #~ msgstr "ਇਹਨਾਂ ਨੂੰ ਚਲਾਓ"
 
 #~ msgid "Configure..."
 #~ msgstr "ਕੰਫ਼ਿਗਰ..."
 
-#, fuzzy
 #~ msgid "Search In Shared Files:"
 #~ msgstr "ਲਭੋ ਅਤੇ ਡਾਉੰਲੋਡ ਕਰੋ"
 
 #~ msgid "Uploads"
 #~ msgstr "ਹੁਣ ਦੇ ਅੱਪਲੋਡ"
 
-#, fuzzy
 #~ msgid "Locations"
 #~ msgstr "ਥਾਂ"
 
@@ -5492,7 +5138,6 @@ msgstr ""
 #~ msgid "Publish under Creative Commons License"
 #~ msgstr "Creative Commons License ਤੋ ਪਬਲਿਸ਼ ਕਰੋ"
 
-#, fuzzy
 #~ msgid "Edit License..."
 #~ msgstr "ਲਾਇਸੈੰਸ"
 
@@ -5508,30 +5153,24 @@ msgstr ""
 #~ msgid "Stop Sharing Folder"
 #~ msgstr "ਫ਼ੋਲਡਰ ਵਂਡਣਾਂ ਬੰਦ ਕਰੋ"
 
-#, fuzzy
 #~ msgid "View License"
 #~ msgstr "ਲਾਇਸੈੰਸ"
 
-#, fuzzy
 #~ msgid "Saved Files"
 #~ msgstr "ਫ਼ਾਇਲ ਵਂਡੋ"
 
-#, fuzzy
 #~ msgid "FrostWire cannot stop sharing this folder."
 #~ msgstr "\"{0}\" : ਇਸ ਫ਼ਾਇਲ ਨੂੰ ਲਾਇੰਵਾਇਰ ਵੰਡ ਨਈ ਪਾਯਾ"
 
-#, fuzzy
 #~ msgid "Shared Files"
 #~ msgstr "ਫ਼ਾਇਲ ਵਂਡੋ"
 
 #~ msgid "Reload Shared Folders"
 #~ msgstr "ਵੰਡੇ ਫ਼ੋਲਡਰ ਨੂੰ ਰੀਲੋਡ ਕਰੋ"
 
-#, fuzzy
 #~ msgid "Loading Logging Window..."
 #~ msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
-#, fuzzy
 #~ msgid "&Advanced"
 #~ msgstr "ਹੋਰ ਜਾਨਕਾਰੀ"
 
@@ -5556,119 +5195,90 @@ msgstr ""
 #~ msgid "Junk"
 #~ msgstr "ਜੰਕ ਹੈ"
 
-#, fuzzy
 #~ msgid "Hosts"
 #~ msgstr "ਹੋਸਟ ਨੂੰ ਬਲੌਕ ਕਿਤਾ ਜਾਏ"
 
-#, fuzzy
 #~ msgid "Allow Hosts"
 #~ msgstr "ਹੋਸਟ ਨੂੰ ਬਲੌਕ ਕਿਤਾ ਜਾਏ"
 
-#, fuzzy
 #~ msgid "Clear Downloads"
 #~ msgstr "ਮਿਟਾਓ ਡਾਉੰਲੋਡ"
 
-#, fuzzy
 #~ msgid "Clear Completed Downloads:"
 #~ msgstr "ਇਹਨਾਂ ਨੂੰ ਮਿਟਾਓ"
 
-#, fuzzy
 #~ msgid "Automatically Clear Completed Uploads:"
 #~ msgstr "ਖ਼ੁਦ’ਬਖ਼ੁਦ ਸਕਰੌਲ"
 
-#, fuzzy
 #~ msgid "Chat Configuration"
 #~ msgstr "ਵੰਡਣ ਦੇ ਓਪਸ਼ੰਜ਼ ਕੰਫ਼ਿਗਰ ਕਰੋ"
 
-#, fuzzy
 #~ msgid "Connect on Startup"
 #~ msgstr "ਕਨੈਕਸ਼ੰਜ਼"
 
-#, fuzzy
 #~ msgid "Connect on Startup:"
 #~ msgstr "ਕਨੈਕਸ਼ੰਜ਼"
 
-#, fuzzy
 #~ msgid "Allow Freeloaders:"
 #~ msgstr "ਸਾਰੇ ਫ਼ੋਲਡਰ"
 
-#, fuzzy
 #~ msgid "Always"
 #~ msgstr "ਹਮੇਸ਼ਾਂ ਪੁੱਛੂਂ"
 
-#, fuzzy
 #~ msgid "Shared Name:"
 #~ msgstr "ਫ਼ਾਇਲ ਵਂਡੋ"
 
-#, fuzzy
 #~ msgid "Download Bandwidth"
 #~ msgstr "ਕੁੱਲ ਏਵਰੇਜ ਬੈੰਡਵਿਥ"
 
-#, fuzzy
 #~ msgid "Filter Hosts"
 #~ msgstr "ਨਤੀਜੇ ਫ਼ਿਲਟਰ ਕਰਆਓ"
 
-#, fuzzy
 #~ msgid "Maximum Downloads:"
 #~ msgstr "ਹੁਣ ਦੇ ਡਾਉੰਲੋਡ"
 
-#, fuzzy
 #~ msgid "Max Upload Slots"
 #~ msgstr "ਹੁਣ ਦੇ ਅੱਪਲੋਡ"
 
-#, fuzzy
 #~ msgid "Media Type"
 #~ msgstr "ਮੀਡ੍ਯਾ"
 
-#, fuzzy
 #~ msgid "Reset"
 #~ msgstr "ਰੀਸਟੋਰ"
 
-#, fuzzy
 #~ msgid "Search Result Quality"
 #~ msgstr "ਖੋਜ ਦੇ ਪਰਿਣਾਮ ਦੇ ਫ਼ਿਲਟਰਾਂ ਨੂੰ ਦੇਖੋ"
 
-#, fuzzy
 #~ msgid "Show Only Four Star Results"
 #~ msgstr "ਖੋਜ ਦੇ ਪਰਿਣਾਮ ਦੇ ਫ਼ਿਲਟਰਾਂ ਨੂੰ ਦੇਖੋ"
 
-#, fuzzy
 #~ msgid "Search Result Speed"
 #~ msgstr "ਖੋਜ ਦੇ ਪਰਿਣਾਮ ਦੇ ਫ਼ਿਲਟਰਾਂ ਨੂੰ ਦੇਖੋ"
 
-#, fuzzy
 #~ msgid "Download Sharing"
 #~ msgstr "ਡਾਉੰਲੋਡ"
 
-#, fuzzy
 #~ msgid "Relaxed"
 #~ msgstr "ਨਾਂ ਬਦਲੋ"
 
-#, fuzzy
 #~ msgid "Connection Speed"
 #~ msgstr "ਕਨੈਕਸ਼ੰਜ਼"
 
-#, fuzzy
 #~ msgid "Speed:"
 #~ msgstr "ਗਤਿ"
 
-#, fuzzy
 #~ msgid "LimeWire Store Indicator"
 #~ msgstr "ਵੰਡਿਆਂ ਫ਼ਾਇਲਾਂ ਦੀ ਗਿਣਤੀ ਦੇਖੋ"
 
-#, fuzzy
 #~ msgid "Show LimeWire Store Indicator:"
 #~ msgstr "ਫ਼ਾਯਰਵਾਲ ਦੀ ਹਾਲਤ ਦੇਖੋ"
 
-#, fuzzy
 #~ msgid "Shared Files Indicator"
 #~ msgstr "ਵੰਡਿਆਂ ਫ਼ਾਇਲਾਂ ਦੀ ਗਿਣਤੀ ਦੇਖੋ"
 
-#, fuzzy
 #~ msgid "Show Shared Files Indicator:"
 #~ msgstr "ਵੰਡਿਆਂ ਫ਼ਾਇਲਾਂ ਦੀ ਗਿਣਤੀ ਦੇਖੋ"
 
-#, fuzzy
 #~ msgid "Upload Bandwidth"
 #~ msgstr "ਕੁੱਲ ਏਵਰੇਜ ਬੈੰਡਵਿਥ"
 
@@ -5681,15 +5291,12 @@ msgstr ""
 #~ msgid "#"
 #~ msgstr "#"
 
-#, fuzzy
 #~ msgid "Loading Playlist Window..."
 #~ msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
-#, fuzzy
 #~ msgid "Play Options:"
 #~ msgstr "ਓਪਸ਼ੰਜ਼(&O)"
 
-#, fuzzy
 #~ msgid "Continuous"
 #~ msgstr "ਕੰਟਿਨ੍ਯੂ"
 
@@ -5708,7 +5315,6 @@ msgstr ""
 #~ msgid "Download As..."
 #~ msgstr "...ਵੰਗ ਡਾਉੰਲੋਡ"
 
-#, fuzzy
 #~ msgid "Would you like to start downloads from the following magnets?"
 #~ msgstr "ਤੁਸੀਂ ਇਸ ਹੋਸਟ ਦੇ ਨਤੀਜੇ ਹਟਾਣਾ ਚਾੰਦੇ ਹੋ"
 
@@ -5750,7 +5356,6 @@ msgstr ""
 #~ msgid "Keyword"
 #~ msgstr "ਮੁਖਿਅ ਸ਼ਬਦ"
 
-#, fuzzy
 #~ msgid "Direct Connect"
 #~ msgstr "ਡਿਸਕਨੇਕਟ(&I)"
 
@@ -5831,7 +5436,6 @@ msgstr ""
 #~ msgid "View Console Messages"
 #~ msgstr "ਲੌਗ ਵੇਖੋ"
 
-#, fuzzy
 #~ msgid "View Logging Messages"
 #~ msgstr "ਲੌਗ ਵੇਖੋ"
 
@@ -5841,103 +5445,78 @@ msgstr ""
 #~ msgid "View Searches and Uploads"
 #~ msgstr "ਖੋਜਾਂ ਅਤੇ ਅੱਪਲੋਡ ਵੇਖੋ"
 
-#, fuzzy
 #~ msgid "Get New Skins"
 #~ msgstr "ਹੋਰ ਸਕਿੰਨਾਂ ਲਓ(&G)"
 
-#, fuzzy
 #~ msgid "Kill Upload"
 #~ msgstr "ਹੁਣ ਦੇ ਅੱਪਲੋਡ"
 
-#, fuzzy
 #~ msgid "Stop Selected Uploads"
 #~ msgstr "ਫੇਰ ਕੋਸ਼ਿਸ਼ ਕਰੋ ਡਾਉੰਲੋਡ ਦੀ"
 
-#, fuzzy
 #~ msgid "Remove Inactive Uploads"
 #~ msgstr "ਸੁਸਤ ਡਾਉੰਲੋਡ ਹਟਾਓ"
 
-#, fuzzy
 #~ msgid "Suspended"
 #~ msgstr "ਗਤਿ"
 
-#, fuzzy
 #~ msgid "Swarm for {0}"
 #~ msgstr "{0} ਬਾਰੇ ਲੱਭੋ"
 
-#, fuzzy
 #~ msgid "Loading Upload Window..."
 #~ msgstr "ਸੁਝਾਵ ਲੋਡ ਹੋ ਰਹੇ ਹਨ..."
 
-#, fuzzy
 #~ msgid "Publish License"
 #~ msgstr "ਲਾਇਸੈੰਸ"
 
-#, fuzzy
 #~ msgid "This tool helps you publish audio under a Creative Commons license."
 #~ msgstr "Creative Commons License ਤੋ ਪਬਲਿਸ਼ ਕਰੋ"
 
-#, fuzzy
 #~ msgid "ShareAlike"
 #~ msgstr "ਫ਼ਾਇਲ ਵਂਡੋ"
 
-#, fuzzy
 #~ msgid "Copyright Holder:"
 #~ msgstr "ਫ਼ੋਲਡਰ ਵਂਡਣਾਂ ਬੰਦ ਕਰੋ"
 
-#, fuzzy
 #~ msgid "Size:"
 #~ msgstr "ਮਾਪ"
 
-#, fuzzy
 #~ msgid "Type:"
 #~ msgstr "ਤਰਹ"
 
-#, fuzzy
 #~ msgid "Comments:"
 #~ msgstr "ਦਸਤਾਵੇਜ਼"
 
-#, fuzzy
 #~ msgid "Price:"
 #~ msgstr "ਚਲਾਓ(Preview)"
 
-#, fuzzy
 #~ msgid "Action:"
 #~ msgstr "ਥਾਂ"
 
-#, fuzzy
 #~ msgid "License:"
 #~ msgstr "ਲਾਇਸੈੰਸ"
 
-#, fuzzy
 #~ msgid "Rating:"
 #~ msgstr "ਜੰਕ ਰੇਟਿੰਗ"
 
-#, fuzzy
 #~ msgid "License Type:"
 #~ msgstr "ਲਾਇਸੈੰਸ"
 
-#, fuzzy
 #~ msgid "Studio:"
 #~ msgstr "ਔਡ੍ਯੋ"
 
-#, fuzzy
 #~ msgid "Name:"
 #~ msgstr "ਨਾਂ"
 
-#, fuzzy
 #~ msgid "Publisher:"
 #~ msgstr "ਪਬਲਿਸ਼..."
 
-#, fuzzy
 #~ msgid "English"
 #~ msgstr "ਖ਼ਤਮ"
 
-#, fuzzy
 #~ msgid "Loading Languages"
 #~ msgstr "ਭਾਸ਼ਾ ਬਦਲੋ(Language)(&H)"
 
-#, fuzzy
 #~ msgid "false"
 #~ msgstr "ਚਿਪਕਾਓ"
 
@@ -5950,23 +5529,18 @@ msgstr ""
 #~ msgid "Search \"What''s New\" for: {0}"
 #~ msgstr "{0} ਨਵਾ ਕੀ’ਚ ਲੱਭੋ"
 
-#, fuzzy
 #~ msgid "Finish Setup"
 #~ msgstr "ਖ਼ਤਮ"
 
-#, fuzzy
 #~ msgid "Language Options"
 #~ msgstr "ਹੋਰ ਓਪਸ਼ੰਜ਼"
 
-#, fuzzy
 #~ msgid "Choose Language:"
 #~ msgstr "ਭਾਸ਼ਾ ਬਦਲੋ(Language)(&H)"
 
-#, fuzzy
 #~ msgid "Save Folder:"
 #~ msgstr "ਫ਼ੋਲਡਰ ਵਂਡੋ"
 
-#, fuzzy
 #~ msgid "Scan for Files"
 #~ msgstr "ਫ਼ਾਇਲ ਵਂਡੋ"
 
@@ -5983,11 +5557,9 @@ msgstr ""
 #~ "ਕਿਸੀ ਮਿੱਤਰ ਦਾ IPਧਤਾ ਧਾ ਕੇ ਸਿੱਧਾ ਕਨੈਕਟ ਵਾਲਾ ਬਟਨ ਦਬਾਓ, ਫੇਰ ਲਾਇਸਵਾਇਰ ਸਿੱਧਾ ਕਨੈਕਸ਼ਨ "
 #~ "ਬਣਾ ਦਏਗਾ"
 
-#, fuzzy
 #~ msgid "Connecting to the Internet Archive..."
 #~ msgstr "ਨੇਟਵਰਕ ਨੂੰ ਕਨੇਕਟ ਕਰੋ"
 
-#, fuzzy
 #~ msgid "Connected..."
 #~ msgstr "ਕਨੇਕਟ(&O)"
 
@@ -6033,14 +5605,11 @@ msgstr ""
 #~ msgid "FrostWire: Enabling Open Information Sharing"
 #~ msgstr "ਲਾਇਸਵਾਇਰ: ਏਨੇਬਲਿੰਗ ਓਪਨ ਇੰਫ਼ੌਰਮੇਸ਼ਨ ਸ਼ੈਰਿੰਗ"
 
-#, fuzzy
 #~ msgid "Content Filtering"
 #~ msgstr "ਫ਼ਿਲਟਰ(&Config.)"
 
-#, fuzzy
 #~ msgid "Enable Content Filtering"
 #~ msgstr "ਫ਼ਿਲਟਰ(&Config.)"
 
-#, fuzzy
 #~ msgid "Content"
 #~ msgstr "ਕਨੇਕਟ(&O)"

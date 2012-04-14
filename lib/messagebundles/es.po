@@ -1268,12 +1268,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/library/Device.java:265
-#, fuzzy
 msgid "Transfer failed"
 msgstr "Transferencias"
 
 #: gui/com/frostwire/gui/library/DeviceUploadDialog.java:66
-#, fuzzy
 msgid "Upload to device"
 msgstr "El Límite de Carga ha sido alcanzado"
 
@@ -1286,7 +1284,6 @@ msgid "Uploading"
 msgstr "Cargando"
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
-#, fuzzy
 msgid "Uploading "
 msgstr "Cargando"
 
@@ -5133,121 +5130,93 @@ msgstr ""
 msgid "helppage"
 msgstr ""
 
-#, fuzzy
 #~ msgid "Loading phones and tablets..."
 #~ msgstr "Cargando archivos compartidos..."
 
-#, fuzzy
 #~ msgid "Videos"
 #~ msgstr "Vídeo"
 
-#, fuzzy
 #~ msgid "Sort:"
 #~ msgstr "Puerto:"
 
-#, fuzzy
 #~ msgid "None"
 #~ msgstr "No"
 
-#, fuzzy
 #~ msgid "Name Asc"
 #~ msgstr "Nombre"
 
-#, fuzzy
 #~ msgid "Name Desc"
 #~ msgstr "Nombre"
 
-#, fuzzy
 #~ msgid "Kind Asc"
 #~ msgstr "Clase:"
 
-#, fuzzy
 #~ msgid "Size Asc"
 #~ msgstr "Guardar Como"
 
-#, fuzzy
 #~ msgid "Size Desc"
 #~ msgstr "Tamaño"
 
-#, fuzzy
 #~ msgid "Open"
 #~ msgstr "Abrir:"
 
-#, fuzzy
 #~ msgid "Delete Files"
 #~ msgstr "Eliminar los archivos seleccionados."
 
-#, fuzzy
 #~ msgid "System"
 #~ msgstr "Cerrar"
 
-#, fuzzy
 #~ msgid "Error deleting file"
 #~ msgstr "Cargando archivo"
 
-#, fuzzy
 #~ msgid "Connected"
 #~ msgstr "Conectado a"
 
-#, fuzzy
 #~ msgid "New Folder"
 #~ msgstr "Carpeta a guardar"
 
-#, fuzzy
 #~ msgid "File Transfers"
 #~ msgstr "Transferencias"
 
-#, fuzzy
 #~ msgid "Cancel All"
 #~ msgstr "Cancelar"
 
-#, fuzzy
 #~ msgid "Clear Finished"
 #~ msgstr "Borrar Inactivas"
 
-#, fuzzy
 #~ msgid "Should I stop all transfers?"
 #~ msgstr "Cerrar luego de las transferencias"
 
-#, fuzzy
 #~ msgid "one file"
 #~ msgstr "archivos .torrent"
 
 #~ msgid "files"
 #~ msgstr "archivos"
 
-#, fuzzy
 #~ msgid "pending"
 #~ msgstr "Sembrando"
 
-#, fuzzy
 #~ msgid "canceled"
 #~ msgstr "Analisis Cancelado"
 
-#, fuzzy
 #~ msgid "error"
 #~ msgstr "Error"
 
 #~ msgid "Upload"
 #~ msgstr "Cargar"
 
-#, fuzzy
 #~ msgid "to"
 #~ msgstr "Detener"
 
-#, fuzzy
 #~ msgid "Select a file..."
 #~ msgstr "Seleccionar directorio"
 
-#, fuzzy
 #~ msgid "Preparing selected folder"
 #~ msgstr "Vista preliminar de las descargas seleccionadas."
 
-#, fuzzy
 #~ msgid "Open in Folder"
 #~ msgstr "Abrir directorio de la biblioteca."
 
-#, fuzzy
 #~ msgid "Open Folder Containing a Selected File"
 #~ msgstr "Abrir la carpeta que contiene el archivo"
 
@@ -5257,14 +5226,12 @@ msgstr ""
 #~ msgid "Add Selected Files to the Playlist"
 #~ msgstr "Agregar los archivos seleccionados a la lista de reproducción."
 
-#, fuzzy
 #~ msgid "Delete from playlist"
 #~ msgstr "Quitar el archivo seleccionado de la lista de reproducción."
 
 #~ msgid "Community C&hat"
 #~ msgstr "Comunidad C&hat"
 
-#, fuzzy
 #~ msgid "Toggle the {0} Screen"
 #~ msgstr "Mostrar la {0} pantalla"
 
@@ -5277,7 +5244,6 @@ msgstr ""
 #~ msgid "Show Media Player"
 #~ msgstr "Mostrar Reproductor"
 
-#, fuzzy
 #~ msgid "Send File..."
 #~ msgstr "Guardando archivo..."
 
@@ -5320,11 +5286,9 @@ msgstr ""
 #~ msgid "Use FrostWire Media Player:"
 #~ msgstr "Usar el reproductor de MP3 de FrostWire"
 
-#, fuzzy
 #~ msgid "Seeding Status"
 #~ msgstr "Sembrando"
 
-#, fuzzy
 #~ msgid "Search Files"
 #~ msgstr "Búsquedas"
 
@@ -5427,11 +5391,9 @@ msgstr ""
 #~ msgid "You are already downloading this file to {0}"
 #~ msgstr "Ya está descargando este archivo en la carpeta \"{0}\"."
 
-#, fuzzy
 #~ msgid "&Refresh Connections ("
 #~ msgstr "&Conexiones"
 
-#, fuzzy
 #~ msgid "&Refreshing Connections ("
 #~ msgstr "&Conexiones"
 
@@ -5683,7 +5645,6 @@ msgstr ""
 #~ "eliminado, que no tenga permiso para escribir en él o que haya otro "
 #~ "problema. Por favor, elija otro directorio."
 
-#, fuzzy
 #~ msgid "You are not connected to the FrostWire VIP Area"
 #~ msgstr "Actualmente se está conectando a la red."
 
@@ -5733,7 +5694,6 @@ msgstr ""
 #~ msgid "Show Shared Files Count"
 #~ msgstr "Mostrar Número de Archivos Compartidos"
 
-#, fuzzy
 #~ msgid "Show Store Indicator"
 #~ msgstr "Mostrar Indicador de Cortafuegos:"
 
@@ -5855,7 +5815,6 @@ msgstr ""
 #~ "Sugiérala en el <a href=\"{0}\">foro</a> de FrostWire y podría ser "
 #~ "agregada en versiones futuras."
 
-#, fuzzy
 #~ msgid ""
 #~ "You can make your own FrostWire skins! Visit <a href=\"{0}\">FrostWire's "
 #~ "website</a> for detailed information about how skins are created."
@@ -5880,7 +5839,6 @@ msgstr ""
 #~ "pestaña Conexiones desde el menú Ver; Mostrar/Ocultar, y echa un vistazo "
 #~ "a las conexiones de FrostWire."
 
-#, fuzzy
 #~ msgid ""
 #~ "Sport the FrostWire look! Visit our <a href=\"{0}\">FrostWire gear</a> "
 #~ "page and purchase a t-shirt or stickers!"
@@ -5958,7 +5916,6 @@ msgstr ""
 #~ "círculo en el rincón izquierdo superior de una caja, y escoja una nueva "
 #~ "opción del menú."
 
-#, fuzzy
 #~ msgid ""
 #~ "Do you want to browse your friend's FrostWire Library? Go to Search &gt; "
 #~ "Direct Connect, then enter the ip address and port number of your "
@@ -6162,11 +6119,9 @@ msgstr ""
 #~ "pulsa con el botón derecho del ratón sobre el archivo y selecciona Parar "
 #~ "Compartición de Archivo."
 
-#, fuzzy
 #~ msgid "Upgrade FrostWire"
 #~ msgstr "&Uso de FrostWire"
 
-#, fuzzy
 #~ msgid "Upgrade to FrostWire?"
 #~ msgstr "&Uso de FrostWire"
 
@@ -6187,7 +6142,6 @@ msgstr ""
 #~ msgid "Would you like to get your free Java upgrade?"
 #~ msgstr "¿Desearía obtener su actualización gratuita de Java?"
 
-#, fuzzy
 #~ msgid "Get FrostWire Now"
 #~ msgstr "&Usar FrostWire para..."
 
@@ -6201,7 +6155,6 @@ msgstr ""
 #~ "FrostWire detectó una falla en el archivo {0} Desea continuar con la "
 #~ "descarga?"
 
-#, fuzzy
 #~ msgid ""
 #~ "<html><b>Your FrostWire may have been corrupted by a virus or trojan!</"
 #~ "b><br><br>Please visit <a href=\"http://www.frostwire.com/download\">www."
@@ -6292,7 +6245,6 @@ msgstr ""
 #~ msgid "A connection error has occurred"
 #~ msgstr "Ha ocurrido un error de conexión"
 
-#, fuzzy
 #~ msgid "Could not send chat message"
 #~ msgstr "No se puede navegar por la computadora central {0} ."
 
@@ -6705,11 +6657,9 @@ msgstr ""
 #~ msgid "Incomplete Files"
 #~ msgstr "Archivos Incompletos"
 
-#, fuzzy
 #~ msgid "Individual Store Files"
 #~ msgstr "Archivos Compartidos Individualmente"
 
-#, fuzzy
 #~ msgid "List of All Individual Purchased Files"
 #~ msgstr "Lista de Todos los Archivos Compartidos Individualmente"
 
@@ -6861,11 +6811,9 @@ msgstr ""
 #~ msgid "Reload available skins from disk"
 #~ msgstr "Recargar carátulas disponibles en el disco."
 
-#, fuzzy
 #~ msgid "&Check for updates"
 #~ msgstr "Buscando actualizaciones..."
 
-#, fuzzy
 #~ msgid "seconds left)"
 #~ msgstr "segundos"
 
@@ -6937,7 +6885,6 @@ msgstr ""
 #~ msgid "Host Communication"
 #~ msgstr "Comunicación con la computadora central"
 
-#, fuzzy
 #~ msgid "Chat Configuration"
 #~ msgstr "Configuración del enrutador"
 
@@ -7067,7 +7014,6 @@ msgstr ""
 #~ "Puede establecer el porcentaje de su ancho de banda destinado a las "
 #~ "descargas."
 
-#, fuzzy
 #~ msgid "Display"
 #~ msgstr "Mostrar:"
 
@@ -7603,7 +7549,6 @@ msgstr ""
 #~ msgid "Do Not Share Sensitive File Types"
 #~ msgstr "No compartir tipos de archivos delicados"
 
-#, fuzzy
 #~ msgid ""
 #~ "This stops FrostWire from sharing certain files that may contain "
 #~ "sensitive information."
@@ -7611,7 +7556,6 @@ msgstr ""
 #~ "Esto evita que FrostWire comparta ciertos archivos que tal vez contengan "
 #~ "información sensible."
 
-#, fuzzy
 #~ msgid "File types you added to share."
 #~ msgstr "Tipos de archivos que añadió para compartir"
 
@@ -7656,7 +7600,6 @@ msgstr ""
 #~ msgid "View Console Messages"
 #~ msgstr "Ver Mensajes de la bitacora"
 
-#, fuzzy
 #~ msgid "View Logging Messages"
 #~ msgstr "Ver Mensajes de la bitacora"
 
@@ -7666,7 +7609,6 @@ msgstr ""
 #~ msgid "View Searches and Uploads"
 #~ msgstr "Ver búsquedas y cargas."
 
-#, fuzzy
 #~ msgid "Test action!"
 #~ msgstr "Descripción"
 
@@ -7700,7 +7642,6 @@ msgstr ""
 #~ "El tema que está aplicando es inválido. FrostWire revertirá los cambios "
 #~ "al tema por defecto."
 
-#, fuzzy
 #~ msgid "Kill Upload"
 #~ msgstr "Cargar"
 
@@ -7777,7 +7718,6 @@ msgstr ""
 #~ msgid "Modify the license of this file"
 #~ msgstr "Modificar la licencia de este archivo"
 
-#, fuzzy
 #~ msgid "Permanently remove the license from this file"
 #~ msgstr ""
 #~ "Está seguro de que desea eliminar permanentemente la licencia de su copia "
@@ -7812,7 +7752,6 @@ msgstr ""
 #~ msgid "Comment:"
 #~ msgstr "Comentario:"
 
-#, fuzzy
 #~ msgid "Please enter the copyright holder, copright year and title."
 #~ msgstr ""
 #~ "Por favor introduzca el dueño de los derechos de copia del archivo que "
@@ -7998,18 +7937,15 @@ msgstr ""
 #~ msgid "Cable/DSL"
 #~ msgstr "Cable/DSL"
 
-#, fuzzy
 #~ msgid "United States"
 #~ msgstr "Estados Unidos"
 
-#, fuzzy
 #~ msgid "English"
 #~ msgstr "Inglés"
 
 #~ msgid "Loading Languages"
 #~ msgstr "Cargando Idiomas"
 
-#, fuzzy
 #~ msgid "false"
 #~ msgstr "falso"
 
@@ -9721,7 +9657,6 @@ msgstr ""
 #~ "¿quieres abrir esta ventana de \"Consejo del día\" después de que la "
 #~ "hayas cerrado? Ve al menú Ayuda y escoge \"Consejo del día\""
 
-#, fuzzy
 #~ msgid ""
 #~ "Want to know more about the development of FrostWire? Visit <a href=\"{0}"
 #~ "\">FrostWire's open-source website</a> and look around!"
@@ -9751,7 +9686,6 @@ msgstr ""
 #~ "dentro de la ventana de opciones de FrostWire para encontrar el puerto. "
 #~ "Revise la configuración de su ruter y ajústela adecuadamente."
 
-#, fuzzy
 #~ msgid ""
 #~ "Did you know FrostWire is completely open-source? Visit <a href=\"{0}"
 #~ "\">www.frostwire.com</a> for information on how to join developer mailing "

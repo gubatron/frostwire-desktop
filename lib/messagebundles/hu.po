@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-12 17:19-0400\n"
+"POT-Creation-Date: 2012-04-14 11:28-0400\n"
 "PO-Revision-Date: 2008-07-30 09:36+0000\n"
 "Last-Translator: FTA <Unknown>\n"
 "Language-Team: none\n"
@@ -19,7 +19,6 @@ msgstr ""
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:50
-#, fuzzy
 msgid ""
 "FrostWire was unable to write a necessary file because your hard drive is "
 "full. To continue using FrostWire you must free up space on your hard drive."
@@ -28,7 +27,6 @@ msgstr ""
 "A FrostWire további használatához helyet kell felszabaditanod a lemezen."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:52
-#, fuzzy
 msgid ""
 "FrostWire was unable to open a necessary file because another program has "
 "locked the file. FrostWire may act unexpectedly until this file is released."
@@ -38,7 +36,6 @@ msgstr ""
 "a fájl lezárva marad."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:54
-#, fuzzy
 msgid ""
 "FrostWire was unable to write a necessary file because you do not have the "
 "necessary permissions. Your preferences may not be maintained the next time "
@@ -49,7 +46,6 @@ msgstr ""
 "FrostWire indításig, vagy a FrostWire furcsán viselkedhet."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:56
-#, fuzzy
 msgid ""
 "FrostWire cannot open a necessary file because the filename contains "
 "characters which are not supported by your operating system. FrostWire may "
@@ -76,7 +72,6 @@ msgstr ""
 "használja a fájlt. Zárd be ezt a programot, majd próbálkozz újra."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:64
-#, fuzzy
 msgid ""
 "FrostWire was unable to create or continue writing an incomplete file for "
 "the selected download because you do not have permission to write files to "
@@ -326,7 +321,6 @@ msgid "Images"
 msgstr "K�pek"
 
 #: core/com/limegroup/gnutella/MediaType.java:50
-#, fuzzy
 msgid "Torrents"
 msgstr "BitTorrent"
 
@@ -341,12 +335,10 @@ msgid "Loading Community Chat..."
 msgstr ""
 
 #: gui/com/frostwire/gui/ChatMediator.java:413
-#, fuzzy
 msgid "Loading Community Chat Window..."
 msgstr "Monitorablak bet�lt�se..."
 
 #: gui/com/frostwire/gui/HideExitDialog.java:39
-#, fuzzy
 msgid "Do you want to hide FrostWire?"
 msgstr "Jelenleg kapcsol�dva vagy a h�l�zathoz"
 
@@ -357,13 +349,11 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/HideExitDialog.java:61
-#, fuzzy
 msgid "Don't show this again"
 msgstr "Ne jelenjen meg �jra ez az �zenet."
 
 #. hide button
 #: gui/com/frostwire/gui/HideExitDialog.java:70
-#, fuzzy
 msgid "Hide"
 msgstr "Videó"
 
@@ -375,14 +365,12 @@ msgid "Exit"
 msgstr "Kil�p�"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:63
-#, fuzzy
 msgid "Send audio to iTunes"
 msgstr "R�szletek ment�se f�jlba"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:64
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:902
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:739
-#, fuzzy
 msgid "Send audio files to iTunes"
 msgstr "R�szletek ment�se f�jlba"
 
@@ -394,13 +382,11 @@ msgstr "R�szletek"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:108
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:388
-#, fuzzy
 msgid "Show Details"
 msgstr "Magnet-r�szletek megjelen�t�se"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:109
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:389
-#, fuzzy
 msgid "Show Torrent Details"
 msgstr "Magnet-r�szletek megjelen�t�se"
 
@@ -422,7 +408,6 @@ msgstr "Tartalmaz� mappa megnyit�sa"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:152
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:153
-#, fuzzy
 msgid "Show"
 msgstr "Mutasd az utols�"
 
@@ -479,12 +464,10 @@ msgid "Remove Torrent"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:259
-#, fuzzy
 msgid "Remove Torrent from selected downloads"
 msgstr "Let�lt�s ism�telt megk�s�rl�se"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:261
-#, fuzzy
 msgid "Remove Download"
 msgstr "Let�lt�s folytat�sa"
 
@@ -497,12 +480,10 @@ msgid "Remove"
 msgstr "töröl"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:263
-#, fuzzy
 msgid "Remove Selected Downloads"
 msgstr "A kijel�lt let�lt�s el�n�zete"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:273
-#, fuzzy
 msgid ""
 "Are you sure you want to remove the data files from your computer?\n"
 "\n"
@@ -518,12 +499,10 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:295
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:296
-#, fuzzy
 msgid "Remove Download and Data"
 msgstr "Let�lt�s folytat�sa"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:297
-#, fuzzy
 msgid "Remove Download and Data from selected downloads"
 msgstr "Let�lt�s ism�telt megk�s�rl�se"
 
@@ -532,7 +511,6 @@ msgstr "Let�lt�s ism�telt megk�s�rl�se"
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:311
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:486
 #: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:479
-#, fuzzy
 msgid "Copy Magnet"
 msgstr "Jelent�s m�sol�sa"
 
@@ -552,7 +530,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:394
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:395
-#, fuzzy
 msgid "Hide Seeding Transfers"
 msgstr "�tvitel ut�n kil�p�"
 
@@ -563,13 +540,11 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:398
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:399
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:400
-#, fuzzy
 msgid "Show Seeding Transfers"
 msgstr "Kil�p�s �tvitel befejez�se ut�"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:419
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:195
-#, fuzzy
 msgid "Create New Playlist"
 msgstr "Lej�tsz�lista ment�se m�sk�nt"
 
@@ -584,7 +559,6 @@ msgid "Add to playlist "
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:39
-#, fuzzy
 msgid " (Partial)"
 msgstr "R�szleges f�jlok"
 
@@ -610,7 +584,6 @@ msgstr "Állapot"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:117
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:324
-#, fuzzy
 msgid "Downloaded"
 msgstr "Let�lt�"
 
@@ -621,13 +594,11 @@ msgstr "Felt�ltve"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:127
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:322
-#, fuzzy
 msgid "Down Speed"
 msgstr "Let�lt�si sebess�g:"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:131
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:323
-#, fuzzy
 msgid "Up Speed"
 msgstr "Sebesség"
 
@@ -638,7 +609,6 @@ msgstr "Idõ"
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:142
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:327
 #: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:22
-#, fuzzy
 msgid "Seeds"
 msgstr "Sebesség"
 
@@ -648,12 +618,10 @@ msgid "Peers"
 msgstr "partner"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:148
-#, fuzzy
 msgid "Share Ratio"
 msgstr "F�jl megoszt�sa"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:153
-#, fuzzy
 msgid "Seeds/Peers"
 msgstr "partner"
 
@@ -690,7 +658,6 @@ msgid "Show Download in Library"
 msgstr "Letöltés mutatása a Könyvtá-ban"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediator.java:141
-#, fuzzy
 msgid "Transfers"
 msgstr "�tvitel ut�n kil�p�"
 
@@ -738,13 +705,11 @@ msgstr ""
 
 #. advanced > Download Speed Menu //
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:56
-#, fuzzy
 msgid "Set Down Speed"
 msgstr "V�lassz sebess�get"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:65
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:172
-#, fuzzy
 msgid "Disabled"
 msgstr "Eldob�"
 
@@ -785,7 +750,6 @@ msgstr ""
 #. }
 #. advanced >Upload Speed Menu //
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:163
-#, fuzzy
 msgid "Set Up Speed"
 msgstr "V�lassz sebess�get"
 
@@ -798,12 +762,10 @@ msgstr "Haladó"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:399
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:149
-#, fuzzy
 msgid "Add to playlist"
 msgstr "Mappa tartalma a lej�tsz�list�ba"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:84
-#, fuzzy
 msgid "Torrent File Created with FrostWire"
 msgstr "Jelenleg kapcsol�dva vagy a h�l�zathoz"
 
@@ -815,12 +777,10 @@ msgid "Create New Torrent"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:178
-#, fuzzy
 msgid "Torrent Contents"
 msgstr "Feln�tt tartalom kisz�r�se"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:180
-#, fuzzy
 msgid "Select File or Folder..."
 msgstr "Mappa v�laszt�sa"
 
@@ -837,7 +797,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:228
-#, fuzzy
 msgid "Torrent Properties"
 msgstr "BitTorrent-be�ll�t�sok"
 
@@ -852,7 +811,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:248
-#, fuzzy
 msgid "Start seeding"
 msgstr "Bet�lt�"
 
@@ -886,7 +844,6 @@ msgstr "Bezárás"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:314
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:875
-#, fuzzy
 msgid "Save torrent as..."
 msgstr ".torrent f�jlok megoszt�sa"
 
@@ -936,7 +893,6 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:486
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:843
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:716
-#, fuzzy
 msgid "Invalid Folder"
 msgstr "Helytelen f�jln�"
 
@@ -949,12 +905,10 @@ msgid "Invalid Tracker URL\n"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:521
-#, fuzzy
 msgid "Torrent Created."
 msgstr "K�sz�"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:547
-#, fuzzy
 msgid "Torrent File"
 msgstr ".torrent f�jlok"
 
@@ -1006,7 +960,6 @@ msgid "wizard.operationfailed"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:886
-#, fuzzy
 msgid "Saving Torrent..."
 msgstr "F�jl ment�se..."
 
@@ -1016,31 +969,26 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:61
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:81
-#, fuzzy
 msgid "Select files to download"
 msgstr "A kijel�lt let�lt�s elt�vol�t�sa a list�r�"
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:129
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:149
-#, fuzzy
 msgid "Download Selected Files Only"
 msgstr "Az �sszes kijel�lt f�jl let�lt�se"
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:153
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:173
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:264
-#, fuzzy
 msgid "File"
 msgstr "&F�jl"
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:171
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:191
-#, fuzzy
 msgid "Select/Unselect all files"
 msgstr "A kijel�lt f�jlok t�rl�se"
 
 #: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:70
-#, fuzzy
 msgid "Preparing selection"
 msgstr "A kijel�lt f�jlok ind�t�sa."
 
@@ -1049,7 +997,6 @@ msgid "please wait..."
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:159
-#, fuzzy
 msgid "Select the content you want to send"
 msgstr "A kijel�lt let�lt�s elt�vol�t�sa a list�r�"
 
@@ -1060,12 +1007,10 @@ msgid "Download"
 msgstr "Let�lt�"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:166
-#, fuzzy
 msgid "at"
 msgstr "Chat"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:167
-#, fuzzy
 msgid "via FrostWire"
 msgstr "FrostWire &PRO"
 
@@ -1090,47 +1035,38 @@ msgid "Send the message above to Twitter"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:444
-#, fuzzy
 msgid "Copy Text"
 msgstr "Jelent�s m�sol�sa"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:445
-#, fuzzy
 msgid "Copy entire message to Clipboard"
 msgstr "Magneet linkek m�sol�sa a v�g�lapra"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:452
-#, fuzzy
 msgid "Message copied to clipboard."
 msgstr "M�sol�s a v�g�lapra"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:464
-#, fuzzy
 msgid "Copy Link"
 msgstr "M�sol�"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:465
-#, fuzzy
 msgid "Copy Link to Clipboard"
 msgstr "M�sol�s a v�g�lapra"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:472
-#, fuzzy
 msgid "Link copied to clipboard."
 msgstr "M�sol�s a v�g�lapra"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:487
-#, fuzzy
 msgid "Copy Magnet URL to Clipboard"
 msgstr "Magneet linkek m�sol�sa a v�g�lapra"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:494
-#, fuzzy
 msgid "Magnet copied to clipboard."
 msgstr "Magneet linkek m�sol�sa a v�g�lapra"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentFetcherDownload.java:23
-#, fuzzy
 msgid "Downloading Torrent"
 msgstr ".torrent &let�lt�se"
 
@@ -1149,13 +1085,11 @@ msgid "Error"
 msgstr "Hiba"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentFetcherDownload.java:25
-#, fuzzy
 msgid "Canceled"
 msgstr "Mégse"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:34
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentSaveFolderPaneItem.java:13
-#, fuzzy
 msgid "Torrent Data Save Folder"
 msgstr "Mentési mappa"
 
@@ -1164,23 +1098,19 @@ msgid "You forgot to enter a path for the Torrent Data Folder."
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:87
-#, fuzzy
 msgid "Please enter a valid path for the Torrent Data Folder"
 msgstr "Adj meg egy �rv�nyes �vsz�mot a pulibk�land� f�jl sz�m�ra."
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:99
-#, fuzzy
 msgid "The Torrent Data Folder cannot be inside the "
 msgstr "A f�jl hib�s. Az adat nem volt menthet�"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:103
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:114
-#, fuzzy
 msgid "Could not resolve folder path."
 msgstr "Nem siker� {0} kiszolg�l� b�ng�sz�se."
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:110
-#, fuzzy
 msgid "The Torrent Data Folder cannot be a parent folder of the "
 msgstr ""
 "A megoszt�si mappa �rv�nytelen. Haszn�lj egy m�sikat, vagy t�rj vissza az "
@@ -1205,7 +1135,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:46
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentSeedingSettingPaneItem.java:14
-#, fuzzy
 msgid "Seeding Settings"
 msgstr "Felhaszn�l�i be�ll�t�sok bet�lt�se..."
 
@@ -1230,13 +1159,11 @@ msgid "globalmanager.download.remove.veto"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:20
-#, fuzzy
 msgid "Downloading"
 msgstr "Let�lt�"
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:22
 #: gui/com/frostwire/gui/bittorrent/YouTubeVideoUrlDownload.java:49
-#, fuzzy
 msgid "Stopped"
 msgstr "Le�ll�t�"
 
@@ -1246,7 +1173,6 @@ msgstr "V�rakoz�"
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:24
 #: gui/com/frostwire/gui/bittorrent/YouTubeVideoUrlDownload.java:47
-#, fuzzy
 msgid "Finished"
 msgstr "Befejez�"
 
@@ -1284,14 +1210,12 @@ msgid "Send"
 msgstr "K�"
 
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:243
-#, fuzzy
 msgid "Do you want to send this file to a friend?"
 msgstr "Ezzel a f�jln�vvel rendelkez� f�jlokra keres."
 
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:243
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:136
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:65
-#, fuzzy
 msgid "Send files with FrostWire"
 msgstr "Seg�ts�g a FrostWire haszn�lat�hoz"
 
@@ -1306,12 +1230,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/library/Device.java:265
-#, fuzzy
 msgid "Transfer failed"
 msgstr "�tvitel ut�n kil�p�"
 
 #: gui/com/frostwire/gui/library/DeviceUploadDialog.java:66
-#, fuzzy
 msgid "Upload to device"
 msgstr "El�rted a felt�lt�si korl�tot"
 
@@ -1324,13 +1246,11 @@ msgid "Uploading"
 msgstr "Felt�lt�"
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
-#, fuzzy
 msgid "Uploading "
 msgstr "Felt�lt�"
 
 #: gui/com/frostwire/gui/library/DownloadTask.java:76
 #: gui/com/frostwire/gui/library/DownloadTask.java:109
-#, fuzzy
 msgid "Downloading "
 msgstr "Let�lt�"
 
@@ -1348,12 +1268,10 @@ msgid "Icon"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:76
-#, fuzzy
 msgid "Date Added"
 msgstr "Ment�s m�sk�nt"
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:79
-#, fuzzy
 msgid "Date Modified"
 msgstr "Utols� m�dos�t�s:"
 
@@ -1368,40 +1286,33 @@ msgstr "Keresés"
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableMediator.java:411
 #: gui/com/frostwire/gui/library/LibraryDeviceTableMediator.java:412
-#, fuzzy
 msgid "Save"
 msgstr "Mentés"
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableMediator.java:413
-#, fuzzy
 msgid "Save Selected Files To Folder"
 msgstr "A kijel�lt let�lt�s elt�vol�t�sa a list�r�"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:144
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:269
-#, fuzzy
 msgid "tracks"
 msgstr "S�"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:199
-#, fuzzy
 msgid "Finished Downloads"
 msgstr "K�sz let�lt�sek megoszt�sa:"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:201
-#, fuzzy
 msgid "Devices"
 msgstr "El�n�zet"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:223
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:155
-#, fuzzy
 msgid "Configure Options"
 msgstr "Megoszt�si opci�k konfigur�l�sa"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:223
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:156
-#, fuzzy
 msgid "You can configure the FrostWire's Options."
 msgstr "Be�ll�thatod a megosztott mapp�kat a FrostWire Be�ll�t�sok kartonj�"
 
@@ -1412,7 +1323,6 @@ msgstr "Friss�t�"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:607
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:655
-#, fuzzy
 msgid "Refresh selected"
 msgstr "&Kapcsolatok"
 
@@ -1489,20 +1399,17 @@ msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:791
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:664
-#, fuzzy
 msgid "Launch in "
 msgstr "M�velet ind�t�sa"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:792
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:665
-#, fuzzy
 msgid "Launch Selected Files in "
 msgstr "A kijel�lt f�jlok ind�t�sa."
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:834
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:707
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:317
-#, fuzzy
 msgid "Create a new .torrent file"
 msgstr ".torrent f�jlok megoszt�sa"
 
@@ -1535,12 +1442,10 @@ msgid "Url"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:377
-#, fuzzy
 msgid "Are you sure you want to remove the selected radio station?"
 msgstr "Biztosan t�r�lni akarod a kijel�lt f�jl(oka)t?"
 
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:377
-#, fuzzy
 msgid "Are you sure you want to remove the selected radio stations?"
 msgstr "Biztosan t�r�lni akarod a kijel�lt f�jl(oka)t?"
 
@@ -1575,7 +1480,6 @@ msgid "Loading Library Window..."
 msgstr "K�nyvt�rablak bet�lt�se..."
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:162
-#, fuzzy
 msgid "New Playlist"
 msgstr "MP3 lej�tsz�lista"
 
@@ -1608,19 +1512,16 @@ msgid "Refresh the audio properties based on ID3 tags of selected items"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:690
-#, fuzzy
 msgid "Delete Playlist"
 msgstr "MP3 lej�tsz�lista"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:701
-#, fuzzy
 msgid ""
 "Are you sure you want to delete the playlist?\n"
 "(No files will be deleted)"
 msgstr "Biztosan t�r�lni akarod a kijel�lt f�jl(oka)t?"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:720
-#, fuzzy
 msgid "Rename Playlist"
 msgstr "Lej�tsz�lista ment�se m�sk�nt"
 
@@ -1648,7 +1549,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:787
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:805
-#, fuzzy
 msgid "Export Playlist to .m3u"
 msgstr "Lej�tsz�lista megnyit�sa (.m3u)"
 
@@ -1660,7 +1560,6 @@ msgstr ""
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:39
 #: gui/com/frostwire/gui/library/StarredDirectoryHolder.java:40
 #: gui/com/frostwire/gui/library/StarredDirectoryHolder.java:44
-#, fuzzy
 msgid "Starred"
 msgstr "Kezd�d�"
 
@@ -1670,27 +1569,22 @@ msgid "Comment"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:244
-#, fuzzy
 msgid "Duration"
 msgstr "Le�r�"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:267
-#, fuzzy
 msgid "Folder"
 msgstr "Mappa:"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:763
-#, fuzzy
 msgid "Delete Selected Files from this playlist"
 msgstr "A kijel�lt f�jlok elt�vol�t�sa a lej�tsz�list�b�"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:820
-#, fuzzy
 msgid "Cleanup playlist"
 msgstr "Felt�lt�sek takar�t�sa"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:821
-#, fuzzy
 msgid "Remove the deleted items"
 msgstr "Kijel�lt elem elt�vol�t�sa"
 
@@ -1699,7 +1593,6 @@ msgid "Refresh the audio properties based on ID3 tags"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibrarySearch.java:101
-#, fuzzy
 msgid "search results"
 msgstr "Keres�si eredm�nyek"
 
@@ -1712,12 +1605,10 @@ msgstr ""
 #: gui/com/frostwire/gui/library/LibraryUtils.java:140
 #: gui/com/frostwire/gui/library/LibraryUtils.java:171
 #: gui/com/frostwire/gui/library/LibraryUtils.java:235
-#, fuzzy
 msgid "Playlist name"
 msgstr "MP3 lej�tsz�lista"
 
 #: gui/com/frostwire/gui/library/LibraryUtils.java:573
-#, fuzzy
 msgid "Refreshing"
 msgstr "Friss�t�"
 
@@ -1730,37 +1621,30 @@ msgid "Error importing Radio Station from"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/MediaTypeSavedFilesDirectoryHolder.java:60
-#, fuzzy
 msgid "Holds the Results for "
 msgstr "A legut�bbi keres�s eredm�nyeit tartalmazza"
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:187
-#, fuzzy
 msgid "Library Folders"
 msgstr "Mappa megnyitása"
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:368
-#, fuzzy
 msgid "Legend"
 msgstr "Jelmagyarázat"
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:377
-#, fuzzy
 msgid "Folder and subfolders are included in the Library."
 msgstr "A mappa fájljai és pár almappa meg van osztva."
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:391
-#, fuzzy
 msgid "Folder is not included and no subfolders are included in the Library."
 msgstr "A mappa nincs megosztva, és almappák sincsenek megosztva."
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:399
-#, fuzzy
 msgid "Folder's files and some subfolders are included in the Library."
 msgstr "A mappa fájljai és pár almappa meg van osztva."
 
 #: gui/com/frostwire/gui/library/UITool.java:102
-#, fuzzy
 msgid "Applications"
 msgstr "Alkalmazás"
 
@@ -1777,7 +1661,6 @@ msgid "Ringtones"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/UITool.java:114
-#, fuzzy
 msgid "Unkown file type"
 msgstr "Linkek �s f�jlt�pusok"
 
@@ -1808,7 +1691,6 @@ msgid "Previous"
 msgstr "El�"
 
 #: gui/com/frostwire/gui/player/AudioPlayerComponent.java:235
-#, fuzzy
 msgid "Shuffle songs"
 msgstr "Kevert"
 
@@ -1818,12 +1700,10 @@ msgstr ""
 
 #. public ChatTab(final ChatMediator cm) {
 #: gui/com/frostwire/gui/tabs/ChatTab.java:29
-#, fuzzy
 msgid "Chat"
 msgstr "Chat"
 
 #: gui/com/frostwire/gui/tabs/ChatTab.java:30
-#, fuzzy
 msgid "Show our community chat"
 msgstr "Mutasd a tároló szintjelzőt."
 
@@ -1842,7 +1722,6 @@ msgid "Search and Download Files"
 msgstr "File-keres�s �s let�lt�"
 
 #: gui/com/frostwire/gui/updates/InstallerUpdater.java:127
-#, fuzzy
 msgid "Update"
 msgstr "Friss�t�sek"
 
@@ -1986,19 +1865,16 @@ msgid "Clear History"
 msgstr "El�zm�nyek t�rl�se"
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:84
-#, fuzzy
 msgid "Send this file to a friend"
 msgstr "R�szletek ment�se f�jlba"
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:130
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:64
-#, fuzzy
 msgid "file"
 msgstr "f�jl"
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:131
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:64
-#, fuzzy
 msgid "folder"
 msgstr "Mappa:"
 
@@ -2082,7 +1958,6 @@ msgid "&Library"
 msgstr "Könyvtár"
 
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:116
-#, fuzzy
 msgid "C&hat"
 msgstr "Cseveg�s v�ge"
 
@@ -2226,7 +2101,6 @@ msgstr "Oké"
 #: gui/com/limegroup/gnutella/gui/InputFieldDialog.java:93
 #: gui/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:44
 #: gui/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:46
-#, fuzzy
 msgid "Apply Operation"
 msgstr "Művelet alkalmazása"
 
@@ -2513,7 +2387,6 @@ msgid "Loading tips..."
 msgstr "Tippek bet�lt�se..."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:7
-#, fuzzy
 msgid ""
 "Tired of downloads stopping halfway through? It helps to pick search results "
 "with a higher number in the '#' column. The # is the amount of unique places "
@@ -2536,7 +2409,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:26
-#, fuzzy
 msgid ""
 "You can sort your search results by clicking on a column. The most useful "
 "column to sort by is the 'Seeds' column, which represents an approximate "
@@ -2838,12 +2710,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:122
-#, fuzzy
 msgid "Thank you for using FrostWire"
 msgstr "Seg�ts�g a FrostWire haszn�lat�hoz"
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:123
-#, fuzzy
 msgid "Visit us at www.frostwire.com"
 msgstr "L�togasd meg a http://www.frostwire.com-ot a friss�t�shez!"
 
@@ -2888,7 +2758,6 @@ msgid "A newer version is available, update?"
 msgstr "�j verzi� �rhet� el, friss�tsem?"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:47
-#, fuzzy
 msgid "O&pen .Torrent or Magnet"
 msgstr ".&torrent f�jl megnyit�sa"
 
@@ -2897,7 +2766,6 @@ msgid "Opens a magnet link or torrent file"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:73
-#, fuzzy
 msgid "Download .Torrent or Magnet or YouTube video link"
 msgstr ".&torrent f�jl megnyit�sa"
 
@@ -2924,27 +2792,22 @@ msgid "&Close"
 msgstr "&Bez�r�"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:287
-#, fuzzy
 msgid "Close the program's main window"
 msgstr "Program bez�r�sa"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:303
-#, fuzzy
 msgid "E&xit"
 msgstr "Kil�p�"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:304
-#, fuzzy
 msgid "Close and exit the program"
 msgstr "Program bez�r�sa"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:336
-#, fuzzy
 msgid "Send File or Folder..."
 msgstr "�j mappa megoszt�sa..."
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:337
-#, fuzzy
 msgid "Send a file or a folder to a friend"
 msgstr "R�szletek ment�se f�jlba"
 
@@ -3134,7 +2997,6 @@ msgstr "Mit tegyen a FrostWire ind�t�skor a kijel�lt t�rs�t�sokkal?"
 
 #: gui/com/limegroup/gnutella/gui/init/AssociationsWindow.java:72
 #: gui/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:71
-#, fuzzy
 msgid "Always take the selected associations."
 msgstr "Mindig fogadja el a kijel�lt t�rs�t�sokat."
 
@@ -3149,7 +3011,6 @@ msgid "Ask me what to do when an association is missing."
 msgstr "K�rdezzen r�, mit tegyen, ha egy t�rs�t�s hi�nyzik."
 
 #: gui/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:39
-#, fuzzy
 msgid "BitTorrent Sharing Settings"
 msgstr "BitTorrent-be�ll�t�sok"
 
@@ -3170,7 +3031,7 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:109
-#, fuzzy, java-format
+#, java-format
 msgid "FrostWire could not create the Torrent Data Folder {0}"
 msgstr ""
 "FrostWire nem találta meg a webböngésződet a következő weblap "
@@ -3181,7 +3042,6 @@ msgid "You're almost done!"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:55
-#, fuzzy
 msgid "State your intent below to start using FrostWire "
 msgstr "A kin�zet m�dos�t�sa �rdek�ben ind�tsd �jra a FrostWire-t."
 
@@ -3193,7 +3053,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:58
-#, fuzzy
 msgid "Find out more..."
 msgstr "Tudta-e, hogy..."
 
@@ -3249,7 +3108,6 @@ msgstr ""
 "FrostWire-t, hogy haszn�latkor gyorsabban elinduljon."
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:152
-#, fuzzy
 msgid "Chat Community"
 msgstr "Kiszolg�l�i kapcsolat"
 
@@ -3320,12 +3178,10 @@ msgstr ""
 "l�p�seken, amelyekkel a programb�l a lehet� legt�bbet hozhatod ki."
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:99
-#, fuzzy
 msgid "FrostWire is free software, "
 msgstr "A FrostWire �ppen k�szenl�ti m�db�l �ll vissza"
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:109
-#, fuzzy
 msgid "Do not pay for FrostWire."
 msgstr "Proxy be�ll�t�sa a FrostWire sz�m�ra."
 
@@ -3354,7 +3210,6 @@ msgid "Learn More about FrostWire's Content Filtering System"
 msgstr "T�bb inf� a FrostWire tartalomsz�r� rendszer�r�"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:29
-#, fuzzy
 msgid "Sharing &Help"
 msgstr "Megosztás"
 
@@ -3367,7 +3222,6 @@ msgid "Frequently Asked Questions for FrostWire"
 msgstr "Gyakran ism�telt k�rd�sek a FrostWire-r�"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:33
-#, fuzzy
 msgid "FrostWire for Android"
 msgstr "A FrostWire haszn�lata erre..."
 
@@ -3376,17 +3230,14 @@ msgid "Get FrostWire on your Android phone, tablet or google tv, all free."
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:35
-#, fuzzy
 msgid "What is \"Seeding\"?"
 msgstr "Mi ez?"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:35
-#, fuzzy
 msgid "Learn about BitTorrent Seeding"
 msgstr "BitTorrent-be�ll�t�sok"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:39
-#, fuzzy
 msgid "Free FrostWire Stickers"
 msgstr "FrostWire PRO let�lt�se k�s�"
 
@@ -3397,7 +3248,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:41
-#, fuzzy
 msgid "FrostWire T-Shirts"
 msgstr "FrostWire &PRO"
 
@@ -3410,12 +3260,10 @@ msgid "FrostClick.com"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
-#, fuzzy
 msgid "Free Legal Downloads"
 msgstr "A kijel�lt let�lt�s el�n�zete"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:48
-#, fuzzy
 msgid "FrostWire on Facebook"
 msgstr "FrostWire m�dialej�tsz�"
 
@@ -3436,7 +3284,6 @@ msgid "Access the FrostWire Users' Forum"
 msgstr "Bel�p�s a FrostWire felhaszn�l�i f�rumba"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:56
-#, fuzzy
 msgid "&Did you pay for FrostWire?"
 msgstr "Seg�ts�g a FrostWire haszn�lat�hoz"
 
@@ -3584,7 +3431,6 @@ msgid "Select your Language Prefereces"
 msgstr "Nyelvi be�ll�t�sok megv�ltoztat�sa"
 
 #: gui/com/limegroup/gnutella/gui/menu/ViewMenu.java:119
-#, fuzzy
 msgid "Reset Font Size"
 msgstr "&Bet�m�ret n�vel�se"
 
@@ -3673,7 +3519,6 @@ msgid "Updates"
 msgstr "Friss�t�sek"
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:321
-#, fuzzy
 msgid "Firewall"
 msgstr "T�zfal be�ll�t�sai"
 
@@ -3692,7 +3537,6 @@ msgid "File Associations"
 msgstr "F�jlt�rs�t�sok"
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:329
-#, fuzzy
 msgid "System Boot"
 msgstr "Rendszerindítás"
 
@@ -3764,7 +3608,6 @@ msgid "Enable Autocompletion of Text Fields:"
 msgstr "Automatikus kieg�sz�t�s enged�lyez�se:"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AutomaticInstallerDownloadPaneItem.java:14
-#, fuzzy
 msgid "Automatic Installer Download"
 msgstr "Automatikus g�rget�"
 
@@ -3923,7 +3766,6 @@ msgid "Router Configuration"
 msgstr "Router be�ll�t�sa"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:35
-#, fuzzy
 msgid ""
 "FrostWire can configure itself to work from behind a firewall or router. "
 "Using Universal Plug 'n Play (UPnP) and other NAT traversal techniques "
@@ -3940,12 +3782,10 @@ msgstr ""
 "routert is konfigur�lnod kell a k�zi be�ll�t�s v�laszt�sa eset�n.)"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:49
-#, fuzzy
 msgid "Use random port (Recommended)"
 msgstr "UPnP haszn�lata (Aj�nlott)"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:50
-#, fuzzy
 msgid "Manual Port Forward"
 msgstr "K�zi portbe�ll�t�s:"
 
@@ -3958,14 +3798,12 @@ msgid "UDP:"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:172
-#, fuzzy
 msgid ""
 "You must enter a port between 1 and 65535 when manually forcing your TCP "
 "port."
 msgstr "1 �s 65535 k�z�tti portsz�mot kell megadnod a k�zi be�ll�t�shoz."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:176
-#, fuzzy
 msgid ""
 "You must enter a port between 1 and 65535 when manually forcing your UDP "
 "port."
@@ -4008,7 +3846,6 @@ msgstr "A .vbs f�jlok kisz�r�se"
 #. * Key for the locale-specific string for the wmv and asf file check box label.
 #.
 #: gui/com/limegroup/gnutella/gui/options/panes/IgnoreResultTypesPaneItem.java:66
-#, fuzzy
 msgid "Ignore .wmv, .wma, .au, .asf files"
 msgstr "A .wmv/.asf f�jlok kisz�r�se"
 
@@ -4038,12 +3875,10 @@ msgid "Image Viewer"
 msgstr "K�pn�zeget�"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LibraryFoldersPaneItem.java:34
-#, fuzzy
 msgid "Library Included Folders"
 msgstr "Mappa megnyitása"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LibraryFoldersPaneItem.java:36
-#, fuzzy
 msgid "You can choose the folders for include files when browsing the library."
 msgstr ""
 "Kijel�lheted a megosztott f�ljok mapp�it. Az itt l�v� f�jlok megjelennek a "
@@ -4054,7 +3889,6 @@ msgid "Internet Radio Stations"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:20
-#, fuzzy
 msgid "You can restore the default internet radio stations."
 msgstr "Itt kiv�laszthatod a kil�p�si viselked�si m�dot."
 
@@ -4154,7 +3988,6 @@ msgid "Allow Partial Sharing:"
 msgstr "R�szleges megoszt�s enged�lyez�se:"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:20
-#, fuzzy
 msgid "FrostWire Popups"
 msgstr "FrostWire &PRO"
 
@@ -4191,7 +4024,6 @@ msgid "Password:"
 msgstr "Jelszó:"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:29
-#, fuzzy
 msgid "Proxy Options"
 msgstr "Lej�tsz�s be�ll�t�sok:"
 
@@ -4269,7 +4101,6 @@ msgid "Show dialog to ask before close"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:20
-#, fuzzy
 msgid "Smart Search"
 msgstr "Keresés leállítása"
 
@@ -4284,7 +4115,6 @@ msgid "Total torrents indexed"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:49
-#, fuzzy
 msgid "Total files indexed"
 msgstr "Az �sszes sz�rt �zenet."
 
@@ -4293,7 +4123,6 @@ msgid "If you continue you will erase all the information related to\n"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:77
-#, fuzzy
 msgid " torrents and "
 msgstr "Torrentmegoszt�"
 
@@ -4353,7 +4182,6 @@ msgid "Show Firewall Indicator:"
 msgstr "T�zfalkijelz� mutat�sa:"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:18
-#, fuzzy
 msgid "BitTorrent Connection Settings"
 msgstr "BitTorrent-be�ll�t�sok"
 
@@ -4363,7 +4191,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:22
-#, fuzzy
 msgid "Maximum active downloads"
 msgstr "Maximum let�lt�sek"
 
@@ -4372,17 +4199,14 @@ msgid "Global maximum number of connections"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:26
-#, fuzzy
 msgid "Maximum number of connected peers per torrent"
 msgstr "Torrentre jut� max. felt�lt�sek"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:28
-#, fuzzy
 msgid "Number of upload slots per torrent"
 msgstr "Torrentre jut� max. felt�lt�sek"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentDetailsPaneItem.java:19
-#, fuzzy
 msgid "Torrent Details Page"
 msgstr "Torrentmegoszt�"
 
@@ -4469,7 +4293,6 @@ msgstr "Mind"
 #. * String for 'Select Type'
 #.
 #: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:56
-#, fuzzy
 msgid "Select Search Types:"
 msgstr "Keres�s t�pusa:"
 
@@ -4494,12 +4317,10 @@ msgid "Search for Program Files, Including exe, zip, gz, and More"
 msgstr "Programf�jlok (exe, zip, gz, �s EGYEBEK) keres�se"
 
 #: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:207
-#, fuzzy
 msgid "Search for Torrents!"
 msgstr "Keress t�bbet"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:54
-#, fuzzy
 msgid "Open Options dialog"
 msgstr "Friss�t�s be�ll�t�sai"
 
@@ -4517,7 +4338,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:58
-#, fuzzy
 msgid "Stop current search"
 msgstr "Jelenlegi keres�s:"
 
@@ -4529,7 +4349,6 @@ msgid "0"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputManager.java:151
-#, fuzzy
 msgid "Open a .torrent or Magnet link or YouTube video link"
 msgstr ".&torrent f�jl megnyit�sa"
 
@@ -4539,12 +4358,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:213
-#, fuzzy
 msgid "Search Engines"
 msgstr "Keres�s bez�r�sa"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:221
-#, fuzzy
 msgid "Filter"
 msgstr "Sz�"
 
@@ -4553,12 +4370,10 @@ msgid "<html><strong>Refine Results</strong></html>"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:410
-#, fuzzy
 msgid "Show search result filter controls"
 msgstr "Keres�si eredm�nyek sz�r�inek megjelen�t�se"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:411
-#, fuzzy
 msgid "Hide search result filter controls"
 msgstr "Keres�si eredm�nyek sz�r�inek megjelen�t�se"
 
@@ -4579,12 +4394,10 @@ msgid "Buy this item now"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:71
-#, fuzzy
 msgid "Download Partial Files"
 msgstr "R�szleges f�jlok"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:73
-#, fuzzy
 msgid "Torrent Details"
 msgstr "Bejelentkez�si r�szletek"
 
@@ -4626,7 +4439,6 @@ msgid "Show Torrent Details page when a download starts"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:480
-#, fuzzy
 msgid "Copy Hash"
 msgstr "M�sol�"
 
@@ -4635,7 +4447,6 @@ msgid "Search More"
 msgstr "Keress t�bbet"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:43
-#, fuzzy
 msgid "Source"
 msgstr "Forr�sok keres�se"
 
@@ -4644,7 +4455,6 @@ msgid "Created"
 msgstr "K�sz�"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:53
-#, fuzzy
 msgid "Extension"
 msgstr "Kiterjeszt�sek:"
 
@@ -4662,12 +4472,10 @@ msgstr "M�dia"
 
 #: gui/com/limegroup/gnutella/gui/shell/FrostAssociations.java:84
 #: gui/com/limegroup/gnutella/gui/shell/FrostAssociations.java:96
-#, fuzzy
 msgid "\".torrent\" files"
 msgstr "\".torrent\" f�jlok"
 
 #: gui/com/limegroup/gnutella/gui/shell/FrostAssociations.java:109
-#, fuzzy
 msgid "\"magnet:\" links"
 msgstr "\"magnet:\" hivatkoz�sok"
 
@@ -4909,7 +4717,6 @@ msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:131
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:79
-#, fuzzy
 msgid "language"
 msgstr "Nyelv:"
 
@@ -4920,13 +4727,11 @@ msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:133
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:81
-#, fuzzy
 msgid "lngextension"
 msgstr "Kiterjeszt�sek:"
 
 #: gui/irc/ConfigurationLoader.java:134
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:82
-#, fuzzy
 msgid "backuplanguage"
 msgstr "Nyelv:"
 
@@ -4962,7 +4767,6 @@ msgid "noasldisplayprefix"
 msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:318
-#, fuzzy
 msgid "quitmessage"
 msgstr "Üzenet"
 
@@ -4975,7 +4779,6 @@ msgid "aslfemale"
 msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:324
-#, fuzzy
 msgid "userid"
 msgstr "Sz�netelve"
 
@@ -4999,121 +4802,93 @@ msgstr ""
 msgid "helppage"
 msgstr ""
 
-#, fuzzy
 #~ msgid "Loading phones and tablets..."
 #~ msgstr "Megosztott fájlok betöltése..."
 
-#, fuzzy
 #~ msgid "Videos"
 #~ msgstr "Videó"
 
-#, fuzzy
 #~ msgid "Sort:"
 #~ msgstr "Port"
 
-#, fuzzy
 #~ msgid "None"
 #~ msgstr "Nem"
 
-#, fuzzy
 #~ msgid "Name Asc"
 #~ msgstr "Név"
 
-#, fuzzy
 #~ msgid "Name Desc"
 #~ msgstr "Név"
 
-#, fuzzy
 #~ msgid "Kind Asc"
 #~ msgstr "Fajta:"
 
-#, fuzzy
 #~ msgid "Size Asc"
 #~ msgstr "Ment�s m�sk�nt"
 
-#, fuzzy
 #~ msgid "Size Desc"
 #~ msgstr "Méret"
 
-#, fuzzy
 #~ msgid "Open"
 #~ msgstr "Megnyit�s..."
 
-#, fuzzy
 #~ msgid "Delete Files"
 #~ msgstr "F�jl(ok) &t�rl�se"
 
-#, fuzzy
 #~ msgid "System"
 #~ msgstr "T�lca"
 
-#, fuzzy
 #~ msgid "Error deleting file"
 #~ msgstr "F�jl felt�lt�se"
 
-#, fuzzy
 #~ msgid "Connected"
 #~ msgstr "Kapcsol�dva"
 
-#, fuzzy
 #~ msgid "New Folder"
 #~ msgstr "�&j mappa"
 
-#, fuzzy
 #~ msgid "File Transfers"
 #~ msgstr "�tvitel ut�n kil�p�"
 
-#, fuzzy
 #~ msgid "Cancel All"
 #~ msgstr "Mégse"
 
-#, fuzzy
 #~ msgid "Clear Finished"
 #~ msgstr "Inaktív törlése"
 
-#, fuzzy
 #~ msgid "Should I stop all transfers?"
 #~ msgstr "Kil�p�s �tvitel befejez�se ut�"
 
-#, fuzzy
 #~ msgid "one file"
 #~ msgstr ".torrent f�jlok"
 
 #~ msgid "files"
 #~ msgstr "f�jl"
 
-#, fuzzy
 #~ msgid "pending"
 #~ msgstr "Seedelés"
 
-#, fuzzy
 #~ msgid "canceled"
 #~ msgstr "Keres�s le�ll�tva"
 
-#, fuzzy
 #~ msgid "error"
 #~ msgstr "Hiba"
 
 #~ msgid "Upload"
 #~ msgstr "Felt�lt�"
 
-#, fuzzy
 #~ msgid "to"
 #~ msgstr "Le�ll�t�"
 
-#, fuzzy
 #~ msgid "Select a file..."
 #~ msgstr "Mappa v�laszt�sa"
 
-#, fuzzy
 #~ msgid "Preparing selected folder"
 #~ msgstr "A kijel�lt let�lt�s el�n�zete"
 
-#, fuzzy
 #~ msgid "Open in Folder"
 #~ msgstr "Mappa megnyitása"
 
-#, fuzzy
 #~ msgid "Open Folder Containing a Selected File"
 #~ msgstr "Tartalmaz� mappa megnyit�sa"
 
@@ -5123,11 +4898,9 @@ msgstr ""
 #~ msgid "Add Selected Files to the Playlist"
 #~ msgstr "A kijel�lt f�jlok hozz�ad�sa a lej�tsz�list�hoz"
 
-#, fuzzy
 #~ msgid "Delete from playlist"
 #~ msgstr "A kijel�lt f�jlok elt�vol�t�sa a lej�tsz�list�b�"
 
-#, fuzzy
 #~ msgid "Toggle the {0} Screen"
 #~ msgstr "A {0} képernyő megjelenítése"
 
@@ -5137,7 +4910,6 @@ msgstr ""
 #~ msgid "Show Media Player"
 #~ msgstr "M�dialej�tsz�"
 
-#, fuzzy
 #~ msgid "Send File..."
 #~ msgstr "F�jl ment�se..."
 
@@ -5180,15 +4952,12 @@ msgstr ""
 #~ msgid "Use FrostWire Media Player:"
 #~ msgstr "A FrostWire m�dialej�tsz� haszn�lata:"
 
-#, fuzzy
 #~ msgid "Seeding Status"
 #~ msgstr "Seedelés"
 
-#, fuzzy
 #~ msgid "Search Files"
 #~ msgstr "keres�st"
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire was unable to set up a port to listen for incoming connections. "
 #~ "Some features of FrostWire may not work as expected."
@@ -5206,7 +4975,6 @@ msgstr ""
 #~ "them by going to your Library, viewing your 'Incomplete Files', and "
 #~ "clicking to 'Resume' your downloads."
 
-#, fuzzy
 #~ msgid ""
 #~ "Sorry, FrostWire couldn't read some of your old downloads.  You can "
 #~ "restart them by going to your Library, viewing your 'Incomplete Files', "
@@ -5283,51 +5051,40 @@ msgstr ""
 #~ msgid "You are already downloading this file to {0}"
 #~ msgstr "Már letöltöd ezt a fájlt a {0} -ba."
 
-#, fuzzy
 #~ msgid "For Turbo-Charged searches get LimeWire PRO."
 #~ msgstr "A turb�-sebess�g� kapcsolatok�rt, v�lts a FrostWire PRO-ra."
 
-#, fuzzy
 #~ msgid "Support LimeWire's peer-to-peer development. Get PRO."
 #~ msgstr "T�mogasd a FrostWire P2P fejleszt�seit. V�lts a PRO-ra."
 
-#, fuzzy
 #~ msgid "Purchase LimeWire PRO to help us make downloads faster."
 #~ msgstr ""
 #~ "V�s�rold meg a FrostWire PRO-t, hogy seg�tsd a gyorsabb let�lt�seket."
 
-#, fuzzy
 #~ msgid "For Turbo-Charged downloads get LimeWire PRO."
 #~ msgstr "A turb�-sebess�g� let�lt�sek�rt v�lts a FrostWire PRO-ra."
 
-#, fuzzy
 #~ msgid "Support open networks. Get LimeWire PRO."
 #~ msgstr "T�mogasd a ny�ltk�r� h�l�zatokat. V�lts a FrostWire PRO-ra."
 
-#, fuzzy
 #~ msgid "Support open source and open protocols. Get LimeWire PRO."
 #~ msgstr ""
 #~ "T�mogasd a ny�lt forr�sk�dot �s -protokollokat. V�lts a FrostWire PRO-ra."
 
-#, fuzzy
 #~ msgid "For Turbo-Charged performance get LimeWire PRO."
 #~ msgstr "A lehet� legjobb m�k�d�s�rt, v�lts a FrostWire PRO-ra."
 
-#, fuzzy
 #~ msgid "Keep the Internet open. Get LimeWire PRO."
 #~ msgstr "Legyen tov�bbra is nyitott az internet! V�lts a FrostWire PRO-ra."
 
-#, fuzzy
 #~ msgid "Developing LimeWire costs real money. Get PRO."
 #~ msgstr ""
 #~ "A FrostWire fejleszt�se komoly p�nzeket em�szt fel. V�lts a FrostWire PRO-"
 #~ "ra."
 
-#, fuzzy
 #~ msgid "&Refresh Connections ("
 #~ msgstr "&Kapcsolatok"
 
-#, fuzzy
 #~ msgid "&Refreshing Connections ("
 #~ msgstr "&Kapcsolatok"
 
@@ -5403,7 +5160,6 @@ msgstr ""
 #~ "Digit�lis Audi�hozz�f�r�si protokollban. Ez a lehet�s�g ki lesz "
 #~ "kapcsolva. Az opci�k k�z�tt (iTunes -> Megoszt�s) visszakapcsolhatod."
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire was unable to start the Digital Audio Access Protocol (for "
 #~ "sharing files in iTunes) because a Microsoft patch is required or a "
@@ -5418,7 +5174,6 @@ msgstr ""
 #~ "Kattints az 'Igen' gombra a friss�t�s�rt, a 'Nem'-re az opci� "
 #~ "kikapcsol�s��rt, vagy a 'M�gs�'-re, ha majd k�s�bb d�ntesz."
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire was unable to start the Digital Audio Access Protocol (for "
 #~ "sharing files in iTunes) because a firewall is blocking access. To "
@@ -5433,7 +5188,6 @@ msgstr ""
 #~ "csatlakozásait. Amennyiben nem szeretnéd beállítani ezt a tulajdonásgot "
 #~ "kattints a 'Nem' gombra."
 
-#, fuzzy
 #~ msgid "View My Shared Files."
 #~ msgstr "Meogsztott fájlaim megtekintése."
 
@@ -5567,7 +5321,6 @@ msgstr ""
 #~ "jogosults�god ide �rni, vagy valami m�s probl�ma �ll fenn. V�lassz egy "
 #~ "m�sik k�nyvt�rat."
 
-#, fuzzy
 #~ msgid "You are not connected to the FrostWire VIP Area"
 #~ msgstr "Jelenleg kapcsol�dva vagy a h�l�zathoz"
 
@@ -5611,7 +5364,6 @@ msgstr ""
 #~ msgid "Your connection to the network is very strong"
 #~ msgstr "A h�l�zati kapcsolat rendk�v�l j� min�s�g�"
 
-#, fuzzy
 #~ msgid ""
 #~ "You can experience Turbo-Charged connections all the time with LimeWire "
 #~ "PRO!"
@@ -5637,7 +5389,6 @@ msgstr ""
 #~ msgstr[0] "{0} fájlok vannak megosztva"
 #~ msgstr[1] "{0} fájlok vannak megosztva"
 
-#, fuzzy
 #~ msgid ""
 #~ "You can find out how many times someone has uploaded a file by choosing "
 #~ "the 'Library' tab and looking at the Uploads column. The information is "
@@ -5769,7 +5520,6 @@ msgstr ""
 #~ "kapcsolatban további információkért látogasd meg a <a href=\"{0}"
 #~ "\">creative commons weboldalt</a>"
 
-#, fuzzy
 #~ msgid ""
 #~ "Wondering how many files you are sharing? Look in FrostWire's status bar "
 #~ "at the number in a green oval. A beige oval means FrostWire is still "
@@ -5780,7 +5530,6 @@ msgstr ""
 #~ "jelzi, hogy a FrostWire még építi a könyvtáradat. A piros színű mező azt "
 #~ "jelzi, hogy még nem osztottál meg fájlt."
 
-#, fuzzy
 #~ msgid ""
 #~ "Instead of putting all your files in a single folder, FrostWire can "
 #~ "automatically sort them by media type. In the Options &gt; Saving window, "
@@ -5801,11 +5550,9 @@ msgstr ""
 #~ "Nagy fájlt akarsz megosztani? FrostWire 1 TB (terrabájt)-ig támogatja a "
 #~ "fájlok méretét!"
 
-#, fuzzy
 #~ msgid "Upgrade FrostWire"
 #~ msgstr "�tt�rsz a FrostWire PRO szoftverre?"
 
-#, fuzzy
 #~ msgid ""
 #~ "For Turbo-Charged downloads, get FrostWire. Thank you for helping keep "
 #~ "the Internet open by running FrostWire."
@@ -5814,7 +5561,6 @@ msgstr ""
 #~ "sok �r�med telik majd a tov�bbfejlesztett PRO v�ltozatban. K�sz�nj�k, "
 #~ "hogy seg�ted a szabad inform�ci��raml�st a FrostWire haszn�lat�val."
 
-#, fuzzy
 #~ msgid "Upgrade to FrostWire?"
 #~ msgstr "�tt�rsz a FrostWire PRO szoftverre?"
 
@@ -5835,14 +5581,12 @@ msgstr ""
 #~ msgid "Would you like to get your free Java upgrade?"
 #~ msgstr "Szeretn�d ingyenesen let�lteni a Java friss�t�st?"
 
-#, fuzzy
 #~ msgid "Get FrostWire Now"
 #~ msgstr "FrostWire PRO let�lt�se most"
 
 #~ msgid "Why"
 #~ msgstr "Mi�rt a PRO?"
 
-#, fuzzy
 #~ msgid "What does frostwire give me?"
 #~ msgstr "Mit ny�jt nekem a PRO?"
 
@@ -5855,7 +5599,6 @@ msgstr ""
 #~ msgstr ""
 #~ "A FrostWire hib�t tal�lt a f�jlban {0} Folytatni akarod a let�lt�st?"
 
-#, fuzzy
 #~ msgid ""
 #~ "<html><b>Your FrostWire may have been corrupted by a virus or trojan!</"
 #~ "b><br><br>Please visit <a href=\"http://www.frostwire.com/download\">www."
@@ -5940,7 +5683,6 @@ msgstr ""
 #~ msgid "A connection error has occurred"
 #~ msgstr "H�l�zati hiba l�pett fel"
 
-#, fuzzy
 #~ msgid "Could not send chat message"
 #~ msgstr "Az �zenetk�ld�s sikertelen volt"
 
@@ -5989,7 +5731,6 @@ msgstr ""
 #~ msgid "Ultrapeer"
 #~ msgstr "Ultrapeer"
 
-#, fuzzy
 #~ msgid "Leaf"
 #~ msgstr "Lap"
 
@@ -6023,7 +5764,6 @@ msgstr ""
 #~ msgid "0.6"
 #~ msgstr "0.6"
 
-#, fuzzy
 #~ msgid ""
 #~ "You dropped the following files/folders on LimeWire, please select the "
 #~ "ones you would like to share."
@@ -6031,11 +5771,9 @@ msgstr ""
 #~ "A k�vetkez� f�jlokat/mapp�kat ejtetted a FrostWire-re, v�laszd ki, "
 #~ "melyikeket szeretn�d megosztani."
 
-#, fuzzy
 #~ msgid "All folders you select will also have their subfolders shared."
 #~ msgstr "Minden megosztott mappa almapp�i is megosztottak lesznek."
 
-#, fuzzy
 #~ msgid "Share Dropped Files?"
 #~ msgstr "R�ejtett f�jlok megoszt�sa"
 
@@ -6286,11 +6024,9 @@ msgstr ""
 #~ msgid "Incomplete Files"
 #~ msgstr "Befejezetlen fájlok"
 
-#, fuzzy
 #~ msgid "Individual Store Files"
 #~ msgstr "Egy�nileg megosztott f�jlok"
 
-#, fuzzy
 #~ msgid "List of All Individual Purchased Files"
 #~ msgstr "Az �sszes egy�nileg mogosztott f�jl list�z�sa"
 
@@ -6404,7 +6140,6 @@ msgstr ""
 #~ msgid "Reload available skins from disk"
 #~ msgstr "Az el�rhet� kin�zetek �jrat�lt�se a lemezr�"
 
-#, fuzzy
 #~ msgid "&Check for updates"
 #~ msgstr "Frissítések keresése..."
 
@@ -6468,7 +6203,6 @@ msgstr ""
 #~ msgid "Host Communication"
 #~ msgstr "Kiszolg�l�i kapcsolat"
 
-#, fuzzy
 #~ msgid "Chat Configuration"
 #~ msgstr "Router be�ll�t�sa"
 
@@ -6567,7 +6301,6 @@ msgstr ""
 #~ msgid "Disable Mojito DHT Capabilities:"
 #~ msgstr "Mojito DHT k�pess�gek tilt�sa:"
 
-#, fuzzy
 #~ msgid "Disable TLS Capabilities:"
 #~ msgstr "TLS képességek letiltása"
 
@@ -6590,7 +6323,6 @@ msgstr ""
 #~ msgid "You can set the percentage of your bandwidth devoted to downloads."
 #~ msgstr "Megadhatod a s�vsz�less�ged let�lt�sre sz�nt sz�zal�kos m�rt�k�t."
 
-#, fuzzy
 #~ msgid "Display"
 #~ msgstr "Mutasd:"
 
@@ -6789,15 +6521,12 @@ msgstr ""
 #~ msgid "Speed:"
 #~ msgstr "Sebess�g:"
 
-#, fuzzy
 #~ msgid "LimeWire Store Indicator"
 #~ msgstr "Mutasd a tároló szintjelzőt."
 
-#, fuzzy
 #~ msgid "You can display your LimeWire Store status in the status bar."
 #~ msgstr "Megjelenhet a t�zfalad �llapota az �llapotsoron."
 
-#, fuzzy
 #~ msgid "Show LimeWire Store Indicator:"
 #~ msgstr "Mutasd a tároló szintjelzőt."
 
@@ -6810,7 +6539,6 @@ msgstr ""
 #~ msgid "Show Shared Files Indicator:"
 #~ msgstr "Megosztottf�jl-kijelz� megjelen�t�se:"
 
-#, fuzzy
 #~ msgid ""
 #~ "You can choose the folder for saving files purchased from the LimeWire "
 #~ "Store."
@@ -7027,7 +6755,6 @@ msgstr ""
 #~ msgid "View Console Messages"
 #~ msgstr "Konzol�zenetek megtekint�se"
 
-#, fuzzy
 #~ msgid "View Logging Messages"
 #~ msgstr "Napl��zenetek megtekint�se"
 
@@ -7037,7 +6764,6 @@ msgstr ""
 #~ msgid "View Searches and Uploads"
 #~ msgstr "Keres�sek �s felt�lt�sek megtekint�se"
 
-#, fuzzy
 #~ msgid "Test action!"
 #~ msgstr "Le�r�"
 
@@ -7070,7 +6796,6 @@ msgstr ""
 #~ "Az alkalmazand� t�ma �rv�nytelen. A FrostWire az alap�rtelmez�st fogja "
 #~ "haszn�lni."
 
-#, fuzzy
 #~ msgid "Kill Upload"
 #~ msgstr "Feltöltés leállítása"
 
@@ -7141,7 +6866,6 @@ msgstr ""
 #~ msgid "Modify the license of this file"
 #~ msgstr "F�jl licensz�nek m�dos�t�sa"
 
-#, fuzzy
 #~ msgid "Permanently remove the license from this file"
 #~ msgstr "A f�jl licensz�nek elt�vol�t�sa"
 
@@ -7171,7 +6895,6 @@ msgstr ""
 #~ msgid "Title of Work:"
 #~ msgstr "M� c�me:"
 
-#, fuzzy
 #~ msgid "Please enter the copyright holder, copright year and title."
 #~ msgstr "Add meg a szerz�ijog-tulajdonost, a copyright �v�t �s a c�met."
 
@@ -7317,7 +7040,6 @@ msgstr ""
 #~ msgid "Ogg Vorbis"
 #~ msgstr "Ogg Vorbis"
 
-#, fuzzy
 #~ msgid "Back"
 #~ msgstr "Vissza"
 
@@ -7363,7 +7085,6 @@ msgstr ""
 #~ "Javasold a FrostWire <a href=\"{0}\">message board-ján</a>, és talán "
 #~ "benne is lesz a jövőbeli verziókban!"
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire is translated into many different languages including Chinese, "
 #~ "French, German, Japanese, Italian, Spanish and many more. Visit "
@@ -7567,18 +7288,15 @@ msgstr ""
 #~ msgid "Cable/DSL"
 #~ msgstr "K�bel/DSL"
 
-#, fuzzy
 #~ msgid "United States"
 #~ msgstr "Friss�t�sek"
 
-#, fuzzy
 #~ msgid "English"
 #~ msgstr "Befejez�"
 
 #~ msgid "Loading Languages"
 #~ msgstr "Nyelvek bet�lt�se"
 
-#, fuzzy
 #~ msgid "false"
 #~ msgstr "Beilleszt�"
 
@@ -8770,7 +8488,6 @@ msgstr ""
 #~ "Ne mereszd a szemedet a FrostWire használata közben! Be tudod állítani a "
 #~ "szöveg méretét, a Nézet &gt; Betűméret növelésé-nél."
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire autocompletes what you type in the search box. To prevent "
 #~ "autocompletion, open the Options window. Under View, choose "
@@ -8825,10 +8542,8 @@ msgstr ""
 #~ msgid "More Info..."
 #~ msgstr "T�bb inf�..."
 
-#, fuzzy
 #~ msgid "Go"
 #~ msgstr "Mehet"
 
-#, fuzzy
 #~ msgid "Forward"
 #~ msgstr "Következő"

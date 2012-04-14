@@ -95,7 +95,6 @@ msgstr ""
 #: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:214
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:45
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:238
-#, fuzzy
 msgid "Title"
 msgstr "&Restr"
 
@@ -113,7 +112,6 @@ msgstr ""
 #: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:221
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:63
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:250
-#, fuzzy
 msgid "Album"
 msgstr "War-dro"
 
@@ -184,7 +182,6 @@ msgstr ""
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:100
 #: core/com/limegroup/gnutella/LimeXMLNames.java:117
-#, fuzzy
 msgid "Copyright"
 msgstr "Kopiañ"
 
@@ -193,14 +190,12 @@ msgstr "Kopiañ"
 #: core/com/limegroup/gnutella/LimeXMLNames.java:128
 #: core/com/limegroup/gnutella/LimeXMLNames.java:135
 #: core/com/limegroup/gnutella/LimeXMLNames.java:141
-#, fuzzy
 msgid "License Type"
 msgstr "Aotre arverañ :"
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:103
 #: core/com/limegroup/gnutella/MediaType.java:48
 #: gui/com/frostwire/gui/library/UITool.java:112
-#, fuzzy
 msgid "Video"
 msgstr "&Gwel"
 
@@ -249,7 +244,6 @@ msgstr ""
 #: core/com/limegroup/gnutella/LimeXMLNames.java:127
 #: core/com/limegroup/gnutella/LimeXMLNames.java:134
 #: core/com/limegroup/gnutella/LimeXMLNames.java:142
-#, fuzzy
 msgid "License"
 msgstr "Aotre arverañ :"
 
@@ -275,7 +269,6 @@ msgstr ""
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:44
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:167
 #: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:32
-#, fuzzy
 msgid "Name"
 msgstr "Adenvel"
 
@@ -323,7 +316,6 @@ msgid "Loading Community Chat Window..."
 msgstr ""
 
 #: gui/com/frostwire/gui/HideExitDialog.java:39
-#, fuzzy
 msgid "Do you want to hide FrostWire?"
 msgstr "FrostWire"
 
@@ -339,7 +331,6 @@ msgstr ""
 
 #. hide button
 #: gui/com/frostwire/gui/HideExitDialog.java:70
-#, fuzzy
 msgid "Hide"
 msgstr "&Gwel"
 
@@ -406,7 +397,6 @@ msgid "Resume Download"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:181
-#, fuzzy
 msgid "Resume"
 msgstr "Adenvel"
 
@@ -463,7 +453,6 @@ msgstr ""
 #: gui/com/limegroup/gnutella/gui/ListEditor.java:296
 #: gui/com/limegroup/gnutella/gui/StandardListEditor.java:93
 #: gui/com/limegroup/gnutella/gui/StandardListEditor.java:103
-#, fuzzy
 msgid "Remove"
 msgstr "Adenvel"
 
@@ -827,7 +816,6 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:306
 #: gui/com/limegroup/gnutella/gui/AboutWindow.java:103
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMediator.java:78
-#, fuzzy
 msgid "Close"
 msgstr "Serriñ"
 
@@ -969,7 +957,6 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:153
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:173
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:264
-#, fuzzy
 msgid "File"
 msgstr "&Restr"
 
@@ -1001,7 +988,6 @@ msgid "at"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:167
-#, fuzzy
 msgid "via FrostWire"
 msgstr "FrostWire"
 
@@ -1026,7 +1012,6 @@ msgid "Send the message above to Twitter"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:444
-#, fuzzy
 msgid "Copy Text"
 msgstr "Kopiañ"
 
@@ -1039,7 +1024,6 @@ msgid "Message copied to clipboard."
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:464
-#, fuzzy
 msgid "Copy Link"
 msgstr "Kopiañ"
 
@@ -1201,14 +1185,12 @@ msgid "Send"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:243
-#, fuzzy
 msgid "Do you want to send this file to a friend?"
 msgstr "FrostWire"
 
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:243
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:136
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:65
-#, fuzzy
 msgid "Send files with FrostWire"
 msgstr "FrostWire"
 
@@ -1563,7 +1545,6 @@ msgid "Duration"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:267
-#, fuzzy
 msgid "Folder"
 msgstr "&Restr"
 
@@ -1674,7 +1655,6 @@ msgstr ""
 #. * Constant for the forward button.
 #.
 #: gui/com/frostwire/gui/player/AudioPlayerComponent.java:67
-#, fuzzy
 msgid "Next"
 msgstr "War-lerc'h »"
 
@@ -1861,7 +1841,6 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:130
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:64
-#, fuzzy
 msgid "file"
 msgstr "&Restr"
 
@@ -2224,7 +2203,6 @@ msgid "Please wait while FrostWire shuts down..."
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/SplashWindow.java:108
-#, fuzzy
 msgid "Loading FrostWire..."
 msgstr "War-dro FrostWire"
 
@@ -2345,7 +2323,6 @@ msgstr ""
 #. * 'Next'.
 #.
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMediator.java:68
-#, fuzzy
 msgid "Next Tip"
 msgstr "War-lerc'h »"
 
@@ -2660,7 +2637,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:122
-#, fuzzy
 msgid "Thank you for using FrostWire"
 msgstr "FrostWire"
 
@@ -2744,7 +2720,6 @@ msgid "Close the program's main window"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:303
-#, fuzzy
 msgid "E&xit"
 msgstr "Hent er-maez"
 
@@ -3111,7 +3086,6 @@ msgid "FrostWire is free software, "
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:109
-#, fuzzy
 msgid "Do not pay for FrostWire."
 msgstr "FrostWire"
 
@@ -3120,7 +3094,6 @@ msgid "&File"
 msgstr "&Restr"
 
 #: gui/com/limegroup/gnutella/gui/menu/FiltersMenu.java:15
-#, fuzzy
 msgid "Filter&s"
 msgstr "&Restr"
 
@@ -3169,7 +3142,6 @@ msgid "Learn about BitTorrent Seeding"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:39
-#, fuzzy
 msgid "Free FrostWire Stickers"
 msgstr "War-dro FrostWire"
 
@@ -3180,7 +3152,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:41
-#, fuzzy
 msgid "FrostWire T-Shirts"
 msgstr "FrostWire"
 
@@ -3217,7 +3188,6 @@ msgid "Access the FrostWire Users' Forum"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:56
-#, fuzzy
 msgid "&Did you pay for FrostWire?"
 msgstr "FrostWire"
 
@@ -3239,7 +3209,6 @@ msgid "&About FrostWire"
 msgstr "War-dro FrostWire"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:99
-#, fuzzy
 msgid "Information about FrostWire"
 msgstr "War-dro FrostWire"
 
@@ -3431,7 +3400,6 @@ msgstr ""
 
 #. view options
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:308
-#, fuzzy
 msgid "View"
 msgstr "&Gwel"
 
@@ -3443,7 +3411,6 @@ msgstr ""
 
 #. filter options
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:315
-#, fuzzy
 msgid "Filters"
 msgstr "&Restr"
 
@@ -3644,7 +3611,6 @@ msgid "Always Ask What to do"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/DownloadLicenseWarningPaneItem.java:21
-#, fuzzy
 msgid "License Warning"
 msgstr "Aotre arverañ :"
 
@@ -3893,7 +3859,6 @@ msgid "Allow Partial Sharing:"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:20
-#, fuzzy
 msgid "FrostWire Popups"
 msgstr "FrostWire"
 
@@ -3920,7 +3885,6 @@ msgid "Enable Authentication (Does Not Work for HTTP Proxies):"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:42
-#, fuzzy
 msgid "Username:"
 msgstr "Adenvel"
 
@@ -4265,7 +4229,6 @@ msgid "Search Engines"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:221
-#, fuzzy
 msgid "Filter"
 msgstr "&Restr"
 
@@ -4302,7 +4265,6 @@ msgid "Download Partial Files"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:73
-#, fuzzy
 msgid "Torrent Details"
 msgstr "Aotre arverañ :"
 
@@ -4341,7 +4303,6 @@ msgid "Show Torrent Details page when a download starts"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:480
-#, fuzzy
 msgid "Copy Hash"
 msgstr "Kopiañ"
 
@@ -4703,104 +4664,81 @@ msgstr ""
 msgid "helppage"
 msgstr ""
 
-#, fuzzy
 #~ msgid "Loading phones and tablets..."
 #~ msgstr "War-dro FrostWire"
 
-#, fuzzy
 #~ msgid "Videos"
 #~ msgstr "&Gwel"
 
-#, fuzzy
 #~ msgid "None"
 #~ msgstr "Nann"
 
-#, fuzzy
 #~ msgid "Name Asc"
 #~ msgstr "Adenvel"
 
-#, fuzzy
 #~ msgid "Name Desc"
 #~ msgstr "Adenvel"
 
-#, fuzzy
 #~ msgid "files"
 #~ msgstr "&Restr"
 
-#, fuzzy
 #~ msgid "Loading Network Listeners..."
 #~ msgstr "War-dro FrostWire"
 
 #~ msgid "Creative Commons"
 #~ msgstr "Creative Commons"
 
-#, fuzzy
 #~ msgid "License Details:"
 #~ msgstr "Aotre arverañ :"
 
-#, fuzzy
 #~ msgid "Creative Commons Details"
 #~ msgstr "Creative Commons"
 
-#, fuzzy
 #~ msgid "Upgrade FrostWire"
 #~ msgstr "FrostWire"
 
-#, fuzzy
 #~ msgid "Get FrostWire Now"
 #~ msgstr "FrostWire"
 
-#, fuzzy
 #~ msgid "Aborted"
 #~ msgstr "War-dro"
 
-#, fuzzy
 #~ msgid "Edit License..."
 #~ msgstr "Aotre arverañ :"
 
-#, fuzzy
 #~ msgid "View License"
 #~ msgstr "Aotre arverañ :"
 
 #~ msgid "&Help"
 #~ msgstr "&Skoazell"
 
-#, fuzzy
 #~ msgid "&Using FrostWire"
 #~ msgstr "FrostWire"
 
-#, fuzzy
 #~ msgid "Relaxed"
 #~ msgstr "Adenvel"
 
-#, fuzzy
 #~ msgid "Filename"
 #~ msgstr "Adenvel"
 
-#, fuzzy
 #~ msgid "Console"
 #~ msgstr "Serriñ"
 
-#, fuzzy
 #~ msgid "Publish License"
 #~ msgstr "Aotre arverañ :"
 
-#, fuzzy
 #~ msgid "Link:"
 #~ msgstr "Aotre arverañ :"
 
 #~ msgid "License:"
 #~ msgstr "Aotre arverañ :"
 
-#, fuzzy
 #~ msgid "License Type:"
 #~ msgstr "Aotre arverañ :"
 
-#, fuzzy
 #~ msgid "Back"
 #~ msgstr "« Kent"
 
-#, fuzzy
 #~ msgid "FB"
 #~ msgstr "R"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-12 17:19-0400\n"
+"POT-Creation-Date: 2012-04-14 11:28-0400\n"
 "PO-Revision-Date: 2008-07-31 03:37+0000\n"
 "Last-Translator: FTA <Unknown>\n"
 "Language-Team: none\n"
@@ -19,7 +19,6 @@ msgstr ""
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:50
-#, fuzzy
 msgid ""
 "FrostWire was unable to write a necessary file because your hard drive is "
 "full. To continue using FrostWire you must free up space on your hard drive."
@@ -29,7 +28,6 @@ msgstr ""
 "hard drive anda."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:52
-#, fuzzy
 msgid ""
 "FrostWire was unable to open a necessary file because another program has "
 "locked the file. FrostWire may act unexpectedly until this file is released."
@@ -39,7 +37,6 @@ msgstr ""
 "tersebut tidak lagi dikunci."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:54
-#, fuzzy
 msgid ""
 "FrostWire was unable to write a necessary file because you do not have the "
 "necessary permissions. Your preferences may not be maintained the next time "
@@ -50,7 +47,6 @@ msgstr ""
 "FrostWire, atau FrostWire mungkin tidak berjalan seperti seharusnya."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:56
-#, fuzzy
 msgid ""
 "FrostWire cannot open a necessary file because the filename contains "
 "characters which are not supported by your operating system. FrostWire may "
@@ -77,7 +73,6 @@ msgstr ""
 "menggunakannya. Tutup dulu program tersebut dan coba lagi."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:64
-#, fuzzy
 msgid ""
 "FrostWire was unable to create or continue writing an incomplete file for "
 "the selected download because you do not have permission to write files to "
@@ -112,7 +107,6 @@ msgstr "Memanggil download yg lalu..."
 #: core/com/limegroup/gnutella/LimeXMLNames.java:87
 #: core/com/limegroup/gnutella/MediaType.java:47
 #: gui/com/frostwire/gui/library/UITool.java:104
-#, fuzzy
 msgid "Audio"
 msgstr "Studio"
 
@@ -124,7 +118,6 @@ msgstr "Studio"
 #: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:214
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:45
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:238
-#, fuzzy
 msgid "Title"
 msgstr "Judul:"
 
@@ -134,7 +127,6 @@ msgstr "Judul:"
 #: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:218
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:51
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:247
-#, fuzzy
 msgid "Artist"
 msgstr "Artis:"
 
@@ -169,7 +161,6 @@ msgstr "Track"
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:99
 #: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:27
 #: gui/com/limegroup/gnutella/gui/search/Selector.java:80
-#, fuzzy
 msgid "Type"
 msgstr "Tipe:"
 
@@ -185,13 +176,11 @@ msgstr "Panjang"
 #: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:224
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:105
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:256
-#, fuzzy
 msgid "Year"
 msgstr "Tahun:"
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:96
 #: core/com/limegroup/gnutella/LimeXMLNames.java:112
-#, fuzzy
 msgid "Language"
 msgstr "Bahasa:"
 
@@ -201,25 +190,21 @@ msgstr "Bahasa:"
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:176
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:81
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:270
-#, fuzzy
 msgid "Bitrate"
 msgstr "Bitrate:"
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:98
 #: core/com/limegroup/gnutella/LimeXMLNames.java:115
-#, fuzzy
 msgid "Comments"
 msgstr "Komentar:"
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:99
 #: core/com/limegroup/gnutella/LimeXMLNames.java:116
-#, fuzzy
 msgid "Action"
 msgstr "Aksi:"
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:100
 #: core/com/limegroup/gnutella/LimeXMLNames.java:117
-#, fuzzy
 msgid "Copyright"
 msgstr "Tahun Hakcipta:"
 
@@ -228,14 +213,12 @@ msgstr "Tahun Hakcipta:"
 #: core/com/limegroup/gnutella/LimeXMLNames.java:128
 #: core/com/limegroup/gnutella/LimeXMLNames.java:135
 #: core/com/limegroup/gnutella/LimeXMLNames.java:141
-#, fuzzy
 msgid "License Type"
 msgstr "Tipe Lisensi:"
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:103
 #: core/com/limegroup/gnutella/MediaType.java:48
 #: gui/com/frostwire/gui/library/UITool.java:112
-#, fuzzy
 msgid "Video"
 msgstr "Lihat"
 
@@ -272,7 +255,6 @@ msgid "Width"
 msgstr "Lebar"
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:123
-#, fuzzy
 msgid "Image"
 msgstr "Citra"
 
@@ -285,12 +267,10 @@ msgstr "Deskripsi"
 #: core/com/limegroup/gnutella/LimeXMLNames.java:127
 #: core/com/limegroup/gnutella/LimeXMLNames.java:134
 #: core/com/limegroup/gnutella/LimeXMLNames.java:142
-#, fuzzy
 msgid "License"
 msgstr "Lisensi:"
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:130
-#, fuzzy
 msgid "Document"
 msgstr "Dokumen"
 
@@ -303,7 +283,6 @@ msgid "Author"
 msgstr "Penulis"
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:137
-#, fuzzy
 msgid "Application"
 msgstr "Aksi:"
 
@@ -313,7 +292,6 @@ msgstr "Aksi:"
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:44
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableDataLine.java:167
 #: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:32
-#, fuzzy
 msgid "Name"
 msgstr "Nama:"
 
@@ -322,7 +300,6 @@ msgid "Publisher"
 msgstr "Penerbit"
 
 #: core/com/limegroup/gnutella/LimeXMLNames.java:140
-#, fuzzy
 msgid "Platform"
 msgstr "Platform:"
 
@@ -344,13 +321,11 @@ msgid "Images"
 msgstr "Citra"
 
 #: core/com/limegroup/gnutella/MediaType.java:50
-#, fuzzy
 msgid "Torrents"
 msgstr "Yg Bersangkutan"
 
 #: gui/com/frostwire/gui/BuyAction.java:70
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:48
-#, fuzzy
 msgid "Buy"
 msgstr "Sibuk"
 
@@ -360,12 +335,10 @@ msgid "Loading Community Chat..."
 msgstr ""
 
 #: gui/com/frostwire/gui/ChatMediator.java:413
-#, fuzzy
 msgid "Loading Community Chat Window..."
 msgstr "Memuat jendela pengawasan..."
 
 #: gui/com/frostwire/gui/HideExitDialog.java:39
-#, fuzzy
 msgid "Do you want to hide FrostWire?"
 msgstr "Anda sedang menyambung ke jaringan."
 
@@ -376,13 +349,11 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/HideExitDialog.java:61
-#, fuzzy
 msgid "Don't show this again"
 msgstr "Jangan tampilkan pesan ini lagi"
 
 #. hide button
 #: gui/com/frostwire/gui/HideExitDialog.java:70
-#, fuzzy
 msgid "Hide"
 msgstr "Lihat"
 
@@ -394,33 +365,28 @@ msgid "Exit"
 msgstr "Keluar"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:63
-#, fuzzy
 msgid "Send audio to iTunes"
 msgstr "Simpan playlist tersebut ke sebuah berkas."
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:64
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:902
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:739
-#, fuzzy
 msgid "Send audio files to iTunes"
 msgstr "Simpan playlist tersebut ke sebuah berkas."
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:107
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:50
 #: gui/com/limegroup/gnutella/gui/shell/ShellAssociationManager.java:50
-#, fuzzy
 msgid "Details"
 msgstr "Detail Log masuk"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:108
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:388
-#, fuzzy
 msgid "Show Details"
 msgstr "Perlihatkan detail magnet"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:109
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:389
-#, fuzzy
 msgid "Show Torrent Details"
 msgstr "Perlihatkan detail magnet"
 
@@ -442,7 +408,6 @@ msgstr "Buka folder berisi berkas"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:152
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:153
-#, fuzzy
 msgid "Show"
 msgstr "Perlihatkan yg terakhir"
 
@@ -455,7 +420,6 @@ msgid "Resume Download"
 msgstr "Lanjutkan pengunduhan"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:181
-#, fuzzy
 msgid "Resume"
 msgstr "Ganti nama"
 
@@ -478,7 +442,6 @@ msgstr "Jeda pengunduhan"
 #.
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:228
 #: gui/com/frostwire/gui/player/AudioPlayerComponent.java:53
-#, fuzzy
 msgid "Pause"
 msgstr "Dijeda"
 
@@ -501,12 +464,10 @@ msgid "Remove Torrent"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:259
-#, fuzzy
 msgid "Remove Torrent from selected downloads"
 msgstr "Coba lagi pengunduhan tersebut."
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:261
-#, fuzzy
 msgid "Remove Download"
 msgstr "Lanjutkan pengunduhan"
 
@@ -515,17 +476,14 @@ msgstr "Lanjutkan pengunduhan"
 #: gui/com/limegroup/gnutella/gui/ListEditor.java:296
 #: gui/com/limegroup/gnutella/gui/StandardListEditor.java:93
 #: gui/com/limegroup/gnutella/gui/StandardListEditor.java:103
-#, fuzzy
 msgid "Remove"
 msgstr "Ganti nama"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:263
-#, fuzzy
 msgid "Remove Selected Downloads"
 msgstr "Tinjau unduhan tersebut."
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:273
-#, fuzzy
 msgid ""
 "Are you sure you want to remove the data files from your computer?\n"
 "\n"
@@ -541,12 +499,10 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:295
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:296
-#, fuzzy
 msgid "Remove Download and Data"
 msgstr "Lanjutkan pengunduhan"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:297
-#, fuzzy
 msgid "Remove Download and Data from selected downloads"
 msgstr "Coba lagi pengunduhan tersebut."
 
@@ -555,7 +511,6 @@ msgstr "Coba lagi pengunduhan tersebut."
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:311
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:486
 #: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:479
-#, fuzzy
 msgid "Copy Magnet"
 msgstr "Salin Laporan"
 
@@ -575,7 +530,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:394
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:395
-#, fuzzy
 msgid "Hide Seeding Transfers"
 msgstr "Keluar setelah transfer"
 
@@ -586,13 +540,11 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:398
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:399
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:400
-#, fuzzy
 msgid "Show Seeding Transfers"
 msgstr "Penutupan setelah transfer"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:419
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:195
-#, fuzzy
 msgid "Create New Playlist"
 msgstr "Simpan playlist sebagai"
 
@@ -607,7 +559,6 @@ msgid "Add to playlist "
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:39
-#, fuzzy
 msgid " (Partial)"
 msgstr "HTTP (Potensial)"
 
@@ -618,25 +569,21 @@ msgstr "HTTP (Potensial)"
 #: gui/com/frostwire/gui/library/LibraryFilesTableDataLine.java:251
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:93
 #: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:37
-#, fuzzy
 msgid "Size"
 msgstr "Ukuran:"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:103
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:320
-#, fuzzy
 msgid "Status"
 msgstr "Papan Status"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:109
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:321
-#, fuzzy
 msgid "Progress"
 msgstr "Program"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:117
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:324
-#, fuzzy
 msgid "Downloaded"
 msgstr "Unduh"
 
@@ -647,25 +594,21 @@ msgstr "Ter-upload"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:127
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:322
-#, fuzzy
 msgid "Down Speed"
 msgstr "Kecepatan pengunduhan:"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:131
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:323
-#, fuzzy
 msgid "Up Speed"
 msgstr "Kecepatan:"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:138
-#, fuzzy
 msgid "Time"
 msgstr "Judul:"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:142
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:327
 #: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:22
-#, fuzzy
 msgid "Seeds"
 msgstr "Kecepatan:"
 
@@ -675,12 +618,10 @@ msgid "Peers"
 msgstr "Peer-peer"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:148
-#, fuzzy
 msgid "Share Ratio"
 msgstr "Bagikan berkas"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:153
-#, fuzzy
 msgid "Seeds/Peers"
 msgstr "Peer-peer"
 
@@ -697,7 +638,6 @@ msgstr ""
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:765
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:515
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:638
-#, fuzzy
 msgid "Launch"
 msgstr "Jalankan berkas"
 
@@ -710,12 +650,10 @@ msgid "Launch Selected Files"
 msgstr "Jalankan berkas tersebut."
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:444
-#, fuzzy
 msgid "Show in Library"
 msgstr "Pustaka"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:445
-#, fuzzy
 msgid "Show Download in Library"
 msgstr "Mengunduh dari"
 
@@ -750,7 +688,6 @@ msgstr "Batalkan pengunduhan"
 #: gui/com/limegroup/gnutella/gui/download/DownloaderUtils.java:176
 #: gui/com/limegroup/gnutella/gui/init/SetupManager.java:491
 #: gui/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:39
-#, fuzzy
 msgid "Cancel"
 msgstr "Batalkan pemindaian"
 
@@ -768,13 +705,11 @@ msgstr ""
 
 #. advanced > Download Speed Menu //
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:56
-#, fuzzy
 msgid "Set Down Speed"
 msgstr "Pilih kecepatan"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:65
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:172
-#, fuzzy
 msgid "Disabled"
 msgstr "Buang"
 
@@ -815,7 +750,6 @@ msgstr ""
 #. }
 #. advanced >Upload Speed Menu //
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:163
-#, fuzzy
 msgid "Set Up Speed"
 msgstr "Pilih kecepatan"
 
@@ -828,12 +762,10 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:399
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:149
-#, fuzzy
 msgid "Add to playlist"
 msgstr "Tambahkan isi folder ke playlist"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:84
-#, fuzzy
 msgid "Torrent File Created with FrostWire"
 msgstr "Anda sedang menyambung ke jaringan."
 
@@ -845,12 +777,10 @@ msgid "Create New Torrent"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:178
-#, fuzzy
 msgid "Torrent Contents"
 msgstr "Abaikan Konten Dewasa"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:180
-#, fuzzy
 msgid "Select File or Folder..."
 msgstr "Pilih folder"
 
@@ -867,7 +797,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:228
-#, fuzzy
 msgid "Torrent Properties"
 msgstr "Pengaturan-pengaturan BitTorrent"
 
@@ -882,7 +811,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:248
-#, fuzzy
 msgid "Start seeding"
 msgstr "Memulai"
 
@@ -911,13 +839,11 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:306
 #: gui/com/limegroup/gnutella/gui/AboutWindow.java:103
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMediator.java:78
-#, fuzzy
 msgid "Close"
 msgstr "&Tutup"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:314
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:875
-#, fuzzy
 msgid "Save torrent as..."
 msgstr "Berkas bersama"
 
@@ -935,7 +861,6 @@ msgstr "Berkas bersama"
 #: gui/com/limegroup/gnutella/gui/FileChooserHandler.java:466
 #: gui/com/limegroup/gnutella/gui/FileChooserHandler.java:487
 #: gui/com/limegroup/gnutella/gui/FileChooserHandler.java:509
-#, fuzzy
 msgid "Select"
 msgstr "Pilih kecepatan"
 
@@ -968,7 +893,6 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:486
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:843
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:716
-#, fuzzy
 msgid "Invalid Folder"
 msgstr "Nama berkas tidak benar"
 
@@ -977,17 +901,14 @@ msgid "Check again your tracker URL(s).\n"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:497
-#, fuzzy
 msgid "Invalid Tracker URL\n"
-msgstr "TTL Tidak Berlaku"
+msgstr "URL tidak valid Tracker\n"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:521
-#, fuzzy
 msgid "Torrent Created."
 msgstr "Diciptakan"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:547
-#, fuzzy
 msgid "Torrent File"
 msgstr "Penyaring Konten"
 
@@ -1039,7 +960,6 @@ msgid "wizard.operationfailed"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:886
-#, fuzzy
 msgid "Saving Torrent..."
 msgstr "Menyimpan berkas..."
 
@@ -1049,31 +969,26 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:61
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:81
-#, fuzzy
 msgid "Select files to download"
 msgstr "Bersihkan pengunduhan tersebut."
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:129
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:149
-#, fuzzy
 msgid "Download Selected Files Only"
 msgstr "Unduh semua berkas tersebut."
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:153
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:173
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:264
-#, fuzzy
 msgid "File"
 msgstr "&Berkas"
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:171
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:191
-#, fuzzy
 msgid "Select/Unselect all files"
 msgstr "Hapus berkas tersebut."
 
 #: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:70
-#, fuzzy
 msgid "Preparing selection"
 msgstr "Jalankan berkas tersebut."
 
@@ -1082,7 +997,6 @@ msgid "please wait..."
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:159
-#, fuzzy
 msgid "Select the content you want to send"
 msgstr "Bersihkan pengunduhan tersebut."
 
@@ -1093,12 +1007,10 @@ msgid "Download"
 msgstr "Unduh"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:166
-#, fuzzy
 msgid "at"
 msgstr "Chat..."
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:167
-#, fuzzy
 msgid "via FrostWire"
 msgstr "FrostWire &PRO"
 
@@ -1123,47 +1035,38 @@ msgid "Send the message above to Twitter"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:444
-#, fuzzy
 msgid "Copy Text"
 msgstr "Salin Laporan"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:445
-#, fuzzy
 msgid "Copy entire message to Clipboard"
 msgstr "Salin link magnet ke clipboard"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:452
-#, fuzzy
 msgid "Message copied to clipboard."
 msgstr "Salin ke Clipboard"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:464
-#, fuzzy
 msgid "Copy Link"
 msgstr "Salin"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:465
-#, fuzzy
 msgid "Copy Link to Clipboard"
 msgstr "Salin ke Clipboard"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:472
-#, fuzzy
 msgid "Link copied to clipboard."
 msgstr "Salin ke Clipboard"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:487
-#, fuzzy
 msgid "Copy Magnet URL to Clipboard"
 msgstr "Salin link magnet ke clipboard"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:494
-#, fuzzy
 msgid "Magnet copied to clipboard."
 msgstr "Salin link magnet ke clipboard"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentFetcherDownload.java:23
-#, fuzzy
 msgid "Downloading Torrent"
 msgstr "Pengunduhan bersama"
 
@@ -1182,13 +1085,11 @@ msgid "Error"
 msgstr "Kesalahan"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentFetcherDownload.java:25
-#, fuzzy
 msgid "Canceled"
 msgstr "Batalkan pemindaian"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:34
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentSaveFolderPaneItem.java:13
-#, fuzzy
 msgid "Torrent Data Save Folder"
 msgstr "Folder:"
 
@@ -1197,41 +1098,34 @@ msgid "You forgot to enter a path for the Torrent Data Folder."
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:87
-#, fuzzy
 msgid "Please enter a valid path for the Torrent Data Folder"
 msgstr "Masukkan tahun yg berlaku dari berkas yg ingin anda terbitkan."
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:99
-#, fuzzy
 msgid "The Torrent Data Folder cannot be inside the "
 msgstr "Berkas rusak. Data tidak dapat disimpan."
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:103
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:114
-#, fuzzy
 msgid "Could not resolve folder path."
 msgstr "Tidak dapat menjelajah host {0} ."
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:110
-#, fuzzy
 msgid "The Torrent Data Folder cannot be a parent folder of the "
 msgstr ""
 "Folder untuk berbagi berkas tidak berlaku. Gunakan folder lain atau kembali "
 "ke standar."
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:127
-#, fuzzy
 msgid "Use Default"
 msgstr "&Gunakan standar"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:128
-#, fuzzy
 msgid "Use the Default Folder"
 msgstr "Reset ke folder pengunduhan standar"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:141
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:182
-#, fuzzy
 msgid "Browse..."
 msgstr "Browser"
 
@@ -1241,7 +1135,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:46
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentSeedingSettingPaneItem.java:14
-#, fuzzy
 msgid "Seeding Settings"
 msgstr "Memuat pengaturan..."
 
@@ -1266,13 +1159,11 @@ msgid "globalmanager.download.remove.veto"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:20
-#, fuzzy
 msgid "Downloading"
 msgstr "Unduh"
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:22
 #: gui/com/frostwire/gui/bittorrent/YouTubeVideoUrlDownload.java:49
-#, fuzzy
 msgid "Stopped"
 msgstr "Hentikan"
 
@@ -1282,7 +1173,6 @@ msgstr "Menunggu"
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:24
 #: gui/com/frostwire/gui/bittorrent/YouTubeVideoUrlDownload.java:47
-#, fuzzy
 msgid "Finished"
 msgstr "Selesai"
 
@@ -1307,7 +1197,6 @@ msgstr "Maks"
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:173
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:47
 #: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:421
-#, fuzzy
 msgid "Options"
 msgstr "&Pilihan"
 
@@ -1321,14 +1210,12 @@ msgid "Send"
 msgstr "Kirim"
 
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:243
-#, fuzzy
 msgid "Do you want to send this file to a friend?"
 msgstr "Mencari berkas dengan nama yg sama."
 
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:243
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:136
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:65
-#, fuzzy
 msgid "Send files with FrostWire"
 msgstr "Bantuan untuk penggunaan FrostWire."
 
@@ -1343,12 +1230,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/library/Device.java:265
-#, fuzzy
 msgid "Transfer failed"
 msgstr "Transfer"
 
 #: gui/com/frostwire/gui/library/DeviceUploadDialog.java:66
-#, fuzzy
 msgid "Upload to device"
 msgstr "Batas upload tercapai"
 
@@ -1361,13 +1246,11 @@ msgid "Uploading"
 msgstr "Melakukan upload"
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
-#, fuzzy
 msgid "Uploading "
 msgstr "Melakukan upload"
 
 #: gui/com/frostwire/gui/library/DownloadTask.java:76
 #: gui/com/frostwire/gui/library/DownloadTask.java:109
-#, fuzzy
 msgid "Downloading "
 msgstr "Unduh"
 
@@ -1385,12 +1268,10 @@ msgid "Icon"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:76
-#, fuzzy
 msgid "Date Added"
 msgstr "Simpan sebagai"
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:79
-#, fuzzy
 msgid "Date Modified"
 msgstr "Tanggal dirubah:"
 
@@ -1400,46 +1281,38 @@ msgstr "Tanggal dirubah:"
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:261
 #: gui/com/frostwire/gui/library/LibrarySearch.java:198
 #: gui/com/frostwire/gui/tabs/SearchDownloadTab.java:42
-#, fuzzy
 msgid "Search"
 msgstr "Pencarian"
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableMediator.java:411
 #: gui/com/frostwire/gui/library/LibraryDeviceTableMediator.java:412
-#, fuzzy
 msgid "Save"
 msgstr "Simpan sebagai"
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableMediator.java:413
-#, fuzzy
 msgid "Save Selected Files To Folder"
 msgstr "Bersihkan pengunduhan tersebut."
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:144
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:269
-#, fuzzy
 msgid "tracks"
 msgstr "Track"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:199
-#, fuzzy
 msgid "Finished Downloads"
 msgstr "Bagikan pengunduhan yg selesai:"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:201
-#, fuzzy
 msgid "Devices"
 msgstr "Tinjau"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:223
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:155
-#, fuzzy
 msgid "Configure Options"
 msgstr "Pilihan penentuan berbagi"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:223
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:156
-#, fuzzy
 msgid "You can configure the FrostWire's Options."
 msgstr "Anda bisa menentukan folder bersama pada pilihan FrostWire."
 
@@ -1450,7 +1323,6 @@ msgstr "Refresh"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:607
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:655
-#, fuzzy
 msgid "Refresh selected"
 msgstr "Koneksi"
 
@@ -1463,7 +1335,6 @@ msgid "Path"
 msgstr "Jalur"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableDataLine.java:261
-#, fuzzy
 msgid "Last Modified"
 msgstr "Tanggal dirubah:"
 
@@ -1527,20 +1398,17 @@ msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:791
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:664
-#, fuzzy
 msgid "Launch in "
 msgstr "Jalankan aksi"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:792
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:665
-#, fuzzy
 msgid "Launch Selected Files in "
 msgstr "Jalankan berkas tersebut."
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:834
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:707
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:317
-#, fuzzy
 msgid "Create a new .torrent file"
 msgstr "Berkas bersama"
 
@@ -1573,12 +1441,10 @@ msgid "Url"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:377
-#, fuzzy
 msgid "Are you sure you want to remove the selected radio station?"
 msgstr "Apakah anda yakin untuk menghapus berkas tersebut?"
 
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:377
-#, fuzzy
 msgid "Are you sure you want to remove the selected radio stations?"
 msgstr "Apakah anda yakin untuk menghapus berkas tersebut?"
 
@@ -1613,7 +1479,6 @@ msgid "Loading Library Window..."
 msgstr "Memuat jendela pustaka..."
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:162
-#, fuzzy
 msgid "New Playlist"
 msgstr "Playlist mP3"
 
@@ -1646,19 +1511,16 @@ msgid "Refresh the audio properties based on ID3 tags of selected items"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:690
-#, fuzzy
 msgid "Delete Playlist"
 msgstr "Playlist mP3"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:701
-#, fuzzy
 msgid ""
 "Are you sure you want to delete the playlist?\n"
 "(No files will be deleted)"
 msgstr "Apakah anda yakin untuk menghapus berkas tersebut?"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:720
-#, fuzzy
 msgid "Rename Playlist"
 msgstr "Simpan playlist sebagai"
 
@@ -1686,7 +1548,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:787
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:805
-#, fuzzy
 msgid "Export Playlist to .m3u"
 msgstr "Buka playlist (.m3u)"
 
@@ -1698,7 +1559,6 @@ msgstr ""
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:39
 #: gui/com/frostwire/gui/library/StarredDirectoryHolder.java:40
 #: gui/com/frostwire/gui/library/StarredDirectoryHolder.java:44
-#, fuzzy
 msgid "Starred"
 msgstr "Dihalangi"
 
@@ -1708,27 +1568,22 @@ msgid "Comment"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:244
-#, fuzzy
 msgid "Duration"
 msgstr "Deskripsi"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:267
-#, fuzzy
 msgid "Folder"
 msgstr "Folder:"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:763
-#, fuzzy
 msgid "Delete Selected Files from this playlist"
 msgstr "Hilangkan berkas tersebut dari playlist."
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:820
-#, fuzzy
 msgid "Cleanup playlist"
 msgstr "Bersihkan upload"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:821
-#, fuzzy
 msgid "Remove the deleted items"
 msgstr "Hilangkan item tersebut"
 
@@ -1737,7 +1592,6 @@ msgid "Refresh the audio properties based on ID3 tags"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibrarySearch.java:101
-#, fuzzy
 msgid "search results"
 msgstr "Kecepatan Hasil Pencarian"
 
@@ -1750,12 +1604,10 @@ msgstr ""
 #: gui/com/frostwire/gui/library/LibraryUtils.java:140
 #: gui/com/frostwire/gui/library/LibraryUtils.java:171
 #: gui/com/frostwire/gui/library/LibraryUtils.java:235
-#, fuzzy
 msgid "Playlist name"
 msgstr "Playlist mP3"
 
 #: gui/com/frostwire/gui/library/LibraryUtils.java:573
-#, fuzzy
 msgid "Refreshing"
 msgstr "Refresh"
 
@@ -1768,37 +1620,30 @@ msgid "Error importing Radio Station from"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/MediaTypeSavedFilesDirectoryHolder.java:60
-#, fuzzy
 msgid "Holds the Results for "
 msgstr "Penyaringan Hasil"
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:187
-#, fuzzy
 msgid "Library Folders"
 msgstr "Buka folder pustaka."
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:368
-#, fuzzy
 msgid "Legend"
 msgstr "Kirim"
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:377
-#, fuzzy
 msgid "Folder and subfolders are included in the Library."
 msgstr "Folder-folder terpilih tersebut (beserta subfoldernya) akan dibagikan."
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:391
-#, fuzzy
 msgid "Folder is not included and no subfolders are included in the Library."
 msgstr "Folder-folder terpilih tersebut (beserta subfoldernya) akan dibagikan."
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:399
-#, fuzzy
 msgid "Folder's files and some subfolders are included in the Library."
 msgstr "Folder-folder terpilih tersebut (beserta subfoldernya) akan dibagikan."
 
 #: gui/com/frostwire/gui/library/UITool.java:102
-#, fuzzy
 msgid "Applications"
 msgstr "Aksi:"
 
@@ -1815,7 +1660,6 @@ msgid "Ringtones"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/UITool.java:114
-#, fuzzy
 msgid "Unkown file type"
 msgstr "Tipe Lisensi:"
 
@@ -1846,7 +1690,6 @@ msgid "Previous"
 msgstr "Sebelumnya"
 
 #: gui/com/frostwire/gui/player/AudioPlayerComponent.java:235
-#, fuzzy
 msgid "Shuffle songs"
 msgstr "Mengacak"
 
@@ -1856,7 +1699,6 @@ msgstr ""
 
 #. public ChatTab(final ChatMediator cm) {
 #: gui/com/frostwire/gui/tabs/ChatTab.java:29
-#, fuzzy
 msgid "Chat"
 msgstr "Chat..."
 
@@ -1879,7 +1721,6 @@ msgid "Search and Download Files"
 msgstr "Cari dan unduh berkas."
 
 #: gui/com/frostwire/gui/updates/InstallerUpdater.java:127
-#, fuzzy
 msgid "Update"
 msgstr "Perbaruan"
 
@@ -1894,7 +1735,6 @@ msgstr "Tentang FrostWire"
 #. set up limewire version label
 #: gui/com/limegroup/gnutella/gui/AboutWindow.java:79
 #: gui/com/limegroup/gnutella/gui/notify/TrayNotifier.java:57
-#, fuzzy
 msgid "FrostWire"
 msgstr "FrostWire &PRO"
 
@@ -1908,7 +1748,6 @@ msgid "<h1>FrostWire Logo Designer</h1>"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/AboutWindow.java:185
-#, fuzzy
 msgid "<h1>FrostWire Graphics Designers/Photographers</h1>"
 msgstr "Leaves FrostWire"
 
@@ -2006,7 +1845,6 @@ msgstr ""
 #.
 #: gui/com/limegroup/gnutella/gui/CheckBoxList.java:620
 #: gui/com/limegroup/gnutella/gui/LimeTextField.java:107
-#, fuzzy
 msgid "Select All"
 msgstr "Tidak pilih semua"
 
@@ -2027,19 +1865,16 @@ msgid "Clear History"
 msgstr "Bersihkan sejarah"
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:84
-#, fuzzy
 msgid "Send this file to a friend"
 msgstr "Simpan playlist tersebut ke sebuah berkas."
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:130
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:64
-#, fuzzy
 msgid "file"
 msgstr "Berkas-berkas"
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:131
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:64
-#, fuzzy
 msgid "folder"
 msgstr "Folder:"
 
@@ -2115,17 +1950,14 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:115
 #: gui/com/limegroup/gnutella/gui/menu/SearchMenu.java:25
-#, fuzzy
 msgid "&Search"
 msgstr "Pencarian"
 
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:115
-#, fuzzy
 msgid "&Library"
 msgstr "Pustaka"
 
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:116
-#, fuzzy
 msgid "C&hat"
 msgstr "Akhiri chat"
 
@@ -2187,7 +2019,6 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:1415
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:1441
-#, fuzzy
 msgid "FrostWire could not launch the specified file."
 msgstr ""
 "FrostWire tidak akan menjalankan berkas tersebut karena alasan keamanan."
@@ -2239,7 +2070,6 @@ msgid "Loading Internationalization Support..."
 msgstr "Memuat dukungan internasionalisasi..."
 
 #: gui/com/limegroup/gnutella/gui/Initializer.java:492
-#, fuzzy
 msgid "This Alpha version has expired.  Press Ok to exit. "
 msgstr "Versi Alpha ini telah berakhir. Tekan Ok untuk keluar. "
 
@@ -2270,7 +2100,6 @@ msgstr ""
 #: gui/com/limegroup/gnutella/gui/InputFieldDialog.java:93
 #: gui/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:44
 #: gui/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:46
-#, fuzzy
 msgid "Apply Operation"
 msgstr "Batalkan operasi."
 
@@ -2280,7 +2109,6 @@ msgid "Cancel Operation"
 msgstr "Batalkan operasi."
 
 #: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:70
-#, fuzzy
 msgid ""
 "You are currently using a beta or pre-release version of Java 1.6.0. This "
 "version is known to have caused problems with FrostWire. Please upgrade to "
@@ -2291,27 +2119,23 @@ msgstr ""
 "1.6.0\n"
 
 #: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:161
-#, fuzzy
 msgid "Upgrade Java"
 msgstr "Upgrade Java anda"
 
 #: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:178
-#, fuzzy
 msgid "More Information"
 msgstr "Informasi beberapa berkas"
 
 #: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:179
-#, fuzzy, java-format
+#, java-format
 msgid "Visit {0}"
 msgstr "Kunjungi {0}"
 
 #: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:187
-#, fuzzy
 msgid "Remind Me Later"
 msgstr "Ingatkan Saya Nanti"
 
 #: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:194
-#, fuzzy
 msgid "Do not Show Again"
 msgstr "Pengunduhan bersama"
 
@@ -2320,7 +2144,6 @@ msgid "FrostWire must be restarted for the new language to take effect."
 msgstr "FrostWire harus start ulang agar bahasa baru berpengaruh."
 
 #: gui/com/limegroup/gnutella/gui/LanguageWindow.java:198
-#, fuzzy
 msgid "Change Language"
 msgstr "Ganti &bahasa"
 
@@ -2329,7 +2152,6 @@ msgid "Help Translate FrostWire"
 msgstr "Bantu penterjemahan FrostWire"
 
 #: gui/com/limegroup/gnutella/gui/LanguageWindow.java:202
-#, fuzzy
 msgid "Show Language in status bar"
 msgstr "Perlihatkan status bahasa"
 
@@ -2428,13 +2250,11 @@ msgid "Please wait while FrostWire shuts down..."
 msgstr "Harap tunggu sementara FrostWire dimatikan..."
 
 #: gui/com/limegroup/gnutella/gui/SplashWindow.java:108
-#, fuzzy
 msgid "Loading FrostWire..."
 msgstr "Memuat sumber-sumber..."
 
 #: gui/com/limegroup/gnutella/gui/StandardListEditor.java:93
 #: gui/com/limegroup/gnutella/gui/StandardListEditor.java:103
-#, fuzzy
 msgid "Add..."
 msgstr "Tambah"
 
@@ -2588,7 +2408,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:27
-#, fuzzy
 msgid ""
 "The more stars a search result has, the better the chances of the download "
 "completing successfully! Some search results may even appear with four blue "
@@ -2869,12 +2688,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:122
-#, fuzzy
 msgid "Thank you for using FrostWire"
 msgstr "Bantuan untuk penggunaan FrostWire."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:123
-#, fuzzy
 msgid "Visit us at www.frostwire.com"
 msgstr "Kunjungi http://www.frostwire.com untuk memperbaharui!"
 
@@ -2953,27 +2770,22 @@ msgid "&Close"
 msgstr "&Tutup"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:287
-#, fuzzy
 msgid "Close the program's main window"
 msgstr "Tutup program ini"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:303
-#, fuzzy
 msgid "E&xit"
 msgstr "Keluar"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:304
-#, fuzzy
 msgid "Close and exit the program"
 msgstr "Tutup program ini"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:336
-#, fuzzy
 msgid "Send File or Folder..."
 msgstr "Bagikan folder baru..."
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:337
-#, fuzzy
 msgid "Send a file or a folder to a friend"
 msgstr "Simpan playlist tersebut ke sebuah berkas."
 
@@ -3102,7 +2914,6 @@ msgid "Overwrite the Existing File"
 msgstr "Tulis ulang berkas yg ada."
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderDialog.java:336
-#, fuzzy
 msgid "Save As..."
 msgstr "Simpan sebagai"
 
@@ -3163,7 +2974,6 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/AssociationsWindow.java:72
 #: gui/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:71
-#, fuzzy
 msgid "Always take the selected associations."
 msgstr "Hilangkan koneksi tersebut."
 
@@ -3178,7 +2988,6 @@ msgid "Ask me what to do when an association is missing."
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:39
-#, fuzzy
 msgid "BitTorrent Sharing Settings"
 msgstr "Pengaturan-pengaturan BitTorrent"
 
@@ -3208,7 +3017,6 @@ msgid "You're almost done!"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:55
-#, fuzzy
 msgid "State your intent below to start using FrostWire "
 msgstr "Untuk mencoba kulit baru, start ulang FrostWire."
 
@@ -3220,7 +3028,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:58
-#, fuzzy
 msgid "Find out more..."
 msgstr "Tahukah anda..."
 
@@ -3260,7 +3067,6 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:79
 #: gui/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:22
-#, fuzzy
 msgid "System Startup"
 msgstr "Jalan saat Memulai Sistem"
 
@@ -3278,7 +3084,6 @@ msgstr ""
 "gunakan."
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:152
-#, fuzzy
 msgid "Chat Community"
 msgstr "Host komunikasi"
 
@@ -3351,12 +3156,10 @@ msgstr ""
 "optimal."
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:99
-#, fuzzy
 msgid "FrostWire is free software, "
 msgstr "FrostWire bangkit dari mode tidur."
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:109
-#, fuzzy
 msgid "Do not pay for FrostWire."
 msgstr "Pilihan Pengaturan Proxy untuk FrostWire."
 
@@ -3385,7 +3188,6 @@ msgid "Learn More about FrostWire's Content Filtering System"
 msgstr "Pelajari lebih banyak lagi tentang sistem saringan konten FrostWire"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:29
-#, fuzzy
 msgid "Sharing &Help"
 msgstr "Memulai"
 
@@ -3398,7 +3200,6 @@ msgid "Frequently Asked Questions for FrostWire"
 msgstr "Pertanyaan umum (FAQ) pada FrostWire."
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:33
-#, fuzzy
 msgid "FrostWire for Android"
 msgstr "&Penggunaan FrostWire"
 
@@ -3407,17 +3208,14 @@ msgid "Get FrostWire on your Android phone, tablet or google tv, all free."
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:35
-#, fuzzy
 msgid "What is \"Seeding\"?"
 msgstr "Apa ini?"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:35
-#, fuzzy
 msgid "Learn about BitTorrent Seeding"
 msgstr "Pengaturan-pengaturan BitTorrent"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:39
-#, fuzzy
 msgid "Free FrostWire Stickers"
 msgstr "Leaves FrostWire"
 
@@ -3428,7 +3226,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:41
-#, fuzzy
 msgid "FrostWire T-Shirts"
 msgstr "FrostWire &PRO"
 
@@ -3441,12 +3238,10 @@ msgid "FrostClick.com"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
-#, fuzzy
 msgid "Free Legal Downloads"
 msgstr "Tinjau unduhan tersebut."
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:48
-#, fuzzy
 msgid "FrostWire on Facebook"
 msgstr "Media player FrostWire"
 
@@ -3467,7 +3262,6 @@ msgid "Access the FrostWire Users' Forum"
 msgstr "Mengakses forum pengguna FrostWire."
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:56
-#, fuzzy
 msgid "&Did you pay for FrostWire?"
 msgstr "Bantuan untuk penggunaan FrostWire."
 
@@ -3648,7 +3442,6 @@ msgstr ""
 
 #. set text before adding the document listener
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:231
-#, fuzzy
 msgid "Search here"
 msgstr "Cari lebih banyak"
 
@@ -3704,12 +3497,10 @@ msgid "Updates"
 msgstr "Perbaruan"
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:321
-#, fuzzy
 msgid "Firewall"
 msgstr "Pengaturan firewall"
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:322
-#, fuzzy
 msgid "Proxy"
 msgstr "Proxy:"
 
@@ -3720,12 +3511,10 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:325
 #: gui/com/limegroup/gnutella/gui/shell/ShellAssociationManager.java:58
-#, fuzzy
 msgid "File Associations"
 msgstr "Lokasi Alternatif"
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:329
-#, fuzzy
 msgid "System Boot"
 msgstr "Jalan saat Memulai Sistem"
 
@@ -3736,7 +3525,6 @@ msgstr "System Tray"
 #. debug
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:335
 #: gui/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:74
-#, fuzzy
 msgid "Bug Reports"
 msgstr "Salin Laporan"
 
@@ -3751,7 +3539,6 @@ msgid ""
 msgstr "Perubahan pilihan akan berpengaruh setelah FrostWire start ulang."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:29
-#, fuzzy
 msgid "Links and File Types"
 msgstr "Tipe Lisensi:"
 
@@ -3763,7 +3550,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:59
-#, fuzzy
 msgid "Use FrostWire for..."
 msgstr "&Penggunaan FrostWire"
 
@@ -3797,7 +3583,6 @@ msgid "Enable Autocompletion of Text Fields:"
 msgstr "Perbolehkan Penyelesai Otomatis pada Bidang Teks:"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AutomaticInstallerDownloadPaneItem.java:14
-#, fuzzy
 msgid "Automatic Installer Download"
 msgstr "Menggulung secara otomatis"
 
@@ -3957,7 +3742,6 @@ msgid "Router Configuration"
 msgstr "Konfigurasi Router"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:35
-#, fuzzy
 msgid ""
 "FrostWire can configure itself to work from behind a firewall or router. "
 "Using Universal Plug 'n Play (UPnP) and other NAT traversal techniques "
@@ -3974,12 +3758,10 @@ msgstr ""
 "luar. (Anda juga harus mengatur router jika memilih pengaturan manual.)"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:49
-#, fuzzy
 msgid "Use random port (Recommended)"
 msgstr "Gunakan UPnP (direkomendasikan)"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:50
-#, fuzzy
 msgid "Manual Port Forward"
 msgstr "Post Penyampai Manual:"
 
@@ -3992,7 +3774,6 @@ msgid "UDP:"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:172
-#, fuzzy
 msgid ""
 "You must enter a port between 1 and 65535 when manually forcing your TCP "
 "port."
@@ -4001,7 +3782,6 @@ msgstr ""
 "secara manual."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:176
-#, fuzzy
 msgid ""
 "You must enter a port between 1 and 65535 when manually forcing your UDP "
 "port."
@@ -4046,7 +3826,6 @@ msgstr "Abaikan berkas .vbs"
 #. * Key for the locale-specific string for the wmv and asf file check box label.
 #.
 #: gui/com/limegroup/gnutella/gui/options/panes/IgnoreResultTypesPaneItem.java:66
-#, fuzzy
 msgid "Ignore .wmv, .wma, .au, .asf files"
 msgstr "Abaikan berkas .wmv/ .asf"
 
@@ -4076,12 +3855,10 @@ msgid "Image Viewer"
 msgstr "Pelihat Citra"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LibraryFoldersPaneItem.java:34
-#, fuzzy
 msgid "Library Included Folders"
 msgstr "Buka folder pustaka."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LibraryFoldersPaneItem.java:36
-#, fuzzy
 msgid "You can choose the folders for include files when browsing the library."
 msgstr ""
 "Anda bisa memilih folder untuk membagikan berkas. Berkas dalam folder itu "
@@ -4092,7 +3869,6 @@ msgid "Internet Radio Stations"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:20
-#, fuzzy
 msgid "You can restore the default internet radio stations."
 msgstr "Anda bisa memilih perilaku penutupan standar"
 
@@ -4155,7 +3931,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:20
-#, fuzzy
 msgid "Notifications"
 msgstr "Lokasi"
 
@@ -4186,7 +3961,6 @@ msgid "Allow Partial Sharing:"
 msgstr "Ijinkan berbagi potongan:"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:20
-#, fuzzy
 msgid "FrostWire Popups"
 msgstr "FrostWire &PRO"
 
@@ -4215,17 +3989,14 @@ msgid "Enable Authentication (Does Not Work for HTTP Proxies):"
 msgstr "Perbolehkan Otentifikasi (Tidak berfungsi di Proxy HTTP):"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:42
-#, fuzzy
 msgid "Username:"
 msgstr "Nama pengguna (wajib):"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ProxyLoginPaneItem.java:49
-#, fuzzy
 msgid "Password:"
 msgstr "Diperlukan password (wajib):"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:29
-#, fuzzy
 msgid "Proxy Options"
 msgstr "Pilihan memainkan"
 
@@ -4262,7 +4033,6 @@ msgstr "Proxy:"
 #. * label on the port text field.
 #.
 #: gui/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:56
-#, fuzzy
 msgid "Port:"
 msgstr "Kurang"
 
@@ -4304,7 +4074,6 @@ msgid "Show dialog to ask before close"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:20
-#, fuzzy
 msgid "Smart Search"
 msgstr "Tutup pencarian"
 
@@ -4319,7 +4088,6 @@ msgid "Total torrents indexed"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:49
-#, fuzzy
 msgid "Total files indexed"
 msgstr "Total pesan yg disaring"
 
@@ -4328,7 +4096,6 @@ msgid "If you continue you will erase all the information related to\n"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:77
-#, fuzzy
 msgid " torrents and "
 msgstr "Anda berbagi"
 
@@ -4388,7 +4155,6 @@ msgid "Show Firewall Indicator:"
 msgstr "Perlihatkan indikator firewall:"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:18
-#, fuzzy
 msgid "BitTorrent Connection Settings"
 msgstr "Pengaturan-pengaturan BitTorrent"
 
@@ -4398,7 +4164,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:22
-#, fuzzy
 msgid "Maximum active downloads"
 msgstr "Maksimum Pengunduhan"
 
@@ -4415,7 +4180,6 @@ msgid "Number of upload slots per torrent"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentDetailsPaneItem.java:19
-#, fuzzy
 msgid "Torrent Details Page"
 msgstr "Anda berbagi"
 
@@ -4502,7 +4266,6 @@ msgstr "Semua"
 #. * String for 'Select Type'
 #.
 #: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:56
-#, fuzzy
 msgid "Select Search Types:"
 msgstr "Pilih tipe pencarian:"
 
@@ -4527,12 +4290,10 @@ msgid "Search for Program Files, Including exe, zip, gz, and More"
 msgstr "Mencari berkas program, termasuk exe, zip, gz, dan lainnya."
 
 #: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:207
-#, fuzzy
 msgid "Search for Torrents!"
 msgstr "Cari lebih banyak"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:54
-#, fuzzy
 msgid "Open Options dialog"
 msgstr "Pilihan pembaruan"
 
@@ -4550,7 +4311,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:58
-#, fuzzy
 msgid "Stop current search"
 msgstr "Pencarian yg berlangsung:"
 
@@ -4571,12 +4331,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:213
-#, fuzzy
 msgid "Search Engines"
 msgstr "Tutup pencarian"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:221
-#, fuzzy
 msgid "Filter"
 msgstr "Saringan"
 
@@ -4585,12 +4343,10 @@ msgid "<html><strong>Refine Results</strong></html>"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:410
-#, fuzzy
 msgid "Show search result filter controls"
 msgstr "Perlihatkan saringan hasil pencarian."
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:411
-#, fuzzy
 msgid "Hide search result filter controls"
 msgstr "Perlihatkan saringan hasil pencarian."
 
@@ -4611,12 +4367,10 @@ msgid "Buy this item now"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:71
-#, fuzzy
 msgid "Download Partial Files"
 msgstr "Pemotongan berkas"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:73
-#, fuzzy
 msgid "Torrent Details"
 msgstr "Detail Log masuk"
 
@@ -4656,7 +4410,6 @@ msgid "Show Torrent Details page when a download starts"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:480
-#, fuzzy
 msgid "Copy Hash"
 msgstr "Salin"
 
@@ -4665,7 +4418,6 @@ msgid "Search More"
 msgstr "Cari lebih banyak"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:43
-#, fuzzy
 msgid "Source"
 msgstr "Mencari sumber"
 
@@ -4674,12 +4426,10 @@ msgid "Created"
 msgstr "Diciptakan"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:53
-#, fuzzy
 msgid "Extension"
 msgstr "Ekstensi:"
 
 #: gui/com/limegroup/gnutella/gui/search/Selector.java:81
-#, fuzzy
 msgid "Speed"
 msgstr "Kecepatan:"
 
@@ -4946,7 +4696,6 @@ msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:131
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:79
-#, fuzzy
 msgid "language"
 msgstr "Bahasa:"
 
@@ -4957,13 +4706,11 @@ msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:133
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:81
-#, fuzzy
 msgid "lngextension"
 msgstr "Ekstensi:"
 
 #: gui/irc/ConfigurationLoader.java:134
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:82
-#, fuzzy
 msgid "backuplanguage"
 msgstr "Bahasa:"
 
@@ -4999,7 +4746,6 @@ msgid "noasldisplayprefix"
 msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:318
-#, fuzzy
 msgid "quitmessage"
 msgstr "pesan"
 
@@ -5012,12 +4758,10 @@ msgid "aslfemale"
 msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:324
-#, fuzzy
 msgid "userid"
 msgstr "Dijeda"
 
 #: gui/irc/ConfigurationLoader.java:329
-#, fuzzy
 msgid "aslunknown"
 msgstr "Tidak Diketahui"
 
@@ -5037,121 +4781,93 @@ msgstr ""
 msgid "helppage"
 msgstr ""
 
-#, fuzzy
 #~ msgid "Loading phones and tablets..."
 #~ msgstr "Memanggil berkas yang di-share..."
 
-#, fuzzy
 #~ msgid "Videos"
 #~ msgstr "Lihat"
 
-#, fuzzy
 #~ msgid "Sort:"
 #~ msgstr "Kurang"
 
-#, fuzzy
 #~ msgid "None"
 #~ msgstr "Tidak"
 
-#, fuzzy
 #~ msgid "Name Asc"
 #~ msgstr "Nama:"
 
-#, fuzzy
 #~ msgid "Name Desc"
 #~ msgstr "Nama:"
 
-#, fuzzy
 #~ msgid "Kind Asc"
 #~ msgstr "Jenis:"
 
-#, fuzzy
 #~ msgid "Size Asc"
 #~ msgstr "Simpan sebagai"
 
-#, fuzzy
 #~ msgid "Size Desc"
 #~ msgstr "Ukuran:"
 
-#, fuzzy
 #~ msgid "Open"
 #~ msgstr "Buka..."
 
-#, fuzzy
 #~ msgid "Delete Files"
 #~ msgstr "Hapus berkas tersebut."
 
-#, fuzzy
 #~ msgid "System"
 #~ msgstr "System Tray"
 
-#, fuzzy
 #~ msgid "Error deleting file"
 #~ msgstr "Meng-upload berkas"
 
-#, fuzzy
 #~ msgid "Connected"
 #~ msgstr "Tersambung ke"
 
-#, fuzzy
 #~ msgid "New Folder"
 #~ msgstr "Folder:"
 
-#, fuzzy
 #~ msgid "File Transfers"
 #~ msgstr "Transfer"
 
-#, fuzzy
 #~ msgid "Cancel All"
 #~ msgstr "Batalkan pemindaian"
 
-#, fuzzy
 #~ msgid "Clear Finished"
 #~ msgstr "Bersihkan semua pengunduhan yg tidak aktif"
 
-#, fuzzy
 #~ msgid "Should I stop all transfers?"
 #~ msgstr "Penutupan setelah transfer"
 
-#, fuzzy
 #~ msgid "one file"
 #~ msgstr "Penyaring Konten"
 
 #~ msgid "files"
 #~ msgstr "Berkas-berkas"
 
-#, fuzzy
 #~ msgid "pending"
 #~ msgstr "Pencarian"
 
-#, fuzzy
 #~ msgid "canceled"
 #~ msgstr "Pemindaian dibatalkan"
 
-#, fuzzy
 #~ msgid "error"
 #~ msgstr "Kesalahan"
 
 #~ msgid "Upload"
 #~ msgstr "Upload"
 
-#, fuzzy
 #~ msgid "to"
 #~ msgstr "Hentikan"
 
-#, fuzzy
 #~ msgid "Select a file..."
 #~ msgstr "Pilih folder"
 
-#, fuzzy
 #~ msgid "Preparing selected folder"
 #~ msgstr "Tinjau unduhan tersebut."
 
-#, fuzzy
 #~ msgid "Open in Folder"
 #~ msgstr "Buka folder pustaka."
 
-#, fuzzy
 #~ msgid "Open Folder Containing a Selected File"
 #~ msgstr "Buka folder berisi berkas"
 
@@ -5161,7 +4877,6 @@ msgstr ""
 #~ msgid "Add Selected Files to the Playlist"
 #~ msgstr "Tambah berkas tersebut ke playlist."
 
-#, fuzzy
 #~ msgid "Delete from playlist"
 #~ msgstr "Hilangkan berkas tersebut dari playlist."
 
@@ -5171,7 +4886,6 @@ msgstr ""
 #~ msgid "Show Media Player"
 #~ msgstr "Perlihatkan media player"
 
-#, fuzzy
 #~ msgid "Send File..."
 #~ msgstr "Menyimpan berkas..."
 
@@ -5216,11 +4930,9 @@ msgstr ""
 #~ msgid "Use FrostWire Media Player:"
 #~ msgstr "Gunakan Media Player FrostWire:"
 
-#, fuzzy
 #~ msgid "Seeding Status"
 #~ msgstr "Pencarian"
 
-#, fuzzy
 #~ msgid "Search Files"
 #~ msgstr "Pencarian"
 
@@ -5240,11 +4952,9 @@ msgstr ""
 #~ msgid "Loading Message Router..."
 #~ msgstr "Memanggil router pesan..."
 
-#, fuzzy
 #~ msgid "Checking for Updates..."
 #~ msgstr "Memeriksa ada / tidaknya update tersedia..."
 
-#, fuzzy
 #~ msgid "Loading Upload Management..."
 #~ msgstr "Memanggil pengatur upload"
 
@@ -5254,18 +4964,15 @@ msgstr ""
 #~ msgid "Loading Connection Management..."
 #~ msgstr "Memanggil pengatur koneksi..."
 
-#, fuzzy
 #~ msgid "Loading Download Management..."
 #~ msgstr "Memuat pengatur koneksi..."
 
-#, fuzzy
 #~ msgid "Loading Ultrapeer/DHT Management..."
 #~ msgstr "Memuat Pengatur Ultrapeer/ DHT..."
 
 #~ msgid "Locating Peers..."
 #~ msgstr "Mencari pasangan..."
 
-#, fuzzy
 #~ msgid "Loading Directed Querier..."
 #~ msgstr "Memanggil pencari informasi  terarah..."
 
@@ -5275,14 +4982,12 @@ msgstr ""
 #~ msgid "Loading Peer Listener..."
 #~ msgstr "Memanggil pendengar pasangan ..."
 
-#, fuzzy
 #~ msgid "Loading Stale Connection Management..."
 #~ msgstr "Memanggil pengatur koneksi basi..."
 
 #~ msgid "Loading Saved Files..."
 #~ msgstr "Memanggil file tersimpan..."
 
-#, fuzzy
 #~ msgid "Loading Spam Management..."
 #~ msgstr "Memuat pengatur koneksi..."
 
@@ -5293,27 +4998,21 @@ msgstr ""
 #~ "Satu atau lebih URL pada link MAGNET tidak berlaku. Berkas anda mungkin "
 #~ "tidak dapat diunduh dengan benar."
 
-#, fuzzy
 #~ msgid "You have already downloaded {0}"
 #~ msgstr "Anda sudah mengunduh berkas ini ke \"{0}\"."
 
-#, fuzzy
 #~ msgid "You are already downloading this file to {0}"
 #~ msgstr "Anda sudah mengunduh berkas ini ke \"{0}\"."
 
-#, fuzzy
 #~ msgid "&Refresh Connections ("
 #~ msgstr "Koneksi"
 
-#, fuzzy
 #~ msgid "&Refreshing Connections ("
 #~ msgstr "Koneksi"
 
-#, fuzzy
 #~ msgid "The selected .torrent file may contain a security hazard."
 #~ msgstr "Dokumen .torrent yang dipilih mungkin mengandung bahaya keamanan."
 
-#, fuzzy
 #~ msgid "FrostWire could not download a .torrent file from the provided URL."
 #~ msgstr ""
 #~ "FrostWire tidak dapat mengunduh dokumen .torrent dari URL yang tersedia."
@@ -5325,7 +5024,6 @@ msgstr ""
 #~ "Jika Anda menghentikan penggugahan ini, pengundahan torrent akan "
 #~ "berhenti. Anda yakin hendak melakukan ini?"
 
-#, fuzzy
 #~ msgid ""
 #~ "This upload is a torrent and it hasn't seeded enough. You should let it "
 #~ "upload some more. Are you sure you want to stop it?"
@@ -5334,11 +5032,9 @@ msgstr ""
 #~ "membiarkannya lebih tergugah lagi. Apakah Anda yakin Anda ingin "
 #~ "menghentikannya?"
 
-#, fuzzy
 #~ msgid "Automatically start torrents"
 #~ msgstr "Menggulung secara otomatis"
 
-#, fuzzy
 #~ msgid ""
 #~ "You can choose whether to automatically start torrents downloaded from "
 #~ "Gnutella."
@@ -5346,15 +5042,12 @@ msgstr ""
 #~ "Anda bisa memilih apakah membagikan potongan berkas yg diunduh secara "
 #~ "otomatis atau tidak."
 
-#, fuzzy
 #~ msgid "Start automatically"
 #~ msgstr "Mulai secara otomatis"
 
-#, fuzzy
 #~ msgid "Let FrostWire manage my BitTorrent settings. (Recommended)"
 #~ msgstr "Biarkan FrostWire mengatur Pengaturan-pengaturan BitTorrent saya"
 
-#, fuzzy
 #~ msgid "Clear"
 #~ msgstr "Crawler"
 
@@ -5373,7 +5066,6 @@ msgstr ""
 #~ "berbagi berkas pada iTunes). Fitur ini akan dimatikan. Anda bisa "
 #~ "menyalakannya lagi pada pilihan di iTunes -> Sharing."
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire was unable to start the Digital Audio Access Protocol (for "
 #~ "sharing files in iTunes) because a Microsoft patch is required or a "
@@ -5388,7 +5080,6 @@ msgstr ""
 #~ "mendapatkan patch, 'Tidak' untuk mematikan fitur ini, atau 'Batal' untuk "
 #~ "memutuskannya nanti."
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire was unable to start the Digital Audio Access Protocol (for "
 #~ "sharing files in iTunes) because a firewall is blocking access. To "
@@ -5400,15 +5091,12 @@ msgstr ""
 #~ "berbagi berkas di iTunes) karena firewall memblokir akses. Untuk terus "
 #~ "menggunakan fitur ini, klik 'Ya' dan rubah firewall"
 
-#, fuzzy
 #~ msgid "&Monitor"
 #~ msgstr "Pengawasan"
 
-#, fuzzy
 #~ msgid "&Connections"
 #~ msgstr "Koneksi"
 
-#, fuzzy
 #~ msgid "C&onsole"
 #~ msgstr "Konsol"
 
@@ -5450,7 +5138,6 @@ msgstr ""
 #~ msgid "View Verification Page"
 #~ msgstr "Melihat Halaman Verifikasi"
 
-#, fuzzy
 #~ msgid "License Details:"
 #~ msgstr "Detail lisensi"
 
@@ -5524,7 +5211,6 @@ msgstr ""
 #~ "Folder penyimpanan tidak berlaku. Mungkin sudah dihapus, anda tidak "
 #~ "memiliki ijin menulis, atau mungkin masalah lain. Pilih folder lainnya."
 
-#, fuzzy
 #~ msgid "You are not connected to the FrostWire VIP Area"
 #~ msgstr "Anda sedang menyambung ke jaringan."
 
@@ -5574,11 +5260,9 @@ msgstr ""
 #~ msgid "Show Shared Files Count"
 #~ msgstr "Perlihatkan jumlah berkas bersama"
 
-#, fuzzy
 #~ msgid "Show Store Indicator"
 #~ msgstr "Perlihatkan indikator firewall:"
 
-#, fuzzy
 #~ msgid ""
 #~ "You can find out how many times someone has uploaded a file by choosing "
 #~ "the 'Library' tab and looking at the Uploads column. The information is "
@@ -5592,7 +5276,6 @@ msgstr ""
 #~ "yang telah mencoba untuk menggugah file tersebut dan 'X' adalah jumlah "
 #~ "orang yang sukses menggugah file tersebut."
 
-#, fuzzy
 #~ msgid ""
 #~ "Curious how many people are searching for your files? The 'hits' column "
 #~ "in the Library will count how many times FrostWire has returned a result "
@@ -5602,7 +5285,6 @@ msgstr ""
 #~ "yang ada di Pustaka akan emnghitung seberapa kali FrostWire telah "
 #~ "mengembalikan sebuah hasil dari orang yang mencari file itu."
 
-#, fuzzy
 #~ msgid ""
 #~ "When FrostWire says your download is 'Waiting In Line', that means that "
 #~ "source you are downloading from is temporarily busy and has queued your "
@@ -5614,7 +5296,6 @@ msgstr ""
 #~ "penggugahan Anda. Agar dapat menyempurnakan pengunduhan Anda, tunggulah "
 #~ "selagi permohonan Anda dilanjutkan dalam antrian dan sedang dilayani"
 
-#, fuzzy
 #~ msgid ""
 #~ "Need more help? Visit <a href=\"{0}\">our message boards</a> and see if "
 #~ "others have already answered your question! You can also review the <a "
@@ -5627,7 +5308,6 @@ msgstr ""
 #~ "pertanyaan yang umumnya ditanyakan atau <a href=\"{2}\"> Panduan Pengguna "
 #~ "untuk informasi yang lebih."
 
-#, fuzzy
 #~ msgid ""
 #~ "Accidentally killed your download? Click the library tab, choose the "
 #~ "Incomplete folder, and then highlight the filename of the file you'd like "
@@ -5639,7 +5319,6 @@ msgstr ""
 #~ "pengunduhannya dan klik lanjutkan. FrostWire secara otomatis akan mencari "
 #~ "berkas tersebut dan mulai mengunduhnya lagi"
 
-#, fuzzy
 #~ msgid ""
 #~ "Do you have a tip for effectively using FrostWire? Add it to <a href=\"{0}"
 #~ "\">the wiki</a> and it may make it into future Tips of the Day!"
@@ -5648,11 +5327,9 @@ msgstr ""
 #~ "kiat itu di <a href=\"{0}\">the wiki</a> dan bisa jadi akan muncul pada "
 #~ "\"Kiat Hari ini\" di masa yang akan datang!"
 
-#, fuzzy
 #~ msgid "Upgrade FrostWire"
 #~ msgstr "&Penggunaan FrostWire"
 
-#, fuzzy
 #~ msgid "Upgrade to FrostWire?"
 #~ msgstr "&Penggunaan FrostWire"
 
@@ -5673,14 +5350,12 @@ msgstr ""
 #~ msgid "Would you like to get your free Java upgrade?"
 #~ msgstr "Apakah anda ingin meng-upgrade Java (gratis)?"
 
-#, fuzzy
 #~ msgid "Get FrostWire Now"
 #~ msgstr "&Penggunaan FrostWire"
 
 #~ msgid "Why"
 #~ msgstr "Kenapa?"
 
-#, fuzzy
 #~ msgid "Later"
 #~ msgstr "Rekatkan"
 
@@ -5716,7 +5391,6 @@ msgstr ""
 #~ msgid "Disconnect from the Network"
 #~ msgstr "Putuskan dari jaringan"
 
-#, fuzzy
 #~ msgid "Search \"What's New\" for: {0}"
 #~ msgstr "Mencari \"Hal-hal baru\": {0}"
 
@@ -5761,11 +5435,9 @@ msgstr ""
 #~ msgid "You"
 #~ msgstr "Anda"
 
-#, fuzzy
 #~ msgid "Could not send chat message"
 #~ msgstr "Tidak dapat menjelajah host {0} ."
 
-#, fuzzy
 #~ msgid "Browse Host"
 #~ msgstr "Pilihan Browser"
 
@@ -5778,7 +5450,6 @@ msgstr ""
 #~ msgid "View All Files on the Selected Computer"
 #~ msgstr "Lihat semua berkas pada komputer tersebut."
 
-#, fuzzy
 #~ msgid "Host"
 #~ msgstr "Host:"
 
@@ -5794,7 +5465,6 @@ msgstr ""
 #~ msgid "Protocol"
 #~ msgstr "Protokol"
 
-#, fuzzy
 #~ msgid "Vendor/Version"
 #~ msgstr "Versi Tidak Berlaku"
 
@@ -5807,27 +5477,21 @@ msgstr ""
 #~ msgid "QRP Empty"
 #~ msgstr "QRP kosong"
 
-#, fuzzy
 #~ msgid "Connecting..."
 #~ msgstr "Tersambung..."
 
-#, fuzzy
 #~ msgid "Outgoing"
 #~ msgstr "Usaha Keluar"
 
-#, fuzzy
 #~ msgid "Incoming"
 #~ msgstr "Permintaan Masuk"
 
-#, fuzzy
 #~ msgid "Ultrapeer"
 #~ msgstr "Ultrapeer"
 
-#, fuzzy
 #~ msgid "Leaf"
 #~ msgstr "Ujung-ujung"
 
-#, fuzzy
 #~ msgid "Connecting"
 #~ msgstr "Koneksi"
 
@@ -5858,30 +5522,25 @@ msgstr ""
 #~ msgid "0.6"
 #~ msgstr "0.6"
 
-#, fuzzy
 #~ msgid "All folders you select will also have their subfolders shared."
 #~ msgstr ""
 #~ "Folder-folder terpilih tersebut (beserta subfoldernya) akan dibagikan."
 
-#, fuzzy
 #~ msgid "Share Dropped Files?"
 #~ msgstr "Berkas bersama"
 
-#, fuzzy
 #~ msgid "No, Share Nothing"
 #~ msgstr "Anda berbagi"
 
 #~ msgid "Queue"
 #~ msgstr "Antrian"
 
-#, fuzzy
 #~ msgid "Queued"
 #~ msgstr "Antrian"
 
 #~ msgid "Waiting On Busy Hosts"
 #~ msgstr "Menunggu host yg sibuk"
 
-#, fuzzy
 #~ msgid "Complete"
 #~ msgstr "Terkumpul"
 
@@ -5927,11 +5586,9 @@ msgstr ""
 #~ msgid "Content Removed"
 #~ msgstr "Isi dihilangkan"
 
-#, fuzzy
 #~ msgid "Resuming..."
 #~ msgstr "Menjeda..."
 
-#, fuzzy
 #~ msgid "Downloading .torrent file..."
 #~ msgstr "Memuat berkas tersimpan..."
 
@@ -5988,7 +5645,6 @@ msgstr ""
 #~ msgid "Priority"
 #~ msgstr "Prioritas"
 
-#, fuzzy
 #~ msgid "Downloads"
 #~ msgstr "Pengunduhan:"
 
@@ -6048,7 +5704,6 @@ msgstr ""
 #~ msgid "Preview"
 #~ msgstr "Tinjau"
 
-#, fuzzy
 #~ msgid "Chat with Host"
 #~ msgstr "Chat dengan host"
 
@@ -6080,7 +5735,6 @@ msgstr ""
 #~ msgid "No Filename"
 #~ msgstr "Tidak ada nama berkas"
 
-#, fuzzy
 #~ msgid "Active"
 #~ msgstr "Aksi:"
 
@@ -6108,26 +5762,21 @@ msgstr ""
 #~ "FrostWire tidak dapat menggunakan folder tersebut untuk menyimpan berkas. "
 #~ "Silahkan coba folder lain."
 
-#, fuzzy
 #~ msgid "Incomplete Files"
 #~ msgstr "Lama hari untuk tetap menyimpan berkas belum selesai:"
 
-#, fuzzy
 #~ msgid "Individual Store Files"
 #~ msgstr "Berkas bersama tersendiri"
 
-#, fuzzy
 #~ msgid "List of All Individual Purchased Files"
 #~ msgstr "Daftar semua berkas bersama tersendiri."
 
 #~ msgid "Configure..."
 #~ msgstr "Tentukan..."
 
-#, fuzzy
 #~ msgid "Search In Shared Files:"
 #~ msgstr "Cari dan unduh berkas."
 
-#, fuzzy
 #~ msgid "Uploads"
 #~ msgstr "Upload:"
 
@@ -6155,7 +5804,6 @@ msgstr ""
 #~ msgid "Publish under Creative Commons License"
 #~ msgstr "Terbitkan dibawah lisensi creative common"
 
-#, fuzzy
 #~ msgid "Edit License..."
 #~ msgstr "Lihat Lisensi"
 
@@ -6165,11 +5813,9 @@ msgstr ""
 #~ msgid "Stop Sharing File"
 #~ msgstr "Hentikan berbagi berkas"
 
-#, fuzzy
 #~ msgid "Share Folder"
 #~ msgstr "Forder bersama"
 
-#, fuzzy
 #~ msgid "Stop Sharing Folder"
 #~ msgstr "Hentikan berbagi berkas"
 
@@ -6188,7 +5834,6 @@ msgstr ""
 #~ msgid "Shared Files"
 #~ msgstr "Berkas bersama"
 
-#, fuzzy
 #~ msgid "Show .torrent Files"
 #~ msgstr "Penyaring Konten"
 
@@ -6201,7 +5846,6 @@ msgstr ""
 #~ msgid "List of All Individually Shared Files"
 #~ msgstr "Daftar semua berkas bersama tersendiri."
 
-#, fuzzy
 #~ msgid "Loading Logging Window..."
 #~ msgstr "Memuat jendela pilihan..."
 
@@ -6220,11 +5864,9 @@ msgstr ""
 #~ msgid "Reload available skins from disk"
 #~ msgstr "Muat ulang kulit yg tersedia dari disk"
 
-#, fuzzy
 #~ msgid "&Check for updates"
 #~ msgstr "Memeriksa ada / tidaknya update tersedia..."
 
-#, fuzzy
 #~ msgid "seconds left)"
 #~ msgstr "detik"
 
@@ -6234,11 +5876,9 @@ msgstr ""
 #~ msgid "Slots"
 #~ msgstr "Lubang"
 
-#, fuzzy
 #~ msgid "Connections"
 #~ msgstr "Koneksi"
 
-#, fuzzy
 #~ msgid "Junk"
 #~ msgstr "Bukan sampah"
 
@@ -6289,7 +5929,6 @@ msgstr ""
 #~ msgid "Host Communication"
 #~ msgstr "Host komunikasi"
 
-#, fuzzy
 #~ msgid "Chat Configuration"
 #~ msgstr "Konfigurasi Router"
 
@@ -6371,11 +6010,9 @@ msgstr ""
 #~ msgid "Disable Ultrapeer Capabilities:"
 #~ msgstr "Matikan kemampuan Ultrapeer:"
 
-#, fuzzy
 #~ msgid "Disable Mojito DHT Capabilities:"
 #~ msgstr "Matikan kemampuan Ultrapeer:"
 
-#, fuzzy
 #~ msgid "Disable TLS Capabilities:"
 #~ msgstr "Matikan kemampuan Ultrapeer:"
 
@@ -6398,7 +6035,6 @@ msgstr ""
 #~ msgid "You can set the percentage of your bandwidth devoted to downloads."
 #~ msgstr "Anda bisa menentukan persentase lebar pita anda untuk pengunduhan."
 
-#, fuzzy
 #~ msgid "Display"
 #~ msgstr "Tampilkan:"
 
@@ -6462,7 +6098,6 @@ msgstr ""
 #~ msgid "Open Dialog to Select a Folder"
 #~ msgstr "Buka dialog untuk memilih folder"
 
-#, fuzzy
 #~ msgid "Reset"
 #~ msgstr "Simpan kembali"
 
@@ -6568,12 +6203,10 @@ msgstr ""
 #~ msgstr ""
 #~ "Anda bisa membagikan berkas yg anda unduh ke folder tidak dibagikan."
 
-#, fuzzy
 #~ msgid "You can automatically share .torrent files."
 #~ msgstr ""
 #~ "Anda bisa otomatis menghapus berkas pengunduhan belum selesai yg lalu."
 
-#, fuzzy
 #~ msgid "Start Upload Slots"
 #~ msgstr "Mulai celah upload:"
 
@@ -6589,7 +6222,6 @@ msgstr ""
 #~ msgid "Strict"
 #~ msgstr "Ketat"
 
-#, fuzzy
 #~ msgid "Connection Speed"
 #~ msgstr "Koneksi Ditutup"
 
@@ -6603,15 +6235,12 @@ msgstr ""
 #~ msgid "Speed:"
 #~ msgstr "Kecepatan:"
 
-#, fuzzy
 #~ msgid "LimeWire Store Indicator"
 #~ msgstr "Indikator firewall"
 
-#, fuzzy
 #~ msgid "You can display your LimeWire Store status in the status bar."
 #~ msgstr "Anda bisa menampilkan status firewall di papan status."
 
-#, fuzzy
 #~ msgid "Show LimeWire Store Indicator:"
 #~ msgstr "Perlihatkan indikator firewall:"
 
@@ -6625,7 +6254,6 @@ msgstr ""
 #~ msgid "Show Shared Files Indicator:"
 #~ msgstr "Perlihatkan indikator berkas bersama:"
 
-#, fuzzy
 #~ msgid ""
 #~ "You can choose the folder for saving files purchased from the LimeWire "
 #~ "Store."
@@ -6754,7 +6382,6 @@ msgstr ""
 #~ msgid "Keyword"
 #~ msgstr "Kata kunci"
 
-#, fuzzy
 #~ msgid "Direct Connect"
 #~ msgstr "Koneksi Langsung Gagal"
 
@@ -6849,7 +6476,6 @@ msgstr ""
 #~ msgid "View Console Messages"
 #~ msgstr "Lihat log pesan-pesan"
 
-#, fuzzy
 #~ msgid "View Logging Messages"
 #~ msgstr "Lihat log pesan-pesan"
 
@@ -6859,7 +6485,6 @@ msgstr ""
 #~ msgid "View Searches and Uploads"
 #~ msgstr "Lihat pencarian dan upload."
 
-#, fuzzy
 #~ msgid "Test action!"
 #~ msgstr "Deskripsi"
 
@@ -6891,7 +6516,6 @@ msgstr ""
 #~ "Tema yg anda terapkan tidak berlaku. FrostWire akan mengembalikannya ke "
 #~ "tema standar."
 
-#, fuzzy
 #~ msgid "Kill Upload"
 #~ msgstr "Upload"
 
@@ -6910,11 +6534,9 @@ msgstr ""
 #~ msgid "Queued at"
 #~ msgstr "Mengantri pada"
 
-#, fuzzy
 #~ msgid "Range Unavailable"
 #~ msgstr "Kisaran Tidak Tersedia"
 
-#, fuzzy
 #~ msgid "Malformed Request"
 #~ msgstr "Permintaan Greedy"
 
@@ -6924,15 +6546,12 @@ msgstr ""
 #~ msgid "Uploading Hash Tree"
 #~ msgstr "Meng-upload hash tree"
 
-#, fuzzy
 #~ msgid "Suspended"
 #~ msgstr "Kecepatan:"
 
-#, fuzzy
 #~ msgid "Awaiting Requests"
 #~ msgstr "Permintaan Chat"
 
-#, fuzzy
 #~ msgid "Swarm for {0}"
 #~ msgstr "Mencari: {0}"
 
@@ -6962,7 +6581,6 @@ msgstr ""
 #~ "klik checkbox to membuktikan bahwa anda pemilik hakcipta atau berwenang "
 #~ "untuk menerbitkannya dibawah lisensi Creative Common."
 
-#, fuzzy
 #~ msgid "Permanently remove the license from this file"
 #~ msgstr ""
 #~ "Anda yakin untuk menghilangkan lisensi dari salinan lokal berkas ini?"
@@ -6992,7 +6610,6 @@ msgstr ""
 #~ msgid "Title of Work:"
 #~ msgstr "Judul Pengerjaan:"
 
-#, fuzzy
 #~ msgid "Please enter the copyright holder, copright year and title."
 #~ msgstr "Masukkan pemegang hakcipta dari file yg ingin anda terbitkan."
 
@@ -7006,7 +6623,6 @@ msgstr ""
 #~ msgid "Where do you want to store the verification URL?"
 #~ msgstr "Dimana anda ingin menyimpan URL verifikasi?"
 
-#, fuzzy
 #~ msgid "The verification file is hosted at the following URL:"
 #~ msgstr "Saya ingin menyimpan sendiri berkas verifikasi pada URL berikut:"
 
@@ -7126,7 +6742,6 @@ msgstr ""
 #~ msgid "Platform:"
 #~ msgstr "Platform:"
 
-#, fuzzy
 #~ msgid "Description:"
 #~ msgstr "Deskripsi"
 
@@ -7139,7 +6754,6 @@ msgstr ""
 #~ msgid "Ogg Vorbis"
 #~ msgstr "Ogg Vorbis"
 
-#, fuzzy
 #~ msgid ""
 #~ "It helps the network if you keep your FrostWire running. Others will "
 #~ "connect to the network easier and searches will perform better. "
@@ -7167,43 +6781,33 @@ msgstr ""
 #~ "Berkas yg biasa digunakan untuk menyimpan pilihan anda rusak. FrostWire "
 #~ "akan menggunakan nilai standar."
 
-#, fuzzy
 #~ msgid "other"
 #~ msgstr "Ethernet"
 
-#, fuzzy
 #~ msgid "string"
 #~ msgstr "Memulai"
 
-#, fuzzy
 #~ msgid "1"
 #~ msgstr "T1"
 
-#, fuzzy
 #~ msgid "test1"
 #~ msgstr "Simpan kembali"
 
-#, fuzzy
 #~ msgid "test2"
 #~ msgstr "Simpan kembali"
 
-#, fuzzy
 #~ msgid "The file type is not recognized."
 #~ msgstr ". Tipe berkas tidak dikenali."
 
-#, fuzzy
 #~ msgid "The file cannot be found."
 #~ msgstr ". Berkas tidak ditemukan."
 
-#, fuzzy
 #~ msgid "The file is corrupt."
 #~ msgstr ". Berkas rusak."
 
-#, fuzzy
 #~ msgid "There is an unknown error with the audio file."
 #~ msgstr ". Ada kesalahan yg tidak diketahui pada berkas audio."
 
-#, fuzzy
 #~ msgid "The file cannot be parsed."
 #~ msgstr ". Berkas tidak dapat dipilah."
 
@@ -7219,18 +6823,15 @@ msgstr ""
 #~ msgid "Cable/DSL"
 #~ msgstr "Cable/DSL"
 
-#, fuzzy
 #~ msgid "United States"
 #~ msgstr "Perbaruan"
 
-#, fuzzy
 #~ msgid "English"
 #~ msgstr "Selesai"
 
 #~ msgid "Loading Languages"
 #~ msgstr "Memuat bahasa-bahasa"
 
-#, fuzzy
 #~ msgid "false"
 #~ msgstr "Rekatkan"
 
@@ -7255,7 +6856,6 @@ msgstr ""
 #~ "\n"
 #~ "Bagikan folder ini?"
 
-#, fuzzy
 #~ msgid "Paste from Clipboard"
 #~ msgstr "Salin ke Clipboard"
 
@@ -7354,7 +6954,6 @@ msgstr ""
 #~ msgid "Cancel Scan"
 #~ msgstr "Batalkan pemindaian"
 
-#, fuzzy
 #~ msgid ""
 #~ "Your search must be at least three characters long to avoid too many "
 #~ "meaningless results."
@@ -7372,7 +6971,6 @@ msgstr ""
 #~ "changes?"
 #~ msgstr "Anda telah merubah beberapa ketentuan. Apakah akan disimpan?"
 
-#, fuzzy
 #~ msgid ""
 #~ "You have some songs in the playlist.  Would you like to clear them and "
 #~ "start a new playlist?"
@@ -8768,7 +8366,6 @@ msgstr ""
 #~ msgid "FrostWire: Enabling Open Information Sharing"
 #~ msgstr "FrostWire: memungkinkan berbagi informasi secara terbuka"
 
-#, fuzzy
 #~ msgid ""
 #~ "Looking for something rare? The more detailed your search is, the better "
 #~ "your chances of getting a result you want!"
@@ -8776,7 +8373,6 @@ msgstr ""
 #~ "Mencari sesuatu yang langka? Semakin detail pencarian Anda, semakin besar "
 #~ "kesempatan Anda mendapatkan hasil yang Anda inginkan!"
 
-#, fuzzy
 #~ msgid ""
 #~ "Want to open this Tip Of The Day dialog after you've closed it? Go to the "
 #~ "Help menu and choose 'Tip of the Day'."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-12 17:19-0400\n"
+"POT-Creation-Date: 2012-04-14 11:28-0400\n"
 "PO-Revision-Date: 2008-08-07 15:21+0000\n"
 "Last-Translator: FTA <Unknown>\n"
 "Language-Team: none\n"
@@ -20,7 +20,6 @@ msgstr ""
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:50
-#, fuzzy
 msgid ""
 "FrostWire was unable to write a necessary file because your hard drive is "
 "full. To continue using FrostWire you must free up space on your hard drive."
@@ -29,7 +28,6 @@ msgstr ""
 "llawn. I FrostWire garo ymlaen rhaid gwneud lle ar dy ddisc caled."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:52
-#, fuzzy
 msgid ""
 "FrostWire was unable to open a necessary file because another program has "
 "locked the file. FrostWire may act unexpectedly until this file is released."
@@ -39,7 +37,6 @@ msgstr ""
 "fod y ffeil wedi'i datgloi."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:54
-#, fuzzy
 msgid ""
 "FrostWire was unable to write a necessary file because you do not have the "
 "necessary permissions. Your preferences may not be maintained the next time "
@@ -50,7 +47,6 @@ msgstr ""
 "dechrau, neu efallai fydd FrostWire yn gweithio mewn ffyrdd annisgwyl."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:56
-#, fuzzy
 msgid ""
 "FrostWire cannot open a necessary file because the filename contains "
 "characters which are not supported by your operating system. FrostWire may "
@@ -77,7 +73,6 @@ msgstr ""
 "arall yn defnyddio'r ffeil. Cau'r rhaglen arall ac ail-drio i lwytho i lawr."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:64
-#, fuzzy
 msgid ""
 "FrostWire was unable to create or continue writing an incomplete file for "
 "the selected download because you do not have permission to write files to "
@@ -327,13 +322,11 @@ msgid "Images"
 msgstr "Lluniau"
 
 #: core/com/limegroup/gnutella/MediaType.java:50
-#, fuzzy
 msgid "Torrents"
 msgstr "BitTorrent"
 
 #: gui/com/frostwire/gui/BuyAction.java:70
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:48
-#, fuzzy
 msgid "Buy"
 msgstr "Prysur"
 
@@ -343,12 +336,10 @@ msgid "Loading Community Chat..."
 msgstr ""
 
 #: gui/com/frostwire/gui/ChatMediator.java:413
-#, fuzzy
 msgid "Loading Community Chat Window..."
 msgstr "Llwytho Ffenest Monitor..."
 
 #: gui/com/frostwire/gui/HideExitDialog.java:39
-#, fuzzy
 msgid "Do you want to hide FrostWire?"
 msgstr "Wrthi'n cysylltu a'r rhwydwaith"
 
@@ -359,13 +350,11 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/HideExitDialog.java:61
-#, fuzzy
 msgid "Don't show this again"
 msgstr "Peidio dangos y neges yma eto"
 
 #. hide button
 #: gui/com/frostwire/gui/HideExitDialog.java:70
-#, fuzzy
 msgid "Hide"
 msgstr "Fideo"
 
@@ -377,14 +366,12 @@ msgid "Exit"
 msgstr "Gadael"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:63
-#, fuzzy
 msgid "Send audio to iTunes"
 msgstr "Cadw'r Rhestr Chwarae Presennol i Ffeil"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:64
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:902
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:739
-#, fuzzy
 msgid "Send audio files to iTunes"
 msgstr "Cadw'r Rhestr Chwarae Presennol i Ffeil"
 
@@ -396,13 +383,11 @@ msgstr "Manylion"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:108
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:388
-#, fuzzy
 msgid "Show Details"
 msgstr "Dangos Canlyniadau Magnet"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:109
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:389
-#, fuzzy
 msgid "Show Torrent Details"
 msgstr "Dangos Canlyniadau Magnet"
 
@@ -424,7 +409,6 @@ msgstr "Agor y Ffolder Ble Mae'r Ffeil"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:152
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:153
-#, fuzzy
 msgid "Show"
 msgstr "Dangos Diwethaf"
 
@@ -481,12 +465,10 @@ msgid "Remove Torrent"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:259
-#, fuzzy
 msgid "Remove Torrent from selected downloads"
 msgstr "Trio'r Llwythau Wedi'u Dewis Eto"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:261
-#, fuzzy
 msgid "Remove Download"
 msgstr "Ail-ddechrau'r Llwytho i Lawr"
 
@@ -499,12 +481,10 @@ msgid "Remove"
 msgstr "Cael Gwared"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:263
-#, fuzzy
 msgid "Remove Selected Downloads"
 msgstr "Rhagflas o lwythau wedi'u dewis"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:273
-#, fuzzy
 msgid ""
 "Are you sure you want to remove the data files from your computer?\n"
 "\n"
@@ -522,12 +502,10 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:295
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:296
-#, fuzzy
 msgid "Remove Download and Data"
 msgstr "Ail-ddechrau'r Llwytho i Lawr"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:297
-#, fuzzy
 msgid "Remove Download and Data from selected downloads"
 msgstr "Trio'r Llwythau Wedi'u Dewis Eto"
 
@@ -536,7 +514,6 @@ msgstr "Trio'r Llwythau Wedi'u Dewis Eto"
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:311
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:486
 #: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:479
-#, fuzzy
 msgid "Copy Magnet"
 msgstr "Copio Adroddiad"
 
@@ -556,7 +533,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:394
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:395
-#, fuzzy
 msgid "Hide Seeding Transfers"
 msgstr "Gadael ar ol Trosglwyddo"
 
@@ -567,13 +543,11 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:398
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:399
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:400
-#, fuzzy
 msgid "Show Seeding Transfers"
 msgstr "Cau lawr ar ol Trosglwyddo"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:419
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:195
-#, fuzzy
 msgid "Create New Playlist"
 msgstr "Cadw'r Rhestr Chwarae Fel"
 
@@ -588,7 +562,6 @@ msgid "Add to playlist "
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:39
-#, fuzzy
 msgid " (Partial)"
 msgstr "HTTP (Potensial)"
 
@@ -614,7 +587,6 @@ msgstr "Symudiad"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:117
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:324
-#, fuzzy
 msgid "Downloaded"
 msgstr "Llwytho i lawr"
 
@@ -625,13 +597,11 @@ msgstr "Wedi Llwythio"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:127
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:322
-#, fuzzy
 msgid "Down Speed"
 msgstr "Cyflymdra Llwytho:"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:131
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:323
-#, fuzzy
 msgid "Up Speed"
 msgstr "Cyflymdra"
 
@@ -642,7 +612,6 @@ msgstr "Amser"
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:142
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:327
 #: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:22
-#, fuzzy
 msgid "Seeds"
 msgstr "Cyflymdra"
 
@@ -652,12 +621,10 @@ msgid "Peers"
 msgstr "Partneriaid"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:148
-#, fuzzy
 msgid "Share Ratio"
 msgstr "Rhannu Ffeil"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadDataLine.java:153
-#, fuzzy
 msgid "Seeds/Peers"
 msgstr "Partneriaid"
 
@@ -743,13 +710,11 @@ msgstr ""
 
 #. advanced > Download Speed Menu //
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:56
-#, fuzzy
 msgid "Set Down Speed"
 msgstr "Dewis Cyflymdra"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:65
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:172
-#, fuzzy
 msgid "Disabled"
 msgstr "Cael Gwared"
 
@@ -790,7 +755,6 @@ msgstr ""
 #. }
 #. advanced >Upload Speed Menu //
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:163
-#, fuzzy
 msgid "Set Up Speed"
 msgstr "Dewis Cyflymdra"
 
@@ -803,12 +767,10 @@ msgstr "Uwch"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:399
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:149
-#, fuzzy
 msgid "Add to playlist"
 msgstr "Adio Cynnwys y Ffolder i Restr Chwarae"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:84
-#, fuzzy
 msgid "Torrent File Created with FrostWire"
 msgstr "Wrthi'n cysylltu a'r rhwydwaith"
 
@@ -820,12 +782,10 @@ msgid "Create New Torrent"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:178
-#, fuzzy
 msgid "Torrent Contents"
 msgstr "Anwybyddu Cynnwys Oedolyn"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:180
-#, fuzzy
 msgid "Select File or Folder..."
 msgstr "Dewis Ffolder"
 
@@ -842,7 +802,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:228
-#, fuzzy
 msgid "Torrent Properties"
 msgstr "Dewisiadau BitTorrent"
 
@@ -857,7 +816,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:248
-#, fuzzy
 msgid "Start seeding"
 msgstr "Yn dechrau"
 
@@ -891,7 +849,6 @@ msgstr "Cau"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:314
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:875
-#, fuzzy
 msgid "Save torrent as..."
 msgstr "Rhannu ffeiliau .torrent"
 
@@ -941,7 +898,6 @@ msgstr ""
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:486
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:843
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:716
-#, fuzzy
 msgid "Invalid Folder"
 msgstr "Enw Ffeil Annilys"
 
@@ -950,17 +906,14 @@ msgid "Check again your tracker URL(s).\n"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:497
-#, fuzzy
 msgid "Invalid Tracker URL\n"
-msgstr "TTL annilus"
+msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:521
-#, fuzzy
 msgid "Torrent Created."
 msgstr "Creuwyd"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:547
-#, fuzzy
 msgid "Torrent File"
 msgstr "Ffeiliau .torrent"
 
@@ -1012,7 +965,6 @@ msgid "wizard.operationfailed"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:886
-#, fuzzy
 msgid "Saving Torrent..."
 msgstr "Cadw'r Ffeil..."
 
@@ -1022,31 +974,26 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:61
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:81
-#, fuzzy
 msgid "Select files to download"
 msgstr "Clirio'r Llwythau wedi'u Dewis"
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:129
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:149
-#, fuzzy
 msgid "Download Selected Files Only"
 msgstr "Llwytho i Lawr pob ffeil wedi'i ddewis"
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:153
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:173
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:264
-#, fuzzy
 msgid "File"
 msgstr "&Ffeil"
 
 #: gui/com/frostwire/gui/bittorrent/PartialFilesDialog.java:171
 #: gui/com/frostwire/gui/bittorrent/PartialYouTubePackageDialog.java:191
-#, fuzzy
 msgid "Select/Unselect all files"
 msgstr "Dileu Ffeiliau wedi'u dewis"
 
 #: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:70
-#, fuzzy
 msgid "Preparing selection"
 msgstr "Lansio ffeiliau wedi'u dewis"
 
@@ -1055,7 +1002,6 @@ msgid "please wait..."
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/SendFileProgressDialog.java:159
-#, fuzzy
 msgid "Select the content you want to send"
 msgstr "Clirio'r Llwythau wedi'u Dewis"
 
@@ -1066,12 +1012,10 @@ msgid "Download"
 msgstr "Llwytho i lawr"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:166
-#, fuzzy
 msgid "at"
 msgstr "Sgwrsio"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:167
-#, fuzzy
 msgid "via FrostWire"
 msgstr "FrostWire"
 
@@ -1080,7 +1024,6 @@ msgid "Use the following text to share the \"%s\" folder"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:247
-#, fuzzy
 msgid "Tips"
 msgstr "Mathau"
 
@@ -1097,47 +1040,38 @@ msgid "Send the message above to Twitter"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:444
-#, fuzzy
 msgid "Copy Text"
 msgstr "Copio Adroddiad"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:445
-#, fuzzy
 msgid "Copy entire message to Clipboard"
 msgstr "Copio Linciau Magnet i'r Clipfwrdd"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:452
-#, fuzzy
 msgid "Message copied to clipboard."
 msgstr "Copio i'r Clipfwrdd"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:464
-#, fuzzy
 msgid "Copy Link"
 msgstr "Copio"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:465
-#, fuzzy
 msgid "Copy Link to Clipboard"
 msgstr "Copio i'r Clipfwrdd"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:472
-#, fuzzy
 msgid "Link copied to clipboard."
 msgstr "Copio i'r Clipfwrdd"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:487
-#, fuzzy
 msgid "Copy Magnet URL to Clipboard"
 msgstr "Copio Linciau Magnet i'r Clipfwrdd"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:494
-#, fuzzy
 msgid "Magnet copied to clipboard."
 msgstr "Copio Linciau Magnet i'r Clipfwrdd"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentFetcherDownload.java:23
-#, fuzzy
 msgid "Downloading Torrent"
 msgstr "Rhannu Llwythio i Lawr"
 
@@ -1156,13 +1090,11 @@ msgid "Error"
 msgstr "Gwall"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentFetcherDownload.java:25
-#, fuzzy
 msgid "Canceled"
 msgstr "Canslo"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:34
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentSaveFolderPaneItem.java:13
-#, fuzzy
 msgid "Torrent Data Save Folder"
 msgstr "Ffolder Cadw"
 
@@ -1171,12 +1103,10 @@ msgid "You forgot to enter a path for the Torrent Data Folder."
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:87
-#, fuzzy
 msgid "Please enter a valid path for the Torrent Data Folder"
 msgstr "Rho flwyddyn ddilys i'r ffeil ti eisiau ei chyoeddu."
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:99
-#, fuzzy
 msgid "The Torrent Data Folder cannot be inside the "
 msgstr "Ffeil wedi llygru. Methu cadw'r wybodaeth."
 
@@ -1186,7 +1116,6 @@ msgid "Could not resolve folder path."
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSaveFolderComponent.java:110
-#, fuzzy
 msgid "The Torrent Data Folder cannot be a parent folder of the "
 msgstr ""
 "Ffolder annilys ar gyfer rhannu ffeiliau. Dewis ffolder arall neu fynd yn ol "
@@ -1211,7 +1140,6 @@ msgstr "Dewis Ffolder Arall"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:46
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentSeedingSettingPaneItem.java:14
-#, fuzzy
 msgid "Seeding Settings"
 msgstr "Llwytho Gosodiadau..."
 
@@ -1236,13 +1164,11 @@ msgid "globalmanager.download.remove.veto"
 msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:20
-#, fuzzy
 msgid "Downloading"
 msgstr "Llwytho i lawr"
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:22
 #: gui/com/frostwire/gui/bittorrent/YouTubeVideoUrlDownload.java:49
-#, fuzzy
 msgid "Stopped"
 msgstr "Stopio"
 
@@ -1252,7 +1178,6 @@ msgstr "Yn Aros"
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:24
 #: gui/com/frostwire/gui/bittorrent/YouTubeVideoUrlDownload.java:47
-#, fuzzy
 msgid "Finished"
 msgstr "Gorffen"
 
@@ -1290,14 +1215,12 @@ msgid "Send"
 msgstr "Anfon"
 
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:243
-#, fuzzy
 msgid "Do you want to send this file to a friend?"
 msgstr "Ffolder sy'n cael ei rhannu"
 
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:243
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:136
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:65
-#, fuzzy
 msgid "Send files with FrostWire"
 msgstr "Cymorth i Ddefnyddio FrostWire"
 
@@ -1312,12 +1235,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/library/Device.java:265
-#, fuzzy
 msgid "Transfer failed"
 msgstr "Trosglwyddiadau"
 
 #: gui/com/frostwire/gui/library/DeviceUploadDialog.java:66
-#, fuzzy
 msgid "Upload to device"
 msgstr "Terfyn Llwytho i Fyny wedi cyrraedd"
 
@@ -1330,13 +1251,11 @@ msgid "Uploading"
 msgstr "Llwytho i Fyny"
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
-#, fuzzy
 msgid "Uploading "
 msgstr "Llwytho i Fyny"
 
 #: gui/com/frostwire/gui/library/DownloadTask.java:76
 #: gui/com/frostwire/gui/library/DownloadTask.java:109
-#, fuzzy
 msgid "Downloading "
 msgstr "Llwytho i lawr"
 
@@ -1354,12 +1273,10 @@ msgid "Icon"
 msgstr "Icon"
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:76
-#, fuzzy
 msgid "Date Added"
 msgstr "Cadw Fel"
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableDataLine.java:79
-#, fuzzy
 msgid "Date Modified"
 msgstr "Dyddiad wedi newid:"
 
@@ -1374,40 +1291,33 @@ msgstr "Chwilio"
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableMediator.java:411
 #: gui/com/frostwire/gui/library/LibraryDeviceTableMediator.java:412
-#, fuzzy
 msgid "Save"
 msgstr "Cadw"
 
 #: gui/com/frostwire/gui/library/LibraryDeviceTableMediator.java:413
-#, fuzzy
 msgid "Save Selected Files To Folder"
 msgstr "Clirio'r Llwythau wedi'u Dewis"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:144
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:269
-#, fuzzy
 msgid "tracks"
 msgstr "Trac"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:199
-#, fuzzy
 msgid "Finished Downloads"
 msgstr "Rhannu Llwythiadau wedi'u gorffen:"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:201
-#, fuzzy
 msgid "Devices"
 msgstr "Adolygu"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:223
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:155
-#, fuzzy
 msgid "Configure Options"
 msgstr "Trefnu Opsiynau Rhannu"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:223
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:156
-#, fuzzy
 msgid "You can configure the FrostWire's Options."
 msgstr "Gallet ti drefnu'r ffolderi ar gyfer eu rhannu yn Opsiynau FrostWire"
 
@@ -1418,7 +1328,6 @@ msgstr "Adnewyddu"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:607
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:655
-#, fuzzy
 msgid "Refresh selected"
 msgstr "Cysylltiad"
 
@@ -1494,20 +1403,17 @@ msgstr "Yn methu ail-enwi'r ffeil {0} Rhaglen arall yn ei ddefnyddio efallai?"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:791
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:664
-#, fuzzy
 msgid "Launch in "
 msgstr "Lansio"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:792
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:665
-#, fuzzy
 msgid "Launch Selected Files in "
 msgstr "Lansio ffeiliau wedi'u dewis"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:834
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:707
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:317
-#, fuzzy
 msgid "Create a new .torrent file"
 msgstr "Rhannu ffeiliau .torrent"
 
@@ -1540,12 +1446,10 @@ msgid "Url"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:377
-#, fuzzy
 msgid "Are you sure you want to remove the selected radio station?"
 msgstr "Wyt ti'n siwr dy fod di eisiau dileu y ffeil/iau wedi'u dewis?"
 
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:377
-#, fuzzy
 msgid "Are you sure you want to remove the selected radio stations?"
 msgstr "Wyt ti'n siwr dy fod di eisiau dileu y ffeil/iau wedi'u dewis?"
 
@@ -1580,12 +1484,10 @@ msgid "Loading Library Window..."
 msgstr "Llwytho Ffenest y Llyfrgell..."
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:162
-#, fuzzy
 msgid "New Playlist"
 msgstr "Rhestr chwarae"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:162
-#, fuzzy
 msgid "Creates a new Playlist"
 msgstr "Yn dileu pob ffeil o'r Rhestr Chwarae."
 
@@ -1614,19 +1516,16 @@ msgid "Refresh the audio properties based on ID3 tags of selected items"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:690
-#, fuzzy
 msgid "Delete Playlist"
 msgstr "Rhestr chwarae"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:701
-#, fuzzy
 msgid ""
 "Are you sure you want to delete the playlist?\n"
 "(No files will be deleted)"
 msgstr "Wyt ti'n siwr dy fod di eisiau dileu y ffeil/iau wedi'u dewis?"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:720
-#, fuzzy
 msgid "Rename Playlist"
 msgstr "Cadw'r Rhestr Chwarae Fel"
 
@@ -1654,7 +1553,6 @@ msgstr ""
 
 #: gui/com/frostwire/gui/library/LibraryPlaylists.java:787
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:805
-#, fuzzy
 msgid "Export Playlist to .m3u"
 msgstr "Agor Rhestr Chwarae (.m3u)"
 
@@ -1666,7 +1564,6 @@ msgstr ""
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:39
 #: gui/com/frostwire/gui/library/StarredDirectoryHolder.java:40
 #: gui/com/frostwire/gui/library/StarredDirectoryHolder.java:44
-#, fuzzy
 msgid "Starred"
 msgstr "Wedi Rhannu"
 
@@ -1676,27 +1573,22 @@ msgid "Comment"
 msgstr "Sylw"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:244
-#, fuzzy
 msgid "Duration"
 msgstr "Disgrifiad"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableDataLine.java:267
-#, fuzzy
 msgid "Folder"
 msgstr "Ffolder:"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:763
-#, fuzzy
 msgid "Delete Selected Files from this playlist"
 msgstr "Dileu'r Ffeil o'r Rhestr Chwarae"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:820
-#, fuzzy
 msgid "Cleanup playlist"
 msgstr "Clirio Llwytho i Fyny"
 
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:821
-#, fuzzy
 msgid "Remove the deleted items"
 msgstr "Dileu eitem wedi'i dewis"
 
@@ -1705,7 +1597,6 @@ msgid "Refresh the audio properties based on ID3 tags"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/LibrarySearch.java:101
-#, fuzzy
 msgid "search results"
 msgstr "Canlyniadau Chwilio"
 
@@ -1718,17 +1609,14 @@ msgstr "Mewnforio"
 #: gui/com/frostwire/gui/library/LibraryUtils.java:140
 #: gui/com/frostwire/gui/library/LibraryUtils.java:171
 #: gui/com/frostwire/gui/library/LibraryUtils.java:235
-#, fuzzy
 msgid "Playlist name"
 msgstr "Rhestr chwarae"
 
 #: gui/com/frostwire/gui/library/LibraryUtils.java:573
-#, fuzzy
 msgid "Refreshing"
 msgstr "Adnewyddu"
 
 #: gui/com/frostwire/gui/library/LibraryUtils.java:629
-#, fuzzy
 msgid "Importing from"
 msgstr "Mewnforio"
 
@@ -1737,12 +1625,10 @@ msgid "Error importing Radio Station from"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/MediaTypeSavedFilesDirectoryHolder.java:60
-#, fuzzy
 msgid "Holds the Results for "
 msgstr "Yn dal y canlyniadau o'r chwilio diwethaf"
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:187
-#, fuzzy
 msgid "Library Folders"
 msgstr "Agor Ffolder y Llyfrgell"
 
@@ -1751,22 +1637,18 @@ msgid "Legend"
 msgstr "Allwedd"
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:377
-#, fuzzy
 msgid "Folder and subfolders are included in the Library."
 msgstr "Mae ffeiliau yn y ffolder a rhai ffolderi tu mewn yn cael eu rhannu."
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:391
-#, fuzzy
 msgid "Folder is not included and no subfolders are included in the Library."
 msgstr "Nid yw'r ffolder neu ffolderi tu mewn yn cael eu rannu."
 
 #: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:399
-#, fuzzy
 msgid "Folder's files and some subfolders are included in the Library."
 msgstr "Mae ffeiliau yn y ffolder a rhai ffolderi tu mewn yn cael eu rhannu."
 
 #: gui/com/frostwire/gui/library/UITool.java:102
-#, fuzzy
 msgid "Applications"
 msgstr "Rhaglen"
 
@@ -1783,7 +1665,6 @@ msgid "Ringtones"
 msgstr ""
 
 #: gui/com/frostwire/gui/library/UITool.java:114
-#, fuzzy
 msgid "Unkown file type"
 msgstr "Linciau a mathau o ffeil"
 
@@ -1814,7 +1695,6 @@ msgid "Previous"
 msgstr "Blaenorol"
 
 #: gui/com/frostwire/gui/player/AudioPlayerComponent.java:235
-#, fuzzy
 msgid "Shuffle songs"
 msgstr "Cymysu"
 
@@ -1824,12 +1704,10 @@ msgstr ""
 
 #. public ChatTab(final ChatMediator cm) {
 #: gui/com/frostwire/gui/tabs/ChatTab.java:29
-#, fuzzy
 msgid "Chat"
 msgstr "Sgwrsio"
 
 #: gui/com/frostwire/gui/tabs/ChatTab.java:30
-#, fuzzy
 msgid "Show our community chat"
 msgstr "Dangos manylion y Storfa"
 
@@ -1848,7 +1726,6 @@ msgid "Search and Download Files"
 msgstr "Chwilio a Llwytho i Lawr Ffeil"
 
 #: gui/com/frostwire/gui/updates/InstallerUpdater.java:127
-#, fuzzy
 msgid "Update"
 msgstr "Fesiynau Newydd"
 
@@ -1876,7 +1753,6 @@ msgid "<h1>FrostWire Logo Designer</h1>"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/AboutWindow.java:185
-#, fuzzy
 msgid "<h1>FrostWire Graphics Designers/Photographers</h1>"
 msgstr "Dail FrostWire"
 
@@ -1993,19 +1869,16 @@ msgid "Clear History"
 msgstr "Clirio Hanes"
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:84
-#, fuzzy
 msgid "Send this file to a friend"
 msgstr "Cadw'r Rhestr Chwarae Presennol i Ffeil"
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:130
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:64
-#, fuzzy
 msgid "file"
 msgstr "ffeiliau"
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:131
 #: gui/com/limegroup/gnutella/gui/dnd/SendFileTransferHandler.java:64
-#, fuzzy
 msgid "folder"
 msgstr "Ffolder:"
 
@@ -2089,7 +1962,6 @@ msgid "&Library"
 msgstr "&Llyfrgell"
 
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:116
-#, fuzzy
 msgid "C&hat"
 msgstr "Gorffen Sgwrs"
 
@@ -2208,7 +2080,6 @@ msgid "This Alpha version has expired.  Press Ok to exit. "
 msgstr "Mae'r fersiwn Alpha yma wedi darfod. Clicia Iawn i adael. "
 
 #: gui/com/limegroup/gnutella/gui/Initializer.java:498
-#, fuzzy
 msgid ""
 "FrostWire could not create a temporary preferences folder.\n"
 "\n"
@@ -2244,7 +2115,6 @@ msgstr "Iawn"
 #: gui/com/limegroup/gnutella/gui/InputFieldDialog.java:93
 #: gui/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:44
 #: gui/com/limegroup/gnutella/gui/options/OptionsButtonPanel.java:46
-#, fuzzy
 msgid "Apply Operation"
 msgstr "Gweithredu"
 
@@ -2373,7 +2243,6 @@ msgstr ""
 "lleoliad arall?"
 
 #: gui/com/limegroup/gnutella/gui/SettingsWarningManager.java:20
-#, fuzzy
 msgid ""
 "FrostWire was unable to create your settings folder and is using a temporary "
 "folder.  Your settings may be deleted when you close FrostWire. "
@@ -2382,7 +2251,6 @@ msgstr ""
 "bydd y gosodiadau yn cael eu dileu pan fyddi di'n cau FrostWire. "
 
 #: gui/com/limegroup/gnutella/gui/SettingsWarningManager.java:35
-#, fuzzy
 msgid ""
 "FrostWire has encountered problems in managing your settings.  Your settings "
 "changes may not be saved on shutdown."
@@ -2543,7 +2411,6 @@ msgid "Loading tips..."
 msgstr "Llwytho Awgrymiadau..."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:7
-#, fuzzy
 msgid ""
 "Tired of downloads stopping halfway through? It helps to pick search results "
 "with a higher number in the '#' column. The # is the amount of unique places "
@@ -2566,7 +2433,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:26
-#, fuzzy
 msgid ""
 "You can sort your search results by clicking on a column. The most useful "
 "column to sort by is the 'Seeds' column, which represents an approximate "
@@ -2821,7 +2687,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:78
-#, fuzzy
 msgid ""
 "Did you just download a file that you don't want to share? In the Library, "
 "control-click it and choose 'Stop Sharing File'."
@@ -2858,7 +2723,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:92
-#, fuzzy
 msgid ""
 "Want FrostWire to look like your other Windows programs? Choose the Windows "
 "theme, available from the View &gt; Apply Skins menu."
@@ -2897,12 +2761,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:122
-#, fuzzy
 msgid "Thank you for using FrostWire"
 msgstr "Cymorth i Ddefnyddio FrostWire"
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:123
-#, fuzzy
 msgid "Visit us at www.frostwire.com"
 msgstr "I gael y fersiwn newydd - http://www.frostwire.com"
 
@@ -2961,7 +2823,6 @@ msgstr ""
 #. panel.add(new MultiLineLabel(I18n.tr("Type a magnet link, the file path or web address of a torrent file, or a YouTube Web address and FrostWire will start downloading it for you."),
 #. true), constraints);
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:108
-#, fuzzy
 msgid ""
 "Type a magnet link, the file path or web address of a torrent file and "
 "FrostWire will start downloading it for you."
@@ -2986,27 +2847,22 @@ msgid "&Close"
 msgstr "&Cau"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:287
-#, fuzzy
 msgid "Close the program's main window"
 msgstr "Cau'r Rhaglen"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:303
-#, fuzzy
 msgid "E&xit"
 msgstr "Gadael"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:304
-#, fuzzy
 msgid "Close and exit the program"
 msgstr "Cau'r Rhaglen"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:336
-#, fuzzy
 msgid "Send File or Folder..."
 msgstr "Rhannu Ffolder Newydd..."
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:337
-#, fuzzy
 msgid "Send a file or a folder to a friend"
 msgstr "Cadw'r Rhestr Chwarae Presennol i Ffeil"
 
@@ -3051,7 +2907,6 @@ msgstr ""
 "ynglyn a'r broblem."
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:339
-#, fuzzy
 msgid ""
 "Please add any comments you may have (e.g what caused the error).\n"
 "Thank you and please use English."
@@ -3200,7 +3055,6 @@ msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/AssociationsWindow.java:72
 #: gui/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:71
-#, fuzzy
 msgid "Always take the selected associations."
 msgstr "Cymryd y cysylltiadau wedi'u dewis pob tro."
 
@@ -3215,7 +3069,6 @@ msgid "Ask me what to do when an association is missing."
 msgstr "Gofyn imi beth i wneud pan mae cysylltiad ar goll."
 
 #: gui/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:39
-#, fuzzy
 msgid "BitTorrent Sharing Settings"
 msgstr "Dewisiadau BitTorrent"
 
@@ -3236,7 +3089,7 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:109
-#, fuzzy, java-format
+#, java-format
 msgid "FrostWire could not create the Torrent Data Folder {0}"
 msgstr ""
 "Mae FrostWire yn methu creu ffolder rhannu rhagosodiedig {0}, Dim yn mynd i "
@@ -3247,7 +3100,6 @@ msgid "You're almost done!"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:55
-#, fuzzy
 msgid "State your intent below to start using FrostWire "
 msgstr "I drio dy groen newydd, rhaid iti ail-ddechrau FrostWire."
 
@@ -3259,7 +3111,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:58
-#, fuzzy
 msgid "Find out more..."
 msgstr "Wyt Ti'n Gwybod..."
 
@@ -3294,7 +3145,6 @@ msgid "Miscellaneous Settings"
 msgstr "Gosodiadau Amrywiol"
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:62
-#, fuzzy
 msgid "Below, are several options that affect the functionality of FrostWire."
 msgstr ""
 "Isod, mae sawl dewis sy'n effeithio ar berfformiad a sut mae FrostWire yn "
@@ -3318,7 +3168,6 @@ msgstr ""
 "Mae'n helpu FrostWire i weithio'n gynt nes ymlaen"
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:152
-#, fuzzy
 msgid "Chat Community"
 msgstr "Cynnal Cyfathrebu"
 
@@ -3389,12 +3238,10 @@ msgstr ""
 "gyfres o gamau er mwyn drefnu FrostWire i weithio gorau."
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:99
-#, fuzzy
 msgid "FrostWire is free software, "
 msgstr "Mae FrostWire yn deffro o'i gwsg"
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:109
-#, fuzzy
 msgid "Do not pay for FrostWire."
 msgstr "Trefnu Opsiynau Procsi i FrostWire"
 
@@ -3423,7 +3270,6 @@ msgid "Learn More about FrostWire's Content Filtering System"
 msgstr "Dysgu Mwy am System Ffiltro Cynnwys FrostWire"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:29
-#, fuzzy
 msgid "Sharing &Help"
 msgstr "Yn rhannu"
 
@@ -3436,7 +3282,6 @@ msgid "Frequently Asked Questions for FrostWire"
 msgstr "Cwestiynau Cyffredin am FrostWire"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:33
-#, fuzzy
 msgid "FrostWire for Android"
 msgstr "Defnyddio FrostWire am..."
 
@@ -3445,17 +3290,14 @@ msgid "Get FrostWire on your Android phone, tablet or google tv, all free."
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:35
-#, fuzzy
 msgid "What is \"Seeding\"?"
 msgstr "Beth ydy hwn?"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:35
-#, fuzzy
 msgid "Learn about BitTorrent Seeding"
 msgstr "Dewisiadau BitTorrent"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:39
-#, fuzzy
 msgid "Free FrostWire Stickers"
 msgstr "Dail FrostWire"
 
@@ -3466,7 +3308,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:41
-#, fuzzy
 msgid "FrostWire T-Shirts"
 msgstr "FrostWire"
 
@@ -3479,12 +3320,10 @@ msgid "FrostClick.com"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
-#, fuzzy
 msgid "Free Legal Downloads"
 msgstr "Rhagflas o lwythau wedi'u dewis"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:48
-#, fuzzy
 msgid "FrostWire on Facebook"
 msgstr "Chwaraewr FrostWire"
 
@@ -3505,7 +3344,6 @@ msgid "Access the FrostWire Users' Forum"
 msgstr "Mynediad i Fforwm Defnyddwyr FrostWire"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:56
-#, fuzzy
 msgid "&Did you pay for FrostWire?"
 msgstr "Cymorth i Ddefnyddio FrostWire"
 
@@ -3653,7 +3491,6 @@ msgid "Select your Language Prefereces"
 msgstr "Dewisiadau Iaith"
 
 #: gui/com/limegroup/gnutella/gui/menu/ViewMenu.java:119
-#, fuzzy
 msgid "Reset Font Size"
 msgstr "&Maint y Ffont yn fwy"
 
@@ -3742,7 +3579,6 @@ msgid "Updates"
 msgstr "Fesiynau Newydd"
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:321
-#, fuzzy
 msgid "Firewall"
 msgstr "Trefnu Wal Tan"
 
@@ -3761,7 +3597,6 @@ msgid "File Associations"
 msgstr "Cysylltiadau Ffeil"
 
 #: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:329
-#, fuzzy
 msgid "System Boot"
 msgstr "Dechrau'r System"
 
@@ -3835,7 +3670,6 @@ msgid "Enable Autocompletion of Text Fields:"
 msgstr "Defnyddio awto-lenwi testun:"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AutomaticInstallerDownloadPaneItem.java:14
-#, fuzzy
 msgid "Automatic Installer Download"
 msgstr "Sgrolio'n Awtomatig"
 
@@ -3899,7 +3733,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ChatCommunityPaneItem.java:93
-#, fuzzy
 msgid "The chosen nickname is not allowed."
 msgstr "Ffeil yma heb ei rannu"
 
@@ -3995,7 +3828,6 @@ msgid "Router Configuration"
 msgstr "Trefniadau Router"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:35
-#, fuzzy
 msgid ""
 "FrostWire can configure itself to work from behind a firewall or router. "
 "Using Universal Plug 'n Play (UPnP) and other NAT traversal techniques "
@@ -4012,12 +3844,10 @@ msgstr ""
 "ei drefnu dy hunain - rhaid hefyd trefnu dy router)"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:49
-#, fuzzy
 msgid "Use random port (Recommended)"
 msgstr "Defnyddio UPnP (wedi argymell)"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:50
-#, fuzzy
 msgid "Manual Port Forward"
 msgstr "Dewis Porth Dy Hun:"
 
@@ -4030,7 +3860,6 @@ msgid "UDP:"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:172
-#, fuzzy
 msgid ""
 "You must enter a port between 1 and 65535 when manually forcing your TCP "
 "port."
@@ -4039,7 +3868,6 @@ msgstr ""
 "borth."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:176
-#, fuzzy
 msgid ""
 "You must enter a port between 1 and 65535 when manually forcing your UDP "
 "port."
@@ -4085,7 +3913,6 @@ msgstr "Anwybyddu ffeiliau .vbs"
 #. * Key for the locale-specific string for the wmv and asf file check box label.
 #.
 #: gui/com/limegroup/gnutella/gui/options/panes/IgnoreResultTypesPaneItem.java:66
-#, fuzzy
 msgid "Ignore .wmv, .wma, .au, .asf files"
 msgstr "Anwybyddu ffeiliau .wmv/.asf"
 
@@ -4116,12 +3943,10 @@ msgid "Image Viewer"
 msgstr "Rhaglen Ddelweddau"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LibraryFoldersPaneItem.java:34
-#, fuzzy
 msgid "Library Included Folders"
 msgstr "Agor Ffolder y Llyfrgell"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LibraryFoldersPaneItem.java:36
-#, fuzzy
 msgid "You can choose the folders for include files when browsing the library."
 msgstr ""
 "Ti'n gallu dewis y ffolderi ar gyfer rhannu ffeiliau. Mae ffeiliau yn y "
@@ -4132,7 +3957,6 @@ msgid "Internet Radio Stations"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:20
-#, fuzzy
 msgid "You can restore the default internet radio stations."
 msgstr "Ti'n gallu dewis sut mae FrostWire yn cau."
 
@@ -4235,7 +4059,6 @@ msgid "Allow Partial Sharing:"
 msgstr "Caniatau Rhannu Darnau o Ffieliau:"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:20
-#, fuzzy
 msgid "FrostWire Popups"
 msgstr "FrostWire"
 
@@ -4272,7 +4095,6 @@ msgid "Password:"
 msgstr "Gair-pas:"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ProxyPaneItem.java:29
-#, fuzzy
 msgid "Proxy Options"
 msgstr "Opsiynau Chwarae:"
 
@@ -4350,7 +4172,6 @@ msgid "Show dialog to ask before close"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:20
-#, fuzzy
 msgid "Smart Search"
 msgstr "Stopio'r Chwilio"
 
@@ -4365,7 +4186,6 @@ msgid "Total torrents indexed"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:49
-#, fuzzy
 msgid "Total files indexed"
 msgstr "Cyfanswm y negeseuon wedi'u ffiltro."
 
@@ -4374,7 +4194,6 @@ msgid "If you continue you will erase all the information related to\n"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:77
-#, fuzzy
 msgid " torrents and "
 msgstr "Rhannu Torrent"
 
@@ -4434,7 +4253,6 @@ msgid "Show Firewall Indicator:"
 msgstr "Dangos Mynegydd Wal Tan:"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:18
-#, fuzzy
 msgid "BitTorrent Connection Settings"
 msgstr "Dewisiadau BitTorrent"
 
@@ -4444,7 +4262,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:22
-#, fuzzy
 msgid "Maximum active downloads"
 msgstr "Uchafswm y Llwytho i Lawr"
 
@@ -4453,17 +4270,14 @@ msgid "Global maximum number of connections"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:26
-#, fuzzy
 msgid "Maximum number of connected peers per torrent"
 msgstr "Cyfanswm llwytho i fyny am bob torrent"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:28
-#, fuzzy
 msgid "Number of upload slots per torrent"
 msgstr "Cyfanswm llwytho i fyny am bob torrent"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentDetailsPaneItem.java:19
-#, fuzzy
 msgid "Torrent Details Page"
 msgstr "Rhannu Torrent"
 
@@ -4551,7 +4365,6 @@ msgstr "Popeth"
 #. * String for 'Select Type'
 #.
 #: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:56
-#, fuzzy
 msgid "Select Search Types:"
 msgstr "Dewis Math o Chwilio:"
 
@@ -4576,12 +4389,10 @@ msgid "Search for Program Files, Including exe, zip, gz, and More"
 msgstr "Chwilio am Ffeiliau Rhaglenni, yn cynnwys exe. zip, gz a Mwy"
 
 #: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:207
-#, fuzzy
 msgid "Search for Torrents!"
 msgstr "Chwilio Mwy"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:54
-#, fuzzy
 msgid "Open Options dialog"
 msgstr "Opsiynau Diweddaru"
 
@@ -4599,7 +4410,6 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:58
-#, fuzzy
 msgid "Stop current search"
 msgstr "Chwiliad Presennol:"
 
@@ -4620,12 +4430,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:213
-#, fuzzy
 msgid "Search Engines"
 msgstr "Cau'r Chwilio"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:221
-#, fuzzy
 msgid "Filter"
 msgstr "Ffiltrau"
 
@@ -4634,12 +4442,10 @@ msgid "<html><strong>Refine Results</strong></html>"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:410
-#, fuzzy
 msgid "Show search result filter controls"
 msgstr "Dangos Canlyniadau'r Chiwilo"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:411
-#, fuzzy
 msgid "Hide search result filter controls"
 msgstr "Dangos Canlyniadau'r Chiwilo"
 
@@ -4660,17 +4466,14 @@ msgid "Buy this item now"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:71
-#, fuzzy
 msgid "Download Partial Files"
 msgstr "Darnau o Ffeiliau"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:73
-#, fuzzy
 msgid "Torrent Details"
 msgstr "Manylion cofnodi"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:75
-#, fuzzy
 msgid "View in YouTube"
 msgstr "Gweld Mewn Rhaglen Chwilio..."
 
@@ -4709,7 +4512,6 @@ msgid "Show Torrent Details page when a download starts"
 msgstr ""
 
 #: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:480
-#, fuzzy
 msgid "Copy Hash"
 msgstr "Copio"
 
@@ -4718,7 +4520,6 @@ msgid "Search More"
 msgstr "Chwilio Mwy"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:43
-#, fuzzy
 msgid "Source"
 msgstr "Storfa"
 
@@ -4727,7 +4528,6 @@ msgid "Created"
 msgstr "Creuwyd"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchTableColumns.java:53
-#, fuzzy
 msgid "Extension"
 msgstr "Estyniadau:"
 
@@ -4745,17 +4545,14 @@ msgstr "Cyfrwng"
 
 #: gui/com/limegroup/gnutella/gui/shell/FrostAssociations.java:84
 #: gui/com/limegroup/gnutella/gui/shell/FrostAssociations.java:96
-#, fuzzy
 msgid "\".torrent\" files"
 msgstr "ffeiliau \".torrent\""
 
 #: gui/com/limegroup/gnutella/gui/shell/FrostAssociations.java:109
-#, fuzzy
 msgid "\"magnet:\" links"
 msgstr "cysylltiadau \"magnet:\""
 
 #: gui/com/limegroup/gnutella/gui/shell/ShellAssociationManager.java:48
-#, fuzzy
 msgid ""
 "One or more files or protocols that FrostWire uses are no longer associated "
 "with FrostWire. Would you like FrostWire to re-associate them?"
@@ -4998,7 +4795,6 @@ msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:131
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:79
-#, fuzzy
 msgid "language"
 msgstr "Iaith"
 
@@ -5009,13 +4805,11 @@ msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:133
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:81
-#, fuzzy
 msgid "lngextension"
 msgstr "Estyniadau:"
 
 #: gui/irc/ConfigurationLoader.java:134
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:82
-#, fuzzy
 msgid "backuplanguage"
 msgstr "Iaith"
 
@@ -5051,7 +4845,6 @@ msgid "noasldisplayprefix"
 msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:318
-#, fuzzy
 msgid "quitmessage"
 msgstr "negeseuon"
 
@@ -5064,12 +4857,10 @@ msgid "aslfemale"
 msgstr ""
 
 #: gui/irc/ConfigurationLoader.java:324
-#, fuzzy
 msgid "userid"
 msgstr "Wedi Oedi"
 
 #: gui/irc/ConfigurationLoader.java:329
-#, fuzzy
 msgid "aslunknown"
 msgstr "Anhysbys"
 
@@ -5089,121 +4880,93 @@ msgstr ""
 msgid "helppage"
 msgstr ""
 
-#, fuzzy
 #~ msgid "Loading phones and tablets..."
 #~ msgstr "Llwytho Ffeiliau Rhannu..."
 
-#, fuzzy
 #~ msgid "Videos"
 #~ msgstr "Fideo"
 
-#, fuzzy
 #~ msgid "Sort:"
 #~ msgstr "Porth:"
 
-#, fuzzy
 #~ msgid "None"
 #~ msgstr "Na"
 
-#, fuzzy
 #~ msgid "Name Asc"
 #~ msgstr "Enw"
 
-#, fuzzy
 #~ msgid "Name Desc"
 #~ msgstr "Enw"
 
-#, fuzzy
 #~ msgid "Kind Asc"
 #~ msgstr "Math:"
 
-#, fuzzy
 #~ msgid "Size Asc"
 #~ msgstr "Cadw Fel"
 
-#, fuzzy
 #~ msgid "Size Desc"
 #~ msgstr "Maint"
 
-#, fuzzy
 #~ msgid "Open"
 #~ msgstr "Agor:"
 
-#, fuzzy
 #~ msgid "Delete Files"
 #~ msgstr "Dileu Ffeiliau wedi'u dewis"
 
-#, fuzzy
 #~ msgid "System"
 #~ msgstr "Trei'r System"
 
-#, fuzzy
 #~ msgid "Error deleting file"
 #~ msgstr "Llwytho fyny ffeil"
 
-#, fuzzy
 #~ msgid "Connected"
 #~ msgstr "Cysylltu ar"
 
-#, fuzzy
 #~ msgid "New Folder"
 #~ msgstr "Ffolder Cadw"
 
-#, fuzzy
 #~ msgid "File Transfers"
 #~ msgstr "Trosglwyddiadau"
 
-#, fuzzy
 #~ msgid "Cancel All"
 #~ msgstr "Canslo"
 
-#, fuzzy
 #~ msgid "Clear Finished"
 #~ msgstr "Cliro Segur"
 
-#, fuzzy
 #~ msgid "Should I stop all transfers?"
 #~ msgstr "Cau lawr ar ol Trosglwyddo"
 
-#, fuzzy
 #~ msgid "one file"
 #~ msgstr "Ffeiliau .torrent"
 
 #~ msgid "files"
 #~ msgstr "ffeiliau"
 
-#, fuzzy
 #~ msgid "pending"
 #~ msgstr "Hadu"
 
-#, fuzzy
 #~ msgid "canceled"
 #~ msgstr "Sgan wedi canslo"
 
-#, fuzzy
 #~ msgid "error"
 #~ msgstr "Gwall"
 
 #~ msgid "Upload"
 #~ msgstr "Llwytho i Fyny"
 
-#, fuzzy
 #~ msgid "to"
 #~ msgstr "Stopio"
 
-#, fuzzy
 #~ msgid "Select a file..."
 #~ msgstr "Dewis Ffolder"
 
-#, fuzzy
 #~ msgid "Preparing selected folder"
 #~ msgstr "Rhagflas o lwythau wedi'u dewis"
 
-#, fuzzy
 #~ msgid "Open in Folder"
 #~ msgstr "Agor Ffolder y Llyfrgell"
 
-#, fuzzy
 #~ msgid "Open Folder Containing a Selected File"
 #~ msgstr "Agor y Ffolder Ble Mae'r Ffeil"
 
@@ -5213,11 +4976,9 @@ msgstr ""
 #~ msgid "Add Selected Files to the Playlist"
 #~ msgstr "Adio Ffeiliau wedi'u dewis i'r Rhestr Chwarae"
 
-#, fuzzy
 #~ msgid "Delete from playlist"
 #~ msgstr "Dileu'r Ffeil o'r Rhestr Chwarae"
 
-#, fuzzy
 #~ msgid "Toggle the {0} Screen"
 #~ msgstr "Dangos y Sgrin  {0}"
 
@@ -5230,7 +4991,6 @@ msgstr ""
 #~ msgid "Show Media Player"
 #~ msgstr "Dangos Chwaraewr"
 
-#, fuzzy
 #~ msgid "Send File..."
 #~ msgstr "Cadw'r Ffeil..."
 
@@ -5274,11 +5034,9 @@ msgstr ""
 #~ msgid "Use FrostWire Media Player:"
 #~ msgstr "Defnyddio Chwaraewr FrostWire:"
 
-#, fuzzy
 #~ msgid "Seeding Status"
 #~ msgstr "Hadu"
 
-#, fuzzy
 #~ msgid "Search Files"
 #~ msgstr "Chwiliadau"
 
@@ -5380,11 +5138,9 @@ msgstr ""
 #~ msgid "You are already downloading this file to {0}"
 #~ msgstr "Ti'n llwytho i lawr y ffeil yma'n barod i {0}"
 
-#, fuzzy
 #~ msgid "&Refresh Connections ("
 #~ msgstr "Cysylltiad"
 
-#, fuzzy
 #~ msgid "&Refreshing Connections ("
 #~ msgstr "Cysylltiad"
 
@@ -5475,7 +5231,6 @@ msgstr ""
 #~ "iTunes). Mae hwn yn mynd i gael ei ddiffod. Gallet ti ei ail-ddechrau yn "
 #~ "opsiynnau, o dan iTunes -> Rhannu."
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire was unable to start the Digital Audio Access Protocol (for "
 #~ "sharing files in iTunes) because a Microsoft patch is required or a "
@@ -5489,7 +5244,6 @@ msgstr ""
 #~ "gyda'r wybodaeth. Cicia 'Iawn' i gael y darn, 'Na' i'w hepgor, neu "
 #~ "'Canslo' i benderfynu nes ymlaen."
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire was unable to start the Digital Audio Access Protocol (for "
 #~ "sharing files in iTunes) because a firewall is blocking access. To "
@@ -5633,7 +5387,6 @@ msgstr ""
 #~ "nid oes ganiatad gennyt i ysgrifennu iddo, neu broblem arall. Dewis "
 #~ "ffolder arall."
 
-#, fuzzy
 #~ msgid "You are not connected to the FrostWire VIP Area"
 #~ msgstr "Wrthi'n cysylltu a'r rhwydwaith"
 
@@ -5849,7 +5602,6 @@ msgstr ""
 #~ "dangos. Clicia ar y cylch ar gornel chwith y bocs, a dewis opsiwn newydd "
 #~ "o'r rhestr."
 
-#, fuzzy
 #~ msgid ""
 #~ "Do you want to browse your friend's FrostWire Library? Go to Search &gt; "
 #~ "Direct Connect, then enter the ip address and port number of your "
@@ -6054,11 +5806,9 @@ msgstr ""
 #~ "Dewis y llwytho i lawr ti eisiau i ddechrau nesaf a chlicia'r saeth nes "
 #~ "ei fod ar y brig!"
 
-#, fuzzy
 #~ msgid "Upgrade FrostWire"
 #~ msgstr "Defnyddio &FrostWire"
 
-#, fuzzy
 #~ msgid "Upgrade to FrostWire?"
 #~ msgstr "Defnyddio &FrostWire"
 
@@ -6079,14 +5829,12 @@ msgstr ""
 #~ msgid "Would you like to get your free Java upgrade?"
 #~ msgstr "Eisiau cael dy Java newydd am ddim?"
 
-#, fuzzy
 #~ msgid "Get FrostWire Now"
 #~ msgstr "Defnyddio FrostWire am..."
 
 #~ msgid "Why"
 #~ msgstr "Pam"
 
-#, fuzzy
 #~ msgid "What does frostwire give me?"
 #~ msgstr "Beth mae PRO yn rhoi imi?"
 
@@ -6100,7 +5848,6 @@ msgstr ""
 #~ "Mae FrostWire wedi darganfod llygrydd yn y ffeil {0} Wyt ti dal eisiau "
 #~ "i'w lwytho i lawr?"
 
-#, fuzzy
 #~ msgid ""
 #~ "<html><b>Your FrostWire may have been corrupted by a virus or trojan!</"
 #~ "b><br><br>Please visit <a href=\"http://www.frostwire.com/download\">www."
@@ -6185,7 +5932,6 @@ msgstr ""
 #~ msgid "A connection error has occurred"
 #~ msgstr "Mae gwall cysylltu wedi digwydd"
 
-#, fuzzy
 #~ msgid "Could not send chat message"
 #~ msgstr "Yn methu chwilio'r partner {0} ."
 
@@ -6309,7 +6055,6 @@ msgstr ""
 #~ msgid "0.6"
 #~ msgstr "0.6"
 
-#, fuzzy
 #~ msgid ""
 #~ "You dropped the following files/folders on LimeWire, please select the "
 #~ "ones you would like to share."
@@ -6317,12 +6062,10 @@ msgstr ""
 #~ "Ti wedi gollwng y ffeiliau/ffolderi canlynol ar FrostWire, dewis y rhai "
 #~ "ti eisiau rhannu."
 
-#, fuzzy
 #~ msgid "All folders you select will also have their subfolders shared."
 #~ msgstr ""
 #~ "Mae pob ffolder tu mewn i'r ffolderi ti'n dewis yn cael eu rhannu hefyd."
 
-#, fuzzy
 #~ msgid "Share Dropped Files?"
 #~ msgstr "Rhannu Ffeiliau wedi gollwng?"
 
@@ -6756,11 +6499,9 @@ msgstr ""
 #~ msgid "Reload available skins from disk"
 #~ msgstr "Ail-lwytho'r crwyn o ddisc"
 
-#, fuzzy
 #~ msgid "&Check for updates"
 #~ msgstr "Chwilio am fersiynau newydd"
 
-#, fuzzy
 #~ msgid "seconds left)"
 #~ msgstr "eiliadau"
 
@@ -6828,7 +6569,6 @@ msgstr ""
 #~ msgid "Host Communication"
 #~ msgstr "Cynnal Cyfathrebu"
 
-#, fuzzy
 #~ msgid "Chat Configuration"
 #~ msgstr "Trefniadau Router"
 
@@ -6951,7 +6691,6 @@ msgstr ""
 #~ msgid "You can set the percentage of your bandwidth devoted to downloads."
 #~ msgstr "Ti'n gallu dewis faint o dy led band sydd ar gyfer llwytho i lawr."
 
-#, fuzzy
 #~ msgid "Display"
 #~ msgstr "Dangos:"
 
@@ -7174,15 +6913,12 @@ msgstr ""
 #~ msgid "Speed:"
 #~ msgstr "Cyflymdra:"
 
-#, fuzzy
 #~ msgid "LimeWire Store Indicator"
 #~ msgstr "Dangos manylion y Storfa"
 
-#, fuzzy
 #~ msgid "You can display your LimeWire Store status in the status bar."
 #~ msgstr "Ti'n gallu dangos statws dy wal tan yn y bar statws."
 
-#, fuzzy
 #~ msgid "Show LimeWire Store Indicator:"
 #~ msgstr "Dangos manylion y Storfa"
 
@@ -7195,7 +6931,6 @@ msgstr ""
 #~ msgid "Show Shared Files Indicator:"
 #~ msgstr "Dangos Ffeiliau Rhannu"
 
-#, fuzzy
 #~ msgid ""
 #~ "You can customize where store files are saved. By creating a template "
 #~ "Lime Wire can automatically save purchased files into folders using the "
@@ -7236,7 +6971,6 @@ msgstr ""
 #~ msgid "Invalid template {0}"
 #~ msgstr "Templed annilys {0}"
 
-#, fuzzy
 #~ msgid ""
 #~ "You can choose the folder for saving files purchased from the LimeWire "
 #~ "Store."
@@ -7512,7 +7246,6 @@ msgstr ""
 #~ msgid "Do Not Share Sensitive File Types"
 #~ msgstr "Peidio a rhannu ffeiliau sensitif"
 
-#, fuzzy
 #~ msgid ""
 #~ "This stops FrostWire from sharing certain files that may contain "
 #~ "sensitive information."
@@ -7520,7 +7253,6 @@ msgstr ""
 #~ "Mae hwn yn stopio FrostWire rhag rannu rhai ffeiliau arbennig sy'n "
 #~ "cynnwys gwybodaeth sensitif"
 
-#, fuzzy
 #~ msgid "File types you added to share."
 #~ msgstr "Mathau o ffeiliau ti wedi adio i rhannu."
 
@@ -7565,7 +7297,6 @@ msgstr ""
 #~ msgid "View Console Messages"
 #~ msgstr "Gweld Rhestr Negeseuon"
 
-#, fuzzy
 #~ msgid "View Logging Messages"
 #~ msgstr "Gweld Negeseuon Cofnodi"
 
@@ -7575,7 +7306,6 @@ msgstr ""
 #~ msgid "View Searches and Uploads"
 #~ msgstr "Gweld Chwiliadau a Llwytho i Fyny"
 
-#, fuzzy
 #~ msgid "Test action!"
 #~ msgstr "Disgrifiad"
 
@@ -7609,7 +7339,6 @@ msgstr ""
 #~ "Mae'r thema ti am ei defnyddio'n annilys. Mae FrostWire yn mynd yn ol i "
 #~ "ddefnyddio'r thema wreiddiol."
 
-#, fuzzy
 #~ msgid "Kill Upload"
 #~ msgstr "Stopio'r Llwytho i Fyny"
 
@@ -7680,7 +7409,6 @@ msgstr ""
 #~ msgid "Modify the license of this file"
 #~ msgstr "Addasu trwydded y ffeil yma"
 
-#, fuzzy
 #~ msgid "Permanently remove the license from this file"
 #~ msgstr "Cael gwared am byth y trwydded o'r ffeil yma"
 
@@ -7711,7 +7439,6 @@ msgstr ""
 #~ msgid "Comment:"
 #~ msgstr "Sylw:"
 
-#, fuzzy
 #~ msgid "Please enter the copyright holder, copright year and title."
 #~ msgstr "Rho geidwad yr hawlfraint o'r ffeil rwyt eisiau ei chyhoeddu."
 
@@ -8382,7 +8109,6 @@ msgstr ""
 #~ "Mae FrostWire yn methu darganfod trwydded i'r ffeil yma. Dal i'w  Lwytho "
 #~ "i lawr? Cofia barchu rheolau hawlfraint lleol."
 
-#, fuzzy
 #~ msgid "Loading magnet Management..."
 #~ msgstr "Llwytho Rheolwr Cysylltiadau..."
 
@@ -8404,18 +8130,15 @@ msgstr ""
 #~ msgid "Cable/DSL"
 #~ msgstr "Cabl/DSL"
 
-#, fuzzy
 #~ msgid "United States"
 #~ msgstr "Fesiynau Newydd"
 
-#, fuzzy
 #~ msgid "English"
 #~ msgstr "Gorffen"
 
 #~ msgid "Loading Languages"
 #~ msgstr "Llwythio Ieithoedd"
 
-#, fuzzy
 #~ msgid "false"
 #~ msgstr "Pastio"
 
@@ -8434,7 +8157,6 @@ msgstr ""
 #~ "\n"
 #~ "Rhannu'r ffolder yma?"
 
-#, fuzzy
 #~ msgid "Paste from Clipboard"
 #~ msgstr "Copio i'r Clipfwrdd"
 
@@ -8549,7 +8271,6 @@ msgstr ""
 #~ msgid "MP3 Playlist"
 #~ msgstr "Rhestr Chwarae MP3"
 
-#, fuzzy
 #~ msgid ""
 #~ "You have some songs in the playlist.  Would you like to clear them and "
 #~ "start a new playlist?"

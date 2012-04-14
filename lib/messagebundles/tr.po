@@ -1264,12 +1264,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/library/Device.java:265
-#, fuzzy
 msgid "Transfer failed"
 msgstr "Aktarımlar"
 
 #: gui/com/frostwire/gui/library/DeviceUploadDialog.java:66
-#, fuzzy
 msgid "Upload to device"
 msgstr "Yükleme Sınırına Ulaşıldı"
 
@@ -1282,7 +1280,6 @@ msgid "Uploading"
 msgstr "yükleme"
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
-#, fuzzy
 msgid "Uploading "
 msgstr "yükleme"
 
@@ -3259,7 +3256,6 @@ msgid "State your intent below to start using FrostWire "
 msgstr "FrostWire'ı kullanmak için aşağıda niyetinizi belirtin"
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:57
-#, fuzzy
 msgid ""
 "FrostWire is a peer-to-peer program for sharing authorized files only.  "
 "Installing and using the program does not constitute a license for obtaining "
@@ -3379,7 +3375,6 @@ msgstr ""
 "paylaşmanıza olanak sağlayan ve Uçtan Uca çalışan bir Uygulamadır."
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:31
-#, fuzzy
 msgid ""
 "Installing and using the program does not constitute a license for obtaining "
 "or distributing unauthorized content."
@@ -5116,121 +5111,93 @@ msgstr "mouse"
 msgid "helppage"
 msgstr "helppage"
 
-#, fuzzy
 #~ msgid "Loading phones and tablets..."
 #~ msgstr "Paylaşılan Dosyaları yüklüyor..."
 
-#, fuzzy
 #~ msgid "Videos"
 #~ msgstr "Video"
 
-#, fuzzy
 #~ msgid "Sort:"
 #~ msgstr "Bağlantı Noktası:"
 
-#, fuzzy
 #~ msgid "None"
 #~ msgstr "Hayır"
 
-#, fuzzy
 #~ msgid "Name Asc"
 #~ msgstr "İsim"
 
-#, fuzzy
 #~ msgid "Name Desc"
 #~ msgstr "İsim"
 
-#, fuzzy
 #~ msgid "Kind Asc"
 #~ msgstr "Tür:"
 
-#, fuzzy
 #~ msgid "Size Asc"
 #~ msgstr "Farklı İsimle Kaydet"
 
-#, fuzzy
 #~ msgid "Size Desc"
 #~ msgstr "Boyut"
 
-#, fuzzy
 #~ msgid "Open"
 #~ msgstr "aç"
 
-#, fuzzy
 #~ msgid "Delete Files"
 #~ msgstr "Seçilen Dosyaları Sil"
 
-#, fuzzy
 #~ msgid "System"
 #~ msgstr "Sistem Çekmecesi"
 
-#, fuzzy
 #~ msgid "Error deleting file"
 #~ msgstr "Dosya Gönderiliyor"
 
-#, fuzzy
 #~ msgid "Connected"
 #~ msgstr "Üzerine bağladı"
 
-#, fuzzy
 #~ msgid "New Folder"
 #~ msgstr "Kayıt Yapılacak Klasör"
 
-#, fuzzy
 #~ msgid "File Transfers"
 #~ msgstr "Aktarımlar Bitince Çıkış"
 
-#, fuzzy
 #~ msgid "Cancel All"
 #~ msgstr "İptal"
 
-#, fuzzy
 #~ msgid "Clear Finished"
 #~ msgstr "Hareketsiz aç"
 
-#, fuzzy
 #~ msgid "Should I stop all transfers?"
 #~ msgstr "Transferlerden sonra kapanma"
 
-#, fuzzy
 #~ msgid "one file"
 #~ msgstr ".torrent dosyaları"
 
 #~ msgid "files"
 #~ msgstr "dosyalar"
 
-#, fuzzy
 #~ msgid "pending"
 #~ msgstr "Gönderiliyor"
 
-#, fuzzy
 #~ msgid "canceled"
 #~ msgstr "Tarama İptal Edildi"
 
-#, fuzzy
 #~ msgid "error"
 #~ msgstr "Hata"
 
 #~ msgid "Upload"
 #~ msgstr "Gönder"
 
-#, fuzzy
 #~ msgid "to"
 #~ msgstr "Durdur"
 
-#, fuzzy
 #~ msgid "Select a file..."
 #~ msgstr "Klasör Seç"
 
-#, fuzzy
 #~ msgid "Preparing selected folder"
 #~ msgstr "Seçilen İndirmeleri Önizle"
 
-#, fuzzy
 #~ msgid "Open in Folder"
 #~ msgstr "Kütüphane Dizinini Aç"
 
-#, fuzzy
 #~ msgid "Open Folder Containing a Selected File"
 #~ msgstr "Dosyayı İçeren Klasörü Aç"
 
@@ -5240,11 +5207,9 @@ msgstr "helppage"
 #~ msgid "Add Selected Files to the Playlist"
 #~ msgstr "Seçilen Dosyayı Çalma Listesine Ekle"
 
-#, fuzzy
 #~ msgid "Delete from playlist"
 #~ msgstr "Seçilen Dosyayı Çalma Listesinden Çıkar"
 
-#, fuzzy
 #~ msgid "Toggle the {0} Screen"
 #~ msgstr "{0} Ekranını Göster"
 
@@ -5257,7 +5222,6 @@ msgstr "helppage"
 #~ msgid "Show Media Player"
 #~ msgstr "Media Playeri göster"
 
-#, fuzzy
 #~ msgid "Send File..."
 #~ msgstr "Dosya Kaydediliyor..."
 
@@ -5291,11 +5255,9 @@ msgstr "helppage"
 #~ msgid "Use FrostWire Media Player:"
 #~ msgstr "FrostWire medya oynatıcısını kullan"
 
-#, fuzzy
 #~ msgid "Seeding Status"
 #~ msgstr "Gönderiliyor"
 
-#, fuzzy
 #~ msgid "Search Files"
 #~ msgstr "Aramalar"
 
@@ -5354,7 +5316,6 @@ msgstr "helppage"
 #~ msgid "Loading Ultrapeer/DHT Management..."
 #~ msgstr "Ultrapeer/DHT yöneticisi yükleniyor..."
 
-#, fuzzy
 #~ msgid "Locating Peers..."
 #~ msgstr "Emsaller konumlandırılıyor..."
 
@@ -5398,11 +5359,9 @@ msgstr "helppage"
 #~ msgid "You are already downloading this file to {0}"
 #~ msgstr "Bu dosyayı zaten {0}e indiriyorsunuz"
 
-#, fuzzy
 #~ msgid "&Refresh Connections ("
 #~ msgstr "&Bağlantılar"
 
-#, fuzzy
 #~ msgid "&Refreshing Connections ("
 #~ msgstr "&Bağlantılar"
 
@@ -5494,7 +5453,6 @@ msgstr "helppage"
 #~ "karşılaştı. Bu özellik kapatılacak. Bu özelliği Özellikler içerisindeki "
 #~ "iTunes-> Paylaşım (Options->iTunes->Sharing) bölümünden açabilirsiniz."
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire was unable to start the Digital Audio Access Protocol (for "
 #~ "sharing files in iTunes) because a Microsoft patch is required or a "
@@ -5510,7 +5468,6 @@ msgstr "helppage"
 #~ "özelliği kapatmak için 'Hayır' (No) butonuna veya daha sonra karar vermek "
 #~ "için 'İptal' (Cancel) butonuna tıklayabilirsiniz."
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire was unable to start the Digital Audio Access Protocol (for "
 #~ "sharing files in iTunes) because a firewall is blocking access. To "
@@ -5679,7 +5636,6 @@ msgstr "helppage"
 #~ "yazma izniniz olmayabilir veya başka bir sorun olabilir. Lütfen başka bir "
 #~ "klasör belirleyiniz."
 
-#, fuzzy
 #~ msgid "You are not connected to the FrostWire VIP Area"
 #~ msgstr "Şu anda ağa bağlanıyorsunuz"
 
@@ -5726,7 +5682,6 @@ msgstr "helppage"
 #~ msgid "Show Shared Files Count"
 #~ msgstr "Paylaşılan dosya sayısını göster"
 
-#, fuzzy
 #~ msgid "Show Store Indicator"
 #~ msgstr "güvenlik duvarı göstergesini göster"
 
@@ -5890,7 +5845,6 @@ msgstr "helppage"
 #~ "gösterdiğini değiştirebilirsin. Bir kutunun üst sol köşesinde çemberi "
 #~ "tıkla ve menüden yeni bir seçeneği seç."
 
-#, fuzzy
 #~ msgid ""
 #~ "Do you want to browse your friend's FrostWire Library? Go to Search &gt; "
 #~ "Direct Connect, then enter the ip address and port number of your "
@@ -6084,18 +6038,15 @@ msgstr "helppage"
 #~ "sonraki başlamayı istediğin indirmeyi seç ve yükselme okunu tıkla üstte "
 #~ "oluncaya kadar!"
 
-#, fuzzy
 #~ msgid "Upgrade FrostWire"
 #~ msgstr "&Frost Wire Kullanılıyor"
 
-#, fuzzy
 #~ msgid "Upgrade to FrostWire?"
 #~ msgstr "&Frost Wire Kullanılıyor"
 
 #~ msgid "Upgrade Your Java"
 #~ msgstr "Java'nızı Yükseltin"
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire has detected that you are using an out-of-date version of Java. "
 #~ "FrostWire looks and acts much better with newer versions of Java. "
@@ -6110,14 +6061,12 @@ msgstr "helppage"
 #~ msgid "Would you like to get your free Java upgrade?"
 #~ msgstr "Ücretsiz Java Yükseltmenizi İstiyor musunuz?"
 
-#, fuzzy
 #~ msgid "Get FrostWire Now"
 #~ msgstr "FrostWire'ı Bunun İçin Kullan:"
 
 #~ msgid "Why"
 #~ msgstr "Niçin"
 
-#, fuzzy
 #~ msgid "What does frostwire give me?"
 #~ msgstr "PRO bana neler sağlar?"
 
@@ -6131,7 +6080,6 @@ msgstr "helppage"
 #~ "FrostWire {0} dosyasında kötü içerik tespit etti. İndirmeye devam etmek "
 #~ "istiyor musunuz?"
 
-#, fuzzy
 #~ msgid ""
 #~ "<html><b>Your FrostWire may have been corrupted by a virus or trojan!</"
 #~ "b><br><br>Please visit <a href=\"http://www.frostwire.com/download\">www."
@@ -6219,7 +6167,6 @@ msgstr "helppage"
 #~ msgid "A connection error has occurred"
 #~ msgstr "Bir bağlantı hatası oluştu"
 
-#, fuzzy
 #~ msgid "Could not send chat message"
 #~ msgstr "Sohbet iletisi gönderilemedi"
 
@@ -6343,7 +6290,6 @@ msgstr "helppage"
 #~ msgid "0.6"
 #~ msgstr "0.6"
 
-#, fuzzy
 #~ msgid ""
 #~ "You dropped the following files/folders on LimeWire, please select the "
 #~ "ones you would like to share."
@@ -6351,11 +6297,9 @@ msgstr "helppage"
 #~ "Asagidaki dosya/klasörleri FrostWire üzerine sürüklediniz, lütfen "
 #~ "paylasmak istediklerinizi seçiniz."
 
-#, fuzzy
 #~ msgid "All folders you select will also have their subfolders shared."
 #~ msgstr "Seçmiş olduğunuz dizinlerin altdizinleri de paylaşılacak."
 
-#, fuzzy
 #~ msgid "Share Dropped Files?"
 #~ msgstr "Sürüklenen Dosyalar Paylasima Açilacak mi?"
 
@@ -6808,7 +6752,6 @@ msgstr "helppage"
 #~ msgid "Reload available skins from disk"
 #~ msgstr "Diskten mevcut temaları tekrar yükle"
 
-#, fuzzy
 #~ msgid "&Check for updates"
 #~ msgstr "Güncellemeler Kontrol Ediliyor..."
 
@@ -6873,7 +6816,6 @@ msgstr "helppage"
 #~ msgid "Host Communication"
 #~ msgstr "Sunucu Bağlantısı"
 
-#, fuzzy
 #~ msgid "Chat Configuration"
 #~ msgstr "Router Ayarları"
 
@@ -7155,15 +7097,12 @@ msgstr "helppage"
 #~ msgid "Speed:"
 #~ msgstr "Hız:"
 
-#, fuzzy
 #~ msgid "LimeWire Store Indicator"
 #~ msgstr "güvenlik duvarı göstergesi"
 
-#, fuzzy
 #~ msgid "You can display your LimeWire Store status in the status bar."
 #~ msgstr "durum barında güvenlik duvarı durumunu gösterebilirsin"
 
-#, fuzzy
 #~ msgid "Show LimeWire Store Indicator:"
 #~ msgstr "güvenlik duvarı göstergesini göster"
 
@@ -7194,7 +7133,6 @@ msgstr "helppage"
 #~ msgid "Invalid template {0}"
 #~ msgstr "Geçersiz kalıp {0}"
 
-#, fuzzy
 #~ msgid ""
 #~ "You can choose the folder for saving files purchased from the LimeWire "
 #~ "Store."
@@ -7330,7 +7268,6 @@ msgstr "helppage"
 #~ msgid "Don't Know"
 #~ msgstr "Bilmiyorum"
 
-#, fuzzy
 #~ msgid "What To Look For?"
 #~ msgstr "Neyin aranacak olduğu?"
 
@@ -7436,7 +7373,6 @@ msgstr "helppage"
 #~ msgid "Do Not Share Sensitive File Types"
 #~ msgstr "Hassas dosya tiplerini paylaşma"
 
-#, fuzzy
 #~ msgid ""
 #~ "This stops FrostWire from sharing certain files that may contain "
 #~ "sensitive information."
@@ -7444,14 +7380,12 @@ msgstr "helppage"
 #~ "FrostWire'yi hassas bilgiyi içerebilen kesin dosyaları paylaşmaktan "
 #~ "durdurur"
 
-#, fuzzy
 #~ msgid "File types you added to share."
 #~ msgstr "Paylaşmak istediğiniz dosya türleri."
 
 #~ msgid "Other types of files."
 #~ msgstr "diğer dosya  tipleri."
 
-#, fuzzy
 #~ msgid ""
 #~ "<html><table width=400>You selected: <i>{0}</i><br>FrostWire cannot share "
 #~ "this folder for security reasons.<br><br>Please select another folder to "
@@ -7470,7 +7404,6 @@ msgstr "helppage"
 #~ msgid "View Console Messages"
 #~ msgstr "konsol mesajlarını göster"
 
-#, fuzzy
 #~ msgid "View Logging Messages"
 #~ msgstr "Günlüğe kaydetilmiş mesajları  gör"
 
@@ -7480,7 +7413,6 @@ msgstr "helppage"
 #~ msgid "View Searches and Uploads"
 #~ msgstr "Görüşler  aramalar ve yüklemeler"
 
-#, fuzzy
 #~ msgid "Test action!"
 #~ msgstr "Açıklama"
 
@@ -7514,7 +7446,6 @@ msgstr "helppage"
 #~ "Senin uyguluyor olduğun tema geçersizdir. FrostWire hazır gelen temaya "
 #~ "dönecek"
 
-#, fuzzy
 #~ msgid "Kill Upload"
 #~ msgstr "Yüklemeyi durdur"
 
@@ -7577,7 +7508,6 @@ msgstr "helppage"
 #~ msgid "Modify the license of this file"
 #~ msgstr "Bu dosyanın lisansını düzenle"
 
-#, fuzzy
 #~ msgid "Permanently remove the license from this file"
 #~ msgstr "Lisansı bu dosyadan kalıcı olarak çıkar"
 
@@ -7609,7 +7539,6 @@ msgstr "helppage"
 #~ msgid "Comment:"
 #~ msgstr "Yorum:"
 
-#, fuzzy
 #~ msgid "Please enter the copyright holder, copright year and title."
 #~ msgstr "Lütfen telif hakkı sahibini, yılını ve başlığını girin."
 
@@ -7753,7 +7682,6 @@ msgstr "helppage"
 #~ msgid "Ogg Vorbis"
 #~ msgstr "Ogg Vorbis"
 
-#, fuzzy
 #~ msgid ""
 #~ "Unknown file type. Please choose the type that best describes this file."
 #~ msgstr "Bilinmeyen öğe türü. Lütfen bu öğeyi en iyi açıklayan türü seçin."
@@ -7866,7 +7794,6 @@ msgstr "helppage"
 #~ "Yardım menüsünden 'FrostWire'nin hakkında' seçerek hangi FrostWire'nin "
 #~ "uyarlamasını kullanıyor olduğunu bulabilirsin "
 
-#, fuzzy
 #~ msgid ""
 #~ "Do you reach your search limit and all the results are spam or not "
 #~ "related to your search? Try using the keyword filter by going to Tools "
@@ -7886,7 +7813,6 @@ msgstr "helppage"
 #~ "alınan  arama sonuçlarının küçük sayısıyla mutsuz musun? Arama sonucunda "
 #~ "mause sağa tıkla , Sonra aramayı daha çok seç, sonra daha çok sonucu al. "
 
-#, fuzzy
 #~ msgid ""
 #~ "Can't connect to the Gnutella network? If you are using a firewall, make "
 #~ "sure that a port is opened for FrostWire (both incoming and outgoing, UPD "
@@ -7924,7 +7850,6 @@ msgstr "helppage"
 #~ "muydunuz? Sadece Araclar - Secenekler - Kaydetme kisminda her tipteki "
 #~ "dosyanin nereye kaydedilecegini belirtmeniz yeterli. "
 
-#, fuzzy
 #~ msgid ""
 #~ "Make FrostWire's Junk filter block more results by making the filter "
 #~ "stricter. Adjust that and more by going to Tools &gt; Options &gt; "
@@ -7934,7 +7859,6 @@ msgstr "helppage"
 #~ "değersiz verileri süzebilirsiniz. Artırmak için araçlar menüsünden &gt; "
 #~ "Seçenekler &gt; Filitreler &gt; Çöp. "
 
-#, fuzzy
 #~ msgid ""
 #~ "Do you like trying out new product features as soon as they are released? "
 #~ "Feedback on new features is always welcomed and appreciated! Go to Tools "
@@ -7989,7 +7913,6 @@ msgstr "helppage"
 #~ "bilgisayarında paylaşılan bir dosyanın nerede olduğunu görmeyi istersen. "
 #~ "Kütüphaneye git ve 'Keşfet' tıkla. FrostWire o dosyayı açacak "
 
-#, fuzzy
 #~ msgid ""
 #~ "Using OSX's built-in firewall? Make sure that FrostWire's port is opened "
 #~ "by clicking on the Apple Menu &gt; System Preferences &gt; Sharing &gt; "
@@ -8008,7 +7931,6 @@ msgstr "helppage"
 #~ "menüsünden 'Seçenekler'e girip, 'Görünüm' seçeneği altındaki 'Otomatik "
 #~ "Tamamlama' kısmından gerekli ayarlamaları yapabilirsiniz. "
 
-#, fuzzy
 #~ msgid ""
 #~ "Want to see dialogs for questions which you previously marked 'Do not "
 #~ "display this message again' or 'Always Use This Answer'? Go to FrostWire "
@@ -8066,7 +7988,6 @@ msgstr "helppage"
 #~ "çalmak istiyorsunuz? FrostWire durum çubuğuna Control+Fare ile tıklayın "
 #~ "ve \"Media Player'ı Göster\" seçeneğini seçili olmadığından emin olun "
 
-#, fuzzy
 #~ msgid ""
 #~ "Did you know you can save different types of files, such as audio, video, "
 #~ "or images, in different folders on your computer automatically? Just go "
@@ -8078,7 +7999,6 @@ msgstr "helppage"
 #~ "Seçenekler &gt; Kaydetme 'e gidin ve her tür için istediğiniz dosyayı "
 #~ "belirtin. "
 
-#, fuzzy
 #~ msgid ""
 #~ "Make FrostWire's Junk filter block more results by making the filter "
 #~ "stricter. Adjust that and more by going to FrostWire &gt; Preferences "
@@ -8129,7 +8049,6 @@ msgstr "helppage"
 #~ "dosyanın yerine sadece bir tek dosyayı paylaşmak, dosyayı  FrostWire'nin "
 #~ "kütüphanesine  sürükle. "
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire's Library is a file manager, not just an MP3 Playlist. That "
 #~ "means that when you delete a file from the Library, you have the option "
@@ -8167,7 +8086,6 @@ msgstr "helppage"
 #~ "En üste doğru FrostWire köşesinde eğiren simge bir aramanın ilerlemede "
 #~ "olduğunu gösterir "
 
-#, fuzzy
 #~ msgid "Sorry, but FrostWire was unable to restart your old downloads."
 #~ msgstr "Üzgünüm fakat FrostWire eski indirmelerinizi yeniden başlatamadı."
 
@@ -8180,18 +8098,15 @@ msgstr "helppage"
 #~ msgid "Cable/DSL"
 #~ msgstr "Kablo/DSL"
 
-#, fuzzy
 #~ msgid "United States"
 #~ msgstr "Amerika Birleşik Devletleri"
 
-#, fuzzy
 #~ msgid "English"
 #~ msgstr "İngilizce"
 
 #~ msgid "Loading Languages"
 #~ msgstr "Diller yükleniyor"
 
-#, fuzzy
 #~ msgid "false"
 #~ msgstr "yanlış"
 
