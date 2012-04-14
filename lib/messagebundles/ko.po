@@ -1248,12 +1248,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/library/Device.java:265
-#, fuzzy
 msgid "Transfer failed"
 msgstr "전송"
 
 #: gui/com/frostwire/gui/library/DeviceUploadDialog.java:66
-#, fuzzy
 msgid "Upload to device"
 msgstr "업로드 제한됨"
 
@@ -1266,7 +1264,6 @@ msgid "Uploading"
 msgstr "업로드중"
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
-#, fuzzy
 msgid "Uploading "
 msgstr "업로드중"
 
@@ -3176,7 +3173,6 @@ msgid "State your intent below to start using FrostWire "
 msgstr "FrostWire를 사용하려면 아래에 의도를 표명하세요"
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:57
-#, fuzzy
 msgid ""
 "FrostWire is a peer-to-peer program for sharing authorized files only.  "
 "Installing and using the program does not constitute a license for obtaining "
@@ -3290,7 +3286,6 @@ msgstr ""
 "도록 하는 피어-투-피어 어플리케이션입니다."
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:31
-#, fuzzy
 msgid ""
 "Installing and using the program does not constitute a license for obtaining "
 "or distributing unauthorized content."

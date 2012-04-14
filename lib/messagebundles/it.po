@@ -1266,12 +1266,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/library/Device.java:265
-#, fuzzy
 msgid "Transfer failed"
 msgstr "Trasferimenti"
 
 #: gui/com/frostwire/gui/library/DeviceUploadDialog.java:66
-#, fuzzy
 msgid "Upload to device"
 msgstr "Limite massimo di trasferimenti raggiunto"
 
@@ -1284,7 +1282,6 @@ msgid "Uploading"
 msgstr "Uploading"
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
-#, fuzzy
 msgid "Uploading "
 msgstr "Uploading"
 
@@ -3263,7 +3260,6 @@ msgid "State your intent below to start using FrostWire "
 msgstr "Dichiara la tua intenzione qui sotto per cominciare a usare FrostWire."
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:57
-#, fuzzy
 msgid ""
 "FrostWire is a peer-to-peer program for sharing authorized files only.  "
 "Installing and using the program does not constitute a license for obtaining "
@@ -3381,7 +3377,6 @@ msgstr ""
 "file di tua scelta con altri utenti connessi al netword di BitTorrent."
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:31
-#, fuzzy
 msgid ""
 "Installing and using the program does not constitute a license for obtaining "
 "or distributing unauthorized content."
