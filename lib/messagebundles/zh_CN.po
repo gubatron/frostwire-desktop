@@ -1233,12 +1233,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/library/Device.java:265
-#, fuzzy
 msgid "Transfer failed"
 msgstr "传输完 退出 "
 
 #: gui/com/frostwire/gui/library/DeviceUploadDialog.java:66
-#, fuzzy
 msgid "Upload to device"
 msgstr "已达上载限制"
 
@@ -1251,7 +1249,6 @@ msgid "Uploading"
 msgstr "上载中"
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
-#, fuzzy
 msgid "Uploading "
 msgstr "上载中"
 
@@ -3098,7 +3095,6 @@ msgid "State your intent below to start using FrostWire "
 msgstr "要尝试新貌，您必须重下次 启动 FrostWire, 皮肤 将会 改变... "
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:57
-#, fuzzy
 msgid ""
 "FrostWire is a peer-to-peer program for sharing authorized files only.  "
 "Installing and using the program does not constitute a license for obtaining "
@@ -3207,7 +3203,6 @@ msgstr ""
 "件。"
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:31
-#, fuzzy
 msgid ""
 "Installing and using the program does not constitute a license for obtaining "
 "or distributing unauthorized content."
@@ -4847,119 +4842,90 @@ msgstr "鼠标"
 msgid "helppage"
 msgstr "帮助页面"
 
-#, fuzzy
 #~ msgid "Loading phones and tablets..."
 #~ msgstr "加载共享文档"
 
-#, fuzzy
 #~ msgid "Videos"
 #~ msgstr "视频"
 
-#, fuzzy
 #~ msgid "Sort:"
 #~ msgstr "端口"
 
-#, fuzzy
 #~ msgid "None"
 #~ msgstr "否"
 
-#, fuzzy
 #~ msgid "Name Asc"
 #~ msgstr "名称"
 
-#, fuzzy
 #~ msgid "Name Desc"
 #~ msgstr "名称"
 
-#, fuzzy
 #~ msgid "Size Asc"
 #~ msgstr "保存..."
 
-#, fuzzy
 #~ msgid "Size Desc"
 #~ msgstr "大小:"
 
-#, fuzzy
 #~ msgid "Open"
 #~ msgstr "打开..."
 
-#, fuzzy
 #~ msgid "Delete Files"
 #~ msgstr "删除 选中的 文件."
 
-#, fuzzy
 #~ msgid "System"
 #~ msgstr "关闭"
 
-#, fuzzy
 #~ msgid "Error deleting file"
 #~ msgstr "正在 上载"
 
-#, fuzzy
 #~ msgid "Connected"
 #~ msgstr "连接 (&O)"
 
-#, fuzzy
 #~ msgid "New Folder"
 #~ msgstr "文件夹:"
 
-#, fuzzy
 #~ msgid "File Transfers"
 #~ msgstr "传输完 退出"
 
-#, fuzzy
 #~ msgid "Cancel All"
 #~ msgstr "撤销"
 
-#, fuzzy
 #~ msgid "Clear Finished"
 #~ msgstr "完成"
 
-#, fuzzy
 #~ msgid "Should I stop all transfers?"
 #~ msgstr "传输 完后 关闭"
 
-#, fuzzy
 #~ msgid "one file"
 #~ msgstr "正在 上载"
 
-#, fuzzy
 #~ msgid "files"
 #~ msgstr "文件"
 
-#, fuzzy
 #~ msgid "pending"
 #~ msgstr "搜索"
 
-#, fuzzy
 #~ msgid "canceled"
 #~ msgstr "撤销"
 
-#, fuzzy
 #~ msgid "error"
 #~ msgstr "错误"
 
-#, fuzzy
 #~ msgid "Upload"
 #~ msgstr "正在 上载"
 
-#, fuzzy
 #~ msgid "to"
 #~ msgstr "停止"
 
-#, fuzzy
 #~ msgid "Select a file..."
 #~ msgstr "选择 文件夹"
 
-#, fuzzy
 #~ msgid "Preparing selected folder"
 #~ msgstr "取消 选中的 下载."
 
-#, fuzzy
 #~ msgid "Open in Folder"
 #~ msgstr "停止 共享"
 
-#, fuzzy
 #~ msgid "Open Folder Containing a Selected File"
 #~ msgstr "删除 选中的 文件."
 
@@ -4969,23 +4935,18 @@ msgstr "帮助页面"
 #~ msgid "Add Selected Files to the Playlist"
 #~ msgstr "添加 选中的 文件 到 播放列表."
 
-#, fuzzy
 #~ msgid "Delete from playlist"
 #~ msgstr "从 播放列表中 删除 选中的 文件."
 
-#, fuzzy
 #~ msgid "Toggle the {0} Screen"
 #~ msgstr "显示{0}荧幕"
 
-#, fuzzy
 #~ msgid "Connection"
 #~ msgstr "连接 (&O)"
 
-#, fuzzy
 #~ msgid "Show Media Player"
 #~ msgstr "FrostWire 多媒体 播放器"
 
-#, fuzzy
 #~ msgid "Send File..."
 #~ msgstr "文档保存中..."
 
@@ -4998,7 +4959,6 @@ msgstr "帮助页面"
 #~ msgid "You can choose the folder for saving files."
 #~ msgstr "你 可以 选择 保存 文件的 文件夹."
 
-#, fuzzy
 #~ msgid ""
 #~ "The selected save folder is invalid. You may not have permissions to "
 #~ "write to the selected folder. FrostWire will revert to your previously "
@@ -5020,11 +4980,9 @@ msgstr "帮助页面"
 #~ msgid "Use FrostWire Media Player:"
 #~ msgstr "选用 FrostWire MP3 播放器:"
 
-#, fuzzy
 #~ msgid "Seeding Status"
 #~ msgstr "搜索"
 
-#, fuzzy
 #~ msgid "Search Files"
 #~ msgstr "搜索"
 
@@ -5073,7 +5031,6 @@ msgstr "帮助页面"
 #~ msgid "Loading Saved Files..."
 #~ msgstr "加载已存文档"
 
-#, fuzzy
 #~ msgid "Loading Spam Management..."
 #~ msgstr "加载 connection management..."
 
@@ -5083,19 +5040,15 @@ msgstr "帮助页面"
 #~ msgid "You are already downloading this file to {0}"
 #~ msgstr "您已经下载此文档于{0}"
 
-#, fuzzy
 #~ msgid "&Refresh Connections ("
 #~ msgstr "所有 邻居"
 
-#, fuzzy
 #~ msgid "&Refreshing Connections ("
 #~ msgstr "所有 邻居"
 
-#, fuzzy
 #~ msgid "Automatically start torrents"
 #~ msgstr "自动 滚动."
 
-#, fuzzy
 #~ msgid ""
 #~ "You can choose whether to automatically start torrents downloaded from "
 #~ "Gnutella."
@@ -5104,22 +5057,18 @@ msgstr "帮助页面"
 #~ msgid "Start automatically"
 #~ msgstr "自动启动"
 
-#, fuzzy
 #~ msgid "Clear"
 #~ msgstr "颜色"
 
 #~ msgid "What's New"
 #~ msgstr "新特点"
 
-#, fuzzy
 #~ msgid "&Monitor"
 #~ msgstr "监视"
 
-#, fuzzy
 #~ msgid "&Connections"
 #~ msgstr "所有 邻居"
 
-#, fuzzy
 #~ msgid "C&onsole"
 #~ msgstr "连接 (&O)"
 
@@ -5168,15 +5117,12 @@ msgstr "帮助页面"
 #~ "你的 保存 文件夹 不正确. 它可能 被 删除了, 你 可能 没有 写的 权限或者是其"
 #~ "他问题. 请 选择 另 一个 文件夹."
 
-#, fuzzy
 #~ msgid "You are not connected to the FrostWire VIP Area"
 #~ msgstr "连接 到 网络"
 
-#, fuzzy
 #~ msgid "You are currently connecting to the network"
 #~ msgstr "连接 到 网络"
 
-#, fuzzy
 #~ msgid "Poor"
 #~ msgstr "端口"
 
@@ -5186,34 +5132,27 @@ msgstr "帮助页面"
 #~ msgid "Excellent"
 #~ msgstr "很好"
 
-#, fuzzy
 #~ msgid "Waking Up"
 #~ msgstr "请求 已发出, 等待"
 
-#, fuzzy
 #~ msgid "Show Store Indicator"
 #~ msgstr "共享 文件夹"
 
-#, fuzzy
 #~ msgid "Upgrade FrostWire"
 #~ msgstr "使用 FrostWire (&U)"
 
-#, fuzzy
 #~ msgid "Upgrade to FrostWire?"
 #~ msgstr "使用 FrostWire (&U)"
 
-#, fuzzy
 #~ msgid "Upgrade Your Java"
 #~ msgstr "升级 到 “增强版”"
 
-#, fuzzy
 #~ msgid "Get FrostWire Now"
 #~ msgstr "使用 FrostWire (&U)"
 
 #~ msgid "Why"
 #~ msgstr "为什么"
 
-#, fuzzy
 #~ msgid "What does frostwire give me?"
 #~ msgstr "“增强版” 带来什么?"
 
@@ -5237,11 +5176,9 @@ msgstr "帮助页面"
 #~ msgid "Disconnect from the Network"
 #~ msgstr "断开 网络 连接"
 
-#, fuzzy
 #~ msgid "Share New File..."
 #~ msgstr "保存中 文件..."
 
-#, fuzzy
 #~ msgid "Share"
 #~ msgstr "保存"
 
@@ -5266,11 +5203,9 @@ msgstr "帮助页面"
 #~ msgid "You"
 #~ msgstr "您"
 
-#, fuzzy
 #~ msgid "Could not send chat message"
 #~ msgstr "不能 浏览 主机 {0} ."
 
-#, fuzzy
 #~ msgid "Browse Host"
 #~ msgstr "浏览器 选项"
 
@@ -5283,7 +5218,6 @@ msgstr "帮助页面"
 #~ msgid "View All Files on the Selected Computer"
 #~ msgstr "观看所选计算机的全部文档。"
 
-#, fuzzy
 #~ msgid "Host"
 #~ msgstr "主机"
 
@@ -5299,38 +5233,30 @@ msgstr "帮助页面"
 #~ msgid "Protocol"
 #~ msgstr "协议"
 
-#, fuzzy
 #~ msgid "Vendor/Version"
 #~ msgstr "软件"
 
-#, fuzzy
 #~ msgid "Compressed (I/O)"
 #~ msgstr "丢弃 (入/出)"
 
 #~ msgid "QRP (%)"
 #~ msgstr "QRP (%/大小)"
 
-#, fuzzy
 #~ msgid "Connecting..."
 #~ msgstr "连接 (&O)"
 
-#, fuzzy
 #~ msgid "Outgoing"
 #~ msgstr "传出 邻居"
 
-#, fuzzy
 #~ msgid "Incoming"
 #~ msgstr "HTTP 请求"
 
-#, fuzzy
 #~ msgid "Ultrapeer"
 #~ msgstr "Ultrapeers"
 
-#, fuzzy
 #~ msgid "Leaf"
 #~ msgstr "叶子"
 
-#, fuzzy
 #~ msgid "Connecting"
 #~ msgstr "连接 (&O)"
 
@@ -5346,30 +5272,24 @@ msgstr "帮助页面"
 #~ msgid "Loading Connections Window..."
 #~ msgstr "加载 连接 窗口..."
 
-#, fuzzy
 #~ msgid "Host:"
 #~ msgstr "主机"
 
-#, fuzzy
 #~ msgid "Peer"
 #~ msgstr "播放器"
 
 #~ msgid "0.6"
 #~ msgstr "0.6"
 
-#, fuzzy
 #~ msgid "Share Dropped Files?"
 #~ msgstr "共享 文件夹"
 
-#, fuzzy
 #~ msgid "No, Share Nothing"
 #~ msgstr "你 正在 共享 文件的 数目."
 
-#, fuzzy
 #~ msgid "Queue"
 #~ msgstr "等候"
 
-#, fuzzy
 #~ msgid "Queued"
 #~ msgstr "等候"
 
@@ -5394,33 +5314,27 @@ msgstr "帮助页面"
 #~ msgid "Waiting {0}s for Sources"
 #~ msgstr "请求 已发出, 等待 {0}秒 返回 结果"
 
-#, fuzzy
 #~ msgid "Need More Sources"
 #~ msgstr "秒 返回 结果"
 
-#, fuzzy
 #~ msgid "Waiting for Stable Connections"
 #~ msgstr "加载 stale connection management..."
 
-#, fuzzy
 #~ msgid "Waiting in Line, Position"
 #~ msgstr "等待因为繁忙"
 
 #~ msgid "Verifying File Contents..."
 #~ msgstr "文档内容核实中..."
 
-#, fuzzy
 #~ msgid "Paused"
 #~ msgstr "停留"
 
-#, fuzzy
 #~ msgid "Downloading .torrent file..."
 #~ msgstr "加载 saved files..."
 
 #~ msgid "Average Bandwidth"
 #~ msgstr "宽频平均"
 
-#, fuzzy
 #~ msgid "Lost To Corruption"
 #~ msgstr "主机 联系"
 
@@ -5430,34 +5344,27 @@ msgstr "帮助页面"
 #~ msgid "host"
 #~ msgstr "主机"
 
-#, fuzzy
 #~ msgid "Possible Hosts"
 #~ msgstr "过滤 主机"
 
-#, fuzzy
 #~ msgid "Busy Hosts"
 #~ msgstr "屏蔽 对方"
 
-#, fuzzy
 #~ msgid "Locating Sources..."
 #~ msgstr "加载 资源..."
 
-#, fuzzy
 #~ msgid "Priority"
 #~ msgstr "端口"
 
-#, fuzzy
 #~ msgid "Downloads"
 #~ msgstr "下载"
 
-#, fuzzy
 #~ msgid "Find More Sources for Download"
 #~ msgstr "Try to locate other sources for failed download."
 
 #~ msgid "Try to Find Additional Sources for Downloads"
 #~ msgstr "尝试为下载寻找其他资源"
 
-#, fuzzy
 #~ msgid "&Refresh Skins"
 #~ msgstr "刷新"
 
@@ -5467,23 +5374,18 @@ msgstr "帮助页面"
 #~ msgstr ""
 #~ "错误的 保存 文件的 文件夹. 请用 另 一个 文件夹 或者恢复到 缺省 设置."
 
-#, fuzzy
 #~ msgid "Search..."
 #~ msgstr "搜索"
 
-#, fuzzy
 #~ msgid "Clear Download"
 #~ msgstr "清除 下载 条目"
 
-#, fuzzy
 #~ msgid "Clear Selected Downloads"
 #~ msgstr "取消 选中的 下载."
 
-#, fuzzy
 #~ msgid "Launch Download"
 #~ msgstr "取消 下载"
 
-#, fuzzy
 #~ msgid "Launch Selected Downloads"
 #~ msgstr "取消 选中的 下载."
 
@@ -5493,22 +5395,18 @@ msgstr "帮助页面"
 #~ msgid "Preview"
 #~ msgstr "预览"
 
-#, fuzzy
 #~ msgid "Chat with Host"
 #~ msgstr "和对方 聊天"
 
-#, fuzzy
 #~ msgid "Clear All Inactive Downloads"
 #~ msgstr "移除 不活动的 下载."
 
 #~ msgid "Remove Inactive Downloads"
 #~ msgstr "去掉不活跃下载"
 
-#, fuzzy
 #~ msgid "No Filename"
 #~ msgstr "文件名"
 
-#, fuzzy
 #~ msgid "Firewall Setup"
 #~ msgstr "防火墙"
 
@@ -5520,11 +5418,9 @@ msgstr "帮助页面"
 #~ msgid "Incomplete Files"
 #~ msgstr "不完整文档"
 
-#, fuzzy
 #~ msgid "Search In Shared Files:"
 #~ msgstr "搜索 和 下载 文件"
 
-#, fuzzy
 #~ msgid "Uploads"
 #~ msgstr "正在 上载"
 
@@ -5549,40 +5445,33 @@ msgstr "帮助页面"
 #~ msgid "Share Folder"
 #~ msgstr "共享文件夹"
 
-#, fuzzy
 #~ msgid "Saved Files"
 #~ msgstr "共享 文件夹"
 
-#, fuzzy
 #~ msgid "FrostWire cannot stop sharing this folder."
 #~ msgstr "你 确认要 停止 共享 此 文件夹 吗?"
 
 #~ msgid "Are you sure you want to stop sharing this folder?"
 #~ msgstr "你 确认要 停止 共享 此 文件夹 吗?"
 
-#, fuzzy
 #~ msgid "Shared Files"
 #~ msgstr "共享 文件夹"
 
 #~ msgid "Reload Shared Folders"
 #~ msgstr "刷新 共享 目录."
 
-#, fuzzy
 #~ msgid "Loading Logging Window..."
 #~ msgstr "加载 选项 窗口..."
 
 #~ msgid "&Help"
 #~ msgstr "帮助 (&H)"
 
-#, fuzzy
 #~ msgid "&Get More Skins"
 #~ msgstr "浏览 新的 皮肤"
 
-#, fuzzy
 #~ msgid "&Check for updates"
 #~ msgstr "检查升级中"
 
-#, fuzzy
 #~ msgid "seconds left)"
 #~ msgstr "秒"
 
@@ -5592,11 +5481,9 @@ msgstr "帮助页面"
 #~ msgid "Slots"
 #~ msgstr "扩展槽"
 
-#, fuzzy
 #~ msgid "Connections"
 #~ msgstr "连接 (&O)"
 
-#, fuzzy
 #~ msgid "Popups"
 #~ msgstr "Hops"
 
@@ -5640,7 +5527,6 @@ msgstr "帮助页面"
 #~ msgid "Host Communication"
 #~ msgstr "主机 联系"
 
-#, fuzzy
 #~ msgid "Chat Configuration"
 #~ msgstr "主机 联系"
 
@@ -5681,26 +5567,21 @@ msgstr "帮助页面"
 #~ msgid "Always"
 #~ msgstr "始终"
 
-#, fuzzy
 #~ msgid "Shared Name:"
 #~ msgstr "共享 文件夹"
 
 #~ msgid "Disable Ultrapeer Capabilities:"
 #~ msgstr "设置 超级 节点为无效:"
 
-#, fuzzy
 #~ msgid "Disable Mojito DHT Capabilities:"
 #~ msgstr "设置 超级 节点为无效:"
 
-#, fuzzy
 #~ msgid "Disable TLS Capabilities:"
 #~ msgstr "设置 超级 节点为无效:"
 
-#, fuzzy
 #~ msgid "OOB Searching"
 #~ msgstr "搜索"
 
-#, fuzzy
 #~ msgid "Enable OOB Searching:"
 #~ msgstr "搜索"
 
@@ -5739,11 +5620,9 @@ msgstr "帮助页面"
 #~ msgid "Max Upload Slots:"
 #~ msgstr "最大 上载 槽:"
 
-#, fuzzy
 #~ msgid "Open Dialog to Select a Folder"
 #~ msgstr "选择 文件夹"
 
-#, fuzzy
 #~ msgid "Reset"
 #~ msgstr "恢复"
 
@@ -5823,22 +5702,18 @@ msgstr "帮助页面"
 #~ msgid "Show All Speeds"
 #~ msgstr "显示 全部 速度的 搜索 结果"
 
-#, fuzzy
 #~ msgid "Download Sharing"
 #~ msgstr "正在 下载 从"
 
-#, fuzzy
 #~ msgid "You can automatically share .torrent files."
 #~ msgstr "你 可以 自动 删除 老的 不完全的 下载 文件."
 
-#, fuzzy
 #~ msgid "Start Upload Slots"
 #~ msgstr "起始 上载 槽:"
 
 #~ msgid "Start Upload Slots:"
 #~ msgstr "起始 上载 槽:"
 
-#, fuzzy
 #~ msgid "Connection Speed"
 #~ msgstr "启动 时 连接"
 
@@ -5850,29 +5725,23 @@ msgstr "帮助页面"
 #~ msgid "Speed:"
 #~ msgstr "速度:"
 
-#, fuzzy
 #~ msgid "LimeWire Store Indicator"
 #~ msgstr "防火墙"
 
-#, fuzzy
 #~ msgid "Show LimeWire Store Indicator:"
 #~ msgstr "共享 文件夹"
 
-#, fuzzy
 #~ msgid "Shared Files Indicator"
 #~ msgstr "共享 文件夹"
 
-#, fuzzy
 #~ msgid ""
 #~ "You can choose the folder for saving files purchased from the LimeWire "
 #~ "Store."
 #~ msgstr "你 可以 选择 保存 文件的 文件夹."
 
-#, fuzzy
 #~ msgid "System Tray Icon"
 #~ msgstr "关闭"
 
-#, fuzzy
 #~ msgid "Show System Tray Icon:"
 #~ msgstr "关闭"
 
@@ -5905,15 +5774,12 @@ msgstr "帮助页面"
 #~ msgid "Option"
 #~ msgstr "选项"
 
-#, fuzzy
 #~ msgid "Filter Results:"
 #~ msgstr "过滤"
 
-#, fuzzy
 #~ msgid "Back To Search"
 #~ msgstr "关闭 搜索"
 
-#, fuzzy
 #~ msgid "Download As..."
 #~ msgstr "下载"
 
@@ -5923,15 +5789,12 @@ msgstr "帮助页面"
 #~ msgid "Stop Collecting Search Results for Selected Tab"
 #~ msgstr "终止为已选清单收集寻结果"
 
-#, fuzzy
 #~ msgid "New"
 #~ msgstr "网络"
 
-#, fuzzy
 #~ msgid "Keyword"
 #~ msgstr "关键词"
 
-#, fuzzy
 #~ msgid "Direct Connect"
 #~ msgstr "断开 连接 (&I)"
 
@@ -5950,7 +5813,6 @@ msgstr "帮助页面"
 #~ msgid "Block Hosts"
 #~ msgstr "屏蔽 对方"
 
-#, fuzzy
 #~ msgid "Get More Results"
 #~ msgstr "过滤"
 
@@ -5965,15 +5827,12 @@ msgstr "帮助页面"
 #~ msgid "Show Connections to Other Clients"
 #~ msgstr "连接 到其他 客户端"
 
-#, fuzzy
 #~ msgid "Console"
 #~ msgstr "关闭 (&C)"
 
-#, fuzzy
 #~ msgid "View Console Messages"
 #~ msgstr "Vendor 平均"
 
-#, fuzzy
 #~ msgid "View Logging Messages"
 #~ msgstr "加载 消息..."
 
@@ -5983,11 +5842,9 @@ msgstr "帮助页面"
 #~ msgid "View Searches and Uploads"
 #~ msgstr "显示 搜索 和 上载"
 
-#, fuzzy
 #~ msgid "Test action!"
 #~ msgstr "说明"
 
-#, fuzzy
 #~ msgid ""
 #~ "The skin file you selected does not exist or is invalid. Please choose "
 #~ "another file, or use the default."
@@ -5999,7 +5856,6 @@ msgstr "帮助页面"
 #~ msgid "Get New Skins"
 #~ msgstr "选新皮肤"
 
-#, fuzzy
 #~ msgid "Kill Upload"
 #~ msgstr "清除 上载"
 
@@ -6021,23 +5877,18 @@ msgstr "帮助页面"
 #~ msgid "Queued at"
 #~ msgstr "等候"
 
-#, fuzzy
 #~ msgid "Range Unavailable"
 #~ msgstr "连接 不上 主机"
 
-#, fuzzy
 #~ msgid "Malformed Request"
 #~ msgstr "Magnet 请求"
 
-#, fuzzy
 #~ msgid "Uploading Hash Tree"
 #~ msgstr "正在 上载"
 
-#, fuzzy
 #~ msgid "Suspended"
 #~ msgstr "速度:"
 
-#, fuzzy
 #~ msgid "Awaiting Requests"
 #~ msgstr "Chat 请求"
 
@@ -6047,11 +5898,9 @@ msgstr "帮助页面"
 #~ msgid "Info"
 #~ msgstr "信息"
 
-#, fuzzy
 #~ msgid "Copyright Holder:"
 #~ msgstr "停止 共享"
 
-#, fuzzy
 #~ msgid "Title of Work:"
 #~ msgstr "监听 端口:"
 
@@ -6088,30 +5937,24 @@ msgstr "帮助页面"
 #~ msgid "Type:"
 #~ msgstr "类型:"
 
-#, fuzzy
 #~ msgid "Length:"
 #~ msgstr "时长"
 
-#, fuzzy
 #~ msgid "Bitrate:"
 #~ msgstr "比特率"
 
-#, fuzzy
 #~ msgid "Comments:"
 #~ msgstr "文档"
 
 #~ msgid "SHA1:"
 #~ msgstr "SHA1:"
 
-#, fuzzy
 #~ msgid "Price:"
 #~ msgstr "预览"
 
-#, fuzzy
 #~ msgid "Action:"
 #~ msgstr "位置"
 
-#, fuzzy
 #~ msgid "Rating:"
 #~ msgstr "请求 已发出, 等待"
 
@@ -6127,23 +5970,18 @@ msgstr "帮助页面"
 #~ msgid "Ogg Vorbis"
 #~ msgstr "Ogg Vorbis"
 
-#, fuzzy
 #~ msgid "other"
 #~ msgstr "Ethernet"
 
-#, fuzzy
 #~ msgid "string"
 #~ msgstr "共享"
 
-#, fuzzy
 #~ msgid "1"
 #~ msgstr "T1"
 
-#, fuzzy
 #~ msgid "test1"
 #~ msgstr "恢复"
 
-#, fuzzy
 #~ msgid "test2"
 #~ msgstr "恢复"
 
@@ -6159,15 +5997,12 @@ msgstr "帮助页面"
 #~ msgid "Cable/DSL"
 #~ msgstr "Cable/DSL"
 
-#, fuzzy
 #~ msgid "English"
 #~ msgstr "完成"
 
-#, fuzzy
 #~ msgid "Loading Languages"
 #~ msgstr "加载 菜单..."
 
-#, fuzzy
 #~ msgid "false"
 #~ msgstr "停留"
 
@@ -6179,11 +6014,9 @@ msgstr "帮助页面"
 #~ "\" button to begin using FrostWire."
 #~ msgstr "FrostWire 安装成功. 请按 “完成” 按钮, 开始 使用 FrostWire."
 
-#, fuzzy
 #~ msgid "Language Options"
 #~ msgstr "图片 选项"
 
-#, fuzzy
 #~ msgid "Choose Language:"
 #~ msgstr "语言:"
 
@@ -6205,7 +6038,6 @@ msgstr "帮助页面"
 #~ "我们鉴定那些 文件夹 下面的 东西有 共享的 可能. 如果 你 想 共享 这些 文件"
 #~ "夹, 仅仅检查它相关的 选择 框. 共享的 文件夹的 子 文件夹 目录 也将被 共享."
 
-#, fuzzy
 #~ msgid "The selected folders below (and their subfolders) will be shared."
 #~ msgstr "错误的 共享 文件夹. 请用 另 一个 文件夹 或者恢复到 缺省 设置."
 
@@ -6217,7 +6049,6 @@ msgstr "帮助页面"
 #~ "你 想要 FrostWire 迅速为其他媒介 文件 扫描 你的 硬盘 吗? 你 将有机会确切说"
 #~ "明当扫描完成时, 你 想分享哪份 文件夹."
 
-#, fuzzy
 #~ msgid "Scan Hard Drive?"
 #~ msgstr "正在 扫描硬盘"
 
@@ -6235,15 +6066,12 @@ msgstr "帮助页面"
 #~ msgid "Please wait as FrostWire scans your hard drive..."
 #~ msgstr "FrostWire 正在 扫描 你的 硬盘, 请等待..."
 
-#, fuzzy
 #~ msgid "Scanning Hard Drive..."
 #~ msgstr "正在 扫描硬盘"
 
-#, fuzzy
 #~ msgid "Cancel Scan"
 #~ msgstr "取消 操作."
 
-#, fuzzy
 #~ msgid ""
 #~ "Your search must be at least three characters long to avoid too many "
 #~ "meaningless results."
@@ -6264,21 +6092,17 @@ msgstr "帮助页面"
 #~ msgid "Cannot remove unsaved info."
 #~ msgstr "不能 移 除 没有 保存的 信息."
 
-#, fuzzy
 #~ msgid ""
 #~ "Please wait while FrostWire is uploading your files to the Internet "
 #~ "Archive"
 #~ msgstr "FrostWire 正在 扫描 你的 硬盘, 请等待..."
 
-#, fuzzy
 #~ msgid "Connecting to the Internet Archive..."
 #~ msgstr "连接 到 网络"
 
-#, fuzzy
 #~ msgid "Connected..."
 #~ msgstr "连接 (&O)"
 
-#, fuzzy
 #~ msgid "Checking in..."
 #~ msgstr "升级 检查..."
 
@@ -6451,7 +6275,6 @@ msgstr "帮助页面"
 #~ msgid "FrostWire: Enabling Open Information Sharing"
 #~ msgstr "FrostWire: 运行在 Gnutella 网络"
 
-#, fuzzy
 #~ msgid "Content"
 #~ msgstr "连接 (&O)"
 

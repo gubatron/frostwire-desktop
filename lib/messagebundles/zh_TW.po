@@ -1229,12 +1229,10 @@ msgid ""
 msgstr ""
 
 #: gui/com/frostwire/gui/library/Device.java:265
-#, fuzzy
 msgid "Transfer failed"
 msgstr "全部下載傳輸"
 
 #: gui/com/frostwire/gui/library/DeviceUploadDialog.java:66
-#, fuzzy
 msgid "Upload to device"
 msgstr "達到上傳限制"
 
@@ -1247,7 +1245,6 @@ msgid "Uploading"
 msgstr "正在上傳"
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
-#, fuzzy
 msgid "Uploading "
 msgstr "正在上傳"
 
@@ -3095,7 +3092,6 @@ msgid "State your intent below to start using FrostWire "
 msgstr "使用新面板需要重新啟動 FrostWire。 "
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:57
-#, fuzzy
 msgid ""
 "FrostWire is a peer-to-peer program for sharing authorized files only.  "
 "Installing and using the program does not constitute a license for obtaining "
@@ -3204,7 +3200,6 @@ msgstr ""
 "檔。"
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:31
-#, fuzzy
 msgid ""
 "Installing and using the program does not constitute a license for obtaining "
 "or distributing unauthorized content."
@@ -4846,121 +4841,93 @@ msgstr "滑鼠"
 msgid "helppage"
 msgstr "説明頁面"
 
-#, fuzzy
 #~ msgid "Loading phones and tablets..."
 #~ msgstr "載入儲存的檔案..."
 
-#, fuzzy
 #~ msgid "Videos"
 #~ msgstr "檢視"
 
-#, fuzzy
 #~ msgid "Sort:"
 #~ msgstr "差"
 
-#, fuzzy
 #~ msgid "None"
 #~ msgstr "否"
 
-#, fuzzy
 #~ msgid "Name Asc"
 #~ msgstr "名稱:"
 
-#, fuzzy
 #~ msgid "Name Desc"
 #~ msgstr "名稱:"
 
-#, fuzzy
 #~ msgid "Kind Asc"
 #~ msgstr "類別:"
 
-#, fuzzy
 #~ msgid "Size Asc"
 #~ msgstr "另存為"
 
-#, fuzzy
 #~ msgid "Size Desc"
 #~ msgstr "大小:"
 
-#, fuzzy
 #~ msgid "Open"
 #~ msgstr "開啟..."
 
-#, fuzzy
 #~ msgid "Delete Files"
 #~ msgstr "刪除選取的檔案"
 
-#, fuzzy
 #~ msgid "System"
 #~ msgstr "系統列"
 
-#, fuzzy
 #~ msgid "Error deleting file"
 #~ msgstr "上傳檔案"
 
-#, fuzzy
 #~ msgid "Connected"
 #~ msgstr "連線"
 
-#, fuzzy
 #~ msgid "New Folder"
 #~ msgstr "儲存資料夾:"
 
-#, fuzzy
 #~ msgid "File Transfers"
 #~ msgstr "全部下載傳輸"
 
-#, fuzzy
 #~ msgid "Cancel All"
 #~ msgstr "取消掃瞄"
 
-#, fuzzy
 #~ msgid "Clear Finished"
 #~ msgstr "清除所有停止的下載"
 
-#, fuzzy
 #~ msgid "Should I stop all transfers?"
 #~ msgstr "傳輸完後關閉"
 
-#, fuzzy
 #~ msgid "one file"
 #~ msgstr "內容過濾器"
 
 #~ msgid "files"
 #~ msgstr "檔案"
 
-#, fuzzy
 #~ msgid "pending"
 #~ msgstr "搜尋"
 
-#, fuzzy
 #~ msgid "canceled"
 #~ msgstr "掃瞄已取消"
 
-#, fuzzy
 #~ msgid "error"
 #~ msgstr "錯誤"
 
 #~ msgid "Upload"
 #~ msgstr "上傳"
 
-#, fuzzy
 #~ msgid "to"
 #~ msgstr "停止"
 
-#, fuzzy
 #~ msgid "Select a file..."
 #~ msgstr "選擇資料夾"
 
-#, fuzzy
 #~ msgid "Preparing selected folder"
 #~ msgstr "預覽選取的下載"
 
-#, fuzzy
 #~ msgid "Open in Folder"
 #~ msgstr "打開檔案資料庫目錄"
 
-#, fuzzy
 #~ msgid "Open Folder Containing a Selected File"
 #~ msgstr "開啟檔案所在資料夾"
 
@@ -4970,7 +4937,6 @@ msgstr "説明頁面"
 #~ msgid "Add Selected Files to the Playlist"
 #~ msgstr "新增選取的檔案到播放清單"
 
-#, fuzzy
 #~ msgid "Delete from playlist"
 #~ msgstr "從播放清單中刪除選取的檔案"
 
@@ -4980,7 +4946,6 @@ msgstr "説明頁面"
 #~ msgid "Show Media Player"
 #~ msgstr "顯示媒體播放機"
 
-#, fuzzy
 #~ msgid "Send File..."
 #~ msgstr "儲存檔案..."
 
@@ -5022,11 +4987,9 @@ msgstr "説明頁面"
 #~ msgid "Use FrostWire Media Player:"
 #~ msgstr "使用 FrostWire 媒體播放機:"
 
-#, fuzzy
 #~ msgid "Seeding Status"
 #~ msgstr "搜尋"
 
-#, fuzzy
 #~ msgid "Search Files"
 #~ msgstr "個搜尋"
 
@@ -5037,22 +5000,18 @@ msgstr "説明頁面"
 #~ "FrostWire 無法設立連接埠監視進入的連線。FrostWire 的某些功能可能無法正常使"
 #~ "用。"
 
-#, fuzzy
 #~ msgid "Loading TLS Encryption..."
 #~ msgstr "載入 HTML 引擎..."
 
-#, fuzzy
 #~ msgid "Loading Safe Content Management..."
 #~ msgstr "載入失效連線管理器..."
 
 #~ msgid "Loading Message Router..."
 #~ msgstr "載入訊息路由器..."
 
-#, fuzzy
 #~ msgid "Checking for Updates..."
 #~ msgstr "登入..."
 
-#, fuzzy
 #~ msgid "Loading Upload Management..."
 #~ msgstr "載入連線管理..."
 
@@ -5062,11 +5021,9 @@ msgstr "説明頁面"
 #~ msgid "Loading Connection Management..."
 #~ msgstr "載入連線管理..."
 
-#, fuzzy
 #~ msgid "Loading Download Management..."
 #~ msgstr "載入連線管理..."
 
-#, fuzzy
 #~ msgid "Loading Ultrapeer/DHT Management..."
 #~ msgstr "載入失效連線管理器..."
 
@@ -5088,7 +5045,6 @@ msgstr "説明頁面"
 #~ msgid "Loading Saved Files..."
 #~ msgstr "載入儲存的檔案..."
 
-#, fuzzy
 #~ msgid "Loading Spam Management..."
 #~ msgstr "載入連線管理..."
 
@@ -5097,37 +5053,29 @@ msgstr "説明頁面"
 #~ "download correctly."
 #~ msgstr "MAGNET連結中的一個或多個 URL 不正確。檔案可能沒有正確下載。"
 
-#, fuzzy
 #~ msgid "You have already downloaded {0}"
 #~ msgstr "您已在下載這個檔案到「{0}」。"
 
-#, fuzzy
 #~ msgid "You are already downloading this file to {0}"
 #~ msgstr "您已在下載這個檔案到「{0}」。"
 
-#, fuzzy
 #~ msgid "&Refresh Connections ("
 #~ msgstr "連線等級:"
 
-#, fuzzy
 #~ msgid "&Refreshing Connections ("
 #~ msgstr "連線等級:"
 
-#, fuzzy
 #~ msgid "Automatically start torrents"
 #~ msgstr "自動捲動"
 
-#, fuzzy
 #~ msgid ""
 #~ "You can choose whether to automatically start torrents downloaded from "
 #~ "Gnutella."
 #~ msgstr "您可以選擇是否自動共用部份下載的檔案。"
 
-#, fuzzy
 #~ msgid "Start automatically"
 #~ msgstr "自動啟動"
 
-#, fuzzy
 #~ msgid "Clear"
 #~ msgstr "爬蟲"
 
@@ -5145,7 +5093,6 @@ msgstr "説明頁面"
 #~ "FrostWire 啟動數位音樂通訊協定(共用 iTunes 檔案)時遇到錯誤。該功能將被關"
 #~ "閉。您可以到選項中重新開啟，點選 iTunes ->共用。"
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire was unable to start the Digital Audio Access Protocol (for "
 #~ "sharing files in iTunes) because a Microsoft patch is required or a "
@@ -5157,7 +5104,6 @@ msgstr "説明頁面"
 #~ "(共用 iTunes 檔案)。如果您希望使用該功能，FrostWire 可以將您重新定向到微軟"
 #~ "的網頁。點選「是」移至修補程式，「否」停用該功能，或「取消」稍後決定。"
 
-#, fuzzy
 #~ msgid ""
 #~ "FrostWire was unable to start the Digital Audio Access Protocol (for "
 #~ "sharing files in iTunes) because a firewall is blocking access. To "
@@ -5169,15 +5115,12 @@ msgstr "説明頁面"
 #~ "要繼續使用該功能，點選「是」更改防火牆設定，允許「FrostWire.exe」全部進出"
 #~ "連線權限。若想停用該功能，請點選「否」。"
 
-#, fuzzy
 #~ msgid "&Monitor"
 #~ msgstr "監視"
 
-#, fuzzy
 #~ msgid "&Connections"
 #~ msgstr "連線等級:"
 
-#, fuzzy
 #~ msgid "C&onsole"
 #~ msgstr "主控台"
 
@@ -5214,7 +5157,6 @@ msgstr "説明頁面"
 #~ msgid "View Claimed License Deed"
 #~ msgstr "檢視公開的授權約定"
 
-#, fuzzy
 #~ msgid "License Details:"
 #~ msgstr "授權細節"
 
@@ -5285,7 +5227,6 @@ msgstr "説明頁面"
 #~ "儲存資料夾無效。它可能已被刪除了，可能沒有寫入的權限，或者是其他問題。 請"
 #~ "選擇另一個資料夾。"
 
-#, fuzzy
 #~ msgid "You are not connected to the FrostWire VIP Area"
 #~ msgstr "正在連線至網路。"
 
@@ -5330,15 +5271,12 @@ msgstr "説明頁面"
 #~ msgid "Show Shared Files Count"
 #~ msgstr "顯示共用檔案數"
 
-#, fuzzy
 #~ msgid "Show Store Indicator"
 #~ msgstr "顯示防火牆狀態:"
 
-#, fuzzy
 #~ msgid "Upgrade FrostWire"
 #~ msgstr "使用 FrostWire(&U)"
 
-#, fuzzy
 #~ msgid "Upgrade to FrostWire?"
 #~ msgstr "使用 FrostWire(&U)"
 
@@ -5357,14 +5295,12 @@ msgstr "説明頁面"
 #~ msgid "Would you like to get your free Java upgrade?"
 #~ msgstr "您是否希望取得免費 Java 升級?"
 
-#, fuzzy
 #~ msgid "Get FrostWire Now"
 #~ msgstr "使用 FrostWire(&U)"
 
 #~ msgid "Why"
 #~ msgstr "為何"
 
-#, fuzzy
 #~ msgid "Later"
 #~ msgstr "貼上"
 
@@ -5435,11 +5371,9 @@ msgstr "説明頁面"
 #~ msgid "You"
 #~ msgstr "您"
 
-#, fuzzy
 #~ msgid "Could not send chat message"
 #~ msgstr "不能瀏覽主機 {0} 。"
 
-#, fuzzy
 #~ msgid "Browse Host"
 #~ msgstr "瀏覽選項"
 
@@ -5452,7 +5386,6 @@ msgstr "説明頁面"
 #~ msgid "View All Files on the Selected Computer"
 #~ msgstr "瀏覽選取電腦上的所有共用檔案"
 
-#, fuzzy
 #~ msgid "Host"
 #~ msgstr "主機:"
 
@@ -5468,7 +5401,6 @@ msgstr "説明頁面"
 #~ msgid "Protocol"
 #~ msgstr "協定"
 
-#, fuzzy
 #~ msgid "Vendor/Version"
 #~ msgstr "無效的版本"
 
@@ -5481,27 +5413,21 @@ msgstr "説明頁面"
 #~ msgid "QRP Empty"
 #~ msgstr "QRP 空"
 
-#, fuzzy
 #~ msgid "Connecting..."
 #~ msgstr "連線..."
 
-#, fuzzy
 #~ msgid "Outgoing"
 #~ msgstr "傳出嘗試"
 
-#, fuzzy
 #~ msgid "Incoming"
 #~ msgstr "傳入的請求"
 
-#, fuzzy
 #~ msgid "Ultrapeer"
 #~ msgstr "超級節點"
 
-#, fuzzy
 #~ msgid "Leaf"
 #~ msgstr "葉節點"
 
-#, fuzzy
 #~ msgid "Connecting"
 #~ msgstr "連線等級:"
 
@@ -5529,29 +5455,24 @@ msgstr "説明頁面"
 #~ msgid "0.6"
 #~ msgstr "0.6"
 
-#, fuzzy
 #~ msgid "All folders you select will also have their subfolders shared."
 #~ msgstr "以下選取的資料夾(以及子資料夾)將被共用。"
 
-#, fuzzy
 #~ msgid "Share Dropped Files?"
 #~ msgstr "共用的檔案"
 
-#, fuzzy
 #~ msgid "No, Share Nothing"
 #~ msgstr "您正在共用的檔案數"
 
 #~ msgid "Queue"
 #~ msgstr "低優先"
 
-#, fuzzy
 #~ msgid "Queued"
 #~ msgstr "低優先"
 
 #~ msgid "Waiting On Busy Hosts"
 #~ msgstr "等待中"
 
-#, fuzzy
 #~ msgid "Complete"
 #~ msgstr "已收取"
 
@@ -5597,11 +5518,9 @@ msgstr "説明頁面"
 #~ msgid "Content Removed"
 #~ msgstr "檔案已移除"
 
-#, fuzzy
 #~ msgid "Resuming..."
 #~ msgstr "暫停..."
 
-#, fuzzy
 #~ msgid "Downloading .torrent file..."
 #~ msgstr "載入儲存的檔案..."
 
@@ -5658,7 +5577,6 @@ msgstr "説明頁面"
 #~ msgid "Priority"
 #~ msgstr "優先權"
 
-#, fuzzy
 #~ msgid "Downloads"
 #~ msgstr "下載:"
 
@@ -5713,7 +5631,6 @@ msgstr "説明頁面"
 #~ msgid "Preview"
 #~ msgstr "預覽"
 
-#, fuzzy
 #~ msgid "Chat with Host"
 #~ msgstr "和對方聊天"
 
@@ -5743,7 +5660,6 @@ msgstr "説明頁面"
 #~ msgid "No Filename"
 #~ msgstr "沒有檔名"
 
-#, fuzzy
 #~ msgid "Active"
 #~ msgstr "表演:"
 
@@ -5767,26 +5683,21 @@ msgstr "説明頁面"
 #~ "try a different folder."
 #~ msgstr "FrostWire 不能夠使用指定的儲存資料夾儲存檔案。請選擇另一個資料夾。"
 
-#, fuzzy
 #~ msgid "Incomplete Files"
 #~ msgstr "未完成檔案保留天數:"
 
-#, fuzzy
 #~ msgid "Individual Store Files"
 #~ msgstr "個別共用的檔案"
 
-#, fuzzy
 #~ msgid "List of All Individual Purchased Files"
 #~ msgstr "個別共用的檔案清單"
 
 #~ msgid "Configure..."
 #~ msgstr "設定"
 
-#, fuzzy
 #~ msgid "Search In Shared Files:"
 #~ msgstr "搜尋和下載檔案"
 
-#, fuzzy
 #~ msgid "Uploads"
 #~ msgstr "上傳:"
 
@@ -5812,7 +5723,6 @@ msgstr "説明頁面"
 #~ msgid "Publish under Creative Commons License"
 #~ msgstr "以 Creative Commons 授權發佈"
 
-#, fuzzy
 #~ msgid "Edit License..."
 #~ msgstr "檢視授權"
 
@@ -5822,11 +5732,9 @@ msgstr "説明頁面"
 #~ msgid "Stop Sharing File"
 #~ msgstr "停止共用檔案"
 
-#, fuzzy
 #~ msgid "Share Folder"
 #~ msgstr "共用資料夾"
 
-#, fuzzy
 #~ msgid "Stop Sharing Folder"
 #~ msgstr "停止共用檔案"
 
@@ -5845,7 +5753,6 @@ msgstr "説明頁面"
 #~ msgid "Shared Files"
 #~ msgstr "共用的檔案"
 
-#, fuzzy
 #~ msgid "Show .torrent Files"
 #~ msgstr "內容過濾器"
 
@@ -5858,7 +5765,6 @@ msgstr "説明頁面"
 #~ msgid "List of All Individually Shared Files"
 #~ msgstr "個別共用的檔案清單"
 
-#, fuzzy
 #~ msgid "Loading Logging Window..."
 #~ msgstr "載入選項視窗..."
 
@@ -5874,11 +5780,9 @@ msgstr "説明頁面"
 #~ msgid "Reload available skins from disk"
 #~ msgstr "從硬碟重新載入可用面板"
 
-#, fuzzy
 #~ msgid "&Check for updates"
 #~ msgstr "登入..."
 
-#, fuzzy
 #~ msgid "seconds left)"
 #~ msgstr "秒"
 
@@ -5888,11 +5792,9 @@ msgstr "説明頁面"
 #~ msgid "Slots"
 #~ msgstr "副檔槽"
 
-#, fuzzy
 #~ msgid "Connections"
 #~ msgstr "連線等級:"
 
-#, fuzzy
 #~ msgid "Junk"
 #~ msgstr "不是垃圾"
 
@@ -5937,7 +5839,6 @@ msgstr "説明頁面"
 #~ msgid "Host Communication"
 #~ msgstr "主機連絡"
 
-#, fuzzy
 #~ msgid "Chat Configuration"
 #~ msgstr "路由器設定"
 
@@ -6017,11 +5918,9 @@ msgstr "説明頁面"
 #~ msgid "Disable Ultrapeer Capabilities:"
 #~ msgstr "停用超級節點功能:"
 
-#, fuzzy
 #~ msgid "Disable Mojito DHT Capabilities:"
 #~ msgstr "停用超級節點功能:"
 
-#, fuzzy
 #~ msgid "Disable TLS Capabilities:"
 #~ msgstr "停用超級節點功能:"
 
@@ -6042,7 +5941,6 @@ msgstr "説明頁面"
 #~ msgid "You can set the percentage of your bandwidth devoted to downloads."
 #~ msgstr "您可以設定下載使用的頻寬百分比。"
 
-#, fuzzy
 #~ msgid "Display"
 #~ msgstr "顯示:"
 
@@ -6102,7 +6000,6 @@ msgstr "説明頁面"
 #~ msgid "Open Dialog to Select a Folder"
 #~ msgstr "開啟選擇資料夾對話框"
 
-#, fuzzy
 #~ msgid "Reset"
 #~ msgstr "恢復"
 
@@ -6202,7 +6099,6 @@ msgstr "説明頁面"
 #~ msgid "You can share files that you download to unshared folders."
 #~ msgstr "您可以共用下載到非共用資料夾的檔案。"
 
-#, fuzzy
 #~ msgid "You can automatically share .torrent files."
 #~ msgstr "您可以自動刪除舊的不完全的下載檔案。"
 
@@ -6218,7 +6114,6 @@ msgstr "説明頁面"
 #~ msgid "Strict"
 #~ msgstr "嚴格"
 
-#, fuzzy
 #~ msgid "Connection Speed"
 #~ msgstr "連線關閉"
 
@@ -6230,15 +6125,12 @@ msgstr "説明頁面"
 #~ msgid "Speed:"
 #~ msgstr "速度:"
 
-#, fuzzy
 #~ msgid "LimeWire Store Indicator"
 #~ msgstr "防火牆狀態"
 
-#, fuzzy
 #~ msgid "You can display your LimeWire Store status in the status bar."
 #~ msgstr "您可以在狀態列顯示防火牆狀態。"
 
-#, fuzzy
 #~ msgid "Show LimeWire Store Indicator:"
 #~ msgstr "顯示防火牆狀態:"
 
@@ -6251,7 +6143,6 @@ msgstr "説明頁面"
 #~ msgid "Show Shared Files Indicator:"
 #~ msgstr "顯示共用檔案狀態:"
 
-#, fuzzy
 #~ msgid ""
 #~ "You can choose the folder for saving files purchased from the LimeWire "
 #~ "Store."
@@ -6374,7 +6265,6 @@ msgstr "説明頁面"
 #~ msgid "Keyword"
 #~ msgstr "關鍵字"
 
-#, fuzzy
 #~ msgid "Direct Connect"
 #~ msgstr "直接連線失敗"
 
@@ -6454,7 +6344,6 @@ msgstr "説明頁面"
 #~ msgid "View Console Messages"
 #~ msgstr "檢視訊息紀錄"
 
-#, fuzzy
 #~ msgid "View Logging Messages"
 #~ msgstr "檢視訊息紀錄"
 
@@ -6464,7 +6353,6 @@ msgstr "説明頁面"
 #~ msgid "View Searches and Uploads"
 #~ msgstr "顯示搜尋和上傳"
 
-#, fuzzy
 #~ msgid "Test action!"
 #~ msgstr "描述"
 
@@ -6492,7 +6380,6 @@ msgstr "説明頁面"
 #~ "default theme."
 #~ msgstr "您套用的主題不正確。FrostWire 將恢復到預設的主題。"
 
-#, fuzzy
 #~ msgid "Kill Upload"
 #~ msgstr "上傳"
 
@@ -6511,11 +6398,9 @@ msgstr "説明頁面"
 #~ msgid "Queued at"
 #~ msgstr "等候"
 
-#, fuzzy
 #~ msgid "Range Unavailable"
 #~ msgstr "範圍不可用"
 
-#, fuzzy
 #~ msgid "Malformed Request"
 #~ msgstr "過度請求"
 
@@ -6525,15 +6410,12 @@ msgstr "説明頁面"
 #~ msgid "Uploading Hash Tree"
 #~ msgstr "上傳Hash樹"
 
-#, fuzzy
 #~ msgid "Suspended"
 #~ msgstr "速度:"
 
-#, fuzzy
 #~ msgid "Awaiting Requests"
 #~ msgstr "聊天請求"
 
-#, fuzzy
 #~ msgid "Swarm for {0}"
 #~ msgstr "搜尋: {0}"
 
@@ -6561,7 +6443,6 @@ msgstr "説明頁面"
 #~ "這個檔案已經擁有授權。如果你想要修改，點選核取方塊以確認您擁有版權，或是得"
 #~ "以 Creative Commons 授權發佈。"
 
-#, fuzzy
 #~ msgid "Permanently remove the license from this file"
 #~ msgstr "您確定要永遠移除這個檔案的授權嗎?"
 
@@ -6589,7 +6470,6 @@ msgstr "説明頁面"
 #~ msgid "Title of Work:"
 #~ msgstr "標題:"
 
-#, fuzzy
 #~ msgid "Please enter the copyright holder, copright year and title."
 #~ msgstr "請輸入您要發佈的檔案的版權所有者。"
 
@@ -6602,7 +6482,6 @@ msgstr "説明頁面"
 #~ msgid "Where do you want to store the verification URL?"
 #~ msgstr "您要將認證URL儲存在哪裡?"
 
-#, fuzzy
 #~ msgid "The verification file is hosted at the following URL:"
 #~ msgstr "我想要將認證檔案儲存在以下URL:"
 
@@ -6719,7 +6598,6 @@ msgstr "説明頁面"
 #~ msgid "Platform:"
 #~ msgstr "平臺"
 
-#, fuzzy
 #~ msgid "Description:"
 #~ msgstr "描述"
 
@@ -6745,7 +6623,6 @@ msgstr "説明頁面"
 #~ msgid "Support FrostWire and independent media content. Get PRO."
 #~ msgstr "支援 FrostWire 及獨立媒體內容，請購買PRO版。"
 
-#, fuzzy
 #~ msgid "Loading bittorrent Management..."
 #~ msgstr "載入連線管理..."
 
@@ -6757,7 +6634,6 @@ msgstr "説明頁面"
 #~ msgid "Sorry, but FrostWire was unable to restart your old downloads."
 #~ msgstr "抱歉，FrostWire 無法啟動原有下載。"
 
-#, fuzzy
 #~ msgid "Loading magnet Management..."
 #~ msgstr "載入連線管理..."
 
@@ -6767,18 +6643,15 @@ msgstr "説明頁面"
 #~ msgid "Cable/DSL"
 #~ msgstr "Cable/DSL"
 
-#, fuzzy
 #~ msgid "United States"
 #~ msgstr "更新"
 
-#, fuzzy
 #~ msgid "English"
 #~ msgstr "完成"
 
 #~ msgid "Loading Languages"
 #~ msgstr "載入語言"
 
-#, fuzzy
 #~ msgid "false"
 #~ msgstr "貼上"
 
@@ -6802,7 +6675,6 @@ msgstr "説明頁面"
 #~ "\n"
 #~ "共用這個資料夾?"
 
-#, fuzzy
 #~ msgid "Paste from Clipboard"
 #~ msgstr "複製到剪貼簿"
 
@@ -6895,7 +6767,6 @@ msgstr "説明頁面"
 #~ msgid "Cancel Scan"
 #~ msgstr "取消掃瞄"
 
-#, fuzzy
 #~ msgid ""
 #~ "Your search must be at least three characters long to avoid too many "
 #~ "meaningless results."
@@ -6927,7 +6798,6 @@ msgstr "説明頁面"
 #~ "changes?"
 #~ msgstr "您已經修改設定，是否需要保存?"
 
-#, fuzzy
 #~ msgid ""
 #~ "You have some songs in the playlist.  Would you like to clear them and "
 #~ "start a new playlist?"
