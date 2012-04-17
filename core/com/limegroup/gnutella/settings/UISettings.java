@@ -79,12 +79,8 @@ public final class UISettings extends LimeProps {
 	public static final IntSetting UI_LIBRARY_MAIN_DIVIDER_LOCATION =
 	        FACTORY.createIntSetting("UI_LIBRARY_MAIN_DIVIDER_LOCATION", -1);
 	
-	/**
-	 * Setting for the divider location between library and playlist.
-	 */
-	public static final IntSetting UI_LIBRARY_PLAY_LIST_TAB_DIVIDER_LOCATION =
-		FACTORY.createIntSetting("UI_LIBRARY_PLAY_LIST_TAB_DIVIDER_LOCATION",
-				300);
+	public static final IntSetting UI_LIBRARY_EXPLORER_DIVIDER_POSITION =
+	        FACTORY.createIntSetting("UI_LIBRARY_EXPLORER_DIVIDER_POSITION", -1);
 	
 	/**
 	 * Setting for the divider location between incoming query monitors and

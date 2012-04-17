@@ -31,7 +31,9 @@ import javax.swing.Box;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import com.limegroup.gnutella.gui.util.DividerLocationSettingUpdater;
 import com.limegroup.gnutella.settings.LibrarySettings;
+import com.limegroup.gnutella.settings.UISettings;
 
 /**
  * @author gubatron
@@ -64,7 +66,6 @@ public class LibraryLeftPanel extends JPanel {
         setLayout(new GridBagLayout());
 
         //Prepare a split pane with explorers
-        splitPane.setDividerLocation(LibrarySettings.EXPLORER_SPLIT_PANE_LAST_POSITION.getValue());
         splitPane.setTopComponent(libraryExplorer);
         splitPane.setBottomComponent(libraryPlaylists);
         splitPane.setAutoscrolls(true);
@@ -99,17 +100,10 @@ public class LibraryLeftPanel extends JPanel {
             @Override
             public void componentResized(ComponentEvent e) {
                 layoutComponents();
-                LibrarySettings.EXPLORER_SPLIT_PANE_LAST_POSITION.setValue(splitPane.getLastDividerLocation());
             }
         });
-
-        splitPane.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent arg0) {
-                //save position of the divider
-                LibrarySettings.EXPLORER_SPLIT_PANE_LAST_POSITION.setValue(splitPane.getDividerLocation());
-            }
-        });
+        
+        DividerLocationSettingUpdater.install(splitPane, UISettings.UI_LIBRARY_EXPLORER_DIVIDER_POSITION);
     }
 
     protected void layoutComponents() {
