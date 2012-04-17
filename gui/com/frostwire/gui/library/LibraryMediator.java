@@ -294,7 +294,7 @@ public class LibraryMediator {
 
     private JComponent getLibraryLeftPanel() {
         if (libraryLeftPanel == null) {
-            libraryLeftPanel = new LibraryLeftPanel(getLibraryExplorer(), getLibraryPlaylists(), getLibraryCoverArt());
+            libraryLeftPanel = new LibraryLeftPanel(getLibrarySearch(), getLibraryExplorer(), getLibraryPlaylists(), getLibraryCoverArt());
         }
         return libraryLeftPanel;
     }

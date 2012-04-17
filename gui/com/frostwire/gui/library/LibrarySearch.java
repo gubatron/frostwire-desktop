@@ -20,6 +20,7 @@ package com.frostwire.gui.library;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
@@ -44,7 +45,8 @@ import com.frostwire.alexandria.InternetRadioStation;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.bittorrent.TorrentUtil;
-import com.frostwire.gui.components.IconClearableAutoCompleteTextField;
+import com.frostwire.gui.components.SearchField;
+import com.frostwire.gui.components.searchfield.JXSearchField.SearchMode;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
@@ -58,7 +60,7 @@ public class LibrarySearch extends JPanel {
     private static final long serialVersionUID = 2266243762191789491L;
 
     private JLabel statusLabel;
-    private IconClearableAutoCompleteTextField searchField;
+    private SearchField searchField;
 
     private SearchRunnable currentSearchRunnable;
 
@@ -141,12 +143,24 @@ public class LibrarySearch extends JPanel {
         c.weightx = 1;
         add(statusLabel, c);
 
-        searchField = new IconClearableAutoCompleteTextField(10, GUIMediator.getThemeImage("search_tab"));
-        c = new GridBagConstraints();
-        c.anchor = GridBagConstraints.LINE_END;
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        add(searchField, c);
+        searchField = new SearchField();
+        searchField.setSearchMode(SearchMode.INSTANT);
+        searchField.setInstantSearchDelay(50); 
+ 
+        searchField.addActionListener(new ActionListener() {
+            private SearchLibraryAction a = new SearchLibraryAction();
+            
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (searchField.getText().length() == 0) {
+                    a.perform(".");
+                } else {
+                    a.actionPerformed(null);
+                }
+            }
+        });
 
+        /*
         searchField.addKeyListener(new KeyAdapter() {
             private Action a = new SearchLibraryAction();
 
@@ -166,7 +180,7 @@ public class LibrarySearch extends JPanel {
                     lastSearch = System.currentTimeMillis();
                 }
             }
-        });
+        });*/
         
         searchField.addFocusListener(new FocusListener() {
 			
@@ -209,9 +223,8 @@ public class LibrarySearch extends JPanel {
                 return true;
             }
         }
-
-        public void actionPerformed(ActionEvent e) {
-            String query = searchField.getText().trim();
+        
+        public void perform(String query) {
             if (query.length() == 0) {
                 searchField.getToolkit().beep();
                 return;
@@ -240,11 +253,11 @@ public class LibrarySearch extends JPanel {
             Playlist playlist = null;
             
             if (directoryHolder instanceof StarredDirectoryHolder) {
-            	playlist = LibraryMediator.getLibrary().getStarredPlaylist();
+                playlist = LibraryMediator.getLibrary().getStarredPlaylist();
             } else {
-            	playlist = LibraryMediator.instance().getLibraryPlaylists().getSelectedPlaylist();
+                playlist = LibraryMediator.instance().getLibraryPlaylists().getSelectedPlaylist();
             }
-            	
+                
             if (playlist != null) {
                 currentSearchRunnable = new SearchPlaylistItemsRunnable(query,playlist);
                 BackgroundExecutorService.schedule(currentSearchRunnable);
@@ -254,6 +267,11 @@ public class LibrarySearch extends JPanel {
             if (device != null) {
                 LibraryDeviceTableMediator.instance().filter(query);
             }
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            String query = searchField.getText().trim();
+            perform(query);
         }
     }
 
@@ -686,5 +704,9 @@ public class LibrarySearch extends JPanel {
             };
             GUIMediator.safeInvokeLater(r);
         }
+    }
+
+    public SearchField getSearchField() {
+        return searchField;
     }
 }

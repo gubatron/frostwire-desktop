@@ -26,7 +26,6 @@ import java.awt.event.ComponentEvent;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
-import com.frostwire.gui.components.SearchField;
 import com.limegroup.gnutella.gui.util.DividerLocationSettingUpdater;
 import com.limegroup.gnutella.settings.UISettings;
 
@@ -42,13 +41,15 @@ public class LibraryLeftPanel extends JPanel {
     public static final int MIN_WIDTH = 155;
     public static final int MAX_WIDTH = 300;
 
+    private final LibrarySearch librarySearch;
     private final LibraryExplorer libraryExplorer;
     private final LibraryPlaylists libraryPlaylists;
     private final LibraryCoverArt libraryCoverArt;
 
     private final JSplitPane splitPane;
 
-    public LibraryLeftPanel(LibraryExplorer libraryExplorer, LibraryPlaylists libraryPlaylists, LibraryCoverArt libraryCoverArt) {
+    public LibraryLeftPanel(LibrarySearch librarySearch, LibraryExplorer libraryExplorer, LibraryPlaylists libraryPlaylists, LibraryCoverArt libraryCoverArt) {
+        this.librarySearch = librarySearch;
         this.libraryExplorer = libraryExplorer;
         this.libraryPlaylists = libraryPlaylists;
         this.libraryCoverArt = libraryCoverArt;
@@ -60,8 +61,7 @@ public class LibraryLeftPanel extends JPanel {
     protected void setupUI() {
         setLayout(new BorderLayout());
         
-        SearchField searchField = new SearchField();
-        add(searchField, BorderLayout.PAGE_START);
+        add(librarySearch.getSearchField(), BorderLayout.PAGE_START);
 
         //Prepare a split pane with explorers
         splitPane.setTopComponent(libraryExplorer);

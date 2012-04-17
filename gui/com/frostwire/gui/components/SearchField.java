@@ -9,4 +9,9 @@ public class SearchField extends JXSearchField {
     public SearchField() {
 
     }
+
+    public void addToDictionary() {
+        // TODO Auto-generated method stub
+        
+    }
 }
