@@ -18,21 +18,15 @@
 
 package com.frostwire.gui.library;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
-import javax.swing.Box;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 import com.limegroup.gnutella.gui.util.DividerLocationSettingUpdater;
-import com.limegroup.gnutella.settings.LibrarySettings;
 import com.limegroup.gnutella.settings.UISettings;
 
 /**
@@ -63,38 +57,21 @@ public class LibraryLeftPanel extends JPanel {
     }
 
     protected void setupUI() {
-        setLayout(new GridBagLayout());
+        setLayout(new BorderLayout());
 
         //Prepare a split pane with explorers
         splitPane.setTopComponent(libraryExplorer);
         splitPane.setBottomComponent(libraryPlaylists);
         splitPane.setAutoscrolls(true);
 
-        GridBagConstraints c = new GridBagConstraints();
-        c.anchor = GridBagConstraints.PAGE_START;
-        c.fill = GridBagConstraints.BOTH;
-        c.gridx = 0;
-        c.gridy = 0;
-        c.insets = new Insets(0, 0, 0, 0);
-        c.weightx = 1.0;
-        c.weighty = 1.0;
+        add(splitPane, BorderLayout.CENTER);
 
-        add(splitPane, c);
-
-        c = new GridBagConstraints();
-        c.anchor = GridBagConstraints.PAGE_END;
-        c.fill = GridBagConstraints.BOTH;
-        c.gridx = 0;
-        c.gridy = 1;
-        c.insets = new Insets(0, 0, 0, 0);
-        c.weightx = 1.0;
-        c.weighty = 1.0;
-        c.gridheight = 1;
-        c.gridwidth = 1;
-
-        add(Box.createVerticalStrut(2));
-
-        add(libraryCoverArt, c);
+        Dimension minSize = new Dimension(MIN_WIDTH, MIN_WIDTH);
+        Dimension maxSize = new Dimension(MAX_WIDTH, MAX_WIDTH);
+        libraryCoverArt.setPreferredSize(minSize);
+        libraryCoverArt.setMinimumSize(minSize);
+        libraryCoverArt.setMaximumSize(maxSize);
+        add(libraryCoverArt, BorderLayout.PAGE_END);
 
         addComponentListener(new ComponentAdapter() {
             @Override
@@ -107,20 +84,11 @@ public class LibraryLeftPanel extends JPanel {
     }
 
     protected void layoutComponents() {
-        Dimension size = getSize();
-
-        // layout files and playlists takes whatever is left in height
-        splitPane.setSize(new Dimension(size.width - 4, size.height - (size.width + 4)));
-        splitPane.setPreferredSize(new Dimension(size.width - 4, size.height - (size.width + 4)));
-        splitPane.setMinimumSize(new Dimension(MIN_WIDTH, size.height - (MAX_WIDTH + 4)));
-
-        // the size of the cover art is proportional to the width available.
-        int coverArtWidth = size.width > MAX_WIDTH ? MAX_WIDTH : size.width - 4;
-        libraryCoverArt.setLocation(0, size.height - coverArtWidth);
-        libraryCoverArt.setSize(coverArtWidth, coverArtWidth);
-        libraryCoverArt.setPreferredSize(new Dimension(coverArtWidth, coverArtWidth));
-        libraryCoverArt.setMaximumSize(new Dimension(coverArtWidth, coverArtWidth));
-
-        repaint();
+        Dimension size = libraryCoverArt.getSize();
+        size.height = size.width;
+        libraryCoverArt.setSize(size);
+        libraryCoverArt.setPreferredSize(size);
+        
+        revalidate();
     }
 }
