@@ -14,6 +14,7 @@ import javax.accessibility.Accessible;
 import javax.swing.JComponent;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.TextUI;
+import javax.swing.plaf.basic.BasicTextFieldUI;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Caret;
 import javax.swing.text.DefaultHighlighter.DefaultHighlightPainter;
@@ -103,6 +104,7 @@ public abstract class PromptTextUI extends TextUI {
 	public JTextComponent getPromptComponent(JTextComponent txt) {
 		if (promptComponent == null) {
 			promptComponent = createPromptComponent();
+			promptComponent.setUI(new BasicTextFieldUI());
 		}
 		if (txt.isFocusOwner() && PromptSupport.getFocusBehavior(txt) == FocusBehavior.HIDE_PROMPT) {
 			promptComponent.setText(null);
