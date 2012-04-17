@@ -1,6 +1,14 @@
 frostwire (5.3.5) stable; urgency=high
   * Drag and drop files and folders to your Android device running FrostWire.
     You can upload files to 3 different devices at the same time.
+  * Glitch saving last location of splitbar on the Library explorer fixed.
+  * Removes flickering when resizing library explorer
+  * When the FrostWire window is resized to be on the small side the search
+    filters no longer overlap the "Open" and "Send to" buttons.
+  * Search box on the Library is now on the upper left and 
+    offers contextual hint.
+  * Search box on the Library now has a clear button.
+  * Playlists are now sorted alphabetically.
   * German translation updated.
   * French translation updated.
   * Norwegian translation updated.
@@ -15,7 +23,7 @@ frostwire (5.3.5) stable; urgency=high
   * Korean translation updated.
   * Italian translation updated.
 
- -- FrostWire Team <contact@frostwire.com>  Wed, 11 Apr 2012 18:00:00 -0500
+ -- FrostWire Team <contact@frostwire.com>  Tue, 17 Apr 2012 18:00:00 -0500
 
 frostwire (5.3.4) stable; urgency=high
   * New frostwire.exe launcher with extended Unicode support now able to
