@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 import javax.swing.JComponent;
+import javax.swing.JScrollPane;
 import javax.swing.border.Border;
 
 import org.pushingpixels.substance.api.SubstanceSkin;
@@ -51,6 +52,10 @@ public class FueledSkinWatermark implements SubstanceWatermark {
             return;
         }
 
+        if (c instanceof JScrollPane) {
+            return;
+        }
+
         int darkDarkNoise = Integer.MAX_VALUE;
         int darkNoise = Integer.MAX_VALUE;
         int lightNoise = Integer.MAX_VALUE;
@@ -79,10 +84,27 @@ public class FueledSkinWatermark implements SubstanceWatermark {
         }
 
         if (clipped) {
-            drawImage(graphics, getIndexedImage(1, lightNoise, darkNoise, darkDarkNoise), x, y, width, height, dx, dy);
-            RoundRectangle2D shape = new RoundRectangle2D.Float(x, y, width, height, 16, 16);
-            graphics.setClip(shape);
-            drawImage(graphics, getIndexedImage(0, lightNoise, darkNoise, darkDarkNoise), x, y, width, height, dx, dy);
+            JScrollPane sp = isInsideScrollPane(c);
+            if (sp != null) {
+                drawImage(graphics, getIndexedImage(1, lightNoise, darkNoise, darkDarkNoise), x, y, width, height, dx, dy);
+                Image img = getIndexedImage(0, lightNoise, darkNoise, darkDarkNoise);
+                if (width > 32 && height > 32) {
+                    drawImage(graphics, img, x + 5, y, width - 10, 2, dx, dy);
+                    drawImage(graphics, img, x + 4, y + 2, width - 8, 2, dx, dy);
+                    drawImage(graphics, img, x + 2, y + 4, width - 4, 2, dx, dy);
+                    drawImage(graphics, img, x, y + 6, width, height - 12, dx, dy);
+                    drawImage(graphics, img, x + 2, height - 6, width - 4, 2, dx, dy);
+                    drawImage(graphics, img, x + 4, height - 4, width - 8, 2, dx, dy);
+                    drawImage(graphics, img, x + 5, height - 10, width - 10, 2, dx, dy);
+                } else {
+                    drawImage(graphics, img, x, y, width, height, dx, dy);
+                }
+            } else {
+                drawImage(graphics, getIndexedImage(1, lightNoise, darkNoise, darkDarkNoise), x, y, width, height, dx, dy);
+                RoundRectangle2D shape = new RoundRectangle2D.Float(x, y, width, height, 16, 16);
+                graphics.setClip(shape);
+                drawImage(graphics, getIndexedImage(0, lightNoise, darkNoise, darkDarkNoise), x, y, width, height, dx, dy);
+            }
         } else {
             drawImage(graphics, getIndexedImage(0, lightNoise, darkNoise, darkDarkNoise), x, y, width, height, dx, dy);
         }
@@ -98,7 +120,9 @@ public class FueledSkinWatermark implements SubstanceWatermark {
 
         for (int i = 0; i <= nx; i++) {
             for (int j = 0; j <= ny; j++) {
-                graphics.drawImage(image, x + i * WATERMARK_WIDTH, y + j * WATERMARK_HEIGHT, null);
+                int w = Math.min(WATERMARK_WIDTH, width - i * WATERMARK_WIDTH);
+                int h = Math.min(WATERMARK_HEIGHT, height - j * WATERMARK_HEIGHT);
+                graphics.drawImage(image, x + i * WATERMARK_WIDTH, y + j * WATERMARK_HEIGHT, w, h, null);
             }
         }
 
@@ -254,6 +278,14 @@ public class FueledSkinWatermark implements SubstanceWatermark {
             return d != Integer.MAX_VALUE ? d + 1 : Integer.MAX_VALUE;
         } else {
             return Integer.MAX_VALUE;
+        }
+    }
+
+    private JScrollPane isInsideScrollPane(Component c) {
+        if (c.getParent() instanceof JScrollPane) {
+            return (JScrollPane) c.getParent();
+        } else {
+            return c.getParent() != null && c.getParent() instanceof Component ? isInsideScrollPane((Component) c.getParent()) : null;
         }
     }
 }

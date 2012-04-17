@@ -1,7 +1,6 @@
 package com.limegroup.gnutella.gui.search;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -25,6 +24,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.text.BadLocationException;
 
@@ -37,7 +37,6 @@ import com.frostwire.gui.filters.TableLineFilter;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.KeyProcessingTextField;
@@ -74,7 +73,7 @@ class SearchInputPanel extends JPanel {
      */
     /**private final Ditherer DITHERER = new Ditherer(62, SkinHandler.getSearchPanelBG1(), SkinHandler.getSearchPanelBG2());*/
 
-    private JPanel searchEntry;
+    //private JPanel searchEntry;
 
     /**
      * The listener for new searches.
@@ -86,19 +85,24 @@ class SearchInputPanel extends JPanel {
 	private SearchFilterPanel _filterPanel;
 	
     SearchInputPanel() {
-        super(new BorderLayout(0, 5));
-
         final ActionListener schemaListener = new SchemaListener();
 
-        searchEntry = createSearchEntryPanel();
-        searchEntry.setBorder(BorderFactory.createEmptyBorder(0, 3, 5, 2));
+        SEARCH_FIELD.addActionListener(SEARCH_LISTENER);
+        SEARCH_FIELD.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                SEARCH_LISTENER.actionPerformed(null);
+            }
+        });
+        
+        createDefaultSearchPanel();
+        
+        setBorder(BorderFactory.createEmptyBorder(0, 3, 5, 2));
         //panelize(searchEntry);
-
-        add(searchEntry, BorderLayout.PAGE_START);
 
         schemaListener.actionPerformed(null);
         
-        add(GUIMediator.getVerticalSeparator());
+        //add(GUIMediator.getVerticalSeparator());
     }
 
 
@@ -163,38 +167,29 @@ class SearchInputPanel extends JPanel {
     }
     */
 
-    private JPanel createSearchEntryPanel() {
-        SEARCH_FIELD.addActionListener(SEARCH_LISTENER);
-        SEARCH_FIELD.addMouseListener(new MouseAdapter() {
-        	@Override
-        	public void mouseClicked(MouseEvent e) {
-        		SEARCH_LISTENER.actionPerformed(null);
-        	}
-		});
-        
-        return createDefaultSearchPanel();
-    }
-
     /**
      * Creates the default search input of:
      *    Filename
      *    [   input box  ]
      */
-    private JPanel createDefaultSearchPanel() {
-        JPanel fullPanel = new BoxPanel(BoxPanel.Y_AXIS);
-        fullPanel.add(SCHEMA_BOX);
-        fullPanel.add(Box.createVerticalStrut(3));
-        fullPanel.add(GUIUtils.left(SEARCH_FIELD));
-        fullPanel.add(Box.createVerticalStrut(5));
-        fullPanel.add(createSearchButtonPanel());
-        fullPanel.add(createSearchOptionsPanel());
-        
-        
-        return fullPanel;
+    private void createDefaultSearchPanel() {
+        setLayout(new BoxLayout(this, BoxPanel.Y_AXIS));        
+        add(SCHEMA_BOX);
+        add(Box.createVerticalStrut(3));
+        add(SEARCH_FIELD);
+        add(Box.createVerticalStrut(5));
+        add(createSearchButtonPanel());
+        JXCollapsiblePane cp = createSearchOptionsPanel();
+        JPanel p = new JPanel(new BorderLayout());
+        p.add(cp, BorderLayout.PAGE_START);
+        JScrollPane sp = new JScrollPane(p);
+        sp.setBorder(BorderFactory.createEmptyBorder());
+        Dimension d = new Dimension(100, 70000);
+        sp.setPreferredSize(d);
+        add(sp);
     }
     
-
-    private Component createSearchOptionsPanel() {
+    private JXCollapsiblePane createSearchOptionsPanel() {
 		SEARCH_OPTIONS_COLLAPSIBLE_PANEL = new JXCollapsiblePane();
 		
 		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setCollapsed(ApplicationSettings.SEARCH_OPTIONS_COLLAPSED.getValue());

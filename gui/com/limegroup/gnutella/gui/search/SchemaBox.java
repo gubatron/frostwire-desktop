@@ -116,6 +116,11 @@ final class SchemaBox extends JPanel {
         p.add(SCHEMAS);
         p.add(Box.createHorizontalStrut(1));
         add(p);
+        
+        Dimension d = getPreferredSize();
+        d.height += 10;
+        setPreferredSize(d);
+        setMinimumSize(d);
     }
 
     /**
