@@ -26,6 +26,7 @@ import java.awt.event.ComponentEvent;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
+import com.frostwire.gui.components.SearchField;
 import com.limegroup.gnutella.gui.util.DividerLocationSettingUpdater;
 import com.limegroup.gnutella.settings.UISettings;
 
@@ -58,6 +59,9 @@ public class LibraryLeftPanel extends JPanel {
 
     protected void setupUI() {
         setLayout(new BorderLayout());
+        
+        SearchField searchField = new SearchField();
+        add(searchField, BorderLayout.PAGE_START);
 
         //Prepare a split pane with explorers
         splitPane.setTopComponent(libraryExplorer);
