@@ -32,14 +32,11 @@ import org.jdesktop.swingx.JXCollapsiblePane;
 import org.limewire.setting.BooleanSetting;
 
 import com.frostwire.gui.components.GoogleIconSearchField;
-import com.frostwire.gui.components.IconSearchField;
 import com.frostwire.gui.filters.TableLineFilter;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.BoxPanel;
-import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
-import com.limegroup.gnutella.gui.KeyProcessingTextField;
 import com.limegroup.gnutella.gui.themes.SkinCustomUI;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.settings.ApplicationSettings;
@@ -61,8 +58,7 @@ class SearchInputPanel extends JPanel {
     /**
      * The sole input text field that is at the top of all searches.
      */
-    //private final SearchField SEARCH_FIELD = new SearchField(14);
-    private final IconSearchField SEARCH_FIELD = new GoogleIconSearchField(17,GUIMediator.getThemeImage("search_tab"));
+    private final GoogleIconSearchField SEARCH_FIELD = new GoogleIconSearchField();
 
     /**
      * The box that holds the schemas for searching.
@@ -103,31 +99,6 @@ class SearchInputPanel extends JPanel {
         schemaListener.actionPerformed(null);
         
         //add(GUIMediator.getVerticalSeparator());
-    }
-
-
-    /**
-     * Gets the KeyProcessingTextField that key events can be forwarded to.
-     */
-    KeyProcessingTextField getForwardingSearchField() {
-        if (isNormalSearchType()) {
-            return SEARCH_FIELD;
-        }
-        return null;
-    }
-
-    /**
-     * Determines if a key event can be forwarded to the search.
-     */
-    boolean isKeyEventForwardable() {
-        return isNormalSearchType();
-    }
-
-    /**
-     * Determines if keyword is selected.
-     */
-    boolean isNormalSearchType() {
-        return true;//PANE.getSelectedIndex() == 0;
     }
 
     void requestSearchFocusImmediately() {
