@@ -1,14 +1,17 @@
 frostwire (5.3.5) stable; urgency=high
   * Drag and drop files and folders to your Android device running FrostWire.
     You can upload files to 3 different devices at the same time.
-  * Glitch saving last location of splitbar on the Library explorer fixed.
-  * Removes flickering when resizing library explorer
-  * When the FrostWire window is resized to be on the small side the search
+  * Fixes glitch where the file explorer would reset the split pane position.
+  * Removes flickering on album arts when resizing library explorer
+  * When the FrostWire window is resized to be very small the search
     filters no longer overlap the "Open" and "Send to" buttons.
   * Search box on the Library is now on the upper left and 
     offers contextual hint.
-  * Search box on the Library now has a clear button.
+  * Search boxes everywhere now have a clear button.
   * Playlists are now sorted alphabetically.
+  * Option panes UI upgrades.
+  * Better suggestion for a playlist name when a folder is dropped on
+    "New Playlist".
   * German translation updated.
   * French translation updated.
   * Norwegian translation updated.
@@ -22,6 +25,7 @@ frostwire (5.3.5) stable; urgency=high
   * Portuguese (Brazilian) updated.
   * Korean translation updated.
   * Italian translation updated.
+  * Hindi translation updated.
 
  -- FrostWire Team <contact@frostwire.com>  Tue, 17 Apr 2012 18:00:00 -0500
 

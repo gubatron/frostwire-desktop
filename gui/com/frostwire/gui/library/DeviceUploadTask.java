@@ -79,7 +79,7 @@ public class DeviceUploadTask extends DeviceTask {
                         if (getProgress() % 5 == 0) {
                             GUIMediator.safeInvokeLater(new Runnable() {
                                 public void run() {
-                                    String status = String.format("%s to %s %d%% - %s", I18n.tr("Uploading"), device.getName(), getProgress(), name);
+                                    String status = String.format("%d%% %s to %s - %s", getProgress(), I18n.tr("Uploading"), device.getName(), name);
                                     LibraryMediator.instance().getLibrarySearch().pushStatus(status);
                                 }
                             });

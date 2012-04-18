@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-12 17:19-0400\n"
+"POT-Creation-Date: 2012-04-18 19:18-0400\n"
 "PO-Revision-Date: 2012-04-12 10:21-0500\n"
 "Last-Translator: Lee <leeooilu@hotmail.com>\n"
 "Language-Team: none\n"
@@ -389,7 +389,7 @@ msgstr "顯示源代碼細節"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:125
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:126
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:628
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:629
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:809
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:810
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:682
@@ -494,7 +494,7 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:273
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:378
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:701
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:719
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:77
 msgid "Are you sure?"
 msgstr "您確定？"
@@ -759,8 +759,8 @@ msgstr "設定上載速度"
 
 #. advanced options
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:339
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:285
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:319
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:261
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:295
 msgid "Advanced"
 msgstr "高級"
 
@@ -1014,7 +1014,7 @@ msgstr "選擇您要發送的內容"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:166
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:49
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:61
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:60
 msgid "Download"
 msgstr "下載"
 
@@ -1174,6 +1174,8 @@ msgid "globalmanager.download.remove.veto"
 msgstr "globalmanager.download.remove.veto"
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:20
+#: gui/com/frostwire/gui/library/DownloadTask.java:76
+#: gui/com/frostwire/gui/library/DownloadTask.java:110
 msgid "Downloading"
 msgstr "下載中"
 
@@ -1195,7 +1197,7 @@ msgstr "已完成"
 msgid "Crawling"
 msgstr "緩慢進行中"
 
-#: gui/com/frostwire/gui/components/GoogleIconSearchField.java:50
+#: gui/com/frostwire/gui/components/GoogleSearchField.java:38
 msgid "Hints by Google"
 msgstr "Google的提示"
 
@@ -1207,9 +1209,86 @@ msgstr "Google的提示"
 msgid "Max"
 msgstr "Max"
 
+#. *
+#. * The undo action.
+#.
+#: gui/com/frostwire/gui/components/SearchField.java:222
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:37
+msgid "Undo"
+msgstr "復原"
+
+#. *
+#. * The cut action
+#.
+#: gui/com/frostwire/gui/components/SearchField.java:237
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:51
+msgid "Cut"
+msgstr "切"
+
+#. *
+#. * The copy action.
+#.
+#: gui/com/frostwire/gui/components/SearchField.java:252
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:65
+msgid "Copy"
+msgstr "複製"
+
+#. *
+#. * The paste action.
+#.
+#: gui/com/frostwire/gui/components/SearchField.java:267
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:79
+#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:166
+msgid "Paste"
+msgstr "貼"
+
+#. *
+#. * The delete action.
+#.
+#: gui/com/frostwire/gui/components/SearchField.java:282
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:420
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:422
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:868
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:552
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:707
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:762
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:93
+msgid "Delete"
+msgstr "刪除"
+
+#. *
+#. * The select all action.
+#.
+#: gui/com/frostwire/gui/components/SearchField.java:297
+#: gui/com/limegroup/gnutella/gui/CheckBoxList.java:620
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:107
+msgid "Select All"
+msgstr "選擇全部"
+
+#: gui/com/frostwire/gui/components/SearchField.java:648
+#: gui/com/limegroup/gnutella/gui/ClearableAutoCompleteTextField.java:326
+msgid "Clear History"
+msgstr "清除歷史紀錄"
+
+#: gui/com/frostwire/gui/components/searchfield/RecentSearches.java:320
+msgid "SearchField.noRecentsText"
+msgstr ""
+
+#: gui/com/frostwire/gui/components/searchfield/RecentSearches.java:324
+msgid "SearchField.recentsMenuTitle"
+msgstr ""
+
+#: gui/com/frostwire/gui/components/searchfield/RecentSearches.java:335
+msgid "SearchField.clearRecentsText"
+msgstr ""
+
+#: gui/com/frostwire/gui/components/searchfield/SearchFieldUI.java:410
+msgid "SearchField.popupSource"
+msgstr ""
+
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:144
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:188
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:173
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:169
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:47
 #: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:421
 msgid "Options"
@@ -1257,17 +1336,9 @@ msgid "Waiting for device authorization..."
 msgstr ""
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:70
+#: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
 msgid "Uploading"
 msgstr "已上載"
-
-#: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
-msgid "Uploading "
-msgstr "下載中"
-
-#: gui/com/frostwire/gui/library/DownloadTask.java:76
-#: gui/com/frostwire/gui/library/DownloadTask.java:109
-msgid "Downloading "
-msgstr "下載中"
 
 #: gui/com/frostwire/gui/library/InternetRadioDirectoryHolder.java:40
 msgid "Radio"
@@ -1294,7 +1365,7 @@ msgstr "修改日期"
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:234
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:159
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:261
-#: gui/com/frostwire/gui/library/LibrarySearch.java:198
+#: gui/com/frostwire/gui/library/LibrarySearch.java:181
 #: gui/com/frostwire/gui/tabs/SearchDownloadTab.java:42
 msgid "Search"
 msgstr "搜尋"
@@ -1309,39 +1380,39 @@ msgid "Save Selected Files To Folder"
 msgstr "將所選檔案保存到文件夾"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:144
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:269
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:287
 msgid "tracks"
 msgstr "音軌"
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:199
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:200
 msgid "Finished Downloads"
 msgstr "下載已完成"
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:201
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:202
 msgid "Devices"
 msgstr "裝置"
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:223
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:155
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:224
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:158
 msgid "Configure Options"
 msgstr "配置選項"
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:223
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:156
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:224
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:159
 msgid "You can configure the FrostWire's Options."
 msgstr "您可以為FrostWire選項進行配置。"
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:606
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:654
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:607
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:672
 msgid "Refresh"
 msgstr "刷新"
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:607
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:655
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:608
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:673
 msgid "Refresh selected"
 msgstr "刷新已選"
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:629
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:630
 msgid "Open Library Folder"
 msgstr "打開媒體庫文件夾"
 
@@ -1360,19 +1431,6 @@ msgstr "移至回收站"
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:419
 msgid "Move to Trash"
 msgstr "移至垃圾箱"
-
-#. *
-#. * The delete action.
-#.
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:420
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:422
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:868
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:552
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:689
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:762
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:93
-msgid "Delete"
-msgstr "刪除"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:474
 msgid ""
@@ -1430,7 +1488,7 @@ msgid "Delete Selected Files"
 msgstr "刪除所選檔案"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:886
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:719
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:737
 msgid "Rename"
 msgstr "重新命名"
 
@@ -1491,43 +1549,43 @@ msgstr "複製資料流URL"
 msgid "Loading Library Window..."
 msgstr "媒體庫窗口加載中..."
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:162
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:165
 msgid "New Playlist"
 msgstr "新播放清單"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:162
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:165
 msgid "Creates a new Playlist"
 msgstr "建立新播放清單"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:383
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:401
 msgid "Open Playlist (.m3u)"
 msgstr "打開播放清單（.m3u）"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:456
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:474
 msgid "Save Playlist As"
 msgstr "保存播放清單為"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:468
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:486
 #, java-format
 msgid ""
 "Warning: a file with the name {0} already exists in the folder. Overwrite "
 "this file?"
 msgstr "警告：名為{0}的檔案已經存在文件夾中。覆寫此檔案？"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:669
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:687
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:836
 msgid "Refresh Audio Properties"
 msgstr "刷新音頻屬性"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:670
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:688
 msgid "Refresh the audio properties based on ID3 tags of selected items"
 msgstr "根據所選項目的ID3標籤刷新音頻屬性"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:690
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:708
 msgid "Delete Playlist"
 msgstr "刪除播放清單"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:701
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:719
 msgid ""
 "Are you sure you want to delete the playlist?\n"
 "(No files will be deleted)"
@@ -1535,38 +1593,38 @@ msgstr ""
 "您確定要刪除播放清單？\n"
 "（沒有檔案會被刪除）"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:720
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:738
 msgid "Rename Playlist"
 msgstr "重新命名播放清單"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:748
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:766
 msgid "Playlist Files (*.m3u)"
 msgstr "播放清單檔案（*.m3u）"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:757
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:775
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:790
 msgid "Import .m3u to Playlist"
 msgstr "輸入.m3u至播放清單"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:758
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:776
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:791
 msgid "Import a .m3u file into the selected playlist"
 msgstr "輸入某.m3u檔案至所選播放清單"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:772
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:790
 msgid "Import .m3u to New Playlist"
 msgstr "輸入.m3u至新播放清單"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:773
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:791
 msgid "Import a .m3u file to a new playlist"
 msgstr "輸入某.m3u檔案至新播放清單"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:787
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:805
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:805
 msgid "Export Playlist to .m3u"
 msgstr "輸出播放清單至.m3u"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:788
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:806
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:806
 msgid "Export this playlist into a .m3u file"
 msgstr "輸出此播放清單至某.m3u檔案"
@@ -1610,8 +1668,12 @@ msgstr "根據ID3標籤刷新音頻屬性"
 msgid "search results"
 msgstr "搜尋結果"
 
+#: gui/com/frostwire/gui/library/LibrarySearch.java:673
+msgid "Search in "
+msgstr "搜尋"
+
 #: gui/com/frostwire/gui/library/LibraryUtils.java:69
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:300
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:276
 #: gui/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:15
 msgid "Importing"
 msgstr "輸入中"
@@ -1638,23 +1700,23 @@ msgstr "錯誤輸入電台，從"
 msgid "Holds the Results for "
 msgstr "保存結果，為"
 
-#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:187
+#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:178
 msgid "Library Folders"
 msgstr "媒體庫文件夾"
 
-#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:368
+#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:359
 msgid "Legend"
 msgstr "說明"
 
-#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:377
+#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:368
 msgid "Folder and subfolders are included in the Library."
 msgstr "文件夾及子文件夾都包含在媒體庫內。"
 
-#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:391
+#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:382
 msgid "Folder is not included and no subfolders are included in the Library."
 msgstr "文件夾不包含在內，且沒有子文件夾包含在媒體庫內。"
 
-#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:399
+#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:391
 msgid "Folder's files and some subfolders are included in the Library."
 msgstr "文件夾的檔案和一些子文件夾包含在媒體庫內。"
 
@@ -1723,7 +1785,7 @@ msgstr "顯示我們的社區聊天"
 
 #. library
 #: gui/com/frostwire/gui/tabs/LibraryTab.java:33
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:288
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:264
 msgid "Library"
 msgstr "媒體庫"
 
@@ -1856,14 +1918,6 @@ msgid ""
 "Inc."
 msgstr "BitTorrent、BitTorrent標誌，以及源代碼都是BitTorrent公司的商標。"
 
-#. *
-#. * The select all action.
-#.
-#: gui/com/limegroup/gnutella/gui/CheckBoxList.java:620
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:107
-msgid "Select All"
-msgstr "選擇全部"
-
 #: gui/com/limegroup/gnutella/gui/CheckBoxList.java:622
 msgid "Marks all Items as Selected"
 msgstr "標記所有項目為已選"
@@ -1875,10 +1929,6 @@ msgstr "取消選擇全部"
 #: gui/com/limegroup/gnutella/gui/CheckBoxList.java:647
 msgid "Deselects all Items in the List"
 msgstr "取消選擇清單上的所有項目"
-
-#: gui/com/limegroup/gnutella/gui/ClearableAutoCompleteTextField.java:326
-msgid "Clear History"
-msgstr "清除歷史紀錄"
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:84
 msgid "Send this file to a friend"
@@ -2053,10 +2103,6 @@ msgstr "TB"
 msgid "KB/s"
 msgstr "KB/秒"
 
-#: gui/com/limegroup/gnutella/gui/IndentingPanel.java:134
-msgid "More Search Options"
-msgstr "更多搜尋選項"
-
 #. Load up the HTML engine.
 #: gui/com/limegroup/gnutella/gui/Initializer.java:307
 msgid "Loading HTML Engine..."
@@ -2169,35 +2215,6 @@ msgstr "幫助翻譯FrostWire"
 #: gui/com/limegroup/gnutella/gui/LanguageWindow.java:202
 msgid "Show Language in status bar"
 msgstr "在狀態欄顯示語言"
-
-#. *
-#. * The undo action.
-#.
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:37
-msgid "Undo"
-msgstr "復原"
-
-#. *
-#. * The cut action
-#.
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:51
-msgid "Cut"
-msgstr "切"
-
-#. *
-#. * The copy action.
-#.
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:65
-msgid "Copy"
-msgstr "複製"
-
-#. *
-#. * The paste action.
-#.
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:79
-#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:166
-msgid "Paste"
-msgstr "貼"
 
 #: gui/com/limegroup/gnutella/gui/MessageResourceHandler.java:10
 msgid "Download Page"
@@ -3552,105 +3569,104 @@ msgstr "恢復默認"
 msgid "Revert All Settings to the Factory Defaults"
 msgstr "將所有設置還原至出廠默認"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:198
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:194
 msgid ""
 "You have made changes to some of FrostWire's settings. Would you like to "
 "save these changes?"
 msgstr "您更改了FrostWire的一些設定。您是否要保存這些變更？"
 
-#. set text before adding the document listener
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:231
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:224
 msgid "Search here"
 msgstr "在此搜尋"
 
 #. bittorrent
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:283
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:259
 msgid "BitTorrent"
 msgstr "BitTorrent"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:284
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:260
 msgid "Basic"
 msgstr "基本"
 
 #. search options
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:291
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:267
 msgid "Searching"
 msgstr "搜尋"
 
 #. status bar
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:295
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:271
 msgid "Status Bar"
 msgstr "狀態欄"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:299
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:275
 msgid "iTunes"
 msgstr "iTunes"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:304
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:280
 msgid "Helper Apps"
 msgstr "幫助程序"
 
 #. view options
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:308
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:284
 msgid "View"
 msgstr "檢視"
 
 #. community chat
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:312
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:288
 #: gui/com/limegroup/gnutella/gui/options/panes/ChatCommunityPaneItem.java:20
 msgid "Community Chat"
 msgstr "社區聊天"
 
 #. filter options
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:315
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:291
 msgid "Filters"
 msgstr "篩選器"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:316
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:292
 msgid "Keywords"
 msgstr "關鍵字"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:320
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:296
 msgid "Updates"
 msgstr "更新"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:321
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:297
 msgid "Firewall"
 msgstr "防火牆"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:322
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:298
 msgid "Proxy"
 msgstr "代理伺服器"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:323
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:299
 #: gui/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:35
 msgid "Network Interface"
 msgstr "網絡介面"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:325
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:301
 #: gui/com/limegroup/gnutella/gui/shell/ShellAssociationManager.java:58
 msgid "File Associations"
 msgstr "檔案關連"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:329
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:305
 msgid "System Boot"
 msgstr "系統啟動"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:332
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:308
 msgid "System Tray"
 msgstr "系統托盤"
 
 #. debug
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:335
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:311
 #: gui/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:74
 msgid "Bug Reports"
 msgstr "錯誤報告"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsMediator.java:71
+#: gui/com/limegroup/gnutella/gui/options/OptionsMediator.java:70
 msgid "Loading Options Window..."
 msgstr "選項窗口加載中..."
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsMediator.java:168
+#: gui/com/limegroup/gnutella/gui/options/OptionsMediator.java:167
 #: gui/com/limegroup/gnutella/gui/options/OptionsPaneManager.java:115
 msgid ""
 "One or more options will take effect the next time FrostWire is restarted."
@@ -4388,27 +4404,27 @@ msgstr "全部"
 msgid "Select Search Types:"
 msgstr "選擇搜尋類型："
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:177
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:182
 msgid "Search For Audio Files, Including mp3, wav, ogg, and More"
 msgstr "搜尋音頻檔案，包括mp3、wav、ogg及更多"
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:183
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:188
 msgid "Search For Image Files, Including jpg, gif, png and More"
 msgstr "搜尋圖像檔案，包括jpg、gif、png及更多"
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:189
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:194
 msgid "Search For Video Files, Including avi, mpg, wmv, and More"
 msgstr "搜尋視頻檔案，包括avi、mpg、wmv及更多"
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:195
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:200
 msgid "Search for Document Files, Including html, txt, pdf, and More"
 msgstr "搜尋文檔檔案，包括html、txt、pdf及更多"
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:201
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:206
 msgid "Search for Program Files, Including exe, zip, gz, and More"
 msgstr "搜尋程序檔案，包括exe、zip、gz及更多"
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:207
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:212
 msgid "Search for Torrents!"
 msgstr "搜尋源代碼！"
 
@@ -4440,85 +4456,79 @@ msgstr "停止當前搜尋"
 msgid "0"
 msgstr "0"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputManager.java:151
+#: gui/com/limegroup/gnutella/gui/search/SearchInputManager.java:152
 msgid "Open a .torrent or Magnet link or YouTube video link"
 msgstr "打開 .torrent 或磁力鏈接或YouTube視頻鏈接"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputManager.java:163
+#: gui/com/limegroup/gnutella/gui/search/SearchInputManager.java:164
 msgid ""
 "Send a file or folder to a friend (No size limit, No third parties involved)"
 msgstr "發送檔案或文件夾給朋友（無容量限制、無涉及第三方）"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:213
+#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:171
 msgid "Search Engines"
 msgstr "搜尋引擎"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:221
+#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:179
 msgid "Filter"
 msgstr "篩選器"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:318
+#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:276
 msgid "<html><strong>Refine Results</strong></html>"
 msgstr "<html><strong>縮小結果範圍</strong></html>"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:410
+#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:368
 msgid "Show search result filter controls"
 msgstr "顯示搜尋結果篩選器控制"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:411
+#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:369
 msgid "Hide search result filter controls"
 msgstr "隱藏搜尋結果篩選器控制"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:63
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:62
 msgid "Close Search"
 msgstr "關閉搜尋"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:65
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:64
 msgid "Launch Action"
 msgstr "啟動行動"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:67
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:66
 msgid "Repeat Search"
 msgstr "重複搜尋"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:69
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:68
 msgid "Buy this item now"
 msgstr "現在就購買此項目"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:71
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:70
 msgid "Download Partial Files"
 msgstr "下載局部檔案"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:73
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:72
 msgid "Torrent Details"
 msgstr "源代碼細節"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:75
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:74
 msgid "View in YouTube"
 msgstr "在YouTube瀏覽"
 
 #. Set the splash screen text...
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:96
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:95
 msgid "Loading Search Window..."
 msgstr "搜尋窗口加載中..."
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:215
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:209
 msgid ""
 "Your search must be at least three characters to avoid congesting the "
 "network."
 msgstr "為了避免網絡壅塞，您的搜尋比須有至少三個字符。"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:220
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:212
 msgid "Your search is too long. Please make your search smaller and try again."
 msgstr "您的搜尋過長。請縮小您的搜尋並再度嘗試。"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:223
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:227
-msgid ""
-"Your search is too specific. Please make your search smaller and try again."
-msgstr "您的搜尋過於精闢。請縮小您的搜尋並再度嘗試。"
-
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:237
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:221
 msgid ""
 "Please wait, FrostWire must finish loading before a search can be started."
 msgstr "請稍待，在開始搜尋前，FrostWire必須完成加載。"
@@ -4890,6 +4900,20 @@ msgstr "鼠標"
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:234
 msgid "helppage"
 msgstr "helppage"
+
+#~ msgid "Uploading "
+#~ msgstr "下載中"
+
+#~ msgid "Downloading "
+#~ msgstr "下載中"
+
+#~ msgid "More Search Options"
+#~ msgstr "更多搜尋選項"
+
+#~ msgid ""
+#~ "Your search is too specific. Please make your search smaller and try "
+#~ "again."
+#~ msgstr "您的搜尋過於精闢。請縮小您的搜尋並再度嘗試。"
 
 #~ msgid "Modem"
 #~ msgstr "數據機"

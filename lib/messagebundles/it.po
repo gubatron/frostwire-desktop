@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 4.17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-14 14:38-0400\n"
+"POT-Creation-Date: 2012-04-18 19:18-0400\n"
 "PO-Revision-Date: 2012-04-13 15:35-0500\n"
 "Last-Translator: Katia <drmoonkey@yahoo.it>\n"
 "Language-Team: none\n"
@@ -400,7 +400,7 @@ msgstr "Mostra i Dettagli Torrent"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:125
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:126
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:628
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:629
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:809
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:810
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:682
@@ -505,7 +505,7 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:273
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:378
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:701
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:719
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:77
 msgid "Are you sure?"
 msgstr "Sei sicuro?"
@@ -771,8 +771,8 @@ msgstr "Imposta velocità"
 
 #. advanced options
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:339
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:285
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:319
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:261
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:295
 msgid "Advanced"
 msgstr "Avanzate"
 
@@ -1033,7 +1033,7 @@ msgstr "Seleziona il contenuto che vuoi inviare"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:166
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:49
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:61
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:60
 msgid "Download"
 msgstr "Scarica"
 
@@ -1195,6 +1195,8 @@ msgid "globalmanager.download.remove.veto"
 msgstr "globalmanager.download.remove.veto"
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:20
+#: gui/com/frostwire/gui/library/DownloadTask.java:76
+#: gui/com/frostwire/gui/library/DownloadTask.java:110
 msgid "Downloading"
 msgstr "Sto scaricando"
 
@@ -1216,7 +1218,7 @@ msgstr "Finito"
 msgid "Crawling"
 msgstr "Strisciando"
 
-#: gui/com/frostwire/gui/components/GoogleIconSearchField.java:50
+#: gui/com/frostwire/gui/components/GoogleSearchField.java:38
 msgid "Hints by Google"
 msgstr "Suggerimenti da Google"
 
@@ -1228,9 +1230,86 @@ msgstr "Suggerimenti da Google"
 msgid "Max"
 msgstr "Massimo"
 
+#. *
+#. * The undo action.
+#.
+#: gui/com/frostwire/gui/components/SearchField.java:222
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:37
+msgid "Undo"
+msgstr "Annulla"
+
+#. *
+#. * The cut action
+#.
+#: gui/com/frostwire/gui/components/SearchField.java:237
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:51
+msgid "Cut"
+msgstr "Taglia"
+
+#. *
+#. * The copy action.
+#.
+#: gui/com/frostwire/gui/components/SearchField.java:252
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:65
+msgid "Copy"
+msgstr "Copia"
+
+#. *
+#. * The paste action.
+#.
+#: gui/com/frostwire/gui/components/SearchField.java:267
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:79
+#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:166
+msgid "Paste"
+msgstr "Incolla"
+
+#. *
+#. * The delete action.
+#.
+#: gui/com/frostwire/gui/components/SearchField.java:282
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:420
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:422
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:868
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:552
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:707
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:762
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:93
+msgid "Delete"
+msgstr "Cancellare"
+
+#. *
+#. * The select all action.
+#.
+#: gui/com/frostwire/gui/components/SearchField.java:297
+#: gui/com/limegroup/gnutella/gui/CheckBoxList.java:620
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:107
+msgid "Select All"
+msgstr "Seleziona tutto"
+
+#: gui/com/frostwire/gui/components/SearchField.java:648
+#: gui/com/limegroup/gnutella/gui/ClearableAutoCompleteTextField.java:326
+msgid "Clear History"
+msgstr "Azzera cronologia"
+
+#: gui/com/frostwire/gui/components/searchfield/RecentSearches.java:320
+msgid "SearchField.noRecentsText"
+msgstr ""
+
+#: gui/com/frostwire/gui/components/searchfield/RecentSearches.java:324
+msgid "SearchField.recentsMenuTitle"
+msgstr ""
+
+#: gui/com/frostwire/gui/components/searchfield/RecentSearches.java:335
+msgid "SearchField.clearRecentsText"
+msgstr ""
+
+#: gui/com/frostwire/gui/components/searchfield/SearchFieldUI.java:410
+msgid "SearchField.popupSource"
+msgstr ""
+
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:144
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:188
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:173
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:169
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:47
 #: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:421
 msgid "Options"
@@ -1278,17 +1357,9 @@ msgid "Waiting for device authorization..."
 msgstr ""
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:70
+#: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
 msgid "Uploading"
 msgstr "Uploading"
-
-#: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
-msgid "Uploading "
-msgstr "Uploading"
-
-#: gui/com/frostwire/gui/library/DownloadTask.java:76
-#: gui/com/frostwire/gui/library/DownloadTask.java:109
-msgid "Downloading "
-msgstr "Sto scaricando"
 
 #: gui/com/frostwire/gui/library/InternetRadioDirectoryHolder.java:40
 msgid "Radio"
@@ -1315,7 +1386,7 @@ msgstr "Data modificata"
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:234
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:159
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:261
-#: gui/com/frostwire/gui/library/LibrarySearch.java:198
+#: gui/com/frostwire/gui/library/LibrarySearch.java:181
 #: gui/com/frostwire/gui/tabs/SearchDownloadTab.java:42
 msgid "Search"
 msgstr "Cerca"
@@ -1330,39 +1401,39 @@ msgid "Save Selected Files To Folder"
 msgstr "Salva i file selezionati nella cartella"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:144
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:269
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:287
 msgid "tracks"
 msgstr "Tracce"
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:199
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:200
 msgid "Finished Downloads"
 msgstr "Download completati"
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:201
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:202
 msgid "Devices"
 msgstr "Dispositivi"
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:223
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:155
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:224
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:158
 msgid "Configure Options"
 msgstr "Configura opzioni"
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:223
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:156
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:224
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:159
 msgid "You can configure the FrostWire's Options."
 msgstr "Puoi configurare le opzioni di FrostWire."
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:606
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:654
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:607
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:672
 msgid "Refresh"
 msgstr "Aggiorna"
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:607
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:655
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:608
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:673
 msgid "Refresh selected"
 msgstr "Aggiornamento selezionato"
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:629
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:630
 msgid "Open Library Folder"
 msgstr "Apri la Cartella della Libreria"
 
@@ -1381,19 +1452,6 @@ msgstr "Sposta nel Cestino"
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:419
 msgid "Move to Trash"
 msgstr "Sposta nel Cestino"
-
-#. *
-#. * The delete action.
-#.
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:420
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:422
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:868
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:552
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:689
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:762
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:93
-msgid "Delete"
-msgstr "Cancellare"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:474
 msgid ""
@@ -1457,7 +1515,7 @@ msgid "Delete Selected Files"
 msgstr "Elimina i file selezionati"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:886
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:719
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:737
 msgid "Rename"
 msgstr "Rinomina"
 
@@ -1518,23 +1576,23 @@ msgstr "Copia l'URL per lo Stream"
 msgid "Loading Library Window..."
 msgstr "Caricamento finestra della libreria..."
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:162
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:165
 msgid "New Playlist"
 msgstr "Nuova Playlist"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:162
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:165
 msgid "Creates a new Playlist"
 msgstr "Crea una nuova playlist"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:383
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:401
 msgid "Open Playlist (.m3u)"
 msgstr "Apri lista file (.m3u)"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:456
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:474
 msgid "Save Playlist As"
 msgstr "Salva Playlist Come"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:468
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:486
 #, java-format
 msgid ""
 "Warning: a file with the name {0} already exists in the folder. Overwrite "
@@ -1543,21 +1601,21 @@ msgstr ""
 "Attenzione: un file con il nome {0} esiste già nella cartella. Sovrascrivere "
 "questo file?"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:669
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:687
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:836
 msgid "Refresh Audio Properties"
 msgstr "Aggiorna le proprieta' audio"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:670
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:688
 msgid "Refresh the audio properties based on ID3 tags of selected items"
 msgstr ""
 "Aggiorna le proprieta' audio basate sui tag ID3 degli elementi selezionati"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:690
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:708
 msgid "Delete Playlist"
 msgstr "Cancella Playlist"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:701
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:719
 msgid ""
 "Are you sure you want to delete the playlist?\n"
 "(No files will be deleted)"
@@ -1565,38 +1623,38 @@ msgstr ""
 "Sei sicuro di voler eliminare la playlist?\n"
 "(Nessun file sara' eliminato)"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:720
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:738
 msgid "Rename Playlist"
 msgstr "Rinomina la Playlist"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:748
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:766
 msgid "Playlist Files (*.m3u)"
 msgstr "Liste di riproduzione (*.m3u)"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:757
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:775
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:790
 msgid "Import .m3u to Playlist"
 msgstr "Importa .m3u nella Playlist"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:758
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:776
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:791
 msgid "Import a .m3u file into the selected playlist"
 msgstr "Importa un file .m3u nella playlist selezionata"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:772
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:790
 msgid "Import .m3u to New Playlist"
 msgstr "Importa .m3u nella Nuova Playlist"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:773
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:791
 msgid "Import a .m3u file to a new playlist"
 msgstr "Importa un file .m3u nella nuova playlist"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:787
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:805
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:805
 msgid "Export Playlist to .m3u"
 msgstr "Esporta la Playlist a .m3u"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:788
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:806
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:806
 msgid "Export this playlist into a .m3u file"
 msgstr "Esporta questa playlist in un file .m3u"
@@ -1640,8 +1698,12 @@ msgstr "Aggiorna le proprieta' audio basate sui tag ID3"
 msgid "search results"
 msgstr "Risultati di Ricerca"
 
+#: gui/com/frostwire/gui/library/LibrarySearch.java:673
+msgid "Search in "
+msgstr "Ricerca"
+
 #: gui/com/frostwire/gui/library/LibraryUtils.java:69
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:300
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:276
 #: gui/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:15
 msgid "Importing"
 msgstr "Sto importando"
@@ -1668,24 +1730,24 @@ msgstr "Errore durante l'importazione della Stazione Radio da"
 msgid "Holds the Results for "
 msgstr "Conserva i risultati per"
 
-#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:187
+#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:178
 msgid "Library Folders"
 msgstr "Cartelle della Libreria"
 
-#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:368
+#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:359
 msgid "Legend"
 msgstr "Legenda"
 
-#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:377
+#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:368
 msgid "Folder and subfolders are included in the Library."
 msgstr "Le cartelle e le sottocartelle sono incluse nella Libreria."
 
-#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:391
+#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:382
 msgid "Folder is not included and no subfolders are included in the Library."
 msgstr ""
 "La cartella non e' inclusa e nessuna sottocartella e' inclusa nella Libreria."
 
-#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:399
+#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:391
 msgid "Folder's files and some subfolders are included in the Library."
 msgstr ""
 "I file della cartella e alcune sottocartelle sono incluse nella Libreria."
@@ -1755,7 +1817,7 @@ msgstr "Mostra la nostra community chat"
 
 #. library
 #: gui/com/frostwire/gui/tabs/LibraryTab.java:33
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:288
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:264
 msgid "Library"
 msgstr "Libreria"
 
@@ -1899,14 +1961,6 @@ msgstr ""
 "BitTorrent, il Logo BitTorrent, e Torrent sono marchi registrati di "
 "BitTorrent, Inc."
 
-#. *
-#. * The select all action.
-#.
-#: gui/com/limegroup/gnutella/gui/CheckBoxList.java:620
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:107
-msgid "Select All"
-msgstr "Seleziona tutto"
-
 #: gui/com/limegroup/gnutella/gui/CheckBoxList.java:622
 msgid "Marks all Items as Selected"
 msgstr "Marca tutti gli elementi come selezionati"
@@ -1918,10 +1972,6 @@ msgstr "Deseleziona tutto"
 #: gui/com/limegroup/gnutella/gui/CheckBoxList.java:647
 msgid "Deselects all Items in the List"
 msgstr "Deseleziona tutti gli elementi nella lista"
-
-#: gui/com/limegroup/gnutella/gui/ClearableAutoCompleteTextField.java:326
-msgid "Clear History"
-msgstr "Azzera cronologia"
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:84
 msgid "Send this file to a friend"
@@ -2103,10 +2153,6 @@ msgstr "TB"
 msgid "KB/s"
 msgstr "KB/s"
 
-#: gui/com/limegroup/gnutella/gui/IndentingPanel.java:134
-msgid "More Search Options"
-msgstr "Più opzioni di ricerca"
-
 #. Load up the HTML engine.
 #: gui/com/limegroup/gnutella/gui/Initializer.java:307
 msgid "Loading HTML Engine..."
@@ -2223,35 +2269,6 @@ msgstr "Aiuta a tradurre FrostWire"
 #: gui/com/limegroup/gnutella/gui/LanguageWindow.java:202
 msgid "Show Language in status bar"
 msgstr "Mostra Lingua nella barra di stato"
-
-#. *
-#. * The undo action.
-#.
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:37
-msgid "Undo"
-msgstr "Annulla"
-
-#. *
-#. * The cut action
-#.
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:51
-msgid "Cut"
-msgstr "Taglia"
-
-#. *
-#. * The copy action.
-#.
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:65
-msgid "Copy"
-msgstr "Copia"
-
-#. *
-#. * The paste action.
-#.
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:79
-#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:166
-msgid "Paste"
-msgstr "Incolla"
 
 #: gui/com/limegroup/gnutella/gui/MessageResourceHandler.java:10
 msgid "Download Page"
@@ -3700,7 +3717,7 @@ msgstr "Ripristina i valori predefiniti"
 msgid "Revert All Settings to the Factory Defaults"
 msgstr "Riporta tutti le impostazioni ai valori predefiniti."
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:198
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:194
 msgid ""
 "You have made changes to some of FrostWire's settings. Would you like to "
 "save these changes?"
@@ -3708,99 +3725,98 @@ msgstr ""
 "Hai apportato delle modifiche alle impostazioni di FrostWire. Vuoi salvare "
 "queste modifiche?"
 
-#. set text before adding the document listener
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:231
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:224
 msgid "Search here"
 msgstr "Cerca qui"
 
 #. bittorrent
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:283
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:259
 msgid "BitTorrent"
 msgstr "BitTorrent"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:284
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:260
 msgid "Basic"
 msgstr "Base"
 
 #. search options
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:291
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:267
 msgid "Searching"
 msgstr "Ricerca"
 
 #. status bar
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:295
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:271
 msgid "Status Bar"
 msgstr "Barra di stato"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:299
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:275
 msgid "iTunes"
 msgstr "iTunes"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:304
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:280
 msgid "Helper Apps"
 msgstr "Applicazioni"
 
 #. view options
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:308
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:284
 msgid "View"
 msgstr "Visualizza"
 
 #. community chat
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:312
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:288
 #: gui/com/limegroup/gnutella/gui/options/panes/ChatCommunityPaneItem.java:20
 msgid "Community Chat"
 msgstr "Community Chat"
 
 #. filter options
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:315
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:291
 msgid "Filters"
 msgstr "Filtri"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:316
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:292
 msgid "Keywords"
 msgstr "Parole chiave"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:320
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:296
 msgid "Updates"
 msgstr "Aggiornamenti"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:321
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:297
 msgid "Firewall"
 msgstr "Firewall"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:322
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:298
 msgid "Proxy"
 msgstr "Proxy"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:323
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:299
 #: gui/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:35
 msgid "Network Interface"
 msgstr "Interfaccia di Rete"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:325
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:301
 #: gui/com/limegroup/gnutella/gui/shell/ShellAssociationManager.java:58
 msgid "File Associations"
 msgstr "Associazioni di file"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:329
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:305
 msgid "System Boot"
 msgstr "Esecuzione Sistema"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:332
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:308
 msgid "System Tray"
 msgstr "Barra sistema"
 
 #. debug
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:335
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:311
 #: gui/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:74
 msgid "Bug Reports"
 msgstr "Rapporti degli errori"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsMediator.java:71
+#: gui/com/limegroup/gnutella/gui/options/OptionsMediator.java:70
 msgid "Loading Options Window..."
 msgstr "Caricamento finestra preferenze..."
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsMediator.java:168
+#: gui/com/limegroup/gnutella/gui/options/OptionsMediator.java:167
 #: gui/com/limegroup/gnutella/gui/options/OptionsPaneManager.java:115
 msgid ""
 "One or more options will take effect the next time FrostWire is restarted."
@@ -4587,27 +4603,27 @@ msgstr "Tutti"
 msgid "Select Search Types:"
 msgstr "Seleziona Tipi di ricerca:"
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:177
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:182
 msgid "Search For Audio Files, Including mp3, wav, ogg, and More"
 msgstr "Ricerca file audio, inclusi file mp3, wav, ogg, e altro."
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:183
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:188
 msgid "Search For Image Files, Including jpg, gif, png and More"
 msgstr "Ricerca file immagine, inclusi file jpg, gif, png e altro."
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:189
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:194
 msgid "Search For Video Files, Including avi, mpg, wmv, and More"
 msgstr "Ricerca file video inclusi file avi, mpg, wmv e altro."
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:195
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:200
 msgid "Search for Document Files, Including html, txt, pdf, and More"
 msgstr "Ricerca documenti, incluso file html, txt, pdf, e altro."
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:201
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:206
 msgid "Search for Program Files, Including exe, zip, gz, and More"
 msgstr "Ricerca programmi, incluso file exe, zip, gz, e altro."
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:207
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:212
 msgid "Search for Torrents!"
 msgstr "Cerca Torrent!"
 
@@ -4641,71 +4657,71 @@ msgstr "Interrompi Ricerca corrente:"
 msgid "0"
 msgstr "0"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputManager.java:151
+#: gui/com/limegroup/gnutella/gui/search/SearchInputManager.java:152
 msgid "Open a .torrent or Magnet link or YouTube video link"
 msgstr "Apri un .torrent o un link Magnet o un link per il video YouTube"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputManager.java:163
+#: gui/com/limegroup/gnutella/gui/search/SearchInputManager.java:164
 msgid ""
 "Send a file or folder to a friend (No size limit, No third parties involved)"
 msgstr ""
 "Invia un file o una cartella a un amico (nessun limite di dimensione, nessun "
 "coinvolgimento di parti terze)"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:213
+#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:171
 msgid "Search Engines"
 msgstr "Motori di ricerca"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:221
+#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:179
 msgid "Filter"
 msgstr "Filtro"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:318
+#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:276
 msgid "<html><strong>Refine Results</strong></html>"
 msgstr "<html><strong>Refine Results</strong></html>"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:410
+#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:368
 msgid "Show search result filter controls"
 msgstr "Mostra i filtri del risultato di ricerca."
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:411
+#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:369
 msgid "Hide search result filter controls"
 msgstr "nascondi i filtri del risultato di ricerca."
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:63
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:62
 msgid "Close Search"
 msgstr "Chiudi ricerca"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:65
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:64
 msgid "Launch Action"
 msgstr "Lancia"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:67
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:66
 msgid "Repeat Search"
 msgstr "Ripeti ricerca"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:69
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:68
 msgid "Buy this item now"
 msgstr "Acquista ora questo prodotto"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:71
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:70
 msgid "Download Partial Files"
 msgstr "Scarica file parziali"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:73
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:72
 msgid "Torrent Details"
 msgstr "Dettagli del Torrent"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:75
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:74
 msgid "View in YouTube"
 msgstr "Visualizza su YouTube"
 
 #. Set the splash screen text...
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:96
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:95
 msgid "Loading Search Window..."
 msgstr "Caricamento finestra di ricerca..."
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:215
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:209
 msgid ""
 "Your search must be at least three characters to avoid congesting the "
 "network."
@@ -4713,20 +4729,12 @@ msgstr ""
 "La tua chiave di ricerca deve contenere almeno tre caratteri per evitare di "
 "congestionare la rete."
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:220
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:212
 msgid "Your search is too long. Please make your search smaller and try again."
 msgstr ""
 "La tua ricerca è troppo ampia. Seleziona una ricerca più mirata e riprova."
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:223
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:227
-msgid ""
-"Your search is too specific. Please make your search smaller and try again."
-msgstr ""
-"La tua ricerca è troppo specifica. Seleziona una ricerca più mirata e "
-"riprova."
-
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:237
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:221
 msgid ""
 "Please wait, FrostWire must finish loading before a search can be started."
 msgstr ""
@@ -5114,6 +5122,22 @@ msgstr "mouse"
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:234
 msgid "helppage"
 msgstr "helppage"
+
+#~ msgid "Uploading "
+#~ msgstr "Uploading"
+
+#~ msgid "Downloading "
+#~ msgstr "Sto scaricando"
+
+#~ msgid "More Search Options"
+#~ msgstr "Più opzioni di ricerca"
+
+#~ msgid ""
+#~ "Your search is too specific. Please make your search smaller and try "
+#~ "again."
+#~ msgstr ""
+#~ "La tua ricerca è troppo specifica. Seleziona una ricerca più mirata e "
+#~ "riprova."
 
 #~ msgid "Loading phones and tablets..."
 #~ msgstr "Caricamento file condivisi..."

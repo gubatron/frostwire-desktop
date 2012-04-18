@@ -411,7 +411,7 @@ public class LibraryDeviceTableMediator extends AbstractLibraryTableMediator<Lib
             putValue(Action.NAME, I18n.tr("Save"));
             putValue(LimeAction.SHORT_NAME, I18n.tr("Save"));
             putValue(Action.SHORT_DESCRIPTION, I18n.tr("Save Selected Files To Folder"));
-            putValue(LimeAction.ICON_NAME, "LIBRARY_LAUNCH");
+            putValue(LimeAction.ICON_NAME, "DEVICE_SAVE");
         }
 
         public void actionPerformed(ActionEvent e) {

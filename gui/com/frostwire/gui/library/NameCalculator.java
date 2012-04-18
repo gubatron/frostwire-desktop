@@ -73,7 +73,7 @@ class NameCalculator {
             return list.get(0).token + " " + list.get(1).token;
         } else {
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < list.size() && i < 5; i++) {
+            for (int i = 0; i < list.size() && i < 3; i++) {
                 if (list.get(0).frecuency - list.get(i).frecuency > 1) {
                     break;
                 } else {

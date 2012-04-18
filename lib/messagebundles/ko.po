@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-14 14:38-0400\n"
+"POT-Creation-Date: 2012-04-18 19:18-0400\n"
 "PO-Revision-Date: 2012-04-13 15:39-0500\n"
 "Last-Translator: FTA <Unknown>\n"
 "Language-Team: none\n"
@@ -389,7 +389,7 @@ msgstr "토렌트 상세정보 보이기"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:125
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:126
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:628
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:629
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:809
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:810
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:682
@@ -494,7 +494,7 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:273
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:378
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:701
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:719
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:77
 msgid "Are you sure?"
 msgstr "계속하시겠습니까?"
@@ -759,8 +759,8 @@ msgstr "업 속도 설정"
 
 #. advanced options
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:339
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:285
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:319
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:261
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:295
 msgid "Advanced"
 msgstr "고급"
 
@@ -1016,7 +1016,7 @@ msgstr "보낼 내용 선택"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:166
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:49
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:61
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:60
 msgid "Download"
 msgstr "다운로드"
 
@@ -1177,6 +1177,8 @@ msgid "globalmanager.download.remove.veto"
 msgstr "globalmanager.download.remove.veto"
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:20
+#: gui/com/frostwire/gui/library/DownloadTask.java:76
+#: gui/com/frostwire/gui/library/DownloadTask.java:110
 msgid "Downloading"
 msgstr "다운로드 중"
 
@@ -1198,7 +1200,7 @@ msgstr "완료됨"
 msgid "Crawling"
 msgstr "크라울링"
 
-#: gui/com/frostwire/gui/components/GoogleIconSearchField.java:50
+#: gui/com/frostwire/gui/components/GoogleSearchField.java:38
 msgid "Hints by Google"
 msgstr "구글 힌트"
 
@@ -1210,9 +1212,86 @@ msgstr "구글 힌트"
 msgid "Max"
 msgstr "최고치"
 
+#. *
+#. * The undo action.
+#.
+#: gui/com/frostwire/gui/components/SearchField.java:222
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:37
+msgid "Undo"
+msgstr "되돌리기"
+
+#. *
+#. * The cut action
+#.
+#: gui/com/frostwire/gui/components/SearchField.java:237
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:51
+msgid "Cut"
+msgstr "자르기"
+
+#. *
+#. * The copy action.
+#.
+#: gui/com/frostwire/gui/components/SearchField.java:252
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:65
+msgid "Copy"
+msgstr "복사"
+
+#. *
+#. * The paste action.
+#.
+#: gui/com/frostwire/gui/components/SearchField.java:267
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:79
+#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:166
+msgid "Paste"
+msgstr "붙이기"
+
+#. *
+#. * The delete action.
+#.
+#: gui/com/frostwire/gui/components/SearchField.java:282
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:420
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:422
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:868
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:552
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:707
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:762
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:93
+msgid "Delete"
+msgstr "삭제"
+
+#. *
+#. * The select all action.
+#.
+#: gui/com/frostwire/gui/components/SearchField.java:297
+#: gui/com/limegroup/gnutella/gui/CheckBoxList.java:620
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:107
+msgid "Select All"
+msgstr "모두 선택"
+
+#: gui/com/frostwire/gui/components/SearchField.java:648
+#: gui/com/limegroup/gnutella/gui/ClearableAutoCompleteTextField.java:326
+msgid "Clear History"
+msgstr "이력 지움"
+
+#: gui/com/frostwire/gui/components/searchfield/RecentSearches.java:320
+msgid "SearchField.noRecentsText"
+msgstr ""
+
+#: gui/com/frostwire/gui/components/searchfield/RecentSearches.java:324
+msgid "SearchField.recentsMenuTitle"
+msgstr ""
+
+#: gui/com/frostwire/gui/components/searchfield/RecentSearches.java:335
+msgid "SearchField.clearRecentsText"
+msgstr ""
+
+#: gui/com/frostwire/gui/components/searchfield/SearchFieldUI.java:410
+msgid "SearchField.popupSource"
+msgstr ""
+
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:144
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:188
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:173
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:169
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:47
 #: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:421
 msgid "Options"
@@ -1260,17 +1339,9 @@ msgid "Waiting for device authorization..."
 msgstr ""
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:70
+#: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
 msgid "Uploading"
 msgstr "업로드중"
-
-#: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
-msgid "Uploading "
-msgstr "업로드중"
-
-#: gui/com/frostwire/gui/library/DownloadTask.java:76
-#: gui/com/frostwire/gui/library/DownloadTask.java:109
-msgid "Downloading "
-msgstr "다운로드 중"
 
 #: gui/com/frostwire/gui/library/InternetRadioDirectoryHolder.java:40
 msgid "Radio"
@@ -1297,7 +1368,7 @@ msgstr "수정된 날짜"
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:234
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:159
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:261
-#: gui/com/frostwire/gui/library/LibrarySearch.java:198
+#: gui/com/frostwire/gui/library/LibrarySearch.java:181
 #: gui/com/frostwire/gui/tabs/SearchDownloadTab.java:42
 msgid "Search"
 msgstr "검색"
@@ -1312,39 +1383,39 @@ msgid "Save Selected Files To Folder"
 msgstr "선택된 파일을 폴더에 저장"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:144
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:269
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:287
 msgid "tracks"
 msgstr "트랙 "
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:199
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:200
 msgid "Finished Downloads"
 msgstr "완료된 다운로드"
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:201
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:202
 msgid "Devices"
 msgstr "장치"
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:223
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:155
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:224
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:158
 msgid "Configure Options"
 msgstr "설정 옵션"
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:223
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:156
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:224
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:159
 msgid "You can configure the FrostWire's Options."
 msgstr "FrostWire의 옵션을 설정할 수 있습니다."
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:606
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:654
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:607
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:672
 msgid "Refresh"
 msgstr "갱신"
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:607
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:655
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:608
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:673
 msgid "Refresh selected"
 msgstr "라이브러리 폴더 열기"
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:629
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:630
 msgid "Open Library Folder"
 msgstr "라이브러리 폴더 열기"
 
@@ -1363,19 +1434,6 @@ msgstr "재활용으로 이동"
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:419
 msgid "Move to Trash"
 msgstr "휴지통으로 이동"
-
-#. *
-#. * The delete action.
-#.
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:420
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:422
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:868
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:552
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:689
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:762
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:93
-msgid "Delete"
-msgstr "삭제"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:474
 msgid ""
@@ -1437,7 +1495,7 @@ msgid "Delete Selected Files"
 msgstr "선택한 파일을 삭제"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:886
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:719
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:737
 msgid "Rename"
 msgstr "이름 변경"
 
@@ -1498,43 +1556,43 @@ msgstr "스트림 URL 복사"
 msgid "Loading Library Window..."
 msgstr "라이브러리 윈도우를 불러오는 중..."
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:162
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:165
 msgid "New Playlist"
 msgstr "새 재생목록"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:162
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:165
 msgid "Creates a new Playlist"
 msgstr "새 재생목록 생성"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:383
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:401
 msgid "Open Playlist (.m3u)"
 msgstr "재생 리스트를 선택 (. m3u)"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:456
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:474
 msgid "Save Playlist As"
 msgstr "재생 리스트를 별명으로 다른 이름으로 저장..."
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:468
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:486
 #, java-format
 msgid ""
 "Warning: a file with the name {0} already exists in the folder. Overwrite "
 "this file?"
 msgstr "경고: 폴더에 파일 이름{0}이 이미 존재합니다. 덮어쓰기 하시겠습니까?"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:669
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:687
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:836
 msgid "Refresh Audio Properties"
 msgstr "오디오 속성 갱신"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:670
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:688
 msgid "Refresh the audio properties based on ID3 tags of selected items"
 msgstr "선택된 항목의 ID3 태그를 기준으로 오디오 속성 갱신"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:690
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:708
 msgid "Delete Playlist"
 msgstr "재생목록 삭제"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:701
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:719
 msgid ""
 "Are you sure you want to delete the playlist?\n"
 "(No files will be deleted)"
@@ -1542,38 +1600,38 @@ msgstr ""
 "재생목록을 삭제하시겠습니까?\n"
 "(파일은 삭제되지 않음)"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:720
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:738
 msgid "Rename Playlist"
 msgstr "재생목록 이름 변경"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:748
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:766
 msgid "Playlist Files (*.m3u)"
 msgstr "재생 리스트 파일 (*. m3u)"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:757
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:775
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:790
 msgid "Import .m3u to Playlist"
 msgstr "재생목록에 .m3u 가져오기"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:758
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:776
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:791
 msgid "Import a .m3u file into the selected playlist"
 msgstr "선택된 재생목록에 .m3u 파일 가져오기"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:772
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:790
 msgid "Import .m3u to New Playlist"
 msgstr "새 재생목록에 .m3u 가져오기"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:773
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:791
 msgid "Import a .m3u file to a new playlist"
 msgstr "새 재생목록에 .m3u 파일 가져오기"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:787
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:805
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:805
 msgid "Export Playlist to .m3u"
 msgstr "재생목록 .m3u 보내기"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:788
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:806
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:806
 msgid "Export this playlist into a .m3u file"
 msgstr "재생목록에 .m3u 파일 보내기"
@@ -1617,8 +1675,12 @@ msgstr "코멘트"
 msgid "search results"
 msgstr "검색 결과"
 
+#: gui/com/frostwire/gui/library/LibrarySearch.java:673
+msgid "Search in "
+msgstr "검색"
+
 #: gui/com/frostwire/gui/library/LibraryUtils.java:69
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:300
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:276
 #: gui/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:15
 msgid "Importing"
 msgstr "가져오는 중"
@@ -1645,23 +1707,23 @@ msgstr "라디오 스테이션으로부터 가져오기 오류"
 msgid "Holds the Results for "
 msgstr "라이브러리 폴더"
 
-#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:187
+#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:178
 msgid "Library Folders"
 msgstr "라이브러리 폴더"
 
-#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:368
+#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:359
 msgid "Legend"
 msgstr "범례"
 
-#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:377
+#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:368
 msgid "Folder and subfolders are included in the Library."
 msgstr "라이브러리에 폴더 및 서브 폴더가 포함되었습니다."
 
-#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:391
+#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:382
 msgid "Folder is not included and no subfolders are included in the Library."
 msgstr "라이브러리에 폴더 및 서브폴더가 포함되지 않았습니다."
 
-#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:399
+#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:391
 msgid "Folder's files and some subfolders are included in the Library."
 msgstr "라이브러리에 폴더 및 서브 폴더가 포함되었습니다."
 
@@ -1730,7 +1792,7 @@ msgstr "커뮤니티 채팅 보이기"
 
 #. library
 #: gui/com/frostwire/gui/tabs/LibraryTab.java:33
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:288
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:264
 msgid "Library"
 msgstr "라이브러리"
 
@@ -1867,14 +1929,6 @@ msgstr ""
 "BitTorrent, the BitTorrent 로고, 그리고 Torrent는 BitTorrent Inc.의 대표 브랜"
 "드입니다."
 
-#. *
-#. * The select all action.
-#.
-#: gui/com/limegroup/gnutella/gui/CheckBoxList.java:620
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:107
-msgid "Select All"
-msgstr "모두 선택"
-
 #: gui/com/limegroup/gnutella/gui/CheckBoxList.java:622
 msgid "Marks all Items as Selected"
 msgstr "모든 아이템을 선택 표시"
@@ -1886,10 +1940,6 @@ msgstr "모두 선택해제"
 #: gui/com/limegroup/gnutella/gui/CheckBoxList.java:647
 msgid "Deselects all Items in the List"
 msgstr "리스트 안의 모든 아이템 선택해제"
-
-#: gui/com/limegroup/gnutella/gui/ClearableAutoCompleteTextField.java:326
-msgid "Clear History"
-msgstr "이력 지움"
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:84
 msgid "Send this file to a friend"
@@ -2068,10 +2118,6 @@ msgstr "TB"
 msgid "KB/s"
 msgstr "KB/초"
 
-#: gui/com/limegroup/gnutella/gui/IndentingPanel.java:134
-msgid "More Search Options"
-msgstr "보다 한층 더 검색 옵션"
-
 #. Load up the HTML engine.
 #: gui/com/limegroup/gnutella/gui/Initializer.java:307
 msgid "Loading HTML Engine..."
@@ -2185,35 +2231,6 @@ msgstr "FrostWire 번역 도움"
 #: gui/com/limegroup/gnutella/gui/LanguageWindow.java:202
 msgid "Show Language in status bar"
 msgstr "상태바에 언어 표시"
-
-#. *
-#. * The undo action.
-#.
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:37
-msgid "Undo"
-msgstr "되돌리기"
-
-#. *
-#. * The cut action
-#.
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:51
-msgid "Cut"
-msgstr "자르기"
-
-#. *
-#. * The copy action.
-#.
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:65
-msgid "Copy"
-msgstr "복사"
-
-#. *
-#. * The paste action.
-#.
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:79
-#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:166
-msgid "Paste"
-msgstr "붙이기"
 
 #: gui/com/limegroup/gnutella/gui/MessageResourceHandler.java:10
 msgid "Download Page"
@@ -3610,105 +3627,104 @@ msgstr "초기설정으로 복원"
 msgid "Revert All Settings to the Factory Defaults"
 msgstr "모든 설정을 초기 상태로 되돌림"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:198
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:194
 msgid ""
 "You have made changes to some of FrostWire's settings. Would you like to "
 "save these changes?"
 msgstr "\"FrostWire의 설정을 변경하였습니다. 변경을 저장하시겠습니까?"
 
-#. set text before adding the document listener
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:231
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:224
 msgid "Search here"
 msgstr "여기서 검색"
 
 #. bittorrent
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:283
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:259
 msgid "BitTorrent"
 msgstr "BitTorrent"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:284
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:260
 msgid "Basic"
 msgstr "일반"
 
 #. search options
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:291
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:267
 msgid "Searching"
 msgstr "검색"
 
 #. status bar
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:295
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:271
 msgid "Status Bar"
 msgstr "상태 바"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:299
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:275
 msgid "iTunes"
 msgstr "iTunes"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:304
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:280
 msgid "Helper Apps"
 msgstr "헬퍼 어플리케이션"
 
 #. view options
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:308
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:284
 msgid "View"
 msgstr "표시"
 
 #. community chat
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:312
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:288
 #: gui/com/limegroup/gnutella/gui/options/panes/ChatCommunityPaneItem.java:20
 msgid "Community Chat"
 msgstr "커뮤니티 채팅"
 
 #. filter options
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:315
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:291
 msgid "Filters"
 msgstr "필터"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:316
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:292
 msgid "Keywords"
 msgstr "키워드"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:320
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:296
 msgid "Updates"
 msgstr "업데이트"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:321
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:297
 msgid "Firewall"
 msgstr "방화벽"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:322
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:298
 msgid "Proxy"
 msgstr "프록시"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:323
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:299
 #: gui/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:35
 msgid "Network Interface"
 msgstr "네트워크 인터페이스"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:325
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:301
 #: gui/com/limegroup/gnutella/gui/shell/ShellAssociationManager.java:58
 msgid "File Associations"
 msgstr "파일 연계"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:329
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:305
 msgid "System Boot"
 msgstr "시스템 부팅"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:332
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:308
 msgid "System Tray"
 msgstr "종료"
 
 #. debug
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:335
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:311
 #: gui/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:74
 msgid "Bug Reports"
 msgstr "버그 보고"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsMediator.java:71
+#: gui/com/limegroup/gnutella/gui/options/OptionsMediator.java:70
 msgid "Loading Options Window..."
 msgstr "옵션 윈도우를 불러오는 중..."
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsMediator.java:168
+#: gui/com/limegroup/gnutella/gui/options/OptionsMediator.java:167
 #: gui/com/limegroup/gnutella/gui/options/OptionsPaneManager.java:115
 msgid ""
 "One or more options will take effect the next time FrostWire is restarted."
@@ -4464,27 +4480,27 @@ msgstr "모두"
 msgid "Select Search Types:"
 msgstr "검색 유형 선택:"
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:177
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:182
 msgid "Search For Audio Files, Including mp3, wav, ogg, and More"
 msgstr "mp3, wav, ogg, 등의 음악 파일 검색"
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:183
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:188
 msgid "Search For Image Files, Including jpg, gif, png and More"
 msgstr "jpg, gif, png등의 화상 파일 검색"
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:189
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:194
 msgid "Search For Video Files, Including avi, mpg, wmv, and More"
 msgstr "avi, mpg, wmv, 등의 동영상 파일 검색 비디오 파일"
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:195
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:200
 msgid "Search for Document Files, Including html, txt, pdf, and More"
 msgstr "html, txt, pdf등의 문서 파일 검색"
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:201
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:206
 msgid "Search for Program Files, Including exe, zip, gz, and More"
 msgstr "exe, zip, gz등의 프로그램 파일 검색"
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:207
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:212
 msgid "Search for Torrents!"
 msgstr "토렌트 검색!"
 
@@ -4516,86 +4532,80 @@ msgstr "현재 검색 정지"
 msgid "0"
 msgstr "0"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputManager.java:151
+#: gui/com/limegroup/gnutella/gui/search/SearchInputManager.java:152
 msgid "Open a .torrent or Magnet link or YouTube video link"
 msgstr "토렌트 또는 마그넷 링크 또는 유투브 링크 열기"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputManager.java:163
+#: gui/com/limegroup/gnutella/gui/search/SearchInputManager.java:164
 msgid ""
 "Send a file or folder to a friend (No size limit, No third parties involved)"
 msgstr "파일 또는 폴더를 친구에게 보내기(사이즈 무제한, 제삼자 연관없음)"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:213
+#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:171
 msgid "Search Engines"
 msgstr "검색 엔진"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:221
+#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:179
 msgid "Filter"
 msgstr "필터"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:318
+#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:276
 msgid "<html><strong>Refine Results</strong></html>"
 msgstr "<html><strong>결과 정렬</strong></html>"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:410
+#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:368
 msgid "Show search result filter controls"
 msgstr "검색 결과 필터 컨트롤 보이기"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:411
+#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:369
 msgid "Hide search result filter controls"
 msgstr "검색 결과 필터 컨트롤 감추기"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:63
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:62
 msgid "Close Search"
 msgstr "검색 닫기"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:65
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:64
 msgid "Launch Action"
 msgstr "작업 실시"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:67
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:66
 msgid "Repeat Search"
 msgstr "재검색"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:69
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:68
 msgid "Buy this item now"
 msgstr "해당 아이템 지금 구매"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:71
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:70
 msgid "Download Partial Files"
 msgstr "다운로드 부분 파일"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:73
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:72
 msgid "Torrent Details"
 msgstr "토렌트 상세정보"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:75
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:74
 msgid "View in YouTube"
 msgstr "유투브에서 보기"
 
 #. Set the splash screen text...
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:96
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:95
 msgid "Loading Search Window..."
 msgstr "검색 윈도우를 불러오는 중..."
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:215
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:209
 msgid ""
 "Your search must be at least three characters to avoid congesting the "
 "network."
 msgstr ""
 "네트워크의 혼잡을 피하기 위해서, 검색은 최저 세자 이상으로 입력해야합니다."
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:220
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:212
 msgid "Your search is too long. Please make your search smaller and try again."
 msgstr "검색이 너무 길므로, 검색을 소규모로 해 재시행"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:223
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:227
-msgid ""
-"Your search is too specific. Please make your search smaller and try again."
-msgstr "검색이 특정화너무 되고 , 검색을 소규모로 해 재시행"
-
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:237
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:221
 msgid ""
 "Please wait, FrostWire must finish loading before a search can be started."
 msgstr ""
@@ -4974,6 +4984,20 @@ msgstr "mouse"
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:234
 msgid "helppage"
 msgstr "helppage"
+
+#~ msgid "Uploading "
+#~ msgstr "업로드중"
+
+#~ msgid "Downloading "
+#~ msgstr "다운로드 중"
+
+#~ msgid "More Search Options"
+#~ msgstr "보다 한층 더 검색 옵션"
+
+#~ msgid ""
+#~ "Your search is too specific. Please make your search smaller and try "
+#~ "again."
+#~ msgstr "검색이 특정화너무 되고 , 검색을 소규모로 해 재시행"
 
 #~ msgid "Loading phones and tablets..."
 #~ msgstr "다른 이름으로 저장 파일을 불러오는 중..."

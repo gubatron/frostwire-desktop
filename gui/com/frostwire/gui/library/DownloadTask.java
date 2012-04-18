@@ -107,7 +107,7 @@ public class DownloadTask extends DeviceTask {
                         if (getProgress() % 5 == 0) {
                             GUIMediator.safeInvokeLater(new Runnable() {
                                 public void run() {
-                                    String status = String.format("%s from %s %d%% - %s", I18n.tr("Downloading"), device.getName(), getProgress(), currentFD.title);
+                                    String status = String.format("%d%% %s from %s - %s", getProgress(), I18n.tr("Downloading"), device.getName(), currentFD.title);
                                     LibraryMediator.instance().getLibrarySearch().pushStatus(status);
                                 }
                             });

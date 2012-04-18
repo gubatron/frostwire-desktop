@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: frostwire\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-12 17:19-0400\n"
-"PO-Revision-Date: 2012-04-11 11:24-0500\n"
+"POT-Creation-Date: 2012-04-18 19:18-0400\n"
+"PO-Revision-Date: 2012-04-18 19:33-0500\n"
 "Last-Translator: Tatiana <tati_110@hotmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -19,83 +19,36 @@ msgstr ""
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:50
-msgid ""
-"FrostWire was unable to write a necessary file because your hard drive is "
-"full. To continue using FrostWire you must free up space on your hard drive."
-msgstr ""
-"O FrostWire não conseguiu escrever o arquivo necessário porque o seu disco "
-"rígido está cheio. Para continuar usando o FrostWire, você deve criar espaço "
-"no seu disco rígido."
+msgid "FrostWire was unable to write a necessary file because your hard drive is full. To continue using FrostWire you must free up space on your hard drive."
+msgstr "O FrostWire não conseguiu escrever o arquivo necessário porque o seu disco rígido está cheio. Para continuar usando o FrostWire, você deve criar espaço no seu disco rígido."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:52
-msgid ""
-"FrostWire was unable to open a necessary file because another program has "
-"locked the file. FrostWire may act unexpectedly until this file is released."
-msgstr ""
-"O FrostWire não conseguiu abrir o arquivo necessário pois um outro programa "
-"o bloqueou. O FrostWire pode agir de forma inesperada até que o arquivo seja "
-"liberado."
+msgid "FrostWire was unable to open a necessary file because another program has locked the file. FrostWire may act unexpectedly until this file is released."
+msgstr "O FrostWire não conseguiu abrir o arquivo necessário pois um outro programa o bloqueou. O FrostWire pode agir de forma inesperada até que o arquivo seja liberado."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:54
-msgid ""
-"FrostWire was unable to write a necessary file because you do not have the "
-"necessary permissions. Your preferences may not be maintained the next time "
-"you start FrostWire, or FrostWire may behave in unexpected ways."
-msgstr ""
-"O FrostWire não conseguiu escrever um arquivo necessário por não possuir as "
-"permissões necessárias. As suas preferências podem não ser mantidas da "
-"próxima vez que iniciar o FrostWire, ou o FrostWire pode comportar-se de uma "
-"forma inesperada."
+msgid "FrostWire was unable to write a necessary file because you do not have the necessary permissions. Your preferences may not be maintained the next time you start FrostWire, or FrostWire may behave in unexpected ways."
+msgstr "O FrostWire não conseguiu escrever um arquivo necessário por não possuir as permissões necessárias. As suas preferências podem não ser mantidas da próxima vez que iniciar o FrostWire, ou o FrostWire pode comportar-se de uma forma inesperada."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:56
-msgid ""
-"FrostWire cannot open a necessary file because the filename contains "
-"characters which are not supported by your operating system. FrostWire may "
-"behave in unexpected ways."
-msgstr ""
-"O FrostWire não pode abrir o arquivo necessário pois o nome do arquivo "
-"contém caracteres não suportados pelo seu sistema operacional. O FrostWire "
-"pode comportar-se de forma inesperada."
+msgid "FrostWire cannot open a necessary file because the filename contains characters which are not supported by your operating system. FrostWire may behave in unexpected ways."
+msgstr "O FrostWire não pode abrir o arquivo necessário pois o nome do arquivo contém caracteres não suportados pelo seu sistema operacional. O FrostWire pode comportar-se de forma inesperada."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:60
-msgid ""
-"FrostWire cannot download the selected file because your hard drive is full. "
-"To download more files, you must free up space on your hard drive."
-msgstr ""
-"O FrostWire não consegue fazer o download do arquivo selecionado porque o "
-"seu disco rígido está cheio. Para efetuar o download de mais arquivos você "
-"tem que criar espaço no seu disco rígido."
+msgid "FrostWire cannot download the selected file because your hard drive is full. To download more files, you must free up space on your hard drive."
+msgstr "O FrostWire não consegue fazer o download do arquivo selecionado porque o seu disco rígido está cheio. Para efetuar o download de mais arquivos você tem que criar espaço no seu disco rígido."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:62
-msgid ""
-"FrostWire was unable to download the selected file because another program "
-"is using the file. Please close the other program and retry the download."
-msgstr ""
-"O FrostWire não consegue fazer o download do arquivo selecionado porque "
-"existe outro programa utilizando o arquivo. Feche o outro programa e tente "
-"fazer o download novamente."
+msgid "FrostWire was unable to download the selected file because another program is using the file. Please close the other program and retry the download."
+msgstr "O FrostWire não consegue fazer o download do arquivo selecionado porque existe outro programa utilizando o arquivo. Feche o outro programa e tente fazer o download novamente."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:64
-msgid ""
-"FrostWire was unable to create or continue writing an incomplete file for "
-"the selected download because you do not have permission to write files to "
-"the incomplete folder. To continue using FrostWire, please choose a "
-"different Save Folder."
-msgstr ""
-"O FrostWire não conseguiu criar ou continuar escrevendo um arquivo "
-"incompletodo para o download selecionado pois não possui permissão para "
-"escrever arquivos na pasta de arquivos incompletos. Para continuar a usar o "
-"FrostWire selecione uma pasta diferente."
+msgid "FrostWire was unable to create or continue writing an incomplete file for the selected download because you do not have permission to write files to the incomplete folder. To continue using FrostWire, please choose a different Save Folder."
+msgstr "O FrostWire não conseguiu criar ou continuar escrevendo um arquivo incompletodo para o download selecionado pois não possui permissão para escrever arquivos na pasta de arquivos incompletos. Para continuar a usar o FrostWire selecione uma pasta diferente."
 
 #: components/common/src/main/java/org/limewire/util/IOUtils.java:66
-msgid ""
-"FrostWire was unable to open the incomplete file for the selected download "
-"because the filename contains characters which are not supported by your "
-"operating system."
-msgstr ""
-"O FrostWire não conseguiu abrir o arquivo incompleto para o download "
-"selecionado, pois o nome do arquivo contém caracteres não suportados pelo "
-"seu sitema operacional."
+msgid "FrostWire was unable to open the incomplete file for the selected download because the filename contains characters which are not supported by your operating system."
+msgstr "O FrostWire não conseguiu abrir o arquivo incompleto para o download selecionado, pois o nome do arquivo contém caracteres não suportados pelo seu sitema operacional."
 
 #: core/com/frostwire/mplayer/MPlayer.java:353
 msgid "azemp.failed.nocodec"
@@ -348,12 +301,8 @@ msgid "Do you want to hide FrostWire?"
 msgstr "Você deseja esconder o FrostWire?"
 
 #: gui/com/frostwire/gui/HideExitDialog.java:54
-msgid ""
-"<html>Closing the FrostWire window will only hide the application<p>This way "
-"file transfers may continue in the background.</html>"
-msgstr ""
-"<html>Fechar a janela FrostWire, só irá esconder o programa<p>Assim, a "
-"tranferência de arquivos pode continuar na tela do fundo.</html>"
+msgid "<html>Closing the FrostWire window will only hide the application<p>This way file transfers may continue in the background.</html>"
+msgstr "<html>Fechar a janela FrostWire, só irá esconder o programa<p>Assim, a tranferência de arquivos pode continuar na tela do fundo.</html>"
 
 #: gui/com/frostwire/gui/HideExitDialog.java:61
 msgid "Don't show this again"
@@ -399,7 +348,7 @@ msgstr "Mostrar detalhes do Torrent"
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:125
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:126
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:628
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:629
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:809
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:810
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:682
@@ -504,7 +453,7 @@ msgstr ""
 
 #: gui/com/frostwire/gui/bittorrent/BTDownloadActions.java:273
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:378
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:701
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:719
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:77
 msgid "Are you sure?"
 msgstr "Você tem certeza?"
@@ -710,12 +659,8 @@ msgstr "Cancelar downloads selecionados."
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediator.java:621
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediator.java:675
 #, java-format
-msgid ""
-"FrostWire was unable to load the torrent file \"{0}\", - it may be malformed "
-"or FrostWire does not have permission to access this file."
-msgstr ""
-"Frostwire não conseguiu carregar o arquivo  \"{0}\", - ele pode estar "
-"deformado  ou Frostwire não tem permissão para acessar esse arquivo."
+msgid "FrostWire was unable to load the torrent file \"{0}\", - it may be malformed or FrostWire does not have permission to access this file."
+msgstr "Frostwire não conseguiu carregar o arquivo  \"{0}\", - ele pode estar deformado  ou Frostwire não tem permissão para acessar esse arquivo."
 
 #. advanced > Download Speed Menu //
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:56
@@ -769,8 +714,8 @@ msgstr "Selecione a Velocidade"
 
 #. advanced options
 #: gui/com/frostwire/gui/bittorrent/BTDownloadMediatorAdvancedMenuFactory.java:339
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:285
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:319
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:261
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:295
 msgid "Advanced"
 msgstr "Avançado"
 
@@ -799,20 +744,15 @@ msgid "Select File or Folder..."
 msgstr "Selecionar Pasta ou Arquivo..."
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:181
-msgid ""
-"Click here to select a single file or a folder as the content indexed by "
-"your new .torrent"
-msgstr ""
-"Clique aqui para selecionar um arquivo ou pasta como conteúdoindexado pelo "
-"seu novo .torrent"
+msgid "Click here to select a single file or a folder as the content indexed by your new .torrent"
+msgstr "Clique aqui para selecionar um arquivo ou pasta como conteúdoindexado pelo seu novo .torrent"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:196
 msgid ""
 "These box shows the contents you've selected for your new .torrent.\n"
 "Either a file, or the contents of a folder."
 msgstr ""
-"Esses caixas mostram os consteúdos que você selecionou no seu novo ."
-"torrent.\n"
+"Esses caixas mostram os consteúdos que você selecionou no seu novo .torrent.\n"
 "Ou um arquivo ou os conteúdos de uma pasta."
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:228
@@ -824,12 +764,8 @@ msgid "Trackerless Torrent (DHT)"
 msgstr "Trackerless Torrent (DHT)"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:238
-msgid ""
-"Select this option to create torrents that don't need trackers, completely "
-"descentralized. (Recommended)"
-msgstr ""
-"Selecione esta opção para criar torrents que não precisam de trackers, "
-"completamente desentralizados (Recomendado)"
+msgid "Select this option to create torrents that don't need trackers, completely descentralized. (Recommended)"
+msgstr "Selecione esta opção para criar torrents que não precisam de trackers, completamente desentralizados (Recomendado)"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:248
 msgid "Start seeding"
@@ -837,28 +773,23 @@ msgstr "Iniciar semeadura"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:249
 msgid ""
-"Announce yourself as a seed for the content indexed by this torrent as soon "
-"as it's created.\n"
+"Announce yourself as a seed for the content indexed by this torrent as soon as it's created.\n"
 "If nobody is seeding the torrent won't work. (Recommended)"
 msgstr ""
-"Anuncie-se como uma semente para o conteúdo indexado por esse torrentassique "
-"ele for criado.\n"
+"Anuncie-se como uma semente para o conteúdo indexado por esse torrentassique ele for criado.\n"
 "Se ninguem estiver semeando, o torrent não irá funcionar. (Recomendado)"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:261
 msgid "<html><p>Tracker Announce URLs</p><p>(One tracker per line)</p></html>"
-msgstr ""
-"<html><p>Tracker Anunciam  URLs</p><p>(Uma música por linha)</p></html>"
+msgstr "<html><p>Tracker Anunciam  URLs</p><p>(Uma música por linha)</p></html>"
 
 #: gui/com/frostwire/gui/bittorrent/CreateTorrentDialog.java:262
 msgid ""
 "Enter a list of valid BitTorrent Tracker Server URLs.\n"
-"Your new torrent will be announced to these trackers if you start seeding "
-"the torrent."
+"Your new torrent will be announced to these trackers if you start seeding the torrent."
 msgstr ""
 "Digite uma lista de URLs válida de BitTorrent Tracker.\n"
-"Seu novo torrent será anunciado para esses trackers se você começar a "
-"sementear o torrent."
+"Seu novo torrent será anunciado para esses trackers se você começar a sementear o torrent."
 
 #. set up close button
 #. *
@@ -1032,7 +963,7 @@ msgstr "Selecione o conteúdo que você deseja enviar"
 
 #: gui/com/frostwire/gui/bittorrent/ShareTorrentDialog.java:166
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:49
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:61
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:60
 msgid "Download"
 msgstr "Download"
 
@@ -1167,26 +1098,12 @@ msgid "Seeding Settings"
 msgstr "Semeando configurações"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:64
-msgid ""
-"<html><strong>Seed finished torrent downloads.</strong> BitTorrent users on "
-"the internet will be able<br/>to download file chunks of the data your "
-"torrents seed. (Recommended)</html>"
-msgstr ""
-"<html><strong>A semente terminou os downloads torrent.</strong> Usuários "
-"BitTorrent na internet poderão <br/>baixar arquivos dos seus dados torrents."
-"(Recomendado)</html>"
+msgid "<html><strong>Seed finished torrent downloads.</strong> BitTorrent users on the internet will be able<br/>to download file chunks of the data your torrents seed. (Recommended)</html>"
+msgstr "<html><strong>A semente terminou os downloads torrent.</strong> Usuários BitTorrent na internet poderão <br/>baixar arquivos dos seus dados torrents.(Recomendado)</html>"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentSeedingSettingComponent.java:65
-msgid ""
-"<html><strong>Don't seed finished torrent downloads.</strong> BitTorrent "
-"users on the internet may<br/>only download file chunks of that torrent from "
-"you while you're downloading its<br/>data files. <strong>Some trackers will "
-"penalize this Leeching behavior</strong>.</html>"
-msgstr ""
-"<html><strong>Não semeie downloads torrent completos.</strong> Usuários "
-"BitTorrent na internet poderão <br/>baixar somente arquivos do torrents "
-"enquanto você está baixando<br/> os dados de arquivo. <strong>Alguns "
-"trackers irão penalizar esse comportamento leeching</strong>.</html>"
+msgid "<html><strong>Don't seed finished torrent downloads.</strong> BitTorrent users on the internet may<br/>only download file chunks of that torrent from you while you're downloading its<br/>data files. <strong>Some trackers will penalize this Leeching behavior</strong>.</html>"
+msgstr "<html><strong>Não semeie downloads torrent completos.</strong> Usuários BitTorrent na internet poderão <br/>baixar somente arquivos do torrents enquanto você está baixando<br/> os dados de arquivo. <strong>Alguns trackers irão penalizar esse comportamento leeching</strong>.</html>"
 
 #: gui/com/frostwire/gui/bittorrent/TorrentUtil.java:389
 #: gui/com/frostwire/gui/bittorrent/TorrentUtil.java:489
@@ -1194,6 +1111,8 @@ msgid "globalmanager.download.remove.veto"
 msgstr "globalmanager.download.remove.veto"
 
 #: gui/com/frostwire/gui/bittorrent/YouTubeItemDownload.java:20
+#: gui/com/frostwire/gui/library/DownloadTask.java:76
+#: gui/com/frostwire/gui/library/DownloadTask.java:110
 msgid "Downloading"
 msgstr "Baixando"
 
@@ -1215,7 +1134,7 @@ msgstr "Terminou"
 msgid "Crawling"
 msgstr "rastejando"
 
-#: gui/com/frostwire/gui/components/GoogleIconSearchField.java:50
+#: gui/com/frostwire/gui/components/GoogleSearchField.java:38
 msgid "Hints by Google"
 msgstr "Dicas do Google"
 
@@ -1227,9 +1146,86 @@ msgstr "Dicas do Google"
 msgid "Max"
 msgstr "Máximo"
 
+#. *
+#. * The undo action.
+#.
+#: gui/com/frostwire/gui/components/SearchField.java:222
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:37
+msgid "Undo"
+msgstr "Desfazer"
+
+#. *
+#. * The cut action
+#.
+#: gui/com/frostwire/gui/components/SearchField.java:237
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:51
+msgid "Cut"
+msgstr "Recortar"
+
+#. *
+#. * The copy action.
+#.
+#: gui/com/frostwire/gui/components/SearchField.java:252
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:65
+msgid "Copy"
+msgstr "Copiar"
+
+#. *
+#. * The paste action.
+#.
+#: gui/com/frostwire/gui/components/SearchField.java:267
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:79
+#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:166
+msgid "Paste"
+msgstr "Colar"
+
+#. *
+#. * The delete action.
+#.
+#: gui/com/frostwire/gui/components/SearchField.java:282
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:420
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:422
+#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:868
+#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:552
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:707
+#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:762
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:93
+msgid "Delete"
+msgstr "Apagar"
+
+#. *
+#. * The select all action.
+#.
+#: gui/com/frostwire/gui/components/SearchField.java:297
+#: gui/com/limegroup/gnutella/gui/CheckBoxList.java:620
+#: gui/com/limegroup/gnutella/gui/LimeTextField.java:107
+msgid "Select All"
+msgstr "Selecionar Tudo"
+
+#: gui/com/frostwire/gui/components/SearchField.java:648
+#: gui/com/limegroup/gnutella/gui/ClearableAutoCompleteTextField.java:326
+msgid "Clear History"
+msgstr "Limpar histórico"
+
+#: gui/com/frostwire/gui/components/searchfield/RecentSearches.java:320
+msgid "SearchField.noRecentsText"
+msgstr "SearchField.noRecentsText"
+
+#: gui/com/frostwire/gui/components/searchfield/RecentSearches.java:324
+msgid "SearchField.recentsMenuTitle"
+msgstr "SearchField.recentsMenuTitle"
+
+#: gui/com/frostwire/gui/components/searchfield/RecentSearches.java:335
+msgid "SearchField.clearRecentsText"
+msgstr "SearchField.clearRecentsText"
+
+#: gui/com/frostwire/gui/components/searchfield/SearchFieldUI.java:410
+msgid "SearchField.popupSource"
+msgstr "SearchField.popupSource"
+
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:144
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:188
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:173
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:169
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:47
 #: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:421
 msgid "Options"
@@ -1237,8 +1233,7 @@ msgstr "Opções"
 
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:145
 msgid "You can configure the folders you share in FrostWire's Options."
-msgstr ""
-"Você pode configurar as pastas que compartilha no menu opções do FrostWire."
+msgstr "Você pode configurar as pastas que compartilha no menu opções do FrostWire."
 
 #: gui/com/frostwire/gui/library/AbstractLibraryTableMediator.java:229
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:359
@@ -1261,9 +1256,8 @@ msgid "Add"
 msgstr "Adicionar"
 
 #: gui/com/frostwire/gui/library/Device.java:265
-msgid ""
-"The device is busy with another transfer or did not authorize your request"
-msgstr ""
+msgid "The device is busy with another transfer or did not authorize your request"
+msgstr "O dispositivo está ocupado com outra transferência ou não autorizado o seu pedido"
 
 #: gui/com/frostwire/gui/library/Device.java:265
 msgid "Transfer failed"
@@ -1275,20 +1269,12 @@ msgstr "Limite de uploads atingido"
 
 #: gui/com/frostwire/gui/library/DeviceUploadDialog.java:117
 msgid "Waiting for device authorization..."
-msgstr ""
+msgstr "Aguardando autorização dispositivo..."
 
 #: gui/com/frostwire/gui/library/DeviceUploadTask.java:70
+#: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
 msgid "Uploading"
 msgstr "Fazendo o upload"
-
-#: gui/com/frostwire/gui/library/DeviceUploadTask.java:82
-msgid "Uploading "
-msgstr "Fazendo o upload"
-
-#: gui/com/frostwire/gui/library/DownloadTask.java:76
-#: gui/com/frostwire/gui/library/DownloadTask.java:109
-msgid "Downloading "
-msgstr "Baixando"
 
 #: gui/com/frostwire/gui/library/InternetRadioDirectoryHolder.java:40
 msgid "Radio"
@@ -1315,7 +1301,7 @@ msgstr "Data modificada"
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:234
 #: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:159
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:261
-#: gui/com/frostwire/gui/library/LibrarySearch.java:198
+#: gui/com/frostwire/gui/library/LibrarySearch.java:181
 #: gui/com/frostwire/gui/tabs/SearchDownloadTab.java:42
 msgid "Search"
 msgstr "Pesquisar"
@@ -1330,39 +1316,39 @@ msgid "Save Selected Files To Folder"
 msgstr "Salvar os Arquivos Selecionados na Pasta"
 
 #: gui/com/frostwire/gui/library/LibraryExplorer.java:144
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:269
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:287
 msgid "tracks"
 msgstr "faixas"
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:199
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:200
 msgid "Finished Downloads"
 msgstr "Downloads concluídos"
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:201
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:202
 msgid "Devices"
 msgstr "Dispositivos"
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:223
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:155
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:224
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:158
 msgid "Configure Options"
 msgstr "Configuar Opções"
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:223
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:156
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:224
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:159
 msgid "You can configure the FrostWire's Options."
 msgstr "Você pode configurar as Opções do FrostWire."
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:606
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:654
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:607
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:672
 msgid "Refresh"
 msgstr "Atualizar"
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:607
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:655
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:608
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:673
 msgid "Refresh selected"
 msgstr "Atualizar os selecionados"
 
-#: gui/com/frostwire/gui/library/LibraryExplorer.java:629
+#: gui/com/frostwire/gui/library/LibraryExplorer.java:630
 msgid "Open Library Folder"
 msgstr "Abrir Pasta da Biblioteca"
 
@@ -1382,26 +1368,9 @@ msgstr "Mover para o Lixo"
 msgid "Move to Trash"
 msgstr "Mover para o Lixo"
 
-#. *
-#. * The delete action.
-#.
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:420
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:422
-#: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:868
-#: gui/com/frostwire/gui/library/LibraryInternetRadioTableMediator.java:552
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:689
-#: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:762
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:93
-msgid "Delete"
-msgstr "Apagar"
-
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:474
-msgid ""
-"Are you sure you want to delete the selected file(s), thus removing it from "
-"your computer?"
-msgstr ""
-"Tem certeza de que deseja excluir o(s) arquivo(s) selecionado(s), o "
-"removendo do seu computador"
+msgid "Are you sure you want to delete the selected file(s), thus removing it from your computer?"
+msgstr "Tem certeza de que deseja excluir o(s) arquivo(s) selecionado(s), o removendo do seu computador"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:480
 #: gui/com/limegroup/gnutella/gui/MessageService.java:174
@@ -1421,20 +1390,13 @@ msgid "Message"
 msgstr "Mensagem"
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:525
-msgid ""
-"The following files could not be deleted. They may be in use by another "
-"application or are currently being downloaded to."
-msgstr ""
-"Os seguintes arquivos não podem ser excluidos porque estão em uso por outro "
-"programa ou atualmente sendo baixando."
+msgid "The following files could not be deleted. They may be in use by another application or are currently being downloaded to."
+msgstr "Os seguintes arquivos não podem ser excluidos porque estão em uso por outro programa ou atualmente sendo baixando."
 
 #. notify the user that renaming failed
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:583
-msgid ""
-"Unable to rename the file '{0}'. It may be in use by another application."
-msgstr ""
-"Impossível renomear o arquivo '{0}'. Ele pode estar sendo utilizado por "
-"outro aplicativo."
+msgid "Unable to rename the file '{0}'. It may be in use by another application."
+msgstr "Impossível renomear o arquivo '{0}'. Ele pode estar sendo utilizado por outro aplicativo."
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:791
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:664
@@ -1457,7 +1419,7 @@ msgid "Delete Selected Files"
 msgstr "Excluir arquivos selecionados."
 
 #: gui/com/frostwire/gui/library/LibraryFilesTableMediator.java:886
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:719
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:737
 msgid "Rename"
 msgstr "Renomear"
 
@@ -1518,45 +1480,41 @@ msgstr "Copiar URL"
 msgid "Loading Library Window..."
 msgstr "Carregando janela da biblioteca..."
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:162
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:165
 msgid "New Playlist"
 msgstr "Nova Lista de Reprodução"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:162
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:165
 msgid "Creates a new Playlist"
 msgstr "Criar uma Nova Lista de reprodução"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:383
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:401
 msgid "Open Playlist (.m3u)"
 msgstr "Abrir lista de reprodução (.m3u)"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:456
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:474
 msgid "Save Playlist As"
 msgstr "Salvar lista de reprodução como"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:468
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:486
 #, java-format
-msgid ""
-"Warning: a file with the name {0} already exists in the folder. Overwrite "
-"this file?"
-msgstr ""
-"Atenção: um arquivo com o nome {0} já existe na pasta. Reescrever esse "
-"arquivo?"
+msgid "Warning: a file with the name {0} already exists in the folder. Overwrite this file?"
+msgstr "Atenção: um arquivo com o nome {0} já existe na pasta. Reescrever esse arquivo?"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:669
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:687
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:836
 msgid "Refresh Audio Properties"
 msgstr "Atualizar Propriedades de áudio"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:670
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:688
 msgid "Refresh the audio properties based on ID3 tags of selected items"
 msgstr "Atualizar Propriedades de áudio baseado no ID3 dos itens selecionados"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:690
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:708
 msgid "Delete Playlist"
 msgstr "Deletar Lista de reprodução"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:701
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:719
 msgid ""
 "Are you sure you want to delete the playlist?\n"
 "(No files will be deleted)"
@@ -1564,38 +1522,38 @@ msgstr ""
 "Você tem certeza que deseja excluir a Lista de Reprodução?\n"
 "(Nenhum arquivo será deletado)"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:720
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:738
 msgid "Rename Playlist"
 msgstr "Renomear lista de reprodução"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:748
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:766
 msgid "Playlist Files (*.m3u)"
 msgstr "Arquivos de listas de reprodução (*.m3u)"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:757
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:775
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:790
 msgid "Import .m3u to Playlist"
 msgstr "Importar .m3u para lista de reprodução"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:758
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:776
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:791
 msgid "Import a .m3u file into the selected playlist"
 msgstr "Importar um arquivo .m3u para lista de reprodução selecionada"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:772
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:790
 msgid "Import .m3u to New Playlist"
 msgstr "Importar .m3u para Nova Lista de Reprodução"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:773
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:791
 msgid "Import a .m3u file to a new playlist"
 msgstr "Importar .m3u para nova lista de reprodução"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:787
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:805
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:805
 msgid "Export Playlist to .m3u"
 msgstr "Exportar Lista de Reprodução para .m3u"
 
-#: gui/com/frostwire/gui/library/LibraryPlaylists.java:788
+#: gui/com/frostwire/gui/library/LibraryPlaylists.java:806
 #: gui/com/frostwire/gui/library/LibraryPlaylistsTableMediator.java:806
 msgid "Export this playlist into a .m3u file"
 msgstr "Importar essa lista de reprodução para um arquivo .m3u"
@@ -1639,8 +1597,12 @@ msgstr "Atualizar as propriedades de áudio baseado no ID3"
 msgid "search results"
 msgstr "pesquisar resultados "
 
+#: gui/com/frostwire/gui/library/LibrarySearch.java:673
+msgid "Search in "
+msgstr "Pesquisando"
+
 #: gui/com/frostwire/gui/library/LibraryUtils.java:69
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:300
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:276
 #: gui/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:15
 msgid "Importing"
 msgstr "Importando"
@@ -1667,23 +1629,23 @@ msgstr "Erro ao importar a estação de rádio de"
 msgid "Holds the Results for "
 msgstr "Contém os resultados de"
 
-#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:187
+#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:178
 msgid "Library Folders"
 msgstr "Pastas da Biblioteca"
 
-#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:368
+#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:359
 msgid "Legend"
 msgstr "Legenda"
 
-#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:377
+#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:368
 msgid "Folder and subfolders are included in the Library."
 msgstr "Pasta e subpastas estão inclusas na Biblioteca."
 
-#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:391
+#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:382
 msgid "Folder is not included and no subfolders are included in the Library."
 msgstr "Pasta não inclusa e nenhuma subpasta estão inclusas na Biblioteca."
 
-#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:399
+#: gui/com/frostwire/gui/library/RecursiveLibraryDirectoryPanel.java:391
 msgid "Folder's files and some subfolders are included in the Library."
 msgstr "A pasta e alguns arquivos de subpastas estão inclusos na Biblioteca."
 
@@ -1752,7 +1714,7 @@ msgstr "Mostrar o bate-papo da comunidade"
 
 #. library
 #: gui/com/frostwire/gui/tabs/LibraryTab.java:33
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:288
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:264
 msgid "Library"
 msgstr "Biblioteca"
 
@@ -1804,22 +1766,12 @@ msgid "<h1>Thanks to the FrostWire Chat Community!</h1>"
 msgstr "<h1>Obrigado pelo bate papo da comunidade FrostWire</h1>"
 
 #: gui/com/limegroup/gnutella/gui/AboutWindow.java:201
-msgid ""
-"Thanks to everybody that has helped us everyday in the forums and chatrooms, "
-"you not only help new users but you also warn the FrostWire team of any "
-"problem that occur on our networks. Thank you all, without you this wouldn't "
-"be possible!"
-msgstr ""
-"Obrigada a todos que nos ajuda todos os dias nos fóruns e bate-papo, vocês "
-"ajudam novos usuários e também ajudam a equipe FrostWire caso aconteça algum "
-"problema na nossa rede. Obrigado a todos, sem vocês, nada seria possível!"
+msgid "Thanks to everybody that has helped us everyday in the forums and chatrooms, you not only help new users but you also warn the FrostWire team of any problem that occur on our networks. Thank you all, without you this wouldn't be possible!"
+msgstr "Obrigada a todos que nos ajuda todos os dias nos fóruns e bate-papo, vocês ajudam novos usuários e também ajudam a equipe FrostWire caso aconteça algum problema na nossa rede. Obrigado a todos, sem vocês, nada seria possível!"
 
 #: gui/com/limegroup/gnutella/gui/AboutWindow.java:204
-msgid ""
-"<br><br>In Special we give thanks to the Chatroom Operators and Forum "
-"Moderators"
-msgstr ""
-"<br><br>Em especial agradecemos os Moderadores de bate-papo we e Fórum "
+msgid "<br><br>In Special we give thanks to the Chatroom Operators and Forum Moderators"
+msgstr "<br><br>Em especial agradecemos os Moderadores de bate-papo we e Fórum "
 
 #: gui/com/limegroup/gnutella/gui/AboutWindow.java:207
 msgid "<h1>FrostWire Chat Operators</h1>"
@@ -1840,12 +1792,8 @@ msgstr "<h1>Obrigado para a equipe de desenvolvimento LimeWire</h1>"
 
 #. community VIPs
 #: gui/com/limegroup/gnutella/gui/AboutWindow.java:255
-msgid ""
-"Several colleagues in the Gnutella community merit special thanks. These "
-"include:"
-msgstr ""
-"Entre os colegas da comunidade Gnutella que merecem uma agradecimento "
-"especial, podemos incluir:"
+msgid "Several colleagues in the Gnutella community merit special thanks. These include:"
+msgstr "Entre os colegas da comunidade Gnutella que merecem uma agradecimento especial, podemos incluir:"
 
 #: gui/com/limegroup/gnutella/gui/AboutWindow.java:275
 msgid "<h1>Thanks to the PJIRC Staff</h1>"
@@ -1860,22 +1808,16 @@ msgid "<h1>Thanks to Ubuntu/Kubuntu Teams</h1>"
 msgstr "<h1>Obrigado para a Equipe Ubuntu/Kubuntu</h1>"
 
 #: gui/com/limegroup/gnutella/gui/AboutWindow.java:294
-msgid ""
-"<p>For making the world a better place with such an excellent distro, you'll "
-"be the ones to make a difference on the desktop.</p>"
-msgstr ""
-"<p>Por tornar o mundo um lugar melhor com essa excelente distribuição, vocês "
-"fazem a diferença no ambiente de trabalho.</p>"
+msgid "<p>For making the world a better place with such an excellent distro, you'll be the ones to make a difference on the desktop.</p>"
+msgstr "<p>Por tornar o mundo um lugar melhor com essa excelente distribuição, vocês fazem a diferença no ambiente de trabalho.</p>"
 
 #: gui/com/limegroup/gnutella/gui/AboutWindow.java:296
 msgid "<h1>Thanks to the NSIS Project</h1>"
 msgstr "<h1>Obrigado Projeto NSIS</h1>"
 
 #: gui/com/limegroup/gnutella/gui/AboutWindow.java:297
-msgid ""
-"<p>Thanks for such an awesome installer builder system and documentation.</p>"
-msgstr ""
-"<p>Obrigado por esse incrível sistema de construção e documentação.</p>"
+msgid "<p>Thanks for such an awesome installer builder system and documentation.</p>"
+msgstr "<p>Obrigado por esse incrível sistema de construção e documentação.</p>"
 
 #: gui/com/limegroup/gnutella/gui/AboutWindow.java:299
 msgid "<h1>Thanks to our families</h1>"
@@ -1886,20 +1828,8 @@ msgid "For being patient during our many sleepless nights"
 msgstr "Por terem sido pacientes durantes as noites sem dormir"
 
 #: gui/com/limegroup/gnutella/gui/AboutWindow.java:305
-msgid ""
-"BitTorrent, the BitTorrent Logo, and Torrent are trademarks of BitTorrent, "
-"Inc."
-msgstr ""
-"BitTorrent, o logo do BitTorrent, e Torrent são marcas registradas do "
-"BitTorrent, Inc."
-
-#. *
-#. * The select all action.
-#.
-#: gui/com/limegroup/gnutella/gui/CheckBoxList.java:620
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:107
-msgid "Select All"
-msgstr "Selecionar Tudo"
+msgid "BitTorrent, the BitTorrent Logo, and Torrent are trademarks of BitTorrent, Inc."
+msgstr "BitTorrent, o logo do BitTorrent, e Torrent são marcas registradas do BitTorrent, Inc."
 
 #: gui/com/limegroup/gnutella/gui/CheckBoxList.java:622
 msgid "Marks all Items as Selected"
@@ -1912,10 +1842,6 @@ msgstr "Desmarcar tudo"
 #: gui/com/limegroup/gnutella/gui/CheckBoxList.java:647
 msgid "Deselects all Items in the List"
 msgstr "Desmarcar todos os Itens da Lista"
-
-#: gui/com/limegroup/gnutella/gui/ClearableAutoCompleteTextField.java:326
-msgid "Clear History"
-msgstr "Limpar histórico"
 
 #: gui/com/limegroup/gnutella/gui/CurrentAudioStatusComponent.java:84
 msgid "Send this file to a friend"
@@ -1990,16 +1916,8 @@ msgstr "Ethernet"
 
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:105
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:1485
-msgid ""
-"Your machine does not appear to have an active Internet connection or a "
-"firewall is blocking FrostWire from accessing the internet. FrostWire will "
-"automatically keep trying to connect you to the network unless you select "
-"\"Disconnect\" from the File menu."
-msgstr ""
-"A sua máquina não parece possuir uma conexão à internet ativa, ou existe um "
-"firewall bloqueando o acesso do FrostWire à internet. O FrostWire vair "
-"continuar à tentar conectar à rede automaticamente, a não ser que "
-"vocêselecione \"Desconectar\" no menu arquivo."
+msgid "Your machine does not appear to have an active Internet connection or a firewall is blocking FrostWire from accessing the internet. FrostWire will automatically keep trying to connect you to the network unless you select \"Disconnect\" from the File menu."
+msgstr "A sua máquina não parece possuir uma conexão à internet ativa, ou existe um firewall bloqueando o acesso do FrostWire à internet. O FrostWire vair continuar à tentar conectar à rede automaticamente, a não ser que vocêselecione \"Desconectar\" no menu arquivo."
 
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:115
 #: gui/com/limegroup/gnutella/gui/menu/SearchMenu.java:25
@@ -2029,38 +1947,18 @@ msgstr "FrostWire: BitTorrent tão simples"
 
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:399
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:405
-msgid ""
-"FrostWire has encountered a problem during startup and cannot proceed. You "
-"may be able to fix this problem by changing FrostWire's Windows "
-"Compatibility. Right-click on the FrostWire icon on your Desktop and select "
-"'Properties' from the popup menu. Click the 'Compatibility' tab at the top, "
-"then click the 'Run this program in compatibility mode for' check box, and "
-"then select 'Windows 2000' in the box below the check box. Then click the "
-"'OK' button at the bottom and restart FrostWire."
-msgstr ""
-"O FrostWire encontrou um problema durante a inicialização e não pode "
-"continuar. Você pode consertar este problema mudando o modo de "
-"compatibilidade windows do FrostWire. Clique com o botão direito do mouse no "
-"ícone do FrostWire no seu desktop, e selecione 'Propriedades' do menu. "
-"Clique na aba 'Compatibilidade' na parte superior, e então clique na caixa "
-"de seleção 'Executar este programa em modo de compatibilidade', e então "
-"selecione 'Windows 2000' na caixa embaixo da caixa de seleção. Então clique "
-"no botão 'OK' na parte inferior e reinicie o FrostWire."
+msgid "FrostWire has encountered a problem during startup and cannot proceed. You may be able to fix this problem by changing FrostWire's Windows Compatibility. Right-click on the FrostWire icon on your Desktop and select 'Properties' from the popup menu. Click the 'Compatibility' tab at the top, then click the 'Run this program in compatibility mode for' check box, and then select 'Windows 2000' in the box below the check box. Then click the 'OK' button at the bottom and restart FrostWire."
+msgstr "O FrostWire encontrou um problema durante a inicialização e não pode continuar. Você pode consertar este problema mudando o modo de compatibilidade windows do FrostWire. Clique com o botão direito do mouse no ícone do FrostWire no seu desktop, e selecione 'Propriedades' do menu. Clique na aba 'Compatibilidade' na parte superior, e então clique na caixa de seleção 'Executar este programa em modo de compatibilidade', e então selecione 'Windows 2000' na caixa embaixo da caixa de seleção. Então clique no botão 'OK' na parte inferior e reinicie o FrostWire."
 
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:1388
 #, java-format
-msgid ""
-"FrostWire could not locate your web browser to display the following "
-"webpage: {0}."
-msgstr ""
-"FrostWire não conseguiu localizar seu navegador de internet para mostrar a "
-"seguinte página: {0}."
+msgid "FrostWire could not locate your web browser to display the following webpage: {0}."
+msgstr "FrostWire não conseguiu localizar seu navegador de internet para mostrar a seguinte página: {0}."
 
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:1410
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:1436
 msgid "FrostWire will not launch the specified file for security reasons."
-msgstr ""
-"Por razões de segurança o FrostWire não irá abrir o arquivo especificado."
+msgstr "Por razões de segurança o FrostWire não irá abrir o arquivo especificado."
 
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:1413
 #: gui/com/limegroup/gnutella/gui/GUIMediator.java:1439
@@ -2099,10 +1997,6 @@ msgstr "TB"
 msgid "KB/s"
 msgstr "KB/s"
 
-#: gui/com/limegroup/gnutella/gui/IndentingPanel.java:134
-msgid "More Search Options"
-msgstr "Mais opções de pesquisa"
-
 #. Load up the HTML engine.
 #: gui/com/limegroup/gnutella/gui/Initializer.java:307
 msgid "Loading HTML Engine..."
@@ -2133,19 +2027,13 @@ msgstr "Esta versão Alpha expirou. Clique no Ok para sair. "
 msgid ""
 "FrostWire could not create a temporary preferences folder.\n"
 "\n"
-"This is generally caused by a lack of permissions.  Please make sure that "
-"FrostWire (and you) have access to create files/folders on your computer.  "
-"If the problem persists, please visit www.frostwire.com and click the "
-"'Support' link.\n"
+"This is generally caused by a lack of permissions.  Please make sure that FrostWire (and you) have access to create files/folders on your computer.  If the problem persists, please visit www.frostwire.com and click the 'Support' link.\n"
 "\n"
 "FrostWire will now exit.  Thank You."
 msgstr ""
 "O FrostWire não conseguiu criar uma pasta temporária de preferências.\n"
 "\n"
-"Isso é geralmente causado pela falta de permissões. Por favor tenha certeza "
-"de que o FrostWire (e você) tem acesso para criar arquivos/pastas em seu "
-"computador. Se o problema persistir, por favor visite www.frostwire.com e "
-"click no link 'Suporte'.\n"
+"Isso é geralmente causado pela falta de permissões. Por favor tenha certeza de que o FrostWire (e você) tem acesso para criar arquivos/pastas em seu computador. Se o problema persistir, por favor visite www.frostwire.com e click no link 'Suporte'.\n"
 "\n"
 "O FrostWire irá fechar agora. Obrigado."
 
@@ -2173,14 +2061,8 @@ msgid "Cancel Operation"
 msgstr "Cancelar operação."
 
 #: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:70
-msgid ""
-"You are currently using a beta or pre-release version of Java 1.6.0. This "
-"version is known to have caused problems with FrostWire. Please upgrade to "
-"the final 1.6.0 release.\n"
-msgstr ""
-"Você está usando uam versão beta ou pre-lançamento do Java 1.6.0. Está "
-"versão deve ter causado problemas com o FrostWire. Porfavor atualize para a "
-"versão final do Java.\n"
+msgid "You are currently using a beta or pre-release version of Java 1.6.0. This version is known to have caused problems with FrostWire. Please upgrade to the final 1.6.0 release.\n"
+msgstr "Você está usando uam versão beta ou pre-lançamento do Java 1.6.0. Está versão deve ter causado problemas com o FrostWire. Porfavor atualize para a versão final do Java.\n"
 
 #: gui/com/limegroup/gnutella/gui/JavaVersionNotice.java:161
 msgid "Upgrade Java"
@@ -2205,8 +2087,7 @@ msgstr "Não mostrar de novo"
 
 #: gui/com/limegroup/gnutella/gui/LanguageWindow.java:182
 msgid "FrostWire must be restarted for the new language to take effect."
-msgstr ""
-"É necessário reiniciar o FrostWire para que o novo idioma esteja disponível."
+msgstr "É necessário reiniciar o FrostWire para que o novo idioma esteja disponível."
 
 #: gui/com/limegroup/gnutella/gui/LanguageWindow.java:198
 msgid "Change Language"
@@ -2219,35 +2100,6 @@ msgstr "Ajude a traduzir o FrostWire"
 #: gui/com/limegroup/gnutella/gui/LanguageWindow.java:202
 msgid "Show Language in status bar"
 msgstr "Mostrar idioma na barra de status"
-
-#. *
-#. * The undo action.
-#.
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:37
-msgid "Undo"
-msgstr "Desfazer"
-
-#. *
-#. * The cut action
-#.
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:51
-msgid "Cut"
-msgstr "Recortar"
-
-#. *
-#. * The copy action.
-#.
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:65
-msgid "Copy"
-msgstr "Copiar"
-
-#. *
-#. * The paste action.
-#.
-#: gui/com/limegroup/gnutella/gui/LimeTextField.java:79
-#: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:166
-msgid "Paste"
-msgstr "Colar"
 
 #: gui/com/limegroup/gnutella/gui/MessageResourceHandler.java:10
 msgid "Download Page"
@@ -2282,39 +2134,20 @@ msgstr "Usar sempre esta resposta"
 
 #: gui/com/limegroup/gnutella/gui/SaveDirectoryHandler.java:111
 #, java-format
-msgid ""
-"Saving downloads to {0} may not function correctly.  To be sure downloads "
-"are saved properly you should save them to a sub-folder of {1}.  Would you "
-"like to choose another location?"
-msgstr ""
-"Salvar downloads em {0} talvez não funcione corretamente. Para ter certeza "
-"que os downloads serão salvos devidamente você deve salvá-los em uma sub-"
-"pasta de {1}. Você gostaria de escolher outra localidade?"
+msgid "Saving downloads to {0} may not function correctly.  To be sure downloads are saved properly you should save them to a sub-folder of {1}.  Would you like to choose another location?"
+msgstr "Salvar downloads em {0} talvez não funcione corretamente. Para ter certeza que os downloads serão salvos devidamente você deve salvá-los em uma sub-pasta de {1}. Você gostaria de escolher outra localidade?"
 
 #: gui/com/limegroup/gnutella/gui/SettingsWarningManager.java:20
-msgid ""
-"FrostWire was unable to create your settings folder and is using a temporary "
-"folder.  Your settings may be deleted when you close FrostWire. "
-msgstr ""
-"O FrostWire não conseguiu criar sua pasta de configurações e está usando uma "
-"pasta temporária. Sua configuração poderá ser deletada quando fechar o "
-"FrostWire. "
+msgid "FrostWire was unable to create your settings folder and is using a temporary folder.  Your settings may be deleted when you close FrostWire. "
+msgstr "O FrostWire não conseguiu criar sua pasta de configurações e está usando uma pasta temporária. Sua configuração poderá ser deletada quando fechar o FrostWire. "
 
 #: gui/com/limegroup/gnutella/gui/SettingsWarningManager.java:35
-msgid ""
-"FrostWire has encountered problems in managing your settings.  Your settings "
-"changes may not be saved on shutdown."
-msgstr ""
-"O FrostWire encontrou problemas ao gerenciar suas configurações. Suas "
-"mudanças de configuração podem não serem salvas ao desligar."
+msgid "FrostWire has encountered problems in managing your settings.  Your settings changes may not be saved on shutdown."
+msgstr "O FrostWire encontrou problemas ao gerenciar suas configurações. Suas mudanças de configuração podem não serem salvas ao desligar."
 
 #: gui/com/limegroup/gnutella/gui/SettingsWarningManager.java:38
-msgid ""
-"FrostWire has encountered problems in loading your settings.  FrostWire will "
-"attempt to use the default values; however, may behave unexpectedly."
-msgstr ""
-"O FrostWire encontrou problemas ao carregar suas configurações. O FrostWire "
-"tentará usar valores padrão; no entanto, pode funcionar incorretamente."
+msgid "FrostWire has encountered problems in loading your settings.  FrostWire will attempt to use the default values; however, may behave unexpectedly."
+msgstr "O FrostWire encontrou problemas ao carregar suas configurações. O FrostWire tentará usar valores padrão; no entanto, pode funcionar incorretamente."
 
 #: gui/com/limegroup/gnutella/gui/ShutdownWindow.java:25
 msgid "Shutting down FrostWire..."
@@ -2354,12 +2187,8 @@ msgid "<html><b>Seeding</b><p>completed torrent downloads.</html>"
 msgstr "<html><b>Semeadura</b><p>termeinou os downloads torrent.</html>"
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:180
-msgid ""
-"<html><b>Not Seeding</b>.<p>File chunks might be shared only during<p>a "
-"torrent download.</html>"
-msgstr ""
-"<html><b>Nenhuma semeadura</b>.<p>Partes do arquivo só podem ser "
-"compartilhadas<p>a durante o download torrent.</html>"
+msgid "<html><b>Not Seeding</b>.<p>File chunks might be shared only during<p>a torrent download.</html>"
+msgstr "<html><b>Nenhuma semeadura</b>.<p>Partes do arquivo só podem ser compartilhadas<p>a durante o download torrent.</html>"
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:441
 msgid "<html><b>Seeding</b></html>"
@@ -2383,8 +2212,7 @@ msgstr "Desconectado"
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:562
 msgid "Check your internet connection, FrostWire can't connect."
-msgstr ""
-"Verifique a sua conexão de internet pois o frostWirre não consegue conectar."
+msgstr "Verifique a sua conexão de internet pois o frostWirre não consegue conectar."
 
 #: gui/com/limegroup/gnutella/gui/StatusLine.java:565
 msgid "Turbo-Charged"
@@ -2463,433 +2291,176 @@ msgid "Loading tips..."
 msgstr "Carregando dicas..."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:7
-msgid ""
-"Tired of downloads stopping halfway through? It helps to pick search results "
-"with a higher number in the '#' column. The # is the amount of unique places "
-"on the network that are hosting the file. The more sources, the better the "
-"chance of getting your file! In case a junk result appears to have a lot of "
-"sources, use the <font color=\"185ea8\">Junk</font> button to train "
-"FrostWire's junk filter."
-msgstr ""
-"Cansado dos downloads que param na metade? Um dica é escolher resultados na "
-"coluna '#' com um número maior. O  # é a quantidade dos locais na rede que "
-"hospedam esse arquivo. Quanto mais fontes, maior a chance de conseguir o seu "
-"arquivo! Caso um arquivo spam tenha muitas fontes, use o botão  <font color="
-"\"185ea8\">Spam</font>para treinar o filtro de spam do FrostWire."
+msgid "Tired of downloads stopping halfway through? It helps to pick search results with a higher number in the '#' column. The # is the amount of unique places on the network that are hosting the file. The more sources, the better the chance of getting your file! In case a junk result appears to have a lot of sources, use the <font color=\"185ea8\">Junk</font> button to train FrostWire's junk filter."
+msgstr "Cansado dos downloads que param na metade? Um dica é escolher resultados na coluna '#' com um número maior. O  # é a quantidade dos locais na rede que hospedam esse arquivo. Quanto mais fontes, maior a chance de conseguir o seu arquivo! Caso um arquivo spam tenha muitas fontes, use o botão  <font color=\"185ea8\">Spam</font>para treinar o filtro de spam do FrostWire."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:25
-msgid ""
-"You can change the look and feel of FrostWire by going to View &gt; Apply "
-"Skins and choosing a new skin."
-msgstr ""
-"Você pode mudar a aparencia do FrostWire, vá em Visualizar &gt; Aplicar Tema "
-"e escolha o novo tema."
+msgid "You can change the look and feel of FrostWire by going to View &gt; Apply Skins and choosing a new skin."
+msgstr "Você pode mudar a aparencia do FrostWire, vá em Visualizar &gt; Aplicar Tema e escolha o novo tema."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:26
-msgid ""
-"You can sort your search results by clicking on a column. The most useful "
-"column to sort by is the 'Seeds' column, which represents an approximate "
-"number of computers that have the entire file and are online."
-msgstr ""
-"Você pode ordenar os resultados da sua busca clicando em uma coluna. A "
-"coluna mais útil para ordenar é a 'Semente', que representa a quantidade "
-"aproximada de computadores que tem o arquivo e que estão online."
+msgid "You can sort your search results by clicking on a column. The most useful column to sort by is the 'Seeds' column, which represents an approximate number of computers that have the entire file and are online."
+msgstr "Você pode ordenar os resultados da sua busca clicando em uma coluna. A coluna mais útil para ordenar é a 'Semente', que representa a quantidade aproximada de computadores que tem o arquivo e que estão online."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:27
-msgid ""
-"The more stars a search result has, the better the chances of the download "
-"completing successfully! Some search results may even appear with four blue "
-"stars and a speed of 'Ethernet'. These results have the greatest chance of "
-"completing successfully."
-msgstr ""
-"Quanto mais estrelas um resultado de busca tem, maiores as chances de "
-"completar o download! Alguns resultados podem até aparecer com quatro "
-"estrelas azuis e a velocidade 'Ethernet'. Esses resultados são os que "
-"possuem mais chance de serem completados com sucesso."
+msgid "The more stars a search result has, the better the chances of the download completing successfully! Some search results may even appear with four blue stars and a speed of 'Ethernet'. These results have the greatest chance of completing successfully."
+msgstr "Quanto mais estrelas um resultado de busca tem, maiores as chances de completar o download! Alguns resultados podem até aparecer com quatro estrelas azuis e a velocidade 'Ethernet'. Esses resultados são os que possuem mais chance de serem completados com sucesso."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:28
-msgid ""
-"It helps the network if you keep your FrostWire running. Others will connect "
-"to the network easier and searches will perform better."
-msgstr ""
-"Ajuda a rede se você manter o seu FrostWire execução. Outros irão se "
-"conectar mais facilmente à rede e pesquisas terão um desempenho melhor."
+msgid "It helps the network if you keep your FrostWire running. Others will connect to the network easier and searches will perform better."
+msgstr "Ajuda a rede se você manter o seu FrostWire execução. Outros irão se conectar mais facilmente à rede e pesquisas terão um desempenho melhor."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:29
 #, java-format
-msgid ""
-"Passionate about digital rights? Visit the <a href=\"{0}\">Electronic "
-"Frontier Foundation</a> and see what you can do to help."
-msgstr ""
-"Quer saber mais sobre Direitos Autorais Digitais? Visite a <a href=\"{0}"
-"\">Electronic Frontier Foundation</a> e descubra mais sobre o assunto."
+msgid "Passionate about digital rights? Visit the <a href=\"{0}\">Electronic Frontier Foundation</a> and see what you can do to help."
+msgstr "Quer saber mais sobre Direitos Autorais Digitais? Visite a <a href=\"{0}\">Electronic Frontier Foundation</a> e descubra mais sobre o assunto."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:30
-msgid ""
-"FrostWire is translated into many different languages including Chinese, "
-"French, German, Japanese, Italian, Spanish and many more. Visit FrostWire's "
-"<a href=\"{0}\">internationalization page</a> for information on how you can "
-"help translation efforts!"
-msgstr ""
-"FrostWire é traduzido em diversos idiomas, incluindo chinês, francês, "
-"alemão, japonês, italiano, espanhol e muito mais. Visite <a href=\"{0}\">a "
-"página internacional</a> para obter informações sobre como você pode ajudar "
-"nas tradução."
+msgid "FrostWire is translated into many different languages including Chinese, French, German, Japanese, Italian, Spanish and many more. Visit FrostWire's <a href=\"{0}\">internationalization page</a> for information on how you can help translation efforts!"
+msgstr "FrostWire é traduzido em diversos idiomas, incluindo chinês, francês, alemão, japonês, italiano, espanhol e muito mais. Visite <a href=\"{0}\">a página internacional</a> para obter informações sobre como você pode ajudar nas tradução."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:31
-msgid ""
-"Small variations in the search title will still work. For example, if your "
-"buddy is sharing 'Frosty' but you searched for 'My Frosty', your buddy's "
-"file will still be found."
-msgstr ""
-"Pequenas variações no título na busca ainda funcionar. Por exemplo, se seu "
-"amigo está compartilhando 'Frosty', mas você procurou por 'Meu Frosty', o "
-"arquivo do seu amigo ainda irá aparecer."
+msgid "Small variations in the search title will still work. For example, if your buddy is sharing 'Frosty' but you searched for 'My Frosty', your buddy's file will still be found."
+msgstr "Pequenas variações no título na busca ainda funcionar. Por exemplo, se seu amigo está compartilhando 'Frosty', mas você procurou por 'Meu Frosty', o arquivo do seu amigo ainda irá aparecer."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:32
-msgid ""
-"Are you behind a firewall? At the bottom of FrostWire in the status bar, "
-"look for the globe. If there is a brick wall in front of it, your Internet "
-"connection is firewalled."
-msgstr ""
-"Você tem um firewall? Na barra de status do FrostWire, procure o globo. Se "
-"houver uma parede em sua frente, sua conexão está protegida por um firewall."
+msgid "Are you behind a firewall? At the bottom of FrostWire in the status bar, look for the globe. If there is a brick wall in front of it, your Internet connection is firewalled."
+msgstr "Você tem um firewall? Na barra de status do FrostWire, procure o globo. Se houver uma parede em sua frente, sua conexão está protegida por um firewall."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:33
-msgid ""
-"The numbers next to the up and down arrows in the status bar at the bottom "
-"of FrostWire show how fast all of your files are downloading or uploading "
-"combined."
-msgstr ""
-"Os números perto das setas para cima e para baixo (na barra de status) "
-"mostram qual é a velocidade de compartilhamento de seus arquivos."
+msgid "The numbers next to the up and down arrows in the status bar at the bottom of FrostWire show how fast all of your files are downloading or uploading combined."
+msgstr "Os números perto das setas para cima e para baixo (na barra de status) mostram qual é a velocidade de compartilhamento de seus arquivos."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:34
-msgid ""
-"You can increase the text size via <font color=\"185ea8\">View</font> &gt; "
-"<font color=\"185ea8\">Increase Font Size</font>."
-msgstr ""
-"Você pode aumentar o tamanho da fonte via <font color=\"185ea8\">Visualizar</"
-"font> &gt; <font color=\"185ea8\">Aumentar Tamanho da Fonte</font>."
+msgid "You can increase the text size via <font color=\"185ea8\">View</font> &gt; <font color=\"185ea8\">Increase Font Size</font>."
+msgstr "Você pode aumentar o tamanho da fonte via <font color=\"185ea8\">Visualizar</font> &gt; <font color=\"185ea8\">Aumentar Tamanho da Fonte</font>."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:37
-msgid ""
-"Be careful not to share sensitive information like tax documents, passwords, "
-"etc. The torrents you are seeding are accesible by everyone on the network "
-"as long as they have the .torrent or a (magnet) link to it."
-msgstr ""
-"Tenha cuidado para não compartilhar informações sigilosas como documentos "
-"fiscais, senhas, etc. Os torrents que você está semeando são acessíveis por "
-"todos na rede, enquanto eles tiverem o .torrent ou um link."
+msgid "Be careful not to share sensitive information like tax documents, passwords, etc. The torrents you are seeding are accesible by everyone on the network as long as they have the .torrent or a (magnet) link to it."
+msgstr "Tenha cuidado para não compartilhar informações sigilosas como documentos fiscais, senhas, etc. Os torrents que você está semeando são acessíveis por todos na rede, enquanto eles tiverem o .torrent ou um link."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:38
-msgid ""
-"Unlike other peer-to-peer file-sharing programs, FrostWire can transfer "
-"files even if both parties are behind a firewall. You don't have to do "
-"anything extra because it happens automatically!"
-msgstr ""
-"Diferente de outros programas de amigos, FrostWire pode transferir arquivos "
-"de ambas as partes atrás do firewall. Você não precisa fazer mais nada pois "
-"isso acontece automaticamente!"
+msgid "Unlike other peer-to-peer file-sharing programs, FrostWire can transfer files even if both parties are behind a firewall. You don't have to do anything extra because it happens automatically!"
+msgstr "Diferente de outros programas de amigos, FrostWire pode transferir arquivos de ambas as partes atrás do firewall. Você não precisa fazer mais nada pois isso acontece automaticamente!"
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:39
-msgid ""
-"Want to share a large file? Send several hundred gigabytes with no problems "
-"at all, just make sure you leave your FrostWire running while your friend(s) "
-"are downloading. They can pause and resume the download all they want as "
-"long as you or somebody else is seeding the same content."
-msgstr ""
-"Quer compartilhar arquivos grandes? Envie várias centenas de gigabytes sem "
-"nenhum problema, apenas certifique-se de deixar o seu FrostWire funcionando "
-"enquanto o seu amigo(s) estão bainxando. Eles podem pausar e retomar o "
-"download desde que você ou outra pessoa esteja semenando o mesmo conteudo. "
+msgid "Want to share a large file? Send several hundred gigabytes with no problems at all, just make sure you leave your FrostWire running while your friend(s) are downloading. They can pause and resume the download all they want as long as you or somebody else is seeding the same content."
+msgstr "Quer compartilhar arquivos grandes? Envie várias centenas de gigabytes sem nenhum problema, apenas certifique-se de deixar o seu FrostWire funcionando enquanto o seu amigo(s) estão bainxando. Eles podem pausar e retomar o download desde que você ou outra pessoa esteja semenando o mesmo conteudo. "
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:40
-msgid ""
-"Magnet links allow users to download files through FrostWire from a web "
-"page. When you put a magnet link on your web page (in the 'href' attribute "
-"of anchor tags), and a user clicks the link, a download will start in "
-"FrostWire."
-msgstr ""
-"Links magnet possibilitam o usuário a baixar arquivos via FrostWire pela "
-"web.  Quando você coloca um link magnet na seua página de web, e um usuário "
-"clica no link, o download inicia no FrostWire."
+msgid "Magnet links allow users to download files through FrostWire from a web page. When you put a magnet link on your web page (in the 'href' attribute of anchor tags), and a user clicks the link, a download will start in FrostWire."
+msgstr "Links magnet possibilitam o usuário a baixar arquivos via FrostWire pela web.  Quando você coloca um link magnet na seua página de web, e um usuário clica no link, o download inicia no FrostWire."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:41
 msgid "Don't want to seed? Go to Tools &gt; Options &gt; Bittorrent "
 msgstr "Não quer sementar? Vá para Ferramentas &gt; Opções &gt; Bittorrent "
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:52
-msgid ""
-"You can find out which version of FrostWire you are using by choosing 'About "
-"FrostWire' from the Help menu."
-msgstr ""
-"Você pode descobrir qual versão do FrostWire você está usando, escolhendo "
-"'Sobre FrostWire' no menu de Ajuda."
+msgid "You can find out which version of FrostWire you are using by choosing 'About FrostWire' from the Help menu."
+msgstr "Você pode descobrir qual versão do FrostWire você está usando, escolhendo 'Sobre FrostWire' no menu de Ajuda."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:53
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:71
-msgid ""
-"Be a good network participant, don't close FrostWire if someone is uploading "
-"from you."
-msgstr ""
-"Seja um bom participante, não feche o FrostWire  se alguem estiver "
-"carregando um arquivo seu."
+msgid "Be a good network participant, don't close FrostWire if someone is uploading from you."
+msgstr "Seja um bom participante, não feche o FrostWire  se alguem estiver carregando um arquivo seu."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:54
-msgid ""
-"You can turn autocomplete for searching on or off by choosing 'Options' from "
-"the 'Tools' menu, and changing the value of 'Autocomplete Text' under the "
-"'View' option."
-msgstr ""
-"Você pode ativar ou desativer o recurso autocompletar para pesquisar, "
-"escolhendo 'Opções' no menu 'Ferramentas' e alterando o valor de 'Texto "
-"Autocompletar'. "
+msgid "You can turn autocomplete for searching on or off by choosing 'Options' from the 'Tools' menu, and changing the value of 'Autocomplete Text' under the 'View' option."
+msgstr "Você pode ativar ou desativer o recurso autocompletar para pesquisar, escolhendo 'Opções' no menu 'Ferramentas' e alterando o valor de 'Texto Autocompletar'. "
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:55
-msgid ""
-"Want to see dialogs for questions which you previously marked 'Do not "
-"display this message again' or 'Always Use This Answer'? Go to Tools &gt; "
-"Options, and check 'Revert To Default' under View &gt; Popups."
-msgstr ""
-"Quer ver diálogos das perguntas que você previamente marcau como 'Não "
-"mostrar essa mensagem novamente' ou 'Sempre usar essa resposta'? Vá para "
-"Ferramentas &gt; Opções, e marque 'Voltar para Padrão' em Vizualizar &gt; "
-"Popups."
+msgid "Want to see dialogs for questions which you previously marked 'Do not display this message again' or 'Always Use This Answer'? Go to Tools &gt; Options, and check 'Revert To Default' under View &gt; Popups."
+msgstr "Quer ver diálogos das perguntas que você previamente marcau como 'Não mostrar essa mensagem novamente' ou 'Sempre usar essa resposta'? Vá para Ferramentas &gt; Opções, e marque 'Voltar para Padrão' em Vizualizar &gt; Popups."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:56
-msgid ""
-"You can ban certain words from appearing in your search results by choosing "
-"'Options' from the 'Tools' menu and adding new words to those listed under "
-"Filters &gt; Keywords."
-msgstr ""
-"Você pode banir certas palavras de aparecerem nos seus resultados de busca "
-"indo em 'Opções' no menu 'Ferramentas' e adicionando novas palavras a "
-"aquelas listadas sob Filtrar &gt; as Palavras-chave."
+msgid "You can ban certain words from appearing in your search results by choosing 'Options' from the 'Tools' menu and adding new words to those listed under Filters &gt; Keywords."
+msgstr "Você pode banir certas palavras de aparecerem nos seus resultados de busca indo em 'Opções' no menu 'Ferramentas' e adicionando novas palavras a aquelas listadas sob Filtrar &gt; as Palavras-chave."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:57
-msgid ""
-"Hate tool tips? Love tool tips? You can turn them on or off in most tables "
-"by right-clicking on the column headers and choosing 'More Options'. You can "
-"toggle other options here too, like whether or not to sort tables "
-"automatically and if you prefer the rows to be striped."
-msgstr ""
-"Não gosta das dicas? Gosta das dicas? Você pode habilita-las ou não clicando "
-"com o botão direito na coluna superior em 'Mais opções'. Você pode alterar "
-"outras opções também, tipo arrumar ou não automaticamente as tabelas ou se "
-"prefere colunas."
+msgid "Hate tool tips? Love tool tips? You can turn them on or off in most tables by right-clicking on the column headers and choosing 'More Options'. You can toggle other options here too, like whether or not to sort tables automatically and if you prefer the rows to be striped."
+msgstr "Não gosta das dicas? Gosta das dicas? Você pode habilita-las ou não clicando com o botão direito na coluna superior em 'Mais opções'. Você pode alterar outras opções também, tipo arrumar ou não automaticamente as tabelas ou se prefere colunas."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:58
-msgid ""
-"You can sort uploads, downloads, etc..., by clicking on a column. The table "
-"keeps resorting as the information changes. You can turn this automatic-"
-"sorting behavior off by right-clicking on a column header, choosing 'More "
-"Options' and un-checking 'Sort Automatically'."
-msgstr ""
-"Você pode arrumar os uploads, downloads, etc..., clicando na coluna. A "
-"tabela rearruma as informações modificadas. Você pode desabilitar isso "
-"clicando com o botão direito na parte superior em 'Mais opções' e desclicar "
-"'Arrumar Automaticamente'."
+msgid "You can sort uploads, downloads, etc..., by clicking on a column. The table keeps resorting as the information changes. You can turn this automatic-sorting behavior off by right-clicking on a column header, choosing 'More Options' and un-checking 'Sort Automatically'."
+msgstr "Você pode arrumar os uploads, downloads, etc..., clicando na coluna. A tabela rearruma as informações modificadas. Você pode desabilitar isso clicando com o botão direito na parte superior em 'Mais opções' e desclicar 'Arrumar Automaticamente'."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:59
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:91
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:104
-msgid ""
-"FrostWire is written in Java, which means that having the latest version of "
-"Java will improve FrostWire's speed and stability. You can find the most "
-"recent Java release at <a href=\"{0}\">www.java.com</a>."
-msgstr ""
-"FrostWire foi escrito em Jova, e tendo a versão mais recente da Java irá "
-"aumentar a velocidade e estabilidade do FrostWrire. Você pode encontrar a "
-"versão mais recente da Java no <a href=\"{0}\">www.java.com</a>."
+msgid "FrostWire is written in Java, which means that having the latest version of Java will improve FrostWire's speed and stability. You can find the most recent Java release at <a href=\"{0}\">www.java.com</a>."
+msgstr "FrostWire foi escrito em Jova, e tendo a versão mais recente da Java irá aumentar a velocidade e estabilidade do FrostWrire. Você pode encontrar a versão mais recente da Java no <a href=\"{0}\">www.java.com</a>."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:60
-msgid ""
-"Are you unhappy with the small number of search results you received? Right-"
-"click a search result, then choose Search More, then Get More Results."
-msgstr ""
-"Você não está contente com o número pequeno de resultdos encontrados? Clique "
-"com o botão direito, depois escolha Pesquisar Mais, depois Obter Mais "
-"Resultados."
+msgid "Are you unhappy with the small number of search results you received? Right-click a search result, then choose Search More, then Get More Results."
+msgstr "Você não está contente com o número pequeno de resultdos encontrados? Clique com o botão direito, depois escolha Pesquisar Mais, depois Obter Mais Resultados."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:70
-msgid ""
-"You can find out which version of FrostWire you are using by choosing 'About "
-"FrostWire' from the FrostWire menu."
-msgstr ""
-"Você pode descobrir qual versão do FrostWire você está usando, escolhendo "
-"'Sobre FrostWire' no menu de Ajuda."
+msgid "You can find out which version of FrostWire you are using by choosing 'About FrostWire' from the FrostWire menu."
+msgstr "Você pode descobrir qual versão do FrostWire você está usando, escolhendo 'Sobre FrostWire' no menu de Ajuda."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:72
-msgid ""
-"You can turn autocomplete for searching on or off by choosing 'Preferences' "
-"from the 'FrostWire' menu, and changing the value of 'Autocomplete Text' "
-"under the 'View' option."
-msgstr ""
-"Você pode ativar ou desativer o recurso autocompletar para pesquisar, "
-"escolhendo 'Preferências' no menu FrostWire, e alterando o valor de 'Texto "
-"Autocompletar' "
+msgid "You can turn autocomplete for searching on or off by choosing 'Preferences' from the 'FrostWire' menu, and changing the value of 'Autocomplete Text' under the 'View' option."
+msgstr "Você pode ativar ou desativer o recurso autocompletar para pesquisar, escolhendo 'Preferências' no menu FrostWire, e alterando o valor de 'Texto Autocompletar' "
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:73
-msgid ""
-"Want to see dialogs for questions which you previously marked 'Do not "
-"display this message again' or 'Always Use This Answer'? Go to FrostWire "
-"&gt; Preferences, and check 'Revert To Default' under View &gt; Popups."
-msgstr ""
-"Quer ver diálogos das perguntas que você previamente marcau como 'não "
-"mostrar essa mensagem novamente' ou 'Sempre usar essa resposta'? Vá para "
-"Ferramentas &gt; opções, e marque 'Voltar para Padrão' em Vizualizar &gt; "
-"Popups."
+msgid "Want to see dialogs for questions which you previously marked 'Do not display this message again' or 'Always Use This Answer'? Go to FrostWire &gt; Preferences, and check 'Revert To Default' under View &gt; Popups."
+msgstr "Quer ver diálogos das perguntas que você previamente marcau como 'não mostrar essa mensagem novamente' ou 'Sempre usar essa resposta'? Vá para Ferramentas &gt; opções, e marque 'Voltar para Padrão' em Vizualizar &gt; Popups."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:74
-msgid ""
-"You can ban certain words from appearing in your search results by choosing "
-"'Preferences' from the 'FrostWire' menu and adding new words to those listed "
-"under Filters &gt; Keywords."
-msgstr ""
-"Você pode banir certar palavras no busca, escolhendo 'Preferências' no menu "
-"FrostWire e adicionando novas palavras listradas no Filtro &gt; Palara-chave."
+msgid "You can ban certain words from appearing in your search results by choosing 'Preferences' from the 'FrostWire' menu and adding new words to those listed under Filters &gt; Keywords."
+msgstr "Você pode banir certar palavras no busca, escolhendo 'Preferências' no menu FrostWire e adicionando novas palavras listradas no Filtro &gt; Palara-chave."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:75
-msgid ""
-"Hate tool tips? Love tool tips? You can turn them on or off in most tables "
-"by control-clicking on the column headers and choosing 'More Options'. You "
-"can toggle other options here too, like whether or not to sort tables "
-"automatically and if you prefer the rows to be striped."
-msgstr ""
-"Não gosta das dicas? Gosta das dicas? Você pode habilita-las ou não clicando "
-"com o botão direito na coluna superior em 'Mais opções'. Você pode alterar "
-"outras opções também, tipo arrumar ou não automaticamente as tabelas ou se "
-"prefere colunas."
+msgid "Hate tool tips? Love tool tips? You can turn them on or off in most tables by control-clicking on the column headers and choosing 'More Options'. You can toggle other options here too, like whether or not to sort tables automatically and if you prefer the rows to be striped."
+msgstr "Não gosta das dicas? Gosta das dicas? Você pode habilita-las ou não clicando com o botão direito na coluna superior em 'Mais opções'. Você pode alterar outras opções também, tipo arrumar ou não automaticamente as tabelas ou se prefere colunas."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:76
-msgid ""
-"You can sort uploads, downloads, etc..., by clicking on a column. The table "
-"keeps resorting as the information changes. You can turn this automatic-"
-"sorting behavior off by control-clicking on a column header, choosing 'More "
-"Options' and un-checking 'Sort Automatically'."
-msgstr ""
-"Você pode arrumar os uploads, downloads, etc..., clicando na coluna. A "
-"tabela rearruma as informações modificadas. Você pode desabilitar isso "
-"clicando com o botão direito na parte superior em 'Mais opções' e desclicar "
-"'Arrumar Automaticamente'."
+msgid "You can sort uploads, downloads, etc..., by clicking on a column. The table keeps resorting as the information changes. You can turn this automatic-sorting behavior off by control-clicking on a column header, choosing 'More Options' and un-checking 'Sort Automatically'."
+msgstr "Você pode arrumar os uploads, downloads, etc..., clicando na coluna. A tabela rearruma as informações modificadas. Você pode desabilitar isso clicando com o botão direito na parte superior em 'Mais opções' e desclicar 'Arrumar Automaticamente'."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:77
-msgid ""
-"You can save individual downloads to custom locations. Control-click a "
-"search result and choose Download As. You can even change the location of a "
-"download in progress by control-clicking the download and choosing Change "
-"File Location."
-msgstr ""
-"Você pode salvar downloads individuais em locais especiais. Clique com o "
-"botão direitono resultado da pesquisa e escolha Baixar Como. Você pode até "
-"modificar o local do download clicando com o botão direito no download e "
-"escolhando Modificar o Local do Arquivo."
+msgid "You can save individual downloads to custom locations. Control-click a search result and choose Download As. You can even change the location of a download in progress by control-clicking the download and choosing Change File Location."
+msgstr "Você pode salvar downloads individuais em locais especiais. Clique com o botão direitono resultado da pesquisa e escolha Baixar Como. Você pode até modificar o local do download clicando com o botão direito no download e escolhando Modificar o Local do Arquivo."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:78
-msgid ""
-"Did you just download a file that you don't want to share? In the Library, "
-"control-click it and choose 'Stop Sharing File'."
-msgstr ""
-"Você baixou um arquivo que você não quer compartilhar? Na Biblioteca, clique "
-"com o direito e escolha 'Parar de Compartilhar Arquivo'."
+msgid "Did you just download a file that you don't want to share? In the Library, control-click it and choose 'Stop Sharing File'."
+msgstr "Você baixou um arquivo que você não quer compartilhar? Na Biblioteca, clique com o direito e escolha 'Parar de Compartilhar Arquivo'."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:79
-msgid ""
-"FrostWire's Library is a file manager, not just an MP3 Playlist. That means "
-"that when you delete a file from the Library, you have the option to either "
-"permanently delete the file from your computer or move it to the Trash."
-msgstr ""
-"A biblioteca frostWire é um gerenciamento de arquivo, não somente uma Lista "
-"de Reprodução MP3. Isso significa que você pode deletar arquivos da "
-"Biblioteca, você tem a opção de deletar permanentemente o arquivo do seu "
-"computador ou mover para o Lixo."
+msgid "FrostWire's Library is a file manager, not just an MP3 Playlist. That means that when you delete a file from the Library, you have the option to either permanently delete the file from your computer or move it to the Trash."
+msgstr "A biblioteca frostWire é um gerenciamento de arquivo, não somente uma Lista de Reprodução MP3. Isso significa que você pode deletar arquivos da Biblioteca, você tem a opção de deletar permanentemente o arquivo do seu computador ou mover para o Lixo."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:80
-msgid ""
-"Want to play music in your default media player instead of in FrostWire? "
-"Control-click the FrostWire status bar and deselect 'Show Media Player'."
-msgstr ""
-"Quer tocar a música com seu programa padrão ao invés do FrostWire? Clique "
-"com o botão direito no menu de status do FrostWire e deselecione 'Mostrar "
-"Media Player'."
+msgid "Want to play music in your default media player instead of in FrostWire? Control-click the FrostWire status bar and deselect 'Show Media Player'."
+msgstr "Quer tocar a música com seu programa padrão ao invés do FrostWire? Clique com o botão direito no menu de status do FrostWire e deselecione 'Mostrar Media Player'."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:81
-msgid ""
-"Did you know you can save different types of files, such as audio, video, or "
-"images, in different folders on your computer automatically? Just go to "
-"FrostWire &gt; Preferences &gt; Saving to choose the location for each type "
-"of file."
-msgstr ""
-"Você sabia que pode salvar automaticament diferentes tipos de arquivos,  "
-"tipo vídeo, áudio ou imagens, em pastar diferentes no seu computador? Vá "
-"para FrostWire &gt; Preferências &gt; escolher e salvar o local de caa tipo "
-"de arquivo."
+msgid "Did you know you can save different types of files, such as audio, video, or images, in different folders on your computer automatically? Just go to FrostWire &gt; Preferences &gt; Saving to choose the location for each type of file."
+msgstr "Você sabia que pode salvar automaticament diferentes tipos de arquivos,  tipo vídeo, áudio ou imagens, em pastar diferentes no seu computador? Vá para FrostWire &gt; Preferências &gt; escolher e salvar o local de caa tipo de arquivo."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:82
-msgid ""
-"Make FrostWire's Junk filter block more results by making the filter "
-"stricter. Adjust that and more by going to FrostWire &gt; Preferences &gt; "
-"Filters &gt; Junk."
-msgstr ""
-"Faça o filtro de Lixo FrostWire bloquear mais resultados, tornando o filtro. "
-"mais rigoroso. Ajuste isso indo em FrostWire &gt; Preferências &gt; Filtros "
-"&gt; Junk."
+msgid "Make FrostWire's Junk filter block more results by making the filter stricter. Adjust that and more by going to FrostWire &gt; Preferences &gt; Filters &gt; Junk."
+msgstr "Faça o filtro de Lixo FrostWire bloquear mais resultados, tornando o filtro. mais rigoroso. Ajuste isso indo em FrostWire &gt; Preferências &gt; Filtros &gt; Junk."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:92
-msgid ""
-"Want FrostWire to look like your other Windows programs? Choose the Windows "
-"theme, available from the View &gt; Apply Skins menu."
-msgstr ""
-"Quer que o FrostWire fique parecido com a Janela de outros programas? Tente "
-"usar um novo tema, disponível no menu Visualizar &gt; Aplicar Temas."
+msgid "Want FrostWire to look like your other Windows programs? Choose the Windows theme, available from the View &gt; Apply Skins menu."
+msgstr "Quer que o FrostWire fique parecido com a Janela de outros programas? Tente usar um novo tema, disponível no menu Visualizar &gt; Aplicar Temas."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:93
-msgid ""
-"The icons that you see next to your search results in the '?' column are "
-"symbols of the program used to open that particular type of file. To change "
-"the program associated with a file, go to the Folder Options in Windows "
-"Explorer (from the Tools menu). This is a Windows setting, not a FrostWire "
-"setting."
-msgstr ""
-"Os ícones que você vê ao lado das colunas de seus resultados de busca na '?' "
-"são símbolos do programa usados para abrir esse tipo específico de arquivo. "
-"Para alterar  o programa associado a um arquivo, vá para as Opções de Pasta "
-"no Windows Explorer (no menu Ferramentas). Esta é uma configuração do "
-"Windows, e não FrostWire."
+msgid "The icons that you see next to your search results in the '?' column are symbols of the program used to open that particular type of file. To change the program associated with a file, go to the Folder Options in Windows Explorer (from the Tools menu). This is a Windows setting, not a FrostWire setting."
+msgstr "Os ícones que você vê ao lado das colunas de seus resultados de busca na '?' são símbolos do programa usados para abrir esse tipo específico de arquivo. Para alterar  o programa associado a um arquivo, vá para as Opções de Pasta no Windows Explorer (no menu Ferramentas). Esta é uma configuração do Windows, e não FrostWire."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:94
-msgid ""
-"FrostWire's Library is a file manager, not just an MP3 Playlist. That means "
-"that when you delete a file from the Library, you have the option to either "
-"permanently delete the file from your computer or move it to the Recycle Bin."
-msgstr ""
-"A biblioteca frostWire é um gerenciamento de arquivo, não somente uma Lista "
-"de Reprodução MP3. Isso significa que você pode deletar arquivos da "
-"Biblioteca, você tem a opção de deletar permanentemente o arquivo do seu "
-"computador ou mover para o Lixo."
+msgid "FrostWire's Library is a file manager, not just an MP3 Playlist. That means that when you delete a file from the Library, you have the option to either permanently delete the file from your computer or move it to the Recycle Bin."
+msgstr "A biblioteca frostWire é um gerenciamento de arquivo, não somente uma Lista de Reprodução MP3. Isso significa que você pode deletar arquivos da Biblioteca, você tem a opção de deletar permanentemente o arquivo do seu computador ou mover para o Lixo."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:95
-msgid ""
-"When you close FrostWire, it minimizes to the system tray. To exit, right-"
-"click the system tray icon (next to the time), and select Exit. You can "
-"change this behavior by going to Tools &gt; Options &gt; System Tray."
-msgstr ""
-"Quando você fecha o FrostWire, ele minimiza a barra do sistema. Para sair, "
-"clique com obotão direito no ícone do sistema (ao lado do relógio) e "
-"selecione Sair. Você pode modificar isso indo em Ferramentas &gt; Opções "
-"&gt; Barra do Sistema."
+msgid "When you close FrostWire, it minimizes to the system tray. To exit, right-click the system tray icon (next to the time), and select Exit. You can change this behavior by going to Tools &gt; Options &gt; System Tray."
+msgstr "Quando você fecha o FrostWire, ele minimiza a barra do sistema. Para sair, clique com obotão direito no ícone do sistema (ao lado do relógio) e selecione Sair. Você pode modificar isso indo em Ferramentas &gt; Opções &gt; Barra do Sistema."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:105
-msgid ""
-"Want to play music in your preferred media player instead of in FrostWire? "
-"Right-click the FrostWire status bar and deselect 'Show Media Player'. Then "
-"go to Tools &gt; Options &gt; Helper Apps to set the program of your choice."
-msgstr ""
-"Quer tocar música no seu media player favorito ao invés do FrostWire? Clique "
-"com o botão direito na barra de status do FrostWire e deselecione 'Mostrar "
-"Media Player'. Depois vá para Ferramentas &gt: opções; Ajudante de "
-"Aplicativos para definir o seu programa."
+msgid "Want to play music in your preferred media player instead of in FrostWire? Right-click the FrostWire status bar and deselect 'Show Media Player'. Then go to Tools &gt; Options &gt; Helper Apps to set the program of your choice."
+msgstr "Quer tocar música no seu media player favorito ao invés do FrostWire? Clique com o botão direito na barra de status do FrostWire e deselecione 'Mostrar Media Player'. Depois vá para Ferramentas &gt: opções; Ajudante de Aplicativos para definir o seu programa."
 
 #: gui/com/limegroup/gnutella/gui/TipOfTheDayMessages.java:122
 msgid "Thank you for using FrostWire"
@@ -2917,14 +2488,8 @@ msgid "Visit http://www.frostwire.com to update!"
 msgstr "Visite a página http://www.frostwire.com para atualizar!"
 
 #: gui/com/limegroup/gnutella/gui/UpdateDialog.java:174
-msgid ""
-"FrostWire needs to be restarted to install the update. If you choose not to "
-"update now, FrostWire will update automatically when you close. Would you "
-"like to update now?"
-msgstr ""
-"O FrostWire necessita ser reiniciado para instalar a atualização. Se optar "
-"por não efetuar a atualização neste momento, o FrostWire será atualizado "
-"automaticamente quando fechar o programa. Deseja atualizar agora?"
+msgid "FrostWire needs to be restarted to install the update. If you choose not to update now, FrostWire will update automatically when you close. Would you like to update now?"
+msgstr "O FrostWire necessita ser reiniciado para instalar a atualização. Se optar por não efetuar a atualização neste momento, o FrostWire será atualizado automaticamente quando fechar o programa. Deseja atualizar agora?"
 
 #: gui/com/limegroup/gnutella/gui/UpdateDialog.java:175
 msgid "Update Ready"
@@ -2954,24 +2519,16 @@ msgstr "Baixar link .Torrent ou Magnet ou YouTube"
 #. panel.add(new MultiLineLabel(I18n.tr("Type a magnet link, the file path or web address of a torrent file, or a YouTube Web address and FrostWire will start downloading it for you."),
 #. true), constraints);
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:108
-msgid ""
-"Type a magnet link, the file path or web address of a torrent file and "
-"FrostWire will start downloading it for you."
-msgstr ""
-"digite um magnet link, o caminho do arquivo ou o endereço web de um arquivo "
-"torrent e o FrostWire irá começar a baixar isso para você."
+msgid "Type a magnet link, the file path or web address of a torrent file and FrostWire will start downloading it for you."
+msgstr "digite um magnet link, o caminho do arquivo ou o endereço web de um arquivo torrent e o FrostWire irá começar a baixar isso para você."
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:115
 msgid "Open:"
 msgstr "Abrir:"
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:208
-msgid ""
-"FrostWire cannot download this address. Make sure you typed it correctly, "
-"and then try again."
-msgstr ""
-"FrostWire não pode baixar esse endereço. Certifique-se que foi digitado "
-"coretamente e tente novamente."
+msgid "FrostWire cannot download this address. Make sure you typed it correctly, and then try again."
+msgstr "FrostWire não pode baixar esse endereço. Certifique-se que foi digitado coretamente e tente novamente."
 
 #: gui/com/limegroup/gnutella/gui/actions/FileMenuActions.java:286
 msgid "&Close"
@@ -3014,28 +2571,12 @@ msgid "Internal Error"
 msgstr "Erro interno"
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:319
-msgid ""
-"FrostWire has encountered an internal error. It is possible for FrostWire to "
-"recover and continue running normally. To aid with debugging, please click "
-"'Send' to notify FrostWire about the problem. If desired, you can click "
-"'Review' to look at the information that will be sent. Thank you."
-msgstr ""
-"O FrostWire encontrou um erro interno. O FrostWire pode se recuperar e "
-"continuar a funcionar normalmente. Para ajudar a eliminar erros clique em "
-"'Enviar' para informar à FrostWire o problema. Se quiser, pode clicar em "
-"'Rever' para ler a informação que vai ser enviada. Obrigado."
+msgid "FrostWire has encountered an internal error. It is possible for FrostWire to recover and continue running normally. To aid with debugging, please click 'Send' to notify FrostWire about the problem. If desired, you can click 'Review' to look at the information that will be sent. Thank you."
+msgstr "O FrostWire encontrou um erro interno. O FrostWire pode se recuperar e continuar a funcionar normalmente. Para ajudar a eliminar erros clique em 'Enviar' para informar à FrostWire o problema. Se quiser, pode clicar em 'Rever' para ler a informação que vai ser enviada. Obrigado."
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:321
-msgid ""
-"FrostWire has encountered an internal error. It is possible for FrostWire to "
-"recover and continue running normally. To continue using FrostWire, click "
-"'Discard'. If desired, you can click 'Review' to look at the information "
-"about the error."
-msgstr ""
-"O FrostWire encontrou um erro interno. O Frost Wire pode se recuperar e "
-"continuar a funcionar normalmente. Para continuar a utilizar o FrostWire, "
-"clique em 'Anular'. Se quiser, pode fazer clicar em 'Rever' para ler a "
-"informação sobre o erro."
+msgid "FrostWire has encountered an internal error. It is possible for FrostWire to recover and continue running normally. To continue using FrostWire, click 'Discard'. If desired, you can click 'Review' to look at the information about the error."
+msgstr "O FrostWire encontrou um erro interno. O Frost Wire pode se recuperar e continuar a funcionar normalmente. Para continuar a utilizar o FrostWire, clique em 'Anular'. Se quiser, pode fazer clicar em 'Rever' para ler a informação sobre o erro."
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:339
 msgid ""
@@ -3069,14 +2610,8 @@ msgid "Always Discard All Errors"
 msgstr "Anular sempre todos os erros"
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:499
-msgid ""
-"FrostWire was unable to connect to the bug server in order to send the below "
-"bug report. For further help and to aid with debugging, please visit www."
-"frostwire.com and click 'Support'. Thank you."
-msgstr ""
-"O FrostWire não conseguiu conectar ao servidor de erros para enviar o "
-"relatório de erro apresentado abaixo. Para ajudar a corrigir erros, copie o "
-"texto que se segue e envie-o por email para bugs@frostwire.com. Obrigado."
+msgid "FrostWire was unable to connect to the bug server in order to send the below bug report. For further help and to aid with debugging, please visit www.frostwire.com and click 'Support'. Thank you."
+msgstr "O FrostWire não conseguiu conectar ao servidor de erros para enviar o relatório de erro apresentado abaixo. Para ajudar a corrigir erros, copie o texto que se segue e envie-o por email para bugs@frostwire.com. Obrigado."
 
 #: gui/com/limegroup/gnutella/gui/bugs/BugManager.java:528
 msgid "Copy Report"
@@ -3111,11 +2646,8 @@ msgstr "Erro: {0}"
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderDialog.java:227
 #, java-format
-msgid ""
-"<b>Note</b>: A file with the same content already exists in the library at "
-"{0}"
-msgstr ""
-"<b>Nota</b>: já existe um arquivo com o mesmo conteúdo na biblioteca em {0}"
+msgid "<b>Note</b>: A file with the same content already exists in the library at {0}"
+msgstr "<b>Nota</b>: já existe um arquivo com o mesmo conteúdo na biblioteca em {0}"
 
 #: gui/com/limegroup/gnutella/gui/download/DownloaderDialog.java:311
 msgid "Overwrite"
@@ -3205,28 +2737,20 @@ msgstr "Configurações de Compartilhamento BitTorrent"
 
 #: gui/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:43
 msgid ""
-"Choose a folder where files downloaded from the BitTorrent network should be "
-"saved to.\n"
-"Please select if you want to \"Seed\" or to not \"Seed\" finished downloads. "
-"The link below has more information about \"Seeding\"."
+"Choose a folder where files downloaded from the BitTorrent network should be saved to.\n"
+"Please select if you want to \"Seed\" or to not \"Seed\" finished downloads. The link below has more information about \"Seeding\"."
 msgstr ""
-"Escolha uma pasta onde os arquivos baixados da rede BitTorrent deve ser "
-"salvos em .\n"
-"Por favor, selecione se você quiser \"Sementear\" ou não \"Sementear\" os "
-"downloads concluídos. O link abaixo tem mais informações sobre as \"Sementes"
-"\"."
+"Escolha uma pasta onde os arquivos baixados da rede BitTorrent deve ser salvos em .\n"
+"Por favor, selecione se você quiser \"Sementear\" ou não \"Sementear\" os downloads concluídos. O link abaixo tem mais informações sobre as \"Sementes\"."
 
 #: gui/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:96
 #, java-format
 msgid ""
-"<html><p>You forgot to select your finished downloads \"Seeding\" setting.</"
-"p>\n"
+"<html><p>You forgot to select your finished downloads \"Seeding\" setting.</p>\n"
 "<p></p><p align=\"right\"><a href=\"{0}\">What is \"Seeding\"?</a></p></html>"
 msgstr ""
-"<html><p>Você esqueceu de selecionar as configurações de  \"Sementes\" dos "
-"downloads concluídos. </p>\n"
-"<p></p><p align=\"right\"><a href=\"{0}\">O que são \"Sementes\"?</a></p></"
-"html> "
+"<html><p>Você esqueceu de selecionar as configurações de  \"Sementes\" dos downloads concluídos. </p>\n"
+"<p></p><p align=\"right\"><a href=\"{0}\">O que são \"Sementes\"?</a></p></html> "
 
 #: gui/com/limegroup/gnutella/gui/init/BitTorrentSettingsWindow.java:109
 #, java-format
@@ -3242,14 +2766,8 @@ msgid "State your intent below to start using FrostWire "
 msgstr "Declare sua intenção abaixo para começar a usar o FrostWire."
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:57
-msgid ""
-"FrostWire is a peer-to-peer program for sharing authorized files only.  "
-"Installing and using the program does not constitute a license for obtaining "
-"or distributing unauthorized content."
-msgstr ""
-"FrostWire é um programa amigável para o compartilhamento de arquivos somente "
-"autorizados. Instalar e usar o programa não consitute uma licença para a "
-"obtenção ou distribuição de conteúdo não autorizado."
+msgid "FrostWire is a peer-to-peer program for sharing authorized files only.  Installing and using the program does not constitute a license for obtaining or distributing unauthorized content."
+msgstr "FrostWire é um programa amigável para o compartilhamento de arquivos somente autorizados. Instalar e usar o programa não consitute uma licença para a obtenção ou distribuição de conteúdo não autorizado."
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:58
 msgid "Find out more..."
@@ -3257,21 +2775,13 @@ msgstr "Descubra mais..."
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:65
 #, java-format
-msgid ""
-"<html><div display=\"block\" color=\"#515151\" size=\"13\">I <b>will not</b> "
-"use FrostWire {0} for copyright infringement.</div></html>"
-msgstr ""
-"<html><div display=\"block\" color=\"#515151\" size=\"13\">Eu <b>não irei</"
-"b> usar o FrostWire {0} para infringir direitos autorais.</div></html>"
+msgid "<html><div display=\"block\" color=\"#515151\" size=\"13\">I <b>will not</b> use FrostWire {0} for copyright infringement.</div></html>"
+msgstr "<html><div display=\"block\" color=\"#515151\" size=\"13\">Eu <b>não irei</b> usar o FrostWire {0} para infringir direitos autorais.</div></html>"
 
 #: gui/com/limegroup/gnutella/gui/init/IntentPanel.java:73
 #, java-format
-msgid ""
-"<html><div display=\"block\" color=\"#515151\" size=\"13\">I <b>might use</"
-"b> FrostWire {0} for copyright infringement.</div></html>"
-msgstr ""
-"<html><div display=\"block\" color=\"#515151\" size=\"13\">Eu <b>talvez use</"
-"b> o FrostWire {0} para infringir direitos autorais.</div></html>"
+msgid "<html><div display=\"block\" color=\"#515151\" size=\"13\">I <b>might use</b> FrostWire {0} for copyright infringement.</div></html>"
+msgstr "<html><div display=\"block\" color=\"#515151\" size=\"13\">Eu <b>talvez use</b> o FrostWire {0} para infringir direitos autorais.</div></html>"
 
 #: gui/com/limegroup/gnutella/gui/init/IntentWindow.java:29
 msgid "State Your Intent"
@@ -3303,24 +2813,16 @@ msgid "Start Automatically"
 msgstr "Iníciar automáticamente"
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:86
-msgid ""
-"Would you like FrostWire to start when you log into your computer? This will "
-"cause FrostWire to start faster when you use it later."
-msgstr ""
-"Gostaria de executar o FrostWire ao ligar o computador? isto vai permitir o "
-"FrostWire iniciar mais rápidamente quando você o utilizar posteriormente."
+msgid "Would you like FrostWire to start when you log into your computer? This will cause FrostWire to start faster when you use it later."
+msgstr "Gostaria de executar o FrostWire ao ligar o computador? isto vai permitir o FrostWire iniciar mais rápidamente quando você o utilizar posteriormente."
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:152
 msgid "Chat Community"
 msgstr "Bate-papo comunitário"
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:156
-msgid ""
-"FrostWire's Community Chat Tab requires you to have a nickname to "
-"communicate with others in the chatrooms."
-msgstr ""
-"A aba FrostWire de bate-papo comunitário exige que você tenha um apelido "
-"para comunicar-se com os outros nas salas de chat."
+msgid "FrostWire's Community Chat Tab requires you to have a nickname to communicate with others in the chatrooms."
+msgstr "A aba FrostWire de bate-papo comunitário exige que você tenha um apelido para comunicar-se com os outros nas salas de chat."
 
 #: gui/com/limegroup/gnutella/gui/init/MiscWindow.java:165
 #: gui/com/limegroup/gnutella/gui/options/panes/ChatCommunityPaneItem.java:25
@@ -3349,43 +2851,24 @@ msgid "Learn more about this option..."
 msgstr "Aprenda mais sobre essa opção"
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:30
-msgid ""
-"FrostWire is a Peer to Peer Application that enables you to share files of "
-"your choosing with other users connected to the BitTorrent network."
-msgstr ""
-"FrostWire é um _ Aplicativo amigável que permite compartilhar arquivos da "
-"sua escolha com outros usuários conectados à rede BitTorrent."
+msgid "FrostWire is a Peer to Peer Application that enables you to share files of your choosing with other users connected to the BitTorrent network."
+msgstr "FrostWire é um _ Aplicativo amigável que permite compartilhar arquivos da sua escolha com outros usuários conectados à rede BitTorrent."
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:31
-msgid ""
-"Installing and using the program does not constitute a license for obtaining "
-"or distributing unauthorized content."
-msgstr ""
-"Instalar e usar o programa não consitute uma licença para a obtenção ou "
-"distribuição de conteúdo não autorizado."
+msgid "Installing and using the program does not constitute a license for obtaining or distributing unauthorized content."
+msgstr "Instalar e usar o programa não consitute uma licença para a obtenção ou distribuição de conteúdo não autorizado."
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:39
 msgid "Welcome"
 msgstr "Bem-vindo"
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:40
-msgid ""
-"Welcome to the FrostWire setup wizard. FrostWire has recently added new "
-"features that require your configuration. FrostWire will guide you through a "
-"series of steps to configure these new features."
-msgstr ""
-"Bem-vindo ao assistente de instalação do FrostWire. O FrostWire possui novas "
-"características que necessitam ser configuradas. O FrostWire vai guiá-lo "
-"numa série de passos para configurar essas novas características."
+msgid "Welcome to the FrostWire setup wizard. FrostWire has recently added new features that require your configuration. FrostWire will guide you through a series of steps to configure these new features."
+msgstr "Bem-vindo ao assistente de instalação do FrostWire. O FrostWire possui novas características que necessitam ser configuradas. O FrostWire vai guiá-lo numa série de passos para configurar essas novas características."
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:41
-msgid ""
-"Welcome to the FrostWire setup wizard. FrostWire will guide you through a "
-"series of steps to configure FrostWire for optimum performance."
-msgstr ""
-"Bem-vindo ao assistente de instalação do FrostWire. O FrostWire vai guiá-lo "
-"numa série de passos para configurar o FrostWire para um desempenho "
-"otimizado."
+msgid "Welcome to the FrostWire setup wizard. FrostWire will guide you through a series of steps to configure FrostWire for optimum performance."
+msgstr "Bem-vindo ao assistente de instalação do FrostWire. O FrostWire vai guiá-lo numa série de passos para configurar o FrostWire para um desempenho otimizado."
 
 #: gui/com/limegroup/gnutella/gui/init/WelcomeWindow.java:99
 msgid "FrostWire is free software, "
@@ -3437,8 +2920,7 @@ msgstr "FrostWire para Andriod"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:33
 msgid "Get FrostWire on your Android phone, tablet or google tv, all free."
-msgstr ""
-"Tenha FrostWire no seu telefone Android, tablet ou google tv, tudo gratuito."
+msgstr "Tenha FrostWire no seu telefone Android, tablet ou google tv, tudo gratuito."
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:35
 msgid "What is \"Seeding\"?"
@@ -3453,12 +2935,8 @@ msgid "Free FrostWire Stickers"
 msgstr "Adesivos FrostWire Gratuitos"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:39
-msgid ""
-"Order free FrostWire stickers, we ship worldwide. Stickers are free, you pay "
-"cents for shipping."
-msgstr ""
-"Peça Adesivos FrostWire Gratuitos, enviamos para o mundo inteiro. Adesivos "
-"são gratuitos, você paga apenas centavos para o envio."
+msgid "Order free FrostWire stickers, we ship worldwide. Stickers are free, you pay cents for shipping."
+msgstr "Peça Adesivos FrostWire Gratuitos, enviamos para o mundo inteiro. Adesivos são gratuitos, você paga apenas centavos para o envio."
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:41
 msgid "FrostWire T-Shirts"
@@ -3466,9 +2944,7 @@ msgstr "Camisetas FrostWire"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:41
 msgid "Get a T-shirt, support the project. You'll get also 10 free stickers"
-msgstr ""
-"Obtenha uma camiseta, apoie o projeto. Você receberá também 10 adesivos "
-"gratuitos"
+msgstr "Obtenha uma camiseta, apoie o projeto. Você receberá também 10 adesivos gratuitos"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:44
 msgid "FrostClick.com"
@@ -3503,8 +2979,7 @@ msgid "&Did you pay for FrostWire?"
 msgstr "&Você pagou pelo FrostWire?"
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:57
-msgid ""
-"Did you pay for FrostWire? FrostWire is Free as in Free Beer. Avoid Scams."
+msgid "Did you pay for FrostWire? FrostWire is Free as in Free Beer. Avoid Scams."
 msgstr "Você pagou pelo FrostWire? FrostWire é gratuito. Evite golpes."
 
 #: gui/com/limegroup/gnutella/gui/menu/HelpMenu.java:78
@@ -3568,12 +3043,8 @@ msgid "Rebuild iTunes \"FrostWire\" Playlist"
 msgstr "Reconstruir Lista de Reprodução \"FrostWire\" iTunes"
 
 #: gui/com/limegroup/gnutella/gui/menu/ToolsMenu.java:44
-msgid ""
-"Deletes and re-builds the \"FrostWire\" playlist on iTunes with all the "
-"audio files found on your Torrent Data Folder."
-msgstr ""
-"Deletar e reconstruir a Lista de Reprodução \"FrostWire\" iTunes com todos "
-"os arquivos de vídeo encontrados na Pasta Torrent."
+msgid "Deletes and re-builds the \"FrostWire\" playlist on iTunes with all the audio files found on your Torrent Data Folder."
+msgstr "Deletar e reconstruir a Lista de Reprodução \"FrostWire\" iTunes com todos os arquivos de vídeo encontrados na Pasta Torrent."
 
 #: gui/com/limegroup/gnutella/gui/menu/ToolsMenu.java:50
 msgid ""
@@ -3586,13 +3057,11 @@ msgid ""
 "\n"
 "Are you sure you want to continue?"
 msgstr ""
-"Isso irá remover a sua Lista de Reprodução \"FrostWire\" iTunes e substituí-"
-"lo\n"
+"Isso irá remover a sua Lista de Reprodução \"FrostWire\" iTunes e substituí-lo\n"
 " por um contendo todos os arquivos compatíveis com o iTunes na sua\n"
 "Frostwire \"Pasta de Dados Torrent\"\n"
 "\n"
-"Por favor, note que isso irá também adicionar os arquivos na biblioteca do "
-"iTunes\n"
+"Por favor, note que isso irá também adicionar os arquivos na biblioteca do iTunes\n"
 "e isso pode resultar em arquivos duplicados em sua biblioteca do iTunes\n"
 "\n"
 "Você tem certeza que deseja continuar?"
@@ -3683,126 +3152,113 @@ msgstr "Restaurar padrões"
 msgid "Revert All Settings to the Factory Defaults"
 msgstr "Restaurar configurações originais."
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:198
-msgid ""
-"You have made changes to some of FrostWire's settings. Would you like to "
-"save these changes?"
-msgstr ""
-"Você fez algumas alterações nas configurações do FrostWire. Você gostaria de "
-"salvar essas alterações?"
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:194
+msgid "You have made changes to some of FrostWire's settings. Would you like to save these changes?"
+msgstr "Você fez algumas alterações nas configurações do FrostWire. Você gostaria de salvar essas alterações?"
 
-#. set text before adding the document listener
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:231
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:224
 msgid "Search here"
 msgstr "Buscar aqui"
 
 #. bittorrent
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:283
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:259
 msgid "BitTorrent"
 msgstr "BitTorrent"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:284
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:260
 msgid "Basic"
 msgstr "Básico"
 
 #. search options
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:291
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:267
 msgid "Searching"
 msgstr "Pesquisando"
 
 #. status bar
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:295
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:271
 msgid "Status Bar"
 msgstr "Barra de status"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:299
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:275
 msgid "iTunes"
 msgstr "iTunes"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:304
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:280
 msgid "Helper Apps"
 msgstr "Aplicações ajudantes"
 
 #. view options
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:308
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:284
 msgid "View"
 msgstr "Ver"
 
 #. community chat
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:312
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:288
 #: gui/com/limegroup/gnutella/gui/options/panes/ChatCommunityPaneItem.java:20
 msgid "Community Chat"
 msgstr "Bate-papo comunitário"
 
 #. filter options
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:315
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:291
 msgid "Filters"
 msgstr "Filtros"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:316
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:292
 msgid "Keywords"
 msgstr "Palavras-chave"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:320
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:296
 msgid "Updates"
 msgstr "Atualizações"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:321
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:297
 msgid "Firewall"
 msgstr "Firewall"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:322
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:298
 msgid "Proxy"
 msgstr "Proxy"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:323
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:299
 #: gui/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:35
 msgid "Network Interface"
 msgstr "Interface de Rede"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:325
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:301
 #: gui/com/limegroup/gnutella/gui/shell/ShellAssociationManager.java:58
 msgid "File Associations"
 msgstr "Associações de Arquivos"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:329
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:305
 msgid "System Boot"
 msgstr "Inicialização do Sistema"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:332
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:308
 msgid "System Tray"
 msgstr "Bandeja do sistema"
 
 #. debug
-#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:335
+#: gui/com/limegroup/gnutella/gui/options/OptionsConstructor.java:311
 #: gui/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:74
 msgid "Bug Reports"
 msgstr "Relatórios de erro"
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsMediator.java:71
+#: gui/com/limegroup/gnutella/gui/options/OptionsMediator.java:70
 msgid "Loading Options Window..."
 msgstr "Carregando janela de opções..."
 
-#: gui/com/limegroup/gnutella/gui/options/OptionsMediator.java:168
+#: gui/com/limegroup/gnutella/gui/options/OptionsMediator.java:167
 #: gui/com/limegroup/gnutella/gui/options/OptionsPaneManager.java:115
-msgid ""
-"One or more options will take effect the next time FrostWire is restarted."
-msgstr ""
-"Uma ou mais opções só entrarão em vigor da próxima vez em que o FrostWire "
-"for iniciado."
+msgid "One or more options will take effect the next time FrostWire is restarted."
+msgstr "Uma ou mais opções só entrarão em vigor da próxima vez em que o FrostWire for iniciado."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:29
 msgid "Links and File Types"
 msgstr "Vínculos e Tipos de Arquivos"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:31
-msgid ""
-"You can use FrostWire to open certain filetypes and protocols. You can also "
-"instruct FrostWire to always regain these associations if another program "
-"takes them."
-msgstr ""
-"Você pode abrir algum arquivos e portocolos com FrostWire. Pode também dar "
-"instruções para sempre assinar essas associações com o FrostWire."
+msgid "You can use FrostWire to open certain filetypes and protocols. You can also instruct FrostWire to always regain these associations if another program takes them."
+msgstr "Você pode abrir algum arquivos e portocolos com FrostWire. Pode também dar instruções para sempre assinar essas associações com o FrostWire."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AssociationPreferencePaneItem.java:59
 msgid "Use FrostWire for..."
@@ -3842,14 +3298,8 @@ msgid "Automatic Installer Download"
 msgstr "Download Instalador Automático"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AutomaticInstallerDownloadPaneItem.java:16
-msgid ""
-"FrostWire can automatically download a new installer via BitTorrent for you "
-"when it's available. It won't install it but next time you start FrostWire "
-"it'll let you know that it's there for you."
-msgstr ""
-"FrostWire pode baixar automaticamente para você um novo instalador via "
-"BitTorrent quando estiver disponível. Não irá instalá-lo, porém a próxima "
-"vez que você iniciar FrostWire ele irá avisar "
+msgid "FrostWire can automatically download a new installer via BitTorrent for you when it's available. It won't install it but next time you start FrostWire it'll let you know that it's there for you."
+msgstr "FrostWire pode baixar automaticamente para você um novo instalador via BitTorrent quando estiver disponível. Não irá instalá-lo, porém a próxima vez que você iniciar FrostWire ele irá avisar "
 
 #: gui/com/limegroup/gnutella/gui/options/panes/AutomaticInstallerDownloadPaneItem.java:24
 msgid "Download new installers for me (Recommended)"
@@ -3877,34 +3327,16 @@ msgid "View Example"
 msgstr "Ver exemplo"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:76
-msgid ""
-"You can choose how bug reports should be sent. To view an example bug "
-"report, click 'View Example'. Choosing 'Always Send Immediately' will "
-"immediately contact the bug server when FrostWire encounters an internal "
-"error. Choosing 'Always Ask for Review' will tell FrostWire to ask for your "
-"approval before sending a bug to the bug server. Choosing 'Always Discard "
-"All Errors' will cause FrostWire to ignore all bugs (this is not "
-"recommended)."
-msgstr ""
-"Você pode selecionar a forma de enviar relatórios de erro. Para visualizar "
-"um exemplo de um relatório de erro clique em 'Ver exemplo'. Se selecionar "
-"'Enviar sempre imediatamente', o FrostWire contata imediatamente o servidor "
-"de erros quando encontra um erro interno. Se selecionar 'Pedir sempre para "
-"rever' o FrostWire lhe pede aprovação antes de enviar um relatório de erro "
-"para o servidor. Se selecionar 'Eliminar sempre todos os erros', o FrostWire "
-"ignora todos os erros (opção não recomendável)."
+msgid "You can choose how bug reports should be sent. To view an example bug report, click 'View Example'. Choosing 'Always Send Immediately' will immediately contact the bug server when FrostWire encounters an internal error. Choosing 'Always Ask for Review' will tell FrostWire to ask for your approval before sending a bug to the bug server. Choosing 'Always Discard All Errors' will cause FrostWire to ignore all bugs (this is not recommended)."
+msgstr "Você pode selecionar a forma de enviar relatórios de erro. Para visualizar um exemplo de um relatório de erro clique em 'Ver exemplo'. Se selecionar 'Enviar sempre imediatamente', o FrostWire contata imediatamente o servidor de erros quando encontra um erro interno. Se selecionar 'Pedir sempre para rever' o FrostWire lhe pede aprovação antes de enviar um relatório de erro para o servidor. Se selecionar 'Eliminar sempre todos os erros', o FrostWire ignora todos os erros (opção não recomendável)."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/BugsPaneItem.java:99
 msgid "Send Errors Automatically if FrostWire is Frozen"
 msgstr "Enviar automáticamente erros se FrostWire se congelar"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ChatCommunityPaneItem.java:22
-msgid ""
-"FrostWire's Community Chat Tab requires you to have a nickname to "
-"communicate with others in the chatrooms"
-msgstr ""
-"Aba de bate-papo comunitário FrostWire exige que você tenha um apelido para "
-"se comunicar com os outros nas salas de chat"
+msgid "FrostWire's Community Chat Tab requires you to have a nickname to communicate with others in the chatrooms"
+msgstr "Aba de bate-papo comunitário FrostWire exige que você tenha um apelido para se comunicar com os outros nas salas de chat"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ChatCommunityPaneItem.java:93
 msgid "The chosen nickname is not allowed."
@@ -3919,15 +3351,8 @@ msgid "Content Filters"
 msgstr "Índice de Filtros"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ContentFilterPaneItem.java:20
-msgid ""
-"You can tell FrostWire to filter files that copyright owners request not be "
-"shared. By enabling filtering, you are instructing FrostWire to confirm all "
-"files you download or share with a list of removed content."
-msgstr ""
-"O FrostWire pode filtrar arquivos que os donos dos direitos autorais não "
-"permitem que sejam compartilhados. Se você habilitar a função de filtro, "
-"você está instruindo o FrostWire para confirmar todos os arquivos que você "
-"baixar ou compartilhar com uma lista de conteúdo removido. "
+msgid "You can tell FrostWire to filter files that copyright owners request not be shared. By enabling filtering, you are instructing FrostWire to confirm all files you download or share with a list of removed content."
+msgstr "O FrostWire pode filtrar arquivos que os donos dos direitos autorais não permitem que sejam compartilhados. Se você habilitar a função de filtro, você está instruindo o FrostWire para confirmar todos os arquivos que você baixar ou compartilhar com uma lista de conteúdo removido. "
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ContentFilterPaneItem.java:28
 msgid "Enable Content Filters"
@@ -3938,12 +3363,8 @@ msgid "File Already Exists Behavior"
 msgstr "Comportamento Arquivo já existe"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/DefaultActionPaneItem.java:25
-msgid ""
-"You can choose the default action that FrostWire will perform when you try "
-"to download a file that already exists on disk."
-msgstr ""
-"Você pode escolher a ação padrão que FrostWire irá executar quando você "
-"tentar baixar um arquivo que já existe no disco."
+msgid "You can choose the default action that FrostWire will perform when you try to download a file that already exists on disk."
+msgstr "Você pode escolher a ação padrão que FrostWire irá executar quando você tentar baixar um arquivo que já existe no disco."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/DefaultActionPaneItem.java:49
 msgid "Always Show the 'Save As' Dialog"
@@ -3962,12 +3383,8 @@ msgid "License Warning"
 msgstr "Limpar downloads"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/DownloadLicenseWarningPaneItem.java:23
-msgid ""
-"You can choose whether to be warned about downloading a file without a "
-"license."
-msgstr ""
-"Pode selecionar se pretende ser avisado ao fazer o download de um arquivo "
-"sem licença."
+msgid "You can choose whether to be warned about downloading a file without a license."
+msgstr "Pode selecionar se pretende ser avisado ao fazer o download de um arquivo sem licença."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/DownloadLicenseWarningPaneItem.java:30
 msgid "Show License Warning:"
@@ -3979,8 +3396,7 @@ msgstr "Extensões partilhadas"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ExtensionsPaneItem.java:27
 msgid "You can choose which file extensions you would like to share."
-msgstr ""
-"Você pode selecionar as extensões de arquivos que pretende compartilhar."
+msgstr "Você pode selecionar as extensões de arquivos que pretende compartilhar."
 
 #. *
 #. * Constant for the key of the locale-specific <code>String</code> for the
@@ -4004,21 +3420,8 @@ msgid "Router Configuration"
 msgstr "Configuração do roteador"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:35
-msgid ""
-"FrostWire can configure itself to work from behind a firewall or router. "
-"Using Universal Plug 'n Play (UPnP) and other NAT traversal techniques "
-"FrostWire can automatically configure your router or firewall for optimal "
-"performance. If your router does not support UPnP, FrostWire can be set to "
-"advertise an external port manually. (You may also have to configure your "
-"router if you choose manual configuration, but FrostWire will try its best "
-"so you don't have to.)"
-msgstr ""
-"O FrostWire pode se auto-configurar para funcionar atrás de um firewall ou "
-"roteador. Usando o plug 'n play (UPnP) Universal, o FrostWire pode "
-"automaticamente configurar o seu roteador ou firewall para um desempenho "
-"ideal. Se o seu roteador não suportar uPnP é possível definir o FrostWire "
-"para indicar uma porta externa manualmente. (Se selecionar a configuração "
-"manual também tem de configurar o seu roteador.)"
+msgid "FrostWire can configure itself to work from behind a firewall or router. Using Universal Plug 'n Play (UPnP) and other NAT traversal techniques FrostWire can automatically configure your router or firewall for optimal performance. If your router does not support UPnP, FrostWire can be set to advertise an external port manually. (You may also have to configure your router if you choose manual configuration, but FrostWire will try its best so you don't have to.)"
+msgstr "O FrostWire pode se auto-configurar para funcionar atrás de um firewall ou roteador. Usando o plug 'n play (UPnP) Universal, o FrostWire pode automaticamente configurar o seu roteador ou firewall para um desempenho ideal. Se o seu roteador não suportar uPnP é possível definir o FrostWire para indicar uma porta externa manualmente. (Se selecionar a configuração manual também tem de configurar o seu roteador.)"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:49
 msgid "Use random port (Recommended)"
@@ -4037,20 +3440,12 @@ msgid "UDP:"
 msgstr "UDP:"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:172
-msgid ""
-"You must enter a port between 1 and 65535 when manually forcing your TCP "
-"port."
-msgstr ""
-"Você deve indicar uma porta entre 1 e 65535 quando for forçar a sua porta "
-"TCP manualmente."
+msgid "You must enter a port between 1 and 65535 when manually forcing your TCP port."
+msgstr "Você deve indicar uma porta entre 1 e 65535 quando for forçar a sua porta TCP manualmente."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ForceIPPaneItem.java:176
-msgid ""
-"You must enter a port between 1 and 65535 when manually forcing your UDP "
-"port."
-msgstr ""
-"Você deve indicar uma porta entre 1 e 65535 quando for forçar a sua porta "
-"UDP manualmente."
+msgid "You must enter a port between 1 and 65535 when manually forcing your UDP port."
+msgstr "Você deve indicar uma porta entre 1 e 65535 quando for forçar a sua porta UDP manualmente."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/IgnoreResultTypesPaneItem.java:21
 msgid "Filter Result Types"
@@ -4058,9 +3453,7 @@ msgstr "Filtrar tipos de resultados"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/IgnoreResultTypesPaneItem.java:23
 msgid "You can specify general types of search results to filter."
-msgstr ""
-"Você pode especificar tipos gerais de resultados de pesquisa que pretende "
-"filtrar."
+msgstr "Você pode especificar tipos gerais de resultados de pesquisa que pretende filtrar."
 
 #. *
 #. * Key for the locale-specifis string for the adult content check box
@@ -4125,9 +3518,7 @@ msgstr "Pasta Inclusas na Biblioteca"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LibraryFoldersPaneItem.java:36
 msgid "You can choose the folders for include files when browsing the library."
-msgstr ""
-"Você pode selecionar as pastas para incluir arquivos enquanto navegando na "
-"biblioteca. "
+msgstr "Você pode selecionar as pastas para incluir arquivos enquanto navegando na biblioteca. "
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:18
 msgid "Internet Radio Stations"
@@ -4135,8 +3526,7 @@ msgstr "Estações de Rádio da Internet"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:20
 msgid "You can restore the default internet radio stations."
-msgstr ""
-"Você pode restaurar as predefinições das estações de rádio da internet."
+msgstr "Você pode restaurar as predefinições das estações de rádio da internet."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LibraryInternetRadioPaneItem.java:42
 msgid "Total Radio Stations"
@@ -4148,9 +3538,7 @@ msgstr "Preferenciamento local"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LocalePreferencingPaneItem.java:21
 msgid "You can choose to preference hosts using the same language as you."
-msgstr ""
-"Você pode optar por dar preferência a usuários que estão utilizando o seu "
-"mesmo idioma."
+msgstr "Você pode optar por dar preferência a usuários que estão utilizando o seu mesmo idioma."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/LocalePreferencingPaneItem.java:24
 msgid "Turn preferencing on:"
@@ -4161,10 +3549,8 @@ msgid "Maximum Searches"
 msgstr "Número máximo de pesquisas"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/MaximumSearchesPaneItem.java:24
-msgid ""
-"You can set the maximum number of simultaneous searches you can perform."
-msgstr ""
-"Você pode definir o número máximo de pesquisas simultâneas que se pode fazer."
+msgid "You can set the maximum number of simultaneous searches you can perform."
+msgstr "Você pode definir o número máximo de pesquisas simultâneas que se pode fazer."
 
 #. *
 #. * Constant for the key of the locale-specific <code>String</code> for the
@@ -4180,42 +3566,24 @@ msgid "The maximum parallel searches you can make is "
 msgstr "O máximo de pesquisas paralelas que você pode fazer são "
 
 #: gui/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:37
-msgid ""
-"You can tell FrostWire to bind outgoing connections to an IP address from a "
-"specific network interface. Listening sockets will still listen on all "
-"available interfaces. This is useful on multi-homed hosts. If you later "
-"disable this interface, FrostWire will revert to binding to an arbitrary "
-"address."
-msgstr ""
-"Você pode dizer ao FrostWire para ligar as conexões de saída para um "
-"endereço IP a partir de uma interface de rede específica. Isso é uma "
-"hospedagem multi-homed útil. Se mais tarde você desativar esta interface, o "
-"FrostWire voltará a ligação para um endereço arbitrário."
+msgid "You can tell FrostWire to bind outgoing connections to an IP address from a specific network interface. Listening sockets will still listen on all available interfaces. This is useful on multi-homed hosts. If you later disable this interface, FrostWire will revert to binding to an arbitrary address."
+msgstr "Você pode dizer ao FrostWire para ligar as conexões de saída para um endereço IP a partir de uma interface de rede específica. Isso é uma hospedagem multi-homed útil. Se mais tarde você desativar esta interface, o FrostWire voltará a ligação para um endereço arbitrário."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:50
 msgid "Use a specific network interface."
 msgstr "Usar uma interface de rede específica."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/NetworkInterfacePaneItem.java:110
-msgid ""
-"FrostWire was unable to determine which network interfaces are available on "
-"this machine. Outgoing connections will bind to any arbitrary interface."
-msgstr ""
-"FrostWire não pôde determinar quais interfaces de rede estão disponíveis "
-"neste equipamento. As conexões de saída irão ligar qualquer interface "
-"arbitrária."
+msgid "FrostWire was unable to determine which network interfaces are available on this machine. Outgoing connections will bind to any arbitrary interface."
+msgstr "FrostWire não pôde determinar quais interfaces de rede estão disponíveis neste equipamento. As conexões de saída irão ligar qualquer interface arbitrária."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:20
 msgid "Notifications"
 msgstr "Notificações"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:22
-msgid ""
-"FrostWire can display popups to notify you when certain things happen, such "
-"as a download completing. "
-msgstr ""
-"FrostWire pode exibir pop-ups para notificá-lo quando certas coisas "
-"acontecem, tais como quando download terminar."
+msgid "FrostWire can display popups to notify you when certain things happen, such as a download completing. "
+msgstr "FrostWire pode exibir pop-ups para notificá-lo quando certas coisas acontecem, tais como quando download terminar."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/NotificationsPaneItem.java:25
 msgid "Show Notifications:"
@@ -4226,12 +3594,8 @@ msgid "Partial Files"
 msgstr "Arquivos com download parcial."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/PartialFileSharingPaneItem.java:21
-msgid ""
-"You can choose whether or not to automatically share partially downloaded "
-"files."
-msgstr ""
-"Você pode selecionar se pretende compartilhar automaticamente os arquivos "
-"com download parcial."
+msgid "You can choose whether or not to automatically share partially downloaded files."
+msgstr "Você pode selecionar se pretende compartilhar automaticamente os arquivos com download parcial."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/PartialFileSharingPaneItem.java:28
 msgid "Allow Partial Sharing:"
@@ -4242,12 +3606,8 @@ msgid "FrostWire Popups"
 msgstr "Popups FrostWire"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:22
-msgid ""
-"Redisplay messages for which you have chosen 'Do not display this message "
-"again' or 'Always use this answer'."
-msgstr ""
-"Voltar a ver mensagens que você selecionou 'Não mostrar esta mensagem "
-"novamente' ou 'Utilizar sempre esta resposta'."
+msgid "Redisplay messages for which you have chosen 'Do not display this message again' or 'Always use this answer'."
+msgstr "Voltar a ver mensagens que você selecionou 'Não mostrar esta mensagem novamente' ou 'Utilizar sempre esta resposta'."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/PopupsPaneItem.java:29
 msgid "Revert to Default:"
@@ -4318,18 +3678,8 @@ msgid "FrostClick Promotions"
 msgstr "Promoções FrostClick"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ShowPromoOverlaysPaneItem.java:20
-msgid ""
-"You can enable or disable the FrostClick Promotion on the welcome screen. "
-"FrostClick promotions help artists and content creators distribute their "
-"content legally and freely to hundreds of thousands of people via FrostWire, "
-"BitTorrent and Gnutella. Keep this option on to support file sharing and the "
-"future of content distribution."
-msgstr ""
-"Você pode ativar ou desativar a Promoção FrostClick na tela de boas-vindas. "
-"As promoções FrostClick ajudam os artistas e criadores de conteúdo "
-"distribuir legalmente o seu conteúdo para centenas de milhares de pessoas "
-"através FrostWire, BitTorrent e Gnutella. Mantenha esta opção para apoiar o "
-"compartilhamento de arquivos e do futuro da distribuição de conteúdo."
+msgid "You can enable or disable the FrostClick Promotion on the welcome screen. FrostClick promotions help artists and content creators distribute their content legally and freely to hundreds of thousands of people via FrostWire, BitTorrent and Gnutella. Keep this option on to support file sharing and the future of content distribution."
+msgstr "Você pode ativar ou desativar a Promoção FrostClick na tela de boas-vindas. As promoções FrostClick ajudam os artistas e criadores de conteúdo distribuir legalmente o seu conteúdo para centenas de milhares de pessoas através FrostWire, BitTorrent e Gnutella. Mantenha esta opção para apoiar o compartilhamento de arquivos e do futuro da distribuição de conteúdo."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/ShowPromoOverlaysPaneItem.java:27
 msgid "Enable FrostClick Promotions (highly recommended):"
@@ -4360,13 +3710,8 @@ msgid "Smart Search"
 msgstr "Pesquisa Inteligente"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:22
-msgid ""
-"The Smart Search database is used to speed up individual file searches, it's "
-"how FrostWire remembers information about .torrent contents."
-msgstr ""
-"O banco de dados de Busca Inteligente é usado para acelerar buscas de "
-"arquivos individuais, é como FrostWire lembra das informações sobre "
-"conteúdos .torrent."
+msgid "The Smart Search database is used to speed up individual file searches, it's how FrostWire remembers information about .torrent contents."
+msgstr "O banco de dados de Busca Inteligente é usado para acelerar buscas de arquivos individuais, é como FrostWire lembra das informações sobre conteúdos .torrent."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/SmartSearchDBPaneItem.java:48
 msgid "Total torrents indexed"
@@ -4393,12 +3738,8 @@ msgstr ""
 "Você deseja continuar?"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:24
-msgid ""
-"You can choose whether or not to automatically run FrostWire when your "
-"computer starts."
-msgstr ""
-"Você pode selecionar se quer iniciar automaticamente o FrostWire quando "
-"iniciar o computador."
+msgid "You can choose whether or not to automatically run FrostWire when your computer starts."
+msgstr "Você pode selecionar se quer iniciar automaticamente o FrostWire quando iniciar o computador."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/StartupPaneItem.java:31
 msgid "Run on System Startup:"
@@ -4410,8 +3751,7 @@ msgstr "Indicador de largura de banda:"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/StatusBarBandwidthPaneItem.java:23
 msgid "You can display your bandwidth consumption in the status bar."
-msgstr ""
-"Você pode visualizar o seu consumo de largura de banda na barra de status."
+msgstr "Você pode visualizar o seu consumo de largura de banda na barra de status."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/StatusBarBandwidthPaneItem.java:30
 msgid "Show Bandwidth Indicator:"
@@ -4422,10 +3762,8 @@ msgid "Connection Quality Indicator"
 msgstr "Indicador de qualidade da conexão"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:23
-msgid ""
-"You can display a measurement of your connection quality in the status bar."
-msgstr ""
-"Você pode ver uma medição da qualidade da sua conexão na barra de status."
+msgid "You can display a measurement of your connection quality in the status bar."
+msgstr "Você pode ver uma medição da qualidade da sua conexão na barra de status."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/StatusBarConnectionQualityPaneItem.java:30
 msgid "Show Connection Quality Indicator:"
@@ -4448,11 +3786,8 @@ msgid "BitTorrent Connection Settings"
 msgstr "Configurações de Conexão BitTorrent"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:20
-msgid ""
-"Adjust connection settings to make better use of your internet connection"
-msgstr ""
-"Ajuste as configurações de conexão para fazer um uso melhor da sua conexão "
-"de internet "
+msgid "Adjust connection settings to make better use of your internet connection"
+msgstr "Ajuste as configurações de conexão para fazer um uso melhor da sua conexão de internet "
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentConnectionPaneItem.java:22
 msgid "Maximum active downloads"
@@ -4476,9 +3811,7 @@ msgstr "Página de Detalhes Torrent"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentDetailsPaneItem.java:21
 msgid "Show torrent details web page after a download starts. (Recommended)"
-msgstr ""
-"Mostrar página web detalhes do torrent depois que o download começar. "
-"(Recomendado)"
+msgstr "Mostrar página web detalhes do torrent depois que o download começar. (Recomendado)"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:22
 msgid "BitTorrent Global Tranfer Speeds"
@@ -4497,14 +3830,8 @@ msgid "Download Speed:"
 msgstr "Velocidade de download:"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:39
-msgid ""
-"<html>Set the Maximum BitTorrent upload speed in KB/s.<p>Note: Too low "
-"upload speeds (leeching) could be penalized by some trackers, resulting in "
-"slower downloads.</html>"
-msgstr ""
-"<html>Definir as velocidades máximas de upload via BitTorrent em KB/s. "
-"<p>Note: Velocidades muito baixas de upload podem ser penalizadas por alguns "
-"trackers, resultando em downloads mais lentos.</html>"
+msgid "<html>Set the Maximum BitTorrent upload speed in KB/s.<p>Note: Too low upload speeds (leeching) could be penalized by some trackers, resulting in slower downloads.</html>"
+msgstr "<html>Definir as velocidades máximas de upload via BitTorrent em KB/s. <p>Note: Velocidades muito baixas de upload podem ser penalizadas por alguns trackers, resultando em downloads mais lentos.</html>"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentGlobalSpeedPaneItem.java:41
 msgid "Upload Speed:"
@@ -4525,15 +3852,8 @@ msgid "Choose the folder where the torrent data will be saved"
 msgstr "Escolha a pasta onde os dados torrent serão salvos"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/TorrentSeedingSettingPaneItem.java:19
-msgid ""
-"Seeding is the process of connecting to a torrent when you have a complete "
-"file(s). Pieces of the seeded file(s) will be available to everybody. While "
-"downloading pieces are always available to other peers in the swarm."
-msgstr ""
-"A propagação é o processo de ligação a uma torrente quando você tem um "
-"arquivcompleto. Partes do arquivo semeado estarão disponíveis para todos. "
-"Enquanto outros partes de downloads estão sempre disponíveis para outros "
-"colegas"
+msgid "Seeding is the process of connecting to a torrent when you have a complete file(s). Pieces of the seeded file(s) will be available to everybody. While downloading pieces are always available to other peers in the swarm."
+msgstr "A propagação é o processo de ligação a uma torrente quando você tem um arquivcompleto. Partes do arquivo semeado estarão disponíveis para todos. Enquanto outros partes de downloads estão sempre disponíveis para outros colegas"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/VideoPlayerPaneItem.java:28
 msgid "Video Options"
@@ -4554,9 +3874,7 @@ msgstr "Player de vídeo"
 
 #: gui/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:17
 msgid "You can have FrostWire import newly downloaded songs into iTunes."
-msgstr ""
-"O FrostWire pode importar para iTunes músicas cujo download tenha sido "
-"concluído recentemente."
+msgstr "O FrostWire pode importar para iTunes músicas cujo download tenha sido concluído recentemente."
 
 #: gui/com/limegroup/gnutella/gui/options/panes/iTunesPreferencePaneItem.java:20
 msgid "Enable iTunes importing:"
@@ -4573,27 +3891,27 @@ msgstr "Todos"
 msgid "Select Search Types:"
 msgstr "Selecione Tipos de Pesquisas:"
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:177
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:182
 msgid "Search For Audio Files, Including mp3, wav, ogg, and More"
 msgstr "Pesquisar arquivos de Áudio, incluindo mp3, wav, ogg e outros."
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:183
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:188
 msgid "Search For Image Files, Including jpg, gif, png and More"
 msgstr "Pesquisar arquivos de Imagem, incluindo jpg, gif, png e outros."
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:189
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:194
 msgid "Search For Video Files, Including avi, mpg, wmv, and More"
 msgstr "Pesquisar arquivos de Vídeo, incluindo avi, mpg, wmv e outros."
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:195
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:200
 msgid "Search for Document Files, Including html, txt, pdf, and More"
 msgstr "Pesquisar arquivos de documentos, incluindo html, txt, pdf e outros."
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:201
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:206
 msgid "Search for Program Files, Including exe, zip, gz, and More"
 msgstr "Pesquisar arquivos de Programas, incluindo exe, zip, gz e outros."
 
-#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:207
+#: gui/com/limegroup/gnutella/gui/search/SchemaBox.java:212
 msgid "Search for Torrents!"
 msgstr "Pesquisar por Torrents!"
 
@@ -4610,11 +3928,8 @@ msgid "Download All Selected Files"
 msgstr "Fazer download de todos os arquivos selecionados."
 
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:57
-msgid ""
-"See detail web page about the selected torrent (Contents, Comments, Seeds)"
-msgstr ""
-"Consulte a página de detalhes na web sobre o torrent selecionado (Conteúdo, "
-"Comentários, Sementes)"
+msgid "See detail web page about the selected torrent (Contents, Comments, Seeds)"
+msgstr "Consulte a página de detalhes na web sobre o torrent selecionado (Conteúdo, Comentários, Sementes)"
 
 #: gui/com/limegroup/gnutella/gui/search/SearchButtons.java:58
 msgid "Stop current search"
@@ -4627,97 +3942,78 @@ msgstr "Parar pesquisa atual"
 msgid "0"
 msgstr "0"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputManager.java:151
+#: gui/com/limegroup/gnutella/gui/search/SearchInputManager.java:152
 msgid "Open a .torrent or Magnet link or YouTube video link"
 msgstr "Abrir um link .torrent ou Magnet ou um link de vídeo no YouTube"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputManager.java:163
-msgid ""
-"Send a file or folder to a friend (No size limit, No third parties involved)"
-msgstr ""
-"Envie um arquivo ou pasta para um amigo (Sem limite de tamanho, Não envolver "
-"terceiros)"
+#: gui/com/limegroup/gnutella/gui/search/SearchInputManager.java:164
+msgid "Send a file or folder to a friend (No size limit, No third parties involved)"
+msgstr "Envie um arquivo ou pasta para um amigo (Sem limite de tamanho, Não envolver terceiros)"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:213
+#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:171
 msgid "Search Engines"
 msgstr "Mecanismos de pesquisa"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:221
+#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:179
 msgid "Filter"
 msgstr "Filtro"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:318
+#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:276
 msgid "<html><strong>Refine Results</strong></html>"
 msgstr "<html><strong>Filtrar resultados</strong></html>"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:410
+#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:368
 msgid "Show search result filter controls"
 msgstr "Mostrar filtros de pesquisa de resultados"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:411
+#: gui/com/limegroup/gnutella/gui/search/SearchInputPanel.java:369
 msgid "Hide search result filter controls"
 msgstr "Esconder filtros de pesquisa de resultados"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:63
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:62
 msgid "Close Search"
 msgstr "Fechar a pesquisa"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:65
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:64
 msgid "Launch Action"
 msgstr "Ação de abrir"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:67
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:66
 msgid "Repeat Search"
 msgstr "Repetir pesquisa"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:69
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:68
 msgid "Buy this item now"
 msgstr "Comprar esse item agora"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:71
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:70
 msgid "Download Partial Files"
 msgstr "Baixe Arquivos Parciais"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:73
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:72
 msgid "Torrent Details"
 msgstr "Detalhes do login"
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:75
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:74
 msgid "View in YouTube"
 msgstr "Ver no YouTube"
 
 #. Set the splash screen text...
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:96
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:95
 msgid "Loading Search Window..."
 msgstr "Carregando janela de pesquisa..."
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:215
-msgid ""
-"Your search must be at least three characters to avoid congesting the "
-"network."
-msgstr ""
-"A sua pesquisa deve ter pelo menos três caracteres para evitar "
-"congestionamento na rede."
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:209
+msgid "Your search must be at least three characters to avoid congesting the network."
+msgstr "A sua pesquisa deve ter pelo menos três caracteres para evitar congestionamento na rede."
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:220
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:212
 msgid "Your search is too long. Please make your search smaller and try again."
-msgstr ""
-"A sua pesquisa é muito extensa. Introduza uma pesquisa menor e tente "
-"novamente."
+msgstr "A sua pesquisa é muito extensa. Introduza uma pesquisa menor e tente novamente."
 
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:223
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:227
-msgid ""
-"Your search is too specific. Please make your search smaller and try again."
-msgstr ""
-"A sua pesquisa é muito específica. Reduza a sua pesquisa e tente novamente."
-
-#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:237
-msgid ""
-"Please wait, FrostWire must finish loading before a search can be started."
-msgstr ""
-"Por favor aguarde, o FrostWire precisa acabar de carregar antes de começar "
-"uma nova pesquisa."
+#: gui/com/limegroup/gnutella/gui/search/SearchMediator.java:221
+msgid "Please wait, FrostWire must finish loading before a search can be started."
+msgstr "Por favor aguarde, o FrostWire precisa acabar de carregar antes de começar uma nova pesquisa."
 
 #: gui/com/limegroup/gnutella/gui/search/SearchResultMediator.java:371
 msgid "Show Torrent Details page when a download starts"
@@ -4765,12 +4061,8 @@ msgid "\"magnet:\" links"
 msgstr "\"magnet:\" links"
 
 #: gui/com/limegroup/gnutella/gui/shell/ShellAssociationManager.java:48
-msgid ""
-"One or more files or protocols that FrostWire uses are no longer associated "
-"with FrostWire. Would you like FrostWire to re-associate them?"
-msgstr ""
-"Um ou mais arquivos ou protocolos que o FrostWire utuliza não estão mais "
-"associadas com FrostWire. Gostaria que o FrostWire os re-associe?"
+msgid "One or more files or protocols that FrostWire uses are no longer associated with FrostWire. Would you like FrostWire to re-associate them?"
+msgstr "Um ou mais arquivos ou protocolos que o FrostWire utuliza não estão mais associadas com FrostWire. Gostaria que o FrostWire os re-associe?"
 
 #: gui/com/limegroup/gnutella/gui/tables/ColumnSelectionMenu.java:50
 msgid "Revert To Default"
@@ -4941,34 +4233,22 @@ msgstr "Arquivo já está sendo baixado"
 
 #: gui/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:88
 #, java-format
-msgid ""
-"Could not set file location to {0}, because the filename is invalid and may "
-"corrupt your system."
-msgstr ""
-"Não foi possível definir a localização do arquivo para {0}, pois o nome do "
-"arquivo é inválido e poder danificar o seu sistema."
+msgid "Could not set file location to {0}, because the filename is invalid and may corrupt your system."
+msgstr "Não foi possível definir a localização do arquivo para {0}, pois o nome do arquivo é inválido e poder danificar o seu sistema."
 
 #: gui/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:91
 msgid "Could not set the file location, the download is already finished."
-msgstr ""
-"Não foi possível definir a localização do arquivo, o download já foi "
-"concluído."
+msgstr "Não foi possível definir a localização do arquivo, o download já foi concluído."
 
 #: gui/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:94
 #, java-format
-msgid ""
-"Could not save download to the folder {0}, because you do not have write "
-"access to it."
-msgstr ""
-"Não foi possível salvar o download na pasta{0}, por não possuir acesso para "
-"escrita."
+msgid "Could not save download to the folder {0}, because you do not have write access to it."
+msgstr "Não foi possível salvar o download na pasta{0}, por não possuir acesso para escrita."
 
 #: gui/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:98
 #, java-format
-msgid ""
-"Could not save download to folder {0}, because the folder does not exist."
-msgstr ""
-"Não foi possível guardar o download na pasta {0}, pois o arquivo não existe."
+msgid "Could not save download to folder {0}, because the folder does not exist."
+msgstr "Não foi possível guardar o download na pasta {0}, pois o arquivo não existe."
 
 #: gui/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:102
 #, java-format
@@ -4982,25 +4262,17 @@ msgstr "Já existe um arquivo sendo salvo em {0}."
 
 #: gui/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:110
 #, java-format
-msgid ""
-"Could not set download folder to {0}, because it represents an individual "
-"file, not a folder."
-msgstr ""
-"Não foi possível definir a pasta de download para {0}, por representar um "
-"arquivo individual e não uma pasta."
+msgid "Could not set download folder to {0}, because it represents an individual file, not a folder."
+msgstr "Não foi possível definir a pasta de download para {0}, por representar um arquivo individual e não uma pasta."
 
 #: gui/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:114
 #, java-format
 msgid "Could not set file location to {0}, because it is not a regular file."
-msgstr ""
-"Não foi possível definir a localização do arquivo para {0}, por não se "
-"tratar de um arquivo normal."
+msgstr "Não foi possível definir a localização do arquivo para {0}, por não se tratar de um arquivo normal."
 
 #: gui/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:117
 msgid "Could not set file location due to an error in the filesystem."
-msgstr ""
-"Não foi possível definir a localização do arquivo devido a um erro no "
-"sistema de arquivos."
+msgstr "Não foi possível definir a localização do arquivo devido a um erro no sistema de arquivos."
 
 #: gui/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:119
 msgid "The same file is already being downloaded."
@@ -5008,12 +4280,8 @@ msgstr "O mesmo arquivo já está sendo baixado."
 
 #: gui/com/limegroup/gnutella/gui/util/CoreExceptionHandler.java:121
 #, java-format
-msgid ""
-"The path of the parent folder exceeds the maximum length of paths on the "
-"filesystem. {0} "
-msgstr ""
-"O caminho da pasta principal excede o tamanho máximo dos caminhos no sistema "
-"do arquivos. {0}"
+msgid "The path of the parent folder exceeds the maximum length of paths on the filesystem. {0} "
+msgstr "O caminho da pasta principal excede o tamanho máximo dos caminhos no sistema do arquivos. {0}"
 
 #: gui/irc/ConfigurationLoader.java:131
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:79
@@ -5040,7 +4308,8 @@ msgstr "backuplanguage"
 msgid "backuplanguageencoding"
 msgstr "backuplanguageencoding"
 
-#: gui/irc/ConfigurationLoader.java:299 gui/irc/ConfigurationLoader.java:330
+#: gui/irc/ConfigurationLoader.java:299
+#: gui/irc/ConfigurationLoader.java:330
 msgid "gui"
 msgstr "gui"
 
@@ -5101,6 +4370,22 @@ msgstr "mouse"
 #: gui/irc/gui/pixx/PixxConfigurationLoader.java:234
 msgid "helppage"
 msgstr "helppage"
+
+#~ msgid "Uploading "
+#~ msgstr "Fazendo o upload"
+
+#~ msgid "Downloading "
+#~ msgstr "Baixando"
+
+#~ msgid "More Search Options"
+#~ msgstr "Mais opções de pesquisa"
+
+#~ msgid ""
+#~ "Your search is too specific. Please make your search smaller and try "
+#~ "again."
+#~ msgstr ""
+#~ "A sua pesquisa é muito específica. Reduza a sua pesquisa e tente "
+#~ "novamente."
 
 #~ msgid "Loading phones and tablets..."
 #~ msgstr "Carregando telefones e tablets..."
@@ -5686,11 +4971,13 @@ msgstr "helppage"
 #~ msgstr "Mostrar Indicador da Loja"
 
 #~ msgid "You are sharing {0} file"
+
 #~ msgid_plural "You are sharing {0} files"
 #~ msgstr[0] "Você está compartilhando {0} arquivo"
 #~ msgstr[1] "Você está compartilhando {0} arquivos"
 
 #~ msgid "You are sharing {0} file (Loading...)"
+
 #~ msgid_plural "You are sharing {0} files (Loading...)"
 #~ msgstr[0] "Você está compartilhando {0} arquivo (Carregando...)"
 #~ msgstr[1] "Você está compartilhando {0} arquivos (Carregando...)"

@@ -535,8 +535,8 @@ public class LibraryUtils {
 
         for (File file : files) {
             if (file.isDirectory()) {
-                String fullPathNoEndSeparator = FilenameUtils.getFullPathNoEndSeparator(file.getAbsolutePath());
-                String baseName = FilenameUtils.getBaseName(fullPathNoEndSeparator);
+                //String fullPathNoEndSeparator = FilenameUtils.getFullPathNoEndSeparator(file.getAbsolutePath());
+                String baseName = FilenameUtils.getBaseName(file.getAbsolutePath());
                 names.add(baseName);
                 findNames(names, file.listFiles());
             } else if (AudioPlayer.isPlayableFile(file)) {
