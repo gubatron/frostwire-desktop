@@ -1,6 +1,8 @@
 package com.frostwire.alexandria;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import com.frostwire.alexandria.db.LibraryDB;
@@ -46,13 +48,22 @@ public class Library extends Entity<LibraryDB> {
     }
 
     public List<Playlist> getPlaylists() {
-        return db.getPlaylists(this);
+        // perform name sort here. It is no the best place
+        List<Playlist> list = db.getPlaylists(this);
+        Collections.sort(list, new Comparator<Playlist>() {
+            @Override
+            public int compare(Playlist o1, Playlist o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+
+        return list;
     }
 
     public Playlist getPlaylist(String name) {
         return db.getPlaylist(this, name);
     }
-    
+
     public List<InternetRadioStation> getInternetRadioStations() {
         return db.getInternetRadioStations(this);
     }
@@ -60,7 +71,7 @@ public class Library extends Entity<LibraryDB> {
     public Playlist newPlaylist(String name, String description) {
         return new Playlist(this, LibraryDatabase.OBJECT_NOT_SAVED_ID, name, description);
     }
-    
+
     public InternetRadioStation newInternetRadioStation(String name, String description, String url, String bitrate, String type, String website, String genre, String pls, boolean bookmarked) {
         return new InternetRadioStation(this, LibraryDatabase.OBJECT_NOT_SAVED_ID, name, description, url, bitrate, type, website, genre, pls, bookmarked);
     }

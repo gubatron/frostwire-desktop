@@ -31,6 +31,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -57,6 +58,8 @@ import org.pushingpixels.substance.api.renderers.SubstanceDefaultListCellRendere
 import com.frostwire.alexandria.Library;
 import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
+import com.frostwire.gui.components.SortedListModel;
+import com.frostwire.gui.components.SortedListModel.SortOrder;
 import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.FileChooserHandler;
@@ -176,7 +179,22 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         _listMouseObserver = new LibraryPlaylistsMouseObserver();
         _listSelectionListener = new LibraryPlaylistsSelectionListener();
 
-        _list = new LibraryIconList(_model);
+        SortedListModel sortedModel = new SortedListModel(_model, SortOrder.ASCENDING, new Comparator<LibraryPlaylistsListCell>() {
+
+            @Override
+            public int compare(LibraryPlaylistsListCell o1, LibraryPlaylistsListCell o2) {
+                if (o1 == _newPlaylistCell) {
+                    return -1;
+                }
+                if (o2 == _newPlaylistCell) {
+                    return 1;
+                }
+                
+                return o1.getText().compareTo(o2.getText());
+            }
+        });
+        
+        _list = new LibraryIconList(sortedModel);
         _list.setFixedCellHeight(TableSettings.DEFAULT_TABLE_ROW_HEIGHT.getValue());
         _list.setCellRenderer(new LibraryPlaylistsCellRenderer());
         _list.addMouseListener(new DefaultMouseListener(_listMouseObserver));
