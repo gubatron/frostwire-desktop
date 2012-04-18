@@ -73,7 +73,8 @@ public class DownloadTask extends DeviceTask {
 
                 GUIMediator.safeInvokeLater(new Runnable() {
                     public void run() {
-                        LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Downloading ") + currentFD.title);
+                        String status = String.format("%s from %s - %s", I18n.tr("Downloading"), device.getName(), currentFD.title);
+                        LibraryMediator.instance().getLibrarySearch().pushStatus(status);
                     }
                 });
 
@@ -106,12 +107,13 @@ public class DownloadTask extends DeviceTask {
                         if (getProgress() % 5 == 0) {
                             GUIMediator.safeInvokeLater(new Runnable() {
                                 public void run() {
-                                    LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Downloading ") + currentFD.title + " " + getProgress() + "%");
+                                    String status = String.format("%s from %s %d%% - %s", I18n.tr("Downloading"), device.getName(), getProgress(), currentFD.title);
+                                    LibraryMediator.instance().getLibrarySearch().pushStatus(status);
                                 }
                             });
                         }
                     }
-                    
+
                     incompleteFile.renameTo(file);
                 } finally {
                     close(fos);
@@ -149,7 +151,7 @@ public class DownloadTask extends DeviceTask {
         }
         return f;
     }
-    
+
     private File buildIncompleteFile(File file) {
         String prefix = FilenameUtils.removeExtension(file.getAbsolutePath());
         String ext = FilenameUtils.getExtension(file.getAbsolutePath());

@@ -67,7 +67,7 @@ public class DeviceUploadTask extends DeviceTask {
 
                 GUIMediator.safeInvokeLater(new Runnable() {
                     public void run() {
-                        LibraryMediator.instance().getLibrarySearch().pushStatus(String.format("%s %s", I18n.tr("Uploading"), name));
+                        LibraryMediator.instance().getLibrarySearch().pushStatus(String.format("%s to %s - %s", I18n.tr("Uploading"), device.getName(), name));
                     }
                 });
 
@@ -79,7 +79,8 @@ public class DeviceUploadTask extends DeviceTask {
                         if (getProgress() % 5 == 0) {
                             GUIMediator.safeInvokeLater(new Runnable() {
                                 public void run() {
-                                    LibraryMediator.instance().getLibrarySearch().pushStatus(I18n.tr("Uploading ") + name + " " + getProgress() + "%");
+                                    String status = String.format("%s to %s %d%% - %s", I18n.tr("Uploading"), device.getName(), getProgress(), name);
+                                    LibraryMediator.instance().getLibrarySearch().pushStatus(status);
                                 }
                             });
                         }
