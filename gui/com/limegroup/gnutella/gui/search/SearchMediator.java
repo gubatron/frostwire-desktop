@@ -10,7 +10,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.limewire.util.I18NConvert;
-import org.limewire.util.StringUtils;
 
 import com.frostwire.AzureusStarter;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
@@ -33,45 +32,45 @@ import com.limegroup.gnutella.settings.SearchSettings;
  */
 public final class SearchMediator {
 
-	/**
-	 * Query text is valid.
-	 */
-	public static final int QUERY_VALID = 0;
-	/**
-	 * Query text is empty.
-	 */
-	public static final int QUERY_EMPTY = 1;
-	/**
-	 * Query text is too short.
-	 */
-	public static final int QUERY_TOO_SHORT = 2;
-	/**
-	 * Query text is too long.
-	 */
-	public static final int QUERY_TOO_LONG = 3;
-	/**
-	 * Query xml is too long.
-	 */
-	public static final int QUERY_XML_TOO_LONG = 4;
+    /**
+     * Query text is valid.
+     */
+    public static final int QUERY_VALID = 0;
+    /**
+     * Query text is empty.
+     */
+    public static final int QUERY_EMPTY = 1;
+    /**
+     * Query text is too short.
+     */
+    public static final int QUERY_TOO_SHORT = 2;
+    /**
+     * Query text is too long.
+     */
+    public static final int QUERY_TOO_LONG = 3;
+    /**
+     * Query xml is too long.
+     */
+    public static final int QUERY_XML_TOO_LONG = 4;
     /**
      * Query contains invalid characters.
      */
     public static final int QUERY_INVALID_CHARACTERS = 5;
-	
-	static final String DOWNLOAD_STRING = I18n.tr("Download");
+
+    static final String DOWNLOAD_STRING = I18n.tr("Download");
 
     static final String KILL_STRING = I18n.tr("Close Search");
 
     static final String LAUNCH_STRING = I18n.tr("Launch Action");
 
     static final String REPEAT_SEARCH_STRING = I18n.tr("Repeat Search");
-    
+
     static final String BUY_NOW_STRING = I18n.tr("Buy this item now");
-    
+
     static final String DOWNLOAD_PARTIAL_FILES_STRING = I18n.tr("Download Partial Files");
-    
+
     static final String TORRENT_DETAILS_STRING = I18n.tr("Torrent Details");
-    
+
     static final String YOUTUBE_DETAILS_STRING = I18n.tr("View in YouTube");
 
     /**
@@ -84,7 +83,7 @@ public final class SearchMediator {
      * TODO: Changed to package-protected for testing to add special results
      */
     private static SearchResultDisplayer RESULT_DISPLAYER;
-    
+
     private static SearchFilterFactory SEARCH_FILTER_FACTORY;
 
     /**
@@ -96,26 +95,26 @@ public final class SearchMediator {
         final String splashScreenString = I18n.tr("Loading Search Window...");
         GUIMediator.setSplashScreenString(splashScreenString);
         GUIMediator.addRefreshListener(getSearchResultDisplayer());
-        
+
         // Link up the tabs of results with the filters of the input screen.
         getSearchResultDisplayer().setSearchListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 SearchResultMediator panel = getSearchResultDisplayer().getSelectedResultPanel();
-                if(panel == null)
+                if (panel == null)
                     getSearchInputManager().clearFilters();
                 else
                     getSearchInputManager().setFiltersFor(panel);
             }
         });
     }
-    
+
     /**
      * Rebuilds the INPUT_MANAGER's panel.
      */
     public static void rebuildInputPanel() {
         getSearchInputManager().rebuild();
     }
-    
+
     /**
      * Informs the INPUT_MANAGER that we want to display the searching
      * window.
@@ -123,14 +122,14 @@ public final class SearchMediator {
     public static void showSearchInput() {
         getSearchInputManager().goToSearch();
     }
-    
+
     /**
      * Requests the search focus in the INPUT_MANAGER.
      */
     public static void requestSearchFocus() {
         getSearchInputManager().requestSearchFocus();
     }
-    
+
     /**
      * Updates all current results.
      */
@@ -142,35 +141,35 @@ public final class SearchMediator {
      * Placehold for repeatSearch
      */
     static byte[] repeatSearch(SearchResultMediator rp, SearchInformation info) {
-      return repeatSearch (rp,info,true);
+        return repeatSearch(rp, info, true);
     }
-    
+
     /** 
      * Repeats the given search.
      */
     static byte[] repeatSearch(SearchResultMediator rp, SearchInformation info, boolean clearingResults) {
-        if(!validate(info))
+        if (!validate(info))
             return null;
 
         // 1. Update panel with new GUID
-        byte [] guidBytes = newQueryGUID();
+        byte[] guidBytes = newQueryGUID();
         final GUID newGuid = new GUID(guidBytes);
 
         rp.setGUID(newGuid);
-        if ( clearingResults ) {
+        if (clearingResults) {
             getSearchInputManager().panelReset(rp);
         }
-        
+
         GUIMediator.instance().setSearching(true);
         doSearch(guidBytes, info);
-        
+
         return guidBytes;
     }
 
     private static byte[] newQueryGUID() {
         return GUID.makeGuid();
     }
-    
+
     /**
      * Initiates a new search with the specified SearchInformation.
      *
@@ -178,102 +177,76 @@ public final class SearchMediator {
      * otherwise returns null.
      */
     public static byte[] triggerSearch(final SearchInformation info) {
-        if(!validate(info))
+        if (!validate(info))
             return null;
-            
+
         // generate a guid for the search.
         final byte[] guid = newQueryGUID();
         addResultTab(new GUID(guid), info);
-        
+
         doSearch(guid, info);
-        
+
         return guid;
     }
 
-    
     /**
      * Triggers a search given the text in the search field.  For testing
      * purposes returns the 16-byte GUID of the search or null if the search
      * didn't happen because it was greedy, etc.  
      */
     public static byte[] triggerSearch(String query) {
-        return triggerSearch(
-            SearchInformation.createKeywordSearch(query, null, 
-                                  MediaType.getAnyTypeMediaType())
-        );
+        return triggerSearch(SearchInformation.createKeywordSearch(query, null, MediaType.getAnyTypeMediaType()));
     }
-    
+
     /**
      * Validates the given search information.
      */
     private static boolean validate(SearchInformation info) {
-    
-		switch (validateInfo(info)) {
-		case QUERY_EMPTY:
-			return false;
-		case QUERY_TOO_SHORT:
-			GUIMediator.showError(I18n.tr("Your search must be at least three characters to avoid congesting the network."));
-			return false;
-		case QUERY_TOO_LONG:
-			String xml = info.getXML();
-			if (xml == null || xml.length() == 0) {
-				GUIMediator.showError(I18n.tr("Your search is too long. Please make your search smaller and try again."));
-			}
-			else {
-				GUIMediator.showError(I18n.tr("Your search is too specific. Please make your search smaller and try again."));
-			}
-			return false;
-		case QUERY_XML_TOO_LONG:
-            GUIMediator.showError(I18n.tr("Your search is too specific. Please make your search smaller and try again."));
-			return false;
-		case QUERY_VALID:
-		default:
-			boolean searchingTorrents = info.getMediaType().equals(MediaType.getTorrentMediaType());
-			boolean gnutellaStarted = GuiCoreMediator.getLifecycleManager().isStarted();
-			boolean azureusStarted = AzureusStarter.getAzureusCore().isStarted();			
-			
-            if((searchingTorrents && !azureusStarted) ||
-            	(!searchingTorrents && !gnutellaStarted)) {
+        switch (validateInfo(info)) {
+        case QUERY_EMPTY:
+            return false;
+        case QUERY_TOO_SHORT:
+            GUIMediator.showMessage(I18n.tr("Your search must be at least three characters to avoid congesting the network."));
+            return false;
+        case QUERY_TOO_LONG:
+            GUIMediator.showMessage(I18n.tr("Your search is too long. Please make your search smaller and try again."));
+            return false;
+        case QUERY_VALID:
+        default:
+            boolean searchingTorrents = info.getMediaType().equals(MediaType.getTorrentMediaType());
+            boolean gnutellaStarted = GuiCoreMediator.getLifecycleManager().isStarted();
+            boolean azureusStarted = AzureusStarter.getAzureusCore().isStarted();
+
+            if ((searchingTorrents && !azureusStarted) || (!searchingTorrents && !gnutellaStarted)) {
                 GUIMediator.showMessage(I18n.tr("Please wait, FrostWire must finish loading before a search can be started."));
                 return false;
             }
-            
-	        
-			return true;
-		}
+
+            return true;
+        }
     }
-	
-	
-	/**
-	 * Validates the a search info and returns {@link #QUERY_VALID} if it is
-	 * valid.
-	 * @param info
-	 * @return one of the static <code>QUERY*</code> fields
-	 */
-	public static int validateInfo(SearchInformation info) {
-		
-	    String query = I18NConvert.instance().getNorm(info.getQuery());
-	    String xml = info.getXML();
-        
-		if (query.length() == 0) {
-			return QUERY_EMPTY;
-		} else if (query.length() <= 2 && !(query.length() == 2 && 
-				((Character.isDigit(query.charAt(0)) && 
-						Character.isLetter(query.charAt(1)))   ||
-						(Character.isLetter(query.charAt(0)) && 
-								Character.isDigit(query.charAt(1)))))) {
-			return QUERY_TOO_SHORT;
-		} else if (query.length() > SearchSettings.MAX_QUERY_LENGTH.getValue()) {
-			return QUERY_TOO_LONG;
-		} else if (xml != null &&  xml.length() > SearchSettings.MAX_XML_QUERY_LENGTH.getValue()) {
-			return QUERY_XML_TOO_LONG;
-		} else if (StringUtils.containsCharacters(query,SearchSettings.ILLEGAL_CHARS.getValue())) {
-            return QUERY_INVALID_CHARACTERS;
-		} else {
-		    return QUERY_VALID;
-		}
-	}
-    
+
+    /**
+     * Validates the a search info and returns {@link #QUERY_VALID} if it is
+     * valid.
+     * @param info
+     * @return one of the static <code>QUERY*</code> fields
+     */
+    public static int validateInfo(SearchInformation info) {
+
+        String query = I18NConvert.instance().getNorm(info.getQuery());
+
+        if (query.length() == 0) {
+            return QUERY_EMPTY;
+        } else if (query.length() <= 2 && !(query.length() == 2 && ((Character.isDigit(query.charAt(0)) && Character.isLetter(query.charAt(1))) || (Character.isLetter(query.charAt(0)) && Character.isDigit(query.charAt(1)))))) {
+            return QUERY_TOO_SHORT;
+        } else if (query.length() > SearchSettings.MAX_QUERY_LENGTH.getValue()) {
+            return QUERY_TOO_LONG;
+        } else {
+            return QUERY_VALID;
+        }
+    }
+
     /**
      * Does the actual search.
      * 
@@ -282,14 +255,14 @@ public final class SearchMediator {
      */
     private static void doSearch(final byte[] guid, final SearchInformation info) {
         final String query = info.getQuery();
-        
+
         List<SearchEngine> searchEngines = SearchEngine.getSearchEngines();
-        
+
         for (final SearchEngine searchEngine : searchEngines) {
             if (searchEngine.isEnabled()) {
                 Thread t = new Thread(new Runnable() {
                     public void run() {
-        
+
                         final SearchResultMediator rp = getResultPanelForGUID(new GUID(guid));
                         if (rp != null && !rp.isStopped()) {
                             rp.incrementSearchCount();
@@ -325,13 +298,13 @@ public final class SearchMediator {
                 t.start();
             }
         }
-        
+
         //start local search.
         doLocalSearch(guid, query, info);
     }
 
-	public static void doLocalSearch(final byte[] guid, final String query, final SearchInformation info) {
-		Thread t = new Thread(new Runnable() {
+    public static void doLocalSearch(final byte[] guid, final String query, final SearchInformation info) {
+        Thread t = new Thread(new Runnable() {
             public void run() {
 
                 final SearchResultMediator rp = getResultPanelForGUID(new GUID(guid));
@@ -360,16 +333,16 @@ public final class SearchMediator {
                                 }
                             }
                         });
-                    }  
+                    }
                 }
-                
+
                 LocalSearchEngine.instance().deepSearch(guid, query, info);
             }
         });
-		t.setDaemon(true);
-		t.start();
-	}
-    
+        t.setDaemon(true);
+        t.start();
+    }
+
     private static List<SearchResult> normalizeWebResults(List<WebSearchResult> webResults, SearchEngine engine, SearchInformation info) {
 
         List<SearchResult> result = new ArrayList<SearchResult>();
@@ -377,7 +350,7 @@ public final class SearchMediator {
         for (WebSearchResult webResult : webResults) {
 
             SearchResult sr = null;
-            
+
             if (webResult instanceof YouTubeSearchResult) {
                 sr = new YouTubePackageSearchResult((YouTubeSearchResult) webResult, engine, info);
             } else {
@@ -389,16 +362,15 @@ public final class SearchMediator {
 
         return result;
     }
-    
+
     /**
      * Adds a single result tab for the specified GUID, type,
      * standard query string, and XML query string.
      */
-    private static SearchResultMediator addResultTab(GUID guid,
-                                            SearchInformation info) {
+    private static SearchResultMediator addResultTab(GUID guid, SearchInformation info) {
         return getSearchResultDisplayer().addResultTab(guid, info);
     }
-    
+
     /**
      * Downloads all the selected table lines from the given result panel.
      */
@@ -415,50 +387,45 @@ public final class SearchMediator {
         final SearchResultDataLine[] lines = rp.getAllSelectedLines();
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                SearchMediator.downloadAll(lines, new GUID(rp.getGUID()),
-                                           rp.getSearchInformation());
+                SearchMediator.downloadAll(lines, new GUID(rp.getGUID()), rp.getSearchInformation());
                 rp.refresh();
             }
         });
     }
-	
-	/**
-	 * Opens a dialog where you can specify the download directory and final
-	 * filename for the selected file.
-	 * @param panel
-	 * @throws IllegalStateException when there is more than one file selected
-	 * for download or there is no file selected.
-	 */
-	static void doDownloadAs(final SearchResultMediator panel) {
-		final SearchResultDataLine[] lines = panel.getAllSelectedLines();
-		if (lines.length != 1) {
-			throw new IllegalStateException("There should only be one search result selected: " + lines.length);
-		}
-		downloadLine(lines[0], new GUID(panel.getGUID()), null, null, true,
-                     panel.getSearchInformation());
-	}
-	
-	public static void showTorrentDetails(SearchResultMediator panel, long delay) {
-		final SearchResultDataLine[] lines = panel.getAllSelectedLines();
-		if (lines.length != 1) {
-			throw new IllegalStateException("There should only be one search result selected: " + lines.length);
-		}
-		
-		SearchResult searchResult = lines[0].getSearchResult();
-		searchResult.showTorrentDetails(delay);
-	}
 
+    /**
+     * Opens a dialog where you can specify the download directory and final
+     * filename for the selected file.
+     * @param panel
+     * @throws IllegalStateException when there is more than one file selected
+     * for download or there is no file selected.
+     */
+    static void doDownloadAs(final SearchResultMediator panel) {
+        final SearchResultDataLine[] lines = panel.getAllSelectedLines();
+        if (lines.length != 1) {
+            throw new IllegalStateException("There should only be one search result selected: " + lines.length);
+        }
+        downloadLine(lines[0], new GUID(panel.getGUID()), null, null, true, panel.getSearchInformation());
+    }
+
+    public static void showTorrentDetails(SearchResultMediator panel, long delay) {
+        final SearchResultDataLine[] lines = panel.getAllSelectedLines();
+        if (lines.length != 1) {
+            throw new IllegalStateException("There should only be one search result selected: " + lines.length);
+        }
+
+        SearchResult searchResult = lines[0].getSearchResult();
+        searchResult.showTorrentDetails(delay);
+    }
 
     /**
      * Downloads all the selected lines.
      */
-    private static void downloadAll(SearchResultDataLine[] lines, GUID guid, 
-                                    SearchInformation searchInfo) 
-    {
-        for(int i = 0; i < lines.length; i++)
+    private static void downloadAll(SearchResultDataLine[] lines, GUID guid, SearchInformation searchInfo) {
+        for (int i = 0; i < lines.length; i++)
             downloadLine(lines[i], guid, null, null, false, searchInfo);
     }
-    
+
     /**
      * Downloads the given TableLine.
      * @param line
@@ -469,15 +436,12 @@ public final class SearchMediator {
      * <code>null</code>
      * @param searchInfo The query used to find the file being downloaded.
      */
-    private static void downloadLine(SearchResultDataLine line, GUID guid, File saveDir,
-            String fileName, boolean saveAs, SearchInformation searchInfo) 
-    {
+    private static void downloadLine(SearchResultDataLine line, GUID guid, File saveDir, String fileName, boolean saveAs, SearchInformation searchInfo) {
         if (line == null)
             throw new NullPointerException("Tried to download null line");
-        
-        line.takeAction(line, guid, saveDir, fileName, saveAs, searchInfo);
-    }    
 
+        line.takeAction(line, guid, saveDir, fileName, saveAs, searchInfo);
+    }
 
     ////////////////////////// Other Controls ///////////////////////////
 
@@ -498,14 +462,14 @@ public final class SearchMediator {
     static void killSearch() {
         getSearchResultDisplayer().killSearch();
     }
-    
+
     /**
      * Notification that a given ResultPanel has been selected
      */
     static void panelSelected(SearchResultMediator panel) {
         //getSearchInputManager().setFiltersFor(panel);
     }
-    
+
     /**
      * Notification that a search has been killed.
      */
@@ -513,19 +477,19 @@ public final class SearchMediator {
         getSearchInputManager().panelRemoved(panel);
         SearchResultMediator rp = getSearchResultDisplayer().getSelectedResultPanel();
         if (rp != null) {
-           // getSearchInputManager().setFiltersFor(rp);
+            // getSearchInputManager().setFiltersFor(rp);
         }
 
         panel.cleanup();
     }
-    
+
     /**
      * Checks to see if the spinning lime should be stopped.
      */
     static void checkToStopLime() {
         getSearchResultDisplayer().checkToStopLime();
     }
-    
+
     /**
      * Returns the <tt>ResultPanel</tt> for the specified GUID.
      * 
@@ -536,7 +500,7 @@ public final class SearchMediator {
     static SearchResultMediator getResultPanelForGUID(GUID rguid) {
         return getSearchResultDisplayer().getResultPanelForGUID(rguid);
     }
-    
+
     /**
      * Returns the search input panel component.
      *
@@ -557,26 +521,25 @@ public final class SearchMediator {
         return getSearchResultDisplayer().getComponent();
     }
 
-	private static SearchInputManager getSearchInputManager() {
-	    if (INPUT_MANAGER == null) {
-	        INPUT_MANAGER = new SearchInputManager();
-	    }
-	    return INPUT_MANAGER;
-	}
-	
-	public static SearchResultDisplayer getSearchResultDisplayer() {
-	    if (RESULT_DISPLAYER == null) {
-	        RESULT_DISPLAYER = new SearchResultDisplayer();
-	    }
-	    return RESULT_DISPLAYER;
-	}
-	
-	public static SearchFilterFactory getSearchFilterFactory() {
-	    if (SEARCH_FILTER_FACTORY == null) {
-	        SEARCH_FILTER_FACTORY = new SearchFilterFactoryImpl();
-	    }
-	    return SEARCH_FILTER_FACTORY;
-	}
+    private static SearchInputManager getSearchInputManager() {
+        if (INPUT_MANAGER == null) {
+            INPUT_MANAGER = new SearchInputManager();
+        }
+        return INPUT_MANAGER;
+    }
+
+    public static SearchResultDisplayer getSearchResultDisplayer() {
+        if (RESULT_DISPLAYER == null) {
+            RESULT_DISPLAYER = new SearchResultDisplayer();
+        }
+        return RESULT_DISPLAYER;
+    }
+
+    public static SearchFilterFactory getSearchFilterFactory() {
+        if (SEARCH_FILTER_FACTORY == null) {
+            SEARCH_FILTER_FACTORY = new SearchFilterFactoryImpl();
+        }
+        return SEARCH_FILTER_FACTORY;
+    }
 
 }
-
