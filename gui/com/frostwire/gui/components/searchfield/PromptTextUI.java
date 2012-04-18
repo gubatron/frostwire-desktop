@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 import java.awt.TextComponent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.MouseEvent;
 import java.lang.reflect.Method;
 
 import javax.accessibility.Accessible;
@@ -24,6 +25,9 @@ import javax.swing.text.Position;
 import javax.swing.text.Position.Bias;
 import javax.swing.text.View;
 
+import org.pushingpixels.substance.internal.animation.StateTransitionTracker;
+import org.pushingpixels.substance.internal.animation.TransitionAwareUI;
+
 import com.frostwire.gui.components.searchfield.PromptSupport.FocusBehavior;
 
 /**
@@ -39,7 +43,7 @@ import com.frostwire.gui.components.searchfield.PromptSupport.FocusBehavior;
  * @author Peter Weishapl <petw@gmx.net>
  * 
  */
-public abstract class PromptTextUI extends TextUI {
+public abstract class PromptTextUI extends TextUI implements TransitionAwareUI {
 	static final FocusHandler focusHandler = new FocusHandler();
 
 	/**
@@ -327,4 +331,22 @@ public abstract class PromptTextUI extends TextUI {
 			e.getComponent().repaint();
 		}
 	}
+	
+    @Override
+    public boolean isInside(MouseEvent me) {
+        if (delegate instanceof TransitionAwareUI) {
+            return ((TransitionAwareUI) delegate).isInside(me);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public StateTransitionTracker getTransitionTracker() {
+        if (delegate instanceof TransitionAwareUI) {
+            return ((TransitionAwareUI) delegate).getTransitionTracker();
+        } else {
+            return null;
+        }
+    }
 }

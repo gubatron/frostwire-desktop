@@ -92,7 +92,10 @@ public class SearchFieldUI extends BuddyTextFieldUI {
 	@Override
 	protected BuddyLayoutAndBorder createBuddyLayoutAndBorder() {
 		return new BuddyLayoutAndBorder() {
-			/**
+			
+		    private static final long serialVersionUID = 2126978772989855919L;
+
+            /**
 			 * This does nothing, if the search field is rendered natively on
 			 * Leopard.
 			 */

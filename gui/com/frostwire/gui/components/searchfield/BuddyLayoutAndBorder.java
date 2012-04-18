@@ -13,13 +13,17 @@ import java.beans.PropertyChangeListener;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
 import javax.swing.plaf.UIResource;
 import javax.swing.plaf.basic.BasicBorders.MarginBorder;
 
 import com.frostwire.gui.components.searchfield.BuddySupport.Position;
 
-public class BuddyLayoutAndBorder implements LayoutManager, Border, PropertyChangeListener, UIResource {
-	private JTextField textField;
+public class BuddyLayoutAndBorder extends CompoundBorder implements LayoutManager, Border, PropertyChangeListener, UIResource {
+	
+    private static final long serialVersionUID = 2275551286621857718L;
+
+    private JTextField textField;
 
 	private Border borderDelegate;
 
@@ -257,5 +261,10 @@ public class BuddyLayoutAndBorder implements LayoutManager, Border, PropertyChan
 	@Override
 	public String toString() {
 		return String.format("%s (%s): %s", getClass().getName(), getBorderInsets(null), borderDelegate);
+	}
+	
+	@Override
+	public Border getInsideBorder() {
+	    return borderDelegate;
 	}
 }
