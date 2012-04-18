@@ -13,6 +13,7 @@ import java.util.prefs.Preferences;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -315,13 +316,12 @@ public class RecentSearches implements ActionListener {
 			setVisible(false);
 			removeAll();
 
-			/*
 			if (recentSearches.getLength() == 0) {
-				JMenuItem noRecent = new JMenuItem(UIManagerExt.getString("SearchField.noRecentsText"));
+				JMenuItem noRecent = new JMenuItem(UIManager.getString("SearchField.noRecentsText"));
 				noRecent.setEnabled(false);
 				add(noRecent);
 			} else {
-				JMenuItem recent = new JMenuItem(UIManagerExt.getString("SearchField.recentsMenuTitle"));
+				JMenuItem recent = new JMenuItem(UIManager.getString("SearchField.recentsMenuTitle"));
 				recent.setEnabled(false);
 				add(recent);
 
@@ -332,11 +332,10 @@ public class RecentSearches implements ActionListener {
 				}
 
 				addSeparator();
-				clear = new JMenuItem(UIManagerExt.getString("SearchField.clearRecentsText"));
+				clear = new JMenuItem(UIManager.getString("SearchField.clearRecentsText"));
 				clear.addActionListener(this);
 				add(clear);
 			}
-			*/
 		}
 
 		/**
