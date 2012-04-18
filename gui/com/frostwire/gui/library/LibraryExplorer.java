@@ -176,6 +176,7 @@ public class LibraryExplorer extends AbstractLibraryListPanel {
         }
 
         LibraryMediator.instance().getLibrarySearch().clear();
+        LibraryMediator.instance().getLibrarySearch().setSearchPrompt(node.toString());
     }
 
     protected void setupUI() {
