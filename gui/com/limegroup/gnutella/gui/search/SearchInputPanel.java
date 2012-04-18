@@ -31,7 +31,7 @@ import javax.swing.text.BadLocationException;
 import org.jdesktop.swingx.JXCollapsiblePane;
 import org.limewire.setting.BooleanSetting;
 
-import com.frostwire.gui.components.GoogleIconSearchField;
+import com.frostwire.gui.components.GoogleSearchField;
 import com.frostwire.gui.filters.TableLineFilter;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.BoxPanel;
@@ -58,7 +58,7 @@ class SearchInputPanel extends JPanel {
     /**
      * The sole input text field that is at the top of all searches.
      */
-    private final GoogleIconSearchField SEARCH_FIELD = new GoogleIconSearchField();
+    private final GoogleSearchField SEARCH_FIELD = new GoogleSearchField();
 
     /**
      * The box that holds the schemas for searching.
@@ -84,21 +84,12 @@ class SearchInputPanel extends JPanel {
         final ActionListener schemaListener = new SchemaListener();
 
         SEARCH_FIELD.addActionListener(SEARCH_LISTENER);
-        SEARCH_FIELD.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                SEARCH_LISTENER.actionPerformed(null);
-            }
-        });
         
         createDefaultSearchPanel();
         
         setBorder(BorderFactory.createEmptyBorder(0, 3, 5, 2));
-        //panelize(searchEntry);
 
         schemaListener.actionPerformed(null);
-        
-        //add(GUIMediator.getVerticalSeparator());
     }
 
     void requestSearchFocusImmediately() {
@@ -147,6 +138,7 @@ class SearchInputPanel extends JPanel {
         setLayout(new BoxLayout(this, BoxPanel.Y_AXIS));        
         add(SCHEMA_BOX);
         add(Box.createVerticalStrut(3));
+        SEARCH_FIELD.setMinimumSize(new Dimension(100, 27));
         add(SEARCH_FIELD);
         add(Box.createVerticalStrut(5));
         add(createSearchButtonPanel());

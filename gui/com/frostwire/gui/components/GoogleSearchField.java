@@ -23,7 +23,7 @@ import com.frostwire.HttpFetcher;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 
-public class GoogleIconSearchField extends SearchField {
+public class GoogleSearchField extends SearchField {
 
     private static final long serialVersionUID = -7677894485818144062L;
 
@@ -32,7 +32,7 @@ public class GoogleIconSearchField extends SearchField {
 
     private SuggestionsThread suggestionsThread;
 
-    public GoogleIconSearchField() {
+    public GoogleSearchField() {
         this.dict = createDefaultDictionary();
 
         setPrompt(I18n.tr("Hints by Google"));
@@ -87,11 +87,11 @@ public class GoogleIconSearchField extends SearchField {
     private static final class SuggestionsThread extends Thread {
 
         private final String constraint;
-        private final GoogleIconSearchField input;
+        private final GoogleSearchField input;
 
         private boolean cancelled;
 
-        public SuggestionsThread(String constraint, GoogleIconSearchField input) {
+        public SuggestionsThread(String constraint, GoogleSearchField input) {
             this.constraint = constraint;
             this.input = input;
             this.setName("SuggestionsThread: " + constraint);
