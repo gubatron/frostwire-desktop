@@ -18,7 +18,6 @@ import com.limegroup.gnutella.gui.themes.ThemeObserver;
  * <tt>OptionsTreeManager</tt> and <tt>OptionsPaneManager</tt>, the two
  * primary classes that it delegates to.
  */
-//2345678|012345678|012345678|012345678|012345678|012345678|012345678|012345678|
 public final class OptionsMediator implements ThemeObserver {
 
 	/**

@@ -1,6 +1,5 @@
 package com.limegroup.gnutella.gui.options;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.util.Enumeration;
@@ -14,7 +13,6 @@ import org.limewire.util.I18NConvert;
 import org.limewire.util.StringUtils;
 
 import com.limegroup.gnutella.gui.trees.FilteredTreeModel;
-import com.limegroup.gnutella.gui.trees.LimeTreeCellRenderer;
 
 /**
  * Manages the <code>JTree</code> instance of the the options window.  This
@@ -54,17 +52,17 @@ final class OptionsTreeManager {
 		TREE.setEditable(false);
 		TREE.setShowsRootHandles(true);	
 		TREE.setRootVisible(false);
-		TREE.putClientProperty("JTree.lineStyle", "None");
+		//TREE.putClientProperty("JTree.lineStyle", "None");
 		TREE.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);	
 		TREE.addTreeSelectionListener(new OptionsTreeSelectionListener(TREE));
-        TREE.setCellRenderer(new LimeTreeCellRenderer());
+        //TREE.setCellRenderer(new LimeTreeCellRenderer());
                 
 		TREE.setModel(FILTERED_TREE_MODEL);
 
 		SCROLL_PANE = new JScrollPane(TREE);
-		SCROLL_PANE.getViewport().setBackground(Color.white);
-		SCROLL_PANE.setPreferredSize(new Dimension(125, 2000));
-		SCROLL_PANE.setMinimumSize(new Dimension(125, 300));
+		//SCROLL_PANE.getViewport().setBackground(Color.white);
+		SCROLL_PANE.setPreferredSize(new Dimension(150, 2000));
+		SCROLL_PANE.setMinimumSize(new Dimension(150, 300));
 	}
 
 	/**

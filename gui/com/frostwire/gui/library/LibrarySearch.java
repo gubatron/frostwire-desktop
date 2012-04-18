@@ -17,8 +17,8 @@
  */
 package com.frostwire.gui.library;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -129,17 +129,14 @@ public class LibrarySearch extends JPanel {
     }
 
     protected void setupUI() {
-        setLayout(new GridBagLayout());
-        setBorder(BorderFactory.createEmptyBorder(2, 2, 4, 2));
-
-        GridBagConstraints c;
+        setLayout(new BorderLayout());
+        setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        setMinimumSize(new Dimension(200, 20));
+        setPreferredSize(new Dimension(200, 20));
 
         statusLabel = new JLabel();
-        c = new GridBagConstraints();
-        c.anchor = GridBagConstraints.LINE_START;
-        c.gridwidth = GridBagConstraints.RELATIVE;
-        c.weightx = 1;
-        add(statusLabel, c);
+        statusLabel.setBorder(BorderFactory.createEmptyBorder(5, 10, 0, 0));
+        add(statusLabel, BorderLayout.CENTER);
 
         searchField = new SearchField();
         searchField.setSearchMode(SearchMode.INSTANT);
@@ -157,28 +154,6 @@ public class LibrarySearch extends JPanel {
                 }
             }
         });
-
-        /*
-        searchField.addKeyListener(new KeyAdapter() {
-            private Action a = new SearchLibraryAction();
-
-            private long lastSearch;
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                if (searchField.getText().length() == 0 && (e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_DELETE)) {
-                    lastSearch = 0;
-                    searchField.setText(".");
-                    a.actionPerformed(null);
-                    searchField.setText("");
-                }
-
-                if (System.currentTimeMillis() - lastSearch > 50) {
-                    a.actionPerformed(null);
-                    lastSearch = System.currentTimeMillis();
-                }
-            }
-        });*/
 
         searchField.addFocusListener(new FocusListener() {
 

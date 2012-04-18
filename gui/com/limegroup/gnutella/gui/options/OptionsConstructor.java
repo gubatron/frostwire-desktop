@@ -1,11 +1,11 @@
 package com.limegroup.gnutella.gui.options;
 
-import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -16,52 +16,48 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
-import javax.swing.JTextField;
-import javax.swing.UIManager;
 import javax.swing.WindowConstants;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 import org.limewire.setting.IntSetting;
 import org.limewire.setting.SettingsGroupManager;
 import org.limewire.util.OSUtils;
 
+import com.frostwire.gui.components.SearchField;
 import com.limegroup.gnutella.gui.BoxPanel;
 import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
-import com.limegroup.gnutella.gui.IconTextField;
 import com.limegroup.gnutella.gui.PaddedPanel;
 import com.limegroup.gnutella.gui.options.panes.AbstractPaneItem;
 import com.limegroup.gnutella.gui.options.panes.AssociationPreferencePaneItem;
 import com.limegroup.gnutella.gui.options.panes.AudioPlayerPaneItem;
 import com.limegroup.gnutella.gui.options.panes.AutoCompletePaneItem;
 import com.limegroup.gnutella.gui.options.panes.AutomaticInstallerDownloadPaneItem;
-import com.limegroup.gnutella.gui.options.panes.LibraryFoldersPaneItem;
-import com.limegroup.gnutella.gui.options.panes.ShutdownPaneItem;
-import com.limegroup.gnutella.gui.options.panes.SmartSearchDBPaneItem;
-import com.limegroup.gnutella.gui.options.panes.TorrentGlobalSpeedPaneItem;
-import com.limegroup.gnutella.gui.options.panes.TorrentConnectionPaneItem;
-import com.limegroup.gnutella.gui.options.panes.TorrentDetailsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.BrowserPaneItem;
 import com.limegroup.gnutella.gui.options.panes.BugsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ChatCommunityPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ForceIPPaneItem;
 import com.limegroup.gnutella.gui.options.panes.IgnoreResultsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ImageViewerPaneItem;
+import com.limegroup.gnutella.gui.options.panes.LibraryFoldersPaneItem;
+import com.limegroup.gnutella.gui.options.panes.LibraryInternetRadioPaneItem;
 import com.limegroup.gnutella.gui.options.panes.MaximumSearchesPaneItem;
 import com.limegroup.gnutella.gui.options.panes.NetworkInterfacePaneItem;
 import com.limegroup.gnutella.gui.options.panes.NotificationsPaneItem;
-import com.limegroup.gnutella.gui.options.panes.LibraryInternetRadioPaneItem;
 import com.limegroup.gnutella.gui.options.panes.PopupsPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ProxyLoginPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ProxyPaneItem;
 import com.limegroup.gnutella.gui.options.panes.ShowPromoOverlaysPaneItem;
+import com.limegroup.gnutella.gui.options.panes.ShutdownPaneItem;
+import com.limegroup.gnutella.gui.options.panes.SmartSearchDBPaneItem;
 import com.limegroup.gnutella.gui.options.panes.StartupPaneItem;
 import com.limegroup.gnutella.gui.options.panes.StatusBarBandwidthPaneItem;
 import com.limegroup.gnutella.gui.options.panes.StatusBarConnectionQualityPaneItem;
 import com.limegroup.gnutella.gui.options.panes.StatusBarFirewallPaneItem;
+import com.limegroup.gnutella.gui.options.panes.TorrentConnectionPaneItem;
+import com.limegroup.gnutella.gui.options.panes.TorrentDetailsPaneItem;
+import com.limegroup.gnutella.gui.options.panes.TorrentGlobalSpeedPaneItem;
 import com.limegroup.gnutella.gui.options.panes.TorrentSaveFolderPaneItem;
 import com.limegroup.gnutella.gui.options.panes.TorrentSeedingSettingPaneItem;
 import com.limegroup.gnutella.gui.options.panes.VideoPlayerPaneItem;
@@ -101,7 +97,7 @@ public final class OptionsConstructor {
 	 */
 	private final OptionsPaneManager PANE_MANAGER;
 
-	private final JTextField filterTextField;
+	private final SearchField filterTextField;
 
 	static final String SAVE_KEY           = "OPTIONS_SAVE_MAIN_TITLE";
 	static final String SAVE_BASIC_KEY     = "OPTIONS_SAVE_BASIC_MAIN_TITLE";
@@ -224,36 +220,16 @@ public final class OptionsConstructor {
 		treePanel.add(filterPanel);
 		
 		
-		IconTextField iconTextField = new IconTextField(GUIMediator.getThemeImage("browse_host_generic"), 10);
-		filterTextField = iconTextField.getTextField();
-		
-        // set text before adding the document listener
-        filterTextField.setText(I18n.tr("Search here"));
-        filterTextField.getDocument().addDocumentListener(new DocumentListener() {
-			public void changedUpdate(DocumentEvent event) {
-				filter();
-			}
-			public void insertUpdate(DocumentEvent e) {
-				filter();
-			}
-			public void removeUpdate(DocumentEvent e) {
-				filter();
-			}
-		});
-        filterTextField.setForeground(Color.lightGray);
-        filterTextField.addFocusListener(new FocusAdapter() {
-            private boolean initialized = false;
+		filterTextField = new SearchField();
+		filterTextField.setPrompt(I18n.tr("Search here"));
+		filterTextField.setMinimumSize(new Dimension(100, 27));
+		filterTextField.addActionListener(new ActionListener() {
             @Override
-            public void focusGained(FocusEvent e) {
-                if (initialized) {
-                    return;
-                }
-                filterTextField.setForeground(UIManager.getColor("TextField.foreground"));
-                filterTextField.setText("");
-                initialized = true;
+            public void actionPerformed(ActionEvent e) {
+                filter();
             }
         });
-		filterPanel.add(iconTextField);
+		filterPanel.add(filterTextField);
 
 		filterPanel.add(Box.createHorizontalStrut(2));
 		
