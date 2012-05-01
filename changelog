@@ -1,4 +1,10 @@
 frostwire (5.3.5) stable; urgency=high
+  * Fixes issue with search results from KAT.ph. Now downloads are started
+    using magnet links instead of .torrents.
+
+ -- FrostWire Team <contact@frostwire.com>  Tue, 01 May 2012 18:00:00 -0500
+
+frostwire (5.3.5) stable; urgency=high
   * Drag and drop files and folders to your Android device running FrostWire.
     You can upload files to 3 different devices at the same time.
   * Fixes glitch where the file explorer would reset the split pane position.
