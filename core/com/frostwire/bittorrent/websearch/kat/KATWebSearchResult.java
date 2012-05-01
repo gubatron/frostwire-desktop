@@ -21,6 +21,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import com.frostwire.bittorrent.websearch.WebSearchResult;
+import com.limegroup.gnutella.util.UrlUtils;
 
 public class KATWebSearchResult implements WebSearchResult {
     
@@ -55,7 +56,12 @@ public class KATWebSearchResult implements WebSearchResult {
     }
     
     public String getTorrentURI() {
-        return _item.torrentLink;
+        //KAT is no longer allowing torrent hot-linking, thus making the network more de-centralized.
+        //Go magnets.
+        return "magnet:?xt=urn:btih:" +
+                   getHash() +
+                   "&dn="+UrlUtils.encode(getFileName()) + 
+                   "&tr=http%3A%2F%2Ftracker.publicbt.com%2Fannounce";
     }
 
     public long getSize() {
