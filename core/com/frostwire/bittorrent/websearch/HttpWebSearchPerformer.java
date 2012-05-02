@@ -50,7 +50,7 @@ public abstract class HttpWebSearchPerformer implements WebSearchPerformer {
         
         //System.out.println(html);
         
-        int max = getMax();
+        int max = getMaxResults();
         
         int i = 0;
         
@@ -78,7 +78,7 @@ public abstract class HttpWebSearchPerformer implements WebSearchPerformer {
     /** This function must return the regex necessary for a pattern matcher to find the necessary fields of a SearchResult*/
     protected abstract String getRegex();
     
-    protected int getMax() {
+    protected int getMaxResults() {
         return Integer.MAX_VALUE;
     }
 }
