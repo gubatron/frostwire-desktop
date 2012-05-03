@@ -12,6 +12,8 @@ import javax.swing.Action;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.limewire.util.OSUtils;
+
 import com.limegroup.gnutella.gui.ButtonRow;
 import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.I18n;
@@ -87,6 +89,12 @@ public class TorrentSaveFolderComponent extends JPanel {
     			errorMessage = I18n.tr("Please enter a valid path for the Torrent Data Folder");
     			return false;
     		}
+	    }
+	    String lowerCaseFolderPath = folder.getAbsolutePath().toLowerCase();
+	    
+	    //avoid user stupidity, do not save files anywhere in program files.
+	    if (OSUtils.isWindows() && lowerCaseFolderPath.contains(System.getenv("ProgramFiles").toLowerCase())) {
+	        return false;
 	    }
 		
 		return true;
