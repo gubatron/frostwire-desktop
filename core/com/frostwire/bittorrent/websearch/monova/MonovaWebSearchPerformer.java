@@ -50,8 +50,8 @@ public class MonovaWebSearchPerformer extends HttpWebSearchPerformer {
     }
     
     @Override
-    protected int getMax() {
-        return SearchEnginesSettings.MONOVA_WEBSEARCHPERFORMER_MAX.getValue();
+    protected int getMaxResults() {
+        return SearchEnginesSettings.MONOVA_WEBSEARCHPERFORMER_MAX_RESULTS.getValue();
     }
 
     private String fetchTorrentPage(String torrentUrl) {
