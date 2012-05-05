@@ -264,7 +264,7 @@ public class SearchResultMediator extends AbstractTableMediator<TableRowFiltered
     
     @Override
     protected void setupDragAndDrop() {
-    	TABLE.setDragEnabled(true);
+        TABLE.setDragEnabled(true);
         TABLE.setTransferHandler(new MulticastTransferHandler(new ResultPanelTransferHandler(this), DNDUtils.DEFAULT_TRANSFER_HANDLERS));
     }
     

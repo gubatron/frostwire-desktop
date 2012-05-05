@@ -435,6 +435,19 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         //    	}
         return transfers.toArray(new FileTransfer[transfers.size()]);
     }
+    
+    public BTDownload[] getSelectedBTDownloads() {
+        int[] sel  = TABLE.getSelectedRows();
+        ArrayList<BTDownload> btdownloadList = new ArrayList<BTDownload>(sel.length);
+        for (int i = 0; i < sel.length; i++) {
+            BTDownloadDataLine btDownloadDataLine = DATA_MODEL.get(sel[i]);
+            if (btDownloadDataLine.getInitializeObject().isCompleted()) {
+                btdownloadList.add(btDownloadDataLine.getInitializeObject());
+            }
+        }
+        return btdownloadList.toArray(new BTDownload[btdownloadList.size()]);
+    }
+    
 
     /**
      * Forces the selected downloads in the download window to resume.

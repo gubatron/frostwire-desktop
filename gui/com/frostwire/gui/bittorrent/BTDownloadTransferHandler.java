@@ -3,18 +3,21 @@ package com.frostwire.gui.bittorrent;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JComponent;
 
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.DropInfo;
-import com.limegroup.gnutella.gui.dnd.FileTransfer;
+import com.limegroup.gnutella.gui.dnd.FileTransferable;
 import com.limegroup.gnutella.gui.dnd.LimeTransferHandler;
-import com.limegroup.gnutella.gui.search.SearchResultMediator;
 import com.limegroup.gnutella.gui.search.SearchMediator;
-import com.limegroup.gnutella.gui.search.SearchResultTransferable;
 import com.limegroup.gnutella.gui.search.SearchResultDataLine;
+import com.limegroup.gnutella.gui.search.SearchResultMediator;
+import com.limegroup.gnutella.gui.search.SearchResultTransferable;
 
 class BTDownloadTransferHandler extends LimeTransferHandler {
 
@@ -62,14 +65,39 @@ class BTDownloadTransferHandler extends LimeTransferHandler {
     
     @Override
     protected Transferable createTransferable(JComponent c) {
-    	FileTransfer[] transfers = BTDownloadMediator.instance().getSelectedFileTransfers();
-    	if (transfers.length > 0) { 
-			// TODO dnd we mark the transferable as an internal one so no
-			// internal drops are accepted
-//    		return new CompositeTransferable(new LibraryTableTransferable(new LibraryTableDataLine[0]), 
-//    				new FileTransferable(FileTransferable.EMPTY_FILE_LIST, Arrays.asList(transfers)));
-    	}
-    	return null;
+        BTDownload[] downloads = BTDownloadMediator.instance().getSelectedBTDownloads();
+
+        if (downloads.length > 0) {
+            List<File> filesToDrop = getListOfFilesFromBTDowloads(downloads);
+            return new FileTransferable(filesToDrop);
+        }
+        return null;
     }
-    
+
+    private List<File> getListOfFilesFromBTDowloads(BTDownload[] downloads) {
+        List<File> files = new LinkedList<File>();
+        
+        for (BTDownload download : downloads) {
+            File saveLocation = download.getSaveLocation();
+            addFilesRecursively(files, saveLocation);
+        }
+        return files;
+    }
+
+    /**
+     * TODO: Not sure how this will handle partially downloaded torrents, it'll probably include the incomplete files as well.
+     * @param files
+     * @param saveLocation
+     */
+    private void addFilesRecursively(List<File> files, File saveLocation) {
+        if (saveLocation.isFile()) {
+            files.add(saveLocation);
+            return;
+        } else {
+            File[] listFiles = saveLocation.listFiles();
+            for (File f : listFiles) {
+                addFilesRecursively(files, f);
+            }
+        }        
+    }
 }
