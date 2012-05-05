@@ -20,6 +20,7 @@ import com.frostwire.AzureusStarter;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
 import com.frostwire.gui.filters.TableLineFilter;
 import com.frostwire.gui.library.LibraryUtils;
+import com.frostwire.gui.player.AudioPlayer;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.PaddedPanel;
@@ -512,7 +513,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         boolean pausable = dataLine.getInitializeObject().isPausable();
         boolean resumable = dataLine.getInitializeObject().isResumable();
         boolean isTransferFinished = dataLine.getInitializeObject().isCompleted();
-        boolean hasAudioFiles = LibraryUtils.directoryContainsAudio(dataLine.getInitializeObject().getSaveLocation(),Integer.MAX_VALUE);
+        
+        File saveLocation = dataLine.getInitializeObject().getSaveLocation();
+        boolean hasAudioFiles = LibraryUtils.directoryContainsAudio(saveLocation,Integer.MAX_VALUE) ||
+         (saveLocation.isFile() && AudioPlayer.isPlayableFile(saveLocation));
 
         removeAction.putValue(Action.NAME, I18n.tr("Cancel Download"));
         removeAction.putValue(LimeAction.SHORT_NAME, I18n.tr("Cancel"));
