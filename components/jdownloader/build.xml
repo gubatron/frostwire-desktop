@@ -14,6 +14,7 @@
 			<src-classpath>
 				<pathelement location="${limewire.lib.jars}/commons-logging.jar"/>
 			    <path refid="build.limewire.components.common.buildpath"/>
+			    <path refid="build.limewire.components.medialib.buildpath"/>
 			</src-classpath>
         </do.setup-properties>
     </target>
