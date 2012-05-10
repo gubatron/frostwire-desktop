@@ -194,7 +194,7 @@ public class SlideshowPanel extends JPanel {
 
         if (_slides.size() == 1) {
             try {
-                ImageCache.getInstance().getImage(new URL(_slides.get(0).imageSrc), new OnLoadedListener() {
+                ImageCache.instance().getImage(new URL(_slides.get(0).imageSrc), new OnLoadedListener() {
                     public void onLoaded(URL url, BufferedImage image, boolean fromCache, boolean fail) {
                         _currentImage = image;
                         repaint();
@@ -230,7 +230,7 @@ public class SlideshowPanel extends JPanel {
             }
             _loadingNextImage = true;
             try {
-                ImageCache.getInstance().getImage(new URL(_slides.get(_currentSlideIndex).imageSrc), new OnLoadedListener() {
+                ImageCache.instance().getImage(new URL(_slides.get(_currentSlideIndex).imageSrc), new OnLoadedListener() {
                     public void onLoaded(URL url, BufferedImage image, boolean fromCache, boolean fail) {
                         _currentImage = image;
                         _loadingNextImage = false;
@@ -249,7 +249,7 @@ public class SlideshowPanel extends JPanel {
             if (forceCurrentIndex) {
                 //Switch Image without 
                 try {
-                    ImageCache.getInstance().getImage(new URL(slide.imageSrc), new OnLoadedListener() {
+                    ImageCache.instance().getImage(new URL(slide.imageSrc), new OnLoadedListener() {
                         public void onLoaded(URL url, BufferedImage image, boolean fromCache, boolean fail) {
                             _currentImage = prepareImage(image);
 
@@ -276,7 +276,7 @@ public class SlideshowPanel extends JPanel {
         if (slide != null) {
             _loadingNextImage = true;
             try {
-                ImageCache.getInstance().getImage(new URL(slide.imageSrc), new OnLoadedListener() {
+                ImageCache.instance().getImage(new URL(slide.imageSrc), new OnLoadedListener() {
                     public void onLoaded(URL url, BufferedImage image, boolean fromCache, boolean fail) {
                         _currentImage = prepareImage(image);
                         if (_lastImage != null && _currentImage != null) {
