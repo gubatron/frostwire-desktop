@@ -10,6 +10,7 @@
 	<classpathentry kind="src" path="components/osx_stub/src/main/java"/>
 	<classpathentry kind="src" path="components/azureus/src/main/java"/>
 	<classpathentry kind="src" path="components/alexandria/src/main/java"/>
+	<classpathentry kind="src" path="components/medialib/src/main/java"/>
 	<classpathentry kind="src" path="components/jdownloader/src/main/java"/>
 	<classpathentry excluding="build.xml" kind="src" path="core">
 		<attributes>

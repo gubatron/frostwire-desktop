@@ -297,6 +297,9 @@ public class Youtube extends PluginForHost {
             if (convertto.equals(DestinationFormat.VIDEOWEBM) || convertto.equals(DestinationFormat.VIDEOMP4) || convertto.equals(DestinationFormat.VIDEO3GP)) {
                 InType = convertto;
             }
+            if (convertto.equals(DestinationFormat.AUDIOAAC)) {
+                InType = DestinationFormat.VIDEOMP4;
+            }
             if (!TbCm.ConvertFile(downloadLink, InType, convertto)) {
                 logger.severe("Video-Convert failed!");
             }
