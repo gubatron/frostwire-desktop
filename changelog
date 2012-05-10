@@ -1,11 +1,14 @@
 frostwire (5.3.6) stable; urgency=high
+  * AAC downloads from YouTube.
+  * Fixes issue where it was hard to select more than one search result for
+    batch downloads.
   * Fixes issue with search results from KAT.ph. Now downloads are started
     using magnet links instead of .torrents.
   * Supports dragging files from transfer manager. 
     Useful to send files to iTunes as soon as transfers are done.
-  * Adds links to Facebook and Google Plus pages.
+  * Adds links to Facebook and Google Plus pages on status bar.
 
- -- FrostWire Team <contact@frostwire.com>  Fri, 04 May 2012 21:49:00 -0500
+ -- FrostWire Team <contact@frostwire.com>  Thu, 10 May 2012 18:49:00 -0500
 
 frostwire (5.3.5) stable; urgency=high
   * Drag and drop files and folders to your Android device running FrostWire.

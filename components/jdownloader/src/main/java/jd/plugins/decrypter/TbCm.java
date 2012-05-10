@@ -421,7 +421,7 @@ public class TbCm extends PluginForDecrypt {
                     // hack to support AAC
                     if (format == 18) {
                         try {
-                            String desc = "(AAC-LQ)";
+                            String desc = "(AAC)";//"(AAC-Low Quality)";
                             if (fast) {
                                 this.addtopos(DestinationFormat.AUDIOAAC, dlLink, 0, desc, format);
                             } else if (this.br.openGetConnection(dlLink).getResponseCode() == 200) {
@@ -439,7 +439,7 @@ public class TbCm extends PluginForDecrypt {
                     if (!addedAACHQ && (format == 22 || format == 37)) {
                         addedAACHQ = true;
                         try {
-                            String desc = "(AAC-HQ)";
+                            String desc = "(AAC-High Quality)";
                             if (fast) {
                                 this.addtopos(DestinationFormat.AUDIOAAC, dlLink, 0, desc, format);
                             } else if (this.br.openGetConnection(dlLink).getResponseCode() == 200) {

@@ -38,6 +38,8 @@ import com.limegroup.gnutella.gui.util.PopupUtils;
 
 public final class YouTubePackageItemSearchResult extends AbstractSearchResult {
 
+    private static final String AAC_LOW_QUALITY = "(AAC)";
+    static final String AAC_HIGH_QUALITY = "(AAC-High Quality)";
     private final YouTubeSearchResult sr;
     private final FilePackage filePackage;
     private final SearchEngine searchEngine;
@@ -61,7 +63,14 @@ public final class YouTubePackageItemSearchResult extends AbstractSearchResult {
 
     @Override
     public String getFilenameNoExtension() {
-        return FilenameUtils.getBaseName(filename);
+        String fname = FilenameUtils.getBaseName(filename);
+        if (fname.indexOf(AAC_HIGH_QUALITY)>0) {
+            return AAC_HIGH_QUALITY + " " + fname.replace(AAC_HIGH_QUALITY, "");
+        } else if (fname.indexOf(AAC_LOW_QUALITY)>0) {
+            return AAC_LOW_QUALITY + " " + fname.replace(AAC_LOW_QUALITY, "");
+        }
+        
+        return fname;
     }
 
     @Override
