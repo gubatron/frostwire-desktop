@@ -315,6 +315,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
         //if (OVERLAY != null)
         // 	OVERLAY.searchPerformed();
 
+        promoSlides.setVisible(false);
         switcher.last(results); //show tabbed results
 
         // If there are lots of tabs, this ensures everything
@@ -520,6 +521,7 @@ public final class SearchResultDisplayer implements ThemeObserver, RefreshListen
 
         if (entries.size() == 0) {
             try {
+                promoSlides.setVisible(true);
                 switcher.first(results); //show dummy table
             } catch (ArrayIndexOutOfBoundsException aioobe) {
                 //happens on jdk1.5 beta w/ windows XP, ignore.
