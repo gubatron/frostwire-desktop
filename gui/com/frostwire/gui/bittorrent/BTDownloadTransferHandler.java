@@ -20,11 +20,10 @@ package com.frostwire.gui.bittorrent;
 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.File;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.JComponent;
 
@@ -101,10 +100,13 @@ final class BTDownloadTransferHandler extends LimeTransferHandler {
     private List<File> getListOfFilesFromBTDowloads(BTDownload[] downloads) {
         List<File> files = new LinkedList<File>();
 
+        Set<File> ignore = TorrentUtil.getIgnorableFiles();
+
         for (BTDownload download : downloads) {
             File saveLocation = download.getSaveLocation();
-            addFilesRecursively(files, saveLocation);
+            addFilesRecursively(files, saveLocation, ignore);
         }
+
         return files;
     }
 
@@ -112,15 +114,17 @@ final class BTDownloadTransferHandler extends LimeTransferHandler {
      * TODO: Not sure how this will handle partially downloaded torrents, it'll probably include the incomplete files as well.
      * @param files
      * @param saveLocation
+     * @param ignore 
      */
-    private void addFilesRecursively(List<File> files, File saveLocation) {
+    private void addFilesRecursively(List<File> files, File saveLocation, Set<File> ignore) {
         if (saveLocation.isFile()) {
-            files.add(saveLocation);
-            return;
-        } else {
+            if (!ignore.contains(saveLocation)) {
+                files.add(saveLocation);
+            }
+        } else if (saveLocation.isDirectory()) {
             File[] listFiles = saveLocation.listFiles();
             for (File f : listFiles) {
-                addFilesRecursively(files, f);
+                addFilesRecursively(files, f, ignore);
             }
         }
     }
