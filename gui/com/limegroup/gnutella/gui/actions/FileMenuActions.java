@@ -26,7 +26,7 @@ import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.IconManager;
 import com.limegroup.gnutella.gui.MultiLineLabel;
-import com.limegroup.gnutella.gui.download.TorrentFileFilter;
+import com.limegroup.gnutella.gui.TorrentFileFilter;
 import com.limegroup.gnutella.gui.search.MagnetClipboardListener;
 
 public class FileMenuActions {

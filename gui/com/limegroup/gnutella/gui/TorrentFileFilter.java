@@ -1,5 +1,5 @@
 
-package com.limegroup.gnutella.gui.download;
+package com.limegroup.gnutella.gui;
 
 import java.io.File;
 
