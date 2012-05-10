@@ -528,8 +528,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         boolean isTransferFinished = dataLine.getInitializeObject().isCompleted();
         
         File saveLocation = dataLine.getInitializeObject().getSaveLocation();
-        boolean hasAudioFiles = LibraryUtils.directoryContainsAudio(saveLocation,Integer.MAX_VALUE) ||
-         (saveLocation.isFile() && AudioPlayer.isPlayableFile(saveLocation));
+        boolean hasAudioFiles = saveLocation != null && (LibraryUtils.directoryContainsAudio(saveLocation, 4) ||
+         (saveLocation.isFile() && AudioPlayer.isPlayableFile(saveLocation)));
 
         removeAction.putValue(Action.NAME, I18n.tr("Cancel Download"));
         removeAction.putValue(LimeAction.SHORT_NAME, I18n.tr("Cancel"));

@@ -53,6 +53,7 @@ import org.gudy.azureus2.core3.util.TrackersUtil;
 import com.aelitis.azureus.core.AzureusCore;
 import com.aelitis.azureus.core.AzureusCoreFactory;
 import com.aelitis.azureus.core.AzureusCoreRunningListener;
+import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.GUIUtils;
 import com.limegroup.gnutella.gui.I18n;
@@ -393,6 +394,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 			_fileChooser = new JFileChooser();
 			_fileChooser.setMultiSelectionEnabled(false);
 			_fileChooser.setApproveButtonText(I18n.tr("Select"));
+			_fileChooser.setSelectedFile(FileChooserHandler.getLastInputDirectory());
 		}
 
 		_fileChooser.setFileSelectionMode(fileSelectionMode);
@@ -404,6 +406,7 @@ public class CreateTorrentDialog extends JDialog implements TOTorrentProgressLis
 		if (result == JFileChooser.APPROVE_OPTION) {
 
 			File chosenFile = _fileChooser.getSelectedFile();
+			FileChooserHandler.setLastInputDirectory(chosenFile);
 
 			setChosenContent(chosenFile);
 

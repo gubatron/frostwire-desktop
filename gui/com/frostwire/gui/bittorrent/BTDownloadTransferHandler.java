@@ -1,14 +1,34 @@
+/*
+ * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
+ * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.frostwire.gui.bittorrent;
 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
-import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.File;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.JComponent;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.limegroup.gnutella.gui.dnd.DNDUtils;
 import com.limegroup.gnutella.gui.dnd.DropInfo;
@@ -19,50 +39,53 @@ import com.limegroup.gnutella.gui.search.SearchResultDataLine;
 import com.limegroup.gnutella.gui.search.SearchResultMediator;
 import com.limegroup.gnutella.gui.search.SearchResultTransferable;
 
-class BTDownloadTransferHandler extends LimeTransferHandler {
+/**
+ * @author gubatron
+ * @author aldenml
+ *
+ */
+final class BTDownloadTransferHandler extends LimeTransferHandler {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 7090230440259575371L;
 
-    BTDownloadTransferHandler() {
+    private static final Log LOG = LogFactory.getLog(BTDownloadTransferHandler.class);
+
+    public BTDownloadTransferHandler() {
         super(COPY);
     }
 
     public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {
         if (DNDUtils.contains(transferFlavors, SearchResultTransferable.dataFlavor)) {
-        	return true;
+            return true;
         }
-    	return DNDUtils.DEFAULT_TRANSFER_HANDLER.canImport(comp, transferFlavors);
+        return DNDUtils.DEFAULT_TRANSFER_HANDLER.canImport(comp, transferFlavors);
     }
-    
+
     @Override
     public boolean canImport(JComponent c, DataFlavor[] flavors, DropInfo ddi) {
-    	return canImport(c, flavors);
+        return canImport(c, flavors);
     }
 
     public boolean importData(JComponent comp, Transferable t) {
         if (DNDUtils.contains(t.getTransferDataFlavors(), SearchResultTransferable.dataFlavor)) {
             try {
-                SearchResultTransferable srt =
-                        (SearchResultTransferable) t.getTransferData(SearchResultTransferable.dataFlavor);
+                SearchResultTransferable srt = (SearchResultTransferable) t.getTransferData(SearchResultTransferable.dataFlavor);
                 SearchResultMediator rp = srt.getResultPanel();
                 SearchResultDataLine[] lines = srt.getTableLines();
                 SearchMediator.downloadFromPanel(rp, lines);
                 return true;
-            } catch (UnsupportedFlavorException e) {
-            } catch (IOException e) {
+            } catch (Throwable e) {
+                LOG.error("Error importing DnD data", e);
             }
         }
         return DNDUtils.DEFAULT_TRANSFER_HANDLER.importData(comp, t);
     }
-    
+
     @Override
     public boolean importData(JComponent c, Transferable t, DropInfo ddi) {
-    	return importData(c, t);
+        return importData(c, t);
     }
-    
+
     @Override
     protected Transferable createTransferable(JComponent c) {
         BTDownload[] downloads = BTDownloadMediator.instance().getSelectedBTDownloads();
@@ -76,11 +99,14 @@ class BTDownloadTransferHandler extends LimeTransferHandler {
 
     private List<File> getListOfFilesFromBTDowloads(BTDownload[] downloads) {
         List<File> files = new LinkedList<File>();
-        
+
+        Set<File> ignore = TorrentUtil.getIgnorableFiles();
+
         for (BTDownload download : downloads) {
             File saveLocation = download.getSaveLocation();
-            addFilesRecursively(files, saveLocation);
+            addFilesRecursively(files, saveLocation, ignore);
         }
+
         return files;
     }
 
@@ -88,16 +114,18 @@ class BTDownloadTransferHandler extends LimeTransferHandler {
      * TODO: Not sure how this will handle partially downloaded torrents, it'll probably include the incomplete files as well.
      * @param files
      * @param saveLocation
+     * @param ignore 
      */
-    private void addFilesRecursively(List<File> files, File saveLocation) {
+    private void addFilesRecursively(List<File> files, File saveLocation, Set<File> ignore) {
         if (saveLocation.isFile()) {
-            files.add(saveLocation);
-            return;
-        } else {
+            if (!ignore.contains(saveLocation)) {
+                files.add(saveLocation);
+            }
+        } else if (saveLocation.isDirectory()) {
             File[] listFiles = saveLocation.listFiles();
             for (File f : listFiles) {
-                addFilesRecursively(files, f);
+                addFilesRecursively(files, f, ignore);
             }
-        }        
+        }
     }
 }

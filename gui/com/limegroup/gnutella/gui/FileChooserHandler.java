@@ -44,7 +44,7 @@ public final class FileChooserHandler {
     }
     
     /** Sets the last directory that was used for the FileChooser. */
-    private static void setLastInputDirectory(File file) {
+    public static void setLastInputDirectory(File file) {
         if(file != null) {
             if(!file.exists() || !file.isDirectory())
                 file = file.getParentFile();

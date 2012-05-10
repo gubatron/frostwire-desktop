@@ -17,7 +17,10 @@
 package jd.plugins.decrypter;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -26,6 +29,14 @@ import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
+
+import org.limewire.util.FilenameUtils;
+
+import com.frostwire.mp4.DefaultMp4Builder;
+import com.frostwire.mp4.IsoFile;
+import com.frostwire.mp4.Movie;
+import com.frostwire.mp4.MovieCreator;
+import com.frostwire.mp4.Track;
 
 import jd.PluginWrapper;
 import jd.config.SubConfiguration;
@@ -70,6 +81,7 @@ public class TbCm extends PluginForDecrypt {
 
     public static enum DestinationFormat {
         AUDIOMP3("Audio (MP3)", new String[] { ".mp3" }),
+        AUDIOAAC("Audio (AAC)", new String[] { ".m4a" }),
         VIDEOFLV("Video (FLV)", new String[] { ".flv" }),
         VIDEOMP4("Video (MP4)", new String[] { ".mp4" }),
         VIDEOWEBM("Video (Webm)", new String[] { ".webm" }),
@@ -153,6 +165,17 @@ public class TbCm extends PluginForDecrypt {
                 }
 
                 return true;
+            default:
+                TbCm.LOG.warning("Don't know how to convert " + InType.getText() + " to " + OutType.getText());
+                downloadlink.getLinkStatus().setErrorMessage(JDL.L("convert.progress.unknownintype", "Unknown format"));
+                return false;
+            }
+        case VIDEOMP4:
+            // Inputformat MP4
+            switch (OutType) {
+            case AUDIOAAC:
+                TbCm.LOG.info("Convert MP4 to mpa...");
+                return demuxMP4Audio(downloadlink.getFileOutput());
             default:
                 TbCm.LOG.warning("Don't know how to convert " + InType.getText() + " to " + OutType.getText());
                 downloadlink.getLinkStatus().setErrorMessage(JDL.L("convert.progress.unknownintype", "Unknown format"));
@@ -348,6 +371,8 @@ public class TbCm extends PluginForDecrypt {
                 String dlLink = "";
                 String vQuality = "";
                 DestinationFormat cMode = null;
+                
+                boolean addedAACHQ = false;
 
                 for (final Integer format : LinksFound.keySet()) {
                     if (ytVideo.containsKey(format)) {
@@ -383,6 +408,42 @@ public class TbCm extends PluginForDecrypt {
                                 this.addtopos(DestinationFormat.AUDIOMP3, dlLink, 0, "", format);
                             } else if (this.br.openGetConnection(dlLink).getResponseCode() == 200) {
                                 this.addtopos(DestinationFormat.AUDIOMP3, dlLink, this.br.getHttpConnection().getLongContentLength(), "", format);
+                            }
+                        } catch (final Throwable e) {
+                            e.printStackTrace();
+                        } finally {
+                            try {
+                                this.br.getHttpConnection().disconnect();
+                            } catch (final Throwable e) {
+                            }
+                        }
+                    }
+                    // hack to support AAC
+                    if (format == 18) {
+                        try {
+                            String desc = "(AAC-LQ)";
+                            if (fast) {
+                                this.addtopos(DestinationFormat.AUDIOAAC, dlLink, 0, desc, format);
+                            } else if (this.br.openGetConnection(dlLink).getResponseCode() == 200) {
+                                this.addtopos(DestinationFormat.AUDIOAAC, dlLink, this.br.getHttpConnection().getLongContentLength(), desc, format);
+                            }
+                        } catch (final Throwable e) {
+                            e.printStackTrace();
+                        } finally {
+                            try {
+                                this.br.getHttpConnection().disconnect();
+                            } catch (final Throwable e) {
+                            }
+                        }
+                    }
+                    if (!addedAACHQ && (format == 22 || format == 37)) {
+                        addedAACHQ = true;
+                        try {
+                            String desc = "(AAC-HQ)";
+                            if (fast) {
+                                this.addtopos(DestinationFormat.AUDIOAAC, dlLink, 0, desc, format);
+                            } else if (this.br.openGetConnection(dlLink).getResponseCode() == 200) {
+                                this.addtopos(DestinationFormat.AUDIOAAC, dlLink, this.br.getHttpConnection().getLongContentLength(), desc, format);
                             }
                         } catch (final Throwable e) {
                             e.printStackTrace();
@@ -589,4 +650,44 @@ public class TbCm extends PluginForDecrypt {
         return true;
     }
 
+    private static boolean demuxMP4Audio(String filename) {
+        try {
+            String mp4Filename = filename.replace(".m4a", ".mp4");
+            new File(filename).renameTo(new File(mp4Filename));
+            FileChannel inFC = new FileInputStream(mp4Filename).getChannel();
+            Movie inVideo = MovieCreator.build(inFC);
+
+            Track audioTrack = null;
+
+            for (Track trk : inVideo.getTracks()) {
+                if (trk.getHandler().equals("soun")) {
+                    audioTrack = trk;
+                    break;
+                }
+            }
+
+            if (audioTrack == null) {
+                TbCm.LOG.info("No Audio track in MP4 file!!! - " + filename);
+                return false;
+            }
+
+            Movie outMovie = new Movie();
+            outMovie.addTrack(audioTrack);
+
+            IsoFile out = new DefaultMp4Builder().build(outMovie);
+            String audioFilename = filename;
+            FileOutputStream fos = new FileOutputStream(audioFilename);
+            out.getBox(fos.getChannel());
+            fos.close();
+            
+            if (!new File(mp4Filename).delete()) {
+                new File(mp4Filename).deleteOnExit();
+            }
+            
+            return true;
+        } catch (Throwable e) {
+            TbCm.LOG.info("Error demuxing MP4 audio - " + filename);
+            return false;
+        }
+    }
 }

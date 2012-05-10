@@ -1,3 +1,21 @@
+/*
+ * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
+ * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.frostwire;
 
 import java.awt.image.BufferedImage;
@@ -16,25 +34,30 @@ import org.limewire.util.OSUtils;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.util.FrostWireUtils;
 
+/**
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class ImageCache {
-	
-	private static final Log LOG = LogFactory.getLog(ImageCache.class);
 
-    private static ImageCache INSTANCE;
-    
+    private static final Log LOG = LogFactory.getLog(ImageCache.class);
+
+    private static ImageCache instance;
+
+    public synchronized static ImageCache instance() {
+        if (instance == null) {
+            instance = new ImageCache();
+        }
+        return instance;
+    }
+
     private ImageCache() {
     }
-    
-    public synchronized static ImageCache getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new ImageCache();
-        }
-        return INSTANCE;
-    }
-    
+
     public BufferedImage getImage(URL url, OnLoadedListener listener) {
         if (isCached(url)) {
-        	return loadFromCache(url, listener);
+            return loadFromCache(url, listener);
         } else if (!url.getProtocol().equals("http")) {
             return loadFromResource(url, listener);
         } else {
@@ -42,19 +65,18 @@ public class ImageCache {
             return null;
         }
     }
-    
+
     private File getCacheFile(URL url) {
-        
         String host = url.getHost();
         String path = url.getPath();
         if (host == null || host.length() == 0) { // dealing with local resource images, not perfect
-            host = "localhost";         
+            host = "localhost";
             path = new File(path).getName();
         }
-        
+
         return new File(SharingSettings.getImageCacheDirectory(), File.separator + host + File.separator + path);
     }
-    
+
     /**
      * Given the remote URL if the image has been cached this will return the local URL of the cached image on disk.
      * 
@@ -62,22 +84,21 @@ public class ImageCache {
      * @return The URL of the cached file. null if it's not been cached yet.
      */
     public URL getCachedFileURL(URL remoteURL) {
-    	if (isCached(remoteURL)) {
-    		try {
-				return getCacheFile(remoteURL).toURI().toURL();
-			} catch (MalformedURLException e) {
-				return null;
-			}
-    	}
-    	return null;
+        if (isCached(remoteURL)) {
+            try {
+                return getCacheFile(remoteURL).toURI().toURL();
+            } catch (MalformedURLException e) {
+                return null;
+            }
+        }
+        return null;
     }
 
     private boolean isCached(URL url) {
         File file = getCacheFile(url);
-        long now = System.currentTimeMillis();
-        return file.exists() && (now - file.lastModified()) < 2592000000L;
+        return file.exists();
     }
-    
+
     private BufferedImage loadFromCache(URL url, OnLoadedListener listener) {
         try {
             File file = getCacheFile(url);
@@ -85,6 +106,7 @@ public class ImageCache {
             listener.onLoaded(url, image, true, false);
             return image;
         } catch (Throwable e) {
+            LOG.error("Failed to load image from cache: " + url, e);
             if (e instanceof OutOfMemoryError) {
                 e.printStackTrace(); // this is a special condition
             }
@@ -92,34 +114,35 @@ public class ImageCache {
             return null;
         }
     }
-    
+
     private BufferedImage loadFromResource(URL url, OnLoadedListener listener) {
         try {
             BufferedImage image = ImageIO.read(url);
             saveToCache(url, image, 0);
             listener.onLoaded(url, image, false, false);
             return image;
-        } catch (Exception e) {
+        } catch (Throwable e) {
+            LOG.error("Failed to load image from resource: " + url, e);
             listener.onLoaded(url, null, false, true);
             return null;
         }
     }
-    
+
     private void loadFromUrl(final URL url, final OnLoadedListener listener) {
         // TODO: may be I must use BackgroundExecutorService
         new Thread(new Runnable() {
-            public void run() {                
+            public void run() {
                 try {
                     BufferedImage image = null;
-                    
+
                     String userAgent = "FrostWire/" + OSUtils.getOS() + "/" + FrostWireUtils.getFrostWireVersion();
                     HttpFetcher fetcher = new HttpFetcher(url.toURI(), userAgent);
                     Object[] result = fetcher.fetch(false);
-                    
+
                     if (result == null) {
-                    	throw new IOException("HttpFetcher.fetch() got nothing at " + url.toString());
+                        throw new IOException("HttpFetcher.fetch() got nothing at " + url.toString());
                     }
-                    
+
                     byte[] data = (byte[]) result[0];
                     long date = (Long) result[1];
                     if (data != null) {
@@ -129,44 +152,43 @@ public class ImageCache {
                     if (listener != null && image != null) {
                         listener.onLoaded(url, image, false, false);
                     }
-                } catch (Exception e) {
+                } catch (Throwable e) {
+                    LOG.error("Failed to load image from: " + url, e);
                     listener.onLoaded(url, null, false, true);
-                    LOG.info("Failed to load image from: " + url, e);
                 }
-                
             }
         }).start();
     }
-    
+
     private void saveToCache(URL url, BufferedImage image, long date) {
         try {
             File file = getCacheFile(url);
-            
+
             if (file.exists()) {
                 file.delete();
             }
-            
+
             String filename = file.getName();
             int dotIndex = filename.lastIndexOf('.');
             String ext = filename.substring(dotIndex + 1);
 
             String formatName = ImageIO.getImageReadersBySuffix(ext).next().getFormatName();
-            
+
             if (!file.getParentFile().exists()) {
                 file.mkdirs();
             }
             ImageIO.write(image, formatName, file);
             file.setLastModified(date);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Throwable e) {
+            LOG.error("Failed to save image to cache: " + url, e);
         }
     }
 
     public interface OnLoadedListener {
-    	
+
         /**
-    	 * This is called in the event that the image was downloaded and cached
-    	 */
+         * This is called in the event that the image was downloaded and cached
+         */
         public void onLoaded(URL url, BufferedImage image, boolean fromCache, boolean fail);
     }
 }

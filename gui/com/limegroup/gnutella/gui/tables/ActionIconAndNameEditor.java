@@ -1,3 +1,21 @@
+/*
+ * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
+ * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.limegroup.gnutella.gui.tables;
 
 import java.awt.Component;
@@ -12,19 +30,26 @@ import javax.swing.AbstractCellEditor;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+/**
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class ActionIconAndNameEditor extends AbstractCellEditor implements TableCellEditor {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 2661028644256459921L;
 
-    private final Rectangle _actionRegion;
+    private static final Log LOG = LogFactory.getLog(ActionIconAndNameEditor.class);
 
-    private ActionListener _action;
+    private final Rectangle actionRegion;
+
+    private ActionListener action;
 
     public ActionIconAndNameEditor(Rectangle actionRegion) {
-        _actionRegion = actionRegion;
+        this.actionRegion = actionRegion;
     }
 
     public ActionIconAndNameEditor() {
@@ -37,24 +62,26 @@ public class ActionIconAndNameEditor extends AbstractCellEditor implements Table
 
     public Component getTableCellEditorComponent(final JTable table, Object value, boolean isSelected, int row, int column) {
         ActionIconAndNameHolder in = (ActionIconAndNameHolder) value;
-        _action = in.getAction();
+        action = in.getAction();
 
         final Component component = new ActionIconAndNameRenderer().getTableCellRendererComponent(table, value, isSelected, true, row, column);
         component.addMouseListener(new MouseAdapter() {
             @Override
-            public void mousePressed(MouseEvent e) {
-                if (_actionRegion == null) {
-                    component_mousePressed(e);
-                } else {
-                    if (_actionRegion.contains(e.getPoint())) {
+            public void mouseReleased(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    if (actionRegion == null) {
                         component_mousePressed(e);
                     } else {
-                        Toolkit.getDefaultToolkit()
-                                .getSystemEventQueue()
-                                .postEvent(
-                                        new MouseEvent(table, e.getClickCount() >= 2 ? MouseEvent.MOUSE_CLICKED : MouseEvent.MOUSE_PRESSED, e.getWhen(), e
-                                                .getModifiers(), component.getX() + e.getX(), component.getY() + e.getY(), e.getClickCount(), false));
+                        if (actionRegion.contains(e.getPoint())) {
+                            component_mousePressed(e);
+                        } else {
+                            if (e.getClickCount() >= 2) {
+                                Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new MouseEvent(table, MouseEvent.MOUSE_CLICKED, e.getWhen(), e.getModifiers(), component.getX() + e.getX(), component.getY() + e.getY(), e.getClickCount(), false));
+                            }
+                        }
                     }
+                } else if (e.getButton() == MouseEvent.BUTTON3) {
+                    Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(new MouseEvent(table, e.getID(), e.getWhen(), e.getModifiers(), component.getX() + e.getX(), component.getY() + e.getY(), e.getClickCount(), true));
                 }
             }
         });
@@ -63,11 +90,11 @@ public class ActionIconAndNameEditor extends AbstractCellEditor implements Table
     }
 
     protected void component_mousePressed(MouseEvent e) {
-        if (_action != null) {
+        if (action != null) {
             try {
-                _action.actionPerformed(new ActionEvent(e.getSource(), e.getID(), ""));
-            } catch (Exception ex) {
-                ex.printStackTrace();
+                action.actionPerformed(new ActionEvent(e.getSource(), e.getID(), ""));
+            } catch (Throwable e1) {
+                LOG.error("Error performing action", e1);
             }
         }
     }

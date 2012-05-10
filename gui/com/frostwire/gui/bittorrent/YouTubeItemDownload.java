@@ -38,7 +38,7 @@ public class YouTubeItemDownload implements BTDownload {
         this.filePackage = filePackage;
         this.link = filePackage.getChildren().get(0);
         this.dateCreated = new Date();
-        this.saveLocation = readFilename(filePackage);
+        this.saveLocation = readSaveLocation(filePackage);
 
         this.started = false;
         start();
@@ -236,12 +236,12 @@ public class YouTubeItemDownload implements BTDownload {
         }, true);
     }
     
-    private String readFilename(FilePackage filePackage) {
+    private String readSaveLocation(FilePackage filePackage) {
         DownloadLink dl = filePackage.getChildren().get(0);
         if (dl.getStringProperty("convertto", "").equals("AUDIOMP3")) {
             return FilenameUtils.getFullPath(dl.getFileOutput()) + File.separator + FilenameUtils.getBaseName(dl.getName()) + ".mp3";
         }
 
-        return dl.getName();
+        return dl.getFileOutput();
     }
 }
