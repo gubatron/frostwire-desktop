@@ -71,7 +71,7 @@
 	    <fileset dir="${limewire.home}/gui" includes="org/**/*" excludes="org/**/*.java"/>
 	    <manifest>
 	      <attribute name="Main-Class" value="com.limegroup.gnutella.gui.Main" />
-	      <attribute name="Class-Path" value=". ${classpath} lw-alexandria.jar lw-azureus.jar lw-common.jar lw-resources.jar lw-setting.jar lw-jdownloader.jar"/>
+	      <attribute name="Class-Path" value=". ${classpath} lw-alexandria.jar lw-azureus.jar lw-common.jar lw-resources.jar lw-setting.jar lw-medialib.jar lw-jdownloader.jar"/>
 	    </manifest>
 	  </jar>
 	</target>
