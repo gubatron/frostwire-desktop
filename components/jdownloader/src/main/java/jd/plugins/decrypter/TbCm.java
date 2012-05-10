@@ -81,7 +81,7 @@ public class TbCm extends PluginForDecrypt {
 
     public static enum DestinationFormat {
         AUDIOMP3("Audio (MP3)", new String[] { ".mp3" }),
-        AUDIOAAC("Audio (AAC)", new String[] { ".mpa" }),
+        AUDIOAAC("Audio (AAC)", new String[] { ".m4a" }),
         VIDEOFLV("Video (FLV)", new String[] { ".flv" }),
         VIDEOMP4("Video (MP4)", new String[] { ".mp4" }),
         VIDEOWEBM("Video (Webm)", new String[] { ".webm" }),
@@ -652,7 +652,7 @@ public class TbCm extends PluginForDecrypt {
 
     private static boolean demuxMP4Audio(String filename) {
         try {
-            String mp4Filename = filename.replace(".mpa", ".mp4");
+            String mp4Filename = filename.replace(".m4a", ".mp4");
             new File(filename).renameTo(new File(mp4Filename));
             FileChannel inFC = new FileInputStream(mp4Filename).getChannel();
             Movie inVideo = MovieCreator.build(inFC);
@@ -679,6 +679,10 @@ public class TbCm extends PluginForDecrypt {
             FileOutputStream fos = new FileOutputStream(audioFilename);
             out.getBox(fos.getChannel());
             fos.close();
+            
+            if (!new File(mp4Filename).delete()) {
+                new File(mp4Filename).deleteOnExit();
+            }
             
             return true;
         } catch (Throwable e) {
