@@ -199,7 +199,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         _list.setCellRenderer(new LibraryPlaylistsCellRenderer());
         _list.addMouseListener(new DefaultMouseListener(_listMouseObserver));
         _list.addListSelectionListener(_listSelectionListener);
-        _list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        _list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         _list.setLayoutOrientation(JList.VERTICAL);
         _list.setPrototypeCellValue(new LibraryPlaylistsListCell("test", "", GUIMediator.getThemeImage("playlist"), null, null));
         _list.setVisibleRowCount(-1);

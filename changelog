@@ -3,6 +3,7 @@ frostwire (5.3.6) stable; urgency=high
     using magnet links instead of .torrents.
   * Supports dragging files from transfer manager. 
     Useful to send files to iTunes as soon as transfers are done.
+  * Adds links to Facebook and Google Plus pages.
 
  -- FrostWire Team <contact@frostwire.com>  Fri, 04 May 2012 21:49:00 -0500
 

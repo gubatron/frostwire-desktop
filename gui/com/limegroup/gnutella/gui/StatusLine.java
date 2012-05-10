@@ -81,6 +81,8 @@ public final class StatusLine implements ThemeObserver {
 	private JLabel _bandwidthUsageUp;
 	
 	private IconButton _twitterButton;
+    private IconButton _facebookButton;
+    private IconButton _googlePlusButton;
 	
 	private IconButton seedingStatusButton;
     
@@ -107,7 +109,6 @@ public final class StatusLine implements ThemeObserver {
     public StatusLine() {
         GUIMediator.setSplashScreenString(I18n.tr("Loading Status Window..."));
 
-        GUIMediator.addRefreshListener(REFRESH_LISTENER);
         getComponent().addMouseListener(STATUS_BAR_LISTENER);
         GUIMediator.getAppFrame().addComponentListener(new ComponentListener() {
             public void componentResized(ComponentEvent arg0) {
@@ -138,8 +139,10 @@ public final class StatusLine implements ThemeObserver {
         //  make the 'Bandwidth Usage' label
         createBandwidthLabel();
 
-        // make the Twitter button
+        // make the social buttons
+        createFacebookButton();
         createTwitterButton();
+        createGooglePlusButton();
         
         // male Seeding status label
         createSeedingStatusLabel();
@@ -150,23 +153,41 @@ public final class StatusLine implements ThemeObserver {
         // Set the bars to not be connected.
         setConnectionQuality(0);
 
+        GUIMediator.addRefreshListener(REFRESH_LISTENER);
         ThemeMediator.addThemeObserver(this);
-
+        
+        
         refresh();
     }
 
 	private void createTwitterButton() {
 	    _twitterButton = new IconButton("TWITTER");
-	    _twitterButton.setToolTipText(I18n.tr("Follow us @frostwire"));
-	    _twitterButton.addActionListener(new ActionListener() {
-            
+	    initSocialButton(_twitterButton, I18n.tr("Follow us @frostwire"), "https://twitter.com/#!/frostwire");
+    }
+
+    private void createFacebookButton() {
+        _facebookButton = new IconButton("FACEBOOK");
+        initSocialButton(_facebookButton, I18n.tr("Like FrostWire on Facebook and stay in touch with the community. Get Help and Help Others."),
+                "http://www.facebook.com/pages/FrostWire/110265295669948");
+    }
+
+    private void createGooglePlusButton() {
+        _googlePlusButton = new IconButton("GOOGLEPLUS");
+        _googlePlusButton.setPreferredSize(new Dimension(19,16));
+        initSocialButton(_googlePlusButton, I18n.tr("Circle FrostWire on G+"), "https://plus.google.com/b/101138154526002646407/");
+    }
+    
+    private void initSocialButton(IconButton socialButton, String toolTipText, final String url) {
+        socialButton.setToolTipText(I18n.tr(toolTipText));
+        socialButton.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                GUIMediator.openURL("https://twitter.com/#!/frostwire");
+                GUIMediator.openURL(url);
             }
         });
     }
-	
+    
     private void createSeedingStatusLabel() {
 
         seedingStatusButton = new IconButton("","SEEDING",true)  {
@@ -299,7 +320,9 @@ public final class StatusLine implements ThemeObserver {
 
         gbc = new GridBagConstraints();
         gbc.gridx = GridBagConstraints.RELATIVE;
+        BAR.add(_facebookButton,gbc);
         BAR.add(_twitterButton,gbc);
+        BAR.add(_googlePlusButton,gbc);
         
 		BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
         //  make center panel stretchy
