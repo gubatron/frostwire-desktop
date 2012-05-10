@@ -48,7 +48,7 @@ public abstract class AbstractLibraryListPanel extends JPanel implements Refresh
 	private List<Runnable> PENDING_RUNNABLES;
     
     public AbstractLibraryListPanel() {
-    	PENDING_RUNNABLES = new ArrayList<Runnable>();
+    	    PENDING_RUNNABLES = new ArrayList<Runnable>();
     }
     
     public void enqueueRunnable(Runnable r) {
