@@ -154,9 +154,7 @@ class SearchInputPanel extends JPanel {
     
     private JXCollapsiblePane createSearchOptionsPanel() {
 		SEARCH_OPTIONS_COLLAPSIBLE_PANEL = new JXCollapsiblePane();
-		
 		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setCollapsed(ApplicationSettings.SEARCH_OPTIONS_COLLAPSED.getValue());
-		
 		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setLayout(new BorderLayout());
 		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.setAnimated(true);
 		
@@ -164,28 +162,25 @@ class SearchInputPanel extends JPanel {
 		p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
 		p.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
 		
-		List<SearchEngine> searchEngines = SearchEngine.getSearchEngines();
-		
 		JPanel controls = new JPanel();
 		controls.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_DARK_NOISE, true);
 		controls.setBorder(ThemeMediator.CURRENT_THEME.getCustomUI().createTitledBorder(I18n.tr("Search Engines")));
         controls.setLayout(new GridBagLayout());
-       
         controls.setAlignmentX(0.0f);
-		setupCheckboxes(searchEngines, controls);
-		
-		_filterPanel = new SearchFilterPanel();
+        List<SearchEngine> searchEngines = SearchEngine.getSearchEngines();
+        setupCheckboxes(searchEngines, controls);
+        p.add(controls);
+       
+        p.add(Box.createVerticalStrut(15));
+
+        _filterPanel = new SearchFilterPanel();
 		_filterPanel.putClientProperty(SkinCustomUI.CLIENT_PROPERTY_DARK_DARK_NOISE, true);
 		_filterPanel.setBorder(ThemeMediator.CURRENT_THEME.getCustomUI().createTitledBorder(I18n.tr("Filter")));
 		_filterPanel.setAlignmentX(0.0f);
 		p.add(_filterPanel);
 		
-		p.add(Box.createVerticalStrut(15));
-		
-		p.add(controls);
 		//JScrollPane sp = new JScrollPane(p); //pending work
 		SEARCH_OPTIONS_COLLAPSIBLE_PANEL.add(p);
-		
 
 		return SEARCH_OPTIONS_COLLAPSIBLE_PANEL;
 	}
@@ -225,7 +220,7 @@ class SearchInputPanel extends JPanel {
 	        c.fill = GridBagConstraints.HORIZONTAL;
 	        c.weightx = 1.0;
 	        c.gridwidth = GridBagConstraints.REMAINDER;
-	        c.insets = new Insets(0, 10, 10, 10);
+	        c.insets = new Insets(0, 10, 2, 10);
 			parent.add(cBox, c);
 			
 			cBoxes.put(cBox,se.getEnabledSetting());
