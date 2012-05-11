@@ -41,17 +41,17 @@ public class SubstanceThemeSetter implements ThemeSetter {
     private final String _name;
     private final String _skinClassName;
     private final SkinCustomUI customUI;
-    
+
     private final float LINUX_SCALED_FONT_POLICY_FACTOR = 0.87f;
     private final float WINDOWS_SCALED_FONT_POLICY_FACTOR = 0.92f;
     private final float MAC_SCALED_FONT_POLICY_FACTOR = 0.87f;
-    
+
     private SubstanceThemeSetter(String name, String skinClassName, SkinCustomUI customUI) {
         _name = name;
         _skinClassName = skinClassName;
         this.customUI = customUI;
     }
-    
+
     private SubstanceThemeSetter(String name, String skinClassName) {
         this(name, skinClassName, new SubstanceCustomUI());
     }
@@ -63,16 +63,16 @@ public class SubstanceThemeSetter implements ThemeSetter {
     public void apply() {
         SubstanceLookAndFeel.setSkin(_skinClassName);
         ThemeMediator.applyCommonSkinUI();
-        
+
         float scaledFontPolicyFactor = WINDOWS_SCALED_FONT_POLICY_FACTOR;
         if (OSUtils.isMacOSX()) {
-        	scaledFontPolicyFactor = MAC_SCALED_FONT_POLICY_FACTOR;
+            scaledFontPolicyFactor = MAC_SCALED_FONT_POLICY_FACTOR;
         } else if (OSUtils.isLinux()) {
-        	scaledFontPolicyFactor = LINUX_SCALED_FONT_POLICY_FACTOR;
+            scaledFontPolicyFactor = LINUX_SCALED_FONT_POLICY_FACTOR;
         }
-        
+
         SubstanceLookAndFeel.setFontPolicy(SubstanceFontUtilities.getScaledFontPolicy(scaledFontPolicyFactor));
-        
+
         //reduceFont("Label.font");
         //reduceFont("Table.font");
         //ResourceManager.setFontSizes(-1);
@@ -129,14 +129,14 @@ public class SubstanceThemeSetter implements ThemeSetter {
     public static final SubstanceThemeSetter SAHARA = new SubstanceThemeSetter("Sahara", "org.pushingpixels.substance.api.skin.SaharaSkin");
     public static final SubstanceThemeSetter TWILIGHT = new SubstanceThemeSetter("Twilight", "org.pushingpixels.substance.api.skin.TwilightSkin");
 
-//    // from Substance extras
-//    public static final SubstanceThemeSetter FIELD_OF_WHEAT = new SubstanceThemeSetter("Field Of Wheat", "org.pushingpixels.substance.skinpack.FieldOfWheatSkin");
-//    public static final SubstanceThemeSetter FINDING_NEMO = new SubstanceThemeSetter("Finding Nemo", "org.pushingpixels.substance.skinpack.FindingNemoSkin");
-//    public static final SubstanceThemeSetter GREEN_MAGIC = new SubstanceThemeSetter("Green Magic", "org.pushingpixels.substance.skinpack.GreenMagicSkin");
-//    public static final SubstanceThemeSetter MAGMA = new SubstanceThemeSetter("Magma", "org.pushingpixels.substance.skinpack.MagmaSkin");
-//    public static final SubstanceThemeSetter MANGO = new SubstanceThemeSetter("Mango", "org.pushingpixels.substance.skinpack.MangoSkin");
-//    public static final SubstanceThemeSetter STREETLIGHTS = new SubstanceThemeSetter("Streetlights", "org.pushingpixels.substance.skinpack.StreetlightsSkin");
-    
+    //    // from Substance extras
+    //    public static final SubstanceThemeSetter FIELD_OF_WHEAT = new SubstanceThemeSetter("Field Of Wheat", "org.pushingpixels.substance.skinpack.FieldOfWheatSkin");
+    //    public static final SubstanceThemeSetter FINDING_NEMO = new SubstanceThemeSetter("Finding Nemo", "org.pushingpixels.substance.skinpack.FindingNemoSkin");
+    //    public static final SubstanceThemeSetter GREEN_MAGIC = new SubstanceThemeSetter("Green Magic", "org.pushingpixels.substance.skinpack.GreenMagicSkin");
+    //    public static final SubstanceThemeSetter MAGMA = new SubstanceThemeSetter("Magma", "org.pushingpixels.substance.skinpack.MagmaSkin");
+    //    public static final SubstanceThemeSetter MANGO = new SubstanceThemeSetter("Mango", "org.pushingpixels.substance.skinpack.MangoSkin");
+    //    public static final SubstanceThemeSetter STREETLIGHTS = new SubstanceThemeSetter("Streetlights", "org.pushingpixels.substance.skinpack.StreetlightsSkin");
+
     public SkinCustomUI getCustomUI() {
         return customUI;
     }
@@ -191,7 +191,7 @@ public class SubstanceThemeSetter implements ThemeSetter {
     public ComponentUI createTableUI(JComponent comp) {
         return SubstanceTableUI.createUI(comp);
     }
-    
+
     public ComponentUI createTabbedPaneUI(JComponent comp) {
         SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
         return new SkinTabbedPaneUI((JTabbedPane) comp);
@@ -201,7 +201,7 @@ public class SubstanceThemeSetter implements ThemeSetter {
         SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
         return new SkinRangeSliderUI((RangeSlider) comp);
     }
-    
+
     public ComponentUI createProgressBarUI(JComponent comp) {
         SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
         return new SkinProgressBarUI();
