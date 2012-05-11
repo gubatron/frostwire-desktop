@@ -18,6 +18,8 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.frostwire.gui.ChatMediator;
@@ -51,6 +53,8 @@ public class LanguageWindow extends JDialog {
 
     private boolean defaultLocaleSelectable;
     
+    private Font dialogFont;
+    
     public LanguageWindow() {
         super(GUIMediator.getAppFrame());
 
@@ -58,8 +62,8 @@ public class LanguageWindow extends JDialog {
 
         initializeWindow();
 
-        Font font = new Font("Dialog", Font.PLAIN, 11);
-        Locale[] locales = LanguageUtils.getLocales(font);
+        dialogFont = new Font("Dialog", Font.PLAIN, 11);
+        Locale[] locales = LanguageUtils.getLocales(dialogFont);
 
         mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -107,6 +111,7 @@ public class LanguageWindow extends JDialog {
         }
 
         localeComboBox = new JComboBox(localeModel);
+        localeComboBox.setFont(dialogFont);
         localeComboBox.setRenderer(LanguageFlagFactory.getListRenderer());
         localeComboBox.setMaximumRowCount(15);
         if (selectedIndex != -1) {
@@ -139,11 +144,13 @@ public class LanguageWindow extends JDialog {
         container.add(Box.createVerticalStrut(5),c);
         
         helpTranslateLabel = new URLLabel(TRANSLATE_URL, "");
+        helpTranslateLabel.setFont(dialogFont);
         container.add(helpTranslateLabel,c);
 
         container.add(Box.createVerticalStrut(15),c);
 
         showLanguageCheckbox = new JCheckBox();
+        showLanguageCheckbox.setFont(dialogFont);
         showLanguageCheckbox.setSelected(StatusBarSettings.LANGUAGE_DISPLAY_ENABLED.getValue());
         c.anchor = GridBagConstraints.LINE_START;
         container.add(showLanguageCheckbox,c);
@@ -158,11 +165,15 @@ public class LanguageWindow extends JDialog {
         cancelAction = new CancelAction();
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING));
-        buttonPanel.add(new JButton(okayAction));
+        JButton buttonOK = new JButton(okayAction);
+        buttonOK.setFont(dialogFont);
+        buttonPanel.add(buttonOK);
         if (!LanguageUtils.isEnglishLocale(currentLocale)) {
             buttonPanel.add(new JButton(new UseEnglishAction()));
         }
-        buttonPanel.add(new JButton(cancelAction));
+        JButton buttonCancel = new JButton(cancelAction);
+        buttonCancel.setFont(dialogFont);
+        buttonPanel.add(buttonCancel);
         mainPanel.add(buttonPanel, BorderLayout.SOUTH);
     }
 
@@ -181,7 +192,9 @@ public class LanguageWindow extends JDialog {
             String message = I18n.trl(
                     "FrostWire must be restarted for the new language to take effect.", locale);
 	    //com.frostwire.gui.updates.UpdateManager.getInstance().checkForUpdates(); // check if it's possible to load the new overlay ad for next frostwire load. In the future should be loaded automatically from this function checkforupdates.
-	    GUIMediator.showMessage(message);
+            JLabel labelMessage = new JLabel(message);
+            labelMessage.setFont(dialogFont);
+            JOptionPane.showMessageDialog(this, labelMessage, I18n.tr("Message"), JOptionPane.INFORMATION_MESSAGE);
         }
 
         StatusBarSettings.LANGUAGE_DISPLAY_ENABLED.setValue(showLanguageInStatusBar);

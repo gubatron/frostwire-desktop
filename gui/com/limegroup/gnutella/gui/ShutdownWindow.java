@@ -1,6 +1,7 @@
 package com.limegroup.gnutella.gui;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -33,6 +34,7 @@ class ShutdownWindow extends JDialog {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.anchor = GridBagConstraints.WEST;
         JLabel label = new JLabel(I18n.tr("Please wait while FrostWire shuts down..."));
+        label.setFont(new Font("Dialog", Font.PLAIN, 12));
         pane.add(label, c);
         
         JProgressBar bar = new LimeJProgressBar();
