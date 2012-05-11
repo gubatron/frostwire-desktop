@@ -7,6 +7,7 @@ frostwire (5.3.6) stable; urgency=high
   * Supports dragging files from transfer manager. 
     Useful to send files to iTunes as soon as transfers are done.
   * Adds links to Facebook and Google Plus pages on status bar.
+  * Single file search results now are launched on double click.
 
  -- FrostWire Team <contact@frostwire.com>  Thu, 10 May 2012 18:49:00 -0500
 

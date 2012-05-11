@@ -18,6 +18,7 @@ import org.limewire.util.OSUtils;
 import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.AzureusStarter;
 import com.frostwire.bittorrent.websearch.WebSearchResult;
+import com.frostwire.gui.bittorrent.BTDownloadActions.PlaySingleAudioFileAction;
 import com.frostwire.gui.filters.TableLineFilter;
 import com.frostwire.gui.library.LibraryUtils;
 import com.frostwire.gui.player.AudioPlayer;
@@ -84,6 +85,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 
 	private Action sendToItunesAction;
 
+    private PlaySingleAudioFileAction playSingleAudioFileAction;
+
     /**
      * Overriden to have different default values for tooltips.
      */
@@ -119,6 +122,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         copyHashAction = BTDownloadActions.COPY_HASH_ACTION;
         shareTorrentAction = BTDownloadActions.SHARE_TORRENT_ACTION;
         sendToItunesAction = BTDownloadActions.SEND_TO_ITUNES_ACTION;
+        playSingleAudioFileAction = BTDownloadActions.PLAY_SINGLE_AUDIO_FILE_ACTION;
     }
 
     /**
@@ -465,19 +469,36 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
      * Handles a double-click event in the table.
      */
     public void handleActionKey() {
-        if (showInLibraryAction.isEnabled())
-        	showInLibraryAction.actionPerformed(null);
+        
+        BTDownload[] selectedDownloaders = getSelectedDownloaders();
+        
+        if (selectedDownloaders.length == 1) {
+            playSingleAudioFileAction.setEnabled(selectionHasAudioFiles(selectedDownloaders[0].getSaveLocation()));
+        }
+        
+        if (playSingleAudioFileAction.isEnabled()) {
+            playSingleAudioFileAction.actionPerformed(null);
+        }
+        
+        if (showInLibraryAction.isEnabled()) {
+            showInLibraryAction.actionPerformed(null);
+        }
     }
 
     protected JPopupMenu createPopupMenu() {
         
         JPopupMenu menu = new SkinPopupMenu();
 
+        if (playSingleAudioFileAction.isEnabled()) {
+            menu.add(new SkinMenuItem(playSingleAudioFileAction));
+        }
+        
         menu.add(new SkinMenuItem(resumeAction));
         menu.add(new SkinMenuItem(pauseAction));
+        
         if (OSUtils.isWindows() || OSUtils.isMacOSX()) {
-        	menu.add(new SkinMenuItem(showInLibraryAction));
-        	menu.add(new SkinMenuItem(exploreAction));
+        	    menu.add(new SkinMenuItem(showInLibraryAction));
+        	    menu.add(new SkinMenuItem(exploreAction));
         }
         
         menu.addSeparator();
@@ -528,8 +549,9 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         boolean isTransferFinished = dataLine.getInitializeObject().isCompleted();
         
         File saveLocation = dataLine.getInitializeObject().getSaveLocation();
-        boolean hasAudioFiles = saveLocation != null && (LibraryUtils.directoryContainsAudio(saveLocation, 4) ||
-         (saveLocation.isFile() && AudioPlayer.isPlayableFile(saveLocation)));
+        boolean hasAudioFiles = selectionHasAudioFiles(saveLocation);
+        
+        boolean isSingleFile = selectionIsSingleFile(saveLocation);
 
         removeAction.putValue(Action.NAME, I18n.tr("Cancel Download"));
         removeAction.putValue(LimeAction.SHORT_NAME, I18n.tr("Cancel"));
@@ -552,9 +574,22 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
 		shareTorrentAction.setEnabled(getSelectedDownloaders().length == 1
 				&& dataLine.getInitializeObject().isPausable());
 		
+		playSingleAudioFileAction.setEnabled(getSelectedDownloaders().length == 1 && hasAudioFiles && isSingleFile);
+		
 		removeYouTubeAction.setEnabled(isYouTubeDownload(dataLine.getInitializeObject()));
 		BTDownloadActions.REMOVE_TORRENT_ACTION.setEnabled(!isYouTubeDownload(dataLine.getInitializeObject()));
         BTDownloadActions.REMOVE_TORRENT_AND_DATA_ACTION.setEnabled(!isYouTubeDownload(dataLine.getInitializeObject()));
+    }
+
+    private boolean selectionIsSingleFile(File saveLocation) {
+        boolean isSingleFile = saveLocation != null && saveLocation.isFile();
+        return isSingleFile;
+    }
+
+    private boolean selectionHasAudioFiles(File saveLocation) {
+        boolean hasAudioFiles = saveLocation != null && (LibraryUtils.directoryContainsAudio(saveLocation, 4) ||
+         (saveLocation.isFile() && AudioPlayer.isPlayableFile(saveLocation)));
+        return hasAudioFiles;
     }
     
     private boolean isYouTubeDownload(BTDownload d) {
@@ -575,6 +610,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         copyHashAction.setEnabled(false);
         shareTorrentAction.setEnabled(false);
         sendToItunesAction.setEnabled(false);
+        playSingleAudioFileAction.setEnabled(false);
         
         BTDownloadActions.REMOVE_TORRENT_ACTION.setEnabled(false);
         BTDownloadActions.REMOVE_TORRENT_AND_DATA_ACTION.setEnabled(false);

@@ -347,7 +347,7 @@ public class AudioPlayer implements RefreshListener {
         String name = filename.toLowerCase();
         
         if (playableExtensions == null) {
-        	playableExtensions = Arrays.asList("mp3","ogg","wav","wma","m4a","aac","flac");
+        	  playableExtensions = Arrays.asList("mp3","ogg","wav","wma","m4a","aac","flac");
         }
         
         return playableExtensions.contains(FilenameUtils.getExtension(name).toLowerCase());

@@ -319,10 +319,10 @@ class ResultPanelModel extends BasicDataLineModel<SearchResultDataLine, SearchRe
         int c2 = b.getSeeds() + ((b.getFilenameNoExtension().indexOf(YouTubePackageItemSearchResult.AAC_HIGH_QUALITY) > 0) ? 1000 : 0);
         
         if (a.getSearchEngine().getId() == SearchEngine.YOUTUBE_ID) {
-            c1 = 1000;
+            c1 += 1000;
         }
         if (b.getSearchEngine().getId() == SearchEngine.YOUTUBE_ID) {
-            c2 = 1000;
+            c2 += 1000;
         }
         
         return (c1 - c2) * _ascending;
