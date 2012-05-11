@@ -1,6 +1,8 @@
 package com.limegroup.gnutella.gui.themes.setters;
 
 import java.awt.Font;
+import java.awt.Toolkit;
+import java.lang.reflect.Method;
 
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
@@ -10,7 +12,10 @@ import javax.swing.UIManager;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.FontUIResource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.limewire.util.OSUtils;
+import org.pushingpixels.lafwidget.utils.LookUtils;
 import org.pushingpixels.substance.api.SubstanceLookAndFeel;
 import org.pushingpixels.substance.api.fonts.SubstanceFontUtilities;
 import org.pushingpixels.substance.internal.ui.SubstanceCheckBoxMenuItemUI;
@@ -35,8 +40,11 @@ import com.limegroup.gnutella.gui.themes.SkinTextAreaUI;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeSetter;
 import com.limegroup.gnutella.gui.themes.fueled.FueledCustomUI;
+import com.limegroup.gnutella.settings.ApplicationSettings;
 
 public class SubstanceThemeSetter implements ThemeSetter {
+
+    private static final Log LOG = LogFactory.getLog(SubstanceThemeSetter.class);
 
     private final String _name;
     private final String _skinClassName;
@@ -69,6 +77,10 @@ public class SubstanceThemeSetter implements ThemeSetter {
             scaledFontPolicyFactor = MAC_SCALED_FONT_POLICY_FACTOR;
         } else if (OSUtils.isLinux()) {
             scaledFontPolicyFactor = LINUX_SCALED_FONT_POLICY_FACTOR;
+        }
+
+        if (LookUtils.IS_OS_WINDOWS) {
+            fixWindowsOSFont();
         }
 
         SubstanceLookAndFeel.setFontPolicy(SubstanceFontUtilities.getScaledFontPolicy(scaledFontPolicyFactor));
@@ -205,5 +217,47 @@ public class SubstanceThemeSetter implements ThemeSetter {
     public ComponentUI createProgressBarUI(JComponent comp) {
         SubstanceCoreUtilities.testComponentCreationThreadingViolation(comp);
         return new SkinProgressBarUI();
+    }
+
+    // windows font policy http://msdn.microsoft.com/en-us/library/windows/desktop/aa511282.aspx
+    // table of languages http://msdn.microsoft.com/en-us/library/ee825488(v=cs.20).aspx
+    private void fixWindowsOSFont() {
+        try {
+            Toolkit toolkit = Toolkit.getDefaultToolkit();
+
+            Method method = Toolkit.class.getDeclaredMethod("setDesktopProperty", String.class, Object.class);
+            method.setAccessible(true);
+
+            String fontName = null;
+
+            String language = ApplicationSettings.getLanguage();
+            if (language != null) {
+                if (language.startsWith("ja")) {
+                    //Meiryo for Japanese
+                    fontName = "Meiryo";
+                } else if (language.startsWith("ko")) {
+                    //Malgun Gothic for Korean
+                    fontName = "Malgun Gothic";
+                } else if (language.startsWith("zh")) {
+                    //Microsoft JhengHei for Chinese (Traditional)
+                    //Microsoft YaHei for Chinese (Simplified)
+                    fontName = "Microsoft JhengHei";
+                } else if (language.startsWith("he")) {
+                    //Gisha for Hebrew
+                    fontName = "Gisha";
+                } else if (language.startsWith("th")) {
+                    //Leelawadee for Thai
+                    fontName = "Leelawadee";
+                }
+            }
+
+            if (fontName != null) {
+                Font font = new Font(fontName, Font.PLAIN, 12);
+                method.invoke(toolkit, "win.icon.font", font);
+                SubstanceLookAndFeel.setFontPolicy(SubstanceFontUtilities.getDefaultFontPolicy());
+            }
+        } catch (Throwable e) {
+            LOG.error("Error fixing font", e);
+        }
     }
 }
