@@ -20,6 +20,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,14 +33,6 @@ import java.util.Locale;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
-
-import org.limewire.util.FilenameUtils;
-
-import com.frostwire.mp4.DefaultMp4Builder;
-import com.frostwire.mp4.IsoFile;
-import com.frostwire.mp4.Movie;
-import com.frostwire.mp4.MovieCreator;
-import com.frostwire.mp4.Track;
 
 import jd.PluginWrapper;
 import jd.config.SubConfiguration;
@@ -61,6 +57,20 @@ import jd.plugins.PluginForDecrypt;
 import jd.plugins.PluginForHost;
 import jd.utils.JDUtilities;
 import jd.utils.locale.JDL;
+
+import com.frostwire.mp4.DefaultMp4Builder;
+import com.frostwire.mp4.IsoFile;
+import com.frostwire.mp4.Movie;
+import com.frostwire.mp4.MovieCreator;
+import com.frostwire.mp4.Track;
+import com.frostwire.mp4.boxes.Box;
+import com.frostwire.mp4.boxes.FileTypeBox;
+import com.frostwire.mp4.boxes.MetaBox;
+import com.frostwire.mp4.boxes.MovieBox;
+import com.frostwire.mp4.boxes.UserDataBox;
+import com.frostwire.mp4.boxes.apple.AppleCoverBox;
+import com.frostwire.mp4.boxes.apple.AppleItemListBox;
+
 import de.savemytube.flv.FLV;
 
 @DecrypterPlugin(revision = "$Revision: 16079 $", interfaceVersion = 2, names = { "youtube.com" }, urls = { "https?://[\\w\\.]*?youtube\\.com/(embed/|watch.*?v=|view_play_list\\?p=|playlist\\?(p|list)=|.*?g/c/|.*?grid/user/|v/)[a-z\\-_A-Z0-9]+(.*?page=\\d+)?" }, flags = { 0 })
@@ -80,17 +90,12 @@ public class TbCm extends PluginForDecrypt {
     }
 
     public static enum DestinationFormat {
-        AUDIOMP3("Audio (MP3)", new String[] { ".mp3" }),
-        AUDIOAAC("Audio (AAC)", new String[] { ".m4a" }),
-        VIDEOFLV("Video (FLV)", new String[] { ".flv" }),
-        VIDEOMP4("Video (MP4)", new String[] { ".mp4" }),
-        VIDEOWEBM("Video (Webm)", new String[] { ".webm" }),
-        VIDEO3GP("Video (3GP)", new String[] { ".3gp" }),
-        UNKNOWN("Unknown (unk)", new String[] { ".unk" }),
+        AUDIOMP3("Audio (MP3)", new String[] { ".mp3" }), AUDIOAAC("Audio (AAC)", new String[] { ".m4a" }), VIDEOFLV("Video (FLV)", new String[] { ".flv" }), VIDEOMP4("Video (MP4)", new String[] { ".mp4" }), VIDEOWEBM("Video (Webm)", new String[] { ".webm" }), VIDEO3GP("Video (3GP)",
+                new String[] { ".3gp" }), UNKNOWN("Unknown (unk)", new String[] { ".unk" }),
 
         VIDEOIPHONE("Video (IPhone)", new String[] { ".mp4" });
 
-        private String   text;
+        private String text;
         private String[] ext;
 
         DestinationFormat(final String text, final String[] ext) {
@@ -115,24 +120,24 @@ public class TbCm extends PluginForDecrypt {
 
     static class Info {
         public String link;
-        public long   size;
-        public int    fmt;
+        public long size;
+        public int fmt;
         public String desc;
     }
 
-    private final Pattern                       StreamingShareLink  = Pattern.compile("\\< streamingshare=\"youtube\\.com\" name=\"(.*?)\" dlurl=\"(.*?)\" brurl=\"(.*?)\" convertto=\"(.*?)\" comment=\"(.*?)\" \\>", Pattern.CASE_INSENSITIVE);
+    private final Pattern StreamingShareLink = Pattern.compile("\\< streamingshare=\"youtube\\.com\" name=\"(.*?)\" dlurl=\"(.*?)\" brurl=\"(.*?)\" convertto=\"(.*?)\" comment=\"(.*?)\" \\>", Pattern.CASE_INSENSITIVE);
 
-    static public final Pattern                 YT_FILENAME_PATTERN = Pattern.compile("<meta name=\"title\" content=\"(.*?)\">", Pattern.CASE_INSENSITIVE);
+    static public final Pattern YT_FILENAME_PATTERN = Pattern.compile("<meta name=\"title\" content=\"(.*?)\">", Pattern.CASE_INSENSITIVE);
 
-    HashMap<DestinationFormat, ArrayList<Info>> possibleconverts    = null;
+    HashMap<DestinationFormat, ArrayList<Info>> possibleconverts = null;
 
-    private static final Logger                 LOG                 = JDLogger.getLogger();
+    private static final Logger LOG = JDLogger.getLogger();
 
-    private static final String                 TEMP_EXT            = ".tmp$";
+    private static final String TEMP_EXT = ".tmp$";
 
-    ArrayList<String>                           done                = new ArrayList<String>();
-    private static boolean                      pluginloaded        = false;
-    private boolean                             verifyAge           = false;
+    ArrayList<String> done = new ArrayList<String>();
+    private static boolean pluginloaded = false;
+    private boolean verifyAge = false;
 
     public static boolean ConvertFile(final DownloadLink downloadlink, final DestinationFormat InType, final DestinationFormat OutType) {
         TbCm.LOG.info("Convert " + downloadlink.getName() + " - " + InType.getText() + " - " + OutType.getText());
@@ -175,7 +180,7 @@ public class TbCm extends PluginForDecrypt {
             switch (OutType) {
             case AUDIOAAC:
                 TbCm.LOG.info("Convert MP4 to mpa...");
-                return demuxMP4Audio(downloadlink.getFileOutput());
+                return demuxMP4Audio(downloadlink);
             default:
                 TbCm.LOG.warning("Don't know how to convert " + InType.getText() + " to " + OutType.getText());
                 downloadlink.getLinkStatus().setErrorMessage(JDL.L("convert.progress.unknownintype", "Unknown format"));
@@ -210,17 +215,21 @@ public class TbCm extends PluginForDecrypt {
     private void addVideosCurrentPage(final ArrayList<DownloadLink> links, String playlistID) {
         final String[] videos = this.br.getRegex("href=\"(/watch\\?v=.*?)\"").getColumn(0);
         for (String video : videos) {
-            if (done.contains(video)) continue;
+            if (done.contains(video))
+                continue;
             done.add(video);
-            if (playlistID != null && !video.contains(playlistID)) continue;
+            if (playlistID != null && !video.contains(playlistID))
+                continue;
             video = new Regex(video, "(/watch\\?v=.*?)&").getMatch(0);
-            if (video == null) continue;
+            if (video == null)
+                continue;
             links.add(this.createDownloadlink("http://www.youtube.com" + video));
         }
     }
 
     public boolean canHandle(final String data) {
-        if (PLUGIN_DISABLED) return false;
+        if (PLUGIN_DISABLED)
+            return false;
         return super.canHandle(data);
     }
 
@@ -228,7 +237,8 @@ public class TbCm extends PluginForDecrypt {
 
         this.possibleconverts = new HashMap<DestinationFormat, ArrayList<Info>>();
         final ArrayList<DownloadLink> decryptedLinks = new ArrayList<DownloadLink>();
-        if (PLUGIN_DISABLED) return decryptedLinks;
+        if (PLUGIN_DISABLED)
+            return decryptedLinks;
         String parameter = param.toString().replace("watch#!v", "watch?v");
         parameter = parameter.replaceFirst("(watch\\?.*?v)", "watch?v");
         parameter = parameter.replaceFirst("/embed/", "/watch?v=");
@@ -241,7 +251,8 @@ public class TbCm extends PluginForDecrypt {
         }
         if (parameter.contains("v/")) {
             String id = new Regex(parameter, "v/([a-z\\-_A-Z0-9]+)").getMatch(0);
-            if (id != null) parameter = "http://www.youtube.com/watch?v=" + id;
+            if (id != null)
+                parameter = "http://www.youtube.com/watch?v=" + id;
         }
         if (parameter.contains("view_play_list") || parameter.contains("playlist") || parameter.contains("g/c/") || parameter.contains("grid/user/")) {
             if (parameter.contains("g/c/") || parameter.contains("grid/user/")) {
@@ -252,10 +263,12 @@ public class TbCm extends PluginForDecrypt {
                         id = new Regex(parameter, "youtube\\.com/playlist\\?list=(.+)").getMatch(0);
                     }
                 }
-                if (id != null) parameter = "http://www.youtube.com/view_play_list?p=" + id;
+                if (id != null)
+                    parameter = "http://www.youtube.com/view_play_list?p=" + id;
             }
             String playlistID = new Regex(parameter, "\\?list=([a-zA-Z0-9]+)").getMatch(0);
-            if (playlistID == null) playlistID = new Regex(parameter, "list\\?p=([a-zA-Z0-9]+)").getMatch(0);
+            if (playlistID == null)
+                playlistID = new Regex(parameter, "list\\?p=([a-zA-Z0-9]+)").getMatch(0);
             parameter = parameter.replaceFirst("playlist\\?", "view_play_list?");
             this.br.getPage(parameter);
             this.addVideosCurrentPage(decryptedLinks, playlistID);
@@ -306,7 +319,9 @@ public class TbCm extends PluginForDecrypt {
                     throw new DecrypterException("This video is not avaible from your IP address");
                 }
                 if (LinksFound == null || LinksFound.isEmpty()) {
-                    if (verifyAge || this.br.getURL().toLowerCase().indexOf("youtube.com/get_video_info?") != -1 && !prem) { throw new DecrypterException(DecrypterException.ACCOUNT); }
+                    if (verifyAge || this.br.getURL().toLowerCase().indexOf("youtube.com/get_video_info?") != -1 && !prem) {
+                        throw new DecrypterException(DecrypterException.ACCOUNT);
+                    }
                     throw new DecrypterException("Video no longer available");
                 }
 
@@ -320,7 +335,8 @@ public class TbCm extends PluginForDecrypt {
                 SubConfiguration cfg = SubConfiguration.getConfig("youtube.com");
                 if (cfg.getBooleanProperty("ISASFILENAME", false)) {
                     String id = new Regex(parameter, "v=([a-z\\-_A-Z0-9]+)").getMatch(0);
-                    if (id != null) YT_FILENAME = id.toUpperCase(Locale.ENGLISH);
+                    if (id != null)
+                        YT_FILENAME = id.toUpperCase(Locale.ENGLISH);
                 }
                 final boolean fast = cfg.getBooleanProperty("FAST_CHECK2", false);
                 final boolean mp3 = cfg.getBooleanProperty("ALLOW_MP3", true);
@@ -371,7 +387,7 @@ public class TbCm extends PluginForDecrypt {
                 String dlLink = "";
                 String vQuality = "";
                 DestinationFormat cMode = null;
-                
+
                 boolean addedAACHQ = false;
 
                 for (final Integer format : LinksFound.keySet()) {
@@ -508,7 +524,9 @@ public class TbCm extends PluginForDecrypt {
         br.setCookie("youtube.com", "PREF", "f2=40100000");
         br.getHeaders().put("User-Agent", "Wget/1.12");
         br.getPage(video);
-        if (br.containsHTML("id=\"unavailable-submessage\" class=\"watch-unavailable-submessage\"")) { return null; }
+        if (br.containsHTML("id=\"unavailable-submessage\" class=\"watch-unavailable-submessage\"")) {
+            return null;
+        }
         final String VIDEOID = new Regex(video, "watch\\?v=([\\w_\\-]+)").getMatch(0);
         String YT_FILENAME = br.containsHTML("&title=") ? Encoding.htmlDecode(br.getRegex("&title=([^&$]+)").getMatch(0).replaceAll("\\+", " ").trim()) : VIDEOID;
         final String url = br.getURL();
@@ -529,7 +547,9 @@ public class TbCm extends PluginForDecrypt {
                 form.put("action_confirm", "Confirm+Birth+Date");
                 form.put("session_token", Encoding.urlEncode(session_token));
                 br.submitForm(form);
-                if (br.getCookie("http://www.youtube.com", "is_adult") == null) { return null; }
+                if (br.getCookie("http://www.youtube.com", "is_adult") == null) {
+                    return null;
+                }
             } else if (url.toLowerCase(Locale.ENGLISH).indexOf("youtube.com/index?ytsession=") != -1 || url.toLowerCase(Locale.ENGLISH).indexOf("youtube.com/verify_age?next_url=") != -1 && !prem) {
                 ythack = true;
                 br.getPage("http://www.youtube.com/get_video_info?video_id=" + VIDEOID);
@@ -622,7 +642,8 @@ public class TbCm extends PluginForDecrypt {
         /* we have to make sure the youtube plugin is loaded */
         if (pluginloaded == false) {
             final PluginForHost plugin = JDUtilities.getPluginForHost("youtube.com");
-            if (plugin == null) throw new IllegalStateException("youtube plugin not found!");
+            if (plugin == null)
+                throw new IllegalStateException("youtube plugin not found!");
             pluginloaded = true;
         }
         return jd.plugins.hoster.Youtube.unescape(s);
@@ -650,9 +671,12 @@ public class TbCm extends PluginForDecrypt {
         return true;
     }
 
-    private static boolean demuxMP4Audio(String filename) {
+    private static boolean demuxMP4Audio(DownloadLink dl) {
+        String filename = dl.getFileOutput();
         try {
             String mp4Filename = filename.replace(".m4a", ".mp4");
+            final String jpgFilename = filename.replace(".m4a", ".jpg");
+            downloadThumbnail(dl, jpgFilename);
             new File(filename).renameTo(new File(mp4Filename));
             FileInputStream fis = new FileInputStream(mp4Filename);
             FileChannel inFC = fis.getChannel();
@@ -675,22 +699,133 @@ public class TbCm extends PluginForDecrypt {
             Movie outMovie = new Movie();
             outMovie.addTrack(audioTrack);
 
-            IsoFile out = new DefaultMp4Builder().build(outMovie);
+            IsoFile out = new DefaultMp4Builder() {
+                protected Box createUdta(Movie movie) {
+                    return addThumbnailBox(jpgFilename);
+                };
+            }.build(outMovie);
             String audioFilename = filename;
             FileOutputStream fos = new FileOutputStream(audioFilename);
+            out.getBoxes(FileTypeBox.class).get(0).setMajorBrand("M4A ");
             out.getBox(fos.getChannel());
             fos.close();
-            
+
             if (!new File(mp4Filename).delete()) {
                 new File(mp4Filename).deleteOnExit();
             }
-            
+            File jpgFile = new File(jpgFilename);
+            if (jpgFile.exists() && !jpgFile.delete()) {
+                jpgFile.deleteOnExit();
+            }
+
             fis.close();
-            
+
             return true;
         } catch (Throwable e) {
             TbCm.LOG.info("Error demuxing MP4 audio - " + filename);
             return false;
         }
+    }
+    
+    private static void asyncDownloadThumbnail(final DownloadLink dl, final String jpgFilename) {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                downloadThumbnail(dl, jpgFilename);
+            }
+        }, "YouTube thumbnail download");
+        t.setDaemon(true);
+        t.start();
+    }
+
+    private static void downloadThumbnail(DownloadLink dl, String jpgFilename) {
+        try {
+            String videoLink = (String) dl.getProperty("videolink", null);
+            //http://www.youtube.com/watch?v=[id]
+            //http://i.ytimg.com/vi/[id]/hqdefault.jpg
+            String id = videoLink.replace("http://www.youtube.com/watch?v=", "");
+            String url = "http://i.ytimg.com/vi/" + id + "/hqdefault.jpg";
+            simpleHTTP(url, jpgFilename);
+            
+        } catch (Throwable e) {
+            TbCm.LOG.info("Unable to get youtube thumbnail - " + dl.getFileOutput());
+        }
+    }
+    
+    private static void simpleHTTP(String url, String jpgFilename) throws Throwable {
+        URL u = new URL(url);
+        URLConnection con = u.openConnection();
+        con.setConnectTimeout(1000);
+        con.setReadTimeout(1000);
+        InputStream in = con.getInputStream();
+        OutputStream out = new FileOutputStream(jpgFilename);
+
+        try {
+            
+            byte[] b = new byte[1024];
+            int n = 0;
+            while ((n = in.read(b, 0, b.length)) != -1) {
+                out.write(b, 0, n);
+            }
+        } finally {
+            try {
+                out.close();
+            } catch (Throwable e) {
+                // ignore   
+            }
+            try {
+                in.close();
+            } catch (Throwable e) {
+                // ignore   
+            }
+        }
+    }
+    
+    private static UserDataBox addThumbnailBox(String jpgFilename) {
+        File jpgFile = new File(jpgFilename);
+        if (!jpgFile.exists()) {
+            return null;
+        }
+
+        byte[] jpgData = toByteArray(jpgFile);
+        if (jpgData == null) {
+            return null;
+        }
+        
+        //"/moov/udta/meta/ilst/covr/data"
+        UserDataBox udta = new UserDataBox();
+        
+        MetaBox meta = new MetaBox();
+        udta.addBox(meta);
+        
+        AppleItemListBox ilst = new AppleItemListBox();
+        meta.addBox(ilst);
+        
+        AppleCoverBox covr = new AppleCoverBox();
+        covr.setJpg(jpgData);
+        ilst.addBox(covr);
+        
+        return udta;
+    }
+
+    private static byte[] toByteArray(File file) {
+        InputStream in = null;
+
+        try {
+            int length = (int) file.length();
+            byte[] array = new byte[length];
+            in = new FileInputStream(file);
+
+            int offset = 0;
+            while (offset < length) {
+                offset += in.read(array, offset, (length - offset));
+            }
+            in.close();
+            return array;
+        } catch (Throwable e) {
+            TbCm.LOG.info("Error reading local youtube thumbnail - " + file);
+        }
+
+        return null;
     }
 }
