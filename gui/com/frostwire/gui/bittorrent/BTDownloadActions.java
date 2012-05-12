@@ -40,6 +40,11 @@ import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.SharingSettings;
 
+/**
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 final class BTDownloadActions {
 
     static final ShowDetailsAction SHOW_DETAILS_ACTION = new ShowDetailsAction();
@@ -442,7 +447,10 @@ final class BTDownloadActions {
         }
     }
     
-    static class PlaySingleAudioFileAction extends AbstractAction {
+    static final class PlaySingleAudioFileAction extends AbstractAction {
+        
+        private static final long serialVersionUID = -3628469680044329612L;
+
         public PlaySingleAudioFileAction() {
             super(I18n.tr("Play audio file"));
             putValue(Action.LONG_DESCRIPTION,I18n.tr("Play Audio file"));

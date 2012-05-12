@@ -15,6 +15,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.frostwire.gui.library;
 
 import java.awt.Color;
@@ -27,21 +28,37 @@ import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.nio.channels.FileChannel;
 
 import javax.imageio.IIOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.frostwire.jpeg.JPEGImageIO;
 import com.frostwire.mp3.ID3v2;
 import com.frostwire.mp3.Mp3File;
+import com.frostwire.mp4.IsoFile;
+import com.frostwire.mp4.Path;
+import com.frostwire.mp4.boxes.apple.AppleDataBox;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.themes.ThemeMediator;
 import com.limegroup.gnutella.gui.themes.ThemeObserver;
 
-public class LibraryCoverArt extends JPanel implements ThemeObserver {
+/**
+ * @author gubatron
+ * @author aldenml
+ *
+ */
+public final class LibraryCoverArt extends JPanel implements ThemeObserver {
 
     private static final long serialVersionUID = 4302859512245078593L;
+
+    @SuppressWarnings("unused")
+    private static final Log LOG = LogFactory.getLog(LibraryCoverArt.class);
 
     private final BufferedImage background;
     private final Image defaultCoverArt;
@@ -71,16 +88,18 @@ public class LibraryCoverArt extends JPanel implements ThemeObserver {
             return;
         }
         this.file = file;
-        new Thread(new Runnable() {
+        Thread t = new Thread(new Runnable() {
             public void run() {
                 Image image = retrieveImage(file);
                 if (file != null && file.equals(LibraryCoverArt.this.file)) {
                     setPrivateImage(image);
                 }
             }
-        }).start();
+        }, "Cover Art extract");
+        t.setDaemon(true);
+        t.start();
     }
-    
+
     public void setDefault() {
         this.file = null;
         new Thread(new Runnable() {
@@ -110,6 +129,8 @@ public class LibraryCoverArt extends JPanel implements ThemeObserver {
         Image image = null;
         if (path.toLowerCase().endsWith(".mp3")) {
             image = retrieveImageFromMP3(path);
+        } else if (path.toLowerCase().endsWith(".m4a")) {
+            image = retrieveImageFromM4A(path);
         }
 
         return image;
@@ -124,10 +145,10 @@ public class LibraryCoverArt extends JPanel implements ThemeObserver {
 
         Graphics2D g2 = background.createGraphics();
         g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-        
+
         g2.setBackground(new Color(255, 255, 255, 0));
-        g2.clearRect(0,0,getWidth(),getHeight());
-        
+        g2.clearRect(0, 0, getWidth(), getHeight());
+
         g2.drawImage(coverArtImage, 0, 0, getWidth(), getHeight(), null);
         g2.dispose();
 
@@ -147,11 +168,47 @@ public class LibraryCoverArt extends JPanel implements ThemeObserver {
                     return JPEGImageIO.read(new ByteArrayInputStream(imageBytes, 0, imageBytes.length));
                 }
             }
-            return null;
-        } catch (Exception e) {
-            // ignore
-            return null;
+        } catch (Throwable e) {
+            //LOG.error("Unable to read cover art from mp3");
         }
+
+        return null;
+    }
+
+    private Image retrieveImageFromM4A(String filename) {
+        try {
+            FileInputStream fis = new FileInputStream(filename);
+            FileChannel inFC = fis.getChannel();
+            IsoFile iso = new IsoFile(inFC);
+
+            Path p = new Path(iso);
+
+            AppleDataBox data = (AppleDataBox) p.getPath("/moov/udta/meta/ilst/covr/data");
+            if (data != null) {
+                if ((data.getFlags() & 0x1) == 0x1) { // jpg
+                    byte[] imageBytes = data.getData();
+                    try {
+                        return ImageIO.read(new ByteArrayInputStream(imageBytes, 0, imageBytes.length));
+                    } catch (IIOException e) {
+                        return JPEGImageIO.read(new ByteArrayInputStream(imageBytes, 0, imageBytes.length));
+                    }
+                } else if ((data.getFlags() & 0x2) == 0x2) { // png
+                    byte[] imageBytes = data.getData();
+                    try {
+                        return ImageIO.read(new ByteArrayInputStream(imageBytes, 0, imageBytes.length));
+                    } catch (IIOException e) {
+                        return null;
+                    }
+                }
+            }
+
+            fis.close();
+
+        } catch (Throwable e) {
+            //LOG.error("Unable to read cover art from m4a");
+        }
+
+        return null;
     }
 
     @Override

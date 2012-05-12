@@ -654,7 +654,8 @@ public class TbCm extends PluginForDecrypt {
         try {
             String mp4Filename = filename.replace(".m4a", ".mp4");
             new File(filename).renameTo(new File(mp4Filename));
-            FileChannel inFC = new FileInputStream(mp4Filename).getChannel();
+            FileInputStream fis = new FileInputStream(mp4Filename);
+            FileChannel inFC = fis.getChannel();
             Movie inVideo = MovieCreator.build(inFC);
 
             Track audioTrack = null;
@@ -683,6 +684,8 @@ public class TbCm extends PluginForDecrypt {
             if (!new File(mp4Filename).delete()) {
                 new File(mp4Filename).deleteOnExit();
             }
+            
+            fis.close();
             
             return true;
         } catch (Throwable e) {

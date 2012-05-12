@@ -72,10 +72,10 @@ public class PropertyBoxParserImpl extends AbstractBoxParser {
         
 //        hint=com.coremedia.iso.boxes.TrackReferenceTypeBox(type)
 //        cdsc=com.coremedia.iso.boxes.TrackReferenceTypeBox(type)
-//        meta-ilst=com.coremedia.iso.boxes.apple.AppleItemListBox()
-//        -----name=com.coremedia.iso.boxes.apple.AppleNameBox()
-//        -----mean=com.coremedia.iso.boxes.apple.AppleMeanBox()
-//        -----data=com.coremedia.iso.boxes.apple.AppleDataBox()
+        put(mapping, "meta-ilst", "apple.AppleItemListBox()");
+        put(mapping, "-----name", "apple.AppleNameBox()");
+        put(mapping, "-----mean", "apple.AppleMeanBox()");
+        put(mapping, "-----data", "apple.AppleDataBox()");
 //        rmra=com.coremedia.iso.boxes.apple.AppleReferenceMovieBox()
 //        rmda=com.coremedia.iso.boxes.apple.AppleReferenceMovieDescriptorBox()
 //        rmdr=com.coremedia.iso.boxes.apple.AppleDataRateBox()
@@ -83,7 +83,7 @@ public class PropertyBoxParserImpl extends AbstractBoxParser {
 //        ilst-cprt=com.coremedia.iso.boxes.apple.AppleCopyrightBox()
 //        ilst-\u00A9cmt=com.coremedia.iso.boxes.apple.AppleCommentBox()
 //        ilst-desc=com.coremedia.iso.boxes.apple.AppleDescriptionBox()
-//        ilst-covr=com.coremedia.iso.boxes.apple.AppleCoverBox()
+        put(mapping, "ilst-covr", "apple.AppleCoverBox()");
 //        ilst-\u00A9alb=com.coremedia.iso.boxes.apple.AppleAlbumBox()
 //        ilst-\u00A9gen=com.coremedia.iso.boxes.apple.AppleCustomGenreBox()
 //        ilst-\u00A9grp=com.coremedia.iso.boxes.apple.AppleGroupingBox()
@@ -96,7 +96,7 @@ public class PropertyBoxParserImpl extends AbstractBoxParser {
 //        ilst-\u00A9nam=com.coremedia.iso.boxes.apple.AppleTrackTitleBox()
 //        ilst-ldes=com.coremedia.iso.boxes.apple.AppleSynopsisBox()
 //        ilst-\u00A9ART=com.coremedia.iso.boxes.apple.AppleArtistBox()
-//        ilst-name=com.coremedia.iso.boxes.apple.AppleNameBox()
+        put(mapping, "ilst-name", "apple.AppleNameBox()");
 //        ilst-cpil=com.coremedia.iso.boxes.apple.AppleCompilationBox()
 //        ilst-purd=com.coremedia.iso.boxes.apple.ApplePurchaseDateBox()
 //        ilst-\u00A9too=com.coremedia.iso.boxes.apple.AppleEncoderBox()
@@ -104,7 +104,7 @@ public class PropertyBoxParserImpl extends AbstractBoxParser {
 //        ilst-gnre=com.coremedia.iso.boxes.apple.AppleStandardGenreBox()
 //        ilst-tves=com.coremedia.iso.boxes.apple.AppleTvEpisodeBox()
 //        ilst-ilst=com.coremedia.iso.boxes.apple.AppleItemListBox()
-//        ilst-data=com.coremedia.iso.boxes.apple.AppleDataBox()
+        put(mapping, "ilst-data", "apple.AppleDataBox()");
 //        ilst-tvsn=com.coremedia.iso.boxes.apple.AppleTvSeasonBox()
 //        ilst-soal=com.coremedia.iso.boxes.apple.AppleSortAlbumBox()
 //        ilst-tven=com.coremedia.iso.boxes.apple.AppleTvEpisodeNumberBox()
@@ -201,7 +201,7 @@ public class PropertyBoxParserImpl extends AbstractBoxParser {
         put(mapping, "stco", "StaticChunkOffsetBox()");
 //        subs=com.coremedia.iso.boxes.SubSampleInformationBox()
 //        sbgp=com.coremedia.iso.boxes.SampleToGroupBox()
-//        udta=com.coremedia.iso.boxes.UserDataBox()
+        put(mapping, "udta", "UserDataBox()");
 //        skip=com.coremedia.iso.boxes.FreeSpaceBox()
 //        tref=com.coremedia.iso.boxes.TrackReferenceBox()
 //        iloc=com.coremedia.iso.boxes.ItemLocationBox()
@@ -209,7 +209,7 @@ public class PropertyBoxParserImpl extends AbstractBoxParser {
 //        saio=com.coremedia.iso.boxes.SampleAuxiliaryInformationOffsetsBox()
 //        saiz=com.coremedia.iso.boxes.SampleAuxiliaryInformationSizesBox()
 //        damr=com.coremedia.iso.boxes.sampleentry.AmrSpecificBox()
-//        meta=com.coremedia.iso.boxes.MetaBox()
+        put(mapping, "meta", "MetaBox()");
 //        ipro=com.coremedia.iso.boxes.ItemProtectionBox()
 //        sinf=com.coremedia.iso.boxes.ProtectionSchemeInformationBox()
 //        frma=com.coremedia.iso.boxes.OriginalFormatBox()
