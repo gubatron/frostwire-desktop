@@ -4,10 +4,12 @@ import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.nio.channels.FileChannel;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,6 +32,7 @@ import com.frostwire.alexandria.Playlist;
 import com.frostwire.alexandria.PlaylistItem;
 import com.frostwire.gui.library.LibraryMediator;
 import com.frostwire.mp3.Mp3File;
+import com.frostwire.mp4.IsoFile;
 import com.frostwire.mplayer.IcyInfoListener;
 import com.frostwire.mplayer.MPlayer;
 import com.frostwire.mplayer.MediaPlaybackState;
@@ -235,18 +238,47 @@ public class AudioPlayer implements RefreshListener {
 	}
 	
     private void calculateDurationInSecs(File f) {
-    	if (FileUtils.getFileExtension(f)==null || !FileUtils.getFileExtension(f).toLowerCase().endsWith("mp3")) {
-    		durationInSeconds = -1;
-    		return;
-    	}
-    	
-    	try {
-			Mp3File mp3 = new Mp3File(f.getAbsolutePath());
-			durationInSeconds = mp3.getLengthInSeconds();
-		} catch (Exception e) {
-			durationInSeconds = -1;
-		}    	
-	}
+        if (FileUtils.getFileExtension(f) == null || !FileUtils.getFileExtension(f).toLowerCase().endsWith("mp3") || !FileUtils.getFileExtension(f).toLowerCase().endsWith("m4a")) {
+            durationInSeconds = -1;
+            return;
+        }
+
+        if (FileUtils.getFileExtension(f).toLowerCase().endsWith("mp3")) {
+            durationInSeconds = getDurationFromMP3(f);
+        } else if (FileUtils.getFileExtension(f).toLowerCase().endsWith("m4a")) {
+            durationInSeconds = getDurationFromM4A(f);
+        }
+    }
+    
+    private long getDurationFromMP3(File f) {
+        try {
+            Mp3File mp3 = new Mp3File(f.getAbsolutePath());
+            return mp3.getLengthInSeconds();
+        } catch (Throwable e) {
+            return -1;
+        }
+    }
+    
+    private long getDurationFromM4A(File f) {
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(f);
+            FileChannel inFC = fis.getChannel();
+            IsoFile isoFile = new IsoFile(inFC);
+
+            return isoFile.getMovieBox().getMovieHeaderBox().getDuration() / isoFile.getMovieBox().getMovieHeaderBox().getTimescale();
+        } catch (Throwable e) {
+            return -1;
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (Throwable e) {
+                    // ignore
+                }
+            }
+        }
+    }
 
 	public void asyncLoadSong(final AudioSource source, final boolean play, final boolean playNextSong, final Playlist currentPlaylist,
             final List<AudioSource> playlistFilesView) {
