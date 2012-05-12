@@ -81,6 +81,8 @@ public class SubstanceThemeSetter implements ThemeSetter {
 
         if (LookUtils.IS_OS_WINDOWS) {
             fixWindowsOSFont();
+        } else if (LookUtils.IS_OS_LINUX) {
+            fixLinuxOSFont();
         }
 
         SubstanceLookAndFeel.setFontPolicy(SubstanceFontUtilities.getScaledFontPolicy(scaledFontPolicyFactor));
@@ -254,6 +256,47 @@ public class SubstanceThemeSetter implements ThemeSetter {
             if (fontName != null) {
                 Font font = new Font(fontName, Font.PLAIN, 12);
                 method.invoke(toolkit, "win.icon.font", font);
+                SubstanceLookAndFeel.setFontPolicy(SubstanceFontUtilities.getDefaultFontPolicy());
+            }
+        } catch (Throwable e) {
+            LOG.error("Error fixing font", e);
+        }
+    }
+
+    private void fixLinuxOSFont() {
+        try {
+            Toolkit toolkit = Toolkit.getDefaultToolkit();
+
+            Method method = Toolkit.class.getDeclaredMethod("setDesktopProperty", String.class, Object.class);
+            method.setAccessible(true);
+
+            String fontName = null;
+
+            String language = ApplicationSettings.getLanguage();
+            if (language != null) {
+                if (language.startsWith("ja")) {
+                    //Meiryo for Japanese
+                    fontName = "Meiryo";
+                } else if (language.startsWith("ko")) {
+                    //Malgun Gothic for Korean
+                    fontName = "Malgun Gothic";
+                } else if (language.startsWith("zh")) {
+                    //Microsoft JhengHei for Chinese (Traditional)
+                    //Microsoft YaHei for Chinese (Simplified)
+                    fontName = "Microsoft JhengHei";
+                } else if (language.startsWith("he")) {
+                    //Gisha for Hebrew
+                    fontName = "Gisha";
+                } else if (language.startsWith("th")) {
+                    //Leelawadee for Thai
+                    fontName = "Leelawadee";
+                }
+            }
+
+            if (fontName != null) {
+                // linux is hardcoded to Dialog
+                fontName = "Dialog";
+                method.invoke(toolkit, "gnome.Gtk/FontName", fontName);
                 SubstanceLookAndFeel.setFontPolicy(SubstanceFontUtilities.getDefaultFontPolicy());
             }
         } catch (Throwable e) {
