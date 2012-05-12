@@ -120,7 +120,9 @@ public class GoogleSearchField extends SearchField {
                         public void run() {
                             Iterator<String> it = suggestions.iterator();
                             if (it.hasNext())
-                                input.showPopup(it);
+                                if (!StringUtils.isNullOrEmpty(input.getText(), true)) {
+                                    input.showPopup(it);
+                                }
                             else
                                 input.hidePopup();
                         }
