@@ -518,6 +518,7 @@ public class LocalSearchEngine {
 
     public void resetDB() {
         DB.reset();
+        KNOWN_INFO_HASHES.clear();
     }
 
     private interface DeepTask extends Runnable, Comparable<DeepTask> {
