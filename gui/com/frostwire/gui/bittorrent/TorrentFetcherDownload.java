@@ -53,24 +53,20 @@ public class TorrentFetcherDownload implements BTDownload {
         _state = STATE_DOWNLOADING;
         _torrentDownloader.start();
     }
-    
-    public TorrentFetcherDownload(String uri, String displayName, String hash, long size, boolean partialDownload, ActionListener postPartialDownloadAction) {
-        this(uri, null, displayName, hash, size, partialDownload, postPartialDownloadAction);
-    }
 
     public TorrentFetcherDownload(String uri, boolean partialDownload, ActionListener postPartialDownloadAction) {
-        this(uri, getDownloadNameFromMagnetURI(uri), "", -1, partialDownload, postPartialDownloadAction);
+        this(uri, null, getDownloadNameFromMagnetURI(uri), "", -1, partialDownload, postPartialDownloadAction);
     }
 
     public TorrentFetcherDownload(String uri, String relativePath,
 			ActionListener postPartialDownloadAction) {
-    	this(uri, getDownloadNameFromMagnetURI(uri), "", -1, true, postPartialDownloadAction);
+    	this(uri, null, getDownloadNameFromMagnetURI(uri), "", -1, true, postPartialDownloadAction);
     	this.relativePath = relativePath;
 	}
     
-    public TorrentFetcherDownload(String uri, String relativePath, String hash,
+    public TorrentFetcherDownload(String uri, String referrer, String relativePath, String hash,
             ActionListener postPartialDownloadAction) {
-        this(uri, getDownloadNameFromMagnetURI(uri), hash, -1, true, postPartialDownloadAction);
+        this(uri, referrer, getDownloadNameFromMagnetURI(uri), hash, -1, true, postPartialDownloadAction);
         this.relativePath = relativePath;
     }
 

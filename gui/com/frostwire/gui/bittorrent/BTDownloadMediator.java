@@ -645,10 +645,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         });
     }
     
-    public void openTorrentURI(final String uri, final String relativePath, final String hash, final ActionListener postPartialDownloadAction) {
+    public void openTorrentURI(final String uri, final String referrer, final String relativePath, final String hash, final ActionListener postPartialDownloadAction) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
-                BTDownload downloader = new TorrentFetcherDownload(uri, relativePath, hash, postPartialDownloadAction);
+                BTDownload downloader = new TorrentFetcherDownload(uri, referrer, relativePath, hash, postPartialDownloadAction);
                 add(downloader);
             }
         });
