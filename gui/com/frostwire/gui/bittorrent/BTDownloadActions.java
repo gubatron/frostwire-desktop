@@ -461,9 +461,7 @@ final class BTDownloadActions {
             File file = BTDownloadMediator.instance().getSelectedDownloaders()[0].getSaveLocation();
             
             if (AudioPlayer.isPlayableFile(file)) {
-                AudioPlayer.instance().stop();
-                AudioPlayer.instance().loadSong(new AudioSource(file));
-                AudioPlayer.instance().playSong();
+                AudioPlayer.instance().loadSong(new AudioSource(file),true,false);
             }
         }
     }
