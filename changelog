@@ -1,5 +1,9 @@
 frostwire (5.3.6) stable; urgency=high
+  * Full support for .m4a audio files (thumbnails, seek)
   * AAC downloads from YouTube.
+  * Fixes issue with search suggestions where the popup wouldn't 
+    hide correctly.
+  * Chinese, Korean character display fixed for Windows and Linux (Gnome only)
   * Fixes issue where it was hard to select more than one search result for
     batch downloads.
   * Fixes issue with search results from KAT.ph. Now downloads are started
@@ -9,7 +13,7 @@ frostwire (5.3.6) stable; urgency=high
   * Adds links to Facebook and Google Plus pages on status bar.
   * Single file search results now are launched on double click.
 
- -- FrostWire Team <contact@frostwire.com>  Thu, 10 May 2012 18:49:00 -0500
+ -- FrostWire Team <contact@frostwire.com>  Mon, 14 May 2012 14:47:00 -0500
 
 frostwire (5.3.5) stable; urgency=high
   * Drag and drop files and folders to your Android device running FrostWire.
