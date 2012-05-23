@@ -31,11 +31,6 @@ public final class FrostWireUtils {
 	 * Constant for the current version of FrostWire.
 	 */
 	private static final String FROSTWIRE_VERSION = "5.3.6";
-     
-	/**
-	 * Cached constant for the HTTP Server: header value.
-	 */
-	private static final String HTTP_SERVER;
 
     /** Whether or not a temporary directory is in use. */
     private static boolean temporaryDirectoryInUse;
@@ -43,19 +38,7 @@ public final class FrostWireUtils {
 	/**
 	 * Make sure the constructor can never be called.
 	 */
-	private FrostWireUtils() {}
-    
-	/**
-	 * Initialize the settings statically. 
-	 */
-	static {
-		if(!FROSTWIRE_VERSION.endsWith("Pro")) {
-			HTTP_SERVER = "LimeWire/" + FROSTWIRE_VERSION;
-		}
-		else {
-			HTTP_SERVER = ("LimeWire/"+FROSTWIRE_VERSION.
-                           substring(0, FROSTWIRE_VERSION.length()-4)+" (Pro)");
-		}
+	private FrostWireUtils() {
 	}
 
 	/**
@@ -64,16 +47,6 @@ public final class FrostWireUtils {
 	 */
 	public static String getFrostWireVersion() {
         return FROSTWIRE_VERSION;
-	}
-
-    /**
-	 * Returns the string for the server that should be reported in the HTTP
-	 * "Server: " tag.
-	 * 
-	 * @return the HTTP "Server: " header value
-	 */
-	public static String getHttpServer() {
-		return HTTP_SERVER;
 	}
     
     /**

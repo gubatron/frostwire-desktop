@@ -353,6 +353,7 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 
             InstallerMetaData md = new InstallerMetaData();
             md.frostwireVersion = _updateMessage.getVersion();
+            
 
             File f = new File(installerPath);
 

@@ -19,6 +19,7 @@ import org.limewire.util.Stopwatch;
 import org.limewire.util.SystemUtils;
 
 import com.frostwire.AzureusStarter;
+import com.frostwire.UserAgentGenerator;
 import com.limegroup.gnutella.ExternalControl;
 import com.limegroup.gnutella.LimeCoreGlue;
 import com.limegroup.gnutella.LimeCoreGlue.InstallFailedException;
@@ -30,7 +31,6 @@ import com.limegroup.gnutella.gui.themes.ThemeSettings;
 import com.limegroup.gnutella.gui.util.BackgroundExecutorService;
 import com.limegroup.gnutella.settings.ApplicationSettings;
 import com.limegroup.gnutella.settings.StartupSettings;
-import com.limegroup.gnutella.util.FrostWireUtils;
 
 /** Initializes (creates, starts, & displays) the LimeWire Core & UI. */
 public final class Initializer {
@@ -249,7 +249,7 @@ public final class Initializer {
     
     /** Installs any system properties. */
     private void installProperties() {        
-        System.setProperty("http.agent", FrostWireUtils.getHttpServer());
+        System.setProperty("http.agent", UserAgentGenerator.getUserAgent());
         stopwatch.resetAndLog("set system properties");
         
         if (OSUtils.isMacOSX()) {

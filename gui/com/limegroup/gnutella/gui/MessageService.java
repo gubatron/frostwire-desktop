@@ -75,7 +75,7 @@ public final class MessageService {
 	 *
 	 * @param message the message to display to the user
 	 */
-	final void showError(final String message) {
+	public final void showError(final String message) {
 	    GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
             	JOptionPane optionPane = new JOptionPane();
