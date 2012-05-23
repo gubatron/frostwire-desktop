@@ -3,7 +3,6 @@ package org.limewire.util;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.Closeable;
-import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -15,7 +14,6 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -280,34 +278,6 @@ public class FileUtils {
     }
     
     /**
-     * Touches a file, to ensure it exists.
-     * Note: unlike the unix touch this does not change the modification time.
-     */
-    public static void touch(File f) throws IOException {
-        if(f.exists())
-            return;
-        
-        File parent = f.getParentFile();
-        if(parent != null)
-            parent.mkdirs();
-
-        try {
-            f.createNewFile();
-        } catch(IOException failed) {
-            // Okay, createNewFile failed.  Let's try the old way.
-            FileOutputStream fos = null;
-            try {
-                fos = new FileOutputStream(f);
-            } catch(IOException ioe) {
-                ioe.initCause(failed);
-                throw ioe;
-            } finally {
-                close(fos);
-            }
-        }
-    }
-    
-    /**
      * Adds a new FileLocker to the list of FileLockers
      * that are checked when a lock needs to be released
      * on a file prior to deletion or renaming.
@@ -362,60 +332,6 @@ public class FileUtils {
         return success;
     }
     
-    /**
-     * Saves the data iff it was written exactly as we wanted.
-     */
-    public static boolean verySafeSave(File dir, String name, byte[] data) {
-        File tmp;
-        try {
-            tmp = FileUtils.createTempFile(name, "tmp", dir);
-        } catch(IOException hrorible) {
-            return false;
-        }
-        
-        File out = new File(dir, name);
-        
-        OutputStream os = null;
-        try {
-            os = new BufferedOutputStream(new FileOutputStream(tmp));
-            os.write(data);
-            os.flush();
-        } catch(IOException bad) {
-            return false;
-        } finally {
-            close(os);
-        }
-        
-        //verify that we wrote everything correctly
-        byte[] read = readFileFully(tmp);
-        if(read == null || !Arrays.equals(read, data))
-            return false;
-        
-        return forceRename(tmp, out);
-    }
-    
-    /**
-     * Reads a file, filling a byte array.
-     */
-    public static byte[] readFileFully(File source) {
-        DataInputStream raf = null;
-        int length = (int)source.length();
-        if(length <= 0)
-            return null;
-
-        byte[] data = new byte[length];
-        try {
-            raf = new DataInputStream(new BufferedInputStream(new FileInputStream(source)));
-            raf.readFully(data);
-        } catch(IOException ioe) {
-            return null;
-        } finally {
-            close(raf);
-        }
-        
-        return data;
-    }
-
     /**
      * @param directory Gets all files under this directory RECURSIVELY.
      * @param filter If null, then returns all files.  Else, only returns files
