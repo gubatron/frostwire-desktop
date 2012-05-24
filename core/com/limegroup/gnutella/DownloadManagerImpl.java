@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.gudy.azureus2.core3.global.GlobalManager;
 
 import com.frostwire.AzureusStarter;
@@ -13,6 +15,8 @@ import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.UpdateSettings;
 
 public class DownloadManagerImpl implements DownloadManager {
+    
+    private static final Log LOG = LogFactory.getLog(DownloadManagerImpl.class);
     
     /**
      * The average bandwidth over all downloads.
@@ -75,6 +79,7 @@ public class DownloadManagerImpl implements DownloadManager {
             org.gudy.azureus2.core3.download.DownloadManager downloadManager = (org.gudy.azureus2.core3.download.DownloadManager) obj;
 
             if (downloadManager.getSaveLocation().getParentFile().getAbsolutePath().equals(UpdateSettings.UPDATES_DIR.getAbsolutePath())) {
+                LOG.info("Update download: " + downloadManager.getSaveLocation());
                 continue;
             }
 
