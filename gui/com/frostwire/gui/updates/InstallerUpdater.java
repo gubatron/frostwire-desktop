@@ -1,3 +1,21 @@
+/*
+ * Created by Angel Leon (@gubatron), Alden Torres (aldenml)
+ * Copyright (c) 2011, 2012, FrostWire(TM). All rights reserved.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.frostwire.gui.updates;
 
 import java.io.BufferedInputStream;
@@ -9,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -38,6 +57,11 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.UpdateSettings;
 
+/**
+ * @author gubatron
+ * @author aldenml
+ *
+ */
 public class InstallerUpdater implements Runnable, DownloadManagerListener {
 
     private static final Log LOG = LogFactory.getLog(InstallerUpdater.class);
@@ -207,7 +231,7 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 
         } catch (Throwable e) {
             // processMessage will deal with us returning null
-            LOG.error("Error reading installer meta data", e);
+            LOG.info("Can't read installer meta data");
             return null;
         }
     }
@@ -322,7 +346,7 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 
     private void cleanupOldUpdates() {
 
-        final Pattern p = Pattern.compile("^frostwire-([0-9]+[0-9]?\\.[0-9]+[0-9]?\\.[0-9]+[0-9]?)\\.windows\\.exe(\\.torrent)?$");
+        final Pattern p = Pattern.compile("^frostwire-([0-9]+[0-9]?\\.[0-9]+[0-9]?\\.[0-9]+[0-9]?)(.*?)(\\.torrent)?$");
 
         for (File f : UpdateSettings.UPDATES_DIR.listFiles(new FilenameFilter() {
 
@@ -335,7 +359,7 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
                     return !m.group(1).equals(_updateMessage.getVersion());
                 }
 
-                return false;
+                return true;
             }
         })) {
 
@@ -353,7 +377,6 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
 
             InstallerMetaData md = new InstallerMetaData();
             md.frostwireVersion = _updateMessage.getVersion();
-            
 
             File f = new File(installerPath);
 
@@ -370,7 +393,7 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
             fos.close();
 
         } catch (Throwable e) {
-            LOG.error("Error saving update meta data", e);
+            LOG.info("Can't save update meta data");
         }
     }
 
@@ -514,4 +537,14 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
             fos.close();
         }
     } //downloadTorrentFile
+
+    public static class InstallerMetaData implements Serializable {
+
+        private static final long serialVersionUID = -2309399378691373445L;
+
+        /**
+         * Version coming from the update message
+         */
+        public String frostwireVersion;
+    }
 }
