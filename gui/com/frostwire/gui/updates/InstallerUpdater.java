@@ -359,7 +359,7 @@ public class InstallerUpdater implements Runnable, DownloadManagerListener {
                     return !m.group(1).equals(_updateMessage.getVersion());
                 }
 
-                return true;
+                return false;
             }
         })) {
 
