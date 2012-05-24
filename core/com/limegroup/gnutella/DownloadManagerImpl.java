@@ -3,7 +3,6 @@ package com.limegroup.gnutella;
 import java.io.File;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -68,12 +67,6 @@ public class DownloadManagerImpl implements DownloadManager {
             }
         }
 
-//        Collections.sort(downloads, new Comparator<org.gudy.azureus2.core3.download.DownloadManager>() {
-//            public int compare(org.gudy.azureus2.core3.download.DownloadManager o1, org.gudy.azureus2.core3.download.DownloadManager o2) {
-//                return Long.valueOf(o1.getCreationTime()).compareTo(Long.valueOf(o2.getCreationTime()));
-//            }
-//        });
-
         for (org.gudy.azureus2.core3.download.DownloadManager obj : downloads) {
 
             org.gudy.azureus2.core3.download.DownloadManager downloadManager = (org.gudy.azureus2.core3.download.DownloadManager) obj;
@@ -91,12 +84,6 @@ public class DownloadManagerImpl implements DownloadManager {
 
             addDownloaderManager(downloadManager);
         }
-    }
-    
-    /* (non-Javadoc)
-     * @see com.limegroup.gnutella.DownloadMI#killDownloadersNotListed(java.util.Collection)
-     */
-    public synchronized void killDownloadersNotListed(Collection<? extends DownloadInformation> updates) {
     }
 
     /**

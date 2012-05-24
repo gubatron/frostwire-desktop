@@ -2,7 +2,6 @@ package com.limegroup.gnutella;
 
 import java.io.File;
 import java.net.Socket;
-import java.util.Collection;
 
 
 
@@ -41,12 +40,6 @@ public interface DownloadManager {
      * snapshots and scheduling snapshot checkpointing.
      */
     public void loadSavedDownloadsAndScheduleWriting();
-
-    /**
-     * Kills all in-network downloaders that are not present in the list of URNs
-     * @param urns a current set of urns that we are downloading in-network.
-     */
-    public void killDownloadersNotListed(Collection<? extends DownloadInformation> updates);
 
     public boolean acceptPushedSocket(String file, int index, byte[] clientGUID, Socket socket);
 
