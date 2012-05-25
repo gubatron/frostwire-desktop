@@ -76,20 +76,20 @@ public class Playlist extends Entity<PlaylistDB> {
         return deleted;
     }
 
-    public void save() {
+    public synchronized void save() {
         if (db != null) {
             db.save(this);
         }
     }
 
-    public void delete() {
+    public synchronized void delete() {
         if (db != null) {
             db.delete(this);
             deleted = true;
         }
     }
 
-    public void refresh() {
+    public synchronized void refresh() {
         if (db != null) {
             _items.clear();
             _items.addAll(db.getLibraryItems(this));
