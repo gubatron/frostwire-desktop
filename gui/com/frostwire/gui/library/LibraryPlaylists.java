@@ -65,6 +65,7 @@ import com.limegroup.gnutella.gui.DialogOption;
 import com.limegroup.gnutella.gui.FileChooserHandler;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.gui.iTunesMediator;
 import com.limegroup.gnutella.gui.actions.LimeAction;
 import com.limegroup.gnutella.gui.options.ConfigureOptionsAction;
 import com.limegroup.gnutella.gui.options.OptionsConstructor;
@@ -102,7 +103,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
     private Action importToPlaylistAction = new ImportToPlaylistAction();
     private Action importToNewPlaylistAction = new ImportToNewPlaylistAction();
     private Action exportPlaylistAction = new ExportPlaylistAction();
-
+    private Action exportToiTunesAction = new ExportToiTunesAction();
 
     private List<Playlist> importingPlaylists;
 
@@ -154,9 +155,13 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         _popup.add(new SkinMenuItem(importToPlaylistAction));
         _popup.add(new SkinMenuItem(importToNewPlaylistAction));
         _popup.add(new SkinMenuItem(exportPlaylistAction));
+
+        if (OSUtils.isWindows() || OSUtils.isMacOSX()) {
+            _popup.add(new SkinMenuItem(exportToiTunesAction));
+        }
+
         _popup.addSeparator();
-        _popup.add(new SkinMenuItem(new ConfigureOptionsAction(OptionsConstructor.SHARED_KEY, I18n.tr("Configure Options"), I18n
-                .tr("You can configure the FrostWire\'s Options."))));
+        _popup.add(new SkinMenuItem(new ConfigureOptionsAction(OptionsConstructor.SHARED_KEY, I18n.tr("Configure Options"), I18n.tr("You can configure the FrostWire\'s Options."))));
     }
 
     private void setupModel() {
@@ -189,11 +194,11 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
                 if (o2 == _newPlaylistCell) {
                     return 1;
                 }
-                
+
                 return o1.getText().compareTo(o2.getText());
             }
         });
-        
+
         _list = new LibraryIconList(sortedModel);
         _list.setFixedCellHeight(TableSettings.DEFAULT_TABLE_ROW_HEIGHT.getValue());
         _list.setCellRenderer(new LibraryPlaylistsCellRenderer());
@@ -213,15 +218,15 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
                 list_keyPressed(e);
             }
         });
-        
+
         _list.addMouseListener(new MouseAdapter() {
-        	@Override
-        	public void mouseClicked(MouseEvent e) {
-        		if (e.getClickCount() > 1) {
-        			actionStartRename();
-        		}
-        	}
-		});
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() > 1) {
+                    actionStartRename();
+                }
+            }
+        });
 
         _textName = new JTextField();
         _textName.addKeyListener(new KeyAdapter() {
@@ -250,9 +255,9 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         } else if (key == KeyEvent.VK_DELETE || (OSUtils.isMacOSX() && key == KeyEvent.VK_BACK_SPACE)) {
             deleteAction.actionPerformed(null);
         }
-        
+
         if (LibraryUtils.isRefreshKeyEvent(e)) {
-        	refreshSelection();
+            refreshSelection();
         }
     }
 
@@ -268,7 +273,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
     }
 
     public void refreshSelection() {
-    	
+
         LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) _list.getSelectedValue();
 
         if (cell == null) {
@@ -281,12 +286,12 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
 
         Playlist playlist = cell.getPlaylist();
         playlist.refresh();
-        
+
         LibraryMediator.instance().updateTableItems(playlist);
 
         String status = LibraryUtils.getPlaylistDurationInDDHHMMSS(playlist) + ", " + playlist.getItems().size() + " " + I18n.tr("tracks");
         LibraryMediator.instance().getLibrarySearch().setStatus(status);
-        
+
         executePendingRunnables();
     }
 
@@ -326,8 +331,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
 
     public void selectPlaylist(Playlist playlist) {
         Object selectedValue = _list.getSelectedValue();
-        if (selectedValue != null && ((LibraryPlaylistsListCell) selectedValue).getPlaylist() != null &&
-                ((LibraryPlaylistsListCell) selectedValue).getPlaylist().equals(playlist)) {
+        if (selectedValue != null && ((LibraryPlaylistsListCell) selectedValue).getPlaylist() != null && ((LibraryPlaylistsListCell) selectedValue).getPlaylist().equals(playlist)) {
             // already selected
             try {
                 _listSelectionListener.valueChanged(null);
@@ -336,7 +340,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
             }
             return;
         }
-        
+
         int size = _model.getSize();
 
         for (int i = 0; i < size; i++) {
@@ -398,8 +402,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         if (parentFile == null)
             parentFile = CommonUtils.getCurrentDirectory();
 
-        final File selFile = FileChooserHandler.getInputFile(GUIMediator.getAppFrame(), I18nMarker.marktr("Open Playlist (.m3u)"), parentFile,
-                new PlaylistListFileFilter());
+        final File selFile = FileChooserHandler.getInputFile(GUIMediator.getAppFrame(), I18nMarker.marktr("Open Playlist (.m3u)"), parentFile, new PlaylistListFileFilter());
 
         // nothing selected? exit.
         if (selFile == null || !selFile.isFile())
@@ -471,8 +474,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
 
         suggested = new File(suggestedDirectory, suggestedName + ".m3u");
 
-        File selFile = FileChooserHandler.getSaveAsFile(GUIMediator.getAppFrame(), I18nMarker.marktr("Save Playlist As"), suggested,
-                new PlaylistListFileFilter());
+        File selFile = FileChooserHandler.getSaveAsFile(GUIMediator.getAppFrame(), I18nMarker.marktr("Save Playlist As"), suggested, new PlaylistListFileFilter());
 
         // didn't select a file?  nothing we can do.
         if (selFile == null)
@@ -482,9 +484,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
         //  overwritten. 
         //TODO: this should be handled in the jfilechooser
         if (selFile.exists()) {
-            DialogOption choice = GUIMediator.showYesNoMessage(
-                    I18n.tr("Warning: a file with the name {0} already exists in the folder. Overwrite this file?", selFile.getName()),
-                    QuestionsHandler.PLAYLIST_OVERWRITE_OK, DialogOption.NO);
+            DialogOption choice = GUIMediator.showYesNoMessage(I18n.tr("Warning: a file with the name {0} already exists in the folder. Overwrite this file?", selFile.getName()), QuestionsHandler.PLAYLIST_OVERWRITE_OK, DialogOption.NO);
             if (choice != DialogOption.YES)
                 return;
         }
@@ -594,7 +594,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
             LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) value;
             setText(cell.getText());
             setToolTipText(cell.getDescription());
-            setPreferredSize(new Dimension(getSize().width,TableSettings.DEFAULT_TABLE_ROW_HEIGHT.getValue()));
+            setPreferredSize(new Dimension(getSize().width, TableSettings.DEFAULT_TABLE_ROW_HEIGHT.getValue()));
             Icon icon = cell.getIcon();
             if (icon != null) {
                 setIcon(icon);
@@ -678,7 +678,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
             refreshSelection();
         }
     }
-    
+
     private class RefreshID3TagsAction extends AbstractAction {
 
         private static final long serialVersionUID = -472437818841089984L;
@@ -715,9 +715,7 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
 
             if (selectedPlaylist != null) {
 
-                int showConfirmDialog = JOptionPane.showConfirmDialog(GUIMediator.getAppFrame(),
-                        I18n.tr("Are you sure you want to delete the playlist?\n(No files will be deleted)"), I18n.tr("Are you sure?"),
-                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                int showConfirmDialog = JOptionPane.showConfirmDialog(GUIMediator.getAppFrame(), I18n.tr("Are you sure you want to delete the playlist?\n(No files will be deleted)"), I18n.tr("Are you sure?"), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
                 if (showConfirmDialog != JOptionPane.YES_OPTION) {
                     return;
@@ -809,6 +807,29 @@ public class LibraryPlaylists extends AbstractLibraryListPanel {
 
         public void actionPerformed(ActionEvent e) {
             exportM3U(getSelectedPlaylist());
+        }
+    }
+
+    private final class ExportToiTunesAction extends AbstractAction {
+
+        private static final long serialVersionUID = 3601146746674363384L;
+
+        public ExportToiTunesAction() {
+            putValue(Action.NAME, I18n.tr("Export Playlist to iTunes"));
+            putValue(Action.SHORT_DESCRIPTION, I18n.tr("Export this playlist into an iTunes playlist"));
+            putValue(LimeAction.ICON_NAME, "PLAYLIST_IMPORT_NEW");
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            Playlist playlist = getSelectedPlaylist();
+            if (playlist != null) {
+                List<File> files = new ArrayList<File>();
+                for (PlaylistItem item : playlist.getItems()) {
+                    File file = new File(item.getFilePath());
+                    files.add(file);
+                }
+                iTunesMediator.instance().addSongsiTunes(playlist.getName(), files.toArray(new File[0]));
+            }
         }
     }
 

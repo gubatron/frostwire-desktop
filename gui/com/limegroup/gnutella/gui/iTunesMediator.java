@@ -111,6 +111,10 @@ public final class iTunesMediator {
             return;
         }
 
+        addSongsiTunes(playlist, files);
+    }
+
+    public void addSongsiTunes(String playlist, File[] files) {
         //remove incomplete files from files.
         Set<File> incompleteFiles = TorrentUtil.getIncompleteFiles();
         incompleteFiles.addAll(TorrentUtil.getSkipedFiles());
@@ -121,10 +125,16 @@ public final class iTunesMediator {
                 continue;
             }
 
-            completeFiles.add(f);
+            if (f.exists() && f.isFile() && isSupported(FileUtils.getFileExtension(f))) {
+                completeFiles.add(f);
+            }
         }
 
         files = completeFiles.toArray(new File[0]);
+
+        if (files.length == 0) {
+            return;
+        }
 
         if (OSUtils.isMacOSX()) {
             QUEUE.execute(new ExecOSAScriptCommand(playlist, files));
