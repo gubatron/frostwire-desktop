@@ -37,9 +37,9 @@ import com.limegroup.gnutella.gui.dnd.DNDUtils;
 class LibraryPlaylistsTransferHandler extends TransferHandler {
 
     private static final long serialVersionUID = -3874985752229848555L;
-    
+
     private final JList list;
-    
+
     public LibraryPlaylistsTransferHandler(JList list) {
         this.list = list;
     }
@@ -49,9 +49,9 @@ class LibraryPlaylistsTransferHandler extends TransferHandler {
         if (support.isDataFlavorSupported(LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {
             return true;
         } else if (DNDUtils.containsFileFlavors(support.getDataFlavors())) {
-        	if (OSUtils.isMacOSX()) {
-        		return true;
-        	}
+            if (OSUtils.isMacOSX()) {
+                return true;
+            }
             try {
                 File[] files = DNDUtils.getFiles(support.getTransferable());
                 for (File file : files) {
@@ -99,8 +99,7 @@ class LibraryPlaylistsTransferHandler extends TransferHandler {
                 try {
                     Transferable transferable = support.getTransferable();
                     if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {
-                        PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistsTableTransferable.Item[]) transferable
-                                .getTransferData(LibraryPlaylistsTableTransferable.ITEM_ARRAY));
+                        PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistsTableTransferable.Item[]) transferable.getTransferData(LibraryPlaylistsTableTransferable.ITEM_ARRAY));
                         LibraryUtils.createNewPlaylist(playlistItems);
                     } else {
                         File[] files = DNDUtils.getFiles(support.getTransferable());
@@ -119,8 +118,7 @@ class LibraryPlaylistsTransferHandler extends TransferHandler {
                 try {
                     Transferable transferable = support.getTransferable();
                     if (DNDUtils.contains(transferable.getTransferDataFlavors(), LibraryPlaylistsTableTransferable.ITEM_ARRAY)) {
-                        PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistsTableTransferable.Item[]) transferable
-                                .getTransferData(LibraryPlaylistsTableTransferable.ITEM_ARRAY));
+                        PlaylistItem[] playlistItems = LibraryUtils.convertToPlaylistItems((LibraryPlaylistsTableTransferable.Item[]) transferable.getTransferData(LibraryPlaylistsTableTransferable.ITEM_ARRAY));
                         LibraryUtils.asyncAddToPlaylist(playlist, playlistItems);
                     } else {
                         File[] files = DNDUtils.getFiles(support.getTransferable());
@@ -146,5 +144,15 @@ class LibraryPlaylistsTransferHandler extends TransferHandler {
     @Override
     public int getSourceActions(JComponent c) {
         return COPY;
+    }
+
+    @Override
+    protected Transferable createTransferable(JComponent c) {
+        LibraryPlaylistsListCell cell = (LibraryPlaylistsListCell) list.getSelectedValue();
+        if (cell != null && cell.getPlaylist() != null && cell.getPlaylist().getItems().size() > 0) {
+            return new LibraryPlaylistsTableTransferable(cell.getPlaylist().getItems());
+        } else {
+            return null;
+        }
     }
 }

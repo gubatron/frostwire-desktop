@@ -26,7 +26,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
@@ -85,7 +84,7 @@ public final class iTunesMediator {
      * If running on OSX, iTunes integration is enabled and the downloaded file
      * is a supported type, send it to iTunes.
      */
-    private void addSongsITunes(File file) {
+    private void addSongsITunes(String playlist, File file) {
 
         // Make sure we convert any uppercase to lowercase or vice versa.
         try {
@@ -128,12 +127,12 @@ public final class iTunesMediator {
         files = completeFiles.toArray(new File[0]);
 
         if (OSUtils.isMacOSX()) {
-            QUEUE.execute(new ExecOSAScriptCommand(files));
+            QUEUE.execute(new ExecOSAScriptCommand(playlist, files));
         } else {
             if (LOG.isTraceEnabled()) {
                 LOG.trace("Will add '" + files.length + " files" + "' to Playlist");
             }
-            QUEUE.execute(new ExecWSHScriptCommand(files));
+            QUEUE.execute(new ExecWSHScriptCommand(playlist, files));
         }
     }
 
@@ -157,12 +156,11 @@ public final class iTunesMediator {
     /**
      * Constructs and returns a osascript command.
      */
-    private static String[] createOSAScriptCommand(File[] files) {
-
-        String playlist = iTunesSettings.ITUNES_PLAYLIST.getValue();
-
+    private static String[] createOSAScriptCommand(String playlist, File[] files) {
         List<String> command = new ArrayList<String>();
-        command.addAll(Arrays.asList("osascript", "-e", "tell application \"Finder\""));
+        command.add("osascript");
+        command.add("-e");
+        command.add("tell application \"Finder\"");
 
         for (int i = 0; i < files.length; i++) {
             File f = files[i];
@@ -171,24 +169,35 @@ public final class iTunesMediator {
             command.add("set hfsFile" + i + " to (POSIX file \"" + path + "\")");
         }
 
-        command.addAll(Arrays.asList("-e", "set thePlaylist to \"" + playlist + "\"", "-e", "tell application \"iTunes\"",
-        //"-e",       "activate", // launch and bring to front
-                "-e", "launch", // launch in background
-                "-e", "if not (exists playlist thePlaylist) then", "-e", "set thisPlaylist to make new playlist", "-e", "set name of thisPlaylist to thePlaylist", "-e", "end if"));
+        command.add("-e");
+        command.add("set thePlaylist to \"" + playlist + "\"");
+        command.add("-e");
+        command.add("tell application \"iTunes\"");
+        command.add("-e");
+        command.add("launch");
+        command.add("-e");
+        command.add("if not (exists playlist thePlaylist) then");
+        command.add("-e");
+        command.add("set thisPlaylist to make new playlist");
+        command.add("-e");
+        command.add("set name of thisPlaylist to thePlaylist");
+        command.add("-e");
+        command.add("end if");
 
         for (int i = 0; i < files.length; i++) {
-            command.addAll(Arrays.asList("-e", "add hfsFile" + i + " to playlist thePlaylist"));
+            command.add("-e");
+            command.add("add hfsFile" + i + " to playlist thePlaylist");
         }
 
-        command.addAll(Arrays.asList("-e", "end tell", "-e", "end tell"));
+        command.add("-e");
+        command.add("end tell");
+        command.add("-e");
+        command.add("end tell");
 
         return command.toArray(new String[0]);
     }
 
-    private static String[] createWSHScriptCommand(File[] files) {
-
-        String playlist = iTunesSettings.ITUNES_PLAYLIST.getValue();
-
+    private static String[] createWSHScriptCommand(String playlist, File[] files) {
         ArrayList<String> command = new ArrayList<String>();
         command.add("wscript");
         command.add("//B");
@@ -206,6 +215,9 @@ public final class iTunesMediator {
      * Executes the osascript CLI command
      */
     private class ExecOSAScriptCommand implements Runnable {
+
+        private final String playlist;
+
         /**
          * The file to add.
          */
@@ -214,7 +226,8 @@ public final class iTunesMediator {
         /**
          * Constructs a new ExecOSAScriptCommand for the specified file.
          */
-        public ExecOSAScriptCommand(File[] files) {
+        public ExecOSAScriptCommand(String playlist, File[] files) {
+            this.playlist = playlist;
             this.files = files;
         }
 
@@ -223,7 +236,7 @@ public final class iTunesMediator {
          */
         public void run() {
             try {
-                Runtime.getRuntime().exec(createOSAScriptCommand(files));
+                Runtime.getRuntime().exec(createOSAScriptCommand(playlist, files));
             } catch (IOException e) {
                 LOG.debug(e);
             }
@@ -231,6 +244,9 @@ public final class iTunesMediator {
     }
 
     private class ExecWSHScriptCommand implements Runnable {
+
+        private final String playlist;
+
         /**
          * The file to add.
          */
@@ -239,7 +255,8 @@ public final class iTunesMediator {
         /**
          * Constructs a new ExecOSAScriptCommand for the specified file.
          */
-        public ExecWSHScriptCommand(File[] files) {
+        public ExecWSHScriptCommand(String playlist, File[] files) {
+            this.playlist = playlist;
             this.files = files;
         }
 
@@ -248,7 +265,7 @@ public final class iTunesMediator {
          */
         public void run() {
             try {
-                Runtime.getRuntime().exec(createWSHScriptCommand(files));
+                Runtime.getRuntime().exec(createWSHScriptCommand(playlist, files));
             } catch (IOException e) {
                 LOG.debug(e);
             }
@@ -256,9 +273,13 @@ public final class iTunesMediator {
     }
 
     public void scanForSongs(File file) {
+        scanForSongs(iTunesSettings.ITUNES_PLAYLIST.getValue(), file);
+    }
+
+    public void scanForSongs(String playlist, File file) {
         iTunesImportSettings.IMPORT_FILES.add(file);
         if (OSUtils.isMacOSX() || OSUtils.isWindows()) {
-            addSongsITunes(file);
+            addSongsITunes(playlist, file);
         } else if (OSUtils.isUbuntu()) {
             //System.out.println("Import in Banshee: " + file);
         }
