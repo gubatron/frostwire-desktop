@@ -9,7 +9,7 @@ var args = WScript.Arguments;
 
 var playlistFrostWireName;
 
-playlistFrostWireName = "FrostWire";
+playlistFrostWireName = args(0);
 
 var mainLibrary = iTunesApp.LibrarySource;
 var playlists = mainLibrary.Playlists;

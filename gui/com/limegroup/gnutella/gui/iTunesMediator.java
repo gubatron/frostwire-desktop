@@ -77,6 +77,7 @@ public final class iTunesMediator {
     private iTunesMediator() {
         if (OSUtils.isWindows()) {
             createiTunesJavaScript(JS_IMPORT_SCRIPT_NAME);
+            createiTunesJavaScript(JS_REMOVE_PLAYLIST_SCRIPT_NAME);
         }
     }
 
@@ -342,7 +343,8 @@ public final class iTunesMediator {
                 command.add("//B");
                 command.add("//NoLogo");
                 command.add(new File(CommonUtils.getUserSettingsDir(), JS_REMOVE_PLAYLIST_SCRIPT_NAME).getAbsolutePath());
-
+                command.add(playlistName);
+                
                 Runtime.getRuntime().exec(command.toArray(new String[0]));
             }
         } catch (IOException e) {
