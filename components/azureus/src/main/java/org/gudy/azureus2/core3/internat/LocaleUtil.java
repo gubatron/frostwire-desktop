@@ -58,6 +58,7 @@ LocaleUtil
    private LocaleUtilDecoder[] 	all_decoders;
    private LocaleUtilDecoder[]	general_decoders;
    private LocaleUtilDecoder	system_decoder;
+   private LocaleUtilDecoder utf8_decoder;
    private LocaleUtilDecoder	fallback_decoder;
      
   
@@ -83,6 +84,10 @@ LocaleUtil
 			 if ( i == 0 ){
 			 	
 			 	system_decoder = lu_decoder;
+			 }
+			 
+			 if (name.equals(Constants.DEFAULT_ENCODING)) {
+			     utf8_decoder = lu_decoder;
 			 }
 			 
 			 decoders.add( lu_decoder );
@@ -175,6 +180,12 @@ LocaleUtil
   getSystemDecoder()
   {
   	return( system_decoder );
+  }
+  
+  public LocaleUtilDecoder
+  getUTF8Decoder()
+  {
+    return( utf8_decoder );
   }
   
   /**
