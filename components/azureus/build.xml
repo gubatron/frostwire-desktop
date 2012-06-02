@@ -55,6 +55,8 @@
         
     - On MagnetPlugin.java initialize secondary lookups as true
        boolean sl_enabled = true; 
+       
+    - Perform the hack related to UTF-8 in LocalUtil and TOTorrentFileImpl in the commit related to this comment.
 		
     -->
     <import file="../common/build-macros.xml" />

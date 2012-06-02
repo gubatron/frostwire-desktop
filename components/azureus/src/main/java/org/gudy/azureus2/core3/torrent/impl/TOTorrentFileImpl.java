@@ -152,15 +152,24 @@ TOTorrentFileImpl
 	
 		throws TOTorrentException
 	{
-		for (int i=0;i<path_components.length;i++){
+		byte[][][] to_do = { path_components, path_components_utf8 };
+		
+		for (byte[][] pc: to_do ){
 			
-			byte[] comp = path_components[i];
-			if (comp.length == 2 && comp[0] == (byte) '.' && comp[1] == (byte) '.')
-				throw (new TOTorrentException("Torrent file contains illegal '..' component", TOTorrentException.RT_DECODE_FAILS));
-
-			// intern directories as they're likely to repeat
-			if(i < (path_components.length - 1))
-				path_components[i] = StringInterner.internBytes(path_components[i]);
+			if ( pc == null ){
+				continue;
+			}
+		
+			for (int i=0;i<pc.length;i++){
+				
+				byte[] comp = pc[i];
+				if (comp.length == 2 && comp[0] == (byte) '.' && comp[1] == (byte) '.')
+					throw (new TOTorrentException("Torrent file contains illegal '..' component", TOTorrentException.RT_DECODE_FAILS));
+	
+				// intern directories as they're likely to repeat
+				if(i < (pc.length - 1))
+					pc[i] = StringInterner.internBytes(pc[i]);
+			}
 		}
 	}
 	
@@ -234,16 +243,41 @@ TOTorrentFileImpl
 	}
 	
 	public String getRelativePath() {
-		if (torrent == null)
+		if (torrent == null) {
 			return "";
+		}
 		String sRelativePath = "";
+		
+		byte[][] pathComponentsUTF8 = getPathComponentsUTF8();
+		if (pathComponentsUTF8 != null) {
+			for (int j = 0; j < pathComponentsUTF8.length; j++) {
+
+				try {
+					String comp;
+					try {
+						comp =  new String(pathComponentsUTF8[j], "utf8");
+					} catch (UnsupportedEncodingException e) {
+						System.out.println("file - unsupported encoding!!!!");
+						comp = "UnsupportedEncoding";
+					}
+	
+					comp = FileUtil.convertOSSpecificChars(comp, j != pathComponentsUTF8.length-1 );
+	
+					sRelativePath += (j == 0 ? "" : File.separator) + comp;
+				} catch (Exception ex) {
+					Debug.out(ex);
+				}
+
+			}
+			return sRelativePath;
+		}
 
 		LocaleUtilDecoder decoder = null;
 		try {
 			decoder = LocaleTorrentUtil.getTorrentEncodingIfAvailable(torrent);
 			if (decoder == null) {
 				LocaleUtil localeUtil = LocaleUtil.getSingleton();
-				decoder = localeUtil.getSystemDecoder();
+				decoder = localeUtil.getUTF8Decoder();
 			}
 		} catch (Exception e) {
 			// Do Nothing
@@ -295,12 +329,14 @@ TOTorrentFileImpl
 		
 		byte[][]	path_comps = getPathComponentsBasic();
 		
-		for (int j=0;j<path_comps.length;j++){
-			
-			path.add( path_comps[j]);
+		if (path_comps != null) {
+  		for (int j=0;j<path_comps.length;j++){
+  			
+  			path.add( path_comps[j]);
+  		}
 		}
 		
-		if ( isUTF8()){
+		if (path_comps != null && isUTF8()){
 			
 			List utf8_path = new ArrayList();
 			
