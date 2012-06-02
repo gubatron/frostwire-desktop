@@ -57,6 +57,7 @@ public class DownloadManagerImpl implements DownloadManager {
      * If seeding is not enaebled, completed torrents won't be started, they'll be stopped.
      */
     private void loadTorrentDownloads() {
+        //this line right here takes a while.
         GlobalManager globalManager = AzureusStarter.getAzureusCore().getGlobalManager();
         List<?> downloadManagers = globalManager.getDownloadManagers();
 

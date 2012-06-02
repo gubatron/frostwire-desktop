@@ -26,6 +26,7 @@ import javax.swing.SwingConstants;
 import javax.swing.ToolTipManager;
 
 import org.gudy.azureus2.plugins.network.ConnectionManager;
+import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.setting.BooleanSetting;
 
 import com.aelitis.azureus.core.AzureusCore;
@@ -125,29 +126,38 @@ public final class StatusLine implements ThemeObserver {
             }
         });
 
+        GUIMediator.setSplashScreenString(I18n.tr("Creating Audio Status Component..."));
         _audioStatusComponent = new CurrentAudioStatusComponent();
 
         //  make icons and panels for connection quality
+        GUIMediator.setSplashScreenString(I18n.tr("Creating Connection Quality Indicator..."));
         createConnectionQualityPanel();
 
         //  make the 'Language' button
+        GUIMediator.setSplashScreenString(I18n.tr("Adding flags here and there..."));
         createLanguageButton();
 
         //  make the 'Firewall Status' label
+        GUIMediator.setSplashScreenString(I18n.tr("Playing with pixels for the Firewall indicator..."));
         createFirewallLabel();
 
         //  make the 'Bandwidth Usage' label
         createBandwidthLabel();
 
         // make the social buttons
+        GUIMediator.setSplashScreenString(I18n.tr("Learning to socialize on Facebook..."));
         createFacebookButton();
+        GUIMediator.setSplashScreenString(I18n.tr("Learning to socialize on Twitter..."));
         createTwitterButton();
+        GUIMediator.setSplashScreenString(I18n.tr("Learning to socialize on G+..."));
         createGooglePlusButton();
         
         // male Seeding status label
+        GUIMediator.setSplashScreenString(I18n.tr("Painting seeding sign..."));
         createSeedingStatusLabel();
 
         //  make the center panel
+        GUIMediator.setSplashScreenString(I18n.tr("Creating center panel..."));
         createCenterPanel();
 
         // Set the bars to not be connected.
@@ -381,7 +391,14 @@ public final class StatusLine implements ThemeObserver {
 	 */
 	private void createFirewallLabel() {
 	    _firewallStatus = new JLabel();
-	    updateFirewall();
+	    
+	    ThreadExecutor.startThread(new Runnable() {
+	        @Override
+	        public void run() {
+	            updateFirewall();
+	        }
+	    },"updateFirewall()");
+	    
 		// don't allow easy clipping
 		_firewallStatus.setMinimumSize(new Dimension(20, 20));
 		// add right-click listener
@@ -513,12 +530,26 @@ public final class StatusLine implements ThemeObserver {
 		AzureusCore azureusCore = AzureusStarter.getAzureusCore();
 		
 		if (azureusCore == null) {
-			updateFirewallLabel(false);
+		    //let ui thread know
+		    GUIMediator.safeInvokeLater(new Runnable() {
+		        @Override
+		        public void run() {
+		            updateFirewallLabel(false);
+		        }
+		    });
+			
 			return;
 		}
 		
-		int natStatus = azureusCore.getGlobalManager().getNATStatus();
-		updateFirewallLabel(natStatus == ConnectionManager.NAT_OK || natStatus == ConnectionManager.NAT_PROBABLY_OK);	
+		final int natStatus = azureusCore.getGlobalManager().getNATStatus();
+
+		//let ui thread know.
+		GUIMediator.safeInvokeLater(new Runnable() {
+            @Override
+            public void run() {
+                updateFirewallLabel(natStatus == ConnectionManager.NAT_OK || natStatus == ConnectionManager.NAT_PROBABLY_OK);
+            }
+        });
 	}
 	
     /**
