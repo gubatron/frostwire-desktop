@@ -24,6 +24,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import org.limewire.setting.SettingsGroupManager;
@@ -428,6 +429,7 @@ public final class MainFrame implements RefreshListener, ThemeObserver {
     
     final BTDownloadMediator getBTDownloadMediator() {
         if (BT_DOWNLOAD_MEDIATOR == null) {
+            
             BT_DOWNLOAD_MEDIATOR = BTDownloadMediator.instance();
         }
         return BT_DOWNLOAD_MEDIATOR;
