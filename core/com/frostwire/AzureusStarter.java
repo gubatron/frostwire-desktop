@@ -45,6 +45,10 @@ public final class AzureusStarter {
 		return AZUREUS_CORE;
 	}
 	
+	public static boolean isAzureusCoreStarted() {
+	    return AZUREUS_CORE != null && AZUREUS_CORE.isStarted();
+	}
+	
 	/*
 	 * Initializes synchronously the azureus core
 	 */

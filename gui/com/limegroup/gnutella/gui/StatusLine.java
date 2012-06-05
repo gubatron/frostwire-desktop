@@ -26,7 +26,6 @@ import javax.swing.SwingConstants;
 import javax.swing.ToolTipManager;
 
 import org.gudy.azureus2.plugins.network.ConnectionManager;
-import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.setting.BooleanSetting;
 
 import com.aelitis.azureus.core.AzureusCore;
@@ -303,6 +302,7 @@ public final class StatusLine implements ThemeObserver {
             BAR.add(Box.createHorizontalStrut(GUIConstants.SEPARATOR / 2), gbc);
             BAR.add(createSeparator(), gbc);
             remainingWidth -= indicatorWidth;
+            updateFirewall();
         }
         
 		
@@ -392,12 +392,7 @@ public final class StatusLine implements ThemeObserver {
 	private void createFirewallLabel() {
 	    _firewallStatus = new JLabel();
 	    
-	    ThreadExecutor.startThread(new Runnable() {
-	        @Override
-	        public void run() {
-	            updateFirewall();
-	        }
-	    },"updateFirewall()");
+	    updateFirewall();
 	    
 		// don't allow easy clipping
 		_firewallStatus.setMinimumSize(new Dimension(20, 20));
@@ -527,29 +522,13 @@ public final class StatusLine implements ThemeObserver {
 	 * Updates the firewall text. 
 	 */
 	public void updateFirewall() {
-		AzureusCore azureusCore = AzureusStarter.getAzureusCore();
-		
-		if (azureusCore == null) {
-		    //let ui thread know
-		    GUIMediator.safeInvokeLater(new Runnable() {
-		        @Override
-		        public void run() {
-		            updateFirewallLabel(false);
-		        }
-		    });
-			
-			return;
-		}
-		
-		final int natStatus = azureusCore.getGlobalManager().getNATStatus();
-
-		//let ui thread know.
-		GUIMediator.safeInvokeLater(new Runnable() {
-            @Override
-            public void run() {
-                updateFirewallLabel(natStatus == ConnectionManager.NAT_OK || natStatus == ConnectionManager.NAT_PROBABLY_OK);
-            }
-        });
+	    if (AzureusStarter.isAzureusCoreStarted()) {
+	        AzureusCore azureusCore = AzureusStarter.getAzureusCore();
+	        int natStatus = azureusCore.getGlobalManager().getNATStatus();
+	        updateFirewallLabel(natStatus == ConnectionManager.NAT_OK || natStatus == ConnectionManager.NAT_PROBABLY_OK);
+	    } else {
+	        updateFirewallLabel(false);
+	    }
 	}
 	
     /**
