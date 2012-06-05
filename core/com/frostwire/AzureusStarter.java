@@ -9,7 +9,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.appwork.utils.Application;
 import org.gudy.azureus2.core3.config.COConfigurationManager;
-import org.limewire.concurrent.ThreadExecutor;
 import org.limewire.util.CommonUtils;
 
 import com.aelitis.azureus.core.AzureusCore;
@@ -31,12 +30,7 @@ public final class AzureusStarter {
 	private static AzureusCore AZUREUS_CORE;
 
 	public final static void start() {
-	    ThreadExecutor.startThread(new Runnable() {
-            @Override
-            public void run() {
-                azureusInit();                
-            }
-	    }, "AzureusStarter");
+	    azureusInit();
 	}
 	
 	/**
