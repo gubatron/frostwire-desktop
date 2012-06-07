@@ -30,6 +30,8 @@ import javax.swing.JPopupMenu;
 import jd.controlling.downloadcontroller.DownloadController;
 import jd.plugins.FilePackage;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.gudy.azureus2.core3.download.DownloadManager;
 import org.limewire.util.OSUtils;
 
@@ -64,6 +66,8 @@ import com.limegroup.gnutella.settings.TablesHandlerSettings;
  * components.
  */
 public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRowFilteredModel, BTDownloadDataLine, BTDownload> {
+    
+    private static final Log LOG = LogFactory.getLog(BTDownloadMediator.class);
 
     public static final int MIN_HEIGHT = 150;
 
@@ -668,6 +672,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     public void openTorrentFileForSeed(final File torrentFile, final File saveDir) {
+        if (!AzureusStarter.isAzureusCoreStarted()) {
+            LOG.error("Azureus core not started");
+            return;
+        }
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
                 try {
@@ -709,6 +717,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     public void openTorrentFile(final File torrentFile, final boolean partialDownload) {
+        if (!AzureusStarter.isAzureusCoreStarted()) {
+            LOG.error("Azureus core not started");
+            return;
+        }
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
                 try {

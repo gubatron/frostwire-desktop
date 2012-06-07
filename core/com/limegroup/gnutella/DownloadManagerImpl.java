@@ -23,6 +23,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.gudy.azureus2.core3.global.GlobalManager;
+import org.limewire.concurrent.ThreadExecutor;
 
 import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.AzureusStarter;
@@ -64,12 +65,12 @@ public class DownloadManagerImpl implements DownloadManager {
      * @see com.limegroup.gnutella.DownloadMI#postGuiInit()
      */
     public void loadSavedDownloadsAndScheduleWriting() {
-//        ThreadExecutor.newManagedThread(new Runnable() {
-//            @Override
-//            public void run() {
+        ThreadExecutor.newManagedThread(new Runnable() {
+            @Override
+            public void run() {
                 loadTorrentDownloads();
-//            }
-//        }, "DownloadManager.loadTorrentDownloads()");
+            }
+        }, "DownloadManager.loadTorrentDownloads()");
 
     }
 
@@ -79,11 +80,11 @@ public class DownloadManagerImpl implements DownloadManager {
      */
     private void loadTorrentDownloads() {
         //this line right here takes a while.
-        System.out.println("DownloadManagerImpl.loadTorrentDownloads() Waiting for azureus core");
+        //System.out.println("DownloadManagerImpl.loadTorrentDownloads() Waiting for azureus core");
         AzureusCore azureusCore = AzureusStarter.getAzureusCore();
-        
+
         GlobalManager globalManager = azureusCore.getGlobalManager();
-        System.out.println("DownloadManagerImpl.loadTorrentDownloads() Got azureus core");
+        //System.out.println("DownloadManagerImpl.loadTorrentDownloads() Got azureus core");
         List<?> downloadManagers = globalManager.getDownloadManagers();
 
         List<org.gudy.azureus2.core3.download.DownloadManager> downloads = new ArrayList<org.gudy.azureus2.core3.download.DownloadManager>();
