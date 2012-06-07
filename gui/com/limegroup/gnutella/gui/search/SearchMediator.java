@@ -20,7 +20,6 @@ import com.frostwire.websearch.youtube.YouTubeSearchResult;
 import com.limegroup.gnutella.GUID;
 import com.limegroup.gnutella.MediaType;
 import com.limegroup.gnutella.gui.GUIMediator;
-import com.limegroup.gnutella.gui.GuiCoreMediator;
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.settings.SearchSettings;
 
@@ -213,14 +212,16 @@ public final class SearchMediator {
             return false;
         case QUERY_VALID:
         default:
+            /**
             boolean searchingTorrents = info.getMediaType().equals(MediaType.getTorrentMediaType());
             boolean gnutellaStarted = GuiCoreMediator.getLifecycleManager().isStarted();
-            boolean azureusStarted = AzureusStarter.getAzureusCore().isStarted();
+            boolean azureusStarted = AzureusStarter.isAzureusCoreStarted();
 
             if ((searchingTorrents && !azureusStarted) || (!searchingTorrents && !gnutellaStarted)) {
                 GUIMediator.showMessage(I18n.tr("Please wait, FrostWire must finish loading before a search can be started."));
                 return false;
             }
+            */
 
             return true;
         }
@@ -379,6 +380,17 @@ public final class SearchMediator {
         rp.refresh();
     }
 
+    
+    public static boolean hasTorrentDownloads(SearchResultDataLine[] lines) {
+        for (SearchResultDataLine line : lines) {
+            SearchResult initializeObject = line.getInitializeObject();
+            if (initializeObject instanceof BittorrentSearchResult) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     /**
      * Downloads the selected files in the currently displayed
      * <tt>ResultPanel</tt> if there is one.
@@ -387,6 +399,12 @@ public final class SearchMediator {
         final SearchResultDataLine[] lines = rp.getAllSelectedLines();
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
+                
+                if (!AzureusStarter.isAzureusCoreStarted() && hasTorrentDownloads(lines)) {
+                    GUIMediator.showMessage(I18n.tr("Please try this download in a few seconds, FrostWire is still warming up."));            
+                    return;
+                }
+
                 SearchMediator.downloadAll(lines, new GUID(rp.getGUID()), rp.getSearchInformation());
                 rp.refresh();
             }

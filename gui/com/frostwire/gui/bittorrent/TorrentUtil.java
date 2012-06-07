@@ -148,7 +148,7 @@ public final class TorrentUtil {
     /** Deletes incomplete files and the save location from the itunes import settings */
     private static void finalCleanup(DownloadManager downloadManager) {
         Set<File> filesToDelete = getSkippedFiles(downloadManager);
-        
+
         for (File f : filesToDelete) {
             try {
                 if (isSkippedFileComplete(f, downloadManager)) {
@@ -176,15 +176,15 @@ public final class TorrentUtil {
      */
     private static boolean isSkippedFileComplete(File file, DownloadManager downloadManager) {
         DiskManagerFileInfoSet infoSet = downloadManager.getDiskManagerFileInfoSet();
-        
+
         //search for the given file on the disk manager for this download manager
         for (DiskManagerFileInfo fileInfo : infoSet.getFiles()) {
             if (fileInfo.isSkipped()) {
                 File f = fileInfo.getFile(false);
-                
+
                 //1. found the path of our file in here.
                 if (f.getAbsolutePath().equalsIgnoreCase(file.getAbsolutePath())) {
-                   return fileInfo.getLength() == file.length();
+                    return fileInfo.getLength() == file.length();
                 }
             }
         }
@@ -193,13 +193,13 @@ public final class TorrentUtil {
 
     public static Set<File> getSkipedFiles() {
         Set<File> set = new HashSet<File>();
-
-        List<?> dms = AzureusStarter.getAzureusCore().getGlobalManager().getDownloadManagers();
-        for (Object obj : dms) {
-            DownloadManager dm = (DownloadManager) obj;
-            set.addAll(getSkippedFiles(dm));
+        if (AzureusStarter.isAzureusCoreStarted()) {
+            List<?> dms = AzureusStarter.getAzureusCore().getGlobalManager().getDownloadManagers();
+            for (Object obj : dms) {
+                DownloadManager dm = (DownloadManager) obj;
+                set.addAll(getSkippedFiles(dm));
+            }
         }
-
         return set;
     }
 
@@ -232,18 +232,20 @@ public final class TorrentUtil {
     public static Set<File> getIncompleteFiles() {
         Set<File> set = new HashSet<File>();
 
-        List<?> dms = AzureusStarter.getAzureusCore().getGlobalManager().getDownloadManagers();
-        for (Object obj : dms) {
-            DownloadManager dm = (DownloadManager) obj;
+        if (AzureusStarter.isAzureusCoreStarted()) {
+            List<?> dms = AzureusStarter.getAzureusCore().getGlobalManager().getDownloadManagers();
+            for (Object obj : dms) {
+                DownloadManager dm = (DownloadManager) obj;
 
-            DiskManagerFileInfoSet infoSet = dm.getDiskManagerFileInfoSet();
-            for (DiskManagerFileInfo fileInfo : infoSet.getFiles()) {
-                try {
-                    if (getDownloadPercent(fileInfo) < 100) {
-                        set.add(fileInfo.getFile(false));
+                DiskManagerFileInfoSet infoSet = dm.getDiskManagerFileInfoSet();
+                for (DiskManagerFileInfo fileInfo : infoSet.getFiles()) {
+                    try {
+                        if (getDownloadPercent(fileInfo) < 100) {
+                            set.add(fileInfo.getFile(false));
+                        }
+                    } catch (Throwable e) {
+                        LOG.error("Error getting file information", e);
                     }
-                } catch (Throwable e) {
-                    LOG.error("Error getting file information", e);
                 }
             }
         }
@@ -583,7 +585,7 @@ public final class TorrentUtil {
     public static String getMagnet(String hash) {
         return "magnet:?xt=urn:btih:" + hash;
     }
-    
+
     public static String getMagnetURLParameters(TOTorrent torrent) {
         StringBuilder sb = new StringBuilder();
         //dn
@@ -592,10 +594,10 @@ public final class TorrentUtil {
         } else {
             sb.append("dn=" + UrlUtils.encode(torrent.getUTF8Name()));
         }
-        
+
         TOTorrentAnnounceURLGroup announceURLGroup = torrent.getAnnounceURLGroup();
         TOTorrentAnnounceURLSet[] announceURLSets = announceURLGroup.getAnnounceURLSets();
-        
+
         for (TOTorrentAnnounceURLSet set : announceURLSets) {
             URL[] announceURLs = set.getAnnounceURLs();
             for (URL url : announceURLs) {
@@ -603,31 +605,30 @@ public final class TorrentUtil {
                 sb.append(UrlUtils.encode(url.toString()));
             }
         }
-        
-        if( torrent.getAnnounceURL() != null) {
+
+        if (torrent.getAnnounceURL() != null) {
             sb.append("&tr=");
             sb.append(UrlUtils.encode(torrent.getAnnounceURL().toString()));
         }
-        
+
         //iipp = internal ip port, for lan
         try {
             String localAddress = NetworkUtils.getLocalAddress().getHostAddress();
             int localPort = TCPNetworkManager.getSingleton().getTCPListeningPortNumber();
-            
-            if (localPort != -1) {            
+
+            if (localPort != -1) {
                 sb.append("&iipp=");
-                sb.append(NetworkUtils.convertIPPortToHex(localAddress,localPort));
-            } 
-            
+                sb.append(NetworkUtils.convertIPPortToHex(localAddress, localPort));
+            }
+
         } catch (Throwable e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
-        
+
         return sb.toString();
     }
-    
+
     public static String hashToString(byte[] hash) {
         String hex = "";
         for (int i = 0; i < hash.length; i++) {

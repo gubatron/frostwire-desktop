@@ -127,7 +127,7 @@ public class LifecycleManagerImpl implements LifecycleManager {
 					com.limegroup.gnutella.LifecycleManagerImpl.LifeCycleEvent event) {
 				if (event == LifeCycleEvent.SHUTINGDOWN) {
 					
-					if (AzureusStarter.getAzureusCore().isStarted()) {
+					if (AzureusStarter.isAzureusCoreStarted()) {
 						LOG.debug("LifecycleManagerImpl.handleEvent - SHUTINGDOWN - Azureus core pauseDownloads()!");
 						AzureusStarter.getAzureusCore().getGlobalManager().pauseDownloads();
 						AzureusStarter.getAzureusCore().stop();
@@ -225,7 +225,9 @@ public class LifecycleManagerImpl implements LifecycleManager {
         // save frostwire.props & other settings
         SettingsGroupManager.instance().save();
 		
-        AzureusStarter.getAzureusCore().stop();
+        if (AzureusStarter.isAzureusCoreStarted()) {
+            AzureusStarter.getAzureusCore().stop();
+        }
         
         shutdownDone.set(true);
     }

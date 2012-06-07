@@ -27,6 +27,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.appwork.utils.Application;
 import org.gudy.azureus2.core3.config.COConfigurationManager;
+import org.gudy.azureus2.core3.util.Debug;
 import org.limewire.util.CommonUtils;
 
 import com.aelitis.azureus.core.AzureusCore;
@@ -56,9 +57,14 @@ public final class AzureusStarter {
 	 * @return
 	 */
 	public static AzureusCore getAzureusCore() {
-		if (AZUREUS_CORE != null && AZUREUS_CORE.isStarted())
+		if (isAzureusCoreStarted()) {
 			return AZUREUS_CORE;
-		else azureusInit();
+		} else {
+		    System.out.println(Thread.currentThread().getName() + " -> Invoking Azureus Init");
+		    Debug.printStackTrace(new Throwable(Thread.currentThread().getName() + " -> Invoking Azureus Init"));
+		    azureusInit();
+	        System.out.println(Thread.currentThread().getName() + " -> Azureus Init finished");
+		}
 				
 		return AZUREUS_CORE;
 	}
@@ -71,6 +77,15 @@ public final class AzureusStarter {
 	 * Initializes synchronously the azureus core
 	 */
 	private static synchronized void azureusInit() {
+	    
+       try {
+            if (isAzureusCoreStarted()) {
+                LOG.debug("azureusInit(): core already started. skipping.");
+                System.out.println(Thread.currentThread().getName() + " -> azureusInit(): core already started. skipping.");
+                return;
+            }
+        } catch (Exception ignore) {}
+
 	    
 	    Application.setApplication(CommonUtils.getUserSettingsDir().getAbsolutePath() + File.separator + "appwork" + File.separator);
 	    File jdHome = new File(CommonUtils.getUserSettingsDir().getAbsolutePath() + File.separator + "jd_home" + File.separator);
@@ -88,13 +103,7 @@ public final class AzureusStarter {
 	    System.setProperty("azureus.loadplugins", "0"); // disable third party azureus plugins
 	    System.setProperty("azureus.config.path", azureusUserPath.getAbsolutePath());
 	    System.setProperty("azureus.install.path", azureusUserPath.getAbsolutePath());
-		try {
-			if (AZUREUS_CORE != null && AZUREUS_CORE.isStarted()) {
-				LOG.debug("azureusInit(): core already started. skipping.");
-				return;
-			}
-		} catch (Exception ignore) {}
-		
+	    		
 		if (!AzureusCoreFactory.isCoreAvailable()) {
 			//This does work
 			org.gudy.azureus2.core3.util.SystemProperties.APPLICATION_NAME = "azureus";
@@ -177,6 +186,7 @@ public final class AzureusStarter {
 			try {
 				signal.await(); LOG.debug("azureusInit(): core started...");
 			} catch (InterruptedException e) {
+			    
 				e.printStackTrace();
 			} 
 		}

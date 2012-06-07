@@ -15,7 +15,7 @@ import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 import com.limegroup.gnutella.settings.BittorrentSettings;
 
-public class DeepSearchResult extends AbstractSearchResult {
+public class DeepSearchResult extends AbstractSearchResult implements BittorrentSearchResult {
 
     private WebSearchResult _item;
     private SearchEngine _searchEngine;

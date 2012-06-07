@@ -64,7 +64,7 @@ import com.limegroup.gnutella.settings.TablesHandlerSettings;
  * components.
  */
 public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRowFilteredModel, BTDownloadDataLine, BTDownload> {
-    
+
     public static final int MIN_HEIGHT = 150;
 
     /**
@@ -78,7 +78,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         }
         return INSTANCE;
     }
-    
+
     /**
      * Variables so only one ActionListener needs to be created for both
      * the buttons & popup menu.
@@ -96,9 +96,9 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     /** The actual download buttons instance.
      */
     private BTDownloadButtons _downloadButtons;
-	private SeedingFilter _seedingFilter;
+    private SeedingFilter _seedingFilter;
 
-	private Action sendToItunesAction;
+    private Action sendToItunesAction;
 
     private PlaySingleAudioFileAction playSingleAudioFileAction;
 
@@ -158,86 +158,84 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
      * Set up the necessary constants.
      */
     protected void setupConstants() {
-        MAIN_PANEL = new PaddedPanel(I18n.tr("Transfers"));        
-		_seedingFilter = new SeedingFilter();
+        MAIN_PANEL = new PaddedPanel(I18n.tr("Transfers"));
+        _seedingFilter = new SeedingFilter();
         DATA_MODEL = new BTDownloadRowFilteredModel(_seedingFilter);//new BTDownloadModel();
         TABLE = new LimeJTable(DATA_MODEL);
         _downloadButtons = new BTDownloadButtons(this);
         BUTTON_ROW = _downloadButtons.getComponent();
-        
+
         updateTableFilters();
     }
-    
+
     /**
      * Filter out all the models who are being seeded.
      * @author gubatron
      *
      */
-	class SeedingFilter implements TableLineFilter<BTDownloadDataLine> {
-		@Override
-		public boolean allow(BTDownloadDataLine node) {
-			if (ApplicationSettings.SHOW_SEEDING_TRANSFERS
-				.getValue()) {
-				return true;
-			}
-			
-			if (node==null) {
-				return false;
-			}
-			
-			return !node.isSeeding();
-		}
-	}
+    class SeedingFilter implements TableLineFilter<BTDownloadDataLine> {
+        @Override
+        public boolean allow(BTDownloadDataLine node) {
+            if (ApplicationSettings.SHOW_SEEDING_TRANSFERS.getValue()) {
+                return true;
+            }
 
+            if (node == null) {
+                return false;
+            }
 
-	public void updateTableFilters() {
+            return !node.isSeeding();
+        }
+    }
 
-		if (TABLE == null || DATA_MODEL == null) {
-			return;
-		}
+    public void updateTableFilters() {
 
-		DATA_MODEL.filtersChanged();
-	}
+        if (TABLE == null || DATA_MODEL == null) {
+            return;
+        }
+
+        DATA_MODEL.filtersChanged();
+    }
 
     /**
      * Notification that a filter on this panel has changed.
      *
      * Updates the data model with the new list, maintains the selection,
      * and moves the viewport to the first still visible selected row.
-	*/
+    */
     boolean filterChanged() {
         // store the selection & visible rows
         int[] rows = TABLE.getSelectedRows();
         BTDownloadDataLine[] lines = new BTDownloadDataLine[rows.length];
         List<BTDownloadDataLine> inView = new LinkedList<BTDownloadDataLine>();
-        for(int i = 0; i < rows.length; i++) {
+        for (int i = 0; i < rows.length; i++) {
             int row = rows[i];
             BTDownloadDataLine line = DATA_MODEL.get(row);
             lines[i] = line;
-            if(TABLE.isRowVisible(row))
+            if (TABLE.isRowVisible(row))
                 inView.add(line);
         }
-        
+
         // change the table.
         DATA_MODEL.filtersChanged();
-        
+
         // reselect & move the viewpoint to the first still visible row.
-        for(int i = 0; i < rows.length; i++) {
-        	BTDownloadDataLine line = lines[i];
+        for (int i = 0; i < rows.length; i++) {
+            BTDownloadDataLine line = lines[i];
             int row = DATA_MODEL.getRow(line);
-            if(row != -1) {
+            if (row != -1) {
                 TABLE.addRowSelectionInterval(row, row);
-                if(inView != null && inView.contains(line)) {
+                if (inView != null && inView.contains(line)) {
                     TABLE.ensureRowVisible(row);
                     inView = null;
-                }                    
+                }
             }
         }
-        
+
         return true;
     }
-	
-	/**
+
+    /**
      * Update the splash screen.
      */
     protected void updateSplashScreen() {
@@ -252,7 +250,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         super("DOWNLOAD_TABLE");
         GUIMediator.addRefreshListener(this);
         ThemeMediator.addThemeObserver(this);
-        
+
         restoreSorting();
     }
 
@@ -261,8 +259,8 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
      * set the clear button appropriately.
      */
     public void doRefresh() {
-    	DATA_MODEL.refresh();
-        
+        DATA_MODEL.refresh();
+
         int[] selRows = TABLE.getSelectedRows();
 
         if (selRows.length > 0) {
@@ -299,6 +297,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
      * @return the total amount of bandwidth being consumed by active downloads.
      */
     private double getBandwidth(boolean download) {
+        if (!AzureusStarter.isAzureusCoreStarted()) {
+            return 0;
+        }
+        
         AzureusCore azureusCore = AzureusStarter.getAzureusCore();
 
         if (azureusCore == null) {
@@ -454,9 +456,9 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         //    	}
         return transfers.toArray(new FileTransfer[transfers.size()]);
     }
-    
+
     public BTDownload[] getSelectedBTDownloads() {
-        int[] sel  = TABLE.getSelectedRows();
+        int[] sel = TABLE.getSelectedRows();
         ArrayList<BTDownload> btdownloadList = new ArrayList<BTDownload>(sel.length);
         for (int i = 0; i < sel.length; i++) {
             BTDownloadDataLine btDownloadDataLine = DATA_MODEL.get(sel[i]);
@@ -466,7 +468,6 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         }
         return btdownloadList.toArray(new BTDownload[btdownloadList.size()]);
     }
-    
 
     /**
      * Forces the selected downloads in the download window to resume.
@@ -484,45 +485,45 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
      * Handles a double-click event in the table.
      */
     public void handleActionKey() {
-        
+
         BTDownload[] selectedDownloaders = getSelectedDownloaders();
-        
+
         if (selectedDownloaders.length == 1) {
             playSingleAudioFileAction.setEnabled(selectionHasAudioFiles(selectedDownloaders[0].getSaveLocation()));
         }
-        
+
         if (playSingleAudioFileAction.isEnabled()) {
             playSingleAudioFileAction.actionPerformed(null);
         }
-        
+
         if (showInLibraryAction.isEnabled()) {
             showInLibraryAction.actionPerformed(null);
         }
     }
 
     protected JPopupMenu createPopupMenu() {
-        
+
         JPopupMenu menu = new SkinPopupMenu();
 
         if (playSingleAudioFileAction.isEnabled()) {
             menu.add(new SkinMenuItem(playSingleAudioFileAction));
         }
-        
+
         menu.add(new SkinMenuItem(resumeAction));
         menu.add(new SkinMenuItem(pauseAction));
-        
+
         if (OSUtils.isWindows() || OSUtils.isMacOSX()) {
-        	    menu.add(new SkinMenuItem(showInLibraryAction));
-        	    menu.add(new SkinMenuItem(exploreAction));
+            menu.add(new SkinMenuItem(showInLibraryAction));
+            menu.add(new SkinMenuItem(exploreAction));
         }
-        
+
         menu.addSeparator();
         menu.add(new SkinMenuItem(shareTorrentAction));
-        
-        if (OSUtils.isMacOSX() || OSUtils.isWindows()) {       	
-        	menu.add(new SkinMenuItem(sendToItunesAction));
+
+        if (OSUtils.isMacOSX() || OSUtils.isWindows()) {
+            menu.add(new SkinMenuItem(sendToItunesAction));
         }
-        
+
         menu.add(new SkinMenuItem(copyMagnetAction));
         menu.add(new SkinMenuItem(copyHashAction));
         SkinMenu addToPlaylistMenu = BTDownloadMediatorAdvancedMenuFactory.createAddToPlaylistSubMenu();
@@ -536,9 +537,9 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         menu.add(new SkinMenuItem(removeYouTubeAction));
 
         menu.addSeparator();
-        
+
         menu.add(new SkinMenuItem(BTDownloadActions.TOGGLE_SEEDS_VISIBILITY_ACTION));
-        
+
         SkinMenu advancedMenu = BTDownloadMediatorAdvancedMenuFactory.createAdvancedSubMenu();
         if (advancedMenu != null) {
             menu.addSeparator();
@@ -562,19 +563,18 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         boolean pausable = dataLine.getInitializeObject().isPausable();
         boolean resumable = dataLine.getInitializeObject().isResumable();
         boolean isTransferFinished = dataLine.getInitializeObject().isCompleted();
-        
+
         File saveLocation = dataLine.getInitializeObject().getSaveLocation();
         boolean hasAudioFiles = selectionHasAudioFiles(saveLocation);
-        
+
         boolean isSingleFile = selectionIsSingleFile(saveLocation);
 
         removeAction.putValue(Action.NAME, I18n.tr("Cancel Download"));
         removeAction.putValue(LimeAction.SHORT_NAME, I18n.tr("Cancel"));
         removeAction.putValue(Action.SHORT_DESCRIPTION, I18n.tr("Cancel Selected Downloads"));
-        
-        
+
         BTDownload dl = dataLine.getInitializeObject();
-        
+
         exploreAction.setEnabled(dl.isCompleted());
         showInLibraryAction.setEnabled(dl.isCompleted());
 
@@ -583,16 +583,15 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         pauseAction.setEnabled(pausable);
         copyMagnetAction.setEnabled(!isYouTubeDownload(dataLine.getInitializeObject()));
         copyHashAction.setEnabled(!isYouTubeDownload(dataLine.getInitializeObject()));
-        
+
         sendToItunesAction.setEnabled(isTransferFinished && hasAudioFiles);
-        
-		shareTorrentAction.setEnabled(getSelectedDownloaders().length == 1
-				&& dataLine.getInitializeObject().isPausable());
-		
-		playSingleAudioFileAction.setEnabled(getSelectedDownloaders().length == 1 && hasAudioFiles && isSingleFile);
-		
-		removeYouTubeAction.setEnabled(isYouTubeDownload(dataLine.getInitializeObject()));
-		BTDownloadActions.REMOVE_TORRENT_ACTION.setEnabled(!isYouTubeDownload(dataLine.getInitializeObject()));
+
+        shareTorrentAction.setEnabled(getSelectedDownloaders().length == 1 && dataLine.getInitializeObject().isPausable());
+
+        playSingleAudioFileAction.setEnabled(getSelectedDownloaders().length == 1 && hasAudioFiles && isSingleFile);
+
+        removeYouTubeAction.setEnabled(isYouTubeDownload(dataLine.getInitializeObject()));
+        BTDownloadActions.REMOVE_TORRENT_ACTION.setEnabled(!isYouTubeDownload(dataLine.getInitializeObject()));
         BTDownloadActions.REMOVE_TORRENT_AND_DATA_ACTION.setEnabled(!isYouTubeDownload(dataLine.getInitializeObject()));
     }
 
@@ -602,11 +601,10 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     private boolean selectionHasAudioFiles(File saveLocation) {
-        boolean hasAudioFiles = saveLocation != null && (LibraryUtils.directoryContainsAudio(saveLocation, 4) ||
-         (saveLocation.isFile() && AudioPlayer.isPlayableFile(saveLocation)));
+        boolean hasAudioFiles = saveLocation != null && (LibraryUtils.directoryContainsAudio(saveLocation, 4) || (saveLocation.isFile() && AudioPlayer.isPlayableFile(saveLocation)));
         return hasAudioFiles;
     }
-    
+
     private boolean isYouTubeDownload(BTDownload d) {
         return d instanceof YouTubeVideoUrlDownload || d instanceof YouTubeItemDownload;
     }
@@ -626,7 +624,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         shareTorrentAction.setEnabled(false);
         sendToItunesAction.setEnabled(false);
         playSingleAudioFileAction.setEnabled(false);
-        
+
         BTDownloadActions.REMOVE_TORRENT_ACTION.setEnabled(false);
         BTDownloadActions.REMOVE_TORRENT_AND_DATA_ACTION.setEnabled(false);
         removeYouTubeAction.setEnabled(false);
@@ -659,7 +657,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             }
         });
     }
-    
+
     public void openTorrentURI(final String uri, final String referrer, final String relativePath, final String hash, final ActionListener postPartialDownloadAction) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
@@ -668,18 +666,18 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             }
         });
     }
-    
+
     public void openTorrentFileForSeed(final File torrentFile, final File saveDir) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
                 try {
                     BTDownloadCreator creator = new BTDownloadCreator(torrentFile, saveDir, true, null);
                     BTDownload download = creator.createDownload();
-                    
+
                     if (!(download instanceof DuplicateDownload)) {
                         add(download);
                     } else {
-                    	selectRowByDownload(download);
+                        selectRowByDownload(download);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -697,21 +695,20 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
         });
     }
 
-    
     protected void selectRowByDownload(BTDownload download) {
-    	for (int i=0 ; i < TABLE.getRowCount(); i++) {
-    		BTDownloadDataLine btDownloadDataLine = DATA_MODEL.get(i);
-    		if (download.getHash().equals(btDownloadDataLine.getInitializeObject().getHash())) {
-    			btDownloadDataLine.getInitializeObject().getSize(true);
-    			btDownloadDataLine.getInitializeObject().updateDownloadManager(download.getDownloadManager());
-    			TABLE.setSelectedRow(i);
-    			return;
-    		}
-    	}
+        for (int i = 0; i < TABLE.getRowCount(); i++) {
+            BTDownloadDataLine btDownloadDataLine = DATA_MODEL.get(i);
+            if (download.getHash().equals(btDownloadDataLine.getInitializeObject().getHash())) {
+                btDownloadDataLine.getInitializeObject().getSize(true);
+                btDownloadDataLine.getInitializeObject().updateDownloadManager(download.getDownloadManager());
+                TABLE.setSelectedRow(i);
+                return;
+            }
+        }
 
-	}
+    }
 
-	public void openTorrentFile(final File torrentFile, final boolean partialDownload) {
+    public void openTorrentFile(final File torrentFile, final boolean partialDownload) {
         GUIMediator.safeInvokeLater(new Runnable() {
             public void run() {
                 try {
@@ -732,7 +729,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
                     if (!(download instanceof DuplicateDownload)) {
                         add(download);
                     } else {
-                    	selectRowByDownload(download);
+                        selectRowByDownload(download);
                     }
 
                 } catch (Exception e) {
@@ -762,16 +759,24 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
     }
 
     public long getTotalBytesDownloaded() {
-        AzureusCore azureusCore = AzureusStarter.getAzureusCore();
-        if (azureusCore == null)
+        if (!AzureusStarter.isAzureusCoreStarted()) {
             return 0;
+        }
+        AzureusCore azureusCore = AzureusStarter.getAzureusCore();
+        if (azureusCore == null) {
+            return 0;
+        }
         return azureusCore.getGlobalManager().getStats().getTotalDataBytesReceived();
     }
 
     public long getTotalBytesUploaded() {
-        AzureusCore azureusCore = AzureusStarter.getAzureusCore();
-        if (azureusCore == null)
+        if (!AzureusStarter.isAzureusCoreStarted()) {
             return 0;
+        }
+        AzureusCore azureusCore = AzureusStarter.getAzureusCore();
+        if (azureusCore == null) {
+            return 0;
+        }
         return azureusCore.getGlobalManager().getStats().getTotalDataBytesSent();
     }
 
@@ -809,7 +814,7 @@ public final class BTDownloadMediator extends AbstractTableMediator<BTDownloadRo
             e.printStackTrace();
         }
     }
-    
+
     /**
      * Load from the last settings saved the previous sorting preferences of this mediator.
      */

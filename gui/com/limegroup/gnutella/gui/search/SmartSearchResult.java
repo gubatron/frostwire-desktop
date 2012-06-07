@@ -15,20 +15,20 @@ import com.limegroup.gnutella.gui.search.db.TorrentFileDBPojo;
 import com.limegroup.gnutella.gui.util.PopupUtils;
 import com.limegroup.gnutella.settings.BittorrentSettings;
 
-public class SmartSearchResult extends AbstractSearchResult {
+public class SmartSearchResult extends AbstractSearchResult implements BittorrentSearchResult {
     private WebSearchResult _item;
     private SearchEngine _searchEngine;
 
     TorrentDBPojo torrent;
     TorrentFileDBPojo file;
-    
+
     public SmartSearchResult(TorrentDBPojo torrentPojo, TorrentFileDBPojo torrentFilePojo) {
-    	torrent = torrentPojo;
-    	_item = new WebSearchResultProxy(torrent);
-    	file = torrentFilePojo;
-    	_searchEngine = SearchEngine.getSearchEngineById(torrentPojo.searchEngineID);
+        torrent = torrentPojo;
+        _item = new WebSearchResultProxy(torrent);
+        file = torrentFilePojo;
+        _searchEngine = SearchEngine.getSearchEngineById(torrentPojo.searchEngineID);
     }
-    
+
     @Override
     public long getCreationTime() {
         return _item.getCreationTime();
@@ -36,32 +36,32 @@ public class SmartSearchResult extends AbstractSearchResult {
 
     @Override
     public String getExtension() {
-        return file.relativePath.substring(file.relativePath.lastIndexOf(".")+1).toLowerCase();
+        return file.relativePath.substring(file.relativePath.lastIndexOf(".") + 1).toLowerCase();
     }
 
     @Override
     public String getFileName() {
-    	if (file.relativePath.startsWith("/")) {
-    		file.relativePath = file.relativePath.substring(1);
-    	}
-    	
-    	return new File(file.relativePath).getName();
+        if (file.relativePath.startsWith("/")) {
+            file.relativePath = file.relativePath.substring(1);
+        }
+
+        return new File(file.relativePath).getName();
     }
 
     @Override
     public String getFilenameNoExtension() {
 
-    	if (file.relativePath.indexOf("/") != -1) {
-    		String fileName = file.relativePath.substring(file.relativePath.lastIndexOf("/"));
-    		
-        	if (fileName.startsWith("/")) {
-        		fileName = fileName.substring(1);
-        	}
-    		
-    		return fileName.substring(0,fileName.lastIndexOf("."));
-    	}
-    	
-    	return file.relativePath.substring(0, file.relativePath.lastIndexOf("."));
+        if (file.relativePath.indexOf("/") != -1) {
+            String fileName = file.relativePath.substring(file.relativePath.lastIndexOf("/"));
+
+            if (fileName.startsWith("/")) {
+                fileName = fileName.substring(1);
+            }
+
+            return fileName.substring(0, fileName.lastIndexOf("."));
+        }
+
+        return file.relativePath.substring(0, file.relativePath.lastIndexOf("."));
     }
 
     @Override
@@ -96,11 +96,10 @@ public class SmartSearchResult extends AbstractSearchResult {
     public String getVendor() {
         return _item.getVendor();
     }
-    
+
     @Override
     public void initialize(SearchResultDataLine line) {
         line.setAddedOn(getCreationTime());
-        
 
         //hack this to show the icon for mininova or for isohunt.
     }
@@ -142,7 +141,7 @@ public class SmartSearchResult extends AbstractSearchResult {
     public int getSeeds() {
         return _item.getSeeds();
     }
-    
+
     public SearchEngine getSearchEngine() {
         return _searchEngine;
     }
@@ -153,56 +152,56 @@ public class SmartSearchResult extends AbstractSearchResult {
 
     private class WebSearchResultProxy implements WebSearchResult {
 
-    	private TorrentDBPojo _torrentDBPojo;
+        private TorrentDBPojo _torrentDBPojo;
 
-		public WebSearchResultProxy(TorrentDBPojo torrentDBPojo) {
-    		_torrentDBPojo = torrentDBPojo;
-    	}
-    	
-		@Override
-		public String getFileName() {
-			return _torrentDBPojo.fileName;
-		}
+        public WebSearchResultProxy(TorrentDBPojo torrentDBPojo) {
+            _torrentDBPojo = torrentDBPojo;
+        }
 
-		@Override
-		public long getSize() {
-			return _torrentDBPojo.size;
-		}
+        @Override
+        public String getFileName() {
+            return _torrentDBPojo.fileName;
+        }
 
-		@Override
-		public long getCreationTime() {
-			return _torrentDBPojo.creationTime;
-		}
+        @Override
+        public long getSize() {
+            return _torrentDBPojo.size;
+        }
 
-		@Override
-		public String getVendor() {
-			return _torrentDBPojo.vendor;
-		}
+        @Override
+        public long getCreationTime() {
+            return _torrentDBPojo.creationTime;
+        }
 
-		@Override
-		public String getFilenameNoExtension() {
-			return _torrentDBPojo.fileNameNoExtension;
-		}
+        @Override
+        public String getVendor() {
+            return _torrentDBPojo.vendor;
+        }
 
-		@Override
-		public String getHash() {
-			return _torrentDBPojo.hash;
-		}
+        @Override
+        public String getFilenameNoExtension() {
+            return _torrentDBPojo.fileNameNoExtension;
+        }
 
-		@Override
-		public String getTorrentURI() {
-			return _torrentDBPojo.torrentURI;
-		}
+        @Override
+        public String getHash() {
+            return _torrentDBPojo.hash;
+        }
 
-		@Override
-		public int getSeeds() {
-			return _torrentDBPojo.seeds;
-		}
+        @Override
+        public String getTorrentURI() {
+            return _torrentDBPojo.torrentURI;
+        }
 
-		@Override
-		public String getTorrentDetailsURL() {
-			return _torrentDBPojo.torrentDetailsURL;
-		}
-    	
+        @Override
+        public int getSeeds() {
+            return _torrentDBPojo.seeds;
+        }
+
+        @Override
+        public String getTorrentDetailsURL() {
+            return _torrentDBPojo.torrentDetailsURL;
+        }
+
     }
 }

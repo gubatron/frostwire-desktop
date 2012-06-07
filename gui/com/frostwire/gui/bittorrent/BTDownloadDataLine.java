@@ -370,6 +370,7 @@ final class BTDownloadDataLine extends AbstractDataLine<BTDownload> {
      */
     public void update() {
         _status = initializer.getStateString();
+        System.out.println("BTDownloadDataLine.update() status = " + _status);
         _progress = initializer.getProgress();
         _download = initializer.getBytesReceived();
         _upload = initializer.getBytesSent();

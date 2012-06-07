@@ -1162,7 +1162,7 @@ AzureusCoreImpl
 	public boolean
 	isStarted()
 	{
-	   mon_coreRunningListeners.enter();
+	     mon_coreRunningListeners.enter();
 	   try {
 	  	 return( started && coreRunningListeners == null );
 	   } finally {

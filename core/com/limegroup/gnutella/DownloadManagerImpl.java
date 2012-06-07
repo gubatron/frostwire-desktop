@@ -24,26 +24,26 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.gudy.azureus2.core3.global.GlobalManager;
 
+import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.AzureusStarter;
 import com.limegroup.gnutella.settings.SharingSettings;
 import com.limegroup.gnutella.settings.UpdateSettings;
 
 public class DownloadManagerImpl implements DownloadManager {
-    
+
     private static final Log LOG = LogFactory.getLog(DownloadManagerImpl.class);
-    
+
     /**
      * The average bandwidth over all downloads.
      * This is only counted while downloads are active.
      */
     private float averageBandwidth = 0;
-    
+
     private final ActivityCallback activityCallback;
-    
+
     public DownloadManagerImpl(ActivityCallback downloadCallback) {
         this.activityCallback = downloadCallback;
     }
-
 
     //////////////////////// Creation and Saving /////////////////////////
 
@@ -53,9 +53,9 @@ public class DownloadManagerImpl implements DownloadManager {
     public void initialize() {
         //scheduleWaitingPump();
     }
-    
+
     private void addDownloaderManager(org.gudy.azureus2.core3.download.DownloadManager downloader) {
-        synchronized(this) {
+        synchronized (this) {
             callback(downloader).addDownloadManager(downloader);
         }
     }
@@ -64,16 +64,26 @@ public class DownloadManagerImpl implements DownloadManager {
      * @see com.limegroup.gnutella.DownloadMI#postGuiInit()
      */
     public void loadSavedDownloadsAndScheduleWriting() {
-        loadTorrentDownloads();
+//        ThreadExecutor.newManagedThread(new Runnable() {
+//            @Override
+//            public void run() {
+                loadTorrentDownloads();
+//            }
+//        }, "DownloadManager.loadTorrentDownloads()");
+
     }
-    
+
     /**
      * This is where torrents are loaded from the last session.
      * If seeding is not enaebled, completed torrents won't be started, they'll be stopped.
      */
     private void loadTorrentDownloads() {
         //this line right here takes a while.
-        GlobalManager globalManager = AzureusStarter.getAzureusCore().getGlobalManager();
+        System.out.println("DownloadManagerImpl.loadTorrentDownloads() Waiting for azureus core");
+        AzureusCore azureusCore = AzureusStarter.getAzureusCore();
+        
+        GlobalManager globalManager = azureusCore.getGlobalManager();
+        System.out.println("DownloadManagerImpl.loadTorrentDownloads() Got azureus core");
         List<?> downloadManagers = globalManager.getDownloadManagers();
 
         List<org.gudy.azureus2.core3.download.DownloadManager> downloads = new ArrayList<org.gudy.azureus2.core3.download.DownloadManager>();
@@ -85,7 +95,7 @@ public class DownloadManagerImpl implements DownloadManager {
 
         for (org.gudy.azureus2.core3.download.DownloadManager obj : downloads) {
 
-            org.gudy.azureus2.core3.download.DownloadManager downloadManager = (org.gudy.azureus2.core3.download.DownloadManager) obj;
+            final org.gudy.azureus2.core3.download.DownloadManager downloadManager = (org.gudy.azureus2.core3.download.DownloadManager) obj;
 
             if (downloadManager.getSaveLocation().getParentFile().getAbsolutePath().equals(UpdateSettings.UPDATES_DIR.getAbsolutePath())) {
                 LOG.info("Update download: " + downloadManager.getSaveLocation());
@@ -113,80 +123,78 @@ public class DownloadManagerImpl implements DownloadManager {
      * @param clientGUID
      * @param socket
      */
-    private synchronized boolean handleIncomingPush(String file, int index, byte [] clientGUID, Socket socket) {
-         return false;
+    private synchronized boolean handleIncomingPush(String file, int index, byte[] clientGUID, Socket socket) {
+        return false;
     }
 
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.DownloadMI#acceptPushedSocket(java.lang.String, int, byte[], java.net.Socket)
      */
-    public boolean acceptPushedSocket(String file, int index,
-            byte[] clientGUID, Socket socket) {
+    public boolean acceptPushedSocket(String file, int index, byte[] clientGUID, Socket socket) {
         return handleIncomingPush(file, index, clientGUID, socket);
     }
-    
+
     public boolean allowNewTorrents() {
-    	return true;
-    	
+        return true;
+
     }
-    
+
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.DownloadMI#isIncomplete(com.limegroup.gnutella.URN)
      */
     public boolean isIncomplete(URN urn) {
         return false;//incompleteFileManager.getFileForUrn(urn) != null;
     }
- 
+
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.DownloadMI#downloadsInProgress()
      */
     public synchronized int downloadsInProgress() {
         return 0;
     }
-    
+
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.DownloadMI#getNumIndividualDownloaders()
      */
     public synchronized int getNumIndividualDownloaders() {
         return 0;
     }
-    
+
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.DownloadMI#getNumActiveDownloads()
      */
     public synchronized int getNumActiveDownloads() {
         return 0;//active.size() - innetworkCount;
     }
-   
+
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.DownloadMI#getNum<Downloads()
      */
     public synchronized int getNumWaitingDownloads() {
         return 0;//waiting.size();
     }
-    
+
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.DownloadMI#isGuidForQueryDownloading(com.limegroup.gnutella.GUID)
      */
     public synchronized boolean isGuidForQueryDownloading(GUID guid) {
         return false;
     }
-    
+
     void clearAllDownloads() {
     }
-    
+
     private ActivityCallback callback(org.gudy.azureus2.core3.download.DownloadManager dm) {
         return activityCallback;
     }
-        
-    
+
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.DownloadMI#conflicts(com.limegroup.gnutella.URN, long, java.io.File)
      */
     public boolean conflicts(URN urn, long fileSize, File... fileName) {
         return false;
     }
-    
+
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.DownloadMI#isSaveLocationTaken(java.io.File)
      */
@@ -198,7 +206,7 @@ public class DownloadManagerImpl implements DownloadManager {
      * @see com.limegroup.gnutella.DownloadMI#measureBandwidth()
      */
     public void measureBandwidth() {
-     
+
     }
 
     /* (non-Javadoc)
@@ -207,7 +215,7 @@ public class DownloadManagerImpl implements DownloadManager {
     public float getMeasuredBandwidth() {
         return 0;
     }
-    
+
     /* (non-Javadoc)
      * @see com.limegroup.gnutella.DownloadMI#getAverageBandwidth()
      */
