@@ -440,7 +440,9 @@ public final class Initializer {
         
         // Instruct the gui to perform tasks that can only be performed
         // after the backend has been constructed.
-        GUIMediator.instance().coreInitialized();        
+        GUIMediator.instance().coreInitialized();
+        GUIMediator.setSplashScreenString(I18nMarker.marktr("Loading Old Downloads..."));
+        limeWireCore.getDownloadManager().loadSavedDownloadsAndScheduleWriting();
         stopwatch.resetAndLog("core initialized");
     }
     

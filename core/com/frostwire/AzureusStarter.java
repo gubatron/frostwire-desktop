@@ -61,7 +61,7 @@ public final class AzureusStarter {
 			return AZUREUS_CORE;
 		} else {
 		    System.out.println(Thread.currentThread().getName() + " -> Invoking Azureus Init");
-		    Debug.printStackTrace(new Throwable(Thread.currentThread().getName() + " -> Invoking Azureus Init"));
+		    //Debug.printStackTrace(new Throwable(Thread.currentThread().getName() + " -> Invoking Azureus Init"));
 		    azureusInit();
 	        System.out.println(Thread.currentThread().getName() + " -> Azureus Init finished");
 		}

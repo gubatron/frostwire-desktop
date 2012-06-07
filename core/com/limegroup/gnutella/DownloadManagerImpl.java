@@ -65,12 +65,12 @@ public class DownloadManagerImpl implements DownloadManager {
      * @see com.limegroup.gnutella.DownloadMI#postGuiInit()
      */
     public void loadSavedDownloadsAndScheduleWriting() {
-        ThreadExecutor.newManagedThread(new Runnable() {
-            @Override
-            public void run() {
+//        ThreadExecutor.newManagedThread(new Runnable() {
+//            @Override
+//            public void run() {
                 loadTorrentDownloads();
-            }
-        }, "DownloadManager.loadTorrentDownloads()");
+//            }
+//        }, "DownloadManager.loadTorrentDownloads()");
 
     }
 
