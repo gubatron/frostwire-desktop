@@ -28,6 +28,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -86,6 +87,7 @@ import org.gudy.azureus2.core3.util.SystemTime;
 import org.gudy.azureus2.core3.util.TorrentUtils;
 import org.gudy.azureus2.core3.util.UrlUtils;
 import org.gudy.azureus2.plugins.PluginInterface;
+import org.gudy.azureus2.plugins.PluginListener;
 import org.gudy.azureus2.plugins.network.ConnectionManager;
 import org.gudy.azureus2.plugins.utils.Utilities;
 import org.gudy.azureus2.pluginsimpl.local.PluginInitializer;
@@ -2139,9 +2141,23 @@ DownloadManagerController
     
     private void initFixVariables() {
         try {
-            this.externalIp = getExternalIp();
-            this.localTcpPort = TCPNetworkManager.getSingleton().getTCPListeningPortNumber();
-            this.manualIps = new HashSet<String>();
+            
+            PluginInitializer.getDefaultInterface().addListener(new PluginListener() {
+                @Override
+                public void initializationComplete() {
+                    externalIp = getExternalIp();
+                    localTcpPort = TCPNetworkManager.getSingleton().getTCPListeningPortNumber();
+                    manualIps = Collections.synchronizedSet(new HashSet<String>());
+                }
+                
+                @Override
+                public void closedownInitiated() {
+                }
+                
+                @Override
+                public void closedownComplete() {
+                }
+            });
         } catch (Throwable e) {
             // not chance here
         }
@@ -2183,7 +2199,7 @@ DownloadManagerController
     
 	private void fixForLocalLANPeer(PEPeer peer) {
 	    try {
-            if (peer_manager != null) {
+            if (peer_manager != null && manualIps != null) {
                 if (peer.getIp().equals(externalIp) && peer.getPort() != localTcpPort && !manualIps.contains(peer.getIp())) {
                     // what are the odds?
                     // I will not hack the vuze core for this, since it is a very delicate change,
