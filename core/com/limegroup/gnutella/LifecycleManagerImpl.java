@@ -10,7 +10,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.limewire.concurrent.ThreadExecutor;
-import org.limewire.i18n.I18nMarker;
 import org.limewire.lifecycle.ServiceRegistry;
 import org.limewire.listener.EventListener;
 import org.limewire.listener.EventListenerList;
@@ -39,8 +38,6 @@ public class LifecycleManagerImpl implements LifecycleManager {
     
     private static enum State { NONE, STARTING, STARTED, STOPPED };
 
-    private final ActivityCallback activityCallback;
-    private final DownloadManager downloadManager;
     private final LimeCoreGlue limeCoreGlue;
     
     /** A list of items that require running prior to shutting down LW. */
@@ -58,18 +55,13 @@ public class LifecycleManagerImpl implements LifecycleManager {
     
     
     /**/
-    public LifecycleManagerImpl(             
-            ActivityCallback activityCallback,
-            DownloadManager downloadManager,
+    public LifecycleManagerImpl(
             LimeCoreGlue limeCoreGlue,
             ServiceRegistry serviceRegistry) {
         
         this.serviceRegistry = serviceRegistry;
         this.listenerList = new EventListenerList<LifeCycleEvent>();
 
-        
-        this.activityCallback = activityCallback;
-        this.downloadManager = downloadManager;
         this.limeCoreGlue = limeCoreGlue;
     }
     /**/

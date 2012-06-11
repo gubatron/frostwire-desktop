@@ -27,7 +27,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.appwork.utils.Application;
 import org.gudy.azureus2.core3.config.COConfigurationManager;
-import org.gudy.azureus2.core3.util.Debug;
 import org.limewire.util.CommonUtils;
 
 import com.aelitis.azureus.core.AzureusCore;
@@ -60,10 +59,8 @@ public final class AzureusStarter {
 		if (isAzureusCoreStarted()) {
 			return AZUREUS_CORE;
 		} else {
-		    System.out.println(Thread.currentThread().getName() + " -> Invoking Azureus Init");
 		    //Debug.printStackTrace(new Throwable(Thread.currentThread().getName() + " -> Invoking Azureus Init"));
 		    azureusInit();
-	        System.out.println(Thread.currentThread().getName() + " -> Azureus Init finished");
 		}
 				
 		return AZUREUS_CORE;
@@ -81,7 +78,6 @@ public final class AzureusStarter {
        try {
             if (isAzureusCoreStarted()) {
                 LOG.debug("azureusInit(): core already started. skipping.");
-                System.out.println(Thread.currentThread().getName() + " -> azureusInit(): core already started. skipping.");
                 return;
             }
         } catch (Exception ignore) {}

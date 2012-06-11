@@ -23,7 +23,6 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.gudy.azureus2.core3.global.GlobalManager;
-import org.limewire.concurrent.ThreadExecutor;
 
 import com.aelitis.azureus.core.AzureusCore;
 import com.frostwire.AzureusStarter;
@@ -65,13 +64,7 @@ public class DownloadManagerImpl implements DownloadManager {
      * @see com.limegroup.gnutella.DownloadMI#postGuiInit()
      */
     public void loadSavedDownloadsAndScheduleWriting() {
-//        ThreadExecutor.newManagedThread(new Runnable() {
-//            @Override
-//            public void run() {
-                loadTorrentDownloads();
-//            }
-//        }, "DownloadManager.loadTorrentDownloads()");
-
+        loadTorrentDownloads();
     }
 
     /**
@@ -96,7 +89,7 @@ public class DownloadManagerImpl implements DownloadManager {
 
         for (org.gudy.azureus2.core3.download.DownloadManager obj : downloads) {
 
-            final org.gudy.azureus2.core3.download.DownloadManager downloadManager = (org.gudy.azureus2.core3.download.DownloadManager) obj;
+            org.gudy.azureus2.core3.download.DownloadManager downloadManager = (org.gudy.azureus2.core3.download.DownloadManager) obj;
 
             if (downloadManager.getSaveLocation().getParentFile().getAbsolutePath().equals(UpdateSettings.UPDATES_DIR.getAbsolutePath())) {
                 LOG.info("Update download: " + downloadManager.getSaveLocation());

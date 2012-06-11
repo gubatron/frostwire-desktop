@@ -29,7 +29,7 @@ public class LimeWireCoreModule {
         this.activityCallback = activitCallback;
         limeWireCommonModule = LimeWireCommonModule.instance();
         downloadManager = new DownloadManagerImpl(activitCallback);
-        lifecycleManager = new LifecycleManagerImpl(activitCallback, downloadManager, LimeCoreGlue.instance(), limeWireCommonModule.getLimeWireCommonLifecycleModule().getServiceRegistry());
+        lifecycleManager = new LifecycleManagerImpl(LimeCoreGlue.instance(), limeWireCommonModule.getLimeWireCommonLifecycleModule().getServiceRegistry());
     }
     
     public ActivityCallback getActivityCallback() {
