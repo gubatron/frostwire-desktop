@@ -22,6 +22,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.limewire.util.IOUtils;
+import org.limewire.util.OSUtils;
+import org.limewire.util.SystemUtils;
 
 import com.limegroup.gnutella.gui.I18n;
 import com.limegroup.gnutella.gui.LanguageFlagFactory;
@@ -56,7 +58,7 @@ public class LanguagePanel extends JPanel {
         languageOptions.setModel(new DefaultComboBoxModel(locales));
         languageOptions.setRenderer(LanguageFlagFactory.getListRenderer());
         
-        Locale locale = guessLocale();
+        Locale locale = guessLocale(locales);
         languageOptions.setSelectedItem(locale);
         
         applySettings(false);
@@ -92,15 +94,44 @@ public class LanguagePanel extends JPanel {
         }
     }
     
-    private Locale guessLocale() {
+    private Locale guessLocale(Locale[] locales) {
         String[] language = guessLanguage();
-        return new Locale(language[0], language[1], language[2]);
+
+        Locale result = null;
+        try {
+        for (Locale l : locales) {
+			if (l.getLanguage().equalsIgnoreCase(language[0])
+					&& l.getCountry().equalsIgnoreCase(language[1])
+					&& l.getVariant().equalsIgnoreCase(language[2])) {
+				result = l;
+			}
+
+			if (l.getLanguage().equalsIgnoreCase(language[0])
+					&& l.getCountry().equalsIgnoreCase(language[1])
+					&& result == null) {
+				result = l;
+			}
+
+			if (l.getLanguage().equalsIgnoreCase(language[0]) && result == null) {
+				result = l;
+			}
+		}
+        } catch (Throwable e) {
+        	//shhh!
+        }
+		
+        return (result == null) ? new Locale(language[0], language[1], language[2]) : result;
     }
     
     private String[] guessLanguage() {
-        String ln = ApplicationSettings.LANGUAGE.getValue();
+    	String ln = ApplicationSettings.LANGUAGE.getValue();
         String cn = ApplicationSettings.COUNTRY.getValue();
         String vn = ApplicationSettings.LOCALE_VARIANT.getValue();
+        
+        String[] registryLocale = null;
+        if (OSUtils.isWindows() && (registryLocale = getDisplayLanguageFromWindowsRegistry())!= null) {
+        	return registryLocale;        	
+        }
         
         File file = new File("language.prop");
         if(!file.exists())
@@ -257,4 +288,32 @@ public class LanguagePanel extends JPanel {
         return map.get(code);
     }
     
+    private String[] getDisplayLanguageFromWindowsRegistry() {
+    	//HKCU/Control Panel/Desktop/PreferredUILanguages
+    	String[] result = null;
+    	
+    	try { 
+    		String registryReadText  = SystemUtils.registryReadText("HKEY_CURRENT_USER", "Control Panel\\Desktop", "PreferredUILanguages");
+    		String[] splitLocale = registryReadText.split("-");
+    		switch (splitLocale.length) {
+    			case 1:
+    				result = new String[]{splitLocale[0],"",""};
+    				break;
+    			case 2:
+    				result = new String[]{splitLocale[0],splitLocale[1],""};
+    				break;
+    			case 3:
+    				result = new String[]{splitLocale[0],splitLocale[1],splitLocale[2]};
+    				break;
+    			default:
+    				result = null;
+    				break;
+    		}
+    				
+    		
+    	} catch (Throwable e) {
+    		
+    	}
+    	return result;
+    }
 }
