@@ -28,15 +28,15 @@ public class StringUtils {
      * Collator used for internationalization.
      */
     private volatile static Collator COLLATOR;
-    
+
     private static ThreadLocal<IdentityHashMap<Object, Object>> threadLocal = new ThreadLocal<IdentityHashMap<Object, Object>>();
-    
+
     static {
         COLLATOR = Collator.getInstance(Locale.getDefault());
         COLLATOR.setDecomposition(Collator.FULL_DECOMPOSITION);
         COLLATOR.setStrength(Collator.PRIMARY);
     }
-    
+
     /** Updates the locale that string-matching will use. */
     public static void setLocale(Locale locale) {
         Collator later = Collator.getInstance(locale);
@@ -45,7 +45,6 @@ public class StringUtils {
         COLLATOR = later;
     }
 
-    
     /** Returns true if input contains the given pattern, which may contain the
      *  wildcard character '*'.  TODO: need more formal definition.  Examples:
      *
@@ -65,8 +64,7 @@ public class StringUtils {
 
     /** Exactly like contains(input, pattern), but case is ignored if
      *  ignoreCase==true. */
-    public static final boolean contains(String input, String pattern,
-                                         boolean ignoreCase) {
+    public static final boolean contains(String input, String pattern, boolean ignoreCase) {
         //More efficient algorithms are possible, e.g. a modified version of the
         //Rabin-Karp algorithm, but they are unlikely to be faster with such
         //short strings.  Also, some contant time factors could be shaved by
@@ -74,46 +72,45 @@ public class StringUtils {
         //just isn't important.  The important thing is to avoid needless
         //allocations.
 
-        final int n=pattern.length();
+        final int n = pattern.length();
         //Where to resume searching after last wildcard, e.g., just past
         //the last match in input.
-        int last=0;
+        int last = 0;
         //For each token in pattern starting at i...
-        for (int i=0; i<n; ) {
+        for (int i = 0; i < n;) {
             //1. Find the smallest j>i s.t. pattern[j] is space, *, or +.
-            char c=' ';
-            int j=i;
-            for ( ; j<n; j++) {
-                char c2=pattern.charAt(j);
-                if (c2==' ' || c2=='+' || c2=='*') {
-                    c=c2;
+            char c = ' ';
+            int j = i;
+            for (; j < n; j++) {
+                char c2 = pattern.charAt(j);
+                if (c2 == ' ' || c2 == '+' || c2 == '*') {
+                    c = c2;
                     break;
                 }
             }
 
             //2. Match pattern[i..j-1] against input[last...].
-            int k=subset(pattern, i, j,
-                         input, last,
-                         ignoreCase);
-            if (k<0)
+            int k = subset(pattern, i, j, input, last, ignoreCase);
+            if (k < 0)
                 return false;
 
             //3. Reset the starting search index if got ' ' or '+'.
             //Otherwise increment past the match in input.
-            if (c==' ' || c=='+') 
-                last=0;
-            else if (c=='*')
-                last=k+j-i;
-            i=j+1;
+            if (c == ' ' || c == '+')
+                last = 0;
+            else if (c == '*')
+                last = k + j - i;
+            i = j + 1;
         }
-        return true;            
+        return true;
     }
-    
-    public static boolean containsCharacters(String input, char [] chars) {
-        char [] inputChars = input.toCharArray();
+
+    public static boolean containsCharacters(String input, char[] chars) {
+        char[] inputChars = input.toCharArray();
         Arrays.sort(inputChars);
-        for(int i=0; i<chars.length; i++) {
-            if(Arrays.binarySearch(inputChars, chars[i]) >= 0) return true;
+        for (int i = 0; i < chars.length; i++) {
+            if (Arrays.binarySearch(inputChars, chars[i]) >= 0)
+                return true;
         }
         return false;
     }
@@ -125,42 +122,38 @@ public class StringUtils {
      *  or -1 if no such i exists.  If ignoreCase==false, case doesn't matter
      *  when comparing characters.
      */
-    private static final int subset(String little, int littleStart, int littleStop,
-                                    String big, int bigStart,
-                                    boolean ignoreCase) {
+    private static final int subset(String little, int littleStart, int littleStop, String big, int bigStart, boolean ignoreCase) {
         //Equivalent to
         // return big.indexOf(little.substring(littleStart, littleStop), bigStart);
         //but without an allocation.
         //Note special case for ignoreCase below.
-        
+
         if (ignoreCase) {
-            final int n=big.length()-(littleStop-littleStart)+1;
-        outerLoop:
-            for (int i=bigStart; i<n; i++) {
+            final int n = big.length() - (littleStop - littleStart) + 1;
+            outerLoop: for (int i = bigStart; i < n; i++) {
                 //Check if little[littleStart...littleStop-1] matches with shift i
-                final int n2=littleStop-littleStart;
-                for (int j=0 ; j<n2 ; j++) {
-                    char c1=big.charAt(i+j); 
-                    char c2=little.charAt(littleStart+j);
-                    if (c1!=c2 && c1!=toOtherCase(c2))  //Ignore case. See below.
+                final int n2 = littleStop - littleStart;
+                for (int j = 0; j < n2; j++) {
+                    char c1 = big.charAt(i + j);
+                    char c2 = little.charAt(littleStart + j);
+                    if (c1 != c2 && c1 != toOtherCase(c2)) //Ignore case. See below.
                         continue outerLoop;
-                }            
+                }
                 return i;
-            }                
+            }
             return -1;
         } else {
-            final int n=big.length()-(littleStop-littleStart)+1;
-        outerLoop:
-            for (int i=bigStart; i<n; i++) {
-                final int n2=littleStop-littleStart;
-                for (int j=0 ; j<n2 ; j++) {
-                    char c1=big.charAt(i+j); 
-                    char c2=little.charAt(littleStart+j);
-                    if (c1!=c2)                        //Consider case.  See above.
+            final int n = big.length() - (littleStop - littleStart) + 1;
+            outerLoop: for (int i = bigStart; i < n; i++) {
+                final int n2 = littleStop - littleStart;
+                for (int j = 0; j < n2; j++) {
+                    char c1 = big.charAt(i + j);
+                    char c2 = little.charAt(littleStart + j);
+                    if (c1 != c2) //Consider case.  See above.
                         continue outerLoop;
-                }            
+                }
                 return i;
-            }                
+            }
             return -1;
         }
     }
@@ -171,23 +164,24 @@ public class StringUtils {
      *  Note that this is <b>not internationalized</b>; but it is fast.
      */
     public static final char toOtherCase(char c) {
-        int i = c; 
-        final int A= 'A';   //65
-        final int Z= 'Z';   //90
-        final int a= 'a';   //97
-        final int z= 'z';   //122
-        final int SHIFT=a-A;
+        int i = c;
+        final int A = 'A'; //65
+        final int Z = 'Z'; //90
+        final int a = 'a'; //97
+        final int z = 'z'; //122
+        final int SHIFT = a - A;
 
-        if (i<A)          //non alphabetic
+        if (i < A) //non alphabetic
             return c;
-        else if (i<=Z)    //upper-case
-            return (char)(i+SHIFT);
-        else if (i<a)     //non alphabetic
+        else if (i <= Z) //upper-case
+            return (char) (i + SHIFT);
+        else if (i < a) //non alphabetic
             return c;
-        else if (i<=z)    //lower-case
-            return (char)(i-SHIFT);
-        else              //non alphabetic
-            return c;            
+        else if (i <= z) //lower-case
+            return (char) (i - SHIFT);
+        else
+            //non alphabetic
+            return c;
     }
 
     /**
@@ -213,7 +207,7 @@ public class StringUtils {
     public static String[] split(String s, String delimiters) {
         //Tokenize s based on delimiters, adding to buffer.
         StringTokenizer tokenizer = new StringTokenizer(s, delimiters);
-        List<String> tokens = new ArrayList<String>();        
+        List<String> tokens = new ArrayList<String>();
         while (tokenizer.hasMoreTokens())
             tokens.add(tokenizer.nextToken());
 
@@ -247,23 +241,23 @@ public class StringUtils {
     public static String[] splitNoCoalesce(String s, String delimiters) {
         //Tokenize s based on delimiters, adding to buffer.
         StringTokenizer tokenizer = new StringTokenizer(s, delimiters, true);
-        List<String> tokens = new ArrayList<String>(); 
+        List<String> tokens = new ArrayList<String>();
         //True if last token was a delimiter.  Initialized to true to force
         //an empty string if s starts with a delimiter.
-        boolean gotDelimiter=true; 
+        boolean gotDelimiter = true;
         while (tokenizer.hasMoreTokens()) {
-            String token=tokenizer.nextToken();
+            String token = tokenizer.nextToken();
             //Is token a delimiter?
-            if (token.length()==1 && delimiters.indexOf(token)>=0) {
+            if (token.length() == 1 && delimiters.indexOf(token) >= 0) {
                 //If so, add blank only if last token was a delimiter.
                 if (gotDelimiter)
                     tokens.add("");
-                gotDelimiter=true;
+                gotDelimiter = true;
             } else {
                 //If not, add "real" token.
                 tokens.add(token);
-                gotDelimiter=false;
-            }            
+                gotDelimiter = false;
+            }
         }
         //Add trailing empty string UNLESS s is the empty string.
         if (gotDelimiter && !tokens.isEmpty())
@@ -299,14 +293,14 @@ public class StringUtils {
                 if (sc != pc) {
                     sc = Character.toLowerCase(sc);
                     pc = Character.toLowerCase(pc);
-            if (sc!=pc)
-                return false;
+                    if (sc != pc)
+                        return false;
                 }
             }
         }
         return true;
     }
-    
+
     /**
      * Replaces all occurrences of old_str in str with new_str
      *
@@ -317,24 +311,24 @@ public class StringUtils {
      * @return the modified str.
      */
     public static String replace(String str, String old_str, String new_str) {
-		int o = 0;
+        int o = 0;
         StringBuilder buf = new StringBuilder();
-		for (int i = str.indexOf(old_str) ; i > -1 ; i = str.indexOf(old_str, i+1)) {
-			if (i > o ) {
-				buf.append (str.substring(o, i));
-			}
-			buf.append (new_str);
-			o = i+old_str.length();
-		}
-		buf.append (str.substring(o, str.length()));
-		return buf.toString();
+        for (int i = str.indexOf(old_str); i > -1; i = str.indexOf(old_str, i + 1)) {
+            if (i > o) {
+                buf.append(str.substring(o, i));
+            }
+            buf.append(new_str);
+            o = i + old_str.length();
+        }
+        buf.append(str.substring(o, str.length()));
+        return buf.toString();
     }
 
     /**
      * Returns a truncated string, up to the maximum number of characters
      */
     public static String truncate(final String string, final int maxLen) {
-        if(string.length() <= maxLen)
+        if (string.length() <= maxLen)
             return string;
         else
             return string.substring(0, maxLen);
@@ -355,7 +349,7 @@ public class StringUtils {
      *  returned
      */
     public static int indexOfIgnoreCase(String str, String substring) {
-    	return indexOfIgnoreCase(str, substring, Locale.getDefault());
+        return indexOfIgnoreCase(str, substring, Locale.getDefault());
     }
 
     /**
@@ -376,62 +370,62 @@ public class StringUtils {
      *  returned
      */
     public static int indexOfIgnoreCase(String str, String substring, Locale locale) {
-    	// Look for the index after the expensive conversion to lower case.
-    	return str.toLowerCase(locale).indexOf(substring.toLowerCase(locale));
+        // Look for the index after the expensive conversion to lower case.
+        return str.toLowerCase(locale).indexOf(substring.toLowerCase(locale));
     }
 
-	/**
+    /**
      * Utility wrapper for getting a String object out of
      * byte [] using the ascii encoding.
      */
-    public static String getASCIIString(byte [] bytes) {
-    	return getEncodedString(bytes, "ISO-8859-1");
+    public static String getASCIIString(byte[] bytes) {
+        return getEncodedString(bytes, "ISO-8859-1");
     }
-    
+
     /**
      * Utility wrapper for getting a String object out of
      * byte [] using the UTF-8 encoding.
      */
-    public static String getUTF8String(byte [] bytes) {
-    	return getEncodedString(bytes, "UTF-8");
+    public static String getUTF8String(byte[] bytes) {
+        return getEncodedString(bytes, "UTF-8");
     }
 
     public static String getASCIIString(byte[] bytes, int offset, int length) {
         return new String(bytes, offset, length, Charset.forName("ISO-8859-1"));
     }
-    
+
     /**
      * @return a string with an encoding we know we support.
      */
-    private static String getEncodedString(byte [] bytes, String encoding) {
-    	try {
-    		return new String(bytes, encoding);
-    	} catch (UnsupportedEncodingException impossible) {
+    private static String getEncodedString(byte[] bytes, String encoding) {
+        try {
+            return new String(bytes, encoding);
+        } catch (UnsupportedEncodingException impossible) {
             throw new RuntimeException(impossible);
-    	}
+        }
     }
-    
+
     /**
-	 * Returns the tokens of array concanated to a delimited by the given
-	 * delimiter, without Examples:
-	 * 
-	 * <pre>
-	 *     explode({ "a", "b" }, " ") == "a b"
-	 *     explode({ "a", "b" }, "") == "ab"
-	 * </pre>
-	 */
+     * Returns the tokens of array concanated to a delimited by the given
+     * delimiter, without Examples:
+     * 
+     * <pre>
+     *     explode({ "a", "b" }, " ") == "a b"
+     *     explode({ "a", "b" }, "") == "ab"
+     * </pre>
+     */
     public static String explode(String[] array, String delimeter) {
-		StringBuilder sb = new StringBuilder();
-		if (array.length > 0) {
-			sb.append(array[0]);
-			for (int i = 1; i < array.length; i++) {
-				sb.append(delimeter);
-				sb.append(array[i]);
-			}
-		}
-		return sb.toString();
+        StringBuilder sb = new StringBuilder();
+        if (array.length > 0) {
+            sb.append(array[0]);
+            for (int i = 1; i < array.length; i++) {
+                sb.append(delimeter);
+                sb.append(array[i]);
+            }
+        }
+        return sb.toString();
     }
-    
+
     /**
      * Returns the tokens of a collection concanated to a delimited by the given
      * delimiter.
@@ -439,7 +433,7 @@ public class StringUtils {
     public static String explode(Collection<String> collection, String delimiter) {
         StringBuilder sb = new StringBuilder();
         if (!collection.isEmpty()) {
-            Iterator<String> i = collection.iterator(); 
+            Iterator<String> i = collection.iterator();
             sb.append(i.next());
             while (i.hasNext()) {
                 sb.append(delimiter);
@@ -465,7 +459,7 @@ public class StringUtils {
     public static String toString(Object thiz, Object... whitelist) {
         return toStringBlackAndWhite(thiz, Arrays.asList(whitelist), Collections.emptyList());
     }
-    
+
     /**                                                                                                                                                                                                                                                                                                                                                                                   
      * Creates a string representation of the object <code>thiz</code>.                                                                                                                                                                                                                                                                                                                   
      * <p>                                                                                                                                                                                                                                                                                                                                                                                
@@ -479,8 +473,7 @@ public class StringUtils {
      * <p>                                                                                                                                                                                                                                                                                                                                                                                
      * Calls {@link Object#toString()} on fields.                                                                                                                                                                                                                                                                                                                                         
      */
-    private static String toStringBlackAndWhite(Object thiz,
-            Collection<? extends Object> whitelist, Collection<? extends Object> blacklist) {
+    private static String toStringBlackAndWhite(Object thiz, Collection<? extends Object> whitelist, Collection<? extends Object> blacklist) {
         boolean cleanUp = false;
         try {
             IdentityHashMap<Object, Object> handledObjects = threadLocal.get();
@@ -500,16 +493,14 @@ public class StringUtils {
                     field.setAccessible(true);
                     Object value = field.get(thiz);
                     field.setAccessible(accessible);
-                    if (!Modifier.isStatic(field.getModifiers()) && !blacklist.contains(value)
-                            && (whitelist.isEmpty() || whitelist.contains(value))) {
+                    if (!Modifier.isStatic(field.getModifiers()) && !blacklist.contains(value) && (whitelist.isEmpty() || whitelist.contains(value))) {
                         if (value == null) {
                             fields.put(field.getName(), String.valueOf(value));
                         } else {
                             Class<?> clazz = value.getClass();
                             if (clazz.isArray()) {
                                 if (!clazz.getComponentType().isPrimitive()) {
-                                    fields.put(field.getName(), String.valueOf(Arrays
-                                            .asList((Object[]) value)));
+                                    fields.put(field.getName(), String.valueOf(Arrays.asList((Object[]) value)));
                                 } else {
                                     int length = Array.getLength(value);
                                     List<Object> copy = new ArrayList<Object>(length);
@@ -550,7 +541,7 @@ public class StringUtils {
     public static boolean isNullOrEmpty(String s) {
         return isNullOrEmpty(s, false);
     }
-    
+
     public static String removeDoubleSpaces(String s) {
         return s != null ? s.replaceAll("\\s+", " ") : null;
     }
