@@ -44,7 +44,7 @@ public class MonovaWebSearchResult implements WebSearchResult {
         this.torrentDetailsURI = torrentDetailsUrl;
         torrentURI = matcher.group(1);
         fileName = FilenameUtils.getName(torrentURI);
-        infoHash = matcher.group(2);
+        infoHash = matcher.group(2).split("&")[0];
         creationTime = parseCreationTime(torrentURI);
         size = parseSize(matcher.group(4));
         seeds = parseSeeds(matcher.group(3));

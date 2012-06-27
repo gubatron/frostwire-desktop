@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.limewire.util.StringUtils;
 
 import com.frostwire.HttpFetcher;
 import com.frostwire.bittorrent.websearch.HttpWebSearchPerformer;
@@ -68,6 +69,6 @@ public class MonovaWebSearchPerformer extends HttpWebSearchPerformer {
             return null;
         }
         
-        return new String(htmlBytes);
+        return StringUtils.getUTF8String(htmlBytes);
     }
 }

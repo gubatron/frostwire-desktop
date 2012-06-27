@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.limewire.util.StringUtils;
+
 import com.frostwire.HttpFetcher;
 
 /**
@@ -41,7 +43,7 @@ public abstract class HttpWebSearchPerformer implements WebSearchPerformer {
             return result;
         }
 
-        String html = new String(htmlBytes);
+        String html = StringUtils.getUTF8String(htmlBytes);
 
         String regex = getRegex();
         
