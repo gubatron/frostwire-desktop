@@ -7,7 +7,6 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -22,6 +21,7 @@ import org.limewire.util.StringUtils;
 import com.frostwire.HttpFetcher;
 import com.limegroup.gnutella.gui.GUIMediator;
 import com.limegroup.gnutella.gui.I18n;
+import com.limegroup.gnutella.settings.ApplicationSettings;
 
 public class GoogleSearchField extends SearchField {
 
@@ -76,12 +76,12 @@ public class GoogleSearchField extends SearchField {
     }
 
     private static String buildSuggestionsUrl() {
-        String lang = Locale.getDefault().getLanguage();
+        String lang = ApplicationSettings.LANGUAGE.getValue();
         if (StringUtils.isNullOrEmpty(lang)) {
             lang = "en";
         }
 
-        return "http://suggestqueries.google.com/complete/search?output=firefox&hl=" + Locale.getDefault() + "&q=%s";
+        return "http://suggestqueries.google.com/complete/search?output=firefox&hl=" + lang + "&q=%s";
     }
 
     private static final class SuggestionsThread extends Thread {
@@ -111,7 +111,7 @@ public class GoogleSearchField extends SearchField {
                 String url = String.format(SUGGESTIONS_URL, URLEncoder.encode(constraint, "UTF-8"));
 
                 HttpFetcher fetcher = new HttpFetcher(new URI(url), HTTP_QUERY_TIMEOUT);
-                String json = new String(fetcher.fetch());
+                String json = StringUtils.getUTF8String(fetcher.fetch());
 
                 if (!isCancelled()) {
                     final List<String> suggestions = readSuggestions((JSONArray) ((JSONArray) JSONValue.parse(json)).get(1));
