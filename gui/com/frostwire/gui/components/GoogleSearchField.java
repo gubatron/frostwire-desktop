@@ -16,6 +16,7 @@ import javax.swing.UIManager;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONValue;
+import org.limewire.util.LCS;
 import org.limewire.util.StringUtils;
 
 import com.frostwire.HttpFetcher;
@@ -134,9 +135,13 @@ public class GoogleSearchField extends SearchField {
         }
 
         private List<String> readSuggestions(JSONArray array) {
+            String t = input.getText();
             List<String> suggestions = new ArrayList<String>(array.size());
-            for (Object obj : array) {
-                suggestions.add((String) obj);
+            if (!StringUtils.isNullOrEmpty(t, true)) {
+                for (Object obj : array) {
+                    String s = LCS.lcsHtml(t, (String) obj);
+                    suggestions.add(s);
+                }
             }
             return suggestions;
         }
