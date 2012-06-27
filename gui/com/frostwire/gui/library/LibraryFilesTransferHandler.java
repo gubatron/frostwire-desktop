@@ -153,7 +153,7 @@ final class LibraryFilesTransferHandler extends TransferHandler {
 
     @Override
     public int getSourceActions(JComponent c) {
-        return COPY;
+        return COPY_OR_MOVE | LINK;
     }
 
     private boolean isStarredDirectoryHolder(DropLocation location) {

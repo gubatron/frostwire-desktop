@@ -81,7 +81,7 @@ class LibraryFilesTableTransferHandler extends TransferHandler {
 
     @Override
     public int getSourceActions(JComponent c) {
-        return COPY;
+        return COPY_OR_MOVE | LINK;
     }
 
     @Override
