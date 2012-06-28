@@ -65,6 +65,7 @@ public class SubstanceCustomUI implements SkinCustomUI {
     }
 
     public Color getFilterTitleColor() {
+        //0xfdf899 - yellow
         return new Color(0x3a72a0);
     }
 }
