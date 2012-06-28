@@ -32,8 +32,10 @@ import java.util.List;
 public class LCS {
 
     public static String lcsHtml(String s1, String s2) {
-        LcsString seq = new LcsString(s1, s2);
-        return seq.getHtml();
+        String rs1 = new StringBuffer(s1).reverse().toString();
+        String rs2 = new StringBuffer(s2).reverse().toString();
+        LcsString seq = new LcsString(rs1, rs2);
+        return seq.getHtml(true);
     }
 
     public static <E> List<E> LongestCommonSubsequence(E[] s1, E[] s2) {
@@ -337,15 +339,23 @@ public class LCS {
             return buf.toString();
         }
 
-        public String getHtml() {
+        private String getHtml(boolean reverse) {
             DiffType type = null;
             List<DiffEntry<Character>> diffs = diff();
+            if (reverse) {
+                Collections.reverse(diffs);
+            }
             StringBuffer buf = new StringBuffer();
 
             for (DiffEntry<Character> entry : diffs) {
                 if (type != entry.getType()) {
                     if (type != null) {
-                        buf.append("</b>");
+                        int indx = buf.lastIndexOf("<b>");
+                        if (buf.length() - indx > 6) {
+                            buf.append("</b>");
+                        } else {
+                            buf.replace(indx, indx + 3, "");
+                        }
                     }
                     switch (entry.getType()) {
                     case REMOVE:
