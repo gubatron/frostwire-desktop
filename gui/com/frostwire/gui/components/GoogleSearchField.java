@@ -79,6 +79,12 @@ public class GoogleSearchField extends SearchField {
             hidePopup();
         }
     }
+    
+    @Override
+    public void setText(String t) {
+        t = t.replace("<html>", "").replace("</html>", "").replace("<b>", "").replace("</b>", "");
+        super.setText(t);
+    }
 
     protected JComponent getPopupComponent() {
         if (entryPanel != null)
