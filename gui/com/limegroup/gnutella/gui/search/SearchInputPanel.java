@@ -2,6 +2,7 @@ package com.limegroup.gnutella.gui.search;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -150,6 +151,10 @@ class SearchInputPanel extends JPanel {
         Dimension d = new Dimension(100, 70000);
         sp.setPreferredSize(d);
         add(sp);
+        
+        Font origFont = SEARCH_FIELD.getFont();
+        Font newFont = origFont.deriveFont(origFont.getSize2D() + 2f);
+        SEARCH_FIELD.setFont(newFont);
     }
     
     private JXCollapsiblePane createSearchOptionsPanel() {

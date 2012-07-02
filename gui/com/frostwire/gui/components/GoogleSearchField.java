@@ -102,6 +102,8 @@ public class GoogleSearchField extends SearchField {
         entryScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         entryScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         entryPanel.add(entryScrollPane, c);
+        
+        entryList.setFont(getFont());
 
         return entryPanel;
     }
